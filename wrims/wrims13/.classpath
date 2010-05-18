@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="calsim/installer/" kind="src" path=""/>
+	<classpathentry kind="lib" path="calsim/lib/__init__.py"/>
+	<classpathentry kind="lib" path="calsim/lib/Acme.jar"/>
+	<classpathentry kind="lib" path="calsim/lib/calsim-help.jar"/>
+	<classpathentry kind="lib" path="calsim/lib/calsim.jar"/>
+	<classpathentry kind="lib" path="calsim/lib/calsim.obj"/>
+	<classpathentry kind="lib" path="calsim/lib/code_ut0.mod"/>
+	<classpathentry kind="lib" path="calsim/lib/collections.jar"/>
+	<classpathentry kind="lib" path="calsim/lib/COM.jar"/>
+	<classpathentry kind="lib" path="calsim/lib/data.jar"/>
+	<classpathentry kind="lib" path="calsim/lib/global.lib"/>
+	<classpathentry kind="lib" path="calsim/lib/global.mod"/>
+	<classpathentry kind="lib" path="calsim/lib/hec.jar"/>
+	<classpathentry kind="lib" path="calsim/lib/heclib.jar"/>
+	<classpathentry kind="lib" path="calsim/lib/HecNT.dll"/>
+	<classpathentry kind="lib" path="calsim/lib/JGo.jar"/>
+	<classpathentry kind="lib" path="calsim/lib/JGoSVG.jar"/>
+	<classpathentry kind="lib" path="calsim/lib/jhall.jar"/>
+	<classpathentry kind="lib" path="calsim/lib/jpython.jar"/>
+	<classpathentry kind="lib" path="calsim/lib/modtable.txt"/>
+	<classpathentry kind="lib" path="calsim/lib/msgsystem.jar"/>
+	<classpathentry kind="lib" path="calsim/lib/registry"/>
+	<classpathentry kind="lib" path="calsim/lib/rma.jar"/>
+	<classpathentry kind="lib" path="calsim/lib/simsolver.lib"/>
+	<classpathentry kind="lib" path="calsim/lib/vista.jar"/>
+	<classpathentry kind="lib" path="calsim/lib/webstart.jab"/>
+	<classpathentry kind="lib" path="calsim/lib/webstart.jar"/>
+	<classpathentry kind="lib" path="calsim/lib/wrangler.lib"/>
+	<classpathentry kind="lib" path="calsim/lib/WrimsSchematic.jar"/>
+	<classpathentry kind="lib" path="calsim/lib/xml.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path=""/>
+</classpath>
