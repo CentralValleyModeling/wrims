@@ -8,14 +8,14 @@
 #CPATH_SEP=:
 
 # set these for Windows platform
-CALSIM_HOME = d:/cvwrsm/models/wrims/wrims13/calsim
+CALSIM_HOME = D:/cvwrsm/wrims/wrims1_workspace/wrims1/calsim
 JAVA_HOME = d:/jdk/jdk1.6.0_20
 DELETE = rm -rf #del
 CMD_SEP = ; #&
 PATH_SEP = /
 CPATH_SEP=;
-JAVACC=d:/cvwrsm/models/3rdparty/javacc2.0/bin/javacc.bat
+JAVACC=D:/cvwrsm/wrims/wrims1_workspace/3rd_party/javacc2.0/bin/javacc.bat
 JAVACC_OPTIONS=
-MAKE=d:/cvwrsm/models/3rdparty/cygnus/bin/make.exe --unix
+MAKE=D:/cvwrsm/wrims/wrims1_workspace/3rd_party/cygnus/bin/make.exe --unix
 JAR = $(JAVA_HOME)${PATH_SEP}bin${PATH_SEP}jar.exe
-WEBSTART_LIB=d:/cvwrsm/models/3rdparty/WebstartSDK3.0/classes
+WEBSTART_LIB=D:/cvwrsm/wrims/wrims1_workspace/3rd_party/WebstartSDK3.0/classes
