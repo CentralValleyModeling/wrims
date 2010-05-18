@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/wrims13/calsim/gui/CalsimGui.java"/>
+<listEntry value="/wrims1/calsim/gui/CalsimGui.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
 </listAttribute>
 <mapAttribute key="org.eclipse.debug.core.environmentVariables">
-<mapEntry key="path" value="D:\cvwrsm\models\wrims\wrims13\calsim\bin;D:\cvwrsm\models\wrims\wrims13\xa_dlls;D:\cvwrsm\models\wrims\wrims13\calsim\lib;D:\cvwrsm\models\wrims\wrims13\calsim\bin;Z:\LF9045\Bin"/>
-<mapEntry key="CALSIM_HOME" value="D:\cvwrsm\models\wrims\wrims13\calsim"/>
-<mapEntry key="calsim.home" value="D:\cvwrsm\models\wrims\wrims13\calsim"/>
+<mapEntry key="CALSIM_HOME" value="D:\cvwrsm\wrims\wrims1_workspace\wrims1\calsim"/>
+<mapEntry key="Path" value="D:\cvwrsm\wrims\wrims1_workspace\wrims1\calsim\lib;D:\cvwrsm\wrims\wrims1_workspace\wrims1\calsim\bin;Z:\LF9045\Bin;"/>
+<mapEntry key="calsim.home" value="D:\cvwrsm\wrims\wrims1_workspace\wrims1\calsim"/>
 </mapAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="calsim.gui.CalsimGui"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="wrims13"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="wrims1"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-mx172m"/>
 </launchConfiguration>
