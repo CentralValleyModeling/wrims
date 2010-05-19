@@ -195,7 +195,7 @@ IF (charneq(cyclenum,'00'))  OPEN  (UNIT=8,  FILE=weight_file,  STATUS='old')
   		WRITE (16,*) '! Type Statements for GOAL Variables '
   		WRITE (16,*) ' '
   		WRITE (16,*) 'REAL , DIMENSION(maxdvar)              :: C '
-  		WRITE (16,*) 'CHARACTER(LEN=32),DIMENSION(maxdvar)  :: Dvar_Name ' 
+  		WRITE (16,*) 'CHARACTER(LEN=32),DIMENSION(maxdvar)  :: Dvar_Name '
   		WRITE (16,*) 'CHARACTER(LEN=32)                     :: Control_Tag '
   		WRITE (16,*) 'CHARACTER(LEN=9)                      :: Surpl_Label, Slack_Label '
   		WRITE (16,*) 'REAL                                :: Pen_Surpl, Pen_Slack, RHS '
@@ -414,7 +414,7 @@ defcond:  DO while (.true.) ! loop through the number of conditions in define st
   CHARACTER(LEN=16), DIMENSION(maxcond) :: Pen_Surpl, Pen_Slack
 ! CHARACTER(LEN=16)                             :: Goal_Set
   CHARACTER(LEN=29)                             :: Goal_Tag
-  CHARACTER(LEN=16), DIMENSION(maxdvar) :: Dvar_Name
+  CHARACTER(LEN=32), DIMENSION(maxdvar) :: Dvar_Name
   CHARACTER(LEN=500), DIMENSION(maxdvar) :: C
   CHARACTER(LEN=500), DIMENSION(maxcond) :: Condition
   CHARACTER(LEN=2000), DIMENSION(maxcond) :: RHS
