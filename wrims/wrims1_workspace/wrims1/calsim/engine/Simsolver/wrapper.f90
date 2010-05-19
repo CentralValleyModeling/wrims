@@ -79,6 +79,8 @@ SUBROUTINE WRAPPER (date, code, dss_init, reportsv, runDirectory)
   INTEGER,DIMENSION(9)             :: bigMlevel
   REAL(8),DIMENSION(9)             :: bigM
   CHARACTER(LEN=200),INTENT(IN)    :: runDirectory
+  Integer                          :: i_cwdir
+  CHARACTER(LEN=200)               :: cwdir
   CHARACTER(LEN=200)               :: studyFile,traceFile,lpvarFile,stateFile,studyDir,studyName,errorLog
   CHARACTER(LEN=200)               :: dvarFile,svarFile,initvarFile
   CHARACTER(LEN=200)               :: Apart,Epart,Fpart,initfilefpart
@@ -186,7 +188,18 @@ SUBROUTINE WRAPPER (date, code, dss_init, reportsv, runDirectory)
   READ (11,*) pos
   READ (11,318,END=10) studyType	! added var for single or multi studytype for msg dlvry. - ED 12/14/2006
 10  CLOSE(11)
-    
+
+  cwdir= getenv("CalLiteStudy")
+  i_cwdir=LEN_TRIM(cwdir)
+  if (TRIM(svarFile) == 'StandAloneCalLite') then
+    svarFile=TRIM(cwdir)
+    dvarFile=TRIM(cwdir)
+    initvarFile =TRIM(cwdir)
+    svarFile(i_cwdir+1:)="\DSS\CL2020SV.DSS"
+    dvarFile(i_cwdir+1:)="\DSS\CALLITE2020DV.DSS"
+    initvarFile(i_cwdir+1:)="\DSS\CALLITE2020INIT.DSS"
+  endif
+   
   date%timestep = Epart(1:4) !*************This will be used in taf_cfs conversion
   
   CALL set_flush_interval(Epart, flush_interval, cache_back, cache_forward) !************
