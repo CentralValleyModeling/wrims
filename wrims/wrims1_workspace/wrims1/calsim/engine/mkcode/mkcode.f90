@@ -195,7 +195,7 @@ IF (charneq(cyclenum,'00'))  OPEN  (UNIT=8,  FILE=weight_file,  STATUS='old')
   		WRITE (16,*) '! Type Statements for GOAL Variables '
   		WRITE (16,*) ' '
   		WRITE (16,*) 'REAL , DIMENSION(maxdvar)              :: C '
-  		WRITE (16,*) 'CHARACTER(LEN=32),DIMENSION(maxdvar)  :: Dvar_Name '
+  		WRITE (16,*) 'CHARACTER(LEN=32),DIMENSION(maxdvar)  :: Dvar_Name ' 
   		WRITE (16,*) 'CHARACTER(LEN=32)                     :: Control_Tag '
   		WRITE (16,*) 'CHARACTER(LEN=9)                      :: Surpl_Label, Slack_Label '
   		WRITE (16,*) 'REAL                                :: Pen_Surpl, Pen_Slack, RHS '
