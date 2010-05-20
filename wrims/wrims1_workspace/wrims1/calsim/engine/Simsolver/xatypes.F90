@@ -49,13 +49,13 @@ MODULE XATYPES
   PARAMETER(maxRcc = 150000, maxVars=50000) !CB      ! max Rows in RCC and max variables CalSim 3 needs it BIG!
   INTEGER(2), parameter :: rowsize = 32     ! length of row name
 !CB if want 32 char dvarnames?  INTEGER(2), PARAMETER :: colsize = 32     ! length of column name
-  INTEGER(2), PARAMETER :: colsize = 16     ! length of column name
+  INTEGER(2), PARAMETER :: colsize = 32     ! length of column name
 
   ! Two derived types:  one for the problem description and the other for the solution
   TYPE rcc
      CHARACTER(LEN=32)  :: rowname
 !CB if want 32 char dvarnames?       CHARACTER(LEN=32)  :: colname
-     CHARACTER(LEN=16)  :: colname
+     CHARACTER(LEN=32)  :: colname
      REAL(8)            :: coef
   END TYPE rcc
 
