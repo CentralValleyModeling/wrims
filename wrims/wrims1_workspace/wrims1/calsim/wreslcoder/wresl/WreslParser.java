@@ -420,7 +420,7 @@ public class WreslParser implements WreslParserConstants {
       if( f != null) try {
         f.close();
         f = null;  //CB added lines to try to fix error - "...user-mapped section is open"  I.E, file is locked message on Nazrul's machine
-        System.gc(); //CB
+        System.gc(); //CB	
       } catch (IOException ie) {
         // swallow
       }
@@ -854,7 +854,7 @@ public class WreslParser implements WreslParserConstants {
     jj_consume_token(97);
     CompilationUnit();
     jj_consume_token(98);
-//    System.out.println(_currentModel + " has " + dvarList.size() + " dvars");
+//    System.out.println(_currentModel + " has " + dvarList.size() + " dvars");    
         try {writeOutput();} catch (Exception e) { {if (true) throw new RuntimeException (e.getMessage());}}
         try {closeOutput(_numberCycles);} catch (Exception e) {
           e.printStackTrace(System.err);
@@ -1281,7 +1281,7 @@ public class WreslParser implements WreslParserConstants {
       throw new ParseException();
     }
 //CB        _controlDefines.println(expr.toString());  // fortran expression
-    _writer.println(_controlDefines, expr.toString());  //CB
+    _writer.println(_controlDefines, expr.toString());  //CB        
 
   }
 
@@ -1330,7 +1330,7 @@ public class WreslParser implements WreslParserConstants {
     NonDvarExpression(expr);
         if (step.toString().compareTo("")== 0) {           // blank string
 //CB        	_controlDefines.println("$"+index.image+"="+beg.toString()+","+end.toString());
-           _writer.println(_controlDefines, "$"+index.image+"="+beg.toString()+","+end.toString());  //CB
+           _writer.println(_controlDefines, "$"+index.image+"="+beg.toString()+","+end.toString());  //CB        	
         } else {
 //CB        	_controlDefines.println("$"+index.image+"="+beg.toString()+","+end.toString()+","+step.toString());
 
@@ -1606,8 +1606,8 @@ public class WreslParser implements WreslParserConstants {
   String units= new String("'UNKNOWN'");
   String name = id.image.toUpperCase();
 
-  if (id.image.length() > 16) throw wreslError(id,
-    "Identifier '" + id.image + "' exceeds max of 16 characters");
+  if (id.image.length() > 32) throw wreslError(id,
+    "Identifier '" + id.image + "' exceeds max of 32 characters");
   if (name.indexOf("SURPL")==0 || name.indexOf("SLACK")==0 )
     throw wreslError(id,"SURPL and SLACK are reserved strings! Rename '" + name + "'");
   if (scope.kind==LOCAL) {
@@ -1624,7 +1624,7 @@ public class WreslParser implements WreslParserConstants {
   } else {
      if (!dvarList.newItem(name)) throw wreslError(id,"Redefining global variable '" + name + "'");
 //wip     if (!dvarLocalList.newItem(name)) throw wreslError(id, "Redefining global variable '" + name + "' same as local variable within Model"); //CB added
-//wip     if (_currentOrder > 1) throw wreslError(id, "Defining global variable '" + name + "' in other than the first sequence"); //CB added
+//wip     if (_currentOrder > 1) throw wreslError(id, "Defining global variable '" + name + "' in other than the first sequence"); //CB added     
   }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case INTEGER:
@@ -1807,8 +1807,8 @@ public class WreslParser implements WreslParserConstants {
     }
     jj_consume_token(UNITS);
     units = jj_consume_token(QUOTED_LITERAL);
-    if (id.image.length() > 16) {if (true) throw wreslError(id,
-      "Identifier '" + id.image + "' exceeds max of 16 characters");}
+    if (id.image.length() > 32) {if (true) throw wreslError(id,
+      "Identifier '" + id.image + "' exceeds max of 32 characters");}
     if (scope.kind==LOCAL) {
       if (!dvarLocalList.newItem(name))
           {if (true) throw wreslError(id, "Redefining '" + name + "' within Model");}
@@ -3098,7 +3098,7 @@ public class WreslParser implements WreslParserConstants {
       if ( !valueDefLocalList.newItem(name)) {if (true) throw wreslError(id, "Redefining '" + name + "' within Model");}
           if ( valueDefList.getIdCode(name)!=null) {if (true) throw wreslError(id, "Redefining '" + name + "'");}
 //CB	  _controlDefines.println(make32( "$"+name));
-          _writer.println(_controlDefines, make32( "$"+name));  //CB
+          _writer.println(_controlDefines, make32( "$"+name));  //CB	  
         } else {
           _controlDefines = globalDefines;
           if (!valueDefList.newItem(name)) {if (true) throw wreslError(id, "Redefining '" + name + "'");}
