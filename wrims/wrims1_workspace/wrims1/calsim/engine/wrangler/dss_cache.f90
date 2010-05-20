@@ -46,7 +46,7 @@ module dss_cache
   implicit none
   PUBLIC
 
-  INTEGER, PARAMETER                  :: DVAR_LEN = 16, header_len = 117
+  INTEGER, PARAMETER                  :: DVAR_LEN = 32, header_len = 117
   INTEGER, parameter                  :: kiwi = 32, datelen = 20
   INTEGER,PARAMETER,PRIVATE           :: message_unit = 14
   CHARACTER(LEN=200),private          :: msg
