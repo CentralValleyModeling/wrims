@@ -75,7 +75,7 @@ SUBROUTINE WRAPPER (date, code, dss_init, reportsv, runDirectory)
   INTEGER, DIMENSION(2)            :: stats
   INTEGER, DIMENSION(40)           :: opt_flag=0
   REAL(8),DIMENSION(9)             :: currentObjValue
-  CHARACTER(LEN=16)                :: ObjId
+  CHARACTER(LEN=32)                :: ObjId
   INTEGER,DIMENSION(9)             :: bigMlevel
   REAL(8),DIMENSION(9)             :: bigM
   CHARACTER(LEN=200),INTENT(IN)    :: runDirectory
