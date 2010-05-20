@@ -1606,8 +1606,8 @@ public class WreslParser implements WreslParserConstants {
   String units= new String("'UNKNOWN'");
   String name = id.image.toUpperCase();
 
-  if (id.image.length() > 16) throw wreslError(id,
-    "Identifier '" + id.image + "' exceeds max of 16 characters");
+  if (id.image.length() > 32) throw wreslError(id,
+    "Identifier '" + id.image + "' exceeds max of 32 characters");
   if (name.indexOf("SURPL")==0 || name.indexOf("SLACK")==0 )
     throw wreslError(id,"SURPL and SLACK are reserved strings! Rename '" + name + "'");
   if (scope.kind==LOCAL) {
@@ -1807,8 +1807,8 @@ public class WreslParser implements WreslParserConstants {
     }
     jj_consume_token(UNITS);
     units = jj_consume_token(QUOTED_LITERAL);
-    if (id.image.length() > 16) {if (true) throw wreslError(id,
-      "Identifier '" + id.image + "' exceeds max of 16 characters");}
+    if (id.image.length() > 32) {if (true) throw wreslError(id,
+      "Identifier '" + id.image + "' exceeds max of 32 characters");}
     if (scope.kind==LOCAL) {
       if (!dvarLocalList.newItem(name))
           {if (true) throw wreslError(id, "Redefining '" + name + "' within Model");}
