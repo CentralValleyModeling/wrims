@@ -34,7 +34,7 @@ public class CalsimBuilder extends InstallArchiveWriter
        * Sets the name of the product.  The name appears throughout the
        * installation to tell the user what they are installing.
        */
-      setProductName("WRIMS 1.3");
+      setProductName("WRIMS 1.3.2 (XA13)");
 
       /*
        * The initial directory the user sees.  It can be changed, though,
