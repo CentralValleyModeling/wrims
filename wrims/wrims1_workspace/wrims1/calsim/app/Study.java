@@ -63,6 +63,7 @@ public class Study {
     _filename = "";
     _wreslFile = "";
     _svFile = "";
+    _svFileFPart = "";    
     _dvFile = "";
     _initFile = "";
     _initFileFPart = "";
@@ -130,9 +131,19 @@ public class Study {
   public String getSvFile() {
     return _svFile;
   }
+
+  public String getSvDvFileAPartOption() {
+	    return _svdvFileAPartOption;
+	  }
+
+  public String getSvFileFPart() {
+	    return _svFileFPart;
+	  }  
+  
   public String getDvFile() {
     return _dvFile;
   }
+
   public String getInitFile() {
     return _initFile;
   }
@@ -258,6 +269,9 @@ public class Study {
   public void setSvFile(String fname) {
     _svFile = fname;
   }
+  public void setSvFileFPart(String fname) {
+	_svFileFPart = fname;
+  } 
   public void setDvFile(String fname) {
     _dvFile = fname;
   }
@@ -296,6 +310,9 @@ public class Study {
   public void setSimOption(String option) {
     _simOption = option;
   }
+  public void setSvDvFileAPartOption(String option) {
+	    _svdvFileAPartOption = option;
+	  }
   public void setNumberSequences(Integer number) {
     _numberSequences = number;
   }
@@ -395,6 +412,8 @@ public class Study {
     v.addElement(_genRestart);
  //CB not yet   v.addElement(_pricingRHSSensitivity);
  //CB not yet   v.addElement(_activitySensitivity);
+    v.addElement(_svdvFileAPartOption);
+    v.addElement(_svFileFPart);    
     v.addElement(_initFileFPart);
     v.addElement(_posAnalysis);
     v.addElement(_dialogWindow);
@@ -455,6 +474,8 @@ public class Study {
     setWreslFile(se.getAttribute("wreslfile"));
     setSvFile(se.getAttribute("svfile"));
     setDvFile(se.getAttribute("dvfile"));
+    setSvDvFileAPartOption(se.getAttribute("svdvfileapart"));
+    setSvFileFPart(se.getAttribute("svfilefpart"));    
     setInitFile(se.getAttribute("initfile"));
     setInitFileFPart(se.getAttribute("initfilefpart"));
     //DJE*************************************************
@@ -487,6 +508,8 @@ public class Study {
     styElement.setAttribute("wreslfile", getWreslFile());
     styElement.setAttribute("svfile", getSvFile());
     styElement.setAttribute("dvfile", getDvFile());
+    styElement.setAttribute("svdvfileapart", getSvDvFileAPartOption());    
+    styElement.setAttribute("svfilefpart", getSvFileFPart());    
     styElement.setAttribute("initfile", getInitFile());
     styElement.setAttribute("initfilefpart", getInitFileFPart());
     //DJE********************************************************
@@ -514,6 +537,7 @@ public class Study {
   private String _filename;
   private String _wreslFile;
   private String _svFile;
+  private String _svFileFPart;  
   private String _dvFile;
   private String _initFile;
   private String _initFileFPart;
@@ -525,6 +549,7 @@ public class Study {
   private String _stopMonth;
   private Integer _stopYear;
   private String _simOption;
+  private String _svdvFileAPartOption;
   private Integer _numberSequences;
   private Boolean _solverReport;
   private String _solverList;

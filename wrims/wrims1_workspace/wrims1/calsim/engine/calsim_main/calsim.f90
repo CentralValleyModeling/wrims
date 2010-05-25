@@ -41,17 +41,23 @@ program calsim
   use global
   CHARACTER(LEN=400)	:: dirs
   CHARACTER(LEN=200)	:: runDirectory, commondir
-  INTEGER 		:: run, last
+  !INTEGER 		:: run, last
   external code, dss_init, reportsv
   call getcl(dirs)
+  
+  runDirectory = TRIM(dirs)
+  
+  !run  = INDEX(dirs,"RUN")
+  !last = LEN_TRIM(dirs)
+  !runDirectory = dirs(:run+2)
+  !commondir = dirs(run+3:last)
+
   if (LEN_TRIM(runDirectory)==0) then
     runDirectory="."
-    commondir="."
+  !  commondir="."
   end if
-  run  = INDEX(dirs,"RUN")
-  last = LEN_TRIM(dirs)
-  runDirectory = dirs(:run+2)
-  commondir = dirs(run+3:last)
+  
+  commondir="."  !todo: commondir is probably not used.
   call setTableDirectory(TRIM(runDirectory),TRIM(commondir))
   call wrapper (date, code, dss_init, reportsv, runDirectory)
 end program calsim

@@ -1,4 +1,7 @@
 del *.mod
 del *.obj
-set path=../../../../libstuff;%path%;
+del wrangler.lib
+del wrangler.dll
+del AUTOMAKE.DEP
+set path=..\..\..\..\3rd_party\libstuff;%path%;
 call am

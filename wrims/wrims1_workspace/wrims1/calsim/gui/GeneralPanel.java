@@ -59,6 +59,7 @@ public class GeneralPanel extends JPanel {
   public static int MAX_NUM_SEQUENCES = 99; //CB added  (IF > 99, NEED TO CHANGE FORTRAN TOO)
   //public static	String optionList[] = {"None","SLP", "LGP", "WGP"};
   public static	String optionList[] = {"SLP"};
+  public static	String svdvfileAPartList[] = {"CalSim","CalLite"};
 //CB  public static	String seqList[] = {"1","2","3","4","5","6","7","8","9","10",
 //CB  									"11","12","13","14","15","16","17","18","19","20"};
   public static	String seqList[] = createSequenceList(); //CB added
@@ -86,7 +87,7 @@ public class GeneralPanel extends JPanel {
   public GeneralPanel() {
     setLayout(new BorderLayout());
     _fileText = new JTextField[5];
-    _entryText = new JTextField[5];
+    _entryText = new JTextField[6];
     _month = new JComboBox[2];
     _year = new JComboBox[2];
     //DJE******************************
@@ -116,7 +117,7 @@ public class GeneralPanel extends JPanel {
    */
   JPanel createLabelPanel(){
     JPanel panel = new JPanel();
-    panel.setLayout(new GridLayout(13,1));
+    panel.setLayout(new GridLayout(14,1));
     panel.add(createLabel("Study Name:"));
     panel.add(createLabel("Author:"));
     panel.add(createLabel("Date:"));
@@ -125,6 +126,7 @@ public class GeneralPanel extends JPanel {
     //    panel.add(createLabel("Working Directory:"));
     panel.add(createLabel("WRESL File:"));
     panel.add(createLabel("SV File:"));
+    panel.add(createLabel("SV File A Part:"));
     panel.add(createLabel("DV File:"));
     panel.add(createLabel("Init File:"));
     panel.add(createLabel("Init File F Part:"));
@@ -154,7 +156,7 @@ public class GeneralPanel extends JPanel {
    */
   JPanel createAttribPanel(){
     JPanel panel = new JPanel();
-    panel.setLayout(new GridLayout(13,1));
+    panel.setLayout(new GridLayout(14,1));
     panel.add(createTextPanel(0));//name
     panel.add(createTextPanel(1));//author
     panel.add(createTextPanel(2));//date
@@ -163,6 +165,7 @@ public class GeneralPanel extends JPanel {
     //		panel.add(createFilePanel(4));//directory
     panel.add(createFilePanel(0));//wresl file
     panel.add(createFilePanel(1));//sv file
+    panel.add(createSvFileAPartOptionFPartPanel());// file A part 
     panel.add(createFilePanel(2));//dv file
     panel.add(createFilePanel(3));//init file
     panel.add(createTextPanel(4));// init file f part
@@ -252,6 +255,13 @@ public class GeneralPanel extends JPanel {
     panel.add(_entryText[type]);
     return panel;
   }
+  JPanel createTextPanelShort(int type) {
+	    JPanel panel = new JPanel();
+	    panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+	    _entryText[type] = new JTextField(30);
+	    panel.add(_entryText[type]);
+	    return panel;
+	  }
   JPanel createSimOptionPanel() {
     JPanel panel = new JPanel();
     panel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -263,6 +273,17 @@ public class GeneralPanel extends JPanel {
     panel.add(_numSeq);
     return panel;
   }
+
+  JPanel createSvFileAPartOptionFPartPanel() {
+	    JPanel panel = new JPanel();
+	    panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+	    _svdvFileAPartOption = new JComboBox(svdvfileAPartList);
+	    _svdvFileAPartOption.setSelectedItem("CalSim");
+	    panel.add(_svdvFileAPartOption);
+	    panel.add(new JLabel("     SV file F Part:  "));
+	    panel.add(createTextPanelShort(5));// sv file f part
+	    return panel;
+	  }
   /**
    * Create the file choose button
    */
@@ -435,6 +456,8 @@ public class GeneralPanel extends JPanel {
     //    _fileText[4].setText(study.getStudyDir());
     _fileText[0].setText(study.getWreslFile());
     _fileText[1].setText(study.getSvFile());
+    _svdvFileAPartOption.setSelectedItem(study.getSvDvFileAPartOption());    
+    _entryText[5].setText(study.getSvFileFPart());
     _fileText[2].setText(study.getDvFile());
     _fileText[3].setText(study.getInitFile());
     _entryText[4].setText(study.getInitFileFPart());
@@ -469,6 +492,8 @@ public class GeneralPanel extends JPanel {
     //   study.setStudyDir(_fileText[4].getText());
     study.setWreslFile(_fileText[0].getText());
     study.setSvFile(_fileText[1].getText());
+    study.setSvFileFPart(_entryText[5].getText());    
+    study.setSvDvFileAPartOption(_svdvFileAPartOption.getSelectedItem().toString());     
     study.setDvFile(_fileText[2].getText());
     study.setInitFile(_fileText[3].getText());
     study.setInitFileFPart(_entryText[4].getText());
@@ -482,7 +507,7 @@ public class GeneralPanel extends JPanel {
     study.setStartYear(new Integer(_year[0].getSelectedItem().toString()));
     study.setStopMonth(_month[1].getSelectedItem().toString());
     study.setStopYear(new Integer(_year[1].getSelectedItem().toString()));
-    study.setSimOption(_simOption.getSelectedItem().toString());
+    study.setSimOption(_simOption.getSelectedItem().toString());   
     study.setNumberSequences(new Integer(_numSeq.getSelectedItem().toString()));
     study.updateStudyObject();//DJE************************
   }
@@ -501,7 +526,7 @@ public class GeneralPanel extends JPanel {
   private JTextField[] _fileText, _entryText;
   //DJE***************************************************
   public static JLabel _numberSteps;
-  private JComboBox _simOption,_numSeq;
+  private JComboBox _simOption,_numSeq,_svdvFileAPartOption;
   private String _strTimeStep = new String("1MON");
 //  private TSItemListener tsl;
   //private JComboBox[] _month,_year,_day;
