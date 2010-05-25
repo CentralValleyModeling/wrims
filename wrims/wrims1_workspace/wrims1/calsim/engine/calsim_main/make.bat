@@ -1,4 +1,7 @@
 del *.obj
-del mods\*.mod mods\*.lib mods\modtable.txt
+del *.mod 
+del *.lib
+del modtable.txt 
+del AUTOMAKE.DEP 
 call am
 
