@@ -45,7 +45,7 @@ import java.util.Vector;
 /**
  * Controller class for Wresl parse, compile, link, and executions
  * @author Armin Munevar
- * @author Clay Booher (version 1.3 changes)
+ * @author Clay Booher (version 1.3.2 changes)
  * @version $Id: WreslMaker.java,v 1.1.2.18 2001/12/11 23:46:19 jfenolio Exp $
  */
 public class WreslMaker {
@@ -148,7 +148,7 @@ public class WreslMaker {
    */
   public int runModel() {
 //    String directory;
-    int status = doCommand(exeFileName + " " + tempFilePath + " " + commonPath,false);
+    int status = doCommand("set path=" + tempFilePath +"\\external;%path% \n" + exeFileName + " " + tempFilePath + " " + commonPath,false);
     if (status != 0) return status;
     // successful run.  Remove several temporary output files.
 		if (!_buildDebug) {

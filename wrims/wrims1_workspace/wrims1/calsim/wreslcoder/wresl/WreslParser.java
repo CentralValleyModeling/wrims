@@ -1198,7 +1198,8 @@ public class WreslParser implements WreslParserConstants {
         if (dllList.newItem(type.image.toUpperCase())) {
                 if (!new File(rootDirectory + "\\" + "external" + "\\",type.image).exists())
                         {if (true) throw wreslError(id, "External Procedure '" + type.image + "' does not exist in external directory.");}
-                globalExternalsLib.println( "-implib " + rootDirectory + "\\external\\" + type.image);
+                //globalExternalsLib.println( "-implib " + rootDirectory + "\\external\\" + type.image);
+                globalExternalsLib.println( "-implib " + type.image);
         }
         globalExternalsLib.println( "-import " + name);
       }
