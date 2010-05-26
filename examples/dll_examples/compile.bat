@@ -1,0 +1,1 @@
+lf90 simplefunction.f90 -dll -win -ml LF90
