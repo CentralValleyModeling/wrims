@@ -148,7 +148,10 @@ public class WreslMaker {
    */
   public int runModel() {
 //    String directory;
-    int status = doCommand("set path=" + tempFilePath +"\\external;%path% \n" + exeFileName + " " + tempFilePath + " " + commonPath,false);
+    String cmdSetPath = "set path=" + tempFilePath +"\\external;%path%"; 
+    String cmdExec    =  exeFileName + " " + tempFilePath + " " + commonPath;
+    //int status = doCommand("set path=" + tempFilePath +"\\external;%path% \n" + exeFileName + " " + tempFilePath + " " + commonPath,false);
+    int status = doCommand(cmdExec,cmdSetPath,false);
     if (status != 0) return status;
     // successful run.  Remove several temporary output files.
 		if (!_buildDebug) {
@@ -187,7 +190,7 @@ public class WreslMaker {
       if (!_hideProgressDetails) out.println(cycleNum);
       // Create code.f90 and types.f90
       makerString = calsimProgDir+"\\bin\\mkcode.exe " + tempFilePath+ " " + cycleNum;
-      if (doCommand(makerString,true) > 0) return false;
+      if (doCommand(makerString,"",true) > 0) return false;
       if (!_buildDebug) {
 				new File(tempFilePath,"defines"+cycleNum+".txt").delete();
 				new File(tempFilePath,"goals"+cycleNum+".txt").delete();
@@ -198,7 +201,7 @@ public class WreslMaker {
 				+ tempFilePath +"\\types"+cycleNum+".f90 "
 				+ " -mod " + tempFilePath + ";" + sourcePath
 				+ " -win -trace -ml msvc";
-      if (doCommand(makerString,true) > 0) return false;
+      if (doCommand(makerString,"",true) > 0) return false;
       if (!_buildDebug) new File(tempFilePath,"types"+cycleNum+".f90").delete();
       if (cycleNum.equals("00")) {
 				makerString = "lf90 -c -o0 "
@@ -211,7 +214,7 @@ public class WreslMaker {
 				  + " -mod " + tempFilePath + ";" + sourcePath
 				  + " -win -trace -ml msvc -stack 1000000";
       }
-      if (doCommand(makerString,true) > 0) {
+      if (doCommand(makerString,"",true) > 0) {
 				new File( exeFileName).delete();
 				return false;
       }
@@ -245,7 +248,7 @@ public class WreslMaker {
 				+ tempFilePath +"\\report_writer.f90 "
 				+ " -mod " + tempFilePath + ";" + sourcePath
 				+ " -win -trace -ml msvc -stack 1000000";
-      if (doCommand(makerString,true) > 0) {
+      if (doCommand(makerString,"",true) > 0) {
 				new File( exeFileName).delete();
 				return false;
       }
@@ -287,7 +290,7 @@ public class WreslMaker {
 					+ " -win -trace -ml msvc -stack 1000000 -wisk -nomap"
 					+ " -LIBpath " + sourcePath
 					+ " -lib wrangler,simsolver ";
-	      if (doCommand(makerString,true) > 0) {
+	      if (doCommand(makerString,"",true) > 0) {
 					new File(exeFileName).delete();
 					return false;
 	      }
@@ -354,15 +357,17 @@ public class WreslMaker {
 	/**
 	 *  Runs a DOS command and attempts to capture its output.
  	 */
-	public int doCommand(String cmd, boolean minwin) {
+	public int doCommand(String cmdExec, String cmdSetPath, boolean minwin) {
 		Vector hidingDetailsMessages = null;    //CB added hiding messages code
+		String cmd = cmdSetPath + "\n" + cmdExec;
 		try {
 			if (_hideProgressDetails)
 				hidingDetailsMessages = new Vector();
 			Process p;
 //			if (_buildDebug || _lf90Debug) {
 			if (_buildDebug) {
-				p = Runtime.getRuntime().exec(cmd);
+				p = Runtime.getRuntime().exec("cmd /c "+cmdSetPath);
+				p = Runtime.getRuntime().exec(cmdExec);
 			} else {
 				PrintWriter tempWriter = new PrintWriter(new BufferedWriter(new FileWriter("temp.bat")));
 				if (minwin) tempWriter.println("start /min "+cmd);
