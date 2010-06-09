@@ -475,11 +475,17 @@ public class Study {
     setSvFile(se.getAttribute("svfile"));
     setDvFile(se.getAttribute("dvfile"));
     setSvDvFileAPartOption(se.getAttribute("svdvfileapart"));
-    setSvFileFPart(se.getAttribute("svfilefpart"));    
+    if (se.getAttribute("svfilefpart").equals("")){ 
+    	_newStudyObject = false;
+    	setSvFileFPart(se.getAttribute("name"));
+    }
+    else{
+    	setSvFileFPart(se.getAttribute("svfilefpart"));
+    }    
     setInitFile(se.getAttribute("initfile"));
     setInitFileFPart(se.getAttribute("initfilefpart"));
     //DJE*************************************************
-    if (se.getAttribute("svfilefpart").equals("")) _newStudyObject = false;
+    if (se.getAttribute("ts").equals("")) _newStudyObject = false;
     setTimeStep(se.getAttribute("ts"));
     setStartDay(se.getAttribute("startday"));
     setStopDay(se.getAttribute("stopday"));
