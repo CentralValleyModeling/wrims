@@ -479,7 +479,7 @@ public class Study {
     setInitFile(se.getAttribute("initfile"));
     setInitFileFPart(se.getAttribute("initfilefpart"));
     //DJE*************************************************
-    if (se.getAttribute("ts").equals("")) _newStudyObject = false;
+    if (se.getAttribute("svfilefpart").equals("")) _newStudyObject = false;
     setTimeStep(se.getAttribute("ts"));
     setStartDay(se.getAttribute("startday"));
     setStopDay(se.getAttribute("stopday"));

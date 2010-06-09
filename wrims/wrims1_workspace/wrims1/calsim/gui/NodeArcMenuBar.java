@@ -53,6 +53,7 @@ import wrims.schematic.SchematicUtils;
 public class NodeArcMenuBar
 {
   public static boolean DEBUG = false;
+  public static boolean DEBUG_FILEINPUT = true;
   public static int [] generalItemKeys = { KeyEvent.VK_R };
   /**
    * constructor
@@ -76,6 +77,7 @@ public class NodeArcMenuBar
     mbar.add(createArcMenu());
     mbar.add(createToolsMenu());
     mbar.add(_mainMenuBar.getHelpMenu());
+    if(DEBUG_FILEINPUT) mbar.add(_mainMenuBar.getDebugMenu());
     return mbar;
   }
   /**

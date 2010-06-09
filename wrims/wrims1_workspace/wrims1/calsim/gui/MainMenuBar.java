@@ -83,10 +83,12 @@ public class MainMenuBar
     _editMenu = createEditMenu();
     _viewMenu = createViewMenu();
     _helpMenu = createHelpMenu();
+    _debugMenu = createDebugMenu();
     mbar.add(_fileMenu);
     mbar.add(_editMenu);
     mbar.add(_viewMenu);
     mbar.add(_helpMenu);
+    mbar.add(_debugMenu);
     return mbar;
   }
 
@@ -901,6 +903,30 @@ public class MainMenuBar
     return menu;
   }
 
+  JMenu createDebugMenu() {
+	    JMenu menu = new JMenu("Debug      ");
+	    JMenuItem debugStudy = new JMenuItem("Open File");
+	    debugStudy.setMnemonic('o');
+	    debugStudy.addActionListener(new GuiTaskListener("Open Study...") {
+	      public void doWork() {
+
+		      Study sty = new Study();
+		      try {
+		        sty.load("D:\\Example_callite_ex2\\calllite.sty");
+		        AppUtils.setCurrentStudy(sty);
+		        GuiUtils.getStudyTab().setStudy(sty);
+		      }catch(IOException ioe){
+		        VistaUtils.displayException(_mainPanel,ioe);
+		      }
+		      
+		      
+	      }
+	    });
+	    menu.add(debugStudy);
+	    return menu;
+	  }
+
+  
   /**
    * create new study
    */
@@ -1451,6 +1477,9 @@ public class MainMenuBar
     return _helpMenu;
   }
 
+  public JMenu getDebugMenu(){
+	    return _debugMenu;
+	  }
   /*
    * Fields
    */
@@ -1464,6 +1493,6 @@ public class MainMenuBar
   HelpBroker _mainHB;
   private JMenuBar _menuBar;
   static MainPanel _mainPanel;
-  private JMenu _fileMenu, _editMenu, _viewMenu, _helpMenu;
+  private JMenu _fileMenu, _editMenu, _viewMenu, _helpMenu, _debugMenu;
   private SystemConsole _systemConsole;
 } //end of class MainMenuBar
