@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="calsim/classes/|calsim/installer/|calsim/jre/" kind="src" path=""/>
+	<classpathentry excluding="**/.svn/*|calsim/classes/|calsim/installer/|calsim/jre/" kind="src" path=""/>
 	<classpathentry kind="lib" path="calsim/lib/__init__.py"/>
 	<classpathentry kind="lib" path="calsim/lib/Acme.jar"/>
 	<classpathentry kind="lib" path="calsim/lib/calsim.obj"/>
