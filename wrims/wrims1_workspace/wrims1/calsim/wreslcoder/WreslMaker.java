@@ -49,6 +49,7 @@ import java.util.Vector;
  * @version $Id: WreslMaker.java,v 1.1.2.18 2001/12/11 23:46:19 jfenolio Exp $
  */
 public class WreslMaker {
+  public static boolean DEBUG_FILEINPUT = true;
   private PrintWriter out;
   private String ident, tempFilePath, commonPath;
 //CB  private static String calsimProgDir=System.getProperty("calsim.home");
@@ -357,9 +358,29 @@ public class WreslMaker {
 	/**
 	 *  Runs a DOS command and attempts to capture its output.
  	 */
-	public int doCommand(String cmdExec, String cmdSetPath, boolean minwin) {
+	
+    public int doCommand(String cmdExec, String cmdSetPath, boolean minwin) {
 		Vector hidingDetailsMessages = null;    //CB added hiding messages code
-		String cmd = cmdSetPath + "\n" + cmdExec;
+		String cmd;
+		if(cmdSetPath.trim()!="" ){
+			cmd = cmdSetPath + "\n" + cmdExec;
+		}
+		else{
+			cmd = cmdExec;
+		}
+		if(DEBUG_FILEINPUT){
+		try {
+			FileWriter compileBatchFile = new FileWriter("compile.bat",true);
+			BufferedWriter compileWriter = new BufferedWriter(compileBatchFile);
+			compileWriter.write(cmd+"\n");
+			compileWriter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+
+		
 		try {
 			if (_hideProgressDetails)
 				hidingDetailsMessages = new Vector();
