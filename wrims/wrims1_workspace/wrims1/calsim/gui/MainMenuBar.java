@@ -912,7 +912,7 @@ public class MainMenuBar
 
 		      Study sty = new Study();
 		      try {
-		        sty.load("D:\\Example_callite_ex2\\calllite.sty");
+		        sty.load("D:\\Example_callite_test\\callite_test.sty"); // todo: remove this
 		        AppUtils.setCurrentStudy(sty);
 		        GuiUtils.getStudyTab().setStudy(sty);
 		      }catch(IOException ioe){
