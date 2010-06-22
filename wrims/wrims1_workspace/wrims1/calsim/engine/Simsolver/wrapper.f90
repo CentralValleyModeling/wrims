@@ -61,7 +61,7 @@ SUBROUTINE WRAPPER (date, code, dss_init, reportsv, runDirectory)
   EXTERNAL code, dss_init, reportsv
   TYPE(dwmy), INTENT(INOUT)       :: date
 
-  CHARACTER(LEN=4), parameter     :: version_identifier = '1.3.2' 
+  CHARACTER(LEN=16), parameter     :: version_identifier = '1.3.3 Beta (XA13)' 
   CHARACTER(LEN=75), parameter    :: copyright = 'This program is Copyright (C) 1998 State of California, all rights reserved'
   TYPE(rcc),DIMENSION(:), ALLOCATABLE :: problem
   TYPE(answer),DIMENSION(:), ALLOCATABLE:: solution

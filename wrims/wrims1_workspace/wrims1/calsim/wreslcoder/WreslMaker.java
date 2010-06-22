@@ -41,15 +41,15 @@ import calsim.wreslcoder.wresl.ParseException;
 import java.io.*;
 import java.util.Enumeration;
 import java.util.Vector;
-
+import calsim.debug.*;
 /**
  * Controller class for Wresl parse, compile, link, and executions
  * @author Armin Munevar
- * @author Clay Booher (version 1.3.2 changes)
+ * @author Clay Booher
  * @version $Id: WreslMaker.java,v 1.1.2.18 2001/12/11 23:46:19 jfenolio Exp $
  */
 public class WreslMaker {
-  public static boolean DEBUG_FILEINPUT = true;
+  //public static boolean DEBUG_FILEINPUT = true;
   private PrintWriter out;
   private String ident, tempFilePath, commonPath;
 //CB  private static String calsimProgDir=System.getProperty("calsim.home");
@@ -227,6 +227,9 @@ public class WreslMaker {
       // no files need to be remade
       if (!_buildDebug) {
 				new File(tempFilePath,"dss_init.f90").delete();
+				new File(tempFilePath,"dss_initTs.f90").delete();
+				new File(tempFilePath,"dss_initDvar1.f90").delete();
+				new File(tempFilePath,"dss_initDvar2.f90").delete();
       }
       out.println(exeFileName + " is up to date.");
     }
@@ -246,6 +249,9 @@ public class WreslMaker {
       makerString = "lf90 -c -o0 "
 				+ tempFilePath +"\\code.f90 "
 				+ tempFilePath +"\\dss_init.f90 "
+				+ tempFilePath +"\\dss_initTs.f90 "
+				+ tempFilePath +"\\dss_initDvar1.f90 "
+				+ tempFilePath +"\\dss_initDvar2.f90 "
 				+ tempFilePath +"\\report_writer.f90 "
 				+ " -mod " + tempFilePath + ";" + sourcePath
 				+ " -win -trace -ml msvc -stack 1000000";
@@ -256,6 +262,9 @@ public class WreslMaker {
       if (!_buildDebug) {
 				new File(tempFilePath,"code.f90").delete();
 				new File(tempFilePath,"dss_init.f90").delete();
+				new File(tempFilePath,"dss_initTs.f90").delete();				
+				new File(tempFilePath,"dss_initDvar1.f90").delete();
+				new File(tempFilePath,"dss_initDvar2.f90").delete();
 				new File(tempFilePath,"report_writer.f90").delete();
       }
     } else {
@@ -282,6 +291,9 @@ public class WreslMaker {
 	      makerString = makerString
 					+ tempFilePath +"\\code.obj "
 					+ tempFilePath +"\\dss_init.obj "
+					+ tempFilePath +"\\dss_initTs.obj "	
+					+ tempFilePath +"\\dss_initDvar1.obj "
+					+ tempFilePath +"\\dss_initDvar2.obj "
 					+ tempFilePath +"\\report_writer.obj "
 					+ "@" + tempFilePath + "\\externals.rsp "
 					+ "@" + tempFilePath + "\\externalsLib.rsp "
@@ -307,6 +319,9 @@ public class WreslMaker {
 				new File(tempFilePath,"code.obj").delete();
 				new File(tempFilePath,"modtable.txt").delete();
 				new File(tempFilePath,"dss_init.obj").delete();
+				new File(tempFilePath,"dss_initTs.obj").delete();
+				new File(tempFilePath,"dss_initDvar1.obj").delete();
+				new File(tempFilePath,"dss_initDvar2.obj").delete();
 				new File(tempFilePath,"report_writer.obj").delete();
 				new File(tempFilePath,"externals.rsp").delete();
 				new File(tempFilePath,"externalsLib.rsp").delete();
@@ -316,6 +331,9 @@ public class WreslMaker {
 	      // no files need to be remade
 	      if (!_buildDebug) {
 				new File(tempFilePath,"dss_init.f90").delete();
+				new File(tempFilePath,"dss_initTs.f90").delete();
+				new File(tempFilePath,"dss_initDvar1.f90").delete();
+				new File(tempFilePath,"dss_initDvar2.f90").delete();
 				new File(tempFilePath,"report_writer.f90").delete();
 	      }
 	      out.println(exeFileName + " is up to date.");
@@ -368,7 +386,7 @@ public class WreslMaker {
 		else{
 			cmd = cmdExec;
 		}
-		if(DEBUG_FILEINPUT){
+		if(DebugSetting.DEBUG_FILEINPUT){
 		try {
 			FileWriter compileBatchFile = new FileWriter("compile.bat",true);
 			BufferedWriter compileWriter = new BufferedWriter(compileBatchFile);
@@ -386,16 +404,16 @@ public class WreslMaker {
 				hidingDetailsMessages = new Vector();
 			Process p;
 //			if (_buildDebug || _lf90Debug) {
-			if (_buildDebug) {
-				p = Runtime.getRuntime().exec("cmd /c "+cmdSetPath);
-				p = Runtime.getRuntime().exec(cmdExec);
-			} else {
+			//if (_buildDebug) {
+			//	p = Runtime.getRuntime().exec("cmd /c "+cmdSetPath);
+			//	p = Runtime.getRuntime().exec(cmdExec);
+			//} else {
 				PrintWriter tempWriter = new PrintWriter(new BufferedWriter(new FileWriter("temp.bat")));
 				if (minwin) tempWriter.println("start /min "+cmd);
 				else tempWriter.println(cmd);
 				tempWriter.close();
 				p = Runtime.getRuntime().exec("temp.bat");
-			}
+			//}
 			BufferedReader stdout = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			BufferedReader stderr = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 			String line;

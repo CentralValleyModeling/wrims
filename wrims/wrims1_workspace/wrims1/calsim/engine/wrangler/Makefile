@@ -10,7 +10,7 @@ F90_OBJS = $(F90_FILES:%.f90=%.obj)
 TARGET=wrangler.dll
 
 all: #$(F90_MOD) $(F90_OBJS) 
-	make.bat
+	(cmd /c make_dos)
 
 release: clean all
 	cp $(TARGET) ../../bin 

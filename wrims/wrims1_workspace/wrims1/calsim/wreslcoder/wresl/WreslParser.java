@@ -14,7 +14,8 @@ import java.awt.event.*;    //CB added
 public class WreslParser implements WreslParserConstants {
   public static String version = new String("Wresl Parser Version 0.97");
   static java.io.PrintWriter goals, defines, globalDefines, weights, dssInit, externals, externalsLib;
-  static java.io.PrintWriter globalCodeSelect, globalDssInit, globalExternals, globalExternalsLib;
+  static java.io.PrintWriter globalCodeSelect, globalDssInit, globalDssInitTs, globalDssInit1, globalDssInit2,
+         globalExternals, globalExternalsLib;
   static java.io.PrintWriter _controlDefines, localDefines;
   static ReportWriter svReport;
 //  static InitSVWriter initSVReport;
@@ -33,6 +34,8 @@ public class WreslParser implements WreslParserConstants {
   static UniqueList valueDefLocalList;          // stores names of value variables
   static UniqueList tsDefLocalList;                     // stores names of timeseries variables
   static UniqueList dvarLocalList;                      // stores names of decision variables
+  static boolean [] dvarChecklist;
+  static boolean [] tsChecklist;
 
   static Hashtable fileList;
   static Hashtable tsParamList;
@@ -117,22 +120,48 @@ public class WreslParser implements WreslParserConstants {
     dvarLocalList.removeAllElements();
   }
 
+
+
+  public static void globalDSSInitFileDvarPrint(int indx, String pnt, boolean endLineStatus)
+  {
+          if (!dvarChecklist[indx]) {
+                  globalDssInit1.print(pnt);
+          }
+          if (endLineStatus) dvarChecklist[indx]=true;
+  }
+
+  public static void globalDSSInitFileTsPrint(int indx, String pnt, boolean endLineStatus)
+  {
+          if (!tsChecklist[indx]) {
+                  globalDssInitTs.print(pnt);
+          }
+          if (endLineStatus) tsChecklist[indx]=true;
+  }
+
+
   /**
    *  Opens global files which will contain the sub-files for each sequence
    */
   public static void openGlobalFiles() throws IOException {
-    FileWriter globalCodeSelectFile, globalDefinesFile, globalDssInitFile, globalStateReportFile,
-      globalExternalsFile, globalExternalsLibFile;
+    FileWriter globalCodeSelectFile, globalDefinesFile,
+        globalDssInitFile, globalDssInitFileTs, globalDssInitFile1, globalDssInitFile2,
+        globalStateReportFile, globalExternalsFile, globalExternalsLibFile;
 
     globalCodeSelectFile = new FileWriter(rootDirectory + "\\code.f90");
     globalDefinesFile = new FileWriter(rootDirectory + "\\defines00.txt");
     globalDssInitFile = new FileWriter(rootDirectory + "\\dss_init.f90");
+    globalDssInitFileTs = new FileWriter(rootDirectory + "\\dss_initTs.f90");
+    globalDssInitFile1 = new FileWriter(rootDirectory + "\\dss_initDvar1.f90");
+    globalDssInitFile2 = new FileWriter(rootDirectory + "\\dss_initDvar2.f90");
     globalExternalsFile = new FileWriter(rootDirectory + "\\externals.rsp");
     globalExternalsLibFile = new FileWriter(rootDirectory + "\\externalsLib.rsp");
 
     globalCodeSelect = new PrintWriter(new BufferedWriter(globalCodeSelectFile));
     globalDefines = new PrintWriter(new BufferedWriter(globalDefinesFile), false);
     globalDssInit = new PrintWriter(new BufferedWriter(globalDssInitFile));
+    globalDssInitTs = new PrintWriter(new BufferedWriter(globalDssInitFileTs));
+    globalDssInit1 = new PrintWriter(new BufferedWriter(globalDssInitFile1));
+    globalDssInit2 = new PrintWriter(new BufferedWriter(globalDssInitFile2));
     globalExternals = new PrintWriter(new BufferedWriter(globalExternalsFile));
     globalExternalsLib = new PrintWriter(new BufferedWriter(globalExternalsLibFile));
 
@@ -172,7 +201,7 @@ public class WreslParser implements WreslParserConstants {
    */
   public static void conditionGlobalCode(String number, String cond) {
     globalCodeSelect.println("IF (number=="+number+") needToSimulate="+cond);
-    globalCodeSelect.println("IF (number=="+number+".and.("+cond+")) CALL CODE"+number+"(p, goal_count)");
+    globalCodeSelect.println("IF (number=="+number+" .and. ("+cond+")) CALL CODE"+number+"(p, goal_count)");
   }
 
   /**
@@ -219,6 +248,8 @@ public class WreslParser implements WreslParserConstants {
     seqConditionList = new Hashtable();
     goalLocalList = new Hashtable();
     includeLocalList = new Hashtable();
+        dvarChecklist = new boolean [10000];
+    tsChecklist = new boolean [10000];
   }
 
   /**
@@ -297,6 +328,9 @@ public class WreslParser implements WreslParserConstants {
     if (externalsLib != null) externalsLib.close();
     if (globalCodeSelect != null) globalCodeSelect.close();
     if (globalDssInit != null) globalDssInit.close();
+    if (globalDssInitTs != null) globalDssInitTs.close();
+    if (globalDssInit1 != null) globalDssInit1.close();
+    if (globalDssInit2 != null) globalDssInit2.close();
     if (globalExternals != null) globalExternals.close();
     if (globalExternals != null) globalExternalsLib.close();
   }
@@ -323,8 +357,23 @@ public class WreslParser implements WreslParserConstants {
     globalDssInit.println("! Automatically generated by WreslParser");
     globalDssInit.println("subroutine dss_init");
     globalDssInit.println("use code_utils");
-    globalDssInit.println("call allocateTables");
-  }
+        globalDssInit.println("call allocateTables");
+        globalDssInit.println("call dss_initTs");
+        globalDssInit.println("call dss_initDvar1");
+        globalDssInit.println("call dss_initDvar2");
+
+    globalDssInitTs.println("! Automatically generated by WreslParser");
+    globalDssInitTs.println("subroutine dss_initTs");
+    globalDssInitTs.println("use code_utils");
+
+        globalDssInit1.println("! Automatically generated by WreslParser");
+    globalDssInit1.println("subroutine dss_initDvar1");
+    globalDssInit1.println("use code_utils");
+
+        globalDssInit2.println("! Automatically generated by WreslParser");
+    globalDssInit2.println("subroutine dss_initDvar2");
+    globalDssInit2.println("use code_utils");
+        }
 
   /**
    *  Writes the ending statements for the DSS init file
@@ -352,6 +401,15 @@ public class WreslParser implements WreslParserConstants {
     globalDssInit.println("  end subroutine allocateTables");
     globalDssInit.println("end subroutine");
     globalDssInit.close();
+
+    globalDssInitTs.println("end subroutine");
+    globalDssInitTs.close();
+
+    globalDssInit1.println("end subroutine");
+    globalDssInit1.close();
+
+    globalDssInit2.println("end subroutine");
+    globalDssInit2.close();
   }
 
 
@@ -1517,7 +1575,7 @@ public class WreslParser implements WreslParserConstants {
            given.append(fieldname);
         } else {
            if (reservedList.isIn(fieldname.image)) {
-                given.append("real(" +
+                given.append("real(" +      //todo: get rid of real() // floating point comparison is instable
             reservedList.fortranExpr(fieldname.image) + ")" );
         } else {
            {if (true) throw wreslError(fieldname,"Must use '=' or define '"
@@ -1577,25 +1635,25 @@ public class WreslParser implements WreslParserConstants {
         if (!tsDefList.newItem(name)) logger.println("Warning! Local TS '" + name
           + "' value will be same as Global.");
       }
-      globalDssInit.print("call dss_ts_init(  " + String.valueOf(tsDefList.getIndexOf(name)+1)+ ","
-        + bpart.image + "," + kind.image + "," + units.image);
+      globalDSSInitFileTsPrint(tsDefList.getIndexOf(name), "call dss_ts_init(  " + String.valueOf(tsDefList.getIndexOf(name)+1)+ ","
+                        + bpart.image + "," + kind.image + "," + units.image, false);
     } else {
       if (!tsDefList.newItem(name)) {if (true) throw wreslError(id,"Redefining '" + name + "'");}
-        globalDssInit.print("call dss_ts_init(  "
+      globalDSSInitFileTsPrint(tsDefList.getIndexOf(name), "call dss_ts_init(  "
           + String.valueOf(tsDefList.getIndexOf(name)+1)+ "," + bpart.image+"," + kind.image+","
-          + units.image);
+          + units.image, false);
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case DESC:
       jj_consume_token(DESC);
       jj_consume_token(QUOTED_LITERAL);
-                                globalDssInit.print(", desc=" +token.image);
+                                globalDSSInitFileTsPrint(tsDefList.getIndexOf(name), ", desc=" +token.image, false);
       break;
     default:
       jj_la1[35] = jj_gen;
       ;
     }
-      globalDssInit.println(")");
+        globalDSSInitFileTsPrint(tsDefList.getIndexOf(name), ")\n", true);
   }
 
 /**
@@ -1613,16 +1671,22 @@ public class WreslParser implements WreslParserConstants {
     throw wreslError(id,"SURPL and SLACK are reserved strings! Rename '" + name + "'");
   if (scope.kind==LOCAL) {
 //CB    if (!dvarLocalList.newItem(name)) throw wreslError(id, "Redefining '" + name + "' within Model");
-    if (!dvarLocalList.newItem(name))  //CB altered
+    if (!dvarLocalList.newItem(name)) {
       throw wreslError(id, "Redefining local variable '" + name + "' within Model");
+    }
      // fix scoping dvar bounds
-     if (_hideWarnings) { // CB added to allow user to turn off warning messages
+    if (_hideWarnings) { // CB added to allow user to turn off warning messages
        dvarList.newItem(name); // warnings off
-     } else {
-       if (!dvarList.newItem(name)) logger.println("Warning! Local Dvar '" + name
-         + "' bounds will be same as Global.");
-     }
-  } else {
+    }
+        else {
+                if (!dvarList.newItem(name)) {
+                        logger.println("Warning! Local Dvar '" + name
+                        + "' bounds will be same as Global.");
+                }
+    }
+
+  }
+  else {
      if (!dvarList.newItem(name)) throw wreslError(id,"Redefining global variable '" + name + "'");
 //wip     if (!dvarLocalList.newItem(name)) throw wreslError(id, "Redefining global variable '" + name + "' same as local variable within Model"); //CB added
 //wip     if (_currentOrder > 1) throw wreslError(id, "Defining global variable '" + name + "' in other than the first sequence"); //CB added     
@@ -1665,14 +1729,14 @@ public class WreslParser implements WreslParserConstants {
     jj_consume_token(QUOTED_LITERAL);
                                    units=token.image;
         dvarDef.output(goals);
-        globalDssInit.print("call dss_dvar_init( " +
+        globalDSSInitFileDvarPrint(dvarList.getIndexOf(name), "call dss_dvar_init( " +
                 String.valueOf(dvarList.getIndexOf(name)+1)
-                                        + ",'" + name + "'," + kind + "," + units);
+                                        + ",'" + name + "'," + kind + "," + units, false);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case DESC:
       jj_consume_token(DESC);
       jj_consume_token(QUOTED_LITERAL);
-                                globalDssInit.print(", desc=" +token.image);
+                                globalDSSInitFileDvarPrint(dvarList.getIndexOf(name), ", desc=" +token.image, false);
       break;
     default:
       jj_la1[39] = jj_gen;
@@ -1682,13 +1746,13 @@ public class WreslParser implements WreslParserConstants {
     case HEADER:
       jj_consume_token(HEADER);
       jj_consume_token(QUOTED_LITERAL);
-                                  globalDssInit.print(",&\r\n   header=" +token.image);
+                                  globalDSSInitFileDvarPrint(dvarList.getIndexOf(name), ",&\r\n   header=" +token.image, false);
       break;
     default:
       jj_la1[40] = jj_gen;
       ;
     }
-        globalDssInit.println(")");
+        globalDSSInitFileDvarPrint(dvarList.getIndexOf(name), ")\n", true);
   }
 
 /**
@@ -1837,8 +1901,8 @@ public class WreslParser implements WreslParserConstants {
     goals.println(p.asString());        // lhs>rhs: constrain
     goals.println(p.asString());        // lhs<rhs: constrain
     noMoreCases(goals);                 // 99999   end of cases
-    globalDssInit.println("call dss_dvar_init( " +      String.valueOf(dvarList.getIndexOf(name)+1) +
-                                                                        ",'" + name + "',"+kind.image+","+units.image+")");
+    globalDSSInitFileDvarPrint(dvarList.getIndexOf(name), "call dss_dvar_init( " +      String.valueOf(dvarList.getIndexOf(name)+1) +
+                                                                        ",'" + name + "',"+kind.image+","+units.image+")\n", true);
   }
 
 /**
@@ -2269,7 +2333,7 @@ public class WreslParser implements WreslParserConstants {
           jj_consume_token(-1);
           throw new ParseException();
         }
-                                             e.append(token.image);
+                                             e.append(" "+token.image+" ");
         LogicalExpression(e);
       }
        {if (true) return e.toString();}
@@ -3199,6 +3263,55 @@ public class WreslParser implements WreslParserConstants {
     return retval;
   }
 
+  final private boolean jj_3R_22() {
+    if (jj_scan_token(MONTHYEAR)) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3_1() {
+    if (jj_3R_16()) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3R_24() {
+    if (jj_scan_token(IDENTIFIER)) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3R_18() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_24()) {
+    jj_scanpos = xsp;
+    if (jj_3R_25()) {
+    jj_scanpos = xsp;
+    if (jj_3R_26()) {
+    jj_scanpos = xsp;
+    if (jj_3R_27()) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    } else if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    } else if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    } else if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    if (jj_scan_token(99)) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3R_27() {
+    if (jj_scan_token(DAYMONTHYEAR)) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3R_21() {
+    if (jj_scan_token(DAYMONTH)) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
   final private boolean jj_3R_26() {
     if (jj_scan_token(MONTHYEAR)) return true;
     if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
@@ -3401,55 +3514,6 @@ public class WreslParser implements WreslParserConstants {
 
   final private boolean jj_3_2() {
     if (jj_3R_17()) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3R_22() {
-    if (jj_scan_token(MONTHYEAR)) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3_1() {
-    if (jj_3R_16()) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3R_24() {
-    if (jj_scan_token(IDENTIFIER)) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3R_18() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_24()) {
-    jj_scanpos = xsp;
-    if (jj_3R_25()) {
-    jj_scanpos = xsp;
-    if (jj_3R_26()) {
-    jj_scanpos = xsp;
-    if (jj_3R_27()) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    } else if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    } else if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    } else if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    if (jj_scan_token(99)) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3R_27() {
-    if (jj_scan_token(DAYMONTHYEAR)) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3R_21() {
-    if (jj_scan_token(DAYMONTH)) return true;
     if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
     return false;
   }

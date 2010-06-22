@@ -16,6 +16,7 @@ complete:
 	cd wreslcoder $(CMD_SEP) $(MAKE) all
 	cd app $(CMD_SEP) $(MAKE) all
 	cd gui $(CMD_SEP) $(MAKE) all
+	cd debug $(CMD_SEP) $(MAKE) all	
 #        cd .$(PATH_SEP)gui $(CMD_SEP) $(MAKE) all  #CB does not work - cygwin bug
 	cd gym $(CMD_SEP) $(MAKE) all
 	cd schematic $(CMD_SEP) $(MAKE) all
@@ -38,6 +39,7 @@ jar:
 	(cp -P gui/*.class classes/calsim)
 #	(cp -P gui/*.java classes/calsim)
 	(cp -P app/*.class classes/calsim)
+	(cp -P debug/*.class classes/calsim)	
 #	(cp -P app/*.java classes/calsim)
 	(cp -P msw/*.class classes/calsim)
 #	(cp -P msw/*.java classes/calsim)
