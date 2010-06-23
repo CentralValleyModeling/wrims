@@ -56,10 +56,10 @@ Name: "main"; Description: "Main Files"; Types: full compact custom;
 
 [Files]
 
-;Source: "..\jre\*";        Excludes: ".svn";            DestDir: "{app}\jre\";       Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
-;Source: "..\bin\*";        Excludes: ".svn, xa*.dll";   DestDir: "{app}\bin\";       Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
-;Source: "..\lib\*";        Excludes: ".svn";            DestDir: "{app}\lib\";       Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
-;Source: "..\svg\*";        Excludes: ".svn";            DestDir: "{app}\svg\";       Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
+Source: "..\jre\*";        Excludes: ".svn";            DestDir: "{app}\jre\";       Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
+Source: "..\bin\*";        Excludes: ".svn, xa*.dll";   DestDir: "{app}\bin\";       Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
+Source: "..\lib\*";        Excludes: ".svn";            DestDir: "{app}\lib\";       Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
+Source: "..\svg\*";        Excludes: ".svn";            DestDir: "{app}\svg\";       Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
 Source: "..\license\*";    Excludes: ".svn";            Destdir: "{app}\";           Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
 
 [Icons]
