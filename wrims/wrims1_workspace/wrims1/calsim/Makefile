@@ -10,8 +10,8 @@ JAVADOC = ${JAVA_HOME}
 JAVADOC_OPT= -classpath ..\${CPATH_SEP}${CLASSPATH_DEF} -d docs -version -author
 
 complete:
-	(cp -u ../hec_dlls/*.dll  bin/)
-	(cp -u libs/* lib/)
+#	(cp -u ../hec_dlls/*.dll  bin/)
+#	(cp -u libs/* lib/)
 	cd wreslcoder$(PATH_SEP)wresl $(CMD_SEP) $(MAKE) all
 	cd wreslcoder $(CMD_SEP) $(MAKE) all
 	cd app $(CMD_SEP) $(MAKE) all
@@ -64,15 +64,14 @@ jar:
 	(cd help; rm -rf calsim-help.jar; $(JAR) -cf calsim-help.jar *; cp calsim-help.jar ../lib;)
 
 pack:
-
-	(cp -u ../hec_dlls/*.dll  bin/)
-	(cp -u libs/* lib/)
-	(cp -u svgs/* svg/)
-	rm -rf calsim.zip
-	cd ${CALSIM_HOME}/installer; $(MAKE) installer
+#	(cp -u ../hec_dlls/*.dll  bin/)
+#	(cp -u libs/* lib/)
+#	(cp -u svgs/* svg/)
+#	rm -rf calsim.zip
+#	cd ${CALSIM_HOME}/installer; $(MAKE) installer
 
 fullpack: pack
-	zip -r calsim.zip jre
+#	zip -r calsim.zip jre
 
 top-clean:
 	cd gui $(CMD_SEP) $(MAKE) clean
