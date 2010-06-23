@@ -21,8 +21,8 @@ CompressionThreads=auto
 SolidCompression=no
 ChangesEnvironment=yes
 UninstallFilesDir={app}\bin\uninstall
-;UninstallLogMode=new
-UninstallLogMode=append
+UninstallLogMode=new
+;UninstallLogMode=append
 InfoBeforeFile=".\infoFile.rtf"
 OutputDir="."
 AlwaysRestart = no
@@ -84,7 +84,8 @@ begin
   
   template :=           '@echo off'
              + #13#10 + 'set path={app}\bin;%path%'
-             + #13#10 + 'start {app}\jre\bin\java -Xmx512m -Dcalsim.home={app} -cp'
+             + #13#10
+             + #13#10 + 'start {app}\jre\bin\java -Xmx512m -Dcalsim.home={app} -cp '
              +          '"'
              +          '{app}\lib\calsim.jar;'
              +          '{app}\lib\vista.jar;'
