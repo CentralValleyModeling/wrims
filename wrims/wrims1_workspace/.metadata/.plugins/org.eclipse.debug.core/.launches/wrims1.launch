@@ -13,5 +13,5 @@
 </mapAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="calsim.gui.CalsimGui"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="wrims1"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-mx172m"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx512m"/>
 </launchConfiguration>
