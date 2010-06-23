@@ -70,6 +70,10 @@ Name:         "{app}\WRIMS v1.3.3 beta (XA13)";     Filename: "{app}\bin\WRIMS.b
 Name: "{userdesktop}\WRIMS v1.3.3 beta (XA13)";     Filename: "{app}\bin\WRIMS.bat";         Tasks: desktopicon
 Name:       "{group}\Uninstall";                    Filename: "{uninstallexe}"
 
+[UninstallDelete]
+
+Type: files; Name: "{app}\bin\WRIMS.bat"
+
 [code]
 
 procedure CurStepChanged(CurStep: TSetupStep);
