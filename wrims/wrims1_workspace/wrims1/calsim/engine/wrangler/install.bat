@@ -1,2 +1,2 @@
-copy wrangler.dll ..\..\bin
-copy wrangler.lib ..\..\lib
+copy /Y wrangler.dll ..\..\bin\
+copy /Y wrangler.lib ..\..\lib\
