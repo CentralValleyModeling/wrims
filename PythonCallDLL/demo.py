@@ -11,7 +11,8 @@ class PyExample(Structure):
 PyDoubleArray = (c_double * 10)()
 
                  
-mydll = windll.LoadLibrary("project//Debug//pycallfortrandll.dll")
+mydll = windll.LoadLibrary("D://cvwrsm//PythonCallDLL//project//Debug//PyCallFortranDll.dll")
+#mydll = windll.LoadLibrary("D://cvwrsm//PythonCallDLL//project//x64//Debug//PyCallFortranDll.dll")
 
 PyE = PyExample()
 PyE.a = 2
@@ -24,12 +25,12 @@ for i in range(0,10):
 
 mydll.DEMOFORTRAN(byref(PyE),byref(PyDoubleArray))
 
-print "============================================="
-print "In Python......\n"
-print "a, b, c \n"
-print PyE.a
-print PyE.b
-print ">" + PyE.c + "<"
-print "Array"
+print ("=============================================")
+print ("In Python......\n")
+print ("a, b, c \n")
+print (PyE.a)
+print (PyE.b)
+print (">" + PyE.c + "<")
+print ("Array")
 for i in range(0,10):
-    print PyDoubleArray[i]
+    print (PyDoubleArray[i])
