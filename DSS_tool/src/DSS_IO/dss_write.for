@@ -1,4 +1,4 @@
-      subroutine dss_write(CDATE, CTIME, nvals_dss, values_dss)
+      subroutine dss_write(date_begin, time_begin, nvals_to_read, values_dss)
 
 c-----Write out a block of data to DSS
       !use io_units
@@ -25,9 +25,9 @@ c-----Write out a block of data to DSS
 !==================================================
 ! test Kevin
       integer
-     &     nvals_dss
+     &     nvals_to_read
       real*4 values_dss(90000) ! data values
-      character CDATE*10, CTIME*10
+      character date_begin*10, time_begin*10
       character*80 :: pathnames_dss
       character*130,dimension(1)::outfilenames_dss = ' '
       integer ifltab_out_dss(1200,1)           ! DSS table for each input file
@@ -64,7 +64,7 @@ c--------preset for a very large .dss file
 
       call zsrts(ifltab_out_dss(1,1),
      &     pathnames_dss,
-     &     cdate , ctime, nvals_dss, values_dss, cunits,
+     &     date_begin , time_begin, nvals_to_read, values_dss, cunits,
      &     per_type, 0, istat)
 
 

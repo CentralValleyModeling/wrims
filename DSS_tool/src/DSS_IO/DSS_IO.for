@@ -1,14 +1,15 @@
       PROGRAM DSS_IO
       
       !use MatData
+      use dss_utility
 
       IMPLICIT NONE
 
 ! test Kevin
-      integer*4 nvals_dss
+      integer*4 nvals_to_read
       real*4    values_dss(9000) ! data values
-      character CDATE*10, CTIME*10
-      character*20 Ap,Bp,Cp,Ep,Fp
+      character date_begin*10, time_begin*10
+      character*32 Ap,Bp,Cp,Ep,Fp
       
       character*130,dimension(1) :: infilenames_dss
       character*80 :: pathnames_dss, file_out
@@ -34,33 +35,34 @@
          read(1, *)
          read(1, *) Ap,Bp,Cp,Ep,Fp
          read(1, *)
-         read(1, *) cdate, ctime
+         read(1, *) date_begin, time_begin
          read(1, *)
-         read(1, *) nvals_dss
+         read(1, *) nvals_to_read
          read(1, *) 
          read(1, *) file_out
          
          open(unit = 2, file = file_out)  
                                   
-         pathnames_dss = "/"//trim(Ap)//"/"//trim(Bp)//"/"//
-     &                     trim(Cp)//"//"//trim(Ep)//"/"//trim(Fp)//"/"
+
 
  
        
 
           
-       call dss_read(istat, cdate, CTIME, nvals_dss
-     &                ,values_dss,infilenames_dss,pathnames_dss)  
+       call dss_read(values_dss,                        
+     &                infilenames_dss, Ap,Bp,Cp,Ep,Fp,   
+     &                date_begin, time_begin, nvals_to_read)
+
        
      
-       !call matwrite(trim(file_out)//".mat",trim(file_out),values_dss(1:nvals_dss),'w') 
+       !call matwrite(trim(file_out)//".mat",trim(file_out),values_dss(1:nvals_to_read),'w') 
        
-       write(2,"(f8.4)") values_dss(1:nvals_dss)
+       write(2,"(f8.4)") values_dss(1:nvals_to_read)
        
+       write(*,"(f8.4)") values_dss(1:nvals_to_read)
        
-       
-       call dss_write(CDATE, CTIME, nvals_dss, values_dss)
+       call dss_write(date_begin, time_begin, nvals_to_read, values_dss)
 
-
+       pause
       END
 
