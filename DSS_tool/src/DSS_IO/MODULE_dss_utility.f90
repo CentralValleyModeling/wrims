@@ -20,6 +20,7 @@ module dss_utility
 
 
   interface dss_read
+     !module procedure dss_read_hourly_specify_endtime_ 
      module procedure dss_read_hourly_specify_nvals_ 
 
   end interface

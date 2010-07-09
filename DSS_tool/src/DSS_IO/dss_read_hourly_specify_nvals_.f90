@@ -47,7 +47,8 @@ subroutine dss_read_hourly_specify_nvals_                         &
   
   integer, dimension(600) :: ifltab_in_dss           ! DSS table for each input file
   integer :: IYR, IMON, IDAY, IERR
-
+  integer :: nloop 
+  
   character(80)             :: pathnames_dss 
 
   pathnames_dss = "/"//trim(Ap)//"/"//trim(Bp)//"/"//trim(Cp)//"//"//trim(Ep)//"/"//trim(Fp)//"/"  
@@ -83,38 +84,38 @@ subroutine dss_read_hourly_specify_nvals_                         &
        
 
 
-    if (nvals_to_read < READS_PER_LOOP) then
-             
-        call JULDAT( JULE, 4, normaldate, dummy_val) 
-          
-        begin_ind = 1
-        end_ind   = nvals_to_read
-         
-        istat = -1
-        number_data_retrive = nvals_to_read
-        
-        call zrrtsx(ifltab_in_dss,pathnames_dss,                                 &
-                    normaldate, time_begin, number_data_retrive,                 &
-                    values_k(begin_ind:end_ind), data_flags(begin_ind:end_ind),  & 
-                    lflags, lfread, &
-                    cunits, per_type, headu, &
-                    kheadu, nheadu, iofset, icomp, istat)
-        if (istat > 0) then
-          write(*,*) "zrrtsx error, istat = ", istat
-          pause
-          call exit()
-        end if
+!    if (nvals_to_read < READS_PER_LOOP) then
+!             
+!        call JULDAT( JULE, 4, normaldate, dummy_val) 
+!          
+!        begin_ind = 1
+!        end_ind   = nvals_to_read
+!         
+!        istat = -1
+!        number_data_retrive = nvals_to_read
+!        
+!        call zrrtsx(ifltab_in_dss,pathnames_dss,                                 &
+!                    normaldate, time_begin, number_data_retrive,                 &
+!                    values_k(begin_ind:end_ind), data_flags(begin_ind:end_ind),  & 
+!                    lflags, lfread, &
+!                    cunits, per_type, headu, &
+!                    kheadu, nheadu, iofset, icomp, istat)
+!        if (istat > 0) then
+!          write(*,*) "zrrtsx error, istat = ", istat
+!          pause
+!          call exit()
+!        end if
           
 
 
-    else
-    
-      do i_count =1, nvals_to_read/READS_PER_LOOP
+    !else
+      nloop = ceiling(real(nvals_to_read)/READS_PER_LOOP)
+      do i_count =1, nloop
          
         call JULDAT( JULE, 4, normaldate, dummy_val) 
           
         begin_ind = 1+(i_count-1)*reads_per_loop
-        end_ind   = i_count*READS_PER_LOOP
+        end_ind   = min(i_count*READS_PER_LOOP,nvals_to_read) 
                  
          
         istat = -1
@@ -136,7 +137,7 @@ subroutine dss_read_hourly_specify_nvals_                         &
        
       enddo
     
-    end if
+    !end if
     
     continue
 

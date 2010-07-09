@@ -13,7 +13,7 @@
       
       character*130,dimension(1) :: infilenames_dss
       character*80 :: pathnames_dss, file_out
-      
+      integer  :: ii
 
 
       integer*4 istat
@@ -59,7 +59,9 @@
        
        write(2,"(f8.4)") values_dss(1:nvals_to_read)
        
-       write(*,"(f8.4)") values_dss(1:nvals_to_read)
+       do ii = 1, nvals_to_read
+        write(*,"(i,f8.4)") ii,values_dss(ii)
+       end do
        
        call dss_write(date_begin, time_begin, nvals_to_read, values_dss)
 
