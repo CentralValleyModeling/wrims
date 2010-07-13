@@ -158,7 +158,7 @@ contains
        call stopWithError()
     end if
     
-    if(debug) WRITE(message_unit,100) TRIM(path)
+   
   END subroutine verifypath
 
 
@@ -172,12 +172,14 @@ contains
     CHARACTER(LEN=*),INTENT(IN)    :: path
     CHARACTER(LEN=80)              :: cpath
 
+100 FORMAT('Pathname: ',a,a,a)
     open(message_unit,FILE='wranglerDSS.log',STATUS='UNKNOWN',ACTION='DENYWRITE')
     WRITE(message_unit,*) 'Log Open.'
     call zset('MUNI','',message_unit)
 !    if (.not.debug) call zset('MLEVEL','',0)
     cpath = ADJUSTL(path)
     call verifypath(cpath)
+     if(debug) WRITE(message_unit,100) TRIM(cpath)
     ! Now, find the model time step and start date from the pathname
     npath = len_trim(cpath)
     call zufpn(ca,na,cb,nb,cc,nc,cd,nd,ce,ne,cf,nf,cpath,npath,istat)

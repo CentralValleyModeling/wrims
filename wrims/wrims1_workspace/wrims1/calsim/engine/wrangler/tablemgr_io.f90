@@ -184,7 +184,7 @@ contains
     CHARACTER(LEN=255) :: commonfile  !shengjun revised
     CHARACTER(LEN=KIWI):: tn_from_file
 100 FORMAT(a)
-101 FORMAT(a,'/',a,'.table')
+101 FORMAT(a,'\',a,'.table')
 102 FORMAT("Table name disagreement",a,"File: ",a,", first line: ",a)
     fixed_tablename = tablename        
     call deNullify(fixed_tablename)    
