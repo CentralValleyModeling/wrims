@@ -45,7 +45,7 @@ public class CalsimBuilder extends InstallArchiveWriter
        */
 //CB      setDefaultDirectory("[userDir]/calsim"); //CB - NOT WORKING UNDER Java 1.5.0
 //      setDefaultDirectory(System.getProperty("user.dir") + "/calsim");  //CB - tried, not C: or R:, but a development directory
-      setDefaultDirectory("c:/calsim_1.3.3beta_xa13"); //CB
+      setDefaultDirectory("c:/calsim_1.3.4beta_xa16"); //CB
 
       /**
        * Use the supplied directories for the components, if supplied.

@@ -1,14 +1,14 @@
 [Setup]
 
-AppName              =WRIMS v1.3.3 beta (XA13)
-DefaultGroupName     =WRIMS v1.3.3 beta (XA13)
-AppVerName           =WRIMS v1.3.3 beta (XA13)
-UninstallDisplayName =WRIMS v1.3.3 beta (XA13)
-AppId                =WRIMS v1.3.3 beta (XA13)
+AppName              =WRIMS v1.3.4 beta (XA16)
+DefaultGroupName     =WRIMS v1.3.4 beta (XA16)
+AppVerName           =WRIMS v1.3.4 beta (XA16)
+UninstallDisplayName =WRIMS v1.3.4 beta (XA16)
+AppId                =WRIMS v1.3.4 beta (XA16)
 
-OutputBaseFilename   =WRIMS_v1.3.3_beta_(XA13)
+OutputBaseFilename   =WRIMS_v1.3.4_beta_(XA16)
 
-DefaultDirName    =c:\WRIMS_v1.3.3_beta_XA13
+DefaultDirName    =c:\WRIMS_v1.3.4_beta_XA16
 
 AppPublisher=CA DWR
 AppPublisherURL=http://baydeltaoffice.water.ca.gov/modeling/hydrology/CalSim/index.cfm
@@ -64,10 +64,10 @@ Source: "..\license\*";    Excludes: ".svn";            Destdir: "{app}\";      
 
 [Icons]
 
-Name:       "{group}\WRIMS v1.3.3 beta (XA13)";     Filename: "{app}\"
-Name:       "{group}\Run WRIMS v1.3.3 beta (XA13)"; Filename: "{app}\bin\WRIMS.bat"
-Name:         "{app}\WRIMS v1.3.3 beta (XA13)";     Filename: "{app}\bin\WRIMS.bat"
-Name: "{userdesktop}\WRIMS v1.3.3 beta (XA13)";     Filename: "{app}\bin\WRIMS.bat";         Tasks: desktopicon
+Name:       "{group}\WRIMS v1.3.4 beta (XA16)";     Filename: "{app}\"
+Name:       "{group}\Run WRIMS v1.3.4 beta (XA16)"; Filename: "{app}\bin\WRIMS.bat"
+Name:         "{app}\WRIMS v1.3.4 beta (XA16)";     Filename: "{app}\bin\WRIMS.bat"
+Name: "{userdesktop}\WRIMS v1.3.4 beta (XA16)";     Filename: "{app}\bin\WRIMS.bat";         Tasks: desktopicon
 Name:       "{group}\Uninstall";                    Filename: "{uninstallexe}"
 
 [UninstallDelete]
