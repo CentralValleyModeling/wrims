@@ -247,7 +247,7 @@ contains
 
     tablename=uc(tablename)
     return
-500 WRITE(MSG,103) filename,IS
+500 WRITE(MSG,*) "Can not open file: ", TRIM(filename)
     call stopWithError
   END function openAndReadName
 
