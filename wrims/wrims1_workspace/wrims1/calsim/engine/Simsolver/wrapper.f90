@@ -106,11 +106,15 @@ SUBROUTINE WRAPPER (date, code, dss_init, reportsv, runDirectory)
   integer :: auto_solver_report = 0		!added by DE for automation of XA log when solver error such as infeas occurs
   character(LEN=8) :: report_cycle
 
+  real ExeStartTime, ExeFinishTime
+
   ! DSS cache flush interval and size
   !*******************INITIALIZATION WILL NOW BE DEPENDENT ON TIME STEP******************
   INTEGER :: flush_interval
   INTEGER :: cache_back, cache_forward
   !**************************************************************************
+  
+  call cpu_time(ExeStartTime)
   ctime = 0.0
   stime = 0.0
   setuptime = 0.0
@@ -656,9 +660,12 @@ SUBROUTINE WRAPPER (date, code, dss_init, reportsv, runDirectory)
   DEALLOCATE( solution)
   if (showDialogWindow) call dialogRemove()
 
+747 FORMAT(a, f7.1, a)
+
   ! final message indicating normal completion - solution errors terminate before here
   IF (stats(2)==1 .and. (stats(1)==1 .or. stats(1)==2) ) THEN
-     msg='NORMAL COMPLETION'
+     call cpu_time(ExeFinishTime)
+     write(msg,747) 'Computation Time: ', ExeFinishTime-ExeStartTime, ' Seconds'
      IF (chareq(TRIM(genWsiDi),"FALSE").and.chareq(TRIM(posAnalysis),"FALSE"))  CALL StopWithFinal(msg)
   ELSE
      CALL XA_ERRORHANDLER(stats(1),stats(2),date,icycle,Number_of_cycles,studyType,errorLog)
