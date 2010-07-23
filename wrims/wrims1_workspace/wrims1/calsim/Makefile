@@ -20,7 +20,7 @@ complete:
 #        cd .$(PATH_SEP)gui $(CMD_SEP) $(MAKE) all  #CB does not work - cygwin bug
 	cd gym $(CMD_SEP) $(MAKE) all
 	cd schematic $(CMD_SEP) $(MAKE) all
-	cd engine $(CMD_SEP) make --unix release
+#	cd engine $(CMD_SEP) make --unix release
 	cd msw $(CMD_SEP) $(MAKE) all
 #	cd ../wrims/dss $(CMD_SEP) $(MAKE) all          #CB not needed
 #	cd ../wrims/schematic $(CMD_SEP) $(MAKE) all    #CB for building WRIMS Schematic as part of - now it is standalone
