@@ -70,7 +70,7 @@ public class GuiUtils{
     Properties props = new Properties();
     String version = "1.0";
     try {
-      props.load(VistaUtils.getResourceAsStream("/calsim/version"));
+      props.load(VistaUtils.getResourceAsStream("/calsim/version.txt"));
       version = props.getProperty("version");
     }catch(Exception e){
     }
