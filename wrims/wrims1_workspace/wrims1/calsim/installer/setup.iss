@@ -1,14 +1,6 @@
+#include "setup_include.txt"
+
 [Setup]
-
-AppName              =WRIMS v1.3.4 beta (XA16)
-DefaultGroupName     =WRIMS v1.3.4 beta (XA16)
-AppVerName           =WRIMS v1.3.4 beta (XA16)
-UninstallDisplayName =WRIMS v1.3.4 beta (XA16)
-AppId                =WRIMS v1.3.4 beta (XA16)
-
-OutputBaseFilename   =WRIMS_v1.3.4_beta_(XA16)
-
-DefaultDirName    =c:\WRIMS_v1.3.4_beta_XA16
 
 AppPublisher=CA DWR
 AppPublisherURL=http://baydeltaoffice.water.ca.gov/modeling/hydrology/CalSim/index.cfm
@@ -56,18 +48,14 @@ Name: "main"; Description: "Main Files"; Types: full compact custom;
 
 [Files]
 
-Source: "D:\Java\jre_x86\jre6\*";        Excludes: ".svn";            DestDir: "{app}\jre\";       Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
 Source: "..\bin\*";        Excludes: ".svn, xa*.dll";   DestDir: "{app}\bin\";       Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
 Source: "..\lib\*";        Excludes: ".svn";            DestDir: "{app}\lib\";       Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
 Source: "..\svg\*";        Excludes: ".svn";            DestDir: "{app}\svg\";       Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
 Source: "..\license\*";    Excludes: ".svn";            Destdir: "{app}\";           Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
 
+
 [Icons]
 
-Name:       "{group}\WRIMS v1.3.4 beta (XA16)";     Filename: "{app}\"
-Name:       "{group}\Run WRIMS v1.3.4 beta (XA16)"; Filename: "{app}\bin\WRIMS.bat"
-Name:         "{app}\WRIMS v1.3.4 beta (XA16)";     Filename: "{app}\bin\WRIMS.bat"
-Name: "{userdesktop}\WRIMS v1.3.4 beta (XA16)";     Filename: "{app}\bin\WRIMS.bat";         Tasks: desktopicon
 Name:       "{group}\Uninstall";                    Filename: "{uninstallexe}"
 
 [UninstallDelete]
