@@ -1,14 +1,19 @@
 import os,subprocess
+import version_generate
+
+#cwd = os.path.split( __file__)[0];
+calsim_path    = os.path.split( __file__)[0]+'\\'
+
 
 dirs = ['wreslcoder','wreslcoder\\wresl','app','gui','debug','gym','schematic','msw'] 
 
-batchFile_clean = open('pythonwrite_clean.bat','w')
-batchFile_javac = open('pythonwrite_javac.bat','w')
-batchFile_copy = open('pythonwrite_copy.bat','w')
+batchFile_clean = open(calsim_path+'pythonwrite_clean.bat','w')
+batchFile_javac = open(calsim_path+'pythonwrite_javac.bat','w')
+batchFile_copy = open(calsim_path+'pythonwrite_copy.bat','w')
 
 
-cwd = os.getcwd();
-print(cwd)
+
+#print(cwd)
 #cwd = cwd+"\\calsim";
 
 #javac = r'D:\Java\jdk_x86\jdk1.6.0_21\bin\javac -J"-mx44m" -g -d'
@@ -41,7 +46,7 @@ def delete_folder(target):
 
 
 def writeBatch_javac(dir):
-    newd = cwd+'\\'+dir;
+    newd = calsim_path+dir;
     print(newd);
     files = newd+'\\'+'*.java'
     #os.chdir(newd)
@@ -70,7 +75,7 @@ def writeBatch_jar(target, source):
 
     batchFile_copy.write(jar+' -cf '+target+' '+source+'\n\n')
 
-
+		
 #for dir in dirs:
 #    clean(dir+'\\','*.class')
 #print '========================'
@@ -111,6 +116,22 @@ writeBatch_copy(targetpath+'gui\\',               'gui\\*.gif')
 writeBatch_jar(targetLibPath+'calsim-help.jar', 'help\\*')
 
 writeBatch_jar(targetLibPath+'calsim.jar', 'classes\\calsim')
+
+batchFile_clean.close()
+batchFile_javac.close()
+batchFile_copy.close()
+
+
+subprocess.call(['pythonwrite_clean.bat' ])
+subprocess.call(['pythonwrite_clean.bat' ])
+os.chdir(calsim_path+'engine')
+subprocess.call(['set_path_build.bat' ])
+os.chdir(calsim_path)
+subprocess.call(['pythonwrite_javac.bat' ])
+subprocess.call(['pythonwrite_copy.bat' ])
+
+
+
 
 #compile('gui')
 

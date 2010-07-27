@@ -1,4 +1,4 @@
-#include "setup_include.txt"
+#include "..\setup_include.iss"
 
 [Setup]
 
