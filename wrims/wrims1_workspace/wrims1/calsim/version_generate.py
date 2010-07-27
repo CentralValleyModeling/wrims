@@ -4,8 +4,8 @@ import os
 
 print __file__
 
-Version_ = 'WRIMS v1.3.4 beta (XA17)'
-Version_Nospace_ = 'WRIMS_v1.3.4_beta_(XA17)'
+Version_ = 'WRIMS v1.3.4 beta (XA16)'
+Version_Nospace_ = 'WRIMS_v1.3.4_beta_(XA16)'
 
 #VersionTemplate     = "      character*16 :: dsm2_version = '8.0.4', svn_build = '@{Version_SVN}' " 
 VersionTemplate     = "version=@{Version} SVN:@{Version_SVN} " 
@@ -16,7 +16,7 @@ setupScriptTemplate =   '[Setup] \n' \
 						'AppVerName           =WRIMS @{Version} \n' \
 						'UninstallDisplayName =WRIMS @{Version} \n' \
 						'AppId                =WRIMS @{Version} \n' \
-						'OutputBaseFilename   =WRIMS_@{Version_Nospace} \n' \
+						'OutputBaseFilename   =WRIMS_@{Version_Nospace}_SVN_@{Version_SVN} \n' \
 						'DefaultDirName   =c:\\@{Version_Nospace}    \n' \
 						'[Files] \n' \
 						'Source: "D:\\Java\\jre_x86\\jre6\\*"; Excludes: ".svn"; DestDir: "{app}\\jre\\"; Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main \n' \
@@ -43,7 +43,8 @@ try:
 	(dummy, SVNVersion_SourceCode) = os.popen4("svnversion ..//calsim ")
 	SVNVersion_SourceCode = SVNVersion_SourceCode.readlines()[0]
 	SVNVersion_SourceCode = SVNVersion_SourceCode.strip()
-
+	SVNVersion_SourceCode = SVNVersion_SourceCode.replace(":", "-")
+	
 	print ' SVN version of wrims:        '+ SVNVersion_SourceCode
 	VersionTxt = VersionTemplate.replace("@{Version_SVN}", SVNVersion_SourceCode)
 	VersionWrapperTxt = VersionWrapperTemplate.replace("@{Version_SVN}", SVNVersion_SourceCode)
