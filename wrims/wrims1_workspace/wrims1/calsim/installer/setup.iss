@@ -78,7 +78,7 @@ begin
              + #13#10
 			 + #13#10 + 'set path={app}\bin;%path%'
              + #13#10
-			 + #13#10 + 'cd {app}\bin'
+			 + #13#10 + 'cd /d {app}\bin'
 			 + #13#10
              + #13#10 + 'start {app}\jre\bin\java -Xmx512m -Dcalsim.home={app} -cp '
              +          '"'
