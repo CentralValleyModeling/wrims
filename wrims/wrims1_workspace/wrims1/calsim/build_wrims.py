@@ -112,10 +112,14 @@ writeBatch_copy(targetpath+'app\\',               'app\\*.props')
 writeBatch_copy(targetpath+'schematic\\',         'schematic\\*.gif')
 writeBatch_copy(targetpath+'gui\\',               'gui\\*.gif')
 
+batchFile_copy.write('cd help \n')
+writeBatch_jar(targetLibPath+'calsim-help.jar', '*')
+batchFile_copy.write('cd .. \n')
 
-writeBatch_jar(targetLibPath+'calsim-help.jar', 'help\\*')
+batchFile_copy.write('cd classes \n')
+writeBatch_jar(targetLibPath+'calsim.jar', 'calsim')
+batchFile_copy.write('cd .. \n')
 
-writeBatch_jar(targetLibPath+'calsim.jar', 'classes\\calsim')
 
 batchFile_clean.close()
 batchFile_javac.close()

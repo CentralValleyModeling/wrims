@@ -5,7 +5,7 @@ import os
 print __file__
 
 Version_ = 'WRIMS v1.3.4 beta (XA16)'
-Version_Nospace_ = 'WRIMS_v1.3.4_beta_(XA16)'
+Version_Nospace_ = 'WRIMS_v1.3.4_beta_XA16'
 
 #VersionTemplate     = "      character*16 :: dsm2_version = '8.0.4', svn_build = '@{Version_SVN}' " 
 VersionTemplate     = "version=@{Version} SVN:@{Version_SVN} " 
