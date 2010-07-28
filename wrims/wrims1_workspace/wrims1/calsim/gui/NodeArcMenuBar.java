@@ -185,14 +185,11 @@ public class NodeArcMenuBar
   }
 
   /**
-	 * create Node menu
+	 * create Tool menu
 	 */
 	JMenu createToolsMenu() {
 		JMenu menu = new JMenu("Tools     ");
-		_nodetextfield = new JTextField("6", 10); // get a default number from
-													// app ??
-		_nodetextfield.setRequestFocusEnabled(true);
-		_nodetextfield.requestFocus(); // not works, needs to be fixed ??
+		
 		JMenuItem schematicitem = new JMenuItem("Schematic Window");
 		schematicitem.addActionListener(new GuiTaskListener("Starting schematic...") {
 			public void doWork() {
