@@ -386,7 +386,7 @@ public class WreslMaker {
 		else{
 			cmd = cmdExec;
 		}
-		//if(DebugSetting.DEBUG_FILEINPUT){
+		if(DebugSetting.DEBUG_FILEINPUT){
 		try {
 			FileWriter compileBatchFile = new FileWriter("compile.bat",true);
 			BufferedWriter compileWriter = new BufferedWriter(compileBatchFile);
@@ -396,7 +396,7 @@ public class WreslMaker {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//}
+		}
 
 		
 		try {
