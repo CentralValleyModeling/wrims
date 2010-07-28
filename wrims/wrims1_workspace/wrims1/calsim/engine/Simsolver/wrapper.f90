@@ -63,7 +63,7 @@ SUBROUTINE WRAPPER (date, code, dss_init, reportsv, runDirectory)
 
   !CHARACTER(LEN=32), parameter     :: version_identifier = '1.3.4 Beta (XA16)' 
   include '..\..\version_wrapper.inc'
-  CHARACTER(LEN=75), parameter    :: copyright = 'This program is Copyright (C) 1998 State of California, all rights reserved'
+  CHARACTER(LEN=75), parameter    :: copyright = 'This program is Copyright (C) 1998, 2010 State of California, all rights reserved'
   TYPE(rcc),DIMENSION(:), ALLOCATABLE :: problem
   TYPE(answer),DIMENSION(:), ALLOCATABLE:: solution
   INTEGER                          :: i,j
