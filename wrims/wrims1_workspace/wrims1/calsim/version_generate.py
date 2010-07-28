@@ -11,12 +11,12 @@ Version_Nospace_ = 'WRIMS_v1.3.4_beta_XA16'
 VersionTemplate     = "version=@{Version} SVN:@{Version_SVN} " 
 VersionWrapperTemplate = "  CHARACTER(LEN=36), parameter     :: version_identifier = '@{Version} SVN:@{Version_SVN}'"
 setupScriptTemplate =   '[Setup] \n' \
-					    'AppName              =WRIMS @{Version} \n' \
-						'DefaultGroupName     =WRIMS @{Version} \n' \
-						'AppVerName           =WRIMS @{Version} \n' \
-						'UninstallDisplayName =WRIMS @{Version} \n' \
-						'AppId                =WRIMS @{Version} \n' \
-						'OutputBaseFilename   =WRIMS_@{Version_Nospace}_SVN_@{Version_SVN} \n' \
+					    'AppName              =@{Version} \n' \
+						'DefaultGroupName     =@{Version} \n' \
+						'AppVerName           =@{Version} \n' \
+						'UninstallDisplayName =@{Version} \n' \
+						'AppId                =@{Version} \n' \
+						'OutputBaseFilename   =@{Version_Nospace}_SVN_@{Version_SVN} \n' \
 						'DefaultDirName   =c:\\@{Version_Nospace}    \n' \
 						'[Files] \n' \
 						'Source: "D:\\Java\\jre_x86\\jre6\\*"; Excludes: ".svn"; DestDir: "{app}\\jre\\"; Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main \n' \
