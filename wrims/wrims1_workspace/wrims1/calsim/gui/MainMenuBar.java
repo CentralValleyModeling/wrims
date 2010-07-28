@@ -1427,7 +1427,6 @@ public class MainMenuBar
     ImageIcon dwrIcon =
       new ImageIcon(VistaUtils.getImageAsBytes("/calsim/gui/DWR_Logo-1.0in.gif"));
     JOptionPane.showMessageDialog(_mainPanel,
-				  GuiUtils.getProgramName() + " " +
 				  GuiUtils.getVersionName() + "\n"
 				  + GuiUtils.getLocaleDescription() + "\n"
 	              //+ "Authors: Armin Munevar, Nicky Sandhu, Yan-Ping Zuo" + "\n"
