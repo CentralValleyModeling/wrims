@@ -134,8 +134,8 @@ os.chdir(calsim_path)
 subprocess.call(['pythonwrite_javac.bat' ])
 subprocess.call(['pythonwrite_copy.bat' ])
 
-
-
+os.chdir(calsim_path+'installer')
+subprocess.call(['compile_package.bat' ])
 
 #compile('gui')
 
