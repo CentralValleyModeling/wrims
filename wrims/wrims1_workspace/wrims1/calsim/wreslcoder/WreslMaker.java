@@ -302,7 +302,10 @@ public class WreslMaker {
 					+ " -mod " + tempFilePath + ";" + sourcePath
 					+ " -win -trace -ml msvc -stack 1000000 -wisk -nomap"
 					+ " -LIBpath " + sourcePath
-					+ " -lib wrangler,simsolver ";
+					+ " -lib wrangler simsolver "
+                    + " -implib xav16.dll ";
+	      //if ()
+	      
 	      if (doCommand(makerString,"",true) > 0) {
 					new File(exeFileName).delete();
 					return false;
@@ -386,9 +389,10 @@ public class WreslMaker {
 		else{
 			cmd = cmdExec;
 		}
-		if(DebugSetting.DEBUG_FILEINPUT){
+		//if(DebugSetting.DEBUG_FILEINPUT){
+		if((DebugSetting.getDebugOption().indexOf("compile"))>0){
 		try {
-			FileWriter compileBatchFile = new FileWriter("compile.bat",true);
+			FileWriter compileBatchFile = new FileWriter("compile.log",true);
 			BufferedWriter compileWriter = new BufferedWriter(compileBatchFile);
 			compileWriter.write(cmd+"\n");
 			compileWriter.close();
