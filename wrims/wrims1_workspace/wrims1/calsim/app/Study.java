@@ -41,6 +41,7 @@ import java.io.*;
 import com.sun.xml.tree.XmlDocument;
 //import com.sun.xml.tree.TreeWalker;
 import org.w3c.dom.Element;
+import calsim.debug.DebugSetting;
 
 /**
 	* Contains all necessary properties required to run a study
@@ -475,6 +476,8 @@ public class Study {
     setSvFile(se.getAttribute("svfile"));
     setDvFile(se.getAttribute("dvfile"));
     setSvDvFileAPartOption(se.getAttribute("svdvfileapart"));
+    DebugSetting.setDebugOption(se.getAttribute("debug")); //debug setting
+    
     if (se.getAttribute("svfilefpart").equals("")){ 
     	_newStudyObject = false;
     	setSvFileFPart(se.getAttribute("name"));
