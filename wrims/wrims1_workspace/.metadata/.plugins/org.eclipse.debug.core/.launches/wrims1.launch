@@ -7,9 +7,9 @@
 <listEntry value="1"/>
 </listAttribute>
 <mapAttribute key="org.eclipse.debug.core.environmentVariables">
+<mapEntry key="calsim.home" value="D:\cvwrsm\wrims\wrims1_workspace\wrims1\calsim"/>
 <mapEntry key="CALSIM_HOME" value="D:\cvwrsm\wrims\wrims1_workspace\wrims1\calsim"/>
 <mapEntry key="Path" value="D:\cvwrsm\wrims\wrims1_workspace\wrims1\calsim\lib;D:\cvwrsm\wrims\wrims1_workspace\wrims1\calsim\bin;D:\LF9045\Bin;"/>
-<mapEntry key="calsim.home" value="D:\cvwrsm\wrims\wrims1_workspace\wrims1\calsim"/>
 </mapAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="calsim.gui.CalsimGui"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="wrims1"/>
