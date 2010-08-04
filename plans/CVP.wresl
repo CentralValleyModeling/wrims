@@ -1,0 +1,302 @@
+! Defines CVP South of Delta demands.
+! Allocation reductions must follow the reduction priorities shown below:
+!     if shasta critical year, cut Exchange and Refuge to 75%
+!     1. (first cut) AG cut to 75%
+!     2. AG cut to 50%, MI cut to 75%
+!     3. AG cut to 25%
+!     4. AG cut to 0%, MI cut to 75%
+!     5. MI cut to 0%
+!     6. Exchange and Refuge cut to 0%
+!     7. (last cut) Losses cut to 0%
+
+! Ryan Wilbur 8-1-03
+
+! demand allocation cut level
+define cut1 {lower 0 upper 1. kind 'CVP-CUT' units 'PERCENT'}
+define cut2 {lower 0 upper 1. kind 'CVP-CUT' units 'PERCENT'}
+define cut3 {lower 0 upper 1. kind 'CVP-CUT' units 'PERCENT'}
+define cut4 {lower 0 upper 1. kind 'CVP-CUT' units 'PERCENT'}
+define cut5 {lower 0 upper 1. kind 'CVP-CUT' units 'PERCENT'}
+define cut6 {lower 0 upper 1. kind 'CVP-CUT' units 'PERCENT'}
+define cut7 {lower 0 upper 1. kind 'CVP-CUT' units 'PERCENT'}
+
+! max annual demand by type
+define CVP_MAX    {value 3332.}
+define CVP_AG_MAX {value 1841.}
+define CVP_MI_MAX {value  144.}
+define CVP_EX_MAX {value  875.}
+define CVP_RF_MAX {value  288.}
+define CVP_LS_MAX {value  184.}
+
+! annual delivery by type
+define CVP    {lower 0 upper 3332. kind 'CVP-DEL' units 'TAF'}
+define CVP_AG {lower 0 upper 1841. kind 'CVP-DEL' units 'TAF'}
+define CVP_MI {lower 0 upper  144. kind 'CVP-DEL' units 'TAF'}
+define CVP_EX {lower 0 upper  875. kind 'CVP-DEL' units 'TAF'}
+define CVP_RF {lower 0 upper  288. kind 'CVP-DEL' units 'TAF'}
+define CVP_LS {lower 0 upper  184. kind 'CVP-DEL' units 'TAF'}
+
+goal setCVP {CVP = CVP_AG + CVP_MI + CVP_EX + CVP_RF + CVP_LS}
+
+! partition ag and mi into annual sub-levels for tiered cut procedure
+define CVP_AG1 {lower 0 upper 460.25 kind 'CVP-TIER' units 'TAF'}
+define CVP_AG2 {lower 0 upper 460.25 kind 'CVP-TIER' units 'TAF'}
+define CVP_AG3 {lower 0 upper 460.25 kind 'CVP-TIER' units 'TAF'}
+define CVP_AG4 {lower 0 upper 460.25 kind 'CVP-TIER' units 'TAF'}
+				  
+define CVP_MI1 {lower 0 upper  72. kind 'CVP-TIER' units 'TAF'}
+define CVP_MI2 {lower 0 upper  36. kind 'CVP-TIER' units 'TAF'}
+define CVP_MI3 {lower 0 upper  36. kind 'CVP-TIER' units 'TAF'}
+			 		      
+! apply cuts to corresponding sub-level
+goal setCVP_AG1 {CVP_AG1 = 0.25*CVP_AG_MAX*cut4}
+goal setCVP_AG2 {CVP_AG2 = 0.25*CVP_AG_MAX*cut3}
+goal setCVP_AG3 {CVP_AG3 = 0.25*CVP_AG_MAX*cut2}
+goal setCVP_AG4 {CVP_AG4 = 0.25*CVP_AG_MAX*cut1}
+
+goal setCVP_MI1 {CVP_MI1 = 0.50*CVP_MI_MAX*cut5}
+goal setCVP_MI2 {CVP_MI2 = 0.25*CVP_MI_MAX*cut4}
+goal setCVP_MI3 {CVP_MI3 = 0.25*CVP_MI_MAX*cut2}
+
+! limit cut6 to 75% for shasta critical years
+goal setCut6 {lhs cut6 case ShaCrit{condition wyt==5 rhs 0.75 lhs>rhs constrain lhs<rhs penalty 0} 
+                       case other  {condition always rhs 1.0  lhs>rhs constrain lhs<rhs penalty 0}}
+
+goal setCVP_EX {CVP_EX = CVP_EX_MAX*cut6}
+goal setCVP_RF {CVP_RF = CVP_RF_MAX*cut6}
+goal setCVP_LS {CVP_LS = CVP_LS_MAX*cut7}
+
+! monthly deliveries for each type
+define CVP_AG_Jan {std kind 'CVP-DEL-AG' units 'TAF'}
+define CVP_AG_Feb {std kind 'CVP-DEL-AG' units 'TAF'}
+define CVP_AG_Mar {std kind 'CVP-DEL-AG' units 'TAF'}
+define CVP_AG_Apr {std kind 'CVP-DEL-AG' units 'TAF'}
+define CVP_AG_May {std kind 'CVP-DEL-AG' units 'TAF'}
+define CVP_AG_Jun {std kind 'CVP-DEL-AG' units 'TAF'}
+define CVP_AG_Jul {std kind 'CVP-DEL-AG' units 'TAF'}
+define CVP_AG_Aug {std kind 'CVP-DEL-AG' units 'TAF'}
+define CVP_AG_Sep {std kind 'CVP-DEL-AG' units 'TAF'}
+define CVP_AG_Oct {std kind 'CVP-DEL-AG' units 'TAF'}
+define CVP_AG_Nov {std kind 'CVP-DEL-AG' units 'TAF'}
+define CVP_AG_Dec {std kind 'CVP-DEL-AG' units 'TAF'}
+
+define CVP_MI_Jan {std kind 'CVP-DEL-MI' units 'TAF'}
+define CVP_MI_Feb {std kind 'CVP-DEL-MI' units 'TAF'}
+define CVP_MI_Mar {std kind 'CVP-DEL-MI' units 'TAF'}
+define CVP_MI_Apr {std kind 'CVP-DEL-MI' units 'TAF'}
+define CVP_MI_May {std kind 'CVP-DEL-MI' units 'TAF'}
+define CVP_MI_Jun {std kind 'CVP-DEL-MI' units 'TAF'}
+define CVP_MI_Jul {std kind 'CVP-DEL-MI' units 'TAF'}
+define CVP_MI_Aug {std kind 'CVP-DEL-MI' units 'TAF'}
+define CVP_MI_Sep {std kind 'CVP-DEL-MI' units 'TAF'}
+define CVP_MI_Oct {std kind 'CVP-DEL-MI' units 'TAF'}
+define CVP_MI_Nov {std kind 'CVP-DEL-MI' units 'TAF'}
+define CVP_MI_Dec {std kind 'CVP-DEL-MI' units 'TAF'}
+
+define CVP_EX_Jan {std kind 'CVP-DEL-EX' units 'TAF'}
+define CVP_EX_Feb {std kind 'CVP-DEL-EX' units 'TAF'}
+define CVP_EX_Mar {std kind 'CVP-DEL-EX' units 'TAF'}
+define CVP_EX_Apr {std kind 'CVP-DEL-EX' units 'TAF'}
+define CVP_EX_May {std kind 'CVP-DEL-EX' units 'TAF'}
+define CVP_EX_Jun {std kind 'CVP-DEL-EX' units 'TAF'}
+define CVP_EX_Jul {std kind 'CVP-DEL-EX' units 'TAF'}
+define CVP_EX_Aug {std kind 'CVP-DEL-EX' units 'TAF'}
+define CVP_EX_Sep {std kind 'CVP-DEL-EX' units 'TAF'}
+define CVP_EX_Oct {std kind 'CVP-DEL-EX' units 'TAF'}
+define CVP_EX_Nov {std kind 'CVP-DEL-EX' units 'TAF'}
+define CVP_EX_Dec {std kind 'CVP-DEL-EX' units 'TAF'}
+
+define CVP_RF_Jan {std kind 'CVP-DEL-RF' units 'TAF'}
+define CVP_RF_Feb {std kind 'CVP-DEL-RF' units 'TAF'}
+define CVP_RF_Mar {std kind 'CVP-DEL-RF' units 'TAF'}
+define CVP_RF_Apr {std kind 'CVP-DEL-RF' units 'TAF'}
+define CVP_RF_May {std kind 'CVP-DEL-RF' units 'TAF'}
+define CVP_RF_Jun {std kind 'CVP-DEL-RF' units 'TAF'}
+define CVP_RF_Jul {std kind 'CVP-DEL-RF' units 'TAF'}
+define CVP_RF_Aug {std kind 'CVP-DEL-RF' units 'TAF'}
+define CVP_RF_Sep {std kind 'CVP-DEL-RF' units 'TAF'}
+define CVP_RF_Oct {std kind 'CVP-DEL-RF' units 'TAF'}
+define CVP_RF_Nov {std kind 'CVP-DEL-RF' units 'TAF'}
+define CVP_RF_Dec {std kind 'CVP-DEL-RF' units 'TAF'}
+
+define CVP_LS_Jan {std kind 'CVP-DEL-LS' units 'TAF'}
+define CVP_LS_Feb {std kind 'CVP-DEL-LS' units 'TAF'}
+define CVP_LS_Mar {std kind 'CVP-DEL-LS' units 'TAF'}
+define CVP_LS_Apr {std kind 'CVP-DEL-LS' units 'TAF'}
+define CVP_LS_May {std kind 'CVP-DEL-LS' units 'TAF'}
+define CVP_LS_Jun {std kind 'CVP-DEL-LS' units 'TAF'}
+define CVP_LS_Jul {std kind 'CVP-DEL-LS' units 'TAF'}
+define CVP_LS_Aug {std kind 'CVP-DEL-LS' units 'TAF'}
+define CVP_LS_Sep {std kind 'CVP-DEL-LS' units 'TAF'}
+define CVP_LS_Oct {std kind 'CVP-DEL-LS' units 'TAF'}
+define CVP_LS_Nov {std kind 'CVP-DEL-LS' units 'TAF'}
+define CVP_LS_Dec {std kind 'CVP-DEL-LS' units 'TAF'}
+
+! monthly demand pattern for each type
+define CVP_AGDEM_Jan {value 0.05}
+define CVP_AGDEM_Feb {value 0.07}
+define CVP_AGDEM_Mar {value 0.05}
+define CVP_AGDEM_Apr {value 0.07}
+define CVP_AGDEM_May {value 0.10}
+define CVP_AGDEM_Jun {value 0.17}
+define CVP_AGDEM_Jul {value 0.21}
+define CVP_AGDEM_Aug {value 0.15}
+define CVP_AGDEM_Sep {value 0.05}
+define CVP_AGDEM_Oct {value 0.03}
+define CVP_AGDEM_Nov {value 0.02}
+define CVP_AGDEM_Dec {value 0.03}
+
+define CVP_MIDEM_Jan {value 0.05}
+define CVP_MIDEM_Feb {value 0.03}
+define CVP_MIDEM_Mar {value 0.10}
+define CVP_MIDEM_Apr {value 0.08}
+define CVP_MIDEM_May {value 0.08}
+define CVP_MIDEM_Jun {value 0.08}
+define CVP_MIDEM_Jul {value 0.09}
+define CVP_MIDEM_Aug {value 0.10}
+define CVP_MIDEM_Sep {value 0.11}
+define CVP_MIDEM_Oct {value 0.08}
+define CVP_MIDEM_Nov {value 0.10}
+define CVP_MIDEM_Dec {value 0.10}
+
+define CVP_EXDEM_Jan {value 0.01}
+define CVP_EXDEM_Feb {value 0.03}
+define CVP_EXDEM_Mar {value 0.07}
+define CVP_EXDEM_Apr {value 0.08}
+define CVP_EXDEM_May {value 0.11}
+define CVP_EXDEM_Jun {value 0.15}
+define CVP_EXDEM_Jul {value 0.17}
+define CVP_EXDEM_Aug {value 0.17}
+define CVP_EXDEM_Sep {value 0.11}
+define CVP_EXDEM_Oct {value 0.07}
+define CVP_EXDEM_Nov {value 0.02}
+define CVP_EXDEM_Dec {value 0.01}
+
+define CVP_RFDEM_Jan {value 0.02}
+define CVP_RFDEM_Feb {value 0.02}
+define CVP_RFDEM_Mar {value 0.02}
+define CVP_RFDEM_Apr {value 0.05}
+define CVP_RFDEM_May {value 0.09}
+define CVP_RFDEM_Jun {value 0.10}
+define CVP_RFDEM_Jul {value 0.02}
+define CVP_RFDEM_Aug {value 0.04}
+define CVP_RFDEM_Sep {value 0.18}
+define CVP_RFDEM_Oct {value 0.24}
+define CVP_RFDEM_Nov {value 0.15}
+define CVP_RFDEM_Dec {value 0.07}
+
+define CVP_LSDEM_Jan {value 0.04}
+define CVP_LSDEM_Feb {value 0.05}
+define CVP_LSDEM_Mar {value 0.05}
+define CVP_LSDEM_Apr {value 0.08}
+define CVP_LSDEM_May {value 0.11}
+define CVP_LSDEM_Jun {value 0.16}
+define CVP_LSDEM_Jul {value 0.19}
+define CVP_LSDEM_Aug {value 0.16}
+define CVP_LSDEM_Sep {value 0.06}
+define CVP_LSDEM_Oct {value 0.04}
+define CVP_LSDEM_Nov {value 0.03}
+define CVP_LSDEM_Dec {value 0.03}
+
+! set all monthly deliveries
+goal setCVP_AG_Jan {lhs CVP_AG_Jan case a{condition month<=JAN rhs CVP_AGDEM_Jan*CVP_AG1 + CVP_AGDEM_Jan*CVP_AG2 + CVP_AGDEM_Jan*CVP_AG3 + CVP_AGDEM_Jan*CVP_AG4} case b{condition always rhs 0}}
+goal setCVP_AG_Feb {lhs CVP_AG_Feb case a{condition month<=Feb rhs CVP_AGDEM_Feb*CVP_AG1 + CVP_AGDEM_Feb*CVP_AG2 + CVP_AGDEM_Feb*CVP_AG3 + CVP_AGDEM_Feb*CVP_AG4} case b{condition always rhs 0}}
+goal setCVP_AG_Mar {lhs CVP_AG_Mar case a{condition month<=Mar rhs CVP_AGDEM_Mar*CVP_AG1 + CVP_AGDEM_Mar*CVP_AG2 + CVP_AGDEM_Mar*CVP_AG3 + CVP_AGDEM_Mar*CVP_AG4} case b{condition always rhs 0}}
+goal setCVP_AG_Apr {lhs CVP_AG_Apr case a{condition month<=Apr rhs CVP_AGDEM_Apr*CVP_AG1 + CVP_AGDEM_Apr*CVP_AG2 + CVP_AGDEM_Apr*CVP_AG3 + CVP_AGDEM_Apr*CVP_AG4} case b{condition always rhs 0}}
+goal setCVP_AG_May {lhs CVP_AG_May case a{condition month<=May rhs CVP_AGDEM_May*CVP_AG1 + CVP_AGDEM_May*CVP_AG2 + CVP_AGDEM_May*CVP_AG3 + CVP_AGDEM_May*CVP_AG4} case b{condition always rhs 0}}
+goal setCVP_AG_Jun {lhs CVP_AG_Jun case a{condition month<=Jun rhs CVP_AGDEM_Jun*CVP_AG1 + CVP_AGDEM_Jun*CVP_AG2 + CVP_AGDEM_Jun*CVP_AG3 + CVP_AGDEM_Jun*CVP_AG4} case b{condition always rhs 0}}
+goal setCVP_AG_Jul {CVP_AG_Jul = CVP_AGDEM_Jul*CVP_AG1 + CVP_AGDEM_Jul*CVP_AG2 + CVP_AGDEM_Jul*CVP_AG3 + CVP_AGDEM_Jul*CVP_AG4}
+goal setCVP_AG_Aug {CVP_AG_Aug = CVP_AGDEM_Aug*CVP_AG1 + CVP_AGDEM_Aug*CVP_AG2 + CVP_AGDEM_Aug*CVP_AG3 + CVP_AGDEM_Aug*CVP_AG4}
+goal setCVP_AG_Sep {CVP_AG_Sep = CVP_AGDEM_Sep*CVP_AG1 + CVP_AGDEM_Sep*CVP_AG2 + CVP_AGDEM_Sep*CVP_AG3 + CVP_AGDEM_Sep*CVP_AG4}
+goal setCVP_AG_Oct {CVP_AG_Oct = CVP_AGDEM_Oct*CVP_AG1 + CVP_AGDEM_Oct*CVP_AG2 + CVP_AGDEM_Oct*CVP_AG3 + CVP_AGDEM_Oct*CVP_AG4}
+goal setCVP_AG_Nov {CVP_AG_Nov = CVP_AGDEM_Nov*CVP_AG1 + CVP_AGDEM_Nov*CVP_AG2 + CVP_AGDEM_Nov*CVP_AG3 + CVP_AGDEM_Nov*CVP_AG4}
+goal setCVP_AG_Dec {CVP_AG_Dec = CVP_AGDEM_Dec*CVP_AG1 + CVP_AGDEM_Dec*CVP_AG2 + CVP_AGDEM_Dec*CVP_AG3 + CVP_AGDEM_Dec*CVP_AG4}
+
+goal setCVP_MI_Jan {lhs CVP_MI_Jan case a{condition month<=JAN rhs CVP_MIDEM_Jan*CVP_MI1 + CVP_MIDEM_Jan*CVP_MI2 + CVP_MIDEM_Jan*CVP_MI3} case b{condition always rhs 0}}
+goal setCVP_MI_Feb {lhs CVP_MI_Feb case a{condition month<=Feb rhs CVP_MIDEM_Feb*CVP_MI1 + CVP_MIDEM_Feb*CVP_MI2 + CVP_MIDEM_Feb*CVP_MI3} case b{condition always rhs 0}}
+goal setCVP_MI_Mar {lhs CVP_MI_Mar case a{condition month<=Mar rhs CVP_MIDEM_Mar*CVP_MI1 + CVP_MIDEM_Mar*CVP_MI2 + CVP_MIDEM_Mar*CVP_MI3} case b{condition always rhs 0}}
+goal setCVP_MI_Apr {lhs CVP_MI_Apr case a{condition month<=Apr rhs CVP_MIDEM_Apr*CVP_MI1 + CVP_MIDEM_Apr*CVP_MI2 + CVP_MIDEM_Apr*CVP_MI3} case b{condition always rhs 0}}
+goal setCVP_MI_May {lhs CVP_MI_May case a{condition month<=May rhs CVP_MIDEM_May*CVP_MI1 + CVP_MIDEM_May*CVP_MI2 + CVP_MIDEM_May*CVP_MI3} case b{condition always rhs 0}}
+goal setCVP_MI_Jun {lhs CVP_MI_Jun case a{condition month<=Jun rhs CVP_MIDEM_Jun*CVP_MI1 + CVP_MIDEM_Jun*CVP_MI2 + CVP_MIDEM_Jun*CVP_MI3} case b{condition always rhs 0}}
+goal setCVP_MI_Jul {CVP_MI_Jul = CVP_MIDEM_Jul*CVP_MI1 + CVP_MIDEM_Jul*CVP_MI2 + CVP_MIDEM_Jul*CVP_MI3}
+goal setCVP_MI_Aug {CVP_MI_Aug = CVP_MIDEM_Aug*CVP_MI1 + CVP_MIDEM_Aug*CVP_MI2 + CVP_MIDEM_Aug*CVP_MI3}
+goal setCVP_MI_Sep {CVP_MI_Sep = CVP_MIDEM_Sep*CVP_MI1 + CVP_MIDEM_Sep*CVP_MI2 + CVP_MIDEM_Sep*CVP_MI3}
+goal setCVP_MI_Oct {CVP_MI_Oct = CVP_MIDEM_Oct*CVP_MI1 + CVP_MIDEM_Oct*CVP_MI2 + CVP_MIDEM_Oct*CVP_MI3}
+goal setCVP_MI_Nov {CVP_MI_Nov = CVP_MIDEM_Nov*CVP_MI1 + CVP_MIDEM_Nov*CVP_MI2 + CVP_MIDEM_Nov*CVP_MI3}
+goal setCVP_MI_Dec {CVP_MI_Dec = CVP_MIDEM_Dec*CVP_MI1 + CVP_MIDEM_Dec*CVP_MI2 + CVP_MIDEM_Dec*CVP_MI3}
+
+goal setCVP_EX_Jan {lhs CVP_EX_Jan case a{condition month<=JAN rhs CVP_EXDEM_Jan*CVP_EX} case b{condition always rhs 0}}
+goal setCVP_EX_Feb {lhs CVP_EX_Feb case a{condition month<=Feb rhs CVP_EXDEM_Feb*CVP_EX} case b{condition always rhs 0}}
+goal setCVP_EX_Mar {lhs CVP_EX_Mar case a{condition month<=Mar rhs CVP_EXDEM_Mar*CVP_EX} case b{condition always rhs 0}}
+goal setCVP_EX_Apr {lhs CVP_EX_Apr case a{condition month<=Apr rhs CVP_EXDEM_Apr*CVP_EX} case b{condition always rhs 0}}
+goal setCVP_EX_May {lhs CVP_EX_May case a{condition month<=May rhs CVP_EXDEM_May*CVP_EX} case b{condition always rhs 0}}
+goal setCVP_EX_Jun {lhs CVP_EX_Jun case a{condition month<=Jun rhs CVP_EXDEM_Jun*CVP_EX} case b{condition always rhs 0}}
+goal setCVP_EX_Jul {CVP_EX_Jul = CVP_EXDEM_Jul*CVP_EX}
+goal setCVP_EX_Aug {CVP_EX_Aug = CVP_EXDEM_Aug*CVP_EX}
+goal setCVP_EX_Sep {CVP_EX_Sep = CVP_EXDEM_Sep*CVP_EX}
+goal setCVP_EX_Oct {CVP_EX_Oct = CVP_EXDEM_Oct*CVP_EX}
+goal setCVP_EX_Nov {CVP_EX_Nov = CVP_EXDEM_Nov*CVP_EX}
+goal setCVP_EX_Dec {CVP_EX_Dec = CVP_EXDEM_Dec*CVP_EX}
+
+goal setCVP_RF_Jan {lhs CVP_RF_Jan case a{condition month<=JAN rhs CVP_RFDEM_Jan*CVP_RF} case b{condition always rhs 0}}
+goal setCVP_RF_Feb {lhs CVP_RF_Feb case a{condition month<=Feb rhs CVP_RFDEM_Feb*CVP_RF} case b{condition always rhs 0}}
+goal setCVP_RF_Mar {lhs CVP_RF_Mar case a{condition month<=Mar rhs CVP_RFDEM_Mar*CVP_RF} case b{condition always rhs 0}}
+goal setCVP_RF_Apr {lhs CVP_RF_Apr case a{condition month<=Apr rhs CVP_RFDEM_Apr*CVP_RF} case b{condition always rhs 0}}
+goal setCVP_RF_May {lhs CVP_RF_May case a{condition month<=May rhs CVP_RFDEM_May*CVP_RF} case b{condition always rhs 0}}
+goal setCVP_RF_Jun {lhs CVP_RF_Jun case a{condition month<=Jun rhs CVP_RFDEM_Jun*CVP_RF} case b{condition always rhs 0}}
+goal setCVP_RF_Jul {CVP_RF_Jul = CVP_RFDEM_Jul*CVP_RF}
+goal setCVP_RF_Aug {CVP_RF_Aug = CVP_RFDEM_Aug*CVP_RF}
+goal setCVP_RF_Sep {CVP_RF_Sep = CVP_RFDEM_Sep*CVP_RF}
+goal setCVP_RF_Oct {CVP_RF_Oct = CVP_RFDEM_Oct*CVP_RF}
+goal setCVP_RF_Nov {CVP_RF_Nov = CVP_RFDEM_Nov*CVP_RF}
+goal setCVP_RF_Dec {CVP_RF_Dec = CVP_RFDEM_Dec*CVP_RF}
+
+goal setCVP_LS_Jan {lhs CVP_LS_Jan case a{condition month<=JAN rhs CVP_LSDEM_Jan*CVP_LS} case b{condition always rhs 0}}
+goal setCVP_LS_Feb {lhs CVP_LS_Feb case a{condition month<=Feb rhs CVP_LSDEM_Feb*CVP_LS} case b{condition always rhs 0}}
+goal setCVP_LS_Mar {lhs CVP_LS_Mar case a{condition month<=Mar rhs CVP_LSDEM_Mar*CVP_LS} case b{condition always rhs 0}}
+goal setCVP_LS_Apr {lhs CVP_LS_Apr case a{condition month<=Apr rhs CVP_LSDEM_Apr*CVP_LS} case b{condition always rhs 0}}
+goal setCVP_LS_May {lhs CVP_LS_May case a{condition month<=May rhs CVP_LSDEM_May*CVP_LS} case b{condition always rhs 0}}
+goal setCVP_LS_Jun {lhs CVP_LS_Jun case a{condition month<=Jun rhs CVP_LSDEM_Jun*CVP_LS} case b{condition always rhs 0}}
+goal setCVP_LS_Jul {CVP_LS_Jul = CVP_LSDEM_Jul*CVP_LS}
+goal setCVP_LS_Aug {CVP_LS_Aug = CVP_LSDEM_Aug*CVP_LS}
+goal setCVP_LS_Sep {CVP_LS_Sep = CVP_LSDEM_Sep*CVP_LS}
+goal setCVP_LS_Oct {CVP_LS_Oct = CVP_LSDEM_Oct*CVP_LS}
+goal setCVP_LS_Nov {CVP_LS_Nov = CVP_LSDEM_Nov*CVP_LS}
+goal setCVP_LS_Dec {CVP_LS_Dec = CVP_LSDEM_Dec*CVP_LS}
+
+! total all demands
+goal setCVP_AG {lhs CVP_AG case a{condition month<=JAN rhs CVP_AG_Jan+CVP_AG_Feb+CVP_AG_Mar+CVP_AG_Apr+CVP_AG_May+CVP_AG_Jun+CVP_AG_Jul+CVP_AG_Aug+CVP_AG_Sep+CVP_AG_Oct+CVP_AG_Nov+CVP_AG_Dec}
+			   case b{condition month<=Feb rhs            CVP_AG_Feb+CVP_AG_Mar+CVP_AG_Apr+CVP_AG_May+CVP_AG_Jun+CVP_AG_Jul+CVP_AG_Aug+CVP_AG_Sep+CVP_AG_Oct+CVP_AG_Nov+CVP_AG_Dec}
+			   case c{condition month<=Mar rhs                       CVP_AG_Mar+CVP_AG_Apr+CVP_AG_May+CVP_AG_Jun+CVP_AG_Jul+CVP_AG_Aug+CVP_AG_Sep+CVP_AG_Oct+CVP_AG_Nov+CVP_AG_Dec}
+			   case d{condition month<=Apr rhs                                  CVP_AG_Apr+CVP_AG_May+CVP_AG_Jun+CVP_AG_Jul+CVP_AG_Aug+CVP_AG_Sep+CVP_AG_Oct+CVP_AG_Nov+CVP_AG_Dec}
+			   case e{condition month<=May rhs                                             CVP_AG_May+CVP_AG_Jun+CVP_AG_Jul+CVP_AG_Aug+CVP_AG_Sep+CVP_AG_Oct+CVP_AG_Nov+CVP_AG_Dec}
+			   case f{condition month<=Jun rhs                                                        CVP_AG_Jun+CVP_AG_Jul+CVP_AG_Aug+CVP_AG_Sep+CVP_AG_Oct+CVP_AG_Nov+CVP_AG_Dec}
+			   case g{condition always     rhs                                                                   CVP_AG_Jul+CVP_AG_Aug+CVP_AG_Sep+CVP_AG_Oct+CVP_AG_Nov+CVP_AG_Dec}}
+
+
+goal setCVP_MI {lhs CVP_MI case a{condition month<=JAN rhs CVP_MI_Jan+CVP_MI_Feb+CVP_MI_Mar+CVP_MI_Apr+CVP_MI_May+CVP_MI_Jun+CVP_MI_Jul+CVP_MI_Aug+CVP_MI_Sep+CVP_MI_Oct+CVP_MI_Nov+CVP_MI_Dec}
+			   case b{condition month<=Feb rhs            CVP_MI_Feb+CVP_MI_Mar+CVP_MI_Apr+CVP_MI_May+CVP_MI_Jun+CVP_MI_Jul+CVP_MI_Aug+CVP_MI_Sep+CVP_MI_Oct+CVP_MI_Nov+CVP_MI_Dec}
+			   case c{condition month<=Mar rhs                       CVP_MI_Mar+CVP_MI_Apr+CVP_MI_May+CVP_MI_Jun+CVP_MI_Jul+CVP_MI_Aug+CVP_MI_Sep+CVP_MI_Oct+CVP_MI_Nov+CVP_MI_Dec}
+			   case d{condition month<=Apr rhs                                  CVP_MI_Apr+CVP_MI_May+CVP_MI_Jun+CVP_MI_Jul+CVP_MI_Aug+CVP_MI_Sep+CVP_MI_Oct+CVP_MI_Nov+CVP_MI_Dec}
+			   case e{condition month<=May rhs                                             CVP_MI_May+CVP_MI_Jun+CVP_MI_Jul+CVP_MI_Aug+CVP_MI_Sep+CVP_MI_Oct+CVP_MI_Nov+CVP_MI_Dec}
+			   case f{condition month<=Jun rhs                                                        CVP_MI_Jun+CVP_MI_Jul+CVP_MI_Aug+CVP_MI_Sep+CVP_MI_Oct+CVP_MI_Nov+CVP_MI_Dec}
+			   case g{condition always     rhs                                                                   CVP_MI_Jul+CVP_MI_Aug+CVP_MI_Sep+CVP_MI_Oct+CVP_MI_Nov+CVP_MI_Dec}}
+
+goal setCVP_Jan {lhs D7_Jan case a{condition month<=JAN rhs CVP_AG_Jan + CVP_MI_Jan + CVP_EX_Jan + CVP_RF_Jan + CVP_LS_Jan} case b{condition always rhs del_cvp_Jan}}
+goal setCVP_Feb {lhs D7_Feb case a{condition month<=Feb rhs CVP_AG_Feb + CVP_MI_Feb + CVP_EX_Feb + CVP_RF_Feb + CVP_LS_Feb} case b{condition always rhs del_cvp_Feb}}
+goal setCVP_Mar {lhs D7_Mar case a{condition month<=Mar rhs CVP_AG_Mar + CVP_MI_Mar + CVP_EX_Mar + CVP_RF_Mar + CVP_LS_Mar} case b{condition always rhs del_cvp_Mar}}
+goal setCVP_Apr {lhs D7_Apr case a{condition month<=Apr rhs CVP_AG_Apr + CVP_MI_Apr + CVP_EX_Apr + CVP_RF_Apr + CVP_LS_Apr} case b{condition always rhs del_cvp_Apr}}
+goal setCVP_May {lhs D7_May case a{condition month<=May rhs CVP_AG_May + CVP_MI_May + CVP_EX_May + CVP_RF_May + CVP_LS_May} case b{condition always rhs del_cvp_May}}
+goal setCVP_Jun {lhs D7_Jun case a{condition month<=Jun rhs CVP_AG_Jun + CVP_MI_Jun + CVP_EX_Jun + CVP_RF_Jun + CVP_LS_Jun} case b{condition always rhs del_cvp_Jun}}
+goal setCVP_Jul {D7_Jul = CVP_AG_Jul + CVP_MI_Jul + CVP_EX_Jul + CVP_RF_Jul + CVP_LS_Jul}
+goal setCVP_Aug {D7_Aug = CVP_AG_Aug + CVP_MI_Aug + CVP_EX_Aug + CVP_RF_Aug + CVP_LS_Aug}
+goal setCVP_Sep {D7_Sep = CVP_AG_Sep + CVP_MI_Sep + CVP_EX_Sep + CVP_RF_Sep + CVP_LS_Sep}
+goal setCVP_Oct {D7_Oct = CVP_AG_Oct + CVP_MI_Oct + CVP_EX_Oct + CVP_RF_Oct + CVP_LS_Oct}
+goal setCVP_Nov {D7_Nov = CVP_AG_Nov + CVP_MI_Nov + CVP_EX_Nov + CVP_RF_Nov + CVP_LS_Nov}
+goal setCVP_Dec {D7_Dec = CVP_AG_Dec + CVP_MI_Dec + CVP_EX_Dec + CVP_RF_Dec + CVP_LS_Dec}
+
+! temp variables
+!define CVP_Allocation {lower 0 upper 1 kind 'Percent' units 'percent'}
+define CVP_Delivery {lower 0 upper 6000 kind 'Delivery' units 'TAF'}
+goal set_CVP_Del {CVP_Delivery = CVP}
+!goal set_CVP_All {CVP_Allocation = CVP/3332.}
