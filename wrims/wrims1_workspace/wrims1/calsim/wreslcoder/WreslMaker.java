@@ -302,10 +302,7 @@ public class WreslMaker {
 					+ " -mod " + tempFilePath + ";" + sourcePath
 					+ " -win -trace -ml msvc -stack 1000000 -wisk -nomap"
 					+ " -LIBpath " + sourcePath
-					+ " -lib wrangler simsolver "
-                    + " -implib xav16.dll ";
-	      //if ()
-	      
+					+ " -lib wrangler,simsolver ";
 	      if (doCommand(makerString,"",true) > 0) {
 					new File(exeFileName).delete();
 					return false;
