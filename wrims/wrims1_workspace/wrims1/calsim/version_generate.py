@@ -4,9 +4,9 @@ import os
 
 print __file__
 
-Version_ = 'WRIMS v1.3.4 beta (XA16)'
-Version_Nospace_ = 'WRIMS_v1.3.4_beta_XA16'
-Version_XA = 'xav13'
+Version_ = 'WRIMS v1.3.4 beta (XA13)'
+Version_Nospace_ = 'WRIMS_v1.3.4_beta_XA13'
+Version_XA = 'xav13' 
 
 #VersionTemplate     = "      character*16 :: dsm2_version = '8.0.4', svn_build = '@{Version_SVN}' " 
 VersionTemplate     = "version=@{Version} SVN:@{Version_SVN} " 
@@ -39,7 +39,7 @@ calsim_path    = os.path.split( __file__)[0]
 VersionFile_path    = os.path.join(calsim_path,"version.txt")
 VersionWrapperFile_path    = os.path.join(calsim_path,"version_wrapper.inc")
 setupScriptFile_path    = os.path.join(calsim_path,"setup_include.iss")
-XA_AutomakeFile_path    = os.path.join(calsim_path,"engine","Simsolver","auto.config")
+XA_AutomakeFile_path    = os.path.join(calsim_path,"engine","Simsolver","automake.fig")
 
 print calsim_path
 
