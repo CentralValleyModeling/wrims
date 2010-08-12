@@ -302,7 +302,10 @@ public class WreslMaker {
 					+ " -mod " + tempFilePath + ";" + sourcePath
 					+ " -win -trace -ml msvc -stack 1000000 -wisk -nomap"
 					+ " -LIBpath " + sourcePath
-					+ " -lib wrangler,simsolver ";
+					+ " -lib wrangler simsolver ";
+                    //+ " -implib xav16.dll -import XBVAR";
+	      //if ()
+	      
 	      if (doCommand(makerString,"",true) > 0) {
 					new File(exeFileName).delete();
 					return false;
@@ -325,6 +328,7 @@ public class WreslMaker {
 				new File(tempFilePath,"report_writer.obj").delete();
 				new File(tempFilePath,"externals.rsp").delete();
 				new File(tempFilePath,"externalsLib.rsp").delete();
+				new File("compile.log").delete();
 	      }
 	      //needToMake = false;
 	    } else {
@@ -387,7 +391,7 @@ public class WreslMaker {
 			cmd = cmdExec;
 		}
 		//if(DebugSetting.DEBUG_FILEINPUT){
-		if((DebugSetting.getDebugOption().indexOf("compile"))>0){
+		//if((DebugSetting.getDebugOption().indexOf("compile"))>0){
 		try {
 			FileWriter compileBatchFile = new FileWriter("compile.log",true);
 			BufferedWriter compileWriter = new BufferedWriter(compileBatchFile);
@@ -397,7 +401,7 @@ public class WreslMaker {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		}
+		//}
 
 		
 		try {

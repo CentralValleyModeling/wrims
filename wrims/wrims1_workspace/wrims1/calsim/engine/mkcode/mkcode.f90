@@ -661,11 +661,12 @@ contains
 subroutine writetrimmed(iunit, var_name, var_expr)
   CHARACTER(LEN=*)   :: var_name,var_expr
 !  INTEGER :: maxLineLength = 130  !CB
-  maxLineLength = 132  !CB
+  maxLineLength = 100
+  
 
   ilen=LEN_TRIM(var_expr)
   WRITE(iunit, *) '!  ilen=', ilen
-  if (ilen<=100) then
+  if (ilen<=maxLineLength) then
      WRITE(iunit,450)  TRIM(var_name), var_expr(1:ilen)
   else
       call checkunderscore(var_expr)
@@ -695,7 +696,7 @@ subroutine writetrimmed(iunit, var_name, var_expr)
         IF (i==0) THEN
           WRITE (iunit,500) TRIM(var_name), var_expr(1:100)
         ELSE
-          IF (ilen > (i-1)*maxLineLength + 100) WRITE(iunit,510) var_expr((i-1)*maxLineLength + 101:i*maxLineLength+100)
+          IF (ilen > i*maxLineLength ) WRITE(iunit,510) var_expr( i*maxLineLength + 1: (i+1)*maxLineLength)
 !        WRITE(iunit, *) '!  (i-1)*maxLineLength + 101 =', (i-1)*maxLineLength + 101
 !        WRITE(iunit, *) '!  i*maxLineLength+100 =', i*maxLineLength+100
         END IF
@@ -714,11 +715,11 @@ subroutine checkunderscore(expr)
   CHARACTER(LEN=*) :: expr
   INTEGER :: i
   
-  maxLineLength = 132  !CB
+  maxLineLength = 100  
   
   ilen=LEN_TRIM(expr)
-  if (ilen>100) then
-    do i=100,ilen,maxLineLength
+  if (ilen>maxLineLength) then
+    do i=maxLineLength,ilen,maxLineLength
       if (chareq(expr(i:i),'_')) then           
          expr(i+1:)=expr(i:)
          expr(i:i)='&'
