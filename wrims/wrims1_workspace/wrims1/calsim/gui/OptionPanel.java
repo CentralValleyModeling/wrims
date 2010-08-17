@@ -62,8 +62,8 @@ public class OptionPanel extends JPanel {
    */
   public OptionPanel() {
 
-    _check = new JCheckBox[12];
-    setLayout( new XYGridLayout(22,28) );
+    _check = new JCheckBox[13];
+    setLayout( new XYGridLayout(22,30) );
     // solver options
     JPanel panel = new JPanel();
     panel.setLayout(new GridLayout(2,2));
@@ -72,7 +72,7 @@ public class OptionPanel extends JPanel {
     panel.add(createCheckBoxPanel(0));
     panel.add(createLabel("     Listing:"));
     panel.add(createComboBoxPanel());
-    add(panel, new Rectangle(1,1,8,6) );
+    add(panel, new Rectangle(1,1,9,6) );
     // state variable output options
     panel = new JPanel();
     //panel.setLayout(new GridLayout(4,4));
@@ -82,7 +82,7 @@ public class OptionPanel extends JPanel {
     panel.add(createCheckBoxPanel(7));
     panel.add(createLabel("Gen WSI-DI Tables:"));
     panel.add(createCheckBoxPanel(8));
-    add(panel, new Rectangle(12,1,8,6));
+    add(panel, new Rectangle(12,1,9,6));
     // slack/ surplus output
     panel = new JPanel();
     panel.setLayout(new GridLayout(2,2));
@@ -91,7 +91,7 @@ public class OptionPanel extends JPanel {
     panel.add(createCheckBoxPanel(3));
     panel.add(createLabel("Save All   :"));
     panel.add(createCheckBoxPanel(4));
-    add(panel, new Rectangle(12,8,8,6));
+    add(panel, new Rectangle(12,8,9,6));
     // dss options
     panel = new JPanel();
     panel.setLayout(new GridLayout(2,2));
@@ -100,7 +100,7 @@ public class OptionPanel extends JPanel {
     panel.add(createCheckBoxPanel(5));
     panel.add(createLabel("Save Old :"));
     panel.add(createCheckBoxPanel(6));
-    add(panel, new Rectangle(1,8,8,6));
+    add(panel, new Rectangle(1,8,9,6));
     // add xa
     panel = new JPanel();
     //panel.setLayout( new FlowLayout() );
@@ -116,7 +116,7 @@ public class OptionPanel extends JPanel {
     panel.add(createCheckBoxPanel(10));
     _check[9].setEnabled(false);
     _check[10].setEnabled(false);
-    add(panel, new Rectangle(12,15,8,10));
+    add(panel, new Rectangle(12,15,9,10));
 
 
 
@@ -134,7 +134,9 @@ public class OptionPanel extends JPanel {
     // position analysis option
     panel = new JPanel();
     panel.setBorder(BorderFactory.createTitledBorder("Position Analysis"));
-    panel.setLayout(new GridLayout(5,2));
+    panel.setLayout(new GridLayout(6,2));
+    panel.add(createLabel("Gen Random Table:"));
+    panel.add(createCheckBoxPanel(12));
     panel.add(createLabel("Run:"));
     panel.add(createCheckBoxPanel(11));
     panel.add(createLabel("Start Month:"));
@@ -160,7 +162,7 @@ public class OptionPanel extends JPanel {
     monpanel.add(_stop);
     _stop.setSelectedItem("1921");
     panel.add(monpanel);
-    add(panel, new Rectangle(1,15,8,10));
+    add(panel, new Rectangle(1,15,9,15));
 
 		_months.setEnabled(false);
 		_nper.setEnabled(false);
@@ -169,10 +171,11 @@ public class OptionPanel extends JPanel {
 
     panel = new JPanel();
     //panel.setLayout( new FlowLayout() );
-    panel.setLayout( new GridLayout(1,2) );
-    panel.add(createLabel("XA Options:"));
+    panel.setBorder(BorderFactory.createTitledBorder("XA Options:"));
+    panel.setLayout( new GridLayout(1,1) );
+    //panel.add(createLabel("XA Options:"));
     panel.add(createTextPanel());
-    add(panel, new Rectangle(1,25,13,3));
+    add(panel, new Rectangle(12,26,9,4));
 
 		final Hashtable monthIndex = new Hashtable(12);
     monthIndex.put("OCT", new Integer(0));
@@ -188,6 +191,19 @@ public class OptionPanel extends JPanel {
     monthIndex.put("AUG", new Integer(10));
     monthIndex.put("SEP", new Integer(11));
 
+    // generate random table for position analysis
+    _check[12].addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			if (_check[12].isSelected()) {
+				System.out.println("genNewRandomTable = " + "True");
+			}
+			if (!_check[12].isSelected()) {
+				System.out.println("genNewRandomTable = " + "False");
+			}
+			return;
+		}
+	});
+    
 		_check[11].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Study sty = AppUtils.getCurrentStudy();
@@ -312,8 +328,8 @@ public class OptionPanel extends JPanel {
    */
   private JPanel createTextPanel() {
     JPanel panel = new JPanel();
-    panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-    _addXaOptions = new JTextField(20);
+    panel.setLayout(new FlowLayout(FlowLayout.CENTER));
+    _addXaOptions = new JTextField(24);
     panel.add(_addXaOptions);
     return panel;
   }
@@ -356,6 +372,7 @@ public class OptionPanel extends JPanel {
     _check[9].setSelected(study.getUseRestartOption().booleanValue());
     _check[10].setSelected(study.getGenerateRestartOption().booleanValue());
     _check[11].setSelected(study.getPosAnalysisOption().booleanValue());
+    //_check[12].setSelected(study.getGenNewRandomTableOption().booleanValue());
     if (_check[11].isSelected()) enablePositionComponents(true);
     else enablePositionComponents(false);
     _months.setSelectedItem(study.getStartMonth());
@@ -392,6 +409,9 @@ public class OptionPanel extends JPanel {
    */
   public boolean getLF90OutputOption() {
     return _check[7].isSelected();
+  }
+  public boolean getGenNewRandomTableOption() {
+	    return _check[12].isSelected();
   }
   /**
    *

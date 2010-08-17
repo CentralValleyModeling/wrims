@@ -104,7 +104,7 @@ public class StudyTab extends JTabbedPane {
    */
   public JPanel createRunPanel(){
     JPanel panel = new JPanel();
-    panel.setLayout(new FlowLayout(FlowLayout.CENTER, 80, 5));
+    panel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 10));
 
     //CB added the following code:
     JCheckBox hideWarnings = new JCheckBox("Hide Warnings");
@@ -115,7 +115,7 @@ public class StudyTab extends JTabbedPane {
     hideProgressDetails.setSelected(true);
     hideProgressDetails.setToolTipText(
     	"Hides the more detailed progress messages such as the successfully parsed file messages");
-    JButton run = new JButton("Run  ");
+    JButton run = new JButton("  Run  ");
     JButton check = new JButton("Check");
     hideWarnings.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {

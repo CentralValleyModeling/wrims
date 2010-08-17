@@ -93,6 +93,7 @@ public class Study {
 //    _pricingRHSSensitivity = false; //CB added
 //	_activitySensitivity = false; //CB added
     _posAnalysis = new Boolean(false);
+    _genNewRandomTable = new Boolean(false);
     _useRestart = new Boolean(false);
     _genRestart = new Boolean(false);
     _dialogWindow = new Boolean(true);
@@ -215,6 +216,9 @@ public class Study {
   }
   public Boolean getPosAnalysisOption() {
     return _posAnalysis;
+  }
+  public Boolean getGenNewRandomTableOption() {
+	    return _genNewRandomTable;
   }
   public Boolean getDialogWindowOption() {
 	  return _dialogWindow;
@@ -571,6 +575,7 @@ public class Study {
   private Boolean _dssSave;
   private Boolean _genWsiDi;
   private Boolean _posAnalysis;
+  private Boolean _genNewRandomTable;
   private Boolean _useRestart;
   private Boolean _genRestart;
   private boolean _pricingRHSSensitivity; //CB added
