@@ -90,7 +90,7 @@ public class AppProps{
     */
   public static File checkForPropsDir(){
     // first look in user.home for .calsim directory
-    String appDir = System.getProperty("user.home") + File.separator + ".calsim";
+    String appDir = System.getProperty("calsim.home") + File.separator + ".calsim";
     File appPropsDir = new File(appDir);
     if ( ! appPropsDir.exists() ) {
       // create this directory...

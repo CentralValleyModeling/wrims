@@ -51,7 +51,7 @@ import calsim.app.AppProps;
 
 public class CalsimGui {
   //public final String CALSIM_HOME = "D:\\WRIMS1Development\\Calsim1.3\\calsim"; // CB for IDE use (non-batch file)
-
+  private static JFrame frameBase = new JFrame(GuiUtils.getProgramName()); // version is already in About screen
   public static boolean DEBUG = true;
   public static int FRAME_WIDTH=800;
   public static int FRAME_HEIGHT=600;
@@ -81,12 +81,12 @@ public class CalsimGui {
    */
   public CalsimGui(String prjFile) {
 //    JFrame fr = new JFrame(GuiUtils.getProgramName()+GuiUtils.getVersionNo());
-    JFrame fr = new JFrame(GuiUtils.getProgramName()); // version is already in About screen
-    fr.setIconImage(Toolkit.getDefaultToolkit().
+    //JFrame fr = new JFrame(GuiUtils.getProgramName()); // version is already in About screen
+	  frameBase.setIconImage(Toolkit.getDefaultToolkit().
 		createImage(VistaUtils.getImageAsBytes("/calsim/gui/calsimoas.gif")));
-    Container pane = fr.getContentPane();
+    Container pane = frameBase.getContentPane();
     pane.setLayout(new BorderLayout());
-    TabbedPane tabbedPane = new TabbedPane(fr);
+    TabbedPane tabbedPane = new TabbedPane(frameBase);
     pane.add(tabbedPane.getTabbedPane(), BorderLayout.CENTER);
     pane.add(GuiUtils.getStatusPanel(), BorderLayout.SOUTH);
     //
@@ -95,15 +95,16 @@ public class CalsimGui {
     else
       GuiUtils.getMainPanel().getMessagePanel().updateMessagePanel();
     //
-    fr.addWindowListener( new WindowAdapter() {
+    frameBase.addWindowListener( new WindowAdapter() {
       public void windowClosing(WindowEvent evt){
 		exit();
       }
     });
     //System.out.println(FRAME_WIDTH+" "+FRAME_HEIGHT);
-    fr.setSize(810,FRAME_HEIGHT);
-    fr.setVisible(true);
-    fr.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+    frameBase.setSize(FRAME_WIDTH,FRAME_HEIGHT);
+    frameBase.setVisible(true);
+    frameBase.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+
   }
 
   /**
@@ -112,13 +113,16 @@ public class CalsimGui {
    */
   void exit() {
     //
-      saveProps();
-    GuiUtils.getMainPanel().getMainMenuBar().fileExit();
+      //saveProps();
+      GuiUtils.getMainPanel().getMainMenuBar().fileExit();
     //
   }
     /**
      *
      */
+
+
+  
     public static void loadProps(){
 	FRAME_WIDTH = new Integer(AppProps.getProperty("CalsimGui.FRAME_WIDTH")).intValue();
 	FRAME_HEIGHT = new Integer(AppProps.getProperty("CalsimGui.FRAME_HEIGHT")).intValue();
@@ -127,6 +131,8 @@ public class CalsimGui {
      *
      */
     public static void saveProps(){
+    FRAME_WIDTH=frameBase.getWidth();
+    FRAME_HEIGHT=frameBase.getHeight();
 	AppProps.setProperty("CalsimGui.FRAME_WIDTH",new Integer(FRAME_WIDTH).toString());
 	AppProps.setProperty("CalsimGui.FRAME_HEIGHT",new Integer(FRAME_HEIGHT).toString());
     }

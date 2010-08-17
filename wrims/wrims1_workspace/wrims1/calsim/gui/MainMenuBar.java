@@ -1273,6 +1273,7 @@ public class MainMenuBar
   void fileExit(){
     if (DEBUG) System.out.println("fileExit");
     // save all the properties anyways
+    calsim.gui.CalsimGui.saveProps();
     calsim.app.AppUtils.saveProps();
     //
     Project prj = AppUtils.getCurrentProject();
