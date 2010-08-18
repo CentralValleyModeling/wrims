@@ -82,7 +82,7 @@ public class OptionPanel extends JPanel {
     panel.add(createCheckBoxPanel(7));
     panel.add(createLabel("Gen WSI-DI Tables:"));
     panel.add(createCheckBoxPanel(8));
-    add(panel, new Rectangle(12,1,9,6));
+    add(panel, new Rectangle(11,1,9,6));
     // slack/ surplus output
     panel = new JPanel();
     panel.setLayout(new GridLayout(2,2));
@@ -91,7 +91,7 @@ public class OptionPanel extends JPanel {
     panel.add(createCheckBoxPanel(3));
     panel.add(createLabel("Save All   :"));
     panel.add(createCheckBoxPanel(4));
-    add(panel, new Rectangle(12,8,9,6));
+    add(panel, new Rectangle(11,8,9,6));
     // dss options
     panel = new JPanel();
     panel.setLayout(new GridLayout(2,2));
@@ -116,7 +116,7 @@ public class OptionPanel extends JPanel {
     panel.add(createCheckBoxPanel(10));
     _check[9].setEnabled(false);
     _check[10].setEnabled(false);
-    add(panel, new Rectangle(12,15,9,10));
+    add(panel, new Rectangle(11,15,9,10));
 
 
 
@@ -175,7 +175,7 @@ public class OptionPanel extends JPanel {
     panel.setLayout( new GridLayout(1,1) );
     //panel.add(createLabel("XA Options:"));
     panel.add(createTextPanel());
-    add(panel, new Rectangle(12,26,9,4));
+    add(panel, new Rectangle(11,26,9,4));
 
 		final Hashtable monthIndex = new Hashtable(12);
     monthIndex.put("OCT", new Integer(0));

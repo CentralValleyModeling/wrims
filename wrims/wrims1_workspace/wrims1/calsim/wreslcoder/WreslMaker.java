@@ -148,7 +148,7 @@ public class WreslMaker {
    *           1 and messages to the output PrintWriter if problems
    */
   public int runModel() {
-//    String directory;
+//    String directory;  TODO: write a batch to generate position analysis table.
     String cmdSetPath = "set path=" + tempFilePath +"\\external;%path%"; 
     String cmdExec    =  exeFileName + " " + tempFilePath + " " + commonPath;
     //int status = doCommand("set path=" + tempFilePath +"\\external;%path% \n" + exeFileName + " " + tempFilePath + " " + commonPath,false);
