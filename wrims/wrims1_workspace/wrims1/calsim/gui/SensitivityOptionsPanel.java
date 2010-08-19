@@ -74,7 +74,7 @@ public class SensitivityOptionsPanel extends JPanel {
     panel.add(createCheckBoxPanel(0));
     panel.add(createLabel("Column or row activity:"));
     panel.add(createCheckBoxPanel(1));
-    add(panel, new Rectangle(1,1,8,6));
+    add(panel, new Rectangle(1,1,10,6));
 /*    // slack/ surplus output
     panel = new JPanel();
     panel.setLayout(new GridLayout(2,2));
