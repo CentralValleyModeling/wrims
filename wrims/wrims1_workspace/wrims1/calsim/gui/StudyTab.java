@@ -407,11 +407,14 @@ public class StudyTab extends JTabbedPane {
     output.println(msg);// CB added - don't worry about using invokeLater or invokeAndWait (msg not read or changed by any code)
     
     // generate random table for position analysis
-    if (_wm.runTools("RANGEN", "lookup") > 0) {
-        msg="Generate Random Table Error!";
-        JOptionPane.showMessageDialog(_generalPanel,msg,"Error",JOptionPane.ERROR_MESSAGE);
-        return 1;
-      }
+    if (_optionPanel.getGenNewRandomTableOption()){
+    	
+    	if (_wm.runTools("RANGEN", "lookup") > 0) {
+    		msg="Generate Random Table Error!";
+    		JOptionPane.showMessageDialog(_generalPanel,msg,"Error",JOptionPane.ERROR_MESSAGE);
+    		return 1;
+    	}
+    }
     
     if (_wm.runModel() > 0) {
       msg="Execution Error!";

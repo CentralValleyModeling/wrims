@@ -407,6 +407,9 @@ public class OptionPanel extends JPanel {
   /**
    * Get LF90 Error Output Option
    */
+  public boolean getGenRandomTableOption() {
+	    return _check[12].isSelected();
+	  }
   public boolean getLF90OutputOption() {
     return _check[7].isSelected();
   }
