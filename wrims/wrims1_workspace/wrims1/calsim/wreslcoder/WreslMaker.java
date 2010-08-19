@@ -156,6 +156,7 @@ public class WreslMaker {
     if (status != 0) return status;
     // successful run.  Remove several temporary output files.
 		if (!_buildDebug) {
+			new File("compile.log").delete();
 			new File("wranglerDSS.log").delete();
 			new File(".","testxa.out").delete();
 			new File("temp.bat").delete();
