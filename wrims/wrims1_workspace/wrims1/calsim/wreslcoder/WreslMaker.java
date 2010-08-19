@@ -148,7 +148,7 @@ public class WreslMaker {
    *           1 and messages to the output PrintWriter if problems
    */
   public int runModel() {
-//    String directory;  TODO: write a batch to generate position analysis table.
+//    String directory;  
     String cmdSetPath = "set path=" + tempFilePath +"\\external;%path%"; 
     String cmdExec    =  exeFileName + " " + tempFilePath + " " + commonPath;
     //int status = doCommand("set path=" + tempFilePath +"\\external;%path% \n" + exeFileName + " " + tempFilePath + " " + commonPath,false);
@@ -163,7 +163,21 @@ public class WreslMaker {
     return 0;
   }
 
-
+// e.g., generate random table for position analysis.  
+  public int runTools(String toolName, String Dir) {
+    //String cmdSetPath = ""; 
+    //String cmdExec    =  "exeFileName + " " + tempFilePath + " " + commonPath;
+    //int status = doCommand("set path=" + tempFilePath +"\\external;%path% \n" + exeFileName + " " + tempFilePath + " " + commonPath,false);
+	String cmdExec = "tools " + toolName + " " + tempFilePath + "\\" + Dir;
+	
+	int status = doCommand(cmdExec,"",false);
+    if (status != 0) return status;
+    // successful run.  Remove several temporary output files.
+		if (!_buildDebug) {
+			new File("temp.bat").delete();
+		}
+    return 0;
+  }
   /**
    *  Contrives a name for the output excutable filename.
    *

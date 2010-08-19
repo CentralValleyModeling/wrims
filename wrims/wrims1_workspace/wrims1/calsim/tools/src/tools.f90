@@ -28,9 +28,9 @@ subroutine process_argument( name, path )
     character*(*) name, path
     character(120) fullpath
     
-    print *, name
+    !print *, name
     fullpath = path//"\"//"RAN2YEAR.TABLE"
-    print *, trim(fullpath)
+    !print *, trim(fullpath)
     
     if ( trim(name) .eq. "RANGEN" ) then
         call RANGEN(trim(fullpath))
