@@ -4,8 +4,8 @@ import os
 
 print __file__
 
-Version_ = 'WRIMS v1.3.5 (XA16)'
-Version_Nospace_ = 'WRIMS_v1.3.5_XA16'
+Version_ = 'WRIMS v1.3.6 (XA16)'
+Version_Nospace_ = 'WRIMS_v1.3.6_XA16'
 Version_XA = 'xav16' 
 
 VersionTemplate     = "version=@{Version} SVN:@{Version_SVN} " 
