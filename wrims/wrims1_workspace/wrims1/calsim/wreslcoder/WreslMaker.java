@@ -169,7 +169,7 @@ public class WreslMaker {
     //String cmdSetPath = ""; 
     //String cmdExec    =  "exeFileName + " " + tempFilePath + " " + commonPath;
     //int status = doCommand("set path=" + tempFilePath +"\\external;%path% \n" + exeFileName + " " + tempFilePath + " " + commonPath,false);
-	String cmdExec = "tools " + toolName + " " + tempFilePath + "\\" + Dir;
+	String cmdExec = "start /wait tools " + toolName + " " + tempFilePath + "\\" + Dir;
 	
 	int status = doCommand(cmdExec,"",false);
     if (status != 0) return status;
