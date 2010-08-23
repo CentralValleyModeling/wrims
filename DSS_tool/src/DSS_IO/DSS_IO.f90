@@ -55,7 +55,7 @@
 
        
      
-       !call matwrite(trim(file_out)//".mat",trim(file_out),values_dss(1:nvals_to_read),'w') 
+
        
        write(2,"(f8.4)") values_dss(1:nvals_to_read)
        

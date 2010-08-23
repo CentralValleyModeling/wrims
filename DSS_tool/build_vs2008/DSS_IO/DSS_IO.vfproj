@@ -40,14 +40,15 @@
 		<Filter Name="Source Files">
 		<File RelativePath="..\..\src\DSS_IO\constants.for"/>
 		<File RelativePath="..\..\src\DSS_IO\DSS_IO.for"/>
-		<File RelativePath="..\..\src\DSS_IO\MODULE_dss_utility.f90"/>
+		<File RelativePath="..\..\src\DSS_IO\dss_open_.f90"/>
 		<File RelativePath="..\..\src\DSS_IO\dss_read_hourly_specify_nvals_.f90"/>
 		<File RelativePath="..\..\src\DSS_IO\dss_write.for"/>
 		<File RelativePath="..\..\src\DSS_IO\io_units.for"/>
 		<File RelativePath="..\..\src\DSS_IO\iopath_data.for"/>
+		<File RelativePath="..\..\src\DSS_IO\MODULE_dss_utility.f90"/>
 		<File RelativePath="..\..\src\DSS_IO\MODULE_misc.f90"/>
 		<File RelativePath="..\..\src\DSS_IO\MODULE_parameters.f90"/>
-		<File RelativePath="..\..\src\DSS_IO\runtime_data.for"/>
 		<File RelativePath="..\..\src\DSS_IO\MODULE_string_utility.f90"/>
+		<File RelativePath="..\..\src\DSS_IO\runtime_data.for"/>
 		<File RelativePath="..\..\src\DSS_IO\type_defs.for"/></Filter></Files>
 	<Globals/></VisualStudioProject>

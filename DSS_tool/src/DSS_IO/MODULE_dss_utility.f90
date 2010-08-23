@@ -3,6 +3,8 @@ module dss_utility
 
   implicit none
 
+  integer, private, save, dimension(600) :: ifltab_in_dss           ! DSS table for each input file
+  
   integer, parameter :: MSG_LENGTH = 1500
   integer, parameter :: MSG_STACK_SIZE = 300000
 
@@ -18,6 +20,9 @@ module dss_utility
   integer, private, save :: testCaseIndex = 1
   logical, private, save :: last_passed = .false.
 
+  interface dss_open
+     module procedure dss_open_ 
+  end interface
 
   interface dss_read
      !module procedure dss_read_hourly_specify_endtime_ 
@@ -34,6 +39,7 @@ module dss_utility
 
 contains
 
+  include 'dss_open_.f90'
   include 'dss_read_hourly_specify_nvals_.f90'
 
 
