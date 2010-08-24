@@ -1,4 +1,4 @@
-      subroutine dss_write(ifltab_out_dss, date_begin, time_begin, nvals_to_read, values_dss)
+      subroutine dss_write(values_dss, ifltab_out_dss, Ap,Bp,Cp,Ep,Fp, date_begin, time_begin, nvals_to_read)
 
 c-----Write out a block of data to DSS
       !use io_units
@@ -10,9 +10,9 @@ c-----Write out a block of data to DSS
       !include 'writedss.inc'
 
 !      logical,dimension(max_dssoutfiles) :: isopen = .false.
+      character*32, intent(in) :: Ap,Bp,Cp,Ep,Fp
       character
-     &     ca*32, cb*32, cc*32, cd*32, ce*32, cf*32
-     &     ,cunits*8            ! units (e.g. FEET, CFS)
+     &      cunits*8            ! units (e.g. FEET, CFS)
      &     ,per_type*10         ! PER_MIN,PER_AVER 
 
       integer*4
@@ -57,7 +57,8 @@ c--------preset for a very large .dss file
 !-----write the time block
        cunits='CFS'
        per_type='PER-AVER'
-       pathnames_dss = '/TESTA/TESTB/TESTC//1MON/TESTF/'
+       !pathnames_dss = '/TESTA/TESTB/TESTC//1MON/TESTF/'
+       pathnames_dss = "/"//trim(Ap)//"/"//trim(Bp)//"/"//trim(Cp)//"//"//trim(Ep)//"/"//trim(Fp)//"/"  
        
 !       do i =1,900
 !       values_dss(i) = 100*i
