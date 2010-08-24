@@ -1,4 +1,4 @@
-      subroutine dss_write(date_begin, time_begin, nvals_to_read, values_dss)
+      subroutine dss_write(ifltab_out_dss, date_begin, time_begin, nvals_to_read, values_dss)
 
 c-----Write out a block of data to DSS
       !use io_units
@@ -29,8 +29,9 @@ c-----Write out a block of data to DSS
       real*4 values_dss(90000) ! data values
       character date_begin*10, time_begin*10
       character*80 :: pathnames_dss
-      character*130,dimension(1)::outfilenames_dss = ' '
-      integer ifltab_out_dss(1200,1)           ! DSS table for each input file
+!      character*130,dimension(1)::outfilenames_dss = ' '
+      integer, dimension(1200), intent(in) :: ifltab_out_dss          ! DSS table for each output file
+      !integer ifltab_out_dss(1200,1)           ! DSS table for each input file
  
 !==================================================
 
@@ -49,20 +50,20 @@ c--------preset for a very large .dss file
 !==================================================
 ! test Kevin
 
-         outfilenames_dss(1) = 'sample_out.dss'
-         call zopen (ifltab_out_dss(:,1), outfilenames_dss(1)
-     &    , iostat)
+!         outfilenames_dss(1) = 'sample_out.dss'
+!         call zopen (ifltab_out_dss(:,1), outfilenames_dss(1)
+!     &    , iostat)
 
 !-----write the time block
        cunits='CFS'
        per_type='PER-AVER'
-       pathnames_dss = '/TESTA/TESTB/TESTC//1HOUR/TESTF/'
+       pathnames_dss = '/TESTA/TESTB/TESTC//1MON/TESTF/'
        
 !       do i =1,900
 !       values_dss(i) = 100*i
 !       enddo
 
-      call zsrts(ifltab_out_dss(1,1),
+      call zsrts(ifltab_out_dss,
      &     pathnames_dss,
      &     date_begin , time_begin, nvals_to_read, values_dss, cunits,
      &     per_type, 0, istat)

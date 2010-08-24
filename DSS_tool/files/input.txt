@@ -3,8 +3,8 @@ historical.dss
 #A_part      B_part   C_part  E_part F_part
 HYDRO8.0B6  RSAN007  STAGE   1HOUR  HISTORICAL
 #cdate     ctime
-01JAN1991  0000
+31DEC1990  2400
 # numbor of records to read
-27
+18
 # outfile
 test.txt

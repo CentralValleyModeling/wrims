@@ -12,11 +12,19 @@
       character*32 Ap,Bp,Cp,Ep,Fp
       
       character*130,dimension(1) :: infilenames_dss
+      character*130,dimension(1) :: outfilenames_dss = ' '
+      
+      integer, dimension(600,2)  :: ifltab_in_dss           ! DSS table for each input file
+      integer, dimension(1200,2) :: ifltab_out_dss          ! DSS table for each output file
       character*80 :: pathnames_dss, file_out
       integer  :: ii
 
 
       integer*4 istat
+      
+      
+
+
 
 !      real*8 ::  temp(10,1),threeD(10,10,10)
 !
@@ -47,10 +55,10 @@
 
  
        
-
+       call zopen (ifltab_in_dss(:,1), infilenames_dss(1), istat)
           
-       call dss_read(values_dss,                        
-     &                infilenames_dss, Ap,Bp,Cp,Ep,Fp,   
+       call dss_read(values_dss,             &            
+     &                ifltab_in_dss(:,1), Ap,Bp,Cp,Ep,Fp, &   
      &                date_begin, time_begin, nvals_to_read)
 
        
@@ -63,7 +71,18 @@
         write(*,"(i,f8.4)") ii,values_dss(ii)
        end do
        
-       call dss_write(date_begin, time_begin, nvals_to_read, values_dss)
+       
+       outfilenames_dss(1) = 'sample_out.dss'
+       
+       call zopen (ifltab_out_dss(:,1), outfilenames_dss(1), istat)
+       
+       
+       call dss_write(ifltab_out_dss(:,1), date_begin, time_begin, nvals_to_read, values_dss)
+       
+       
+!       call dss_read(values_dss,             &            
+!     &                ifltab_in_dss, Ap,Bp,Cp,Ep,Fp, &   
+!     &                date_begin, time_begin, nvals_to_read)
 
        pause
       END
