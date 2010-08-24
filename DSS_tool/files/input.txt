@@ -5,7 +5,7 @@ HYDRO8.0B6  RSAN007  STAGE   1MON  HISTORICAL
 #cdate     ctime
 31DEC1990  2400
 # numbor of records to read
-3
+27
 # DSS file to write
 sample_output.dss
 #A_part      B_part   C_part  E_part F_part
