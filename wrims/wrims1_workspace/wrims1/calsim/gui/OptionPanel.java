@@ -137,6 +137,7 @@ public class OptionPanel extends JPanel {
     panel.setLayout(new GridLayout(6,2));
     panel.add(createLabel("Gen Random Table:"));
     panel.add(createCheckBoxPanel(12));
+    _check[12].setEnabled(false);
     panel.add(createLabel("Run:"));
     panel.add(createCheckBoxPanel(11));
     panel.add(createLabel("Start Month:"));
