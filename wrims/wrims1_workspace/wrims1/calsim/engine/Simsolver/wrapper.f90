@@ -667,7 +667,9 @@ SUBROUTINE WRAPPER (date, code, dss_init, reportsv, runDirectory)
   IF (stats(2)==1 .and. (stats(1)==1 .or. stats(1)==2) ) THEN
      call cpu_time(ExeFinishTime)
      write(msg,747) 'Computation Time: ', ExeFinishTime-ExeStartTime, ' Seconds'
-     IF (chareq(TRIM(genWsiDi),"FALSE").and.chareq(TRIM(posAnalysis),"FALSE"))  CALL StopWithFinal(msg)
+     if (showDialogWindow) then
+         IF (chareq(TRIM(genWsiDi),"FALSE").and.chareq(TRIM(posAnalysis),"FALSE"))  CALL StopWithFinal(msg)
+     end if    
   ELSE
      CALL XA_ERRORHANDLER(stats(1),stats(2),date,icycle,Number_of_cycles,studyType,errorLog)
      msg='XA HAD BAD SOLUTION'
