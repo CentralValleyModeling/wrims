@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="**/*.dll|**/*.lib|**/*.mod|**/*.obj|**/*.py|**/*.txt|**/.svn|**/.svn/*|*.dll|*.jj|*.lib|*.mod|*.py|*.txt|.svn/|calsim/classes/|calsim/installer/|calsim/jre/|hec_dlls/|xa_dlls/" kind="src" path=""/>
+	<classpathentry excluding="**/*.dll|**/*.mod|**/*.txt|**/.svn|**/.svn/*|*.dll|*.jj|*.mod|*.py|*.txt|.svn/|calsim/classes/|calsim/installer/|calsim/jre/|calsim/lib/*.lib|calsim/lib/*.obj|calsim/lib/*.py|hec_dlls/|xa_dlls/" kind="src" path=""/>
 	<classpathentry kind="lib" path="calsim/lib/__init__.py"/>
 	<classpathentry kind="lib" path="calsim/lib/Acme.jar"/>
 	<classpathentry kind="lib" path="calsim/lib/collections.jar"/>

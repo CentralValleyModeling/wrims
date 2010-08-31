@@ -437,6 +437,58 @@ public class Study {
     doc.write(pw); pw.close();
     _modified = false;
   }
+  
+  public Vector getAllPropertiesDescription() {
+	    Vector vDesc = new Vector();
+	    vDesc.addElement("study name");
+	    vDesc.addElement("author");
+	    vDesc.addElement("date");
+	    vDesc.addElement("desc");
+	    vDesc.addElement("hydrology");
+	    vDesc.addElement("study dir");
+	    vDesc.addElement("study filename");
+	    vDesc.addElement("main wreslFile");
+	    vDesc.addElement("SV DSS file");
+	    vDesc.addElement("DV DSS file");
+	    vDesc.addElement("INIT DSS file");
+	    //DJE********************************************************
+	    vDesc.addElement("timeStep");
+
+	    if (!AppUtils.position) {
+			  vDesc.addElement("number of steps");
+		  } else {
+			  vDesc.addElement("number of steps");
+		  }
+	    vDesc.addElement("start day");
+	    //******************************************
+	    vDesc.addElement("start month");
+	    vDesc.addElement("start year");
+	    //DJE removed stop date parameters
+	    vDesc.addElement("sim option");
+	    vDesc.addElement("number of sequences");
+	    vDesc.addElement("solver report");
+	    vDesc.addElement("solver list");
+	    vDesc.addElement("slack report");
+	    vDesc.addElement("slack save");
+	    vDesc.addElement("add XA options");
+	    vDesc.addElement("SV report");
+	    vDesc.addElement("SV save");
+	    vDesc.addElement("DSS debug");
+	    vDesc.addElement("DSS save");
+	    vDesc.addElement("gen WsiDi");
+	    vDesc.addElement("use restart");
+	    vDesc.addElement("gen restart");
+	 //CB not yet   vDesc.addElement(_pricingRHSSensitivity);
+	 //CB not yet   vDesc.addElement(_activitySensitivity);
+	    vDesc.addElement("SV DV DSS file A part");
+	    vDesc.addElement("SV    DSS file F part");    
+	    vDesc.addElement("Init  DSS file F part");
+	    vDesc.addElement("pos analysis");
+	    vDesc.addElement("show dialog window");
+	    vDesc.addElement("pos start year");
+	    return vDesc;
+	  }
+
   /**
    * reads all the study data from a file in binary format
    */
