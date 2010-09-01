@@ -4,9 +4,9 @@ import os
 
 print __file__
 
-Version_ = 'WRIMS v1.3.7 (XA16)'
-Version_Nospace_ = 'WRIMS_v1.3.7_XA16'
-Version_XA = 'xav16' 
+Version_ = 'WRIMS v1.3.7 (XA13)'
+Version_Nospace_ = 'WRIMS_v1.3.7_XA13'
+Version_XA = 'xav13' 
 
 VersionTemplate     = "version=@{Version} SVN:@{Version_SVN} " 
 VersionWrapperTemplate = "  CHARACTER(LEN=36), parameter     :: version_identifier = '@{Version} SVN:@{Version_SVN}'"
