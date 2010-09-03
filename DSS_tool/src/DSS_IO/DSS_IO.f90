@@ -2,13 +2,15 @@
       
       !use MatData
       use dss_utility
+      use string_utility
 
       IMPLICIT NONE
 
 ! test Kevin
       integer*4 nvals_to_read
       real*4    values_dss(9000) ! data values
-      character date_begin*10, time_begin*10
+      character date_begin_read*10, time_begin_read*10
+      character date_begin_write*10, time_begin_write*10
       character*32 Api,Bpi,Cpi,Epi,Fpi
       character*32 Apo,Bpo,Cpo,Epo,Fpo      
       
@@ -16,11 +18,11 @@
       character*130,dimension(2) :: outfilenames_dss = ' '
       
       integer, dimension(600,2)  :: ifltab_in_dss           ! DSS table for each input file
-      integer, dimension(1200,2) :: ifltab_out_dss          ! DSS table for each output file
+      integer, dimension(600,2) :: ifltab_out_dss          ! DSS table for each output file
       character*80 ::  file_out
       integer  :: ii
 
-
+      logical :: sameFile = 0
       integer*4 istat
       
       
@@ -44,27 +46,35 @@
          read(1, *)
          read(1, *) Api,Bpi,Cpi,Epi,Fpi
          read(1, *)
-         read(1, *) date_begin, time_begin
+         read(1, *) date_begin_read, time_begin_read
          read(1, *)
          read(1, *) nvals_to_read
          read(1, *) 
          read(1, *) outfilenames_dss(1)
          read(1, *) 
          read(1, *) Apo,Bpo,Cpo,Epo,Fpo
-         read(1, *) 
+         read(1, *)
+         read(1, *) date_begin_write, time_begin_write
+         read(1, *)
          read(1, *) file_out
          
 
-                                  
+       if (StrLowCase(trim(infilenames_dss(1))) .eq. StrLowCase(trim(outfilenames_dss(1))) ) then
+         sameFile = 1
+       else
+         sameFile = 0
+       end if                                     
 
 
  
        
        call zopen (ifltab_in_dss(:,1), infilenames_dss(1), istat)
+       
+       !call ZOPCAT ( CDSSFI, CATFIL, ICUNIT, LOPEN, LCATLG, LCREAT, NREC)
           
        call dss_read(values_dss,             &            
      &                ifltab_in_dss(:,1), Api,Bpi,Cpi,Epi,Fpi, &   
-     &                date_begin, time_begin, nvals_to_read)
+     &                date_begin_read, time_begin_read, nvals_to_read)
 
        
      
@@ -77,14 +87,28 @@
        end do
 !========================================================       
        
+       if (sameFile) then
+         ifltab_out_dss(:,1) = ifltab_in_dss(:,1)
+       else
+         call zopen (ifltab_out_dss(:,1), outfilenames_dss(1), istat)
+       end if      
        
-       call zopen (ifltab_out_dss(:,1), outfilenames_dss(1), istat)       
        
-       call dss_write(values_dss, ifltab_out_dss(:,1), Apo,Bpo,Cpo,Epo,Fpo, date_begin, time_begin, nvals_to_read)
+       
+       call dss_write(values_dss, ifltab_out_dss(:,1),  &
+                      Apo,Bpo,Cpo,Epo,Fpo,              &
+                      date_begin_write, time_begin_write, & 
+                      nvals_to_read)
        
 
-       call zclose (ifltab_in_dss(:,1))
-       call zclose (ifltab_out_dss(:,1))
+
+
+       if  (sameFile) then
+         call zclose (ifltab_in_dss(:,1))
+       else
+         call zclose (ifltab_in_dss(:,1))
+         call zclose (ifltab_out_dss(:,1))
+       end if    
        
        pause
 END
