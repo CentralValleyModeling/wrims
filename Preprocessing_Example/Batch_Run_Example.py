@@ -50,7 +50,7 @@ for i, Fpart in enumerate(FpartList):
 	studyFile.write(text)
 	studyFile.close()
 
-	#subprocess.call(['runWRIMS.bat' ])          # call WRIMS compiled exe to run
+	subprocess.call(['runWRIMS.bat' ])          # call WRIMS compiled exe to run
 	
 	print " Finished Run "+str(i+1)+"/"+str(len(serialList))+ "  "+Fpart
 
