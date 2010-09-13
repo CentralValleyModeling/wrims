@@ -1431,7 +1431,7 @@ public class MainMenuBar
 				  GuiUtils.getVersionName() + "\n"
 				  + GuiUtils.getLocaleDescription() + "\n"
 	              //+ "Authors: Armin Munevar, Nicky Sandhu, Yan-Ping Zuo" + "\n"
- 				  + "Copyright (C) 1998, 2001,2010 State of California, Department of Water Resources.",
+ 				  + "Copyright (C) 1998, 2001, 2010 State of California, Department of Water Resources.",
 				  "About",
 				  JOptionPane.INFORMATION_MESSAGE,
 				  dwrIcon);
