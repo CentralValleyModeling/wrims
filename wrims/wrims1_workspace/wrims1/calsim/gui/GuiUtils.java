@@ -68,7 +68,7 @@ public class GuiUtils{
    */
   public static String getVersionName(){
     Properties props = new Properties();
-    String version = "1.0";
+    String version = "1.5";
     try {
       props.load(VistaUtils.getResourceAsStream("/calsim/version.txt"));
       version = props.getProperty("version");
