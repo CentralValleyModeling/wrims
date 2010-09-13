@@ -67,6 +67,7 @@ public class GeneralRetrievePanel extends JPanel {
 		_upperPanel = createUpperPanel();
 		_lowerPanel = createLowerPanel();
 		setLayout(new BorderLayout());
+		setBackground(new Color(207,220,200));
 		add(_upperPanel, BorderLayout.NORTH);
 		add(_lowerPanel, BorderLayout.CENTER);
 	}
@@ -78,6 +79,7 @@ public class GeneralRetrievePanel extends JPanel {
 		// create filter panel
 		JPanel filterPanel = new JPanel();
 		filterPanel.setLayout(new GridLayout(1, 7));
+		filterPanel.setBackground(new Color(207,220,200));
 		_varTypeBox = new JComboBox(
 				new String[] { AppUtils.DVAR, AppUtils.SVAR });
 		_varTypeBox.setBorder(BorderFactory.createTitledBorder(BorderFactory
@@ -145,6 +147,7 @@ public class GeneralRetrievePanel extends JPanel {
 		box1.add(Box.createHorizontalGlue());
 		JPanel upperPanel = new JPanel();
 		upperPanel.setLayout(new BorderLayout());
+		upperPanel.setBackground(new Color(207,220,200));
 		upperPanel.add(box1, BorderLayout.CENTER);
 		return upperPanel;
 	}
@@ -170,6 +173,7 @@ public class GeneralRetrievePanel extends JPanel {
 		//
 		JPanel lowerPanel = new JPanel();
 		lowerPanel.setLayout(new BorderLayout());
+		lowerPanel.setBackground(new Color(207,220,200));
 		lowerPanel.add(new JScrollPane(_table), BorderLayout.CENTER);
 		return lowerPanel;
 	}

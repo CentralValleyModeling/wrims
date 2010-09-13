@@ -64,6 +64,7 @@ public class OptionPanel extends JPanel {
 
     _check = new JCheckBox[13];
     setLayout( new XYGridLayout(22,30) );
+    setBackground(new Color(229,240,203));
     // solver options
     JPanel panel = new JPanel();
     panel.setLayout(new GridLayout(2,2));
@@ -72,6 +73,7 @@ public class OptionPanel extends JPanel {
     panel.add(createCheckBoxPanel(0));
     panel.add(createLabel("     Listing:"));
     panel.add(createComboBoxPanel());
+    panel.setBackground(new Color(207,220,200));
     add(panel, new Rectangle(1,1,9,6) );
     // state variable output options
     panel = new JPanel();
@@ -82,6 +84,7 @@ public class OptionPanel extends JPanel {
     panel.add(createCheckBoxPanel(7));
     panel.add(createLabel("Gen WSI-DI Tables:"));
     panel.add(createCheckBoxPanel(8));
+    panel.setBackground(new Color(207,220,200));
     add(panel, new Rectangle(11,1,9,6));
     // slack/ surplus output
     panel = new JPanel();
@@ -91,6 +94,7 @@ public class OptionPanel extends JPanel {
     panel.add(createCheckBoxPanel(3));
     panel.add(createLabel("Save All   :"));
     panel.add(createCheckBoxPanel(4));
+    panel.setBackground(new Color(207,220,200));
     add(panel, new Rectangle(11,8,9,6));
     // dss options
     panel = new JPanel();
@@ -100,6 +104,7 @@ public class OptionPanel extends JPanel {
     panel.add(createCheckBoxPanel(5));
     panel.add(createLabel("Save Old :"));
     panel.add(createCheckBoxPanel(6));
+    panel.setBackground(new Color(207,220,200));
     add(panel, new Rectangle(1,8,9,6));
     // add xa
     panel = new JPanel();
@@ -116,6 +121,7 @@ public class OptionPanel extends JPanel {
     panel.add(createCheckBoxPanel(10));
     _check[9].setEnabled(false);
     _check[10].setEnabled(false);
+    panel.setBackground(new Color(207,220,200));
     add(panel, new Rectangle(11,15,9,10));
 
 
@@ -145,24 +151,29 @@ public class OptionPanel extends JPanel {
     monpanel.setLayout(new FlowLayout(FlowLayout.LEFT));
     monpanel.add(_months);
     panel.add(monpanel);
+    monpanel.setBackground(new Color(207,220,200));
     panel.add(createLabel("Periods:"));
     monpanel = new JPanel();
     monpanel.setLayout(new FlowLayout(FlowLayout.LEFT));
     monpanel.add(_nper);
     _nper.setText("0");
+    monpanel.setBackground(new Color(207,220,200));
     panel.add(monpanel);
     panel.add(createLabel("First Start Year:"));
     monpanel = new JPanel();
     monpanel.setLayout(new FlowLayout(FlowLayout.LEFT));
     monpanel.add(_start);
     _start.setSelectedItem("1921");
+    monpanel.setBackground(new Color(207,220,200));
     panel.add(monpanel);
     panel.add(createLabel("Last Start Year:"));
     monpanel = new JPanel();
     monpanel.setLayout(new FlowLayout(FlowLayout.LEFT));
     monpanel.add(_stop);
     _stop.setSelectedItem("1921");
+    monpanel.setBackground(new Color(207,220,200));
     panel.add(monpanel);
+    panel.setBackground(new Color(207,220,200));
     add(panel, new Rectangle(1,15,9,15));
 
 		_months.setEnabled(false);
@@ -176,6 +187,7 @@ public class OptionPanel extends JPanel {
     panel.setLayout( new GridLayout(1,1) );
     //panel.add(createLabel("XA Options:"));
     panel.add(createTextPanel());
+    panel.setBackground(new Color(207,220,200));
     add(panel, new Rectangle(11,26,9,4));
 
 		final Hashtable monthIndex = new Hashtable(12);
@@ -302,6 +314,7 @@ public class OptionPanel extends JPanel {
     JPanel panel = new JPanel();
     panel.setLayout(new FlowLayout(FlowLayout.RIGHT));
     panel.add(label);
+    panel.setBackground(new Color(207,220,200));
     return panel;
   }
   /**
@@ -312,6 +325,7 @@ public class OptionPanel extends JPanel {
     panel.setLayout(new FlowLayout(FlowLayout.LEFT));
     _check[type] = new JCheckBox("",false);
     panel.add(_check[type]);
+    panel.setBackground(new Color(207,220,200));
     return panel;
   }
   /**
@@ -322,6 +336,7 @@ public class OptionPanel extends JPanel {
     panel.setLayout(new FlowLayout(FlowLayout.LEFT));
     _solverRepList = new JComboBox(listString);
     panel.add(_solverRepList);
+    panel.setBackground(new Color(207,220,200));
     return panel;
   }
   /**
@@ -332,6 +347,7 @@ public class OptionPanel extends JPanel {
     panel.setLayout(new FlowLayout(FlowLayout.CENTER));
     _addXaOptions = new JTextField(24);
     panel.add(_addXaOptions);
+    panel.setBackground(new Color(207,220,200));
     return panel;
   }
 

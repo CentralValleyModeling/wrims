@@ -341,6 +341,8 @@ public class MessagePanel
     gc.gridwidth = GridBagConstraints.REMAINDER;
     gc.weightx = 1.0;
     panel.add(_messages[13],gc);
+    
+    panel.setBackground(new Color(229,240,203));
 
     /*
     gc.anchor = GridBagConstraints.WEST;
@@ -392,6 +394,7 @@ public class MessagePanel
 				       "Message Panel")
 		    );
     panel1.setLayout(new GridBagLayout());
+    panel1.setBackground(new Color(229,240,203));
     gc.anchor = GridBagConstraints.NORTHWEST;
     gc.gridx = 0;
     gc.gridy = 0;
@@ -442,6 +445,7 @@ public class MessagePanel
     panel.add(labelNames[9],gc);
     gc.gridx = 8;
     panel.add(createUnitsPanel(),gc);
+    panel.setBackground(new Color(229,240,203));
     return panel;
 	}
 
@@ -449,6 +453,8 @@ public class MessagePanel
 		JPanel panel = new JPanel();
 		ButtonGroup g = new ButtonGroup();
 		g.add(taf); g.add(cfs);
+		taf.setBackground(new Color(229,240,203));
+		cfs.setBackground(new Color(229,240,203));
 		taf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (DEBUG) System.out.println("TAF");
@@ -466,6 +472,7 @@ public class MessagePanel
 		panel.setPreferredSize(new Dimension(100,12));
 		panel.setLayout(new GridLayout(1,0));
 		panel.add(taf); panel.add(cfs);
+	    panel.setBackground(new Color(229,240,203));
 		return panel;
 	}
 
@@ -473,6 +480,9 @@ public class MessagePanel
 		JPanel panel = new JPanel();
 		ButtonGroup g = new ButtonGroup();
 		g.add(base); g.add(comp); g.add(diff);
+		base.setBackground(new Color(229,240,203));
+		comp.setBackground(new Color(229,240,203));
+		diff.setBackground(new Color(229,240,203));
 		base.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -506,6 +516,7 @@ public class MessagePanel
 		panel.setPreferredSize(new Dimension(150,12));
 		panel.setLayout(new GridLayout(1,0));
 		panel.add(base); panel.add(comp); panel.add(diff);
+	    panel.setBackground(new Color(229,240,203));
 		return panel;
 	}
 
@@ -573,6 +584,9 @@ public class MessagePanel
 		plot.setFont(new Font(f.getName(),f.getStyle(),10));
 		table.setFont(new Font(f.getName(),f.getStyle(),10));
 		monthly.setFont(new Font(f.getName(),f.getStyle(),10));
+		plot.setBackground(new Color(229,240,203));
+		table.setBackground(new Color(229,240,203));
+		monthly.setBackground(new Color(229,240,203));
 		panel.setPreferredSize(new Dimension(165,12));
 		panel.setLayout(new GridLayout(1,0));
 		panel.add(plot); panel.add(table); panel.add(monthly);

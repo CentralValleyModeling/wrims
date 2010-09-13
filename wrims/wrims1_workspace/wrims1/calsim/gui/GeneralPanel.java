@@ -37,6 +37,7 @@ sushil@water.ca.gov
 package calsim.gui;
 import calsim.app.*;
 import vista.gui.*;
+
 import java.awt.*;
 import java.awt.event.*;
 //import java.io.*;
@@ -97,7 +98,8 @@ public class GeneralPanel extends JPanel {
     yl = new MYItemListener[2];
     //******************************************************
     add(createLabelPanel(), BorderLayout.WEST);
-    add(createAttribPanel(), BorderLayout.CENTER);
+    add(createAttribPanel(), FlowLayout.CENTER);
+    add(createImagePanel(),BorderLayout.EAST);
   }
 
   /**
@@ -136,6 +138,7 @@ public class GeneralPanel extends JPanel {
     panel.add(createLabel("Start Date:"));
     panel.add(createLabel("Stop Date:"));
     panel.add(createLabel("Sim Option:"));
+    panel.setBackground(new Color(229,240,203));
     return panel;
   }
   /*	private JLabel createLabel(String str) {
@@ -149,6 +152,7 @@ public class GeneralPanel extends JPanel {
     JPanel panel = new JPanel();
     panel.setLayout(new FlowLayout(FlowLayout.RIGHT));
     panel.add(label);
+    panel.setBackground(new Color(229,240,203));
     return panel;
   }
   /**
@@ -175,8 +179,29 @@ public class GeneralPanel extends JPanel {
     panel.add(createDatePanel(0));//start date
     panel.add(createDatePanel(1));//end date
     panel.add(createSimOptionPanel());//sim options
+    panel.setBackground(new Color(229,240,203));
     return panel;
   }
+  
+  JPanel createImagePanel(){
+	    JPanel panel = new JPanel();
+	    panel.setLayout(new BorderLayout());
+	    ImageIcon icon1 = new ImageIcon(VistaUtils.getImageAsBytes("/Calsim/GUI/aqueduct9707.jpg")); 
+	    JLabel label1 = new JLabel("  "); 
+	    label1.setIcon(icon1); 
+	    label1.setHorizontalAlignment(SwingConstants.CENTER);
+	    label1.setVerticalAlignment(SwingConstants.CENTER);
+	    panel.add(label1, BorderLayout.NORTH); 
+	    ImageIcon icon2 = new ImageIcon(VistaUtils.getImageAsBytes("/Calsim/GUI/dwr_logo.jpg")); 
+	    JLabel label2 = new JLabel(); 
+	    label2.setIcon(icon2); 
+	    label2.setHorizontalAlignment(SwingConstants.CENTER);
+	    label2.setVerticalAlignment(SwingConstants.CENTER);
+	    panel.add(label2, BorderLayout.CENTER);
+	    panel.setBackground(new Color(229,240,203));
+	    return panel;
+  }
+  
   JPanel createFilePanel(int type) {
     JPanel panel = new JPanel();
     panel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -184,17 +209,19 @@ public class GeneralPanel extends JPanel {
     panel.add(_fileText[type]);
     JButton button = createFileChooser(type);
     panel.add(button);
+    panel.setBackground(new Color(229,240,203));
     return panel;
   }
   JPanel createDescPanel() {
     JPanel panel = new JPanel();
     panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-    _desc = new JTextArea(2,78);
+    _desc = new JTextArea(2,50);
     _desc.setLineWrap(true);
     _desc.setWrapStyleWord(true);
     JScrollPane descScrollPane = new JScrollPane(_desc);
     descScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     panel.add(descScrollPane);
+    panel.setBackground(new Color(229,240,203));
     return panel;
   }
 
@@ -210,6 +237,7 @@ public class GeneralPanel extends JPanel {
     panel.add(_timeStep);
     panel.add(new JLabel("     Number of Time Steps: "));
     panel.add(_numberSteps);
+    panel.setBackground(new Color(229,240,203));
     return panel;
   }
   //******************************************************
@@ -246,20 +274,23 @@ public class GeneralPanel extends JPanel {
     panel.add(_day[type]);
     panel.add(new JLabel(" Day"));
     //********************************************************
+    panel.setBackground(new Color(229,240,203));
     return panel;
   }
   JPanel createTextPanel(int type) {
     JPanel panel = new JPanel();
     panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-    _entryText[type] = new JTextField(50);
+    _entryText[type] = new JTextField(52);
     panel.add(_entryText[type]);
+    panel.setBackground(new Color(229,240,203));
     return panel;
   }
   JPanel createTextPanelShort(int type) {
 	    JPanel panel = new JPanel();
 	    panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-	    _entryText[type] = new JTextField(30);
+	    _entryText[type] = new JTextField(32);
 	    panel.add(_entryText[type]);
+	    panel.setBackground(new Color(229,240,203));
 	    return panel;
 	  }
   JPanel createSimOptionPanel() {
@@ -271,6 +302,7 @@ public class GeneralPanel extends JPanel {
     panel.add(_simOption);
     panel.add(new JLabel("     # Sequences  "));
     panel.add(_numSeq);
+    panel.setBackground(new Color(229,240,203));
     return panel;
   }
 
@@ -282,6 +314,7 @@ public class GeneralPanel extends JPanel {
 	    panel.add(_svdvFileAPartOption);
 	    panel.add(new JLabel("     SV file F Part:  "));
 	    panel.add(createTextPanelShort(5));// sv file f part
+	    panel.setBackground(new Color(229,240,203));
 	    return panel;
 	  }
   /**

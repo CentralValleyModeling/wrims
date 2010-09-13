@@ -36,6 +36,9 @@ sushil@water.ca.gov
 
 package calsim.gui;
 //import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+
 import javax.swing.*;
 //import java.io.*;
 
@@ -64,7 +67,11 @@ public class TabbedPane
    */
   JTabbedPane createTabbedPane() {
     _tabbedPane = new JTabbedPane();
-    _tabbedPane.addTab("Study   ", null, GuiUtils.createStudyTab(), "Study tabbed pane");
+    JPanel jPanel = new JPanel();
+    jPanel .setLayout(new BorderLayout());
+    jPanel.setBackground(new Color(229,240,203));
+    jPanel.add(GuiUtils.createStudyTab());
+    _tabbedPane.addTab("Study   ", null, jPanel, "Study tabbed pane");
     _tabbedPane.addTab("Output    ", null, GuiUtils.createMainPanel(_fr), "OutPut panel");
     return _tabbedPane;
   }

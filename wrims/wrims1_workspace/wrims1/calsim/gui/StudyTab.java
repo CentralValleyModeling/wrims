@@ -66,13 +66,17 @@ public class StudyTab extends JTabbedPane {
   public StudyTab(Study study) {
     _study = study;
     _generalPanel = new GeneralPanel();
+    JPanel jPanel = new JPanel(); 
     _inputPanel = new InputPanel();
+    jPanel.setBackground(new Color(229,240,203));
+    jPanel.setLayout(new BorderLayout());
+    jPanel.add(_inputPanel);
     _lookupPanel = new MTab(new LookupUI());
     _optionPanel = new OptionPanel();
     _sensitivityPanel = new SensitivityOptionsPanel();
     _resultPanel = new ResultPanel();
     addTab("General   ", null, _generalPanel, "General panel");
-    addTab("System    ", null, _inputPanel, "System panel");
+    addTab("System    ", null, jPanel, "System panel");
     addTab("Lookup    ", null, _lookupPanel, "Lookup data Panel");
     addTab("Options  ", null, _optionPanel, "Options panel");
     addTab("Sensitivity", null, _sensitivityPanel, "Sensitivity options panel");
@@ -109,9 +113,11 @@ public class StudyTab extends JTabbedPane {
     //CB added the following code:
     JCheckBox hideWarnings = new JCheckBox("Hide Warnings");
     hideWarnings.setSelected(true);
+    hideWarnings.setBackground(new Color(229,240,203));
     hideWarnings.setToolTipText(
     	"Hides \"local name will be same as global\" warnings for decision variables and timeseries");
     JCheckBox hideProgressDetails = new JCheckBox("Hide Progress Details");
+    hideProgressDetails.setBackground(new Color(229,240,203));
     hideProgressDetails.setSelected(true);
     hideProgressDetails.setToolTipText(
     	"Hides the more detailed progress messages such as the successfully parsed file messages");
@@ -166,6 +172,7 @@ public class StudyTab extends JTabbedPane {
     panel.add(compileButton);    
     panel.add(run);
     panel.setBorder(BorderFactory.createEtchedBorder());
+    panel.setBackground(new Color(229,240,203));
     return panel;
   }
 

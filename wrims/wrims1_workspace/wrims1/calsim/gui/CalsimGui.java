@@ -82,10 +82,11 @@ public class CalsimGui {
   public CalsimGui(String prjFile) {
 //    JFrame fr = new JFrame(GuiUtils.getProgramName()+GuiUtils.getVersionNo());
     //JFrame fr = new JFrame(GuiUtils.getProgramName()); // version is already in About screen
-	  frameBase.setIconImage(Toolkit.getDefaultToolkit().
+	frameBase.setIconImage(Toolkit.getDefaultToolkit().
 		createImage(VistaUtils.getImageAsBytes("/calsim/gui/calsimoas.gif")));
-    Container pane = frameBase.getContentPane();
-    pane.setLayout(new BorderLayout());
+	Container pane = frameBase.getContentPane();
+	pane.setBackground(new Color(207,220,200));
+	pane.setLayout(new BorderLayout());
     TabbedPane tabbedPane = new TabbedPane(frameBase);
     pane.add(tabbedPane.getTabbedPane(), BorderLayout.CENTER);
     pane.add(GuiUtils.getStatusPanel(), BorderLayout.SOUTH);
