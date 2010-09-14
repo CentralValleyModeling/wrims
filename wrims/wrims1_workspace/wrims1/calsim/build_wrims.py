@@ -111,6 +111,7 @@ writeBatch_copy(targetpath+'app\\data\\',         'app\\data\\*.table')
 writeBatch_copy(targetpath+'app\\',               'app\\*.props')
 writeBatch_copy(targetpath+'schematic\\',         'schematic\\*.gif')
 writeBatch_copy(targetpath+'gui\\',               'gui\\*.gif')
+writeBatch_copy(targetpath+'gui\\',               'gui\\*.jpg')
 
 batchFile_copy.write('cd help \n')
 writeBatch_jar(targetLibPath+'calsim-help.jar', '*')
