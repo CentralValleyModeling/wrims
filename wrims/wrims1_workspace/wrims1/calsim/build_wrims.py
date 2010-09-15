@@ -1,11 +1,10 @@
 import os,subprocess
-import version_file
+import local_config
 
 def version_generate(versionWRIMS, versionXA):
 
 	Version_ = 'WRIMS v' + versionWRIMS + ' ('+versionXA+')'
 	Version_Nospace_ = 'WRIMS_v' + versionWRIMS +'_' + versionXA
-	#Version_XA = version_file.Version_XA #'xav13' 
 	
 	VersionTemplate     = "version=@{Version} SVN:@{Version_SVN} " 
 	VersionWrapperTemplate = "  CHARACTER(LEN=36), parameter     :: version_identifier = '@{Version} SVN:@{Version_SVN}'"
@@ -136,7 +135,7 @@ def writeBatch_jar(target, source):
 
     batchFile_copy.write(jar+' -cf '+target+' '+source+'\n\n')
 
-version_generate(version_file.versionWRIMS, version_file.versionXA)
+version_generate(local_config.versionWRIMS, local_config.versionXA)
 	
 #cwd = os.path.split( __file__)[0];
 calsim_path    = os.path.split( __file__)[0]+'\\'
@@ -154,14 +153,14 @@ batchFile_copy = open(calsim_path+'pythonwrite_copy.bat','w')
 #cwd = cwd+"\\calsim";
 
 #javac = r'D:\Java\jdk_x86\jdk1.6.0_21\bin\javac -J"-mx44m" -g -d'
-javac = version_file.javac 
+javac = local_config.javac 
 #javac = r'D:\Java\jdk_x86\jdk1.6.0_21\bin\javac'
-jar = version_file.jar 
-targetpath = version_file.targetpath 
-targetpath_m = version_file.targetpath_m 
-targetLibPath = version_file.targetLibPath 
+jar = local_config.jar 
+targetpath = local_config.targetpath 
+targetpath_m = local_config.targetpath_m 
+targetLibPath = local_config.targetLibPath 
 
-classpath = version_file.classpath 
+classpath = local_config.classpath 
 
 
 		
@@ -225,7 +224,7 @@ subprocess.call(['pythonwrite_copy.bat' ])
 
 os.chdir(calsim_path+'installer')
 compilePackageFile = open('compile_package.bat','w')
-compilePackageFile.writelines('set path="'+version_file.innoSetupPath+'";%path% \n')
+compilePackageFile.writelines('set path="'+local_config.innoSetupPath+'";%path% \n')
 compilePackageFile.writelines('compil32 /cc "setup.iss" \n')
 compilePackageFile.close()
 subprocess.call(['compile_package.bat' ])
