@@ -22,6 +22,5 @@
 	<classpathentry kind="lib" path="calsim/lib/WrimsSchematic.jar"/>
 	<classpathentry kind="lib" path="calsim/lib/xml.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="calsim/lib/calsim-help.jar"/>
 	<classpathentry kind="output" path="calsimEclipseOutput"/>
 </classpath>
