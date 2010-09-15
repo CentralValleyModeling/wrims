@@ -186,13 +186,13 @@ public class GeneralPanel extends JPanel {
   JPanel createImagePanel(){
 	    JPanel panel = new JPanel();
 	    panel.setLayout(new BorderLayout());
-	    ImageIcon icon1 = new ImageIcon(VistaUtils.getImageAsBytes("/Calsim/GUI/aqueduct9707.jpg")); 
+	    ImageIcon icon1 = new ImageIcon(VistaUtils.getImageAsBytes("/calsim/graphics/aqueduct9707.jpg")); 
 	    JLabel label1 = new JLabel("  "); 
 	    label1.setIcon(icon1); 
 	    label1.setHorizontalAlignment(SwingConstants.CENTER);
 	    label1.setVerticalAlignment(SwingConstants.CENTER);
 	    panel.add(label1, BorderLayout.NORTH); 
-	    ImageIcon icon2 = new ImageIcon(VistaUtils.getImageAsBytes("/Calsim/GUI/dwr_logo.jpg")); 
+	    ImageIcon icon2 = new ImageIcon(VistaUtils.getImageAsBytes("/calsim/graphics/dwr_logo.jpg")); 
 	    JLabel label2 = new JLabel(); 
 	    label2.setIcon(icon2); 
 	    label2.setHorizontalAlignment(SwingConstants.CENTER);

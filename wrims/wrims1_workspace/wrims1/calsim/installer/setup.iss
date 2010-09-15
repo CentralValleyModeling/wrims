@@ -48,10 +48,11 @@ Name: "main"; Description: "Main Files"; Types: full compact custom;
 
 [Files]
 
-Source: "..\bin\*";        Excludes: ".svn, xa*.dll";   DestDir: "{app}\bin\";       Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
-Source: "..\lib\*";        Excludes: ".svn";            DestDir: "{app}\lib\";       Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
-Source: "..\svg\*";        Excludes: ".svn";            DestDir: "{app}\svg\";       Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
-Source: "..\license\*";    Excludes: ".svn";            Destdir: "{app}\";           Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
+Source: "..\bin\*";        Excludes: ".svn, xa*.dll";   DestDir: "{app}\bin\";                Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
+Source: "..\lib\*";        Excludes: ".svn";            DestDir: "{app}\lib\";                Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
+Source: "..\svg\*";        Excludes: ".svn";            DestDir: "{app}\svg\";                Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
+Source: "..\license\*";    Excludes: ".svn";            Destdir: "{app}\";                    Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
+Source: "..\graphics\*";   Excludes: ".svn";  Destdir: "{app}\lib\graphics\calsim\graphics";  Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
 
 
 [Icons]
@@ -83,6 +84,7 @@ begin
              + #13#10 + 'start {app}\jre\bin\java -Xmx512m -Dcalsim.home={app} -cp '
              +          '"'
              +          '{app}\lib\calsim.jar;'
+             +          '{app}\lib\graphics\;'			 
              +          '{app}\lib\vista.jar;'
              +          '{app}\lib\Acme.jar;'
              +          '{app}\lib\COM.jar;'
