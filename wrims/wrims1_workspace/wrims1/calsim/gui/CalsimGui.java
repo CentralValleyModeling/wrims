@@ -53,7 +53,7 @@ public class CalsimGui {
   //public final String CALSIM_HOME = "D:\\WRIMS1Development\\Calsim1.3\\calsim"; // CB for IDE use (non-batch file)
   private static JFrame frameBase = new JFrame(GuiUtils.getProgramName()); // version is already in About screen
   public static boolean DEBUG = true;
-  public static int FRAME_WIDTH=1008;
+  public static int FRAME_WIDTH=1095;
   public static int FRAME_HEIGHT=666;
   static {
 		loadProps();

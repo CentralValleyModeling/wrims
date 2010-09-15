@@ -29,6 +29,6 @@ ReportUtils.minimumFractionDigits = 0
 ReportUtils.minimumIntegerDigits = 1
 ReportUtils.maximumFractionDigits = 0
 #
-CalsimGui.FRAME_WIDTH=1008
+CalsimGui.FRAME_WIDTH=1095
 CalsimGui.FRAME_HEIGHT=666
 #
