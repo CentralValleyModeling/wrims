@@ -154,14 +154,14 @@ batchFile_copy = open(calsim_path+'pythonwrite_copy.bat','w')
 #cwd = cwd+"\\calsim";
 
 #javac = r'D:\Java\jdk_x86\jdk1.6.0_21\bin\javac -J"-mx44m" -g -d'
-javac = version_file.javac #= r'D:\Java\jdk_x86\jdk1.6.0_21\bin\javac -J"-mx44m" -g '
+javac = version_file.javac 
 #javac = r'D:\Java\jdk_x86\jdk1.6.0_21\bin\javac'
-jar = version_file.jar #r'D:\Java\jdk_x86\jdk1.6.0_21\bin\jar.exe'
-targetpath = version_file.targetpath #r'D:\cvwrsm\wrims\wrims1_workspace\wrims1\calsim\classes\calsim'+'\\'
-targetpath_m = version_file.targetpath_m #r'D:\cvwrsm\wrims\wrims1_workspace\wrims1\calsim\classes\calsim'
-targetLibPath = version_file.targetLibPath #r'D:\cvwrsm\wrims\wrims1_workspace\wrims1\calsim\lib'+'\\'
+jar = version_file.jar 
+targetpath = version_file.targetpath 
+targetpath_m = version_file.targetpath_m 
+targetLibPath = version_file.targetLibPath 
 
-classpath = version_file.classpath #'".;D:\\cvwrsm\\wrims\\wrims1_workspace\\wrims1\\calsim\\..;D:\\Java\\jdk_x86\\jdk1.6.0_21\\lib\\classes.zip;D:\\cvwrsm\\wrims\\wrims1_workspace\\wrims1\\calsim\\lib\\vista.jar;D:\\cvwrsm\\wrims\\wrims1_workspace\\wrims1\\calsim\\lib\\COM.jar;D:\\cvwrsm\\wrims\\wrims1_workspace\\wrims1\\calsim\\lib\\test.jar;D:\\cvwrsm\\wrims\\wrims1_workspace\\wrims1\\calsim\\lib\\jhall.jar;D:\\cvwrsm\\wrims\\wrims1_workspace\\wrims1\\calsim\\lib\\collections.jar;D:\\cvwrsm\\wrims\\wrims1_workspace\\wrims1\\calsim\\lib\\xml.jar;D:\\cvwrsm\\wrims\\wrims1_workspace\\wrims1\\calsim\\lib\\JGo.jar;D:\\cvwrsm\\wrims\\wrims1_workspace\\wrims1\\calsim\\lib\\WrimsSchematic.jar"'
+classpath = version_file.classpath 
 
 
 		
@@ -224,6 +224,10 @@ subprocess.call(['pythonwrite_javac.bat' ])
 subprocess.call(['pythonwrite_copy.bat' ])
 
 os.chdir(calsim_path+'installer')
+compilePackageFile = open('compile_package.bat','w')
+compilePackageFile.writelines('set path="'+version_file.innoSetupPath+'";%path% \n')
+compilePackageFile.writelines('compil32 /cc "setup.iss" \n')
+compilePackageFile.close()
 subprocess.call(['compile_package.bat' ])
 
 #compile('gui')
