@@ -17,7 +17,7 @@ def version_generate(versionWRIMS, versionXA):
 							'OutputBaseFilename   =@{Version_Nospace}_SVN_@{Version_SVN} \n' \
 							'DefaultDirName   =c:\\@{Version_Nospace}    \n' \
 							'[Files] \n' \
-							'Source: "D:\\Java\\jre_x86\\jre6\\*"; Excludes: ".svn"; DestDir: "{app}\\jre\\"; Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main \n' \
+							'Source: "'+local_config.jrePath+'"; Excludes: ".svn"; DestDir: "{app}\\jre\\"; Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main \n' \
 							'[Icons]                                                                             \n' \
 							'Name:       "{group}\\@{Version} "; Filename: "{app}\\"                \n' \
 							'Name:   "{group}\\Run @{Version} "; Filename: "{app}\\bin\\WRIMS.bat"  \n' \
