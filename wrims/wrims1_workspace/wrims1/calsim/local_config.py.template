@@ -1,13 +1,12 @@
 versionWRIMS = '1.5.0'
 versionXA = 'XAV13' 
+jdkPath = 'C:\\Java\\jdk1.6.0_21'
+jrePath = 'C:\\Java\\jre6'
+calsimPath = 'C:\\cvwrsm\\wrims\\wrims1_workspace\\wrims1\\calsim'
+innoSetupPath = '"C:\\Program Files\\Inno Setup 5"'
+thirdPartyLibPath = 'C:\\cvwrsm\\wrims\\wrims1_workspace\\3rd_party\\libstuff'
 
-#javac = r'D:\Java\jdk_x86\jdk1.6.0_21\bin\javac -J"-mx44m" -g -d'
-javac = r'D:\Java\jdk_x86\jdk1.6.0_21\bin\javac -J"-mx44m" -g '
-#javac = r'D:\Java\jdk_x86\jdk1.6.0_21\bin\javac'
-jar =   r'D:\Java\jdk_x86\jdk1.6.0_21\bin\jar.exe'
-targetpath = r'D:\cvwrsm\wrims\wrims1_workspace\wrims1\calsim\classes\calsim'+'\\'
-targetpath_m = r'D:\cvwrsm\wrims\wrims1_workspace\wrims1\calsim\classes\calsim'
-targetLibPath = r'D:\cvwrsm\wrims\wrims1_workspace\wrims1\calsim\lib'+'\\'
-classpath = '".;D:\\cvwrsm\\wrims\\wrims1_workspace\\wrims1\\calsim\\..;D:\\Java\\jdk_x86\\jdk1.6.0_21\\lib\\classes.zip;D:\\cvwrsm\\wrims\\wrims1_workspace\\wrims1\\calsim\\lib\\vista.jar;D:\\cvwrsm\\wrims\\wrims1_workspace\\wrims1\\calsim\\lib\\COM.jar;D:\\cvwrsm\\wrims\\wrims1_workspace\\wrims1\\calsim\\lib\\test.jar;D:\\cvwrsm\\wrims\\wrims1_workspace\\wrims1\\calsim\\lib\\jhall.jar;D:\\cvwrsm\\wrims\\wrims1_workspace\\wrims1\\calsim\\lib\\collections.jar;D:\\cvwrsm\\wrims\\wrims1_workspace\\wrims1\\calsim\\lib\\xml.jar;D:\\cvwrsm\\wrims\\wrims1_workspace\\wrims1\\calsim\\lib\\JGo.jar;D:\\cvwrsm\\wrims\\wrims1_workspace\\wrims1\\calsim\\lib\\WrimsSchematic.jar"'
-innoSetupPath = 'C:\\Program Files (x86)\\Inno Setup 5'
-jrePath = 'D:\\Java\\jre_x86\\jre6\\*'
+
+
+
+

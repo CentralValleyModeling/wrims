@@ -17,7 +17,7 @@ def version_generate(versionWRIMS, versionXA):
 							'OutputBaseFilename   =@{Version_Nospace}_SVN_@{Version_SVN} \n' \
 							'DefaultDirName   =c:\\@{Version_Nospace}    \n' \
 							'[Files] \n' \
-							'Source: "'+local_config.jrePath+'"; Excludes: ".svn"; DestDir: "{app}\\jre\\"; Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main \n' \
+							'Source: "'+jrePath+'"; Excludes: ".svn"; DestDir: "{app}\\jre\\"; Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main \n' \
 							'[Icons]                                                                             \n' \
 							'Name:       "{group}\\@{Version} "; Filename: "{app}\\"                \n' \
 							'Name:   "{group}\\Run @{Version} "; Filename: "{app}\\bin\\WRIMS.bat"  \n' \
@@ -135,6 +135,19 @@ def writeBatch_jar(target, source):
 
     batchFile_copy.write(jar+' -cf '+target+' '+source+'\n\n')
 
+
+#javac = r'D:\Java\jdk_x86\jdk1.6.0_21\bin\javac -J"-mx44m" -g -d'
+javac = local_config.jdkPath + r'\bin\javac -J"-mx44m" -g '
+#javac = r'D:\Java\jdk_x86\jdk1.6.0_21\bin\javac'
+jar =   local_config.jdkPath + r'\bin\jar.exe'
+calsimPath = local_config.calsimPath
+targetpath =    calsimPath + r'\classes\calsim'+'\\'
+#targetpath_m =  calsimPath + r'\classes\calsim'
+targetLibPath = calsimPath + r'\lib'+'\\'
+jrePath = local_config.jrePath + '\\*'
+
+classpath = '".;'+calsimPath+'\\..;'+local_config.jdkPath+'\\lib\\classes.zip;'+calsimPath+'\\lib\\vista.jar;'+calsimPath+'\\lib\\COM.jar;'+calsimPath+'\\lib\\test.jar;'+calsimPath+'\\lib\\jhall.jar;'+calsimPath+'\\lib\\collections.jar;'+calsimPath+'\\lib\\xml.jar;'+calsimPath+'\\lib\\JGo.jar;'+calsimPath+'\\lib\\WrimsSchematic.jar"'	
+
 version_generate(local_config.versionWRIMS, local_config.versionXA)
 	
 #cwd = os.path.split( __file__)[0];
@@ -146,21 +159,6 @@ dirs = ['wreslcoder','wreslcoder\\wresl','app','gui','debug','gym','schematic','
 batchFile_clean = open(calsim_path+'pythonwrite_clean.bat','w')
 batchFile_javac = open(calsim_path+'pythonwrite_javac.bat','w')
 batchFile_copy = open(calsim_path+'pythonwrite_copy.bat','w')
-
-
-
-#print(cwd)
-#cwd = cwd+"\\calsim";
-
-#javac = r'D:\Java\jdk_x86\jdk1.6.0_21\bin\javac -J"-mx44m" -g -d'
-javac = local_config.javac 
-#javac = r'D:\Java\jdk_x86\jdk1.6.0_21\bin\javac'
-jar = local_config.jar 
-targetpath = local_config.targetpath 
-targetpath_m = local_config.targetpath_m 
-targetLibPath = local_config.targetLibPath 
-
-classpath = local_config.classpath 
 
 
 		
@@ -216,15 +214,23 @@ batchFile_copy.close()
 
 subprocess.call(['pythonwrite_clean.bat' ])
 subprocess.call(['pythonwrite_clean.bat' ])
+
 os.chdir(calsim_path+'engine')
+
+compileEngineFile = open('set_path_build.bat','w')
+compileEngineFile.writelines('set path='+local_config.thirdPartyLibPath+';%path% \n')
+compileEngineFile.writelines('python build.py \n')
+compileEngineFile.close()
+
 subprocess.call(['set_path_build.bat' ])
+
 os.chdir(calsim_path)
 subprocess.call(['pythonwrite_javac.bat' ])
 subprocess.call(['pythonwrite_copy.bat' ])
 
 os.chdir(calsim_path+'installer')
 compilePackageFile = open('compile_package.bat','w')
-compilePackageFile.writelines('set path="'+local_config.innoSetupPath+'";%path% \n')
+compilePackageFile.writelines('set path='+local_config.innoSetupPath+';%path% \n')
 compilePackageFile.writelines('compil32 /cc "setup.iss" \n')
 compilePackageFile.close()
 subprocess.call(['compile_package.bat' ])
