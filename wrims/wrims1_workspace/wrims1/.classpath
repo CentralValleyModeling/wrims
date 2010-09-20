@@ -16,7 +16,6 @@
 	<classpathentry kind="lib" path="calsim/lib/msgsystem.jar"/>
 	<classpathentry kind="lib" path="calsim/lib/registry"/>
 	<classpathentry kind="lib" path="calsim/lib/rma.jar"/>
-	<classpathentry kind="lib" path="calsim/lib/simsolver.lib"/>
 	<classpathentry kind="lib" path="calsim/lib/vista.jar"/>
 	<classpathentry kind="lib" path="calsim/lib/webstart.jar"/>
 	<classpathentry kind="lib" path="calsim/lib/WrimsSchematic.jar"/>
