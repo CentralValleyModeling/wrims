@@ -53,7 +53,7 @@ public class CalsimGui {
   //public final String CALSIM_HOME = "D:\\WRIMS1Development\\Calsim1.3\\calsim"; // CB for IDE use (non-batch file)
   private static JFrame frameBase = new JFrame(GuiUtils.getProgramName()); // version is already in About screen
   public static boolean DEBUG = true;
-  public static int FRAME_WIDTH=1095;
+  public static int FRAME_WIDTH=900;
   public static int FRAME_HEIGHT=666;
   static {
 		loadProps();
@@ -103,6 +103,7 @@ public class CalsimGui {
     });
     //System.out.println(FRAME_WIDTH+" "+FRAME_HEIGHT);
     frameBase.setSize(FRAME_WIDTH,FRAME_HEIGHT);
+    frameBase.setExtendedState(JFrame.NORMAL);
     frameBase.setVisible(true);
     frameBase.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -125,7 +126,12 @@ public class CalsimGui {
 
   
     public static void loadProps(){
-	FRAME_WIDTH = new Integer(AppProps.getProperty("CalsimGui.FRAME_WIDTH")).intValue();
+     String sytemName=System.getProperty("os.name");
+     if (System.getProperty("os.name").equals("Windows XP")){
+    	FRAME_WIDTH = new Integer(AppProps.getProperty("CalsimGui.FRAME_WIDTH1")).intValue();
+     }else{
+    	 FRAME_WIDTH = new Integer(AppProps.getProperty("CalsimGui.FRAME_WIDTH2")).intValue(); 
+     }
 	FRAME_HEIGHT = new Integer(AppProps.getProperty("CalsimGui.FRAME_HEIGHT")).intValue();
     }
     /**
@@ -134,7 +140,11 @@ public class CalsimGui {
     public static void saveProps(){
     FRAME_WIDTH=frameBase.getWidth();
     FRAME_HEIGHT=frameBase.getHeight();
-	AppProps.setProperty("CalsimGui.FRAME_WIDTH",new Integer(FRAME_WIDTH).toString());
+    if (System.getProperty("os.name").equals("Windows XP")){
+    	AppProps.setProperty("CalsimGui.FRAME_WIDTH1",new Integer(FRAME_WIDTH).toString());
+    }else{
+    	AppProps.setProperty("CalsimGui.FRAME_WIDTH2",new Integer(FRAME_WIDTH).toString());
+    }
 	AppProps.setProperty("CalsimGui.FRAME_HEIGHT",new Integer(FRAME_HEIGHT).toString());
     }
   /**
