@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://beust.com/testng/testng-1.0.dtd" >
-<suite name="parser">
+<suite name="convert" verbose="2">
   <test name="testing1234">
 <!--     <classes>
        <class name="test.TestConvertWRESL" />
