@@ -2,6 +2,8 @@ package test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.antlr.runtime.ANTLRFileStream;
@@ -28,9 +30,115 @@ public class TestConvertWRESL {
 	{
 		Assert.assertEquals(1,1);
         System.out.println("@Test - 1==1");
-
-
 	}
+	
+	@Test
+	public void svarConst() throws RecognitionException, IOException {
+		
+		try {
+			stream = new ANTLRFileStream("src//test//TestConvertWRESL_svarConst.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	    
+	    Map<String, String>  expected = new HashMap<String, String>();
+	    
+		ConvertWRESLLexer lexer = new ConvertWRESLLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWRESLParser parser = new ConvertWRESLParser(tokenStream);
+		parser.evaluator();
+		Map<String, String> var_const = parser.var_constants;
+
+		
+		expected.put("minflow_C_Orovl3", ".29");
+		expected.put("minflow_C_Orovl2", "45.29");
+		expected.put("minflow_C_Orovl", "600");
+
+		
+		Assert.assertEquals(var_const, expected);
+	}
+
+	
+	@Test
+	public void dvarStd() throws RecognitionException, IOException {
+		
+		try {
+			stream = new ANTLRFileStream("src//test//TestConvertWRESL_dvarStd.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	    //String[] array;
+	    //ArrayList<String> list;
+	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
+	    
+		ConvertWRESLLexer lexer = new ConvertWRESLLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWRESLParser parser = new ConvertWRESLParser(tokenStream);
+		parser.evaluator();
+		Map<String, ArrayList<String>>  dvar_std = parser.dvar_std;
+		
+
+		//list = new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS"}));
+		expected.put("C_Tracy", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS"})));
+		expected.put("C_Banks", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "TAF"})));
+		
+		Assert.assertEquals(dvar_std, expected);
+	}	
+
+	@Test
+	public void dvarNonStd() throws RecognitionException, IOException {
+		
+		try {
+			stream = new ANTLRFileStream("src//test//TestConvertWRESL_dvarNonStd.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	    //String[] array;
+	    //ArrayList<String> list;
+	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
+	    
+		ConvertWRESLLexer lexer = new ConvertWRESLLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWRESLParser parser = new ConvertWRESLParser(tokenStream);
+		parser.evaluator();
+		Map<String, ArrayList<String>>  dvar_nonstd = parser.dvar_nonstd;	
+
+		//list = new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS"}));
+		expected.put("C_SLCVP", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "unbounded", "unbounded"})));
+		expected.put("C_SacFea", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "0.", "6150*taf_cfs"})));
+		
+		Assert.assertEquals(dvar_nonstd, expected);
+	}		
+	
+	@Test
+	public void svarTable() throws RecognitionException, IOException {
+		
+		try {
+			stream = new ANTLRFileStream("src//test//TestConvertWRESL_svarTable.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	    //String[] array;
+	    //ArrayList<String> list;
+	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
+	    
+		ConvertWRESLLexer lexer = new ConvertWRESLLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWRESLParser parser = new ConvertWRESLParser(tokenStream);
+		parser.evaluator();
+		Map<String, ArrayList<String>>  svar_table = parser.svar_table;	
+
+		//list = new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS"}));
+		expected.put("C_SLCVP", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "unbounded", "unbounded"})));
+		expected.put("C_SacFea", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "0.", "6150*taf_cfs"})));
+		
+		Assert.assertEquals(svar_table, expected);
+	}	
+	
 	@Test
 	public void mm() throws RecognitionException, IOException {
 		
