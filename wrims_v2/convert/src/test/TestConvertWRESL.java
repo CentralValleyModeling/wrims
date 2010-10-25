@@ -133,8 +133,7 @@ public class TestConvertWRESL {
 		Map<String, ArrayList<String>>  svar_table = parser.svar_table;	
 
 		//list = new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS"}));
-		expected.put("C_SLCVP", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "unbounded", "unbounded"})));
-		expected.put("C_SacFea", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "0.", "6150*taf_cfs"})));
+		expected.put("nov_trigger_cfs", new ArrayList<String>(Arrays.asList(new String[]{"target", "feather_fish_203", "month = NOV"})));
 		
 		Assert.assertEquals(svar_table, expected);
 	}	
