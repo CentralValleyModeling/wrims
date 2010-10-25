@@ -17,6 +17,7 @@ options {
 @members {
   public Map<String, String>  goals = new HashMap<String, String>();
 
+  public Map<String, String>   error_var_redefined = new HashMap<String, String> ();
   public Map<String, String>   var_all = new HashMap<String, String> ();
   public Map<String, String>  var_constants = new HashMap<String, String>();
   public Map<String, ArrayList<String>>   dvar_nonstd = new HashMap<String, ArrayList<String>>();  
@@ -55,7 +56,8 @@ define //returns [Map<String, String> map]
 goal_simple
 	: GOAL i=IDENT  '{' v=relationStatement '}'  {		
 				if (var_all.containsKey($i.text)){
-				System.out.println("error... variable redefined: " + $i.text);
+				//System.out.println("error... variable redefined: " + $i.text);
+				error_var_redefined.put($i.text, "goal_simple");
 				}
 				else {
 				goals.put($i.text, $v.text);
@@ -72,7 +74,8 @@ constant //returns [Map<String, String> map]
 	:	i=IDENT '{' 'value' v=number '}' { 
 				
 				if (var_all.containsKey($i.text)){
-				System.out.println("error... variable redefined: " + $i.text);
+				//System.out.println("error... variable redefined: " + $i.text);
+				error_var_redefined.put($i.text, "const");
 				}
 				else {
 				var_constants.put($i.text, $v.text);
@@ -86,7 +89,8 @@ dvar_std
 	:	i=IDENT '{' 'std' kind units'}' { 
 				
 				if (var_all.containsKey($i.text)){
-				System.out.println("error... variable redefined: " + $i.text);
+				//System.out.println("error... variable redefined: " + $i.text);
+				error_var_redefined.put($i.text, "dvar_std");
 				}
 				else {
 				list = new ArrayList<String>();
@@ -102,7 +106,8 @@ dvar_nonstd
 	:	i=IDENT '{' lower upper kind units'}' { 
 				
 				if (var_all.containsKey($i.text)){
-				System.out.println("error... variable redefined: " + $i.text);
+				//System.out.println("error... variable redefined: " + $i.text);
+				error_var_redefined.put($i.text, "dvar_nonstd");
 				}
 				else {
 				list = new ArrayList<String>();
@@ -120,7 +125,8 @@ svar_table
 	:	i=IDENT '{' t=tableSQL '}' { 
 				
 				if (var_all.containsKey($i.text)){
-				System.out.println("error... variable redefined: " + $i.text);
+				//System.out.println("error... variable redefined: " + $i.text);
+				error_var_redefined.put($i.text, "svar_table");
 				}
 				else {
 				svar_table.put($i.text, $t.list);
