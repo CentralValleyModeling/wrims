@@ -18,7 +18,6 @@ import WRESL.ConvertWRESLParser;
 import org.testng.annotations.*;
 import org.testng.Assert;
 
-//import java.io.File;
 
 public class TestConvertWRESL {
 
@@ -26,10 +25,10 @@ public class TestConvertWRESL {
 	private static CharStream stream;
 	
 	@Test
-	public void isEmpty()
+	public void sample()
 	{
 		Assert.assertEquals(1,1);
-        System.out.println("@Test - 1==1");
+        System.out.println("@Test sample: 1==1");
 	}
 	
 	@Test
@@ -49,12 +48,10 @@ public class TestConvertWRESL {
 		ConvertWRESLParser parser = new ConvertWRESLParser(tokenStream);
 		parser.evaluator();
 		Map<String, String> var_const = parser.var_constants;
-
 		
 		expected.put("minflow_C_Orovl3", ".29");
 		expected.put("minflow_C_Orovl2", "45.29");
 		expected.put("minflow_C_Orovl", "600");
-
 		
 		Assert.assertEquals(var_const, expected);
 	}
@@ -79,8 +76,6 @@ public class TestConvertWRESL {
 		parser.evaluator();
 		Map<String, ArrayList<String>>  dvar_std = parser.dvar_std;
 		
-
-		//list = new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS"}));
 		expected.put("C_Tracy", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS"})));
 		expected.put("C_Banks", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "TAF"})));
 		
@@ -96,8 +91,7 @@ public class TestConvertWRESL {
 	    catch(Exception e) {
 	         e.printStackTrace();
 	        }
-	    //String[] array;
-	    //ArrayList<String> list;
+
 	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
 	    
 		ConvertWRESLLexer lexer = new ConvertWRESLLexer(stream);
@@ -106,7 +100,6 @@ public class TestConvertWRESL {
 		parser.evaluator();
 		Map<String, ArrayList<String>>  dvar_nonstd = parser.dvar_nonstd;	
 
-		//list = new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS"}));
 		expected.put("C_SLCVP", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "unbounded", "unbounded"})));
 		expected.put("C_SacFea", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "0.", "6150*taf_cfs"})));
 		
@@ -122,8 +115,7 @@ public class TestConvertWRESL {
 	    catch(Exception e) {
 	         e.printStackTrace();
 	        }
-	    //String[] array;
-	    //ArrayList<String> list;
+
 	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
 	    
 		ConvertWRESLLexer lexer = new ConvertWRESLLexer(stream);
@@ -132,34 +124,33 @@ public class TestConvertWRESL {
 		parser.evaluator();
 		Map<String, ArrayList<String>>  svar_table = parser.svar_table;	
 
-		//list = new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS"}));
 		expected.put("nov_trigger_cfs", new ArrayList<String>(Arrays.asList(new String[]{"target", "feather_fish_203", "month = NOV"})));
 		
 		Assert.assertEquals(svar_table, expected);
 	}	
-	
+
 	@Test
-	public void mm() throws RecognitionException, IOException {
+	public void goalSimple() throws RecognitionException, IOException {
 		
 		try {
-			stream = new ANTLRFileStream("src//test//TestConvertWRESL3.wresl", "UTF8");
+			stream = new ANTLRFileStream("src//test//TestConvertWRESL_goalSimple.wresl", "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
 	        }
 
+	    Map<String, String>  expected = new HashMap<String, String>();
+	    
 		ConvertWRESLLexer lexer = new ConvertWRESLLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWRESLParser parser = new ConvertWRESLParser(tokenStream);
 		parser.evaluator();
-		Map<String, String> var_const = parser.var_constants;
-		Map<String, ArrayList<String>>  dvar_std = parser.dvar_std;
-		Map<String, ArrayList<String>>  dvar_nonstd = parser.dvar_nonstd;
-		System.out.println("ok - var_constants: " + var_const );
-		System.out.println("ok - dvar_std: " + dvar_std );
-		System.out.println("ok - dvar_nonstd: " + dvar_nonstd );
-	}
+		Map<String, String>  goal_simple = parser.goal_simple;	
 
-	
+		expected.put("split_C5_WTS", "C5_WTS = C5_WTS_Stg1 + C5_WTS_Stg2");
+		expected.put("C_SLCVP", "C5_WTS = C5_WTS_Stg1");
+		
+		Assert.assertEquals(goal_simple, expected);
+	}			
 
 }

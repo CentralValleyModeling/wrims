@@ -15,18 +15,16 @@ options {
 }
 
 @members {
-  public Map<String, String>  goals = new HashMap<String, String>();
 
   public Map<String, String>   error_var_redefined = new HashMap<String, String> ();
   public Map<String, String>   var_all = new HashMap<String, String> ();
-  public Map<String, String>  var_constants = new HashMap<String, String>();
+  public Map<String, String>   var_constants = new HashMap<String, String>();
   public Map<String, ArrayList<String>>   dvar_nonstd = new HashMap<String, ArrayList<String>>();  
   public Map<String, ArrayList<String>>  dvar_std = new HashMap<String, ArrayList<String>>(); 
   public Map<String, ArrayList<String>>  svar_table = new HashMap<String, ArrayList<String>>(); 
-  //public Map<String, String[]>  dvar_std = new HashMap<String, String[]>(); 
-  private ArrayList<String> list;
-  //private boolean blnExists = hMap.containsKey("3");
+  public Map<String, String>   goal_simple = new HashMap<String, String>();
   
+  private ArrayList<String> list;
 
   public String strip(String s) {
     return s.substring(1, s.length()-1);
@@ -60,7 +58,7 @@ goal_simple
 				error_var_redefined.put($i.text, "goal_simple");
 				}
 				else {
-				goals.put($i.text, $v.text);
+				goal_simple.put($i.text, $v.text);
 				var_all.put($i.text, "goal_simple");
 				}
 		}
