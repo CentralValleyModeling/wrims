@@ -28,7 +28,7 @@ public class TestConvertWRESL {
 	public void sample()
 	{
 		Assert.assertEquals(1,1);
-        System.out.println("@Test sample: 1==1");
+        //System.out.println("@Test sample: 1==1");
 	}
 	
 	@Test
@@ -104,6 +104,52 @@ public class TestConvertWRESL {
 		expected.put("C_SacFea", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "0.", "6150*taf_cfs"})));
 		
 		Assert.assertEquals(dvar_nonstd, expected);
+	}		
+
+	@Test
+	public void dvarNonStd2() throws RecognitionException, IOException {
+		
+		try {
+			stream = new ANTLRFileStream("src//test//TestConvertWRESL_dvarNonStd_2.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+
+	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
+	    
+		ConvertWRESLLexer lexer = new ConvertWRESLLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWRESLParser parser = new ConvertWRESLParser(tokenStream);
+		parser.evaluator();
+		Map<String, ArrayList<String>>  dvar_nonstd = parser.dvar_nonstd;	
+
+		expected.put("C_SLCVP", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "unbounded", "unbounded"})));
+		expected.put("C_SacFea", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "0", "6150*taf_cfs"})));
+		Assert.assertEquals(dvar_nonstd, expected);
+	}		
+
+	@Test
+	public void svarDSS() throws RecognitionException, IOException {
+		
+		try {
+			stream = new ANTLRFileStream("src//test//TestConvertWRESL_svarDSS.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+
+	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
+	    
+		ConvertWRESLLexer lexer = new ConvertWRESLLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWRESLParser parser = new ConvertWRESLParser(tokenStream);
+		parser.evaluator();
+		Map<String, ArrayList<String>>  svar_dss = parser.svar_dss;	
+
+		expected.put("evap_S_Orovl", new ArrayList<String>(Arrays.asList(new String[]{"EVAPORATION-RATE", "IN"})));
+		
+		Assert.assertEquals(svar_dss, expected);
 	}		
 	
 	@Test

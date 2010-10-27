@@ -17,11 +17,13 @@ options {
 @members {
 
   public Map<String, String>   error_var_redefined = new HashMap<String, String> ();
-  public Map<String, String>   var_all = new HashMap<String, String> ();
-  public Map<String, String>   var_constants = new HashMap<String, String>();
-  public Map<String, ArrayList<String>>   dvar_nonstd = new HashMap<String, ArrayList<String>>();  
-  public Map<String, ArrayList<String>>  dvar_std = new HashMap<String, ArrayList<String>>(); 
-  public Map<String, ArrayList<String>>  svar_table = new HashMap<String, ArrayList<String>>(); 
+  public Map<String, String>   var_all             = new HashMap<String, String> ();
+  public Map<String, String>   var_constants       = new HashMap<String, String>();
+  
+  public Map<String, ArrayList<String>>  dvar_nonstd = new HashMap<String, ArrayList<String>>();  
+  public Map<String, ArrayList<String>>  dvar_std    = new HashMap<String, ArrayList<String>>(); 
+  public Map<String, ArrayList<String>>  svar_table  = new HashMap<String, ArrayList<String>>(); 
+  public Map<String, ArrayList<String>>  svar_dss    = new HashMap<String, ArrayList<String>>(); 
   public Map<String, String>   goal_simple = new HashMap<String, String>();
   
   private ArrayList<String> list;
@@ -47,7 +49,7 @@ module
 	;
 
 define //returns [Map<String, String> map]
-	:	DEFINE (constant|dvar_std|dvar_nonstd|svar_table)  
+	:	DEFINE (constant|dvar_std|dvar_nonstd|svar_table|svar_dss)  
 	;
 
 
@@ -82,43 +84,6 @@ constant //returns [Map<String, String> map]
 		}
 	;
 
-
-dvar_std
-	:	i=IDENT '{' 'std' kind units'}' { 
-				
-				if (var_all.containsKey($i.text)){
-				//System.out.println("error... variable redefined: " + $i.text);
-				error_var_redefined.put($i.text, "dvar_std");
-				}
-				else {
-				list = new ArrayList<String>();
-				list.add($kind.str);
-				list.add($units.str);
-				dvar_std.put($i.text, list);
-				var_all.put($i.text, "dvar_std");
-				}
-		}
-	;
-	
-dvar_nonstd
-	:	i=IDENT '{' lower upper kind units'}' { 
-				
-				if (var_all.containsKey($i.text)){
-				//System.out.println("error... variable redefined: " + $i.text);
-				error_var_redefined.put($i.text, "dvar_nonstd");
-				}
-				else {
-				list = new ArrayList<String>();
-				list.add($kind.str);
-				list.add($units.str);
-				list.add($lower.str);
-				list.add($upper.str);
-				dvar_nonstd.put($i.text, list);
-				var_all.put($i.text, "dvar_nonstd");
-				}
-		} 
-	;
-
 svar_table
 	:	i=IDENT '{' t=tableSQL '}' { 
 				
@@ -141,6 +106,80 @@ tableSQL returns[ArrayList<String> list]
 				list.add($i3.text);
 		}
 	;
+
+
+
+svar_dss
+	:	i=IDENT '{' 'timeseries' kind units'}' { 
+				
+				if (var_all.containsKey($i.text)){
+				//System.out.println("error... variable redefined: " + $i.text);
+				error_var_redefined.put($i.text, "svar_dss");
+				}
+				else {
+				list = new ArrayList<String>();
+				list.add($kind.str);
+				list.add($units.str);
+				svar_dss.put($i.text, list);
+				var_all.put($i.text, "svar_dss");
+				}
+		} 
+	;
+
+dvar_std
+	:	i=IDENT '{' 'std' kind units'}' { 
+				
+				if (var_all.containsKey($i.text)){
+				//System.out.println("error... variable redefined: " + $i.text);
+				error_var_redefined.put($i.text, "dvar_std");
+				}
+				else {
+				list = new ArrayList<String>();
+				list.add($kind.str);
+				list.add($units.str);
+				dvar_std.put($i.text, list);
+				var_all.put($i.text, "dvar_std");
+				}
+		}
+	;
+	
+dvar_nonstd 
+	:	i=IDENT '{' c=lower_upper_union kind units '}' { 
+				
+				if (var_all.containsKey($i.text)){
+				//System.out.println("error... variable redefined: " + $i.text);
+				error_var_redefined.put($i.text, "dvar_nonstd");
+				}
+				else {
+				list = new ArrayList<String>();
+				list.add($kind.str);
+				list.add($units.str);
+				list.addAll($c.list);
+				dvar_nonstd.put($i.text, list);
+				var_all.put($i.text, "dvar_nonstd");
+				}
+		} 
+	;
+
+
+lower_upper_union returns[ArrayList<String> list]
+	:	lower upper? {       
+				list = new ArrayList<String>();
+				list.add($lower.str);
+				if ($upper.str==null) {
+				list.add("unbounded");
+				}
+				else {
+				list.add($upper.str);
+				}		
+	    }
+	|	upper {       
+				list = new ArrayList<String>();
+				list.add("0");
+				list.add($upper.str);
+		}		
+
+	;
  
 
 
@@ -159,7 +198,9 @@ kind returns [String str]
 
 units returns [String str]
 	: 'units' CFS {$str = "CFS";}
-	| 'units' TAF {$str = "TAF";}
+	| 'units' TAF {$str = "TAF";} 
+	| 'units' ACRES {$str = "ACRES";}
+	| 'units' IN {$str = "IN";}
 	;
 ///////////////////
 /// basic rules ///
@@ -219,6 +260,8 @@ GOAL :'goal';
 DEFINE :'define';
 TAF :'\''  'TAF'  '\'';
 CFS :'\''  'CFS' '\'';
+ACRES :'\''  'ACRES' '\'';
+IN :'\''  'IN' '\'';
 QUOTE_STRING_with_MINUS : '\'' IDENT ( '-' | IDENT )+ '\'';
 IDENT : LETTER (LETTER | DIGIT | SYMBOLS )*;
 
