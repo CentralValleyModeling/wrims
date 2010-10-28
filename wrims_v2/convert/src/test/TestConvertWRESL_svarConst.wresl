@@ -2,9 +2,3 @@ define minflow_C_Orovl {value 600}  ! test comment
 define minflow_C_Orovl2 {value 45.29} 
 define minflow_C_Orovl3 {value .29}
 define minflow_C_Orovl2 {value 64.}  
-define C_Tracy {std kind 'FLOW-CHANNEL' units 'CFS'}   
-define C_Banks {std kind 'FLOW-CHANNEL' units 'TAF'}   
-define minflow_C_Orovl {std kind 'FLOW-CHANNEL' units 'CFS'}  
-define C_SacFea {lower 0. upper 6150*taf_cfs kind 'FLOW-CHANNEL' units 'CFS'} 
-define C_SLCVP {lower unbounded upper unbounded kind 'FLOW-CHANNEL' units 'CFS'}   
-define C_Tracy {lower unbounded upper unbounded kind 'FLOW-CHANNEL' units 'CFS'}

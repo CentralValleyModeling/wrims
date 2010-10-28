@@ -18,8 +18,8 @@ options {
 
   public Map<String, String>   error_var_redefined = new HashMap<String, String> ();
   public Map<String, String>   var_all             = new HashMap<String, String> ();
-  public Map<String, String>   var_constants       = new HashMap<String, String>();
-  
+  public Map<String, String>   svar_expression     = new HashMap<String, String>();
+    
   public Map<String, ArrayList<String>>  dvar_nonstd = new HashMap<String, ArrayList<String>>();  
   public Map<String, ArrayList<String>>  dvar_std    = new HashMap<String, ArrayList<String>>(); 
   public Map<String, ArrayList<String>>  svar_table  = new HashMap<String, ArrayList<String>>(); 
@@ -49,7 +49,7 @@ module
 	;
 
 define //returns [Map<String, String> map]
-	:	DEFINE (constant|dvar_std|dvar_nonstd|svar_table|svar_dss)  
+	:	DEFINE (svar_expression|dvar_std|dvar_nonstd|svar_table|svar_dss)  
 	;
 
 
@@ -70,19 +70,34 @@ goal_lhs
 	: 'lhs' IDENT
 	;
 
-constant //returns [Map<String, String> map]
-	:	i=IDENT '{' 'value' v=number '}' { 
+//svar_constant //returns [Map<String, String> map]
+//	:	i=IDENT '{' 'value' v=number '}' { 
+//				
+//				if (var_all.containsKey($i.text)){
+//				//System.out.println("error... variable redefined: " + $i.text);
+//				error_var_redefined.put($i.text, "svar_constant");
+//				}
+//				else {
+//				svar_constant.put($i.text, $v.text);
+//				var_all.put($i.text, "svar_constant");
+//				}
+//		}
+//	;
+
+svar_expression //returns [Map<String, String> map]
+	:	i=IDENT '{' 'value' v=expression '}' { 
 				
 				if (var_all.containsKey($i.text)){
 				//System.out.println("error... variable redefined: " + $i.text);
-				error_var_redefined.put($i.text, "const");
+				error_var_redefined.put($i.text, "svar_expression");
 				}
 				else {
-				var_constants.put($i.text, $v.text);
-				var_all.put($i.text, "const");
+				svar_expression.put($i.text, $v.text);
+				var_all.put($i.text, "svar_expression");
 				}
 		}
 	;
+
 
 svar_table
 	:	i=IDENT '{' t=tableSQL '}' { 
@@ -99,14 +114,15 @@ svar_table
 	;
 
 tableSQL returns[ArrayList<String> list]
-	: 'select' i1=IDENT 'from' i2=IDENT 'where' i3=relationStatement {       
+	: 'select' i1=IDENT 'from' i2=IDENT ('given' i3=relationStatement)? ('use' i4=IDENT)? 'where' i5=relationStatement {       
 				list = new ArrayList<String>();
 				list.add($i1.text);
 				list.add($i2.text);
 				list.add($i3.text);
+				list.add($i4.text);
+				list.add($i5.text);
 		}
 	;
-
 
 
 svar_dss
@@ -144,7 +160,7 @@ dvar_std
 	;
 	
 dvar_nonstd 
-	:	i=IDENT '{' c=lower_upper_union kind units '}' { 
+	:	i=IDENT '{' c=lower_or_upper kind units '}' { 
 				
 				if (var_all.containsKey($i.text)){
 				//System.out.println("error... variable redefined: " + $i.text);
@@ -162,7 +178,7 @@ dvar_nonstd
 	;
 
 
-lower_upper_union returns[ArrayList<String> list]
+lower_or_upper returns[ArrayList<String> list]
 	:	lower upper? {       
 				list = new ArrayList<String>();
 				list.add($lower.str);
@@ -202,18 +218,39 @@ units returns [String str]
 	| 'units' ACRES {$str = "ACRES";}
 	| 'units' IN {$str = "IN";}
 	;
+
+///////////////////////////
+/// Intrinsic functions ///
+///////////////////////////
+
+max_func
+	: MAX '(' expression ',' expression ')'
+	;
+
+min_func
+	: MIN '(' expression ',' expression ')'
+	;
+
+inline_func 
+	: IDENT '(' '-' INTEGER ')'
+	;
+
 ///////////////////
 /// basic rules ///
 ///////////////////
+
+
 term
-	:	i=IDENT 
+	:	IDENT 
 	|	'(' e=expression ')' 
-	|	i=INTEGER 
-	|   i=FLOAT 
+	|	number
+	|   inline_func
+	|   max_func
+	|   min_func	
 	;
 	
 unary
-	:	('+' | '-')* term
+	:	('-')? term
 	;
 
 mult
@@ -256,6 +293,9 @@ FLOAT : INTEGER? '.' INTEGER
 	  | INTEGER '.' 
 	  ;
 
+// INLINE_FUNC : LETTER (LETTER | DIGIT | SYMBOLS )*'(' '-'? INTEGER ')';
+MAX : 'max' ;
+MIN : 'min' ;
 GOAL :'goal';
 DEFINE :'define';
 TAF :'\''  'TAF'  '\'';
