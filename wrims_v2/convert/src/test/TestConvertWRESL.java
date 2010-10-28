@@ -220,6 +220,29 @@ public class TestConvertWRESL {
 		
 		Assert.assertEquals(svar_table, expected);
 	}		
+
+	@Test
+	public void svarTableMultipleWhere() throws RecognitionException, IOException {
+		
+		try {
+			stream = new ANTLRFileStream("src//test//TestConvertWRESL_svarTableMultipleWhere.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+
+	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
+	    
+		ConvertWRESLLexer lexer = new ConvertWRESLLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWRESLParser parser = new ConvertWRESLParser(tokenStream);
+		parser.evaluator();
+		Map<String, ArrayList<String>>  svar_table = parser.svar_table;	
+
+		expected.put("A_Orovl_last", new ArrayList<String>(Arrays.asList(new String[]{"area","res_info","storage=1000*S_Orovl(-1)","linear","res_num=6" })));
+		
+		Assert.assertEquals(svar_table, expected);
+	}		
 	
 	@Test
 	public void goalSimple() throws RecognitionException, IOException {

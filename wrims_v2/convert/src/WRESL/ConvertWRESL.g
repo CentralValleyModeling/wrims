@@ -114,13 +114,22 @@ svar_table
 	;
 
 tableSQL returns[ArrayList<String> list]
-	: 'select' i1=IDENT 'from' i2=IDENT ('given' i3=relationStatement)? ('use' i4=IDENT)? 'where' i5=relationStatement {       
+	: 'select' i1=IDENT 'from' i2=IDENT 
+	  ('given' i3=relationStatement)? ('use' i4=IDENT)? 
+	  'where' i5=relationStatement 
+	  
+
+	  
+	  
+	  {       
 				list = new ArrayList<String>();
 				list.add($i1.text);
 				list.add($i2.text);
 				list.add($i3.text);
 				list.add($i4.text);
 				list.add($i5.text);
+
+
 		}
 	;
 

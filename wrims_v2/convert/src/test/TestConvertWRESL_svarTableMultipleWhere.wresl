@@ -1,0 +1,1 @@
+define S_TrntyLevel4 {select target from res_level where res_num=1,level=4,month=month}
