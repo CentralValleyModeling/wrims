@@ -1,18 +1,23 @@
 grammar ConvertWRESL;
 
+
+
 options {
   language = Java;
+
 }
 
 @header {
   package WRESL;
   import java.util.Map;
   import java.util.HashMap;
+  import java.util.Arrays;
 }
 
 @lexer::header {
   package WRESL;
 }
+
 
 @members {
 
@@ -31,8 +36,11 @@ options {
   public String strip(String s) {
     return s.substring(1, s.length()-1);
     }
-  
-  
+  private static String[] keys = {"define","goal"};
+  private static String[] times = {"JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"};
+  public static List<String> r_keys = Arrays.asList(keys); 
+  public static List<String> r_times = Arrays.asList(times); 
+  public static ArrayList<String> reserved_words = new ArrayList<String>() {{ addAll(r_keys); addAll(r_times); }}; 
 }
 
 evaluator //returns [Map<String, String> map1]
@@ -49,7 +57,13 @@ module
 	;
 
 define //returns [Map<String, String> map]
-	:	DEFINE (svar_expression|dvar_std|dvar_nonstd|svar_table|svar_dss)  
+	:	DEFINE 
+	(svar_expression
+	|dvar_std
+	|dvar_nonstd
+	|svar_table
+	|svar_dss
+	|svar_case)  
 	;
 
 
@@ -114,26 +128,40 @@ svar_table
 	;
 
 tableSQL returns[ArrayList<String> list]
-	: 'select' i1=IDENT 'from' i2=IDENT 
+	: 'select' i1=all_ident 'from' i2=IDENT 
 	  ('given' i3=relationStatement)? ('use' i4=IDENT)? 
-	  'where' i5=relationStatement 
-	  
-
-	  
-	  
+	  where_items	  
 	  {       
 				list = new ArrayList<String>();
 				list.add($i1.text);
 				list.add($i2.text);
 				list.add($i3.text);
 				list.add($i4.text);
-				list.add($i5.text);
-
-
+				list.addAll($where_items.list);
 		}
 	;
 
+where_items returns[ArrayList<String> list]
+	@init { $list = new ArrayList<String>(); }
 
+	:	 WHERE  (r1=relationStatement{list.add($r1.text);} )
+	        (',' r=relationStatement {list.add($r.text);}  )*
+	;
+
+
+svar_case
+	:  IDENT '{' ('case' IDENT '{' condition_statement (tableSQL|value_statement) '}')+  '}'
+	;
+
+condition_statement
+	: 'condition' 
+	( r_vars EQUALS r_consts
+	| ALWAYS )
+	;
+
+value_statement
+	: 'value' number
+	;
 svar_dss
 	:	i=IDENT '{' 'timeseries' kind units'}' { 
 				
@@ -251,6 +279,7 @@ inline_func
 
 term
 	:	IDENT 
+	|   r_vars
 	|	'(' e=expression ')' 
 	|	number
 	|   inline_func
@@ -289,6 +318,19 @@ number
 	| FLOAT
 	;
 
+r_vars
+	: WATERYEAR
+	| MONTH
+	;
+
+r_consts
+	: TIMES
+	;
+
+all_ident
+	: r_vars | r_consts | IDENT
+	;
+
 MULTILINE_COMMENT : '/*' .* '*/' {$channel = HIDDEN;} ;
 
 
@@ -302,15 +344,37 @@ FLOAT : INTEGER? '.' INTEGER
 	  | INTEGER '.' 
 	  ;
 
-// INLINE_FUNC : LETTER (LETTER | DIGIT | SYMBOLS )*'(' '-'? INTEGER ')';
+/// INLINE_FUNC //
 MAX : 'max' ;
 MIN : 'min' ;
+WHERE : 'where' ;
+
+
+/// keywords //
 GOAL :'goal';
 DEFINE :'define';
+ALWAYS :'always';
+EQUALS : '==';
+CONDITION : 'condition';
+
+
+/// reserved vars ///
+WATERYEAR : 'wateryear';
+MONTH : 'month';
+
+/// reserved constants ///
+TIMES : 'JAN'|'FEB'|'MAR'|'APR'|'MAY'|'JUN'|'JUL'|'AUG'|'SEP'|'OCT'|'NOV'|'DEC';
+
+
+
+///units///
 TAF :'\''  'TAF'  '\'';
 CFS :'\''  'CFS' '\'';
 ACRES :'\''  'ACRES' '\'';
 IN :'\''  'IN' '\'';
+
+
+///basics///
 QUOTE_STRING_with_MINUS : '\'' IDENT ( '-' | IDENT )+ '\'';
 IDENT : LETTER (LETTER | DIGIT | SYMBOLS )*;
 
