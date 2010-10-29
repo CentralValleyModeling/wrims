@@ -37,10 +37,10 @@ options {
     return s.substring(1, s.length()-1);
     }
   private static String[] keys = {"define","goal"};
-  private static String[] times = {"JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"};
+  private static String[] mons = {"JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"};
   public static List<String> r_keys = Arrays.asList(keys); 
-  public static List<String> r_times = Arrays.asList(times); 
-  public static ArrayList<String> reserved_words = new ArrayList<String>() {{ addAll(r_keys); addAll(r_times); }}; 
+  public static List<String> r_mons = Arrays.asList(mons); 
+  public static ArrayList<String> reserved_words = new ArrayList<String>() {{ addAll(r_keys); addAll(r_mons); }}; 
 }
 
 evaluator //returns [Map<String, String> map1]
@@ -58,12 +58,12 @@ module
 
 define //returns [Map<String, String> map]
 	:	DEFINE 
-	(svar_expression
-	|dvar_std
-	|dvar_nonstd
-	|svar_table
-	|svar_dss
-	|svar_case)  
+	(	svar_expression
+	|	dvar_std
+	|	dvar_nonstd
+	|	svar_table
+	|	svar_dss
+	|	svar_case)  
 	;
 
 
@@ -84,34 +84,19 @@ goal_lhs
 	: 'lhs' IDENT
 	;
 
-//svar_constant //returns [Map<String, String> map]
-//	:	i=IDENT '{' 'value' v=number '}' { 
-//				
-//				if (var_all.containsKey($i.text)){
-//				//System.out.println("error... variable redefined: " + $i.text);
-//				error_var_redefined.put($i.text, "svar_constant");
-//				}
-//				else {
-//				svar_constant.put($i.text, $v.text);
-//				var_all.put($i.text, "svar_constant");
-//				}
-//		}
-//	;
-
 svar_expression //returns [Map<String, String> map]
-	:	i=IDENT '{' 'value' v=expression '}' { 
+	:	i=IDENT '{' v=value_statement '}' { 
 				
 				if (var_all.containsKey($i.text)){
 				//System.out.println("error... variable redefined: " + $i.text);
 				error_var_redefined.put($i.text, "svar_expression");
 				}
 				else {
-				svar_expression.put($i.text, $v.text);
+				svar_expression.put($i.text, $v.str);
 				var_all.put($i.text, "svar_expression");
 				}
 		}
 	;
-
 
 svar_table
 	:	i=IDENT '{' t=tableSQL '}' { 
@@ -127,41 +112,10 @@ svar_table
 		}
 	;
 
-tableSQL returns[ArrayList<String> list]
-	: 'select' i1=all_ident 'from' i2=IDENT 
-	  ('given' i3=relationStatement)? ('use' i4=IDENT)? 
-	  where_items	  
-	  {       
-				list = new ArrayList<String>();
-				list.add($i1.text);
-				list.add($i2.text);
-				list.add($i3.text);
-				list.add($i4.text);
-				list.addAll($where_items.list);
-		}
-	;
-
-where_items returns[ArrayList<String> list]
-	@init { $list = new ArrayList<String>(); }
-
-	:	 WHERE  (r1=relationStatement{list.add($r1.text);} )
-	        (',' r=relationStatement {list.add($r.text);}  )*
-	;
-
-
 svar_case
 	:  IDENT '{' ('case' IDENT '{' condition_statement (tableSQL|value_statement) '}')+  '}'
 	;
 
-condition_statement
-	: 'condition' 
-	( r_vars EQUALS r_consts
-	| ALWAYS )
-	;
-
-value_statement
-	: 'value' number
-	;
 svar_dss
 	:	i=IDENT '{' 'timeseries' kind units'}' { 
 				
@@ -214,7 +168,6 @@ dvar_nonstd
 		} 
 	;
 
-
 lower_or_upper returns[ArrayList<String> list]
 	:	lower upper? {       
 				list = new ArrayList<String>();
@@ -231,12 +184,8 @@ lower_or_upper returns[ArrayList<String> list]
 				list.add("0");
 				list.add($upper.str);
 		}		
-
 	;
  
-
-
-
 lower returns[String str]
 	: 'lower' e=expression {$str =$e.str; }
 	;
@@ -255,6 +204,42 @@ units returns [String str]
 	| 'units' ACRES {$str = "ACRES";}
 	| 'units' IN {$str = "IN";}
 	;
+
+/// sub rules ///
+
+condition_statement
+	: 'condition' 
+	( reserved_vars EQUALS reserved_consts
+	| ALWAYS )
+	;
+
+value_statement returns[String str]
+	: 'value' e=expression {$str = $e.text;}
+	;
+
+/// SQL related ///
+
+tableSQL returns[ArrayList<String> list]
+	: 'select' i1=all_ident 'from' i2=IDENT 
+	  ('given' i3=relationStatement)? ('use' i4=IDENT)? 
+	  where_items	  
+	  {       
+				list = new ArrayList<String>();
+				list.add($i1.text);
+				list.add($i2.text);
+				list.add($i3.text);
+				list.add($i4.text);
+				list.addAll($where_items.list);
+		}
+	;
+
+where_items returns[ArrayList<String> list]
+	@init { $list = new ArrayList<String>(); }
+
+	:	 WHERE  (r1=relationStatement{list.add($r1.text);} )
+	        (',' r=relationStatement {list.add($r.text);}  )*
+	;
+
 
 ///////////////////////////
 /// Intrinsic functions ///
@@ -276,10 +261,9 @@ inline_func
 /// basic rules ///
 ///////////////////
 
-
 term
 	:	IDENT 
-	|   r_vars
+	|   reserved_vars
 	|	'(' e=expression ')' 
 	|	number
 	|   inline_func
@@ -318,17 +302,17 @@ number
 	| FLOAT
 	;
 
-r_vars
+reserved_vars
 	: WATERYEAR
 	| MONTH
 	;
 
-r_consts
-	: TIMES
+reserved_consts
+	: MON_CONST
 	;
 
 all_ident
-	: r_vars | r_consts | IDENT
+	: reserved_vars | reserved_consts | IDENT
 	;
 
 MULTILINE_COMMENT : '/*' .* '*/' {$channel = HIDDEN;} ;
@@ -349,22 +333,21 @@ MAX : 'max' ;
 MIN : 'min' ;
 WHERE : 'where' ;
 
+/// comparison ///
+EQUALS : '==';
 
-/// keywords //
+/// reserved keywords //
 GOAL :'goal';
 DEFINE :'define';
 ALWAYS :'always';
-EQUALS : '==';
 CONDITION : 'condition';
-
 
 /// reserved vars ///
 WATERYEAR : 'wateryear';
 MONTH : 'month';
 
 /// reserved constants ///
-TIMES : 'JAN'|'FEB'|'MAR'|'APR'|'MAY'|'JUN'|'JUL'|'AUG'|'SEP'|'OCT'|'NOV'|'DEC';
-
+MON_CONST : 'JAN'|'FEB'|'MAR'|'APR'|'MAY'|'JUN'|'JUL'|'AUG'|'SEP'|'OCT'|'NOV'|'DEC';
 
 
 ///units///
