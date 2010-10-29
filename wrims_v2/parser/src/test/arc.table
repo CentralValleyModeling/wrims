@@ -1,0 +1,2 @@
+name,	  include	, expression,		units,	lowerbound,     upperbound,	startnode	, endnode ,      type ,	     filter
+channel1,    y,		#		,	cfs,	0,		3160	  ,             SJR2	,	SBay	,         channel ,    system\channel 
