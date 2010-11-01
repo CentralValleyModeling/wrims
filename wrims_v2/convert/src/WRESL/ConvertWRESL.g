@@ -24,12 +24,23 @@ options {
   public Map<String, String>   error_var_redefined = new HashMap<String, String> ();
   public Map<String, String>   var_all             = new HashMap<String, String> ();
   public Map<String, String>   svar_expression     = new HashMap<String, String>();
-    
+  public Map<String, String>   goal_simple = new HashMap<String, String>();
+      
   public Map<String, ArrayList<String>>  dvar_nonstd = new HashMap<String, ArrayList<String>>();  
   public Map<String, ArrayList<String>>  dvar_std    = new HashMap<String, ArrayList<String>>(); 
   public Map<String, ArrayList<String>>  svar_table  = new HashMap<String, ArrayList<String>>(); 
   public Map<String, ArrayList<String>>  svar_dss    = new HashMap<String, ArrayList<String>>(); 
-  public Map<String, String>   goal_simple = new HashMap<String, String>();
+
+  public Map<String, String>   test = new HashMap<String, String>();  
+  public Map<String, ArrayList<String>>  testmap  = new HashMap<String, ArrayList<String>>(); 
+  
+  //public Map<String, ArrayList<ArrayList<String>>>  svar_case  = new HashMap<String, ArrayList<ArrayList<String>>>(); 
+  //public ArrayList<ArrayList<String>> list_2d_cases = new ArrayList<ArrayList<String>>();
+  
+  public Map<String, Map<String, ArrayList<String>>>  svar_case    = new HashMap<String, Map<String, ArrayList<String>>> (); 
+  public Map<String, ArrayList<String>>   map_of_array;
+  
+  
   
   private ArrayList<String> list;
 

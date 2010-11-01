@@ -22,16 +22,16 @@ import org.testng.Assert;
 public class TestConvertWRESL {
 
 	
-	private static CharStream stream;
+	private static CharStream stream;	
 	
-	@Test
+	@Test(groups = { "WRESL_elements" })
 	public void sample()
 	{
 		Assert.assertEquals(1,1);
-        //System.out.println("@Test sample: 1==1");
+        //System.out.println("@Test(groups = { "WRESL_elements" }) sample: 1==1");
 	}
 	
-	@Test
+	@Test(groups = { "WRESL_elements" })
 	public void svarConst() throws RecognitionException, IOException {
 		
 		try {
@@ -56,7 +56,7 @@ public class TestConvertWRESL {
 		Assert.assertEquals(svar_constant, expected);
 	}
 
-	@Test
+	@Test(groups = { "WRESL_elements" })
 	public void svarExpression() throws RecognitionException, IOException {
 		
 		try {
@@ -80,7 +80,7 @@ public class TestConvertWRESL {
 		Assert.assertEquals(svar_expression, expected);
 	}
 	
-	@Test
+	@Test(groups = { "WRESL_elements" })
 	public void dvarStd() throws RecognitionException, IOException {
 		
 		try {
@@ -105,7 +105,7 @@ public class TestConvertWRESL {
 		Assert.assertEquals(dvar_std, expected);
 	}	
 
-	@Test
+	@Test(groups = { "WRESL_elements" })
 	public void dvarNonStd() throws RecognitionException, IOException {
 		
 		try {
@@ -129,7 +129,7 @@ public class TestConvertWRESL {
 		Assert.assertEquals(dvar_nonstd, expected);
 	}		
 
-	@Test
+	@Test(groups = { "WRESL_elements" })
 	public void dvarNonStd2() throws RecognitionException, IOException {
 		
 		try {
@@ -152,7 +152,7 @@ public class TestConvertWRESL {
 		Assert.assertEquals(dvar_nonstd, expected);
 	}		
 
-	@Test
+	@Test(groups = { "WRESL_elements" })
 	public void svarDSS() throws RecognitionException, IOException {
 		
 		try {
@@ -175,7 +175,7 @@ public class TestConvertWRESL {
 		Assert.assertEquals(svar_dss, expected);
 	}		
 	
-	@Test
+	@Test(groups = { "WRESL_elements" })
 	public void svarTable() throws RecognitionException, IOException {
 		
 		try {
@@ -198,7 +198,7 @@ public class TestConvertWRESL {
 		Assert.assertEquals(svar_table, expected);
 	}	
 
-	@Test
+	@Test(groups = { "WRESL_elements" })
 	public void svarTableFull() throws RecognitionException, IOException {
 		
 		try {
@@ -221,7 +221,7 @@ public class TestConvertWRESL {
 		Assert.assertEquals(svar_table, expected);
 	}		
 
-	@Test
+	@Test(groups = { "WRESL_elements" })
 	public void svarTableMultipleWhere() throws RecognitionException, IOException {
 		
 		try {
@@ -244,7 +244,7 @@ public class TestConvertWRESL {
 		Assert.assertEquals(svar_table, expected);
 	}		
 	
-	@Test
+	@Test(groups = { "WRESL_elements" })
 	public void svarCase() throws RecognitionException, IOException {
 		
 		try {
@@ -254,20 +254,35 @@ public class TestConvertWRESL {
 	         e.printStackTrace();
 	        }
 
-	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
+	    Map<String, Map<String, ArrayList<String>>>  expected  = new HashMap<String, Map<String, ArrayList<String>>>(); 
+ 
+	    Map<String, ArrayList<String>>   map_of_array;
+	    ArrayList<String> list;
 	    
+	    	    
 		ConvertWRESLLexer lexer = new ConvertWRESLLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWRESLParser parser = new ConvertWRESLParser(tokenStream);
 		parser.evaluator();
-		Map<String, ArrayList<String>>  svar_table = parser.svar_table;	
+		Map<String, Map<String, ArrayList<String>>>  svar_case = parser.svar_case;	
 
-		expected.put("S_TrntyLevel4", new ArrayList<String>(Arrays.asList(new String[]{"target","res_level",null,null,"res_num=1","level=4","month=month" })));
+	    map_of_array = new HashMap<String, ArrayList<String>>();
+		list = new ArrayList<String>();
+	    list.addAll(Arrays.asList(new String[]{"v1","v2","v3","v4"}));
+
+		map_of_array.put("subkey1", list);
 		
-		Assert.assertEquals(svar_table, expected);
+	    list = new ArrayList<String>();
+	    list.addAll(Arrays.asList(new String[]{"v5","v6","v7","v8"}));
+
+		map_of_array.put("subkey2", list);
+		
+		expected.put("S_TrntyLevel4", map_of_array);
+		
+		Assert.assertEquals(svar_case, expected);
 	}
 	
-	@Test
+	@Test(groups = { "WRESL_elements" })
 	public void goalSimple() throws RecognitionException, IOException {
 		
 		try {

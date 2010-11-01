@@ -7,5 +7,10 @@
 	<packages>
       <package name="test" />
    </packages>
+   <groups>
+    <run>
+      <include name="WRESL_elements"/>
+    </run>
+  </groups>
   </test>
 </suite>
