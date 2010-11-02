@@ -273,8 +273,7 @@ inline_func
 ///////////////////
 
 term
-	:	IDENT 
-	|   reserved_vars
+	:	IDENT | reserved_vars| reserved_consts
 	|	'(' e=expression ')' 
 	|	number
 	|   inline_func

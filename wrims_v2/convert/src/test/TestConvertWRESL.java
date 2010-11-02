@@ -255,10 +255,10 @@ public class TestConvertWRESL {
 	        }
 
 	    Map<String, Map<String, ArrayList<String>>>  expected  = new HashMap<String, Map<String, ArrayList<String>>>(); 
- 
+	    //Map<String, Map<String, ArrayList<ArrayList<String>>>>  expected    = new HashMap<String, Map<String, ArrayList<ArrayList<String>>>> ();
+	    Map<String, ArrayList<ArrayList<String>>>   map_of_2d_list; 
 	    Map<String, ArrayList<String>>   map_of_array;
 	    ArrayList<String> list;
-	    
 	    	    
 		ConvertWRESLLexer lexer = new ConvertWRESLLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
@@ -266,9 +266,10 @@ public class TestConvertWRESL {
 		parser.evaluator();
 		Map<String, Map<String, ArrayList<String>>>  svar_case = parser.svar_case;	
 
+		map_of_2d_list     = new HashMap<String, ArrayList<ArrayList<String>>>  (); 
 	    map_of_array = new HashMap<String, ArrayList<String>>();
 		list = new ArrayList<String>();
-	    list.addAll(Arrays.asList(new String[]{"v1","v2","v3","v4"}));
+	    list.addAll(Arrays.asList(new String[]{"Febfore","month == FEB","v3","v4"}));
 
 		map_of_array.put("subkey1", list);
 		
