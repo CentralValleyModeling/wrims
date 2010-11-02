@@ -254,33 +254,52 @@ public class TestConvertWRESL {
 	         e.printStackTrace();
 	        }
 
-	    Map<String, Map<String, ArrayList<String>>>  expected  = new HashMap<String, Map<String, ArrayList<String>>>(); 
-	    //Map<String, Map<String, ArrayList<ArrayList<String>>>>  expected    = new HashMap<String, Map<String, ArrayList<ArrayList<String>>>> ();
-	    Map<String, ArrayList<ArrayList<String>>>   map_of_2d_list; 
-	    Map<String, ArrayList<String>>   map_of_array;
-	    ArrayList<String> list;
+	    //Map<String, Map<String, ArrayList<String>>>  expected  = new HashMap<String, Map<String, ArrayList<String>>>(); 
+	    
+
 	    	    
 		ConvertWRESLLexer lexer = new ConvertWRESLLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWRESLParser parser = new ConvertWRESLParser(tokenStream);
 		parser.evaluator();
-		Map<String, Map<String, ArrayList<String>>>  svar_case = parser.svar_case;	
+	    Map<String, Map<String, ArrayList<ArrayList<String>>>> svar_case_sql = parser.svar_case_sql; 
+	    Map<String, ArrayList<String>>   svar_case_sql_list  = parser.svar_case_sql_list; 
+	    
+	    Map<String,Map<String,ArrayList<ArrayList<String>>>>expected = new HashMap<String,Map<String,ArrayList<ArrayList<String>>>>();				
+	    Map<String, ArrayList<String>>   expected_case_list  = new HashMap<String,ArrayList<String>> (); 
+	    
+	    Map<String, ArrayList<ArrayList<String>>> map_cases; 
+	    ArrayList<String> list_case_names;
+	    ArrayList<ArrayList<String>> list_case_2d;
 
-		map_of_2d_list     = new HashMap<String, ArrayList<ArrayList<String>>>  (); 
-	    map_of_array = new HashMap<String, ArrayList<String>>();
-		list = new ArrayList<String>();
-	    list.addAll(Arrays.asList(new String[]{"Febfore","month == FEB","v3","v4"}));
+		// new svar
+	    map_cases  = new HashMap<String,ArrayList<ArrayList<String>>>(); 
+	    list_case_names = new ArrayList<String>();
+	    
+	    // new case
+	    list_case_2d = new ArrayList<ArrayList<String>>();
+		list_case_2d.add(new ArrayList<String>());list_case_2d.add(new ArrayList<String>());
 
-		map_of_array.put("subkey1", list);
+		list_case_2d.get(0).add("sql");
+		list_case_2d.get(1).addAll(Arrays.asList(new String[]{"month == FEB","FEB","sacramento_runoff_forecast",null,null,"wateryear=wateryear",null,null}));
+		list_case_names.add("Febfore"); // this is needed to ensure the order of the cases, which is lost in map
+		map_cases.put("Febfore", list_case_2d);
 		
-	    list = new ArrayList<String>();
-	    list.addAll(Arrays.asList(new String[]{"v5","v6","v7","v8"}));
+		// new case
+	    list_case_2d = new ArrayList<ArrayList<String>>();
+		list_case_2d.add(new ArrayList<String>());list_case_2d.add(new ArrayList<String>());
 
-		map_of_array.put("subkey2", list);
-		
-		expected.put("S_TrntyLevel4", map_of_array);
-		
-		Assert.assertEquals(svar_case, expected);
+		list_case_2d.get(0).add("value");
+		list_case_2d.get(1).addAll(Arrays.asList(new String[]{"always","0"}));
+		list_case_names.add("JuntoJan");
+		map_cases.put("JuntoJan", list_case_2d);
+
+		// conclude 1st svar
+		expected_case_list.put("frcst_sac", list_case_names);
+		expected.put("frcst_sac", map_cases);
+				
+		Assert.assertEquals(svar_case_sql, expected);
+		//Assert.assertEquals(svar_case_sql_list, expected_case_list);
 	}
 	
 	@Test(groups = { "WRESL_elements" })

@@ -83,5 +83,60 @@ public class SandBox {
 		//System.out.println(map_of_map);
 	}		
 	
+
+	@Test(groups = { "sandbox" })	
+	public void MapConectingMap()
+	{ 
+
+	    Map<String, ArrayList<String>>   svar_case_list  = new HashMap<String,ArrayList<String>> (); 
+	    Map<String, ArrayList<ArrayList<String>>>   map_cases; 
+	    Map<String, Map<String, ArrayList<ArrayList<String>>>> svar_case_statements = new HashMap<String,Map<String, ArrayList<ArrayList<String>>>>(); 
+	    
+	    ArrayList<String> list_case_names;
+	    ArrayList<ArrayList<String>> list_case_2d;
+
+		// new svar
+	    map_cases  = new HashMap<String,ArrayList<ArrayList<String>>>(); 
+	    list_case_names = new ArrayList<String>();
+	    
+	    // new case
+	    list_case_2d = new ArrayList<ArrayList<String>>();
+		list_case_2d.add(new ArrayList<String>());list_case_2d.add(new ArrayList<String>());
+
+		list_case_names.add("Febfore");
+		list_case_2d.get(0).add("sql");
+		list_case_2d.get(1).addAll(Arrays.asList(new String[]{"month == FEB","FEB","sacramento_runoff_forecast",null,null,"wateryear=wateryear",null,null}));
+		map_cases.put("Febfore", list_case_2d);
+		
+		// new case
+	    list_case_2d = new ArrayList<ArrayList<String>>();
+		list_case_2d.add(new ArrayList<String>());list_case_2d.add(new ArrayList<String>());
+
+		list_case_names.add("JuntoJan");
+		list_case_2d.get(0).add("value");
+		list_case_2d.get(1).addAll(Arrays.asList(new String[]{"always","0"}));
+		map_cases.put("JuntoJan", list_case_2d);
+
+		// conclude 1st svar
+		svar_case_list.put("frcst_sac", list_case_names);
+		svar_case_statements.put("frcst_sac", map_cases);
+
+	    
+		// print
+		System.out.println("----------");
+		for (String svarName : svar_case_list.keySet()) {
+			//System.out.println(key+"::"+map_cases.get(key));			
+			for (String caseName : svar_case_list.get(svarName)) {
+
+				System.out.println(svarName+"::"+caseName+"::"+svar_case_statements.get(svarName).get(caseName));
+			}
+		}
+		System.out.println("----------");	
+		
+		
+		}
+
+	}		
 	
-}
+	
+
