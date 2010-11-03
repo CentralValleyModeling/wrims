@@ -1,3 +1,3 @@
 cd src
-java -jar ..\\libs\\antlr-3.2.jar -o ..\\antlr-generated WRESL\\ConvertWRESL.g
+java -jar ..\\libs\\antlr-3.2.jar -o ..\\antlr-generated wresl\\ConvertWresl.g
 cd ..

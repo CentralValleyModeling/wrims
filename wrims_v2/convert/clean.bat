@@ -1,12 +1,13 @@
 del antlr-generated\\*.tokens
-del antlr-generated\\WRESL\\*.java
-del antlr-generated\\WRESL\\*.class
+del antlr-generated\\wresl\\*.java
+del antlr-generated\\wresl\\*.class
+rmdir antlr-generated\\wresl /s /q
 
 del src\\test\\*.class 
-del src\\WRESL\\*.tokens 
+del src\\wresl\\*.tokens 
 
 del bin\\test\\*.class
-del bin\\WRESL\\*.class
+del bin\\wresl\\*.class
 
 rmdir test-output /s /q
 
