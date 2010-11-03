@@ -5,7 +5,7 @@
        <class name="test.TestConvertWRESL" />
     </classes> -->
 	<packages>
-      <package name="test" />
+      <package name="test.convertWresl" />
    </packages>
    <groups>
     <run>
