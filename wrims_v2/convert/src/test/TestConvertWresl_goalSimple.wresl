@@ -1,0 +1,2 @@
+goal split_C5_WTS { C5_WTS = C5_WTS_Stg1 + C5_WTS_Stg2 }
+goal C_SLCVP { C5_WTS = C5_WTS_Stg1 }

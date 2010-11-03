@@ -1,0 +1,10 @@
+define frcst_sac {
+       case Febfore {
+           condition  month == FEB
+           select     FEB
+           from       sacramento_runoff_forecast
+           where      wateryear=wateryear }
+       case JuntoJan {
+           condition  always
+           value      0  }
+       }
