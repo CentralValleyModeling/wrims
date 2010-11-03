@@ -11,8 +11,8 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 
-import WRESL.ConvertWRESLLexer;
-import WRESL.ConvertWRESLParser;
+import wresl.ConvertWreslLexer;
+import wresl.ConvertWreslParser;
 
 import org.testng.annotations.*;
 import org.testng.Assert;

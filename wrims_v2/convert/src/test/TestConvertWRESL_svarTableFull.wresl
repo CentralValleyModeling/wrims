@@ -1,1 +1,0 @@
-define A_Orovl_last { select area from res_info given storage=1000*S_Orovl(-1) use linear where res_num=6 }

@@ -1,2 +1,0 @@
-define C_SacFea {lower 0. upper 6150*taf_cfs kind 'FLOW-CHANNEL' units 'CFS'} 
-define C_SLCVP {lower unbounded upper unbounded kind 'FLOW-CHANNEL' units 'CFS'}   
