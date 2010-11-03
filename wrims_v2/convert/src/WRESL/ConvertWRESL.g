@@ -294,14 +294,28 @@ expression returns [String str]
 	:	i=add {$str = $i.text; }
 	;
 
-relation
+relation_group1
 	: '='
 	| '<'
 	| '>'
 	;	
 
+relation_group2
+	: EQUALS
+	| LESSER_THAN
+	| GREATER_THAN
+	;
+
 relationStatement
-	:	expression relation expression 
+	:	expression relation_group1 expression 
+	;
+
+relationStatement_2
+	:	expression relation_group2 expression 
+	;
+
+logicalRelationStatement
+	:   relationStatement_2 '.and.' relationStatement_2
 	;
 
 number
@@ -342,6 +356,8 @@ WHERE : 'where' ;
 
 /// comparison ///
 EQUALS : '==';
+LESSER_THAN : '<=';
+GREATER_THAN : '>=';
 
 /// reserved keywords //
 GOAL :'goal';
