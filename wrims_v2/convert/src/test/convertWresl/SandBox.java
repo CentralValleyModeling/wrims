@@ -3,6 +3,7 @@ package test.convertWresl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.testng.annotations.*;
@@ -10,6 +11,36 @@ import org.testng.annotations.*;
 
 public class SandBox {	
 
+	
+	@Test(groups = { "sandbox" })	
+	public void OverWriteList()
+	{ 
+	    ArrayList<String> list ;
+	    ArrayList<String> list2 ;
+
+	    list = new ArrayList<String>();
+	    list2 = new ArrayList<String>();
+	    
+	    list.addAll(Arrays.asList(new String[]{"1","2","3","4"}));
+	    list2.addAll(Arrays.asList(new String[]{"a","b","c"}));
+		list.addAll(null);
+	    
+	    
+	    String[] arr = {"a","b","c"};
+	    String[] brr = {"dd","ee"};
+	    
+	    arr[2] = brr[1];
+	    
+	    List<String> li  ;
+	    String[] eee= {"aaa","bbb"};
+	    li = Arrays.asList(eee);
+	    
+	    
+	    System.out.println(Arrays.asList(arr));
+	    System.out.println(li);
+	    System.out.println(list);
+	}	
+	
 	@Test(groups = { "sandbox" })
 	public void ArrayList2d()
 	{ 

@@ -26,19 +26,11 @@ options {
   public Map<String, ArrayList<String>>  svar_table  = new HashMap<String, ArrayList<String>>(); 
   public Map<String, ArrayList<String>>  svar_dss    = new HashMap<String, ArrayList<String>>(); 
   
-  //public Map<String, Map<String, ArrayList<ArrayList<String>>>> svar_case_sql = new HashMap<String, Map<String, ArrayList<ArrayList<String>>>>(); 
-  //public Map<String, ArrayList<String>>   svar_case_sql_list = new HashMap<String, ArrayList<String>>();   
 
-	/// svar_case
+	/// svar_cases
 	public    Map<String, ArrayList<String>>   svar_cases  = new HashMap<String,ArrayList<String>> (); 
 	public    Map<String, ArrayList<String>>   svar_conditions  = new HashMap<String,ArrayList<String>> (); 
-	public    Map<String, Map<String, List<String>>> svar_map_case_statement = new HashMap<String, Map<String, List<String>>>();
-
-    /// for each case of svar_case
-	private    Map<String, List<String>> map_case_statement; 
-	private    ArrayList<String> list_case_names;
-	private    ArrayList<String> list_conditions;
-
+	public    Map<String, Map<String, ArrayList<String>>> svar_map_case_content = new HashMap<String, Map<String, ArrayList<String>>>();
 
   
   private ArrayList<String> list;
@@ -69,7 +61,7 @@ define //returns [Map<String, String> map]
 	|	dvar_nonstd
 	|	svar_table
 	|	svar_dss
-	|	svar_case)  
+	|	svar_cases)  
 	;
 
 goal_simple
@@ -117,9 +109,53 @@ svar_table
 		}
 	;
 
-svar_case
-	:  IDENT '{' ('case' IDENT '{' conditionStatement ( sqlStatement | valueStatement) '}')+  '}'
+svar_cases
+	//@init { $list = new ArrayList<String>(); }
+	:  i=IDENT '{' c=caseStatements '}' { 
+
+				if (var_all.containsKey($i.text)){
+				//System.out.println("error... variable redefined: " + $i.text);
+				error_var_redefined.put($i.text, "svar_cases");
+				}
+				else {
+				//list = new ArrayList<String>();
+				//list.add($c.text);
+				svar_cases.put($i.text, $c.caseNames);
+				svar_conditions.put($i.text, $c.conditions);
+				svar_map_case_content.put($i.text, $c.caseContent);
+				var_all.put($i.text, "svar_cases");
+				}
+		} 	
 	;
+	
+caseStatements returns[ArrayList<String> caseNames, 
+					   ArrayList<String> conditions, 
+					   Map<String, ArrayList<String>> caseContent ]
+					   
+@init { $caseNames = new ArrayList<String>(); 
+        $conditions = new ArrayList<String>();
+        $caseContent = new HashMap<String, ArrayList<String>>(); }
+        
+	:  ( c=caseStatement  {
+			$caseNames.add($c.caseNameStr);
+			$conditions.add($c.conditionStr);			
+			$caseContent.put($c.caseNameStr, $c.contentList);			         
+			
+			} )+
+	;	
+
+caseStatement returns[String caseNameStr, String conditionStr, ArrayList<String> contentList]
+@init { $contentList = new ArrayList<String>();} 
+	:  'case' i=IDENT '{' c=conditionStatement ( s=sqlStatement | v=valueStatement) '}'  {
+			
+			$caseNameStr = $i.text;
+			$conditionStr = $c.str;
+			if ($v.str==null|$v.str==""){$contentList.add("sql");$contentList.addAll($s.list);}
+			else                        {$contentList.add("value");$contentList.add($v.str);}
+			
+			}
+	;	
+
 
 svar_dss
 	:	i=IDENT '{' 'timeseries' kind units'}' { 
@@ -175,19 +211,19 @@ dvar_nonstd
 
 lower_or_upper returns[ArrayList<String> list]
 	:	lower upper? {       
-				list = new ArrayList<String>();
-				list.add($lower.str);
+				$list = new ArrayList<String>();
+				$list.add($lower.str);
 				if ($upper.str==null) {
-				list.add("unbounded");
+				$list.add("unbounded");
 				}
 				else {
-				list.add($upper.str);
+				$list.add($upper.str);
 				}		
 	    }
 	|	upper {       
-				list = new ArrayList<String>();
-				list.add("0");
-				list.add($upper.str);
+				$list = new ArrayList<String>();
+				$list.add("0");
+				$list.add($upper.str);
 		}		
 	;
  
@@ -212,10 +248,13 @@ units returns [String str]
 
 /// sub rules ///
 
-conditionStatement
+
+
+
+conditionStatement returns[String str]
 	: 'condition' 
-	( logicalRelationStatement
-	| ALWAYS )
+	( s=logicalRelationStatement {$str = $s.text;}
+	| ALWAYS {$str = "always";} )
 	;
 
 valueStatement returns[String str]
@@ -225,24 +264,24 @@ valueStatement returns[String str]
 /// SQL related ///
 
 sqlStatement returns[ArrayList<String> list]
+	@init { $list = new ArrayList<String>(); }
 	: 'select' i1=all_ident 'from' i2=IDENT 
 	  ('given' i3=assignmentStatement)? ('use' i4=IDENT)? 
 	  where_items?	  
 	  {       
-				list = new ArrayList<String>();
-				list.add($i1.text);
-				list.add($i2.text);
-				list.add($i3.text);
-				list.add($i4.text);
-				list.addAll($where_items.list);
+				$list.add($i1.text);
+				$list.add($i2.text);
+				$list.add($i3.text);
+				$list.add($i4.text);
+				if ($where_items.list != null) {$list.addAll($where_items.list);}
 		}
 	;
 
 where_items returns[ArrayList<String> list]
 	@init { $list = new ArrayList<String>(); }
 
-	:	 WHERE  (r1=assignmentStatement{list.add($r1.text);} )
-	        (',' r=assignmentStatement {list.add($r.text);}  )*
+	:	 WHERE  (r1=assignmentStatement{$list.add($r1.text);} )
+	        (',' r=assignmentStatement {$list.add($r.text);}  )*
 	;
 
 ///////////////////////////

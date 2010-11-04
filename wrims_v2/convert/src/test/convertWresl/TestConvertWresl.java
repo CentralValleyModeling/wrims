@@ -258,20 +258,18 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();
-		
+		parser.evaluator();		
 
 		Map<String, ArrayList<String>>   svar_cases  = parser.svar_cases;
 		Map<String, ArrayList<String>>   svar_conditions = parser.svar_conditions; 
-		Map<String, Map<String, List<String>>> svar_map_case_statement = parser.svar_map_case_statement;
-	    	    
+		Map<String, Map<String, ArrayList<String>>> svar_map_case_content = parser.svar_map_case_content;
 	    
 	    Map<String, ArrayList<String>>   expected_svar_cases  = new HashMap<String,ArrayList<String>> (); 
 	    Map<String, ArrayList<String>>   expected_svar_conditions  = new HashMap<String,ArrayList<String>> (); 
-	    Map<String, Map<String, List<String>>> expected_svar_map_case_statement = new HashMap<String, Map<String, List<String>>>();
+	    Map<String, Map<String, List<String>>> expected_svar_map_case_content = new HashMap<String, Map<String, List<String>>>();
 	    
 	    /// for each case of svar
-	    Map<String, List<String>> map_case_statement; 
+	    Map<String, List<String>> map_case_content; 
 	    ArrayList<String> list_case_names;
 	    ArrayList<String> list_conditions;
 
@@ -279,29 +277,84 @@ public class TestConvertWresl {
 		/// new svar
 	    list_case_names = new ArrayList<String>();
 	    list_conditions = new ArrayList<String>();
-	    map_case_statement = new HashMap<String, List<String>>();	
+	    map_case_content = new HashMap<String, List<String>>();	
 	    
 	    /// new case
 		list_case_names.add("Febfore"); // this is needed to ensure the order of the cases, which is lost in map
 		list_conditions.add("month == FEB");
-		map_case_statement.put("Febfore", Arrays.asList(new String[]{"sql","FEB","sacramento_runoff_forecast",null,null,"wateryear=wateryear",null,null}));
-
+		map_case_content.put("Febfore", Arrays.asList(new String[]{"sql","FEB","sacramento_runoff_forecast",null,null,"wateryear=wateryear"}));
 		
 		/// new case
 		list_case_names.add("JuntoJan");
 		list_conditions.add("always");
-		map_case_statement.put("JuntoJan", Arrays.asList(new String[]{"value","0"}));
+		map_case_content.put("JuntoJan", Arrays.asList(new String[]{"value","0"}));
 
 		// conclude 1st svar
 		expected_svar_cases.put("frcst_sac", list_case_names);
 		expected_svar_conditions.put("frcst_sac", list_conditions);
-		expected_svar_map_case_statement.put("frcst_sac", map_case_statement);
+		expected_svar_map_case_content.put("frcst_sac", map_case_content);
 
 				
-		//Assert.assertEquals(null, expected_map_svar_cases);
-		//Assert.assertEquals(null, expected_map_svar_conditions);
-		Assert.assertEquals(null, expected_svar_map_case_statement);
+		Assert.assertEquals(svar_cases, expected_svar_cases);
+		Assert.assertEquals(svar_conditions, expected_svar_conditions);
+		Assert.assertEquals(svar_map_case_content, expected_svar_map_case_content);
 	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void svarCase2() throws RecognitionException, IOException {
+		
+		try {
+			stream = new ANTLRFileStream("src//test//TestConvertWresl_svarCase2.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	    	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.evaluator();		
+
+		Map<String, ArrayList<String>>   svar_cases  = parser.svar_cases;
+		Map<String, ArrayList<String>>   svar_conditions = parser.svar_conditions; 
+		Map<String, Map<String, ArrayList<String>>> svar_map_case_content = parser.svar_map_case_content;
+	    
+	    Map<String, ArrayList<String>>   expected_svar_cases  = new HashMap<String,ArrayList<String>> (); 
+	    Map<String, ArrayList<String>>   expected_svar_conditions  = new HashMap<String,ArrayList<String>> (); 
+	    Map<String, Map<String, List<String>>> expected_svar_map_case_content = new HashMap<String, Map<String, List<String>>>();
+	    
+	    /// for each case of svar
+	    Map<String, List<String>> map_case_content; 
+	    ArrayList<String> list_case_names;
+	    ArrayList<String> list_conditions;
+
+
+		/// new svar
+	    list_case_names = new ArrayList<String>();
+	    list_conditions = new ArrayList<String>();
+	    map_case_content = new HashMap<String, List<String>>();	
+	    
+	    /// new case
+		list_case_names.add("Febfore"); // this is needed to ensure the order of the cases, which is lost in map
+		list_conditions.add("month == FEB");
+		map_case_content.put("Febfore", Arrays.asList(new String[]{"sql","FEB","sacramento_runoff_forecast",null,null,"wateryear=wateryear"}));
+		
+		/// new case
+		list_case_names.add("JuntoJan");
+		list_conditions.add("always");
+		map_case_content.put("JuntoJan", Arrays.asList(new String[]{"value","0"}));
+
+		// conclude 1st svar
+		expected_svar_cases.put("frcst_sac", list_case_names);
+		expected_svar_conditions.put("frcst_sac", list_conditions);
+		expected_svar_map_case_content.put("frcst_sac", map_case_content);
+
+				
+		Assert.assertEquals(svar_cases, expected_svar_cases);
+		Assert.assertEquals(svar_conditions, expected_svar_conditions);
+		Assert.assertEquals(svar_map_case_content, expected_svar_map_case_content);
+	}	
+	
 	
 	@Test(groups = { "WRESL_elements" })
 	public void goalSimple() throws RecognitionException, IOException {
