@@ -46,18 +46,14 @@ options {
   public static ArrayList<String> reserved_words = new ArrayList<String>() {{ addAll(r_keys); addAll(r_mons); }}; 
 }
 
-evaluator //returns [Map<String, String> map1]
-	:	modules EOF //{ $map1 = constants; }
-	;
+evaluator 
+	:	modules EOF  ;
 
 modules
-	:	module*
-	;
+	:	module*  ;
 
 module
-	:   goal_simple
-	|   define
-	;
+	:   goal_simple  |  define  ;
 
 define //returns [Map<String, String> map]
 	:	DEFINE 
@@ -68,7 +64,6 @@ define //returns [Map<String, String> map]
 	|	svar_dss
 	|	svar_case)  
 	;
-
 
 goal_simple
 	: GOAL i=IDENT  '{' v=assignmentStatement '}'  {		
@@ -248,16 +243,13 @@ where_items returns[ArrayList<String> list]
 ///////////////////////////
 
 max_func
-	: MAX '(' expression ',' expression ')'
-	;
+	: MAX '(' expression ',' expression ')' ;
 
 min_func
-	: MIN '(' expression ',' expression ')'
-	;
+	: MIN '(' expression ',' expression ')' ;
 
 inline_func 
-	: IDENT '(' '-' INTEGER ')'
-	;
+	: IDENT '(' '-' INTEGER ')' ;
 
 ///////////////////
 /// basic rules ///
@@ -271,52 +263,41 @@ term
 	;
 	
 unary
-	:	('-')? term
-	;
+	:	('-')? term ;
 
 mult
-	:	unary (('*' | '/' | 'mod') unary)*
-	;
+	:	unary (('*' | '/' | 'mod') unary)* ;
 	
 add 
-	:	mult (('+' | '-') mult)*
-	;
+	:	mult (('+' | '-') mult)* ;
 
 expression returns [String str]
 	:	i=add {$str = $i.text; }
 	;
 
 relation_group
-	: EQUALS | LE | GE | '<' | '>'
-	;
+	: EQUALS | LE | GE | '<' | '>' ;
 
 assignmentStatement
-	: expression '=' expression
-	;
+	: expression '=' expression ;
 
 relationStatement
-	:	expression relation_group expression 
-	;
+	:	expression relation_group expression  ;
 
 logicalRelationStatement
-	:   relationStatement ((AND|OR) relationStatement)?
-	;
+	:   relationStatement ((AND|OR) relationStatement)? ;
 
 number
-	: INTEGER | FLOAT
-	;
+	: INTEGER | FLOAT ;
 
 reserved_vars
-	: WATERYEAR | MONTH
-	;
+	: WATERYEAR | MONTH ;
 
 reserved_consts
-	: MON_CONST
-	;
+	: MON_CONST ;
 
 all_ident
-	: reserved_vars | reserved_consts | IDENT
-	;
+	: reserved_vars | reserved_consts | IDENT ;
 
 MULTILINE_COMMENT : '/*' .* '*/' {$channel = HIDDEN;} ;
 
