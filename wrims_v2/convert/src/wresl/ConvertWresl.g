@@ -1,10 +1,7 @@
 grammar ConvertWresl;
 
-
-
 options {
   language = Java;
-
 }
 
 @header {
@@ -18,9 +15,7 @@ options {
   package wresl;
 }
 
-
 @members {
-
   public Map<String, String>   error_var_redefined = new HashMap<String, String> ();
   public Map<String, String>   var_all             = new HashMap<String, String> ();
   public Map<String, String>   svar_expression     = new HashMap<String, String>();
@@ -76,7 +71,7 @@ define //returns [Map<String, String> map]
 
 
 goal_simple
-	: GOAL i=IDENT  '{' v=relationStatement '}'  {		
+	: GOAL i=IDENT  '{' v=assignmentStatement '}'  {		
 				if (var_all.containsKey($i.text)){
 				//System.out.println("error... variable redefined: " + $i.text);
 				error_var_redefined.put($i.text, "goal_simple");
@@ -217,7 +212,7 @@ units returns [String str]
 
 condition_statement
 	: 'condition' 
-	( reserved_vars EQUALS reserved_consts
+	( logicalRelationStatement
 	| ALWAYS )
 	;
 
@@ -229,8 +224,8 @@ value_statement returns[String str]
 
 tableSQL returns[ArrayList<String> list]
 	: 'select' i1=all_ident 'from' i2=IDENT 
-	  ('given' i3=relationStatement)? ('use' i4=IDENT)? 
-	  where_items	  
+	  ('given' i3=assignmentStatement)? ('use' i4=IDENT)? 
+	  where_items?	  
 	  {       
 				list = new ArrayList<String>();
 				list.add($i1.text);
@@ -244,10 +239,9 @@ tableSQL returns[ArrayList<String> list]
 where_items returns[ArrayList<String> list]
 	@init { $list = new ArrayList<String>(); }
 
-	:	 WHERE  (r1=relationStatement{list.add($r1.text);} )
-	        (',' r=relationStatement {list.add($r.text);}  )*
+	:	 WHERE  (r1=assignmentStatement{list.add($r1.text);} )
+	        (',' r=assignmentStatement {list.add($r.text);}  )*
 	;
-
 
 ///////////////////////////
 /// Intrinsic functions ///
@@ -273,9 +267,7 @@ term
 	:	IDENT | reserved_vars| reserved_consts
 	|	'(' e=expression ')' 
 	|	number
-	|   inline_func
-	|   max_func
-	|   min_func	
+	|   inline_func  |   max_func  |  min_func	
 	;
 	
 unary
@@ -294,38 +286,28 @@ expression returns [String str]
 	:	i=add {$str = $i.text; }
 	;
 
-relation_group1
-	: '='
-	| '<'
-	| '>'
-	;	
+relation_group
+	: EQUALS | LE | GE | '<' | '>'
+	;
 
-relation_group2
-	: EQUALS
-	| LESSER_THAN
-	| GREATER_THAN
+assignmentStatement
+	: expression '=' expression
 	;
 
 relationStatement
-	:	expression relation_group1 expression 
-	;
-
-relationStatement_2
-	:	expression relation_group2 expression 
+	:	expression relation_group expression 
 	;
 
 logicalRelationStatement
-	:   relationStatement_2 '.and.' relationStatement_2
+	:   relationStatement ((AND|OR) relationStatement)?
 	;
 
 number
-	: INTEGER
-	| FLOAT
+	: INTEGER | FLOAT
 	;
 
 reserved_vars
-	: WATERYEAR
-	| MONTH
+	: WATERYEAR | MONTH
 	;
 
 reserved_consts
@@ -338,16 +320,12 @@ all_ident
 
 MULTILINE_COMMENT : '/*' .* '*/' {$channel = HIDDEN;} ;
 
-
 fragment LETTER : ('a'..'z' | 'A'..'Z') ;
 fragment DIGIT : '0'..'9';
 fragment SYMBOLS : '_';
 
-
 INTEGER : DIGIT+ ;
-FLOAT : INTEGER? '.' INTEGER 
-	  | INTEGER '.' 
-	  ;
+FLOAT : INTEGER? '.' INTEGER  | INTEGER '.' ;
 
 /// INLINE_FUNC //
 MAX : 'max' ;
@@ -356,8 +334,12 @@ WHERE : 'where' ;
 
 /// comparison ///
 EQUALS : '==';
-LESSER_THAN : '<=';
-GREATER_THAN : '>=';
+LE : '<=';
+GE : '>=';
+
+/// logical ///
+AND : '.and.';
+OR  : '.or.';
 
 /// reserved keywords //
 GOAL :'goal';
@@ -372,13 +354,11 @@ MONTH : 'month';
 /// reserved constants ///
 MON_CONST : 'JAN'|'FEB'|'MAR'|'APR'|'MAY'|'JUN'|'JUL'|'AUG'|'SEP'|'OCT'|'NOV'|'DEC';
 
-
 ///units///
 TAF :'\''  'TAF'  '\'';
 CFS :'\''  'CFS' '\'';
 ACRES :'\''  'ACRES' '\'';
 IN :'\''  'IN' '\'';
-
 
 ///basics///
 QUOTE_STRING_with_MINUS : '\'' IDENT ( '-' | IDENT )+ '\'';
