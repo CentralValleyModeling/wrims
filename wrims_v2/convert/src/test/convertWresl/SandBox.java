@@ -16,8 +16,7 @@ public class SandBox {
 		ArrayList<ArrayList<String>> myList = new ArrayList<ArrayList<String>>();
 
 		// add 2nd dimension
-		for ( int i = 0; i < 3; i++ )
-		    myList.add(new ArrayList<String>());
+		for ( int i = 0; i < 3; i++ ) myList.add(new ArrayList<String>());
 
 		// add some contents
 		myList.get(0).add("a");myList.get(0).add("b");myList.get(0).add("c");

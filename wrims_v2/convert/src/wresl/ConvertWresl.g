@@ -26,12 +26,19 @@ options {
   public Map<String, ArrayList<String>>  svar_table  = new HashMap<String, ArrayList<String>>(); 
   public Map<String, ArrayList<String>>  svar_dss    = new HashMap<String, ArrayList<String>>(); 
   
-  public Map<String, Map<String, ArrayList<ArrayList<String>>>> svar_case_sql = new HashMap<String, Map<String, ArrayList<ArrayList<String>>>>(); 
-  public Map<String, ArrayList<String>>   svar_case_sql_list = new HashMap<String, ArrayList<String>>();   
+  //public Map<String, Map<String, ArrayList<ArrayList<String>>>> svar_case_sql = new HashMap<String, Map<String, ArrayList<ArrayList<String>>>>(); 
+  //public Map<String, ArrayList<String>>   svar_case_sql_list = new HashMap<String, ArrayList<String>>();   
 
-  private Map<String, ArrayList<ArrayList<String>>> map_cases; 
-  private ArrayList<String> list_case_names;
-  private ArrayList<ArrayList<String>> list_case_2d;
+	/// svar_case
+	public    Map<String, ArrayList<String>>   svar_cases  = new HashMap<String,ArrayList<String>> (); 
+	public    Map<String, ArrayList<String>>   svar_conditions  = new HashMap<String,ArrayList<String>> (); 
+	public    Map<String, Map<String, List<String>>> svar_map_case_statement = new HashMap<String, Map<String, List<String>>>();
+
+    /// for each case of svar_case
+	private    Map<String, List<String>> map_case_statement; 
+	private    ArrayList<String> list_case_names;
+	private    ArrayList<String> list_conditions;
+
 
   
   private ArrayList<String> list;
@@ -83,7 +90,7 @@ goal_lhs
 	;
 
 svar_expression //returns [Map<String, String> map]
-	:	i=IDENT '{' v=value_statement '}' { 
+	:	i=IDENT '{' v=valueStatement '}' { 
 				
 				if (var_all.containsKey($i.text)){
 				//System.out.println("error... variable redefined: " + $i.text);
@@ -97,7 +104,7 @@ svar_expression //returns [Map<String, String> map]
 	;
 
 svar_table
-	:	i=IDENT '{' t=tableSQL '}' { 
+	:	i=IDENT '{' t=sqlStatement '}' { 
 				
 				if (var_all.containsKey($i.text)){
 				//System.out.println("error... variable redefined: " + $i.text);
@@ -111,7 +118,7 @@ svar_table
 	;
 
 svar_case
-	:  IDENT '{' ('case' IDENT '{' condition_statement (tableSQL|value_statement) '}')+  '}'
+	:  IDENT '{' ('case' IDENT '{' conditionStatement ( sqlStatement | valueStatement) '}')+  '}'
 	;
 
 svar_dss
@@ -205,19 +212,19 @@ units returns [String str]
 
 /// sub rules ///
 
-condition_statement
+conditionStatement
 	: 'condition' 
 	( logicalRelationStatement
 	| ALWAYS )
 	;
 
-value_statement returns[String str]
+valueStatement returns[String str]
 	: 'value' e=expression {$str = $e.text;}
 	;
 
 /// SQL related ///
 
-tableSQL returns[ArrayList<String> list]
+sqlStatement returns[ArrayList<String> list]
 	: 'select' i1=all_ident 'from' i2=IDENT 
 	  ('given' i3=assignmentStatement)? ('use' i4=IDENT)? 
 	  where_items?	  

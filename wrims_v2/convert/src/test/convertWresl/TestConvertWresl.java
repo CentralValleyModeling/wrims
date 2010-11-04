@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.antlr.runtime.ANTLRFileStream;
@@ -253,53 +254,53 @@ public class TestConvertWresl {
 	    catch(Exception e) {
 	         e.printStackTrace();
 	        }
-
-	    //Map<String, Map<String, ArrayList<String>>>  expected  = new HashMap<String, Map<String, ArrayList<String>>>(); 
-	    
-
 	    	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();
-	    Map<String, Map<String, ArrayList<ArrayList<String>>>> svar_case_sql = parser.svar_case_sql; 
-	    Map<String, ArrayList<String>>   svar_case_sql_list  = parser.svar_case_sql_list; 
-	    
-	    Map<String,Map<String,ArrayList<ArrayList<String>>>>expected = new HashMap<String,Map<String,ArrayList<ArrayList<String>>>>();				
-	    Map<String, ArrayList<String>>   expected_case_list  = new HashMap<String,ArrayList<String>> (); 
-	    
-	    Map<String, ArrayList<ArrayList<String>>> map_cases; 
-	    ArrayList<String> list_case_names;
-	    ArrayList<ArrayList<String>> list_case_2d;
-
-		// new svar
-	    map_cases  = new HashMap<String,ArrayList<ArrayList<String>>>(); 
-	    list_case_names = new ArrayList<String>();
-	    
-	    // new case
-	    list_case_2d = new ArrayList<ArrayList<String>>();
-		list_case_2d.add(new ArrayList<String>());list_case_2d.add(new ArrayList<String>());
-
-		list_case_2d.get(0).add("sql");
-		list_case_2d.get(1).addAll(Arrays.asList(new String[]{"month == FEB","FEB","sacramento_runoff_forecast",null,null,"wateryear=wateryear",null,null}));
-		list_case_names.add("Febfore"); // this is needed to ensure the order of the cases, which is lost in map
-		map_cases.put("Febfore", list_case_2d);
 		
-		// new case
-	    list_case_2d = new ArrayList<ArrayList<String>>();
-		list_case_2d.add(new ArrayList<String>());list_case_2d.add(new ArrayList<String>());
 
-		list_case_2d.get(0).add("value");
-		list_case_2d.get(1).addAll(Arrays.asList(new String[]{"always","0"}));
+		Map<String, ArrayList<String>>   svar_cases  = parser.svar_cases;
+		Map<String, ArrayList<String>>   svar_conditions = parser.svar_conditions; 
+		Map<String, Map<String, List<String>>> svar_map_case_statement = parser.svar_map_case_statement;
+	    	    
+	    
+	    Map<String, ArrayList<String>>   expected_svar_cases  = new HashMap<String,ArrayList<String>> (); 
+	    Map<String, ArrayList<String>>   expected_svar_conditions  = new HashMap<String,ArrayList<String>> (); 
+	    Map<String, Map<String, List<String>>> expected_svar_map_case_statement = new HashMap<String, Map<String, List<String>>>();
+	    
+	    /// for each case of svar
+	    Map<String, List<String>> map_case_statement; 
+	    ArrayList<String> list_case_names;
+	    ArrayList<String> list_conditions;
+
+
+		/// new svar
+	    list_case_names = new ArrayList<String>();
+	    list_conditions = new ArrayList<String>();
+	    map_case_statement = new HashMap<String, List<String>>();	
+	    
+	    /// new case
+		list_case_names.add("Febfore"); // this is needed to ensure the order of the cases, which is lost in map
+		list_conditions.add("month == FEB");
+		map_case_statement.put("Febfore", Arrays.asList(new String[]{"sql","FEB","sacramento_runoff_forecast",null,null,"wateryear=wateryear",null,null}));
+
+		
+		/// new case
 		list_case_names.add("JuntoJan");
-		map_cases.put("JuntoJan", list_case_2d);
+		list_conditions.add("always");
+		map_case_statement.put("JuntoJan", Arrays.asList(new String[]{"value","0"}));
 
 		// conclude 1st svar
-		expected_case_list.put("frcst_sac", list_case_names);
-		expected.put("frcst_sac", map_cases);
+		expected_svar_cases.put("frcst_sac", list_case_names);
+		expected_svar_conditions.put("frcst_sac", list_conditions);
+		expected_svar_map_case_statement.put("frcst_sac", map_case_statement);
+
 				
-		Assert.assertEquals(svar_case_sql, expected);
-		//Assert.assertEquals(svar_case_sql_list, expected_case_list);
+		//Assert.assertEquals(null, expected_map_svar_cases);
+		//Assert.assertEquals(null, expected_map_svar_conditions);
+		Assert.assertEquals(null, expected_svar_map_case_statement);
 	}
 	
 	@Test(groups = { "WRESL_elements" })
