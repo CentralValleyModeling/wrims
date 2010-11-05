@@ -410,12 +410,26 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();
-		Map<String, String>  goal_simple = parser.goal_simple;	
 
 		expected.put("split_C5_WTS", "C5_WTS = C5_WTS_Stg1 + C5_WTS_Stg2");
 		expected.put("C_SLCVP", "C5_WTS = C5_WTS_Stg1");
+		expected.put("a1", "b = c");
+		expected.put("a2", "b >  c");
+		expected.put("a3", "b < c");
 		
-		Assert.assertEquals(goal_simple, expected);
+		
+		List<String> goal_simple_keys = new ArrayList<String> (parser.goal_simple.keySet());
+		List<String> expected_keys = new ArrayList<String> (expected.keySet());
+		Collections.sort(goal_simple_keys);
+		Collections.sort(expected_keys);
+		
+		Assert.assertEquals(goal_simple_keys, expected_keys);
+		
+		for (String i : expected_keys) {
+			Assert.assertEquals(parser.goal_simple.get(i), expected.get(i));
+		}
+		
+		Assert.assertEquals(parser.goal_simple, expected);
 	}			
 
 }

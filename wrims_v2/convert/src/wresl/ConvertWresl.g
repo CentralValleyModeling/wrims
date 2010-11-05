@@ -73,7 +73,7 @@ define //returns [Map<String, String> map]
 	;
 
 goal_simple
-	: GOAL i=IDENT  '{' v=assignmentStatement '}'  {		
+	: GOAL i=IDENT  '{' v=constraintStatement '}'  {		
 				if (var_all.containsKey($i.text)){
 				//System.out.println("error... variable redefined: " + $i.text);
 				error_var_redefined.put($i.text, "goal_simple");
@@ -274,7 +274,7 @@ valueStatement returns[String str]
 sqlStatement returns[ArrayList<String> list]
 	@init { $list = new ArrayList<String>(); }
 	: 'select' i1=all_ident 'from' i2=IDENT 
-	  ('given' i3=assignmentStatement)? ('use' i4=IDENT)? 
+	  ('given' i3=assignStatement)? ('use' i4=IDENT)? 
 	  where_items?	  
 	  {       
 				$list.add($i1.text);
@@ -288,8 +288,8 @@ sqlStatement returns[ArrayList<String> list]
 where_items returns[ArrayList<String> list]
 	@init { $list = new ArrayList<String>(); }
 
-	:	 WHERE  (r1=assignmentStatement{$list.add($r1.text);} )
-	        (',' r=assignmentStatement {$list.add($r.text);}  )*
+	:	 WHERE  (r1=assignStatement{$list.add($r1.text);} )
+	        (',' r=assignStatement {$list.add($r.text);}  )*
 	;
 
 ///////////////////////////
@@ -316,33 +316,31 @@ term
 	|   inline_func  |   max_func  |  min_func	
 	;
 	
-unary
-	:	('-')? term ;
+unary :	('-')? term ;
 
-mult
-	:	unary (('*' | '/' | 'mod') unary)* ;
+mult :	unary (('*' | '/' | 'mod') unary)* ;
 	
-add 
-	:	mult (('+' | '-') mult)* ;
+add  :	mult (('+' | '-') mult)* ;
 
 expression returns [String str]
 	:	i=add {$str = $i.text; }
 	;
 
-relation_group
-	: EQUALS | LE | GE | '<' | '>' ;
+relation_group_1  :  LE | GE   ;
 
-assignmentStatement
-	: expression '=' expression ;
+relation_group_2  :  '<' | '>'  ;
+
+assignStatement  :   expression '=' expression ;
+
+constraintStatement : expression ('='|relation_group_2) expression ;
 
 relationStatement
-	:	expression relation_group expression  ;
+	:	expression (EQUALS|relation_group_1) expression  ;
 
 logicalRelationStatement
 	:   relationStatement ((AND|OR) relationStatement)? ;
 
-number
-	: INTEGER | FLOAT ;
+number : INTEGER | FLOAT ;
 
 reserved_vars
 	: WATERYEAR | MONTH ;
@@ -350,8 +348,7 @@ reserved_vars
 reserved_consts
 	: MON_CONST ;
 
-all_ident
-	: reserved_vars | reserved_consts | IDENT ;
+all_ident  : reserved_vars | reserved_consts | IDENT ;
 
 MULTILINE_COMMENT : '/*' .* '*/' {$channel = HIDDEN;} ;
 
