@@ -348,21 +348,22 @@ public class TestConvertWresl {
 	    list_case_names = new ArrayList<String>();
 	    list_conditions = new ArrayList<String>();
 	    map_case_content = new HashMap<String, List<String>>();	
+	    String svar_name = "DI_CVP_s";
 	    
 	    /// new case
-		list_case_names.add("Febfore"); // this is needed to ensure the order of the cases, which is lost in map
-		list_conditions.add("month == FEB");
-		map_case_content.put("Febfore", Arrays.asList(new String[]{"sql","FEB","sacramento_runoff_forecast",null,null,"wateryear=wateryear"}));
+		list_case_names.add("MartoMay"); // this is needed to ensure the order of the cases, which is lost in map
+		list_conditions.add("month >= MAR .and. month <= MAY");
+		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"sql","di","wsi_di_cvp_s","wsi=wsi_cvp_s","linear"}));
 		
 		/// new case
-		list_case_names.add("JuntoJan");
+		list_case_names.add("JuntoFeb");
 		list_conditions.add("always");
-		map_case_content.put("JuntoJan", Arrays.asList(new String[]{"value","0"}));
+		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"value","99.06"}));
 
 		// conclude 1st svar
-		expected_svar_cases.put("frcst_sac", list_case_names);
-		expected_svar_conditions.put("frcst_sac", list_conditions);
-		expected_svar_map_case_content.put("frcst_sac", map_case_content);
+		expected_svar_cases.put(svar_name, list_case_names);
+		expected_svar_conditions.put(svar_name, list_conditions);
+		expected_svar_map_case_content.put(svar_name, map_case_content);
 
 				
 		List<String> svar_cases_keys = new ArrayList<String> (parser.svar_cases.keySet());
@@ -382,7 +383,7 @@ public class TestConvertWresl {
 
 		for (String i : svar_cases_keys) {
 			for (String j : expected_svar_map_case_content.get(i).keySet()) {
-				System.out.println(i+":"+j);
+				//System.out.println(i+":"+j);
 				Assert.assertEquals(parser.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
 			}
 		}

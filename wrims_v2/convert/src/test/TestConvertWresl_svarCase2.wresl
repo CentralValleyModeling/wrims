@@ -8,5 +8,5 @@ define DI_CVP_s {
                                
     case JuntoFeb { 
            condition  always 
-           value      0 }                  
+           value      99.06 }                  
               }
