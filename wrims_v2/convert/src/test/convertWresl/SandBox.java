@@ -2,6 +2,7 @@ package test.convertWresl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,25 @@ public class SandBox {
 		
 		//System.out.println(myList);
 	}
+	
+	
+	@Test(groups = { "sandbox" })
+	public void SortMapKey()
+	{ 
+
+		Map<String, List<String>>   amap = new HashMap<String, List<String>> ();
+		
+
+		amap.put("a", Arrays.asList(new String[]{"4","3"}));
+		amap.put("b", Arrays.asList(new String[]{"1","2"}));		
+		
+		List<String> list = new ArrayList<String> (amap.keySet());
+		
+		System.out.println("mmmmmmmmmmmmmmm before sort:"+list);
+		Collections.sort(list); 
+		
+		System.out.println("mmmmmmmmmmmmmmm after sort:"+list);
+	}	
 	
 	@Test(groups = { "sandbox" })	
 	public void MapOfMap()

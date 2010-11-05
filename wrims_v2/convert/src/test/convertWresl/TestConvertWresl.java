@@ -3,6 +3,7 @@ package test.convertWresl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -259,10 +260,6 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();		
-
-		Map<String, ArrayList<String>>   svar_cases  = parser.svar_cases;
-		Map<String, ArrayList<String>>   svar_conditions = parser.svar_conditions; 
-		Map<String, Map<String, ArrayList<String>>> svar_map_case_content = parser.svar_map_case_content;
 	    
 	    Map<String, ArrayList<String>>   expected_svar_cases  = new HashMap<String,ArrayList<String>> (); 
 	    Map<String, ArrayList<String>>   expected_svar_conditions  = new HashMap<String,ArrayList<String>> (); 
@@ -295,9 +292,31 @@ public class TestConvertWresl {
 		expected_svar_map_case_content.put("frcst_sac", map_case_content);
 
 				
-		Assert.assertEquals(svar_cases, expected_svar_cases);
-		Assert.assertEquals(svar_conditions, expected_svar_conditions);
-		Assert.assertEquals(svar_map_case_content, expected_svar_map_case_content);
+		List<String> svar_cases_keys = new ArrayList<String> (parser.svar_cases.keySet());
+		List<String> expected_svar_cases_keys = new ArrayList<String> (expected_svar_cases.keySet());
+		Collections.sort(svar_cases_keys);
+		Collections.sort(expected_svar_cases_keys);
+		
+		Assert.assertEquals(svar_cases_keys, expected_svar_cases_keys);
+		
+		for (String i : svar_cases_keys) {
+			Assert.assertEquals(parser.svar_cases.get(i), expected_svar_cases.get(i));
+		}
+		
+		for (String i : svar_cases_keys) {
+			Assert.assertEquals(parser.svar_conditions.get(i), expected_svar_conditions.get(i));
+		}
+
+		for (String i : svar_cases_keys) {
+			for (String j : expected_svar_map_case_content.get(i).keySet()) {
+				System.out.println(i+":"+j);
+				Assert.assertEquals(parser.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
+			}
+		}
+		
+		Assert.assertEquals(parser.svar_cases, expected_svar_cases);
+		Assert.assertEquals(parser.svar_conditions, expected_svar_conditions);
+		Assert.assertEquals(parser.svar_map_case_content, expected_svar_map_case_content);
 	}
 
 	@Test(groups = { "WRESL_elements" })
@@ -314,10 +333,6 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();		
-
-		Map<String, ArrayList<String>>   svar_cases  = parser.svar_cases;
-		Map<String, ArrayList<String>>   svar_conditions = parser.svar_conditions; 
-		Map<String, Map<String, ArrayList<String>>> svar_map_case_content = parser.svar_map_case_content;
 	    
 	    Map<String, ArrayList<String>>   expected_svar_cases  = new HashMap<String,ArrayList<String>> (); 
 	    Map<String, ArrayList<String>>   expected_svar_conditions  = new HashMap<String,ArrayList<String>> (); 
@@ -350,10 +365,32 @@ public class TestConvertWresl {
 		expected_svar_map_case_content.put("frcst_sac", map_case_content);
 
 				
-		Assert.assertEquals(svar_cases, expected_svar_cases);
-		Assert.assertEquals(svar_conditions, expected_svar_conditions);
-		Assert.assertEquals(svar_map_case_content, expected_svar_map_case_content);
-	}	
+		List<String> svar_cases_keys = new ArrayList<String> (parser.svar_cases.keySet());
+		List<String> expected_svar_cases_keys = new ArrayList<String> (expected_svar_cases.keySet());
+		Collections.sort(svar_cases_keys);
+		Collections.sort(expected_svar_cases_keys);
+		
+		Assert.assertEquals(svar_cases_keys, expected_svar_cases_keys);
+		
+		for (String i : svar_cases_keys) {
+			Assert.assertEquals(parser.svar_cases.get(i), expected_svar_cases.get(i));
+		}
+		
+		for (String i : svar_cases_keys) {
+			Assert.assertEquals(parser.svar_conditions.get(i), expected_svar_conditions.get(i));
+		}
+
+		for (String i : svar_cases_keys) {
+			for (String j : expected_svar_map_case_content.get(i).keySet()) {
+				System.out.println(i+":"+j);
+				Assert.assertEquals(parser.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
+			}
+		}
+		
+		Assert.assertEquals(parser.svar_cases, expected_svar_cases);
+		Assert.assertEquals(parser.svar_conditions, expected_svar_conditions);
+		Assert.assertEquals(parser.svar_map_case_content, expected_svar_map_case_content);
+	}
 	
 	
 	@Test(groups = { "WRESL_elements" })

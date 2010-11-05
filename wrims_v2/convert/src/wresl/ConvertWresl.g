@@ -26,12 +26,10 @@ options {
   public Map<String, ArrayList<String>>  svar_table  = new HashMap<String, ArrayList<String>>(); 
   public Map<String, ArrayList<String>>  svar_dss    = new HashMap<String, ArrayList<String>>(); 
   
-
 	/// svar_cases
 	public    Map<String, ArrayList<String>>   svar_cases  = new HashMap<String,ArrayList<String>> (); 
 	public    Map<String, ArrayList<String>>   svar_conditions  = new HashMap<String,ArrayList<String>> (); 
 	public    Map<String, Map<String, ArrayList<String>>> svar_map_case_content = new HashMap<String, Map<String, ArrayList<String>>>();
-
   
   private ArrayList<String> list;
 
@@ -43,6 +41,16 @@ options {
   public static List<String> r_keys = Arrays.asList(keys); 
   public static List<String> r_mons = Arrays.asList(mons); 
   public static ArrayList<String> reserved_words = new ArrayList<String>() {{ addAll(r_keys); addAll(r_mons); }}; 
+
+	/// error message
+	public String currentFilePath;
+	public ArrayList<String> outputErrorMessage = new ArrayList<String>();
+	public String getErrorMessage(RecognitionException e, String[] tokenNames) {
+    		String msg = super.getErrorMessage(e, tokenNames);
+			msg = msg+" in file \""+currentFilePath+"\"";
+			if (msg!=null){outputErrorMessage.add(msg);}
+			return msg;
+			}
 }
 
 evaluator 
