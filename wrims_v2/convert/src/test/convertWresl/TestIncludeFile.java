@@ -22,17 +22,17 @@ public class TestIncludeFile {
 	
 	private static CharStream stream;	
 	
-	@Test(groups = { "file_include" })
+	@Test(groups = { "file_includes" })
 	public void sample()
 	{
 		Assert.assertEquals(1,1);
         //System.out.println("@Test(groups = { "WRESL_elements" }) sample: 1==1");
 	}
 
-	@Test(groups = { "error_message" })
+	@Test(groups = { "file_includes" })
 	public void errorSimple() throws RecognitionException, IOException {
 		
-		String filePath ="src//test//TestErrorMessage_errorSimple.wresl";
+		String filePath ="src\\test\\TestErrorMessage_errorSimple.wresl";
 		
 		try {
 			stream = new ANTLRFileStream(filePath, "UTF8");

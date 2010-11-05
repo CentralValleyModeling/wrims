@@ -37,7 +37,7 @@ public class TestConvertWresl {
 	public void svarConst() throws RecognitionException, IOException {
 		
 		try {
-			stream = new ANTLRFileStream("src//test//TestConvertWresl_svarConst.wresl", "UTF8");
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarConst.wresl", "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -62,7 +62,7 @@ public class TestConvertWresl {
 	public void svarExpression() throws RecognitionException, IOException {
 		
 		try {
-			stream = new ANTLRFileStream("src//test//TestConvertWresl_svarExpression.wresl", "UTF8");
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarExpression.wresl", "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -86,7 +86,7 @@ public class TestConvertWresl {
 	public void dvarStd() throws RecognitionException, IOException {
 		
 		try {
-			stream = new ANTLRFileStream("src//test//TestConvertWresl_dvarStd.wresl", "UTF8");
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_dvarStd.wresl", "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -111,7 +111,7 @@ public class TestConvertWresl {
 	public void dvarNonStd() throws RecognitionException, IOException {
 		
 		try {
-			stream = new ANTLRFileStream("src//test//TestConvertWresl_dvarNonStd.wresl", "UTF8");
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_dvarNonStd.wresl", "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -135,7 +135,7 @@ public class TestConvertWresl {
 	public void dvarNonStd2() throws RecognitionException, IOException {
 		
 		try {
-			stream = new ANTLRFileStream("src//test//TestConvertWresl_dvarNonStd_2.wresl", "UTF8");
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_dvarNonStd_2.wresl", "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -158,7 +158,7 @@ public class TestConvertWresl {
 	public void svarDSS() throws RecognitionException, IOException {
 		
 		try {
-			stream = new ANTLRFileStream("src//test//TestConvertWresl_svarDSS.wresl", "UTF8");
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarDSS.wresl", "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -181,7 +181,7 @@ public class TestConvertWresl {
 	public void svarTable() throws RecognitionException, IOException {
 		
 		try {
-			stream = new ANTLRFileStream("src//test//TestConvertWresl_svarTable.wresl", "UTF8");
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarTable.wresl", "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -204,7 +204,7 @@ public class TestConvertWresl {
 	public void svarTableFull() throws RecognitionException, IOException {
 		
 		try {
-			stream = new ANTLRFileStream("src//test//TestConvertWresl_svarTableFull.wresl", "UTF8");
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarTableFull.wresl", "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -227,7 +227,7 @@ public class TestConvertWresl {
 	public void svarTableMultipleWhere() throws RecognitionException, IOException {
 		
 		try {
-			stream = new ANTLRFileStream("src//test//TestConvertWresl_svarTableMultipleWhere.wresl", "UTF8");
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarTableMultipleWhere.wresl", "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -250,7 +250,7 @@ public class TestConvertWresl {
 	public void svarCase() throws RecognitionException, IOException {
 		
 		try {
-			stream = new ANTLRFileStream("src//test//TestConvertWresl_svarCase.wresl", "UTF8");
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarCase.wresl", "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -309,7 +309,7 @@ public class TestConvertWresl {
 
 		for (String i : svar_cases_keys) {
 			for (String j : expected_svar_map_case_content.get(i).keySet()) {
-				System.out.println(i+":"+j);
+				//System.out.println(i+":"+j);
 				Assert.assertEquals(parser.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
 			}
 		}
@@ -323,7 +323,7 @@ public class TestConvertWresl {
 	public void svarCase2() throws RecognitionException, IOException {
 		
 		try {
-			stream = new ANTLRFileStream("src//test//TestConvertWresl_svarCase2.wresl", "UTF8");
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarCase2.wresl", "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -397,7 +397,7 @@ public class TestConvertWresl {
 	public void goalSimple() throws RecognitionException, IOException {
 		
 		try {
-			stream = new ANTLRFileStream("src//test//TestConvertWresl_goalSimple.wresl", "UTF8");
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_goalSimple.wresl", "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();

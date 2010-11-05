@@ -20,17 +20,17 @@ public class TestErrorMessage {
 	
 	private static CharStream stream;	
 	
-	@Test(groups = { "error_message" })
+	@Test(groups = { "error_messages" })
 	public void sample()
 	{
 		Assert.assertEquals(1,1);
         //System.out.println("@Test(groups = { "error_message" }) sample: 1==1");
 	}
 	
-	@Test(groups = { "error_message" })
+	@Test(groups = { "error_messages" })
 	public void errorSimple() throws RecognitionException, IOException {
 		
-		String filePath ="src//test//TestErrorMessage_errorSimple.wresl";
+		String filePath ="src\\test\\TestErrorMessage_errorSimple.wresl";
 		
 		try {
 			stream = new ANTLRFileStream(filePath, "UTF8");
@@ -47,7 +47,7 @@ public class TestErrorMessage {
 		parser.currentFilePath = filePath;
 		parser.evaluator();
 				
-		expected.add("missing EOF at 'defin' in file \"src//test//TestErrorMessage_errorSimple.wresl\"");
+		expected.add("missing EOF at 'defin' in file \"src\\test\\TestErrorMessage_errorSimple.wresl\"");
 		
 		Assert.assertEquals(parser.outputErrorMessage, expected);
 	}			

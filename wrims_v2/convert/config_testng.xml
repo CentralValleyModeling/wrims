@@ -10,6 +10,7 @@
    <groups>
     <run>
       <include name="WRESL_elements"/>
+	  <include name="error_messages"/>
     </run>
   </groups>
   </test>
