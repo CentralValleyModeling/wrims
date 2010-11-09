@@ -1,0 +1,1 @@
+define OroInfEst {sum(i=0,SEP-month,1) (I_Orovl(i))*cfs_taf(i) }

@@ -59,6 +59,31 @@ public class TestConvertWresl {
 	}
 
 	@Test(groups = { "WRESL_elements" })
+	public void svarSum() throws RecognitionException, IOException {
+		
+		try {
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarSum.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	    
+	    Map<String, String>  expected = new HashMap<String, String>();
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.evaluator();
+		Map<String, String> svar_constant = parser.svar_expression;
+		
+		expected.put("minflow_C_Orovl3", ".29");
+		expected.put("minflow_C_Orovl2", "45.29");
+		expected.put("minflow_C_Orovl", "600");
+		
+		Assert.assertEquals(svar_constant, expected);
+	}	
+	
+	@Test(groups = { "WRESL_elements" })
 	public void svarExpression() throws RecognitionException, IOException {
 		
 		try {
@@ -107,6 +132,30 @@ public class TestConvertWresl {
 		Assert.assertEquals(dvar_std, expected);
 	}	
 
+	@Test(groups = { "WRESL_elements" })
+	public void dvarAlias() throws RecognitionException, IOException {
+		
+		try {
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_dvarAlias.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	    //String[] array;
+	    //ArrayList<String> list;
+	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.evaluator();
+		Map<String, ArrayList<String>>  dvar_std = parser.dvar_std;
+		
+		expected.put("C_Tracy", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS"})));
+		
+		Assert.assertEquals(dvar_std, expected);
+	}	
+	
 	@Test(groups = { "WRESL_elements" })
 	public void dvarNonStd() throws RecognitionException, IOException {
 		
@@ -393,6 +442,153 @@ public class TestConvertWresl {
 		Assert.assertEquals(parser.svar_map_case_content, expected_svar_map_case_content);
 	}
 	
+	@Test(groups = { "WRESL_elements" })
+	public void svarCaseSum() throws RecognitionException, IOException {
+		
+		try {
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarCaseSum.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	    	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.evaluator();		
+	    
+	    Map<String, ArrayList<String>>   expected_svar_cases  = new HashMap<String,ArrayList<String>> (); 
+	    Map<String, ArrayList<String>>   expected_svar_conditions  = new HashMap<String,ArrayList<String>> (); 
+	    Map<String, Map<String, List<String>>> expected_svar_map_case_content = new HashMap<String, Map<String, List<String>>>();
+	    
+	    /// for each case of svar
+	    Map<String, List<String>> map_case_content; 
+	    ArrayList<String> list_case_names;
+	    ArrayList<String> list_conditions;
+
+
+		/// new svar
+	    list_case_names = new ArrayList<String>();
+	    list_conditions = new ArrayList<String>();
+	    map_case_content = new HashMap<String, List<String>>();	
+	    String svar_name = "DI_CVP_s";
+	    
+	    /// new case
+		list_case_names.add("MartoMay"); // this is needed to ensure the order of the cases, which is lost in map
+		list_conditions.add("month >= MAR .and. month <= MAY");
+		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"sql","di","wsi_di_cvp_s","wsi=wsi_cvp_s","linear"}));
+		
+		/// new case
+		list_case_names.add("JuntoFeb");
+		list_conditions.add("always");
+		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"value","99.06"}));
+
+		// conclude 1st svar
+		expected_svar_cases.put(svar_name, list_case_names);
+		expected_svar_conditions.put(svar_name, list_conditions);
+		expected_svar_map_case_content.put(svar_name, map_case_content);
+
+				
+		List<String> svar_cases_keys = new ArrayList<String> (parser.svar_cases.keySet());
+		List<String> expected_svar_cases_keys = new ArrayList<String> (expected_svar_cases.keySet());
+		Collections.sort(svar_cases_keys);
+		Collections.sort(expected_svar_cases_keys);
+		
+		Assert.assertEquals(svar_cases_keys, expected_svar_cases_keys);
+		
+		for (String i : svar_cases_keys) {
+			Assert.assertEquals(parser.svar_cases.get(i), expected_svar_cases.get(i));
+		}
+		
+		for (String i : svar_cases_keys) {
+			Assert.assertEquals(parser.svar_conditions.get(i), expected_svar_conditions.get(i));
+		}
+
+		for (String i : svar_cases_keys) {
+			for (String j : expected_svar_map_case_content.get(i).keySet()) {
+				//System.out.println(i+":"+j);
+				Assert.assertEquals(parser.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
+			}
+		}
+		
+		Assert.assertEquals(parser.svar_cases, expected_svar_cases);
+		Assert.assertEquals(parser.svar_conditions, expected_svar_conditions);
+		Assert.assertEquals(parser.svar_map_case_content, expected_svar_map_case_content);
+	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void svarCaseMultipleAnds() throws RecognitionException, IOException {
+		
+		try {
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarCaseMultipleAnds.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	    	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.evaluator();		
+	    
+	    Map<String, ArrayList<String>>   expected_svar_cases  = new HashMap<String,ArrayList<String>> (); 
+	    Map<String, ArrayList<String>>   expected_svar_conditions  = new HashMap<String,ArrayList<String>> (); 
+	    Map<String, Map<String, List<String>>> expected_svar_map_case_content = new HashMap<String, Map<String, List<String>>>();
+	    
+	    /// for each case of svar
+	    Map<String, List<String>> map_case_content; 
+	    ArrayList<String> list_case_names;
+	    ArrayList<String> list_conditions;
+
+
+		/// new svar
+	    list_case_names = new ArrayList<String>();
+	    list_conditions = new ArrayList<String>();
+	    map_case_content = new HashMap<String, List<String>>();	
+	    String svar_name = "DI_CVP_s";
+	    
+	    /// new case
+		list_case_names.add("MartoMay"); // this is needed to ensure the order of the cases, which is lost in map
+		list_conditions.add("month >= MAR .and. month <= MAY");
+		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"sql","di","wsi_di_cvp_s","wsi=wsi_cvp_s","linear"}));
+		
+		/// new case
+		list_case_names.add("JuntoFeb");
+		list_conditions.add("always");
+		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"value","99.06"}));
+
+		// conclude 1st svar
+		expected_svar_cases.put(svar_name, list_case_names);
+		expected_svar_conditions.put(svar_name, list_conditions);
+		expected_svar_map_case_content.put(svar_name, map_case_content);
+
+				
+		List<String> svar_cases_keys = new ArrayList<String> (parser.svar_cases.keySet());
+		List<String> expected_svar_cases_keys = new ArrayList<String> (expected_svar_cases.keySet());
+		Collections.sort(svar_cases_keys);
+		Collections.sort(expected_svar_cases_keys);
+		
+		Assert.assertEquals(svar_cases_keys, expected_svar_cases_keys);
+		
+		for (String i : svar_cases_keys) {
+			Assert.assertEquals(parser.svar_cases.get(i), expected_svar_cases.get(i));
+		}
+		
+		for (String i : svar_cases_keys) {
+			Assert.assertEquals(parser.svar_conditions.get(i), expected_svar_conditions.get(i));
+		}
+
+		for (String i : svar_cases_keys) {
+			for (String j : expected_svar_map_case_content.get(i).keySet()) {
+				//System.out.println(i+":"+j);
+				Assert.assertEquals(parser.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
+			}
+		}
+		
+		Assert.assertEquals(parser.svar_cases, expected_svar_cases);
+		Assert.assertEquals(parser.svar_conditions, expected_svar_conditions);
+		Assert.assertEquals(parser.svar_map_case_content, expected_svar_map_case_content);
+	}	
 	
 	@Test(groups = { "WRESL_elements" })
 	public void goalSimple() throws RecognitionException, IOException {
@@ -429,7 +625,45 @@ public class TestConvertWresl {
 			Assert.assertEquals(parser.goal_simple.get(i), expected.get(i));
 		}
 		
-		Assert.assertEquals(parser.goal_simple, expected);
+		Assert.assertEquals(parser.goal_simple, expected);		
 	}			
 
+	
+	@Test(groups = { "WRESL_elements" })
+	public void minMaxInlines() throws RecognitionException, IOException {
+		
+		try {
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_minMaxInlines.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+
+	    Map<String, String>  expected = new HashMap<String, String>();
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.evaluator();
+
+		expected.put("split_C5_WTS", "C5_WTS = C5_WTS_Stg1 + C5_WTS_Stg2");
+		expected.put("C_SLCVP", "C5_WTS = C5_WTS_Stg1");
+		expected.put("a1", "b = c");
+		expected.put("a2", "b >  c");
+		expected.put("a3", "b < c");
+		
+		
+		List<String> goal_simple_keys = new ArrayList<String> (parser.goal_simple.keySet());
+		List<String> expected_keys = new ArrayList<String> (expected.keySet());
+		Collections.sort(goal_simple_keys);
+		Collections.sort(expected_keys);
+		
+		Assert.assertEquals(goal_simple_keys, expected_keys);
+		
+		for (String i : expected_keys) {
+			Assert.assertEquals(parser.goal_simple.get(i), expected.get(i));
+		}
+		
+		Assert.assertEquals(parser.goal_simple, expected);		
+	}	
 }

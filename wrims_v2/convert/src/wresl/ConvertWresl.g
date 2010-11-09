@@ -23,9 +23,12 @@ options {
       
   public Map<String, ArrayList<String>>  dvar_nonstd = new HashMap<String, ArrayList<String>>();  
   public Map<String, ArrayList<String>>  dvar_std    = new HashMap<String, ArrayList<String>>(); 
+  public Map<String, ArrayList<String>>  dvar_alias  = new HashMap<String, ArrayList<String>>();   
+
   public Map<String, ArrayList<String>>  svar_table  = new HashMap<String, ArrayList<String>>(); 
   public Map<String, ArrayList<String>>  svar_dss    = new HashMap<String, ArrayList<String>>(); 
-  
+  public Map<String, ArrayList<String>>  svar_sum    = new HashMap<String, ArrayList<String>>(); 
+    
 	/// svar_cases
 	public    Map<String, ArrayList<String>>   svar_cases  = new HashMap<String,ArrayList<String>> (); 
 	public    Map<String, ArrayList<String>>   svar_conditions  = new HashMap<String,ArrayList<String>> (); 
@@ -65,11 +68,8 @@ module
 define //returns [Map<String, String> map]
 	:	DEFINE 
 	(	svar_expression
-	|	dvar_std
-	|	dvar_nonstd
-	|	svar_table
-	|	svar_dss
-	|	svar_cases)  
+	|	dvar_std   | dvar_nonstd | dvar_alias
+	|	svar_table | svar_dss    | svar_cases | svar_sum )  
 	;
 
 goal_simple
@@ -99,6 +99,20 @@ svar_expression //returns [Map<String, String> map]
 				else {
 				svar_expression.put($i.text, $v.str);
 				var_all.put($i.text, "svar_expression");
+				}
+		}
+	;
+
+svar_sum 
+	:	i=IDENT '{' t=sumStatement '}' { 
+				
+				if (var_all.containsKey($i.text)){
+				//System.out.println("error... variable redefined: " + $i.text);
+				error_var_redefined.put($i.text, "svar_sum");
+				}
+				else {
+				svar_sum.put($i.text, $t.list);
+				var_all.put($i.text, "svar_sum");
 				}
 		}
 	;
@@ -154,13 +168,15 @@ caseStatements returns[ArrayList<String> caseNames,
 
 caseStatement returns[String caseNameStr, String conditionStr, ArrayList<String> contentList]
 @init { $contentList = new ArrayList<String>();} 
-	:  'case' i=IDENT '{' c=conditionStatement ( s=sqlStatement | v=valueStatement) '}'  {
+	:  'case' i=IDENT '{' c=conditionStatement 
+	( s=sqlStatement | v=valueStatement | u=sumStatement) '}'  {
 			
 			$caseNameStr = $i.text;
 			$conditionStr = $c.str;
-			if ($v.str==null|$v.str==""){$contentList.add("sql");$contentList.addAll($s.list);}
-			else                        {$contentList.add("value");$contentList.add($v.str);}
-			
+			if ($v.str !=null && $v.str!="")      {$contentList.add("value");$contentList.add($v.str);}
+			else if ($s.list !=null && ! $s.list.isEmpty() ) {$contentList.add("sql");$contentList.addAll($s.list);}
+			else if ($u.list !=null && ! $u.list.isEmpty() ) {$contentList.add("sum");$contentList.addAll($u.list);}
+			else { System.out.println("error in caseStatement"); }
 			}
 	;	
 
@@ -195,6 +211,24 @@ dvar_std
 				list.add($units.str);
 				dvar_std.put($i.text, list);
 				var_all.put($i.text, "dvar_std");
+				}
+		}
+	;
+
+dvar_alias
+	:	i=IDENT '{' alias kind units'}' { 
+				
+				if (var_all.containsKey($i.text)){
+				//System.out.println("error... variable redefined: " + $i.text);
+				error_var_redefined.put($i.text, "dvar_alias");
+				}
+				else {
+				list = new ArrayList<String>();
+				list.add($kind.str);
+				list.add($units.str);
+				list.add($alias.str);
+				dvar_alias.put($i.text, list);
+				var_all.put($i.text, "dvar_alias");
 				}
 		}
 	;
@@ -242,6 +276,10 @@ lower returns[String str]
 upper returns[String str]
 	: 'upper' e=expression {$str =$e.str; }
 	;
+
+alias returns [String str]
+	: 'alias'  i=( IDENT  | inline_func )  { $str = $i.text; }
+	;
 	
 kind returns [String str]
 	: 'kind'  s=QUOTE_STRING_with_MINUS  { $str =strip($s.text); } 
@@ -252,6 +290,7 @@ units returns [String str]
 	| 'units' TAF {$str = "TAF";} 
 	| 'units' ACRES {$str = "ACRES";}
 	| 'units' IN {$str = "IN";}
+	| 'units' NONE {$str = "NONE";}
 	;
 
 /// sub rules ///
@@ -297,21 +336,41 @@ where_items returns[ArrayList<String> list]
 ///////////////////////////
 
 max_func
-	: MAX '(' expression ',' expression ')' ;
+	: MAX '(' expression (',' expression)+ ')' ;
 
 min_func
-	: MIN '(' expression ',' expression ')' ;
+	: MIN '(' expression (',' expression)+ ')' ;
 
 inline_func 
-	: IDENT '(' '-' INTEGER ')' ;
+	: IDENT '(' ( ('-' INTEGER) | PREV_MON | 'i' ) ')' ;
+
+sumStatement returns[ArrayList<String> list]
+	@init { $list = new ArrayList<String>(); }
+	: s=sum_func e=expression
+		{$list.add($s.text);$list.add($e.text);}
+	;
+
+sum_func
+	: SUM 
+	s=( '(' 'i=' expression_sum ',' expression_sum (',' INTEGER )? ')' ) 
+	;
+
+/////////////////////////////
+/// sum rules in sum_func ///
+/////////////////////////////
+term_sum : reserved_vars | reserved_consts | INTEGER | '(' expression_sum ')' 	;
+unary_sum :	('-')? term_sum ;
+add_sum  :	unary_sum(('+' | '-') unary_sum)* ;
+expression_sum : add_sum ;
+
 
 ///////////////////
 /// basic rules ///
 ///////////////////
 
 term
-	:	IDENT | reserved_vars| reserved_consts
-	|	'(' e=expression ')' 
+	:	IDENT | reserved_vars | reserved_consts
+	|	'(' expression ')' 
 	|	number
 	|   inline_func  |   max_func  |  min_func	
 	;
@@ -335,18 +394,20 @@ assignStatement  :   expression '=' expression ;
 constraintStatement : expression ('='|relation_group_2) expression ;
 
 relationStatement
-	:	expression (EQUALS|relation_group_1) expression  ;
+	:	expression (EQUALS|relation_group_1|relation_group_2) expression  ;
 
 logicalRelationStatement
-	:   relationStatement ((AND|OR) relationStatement)? ;
+	:   relationStatement ((AND|OR) relationStatement)* ;
 
 number : INTEGER | FLOAT ;
 
-reserved_vars
-	: WATERYEAR | MONTH ;
+reserved_vars : WATERYEAR | MONTH ;
 
-reserved_consts
-	: MON_CONST ;
+reserved_funcs :  PREV_MON ;
+
+reserved_consts : MON_CONST ;
+
+reserved_keys : GOAL | DEFINE ;
 
 all_ident  : reserved_vars | reserved_consts | IDENT ;
 
@@ -362,6 +423,7 @@ FLOAT : INTEGER? '.' INTEGER  | INTEGER '.' ;
 /// INLINE_FUNC //
 MAX : 'max' ;
 MIN : 'min' ;
+SUM : 'sum' ;
 WHERE : 'where' ;
 
 /// comparison ///
@@ -386,11 +448,17 @@ MONTH : 'month';
 /// reserved constants ///
 MON_CONST : 'JAN'|'FEB'|'MAR'|'APR'|'MAY'|'JUN'|'JUL'|'AUG'|'SEP'|'OCT'|'NOV'|'DEC';
 
+/// reserved functions ///
+fragment MON_VAR: 'Jan'|'Feb'|'Mar'|'Apr'|'May'|'Jun'|'Jul'|'Aug'|'Sep'|'Oct'|'Nov'|'Dec'; 
+PREV_MON : 'prev' ( MON_VAR | MON_CONST ); // this is wrong!! need to force one format
+
+
 ///units///
 TAF :'\''  'TAF'  '\'';
 CFS :'\''  'CFS' '\'';
 ACRES :'\''  'ACRES' '\'';
 IN :'\''  'IN' '\'';
+NONE :'\''  'NONE' '\'';
 
 ///basics///
 QUOTE_STRING_with_MINUS : '\'' IDENT ( '-' | IDENT )+ '\'';
