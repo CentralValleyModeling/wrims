@@ -9,6 +9,8 @@ options {
   import java.util.Map;
   import java.util.HashMap;
   import java.util.Arrays;
+  import evaluators.Struct;
+  import evaluators.Tools;
 }
 
 @lexer::header {
@@ -16,34 +18,11 @@ options {
 }
 
 @members {
-  public Map<String, String>   error_var_redefined = new HashMap<String, String> ();
-  public Map<String, String>   var_all             = new HashMap<String, String> ();
-  public Map<String, String>   svar_expression     = new HashMap<String, String>();
-  public Map<String, String>   goal_simple = new HashMap<String, String>();
-      
-  public Map<String, ArrayList<String>>  dvar_nonstd = new HashMap<String, ArrayList<String>>();  
-  public Map<String, ArrayList<String>>  dvar_std    = new HashMap<String, ArrayList<String>>(); 
-  public Map<String, ArrayList<String>>  dvar_alias  = new HashMap<String, ArrayList<String>>();   
 
-  public Map<String, ArrayList<String>>  svar_table  = new HashMap<String, ArrayList<String>>(); 
-  public Map<String, ArrayList<String>>  svar_dss    = new HashMap<String, ArrayList<String>>(); 
-  public Map<String, ArrayList<String>>  svar_sum    = new HashMap<String, ArrayList<String>>(); 
-    
-	/// svar_cases
-	public    Map<String, ArrayList<String>>   svar_cases  = new HashMap<String,ArrayList<String>> (); 
-	public    Map<String, ArrayList<String>>   svar_conditions  = new HashMap<String,ArrayList<String>> (); 
-	public    Map<String, Map<String, ArrayList<String>>> svar_map_case_content = new HashMap<String, Map<String, ArrayList<String>>>();
-  
-  private ArrayList<String> list;
-
-  public String strip(String s) {
-    return s.substring(1, s.length()-1);
-    }
-  private static String[] keys = {"define","goal"};
-  private static String[] mons = {"JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"};
-  public static List<String> r_keys = Arrays.asList(keys); 
-  public static List<String> r_mons = Arrays.asList(mons); 
-  public static ArrayList<String> reserved_words = new ArrayList<String>() {{ addAll(r_keys); addAll(r_mons); }}; 
+	public Struct F = new Struct();
+	
+	/// temp variables 
+ 	private ArrayList<String> list;
 
 	/// error message
 	public String currentFilePath;
@@ -55,6 +34,7 @@ options {
 			return msg;
 			}
 }
+
 
 evaluator 
 	:	modules EOF  ;
@@ -74,13 +54,13 @@ define //returns [Map<String, String> map]
 
 goal_simple
 	: GOAL i=IDENT  '{' v=constraintStatement '}'  {		
-				if (var_all.containsKey($i.text)){
+				if (F.var_all.containsKey($i.text)){
 				//System.out.println("error... variable redefined: " + $i.text);
-				error_var_redefined.put($i.text, "goal_simple");
+				F.error_var_redefined.put($i.text, "goal_simple");
 				}
 				else {
-				goal_simple.put($i.text, $v.text);
-				var_all.put($i.text, "goal_simple");
+				F.goal_simple.put($i.text, $v.text);
+				F.var_all.put($i.text, "goal_simple");
 				}
 		}
 	;
@@ -92,13 +72,13 @@ goal_lhs
 svar_expression //returns [Map<String, String> map]
 	:	i=IDENT '{' v=valueStatement '}' { 
 				
-				if (var_all.containsKey($i.text)){
+				if (F.var_all.containsKey($i.text)){
 				//System.out.println("error... variable redefined: " + $i.text);
-				error_var_redefined.put($i.text, "svar_expression");
+				F.error_var_redefined.put($i.text, "svar_expression");
 				}
 				else {
-				svar_expression.put($i.text, $v.str);
-				var_all.put($i.text, "svar_expression");
+				F.svar_expression.put($i.text, $v.str);
+				F.var_all.put($i.text, "svar_expression");
 				}
 		}
 	;
@@ -106,13 +86,13 @@ svar_expression //returns [Map<String, String> map]
 svar_sum 
 	:	i=IDENT '{' t=sumStatement '}' { 
 				
-				if (var_all.containsKey($i.text)){
+				if (F.var_all.containsKey($i.text)){
 				//System.out.println("error... variable redefined: " + $i.text);
-				error_var_redefined.put($i.text, "svar_sum");
+				F.error_var_redefined.put($i.text, "svar_sum");
 				}
 				else {
-				svar_sum.put($i.text, $t.list);
-				var_all.put($i.text, "svar_sum");
+				F.svar_sum.put($i.text, $t.list);
+				F.var_all.put($i.text, "svar_sum");
 				}
 		}
 	;
@@ -120,13 +100,13 @@ svar_sum
 svar_table
 	:	i=IDENT '{' t=sqlStatement '}' { 
 				
-				if (var_all.containsKey($i.text)){
+				if (F.var_all.containsKey($i.text)){
 				//System.out.println("error... variable redefined: " + $i.text);
-				error_var_redefined.put($i.text, "svar_table");
+				F.error_var_redefined.put($i.text, "svar_table");
 				}
 				else {
-				svar_table.put($i.text, $t.list);
-				var_all.put($i.text, "svar_table");
+				F.svar_table.put($i.text, $t.list);
+				F.var_all.put($i.text, "svar_table");
 				}
 		}
 	;
@@ -135,17 +115,17 @@ svar_cases
 	//@init { $list = new ArrayList<String>(); }
 	:  i=IDENT '{' c=caseStatements '}' { 
 
-				if (var_all.containsKey($i.text)){
+				if (F.var_all.containsKey($i.text)){
 				//System.out.println("error... variable redefined: " + $i.text);
-				error_var_redefined.put($i.text, "svar_cases");
+				F.error_var_redefined.put($i.text, "svar_cases");
 				}
 				else {
 				//list = new ArrayList<String>();
 				//list.add($c.text);
-				svar_cases.put($i.text, $c.caseNames);
-				svar_conditions.put($i.text, $c.conditions);
-				svar_map_case_content.put($i.text, $c.caseContent);
-				var_all.put($i.text, "svar_cases");
+				F.svar_cases.put($i.text, $c.caseNames);
+				F.svar_conditions.put($i.text, $c.conditions);
+				F.svar_map_case_content.put($i.text, $c.caseContent);
+				F.var_all.put($i.text, "svar_cases");
 				}
 		} 	
 	;
@@ -184,16 +164,16 @@ caseStatement returns[String caseNameStr, String conditionStr, ArrayList<String>
 svar_dss
 	:	i=IDENT '{' 'timeseries' kind units'}' { 
 				
-				if (var_all.containsKey($i.text)){
+				if (F.var_all.containsKey($i.text)){
 				//System.out.println("error... variable redefined: " + $i.text);
-				error_var_redefined.put($i.text, "svar_dss");
+				F.error_var_redefined.put($i.text, "svar_dss");
 				}
 				else {
 				list = new ArrayList<String>();
 				list.add($kind.str);
 				list.add($units.str);
-				svar_dss.put($i.text, list);
-				var_all.put($i.text, "svar_dss");
+				F.svar_dss.put($i.text, list);
+				F.var_all.put($i.text, "svar_dss");
 				}
 		} 
 	;
@@ -201,16 +181,16 @@ svar_dss
 dvar_std
 	:	i=IDENT '{' 'std' kind units'}' { 
 				
-				if (var_all.containsKey($i.text)){
+				if (F.var_all.containsKey($i.text)){
 				//System.out.println("error... variable redefined: " + $i.text);
-				error_var_redefined.put($i.text, "dvar_std");
+				F.error_var_redefined.put($i.text, "dvar_std");
 				}
 				else {
 				list = new ArrayList<String>();
 				list.add($kind.str);
 				list.add($units.str);
-				dvar_std.put($i.text, list);
-				var_all.put($i.text, "dvar_std");
+				F.dvar_std.put($i.text, list);
+				F.var_all.put($i.text, "dvar_std");
 				}
 		}
 	;
@@ -218,17 +198,17 @@ dvar_std
 dvar_alias
 	:	i=IDENT '{' alias kind units'}' { 
 				
-				if (var_all.containsKey($i.text)){
+				if (F.var_all.containsKey($i.text)){
 				//System.out.println("error... variable redefined: " + $i.text);
-				error_var_redefined.put($i.text, "dvar_alias");
+				F.error_var_redefined.put($i.text, "dvar_alias");
 				}
 				else {
 				list = new ArrayList<String>();
 				list.add($kind.str);
 				list.add($units.str);
 				list.add($alias.str);
-				dvar_alias.put($i.text, list);
-				var_all.put($i.text, "dvar_alias");
+				F.dvar_alias.put($i.text, list);
+				F.var_all.put($i.text, "dvar_alias");
 				}
 		}
 	;
@@ -236,17 +216,17 @@ dvar_alias
 dvar_nonstd 
 	:	i=IDENT '{' c=lower_or_upper kind units '}' { 
 				
-				if (var_all.containsKey($i.text)){
+				if (F.var_all.containsKey($i.text)){
 				//System.out.println("error... variable redefined: " + $i.text);
-				error_var_redefined.put($i.text, "dvar_nonstd");
+				F.error_var_redefined.put($i.text, "dvar_nonstd");
 				}
 				else {
 				list = new ArrayList<String>();
 				list.add($kind.str);
 				list.add($units.str);
 				list.addAll($c.list);
-				dvar_nonstd.put($i.text, list);
-				var_all.put($i.text, "dvar_nonstd");
+				F.dvar_nonstd.put($i.text, list);
+				F.var_all.put($i.text, "dvar_nonstd");
 				}
 		} 
 	;
@@ -282,7 +262,7 @@ alias returns [String str]
 	;
 	
 kind returns [String str]
-	: 'kind'  s=QUOTE_STRING_with_MINUS  { $str =strip($s.text); } 
+	: 'kind'  s=QUOTE_STRING_with_MINUS  { $str =Tools.strip($s.text); } 
 	;
 
 units returns [String str]

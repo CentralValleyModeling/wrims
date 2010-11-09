@@ -21,6 +21,8 @@ import org.testng.annotations.*;
 import org.testng.Assert;
 
 
+//import evaluators.Demo;
+
 public class TestConvertWresl {
 
 	
@@ -32,6 +34,54 @@ public class TestConvertWresl {
 		Assert.assertEquals(1,1);
         //System.out.println("@Test(groups = { "WRESL_elements" }) sample: 1==1");
 	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void sequence() throws RecognitionException, IOException {
+		
+		try {
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_sequence.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	    
+	    Map<String, String>  expected = new HashMap<String, String>();
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.evaluator();
+		
+		expected.put("1", "SJRBASE");
+		expected.put("2", "SJR_WQ1");
+		
+		Assert.assertEquals(parser.F.sequence, expected);
+	}	
+
+	@Test(groups = { "WRESL_elements" })
+	public void model() throws RecognitionException, IOException {
+		
+		try {
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_model.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	    
+	    Map<String, String>  expected = new HashMap<String, String>();
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.evaluator();
+		Map<String, String> svar_constant = parser.F.svar_expression;
+		
+		expected.put("minflow_C_Orovl3", ".29");
+		expected.put("minflow_C_Orovl2", "45.29");
+		expected.put("minflow_C_Orovl", "600");
+		
+		Assert.assertEquals(svar_constant, expected);
+	}	
 	
 	@Test(groups = { "WRESL_elements" })
 	public void svarConst() throws RecognitionException, IOException {
@@ -49,7 +99,8 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();
-		Map<String, String> svar_constant = parser.svar_expression;
+		Map<String, String> svar_constant = parser.F.svar_expression;
+		//Map<String, String> svar_constant2 = 
 		
 		expected.put("minflow_C_Orovl3", ".29");
 		expected.put("minflow_C_Orovl2", "45.29");
@@ -74,7 +125,7 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();
-		Map<String, String> svar_constant = parser.svar_expression;
+		Map<String, String> svar_constant = parser.F.svar_expression;
 		
 		expected.put("minflow_C_Orovl3", ".29");
 		expected.put("minflow_C_Orovl2", "45.29");
@@ -99,7 +150,7 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();
-		Map<String, String> svar_expression = parser.svar_expression;
+		Map<String, String> svar_expression = parser.F.svar_expression;
 		
 		expected.put("coefev_Orovl", "(A_Orovl_forward - A_Orovl_back)/(100*max(0.01,S_Orovl(-1)))");
 		expected.put("min_test", "min(max(a,b),2.5)");
@@ -124,7 +175,7 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();
-		Map<String, ArrayList<String>>  dvar_std = parser.dvar_std;
+		Map<String, ArrayList<String>>  dvar_std = parser.F.dvar_std;
 		
 		expected.put("C_Tracy", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS"})));
 		expected.put("C_Banks", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "TAF"})));
@@ -149,7 +200,7 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();
-		Map<String, ArrayList<String>>  dvar_std = parser.dvar_std;
+		Map<String, ArrayList<String>>  dvar_std = parser.F.dvar_std;
 		
 		expected.put("C_Tracy", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS"})));
 		
@@ -172,7 +223,7 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();
-		Map<String, ArrayList<String>>  dvar_nonstd = parser.dvar_nonstd;	
+		Map<String, ArrayList<String>>  dvar_nonstd = parser.F.dvar_nonstd;	
 
 		expected.put("C_SLCVP", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "unbounded", "unbounded"})));
 		expected.put("C_SacFea", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "0.", "6150*taf_cfs"})));
@@ -196,7 +247,7 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();
-		Map<String, ArrayList<String>>  dvar_nonstd = parser.dvar_nonstd;	
+		Map<String, ArrayList<String>>  dvar_nonstd = parser.F.dvar_nonstd;	
 
 		expected.put("C_SLCVP", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "unbounded", "unbounded"})));
 		expected.put("C_SacFea", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "0", "6150*taf_cfs"})));
@@ -219,7 +270,7 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();
-		Map<String, ArrayList<String>>  svar_dss = parser.svar_dss;	
+		Map<String, ArrayList<String>>  svar_dss = parser.F.svar_dss;	
 
 		expected.put("evap_S_Orovl", new ArrayList<String>(Arrays.asList(new String[]{"EVAPORATION-RATE", "IN"})));
 		
@@ -242,7 +293,7 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();
-		Map<String, ArrayList<String>>  svar_table = parser.svar_table;	
+		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
 
 		expected.put("nov_trigger_cfs", new ArrayList<String>(Arrays.asList(new String[]{"target","feather_fish_203",null,null,"month = NOV"})));
 		
@@ -265,7 +316,7 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();
-		Map<String, ArrayList<String>>  svar_table = parser.svar_table;	
+		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
 
 		expected.put("A_Orovl_last", new ArrayList<String>(Arrays.asList(new String[]{"area","res_info","storage=1000*S_Orovl(-1)","linear","res_num=6" })));
 		
@@ -288,7 +339,7 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();
-		Map<String, ArrayList<String>>  svar_table = parser.svar_table;	
+		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
 
 		expected.put("S_TrntyLevel4", new ArrayList<String>(Arrays.asList(new String[]{"target","res_level",null,null,"res_num=1","level=4","month=month" })));
 		
@@ -341,7 +392,7 @@ public class TestConvertWresl {
 		expected_svar_map_case_content.put("frcst_sac", map_case_content);
 
 				
-		List<String> svar_cases_keys = new ArrayList<String> (parser.svar_cases.keySet());
+		List<String> svar_cases_keys = new ArrayList<String> (parser.F.svar_cases.keySet());
 		List<String> expected_svar_cases_keys = new ArrayList<String> (expected_svar_cases.keySet());
 		Collections.sort(svar_cases_keys);
 		Collections.sort(expected_svar_cases_keys);
@@ -349,23 +400,23 @@ public class TestConvertWresl {
 		Assert.assertEquals(svar_cases_keys, expected_svar_cases_keys);
 		
 		for (String i : svar_cases_keys) {
-			Assert.assertEquals(parser.svar_cases.get(i), expected_svar_cases.get(i));
+			Assert.assertEquals(parser.F.svar_cases.get(i), expected_svar_cases.get(i));
 		}
 		
 		for (String i : svar_cases_keys) {
-			Assert.assertEquals(parser.svar_conditions.get(i), expected_svar_conditions.get(i));
+			Assert.assertEquals(parser.F.svar_conditions.get(i), expected_svar_conditions.get(i));
 		}
 
 		for (String i : svar_cases_keys) {
 			for (String j : expected_svar_map_case_content.get(i).keySet()) {
 				//System.out.println(i+":"+j);
-				Assert.assertEquals(parser.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
+				Assert.assertEquals(parser.F.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
 			}
 		}
 		
-		Assert.assertEquals(parser.svar_cases, expected_svar_cases);
-		Assert.assertEquals(parser.svar_conditions, expected_svar_conditions);
-		Assert.assertEquals(parser.svar_map_case_content, expected_svar_map_case_content);
+		Assert.assertEquals(parser.F.svar_cases, expected_svar_cases);
+		Assert.assertEquals(parser.F.svar_conditions, expected_svar_conditions);
+		Assert.assertEquals(parser.F.svar_map_case_content, expected_svar_map_case_content);
 	}
 
 	@Test(groups = { "WRESL_elements" })
@@ -415,7 +466,7 @@ public class TestConvertWresl {
 		expected_svar_map_case_content.put(svar_name, map_case_content);
 
 				
-		List<String> svar_cases_keys = new ArrayList<String> (parser.svar_cases.keySet());
+		List<String> svar_cases_keys = new ArrayList<String> (parser.F.svar_cases.keySet());
 		List<String> expected_svar_cases_keys = new ArrayList<String> (expected_svar_cases.keySet());
 		Collections.sort(svar_cases_keys);
 		Collections.sort(expected_svar_cases_keys);
@@ -423,23 +474,23 @@ public class TestConvertWresl {
 		Assert.assertEquals(svar_cases_keys, expected_svar_cases_keys);
 		
 		for (String i : svar_cases_keys) {
-			Assert.assertEquals(parser.svar_cases.get(i), expected_svar_cases.get(i));
+			Assert.assertEquals(parser.F.svar_cases.get(i), expected_svar_cases.get(i));
 		}
 		
 		for (String i : svar_cases_keys) {
-			Assert.assertEquals(parser.svar_conditions.get(i), expected_svar_conditions.get(i));
+			Assert.assertEquals(parser.F.svar_conditions.get(i), expected_svar_conditions.get(i));
 		}
 
 		for (String i : svar_cases_keys) {
 			for (String j : expected_svar_map_case_content.get(i).keySet()) {
 				//System.out.println(i+":"+j);
-				Assert.assertEquals(parser.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
+				Assert.assertEquals(parser.F.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
 			}
 		}
 		
-		Assert.assertEquals(parser.svar_cases, expected_svar_cases);
-		Assert.assertEquals(parser.svar_conditions, expected_svar_conditions);
-		Assert.assertEquals(parser.svar_map_case_content, expected_svar_map_case_content);
+		Assert.assertEquals(parser.F.svar_cases, expected_svar_cases);
+		Assert.assertEquals(parser.F.svar_conditions, expected_svar_conditions);
+		Assert.assertEquals(parser.F.svar_map_case_content, expected_svar_map_case_content);
 	}
 	
 	@Test(groups = { "WRESL_elements" })
@@ -489,7 +540,7 @@ public class TestConvertWresl {
 		expected_svar_map_case_content.put(svar_name, map_case_content);
 
 				
-		List<String> svar_cases_keys = new ArrayList<String> (parser.svar_cases.keySet());
+		List<String> svar_cases_keys = new ArrayList<String> (parser.F.svar_cases.keySet());
 		List<String> expected_svar_cases_keys = new ArrayList<String> (expected_svar_cases.keySet());
 		Collections.sort(svar_cases_keys);
 		Collections.sort(expected_svar_cases_keys);
@@ -497,23 +548,23 @@ public class TestConvertWresl {
 		Assert.assertEquals(svar_cases_keys, expected_svar_cases_keys);
 		
 		for (String i : svar_cases_keys) {
-			Assert.assertEquals(parser.svar_cases.get(i), expected_svar_cases.get(i));
+			Assert.assertEquals(parser.F.svar_cases.get(i), expected_svar_cases.get(i));
 		}
 		
 		for (String i : svar_cases_keys) {
-			Assert.assertEquals(parser.svar_conditions.get(i), expected_svar_conditions.get(i));
+			Assert.assertEquals(parser.F.svar_conditions.get(i), expected_svar_conditions.get(i));
 		}
 
 		for (String i : svar_cases_keys) {
 			for (String j : expected_svar_map_case_content.get(i).keySet()) {
 				//System.out.println(i+":"+j);
-				Assert.assertEquals(parser.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
+				Assert.assertEquals(parser.F.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
 			}
 		}
 		
-		Assert.assertEquals(parser.svar_cases, expected_svar_cases);
-		Assert.assertEquals(parser.svar_conditions, expected_svar_conditions);
-		Assert.assertEquals(parser.svar_map_case_content, expected_svar_map_case_content);
+		Assert.assertEquals(parser.F.svar_cases, expected_svar_cases);
+		Assert.assertEquals(parser.F.svar_conditions, expected_svar_conditions);
+		Assert.assertEquals(parser.F.svar_map_case_content, expected_svar_map_case_content);
 	}
 
 	@Test(groups = { "WRESL_elements" })
@@ -563,7 +614,7 @@ public class TestConvertWresl {
 		expected_svar_map_case_content.put(svar_name, map_case_content);
 
 				
-		List<String> svar_cases_keys = new ArrayList<String> (parser.svar_cases.keySet());
+		List<String> svar_cases_keys = new ArrayList<String> (parser.F.svar_cases.keySet());
 		List<String> expected_svar_cases_keys = new ArrayList<String> (expected_svar_cases.keySet());
 		Collections.sort(svar_cases_keys);
 		Collections.sort(expected_svar_cases_keys);
@@ -571,23 +622,23 @@ public class TestConvertWresl {
 		Assert.assertEquals(svar_cases_keys, expected_svar_cases_keys);
 		
 		for (String i : svar_cases_keys) {
-			Assert.assertEquals(parser.svar_cases.get(i), expected_svar_cases.get(i));
+			Assert.assertEquals(parser.F.svar_cases.get(i), expected_svar_cases.get(i));
 		}
 		
 		for (String i : svar_cases_keys) {
-			Assert.assertEquals(parser.svar_conditions.get(i), expected_svar_conditions.get(i));
+			Assert.assertEquals(parser.F.svar_conditions.get(i), expected_svar_conditions.get(i));
 		}
 
 		for (String i : svar_cases_keys) {
 			for (String j : expected_svar_map_case_content.get(i).keySet()) {
 				//System.out.println(i+":"+j);
-				Assert.assertEquals(parser.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
+				Assert.assertEquals(parser.F.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
 			}
 		}
 		
-		Assert.assertEquals(parser.svar_cases, expected_svar_cases);
-		Assert.assertEquals(parser.svar_conditions, expected_svar_conditions);
-		Assert.assertEquals(parser.svar_map_case_content, expected_svar_map_case_content);
+		Assert.assertEquals(parser.F.svar_cases, expected_svar_cases);
+		Assert.assertEquals(parser.F.svar_conditions, expected_svar_conditions);
+		Assert.assertEquals(parser.F.svar_map_case_content, expected_svar_map_case_content);
 	}	
 	
 	@Test(groups = { "WRESL_elements" })
@@ -614,7 +665,7 @@ public class TestConvertWresl {
 		expected.put("a3", "b < c");
 		
 		
-		List<String> goal_simple_keys = new ArrayList<String> (parser.goal_simple.keySet());
+		List<String> goal_simple_keys = new ArrayList<String> (parser.F.goal_simple.keySet());
 		List<String> expected_keys = new ArrayList<String> (expected.keySet());
 		Collections.sort(goal_simple_keys);
 		Collections.sort(expected_keys);
@@ -622,10 +673,10 @@ public class TestConvertWresl {
 		Assert.assertEquals(goal_simple_keys, expected_keys);
 		
 		for (String i : expected_keys) {
-			Assert.assertEquals(parser.goal_simple.get(i), expected.get(i));
+			Assert.assertEquals(parser.F.goal_simple.get(i), expected.get(i));
 		}
 		
-		Assert.assertEquals(parser.goal_simple, expected);		
+		Assert.assertEquals(parser.F.goal_simple, expected);		
 	}			
 
 	
@@ -653,7 +704,7 @@ public class TestConvertWresl {
 		expected.put("a3", "b < c");
 		
 		
-		List<String> goal_simple_keys = new ArrayList<String> (parser.goal_simple.keySet());
+		List<String> goal_simple_keys = new ArrayList<String> (parser.F.goal_simple.keySet());
 		List<String> expected_keys = new ArrayList<String> (expected.keySet());
 		Collections.sort(goal_simple_keys);
 		Collections.sort(expected_keys);
@@ -661,9 +712,9 @@ public class TestConvertWresl {
 		Assert.assertEquals(goal_simple_keys, expected_keys);
 		
 		for (String i : expected_keys) {
-			Assert.assertEquals(parser.goal_simple.get(i), expected.get(i));
+			Assert.assertEquals(parser.F.goal_simple.get(i), expected.get(i));
 		}
 		
-		Assert.assertEquals(parser.goal_simple, expected);		
+		Assert.assertEquals(parser.F.goal_simple, expected);		
 	}	
 }

@@ -48,7 +48,7 @@ public class TestIncludeFile {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = filePath;
 		parser.evaluator();
-		Map<String, String> svar_constant = parser.svar_expression;
+		Map<String, String> svar_constant = parser.F.svar_expression;
 		
 		expected.put("minflow_C_Orovl3", ".29");
 		expected.put("minflow_C_Orovl2", "45.29");
