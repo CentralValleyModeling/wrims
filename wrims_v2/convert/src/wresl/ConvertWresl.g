@@ -10,6 +10,7 @@ options {
   import java.util.HashMap;
   import java.util.Arrays;
   import evaluators.Struct;
+  import evaluators.Model;
   import evaluators.Tools;
 }
 
@@ -19,7 +20,8 @@ options {
 
 @members {
 
-	public Struct F = new Struct();
+	public Struct F = new Struct();	
+	public ArrayList<Model> modelList = new ArrayList<Model>();
 	
 	/// temp variables 
  	private ArrayList<String> list;
@@ -45,7 +47,7 @@ modules
 module
 	:   goal_simple  |  define  ;
 
-define //returns [Map<String, String> map]
+define 
 	:	DEFINE 
 	(	svar_expression
 	|	dvar_std   | dvar_nonstd | dvar_alias
@@ -53,15 +55,8 @@ define //returns [Map<String, String> map]
 	;
 
 goal_simple
-	: GOAL i=IDENT  '{' v=constraintStatement '}'  {		
-				if (F.var_all.containsKey($i.text)){
-				//System.out.println("error... variable redefined: " + $i.text);
-				F.error_var_redefined.put($i.text, "goal_simple");
-				}
-				else {
-				F.goal_simple.put($i.text, $v.text);
-				F.var_all.put($i.text, "goal_simple");
-				}
+	:	GOAL i=IDENT  '{' v=constraintStatement '}'  {
+			F.goalSimple($i.text, $v.text);		
 		}
 	;
 
@@ -69,17 +64,9 @@ goal_lhs
 	: 'lhs' IDENT
 	;
 
-svar_expression //returns [Map<String, String> map]
+svar_expression 
 	:	i=IDENT '{' v=valueStatement '}' { 
-				
-				if (F.var_all.containsKey($i.text)){
-				//System.out.println("error... variable redefined: " + $i.text);
-				F.error_var_redefined.put($i.text, "svar_expression");
-				}
-				else {
-				F.svar_expression.put($i.text, $v.str);
-				F.var_all.put($i.text, "svar_expression");
-				}
+			F.svarExpression($i.text, $v.str);
 		}
 	;
 
