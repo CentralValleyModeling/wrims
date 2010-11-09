@@ -1,0 +1,8 @@
+SEQUENCE CYCLE1 {
+    model   SJRBASE
+    order   1
+    }
+SEQUENCE CYCLE2 {
+    model   SJR_WQ1
+    order   2
+    }
