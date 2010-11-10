@@ -417,7 +417,7 @@ MON_CONST : 'JAN'|'FEB'|'MAR'|'APR'|'MAY'|'JUN'|'JUL'|'AUG'|'SEP'|'OCT'|'NOV'|'D
 
 /// reserved functions ///
 fragment MON_VAR: 'Jan'|'Feb'|'Mar'|'Apr'|'May'|'Jun'|'Jul'|'Aug'|'Sep'|'Oct'|'Nov'|'Dec'; 
-PREV_MON : 'prev' ( MON_VAR | MON_CONST ); // this is wrong!! need to force one format
+PREV_MON : 'prev' ( MON_VAR | MON_CONST ); // need to force single format
 
 
 ///units///
