@@ -11,6 +11,7 @@
     <run>
       <include name="WRESL_elements"/>
 	  <include name="error_messages"/>
+	  <include name="file_includes"/>
     </run>
   </groups>
   </test>
