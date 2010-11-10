@@ -53,14 +53,8 @@ filePath
 path
 	: PATH ;
 
-	
-
 MULTILINE_COMMENT : '/*' .* '*/' {$channel = HIDDEN;} ;
 COMMENT : '!' .* ('\n'|'\r') {$channel = HIDDEN;};
-
-
-INCLUDE: 'include' | 'Include' | 'INCLUDE'  ;
-
 
 fragment LETTER : ('a'..'z' | 'A'..'Z') ;
 fragment DIGIT : '0'..'9';
@@ -71,6 +65,7 @@ fragment WRESL : '.wresl' | '.WRESL' ;
 
 PATH : '\'' IDENT  ('\\' IDENT )* WRESL  '\'';
 
-WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {$channel = HIDDEN;};
+INCLUDE: 'include' | 'Include' | 'INCLUDE'  ;
 
+WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {$channel = HIDDEN;};
 IGNORE : . {$channel = HIDDEN;};

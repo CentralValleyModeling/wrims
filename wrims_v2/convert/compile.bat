@@ -1,7 +1,14 @@
-javac -cp "libs\\antlr-3.2.jar" antlr-generated\\wresl\\*.java
-javac -cp "libs\\testng-5.14.1.jar;libs\\antlr-3.2.jar;antlr-generated" src\\test\\convertWresl\\*.java
+javac src\\evaluators\\*.java
+
+javac -cp "libs\\antlr-3.2.jar;src" antlr-generated\\wresl\\*.java
+
+javac -cp "libs\\testng-5.14.1.jar;libs\\antlr-3.2.jar;antlr-generated;src" src\\test\\convertWresl\\*.java
 
 md bin
+
+md bin\\evaluators
+copy evaluators\\*.class bin\\evaluators\\*.class
+del  evaluators\\*.class
 
 md bin\\wresl
 copy antlr-generated\\wresl\\*.class bin\\wresl\\*.class
