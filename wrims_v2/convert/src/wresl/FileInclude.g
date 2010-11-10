@@ -1,8 +1,7 @@
-parser grammar FileIncludeParser;
+grammar FileInclude;
 
 options {
   language = Java;
-  tokenVocab = FileIncludeLexer;
 }
 
 @header {
@@ -13,7 +12,9 @@ options {
   import evaluators.Struct;
   import evaluators.Tools;  
 }
-
+@lexer::header {
+  package wresl;
+}
 
 @members {
 
@@ -21,7 +22,7 @@ options {
 	//public ArrayList<Model> modelList = new ArrayList<Model>();
 
 	/// temp variables 
- 	public ArrayList<String> fileList;
+ 	public ArrayList<String> fileList = new ArrayList<String> ();
 	
 	/// temp variables 
  	private ArrayList<String> list;
@@ -47,6 +48,29 @@ include
 	:   INCLUDE filePath .* ; 
 
 filePath
-	:	 PATH  ;
+	:	 path  {fileList.add($path.text);};
+
+path
+	: PATH ;
+
+	
+
+MULTILINE_COMMENT : '/*' .* '*/' {$channel = HIDDEN;} ;
+COMMENT : '!' .* ('\n'|'\r') {$channel = HIDDEN;};
 
 
+INCLUDE: 'include' | 'Include' | 'INCLUDE'  ;
+
+
+fragment LETTER : ('a'..'z' | 'A'..'Z') ;
+fragment DIGIT : '0'..'9';
+fragment SYMBOLS : '_' | '-' ;
+fragment IDENT : (LETTER | DIGIT | SYMBOLS )+ ;
+
+fragment WRESL : '.wresl' | '.WRESL' ;
+
+PATH : '\'' IDENT  ('\\' IDENT )* WRESL  '\'';
+
+WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {$channel = HIDDEN;};
+
+IGNORE : . {$channel = HIDDEN;};

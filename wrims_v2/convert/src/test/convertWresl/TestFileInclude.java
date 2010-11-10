@@ -52,7 +52,10 @@ public class TestFileInclude {
 		//Map<String, String> svar_constant = parser.F.svar_expression;
 		
 		expected.add("minflow_C_Orovl3");
+		expected.add("minflow_C_Orovl3");
+		expected.add("minflow_C_Orovl3");		
 		
+
 		Assert.assertEquals(parser.fileList, expected);
 	}		
 
