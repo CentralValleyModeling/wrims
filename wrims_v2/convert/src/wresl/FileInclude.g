@@ -10,7 +10,8 @@ options {
   import java.util.HashMap;
   import java.util.Arrays;
   import evaluators.Struct;
-  import evaluators.Tools;  
+  import evaluators.Tools;
+  import evaluators.Model;  
 }
 @lexer::header {
   package wresl;
@@ -19,7 +20,7 @@ options {
 @members {
 
 	public Struct F = new Struct();	
-	//public ArrayList<Model> modelList = new ArrayList<Model>();
+	public ArrayList<Model> modelList = new ArrayList<Model>();
 
 	/// temp variables 
  	public ArrayList<String> fileList = new ArrayList<String> ();
