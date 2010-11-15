@@ -596,17 +596,17 @@ public class TestConvertWresl {
 	    list_case_names = new ArrayList<String>();
 	    list_conditions = new ArrayList<String>();
 	    map_case_content = new HashMap<String, List<String>>();	
-	    String svar_name = "DI_CVP_s";
+	    String svar_name = "minflowFMPAmer";
 	    
 	    /// new case
-		list_case_names.add("MartoMay"); // this is needed to ensure the order of the cases, which is lost in map
-		list_conditions.add("month >= MAR .and. month <= MAY");
-		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"sql","di","wsi_di_cvp_s","wsi=wsi_cvp_s","linear"}));
+		list_case_names.add("JanFebCMin"); // this is needed to ensure the order of the cases, which is lost in map
+		list_conditions.add("month>=JAN .and. month<=FEB .and. sri_ytp == 5 .and. C_Nimbus_fmp_mif(-1) < 800.");
+		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"value","max(250., min(1750., (0.85 * C_Nimbus_fmp_mif(-1))))"}));
 		
 		/// new case
-		list_case_names.add("JuntoFeb");
-		list_conditions.add("always");
-		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"value","99.06"}));
+		//list_case_names.add("JuntoFeb");
+		//list_conditions.add("always");
+		//map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"value","99.06"}));
 
 		// conclude 1st svar
 		expected_svar_cases.put(svar_name, list_case_names);
