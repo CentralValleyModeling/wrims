@@ -5,3 +5,4 @@ define AmerFrcstInflow {
 	case other {
 		condition		always
 		value   		0.0   }
+}
