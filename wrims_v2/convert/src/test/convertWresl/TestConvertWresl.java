@@ -207,11 +207,10 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();
-		Map<String, ArrayList<String>>  dvar_std = parser.F.dvar_std;
 		
-		expected.put("C_Tracy", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS"})));
+		expected.put("QsacFth", new ArrayList<String>(Arrays.asList(new String[]{"flow-channel","CFS","C_SacFea+D_SacFea"})));
 		
-		Assert.assertEquals(dvar_std, expected);
+		Assert.assertEquals(parser.F.dvar_alias, expected);
 	}	
 	
 	@Test(groups = { "WRESL_elements" })

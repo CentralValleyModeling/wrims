@@ -245,7 +245,7 @@ upper returns[String str]
 	;
 
 alias returns [String str]
-	: 'alias'  i=( IDENT  | inline_func )  { $str = $i.text; }
+	: 'alias'  e=expression  { $str = $e.text; }
 	;
 	
 kind returns [String str]
@@ -421,10 +421,10 @@ PREV_MON : 'prev' ( MON_VAR | MON_CONST ); // need to force single format
 
 
 ///units///
-TAF :'\''  'TAF'  '\'';
-CFS :'\''  'CFS' '\'';
-ACRES :'\''  'ACRES' '\'';
-IN :'\''  'IN' '\'';
+TAF :'\''    ('TAF'  |'taf')     '\'';
+CFS :'\''    ('CFS'  |'cfs')     '\'';
+ACRES :'\''  ('ACRES'|'acres') '\'';
+IN :'\''  ('IN'|'in') '\'';
 NONE :'\''  'NONE' '\'';
 
 ///basics///
