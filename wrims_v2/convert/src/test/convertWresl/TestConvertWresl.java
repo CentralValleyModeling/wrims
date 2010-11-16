@@ -703,24 +703,8 @@ public class TestConvertWresl {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();
 
-		expected.put("split_C5_WTS", "C5_WTS = C5_WTS_Stg1 + C5_WTS_Stg2");
-		expected.put("C_SLCVP", "C5_WTS = C5_WTS_Stg1");
-		expected.put("a1", "b = c");
-		expected.put("a2", "b >  c");
-		expected.put("a3", "b < c");
+		expected.put("a", "min(1000. + 0.5*max(S_Orovl(prevSep) - 1000. ,0.), S_OrovlLevel5)");
 		
-		
-		List<String> goal_simple_keys = new ArrayList<String> (parser.F.goal_simple.keySet());
-		List<String> expected_keys = new ArrayList<String> (expected.keySet());
-		Collections.sort(goal_simple_keys);
-		Collections.sort(expected_keys);
-		
-		Assert.assertEquals(goal_simple_keys, expected_keys);
-//		
-//		for (String i : expected_keys) {
-//			Assert.assertEquals(parser.F.goal_simple.get(i), expected.get(i));
-//		}
-//		
-//		Assert.assertEquals(parser.F.goal_simple, expected);		
+		Assert.assertEquals(parser.F.svar_expression, expected);	
 	}	
 }
