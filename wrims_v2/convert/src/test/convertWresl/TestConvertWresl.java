@@ -119,19 +119,26 @@ public class TestConvertWresl {
 	         e.printStackTrace();
 	        }
 	    
-	    Map<String, String>  expected = new HashMap<String, String>();
+	    Map<String, ArrayList<String>>   expected = new HashMap<String, ArrayList<String>> ();
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();
-		Map<String, String> svar_constant = parser.F.svar_expression;
 		
-		expected.put("minflow_C_Orovl3", ".29");
-		expected.put("minflow_C_Orovl2", "45.29");
-		expected.put("minflow_C_Orovl", "600");
+		expected.put("OroInfEst", new ArrayList<String>(Arrays.asList(new String[]{"sum(i=0,SEP-month,1)","(I_Orovl(i))*cfs_taf(i)"})));
 		
-		Assert.assertEquals(svar_constant, expected);
+		
+		List<String> svar_sum_keys = new ArrayList<String> (parser.F.svar_sum.keySet());
+		List<String> expected_keys = new ArrayList<String> (expected.keySet());
+		Collections.sort(svar_sum_keys);
+		Collections.sort(expected_keys);
+		
+		Assert.assertEquals(svar_sum_keys, expected_keys);
+		for (String i : svar_sum_keys) {
+			Assert.assertEquals(parser.F.svar_sum.get(i), expected.get(i));
+		}
+//		Assert.assertEquals(svar_sum, expected);
 	}	
 	
 	@Test(groups = { "WRESL_elements" })
