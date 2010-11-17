@@ -59,29 +59,82 @@ public class TestConvertWresl {
 	}	
 
 	@Test(groups = { "WRESL_elements" })
-	public void model() throws RecognitionException, IOException {
+	public void modelBasic() throws RecognitionException, IOException {
 		
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_model.wresl", "UTF8");
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_modelBasic.wresl", "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
 	        }
 	    
-	    Map<String, String>  expected = new HashMap<String, String>();
+
+	    ArrayList<String> list=new ArrayList<String>();
+	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();
-		Map<String, String> svar_constant = parser.F.svar_expression;
 		
-		expected.put("minflow_C_Orovl3", ".29");
-		expected.put("minflow_C_Orovl2", "45.29");
-		expected.put("minflow_C_Orovl", "600");
+	    String[] array={"flow-channel","CFS","C_SacFea+D_SacFea"};
+		list.addAll(Arrays.asList(array));
+		expected.put("QsacFth", list);
 		
-		Assert.assertEquals(svar_constant, expected);
+		Assert.assertEquals(parser.F.model_var_adhoc, expected);
 	}	
+	
+	@Test(groups = { "WRESL_elements" })
+	public void modelVarAdhoc() throws RecognitionException, IOException {
+		
+		try {
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_modelVarAdhoc.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	    
+
+	    ArrayList<String> list=new ArrayList<String>();
+	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.evaluator();
+		
+	    String[] array={"flow-channel","CFS","C_SacFea+D_SacFea"};
+		list.addAll(Arrays.asList(array));
+		expected.put("QsacFth", list);
+		
+		Assert.assertEquals(parser.F.model_var_adhoc, expected);
+	}	
+
+	@Test(groups = { "WRESL_elements" })
+	public void modelIncludeFile() throws RecognitionException, IOException {
+		
+		try {
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_modelIncludeFile.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	    
+
+	    ArrayList<String> list=new ArrayList<String>();
+	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.evaluator();
+		
+	    String[] array={"flow-channel","CFS","C_SacFea+D_SacFea"};
+		list.addAll(Arrays.asList(array));
+		expected.put("QsacFth", list);
+		
+		Assert.assertEquals(parser.F.model_var_adhoc, expected);
+	}		
 	
 	@Test(groups = { "WRESL_elements" })
 	public void svarConst() throws RecognitionException, IOException {
@@ -212,6 +265,29 @@ public class TestConvertWresl {
 		
 		Assert.assertEquals(parser.F.dvar_alias, expected);
 	}	
+
+	@Test(groups = { "WRESL_elements" })
+	public void dvarAlias2() throws RecognitionException, IOException {
+		
+		try {
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_dvarAlias2.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	    //String[] array;
+	    //ArrayList<String> list;
+	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.evaluator();
+		
+		expected.put("QsacFth", new ArrayList<String>(Arrays.asList(new String[]{"flow-channel","CFS","C_SacFea+D_SacFea"})));
+		
+		Assert.assertEquals(parser.F.dvar_alias, expected);
+	}
 	
 	@Test(groups = { "WRESL_elements" })
 	public void dvarNonStd() throws RecognitionException, IOException {

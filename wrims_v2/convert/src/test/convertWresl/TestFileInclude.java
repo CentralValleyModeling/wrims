@@ -28,7 +28,7 @@ public class TestFileInclude {
 	}
 
 	@Test(groups = { "file_includes" })
-	public void Simple() throws RecognitionException, IOException {
+	public void simpleInclude() throws RecognitionException, IOException {
 		
 		String filePath ="src\\test\\TestFileInclude_Simple.wresl";
 		
