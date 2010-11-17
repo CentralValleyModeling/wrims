@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Struct {
 
-	public Map<String, String> model = new HashMap<String, String>();
+	public Map<String, String> model_basic = new HashMap<String, String>();
 	public Map<String, String> sequence_orders = new HashMap<String, String>();
 	public Map<String, String> error_sequence_order_redefined = new HashMap<String, String>();
 	public Map<String, String> error_var_redefined = new HashMap<String, String>();

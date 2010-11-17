@@ -39,10 +39,14 @@ options {
 
 
 evaluator 
-	:	module* EOF  ;
+	:	pattern* EOF  ;
 
-module
-	:   sequence | goal_simple  |  define ;
+pattern
+	:   includeFile | sequence | goal_simple | define ;
+
+includeFile
+	:	INCLUDE
+	;
 
 sequence
 	:   SEQUENCE IDENT '{' MODEL m=IDENT ORDER i=INTEGER'}'{
@@ -413,6 +417,7 @@ CONDITION : 'condition';
 SEQUENCE  : 'sequence' | 'SEQUENCE';
 MODEL     : 'model';
 ORDER     : 'order';
+INCLUDE   : 'include' | 'INCLUDE' | 'Include';
 /// reserved vars ///
 WATERYEAR : 'wateryear';
 MONTH : 'month';
