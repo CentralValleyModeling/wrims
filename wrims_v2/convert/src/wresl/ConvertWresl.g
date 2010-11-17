@@ -190,7 +190,7 @@ dvar_std
 	;
 
 dvar_alias
-	:	i=IDENT '{' alias kind units'}' { 
+	:	i=IDENT '{' alias kind? units'}' { 
 				
 				if (F.var_all.containsKey($i.text)){
 				//System.out.println("error... variable redefined: " + $i.text);
@@ -343,7 +343,7 @@ expression_sum : add_sum ;
 ///////////////////
 
 term
-	:	IDENT | reserved_vars | reserved_consts
+	:	( var_previous_cycle | IDENT | reserved_vars | reserved_consts)
 	|	'(' expression ')' 
 	|	number
 	|   inline_func  |   max_func  |  min_func	
@@ -385,6 +385,8 @@ reserved_keys : GOAL | DEFINE ;
 
 all_ident  : reserved_vars | reserved_consts | IDENT ;
 
+var_previous_cycle : IDENT '[' IDENT ']';
+ 
 MULTILINE_COMMENT : '/*' .* '*/' {$channel = HIDDEN;} ;
 
 fragment LETTER : ('a'..'z' | 'A'..'Z') ;
@@ -439,6 +441,7 @@ NONE :'\''  'NONE' '\'';
 
 ///basics///
 QUOTE_STRING_with_MINUS : '\'' IDENT ( '-' | IDENT )+ '\'';
+//VAR_PREVIOUS_CYCLE : IDENT '[' IDENT ']';
 IDENT : LETTER (LETTER | DIGIT | SYMBOLS )*;
 
 WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {$channel = HIDDEN;};
