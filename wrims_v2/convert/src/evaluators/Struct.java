@@ -9,7 +9,8 @@ import java.util.Map;
 public class Struct {
 
 	public Map<String, String> model = new HashMap<String, String>();
-	public Map<String, String> sequence = new HashMap<String, String>();
+	public Map<String, String> sequence_orders = new HashMap<String, String>();
+	public Map<String, String> error_sequence_order_redefined = new HashMap<String, String>();
 	public Map<String, String> error_var_redefined = new HashMap<String, String>();
 	public Map<String, String> var_all = new HashMap<String, String>();
 	public Map<String, String> svar_expression = new HashMap<String, String>();
@@ -58,5 +59,15 @@ public class Struct {
 			}
 	}	
 	
+
+	public void sequenceOrder(String order, String modelName) {	
+	if (sequence_orders.containsKey(order)){
+		//System.out.println("error... variable redefined: " + $i.text);
+		error_sequence_order_redefined.put(order, modelName);
+		}
+		else {
+		sequence_orders.put(order, modelName);
+		}
+	}
 	
 }

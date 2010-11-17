@@ -55,7 +55,7 @@ public class TestConvertWresl {
 		expected.put("1", "SJRBASE");
 		expected.put("2", "SJR_WQ1");
 		
-		Assert.assertEquals(parser.F.sequence, expected);
+		Assert.assertEquals(parser.F.sequence_orders, expected);
 	}	
 
 	@Test(groups = { "WRESL_elements" })

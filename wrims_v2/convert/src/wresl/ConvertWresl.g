@@ -39,13 +39,16 @@ options {
 
 
 evaluator 
-	:	modules EOF  ;
-
-modules
-	:	module*  ;
+	:	module* EOF  ;
 
 module
-	:   goal_simple  |  define  ;
+	:   sequence | goal_simple  |  define ;
+
+sequence
+	:   SEQUENCE IDENT '{' MODEL m=IDENT ORDER i=INTEGER'}'{
+				F.sequenceOrder($i.text, $m.text );
+		}
+	;
 
 define 
 	:	DEFINE 
@@ -407,7 +410,9 @@ GOAL :'goal';
 DEFINE :'define';
 ALWAYS :'always';
 CONDITION : 'condition';
-
+SEQUENCE  : 'sequence' | 'SEQUENCE';
+MODEL     : 'model';
+ORDER     : 'order';
 /// reserved vars ///
 WATERYEAR : 'wateryear';
 MONTH : 'month';
