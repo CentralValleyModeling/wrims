@@ -77,20 +77,7 @@ goal_noCase
 
 goal_case
 	:   GOAL i=IDENT  '{' 'lhs' h=IDENT  c=caseStatements '}'{ 
-
-				if (F.var_all.containsKey($i.text)){
-				//System.out.println("error... variable redefined: " + $i.text);
-				F.error_var_redefined.put($i.text, "goal_cases");
-				}
-				else {
-				//list = new ArrayList<String>();
-				//list.add($c.text);
-				F.goal_cases.put($i.text, $c.caseNames);
-				F.goal_lhs.put($i.text, $h.text);
-				F.goal_conditions.put($i.text, $c.conditions);
-				F.goal_map_case_content.put($i.text, $c.caseContent);
-				F.var_all.put($i.text, "goal_cases");
-				}
+				F.goalCase($i.text, $h.text, $c.caseNames, $c.conditions, $c.caseContent);
 	     }
 	; 
 
@@ -111,13 +98,10 @@ lhs_vs_rhs returns[ArrayList<String> list]
 	| PENALTY i=number {$list.add("penalty");$list.add($i.text);}
 	) ;
 
-	
 
 svar_expression 
 	:	i=IDENT '{' v=valueStatement '}' { 
-			F.svarExpression($i.text, $v.str);
-		}
-	;
+			F.svarExpression($i.text, $v.str);   };
 
 svar_sum 
 	:	i=IDENT '{' t=sumStatement '}' { 
@@ -148,23 +132,9 @@ svar_table
 	;
 
 svar_cases
-	//@init { $list = new ArrayList<String>(); }
 	:  i=IDENT '{' c=caseStatements '}' { 
-
-				if (F.var_all.containsKey($i.text)){
-				//System.out.println("error... variable redefined: " + $i.text);
-				F.error_var_redefined.put($i.text, "svar_cases");
-				}
-				else {
-				//list = new ArrayList<String>();
-				//list.add($c.text);
-				F.svar_cases.put($i.text, $c.caseNames);
-				F.svar_conditions.put($i.text, $c.conditions);
-				F.svar_map_case_content.put($i.text, $c.caseContent);
-				F.var_all.put($i.text, "svar_cases");
-				}
-		} 	
-	;
+                F.svarCase($i.text, $c.caseNames, $c.conditions, $c.caseContent);  
+       };
 	
 caseStatements returns[ArrayList<String> caseNames, 
 					   ArrayList<String> conditions, 

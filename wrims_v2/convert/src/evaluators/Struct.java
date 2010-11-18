@@ -69,6 +69,33 @@ public class Struct {
 			var_all.put(name, "goal_no_case");
 		}
 	}
+
+	public void goalCase(String goalName, String lhs, ArrayList<String> caseName, ArrayList<String> condition, Map<String, ArrayList<String>> caseContent) {
+		if (var_all.containsKey(goalName)){
+			//System.out.println("error... variable redefined: " + $i.text);
+			error_var_redefined.put(goalName, "goal_cases");
+			}
+			else {
+			goal_cases.put(goalName, caseName);
+			goal_lhs.put(goalName, lhs);
+			goal_conditions.put(goalName, condition);
+			goal_map_case_content.put(goalName, caseContent);
+			var_all.put(goalName, "goal_cases");
+			}
+	}	
+
+	public void svarCase(String svarName, ArrayList<String> caseName, ArrayList<String> condition, Map<String, ArrayList<String>> caseContent) {
+		if (var_all.containsKey(svarName)){
+			//System.out.println("error... variable redefined: " + $i.text);
+			error_var_redefined.put(svarName, "svar_cases");
+			}
+			else {
+			svar_cases.put(svarName, caseName);
+			svar_conditions.put(svarName, condition);
+			svar_map_case_content.put(svarName, caseContent);
+			var_all.put(svarName, "svar_cases");
+			}
+	}		
 	
 	public void svarExpression(String name, String content) {
 		if (var_all.containsKey(name)){
