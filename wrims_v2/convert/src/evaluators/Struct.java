@@ -31,6 +31,11 @@ public class Struct {
 	public Map<String, ArrayList<String>> svar_conditions = new HashMap<String, ArrayList<String>>();
 	public Map<String, Map<String, ArrayList<String>>> svar_map_case_content = new HashMap<String, Map<String, ArrayList<String>>>();
 
+	/// goal_cases
+	public Map<String, ArrayList<String>> goal_cases = new HashMap<String, ArrayList<String>>();
+	public Map<String, ArrayList<String>> goal_conditions = new HashMap<String, ArrayList<String>>();
+	public Map<String, Map<String, ArrayList<String>>> goal_map_case_content = new HashMap<String, Map<String, ArrayList<String>>>();
+	
 	private static String[] keys = { "define", "goal" };
 	private static String[] mons = { "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
 			"JUL", "AUG", "SEP", "OCT", "NOV", "DEC" };

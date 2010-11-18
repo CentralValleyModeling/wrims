@@ -42,7 +42,7 @@ evaluator
 	:	pattern* EOF  ;
 
 pattern
-	:   model | includeFile | sequence | (goal_simple|goal_soft) | define ;
+	:   model | includeFile | sequence |  goal  | define ;
 
 model
 	:    MODEL IDENT '{' ( goal_simple | define ) '}'
@@ -65,15 +65,54 @@ define
 	|	svar_table | svar_dss    | svar_cases | svar_sum )  
 	;
 
+goal : goal_simple | goal_noCase | goal_case ;
+
 goal_simple
 	:	GOAL i=IDENT  '{' v=constraintStatement '}'  {
 			F.goalSimple($i.text, $v.text);		
 		}
 	;
 
-goal_soft
-	:   GOAL IDENT  '{' 'lhs' IDENT 'rhs' IDENT  'lhs' '>' 'rhs' IDENT 'lhs' '<' 'rhs' IDENT '}'
+goal_noCase
+	:   GOAL i=IDENT  '{' 'lhs' l=IDENT  r=goalStatement '}'
 	;
+
+goal_case
+	:   GOAL i=IDENT  '{' 'lhs' l=IDENT  c=caseStatements '}'{ 
+
+				if (F.var_all.containsKey($i.text)){
+				//System.out.println("error... variable redefined: " + $i.text);
+				F.error_var_redefined.put($i.text, "goal_cases");
+				}
+				else {
+				//list = new ArrayList<String>();
+				//list.add($c.text);
+				F.goal_cases.put($i.text, $c.caseNames);
+				F.goal_conditions.put($i.text, $c.conditions);
+				F.goal_map_case_content.put($i.text, $c.caseContent);
+				F.var_all.put($i.text, "goal_cases");
+				}
+	     }
+	; 
+
+goalStatement returns[ArrayList<String> list]
+	@init { $list = new ArrayList<String>(); }
+	: 'rhs' i=IDENT  v1=lhs_vs_rhs v2=lhs_vs_rhs {       
+				$list.add("rhs"); $list.add($i.text);
+				$list.addAll($v1.list); $list.addAll($v2.list);
+	  }
+	;
+
+lhs_vs_rhs returns[ArrayList<String> list]
+	@init { $list = new ArrayList<String>(); }
+	: 'lhs'  
+	( '>' {$list.add("l>r");}  |  '<' {$list.add("l<r");} )  
+	  'rhs' 
+	( CONSTRAIN {$list.add("constrain");$list.add(null);}
+	| PENALTY i=number {$list.add("penalty");$list.add($i.text);}
+	) ;
+
+	
 
 svar_expression 
 	:	i=IDENT '{' v=valueStatement '}' { 
@@ -147,15 +186,16 @@ caseStatements returns[ArrayList<String> caseNames,
 caseStatement returns[String caseNameStr, String conditionStr, ArrayList<String> contentList]
 @init { $contentList = new ArrayList<String>();} 
 	:  'case' i=IDENT '{' c=conditionStatement 
-	( s=sqlStatement | v=valueStatement | u=sumStatement) '}'  {
-			
+	( s=sqlStatement   {$contentList.add("sql");$contentList.addAll($s.list);}
+	| v=valueStatement {$contentList.add("value");$contentList.add($v.str);}
+	| u=sumStatement   {$contentList.add("sum");$contentList.addAll($u.list);}
+	| g=goalStatement  {$contentList.add("goal");$contentList.addAll($g.list);}
+	) '}' {			
 			$caseNameStr = $i.text;
 			$conditionStr = $c.str;
-			if ($v.str !=null && $v.str!="")      {$contentList.add("value");$contentList.add($v.str);}
-			else if ($s.list !=null && ! $s.list.isEmpty() ) {$contentList.add("sql");$contentList.addAll($s.list);}
-			else if ($u.list !=null && ! $u.list.isEmpty() ) {$contentList.add("sum");$contentList.addAll($u.list);}
-			else { System.out.println("error in caseStatement"); }
-			}
+			//if ($v.str !=null && $v.str!="")      {$contentList.add("value");$contentList.add($v.str);}
+			//if ($s.list !=null && ! $s.list.isEmpty() ) {$contentList.add("sql");$contentList.addAll($s.list);}
+	}
 	;	
 
 
@@ -319,6 +359,9 @@ max_func
 min_func
 	: MIN '(' expression (',' expression)+ ')' ;
 
+other_func
+	: INT  '(' expression ')';	
+
 inline_func 
 	: IDENT '(' ( ('-' INTEGER) | PREV_MON | 'i' ) ')' ;
 
@@ -350,7 +393,7 @@ term
 	:	( var_previous_cycle | IDENT | reserved_vars | reserved_consts)
 	|	'(' expression ')' 
 	|	number
-	|   inline_func  |   max_func  |  min_func	
+	|   inline_func  |   max_func  |  min_func	| other_func
 	;
 	
 unary :	('-')? term ;
@@ -400,10 +443,13 @@ fragment SYMBOLS : '_';
 INTEGER : DIGIT+ ;
 FLOAT : INTEGER? '.' INTEGER  | INTEGER '.' ;
 
-/// INLINE_FUNC //
-MAX : 'max' ;
-MIN : 'min' ;
-SUM : 'sum' ;
+/// intrinsic functions //
+INT : 'int'  ;
+REAL: 'real' ;
+MOD : 'mod'  ;
+MAX : 'max'  ;
+MIN : 'min'  ;
+SUM : 'sum'  ;
 WHERE : 'where' ;
 
 /// comparison ///
@@ -429,8 +475,8 @@ WATERYEAR : 'wateryear';
 MONTH : 'month';
 
 /// goal keywords ///
-GOAL_HARD_KEYS : 'constrain' | 'never' ;
-GOAL_PENALTY   : 'penalty' ;
+CONSTRAIN : 'constrain' | 'never' ;
+PENALTY   : 'penalty' ;
 
 /// reserved constants ///
 MON_CONST : 'JAN'|'FEB'|'MAR'|'APR'|'MAY'|'JUN'|'JUL'|'AUG'|'SEP'|'OCT'|'NOV'|'DEC';
