@@ -771,6 +771,30 @@ public class TestConvertWresl {
 	}			
 
 	@Test(groups = { "WRESL_elements" })
+	public void goalNoCase() throws RecognitionException, IOException {
+		
+		try {
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_goalNoCase.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+
+	    Map<String, List<String>>  expected = new HashMap<String, List<String>>();
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.evaluator();
+
+		expected.put("b2action1Whi_1", Arrays.asList(new String[]{
+				"lhs","C3_MIF","rhs","minflow_C3b2","l>r","constrain",null,"l<r","penalty","700.0"
+		}));
+		
+		Assert.assertEquals(parser.F.goal_no_case, expected);		
+	}		
+	
+	@Test(groups = { "WRESL_elements" })
 	public void goalCase() throws RecognitionException, IOException {
 		
 		try {

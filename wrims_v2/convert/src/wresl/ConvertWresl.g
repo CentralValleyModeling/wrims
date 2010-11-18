@@ -72,7 +72,7 @@ goal_simple
 	;
 
 goal_noCase
-	:   GOAL i=IDENT  '{' 'lhs' l=IDENT  r=goalStatement '}'
+	:   GOAL i=IDENT  '{' 'lhs' h=IDENT  r=goalStatement '}' {F.goalNoCase($i.text, $h.text, $r.list);}
 	;
 
 goal_case
