@@ -42,7 +42,11 @@ evaluator
 	:	pattern* EOF  ;
 
 pattern
-	:   includeFile | sequence | goal_simple | define ;
+	:   model | includeFile | sequence | (goal_simple|goal_soft) | define ;
+
+model
+	:    MODEL IDENT '{' ( goal_simple | define ) '}'
+	;
 
 includeFile
 	:	INCLUDE
@@ -67,8 +71,8 @@ goal_simple
 		}
 	;
 
-goal_lhs
-	: 'lhs' IDENT
+goal_soft
+	:   GOAL IDENT  '{' 'lhs' IDENT 'rhs' IDENT  'lhs' '>' 'rhs' IDENT 'lhs' '<' 'rhs' IDENT '}'
 	;
 
 svar_expression 
@@ -417,12 +421,16 @@ DEFINE :'define';
 ALWAYS :'always';
 CONDITION : 'condition';
 SEQUENCE  : 'sequence' | 'SEQUENCE';
-MODEL     : 'model';
+MODEL     : 'model' | 'MODEL' | 'Model';
 ORDER     : 'order';
 INCLUDE   : 'include' | 'INCLUDE' | 'Include';
 /// reserved vars ///
 WATERYEAR : 'wateryear';
 MONTH : 'month';
+
+/// goal keywords ///
+GOAL_HARD_KEYS : 'constrain' | 'never' ;
+GOAL_PENALTY   : 'penalty' ;
 
 /// reserved constants ///
 MON_CONST : 'JAN'|'FEB'|'MAR'|'APR'|'MAY'|'JUN'|'JUL'|'AUG'|'SEP'|'OCT'|'NOV'|'DEC';
