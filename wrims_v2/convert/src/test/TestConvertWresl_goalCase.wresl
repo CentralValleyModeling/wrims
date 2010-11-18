@@ -4,7 +4,7 @@ goal b2action1Whi_1 {
     condition   int(B2Action1WhiOn)==1
     rhs     minflow_C3b2
     lhs>rhs     constrain
-    lhs<rhs     penalty 0 }
+    lhs<rhs     penalty 700. }
   case Action1WhiOff {
     condition   int(B2Action1WhiOn)==0
     rhs     clear_min

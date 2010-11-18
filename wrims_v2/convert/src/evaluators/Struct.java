@@ -32,6 +32,7 @@ public class Struct {
 	public Map<String, Map<String, ArrayList<String>>> svar_map_case_content = new HashMap<String, Map<String, ArrayList<String>>>();
 
 	/// goal_cases
+	public Map<String, String> goal_lhs = new HashMap<String, String>();
 	public Map<String, ArrayList<String>> goal_cases = new HashMap<String, ArrayList<String>>();
 	public Map<String, ArrayList<String>> goal_conditions = new HashMap<String, ArrayList<String>>();
 	public Map<String, Map<String, ArrayList<String>>> goal_map_case_content = new HashMap<String, Map<String, ArrayList<String>>>();
@@ -54,7 +55,8 @@ public class Struct {
 			var_all.put(name, "goal_simple");
 		}
 	}
-
+	
+	
 	public void svarExpression(String name, String content) {
 		if (var_all.containsKey(name)){
 			//System.out.println("error... variable redefined: " + $i.text);

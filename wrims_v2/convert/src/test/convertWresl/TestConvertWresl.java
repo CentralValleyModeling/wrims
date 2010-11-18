@@ -377,7 +377,9 @@ public class TestConvertWresl {
 		parser.evaluator();
 		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
 
-		expected.put("nov_trigger_cfs", new ArrayList<String>(Arrays.asList(new String[]{"target","feather_fish_203",null,null,"month = NOV"})));
+		expected.put("nov_trigger_cfs", new ArrayList<String>(Arrays.asList(new String[]{
+			"select","target","from","feather_fish_203","given",null,"use",null,"where","month = NOV"
+			})));
 		
 		Assert.assertEquals(svar_table, expected);
 	}	
@@ -400,7 +402,9 @@ public class TestConvertWresl {
 		parser.evaluator();
 		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
 
-		expected.put("A_Orovl_last", new ArrayList<String>(Arrays.asList(new String[]{"area","res_info","storage=1000*S_Orovl(-1)","linear","res_num=6" })));
+		expected.put("A_Orovl_last", new ArrayList<String>(Arrays.asList(new String[]{
+			"select","area","from","res_info","given","storage=1000*S_Orovl(-1)","use","linear","where","res_num=6" 
+			})));
 		
 		Assert.assertEquals(svar_table, expected);
 	}		
@@ -423,7 +427,8 @@ public class TestConvertWresl {
 		parser.evaluator();
 		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
 
-		expected.put("S_TrntyLevel4", new ArrayList<String>(Arrays.asList(new String[]{"target","res_level",null,null,"res_num=1","level=4","month=month" })));
+		expected.put("S_TrntyLevel4", new ArrayList<String>(Arrays.asList(new String[]{
+			"select","target","from","res_level","given",null,"use",null,"where","res_num=1","level=4","month=month" })));
 		
 		Assert.assertEquals(svar_table, expected);
 	}		
@@ -461,7 +466,9 @@ public class TestConvertWresl {
 	    /// new case
 		list_case_names.add("Febfore"); // this is needed to ensure the order of the cases, which is lost in map
 		list_conditions.add("month == FEB");
-		map_case_content.put("Febfore", Arrays.asList(new String[]{"sql","FEB","sacramento_runoff_forecast",null,null,"wateryear=wateryear"}));
+		map_case_content.put("Febfore", Arrays.asList(new String[]{
+			"sql","select","FEB","from","sacramento_runoff_forecast","given",null,"use",null,"where","wateryear=wateryear"
+				}));
 		
 		/// new case
 		list_case_names.add("JuntoJan");
@@ -481,20 +488,20 @@ public class TestConvertWresl {
 		
 		Assert.assertEquals(svar_cases_keys, expected_svar_cases_keys);
 		
-		for (String i : svar_cases_keys) {
-			Assert.assertEquals(parser.F.svar_cases.get(i), expected_svar_cases.get(i));
-		}
-		
-		for (String i : svar_cases_keys) {
-			Assert.assertEquals(parser.F.svar_conditions.get(i), expected_svar_conditions.get(i));
-		}
-
-		for (String i : svar_cases_keys) {
-			for (String j : expected_svar_map_case_content.get(i).keySet()) {
-				//System.out.println(i+":"+j);
-				Assert.assertEquals(parser.F.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
-			}
-		}
+//		for (String i : svar_cases_keys) {
+//			Assert.assertEquals(parser.F.svar_cases.get(i), expected_svar_cases.get(i));
+//		}
+//		
+//		for (String i : svar_cases_keys) {
+//			Assert.assertEquals(parser.F.svar_conditions.get(i), expected_svar_conditions.get(i));
+//		}
+//
+//		for (String i : svar_cases_keys) {
+//			for (String j : expected_svar_map_case_content.get(i).keySet()) {
+//				//System.out.println(i+":"+j);
+//				Assert.assertEquals(parser.F.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
+//			}
+//		}
 		
 		Assert.assertEquals(parser.F.svar_cases, expected_svar_cases);
 		Assert.assertEquals(parser.F.svar_conditions, expected_svar_conditions);
@@ -535,7 +542,9 @@ public class TestConvertWresl {
 	    /// new case
 		list_case_names.add("MartoMay"); // this is needed to ensure the order of the cases, which is lost in map
 		list_conditions.add("month >= MAR .and. month <= MAY");
-		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"sql","di","wsi_di_cvp_s","wsi=wsi_cvp_s","linear"}));
+		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{
+				"sql","select","di","from","wsi_di_cvp_s","given","wsi=wsi_cvp_s","use","linear","where"
+				}));
 		
 		/// new case
 		list_case_names.add("JuntoFeb");
@@ -555,20 +564,20 @@ public class TestConvertWresl {
 		
 		Assert.assertEquals(svar_cases_keys, expected_svar_cases_keys);
 		
-		for (String i : svar_cases_keys) {
-			Assert.assertEquals(parser.F.svar_cases.get(i), expected_svar_cases.get(i));
-		}
-		
-		for (String i : svar_cases_keys) {
-			Assert.assertEquals(parser.F.svar_conditions.get(i), expected_svar_conditions.get(i));
-		}
-
-		for (String i : svar_cases_keys) {
-			for (String j : expected_svar_map_case_content.get(i).keySet()) {
-				//System.out.println(i+":"+j);
-				Assert.assertEquals(parser.F.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
-			}
-		}
+//		for (String i : svar_cases_keys) {
+//			Assert.assertEquals(parser.F.svar_cases.get(i), expected_svar_cases.get(i));
+//		}
+//		
+//		for (String i : svar_cases_keys) {
+//			Assert.assertEquals(parser.F.svar_conditions.get(i), expected_svar_conditions.get(i));
+//		}
+//
+//		for (String i : svar_cases_keys) {
+//			for (String j : expected_svar_map_case_content.get(i).keySet()) {
+//				//System.out.println(i+":"+j);
+//				Assert.assertEquals(parser.F.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
+//			}
+//		}
 		
 		Assert.assertEquals(parser.F.svar_cases, expected_svar_cases);
 		Assert.assertEquals(parser.F.svar_conditions, expected_svar_conditions);
@@ -775,7 +784,8 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();		
-	    
+
+		Map<String, String> expected_goal_lhs = new HashMap<String, String>();
 	    Map<String, ArrayList<String>>   expected_goal_cases  = new HashMap<String,ArrayList<String>> (); 
 	    Map<String, ArrayList<String>>   expected_goal_conditions  = new HashMap<String,ArrayList<String>> (); 
 	    Map<String, Map<String, List<String>>> expected_goal_map_case_content = new HashMap<String, Map<String, List<String>>>();
@@ -791,20 +801,24 @@ public class TestConvertWresl {
 	    list_conditions = new ArrayList<String>();
 	    map_case_content = new HashMap<String, List<String>>();	
 	    String goal_name = "b2action1Whi_1";
+	    String lhs = "C3_MIF";
 	    
 	    /// new case
 		list_case_names.add("Action1WhiOn"); // this is needed to ensure the order of the cases, which is lost in map
 		list_conditions.add("int(B2Action1WhiOn)==1");
-		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"sql","di"}));
+		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{
+				"goal","rhs","minflow_C3b2","l>r","constrain",null,"l<r","penalty","700."
+				}));
 		
 		/// new case
 		list_case_names.add("Action1WhiOff");
 		list_conditions.add("int(B2Action1WhiOn)==0");
 		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{
-		"goal","rhs","clear_min","l>r","constrain",null,"l<r","penalty","0"
-		}));
+				"goal","rhs","clear_min","l>r","constrain",null,"l<r","penalty","0"
+				}));
 
 		// conclude 1st svar
+		expected_goal_lhs.put(goal_name, lhs);
 		expected_goal_cases.put(goal_name, list_case_names);
 		expected_goal_conditions.put(goal_name, list_conditions);
 		expected_goal_map_case_content.put(goal_name, map_case_content);
@@ -832,6 +846,7 @@ public class TestConvertWresl {
 //			}
 //		}
 		
+		Assert.assertEquals(parser.F.goal_lhs, expected_goal_lhs);
 		Assert.assertEquals(parser.F.goal_cases, expected_goal_cases);
 		Assert.assertEquals(parser.F.goal_conditions, expected_goal_conditions);
 		Assert.assertEquals(parser.F.goal_map_case_content, expected_goal_map_case_content);

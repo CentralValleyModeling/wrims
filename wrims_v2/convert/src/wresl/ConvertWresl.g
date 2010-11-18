@@ -68,9 +68,7 @@ define
 goal : goal_simple | goal_noCase | goal_case ;
 
 goal_simple
-	:	GOAL i=IDENT  '{' v=constraintStatement '}'  {
-			F.goalSimple($i.text, $v.text);		
-		}
+	:	GOAL i=IDENT  '{' v=constraintStatement '}'  {F.goalSimple($i.text, $v.text);}
 	;
 
 goal_noCase
@@ -78,7 +76,7 @@ goal_noCase
 	;
 
 goal_case
-	:   GOAL i=IDENT  '{' 'lhs' l=IDENT  c=caseStatements '}'{ 
+	:   GOAL i=IDENT  '{' 'lhs' h=IDENT  c=caseStatements '}'{ 
 
 				if (F.var_all.containsKey($i.text)){
 				//System.out.println("error... variable redefined: " + $i.text);
@@ -88,6 +86,7 @@ goal_case
 				//list = new ArrayList<String>();
 				//list.add($c.text);
 				F.goal_cases.put($i.text, $c.caseNames);
+				F.goal_lhs.put($i.text, $h.text);
 				F.goal_conditions.put($i.text, $c.conditions);
 				F.goal_map_case_content.put($i.text, $c.caseContent);
 				F.var_all.put($i.text, "goal_cases");
@@ -332,19 +331,17 @@ sqlStatement returns[ArrayList<String> list]
 	@init { $list = new ArrayList<String>(); }
 	: 'select' i1=all_ident 'from' i2=IDENT 
 	  ('given' i3=assignStatement)? ('use' i4=IDENT)? 
-	  where_items?	  
-	  {       
-				$list.add($i1.text);
-				$list.add($i2.text);
-				$list.add($i3.text);
-				$list.add($i4.text);
-				if ($where_items.list != null) {$list.addAll($where_items.list);}
-		}
+	  i5=where_items?	{       
+				$list.add("select");$list.add($i1.text);
+				$list.add("from");$list.add($i2.text);
+				$list.add("given");$list.add($i3.text);
+				$list.add("use");$list.add($i4.text);
+				$list.add("where"); if ($i5.list!=null) {$list.addAll($i5.list);};				
+	  }
 	;
 
 where_items returns[ArrayList<String> list]
 	@init { $list = new ArrayList<String>(); }
-
 	:	 WHERE  (r1=assignStatement{$list.add($r1.text);} )
 	        (',' r=assignStatement {$list.add($r.text);}  )*
 	;
