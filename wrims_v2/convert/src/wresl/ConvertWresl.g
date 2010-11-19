@@ -52,19 +52,14 @@ includes
 	:  .* include*   ;
 
 include
-	:   INCLUDE ('[' LOCAL ']')? filePath .* ; 
+	:   INCLUDE ('[' LOCAL ']')? filePath  ; 
 
 filePath
 	:	 path // {fileList.add($path.text);};
 	;
+
 path
-	: '\'' path_element  ('\\' path_element )* WRESL_EXT  '\'' ;
-
-path_element : IDENT | '..' ;
-
-//include
-//	:	INCLUDE ('[' LOCAL ']')? '\'' .+ '\''
-//	;
+	: FILE_PATH  ;
 
 sequence
 	:   SEQUENCE IDENT '{' MODEL m=IDENT ORDER i=INTEGER'}'{
@@ -441,8 +436,12 @@ AND : '.and.';
 OR  : '.or.';
 
 /// include file path ///
-WRESL_EXT : '.wresl' | '.WRESL' ;
-//PATH : '\'' IDENT  ('\\' IDENT )* WRESL  '\'';
+FILE_PATH : '\'' (DIR_ELEMENT | DIR_UP)+   WRESL_FILE   '\'';
+fragment WRESL_EXT :   '.wresl' | '.WRESL' ;
+fragment WRESL_FILE :  (LETTER | DIGIT | SYMBOLS |'-'  )+ WRESL_EXT ;
+fragment DIR_ELEMENT : (LETTER | DIGIT | SYMBOLS | '-' )+  '\\' ;
+fragment DIR_UP :                                   ('..') '\\' ;
+
 
 /// reserved keywords ///
 GOAL :'goal';
@@ -479,9 +478,12 @@ IN :'\''  ('IN'|'in') '\'';
 NONE :'\''  'NONE' '\'';
 
 ///basics///
+
 QUOTE_STRING_with_MINUS : '\'' IDENT ( '-' | IDENT )+ '\'';
 //VAR_PREVIOUS_CYCLE : IDENT '[' IDENT ']';
 IDENT : LETTER (LETTER | DIGIT | SYMBOLS )*;
 
 WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {$channel = HIDDEN;};
 COMMENT : '!' .* ('\n'|'\r') {$channel = HIDDEN;};
+
+//IGNORE : . {$channel = HIDDEN;};
