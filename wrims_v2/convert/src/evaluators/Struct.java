@@ -14,7 +14,7 @@ public class Struct {
 	public Map<String, String> sequence_orders = new HashMap<String, String>();
 	public Map<String, String> error_sequence_order_redefined = new HashMap<String, String>();
 	public Map<String, String> error_var_redefined = new HashMap<String, String>();
-	public Map<String, String> var_all = new HashMap<String, String>();
+
 	public Map<String, String> svar_expression = new HashMap<String, String>();
 	public Map<String, String> goal_simple = new HashMap<String, String>();
 
@@ -26,6 +26,14 @@ public class Struct {
 	public Map<String, ArrayList<String>> svar_dss = new HashMap<String, ArrayList<String>>();
 	public Map<String, ArrayList<String>> svar_sum = new HashMap<String, ArrayList<String>>();
 
+	/// variable and scope
+	public Map<String, String> var_all = new HashMap<String, String>();
+	public Map<String, String> var_goal_scope = new HashMap<String, String>();
+	
+	/// model
+	public Map<String, ArrayList<String>> model_file_list = new HashMap<String, ArrayList<String>>();	
+	public Map<String, ArrayList<String>> model_scope_list = new HashMap<String, ArrayList<String>>();
+	
 	/// svar_cases
 	public Map<String, ArrayList<String>> svar_cases = new HashMap<String, ArrayList<String>>();
 	public Map<String, ArrayList<String>> svar_conditions = new HashMap<String, ArrayList<String>>();
@@ -49,11 +57,22 @@ public class Struct {
 	// public static List<String> reserved_words = new ArrayList<String>() {{
 	// addAll(r_keys); addAll(r_mons); }};
 
-	public void goalSimple(String name, String content) {
+	public void modelBasic(String name, ArrayList<String> fileList, ArrayList<String> scopeList) {
+		if (var_all.containsKey(name)) {
+			// System.out.println("error... variable redefined: " + $i.text);
+			error_var_redefined.put(name, "model");
+		} else {
+			model_file_list.put(name, fileList);
+			model_scope_list.put(name, scopeList);
+		}
+	}
+	
+	public void goalSimple(String name, String scope, String content) {
 		if (var_all.containsKey(name)) {
 			// System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "goal_simple");
 		} else {
+			var_goal_scope.put(name, scope);
 			goal_simple.put(name, content);
 			var_all.put(name, "goal_simple");
 		}

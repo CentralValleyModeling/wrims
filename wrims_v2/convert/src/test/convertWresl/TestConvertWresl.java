@@ -121,19 +121,25 @@ public class TestConvertWresl {
 	        }
 	    
 
-	    ArrayList<String> list=new ArrayList<String>();
-	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
+	    ArrayList<String> list;
+	    Map<String, ArrayList<String>>  expected_model_file_list  = new HashMap<String, ArrayList<String>>();
+	    Map<String, ArrayList<String>>  expected_model_scope_list = new HashMap<String, ArrayList<String>>();
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator();
 		
-	    String[] array={"flow-channel","CFS","C_SacFea+D_SacFea"};
-		list.addAll(Arrays.asList(array));
-		expected.put("QsacFth", list);
+	    String[] array={"local","global"};
+	    list=new ArrayList<String>();list.addAll(Arrays.asList(array));
+		expected_model_scope_list.put("CVCWHEELING", list);
+
+	    String[] array2={"..\\..\\common\\System\\System_Sac.wresl","..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl"};
+	    list=new ArrayList<String>();list.addAll(Arrays.asList(array2));
+		expected_model_file_list.put("CVCWHEELING", list);
 		
-		Assert.assertEquals(parser.F.model_var_adhoc, expected);
+		Assert.assertEquals(parser.F.model_scope_list, expected_model_scope_list);
+		Assert.assertEquals(parser.F.model_file_list, expected_model_file_list);
 	}		
 	
 	@Test(groups = { "WRESL_elements" })

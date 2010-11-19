@@ -24,7 +24,7 @@ options {
 	public ArrayList<Model> modelList = new ArrayList<Model>();
 	
 	/// temp variables 
- 	private ArrayList<String> list;
+ 	private ArrayList<String> list;  	private ArrayList<String> list2;
 
 	/// error message
 	public String currentFilePath;
@@ -44,22 +44,25 @@ evaluator
 pattern
 	:   model | include | sequence |  goal  | define ;
 
-model
-	:    MODEL IDENT '{' includes '}'
+model 
+	@init { list = new ArrayList<String>(); list2 = new ArrayList<String>(); }
+	:    MODEL i=IDENT '{' 
+	     (  c=include  {list.add($c.path); list2.add($c.scope);   } 
+	     |  goal
+	     )*
+	     '}' {
+	     	F.modelBasic($i.text, list, list2); 
+	     }
 	;
 
-includes
-	:  .* include*   ;
-
-include
-	:   INCLUDE ('[' LOCAL ']')? filePath  ; 
+include returns[String scope, String path]
+	@init { $scope = "global"; }
+	:   INCLUDE ( LOCAL  {$scope="local";})? p=filePath {$path=Tools.strip($p.text);}  
+	; 
 
 filePath
-	:	 path // {fileList.add($path.text);};
+	:	 FILE_PATH // {fileList.add($path.text);};
 	;
-
-path
-	: FILE_PATH  ;
 
 sequence
 	:   SEQUENCE IDENT '{' MODEL m=IDENT ORDER i=INTEGER'}'{
@@ -77,7 +80,7 @@ define
 goal : goal_simple | goal_noCase | goal_case ;
 
 goal_simple
-	:	GOAL i=IDENT  '{' v=constraintStatement '}'  {F.goalSimple($i.text, $v.text);}
+	:	GOAL i=IDENT  (s=LOCAL )? '{' v=constraintStatement '}'  {F.goalSimple($i.text, $s.text, $v.text);}
 	;
 
 goal_noCase
@@ -436,7 +439,7 @@ AND : '.and.';
 OR  : '.or.';
 
 /// include file path ///
-FILE_PATH : '\'' (DIR_ELEMENT | DIR_UP)+   WRESL_FILE   '\'';
+FILE_PATH :  '\'' (DIR_ELEMENT | DIR_UP)+   WRESL_FILE  '\''  ;
 fragment WRESL_EXT :   '.wresl' | '.WRESL' ;
 fragment WRESL_FILE :  (LETTER | DIGIT | SYMBOLS |'-'  )+ WRESL_EXT ;
 fragment DIR_ELEMENT : (LETTER | DIGIT | SYMBOLS | '-' )+  '\\' ;
@@ -452,7 +455,7 @@ SEQUENCE  : 'sequence' | 'SEQUENCE';
 MODEL     : 'model' | 'MODEL' | 'Model';
 ORDER     : 'order';
 INCLUDE   : 'include' | 'INCLUDE' | 'Include';
-LOCAL     : 'local';
+LOCAL     : '[' 'local' ']';
 
 /// reserved vars ///
 WATERYEAR : 'wateryear';
