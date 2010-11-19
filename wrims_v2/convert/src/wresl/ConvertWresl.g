@@ -39,30 +39,31 @@ options {
 }
 
 
-evaluator 
-	:	pattern* EOF  ;
+evaluator[String thisPath] 
+	:	pattern[thisPath] * EOF  ;
 
-pattern
-	:   model | include | sequence |  goal  | define ;
+pattern[String thisPath] 
+	:   model | include[thisPath,""] | sequence |  goal  | define ;
 
 model 
-	@init { list = new ArrayList<String>(); list2 = new ArrayList<String>(); }
 	:    MODEL i=IDENT '{' 
-	     (  c=include  {list.add($c.path); list2.add($c.scope);   } 
+	     (  c=include["",$i.text] 
 	     |  goal
 	     )*
-	     '}' {
-	     	F.modelBasic($i.text, list, list2); 
-	     }
+	     '}' 
 	;
 
-include returns[String scope, String path]
-	@init { $scope = "global"; }
-	:   INCLUDE ( LOCAL  {$scope="local";})? p=filePath {$path=Tools.strip($p.text);}  
+include[String fileName, String modelName] 
+	@init { scope = "global"; }
+	:   INCLUDE ( LOCAL  {scope="local";} )? p=filePath {
+	
+	             F.modelBasic(modelName, $p.path, scope); 
+	   
+	    }  
 	; 
 
-filePath
-	:	 FILE_PATH // {fileList.add($path.text);};
+filePath returns[String path]
+	:	 f=FILE_PATH  {$path=Tools.strip($f.text);}
 	;
 
 sequence

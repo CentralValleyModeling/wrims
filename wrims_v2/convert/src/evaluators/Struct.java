@@ -56,14 +56,30 @@ public class Struct {
 
 	// public static List<String> reserved_words = new ArrayList<String>() {{
 	// addAll(r_keys); addAll(r_mons); }};
+	
+	///dummy var
+	private ArrayList<String> list;
+	
 
-	public void modelBasic(String name, ArrayList<String> fileList, ArrayList<String> scopeList) {
+	public void modelBasic(String name, String filePathWithQuo, String scope ) {
 		if (var_all.containsKey(name)) {
-			// System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "model");
 		} else {
-			model_file_list.put(name, fileList);
-			model_scope_list.put(name, scopeList);
+			
+			String filePath = Tools.strip(filePathWithQuo);
+			
+			if (model_file_list.containsKey(name)){
+				
+				model_file_list.get(name).add(filePath);
+				model_scope_list.get(name).add(scope);
+			
+			} else {
+			    list=new ArrayList<String>();list.addAll(Arrays.asList(filePath));			    
+				model_file_list.put(name, list);	
+				
+				list=new ArrayList<String>();list.addAll(Arrays.asList(scope));	
+				model_scope_list.put(name, list);				
+			}
 		}
 	}
 	

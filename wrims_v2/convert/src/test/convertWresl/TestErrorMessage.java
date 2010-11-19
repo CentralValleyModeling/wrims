@@ -17,7 +17,7 @@ import org.testng.Assert;
 
 public class TestErrorMessage {
 
-	
+	public String path; 
 	private static CharStream stream;	
 	
 	@Test(groups = { "error_messages" })
@@ -29,11 +29,11 @@ public class TestErrorMessage {
 	
 	@Test(groups = { "error_messages" })
 	public void errorSimple() throws RecognitionException, IOException {
-		
-		String filePath ="src\\test\\TestErrorMessage_errorSimple.wresl";
+
+		path ="src\\test\\TestErrorMessage_errorSimple.wresl";
 		
 		try {
-			stream = new ANTLRFileStream(filePath, "UTF8");
+			stream = new ANTLRFileStream(path, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -44,8 +44,8 @@ public class TestErrorMessage {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = filePath;
-		parser.evaluator();
+		parser.currentFilePath = path;
+		parser.evaluator(path);
 				
 		expected.add("missing EOF at 'defin' in file \"src\\test\\TestErrorMessage_errorSimple.wresl\"");
 		

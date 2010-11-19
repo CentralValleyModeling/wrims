@@ -25,7 +25,7 @@ import org.testng.Assert;
 
 public class TestConvertWresl {
 
-	
+	public String path;
 	private static CharStream stream;	
 	
 	@Test(groups = { "WRESL_elements" })
@@ -38,8 +38,10 @@ public class TestConvertWresl {
 	@Test(groups = { "WRESL_elements" })
 	public void sequence() throws RecognitionException, IOException {
 		
+		path ="src\\test\\TestConvertWresl_sequence.wresl";
+		
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_sequence.wresl", "UTF8");
+			stream = new ANTLRFileStream(path, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -50,7 +52,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();
+		parser.evaluator(path);
 		
 		expected.put("1", "SJRBASE");
 		expected.put("2", "SJR_WQ1");
@@ -61,8 +63,10 @@ public class TestConvertWresl {
 	@Test(groups = { "WRESL_elements" })
 	public void modelBasic() throws RecognitionException, IOException {
 		
+		path = "src\\test\\TestConvertWresl_modelBasic.wresl";
+		
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_modelBasic.wresl", "UTF8");
+			stream = new ANTLRFileStream(path, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -75,7 +79,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();
+		parser.evaluator(path);
 		
 	    String[] array={"flow-channel","CFS","C_SacFea+D_SacFea"};
 		list.addAll(Arrays.asList(array));
@@ -86,6 +90,8 @@ public class TestConvertWresl {
 	
 	@Test(groups = { "WRESL_elements" })
 	public void modelVarAdhoc() throws RecognitionException, IOException {
+		
+		path = "src\\test\\TestConvertWresl_modelVarAdhoc.wresl";
 		
 		try {
 			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_modelVarAdhoc.wresl", "UTF8");
@@ -101,7 +107,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();
+		parser.evaluator(path);
 		
 	    String[] array={"flow-channel","CFS","C_SacFea+D_SacFea"};
 		list.addAll(Arrays.asList(array));
@@ -113,8 +119,9 @@ public class TestConvertWresl {
 	@Test(groups = { "WRESL_elements" })
 	public void modelIncludeFile() throws RecognitionException, IOException {
 		
+		path = "src\\test\\TestConvertWresl_modelIncludeFile.wresl";
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_modelIncludeFile.wresl", "UTF8");
+			stream = new ANTLRFileStream(path, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -128,7 +135,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();
+		parser.evaluator(path);
 		
 	    String[] array={"local","global"};
 	    list=new ArrayList<String>();list.addAll(Arrays.asList(array));
@@ -139,14 +146,16 @@ public class TestConvertWresl {
 		expected_model_file_list.put("CVCWHEELING", list);
 		
 		Assert.assertEquals(parser.F.model_scope_list, expected_model_scope_list);
-		Assert.assertEquals(parser.F.model_file_list, expected_model_file_list);
+		//Assert.assertEquals(parser.F.model_file_list, expected_model_file_list);
 	}		
 	
 	@Test(groups = { "WRESL_elements" })
 	public void svarConst() throws RecognitionException, IOException {
 		
+		path ="src\\test\\TestConvertWresl_svarConst.wresl";
+		
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarConst.wresl", "UTF8");
+			stream = new ANTLRFileStream(path, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -157,7 +166,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();
+		parser.evaluator(path);
 		Map<String, String> svar_constant = parser.F.svar_expression;
 		//Map<String, String> svar_constant2 = 
 		
@@ -171,6 +180,8 @@ public class TestConvertWresl {
 	@Test(groups = { "WRESL_elements" })
 	public void svarSum() throws RecognitionException, IOException {
 		
+		path = "src\\test\\TestConvertWresl_svarSum.wresl";
+		
 		try {
 			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarSum.wresl", "UTF8");
 			}
@@ -183,7 +194,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();
+		parser.evaluator(path);
 		
 		expected.put("OroInfEst", new ArrayList<String>(Arrays.asList(new String[]{"sum(i=0,SEP-month,1)","(I_Orovl(i))*cfs_taf(i)"})));
 		
@@ -203,6 +214,8 @@ public class TestConvertWresl {
 	@Test(groups = { "WRESL_elements" })
 	public void svarExpression() throws RecognitionException, IOException {
 		
+		path = "src\\test\\TestConvertWresl_svarExpression.wresl";
+		
 		try {
 			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarExpression.wresl", "UTF8");
 			}
@@ -215,7 +228,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();
+		parser.evaluator(path);
 		Map<String, String> svar_expression = parser.F.svar_expression;
 		
 		expected.put("coefev_Orovl", "(A_Orovl_forward - A_Orovl_back)/(100*max(0.01,S_Orovl(-1)))");
@@ -226,7 +239,7 @@ public class TestConvertWresl {
 	
 	@Test(groups = { "WRESL_elements" })
 	public void dvarStd() throws RecognitionException, IOException {
-		
+		path = "src\\test\\TestConvertWresl_dvarStd.wresl";
 		try {
 			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_dvarStd.wresl", "UTF8");
 			}
@@ -240,7 +253,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();
+		parser.evaluator(path);
 		Map<String, ArrayList<String>>  dvar_std = parser.F.dvar_std;
 		
 		expected.put("C_Tracy", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS"})));
@@ -251,7 +264,7 @@ public class TestConvertWresl {
 
 	@Test(groups = { "WRESL_elements" })
 	public void dvarAlias() throws RecognitionException, IOException {
-		
+		path = "src\\test\\TestConvertWresl_dvarAlias.wresl";
 		try {
 			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_dvarAlias.wresl", "UTF8");
 			}
@@ -265,7 +278,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();
+		parser.evaluator(path);
 		
 		expected.put("QsacFth", new ArrayList<String>(Arrays.asList(new String[]{"flow-channel","CFS","C_SacFea+D_SacFea"})));
 		
@@ -274,7 +287,7 @@ public class TestConvertWresl {
 
 	@Test(groups = { "WRESL_elements" })
 	public void dvarAlias2() throws RecognitionException, IOException {
-		
+		path = "src\\test\\TestConvertWresl_dvarAlias2.wresl";
 		try {
 			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_dvarAlias2.wresl", "UTF8");
 			}
@@ -288,7 +301,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();
+		parser.evaluator(path);
 		
 		expected.put("D419_swpC6", new ArrayList<String>(Arrays.asList(new String[]{null,"CFS","D419_swp[monthlyweighted5]"})));
 		
@@ -297,7 +310,7 @@ public class TestConvertWresl {
 	
 	@Test(groups = { "WRESL_elements" })
 	public void dvarNonStd() throws RecognitionException, IOException {
-		
+		path = "src\\test\\TestConvertWresl_dvarNonStd.wresl";
 		try {
 			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_dvarNonStd.wresl", "UTF8");
 			}
@@ -310,7 +323,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();
+		parser.evaluator(path);
 		Map<String, ArrayList<String>>  dvar_nonstd = parser.F.dvar_nonstd;	
 
 		expected.put("C_SLCVP", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "unbounded", "unbounded"})));
@@ -321,7 +334,7 @@ public class TestConvertWresl {
 
 	@Test(groups = { "WRESL_elements" })
 	public void dvarNonStd2() throws RecognitionException, IOException {
-		
+		path = "src\\test\\TestConvertWresl_dvarNonStd_2.wresl";
 		try {
 			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_dvarNonStd_2.wresl", "UTF8");
 			}
@@ -334,7 +347,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();
+		parser.evaluator(path);
 		Map<String, ArrayList<String>>  dvar_nonstd = parser.F.dvar_nonstd;	
 
 		expected.put("C_SLCVP", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "unbounded", "unbounded"})));
@@ -344,7 +357,7 @@ public class TestConvertWresl {
 
 	@Test(groups = { "WRESL_elements" })
 	public void svarDSS() throws RecognitionException, IOException {
-		
+		path = "src\\test\\TestConvertWresl_svarDSS.wresl";
 		try {
 			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarDSS.wresl", "UTF8");
 			}
@@ -357,7 +370,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();
+		parser.evaluator(path);
 		Map<String, ArrayList<String>>  svar_dss = parser.F.svar_dss;	
 
 		expected.put("evap_S_Orovl", new ArrayList<String>(Arrays.asList(new String[]{"EVAPORATION-RATE", "IN"})));
@@ -367,7 +380,7 @@ public class TestConvertWresl {
 	
 	@Test(groups = { "WRESL_elements" })
 	public void svarTable() throws RecognitionException, IOException {
-		
+		path ="src\\test\\TestConvertWresl_svarTable.wresl";
 		try {
 			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarTable.wresl", "UTF8");
 			}
@@ -380,7 +393,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();
+		parser.evaluator(path);
 		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
 
 		expected.put("nov_trigger_cfs", new ArrayList<String>(Arrays.asList(new String[]{
@@ -392,7 +405,7 @@ public class TestConvertWresl {
 
 	@Test(groups = { "WRESL_elements" })
 	public void svarTableFull() throws RecognitionException, IOException {
-		
+		path ="src\\test\\TestConvertWresl_svarTableFull.wresl";
 		try {
 			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarTableFull.wresl", "UTF8");
 			}
@@ -405,7 +418,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();
+		parser.evaluator(path);
 		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
 
 		expected.put("A_Orovl_last", new ArrayList<String>(Arrays.asList(new String[]{
@@ -417,7 +430,7 @@ public class TestConvertWresl {
 
 	@Test(groups = { "WRESL_elements" })
 	public void svarTableMultipleWhere() throws RecognitionException, IOException {
-		
+		path ="src\\test\\TestConvertWresl_svarTableMultipleWhere.wresl";
 		try {
 			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarTableMultipleWhere.wresl", "UTF8");
 			}
@@ -430,7 +443,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();
+		parser.evaluator(path);
 		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
 
 		expected.put("S_TrntyLevel4", new ArrayList<String>(Arrays.asList(new String[]{
@@ -441,7 +454,7 @@ public class TestConvertWresl {
 	
 	@Test(groups = { "WRESL_elements" })
 	public void svarCase() throws RecognitionException, IOException {
-		
+		path ="src\\test\\TestConvertWresl_svarCase.wresl";
 		try {
 			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarCase.wresl", "UTF8");
 			}
@@ -452,7 +465,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();		
+		parser.evaluator(path);		
 	    
 	    Map<String, ArrayList<String>>   expected_svar_cases  = new HashMap<String,ArrayList<String>> (); 
 	    Map<String, ArrayList<String>>   expected_svar_conditions  = new HashMap<String,ArrayList<String>> (); 
@@ -516,7 +529,7 @@ public class TestConvertWresl {
 
 	@Test(groups = { "WRESL_elements" })
 	public void svarCase2() throws RecognitionException, IOException {
-		
+		path ="src\\test\\TestConvertWresl_svarCase2.wresl";
 		try {
 			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarCase2.wresl", "UTF8");
 			}
@@ -527,7 +540,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();		
+		parser.evaluator(path);		
 	    
 	    Map<String, ArrayList<String>>   expected_svar_cases  = new HashMap<String,ArrayList<String>> (); 
 	    Map<String, ArrayList<String>>   expected_svar_conditions  = new HashMap<String,ArrayList<String>> (); 
@@ -592,7 +605,7 @@ public class TestConvertWresl {
 	
 	@Test(groups = { "WRESL_elements" })
 	public void svarCaseSum() throws RecognitionException, IOException {
-		
+		path = "src\\test\\TestConvertWresl_svarCaseSum.wresl";
 		try {
 			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarCaseSum.wresl", "UTF8");
 			}
@@ -603,7 +616,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();		
+		parser.evaluator(path);		
 	    
 	    Map<String, ArrayList<String>>   expected_svar_cases  = new HashMap<String,ArrayList<String>> (); 
 	    Map<String, ArrayList<String>>   expected_svar_conditions  = new HashMap<String,ArrayList<String>> (); 
@@ -677,7 +690,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();		
+		parser.evaluator(path);		
 	    
 	    Map<String, ArrayList<String>>   expected_svar_cases  = new HashMap<String,ArrayList<String>> (); 
 	    Map<String, ArrayList<String>>   expected_svar_conditions  = new HashMap<String,ArrayList<String>> (); 
@@ -754,7 +767,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();
+		parser.evaluator(path);
 
 		expected.put("split_C5_WTS", "C5_WTS = C5_WTS_Stg1 + C5_WTS_Stg2");
 		expected.put("C_SLCVP", "C5_WTS = C5_WTS_Stg1");
@@ -799,7 +812,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();
+		parser.evaluator(path);
 
 		expected.put("b2action1Whi_1", Arrays.asList(new String[]{
 				"lhs","C3_MIF","rhs","minflow_C3b2","l>r","constrain",null,"l<r","penalty","700.0"
@@ -821,7 +834,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();		
+		parser.evaluator(path);		
 
 		Map<String, String> expected_goal_lhs = new HashMap<String, String>();
 	    Map<String, ArrayList<String>>   expected_goal_cases  = new HashMap<String,ArrayList<String>> (); 
@@ -893,6 +906,8 @@ public class TestConvertWresl {
 	@Test(groups = { "WRESL_elements" })
 	public void minMaxInlines() throws RecognitionException, IOException {
 		
+		path =  "src\\test\\TestConvertWresl_minMaxInlines.wresl";
+		
 		try {
 			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_minMaxInlines.wresl", "UTF8");
 			}
@@ -905,7 +920,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator();
+		parser.evaluator(path);
 
 		expected.put("a", "min(1000. + 0.5*max(S_Orovl(prevSep) - 1000. ,0.), S_OrovlLevel5)");
 		
