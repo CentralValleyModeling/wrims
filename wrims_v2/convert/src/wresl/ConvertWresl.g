@@ -25,6 +25,7 @@ options {
 	
 	/// temp variables 
  	private ArrayList<String> list;  	private ArrayList<String> list2;
+ 	private String scope;
 
 	/// error message
 	public String currentFilePath;
@@ -80,7 +81,9 @@ define
 goal : goal_simple | goal_noCase | goal_case ;
 
 goal_simple
-	:	GOAL i=IDENT  (s=LOCAL )? '{' v=constraintStatement '}'  {F.goalSimple($i.text, $s.text, $v.text);}
+	@init { scope = "global"; }
+	:	GOAL ( LOCAL {scope="local";} )?  i=IDENT  '{' v=constraintStatement '}'  
+	        {F.goalSimple($i.text, scope, $v.text);}
 	;
 
 goal_noCase
