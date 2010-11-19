@@ -42,15 +42,29 @@ evaluator
 	:	pattern* EOF  ;
 
 pattern
-	:   model | includeFile | sequence |  goal  | define ;
+	:   model | include | sequence |  goal  | define ;
 
 model
-	:    MODEL IDENT '{' ( goal_simple | define ) '}'
+	:    MODEL IDENT '{' includes '}'
 	;
 
-includeFile
-	:	INCLUDE
+includes
+	:  .* include*   ;
+
+include
+	:   INCLUDE ('[' LOCAL ']')? filePath .* ; 
+
+filePath
+	:	 path // {fileList.add($path.text);};
 	;
+path
+	: '\'' path_element  ('\\' path_element )* WRESL_EXT  '\'' ;
+
+path_element : IDENT | '..' ;
+
+//include
+//	:	INCLUDE ('[' LOCAL ']')? '\'' .+ '\''
+//	;
 
 sequence
 	:   SEQUENCE IDENT '{' MODEL m=IDENT ORDER i=INTEGER'}'{
@@ -283,8 +297,6 @@ units returns [String str]
 /// sub rules ///
 
 
-
-
 conditionStatement returns[String str]
 	: 'condition' 
 	( s=logicalRelationStatement {$str = $s.text;}
@@ -428,7 +440,11 @@ GE : '>=';
 AND : '.and.';
 OR  : '.or.';
 
-/// reserved keywords //
+/// include file path ///
+WRESL_EXT : '.wresl' | '.WRESL' ;
+//PATH : '\'' IDENT  ('\\' IDENT )* WRESL  '\'';
+
+/// reserved keywords ///
 GOAL :'goal';
 DEFINE :'define';
 ALWAYS :'always';
@@ -437,6 +453,8 @@ SEQUENCE  : 'sequence' | 'SEQUENCE';
 MODEL     : 'model' | 'MODEL' | 'Model';
 ORDER     : 'order';
 INCLUDE   : 'include' | 'INCLUDE' | 'Include';
+LOCAL     : 'local';
+
 /// reserved vars ///
 WATERYEAR : 'wateryear';
 MONTH : 'month';
