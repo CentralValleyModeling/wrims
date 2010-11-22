@@ -1,4 +1,0 @@
-file, include
-.\channel\system  , n
-..\y\focus-1\, y
-\max\cfs , n
