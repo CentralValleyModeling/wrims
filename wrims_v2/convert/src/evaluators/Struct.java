@@ -94,23 +94,25 @@ public class Struct {
 		}
 	}
 	
-	public void goalNoCase(String name, String lhs, ArrayList<String> list) {
+	public void goalNoCase(String name, String scope, String lhs, ArrayList<String> list) {
 		if (var_all.containsKey(name)) {
 			// System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "goal_no_case");
 		} else {
 			list.add(0,"lhs");list.add(1,lhs);
+			var_goal_scope.put(name, scope);
 			goal_no_case.put(name, list);
 			var_all.put(name, "goal_no_case");
 		}
 	}
 
-	public void goalCase(String goalName, String lhs, ArrayList<String> caseName, ArrayList<String> condition, Map<String, ArrayList<String>> caseContent) {
+	public void goalCase(String goalName, String scope, String lhs, ArrayList<String> caseName, ArrayList<String> condition, Map<String, ArrayList<String>> caseContent) {
 		if (var_all.containsKey(goalName)){
 			//System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(goalName, "goal_cases");
 			}
 			else {
+			var_goal_scope.put(goalName, scope);
 			goal_cases.put(goalName, caseName);
 			goal_lhs.put(goalName, lhs);
 			goal_conditions.put(goalName, condition);
@@ -143,7 +145,86 @@ public class Struct {
 			}
 	}	
 	
+	public void svarSum(String name, ArrayList<String> content) {
+		if (var_all.containsKey(name)){
+			//System.out.println("error... variable redefined: " + $i.text);
+			error_var_redefined.put(name, "svar_sum");
+			}
+			else {
+			svar_sum.put(name, content);
+			var_all.put(name, "svar_sum");
+			}
+	}	
 
+	public void svarTable(String name, ArrayList<String> content) {
+		if (var_all.containsKey(name)){
+			//System.out.println("error... variable redefined: " + $i.text);
+			error_var_redefined.put(name, "svar_table");
+			}
+			else {
+			svar_table.put(name, content);
+			var_all.put(name, "svar_table");
+			}
+	}		
+
+	public void svarDSS(String name, String kind, String units) {
+		if (var_all.containsKey(name)){
+			//System.out.println("error... variable redefined: " + $i.text);
+			error_var_redefined.put(name, "svar_dss");
+			}
+			else {
+				list = new ArrayList<String>();
+				list.add(kind);
+				list.add(units);	
+			svar_dss.put(name, list);
+			var_all.put(name, "svar_dss");
+			}
+	}		
+
+	public void dvarStd(String name, String kind, String units) {
+		if (var_all.containsKey(name)){
+			//System.out.println("error... variable redefined: " + $i.text);
+			error_var_redefined.put(name, "dvar_std");
+			}
+			else {
+				list = new ArrayList<String>();
+				list.add(kind);
+				list.add(units);	
+			dvar_std.put(name, list);
+			var_all.put(name, "dvar_std");
+			}
+	}		
+
+	public void dvarAlias(String name, String kind, String units, String alias) {
+		if (var_all.containsKey(name)){
+			//System.out.println("error... variable redefined: " + $i.text);
+			error_var_redefined.put(name, "dvar_alias");
+			}
+			else {
+				list = new ArrayList<String>();
+				list.add(kind);
+				list.add(units);
+				list.add(alias);
+			dvar_alias.put(name, list);
+			var_all.put(name, "dvar_alias");
+			}
+	}	
+
+	public void dvarNonStd(String name, String kind, String units, ArrayList<String> content) {
+		if (var_all.containsKey(name)){
+			//System.out.println("error... variable redefined: " + $i.text);
+			error_var_redefined.put(name, "dvar_nonstd");
+			}
+			else {
+				list = new ArrayList<String>();
+				list.add(kind);
+				list.add(units);
+				list.addAll(content);
+			dvar_nonstd.put(name, list);
+			var_all.put(name, "dvar_nonstd");
+			}
+	}		
+	
 	public void sequenceOrder(String order, String modelName) {	
 	if (sequence_orders.containsKey(order)){
 		//System.out.println("error... variable redefined: " + $i.text);

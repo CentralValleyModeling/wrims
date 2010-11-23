@@ -38,6 +38,7 @@ options {
 			}
 }
 
+test : evaluator["test"];
 
 evaluator[String thisPath] 
 	:	pattern[thisPath] * EOF  ;
@@ -47,9 +48,7 @@ pattern[String thisPath]
 
 model 
 	:    MODEL i=IDENT '{' 
-	     (  c=include["",$i.text] 
-	     |  goal
-	     )*
+	     (  goal | define |  c=include["",$i.text] )*
 	     '}' 
 	;
 
@@ -72,28 +71,25 @@ sequence
 		}
 	;
 
-define 
-	:	DEFINE 
-	(	svar_expression
-	|	dvar_std   | dvar_nonstd | dvar_alias
-	|	svar_table | svar_dss    | svar_cases | svar_sum )  
-	;
-
-goal : goal_simple | goal_noCase | goal_case ;
-
-goal_simple
+goal 	
 	@init { scope = "global"; }
-	:	GOAL ( LOCAL {scope="local";} )?  i=IDENT  '{' v=constraintStatement '}'  
-	        {F.goalSimple($i.text, scope, $v.text);}
+	: GOAL ( LOCAL {scope="local";} )?  id=IDENT 
+	( goal_simple[$id.text, scope] 
+	| goal_noCase[$id.text, scope] 
+	| goal_case  [$id.text, scope] ) 
 	;
 
-goal_noCase
-	:   GOAL i=IDENT  '{' 'lhs' h=IDENT  r=goalStatement '}' {F.goalNoCase($i.text, $h.text, $r.list);}
+goal_simple[String id, String sc] 
+	:	 '{' v=constraintStatement '}'  {F.goalSimple($id, $sc, $v.text);}
 	;
 
-goal_case
-	:   GOAL i=IDENT  '{' 'lhs' h=IDENT  c=caseStatements '}'{ 
-				F.goalCase($i.text, $h.text, $c.caseNames, $c.conditions, $c.caseContent);
+goal_noCase[String id, String sc]
+	:   '{' 'lhs' h=IDENT  r=goalStatement '}' {F.goalNoCase($id, $sc, $h.text, $r.list);}
+	;
+
+goal_case[String id, String sc] 
+	:   '{' 'lhs' h=IDENT  c=caseStatements '}'{ 
+				F.goalCase($id, $sc, $h.text, $c.caseNames, $c.conditions, $c.caseContent);
 	     }
 	; 
 
@@ -114,43 +110,30 @@ lhs_vs_rhs returns[ArrayList<String> list]
 	| PENALTY i=number {$list.add("penalty");$list.add($i.text);}
 	) ;
 
-
-svar_expression 
-	:	i=IDENT '{' v=valueStatement '}' { 
-			F.svarExpression($i.text, $v.str);   };
-
-svar_sum 
-	:	i=IDENT '{' t=sumStatement '}' { 
-				
-				if (F.var_all.containsKey($i.text)){
-				//System.out.println("error... variable redefined: " + $i.text);
-				F.error_var_redefined.put($i.text, "svar_sum");
-				}
-				else {
-				F.svar_sum.put($i.text, $t.list);
-				F.var_all.put($i.text, "svar_sum");
-				}
-		}
+/// define ///
+define 
+	:	DEFINE id=IDENT 
+	(	svar_expression[$id.text]
+	|	dvar_std[$id.text]   | dvar_nonstd[$id.text] | dvar_alias[$id.text]
+	|	svar_table[$id.text] | svar_dss[$id.text]    | svar_cases[$id.text] 
+	|   svar_sum[$id.text] )  
 	;
 
-svar_table
-	:	i=IDENT '{' t=sqlStatement '}' { 
-				
-				if (F.var_all.containsKey($i.text)){
-				//System.out.println("error... variable redefined: " + $i.text);
-				F.error_var_redefined.put($i.text, "svar_table");
-				}
-				else {
-				F.svar_table.put($i.text, $t.list);
-				F.var_all.put($i.text, "svar_table");
-				}
-		}
-	;
+svar_expression[String id]
+	:	'{' v=valueStatement '}' { 
+			F.svarExpression($id, $v.str);   };
 
-svar_cases
-	:  i=IDENT '{' c=caseStatements '}' { 
-                F.svarCase($i.text, $c.caseNames, $c.conditions, $c.caseContent);  
-       };
+svar_sum [String id]
+	:	 '{' t=sumStatement '}' { 				
+			F.svarSum($id, $t.list);     };
+
+svar_table[String id]
+	:	'{' t=sqlStatement '}' { 
+			F.svarTable($id, $t.list);    };
+
+svar_cases[String id]
+	:   '{' c=caseStatements '}' { 
+            F.svarCase($id, $c.caseNames, $c.conditions, $c.caseContent);  };
 	
 caseStatements returns[ArrayList<String> caseNames, 
 					   ArrayList<String> conditions, 
@@ -184,75 +167,21 @@ caseStatement returns[String caseNameStr, String conditionStr, ArrayList<String>
 	;	
 
 
-svar_dss
-	:	i=IDENT '{' 'timeseries' kind units'}' { 
-				
-				if (F.var_all.containsKey($i.text)){
-				//System.out.println("error... variable redefined: " + $i.text);
-				F.error_var_redefined.put($i.text, "svar_dss");
-				}
-				else {
-				list = new ArrayList<String>();
-				list.add($kind.str);
-				list.add($units.str);
-				F.svar_dss.put($i.text, list);
-				F.var_all.put($i.text, "svar_dss");
-				}
-		} 
-	;
+svar_dss[String id]
+	:  '{' 'timeseries' kind units'}' { 				
+		F.svarDSS($id, $kind.str, $units.str);  };
 
-dvar_std
-	:	i=IDENT '{' 'std' kind units'}' { 
-				
-				if (F.var_all.containsKey($i.text)){
-				//System.out.println("error... variable redefined: " + $i.text);
-				F.error_var_redefined.put($i.text, "dvar_std");
-				}
-				else {
-				list = new ArrayList<String>();
-				list.add($kind.str);
-				list.add($units.str);
-				F.dvar_std.put($i.text, list);
-				F.var_all.put($i.text, "dvar_std");
-				}
-		}
-	;
+dvar_std[String id]
+	:	'{' 'std' kind units'}' { 
+		F.dvarStd($id, $kind.str, $units.str);  };
 
-dvar_alias
-	:	i=IDENT '{' alias kind? units'}' { 
-				
-				if (F.var_all.containsKey($i.text)){
-				//System.out.println("error... variable redefined: " + $i.text);
-				F.error_var_redefined.put($i.text, "dvar_alias");
-				}
-				else {
-				list = new ArrayList<String>();
-				list.add($kind.str);
-				list.add($units.str);
-				list.add($alias.str);
-				F.dvar_alias.put($i.text, list);
-				F.var_all.put($i.text, "dvar_alias");
-				}
-		}
-	;
+dvar_alias[String id]
+	:	'{' alias kind? units'}' { 
+		F.dvarAlias($id, $kind.str, $units.str, $alias.str);  };
 	
-dvar_nonstd 
-	:	i=IDENT '{' c=lower_or_upper kind units '}' { 
-				
-				if (F.var_all.containsKey($i.text)){
-				//System.out.println("error... variable redefined: " + $i.text);
-				F.error_var_redefined.put($i.text, "dvar_nonstd");
-				}
-				else {
-				list = new ArrayList<String>();
-				list.add($kind.str);
-				list.add($units.str);
-				list.addAll($c.list);
-				F.dvar_nonstd.put($i.text, list);
-				F.var_all.put($i.text, "dvar_nonstd");
-				}
-		} 
-	;
+dvar_nonstd [String id]
+	:	'{' c=lower_or_upper kind units '}' { 
+		F.dvarNonStd($id, $kind.str, $units.str, $c.list);  };
 
 lower_or_upper returns[ArrayList<String> list]
 	:	lower upper? {       
