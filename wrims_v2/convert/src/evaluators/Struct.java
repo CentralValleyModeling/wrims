@@ -32,6 +32,7 @@ public class Struct {
 	/// variable and scope
 	public Map<String, String> var_all = new HashMap<String, String>();
 	public Map<String, String> var_scope = new HashMap<String, String>();
+	public Map<String, String> include_file_scope = new HashMap<String, String>();
 	
 	/// model
 	public Map<String, ArrayList<String>> model_include_file = new HashMap<String, ArrayList<String>>();	
@@ -39,11 +40,6 @@ public class Struct {
 	public Map<String, ArrayList<String>> model_var_adhoc = new HashMap<String, ArrayList<String>>();
 	//public Map<String, ArrayList<String>> model_include_files = new HashMap<String, ArrayList<String>>();
 
-	/// file contains
-	//public Map<String, ArrayList<String>> file_contain_var = new HashMap<String, ArrayList<String>>();
-	//public Map<String, ArrayList<String>> file_include_file = new HashMap<String, ArrayList<String>>();	
-	public Map<String, String> include_file_scope = new HashMap<String, String>();
-	//public Map<String, ArrayList<String>> file_contain_var_scope = new HashMap<String, ArrayList<String>>();
 	
 	/// svar_cases
 	public Map<String, ArrayList<String>> svar_cases = new HashMap<String, ArrayList<String>>();
@@ -71,19 +67,7 @@ public class Struct {
 	///dummy var
 	private ArrayList<String> list;
 
-//	public void fileSystemInitial(String name ) {
-//
-//	    //TODO: check if this file includes itself
-//		
-//		    list=new ArrayList<String>();list.add(null);			    
-//			file_include_file.put(name, list);
-//			//file_contain_var.put(name, list);
-//			
-//			list=new ArrayList<String>();list.add(null);	
-//			file_include_file_scope.put(name, list);
-//			//file_contain_var_scope.put(name, list);
-//
-//	}		
+	
 	
 	public void includeFile(String filePath, String scope ) {
 		if (var_all.containsKey(filePath)) {

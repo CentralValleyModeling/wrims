@@ -52,7 +52,7 @@ pattern
 
 model 
 	:    MODEL i=IDENT {F.modelInitial($i.text);} '{' 
-	     (  goal | define |  c=include )*
+	     c=(  include )*
 	     '}' 
 	;
 
