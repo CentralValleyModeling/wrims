@@ -8,11 +8,16 @@ import java.util.Map;
 
 public class Struct {
 
+	public String inFile_or_inModel;
 	
 	public Map<String, String> sequence_orders = new HashMap<String, String>();
+
+	/// errors
 	public Map<String, String> error_sequence_order_redefined = new HashMap<String, String>();
 	public Map<String, String> error_var_redefined = new HashMap<String, String>();
-
+	public Map<String, String> error_model_contains_redefined = new HashMap<String, String>();
+	public Map<String, String> error_file_contains_redefined = new HashMap<String, String>();
+	
 	public Map<String, String> svar_expression = new HashMap<String, String>();
 	public Map<String, String> goal_simple = new HashMap<String, String>();
 
@@ -35,9 +40,10 @@ public class Struct {
 	//public Map<String, ArrayList<String>> model_include_files = new HashMap<String, ArrayList<String>>();
 
 	/// file contains
-	public Map<String, ArrayList<String>> file_include_file = new HashMap<String, ArrayList<String>>();	
-	public Map<String, ArrayList<String>> file_include_file_scope = new HashMap<String, ArrayList<String>>();
-
+	//public Map<String, ArrayList<String>> file_contain_var = new HashMap<String, ArrayList<String>>();
+	//public Map<String, ArrayList<String>> file_include_file = new HashMap<String, ArrayList<String>>();	
+	public Map<String, String> include_file_scope = new HashMap<String, String>();
+	//public Map<String, ArrayList<String>> file_contain_var_scope = new HashMap<String, ArrayList<String>>();
 	
 	/// svar_cases
 	public Map<String, ArrayList<String>> svar_cases = new HashMap<String, ArrayList<String>>();
@@ -65,47 +71,54 @@ public class Struct {
 	///dummy var
 	private ArrayList<String> list;
 
-	public void fileIncludeFile(String name, String filePath, String scope ) {
-
-		    //TODO: check if this file includes itself
-			
-			
-			if (file_include_file.containsKey(name)){
-				
-				file_include_file.get(name).add(filePath);
-				file_include_file_scope.get(name).add(scope);
-			
-			} else {
-			    list=new ArrayList<String>();list.addAll(Arrays.asList(filePath));			    
-				file_include_file.put(name, list);	
-				
-				list=new ArrayList<String>();list.addAll(Arrays.asList(scope));	
-				file_include_file_scope.put(name, list);				
-			}
+//	public void fileSystemInitial(String name ) {
+//
+//	    //TODO: check if this file includes itself
+//		
+//		    list=new ArrayList<String>();list.add(null);			    
+//			file_include_file.put(name, list);
+//			//file_contain_var.put(name, list);
+//			
+//			list=new ArrayList<String>();list.add(null);	
+//			file_include_file_scope.put(name, list);
+//			//file_contain_var_scope.put(name, list);
+//
+//	}		
+	
+	public void includeFile(String filePath, String scope ) {
+		if (var_all.containsKey(filePath)) {
+			error_var_redefined.put(filePath, "include");
+		} else {				
+				//file_include_file.get(name).add(filePath);
+				include_file_scope.put(filePath, scope);
+				var_all.put(filePath, "include");
+		}
 
 	}	
 
-	public void modelBasic(String name, String filePath, String scope ) {
+	public void modelInitial(String name) {
 		if (var_all.containsKey(name)) {
 			error_var_redefined.put(name, "model");
 		} else {
-			
-			if (model_include_file.containsKey(name)){
-				
-				model_include_file.get(name).add(filePath);
-				model_include_file_scope.get(name).add(scope);
-			
-			} else {
-			    list=new ArrayList<String>();list.addAll(Arrays.asList(filePath));			    
+			    list=new ArrayList<String>();list.add(null);			    
 				model_include_file.put(name, list);	
 				
-				list=new ArrayList<String>();list.addAll(Arrays.asList(scope));	
+				list=new ArrayList<String>();list.add(null);	
 				model_include_file_scope.put(name, list);				
-			}
 		}
+	}	
+	
+	public void modelBasic(String name, String filePath, String scope ) {
+		if (model_include_file.get(name).contains(filePath)) {
+			error_model_contains_redefined.put(name, filePath);
+		} else {				
+				model_include_file.get(name).add(filePath);
+				model_include_file_scope.get(name).add(scope);
+		}
+			
 	}
 	
-	public void goalSimple(String name, String scope, String content) {
+	public void goalSimple( String name, String scope, String content) {
 		if (var_all.containsKey(name)) {
 			// System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "goal_simple");
@@ -113,6 +126,7 @@ public class Struct {
 			var_scope.put(name, scope);
 			goal_simple.put(name, content);
 			var_all.put(name, "goal_simple");
+
 		}
 	}
 	

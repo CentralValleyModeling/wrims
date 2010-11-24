@@ -44,10 +44,14 @@ evaluator[String thisPath]
 	:	pattern[thisPath] * EOF  ;
 
 pattern[String thisPath] 
-	:   model | include[thisPath,""] | sequence |  goal  | define ;
+	:   model 
+	|   include[thisPath,""] 
+	|	sequence 
+	| 	goal 
+	| 	define ;
 
 model 
-	:    MODEL i=IDENT '{' 
+	:    MODEL i=IDENT {F.modelInitial($i.text);} '{' 
 	     (  goal | define |  c=include["",$i.text] )*
 	     '}' 
 	;
@@ -55,13 +59,13 @@ model
 include[String thisFile, String modelName] 
 	@init { scope = "global"; }
 	:   INCLUDE ( LOCAL  {scope="local";} )? p=includeFilePath {
-			if (modelName!=""){
-	             F.modelBasic(modelName, $p.path, scope);
-	             }
-	        else if (thisFile!=""){
-	             F.fileIncludeFile(thisFile, $p.path, scope);
-	             }
-	        else { System.out.println("error include rule: " +  $p.path); }	        
+//			if (modelName!=""){
+//	             F.modelBasic(modelName, $p.path, scope);
+//	             }
+//	        else if (thisFile!=""){
+	             F.includeFile($p.path, scope);
+//	             }
+//	        else { System.out.println("error include rule: " +  $p.path); }	        
 	   
 	    }  
 	; 
@@ -76,8 +80,9 @@ sequence
 		}
 	;
 
-goal 	
-	@init { scope = "global"; }
+
+goal	
+	@init { scope = "global";}
 	: GOAL ( LOCAL {scope="local";} )?  id=IDENT 
 	( goal_simple[$id.text, scope] 
 	| goal_noCase[$id.text, scope] 

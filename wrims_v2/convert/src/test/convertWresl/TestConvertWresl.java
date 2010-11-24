@@ -117,9 +117,9 @@ public class TestConvertWresl {
 	}	
 
 	@Test(groups = { "WRESL_elements" })
-	public void fileIncludeFile() throws RecognitionException, IOException {
+	public void includeFile() throws RecognitionException, IOException {
 		
-		inputFilePath = "src\\test\\TestConvertWresl_fileIncludeFile.wresl";
+		inputFilePath = "src\\test\\TestConvertWresl_includeFile.wresl";
 		try {
 			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
@@ -129,24 +129,21 @@ public class TestConvertWresl {
 	    
 
 	    ArrayList<String> list;
-	    Map<String, ArrayList<String>>  expected_file_include_file  = new HashMap<String, ArrayList<String>>();
-	    Map<String, ArrayList<String>>  expected_file_include_file_scope = new HashMap<String, ArrayList<String>>();
+	    //Map<String, ArrayList<String>>  expected_file_include_file  = new HashMap<String, ArrayList<String>>();
+	    Map<String, String>  expected_include_file_scope = new HashMap<String, String>();
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator(inputFilePath);
 		
-	    String[] array={"local","global"};
-	    list=new ArrayList<String>();list.addAll(Arrays.asList(array));
-		expected_file_include_file_scope.put(inputFilePath, list);
 
-	    String[] array2={"..\\..\\common\\System\\System_Sac.wresl","..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl"};
-	    list=new ArrayList<String>();list.addAll(Arrays.asList(array2));
-		expected_file_include_file.put(inputFilePath, list);
+		expected_include_file_scope.put("..\\..\\common\\System\\System_Sac.wresl", "local");
+		expected_include_file_scope.put("..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl", "global");
 		
-		Assert.assertEquals(parser.F.file_include_file_scope, expected_file_include_file_scope);
-		Assert.assertEquals(parser.F.file_include_file, expected_file_include_file);
+
+		Assert.assertEquals(parser.F.include_file_scope, expected_include_file_scope);
+		//Assert.assertEquals(parser.F.file_include_file, expected_file_include_file);
 	}	
 	
 	@Test(groups = { "WRESL_elements" })
@@ -170,11 +167,11 @@ public class TestConvertWresl {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator(inputFilePath);
 		
-	    String[] array={"local","global"};
+	    String[] array={null,"local","global"};
 	    list=new ArrayList<String>();list.addAll(Arrays.asList(array));
 		expected_model_scope_list.put("CVCWHEELING", list);
 
-	    String[] array2={"..\\..\\common\\System\\System_Sac.wresl","..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl"};
+	    String[] array2={null,"..\\..\\common\\System\\System_Sac.wresl","..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl"};
 	    list=new ArrayList<String>();list.addAll(Arrays.asList(array2));
 		expected_model_file_list.put("CVCWHEELING", list);
 		
