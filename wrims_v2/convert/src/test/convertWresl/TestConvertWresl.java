@@ -117,6 +117,39 @@ public class TestConvertWresl {
 	}	
 
 	@Test(groups = { "WRESL_elements" })
+	public void fileIncludeFile() throws RecognitionException, IOException {
+		
+		inputFilePath = "src\\test\\TestConvertWresl_fileIncludeFile.wresl";
+		try {
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	    
+
+	    ArrayList<String> list;
+	    Map<String, ArrayList<String>>  expected_file_include_file  = new HashMap<String, ArrayList<String>>();
+	    Map<String, ArrayList<String>>  expected_file_include_file_scope = new HashMap<String, ArrayList<String>>();
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.evaluator(inputFilePath);
+		
+	    String[] array={"local","global"};
+	    list=new ArrayList<String>();list.addAll(Arrays.asList(array));
+		expected_file_include_file_scope.put(inputFilePath, list);
+
+	    String[] array2={"..\\..\\common\\System\\System_Sac.wresl","..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl"};
+	    list=new ArrayList<String>();list.addAll(Arrays.asList(array2));
+		expected_file_include_file.put(inputFilePath, list);
+		
+		Assert.assertEquals(parser.F.file_include_file_scope, expected_file_include_file_scope);
+		Assert.assertEquals(parser.F.file_include_file, expected_file_include_file);
+	}	
+	
+	@Test(groups = { "WRESL_elements" })
 	public void modelIncludeFile() throws RecognitionException, IOException {
 		
 		inputFilePath = "src\\test\\TestConvertWresl_modelIncludeFile.wresl";
@@ -145,8 +178,8 @@ public class TestConvertWresl {
 	    list=new ArrayList<String>();list.addAll(Arrays.asList(array2));
 		expected_model_file_list.put("CVCWHEELING", list);
 		
-		Assert.assertEquals(parser.F.model_scope_list, expected_model_scope_list);
-		//Assert.assertEquals(parser.F.model_file_list, expected_model_file_list);
+		Assert.assertEquals(parser.F.model_include_file_scope, expected_model_scope_list);
+		Assert.assertEquals(parser.F.model_include_file, expected_model_file_list);
 	}		
 	
 	@Test(groups = { "WRESL_elements" })

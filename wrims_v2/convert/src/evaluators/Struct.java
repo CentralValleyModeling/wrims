@@ -8,8 +8,6 @@ import java.util.Map;
 
 public class Struct {
 
-	public Map<String, ArrayList<String>> model_var_adhoc = new HashMap<String, ArrayList<String>>();
-	public Map<String, ArrayList<String>> model_include_files = new HashMap<String, ArrayList<String>>();
 	
 	public Map<String, String> sequence_orders = new HashMap<String, String>();
 	public Map<String, String> error_sequence_order_redefined = new HashMap<String, String>();
@@ -31,8 +29,15 @@ public class Struct {
 	public Map<String, String> var_scope = new HashMap<String, String>();
 	
 	/// model
-	public Map<String, ArrayList<String>> model_file_list = new HashMap<String, ArrayList<String>>();	
-	public Map<String, ArrayList<String>> model_scope_list = new HashMap<String, ArrayList<String>>();
+	public Map<String, ArrayList<String>> model_include_file = new HashMap<String, ArrayList<String>>();	
+	public Map<String, ArrayList<String>> model_include_file_scope = new HashMap<String, ArrayList<String>>();
+	public Map<String, ArrayList<String>> model_var_adhoc = new HashMap<String, ArrayList<String>>();
+	//public Map<String, ArrayList<String>> model_include_files = new HashMap<String, ArrayList<String>>();
+
+	/// file contains
+	public Map<String, ArrayList<String>> file_include_file = new HashMap<String, ArrayList<String>>();	
+	public Map<String, ArrayList<String>> file_include_file_scope = new HashMap<String, ArrayList<String>>();
+
 	
 	/// svar_cases
 	public Map<String, ArrayList<String>> svar_cases = new HashMap<String, ArrayList<String>>();
@@ -59,26 +64,43 @@ public class Struct {
 	
 	///dummy var
 	private ArrayList<String> list;
-	
 
-	public void modelBasic(String name, String filePathWithQuo, String scope ) {
+	public void fileIncludeFile(String name, String filePath, String scope ) {
+
+		    //TODO: check if this file includes itself
+			
+			
+			if (file_include_file.containsKey(name)){
+				
+				file_include_file.get(name).add(filePath);
+				file_include_file_scope.get(name).add(scope);
+			
+			} else {
+			    list=new ArrayList<String>();list.addAll(Arrays.asList(filePath));			    
+				file_include_file.put(name, list);	
+				
+				list=new ArrayList<String>();list.addAll(Arrays.asList(scope));	
+				file_include_file_scope.put(name, list);				
+			}
+
+	}	
+
+	public void modelBasic(String name, String filePath, String scope ) {
 		if (var_all.containsKey(name)) {
 			error_var_redefined.put(name, "model");
 		} else {
 			
-			String filePath = Tools.strip(filePathWithQuo);
-			
-			if (model_file_list.containsKey(name)){
+			if (model_include_file.containsKey(name)){
 				
-				model_file_list.get(name).add(filePath);
-				model_scope_list.get(name).add(scope);
+				model_include_file.get(name).add(filePath);
+				model_include_file_scope.get(name).add(scope);
 			
 			} else {
 			    list=new ArrayList<String>();list.addAll(Arrays.asList(filePath));			    
-				model_file_list.put(name, list);	
+				model_include_file.put(name, list);	
 				
 				list=new ArrayList<String>();list.addAll(Arrays.asList(scope));	
-				model_scope_list.put(name, list);				
+				model_include_file_scope.put(name, list);				
 			}
 		}
 	}

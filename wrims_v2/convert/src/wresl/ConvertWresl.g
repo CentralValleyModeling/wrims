@@ -52,16 +52,21 @@ model
 	     '}' 
 	;
 
-include[String fileName, String modelName] 
+include[String thisFile, String modelName] 
 	@init { scope = "global"; }
-	:   INCLUDE ( LOCAL  {scope="local";} )? p=filePath {
-	
-	             F.modelBasic(modelName, $p.path, scope); 
+	:   INCLUDE ( LOCAL  {scope="local";} )? p=includeFilePath {
+			if (modelName!=""){
+	             F.modelBasic(modelName, $p.path, scope);
+	             }
+	        else if (thisFile!=""){
+	             F.fileIncludeFile(thisFile, $p.path, scope);
+	             }
+	        else { System.out.println("error include rule: " +  $p.path); }	        
 	   
 	    }  
 	; 
 
-filePath returns[String path]
+includeFilePath returns[String path]
 	:	 f=FILE_PATH  {$path=Tools.strip($f.text);}
 	;
 
