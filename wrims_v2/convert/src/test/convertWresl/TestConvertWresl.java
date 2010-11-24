@@ -318,7 +318,7 @@ public class TestConvertWresl {
 	         e.printStackTrace();
 	        }
 	    //String[] array;
-	    ArrayList<String> list;
+	    //ArrayList<String> list;
 	    Map<String, ArrayList<String>>  expected_dvar_alias = new HashMap<String, ArrayList<String>>();
 	    Map<String, String>  expected_svar_expression = new HashMap<String, String> ();
 	    Map<String, String> expected_var_scope = new HashMap<String, String>();
@@ -371,13 +371,14 @@ public class TestConvertWresl {
 	public void dvarNonStd2() throws RecognitionException, IOException {
 		inputFilePath = "src\\test\\TestConvertWresl_dvarNonStd_2.wresl";
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_dvarNonStd_2.wresl", "UTF8");
+			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_dvarNonStd2.wresl", "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
 	        }
 
 	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
+	    Map<String, String>  expected_var_scope = new HashMap<String, String>();
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
@@ -387,6 +388,9 @@ public class TestConvertWresl {
 
 		expected.put("C_SLCVP", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "unbounded", "unbounded"})));
 		expected.put("C_SacFea", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "0", "6150*taf_cfs"})));
+		expected_var_scope.put("C_SLCVP", "global");
+		expected_var_scope.put("C_SacFea", "local");
+		
 		Assert.assertEquals(dvar_nonstd, expected);
 	}		
 
