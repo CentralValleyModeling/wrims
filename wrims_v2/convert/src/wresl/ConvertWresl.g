@@ -38,25 +38,25 @@ options {
 			}
 }
 
-test : evaluator["test"];
 
-evaluator[String thisPath] 
-	:	pattern[thisPath] * EOF  ;
 
-pattern[String thisPath] 
+evaluator
+	:	pattern * EOF  ;
+
+pattern
 	:   model 
-	|   include[thisPath,""] 
+	|   include
 	|	sequence 
 	| 	goal 
 	| 	define ;
 
 model 
 	:    MODEL i=IDENT {F.modelInitial($i.text);} '{' 
-	     (  goal | define |  c=include["",$i.text] )*
+	     (  goal | define |  c=include )*
 	     '}' 
 	;
 
-include[String thisFile, String modelName] 
+include
 	@init { scope = "global"; }
 	:   INCLUDE ( LOCAL  {scope="local";} )? p=includeFilePath {
 //			if (modelName!=""){

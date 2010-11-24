@@ -52,7 +52,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 		
 		expected.put("1", "SJRBASE");
 		expected.put("2", "SJR_WQ1");
@@ -79,7 +79,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 		
 	    String[] array={"flow-channel","CFS","C_SacFea+D_SacFea"};
 		list.addAll(Arrays.asList(array));
@@ -107,7 +107,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 		
 	    String[] array={"flow-channel","CFS","C_SacFea+D_SacFea"};
 		list.addAll(Arrays.asList(array));
@@ -135,7 +135,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 		
 
 		expected_include_file_scope.put("..\\..\\common\\System\\System_Sac.wresl", "local");
@@ -165,7 +165,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 		
 	    String[] array={null,"local","global"};
 	    list=new ArrayList<String>();list.addAll(Arrays.asList(array));
@@ -196,7 +196,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 		Map<String, String> svar_constant = parser.F.svar_expression;
 		//Map<String, String> svar_constant2 = 
 		
@@ -224,7 +224,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 		
 		expected.put("OroInfEst", new ArrayList<String>(Arrays.asList(new String[]{"sum(i=0,SEP-month,1)","(I_Orovl(i))*cfs_taf(i)"})));
 		
@@ -258,7 +258,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 		Map<String, String> svar_expression = parser.F.svar_expression;
 		
 		expected.put("coefev_Orovl", "(A_Orovl_forward - A_Orovl_back)/(100*max(0.01,S_Orovl(-1)))");
@@ -283,7 +283,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 		Map<String, ArrayList<String>>  dvar_std = parser.F.dvar_std;
 		
 		expected.put("C_Tracy", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS"})));
@@ -308,7 +308,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 		
 		expected.put("QsacFth", new ArrayList<String>(Arrays.asList(new String[]{"flow-channel","CFS","C_SacFea+D_SacFea"})));
 		
@@ -331,7 +331,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 		
 		expected.put("D419_swpC6", new ArrayList<String>(Arrays.asList(new String[]{null,"CFS","D419_swp[monthlyweighted5]"})));
 		
@@ -356,7 +356,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 		
 		expected_dvar_alias.put("D419_swpC6", new ArrayList<String>(Arrays.asList(new String[]{null,"CFS","D419_swp[monthlyweighted5]"})));
 		expected_svar_expression.put("minflow_C", "60");
@@ -388,7 +388,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 		Map<String, ArrayList<String>>  dvar_nonstd = parser.F.dvar_nonstd;	
 
 		expected.put("C_SLCVP", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "unbounded", "unbounded"})));
@@ -413,7 +413,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 		Map<String, ArrayList<String>>  dvar_nonstd = parser.F.dvar_nonstd;	
 
 		expected.put("C_SLCVP", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "unbounded", "unbounded"})));
@@ -439,7 +439,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 		Map<String, ArrayList<String>>  svar_dss = parser.F.svar_dss;	
 
 		expected.put("evap_S_Orovl", new ArrayList<String>(Arrays.asList(new String[]{"EVAPORATION-RATE", "IN"})));
@@ -462,7 +462,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
 
 		expected.put("nov_trigger_cfs", new ArrayList<String>(Arrays.asList(new String[]{
@@ -487,7 +487,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
 
 		expected.put("A_Orovl_last", new ArrayList<String>(Arrays.asList(new String[]{
@@ -512,7 +512,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
 
 		expected.put("S_TrntyLevel4", new ArrayList<String>(Arrays.asList(new String[]{
@@ -534,7 +534,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);		
+		parser.evaluator();		
 	    
 	    Map<String, ArrayList<String>>   expected_svar_cases  = new HashMap<String,ArrayList<String>> (); 
 	    Map<String, ArrayList<String>>   expected_svar_conditions  = new HashMap<String,ArrayList<String>> (); 
@@ -609,7 +609,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);		
+		parser.evaluator();		
 	    
 	    Map<String, ArrayList<String>>   expected_svar_cases  = new HashMap<String,ArrayList<String>> (); 
 	    Map<String, ArrayList<String>>   expected_svar_conditions  = new HashMap<String,ArrayList<String>> (); 
@@ -685,7 +685,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);		
+		parser.evaluator();		
 	    
 	    Map<String, ArrayList<String>>   expected_svar_cases  = new HashMap<String,ArrayList<String>> (); 
 	    Map<String, ArrayList<String>>   expected_svar_conditions  = new HashMap<String,ArrayList<String>> (); 
@@ -759,7 +759,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);		
+		parser.evaluator();		
 	    
 	    Map<String, ArrayList<String>>   expected_svar_cases  = new HashMap<String,ArrayList<String>> (); 
 	    Map<String, ArrayList<String>>   expected_svar_conditions  = new HashMap<String,ArrayList<String>> (); 
@@ -836,7 +836,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 
 		expected.put("split_C5_WTS", "C5_WTS = C5_WTS_Stg1 + C5_WTS_Stg2");
 		expected.put("C_SLCVP", "C5_WTS = C5_WTS_Stg1");
@@ -881,7 +881,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 
 		expected.put("b2action1Whi_1", Arrays.asList(new String[]{
 				"lhs","C3_MIF","rhs","minflow_C3b2","l>r","constrain",null,"l<r","penalty","700.0"
@@ -903,7 +903,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);		
+		parser.evaluator();		
 
 		Map<String, String> expected_goal_lhs = new HashMap<String, String>();
 	    Map<String, ArrayList<String>>   expected_goal_cases  = new HashMap<String,ArrayList<String>> (); 
@@ -989,7 +989,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.evaluator(inputFilePath);
+		parser.evaluator();
 
 		expected.put("a", "min(1000. + 0.5*max(S_Orovl(prevSep) - 1000. ,0.), S_OrovlLevel5)");
 		
