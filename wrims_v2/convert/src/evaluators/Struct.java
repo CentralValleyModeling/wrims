@@ -28,7 +28,7 @@ public class Struct {
 
 	/// variable and scope
 	public Map<String, String> var_all = new HashMap<String, String>();
-	public Map<String, String> var_goal_scope = new HashMap<String, String>();
+	public Map<String, String> var_scope = new HashMap<String, String>();
 	
 	/// model
 	public Map<String, ArrayList<String>> model_file_list = new HashMap<String, ArrayList<String>>();	
@@ -88,7 +88,7 @@ public class Struct {
 			// System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "goal_simple");
 		} else {
-			var_goal_scope.put(name, scope);
+			var_scope.put(name, scope);
 			goal_simple.put(name, content);
 			var_all.put(name, "goal_simple");
 		}
@@ -100,7 +100,7 @@ public class Struct {
 			error_var_redefined.put(name, "goal_no_case");
 		} else {
 			list.add(0,"lhs");list.add(1,lhs);
-			var_goal_scope.put(name, scope);
+			var_scope.put(name, scope);
 			goal_no_case.put(name, list);
 			var_all.put(name, "goal_no_case");
 		}
@@ -112,7 +112,7 @@ public class Struct {
 			error_var_redefined.put(goalName, "goal_cases");
 			}
 			else {
-			var_goal_scope.put(goalName, scope);
+			var_scope.put(goalName, scope);
 			goal_cases.put(goalName, caseName);
 			goal_lhs.put(goalName, lhs);
 			goal_conditions.put(goalName, condition);
@@ -121,12 +121,13 @@ public class Struct {
 			}
 	}	
 
-	public void svarCase(String svarName, ArrayList<String> caseName, ArrayList<String> condition, Map<String, ArrayList<String>> caseContent) {
+	public void svarCase(String svarName, String scope, ArrayList<String> caseName, ArrayList<String> condition, Map<String, ArrayList<String>> caseContent) {
 		if (var_all.containsKey(svarName)){
 			//System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(svarName, "svar_cases");
 			}
 			else {
+		    var_scope.put(svarName, scope);
 			svar_cases.put(svarName, caseName);
 			svar_conditions.put(svarName, condition);
 			svar_map_case_content.put(svarName, caseContent);
@@ -134,45 +135,49 @@ public class Struct {
 			}
 	}		
 	
-	public void svarExpression(String name, String content) {
+	public void svarExpression(String name, String scope, String content) {
 		if (var_all.containsKey(name)){
 			//System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "svar_expression");
 			}
 			else {
+			var_scope.put(name, scope);	
 			svar_expression.put(name, content);
 			var_all.put(name, "svar_expression");
 			}
 	}	
 	
-	public void svarSum(String name, ArrayList<String> content) {
+	public void svarSum(String name, String scope, ArrayList<String> content) {
 		if (var_all.containsKey(name)){
 			//System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "svar_sum");
 			}
 			else {
+			var_scope.put(name, scope);
 			svar_sum.put(name, content);
 			var_all.put(name, "svar_sum");
 			}
 	}	
 
-	public void svarTable(String name, ArrayList<String> content) {
+	public void svarTable(String name, String scope, ArrayList<String> content) {
 		if (var_all.containsKey(name)){
 			//System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "svar_table");
 			}
 			else {
+			var_scope.put(name, scope);	
 			svar_table.put(name, content);
 			var_all.put(name, "svar_table");
 			}
 	}		
 
-	public void svarDSS(String name, String kind, String units) {
+	public void svarDSS(String name, String scope, String kind, String units) {
 		if (var_all.containsKey(name)){
 			//System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "svar_dss");
 			}
 			else {
+			var_scope.put(name, scope);		
 				list = new ArrayList<String>();
 				list.add(kind);
 				list.add(units);	
@@ -181,12 +186,13 @@ public class Struct {
 			}
 	}		
 
-	public void dvarStd(String name, String kind, String units) {
+	public void dvarStd(String name, String scope, String kind, String units) {
 		if (var_all.containsKey(name)){
 			//System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "dvar_std");
 			}
 			else {
+			var_scope.put(name, scope);		
 				list = new ArrayList<String>();
 				list.add(kind);
 				list.add(units);	
@@ -195,12 +201,13 @@ public class Struct {
 			}
 	}		
 
-	public void dvarAlias(String name, String kind, String units, String alias) {
+	public void dvarAlias(String name, String scope, String kind, String units, String alias) {
 		if (var_all.containsKey(name)){
 			//System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "dvar_alias");
 			}
 			else {
+				var_scope.put(name, scope);	
 				list = new ArrayList<String>();
 				list.add(kind);
 				list.add(units);
@@ -210,12 +217,13 @@ public class Struct {
 			}
 	}	
 
-	public void dvarNonStd(String name, String kind, String units, ArrayList<String> content) {
+	public void dvarNonStd(String name, String scope, String kind, String units, ArrayList<String> content) {
 		if (var_all.containsKey(name)){
 			//System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "dvar_nonstd");
 			}
 			else {
+				var_scope.put(name, scope);	
 				list = new ArrayList<String>();
 				list.add(kind);
 				list.add(units);

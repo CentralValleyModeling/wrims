@@ -318,17 +318,29 @@ public class TestConvertWresl {
 	         e.printStackTrace();
 	        }
 	    //String[] array;
-	    //ArrayList<String> list;
-	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
+	    ArrayList<String> list;
+	    Map<String, ArrayList<String>>  expected_dvar_alias = new HashMap<String, ArrayList<String>>();
+	    Map<String, String>  expected_svar_expression = new HashMap<String, String> ();
+	    Map<String, String> expected_var_scope = new HashMap<String, String>();
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.evaluator(inputFilePath);
 		
-		expected.put("D419_swpC6", new ArrayList<String>(Arrays.asList(new String[]{null,"CFS","D419_swp[monthlyweighted5]"})));
+		expected_dvar_alias.put("D419_swpC6", new ArrayList<String>(Arrays.asList(new String[]{null,"CFS","D419_swp[monthlyweighted5]"})));
+		expected_svar_expression.put("minflow_C", "60");
 		
-		Assert.assertEquals(parser.F.dvar_alias, expected);
+		expected_var_scope.put("D419_swpC6", "global");
+		expected_var_scope.put("minflow_C", "local");
+		
+		//Assert.assertEquals(1, 2);
+		Assert.assertEquals(parser.F.var_scope, expected_var_scope);
+		
+		Assert.assertEquals(parser.F.dvar_alias, expected_dvar_alias);
+		Assert.assertEquals(parser.F.svar_expression, expected_svar_expression);
+		
+		
 	}	
 	
 	@Test(groups = { "WRESL_elements" })
@@ -817,7 +829,7 @@ public class TestConvertWresl {
 //		}
 		
 		Assert.assertEquals(parser.F.goal_simple, expected);	
-		Assert.assertEquals(parser.F.var_goal_scope, expected_scope);	
+		Assert.assertEquals(parser.F.var_scope, expected_scope);	
 	}			
 
 	@Test(groups = { "WRESL_elements" })

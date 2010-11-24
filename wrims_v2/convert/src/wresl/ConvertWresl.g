@@ -111,29 +111,30 @@ lhs_vs_rhs returns[ArrayList<String> list]
 	) ;
 
 /// define ///
-define 
-	:	DEFINE id=IDENT 
-	(	svar_expression[$id.text]
-	|	dvar_std[$id.text]   | dvar_nonstd[$id.text] | dvar_alias[$id.text]
-	|	svar_table[$id.text] | svar_dss[$id.text]    | svar_cases[$id.text] 
-	|   svar_sum[$id.text] )  
+define
+	@init { scope = "global"; } 
+	:	DEFINE ( LOCAL {scope="local";} )? id=IDENT 
+	(	svar_expression[$id.text, scope]
+	|	dvar_std[$id.text, scope]   | dvar_nonstd[$id.text, scope] | dvar_alias[$id.text, scope]
+	|	svar_table[$id.text, scope] | svar_dss[$id.text, scope]   | svar_cases[$id.text, scope]
+	|   svar_sum[$id.text, scope] )  
 	;
 
-svar_expression[String id]
+svar_expression[String id, String sc]
 	:	'{' v=valueStatement '}' { 
-			F.svarExpression($id, $v.str);   };
+			F.svarExpression($id, $sc, $v.str);   };
 
-svar_sum [String id]
+svar_sum [String id, String sc]
 	:	 '{' t=sumStatement '}' { 				
-			F.svarSum($id, $t.list);     };
+			F.svarSum($id, $sc, $t.list);     };
 
-svar_table[String id]
+svar_table[String id, String sc]
 	:	'{' t=sqlStatement '}' { 
-			F.svarTable($id, $t.list);    };
+			F.svarTable($id, $sc, $t.list);    };
 
-svar_cases[String id]
+svar_cases[String id, String sc]
 	:   '{' c=caseStatements '}' { 
-            F.svarCase($id, $c.caseNames, $c.conditions, $c.caseContent);  };
+            F.svarCase($id, $sc, $c.caseNames, $c.conditions, $c.caseContent);  };
 	
 caseStatements returns[ArrayList<String> caseNames, 
 					   ArrayList<String> conditions, 
@@ -167,21 +168,21 @@ caseStatement returns[String caseNameStr, String conditionStr, ArrayList<String>
 	;	
 
 
-svar_dss[String id]
+svar_dss[String id, String sc]
 	:  '{' 'timeseries' kind units'}' { 				
-		F.svarDSS($id, $kind.str, $units.str);  };
+		F.svarDSS($id, $sc, $kind.str, $units.str);  };
 
-dvar_std[String id]
+dvar_std[String id, String sc]
 	:	'{' 'std' kind units'}' { 
-		F.dvarStd($id, $kind.str, $units.str);  };
+		F.dvarStd($id, $sc, $kind.str, $units.str);  };
 
-dvar_alias[String id]
+dvar_alias[String id, String sc]
 	:	'{' alias kind? units'}' { 
-		F.dvarAlias($id, $kind.str, $units.str, $alias.str);  };
+		F.dvarAlias($id, $sc, $kind.str, $units.str, $alias.str);  };
 	
-dvar_nonstd [String id]
+dvar_nonstd [String id, String sc]
 	:	'{' c=lower_or_upper kind units '}' { 
-		F.dvarNonStd($id, $kind.str, $units.str, $c.list);  };
+		F.dvarNonStd($id, $sc, $kind.str, $units.str, $c.list);  };
 
 lower_or_upper returns[ArrayList<String> list]
 	:	lower upper? {       
