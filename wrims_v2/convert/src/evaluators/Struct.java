@@ -8,14 +8,14 @@ import java.util.Map;
 
 public class Struct {
 
-	public String inFile_or_inModel;
+	//public String inFile_or_inModel;
 	
 	public Map<String, String> sequence_orders = new HashMap<String, String>();
 
 	/// errors
 	public Map<String, String> error_sequence_order_redefined = new HashMap<String, String>();
 	public Map<String, String> error_var_redefined = new HashMap<String, String>();
-	public Map<String, String> error_model_contains_redefined = new HashMap<String, String>();
+	//public Map<String, String> error_model_contains_redefined = new HashMap<String, String>();
 	public Map<String, String> error_file_contains_redefined = new HashMap<String, String>();
 	
 	public Map<String, String> svar_expression = new HashMap<String, String>();
@@ -35,9 +35,9 @@ public class Struct {
 	public Map<String, String> include_file_scope = new HashMap<String, String>();
 	
 	/// model
-	public Map<String, ArrayList<String>> model_include_file = new HashMap<String, ArrayList<String>>();	
-	public Map<String, ArrayList<String>> model_include_file_scope = new HashMap<String, ArrayList<String>>();
-	public Map<String, ArrayList<String>> model_var_adhoc = new HashMap<String, ArrayList<String>>();
+//	public Map<String, ArrayList<String>> model_include_file = new HashMap<String, ArrayList<String>>();	
+//	public Map<String, ArrayList<String>> model_include_file_scope = new HashMap<String, ArrayList<String>>();
+//	public Map<String, ArrayList<String>> model_var_adhoc = new HashMap<String, ArrayList<String>>();
 	//public Map<String, ArrayList<String>> model_include_files = new HashMap<String, ArrayList<String>>();
 
 	
@@ -80,27 +80,27 @@ public class Struct {
 
 	}	
 
-	public void modelInitial(String name) {
-		if (var_all.containsKey(name)) {
-			error_var_redefined.put(name, "model");
-		} else {
-			    list=new ArrayList<String>();list.add(null);			    
-				model_include_file.put(name, list);	
-				
-				list=new ArrayList<String>();list.add(null);	
-				model_include_file_scope.put(name, list);				
-		}
-	}	
-	
-	public void modelBasic(String name, String filePath, String scope ) {
-		if (model_include_file.get(name).contains(filePath)) {
-			error_model_contains_redefined.put(name, filePath);
-		} else {				
-				model_include_file.get(name).add(filePath);
-				model_include_file_scope.get(name).add(scope);
-		}
-			
-	}
+//	public void modelInitial(String name) {
+//		if (var_all.containsKey(name)) {
+//			error_var_redefined.put(name, "model");
+//		} else {
+//			    list=new ArrayList<String>();list.add(null);			    
+//				model_include_file.put(name, list);	
+//				
+//				list=new ArrayList<String>();list.add(null);	
+//				model_include_file_scope.put(name, list);				
+//		}
+//	}	
+//	
+//	public void modelBasic(String name, String filePath, String scope ) {
+//		if (model_include_file.get(name).contains(filePath)) {
+//			error_model_contains_redefined.put(name, filePath);
+//		} else {				
+//				model_include_file.get(name).add(filePath);
+//				model_include_file_scope.get(name).add(scope);
+//		}
+//			
+//	}
 	
 	public void goalSimple( String name, String scope, String content) {
 		if (var_all.containsKey(name)) {

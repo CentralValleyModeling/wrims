@@ -51,7 +51,7 @@ pattern
 	| 	define ;
 
 model 
-	:    MODEL i=IDENT {F.modelInitial($i.text);} '{' 
+	:    MODEL i=IDENT  '{' 
 	     c=(  include )*
 	     '}' 
 	;
