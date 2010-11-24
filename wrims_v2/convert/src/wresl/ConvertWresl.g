@@ -20,8 +20,12 @@ options {
 
 @members {
 
+    public String inModel = "n";
+
 	public Struct F = new Struct();	
-	public ArrayList<Model> modelList = new ArrayList<Model>();
+
+	public ArrayList<Struct> modelList = new ArrayList<Struct>();
+	public Map<String, Struct> modelMap = new HashMap<String, Struct>();
 	
 	/// temp variables 
  	private ArrayList<String> list;  	private ArrayList<String> list2;
@@ -40,7 +44,7 @@ options {
 
 
 
-evaluator
+evaluator 
 	:	pattern * EOF  ;
 
 pattern
@@ -51,22 +55,23 @@ pattern
 	| 	define ;
 
 model 
-	:    MODEL i=IDENT  '{' 
+scope { Struct M ; }
+@init { inModel = "y"; }
+@after{ modelList.add($model::M); modelMap.put($i.text, $model::M);  inModel = "n"; }
+	:    MODEL i=IDENT  { $model::M = new Struct(); } '{' 
 	     c=(  include )*
-	     '}' 
+	     '}' {
+	             System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " + $model::M.include_file_scope); }
+	     
 	;
 
 include
 	@init { scope = "global"; }
 	:   INCLUDE ( LOCAL  {scope="local";} )? p=includeFilePath {
-//			if (modelName!=""){
-//	             F.modelBasic(modelName, $p.path, scope);
-//	             }
-//	        else if (thisFile!=""){
-	             F.includeFile($p.path, scope);
-//	             }
-//	        else { System.out.println("error include rule: " +  $p.path); }	        
-	   
+	             if(inModel=="n") { F.includeFile($p.path, scope);}
+	             else             { $model::M.includeFile($p.path, scope);}
+	             
+	              
 	    }  
 	; 
 

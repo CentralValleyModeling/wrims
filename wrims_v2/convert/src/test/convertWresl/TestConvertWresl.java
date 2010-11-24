@@ -146,38 +146,40 @@ public class TestConvertWresl {
 		//Assert.assertEquals(parser.F.file_include_file, expected_file_include_file);
 	}	
 	
-//	@Test(groups = { "WRESL_elements" })
-//	public void modelIncludeFile() throws RecognitionException, IOException {
-//		
-//		inputFilePath = "src\\test\\TestConvertWresl_modelIncludeFile.wresl";
-//		try {
-//			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-//			}
-//	    catch(Exception e) {
-//	         e.printStackTrace();
-//	        }
-//	    
-//
-//	    ArrayList<String> list;
-//	    Map<String, ArrayList<String>>  expected_model_file_list  = new HashMap<String, ArrayList<String>>();
-//	    Map<String, ArrayList<String>>  expected_model_scope_list = new HashMap<String, ArrayList<String>>();
-//	    
-//		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-//		TokenStream tokenStream = new CommonTokenStream(lexer);
-//		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-//		parser.currentFilePath = inputFilePath; parser.evaluator();
-//		
-//	    String[] array={null,"local","global"};
-//	    list=new ArrayList<String>();list.addAll(Arrays.asList(array));
-//		expected_model_scope_list.put("CVCWHEELING", list);
-//
-//	    String[] array2={null,"..\\..\\common\\System\\System_Sac.wresl","..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl"};
-//	    list=new ArrayList<String>();list.addAll(Arrays.asList(array2));
-//		expected_model_file_list.put("CVCWHEELING", list);
-//		
-//		Assert.assertEquals(parser.F.model_include_file_scope, expected_model_scope_list);
-//		Assert.assertEquals(parser.F.model_include_file, expected_model_file_list);
-//	}		
+	@Test(groups = { "WRESL_elements" })
+	public void modelIncludeFile() throws RecognitionException, IOException {
+		
+		inputFilePath = "src\\test\\TestConvertWresl_modelIncludeFile.wresl";
+		try {
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	    
+
+	    ArrayList<String> list;
+	    Map<String, ArrayList<String>>  expected_model_file_list  = new HashMap<String, ArrayList<String>>();
+	    Map<String, ArrayList<String>>  expected_model_scope_list = new HashMap<String, ArrayList<String>>();
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.currentFilePath = inputFilePath; parser.evaluator();
+		
+	    String[] array={null,"local","global"};
+	    list=new ArrayList<String>();list.addAll(Arrays.asList(array));
+		expected_model_scope_list.put("CVCWHEELING", list);
+
+	    String[] array2={null,"..\\..\\common\\System\\System_Sac.wresl","..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl"};
+	    list=new ArrayList<String>();list.addAll(Arrays.asList(array2));
+		expected_model_file_list.put("CVCWHEELING", list);
+		System.out.println("#############################: " + parser.modelList.get(0).include_file_scope);	
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^: " + parser.modelMap.get("CVCWHEELING").include_file_scope);	
+		Assert.assertEquals(parser.F.include_file_scope, expected_model_scope_list);
+
+
+	}		
 	
 	@Test(groups = { "WRESL_elements" })
 	public void svarConst() throws RecognitionException, IOException {
