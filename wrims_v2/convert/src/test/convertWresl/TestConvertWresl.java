@@ -20,6 +20,8 @@ import wresl.ConvertWreslParser;
 import org.testng.annotations.*;
 import org.testng.Assert;
 
+import evaluators.Struct;
+
 
 //import evaluators.Demo;
 
@@ -156,28 +158,28 @@ public class TestConvertWresl {
 	    catch(Exception e) {
 	         e.printStackTrace();
 	        }
-	    
+	
 
-	    ArrayList<String> list;
-	    Map<String, ArrayList<String>>  expected_model_file_list  = new HashMap<String, ArrayList<String>>();
-	    Map<String, ArrayList<String>>  expected_model_scope_list = new HashMap<String, ArrayList<String>>();
+	    Map<String, Struct> expected_modelMap = new HashMap<String, Struct>();
+	    Struct expected_struct = new Struct();
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 		
-	    String[] array={null,"local","global"};
-	    list=new ArrayList<String>();list.addAll(Arrays.asList(array));
-		expected_model_scope_list.put("CVCWHEELING", list);
-
-	    String[] array2={null,"..\\..\\common\\System\\System_Sac.wresl","..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl"};
-	    list=new ArrayList<String>();list.addAll(Arrays.asList(array2));
-		expected_model_file_list.put("CVCWHEELING", list);
-		System.out.println("#############################: " + parser.modelList.get(0).include_file_scope);	
-		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^: " + parser.modelMap.get("CVCWHEELING").include_file_scope);	
-		Assert.assertEquals(parser.F.include_file_scope, expected_model_scope_list);
-
+		expected_struct.include_file_scope.put("..\\..\\common\\System\\System_Sac.wresl","local");
+		expected_struct.include_file_scope.put("..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl","global");
+		
+//	    String[] array={null,"local","global"};
+//	    list=new ArrayList<String>();list.addAll(Arrays.asList(array));
+//		expected_model_scope_list.put("CVCWHEELING", list);
+		
+		expected_modelMap.put("CVCWHEELING",expected_struct);
+				
+		//System.out.println("#############################: " + parser.modelMap.get("CVCWHEELING").include_file_scope);
+		//System.out.println("#############################: " + expected_modelMap.get("CVCWHEELING").include_file_scope);
+		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").include_file_scope, expected_modelMap.get("CVCWHEELING").include_file_scope);
 
 	}		
 	

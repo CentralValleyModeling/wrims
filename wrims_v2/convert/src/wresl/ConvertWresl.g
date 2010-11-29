@@ -24,7 +24,7 @@ options {
 
 	public Struct F = new Struct();	
 
-	public ArrayList<Struct> modelList = new ArrayList<Struct>();
+	//public ArrayList<Struct> modelList = new ArrayList<Struct>();
 	public Map<String, Struct> modelMap = new HashMap<String, Struct>();
 	
 	/// temp variables 
@@ -57,11 +57,12 @@ pattern
 model 
 scope { Struct M ; }
 @init { inModel = "y"; }
-@after{ modelList.add($model::M); modelMap.put($i.text, $model::M);  inModel = "n"; }
+@after{ modelMap.put($i.text, $model::M);  inModel = "n"; }
 	:    MODEL i=IDENT  { $model::M = new Struct(); } '{' 
 	     c=(  include )*
 	     '}' {
-	             System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " + $model::M.include_file_scope); }
+	           //  System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " + $model::M.include_file_scope); 
+	         }
 	     
 	;
 
