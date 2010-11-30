@@ -130,7 +130,7 @@ public class TestConvertWresl {
 	        }
 	    
 
-	    ArrayList<String> list;
+	    //ArrayList<String> list;
 	    //Map<String, ArrayList<String>>  expected_file_include_file  = new HashMap<String, ArrayList<String>>();
 	    Map<String, String>  expected_include_file_scope = new HashMap<String, String>();
 	    
@@ -182,6 +182,42 @@ public class TestConvertWresl {
 		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").include_file_scope, expected_modelMap.get("CVCWHEELING").include_file_scope);
 
 	}		
+
+	@Test(groups = { "WRESL_elements" })
+	public void modelVarAdhoc() throws RecognitionException, IOException {
+		
+		inputFilePath = "src\\test\\TestConvertWresl_modelVarAdhoc.wresl";
+		try {
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	
+
+	    Map<String, Struct> expected_modelMap = new HashMap<String, Struct>();
+	    Struct expected_struct = new Struct();
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.currentFilePath = inputFilePath; parser.evaluator();
+		
+		expected_struct.include_file_scope.put("..\\..\\common\\System\\System_Sac.wresl","local");
+		expected_struct.include_file_scope.put("..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl","global");
+		
+//	    String[] array={null,"local","global"};
+//	    list=new ArrayList<String>();list.addAll(Arrays.asList(array));
+//		expected_model_scope_list.put("CVCWHEELING", list);
+		
+		expected_modelMap.put("CVCWHEELING",expected_struct);
+				
+		System.out.println("#############################: " + parser.modelMap.get("CVCWHEELING").goal_simple);
+		System.out.println("#############################: " + expected_modelMap.get("CVCWHEELING").goal_simple);
+		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").goal_simple, expected_modelMap.get("CVCWHEELING").goal_simple);
+		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").var_scope, expected_modelMap.get("CVCWHEELING").var_scope);
+		
+	}	
 	
 	@Test(groups = { "WRESL_elements" })
 	public void svarConst() throws RecognitionException, IOException {

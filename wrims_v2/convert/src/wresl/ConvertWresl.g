@@ -59,7 +59,7 @@ scope { Struct M ; }
 @init { inModel = "y"; }
 @after{ modelMap.put($i.text, $model::M);  inModel = "n"; }
 	:    MODEL i=IDENT  { $model::M = new Struct(); } '{' 
-	     c=(  include )*
+	     c=(  include | goal | define )*
 	     '}' {
 	           //  System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " + $model::M.include_file_scope); 
 	         }
@@ -96,7 +96,11 @@ goal
 	;
 
 goal_simple[String id, String sc] 
-	:	 '{' v=constraintStatement '}'  {F.goalSimple($id, $sc, $v.text);}
+	:	 '{' v=constraintStatement '}'  {
+	
+		         if(inModel=="n") { F.goalSimple($id, $sc, $v.text);}
+	             else             { $model::M.goalSimple($id, $sc, $v.text);}
+		}
 	;
 
 goal_noCase[String id, String sc]

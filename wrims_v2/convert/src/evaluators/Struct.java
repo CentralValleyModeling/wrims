@@ -19,7 +19,7 @@ public class Struct {
 	public Map<String, String> error_file_contains_redefined = new HashMap<String, String>();
 	
 	public Map<String, String> svar_expression = new HashMap<String, String>();
-	public Map<String, String> goal_simple = new HashMap<String, String>();
+
 
 	public Map<String, ArrayList<String>> dvar_nonstd = new HashMap<String, ArrayList<String>>();
 	public Map<String, ArrayList<String>> dvar_std = new HashMap<String, ArrayList<String>>();
@@ -46,7 +46,8 @@ public class Struct {
 	public Map<String, ArrayList<String>> svar_conditions = new HashMap<String, ArrayList<String>>();
 	public Map<String, Map<String, ArrayList<String>>> svar_map_case_content = new HashMap<String, Map<String, ArrayList<String>>>();
 
-	/// goal_noCase
+	/// goal
+	public Map<String, String> goal_simple = new HashMap<String, String>();
 	public Map<String, ArrayList<String>> goal_no_case = new HashMap<String, ArrayList<String>>();
 	
 	/// goal_cases
