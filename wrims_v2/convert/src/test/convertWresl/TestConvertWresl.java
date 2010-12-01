@@ -515,7 +515,7 @@ public class TestConvertWresl {
 		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
 
 		expected.put("nov_trigger_cfs", new ArrayList<String>(Arrays.asList(new String[]{
-			"select","target","from","feather_fish_203","given",null,"use",null,"where","month = NOV"
+			"target","feather_fish_203",null,null,"month = NOV"
 			})));
 		
 		Assert.assertEquals(svar_table, expected);
@@ -540,7 +540,7 @@ public class TestConvertWresl {
 		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
 
 		expected.put("A_Orovl_last", new ArrayList<String>(Arrays.asList(new String[]{
-			"select","area","from","res_info","given","storage=1000*S_Orovl(-1)","use","linear","where","res_num=6" 
+			"area","res_info","storage=1000*S_Orovl(-1)","linear","res_num=6" 
 			})));
 		
 		Assert.assertEquals(svar_table, expected);
@@ -565,7 +565,8 @@ public class TestConvertWresl {
 		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
 
 		expected.put("S_TrntyLevel4", new ArrayList<String>(Arrays.asList(new String[]{
-			"select","target","from","res_level","given",null,"use",null,"where","res_num=1","level=4","month=month" })));
+		//	"select","target","from","res_level","given",null,"use",null,"where","res_num=1","level=4","month=month" 
+		             "target"       ,"res_level"        ,null      ,null        ,"res_num=1","level=4","month=month" })));
 		
 		Assert.assertEquals(svar_table, expected);
 	}		
@@ -604,8 +605,9 @@ public class TestConvertWresl {
 		list_case_names.add("Febfore"); // this is needed to ensure the order of the cases, which is lost in map
 		list_conditions.add("month == FEB");
 		map_case_content.put("Febfore", Arrays.asList(new String[]{
-			"sql","select","FEB","from","sacramento_runoff_forecast","given",null,"use",null,"where","wateryear=wateryear"
-				}));
+			//"sql","select","FEB","from","sacramento_runoff_forecast","given",null,"use",null,"where","wateryear=wateryear"
+			"sql"         ,"FEB"       ,"sacramento_runoff_forecast"        ,null,      null,        "wateryear=wateryear"
+		}));
 		
 		/// new case
 		list_case_names.add("JuntoJan");
@@ -680,7 +682,7 @@ public class TestConvertWresl {
 		list_case_names.add("MartoMay"); // this is needed to ensure the order of the cases, which is lost in map
 		list_conditions.add("month >= MAR .and. month <= MAY");
 		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{
-				"sql","select","di","from","wsi_di_cvp_s","given","wsi=wsi_cvp_s","use","linear","where"
+				"sql","di","wsi_di_cvp_s","wsi=wsi_cvp_s","linear"
 				}));
 		
 		/// new case

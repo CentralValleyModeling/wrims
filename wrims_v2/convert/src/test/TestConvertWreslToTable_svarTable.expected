@@ -1,0 +1,2 @@
+NAME,SELECT,FROM,GIVEN,USE,WHERE
+nov_trigger_cfs,select,target,from,feather_fish_203,given,null,use,null,where,month = NOV

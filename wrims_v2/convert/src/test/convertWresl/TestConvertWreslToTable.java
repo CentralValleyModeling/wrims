@@ -22,7 +22,8 @@ import org.testng.annotations.*;
 import org.testng.Assert;
 
 import evaluators.Struct;
-import evaluators.Wresl2Writers;
+import evaluators.Tools;
+import evaluators.WriteWresl2;
 
 
 
@@ -40,6 +41,51 @@ public class TestConvertWreslToTable {
 	{
 		Assert.assertEquals(1,1);
         //System.out.println("@Test(groups = { "WRESL_to_Table" }) sample: 1==1");
+	}
+	
+	@Test(groups = { "WRESL_to_Table" })
+	public void svarDSS() throws RecognitionException, IOException {
+		inputFilePath = "src\\test\\TestConvertWresl_svarDSS.wresl";
+		try {
+			stream = new ANTLRFileStream("src\\test\\TestConvertWreslToTable_svarDSS.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.currentFilePath = inputFilePath; parser.evaluator();
+
+		WriteWresl2.mapStringList(parser.F.svar_dss, WriteWresl2.svar_dss_header,"test-wresl2\\svar_dss.wresl2");
+	    String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svarDSS.expected");
+	    String test = 	  Tools.readFileAsString("test-wresl2\\svar_dss.wresl2");	
+		
+		Assert.assertEquals(test, expected);
+	}
+	
+	
+	@Test(groups = { "WRESL_to_Table" })
+	public void svarTable() throws RecognitionException, IOException {
+		inputFilePath = "src\\test\\TestConvertWresl_svarDSS.wresl";
+		try {
+			stream = new ANTLRFileStream("src\\test\\TestConvertWreslToTable_svarTable.wresl", "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.currentFilePath = inputFilePath; parser.evaluator();
+
+		WriteWresl2.mapStringList(parser.F.svar_table, WriteWresl2.svar_table_header, "test-wresl2\\svar_table.wresl2");
+	    String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svarTable.expected");
+	    String test = 	  Tools.readFileAsString("test-wresl2\\svar_table.wresl2");	
+		
+		Assert.assertEquals(test, expected);
 	}
 
 	@Test(groups = { "WRESL_to_Table" })
@@ -450,55 +496,7 @@ public class TestConvertWreslToTable {
 		
 		Assert.assertEquals(dvar_nonstd, expected);
 	}		
-
-	@Test(groups = { "WRESL_to_Table" })
-	public void svarDSS() throws RecognitionException, IOException {
-		inputFilePath = "src\\test\\TestConvertWresl_svarDSS.wresl";
-		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWreslToTable_svarDSS.wresl", "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
-
-	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
-	    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
-
-		expected.put("evap_S_Orovl", new ArrayList<String>(Arrays.asList(new String[]{"EVAPORATION-RATE", "IN"})));
-
-		Wresl2Writers.mapStringList(parser.F.svar_dss, "test-wresl2", "svar_dss.wresl2");
-
-		Assert.assertEquals(parser.F.svar_dss, expected);
-	}		
 	
-	@Test(groups = { "WRESL_to_Table" })
-	public void svarTable() throws RecognitionException, IOException {
-		inputFilePath ="src\\test\\TestConvertWresl_svarTable.wresl";
-		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarTable.wresl", "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
-
-	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
-	    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
-		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
-
-		expected.put("nov_trigger_cfs", new ArrayList<String>(Arrays.asList(new String[]{
-			"select","target","from","feather_fish_203","given",null,"use",null,"where","month = NOV"
-			})));
-		
-		Assert.assertEquals(svar_table, expected);
-	}	
 
 	@Test(groups = { "WRESL_to_Table" })
 	public void svarTableFull() throws RecognitionException, IOException {

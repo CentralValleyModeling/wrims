@@ -266,11 +266,16 @@ sqlStatement returns[ArrayList<String> list]
 	: 'select' i1=all_ident 'from' i2=IDENT 
 	  ('given' i3=assignStatement)? ('use' i4=IDENT)? 
 	  i5=where_items?	{       
-				$list.add("select");$list.add($i1.text);
-				$list.add("from");$list.add($i2.text);
-				$list.add("given");$list.add($i3.text);
-				$list.add("use");$list.add($i4.text);
-				$list.add("where"); if ($i5.list!=null) {$list.addAll($i5.list);};				
+				//$list.add("select");
+				$list.add($i1.text);
+				//$list.add("from");
+				$list.add($i2.text);
+				//$list.add("given");
+				$list.add($i3.text);
+				//$list.add("use");
+				$list.add($i4.text);
+				//$list.add("where"); 
+				if ($i5.list!=null) {$list.addAll($i5.list);};				
 	  }
 	;
 
