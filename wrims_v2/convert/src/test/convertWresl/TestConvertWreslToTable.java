@@ -22,7 +22,8 @@ import org.testng.annotations.*;
 import org.testng.Assert;
 
 import evaluators.Struct;
-import evaluators.Writers;
+import evaluators.Wresl2Writers;
+
 
 
 //import evaluators.Demo;
@@ -469,7 +470,7 @@ public class TestConvertWreslToTable {
 
 		expected.put("evap_S_Orovl", new ArrayList<String>(Arrays.asList(new String[]{"EVAPORATION-RATE", "IN"})));
 
-		Writers.outputWresl2(parser.F.svar_dss, "test-wresl2", "svar_dss.wresl2");
+		Wresl2Writers.mapStringList(parser.F.svar_dss, "test-wresl2", "svar_dss.wresl2");
 
 		Assert.assertEquals(parser.F.svar_dss, expected);
 	}		
