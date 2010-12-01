@@ -1,5 +1,6 @@
 package test.convertWresl;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +22,7 @@ import org.testng.annotations.*;
 import org.testng.Assert;
 
 import evaluators.Struct;
+import evaluators.Writers;
 
 
 //import evaluators.Demo;
@@ -29,6 +31,7 @@ public class TestConvertWreslToTable {
 
 	public String inputFilePath;
 	public String outputFilePath;
+	public BufferedWriter outputFile;
 	private static CharStream stream;	
 	
 	@Test(groups = { "WRESL_to_Table" })
@@ -463,11 +466,12 @@ public class TestConvertWreslToTable {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
-		Map<String, ArrayList<String>>  svar_dss = parser.F.svar_dss;	
 
 		expected.put("evap_S_Orovl", new ArrayList<String>(Arrays.asList(new String[]{"EVAPORATION-RATE", "IN"})));
-		
-		Assert.assertEquals(svar_dss, expected);
+
+		Writers.outputWresl2(parser.F.svar_dss, "test-wresl2", "svar_dss.wresl2");
+
+		Assert.assertEquals(parser.F.svar_dss, expected);
 	}		
 	
 	@Test(groups = { "WRESL_to_Table" })
