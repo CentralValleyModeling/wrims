@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 
-public class WriteWresl2 {
+public class WriteCSV {
 	  
 	  //static Map<String, List<String>> mapStringList = new HashMap<String, List<String>>();
 	  private static PrintWriter out;
 	 
 	  public static String svar_dss_header ="NAME,KIND,UNIT";	  
-	  public static String svar_table_header ="NAME,SELECT,FROM,GIVEN,USE,WHERE";
+	  public static String svar_table_header ="NAME,SELECT,FROM,GIVEN,USE,WHERE,WHERE,WHERE";
 	  
 	private static void openFile(String filePath) throws IOException{
 		File f = new File(filePath);

@@ -58,9 +58,9 @@ public class TestConvertWreslToTable {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 
-		WriteWresl2.mapStringList(parser.F.svar_dss, WriteWresl2.svar_dss_header,"test-wresl2\\svar_dss.wresl2");
+		WriteWresl2.mapStringList(parser.F.svar_dss, WriteWresl2.svar_dss_header,"test-wresl2\\svar_dss.csv");
 	    String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svarDSS.expected");
-	    String test = 	  Tools.readFileAsString("test-wresl2\\svar_dss.wresl2");	
+	    String test = 	  Tools.readFileAsString("test-wresl2\\svar_dss.csv");	
 		
 		Assert.assertEquals(test, expected);
 	}
@@ -81,9 +81,9 @@ public class TestConvertWreslToTable {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 
-		WriteWresl2.mapStringList(parser.F.svar_table, WriteWresl2.svar_table_header, "test-wresl2\\svar_table.wresl2");
+		WriteWresl2.mapStringList(parser.F.svar_table, WriteWresl2.svar_table_header, "test-wresl2\\svar_table.csv");
 	    String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svarTable.expected");
-	    String test = 	  Tools.readFileAsString("test-wresl2\\svar_table.wresl2");	
+	    String test = 	  Tools.readFileAsString("test-wresl2\\svar_table.csv");	
 		
 		Assert.assertEquals(test, expected);
 	}
