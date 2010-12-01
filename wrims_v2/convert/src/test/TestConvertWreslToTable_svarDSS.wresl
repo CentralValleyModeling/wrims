@@ -1,0 +1,2 @@
+define evap_1 {timeseries kind 'EVAPORATION-RATE' units 'IN'}
+define evap_2 {timeseries kind 'EVAPORATION-RATE' units 'IN'}
