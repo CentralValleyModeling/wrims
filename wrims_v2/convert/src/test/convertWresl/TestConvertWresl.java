@@ -62,62 +62,6 @@ public class TestConvertWresl {
 		Assert.assertEquals(parser.F.sequence_orders, expected);
 	}	
 
-//	@Test(groups = { "WRESL_elements" })
-//	public void modelBasic() throws RecognitionException, IOException {
-//		
-//		inputFilePath = "src\\test\\TestConvertWresl_modelBasic.wresl";
-//		
-//		try {
-//			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-//			}
-//	    catch(Exception e) {
-//	         e.printStackTrace();
-//	        }
-//	    
-//
-//	    ArrayList<String> list=new ArrayList<String>();
-//	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
-//	    
-//		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-//		TokenStream tokenStream = new CommonTokenStream(lexer);
-//		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-//		parser.currentFilePath = inputFilePath; parser.evaluator();
-//		
-//	    String[] array={"flow-channel","CFS","C_SacFea+D_SacFea"};
-//		list.addAll(Arrays.asList(array));
-//		expected.put("QsacFth", list);
-//		
-//		Assert.assertEquals(parser.F.model_var_adhoc, expected);
-//	}	
-	
-//	@Test(groups = { "WRESL_elements" })
-//	public void modelVarAdhoc() throws RecognitionException, IOException {
-//		
-//		inputFilePath = "src\\test\\TestConvertWresl_modelVarAdhoc.wresl";
-//		
-//		try {
-//			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_modelVarAdhoc.wresl", "UTF8");
-//			}
-//	    catch(Exception e) {
-//	         e.printStackTrace();
-//	        }
-//	    
-//
-//	    ArrayList<String> list=new ArrayList<String>();
-//	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
-//	    
-//		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-//		TokenStream tokenStream = new CommonTokenStream(lexer);
-//		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-//		parser.currentFilePath = inputFilePath; parser.evaluator();
-//		
-//	    String[] array={"flow-channel","CFS","C_SacFea+D_SacFea"};
-//		list.addAll(Arrays.asList(array));
-//		expected.put("QsacFth", list);
-//		
-//		Assert.assertEquals(parser.F.model_var_adhoc, expected);
-//	}	
-
 	@Test(groups = { "WRESL_elements" })
 	public void includeFile() throws RecognitionException, IOException {
 		
@@ -147,6 +91,34 @@ public class TestConvertWresl {
 		Assert.assertEquals(parser.F.include_file_scope, expected_include_file_scope);
 		//Assert.assertEquals(parser.F.file_include_file, expected_file_include_file);
 	}	
+	
+	@Test(groups = { "WRESL_elements" })
+	public void modelList() throws RecognitionException, IOException {
+		
+		inputFilePath = "src\\test\\TestConvertWresl_modelList.wresl";
+		try {
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	    
+	    ArrayList<String>  expected_model_list = new ArrayList<String>();
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.currentFilePath = inputFilePath; parser.evaluator();
+		
+
+		expected_model_list.add("one");
+		expected_model_list.add("TWO");
+		expected_model_list.add("Three");		
+		
+
+		Assert.assertEquals(parser.F.model_list, expected_model_list);
+		//Assert.assertEquals(parser.F.file_include_file, expected_file_include_file);
+	}
 	
 	@Test(groups = { "WRESL_elements" })
 	public void modelIncludeFile() throws RecognitionException, IOException {
@@ -181,8 +153,8 @@ public class TestConvertWresl {
 		//System.out.println("#############################: " + expected_modelMap.get("CVCWHEELING").include_file_scope);
 		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").include_file_scope, expected_modelMap.get("CVCWHEELING").include_file_scope);
 
-	}		
-
+	}	
+	
 	@Test(groups = { "WRESL_elements" })
 	public void modelVarAdhoc() throws RecognitionException, IOException {
 		
@@ -193,7 +165,6 @@ public class TestConvertWresl {
 	    catch(Exception e) {
 	         e.printStackTrace();
 	        }
-	
 
 	    Map<String, Struct> expected_modelMap = new HashMap<String, Struct>();
 	    Struct expected_struct = new Struct();
@@ -203,8 +174,8 @@ public class TestConvertWresl {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 		
-		expected_struct.include_file_scope.put("..\\..\\common\\System\\System_Sac.wresl","local");
-		expected_struct.include_file_scope.put("..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl","global");
+		expected_struct.var_scope.put("force_c607","local");
+		expected_struct.goal_simple.put("force_c607","C607 > 500");
 		
 //	    String[] array={null,"local","global"};
 //	    list=new ArrayList<String>();list.addAll(Arrays.asList(array));
@@ -212,12 +183,51 @@ public class TestConvertWresl {
 		
 		expected_modelMap.put("CVCWHEELING",expected_struct);
 				
-		System.out.println("#############################: " + parser.modelMap.get("CVCWHEELING").goal_simple);
-		System.out.println("#############################: " + expected_modelMap.get("CVCWHEELING").goal_simple);
+		//System.out.println("#############################: " + parser.modelMap.get("CVCWHEELING").goal_simple);
+		//System.out.println("#############################: " + expected_modelMap.get("CVCWHEELING").goal_simple);
 		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").goal_simple, expected_modelMap.get("CVCWHEELING").goal_simple);
 		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").var_scope, expected_modelMap.get("CVCWHEELING").var_scope);
 		
 	}	
+
+	@Test(groups = { "WRESL_elements" })
+	public void modelBasic() throws RecognitionException, IOException {
+		
+		inputFilePath = "src\\test\\TestConvertWresl_modelBasic.wresl";
+		try {
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+
+	    Map<String, Struct> expected_modelMap = new HashMap<String, Struct>();
+	    Struct expected_struct = new Struct();
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.currentFilePath = inputFilePath; parser.evaluator();
+
+		expected_struct.include_file_scope.put("..\\..\\common\\System\\System_Sac.wresl","local");
+		expected_struct.include_file_scope.put("..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl","global");
+				
+		expected_struct.var_scope.put("force_c607","local");
+		expected_struct.goal_simple.put("force_c607","C607 > 500");
+		
+//	    String[] array={null,"local","global"};
+//	    list=new ArrayList<String>();list.addAll(Arrays.asList(array));
+//		expected_model_scope_list.put("CVCWHEELING", list);
+		
+		expected_modelMap.put("CVCWHEELING",expected_struct);
+				
+		//System.out.println("#############################: " + parser.modelMap.get("CVCWHEELING").goal_simple);
+		//System.out.println("#############################: " + expected_modelMap.get("CVCWHEELING").goal_simple);
+		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").goal_simple, expected_modelMap.get("CVCWHEELING").goal_simple);
+		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").var_scope, expected_modelMap.get("CVCWHEELING").var_scope);
+		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").include_file_scope, expected_modelMap.get("CVCWHEELING").include_file_scope);
+		
+	}			
 	
 	@Test(groups = { "WRESL_elements" })
 	public void svarConst() throws RecognitionException, IOException {
@@ -238,7 +248,6 @@ public class TestConvertWresl {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 		Map<String, String> svar_constant = parser.F.svar_expression;
-		//Map<String, String> svar_constant2 = 
 		
 		expected.put("minflow_C_Orovl3", ".29");
 		expected.put("minflow_C_Orovl2", "45.29");

@@ -58,7 +58,7 @@ model
 scope { Struct M ; }
 @init { inModel = "y"; }
 @after{ modelMap.put($i.text, $model::M);  inModel = "n"; }
-	:    MODEL i=IDENT  { $model::M = new Struct(); } '{' 
+	:    MODEL i=IDENT  {  F.modelList($i.text);$model::M = new Struct(); } '{' 
 	     c=(  include | goal | define )*
 	     '}' {
 	           //  System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " + $model::M.include_file_scope); 
