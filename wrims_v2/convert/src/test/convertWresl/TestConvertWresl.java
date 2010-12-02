@@ -275,7 +275,7 @@ public class TestConvertWresl {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 		
-		expected.put("OroInfEst", new ArrayList<String>(Arrays.asList(new String[]{"sum(i=0,SEP-month,1)","(I_Orovl(i))*cfs_taf(i)"})));
+		expected.put("OroInfEst", new ArrayList<String>(Arrays.asList(new String[]{"sum(i=0;SEP-month;1)","max(I_Orovl(i);dummy)*cfs_taf(i)"})));
 		
 		
 		List<String> svar_sum_keys = new ArrayList<String> (parser.F.svar_sum.keySet());
@@ -310,8 +310,8 @@ public class TestConvertWresl {
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 		Map<String, String> svar_expression = parser.F.svar_expression;
 		
-		expected.put("coefev_Orovl", "(A_Orovl_forward - A_Orovl_back)/(100*max(0.01,S_Orovl(-1)))");
-		expected.put("min_test", "min(max(a,b),2.5)");
+		expected.put("coefev_Orovl", "(A_Orovl_forward - A_Orovl_back)/(100*max(0.01;S_Orovl(-1)))");
+		expected.put("min_test", "min(max(a;b);2.5)");
 		
 		Assert.assertEquals(svar_expression, expected);
 	}
@@ -757,7 +757,7 @@ public class TestConvertWresl {
 	    /// new case
 		list_case_names.add("MAR_SEP"); // this is needed to ensure the order of the cases, which is lost in map
 		list_conditions.add("month >= MAR .and. month <= SEP");
-		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"sum","sum(i=-(month-MAY),SEP-month)","I_Folsm(i)*cfs_taf(i) + I300(i)*cfs_taf(i)"}));
+		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"sum","sum(i=-(month-MAY);SEP-month)","I_Folsm(i)*cfs_taf(i) + I300(i)*cfs_taf(i)"}));
 		
 		/// new case
 		list_case_names.add("other");
@@ -831,7 +831,7 @@ public class TestConvertWresl {
 	    /// new case
 		list_case_names.add("JanFebCMin"); // this is needed to ensure the order of the cases, which is lost in map
 		list_conditions.add("month>=JAN .and. month<=FEB .and. sri_ytp == 5 .and. C_Nimbus_fmp_mif(-1) < 800.");
-		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"value","max(250., min(1750., (0.85 * C_Nimbus_fmp_mif(-1))))"}));
+		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"value","max(250.; min(1750.; (0.85 * C_Nimbus_fmp_mif(-1))))"}));
 		
 		/// new case
 		//list_case_names.add("JuntoFeb");
@@ -1043,7 +1043,7 @@ public class TestConvertWresl {
 		
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 
-		expected.put("a", "min(1000. + 0.5*max(S_Orovl(prevSep) - 1000. ,0.), S_OrovlLevel5)");
+		expected.put("a", "min(1000. + 0.5*max(S_Orovl(prevSep) - 1000. ;0.); S_OrovlLevel5)");
 		
 		Assert.assertEquals(parser.F.svar_expression, expected);	
 	}	

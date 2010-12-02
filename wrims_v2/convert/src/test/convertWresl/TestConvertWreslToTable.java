@@ -23,7 +23,7 @@ import org.testng.Assert;
 
 import evaluators.Struct;
 import evaluators.Tools;
-import evaluators.WriteWresl2;
+import evaluators.WriteCSV;
 
 
 
@@ -58,7 +58,7 @@ public class TestConvertWreslToTable {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 
-		WriteWresl2.mapStringList(parser.F.svar_dss, WriteWresl2.svar_dss_header,"test-wresl2\\svar_dss.csv");
+		WriteCSV.mapStringList(parser.F.svar_dss, WriteCSV.svar_dss_header,"test-wresl2\\svar_dss.csv");
 	    String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svarDSS.expected");
 	    String test = 	  Tools.readFileAsString("test-wresl2\\svar_dss.csv");	
 		
@@ -81,7 +81,7 @@ public class TestConvertWreslToTable {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 
-		WriteWresl2.mapStringList(parser.F.svar_table, WriteWresl2.svar_table_header, "test-wresl2\\svar_table.csv");
+		WriteCSV.mapStringList(parser.F.svar_table, WriteCSV.svar_table_header, "test-wresl2\\svar_table.csv");
 	    String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svarTable.expected");
 	    String test = 	  Tools.readFileAsString("test-wresl2\\svar_table.csv");	
 		

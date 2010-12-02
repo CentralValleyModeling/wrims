@@ -231,7 +231,7 @@ upper returns[String str]
 	;
 
 alias returns [String str]
-	: 'alias'  e=expression  { $str = $e.text; }
+	: 'alias'  e=expression  { $str = $e.str; }
 	;
 	
 kind returns [String str]
@@ -256,7 +256,7 @@ conditionStatement returns[String str]
 	;
 
 valueStatement returns[String str]
-	: 'value' e=expression {$str = $e.text;}
+	: 'value' e=expression {$str = $e.str;}
 	;
 
 /// SQL related ///
@@ -304,7 +304,7 @@ inline_func
 sumStatement returns[ArrayList<String> list]
 	@init { $list = new ArrayList<String>(); }
 	: s=sum_func e=expression
-		{$list.add($s.text);$list.add($e.text);}
+		{$list.add($s.text.replace(",",";"));$list.add($e.str);}
 	;
 
 sum_func
@@ -339,7 +339,7 @@ mult :	unary (('*' | '/' | 'mod') unary)* ;
 add  :	mult (('+' | '-') mult)* ;
 
 expression returns [String str]
-	:	i=add {$str = $i.text; }
+	:	i=add {$str = $i.text.replace(",",";");}
 	;
 
 relation_group_1  :  LE | GE   ;
