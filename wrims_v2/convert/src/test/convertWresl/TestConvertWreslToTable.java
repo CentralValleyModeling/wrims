@@ -2,6 +2,7 @@ package test.convertWresl;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -32,7 +33,8 @@ import evaluators.WriteCSV;
 public class TestConvertWreslToTable {
 
 	public String inputFilePath;
-	public String out;
+	public String outputFilePath;
+	public PrintWriter outFile;
 	public BufferedWriter outputFile;
 	private static CharStream stream;	
 	
@@ -58,10 +60,15 @@ public class TestConvertWreslToTable {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 		
-		out = "test-csv\\svar_dss.csv"; 
-		WriteCSV.mapStringList(parser.F.svar_dss, WriteCSV.svar_dss_header, out);
-	    String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svarDSS.expected");
-	    String test = 	  Tools.readFileAsString(out);	
+		outputFilePath="test-csv\\svar_dss.csv";
+		
+		outFile = Tools.openFile(outputFilePath);
+		outFile.print(WriteCSV.svar_dss_header+"\n");
+		WriteCSV.mapStringList(parser.F.svar_dss, outFile);
+	    outFile.close();
+	    
+		String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svarDSS.expected");
+	    String test = 	  Tools.readFileAsString(outputFilePath);	
 		
 		Assert.assertEquals(test, expected);
 	}
@@ -82,17 +89,21 @@ public class TestConvertWreslToTable {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 		
-		out ="test-csv\\\\svar_table.csv";
-		WriteCSV.mapStringList(parser.F.svar_table, WriteCSV.svar_table_header, out);
-	    String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svarTable.expected");
-	    String test = 	  Tools.readFileAsString(out);	
+		outputFilePath ="test-csv\\\\svar_table.csv";
+		outFile = Tools.openFile(outputFilePath);
+		outFile.print(WriteCSV.svar_table_header+"\n");
+		WriteCSV.mapStringList(parser.F.svar_table, outFile);
+	    outFile.close();
+		
+		String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svarTable.expected");
+	    String test = 	  Tools.readFileAsString(outputFilePath);	
 		
 		Assert.assertEquals(test, expected);
 	}
 	
 	@Test(groups = { "WRESL_to_Table" })	
-	public void dvarStd() throws RecognitionException, IOException {
-		inputFilePath = "src\\test\\TestConvertWreslToTable_dvarStd.wresl";
+	public void dvar() throws RecognitionException, IOException {
+		inputFilePath = "src\\test\\TestConvertWreslToTable_dvar.wresl";
 		try {
 			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
@@ -105,37 +116,20 @@ public class TestConvertWreslToTable {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 		
-		out = "test-csv\\dvar_std.csv"; 
-		WriteCSV.mapStringList(parser.F.dvar_std, WriteCSV.dvar_header, out);
-	    String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_dvarStd.expected");
-	    String test = 	  Tools.readFileAsString(out);	
+		outputFilePath = "test-csv\\dvar.csv"; 
+		outFile = Tools.openFile(outputFilePath); 
+		outFile.print(WriteCSV.dvar_header+"\n");
+		WriteCSV.mapStringList(parser.F.dvar_std, outFile);
+		WriteCSV.mapStringList(parser.F.dvar_nonstd, outFile);
+		outFile.close();
+		
+		String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_dvar.expected");
+	    String test = 	  Tools.readFileAsString(outputFilePath);	
 		
 		Assert.assertEquals(test, expected);
 	}
 
 	
-	@Test(groups = { "WRESL_to_Table" })	
-	public void dvarNonStd() throws RecognitionException, IOException {
-		inputFilePath = "src\\test\\TestConvertWreslToTable_dvarStd.wresl";
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
-
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
-		
-		out = "test-csv\\dvar_std.csv"; 
-		WriteCSV.mapStringList(parser.F.dvar_std, WriteCSV.dvar_header, out);
-	    String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_dvarStd.expected");
-	    String test = 	  Tools.readFileAsString(out);	
-		
-		Assert.assertEquals(test, expected);
-	}	
 
 	@Test(groups = { "WRESL_to_Table" })
 	public void sequence() throws RecognitionException, IOException {

@@ -2,10 +2,13 @@ package evaluators;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 
 public class Tools {
@@ -29,9 +32,17 @@ public class Tools {
 		
 		  File input = new File(filePath);
 		  BufferedReader in = new BufferedReader(new FileReader(input));		  
-		  return in.readLine();
-		  
-		  
+		  return in.readLine();	  
+	  }
+	  
+	  public static PrintWriter openFile(String filePath) throws IOException{
+			
+			File f = new File(filePath);
+			File dir = new File(f.getParent());
+			dir.mkdirs();
+			f.createNewFile();
+			
+		    return  new PrintWriter(new BufferedWriter(new FileWriter(f)));
 	  }
 	  
 }
