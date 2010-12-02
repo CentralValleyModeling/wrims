@@ -262,7 +262,7 @@ public class TestConvertWresl {
 		inputFilePath = "src\\test\\TestConvertWresl_svarSum.wresl";
 		
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarSum.wresl", "UTF8");
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -296,7 +296,7 @@ public class TestConvertWresl {
 		inputFilePath = "src\\test\\TestConvertWresl_svarExpression.wresl";
 		
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarExpression.wresl", "UTF8");
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -320,7 +320,7 @@ public class TestConvertWresl {
 	public void dvarStd() throws RecognitionException, IOException {
 		inputFilePath = "src\\test\\TestConvertWresl_dvarStd.wresl";
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_dvarStd.wresl", "UTF8");
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -345,7 +345,7 @@ public class TestConvertWresl {
 	public void dvarAlias() throws RecognitionException, IOException {
 		inputFilePath = "src\\test\\TestConvertWresl_dvarAlias.wresl";
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_dvarAlias.wresl", "UTF8");
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -368,7 +368,7 @@ public class TestConvertWresl {
 	public void dvarAlias2() throws RecognitionException, IOException {
 		inputFilePath = "src\\test\\TestConvertWresl_dvarAlias2.wresl";
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_dvarAlias2.wresl", "UTF8");
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -426,7 +426,7 @@ public class TestConvertWresl {
 	public void dvarNonStd() throws RecognitionException, IOException {
 		inputFilePath = "src\\test\\TestConvertWresl_dvarNonStd.wresl";
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_dvarNonStd.wresl", "UTF8");
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -448,9 +448,9 @@ public class TestConvertWresl {
 
 	@Test(groups = { "WRESL_elements" })
 	public void dvarNonStd2() throws RecognitionException, IOException {
-		inputFilePath = "src\\test\\TestConvertWresl_dvarNonStd_2.wresl";
+		inputFilePath = "src\\test\\TestConvertWresl_dvarNonStd2.wresl";
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_dvarNonStd2.wresl", "UTF8");
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -477,7 +477,7 @@ public class TestConvertWresl {
 	public void svarDSS() throws RecognitionException, IOException {
 		inputFilePath = "src\\test\\TestConvertWresl_svarDSS.wresl";
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarDSS.wresl", "UTF8");
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -500,7 +500,7 @@ public class TestConvertWresl {
 	public void svarTable() throws RecognitionException, IOException {
 		inputFilePath ="src\\test\\TestConvertWresl_svarTable.wresl";
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarTable.wresl", "UTF8");
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -515,7 +515,7 @@ public class TestConvertWresl {
 		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
 
 		expected.put("nov_trigger_cfs", new ArrayList<String>(Arrays.asList(new String[]{
-			"target","feather_fish_203",null,null,"month = NOV"
+			"target","feather_fish_203",null,null,"month = NOV",null
 			})));
 		
 		Assert.assertEquals(svar_table, expected);
@@ -525,7 +525,7 @@ public class TestConvertWresl {
 	public void svarTableFull() throws RecognitionException, IOException {
 		inputFilePath ="src\\test\\TestConvertWresl_svarTableFull.wresl";
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarTableFull.wresl", "UTF8");
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -540,7 +540,7 @@ public class TestConvertWresl {
 		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
 
 		expected.put("A_Orovl_last", new ArrayList<String>(Arrays.asList(new String[]{
-			"area","res_info","storage=1000*S_Orovl(-1)","linear","res_num=6" 
+			"area","res_info","storage=1000*S_Orovl(-1)","linear","res_num=6",null 
 			})));
 		
 		Assert.assertEquals(svar_table, expected);
@@ -550,7 +550,7 @@ public class TestConvertWresl {
 	public void svarTableMultipleWhere() throws RecognitionException, IOException {
 		inputFilePath ="src\\test\\TestConvertWresl_svarTableMultipleWhere.wresl";
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarTableMultipleWhere.wresl", "UTF8");
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -566,7 +566,7 @@ public class TestConvertWresl {
 
 		expected.put("S_TrntyLevel4", new ArrayList<String>(Arrays.asList(new String[]{
 		//	"select","target","from","res_level","given",null,"use",null,"where","res_num=1","level=4","month=month" 
-		             "target"       ,"res_level"        ,null      ,null        ,"res_num=1","level=4","month=month" })));
+		             "target"       ,"res_level"        ,null      ,null        ,"res_num=1","level=4","month=month",null })));
 		
 		Assert.assertEquals(svar_table, expected);
 	}		
@@ -575,7 +575,7 @@ public class TestConvertWresl {
 	public void svarCase() throws RecognitionException, IOException {
 		inputFilePath ="src\\test\\TestConvertWresl_svarCase.wresl";
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarCase.wresl", "UTF8");
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -606,7 +606,7 @@ public class TestConvertWresl {
 		list_conditions.add("month == FEB");
 		map_case_content.put("Febfore", Arrays.asList(new String[]{
 			//"sql","select","FEB","from","sacramento_runoff_forecast","given",null,"use",null,"where","wateryear=wateryear"
-			"sql"         ,"FEB"       ,"sacramento_runoff_forecast"        ,null,      null,        "wateryear=wateryear"
+			"sql"         ,"FEB"       ,"sacramento_runoff_forecast"        ,null,      null,        "wateryear=wateryear",null
 		}));
 		
 		/// new case
@@ -651,7 +651,7 @@ public class TestConvertWresl {
 	public void svarCase2() throws RecognitionException, IOException {
 		inputFilePath ="src\\test\\TestConvertWresl_svarCase2.wresl";
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarCase2.wresl", "UTF8");
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -682,7 +682,7 @@ public class TestConvertWresl {
 		list_case_names.add("MartoMay"); // this is needed to ensure the order of the cases, which is lost in map
 		list_conditions.add("month >= MAR .and. month <= MAY");
 		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{
-				"sql","di","wsi_di_cvp_s","wsi=wsi_cvp_s","linear"
+				"sql","di","wsi_di_cvp_s","wsi=wsi_cvp_s","linear",null
 				}));
 		
 		/// new case
@@ -727,7 +727,7 @@ public class TestConvertWresl {
 	public void svarCaseSum() throws RecognitionException, IOException {
 		inputFilePath = "src\\test\\TestConvertWresl_svarCaseSum.wresl";
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarCaseSum.wresl", "UTF8");
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -799,9 +799,10 @@ public class TestConvertWresl {
 
 	@Test(groups = { "WRESL_elements" })
 	public void svarCaseMultipleAnds() throws RecognitionException, IOException {
-		
+	
+		inputFilePath = "src\\test\\TestConvertWresl_svarCaseMultipleAnds.wresl";	
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_svarCaseMultipleAnds.wresl", "UTF8");
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -873,9 +874,10 @@ public class TestConvertWresl {
 	
 	@Test(groups = { "WRESL_elements" })
 	public void goalSimple() throws RecognitionException, IOException {
-		
+	
+		inputFilePath = "src\\test\\TestConvertWresl_goalSimple.wresl";	
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_goalSimple.wresl", "UTF8");
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -919,9 +921,10 @@ public class TestConvertWresl {
 
 	@Test(groups = { "WRESL_elements" })
 	public void goalNoCase() throws RecognitionException, IOException {
-		
+	
+		inputFilePath = "src\\test\\TestConvertWresl_goalNoCase.wresl";	
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_goalNoCase.wresl", "UTF8");
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -944,8 +947,9 @@ public class TestConvertWresl {
 	@Test(groups = { "WRESL_elements" })
 	public void goalCase() throws RecognitionException, IOException {
 		
+		inputFilePath = "src\\test\\TestConvertWresl_goalCase.wresl";
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_goalCase.wresl", "UTF8");
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -1029,7 +1033,7 @@ public class TestConvertWresl {
 		inputFilePath =  "src\\test\\TestConvertWresl_minMaxInlines.wresl";
 		
 		try {
-			stream = new ANTLRFileStream("src\\test\\TestConvertWresl_minMaxInlines.wresl", "UTF8");
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();

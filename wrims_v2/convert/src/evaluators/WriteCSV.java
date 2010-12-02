@@ -19,6 +19,7 @@ public class WriteCSV {
 	 
 	  public static String svar_dss_header ="NAME,KIND,UNIT";	  
 	  public static String svar_table_header ="NAME,SELECT,FROM,GIVEN,USE,WHERE,WHERE,WHERE";
+	  public static String dvar_header ="NAME";
 	  
 	private static void openFile(String filePath) throws IOException{
 		File f = new File(filePath);
@@ -37,7 +38,7 @@ public class WriteCSV {
 		    Map<String, List<String>> mapStringList = (Map<String, List<String>>) obj;
 		    
 			List<String> keys = new ArrayList<String> (mapStringList.keySet());
-			Collections.sort(keys);
+			Collections.sort(keys); //TODO: sort should be insensitive to letter case
 		    
 			out.print(header+"\n");
 		    for (String k: keys ){

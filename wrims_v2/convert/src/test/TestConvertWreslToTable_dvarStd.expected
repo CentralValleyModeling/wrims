@@ -1,0 +1,2 @@
+NAME,SELECT,FROM,GIVEN,USE,WHERE,WHERE,WHERE
+nov_trigger_cfs,target,feather_fish_203,null,null,month = NOV
