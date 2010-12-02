@@ -275,7 +275,8 @@ sqlStatement returns[ArrayList<String> list]
 				//$list.add("use");
 				$list.add($i4.text);
 				//$list.add("where"); 
-				if ($i5.list!=null) {$list.addAll($i5.list);};				
+				if ($i5.list!=null) {$list.addAll($i5.list);}
+				else{$list.add(null);};				
 	  }
 	;
 
@@ -283,6 +284,7 @@ where_items returns[ArrayList<String> list]
 	@init { $list = new ArrayList<String>(); }
 	:	 WHERE  (r1=assignStatement{$list.add($r1.text);} )
 	        (',' r=assignStatement {$list.add($r.text);}  )*
+	        {$list.add(null);}
 	;
 
 ///////////////////////////
@@ -437,7 +439,7 @@ TAF :'\''    ('TAF'  |'taf')     '\'';
 CFS :'\''    ('CFS'  |'cfs')     '\'';
 ACRES :'\''  ('ACRES'|'acres') '\'';
 IN :'\''  ('IN'|'in') '\'';
-NONE :'\''  'NONE' '\'';
+NONE :'\''  ('NONE'|'none') '\'';
 
 ///basics///
 

@@ -2,3 +2,24 @@ define nov_trigger_cfs {
         select    target
         from      feather_fish_203
         where   month = NOV}
+		
+define IntertieSwitch {
+      select OnOff from   NewFacSwitch where  Facility = 1}
+
+define CVPDedBanksSwitch {
+      select OnOff from   NewFacSwitch where  Facility = 2}
+
+define SWPShastaSwitch {
+      select OnOff from   NewFacSwitch where  Facility = 3}
+
+define minflowAFRPClear {select flow from AFRP_CLEAR given trigger=S1(-1)+S1mod use minimum where month=month}
+	  
+	  
+define ResAction1Sha {select Reserve from B2ActionRes where Action=1, WYT=wyt_SAC}
+define ResAction2 {select Reserve from B2ActionRes where Action=2, WYT=wyt_SAC}
+define ResAction3 {select Reserve from B2ActionRes where Action=3, WYT=wyt_SAC}
+define ResAction4 {select Reserve from B2ActionRes where Action=4, WYT=wyt_SAC}
+define ResAction5 {select Reserve from B2ActionRes where Action=5, WYT=wyt_SAC}
+define ResAction6 {select Reserve from B2ActionRes where Action=6, WYT=wyt_SAC}
+define ResAction7 {select Reserve from B2ActionRes where Action=7, WYT=wyt_SAC}
+	  
