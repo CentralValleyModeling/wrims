@@ -199,7 +199,9 @@ public class Struct {
 			var_scope.put(name, scope);		
 				list = new ArrayList<String>();
 				list.add(kind);
-				list.add(units);	
+				list.add(units);
+				list.add("0");
+				list.add("unbounded");
 			dvar_std.put(name, list);
 			var_all.put(name, "dvar_std");
 			}

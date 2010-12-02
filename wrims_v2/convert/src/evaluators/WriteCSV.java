@@ -38,7 +38,7 @@ public class WriteCSV {
 		    Map<String, List<String>> mapStringList = (Map<String, List<String>>) obj;
 		    
 			List<String> keys = new ArrayList<String> (mapStringList.keySet());
-			Collections.sort(keys); //TODO: sort should be insensitive to letter case
+			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
 		    
 			out.print(header+"\n");
 		    for (String k: keys ){

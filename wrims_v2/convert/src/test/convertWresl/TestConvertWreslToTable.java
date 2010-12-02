@@ -58,7 +58,7 @@ public class TestConvertWreslToTable {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 		
-		out = "test-wresl2\\svar_dss.csv"; 
+		out = "test-csv\\svar_dss.csv"; 
 		WriteCSV.mapStringList(parser.F.svar_dss, WriteCSV.svar_dss_header, out);
 	    String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svarDSS.expected");
 	    String test = 	  Tools.readFileAsString(out);	
@@ -82,7 +82,7 @@ public class TestConvertWreslToTable {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 		
-		out ="test-wresl2\\\\svar_table.csv";
+		out ="test-csv\\\\svar_table.csv";
 		WriteCSV.mapStringList(parser.F.svar_table, WriteCSV.svar_table_header, out);
 	    String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svarTable.expected");
 	    String test = 	  Tools.readFileAsString(out);	
@@ -105,14 +105,37 @@ public class TestConvertWreslToTable {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 		
-		out = "test-wresl2\\dvar_std.csv"; 
+		out = "test-csv\\dvar_std.csv"; 
 		WriteCSV.mapStringList(parser.F.dvar_std, WriteCSV.dvar_header, out);
 	    String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_dvarStd.expected");
 	    String test = 	  Tools.readFileAsString(out);	
 		
 		Assert.assertEquals(test, expected);
 	}
+
 	
+	@Test(groups = { "WRESL_to_Table" })	
+	public void dvarNonStd() throws RecognitionException, IOException {
+		inputFilePath = "src\\test\\TestConvertWreslToTable_dvarStd.wresl";
+		try {
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.currentFilePath = inputFilePath; parser.evaluator();
+		
+		out = "test-csv\\dvar_std.csv"; 
+		WriteCSV.mapStringList(parser.F.dvar_std, WriteCSV.dvar_header, out);
+	    String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_dvarStd.expected");
+	    String test = 	  Tools.readFileAsString(out);	
+		
+		Assert.assertEquals(test, expected);
+	}	
 
 	@Test(groups = { "WRESL_to_Table" })
 	public void sequence() throws RecognitionException, IOException {
@@ -448,29 +471,6 @@ public class TestConvertWreslToTable {
 		
 	}	
 	
-	@Test(groups = { "WRESL_to_Table" })
-	public void dvarNonStd() throws RecognitionException, IOException {
-		inputFilePath = "src\\test\\TestConvertWresl_dvarNonStd.wresl";
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
-
-	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
-	    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
-		Map<String, ArrayList<String>>  dvar_nonstd = parser.F.dvar_nonstd;	
-
-		expected.put("C_SLCVP", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "unbounded", "unbounded"})));
-		expected.put("C_SacFea", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "0.", "6150*taf_cfs"})));
-		
-		Assert.assertEquals(dvar_nonstd, expected);
-	}		
 
 	@Test(groups = { "WRESL_to_Table" })
 	public void dvarNonStd2() throws RecognitionException, IOException {

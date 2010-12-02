@@ -335,8 +335,8 @@ public class TestConvertWresl {
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 		Map<String, ArrayList<String>>  dvar_std = parser.F.dvar_std;
 		
-		expected.put("C_Tracy", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS"})));
-		expected.put("C_Banks", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "TAF"})));
+		expected.put("C_Tracy", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "0","unbounded"})));
+		expected.put("C_Banks", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "TAF", "0","unbounded"})));
 		
 		Assert.assertEquals(dvar_std, expected);
 	}	
