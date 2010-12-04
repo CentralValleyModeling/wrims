@@ -9,6 +9,7 @@ options {
   import java.util.Map;
   import java.util.HashMap;
   import java.util.Iterator;
+  import java.util.Arrays;
   import java.io.File;
   import java.io.FileInputStream;
   import java.io.BufferedInputStream;
@@ -50,7 +51,12 @@ options {
   public static Map<String, ArrayList<ArrayList<String>>>   rglGlobal = new HashMap<String, ArrayList<ArrayList<String>>>();
   
   private static String currentFile="";
+  private static String currentCycle="";
   private static ArrayList<String> fileAnchestry=new ArrayList<String>();
+  
+  private static boolean testDefine=false;
+  private final ArrayList<String> reserveToken=new ArrayList<String>(Arrays.asList("month", "wateryear","jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"));
+  private final ArrayList<String> pastMonth=new ArrayList<String>(Arrays.asList("prejan","prefeb","premar","preapr","premay","prejun","prejul","preaug","presep","preoct","prenov","predec")); 
   
   private String svType= "NULL"; 
   private String svUnits = "NULL"; 
@@ -102,6 +108,46 @@ options {
   public String rMinusL(String relationStatement){
     String[] expressions = relationStatement.split("[<=>]");
     return expressions[1]+"-("+expressions[0]+")"; 
+  }
+  
+  public void dvTestDefineSV(){
+    Iterator iterator=dvar.keySet().iterator();
+    while(iterator.hasNext()){ 
+      String dvarName=(String)iterator.next();
+      ArrayList<String> dvarList=dvar.get(dvarName);
+      String lowerBound=dvarList.get(0);
+      String upperBound=dvarList.get(1);
+      try{        
+        Integer.parseInt(lowerBound);    
+      } catch(NumberFormatException nfe0) {        
+        try {
+          Float.parseFloat(lowerBound);
+        }catch (NumberFormatException nfe1) { 
+          try {
+            Double.parseDouble(lowerBound);
+          }catch (NumberFormatException nfe2) {
+            if (!svar.containsKey(lowerBound)){
+              error_grammer.add(lowerBound+" as the lower bound of decision variable "+dvarName+" is not defined before used");
+            }
+          }
+        }   
+      }
+      try{        
+        Integer.parseInt(upperBound);    
+      } catch(NumberFormatException nfe3) {        
+        try {
+          Float.parseFloat(upperBound);
+        }catch (NumberFormatException nfe4) { 
+          try {
+            Double.parseDouble(upperBound);
+          }catch (NumberFormatException nfe5) {
+            if (!svar.containsKey(upperBound)){
+              error_grammer.add(upperBound+" as the upper bound of decision variable "+dvarName+" is not defined before used");
+            }
+          }
+        }   
+      }
+    }
   }
   
   public void nodeConstraint(){
@@ -179,9 +225,6 @@ evaluator //returns [Map<String, String> map1]
 modules
 	:	cycletable
 	| filetable
-	|	nodetable
-	|	arctable
-	|	reservoirtable
 	|	dvartable
 	|	svartable
 	|	constrainttable
@@ -389,6 +432,7 @@ content_cycle
         list.add($i3.text);
         list.add($i2.text);
         cycle.put($i1.text, list);
+        currentCycle=$i1.text;
         
         byte[] buffer = new byte[(int) new File($i2.text).length()];
         BufferedInputStream f = null;
@@ -419,7 +463,8 @@ content_cycle
         currentFile=fileAnchestry.get(fileAnchestry.size()-1);
         fileAnchestry.remove(fileAnchestry.size()-1);
         
-        nodeConstraint();
+        //nodeConstraint();
+        dvTestDefineSV();
       }   
   }
   ;
@@ -518,7 +563,7 @@ content_node
 	;
 
 content_arc
-	:	i1=IDENT ',' i2=IDENT ',' ((i3=tableExpression)|'#') ',' units ',' ((i4=lowerbound)|'#') ',' ((i5=upperbound)|'#') ',' 
+	:	i1=IDENT ',' i2=IDENT ',' ((i3=tableExpression)|'#') ',' i9=IDENT ',' ((i4=lowerbound)|'#') ',' ((i5=upperbound)|'#') ',' 
 		((i6=IDENT ',' i7=IDENT)|(i6='#' ',' i7=IDENT)|(i6=IDENT ',' i7='#')) ',' partC {
 			if ($i2.text.equals("y")){
 	       	if ($i3.list == null){
@@ -543,7 +588,7 @@ content_arc
             
                     list.add("n");
             
-                    list.add($units.text);
+                    list.add($i9.text);
                     list.add($partC.text);
                     dvar.put($i1.text,list);
                     
@@ -573,7 +618,7 @@ content_arc
              }else{
                 ArrayList<String> list=new ArrayList<String>();
                 list.add($partC.text);
-                list.add($units.text);
+                list.add($i9.text);
                 list.add("always");
                 list.addAll($i3.list);
                 svlist=new ArrayList<ArrayList<String>>();
@@ -607,7 +652,7 @@ content_arc
 	;
 
 content_reservoir
-	:	i1=IDENT ',' ((i2=IDENT)|'#') ',' i3=IDENT ',' i4=IDENT ',' i5=tableExpression ',' ((i6=weight)|'#') ',' ((i7=units)|'#') {
+	:	i1=IDENT ',' ((i2=IDENT)|'#') ',' i3=IDENT ',' i4=IDENT ',' i5=tableExpression ',' ((i6=weight)|'#') ',' ((i7=IDENT)|'#') {
             if ($i1.text.equals(preReservoir)){
                 if ($i2.text !=null){
                    error_grammer.add(currentFile+": " + $i1.text+ " the include field must be # after the first line");
@@ -792,7 +837,7 @@ content_reservoir
 	;
 	
 content_dvar
-	:	i1=IDENT ',' i2=IDENT ',' lowerbound ',' upperbound ',' i3=IDENT ',' i4=units ',' partC{
+	:	i1=IDENT ',' i2=IDENT ',' lowerbound ',' upperbound ',' i3=IDENT ',' i4=IDENT ',' partC{
 	   if ($i2.text.equals("y")){
 	       if (dvar.containsKey($i1.text)){
             error_var_redefined.add(currentFile+": "+ $i1.text+" redefined");
@@ -827,7 +872,7 @@ content_dvar
 	;
 	
 content_svar
-	:	i1=IDENT ',' i2=(IDENT|'#') ',' ((i3=partC)|'#') ',' ((i9=IDENT)|'#') ',' i4=(IDENT|'#') ',' i5=IDENT ',' i6=(IDENT|'#') ',' i7=conditionStatement ',' i8=tableExpression{
+	:	i1=IDENT ',' i2=(IDENT|'#') ',' ((i3=partC)|'#') ',' ((i9=IDENT)|'#') ',' ((i4=IDENT)|'#') ',' i5=IDENT ',' i6=(IDENT|'#') ',' i7=conditionStatement ',' i8=tableExpression{
      				if ($i1.text.equals(preSV)){
 			        	if ($i3.text!=null){
 			        	  error_grammer.add(currentFile+": "+$i1.text+" type field at this line should be #");
@@ -1191,9 +1236,10 @@ directory
 text	:	LETTER (LETTER | DIGIT )*;
 	
 tableExpression returns [ArrayList<String> list]
-  @init { $list = new ArrayList<String>(); }
+  @init { $list = new ArrayList<String>(); testDefine=true;}
 	:	((i1=expression)|(i1=tableSQL)|(i1=timeseriesWithUnits)|(i1=timeseries)){
 	   list =$i1.list;
+	   testDefine=false;
 	}
 	;
 
@@ -1222,10 +1268,14 @@ timeseries returns[ArrayList<String> list]
 		}
 	;
 	
-partC	:	partCIdent|(number partCIdent)|number;
-
-partCIdent
-	:	 IDENT ('-' IDENT)*;
+partC	
+  :	partCIdent1|partCIdent2;
+  
+partCIdent1
+	:	 IDENT ('-' (IDENT|IDENT1))*;
+	
+partCIdent2
+  :  IDENT1 ('-' (IDENT|IDENT1))*;
 
 tableSQL returns[ArrayList<String> list]
 	: 'select' i1=IDENT 'from' i2=IDENT 
@@ -1253,26 +1303,72 @@ tableSQL returns[ArrayList<String> list]
 where_items returns[ArrayList<String> list]
 	@init { $list = new ArrayList<String>(); }
 
-	:	 WHERE  (r1=relationStatement{list.add($r1.text);} )
-	        ('&' r=relationStatement {
+	:	 WHERE  (r1=whereStatement{list.add($r1.text);} )
+	        ('&' r=whereStatement {
 	           if ($r.text !=null) {list.add($r.text);}}  )*
 	;
 
 
-upperbound:	expression;
+upperbound:	IDENT|allnumber;
 
-lowerbound:	expression;
-
-units 	:	CFS|TAF;
+lowerbound:	IDENT|allnumber;
 
 term
-	:	i=IDENT 
+	:	(knownDV
+	| (i1=IDENT) 
 	|	'(' e=expression ')' 
 	|	i=INTEGER 
 	|       i=FLOAT 
 	|   	max_func
-	|   	min_func
+	|   	min_func)
+	{
+    if ($i1!=null && testDefine && !svar.containsKey($i1.text) && !reserveToken.contains($i1.text)){
+      error_grammer.add(currentFile+": "+$i1.text+" is not defined before used");
+    }
+	}
 	;
+	
+knownDV
+  : pastMonthDV|preMonthDV|pastCycleDV
+  ;
+  
+pastMonthDV  
+  : i1=IDENT '(' i2=IDENT ')'{
+    if (testDefine && !dvar.containsKey($i1.text)){
+      error_grammer.add(currentFile+": decision variable "+$i1.text+" is not defined before used");
+    }
+    if (testDefine && $i2 !=null){
+      if (!pastMonth.contains($i2.text)){
+        error_grammer.add(currentFile+": "+$i2.text+" in decision variable "+$i1.text+" is wrong");
+      }
+    }
+  }
+  ;
+  
+preMonthDV
+  : IDENT '(-' INTEGER ')'{
+    if (testDefine && !dvar.containsKey($IDENT.text)){
+      error_grammer.add(currentFile+": decision variable "+$IDENT.text+" is not defined before used");
+    }
+  }
+  ;
+  
+pastCycleDV
+  : i1=IDENT '[' i2=IDENT ']'{
+    if (testDefine){
+      if (!dvar.containsKey($i1.text)){
+        error_grammer.add(currentFile+": "+$i1.text+" decision variable is not defined before used");
+      }  
+      if (!cycle.containsKey($i2.text)){
+        error_grammer.add(currentFile+": cycle name "+$i2.text+" is not defined before used");
+      }else{
+        if (currentCycle.equals($i2.text)){
+          error_grammer.add(currentFile+": cycle name "+$i2.text+" should be previous cycle");
+        }
+      }
+    } 
+  }
+  ; 
 	
 unary
 	:	('-')? term;
@@ -1305,12 +1401,18 @@ relation
 conditionStatement
 	:	relationStatementSeries|'always'
 	;
+
+whereStatement
+  : IDENT '=' expression
+  ;
 	
 relationStatementSeries
   : relationStatement (('&&'|'||') relationStatement)* ;
 
-relationStatement
-	:	expression relation expression
+relationStatement @init { testDefine=true;}
+	:	expression relation expression{
+	 testDefine=false;
+	}
 	;
 
 number
@@ -1332,8 +1434,6 @@ FLOAT : INTEGER? '.' INTEGER
 	  ;
 
 
-TAF : 'taf' ;
-CFS : 'cfs' ;
 MAX : 'max';
 MIN : 'min';
 WHERE : 'where';
