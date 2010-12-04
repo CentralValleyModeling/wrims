@@ -198,6 +198,7 @@ public class Struct {
 			else {
 			var_scope.put(name, scope);		
 				list = new ArrayList<String>();
+				list.add(scope);
 				list.add(kind);
 				list.add(units);
 				list.add("0");
@@ -231,6 +232,7 @@ public class Struct {
 			else {
 				var_scope.put(name, scope);	
 				list = new ArrayList<String>();
+				list.add(scope);
 				list.add(kind);
 				list.add(units);
 				list.addAll(content);

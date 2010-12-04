@@ -64,7 +64,7 @@ public class TestConvertWreslToTable {
 		
 		outFile = Tools.openFile(outputFilePath);
 		outFile.print(WriteCSV.svar_dss_header+"\n");
-		WriteCSV.mapStringList(parser.F.svar_dss, outFile);
+		WriteCSV.mapStringList(parser.F.svar_dss, inputFilePath,outFile);
 	    outFile.close();
 	    
 		String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svarDSS.expected");
@@ -92,7 +92,7 @@ public class TestConvertWreslToTable {
 		outputFilePath ="test-csv\\\\svar_table.csv";
 		outFile = Tools.openFile(outputFilePath);
 		outFile.print(WriteCSV.svar_table_header+"\n");
-		WriteCSV.mapStringList(parser.F.svar_table, outFile);
+		WriteCSV.mapStringList(parser.F.svar_table, inputFilePath,outFile);
 	    outFile.close();
 		
 		String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svarTable.expected");
@@ -119,8 +119,14 @@ public class TestConvertWreslToTable {
 		outputFilePath = "test-csv\\dvar.csv"; 
 		outFile = Tools.openFile(outputFilePath); 
 		outFile.print(WriteCSV.dvar_header+"\n");
-		WriteCSV.mapStringList(parser.F.dvar_std, outFile);
-		WriteCSV.mapStringList(parser.F.dvar_nonstd, outFile);
+
+		
+		Map<String, ArrayList<String>> mapAll = new HashMap<String, ArrayList<String>>();		
+		mapAll.putAll(parser.F.dvar_std);
+		mapAll.putAll(parser.F.dvar_nonstd);
+		
+		WriteCSV.mapStringList(mapAll, inputFilePath, outFile);
+		
 		outFile.close();
 		
 		String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_dvar.expected");

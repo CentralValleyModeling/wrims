@@ -266,17 +266,17 @@ sqlStatement returns[ArrayList<String> list]
 	: 'select' i1=all_ident 'from' i2=IDENT 
 	  ('given' i3=assignStatement)? ('use' i4=IDENT)? 
 	  i5=where_items?	{       
-				//$list.add("select");
+				$list.add("select");
 				$list.add($i1.text);
-				//$list.add("from");
+				$list.add("from");
 				$list.add($i2.text);
-				//$list.add("given");
+				$list.add("given");
 				$list.add($i3.text);
-				//$list.add("use");
+				$list.add("use");
 				$list.add($i4.text);
-				//$list.add("where"); 
+				$list.add("where"); 
 				if ($i5.list!=null) {$list.addAll($i5.list);}
-				else{$list.add(null);};				
+				//else{$list.add(null);};				
 	  }
 	;
 
@@ -284,7 +284,7 @@ where_items returns[ArrayList<String> list]
 	@init { $list = new ArrayList<String>(); }
 	:	 WHERE  (r1=assignStatement{$list.add($r1.text);} )
 	        (',' r=assignStatement {$list.add($r.text);}  )*
-	        {$list.add(null);}
+	        //{$list.add(null);}
 	;
 
 ///////////////////////////
