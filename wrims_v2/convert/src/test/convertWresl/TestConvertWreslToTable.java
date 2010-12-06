@@ -49,7 +49,7 @@ public class TestConvertWreslToTable {
 	
 	@Test(groups = { "WRESL_to_Table" })
 	public void svar() throws RecognitionException, IOException {
-		inputFilePath = "src\\test\\TestConvertWreslToTable_svarTable.wresl";
+		inputFilePath = "src\\test\\TestConvertWreslToTable_svar.wresl";
 		try {
 			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
@@ -69,7 +69,7 @@ public class TestConvertWreslToTable {
 		WriteCSV.svar(parser.F.svar,inputFilePath,outFile);
 	    outFile.close();
 		
-		String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svarTable.expected");
+		String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svar.expected");
 	    String test = 	  Tools.readFileAsString(outputFilePath);	
 		
 		Assert.assertEquals(test, expected);
