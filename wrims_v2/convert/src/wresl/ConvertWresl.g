@@ -150,7 +150,7 @@ svar_sum [String id, String sc]
 
 svar_table[String id, String sc]
 	:	'{' t=sqlStatement '}' { 
-			F.svarTable($id, $sc, $t.list);    };
+			F.svarTable($id, $sc, $t.list, $t.str);    };
 
 svar_cases[String id, String sc]
 	:   '{' c=caseStatements '}' { 
@@ -172,10 +172,10 @@ caseStatements returns[ArrayList<String> caseNames,
 			} )+
 	;	
 
-caseStatement returns[String caseNameStr, String conditionStr, ArrayList<String> contentList]
+caseStatement returns[String caseNameStr, String conditionStr, ArrayList<String> contentList, String sqlStr]
 @init { $contentList = new ArrayList<String>();} 
 	:  'case' i=IDENT '{' c=conditionStatement 
-	( s=sqlStatement   {$contentList.add("sql");$contentList.addAll($s.list);}
+	( s=sqlStatement   {$contentList.add("sql");$contentList.addAll($s.list);$sqlStr=$s.str;}
 	| v=valueStatement {$contentList.add("value");$contentList.add($v.str);}
 	| u=sumStatement   {$contentList.add("sum");$contentList.addAll($u.list);}
 	| g=goalStatement  {$contentList.add("goal");$contentList.addAll($g.list);}
@@ -261,11 +261,13 @@ valueStatement returns[String str]
 
 /// SQL related ///
 
-sqlStatement returns[ArrayList<String> list]
+sqlStatement returns[ArrayList<String> list, String str]
 	@init { $list = new ArrayList<String>(); }
-	: 'select' i1=all_ident 'from' i2=IDENT 
-	  ('given' i3=assignStatement)? ('use' i4=IDENT)? 
-	  i5=where_items?	{       
+	:  'select' i1=all_ident 
+	   'from' i2=IDENT {$str =" select "+$i1.text+" from "+$i2.text;} 
+	  ('given' i3=assignStatement {$str=$str+" given "+$i3.text;})? 
+	  ('use' i4=IDENT {$str=$str+" use "+$i4.text;})? 
+	  (i5=where_items {$str=$str+" where "+$i5.str;})?	{       
 				$list.add("select");
 				$list.add($i1.text);
 				$list.add("from");
@@ -274,16 +276,17 @@ sqlStatement returns[ArrayList<String> list]
 				$list.add($i3.text);
 				$list.add("use");
 				$list.add($i4.text);
-				$list.add("where"); 
-				if ($i5.list!=null) {$list.addAll($i5.list);}
+				
+				if ($i5.list!=null) {$list.add("where"); $list.addAll($i5.list);}
 				//else{$list.add(null);};				
 	  }
 	;
 
-where_items returns[ArrayList<String> list]
+where_items returns[ArrayList<String> list, String str]
 	@init { $list = new ArrayList<String>(); }
-	:	 WHERE  (r1=assignStatement{$list.add($r1.text);} )
-	        (',' r=assignStatement {$list.add($r.text);}  )*
+	:	 WHERE  (r1=assignStatement{$list.add($r1.text);$str=$r1.text;} )
+	        (',' r=assignStatement {$list.add($r.text);$str=$str+"; "+$r.text;}  )*
+	        //{ if ($list.size()>1) {$str = "(" + $str + ")";}}
 	        //{$list.add(null);}
 	;
 

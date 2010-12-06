@@ -1,3 +1,7 @@
+define evap_1 {timeseries kind 'EVAPORATION-RATE' units 'IN'}
+define evap_2 {timeseries kind 'EVAPORATION-RATE' units 'IN'}
+
+
 define nov_trigger_cfs {
         select    target
         from      feather_fish_203
@@ -9,7 +13,7 @@ define IntertieSwitch {
 define CVPDedBanksSwitch {
       select OnOff from   NewFacSwitch where  Facility = 2}
 
-define SWPShastaSwitch {
+define[local] SWPShastaSwitch {
       select OnOff from   NewFacSwitch where  Facility = 3}
 
 define minflowAFRPClear {select flow from AFRP_CLEAR given trigger=S1(-1)+S1mod use minimum where month=month}

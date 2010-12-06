@@ -174,7 +174,7 @@ public class TestConvertWresl {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 		
-		expected_struct.var_scope.put("force_c607","local");
+		expected_struct.goal_scope.put("force_c607","local");
 		expected_struct.goal_simple.put("force_c607","C607 > 500");
 		
 //	    String[] array={null,"local","global"};
@@ -186,7 +186,7 @@ public class TestConvertWresl {
 		//System.out.println("#############################: " + parser.modelMap.get("CVCWHEELING").goal_simple);
 		//System.out.println("#############################: " + expected_modelMap.get("CVCWHEELING").goal_simple);
 		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").goal_simple, expected_modelMap.get("CVCWHEELING").goal_simple);
-		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").var_scope, expected_modelMap.get("CVCWHEELING").var_scope);
+		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").goal_scope, expected_modelMap.get("CVCWHEELING").goal_scope);
 		
 	}	
 
@@ -212,7 +212,7 @@ public class TestConvertWresl {
 		expected_struct.include_file_scope.put("..\\..\\common\\System\\System_Sac.wresl","local");
 		expected_struct.include_file_scope.put("..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl","global");
 				
-		expected_struct.var_scope.put("force_c607","local");
+		expected_struct.goal_scope.put("force_c607","local");
 		expected_struct.goal_simple.put("force_c607","C607 > 500");
 		
 //	    String[] array={null,"local","global"};
@@ -224,7 +224,7 @@ public class TestConvertWresl {
 		//System.out.println("#############################: " + parser.modelMap.get("CVCWHEELING").goal_simple);
 		//System.out.println("#############################: " + expected_modelMap.get("CVCWHEELING").goal_simple);
 		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").goal_simple, expected_modelMap.get("CVCWHEELING").goal_simple);
-		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").var_scope, expected_modelMap.get("CVCWHEELING").var_scope);
+		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").goal_scope, expected_modelMap.get("CVCWHEELING").goal_scope);
 		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").include_file_scope, expected_modelMap.get("CVCWHEELING").include_file_scope);
 		
 	}			
@@ -328,17 +328,21 @@ public class TestConvertWresl {
 	    //String[] array;
 	    //ArrayList<String> list;
 	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
+	    Map<String, String>  expected_scope = new HashMap<String, String>();
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
-		Map<String, ArrayList<String>>  dvar_std = parser.F.dvar_std;
 		
 		expected.put("C_Tracy", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "0","unbounded"})));
 		expected.put("C_Banks", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "TAF", "0","unbounded"})));
+
+		expected_scope.put("C_Tracy","global");
+		expected_scope.put("C_Banks","global");
 		
-		Assert.assertEquals(dvar_std, expected);
+		Assert.assertEquals(parser.F.dvar_std, expected);
+		Assert.assertEquals(parser.F.dvar_scope, expected_scope);
 	}	
 
 	@Test(groups = { "WRESL_elements" })
@@ -400,7 +404,8 @@ public class TestConvertWresl {
 	    //ArrayList<String> list;
 	    Map<String, ArrayList<String>>  expected_dvar_alias = new HashMap<String, ArrayList<String>>();
 	    Map<String, String>  expected_svar_expression = new HashMap<String, String> ();
-	    Map<String, String> expected_var_scope = new HashMap<String, String>();
+	    Map<String, String> expected_svar_scope = new HashMap<String, String>();
+	    Map<String, String> expected_dvar_scope = new HashMap<String, String>();
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
@@ -410,11 +415,12 @@ public class TestConvertWresl {
 		expected_dvar_alias.put("D419_swpC6", new ArrayList<String>(Arrays.asList(new String[]{null,"CFS","D419_swp[monthlyweighted5]"})));
 		expected_svar_expression.put("minflow_C", "60");
 		
-		expected_var_scope.put("D419_swpC6", "global");
-		expected_var_scope.put("minflow_C", "local");
+		expected_dvar_scope.put("D419_swpC6", "global");
+		expected_svar_scope.put("minflow_C", "local");
 		
 		//Assert.assertEquals(1, 2);
-		Assert.assertEquals(parser.F.var_scope, expected_var_scope);
+		Assert.assertEquals(parser.F.svar_scope, expected_svar_scope);
+		Assert.assertEquals(parser.F.dvar_scope, expected_dvar_scope);
 		
 		Assert.assertEquals(parser.F.dvar_alias, expected_dvar_alias);
 		Assert.assertEquals(parser.F.svar_expression, expected_svar_expression);
@@ -438,12 +444,11 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
-		Map<String, ArrayList<String>>  dvar_nonstd = parser.F.dvar_nonstd;	
 
 		expected.put("C_SLCVP", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "unbounded", "unbounded"})));
 		expected.put("C_SacFea", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "0.", "6150*taf_cfs"})));
 		
-		Assert.assertEquals(dvar_nonstd, expected);
+		Assert.assertEquals(parser.F.dvar_nonstd, expected);
 	}		
 
 	@Test(groups = { "WRESL_elements" })
@@ -463,14 +468,13 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
-		Map<String, ArrayList<String>>  dvar_nonstd = parser.F.dvar_nonstd;	
 
 		expected.put("C_SLCVP", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "unbounded", "unbounded"})));
 		expected.put("C_SacFea", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "0", "6150*taf_cfs"})));
 		expected_var_scope.put("C_SLCVP", "global");
 		expected_var_scope.put("C_SacFea", "local");
 		
-		Assert.assertEquals(dvar_nonstd, expected);
+		Assert.assertEquals(parser.F.dvar_nonstd, expected);
 	}		
 
 	@Test(groups = { "WRESL_elements" })
@@ -507,18 +511,21 @@ public class TestConvertWresl {
 	        }
 
 	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
+	    Map<String, String>  expected_scope = new HashMap<String, String>();
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
-		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
-
+	
+		expected_scope.put("nov_trigger_cfs","global");
+		
 		expected.put("nov_trigger_cfs", new ArrayList<String>(Arrays.asList(new String[]{
-			"target","feather_fish_203",null,null,"month = NOV",null
+			"select","target","from","feather_fish_203","given",null,"use",null,"where","month = NOV"
 			})));
 		
-		Assert.assertEquals(svar_table, expected);
+		Assert.assertEquals(parser.F.svar_table, expected);
+		Assert.assertEquals(parser.F.svar_scope, expected_scope);
 	}	
 
 	@Test(groups = { "WRESL_elements" })
@@ -530,20 +537,21 @@ public class TestConvertWresl {
 	    catch(Exception e) {
 	         e.printStackTrace();
 	        }
-
+	    Map<String, String>  expected_scope = new HashMap<String, String>();
 	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
-		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
 
+		expected_scope.put("A_Orovl_last","global");
 		expected.put("A_Orovl_last", new ArrayList<String>(Arrays.asList(new String[]{
-			"area","res_info","storage=1000*S_Orovl(-1)","linear","res_num=6",null 
+			"select","area","from","res_info","given","storage=1000*S_Orovl(-1)","use","linear","where","res_num=6" 
 			})));
 		
-		Assert.assertEquals(svar_table, expected);
+		Assert.assertEquals(parser.F.svar_table, expected);
+		Assert.assertEquals(parser.F.svar_scope, expected_scope);		
 	}		
 
 	@Test(groups = { "WRESL_elements" })
@@ -557,18 +565,20 @@ public class TestConvertWresl {
 	        }
 
 	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
+	    Map<String, String>  expected_scope = new HashMap<String, String>();
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
-		Map<String, ArrayList<String>>  svar_table = parser.F.svar_table;	
-
-		expected.put("S_TrntyLevel4", new ArrayList<String>(Arrays.asList(new String[]{
-		//	"select","target","from","res_level","given",null,"use",null,"where","res_num=1","level=4","month=month" 
-		             "target"       ,"res_level"        ,null      ,null        ,"res_num=1","level=4","month=month",null })));
 		
-		Assert.assertEquals(svar_table, expected);
+		expected_scope.put("S_TrntyLevel4","global");
+		expected.put("S_TrntyLevel4", new ArrayList<String>(Arrays.asList(new String[]{
+			"select","target","from","res_level","given",null,"use",null,"where","res_num=1","level=4","month=month" })));
+		        //     "target"       ,"res_level"        ,null      ,null        ,"res_num=1","level=4","month=month",null 
+		
+		Assert.assertEquals(parser.F.svar_table, expected);
+		Assert.assertEquals(parser.F.svar_scope, expected_scope);		
 	}		
 	
 	@Test(groups = { "WRESL_elements" })
@@ -605,8 +615,8 @@ public class TestConvertWresl {
 		list_case_names.add("Febfore"); // this is needed to ensure the order of the cases, which is lost in map
 		list_conditions.add("month == FEB");
 		map_case_content.put("Febfore", Arrays.asList(new String[]{
-			//"sql","select","FEB","from","sacramento_runoff_forecast","given",null,"use",null,"where","wateryear=wateryear"
-			"sql"         ,"FEB"       ,"sacramento_runoff_forecast"        ,null,      null,        "wateryear=wateryear",null
+			"sql","select","FEB","from","sacramento_runoff_forecast","given",null,"use",null,"where","wateryear=wateryear"
+			//"sql"         ,"FEB"       ,"sacramento_runoff_forecast"        ,null,      null,        "wateryear=wateryear",null
 		}));
 		
 		/// new case
@@ -682,7 +692,7 @@ public class TestConvertWresl {
 		list_case_names.add("MartoMay"); // this is needed to ensure the order of the cases, which is lost in map
 		list_conditions.add("month >= MAR .and. month <= MAY");
 		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{
-				"sql","di","wsi_di_cvp_s","wsi=wsi_cvp_s","linear",null
+				"sql","select","di","from","wsi_di_cvp_s","given","wsi=wsi_cvp_s","use","linear"
 				}));
 		
 		/// new case
@@ -916,7 +926,7 @@ public class TestConvertWresl {
 //		}
 		
 		Assert.assertEquals(parser.F.goal_simple, expected);	
-		Assert.assertEquals(parser.F.var_scope, expected_scope);	
+		Assert.assertEquals(parser.F.goal_scope, expected_scope);	
 	}			
 
 	@Test(groups = { "WRESL_elements" })

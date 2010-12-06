@@ -8,6 +8,10 @@ import java.util.Map;
 
 public class Struct {
 
+	
+	public SvarProps sProps ; 
+	public Map<String,SvarProps> svar = new HashMap<String,SvarProps>(); 
+	
 	//public String inFile_or_inModel;
 	
 	public Map<String, String> sequence_orders = new HashMap<String, String>();
@@ -27,14 +31,22 @@ public class Struct {
 	public Map<String, ArrayList<String>> dvar_std = new HashMap<String, ArrayList<String>>();
 	public Map<String, ArrayList<String>> dvar_alias = new HashMap<String, ArrayList<String>>();
 
-	public Map<String, ArrayList<String>> svar_table = new HashMap<String, ArrayList<String>>();
+	public Map<String, ArrayList<String>> svar_table_text = new HashMap<String, ArrayList<String>>(); 
+	public Map<String, ArrayList<String>> svar_table = new HashMap<String, ArrayList<String>>();	
 	public Map<String, ArrayList<String>> svar_dss = new HashMap<String, ArrayList<String>>();
 	public Map<String, ArrayList<String>> svar_sum = new HashMap<String, ArrayList<String>>();
 
-	/// variable and scope
+	/// variable, scope, and type, units
 	public Map<String, String> var_all = new HashMap<String, String>();
-	public Map<String, String> var_scope = new HashMap<String, String>();
+	public Map<String, String> svar_scope = new HashMap<String, String>();
+	public Map<String, String> svar_type = new HashMap<String, String>();
+	public Map<String, String> dvar_scope = new HashMap<String, String>();
+	public Map<String, String> goal_scope = new HashMap<String, String>();
 	public Map<String, String> include_file_scope = new HashMap<String, String>();
+
+	public Map<String, ArrayList<String>> svar_type_units = new HashMap<String, ArrayList<String>>(); 
+	public Map<String, ArrayList<String>> dvar_type_units = new HashMap<String, ArrayList<String>>(); 
+
 	
 	/// models in a file
 	public ArrayList<String> model_list = new ArrayList<String>();	
@@ -91,7 +103,7 @@ public class Struct {
 			// System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "goal_simple");
 		} else {
-			var_scope.put(name, scope);
+			goal_scope.put(name, scope);
 			goal_simple.put(name, content);
 			var_all.put(name, "goal_simple");
 
@@ -104,7 +116,7 @@ public class Struct {
 			error_var_redefined.put(name, "goal_no_case");
 		} else {
 			list.add(0,"lhs");list.add(1,lhs);
-			var_scope.put(name, scope);
+			goal_scope.put(name, scope);
 			goal_no_case.put(name, list);
 			var_all.put(name, "goal_no_case");
 		}
@@ -116,7 +128,7 @@ public class Struct {
 			error_var_redefined.put(goalName, "goal_cases");
 			}
 			else {
-			var_scope.put(goalName, scope);
+			goal_scope.put(goalName, scope);
 			goal_cases.put(goalName, caseName);
 			goal_lhs.put(goalName, lhs);
 			goal_conditions.put(goalName, condition);
@@ -131,11 +143,18 @@ public class Struct {
 			error_var_redefined.put(svarName, "svar_cases");
 			}
 			else {
-		    var_scope.put(svarName, scope);
+		    svar_scope.put(svarName, scope);
 			svar_cases.put(svarName, caseName);
 			svar_conditions.put(svarName, condition);
 			svar_map_case_content.put(svarName, caseContent);
 			var_all.put(svarName, "svar_cases");
+			
+			sProps = new SvarProps();
+			sProps.caseName.addAll(caseName);
+			sProps.caseCondition.addAll(condition);
+			sProps.caseContent.putAll(caseContent);
+			svar.put(svarName, sProps);
+			
 			}
 	}		
 	
@@ -145,7 +164,7 @@ public class Struct {
 			error_var_redefined.put(name, "svar_expression");
 			}
 			else {
-			var_scope.put(name, scope);	
+			svar_scope.put(name, scope);	
 			svar_expression.put(name, content);
 			var_all.put(name, "svar_expression");
 			}
@@ -157,21 +176,35 @@ public class Struct {
 			error_var_redefined.put(name, "svar_sum");
 			}
 			else {
-			var_scope.put(name, scope);
+			svar_scope.put(name, scope);
 			svar_sum.put(name, content);
 			var_all.put(name, "svar_sum");
 			}
 	}	
 
-	public void svarTable(String name, String scope, ArrayList<String> content) {
+	public void svarTable(String name, String scope, ArrayList<String> content, String sqlStr) {
 		if (var_all.containsKey(name)){
 			//System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "svar_table");
 			}
 			else {
-			var_scope.put(name, scope);	
-			svar_table.put(name, content);
-			var_all.put(name, "svar_table");
+				var_all.put(name, "svar_table");
+				svar_scope.put(name, scope);	
+			
+			list = new ArrayList<String>();
+			//list.add(scope);
+			list.addAll(content);
+			svar_table.put(name, list);
+
+			list = new ArrayList<String>();
+			//list.add(scope);
+			list.add(sqlStr);
+			svar_table_text.put(name, list);
+			
+			sProps = new SvarProps();
+			sProps.format="table";
+			sProps.expression=sqlStr;
+			svar.put(name, sProps);
 			}
 	}		
 
@@ -181,12 +214,21 @@ public class Struct {
 			error_var_redefined.put(name, "svar_dss");
 			}
 			else {
-			var_scope.put(name, scope);		
+			svar_scope.put(name, scope);
+			svar_type.put(name, "timeseries");
 				list = new ArrayList<String>();
 				list.add(kind);
 				list.add(units);	
 			svar_dss.put(name, list);
 			var_all.put(name, "svar_dss");
+			
+			SvarProps props = new SvarProps();
+			props.scope=scope;
+			props.kind=kind;
+			props.units=units;
+			props.format="timeseries";
+			svar.put(name, props);
+			
 			}
 	}		
 
@@ -196,9 +238,9 @@ public class Struct {
 			error_var_redefined.put(name, "dvar_std");
 			}
 			else {
-			var_scope.put(name, scope);		
+			dvar_scope.put(name, scope);		
 				list = new ArrayList<String>();
-				list.add(scope);
+				//list.add(scope);
 				list.add(kind);
 				list.add(units);
 				list.add("0");
@@ -214,7 +256,7 @@ public class Struct {
 			error_var_redefined.put(name, "dvar_alias");
 			}
 			else {
-				var_scope.put(name, scope);	
+				dvar_scope.put(name, scope);	
 				list = new ArrayList<String>();
 				list.add(kind);
 				list.add(units);
@@ -230,9 +272,9 @@ public class Struct {
 			error_var_redefined.put(name, "dvar_nonstd");
 			}
 			else {
-				var_scope.put(name, scope);	
+				dvar_scope.put(name, scope);	
 				list = new ArrayList<String>();
-				list.add(scope);
+				//list.add(scope);
 				list.add(kind);
 				list.add(units);
 				list.addAll(content);
