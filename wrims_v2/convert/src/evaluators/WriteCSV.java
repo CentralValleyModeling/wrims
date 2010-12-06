@@ -42,34 +42,34 @@ public class WriteCSV {
 			}
 	  };
 
-	public static void svarCase(Map<String,SvarProps> sMap, String filePath, PrintWriter out) {
-		    
-			List<String> keys = new ArrayList<String> (sMap.keySet());
-			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
-		    
-		    for (String k: keys ){
-		    	out.print(k);
-		    	
-		    	SvarProps p = sMap.get(k);
-		    	
-		    	for (int i = ){
-		
-		    	
-		    	out.print(","+p.scope);  // for SCOPE
-		    	out.print(",Y"); //for INCLUDE
-		    	out.print(","+p.format); //for TYPE
-		    	out.print(","+p.kind); //for KIND		    	
-		    	out.print(","+p.units); //for UNITS
-		    	out.print(","+c); //for CASE
-		    	out.print(","+); //for CONDITION
-		    	out.print(","+p.expression); //for EXPRESSION
-		    	
-
-				out.print(","+filePath);
-				out.print("\n");
-		    	}
-			}
-	  };	  
+//	public static void svarCase(Map<String,SvarProps> sMap, String filePath, PrintWriter out) {
+//		    
+//			List<String> keys = new ArrayList<String> (sMap.keySet());
+//			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
+//		    
+//		    for (String k: keys ){
+//		    	out.print(k);
+//		    	
+//		    	SvarProps p = sMap.get(k);
+//		    	
+//		    	for (int i = ){
+//		
+//		    	
+//		    	out.print(","+p.scope);  // for SCOPE
+//		    	out.print(",Y"); //for INCLUDE
+//		    	out.print(","+p.format); //for TYPE
+//		    	out.print(","+p.kind); //for KIND		    	
+//		    	out.print(","+p.units); //for UNITS
+//		    	out.print(","+c); //for CASE
+//		    	out.print(","+); //for CONDITION
+//		    	out.print(","+p.expression); //for EXPRESSION
+//		    	
+//
+//				out.print(","+filePath);
+//				out.print("\n");
+//		    	}
+//			}
+//	  };	  
 	  
 	public static void obsolete(Object obj, Map<String,String> scope, String filePath, PrintWriter out) {
 			
