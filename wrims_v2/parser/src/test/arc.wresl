@@ -1,0 +1,3 @@
+name,	  include	, expression,		units,	lowerbound,     upperbound,	startnode	, endnode ,      type 
+C_Banks,    y,		45		,	cfs,	0,		3160	  ,             SJR2	,	SBay	,         channel 
+D_Banks,    y,		#		,	cfs,	0,		3160	  ,             SBay	,	SJR2	,         delivery 

@@ -1,0 +1,3 @@
+cycle,		file,			condition
+global,		src\test\global.wresl,	always
+cycle1,		src\test\cycle1.wresl,	always

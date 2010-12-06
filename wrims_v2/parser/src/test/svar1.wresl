@@ -1,0 +1,2 @@
+name,		include,	type, 		units,	writetodss,	case,    caseinclude,	condition,	expression
+Frcst_amrX,	y,		test,		cfs,	y,		case1,	y,		always,		C_Kswck_Exc1[cycle2]

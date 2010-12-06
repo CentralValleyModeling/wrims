@@ -1,0 +1,5 @@
+file, include
+src\test\dvar.wresl, y
+src\test\svar.wresl, y
+src\test\constraint.wresl, y
+src\test\weights.wresl, y
