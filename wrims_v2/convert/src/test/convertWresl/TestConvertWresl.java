@@ -21,6 +21,7 @@ import org.testng.annotations.*;
 import org.testng.Assert;
 
 import evaluators.Struct;
+import evaluators.SvarProps;
 
 
 //import evaluators.Demo;
@@ -580,9 +581,70 @@ public class TestConvertWresl {
 		Assert.assertEquals(parser.F.svar_table, expected);
 		Assert.assertEquals(parser.F.svar_scope, expected_scope);		
 	}		
-	
+
 	@Test(groups = { "WRESL_elements" })
 	public void svarCase() throws RecognitionException, IOException {
+		inputFilePath ="src\\test\\TestConvertWresl_svarCase.wresl";
+		try {
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	    	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.currentFilePath = inputFilePath; parser.evaluator();		
+	    
+		Map<String, ArrayList<SvarProps>> expected_svMap = new HashMap<String, ArrayList<SvarProps>>();
+		ArrayList<SvarProps> svPropsList = new ArrayList<SvarProps>();
+		SvarProps svProps;
+		
+		svProps = new SvarProps();
+		svProps.caseName = "Febfore";
+		svProps.caseCondition = "month == FEB";
+		svProps.expression = "select FEB from sacramento_runoff_forecast where wateryear=wateryear"; 
+		svPropsList.add(svProps);
+
+		svProps = new SvarProps();
+		svProps.caseName = "JuntoJan";
+		svProps.caseCondition = "always";
+		svProps.expression = "value 0"; 
+		svPropsList.add(svProps);
+		
+		expected_svMap.put("frcst_sac", svPropsList);
+		
+		//Assert.assertEquals(parser.F.svarMap, expected_svMap);
+
+		for (String k : expected_svMap.keySet()) {
+			
+			for (int i=0;i<expected_svMap.get(k).size();i++) {
+			
+				System.out.println(expected_svMap.get(k).get(i));
+				
+			Assert.assertEquals(parser.F.svarMap.get(k).get(i).equalEva(), expected_svMap.get(k).get(i).equalEva());
+		}
+		}
+		
+//		for (SvarProps i : svPropsList) {
+//			Assert.assertEquals(parser.F.svar_cases.get(i), expected_svar_cases.get(i));
+//		}
+//		
+//		for (String i : svar_cases_keys) {
+//			Assert.assertEquals(parser.F.svar_conditions.get(i), expected_svar_conditions.get(i));
+//		}
+//
+//		for (String i : svar_cases_keys) {
+//			for (String j : expected_svar_map_case_content.get(i).keySet()) {
+//				//System.out.println(i+":"+j);
+//				Assert.assertEquals(parser.F.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
+//			}
+//		}		
+	}	
+	
+	@Test(groups = { "WRESL_elements" })
+	public void svarCaseObsolete() throws RecognitionException, IOException {
 		inputFilePath ="src\\test\\TestConvertWresl_svarCase.wresl";
 		try {
 			stream = new ANTLRFileStream(inputFilePath, "UTF8");

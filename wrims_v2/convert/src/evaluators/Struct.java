@@ -8,9 +8,11 @@ import java.util.Map;
 
 public class Struct {
 
-	
-	public SvarProps sProps ; 
-	public Map<String,SvarProps> svar = new HashMap<String,SvarProps>(); 
+	/// svar data structure
+	public SvarProps svarProps ; 
+	public ArrayList<SvarProps> svarPropsList ; 
+	public Map<String,SvarProps> svarMapSimple = new HashMap<String,SvarProps>(); 
+	public Map<String,ArrayList<SvarProps>> svarMap = new HashMap<String,ArrayList<SvarProps>>(); 
 	
 	//public String inFile_or_inModel;
 	
@@ -137,7 +139,8 @@ public class Struct {
 			}
 	}	
 
-	public void svarCase(String svarName, String scope, ArrayList<String> caseName, ArrayList<String> condition, Map<String, ArrayList<String>> caseContent) {
+	public void svarCase(String svarName, String scope, ArrayList<SvarProps> svPropsList, ArrayList<String> caseName, ArrayList<String> condition, ArrayList<String> expression, Map<String, ArrayList<String>> caseContent) {
+
 		if (var_all.containsKey(svarName)){
 			//System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(svarName, "svar_cases");
@@ -149,25 +152,50 @@ public class Struct {
 			svar_map_case_content.put(svarName, caseContent);
 			var_all.put(svarName, "svar_cases");
 			
-			sProps = new SvarProps();
-			sProps.caseName.addAll(caseName);
-			sProps.caseCondition.addAll(condition);
-			sProps.caseContent.putAll(caseContent);
-			svar.put(svarName, sProps);
+			svarMap.put(svarName, svPropsList);
 			
+//			svarProps = new SvarProps();
+//			
+//			for ( int i = 0; i< caseName.size();i++) {
+//			
+//			svarProps.caseName=caseName.get(i);
+//			svarProps.caseCondition=condition.get(i);
+//			svarProps.caseExpression=expression.get(i);
+//
+//			}
+//			svarPropsList = new ArrayList<SvarProps>();
+//			svarPropsList.add(svarProps);
+//			svarMap.put(svarName, svarPropsList);
+//			
 			}
 	}		
 	
-	public void svarExpression(String name, String scope, String content) {
-		if (var_all.containsKey(name)){
+	public void svarExpression(String svarName, String scope, String expression) {
+		if (var_all.containsKey(svarName)){
 			//System.out.println("error... variable redefined: " + $i.text);
-			error_var_redefined.put(name, "svar_expression");
+			error_var_redefined.put(svarName, "svar_expression");
 			}
 			else {
-			svar_scope.put(name, scope);	
-			svar_expression.put(name, content);
-			var_all.put(name, "svar_expression");
+			svar_scope.put(svarName, scope);	
+			svar_expression.put(svarName, expression);
+			var_all.put(svarName, "svar_expression");
+			
+			
+			String caseName = "default";
+			String condition = "always";
+			
+			
+			
+			svarProps = new SvarProps();
+			svarProps.caseName=caseName;
+			svarProps.caseCondition=condition;
+			svarProps.caseExpression=expression;
+			
+			svarPropsList = new ArrayList<SvarProps>();
+			svarPropsList.add(svarProps);
+			svarMap.put(svarName, svarPropsList);
 			}
+			
 	}	
 	
 	public void svarSum(String name, String scope, ArrayList<String> content) {
@@ -201,10 +229,16 @@ public class Struct {
 			list.add(sqlStr);
 			svar_table_text.put(name, list);
 			
-			sProps = new SvarProps();
-			sProps.format="table";
-			sProps.expression=sqlStr;
-			svar.put(name, sProps);
+			/// clearer data structure
+			svarProps = new SvarProps();
+			svarProps.scope=scope;
+			svarProps.format="table";
+			svarProps.expression=sqlStr;
+			svarMapSimple.put(name, svarProps);
+			
+			svarPropsList = new ArrayList<SvarProps>();
+			svarPropsList.add(svarProps);
+			svarMap.put(name, svarPropsList);
 			}
 	}		
 
@@ -221,13 +255,14 @@ public class Struct {
 				list.add(units);	
 			svar_dss.put(name, list);
 			var_all.put(name, "svar_dss");
-			
+
+			/// clearer data structure
 			SvarProps props = new SvarProps();
 			props.scope=scope;
 			props.kind=kind;
 			props.units=units;
 			props.format="timeseries";
-			svar.put(name, props);
+			svarMapSimple.put(name, props);
 			
 			}
 	}		

@@ -17,28 +17,34 @@ public class WriteCSV {
 	  public static String svar_header ="NAME,SCOPE,INCLUDE,FORMAT,KIND,UNITS,CASE,CONDITION,EXPRESSION,FROM_WRESL_FILE,COMMENT,";
 	  public static String dvar_header ="NAME,SCOPE,INCLUDE,KIND,UNITS,LOWER_BOUND,UPPER_BOUND,FROM_WRESL_FILE,COMMENT,";
 	  
-	public static void svar(Map<String,SvarProps> sMap, String filePath, PrintWriter out) {
+	public static void svar(Map<String,ArrayList<SvarProps>> sMap, String filePath, PrintWriter out) {
 		    
 			List<String> keys = new ArrayList<String> (sMap.keySet());
 			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
-		    
+		    //List<SvarProps> svarPropsList;
+			
 		    for (String k: keys ){
 		    	out.print(k);
 		    	
-		    	SvarProps p = sMap.get(k);
+		    	//svarPropsList = sMap.get(k);
 		    	
+		    	for (SvarProps p :sMap.get(k))
+		    	
+		    	//	SvarProps p =sMap.get(k);
+		    	{
 		    	out.print(","+p.scope);  // for SCOPE
 		    	out.print(",Y"); //for INCLUDE
 		    	out.print(","+p.format); //for TYPE
 		    	out.print(","+p.kind); //for KIND		    	
 		    	out.print(","+p.units); //for UNITS
-		    	out.print(", "); //for CASE
-		    	out.print(", "); //for CONDITION
+		    	out.print(","+p.caseName); //for CASE
+		    	out.print(","+p.caseCondition); //for CONDITION
 		    	out.print(","+p.expression); //for EXPRESSION
 		    	
 
 				out.print(","+filePath);
 				out.print("\n");	
+		    	}
 			}
 	  };
 
@@ -52,7 +58,7 @@ public class WriteCSV {
 //		    	
 //		    	SvarProps p = sMap.get(k);
 //		    	
-//		    	for (int i = ){
+//		    	for (String c:  ){
 //		
 //		    	
 //		    	out.print(","+p.scope);  // for SCOPE

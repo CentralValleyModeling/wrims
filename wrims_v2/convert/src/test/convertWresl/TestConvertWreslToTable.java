@@ -66,7 +66,7 @@ public class TestConvertWreslToTable {
 		outFile = Tools.openFile(outputFilePath);
 		outFile.print(WriteCSV.svar_header+"\n");
 		
-		WriteCSV.svar(parser.F.svar,inputFilePath,outFile);
+		WriteCSV.svar(parser.F.svarMap,inputFilePath,outFile);
 	    outFile.close();
 		
 		String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svar.expected");
@@ -94,7 +94,7 @@ public class TestConvertWreslToTable {
 		outFile = Tools.openFile(outputFilePath);
 		outFile.print(WriteCSV.svar_header+"\n");
 		
-		WriteCSV.svar(parser.F.svar,inputFilePath,outFile);
+		WriteCSV.svar(parser.F.svarMap,inputFilePath,outFile);
 	    outFile.close();
 		
 		String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svarCase.expected");

@@ -12,6 +12,7 @@ options {
   import evaluators.Struct;
   import evaluators.Model;
   import evaluators.Tools;
+  import evaluators.SvarProps;  
 }
 
 @lexer::header {
@@ -154,34 +155,47 @@ svar_table[String id, String sc]
 
 svar_cases[String id, String sc]
 	:   '{' c=caseStatements '}' { 
-            F.svarCase($id, $sc, $c.caseNames, $c.conditions, $c.caseContent);  };
+            F.svarCase($id, $sc, $c.svPropsList, $c.caseNames, $c.conditions, $c.expressions, $c.caseContent);  };
 	
 caseStatements returns[ArrayList<String> caseNames, 
 					   ArrayList<String> conditions, 
-					   Map<String, ArrayList<String>> caseContent ]
+					   ArrayList<String> expressions, 
+					   Map<String, ArrayList<String>> caseContent,
+					   ArrayList<SvarProps> svPropsList ]
 					   
 @init { $caseNames = new ArrayList<String>(); 
         $conditions = new ArrayList<String>();
-        $caseContent = new HashMap<String, ArrayList<String>>(); }
+        $expressions = new ArrayList<String>();
+        $caseContent = new HashMap<String, ArrayList<String>>();
+        $svPropsList = new ArrayList<SvarProps>();
+         }
         
 	:  ( c=caseStatement  {
 			$caseNames.add($c.caseNameStr);
-			$conditions.add($c.conditionStr);			
-			$caseContent.put($c.caseNameStr, $c.contentList);			         
+			$conditions.add($c.conditionStr);	
+			$expressions.add($c.expressionStr);			
+			$caseContent.put($c.caseNameStr, $c.contentList);
+			$svPropsList.add($c.svProps);			         
 			
-			} )+
+			
+			} )+ 
 	;	
 
-caseStatement returns[String caseNameStr, String conditionStr, ArrayList<String> contentList, String sqlStr]
-@init { $contentList = new ArrayList<String>();} 
+caseStatement returns[SvarProps svProps, String caseNameStr, String conditionStr, String expressionStr, ArrayList<String> contentList]
+@init { $contentList = new ArrayList<String>();
+	    $svProps = new SvarProps();
+	} 
 	:  'case' i=IDENT '{' c=conditionStatement 
-	( s=sqlStatement   {$contentList.add("sql");$contentList.addAll($s.list);$sqlStr=$s.str;}
-	| v=valueStatement {$contentList.add("value");$contentList.add($v.str);}
-	| u=sumStatement   {$contentList.add("sum");$contentList.addAll($u.list);}
+	( s=sqlStatement   {$contentList.add("sql");$contentList.addAll($s.list);$expressionStr=$s.str;$svProps.expression = $s.str;}
+	| v=valueStatement {$contentList.add("value");$contentList.add($v.str);$expressionStr=$v.str;$svProps.expression = $v.str;}
+	| u=sumStatement   {$contentList.add("sum");$contentList.addAll($u.list);$expressionStr=$u.str;$svProps.expression = $u.str;}
 	| g=goalStatement  {$contentList.add("goal");$contentList.addAll($g.list);}
 	) '}' {			
 			$caseNameStr = $i.text;
 			$conditionStr = $c.str;
+			$svProps.caseCondition = $c.str;
+			$svProps.caseName = $i.text;
+			
 			//if ($v.str !=null && $v.str!="")      {$contentList.add("value");$contentList.add($v.str);}
 			//if ($s.list !=null && ! $s.list.isEmpty() ) {$contentList.add("sql");$contentList.addAll($s.list);}
 	}
@@ -306,10 +320,12 @@ other_func
 inline_func 
 	: IDENT '(' ( ('-' INTEGER) | PREV_MON | 'i' ) ')' ;
 
-sumStatement returns[ArrayList<String> list]
+sumStatement returns[ArrayList<String> list, String str]
 	@init { $list = new ArrayList<String>(); }
-	: s=sum_func e=expression
-		{$list.add($s.text.replace(",",";"));$list.add($e.str);}
+	: s=sum_func e=expression{
+		$list.add($s.text.replace(",",";"));$list.add($e.str);
+		$str = $s.text.replace(",",";") + " " + $e.str;
+		}
 	;
 
 sum_func
