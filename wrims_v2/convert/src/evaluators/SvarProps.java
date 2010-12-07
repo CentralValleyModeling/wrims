@@ -26,7 +26,8 @@ public class SvarProps {
 	
 	public String equalEva(){
 		
-		String temp = "s:"+scope+format+kind+units+expression+caseName+caseCondition+caseExpression;
+		String s = "|";
+		String temp = scope+s+format+s+kind+s+units+s+expression+s+caseName+s+caseCondition+s+caseExpression;
 		return temp;
 		
 	}
@@ -35,15 +36,21 @@ public class SvarProps {
 	public boolean equals(Object obj)
 	{
 
-	  if((obj == null) || (obj.getClass() != this.getClass()))
-	  	{return false;}
-	  
-	  else if (this.equalEva() == ((SvarProps) obj).equalEva()){
+		if ((obj == null) || (obj.getClass() != this.getClass())) {
+			return false;
+		}
 
-	    return true;
-	  }
-	  
-	  return false;
+		else if (((SvarProps) obj).equalEva() == null) {
+			return false;
+		}
+
+		else if (this.equalEva() == ((SvarProps) obj).equalEva()) {
+			return true;
+		}
+
+		else {
+			return false;
+		}
 	}
 }
 	

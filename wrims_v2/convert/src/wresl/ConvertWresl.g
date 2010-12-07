@@ -278,7 +278,7 @@ valueStatement returns[String str]
 sqlStatement returns[ArrayList<String> list, String str]
 	@init { $list = new ArrayList<String>(); }
 	:  'select' i1=all_ident 
-	   'from' i2=IDENT {$str =" select "+$i1.text+" from "+$i2.text;} 
+	   'from' i2=IDENT {$str ="select "+$i1.text+" from "+$i2.text;} 
 	  ('given' i3=assignStatement {$str=$str+" given "+$i3.text;})? 
 	  ('use' i4=IDENT {$str=$str+" use "+$i4.text;})? 
 	  (i5=where_items {$str=$str+" where "+$i5.str;})?	{       

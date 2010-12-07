@@ -500,6 +500,29 @@ public class TestConvertWresl {
 		
 		Assert.assertEquals(svar_dss, expected);
 	}		
+
+	@Test(groups = { "WRESL_elements" })
+	public void svarDSSNew() throws RecognitionException, IOException {
+		inputFilePath = "src\\test\\TestConvertWresl_svarDSS.wresl";
+		try {
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+
+	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.currentFilePath = inputFilePath; parser.evaluator();
+		Map<String, ArrayList<String>>  svar_dss = parser.F.svar_dss;	
+
+		expected.put("evap_S_Orovl", new ArrayList<String>(Arrays.asList(new String[]{"EVAPORATION-RATE", "IN"})));
+		
+		Assert.assertEquals(svar_dss, expected);
+	}	
 	
 	@Test(groups = { "WRESL_elements" })
 	public void svarTable() throws RecognitionException, IOException {
@@ -583,8 +606,8 @@ public class TestConvertWresl {
 	}		
 
 	@Test(groups = { "WRESL_elements" })
-	public void svarCase() throws RecognitionException, IOException {
-		inputFilePath ="src\\test\\TestConvertWresl_svarCase.wresl";
+	public void svarCaseNew() throws RecognitionException, IOException {
+		inputFilePath ="src\\test\\TestConvertWresl_svarCaseNew.wresl";
 		try {
 			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
@@ -598,49 +621,59 @@ public class TestConvertWresl {
 		parser.currentFilePath = inputFilePath; parser.evaluator();		
 	    
 		Map<String, ArrayList<SvarProps>> expected_svMap = new HashMap<String, ArrayList<SvarProps>>();
-		ArrayList<SvarProps> svPropsList = new ArrayList<SvarProps>();
+		ArrayList<SvarProps> svPropsList;
 		SvarProps svProps;
 		
+		/// 1st key
+		svPropsList = new ArrayList<SvarProps>();
+		/// 1st case
 		svProps = new SvarProps();
 		svProps.caseName = "Febfore";
 		svProps.caseCondition = "month == FEB";
 		svProps.expression = "select FEB from sacramento_runoff_forecast where wateryear=wateryear"; 
 		svPropsList.add(svProps);
-
+		/// 2nd case
 		svProps = new SvarProps();
 		svProps.caseName = "JuntoJan";
 		svProps.caseCondition = "always";
-		svProps.expression = "value 0"; 
+		svProps.expression = "0"; 
 		svPropsList.add(svProps);
-		
+		/// add 1st key
 		expected_svMap.put("frcst_sac", svPropsList);
 		
-		//Assert.assertEquals(parser.F.svarMap, expected_svMap);
+		/// 2nd key
+		svPropsList = new ArrayList<SvarProps>();
+		/// 1st case
+		svProps = new SvarProps();
+		svProps.caseName = "MAR_SEP";
+		svProps.caseCondition = "month >= MAR .and. month <= SEP";
+		svProps.expression = "sum(i=-(month-MAY);SEP-month) I_Folsm(i)*cfs_taf(i) + I300(i)*cfs_taf(i)"; 
+		svPropsList.add(svProps);
+		/// 2nd case
+		svProps = new SvarProps();
+		svProps.caseName = "other";
+		svProps.caseCondition = "always";
+		svProps.expression = "0.0"; 
+		svPropsList.add(svProps);
+		/// add 2nd key
+		expected_svMap.put("AmerFrcstInflow", svPropsList);
 
-		for (String k : expected_svMap.keySet()) {
+		
+		ArrayList<String> allKeys = new ArrayList<String>();
+		allKeys.addAll(expected_svMap.keySet());
+		allKeys.addAll(parser.F.svarMap.keySet());
+		
+
+		for (String k : allKeys) {
 			
 			for (int i=0;i<expected_svMap.get(k).size();i++) {
 			
 				System.out.println(expected_svMap.get(k).get(i));
 				
-			Assert.assertEquals(parser.F.svarMap.get(k).get(i).equalEva(), expected_svMap.get(k).get(i).equalEva());
+				Assert.assertEquals(parser.F.svarMap.get(k).get(i).equalEva(), expected_svMap.get(k).get(i).equalEva());
+			}
 		}
-		}
-		
-//		for (SvarProps i : svPropsList) {
-//			Assert.assertEquals(parser.F.svar_cases.get(i), expected_svar_cases.get(i));
-//		}
-//		
-//		for (String i : svar_cases_keys) {
-//			Assert.assertEquals(parser.F.svar_conditions.get(i), expected_svar_conditions.get(i));
-//		}
-//
-//		for (String i : svar_cases_keys) {
-//			for (String j : expected_svar_map_case_content.get(i).keySet()) {
-//				//System.out.println(i+":"+j);
-//				Assert.assertEquals(parser.F.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
-//			}
-//		}		
+			
 	}	
 	
 	@Test(groups = { "WRESL_elements" })
