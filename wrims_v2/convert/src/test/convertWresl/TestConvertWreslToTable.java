@@ -23,7 +23,7 @@ import org.testng.annotations.*;
 import org.testng.Assert;
 
 import evaluators.Struct;
-import evaluators.SvarProps;
+import evaluators.Svar;
 import evaluators.Tools;
 import evaluators.WriteCSV;
 
@@ -62,11 +62,11 @@ public class TestConvertWreslToTable {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 		
-		outputFilePath ="test-csv\\svar.csv";
+		outputFilePath ="test-csv\\sv.csv";
 		outFile = Tools.openFile(outputFilePath);
 		outFile.print(WriteCSV.svar_header+"\n");
 		
-		WriteCSV.svar(parser.F.svarMap,inputFilePath,outFile);
+		WriteCSV.svar(parser.F.svMap,inputFilePath,outFile);
 	    outFile.close();
 		
 		String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svar.expected");
@@ -94,7 +94,7 @@ public class TestConvertWreslToTable {
 		outFile = Tools.openFile(outputFilePath);
 		outFile.print(WriteCSV.svar_header+"\n");
 		
-		WriteCSV.svar(parser.F.svarMap,inputFilePath,outFile);
+		WriteCSV.svar(parser.F.svMap,inputFilePath,outFile);
 	    outFile.close();
 		
 		String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svarCase.expected");

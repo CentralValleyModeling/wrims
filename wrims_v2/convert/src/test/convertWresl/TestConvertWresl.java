@@ -21,7 +21,8 @@ import org.testng.annotations.*;
 import org.testng.Assert;
 
 import evaluators.Struct;
-import evaluators.SvarProps;
+import evaluators.Svar;
+
 
 
 //import evaluators.Demo;
@@ -620,58 +621,52 @@ public class TestConvertWresl {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();		
 	    
-		Map<String, ArrayList<SvarProps>> expected_svMap = new HashMap<String, ArrayList<SvarProps>>();
-		ArrayList<SvarProps> svPropsList;
-		SvarProps svProps;
 		
-		/// 1st key
-		svPropsList = new ArrayList<SvarProps>();
-		/// 1st case
-		svProps = new SvarProps();
-		svProps.caseName = "Febfore";
-		svProps.caseCondition = "month == FEB";
-		svProps.expression = "select FEB from sacramento_runoff_forecast where wateryear=wateryear"; 
-		svPropsList.add(svProps);
-		/// 2nd case
-		svProps = new SvarProps();
-		svProps.caseName = "JuntoJan";
-		svProps.caseCondition = "always";
-		svProps.expression = "0"; 
-		svPropsList.add(svProps);
-		/// add 1st key
-		expected_svMap.put("frcst_sac", svPropsList);
-		
-		/// 2nd key
-		svPropsList = new ArrayList<SvarProps>();
-		/// 1st case
-		svProps = new SvarProps();
-		svProps.caseName = "MAR_SEP";
-		svProps.caseCondition = "month >= MAR .and. month <= SEP";
-		svProps.expression = "sum(i=-(month-MAY);SEP-month) I_Folsm(i)*cfs_taf(i) + I300(i)*cfs_taf(i)"; 
-		svPropsList.add(svProps);
-		/// 2nd case
-		svProps = new SvarProps();
-		svProps.caseName = "other";
-		svProps.caseCondition = "always";
-		svProps.expression = "0.0"; 
-		svPropsList.add(svProps);
-		/// add 2nd key
-		expected_svMap.put("AmerFrcstInflow", svPropsList);
+		Svar sv;
+		ArrayList<String> svList =  new ArrayList<String>();
+		Map<String, Svar> expected_svMap = new HashMap<String, Svar>();
 
+		
+		/// 1st sv
+		sv = new Svar();
+		/// 1st case
+		sv.caseName.add("Febfore");
+		sv.caseCondition.add("month == FEB");
+		sv.caseExpression.add("select FEB from sacramento_runoff_forecast where wateryear=wateryear"); 
+		/// 2nd case
+		sv.caseName.add("JuntoJan");
+		sv.caseCondition.add("always");
+		sv.caseExpression.add("0"); 
+		/// add 1st key
+		expected_svMap.put("frcst_sac", sv);
+		svList.add("frcst_sac");
+		
+		/// 2nd sv
+		sv = new Svar();
+		/// 1st case
+		sv.caseName.add("MAR_SEP");
+		sv.caseCondition.add("month >= MAR .and. month <= SEP");
+		sv.caseExpression.add("sum(i=-(month-MAY);SEP-month) I_Folsm(i)*cfs_taf(i) + I300(i)*cfs_taf(i)"); 
+		/// 2nd case
+		sv.caseName.add("other");
+		sv.caseCondition.add("always");
+		sv.caseExpression.add("0.0"); 
+		/// add 2nd key
+		expected_svMap.put("AmerFrcstInflow", sv);
+		svList.add("AmerFrcstInflow");
 		
 		ArrayList<String> allKeys = new ArrayList<String>();
 		allKeys.addAll(expected_svMap.keySet());
-		allKeys.addAll(parser.F.svarMap.keySet());
+		allKeys.addAll(parser.F.svMap.keySet());
 		
 
 		for (String k : allKeys) {
 			
-			for (int i=0;i<expected_svMap.get(k).size();i++) {
-			
-				System.out.println(expected_svMap.get(k).get(i));
+
+				//System.out.println(expected_svMap.get(k));
 				
-				Assert.assertEquals(parser.F.svarMap.get(k).get(i).equalEva(), expected_svMap.get(k).get(i).equalEva());
-			}
+				Assert.assertEquals(parser.F.svMap.get(k).equalEva(), expected_svMap.get(k).equalEva());
+
 		}
 			
 	}	

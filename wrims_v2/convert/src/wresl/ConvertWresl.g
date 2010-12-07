@@ -12,7 +12,7 @@ options {
   import evaluators.Struct;
   import evaluators.Model;
   import evaluators.Tools;
-  import evaluators.SvarProps;  
+  import evaluators.Svar;    
 }
 
 @lexer::header {
@@ -155,46 +155,48 @@ svar_table[String id, String sc]
 
 svar_cases[String id, String sc]
 	:   '{' c=caseStatements '}' { 
-            F.svarCase($id, $sc, $c.svPropsList, $c.caseNames, $c.conditions, $c.expressions, $c.caseContent);  };
+            F.svarCase($id, $sc,  $c.sv,  $c.caseNames, $c.conditions, $c.expressions, $c.caseContent);  };
 	
 caseStatements returns[ArrayList<String> caseNames, 
 					   ArrayList<String> conditions, 
 					   ArrayList<String> expressions, 
 					   Map<String, ArrayList<String>> caseContent,
-					   ArrayList<SvarProps> svPropsList ]
+					   Svar sv ]
 					   
 @init { $caseNames = new ArrayList<String>(); 
         $conditions = new ArrayList<String>();
         $expressions = new ArrayList<String>();
         $caseContent = new HashMap<String, ArrayList<String>>();
-        $svPropsList = new ArrayList<SvarProps>();
+        $sv = new Svar();
          }
         
 	:  ( c=caseStatement  {
 			$caseNames.add($c.caseNameStr);
 			$conditions.add($c.conditionStr);	
 			$expressions.add($c.expressionStr);			
-			$caseContent.put($c.caseNameStr, $c.contentList);
-			$svPropsList.add($c.svProps);			         
+			$caseContent.put($c.caseNameStr, $c.contentList);		         
+			
+			$sv.caseName.add($c.caseNameStr);
+			$sv.caseCondition.add($c.conditionStr);
+			$sv.caseExpression.add($c.expressionStr);
+			
+			
 			
 			
 			} )+ 
 	;	
 
-caseStatement returns[SvarProps svProps, String caseNameStr, String conditionStr, String expressionStr, ArrayList<String> contentList]
-@init { $contentList = new ArrayList<String>();
-	    $svProps = new SvarProps();
-	} 
+caseStatement returns[String caseNameStr, String conditionStr, String expressionStr, ArrayList<String> contentList]
+@init { $contentList = new ArrayList<String>();	} 
 	:  'case' i=IDENT '{' c=conditionStatement 
-	( s=sqlStatement   {$contentList.add("sql");$contentList.addAll($s.list);$expressionStr=$s.str;$svProps.expression = $s.str;}
-	| v=valueStatement {$contentList.add("value");$contentList.add($v.str);$expressionStr=$v.str;$svProps.expression = $v.str;}
-	| u=sumStatement   {$contentList.add("sum");$contentList.addAll($u.list);$expressionStr=$u.str;$svProps.expression = $u.str;}
+	( s=sqlStatement   {$contentList.add("sql");$contentList.addAll($s.list);$expressionStr=$s.str;}
+	| v=valueStatement {$contentList.add("value");$contentList.add($v.str);$expressionStr=$v.str;}
+	| u=sumStatement   {$contentList.add("sum");$contentList.addAll($u.list);$expressionStr=$u.str;}
 	| g=goalStatement  {$contentList.add("goal");$contentList.addAll($g.list);}
 	) '}' {			
 			$caseNameStr = $i.text;
 			$conditionStr = $c.str;
-			$svProps.caseCondition = $c.str;
-			$svProps.caseName = $i.text;
+
 			
 			//if ($v.str !=null && $v.str!="")      {$contentList.add("value");$contentList.add($v.str);}
 			//if ($s.list !=null && ! $s.list.isEmpty() ) {$contentList.add("sql");$contentList.addAll($s.list);}

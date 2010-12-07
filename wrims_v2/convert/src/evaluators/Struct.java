@@ -8,11 +8,18 @@ import java.util.Map;
 
 public class Struct {
 
+	
 	/// svar data structure
-	public SvarProps svarProps ; 
-	public ArrayList<SvarProps> svarPropsList ; 
-	public Map<String,SvarProps> svarMapSimple = new HashMap<String,SvarProps>(); 
-	public Map<String,ArrayList<SvarProps>> svarMap = new HashMap<String,ArrayList<SvarProps>>(); 
+	public Svar sv; 
+	public ArrayList<String> svList = new ArrayList<String>(); 
+	public Map<String,Svar> svMap = new HashMap<String,Svar>(); 
+	
+//	
+//	/// svar data structure
+//	public SvarProps svarProps ; 
+//	public ArrayList<SvarProps> svarPropsList ; 
+//	public Map<String,SvarProps> svarMapSimple = new HashMap<String,SvarProps>(); 
+//	public Map<String,ArrayList<SvarProps>> svarMap = new HashMap<String,ArrayList<SvarProps>>(); 
 	
 	//public String inFile_or_inModel;
 	
@@ -139,7 +146,7 @@ public class Struct {
 			}
 	}	
 
-	public void svarCase(String svarName, String scope, ArrayList<SvarProps> svPropsList, ArrayList<String> caseName, ArrayList<String> condition, ArrayList<String> expression, Map<String, ArrayList<String>> caseContent) {
+	public void svarCase(String svarName, String scope, Svar sv, ArrayList<String> caseName, ArrayList<String> condition, ArrayList<String> expression, Map<String, ArrayList<String>> caseContent) {
 
 		if (var_all.containsKey(svarName)){
 			//System.out.println("error... variable redefined: " + $i.text);
@@ -152,7 +159,11 @@ public class Struct {
 			svar_map_case_content.put(svarName, caseContent);
 			var_all.put(svarName, "svar_cases");
 			
-			svarMap.put(svarName, svPropsList);
+
+			
+            /////////////////////
+			svMap.put(svarName, sv);
+			svList.add(svarName);
 			
 //			svarProps = new SvarProps();
 //			
@@ -186,14 +197,12 @@ public class Struct {
 			
 			
 			
-			svarProps = new SvarProps();
-			svarProps.caseName=caseName;
-			svarProps.caseCondition=condition;
-			svarProps.caseExpression=expression;
+			sv = new Svar();
+			sv.caseName.add(caseName);
+			sv.caseCondition.add(condition);
+			sv.caseExpression.add(expression);
 			
-			svarPropsList = new ArrayList<SvarProps>();
-			svarPropsList.add(svarProps);
-			svarMap.put(svarName, svarPropsList);
+			svMap.put(svarName, sv);
 			}
 			
 	}	
@@ -230,15 +239,16 @@ public class Struct {
 			svar_table_text.put(name, list);
 			
 			/// clearer data structure
-			svarProps = new SvarProps();
-			svarProps.scope=scope;
-			svarProps.format="table";
-			svarProps.expression=sqlStr;
-			svarMapSimple.put(name, svarProps);
+			sv = new Svar();
+			sv.scope=scope;
+			sv.format="lookup_table";
+			sv.caseCondition.add("always");
+			sv.caseName.add("default");
+			sv.caseExpression.add(sqlStr);
+			svMap.put(name, sv);
+			svList.add(name);
 			
-			svarPropsList = new ArrayList<SvarProps>();
-			svarPropsList.add(svarProps);
-			svarMap.put(name, svarPropsList);
+
 			}
 	}		
 
@@ -257,12 +267,16 @@ public class Struct {
 			var_all.put(name, "svar_dss");
 
 			/// clearer data structure
-			SvarProps props = new SvarProps();
-			props.scope=scope;
-			props.kind=kind;
-			props.units=units;
-			props.format="timeseries";
-			svarMapSimple.put(name, props);
+			Svar sv = new Svar();
+			sv.scope=scope;
+			sv.kind=kind;
+			sv.units=units;
+			sv.format="timeseries";
+			sv.caseCondition.add("always");
+			sv.caseName.add("default");
+			sv.caseExpression.add("");
+			svMap.put(name, sv);
+			svList.add(name);
 			
 			}
 	}		
