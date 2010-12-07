@@ -147,7 +147,7 @@ svar_expression[String id, String sc]
 
 svar_sum [String id, String sc]
 	:	 '{' t=sumStatement '}' { 				
-			F.svarSum($id, $sc, $t.list);     };
+			F.svarSum($id, $sc, $t.list, $t.str);     };
 
 svar_table[String id, String sc]
 	:	'{' t=sqlStatement '}' { 

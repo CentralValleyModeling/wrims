@@ -629,6 +629,7 @@ public class TestConvertWresl {
 		
 		/// 1st sv
 		sv = new Svar();
+		sv.scope = "global";
 		/// 1st case
 		sv.caseName.add("Febfore");
 		sv.caseCondition.add("month == FEB");
@@ -643,6 +644,7 @@ public class TestConvertWresl {
 		
 		/// 2nd sv
 		sv = new Svar();
+		sv.scope = "global";
 		/// 1st case
 		sv.caseName.add("MAR_SEP");
 		sv.caseCondition.add("month >= MAR .and. month <= SEP");

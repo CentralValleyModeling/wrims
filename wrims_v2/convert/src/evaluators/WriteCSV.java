@@ -14,8 +14,8 @@ public class WriteCSV {
 	  //private static PrintWriter out;
 	 
 	  public static String svar_dss_header ="NAME,KIND,UNIT";	  
-	  public static String svar_header ="NAME,SCOPE,INCLUDE,FORMAT,TYPE,UNITS,OUTPUT,CASE,CONDITION,EXPRESSION,FROM_WRESL_FILE";
-	  public static String dvar_header ="NAME,SCOPE,INCLUDE,TYPE,UNITS,LOWER_BOUND,UPPER_BOUND,FROM_WRESL_FILE";
+	  public static String svar_header ="NAME,TYPE,UNITS,OUTPUT,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
+	  public static String dvar_header ="NAME,TYPE,UNITS,LOWER_BOUND,UPPER_BOUND,FROM_WRESL_FILE";
 	  
 	public static void svar(Map<String,Svar> sMap, String filePath, PrintWriter out) {
 		    
@@ -25,19 +25,23 @@ public class WriteCSV {
 			
 		    for (String k: keys ){
 		    	
-		    	out.print(k);
+		    	//out.print(k);
 		    	Svar p = sMap.get(k);
 		    	
 		    	for (int i=0; i<p.caseCondition.size(); i++)
-		    	
+
 		    	//	SvarProps p =sMap.get(k);
 		    	{
-		    	out.print(","+p.scope);  // for SCOPE
-		    	out.print(",Y"); //for INCLUDE
-		    	out.print(","+p.format); //for TYPE
+			    	int caseOrder = i+1;
+			    out.print(k); // for SVAR NAME
+		    	//out.print(","+p.scope);  // for SCOPE
+		    	//out.print(",Y"); //for INCLUDE
+		    	//out.print(","+p.format); //for FORMAT
 		    	out.print(","+p.kind); //for KIND		    	
 		    	out.print(","+p.units); //for UNITS
-		    	out.print(","+p.caseName.get(i)); //for CASE
+		    	out.print(",Y"); //for OUTPUT
+		    	out.print(","+p.caseName.get(i)); //for CASE 
+		    	out.print(","+caseOrder); //for CASE 
 		    	out.print(","+p.caseCondition.get(i)); //for CONDITION
 		    	out.print(","+p.caseExpression.get(i)); //for EXPRESSION
 		    	

@@ -162,6 +162,7 @@ public class Struct {
 
 			
             /////////////////////
+			sv.scope = scope;
 			svMap.put(svarName, sv);
 			svList.add(svarName);
 			
@@ -203,11 +204,12 @@ public class Struct {
 			sv.caseExpression.add(expression);
 			
 			svMap.put(svarName, sv);
+			svList.add(svarName);
 			}
 			
 	}	
 	
-	public void svarSum(String name, String scope, ArrayList<String> content) {
+	public void svarSum(String name, String scope, ArrayList<String> content, String sumStr) {
 		if (var_all.containsKey(name)){
 			//System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "svar_sum");
@@ -216,6 +218,16 @@ public class Struct {
 			svar_scope.put(name, scope);
 			svar_sum.put(name, content);
 			var_all.put(name, "svar_sum");
+			
+			sv = new Svar();
+			sv.caseName.add("default");
+			sv.caseCondition.add("always");
+			sv.caseExpression.add(sumStr);
+			
+			svMap.put(name, sv);
+			svList.add(name);
+			
+			
 			}
 	}	
 
@@ -274,7 +286,7 @@ public class Struct {
 			sv.format="timeseries";
 			sv.caseCondition.add("always");
 			sv.caseName.add("default");
-			sv.caseExpression.add("");
+			sv.caseExpression.add("timeseries");
 			svMap.put(name, sv);
 			svList.add(name);
 			
