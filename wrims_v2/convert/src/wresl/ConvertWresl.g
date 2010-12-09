@@ -99,8 +99,8 @@ goal
 goal_simple[String id, String sc] 
 	:	 '{' v=constraintStatement '}'  {
 	
-		         if(inModel=="n") { F.goalSimple($id, $sc, $v.str);}
-	             else             { $model::M.goalSimple($id, $sc, $v.str);}
+		         if(inModel=="n") { F.goalSimple($id, $sc, $v.text);}
+	             else             { $model::M.goalSimple($id, $sc, $v.text);}
 		}
 	;
 
@@ -239,15 +239,15 @@ lower_or_upper returns[ArrayList<String> list, String lowerBound, String upperBo
 	;
  
 lower returns[String str]
-	: 'lower' e=expression {$str =$e.str; }
+	: 'lower' e=expression {$str =$e.text; }
 	;
 
 upper returns[String str]
-	: 'upper' e=expression {$str =$e.str; }
+	: 'upper' e=expression {$str =$e.text; }
 	;
 
 alias returns [String str]
-	: 'alias'  e=expression  { $str = $e.str; }
+	: 'alias'  e=expression  { $str = $e.text; }
 	;
 	
 kind returns [String str]
@@ -272,7 +272,7 @@ conditionStatement returns[String str]
 	;
 
 valueStatement returns[String str]
-	: 'value' e=expression {$str = $e.str;}
+	: 'value' e=expression {$str = $e.text;}
 	;
 
 /// SQL related ///
@@ -325,8 +325,8 @@ inline_func
 sumStatement returns[ArrayList<String> list, String str]
 	@init { $list = new ArrayList<String>(); }
 	: s=sum_func e=expression{
-		$list.add($s.text.replace(",",";"));$list.add($e.str);
-		$str = $s.text.replace(",",";") + " " + $e.str;
+		$list.add($s.text.replace(",","; "));$list.add($e.text);
+		$str = $s.text.replace(",","; ") + " " + $e.text;
 		}
 	;
 
@@ -357,18 +357,14 @@ term
 	
 unary :	('-')? term ;
 
-mult :	unary (('*' | '/' | 'mod') unary)* ;
+mult :	unary (('*' | '/' | 'mod') unary)* 
+	 ;
 	
-add returns [String str] 
-	@init { String w=""; }   
-	:	m1=mult {$str =$m1.text;}
-		(	( '+' {w="+";} | '-' {w="-";} ) 
-			 m=mult {$str = $str+w+$m.text;}
-		)* 
+add :	mult  (	( '+' | '-' ) mult )* 
 	;
 
-expression returns [String str]
-	:	i=add {$str = $i.str.replace(",",";");}
+expression returns [String text]
+	:	i=add {$text = $i.text.replace(",","; ");}
 	;
 
 relation_group_1  :  LE | GE   ;
@@ -377,27 +373,21 @@ relation_group_2  :  '<' | '>'  ;
 
 assignStatement  :   expression '=' expression ;
 
-constraintStatement returns[String str]
-	@init { String w=""; }  
-	: e1=expression 
-		('=' {w="=";} | r=relation_group_2 {w=$r.text;}) 
-	  e2=expression 
-		{$str = $e1.str + w + $e2.str;} 
+constraintStatement
+	: expression ('=' | r=relation_group_2 ) expression 
 	;
 
-relationStatement returns[String str]
-	@init { String w=""; }  
-	:	e1=expression 
-	    ( EQUALS  {w="==";} | r1=relation_group_1 {w=$r1.text;} | r2=relation_group_2 {w=$r2.text;} ) 
-	    e2=expression 
-		{$str = $e1.str + w + $e2.str;} 
+relationStatement 
+	:	expression 
+	    ( EQUALS  | r1=relation_group_1 | r2=relation_group_2  ) 
+	    expression 
 	;
 
 logicalRelationStatement returns[String str]
 	@init { String w=""; }  
-	:   r1=relationStatement {$str = $r1.str;} 
+	:   r1=relationStatement {$str = $r1.text;} 
 		(  ( AND { w=" .and. "; } | OR { w=" .or. "; } ) 
-		   r=relationStatement {$str = $str + w + $r.str; } 
+		   r=relationStatement {$str = $str + w + $r.text; } 
 		)* 
 	;
 
@@ -417,7 +407,7 @@ var_previous_cycle : IDENT '[' IDENT ']';
  
 equals : EQUALS; 
  
-MULTILINE_COMMENT : '/*' .* '*/' {$channel = HIDDEN;} ;
+MULTILINE_COMMENT : '/*' .* '*/' {skip();}; //{$channel = HIDDEN;};
 
 fragment LETTER : ('a'..'z' | 'A'..'Z') ;
 fragment DIGIT : '0'..'9';
@@ -492,7 +482,7 @@ QUOTE_STRING_with_MINUS : '\'' IDENT ( '-' | IDENT )+ '\'';
 //VAR_PREVIOUS_CYCLE : IDENT '[' IDENT ']';
 IDENT : LETTER (LETTER | DIGIT | SYMBOLS )*;
 
-WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {$channel = HIDDEN;};
-COMMENT : '!' .* ('\n'|'\r') {$channel = HIDDEN;};
+WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {skip();}; //{$channel = HIDDEN;};
+COMMENT : '!' .* ('\n'|'\r') {skip();}; //{$channel = HIDDEN;};
 
 //IGNORE : . {$channel = HIDDEN;};
