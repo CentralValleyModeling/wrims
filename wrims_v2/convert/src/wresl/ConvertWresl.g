@@ -30,7 +30,7 @@ options {
 	
 	/// temp variables 
  	private ArrayList<String> list;  	private ArrayList<String> list2;
- 	private String scope; private String w;
+ 	private String scope; 
 
 	/// error message
 	public String currentFilePath;
@@ -360,8 +360,11 @@ unary :	('-')? term ;
 mult :	unary (('*' | '/' | 'mod') unary)* ;
 	
 add returns [String str] 
-	:	m=mult {$str =$m.text;}
-		(('+'{$str =$str+"+";}|'-'{$str =$str+"-";}) m=mult {$str =$str+$m.text;})* 
+	@init { String w=""; }   
+	:	m1=mult {$str =$m1.text;}
+		(	( '+' {w="+";} | '-' {w="-";} ) 
+			 m=mult {$str = $str+w+$m.text;}
+		)* 
 	;
 
 expression returns [String str]
@@ -375,23 +378,26 @@ relation_group_2  :  '<' | '>'  ;
 assignStatement  :   expression '=' expression ;
 
 constraintStatement returns[String str]
+	@init { String w=""; }  
 	: e1=expression 
-		('=' {w="=";}|r=relation_group_2 {w=$r.text;}) 
+		('=' {w="=";} | r=relation_group_2 {w=$r.text;}) 
 	  e2=expression 
 		{$str = $e1.str + w + $e2.str;} 
 	;
 
 relationStatement returns[String str]
+	@init { String w=""; }  
 	:	e1=expression 
-	    (EQUALS {w="==";}|r=(relation_group_1|relation_group_2) {w=$r.text;}) 
+	    ( EQUALS  {w="==";} | r1=relation_group_1 {w=$r1.text;} | r2=relation_group_2 {w=$r2.text;} ) 
 	    e2=expression 
 		{$str = $e1.str + w + $e2.str;} 
 	;
 
 logicalRelationStatement returns[String str]
-	:   r=relationStatement {$str = $r.str;} 
-		( (AND {w=".and.";}| OR {w=".or.";}) 
-		   r=relationStatement {$str = $str + w + $r.str;} 
+	@init { String w=""; }  
+	:   r1=relationStatement {$str = $r1.str;} 
+		(  ( AND { w=" .and. "; } | OR { w=" .or. "; } ) 
+		   r=relationStatement {$str = $str + w + $r.str; } 
 		)* 
 	;
 
@@ -408,6 +414,8 @@ reserved_keys : GOAL | DEFINE ;
 all_ident  : reserved_vars | reserved_consts | IDENT ;
 
 var_previous_cycle : IDENT '[' IDENT ']';
+ 
+equals : EQUALS; 
  
 MULTILINE_COMMENT : '/*' .* '*/' {$channel = HIDDEN;} ;
 

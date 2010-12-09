@@ -632,7 +632,7 @@ public class TestConvertWresl {
 		sv.scope = "global";
 		/// 1st case
 		sv.caseName.add("Febfore");
-		sv.caseCondition.add("month == FEB");
+		sv.caseCondition.add("month==FEB");
 		sv.caseExpression.add("select FEB from sacramento_runoff_forecast where wateryear=wateryear"); 
 		/// 2nd case
 		sv.caseName.add("JuntoJan");
@@ -647,7 +647,7 @@ public class TestConvertWresl {
 		sv.scope = "global";
 		/// 1st case
 		sv.caseName.add("MAR_SEP");
-		sv.caseCondition.add("month >= MAR .and. month <= SEP");
+		sv.caseCondition.add("month>=MAR .and. month<=SEP");
 		sv.caseExpression.add("sum(i=-(month-MAY);SEP-month) I_Folsm(i)*cfs_taf(i)+I300(i)*cfs_taf(i)"); 
 		/// 2nd case
 		sv.caseName.add("other");
@@ -705,7 +705,7 @@ public class TestConvertWresl {
 	    
 	    /// new case
 		list_case_names.add("Febfore"); // this is needed to ensure the order of the cases, which is lost in map
-		list_conditions.add("month == FEB");
+		list_conditions.add("month==FEB");
 		map_case_content.put("Febfore", Arrays.asList(new String[]{
 			"sql","select","FEB","from","sacramento_runoff_forecast","given",null,"use",null,"where","wateryear=wateryear"
 			//"sql"         ,"FEB"       ,"sacramento_runoff_forecast"        ,null,      null,        "wateryear=wateryear",null
@@ -782,7 +782,7 @@ public class TestConvertWresl {
 	    
 	    /// new case
 		list_case_names.add("MartoMay"); // this is needed to ensure the order of the cases, which is lost in map
-		list_conditions.add("month >= MAR .and. month <= MAY");
+		list_conditions.add("month>=MAR .and. month<=MAY");
 		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{
 				"sql","select","di","from","wsi_di_cvp_s","given","wsi=wsi_cvp_s","use","linear"
 				}));
@@ -858,7 +858,7 @@ public class TestConvertWresl {
 	    
 	    /// new case
 		list_case_names.add("MAR_SEP"); // this is needed to ensure the order of the cases, which is lost in map
-		list_conditions.add("month >= MAR .and. month <= SEP");
+		list_conditions.add("month>=MAR .and. month<=SEP");
 		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"sum","sum(i=-(month-MAY);SEP-month)","I_Folsm(i)*cfs_taf(i)+I300(i)*cfs_taf(i)"}));
 		
 		/// new case
@@ -933,7 +933,7 @@ public class TestConvertWresl {
 	    
 	    /// new case
 		list_case_names.add("JanFebCMin"); // this is needed to ensure the order of the cases, which is lost in map
-		list_conditions.add("month>=JAN .and. month<=FEB .and. sri_ytp == 5 .and. C_Nimbus_fmp_mif(-1) < 800.");
+		list_conditions.add("month>=JAN .and. month<=FEB .and. sri_ytp==5 .and. C_Nimbus_fmp_mif(-1)<800.");
 		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"value","max(250.; min(1750.; (0.85 * C_Nimbus_fmp_mif(-1))))"}));
 		
 		/// new case
