@@ -13,7 +13,8 @@ define DI_CVP_s {
 
 define frcst_sac {
        case Febfore {
-           condition  month == FEB
+           condition  month 
+		   == FEB
            select     FEB
            from       sacramento_runoff_forecast
            where      wateryear=wateryear }

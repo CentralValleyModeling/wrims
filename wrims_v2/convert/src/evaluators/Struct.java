@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sun.org.apache.xml.internal.security.utils.Constants;
+
 public class Struct {
 
 	
@@ -13,8 +15,18 @@ public class Struct {
 	public Svar sv; 
 	public ArrayList<String> svList = new ArrayList<String>(); 
 	public Map<String,Svar> svMap = new HashMap<String,Svar>(); 
+
+	/// dvar data structure
+	public Dvar dv; 
+	public ArrayList<String> dvList = new ArrayList<String>(); 
+	public Map<String,Dvar> dvMap = new HashMap<String,Dvar>(); 
 	
-//	
+	/// alias data structure
+	public Alias as; 
+	public ArrayList<String> asList = new ArrayList<String>(); 
+	public Map<String,Alias> asMap = new HashMap<String,Alias>(); 
+	
+
 //	/// svar data structure
 //	public SvarProps svarProps ; 
 //	public ArrayList<SvarProps> svarPropsList ; 
@@ -308,6 +320,18 @@ public class Struct {
 				list.add("unbounded");
 			dvar_std.put(name, list);
 			var_all.put(name, "dvar_std");
+			
+			
+			/// better data structure
+			dv = new Dvar();
+			dv.scope=scope;
+			dv.kind=kind;
+			dv.units=units;
+			dv.lowerBound=Parameters.dv_lowerBound;
+			dv.upperBound=Parameters.dv_upperBound;			
+			dvMap.put(name, dv);
+			dvList.add(name);
+			
 			}
 	}		
 
@@ -324,10 +348,22 @@ public class Struct {
 				list.add(alias);
 			dvar_alias.put(name, list);
 			var_all.put(name, "dvar_alias");
+			
+			/// better data structure
+			as = new Alias();
+			as.scope=scope;
+			as.kind=kind;
+			as.units=units;
+			as.expression=alias;		
+			asMap.put(name, as);
+			asList.add(name);			
+			
+			
 			}
 	}	
 
-	public void dvarNonStd(String name, String scope, String kind, String units, ArrayList<String> content) {
+	public void dvarNonStd(String name, String scope, String kind, String units, ArrayList<String> content,
+			               String lowerBound, String upperBound) {
 		if (var_all.containsKey(name)){
 			//System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "dvar_nonstd");
@@ -341,6 +377,17 @@ public class Struct {
 				list.addAll(content);
 			dvar_nonstd.put(name, list);
 			var_all.put(name, "dvar_nonstd");
+			
+			/// better data structure
+			dv = new Dvar();
+			dv.scope=scope;
+			dv.kind=kind;
+			dv.units=units;
+			dv.lowerBound=lowerBound;
+			dv.upperBound=upperBound;			
+			dvMap.put(name, dv);
+			dvList.add(name);
+			
 			}
 	}		
 	

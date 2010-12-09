@@ -24,6 +24,7 @@ import org.testng.Assert;
 
 import evaluators.Struct;
 import evaluators.Svar;
+import evaluators.Dvar;
 import evaluators.Tools;
 import evaluators.WriteCSV;
 
@@ -75,33 +76,33 @@ public class TestConvertWreslToTable {
 		Assert.assertEquals(test, expected);
 	}
 	
-	@Test(groups = { "WRESL_to_Table" })
-	public void svarCase() throws RecognitionException, IOException {
-		inputFilePath = "src\\test\\TestConvertWreslToTable_svarCase.wresl";
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
-
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
-		
-		outputFilePath ="test-csv\\svar_case.csv";
-		outFile = Tools.openFile(outputFilePath);
-		outFile.print(WriteCSV.svar_header+"\n");
-		
-		WriteCSV.svar(parser.F.svMap,inputFilePath,outFile);
-	    outFile.close();
-		
-		String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svarCase.expected");
-	    String test = 	  Tools.readFileAsString(outputFilePath);	
-		
-		Assert.assertEquals(test, expected);
-	}
+//	@Test(groups = { "WRESL_to_Table" })
+//	public void svarCase() throws RecognitionException, IOException {
+//		inputFilePath = "src\\test\\TestConvertWreslToTable_svarCase.wresl";
+//		try {
+//			stream = new ANTLRFileStream(inputFilePath, "UTF8");
+//			}
+//	    catch(Exception e) {
+//	         e.printStackTrace();
+//	        }
+//
+//		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+//		TokenStream tokenStream = new CommonTokenStream(lexer);
+//		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+//		parser.currentFilePath = inputFilePath; parser.evaluator();
+//		
+//		outputFilePath ="test-csv\\svar_case.csv";
+//		outFile = Tools.openFile(outputFilePath);
+//		outFile.print(WriteCSV.svar_header+"\n");
+//		
+//		WriteCSV.svar(parser.F.svMap,inputFilePath,outFile);
+//	    outFile.close();
+//		
+//		String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svarCase.expected");
+//	    String test = 	  Tools.readFileAsString(outputFilePath);	
+//		
+//		Assert.assertEquals(test, expected);
+//	}
 	
 	@Test(groups = { "WRESL_to_Table" })	
 	public void dvar() throws RecognitionException, IOException {
@@ -117,19 +118,13 @@ public class TestConvertWreslToTable {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
-		
-		outputFilePath = "test-csv\\dvar.csv"; 
-		outFile = Tools.openFile(outputFilePath); 
-		outFile.print(WriteCSV.dvar_header+"\n");
 
+		outputFilePath ="test-csv\\dv.csv";
+		outFile = Tools.openFile(outputFilePath);
+		outFile.print(WriteCSV.dvar_header+"\n");
 		
-		Map<String, ArrayList<String>> mapAll = new HashMap<String, ArrayList<String>>();		
-		mapAll.putAll(parser.F.dvar_std);
-		mapAll.putAll(parser.F.dvar_nonstd);
-		
-		WriteCSV.dvar(mapAll, parser.F.dvar_scope,  inputFilePath, outFile);
-		
-		outFile.close();
+		WriteCSV.dvar(parser.F.dvMap,inputFilePath,outFile);
+	    outFile.close();
 		
 		String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_dvar.expected");
 	    String test = 	  Tools.readFileAsString(outputFilePath);	
@@ -137,6 +132,33 @@ public class TestConvertWreslToTable {
 		Assert.assertEquals(test, expected);
 	}
 
+	@Test(groups = { "WRESL_to_Table" })	
+	public void alias() throws RecognitionException, IOException {
+		inputFilePath = "src\\test\\TestConvertWreslToTable_alias.wresl";
+		try {
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.currentFilePath = inputFilePath; parser.evaluator();
+
+		outputFilePath ="test-csv\\config_alias.csv";
+		outFile = Tools.openFile(outputFilePath);
+		outFile.print(WriteCSV.alias_header+"\n");
+		
+		WriteCSV.alias(parser.F.asMap,inputFilePath,outFile);
+	    outFile.close();
+		
+		String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_alias.expected");
+	    String test = 	  Tools.readFileAsString(outputFilePath);	
+		
+		Assert.assertEquals(test, expected);
+	}
 	
 
 	@Test(groups = { "WRESL_to_Table" })

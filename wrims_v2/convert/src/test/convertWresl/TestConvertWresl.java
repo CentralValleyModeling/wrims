@@ -177,7 +177,7 @@ public class TestConvertWresl {
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 		
 		expected_struct.goal_scope.put("force_c607","local");
-		expected_struct.goal_simple.put("force_c607","C607 > 500");
+		expected_struct.goal_simple.put("force_c607","C607>500");
 		
 //	    String[] array={null,"local","global"};
 //	    list=new ArrayList<String>();list.addAll(Arrays.asList(array));
@@ -215,7 +215,7 @@ public class TestConvertWresl {
 		expected_struct.include_file_scope.put("..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl","global");
 				
 		expected_struct.goal_scope.put("force_c607","local");
-		expected_struct.goal_simple.put("force_c607","C607 > 500");
+		expected_struct.goal_simple.put("force_c607","C607>500");
 		
 //	    String[] array={null,"local","global"};
 //	    list=new ArrayList<String>();list.addAll(Arrays.asList(array));
@@ -648,7 +648,7 @@ public class TestConvertWresl {
 		/// 1st case
 		sv.caseName.add("MAR_SEP");
 		sv.caseCondition.add("month >= MAR .and. month <= SEP");
-		sv.caseExpression.add("sum(i=-(month-MAY);SEP-month) I_Folsm(i)*cfs_taf(i) + I300(i)*cfs_taf(i)"); 
+		sv.caseExpression.add("sum(i=-(month-MAY);SEP-month) I_Folsm(i)*cfs_taf(i)+I300(i)*cfs_taf(i)"); 
 		/// 2nd case
 		sv.caseName.add("other");
 		sv.caseCondition.add("always");
@@ -859,7 +859,7 @@ public class TestConvertWresl {
 	    /// new case
 		list_case_names.add("MAR_SEP"); // this is needed to ensure the order of the cases, which is lost in map
 		list_conditions.add("month >= MAR .and. month <= SEP");
-		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"sum","sum(i=-(month-MAY);SEP-month)","I_Folsm(i)*cfs_taf(i) + I300(i)*cfs_taf(i)"}));
+		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"sum","sum(i=-(month-MAY);SEP-month)","I_Folsm(i)*cfs_taf(i)+I300(i)*cfs_taf(i)"}));
 		
 		/// new case
 		list_case_names.add("other");
@@ -993,11 +993,11 @@ public class TestConvertWresl {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 
-		expected.put("split_C5_WTS", "C5_WTS = C5_WTS_Stg1 + C5_WTS_Stg2");
-		expected.put("C_SLCVP", "C5_WTS = C5_WTS_Stg1");
-		expected.put("a1", "b = c");
-		expected.put("a2", "b >  c");
-		expected.put("a3", "b < c");
+		expected.put("split_C5_WTS", "C5_WTS=C5_WTS_Stg1+C5_WTS_Stg2");
+		expected.put("C_SLCVP", "C5_WTS=C5_WTS_Stg1");
+		expected.put("a1", "b=c");
+		expected.put("a2", "b>c");
+		expected.put("a3", "b<c");
 		
 
 		expected_scope.put("split_C5_WTS", "global");

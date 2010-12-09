@@ -1,0 +1,7 @@
+define QsacFth {alias C_SacFea+D_SacFea  kind 'flow-channel' units 'cfs'}
+define CvpTotalDel {alias D700+D710+D706+D607A+D833+D835+D836+D839+D841+D855+D837+D843+ ! AG
+                          D701+D707+D607B+ ! EX
+                          D711+D844+ ! MI
+                          D708+D607C_PRF+D856_PRF+ ! RF
+                          D702+D607D+D834+D838+D840+D842+D845 ! LS
+                          kind 'FLOW-DELIVERY' units 'CFS' }

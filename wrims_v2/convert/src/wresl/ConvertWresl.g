@@ -30,7 +30,7 @@ options {
 	
 	/// temp variables 
  	private ArrayList<String> list;  	private ArrayList<String> list2;
- 	private String scope;
+ 	private String scope; private String w;
 
 	/// error message
 	public String currentFilePath;
@@ -99,8 +99,8 @@ goal
 goal_simple[String id, String sc] 
 	:	 '{' v=constraintStatement '}'  {
 	
-		         if(inModel=="n") { F.goalSimple($id, $sc, $v.text);}
-	             else             { $model::M.goalSimple($id, $sc, $v.text);}
+		         if(inModel=="n") { F.goalSimple($id, $sc, $v.str);}
+	             else             { $model::M.goalSimple($id, $sc, $v.str);}
 		}
 	;
 
@@ -218,23 +218,23 @@ dvar_alias[String id, String sc]
 	
 dvar_nonstd [String id, String sc]
 	:	'{' c=lower_or_upper kind units '}' { 
-		F.dvarNonStd($id, $sc, $kind.str, $units.str, $c.list);  };
+		F.dvarNonStd($id, $sc, $kind.str, $units.str, $c.list, $c.lowerBound, $c.upperBound);  };
 
-lower_or_upper returns[ArrayList<String> list]
+lower_or_upper returns[ArrayList<String> list, String lowerBound, String upperBound]
 	:	lower upper? {       
 				$list = new ArrayList<String>();
-				$list.add($lower.str);
+				$list.add($lower.str); $lowerBound=$lower.str;
 				if ($upper.str==null) {
-				$list.add("unbounded");
+				$list.add("unbounded");$upperBound="unbounded";
 				}
 				else {
-				$list.add($upper.str);
+				$list.add($upper.str);$upperBound=$upper.str;
 				}		
 	    }
 	|	upper {       
 				$list = new ArrayList<String>();
-				$list.add("0");
-				$list.add($upper.str);
+				$list.add("0");$lowerBound="0";
+				$list.add($upper.str);$upperBound=$upper.str;
 		}		
 	;
  
@@ -267,7 +267,7 @@ units returns [String str]
 
 conditionStatement returns[String str]
 	: 'condition' 
-	( s=logicalRelationStatement {$str = $s.text;}
+	( s=logicalRelationStatement {$str = $s.str;}
 	| ALWAYS {$str = "always";} )
 	;
 
@@ -359,10 +359,13 @@ unary :	('-')? term ;
 
 mult :	unary (('*' | '/' | 'mod') unary)* ;
 	
-add  :	mult (('+' | '-') mult)* ;
+add returns [String str] 
+	:	m=mult {$str =$m.text;}
+		(('+'{$str =$str+"+";}|'-'{$str =$str+"-";}) m=mult {$str =$str+$m.text;})* 
+	;
 
 expression returns [String str]
-	:	i=add {$str = $i.text.replace(",",";");}
+	:	i=add {$str = $i.str.replace(",",";");}
 	;
 
 relation_group_1  :  LE | GE   ;
@@ -371,13 +374,26 @@ relation_group_2  :  '<' | '>'  ;
 
 assignStatement  :   expression '=' expression ;
 
-constraintStatement : expression ('='|relation_group_2) expression ;
+constraintStatement returns[String str]
+	: e1=expression 
+		('=' {w="=";}|r=relation_group_2 {w=$r.text;}) 
+	  e2=expression 
+		{$str = $e1.str + w + $e2.str;} 
+	;
 
-relationStatement
-	:	expression (EQUALS|relation_group_1|relation_group_2) expression  ;
+relationStatement returns[String str]
+	:	e1=expression 
+	    (EQUALS {w="==";}|r=(relation_group_1|relation_group_2) {w=$r.text;}) 
+	    e2=expression 
+		{$str = $e1.str + w + $e2.str;} 
+	;
 
-logicalRelationStatement
-	:   relationStatement ((AND|OR) relationStatement)* ;
+logicalRelationStatement returns[String str]
+	:   r=relationStatement {$str = $r.str;} 
+		( (AND {w=".and.";}| OR {w=".or.";}) 
+		   r=relationStatement {$str = $str + w + $r.str;} 
+		)* 
+	;
 
 number : INTEGER | FLOAT ;
 
