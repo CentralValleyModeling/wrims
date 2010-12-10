@@ -20,6 +20,7 @@ import wresl.ConvertWreslParser;
 import org.testng.annotations.*;
 import org.testng.Assert;
 
+import evaluators.Goal;
 import evaluators.Struct;
 import evaluators.Svar;
 
@@ -154,8 +155,7 @@ public class TestConvertWresl {
 		//System.out.println("#############################: " + parser.modelMap.get("CVCWHEELING").include_file_scope);
 		//System.out.println("#############################: " + expected_modelMap.get("CVCWHEELING").include_file_scope);
 		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").include_file_scope, expected_modelMap.get("CVCWHEELING").include_file_scope);
-
-	}	
+	}		
 	
 	@Test(groups = { "WRESL_elements" })
 	public void modelVarAdhoc() throws RecognitionException, IOException {
@@ -179,17 +179,10 @@ public class TestConvertWresl {
 		expected_struct.goal_scope.put("force_c607","local");
 		expected_struct.goal_simple.put("force_c607","C607>500");
 		
-//	    String[] array={null,"local","global"};
-//	    list=new ArrayList<String>();list.addAll(Arrays.asList(array));
-//		expected_model_scope_list.put("CVCWHEELING", list);
-		
 		expected_modelMap.put("CVCWHEELING",expected_struct);
-				
-		//System.out.println("#############################: " + parser.modelMap.get("CVCWHEELING").goal_simple);
-		//System.out.println("#############################: " + expected_modelMap.get("CVCWHEELING").goal_simple);
+
 		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").goal_simple, expected_modelMap.get("CVCWHEELING").goal_simple);
-		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").goal_scope, expected_modelMap.get("CVCWHEELING").goal_scope);
-		
+		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").goal_scope, expected_modelMap.get("CVCWHEELING").goal_scope);		
 	}	
 
 	@Test(groups = { "WRESL_elements" })
@@ -1021,6 +1014,73 @@ public class TestConvertWresl {
 		Assert.assertEquals(parser.F.goal_scope, expected_scope);	
 	}			
 
+	@Test(groups = { "WRESL_elements" })
+	public void goalSimpleNew() throws RecognitionException, IOException {
+	
+		inputFilePath = "src\\test\\TestConvertWresl_goalSimpleNew.wresl";	
+		try {
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+
+	    Map<String, Goal> expected_gMap = new HashMap<String, Goal>(); 
+	    Goal g;
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.currentFilePath = inputFilePath; parser.evaluator();
+
+		g = new Goal();
+		g.scope = "global";
+		g.caseName.add("default");
+		g.caseCondition.add("always");
+		g.caseExpression.add("C5_WTS=C5_WTS_Stg1+C5_WTS_Stg2");
+		expected_gMap.put("split_C5_WTS", g);
+		
+		g = new Goal();
+		g.scope = "global";
+		g.caseName.add("default");
+		g.caseCondition.add("always");
+		g.caseExpression.add("C5_WTS=C5_WTS_Stg1");
+		expected_gMap.put("C_SLCVP", g);
+		
+		g = new Goal();
+		g.scope = "global";
+		g.caseName.add("default");
+		g.caseCondition.add("always");
+		g.caseExpression.add("b=c");
+		expected_gMap.put("a1", g);
+
+		g = new Goal();
+		g.scope = "local";
+		g.caseName.add("default");
+		g.caseCondition.add("always");
+		g.caseExpression.add("b>c");
+		expected_gMap.put("a2", g);
+
+		g = new Goal();
+		g.scope = "global";
+		g.caseName.add("default");
+		g.caseCondition.add("always");
+		g.caseExpression.add("b<c");
+		expected_gMap.put("a3", g);
+				
+		
+		ArrayList<String> allKeys = new ArrayList<String>();
+		allKeys.addAll(expected_gMap.keySet());
+		allKeys.addAll(parser.F.gMap.keySet());
+		
+
+		for (String k : allKeys) {
+				//System.out.println(expected_svMap.get(k));
+				Assert.assertEquals(parser.F.gMap.get(k).equalEva(), expected_gMap.get(k).equalEva());
+		}	
+	}			
+
+	
 	@Test(groups = { "WRESL_elements" })
 	public void goalNoCase() throws RecognitionException, IOException {
 	

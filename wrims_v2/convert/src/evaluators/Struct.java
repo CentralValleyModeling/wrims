@@ -25,13 +25,11 @@ public class Struct {
 	public Alias as; 
 	public ArrayList<String> asList = new ArrayList<String>(); 
 	public Map<String,Alias> asMap = new HashMap<String,Alias>(); 
-	
 
-//	/// svar data structure
-//	public SvarProps svarProps ; 
-//	public ArrayList<SvarProps> svarPropsList ; 
-//	public Map<String,SvarProps> svarMapSimple = new HashMap<String,SvarProps>(); 
-//	public Map<String,ArrayList<SvarProps>> svarMap = new HashMap<String,ArrayList<SvarProps>>(); 
+	/// goal data structure
+	public Goal gl; 
+	public ArrayList<String> gList = new ArrayList<String>(); 
+	public Map<String,Goal>  gMap = new HashMap<String,Goal>(); 	
 	
 	//public String inFile_or_inModel;
 	
@@ -127,7 +125,16 @@ public class Struct {
 			goal_scope.put(name, scope);
 			goal_simple.put(name, content);
 			var_all.put(name, "goal_simple");
-
+			
+			/// clearer data structure
+			gl = new Goal();
+			gl.scope=scope;
+			//gl.lhs="in expression";
+			gl.caseCondition.add("always");
+			gl.caseName.add("default");
+			gl.caseExpression.add(content);
+			gMap.put(name, gl);
+			gList.add(name);						
 		}
 	}
 	
