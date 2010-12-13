@@ -1,6 +1,6 @@
 name,		include,	case, caseinclude, condition,	expression,	lhs>rhs,	lhs<rhs
-ActfwflowY,	y,		case1,	y,	 month=Feb,	Frcst_amrY=D_SacFea_B, #, 	#
+ActfwflowY,	y,		case1,	y,	 month==Feb,	Frcst_amrY=D_SacFea_B, #, 	#
 ActfwflowY,	y,		case2,	y,	 always,	Frcst_amrY>D_SacFea_B, #, 	#
 constraint1,    y,      	case1,  y,       a3+a4<5,         f7<80.3+ghl,    constrain,      -6.0
-constraint1,    y,      	case1,  y,       a3+a4=5,         f7=80.3+ghl,     7.0,      constrain
-constraint1,    y,      	case2,  y,       always,          d12-e14=56*hn,    -8.0,      -6.0
+constraint1,    y,      	case1,  y,       C_Kswck_Exc1+a4==5,         f7=80.3+ghl,     7.0,      constrain
+constraint1,    y,      	case2,  y,       always,          C_Kswck_Exc1-e14=56*hn,    -8.0,      -6.0

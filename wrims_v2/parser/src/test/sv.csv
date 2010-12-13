@@ -1,0 +1,20 @@
+NAME,TYPE,UNITS,OUTPUT,CASE,ORDER,CONDITION,EXPRESSION
+CVPDedBanksSwitch,undefined,undefined,Y,default,1,always,select OnOff from NewFacSwitch where Facility = 2
+DI_CVP_s,undefined,undefined,Y,MartoMay,1,month >= MAR .and. month <= MAY,select di from wsi_di_cvp_s given wsi=wsi_cvp_s use linear
+DI_CVP_s,undefined,undefined,Y,JuntoFeb,2,always,99.06
+evap_1,EVAPORATION-RATE,IN,Y,default,1,always,timeseries
+evap_2,EVAPORATION-RATE,IN,Y,default,1,always,timeseries
+frcst_sac,undefined,undefined,Y,Febfore,1,month == FEB,select FEB from sacramento_runoff_forecast where wateryear=wateryear
+frcst_sac,undefined,undefined,Y,JuntoJan,2,always,0
+IntertieSwitch,undefined,undefined,Y,default,1,always,select OnOff from NewFacSwitch where Facility = 1
+minflowAFRPClear,undefined,undefined,Y,default,1,always,select flow from AFRP_CLEAR given trigger=S1(-1)+S1mod use minimum where month=month
+nov_trigger_cfs,undefined,undefined,Y,default,1,always,select target from feather_fish_203 where month = NOV
+ResAction1Sha,undefined,undefined,Y,default,1,always,select Reserve from B2ActionRes where Action=1; WYT=wyt_SAC
+ResAction2,undefined,undefined,Y,default,1,always,select Reserve from B2ActionRes where Action=2; WYT=wyt_SAC
+ResAction3,undefined,undefined,Y,default,1,always,select Reserve from B2ActionRes where Action=3; WYT=wyt_SAC
+ResAction4,undefined,undefined,Y,default,1,always,select Reserve from B2ActionRes where Action=4; WYT=wyt_SAC
+ResAction5,undefined,undefined,Y,default,1,always,select Reserve from B2ActionRes where Action=5; WYT=wyt_SAC
+ResAction6,undefined,undefined,Y,default,1,always,select Reserve from B2ActionRes where Action=6; WYT=wyt_SAC
+ResAction7,undefined,undefined,Y,default,1,always,select Reserve from B2ActionRes where Action=7; WYT=wyt_SAC
+SWPShastaSwitch,undefined,undefined,Y,default,1,always,select OnOff from NewFacSwitch where Facility = 3
+testFunct,undefined,undefined,Y,default,1,always,testFunction()

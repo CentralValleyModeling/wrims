@@ -106,12 +106,25 @@ public class TestParseTable {
 
 	public void testSVarTable() throws RecognitionException, IOException {
 
-		try {
-			stream = new ANTLRFileStream("src//test//svar.table", "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
+        byte[] buffer = new byte[(int) new File("src//test//sv.csv").length()];
+        BufferedInputStream f = null;
+        try {
+           f = new BufferedInputStream(new FileInputStream("src//test//sv.csv"));
+           f.read(buffer);
+           f.close();
+        } catch (Exception e) { 
+           e.printStackTrace();
+        }
+        
+        String fileString=new String(buffer);
+        fileString=fileString.toLowerCase();
+        
+        try {
+           stream=new ANTLRStringStream(fileString);
+        }
+        catch(Exception e) {
+           e.printStackTrace();
+        }
 
 	    Map<String, ArrayList<ArrayList<String>>>  expected = new HashMap<String, ArrayList<ArrayList<String>>>();
 
@@ -667,6 +680,7 @@ public class TestParseTable {
 		parser.evaluator();
 		ArrayList<String> var_file = parser.file;
 		Map<String, ArrayList<ArrayList<String>>> var_constraint = parser.constraint;
+		Map<String, ArrayList<String>> var_alias=parser.alias;
 		ArrayList<String> errorGrammer=parser.error_grammer;
 		ArrayList<String> errorVarRedefine=parser.error_var_redefined;
 		
@@ -682,6 +696,7 @@ public class TestParseTable {
 		expected.add("src\\test\\constraint.wresl");
 			
 		//Assert.assertEquals(var_file, expected);
-		Assert.assertEquals(var_constraint, expected1);
+		//Assert.assertEquals(var_constraint, expected1);
+		Assert.assertEquals(var_alias, expected1);
 	}	
 }
