@@ -39,6 +39,8 @@ options {
   public static Map<String, ArrayList<ArrayList<String>>>   constraint = new HashMap<String, ArrayList<ArrayList<String>>>();
   public static Map<String, ArrayList<ArrayList<String>>>   lgr = new HashMap<String, ArrayList<ArrayList<String>>>();
   public static Map<String, ArrayList<ArrayList<String>>>   rgl = new HashMap<String, ArrayList<ArrayList<String>>>();
+  public static Map<String, String> function = new HashMap<String, String>();
+  public static Map<String, ArrayList<String>>   alias = new HashMap<String, ArrayList<String>>();
 
   public static Map<String, ArrayList<String>>   nodeGlobal = new HashMap<String, ArrayList<String>>();
   public static Map<String, ArrayList<String>>   dvarGlobal = new HashMap<String, ArrayList<String>>();
@@ -49,14 +51,17 @@ options {
   public static Map<String, ArrayList<ArrayList<String>>>   constraintGlobal = new HashMap<String, ArrayList<ArrayList<String>>>();
   public static Map<String, ArrayList<ArrayList<String>>>   lgrGlobal = new HashMap<String, ArrayList<ArrayList<String>>>();
   public static Map<String, ArrayList<ArrayList<String>>>   rglGlobal = new HashMap<String, ArrayList<ArrayList<String>>>();
+  public static Map<String, String> functionGlobal = new HashMap<String, String>();
+  public static Map<String, ArrayList<String>>   aliasGlobal = new HashMap<String, ArrayList<String>>();
   
   private static String currentFile="";
   private static String currentCycle="";
   private static ArrayList<String> fileAnchestry=new ArrayList<String>();
   
   private static boolean testDefine=false;
-  private final ArrayList<String> reserveToken=new ArrayList<String>(Arrays.asList("month", "wateryear","jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"));
-  private final ArrayList<String> pastMonth=new ArrayList<String>(Arrays.asList("prejan","prefeb","premar","preapr","premay","prejun","prejul","preaug","presep","preoct","prenov","predec")); 
+  private static boolean isSvFile=false;
+  private static boolean isConstraintStatement=false;
+  private final ArrayList<String> reserveToken=new ArrayList<String>(Arrays.asList("month", "wateryear","jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec")); 
   
   private String svType= "NULL"; 
   private String svUnits = "NULL"; 
@@ -64,8 +69,7 @@ options {
   private String preCondition = "always";
   private int n_always=0;
   private boolean redefineSV=false;
-  private boolean includeSV=false;
-  private String writeToDss="y"; 
+  private String output="n"; 
   
   private String preConstraint="";
   private boolean redefineConstraint=false;
@@ -127,7 +131,7 @@ options {
             Double.parseDouble(lowerBound);
           }catch (NumberFormatException nfe2) {
             if (!svar.containsKey(lowerBound)){
-              error_grammer.add(lowerBound+" as the lower bound of decision variable "+dvarName+" is not defined before used");
+              error_grammer.add(lowerBound+" as the lower bound of decision variable "+dvarName+" is not a defined state variable before used");
             }
           }
         }   
@@ -142,7 +146,7 @@ options {
             Double.parseDouble(upperBound);
           }catch (NumberFormatException nfe5) {
             if (!svar.containsKey(upperBound)){
-              error_grammer.add(upperBound+" as the upper bound of decision variable "+dvarName+" is not defined before used");
+              error_grammer.add(upperBound+" as the upper bound of decision variable "+dvarName+" is not a defined state variable before used");
             }
           }
         }   
@@ -203,6 +207,8 @@ options {
         constraintGlobal = constraint;
         lgrGlobal = lgr;
         rglGlobal = rgl;
+        functionGlobal = function;
+        aliasGlobal = alias;
   }
   
   public void initialCycle(){
@@ -214,7 +220,9 @@ options {
         file = fileGlobal;
         constraint = constraintGlobal;
         lgr = lgrGlobal;
-        rgl = rglGlobal;        
+        rgl = rglGlobal;
+        function=functionGlobal;
+        alias = aliasGlobal;        
   }
 }
 
@@ -229,6 +237,8 @@ modules
 	|	svartable
 	|	constrainttable
 	|	weighttable
+	| externaltable
+	| aliastable
 	;
 
 
@@ -256,17 +266,34 @@ dvartable
 	:	headline_dvartable ('\n'|'\r'|COMMENT*) content_dvarline*
 	;
 
-svartable
-	:	headline_svartable ('\n'|'\r'|COMMENT*) content_svarline*
+svartable @init {isSvFile=true;}
+	:	headline_svartable ('\n'|'\r'|COMMENT*) content_svarline* {
+	    isSvFile=false;
+      if (!(preCondition.equals("always"))){
+          error_grammer.add(currentFile+": "+preSV+" the last case should be always");
+      }
+	  }
 	;
 	
 constrainttable
-	:	headline_constrainttable ('\n'|'\r'|COMMENT*) content_constraintline*
+	:	headline_constrainttable ('\n'|'\r'|COMMENT*) content_constraintline*{
+	    if (!(preCondition.equals("always"))){
+          error_grammer.add(currentFile+": "+preConstraint+" the last case should be always");
+      }
+	}
 	;
 
 weighttable
 	:	headline_weighttable ('\n'|'\r'|COMMENT*) content_weightline*
 	;
+
+externaltable
+  : headline_externaltable ('\n'|'\r'|COMMENT*) content_externalline*
+  ;
+  
+aliastable
+  : headline_aliastable ('\n'|'\r'|COMMENT*) content_aliasline*
+  ;
 
 headline_cycletable
   : 'cycle' ',' 'file' ',' 'condition'{
@@ -299,7 +326,7 @@ headline_dvartable
 	;
 	
 headline_svartable
-	:	'name' ',' 'include' ',' 'type' ',' 'units' ',' 'writetodss' ',' 'case' ',' 'caseinclude' ',' 'condition' ',' 'expression' {
+	:	'name' ',' 'type' ',' 'units' ',' 'output' ',' 'case' ',' 'order' ',' 'condition' ',' 'expression' {
 		}
 	;
 
@@ -312,6 +339,16 @@ headline_weighttable
 	:	'name' ',' 'weight'{
 		}
 	;
+	
+headline_externaltable
+  : 'function' ',' 'file'{
+    }
+  ;
+  
+headline_aliastable
+  : 'name' ',' 'type' ',' 'units' ',' 'expression'{
+    }
+  ;
 
 content_globalline
   : content_global (('\n' EOF)|('\r' EOF)|'\n'|'\r'|COMMENT*|EOF)
@@ -352,6 +389,14 @@ content_constraintline
 content_weightline
 	:	content_weight (('\n' EOF)|('\r' EOF)|'\n'|'\r'|COMMENT*|EOF)
 	;
+	
+content_externalline
+  : content_external (('\n' EOF)|('\r' EOF)|'\n'|'\r'|COMMENT*|EOF)
+  ;
+  
+content_aliasline
+  : content_alias (('\n' EOF)|('\r' EOF)|'\n'|'\r'|COMMENT*|EOF)
+  ;
 
 content_global
   : i1=IDENT ',' i2=directory ',' i3=conditionStatement{
@@ -365,6 +410,8 @@ content_global
         constraint = new HashMap<String, ArrayList<ArrayList<String>>>();
         lgr = new HashMap<String, ArrayList<ArrayList<String>>>();
         rgl = new HashMap<String, ArrayList<ArrayList<String>>>();
+        function =  new HashMap<String, String>();
+        alias = new HashMap<String, ArrayList<String>>();
       
         if (cycle.containsKey($i1.text)){
           error_var_redefined.add("main file: cycle"+ $i1.text+" redefined");
@@ -422,6 +469,8 @@ content_cycle
       constraint = new HashMap<String, ArrayList<ArrayList<String>>>();
       lgr = new HashMap<String, ArrayList<ArrayList<String>>>();
       rgl = new HashMap<String, ArrayList<ArrayList<String>>>();
+      function = new HashMap<String, String>();
+      alias = new HashMap<String, ArrayList<String>>();
       
       initialCycle();
       
@@ -567,7 +616,7 @@ content_arc
 		((i6=IDENT ',' i7=IDENT)|(i6='#' ',' i7=IDENT)|(i6=IDENT ',' i7='#')) ',' partC {
 			if ($i2.text.equals("y")){
 	       	if ($i3.list == null){
-	       	   if (dvar.containsKey($i1.text) || svar.containsKey($i1.text)){
+	       	   if (dvar.containsKey($i1.text) || svar.containsKey($i1.text) || alias.containsKey($i1.text)){
                 error_var_redefined.add(currentFile+": "+ $i1.text+" redefined");
              }else{
                 if (($i4.text==null)|($i5.text ==null)){
@@ -613,7 +662,7 @@ content_arc
                 }
              }
 	       	}else{
-	       	   if (dvar.containsKey($i1.text)||svar.containsKey($i1.text)){
+	       	   if (dvar.containsKey($i1.text)||svar.containsKey($i1.text) || alias.containsKey($i1.text)){
                 error_var_redefined.add(currentFile+": "+ $i1.text+" redefined");
              }else{
                 ArrayList<String> list=new ArrayList<String>();
@@ -663,7 +712,7 @@ content_reservoir
                       if (svar.containsKey(levelName)){
                         error_var_redefined.add(currentFile+": "+ levelName+" is an automatic generated name and is redefined");
                       }
-                      if (dvar.containsKey(zoneName)){
+                      if (dvar.containsKey(zoneName) || alias.containsKey($i1.text)){
                         error_var_redefined.add(currentFile+": "+ zoneName+" is an automatic generated name and is redefined");
                       }                   
                       svlist=new ArrayList<ArrayList<String>>();
@@ -747,7 +796,7 @@ content_reservoir
                    includeReservoir=false;
                 }else if ($i2.text.equals("y")){
                    includeReservoir=true;
-                   if (dvar.containsKey($i1.text)){
+                   if (dvar.containsKey($i1.text) || alias.containsKey($i1.text)){
                       error_var_redefined.add(currentFile+": "+ $i1.text+" redefined");
                    }
                    if ($i7.text==null){
@@ -774,7 +823,7 @@ content_reservoir
                       if (svar.containsKey(levelName)){
                         error_var_redefined.add(currentFile+": "+ levelName+" is an automatic generated name and is redefined");
                       }
-                      if (dvar.containsKey(zoneName)){
+                      if (dvar.containsKey(zoneName) || alias.containsKey($i1.text)){
                         error_var_redefined.add(currentFile+": "+ zoneName+" is an automatic generated name and is redefined");
                       }                   
                       svlist=new ArrayList<ArrayList<String>>();
@@ -839,7 +888,7 @@ content_reservoir
 content_dvar
 	:	i1=IDENT ',' i2=IDENT ',' lowerbound ',' upperbound ',' i3=IDENT ',' i4=IDENT ',' partC{
 	   if ($i2.text.equals("y")){
-	       if (dvar.containsKey($i1.text)){
+	       if (dvar.containsKey($i1.text) || svar.containsKey($i1.text) || alias.containsKey($i1.text)){
             error_var_redefined.add(currentFile+": "+ $i1.text+" redefined");
          }else{
             ArrayList<String> list=new ArrayList<String>();
@@ -872,43 +921,37 @@ content_dvar
 	;
 	
 content_svar
-	:	i1=IDENT ',' i2=(IDENT|'#') ',' ((i3=partC)|'#') ',' ((i9=IDENT)|'#') ',' ((i4=IDENT)|'#') ',' i5=IDENT ',' i6=(IDENT|'#') ',' i7=conditionStatement ',' i8=tableExpression{
+	:	i1=IDENT ',' i2=partC ',' i3=IDENT ',' i4=IDENT ',' IDENT ',' INTEGER ',' i5=conditionStatement ',' i6=tableExpression{
      				if ($i1.text.equals(preSV)){
-			        	if ($i3.text!=null){
-			        	  error_grammer.add(currentFile+": "+$i1.text+" type field at this line should be #");
+			        	if (!$i2.text.equals(svType)){
+			        	  error_grammer.add(currentFile+": "+$i1.text+" type field should be the same");
 			        	}
+			        	if (!$i3.text.equals(svUnits)){
+                  error_grammer.add(currentFile+": "+$i1.text+" units field should be the same");
+                }
+                if (!$i4.text.equals(output)){
+                  error_grammer.add(currentFile+": "+$i1.text+" output field should be the same");
+                }
 			        	if (!redefineSV){
-			        	   if ($i7.text.equals("always")){
+			        	   if ($i5.text.equals("always")){
             				  n_always=n_always+1;
 			        		    if (n_always>1){
 		              				error_grammer.add(currentFile+": "+$i1.text+" has more than 1 always condition");
             				  }
-            				  if (includeSV && !($i6.text.equals("y"))){
-              					  error_grammer.add(currentFile+": "+$i1.text+" includecase field should be y when the conditon is always");
-            				  }
           			   }
-          			   if (includeSV && $i6.text.equals("y")){
-            				  ArrayList<String> list=new ArrayList<String>();
-            				  list.add(svType);
-            				  list.add(svUnits);
-            				  list.add($i7.text);
-            				  list.addAll($i8.list);
-            				  svlist=svar.get($i1.text);
-            				  svlist.add(list);
-          			   }
+
+            			 ArrayList<String> list=new ArrayList<String>();
+            			 list.add(svType);
+            			 list.add(svUnits);
+            			 list.add($i5.text);
+            			 list.addAll($i6.list);
+            			 svlist=svar.get($i1.text);
+            			 svlist.add(list);
           			}
         		}else{
-          			if ($i3.text==null){
-          			   svType="NULL";
-          			}else{
-          			   svType=$i3.text;
-          			}
-          			if ($i9.text==null){
-                   svUnits="cfs";
-                }else{
-                   svUnits=$i9.text;
-                }
-          			if (svar.containsKey($i1.text)){
+        			  svType=$i2.text;
+                svUnits=$i3.text;
+          			if (svar.containsKey($i1.text) || dvar.containsKey($i1.text) || alias.containsKey($i1.text)){
                     error_var_redefined.add(currentFile+": "+ $i1.text+" redefined");
                     redefineSV=true;
                 }else{
@@ -916,51 +959,39 @@ content_svar
           				  n_always=0;
 				            svlist=new ArrayList<ArrayList<String>>();
           				  if ($i4.text.equals("y")){
-            					writeToDss=$i4.text;
+            					output=$i4.text;
             					outputSvar.add($i1.text);
             				}else if ($i4.text.equals("n")){
-            				  writeToDss=$i4.text;
+            				  output=$i4.text;
           				  }else{
-            					error_grammer.add(currentFile+": "+$i1.text+" writetodss field should be y or n");
-            					writeToDss="y";
+            					error_grammer.add(currentFile+": "+$i1.text+" output field should be y or n");
+            					output="n";
           				  }
           				
           				  if (!(preCondition.equals("always"))){
             					error_grammer.add(currentFile+": "+preSV+" the last case should be always");
           				  }
-          				  if ($i2.text.equals("y")){
-            					includeSV=true;
-						          if ($i7.text.equals("always")){
-							            if (!($i6.text.equals("y"))){
-						                error_grammer.add(currentFile+": "+$i1.text+" includecase field should be y when the conditon is always");
-              						}
-						          }
-          				  }else if ($i2.text.equals("n")){
-            					includeSV=false;
-          				  }else{
-            					error_grammer.add(currentFile+": "+$i1.text+" include field should be y or n");
-          				  }
-          				  if ($i7.text.equals("always")){
+          				  
+          				  if ($i5.text.equals("always")){
             					n_always=n_always+1;
           				  }
-          				  if (includeSV && $i6.text.equals("y")){
-            					ArrayList<String> list=new ArrayList<String>();
-            					list.add(svType);
-            					list.add(svUnits);
-            					list.add($i7.text);
-            					list.addAll($i8.list);
-            					svlist.add(list);
-            					svar.put($i1.text, svlist);
-          				  }
+            				
+            				ArrayList<String> list=new ArrayList<String>();
+            				list.add(svType);
+            				list.add(svUnits);
+            				list.add($i5.text);
+            				list.addAll($i6.list);
+            				svlist.add(list);
+            				svar.put($i1.text, svlist);
           			}
           	}
-     			  preCondition=$i7.text;
+     			  preCondition=$i5.text;
      			  preSV=$i1.text;
 		   }
 	;
 	
 content_constraint
-	:	i1=IDENT ',' i2=(IDENT|'#') ',' i3=IDENT ',' i4=(IDENT|'#') ',' i5=conditionStatement ',' i6=relationStatement ',' ((i7=lhsrhs)|'#') ',' ((i8=lhsrhs)|'#'){
+	:	i1=IDENT ',' i2=(IDENT|'#') ',' i3=IDENT ',' i4=(IDENT|'#') ',' i5=conditionStatement ',' i6=constraintStatement ',' ((i7=lhsrhs)|'#') ',' ((i8=lhsrhs)|'#'){
             if ($i1.text.equals(preConstraint)){
                 if (!redefineConstraint){
                    if ($i5.text.equals("always")){
@@ -1213,14 +1244,41 @@ content_constraint
 	
 content_weight
 	:	IDENT ',' weight{
-	   if (weight.containsKey($IDENT.text)){
-        error_var_redefined.add(currentFile+": "+ $IDENT.text+" redefined");
+	   if (dvar.containsKey($IDENT.text)){  
+	     if (weight.containsKey($IDENT.text)){
+          error_var_redefined.add(currentFile+": "+ $IDENT.text+" redefined");
+       }else{
+          weight.put($IDENT.text, $weight.text);
+       }
      }else{
-        weight.put($IDENT.text, $weight.text);
+       error_grammer.add(currentFile+": "+$IDENT.text+" is not defined before used");
      }
 	} 
 	;
 	
+content_external
+  : IDENT ',' externalFile{  
+     if (function.containsKey($IDENT.text)){
+        error_var_redefined.add(currentFile+": "+ $IDENT.text+" redefined");
+     }else{
+        function.put($IDENT.text, $externalFile.text);
+     }
+  } 
+  ;
+	
+content_alias @init{testDefine=true;}
+  : i1=IDENT ',' partC ',' i2=IDENT ',' expression{
+      if (dvar.containsKey($i1.text) || svar.containsKey($i1.text) || alias.containsKey($i1.text)){
+        error_var_redefined.add(currentFile+": "+ $i1.text+" redefined");
+      }
+      ArrayList<String> list = new ArrayList<String>();
+      list.add($partC.text);
+      list.add($i2.text);
+      list.add($expression.list.get(1));
+      alias.put($i1.text, list);
+      testDefine=false;
+  } 
+  ;
 
 ///////////////////
 /// basic rules ///
@@ -1233,22 +1291,26 @@ directory
 	:	(';'|'.'|'|'|'_'|'-'|'+'|'/'|BACKSLASH|IDENT|INTEGER)+
 	;
 	
+externalFile
+  : (';'|'.'|'|'|'_'|'-'|'+'|IDENT|INTEGER)+
+  ;
+	
 text	:	LETTER (LETTER | DIGIT )*;
 	
 tableExpression returns [ArrayList<String> list]
   @init { $list = new ArrayList<String>(); testDefine=true;}
-	:	((i1=expression)|(i1=tableSQL)|(i1=timeseriesWithUnits)|(i1=timeseries)){
+	:	((i1=expression)|(i1=tableSQL)|(i1=timeseriesWithUnits)|(i1=timeseries)|(i1=function)){
 	   list =$i1.list;
 	   testDefine=false;
 	}
 	;
 
 max_func
-	: MAX '(' expression ',' expression ')'
+	: MAX '(' expression ';' expression ')'
 	;
 
 min_func
-	: MIN '(' expression ',' expression ')'
+	: MIN '(' expression ';' expression ')'
 	;
 
 timeseriesWithUnits returns[ArrayList<String> list]
@@ -1261,12 +1323,44 @@ timeseriesWithUnits returns[ArrayList<String> list]
 	;
 
 timeseries returns[ArrayList<String> list]
-	: 'timeseries' 'kind' '=' i1=partC{
+	: 'timeseries' {
 				list = new ArrayList<String>();
-				list.add("TIMESERIES");
-				list.add($i1.text);	
+				list.add("TIMESERIES");	
 		}
 	;
+	
+function returns [ArrayList<String> list]
+  : ((i1=noArgFunction)|(i2=argFunction)){
+      list=new ArrayList<String>();
+      list=$i1.list;
+  }
+  ;
+
+noArgFunction returns [ArrayList<String> list]
+  : IDENT '(' ')'{
+      if (!function.containsKey($IDENT.text)){
+        error_grammer.add(currentFile+": function "+$IDENT.text+" is not defined before used");
+      }
+      list=new ArrayList<String>();
+      list.add("FUNCTION");
+      list.add($IDENT.text+"()"); 
+  }
+  ;  
+
+argFunction returns [ArrayList<String> list] 
+  : IDENT arguements {
+      if (!function.containsKey($IDENT.text)){
+        error_grammer.add(currentFile+": function "+$IDENT.text+" is not defined before used");
+      }
+      list=new ArrayList<String>();
+      list.add("FUNCTION");
+      list.add($IDENT.text+$arguements.text);
+  }
+  ;  
+  
+arguements:
+  '(' (IDENT|knownDV) (';' (IDENT|knownDV))* ')'
+  ;
 	
 partC	
   :	partCIdent1|partCIdent2;
@@ -1279,8 +1373,8 @@ partCIdent2
 
 tableSQL returns[ArrayList<String> list]
 	: 'select' i1=IDENT 'from' i2=IDENT 
-	  ('given' i3=relationStatement)? ('use' i4=IDENT)? 
-	  where_items	  
+	  ('given' i3=assignStatement)? ('use' i4=IDENT)? 
+	  (where_items)?	  
 	  {       
 				list = new ArrayList<String>();
 				list.add("TABLE");
@@ -1296,7 +1390,9 @@ tableSQL returns[ArrayList<String> list]
 				}else{
 				  list.add("");
 				}				
-				list.addAll($where_items.list);
+				if ($where_items.list !=null){
+				  list.addAll($where_items.list);
+				}
 		}
 	;
 
@@ -1304,7 +1400,7 @@ where_items returns[ArrayList<String> list]
 	@init { $list = new ArrayList<String>(); }
 
 	:	 WHERE  (r1=whereStatement{list.add($r1.text);} )
-	        ('&' r=whereStatement {
+	        (';' r=whereStatement {
 	           if ($r.text !=null) {list.add($r.text);}}  )*
 	;
 
@@ -1322,8 +1418,16 @@ term
 	|   	max_func
 	|   	min_func)
 	{
-    if ($i1!=null && testDefine && !svar.containsKey($i1.text) && !reserveToken.contains($i1.text)){
-      error_grammer.add(currentFile+": "+$i1.text+" is not defined before used");
+    if ($i1 !=null){
+      if (testDefine && !isSvFile && !dvar.containsKey($i1.text) && !svar.containsKey($i1.text) && !alias.containsKey($i1.text) && !reserveToken.contains($i1.text) && !$i1.text.equals("taf_cfs") && !$i1.text.equals("cfs_taf")){
+        error_grammer.add(currentFile+": "+$i1.text+" is not defined before used");
+      }
+      if (!isConstraintStatement && dvar.containsKey($i1.text)){
+        error_grammer.add(currentFile+": decision variable "+$i1.text+" in current month and current cycle can only be used in constraint relationship or defining weight");
+      }
+      if (!isConstraintStatement && alias.containsKey($i1.text)){
+        error_grammer.add(currentFile+": alias variable "+$i1.text+" in current month and current cycle can only be used in constraint relationship");
+      }
     }
 	}
 	;
@@ -1332,22 +1436,19 @@ knownDV
   : pastMonthDV|preMonthDV|pastCycleDV
   ;
   
+pastMonth:  'prejan'|'prefeb'|'premar'|'preapr'|'premay'|'prejun'|'prejul'|'preaug'|'presep'|'preoct'|'prenov'|'predec';
+  
 pastMonthDV  
-  : i1=IDENT '(' i2=IDENT ')'{
-    if (testDefine && !dvar.containsKey($i1.text)){
+  : i1=IDENT '(' pastMonth ')'{
+    if (testDefine && !dvar.containsKey($i1.text) && !alias.containsKey($i1.text)){
       error_grammer.add(currentFile+": decision variable "+$i1.text+" is not defined before used");
-    }
-    if (testDefine && $i2 !=null){
-      if (!pastMonth.contains($i2.text)){
-        error_grammer.add(currentFile+": "+$i2.text+" in decision variable "+$i1.text+" is wrong");
-      }
     }
   }
   ;
   
 preMonthDV
   : IDENT '(-' INTEGER ')'{
-    if (testDefine && !dvar.containsKey($IDENT.text)){
+    if (testDefine && !dvar.containsKey($IDENT.text)&& !alias.containsKey($IDENT.text)){
       error_grammer.add(currentFile+": decision variable "+$IDENT.text+" is not defined before used");
     }
   }
@@ -1356,8 +1457,8 @@ preMonthDV
 pastCycleDV
   : i1=IDENT '[' i2=IDENT ']'{
     if (testDefine){
-      if (!dvar.containsKey($i1.text)){
-        error_grammer.add(currentFile+": "+$i1.text+" decision variable is not defined before used");
+      if (!dvar.containsKey($i1.text) && !alias.containsKey($i1.text)){
+        error_grammer.add(currentFile+": decision variable"+$i1.text+" is not defined before used");
       }  
       if (!cycle.containsKey($i2.text)){
         error_grammer.add(currentFile+": cycle name "+$i2.text+" is not defined before used");
@@ -1393,12 +1494,14 @@ expression returns [ArrayList<String> list]
 	;
 
 relation
-	: '='
+	: '=='
 	| '<'
 	| '>'
+	| '>='
+	| '<='
 	;	
 
-conditionStatement
+conditionStatement 
 	:	relationStatementSeries|'always'
 	;
 
@@ -1407,13 +1510,26 @@ whereStatement
   ;
 	
 relationStatementSeries
-  : relationStatement (('&&'|'||') relationStatement)* ;
+  : relationStatement (('.and.'|'.or.') relationStatement)* ;
 
 relationStatement @init { testDefine=true;}
 	:	expression relation expression{
 	 testDefine=false;
 	}
 	;
+
+constraintStatement @init { testDefine=true; isConstraintStatement=true;}
+  : expression ('='|'>'|'<') expression{
+   testDefine=false;
+   isConstraintStatement=false;
+  }
+  ;
+
+assignStatement @init { testDefine=true;}
+  : IDENT '=' expression{
+   testDefine=false;
+  }
+  ;
 
 number
 	: INTEGER
