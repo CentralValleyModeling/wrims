@@ -1069,18 +1069,123 @@ public class TestConvertWresl {
 		expected_gMap.put("a3", g);
 				
 		
-		ArrayList<String> allKeys = new ArrayList<String>();
-		allKeys.addAll(expected_gMap.keySet());
-		allKeys.addAll(parser.F.gMap.keySet());
+		ArrayList<String> actual_keys = new ArrayList<String>();
+		ArrayList<String> expected_keys = new ArrayList<String>();
 		
+		expected_keys.addAll(expected_gMap.keySet());
+		actual_keys.addAll(parser.F.gMap.keySet());
+		
+		Collections.sort(expected_keys);
+		Collections.sort(actual_keys);
+		Assert.assertEquals(actual_keys, expected_keys);
 
-		for (String k : allKeys) {
-				//System.out.println(expected_svMap.get(k));
+		for (String k : expected_keys) {
+				//System.out.println("expected:"+ expected_gMap.get(k).equalEva());
+				//System.out.println("actual:  "+parser.F.gMap.get(k).equalEva());
 				Assert.assertEquals(parser.F.gMap.get(k).equalEva(), expected_gMap.get(k).equalEva());
 		}	
 	}			
 
+	@Test(groups = { "WRESL_elements" })
+	public void goalNoCaseNew() throws RecognitionException, IOException {
 	
+		inputFilePath = "src\\test\\TestConvertWresl_goalNoCaseNew.wresl";	
+		try {
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+
+	    Map<String, Goal> expected_gMap = new HashMap<String, Goal>(); 
+	    Goal g;
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.currentFilePath = inputFilePath; parser.evaluator();
+
+		g = new Goal();
+		g.scope = "global";
+		g.lhs = "C3_MIF";
+		g.caseName.add("default");
+		g.caseCondition.add("always");
+		g.caseExpression.add("minflow_C3b2");
+		g.case_lhs_gt_rhs.add("constrain");
+		g.case_lhs_lt_rhs.add("700.0");
+		expected_gMap.put("b2action1Whi_1", g);				
+		
+		ArrayList<String> actual_keys = new ArrayList<String>();
+		ArrayList<String> expected_keys = new ArrayList<String>();
+		
+		expected_keys.addAll(expected_gMap.keySet());
+		actual_keys.addAll(parser.F.gMap.keySet());
+		
+		Collections.sort(expected_keys);
+		Collections.sort(actual_keys);
+		Assert.assertEquals(actual_keys, expected_keys);
+
+		for (String k : expected_keys) {
+				//System.out.println("expected:"+ expected_gMap.get(k).equalEva());
+				//System.out.println("actual:  "+parser.F.gMap.get(k).equalEva());
+				Assert.assertEquals(parser.F.gMap.get(k).equalEva(), expected_gMap.get(k).equalEva());
+		}	
+	}			
+
+	@Test(groups = { "WRESL_elements" })
+	public void goalCaseNew() throws RecognitionException, IOException {
+	
+		inputFilePath = "src\\test\\TestConvertWresl_goalCaseNew.wresl";	
+		try {
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+
+	    Map<String, Goal> expected_gMap = new HashMap<String, Goal>(); 
+	    Goal g;
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.currentFilePath = inputFilePath; parser.evaluator();
+
+		g = new Goal();
+		
+		g.scope = "global";
+		g.lhs   = "C3_MIF";
+		g.caseName.add("Action1WhiOn");
+		g.caseCondition.add("int(B2Action1WhiOn)==1");
+		g.caseExpression.add("minflow_C3b2");
+		g.case_lhs_gt_rhs.add("constrain");
+		g.case_lhs_lt_rhs.add("700.");
+		
+		g.caseName.add("Action1WhiOff");
+		g.caseCondition.add("int(B2Action1WhiOn)==0");
+		g.caseExpression.add("clear_min");
+		g.case_lhs_gt_rhs.add("constrain");
+		g.case_lhs_lt_rhs.add("0");		
+		
+		expected_gMap.put("b2action1Whi_1", g);				
+		
+		ArrayList<String> actual_keys = new ArrayList<String>();
+		ArrayList<String> expected_keys = new ArrayList<String>();
+		
+		expected_keys.addAll(expected_gMap.keySet());
+		actual_keys.addAll(parser.F.gMap.keySet());
+		
+		Collections.sort(expected_keys);
+		Collections.sort(actual_keys);
+		Assert.assertEquals(actual_keys, expected_keys);
+
+		for (String k : expected_keys) {
+				//System.out.println("expected:"+ expected_gMap.get(k).equalEva());
+				//System.out.println("actual:  "+parser.F.gMap.get(k).equalEva());
+				Assert.assertEquals(parser.F.gMap.get(k).equalEva(), expected_gMap.get(k).equalEva());
+		}	
+	}	
+
 	@Test(groups = { "WRESL_elements" })
 	public void goalNoCase() throws RecognitionException, IOException {
 	

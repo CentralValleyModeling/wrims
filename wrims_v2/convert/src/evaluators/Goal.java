@@ -12,6 +12,8 @@ public class Goal {
 	public ArrayList<String> caseName;
 	public ArrayList<String> caseCondition;
 	public ArrayList<String> caseExpression;
+	public ArrayList<String> case_lhs_gt_rhs;
+	public ArrayList<String> case_lhs_lt_rhs;
 	
 	public Goal(){
 		scope="undefined";
@@ -19,6 +21,8 @@ public class Goal {
 		caseName       = new ArrayList<String>();
 		caseCondition  = new ArrayList<String>();
 		caseExpression = new ArrayList<String>();
+		case_lhs_gt_rhs = new ArrayList<String>();
+		case_lhs_lt_rhs = new ArrayList<String>();
 	}
 	
 	public String equalEva(){
@@ -27,12 +31,16 @@ public class Goal {
 		String caseNameStr="";
 		String caseConditionStr="";
 		String caseExpressionStr="";
+		String case_lhs_gt_rhs_str="";
+		String case_lhs_lt_rhs_str="";
 		
 		for (String i: caseName){caseNameStr = caseNameStr + s + i;}
 		for (String i: caseCondition){caseConditionStr = caseConditionStr + s + i;}
-		for (String i: caseExpression){caseExpressionStr = caseExpressionStr + s + i;}		
+		for (String i: caseExpression){caseExpressionStr = caseExpressionStr + s + i;}	
+		for (String i: case_lhs_gt_rhs){case_lhs_gt_rhs_str = case_lhs_gt_rhs_str + s + i;}	
+		for (String i: case_lhs_lt_rhs){case_lhs_lt_rhs_str = case_lhs_lt_rhs_str + s + i;}	
 		
-		String temp = scope+s+lhs+s+caseNameStr+caseConditionStr+s+caseExpressionStr;
+		String temp = scope+s+lhs+s+caseNameStr+caseConditionStr+s+caseExpressionStr+s+case_lhs_gt_rhs_str+s+case_lhs_lt_rhs_str;
 		
 		return temp;
 	}

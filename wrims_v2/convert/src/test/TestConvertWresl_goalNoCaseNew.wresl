@@ -1,0 +1,6 @@
+goal b2action1Whi_1 {
+    lhs C3_MIF
+    rhs     minflow_C3b2
+    lhs>rhs     constrain
+    lhs<rhs     penalty 700.0 
+}

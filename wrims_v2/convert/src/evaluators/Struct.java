@@ -138,7 +138,7 @@ public class Struct {
 		}
 	}
 	
-	public void goalNoCase(String name, String scope, String lhs, ArrayList<String> list) {
+	public void goalNoCase(String name, String scope, String lhs, ArrayList<String> list, String rhs, String lhs_gt_rhs, String lhs_lt_rhs) {
 		if (var_all.containsKey(name)) {
 			// System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "goal_no_case");
@@ -147,21 +147,36 @@ public class Struct {
 			goal_scope.put(name, scope);
 			goal_no_case.put(name, list);
 			var_all.put(name, "goal_no_case");
+			
+			/// clearer data structure
+			gl = new Goal();
+			gl.scope=scope;
+			gl.lhs=lhs;
+			gl.caseCondition.add("always");
+			gl.caseName.add("default");
+			gl.caseExpression.add(rhs);
+			gl.case_lhs_gt_rhs.add(lhs_gt_rhs);
+			gl.case_lhs_lt_rhs.add(lhs_lt_rhs);			
+			gMap.put(name, gl);
+			gList.add(name);				
+			
+			
 		}
 	}
 
-	public void goalCase(String goalName, String scope, String lhs, ArrayList<String> caseName, ArrayList<String> condition, Map<String, ArrayList<String>> caseContent) {
+	public void goalCase(String goalName, String scope, String lhs, Goal gl) {
 		if (var_all.containsKey(goalName)){
 			//System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(goalName, "goal_cases");
 			}
 			else {
 			goal_scope.put(goalName, scope);
-			goal_cases.put(goalName, caseName);
-			goal_lhs.put(goalName, lhs);
-			goal_conditions.put(goalName, condition);
-			goal_map_case_content.put(goalName, caseContent);
 			var_all.put(goalName, "goal_cases");
+			
+			/// better data structure
+			gMap.put(goalName, gl);
+			
+			
 			}
 	}	
 

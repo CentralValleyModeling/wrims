@@ -12,7 +12,8 @@ options {
   import evaluators.Struct;
   import evaluators.Model;
   import evaluators.Tools;
-  import evaluators.Svar;    
+  import evaluators.Svar; 
+  import evaluators.Goal;    
 }
 
 @lexer::header {
@@ -105,30 +106,63 @@ goal_simple[String id, String sc]
 	;
 
 goal_noCase[String id, String sc]
-	:   '{' 'lhs' h=IDENT  r=goalStatement '}' {F.goalNoCase($id, $sc, $h.text, $r.list);}
+	:   '{' 'lhs' h=IDENT  r=goalStatement '}' {F.goalNoCase($id, $sc, $h.text, $r.list, $r.rhs, $r.lhs_gt_rhs, $r.lhs_lt_rhs);}
 	;
 
 goal_case[String id, String sc] 
-	:   '{' 'lhs' h=IDENT  c=caseStatements '}'{ 
-				F.goalCase($id, $sc, $h.text, $c.caseNames, $c.conditions, $c.caseContent);
+	:   '{' 'lhs' lhs=IDENT  g=goalCaseStatements '}'{
+				$g.gl.scope = $sc;
+				$g.gl.lhs = $lhs.text;
+				F.goalCase($id, $sc, $lhs.text, $g.gl);
 	     }
 	; 
 
-goalStatement returns[ArrayList<String> list]
+goalCaseStatements returns[Goal gl]					   
+	@init { $gl = new Goal(); }    
+	:  ( c=goalCaseStatement  {
+			/// clearer data structure		
+			$gl.caseName.add($c.caseName);
+			$gl.caseCondition.add($c.condition);
+			$gl.caseExpression.add($c.rhs);
+			$gl.case_lhs_gt_rhs.add($c.lhs_gt_rhs);
+			$gl.case_lhs_lt_rhs.add($c.lhs_lt_rhs);
+			
+			} )+ 
+	;	
+
+goalCaseStatement returns[String caseName, String condition, String rhs, String expression, String lhs_gt_rhs, String lhs_lt_rhs]
+	:  'case' i=IDENT '{' c=conditionStatement g=goalStatement  '}' {			
+			$caseName = $i.text;
+			$condition = $c.str;
+			$rhs = $g.rhs; $lhs_gt_rhs = $g.lhs_gt_rhs; $lhs_lt_rhs = $g.lhs_lt_rhs;
+	};	
+
+goalStatement returns[ArrayList<String> list, String rhs, String lhs_gt_rhs, String lhs_lt_rhs]
 	@init { $list = new ArrayList<String>(); }
 	: 'rhs' i=IDENT  v1=lhs_vs_rhs v2=lhs_vs_rhs {       
 				$list.add("rhs"); $list.add($i.text);
 				$list.addAll($v1.list); $list.addAll($v2.list);
-	  }
-	;
+				
+				///clearer data structure
+				$rhs=$i.text;
+				if ($v1.lhs_gt_rhs!=null){$lhs_gt_rhs=$v1.lhs_gt_rhs;$lhs_lt_rhs=$v2.lhs_lt_rhs;}
+				else                     {$lhs_gt_rhs=$v2.lhs_gt_rhs;$lhs_lt_rhs=$v1.lhs_lt_rhs;}			
+	};
 
-lhs_vs_rhs returns[ArrayList<String> list]
-	@init { $list = new ArrayList<String>(); }
+lhs_vs_rhs returns[ArrayList<String> list, String lhs_gt_rhs, String lhs_lt_rhs]
+	@init { $list = new ArrayList<String>(); String scenario="";}
 	: 'lhs'  
-	( '>' {$list.add("l>r");}  |  '<' {$list.add("l<r");} )  
+	( '>' {$list.add("l>r"); scenario = "l>r";}  |  '<' {$list.add("l<r"); scenario = "l<r";} )  
 	  'rhs' 
-	( CONSTRAIN {$list.add("constrain");$list.add(null);}
-	| PENALTY i=number {$list.add("penalty");$list.add($i.text);}
+	( CONSTRAIN 
+		{$list.add("constrain");$list.add(null);  
+		 if (scenario == "l>r"){$lhs_gt_rhs="constrain";}
+		 else if (scenario == "l<r"){$lhs_lt_rhs="constrain";}
+		 }
+	| PENALTY i=number {$list.add("penalty");$list.add($i.text);
+		 if (scenario == "l>r"){$lhs_gt_rhs=$i.text;}
+		 else if (scenario == "l<r"){$lhs_lt_rhs=$i.text;}
+		}
 	) ;
 
 /// define ///
@@ -167,7 +201,7 @@ caseStatements returns[ArrayList<String> caseNames,
         $conditions = new ArrayList<String>();
         $expressions = new ArrayList<String>();
         $caseContent = new HashMap<String, ArrayList<String>>();
-        $sv = new Svar();
+        $sv = new Svar(); 
          }
         
 	:  ( c=caseStatement  {
@@ -176,12 +210,10 @@ caseStatements returns[ArrayList<String> caseNames,
 			$expressions.add($c.expressionStr);			
 			$caseContent.put($c.caseNameStr, $c.contentList);		         
 			
+			/// clearer data structure		
 			$sv.caseName.add($c.caseNameStr);
 			$sv.caseCondition.add($c.conditionStr);
-			$sv.caseExpression.add($c.expressionStr);
-			
-			
-			
+			$sv.caseExpression.add($c.expressionStr);			
 			
 			} )+ 
 	;	
@@ -189,14 +221,13 @@ caseStatements returns[ArrayList<String> caseNames,
 caseStatement returns[String caseNameStr, String conditionStr, String expressionStr, ArrayList<String> contentList]
 @init { $contentList = new ArrayList<String>();	} 
 	:  'case' i=IDENT '{' c=conditionStatement 
-	( s=sqlStatement   {$contentList.add("sql");$contentList.addAll($s.list);$expressionStr=$s.str;}
-	| v=valueStatement {$contentList.add("value");$contentList.add($v.str);$expressionStr=$v.str;}
-	| u=sumStatement   {$contentList.add("sum");$contentList.addAll($u.list);$expressionStr=$u.str;}
+	( s=sqlStatement   {$contentList.add("sql");$contentList.addAll($s.list);  $expressionStr=$s.str;}
+	| v=valueStatement {$contentList.add("value");$contentList.add($v.str);    $expressionStr=$v.str;}
+	| u=sumStatement   {$contentList.add("sum");$contentList.addAll($u.list);  $expressionStr=$u.str;}
 	| g=goalStatement  {$contentList.add("goal");$contentList.addAll($g.list);}
 	) '}' {			
 			$caseNameStr = $i.text;
 			$conditionStr = $c.str;
-
 			
 			//if ($v.str !=null && $v.str!="")      {$contentList.add("value");$contentList.add($v.str);}
 			//if ($s.list !=null && ! $s.list.isEmpty() ) {$contentList.add("sql");$contentList.addAll($s.list);}

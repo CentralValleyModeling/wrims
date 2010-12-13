@@ -1,13 +1,5 @@
-goal b2action1Whi_1 {
-  lhs C3_MIF
-  case Action1WhiOn {
-    condition   int(B2Action1WhiOn)==1
-    rhs     minflow_C3b2
-    lhs>rhs     constrain
-    lhs<rhs     penalty 700. }
-  case Action1WhiOff {
-    condition   int(B2Action1WhiOn)==0
-    rhs     clear_min
-    lhs>rhs     constrain
-    lhs<rhs     penalty 0 }
-}
+goal split_C5_WTS { C5_WTS = C5_WTS_Stg1 + C5_WTS_Stg2 }
+goal C_SLCVP { C5_WTS = C5_WTS_Stg1 }
+goal a1 { b = c }
+goal[local] a2 { b >  c }
+goal a3 { b < c }
