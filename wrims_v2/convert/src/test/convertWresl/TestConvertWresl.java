@@ -230,6 +230,7 @@ public class TestConvertWresl {
 
 	    Map<String, Struct> expected_modelMap = new HashMap<String, Struct>();
 	    Struct expected_struct = new Struct();
+
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
@@ -238,11 +239,27 @@ public class TestConvertWresl {
 		
 		expected_struct.goal_scope.put("force_c607","local");
 		expected_struct.goal_simple.put("force_c607","C607>500");
+	    
+		Goal gl = new Goal();
+		gl.scope = "local";
+		gl.caseName.add("default");
+		gl.caseCondition.add("always");
+		gl.caseExpression.add("C607>500");
+		expected_struct.gMap.put("force_c607",gl);
 		
 		expected_modelMap.put("CVCWHEELING",expected_struct);
+		
+		for ( String key : expected_modelMap.get("CVCWHEELING").gMap.keySet() ){
+			Assert.assertEquals(parser.modelMap.get("CVCWHEELING").gMap.get(key).equalEva(), expected_modelMap.get("CVCWHEELING").gMap.get(key).equalEva());
+		}
 
-		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").goal_simple, expected_modelMap.get("CVCWHEELING").goal_simple);
-		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").goal_scope, expected_modelMap.get("CVCWHEELING").goal_scope);		
+		Assert.assertEquals(1,2);
+		for ( String key : expected_modelMap.get("CVCWHEELING").asMap.keySet() ){
+			
+			System.out.println("expected_keySet:  "+expected_modelMap.get("CVCWHEELING").asMap.keySet() );
+			System.out.println("actual_keySet:  "+parser.modelMap.get("CVCWHEELING").asMap.keySet() );
+			Assert.assertEquals(parser.modelMap.get("CVCWHEELING").asMap.get(key).equalEva(), expected_modelMap.get("CVCWHEELING").asMap.get(key).equalEva());
+		}
 	}	
 
 	@Test(groups = { "WRESL_elements" })
