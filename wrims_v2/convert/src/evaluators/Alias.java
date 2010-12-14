@@ -3,7 +3,7 @@ package evaluators;
 public class Alias {
 	
 	public String scope;
-	public String format;
+//	public String format;
 	public String kind;
 	public String units;
 	public String expression;
@@ -14,7 +14,7 @@ public class Alias {
 	
 	public Alias(){
 		scope="undefined";
-		format="undefined";
+//		format="undefined";
 		kind="undefined";
 		units="undefined";
 		expression="undefined";
@@ -27,7 +27,7 @@ public class Alias {
 	public String equalEva(){
 		
 		String s = "|";		
-		String temp = scope+s+format+s+kind+s+units+expression;
+		String temp = scope+s+kind+s+units+expression;
 		
 		return temp;
 	}

@@ -388,7 +388,7 @@ public class Struct {
 			/// better data structure
 			as = new Alias();
 			as.scope=scope;
-			as.kind=kind;
+			if (kind!=null) as.kind=kind;
 			as.units=units;
 			as.expression=alias;		
 			asMap.put(name, as);

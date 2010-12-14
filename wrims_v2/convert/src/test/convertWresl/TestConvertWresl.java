@@ -20,6 +20,7 @@ import wresl.ConvertWreslParser;
 import org.testng.annotations.*;
 import org.testng.Assert;
 
+import evaluators.Alias;
 import evaluators.Goal;
 import evaluators.IncludeFile;
 import evaluators.Struct;
@@ -418,50 +419,47 @@ public class TestConvertWresl {
 	}	
 
 	@Test(groups = { "WRESL_elements" })
-	public void dvarAlias() throws RecognitionException, IOException {
-		inputFilePath = "src\\test\\TestConvertWresl_dvarAlias.wresl";
+	public void alias() throws RecognitionException, IOException {
+		inputFilePath = "src\\test\\TestConvertWresl_alias.wresl";
 		try {
 			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
 	        }
-	    //String[] array;
-	    //ArrayList<String> list;
-	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
+	    Map<String, Alias> expected_asMap = new HashMap<String, Alias>(); 
+	    Alias as;	    
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 		
-		expected.put("QsacFth", new ArrayList<String>(Arrays.asList(new String[]{"flow-channel","CFS","C_SacFea+D_SacFea"})));
+		as = new Alias();
+		as.scope = "global";
+		as.kind = "flow-channel";
+		as.units = "CFS";
+		as.expression = "C_SacFea+D_SacFea";
 		
-		Assert.assertEquals(parser.F.dvar_alias, expected);
+		expected_asMap.put("QsacFth",as);
+
+		as = new Alias();
+		as.scope = "local";
+		as.units = "CFS";
+		as.expression = "D419_swp[monthlyweighted5]";
+		
+		expected_asMap.put("D419_swpC6",as);
+		
+		for (String key : expected_asMap.keySet()){
+			
+			//System.out.println("expected:  "+key+"::"+expected_asMap.get(key).equalEva());
+			//System.out.println("actual  :  "+key+"::"+parser.F.asMap.get(key).equalEva());
+			Assert.assertEquals(parser.F.asMap.get(key).equalEva(), expected_asMap.get(key).equalEva());
+		
+		}
 	}	
 
-	@Test(groups = { "WRESL_elements" })
-	public void dvarAlias2() throws RecognitionException, IOException {
-		inputFilePath = "src\\test\\TestConvertWresl_dvarAlias2.wresl";
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
-	    //String[] array;
-	    //ArrayList<String> list;
-	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
-	    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
-		
-		expected.put("D419_swpC6", new ArrayList<String>(Arrays.asList(new String[]{null,"CFS","D419_swp[monthlyweighted5]"})));
-		
-		Assert.assertEquals(parser.F.dvar_alias, expected);
-	}
+
 
 	@Test(groups = { "WRESL_elements" })
 	public void defineLocal() throws RecognitionException, IOException {
