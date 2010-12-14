@@ -1042,59 +1042,12 @@ public class TestConvertWresl {
 		Assert.assertEquals(parser.F.svar_cases, expected_svar_cases);
 		Assert.assertEquals(parser.F.svar_conditions, expected_svar_conditions);
 		Assert.assertEquals(parser.F.svar_map_case_content, expected_svar_map_case_content);
-	}	
-	
+	}			
+
 	@Test(groups = { "WRESL_elements" })
 	public void goalSimple() throws RecognitionException, IOException {
 	
 		inputFilePath = "src\\test\\TestConvertWresl_goalSimple.wresl";	
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
-
-	    Map<String, String>  expected = new HashMap<String, String>();
-	    Map<String, String>  expected_scope = new HashMap<String, String>();
-	    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
-
-		expected.put("split_C5_WTS", "C5_WTS=C5_WTS_Stg1+C5_WTS_Stg2");
-		expected.put("C_SLCVP", "C5_WTS=C5_WTS_Stg1");
-		expected.put("a1", "b=c");
-		expected.put("a2", "b>c");
-		expected.put("a3", "b<c");
-		
-
-		expected_scope.put("split_C5_WTS", "global");
-		expected_scope.put("C_SLCVP", "global");
-		expected_scope.put("a1", "global");
-		expected_scope.put("a2", "local");
-		expected_scope.put("a3", "global");
-		
-		List<String> goal_simple_keys = new ArrayList<String> (parser.F.goal_simple.keySet());
-		List<String> expected_keys = new ArrayList<String> (expected.keySet());
-		Collections.sort(goal_simple_keys);
-		Collections.sort(expected_keys);
-		
-		Assert.assertEquals(goal_simple_keys, expected_keys);
-		
-//		for (String i : expected_keys) {
-//			Assert.assertEquals(parser.F.goal_simple.get(i), expected.get(i));
-//		}
-		
-		Assert.assertEquals(parser.F.goal_simple, expected);	
-		Assert.assertEquals(parser.F.goal_scope, expected_scope);	
-	}			
-
-	@Test(groups = { "WRESL_elements" })
-	public void goalSimpleNew() throws RecognitionException, IOException {
-	
-		inputFilePath = "src\\test\\TestConvertWresl_goalSimpleNew.wresl";	
 		try {
 			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
