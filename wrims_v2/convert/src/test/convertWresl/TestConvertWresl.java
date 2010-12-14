@@ -21,6 +21,7 @@ import org.testng.annotations.*;
 import org.testng.Assert;
 
 import evaluators.Goal;
+import evaluators.IncludeFile;
 import evaluators.Struct;
 import evaluators.Svar;
 
@@ -76,23 +77,48 @@ public class TestConvertWresl {
 	         e.printStackTrace();
 	        }
 	    
-
-	    //ArrayList<String> list;
-	    //Map<String, ArrayList<String>>  expected_file_include_file  = new HashMap<String, ArrayList<String>>();
-	    Map<String, String>  expected_include_file_scope = new HashMap<String, String>();
+	    Struct expected_struct = new Struct();
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
+				
 		
+		Map<String,IncludeFile>  incFileMap = new HashMap<String,IncludeFile>(); 
 
-		expected_include_file_scope.put("..\\..\\common\\System\\System_Sac.wresl", "local");
-		expected_include_file_scope.put("..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl", "global");
+		IncludeFile incFile;
 		
+		incFile = new IncludeFile();
+		incFile.scope = "local";
+		incFileMap.put("..\\..\\common\\System\\System_Sac.wresl", incFile);
 
-		Assert.assertEquals(parser.F.include_file_scope, expected_include_file_scope);
-		//Assert.assertEquals(parser.F.file_include_file, expected_file_include_file);
+		incFile = new IncludeFile();
+		incFile.scope = "global";
+		incFileMap.put("..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl", incFile);
+
+		expected_struct.incFileMap.putAll(incFileMap);
+							
+		ArrayList<String> actual_keys = new ArrayList<String>();
+		ArrayList<String> expected_keys = new ArrayList<String>();
+		
+		expected_keys.addAll(expected_struct.incFileMap.keySet());
+		actual_keys.addAll(parser.F.incFileMap.keySet());
+		
+		Collections.sort(expected_keys);
+		Collections.sort(actual_keys);
+		
+		Assert.assertEquals(actual_keys, expected_keys);
+
+//		System.out.println("expected_keys:"+ expected_keys);
+//		System.out.println("actual_keys:"+ actual_keys);
+		
+		for (String k : expected_keys) {
+				
+				Assert.assertEquals(parser.F.incFileMap.get(k).equalEva(), expected_struct.incFileMap.get(k).equalEva());
+			
+		}
+		
 	}	
 	
 	@Test(groups = { "WRESL_elements" })
@@ -143,19 +169,53 @@ public class TestConvertWresl {
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 		
-		expected_struct.include_file_scope.put("..\\..\\common\\System\\System_Sac.wresl","local");
-		expected_struct.include_file_scope.put("..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl","global");
+
+		Map<String,IncludeFile>  incFileMap = new HashMap<String,IncludeFile>(); 
+
+		IncludeFile incFile;
 		
-//	    String[] array={null,"local","global"};
-//	    list=new ArrayList<String>();list.addAll(Arrays.asList(array));
-//		expected_model_scope_list.put("CVCWHEELING", list);
+		incFile = new IncludeFile();
+		incFile.scope = "local";
+		incFileMap.put("..\\..\\common\\System\\System_Sac.wresl", incFile);
+
+		incFile = new IncludeFile();
+		incFile.scope = "global";
+		incFileMap.put("..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl", incFile);
+
+		expected_struct.incFileMap.putAll(incFileMap);
 		
 		expected_modelMap.put("CVCWHEELING",expected_struct);
+					
+		ArrayList<String> actual_keys = new ArrayList<String>();
+		ArrayList<String> expected_keys = new ArrayList<String>();
+		
+		expected_keys.addAll(expected_modelMap.keySet());
+		actual_keys.addAll(parser.modelMap.keySet());
+		
+		Collections.sort(expected_keys);
+		Collections.sort(actual_keys);
+		
+		Assert.assertEquals(actual_keys, expected_keys);
+
+//		System.out.println("expected_keys:"+ expected_keys);
+//		System.out.println("actual_keys:"+ actual_keys);
+		
+		for (String k : expected_keys) {
+
+//			System.out.println("actual_keySet:  "+parser.modelMap.get(k).incFileMap.keySet());
+//			System.out.println("expected_keySet:  "+expected_modelMap.get(k).incFileMap.keySet());
+			
+			for (String f : expected_modelMap.get(k).incFileMap.keySet()){
 				
-		//System.out.println("#############################: " + parser.modelMap.get("CVCWHEELING").include_file_scope);
-		//System.out.println("#############################: " + expected_modelMap.get("CVCWHEELING").include_file_scope);
-		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").include_file_scope, expected_modelMap.get("CVCWHEELING").include_file_scope);
-	}		
+				System.out.println("actual:  "+parser.modelMap.get(k).incFileMap.get(f).equalEva());
+			    System.out.println("expected:"+expected_modelMap.get(k).incFileMap.get(f).equalEva());
+				
+				Assert.assertEquals(parser.modelMap.get(k).incFileMap.get(f).equalEva(), expected_modelMap.get(k).incFileMap.get(f).equalEva());
+			}
+		}	
+	
+	}
+			
 	
 	@Test(groups = { "WRESL_elements" })
 	public void modelVarAdhoc() throws RecognitionException, IOException {

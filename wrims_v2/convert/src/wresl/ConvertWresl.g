@@ -13,7 +13,8 @@ options {
   import evaluators.Model;
   import evaluators.Tools;
   import evaluators.Svar; 
-  import evaluators.Goal;    
+  import evaluators.Goal; 
+  import evaluators.IncludeFile;    
 }
 
 @lexer::header {
@@ -26,7 +27,6 @@ options {
 
 	public Struct F = new Struct();	
 
-	//public ArrayList<Struct> modelList = new ArrayList<Struct>();
 	public Map<String, Struct> modelMap = new HashMap<String, Struct>();
 	
 	/// temp variables 
@@ -57,26 +57,32 @@ pattern
 	| 	define ;
 
 model 
-scope { Struct M ; }
+scope { Struct M ; int includeFileKey;}
 @init { inModel = "y"; }
 @after{ modelMap.put($i.text, $model::M);  inModel = "n"; }
 	:    MODEL i=IDENT  {  F.modelList($i.text);$model::M = new Struct(); } '{' 
-	     c=(  include | goal | define )*
+	     c=(  include_in_model | goal | define )*
 	     '}' {
-	           //  System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " + $model::M.include_file_scope); 
+	           //  System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " + $model::M.include_file_scope);
+
+
 	         }
 	     
 	;
 
-include
+include_in_model 
+	@init { scope = "global";}
+	:   INCLUDE ( LOCAL  {scope="local";} )? p=includeFilePath {
+	             	$model::M.includeFile($p.path, scope);
+	}; 
+
+include 
 	@init { scope = "global"; }
 	:   INCLUDE ( LOCAL  {scope="local";} )? p=includeFilePath {
-	             if(inModel=="n") { F.includeFile($p.path, scope);}
-	             else             { $model::M.includeFile($p.path, scope);}
-	             
-	              
-	    }  
-	; 
+	             	F.includeFile($p.path, scope);
+
+	             	 
+	}; 
 
 includeFilePath returns[String path]
 	:	 f=FILE_PATH  {$path=Tools.strip($f.text);}

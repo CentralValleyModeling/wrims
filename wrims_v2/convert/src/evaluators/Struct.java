@@ -10,6 +10,13 @@ import com.sun.org.apache.xml.internal.security.utils.Constants;
 
 public class Struct {
 
+	/// includeFile data structure
+	public IncludeFile incFile; 
+	public ArrayList<String> incFileList = new ArrayList<String>(); 
+	public Map<String,IncludeFile>  incFileMap = new HashMap<String,IncludeFile>(); 
+	
+	ArrayList<String> error_includeFile_redefined;
+	
 	
 	/// svar data structure
 	public Svar sv; 
@@ -108,12 +115,19 @@ public class Struct {
 	}		
 	
 	public void includeFile(String filePath, String scope ) {
-		if (var_all.containsKey(filePath)) {
-			error_var_redefined.put(filePath, "include");
+		if (incFileList.contains(filePath)) {
+			error_includeFile_redefined.add(filePath);
+			
 		} else {				
-				//file_include_file.get(name).add(filePath);
-				include_file_scope.put(filePath, scope);
-				var_all.put(filePath, "include");
+				
+			///clearer data structure
+			incFile = new IncludeFile();
+			
+			incFile.scope = scope;
+			incFileList.add(filePath);
+			
+			incFileMap.put( filePath, incFile);
+				
 		}
 	}	
 	
