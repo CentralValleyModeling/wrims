@@ -1164,9 +1164,9 @@ public class TestConvertWresl {
 	}			
 
 	@Test(groups = { "WRESL_elements" })
-	public void goalNoCaseNew() throws RecognitionException, IOException {
+	public void goalNoCase() throws RecognitionException, IOException {
 	
-		inputFilePath = "src\\test\\TestConvertWresl_goalNoCaseNew.wresl";	
+		inputFilePath = "src\\test\\TestConvertWresl_goalNoCase.wresl";	
 		try {
 			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
@@ -1262,31 +1262,6 @@ public class TestConvertWresl {
 				Assert.assertEquals(parser.F.gMap.get(k).equalEva(), expected_gMap.get(k).equalEva());
 		}	
 	}	
-
-	@Test(groups = { "WRESL_elements" })
-	public void goalNoCase() throws RecognitionException, IOException {
-	
-		inputFilePath = "src\\test\\TestConvertWresl_goalNoCase.wresl";	
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
-
-	    Map<String, List<String>>  expected = new HashMap<String, List<String>>();
-	    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
-
-		expected.put("b2action1Whi_1", Arrays.asList(new String[]{
-				"lhs","C3_MIF","rhs","minflow_C3b2","l>r","constrain",null,"l<r","penalty","700.0"
-		}));
-		
-		Assert.assertEquals(parser.F.goal_no_case, expected);		
-	}		
 	
 	@Test(groups = { "WRESL_elements" })
 	public void goalCase() throws RecognitionException, IOException {
