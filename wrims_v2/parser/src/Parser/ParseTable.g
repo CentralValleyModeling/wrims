@@ -73,7 +73,6 @@ options {
   
   private String preConstraint="";
   private boolean redefineConstraint=false;
-  private boolean includeConstraint=false;
   private boolean constraintOnly=false;
   
   private String preReservoir="";
@@ -321,7 +320,7 @@ headline_reservoirtable
 	;
 	
 headline_dvartable
-	:	'name' ',' 'include' ',' 'lowerbound' ',' 'upperbound' ',' 'integer' ',' 'units' ',' 'type'{
+	:	'name' ',' 'lowerbound' ',' 'upperbound' ',' 'integer' ',' 'units' ',' 'type'{
 		}
 	;
 	
@@ -331,7 +330,7 @@ headline_svartable
 	;
 
 headline_constrainttable
-	:	'name' ',' 'include' ',' 'case' ',' 'caseinclude' ',' 'condition' ',' 'expression' ',' 'lhs>rhs' ',' 'lhs<rhs' {
+	:	'name' ',' 'case' ',' 'condition' ',' 'expression' ',' 'lhs>rhs' ',' 'lhs<rhs' {
 		}
 	;
 		
@@ -886,8 +885,7 @@ content_reservoir
 	;
 	
 content_dvar
-	:	i1=IDENT ',' i2=IDENT ',' lowerbound ',' upperbound ',' i3=IDENT ',' i4=IDENT ',' partC{
-	   if ($i2.text.equals("y")){
+	:	i1=IDENT ',' lowerbound ',' upperbound ',' i3=IDENT ',' i4=IDENT ',' partC{
 	       if (dvar.containsKey($i1.text) || svar.containsKey($i1.text) || alias.containsKey($i1.text)){
             error_var_redefined.add(currentFile+": "+ $i1.text+" redefined");
          }else{
@@ -914,9 +912,6 @@ content_dvar
             list.add($partC.text);
             dvar.put($i1.text,list);
          }
-	   }else if (!($i2.text.equals("n"))){
-	       error_grammer.add(currentFile+": "+$i1.text+" include field should be y or n");
-	   }
 	}
 	;
 	
@@ -991,7 +986,7 @@ content_svar
 	;
 	
 content_constraint
-	:	i1=IDENT ',' i2=(IDENT|'#') ',' i3=IDENT ',' i4=(IDENT|'#') ',' i5=conditionStatement ',' i6=constraintStatement ',' ((i7=lhsrhs)|'#') ',' ((i8=lhsrhs)|'#'){
+	:	i1=IDENT ',' i3=IDENT ',' i5=conditionStatement ',' i6=constraintStatement ',' ((i7=lhsrhs)|'#') ',' ((i8=lhsrhs)|'#'){
             if ($i1.text.equals(preConstraint)){
                 if (!redefineConstraint){
                    if ($i5.text.equals("always")){
@@ -999,12 +994,8 @@ content_constraint
                       if (n_always>1){
                           error_grammer.add(currentFile+": "+$i1.text+" has more than 1 always condition");
                       }
-                      if (includeConstraint && !($i4.text.equals("y"))){
-                          error_grammer.add(currentFile+": "+$i1.text+" includecase field should be y when the conditon is always");
-                      }
                    }
-                   if (includeConstraint && $i4.text.equals("y")){
-                      if (constraintOnly){
+                   if (constraintOnly){
                         if (($i7.text==null) && ($i8.text==null)){
                           ArrayList<ArrayList<String>> constraintList = constraint.get($i1.text);
                           ArrayList<String> list = new ArrayList<String>();
@@ -1014,7 +1005,7 @@ content_constraint
                         }else{
                           error_grammer.add(currentFile+": "+$i1.text+" lhs>rhs and rhs>lhs fields can only be both # or neither");
                         }
-                      }else{
+                   }else{
                         if ($i7.text.equals("constrain") && $i8.text.equals("constrain")){
                           ArrayList<String> list = new ArrayList<String>();
                           ArrayList<ArrayList<String>> constraintList = constraint.get($i1.text);
@@ -1096,7 +1087,6 @@ content_constraint
                           list.add($i8.text);
                           rglList.add(list);
                         }                       
-                      }
                    }
                 }
             }else{
@@ -1111,23 +1101,12 @@ content_constraint
                     if (!(preCondition.equals("always"))){
                       error_grammer.add(currentFile+": "+preConstraint+" the last case should be always");
                     }
-                    if ($i2.text.equals("y")){
-                      includeConstraint=true;
-                      if ($i5.text.equals("always")){
-                          if (!($i4.text.equals("y"))){
-                            error_grammer.add(currentFile+": "+$i1.text+" includecase field should be y when the conditon is always");
-                          }
-                      }
-                    }else if ($i2.text.equals("n")){
-                      includeConstraint=false;
-                    }else{
-                      error_grammer.add(currentFile+": "+$i1.text+" include field should be y or n");
-                    }
+
                     if ($i5.text.equals("always")){
                       n_always=n_always+1;
                     }
-                    if (includeConstraint && $i4.text.equals("y")){
-                      if (($i7.text==null) || ($i8.text==null)){
+
+                    if (($i7.text==null) || ($i8.text==null)){
                         constraintOnly=true;
                         if (($i7.text==null) && ($i8.text==null)){
                           ArrayList<ArrayList<String>> constraintList = new ArrayList<ArrayList<String>>();
@@ -1139,7 +1118,7 @@ content_constraint
                         }else{
                           error_grammer.add(currentFile+": "+$i1.text+" lhs>rhs and rhs>lhs fields can only be both # or neither");
                         }
-                      }else{
+                    }else{
                         if ($i7.text.equals("constrain") && $i8.text.equals("constrain")){
                           ArrayList<String> list = new ArrayList<String>();
                           ArrayList<ArrayList<String>> constraintList = new ArrayList<ArrayList<String>>();
@@ -1233,7 +1212,6 @@ content_constraint
                           rglList.add(list);
                           rgl.put($i1.text, rglList);
                         }                       
-                      }
                     }
                 }
             }
