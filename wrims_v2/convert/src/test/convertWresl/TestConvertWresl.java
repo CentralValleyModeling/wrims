@@ -1210,9 +1210,9 @@ public class TestConvertWresl {
 	}			
 
 	@Test(groups = { "WRESL_elements" })
-	public void goalCaseNew() throws RecognitionException, IOException {
+	public void goalCase() throws RecognitionException, IOException {
 	
-		inputFilePath = "src\\test\\TestConvertWresl_goalCaseNew.wresl";	
+		inputFilePath = "src\\test\\TestConvertWresl_goalCase.wresl";	
 		try {
 			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
@@ -1261,89 +1261,6 @@ public class TestConvertWresl {
 				//System.out.println("actual:  "+parser.F.gMap.get(k).equalEva());
 				Assert.assertEquals(parser.F.gMap.get(k).equalEva(), expected_gMap.get(k).equalEva());
 		}	
-	}	
-	
-	@Test(groups = { "WRESL_elements" })
-	public void goalCase() throws RecognitionException, IOException {
-		
-		inputFilePath = "src\\test\\TestConvertWresl_goalCase.wresl";
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
-	    	    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();		
-
-		Map<String, String> expected_goal_lhs = new HashMap<String, String>();
-	    Map<String, ArrayList<String>>   expected_goal_cases  = new HashMap<String,ArrayList<String>> (); 
-	    Map<String, ArrayList<String>>   expected_goal_conditions  = new HashMap<String,ArrayList<String>> (); 
-	    Map<String, Map<String, List<String>>> expected_goal_map_case_content = new HashMap<String, Map<String, List<String>>>();
-	    
-	    /// for each case of svar
-	    Map<String, List<String>> map_case_content; 
-	    ArrayList<String> list_case_names;
-	    ArrayList<String> list_conditions;
-
-
-		/// new svar
-	    list_case_names = new ArrayList<String>();
-	    list_conditions = new ArrayList<String>();
-	    map_case_content = new HashMap<String, List<String>>();	
-	    String goal_name = "b2action1Whi_1";
-	    String lhs = "C3_MIF";
-	    
-	    /// new case
-		list_case_names.add("Action1WhiOn"); // this is needed to ensure the order of the cases, which is lost in map
-		list_conditions.add("int(B2Action1WhiOn)==1");
-		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{
-				"goal","rhs","minflow_C3b2","l>r","constrain",null,"l<r","penalty","700."
-				}));
-		
-		/// new case
-		list_case_names.add("Action1WhiOff");
-		list_conditions.add("int(B2Action1WhiOn)==0");
-		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{
-				"goal","rhs","clear_min","l>r","constrain",null,"l<r","penalty","0"
-				}));
-
-		// conclude 1st svar
-		expected_goal_lhs.put(goal_name, lhs);
-		expected_goal_cases.put(goal_name, list_case_names);
-		expected_goal_conditions.put(goal_name, list_conditions);
-		expected_goal_map_case_content.put(goal_name, map_case_content);
-
-				
-		List<String> goal_cases_keys = new ArrayList<String> (parser.F.goal_cases.keySet());
-		List<String> expected_goal_cases_keys = new ArrayList<String> (expected_goal_cases.keySet());
-		Collections.sort(goal_cases_keys);
-		Collections.sort(expected_goal_cases_keys);
-		
-//		Assert.assertEquals(goal_cases_keys, expected_goal_cases_keys);
-//		
-//		for (String i : goal_cases_keys) {
-//			Assert.assertEquals(parser.F.goal_cases.get(i), expected_goal_cases.get(i));
-//		}
-//		
-//		for (String i : goal_cases_keys) {
-//			Assert.assertEquals(parser.F.goal_conditions.get(i), expected_goal_conditions.get(i));
-//		}
-//
-//		for (String i : goal_cases_keys) {
-//			for (String j : expected_goal_map_case_content.get(i).keySet()) {
-//				//System.out.println(i+":"+j);
-//				Assert.assertEquals(parser.F.goal_map_case_content.get(i).get(j), expected_goal_map_case_content.get(i).get(j));
-//			}
-//		}
-		
-		Assert.assertEquals(parser.F.goal_lhs, expected_goal_lhs);
-		Assert.assertEquals(parser.F.goal_cases, expected_goal_cases);
-		Assert.assertEquals(parser.F.goal_conditions, expected_goal_conditions);
-		Assert.assertEquals(parser.F.goal_map_case_content, expected_goal_map_case_content);
 	}		
 	
 	@Test(groups = { "WRESL_elements" })
