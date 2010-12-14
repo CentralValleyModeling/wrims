@@ -1,0 +1,8 @@
+file, include
+src\test\external.csv, y
+src\test\dvar.csv, y
+src\test\sv.csv, y
+src\test\alias.csv, y
+src\test\constraint.csv, y
+src\test\weights.csv, y
+

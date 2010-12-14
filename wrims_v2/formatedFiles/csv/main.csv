@@ -1,0 +1,3 @@
+cycle,		file,			condition
+global,		src\test\global.csv,	always
+cycle1,		src\test\cycle1.csv,	always

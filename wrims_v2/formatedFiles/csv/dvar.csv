@@ -1,0 +1,2 @@
+name	,		lowerbound,		upperbound,	integer	,	units, type	
+C_Kswck_Exc1,  		0	,	ul,		n  ,		cfs	, channel-1exc
