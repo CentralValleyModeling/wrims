@@ -361,21 +361,33 @@ public class TestConvertWresl {
 	    catch(Exception e) {
 	         e.printStackTrace();
 	        }
-	    
-	    Map<String, String>  expected = new HashMap<String, String>();
-	    
+	    	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
-		Map<String, String> svar_constant = parser.F.svar_expression;
+		Svar sv;
+		ArrayList<String> svList =  new ArrayList<String>();
+		Map<String, Svar> expected_svMap = new HashMap<String, Svar>();
+	
+		/// 1st sv
+		sv = new Svar();
+		sv.scope = "global";
+		/// 1st case
+		sv.caseName.add("default");
+		sv.caseCondition.add("always");
+		sv.caseExpression.add(".29"); 
+		/// add 1st key
+		expected_svMap.put("minflow_C_Orovl", sv);
+		svList.add("minflow_C_Orovl");
 		
-		expected.put("minflow_C_Orovl3", ".29");
-		expected.put("minflow_C_Orovl2", "45.29");
-		expected.put("minflow_C_Orovl", "600");
-		
-		Assert.assertEquals(svar_constant, expected);
-	}
+		for (String k : expected_svMap.keySet()) {
+			
+				//System.out.println(k+":::"+parser.F.svMap.get(k).equalEva());				
+				Assert.assertEquals(parser.F.svMap.get(k).equalEva(), expected_svMap.get(k).equalEva());
+		}			
+	}	
+	
 
 	@Test(groups = { "WRESL_elements" })
 	public void svarSum() throws RecognitionException, IOException {

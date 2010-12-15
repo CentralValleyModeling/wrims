@@ -47,7 +47,7 @@ options {
 
 
 evaluator 
-	:	pattern * EOF  ;
+	:	pattern *  EOF  ;
 
 pattern
 	:   model 
@@ -501,11 +501,11 @@ PREV_MON : 'prev' ( MON_VAR | MON_CONST ); // need to force single format
 
 
 ///units///
-TAF :'\''    ('TAF'  |'taf')     '\'';
-CFS :'\''    ('CFS'  |'cfs')     '\'';
-ACRES :'\''  ('ACRES'|'acres') '\'';
-IN :'\''  ('IN'|'in') '\'';
-NONE :'\''  ('NONE'|'none') '\'';
+TAF :   '\''  ('TAF'  |'taf'  )  '\'';
+CFS :   '\''  ('CFS'  |'cfs'  )  '\'';
+ACRES : '\''  ('ACRES'|'acres')  '\'';
+IN :    '\''  ('IN'   |'in'   )  '\'';
+NONE :  '\''  ('NONE' |'none' )  '\'';
 
 ///basics///
 
@@ -515,5 +515,6 @@ IDENT : LETTER (LETTER | DIGIT | SYMBOLS )*;
 
 WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {skip();}; //{$channel = HIDDEN;};
 COMMENT : '!' .* ('\n'|'\r') {skip();}; //{$channel = HIDDEN;};
+COMMENT_LAST_LINE : '!' (~('\n' | '\r'))* {skip();};
 
 //IGNORE : . {$channel = HIDDEN;};
