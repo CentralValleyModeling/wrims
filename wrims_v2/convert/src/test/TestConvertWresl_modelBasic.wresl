@@ -6,3 +6,7 @@
      
      goal[local] force_c607 {C607 > 500}          
      }
+	 
+ MODEL model2 {     
+     goal[local] test_goal {C607 > 500}  	 
+     } 

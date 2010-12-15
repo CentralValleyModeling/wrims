@@ -57,16 +57,15 @@ pattern
 	| 	define ;
 
 model 
-scope { Struct M ; int includeFileKey;}
+scope { Struct M }
 @init { inModel = "y"; }
 @after{ modelMap.put($i.text, $model::M);  inModel = "n"; }
-	:    MODEL i=IDENT  {  F.modelList($i.text);$model::M = new Struct(); } '{' 
-	     c=(  include | goal | define )*
-	     '}' {
-	           //  System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " + $model::M.include_file_scope);
-
-
-	     }    
+	:    MODEL i=IDENT  
+			{  F.modelList($i.text);$model::M = new Struct(); } 
+		 '{' c=(  include | goal | define )*  '}' 
+		 	{
+	           //  System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " + $model::M.include_file_scope)
+	     	}    
 	;
 
 include 
@@ -75,10 +74,6 @@ include
 	
 			        if(inModel=="n") { F.includeFile($p.path, scope);}
 	             	else             { $model::M.includeFile($p.path, scope);}
-	
-	             	//F.includeFile($p.path, scope);
-
-	             	 
 	}; 
 
 includeFilePath returns[String path]

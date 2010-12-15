@@ -10,12 +10,16 @@ import com.sun.org.apache.xml.internal.security.utils.Constants;
 
 public class Struct {
 
+	
+	/// models appear in this parsed file
+	public ArrayList<String> model_list = new ArrayList<String>();	
+	public ArrayList<String> error_model_redefined = new ArrayList<String>();
+ 	
 	/// includeFile data structure
 	public IncludeFile incFile; 
 	public ArrayList<String> incFileList = new ArrayList<String>(); 
 	public Map<String,IncludeFile>  incFileMap = new HashMap<String,IncludeFile>(); 
-	
-	ArrayList<String> error_includeFile_redefined;
+	public ArrayList<String> error_includeFile_redefined;
 	
 	
 	/// svar data structure
@@ -45,7 +49,7 @@ public class Struct {
 	/// errors
 	public Map<String, String> error_sequence_order_redefined = new HashMap<String, String>();
 	public Map<String, String> error_var_redefined = new HashMap<String, String>();
-	public ArrayList<String> error_model_redefined = new ArrayList<String>();
+
 	
 	
 	//public Map<String, String> error_file_contains_redefined = new HashMap<String, String>();
@@ -75,7 +79,7 @@ public class Struct {
 
 	
 	/// models in a file
-	public ArrayList<String> model_list = new ArrayList<String>();	
+
 	
 	/// svar_cases
 	public Map<String, ArrayList<String>> svar_cases = new HashMap<String, ArrayList<String>>();

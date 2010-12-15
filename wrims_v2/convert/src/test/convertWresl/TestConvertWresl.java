@@ -255,7 +255,7 @@ public class TestConvertWresl {
 				
 				//System.out.println("expected: "+key+":::"+expected_modelMap.get(model).gMap.get(key).equalEva() );
 				//System.out.println("actual:   "+key+":::"+parser.modelMap.get(model).gMap.get(key).equalEva() );				
-				Assert.assertEquals(parser.modelMap.get(model).gMap.get(key).equalEva(), expected_modelMap.get("CVCWHEELING").gMap.get(key).equalEva());
+				Assert.assertEquals(parser.modelMap.get(model).gMap.get(key).equalEva(), expected_modelMap.get(model).gMap.get(key).equalEva());
 			}
 
 			for ( String key : expected_modelMap.get(model).asMap.keySet() ){
@@ -279,57 +279,74 @@ public class TestConvertWresl {
 	        }
 
 	    Map<String, Struct> expected_modelMap = new HashMap<String, Struct>();
-	    Struct expected_struct = new Struct();
+	    Struct expected_struct1 = new Struct();
+	    Struct expected_struct2 = new Struct();
+	    //Map<String, IncludeFile> incFMap = new HashMap<String, IncludeFile>();
+	    //Map<String, Goal> gMap = new HashMap<String, Goal>();
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 
-		expected_struct.include_file_scope.put("..\\..\\common\\System\\System_Sac.wresl","local");
-		expected_struct.include_file_scope.put("..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl","global");
-				
-		expected_struct.goal_scope.put("force_c607","local");
-		expected_struct.goal_simple.put("force_c607","C607>500");
+		IncludeFile incF;
+		
+		incF = new IncludeFile();
+		incF.scope = "local";
+		expected_struct1.incFileMap.put("..\\..\\common\\System\\System_Sac.wresl", incF);
+		
+		incF = new IncludeFile();
+		incF.scope = "global";
+		expected_struct1.incFileMap.put("..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl", incF);		
 		
 		Goal gl = new Goal();
 		gl.scope = "local";
 		gl.caseName.add("default");
 		gl.caseCondition.add("always");
 		gl.caseExpression.add("C607>500");
-		expected_struct.gMap.put("force_c607",gl);
+		expected_struct1.gMap.put("force_c607",gl);
 
 		Alias as = new Alias();
 		as.scope = "global";
 		as.units = "CFS";
 		as.expression = "D419_swp[monthlyweighted5]";
-		expected_struct.asMap.put("D419_swpC6",as);
+		expected_struct1.asMap.put("D419_swpC6",as);
 		
-		expected_modelMap.put("CVCWHEELING",expected_struct);
+		expected_modelMap.put("CVCWHEELING",expected_struct1);
+		
+		
+		gl = new Goal();
+		gl.scope = "local";
+		gl.caseName.add("default");
+		gl.caseCondition.add("always");
+		gl.caseExpression.add("C607>500");
+		expected_struct2.gMap.put("test_goal",gl);
+		
+		expected_modelMap.put("model2",expected_struct2);
 		
 		for ( String model : expected_modelMap.keySet() ) {
+
+			for ( String key : expected_modelMap.get(model).incFileMap.keySet() ){
+				
+//				System.out.println("expected: "+model+"="+key+":::"+expected_modelMap.get(model).incFileMap.get(key).equalEva() );
+//				System.out.println("actual:   "+model+"="+key+":::"+parser.modelMap.get(model).incFileMap.get(key).equalEva() );				
+				Assert.assertEquals(parser.modelMap.get(model).incFileMap.get(key).equalEva(), expected_modelMap.get(model).incFileMap.get(key).equalEva());
+			}
 			
 			for ( String key : expected_modelMap.get(model).gMap.keySet() ){
 				
-				System.out.println("expected: "+key+":::"+expected_modelMap.get(model).gMap.get(key).equalEva() );
-				System.out.println("actual:   "+key+":::"+parser.modelMap.get(model).gMap.get(key).equalEva() );				
-				Assert.assertEquals(parser.modelMap.get(model).gMap.get(key).equalEva(), expected_modelMap.get("CVCWHEELING").gMap.get(key).equalEva());
+//				System.out.println("expected: "+model+"="+key+":::"+expected_modelMap.get(model).gMap.get(key).equalEva() );
+//				System.out.println("actual:   "+model+"="+key+":::"+parser.modelMap.get(model).gMap.get(key).equalEva() );				
+				Assert.assertEquals(parser.modelMap.get(model).gMap.get(key).equalEva(), expected_modelMap.get(model).gMap.get(key).equalEva());
 			}
 
 			for ( String key : expected_modelMap.get(model).asMap.keySet() ){
 			
-				System.out.println("expected: "+key+":::"+expected_modelMap.get(model).asMap.get(key).equalEva() );
-				System.out.println("actual:   "+key+":::"+parser.modelMap.get(model).asMap.get(key).equalEva() );
+//				System.out.println("expected: "+model+"="+key+":::"+expected_modelMap.get(model).asMap.get(key).equalEva() );
+//				System.out.println("actual:   "+model+"="+key+":::"+parser.modelMap.get(model).asMap.get(key).equalEva() );
 				Assert.assertEquals(parser.modelMap.get(model).asMap.get(key).equalEva(), expected_modelMap.get(model).asMap.get(key).equalEva());
-			}
-			
-			Assert.assertEquals("something wrong!", 2);
-			for ( String key : expected_modelMap.get(model).incFileMap.keySet() ){
-				
-				System.out.println("expected: "+key+":::"+expected_modelMap.get(model).incFileMap.get(key).equalEva() );
-				System.out.println("actual:   "+key+":::"+parser.modelMap.get(model).incFileMap.get(key).equalEva() );
-				Assert.assertEquals(parser.modelMap.get(model).incFileMap.get(key).equalEva(), expected_modelMap.get(model).incFileMap.get(key).equalEva());
-			}
+			}			
+
 		}		
 	}			
 	
