@@ -208,9 +208,8 @@ public class TestConvertWresl {
 			
 			for (String f : expected_modelMap.get(k).incFileMap.keySet()){
 				
-				System.out.println("actual:  "+parser.modelMap.get(k).incFileMap.get(f).equalEva());
-			    System.out.println("expected:"+expected_modelMap.get(k).incFileMap.get(f).equalEva());
-				
+				//System.out.println("actual:  "+parser.modelMap.get(k).incFileMap.get(f).equalEva());
+			    //System.out.println("expected:"+expected_modelMap.get(k).incFileMap.get(f).equalEva());
 				Assert.assertEquals(parser.modelMap.get(k).incFileMap.get(f).equalEva(), expected_modelMap.get(k).incFileMap.get(f).equalEva());
 			}
 		}	
@@ -260,16 +259,15 @@ public class TestConvertWresl {
 			
 			for ( String key : expected_modelMap.get(model).gMap.keySet() ){
 				
-				System.out.println("expected: "+key+":::"+expected_modelMap.get(model).gMap.get(key).equalEva() );
-				System.out.println("actual:   "+key+":::"+parser.modelMap.get(model).gMap.get(key).equalEva() );
-				
+				//System.out.println("expected: "+key+":::"+expected_modelMap.get(model).gMap.get(key).equalEva() );
+				//System.out.println("actual:   "+key+":::"+parser.modelMap.get(model).gMap.get(key).equalEva() );				
 				Assert.assertEquals(parser.modelMap.get(model).gMap.get(key).equalEva(), expected_modelMap.get("CVCWHEELING").gMap.get(key).equalEva());
 			}
 
 			for ( String key : expected_modelMap.get(model).asMap.keySet() ){
 			
-				System.out.println("expected: "+key+":::"+expected_modelMap.get(model).asMap.get(key).equalEva() );
-				System.out.println("actual:   "+key+":::"+parser.modelMap.get(model).asMap.get(key).equalEva() );
+				//System.out.println("expected: "+key+":::"+expected_modelMap.get(model).asMap.get(key).equalEva() );
+				//System.out.println("actual:   "+key+":::"+parser.modelMap.get(model).asMap.get(key).equalEva() );
 				Assert.assertEquals(parser.modelMap.get(model).asMap.get(key).equalEva(), expected_modelMap.get(model).asMap.get(key).equalEva());
 			}
 		}
