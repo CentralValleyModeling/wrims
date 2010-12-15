@@ -61,25 +61,22 @@ scope { Struct M ; int includeFileKey;}
 @init { inModel = "y"; }
 @after{ modelMap.put($i.text, $model::M);  inModel = "n"; }
 	:    MODEL i=IDENT  {  F.modelList($i.text);$model::M = new Struct(); } '{' 
-	     c=(  include_in_model | goal | define )*
+	     c=(  include | goal | define )*
 	     '}' {
 	           //  System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " + $model::M.include_file_scope);
 
 
-	         }
-	     
+	     }    
 	;
-
-include_in_model 
-	@init { scope = "global";}
-	:   INCLUDE ( LOCAL  {scope="local";} )? p=includeFilePath {
-	             	$model::M.includeFile($p.path, scope);
-	}; 
 
 include 
 	@init { scope = "global"; }
 	:   INCLUDE ( LOCAL  {scope="local";} )? p=includeFilePath {
-	             	F.includeFile($p.path, scope);
+	
+			        if(inModel=="n") { F.includeFile($p.path, scope);}
+	             	else             { $model::M.includeFile($p.path, scope);}
+	
+	             	//F.includeFile($p.path, scope);
 
 	             	 
 	}; 
@@ -251,7 +248,9 @@ dvar_std[String id, String sc]
 
 dvar_alias[String id, String sc]
 	:	'{' alias kind? units'}' { 
-		F.dvarAlias($id, $sc, $kind.str, $units.str, $alias.str);  };
+			     if(inModel=="n") { F.dvarAlias($id, $sc, $kind.str, $units.str, $alias.str);}
+	             else             { $model::M.dvarAlias($id, $sc, $kind.str, $units.str, $alias.str);}
+	};
 	
 dvar_nonstd [String id, String sc]
 	:	'{' c=lower_or_upper kind units '}' { 

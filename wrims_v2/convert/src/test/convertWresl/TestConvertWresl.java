@@ -247,19 +247,31 @@ public class TestConvertWresl {
 		gl.caseCondition.add("always");
 		gl.caseExpression.add("C607>500");
 		expected_struct.gMap.put("force_c607",gl);
+
+		Alias as = new Alias();
+		as.scope = "global";
+		as.units = "CFS";
+		as.expression = "D419_swp[monthlyweighted5]";
+		expected_struct.asMap.put("D419_swpC6",as);
 		
 		expected_modelMap.put("CVCWHEELING",expected_struct);
 		
-		for ( String key : expected_modelMap.get("CVCWHEELING").gMap.keySet() ){
-			Assert.assertEquals(parser.modelMap.get("CVCWHEELING").gMap.get(key).equalEva(), expected_modelMap.get("CVCWHEELING").gMap.get(key).equalEva());
-		}
-
-		Assert.assertEquals(1,2);
-		for ( String key : expected_modelMap.get("CVCWHEELING").asMap.keySet() ){
+		for ( String model : expected_modelMap.keySet() ) {
 			
-			System.out.println("expected_keySet:  "+expected_modelMap.get("CVCWHEELING").asMap.keySet() );
-			System.out.println("actual_keySet:  "+parser.modelMap.get("CVCWHEELING").asMap.keySet() );
-			Assert.assertEquals(parser.modelMap.get("CVCWHEELING").asMap.get(key).equalEva(), expected_modelMap.get("CVCWHEELING").asMap.get(key).equalEva());
+			for ( String key : expected_modelMap.get(model).gMap.keySet() ){
+				
+				System.out.println("expected: "+key+":::"+expected_modelMap.get(model).gMap.get(key).equalEva() );
+				System.out.println("actual:   "+key+":::"+parser.modelMap.get(model).gMap.get(key).equalEva() );
+				
+				Assert.assertEquals(parser.modelMap.get(model).gMap.get(key).equalEva(), expected_modelMap.get("CVCWHEELING").gMap.get(key).equalEva());
+			}
+
+			for ( String key : expected_modelMap.get(model).asMap.keySet() ){
+			
+				System.out.println("expected: "+key+":::"+expected_modelMap.get(model).asMap.get(key).equalEva() );
+				System.out.println("actual:   "+key+":::"+parser.modelMap.get(model).asMap.get(key).equalEva() );
+				Assert.assertEquals(parser.modelMap.get(model).asMap.get(key).equalEva(), expected_modelMap.get(model).asMap.get(key).equalEva());
+			}
 		}
 	}	
 

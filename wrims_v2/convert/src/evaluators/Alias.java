@@ -27,7 +27,7 @@ public class Alias {
 	public String equalEva(){
 		
 		String s = "|";		
-		String temp = scope+s+kind+s+units+expression;
+		String temp = scope+s+kind+s+units+s+expression;
 		
 		return temp;
 	}
