@@ -442,15 +442,10 @@ public class TestConvertWresl {
 	         e.printStackTrace();
 	        }
 	    
-	    Map<String, String>  expected = new HashMap<String, String>();
-	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
-
-		expected.put("coefev_Orovl", "(A_Orovl_forward-A_Orovl_back)/(100*max(0.01; S_Orovl(-1)))");
-		expected.put("min_test", "min(max(a; b); 2.5)");
 		
 		Svar sv;
 		ArrayList<String> svList =  new ArrayList<String>();
@@ -700,22 +695,32 @@ public class TestConvertWresl {
 	         e.printStackTrace();
 	        }
 
-	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
-	    Map<String, String>  expected_scope = new HashMap<String, String>();
-	    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+	    ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
+		
+		Svar sv;
+		ArrayList<String> svList =  new ArrayList<String>();
+		Map<String, Svar> expected_svMap = new HashMap<String, Svar>();
 	
-		expected_scope.put("nov_trigger_cfs","global");
+		/// 1st sv
+		sv = new Svar();
+		sv.scope = "global";
+		sv.format = "lookup_table";
+		/// 1st case
+		sv.caseName.add("default");
+		sv.caseCondition.add("always");
+		sv.caseExpression.add("select target from feather_fish_203 where month=NOV"); 
+		/// add 1st key
+		expected_svMap.put("nov_trigger_cfs", sv);
+		svList.add("nov_trigger_cfs");
 		
-		expected.put("nov_trigger_cfs", new ArrayList<String>(Arrays.asList(new String[]{
-			"select","target","from","feather_fish_203","given",null,"use",null,"where","month=NOV"
-			})));
-		
-		Assert.assertEquals(parser.F.svar_table, expected);
-		Assert.assertEquals(parser.F.svar_scope, expected_scope);
+		for (String k : expected_svMap.keySet()) {
+			
+				//System.out.println(k+":::"+parser.F.svMap.get(k).equalEva());				
+				Assert.assertEquals(parser.F.svMap.get(k).equalEva(), expected_svMap.get(k).equalEva());
+		}			
 	}	
 
 	@Test(groups = { "WRESL_elements" })
@@ -727,21 +732,33 @@ public class TestConvertWresl {
 	    catch(Exception e) {
 	         e.printStackTrace();
 	        }
-	    Map<String, String>  expected_scope = new HashMap<String, String>();
-	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
-
-		expected_scope.put("A_Orovl_last","global");
-		expected.put("A_Orovl_last", new ArrayList<String>(Arrays.asList(new String[]{
-			"select","area","from","res_info","given","storage=1000*S_Orovl(-1)","use","linear","where","res_num=6" 
-			})));
 		
-		Assert.assertEquals(parser.F.svar_table, expected);
-		Assert.assertEquals(parser.F.svar_scope, expected_scope);		
+		Svar sv;
+		ArrayList<String> svList =  new ArrayList<String>();
+		Map<String, Svar> expected_svMap = new HashMap<String, Svar>();
+	
+		/// 1st sv
+		sv = new Svar();
+		sv.scope = "global";
+		sv.format = "lookup_table";
+		/// 1st case
+		sv.caseName.add("default");
+		sv.caseCondition.add("always");
+		sv.caseExpression.add("select area from res_info given storage=1000*S_Orovl(-1) use linear where res_num=6"); 
+		/// add 1st key
+		expected_svMap.put("A_Orovl_last", sv);
+		svList.add("A_Orovl_last");
+		
+		for (String k : expected_svMap.keySet()) {
+			
+				//System.out.println(k+":::"+parser.F.svMap.get(k).equalEva());				
+				Assert.assertEquals(parser.F.svMap.get(k).equalEva(), expected_svMap.get(k).equalEva());
+		}	
 	}		
 
 	@Test(groups = { "WRESL_elements" })
