@@ -366,6 +366,7 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
+
 		Svar sv;
 		ArrayList<String> svList =  new ArrayList<String>();
 		Map<String, Svar> expected_svMap = new HashMap<String, Svar>();
@@ -441,12 +442,42 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
-		Map<String, String> svar_expression = parser.F.svar_expression;
-		
+
 		expected.put("coefev_Orovl", "(A_Orovl_forward-A_Orovl_back)/(100*max(0.01; S_Orovl(-1)))");
 		expected.put("min_test", "min(max(a; b); 2.5)");
 		
-		Assert.assertEquals(svar_expression, expected);
+		Svar sv;
+		ArrayList<String> svList =  new ArrayList<String>();
+		Map<String, Svar> expected_svMap = new HashMap<String, Svar>();
+	
+		/// 1st sv
+		sv = new Svar();
+		sv.scope = "global";
+		/// 1st case
+		sv.caseName.add("default");
+		sv.caseCondition.add("always");
+		sv.caseExpression.add("(A_Orovl_forward-A_Orovl_back)/(100*max(0.01; S_Orovl(-1)))"); 
+		/// add 1st key
+		expected_svMap.put("coefev_Orovl", sv);
+		svList.add("coefev_Orovl");
+
+		/// 2nd sv
+		sv = new Svar();
+		sv.scope = "global";
+		/// 1st case
+		sv.caseName.add("default");
+		sv.caseCondition.add("always");
+		sv.caseExpression.add("min(max(a; b); 2.5)"); 
+		/// add 2nd key
+		expected_svMap.put("min_test", sv);
+		svList.add("min_test");
+		
+		for (String k : expected_svMap.keySet()) {
+			
+				//System.out.println(k+":::"+parser.F.svMap.get(k).equalEva());				
+				Assert.assertEquals(parser.F.svMap.get(k).equalEva(), expected_svMap.get(k).equalEva());
+		}			
+
 	}
 	
 	@Test(groups = { "WRESL_elements" })
