@@ -21,6 +21,7 @@ import org.testng.annotations.*;
 import org.testng.Assert;
 
 import evaluators.Alias;
+import evaluators.Dvar;
 import evaluators.Goal;
 import evaluators.IncludeFile;
 import evaluators.Struct;
@@ -490,24 +491,39 @@ public class TestConvertWresl {
 	    catch(Exception e) {
 	         e.printStackTrace();
 	        }
-	    //String[] array;
-	    //ArrayList<String> list;
-	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
-	    Map<String, String>  expected_scope = new HashMap<String, String>();
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
+				
+	    Map<String, Dvar> expected_dvMap = new HashMap<String, Dvar>(); 
+	    Dvar dv;
 		
-		expected.put("C_Tracy", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "0","unbounded"})));
-		expected.put("C_Banks", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "TAF", "0","unbounded"})));
+		dv = new Dvar();
+		dv.scope = "global";
+		dv.kind = "FLOW-CHANNEL";
+		dv.units = "CFS";
+		dv.lowerBound="0";
+		dv.upperBound="unbounded";
+		
+		expected_dvMap.put("C_Tracy",dv);
 
-		expected_scope.put("C_Tracy","global");
-		expected_scope.put("C_Banks","global");
+		dv = new Dvar();
+		dv.scope = "global";
+		dv.kind = "FLOW-CHANNEL";
+		dv.units = "TAF";
+		dv.lowerBound="0";
+		dv.upperBound="unbounded";
 		
-		Assert.assertEquals(parser.F.dvar_std, expected);
-		Assert.assertEquals(parser.F.dvar_scope, expected_scope);
+		expected_dvMap.put("C_Banks",dv);
+		
+		for (String key : expected_dvMap.keySet()){
+			
+			//System.out.println("expected:  "+key+"::"+expected_dvMap.get(key).equalEva());
+			//System.out.println("actual  :  "+key+"::"+parser.F.dvMap.get(key).equalEva());
+			Assert.assertEquals(parser.F.dvMap.get(key).equalEva(), expected_dvMap.get(key).equalEva());		
+		}
 	}	
 
 	@Test(groups = { "WRESL_elements" })
@@ -519,13 +535,14 @@ public class TestConvertWresl {
 	    catch(Exception e) {
 	         e.printStackTrace();
 	        }
-	    Map<String, Alias> expected_asMap = new HashMap<String, Alias>(); 
-	    Alias as;	    
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
+
+	    Map<String, Alias> expected_asMap = new HashMap<String, Alias>(); 
+	    Alias as;
 		
 		as = new Alias();
 		as.scope = "global";
@@ -546,8 +563,7 @@ public class TestConvertWresl {
 			
 			//System.out.println("expected:  "+key+"::"+expected_asMap.get(key).equalEva());
 			//System.out.println("actual  :  "+key+"::"+parser.F.asMap.get(key).equalEva());
-			Assert.assertEquals(parser.F.asMap.get(key).equalEva(), expected_asMap.get(key).equalEva());
-		
+			Assert.assertEquals(parser.F.asMap.get(key).equalEva(), expected_asMap.get(key).equalEva());		
 		}
 	}	
 
@@ -599,47 +615,40 @@ public class TestConvertWresl {
 	    catch(Exception e) {
 	         e.printStackTrace();
 	        }
-
-	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 
-		expected.put("C_SLCVP", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "unbounded", "unbounded"})));
-		expected.put("C_SacFea", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "0.", "6150*taf_cfs"})));
+	    Map<String, Dvar> expected_dvMap = new HashMap<String, Dvar>(); 
+	    Dvar dv;
 		
-		Assert.assertEquals(parser.F.dvar_nonstd, expected);
-	}		
-
-	@Test(groups = { "WRESL_elements" })
-	public void dvarNonStd2() throws RecognitionException, IOException {
-		inputFilePath = "src\\test\\TestConvertWresl_dvarNonStd2.wresl";
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
-
-	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
-	    Map<String, String>  expected_var_scope = new HashMap<String, String>();
-	    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
-
-		expected.put("C_SLCVP", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "unbounded", "unbounded"})));
-		expected.put("C_SacFea", new ArrayList<String>(Arrays.asList(new String[]{"FLOW-CHANNEL", "CFS", "0", "6150*taf_cfs"})));
-		expected_var_scope.put("C_SLCVP", "global");
-		expected_var_scope.put("C_SacFea", "local");
+		dv = new Dvar();
+		dv.scope = "global";
+		dv.kind = "FLOW-CHANNEL";
+		dv.units = "CFS";
+		dv.lowerBound="unbounded";
+		dv.upperBound="unbounded";
 		
-		Assert.assertEquals(parser.F.dvar_nonstd, expected);
-	}		
+		expected_dvMap.put("C_SLCVP",dv);
 
-	
+		dv = new Dvar();
+		dv.scope = "local";
+		dv.kind = "FLOW-CHANNEL";
+		dv.units = "CFS";
+		dv.lowerBound="0";
+		dv.upperBound="6150*taf_cfs";
+		
+		expected_dvMap.put("C_SacFea",dv);
+		
+		for (String key : expected_dvMap.keySet()){
+			
+			System.out.println("expected:  "+key+"::"+expected_dvMap.get(key).equalEva());
+			System.out.println("actual  :  "+key+"::"+parser.F.dvMap.get(key).equalEva());
+			Assert.assertEquals(parser.F.dvMap.get(key).equalEva(), expected_dvMap.get(key).equalEva());		
+		}
+	}		
 
 	@Test(groups = { "WRESL_elements" })
 	public void svarDSS() throws RecognitionException, IOException {
