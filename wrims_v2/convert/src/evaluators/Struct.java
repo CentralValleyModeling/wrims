@@ -272,6 +272,7 @@ public class Struct {
 			var_all.put(name, "svar_sum");
 			
 			sv = new Svar();
+			sv.scope = scope;
 			sv.caseName.add("default");
 			sv.caseCondition.add("always");
 			sv.caseExpression.add(sumStr);

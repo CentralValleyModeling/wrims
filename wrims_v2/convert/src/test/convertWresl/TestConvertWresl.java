@@ -401,27 +401,33 @@ public class TestConvertWresl {
 	    catch(Exception e) {
 	         e.printStackTrace();
 	        }
-	    
-	    Map<String, ArrayList<String>>   expected = new HashMap<String, ArrayList<String>> ();
-	    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+
+	    ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 		
-		expected.put("OroInfEst", new ArrayList<String>(Arrays.asList(new String[]{"sum(i=0; SEP-month; 1)","max(I_Orovl(i); dummy)*cfs_taf(i)"})));
+		Svar sv;
+		ArrayList<String> svList =  new ArrayList<String>();
+		Map<String, Svar> expected_svMap = new HashMap<String, Svar>();
+	
+		/// 1st sv
+		sv = new Svar();
+		sv.scope = "global";
+		/// 1st case
+		sv.caseName.add("default");
+		sv.caseCondition.add("always");
+		sv.caseExpression.add("sum(i=0; SEP-month; 1) max(I_Orovl(i); dummy)*cfs_taf(i)"); 
+		/// add 1st key
+		expected_svMap.put("OroInfEst", sv);
+		svList.add("OroInfEst");
 		
-		
-		List<String> svar_sum_keys = new ArrayList<String> (parser.F.svar_sum.keySet());
-		List<String> expected_keys = new ArrayList<String> (expected.keySet());
-		Collections.sort(svar_sum_keys);
-		Collections.sort(expected_keys);
-		
-		Assert.assertEquals(svar_sum_keys, expected_keys);
-		for (String i : svar_sum_keys) {
-			Assert.assertEquals(parser.F.svar_sum.get(i), expected.get(i));
-		}
-		Assert.assertEquals(parser.F.svar_sum, expected);
+		for (String k : expected_svMap.keySet()) {
+			
+			//System.out.println(k+":::"+parser.F.svMap.get(k).equalEva());				
+			Assert.assertEquals(parser.F.svMap.get(k).equalEva(), expected_svMap.get(k).equalEva());
+	}			
+
 	}	
 	
 	@Test(groups = { "WRESL_elements" })
