@@ -595,6 +595,8 @@ public class TestConvertWresl {
 		Assert.assertEquals(parser.F.dvar_nonstd, expected);
 	}		
 
+	
+
 	@Test(groups = { "WRESL_elements" })
 	public void svarDSS() throws RecognitionException, IOException {
 		inputFilePath = "src\\test\\TestConvertWresl_svarDSS.wresl";
@@ -611,34 +613,35 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
-		Map<String, ArrayList<String>>  svar_dss = parser.F.svar_dss;	
-
-		expected.put("evap_S_Orovl", new ArrayList<String>(Arrays.asList(new String[]{"EVAPORATION-RATE", "IN"})));
 		
-		Assert.assertEquals(svar_dss, expected);
-	}		
-
-	@Test(groups = { "WRESL_elements" })
-	public void svarDSSNew() throws RecognitionException, IOException {
-		inputFilePath = "src\\test\\TestConvertWresl_svarDSS.wresl";
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
-
-	    Map<String, ArrayList<String>>  expected = new HashMap<String, ArrayList<String>>();
-	    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
-		Map<String, ArrayList<String>>  svar_dss = parser.F.svar_dss;	
-
-		expected.put("evap_S_Orovl", new ArrayList<String>(Arrays.asList(new String[]{"EVAPORATION-RATE", "IN"})));
 		
-		Assert.assertEquals(svar_dss, expected);
+		Svar sv;
+		ArrayList<String> svList =  new ArrayList<String>();
+		Map<String, Svar> expected_svMap = new HashMap<String, Svar>();
+		
+		/// 1st sv
+		sv = new Svar();
+		sv.scope = "global";
+		sv.format = "timeseries";
+		sv.kind = "EVAPORATION-RATE";
+		sv.units = "IN";
+		sv.caseName.add("default");
+		sv.caseCondition.add("always");
+		sv.caseExpression.add("timeseries"); 
+		/// add 1st key
+		expected_svMap.put("evap_S_Orovl", sv);
+		svList.add("evap_S_Orovl");
+		
+		ArrayList<String> allKeys = new ArrayList<String>();
+		allKeys.addAll(expected_svMap.keySet());
+		allKeys.addAll(parser.F.svMap.keySet());
+		
+		for (String k : allKeys) {
+			
+				//System.out.println(expected_svMap.get(k));
+				
+				Assert.assertEquals(parser.F.svMap.get(k).equalEva(), expected_svMap.get(k).equalEva());
+		}
 	}	
 	
 	@Test(groups = { "WRESL_elements" })

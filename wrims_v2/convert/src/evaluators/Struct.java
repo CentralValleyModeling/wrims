@@ -245,12 +245,13 @@ public class Struct {
 			var_all.put(svarName, "svar_expression");
 			
 			
+			/// clearer data structure
+			
 			String caseName = "default";
 			String condition = "always";
 			
-			
-			
 			sv = new Svar();
+			sv.scope = scope;
 			sv.caseName.add(caseName);
 			sv.caseCondition.add(condition);
 			sv.caseExpression.add(expression);
