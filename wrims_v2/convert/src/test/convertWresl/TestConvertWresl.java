@@ -236,9 +236,6 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
-		
-		expected_struct.goal_scope.put("force_c607","local");
-		expected_struct.goal_simple.put("force_c607","C607>500");
 	    
 		Goal gl = new Goal();
 		gl.scope = "local";
@@ -298,18 +295,45 @@ public class TestConvertWresl {
 		expected_struct.goal_scope.put("force_c607","local");
 		expected_struct.goal_simple.put("force_c607","C607>500");
 		
-//	    String[] array={null,"local","global"};
-//	    list=new ArrayList<String>();list.addAll(Arrays.asList(array));
-//		expected_model_scope_list.put("CVCWHEELING", list);
+		Goal gl = new Goal();
+		gl.scope = "local";
+		gl.caseName.add("default");
+		gl.caseCondition.add("always");
+		gl.caseExpression.add("C607>500");
+		expected_struct.gMap.put("force_c607",gl);
+
+		Alias as = new Alias();
+		as.scope = "global";
+		as.units = "CFS";
+		as.expression = "D419_swp[monthlyweighted5]";
+		expected_struct.asMap.put("D419_swpC6",as);
 		
 		expected_modelMap.put("CVCWHEELING",expected_struct);
-				
-		//System.out.println("#############################: " + parser.modelMap.get("CVCWHEELING").goal_simple);
-		//System.out.println("#############################: " + expected_modelMap.get("CVCWHEELING").goal_simple);
-		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").goal_simple, expected_modelMap.get("CVCWHEELING").goal_simple);
-		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").goal_scope, expected_modelMap.get("CVCWHEELING").goal_scope);
-		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").include_file_scope, expected_modelMap.get("CVCWHEELING").include_file_scope);
 		
+		for ( String model : expected_modelMap.keySet() ) {
+			
+			for ( String key : expected_modelMap.get(model).gMap.keySet() ){
+				
+				System.out.println("expected: "+key+":::"+expected_modelMap.get(model).gMap.get(key).equalEva() );
+				System.out.println("actual:   "+key+":::"+parser.modelMap.get(model).gMap.get(key).equalEva() );				
+				Assert.assertEquals(parser.modelMap.get(model).gMap.get(key).equalEva(), expected_modelMap.get("CVCWHEELING").gMap.get(key).equalEva());
+			}
+
+			for ( String key : expected_modelMap.get(model).asMap.keySet() ){
+			
+				System.out.println("expected: "+key+":::"+expected_modelMap.get(model).asMap.get(key).equalEva() );
+				System.out.println("actual:   "+key+":::"+parser.modelMap.get(model).asMap.get(key).equalEva() );
+				Assert.assertEquals(parser.modelMap.get(model).asMap.get(key).equalEva(), expected_modelMap.get(model).asMap.get(key).equalEva());
+			}
+			
+			Assert.assertEquals("something wrong!", 2);
+			for ( String key : expected_modelMap.get(model).incFileMap.keySet() ){
+				
+				System.out.println("expected: "+key+":::"+expected_modelMap.get(model).incFileMap.get(key).equalEva() );
+				System.out.println("actual:   "+key+":::"+parser.modelMap.get(model).incFileMap.get(key).equalEva() );
+				Assert.assertEquals(parser.modelMap.get(model).incFileMap.get(key).equalEva(), expected_modelMap.get(model).incFileMap.get(key).equalEva());
+			}
+		}		
 	}			
 	
 	@Test(groups = { "WRESL_elements" })
