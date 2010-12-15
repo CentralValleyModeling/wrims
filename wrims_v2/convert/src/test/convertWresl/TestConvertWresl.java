@@ -644,8 +644,8 @@ public class TestConvertWresl {
 		
 		for (String key : expected_dvMap.keySet()){
 			
-			System.out.println("expected:  "+key+"::"+expected_dvMap.get(key).equalEva());
-			System.out.println("actual  :  "+key+"::"+parser.F.dvMap.get(key).equalEva());
+			//System.out.println("expected:  "+key+"::"+expected_dvMap.get(key).equalEva());
+			//System.out.println("actual  :  "+key+"::"+parser.F.dvMap.get(key).equalEva());
 			Assert.assertEquals(parser.F.dvMap.get(key).equalEva(), expected_dvMap.get(key).equalEva());		
 		}
 	}		
