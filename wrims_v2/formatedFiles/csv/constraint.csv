@@ -1,6 +1,0 @@
-name,		case,  condition,	expression,	lhs>rhs,	lhs<rhs
-ActfwflowY,	case1,	month==Feb,	Frcst_amrY=D_SacFea_B, #, 	#
-ActfwflowY,	case2,	always,	Frcst_amrY>D_SacFea_B, #, 	#
-constraint1,    case1,  a3+a4<5,         f7<80.3+ghl,    constrain,      -6.0
-constraint1,    case1,  C_Kswck_Exc1+a4==5,         f7=80.3+ghl,     7.0,      constrain
-constraint1,    case2,  always,          C_Kswck_Exc1-e14=56*hn,    -8.0,      -6.0
