@@ -27,9 +27,6 @@ import evaluators.Struct;
 import evaluators.Svar;
 
 
-
-//import evaluators.Demo;
-
 public class TestConvertWresl {
 
 	public String inputFilePath;
