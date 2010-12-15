@@ -784,13 +784,11 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();		
-	    
+		parser.currentFilePath = inputFilePath; parser.evaluator();			    
 		
 		Svar sv;
 		ArrayList<String> svList =  new ArrayList<String>();
 		Map<String, Svar> expected_svMap = new HashMap<String, Svar>();
-
 		
 		/// 1st sv
 		sv = new Svar();
@@ -824,18 +822,13 @@ public class TestConvertWresl {
 		
 		ArrayList<String> allKeys = new ArrayList<String>();
 		allKeys.addAll(expected_svMap.keySet());
-		allKeys.addAll(parser.F.svMap.keySet());
-		
+		allKeys.addAll(parser.F.svMap.keySet());		
 
 		for (String k : allKeys) {
-			
-
-				//System.out.println(expected_svMap.get(k));
-				
+	
+				//System.out.println(expected_svMap.get(k));				
 				Assert.assertEquals(parser.F.svMap.get(k).equalEva(), expected_svMap.get(k).equalEva());
-
-		}
-			
+		}			
 	}	
 
 	@Test(groups = { "WRESL_elements" })
@@ -853,64 +846,30 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();		
-	    
-	    Map<String, ArrayList<String>>   expected_svar_cases  = new HashMap<String,ArrayList<String>> (); 
-	    Map<String, ArrayList<String>>   expected_svar_conditions  = new HashMap<String,ArrayList<String>> (); 
-	    Map<String, Map<String, List<String>>> expected_svar_map_case_content = new HashMap<String, Map<String, List<String>>>();
-	    
-	    /// for each case of svar
-	    Map<String, List<String>> map_case_content; 
-	    ArrayList<String> list_case_names;
-	    ArrayList<String> list_conditions;
-
-
-		/// new svar
-	    list_case_names = new ArrayList<String>();
-	    list_conditions = new ArrayList<String>();
-	    map_case_content = new HashMap<String, List<String>>();	
-	    String svar_name = "minflowFMPAmer";
-	    
-	    /// new case
-		list_case_names.add("JanFebCMin"); // this is needed to ensure the order of the cases, which is lost in map
-		list_conditions.add("month>=JAN .and. month<=FEB .and. sri_ytp==5 .and. C_Nimbus_fmp_mif(-1)<800.");
-		map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"value","max(250.; min(1750.; (0.85*C_Nimbus_fmp_mif(-1))))"}));
 		
-		/// new case
-		//list_case_names.add("JuntoFeb");
-		//list_conditions.add("always");
-		//map_case_content.put(list_case_names.get(list_case_names.size()-1), Arrays.asList(new String[]{"value","99.06"}));
+		Svar sv;
+		ArrayList<String> svList =  new ArrayList<String>();
+		Map<String, Svar> expected_svMap = new HashMap<String, Svar>();
+		
+		/// 1st sv
+		sv = new Svar();
+		sv.scope = "global";
+		/// 1st case
+		sv.caseName.add("JanFebCMin");
+		sv.caseCondition.add("month>=JAN .and. month<=FEB .and. sri_ytp==5 .and. C_Nimbus_fmp_mif(-1)<800.");
+		sv.caseExpression.add("max(250.; min(1750.; (0.85*C_Nimbus_fmp_mif(-1))))"); 
+		/// add 1st key
+		expected_svMap.put("minflowFMPAmer", sv);
+		svList.add("minflowFMPAmer");		
+		
+		ArrayList<String> allKeys = new ArrayList<String>();
+		allKeys.addAll(expected_svMap.keySet());
+		allKeys.addAll(parser.F.svMap.keySet());		
 
-		// conclude 1st svar
-		expected_svar_cases.put(svar_name, list_case_names);
-		expected_svar_conditions.put(svar_name, list_conditions);
-		expected_svar_map_case_content.put(svar_name, map_case_content);
-
-				
-		List<String> svar_cases_keys = new ArrayList<String> (parser.F.svar_cases.keySet());
-		List<String> expected_svar_cases_keys = new ArrayList<String> (expected_svar_cases.keySet());
-		Collections.sort(svar_cases_keys);
-		Collections.sort(expected_svar_cases_keys);
-		
-		Assert.assertEquals(svar_cases_keys, expected_svar_cases_keys);
-		
-		for (String i : svar_cases_keys) {
-			Assert.assertEquals(parser.F.svar_cases.get(i), expected_svar_cases.get(i));
-		}
-		
-		for (String i : svar_cases_keys) {
-			Assert.assertEquals(parser.F.svar_conditions.get(i), expected_svar_conditions.get(i));
-		}
-
-		for (String i : svar_cases_keys) {
-			for (String j : expected_svar_map_case_content.get(i).keySet()) {
-				//System.out.println(i+":"+j);
-				Assert.assertEquals(parser.F.svar_map_case_content.get(i).get(j), expected_svar_map_case_content.get(i).get(j));
-			}
-		}
-		
-		Assert.assertEquals(parser.F.svar_cases, expected_svar_cases);
-		Assert.assertEquals(parser.F.svar_conditions, expected_svar_conditions);
-		Assert.assertEquals(parser.F.svar_map_case_content, expected_svar_map_case_content);
+		for (String k : expected_svMap.keySet()) {	
+				//System.out.println(k+":::"+expected_svMap.get(k).equalEva());				
+				Assert.assertEquals(parser.F.svMap.get(k).equalEva(), expected_svMap.get(k).equalEva());
+		}	
 	}			
 
 	@Test(groups = { "WRESL_elements" })
