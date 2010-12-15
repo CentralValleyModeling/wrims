@@ -27,15 +27,6 @@ public class Dvar {
 	public String equalEva(){
 		
 		String s = "|";
-		String caseNameStr="";
-		String caseConditionStr="";
-		String caseExpressionStr="";
-		
-//		for (String i: caseName){caseNameStr = caseNameStr + s + i;}
-//		for (String i: caseCondition){caseConditionStr = caseConditionStr + s + i;}
-//		for (String i: caseExpression){caseExpressionStr = caseExpressionStr + s + i;}
-		
-		
 		String temp = scope+s+format+s+kind+s+units+lowerBound+upperBound;
 		              //+caseNameStr+caseConditionStr+s+caseExpressionStr;
 		

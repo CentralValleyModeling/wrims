@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sun.org.apache.xml.internal.security.utils.Constants;
 
 public class Struct {
 
