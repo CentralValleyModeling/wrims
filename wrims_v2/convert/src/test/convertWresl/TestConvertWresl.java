@@ -282,8 +282,6 @@ public class TestConvertWresl {
 	    Map<String, Struct> expected_modelMap = new HashMap<String, Struct>();
 	    Struct expected_struct1 = new Struct();
 	    Struct expected_struct2 = new Struct();
-	    //Map<String, IncludeFile> incFMap = new HashMap<String, IncludeFile>();
-	    //Map<String, Goal> gMap = new HashMap<String, Goal>();
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
@@ -350,6 +348,51 @@ public class TestConvertWresl {
 
 		}		
 	}			
+
+	@Test(groups = { "WRESL_elements" })
+	public void modelSvarCase() throws RecognitionException, IOException {
+		
+		inputFilePath = "src\\test\\TestConvertWresl_modelSvarCase.wresl";
+		try {
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.currentFilePath = inputFilePath; parser.evaluator();
+
+	    Map<String, Struct> expected_modelMap = new HashMap<String, Struct>();
+	    Struct expected_struct = new Struct();
+		
+		Svar sv = new Svar();
+		sv.scope = "global";
+
+		sv.caseName.add("Febfore");
+		sv.caseCondition.add("month==FEB");
+		sv.caseExpression.add("select FEB from sacramento_runoff_forecast where wateryear=wateryear");
+		
+		sv.caseName.add("JuntoJan");
+		sv.caseCondition.add("always");
+		sv.caseExpression.add("0");
+	
+		expected_struct.svMap.put("frcst_sac",sv);
+		
+		expected_modelMap.put("svcase",expected_struct);	
+		
+		for ( String model : expected_modelMap.keySet() ) {
+
+			for ( String key : expected_modelMap.get(model).svMap.keySet() ){
+				
+				System.out.println("expected: "+model+"="+key+":::"+expected_modelMap.get(model).svMap.get(key).equalEva() );
+				System.out.println("actual:   "+model+"="+key+":::"+parser.modelMap.get(model).svMap.get(key).equalEva() );				
+				Assert.assertEquals(parser.modelMap.get(model).svMap.get(key).equalEva(), expected_modelMap.get(model).svMap.get(key).equalEva());
+			}		
+		}		
+	}		
 	
 	@Test(groups = { "WRESL_elements" })
 	public void svarConst() throws RecognitionException, IOException {

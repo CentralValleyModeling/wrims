@@ -96,8 +96,7 @@ goal
 	;
 
 goal_simple[String id, String sc] 
-	:	 '{' v=constraintStatement '}'  {
-	
+	:	 '{' v=constraintStatement '}'  {	
 		         if(inModel=="n") { F.goalSimple($id, $sc, $v.text);}
 	             else             { $model::M.goalSimple($id, $sc, $v.text);}
 		}
@@ -174,20 +173,29 @@ define
 	;
 
 svar_expression[String id, String sc]
-	:	'{' v=valueStatement '}' { 
-			F.svarExpression($id, $sc, $v.str);   };
+	:	'{' v=valueStatement '}' {  
+			     if(inModel=="n") { F.svarExpression($id, $sc, $v.str);}
+	             else             { $model::M.svarExpression($id, $sc, $v.str);}			
+			};
 
 svar_sum [String id, String sc]
-	:	 '{' t=sumStatement '}' { 				
-			F.svarSum($id, $sc, $t.list, $t.str);     };
+	:	 '{' t=sumStatement '}' { 				  
+				 if(inModel=="n") { F.svarSum($id, $sc, $t.list, $t.str);  }
+	             else             { $model::M.svarSum($id, $sc, $t.list, $t.str);  }		
+	 };
 
 svar_table[String id, String sc]
 	:	'{' t=sqlStatement '}' { 
-			F.svarTable($id, $sc, $t.list, $t.str);    };
+				 if(inModel=="n") { F.svarTable($id, $sc, $t.list, $t.str);   }
+	             else             { $model::M.svarTable($id, $sc, $t.list, $t.str);   }			   
+			
+	};
 
 svar_cases[String id, String sc]
-	:   '{' c=caseStatements '}' { 
-            F.svarCase($id, $sc,  $c.sv,  $c.caseNames, $c.conditions, $c.expressions, $c.caseContent);  };
+	:   '{' c=caseStatements '}' {   
+            if(inModel=="n") { F.svarCase($id, $sc,  $c.sv,  $c.caseNames, $c.conditions, $c.expressions, $c.caseContent);}
+	        else             { $model::M.svarCase($id, $sc,  $c.sv,  $c.caseNames, $c.conditions, $c.expressions, $c.caseContent);}	        
+    };
 	
 caseStatements returns[ArrayList<String> caseNames, 
 					   ArrayList<String> conditions, 
