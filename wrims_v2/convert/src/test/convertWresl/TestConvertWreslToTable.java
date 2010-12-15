@@ -161,30 +161,7 @@ public class TestConvertWreslToTable {
 	}
 	
 
-	@Test(groups = { "WRESL_to_Table" })
-	public void sequence() throws RecognitionException, IOException {
-		
-		inputFilePath ="src\\test\\TestConvertWresl_sequence.wresl";
-		
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
-	    
-	    Map<String, String>  expected = new HashMap<String, String>();
-	    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
-		
-		expected.put("1", "SJRBASE");
-		expected.put("2", "SJR_WQ1");
-		
-		Assert.assertEquals(parser.F.sequence_orders, expected);
-	}		
+	
 
 	@Test(groups = { "WRESL_to_Table" })
 	public void includeFile() throws RecognitionException, IOException {

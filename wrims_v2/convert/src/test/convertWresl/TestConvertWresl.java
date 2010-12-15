@@ -51,17 +51,17 @@ public class TestConvertWresl {
 	         e.printStackTrace();
 	        }
 	    
-	    Map<String, String>  expected = new HashMap<String, String>();
+	    Map<Integer, String>  expected = new HashMap<Integer, String>();
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 		
-		expected.put("1", "SJRBASE");
-		expected.put("2", "SJR_WQ1");
+		expected.put(1, "SJRBASE" );
+		expected.put(2, "SJR_WQ1");
 		
-		Assert.assertEquals(parser.F.sequence_orders, expected);
+		Assert.assertEquals(parser.F.model_order_map, expected);
 	}	
 
 	@Test(groups = { "WRESL_elements" })

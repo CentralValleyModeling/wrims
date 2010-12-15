@@ -13,13 +13,20 @@ public class Struct {
 	/// models appear in this parsed file
 	public ArrayList<String> model_list = new ArrayList<String>();	
 	public ArrayList<String> error_model_redefined = new ArrayList<String>();
- 	
+
+	/// sequence
+	public Map<Integer, String> model_order_map = new HashMap<Integer, String>();	
+	public ArrayList<Integer> error_model_order_redefined = new ArrayList<Integer>();
+	
+	public ArrayList<String> sequence_list = new ArrayList<String>();
+	public ArrayList<String> error_sequence_redefined = new ArrayList<String>();
+
+	
 	/// includeFile data structure
 	public IncludeFile incFile; 
 	public ArrayList<String> incFileList = new ArrayList<String>(); 
 	public Map<String,IncludeFile>  incFileMap = new HashMap<String,IncludeFile>(); 
 	public ArrayList<String> error_includeFile_redefined;
-	
 	
 	/// svar data structure
 	public Svar sv; 
@@ -41,17 +48,10 @@ public class Struct {
 	public ArrayList<String> gList = new ArrayList<String>(); 
 	public Map<String,Goal>  gMap = new HashMap<String,Goal>(); 	
 	
-	//public String inFile_or_inModel;
-	
-	public Map<String, String> sequence_orders = new HashMap<String, String>();
 
-	/// errors
-	public Map<String, String> error_sequence_order_redefined = new HashMap<String, String>();
+	/// errors	
 	public Map<String, String> error_var_redefined = new HashMap<String, String>();
 
-	
-	
-	//public Map<String, String> error_file_contains_redefined = new HashMap<String, String>();
 	
 	public Map<String, String> svar_expression = new HashMap<String, String>();
 
@@ -432,14 +432,19 @@ public class Struct {
 			}
 	}		
 	
-	public void sequenceOrder(String order, String modelName) {	
-	if (sequence_orders.containsKey(order)){
-		//System.out.println("error... variable redefined: " + $i.text);
-		error_sequence_order_redefined.put(order, modelName);
+	public void sequenceOrder(String sequenceName, String order,
+			String modelName) {
+
+		Integer i = Integer.parseInt(order);
+
+		if (sequence_list.contains(sequenceName)) {
+			error_sequence_redefined.add(sequenceName);
+		} else if (model_order_map.containsKey(i)) {
+			error_model_order_redefined.add(i);
+		} else {
+			model_order_map.put(i, modelName);
+			sequence_list.add(sequenceName);
 		}
-		else {
-		sequence_orders.put(order, modelName);
-		}
+
 	}
-	
 }
