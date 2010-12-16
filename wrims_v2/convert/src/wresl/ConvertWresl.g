@@ -72,7 +72,7 @@ include
 	@init { scope = "global"; }
 	:   INCLUDE ( LOCAL  {scope="local";} )? p=includeFilePath {
 	
-			        if(inModel=="n") { F.includeFile($p.path, scope);}
+			        if(inModel=="n") {         F.includeFile($p.path, scope);}
 	             	else             { $model::M.includeFile($p.path, scope);}
 	}; 
 
@@ -103,14 +103,19 @@ goal_simple[String id, String sc]
 	;
 
 goal_noCase[String id, String sc]
-	:   '{' 'lhs' h=IDENT  r=goalStatement '}' {F.goalNoCase($id, $sc, $h.text, $r.list, $r.rhs, $r.lhs_gt_rhs, $r.lhs_lt_rhs);}
+	:   '{' 'lhs' h=IDENT  r=goalStatement '}' {
+		if(inModel=="n") {         F.goalNoCase($id, $sc, $h.text, $r.rhs, $r.lhs_gt_rhs, $r.lhs_lt_rhs);}
+	    else             { $model::M.goalNoCase($id, $sc, $h.text, $r.rhs, $r.lhs_gt_rhs, $r.lhs_lt_rhs);}
+		}
 	;
 
 goal_case[String id, String sc] 
 	:   '{' 'lhs' lhs=IDENT  g=goalCaseStatements '}'{
-				$g.gl.scope = $sc;
-				$g.gl.lhs = $lhs.text;
-				F.goalCase($id, $sc, $lhs.text, $g.gl);
+			 $g.gl.scope = $sc;
+			 $g.gl.lhs = $lhs.text;
+			 if(inModel=="n") {         F.goalCase($id, $sc, $lhs.text, $g.gl);}
+	   		 else             { $model::M.goalCase($id, $sc, $lhs.text, $g.gl);}
+				
 	     }
 	; 
 
@@ -174,26 +179,26 @@ define
 
 svar_expression[String id, String sc]
 	:	'{' v=valueStatement '}' {  
-			     if(inModel=="n") { F.svarExpression($id, $sc, $v.str);}
+			     if(inModel=="n") {         F.svarExpression($id, $sc, $v.str);}
 	             else             { $model::M.svarExpression($id, $sc, $v.str);}			
 			};
 
 svar_sum [String id, String sc]
 	:	 '{' t=sumStatement '}' { 				  
-				 if(inModel=="n") { F.svarSum($id, $sc, $t.list, $t.str);  }
+				 if(inModel=="n") {         F.svarSum($id, $sc, $t.list, $t.str);  }
 	             else             { $model::M.svarSum($id, $sc, $t.list, $t.str);  }		
 	 };
 
 svar_table[String id, String sc]
 	:	'{' t=sqlStatement '}' { 
-				 if(inModel=="n") { F.svarTable($id, $sc, $t.list, $t.str);   }
+				 if(inModel=="n") {         F.svarTable($id, $sc, $t.list, $t.str);   }
 	             else             { $model::M.svarTable($id, $sc, $t.list, $t.str);   }			   
 			
 	};
 
 svar_cases[String id, String sc]
 	:   '{' c=caseStatements '}' {   
-            if(inModel=="n") { F.svarCase($id, $sc,  $c.sv,  $c.caseNames, $c.conditions, $c.expressions, $c.caseContent);}
+            if(inModel=="n") {         F.svarCase($id, $sc,  $c.sv,  $c.caseNames, $c.conditions, $c.expressions, $c.caseContent);}
 	        else             { $model::M.svarCase($id, $sc,  $c.sv,  $c.caseNames, $c.conditions, $c.expressions, $c.caseContent);}	        
     };
 	
@@ -243,21 +248,27 @@ caseStatement returns[String caseNameStr, String conditionStr, String expression
 
 svar_dss[String id, String sc]
 	:  '{' 'timeseries' kind units'}' { 				
-		F.svarDSS($id, $sc, $kind.str, $units.str);  };
+			if(inModel=="n") {         F.svarDSS($id, $sc, $kind.str, $units.str);}
+	        else             { $model::M.svarDSS($id, $sc, $kind.str, $units.str);}		
+		};
 
 dvar_std[String id, String sc]
 	:	'{' 'std' kind units'}' { 
-		F.dvarStd($id, $sc, $kind.str, $units.str);  };
+			if(inModel=="n") {         F.dvarStd($id, $sc, $kind.str, $units.str); }
+	        else             { $model::M.dvarStd($id, $sc, $kind.str, $units.str); }	
+		};
 
 dvar_alias[String id, String sc]
 	:	'{' alias kind? units'}' { 
-			     if(inModel=="n") { F.dvarAlias($id, $sc, $kind.str, $units.str, $alias.str);}
+			     if(inModel=="n") {         F.dvarAlias($id, $sc, $kind.str, $units.str, $alias.str);}
 	             else             { $model::M.dvarAlias($id, $sc, $kind.str, $units.str, $alias.str);}
 	};
 	
 dvar_nonstd [String id, String sc]
-	:	'{' c=lower_or_upper kind units '}' { 
-		F.dvarNonStd($id, $sc, $kind.str, $units.str, $c.list, $c.lowerBound, $c.upperBound);  };
+	:	'{' c=lower_or_upper kind units '}' {  
+			if(inModel=="n") {         F.dvarNonStd($id, $sc, $kind.str, $units.str, $c.list, $c.lowerBound, $c.upperBound);}
+	        else             { $model::M.dvarNonStd($id, $sc, $kind.str, $units.str, $c.list, $c.lowerBound, $c.upperBound);}
+		};
 
 lower_or_upper returns[ArrayList<String> list, String lowerBound, String upperBound]
 	:	lower upper? {       

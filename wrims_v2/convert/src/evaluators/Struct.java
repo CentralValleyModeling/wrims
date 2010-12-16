@@ -155,14 +155,14 @@ public class Struct {
 		}
 	}
 	
-	public void goalNoCase(String name, String scope, String lhs, ArrayList<String> list, String rhs, String lhs_gt_rhs, String lhs_lt_rhs) {
+	public void goalNoCase(String name, String scope, String lhs, String rhs, String lhs_gt_rhs, String lhs_lt_rhs) {
 		if (var_all.containsKey(name)) {
 			// System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "goal_no_case");
 		} else {
-			list.add(0,"lhs");list.add(1,lhs);
-			goal_scope.put(name, scope);
-			goal_no_case.put(name, list);
+			//list.add(0,"lhs");list.add(1,lhs);
+			//goal_scope.put(name, scope);
+			//goal_no_case.put(name, list);
 			var_all.put(name, "goal_no_case");
 			
 			/// clearer data structure

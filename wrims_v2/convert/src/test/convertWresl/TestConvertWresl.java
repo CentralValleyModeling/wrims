@@ -388,8 +388,8 @@ public class TestConvertWresl {
 
 			for ( String key : expected_modelMap.get(model).svMap.keySet() ){
 				
-				System.out.println("expected: "+model+"="+key+":::"+expected_modelMap.get(model).svMap.get(key).equalEva() );
-				System.out.println("actual:   "+model+"="+key+":::"+parser.modelMap.get(model).svMap.get(key).equalEva() );				
+				//System.out.println("expected: "+model+"="+key+":::"+expected_modelMap.get(model).svMap.get(key).equalEva() );
+				//System.out.println("actual:   "+model+"="+key+":::"+parser.modelMap.get(model).svMap.get(key).equalEva() );				
 				Assert.assertEquals(parser.modelMap.get(model).svMap.get(key).equalEva(), expected_modelMap.get(model).svMap.get(key).equalEva());
 			}		
 		}		
@@ -1123,11 +1123,13 @@ public class TestConvertWresl {
 		
 		Collections.sort(expected_keys);
 		Collections.sort(actual_keys);
+
+		//System.out.println("...."+expected_keys);
 		Assert.assertEquals(actual_keys, expected_keys);
 
 		for (String k : expected_keys) {
-				//System.out.println("expected:"+ expected_gMap.get(k).equalEva());
-				//System.out.println("actual:  "+parser.F.gMap.get(k).equalEva());
+				//System.out.println("expected:"+ k+":::"+expected_gMap.get(k).equalEva());
+				//System.out.println("actual:  "+ k+":::"+parser.F.gMap.get(k).equalEva());
 				Assert.assertEquals(parser.F.gMap.get(k).equalEva(), expected_gMap.get(k).equalEva());
 		}	
 	}			
