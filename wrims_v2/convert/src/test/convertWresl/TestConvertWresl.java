@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.antlr.runtime.ANTLRFileStream;
 import org.antlr.runtime.CharStream;
@@ -393,7 +394,81 @@ public class TestConvertWresl {
 			}		
 		}		
 	}		
-	
+
+	@Test(groups = { "WRESL_elements" })
+	public void modelReadFromFile() throws RecognitionException, IOException {
+		
+		inputFilePath = "src\\test\\TestConvertWresl_modelReadFromFile.wresl";
+		try {
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
+			}
+	    catch(Exception e) {
+	         e.printStackTrace();
+	        }
+
+	    Map<String, Struct> expected_modelMap = new HashMap<String, Struct>();
+	    Struct expected_struct1 = new Struct();
+	    
+		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
+		parser.currentFilePath = inputFilePath; parser.evaluator();
+
+		IncludeFile incF;
+		
+		incF = new IncludeFile();
+		incF.scope = "local";
+		expected_struct1.incFileMap.put("..\\..\\common\\System\\System_Sac.wresl", incF);
+			
+		Goal gl = new Goal();
+		gl.scope = "local";
+		gl.caseName.add("default");
+		gl.caseCondition.add("always");
+		gl.caseExpression.add("C607>500");
+		expected_struct1.gMap.put("force_c607",gl);
+
+		Alias as = new Alias();
+		as.scope = "global";
+		as.units = "CFS";
+		as.expression = "D419_swp[monthlyweighted5]";
+		expected_struct1.asMap.put("D419_swpC6",as);
+		
+		expected_modelMap.put("CVCWHEELING",expected_struct1);
+				
+		ArrayList<String> modelInFile =  parser.F.model_list; 
+		ArrayList<String> expected_models = new ArrayList<String>();
+		expected_models.addAll(expected_modelMap.keySet());
+		
+		Collections.sort(modelInFile);
+		Collections.sort(expected_models);
+		
+		Assert.assertEquals(modelInFile, expected_models);
+		
+		for ( String model : expected_modelMap.keySet() ) {
+
+			for ( String key : expected_modelMap.get(model).incFileMap.keySet() ){
+				
+				//System.out.println("expected: "+model+"="+key+":::"+expected_modelMap.get(model).incFileMap.get(key).equalEva() );
+				//System.out.println("actual:   "+model+"="+key+":::"+parser.modelMap.get(model).incFileMap.get(key).equalEva() );				
+				Assert.assertEquals(parser.modelMap.get(model).incFileMap.get(key).equalEva(), expected_modelMap.get(model).incFileMap.get(key).equalEva());
+			}
+			
+			for ( String key : expected_modelMap.get(model).gMap.keySet() ){
+				
+//				System.out.println("expected: "+model+"="+key+":::"+expected_modelMap.get(model).gMap.get(key).equalEva() );
+//				System.out.println("actual:   "+model+"="+key+":::"+parser.modelMap.get(model).gMap.get(key).equalEva() );				
+				Assert.assertEquals(parser.modelMap.get(model).gMap.get(key).equalEva(), expected_modelMap.get(model).gMap.get(key).equalEva());
+			}
+
+			for ( String key : expected_modelMap.get(model).asMap.keySet() ){
+			
+//				System.out.println("expected: "+model+"="+key+":::"+expected_modelMap.get(model).asMap.get(key).equalEva() );
+//				System.out.println("actual:   "+model+"="+key+":::"+parser.modelMap.get(model).asMap.get(key).equalEva() );
+				Assert.assertEquals(parser.modelMap.get(model).asMap.get(key).equalEva(), expected_modelMap.get(model).asMap.get(key).equalEva());
+			}			
+		}		
+	}		
+
 	@Test(groups = { "WRESL_elements" })
 	public void svarConst() throws RecognitionException, IOException {
 		
@@ -432,7 +507,6 @@ public class TestConvertWresl {
 				Assert.assertEquals(parser.F.svMap.get(k).equalEva(), expected_svMap.get(k).equalEva());
 		}			
 	}	
-	
 
 	@Test(groups = { "WRESL_elements" })
 	public void svarSum() throws RecognitionException, IOException {
@@ -470,8 +544,7 @@ public class TestConvertWresl {
 			
 			//System.out.println(k+":::"+parser.F.svMap.get(k).equalEva());				
 			Assert.assertEquals(parser.F.svMap.get(k).equalEva(), expected_svMap.get(k).equalEva());
-	}			
-
+		}			
 	}	
 	
 	@Test(groups = { "WRESL_elements" })
