@@ -1,6 +1,8 @@
 package test.convertWresl;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -30,6 +32,7 @@ import evaluators.IncludeFile;
 import evaluators.Struct;
 import evaluators.Svar;
 import evaluators.Tools;
+import evaluators.WriteCSV;
 
 
 public class TestConvertWresl {
@@ -546,6 +549,17 @@ public class TestConvertWresl {
 		}
 
 		System.out.println("what's in the model: "+model_data_map_complete.get("advanced").svList );
+		
+		String outFolder ="test-csv\\" ;
+				
+//		outputFilePath ="test-csv\\sv.csv";
+//		outFile = Tools.openFile(outputFilePath);
+//		outFile.print(WriteCSV.svar_header+"\n");
+		
+		WriteCSV.dataset(model_data_map_complete.get("advanced"),mainFilePath,outFolder);
+	    
+				
+		
 		Assert.assertEquals(1,2);
 	}	
 	
