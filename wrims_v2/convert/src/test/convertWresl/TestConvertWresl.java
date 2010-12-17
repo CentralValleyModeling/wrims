@@ -483,18 +483,27 @@ public class TestConvertWresl {
 		
 		Map<String, Dataset> file_data_map = new HashMap<String, Dataset>(); 
 		
-		Map<String, Dataset> model_data_map;
+		Map<String, Dataset> model_data_map = new HashMap<String, Dataset>() ;
 		
 		
 		
-		inputFilePath = "src\\test\\TestConvertWresl_modelAdvanced_readStructFromIncludeFile.wresl";
-		ConvertWreslParser parser = FileParser.parseFile(inputFilePath); 
+		String mainFilePath = "src\\test\\TestConvertWresl_modelAdvanced_readStructFromIncludeFile.wresl";
+		
+		ConvertWreslParser parser = FileParser.parseFile(mainFilePath); 
+		
 		dataset = new Dataset();
 		dataset.addStruct(parser.F);
 		
-		file_data_map.put(inputFilePath, dataset);
-		model_data_map = Tools.convertStructMapToDataMap(parser.modelMap);
-				
+		file_data_map.put(mainFilePath, dataset);
+		file_list.add(mainFilePath);
+		
+		if ( !dataset.model_list.isEmpty()){
+		model_data_map.putAll( Tools.convertStructMapToDataMap(parser.modelMap) );
+		model_list.addAll(dataset.model_list);
+		}
+		
+		file_model_map.put(mainFilePath, model_list);
+		
 		//System.out.println(parser.modelMap.keySet() );
 				
 		for ( String model : file_data_map.get(inputFilePath).model_list ) {
