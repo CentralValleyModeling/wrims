@@ -1,4 +1,4 @@
  MODEL advanced { 
-       INCLUDE[local] '..\..\src\test\TestConvertWresl_svarExpression.wresl'      
+       INCLUDE[local] 'src\test\TestConvertWresl_svarExpression.wresl'      
      }
 	 

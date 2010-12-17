@@ -476,43 +476,77 @@ public class TestConvertWresl {
 	public void modelAdvanced_readStructFromIncludeFile() throws RecognitionException, IOException {
 		
 
-		Dataset dataset; 
+		Dataset dataset_each_file; 
+
+
 		ArrayList<String> file_list = new ArrayList<String>();
 		ArrayList<String> model_list = new ArrayList<String>();
+
+			
 		Map<String, ArrayList<String>> file_model_map = new HashMap<String, ArrayList<String>> ();
 		
 		Map<String, Dataset> file_data_map = new HashMap<String, Dataset>(); 
 		
 		Map<String, Dataset> model_data_map = new HashMap<String, Dataset>() ;
+		Map<String, Dataset> model_data_map_complete = new HashMap<String, Dataset>(); 
 		
 		
 		
 		String mainFilePath = "src\\test\\TestConvertWresl_modelAdvanced_readStructFromIncludeFile.wresl";
 		
 		ConvertWreslParser parser = FileParser.parseFile(mainFilePath); 
+
+
+		dataset_each_file = new Dataset();
+		dataset_each_file.addStruct(parser.F);
+
 		
-		dataset = new Dataset();
-		dataset.addStruct(parser.F);
-		
-		file_data_map.put(mainFilePath, dataset);
+		file_data_map.put(mainFilePath, dataset_each_file);
 		file_list.add(mainFilePath);
 		
-		if ( !dataset.model_list.isEmpty()){
+		if ( ! file_data_map.get(mainFilePath).model_list.isEmpty()){
 		model_data_map.putAll( Tools.convertStructMapToDataMap(parser.modelMap) );
-		model_list.addAll(dataset.model_list);
+		model_list.addAll(file_data_map.get(mainFilePath).model_list);
 		}
 		
 		file_model_map.put(mainFilePath, model_list);
 		
-		//System.out.println(parser.modelMap.keySet() );
-				
-		for ( String model : file_data_map.get(inputFilePath).model_list ) {
+		System.out.println( file_data_map.get(mainFilePath).model_list );
+		
+		
+		/// collect complete data for each model
+		for ( String model : file_data_map.get(mainFilePath).model_list ) {
 
-			for ( String key : model_data_map.get(model).incFileMap.keySet() ) {
-				System.out.println("TTT:   "+model+"="+key+":::"+model_data_map.get(model).incFileMap.get(key).equalEva() );				
-				Assert.assertEquals(1,2);
+			System.out.println(model_data_map.get(model).incFileList );
+			System.out.println(model_data_map.get(model).incFileMap.keySet() );
+			
+	
+			/// for each include file in the model
+			Dataset dataset_each_model = new Dataset();
+			/// add initial data
+			dataset_each_model.add(model_data_map.get(model));
+			
+			for ( String filePath : model_data_map.get(model).incFileList ) {
+				
+				/// new container for each include file
+				dataset_each_file = new Dataset();
+				System.out.println("TTT:   "+model+"="+filePath+":::"+model_data_map.get(model).incFileMap.get(filePath).equalEva() );				
+				
+				parser = FileParser.parseFile(filePath); 
+				dataset_each_file.addStruct(parser.F);				
+				dataset_each_model.addStruct(parser.F);
+				
+				file_data_map.put(filePath, dataset_each_file);
+				file_list.add(filePath);
 			}
-		}		
+			
+			/// put detailed data 
+			System.out.println("what's the model: "+model );
+			model_data_map_complete.put(model, dataset_each_model);
+		}
+
+		System.out.println("what's in the model: "+model_data_map_complete.get("advanced").svList );
+		Assert.assertEquals(1,2);
 	}	
 	
 	@Test(groups = { "WRESL_elements" })
