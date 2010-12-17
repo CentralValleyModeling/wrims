@@ -1,6 +1,6 @@
-name,		case,  condition,	expression,	lhs>rhs,	lhs<rhs
-ActfwflowY,	case1,	month==Feb,	Frcst_amrY=D_SacFea_B, #, 	#
-ActfwflowY,	case2,	always,	Frcst_amrY>D_SacFea_B, #, 	#
-constraint1,    case1,  a3+a4<5,         f7<80.3+ghl,    constrain,      -6.0
-constraint1,    case1,  C_Kswck_Exc1+a4==5,         f7=80.3+ghl,     7.0,      constrain
-constraint1,    case2,  always,          C_Kswck_Exc1-e14=56*hn,    -8.0,      -6.0
+name,		case,  order, 	condition,	expression,	lhs_gt_rhs,	lhs_lt_rhs
+ActfwflowY,	case1,	1,	month==Feb,	C_Kswck_Exc1-evap_1=max(56;ResAction3;C_Kswck_Exc1(preSep)), #, 	#
+ActfwflowY,	case2,	2,	always,	Frcst_amrY>D_SacFea_B, #, 	#
+constraint1,    case1,  1,	CVPDedBanksSwitch+a4 <5,         f7< 80.3+ ResAction3,    constrain,      -6.0
+constraint1,    case1,  2,	C_Kswck_Exc1+bc (preSep)==5,         f7=80.3+ghl,     7.0,      constrain
+constraint1,    case2,  3,	always,          ResAction2=D_SacFea_B,    -8.0,      -6.0
