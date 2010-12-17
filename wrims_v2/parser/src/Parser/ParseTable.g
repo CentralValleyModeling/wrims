@@ -61,6 +61,7 @@ options {
   private static boolean testDefine=false;
   private static boolean isSvFile=false;
   private static boolean isConstraintStatement=false;
+  private static boolean isSumFunction=false;
   private final ArrayList<String> reserveToken=new ArrayList<String>(Arrays.asList("month", "wateryear","jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec")); 
   
   private String svType= "NULL"; 
@@ -330,7 +331,7 @@ headline_svartable
 	;
 
 headline_constrainttable
-	:	'name' ',' 'case' ',' 'condition' ',' 'expression' ',' 'lhs>rhs' ',' 'lhs<rhs' {
+	:	'name' ',' 'case' ',' 'order' ',' 'condition' ',' 'expression' ',' 'lhs>rhs' ',' 'lhs<rhs' {
 		}
 	;
 		
@@ -986,7 +987,7 @@ content_svar
 	;
 	
 content_constraint
-	:	i1=IDENT ',' i3=IDENT ',' i5=conditionStatement ',' i6=constraintStatement ',' ((i7=lhsrhs)|'#') ',' ((i8=lhsrhs)|'#'){
+	:	i1=IDENT ',' i3=IDENT ',' INTEGER ',' i5=conditionStatement ',' i6=constraintStatement ',' ((i7=lhsrhs)|'#') ',' ((i8=lhsrhs)|'#'){
             if ($i1.text.equals(preConstraint)){
                 if (!redefineConstraint){
                    if ($i5.text.equals("always")){
@@ -1277,18 +1278,18 @@ text	:	LETTER (LETTER | DIGIT )*;
 	
 tableExpression returns [ArrayList<String> list]
   @init { $list = new ArrayList<String>(); testDefine=true;}
-	:	((i1=expression)|(i1=tableSQL)|(i1=timeseriesWithUnits)|(i1=timeseries)|(i1=function)){
+	:	((i1=expression)|(i1=tableSQL)|(i1=timeseriesWithUnits)|(i1=timeseries)|(i1=function)|(i1=sumExpression)){
 	   list =$i1.list;
 	   testDefine=false;
 	}
 	;
 
-max_func
-	: MAX '(' expression ';' expression ')'
+max_func returns [String text]
+	: MAX '('{text="max(";} (e1=expression){text=text+$e1.list.get(1);} (';' (e2=expression){text=text+";"+$e2.list.get(1);})+ ')' {text=text+")";}
 	;
 
-min_func
-	: MIN '(' expression ';' expression ')'
+min_func returns [String text]
+	: MIN '(' {text="min(";} (e1=expression){text=text+$e1.list.get(1);} (';' (e2=expression){text=text+";"+$e2.list.get(1);})+ ')' {text=text+")";}
 	;
 
 timeseriesWithUnits returns[ArrayList<String> list]
@@ -1310,7 +1311,11 @@ timeseries returns[ArrayList<String> list]
 function returns [ArrayList<String> list]
   : ((i1=noArgFunction)|(i2=argFunction)){
       list=new ArrayList<String>();
-      list=$i1.list;
+      if ($i1.list!=null){
+        list=$i1.list;
+      }else{
+        list=$i2.list;
+      }
   }
   ;
 
@@ -1336,8 +1341,8 @@ argFunction returns [ArrayList<String> list]
   }
   ;  
   
-arguements:
-  '(' (IDENT|knownDV) (';' (IDENT|knownDV))* ')'
+arguements returns [String text] @init{text="";}:
+  '('{text="(";} ((i1=IDENT){text=text+"{"+$i1.text+"}"; }|(k1=knownDV){text=text+$k1.text;}) (';' ((i2=IDENT){text=text+";"+"{"+$i2.text+"}";}|(k2=knownDV){text=text+";"+"{"+$k2.text+"}";}))* ')' 
   ;
 	
 partC	
@@ -1387,14 +1392,44 @@ upperbound:	IDENT|allnumber;
 
 lowerbound:	IDENT|allnumber;
 
-term
+sumExpression returns [ArrayList<String> list] @init{isSumFunction=true;}
+  : 'sum' '(' 'i' '=' e1=expression_sum ';' e2=expression_sum (';' INTEGER )? ')' e3=expression{
+      String text;
+      if ($INTEGER.text ==null){
+        text="sum(i="+$e1.text+";"+$e2.text+") "+$e3.list.get(1);
+      }else{
+        text="sum(i="+$e1.text+";"+$e2.text+";"+$INTEGER.text+") "+$e3.list.get(1);
+      }
+      list=new ArrayList<String>();
+      list.add("SUM");
+      list.add(text);
+      isSumFunction=false;
+  } 
+  ;
+
+term_sum: (pastMonth|IDENT|INTEGER|'(' expression_sum ')'){
+  if ($IDENT.text !=null){
+    if (!reserveToken.contains($IDENT.text) || $IDENT.text.equals("wateryear")){
+      error_grammer.add(currentFile+": "+$IDENT.text+" can't not be used to define sum loop");
+    }
+  }
+};
+
+unary_sum : ('-')? term_sum ;
+add_sum  :  unary_sum(('+' | '-') unary_sum)* ;
+expression_sum returns [String text]: add_sum {
+  text=$add_sum.text.replace(" ", "");
+  text=text.replace("\\t","");
+};
+
+term returns [String text]
 	:	(knownDV
 	| (i1=IDENT) 
-	|	'(' e=expression ')' 
-	|	i=INTEGER 
-	|       i=FLOAT 
-	|   	max_func
-	|   	min_func)
+	|	'(' (e=expression) ')' 
+	|	(i=INTEGER) 
+	| (f=FLOAT) 
+	| max_func
+	| min_func)
 	{
     if ($i1 !=null){
       if (testDefine && !isSvFile && !dvar.containsKey($i1.text) && !svar.containsKey($i1.text) && !alias.containsKey($i1.text) && !reserveToken.contains($i1.text) && !$i1.text.equals("taf_cfs") && !$i1.text.equals("cfs_taf")){
@@ -1406,33 +1441,61 @@ term
       if (!isConstraintStatement && alias.containsKey($i1.text)){
         error_grammer.add(currentFile+": alias variable "+$i1.text+" in current month and current cycle can only be used in constraint relationship");
       }
+      if (svar.containsKey($i1.text)||alias.containsKey($i1.text)){
+        text="{"+$i1.text+"}";
+      }else{
+        text=$i1.text;
+      }
+    }
+    if ($knownDV.text !=null){
+      text=$knownDV.text;
+    }
+    if ($e.list !=null){
+      text="("+$e.list.get(1)+")";
+    }
+    if ($i.text !=null){
+      text=$i.text;
+    }
+    if ($f.text !=null){
+      text=$f.text;
+    }
+    if ($max_func.text !=null){
+      text=$max_func.text;
+    }
+    if ($min_func.text !=null){
+      text=$min_func.text;
     }
 	}
 	;
 	
-knownDV
-  : pastMonthDV|preMonthDV|pastCycleDV
+knownDV returns [String text] 
+  : pastMonthDV{text=$pastMonthDV.text;}|preMonthDV{text=$preMonthDV.text;}|pastCycleDV{text=$pastCycleDV.text;}
   ;
   
-pastMonth:  'prejan'|'prefeb'|'premar'|'preapr'|'premay'|'prejun'|'prejul'|'preaug'|'presep'|'preoct'|'prenov'|'predec';
+pastMonth:  'prejan'|'prefeb'|'premar'|'preapr'|'premay'|'prejun'|'prejul'|'preaug'|'presep'|'preoct'|'prenov'|'predec'|'i';
   
-pastMonthDV  
+pastMonthDV returns [String text] 
   : i1=IDENT '(' pastMonth ')'{
-    if (testDefine && !dvar.containsKey($i1.text) && !alias.containsKey($i1.text)){
+    if (testDefine && !dvar.containsKey($i1.text) && !alias.containsKey($i1.text) && !$i1.text.equals("cfs_taf") && !$i1.text.equals("taf_cfs")){
       error_grammer.add(currentFile+": decision variable "+$i1.text+" is not defined before used");
     }
+    if (!isSumFunction && $pastMonth.text.equals("i")){
+      error_grammer.add(currentFile+": i acts as a past month index of a decision variable can only be used in sum function");
+    }
+    text="{"+$i1.text+"}"+"("+$pastMonth.text+")";
   }
   ;
   
-preMonthDV
-  : IDENT '(-' INTEGER ')'{
+preMonthDV returns [String text]
+  : IDENT '(-' INTEGER ')'  {
     if (testDefine && !dvar.containsKey($IDENT.text)&& !alias.containsKey($IDENT.text)){
       error_grammer.add(currentFile+": decision variable "+$IDENT.text+" is not defined before used");
     }
+    text="{"+$IDENT.text+"}"+"(-"+$INTEGER.text+")";
   }
   ;
   
-pastCycleDV
+pastCycleDV returns [String text]
   : i1=IDENT '[' i2=IDENT ']'{
     if (testDefine){
       if (!dvar.containsKey($i1.text) && !alias.containsKey($i1.text)){
@@ -1446,26 +1509,33 @@ pastCycleDV
         }
       }
     } 
+    text="{"+$i1.text+"}"+"["+$i2.text+"]";
   }
   ; 
 	
-unary
-	:	('-')? term;
+unary returns [String text]
+	:	(i1='-')? term{
+	   if ($i1==null){
+	     text=$term.text;
+	   }else{
+	     text="-"+$term.text;
+	   }
+	};
 	
 allnumber
 	:	('-')? number;
 
-mult
-	:	unary (('*' | '/' | 'mod') unary)*
+mult returns [String text] @init{text=""; String w="";}
+	:	(i1=unary) {text=$i1.text;} (('*'{w="*";} | '/' {w="/";}| 'mod'{w="mod";}) (i2=unary){text=text+w+$i2.text;})*
 	;
 	
-add 
-	:	mult (('+' | '-') mult)*
+add returns [String text] @init{text=""; String w="";}
+	:	(i1=mult) {text=$i1.text;} (('+'{w="+";} | '-' {w="-";}) (i2=mult){text=text+w+$i2.text;})*
 	;
 
 expression returns [ArrayList<String> list]
 	:	i=add {
-	         list = new ArrayList<String>(); 
+	         list=new ArrayList<String>();
 	         list.add("EXPRESSION");
 	         list.add($i.text); 
 	  }
@@ -1479,33 +1549,44 @@ relation
 	| '<='
 	;	
 
-conditionStatement 
-	:	relationStatementSeries|'always'
-	;
-
-whereStatement
-  : IDENT '=' expression
-  ;
-	
-relationStatementSeries
-  : relationStatement (('.and.'|'.or.') relationStatement)* ;
-
-relationStatement @init { testDefine=true;}
-	:	expression relation expression{
-	 testDefine=false;
+conditionStatement returns [String text]
+	:	((i1=relationStatementSeries)|'always'){
+	     if ($i1.text!=null){
+	       $text=$i1.text;
+	     }else{
+	       $text="always";
+	     }
 	}
 	;
 
-constraintStatement @init { testDefine=true; isConstraintStatement=true;}
-  : expression ('='|'>'|'<') expression{
+whereStatement returns [String text]
+  : IDENT '=' expression{
+      text=$IDENT.text+"="+$expression.list.get(1);
+  }
+  ;
+	
+relationStatementSeries returns [String text] @init { text=""; String w="";}
+  : (r1=relationStatement){text=$r1.text;} (('.and.'{w=" .and. ";}|'.or.' {w=" .or. ";}) (r2=relationStatement){text=text+w+$r2.text;})* ;
+
+relationStatement returns [String text] @init { testDefine=true;}
+	:	(e1=expression) relation (e2=expression){
+	 testDefine=false;
+	 text=$e1.list.get(1)+$relation.text+$e2.list.get(1);
+	}
+	;
+
+constraintStatement returns [String text] @init { testDefine=true; isConstraintStatement=true; text=""; String w="";}
+  : (e1=expression) ('='{w="=";}|'>'{w=">";}|'<'{w="<";}) (e2=expression){
    testDefine=false;
    isConstraintStatement=false;
+   text=$e1.list.get(1)+w+$e2.list.get(1);
   }
   ;
 
-assignStatement @init { testDefine=true;}
+assignStatement returns [String text] @init { testDefine=true;}
   : IDENT '=' expression{
    testDefine=false;
+   text=$IDENT.text+"="+$expression.list.get(1);
   }
   ;
 
