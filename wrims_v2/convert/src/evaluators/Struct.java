@@ -26,7 +26,7 @@ public class Struct {
 	public IncludeFile incFile; 
 	public ArrayList<String> incFileList = new ArrayList<String>(); 
 	public Map<String,IncludeFile>  incFileMap = new HashMap<String,IncludeFile>(); 
-	public ArrayList<String> error_includeFile_redefined;
+	public ArrayList<String> error_includeFile_redefined = new ArrayList<String>();
 	
 	/// svar data structure
 	public Svar sv; 

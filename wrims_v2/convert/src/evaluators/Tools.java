@@ -9,6 +9,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Tools {
@@ -44,6 +46,24 @@ public class Tools {
 			
 		    return  new PrintWriter(new BufferedWriter(new FileWriter(f)));
 	  }
+	  
+		public static Map<String, Dataset> convertStructMapToDataMap(Map<String, Struct> s){
+			
+			Map<String, Dataset> resultMap = new HashMap<String, Dataset>();
+			Dataset dataset;
+			
+			if (!s.isEmpty()) {
+				for (String key : s.keySet()){
+					dataset = new Dataset();
+					dataset.addStruct(s.get(key));
+					resultMap.put(key, dataset);
+				}
+			}
+			
+			return resultMap;
+
+		} 	
+	  
 	  
 }
 

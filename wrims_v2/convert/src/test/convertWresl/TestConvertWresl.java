@@ -22,11 +22,14 @@ import org.testng.annotations.*;
 import org.testng.Assert;
 
 import evaluators.Alias;
+import evaluators.Dataset;
 import evaluators.Dvar;
+import evaluators.FileParser;
 import evaluators.Goal;
 import evaluators.IncludeFile;
 import evaluators.Struct;
 import evaluators.Svar;
+import evaluators.Tools;
 
 
 public class TestConvertWresl {
@@ -405,15 +408,15 @@ public class TestConvertWresl {
 	    catch(Exception e) {
 	         e.printStackTrace();
 	        }
-
-	    Map<String, Struct> expected_modelMap = new HashMap<String, Struct>();
-	    Struct expected_struct1 = new Struct();
 	    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		parser.currentFilePath = inputFilePath; parser.evaluator();
 
+	    Map<String, Struct> expected_modelMap = new HashMap<String, Struct>();
+	    Struct expected_struct1 = new Struct();
+		
 		IncludeFile incF;
 		
 		incF = new IncludeFile();
@@ -472,74 +475,34 @@ public class TestConvertWresl {
 	@Test(groups = { "WRESL_elements" })
 	public void modelAdvanced_readStructFromIncludeFile() throws RecognitionException, IOException {
 		
-		inputFilePath = "src\\test\\TestConvertWresl_modelReadFromFile.wresl";
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
 
-	    Map<String, Struct> expected_modelMap = new HashMap<String, Struct>();
-	    Struct expected_struct1 = new Struct();
-	    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
-
-		IncludeFile incF;
+		Dataset dataset; 
+		ArrayList<String> file_list = new ArrayList<String>();
+		ArrayList<String> model_list = new ArrayList<String>();
+		Map<String, ArrayList<String>> file_model_map = new HashMap<String, ArrayList<String>> ();
 		
-		incF = new IncludeFile();
-		incF.scope = "local";
-		expected_struct1.incFileMap.put("..\\..\\common\\System\\System_Sac.wresl", incF);
-			
-		Goal gl = new Goal();
-		gl.scope = "local";
-		gl.caseName.add("default");
-		gl.caseCondition.add("always");
-		gl.caseExpression.add("C607>500");
-		expected_struct1.gMap.put("force_c607",gl);
-
-		Alias as = new Alias();
-		as.scope = "global";
-		as.units = "CFS";
-		as.expression = "D419_swp[monthlyweighted5]";
-		expected_struct1.asMap.put("D419_swpC6",as);
+		Map<String, Dataset> file_data_map = new HashMap<String, Dataset>(); 
 		
-		expected_modelMap.put("CVCWHEELING",expected_struct1);
+		Map<String, Dataset> model_data_map;
+		
+		
+		
+		inputFilePath = "src\\test\\TestConvertWresl_modelAdvanced_readStructFromIncludeFile.wresl";
+		ConvertWreslParser parser = FileParser.parseFile(inputFilePath); 
+		dataset = new Dataset();
+		dataset.addStruct(parser.F);
+		
+		file_data_map.put(inputFilePath, dataset);
+		model_data_map = Tools.convertStructMapToDataMap(parser.modelMap);
 				
-		ArrayList<String> modelInFile =  parser.F.model_list; 
-		ArrayList<String> expected_models = new ArrayList<String>();
-		expected_models.addAll(expected_modelMap.keySet());
-		
-		Collections.sort(modelInFile);
-		Collections.sort(expected_models);
-		
-		Assert.assertEquals(modelInFile, expected_models);
-		
-		for ( String model : expected_modelMap.keySet() ) {
-
-			for ( String key : expected_modelMap.get(model).incFileMap.keySet() ){
+		//System.out.println(parser.modelMap.keySet() );
 				
-				//System.out.println("expected: "+model+"="+key+":::"+expected_modelMap.get(model).incFileMap.get(key).equalEva() );
-				//System.out.println("actual:   "+model+"="+key+":::"+parser.modelMap.get(model).incFileMap.get(key).equalEva() );				
-				Assert.assertEquals(parser.modelMap.get(model).incFileMap.get(key).equalEva(), expected_modelMap.get(model).incFileMap.get(key).equalEva());
-			}
-			
-			for ( String key : expected_modelMap.get(model).gMap.keySet() ){
-				
-//				System.out.println("expected: "+model+"="+key+":::"+expected_modelMap.get(model).gMap.get(key).equalEva() );
-//				System.out.println("actual:   "+model+"="+key+":::"+parser.modelMap.get(model).gMap.get(key).equalEva() );				
-				Assert.assertEquals(parser.modelMap.get(model).gMap.get(key).equalEva(), expected_modelMap.get(model).gMap.get(key).equalEva());
-			}
+		for ( String model : file_data_map.get(inputFilePath).model_list ) {
 
-			for ( String key : expected_modelMap.get(model).asMap.keySet() ){
-			
-//				System.out.println("expected: "+model+"="+key+":::"+expected_modelMap.get(model).asMap.get(key).equalEva() );
-//				System.out.println("actual:   "+model+"="+key+":::"+parser.modelMap.get(model).asMap.get(key).equalEva() );
-				Assert.assertEquals(parser.modelMap.get(model).asMap.get(key).equalEva(), expected_modelMap.get(model).asMap.get(key).equalEva());
-			}			
+			for ( String key : model_data_map.get(model).incFileMap.keySet() ) {
+				System.out.println("TTT:   "+model+"="+key+":::"+model_data_map.get(model).incFileMap.get(key).equalEva() );				
+				Assert.assertEquals(1,2);
+			}
 		}		
 	}	
 	

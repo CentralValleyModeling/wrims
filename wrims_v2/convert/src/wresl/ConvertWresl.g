@@ -9,6 +9,7 @@ options {
   import java.util.Map;
   import java.util.HashMap;
   import java.util.Arrays;
+  import evaluators.Dataset;
   import evaluators.Struct;
   import evaluators.Model;
   import evaluators.Tools;
@@ -26,8 +27,10 @@ options {
     public String inModel = "n";
 
 	public Struct F = new Struct();	
-
 	public Map<String, Struct> modelMap = new HashMap<String, Struct>();
+
+	public Dataset dataset = new Dataset();	
+	public Map<String, Dataset> modelDataMap = new HashMap<String, Dataset>();
 	
 	/// temp variables 
  	private ArrayList<String> list;  	private ArrayList<String> list2;
@@ -528,7 +531,7 @@ NONE :  '\''  ('NONE' |'none' )  '\'';
 
 ///basics///
 
-QUOTE_STRING_with_MINUS : '\'' IDENT ( '-' | IDENT )+ '\'';
+QUOTE_STRING_with_MINUS : '\'' IDENT ( '-' | IDENT )* '\'';
 //VAR_PREVIOUS_CYCLE : IDENT '[' IDENT ']';
 IDENT : LETTER (LETTER | DIGIT | SYMBOLS )*;
 
