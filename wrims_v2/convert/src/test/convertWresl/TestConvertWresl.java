@@ -29,6 +29,8 @@ import evaluators.Dvar;
 import evaluators.FileParser;
 import evaluators.Goal;
 import evaluators.IncludeFile;
+
+import evaluators.PairMap;
 import evaluators.Struct;
 import evaluators.Svar;
 import evaluators.Tools;
@@ -477,56 +479,46 @@ public class TestConvertWresl {
 
 	@Test(groups = { "WRESL_elements" })
 	public void modelAdvanced_readStructFromIncludeFile() throws RecognitionException, IOException {
-		
 
 		Dataset dataset_each_file; 
 
-
 		ArrayList<String> file_list = new ArrayList<String>();
 		ArrayList<String> model_list = new ArrayList<String>();
-
 			
 		Map<String, ArrayList<String>> file_model_map = new HashMap<String, ArrayList<String>> ();
-		
 		Map<String, Dataset> file_data_map = new HashMap<String, Dataset>(); 
 		
 		Map<String, Dataset> model_data_map = new HashMap<String, Dataset>() ;
-		Map<String, Dataset> model_data_map_complete = new HashMap<String, Dataset>(); 
-		
-		
+		Map<String, Dataset> model_data_map_complete = new HashMap<String, Dataset>(); 		
 		
 		String mainFilePath = "src\\test\\TestConvertWresl_modelAdvanced_readStructFromIncludeFile.wresl";
 		
 		ConvertWreslParser parser = FileParser.parseFile(mainFilePath); 
 
-
 		dataset_each_file = new Dataset();
 		dataset_each_file.addStruct(parser.F);
-
 		
 		file_data_map.put(mainFilePath, dataset_each_file);
 		file_list.add(mainFilePath);
 		
 		if ( ! file_data_map.get(mainFilePath).model_list.isEmpty()){
-		model_data_map.putAll( Tools.convertStructMapToDataMap(parser.modelMap) );
-		model_list.addAll(file_data_map.get(mainFilePath).model_list);
+			model_data_map.putAll( Tools.convertStructMapToDataMap(parser.modelMap) );
+			model_list.addAll(file_data_map.get(mainFilePath).model_list);
 		}
 		
 		file_model_map.put(mainFilePath, model_list);
 		
-		System.out.println( file_data_map.get(mainFilePath).model_list );
+		System.out.println( file_data_map.get(mainFilePath).model_list );		
 		
-		
-		/// collect complete data for each model
+		/// collect complete data for each model in the main file
 		for ( String model : file_data_map.get(mainFilePath).model_list ) {
 
 			System.out.println(model_data_map.get(model).incFileList );
 			System.out.println(model_data_map.get(model).incFileMap.keySet() );
-			
 	
 			/// for each include file in the model
 			Dataset dataset_each_model = new Dataset();
-			/// add initial data
+			/// add initial data, i.e., adhoc dvars, svars, and goals
 			dataset_each_model.add(model_data_map.get(model));
 			
 			for ( String filePath : model_data_map.get(model).incFileList ) {
@@ -536,10 +528,14 @@ public class TestConvertWresl {
 				System.out.println("TTT:   "+model+"="+filePath+":::"+model_data_map.get(model).incFileMap.get(filePath).equalEva() );				
 				
 				parser = FileParser.parseFile(filePath); 
-				dataset_each_file.addStruct(parser.F);				
-				dataset_each_model.addStruct(parser.F);
+				/// parse each file included in the model
+				dataset_each_file.addStruct(parser.F); 
+				
 				
 				file_data_map.put(filePath, dataset_each_file);
+				/// put data into model-data map
+				dataset_each_model.add(dataset_each_file);				
+				
 				file_list.add(filePath);
 			}
 			
@@ -551,15 +547,54 @@ public class TestConvertWresl {
 		System.out.println("what's in the model: "+model_data_map_complete.get("advanced").svList );
 		
 		String outFolder ="test-csv\\" ;
-				
-//		outputFilePath ="test-csv\\sv.csv";
-//		outFile = Tools.openFile(outputFilePath);
-//		outFile.print(WriteCSV.svar_header+"\n");
+
+		WriteCSV.dataset(model_data_map_complete.get("advanced"),mainFilePath,outFolder);	    
+					
+		Assert.assertEquals(1,2);
+	}	
+	
+
+	@Test(groups = { "WRESL_elements" })
+	public void processModelOneLevel() throws RecognitionException, IOException {
+ 
+		PairMap pair;
 		
-		WriteCSV.dataset(model_data_map_complete.get("advanced"),mainFilePath,outFolder);
-	    
-				
+		String mainFilePath = "src\\test\\TestConvertWresl_processModelOneLevel.wresl";
+
+		pair = FileParser.processFile(mainFilePath); 
+
+		System.out.println( " include files in test: processModel="+ pair.fileDataMap.keySet() );		
+		System.out.println( "include models in test: processModel="+ pair.modelAdhocMap.keySet() );
 		
+		/// the include file list is empty
+		pair.add(FileParser.processFileList(pair.fileDataMap.get(mainFilePath).incFileList)); 
+						
+		Map<String, Dataset> model_data_complete_map =  new HashMap<String, Dataset>();
+		
+		for ( String model : pair.modelAdhocMap.keySet()){
+			
+			/// the model include file list is not empty
+			pair.add(FileParser.processFileList(pair.modelAdhocMap.get(model).incFileList)); 
+			
+			System.out.println( "include models in main file: processModel="+ model );
+			Dataset model_data_complete = new Dataset();
+			model_data_complete.add(pair.modelAdhocMap.get(model));
+			for (String fileInModel : pair.modelAdhocMap.get(model).incFileList){
+				
+				System.out.println( "include files in this model: processModel="+ fileInModel );
+				System.out.println( "include files in this model: processModel="+ pair.fileDataMap.keySet() );
+				model_data_complete.add(pair.fileDataMap.get(fileInModel));	
+				System.out.println( "@@@@@@@@@@@@@@@@@@@");
+			}
+			model_data_complete_map.put(model, model_data_complete);		
+		}
+		
+		
+		String outFolder ="test-csv-process-one-level\\" ;
+		
+		System.out.println( "in complete map: "+ model_data_complete_map.keySet() );
+		WriteCSV.dataset(model_data_complete_map.get("advanced"),mainFilePath,outFolder);	    
+					
 		Assert.assertEquals(1,2);
 	}	
 	

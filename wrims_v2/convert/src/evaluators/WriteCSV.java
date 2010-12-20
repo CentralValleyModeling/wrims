@@ -24,9 +24,10 @@ public class WriteCSV {
 		  PrintWriter out_sv = Tools.openFile(outFolder+"sv.csv");
 		  PrintWriter out_dv = Tools.openFile(outFolder+"dv.csv");
 		  PrintWriter out_alias = Tools.openFile(outFolder+"alias.csv");
-			out_sv.print(WriteCSV.svar_header+"\n");
-			out_dv.print(WriteCSV.dvar_header+"\n");
-			out_alias.print(WriteCSV.alias_header+"\n");
+			
+		  out_sv.print(WriteCSV.svar_header+"\n");
+		  out_dv.print(WriteCSV.dvar_header+"\n");
+		  out_alias.print(WriteCSV.alias_header+"\n");
 		  
 		  svar(ds.svMap, filePath, out_sv );
 		  dvar(ds.dvMap, filePath, out_dv );
