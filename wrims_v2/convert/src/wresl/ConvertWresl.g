@@ -26,6 +26,7 @@ options {
     public String inModel = "n";
 
 	public String currentFilePath;
+	public String currentFileScope;
 	public Struct F = new Struct();	
 	public Map<String, Struct> modelMap = new HashMap<String, Struct>();
 

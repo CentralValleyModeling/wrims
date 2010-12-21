@@ -24,27 +24,37 @@ public class Struct {
 	// / includeFile data structure
 	public IncludeFile incFile;
 	public ArrayList<String> incFileList = new ArrayList<String>();
+	public ArrayList<String> incFileList_global = new ArrayList<String>();
+	public ArrayList<String> incFileList_local = new ArrayList<String>();
 	public Map<String, IncludeFile> incFileMap = new HashMap<String, IncludeFile>();
 	public ArrayList<String> error_includeFile_redefined = new ArrayList<String>();
 
 	// / svar data structure
 	public Svar sv;
 	public ArrayList<String> svList = new ArrayList<String>();
+	public ArrayList<String> svList_global = new ArrayList<String>();
+	public ArrayList<String> svList_local = new ArrayList<String>();
 	public Map<String, Svar> svMap = new HashMap<String, Svar>();
 
 	// / dvar data structure
 	public Dvar dv;
 	public ArrayList<String> dvList = new ArrayList<String>();
+	public ArrayList<String> dvList_global = new ArrayList<String>();
+	public ArrayList<String> dvList_local = new ArrayList<String>();
 	public Map<String, Dvar> dvMap = new HashMap<String, Dvar>();
 
 	// / alias data structure
 	public Alias as;
 	public ArrayList<String> asList = new ArrayList<String>();
+	public ArrayList<String> asList_global = new ArrayList<String>();
+	public ArrayList<String> asList_local = new ArrayList<String>();
 	public Map<String, Alias> asMap = new HashMap<String, Alias>();
 
 	// / goal data structure
 	public Goal gl;
 	public ArrayList<String> gList = new ArrayList<String>();
+	public ArrayList<String> gList_global = new ArrayList<String>();
+	public ArrayList<String> gList_local = new ArrayList<String>();
 	public Map<String, Goal> gMap = new HashMap<String, Goal>();
 
 	// / errors
@@ -126,8 +136,13 @@ public class Struct {
 
 			incFile.scope = scope;
 			incFileList.add(filePath);
-
+			
 			incFileMap.put(filePath, incFile);
+			
+			if      (scope == "global"){incFileList_global.add(filePath);}
+			else if (scope == "local") {incFileList_local.add(filePath);}
+			else{ System.out.println("wrong scope!!");}
+			
 
 		}
 	}
@@ -150,6 +165,10 @@ public class Struct {
 			gl.caseExpression.add(content);
 			gMap.put(name, gl);
 			gList.add(name);
+			
+			if      (scope == "global"){gList_global.add(name);}
+			else if (scope == "local") {gList_local.add(name);}
+			else{ System.out.println("wrong scope!!");}
 		}
 	}
 
@@ -176,25 +195,33 @@ public class Struct {
 			gl.fromWresl = currentFilePath;
 			gMap.put(name, gl);
 			gList.add(name);
+			
+			if      (scope == "global"){gList_global.add(name);}
+			else if (scope == "local") {gList_local.add(name);}
+			else{ System.out.println("wrong scope!!");}
 
 		}
 	}
 
-	public void goalCase(String goalName, String scope, String lhs, Goal gl) {
-		if (var_all.containsKey(goalName)) {
+	public void goalCase(String name, String scope, String lhs, Goal gl) {
+		if (var_all.containsKey(name)) {
 			// System.out.println("error... variable redefined: " + $i.text);
-			error_var_redefined.put(goalName, "goal_cases");
+			error_var_redefined.put(name, "goal_cases");
 		} else {
-			goal_scope.put(goalName, scope);
-			var_all.put(goalName, "goal_cases");
+			goal_scope.put(name, scope);
+			var_all.put(name, "goal_cases");
 
 			// / better data structure
 
 			gl.scope = scope;
 			gl.lhs = lhs;
 			gl.fromWresl = currentFilePath;
-			gMap.put(goalName, gl);
-			gList.add(goalName);
+			gMap.put(name, gl);
+			gList.add(name);
+			
+			if      (scope == "global"){gList_global.add(name);}
+			else if (scope == "local") {gList_local.add(name);}
+			else{ System.out.println("wrong scope!!");}
 
 		}
 	}
@@ -219,6 +246,10 @@ public class Struct {
 			sv.fromWresl = currentFilePath;
 			svMap.put(svarName, sv);
 			svList.add(svarName);
+			
+			if      (scope == "global"){svList_global.add(svarName);}
+			else if (scope == "local") {svList_local.add(svarName);}
+			else{ System.out.println("wrong scope!!");}
 
 		}
 	}
@@ -246,6 +277,10 @@ public class Struct {
 
 			svMap.put(svarName, sv);
 			svList.add(svarName);
+			
+			if      (scope == "global"){svList_global.add(svarName);}
+			else if (scope == "local") {svList_local.add(svarName);}
+			else{ System.out.println("wrong scope!!");}
 		}
 
 	}
@@ -269,6 +304,10 @@ public class Struct {
 
 			svMap.put(name, sv);
 			svList.add(name);
+			
+			if      (scope == "global"){svList_global.add(name);}
+			else if (scope == "local") {svList_local.add(name);}
+			else{ System.out.println("wrong scope!!");}
 
 		}
 	}
@@ -302,6 +341,10 @@ public class Struct {
 			sv.fromWresl = currentFilePath;
 			svMap.put(name, sv);
 			svList.add(name);
+			
+			if      (scope == "global"){svList_global.add(name);}
+			else if (scope == "local") {svList_local.add(name);}
+			else{ System.out.println("wrong scope!!");}
 
 		}
 	}
@@ -331,6 +374,10 @@ public class Struct {
 			sv.fromWresl = currentFilePath;
 			svMap.put(name, sv);
 			svList.add(name);
+			
+			if      (scope == "global"){svList_global.add(name);}
+			else if (scope == "local") {svList_local.add(name);}
+			else{ System.out.println("wrong scope!!");}
 
 		}
 	}
@@ -360,6 +407,10 @@ public class Struct {
 			dv.fromWresl = currentFilePath;
 			dvMap.put(name, dv);
 			dvList.add(name);
+			
+			if      (scope == "global"){dvList_global.add(name);}
+			else if (scope == "local") {dvList_local.add(name);}
+			else{ System.out.println("wrong scope!!");}
 
 		}
 	}
@@ -389,6 +440,10 @@ public class Struct {
 			as.fromWresl = currentFilePath;
 			asMap.put(name, as);
 			asList.add(name);
+			
+			if      (scope == "global"){asList_global.add(name);}
+			else if (scope == "local") {asList_local.add(name);}
+			else{ System.out.println("wrong scope!!");}
 
 		}
 	}
@@ -419,6 +474,10 @@ public class Struct {
 			dv.fromWresl = currentFilePath;
 			dvMap.put(name, dv);
 			dvList.add(name);
+			
+			if      (scope == "global"){dvList_global.add(name);}
+			else if (scope == "local") {dvList_local.add(name);}
+			else{ System.out.println("wrong scope!!");}
 
 		}
 	}

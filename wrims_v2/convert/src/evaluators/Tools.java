@@ -60,9 +60,9 @@ public class Tools {
 		return in.readLine();
 	}
 
-	public static PrintWriter openFile(String filePath) throws IOException {
+	public static PrintWriter openFile(String dirPath, String fileName) throws IOException {
 
-		File f = new File(filePath);
+		File f = new File(dirPath, fileName);
 		File dir = new File(f.getParent());
 		dir.mkdirs();
 		f.createNewFile();

@@ -18,22 +18,23 @@ public class WriteCSV {
 	  public static String dvar_header ="NAME,TYPE,UNITS,LOWER_BOUND,UPPER_BOUND,FROM_WRESL_FILE";	  
 	  public static String alias_header ="NAME,TYPE,UNITS,OUTPUT,EXPRESSION,FROM_WRESL_FILE";
 	  public static String goal_header = "NAME,LHS,CASE,ORDER,CONDITION,EXPRESSION/RHS,LHS>RHS,LHS<RHS,FROM_WRESL_FILE";
-	  public static void dataset(Dataset ds, String filePath, String outFolder) throws IOException {
+	  
+	  public static void dataset(Dataset ds, String outFolder) throws IOException {
 		  
-		  PrintWriter out_sv = Tools.openFile(outFolder+"svar.csv");
-		  PrintWriter out_dv = Tools.openFile(outFolder+"dvar.csv");
-		  PrintWriter out_goal = Tools.openFile(outFolder+"constraint.csv");
-		  PrintWriter out_alias = Tools.openFile(outFolder+"alias.csv");
+		  PrintWriter out_sv = Tools.openFile(outFolder,"svar.csv");
+		  PrintWriter out_dv = Tools.openFile(outFolder,"dvar.csv");
+		  PrintWriter out_goal = Tools.openFile(outFolder,"constraint.csv");
+		  PrintWriter out_alias = Tools.openFile(outFolder,"alias.csv");
 			
 		  out_sv.print(WriteCSV.svar_header+"\n");
 		  out_dv.print(WriteCSV.dvar_header+"\n");
 		  out_goal.print(WriteCSV.goal_header+"\n");
 		  out_alias.print(WriteCSV.alias_header+"\n");
 		  
-		  svar(ds.svMap, filePath, out_sv );
-		  dvar(ds.dvMap, filePath, out_dv );
-		  goal(ds.gMap, filePath, out_goal );
-		  alias(ds.asMap, filePath, out_alias );
+		  svar(ds.svMap, out_sv );
+		  dvar(ds.dvMap, out_dv );
+		  goal(ds.gMap, out_goal );
+		  alias(ds.asMap, out_alias );
 		  
 		  out_sv.close();
 		  out_dv.close();
@@ -41,7 +42,7 @@ public class WriteCSV {
 		  out_alias.close();
 	  };
 	  
-	  public static void svar(Map<String,Svar> sMap, String filePath, PrintWriter out) {
+	  public static void svar(Map<String,Svar> sMap, PrintWriter out) {
 		    
 			List<String> keys = new ArrayList<String> (sMap.keySet());
 			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
@@ -76,7 +77,7 @@ public class WriteCSV {
 			}
 	  };	  
 
-	public static void dvar(Map<String,Dvar> dMap, String filePath, PrintWriter out) {
+	public static void dvar(Map<String,Dvar> dMap, PrintWriter out) {
 		    
 			List<String> keys = new ArrayList<String> (dMap.keySet());
 			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
@@ -97,7 +98,7 @@ public class WriteCSV {
 		    	}
 	  };
 
-	public static void alias(Map<String,Alias> asMap, String filePath, PrintWriter out) {
+	public static void alias(Map<String,Alias> asMap, PrintWriter out) {
 		    
 			List<String> keys = new ArrayList<String> (asMap.keySet());
 			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
@@ -118,7 +119,7 @@ public class WriteCSV {
 		    	}
 	  };		  
 	  
-	  public static void goal(Map<String,Goal> gMap, String filePath, PrintWriter out) {
+	  public static void goal(Map<String,Goal> gMap, PrintWriter out) {
 		    
 			List<String> keys = new ArrayList<String> (gMap.keySet());
 			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);

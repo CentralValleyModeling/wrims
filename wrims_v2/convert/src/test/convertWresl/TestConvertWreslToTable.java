@@ -75,113 +75,33 @@ public class TestConvertWreslToTable {
 			model_data_complete_map.put(model, model_data_complete);		
 		}		
 		
-		String outFolder ="test-csv\\TestConvertWreslToTable_processModelOneLevel_case1\\" ;
-		String expectedFolder ="src\\test\\expected\\TestConvertWreslToTable_processModelOneLevel_case1\\" ;
-		
-		Tools.deleteDir(outFolder);
+
 		
 		System.out.println( "in complete map: "+ model_data_complete_map.keySet() );
-		WriteCSV.dataset(model_data_complete_map.get("advanced"),mainFilePath,outFolder);	    
-				
-		Map<String, String> actual = Tools.readFilesFromDirAsMap(outFolder);
-		Map<String, String> expected = Tools.readFilesFromDirAsMap(expectedFolder);
+
 		
-		Assert.assertEquals(actual,expected);
+		for (String model : model_data_complete_map.keySet()) {
+
+			String outFolder = "test-csv\\TestConvertWreslToTable_processModelOneLevel_case1\\"
+					+ model;
+			String expectedFolder = "src\\test\\expected\\TestConvertWreslToTable_processModelOneLevel_case1\\";
+
+			Tools.deleteDir(outFolder);
+
+			WriteCSV.dataset(model_data_complete_map.get(model), outFolder);
+			System.out.println( "outFolder="+ outFolder );
+			Map<String, String> actual = Tools.readFilesFromDirAsMap(outFolder);
+
+			Map<String, String> expected = Tools
+					.readFilesFromDirAsMap(expectedFolder);
+
+			Assert.assertEquals(actual, expected);
+		}
 	}	
 
-	@Test(groups = { "WRESL_to_Table"  })
-	public void processModelOneLevel_case2() throws RecognitionException, IOException {
- 
-		PairMap pair;
-		
-		String mainFilePath = "src\\test\\TestConvertWreslToTable_processModelOneLevel_case2.wresl";
 
-		pair = FileParser.processFile(mainFilePath); 
-		
-		/// process included files in this parsed file
-		pair.add(FileParser.processFileList(pair.fileDataMap.get(mainFilePath).incFileList)); 
-						
-		Map<String, Dataset> model_data_complete_map =  new HashMap<String, Dataset>();
-		
-		for ( String model : pair.modelAdhocMap.keySet()){
-			
-			/// process included files in this model
-			pair.add(FileParser.processFileList(pair.modelAdhocMap.get(model).incFileList)); 
-			
-			System.out.println( "include models in main file: processModel="+ model );
-			Dataset model_data_complete = new Dataset();			
-			
-			model_data_complete.add(pair.modelAdhocMap.get(model));
-			for (String includedFile : pair.modelAdhocMap.get(model).incFileList){
-				
-				model_data_complete.add(pair.fileDataMap.get(includedFile));	
-
-			}
-			model_data_complete_map.put(model, model_data_complete);		
-		}		
-		
-		String outFolder ="test-csv\\TestConvertWreslToTable_processModelOneLevel_case2\\" ;
-		String expectedFolder ="src\\test\\expected\\TestConvertWreslToTable_processModelOneLevel_case2\\" ;
-		
-		Tools.deleteDir(outFolder);
-		
-		System.out.println( "in complete map: "+ model_data_complete_map.keySet() );
-		WriteCSV.dataset(model_data_complete_map.get("advanced"),mainFilePath,outFolder);	    
-				
-		Map<String, String> actual = Tools.readFilesFromDirAsMap(outFolder);
-		Map<String, String> expected = Tools.readFilesFromDirAsMap(expectedFolder);
-		
-		Assert.assertEquals(actual,expected);
-	}	
 	
-	
-	@Test(groups = { "WRESL_to_Table"  })
-	public void processModelTwoLevel_case1() throws RecognitionException, IOException {
- 
-		PairMap pair;
-		
-		String mainFilePath = "src\\test\\TestConvertWreslToTable_processModelTwoLevel_case1.wresl";
 
-		pair = FileParser.processFile(mainFilePath); 
-
-		System.out.println( " include files in test: twoLevel="+ pair.fileDataMap.keySet() );		
-		System.out.println( "include models in test: twoLevel="+ pair.modelAdhocMap.keySet() );
-		
-		/// process included files in this parsed file
-		pair.add(FileParser.processFileList(pair.fileDataMap.get(mainFilePath).incFileList)); 
-						
-		Map<String, Dataset> model_data_complete_map =  new HashMap<String, Dataset>();
-		
-		for ( String model : pair.modelAdhocMap.keySet()){
-			
-			/// process included files in this model
-			pair.add(FileParser.processFileList(pair.modelAdhocMap.get(model).incFileList)); 
-			
-			System.out.println( "include models in main file: processModel="+ model );
-			Dataset model_data_complete = new Dataset();			
-			
-			model_data_complete.add(pair.modelAdhocMap.get(model));
-			for (String includedFile : pair.modelAdhocMap.get(model).incFileList){
-				
-				model_data_complete.add(pair.fileDataMap.get(includedFile));	
-
-			}
-			model_data_complete_map.put(model, model_data_complete);		
-		}		
-		
-		String outFolder ="test-csv\\TestConvertWreslToTable_processModelTwoLevel_case1\\" ;
-		String expectedFolder ="src\\test\\expected\\TestConvertWreslToTable_processModelTwoLevel_case1\\" ;
-		
-		Tools.deleteDir(outFolder);
-		
-		System.out.println( "in complete map: "+ model_data_complete_map.keySet() );
-		WriteCSV.dataset(model_data_complete_map.get("advanced"),mainFilePath,outFolder);	    
-				
-		Map<String, String> actual = Tools.readFilesFromDirAsMap(outFolder);
-		Map<String, String> expected = Tools.readFilesFromDirAsMap(expectedFolder);
-		
-		Assert.assertEquals(actual,expected);
-	}	
 	
 	
 	
