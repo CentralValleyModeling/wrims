@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class Struct {
 
+	public String currentFilePath;	
 	
 	/// models appear in this parsed file
 	public ArrayList<String> model_list = new ArrayList<String>();	
@@ -107,6 +108,11 @@ public class Struct {
 	///dummy var
 	private ArrayList<String> list;
 
+	
+//	public Struct(String currentFilePath){
+//		this.currentFilePath = currentFilePath;
+//	}
+	
 	public void modelList(String name ) {
 		if (model_list.contains(name)) {
 			error_model_redefined.add(name);
@@ -374,7 +380,8 @@ public class Struct {
 			dv.kind=kind;
 			dv.units=units;
 			dv.lowerBound=Parameters.dv_lowerBound;
-			dv.upperBound=Parameters.dv_upperBound;			
+			dv.upperBound=Parameters.dv_upperBound;	
+			dv.fromWresl= currentFilePath;
 			dvMap.put(name, dv);
 			dvList.add(name);
 			

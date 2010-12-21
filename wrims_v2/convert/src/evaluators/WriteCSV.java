@@ -17,7 +17,7 @@ public class WriteCSV {
 	  public static String svar_header ="NAME,TYPE,UNITS,OUTPUT,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
 	  public static String dvar_header ="NAME,TYPE,UNITS,LOWER_BOUND,UPPER_BOUND,FROM_WRESL_FILE";	  
 	  public static String alias_header ="NAME,TYPE,UNITS,OUTPUT,EXPRESSION,FROM_WRESL_FILE";
-	  public static String goal_header = "NAME, LHS, CASE, ORDER, CONDITION, EXPRESSION/RHS";
+	  public static String goal_header = "NAME,LHS,CASE,ORDER,CONDITION,EXPRESSION/RHS,LHS>RHS,LHS<RHS,FROM_WRESL_FILE";
 	  public static void dataset(Dataset ds, String filePath, String outFolder) throws IOException {
 		  
 		  PrintWriter out_sv = Tools.openFile(outFolder+"svar.csv");
@@ -146,8 +146,8 @@ public class WriteCSV {
 		    	out.print(","+caseOrder); //for ORDER 
 		    	out.print(","+g.caseCondition.get(i)); //for CONDITION
 		    	out.print(","+g.caseExpression.get(i)); //for EXPRESSION
-		    	out.print(","+g.case_lhs_gt_rhs); //for EXPRESSION
-		    	out.print(","+g.case_lhs_lt_rhs); //for EXPRESSION
+		    	out.print(","+g.case_lhs_gt_rhs.get(i)); //for EXPRESSION
+		    	out.print(","+g.case_lhs_lt_rhs.get(i)); //for EXPRESSION
 		    	
 
 				out.print(","+filePath);

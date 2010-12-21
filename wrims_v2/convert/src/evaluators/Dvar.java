@@ -8,6 +8,7 @@ public class Dvar {
 	public String units;
 	public String lowerBound;
 	public String upperBound;
+	public String fromWresl;
 //	public ArrayList<String> caseName;
 //	public ArrayList<String> caseCondition;
 //	public ArrayList<String> caseExpression;
@@ -19,6 +20,7 @@ public class Dvar {
 		units="undefined";
 		lowerBound="undefined";
 		upperBound="undefined";
+		fromWresl="undefined";
 //		caseName       = new ArrayList<String>();
 //		caseCondition  = new ArrayList<String>();
 //		caseExpression = new ArrayList<String>();

@@ -11,7 +11,6 @@ options {
   import java.util.Arrays;
   import evaluators.Dataset;
   import evaluators.Struct;
-  import evaluators.Model;
   import evaluators.Tools;
   import evaluators.Svar; 
   import evaluators.Goal; 
@@ -26,6 +25,7 @@ options {
 
     public String inModel = "n";
 
+	public String currentFilePath;
 	public Struct F = new Struct();	
 	public Map<String, Struct> modelMap = new HashMap<String, Struct>();
 
@@ -37,7 +37,6 @@ options {
  	private String scope; 
 
 	/// error message
-	public String currentFilePath;
 	public ArrayList<String> outputErrorMessage = new ArrayList<String>();
 	public String getErrorMessage(RecognitionException e, String[] tokenNames) {
     		String msg = super.getErrorMessage(e, tokenNames);
