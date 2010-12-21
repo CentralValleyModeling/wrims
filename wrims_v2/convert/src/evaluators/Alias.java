@@ -7,6 +7,7 @@ public class Alias {
 	public String kind;
 	public String units;
 	public String expression;
+	public String fromWresl;
 
 //	public ArrayList<String> caseName;
 //	public ArrayList<String> caseCondition;
@@ -18,6 +19,7 @@ public class Alias {
 		kind="undefined";
 		units="undefined";
 		expression="undefined";
+		fromWresl="undefined";
 
 //		caseName       = new ArrayList<String>();
 //		caseCondition  = new ArrayList<String>();

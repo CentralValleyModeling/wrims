@@ -11,6 +11,7 @@ public class Svar {
 	public ArrayList<String> caseName;
 	public ArrayList<String> caseCondition;
 	public ArrayList<String> caseExpression;
+	public String fromWresl;
 	
 	public Svar(){
 		scope="undefined";
@@ -20,6 +21,7 @@ public class Svar {
 		caseName       = new ArrayList<String>();
 		caseCondition  = new ArrayList<String>();
 		caseExpression = new ArrayList<String>();
+		fromWresl = "undefined";
 	}
 	
 	public String equalEva(){

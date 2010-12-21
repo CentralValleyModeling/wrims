@@ -70,7 +70,7 @@ public class WriteCSV {
 		    	out.print(","+s.caseExpression.get(i)); //for EXPRESSION
 		    	
 
-				out.print(","+filePath);
+				out.print(","+s.fromWresl);
 				out.print("\n");	
 		    	}
 			}
@@ -92,7 +92,7 @@ public class WriteCSV {
 		    	out.print(","+d.lowerBound); //for UNITS
 		    	out.print(","+d.upperBound); //for UNITS
 
-				out.print(","+filePath);
+				out.print(","+d.fromWresl);
 				out.print("\n");	
 		    	}
 	  };
@@ -113,7 +113,7 @@ public class WriteCSV {
 		    	out.print(",Y"); //for OUTPUT
 		    	out.print(","+a.expression); //for expression
 
-				out.print(","+filePath);
+				out.print(","+a.fromWresl);
 				out.print("\n");	
 		    	}
 	  };		  
@@ -150,7 +150,7 @@ public class WriteCSV {
 		    	out.print(","+g.case_lhs_lt_rhs.get(i)); //for EXPRESSION
 		    	
 
-				out.print(","+filePath);
+				out.print(","+g.fromWresl);
 				out.print("\n");	
 		    	}
 			}

@@ -179,7 +179,8 @@ public class Struct {
 			gl.caseName.add("default");
 			gl.caseExpression.add(rhs);
 			gl.case_lhs_gt_rhs.add(lhs_gt_rhs);
-			gl.case_lhs_lt_rhs.add(lhs_lt_rhs);			
+			gl.case_lhs_lt_rhs.add(lhs_lt_rhs);	
+			gl.fromWresl= currentFilePath;
 			gMap.put(name, gl);
 			gList.add(name);				
 			
@@ -200,6 +201,7 @@ public class Struct {
 
 			gl.scope = scope;
 			gl.lhs = lhs;
+			gl.fromWresl= currentFilePath;
 			gMap.put(goalName, gl);
 			gList.add(goalName);
 			
@@ -225,6 +227,7 @@ public class Struct {
 			
             /////////////////////
 			sv.scope = scope;
+			sv.fromWresl= currentFilePath;
 			svMap.put(svarName, sv);
 			svList.add(svarName);
 			
@@ -265,6 +268,7 @@ public class Struct {
 			sv.caseName.add(caseName);
 			sv.caseCondition.add(condition);
 			sv.caseExpression.add(expression);
+			sv.fromWresl= currentFilePath;
 			
 			svMap.put(svarName, sv);
 			svList.add(svarName);
@@ -287,6 +291,7 @@ public class Struct {
 			sv.caseName.add("default");
 			sv.caseCondition.add("always");
 			sv.caseExpression.add(sumStr);
+			sv.fromWresl= currentFilePath;
 			
 			svMap.put(name, sv);
 			svList.add(name);
@@ -321,6 +326,7 @@ public class Struct {
 			sv.caseCondition.add("always");
 			sv.caseName.add("default");
 			sv.caseExpression.add(sqlStr);
+			sv.fromWresl= currentFilePath;
 			svMap.put(name, sv);
 			svList.add(name);
 			
@@ -351,6 +357,7 @@ public class Struct {
 			sv.caseCondition.add("always");
 			sv.caseName.add("default");
 			sv.caseExpression.add("timeseries");
+			sv.fromWresl= currentFilePath;
 			svMap.put(name, sv);
 			svList.add(name);
 			
@@ -406,8 +413,9 @@ public class Struct {
 			as = new Alias();
 			as.scope=scope;
 			if (kind!=null) as.kind=kind;
-			as.units=units;
-			as.expression=alias;		
+			if (units!=null) as.units=units;
+			as.expression=alias;
+			as.fromWresl= currentFilePath;
 			asMap.put(name, as);
 			asList.add(name);			
 			
@@ -437,7 +445,8 @@ public class Struct {
 			dv.kind=kind;
 			dv.units=units;
 			dv.lowerBound=lowerBound;
-			dv.upperBound=upperBound;			
+			dv.upperBound=upperBound;
+			dv.fromWresl= currentFilePath;
 			dvMap.put(name, dv);
 			dvList.add(name);
 			

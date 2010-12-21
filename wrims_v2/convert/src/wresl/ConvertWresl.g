@@ -49,6 +49,7 @@ options {
 
 
 evaluator 
+@init { F.currentFilePath=currentFilePath; }
 	:	pattern *  EOF  ;
 
 pattern
@@ -63,7 +64,9 @@ scope { Struct M }
 @init { inModel = "y"; }
 @after{ modelMap.put($i.text, $model::M);  inModel = "n"; }
 	:    MODEL i=IDENT  
-			{  F.modelList($i.text);$model::M = new Struct(); } 
+			{   F.modelList($i.text); 
+				$model::M = new Struct(); 
+				$model::M.currentFilePath=currentFilePath;} 
 		 '{' c=(  include | goal | define )*  '}' 
 		 	{
 	           //  System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " + $model::M.include_file_scope)

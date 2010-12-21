@@ -14,6 +14,7 @@ public class Goal {
 	public ArrayList<String> caseExpression;
 	public ArrayList<String> case_lhs_gt_rhs;
 	public ArrayList<String> case_lhs_lt_rhs;
+	public String fromWresl;
 	
 	public Goal(){
 		scope="undefined";
@@ -23,6 +24,7 @@ public class Goal {
 		caseExpression = new ArrayList<String>();
 		case_lhs_gt_rhs = new ArrayList<String>();
 		case_lhs_lt_rhs = new ArrayList<String>();
+		fromWresl = "undefined";
 	}
 	
 	public String equalEva(){
