@@ -1,0 +1,18 @@
+ MODEL advanced { 
+       INCLUDE[local] 'src\test\TestConvertWresl_svarExpression.wresl'  
+		INCLUDE[local] 'src\test\TestConvertWresl_dvarNonStd.wresl' 
+	 define QsacFth {alias C_SacFea+D_SacFea  kind 'flow-channel' units 'cfs'}
+     define[local] D419_swpC6 {alias D419_swp[monthlyweighted5] units 'cfs'}
+
+		INCLUDE[local] 'src\test\TestConvertWresl_goalCase.wresl' 
+		
+		goal split_C5_WTS { C5_WTS = C5_WTS_Stg1 + C5_WTS_Stg2 }
+goal C_SLCVP { C5_WTS = C5_WTS_Stg1 }
+goal a1 { b = c }
+goal[local] a2 { b >  c }
+goal a3 { b < c }
+		
+}	 
+		
+     }
+	 

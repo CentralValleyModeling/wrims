@@ -18,6 +18,24 @@ public class Tools {
 		    return s.substring(1, s.length()-1);
 		    }
 	  
+
+
+	public static Map<String, String> readFilesFromDirAsMap(String dir)
+			throws IOException {
+		File folder = new File(dir);
+		File[] listOfFiles = folder.listFiles();
+		Map<String, String> map = new HashMap<String, String>();
+
+		for (File file : listOfFiles) {
+			String filePath = file.getPath();
+			String fileName = file.getName();
+			map.put(fileName, readFileAsString(filePath));
+		}
+
+		return map;
+
+	}
+	    
 	  public static String readFileAsString(String filePath) throws IOException{
 		    byte[] buffer = new byte[(int) new File(filePath).length()];
 		    BufferedInputStream f = null;
@@ -63,7 +81,21 @@ public class Tools {
 			return resultMap;
 
 		} 	
-	  
-	  
+		
+	public static boolean deleteDir(String dirString) {
+		File dir = new File(dirString);
+		if (dir.isDirectory()) {
+			String[] children = dir.list();
+			for (int i = 0; i < children.length; i++) {
+				boolean success = deleteDir(new File(dir, children[i]).getPath());
+				if (!success) {
+					return false;
+				}
+			}
+		} 
+		return dir.delete(); 
+	}
+	
+	
 }
 

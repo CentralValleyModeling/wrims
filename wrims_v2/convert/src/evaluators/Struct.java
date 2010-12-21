@@ -205,8 +205,6 @@ public class Struct {
 			gMap.put(goalName, gl);
 			gList.add(goalName);
 			
-			System.out.println("QQQQQQQQQQQQQQQ: "+ gMap.get(goalName).equalEva());
-			
 			}
 	}	
 

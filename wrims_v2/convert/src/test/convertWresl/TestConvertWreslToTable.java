@@ -22,6 +22,9 @@ import wresl.ConvertWreslParser;
 import org.testng.annotations.*;
 import org.testng.Assert;
 
+import evaluators.Dataset;
+import evaluators.FileParser;
+import evaluators.PairMap;
 import evaluators.Struct;
 import evaluators.Svar;
 import evaluators.Dvar;
@@ -38,195 +41,148 @@ public class TestConvertWreslToTable {
 	public String outputFilePath;
 	public PrintWriter outFile;
 	public BufferedWriter outputFile;
-	private static CharStream stream;	
-	
-	@Test(groups = { "WRESL_to_Table" })
-	public void sample()
-	{
-		Assert.assertEquals(1,1);
-        //System.out.println("@Test(groups = { "WRESL_to_Table" }) sample: 1==1");
-	}
-		
-	
-	@Test(groups = { "WRESL_to_Table" })
-	public void svar() throws RecognitionException, IOException {
-		inputFilePath = "src\\test\\TestConvertWreslToTable_svar.wresl";
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
 
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
-		
-		outputFilePath ="test-csv\\sv.csv";
-		outFile = Tools.openFile(outputFilePath);
-		outFile.print(WriteCSV.svar_header+"\n");
-		
-		WriteCSV.svar(parser.F.svMap,inputFilePath,outFile);
-	    outFile.close();
-		
-		String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svar.expected");
-	    String test = 	  Tools.readFileAsString(outputFilePath);	
-		
-		Assert.assertEquals(test, expected);
-	}
-	
-//	@Test(groups = { "WRESL_to_Table" })
-//	public void svarCase() throws RecognitionException, IOException {
-//		inputFilePath = "src\\test\\TestConvertWreslToTable_svarCase.wresl";
-//		try {
-//			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-//			}
-//	    catch(Exception e) {
-//	         e.printStackTrace();
-//	        }
-//
-//		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-//		TokenStream tokenStream = new CommonTokenStream(lexer);
-//		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-//		parser.currentFilePath = inputFilePath; parser.evaluator();
-//		
-//		outputFilePath ="test-csv\\svar_case.csv";
-//		outFile = Tools.openFile(outputFilePath);
-//		outFile.print(WriteCSV.svar_header+"\n");
-//		
-//		WriteCSV.svar(parser.F.svMap,inputFilePath,outFile);
-//	    outFile.close();
-//		
-//		String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_svarCase.expected");
-//	    String test = 	  Tools.readFileAsString(outputFilePath);	
-//		
-//		Assert.assertEquals(test, expected);
-//	}
-	
-	@Test(groups = { "WRESL_to_Table" })	
-	public void dvar() throws RecognitionException, IOException {
-		inputFilePath = "src\\test\\TestConvertWreslToTable_dvar.wresl";
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
-
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
-
-		outputFilePath ="test-csv\\dv.csv";
-		outFile = Tools.openFile(outputFilePath);
-		outFile.print(WriteCSV.dvar_header+"\n");
-		
-		WriteCSV.dvar(parser.F.dvMap,inputFilePath,outFile);
-	    outFile.close();
-		
-		String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_dvar.expected");
-	    String test = 	  Tools.readFileAsString(outputFilePath);	
-		
-		Assert.assertEquals(test, expected);
-	}
-
-	@Test(groups = { "WRESL_to_Table" })	
-	public void alias() throws RecognitionException, IOException {
-		inputFilePath = "src\\test\\TestConvertWreslToTable_alias.wresl";
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
-
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
-
-		outputFilePath ="test-csv\\config_alias.csv";
-		outFile = Tools.openFile(outputFilePath);
-		outFile.print(WriteCSV.alias_header+"\n");
-		
-		WriteCSV.alias(parser.F.asMap,inputFilePath,outFile);
-	    outFile.close();
-		
-		String expected = Tools.readFileAsString("src\\test\\TestConvertWreslToTable_alias.expected");
-	    String test = 	  Tools.readFileAsString(outputFilePath);	
-		
-		Assert.assertEquals(test, expected);
-	}
-	
 
 	
+	@Test(groups = { "WRESL_to_Table"  })
+	public void processModelOneLevel_case1() throws RecognitionException, IOException {
+ 
+		PairMap pair;
+		
+		String mainFilePath = "src\\test\\TestConvertWreslToTable_processModelOneLevel_case1.wresl";
 
-	@Test(groups = { "WRESL_to_Table" })
-	public void includeFile() throws RecognitionException, IOException {
+		pair = FileParser.processFile(mainFilePath); 
 		
-		inputFilePath = "src\\test\\TestConvertWresl_includeFile.wresl";
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
-	    
-
-	    //ArrayList<String> list;
-	    //Map<String, ArrayList<String>>  expected_file_include_file  = new HashMap<String, ArrayList<String>>();
-	    Map<String, String>  expected_include_file_scope = new HashMap<String, String>();
-	    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		/// process included files in this parsed file
+		pair.add(FileParser.processFileList(pair.fileDataMap.get(mainFilePath).incFileList)); 
+						
+		Map<String, Dataset> model_data_complete_map =  new HashMap<String, Dataset>();
 		
-
-		expected_include_file_scope.put("..\\..\\common\\System\\System_Sac.wresl", "local");
-		expected_include_file_scope.put("..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl", "global");
-		
-
-		Assert.assertEquals(parser.F.include_file_scope, expected_include_file_scope);
-		//Assert.assertEquals(parser.F.file_include_file, expected_file_include_file);
-	}	
-	
-	@Test(groups = { "WRESL_to_Table" })
-	public void modelIncludeFile() throws RecognitionException, IOException {
-		
-		inputFilePath = "src\\test\\TestConvertWresl_modelIncludeFile.wresl";
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
-	
-
-	    Map<String, Struct> expected_modelMap = new HashMap<String, Struct>();
-	    Struct expected_struct = new Struct();
-	    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
-		
-		expected_struct.include_file_scope.put("..\\..\\common\\System\\System_Sac.wresl","local");
-		expected_struct.include_file_scope.put("..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl","global");
-		
-//	    String[] array={null,"local","global"};
-//	    list=new ArrayList<String>();list.addAll(Arrays.asList(array));
-//		expected_model_scope_list.put("CVCWHEELING", list);
-		
-		expected_modelMap.put("CVCWHEELING",expected_struct);
+		for ( String model : pair.modelAdhocMap.keySet()){
+			
+			/// process included files in this model
+			pair.add(FileParser.processFileList(pair.modelAdhocMap.get(model).incFileList)); 
+			
+			System.out.println( "include models in main file: processModel="+ model );
+			Dataset model_data_complete = new Dataset();			
+			
+			model_data_complete.add(pair.modelAdhocMap.get(model));
+			for (String includedFile : pair.modelAdhocMap.get(model).incFileList){
 				
-		//System.out.println("#############################: " + parser.modelMap.get("CVCWHEELING").include_file_scope);
-		//System.out.println("#############################: " + expected_modelMap.get("CVCWHEELING").include_file_scope);
-		Assert.assertEquals(parser.modelMap.get("CVCWHEELING").include_file_scope, expected_modelMap.get("CVCWHEELING").include_file_scope);
+				model_data_complete.add(pair.fileDataMap.get(includedFile));	
 
+			}
+			model_data_complete_map.put(model, model_data_complete);		
+		}		
+		
+		String outFolder ="test-csv\\TestConvertWreslToTable_processModelOneLevel_case1\\" ;
+		String expectedFolder ="src\\test\\expected\\TestConvertWreslToTable_processModelOneLevel_case1\\" ;
+		
+		Tools.deleteDir(outFolder);
+		
+		System.out.println( "in complete map: "+ model_data_complete_map.keySet() );
+		WriteCSV.dataset(model_data_complete_map.get("advanced"),mainFilePath,outFolder);	    
+				
+		Map<String, String> actual = Tools.readFilesFromDirAsMap(outFolder);
+		Map<String, String> expected = Tools.readFilesFromDirAsMap(expectedFolder);
+		
+		Assert.assertEquals(actual,expected);
 	}	
+
+	@Test(groups = { "WRESL_to_Table"  })
+	public void processModelOneLevel_case2() throws RecognitionException, IOException {
+ 
+		PairMap pair;
+		
+		String mainFilePath = "src\\test\\TestConvertWreslToTable_processModelOneLevel_case2.wresl";
+
+		pair = FileParser.processFile(mainFilePath); 
+		
+		/// process included files in this parsed file
+		pair.add(FileParser.processFileList(pair.fileDataMap.get(mainFilePath).incFileList)); 
+						
+		Map<String, Dataset> model_data_complete_map =  new HashMap<String, Dataset>();
+		
+		for ( String model : pair.modelAdhocMap.keySet()){
+			
+			/// process included files in this model
+			pair.add(FileParser.processFileList(pair.modelAdhocMap.get(model).incFileList)); 
+			
+			System.out.println( "include models in main file: processModel="+ model );
+			Dataset model_data_complete = new Dataset();			
+			
+			model_data_complete.add(pair.modelAdhocMap.get(model));
+			for (String includedFile : pair.modelAdhocMap.get(model).incFileList){
+				
+				model_data_complete.add(pair.fileDataMap.get(includedFile));	
+
+			}
+			model_data_complete_map.put(model, model_data_complete);		
+		}		
+		
+		String outFolder ="test-csv\\TestConvertWreslToTable_processModelOneLevel_case2\\" ;
+		String expectedFolder ="src\\test\\expected\\TestConvertWreslToTable_processModelOneLevel_case2\\" ;
+		
+		Tools.deleteDir(outFolder);
+		
+		System.out.println( "in complete map: "+ model_data_complete_map.keySet() );
+		WriteCSV.dataset(model_data_complete_map.get("advanced"),mainFilePath,outFolder);	    
+				
+		Map<String, String> actual = Tools.readFilesFromDirAsMap(outFolder);
+		Map<String, String> expected = Tools.readFilesFromDirAsMap(expectedFolder);
+		
+		Assert.assertEquals(actual,expected);
+	}	
+	
+	
+	@Test(groups = { "WRESL_to_Table"  })
+	public void processModelTwoLevel_case1() throws RecognitionException, IOException {
+ 
+		PairMap pair;
+		
+		String mainFilePath = "src\\test\\TestConvertWreslToTable_processModelTwoLevel_case1.wresl";
+
+		pair = FileParser.processFile(mainFilePath); 
+
+		System.out.println( " include files in test: twoLevel="+ pair.fileDataMap.keySet() );		
+		System.out.println( "include models in test: twoLevel="+ pair.modelAdhocMap.keySet() );
+		
+		/// process included files in this parsed file
+		pair.add(FileParser.processFileList(pair.fileDataMap.get(mainFilePath).incFileList)); 
+						
+		Map<String, Dataset> model_data_complete_map =  new HashMap<String, Dataset>();
+		
+		for ( String model : pair.modelAdhocMap.keySet()){
+			
+			/// process included files in this model
+			pair.add(FileParser.processFileList(pair.modelAdhocMap.get(model).incFileList)); 
+			
+			System.out.println( "include models in main file: processModel="+ model );
+			Dataset model_data_complete = new Dataset();			
+			
+			model_data_complete.add(pair.modelAdhocMap.get(model));
+			for (String includedFile : pair.modelAdhocMap.get(model).incFileList){
+				
+				model_data_complete.add(pair.fileDataMap.get(includedFile));	
+
+			}
+			model_data_complete_map.put(model, model_data_complete);		
+		}		
+		
+		String outFolder ="test-csv\\TestConvertWreslToTable_processModelTwoLevel_case1\\" ;
+		String expectedFolder ="src\\test\\expected\\TestConvertWreslToTable_processModelTwoLevel_case1\\" ;
+		
+		Tools.deleteDir(outFolder);
+		
+		System.out.println( "in complete map: "+ model_data_complete_map.keySet() );
+		WriteCSV.dataset(model_data_complete_map.get("advanced"),mainFilePath,outFolder);	    
+				
+		Map<String, String> actual = Tools.readFilesFromDirAsMap(outFolder);
+		Map<String, String> expected = Tools.readFilesFromDirAsMap(expectedFolder);
+		
+		Assert.assertEquals(actual,expected);
+	}	
+	
 	
 	
 }

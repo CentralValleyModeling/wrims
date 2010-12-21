@@ -1,0 +1,3 @@
+NAME,LHS,CASE,ORDER,CONDITION,EXPRESSION/RHS,LHS>RHS,LHS<RHS,FROM_WRESL_FILE
+b2action1Whi_1,C3_MIF,Action1WhiOn,1,int(B2Action1WhiOn)==1,minflow_C3b2,constrain,700.,src\test\TestConvertWresl_goalCase.wresl
+b2action1Whi_1,C3_MIF,Action1WhiOff,2,int(B2Action1WhiOn)==0,clear_min,constrain,0,src\test\TestConvertWresl_goalCase.wresl

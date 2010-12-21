@@ -119,8 +119,7 @@ goal_case[String id, String sc]
 			 //$g.gl.scope = $sc;
 			 //$g.gl.lhs = $lhs.text;
 			 if(inModel=="n") {  F.goalCase($id, $sc, $lhs.text, $g.gl);}
-	   		 else             { System.out.println("QQQQQQQQQQQQQQQ: "+ $g.gl.equalEva());
-	   		 			$model::M.goalCase($id, $sc, $lhs.text, $g.gl);}
+	   		 else             { $model::M.goalCase($id, $sc, $lhs.text, $g.gl);}
 				
 	     }
 	; 

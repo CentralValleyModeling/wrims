@@ -1,0 +1,3 @@
+NAME,TYPE,UNITS,OUTPUT,EXPRESSION,FROM_WRESL_FILE
+D419_swpC6,undefined,CFS,Y,D419_swp[monthlyweighted5],src\test\TestConvertWreslToTable_processModelOneLevel_case1.wresl
+QsacFth,flow-channel,CFS,Y,C_SacFea+D_SacFea,src\test\TestConvertWreslToTable_processModelOneLevel_case1.wresl
