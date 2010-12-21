@@ -2,7 +2,22 @@
        INCLUDE[local] 'src\test\TestConvertWresl_svarExpression.wresl'  
 		INCLUDE[local] 'src\test\TestConvertWresl_dvarNonStd.wresl' 
 	 define QsacFth {alias C_SacFea+D_SacFea  kind 'flow-channel' units 'cfs'}
-     define[local] D419_swpC6 {alias D419_swp[monthlyweighted5] units 'cfs'}  
+     define[local] D419_swpC6 {alias D419_swp[monthlyweighted5] units 'cfs'} 
+
+
+goal b2action1Whi_1 {
+  lhs C3_MIF
+  case Action1WhiOn {
+    condition   int(B2Action1WhiOn)==1
+    rhs     minflow_C3b2
+    lhs>rhs     constrain
+    lhs<rhs     penalty 700. }
+  case Action1WhiOff {
+    condition   int(B2Action1WhiOn)==0
+    rhs     clear_min
+    lhs>rhs     constrain
+    lhs<rhs     penalty 0 }
+}
 		
      }
 	 

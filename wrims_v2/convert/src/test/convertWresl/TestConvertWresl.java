@@ -597,6 +597,50 @@ public class TestConvertWresl {
 					
 		Assert.assertEquals(1,2);
 	}	
+
+	@Test(groups = { "WRESL_elements" })
+	public void processModelTwoLevel() throws RecognitionException, IOException {
+ 
+		PairMap pair;
+		
+		String mainFilePath = "src\\test\\TestConvertWresl_processModelTwoLevel.wresl";
+
+		pair = FileParser.processFile(mainFilePath); 
+
+		System.out.println( " include files in test: processModel="+ pair.fileDataMap.keySet() );		
+		System.out.println( "include models in test: processModel="+ pair.modelAdhocMap.keySet() );
+		
+		/// the include file list is empty
+		pair.add(FileParser.processFileList(pair.fileDataMap.get(mainFilePath).incFileList)); 
+						
+		Map<String, Dataset> model_data_complete_map =  new HashMap<String, Dataset>();
+		
+		for ( String model : pair.modelAdhocMap.keySet()){
+			
+			/// the model include file list is not empty
+			pair.add(FileParser.processFileList(pair.modelAdhocMap.get(model).incFileList)); 
+			
+			System.out.println( "include models in main file: processModel="+ model );
+			Dataset model_data_complete = new Dataset();
+			model_data_complete.add(pair.modelAdhocMap.get(model));
+			for (String fileInModel : pair.modelAdhocMap.get(model).incFileList){
+				
+				System.out.println( "include files in this model: processModel="+ fileInModel );
+				System.out.println( "include files in this model: processModel="+ pair.fileDataMap.keySet() );
+				model_data_complete.add(pair.fileDataMap.get(fileInModel));	
+				System.out.println( "@@@@@@@@@@@@@@@@@@@");
+			}
+			model_data_complete_map.put(model, model_data_complete);		
+		}
+		
+		
+		String outFolder ="test-csv-process-two-level\\" ;
+		
+		System.out.println( "in complete map: "+ model_data_complete_map.keySet() );
+		WriteCSV.dataset(model_data_complete_map.get("advanced"),mainFilePath,outFolder);	    
+					
+		Assert.assertEquals(1,2);
+	}	
 	
 	@Test(groups = { "WRESL_elements" })
 	public void svarConst() throws RecognitionException, IOException {

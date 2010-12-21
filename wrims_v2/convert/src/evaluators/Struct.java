@@ -191,8 +191,13 @@ public class Struct {
 			var_all.put(goalName, "goal_cases");
 			
 			/// better data structure
+
+			gl.scope = scope;
+			gl.lhs = lhs;
 			gMap.put(goalName, gl);
+			gList.add(goalName);
 			
+			System.out.println("QQQQQQQQQQQQQQQ: "+ gMap.get(goalName).equalEva());
 			
 			}
 	}	
