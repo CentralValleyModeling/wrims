@@ -84,7 +84,7 @@ public class TestConvertWreslToTable {
 
 			String outFolder = "test-csv\\TestConvertWreslToTable_processModelOneLevel_case1\\"
 					+ model;
-			String expectedFolder = "src\\test\\expected\\TestConvertWreslToTable_processModelOneLevel_case1\\";
+			String expectedFolder = "src\\test\\expected\\TestConvertWreslToTable_processModelOneLevel_case1\\" + model;
 
 			Tools.deleteDir(outFolder);
 
