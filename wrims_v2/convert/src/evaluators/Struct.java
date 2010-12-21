@@ -6,67 +6,62 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class Struct {
 
-	public String currentFilePath;	
-	
-	/// models appear in this parsed file
-	public ArrayList<String> model_list = new ArrayList<String>();	
+	public String currentFilePath;
+
+	// / models appear in this parsed file
+	public ArrayList<String> model_list = new ArrayList<String>();
 	public ArrayList<String> error_model_redefined = new ArrayList<String>();
 
-	/// sequence
-	public Map<Integer, String> model_order_map = new HashMap<Integer, String>();	
+	// / sequence
+	public Map<Integer, String> model_order_map = new HashMap<Integer, String>();
 	public ArrayList<Integer> error_model_order_redefined = new ArrayList<Integer>();
-	
+
 	public ArrayList<String> sequence_list = new ArrayList<String>();
 	public ArrayList<String> error_sequence_redefined = new ArrayList<String>();
 
-	
-	/// includeFile data structure
-	public IncludeFile incFile; 
-	public ArrayList<String> incFileList = new ArrayList<String>(); 
-	public Map<String,IncludeFile>  incFileMap = new HashMap<String,IncludeFile>(); 
+	// / includeFile data structure
+	public IncludeFile incFile;
+	public ArrayList<String> incFileList = new ArrayList<String>();
+	public Map<String, IncludeFile> incFileMap = new HashMap<String, IncludeFile>();
 	public ArrayList<String> error_includeFile_redefined = new ArrayList<String>();
-	
-	/// svar data structure
-	public Svar sv; 
-	public ArrayList<String> svList = new ArrayList<String>(); 
-	public Map<String,Svar> svMap = new HashMap<String,Svar>(); 
 
-	/// dvar data structure
-	public Dvar dv; 
-	public ArrayList<String> dvList = new ArrayList<String>(); 
-	public Map<String,Dvar> dvMap = new HashMap<String,Dvar>(); 
-	
-	/// alias data structure
-	public Alias as; 
-	public ArrayList<String> asList = new ArrayList<String>(); 
-	public Map<String,Alias> asMap = new HashMap<String,Alias>(); 
+	// / svar data structure
+	public Svar sv;
+	public ArrayList<String> svList = new ArrayList<String>();
+	public Map<String, Svar> svMap = new HashMap<String, Svar>();
 
-	/// goal data structure
-	public Goal gl; 
-	public ArrayList<String> gList = new ArrayList<String>(); 
-	public Map<String,Goal>  gMap = new HashMap<String,Goal>(); 	
-	
+	// / dvar data structure
+	public Dvar dv;
+	public ArrayList<String> dvList = new ArrayList<String>();
+	public Map<String, Dvar> dvMap = new HashMap<String, Dvar>();
 
-	/// errors	
+	// / alias data structure
+	public Alias as;
+	public ArrayList<String> asList = new ArrayList<String>();
+	public Map<String, Alias> asMap = new HashMap<String, Alias>();
+
+	// / goal data structure
+	public Goal gl;
+	public ArrayList<String> gList = new ArrayList<String>();
+	public Map<String, Goal> gMap = new HashMap<String, Goal>();
+
+	// / errors
 	public Map<String, String> error_var_redefined = new HashMap<String, String>();
 
-	
 	public Map<String, String> svar_expression = new HashMap<String, String>();
-
 
 	public Map<String, ArrayList<String>> dvar_nonstd = new HashMap<String, ArrayList<String>>();
 	public Map<String, ArrayList<String>> dvar_std = new HashMap<String, ArrayList<String>>();
 	public Map<String, ArrayList<String>> dvar_alias = new HashMap<String, ArrayList<String>>();
 
-	public Map<String, ArrayList<String>> svar_table_text = new HashMap<String, ArrayList<String>>(); 
-	public Map<String, ArrayList<String>> svar_table = new HashMap<String, ArrayList<String>>();	
+	public Map<String, ArrayList<String>> svar_table_text = new HashMap<String, ArrayList<String>>();
+	public Map<String, ArrayList<String>> svar_table = new HashMap<String, ArrayList<String>>();
 	public Map<String, ArrayList<String>> svar_dss = new HashMap<String, ArrayList<String>>();
 	public Map<String, ArrayList<String>> svar_sum = new HashMap<String, ArrayList<String>>();
 
-	/// variable, scope, and type, units
+	// / variable, scope, and type, units
 	public Map<String, String> var_all = new HashMap<String, String>();
 	public Map<String, String> svar_scope = new HashMap<String, String>();
 	public Map<String, String> svar_type = new HashMap<String, String>();
@@ -74,28 +69,26 @@ public class Struct {
 	public Map<String, String> goal_scope = new HashMap<String, String>();
 	public Map<String, String> include_file_scope = new HashMap<String, String>();
 
-	public Map<String, ArrayList<String>> svar_type_units = new HashMap<String, ArrayList<String>>(); 
-	public Map<String, ArrayList<String>> dvar_type_units = new HashMap<String, ArrayList<String>>(); 
+	public Map<String, ArrayList<String>> svar_type_units = new HashMap<String, ArrayList<String>>();
+	public Map<String, ArrayList<String>> dvar_type_units = new HashMap<String, ArrayList<String>>();
 
-	
-	/// models in a file
+	// / models in a file
 
-	
-	/// svar_cases
+	// / svar_cases
 	public Map<String, ArrayList<String>> svar_cases = new HashMap<String, ArrayList<String>>();
 	public Map<String, ArrayList<String>> svar_conditions = new HashMap<String, ArrayList<String>>();
 	public Map<String, Map<String, ArrayList<String>>> svar_map_case_content = new HashMap<String, Map<String, ArrayList<String>>>();
 
-	/// goal
+	// / goal
 	public Map<String, String> goal_simple = new HashMap<String, String>();
 	public Map<String, ArrayList<String>> goal_no_case = new HashMap<String, ArrayList<String>>();
-	
-	/// goal_cases
+
+	// / goal_cases
 	public Map<String, String> goal_lhs = new HashMap<String, String>();
 	public Map<String, ArrayList<String>> goal_cases = new HashMap<String, ArrayList<String>>();
 	public Map<String, ArrayList<String>> goal_conditions = new HashMap<String, ArrayList<String>>();
 	public Map<String, Map<String, ArrayList<String>>> goal_map_case_content = new HashMap<String, Map<String, ArrayList<String>>>();
-	
+
 	private static String[] keys = { "define", "goal" };
 	private static String[] mons = { "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
 			"JUL", "AUG", "SEP", "OCT", "NOV", "DEC" };
@@ -104,43 +97,42 @@ public class Struct {
 
 	// public static List<String> reserved_words = new ArrayList<String>() {{
 	// addAll(r_keys); addAll(r_mons); }};
-	
-	///dummy var
+
+	// /dummy var
 	private ArrayList<String> list;
 
-	
-//	public Struct(String currentFilePath){
-//		this.currentFilePath = currentFilePath;
-//	}
-	
-	public void modelList(String name ) {
+	// public Struct(String currentFilePath){
+	// this.currentFilePath = currentFilePath;
+	// }
+
+	public void modelList(String name) {
 		if (model_list.contains(name)) {
 			error_model_redefined.add(name);
-		} else {				
-				//file_include_file.get(name).add(filePath);
-				model_list.add(name);
-				var_all.put(name, "model");
+		} else {
+			// file_include_file.get(name).add(filePath);
+			model_list.add(name);
+			var_all.put(name, "model");
 		}
-	}		
-	
-	public void includeFile(String filePath, String scope ) {
+	}
+
+	public void includeFile(String filePath, String scope) {
 		if (incFileList.contains(filePath)) {
 			error_includeFile_redefined.add(filePath);
-			
-		} else {				
-				
-			///clearer data structure
+
+		} else {
+
+			// /clearer data structure
 			incFile = new IncludeFile();
-			
+
 			incFile.scope = scope;
 			incFileList.add(filePath);
-			
-			incFileMap.put( filePath, incFile);
-				
+
+			incFileMap.put(filePath, incFile);
+
 		}
-	}	
-	
-	public void goalSimple( String name, String scope, String content) {
+	}
+
+	public void goalSimple(String name, String scope, String content) {
 		if (var_all.containsKey(name)) {
 			// System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "goal_simple");
@@ -148,309 +140,289 @@ public class Struct {
 			goal_scope.put(name, scope);
 			goal_simple.put(name, content);
 			var_all.put(name, "goal_simple");
-			
-			/// clearer data structure
+
+			// / clearer data structure
 			gl = new Goal();
-			gl.scope=scope;
-			//gl.lhs="in expression";
+			gl.scope = scope;
+			// gl.lhs="in expression";
 			gl.caseCondition.add("always");
 			gl.caseName.add("default");
 			gl.caseExpression.add(content);
 			gMap.put(name, gl);
-			gList.add(name);						
+			gList.add(name);
 		}
 	}
-	
-	public void goalNoCase(String name, String scope, String lhs, String rhs, String lhs_gt_rhs, String lhs_lt_rhs) {
+
+	public void goalNoCase(String name, String scope, String lhs, String rhs,
+			String lhs_gt_rhs, String lhs_lt_rhs) {
 		if (var_all.containsKey(name)) {
 			// System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "goal_no_case");
 		} else {
-			//list.add(0,"lhs");list.add(1,lhs);
-			//goal_scope.put(name, scope);
-			//goal_no_case.put(name, list);
+			// list.add(0,"lhs");list.add(1,lhs);
+			// goal_scope.put(name, scope);
+			// goal_no_case.put(name, list);
 			var_all.put(name, "goal_no_case");
-			
-			/// clearer data structure
+
+			// / clearer data structure
 			gl = new Goal();
-			gl.scope=scope;
-			gl.lhs=lhs;
+			gl.scope = scope;
+			gl.lhs = lhs;
 			gl.caseCondition.add("always");
 			gl.caseName.add("default");
 			gl.caseExpression.add(rhs);
 			gl.case_lhs_gt_rhs.add(lhs_gt_rhs);
-			gl.case_lhs_lt_rhs.add(lhs_lt_rhs);	
-			gl.fromWresl= currentFilePath;
+			gl.case_lhs_lt_rhs.add(lhs_lt_rhs);
+			gl.fromWresl = currentFilePath;
 			gMap.put(name, gl);
-			gList.add(name);				
-			
-			
+			gList.add(name);
+
 		}
 	}
 
 	public void goalCase(String goalName, String scope, String lhs, Goal gl) {
-		if (var_all.containsKey(goalName)){
-			//System.out.println("error... variable redefined: " + $i.text);
+		if (var_all.containsKey(goalName)) {
+			// System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(goalName, "goal_cases");
-			}
-			else {
+		} else {
 			goal_scope.put(goalName, scope);
 			var_all.put(goalName, "goal_cases");
-			
-			/// better data structure
+
+			// / better data structure
 
 			gl.scope = scope;
 			gl.lhs = lhs;
-			gl.fromWresl= currentFilePath;
+			gl.fromWresl = currentFilePath;
 			gMap.put(goalName, gl);
 			gList.add(goalName);
-			
-			}
-	}	
 
-	public void svarCase(String svarName, String scope, Svar sv, ArrayList<String> caseName, ArrayList<String> condition, ArrayList<String> expression, Map<String, ArrayList<String>> caseContent) {
+		}
+	}
 
-		if (var_all.containsKey(svarName)){
-			//System.out.println("error... variable redefined: " + $i.text);
+	public void svarCase(String svarName, String scope, Svar sv,
+			ArrayList<String> caseName, ArrayList<String> condition,
+			ArrayList<String> expression,
+			Map<String, ArrayList<String>> caseContent) {
+
+		if (var_all.containsKey(svarName)) {
+			// System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(svarName, "svar_cases");
-			}
-			else {
-		    svar_scope.put(svarName, scope);
+		} else {
+			svar_scope.put(svarName, scope);
 			svar_cases.put(svarName, caseName);
 			svar_conditions.put(svarName, condition);
 			svar_map_case_content.put(svarName, caseContent);
 			var_all.put(svarName, "svar_cases");
-			
 
-			
-            /////////////////////
+			// ///////////////////
 			sv.scope = scope;
-			sv.fromWresl= currentFilePath;
+			sv.fromWresl = currentFilePath;
 			svMap.put(svarName, sv);
 			svList.add(svarName);
-			
-//			svarProps = new SvarProps();
-//			
-//			for ( int i = 0; i< caseName.size();i++) {
-//			
-//			svarProps.caseName=caseName.get(i);
-//			svarProps.caseCondition=condition.get(i);
-//			svarProps.caseExpression=expression.get(i);
-//
-//			}
-//			svarPropsList = new ArrayList<SvarProps>();
-//			svarPropsList.add(svarProps);
-//			svarMap.put(svarName, svarPropsList);
-//			
-			}
-	}		
-	
+
+		}
+	}
+
 	public void svarExpression(String svarName, String scope, String expression) {
-		if (var_all.containsKey(svarName)){
-			//System.out.println("error... variable redefined: " + $i.text);
+		if (var_all.containsKey(svarName)) {
+			// System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(svarName, "svar_expression");
-			}
-			else {
-			svar_scope.put(svarName, scope);	
+		} else {
+			svar_scope.put(svarName, scope);
 			svar_expression.put(svarName, expression);
 			var_all.put(svarName, "svar_expression");
-			
-			
-			/// clearer data structure
-			
+
+			// / clearer data structure
+
 			String caseName = "default";
 			String condition = "always";
-			
+
 			sv = new Svar();
 			sv.scope = scope;
 			sv.caseName.add(caseName);
 			sv.caseCondition.add(condition);
 			sv.caseExpression.add(expression);
-			sv.fromWresl= currentFilePath;
-			
+			sv.fromWresl = currentFilePath;
+
 			svMap.put(svarName, sv);
 			svList.add(svarName);
-			}
-			
-	}	
-	
-	public void svarSum(String name, String scope, ArrayList<String> content, String sumStr) {
-		if (var_all.containsKey(name)){
-			//System.out.println("error... variable redefined: " + $i.text);
+		}
+
+	}
+
+	public void svarSum(String name, String scope, ArrayList<String> content,
+			String sumStr) {
+		if (var_all.containsKey(name)) {
+			// System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "svar_sum");
-			}
-			else {
+		} else {
 			svar_scope.put(name, scope);
 			svar_sum.put(name, content);
 			var_all.put(name, "svar_sum");
-			
+
 			sv = new Svar();
 			sv.scope = scope;
 			sv.caseName.add("default");
 			sv.caseCondition.add("always");
 			sv.caseExpression.add(sumStr);
-			sv.fromWresl= currentFilePath;
-			
+			sv.fromWresl = currentFilePath;
+
 			svMap.put(name, sv);
 			svList.add(name);
-			
-			
-			}
-	}	
 
-	public void svarTable(String name, String scope, ArrayList<String> content, String sqlStr) {
-		if (var_all.containsKey(name)){
-			//System.out.println("error... variable redefined: " + $i.text);
+		}
+	}
+
+	public void svarTable(String name, String scope, ArrayList<String> content,
+			String sqlStr) {
+		if (var_all.containsKey(name)) {
+			// System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "svar_table");
-			}
-			else {
-				var_all.put(name, "svar_table");
-				svar_scope.put(name, scope);	
-			
+		} else {
+			var_all.put(name, "svar_table");
+			svar_scope.put(name, scope);
+
 			list = new ArrayList<String>();
-			//list.add(scope);
+			// list.add(scope);
 			list.addAll(content);
 			svar_table.put(name, list);
 
 			list = new ArrayList<String>();
-			//list.add(scope);
+			// list.add(scope);
 			list.add(sqlStr);
 			svar_table_text.put(name, list);
-			
-			/// clearer data structure
+
+			// / clearer data structure
 			sv = new Svar();
-			sv.scope=scope;
-			sv.format="lookup_table";
+			sv.scope = scope;
+			sv.format = "lookup_table";
 			sv.caseCondition.add("always");
 			sv.caseName.add("default");
 			sv.caseExpression.add(sqlStr);
-			sv.fromWresl= currentFilePath;
+			sv.fromWresl = currentFilePath;
 			svMap.put(name, sv);
 			svList.add(name);
-			
 
-			}
-	}		
+		}
+	}
 
 	public void svarDSS(String name, String scope, String kind, String units) {
-		if (var_all.containsKey(name)){
-			//System.out.println("error... variable redefined: " + $i.text);
+		if (var_all.containsKey(name)) {
+			// System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "svar_dss");
-			}
-			else {
+		} else {
 			svar_scope.put(name, scope);
 			svar_type.put(name, "timeseries");
-				list = new ArrayList<String>();
-				list.add(kind);
-				list.add(units);	
+			list = new ArrayList<String>();
+			list.add(kind);
+			list.add(units);
 			svar_dss.put(name, list);
 			var_all.put(name, "svar_dss");
 
-			/// clearer data structure
+			// / clearer data structure
 			Svar sv = new Svar();
-			sv.scope=scope;
-			sv.kind=kind;
-			sv.units=units;
-			sv.format="timeseries";
+			sv.scope = scope;
+			sv.kind = kind;
+			sv.units = units;
+			sv.format = "timeseries";
 			sv.caseCondition.add("always");
 			sv.caseName.add("default");
 			sv.caseExpression.add("timeseries");
-			sv.fromWresl= currentFilePath;
+			sv.fromWresl = currentFilePath;
 			svMap.put(name, sv);
 			svList.add(name);
-			
-			}
-	}		
+
+		}
+	}
 
 	public void dvarStd(String name, String scope, String kind, String units) {
-		if (var_all.containsKey(name)){
-			//System.out.println("error... variable redefined: " + $i.text);
+		if (var_all.containsKey(name)) {
+			// System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "dvar_std");
-			}
-			else {
-			dvar_scope.put(name, scope);		
-				list = new ArrayList<String>();
-				//list.add(scope);
-				list.add(kind);
-				list.add(units);
-				list.add("0");
-				list.add("unbounded");
+		} else {
+			dvar_scope.put(name, scope);
+			list = new ArrayList<String>();
+			// list.add(scope);
+			list.add(kind);
+			list.add(units);
+			list.add("0");
+			list.add("unbounded");
 			dvar_std.put(name, list);
 			var_all.put(name, "dvar_std");
-			
-			
-			/// better data structure
+
+			// / better data structure
 			dv = new Dvar();
-			dv.scope=scope;
-			dv.kind=kind;
-			dv.units=units;
-			dv.lowerBound=Parameters.dv_lowerBound;
-			dv.upperBound=Parameters.dv_upperBound;	
-			dv.fromWresl= currentFilePath;
+			dv.scope = scope;
+			dv.kind = kind;
+			dv.units = units;
+			dv.lowerBound = Parameters.dv_lowerBound;
+			dv.upperBound = Parameters.dv_upperBound;
+			dv.fromWresl = currentFilePath;
 			dvMap.put(name, dv);
 			dvList.add(name);
-			
-			}
-	}		
 
-	public void dvarAlias(String name, String scope, String kind, String units, String alias) {
-		if (var_all.containsKey(name)){
-			//System.out.println("error... variable redefined: " + $i.text);
+		}
+	}
+
+	public void dvarAlias(String name, String scope, String kind, String units,
+			String alias) {
+		if (var_all.containsKey(name)) {
+			// System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "dvar_alias");
-			}
-			else {
-				dvar_scope.put(name, scope);	
-				list = new ArrayList<String>();
-				list.add(kind);
-				list.add(units);
-				list.add(alias);
+		} else {
+			dvar_scope.put(name, scope);
+			list = new ArrayList<String>();
+			list.add(kind);
+			list.add(units);
+			list.add(alias);
 			dvar_alias.put(name, list);
 			var_all.put(name, "dvar_alias");
-			
-			/// better data structure
-			as = new Alias();
-			as.scope=scope;
-			if (kind!=null) as.kind=kind;
-			if (units!=null) as.units=units;
-			as.expression=alias;
-			as.fromWresl= currentFilePath;
-			asMap.put(name, as);
-			asList.add(name);			
-			
-			
-			}
-	}	
 
-	public void dvarNonStd(String name, String scope, String kind, String units, ArrayList<String> content,
-			               String lowerBound, String upperBound) {
-		if (var_all.containsKey(name)){
-			//System.out.println("error... variable redefined: " + $i.text);
+			// / better data structure
+			as = new Alias();
+			as.scope = scope;
+			if (kind != null)
+				as.kind = kind;
+			if (units != null)
+				as.units = units;
+			as.expression = alias;
+			as.fromWresl = currentFilePath;
+			asMap.put(name, as);
+			asList.add(name);
+
+		}
+	}
+
+	public void dvarNonStd(String name, String scope, String kind,
+			String units, ArrayList<String> content, String lowerBound,
+			String upperBound) {
+		if (var_all.containsKey(name)) {
+			// System.out.println("error... variable redefined: " + $i.text);
 			error_var_redefined.put(name, "dvar_nonstd");
-			}
-			else {
-				dvar_scope.put(name, scope);	
-				list = new ArrayList<String>();
-				//list.add(scope);
-				list.add(kind);
-				list.add(units);
-				list.addAll(content);
+		} else {
+			dvar_scope.put(name, scope);
+			list = new ArrayList<String>();
+			// list.add(scope);
+			list.add(kind);
+			list.add(units);
+			list.addAll(content);
 			dvar_nonstd.put(name, list);
 			var_all.put(name, "dvar_nonstd");
-			
-			/// better data structure
+
+			// / better data structure
 			dv = new Dvar();
-			dv.scope=scope;
-			dv.kind=kind;
-			dv.units=units;
-			dv.lowerBound=lowerBound;
-			dv.upperBound=upperBound;
-			dv.fromWresl= currentFilePath;
+			dv.scope = scope;
+			dv.kind = kind;
+			dv.units = units;
+			dv.lowerBound = lowerBound;
+			dv.upperBound = upperBound;
+			dv.fromWresl = currentFilePath;
 			dvMap.put(name, dv);
 			dvList.add(name);
-			
-			}
-	}		
-	
+
+		}
+	}
+
 	public void sequenceOrder(String sequenceName, String order,
 			String modelName) {
 
