@@ -70,23 +70,7 @@ public class Tools {
 		return new PrintWriter(new BufferedWriter(new FileWriter(f)));
 	}
 
-	public static Map<String, Dataset> convertStructMapToDataMap(
-			Map<String, Struct> s) {
 
-		Map<String, Dataset> resultMap = new HashMap<String, Dataset>();
-		Dataset dataset;
-
-		if (!s.isEmpty()) {
-			for (String key : s.keySet()) {
-				dataset = new Dataset();
-				dataset.addStruct(s.get(key));
-				resultMap.put(key, dataset);
-			}
-		}
-
-		return resultMap;
-
-	}
 
 	public static boolean deleteDir(String dirString) {
 		File dir = new File(dirString);
@@ -102,5 +86,68 @@ public class Tools {
 		}
 		return dir.delete();
 	}
+	
+	public static Dataset convertStructToDataset(Object obj) {
+		
+		Dataset out = new Dataset();
+		Struct s = (Struct)obj;
 
+		if (!s.incFileList.isEmpty()) {
+			out.incFileList.addAll(s.incFileList);
+			if (!s.incFileList_global.isEmpty()) {out.incFileList_global.addAll(s.incFileList_global);}
+			if (!s.incFileList_local.isEmpty()) {out.incFileList_local.addAll(s.incFileList_local);}
+			out.incFileMap.putAll(s.incFileMap);
+		}
+
+		if (!s.svList.isEmpty()) {
+			out.svList.addAll(s.svList);
+			if (!s.svList_global.isEmpty()) {out.svList_global.addAll(s.svList_global);}
+			if (!s.svList_local.isEmpty()) {out.svList_local.addAll(s.svList_local);}
+			out.svMap.putAll(s.svMap);
+		}
+
+		if (!s.dvList.isEmpty()) {
+			out.dvList.addAll(s.dvList);
+			if (!s.dvList_global.isEmpty()) {out.dvList_global.addAll(s.dvList_global);}
+			if (!s.dvList_local.isEmpty()) {out.dvList_local.addAll(s.dvList_local);}
+			out.dvMap.putAll(s.dvMap);
+		}
+		if (!s.asList.isEmpty()) {
+			out.asList.addAll(s.asList);
+			if (!s.asList_global.isEmpty()) {out.asList_global.addAll(s.asList_global);}
+			if (!s.asList_local.isEmpty()) {out.asList_local.addAll(s.asList_local);}
+			out.asMap.putAll(s.asMap);
+		}
+
+		if (!s.gList.isEmpty()) {
+			out.gList.addAll(s.gList);
+			if (!s.gList_global.isEmpty()) {out.gList_global.addAll(s.gList_global);}
+			if (!s.gList_local.isEmpty()) {out.gList_local.addAll(s.gList_local);}
+			out.gMap.putAll(s.gMap);
+		}
+
+		if (!s.model_list.isEmpty()) {
+			out.model_list.addAll(s.model_list);
+			out.model_order_map.putAll(s.model_order_map);
+		}
+
+		return out;
+	}
+
+	public static Map<String,Dataset> convertStructMapToDatasetMap(Map<String,Struct> s) {
+		
+		Map<String,Dataset> out = new HashMap<String, Dataset> ();
+		
+		for (String key : s.keySet()) {
+			
+			Dataset d = new Dataset();
+			d = convertStructToDataset(s.get(key));
+			out.put(key, d);
+			
+		}
+ 
+		return out;
+	}
+	
+	
 }

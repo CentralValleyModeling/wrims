@@ -88,7 +88,7 @@ public class TestConvertWreslToTable {
 
 			Tools.deleteDir(outFolder);
 
-			WriteCSV.dataset(model_data_complete_map.get(model), outFolder);
+			WriteCSV.dataset(model_data_complete_map.get(model), "all", outFolder);
 			System.out.println( "outFolder="+ outFolder );
 			Map<String, String> actual = Tools.readFilesFromDirAsMap(outFolder);
 

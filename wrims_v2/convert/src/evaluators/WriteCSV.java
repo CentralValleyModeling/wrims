@@ -19,7 +19,7 @@ public class WriteCSV {
 	  public static String alias_header ="NAME,TYPE,UNITS,OUTPUT,EXPRESSION,FROM_WRESL_FILE";
 	  public static String goal_header = "NAME,LHS,CASE,ORDER,CONDITION,EXPRESSION/RHS,LHS>RHS,LHS<RHS,FROM_WRESL_FILE";
 	  
-	  public static void dataset(Dataset ds, String outFolder) throws IOException {
+	  public static void dataset(Dataset ds, String scope, String outFolder) throws IOException {
 		  
 		  PrintWriter out_sv = Tools.openFile(outFolder,"svar.csv");
 		  PrintWriter out_dv = Tools.openFile(outFolder,"dvar.csv");
@@ -31,10 +31,22 @@ public class WriteCSV {
 		  out_goal.print(WriteCSV.goal_header+"\n");
 		  out_alias.print(WriteCSV.alias_header+"\n");
 		  
-		  svar(ds.svMap, out_sv );
-		  dvar(ds.dvMap, out_dv );
-		  goal(ds.gMap, out_goal );
-		  alias(ds.asMap, out_alias );
+		  if (scope == "all") {
+		  svar(ds.svMap, ds.svList, out_sv );
+		  dvar(ds.dvMap, ds.dvList, out_dv );
+		  goal(ds.gMap,  ds.gList, out_goal );
+		  alias(ds.asMap, ds.asList, out_alias );
+		  } else if (scope == "global") {
+			  svar(ds.svMap, ds.svList_global, out_sv );
+			  dvar(ds.dvMap, ds.dvList_global, out_dv );
+			  goal(ds.gMap,  ds.gList_global, out_goal );
+			  alias(ds.asMap, ds.asList_global, out_alias );
+		  } else if (scope == "local") {
+			  svar(ds.svMap, ds.svList_local, out_sv );
+			  dvar(ds.dvMap, ds.dvList_local, out_dv );
+			  goal(ds.gMap,  ds.gList_local, out_goal );
+			  alias(ds.asMap, ds.asList_local, out_alias );
+		  } else { System.out.println("WriteCSV scope error!!!" ); }
 		  
 		  out_sv.close();
 		  out_dv.close();
@@ -42,9 +54,9 @@ public class WriteCSV {
 		  out_alias.close();
 	  };
 	  
-	  public static void svar(Map<String,Svar> sMap, PrintWriter out) {
+	  public static void svar(Map<String,Svar> sMap, ArrayList<String> list ,PrintWriter out) {
 		    
-			List<String> keys = new ArrayList<String> (sMap.keySet());
+			List<String> keys = list;
 			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
 		    //List<SvarProps> svarPropsList;
 			
@@ -77,9 +89,9 @@ public class WriteCSV {
 			}
 	  };	  
 
-	public static void dvar(Map<String,Dvar> dMap, PrintWriter out) {
+	public static void dvar(Map<String,Dvar> dMap, ArrayList<String> list ,PrintWriter out) {
 		    
-			List<String> keys = new ArrayList<String> (dMap.keySet());
+			List<String> keys = list;
 			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
 			
 		    for (String k: keys ){
@@ -98,9 +110,9 @@ public class WriteCSV {
 		    	}
 	  };
 
-	public static void alias(Map<String,Alias> asMap, PrintWriter out) {
+	public static void alias(Map<String,Alias> asMap, ArrayList<String> list ,PrintWriter out) {
 		    
-			List<String> keys = new ArrayList<String> (asMap.keySet());
+			List<String> keys = list;
 			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
 			
 		    for (String k: keys ){
@@ -119,9 +131,9 @@ public class WriteCSV {
 		    	}
 	  };		  
 	  
-	  public static void goal(Map<String,Goal> gMap, PrintWriter out) {
+	  public static void goal(Map<String,Goal> gMap, ArrayList<String> list ,PrintWriter out) {
 		    
-			List<String> keys = new ArrayList<String> (gMap.keySet());
+			List<String> keys = list;
 			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
 		    //List<SvarProps> svarPropsList;
 			
