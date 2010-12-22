@@ -54,14 +54,19 @@ public class TestConvertWreslToTable {
 		pair = FileParser.processFile(mainFilePath); 
 		
 		/// process included files in this parsed file
-		pair.add(FileParser.processFileList(pair.fileDataMap.get(mainFilePath).incFileList)); 
+		pair.add(FileParser.processFileList(pair.fileDataMap.get(mainFilePath))); 
+		
+
+		
+		
+		
 						
 		Map<String, Dataset> model_data_complete_map =  new HashMap<String, Dataset>();
 		
 		for ( String model : pair.modelAdhocMap.keySet()){
 			
 			/// process included files in this model
-			pair.add(FileParser.processFileList(pair.modelAdhocMap.get(model).incFileList)); 
+			pair.add(FileParser.processFileList(pair.modelAdhocMap.get(model))); 
 			
 			System.out.println( "include models in main file: processModel="+ model );
 			Dataset model_data_complete = new Dataset();			
@@ -88,7 +93,7 @@ public class TestConvertWreslToTable {
 
 			Tools.deleteDir(outFolder);
 
-			WriteCSV.dataset(model_data_complete_map.get(model), "all", outFolder);
+			WriteCSV.dataset(model_data_complete_map.get(model), "global", outFolder);
 			System.out.println( "outFolder="+ outFolder );
 			Map<String, String> actual = Tools.readFilesFromDirAsMap(outFolder);
 

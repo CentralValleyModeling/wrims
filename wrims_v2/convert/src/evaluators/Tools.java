@@ -86,6 +86,62 @@ public class Tools {
 		}
 		return dir.delete();
 	}
+
+	public static Map<String, Dataset> convertDatasetMapToLocal(Map<String, Dataset> s) {
+		
+		Map<String, Dataset> out = new HashMap<String, Dataset>();
+		
+		for (String key : s.keySet()){
+			
+			out.put(key, convertDatasetToLocal(s.get(key)));
+			
+		}
+		
+		return out;
+			
+	}
+	
+	public static Dataset convertDatasetToLocal(Dataset s) {
+		
+		Dataset out = new Dataset();
+
+
+		if (!s.incFileList.isEmpty()) {
+			out.incFileList.addAll(s.incFileList);
+			out.incFileList_local.addAll(s.incFileList_local);
+			out.incFileMap.putAll(s.incFileMap);
+		}
+
+		if (!s.svList.isEmpty()) {
+			out.svList.addAll(s.svList);
+			out.svList_local.addAll(s.svList_local);
+			out.svMap.putAll(s.svMap);
+		}
+
+		if (!s.dvList.isEmpty()) {
+			out.dvList.addAll(s.dvList);
+			out.dvList_local.addAll(s.dvList_local);
+			out.dvMap.putAll(s.dvMap);
+		}
+		if (!s.asList.isEmpty()) {
+			out.asList.addAll(s.asList);
+			out.asList_local.addAll(s.asList_local);
+			out.asMap.putAll(s.asMap);
+		}
+
+		if (!s.gList.isEmpty()) {
+			out.gList.addAll(s.gList);
+			out.gList_local.addAll(s.gList_local);
+			out.gMap.putAll(s.gMap);
+		}
+
+		if (!s.model_list.isEmpty()) {
+			out.model_list.addAll(s.model_list);
+			out.model_order_map.putAll(s.model_order_map);
+		}
+
+		return out;
+	}	
 	
 	public static Dataset convertStructToDataset(Object obj) {
 		
