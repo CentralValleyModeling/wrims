@@ -266,8 +266,8 @@ dvar_std[String id, String sc]
 
 dvar_alias[String id, String sc]
 	:	'{' alias kind? units'}' { 
-			     if(inModel=="n") {         F.dvarAlias($id, $sc, $kind.str, $units.str, $alias.str);}
-	             else             { $model::M.dvarAlias($id, $sc, $kind.str, $units.str, $alias.str);}
+			     if(inModel=="n") {         F.alias($id, $sc, $kind.str, $units.str, $alias.str);}
+	             else             { $model::M.alias($id, $sc, $kind.str, $units.str, $alias.str);}
 	};
 	
 dvar_nonstd [String id, String sc]

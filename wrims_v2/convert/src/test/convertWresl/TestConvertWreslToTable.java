@@ -54,53 +54,72 @@ public class TestConvertWreslToTable {
 		pairMain = FileParser.processFile(mainFilePath,"global"); 
 		
 		/// process included files in this main file
-		pairMain.add(FileParser.processFileList(pairMain.fileDataMap.get(mainFilePath))); 
+		//pairMain.add(FileParser.processFileList(pairMain.fileDataMap.get(mainFilePath))); 
 		
 
 		/// this map will collect detailed info for models				
 		Map<String, Dataset> model_data_complete_map =  new HashMap<String, Dataset>();
 		
 		
-		/// for each model collected from the main file and one-level includes
+		/// for each model collected from the main file
 		for ( String model : pairMain.modelAdhocMap.keySet()){
 			
 			System.out.println( "processing this included model in main file: "+ model );
 			
 			/// put the initial adhoc data from main file into complete data container
-			Dataset model_data_complete = new Dataset( pairMain.modelAdhocMap.get(model) );	
-			
+			Dataset model_data_adhoc = pairMain.modelAdhocMap.get(model);	
+			Dataset model_data_complete = new Dataset(model_data_adhoc);
 			
 			/// process included files under this model
-			pairMain.add(FileParser.processFileList(pairMain.modelAdhocMap.get(model)));
+			Map<String, PairMap> pm = new HashMap<String, PairMap>();
+			pm = FileParser.processFileListIntoMap(pairMain.modelAdhocMap.get(model));
 			
-			/// copy global data from pair into the complete data container
-			for (String includedFile : pairMain.modelAdhocMap.get(model).incFileList_global){
-				model_data_complete.add(pairMain.fileDataMap.get(includedFile));	
+			for (String file : pm.keySet()){
+				pairMain.add(pm.get(file));
 			}
+			
 
-			/// copy local data from pair into the complete data container
-			for (String includedFile : pairMain.modelAdhocMap.get(model).incFileList_local){
-				Dataset localData = Tools.convertDatasetToLocal(pairMain.fileDataMap.get(includedFile));
-				model_data_complete.add(localData);	
+			
+			List<String> allList = pairMain.modelAdhocMap.get(model).incFileList;
+			List<String> localList = pairMain.modelAdhocMap.get(model).incFileList_local;
+			
+			// / copy data from pair into the complete data container
+			for (String includedFile : allList) {
+
+				Dataset ds = pairMain.fileDataMap.get(includedFile);
+
+				if (!model_data_complete.hasRedefinedIn(ds)) {
+					
+					/// local
+					if (localList.contains(includedFile)) {
+
+						model_data_complete.addToLocal(ds);
+					}
+					/// global
+					else {
+						model_data_complete.add(ds);
+					}
+				}
 			}
+			
+
 			
 			
 			model_data_complete_map.put(model, model_data_complete);		
 		}		
 		
 
+		/// output csv files		
 		
-		System.out.println( "in complete map: "+ model_data_complete_map.keySet() );
-
-		/// output csv files
-		
+		String outFolder = "test-csv\\TestConvertWreslToTable_processModelOneLevel_case1\\";
+		String expectedFolder = "src\\test\\expected\\TestConvertWreslToTable_processModelOneLevel_case1\\";
+		Tools.deleteDir(outFolder);
 		
 		for (String model : model_data_complete_map.keySet()) {
 
-			String outFolder = "test-csv\\TestConvertWreslToTable_processModelOneLevel_case1\\" + model;
-			String expectedFolder = "src\\test\\expected\\TestConvertWreslToTable_processModelOneLevel_case1\\" + model;
+			outFolder = outFolder + model;
+			expectedFolder = expectedFolder + model;
 
-			Tools.deleteDir(outFolder);
 
 			WriteCSV.dataset(model_data_complete_map.get(model), "all", outFolder);
 

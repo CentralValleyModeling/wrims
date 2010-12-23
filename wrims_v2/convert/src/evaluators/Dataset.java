@@ -58,6 +58,84 @@ public class Dataset {
 		this.add(s);
 	}	
 
+
+	public boolean hasRedefinedIn(Dataset s){
+		
+		for (String e : s.incFileList){ 
+			if (this.incFileList.contains(e)) {
+				System.out.println("Error!!! Include file redefined: "+ e);				
+			}
+		}
+		
+		for (String e : s.svList){ 
+			if (this.svList.contains(e)) {
+				System.out.println("Error!!! Svar redefined: "+ e);				
+			}
+		}		
+
+		for (String e : s.dvList){ 
+			if (this.dvList.contains(e)) {
+				System.out.println("Error!!! Dvar redefined: "+ e);				
+			}
+		}	
+
+		for (String e : s.gList){ 
+			if (this.gList.contains(e)) {
+				System.out.println("Error!!! Goal redefined: "+ e);				
+			}
+		}
+		
+		for (String e : s.asList){ 
+			if (this.asList.contains(e)) {
+				System.out.println("Error!!! Alias redefined: "+ e);				
+			}
+		}
+		
+		return false;
+		
+	}
+	
+	public Dataset addToLocal(Object obj) {
+		
+		Dataset s = (Dataset)obj;
+		
+
+		if (!s.incFileList.isEmpty()) {
+			this.incFileList.addAll(s.incFileList);
+			this.incFileList_local.addAll(s.incFileList);
+			this.incFileMap.putAll(s.incFileMap);
+		}
+
+		if (!s.svList.isEmpty()) {
+			this.svList.addAll(s.svList);
+			this.svList_local.addAll(s.svList);
+			this.svMap.putAll(s.svMap);
+		}
+
+		if (!s.dvList.isEmpty()) {
+			this.dvList.addAll(s.dvList);
+			this.dvList_local.addAll(s.dvList);
+			this.dvMap.putAll(s.dvMap);
+		}
+		if (!s.asList.isEmpty()) {
+			this.asList.addAll(s.asList);
+			this.asList_local.addAll(s.asList);
+			this.asMap.putAll(s.asMap);
+		}
+
+		if (!s.gList.isEmpty()) {
+			this.gList.addAll(s.gList);
+			this.gList_local.addAll(s.gList);
+			this.gMap.putAll(s.gMap);
+		}
+
+		if (!s.model_list.isEmpty()) {
+			this.model_list.addAll(s.model_list);
+			this.model_order_map.putAll(s.model_order_map);
+		}
+
+		return this;
+	}	
 	
 	public Dataset add(Object obj) {
 		

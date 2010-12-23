@@ -59,20 +59,10 @@ public class FileParser {
 	
 	public static PairMap processFile(String inputFilePath, String scope) throws RecognitionException, IOException {
 		
+		ConvertWreslParser parser = parseFile(inputFilePath);
+		
 		Map<String, Dataset> fileDataMap   = new HashMap<String, Dataset>();
 		Map<String, Dataset> modelAdhocMap = new HashMap<String, Dataset>();
-		
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
-		    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
 		
 		Dataset dataset = new Dataset();
 		dataset = Tools.convertStructToDataset(parser.F);
@@ -95,25 +85,42 @@ public class FileParser {
 		return pairOut;
 	}
 
-	public static PairMap processFileList(Dataset obj) throws RecognitionException, IOException {
-				
+//	public static PairMap processFileList(Dataset obj) throws RecognitionException, IOException {
+//				
+//		ArrayList<String> inputFilePathList =  obj.incFileList;
+//		
+//		PairMap outPair = new PairMap();
+//		
+//		for (String inputFilePath : inputFilePathList) {
+//			
+//			PairMap pair = new PairMap();
+//			
+//			pair = processFile(inputFilePath, obj.incFileMap.get(inputFilePath).scope);
+//			
+//			outPair.add(pair);
+//
+//		}
+//		
+//		return outPair;
+//	}	
+	
+	public static Map<String,PairMap> processFileListIntoMap(Dataset obj) throws RecognitionException, IOException {
+		
 		ArrayList<String> inputFilePathList =  obj.incFileList;
 		
-		PairMap outPair = new PairMap();
+		Map<String,PairMap> out = new HashMap<String, PairMap>() ;
 		
 		for (String inputFilePath : inputFilePathList) {
 			
 			PairMap pair = new PairMap();
+			String scope = obj.incFileMap.get(inputFilePath).scope;
+			pair = processFile(inputFilePath, scope);
 			
-			pair = processFile(inputFilePath, obj.incFileMap.get(inputFilePath).scope);
-			
-			outPair.add(pair);
+			out.put(inputFilePath, pair);
 
 		}
 		
-		return outPair;
+		return out;
 	}	
-	
-
 }
 	

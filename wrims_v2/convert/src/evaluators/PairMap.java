@@ -17,8 +17,19 @@ public class PairMap {
     }
     
     public PairMap add(PairMap inPair) {
-        this.fileDataMap.putAll(inPair.fileDataMap);
-        this.modelAdhocMap.putAll(inPair.modelAdhocMap);
+    	
+    	for (String fileKey: inPair.fileDataMap.keySet()){
+
+        	if (this.fileDataMap.containsKey(fileKey)){ System.out.println("Error!! include file redefined: "+fileKey);}
+        	else{ this.fileDataMap.putAll(inPair.fileDataMap);}
+    	}
+    	
+    	for (String modelKey: inPair.modelAdhocMap.keySet()){
+
+        	if (this.modelAdhocMap.containsKey(modelKey)){ System.out.println("Error!! model redefined: "+modelKey);}
+        	else{ this.modelAdhocMap.putAll(inPair.modelAdhocMap);}
+    	}
+
 		return this;
     }    
     

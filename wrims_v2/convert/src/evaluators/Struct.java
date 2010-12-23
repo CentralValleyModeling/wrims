@@ -415,7 +415,7 @@ public class Struct {
 		}
 	}
 
-	public void dvarAlias(String name, String scope, String kind, String units,
+	public void alias(String name, String scope, String kind, String units,
 			String alias) {
 		if (var_all.containsKey(name)) {
 			// System.out.println("error... variable redefined: " + $i.text);
