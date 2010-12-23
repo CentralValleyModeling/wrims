@@ -903,11 +903,11 @@ lhsrhs: weight|CONSTRAIN;
 weight	:	allnumber|(allnumber '*taf_cfs');
 
 directory
-	:	(';'|'.'|'|'|'_'|'-'|'+'|'/'|BACKSLASH|IDENT|INTEGER|usedTokens)+
+	:	(';'|'.'|'|'|'_'|'-'|'+'|'/'|BACKSLASH|IDENT|INTEGER|usedKeywords)+
 	;
 	
 externalFile
-  : (';'|'.'|'|'|'_'|'-'|'+'|IDENT|usedTokens|INTEGER)+
+  : (';'|'.'|'|'|'_'|'-'|'+'|IDENT|usedKeywords|INTEGER)+
   ;
 	
 text	:	LETTER (LETTER | DIGIT )*;
@@ -981,14 +981,14 @@ arguements returns [String text] @init{text="";}:
   '('{text="(";} ((i1=IDENT){text=text+"{"+$i1.text+"}"; }|(k1=knownDV){text=text+$k1.text;}) (';' ((i2=IDENT){text=text+";"+"{"+$i2.text+"}";}|(k2=knownDV){text=text+";"+"{"+$k2.text+"}";}))* ')' 
   ;
 	
-partC: 	(IDENT|IDENT1|usedTokens) ('-' (IDENT|IDENT1|usedTokens))*;
+partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
-usedTokens: I|YEAR|MONTH|PASTMONTH|TAFCFS|SUM|MAX|MIN|WHERE|CONSTRAIN|ALWAYS|NAME|CYCLE|FILE|CONDITION
+usedKeywords: I|YEAR|MONTH|PASTMONTH|TAFCFS|SUM|MAX|MIN|WHERE|CONSTRAIN|ALWAYS|NAME|CYCLE|FILE|CONDITION
 |INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|TYPE|OUTPUT
 |CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION;
 
 tableSQL returns[ArrayList<String> list]
-	: 'select' ((i1=IDENT)|(u1=usedTokens)) 'from' i2=IDENT 
+	: 'select' ((i1=IDENT)|(u1=usedKeywords)) 'from' i2=IDENT 
 	  ('given' i3=assignStatement)? ('use' i4=IDENT)? 
 	  (where_items)?	  
 	  {       
@@ -1207,7 +1207,7 @@ conditionStatement returns [String text]
 	;
 
 whereStatement returns [String text]
-  : ((i=IDENT)|(u=usedTokens)) '=' expression{
+  : ((i=IDENT)|(u=usedKeywords)) '=' expression{
       if ($i.text==null){
         text=$u.text+"="+$expression.list.get(1);
       }else{
