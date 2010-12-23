@@ -51,29 +51,31 @@ public class TestConvertWreslToTable {
 		
 		String mainFilePath = "src\\test\\TestConvertWreslToTable_processModelOneLevel_case1.wresl";
 
-		pair = FileParser.processFile(mainFilePath); 
+		pair = FileParser.processMainFile(mainFilePath); 
 		
-		/// process included files in this parsed file
+		/// process included files in this main file
 		pair.add(FileParser.processFileList(pair.fileDataMap.get(mainFilePath))); 
 		
 
-		
-		
-		
-						
+		/// this map will collect detailed info for models				
 		Map<String, Dataset> model_data_complete_map =  new HashMap<String, Dataset>();
 		
+		
+		/// for each model collected from the main file and one-level includes
 		for ( String model : pair.modelAdhocMap.keySet()){
 			
-			/// process included files in this model
-			pair.add(FileParser.processFileList(pair.modelAdhocMap.get(model))); 
+			System.out.println( "processing this included model in main file: "+ model );
 			
-			System.out.println( "include models in main file: processModel="+ model );
-			Dataset model_data_complete = new Dataset();			
+			/// put the adhoc data from main file into the newly initiated container
+			Dataset model_data_complete = new Dataset( pair.modelAdhocMap.get(model) );	
 			
-			model_data_complete.add(pair.modelAdhocMap.get(model));
+			/// process included files under this model
+			pair.add(FileParser.processFileList(pair.modelAdhocMap.get(model)));
+
+			
 			for (String includedFile : pair.modelAdhocMap.get(model).incFileList){
 				
+				/// TODO: need to seperate local from global 
 				model_data_complete.add(pair.fileDataMap.get(includedFile));	
 
 			}
@@ -93,7 +95,7 @@ public class TestConvertWreslToTable {
 
 			Tools.deleteDir(outFolder);
 
-			WriteCSV.dataset(model_data_complete_map.get(model), "global", outFolder);
+			WriteCSV.dataset(model_data_complete_map.get(model), "all", outFolder);
 			System.out.println( "outFolder="+ outFolder );
 			Map<String, String> actual = Tools.readFilesFromDirAsMap(outFolder);
 
