@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import org.antlr.runtime.ANTLRFileStream;
 import org.antlr.runtime.CharStream;
@@ -64,8 +65,6 @@ public class TestConvertWreslToTable {
 		/// for each model collected from the main file
 		for ( String model : pairMain.modelAdhocMap.keySet()){
 			
-			System.out.println( "processing this included model in main file: "+ model );
-			
 			/// put the initial adhoc data from main file into complete data container
 			Dataset model_data_adhoc = pairMain.modelAdhocMap.get(model);	
 			Dataset model_data_complete = new Dataset(model_data_adhoc);
@@ -87,8 +86,12 @@ public class TestConvertWreslToTable {
 			for (String includedFile : allList) {
 
 				Dataset ds = pairMain.fileDataMap.get(includedFile);
-
-				if (!model_data_complete.hasRedefinedIn(ds)) {
+				
+				if (model_data_complete.hasRedefinedIn(ds, includedFile)){
+					/// replace with some exit message
+					System.exit(1);
+				}
+				else {
 					
 					/// local
 					if (localList.contains(includedFile)) {

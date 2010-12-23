@@ -59,35 +59,35 @@ public class Dataset {
 	}	
 
 
-	public boolean hasRedefinedIn(Dataset s){
+	public boolean hasRedefinedIn(Dataset s, String filePath){
 		
 		for (String e : s.incFileList){ 
 			if (this.incFileList.contains(e)) {
-				System.out.println("Error!!! Include file redefined: "+ e);				
+				System.out.println("Error!!! Include file redefined: "+e+" in file: "+filePath);				
 			}
 		}
 		
 		for (String e : s.svList){ 
 			if (this.svList.contains(e)) {
-				System.out.println("Error!!! Svar redefined: "+ e);				
+				System.out.println("Error!!! Svar redefined: "+e+" in file: "+filePath);			
 			}
 		}		
 
 		for (String e : s.dvList){ 
 			if (this.dvList.contains(e)) {
-				System.out.println("Error!!! Dvar redefined: "+ e);				
+				System.out.println("Error!!! Dvar redefined: "+e+" in file: "+filePath);			
 			}
 		}	
 
 		for (String e : s.gList){ 
 			if (this.gList.contains(e)) {
-				System.out.println("Error!!! Goal redefined: "+ e);				
+				System.out.println("Error!!! Goal redefined: "+e+" in file: "+filePath);			
 			}
 		}
 		
 		for (String e : s.asList){ 
 			if (this.asList.contains(e)) {
-				System.out.println("Error!!! Alias redefined: "+ e);				
+				System.out.println("Error!!! Alias redefined: "+e+" in file: "+filePath);				
 			}
 		}
 		

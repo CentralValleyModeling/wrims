@@ -3,6 +3,10 @@
 		INCLUDE[local] 'src\test\TestConvertWresl_dvarNonStd.wresl' 
 		INCLUDE 'src\test\TestConvertWresl_dvarStd.wresl' 
 		INCLUDE 'src\test\TestConvertWresl_goalCase.wresl' 
+		!INCLUDE 'src\test\duplicate2.wresl'
+		!INCLUDE 'src\test\duplicate1.wresl'
+		
+	 define QsacFth {alias C_SacFea+D_SacFea  kind 'flow-channel' units 'cfs'}
 	 define QsacFth {alias C_SacFea+D_SacFea  kind 'flow-channel' units 'cfs'}
      define[local] D419_swpC6 {alias D419_swp[monthlyweighted5] units 'cfs'} 
 

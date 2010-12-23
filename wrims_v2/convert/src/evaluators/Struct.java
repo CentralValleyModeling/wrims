@@ -117,6 +117,7 @@ public class Struct {
 
 	public void modelList(String name) {
 		if (model_list.contains(name)) {
+			ErrMsg.print("Model redefined: "+name, currentFilePath);
 			error_model_redefined.add(name);
 		} else {
 			// file_include_file.get(name).add(filePath);
@@ -127,6 +128,7 @@ public class Struct {
 
 	public void includeFile(String filePath, String scope) {
 		if (incFileList.contains(filePath)) {
+			ErrMsg.print("Include file redefined: "+filePath, currentFilePath);
 			error_includeFile_redefined.add(filePath);
 
 		} else {
@@ -149,7 +151,7 @@ public class Struct {
 
 	public void goalSimple(String name, String scope, String content) {
 		if (var_all.containsKey(name)) {
-			// System.out.println("error... variable redefined: " + $i.text);
+			ErrMsg.print("Goal redefined: "+name, currentFilePath);
 			error_var_redefined.put(name, "goal_simple");
 		} else {
 			goal_scope.put(name, scope);
@@ -175,7 +177,7 @@ public class Struct {
 	public void goalNoCase(String name, String scope, String lhs, String rhs,
 			String lhs_gt_rhs, String lhs_lt_rhs) {
 		if (var_all.containsKey(name)) {
-			// System.out.println("error... variable redefined: " + $i.text);
+			ErrMsg.print("Goal redefined: "+name, currentFilePath);
 			error_var_redefined.put(name, "goal_no_case");
 		} else {
 			// list.add(0,"lhs");list.add(1,lhs);
@@ -205,7 +207,7 @@ public class Struct {
 
 	public void goalCase(String name, String scope, String lhs, Goal gl) {
 		if (var_all.containsKey(name)) {
-			// System.out.println("error... variable redefined: " + $i.text);
+			ErrMsg.print("Goal redefined: "+name, currentFilePath);
 			error_var_redefined.put(name, "goal_cases");
 		} else {
 			goal_scope.put(name, scope);
@@ -232,7 +234,7 @@ public class Struct {
 			Map<String, ArrayList<String>> caseContent) {
 
 		if (var_all.containsKey(svarName)) {
-			// System.out.println("error... variable redefined: " + $i.text);
+			ErrMsg.print("Svar redefined: "+svarName, currentFilePath);
 			error_var_redefined.put(svarName, "svar_cases");
 		} else {
 			svar_scope.put(svarName, scope);
@@ -256,7 +258,7 @@ public class Struct {
 
 	public void svarExpression(String svarName, String scope, String expression) {
 		if (var_all.containsKey(svarName)) {
-			// System.out.println("error... variable redefined: " + $i.text);
+			ErrMsg.print("Svar redefined: "+svarName, currentFilePath);
 			error_var_redefined.put(svarName, "svar_expression");
 		} else {
 			svar_scope.put(svarName, scope);
@@ -288,7 +290,7 @@ public class Struct {
 	public void svarSum(String name, String scope, ArrayList<String> content,
 			String sumStr) {
 		if (var_all.containsKey(name)) {
-			// System.out.println("error... variable redefined: " + $i.text);
+			ErrMsg.print("Svar redefined: "+name, currentFilePath);
 			error_var_redefined.put(name, "svar_sum");
 		} else {
 			svar_scope.put(name, scope);
@@ -315,7 +317,7 @@ public class Struct {
 	public void svarTable(String name, String scope, ArrayList<String> content,
 			String sqlStr) {
 		if (var_all.containsKey(name)) {
-			// System.out.println("error... variable redefined: " + $i.text);
+			ErrMsg.print("Svar redefined: "+name, currentFilePath);
 			error_var_redefined.put(name, "svar_table");
 		} else {
 			var_all.put(name, "svar_table");
@@ -351,7 +353,7 @@ public class Struct {
 
 	public void svarDSS(String name, String scope, String kind, String units) {
 		if (var_all.containsKey(name)) {
-			// System.out.println("error... variable redefined: " + $i.text);
+			ErrMsg.print("Svar redefined: "+name, currentFilePath);
 			error_var_redefined.put(name, "svar_dss");
 		} else {
 			svar_scope.put(name, scope);
@@ -384,7 +386,7 @@ public class Struct {
 
 	public void dvarStd(String name, String scope, String kind, String units) {
 		if (var_all.containsKey(name)) {
-			// System.out.println("error... variable redefined: " + $i.text);
+			ErrMsg.print("Dvar redefined: "+name, currentFilePath);
 			error_var_redefined.put(name, "dvar_std");
 		} else {
 			dvar_scope.put(name, scope);
@@ -418,7 +420,7 @@ public class Struct {
 	public void alias(String name, String scope, String kind, String units,
 			String alias) {
 		if (var_all.containsKey(name)) {
-			// System.out.println("error... variable redefined: " + $i.text);
+			ErrMsg.print("Alias redefined: "+name, currentFilePath);
 			error_var_redefined.put(name, "dvar_alias");
 		} else {
 			dvar_scope.put(name, scope);
@@ -452,7 +454,7 @@ public class Struct {
 			String units, ArrayList<String> content, String lowerBound,
 			String upperBound) {
 		if (var_all.containsKey(name)) {
-			// System.out.println("error... variable redefined: " + $i.text);
+			ErrMsg.print("Dvar redefined: "+name, currentFilePath);
 			error_var_redefined.put(name, "dvar_nonstd");
 		} else {
 			dvar_scope.put(name, scope);
