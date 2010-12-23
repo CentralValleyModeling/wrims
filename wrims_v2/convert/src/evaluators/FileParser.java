@@ -57,7 +57,7 @@ public class FileParser {
 		
 	}
 	
-	public static PairMap processMainFile(String inputFilePath) throws RecognitionException, IOException {
+	public static PairMap processFile(String inputFilePath, String scope) throws RecognitionException, IOException {
 		
 		Map<String, Dataset> fileDataMap   = new HashMap<String, Dataset>();
 		Map<String, Dataset> modelAdhocMap = new HashMap<String, Dataset>();
@@ -76,6 +76,14 @@ public class FileParser {
 		
 		Dataset dataset = new Dataset();
 		dataset = Tools.convertStructToDataset(parser.F);
+		
+		if (scope == "local"){
+			dataset =Tools.convertDatasetToLocal(dataset);
+		}	
+		else if (scope == "global"){}
+		else { System.out.println(" error in processMainFile!!");}
+		
+		
 		fileDataMap.put(inputFilePath, dataset);
 		
 		if ( ! parser.F.model_list.isEmpty()){
@@ -86,45 +94,26 @@ public class FileParser {
 		PairMap pairOut = new PairMap(fileDataMap, modelAdhocMap);
 		return pairOut;
 	}
-	
+
 	public static PairMap processFileList(Dataset obj) throws RecognitionException, IOException {
-		
-		Map<String, Dataset> fileDataMap   = new HashMap<String, Dataset>();
-		Map<String, Dataset> modelAdhocMap = new HashMap<String, Dataset>();
-		
+				
 		ArrayList<String> inputFilePathList =  obj.incFileList;
 		
-		for (String inputFilePath : inputFilePathList) {
-
-			try {
-				stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-			TokenStream tokenStream = new CommonTokenStream(lexer);
-			ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-			parser.currentFilePath = inputFilePath;
-			parser.evaluator();
-
-			Dataset dataset = new Dataset();
-			dataset = Tools.convertStructToDataset(parser.F);
-			
-			if (obj.incFileList_local.contains(inputFilePath)){
-				dataset =Tools.convertDatasetToLocal(dataset);
-			}			
+		PairMap outPair = new PairMap();
 		
-			fileDataMap.put(inputFilePath, dataset);
+		for (String inputFilePath : inputFilePathList) {
 			
-			if ( ! parser.F.model_list.isEmpty()){
-				
-				modelAdhocMap.putAll( Tools.convertStructMapToDatasetMap(parser.modelMap) );
+			PairMap pair = new PairMap();
 			
-			}			
+			pair = processFile(inputFilePath, obj.incFileMap.get(inputFilePath).scope);
+			
+			outPair.add(pair);
+
 		}
-		PairMap outPair = new PairMap(fileDataMap, modelAdhocMap);
+		
 		return outPair;
-	}
+	}	
+	
+
 }
 	
