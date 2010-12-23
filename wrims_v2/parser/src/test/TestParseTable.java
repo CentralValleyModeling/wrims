@@ -339,7 +339,7 @@ public class TestParseTable {
 	public void testConstraintTable() throws RecognitionException, IOException {
 
 		try {
-			stream = new ANTLRFileStream("src//test//constraint.table", "UTF8");
+			stream = new ANTLRFileStream("src//test//constraint.wresl", "UTF8");
 			}
 	    catch(Exception e) {
 	         e.printStackTrace();
@@ -681,6 +681,7 @@ public class TestParseTable {
 		ArrayList<String> var_file = parser.file;
 		Map<String, ArrayList<ArrayList<String>>> var_constraint = parser.constraint;
 		Map<String, ArrayList<String>> var_alias=parser.alias;
+		Map<String, ArrayList<ArrayList<String>>> var_svar=parser.svar;
 		ArrayList<String> errorGrammer=parser.error_grammer;
 		ArrayList<String> errorVarRedefine=parser.error_var_redefined;
 		
@@ -696,7 +697,8 @@ public class TestParseTable {
 		expected.add("src\\test\\constraint.wresl");
 			
 		//Assert.assertEquals(var_file, expected);
-		//Assert.assertEquals(var_constraint, expected1);
-		Assert.assertEquals(var_alias, expected1);
+		Assert.assertEquals(var_constraint, expected1);
+		//Assert.assertEquals(var_alias, expected1);
+		//Assert.assertEquals(var_svar, expected1);
 	}	
 }
