@@ -190,11 +190,64 @@ public class Dataset {
 
 		return out;
 	}
+
+	
+	public Dataset remove(Object obj) {
+		
+		Dataset s = (Dataset)obj;
+
+		
+		if (!s.incFileList.isEmpty()) {
+			this.incFileList.removeAll(s.incFileList);
+			if (!s.incFileList_global.isEmpty()) {this.incFileList_global.removeAll(s.incFileList_global);}
+			if (!s.incFileList_local.isEmpty()) {this.incFileList_local.removeAll(s.incFileList_local);}
+			this.incFileMap.remove(s.incFileList);
+		}
+
+		if (!s.svList.isEmpty()) {
+			this.svList.removeAll(s.svList);
+			if (!s.svList_global.isEmpty()) {this.svList_global.removeAll(s.svList_global);}
+			if (!s.svList_local.isEmpty()) {this.svList_local.removeAll(s.svList_local);}
+			this.svMap.remove(s.svList);
+		}
+
+		if (!s.dvList.isEmpty()) {
+			this.dvList.removeAll(s.dvList);
+			if (!s.dvList_global.isEmpty()) {this.dvList_global.removeAll(s.dvList_global);}
+			if (!s.dvList_local.isEmpty()) {this.dvList_local.removeAll(s.dvList_local);}
+			this.dvMap.remove(s.dvList);
+		}
+		if (!s.asList.isEmpty()) {
+			this.asList.removeAll(s.gList);
+			if (!s.asList_global.isEmpty()) {this.asList_global.removeAll(s.asList_global);}
+			if (!s.asList_local.isEmpty()) {this.asList_local.removeAll(s.asList_local);}
+			this.asMap.remove(s.gList);
+		}
+
+		if (!s.gList.isEmpty()) {
+			this.gList.removeAll(s.gList);
+			if (!s.gList_global.isEmpty()) {this.gList_global.removeAll(s.gList_global);}
+			if (!s.gList_local.isEmpty()) {this.gList_local.removeAll(s.gList_local);}
+			this.gMap.remove(s.gList);
+		}
+
+		if (!s.model_list.isEmpty()) {
+			this.model_list.removeAll(s.model_list);
+		}
+		
+		if (!s.sequence_list.isEmpty()) {
+			this.sequence_list.removeAll(s.sequence_list);
+			this.sequence_map.remove(s.sequence_list);
+		}
+
+		return this;
+	}	
 	
 	public Dataset add(Object obj) {
 		
 		Dataset s = (Dataset)obj;
 
+		
 		if (!s.incFileList.isEmpty()) {
 			this.incFileList.addAll(s.incFileList);
 			if (!s.incFileList_global.isEmpty()) {this.incFileList_global.addAll(s.incFileList_global);}

@@ -34,56 +34,41 @@ public class TestConvertWreslToTable {
 		String mainFilePath = "src\\test\\TestConvertWreslToTable_processModelOneLevel_case2.wresl";
 
 		pairMain = FileParser.processFile(mainFilePath,"global"); 
+
 		
 		/// process included files in this main file		
 		Map<String, PairMap> m = FileParser.processFileListIntoMap(pairMain.fileDataMap.get(mainFilePath));
 		for (String file : m.keySet()){ pairMain.add(m.get(file)); }
-		
-
-		
+				
 
 		/// this map will collect detailed info for models				
 		Map<String, Dataset> model_data_complete_map =  new HashMap<String, Dataset>();
 		
+
 		
 		/// for each model collected from the main files
 		for ( String model : pairMain.modelAdhocMap.keySet()){
 			
-			/// put the initial adhoc data from main file into complete data container
-			Dataset model_data_complete = new Dataset(pairMain.modelAdhocMap.get(model));
+			Dataset adhoc = pairMain.modelAdhocMap.get(model);
 			
-			/// process included files under this model
-			Map<String, PairMap> pm = FileParser.processFileListIntoMap(pairMain.modelAdhocMap.get(model));
-			for (String file : pm.keySet()){ pairMain.add(pm.get(file)); }
+			/// get pairs from model adhoc (this is the major file parsing)
+			/// TODO: reduce redundant parsing, e.g., same include files in different models
+			Map<String,Dataset> fileDataMap = Tools.getModelPairFromAdhoc(adhoc).fileDataMap;
 			
-
+			/// copy to complete data
+			Dataset model_data_complete = Tools.copyModelCompleteDataFromFileDataMap(
+									fileDataMap, adhoc.incFileList, adhoc.incFileList_local);
 			
-			List<String> allList = pairMain.modelAdhocMap.get(model).incFileList;
-			List<String> localList = pairMain.modelAdhocMap.get(model).incFileList_local;
-			
-			// / copy data from pair into the complete data container
-			for (String includedFile : allList) {
-
-				Dataset ds = pairMain.fileDataMap.get(includedFile);
-
-				if (model_data_complete.hasRedefinedIn(ds, includedFile)) {
-					// / replace with some exit message
-					// System.exit(1);
-				}
-
-				// / add to local
-				if (localList.contains(includedFile)) {
-
-					model_data_complete.addToLocal(ds);
-				}
-				// / add all
-				else {
-					model_data_complete.add(ds);
-				}
-
+			/// check duplicate and keep priority for adhoc data
+			if ( model_data_complete.hasRedefinedIn(adhoc, mainFilePath)) {
+				model_data_complete.remove(adhoc);
 			}
 			
+			/// put the initial adhoc data into complete data container
+			 model_data_complete.add(adhoc);
 			
+
+						
 			model_data_complete_map.put(model, model_data_complete);		
 		}		
 		

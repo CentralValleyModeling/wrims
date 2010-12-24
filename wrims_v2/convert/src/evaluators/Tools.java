@@ -9,8 +9,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import org.antlr.runtime.RecognitionException;
 
 public class Tools {
 	public static String strip(String s) {
@@ -207,6 +211,56 @@ public class Tools {
  
 		return out;
 	}
+	
+	public static PairMap getModelPairFromAdhoc(Dataset InputModelAdhoc) throws RecognitionException, IOException{
+		
+		PairMap out = new PairMap();
+						
+			Map<String, PairMap> pm = FileParser.processFileListIntoMap(InputModelAdhoc);
+			
+			for (String fileKey : pm.keySet()){
+				
+				out.add(pm.get(fileKey)); 
+				
+			}
+			return out;
+
+	}
+	
+	public static Dataset copyModelCompleteDataFromFileDataMap(
+					Map<String,Dataset> inputFileDataMap, ArrayList<String> allFiles, ArrayList<String> localFiles){
+		
+		Dataset out = new Dataset();
+								
+		
+		// / copy data from pair into the complete data container
+		for (String includedFile : allFiles) {
+
+			Dataset ds = inputFileDataMap.get(includedFile);
+
+			if ( out.hasRedefinedIn(ds, includedFile)) {
+				// / replace with some exit message
+				// System.exit(1);
+				out.remove(ds);
+			}
+
+			// / add to local
+			if (localFiles.contains(includedFile)) {
+
+				out.addToLocal(ds);
+			}
+			// / add all
+			else {
+				out.add(ds);
+			}
+
+		}
+		return out;
+					
+
+
+	}	
+	
 	
 	
 }
