@@ -137,7 +137,6 @@ public class Tools {
 
 		if (!s.model_list.isEmpty()) {
 			out.model_list.addAll(s.model_list);
-			out.model_order_map.putAll(s.model_order_map);
 		}
 
 		return out;
@@ -184,9 +183,13 @@ public class Tools {
 
 		if (!s.model_list.isEmpty()) {
 			out.model_list.addAll(s.model_list);
-			out.model_order_map.putAll(s.model_order_map);
 		}
 
+		if (!s.sequence_list.isEmpty()) {
+			out.sequence_list.addAll(s.sequence_list);
+			out.sequence_map.putAll(s.sequence_map);
+		}
+		
 		return out;
 	}
 

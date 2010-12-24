@@ -11,7 +11,7 @@ public class Dataset {
 	public ArrayList<String> error_model_redefined = new ArrayList<String>();
 
 	// / sequence
-	public Map<Integer, String> model_order_map = new HashMap<Integer, String>();
+	public Map<Integer, String> sequence_map = new HashMap<Integer, String>();
 	public ArrayList<String> sequence_list = new ArrayList<String>();
 	public ArrayList<String> error_sequence_redefined = new ArrayList<String>();
 	
@@ -61,37 +61,57 @@ public class Dataset {
 
 	public boolean hasRedefinedIn(Dataset s, String filePath){
 		
+		boolean b = false;
+		
 		for (String e : s.incFileList){ 
 			if (this.incFileList.contains(e)) {
-				System.out.println("Error!!! Include file redefined: "+e+" in file: "+filePath);				
+				System.out.println("Error!!! Include file redefined: "+e+" in file: "+filePath);
+				b = true;
 			}
 		}
 		
 		for (String e : s.svList){ 
 			if (this.svList.contains(e)) {
-				System.out.println("Error!!! Svar redefined: "+e+" in file: "+filePath);			
+				System.out.println("Error!!! Svar redefined: "+e+" in file: "+filePath);
+				b = true;
 			}
 		}		
 
 		for (String e : s.dvList){ 
 			if (this.dvList.contains(e)) {
-				System.out.println("Error!!! Dvar redefined: "+e+" in file: "+filePath);			
+				System.out.println("Error!!! Dvar redefined: "+e+" in file: "+filePath);	
+				b = true;
 			}
 		}	
 
 		for (String e : s.gList){ 
 			if (this.gList.contains(e)) {
-				System.out.println("Error!!! Goal redefined: "+e+" in file: "+filePath);			
+				System.out.println("Error!!! Goal redefined: "+e+" in file: "+filePath);	
+				b = true;
 			}
 		}
 		
 		for (String e : s.asList){ 
 			if (this.asList.contains(e)) {
-				System.out.println("Error!!! Alias redefined: "+e+" in file: "+filePath);				
+				System.out.println("Error!!! Alias redefined: "+e+" in file: "+filePath);	
+				b = true;
+			}
+		}
+
+		for (String e : s.model_list){ 
+			if (this.model_list.contains(e)) {
+				System.out.println("Error!!! Model redefined: "+e+" in file: "+filePath);	
+				b = true;
 			}
 		}
 		
-		return false;
+		for (String e : s.sequence_list){ 
+			if (this.sequence_list.contains(e)) {
+				System.out.println("Error!!! Sequence redefined: "+e+" in file: "+filePath);	
+				b = true;
+			}
+		}
+		return b;
 		
 	}
 	
@@ -131,11 +151,45 @@ public class Dataset {
 
 		if (!s.model_list.isEmpty()) {
 			this.model_list.addAll(s.model_list);
-			this.model_order_map.putAll(s.model_order_map);
 		}
 
 		return this;
 	}	
+	
+	public Dataset getGlobalVar() {
+		
+		Dataset out = new Dataset() ;
+
+		if (!this.svList_global.isEmpty()) {
+			out.svList.addAll(this.svList_global);
+			out.svList_global.addAll(this.svList_global);
+
+			for (String key : this.svList_global) {
+				out.svMap.put(key, this.svMap.get(key));
+			}
+		}
+
+		if (!this.dvList_global.isEmpty()) {
+			out.dvList.addAll(this.dvList_global);
+			out.dvList_global.addAll(this.dvList_global);
+
+			for (String key : this.dvList_global) {
+				out.dvMap.put(key, this.dvMap.get(key));
+			}
+		}
+
+		if (!this.gList_global.isEmpty()) {
+			out.gList.addAll(this.gList_global);
+			out.gList_global.addAll(this.gList_global);
+
+			for (String key : this.gList_global) {
+				out.gMap.put(key, this.gMap.get(key));
+			}
+		}
+		
+
+		return out;
+	}
 	
 	public Dataset add(Object obj) {
 		
@@ -177,73 +231,77 @@ public class Dataset {
 
 		if (!s.model_list.isEmpty()) {
 			this.model_list.addAll(s.model_list);
-			this.model_order_map.putAll(s.model_order_map);
+		}
+		
+		if (!s.sequence_list.isEmpty()) {
+			this.sequence_list.addAll(s.sequence_list);
+			this.sequence_map.putAll(s.sequence_map);
 		}
 
 		return this;
 	}
 	
-	public Dataset addStruct(Object obj) {
-		
-		Struct s = (Struct)obj;
-
-		if (!s.incFileList.isEmpty()) {
-			this.incFileList.addAll(s.incFileList);
-			if (!s.incFileList_global.isEmpty()) {this.incFileList_global.addAll(s.incFileList_global);}
-			if (!s.incFileList_local.isEmpty()) {this.incFileList_local.addAll(s.incFileList_local);}
-			this.incFileMap.putAll(s.incFileMap);
-		}
-
-		if (!s.svList.isEmpty()) {
-			this.svList.addAll(s.svList);
-			if (!s.svList_global.isEmpty()) {this.svList_global.addAll(s.svList_global);}
-			if (!s.svList_local.isEmpty()) {this.svList_local.addAll(s.svList_local);}
-			this.svMap.putAll(s.svMap);
-		}
-
-		if (!s.dvList.isEmpty()) {
-			this.dvList.addAll(s.dvList);
-			if (!s.dvList_global.isEmpty()) {this.dvList_global.addAll(s.dvList_global);}
-			if (!s.dvList_local.isEmpty()) {this.dvList_local.addAll(s.dvList_local);}
-			this.dvMap.putAll(s.dvMap);
-		}
-		if (!s.asList.isEmpty()) {
-			this.asList.addAll(s.asList);
-			if (!s.asList_global.isEmpty()) {this.asList_global.addAll(s.asList_global);}
-			if (!s.asList_local.isEmpty()) {this.asList_local.addAll(s.asList_local);}
-			this.asMap.putAll(s.asMap);
-		}
-
-		if (!s.gList.isEmpty()) {
-			this.gList.addAll(s.gList);
-			if (!s.gList_global.isEmpty()) {this.gList_global.addAll(s.gList_global);}
-			if (!s.gList_local.isEmpty()) {this.gList_local.addAll(s.gList_local);}
-			this.gMap.putAll(s.gMap);
-		}
-
-		if (!s.model_list.isEmpty()) {
-			this.model_list.addAll(s.model_list);
-			this.model_order_map.putAll(s.model_order_map);
-		}
-
-		return this;
-	}
+//	public Dataset addStruct(Object obj) {
+//		
+//		Struct s = (Struct)obj;
+//
+//		if (!s.incFileList.isEmpty()) {
+//			this.incFileList.addAll(s.incFileList);
+//			if (!s.incFileList_global.isEmpty()) {this.incFileList_global.addAll(s.incFileList_global);}
+//			if (!s.incFileList_local.isEmpty()) {this.incFileList_local.addAll(s.incFileList_local);}
+//			this.incFileMap.putAll(s.incFileMap);
+//		}
+//
+//		if (!s.svList.isEmpty()) {
+//			this.svList.addAll(s.svList);
+//			if (!s.svList_global.isEmpty()) {this.svList_global.addAll(s.svList_global);}
+//			if (!s.svList_local.isEmpty()) {this.svList_local.addAll(s.svList_local);}
+//			this.svMap.putAll(s.svMap);
+//		}
+//
+//		if (!s.dvList.isEmpty()) {
+//			this.dvList.addAll(s.dvList);
+//			if (!s.dvList_global.isEmpty()) {this.dvList_global.addAll(s.dvList_global);}
+//			if (!s.dvList_local.isEmpty()) {this.dvList_local.addAll(s.dvList_local);}
+//			this.dvMap.putAll(s.dvMap);
+//		}
+//		if (!s.asList.isEmpty()) {
+//			this.asList.addAll(s.asList);
+//			if (!s.asList_global.isEmpty()) {this.asList_global.addAll(s.asList_global);}
+//			if (!s.asList_local.isEmpty()) {this.asList_local.addAll(s.asList_local);}
+//			this.asMap.putAll(s.asMap);
+//		}
+//
+//		if (!s.gList.isEmpty()) {
+//			this.gList.addAll(s.gList);
+//			if (!s.gList_global.isEmpty()) {this.gList_global.addAll(s.gList_global);}
+//			if (!s.gList_local.isEmpty()) {this.gList_local.addAll(s.gList_local);}
+//			this.gMap.putAll(s.gMap);
+//		}
+//
+//		if (!s.model_list.isEmpty()) {
+//			this.model_list.addAll(s.model_list);
+//			this.model_order_map.putAll(s.model_order_map);
+//		}
+//
+//		return this;
+//	}
 	
-	public Map<String, Dataset> addStructMap(Map<String, Struct> s){
-		
-		Map<String, Dataset> resultMap = new HashMap<String, Dataset>();
-		Dataset dataset;
-		
-		if (!s.isEmpty()) {
-			for (String key : s.keySet()){
-				dataset = new Dataset();
-				dataset.addStruct(s.get(key));
-				resultMap.put(key, dataset);
-			}
-		}
-		
-		return resultMap;
-
-	} 	
+//	public Map<String, Dataset> addStructMap(Map<String, Struct> s){
+//		
+//		Map<String, Dataset> resultMap = new HashMap<String, Dataset>();
+//		Dataset dataset;
+//		
+//		if (!s.isEmpty()) {
+//			for (String key : s.keySet()){
+//				dataset = new Dataset();
+//				dataset.addStruct(s.get(key));
+//				resultMap.put(key, dataset);
+//			}
+//		}
+//		
+//		return resultMap;
+//
+//	} 	
 	
 }

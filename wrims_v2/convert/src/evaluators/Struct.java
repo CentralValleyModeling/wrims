@@ -15,7 +15,7 @@ public class Struct {
 	public ArrayList<String> error_model_redefined = new ArrayList<String>();
 
 	// / sequence
-	public Map<Integer, String> model_order_map = new HashMap<Integer, String>();
+	public Map<Integer, String> sequence_map = new HashMap<Integer, String>();
 	public ArrayList<Integer> error_model_order_redefined = new ArrayList<Integer>();
 
 	public ArrayList<String> sequence_list = new ArrayList<String>();
@@ -491,10 +491,10 @@ public class Struct {
 
 		if (sequence_list.contains(sequenceName)) {
 			error_sequence_redefined.add(sequenceName);
-		} else if (model_order_map.containsKey(i)) {
+		} else if (sequence_map.containsKey(i)) {
 			error_model_order_redefined.add(i);
 		} else {
-			model_order_map.put(i, modelName);
+			sequence_map.put(i, modelName);
 			sequence_list.add(sequenceName);
 		}
 

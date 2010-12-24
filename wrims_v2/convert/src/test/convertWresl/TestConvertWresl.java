@@ -1,16 +1,11 @@
 package test.convertWresl;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import org.antlr.runtime.ANTLRFileStream;
 import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -24,17 +19,12 @@ import org.testng.annotations.*;
 import org.testng.Assert;
 
 import evaluators.Alias;
-import evaluators.Dataset;
 import evaluators.Dvar;
 import evaluators.FileParser;
 import evaluators.Goal;
 import evaluators.IncludeFile;
-
-import evaluators.PairMap;
 import evaluators.Struct;
 import evaluators.Svar;
-import evaluators.Tools;
-import evaluators.WriteCSV;
 
 
 public class TestConvertWresl {
@@ -54,24 +44,14 @@ public class TestConvertWresl {
 		
 		inputFilePath ="src\\test\\TestConvertWresl_sequence.wresl";
 		
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
-	    
+		ConvertWreslParser parser = FileParser.parseFile(inputFilePath);
+
 	    Map<Integer, String>  expected = new HashMap<Integer, String>();
-	    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
 		
 		expected.put(1, "SJRBASE" );
 		expected.put(2, "SJR_WQ1");
 		
-		Assert.assertEquals(parser.F.model_order_map, expected);
+		Assert.assertEquals(parser.F.sequence_map, expected);
 	}	
 
 	@Test(groups = { "WRESL_elements" })
