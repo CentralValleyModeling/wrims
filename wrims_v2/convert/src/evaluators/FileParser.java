@@ -70,7 +70,7 @@ public class FileParser {
 			dataset =Tools.convertDatasetToLocal(dataset);
 		}	
 		else if (scope == "global"){}
-		else { System.out.println(" error in processMainFile!!");}
+		else { System.out.println(" error in processFile scope!!");}
 		
 		
 		fileDataMap.put(inputFilePath, dataset);
@@ -84,24 +84,25 @@ public class FileParser {
 		return pairOut;
 	}
 
-//	public static PairMap processFileList(Dataset obj) throws RecognitionException, IOException {
-//				
-//		ArrayList<String> inputFilePathList =  obj.incFileList;
-//		
-//		PairMap outPair = new PairMap();
-//		
-//		for (String inputFilePath : inputFilePathList) {
-//			
-//			PairMap pair = new PairMap();
-//			
-//			pair = processFile(inputFilePath, obj.incFileMap.get(inputFilePath).scope);
-//			
-//			outPair.add(pair);
-//
-//		}
-//		
-//		return outPair;
-//	}	
+	public static PairMap processNestedFile(String inputFilePath, String scope) throws RecognitionException, IOException {
+				
+		PairMap mainPair = processFile(inputFilePath, scope);
+		PairMap out = new PairMap().add(processFile(inputFilePath, scope));
+		
+		for (String file : mainPair.fileDataMap.get(inputFilePath).incFileList){
+			
+			String subscope;
+			if (scope == "local") {subscope = "local";}
+			else {subscope = mainPair.fileDataMap.get(inputFilePath).incFileMap.get(file).scope;}
+			
+			PairMap each = processFile(file,subscope);
+			out.add(each);
+		}
+		
+		return out;
+		
+		
+	}
 	
 	public static Map<String,PairMap> processFileListIntoMap(Dataset obj) throws RecognitionException, IOException {
 		
@@ -113,7 +114,7 @@ public class FileParser {
 			
 			PairMap pair = new PairMap();
 			String scope = obj.incFileMap.get(inputFilePath).scope;
-			pair = processFile(inputFilePath, scope);
+			pair = processNestedFile(inputFilePath, scope);
 			
 			out.put(inputFilePath, pair);
 
