@@ -79,11 +79,11 @@ public class TestConvertWresl {
 		
 		incFile = new IncludeFile();
 		incFile.scope = "local";
-		incFileMap.put("..\\..\\common\\System\\System_Sac.wresl", incFile);
+		incFileMap.put("D:\\cvwrsm\\wrims_v2\\convert\\..\\..\\common\\System\\System_Sac.wresl", incFile);
 
 		incFile = new IncludeFile();
 		incFile.scope = "global";
-		incFileMap.put("..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl", incFile);
+		incFileMap.put("D:\\cvwrsm\\wrims_v2\\convert\\..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl", incFile);
 
 		expected_struct.incFileMap.putAll(incFileMap);
 							
@@ -164,11 +164,11 @@ public class TestConvertWresl {
 		
 		incFile = new IncludeFile();
 		incFile.scope = "local";
-		incFileMap.put("..\\..\\common\\System\\System_Sac.wresl", incFile);
+		incFileMap.put("D:\\cvwrsm\\wrims_v2\\convert\\..\\..\\common\\System\\System_Sac.wresl", incFile);
 
 		incFile = new IncludeFile();
 		incFile.scope = "global";
-		incFileMap.put("..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl", incFile);
+		incFileMap.put("D:\\cvwrsm\\wrims_v2\\convert\\..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl", incFile);
 
 		expected_struct.incFileMap.putAll(incFileMap);
 		
@@ -281,11 +281,11 @@ public class TestConvertWresl {
 		
 		incF = new IncludeFile();
 		incF.scope = "local";
-		expected_struct1.incFileMap.put("..\\..\\common\\System\\System_Sac.wresl", incF);
+		expected_struct1.incFileMap.put("D:\\cvwrsm\\wrims_v2\\convert\\..\\..\\common\\System\\System_Sac.wresl", incF);
 		
 		incF = new IncludeFile();
 		incF.scope = "global";
-		expected_struct1.incFileMap.put("..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl", incF);		
+		expected_struct1.incFileMap.put("D:\\cvwrsm\\wrims_v2\\convert\\..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl", incF);		
 		
 		Goal gl = new Goal();
 		gl.scope = "local";
@@ -406,7 +406,7 @@ public class TestConvertWresl {
 		
 		incF = new IncludeFile();
 		incF.scope = "local";
-		expected_struct1.incFileMap.put("..\\..\\common\\System\\System_Sac.wresl", incF);
+		expected_struct1.incFileMap.put("D:\\cvwrsm\\wrims_v2\\convert\\..\\..\\common\\System\\System_Sac.wresl", incF);
 			
 		Goal gl = new Goal();
 		gl.scope = "local";

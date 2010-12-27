@@ -1,5 +1,6 @@
 package evaluators;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ public class FileParser {
 
 	}
 
-	public static ConvertWreslParser parseFile(String inputFilePath) throws RecognitionException, IOException {
+	public static ConvertWreslParser parseFile(String inputFilePath) throws RecognitionException, IOException {		
 		
 		try {
 			stream = new ANTLRFileStream(inputFilePath, "UTF8");
@@ -61,7 +62,7 @@ public class FileParser {
 		ConvertWreslParser parser = parseFile(inputFilePath);
 		
 		Map<String, Dataset> fileDataMap   = new HashMap<String, Dataset>();
-		Map<String, Dataset> modelAdhocMap = new HashMap<String, Dataset>();
+
 		
 		Dataset out = new Dataset();
 		out = Tools.convertStructToDataset(parser.F);

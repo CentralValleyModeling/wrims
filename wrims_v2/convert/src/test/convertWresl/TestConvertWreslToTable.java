@@ -1,6 +1,7 @@
 package test.convertWresl;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -31,8 +32,12 @@ public class TestConvertWreslToTable {
  
 		PairMap pairMain;
 		
-		String mainFilePath = "src\\test\\TestConvertWreslToTable_processModelOneLevel_case2.wresl";
+		String mainRelativeFilePath = "src\\test\\TestConvertWreslToTable_processModelOneLevel_case1.wresl";
 
+		String mainFilePath = new File(mainRelativeFilePath).getAbsolutePath();
+
+		//System.out.println( mainFilePath);		
+		
 		pairMain = FileParser.processFileIntoPair(mainFilePath,"global"); 
 
 		
@@ -96,8 +101,6 @@ public class TestConvertWreslToTable {
 		}
 	}	
 
-
-	
 
 	
 	

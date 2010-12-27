@@ -1,5 +1,6 @@
 package evaluators;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -126,7 +127,11 @@ public class Struct {
 		}
 	}
 
-	public void includeFile(String filePath, String scope) {
+	public void includeFile(String fileRelativePath, String scope) {
+		
+		String filePath = new File(fileRelativePath).getAbsolutePath();
+		
+		
 		if (incFileList.contains(filePath)) {
 			ErrMsg.print("Include file redefined: "+filePath, currentFilePath);
 			error_includeFile_redefined.add(filePath);
