@@ -26,6 +26,7 @@ options {
     public String inModel = "n";
 
 	public String currentFilePath;
+	public String currentAbsoluteParent;
 	public String currentFileScope;
 	public Struct F = new Struct();	
 	public Map<String, Struct> modelMap = new HashMap<String, Struct>();
@@ -50,7 +51,8 @@ options {
 
 
 evaluator 
-@init { F.currentFilePath=currentFilePath; }
+@init { F.currentFilePath=currentFilePath;
+		F.currentAbsoluteParent=currentAbsoluteParent; }
 	:	pattern *  EOF  ;
 
 pattern
@@ -67,7 +69,8 @@ scope { Struct M }
 	:    MODEL i=IDENT  
 			{   F.modelList($i.text); 
 				$model::M = new Struct(); 
-				$model::M.currentFilePath=currentFilePath;} 
+				$model::M.currentFilePath=currentFilePath;
+				$model::M.currentAbsoluteParent=currentAbsoluteParent;} 
 		 '{' c=(  include | goal | define )*  '}' 
 		 	{
 	           //  System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " + $model::M.include_file_scope)
@@ -491,7 +494,7 @@ AND : '.and.';
 OR  : '.or.';
 
 /// include file path ///
-FILE_PATH :  '\'' (DIR_ELEMENT | DIR_UP)+   WRESL_FILE  '\''  ;
+FILE_PATH :  '\'' (DIR_ELEMENT | DIR_UP)*   WRESL_FILE  '\''  ;
 fragment WRESL_EXT :   '.wresl' | '.WRESL' ;
 fragment WRESL_FILE :  (LETTER | DIGIT | SYMBOLS |'-'  )+ WRESL_EXT ;
 fragment DIR_ELEMENT : (LETTER | DIGIT | SYMBOLS | '-' )+  '\\' ;

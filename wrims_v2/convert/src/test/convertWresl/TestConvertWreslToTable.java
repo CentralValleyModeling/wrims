@@ -28,11 +28,11 @@ public class TestConvertWreslToTable {
 
 	
 	@Test(groups = { "WRESL_to_Table"  })
-	public void processModelOneLevel_case1() throws RecognitionException, IOException {
+	public void processModelBasic() throws RecognitionException, IOException {
  
 		PairMap pairMain;
 		
-		String mainRelativeFilePath = "src\\test\\TestConvertWreslToTable_processModelOneLevel_case1.wresl";
+		String mainRelativeFilePath = "src\\test\\TestConvertWreslToTable_processModelBasic.wresl";
 
 		String mainFilePath = new File(mainRelativeFilePath).getAbsolutePath();
 
@@ -79,8 +79,8 @@ public class TestConvertWreslToTable {
 
 		/// output csv files		
 		
-		String outFolder = "test-csv\\TestConvertWreslToTable_processModelOneLevel_case1\\";
-		String expectedFolder = "src\\test\\expected\\TestConvertWreslToTable_processModelOneLevel_case1\\";
+		String outFolder = "test-csv\\TestConvertWreslToTable_processModelBasic\\";
+		String expectedFolder = "src\\test\\expected\\TestConvertWreslToTable_processModelBasic\\";
 		Tools.deleteDir(outFolder);
 		
 		Assert.assertEquals(model_data_complete_map.keySet().isEmpty(), false );

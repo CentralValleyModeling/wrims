@@ -10,6 +10,7 @@ import java.util.Map;
 public class Struct {
 
 	public String currentFilePath;
+	public String currentAbsoluteParent;
 
 	// / models appear in this parsed file
 	public ArrayList<String> model_list = new ArrayList<String>();
@@ -128,9 +129,10 @@ public class Struct {
 	}
 
 	public void includeFile(String fileRelativePath, String scope) {
+				
+		String filePath = new File(currentAbsoluteParent, fileRelativePath).getAbsolutePath();
 		
-		String filePath = new File(fileRelativePath).getAbsolutePath();
-		
+		System.out.println(filePath);
 		
 		if (incFileList.contains(filePath)) {
 			ErrMsg.print("Include file redefined: "+filePath, currentFilePath);

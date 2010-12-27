@@ -51,7 +51,11 @@ public class FileParser {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		
+		parser.currentFilePath = inputFilePath; 
+		parser.currentAbsoluteParent = new File(inputFilePath).getAbsoluteFile().getParent();
+		
+		parser.evaluator();
 		
 		return parser;
 		
