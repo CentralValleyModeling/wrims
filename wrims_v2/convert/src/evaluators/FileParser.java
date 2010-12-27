@@ -101,23 +101,26 @@ public class FileParser {
 			else {subscope = mainData.incFileMap.get(file).scope;}
 			
 			Dataset each = processFileIntoDataset(file,subscope);
+			
+			
+			
+			
+			
 			out.put(file, each);
 		}
 		
 		return out;		
 	}
 	
-	public static Map<String,Dataset> processFileListIntoDatasetMap(Dataset obj) throws RecognitionException, IOException {
-		
-		ArrayList<String> inputFilePathList =  obj.incFileList;
-		
+	public static Map<String,Dataset> processFileListIntoDatasetMap(ArrayList<String>fileList, ArrayList<String>scopeList) throws RecognitionException, IOException {
+				
 		Map<String,Dataset> out = new HashMap<String, Dataset>() ;
 		
-		for (String inputFilePath : inputFilePathList) {
+		for ( int i=0 ;i< fileList.size() ;i++ ){
 			
 			Map<String,Dataset> each = new HashMap<String, Dataset>();
-			String scope = obj.incFileMap.get(inputFilePath).scope;
-			each = processNestedFileIntoDatasetMap(inputFilePath, scope);
+			//String scope = obj.incFileMap.get(inputFilePath).scope;
+			each = processNestedFileIntoDatasetMap(fileList.get(i), scopeList.get(i));
 			
 			out.putAll(each);
 		}

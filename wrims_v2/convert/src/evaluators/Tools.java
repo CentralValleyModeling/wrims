@@ -112,30 +112,30 @@ public class Tools {
 
 		if (!s.incFileList.isEmpty()) {
 			out.incFileList.addAll(s.incFileList);
-			out.incFileList_local.addAll(s.incFileList_local);
+			out.incFileList_local.addAll(s.incFileList);
 			out.incFileMap.putAll(s.incFileMap);
 		}
 
 		if (!s.svList.isEmpty()) {
 			out.svList.addAll(s.svList);
-			out.svList_local.addAll(s.svList_local);
+			out.svList_local.addAll(s.svList);
 			out.svMap.putAll(s.svMap);
 		}
 
 		if (!s.dvList.isEmpty()) {
 			out.dvList.addAll(s.dvList);
-			out.dvList_local.addAll(s.dvList_local);
+			out.dvList_local.addAll(s.dvList);
 			out.dvMap.putAll(s.dvMap);
 		}
 		if (!s.asList.isEmpty()) {
 			out.asList.addAll(s.asList);
-			out.asList_local.addAll(s.asList_local);
+			out.asList_local.addAll(s.asList);
 			out.asMap.putAll(s.asMap);
 		}
 
 		if (!s.gList.isEmpty()) {
 			out.gList.addAll(s.gList);
-			out.gList_local.addAll(s.gList_local);
+			out.gList_local.addAll(s.gList);
 			out.gMap.putAll(s.gMap);
 		}
 
@@ -222,20 +222,20 @@ public class Tools {
 //
 //	}
 	
-	public static PairMap getModelPairFromAdhoc(Dataset InputModelAdhoc) throws RecognitionException, IOException{
-		
-		PairMap out = new PairMap();
-						
-			Map<String, PairMap> pm = FileParser.processFileListIntoMapOfPair(InputModelAdhoc);
-			
-			for (String fileKey : pm.keySet()){
-				
-				out.add(pm.get(fileKey)); 
-				
-			}
-			return out;
-
-	}
+//	public static PairMap getModelPairFromAdhoc(Dataset InputModelAdhoc) throws RecognitionException, IOException{
+//		
+//		PairMap out = new PairMap();
+//						
+//			Map<String, PairMap> pm = FileParser.processFileListIntoMapOfPair(InputModelAdhoc);
+//			
+//			for (String fileKey : pm.keySet()){
+//				
+//				out.add(pm.get(fileKey)); 
+//				
+//			}
+//			return out;
+//
+//	}
 	
 	public static Dataset overrideScope(
 					Map<String,Dataset> inputFileDataMap, ArrayList<String> allFiles, ArrayList<String> localFiles){
