@@ -59,7 +59,7 @@ public class Dataset {
 	}	
 
 
-	public boolean hasRedefinedIn(Dataset s, String filePath){
+	public boolean hasDuplicateIn(Dataset s, String filePath){
 		
 		boolean b = false;
 		

@@ -33,11 +33,11 @@ public class TestConvertWreslToTable {
 		
 		String mainFilePath = "src\\test\\TestConvertWreslToTable_processModelOneLevel_case2.wresl";
 
-		pairMain = FileParser.processFile(mainFilePath,"global"); 
+		pairMain = FileParser.processFileIntoPair(mainFilePath,"global"); 
 
 		
 		/// process included files in this main file		
-		Map<String, PairMap> m = FileParser.processFileListIntoMap(pairMain.fileDataMap.get(mainFilePath));
+		Map<String, PairMap> m = FileParser.processFileListIntoMapOfPair(pairMain.fileDataMap.get(mainFilePath));
 		for (String file : m.keySet()){ pairMain.add(m.get(file)); }
 				
 
@@ -51,25 +51,24 @@ public class TestConvertWreslToTable {
 			
 			Dataset adhoc = pairMain.modelAdhocMap.get(model);
 			
-			/// get pairs from model adhoc (this is the major file parsing)
+			/// get dataset map from model adhoc (this is the major file parsing effort)
 			/// TODO: reduce redundant parsing, e.g., same include files in different models
-			Map<String,Dataset> fileDataMap = Tools.getModelPairFromAdhoc(adhoc).fileDataMap;
+			Map<String,Dataset> fileDataMap = FileParser.processFileListIntoDatasetMap(adhoc);
+			                                  
 			
-			/// copy to complete data
-			Dataset model_data_complete = Tools.copyModelCompleteDataFromFileDataMap(
+			/// correct data scope
+			Dataset model_data_complete = Tools.overrideScope(
 									fileDataMap, adhoc.incFileList, adhoc.incFileList_local);
 			
-			/// check duplicate and keep priority for adhoc data
-			if ( model_data_complete.hasRedefinedIn(adhoc, mainFilePath)) {
+			/// check duplicate and promote adhoc data for higher priority 
+			if ( model_data_complete.hasDuplicateIn(adhoc, mainFilePath)) {
 				model_data_complete.remove(adhoc);
 			}
 			
-			/// put the initial adhoc data into complete data container
+			/// put the initial adhoc data into complete data container to override
 			 model_data_complete.add(adhoc);
-			
-
 						
-			model_data_complete_map.put(model, model_data_complete);		
+			 model_data_complete_map.put(model, model_data_complete);		
 		}		
 		
 

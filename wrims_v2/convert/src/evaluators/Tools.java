@@ -211,12 +211,22 @@ public class Tools {
  
 		return out;
 	}
+
+//	public static Map<String,Dataset> getModelDataFromAdhoc(Dataset InputModelAdhoc) throws RecognitionException, IOException{
+//		
+//		Map<String,Dataset> out = new HashMap<String, Dataset>();
+//						
+//		                    out = FileParser.processFileListIntoDatasetMap(InputModelAdhoc);
+//			
+//			return out;
+//
+//	}
 	
 	public static PairMap getModelPairFromAdhoc(Dataset InputModelAdhoc) throws RecognitionException, IOException{
 		
 		PairMap out = new PairMap();
 						
-			Map<String, PairMap> pm = FileParser.processFileListIntoMap(InputModelAdhoc);
+			Map<String, PairMap> pm = FileParser.processFileListIntoMapOfPair(InputModelAdhoc);
 			
 			for (String fileKey : pm.keySet()){
 				
@@ -227,7 +237,7 @@ public class Tools {
 
 	}
 	
-	public static Dataset copyModelCompleteDataFromFileDataMap(
+	public static Dataset overrideScope(
 					Map<String,Dataset> inputFileDataMap, ArrayList<String> allFiles, ArrayList<String> localFiles){
 		
 		Dataset out = new Dataset();
@@ -238,7 +248,7 @@ public class Tools {
 
 			Dataset ds = inputFileDataMap.get(includedFile);
 
-			if ( out.hasRedefinedIn(ds, includedFile)) {
+			if ( out.hasDuplicateIn(ds, includedFile)) {
 				// / replace with some exit message
 				// System.exit(1);
 				out.remove(ds);
