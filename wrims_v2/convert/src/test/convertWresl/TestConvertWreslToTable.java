@@ -32,11 +32,7 @@ public class TestConvertWreslToTable {
  
 		PairMap pairMain;
 		
-		String mainRelativeFilePath = "src\\test\\TestConvertWreslToTable_processModelBasic.wresl";
-
-		String mainFilePath = new File(mainRelativeFilePath).getAbsolutePath();
-
-		//System.out.println( mainFilePath);		
+		String mainFilePath = "src\\test\\TestConvertWreslToTable_processModelBasic.wresl";	
 		
 		pairMain = FileParser.processFileIntoPair(mainFilePath,"global"); 
 

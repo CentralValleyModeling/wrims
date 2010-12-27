@@ -25,7 +25,7 @@ options {
 
     public String inModel = "n";
 
-	public String currentFilePath;
+	public String currentAbsolutePath;
 	public String currentAbsoluteParent;
 	public String currentFileScope;
 	public Struct F = new Struct();	
@@ -42,7 +42,7 @@ options {
 	public ArrayList<String> outputErrorMessage = new ArrayList<String>();
 	public String getErrorMessage(RecognitionException e, String[] tokenNames) {
     		String msg = super.getErrorMessage(e, tokenNames);
-			msg = msg+" in file \""+currentFilePath+"\"";
+			msg = msg+" in file \""+currentAbsolutePath+"\"";
 			if (msg!=null){outputErrorMessage.add(msg);}
 			return msg;
 			}
@@ -51,7 +51,7 @@ options {
 
 
 evaluator 
-@init { F.currentFilePath=currentFilePath;
+@init { F.currentAbsolutePath=currentAbsolutePath;
 		F.currentAbsoluteParent=currentAbsoluteParent; }
 	:	pattern *  EOF  ;
 
@@ -69,7 +69,7 @@ scope { Struct M }
 	:    MODEL i=IDENT  
 			{   F.modelList($i.text); 
 				$model::M = new Struct(); 
-				$model::M.currentFilePath=currentFilePath;
+				$model::M.currentAbsolutePath=currentAbsolutePath;
 				$model::M.currentAbsoluteParent=currentAbsoluteParent;} 
 		 '{' c=(  include | goal | define )*  '}' 
 		 	{

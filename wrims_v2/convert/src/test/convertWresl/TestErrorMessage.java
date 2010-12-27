@@ -44,7 +44,7 @@ public class TestErrorMessage {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = path;
+		parser.currentAbsolutePath = path;
 		parser.evaluator();
 				
 		expected.add("missing EOF at 'defin' in file \"src\\test\\TestErrorMessage_errorSimple.wresl\"");

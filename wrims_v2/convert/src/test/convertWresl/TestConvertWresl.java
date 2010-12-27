@@ -70,7 +70,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 				
 		
 		Map<String,IncludeFile>  incFileMap = new HashMap<String,IncludeFile>(); 
@@ -125,7 +125,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 		
 
 		expected_model_list.add("one");
@@ -155,7 +155,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 		
 
 		Map<String,IncludeFile>  incFileMap = new HashMap<String,IncludeFile>(); 
@@ -222,7 +222,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 	    
 		Goal gl = new Goal();
 		gl.scope = "local";
@@ -275,7 +275,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 
 		IncludeFile incF;
 		
@@ -352,7 +352,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 
 	    Map<String, Struct> expected_modelMap = new HashMap<String, Struct>();
 	    Struct expected_struct = new Struct();
@@ -397,7 +397,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 
 	    Map<String, Struct> expected_modelMap = new HashMap<String, Struct>();
 	    Struct expected_struct1 = new Struct();
@@ -474,7 +474,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 
 		Svar sv;
 		ArrayList<String> svList =  new ArrayList<String>();
@@ -513,7 +513,7 @@ public class TestConvertWresl {
 	    ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 		
 		Svar sv;
 		ArrayList<String> svList =  new ArrayList<String>();
@@ -552,7 +552,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 		
 		Svar sv;
 		ArrayList<String> svList =  new ArrayList<String>();
@@ -601,7 +601,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 				
 	    Map<String, Dvar> expected_dvMap = new HashMap<String, Dvar>(); 
 	    Dvar dv;
@@ -645,7 +645,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 
 	    Map<String, Alias> expected_asMap = new HashMap<String, Alias>(); 
 	    Alias as;
@@ -694,7 +694,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 		
 		expected_dvar_alias.put("D419_swpC6", new ArrayList<String>(Arrays.asList(new String[]{null,"CFS","D419_swp[monthlyweighted5]"})));
 		expected_svar_expression.put("minflow_C", "60");
@@ -725,7 +725,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 
 	    Map<String, Dvar> expected_dvMap = new HashMap<String, Dvar>(); 
 	    Dvar dv;
@@ -769,7 +769,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();		
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();		
 		
 		Svar sv;
 		ArrayList<String> svList =  new ArrayList<String>();
@@ -813,7 +813,7 @@ public class TestConvertWresl {
 	    ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 		
 		Svar sv;
 		ArrayList<String> svList =  new ArrayList<String>();
@@ -851,7 +851,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 		
 		Svar sv;
 		ArrayList<String> svList =  new ArrayList<String>();
@@ -892,7 +892,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 		
 		expected_scope.put("S_TrntyLevel4","global");
 		expected.put("S_TrntyLevel4", new ArrayList<String>(Arrays.asList(new String[]{
@@ -916,7 +916,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();			    
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();			    
 		
 		Svar sv;
 		ArrayList<String> svList =  new ArrayList<String>();
@@ -977,7 +977,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();		
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();		
 		
 		Svar sv;
 		ArrayList<String> svList =  new ArrayList<String>();
@@ -1021,7 +1021,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 
 		g = new Goal();
 		g.scope = "global";
@@ -1093,7 +1093,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 
 		g = new Goal();
 		g.scope = "global";
@@ -1141,7 +1141,7 @@ public class TestConvertWresl {
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 
 		g = new Goal();
 		
@@ -1196,7 +1196,7 @@ public class TestConvertWresl {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
 		
-		parser.currentFilePath = inputFilePath; parser.evaluator();
+		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 
 		expected.put("a", "min(1000.+0.5*max(S_Orovl(prevSep)-1000.; 0.); S_OrovlLevel5)");
 		

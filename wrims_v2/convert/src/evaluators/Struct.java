@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class Struct {
 
-	public String currentFilePath;
+	public String currentAbsolutePath;
 	public String currentAbsoluteParent;
 
 	// / models appear in this parsed file
@@ -119,7 +119,7 @@ public class Struct {
 
 	public void modelList(String name) {
 		if (model_list.contains(name)) {
-			ErrMsg.print("Model redefined: "+name, currentFilePath);
+			ErrMsg.print("Model redefined: "+name, currentAbsolutePath);
 			error_model_redefined.add(name);
 		} else {
 			// file_include_file.get(name).add(filePath);
@@ -135,7 +135,7 @@ public class Struct {
 		System.out.println(filePath);
 		
 		if (incFileList.contains(filePath)) {
-			ErrMsg.print("Include file redefined: "+filePath, currentFilePath);
+			ErrMsg.print("Include file redefined: "+filePath, currentAbsolutePath);
 			error_includeFile_redefined.add(filePath);
 
 		} else {
@@ -158,7 +158,7 @@ public class Struct {
 
 	public void goalSimple(String name, String scope, String content) {
 		if (var_all.containsKey(name)) {
-			ErrMsg.print("Goal redefined: "+name, currentFilePath);
+			ErrMsg.print("Goal redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "goal_simple");
 		} else {
 			goal_scope.put(name, scope);
@@ -184,7 +184,7 @@ public class Struct {
 	public void goalNoCase(String name, String scope, String lhs, String rhs,
 			String lhs_gt_rhs, String lhs_lt_rhs) {
 		if (var_all.containsKey(name)) {
-			ErrMsg.print("Goal redefined: "+name, currentFilePath);
+			ErrMsg.print("Goal redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "goal_no_case");
 		} else {
 			// list.add(0,"lhs");list.add(1,lhs);
@@ -201,7 +201,7 @@ public class Struct {
 			gl.caseExpression.add(rhs);
 			gl.case_lhs_gt_rhs.add(lhs_gt_rhs);
 			gl.case_lhs_lt_rhs.add(lhs_lt_rhs);
-			gl.fromWresl = currentFilePath;
+			gl.fromWresl = currentAbsolutePath;
 			gMap.put(name, gl);
 			gList.add(name);
 			
@@ -214,7 +214,7 @@ public class Struct {
 
 	public void goalCase(String name, String scope, String lhs, Goal gl) {
 		if (var_all.containsKey(name)) {
-			ErrMsg.print("Goal redefined: "+name, currentFilePath);
+			ErrMsg.print("Goal redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "goal_cases");
 		} else {
 			goal_scope.put(name, scope);
@@ -224,7 +224,7 @@ public class Struct {
 
 			gl.scope = scope;
 			gl.lhs = lhs;
-			gl.fromWresl = currentFilePath;
+			gl.fromWresl = currentAbsolutePath;
 			gMap.put(name, gl);
 			gList.add(name);
 			
@@ -241,7 +241,7 @@ public class Struct {
 			Map<String, ArrayList<String>> caseContent) {
 
 		if (var_all.containsKey(svarName)) {
-			ErrMsg.print("Svar redefined: "+svarName, currentFilePath);
+			ErrMsg.print("Svar redefined: "+svarName, currentAbsolutePath);
 			error_var_redefined.put(svarName, "svar_cases");
 		} else {
 			svar_scope.put(svarName, scope);
@@ -252,7 +252,7 @@ public class Struct {
 
 			// ///////////////////
 			sv.scope = scope;
-			sv.fromWresl = currentFilePath;
+			sv.fromWresl = currentAbsolutePath;
 			svMap.put(svarName, sv);
 			svList.add(svarName);
 			
@@ -265,7 +265,7 @@ public class Struct {
 
 	public void svarExpression(String svarName, String scope, String expression) {
 		if (var_all.containsKey(svarName)) {
-			ErrMsg.print("Svar redefined: "+svarName, currentFilePath);
+			ErrMsg.print("Svar redefined: "+svarName, currentAbsolutePath);
 			error_var_redefined.put(svarName, "svar_expression");
 		} else {
 			svar_scope.put(svarName, scope);
@@ -282,7 +282,7 @@ public class Struct {
 			sv.caseName.add(caseName);
 			sv.caseCondition.add(condition);
 			sv.caseExpression.add(expression);
-			sv.fromWresl = currentFilePath;
+			sv.fromWresl = currentAbsolutePath;
 
 			svMap.put(svarName, sv);
 			svList.add(svarName);
@@ -297,7 +297,7 @@ public class Struct {
 	public void svarSum(String name, String scope, ArrayList<String> content,
 			String sumStr) {
 		if (var_all.containsKey(name)) {
-			ErrMsg.print("Svar redefined: "+name, currentFilePath);
+			ErrMsg.print("Svar redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "svar_sum");
 		} else {
 			svar_scope.put(name, scope);
@@ -309,7 +309,7 @@ public class Struct {
 			sv.caseName.add("default");
 			sv.caseCondition.add("always");
 			sv.caseExpression.add(sumStr);
-			sv.fromWresl = currentFilePath;
+			sv.fromWresl = currentAbsolutePath;
 
 			svMap.put(name, sv);
 			svList.add(name);
@@ -324,7 +324,7 @@ public class Struct {
 	public void svarTable(String name, String scope, ArrayList<String> content,
 			String sqlStr) {
 		if (var_all.containsKey(name)) {
-			ErrMsg.print("Svar redefined: "+name, currentFilePath);
+			ErrMsg.print("Svar redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "svar_table");
 		} else {
 			var_all.put(name, "svar_table");
@@ -347,7 +347,7 @@ public class Struct {
 			sv.caseCondition.add("always");
 			sv.caseName.add("default");
 			sv.caseExpression.add(sqlStr);
-			sv.fromWresl = currentFilePath;
+			sv.fromWresl = currentAbsolutePath;
 			svMap.put(name, sv);
 			svList.add(name);
 			
@@ -360,7 +360,7 @@ public class Struct {
 
 	public void svarDSS(String name, String scope, String kind, String units) {
 		if (var_all.containsKey(name)) {
-			ErrMsg.print("Svar redefined: "+name, currentFilePath);
+			ErrMsg.print("Svar redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "svar_dss");
 		} else {
 			svar_scope.put(name, scope);
@@ -380,7 +380,7 @@ public class Struct {
 			sv.caseCondition.add("always");
 			sv.caseName.add("default");
 			sv.caseExpression.add("timeseries");
-			sv.fromWresl = currentFilePath;
+			sv.fromWresl = currentAbsolutePath;
 			svMap.put(name, sv);
 			svList.add(name);
 			
@@ -393,7 +393,7 @@ public class Struct {
 
 	public void dvarStd(String name, String scope, String kind, String units) {
 		if (var_all.containsKey(name)) {
-			ErrMsg.print("Dvar redefined: "+name, currentFilePath);
+			ErrMsg.print("Dvar redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "dvar_std");
 		} else {
 			dvar_scope.put(name, scope);
@@ -413,7 +413,7 @@ public class Struct {
 			dv.units = units;
 			dv.lowerBound = Parameters.dv_lowerBound;
 			dv.upperBound = Parameters.dv_upperBound;
-			dv.fromWresl = currentFilePath;
+			dv.fromWresl = currentAbsolutePath;
 			dvMap.put(name, dv);
 			dvList.add(name);
 			
@@ -427,7 +427,7 @@ public class Struct {
 	public void alias(String name, String scope, String kind, String units,
 			String alias) {
 		if (var_all.containsKey(name)) {
-			ErrMsg.print("Alias redefined: "+name, currentFilePath);
+			ErrMsg.print("Alias redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "dvar_alias");
 		} else {
 			dvar_scope.put(name, scope);
@@ -446,7 +446,7 @@ public class Struct {
 			if (units != null)
 				as.units = units;
 			as.expression = alias;
-			as.fromWresl = currentFilePath;
+			as.fromWresl = currentAbsolutePath;
 			asMap.put(name, as);
 			asList.add(name);
 			
@@ -461,7 +461,7 @@ public class Struct {
 			String units, ArrayList<String> content, String lowerBound,
 			String upperBound) {
 		if (var_all.containsKey(name)) {
-			ErrMsg.print("Dvar redefined: "+name, currentFilePath);
+			ErrMsg.print("Dvar redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "dvar_nonstd");
 		} else {
 			dvar_scope.put(name, scope);
@@ -480,7 +480,7 @@ public class Struct {
 			dv.units = units;
 			dv.lowerBound = lowerBound;
 			dv.upperBound = upperBound;
-			dv.fromWresl = currentFilePath;
+			dv.fromWresl = currentAbsolutePath;
 			dvMap.put(name, dv);
 			dvList.add(name);
 			
