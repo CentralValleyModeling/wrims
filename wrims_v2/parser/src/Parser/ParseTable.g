@@ -19,6 +19,12 @@ options {
   import org.antlr.runtime.CommonTokenStream;
   import org.antlr.runtime.RecognitionException;
   import org.antlr.runtime.TokenStream;
+  
+  import Components.Alias;
+  import Components.Dvar;
+  import Components.Constraint;
+  import Components.Svar;
+  import Components.LRWeight;
 }
 
 @lexer::header {
@@ -27,32 +33,31 @@ options {
 
 @members {
 
-  public static ArrayList<String>   error_var_redefined = new ArrayList<String> ();
   public static ArrayList<String>   error_grammer = new ArrayList<String> ();
   public static Map<String, ArrayList<String>>   cycle = new HashMap<String, ArrayList<String>>();
   public static Map<String, ArrayList<String>>   node = new HashMap<String, ArrayList<String>>();
-  public static Map<String, ArrayList<String>>   dvar = new HashMap<String, ArrayList<String>>();
-  public static Map<String, ArrayList<ArrayList<String>>>   svar = new HashMap<String, ArrayList<ArrayList<String>>>();
+  public static Map<String, Dvar>   dvar = new HashMap<String, Dvar>();
+  public static Map<String, Svar>   svar = new HashMap<String, Svar>();
   public static ArrayList<String>   outputSvar = new ArrayList<String>();
   public static Map<String, String> weight = new HashMap<String, String>();
   public static ArrayList<String>   file = new ArrayList<String>();
-  public static Map<String, ArrayList<ArrayList<String>>>   constraint = new HashMap<String, ArrayList<ArrayList<String>>>();
-  public static Map<String, ArrayList<ArrayList<String>>>   lgr = new HashMap<String, ArrayList<ArrayList<String>>>();
-  public static Map<String, ArrayList<ArrayList<String>>>   rgl = new HashMap<String, ArrayList<ArrayList<String>>>();
+  public static Map<String, Constraint>   constraint = new HashMap<String, Constraint>();
+  public static Map<String, LRWeight>   lgr = new HashMap<String, LRWeight>();
+  public static Map<String, LRWeight>   rgl = new HashMap<String, LRWeight>();
   public static Map<String, String> function = new HashMap<String, String>();
-  public static Map<String, ArrayList<String>>   alias = new HashMap<String, ArrayList<String>>();
+  public static Map<String, Alias>   alias = new HashMap<String, Alias>();
 
   public static Map<String, ArrayList<String>>   nodeGlobal = new HashMap<String, ArrayList<String>>();
-  public static Map<String, ArrayList<String>>   dvarGlobal = new HashMap<String, ArrayList<String>>();
-  public static Map<String, ArrayList<ArrayList<String>>>   svarGlobal = new HashMap<String, ArrayList<ArrayList<String>>>();
+  public static Map<String, Dvar>   dvarGlobal = new HashMap<String, Dvar>();
+  public static Map<String, Svar>   svarGlobal = new HashMap<String, Svar>();
   public static ArrayList<String>   outputSvarGlobal = new ArrayList<String>();
   public static Map<String, String> weightGlobal = new HashMap<String, String>();
   public static ArrayList<String>   fileGlobal = new ArrayList<String>();
-  public static Map<String, ArrayList<ArrayList<String>>>   constraintGlobal = new HashMap<String, ArrayList<ArrayList<String>>>();
-  public static Map<String, ArrayList<ArrayList<String>>>   lgrGlobal = new HashMap<String, ArrayList<ArrayList<String>>>();
-  public static Map<String, ArrayList<ArrayList<String>>>   rglGlobal = new HashMap<String, ArrayList<ArrayList<String>>>();
+  public static Map<String, Constraint>   constraintGlobal = new HashMap<String, Constraint>();
+  public static Map<String, LRWeight>   lgrGlobal = new HashMap<String, LRWeight>();
+  public static Map<String, LRWeight>   rglGlobal = new HashMap<String, LRWeight>();
   public static Map<String, String> functionGlobal = new HashMap<String, String>();
-  public static Map<String, ArrayList<String>>   aliasGlobal = new HashMap<String, ArrayList<String>>();
+  public static Map<String, Alias>   aliasGlobal = new HashMap<String, Alias>();
   
   private static String currentFile="";
   private static String currentCycle="";
@@ -80,8 +85,6 @@ options {
   private boolean includeReservoir=false;
   private int ilevel=1;
   private String reservoirUnits="taf";
-  
-  private ArrayList<ArrayList<String>> svlist;
   
   private static CharStream stream;
 
@@ -118,9 +121,9 @@ options {
     Iterator iterator=dvar.keySet().iterator();
     while(iterator.hasNext()){ 
       String dvarName=(String)iterator.next();
-      ArrayList<String> dvarList=dvar.get(dvarName);
-      String lowerBound=dvarList.get(0);
-      String upperBound=dvarList.get(1);
+      Dvar currDvar=dvar.get(dvarName);
+      String lowerBound=currDvar.getLowerBound();
+      String upperBound=currDvar.getUpperBound();
       try{        
         Integer.parseInt(lowerBound);    
       } catch(NumberFormatException nfe0) {        
@@ -131,7 +134,7 @@ options {
             Double.parseDouble(lowerBound);
           }catch (NumberFormatException nfe2) {
             if (!svar.containsKey(lowerBound)){
-              error_grammer.add(lowerBound+" as the lower bound of decision variable "+dvarName+" is not a defined state variable before used");
+              error_grammer.add(currDvar.getSourceFileName()+" "+currDvar.getLineNumber()+"@"+currDvar.getPosLowerBound()+": "+lowerBound+" as the lower bound of decision variable "+dvarName+" is not a defined state variable before used");
             }
           }
         }   
@@ -146,57 +149,14 @@ options {
             Double.parseDouble(upperBound);
           }catch (NumberFormatException nfe5) {
             if (!svar.containsKey(upperBound)){
-              error_grammer.add(upperBound+" as the upper bound of decision variable "+dvarName+" is not a defined state variable before used");
+              error_grammer.add(currDvar.getSourceFileName()+" "+currDvar.getLineNumber()+"@"+currDvar.getPosUpperBound()+": "+upperBound+" as the upper bound of decision variable "+dvarName+" is not a defined state variable before used");
             }
           }
         }   
       }
     }
   }
-  
-  public void nodeConstraint(){
-    Iterator iterator=node.keySet().iterator();
-    while(iterator.hasNext()){        
-       String nodeName=(String)iterator.next();
-       ArrayList<String> nodeList=node.get(nodeName);
-       if (nodeList.get(2).equals("normal")){
-          String leftHandSide="0";
-          for (int i=5; i<=nodeList.size()-1; i++){
-            leftHandSide=leftHandSide+nodeList.get(i);
-          }
-          String rightHandSide=nodeList.get(3)+"-"+nodeList.get(4);
-          String normalConstraint=leftHandSide+"="+rightHandSide;
-          ArrayList<String> list=new ArrayList<String>();
-          list.add("always");
-          list.add(normalConstraint);
-          ArrayList<ArrayList<String>> constraintList = new ArrayList<ArrayList<String>>(); 
-          constraintList.add(list);
-          String constraintName="continuity"+nodeName;
-          if (constraint.containsKey(constraintName)){
-            error_var_redefined.add(currentFile+": "+ constraintName+" is an automatic generated name and is redefined");
-          }               
-          constraint.put(constraintName, constraintList);
-       }else if (nodeList.get(2).equals("reservoir")){
-          String leftHandSide="0";
-          for (int i=5; i<=nodeList.size()-1; i++){
-            leftHandSide=leftHandSide+nodeList.get(i);
-          }
-          String rightHandSide=nodeName+"-"+nodeName+"(-1)+"+nodeList.get(3)+"-"+nodeList.get(4);
-          String reservoirConstraint=leftHandSide+"="+rightHandSide;
-          ArrayList<String> list=new ArrayList<String>();
-          list.add("always");
-          list.add(reservoirConstraint);
-          ArrayList<ArrayList<String>> constraintList = new ArrayList<ArrayList<String>>(); 
-          constraintList.add(list);
-          String constraintName="continuity"+nodeName;
-          if (constraint.containsKey(constraintName)){
-            error_var_redefined.add(currentFile+": "+ constraintName+" is an automatic generated name and is redefined");
-          }               
-          constraint.put(constraintName, constraintList);                    
-       }    
-    }
-  }
-  
+   
   public void setGlobal(){
         nodeGlobal = node;
         dvarGlobal = dvar;
@@ -223,6 +183,11 @@ options {
         rgl = rglGlobal;
         function=functionGlobal;
         alias = aliasGlobal;        
+  }
+  
+  @Override
+  public void reportError(RecognitionException e) {
+       error_grammer.add(currentFile+" "+e.line+"@"+e.charPositionInLine+": "+getErrorMessage(e, tokenNames));
   }
 }
 
@@ -363,19 +328,19 @@ content_global
   : i1=IDENT ',' i2=directory ',' i3=conditionStatement{
       if ($i1.text.equals("global")){
         node = new HashMap<String, ArrayList<String>>();
-        dvar = new HashMap<String, ArrayList<String>>();
-        svar = new HashMap<String, ArrayList<ArrayList<String>>>();
+        dvar = new HashMap<String, Dvar>();
+        svar = new HashMap<String, Svar>();
         outputSvar = new ArrayList<String>();
         weight = new HashMap<String, String>();
         file = new ArrayList<String>();
-        constraint = new HashMap<String, ArrayList<ArrayList<String>>>();
-        lgr = new HashMap<String, ArrayList<ArrayList<String>>>();
-        rgl = new HashMap<String, ArrayList<ArrayList<String>>>();
+        constraint = new HashMap<String, Constraint>();
+        lgr = new HashMap<String, LRWeight>();
+        rgl = new HashMap<String, LRWeight>();
         function =  new HashMap<String, String>();
-        alias = new HashMap<String, ArrayList<String>>();
+        alias = new HashMap<String, Alias>();
       
         if (cycle.containsKey($i1.text)){
-          error_var_redefined.add("main file: cycle"+ $i1.text+" redefined");
+          error_grammer.add("main file: cycle"+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
         }else{
           ArrayList<String> list = new ArrayList<String>();
           list.add($i3.text);
@@ -414,7 +379,7 @@ content_global
           setGlobal();
         }           
       }else{
-        error_grammer.add("main file: cycle name "+$i1.text+" is wrong. The first line cycle name should be global");
+        error_grammer.add("main file "+$i1.line+"@"+($i1.pos+1)+ ": cycle name "+$i1.text+" is wrong. The first line cycle name should be global");
       }      
   }
   ;
@@ -422,21 +387,21 @@ content_global
 content_cycle
   : i1=IDENT ',' i2=directory ',' i3=conditionStatement{
       node = new HashMap<String, ArrayList<String>>();
-      dvar = new HashMap<String, ArrayList<String>>();
-      svar = new HashMap<String, ArrayList<ArrayList<String>>>();
+      dvar = new HashMap<String, Dvar>();
+      svar = new HashMap<String, Svar>();
       outputSvar = new ArrayList<String>();
       weight = new HashMap<String, String>();
       file = new ArrayList<String>();
-      constraint = new HashMap<String, ArrayList<ArrayList<String>>>();
-      lgr = new HashMap<String, ArrayList<ArrayList<String>>>();
-      rgl = new HashMap<String, ArrayList<ArrayList<String>>>();
+      constraint = new HashMap<String, Constraint>();
+      lgr = new HashMap<String, LRWeight>();
+      rgl = new HashMap<String, LRWeight>();
       function = new HashMap<String, String>();
-      alias = new HashMap<String, ArrayList<String>>();
+      alias = new HashMap<String, Alias>();
       
       initialCycle();
       
       if (cycle.containsKey($i1.text)){
-        error_var_redefined.add("main file: cycle"+ $i1.text+" redefined");
+        error_grammer.add("main file "+$i1.line+"@"+($i1.pos+1)+": cycle"+ $i1.text+" redefined");
       }else{
         ArrayList<String> list = new ArrayList<String>();
         list.add($i3.text);
@@ -473,7 +438,6 @@ content_cycle
         currentFile=fileAnchestry.get(fileAnchestry.size()-1);
         fileAnchestry.remove(fileAnchestry.size()-1);
         
-        //nodeConstraint();
         dvTestDefineSV();
       }   
   }
@@ -483,7 +447,7 @@ content_file
   : i1=directory ',' i2=IDENT {
        if ($i2.text.equals("y")){
            if (file.contains($i1.text)) {
-               error_var_redefined.add(currentFile+": "+ $i1.text+" redefined");
+               error_grammer.add(currentFile+" "+$i2.line+"@"+"0"+": "+ $i1.text+" redefined");
            }else{
              file.add($i1.text); 
              byte[] buffer = new byte[(int) new File($i1.text).length()];
@@ -516,105 +480,110 @@ content_file
              fileAnchestry.remove(fileAnchestry.size()-1);
            }           
        }else if (!($i2.text.equals("n"))){
-           error_grammer.add(currentFile+": "+$i1.text+" include field should be y or n");
+           error_grammer.add(currentFile+" "+$i2.line+"@"+($i2.pos+1)+": "+$i1.text+" include field should be y or n");
        }
     }
   ;
 	
 content_dvar
-	:	i1=IDENT ',' lowerbound ',' upperbound ',' i3=IDENT ',' i4=IDENT ',' partC{
+	:	i1=IDENT s1=',' lowerbound s2=',' upperbound ',' i3=IDENT ',' i4=IDENT ',' partC{
 	       if (dvar.containsKey($i1.text) || svar.containsKey($i1.text) || alias.containsKey($i1.text)){
-            error_var_redefined.add(currentFile+": "+ $i1.text+" redefined");
+            error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
          }else{
-            ArrayList<String> list=new ArrayList<String>();
+            Dvar currDvar=new Dvar();
             if ($lowerbound.text.equals("ul")){
-              list.add("-1.e38");
+              currDvar.setLowerBound("-1.e38");
             }else{
-              list.add($lowerbound.text);
+              currDvar.setLowerBound($lowerbound.text);
             }
             
             if ($upperbound.text.equals("ul")){
-              list.add("1.e38");
+              currDvar.setUpperBound("1.e38");
             }else{
-              list.add($upperbound.text);
+              currDvar.setUpperBound($upperbound.text);
             }
             
-            if ($i3.text.equals("y")|$i3.text.equals("n")){
-              list.add($i3.text);
+            if ($i3.text.equals("y")){
+              currDvar.setIntegerType(true);
+            }else if ($i3.text.equals("n")){
+              currDvar.setIntegerType(false);
             }else{
-              error_grammer.add(currentFile+": "+$i1.text+" integer field should be y or n");
+              error_grammer.add(currentFile+" "+$i3.line+"@"+($i3.pos+1)+": "+$i1.text+" integer field should be y or n");
             }
             
-            list.add($i4.text);
-            list.add($partC.text);
-            dvar.put($i1.text,list);
+            currDvar.setUnits($i4.text);
+            currDvar.setType($partC.text);
+            currDvar.setSourceFileName(currentFile);
+            currDvar.setLineNumber($s1.line);
+            currDvar.setPosLowerBound($s1.pos+2);
+            currDvar.setPosUpperBound($s2.pos+2);
+            dvar.put($i1.text,currDvar);
          }
 	}
 	;
 	
 content_svar
-	:	i1=IDENT ',' i2=partC ',' i3=IDENT ',' i4=IDENT ',' IDENT ',' INTEGER ',' i5=conditionStatement ',' i6=tableExpression{
+	:	i1=IDENT  s1=',' i2=partC ',' i3=IDENT ',' i4=IDENT ',' IDENT ',' INTEGER s2=',' i5=conditionStatement ',' i6=tableExpression{
      				if ($i1.text.equals(preSV)){
 			        	if (!$i2.text.equals(svType)){
-			        	  error_grammer.add(currentFile+": "+$i1.text+" type field should be the same");
+			        	  error_grammer.add(currentFile+" "+$s1.line+"@"+($s1.pos+2)+": "+$i1.text+" type field should be the same");
 			        	}
 			        	if (!$i3.text.equals(svUnits)){
-                  error_grammer.add(currentFile+": "+$i1.text+" units field should be the same");
+                  error_grammer.add(currentFile+" "+$i3.line+"@"+($i3.pos+1)+": "+$i1.text+" units field should be the same");
                 }
                 if (!$i4.text.equals(output)){
-                  error_grammer.add(currentFile+": "+$i1.text+" output field should be the same");
+                  error_grammer.add(currentFile+" "+$i4.line+"@"+($i4.pos+1)+": "+$i1.text+" output field should be the same");
                 }
 			        	if (!redefineSV){
 			        	   if ($i5.text.equals("always")){
             				  n_always=n_always+1;
 			        		    if (n_always>1){
-		              				error_grammer.add(currentFile+": "+$i1.text+" has more than 1 always condition");
+		              				error_grammer.add(currentFile+" "+$s2.line+"@"+($s2.pos+2)+": "+$i1.text+" has more than 1 always condition");
             				  }
           			   }
-
-            			 ArrayList<String> list=new ArrayList<String>();
-            			 list.add(svType);
-            			 list.add(svUnits);
-            			 list.add($i5.text);
-            			 list.addAll($i6.list);
-            			 svlist=svar.get($i1.text);
-            			 svlist.add(list);
+                   
+                   Svar currSvar=svar.get($i1.text);
+                   currSvar.getCaseCondition().add($i5.text);
+                   ArrayList<String> list=new ArrayList<String>();
+                   list.addAll($i6.list);
+                   currSvar.getCaseExpression().add(list);
           			}
         		}else{
         			  svType=$i2.text;
                 svUnits=$i3.text;
           			if (svar.containsKey($i1.text) || dvar.containsKey($i1.text) || alias.containsKey($i1.text)){
-                    error_var_redefined.add(currentFile+": "+ $i1.text+" redefined");
+                    error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
                     redefineSV=true;
                 }else{
                     redefineSV=false;
           				  n_always=0;
-				            svlist=new ArrayList<ArrayList<String>>();
           				  if ($i4.text.equals("y")){
             					output=$i4.text;
             					outputSvar.add($i1.text);
             				}else if ($i4.text.equals("n")){
             				  output=$i4.text;
           				  }else{
-            					error_grammer.add(currentFile+": "+$i1.text+" output field should be y or n");
+            					error_grammer.add(currentFile+" "+$i4.line+"@"+($i4.pos+1)+": "+$i1.text+" output field should be y or n");
             					output="n";
           				  }
           				
           				  if (!(preCondition.equals("always"))){
-            					error_grammer.add(currentFile+": "+preSV+" the last case should be always");
+            					error_grammer.add(currentFile+" "+$s2.line+"@"+($s2.pos+2)+": "+preSV+" the last case should be always");
           				  }
           				  
           				  if ($i5.text.equals("always")){
             					n_always=n_always+1;
           				  }
             				
+            				Svar currSvar=new Svar();
+            				currSvar.setType(svType);
+                    currSvar.setUnits(svUnits);
+                    currSvar.getCaseCondition().add($i5.text);
+
             				ArrayList<String> list=new ArrayList<String>();
-            				list.add(svType);
-            				list.add(svUnits);
-            				list.add($i5.text);
             				list.addAll($i6.list);
-            				svlist.add(list);
-            				svar.put($i1.text, svlist);
+            				currSvar.getCaseExpression().add(list);
+            				svar.put($i1.text, currSvar);
           			}
           	}
      			  preCondition=$i5.text;
@@ -623,112 +592,86 @@ content_svar
 	;
 	
 content_constraint
-	:	i1=IDENT ',' i3=IDENT ',' INTEGER ',' i5=conditionStatement ',' i6=constraintStatement ',' ((i7=lhsrhs)|'#') ',' ((i8=lhsrhs)|'#'){
+	:	i1=IDENT ',' i3=IDENT ',' INTEGER s1=',' i5=conditionStatement s2=',' i6=constraintStatement s3=',' ((i7=lhsrhs)|'#') s4=',' ((i8=lhsrhs)|'#'){
+            ArrayList<String> list;
             if ($i1.text.equals(preConstraint)){
                 if (!redefineConstraint){
                    if ($i5.text.equals("always")){
                       n_always=n_always+1;
                       if (n_always>1){
-                          error_grammer.add(currentFile+": "+$i1.text+" has more than 1 always condition");
+                          error_grammer.add(currentFile+" "+$s1.line+"@"+($s1.pos+2)+": "+$i1.text+" has more than 1 always condition");
                       }
                    }
                    if (constraintOnly){
-                        if (($i7.text==null) && ($i8.text==null)){
-                          ArrayList<ArrayList<String>> constraintList = constraint.get($i1.text);
-                          ArrayList<String> list = new ArrayList<String>();
-                          list.add($i5.text);
-                          list.add($i6.text);
-                          constraintList.add(list);
-                        }else{
-                          error_grammer.add(currentFile+": "+$i1.text+" lhs>rhs and rhs>lhs fields can only be both # or neither");
+                        Constraint currConstraint = constraint.get($i1.text);
+                        currConstraint.getCaseCondition().add($i5.text);
+                        currConstraint.getCaseExpression().add($i6.text);
+                        if (!(($i7.text==null) && ($i8.text==null))){
+                          error_grammer.add(currentFile+" "+$s3.line+"@"+($s3.pos+2)+": "+$i1.text+" lhs_gt_rhs and rhs_gt_lhs fields can only be both # or neither");
                         }
                    }else{
                         if ($i7.text.equals("constrain") && $i8.text.equals("constrain")){
-                          ArrayList<String> list = new ArrayList<String>();
-                          ArrayList<ArrayList<String>> constraintList = constraint.get($i1.text);
-                          list.add($i5.text);
-                          list.add(equalConstraint($i6.text));
-                          constraintList.add(list);
+                          Constraint currConstraint = constraint.get($i1.text);
+                          currConstraint.getCaseCondition().add($i5.text);
+                          currConstraint.getCaseExpression().add(equalConstraint($i6.text));
                           
-                          ArrayList<ArrayList<String>> lgrList = lgr.get($i1.text);
-                          list= new ArrayList<String>();
-                          list.add($i5.text);
-                          list.add("0");
-                          list.add("0");
-                          lgrList.add(list);
+                          LRWeight currLgr = lgr.get($i1.text);
+                          currLgr.getCaseCondition().add($i5.text);
+                          currLgr.getCaseExpression().add("0");
+                          currLgr.getCaseWeight().add("0");
                           
-                          ArrayList<ArrayList<String>> rglList = rgl.get($i1.text);
-                          list= new ArrayList<String>();
-                          list.add($i5.text);
-                          list.add("0");
-                          list.add("0");
-                          rglList.add(list);
+                          LRWeight currRgl = rgl.get($i1.text);
+                          currRgl.getCaseCondition().add($i5.text);
+                          currRgl.getCaseExpression().add("0");
+                          currRgl.getCaseWeight().add("0");
                         }else if ($i7.text.equals("constrain") && !($i8.text.equals("constrain"))){
-                          ArrayList<String> list = new ArrayList<String>();
-                          ArrayList<ArrayList<String>> constraintList = constraint.get($i1.text);
-                          list.add($i5.text);
-                          list.add(smallerConstraint($i6.text));
-                          constraintList.add(list);
+                          Constraint currConstraint = constraint.get($i1.text);
+                          currConstraint.getCaseCondition().add($i5.text);
+                          currConstraint.getCaseExpression().add(smallerConstraint($i6.text));
                           
-                          ArrayList<ArrayList<String>> lgrList = lgr.get($i1.text);
-                          list=new ArrayList<String>();
-                          list.add($i5.text);
-                          list.add("0");
-                          list.add("0");
-                          lgrList.add(list);
+                          LRWeight currLgr = lgr.get($i1.text);
+                          currLgr.getCaseCondition().add($i5.text);
+                          currLgr.getCaseExpression().add("0");
+                          currLgr.getCaseWeight().add("0");
                           
-                          ArrayList<ArrayList<String>> rglList = rgl.get($i1.text);
-                          list=new ArrayList<String>();                          
-                          list.add($i5.text);
-                          list.add(rMinusL($i6.text));
-                          list.add($i8.text);
-                          rglList.add(list);                     
-                        } else if (!($i7.text.equals("constrain")) && $i8.text.equals("constrain")){
-                          ArrayList<String> list = new ArrayList<String>();
-                          ArrayList<ArrayList<String>> constraintList = constraint.get($i1.text);
-                          list.add($i5.text);
-                          list.add(largerConstraint($i6.text));
-                          constraintList.add(list);
+                          LRWeight currRgl = rgl.get($i1.text);
+                          currRgl.getCaseCondition().add($i5.text);
+                          currRgl.getCaseExpression().add(rMinusL($i6.text));
+                          currRgl.getCaseWeight().add($i8.text);                    
+                        } else if (!($i7.text.equals("constrain")) && $i8.text.equals("constrain")){                         
+                          Constraint currConstraint = constraint.get($i1.text);
+                          currConstraint.getCaseCondition().add($i5.text);
+                          currConstraint.getCaseExpression().add(largerConstraint($i6.text));
+                                                   
+                          LRWeight currLgr = lgr.get($i1.text);
+                          currLgr.getCaseCondition().add($i5.text);
+                          currLgr.getCaseExpression().add(lMinusR($i6.text));
+                          currLgr.getCaseWeight().add($i7.text);
                           
-                          ArrayList<ArrayList<String>> lgrList = lgr.get($i1.text);
-                          list = new ArrayList<String>();
-                          list.add($i5.text);
-                          list.add(lMinusR($i6.text));
-                          list.add($i7.text);
-                          lgrList.add(list);
+                          LRWeight currRgl = rgl.get($i1.text);
+                          currRgl.getCaseCondition().add($i5.text);
+                          currRgl.getCaseExpression().add("0");
+                          currRgl.getCaseWeight().add("0");                      
+                        } else{                         
+                          Constraint currConstraint = constraint.get($i1.text);
+                          currConstraint.getCaseCondition().add($i5.text);
+                          currConstraint.getCaseExpression().add("0=0");
                           
-                          ArrayList<ArrayList<String>> rglList = rgl.get($i1.text);
-                          list = new ArrayList<String>();
-                          list.add($i5.text);
-                          list.add("0");
-                          list.add("0");
-                          rglList.add(list);                      
-                        } else{
-                          ArrayList<String> list = new ArrayList<String>();
-                          ArrayList<ArrayList<String>> constraintList = constraint.get($i1.text);
-                          list.add($i5.text);
-                          list.add("0=0");
-                          constraintList.add(list);
+                          LRWeight currLgr = lgr.get($i1.text);
+                          currLgr.getCaseCondition().add($i5.text);
+                          currLgr.getCaseExpression().add(lMinusR($i6.text));
+                          currLgr.getCaseWeight().add($i7.text);
                           
-                          ArrayList<ArrayList<String>> lgrList = lgr.get($i1.text);
-                          list = new ArrayList<String>();
-                          list.add($i5.text);
-                          list.add(lMinusR($i6.text));
-                          list.add($i7.text);
-                          lgrList.add(list);
-                          
-                          ArrayList<ArrayList<String>> rglList = rgl.get($i1.text);
-                          list = new ArrayList<String>();
-                          list.add($i5.text);
-                          list.add(rMinusL($i6.text));
-                          list.add($i8.text);
-                          rglList.add(list);
+                          LRWeight currRgl = rgl.get($i1.text);
+                          currRgl.getCaseCondition().add($i5.text);
+                          currRgl.getCaseExpression().add(rMinusL($i6.text));
+                          currRgl.getCaseWeight().add($i8.text);
                         }                       
                    }
                 }
             }else{
                 if (constraint.containsKey($i1.text)){
-                    error_var_redefined.add(currentFile+": "+ $i1.text+" redefined");
+                    error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
                     redefineConstraint=true;
                 }else{
                     redefineConstraint=false;
@@ -736,7 +679,7 @@ content_constraint
                     n_always=0;
                   
                     if (!(preCondition.equals("always"))){
-                      error_grammer.add(currentFile+": "+preConstraint+" the last case should be always");
+                      error_grammer.add(currentFile+" "+$s1.line+"@"+($s1.pos+2)+": "+preConstraint+" the last case should be always");
                     }
 
                     if ($i5.text.equals("always")){
@@ -745,109 +688,82 @@ content_constraint
 
                     if (($i7.text==null) || ($i8.text==null)){
                         constraintOnly=true;
-                        if (($i7.text==null) && ($i8.text==null)){
-                          ArrayList<ArrayList<String>> constraintList = new ArrayList<ArrayList<String>>();
-                          ArrayList<String> list = new ArrayList<String>();
-                          list.add($i5.text);
-                          list.add($i6.text);
-                          constraintList.add(list);
-                          constraint.put($i1.text, constraintList);
-                        }else{
-                          error_grammer.add(currentFile+": "+$i1.text+" lhs>rhs and rhs>lhs fields can only be both # or neither");
+                        Constraint currConstraint = new Constraint();
+                        currConstraint.getCaseCondition().add($i5.text);
+                        currConstraint.getCaseExpression().add($i6.text);
+                        constraint.put($i1.text, currConstraint);
+                        if (!(($i7.text==null) && ($i8.text==null))){                          
+                          error_grammer.add(currentFile+" "+$s3.line+"@"+($s3.pos+2)+": "+$i1.text+" lhs_gt_rhs and rhs_lt_lhs fields can only be both # or neither");
                         }
                     }else{
-                        if ($i7.text.equals("constrain") && $i8.text.equals("constrain")){
-                          ArrayList<String> list = new ArrayList<String>();
-                          ArrayList<ArrayList<String>> constraintList = new ArrayList<ArrayList<String>>();
-                          list.add($i5.text);
-                          list.add(equalConstraint($i6.text));
-                          constraintList.add(list);
-                          constraint.put($i1.text, constraintList);
+                        if ($i7.text.equals("constrain") && $i8.text.equals("constrain")){                        
+                          Constraint currConstraint = new Constraint();
+                          currConstraint.getCaseCondition().add($i5.text);
+                          currConstraint.getCaseExpression().add(equalConstraint($i6.text));
+                          constraint.put($i1.text, currConstraint);
                           
-                          ArrayList<ArrayList<String>> lgrList = new ArrayList<ArrayList<String>>();
-                          list= new ArrayList<String>();
-                          list.add($i5.text);
-                          list.add("0");
-                          list.add("0");
-                          lgrList.add(list);
-                          lgr.put($i1.text, lgrList);
+                          LRWeight currLgr = new LRWeight();
+                          currLgr.getCaseCondition().add($i5.text);
+                          currLgr.getCaseExpression().add("0");
+                          currLgr.getCaseWeight().add("0");
+                          lgr.put($i1.text, currLgr);
                           
-                          ArrayList<ArrayList<String>> rglList = new ArrayList<ArrayList<String>>();
-                          list= new ArrayList<String>();
-                          list.add($i5.text);
-                          list.add("0");
-                          list.add("0");
-                          rglList.add(list);
-                          rgl.put($i1.text, rglList); 
-                        }else if ($i7.text.equals("constrain") && !($i8.text.equals("constrain"))){
-                          ArrayList<String> list = new ArrayList<String>();
-                          ArrayList<ArrayList<String>> constraintList = new ArrayList<ArrayList<String>>();
-                          list.add($i5.text);
-                          list.add(smallerConstraint($i6.text));
-                          constraintList.add(list);
-                          constraint.put($i1.text, constraintList);
+                          LRWeight currRgl = new LRWeight();
+                          currRgl.getCaseCondition().add($i5.text);
+                          currRgl.getCaseExpression().add("0");
+                          currRgl.getCaseWeight().add("0");
+                          rgl.put($i1.text, currRgl); 
+                        }else if ($i7.text.equals("constrain") && !($i8.text.equals("constrain"))){                         
+                          Constraint currConstraint = new Constraint();
+                          currConstraint.getCaseCondition().add($i5.text);
+                          currConstraint.getCaseExpression().add(smallerConstraint($i6.text));
+                          constraint.put($i1.text, currConstraint);
                           
-                          ArrayList<ArrayList<String>> lgrList = new ArrayList<ArrayList<String>>();
-                          list=new ArrayList<String>();
-                          list.add($i5.text);
-                          list.add("0");
-                          list.add("0");
-                          lgrList.add(list);
-                          lgr.put($i1.text, lgrList);
+                          LRWeight currLgr = new LRWeight();
+                          currLgr.getCaseCondition().add($i5.text);
+                          currLgr.getCaseExpression().add("0");
+                          currLgr.getCaseWeight().add("0");
+                          lgr.put($i1.text, currLgr);
+                                                    
+                          LRWeight currRgl = new LRWeight();
+                          currRgl.getCaseCondition().add($i5.text);
+                          currRgl.getCaseExpression().add(rMinusL($i6.text));
+                          currRgl.getCaseWeight().add($i8.text);
+                          rgl.put($i1.text, currRgl);                        
+                        } else if (!($i7.text.equals("constrain")) && $i8.text.equals("constrain")){                         
+                          Constraint currConstraint = new Constraint();
+                          currConstraint.getCaseCondition().add($i5.text);
+                          currConstraint.getCaseExpression().add(largerConstraint($i6.text));
+                          constraint.put($i1.text, currConstraint);
                           
-                          ArrayList<ArrayList<String>> rglList = new ArrayList<ArrayList<String>>();
-                          list=new ArrayList<String>();                          
-                          list.add($i5.text);
-                          list.add(rMinusL($i6.text));
-                          list.add($i8.text);
-                          rglList.add(list);
-                          rgl.put($i1.text, rglList);                       
-                        } else if (!($i7.text.equals("constrain")) && $i8.text.equals("constrain")){
-                          ArrayList<String> list = new ArrayList<String>();
-                          ArrayList<ArrayList<String>> constraintList = new ArrayList<ArrayList<String>>();
-                          list.add($i5.text);
-                          list.add(largerConstraint($i6.text));
-                          constraintList.add(list);
-                          constraint.put($i1.text, constraintList);
+                          LRWeight currLgr = new LRWeight();
+                          currLgr.getCaseCondition().add($i5.text);
+                          currLgr.getCaseExpression().add(lMinusR($i6.text));
+                          currLgr.getCaseWeight().add($i7.text);
+                          lgr.put($i1.text, currLgr);
                           
-                          ArrayList<ArrayList<String>> lgrList = new ArrayList<ArrayList<String>>();
-                          list = new ArrayList<String>();
-                          list.add($i5.text);
-                          list.add(lMinusR($i6.text));
-                          list.add($i7.text);
-                          lgrList.add(list);
-                          lgr.put($i1.text, lgrList);
-                          
-                          ArrayList<ArrayList<String>> rglList = new ArrayList<ArrayList<String>>();
-                          list = new ArrayList<String>();
-                          list.add($i5.text);
-                          list.add("0");
-                          list.add("0");
-                          rglList.add(list);
-                          rgl.put($i1.text, rglList);                       
+                          LRWeight currRgl = new LRWeight();
+                          currRgl.getCaseCondition().add($i5.text);
+                          currRgl.getCaseExpression().add("0");
+                          currRgl.getCaseWeight().add("0");
+                          rgl.put($i1.text, currRgl);                      
                         } else{
-                          ArrayList<String> list = new ArrayList<String>();
-                          ArrayList<ArrayList<String>> constraintList = new ArrayList<ArrayList<String>>();
-                          list.add($i5.text);
-                          list.add("0=0");
-                          constraintList.add(list);
-                          constraint.put($i1.text, constraintList);
+                          Constraint currConstraint = new Constraint();
+                          currConstraint.getCaseCondition().add($i5.text);
+                          currConstraint.getCaseExpression().add("0=0");
+                          constraint.put($i1.text, currConstraint);                          
                           
-                          ArrayList<ArrayList<String>> lgrList = new ArrayList<ArrayList<String>>();
-                          list = new ArrayList<String>();
-                          list.add($i5.text);
-                          list.add(lMinusR($i6.text));
-                          list.add($i7.text);
-                          lgrList.add(list);
-                          lgr.put($i1.text, lgrList);
+                          LRWeight currLgr = new LRWeight();
+                          currLgr.getCaseCondition().add($i5.text);
+                          currLgr.getCaseExpression().add(lMinusR($i6.text));
+                          currLgr.getCaseWeight().add($i7.text);
+                          lgr.put($i1.text, currLgr);
                           
-                          ArrayList<ArrayList<String>> rglList = new ArrayList<ArrayList<String>>();
-                          list = new ArrayList<String>();
-                          list.add($i5.text);
-                          list.add(rMinusL($i6.text));
-                          list.add($i8.text);
-                          rglList.add(list);
-                          rgl.put($i1.text, rglList);
+                          LRWeight currRgl = new LRWeight();
+                          currRgl.getCaseCondition().add($i5.text);
+                          currRgl.getCaseExpression().add(rMinusL($i6.text));
+                          currRgl.getCaseWeight().add($i8.text);
+                          rgl.put($i1.text, currRgl);
                         }                       
                     }
                 }
@@ -857,16 +773,16 @@ content_constraint
 	} 
 	;
 	
-content_weight
+content_weight 
 	:	IDENT ',' weight{
 	   if (dvar.containsKey($IDENT.text)){  
 	     if (weight.containsKey($IDENT.text)){
-          error_var_redefined.add(currentFile+": "+ $IDENT.text+" redefined");
+          error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": "+ $IDENT.text+" redefined");
        }else{
           weight.put($IDENT.text, $weight.text);
        }
      }else{
-       error_grammer.add(currentFile+": "+$IDENT.text+" is not defined before used");
+       error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": "+$IDENT.text+" is not defined before used");
      }
 	} 
 	;
@@ -874,7 +790,7 @@ content_weight
 content_external
   : IDENT ',' externalFile{  
      if (function.containsKey($IDENT.text)){
-        error_var_redefined.add(currentFile+": "+ $IDENT.text+" redefined");
+        error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": "+ $IDENT.text+" redefined");
      }else{
         function.put($IDENT.text, $externalFile.text);
      }
@@ -884,13 +800,13 @@ content_external
 content_alias @init{testDefine=true;}
   : i1=IDENT ',' partC ',' i2=IDENT ',' expression{
       if (dvar.containsKey($i1.text) || svar.containsKey($i1.text) || alias.containsKey($i1.text)){
-        error_var_redefined.add(currentFile+": "+ $i1.text+" redefined");
+        error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
       }
-      ArrayList<String> list = new ArrayList<String>();
-      list.add($partC.text);
-      list.add($i2.text);
-      list.add($expression.list.get(1));
-      alias.put($i1.text, list);
+      Alias currAlias=new Alias();
+      currAlias.setType($partC.text);
+      currAlias.setUnits($i2.text);
+      currAlias.setExpression($expression.list.get(1));
+      alias.put($i1.text, currAlias);
       testDefine=false;
   } 
   ;
@@ -903,7 +819,8 @@ lhsrhs: weight|CONSTRAIN;
 weight	:	allnumber|(allnumber '*taf_cfs');
 
 directory
-	:	(';'|'.'|'|'|'_'|'-'|'+'|'/'|BACKSLASH|IDENT|INTEGER|usedKeywords)+
+	:	(';'|'.'|'|'|'_'|'-'|'+'|'/'|BACKSLASH|IDENT|INTEGER|usedKeywords)+{
+	}
 	;
 	
 externalFile
@@ -958,7 +875,7 @@ function returns [ArrayList<String> list]
 noArgFunction returns [ArrayList<String> list]
   : IDENT '(' ')'{
       if (!function.containsKey($IDENT.text)){
-        error_grammer.add(currentFile+": function "+$IDENT.text+" is not defined before used");
+        error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": function "+$IDENT.text+" is not defined before used");
       }
       list=new ArrayList<String>();
       list.add("FUNCTION");
@@ -969,7 +886,7 @@ noArgFunction returns [ArrayList<String> list]
 argFunction returns [ArrayList<String> list] 
   : IDENT arguements {
       if (!function.containsKey($IDENT.text)){
-        error_grammer.add(currentFile+": function "+$IDENT.text+" is not defined before used");
+        error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": function "+$IDENT.text+" is not defined before used");
       }
       list=new ArrayList<String>();
       list.add("FUNCTION");
@@ -1067,13 +984,13 @@ term returns [String text]
 	{
     if ($i1 !=null){
       if (testDefine && !isSvFile && !dvar.containsKey($i1.text) && !svar.containsKey($i1.text) && !alias.containsKey($i1.text)){
-        error_grammer.add(currentFile+": "+$i1.text+" is not defined before used");
+        error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+$i1.text+" is not defined before used");
       }
       if (!isConstraintStatement && dvar.containsKey($i1.text)){
-        error_grammer.add(currentFile+": decision variable "+$i1.text+" in current month and current cycle can only be used in constraint relationship or defining weight");
+        error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": decision variable "+$i1.text+" in current month and current cycle can only be used in constraint relationship or defining weight");
       }
       if (!isConstraintStatement && alias.containsKey($i1.text)){
-        error_grammer.add(currentFile+": alias variable "+$i1.text+" in current month and current cycle can only be used in constraint relationship");
+        error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": alias variable "+$i1.text+" in current month and current cycle can only be used in constraint relationship");
       }
       if (svar.containsKey($i1.text)||alias.containsKey($i1.text)||isSvFile){
         text="{"+$i1.text+"}";
@@ -1115,18 +1032,18 @@ knownDV returns [String text]
   : pastMonthDV{text=$pastMonthDV.text;}|preMonthDV{text=$preMonthDV.text;}|pastCycleDV{text=$pastCycleDV.text;}
   ;
   
-pastMonth:  PASTMONTH|I;
+pastMonth returns [int line, int pos]:  (PASTMONTH{$line=$PASTMONTH.line; $pos=$PASTMONTH.line;}|I{$line=$I.line; $pos=$I.line;});
   
 pastMonthDV returns [String text] 
   : ((i1=IDENT)|TAFCFS) '(' pastMonth ')'{
     if (!isSumFunction && $pastMonth.text.equals("i")){
-      error_grammer.add(currentFile+": i acts as a past month index of a decision variable can only be used in sum function");
+      error_grammer.add(currentFile+" "+$pastMonth.line+"@"+($pastMonth.pos+1)+": i acts as a past month index of a decision variable can only be used in sum function");
     }
     if ($i1.text ==null){
       text="{"+$TAFCFS.text+"}"+"("+$pastMonth.text+")";
     }else{
       if (testDefine && !dvar.containsKey($i1.text) && !alias.containsKey($i1.text)){
-        error_grammer.add(currentFile+": decision variable "+$i1.text+" is not defined before used");
+        error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": decision variable "+$i1.text+" is not defined before used");
       }
       text="{"+$i1.text+"}"+"("+$pastMonth.text+")";
     }
@@ -1136,7 +1053,7 @@ pastMonthDV returns [String text]
 preMonthDV returns [String text]
   : IDENT '(-' INTEGER ')'  {
     if (testDefine && !dvar.containsKey($IDENT.text)&& !alias.containsKey($IDENT.text)){
-      error_grammer.add(currentFile+": decision variable "+$IDENT.text+" is not defined before used");
+      error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": decision variable "+$IDENT.text+" is not defined before used");
     }
     text="{"+$IDENT.text+"}"+"(-"+$INTEGER.text+")";
   }
@@ -1146,13 +1063,13 @@ pastCycleDV returns [String text]
   : i1=IDENT '[' i2=IDENT ']'{
     if (testDefine){
       if (!dvar.containsKey($i1.text) && !alias.containsKey($i1.text)){
-        error_grammer.add(currentFile+": decision variable"+$i1.text+" is not defined before used");
+        error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": decision variable"+$i1.text+" is not defined before used");
       }  
       if (!cycle.containsKey($i2.text)){
-        error_grammer.add(currentFile+": cycle name "+$i2.text+" is not defined before used");
+        error_grammer.add(currentFile+" "+$i2.line+"@"+($i2.pos+1)+": cycle name "+$i2.text+" is not defined before used");
       }else{
         if (currentCycle.equals($i2.text)){
-          error_grammer.add(currentFile+": cycle name "+$i2.text+" should be previous cycle");
+          error_grammer.add(currentFile+" "+$i2.line+"@"+($i2.pos+1)+": cycle name "+$i2.text+" should be previous cycle");
         }
       }
     } 
