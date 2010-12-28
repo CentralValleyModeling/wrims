@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Iterator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.BufferedInputStream;
@@ -21,6 +22,11 @@ import Parser.ParseTableParser;
 import org.testng.annotations.*;
 import org.testng.Assert;
 
+import Components.Alias;
+import Components.Dvar;
+import Components.Constraint;
+import Components.Svar;
+import Components.LRWeight;
 
 public class TestParseTable {
 
@@ -52,17 +58,12 @@ public class TestParseTable {
 		ParseTableParser parser = new ParseTableParser(tokenStream);
 		parser.evaluator();
 		Map<String, ArrayList<String>> var_node = parser.node;
-		Map<String, ArrayList<String>> var_dvar = parser.dvar;
+		Map<String, Dvar> var_dvar = parser.dvar;
 		Map<String, String> var_weight = parser.weight;
 		ArrayList<String> errorGrammer=parser.error_grammer;
-		ArrayList<String> errorVarRedefine=parser.error_var_redefined;
 
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
-		}
-		
-		for (int i=0; i<errorVarRedefine.size(); i++){
-			System.out.println(errorVarRedefine.get(i));
 		}
 		
 		ArrayList<String> list = new ArrayList<String>();
@@ -132,19 +133,14 @@ public class TestParseTable {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ParseTableParser parser = new ParseTableParser(tokenStream);
 		parser.evaluator();
-		Map<String, ArrayList<ArrayList<String>>> var_svar = parser.svar;
+		Map<String, Svar> var_svar = parser.svar;
 
 		ArrayList<String> errorGrammer=parser.error_grammer;
-		ArrayList<String> errorVarRedefine=parser.error_var_redefined;
 
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
 		}
-		
-		for (int i=0; i<errorVarRedefine.size(); i++){
-			System.out.println(errorVarRedefine.get(i));
-		}
-		
+			
 		ArrayList<ArrayList<String>> svlist = new ArrayList<ArrayList<String>> ();
 		ArrayList<String> list = new ArrayList<String>();
 		list.add("forcast");
@@ -195,16 +191,11 @@ public class TestParseTable {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ParseTableParser parser = new ParseTableParser(tokenStream);
 		parser.evaluator();
-		Map<String, ArrayList<String>> var_dvar = parser.dvar;
+		Map<String, Dvar> var_dvar = parser.dvar;
 		ArrayList<String> errorGrammer=parser.error_grammer;
-		ArrayList<String> errorVarRedefine=parser.error_var_redefined;
 
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
-		}
-		
-		for (int i=0; i<errorVarRedefine.size(); i++){
-			System.out.println(errorVarRedefine.get(i));
 		}
 		
 		ArrayList<String> list = new ArrayList<String>();
@@ -234,19 +225,14 @@ public class TestParseTable {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ParseTableParser parser = new ParseTableParser(tokenStream);
 		parser.evaluator();
-		Map<String, ArrayList<String>> var_dvar = parser.dvar;
-		Map<String, ArrayList<ArrayList<String>>> var_svar = parser.svar;
+		Map<String, Dvar> var_dvar = parser.dvar;
+		Map<String, Svar> var_svar = parser.svar;
 		ArrayList<String> errorGrammer=parser.error_grammer;
-		ArrayList<String> errorVarRedefine=parser.error_var_redefined;
 		
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
 		}
-		
-		for (int i=0; i<errorVarRedefine.size(); i++){
-			System.out.println(errorVarRedefine.get(i));
-		}
-		
+			
 		ArrayList<String> list = new ArrayList<String>();
 		list.add("0");
 		list.add("3160");
@@ -286,14 +272,9 @@ public class TestParseTable {
 		parser.evaluator();
 		Map<String, String> var_weight = parser.weight;
 		ArrayList<String> errorGrammer=parser.error_grammer;
-		ArrayList<String> errorVarRedefine=parser.error_var_redefined;
 		
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
-		}
-		
-		for (int i=0; i<errorVarRedefine.size(); i++){
-			System.out.println(errorVarRedefine.get(i));
 		}
 		
 		expected.put("c134", "-345");
@@ -321,14 +302,9 @@ public class TestParseTable {
 		parser.evaluator();
 		ArrayList<String> var_file = parser.file;
 		ArrayList<String> errorGrammer=parser.error_grammer;
-		ArrayList<String> errorVarRedefine=parser.error_var_redefined;
 		
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
-		}
-		
-		for (int i=0; i<errorVarRedefine.size(); i++){
-			System.out.println(errorVarRedefine.get(i));
 		}
 		
 		expected.add("..\\y\\focus-1\\");
@@ -353,19 +329,14 @@ public class TestParseTable {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ParseTableParser parser = new ParseTableParser(tokenStream);
 		parser.evaluator();
-		Map<String, ArrayList<ArrayList<String>>> var_constraint = parser.constraint;
-		Map<String, ArrayList<ArrayList<String>>> var_lgr = parser.lgr;
-		Map<String, ArrayList<ArrayList<String>>> var_rgl = parser.rgl;
+		Map<String, Constraint> var_constraint = parser.constraint;
+		Map<String, LRWeight> var_lgr = parser.lgr;
+		Map<String, LRWeight> var_rgl = parser.rgl;
 
 		ArrayList<String> errorGrammer=parser.error_grammer;
-		ArrayList<String> errorVarRedefine=parser.error_var_redefined;
 
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
-		}
-		
-		for (int i=0; i<errorVarRedefine.size(); i++){
-			System.out.println(errorVarRedefine.get(i));
 		}
 		
 		ArrayList<ArrayList<String>> constraintList = new ArrayList<ArrayList<String>> ();
@@ -452,19 +423,14 @@ public class TestParseTable {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ParseTableParser parser = new ParseTableParser(tokenStream);
 		parser.evaluator();
-		Map<String, ArrayList<String>> var_dvar = parser.dvar;
-		Map<String, ArrayList<ArrayList<String>>> var_svar=parser.svar;
-		Map<String, ArrayList<ArrayList<String>>> var_constraint=parser.constraint;
+		Map<String, Dvar> var_dvar = parser.dvar;
+		Map<String, Svar> var_svar=parser.svar;
+		Map<String, Constraint> var_constraint=parser.constraint;
 		Map<String, String> var_weight = parser.weight;
 		ArrayList<String> errorGrammer=parser.error_grammer;
-		ArrayList<String> errorVarRedefine=parser.error_var_redefined;
 
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
-		}
-		
-		for (int i=0; i<errorVarRedefine.size(); i++){
-			System.out.println(errorVarRedefine.get(i));
 		}
 		
 		ArrayList<String> list = new ArrayList<String>();
@@ -589,14 +555,9 @@ public class TestParseTable {
 		ArrayList<String> var_file = parser.file;
 		Map<String, ArrayList<String>> var_node = parser.node;
 		ArrayList<String> errorGrammer=parser.error_grammer;
-		ArrayList<String> errorVarRedefine=parser.error_var_redefined;
 		
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
-		}
-		
-		for (int i=0; i<errorVarRedefine.size(); i++){
-			System.out.println(errorVarRedefine.get(i));
 		}
 		
 		expected.add("src\\test\\node.table");
@@ -679,26 +640,111 @@ public class TestParseTable {
 		ParseTableParser parser = new ParseTableParser(tokenStream);
 		parser.evaluator();
 		ArrayList<String> var_file = parser.file;
-		Map<String, ArrayList<ArrayList<String>>> var_constraint = parser.constraint;
-		Map<String, ArrayList<String>> var_alias=parser.alias;
-		Map<String, ArrayList<ArrayList<String>>> var_svar=parser.svar;
+		Map<String, Constraint> var_constraint = parser.constraint;
+		Map<String, LRWeight> var_lgr = parser.lgr;
+		Map<String, LRWeight> var_rgl = parser.rgl;
+		Map<String, Alias> var_alias=parser.alias;
+		Map<String, Dvar> var_dvar=parser.dvar;
+		Map<String, Svar> var_svar=parser.svar;
 		ArrayList<String> errorGrammer=parser.error_grammer;
-		ArrayList<String> errorVarRedefine=parser.error_var_redefined;
 		
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
-		}
-		
-		for (int i=0; i<errorVarRedefine.size(); i++){
-			System.out.println(errorVarRedefine.get(i));
 		}
 		
 		expected.add("src\\test\\dvar.wresl");
 		expected.add("src\\test\\constraint.wresl");
 			
 		//Assert.assertEquals(var_file, expected);
-		Assert.assertEquals(var_constraint, expected1);
-		//Assert.assertEquals(var_alias, expected1);
+		//Assert.assertEquals(var_constraint, expected1);
 		//Assert.assertEquals(var_svar, expected1);
+		
+		System.out.println();
+		
+	    Iterator iterator=var_dvar.keySet().iterator();
+	    while(iterator.hasNext()){ 
+	      String dvarName=(String)iterator.next();
+	      Dvar currDvar=var_dvar.get(dvarName);
+	      System.out.println(dvarName);
+	      System.out.println(currDvar.getLowerBound());
+	      System.out.println(currDvar.getUpperBound());
+	      System.out.println(currDvar.getType());
+	      System.out.println(currDvar.getUnits());
+	      System.out.println(currDvar.getIntegerType());
+	      System.out.println();
+	    }
+	    
+	    System.out.println();
+	    
+	    iterator=var_constraint.keySet().iterator();
+	    while(iterator.hasNext()){ 
+	      String constraintName=(String)iterator.next();
+	      Constraint currConstraint=var_constraint.get(constraintName);
+	      System.out.println(constraintName);
+	      ArrayList<String> caseCondition=currConstraint.getCaseCondition();
+	      ArrayList<String> caseExpression=currConstraint.getCaseExpression();
+	      for (int i=0; i<caseCondition.size(); i++){
+	    	  System.out.println(caseCondition.get(i));
+	      	  System.out.println(caseExpression.get(i));
+	      }
+		  System.out.println();
+	    }
+		
+	    System.out.println();
+	    
+	    iterator=var_svar.keySet().iterator();
+	    while(iterator.hasNext()){ 
+	      String svarName=(String)iterator.next();
+	      Svar currSvar=var_svar.get(svarName);
+	      System.out.println(svarName);
+	      System.out.println(currSvar.getType());
+	      System.out.println(currSvar.getUnits());
+	      ArrayList<String> caseCondition=currSvar.getCaseCondition();
+	      ArrayList<ArrayList<String>> caseExpression=currSvar.getCaseExpression();
+	      for (int i=0; i<caseCondition.size(); i++){
+	    	  System.out.println(caseCondition.get(i));
+	      	  System.out.println(caseExpression.get(i));
+	      }
+		  System.out.println();
+	    }
+	    
+	    System.out.println();
+	    
+	    iterator=var_lgr.keySet().iterator();
+	    while(iterator.hasNext()){ 
+	      String lgrName=(String)iterator.next();
+	      LRWeight currLgr=var_lgr.get(lgrName);
+	      System.out.println(lgrName);
+	      ArrayList<String> caseCondition=currLgr.getCaseCondition();
+	      ArrayList<String> caseExpression=currLgr.getCaseExpression();
+	      ArrayList<String> caseWeight=currLgr.getCaseWeight();
+	      
+	      for (int i=0; i<caseCondition.size(); i++){
+	    	  System.out.println(caseCondition.get(i));
+	      	  System.out.println(caseExpression.get(i));
+	      	  System.out.println(caseWeight.get(i));
+	      }
+		  System.out.println();
+	    }
+	    
+	    
+	    System.out.println();
+	    
+	    iterator=var_rgl.keySet().iterator();
+	    while(iterator.hasNext()){ 
+	      String rglName=(String)iterator.next();
+	      LRWeight currRgl=var_rgl.get(rglName);
+	      System.out.println(rglName);
+	      ArrayList<String> caseCondition=currRgl.getCaseCondition();
+	      ArrayList<String> caseExpression=currRgl.getCaseExpression();
+	      ArrayList<String> caseWeight=currRgl.getCaseWeight();
+	      
+	      for (int i=0; i<caseCondition.size(); i++){
+	    	  System.out.println(caseCondition.get(i));
+	      	  System.out.println(caseExpression.get(i));
+	      	  System.out.println(caseWeight.get(i));
+	      }
+		  System.out.println();
+	    }
 	}	
 }
