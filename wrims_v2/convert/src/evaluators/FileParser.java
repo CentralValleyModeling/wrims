@@ -94,22 +94,27 @@ public class FileParser {
 		Map<String,Dataset> out = new HashMap<String, Dataset>();
 		out.put(inputFilePath, mainData);
 		
-		for (String file : mainData.incFileList){
-			
-			String subscope;
-			if (scope == "local") {subscope = "local";} // main file scope overrides subfile scope
-			else {subscope = mainData.incFileMap.get(file).scope;}
-			
-			Dataset each = processFileIntoDataset(file,subscope);
-			
-			
-			
-			
-			
-			out.put(file, each);
+		if (mainData.incFileList.isEmpty()) {return out;}
+		else {
+			for (String file : mainData.incFileList) {
+
+				String subscope;
+				if (scope == "local") {
+					subscope = "local";
+				} // main file scope overrides subfile scope
+				else {
+					subscope = mainData.incFileMap.get(file).scope;
+				}
+
+				//Dataset each = processFileIntoDataset(file, subscope);
+				Map<String,Dataset> eachMap = processNestedFileIntoDatasetMap(file, subscope);
+
+				//out.put(file, each);
+				out.putAll(eachMap);
+			}
+
+			return out;
 		}
-		
-		return out;		
 	}
 	
 	public static Map<String,Dataset> processFileListIntoDatasetMap(ArrayList<String>fileList, ArrayList<String>scopeList) throws RecognitionException, IOException {

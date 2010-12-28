@@ -60,29 +60,38 @@ public class TestConvertWreslToTable {
 			ArrayList<String> firstLevel = new ArrayList<String>();
 			ArrayList<String> secondLevel = new ArrayList<String>();
 			
-			///
-			ArrayList<String> fileList = new ArrayList<String>();
+			/// get scope list
 			ArrayList<String> scopeList = new ArrayList<String>();
-			for (String f : adhoc.incFileList){
-				fileList.add(f);
-				scopeList.add(adhoc.incFileMap.get(f).scope);
-			}
+			for (String f : adhoc.incFileList){ scopeList.add(adhoc.incFileMap.get(f).scope); }
 			
-			Map<String,Dataset> fileDataMap = FileParser.processFileListIntoDatasetMap(fileList,scopeList);
+
+			Map<String,Dataset> fileDataMap = FileParser.processFileListIntoDatasetMap(adhoc.incFileList,scopeList);
+			
+			System.out.println("keysets in fileDataMap"+fileDataMap.keySet());
 			
 			System.out.println(fileDataMap.get("D:\\cvwrsm\\wrims_v2\\convert\\src\\test\\TestConvertWresl_svarExpression.wresl").svList);			
 			System.out.println(fileDataMap.get("D:\\cvwrsm\\wrims_v2\\convert\\src\\test\\TestConvertWresl_svarExpression.wresl").svList_global);
 			System.out.println(fileDataMap.get("D:\\cvwrsm\\wrims_v2\\convert\\src\\test\\TestConvertWresl_svarExpression.wresl").svList_local);
 			
+			
+			
 			Dataset model_data_complete = new Dataset();
 			
-			for (String f : fileList){
+			for (String f : adhoc.incFileList){
+				
 				/// check duplicate and promote later included file data for higher priority 		
 				model_data_complete.prioritize(fileDataMap.get(f), f);			
+			
+			
+			
 			}
 			/// check duplicate and promote adhoc data for higher priority 
 			model_data_complete.prioritize(adhoc, mainFilePath);	
-						
+			
+			
+			
+			
+			
 			model_data_complete_map.put(model, model_data_complete);		
 		}		
 		
