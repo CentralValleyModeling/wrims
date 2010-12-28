@@ -212,6 +212,10 @@ public class Tools {
 		return out;
 	}
 
+	
+
+	
+	
 //	public static Map<String,Dataset> getModelDataFromAdhoc(Dataset InputModelAdhoc) throws RecognitionException, IOException{
 //		
 //		Map<String,Dataset> out = new HashMap<String, Dataset>();
@@ -237,39 +241,36 @@ public class Tools {
 //
 //	}
 	
-	public static Dataset overrideScope(
-					Map<String,Dataset> inputFileDataMap, ArrayList<String> allFiles, ArrayList<String> localFiles){
-		
-		Dataset out = new Dataset();
-								
-		
-		// / copy data from pair into the complete data container
-		for (String includedFile : allFiles) {
-
-			Dataset ds = inputFileDataMap.get(includedFile);
-
-			if ( out.hasDuplicateIn(ds, includedFile)) {
-				// / replace with some exit message
-				// System.exit(1);
-				out.remove(ds);
-			}
-
-			// / add to local
-			if (localFiles.contains(includedFile)) {
-
-				out.addToLocal(ds);
-			}
-			// / add all
-			else {
-				out.add(ds);
-			}
-
-		}
-		return out;
-					
-
-
-	}	
+//	public static Dataset overrideScope(
+//					Map<String,Dataset> inputFileDataMap, ArrayList<String> allFiles, ArrayList<String> localFiles){
+//		
+//		Dataset out = new Dataset();
+//								
+//		
+//		// / copy data from pair into the complete data container
+//		for (String includedFile : allFiles) {
+//
+//			Dataset ds = inputFileDataMap.get(includedFile);
+//
+//			if ( out.hasDuplicateIn(ds, includedFile)) {
+//				// / replace with some exit message
+//				// System.exit(1);
+//				out.remove(ds);
+//			}
+//
+//			// / add to local
+//			if (localFiles.contains(includedFile)) {
+//
+//				out.addToLocal(ds);
+//			}
+//			// / add all
+//			else {
+//				out.add(ds);
+//			}
+//
+//		}
+//		return out;
+//	}	
 	
 	
 	

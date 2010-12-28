@@ -294,6 +294,17 @@ public class Dataset {
 		return this;
 	}
 	
+	public Dataset prioritize(Dataset laterFileData, String filePath) {
+
+		/// check duplicate and promote later included file data for higher priority 
+		if ( this.hasDuplicateIn(laterFileData, filePath)) {
+			this.remove(laterFileData);
+		}
+		
+		return this.add(laterFileData); // later data has higher priority
+	}
+	
+	
 //	public Dataset addStruct(Object obj) {
 //		
 //		Struct s = (Struct)obj;

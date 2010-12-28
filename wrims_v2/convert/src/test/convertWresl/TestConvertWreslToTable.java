@@ -60,9 +60,9 @@ public class TestConvertWreslToTable {
 			ArrayList<String> firstLevel = new ArrayList<String>();
 			ArrayList<String> secondLevel = new ArrayList<String>();
 			
+			///
 			ArrayList<String> fileList = new ArrayList<String>();
 			ArrayList<String> scopeList = new ArrayList<String>();
-			
 			for (String f : adhoc.incFileList){
 				fileList.add(f);
 				scopeList.add(adhoc.incFileMap.get(f).scope);
@@ -77,46 +77,38 @@ public class TestConvertWreslToTable {
 			Dataset model_data_complete = new Dataset();
 			
 			for (String f : fileList){
-							
-				/// check duplicate and promote later included file data for higher priority 
-				Dataset ds = fileDataMap.get(f);
-				if ( model_data_complete.hasDuplicateIn(ds, f)) {
-					model_data_complete.remove(ds);
-				}
-				
-				model_data_complete.add(ds); // later data has higher priority
+				/// check duplicate and promote later included file data for higher priority 		
+				model_data_complete.prioritize(fileDataMap.get(f), f);			
 			}
-			
 			/// check duplicate and promote adhoc data for higher priority 
-			if ( model_data_complete.hasDuplicateIn(adhoc, mainFilePath)) {
-				model_data_complete.remove(adhoc);
-			}
-			
-			/// adhoc data has higher priority
-			 model_data_complete.add(adhoc);
+			model_data_complete.prioritize(adhoc, mainFilePath);	
 						
-			 model_data_complete_map.put(model, model_data_complete);		
+			model_data_complete_map.put(model, model_data_complete);		
 		}		
 		
 
 		/// output csv files		
 		
-		String outFolder = "test-csv\\TestConvertWreslToTable_processModelNestedSimple\\";
-		String expectedFolder = "src\\test\\expected\\TestConvertWreslToTable_processModelNestedSimple\\";
-		Tools.deleteDir(outFolder);
+		String outParent = "test-csv\\TestConvertWreslToTable_processModelNestedSimple\\";
+		String expectedParent = "src\\test\\expected\\TestConvertWreslToTable_processModelNestedSimple\\";
+		Tools.deleteDir(outParent);
 		
 		Assert.assertEquals(model_data_complete_map.keySet().isEmpty(), false );
 		
 		for (String model : model_data_complete_map.keySet()) {
-
-			outFolder = outFolder + model;
-			expectedFolder = expectedFolder + model;
-
+			
+			String outFolder = outParent + model;
+			String expectedFolder = expectedParent + model;
 
 			WriteCSV.dataset(model_data_complete_map.get(model), "all", outFolder);
-
+		}
+		
+		for (String model : model_data_complete_map.keySet()) {
+			
+			String outFolder = outParent + model;
+			String expectedFolder = expectedParent + model;
+			
 			Map<String, String> actual = Tools.readFilesFromDirAsMap(outFolder);
-
 			Map<String, String> expected = Tools.readFilesFromDirAsMap(expectedFolder);
 
 			Assert.assertEquals(actual, expected);
