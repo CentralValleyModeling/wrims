@@ -3,6 +3,7 @@ package evaluators;
 public class Dvar {
 	
 	public String scope;
+	public String integer;
 	public String format;
 	public String kind;
 	public String units;
@@ -15,6 +16,7 @@ public class Dvar {
 	
 	public Dvar(){
 		scope="undefined";
+		integer="N";
 		format="undefined";
 		kind="undefined";
 		units="undefined";
@@ -29,7 +31,7 @@ public class Dvar {
 	public String equalEva(){
 		
 		String s = "|";
-		String temp = scope+s+format+s+kind+s+units+lowerBound+upperBound;
+		String temp = scope+s+integer+s+format+s+kind+s+units+lowerBound+upperBound;
 		              //+caseNameStr+caseConditionStr+s+caseExpressionStr;
 		
 		return temp;

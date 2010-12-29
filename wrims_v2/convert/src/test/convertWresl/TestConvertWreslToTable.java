@@ -34,8 +34,8 @@ public class TestConvertWreslToTable {
  		
 		PairMap pairMain;
 		
-		//String mainFilePath = "src\\test\\TestConvertWreslToTable_processModelNestedSimple.wresl";	
-		String mainFilePath = "D:\\callite_test\\CalLite\\Run\\main.wresl";	
+		String mainFilePath = "src\\test\\TestConvertWreslToTable_processModelNestedSimple.wresl";	
+		//String mainFilePath = "D:\\callite_test\\CalLite\\Run\\main.wresl";	
 		
 		pairMain = FileParser.processFileIntoPair(mainFilePath,"global"); 
 
@@ -45,10 +45,11 @@ public class TestConvertWreslToTable {
 		for (String file : m.keySet()){ pairMain.add(m.get(file)); }
 				
 
+		
+		
 		/// this map will collect detailed info for models				
 		Map<String, Dataset> model_data_complete_map =  new HashMap<String, Dataset>();
 		
-
 		
 		/// for each model collected from the main files
 		for ( String model : pairMain.modelAdhocMap.keySet()){

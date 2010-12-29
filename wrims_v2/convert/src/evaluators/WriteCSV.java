@@ -14,7 +14,7 @@ public class WriteCSV {
 	  //static Map<String, List<String>> mapStringList = new HashMap<String, List<String>>();
 	  //private static PrintWriter out;
 	 	  
-	  public static String svar_header ="NAME,TYPE,UNITS,OUTPUT,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
+	  public static String svar_header ="NAME,TYPE,UNITS,CONVERT_TO,OUTPUT,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
 	  public static String dvar_header ="NAME,TYPE,UNITS,LOWER_BOUND,UPPER_BOUND,FROM_WRESL_FILE";	  
 	  public static String alias_header ="NAME,TYPE,UNITS,OUTPUT,EXPRESSION,FROM_WRESL_FILE";
 	  public static String goal_header = "NAME,LHS,CASE,ORDER,CONDITION,EXPRESSION/RHS,LHS>RHS,LHS<RHS,FROM_WRESL_FILE";
@@ -76,6 +76,7 @@ public class WriteCSV {
 		    	//out.print(","+p.format); //for FORMAT
 		    	out.print(","+s.kind); //for KIND		    	
 		    	out.print(","+s.units); //for UNITS
+		    	out.print(","+s.convertToUnits); //for CONVERT
 		    	out.print(",Y"); //for OUTPUT
 		    	out.print(","+s.caseName.get(i)); //for CASE 
 		    	out.print(","+caseOrder); //for CASE 

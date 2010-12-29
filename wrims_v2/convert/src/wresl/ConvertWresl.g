@@ -256,15 +256,15 @@ caseStatement returns[String caseNameStr, String conditionStr, String expression
 
 
 svar_dss[String id, String sc]
-	:  '{' 'timeseries' kind units'}' { 				
-			if(inModel=="n") {         F.svarDSS($id, $sc, $kind.str, $units.str);}
-	        else             { $model::M.svarDSS($id, $sc, $kind.str, $units.str);}		
+	:  '{' 'timeseries' kind units convertToUnits? '}' { 				
+			if(inModel=="n") {         F.svarDSS($id, $sc, $kind.str, $units.str, $convertToUnits.str);}
+	        else             { $model::M.svarDSS($id, $sc, $kind.str, $units.str, $convertToUnits.str);}		
 		};
 
 dvar_std[String id, String sc]
-	:	'{' ('std'|'STD') kind units'}' { 
-			if(inModel=="n") {         F.dvarStd($id, $sc, $kind.str, $units.str); }
-	        else             { $model::M.dvarStd($id, $sc, $kind.str, $units.str); }	
+	:	'{' n=INTEGER_WORD? STD kind units'}' { 
+			if(inModel=="n") {         F.dvarStd($id, $sc, $n.text, $kind.str, $units.str); }
+	        else             { $model::M.dvarStd($id, $sc, $n.text, $kind.str, $units.str); }	
 		};
 
 dvar_alias[String id, String sc]
@@ -306,21 +306,27 @@ upper returns[String str]
 	;
 
 alias returns [String str]
-	: 'alias'  e=expression  { $str = $e.text; }
+	: ALIAS  e=expression  { $str = $e.text; }
 	;
 	
 kind returns [String str]
-	: 'kind'  s=QUOTE_STRING_with_MINUS  { $str =Tools.strip($s.text); } 
+	: KIND  s=QUOTE_STRING_with_MINUS  { $str =Tools.strip($s.text); } 
 	;
 
 units returns [String str]
-	: 'units' CFS {$str = "CFS";}
-	| 'units' TAF {$str = "TAF";} 
-	| 'units' ACRES {$str = "ACRES";}
-	| 'units' IN {$str = "IN";}
-	| 'units' NONE {$str = "NONE";}
+	: UNITS CFS {$str = "CFS";}
+	| UNITS TAF {$str = "TAF";} 
+	| UNITS ACRES {$str = "ACRES";}
+	| UNITS IN {$str = "IN";}
+	| UNITS NONE {$str = "NONE";}
 	;
 
+convertToUnits returns [String str]
+	: CONVERT CFS {$str = "CFS";}
+	| CONVERT TAF {$str = "TAF";} 
+	| CONVERT ACRES {$str = "ACRES";}
+	| CONVERT IN {$str = "IN";}
+	;
 /// sub rules ///
 
 
@@ -502,6 +508,12 @@ fragment DIR_UP :                                   ('..') '\\' ;
 
 
 /// reserved keywords ///
+INTEGER_WORD: 'integer' | 'INTEGER' ;
+STD : 'std' | 'STD' ;
+UNITS : 'units' | 'UNITS' ;
+CONVERT : 'convert' | 'CONVERT' ;
+ALIAS : 'alias' | 'ALIAS';
+KIND : 'kind' | 'KIND';
 GOAL :'goal';
 DEFINE :'define';
 ALWAYS :'always';

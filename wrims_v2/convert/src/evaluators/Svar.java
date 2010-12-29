@@ -8,6 +8,7 @@ public class Svar {
 	public String format;
 	public String kind;
 	public String units;
+	public String convertToUnits;
 	public ArrayList<String> caseName;
 	public ArrayList<String> caseCondition;
 	public ArrayList<String> caseExpression;
@@ -18,6 +19,7 @@ public class Svar {
 		format="undefined";
 		kind="undefined";
 		units="undefined";
+		convertToUnits ="undefined";
 		caseName       = new ArrayList<String>();
 		caseCondition  = new ArrayList<String>();
 		caseExpression = new ArrayList<String>();
@@ -36,8 +38,8 @@ public class Svar {
 		for (String i: caseExpression){caseExpressionStr = caseExpressionStr + s + i;}
 		
 		
-		String temp = scope+s+format+s+kind+s+units
-		              +caseNameStr+caseConditionStr+s+caseExpressionStr;
+		String temp = scope+s+format+s+kind+s+units+s+convertToUnits+s+
+		              caseNameStr+caseConditionStr+s+caseExpressionStr;
 		
 		return temp;
 	}

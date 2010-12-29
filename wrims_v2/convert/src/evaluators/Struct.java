@@ -358,7 +358,7 @@ public class Struct {
 		}
 	}
 
-	public void svarDSS(String name, String scope, String kind, String units) {
+	public void svarDSS(String name, String scope, String kind, String units, String convertToUnits) {
 		if (var_all.containsKey(name)) {
 			ErrMsg.print("Svar redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "svar_dss");
@@ -376,6 +376,7 @@ public class Struct {
 			sv.scope = scope;
 			sv.kind = kind;
 			sv.units = units;
+			if (convertToUnits!=null) {sv.convertToUnits = convertToUnits;}
 			sv.format = "timeseries";
 			sv.caseCondition.add("always");
 			sv.caseName.add("default");
@@ -391,7 +392,7 @@ public class Struct {
 		}
 	}
 
-	public void dvarStd(String name, String scope, String kind, String units) {
+	public void dvarStd(String name, String scope, String integer, String kind, String units) {
 		if (var_all.containsKey(name)) {
 			ErrMsg.print("Dvar redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "dvar_std");
@@ -409,6 +410,7 @@ public class Struct {
 			// / better data structure
 			dv = new Dvar();
 			dv.scope = scope;
+			if (integer != null) {dv.integer = "Y";}
 			dv.kind = kind;
 			dv.units = units;
 			dv.lowerBound = Parameters.dv_lowerBound;
