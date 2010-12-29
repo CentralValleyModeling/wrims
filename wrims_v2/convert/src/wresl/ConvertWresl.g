@@ -240,7 +240,7 @@ caseStatements returns[ArrayList<String> caseNames,
 
 caseStatement returns[String caseNameStr, String conditionStr, String expressionStr, ArrayList<String> contentList]
 @init { $contentList = new ArrayList<String>();	} 
-	:  'case' i=IDENT '{' c=conditionStatement 
+	:  'case' i=all_ident '{' c=conditionStatement 
 	( s=sqlStatement   {$contentList.add("sql");$contentList.addAll($s.list);  $expressionStr=$s.str;}
 	| v=valueStatement {$contentList.add("value");$contentList.add($v.str);    $expressionStr=$v.str;}
 	| u=sumStatement   {$contentList.add("sum");$contentList.addAll($u.list);  $expressionStr=$u.str;}
@@ -318,6 +318,7 @@ units returns [String str]
 	| UNITS TAF {$str = "TAF";} 
 	| UNITS ACRES {$str = "ACRES";}
 	| UNITS IN {$str = "IN";}
+	| UNITS MG_L {$str = "mg/L";}
 	| UNITS NONE {$str = "NONE";}
 	;
 
@@ -332,7 +333,7 @@ convertToUnits returns [String str]
 
 conditionStatement returns[String str]
 	: 'condition' 
-	( s=logicalRelationStatement {$str = $s.str;}
+	( s=logicalRelationStatement {$str = $s.str.replace(",","; ");}
 	| ALWAYS {$str = "always";} )
 	;
 
@@ -375,6 +376,9 @@ where_items returns[ArrayList<String> list, String str]
 /// Intrinsic functions ///
 ///////////////////////////
 
+range_func
+	: RANGE '(' MONTH ',' MONTH_CONST ',' MONTH_CONST ')' ;
+
 max_func
 	: MAX '(' expression (',' expression)+ ')' ;
 
@@ -397,16 +401,19 @@ sumStatement returns[ArrayList<String> list, String str]
 
 sum_func
 	: SUM 
-	s=( '(' 'i=' expression_sum ',' expression_sum (',' INTEGER )? ')' ) 
+	s=( '(' 'i=' expression_sum ',' expression_sum (',' '-'? INTEGER )? ')' ) 
 	;
 
 /////////////////////////////
 /// sum rules in sum_func ///
 /////////////////////////////
-term_sum : reserved_vars | reserved_consts | INTEGER | '(' expression_sum ')' 	;
+term_sum : reserved_vars | reserved_consts | reserved_funcs | INTEGER | '(' expression_sum ')' 	;
 unary_sum :	('-')? term_sum ;
 add_sum  :	unary_sum(('+' | '-') unary_sum)* ;
 expression_sum : add_sum ;
+
+/// function types ///
+logical_funcs : range_func;
 
 
 ///////////////////
@@ -417,7 +424,7 @@ term
 	:	( var_previous_cycle | IDENT | reserved_vars | reserved_consts)
 	|	'(' expression ')' 
 	|	number
-	|   inline_func  |   max_func  |  min_func	| other_func
+	|   inline_func  |   max_func  |  min_func |  other_func
 	;
 	
 unary :	('-')? term ;
@@ -448,11 +455,13 @@ relationStatement
 	    expression 
 	;
 
+logicalStatement : relationStatement | logical_funcs ;
+
 logicalRelationStatement returns[String str]
 	@init { String w=""; }  
-	:   r1=relationStatement {$str = $r1.text;} 
+	:   r1=logicalStatement {$str = $r1.text;} 
 		(  ( AND { w=" .and. "; } | OR { w=" .or. "; } ) 
-		   r=relationStatement {$str = $str + w + $r.text; } 
+		   r=logicalStatement {$str = $str + w + $r.text; } 
 		)* 
 	;
 
@@ -462,7 +471,7 @@ reserved_vars : WATERYEAR | MONTH ;
 
 reserved_funcs :  PREV_MON ;
 
-reserved_consts : MON_CONST ;
+reserved_consts : MONTH_CONST ;
 
 reserved_keys : GOAL | DEFINE ;
 
@@ -482,6 +491,7 @@ INTEGER : DIGIT+ ;
 FLOAT : INTEGER? '.' INTEGER  | INTEGER '.' ;
 
 /// intrinsic functions //
+RANGE : 'range' ;
 INT : 'int'  ;
 REAL: 'real' ;
 MOD : 'mod'  ;
@@ -500,12 +510,12 @@ AND : '.and.';
 OR  : '.or.';
 
 /// include file path ///
-FILE_PATH :  '\'' (DIR_ELEMENT | DIR_UP)*   WRESL_FILE  '\''  ;
+FILE_PATH :  '\''   DIR_SPLIT? (DIR_ELEMENT | DIR_UP)*   WRESL_FILE  '\''  ;
 fragment WRESL_EXT :   '.wresl' | '.WRESL' ;
 fragment WRESL_FILE :  (LETTER | DIGIT | SYMBOLS |'-'  )+ WRESL_EXT ;
 fragment DIR_ELEMENT : (LETTER | DIGIT | SYMBOLS | '-' )+  '\\' ;
 fragment DIR_UP :                                   ('..') '\\' ;
-
+fragment DIR_SPLIT : '\\' ;
 
 /// reserved keywords ///
 INTEGER_WORD: 'integer' | 'INTEGER' ;
@@ -514,7 +524,7 @@ UNITS : 'units' | 'UNITS' ;
 CONVERT : 'convert' | 'CONVERT' ;
 ALIAS : 'alias' | 'ALIAS';
 KIND : 'kind' | 'KIND';
-GOAL :'goal';
+GOAL : 'goal' | 'GOAL';
 DEFINE :'define';
 ALWAYS :'always';
 CONDITION : 'condition';
@@ -533,11 +543,14 @@ CONSTRAIN : 'constrain' | 'never' ;
 PENALTY   : 'penalty' ;
 
 /// reserved constants ///
-MON_CONST : 'JAN'|'FEB'|'MAR'|'APR'|'MAY'|'JUN'|'JUL'|'AUG'|'SEP'|'OCT'|'NOV'|'DEC';
+fragment MONTH_CONST_UPPER : 'JAN'|'FEB'|'MAR'|'APR'|'MAY'|'JUN'|'JUL'|'AUG'|'SEP'|'OCT'|'NOV'|'DEC';
+fragment MONTH_CONST_LOWER : 'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'|'dec';
+fragment MONTH_CAP: 'Jan'|'Feb'|'Mar'|'Apr'|'May'|'Jun'|'Jul'|'Aug'|'Sep'|'Oct'|'Nov'|'Dec'; 
+
+MONTH_CONST : MONTH_CONST_UPPER | MONTH_CONST_LOWER | MONTH_CAP ;
 
 /// reserved functions ///
-fragment MON_VAR: 'Jan'|'Feb'|'Mar'|'Apr'|'May'|'Jun'|'Jul'|'Aug'|'Sep'|'Oct'|'Nov'|'Dec'; 
-PREV_MON : 'prev' ( MON_VAR | MON_CONST ); // need to force single format
+PREV_MON : ('prev'|'Prev') MONTH_CONST; // need to force single format
 
 
 ///units///
@@ -546,6 +559,7 @@ CFS :   '\''  ('CFS'  |'cfs'  )  '\'';
 ACRES : '\''  ('ACRES'|'acres')  '\'';
 IN :    '\''  ('IN'   |'in'   )  '\'';
 NONE :  '\''  ('NONE' |'none' )  '\'';
+MG_L :  '\''   'mg/L'            '\'';
 
 ///basics///
 

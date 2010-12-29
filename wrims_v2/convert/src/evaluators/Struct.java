@@ -132,7 +132,7 @@ public class Struct {
 				
 		String filePath = new File(currentAbsoluteParent, fileRelativePath).getAbsolutePath();
 		
-		System.out.println(filePath);
+		//System.out.println(filePath);
 		
 		if (incFileList.contains(filePath)) {
 			ErrMsg.print("Include file redefined: "+filePath, currentAbsolutePath);

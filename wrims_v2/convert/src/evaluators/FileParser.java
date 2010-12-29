@@ -55,6 +55,8 @@ public class FileParser {
 		parser.currentAbsolutePath = new File(inputFilePath).getAbsolutePath(); 
 		parser.currentAbsoluteParent = new File(inputFilePath).getAbsoluteFile().getParent();
 		
+		System.out.println("...Parsing file: "+parser.currentAbsolutePath);
+		
 		parser.evaluator();
 		
 		return parser;
