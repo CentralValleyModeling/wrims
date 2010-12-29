@@ -1,0 +1,6 @@
+ MODEL advanced { 
+
+	INCLUDE[local] 'TestConvertWreslToTable_includes.wresl'	    
+		
+     }
+	 

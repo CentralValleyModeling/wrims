@@ -1,0 +1,10 @@
+ MODEL advanced { 
+
+ 	!INCLUDE [local]'TestConvertWresl_svarExpression.wresl'	
+	!INCLUDE [local]'TestConvertWresl_svarExpression2.wresl'	
+	!INCLUDE[local] 'TestConvertWreslToTable_includes.wresl'	
+	INCLUDE[local] 'TestConvertWreslToTable_includesIncludes.wresl'		
+	!INCLUDE 'TestConvertWreslToTable_includesIncludes.wresl'	
+	
+     }
+	 
