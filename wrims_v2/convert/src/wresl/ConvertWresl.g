@@ -262,7 +262,7 @@ svar_dss[String id, String sc]
 		};
 
 dvar_std[String id, String sc]
-	:	'{' 'std' kind units'}' { 
+	:	'{' ('std'|'STD') kind units'}' { 
 			if(inModel=="n") {         F.dvarStd($id, $sc, $kind.str, $units.str); }
 	        else             { $model::M.dvarStd($id, $sc, $kind.str, $units.str); }	
 		};
@@ -331,7 +331,7 @@ conditionStatement returns[String str]
 	;
 
 valueStatement returns[String str]
-	: 'value' e=expression {$str = $e.text;}
+	: ('value'|'VALUE') e=expression {$str = $e.text;}
 	;
 
 /// SQL related ///
@@ -510,7 +510,7 @@ SEQUENCE  : 'sequence' | 'SEQUENCE';
 MODEL     : 'model' | 'MODEL' | 'Model';
 ORDER     : 'order';
 INCLUDE   : 'include' | 'INCLUDE' | 'Include';
-LOCAL     : '[' 'local' ']';
+LOCAL     : '[' ( 'local'| 'LOCAL') ']';
 
 /// reserved vars ///
 WATERYEAR : 'wateryear';

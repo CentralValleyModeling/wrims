@@ -34,7 +34,8 @@ public class TestConvertWreslToTable {
  		
 		PairMap pairMain;
 		
-		String mainFilePath = "src\\test\\TestConvertWreslToTable_processModelNestedSimple.wresl";	
+		//String mainFilePath = "src\\test\\TestConvertWreslToTable_processModelNestedSimple.wresl";	
+		String mainFilePath = "D:\\callite_test\\CalLite\\Run\\main.wresl";	
 		
 		pairMain = FileParser.processFileIntoPair(mainFilePath,"global"); 
 
@@ -78,7 +79,7 @@ public class TestConvertWreslToTable {
 			Map<String,ArrayList<String>> t1MapScope = Tools.getType1MapScope(all);
 			
 
-			/// correct data scope
+			/// correct data scope TODO: move this to somewhere else, e.g., Tools
 			Map<String,Dataset> fileDataMap_corrected = new HashMap<String, Dataset>();
 			fileDataMap_corrected.putAll(fileDataMap);
 			
@@ -123,12 +124,12 @@ public class TestConvertWreslToTable {
 			System.out.println(fileDataMap_corrected.get("D:\\cvwrsm\\wrims_v2\\convert\\src\\test\\TestConvertWresl_svarExpression.wresl").svList_local);
 			
 			
-			ArrayList<String> level_1_files = adhoc.incFileList;
 			
 			
 			
 			Dataset model_data_complete = new Dataset();
 
+//////////////////////////// TODO: tidy up in a recursive method.
 			for (String f : adhoc.incFileList) {
 
 				for (String l2File : t1Map.get(f)) {
@@ -161,6 +162,8 @@ public class TestConvertWreslToTable {
 			}			
 			/// check duplicate and promote adhoc data for higher priority 
 			model_data_complete.prioritize(adhoc, mainFilePath);	
+
+////////////////////////////////////////////////////////////////////////////
 			
 			/// assemble the final map
 			model_data_complete_map.put(model, model_data_complete);		
