@@ -155,6 +155,42 @@ public class Dataset {
 
 		return this;
 	}	
+
+	public Dataset convertToLocal() {		
+
+		if (!this.incFileList.isEmpty()) {
+			this.incFileList_local = new ArrayList<String>();
+			this.incFileList_local.addAll(this.incFileList);
+			this.incFileList_global = new ArrayList<String>();
+		}
+
+		if (!this.svList.isEmpty()) {
+			this.svList_local = new ArrayList<String>();
+			this.svList_local.addAll(this.svList);
+			this.svList_global = new ArrayList<String>();
+		}
+
+		if (!this.dvList.isEmpty()) {
+			this.dvList_local = new ArrayList<String>();
+			this.dvList_local.addAll(this.dvList);
+			this.dvList_global = new ArrayList<String>();
+		}
+		if (!this.asList.isEmpty()) {
+			this.asList_local = new ArrayList<String>();
+			this.asList_local.addAll(this.asList);
+			this.asList_global = new ArrayList<String>();
+		}
+
+		if (!this.gList.isEmpty()) {
+			this.gList_local = new ArrayList<String>();
+			this.gList_local.addAll(this.gList);
+			this.gList_global = new ArrayList<String>();
+		}
+
+		return this;
+	}	
+
+
 	
 	public Dataset getGlobalVar() {
 		

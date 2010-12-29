@@ -61,12 +61,44 @@ public class FileParser {
 		
 	}
 
-	public static Dataset processFileIntoDataset(String inputFilePath, String scope) throws RecognitionException, IOException {
+	
+	public static Dataset processFile(String inputFilePath) throws RecognitionException, IOException {
 		
 		ConvertWreslParser parser = parseFile(inputFilePath);
 		
-		Map<String, Dataset> fileDataMap   = new HashMap<String, Dataset>();
+		Dataset out = new Dataset();
+		out = Tools.convertStructToDataset(parser.F);
+			
+		if ( ! parser.F.model_list.isEmpty()){
+			ErrMsg.print("Model exists in this file.", inputFilePath);
+		}	
+		
+		return out;
+	}	
+	
+	public static Map<String,Dataset> processNestedFile(String inputFilePath) throws RecognitionException, IOException {
+		
+		Dataset mainData = processFile(inputFilePath);
+		
+		Map<String,Dataset> out = new HashMap<String, Dataset>();
+		out.put(inputFilePath, mainData);
+		
+		if (mainData.incFileList.isEmpty()) {return out;}
+		else {
+			for (String file : mainData.incFileList) {
 
+				Map<String,Dataset> eachMap = processNestedFile(file);
+
+				out.putAll(eachMap);
+			}
+
+			return out;
+		}
+	}
+	
+	public static Dataset processFileIntoDataset(String inputFilePath, String scope) throws RecognitionException, IOException {
+		
+		ConvertWreslParser parser = parseFile(inputFilePath);
 		
 		Dataset out = new Dataset();
 		out = Tools.convertStructToDataset(parser.F);
@@ -78,7 +110,7 @@ public class FileParser {
 		else { ErrMsg.print("Wrong scope: "+scope+ " for file: ", inputFilePath);}
 		
 		
-		fileDataMap.put(inputFilePath, out);
+
 		
 		if ( ! parser.F.model_list.isEmpty()){
 			ErrMsg.print("Model exists in this file.", inputFilePath);
@@ -117,21 +149,21 @@ public class FileParser {
 		}
 	}
 	
-	public static Map<String,Dataset> processFileListIntoDatasetMap(ArrayList<String>fileList, ArrayList<String>scopeList) throws RecognitionException, IOException {
-				
-		Map<String,Dataset> out = new HashMap<String, Dataset>() ;
-		
-		for ( int i=0 ;i< fileList.size() ;i++ ){
-			
-			Map<String,Dataset> each = new HashMap<String, Dataset>();
-			//String scope = obj.incFileMap.get(inputFilePath).scope;
-			each = processNestedFileIntoDatasetMap(fileList.get(i), scopeList.get(i));
-			
-			out.putAll(each);
-		}
-		
-		return out;
-	}	
+//	public static Map<String,Dataset> processFileListIntoDatasetMap(ArrayList<String>fileList, ArrayList<String>scopeList) throws RecognitionException, IOException {
+//				
+//		Map<String,Dataset> out = new HashMap<String, Dataset>() ;
+//		
+//		for ( int i=0 ;i< fileList.size() ;i++ ){
+//			
+//			Map<String,Dataset> each = new HashMap<String, Dataset>();
+//			//String scope = obj.incFileMap.get(inputFilePath).scope;
+//			each = processNestedFileIntoDatasetMap(fileList.get(i), scopeList.get(i));
+//			
+//			out.putAll(each);
+//		}
+//		
+//		return out;
+//	}	
 
 	public static PairMap processFileIntoPair(String inputFilePath, String scope) throws RecognitionException, IOException {
 		

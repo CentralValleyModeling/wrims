@@ -57,41 +57,112 @@ public class TestConvertWreslToTable {
 			/// get dataset map from model adhoc (this is the major file parsing effort)
 			/// TODO: reduce redundant parsing, e.g., same include files in different models
 
-			ArrayList<String> firstLevel = new ArrayList<String>();
-			ArrayList<String> secondLevel = new ArrayList<String>();
+			ArrayList<String> fileList = adhoc.incFileList;			
+			Map<String,Dataset> fileDataMap = new HashMap<String, Dataset>() ;
 			
-			/// get scope list
-			ArrayList<String> scopeList = new ArrayList<String>();
-			for (String f : adhoc.incFileList){ scopeList.add(adhoc.incFileMap.get(f).scope); }
+			for ( int i=0; i< fileList.size(); i++ ){
+				String f = fileList.get(i);
+				Map<String,Dataset> each = FileParser.processNestedFile(f);
+				
+				fileDataMap.putAll(each);
+			}
+			
+			Map<String,String> fileScopeMap = Tools.getFileScopeMap(fileDataMap, adhoc);
+			
+			Map<String, Dataset> all = new HashMap<String, Dataset>();
+			all.putAll(fileDataMap);
+			all.put(mainFilePath,adhoc);
+			Map<String,ArrayList<String>> t1Map = Tools.getType1Map(all);
+			
+			Map<String,ArrayList<String>> t1ReverseMap = Tools.getReverseMap(t1Map);
+			Map<String,ArrayList<String>> t1MapScope = Tools.getType1MapScope(all);
 			
 
-			Map<String,Dataset> fileDataMap = FileParser.processFileListIntoDatasetMap(adhoc.incFileList,scopeList);
+			/// correct data scope
+			Map<String,Dataset> fileDataMap_corrected = new HashMap<String, Dataset>();
+			fileDataMap_corrected.putAll(fileDataMap);
+			
+			for (String f : fileDataMap_corrected.keySet()) {
+
+				if (fileScopeMap.get(f) == "local") {
+
+					Dataset d = fileDataMap_corrected.get(f);
+
+					fileDataMap_corrected.put(f, d.convertToLocal());
+
+				}
+				else {
+
+					for (String upperFile : t1ReverseMap.get(f)) {
+
+						if (fileScopeMap.get(upperFile) == "local") {
+
+							System.out.println("found it! " + upperFile);
+
+							Dataset d = fileDataMap_corrected.get(f);
+
+							fileDataMap_corrected.put(f, d.convertToLocal());
+
+							break;
+						}
+					}
+				}
+
+			}
+
+			
+			System.out.println("file scope map: "+fileScopeMap);
+			System.out.println("t1 map: "+t1Map);
+			System.out.println("t1 map scope: "+t1MapScope);
+			System.out.println("t1 reverse map: "+t1ReverseMap);
 			
 			System.out.println("keysets in fileDataMap"+fileDataMap.keySet());
 			
-			System.out.println(fileDataMap.get("D:\\cvwrsm\\wrims_v2\\convert\\src\\test\\TestConvertWresl_svarExpression.wresl").svList);			
-			System.out.println(fileDataMap.get("D:\\cvwrsm\\wrims_v2\\convert\\src\\test\\TestConvertWresl_svarExpression.wresl").svList_global);
-			System.out.println(fileDataMap.get("D:\\cvwrsm\\wrims_v2\\convert\\src\\test\\TestConvertWresl_svarExpression.wresl").svList_local);
+			System.out.println(fileDataMap_corrected.get("D:\\cvwrsm\\wrims_v2\\convert\\src\\test\\TestConvertWresl_svarExpression.wresl").svList);			
+			System.out.println(fileDataMap_corrected.get("D:\\cvwrsm\\wrims_v2\\convert\\src\\test\\TestConvertWresl_svarExpression.wresl").svList_global);
+			System.out.println(fileDataMap_corrected.get("D:\\cvwrsm\\wrims_v2\\convert\\src\\test\\TestConvertWresl_svarExpression.wresl").svList_local);
+			
+			
+			ArrayList<String> level_1_files = adhoc.incFileList;
 			
 			
 			
 			Dataset model_data_complete = new Dataset();
+
+			for (String f : adhoc.incFileList) {
+
+				for (String l2File : t1Map.get(f)) {
+					for (String l3File : t1Map.get(l2File)) {
+
+						// / check duplicate and promote later included file
+						// data for higher priority
+						model_data_complete.prioritize(fileDataMap_corrected.get(l3File), l3File);
+					}
+
+				}
+			}
+			
+			for (String f : adhoc.incFileList) {
+
+				for (String lowerFile : t1Map.get(f)) {
+
+					// / check duplicate and promote later included file data
+					// for higher priority
+					model_data_complete.prioritize(fileDataMap_corrected.get(lowerFile), lowerFile);
+
+				}
+			}
 			
 			for (String f : adhoc.incFileList){
 				
 				/// check duplicate and promote later included file data for higher priority 		
-				model_data_complete.prioritize(fileDataMap.get(f), f);			
-			
-			
-			
-			}
+				model_data_complete.prioritize(fileDataMap_corrected.get(f), f);
+
+			}			
 			/// check duplicate and promote adhoc data for higher priority 
 			model_data_complete.prioritize(adhoc, mainFilePath);	
 			
-			
-			
-			
-			
+			/// assemble the final map
 			model_data_complete_map.put(model, model_data_complete);		
 		}		
 		

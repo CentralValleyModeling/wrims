@@ -212,9 +212,113 @@ public class Tools {
 		return out;
 	}
 
-	
+	public static ArrayList<String> getScopeList(ArrayList<String> fileList, ArrayList<String> localList) {
 
+		ArrayList<String> scopeList = new ArrayList<String>();
+
+		for (String f : fileList) {
+			if (localList.contains(f)) {
+				scopeList.add("local");
+			}
+			else {
+				scopeList.add("global");
+			}
+		}
+		return scopeList;
+
+	}
+
+	public static Map<String, String> getScopeMap(ArrayList<String> fileList, ArrayList<String> localList) {
+
+		Map<String, String> scopeMap = new HashMap<String, String>();
+
+		for (String f : fileList) {
+			if (localList.contains(f)) {
+				scopeMap.put(f,"local");
+			}
+			else {
+				scopeMap.put(f,"global");
+			}
+		}
+		return scopeMap;
+
+	}
 	
+	/// type 1 map is the shallow included files, e.g., map( f1, [f7,f9])
+	public static Map<String, ArrayList<String>> getType1Map(Map<String, Dataset> dataMap) {
+
+		Map<String, ArrayList<String>> out = new HashMap<String, ArrayList<String>>();
+		
+		for (String f : dataMap.keySet()){
+
+			Dataset data = dataMap.get(f);
+			
+			ArrayList<String> fileList = new ArrayList<String>();
+			fileList.addAll(data.incFileList);
+			
+			out.put(f, fileList);
+		}
+		return out;
+	}
+
+	/// type 1 map is the shallow included files, e.g., map( f1, [f7,f9])
+	public static Map<String, ArrayList<String>> getReverseMap(Map<String, ArrayList<String>> t1Map) {
+
+		Map<String, ArrayList<String>> out = new HashMap<String, ArrayList<String>>();
+		
+		for (String f : t1Map.keySet()){
+			
+			ArrayList<String> children = t1Map.get(f);
+			
+			for (String c : children){
+				
+			ArrayList<String> s; 
+			if (out.get(c)==null) { s = new ArrayList<String>(); s.add(f);}
+			else { s= out.get(c); s.add(f);}
+			
+			out.put(c, s);
+				
+			}
+
+		}
+		return out;
+	}
+
+	public static Map<String, String> getFileScopeMap(Map<String, Dataset> dataMap, Dataset adhoc) {
+
+		Map<String, String> out = getScopeMap(adhoc.incFileList, adhoc.incFileList_local);
+		
+		
+		for (String f : dataMap.keySet()){
+
+			Dataset data = dataMap.get(f);
+			out.putAll(getScopeMap(data.incFileList, data.incFileList_local));
+
+		}
+		return out;
+	}
+
+	/// type 1 map is the scope list for the shallow included files, e.g., map( f1, [f7 scope ,f9 scope])
+	public static Map<String, ArrayList<String>> getType1MapScope(Map<String, Dataset> dataMap) {
+
+		Map<String, ArrayList<String>> out = new HashMap<String, ArrayList<String>>();
+		
+		for (String f : dataMap.keySet()){
+
+			Dataset data = dataMap.get(f);
+			
+			ArrayList<String> scopeList = new ArrayList<String>();
+			
+			for (String i : data.incFileList){
+				if (data.incFileList_local.contains(i)){scopeList.add("local");}
+				else                                   {scopeList.add("global");}
+				
+			}
+			
+			out.put(f, scopeList);
+		}
+		return out;
+	}
 	
 //	public static Map<String,Dataset> getModelDataFromAdhoc(Dataset InputModelAdhoc) throws RecognitionException, IOException{
 //		
