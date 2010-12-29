@@ -13,46 +13,74 @@ public class WriteCSV {
 	  
 	  //static Map<String, List<String>> mapStringList = new HashMap<String, List<String>>();
 	  //private static PrintWriter out;
-	 	  
+
+	  public static String external_header ="NAME,TYPE,FROM_WRESL_FILE";
 	  public static String svar_header ="NAME,TYPE,UNITS,CONVERT_TO,OUTPUT,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
 	  public static String dvar_header ="NAME,TYPE,UNITS,LOWER_BOUND,UPPER_BOUND,FROM_WRESL_FILE";	  
 	  public static String alias_header ="NAME,TYPE,UNITS,OUTPUT,EXPRESSION,FROM_WRESL_FILE";
 	  public static String goal_header = "NAME,LHS,CASE,ORDER,CONDITION,EXPRESSION/RHS,LHS>RHS,LHS<RHS,FROM_WRESL_FILE";
 	  
 	  public static void dataset(Dataset ds, String scope, String outFolder) throws IOException {
-		  
+		  PrintWriter out_ex = Tools.openFile(outFolder,"external.csv");
 		  PrintWriter out_sv = Tools.openFile(outFolder,"svar.csv");
 		  PrintWriter out_dv = Tools.openFile(outFolder,"dvar.csv");
 		  PrintWriter out_goal = Tools.openFile(outFolder,"constraint.csv");
 		  PrintWriter out_alias = Tools.openFile(outFolder,"alias.csv");
 			
+		  out_ex.print(WriteCSV.external_header+"\n");
 		  out_sv.print(WriteCSV.svar_header+"\n");
 		  out_dv.print(WriteCSV.dvar_header+"\n");
 		  out_goal.print(WriteCSV.goal_header+"\n");
 		  out_alias.print(WriteCSV.alias_header+"\n");
 		  
 		  if (scope == "all") {
+		  external(ds.exMap, ds.exList, out_ex );
 		  svar(ds.svMap, ds.svList, out_sv );
 		  dvar(ds.dvMap, ds.dvList, out_dv );
 		  goal(ds.gMap,  ds.gList, out_goal );
 		  alias(ds.asMap, ds.asList, out_alias );
 		  } else if (scope == "global") {
+			  external(ds.exMap, ds.exList_global, out_ex );
 			  svar(ds.svMap, ds.svList_global, out_sv );
 			  dvar(ds.dvMap, ds.dvList_global, out_dv );
 			  goal(ds.gMap,  ds.gList_global, out_goal );
 			  alias(ds.asMap, ds.asList_global, out_alias );
 		  } else if (scope == "local") {
+			  external(ds.exMap, ds.exList_local, out_ex );
 			  svar(ds.svMap, ds.svList_local, out_sv );
 			  dvar(ds.dvMap, ds.dvList_local, out_dv );
 			  goal(ds.gMap,  ds.gList_local, out_goal );
 			  alias(ds.asMap, ds.asList_local, out_alias );
 		  } else { System.out.println("WriteCSV scope error!!!" ); }
 		  
+		  out_ex.close();
 		  out_sv.close();
 		  out_dv.close();
 		  out_goal.close();
 		  out_alias.close();
 	  };
+
+	  public static void external(Map<String,External> eMap, ArrayList<String> list ,PrintWriter out) {
+		    
+			List<String> keys = list;
+			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
+		    //List<SvarProps> svarPropsList;
+			
+		    for (String k: keys ){
+		    	
+		    	//out.print(k);
+		    	External s = eMap.get(k);
+		    	
+
+			    out.print(k); // 
+		    	out.print(","+s.type); //for KIND		    	
+
+				out.print(","+s.fromWresl);
+				out.print("\n");	
+		    	
+			}
+	  };	  
+
 	  
 	  public static void svar(Map<String,Svar> sMap, ArrayList<String> list ,PrintWriter out) {
 		    

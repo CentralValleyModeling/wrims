@@ -31,6 +31,13 @@ public class Struct {
 	public Map<String, IncludeFile> incFileMap = new HashMap<String, IncludeFile>();
 	public ArrayList<String> error_includeFile_redefined = new ArrayList<String>();
 
+	// / external function structure
+	public External ex;
+	public ArrayList<String> exList = new ArrayList<String>();
+	public ArrayList<String> exList_global = new ArrayList<String>();
+	public ArrayList<String> exList_local = new ArrayList<String>();
+	public Map<String, External> exMap = new HashMap<String, External>();
+	
 	// / svar data structure
 	public Svar sv;
 	public ArrayList<String> svList = new ArrayList<String>();
@@ -263,6 +270,28 @@ public class Struct {
 		}
 	}
 
+	public void external(String name, String scope, String externalType) {
+		if (var_all.containsKey(name)) {
+			ErrMsg.print("Svar redefined: "+name, currentAbsolutePath);
+			error_var_redefined.put(name, "external");
+		} else {
+
+			// / clearer data structure
+
+			ex = new External();
+			ex.type = externalType;
+			ex.fromWresl = currentAbsolutePath;
+
+			exMap.put(name, ex);
+			exList.add(name);
+			
+			if      (scope == "global"){exList_global.add(name);}
+			else if (scope == "local") {exList_local.add(name);}
+			else{ System.out.println("wrong scope!!");}
+		}
+
+	}
+	
 	public void svarExpression(String svarName, String scope, String expression) {
 		if (var_all.containsKey(svarName)) {
 			ErrMsg.print("Svar redefined: "+svarName, currentAbsolutePath);

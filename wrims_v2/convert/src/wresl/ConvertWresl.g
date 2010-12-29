@@ -183,8 +183,19 @@ define
 	(	svar_expression[$id.text, scope]
 	|	dvar_std[$id.text, scope]   | dvar_nonstd[$id.text, scope] | dvar_alias[$id.text, scope]
 	|	svar_table[$id.text, scope] | svar_dss[$id.text, scope]   | svar_cases[$id.text, scope]
-	|   svar_sum[$id.text, scope] )  
+	|   svar_sum[$id.text, scope] 
+	|   external[$id.text, scope] 
+	)  
 	;
+
+external[String id, String sc]
+	:	'{' EXTERNAL e=external_type '}' { 
+				 if(inModel=="n") {         F.external($id, $sc, $e.text);   }
+	             else             { $model::M.external($id, $sc, $e.text);   }			   
+			
+	};
+	
+external_type : F90 | DLL;	
 
 svar_expression[String id, String sc]
 	:	'{' v=valueStatement '}' {  
@@ -518,6 +529,9 @@ fragment DIR_UP :                                   ('..') '\\' ;
 fragment DIR_SPLIT : '\\' ;
 
 /// reserved keywords ///
+EXTERNAL : 'EXTERNAL' | 'external' ;
+F90 : 'f90';
+DLL : 'dll';
 INTEGER_WORD: 'integer' | 'INTEGER' ;
 STD : 'std' | 'STD' ;
 UNITS : 'units' | 'UNITS' ;

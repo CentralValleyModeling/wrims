@@ -116,6 +116,12 @@ public class Tools {
 			out.incFileMap.putAll(s.incFileMap);
 		}
 
+		if (!s.exList.isEmpty()) {
+			out.exList.addAll(s.exList);
+			out.exList_local.addAll(s.exList);
+			out.exMap.putAll(s.exMap);
+		}
+		
 		if (!s.svList.isEmpty()) {
 			out.svList.addAll(s.svList);
 			out.svList_local.addAll(s.svList);
@@ -158,6 +164,13 @@ public class Tools {
 			out.incFileMap.putAll(s.incFileMap);
 		}
 
+		if (!s.exList.isEmpty()) {
+			out.exList.addAll(s.exList);
+			if (!s.exList_global.isEmpty()) {out.exList_global.addAll(s.exList_global);}
+			if (!s.exList_local.isEmpty()) {out.exList_local.addAll(s.exList_local);}
+			out.exMap.putAll(s.exMap);
+		}
+		
 		if (!s.svList.isEmpty()) {
 			out.svList.addAll(s.svList);
 			if (!s.svList_global.isEmpty()) {out.svList_global.addAll(s.svList_global);}

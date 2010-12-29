@@ -25,6 +25,13 @@ public class Dataset {
 	// / svar, dvar, goal, alias
 	public Map<String, String> var_all = new HashMap<String, String>();
 	public Map<String, String> error_var_redefined = new HashMap<String, String>();
+
+	// / external function structure
+	public ArrayList<String> exList = new ArrayList<String>();
+	public ArrayList<String> exList_global = new ArrayList<String>();
+	public ArrayList<String> exList_local = new ArrayList<String>();
+	public Map<String, External> exMap = new HashMap<String, External>();
+
 	
 	// / svar data structure
 	public ArrayList<String> svList = new ArrayList<String>();
@@ -126,6 +133,12 @@ public class Dataset {
 			this.incFileMap.putAll(s.incFileMap);
 		}
 
+		if (!s.exList.isEmpty()) {
+			this.exList.addAll(s.exList);
+			this.exList_local.addAll(s.exList);
+			this.exMap.putAll(s.exMap);
+		}
+		
 		if (!s.svList.isEmpty()) {
 			this.svList.addAll(s.svList);
 			this.svList_local.addAll(s.svList);
@@ -196,6 +209,15 @@ public class Dataset {
 		
 		Dataset out = new Dataset() ;
 
+		if (!this.exList_global.isEmpty()) {
+			out.exList.addAll(this.exList_global);
+			out.exList_global.addAll(this.exList_global);
+
+			for (String key : this.exList_global) {
+				out.exMap.put(key, this.exMap.get(key));
+			}
+		}
+		
 		if (!this.svList_global.isEmpty()) {
 			out.svList.addAll(this.svList_global);
 			out.svList_global.addAll(this.svList_global);
@@ -240,6 +262,13 @@ public class Dataset {
 			this.incFileMap.remove(s.incFileList);
 		}
 
+		if (!s.exList.isEmpty()) {
+			this.exList.removeAll(s.exList);
+			if (!s.exList_global.isEmpty()) {this.exList_global.removeAll(s.exList_global);}
+			if (!s.exList_local.isEmpty()) {this.exList_local.removeAll(s.exList_local);}
+			this.exMap.remove(s.exList);
+		}
+		
 		if (!s.svList.isEmpty()) {
 			this.svList.removeAll(s.svList);
 			if (!s.svList_global.isEmpty()) {this.svList_global.removeAll(s.svList_global);}
@@ -291,6 +320,13 @@ public class Dataset {
 			this.incFileMap.putAll(s.incFileMap);
 		}
 
+		if (!s.exList.isEmpty()) {
+			this.exList.addAll(s.exList);
+			if (!s.exList_global.isEmpty()) {this.exList_global.addAll(s.exList_global);}
+			if (!s.exList_local.isEmpty()) {this.exList_local.addAll(s.exList_local);}
+			this.exMap.putAll(s.exMap);
+		}
+		
 		if (!s.svList.isEmpty()) {
 			this.svList.addAll(s.svList);
 			if (!s.svList_global.isEmpty()) {this.svList_global.addAll(s.svList_global);}

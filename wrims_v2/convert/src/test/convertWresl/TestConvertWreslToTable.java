@@ -34,8 +34,8 @@ public class TestConvertWreslToTable {
  		
 		PairMap pairMain;
 		
-		//String mainFilePath = "src\\test\\TestConvertWreslToTable_processModelNestedSimple.wresl";	
-		String mainFilePath = "D:\\callite_test\\CalLite\\Run\\main.wresl";	
+		String mainFilePath = "src\\test\\TestConvertWreslToTable_processModelNestedSimple.wresl";	
+		//String mainFilePath = "D:\\callite_test\\CalLite\\Run\\main.wresl";	
 		
 		pairMain = FileParser.processFileIntoPair(mainFilePath,"global"); 
 
