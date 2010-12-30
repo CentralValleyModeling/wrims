@@ -279,7 +279,7 @@ dvar_std[String id, String sc]
 		};
 
 dvar_alias[String id, String sc]
-	:	'{' alias kind? units'}' { 
+	:	'{' alias kind? units?'}' { 
 			     if(inModel=="n") {         F.alias($id, $sc, $kind.str, $units.str, $alias.str);}
 	             else             { $model::M.alias($id, $sc, $kind.str, $units.str, $alias.str);}
 	};
@@ -329,7 +329,9 @@ units returns [String str]
 	| UNITS TAF {$str = "TAF";} 
 	| UNITS ACRES {$str = "ACRES";}
 	| UNITS IN {$str = "IN";}
+	| UNITS PERCENT {$str = "PERCENT";}
 	| UNITS MG_L {$str = "mg/L";}
+	| UNITS UMHOS_CM {$str = "UMHOS/CM";} 
 	| UNITS NONE {$str = "NONE";}
 	;
 
@@ -399,8 +401,12 @@ min_func
 other_func
 	: INT  '(' expression ')';	
 
+/// warning!!! inline function is masked by external function
 inline_func 
 	: IDENT '(' ( ('-' INTEGER) | PREV_MON | 'i' ) ')' ;
+
+external_func 
+	: IDENT '(' ( .+ ) ')' ;
 
 sumStatement returns[ArrayList<String> list, String str]
 	@init { $list = new ArrayList<String>(); }
@@ -435,7 +441,7 @@ term
 	:	( var_previous_cycle | IDENT | reserved_vars | reserved_consts)
 	|	'(' expression ')' 
 	|	number
-	|   inline_func  |   max_func  |  min_func |  other_func
+	|    max_func  |  min_func |  other_func | external_func
 	;
 	
 unary :	('-')? term ;
@@ -517,8 +523,8 @@ LE : '<=';
 GE : '>=';
 
 /// logical ///
-AND : '.and.';
-OR  : '.or.';
+AND : '.and.' | '.AND.';
+OR  : '.or.'  | '.OR.';
 
 /// include file path ///
 FILE_PATH :  '\''   DIR_SPLIT? (DIR_ELEMENT | DIR_UP)*   WRESL_FILE  '\''  ;
@@ -574,6 +580,8 @@ ACRES : '\''  ('ACRES'|'acres')  '\'';
 IN :    '\''  ('IN'   |'in'   )  '\'';
 NONE :  '\''  ('NONE' |'none' )  '\'';
 MG_L :  '\''   'mg/L'            '\'';
+PERCENT :  '\''  ( 'percent' | 'PERCENT' )  '\'';
+UMHOS_CM :  '\''  'UMHOS/CM'  '\'';
 
 ///basics///
 
