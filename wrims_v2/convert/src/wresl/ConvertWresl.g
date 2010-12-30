@@ -21,6 +21,22 @@ options {
   package wresl;
 }
 
+@lexer::members {
+List tokens = new ArrayList();
+public void emit(Token token) {
+        state.token = token;
+    	tokens.add(token);
+}
+public Token nextToken() {
+    	super.nextToken();
+        if ( tokens.size()==0 ) {
+            return Token.EOF_TOKEN;
+        }
+        return (Token)tokens.remove(0);
+}
+}
+
+
 @members {
 
     public String inModel = "n";
@@ -55,6 +71,8 @@ evaluator
 		F.currentAbsoluteParent=currentAbsoluteParent; }
 	:	pattern *  EOF  ;
 
+
+
 pattern
 	:   model 
 	|   include
@@ -66,7 +84,7 @@ model
 scope { Struct M }
 @init { inModel = "y"; }
 @after{ modelMap.put($i.text, $model::M);  inModel = "n"; }
-	:    MODEL i=IDENT  
+	:    MODEL i=ident  
 			{   F.modelList($i.text); 
 				$model::M = new Struct(); 
 				$model::M.currentAbsolutePath=currentAbsolutePath;
@@ -90,7 +108,7 @@ includeFilePath returns[String path]
 	;
 
 sequence
-	:   SEQUENCE s=IDENT '{' MODEL m=IDENT ORDER i=INTEGER'}'{
+	:   SEQUENCE s=ident '{' MODEL m=ident ORDER i=INTEGER'}'{
 				F.sequenceOrder($s.text, $i.text, $m.text );
 		}
 	;
@@ -98,7 +116,7 @@ sequence
 
 goal	
 	@init { scope = "global";}
-	: GOAL ( LOCAL {scope="local";} )?  id=IDENT 
+	: GOAL ( LOCAL {scope="local";} )?  id=ident 
 	( goal_simple[$id.text, scope] 
 	| goal_noCase[$id.text, scope] 
 	| goal_case  [$id.text, scope] ) 
@@ -112,14 +130,14 @@ goal_simple[String id, String sc]
 	;
 
 goal_noCase[String id, String sc]
-	:   '{' 'lhs' h=IDENT  r=goalStatement '}' {
+	:   '{' LHS h=ident  r=goalStatement '}' {
 		if(inModel=="n") {         F.goalNoCase($id, $sc, $h.text, $r.rhs, $r.lhs_gt_rhs, $r.lhs_lt_rhs);}
 	    else             { $model::M.goalNoCase($id, $sc, $h.text, $r.rhs, $r.lhs_gt_rhs, $r.lhs_lt_rhs);}
 		}
 	;
 
 goal_case[String id, String sc] 
-	:   '{' 'lhs' lhs=IDENT  g=goalCaseStatements '}'{
+	:   '{' LHS lhs=ident  g=goalCaseStatements '}'{
 			 //$g.gl.scope = $sc;
 			 //$g.gl.lhs = $lhs.text;
 			 if(inModel=="n") {  F.goalCase($id, $sc, $lhs.text, $g.gl);}
@@ -135,51 +153,56 @@ goalCaseStatements returns[Goal gl]
 			$gl.caseName.add($c.caseName);
 			$gl.caseCondition.add($c.condition);
 			$gl.caseExpression.add($c.rhs);
-			$gl.case_lhs_gt_rhs.add($c.lhs_gt_rhs);
-			$gl.case_lhs_lt_rhs.add($c.lhs_lt_rhs);
+			if ($c.lhs_gt_rhs!=null) $gl.case_lhs_gt_rhs.add($c.lhs_gt_rhs);
+			else					 $gl.case_lhs_gt_rhs.add("constrain");
+			if ($c.lhs_lt_rhs!=null) $gl.case_lhs_lt_rhs.add($c.lhs_lt_rhs);
+			else					 $gl.case_lhs_lt_rhs.add("constrain");
 			
 			} )+ 
 	;	
 
 goalCaseStatement returns[String caseName, String condition, String rhs, String expression, String lhs_gt_rhs, String lhs_lt_rhs]
-	:  'case' i=IDENT '{' c=conditionStatement g=goalStatement  '}' {			
+	:  'case' i=ident '{' c=conditionStatement g=goalStatement  '}' {			
 			$caseName = $i.text;
 			$condition = $c.str;
 			$rhs = $g.rhs; $lhs_gt_rhs = $g.lhs_gt_rhs; $lhs_lt_rhs = $g.lhs_lt_rhs;
 	};	
 
-goalStatement returns[ArrayList<String> list, String rhs, String lhs_gt_rhs, String lhs_lt_rhs]
-	@init { $list = new ArrayList<String>(); }
-	: 'rhs' i=expression  v1=lhs_vs_rhs v2=lhs_vs_rhs {       
-				$list.add("rhs"); $list.add($i.text);
-				$list.addAll($v1.list); $list.addAll($v2.list);
+goalStatement returns[String rhs, String lhs_gt_rhs, String lhs_lt_rhs]
+	//@init { $list = new ArrayList<String>(); }
+	: RHS i=expression  (v1=lhs_vs_rhs (v2=lhs_vs_rhs)? )? {       
 				
 				///clearer data structure
 				$rhs=$i.text;
-				if ($v1.lhs_gt_rhs!=null){$lhs_gt_rhs=$v1.lhs_gt_rhs;$lhs_lt_rhs=$v2.lhs_lt_rhs;}
-				else                     {$lhs_gt_rhs=$v2.lhs_gt_rhs;$lhs_lt_rhs=$v1.lhs_lt_rhs;}			
+				if ($v1.scenario == "l>r"){$lhs_gt_rhs=$v1.lhs_gt_rhs;}
+				if ($v1.scenario == "l<r"){$lhs_lt_rhs=$v1.lhs_lt_rhs;}
+				if ($v2.scenario == "l>r"){$lhs_gt_rhs=$v2.lhs_gt_rhs;}
+				if ($v2.scenario == "l<r"){$lhs_lt_rhs=$v2.lhs_lt_rhs;}
+				
+				//if ($v1.lhs_gt_rhs!=null){$lhs_gt_rhs=$v1.lhs_gt_rhs;$lhs_lt_rhs=$v2.lhs_lt_rhs;}
+				//else                     {$lhs_gt_rhs=$v2.lhs_gt_rhs;$lhs_lt_rhs=$v1.lhs_lt_rhs;}			
 	};
 
-lhs_vs_rhs returns[ArrayList<String> list, String lhs_gt_rhs, String lhs_lt_rhs]
-	@init { $list = new ArrayList<String>(); String scenario="";}
-	: 'lhs'  
-	( '>' {$list.add("l>r"); scenario = "l>r";}  |  '<' {$list.add("l<r"); scenario = "l<r";} )  
-	  'rhs' 
+lhs_vs_rhs returns[ArrayList<String> list, String lhs_gt_rhs, String lhs_lt_rhs, String scenario]
+	@init { $list = new ArrayList<String>(); $scenario="";}
+	: LHS  
+	( '>' {$list.add("l>r"); $scenario = "l>r";}  |  '<' {$list.add("l<r"); $scenario = "l<r";} )  
+	  RHS 
 	( CONSTRAIN 
 		{$list.add("constrain");$list.add(null);  
-		 if (scenario == "l>r"){$lhs_gt_rhs="constrain";}
-		 else if (scenario == "l<r"){$lhs_lt_rhs="constrain";}
+		 if ($scenario == "l>r"){$lhs_gt_rhs="constrain";}
+		 else if ($scenario == "l<r"){$lhs_lt_rhs="constrain";}
 		 }
 	| PENALTY i=number {$list.add("penalty");$list.add($i.text);
-		 if (scenario == "l>r"){$lhs_gt_rhs=$i.text;}
-		 else if (scenario == "l<r"){$lhs_lt_rhs=$i.text;}
+		 if ($scenario == "l>r"){$lhs_gt_rhs=$i.text;}
+		 else if ($scenario == "l<r"){$lhs_lt_rhs=$i.text;}
 		}
 	) ;
 
 /// define ///
 define
 	@init { scope = "global"; } 
-	:	DEFINE ( LOCAL {scope="local";} )? id=IDENT 
+	:	DEFINE ( LOCAL {scope="local";} )? id=ident 
 	(	svar_expression[$id.text, scope]
 	|	dvar_std[$id.text, scope]   | dvar_nonstd[$id.text, scope] | dvar_alias[$id.text, scope]
 	|	svar_table[$id.text, scope] | svar_dss[$id.text, scope]   | svar_cases[$id.text, scope]
@@ -255,13 +278,11 @@ caseStatement returns[String caseNameStr, String conditionStr, String expression
 	( s=sqlStatement   {$contentList.add("sql");$contentList.addAll($s.list);  $expressionStr=$s.str;}
 	| v=valueStatement {$contentList.add("value");$contentList.add($v.str);    $expressionStr=$v.str;}
 	| u=sumStatement   {$contentList.add("sum");$contentList.addAll($u.list);  $expressionStr=$u.str;}
-	| g=goalStatement  {$contentList.add("goal");$contentList.addAll($g.list);}
+//	| g=goalStatement  {$contentList.add("goal");$contentList.addAll($g.list);}
 	) '}' {			
 			$caseNameStr = $i.text;
 			$conditionStr = $c.str;
 			
-			//if ($v.str !=null && $v.str!="")      {$contentList.add("value");$contentList.add($v.str);}
-			//if ($s.list !=null && ! $s.list.isEmpty() ) {$contentList.add("sql");$contentList.addAll($s.list);}
 	}
 	;	
 
@@ -321,25 +342,24 @@ alias returns [String str]
 	;
 	
 kind returns [String str]
-	: KIND  s=QUOTE_STRING_with_MINUS  { $str =Tools.strip($s.text); } 
+	: KIND  s=QUOTE_STRING { $str =Tools.strip($s.text); } 
 	;
-
 units returns [String str]
-	: UNITS CFS {$str = "CFS";}
-	| UNITS TAF {$str = "TAF";} 
-	| UNITS ACRES {$str = "ACRES";}
-	| UNITS IN {$str = "IN";}
-	| UNITS PERCENT {$str = "PERCENT";}
-	| UNITS MG_L {$str = "mg/L";}
-	| UNITS UMHOS_CM {$str = "UMHOS/CM";} 
-	| UNITS NONE {$str = "NONE";}
+	: UNITS  s=QUOTE_STRING   {$str =Tools.strip($s.text).toUpperCase();}
 	;
+//units_obsolete returns [String str]
+//	: UNITS CFS {$str = "CFS";}
+//	| UNITS TAF {$str = "TAF";} 
+//	| UNITS ACRES {$str = "ACRES";}
+//	| UNITS IN {$str = "IN";}
+//	| UNITS PERCENT {$str = "PERCENT";}
+//	| UNITS MG_L {$str = "mg/L";}
+//	| UNITS UMHOS_CM {$str = "UMHOS/CM";} 
+//	| UNITS NONE {$str = "NONE";}
+//	;
 
 convertToUnits returns [String str]
-	: CONVERT CFS {$str = "CFS";}
-	| CONVERT TAF {$str = "TAF";} 
-	| CONVERT ACRES {$str = "ACRES";}
-	| CONVERT IN {$str = "IN";}
+	: CONVERT s=QUOTE_STRING   {$str =Tools.strip($s.text).toUpperCase();}
 	;
 /// sub rules ///
 
@@ -359,9 +379,9 @@ valueStatement returns[String str]
 sqlStatement returns[ArrayList<String> list, String str]
 	@init { $list = new ArrayList<String>(); }
 	:  'select' i1=all_ident 
-	   'from' i2=IDENT {$str ="select "+$i1.text+" from "+$i2.text;} 
+	   'from' i2=ident {$str ="select "+$i1.text+" from "+$i2.text;} 
 	  ('given' i3=assignStatement {$str=$str+" given "+$i3.text;})? 
-	  ('use' i4=IDENT {$str=$str+" use "+$i4.text;})? 
+	  ('use' i4=ident {$str=$str+" use "+$i4.text;})? 
 	  (i5=where_items {$str=$str+" where "+$i5.str;})?	{       
 				$list.add("select");
 				$list.add($i1.text);
@@ -385,9 +405,14 @@ where_items returns[ArrayList<String> list, String str]
 	        //{$list.add(null);}
 	;
 
+/// function types ///
+logical_funcs : range_func;
+
 ///////////////////////////
 /// Intrinsic functions ///
 ///////////////////////////
+
+
 
 range_func
 	: RANGE '(' MONTH ',' MONTH_CONST ',' MONTH_CONST ')' ;
@@ -403,10 +428,10 @@ other_func
 
 /// warning!!! inline function is masked by external function
 inline_func 
-	: IDENT '(' ( ('-' INTEGER) | PREV_MON | 'i' ) ')' ;
+	: ident '(' ( ('-' INTEGER) | PREV_MON | 'i' ) ')' ;
 
 external_func 
-	: IDENT '(' ( .+ ) ')' ;
+	: ident '('  expression (',' expression )*  ')' ;
 
 sumStatement returns[ArrayList<String> list, String str]
 	@init { $list = new ArrayList<String>(); }
@@ -424,24 +449,26 @@ sum_func
 /////////////////////////////
 /// sum rules in sum_func ///
 /////////////////////////////
-term_sum : reserved_vars | reserved_consts | reserved_funcs | INTEGER | '(' expression_sum ')' 	;
+term_sum : reserved_vars | reserved_consts | prev_mon_func | INTEGER | '(' expression_sum ')' 	;
 unary_sum :	('-')? term_sum ;
 add_sum  :	unary_sum(('+' | '-') unary_sum)* ;
 expression_sum : add_sum ;
 
-/// function types ///
-logical_funcs : range_func;
+
 
 
 ///////////////////
 /// basic rules ///
 ///////////////////
 
+
+
 term
-	:	( var_previous_cycle | IDENT | reserved_vars | reserved_consts)
+	:  ( ident | 'i' )	// weird!! ident doesn't include 'i' ??
+	|  ( var_previous_cycle |  reserved_vars | reserved_consts)
 	|	'(' expression ')' 
 	|	number
-	|    max_func  |  min_func |  other_func | external_func
+	|    max_func  |  min_func |  other_func | external_func | prev_mon_func
 	;
 	
 unary :	('-')? term ;
@@ -466,6 +493,8 @@ constraintStatement
 	: expression ('=' | r=relation_group_2 ) expression 
 	;
 
+
+
 relationStatement 
 	:	expression 
 	    ( EQUALS  | r1=relation_group_1 | r2=relation_group_2  ) 
@@ -486,26 +515,35 @@ number : INTEGER | FLOAT ;
 
 reserved_vars : WATERYEAR | MONTH ;
 
-reserved_funcs :  PREV_MON ;
+prev_mon_func :  PREV_MON ;
 
 reserved_consts : MONTH_CONST ;
 
 reserved_keys : GOAL | DEFINE ;
 
-all_ident  : reserved_vars | reserved_consts | IDENT ;
+all_ident  : reserved_vars | reserved_consts | ident ;
 
-var_previous_cycle : IDENT '[' IDENT ']';
+var_previous_cycle : ident '[' ident ']';
  
 equals : EQUALS; 
- 
+
+ident : IDENT_TOKEN;
+
+
+
+COMMENT : '!' .* ('\n'|'\r') {skip();}; //{$channel = HIDDEN;}; 
 MULTILINE_COMMENT : '/*' .* '*/' {skip();}; //{$channel = HIDDEN;};
+
+/// logical ///
+AND : '.and.' | '.AND.';
+OR  : '.or.'  | '.OR.';
 
 fragment LETTER : ('a'..'z' | 'A'..'Z') ;
 fragment DIGIT : '0'..'9';
 fragment SYMBOLS : '_';
 
 INTEGER : DIGIT+ ;
-FLOAT : INTEGER? '.' INTEGER  | INTEGER '.' ;
+FLOAT : (INTEGER? '.' INTEGER)  |  (INTEGER '.') ;
 
 /// intrinsic functions //
 RANGE : 'range' ;
@@ -522,9 +560,7 @@ EQUALS : '==';
 LE : '<=';
 GE : '>=';
 
-/// logical ///
-AND : '.and.' | '.AND.';
-OR  : '.or.'  | '.OR.';
+
 
 /// include file path ///
 FILE_PATH :  '\''   DIR_SPLIT? (DIR_ELEMENT | DIR_UP)*   WRESL_FILE  '\''  ;
@@ -535,9 +571,11 @@ fragment DIR_UP :                                   ('..') '\\' ;
 fragment DIR_SPLIT : '\\' ;
 
 /// reserved keywords ///
+LHS: 'lhs' | 'LHS' ;
+RHS: 'rhs' | 'RHS' ;
 EXTERNAL : 'EXTERNAL' | 'external' ;
 F90 : 'f90';
-DLL :  IDENT ('.dll' | '.DLL' );
+DLL :  IDENT_TOKEN ('.dll' | '.DLL' );
 INTEGER_WORD: 'integer' | 'INTEGER' ;
 STD : 'std' | 'STD' ;
 UNITS : 'units' | 'UNITS' ;
@@ -560,7 +598,7 @@ MONTH : 'month';
 
 /// goal keywords ///
 CONSTRAIN : 'constrain' | 'never' ;
-PENALTY   : 'penalty' ;
+PENALTY   : 'penalty' | 'PENALTY';
 
 /// reserved constants ///
 fragment MONTH_CONST_UPPER : 'JAN'|'FEB'|'MAR'|'APR'|'MAY'|'JUN'|'JUL'|'AUG'|'SEP'|'OCT'|'NOV'|'DEC';
@@ -573,24 +611,36 @@ MONTH_CONST : MONTH_CONST_UPPER | MONTH_CONST_LOWER | MONTH_CAP ;
 PREV_MON : ('prev'|'Prev') MONTH_CONST; // need to force single format
 
 
+
 ///units///
-TAF :   '\''  ('TAF'  |'taf'  )  '\'';
-CFS :   '\''  ('CFS'  |'cfs'  )  '\'';
-ACRES : '\''  ('ACRES'|'acres')  '\'';
-IN :    '\''  ('IN'   |'in'   )  '\'';
-NONE :  '\''  ('NONE' |'none' )  '\'';
-MG_L :  '\''   'mg/L'            '\'';
-PERCENT :  '\''  ( 'percent' | 'PERCENT' )  '\'';
-UMHOS_CM :  '\''  'UMHOS/CM'  '\'';
+//TAF :   '\''  ('TAF'  |'taf'  )  '\'';
+//CFS :   '\''  ('CFS'  |'cfs'  )  '\'';
+//ACRES : '\''  ('ACRES'|'acres')  '\'';
+//IN :    '\''  ('IN'   |'in'   )  '\'';
+//NONE :  '\''  ('NONE' |'none' )  '\'';
+//MG_L :  '\''   'mg/L'            '\'';
+//PERCENT :  '\''  ( 'percent' | 'PERCENT' )  '\'';
+//UMHOS_CM :  '\''  ('UMHOS/CM' | 'umhos/cm')  '\'';
 
 ///basics///
 
-QUOTE_STRING_with_MINUS : '\'' IDENT ( '-' | IDENT )* '\'';
-//VAR_PREVIOUS_CYCLE : IDENT '[' IDENT ']';
-IDENT : LETTER (LETTER | DIGIT | SYMBOLS )*;
+QUOTE_STRING : '\'' IDENT_TOKEN ( '-' | '/' | IDENT_TOKEN )* '\'';
+
+
+IDENT_FOLLOWED_BY_LOGICAL 
+	: i=IDENT_TOKEN {$i.setType(IDENT_TOKEN); emit($i);}
+	( a=AND { $a.setType(AND); emit($a);}
+	| a=OR  { $a.setType(OR); emit($a);}
+	);
+
+IDENT_TOKEN : LETTER (LETTER | DIGIT | SYMBOLS )*;
+
+
+
+
 
 WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {skip();}; //{$channel = HIDDEN;};
-COMMENT : '!' .* ('\n'|'\r') {skip();}; //{$channel = HIDDEN;};
+
 COMMENT_LAST_LINE : '!' (~('\n' | '\r'))* {skip();};
 
 //IGNORE : . {$channel = HIDDEN;};
