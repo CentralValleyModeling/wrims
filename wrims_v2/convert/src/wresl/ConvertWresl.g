@@ -150,7 +150,7 @@ goalCaseStatement returns[String caseName, String condition, String rhs, String 
 
 goalStatement returns[ArrayList<String> list, String rhs, String lhs_gt_rhs, String lhs_lt_rhs]
 	@init { $list = new ArrayList<String>(); }
-	: 'rhs' i=IDENT  v1=lhs_vs_rhs v2=lhs_vs_rhs {       
+	: 'rhs' i=expression  v1=lhs_vs_rhs v2=lhs_vs_rhs {       
 				$list.add("rhs"); $list.add($i.text);
 				$list.addAll($v1.list); $list.addAll($v2.list);
 				
