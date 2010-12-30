@@ -58,7 +58,7 @@ public Token nextToken() {
 	public ArrayList<String> outputErrorMessage = new ArrayList<String>();
 	public String getErrorMessage(RecognitionException e, String[] tokenNames) {
     		String msg = super.getErrorMessage(e, tokenNames);
-			msg = msg+" in file \""+currentAbsolutePath+"\"";
+			msg = msg+" in file: "+currentAbsolutePath;
 			if (msg!=null){outputErrorMessage.add(msg);}
 			return msg;
 			}
@@ -193,7 +193,7 @@ lhs_vs_rhs returns[ArrayList<String> list, String lhs_gt_rhs, String lhs_lt_rhs,
 		 if ($scenario == "l>r"){$lhs_gt_rhs="constrain";}
 		 else if ($scenario == "l<r"){$lhs_lt_rhs="constrain";}
 		 }
-	| PENALTY i=number {$list.add("penalty");$list.add($i.text);
+	| PENALTY i=expression {$list.add("penalty");$list.add($i.text);
 		 if ($scenario == "l>r"){$lhs_gt_rhs=$i.text;}
 		 else if ($scenario == "l<r"){$lhs_lt_rhs=$i.text;}
 		}
