@@ -1,6 +1,7 @@
 package evaluators;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -135,15 +136,24 @@ public class Struct {
 		}
 	}
 
-	public void includeFile(String fileRelativePath, String scope) {
-				
-		String filePath = new File(currentAbsoluteParent, fileRelativePath).getAbsolutePath();
+	public void includeFile(String fileRelativePath, String scope)  {
 		
-		//System.out.println(filePath);
+		File absFile = new File(currentAbsoluteParent, fileRelativePath).getAbsoluteFile();
+		String absFilePath = "Error with include file: "+fileRelativePath;
+		try {
+			absFilePath = absFile.getCanonicalPath().toLowerCase();
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//String absFilePath = absFile.getAbsolutePath().toLowerCase();
 		
-		if (incFileList.contains(filePath)) {
-			ErrMsg.print("Include file redefined: "+filePath, currentAbsolutePath);
-			error_includeFile_redefined.add(filePath);
+		//System.out.println("check: "+absFilePath);
+		
+		if (incFileList.contains(absFilePath)) {
+			ErrMsg.print("Include file redefined: " + fileRelativePath, currentAbsolutePath);
+			error_includeFile_redefined.add(absFilePath);
 
 		} else {
 
@@ -151,12 +161,12 @@ public class Struct {
 			incFile = new IncludeFile();
 
 			incFile.scope = scope;
-			incFileList.add(filePath);
+			incFileList.add(absFilePath);
 			
-			incFileMap.put(filePath, incFile);
+			incFileMap.put(absFilePath, incFile);
 			
-			if      (scope == "global"){incFileList_global.add(filePath);}
-			else if (scope == "local") {incFileList_local.add(filePath);}
+			if      (scope == "global"){incFileList_global.add(absFilePath);}
+			else if (scope == "local") {incFileList_local.add(absFilePath);}
 			else{ System.out.println("wrong scope!!");}
 			
 
