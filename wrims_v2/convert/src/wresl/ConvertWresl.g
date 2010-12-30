@@ -537,7 +537,7 @@ fragment DIR_SPLIT : '\\' ;
 /// reserved keywords ///
 EXTERNAL : 'EXTERNAL' | 'external' ;
 F90 : 'f90';
-DLL : 'dll';
+DLL :  IDENT ('.dll' | '.DLL' );
 INTEGER_WORD: 'integer' | 'INTEGER' ;
 STD : 'std' | 'STD' ;
 UNITS : 'units' | 'UNITS' ;
