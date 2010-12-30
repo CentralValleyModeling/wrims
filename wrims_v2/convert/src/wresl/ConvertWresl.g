@@ -162,7 +162,7 @@ goalCaseStatements returns[Goal gl]
 	;	
 
 goalCaseStatement returns[String caseName, String condition, String rhs, String expression, String lhs_gt_rhs, String lhs_lt_rhs]
-	:  'case' i=ident '{' c=conditionStatement g=goalStatement  '}' {			
+	:  'case' i=all_ident '{' c=conditionStatement g=goalStatement  '}' {			
 			$caseName = $i.text;
 			$condition = $c.str;
 			$rhs = $g.rhs; $lhs_gt_rhs = $g.lhs_gt_rhs; $lhs_lt_rhs = $g.lhs_lt_rhs;
