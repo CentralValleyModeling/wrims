@@ -424,7 +424,8 @@ min_func
 	: MIN '(' expression (',' expression)+ ')' ;
 
 other_func
-	: INT  '(' expression ')';	
+	: ( INT | TAF_CFS | CFS_TAF ) '(' expression ')'
+	;	
 
 /// warning!!! inline function is masked by external function
 inline_func 
@@ -517,7 +518,7 @@ reserved_vars : WATERYEAR | MONTH ;
 
 prev_mon_func :  PREV_MON ;
 
-reserved_consts : MONTH_CONST ;
+reserved_consts : MONTH_CONST | TAF_CFS | CFS_TAF ;
 
 reserved_keys : GOAL | DEFINE ;
 
@@ -601,6 +602,8 @@ CONSTRAIN : 'constrain' | 'never' ;
 PENALTY   : 'penalty' | 'PENALTY';
 
 /// reserved constants ///
+TAF_CFS : 'taf_cfs' | 'TAF_CFS';
+CFS_TAF : 'cfs_taf' | 'CFS_TAF';
 fragment MONTH_CONST_UPPER : 'JAN'|'FEB'|'MAR'|'APR'|'MAY'|'JUN'|'JUL'|'AUG'|'SEP'|'OCT'|'NOV'|'DEC';
 fragment MONTH_CONST_LOWER : 'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'|'dec';
 fragment MONTH_CAP: 'Jan'|'Feb'|'Mar'|'Apr'|'May'|'Jun'|'Jul'|'Aug'|'Sep'|'Oct'|'Nov'|'Dec'; 
