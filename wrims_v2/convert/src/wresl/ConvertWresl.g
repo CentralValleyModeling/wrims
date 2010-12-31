@@ -130,7 +130,7 @@ goal_simple[String id, String sc]
 	;
 
 goal_noCase[String id, String sc]
-	:   '{' LHS h=ident  r=goalStatement '}' {
+	:   '{' LHS h=expression  r=goalStatement '}' {
 		if(inModel=="n") {         F.goalNoCase($id, $sc, $h.text, $r.rhs, $r.lhs_gt_rhs, $r.lhs_lt_rhs);}
 	    else             { $model::M.goalNoCase($id, $sc, $h.text, $r.rhs, $r.lhs_gt_rhs, $r.lhs_lt_rhs);}
 		}

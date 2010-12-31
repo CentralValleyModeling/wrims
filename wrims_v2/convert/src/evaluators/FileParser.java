@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.antlr.runtime.ANTLRFileStream;
 import org.antlr.runtime.CharStream;
@@ -97,6 +98,31 @@ public class FileParser {
 			return out;
 		}
 	}
+
+	public static Map<String,Dataset> processNestedFileExceptFor(String inputFilePath, Set<String> existingSet) throws RecognitionException, IOException {
+		
+		//if(existingSet.contains(inputFilePath)) return null;
+		
+		Dataset mainData = processFile(inputFilePath);
+		
+		Map<String,Dataset> out = new HashMap<String, Dataset>();
+		out.put(inputFilePath, mainData);
+		
+		if (mainData.incFileList.isEmpty()) return out;
+		else {
+			for (String file : mainData.incFileList) {
+				
+				if (existingSet.contains(file)) continue; 
+				else {
+					Map<String, Dataset> eachMap = processNestedFile(file);
+
+					out.putAll(eachMap);
+				}
+			}
+
+			return out;
+		}
+	}	
 	
 	public static Dataset processFileIntoDataset(String inputFilePath, String scope) throws RecognitionException, IOException {
 		

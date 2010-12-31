@@ -333,62 +333,32 @@ public class Tools {
 		return out;
 	}
 	
-//	public static Map<String,Dataset> getModelDataFromAdhoc(Dataset InputModelAdhoc) throws RecognitionException, IOException{
-//		
-//		Map<String,Dataset> out = new HashMap<String, Dataset>();
-//						
-//		                    out = FileParser.processFileListIntoDatasetMap(InputModelAdhoc);
-//			
-//			return out;
-//
-//	}
+	public static Dataset correctDataScope(String f, Dataset ds, Map<String,String> fileScopeMap,
+			Map<String,ArrayList<String>> t1ReverseMap	) {
+
+		
+		if (fileScopeMap.get(f) == "local") {
+
+			ds.convertToLocal();
+
+		}
+		else {
+
+			for (String upperFile : t1ReverseMap.get(f)) {
+
+				if (fileScopeMap.get(upperFile) == "local") {
+
+					System.out.println("found it! " + upperFile);
+
+					ds.convertToLocal();
+
+					break;
+				}
+			}
+		}
+		return ds;
+	}
 	
-//	public static PairMap getModelPairFromAdhoc(Dataset InputModelAdhoc) throws RecognitionException, IOException{
-//		
-//		PairMap out = new PairMap();
-//						
-//			Map<String, PairMap> pm = FileParser.processFileListIntoMapOfPair(InputModelAdhoc);
-//			
-//			for (String fileKey : pm.keySet()){
-//				
-//				out.add(pm.get(fileKey)); 
-//				
-//			}
-//			return out;
-//
-//	}
-	
-//	public static Dataset overrideScope(
-//					Map<String,Dataset> inputFileDataMap, ArrayList<String> allFiles, ArrayList<String> localFiles){
-//		
-//		Dataset out = new Dataset();
-//								
-//		
-//		// / copy data from pair into the complete data container
-//		for (String includedFile : allFiles) {
-//
-//			Dataset ds = inputFileDataMap.get(includedFile);
-//
-//			if ( out.hasDuplicateIn(ds, includedFile)) {
-//				// / replace with some exit message
-//				// System.exit(1);
-//				out.remove(ds);
-//			}
-//
-//			// / add to local
-//			if (localFiles.contains(includedFile)) {
-//
-//				out.addToLocal(ds);
-//			}
-//			// / add all
-//			else {
-//				out.add(ds);
-//			}
-//
-//		}
-//		return out;
-//	}	
-	
-	
+
 	
 }

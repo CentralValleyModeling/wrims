@@ -366,16 +366,27 @@ public class Dataset {
 		return this;
 	}
 	
-	public Dataset prioritize(Dataset laterFileData, String filePath) {
+	
+	public Dataset prioritize(Dataset laterFileData, String filePath_forErrorMessage) {
 
 		/// check duplicate and promote later included file data for higher priority 
-		if ( this.hasDuplicateIn(laterFileData, filePath)) {
+		if ( this.hasDuplicateIn(laterFileData, filePath_forErrorMessage)) {
 			this.remove(laterFileData);
 		}
 		
 		return this.add(laterFileData); // later data has higher priority
 	}
 	
+	public Dataset prioritizeList(String nodeFile, Map<String,ArrayList<String>> t1Map, Map<String, Dataset> fileDataMap ) {
+
+		for (String childFile : t1Map.get(nodeFile)) {
+			
+			if (t1Map.get(childFile)!=null)  this.prioritizeList(childFile, t1Map, fileDataMap);
+
+			this.prioritize(fileDataMap.get(childFile), childFile);
+		}
+		return this;
+	}
 	
 //	public Dataset addStruct(Object obj) {
 //		
