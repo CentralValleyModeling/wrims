@@ -69,7 +69,9 @@ public class Dataset {
 	public boolean hasDuplicateIn(Dataset s, String filePath){
 		
 		boolean b = false;
-		
+
+		if(s==null) System.out.println("Fatal error!!! Dataset is null in file: "+filePath);
+
 		for (String e : s.incFileList){ 
 			if (this.incFileList.contains(e)) {
 				System.out.println("Error!!! Include file redefined: "+e+" in file: "+filePath);

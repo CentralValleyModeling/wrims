@@ -37,8 +37,8 @@ public class TestConvertWreslToTable {
 		PairMap pairMain;
 		
 		//String mainFilePath = "src\\test\\TestConvertWreslToTable_processModelNestedSimple.wresl";	
-		String mainFilePath = "D:\\CalliteRun\\main.wresl";	
-		//String mainFilePath = "D:\\CALSIM3.0_070110\\D1641\\Run\\maind1641.wresl";
+		//String mainFilePath = "D:\\CalliteRun\\main.wresl";	
+		String mainFilePath = "D:\\CALSIM3.0_070110\\D1641\\Run\\maind1641.wresl";
 		
 		pairMain = FileParser.processFileIntoPair(mainFilePath,"global"); 
 
@@ -47,13 +47,12 @@ public class TestConvertWreslToTable {
 		Map<String, PairMap> m = FileParser.processFileListIntoMapOfPair(pairMain.fileDataMap.get(mainFilePath));
 		for (String file : m.keySet()){ pairMain.add(m.get(file)); }
 				
-
-		
-		
-		/// this map will collect detailed info for models				
-		Map<String, Dataset> model_data_complete_map =  new HashMap<String, Dataset>();
 		
 		Map<String,Dataset> fileDataMap_wholeStudy = new HashMap<String, Dataset>() ;
+		Map<String,ArrayList<String>> t1Map_wholeStudy = new HashMap<String, ArrayList<String>>();	
+
+		/// this map will collect detailed info for models			
+		Map<String, Dataset> model_data_complete_map =  new HashMap<String, Dataset>();
 		
 		/// for each model collected from the main files
 		for ( String model : pairMain.modelAdhocMap.keySet()){
@@ -75,6 +74,13 @@ public class TestConvertWreslToTable {
 					/// skip processing
 					System.out.println("....Skip file: "+f);
 					fileDataMap_thisModel.put(f, fileDataMap_wholeStudy.get(f));	
+					/// TODO: need to put file f's children dataset
+					
+					System.out.println("@@@@@@@@@@@@@@@@@@@ t1Map_wholeStudy: "+t1Map_wholeStudy);
+					for (String lowerFile: t1Map_wholeStudy.get(f)){
+						System.out.println("@@@@@@@@@@@@@@@@@@@ add additional file: "+lowerFile);
+						fileDataMap_thisModel.put(lowerFile, fileDataMap_wholeStudy.get(lowerFile));	
+					}
 				} 
 				else { /// new file
 					Map<String, Dataset> each = FileParser.processNestedFileExceptFor(f,existingSet);
@@ -93,9 +99,14 @@ public class TestConvertWreslToTable {
 			
 			/// get fileScopeMap and ReverseMap
 			/// TODO: avoid repeated processing
+			
+			/// update whole study t1Map
+			t1Map_wholeStudy.putAll(Tools.getType1Map(fileDataMap_newInModel));	
+			
 			Map<String, Dataset> all = new HashMap<String, Dataset>();
 			all.putAll(fileDataMap_thisModel);
 			all.put(mainFilePath,adhoc);
+			
 			Map<String,ArrayList<String>> t1Map = Tools.getType1Map(all);			
 			
 			Map<String,ArrayList<String>> t1ReverseMap = Tools.getReverseMap(t1Map);
