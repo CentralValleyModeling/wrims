@@ -189,6 +189,9 @@ public class Struct {
 			gl.caseCondition.add("always");
 			gl.caseName.add("default");
 			gl.caseExpression.add(content);
+			gl.case_lhs_gt_rhs.add("constrain");
+			gl.case_lhs_lt_rhs.add("constrain");
+			gl.fromWresl = currentAbsolutePath;
 			gMap.put(name, gl);
 			gList.add(name);
 			

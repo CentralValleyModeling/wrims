@@ -37,8 +37,8 @@ public class TestConvertWreslToTable {
 		PairMap pairMain;
 		
 		//String mainFilePath = "src\\test\\TestConvertWreslToTable_processModelNestedSimple.wresl";	
-		//String mainFilePath = "D:\\CalliteRun\\main.wresl";	
-		String mainFilePath = "D:\\CALSIM3.0_070110\\D1641\\Run\\maind1641.wresl";
+		String mainFilePath = "D:\\CalliteRun\\main.wresl";	
+		//String mainFilePath = "D:\\CALSIM3.0_070110\\D1641\\Run\\maind1641.wresl";
 		
 		pairMain = FileParser.processFileIntoPair(mainFilePath,"global"); 
 
@@ -57,6 +57,9 @@ public class TestConvertWreslToTable {
 		
 		/// for each model collected from the main files
 		for ( String model : pairMain.modelAdhocMap.keySet()){
+			System.out.println("############################################");
+			System.out.println("####   Processing model: "+model);
+			System.out.println("############################################");
 			
 			Dataset adhoc = pairMain.modelAdhocMap.get(model);
 	
@@ -70,6 +73,7 @@ public class TestConvertWreslToTable {
 			for (String f: adhoc.incFileList) {
 				if (existingSet.contains(f))  {
 					/// skip processing
+					System.out.println("....Skip file: "+f);
 					fileDataMap_thisModel.put(f, fileDataMap_wholeStudy.get(f));	
 				} 
 				else { /// new file
@@ -97,7 +101,9 @@ public class TestConvertWreslToTable {
 			Map<String,ArrayList<String>> t1ReverseMap = Tools.getReverseMap(t1Map);
 			Map<String,String> fileScopeMap = Tools.getFileScopeMap(fileDataMap_thisModel, adhoc);
 			//////////////////////////////////////////////////////////////////////////////////////
-
+			System.out.println(".....Finished fileScopeMap & ReverseMap.");
+			
+			
 			Map<String,Dataset> fileDataMap_corrected = new HashMap<String, Dataset>();
 			fileDataMap_corrected.putAll(fileDataMap_thisModel);
 			
@@ -133,10 +139,15 @@ public class TestConvertWreslToTable {
 				
 					model_data_complete.prioritizeList(f, t1Map, fileDataMap_corrected);
 			}
+			//////////////////////////////////////////
+			System.out.println(".....Finished prioritizing data.");
 			
-			model_data_complete_map.put(model, model_data_complete);		
+			model_data_complete_map.put(model, model_data_complete);
+			System.out.println("######################################################");
+			System.out.println("####   Finished Processing model: "+model);
+			System.out.println("######################################################");
 		}		
-		
+		System.out.println("************** Finished all data processing **************");
 
 		/// output csv files		
 		
@@ -144,6 +155,7 @@ public class TestConvertWreslToTable {
 		String expectedParent = "src\\test\\expected\\TestConvertWreslToTable_processModelNestedSimple\\";
 		Tools.deleteDir(outParent);
 		
+		System.out.println("All keyset: "+model_data_complete_map.keySet());
 		Assert.assertEquals(model_data_complete_map.keySet().isEmpty(), false );
 		
 		for (String model : model_data_complete_map.keySet()) {
