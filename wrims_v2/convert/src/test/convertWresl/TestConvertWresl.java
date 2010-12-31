@@ -354,7 +354,6 @@ public class TestConvertWresl {
 			}		
 		}		
 	}		
-
 	
 	
 	@Test(groups = { "WRESL_elements" })
