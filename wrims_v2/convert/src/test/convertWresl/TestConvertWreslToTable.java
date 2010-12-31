@@ -35,7 +35,8 @@ public class TestConvertWreslToTable {
 		PairMap pairMain;
 		
 		//String mainFilePath = "src\\test\\TestConvertWreslToTable_processModelNestedSimple.wresl";	
-		String mainFilePath = "D:\\callite_test\\CalLite\\Run\\main.wresl";	
+		//String mainFilePath = "D:\\callite_test\\CalLite\\Run\\main.wresl";	
+		String mainFilePath = "D:\\CALSIM3.0_070110\\D1641\\Run\\maind1641.wresl";
 		
 		pairMain = FileParser.processFileIntoPair(mainFilePath,"global"); 
 
@@ -120,9 +121,9 @@ public class TestConvertWreslToTable {
 			
 			System.out.println("keysets in fileDataMap"+fileDataMap.keySet());
 			
-			System.out.println(fileDataMap_corrected.get("D:\\cvwrsm\\wrims_v2\\convert\\src\\test\\TestConvertWresl_svarExpression.wresl").svList);			
-			System.out.println(fileDataMap_corrected.get("D:\\cvwrsm\\wrims_v2\\convert\\src\\test\\TestConvertWresl_svarExpression.wresl").svList_global);
-			System.out.println(fileDataMap_corrected.get("D:\\cvwrsm\\wrims_v2\\convert\\src\\test\\TestConvertWresl_svarExpression.wresl").svList_local);
+//			System.out.println(fileDataMap_corrected.get("D:\\cvwrsm\\wrims_v2\\convert\\src\\test\\TestConvertWresl_svarExpression.wresl").svList);			
+//			System.out.println(fileDataMap_corrected.get("D:\\cvwrsm\\wrims_v2\\convert\\src\\test\\TestConvertWresl_svarExpression.wresl").svList_global);
+//			System.out.println(fileDataMap_corrected.get("D:\\cvwrsm\\wrims_v2\\convert\\src\\test\\TestConvertWresl_svarExpression.wresl").svList_local);
 			
 			
 			

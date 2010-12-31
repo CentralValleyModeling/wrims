@@ -162,7 +162,7 @@ goalCaseStatements returns[Goal gl]
 	;	
 
 goalCaseStatement returns[String caseName, String condition, String rhs, String expression, String lhs_gt_rhs, String lhs_lt_rhs]
-	:  'case' i=all_ident '{' c=conditionStatement g=goalStatement  '}' {			
+	:  CASE i=all_ident '{' c=conditionStatement g=goalStatement  '}' {			
 			$caseName = $i.text;
 			$condition = $c.str;
 			$rhs = $g.rhs; $lhs_gt_rhs = $g.lhs_gt_rhs; $lhs_lt_rhs = $g.lhs_lt_rhs;
@@ -274,7 +274,7 @@ caseStatements returns[ArrayList<String> caseNames,
 
 caseStatement returns[String caseNameStr, String conditionStr, String expressionStr, ArrayList<String> contentList]
 @init { $contentList = new ArrayList<String>();	} 
-	:  'case' i=all_ident '{' c=conditionStatement 
+	:  CASE i=all_ident '{' c=conditionStatement 
 	( s=sqlStatement   {$contentList.add("sql");$contentList.addAll($s.list);  $expressionStr=$s.str;}
 	| v=valueStatement {$contentList.add("value");$contentList.add($v.str);    $expressionStr=$v.str;}
 	| u=sumStatement   {$contentList.add("sum");$contentList.addAll($u.list);  $expressionStr=$u.str;}
@@ -572,6 +572,7 @@ fragment DIR_UP :                                   ('..') '\\' ;
 fragment DIR_SPLIT : '\\' ;
 
 /// reserved keywords ///
+CASE : 'case' | 'Case' | 'CASE' ;
 LHS: 'lhs' | 'LHS' ;
 RHS: 'rhs' | 'RHS' ;
 EXTERNAL : 'EXTERNAL' | 'external' ;

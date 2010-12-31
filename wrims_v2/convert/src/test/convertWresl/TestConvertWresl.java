@@ -58,19 +58,19 @@ public class TestConvertWresl {
 	public void includeFile() throws RecognitionException, IOException {
 		
 		inputFilePath = "src\\test\\TestConvertWresl_includeFile.wresl";
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
+//		try {
+//			stream = new ANTLRFileStream(inputFilePath, "UTF8");
+//			}
+//	    catch(Exception e) {
+//	         e.printStackTrace();
+//	        }
 	    
 	    Struct expected_struct = new Struct();
 	    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
+//		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
+//		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ConvertWreslParser parser = FileParser.parseFile(inputFilePath);
+//		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
 				
 		
 		Map<String,IncludeFile>  incFileMap = new HashMap<String,IncludeFile>(); 
@@ -79,11 +79,8 @@ public class TestConvertWresl {
 		
 		incFile = new IncludeFile();
 		incFile.scope = "local";
-		incFileMap.put("D:\\cvwrsm\\wrims_v2\\convert\\..\\..\\common\\System\\System_Sac.wresl", incFile);
+		incFileMap.put("d:\\cvwrsm\\wrims_v2\\convert\\src\\test\\morewreslfiles\\testconvertwresl_alias.wresl", incFile);
 
-		incFile = new IncludeFile();
-		incFile.scope = "global";
-		incFileMap.put("D:\\cvwrsm\\wrims_v2\\convert\\..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl", incFile);
 
 		expected_struct.incFileMap.putAll(incFileMap);
 							
@@ -141,21 +138,12 @@ public class TestConvertWresl {
 	public void modelIncludeFile() throws RecognitionException, IOException {
 		
 		inputFilePath = "src\\test\\TestConvertWresl_modelIncludeFile.wresl";
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
-	
+
 
 	    Map<String, Struct> expected_modelMap = new HashMap<String, Struct>();
 	    Struct expected_struct = new Struct();
 	    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
+		ConvertWreslParser parser = FileParser.parseFile(inputFilePath);
 		
 
 		Map<String,IncludeFile>  incFileMap = new HashMap<String,IncludeFile>(); 
@@ -164,11 +152,7 @@ public class TestConvertWresl {
 		
 		incFile = new IncludeFile();
 		incFile.scope = "local";
-		incFileMap.put("D:\\cvwrsm\\wrims_v2\\convert\\..\\..\\common\\System\\System_Sac.wresl", incFile);
-
-		incFile = new IncludeFile();
-		incFile.scope = "global";
-		incFileMap.put("D:\\cvwrsm\\wrims_v2\\convert\\..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl", incFile);
+		incFileMap.put("d:\\cvwrsm\\wrims_v2\\convert\\src\\test\\morewreslfiles\\testconvertwresl_alias.wresl", incFile);
 
 		expected_struct.incFileMap.putAll(incFileMap);
 		
@@ -261,32 +245,20 @@ public class TestConvertWresl {
 	public void modelBasic() throws RecognitionException, IOException {
 		
 		inputFilePath = "src\\test\\TestConvertWresl_modelBasic.wresl";
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
+
 
 	    Map<String, Struct> expected_modelMap = new HashMap<String, Struct>();
 	    Struct expected_struct1 = new Struct();
 	    Struct expected_struct2 = new Struct();
-	    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
+
+		ConvertWreslParser parser = FileParser.parseFile(inputFilePath);
 
 		IncludeFile incF;
 		
 		incF = new IncludeFile();
 		incF.scope = "local";
-		expected_struct1.incFileMap.put("D:\\cvwrsm\\wrims_v2\\convert\\..\\..\\common\\System\\System_Sac.wresl", incF);
-		
-		incF = new IncludeFile();
-		incF.scope = "global";
-		expected_struct1.incFileMap.put("D:\\cvwrsm\\wrims_v2\\convert\\..\\..\\common\\System\\SystemTables_Sac\\constraints-seepage_cycle7.wresl", incF);		
-		
+		expected_struct1.incFileMap.put("d:\\cvwrsm\\wrims_v2\\convert\\src\\test\\morewreslfiles\\testconvertwresl_alias.wresl", incF);
+				
 		Goal gl = new Goal();
 		gl.scope = "local";
 		gl.caseName.add("default");
@@ -380,80 +352,6 @@ public class TestConvertWresl {
 				//System.out.println("actual:   "+model+"="+key+":::"+parser.modelMap.get(model).svMap.get(key).equalEva() );				
 				Assert.assertEquals(parser.modelMap.get(model).svMap.get(key).equalEva(), expected_modelMap.get(model).svMap.get(key).equalEva());
 			}		
-		}		
-	}		
-
-	@Test(groups = { "WRESL_elements" })
-	public void modelReadFromFile() throws RecognitionException, IOException {
-		
-		inputFilePath = "src\\test\\TestConvertWresl_modelReadFromFile.wresl";
-		try {
-			stream = new ANTLRFileStream(inputFilePath, "UTF8");
-			}
-	    catch(Exception e) {
-	         e.printStackTrace();
-	        }
-	    
-		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		ConvertWreslParser parser = new ConvertWreslParser(tokenStream);
-		parser.currentAbsolutePath = inputFilePath; parser.evaluator();
-
-	    Map<String, Struct> expected_modelMap = new HashMap<String, Struct>();
-	    Struct expected_struct1 = new Struct();
-		
-		IncludeFile incF;
-		
-		incF = new IncludeFile();
-		incF.scope = "local";
-		expected_struct1.incFileMap.put("D:\\cvwrsm\\wrims_v2\\convert\\..\\..\\common\\System\\System_Sac.wresl", incF);
-			
-		Goal gl = new Goal();
-		gl.scope = "local";
-		gl.caseName.add("default");
-		gl.caseCondition.add("always");
-		gl.caseExpression.add("C607>500");
-		expected_struct1.gMap.put("force_c607",gl);
-
-		Alias as = new Alias();
-		as.scope = "global";
-		as.units = "CFS";
-		as.expression = "D419_swp[monthlyweighted5]";
-		expected_struct1.asMap.put("D419_swpC6",as);
-		
-		expected_modelMap.put("CVCWHEELING",expected_struct1);
-				
-		ArrayList<String> modelInFile =  parser.F.model_list; 
-		ArrayList<String> expected_models = new ArrayList<String>();
-		expected_models.addAll(expected_modelMap.keySet());
-		
-		Collections.sort(modelInFile);
-		Collections.sort(expected_models);
-		
-		Assert.assertEquals(modelInFile, expected_models);
-		
-		for ( String model : expected_modelMap.keySet() ) {
-
-			for ( String key : expected_modelMap.get(model).incFileMap.keySet() ){
-				
-				//System.out.println("expected: "+model+"="+key+":::"+expected_modelMap.get(model).incFileMap.get(key).equalEva() );
-				//System.out.println("actual:   "+model+"="+key+":::"+parser.modelMap.get(model).incFileMap.get(key).equalEva() );				
-				Assert.assertEquals(parser.modelMap.get(model).incFileMap.get(key).equalEva(), expected_modelMap.get(model).incFileMap.get(key).equalEva());
-			}
-			
-			for ( String key : expected_modelMap.get(model).gMap.keySet() ){
-				
-//				System.out.println("expected: "+model+"="+key+":::"+expected_modelMap.get(model).gMap.get(key).equalEva() );
-//				System.out.println("actual:   "+model+"="+key+":::"+parser.modelMap.get(model).gMap.get(key).equalEva() );				
-				Assert.assertEquals(parser.modelMap.get(model).gMap.get(key).equalEva(), expected_modelMap.get(model).gMap.get(key).equalEva());
-			}
-
-			for ( String key : expected_modelMap.get(model).asMap.keySet() ){
-			
-//				System.out.println("expected: "+model+"="+key+":::"+expected_modelMap.get(model).asMap.get(key).equalEva() );
-//				System.out.println("actual:   "+model+"="+key+":::"+parser.modelMap.get(model).asMap.get(key).equalEva() );
-				Assert.assertEquals(parser.modelMap.get(model).asMap.get(key).equalEva(), expected_modelMap.get(model).asMap.get(key).equalEva());
-			}			
 		}		
 	}		
 
