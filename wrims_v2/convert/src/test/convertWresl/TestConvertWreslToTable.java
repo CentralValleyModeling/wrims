@@ -3,19 +3,11 @@ package test.convertWresl;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-
 import org.antlr.runtime.RecognitionException;
 import org.testng.annotations.*;
-import org.testng.Assert;
-
 import evaluators.Comparison;
 import evaluators.Dataset;
-import evaluators.FileParser;
-import evaluators.PairMap;
 import evaluators.StudyParser;
 import evaluators.Tools;
 import evaluators.WriteCSV;

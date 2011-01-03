@@ -304,8 +304,6 @@ public class Tools {
 		
 		for (String f : t1Map.keySet()){
 			
-			ArrayList<String> children = t1Map.get(f);
-			
 			for (String c : t1Map.get(f)){
 				
 			ArrayList<String> s; 
