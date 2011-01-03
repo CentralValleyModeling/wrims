@@ -503,19 +503,19 @@ public class Struct {
 	}
 
 	public void dvarNonStd(String name, String scope, String kind,
-			String units, ArrayList<String> content, String lowerBound,
+			String units,  String lowerBound,
 			String upperBound) {
 		if (var_all.containsKey(name)) {
 			ErrMsg.print("Dvar redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "dvar_nonstd");
 		} else {
 			dvar_scope.put(name, scope);
-			list = new ArrayList<String>();
+			//list = new ArrayList<String>();
 			// list.add(scope);
-			list.add(kind);
-			list.add(units);
-			list.addAll(content);
-			dvar_nonstd.put(name, list);
+			//list.add(kind);
+			//list.add(units);
+			//list.addAll(content);
+			//dvar_nonstd.put(name, list);
 			var_all.put(name, "dvar_nonstd");
 
 			// / better data structure

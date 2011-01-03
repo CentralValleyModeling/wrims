@@ -316,28 +316,23 @@ dvar_alias[String id, String sc]
 	
 dvar_nonstd [String id, String sc]
 	:	'{' c=lower_or_upper kind units '}' {  
-			if(inModel=="n") {         F.dvarNonStd($id, $sc, $kind.str, $units.str, $c.list, $c.lowerBound, $c.upperBound);}
-	        else             { $model::M.dvarNonStd($id, $sc, $kind.str, $units.str, $c.list, $c.lowerBound, $c.upperBound);}
+			if(inModel=="n") {         F.dvarNonStd($id, $sc, $kind.str, $units.str,  $c.lowerBound, $c.upperBound);}
+	        else             { $model::M.dvarNonStd($id, $sc, $kind.str, $units.str,  $c.lowerBound, $c.upperBound);}
 		};
 
-lower_or_upper returns[ArrayList<String> list, String lowerBound, String upperBound]
-	:  ( lower upper? {       
-				$list = new ArrayList<String>();
-				//$list.add($lower.str); 
+lower_or_upper returns[String lowerBound, String upperBound]
+	:  ( 	lower upper? {       
 				$lowerBound=$lower.str;
-				if ($upper.str==null) {//$list.add("unbounded");
-				$upperBound="unbounded";}
-				else {//$list.add($upper.str);
-				$upperBound=$upper.str;}	
-		  }
-		)
-	|	upper {       
-				$list = new ArrayList<String>();
-				//$list.add("0");
-				$lowerBound="0";
-				//$list.add($upper.str);
+				if ($upper.str==null) { $upperBound="unbounded"; }
+				else                  { $upperBound=$upper.str;  }	
+		  	}
+	    )
+	|  ( 	upper lower? {       
 				$upperBound=$upper.str;
-		}		
+				if ($lower.str==null) { $lowerBound="0"; }
+				else                  { $lowerBound=$lower.str;  }	
+			}
+		)		
 	;
  
 lower returns[String str]
@@ -582,12 +577,12 @@ F90 : 'f90';
 DLL :  IDENT_TOKEN ('.dll' | '.DLL' );
 INTEGER_WORD: 'integer' | 'INTEGER' ;
 STD : 'std' | 'STD' ;
-UNITS : 'units' | 'UNITS' ;
+UNITS : 'units' | 'UNITS' | 'Units' ;
 CONVERT : 'convert' | 'CONVERT' ;
 ALIAS : 'alias' | 'ALIAS';
 KIND : 'kind' | 'KIND';
 GOAL : 'goal' | 'GOAL' | 'Goal';
-DEFINE :'define';
+DEFINE :'define' | 'Define' | 'DEFINE';
 ALWAYS :'always';
 CONDITION : 'condition' | 'CONDITION';
 SEQUENCE  : 'sequence' | 'SEQUENCE';

@@ -1,2 +1,2 @@
 define C_SLCVP {lower unbounded kind 'FLOW-CHANNEL' units 'CFS'}  
-define[local] C_SacFea {upper 6150*taf_cfs kind 'FLOW-CHANNEL' units 'CFS'}  
+define[local] C_SacFea {upper 6150*taf_cfs lower 0 kind 'FLOW-CHANNEL' units 'CFS'}  
