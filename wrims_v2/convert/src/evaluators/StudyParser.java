@@ -21,13 +21,10 @@ public class StudyParser {
 		File absMainFile = new File(relativeMainFilePath).getAbsoluteFile();
 		String absMainFilePath = absMainFile.getCanonicalPath();
 		
-		pairMain = FileParser.processFileIntoPair(absMainFilePath,"global"); 
-
 		System.out.println("############################################");
-		System.out.println("############################################");
-
-		//System.out.println("sequence: "+ pairMain.fileDataMap.get(absMainFilePath).sequence_map);
+		System.out.println("Parsing study main file  ");
 		
+		pairMain = FileParser.processFileIntoPair(absMainFilePath,"global"); 
 
 		Map<Integer, String> sequence_map = pairMain.fileDataMap.get(absMainFilePath).sequence_map;
 
@@ -38,12 +35,8 @@ public class StudyParser {
 		Collections.sort(sequenceList);
 		
 		for ( Integer i : sequenceList){	
-			System.out.println("sequence: "+i+" Model: "+sequence_map.get(i));		
-		}
-		
-		
-		
-		
+			System.out.println("sequence: "+i+" ::: "+sequence_map.get(i));		
+		}		
 		
 //		/// process included files in this main file		
 //		Map<String, PairMap> m = FileParser.processFileListIntoMapOfPair(pairMain.fileDataMap.get(mainFilePath));
@@ -69,7 +62,7 @@ public class StudyParser {
 			
 			System.out.println("############################################");
 			System.out.println("####   Processing sequence: "+iSequence);
-			System.out.println("####              model:    "+model);
+			System.out.println("####                 model: "+model);
 			System.out.println("############################################");
 			
 			Dataset adhoc = pairMain.modelAdhocMap.get(model);

@@ -323,15 +323,20 @@ dvar_nonstd [String id, String sc]
 lower_or_upper returns[ArrayList<String> list, String lowerBound, String upperBound]
 	:  ( lower upper? {       
 				$list = new ArrayList<String>();
-				$list.add($lower.str); $lowerBound=$lower.str;
-				if ($upper.str==null) {$list.add("unbounded");$upperBound="unbounded";}
-				else {$list.add($upper.str);$upperBound=$upper.str;}	
+				//$list.add($lower.str); 
+				$lowerBound=$lower.str;
+				if ($upper.str==null) {//$list.add("unbounded");
+				$upperBound="unbounded";}
+				else {//$list.add($upper.str);
+				$upperBound=$upper.str;}	
 		  }
 		)
 	|	upper {       
 				$list = new ArrayList<String>();
-				$list.add("0");$lowerBound="0";
-				$list.add($upper.str);$upperBound=$upper.str;
+				//$list.add("0");
+				$lowerBound="0";
+				//$list.add($upper.str);
+				$upperBound=$upper.str;
 		}		
 	;
  
