@@ -11,8 +11,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.antlr.runtime.RecognitionException;
 
@@ -275,7 +277,31 @@ public class Tools {
 	}
 
 	/// type 1 map is the shallow included files, e.g., map( f1, [f7,f9])
-	public static Map<String, ArrayList<String>> getReverseMap(Map<String, ArrayList<String>> t1Map) {
+	public static Map<String, Set<String>> getReverseMap(Map<String, ArrayList<String>> t1Map) {
+
+		Map<String, Set<String>> out = new HashMap<String, Set<String>>();
+		
+		for (String f : t1Map.keySet()) {
+
+			for (String c : t1Map.get(f)) {
+
+				if (out.get(c) == null) {
+					Set<String> s = new HashSet<String>();
+					s.add(f);
+					out.put(c, s);
+				}
+				else {
+					out.get(c).add(f);
+				}
+
+			}
+
+		}
+		return out;
+	}	
+	
+	/// type 1 map is the shallow included files, e.g., map( f1, [f7,f9])
+	public static Map<String, ArrayList<String>> getReverseMap_arrayList(Map<String, ArrayList<String>> t1Map) {
 
 		Map<String, ArrayList<String>> out = new HashMap<String, ArrayList<String>>();
 		
@@ -283,7 +309,7 @@ public class Tools {
 			
 			ArrayList<String> children = t1Map.get(f);
 			
-			for (String c : children){
+			for (String c : t1Map.get(f)){
 				
 			ArrayList<String> s; 
 			if (out.get(c)==null) { s = new ArrayList<String>(); s.add(f);}
@@ -297,9 +323,10 @@ public class Tools {
 		return out;
 	}
 
-	public static Map<String, String> getFileScopeMap(Map<String, Dataset> dataMap, Dataset adhoc) {
+	public static Map<String, String> getFileScopeMap(Map<String, Dataset> dataMap) {
 
-		Map<String, String> out = getScopeMap(adhoc.incFileList, adhoc.incFileList_local);
+		Map<String, String> out = new HashMap<String, String>();
+		//getScopeMap(adhoc.incFileList, adhoc.incFileList_local);
 		
 		
 		for (String f : dataMap.keySet()){
@@ -334,7 +361,7 @@ public class Tools {
 	}
 	
 	public static Dataset correctDataScope(String f, Dataset ds, Map<String,String> fileScopeMap,
-			Map<String,ArrayList<String>> t1ReverseMap	) {
+			Map<String,Set<String>> t1ReverseMap	) {
 
 		
 		if (fileScopeMap.get(f) == "local") {
@@ -360,5 +387,38 @@ public class Tools {
 	}
 	
 
+	public static Map<String,Dataset> getAllSprings(String nodeFile, Map<String,ArrayList<String>> t1Map, Map<String, Dataset> fileDataMap ) {
+		Map<String, Dataset> out = new HashMap<String, Dataset>();
+		
+		for (String child : t1Map.get(nodeFile)){
+			
+			if (t1Map.get(child)!=null) out.putAll(getAllSprings(child,t1Map,fileDataMap));
+
+			out.put(child, fileDataMap.get(child));	
+		}
+		
+		return out;
+		
+	}
+	
+	public static Map<String,Dataset> putDataFileMapFromWholeStudy(String file, Map<String,Dataset> fileDataMap) {
+		
+		
+		Map<String,Dataset> out = new HashMap<String, Dataset>();
+		
+		out.put(file, fileDataMap.get(file));
+		
+			if (! fileDataMap.get(file).incFileList.isEmpty()){
+				
+				for (String child : fileDataMap.get(file).incFileList){
+					out.putAll(putDataFileMapFromWholeStudy(child,fileDataMap));
+				}
+			}
+		
+		return out;
+		
+	}
+	
+	
 	
 }

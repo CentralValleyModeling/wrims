@@ -7,9 +7,9 @@ public class IncludeFile {
 	public String fromWresl;
 	
 	public IncludeFile(){
-		scope="undefined";
-		fromWresl="undefined";
-		//absFilePath="undefined";
+		scope=Parameters.undefined;
+		fromWresl=Parameters.undefined;
+		//absFilePath=Parameters.undefined;
 
 	}
 	

@@ -17,14 +17,14 @@ public class Goal {
 	public String fromWresl;
 	
 	public Goal(){
-		scope="undefined";
-		lhs="undefined";
+		scope=Parameters.undefined;
+		lhs=Parameters.undefined;
 		caseName       = new ArrayList<String>();
 		caseCondition  = new ArrayList<String>();
 		caseExpression = new ArrayList<String>();
 		case_lhs_gt_rhs = new ArrayList<String>();
 		case_lhs_lt_rhs = new ArrayList<String>();
-		fromWresl = "undefined";
+		fromWresl = Parameters.undefined;
 	}
 	
 	public String equalEva(){

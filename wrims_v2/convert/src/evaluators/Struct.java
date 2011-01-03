@@ -400,7 +400,7 @@ public class Struct {
 		}
 	}
 
-	public void svarDSS(String name, String scope, String kind, String units, String convertToUnits) {
+	public void svarDSS(String name, String scope, String b_part, String kind, String units, String convertToUnits) {
 		if (var_all.containsKey(name)) {
 			ErrMsg.print("Svar redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "svar_dss");
@@ -416,6 +416,7 @@ public class Struct {
 			// / clearer data structure
 			Svar sv = new Svar();
 			sv.scope = scope;
+			if (b_part!=null) sv.dssBPart = b_part; 
 			sv.kind = kind;
 			sv.units = units;
 			if (convertToUnits!=null) {sv.convertToUnits = convertToUnits;}

@@ -213,6 +213,8 @@ public class TestConvertWresl {
 		gl.caseName.add("default");
 		gl.caseCondition.add("always");
 		gl.caseExpression.add("C607>500");
+		gl.case_lhs_gt_rhs.add("constrain");
+		gl.case_lhs_lt_rhs.add("constrain");	
 		expected_struct.gMap.put("force_c607",gl);
 
 		Alias as = new Alias();
@@ -264,6 +266,8 @@ public class TestConvertWresl {
 		gl.caseName.add("default");
 		gl.caseCondition.add("always");
 		gl.caseExpression.add("C607>500");
+		gl.case_lhs_gt_rhs.add("constrain");
+		gl.case_lhs_lt_rhs.add("constrain");	
 		expected_struct1.gMap.put("force_c607",gl);
 
 		Alias as = new Alias();
@@ -280,6 +284,8 @@ public class TestConvertWresl {
 		gl.caseName.add("default");
 		gl.caseCondition.add("always");
 		gl.caseExpression.add("C607>500");
+		gl.case_lhs_gt_rhs.add("constrain");
+		gl.case_lhs_lt_rhs.add("constrain");	
 		expected_struct2.gMap.put("test_goal",gl);
 		
 		expected_modelMap.put("model2",expected_struct2);
@@ -675,6 +681,7 @@ public class TestConvertWresl {
 		/// 1st sv
 		sv = new Svar();
 		sv.scope = "global";
+
 		sv.format = "timeseries";
 		sv.kind = "EVAPORATION-RATE";
 		sv.units = "IN";
@@ -925,6 +932,8 @@ public class TestConvertWresl {
 		g.caseName.add("default");
 		g.caseCondition.add("always");
 		g.caseExpression.add("C5_WTS=C5_WTS_Stg1+C5_WTS_Stg2");
+		g.case_lhs_gt_rhs.add("constrain");
+		g.case_lhs_lt_rhs.add("constrain");	
 		expected_gMap.put("split_C5_WTS", g);
 		
 		g = new Goal();
@@ -932,6 +941,8 @@ public class TestConvertWresl {
 		g.caseName.add("default");
 		g.caseCondition.add("always");
 		g.caseExpression.add("C5_WTS=C5_WTS_Stg1");
+		g.case_lhs_gt_rhs.add("constrain");
+		g.case_lhs_lt_rhs.add("constrain");	
 		expected_gMap.put("C_SLCVP", g);
 		
 		g = new Goal();
@@ -939,6 +950,8 @@ public class TestConvertWresl {
 		g.caseName.add("default");
 		g.caseCondition.add("always");
 		g.caseExpression.add("b=c");
+		g.case_lhs_gt_rhs.add("constrain");
+		g.case_lhs_lt_rhs.add("constrain");	
 		expected_gMap.put("a1", g);
 
 		g = new Goal();
@@ -946,6 +959,8 @@ public class TestConvertWresl {
 		g.caseName.add("default");
 		g.caseCondition.add("always");
 		g.caseExpression.add("b>c");
+		g.case_lhs_gt_rhs.add("constrain");
+		g.case_lhs_lt_rhs.add("constrain");		
 		expected_gMap.put("a2", g);
 
 		g = new Goal();
@@ -953,6 +968,8 @@ public class TestConvertWresl {
 		g.caseName.add("default");
 		g.caseCondition.add("always");
 		g.caseExpression.add("b<c");
+		g.case_lhs_gt_rhs.add("constrain");
+		g.case_lhs_lt_rhs.add("constrain");	
 		expected_gMap.put("a3", g);
 				
 		

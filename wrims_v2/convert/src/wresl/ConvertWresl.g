@@ -118,8 +118,8 @@ goal
 	@init { scope = "global";}
 	: GOAL ( LOCAL {scope="local";} )?  id=ident 
 	( goal_simple[$id.text, scope] 
-	| goal_noCase[$id.text, scope] 
-	| goal_case  [$id.text, scope] ) 
+	| goal_case_or_noCase[$id.text, scope] 
+	) 
 	;
 
 goal_simple[String id, String sc] 
@@ -129,22 +129,27 @@ goal_simple[String id, String sc]
 		}
 	;
 
-goal_noCase[String id, String sc]
-	:   '{' LHS h=expression  r=goalStatement '}' {
+goal_case_or_noCase[String id, String sc]
+	:   '{' LHS h=expression  
+	(	r=goalStatement {
 		if(inModel=="n") {         F.goalNoCase($id, $sc, $h.text, $r.rhs, $r.lhs_gt_rhs, $r.lhs_lt_rhs);}
 	    else             { $model::M.goalNoCase($id, $sc, $h.text, $r.rhs, $r.lhs_gt_rhs, $r.lhs_lt_rhs);}
 		}
-	;
-
-goal_case[String id, String sc] 
-	:   '{' LHS lhs=ident  g=goalCaseStatements '}'{
-			 //$g.gl.scope = $sc;
-			 //$g.gl.lhs = $lhs.text;
-			 if(inModel=="n") {  F.goalCase($id, $sc, $lhs.text, $g.gl);}
-	   		 else             { $model::M.goalCase($id, $sc, $lhs.text, $g.gl);}
+	| g=goalCaseStatements {
+			 if(inModel=="n") {  F.goalCase($id, $sc, $h.text, $g.gl);}
+	   		 else             { $model::M.goalCase($id, $sc, $h.text, $g.gl);}
 				
 	     }
-	; 
+	) '}' 
+	;
+
+//goal_case[String id, String sc] 
+//	:   '{' LHS lhs=all_ident  g=goalCaseStatements '}'{
+//			 if(inModel=="n") {  F.goalCase($id, $sc, $lhs.text, $g.gl);}
+//	   		 else             { $model::M.goalCase($id, $sc, $lhs.text, $g.gl);}
+//				
+//	     }
+//	; 
 
 goalCaseStatements returns[Goal gl]					   
 	@init { $gl = new Goal(); }    
@@ -288,10 +293,14 @@ caseStatement returns[String caseNameStr, String conditionStr, String expression
 
 
 svar_dss[String id, String sc]
-	:  '{' 'timeseries' kind units convertToUnits? '}' { 				
-			if(inModel=="n") {         F.svarDSS($id, $sc, $kind.str, $units.str, $convertToUnits.str);}
-	        else             { $model::M.svarDSS($id, $sc, $kind.str, $units.str, $convertToUnits.str);}		
+	:  '{' t=timeseries_B_part kind units convertToUnits? '}' { 				
+			if(inModel=="n") {         F.svarDSS($id, $sc, $t.str, $kind.str, $units.str, $convertToUnits.str);}
+	        else             { $model::M.svarDSS($id, $sc, $t.str, $kind.str, $units.str, $convertToUnits.str);}		
 		};
+		
+timeseries_B_part returns[String str]: TIMESERIES ( s=QUOTE_STRING  )? 
+				{ if ($s.text != null) $str =Tools.strip($s.text);  }
+    ;		
 
 dvar_std[String id, String sc]
 	:	'{' n=INTEGER_WORD? STD kind units'}' { 
@@ -362,7 +371,7 @@ convertToUnits returns [String str]
 
 
 conditionStatement returns[String str]
-	: 'condition' 
+	: CONDITION
 	( s=logicalRelationStatement {$str = $s.str.replace(",","; ");}
 	| ALWAYS {$str = "always";} )
 	;
@@ -375,10 +384,10 @@ valueStatement returns[String str]
 
 sqlStatement returns[ArrayList<String> list, String str]
 	@init { $list = new ArrayList<String>(); }
-	:  'select' i1=all_ident 
-	   'from' i2=ident {$str ="select "+$i1.text+" from "+$i2.text;} 
-	  ('given' i3=assignStatement {$str=$str+" given "+$i3.text;})? 
-	  ('use' i4=ident {$str=$str+" use "+$i4.text;})? 
+	:  SELECT i1=all_ident 
+	   FROM i2=ident {$str ="select "+$i1.text+" from "+$i2.text;} 
+	  (GIVEN i3=assignStatement {$str=$str+" given "+$i3.text;})? 
+	  (USE i4=ident {$str=$str+" use "+$i4.text;})? 
 	  (i5=where_items {$str=$str+" where "+$i5.str;})?	{       
 				$list.add("select");
 				$list.add($i1.text);
@@ -551,7 +560,37 @@ MOD : 'mod'  ;
 MAX : 'max'  ;
 MIN : 'min'  ;
 SUM : 'sum'  ;
-WHERE : 'where' ;
+
+
+/// reserved keywords ///
+TIMESERIES: 'timeseries';
+SELECT :  'select' | 'SELECT' ;
+FROM:     'from' | 'FROM' ;
+WHERE : 'where' | 'WHERE';
+GIVEN:    'given' | 'GIVEN' ;
+USE:      'use' | 'USE' ;
+CASE : 'case' | 'Case' | 'CASE' ;
+LHS: 'lhs' | 'LHS' ;
+RHS: 'rhs' | 'RHS' ;
+EXTERNAL : 'EXTERNAL' | 'external' ;
+F90 : 'f90';
+DLL :  IDENT_TOKEN ('.dll' | '.DLL' );
+INTEGER_WORD: 'integer' | 'INTEGER' ;
+STD : 'std' | 'STD' ;
+UNITS : 'units' | 'UNITS' ;
+CONVERT : 'convert' | 'CONVERT' ;
+ALIAS : 'alias' | 'ALIAS';
+KIND : 'kind' | 'KIND';
+GOAL : 'goal' | 'GOAL' | 'Goal';
+DEFINE :'define';
+ALWAYS :'always';
+CONDITION : 'condition' | 'CONDITION';
+SEQUENCE  : 'sequence' | 'SEQUENCE';
+MODEL     : 'model' | 'MODEL' | 'Model';
+ORDER     : 'order';
+INCLUDE   : 'include' | 'INCLUDE' | 'Include';
+LOCAL     : '[' ( 'local'| 'LOCAL') ']';
+
 
 /// comparison ///
 EQUALS : '==';
@@ -567,29 +606,6 @@ fragment WRESL_FILE :  (LETTER | DIGIT | SYMBOLS |'-'  )+ WRESL_EXT ;
 fragment DIR_ELEMENT : (LETTER | DIGIT | SYMBOLS | '-' )+  '\\' ;
 fragment DIR_UP :                                   ('..') '\\' ;
 fragment DIR_SPLIT : '\\' ;
-
-/// reserved keywords ///
-CASE : 'case' | 'Case' | 'CASE' ;
-LHS: 'lhs' | 'LHS' ;
-RHS: 'rhs' | 'RHS' ;
-EXTERNAL : 'EXTERNAL' | 'external' ;
-F90 : 'f90';
-DLL :  IDENT_TOKEN ('.dll' | '.DLL' );
-INTEGER_WORD: 'integer' | 'INTEGER' ;
-STD : 'std' | 'STD' ;
-UNITS : 'units' | 'UNITS' ;
-CONVERT : 'convert' | 'CONVERT' ;
-ALIAS : 'alias' | 'ALIAS';
-KIND : 'kind' | 'KIND';
-GOAL : 'goal' | 'GOAL';
-DEFINE :'define';
-ALWAYS :'always';
-CONDITION : 'condition';
-SEQUENCE  : 'sequence' | 'SEQUENCE';
-MODEL     : 'model' | 'MODEL' | 'Model';
-ORDER     : 'order';
-INCLUDE   : 'include' | 'INCLUDE' | 'Include';
-LOCAL     : '[' ( 'local'| 'LOCAL') ']';
 
 /// reserved vars ///
 WATERYEAR : 'wateryear';

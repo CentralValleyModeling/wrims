@@ -8,9 +8,9 @@ public class External {
 
 	
 	public External(){
-		scope="undefined";
-		type="undefined";
-		fromWresl="undefined";
+		scope=Parameters.undefined;
+		type=Parameters.undefined;
+		fromWresl=Parameters.undefined;
 
 	}
 	

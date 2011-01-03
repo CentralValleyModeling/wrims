@@ -15,7 +15,7 @@ public class WriteCSV {
 	  //private static PrintWriter out;
 
 	  public static String external_header ="NAME,TYPE,FROM_WRESL_FILE";
-	  public static String svar_header ="NAME,TYPE,UNITS,CONVERT_TO,OUTPUT,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
+	  public static String svar_header ="NAME,DSS_B_PART,TYPE,UNITS,CONVERT_TO,OUTPUT,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
 	  public static String dvar_header ="NAME,TYPE,UNITS,LOWER_BOUND,UPPER_BOUND,FROM_WRESL_FILE";	  
 	  public static String alias_header ="NAME,TYPE,UNITS,OUTPUT,EXPRESSION,FROM_WRESL_FILE";
 	  public static String goal_header = "NAME,LHS,CASE,ORDER,CONDITION,EXPRESSION/RHS,LHS>RHS,LHS<RHS,FROM_WRESL_FILE";
@@ -102,7 +102,8 @@ public class WriteCSV {
 		    	//out.print(","+p.scope);  // for SCOPE
 		    	//out.print(",Y"); //for INCLUDE
 		    	//out.print(","+p.format); //for FORMAT
-		    	out.print(","+s.kind); //for KIND		    	
+			    out.print(","+s.dssBPart); //for DSS B Part	
+			    out.print(","+s.kind); //for KIND		    	
 		    	out.print(","+s.units); //for UNITS
 		    	out.print(","+s.convertToUnits); //for CONVERT
 		    	out.print(",Y"); //for OUTPUT

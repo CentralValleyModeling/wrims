@@ -15,14 +15,14 @@ public class Dvar {
 //	public ArrayList<String> caseExpression;
 	
 	public Dvar(){
-		scope="undefined";
+		scope=Parameters.undefined;
 		integer="N";
-		format="undefined";
-		kind="undefined";
-		units="undefined";
-		lowerBound="undefined";
-		upperBound="undefined";
-		fromWresl="undefined";
+		format=Parameters.undefined;
+		kind=Parameters.undefined;
+		units=Parameters.undefined;
+		lowerBound=Parameters.undefined;
+		upperBound=Parameters.undefined;
+		fromWresl=Parameters.undefined;
 //		caseName       = new ArrayList<String>();
 //		caseCondition  = new ArrayList<String>();
 //		caseExpression = new ArrayList<String>();

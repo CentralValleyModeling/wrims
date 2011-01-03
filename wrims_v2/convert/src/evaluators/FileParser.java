@@ -31,11 +31,11 @@ public class FileParser {
 //	public ArrayList<String> caseExpression;
 	
 	public FileParser(){
-		scope="undefined";
-//		format="undefined";
-		kind="undefined";
-		units="undefined";
-		expression="undefined";
+		scope=Parameters.undefined;
+//		format=Parameters.undefined;
+		kind=Parameters.undefined;
+		units=Parameters.undefined;
+		expression=Parameters.undefined;
 
 
 	}

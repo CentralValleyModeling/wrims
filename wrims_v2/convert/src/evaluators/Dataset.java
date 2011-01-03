@@ -372,6 +372,8 @@ public class Dataset {
 	public Dataset prioritize(Dataset laterFileData, String filePath_forErrorMessage) {
 
 		/// check duplicate and promote later included file data for higher priority 
+		if(laterFileData==null) System.out.println("Fatal error!!! Dataset is null in file: "+filePath_forErrorMessage);
+		
 		if ( this.hasDuplicateIn(laterFileData, filePath_forErrorMessage)) {
 			this.remove(laterFileData);
 		}
@@ -379,16 +381,22 @@ public class Dataset {
 		return this.add(laterFileData); // later data has higher priority
 	}
 	
-	public Dataset prioritizeList(String nodeFile, Map<String,ArrayList<String>> t1Map, Map<String, Dataset> fileDataMap ) {
+	public Dataset prioritizeChildren(String nodeFile, Map<String,ArrayList<String>> t1Map, Map<String, Dataset> fileDataMap ) {
 
+		
 		for (String childFile : t1Map.get(nodeFile)) {
 			
-			if (t1Map.get(childFile)!=null)  this.prioritizeList(childFile, t1Map, fileDataMap);
-
+			System.out.println(" child file is: "+ childFile +" from node: " + nodeFile);
+						
+			if (t1Map.get(childFile)!=null)  this.prioritizeChildren(childFile, t1Map, fileDataMap);
+			
 			this.prioritize(fileDataMap.get(childFile), childFile);
 		}
+		
 		return this;
 	}
+
+	
 	
 //	public Dataset addStruct(Object obj) {
 //		

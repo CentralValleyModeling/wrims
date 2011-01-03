@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Svar {
 	
 	public String scope;
+	public String dssBPart;
 	public String format;
 	public String kind;
 	public String units;
@@ -15,15 +16,16 @@ public class Svar {
 	public String fromWresl;
 	
 	public Svar(){
-		scope="undefined";
-		format="undefined";
-		kind="undefined";
-		units="undefined";
-		convertToUnits ="undefined";
+		scope=Parameters.undefined;
+		dssBPart=Parameters.undefined;
+		format=Parameters.undefined;
+		kind=Parameters.undefined;
+		units=Parameters.undefined;
+		convertToUnits =Parameters.undefined;
 		caseName       = new ArrayList<String>();
 		caseCondition  = new ArrayList<String>();
 		caseExpression = new ArrayList<String>();
-		fromWresl = "undefined";
+		fromWresl = Parameters.undefined;
 	}
 	
 	public String equalEva(){
@@ -38,7 +40,7 @@ public class Svar {
 		for (String i: caseExpression){caseExpressionStr = caseExpressionStr + s + i;}
 		
 		
-		String temp = scope+s+format+s+kind+s+units+s+convertToUnits+s+
+		String temp = scope+s+dssBPart+format+s+kind+s+units+s+convertToUnits+s+
 		              caseNameStr+caseConditionStr+s+caseExpressionStr;
 		
 		return temp;
