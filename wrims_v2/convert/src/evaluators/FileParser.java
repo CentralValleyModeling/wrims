@@ -177,21 +177,6 @@ public class FileParser {
 		}
 	}
 	
-//	public static Map<String,Dataset> processFileListIntoDatasetMap(ArrayList<String>fileList, ArrayList<String>scopeList) throws RecognitionException, IOException {
-//				
-//		Map<String,Dataset> out = new HashMap<String, Dataset>() ;
-//		
-//		for ( int i=0 ;i< fileList.size() ;i++ ){
-//			
-//			Map<String,Dataset> each = new HashMap<String, Dataset>();
-//			//String scope = obj.incFileMap.get(inputFilePath).scope;
-//			each = processNestedFileIntoDatasetMap(fileList.get(i), scopeList.get(i));
-//			
-//			out.putAll(each);
-//		}
-//		
-//		return out;
-//	}	
 
 	public static PairMap processFileIntoPair(String inputFilePath, String scope) throws RecognitionException, IOException {
 		

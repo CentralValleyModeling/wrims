@@ -1,5 +1,0 @@
-NAME,TYPE,UNITS,LOWER_BOUND,UPPER_BOUND,FROM_WRESL_FILE
-C_Banks,FLOW-CHANNEL,TAF,0,unbounded,D:\cvwrsm\wrims_v2\convert\src\test\TestConvertWreslToTable_processModelOneLevel_case1.wresl
-C_SacFea,FLOW-CHANNEL,CFS,0,6150*taf_cfs,D:\cvwrsm\wrims_v2\convert\src\test\TestConvertWresl_dvarNonStd.wresl
-C_SLCVP,FLOW-CHANNEL,CFS,unbounded,unbounded,D:\cvwrsm\wrims_v2\convert\src\test\TestConvertWresl_dvarNonStd.wresl
-C_Tracy,FLOW-CHANNEL,CFS,0,unbounded,D:\cvwrsm\wrims_v2\convert\src\test\TestConvertWresl_dvarStd.wresl

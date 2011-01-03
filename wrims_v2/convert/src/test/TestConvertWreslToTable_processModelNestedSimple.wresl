@@ -1,3 +1,10 @@
+SEQUENCE CYCLE1 {
+    model   advanced
+    order   1
+    }
+
+
+
  MODEL advanced { 
 
  	!INCLUDE [local]'TestConvertWresl_svarExpression.wresl'	

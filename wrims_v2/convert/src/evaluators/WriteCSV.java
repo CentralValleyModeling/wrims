@@ -86,7 +86,7 @@ public class WriteCSV {
 		    
 			List<String> keys = list;
 			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
-		    //List<SvarProps> svarPropsList;
+
 			
 		    for (String k: keys ){
 		    	

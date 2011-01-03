@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
 import org.antlr.runtime.RecognitionException;
+import org.testng.Assert;
 import org.testng.annotations.*;
 import evaluators.Comparison;
 import evaluators.Dataset;
@@ -20,7 +21,25 @@ public class TestConvertWreslToTable {
 	public PrintWriter outFile;
 	public BufferedWriter outputFile;
 
+	@Test(groups = { "WRESL_to_Table"  })
+	public void globalVars() throws RecognitionException, IOException {
+		
+		String f = "src\\test\\TestConvertWreslToTable_globalVars.wresl";
+		
+		String outParent = "test-csv\\TestConvertWreslToTable_globalVars\\";
+		String expectedParent = "src\\test\\expected\\TestConvertWreslToTable_globalVars\\";
+		
+		Tools.deleteDir(outParent);
 
+		
+		Map<String, Dataset> modelDataMap = StudyParser.parseMainFile(f);
+		
+		Assert.assertEquals(modelDataMap.keySet().isEmpty(), false );
+		
+		WriteCSV.output(modelDataMap, outParent);
+		
+		Comparison.compareFolder(modelDataMap.keySet(), outParent, expectedParent);
+	}
 	
 	@Test(groups = { "WRESL_to_Table"  })
 	public void processModelNestedSimple() throws RecognitionException, IOException {
@@ -34,6 +53,9 @@ public class TestConvertWreslToTable {
 
 		
 		Map<String, Dataset> modelDataMap = StudyParser.parseMainFile(f);
+		
+		Assert.assertEquals(modelDataMap.keySet().isEmpty(), false );
+		
 		WriteCSV.output(modelDataMap, outParent);
 		
 		Comparison.compareFolder(modelDataMap.keySet(), outParent, expectedParent);
@@ -54,6 +76,9 @@ public class TestConvertWreslToTable {
 
 		
 		Map<String, Dataset> modelDataMap = StudyParser.parseMainFile(f);
+		
+		Assert.assertEquals(modelDataMap.keySet().isEmpty(), false );
+		
 		WriteCSV.output(modelDataMap, outParent);
 		
 		Comparison.compareFolder(modelDataMap.keySet(), outParent, expectedParent);

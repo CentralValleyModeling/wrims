@@ -382,12 +382,12 @@ public class Tools {
 	}
 	
 
-	public static Map<String,Dataset> getAllSprings(String nodeFile, Map<String,ArrayList<String>> t1Map, Map<String, Dataset> fileDataMap ) {
+	public static Map<String,Dataset> getAllOffSprings(String nodeFile, Map<String,ArrayList<String>> t1Map, Map<String, Dataset> fileDataMap ) {
 		Map<String, Dataset> out = new HashMap<String, Dataset>();
 		
 		for (String child : t1Map.get(nodeFile)){
 			
-			if (t1Map.get(child)!=null) out.putAll(getAllSprings(child,t1Map,fileDataMap));
+			if (t1Map.get(child)!=null) out.putAll(getAllOffSprings(child,t1Map,fileDataMap));
 
 			out.put(child, fileDataMap.get(child));	
 		}

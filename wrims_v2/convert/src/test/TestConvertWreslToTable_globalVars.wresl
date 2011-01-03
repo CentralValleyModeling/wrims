@@ -1,0 +1,21 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   empty
+    order   2
+    }
+
+
+ MODEL first { 
+
+INCLUDE 'TestConvertWresl_svarExpression.wresl'	
+	
+	}
+	 
+ MODEL empty { 
+
+	 	
+     }
