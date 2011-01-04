@@ -91,9 +91,8 @@ public class StudyParser {
 			Dataset adhoc = pairMain.modelAdhocMap.get(model);
 
 			
-			Dataset adhoc_include_previous_globals = new Dataset();
-			adhoc_include_previous_globals.add(adhoc);
-			adhoc_include_previous_globals.add(adhoc_cumulative_globals);
+			Dataset adhoc_include_previous_globals = new Dataset(adhoc);
+			adhoc_include_previous_globals.addNonDuplicate(adhoc_cumulative_globals);
 			
 
 			
@@ -115,9 +114,11 @@ public class StudyParser {
 				
 				if (existingSet.contains(f))  {
 					/// skip processing
-					//System.out.println("....Skip file: "+f);
+					System.out.println("....Skip file: "+f);
 					fileDataMap_thisModel.put(f, fileDataMap_wholeStudy.get(f));
 					fileDataMap_thisModel.putAll(Tools.getAllOffSprings(f, t1Map_wholeStudy, fileDataMap_wholeStudy));
+					
+					System.out.println("....got data from previous models." );
 					/// TODO: need to put file f's children dataset					
 
 				} 
@@ -178,19 +179,6 @@ public class StudyParser {
 			}
 
 			
-//			System.out.println("file scope map: "+fileScopeMap);
-//			System.out.println("t1 map: "+t1Map);
-//			System.out.println("t1 reverse map: "+t1ReverseMap);
-//			
-//			System.out.println("keysets in fileDataMap"+fileDataMap_corrected.keySet());
-			
-//			for (String f : fileDataMap_corrected.keySet()) {
-//				System.out.println("========== fileDataMap_corrected =========== ");
-//				System.out.println("all   : " + f + "::: " + fileDataMap_corrected.get(f).svList);
-//				System.out.println("global: " + f + "::: " + fileDataMap_corrected.get(f).svList_global);
-//				System.out.println("local : " + f + "::: " + fileDataMap_corrected.get(f).svList_local);
-//			}
-			
 			
 			/// prioritize data if redefined			
 			Dataset model_data_complete = new Dataset();
@@ -214,11 +202,13 @@ public class StudyParser {
 			
 			/// for vars in adhoc
 			model_data_complete.prioritize(adhoc, absMainFilePath);
+			System.out.println("========== finish adhoc prioritization =========== ");
+			System.out.println("========== finish all prioritization =========== ");
 			
 			/// update whole study
 			adhoc_cumulative_globals.add(adhoc.getGlobalVars());
 			
-			System.out.println("========== finish prioritization =========== ");
+
 
 
 //				System.out.println("all   : " + model_data_complete.svList);

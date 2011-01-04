@@ -2,7 +2,9 @@ package evaluators;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Dataset {
 
@@ -82,6 +84,7 @@ public class Dataset {
 		for (String e : s.svList){ 
 			if (this.svList.contains(e)) {
 				System.out.println("Error!!! Svar redefined: "+e+" in file: "+filePath);
+				ErrMsg.print("Svar redefined: "+e, filePath);
 				b = true;
 			}
 		}		
@@ -261,49 +264,47 @@ public class Dataset {
 	}
 
 	
-	public Dataset remove(Object obj) {
+	public Dataset remove(Dataset s) {
 		
-		Dataset s = (Dataset)obj;
-
 		
 		if (!s.incFileList.isEmpty()) {
 			this.incFileList.removeAll(s.incFileList);
-			if (!s.incFileList_global.isEmpty()) {this.incFileList_global.removeAll(s.incFileList_global);}
-			if (!s.incFileList_local.isEmpty()) {this.incFileList_local.removeAll(s.incFileList_local);}
+			this.incFileList_global.removeAll(s.incFileList);
+			this.incFileList_local.removeAll(s.incFileList);
 			this.incFileMap.remove(s.incFileList);
 		}
 
 		if (!s.exList.isEmpty()) {
 			this.exList.removeAll(s.exList);
-			if (!s.exList_global.isEmpty()) {this.exList_global.removeAll(s.exList_global);}
-			if (!s.exList_local.isEmpty()) {this.exList_local.removeAll(s.exList_local);}
+			if (!s.exList_global.isEmpty()) {this.exList_global.removeAll(s.exList);}
+			if (!s.exList_local.isEmpty()) {this.exList_local.removeAll(s.exList);}
 			this.exMap.remove(s.exList);
 		}
 		
 		if (!s.svList.isEmpty()) {
 			this.svList.removeAll(s.svList);
-			if (!s.svList_global.isEmpty()) {this.svList_global.removeAll(s.svList_global);}
-			if (!s.svList_local.isEmpty()) {this.svList_local.removeAll(s.svList_local);}
+			if (!s.svList_global.isEmpty()) {this.svList_global.removeAll(s.svList);}
+			if (!s.svList_local.isEmpty()) {this.svList_local.removeAll(s.svList);}
 			this.svMap.remove(s.svList);
 		}
 
 		if (!s.dvList.isEmpty()) {
 			this.dvList.removeAll(s.dvList);
-			if (!s.dvList_global.isEmpty()) {this.dvList_global.removeAll(s.dvList_global);}
-			if (!s.dvList_local.isEmpty()) {this.dvList_local.removeAll(s.dvList_local);}
+			if (!s.dvList_global.isEmpty()) {this.dvList_global.removeAll(s.dvList);}
+			if (!s.dvList_local.isEmpty()) {this.dvList_local.removeAll(s.dvList);}
 			this.dvMap.remove(s.dvList);
 		}
 		if (!s.asList.isEmpty()) {
 			this.asList.removeAll(s.gList);
-			if (!s.asList_global.isEmpty()) {this.asList_global.removeAll(s.asList_global);}
-			if (!s.asList_local.isEmpty()) {this.asList_local.removeAll(s.asList_local);}
+			if (!s.asList_global.isEmpty()) {this.asList_global.removeAll(s.asList);}
+			if (!s.asList_local.isEmpty()) {this.asList_local.removeAll(s.asList);}
 			this.asMap.remove(s.gList);
 		}
 
 		if (!s.gList.isEmpty()) {
 			this.gList.removeAll(s.gList);
-			if (!s.gList_global.isEmpty()) {this.gList_global.removeAll(s.gList_global);}
-			if (!s.gList_local.isEmpty()) {this.gList_local.removeAll(s.gList_local);}
+			if (!s.gList_global.isEmpty()) {this.gList_global.removeAll(s.gList);}
+			if (!s.gList_local.isEmpty()) {this.gList_local.removeAll(s.gList);}
 			this.gMap.remove(s.gList);
 		}
 
@@ -318,11 +319,9 @@ public class Dataset {
 
 		return this;
 	}	
-	
-	public Dataset add(Object obj) {
-		
-		Dataset s = (Dataset)obj;
 
+	
+	public Dataset add(Dataset s) {
 		
 		if (!s.incFileList.isEmpty()) {
 			this.incFileList.addAll(s.incFileList);
@@ -377,6 +376,16 @@ public class Dataset {
 		return this;
 	}
 	
+	
+	
+	public Dataset addNonDuplicate(Dataset s) {
+		
+		s.remove(this);		
+
+		return this.add(s);
+	}
+	
+
 	
 	public Dataset prioritize(Dataset laterFileData, String filePath_forErrorMessage) {
 

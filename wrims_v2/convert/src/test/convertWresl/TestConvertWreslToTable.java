@@ -25,6 +25,49 @@ public class TestConvertWreslToTable {
 	public PrintWriter outFile;
 	public BufferedWriter outputFile;
 
+	
+	@Test(groups = { "WRESL_to_Table"  })
+	public void globalLocalVars() throws RecognitionException, IOException {
+		
+		String f = "src\\test\\TestConvertWreslToTable_globalLocalVars.wresl";
+		
+		String outParent = "test-csv\\TestConvertWreslToTable_globalLocalVars\\";
+		String expectedParent = "src\\test\\expected\\TestConvertWreslToTable_globalLocalVars\\";
+		
+		Tools.deleteDir(outParent);
+
+		
+		PairMap pair = StudyParser.parseMainFile(f);
+		Map<String, Dataset> modelDataMap = StudyParser.parseSubFiles(pair);
+		
+		Assert.assertEquals(modelDataMap.keySet().isEmpty(), false );
+		
+		WriteCSV.output(modelDataMap, outParent);
+		
+		Comparison.compareFolder(modelDataMap.keySet(), outParent, expectedParent);
+	}		
+	
+	@Test(groups = { "WRESL_to_Table"  })
+	public void localVars() throws RecognitionException, IOException {
+		
+		String f = "src\\test\\TestConvertWreslToTable_localVars.wresl";
+		
+		String outParent = "test-csv\\TestConvertWreslToTable_localVars\\";
+		String expectedParent = "src\\test\\expected\\TestConvertWreslToTable_localVars\\";
+		
+		Tools.deleteDir(outParent);
+
+		
+		PairMap pair = StudyParser.parseMainFile(f);
+		Map<String, Dataset> modelDataMap = StudyParser.parseSubFiles(pair);
+		
+		Assert.assertEquals(modelDataMap.keySet().isEmpty(), false );
+		
+		WriteCSV.output(modelDataMap, outParent);
+		
+		Comparison.compareFolder(modelDataMap.keySet(), outParent, expectedParent);
+	}	
+	
 	@Test(groups = { "WRESL_to_Table"  })
 	public void globalVars() throws RecognitionException, IOException {
 		
@@ -67,8 +110,8 @@ public class TestConvertWreslToTable {
 		Comparison.compareFolder(modelDataMap.keySet(), outParent, expectedParent);
 	}	
 
-	@Test(groups = { "WRESL_to_Table"  })
-	public void t1Map() throws RecognitionException, IOException {
+	//@Test(groups = { "WRESL_to_Table"  })
+	public void calsimTest() throws RecognitionException, IOException {
 
 		//String f = "src\\test\\TestConvertWreslToTable_t1Map.wresl";
 		String f = "D:\\CALSIM3.0_070110\\D1641\\Run\\maind1641.wresl";
@@ -90,7 +133,7 @@ public class TestConvertWreslToTable {
 		for ( Integer i : sequence_map.keySet()){ sequenceList.add(i); }
 		Collections.sort(sequenceList);
 
-		PrintWriter out_sequence = Tools.openFile(outParent, "SEQUENCE.csv");
+		PrintWriter out_sequence = Tools.openFile(outParent, "SEQUENCE_test.csv");
 		out_sequence.print(WriteCSV.sequence_header + "\n");
 		WriteCSV.sequence(sequence_map, sequenceList, out_sequence);
 		
