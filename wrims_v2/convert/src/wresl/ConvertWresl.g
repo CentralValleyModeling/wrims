@@ -108,8 +108,8 @@ includeFilePath returns[String path]
 	;
 
 sequence
-	:   SEQUENCE s=ident '{' MODEL m=ident ORDER i=INTEGER'}'{
-				F.sequenceOrder($s.text, $i.text, $m.text );
+	:   SEQUENCE s=ident '{' MODEL m=ident c=conditionStatement? ORDER i=INTEGER'}'{
+				F.sequenceOrder($s.text, $i.text, $m.text, $c.str );
 		}
 	;
 

@@ -18,10 +18,13 @@ public class Struct {
 	public ArrayList<String> error_model_redefined = new ArrayList<String>();
 
 	// / sequence
+	
+	//public Sequence seq;
+	//public Map<Integer, Sequence> seqMap = new HashMap<Integer, Sequence>();
+	public ArrayList<String> sequence_list = new ArrayList<String>();
+	
 	public Map<Integer, String> sequence_map = new HashMap<Integer, String>();
 	public ArrayList<Integer> error_model_order_redefined = new ArrayList<Integer>();
-
-	public ArrayList<String> sequence_list = new ArrayList<String>();
 	public ArrayList<String> error_sequence_redefined = new ArrayList<String>();
 
 	// / includeFile data structure
@@ -537,7 +540,7 @@ public class Struct {
 	}
 
 	public void sequenceOrder(String sequenceName, String order,
-			String modelName) {
+			String modelName, String condition) {
 
 		Integer i = Integer.parseInt(order);
 
@@ -546,8 +549,17 @@ public class Struct {
 		} else if (sequence_map.containsKey(i)) {
 			error_model_order_redefined.add(i);
 		} else {
+			
 			sequence_map.put(i, modelName);
 			sequence_list.add(sequenceName);
+			
+
+//			seq = new Sequence();
+//			seq.sequenceName = sequenceName;
+//			seq.modelName = modelName;
+//			seq.fromWresl = currentAbsolutePath;
+//			seqMap.put(i, seq);
+
 		}
 
 	}

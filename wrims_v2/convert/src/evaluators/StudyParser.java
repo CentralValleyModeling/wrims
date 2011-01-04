@@ -14,8 +14,8 @@ import org.antlr.runtime.RecognitionException;
 import org.testng.Assert;
 
 public class StudyParser {
-	
-	public static Map<String, Dataset> parseMainFile(String relativeMainFilePath) throws RecognitionException, IOException {
+
+	public static PairMap parseMainFile(String relativeMainFilePath) throws RecognitionException, IOException {
  		
 		PairMap pairMain;
 		File absMainFile = new File(relativeMainFilePath).getAbsoluteFile();
@@ -24,7 +24,28 @@ public class StudyParser {
 		System.out.println("############################################");
 		System.out.println("Parsing study main file  ");
 		
-		pairMain = FileParser.processFileIntoPair(absMainFilePath,"global"); 
+		pairMain = FileParser.processFileIntoPair(absMainFilePath,"global");
+		return pairMain; 
+		
+	}
+	
+	public static Map<String, Dataset> parseSubFiles(PairMap pairMain) throws RecognitionException, IOException {
+ 		
+		String absMainFilePath = null;
+		
+		for (String s : pairMain.fileDataMap.keySet()){
+			absMainFilePath = s;
+			
+		}
+		
+		//PairMap pairMain;
+//		File absMainFile = new File(relativeMainFilePath).getAbsoluteFile();
+//		String absMainFilePath = absMainFile.getCanonicalPath();
+//		
+//		System.out.println("############################################");
+//		System.out.println("Parsing study main file  ");
+//		
+//		pairMain = FileParser.processFileIntoPair(absMainFilePath,"global"); 
 
 		Map<Integer, String> sequence_map = pairMain.fileDataMap.get(absMainFilePath).sequence_map;
 
@@ -37,6 +58,8 @@ public class StudyParser {
 		for ( Integer i : sequenceList){	
 			System.out.println("sequence: "+i+" ::: "+sequence_map.get(i));		
 		}		
+		
+
 		
 //		/// process included files in this main file		
 //		Map<String, PairMap> m = FileParser.processFileListIntoMapOfPair(pairMain.fileDataMap.get(mainFilePath));

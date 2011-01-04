@@ -14,6 +14,7 @@ public class WriteCSV {
 	  //static Map<String, List<String>> mapStringList = new HashMap<String, List<String>>();
 	  //private static PrintWriter out;
 
+	  public static String sequence_header ="RUN_ORDER,MODEL,FROM_WRESL_FILE";
 	  public static String external_header ="NAME,TYPE,FROM_WRESL_FILE";
 	  public static String svar_header ="NAME,DSS_B_PART,TYPE,UNITS,CONVERT_TO,OUTPUT,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
 	  public static String dvar_header ="NAME,TYPE,UNITS,LOWER_BOUND,UPPER_BOUND,FROM_WRESL_FILE";	  
@@ -82,6 +83,26 @@ public class WriteCSV {
 		out_alias.close();
 	};
 
+	  public static void sequence(Map<Integer,String> sequence_map, ArrayList<Integer> list ,PrintWriter out) {
+		    
+			List<Integer> keys = list;
+			Collections.sort(keys);
+
+			
+		    for (Integer k: keys ){
+		    	
+		    	//out.print(k);
+		    	//Sequence s = seqMap.get(k);
+		    	
+
+			    out.print(k); // 
+		    	out.print(","+sequence_map.get(k));
+
+				out.print("\n");	
+		    	
+			}
+	  };	
+	
 	  public static void external(Map<String,External> eMap, ArrayList<String> list ,PrintWriter out) {
 		    
 			List<String> keys = list;

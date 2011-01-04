@@ -1,14 +1,18 @@
 package test.convertWresl;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import org.antlr.runtime.RecognitionException;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import evaluators.Comparison;
 import evaluators.Dataset;
+import evaluators.PairMap;
 import evaluators.StudyParser;
 import evaluators.Tools;
 import evaluators.WriteCSV;
@@ -32,7 +36,8 @@ public class TestConvertWreslToTable {
 		Tools.deleteDir(outParent);
 
 		
-		Map<String, Dataset> modelDataMap = StudyParser.parseMainFile(f);
+		PairMap pair = StudyParser.parseMainFile(f);
+		Map<String, Dataset> modelDataMap = StudyParser.parseSubFiles(pair);
 		
 		Assert.assertEquals(modelDataMap.keySet().isEmpty(), false );
 		
@@ -52,7 +57,8 @@ public class TestConvertWreslToTable {
 		Tools.deleteDir(outParent);
 
 		
-		Map<String, Dataset> modelDataMap = StudyParser.parseMainFile(f);
+		PairMap pair = StudyParser.parseMainFile(f);
+		Map<String, Dataset> modelDataMap = StudyParser.parseSubFiles(pair);
 		
 		Assert.assertEquals(modelDataMap.keySet().isEmpty(), false );
 		
@@ -75,7 +81,20 @@ public class TestConvertWreslToTable {
 		Tools.deleteDir(outParent);
 
 		
-		Map<String, Dataset> modelDataMap = StudyParser.parseMainFile(f);
+		PairMap pair = StudyParser.parseMainFile(f);
+		
+		File absMainFile = new File(f).getAbsoluteFile();
+		String absMainFilePath = absMainFile.getCanonicalPath();		
+		Map<Integer, String> sequence_map = pair.fileDataMap.get(absMainFilePath).sequence_map;
+		ArrayList<Integer> sequenceList = new ArrayList<Integer>();
+		for ( Integer i : sequence_map.keySet()){ sequenceList.add(i); }
+		Collections.sort(sequenceList);
+
+		PrintWriter out_sequence = Tools.openFile(outParent, "SEQUENCE.csv");
+		out_sequence.print(WriteCSV.sequence_header + "\n");
+		WriteCSV.sequence(sequence_map, sequenceList, out_sequence);
+		
+		Map<String, Dataset> modelDataMap = StudyParser.parseSubFiles(pair);
 		
 		Assert.assertEquals(modelDataMap.keySet().isEmpty(), false );
 		
