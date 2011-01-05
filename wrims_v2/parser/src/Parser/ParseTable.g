@@ -133,7 +133,7 @@ options {
           try {
             Double.parseDouble(lowerBound);
           }catch (NumberFormatException nfe2) {
-            if (!svar.containsKey(lowerBound)){
+            if (!svar.containsKey(lowerBound) && !lowerBound.contains("*")){
               error_grammer.add(currDvar.getSourceFileName()+" "+currDvar.getLineNumber()+"@"+currDvar.getPosLowerBound()+": "+lowerBound+" as the lower bound of decision variable "+dvarName+" is not a defined state variable before used");
             }
           }
@@ -148,7 +148,7 @@ options {
           try {
             Double.parseDouble(upperBound);
           }catch (NumberFormatException nfe5) {
-            if (!svar.containsKey(upperBound)){
+            if (!svar.containsKey(upperBound) && !upperBound.contains("*")){
               error_grammer.add(currDvar.getSourceFileName()+" "+currDvar.getLineNumber()+"@"+currDvar.getPosUpperBound()+": "+upperBound+" as the upper bound of decision variable "+dvarName+" is not a defined state variable before used");
             }
           }
@@ -844,6 +844,11 @@ max_func returns [String text]
 min_func returns [String text]
 	: MIN '(' {text="min(";} (e1=expression){text=text+$e1.list.get(1);} (';' (e2=expression){text=text+";"+$e2.list.get(1);})+ ')' {text=text+")";}
 	;
+	
+int_func returns [String text]
+  : INT '(' {text="int(";} (e1=expression){text=text+$e1.list.get(1)+")";} ')'
+  ; 
+
 
 timeseriesWithUnits returns[ArrayList<String> list]
 	: 'timeseries' 'kind' '=' i1=partC 'units' '=' i2=IDENT{
@@ -900,7 +905,7 @@ arguements returns [String text] @init{text="";}:
 	
 partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
-usedKeywords: I|YEAR|MONTH|PASTMONTH|TAFCFS|SUM|MAX|MIN|WHERE|CONSTRAIN|ALWAYS|NAME|CYCLE|FILE|CONDITION
+usedKeywords: I|YEAR|MONTH|PASTMONTH|TAFCFS|SUM|MAX|MIN|INT|WHERE|CONSTRAIN|ALWAYS|NAME|CYCLE|FILE|CONDITION
 |INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|TYPE|OUTPUT
 |CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION;
 
@@ -942,9 +947,9 @@ where_items returns[ArrayList<String> list]
 	;
 
 
-upperbound:	IDENT|allnumber;
+upperbound:	IDENT|allnumber|(allnumber '*taf_cfs');
 
-lowerbound:	IDENT|allnumber;
+lowerbound:	IDENT|allnumber|(allnumber '*taf_cfs');
 
 sumExpression returns [ArrayList<String> list] @init{isSumFunction=true;}
   : SUM '(' I '=' e1=expression_sum ';' e2=expression_sum (';' INTEGER )? ')' e3=expression{
@@ -961,7 +966,7 @@ sumExpression returns [ArrayList<String> list] @init{isSumFunction=true;}
   } 
   ;
 
-term_sum: (MONTH|pastMonth|INTEGER|'(' expression_sum ')');
+term_sum: (MONTH|PASTMONTH|I|INTEGER|'(' expression_sum ')');
 
 unary_sum : ('-')? term_sum ;
 add_sum  :  unary_sum(('+' | '-') unary_sum)* ;
@@ -978,6 +983,7 @@ term returns [String text]
 	| (f=FLOAT) 
 	| max_func
 	| min_func
+	| int_func
 	| TAFCFS
 	| YEAR
 	| MONTH)
@@ -1016,6 +1022,9 @@ term returns [String text]
     if ($min_func.text !=null){
       text=$min_func.text;
     }
+    if ($int_func.text !=null){
+      text=$int_func.text;
+    }
     if ($TAFCFS.text !=null){
       text="{"+$TAFCFS.text+"}";
     }
@@ -1032,20 +1041,22 @@ knownDV returns [String text]
   : pastMonthDV{text=$pastMonthDV.text;}|preMonthDV{text=$preMonthDV.text;}|pastCycleDV{text=$pastCycleDV.text;}
   ;
   
-pastMonth returns [int line, int pos]:  (PASTMONTH{$line=$PASTMONTH.line; $pos=$PASTMONTH.line;}|I{$line=$I.line; $pos=$I.line;});
-  
 pastMonthDV returns [String text] 
-  : ((i1=IDENT)|TAFCFS) '(' pastMonth ')'{
-    if (!isSumFunction && $pastMonth.text.equals("i")){
-      error_grammer.add(currentFile+" "+$pastMonth.line+"@"+($pastMonth.pos+1)+": i acts as a past month index of a decision variable can only be used in sum function");
+  : ((i1=IDENT)|TAFCFS) '(' ((p=PASTMONTH)|(i=I)) ')'{
+    if (!isSumFunction && $i.text!=null){
+      error_grammer.add(currentFile+" "+$i.line+"@"+($i.pos+1)+": i acts as a past month index of a decision variable can only be used in sum function");
     }
     if ($i1.text ==null){
-      text="{"+$TAFCFS.text+"}"+"("+$pastMonth.text+")";
+      text="{"+$TAFCFS.text+"}"+"("+$p.text+")";
     }else{
       if (testDefine && !dvar.containsKey($i1.text) && !alias.containsKey($i1.text)){
         error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": decision variable "+$i1.text+" is not defined before used");
       }
-      text="{"+$i1.text+"}"+"("+$pastMonth.text+")";
+      if ($i.text == null){
+        text="{"+$i1.text+"}"+"("+$p.text+")";
+      }else{
+        text="{"+$i1.text+"}"+"("+$i.text+")";
+      }
     }
   }
   ;
@@ -1187,6 +1198,7 @@ TAFCFS: 'taf_cfs'|'cfs_taf';
 SUM: 'sum';
 MAX : 'max';
 MIN : 'min';
+INT : 'int';
 WHERE : 'where';
 
 CONSTRAIN: 'constrain';
