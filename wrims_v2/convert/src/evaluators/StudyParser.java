@@ -13,58 +13,75 @@ import java.util.Set;
 import org.antlr.runtime.RecognitionException;
 import org.testng.Assert;
 
-public class StudyParser {
+import wresl.ConvertWreslParser;
 
-	public static PairMap parseMainFile(String relativeMainFilePath) throws RecognitionException, IOException {
- 		
-		PairMap pairMain;
+public class StudyParser {
+	
+	
+	public static StudyConfig processMainFileIntoStudyConfig(String relativeMainFilePath) throws RecognitionException, IOException {
+		
 		File absMainFile = new File(relativeMainFilePath).getAbsoluteFile();
 		String absMainFilePath = absMainFile.getCanonicalPath();
 		
 		System.out.println("############################################");
 		System.out.println("Parsing study main file  ");
 		
-		pairMain = FileParser.processFileIntoPair(absMainFilePath,"global");
-		return pairMain; 
-		
-	}
-	
-	public static Map<String, Dataset> parseSubFiles(PairMap pairMain) throws RecognitionException, IOException {
- 		
-		String absMainFilePath = null;
-		
-		for (String s : pairMain.fileDataMap.keySet()){
-			absMainFilePath = s;
-			
-		}
-		
-		//PairMap pairMain;
-//		File absMainFile = new File(relativeMainFilePath).getAbsoluteFile();
-//		String absMainFilePath = absMainFile.getCanonicalPath();
-//		
-//		System.out.println("############################################");
-//		System.out.println("Parsing study main file  ");
-//		
-//		pairMain = FileParser.processFileIntoPair(absMainFilePath,"global"); 
-
-		Map<Integer, String> sequence_map = pairMain.fileDataMap.get(absMainFilePath).sequence_map;
-
-		ArrayList<Integer> sequenceList = new ArrayList<Integer>();
-		
-		for ( Integer i : sequence_map.keySet()){ sequenceList.add(i); }
-		
-		Collections.sort(sequenceList);
-		
-		for ( Integer i : sequenceList){	
-			System.out.println("sequence: "+i+" ::: "+sequence_map.get(i));		
-		}		
+		ConvertWreslParser parser = FileParser.parseFile(absMainFilePath);
 		
 
+		Map<String, Dataset> modelAdhocMap = new HashMap<String, Dataset>();
+		StudyConfig sc = new StudyConfig();
+
+		Dataset dataset = Tools.convertStructToDataset(parser.F);
+		sc.sequenceMap = dataset.seqMap;
 		
-//		/// process included files in this main file		
-//		Map<String, PairMap> m = FileParser.processFileListIntoMapOfPair(pairMain.fileDataMap.get(mainFilePath));
-//		for (String file : m.keySet()){ pairMain.add(m.get(file)); }
+		ArrayList<Integer> sequenceOrder = new ArrayList<Integer>();		
+		for ( Integer i : sc.sequenceMap.keySet()){ sequenceOrder.add(i); }
+		Collections.sort(sequenceOrder);
+		sc.sequenceOrder = sequenceOrder;
+
+		for (Integer i : sequenceOrder){
+			String modelName = sc.sequenceMap.get(i).modelName;
+
+			if (!parser.F.model_list.contains(modelName)){
+				ErrMsg.print(" This model doesn't exist: "+ modelName, absMainFilePath);
 				
+			}
+		}
+	
+		
+		
+		if ( ! parser.F.model_list.isEmpty()){
+			
+			modelAdhocMap.putAll( Tools.convertStructMapToDatasetMap(parser.modelMap) );
+		}
+		else { ErrMsg.print(" No models found ", absMainFilePath); }
+	
+		
+
+		sc.absMainFilePath = absMainFilePath;
+		sc.modelAdhocMap = modelAdhocMap;
+
+		sc.sequenceMap = dataset.seqMap;
+		
+		
+		for ( Integer i : sc.sequenceOrder){	
+			System.out.println("sequence: "+i+" ::: "+sc.sequenceMap.get(i).modelName);		
+		}	
+		
+		return sc;
+	}
+
+
+	
+	public static Map<String, Dataset> parseSubFiles(StudyConfig sc) throws RecognitionException, IOException {
+ 		
+		String absMainFilePath = sc.absMainFilePath;
+
+		Map<Integer, Sequence> seqMap = sc.sequenceMap;
+		
+	
+						
 		
 		Map<String,Dataset> fileDataMap_wholeStudy = new HashMap<String, Dataset>() ;
 		Map<String,ArrayList<String>> t1Map_wholeStudy = new HashMap<String, ArrayList<String>>();	
@@ -78,9 +95,9 @@ public class StudyParser {
 
 		/// for each model collected from the main files
 //###################################################################################################		
-		for ( Integer iSequence : sequenceList){	
+		for ( Integer iSequence : sc.sequenceOrder){	
 
-			String model = sequence_map.get(iSequence);
+			String model = seqMap.get(iSequence).modelName;
 		
 			
 			System.out.println("############################################");
@@ -88,7 +105,7 @@ public class StudyParser {
 			System.out.println("####                 model: "+model);
 			System.out.println("############################################");
 			
-			Dataset adhoc = pairMain.modelAdhocMap.get(model);
+			Dataset adhoc = sc.modelAdhocMap.get(model);
 
 			
 			Dataset adhoc_include_previous_globals = new Dataset(adhoc);
@@ -118,7 +135,7 @@ public class StudyParser {
 					fileDataMap_thisModel.put(f, fileDataMap_wholeStudy.get(f));
 					fileDataMap_thisModel.putAll(Tools.getAllOffSprings(f, t1Map_wholeStudy, fileDataMap_wholeStudy));
 					
-					System.out.println("....got data from previous models." );
+					//System.out.println("....got data from previous models." );
 					/// TODO: need to put file f's children dataset					
 
 				} 
@@ -182,28 +199,34 @@ public class StudyParser {
 			
 			/// prioritize data if redefined			
 			Dataset model_data_complete = new Dataset();
-			System.out.println("========== starting data prioritization =========== ");	
+			System.out.println("========== Start data prioritization =========== ");	
 			
 			/// previous globals have lowest priority
 			model_data_complete.prioritize(adhoc_cumulative_globals, " cumulative adhoc globals");
-
+			System.out.println("========== Finish initial prioritization =========== ");	
+			
 			/// for kid
 			for (String f : adhoc_include_previous_globals.incFileList) {
-				
+					
+					System.out.println("========== Prioritize offsprings in file: "+f);
 					model_data_complete.prioritizeChildren(f, t1Map, fileDataMap_corrected);
+					
 			}
-			System.out.println("========== finish children prioritization =========== ");
+			System.out.println("========== Finish children prioritization =========== ");
 
 			/// for include files in adhoc
 			for (String f : adhoc_include_previous_globals.incFileList) {
 				
+				System.out.println("========== Prioritize adhoc include file: "+f);
 				model_data_complete.prioritize(fileDataMap_corrected.get(f), f);
+
 			}
 			
 			/// for vars in adhoc
+			System.out.println("========== Prioritize adhoc =========== ");
 			model_data_complete.prioritize(adhoc, absMainFilePath);
-			System.out.println("========== finish adhoc prioritization =========== ");
-			System.out.println("========== finish all prioritization =========== ");
+			System.out.println("========== Finish adhoc prioritization =========== ");
+			System.out.println("========== Finish all prioritization =========== ");
 			
 			/// update whole study
 			adhoc_cumulative_globals.add(adhoc.getGlobalVars());

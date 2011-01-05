@@ -13,9 +13,17 @@ public class Dataset {
 	public ArrayList<String> error_model_redefined = new ArrayList<String>();
 
 	// / sequence
-	public Map<Integer, String> sequence_map = new HashMap<Integer, String>();
-	public ArrayList<String> sequence_list = new ArrayList<String>();
+	// TODO: error is not added yet
 	public ArrayList<String> error_sequence_redefined = new ArrayList<String>();
+	public ArrayList<Integer> error_sequence_order_redefined = new ArrayList<Integer>();
+	
+	public Sequence seq;
+	public Map<Integer, Sequence> seqMap = new HashMap<Integer, Sequence>();
+	public ArrayList<String> seqList = new ArrayList<String>();
+
+	
+	
+	
 	
 	// / includeFile data structure
 	public ArrayList<String> incFileList = new ArrayList<String>();
@@ -117,8 +125,8 @@ public class Dataset {
 			}
 		}
 		
-		for (String e : s.sequence_list){ 
-			if (this.sequence_list.contains(e)) {
+		for (String e : s.seqList){ 
+			if (this.seqList.contains(e)) {
 				System.out.println("Error!!! Sequence redefined: "+e+" in file: "+filePath);	
 				b = true;
 			}
@@ -312,9 +320,9 @@ public class Dataset {
 			this.model_list.removeAll(s.model_list);
 		}
 		
-		if (!s.sequence_list.isEmpty()) {
-			this.sequence_list.removeAll(s.sequence_list);
-			this.sequence_map.remove(s.sequence_list);
+		if (!s.seqList.isEmpty()) {
+			this.seqList.removeAll(s.seqList);
+			this.seqMap.remove(s.seqList);
 		}
 
 		return this;
@@ -368,9 +376,9 @@ public class Dataset {
 			this.model_list.addAll(s.model_list);
 		}
 		
-		if (!s.sequence_list.isEmpty()) {
-			this.sequence_list.addAll(s.sequence_list);
-			this.sequence_map.putAll(s.sequence_map);
+		if (!s.seqList.isEmpty()) {
+			this.seqList.addAll(s.seqList);
+			this.seqMap.putAll(s.seqMap);
 		}
 
 		return this;
@@ -408,6 +416,7 @@ public class Dataset {
 						
 			if (t1Map.get(childFile)!=null)  this.prioritizeChildren(childFile, t1Map, fileDataMap);
 			
+			System.out.println("========== Prioritize file: " + childFile);
 			this.prioritize(fileDataMap.get(childFile), childFile);
 		}
 		

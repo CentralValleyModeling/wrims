@@ -25,6 +25,7 @@ import evaluators.Goal;
 import evaluators.IncludeFile;
 import evaluators.Struct;
 import evaluators.Svar;
+import evaluators.Parameters;
 
 
 public class TestConvertWresl {
@@ -51,7 +52,8 @@ public class TestConvertWresl {
 		expected.put(1, "SJRBASE" );
 		expected.put(2, "SJR_WQ1");
 		
-		Assert.assertEquals(parser.F.sequence_map, expected);
+		Assert.assertEquals(parser.F.seqMap.get(1).modelName, expected.get(1));
+		Assert.assertEquals(parser.F.seqMap.get(2).modelName, expected.get(2));
 	}	
 
 	@Test(groups = { "WRESL_elements" })
@@ -210,7 +212,7 @@ public class TestConvertWresl {
 	    
 		Goal gl = new Goal();
 		gl.scope = "local";
-		gl.caseName.add("default");
+		gl.caseName.add(Parameters.defaultCaseName);
 		gl.caseCondition.add("always");
 		gl.caseExpression.add("C607>500");
 		gl.case_lhs_gt_rhs.add("constrain");
@@ -263,7 +265,7 @@ public class TestConvertWresl {
 				
 		Goal gl = new Goal();
 		gl.scope = "local";
-		gl.caseName.add("default");
+		gl.caseName.add(Parameters.defaultCaseName);
 		gl.caseCondition.add("always");
 		gl.caseExpression.add("C607>500");
 		gl.case_lhs_gt_rhs.add("constrain");
@@ -281,7 +283,7 @@ public class TestConvertWresl {
 		
 		gl = new Goal();
 		gl.scope = "local";
-		gl.caseName.add("default");
+		gl.caseName.add(Parameters.defaultCaseName);
 		gl.caseCondition.add("always");
 		gl.caseExpression.add("C607>500");
 		gl.case_lhs_gt_rhs.add("constrain");
@@ -387,7 +389,7 @@ public class TestConvertWresl {
 		sv = new Svar();
 		sv.scope = "global";
 		/// 1st case
-		sv.caseName.add("default");
+		sv.caseName.add(Parameters.defaultCaseName);
 		sv.caseCondition.add("always");
 		sv.caseExpression.add(".29"); 
 		/// add 1st key
@@ -426,7 +428,7 @@ public class TestConvertWresl {
 		sv = new Svar();
 		sv.scope = "global";
 		/// 1st case
-		sv.caseName.add("default");
+		sv.caseName.add(Parameters.defaultCaseName);
 		sv.caseCondition.add("always");
 		sv.caseExpression.add("sum(i=0; SEP-month; 1) max(I_Orovl(i); dummy)*cfs_taf(i)"); 
 		/// add 1st key
@@ -465,7 +467,7 @@ public class TestConvertWresl {
 		sv = new Svar();
 		sv.scope = "global";
 		/// 1st case
-		sv.caseName.add("default");
+		sv.caseName.add(Parameters.defaultCaseName);
 		sv.caseCondition.add("always");
 		sv.caseExpression.add("(A_Orovl_forward-A_Orovl_back)/(100*max(0.01; S_Orovl(-1)))"); 
 		/// add 1st key
@@ -476,7 +478,7 @@ public class TestConvertWresl {
 		sv = new Svar();
 		sv.scope = "global";
 		/// 1st case
-		sv.caseName.add("default");
+		sv.caseName.add(Parameters.defaultCaseName);
 		sv.caseCondition.add("always");
 		sv.caseExpression.add("min(max(a; b); 2.5)"); 
 		/// add 2nd key
@@ -685,7 +687,7 @@ public class TestConvertWresl {
 		sv.format = "timeseries";
 		sv.kind = "EVAPORATION-RATE";
 		sv.units = "IN";
-		sv.caseName.add("default");
+		sv.caseName.add(Parameters.defaultCaseName);
 		sv.caseCondition.add("always");
 		sv.caseExpression.add("timeseries"); 
 		/// add 1st key
@@ -728,7 +730,7 @@ public class TestConvertWresl {
 		sv.scope = "global";
 		sv.format = "lookup_table";
 		/// 1st case
-		sv.caseName.add("default");
+		sv.caseName.add(Parameters.defaultCaseName);
 		sv.caseCondition.add("always");
 		sv.caseExpression.add("select target from feather_fish_203 where month=NOV"); 
 		/// add 1st key
@@ -766,7 +768,7 @@ public class TestConvertWresl {
 		sv.scope = "global";
 		sv.format = "lookup_table";
 		/// 1st case
-		sv.caseName.add("default");
+		sv.caseName.add(Parameters.defaultCaseName);
 		sv.caseCondition.add("always");
 		sv.caseExpression.add("select area from res_info given storage=1000*S_Orovl(-1) use linear where res_num=6"); 
 		/// add 1st key
@@ -929,7 +931,7 @@ public class TestConvertWresl {
 
 		g = new Goal();
 		g.scope = "global";
-		g.caseName.add("default");
+		g.caseName.add(Parameters.defaultCaseName);
 		g.caseCondition.add("always");
 		g.caseExpression.add("C5_WTS=C5_WTS_Stg1+C5_WTS_Stg2");
 		g.case_lhs_gt_rhs.add("constrain");
@@ -938,7 +940,7 @@ public class TestConvertWresl {
 		
 		g = new Goal();
 		g.scope = "global";
-		g.caseName.add("default");
+		g.caseName.add(Parameters.defaultCaseName);
 		g.caseCondition.add("always");
 		g.caseExpression.add("C5_WTS=C5_WTS_Stg1");
 		g.case_lhs_gt_rhs.add("constrain");
@@ -947,7 +949,7 @@ public class TestConvertWresl {
 		
 		g = new Goal();
 		g.scope = "global";
-		g.caseName.add("default");
+		g.caseName.add(Parameters.defaultCaseName);
 		g.caseCondition.add("always");
 		g.caseExpression.add("b=c");
 		g.case_lhs_gt_rhs.add("constrain");
@@ -956,7 +958,7 @@ public class TestConvertWresl {
 
 		g = new Goal();
 		g.scope = "local";
-		g.caseName.add("default");
+		g.caseName.add(Parameters.defaultCaseName);
 		g.caseCondition.add("always");
 		g.caseExpression.add("b>c");
 		g.case_lhs_gt_rhs.add("constrain");
@@ -965,7 +967,7 @@ public class TestConvertWresl {
 
 		g = new Goal();
 		g.scope = "global";
-		g.caseName.add("default");
+		g.caseName.add(Parameters.defaultCaseName);
 		g.caseCondition.add("always");
 		g.caseExpression.add("b<c");
 		g.case_lhs_gt_rhs.add("constrain");
@@ -1012,7 +1014,7 @@ public class TestConvertWresl {
 		g = new Goal();
 		g.scope = "global";
 		g.lhs = "C3_MIF";
-		g.caseName.add("default");
+		g.caseName.add(Parameters.defaultCaseName);
 		g.caseCondition.add("always");
 		g.caseExpression.add("minflow_C3b2");
 		g.case_lhs_gt_rhs.add("constrain");

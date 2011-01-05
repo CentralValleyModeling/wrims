@@ -1,0 +1,24 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }
+
+
+ MODEL first { 
+
+INCLUDE 'TestConvertWresl_svarExpression.wresl'	
+define C_SacFea {upper 6150*taf_cfs lower 0 kind 'FLOW-CHANNEL' units 'CFS'}  
+	
+	}
+	 
+ MODEL second { 
+
+INCLUDE[local] 'TestConvertWresl_svarExpression.wresl'	
+define[local] C_SacFea {upper 6150*taf_cfs lower 0 kind 'FLOW-CHANNEL' units 'CFS'}  
+	 	
+     }

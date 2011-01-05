@@ -18,15 +18,15 @@ public class Struct {
 	public ArrayList<String> error_model_redefined = new ArrayList<String>();
 
 	// / sequence
-	
-	//public Sequence seq;
-	//public Map<Integer, Sequence> seqMap = new HashMap<Integer, Sequence>();
-	public ArrayList<String> sequence_list = new ArrayList<String>();
-	
-	public Map<Integer, String> sequence_map = new HashMap<Integer, String>();
-	public ArrayList<Integer> error_model_order_redefined = new ArrayList<Integer>();
-	public ArrayList<String> error_sequence_redefined = new ArrayList<String>();
 
+	
+	public ArrayList<Integer> error_sequence_order_redefined = new ArrayList<Integer>();
+	public ArrayList<String> error_sequence_redefined = new ArrayList<String>();	
+	
+	public Sequence seq;
+	public Map<Integer, Sequence> seqMap = new HashMap<Integer, Sequence>();
+	public ArrayList<String> seqList = new ArrayList<String>();
+	
 	// / includeFile data structure
 	public IncludeFile incFile;
 	public ArrayList<String> incFileList = new ArrayList<String>();
@@ -190,7 +190,7 @@ public class Struct {
 			gl.scope = scope;
 			// gl.lhs="in expression";
 			gl.caseCondition.add("always");
-			gl.caseName.add("default");
+			gl.caseName.add(Parameters.defaultCaseName);
 			gl.caseExpression.add(content);
 			gl.case_lhs_gt_rhs.add("constrain");
 			gl.case_lhs_lt_rhs.add("constrain");
@@ -220,7 +220,7 @@ public class Struct {
 			gl.scope = scope;
 			gl.lhs = lhs;
 			gl.caseCondition.add("always");
-			gl.caseName.add("default");
+			gl.caseName.add(Parameters.defaultCaseName);
 			gl.caseExpression.add(rhs);
 			gl.case_lhs_gt_rhs.add(lhs_gt_rhs);
 			gl.case_lhs_lt_rhs.add(lhs_lt_rhs);
@@ -319,7 +319,7 @@ public class Struct {
 
 			// / clearer data structure
 
-			String caseName = "default";
+			String caseName = Parameters.defaultCaseName;
 			String condition = "always";
 
 			sv = new Svar();
@@ -351,7 +351,7 @@ public class Struct {
 
 			sv = new Svar();
 			sv.scope = scope;
-			sv.caseName.add("default");
+			sv.caseName.add(Parameters.defaultCaseName);
 			sv.caseCondition.add("always");
 			sv.caseExpression.add(sumStr);
 			sv.fromWresl = currentAbsolutePath;
@@ -390,7 +390,7 @@ public class Struct {
 			sv.scope = scope;
 			sv.format = "lookup_table";
 			sv.caseCondition.add("always");
-			sv.caseName.add("default");
+			sv.caseName.add(Parameters.defaultCaseName);
 			sv.caseExpression.add(sqlStr);
 			sv.fromWresl = currentAbsolutePath;
 			svMap.put(name, sv);
@@ -425,7 +425,7 @@ public class Struct {
 			if (convertToUnits!=null) {sv.convertToUnits = convertToUnits;}
 			sv.format = "timeseries";
 			sv.caseCondition.add("always");
-			sv.caseName.add("default");
+			sv.caseName.add(Parameters.defaultCaseName);
 			sv.caseExpression.add("timeseries");
 			sv.fromWresl = currentAbsolutePath;
 			svMap.put(name, sv);
@@ -544,21 +544,19 @@ public class Struct {
 
 		Integer i = Integer.parseInt(order);
 
-		if (sequence_list.contains(sequenceName)) {
+		if (seqList.contains(sequenceName)) {
 			error_sequence_redefined.add(sequenceName);
-		} else if (sequence_map.containsKey(i)) {
-			error_model_order_redefined.add(i);
+		} else if (seqMap.containsKey(i)) {
+			error_sequence_order_redefined.add(i);
 		} else {
 			
-			sequence_map.put(i, modelName);
-			sequence_list.add(sequenceName);
-			
-
-//			seq = new Sequence();
-//			seq.sequenceName = sequenceName;
-//			seq.modelName = modelName;
-//			seq.fromWresl = currentAbsolutePath;
-//			seqMap.put(i, seq);
+			seq = new Sequence();
+			seq.sequenceName = sequenceName;
+			if (condition!=null) seq.condition = condition;
+			seq.modelName = modelName;
+			seq.fromWresl = currentAbsolutePath;
+			seqMap.put(i, seq);
+			seqList.add(sequenceName);
 
 		}
 

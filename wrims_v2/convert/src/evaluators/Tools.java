@@ -201,9 +201,9 @@ public class Tools {
 			out.model_list.addAll(s.model_list);
 		}
 
-		if (!s.sequence_list.isEmpty()) {
-			out.sequence_list.addAll(s.sequence_list);
-			out.sequence_map.putAll(s.sequence_map);
+		if (!s.seqList.isEmpty()) {
+			out.seqList.addAll(s.seqList);
+			out.seqMap.putAll(s.seqMap);
 		}
 		
 		return out;
@@ -370,8 +370,9 @@ public class Tools {
 
 				if (fileScopeMap.get(upperFile) == "local") {
 
-					System.out.println("found it! " + upperFile);
-
+					System.out.println("...Convert this file data to local: " + f );
+					System.out.println("   due to  [local] specification for its parent file: " + upperFile + "\n");
+					
 					ds.convertToLocal();
 
 					break;

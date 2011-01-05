@@ -178,6 +178,7 @@ public class FileParser {
 	}
 	
 
+	
 	public static PairMap processFileIntoPair(String inputFilePath, String scope) throws RecognitionException, IOException {
 		
 		ConvertWreslParser parser = parseFile(inputFilePath);

@@ -14,13 +14,33 @@ public class WriteCSV {
 	  //static Map<String, List<String>> mapStringList = new HashMap<String, List<String>>();
 	  //private static PrintWriter out;
 
-	  public static String sequence_header ="RUN_ORDER,MODEL,FROM_WRESL_FILE";
+	  public static String sequence_header ="RUN_ORDER,MODEL,CONDITION";
 	  public static String external_header ="NAME,TYPE,FROM_WRESL_FILE";
 	  public static String svar_header ="NAME,DSS_B_PART,TYPE,UNITS,CONVERT_TO,OUTPUT,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
 	  public static String dvar_header ="NAME,TYPE,UNITS,LOWER_BOUND,UPPER_BOUND,FROM_WRESL_FILE";	  
 	  public static String alias_header ="NAME,TYPE,UNITS,OUTPUT,EXPRESSION,FROM_WRESL_FILE";
 	  public static String goal_header = "NAME,LHS,CASE,ORDER,CONDITION,EXPRESSION/RHS,LHS>RHS,LHS<RHS,FROM_WRESL_FILE";
 
+	public static void study(StudyConfig sc, Map<String, Dataset> modelDataMap, String outParent) {
+			
+		
+		
+			output(modelDataMap,outParent);
+			
+			
+			try {
+				PrintWriter out_seq = Tools.openFile(outParent, "SEQUENCE.csv");
+				out_seq.print(WriteCSV.sequence_header + "\n");			
+				sequence(sc.sequenceMap, sc.sequenceOrder, out_seq);
+				out_seq.close();
+			}
+			catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+		}	  
+	  
 	public static void output(Map<String, Dataset> modelDataMap, String outParent) {
 
 		for (String model : modelDataMap.keySet()) {
@@ -83,7 +103,7 @@ public class WriteCSV {
 		out_alias.close();
 	};
 
-	  public static void sequence(Map<Integer,String> sequence_map, ArrayList<Integer> list ,PrintWriter out) {
+	  public static void sequence(Map<Integer,Sequence> seqMap, ArrayList<Integer> list ,PrintWriter out) {
 		    
 			List<Integer> keys = list;
 			Collections.sort(keys);
@@ -96,8 +116,8 @@ public class WriteCSV {
 		    	
 
 			    out.print(k); // 
-		    	out.print(","+sequence_map.get(k));
-
+		    	out.print(","+seqMap.get(k).modelName);
+		    	out.print(","+seqMap.get(k).condition);
 				out.print("\n");	
 		    	
 			}

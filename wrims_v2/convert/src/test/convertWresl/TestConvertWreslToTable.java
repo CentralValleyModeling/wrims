@@ -13,6 +13,7 @@ import org.testng.annotations.*;
 import evaluators.Comparison;
 import evaluators.Dataset;
 import evaluators.PairMap;
+import evaluators.StudyConfig;
 import evaluators.StudyParser;
 import evaluators.Tools;
 import evaluators.WriteCSV;
@@ -37,8 +38,8 @@ public class TestConvertWreslToTable {
 		Tools.deleteDir(outParent);
 
 		
-		PairMap pair = StudyParser.parseMainFile(f);
-		Map<String, Dataset> modelDataMap = StudyParser.parseSubFiles(pair);
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(f);
+		Map<String, Dataset> modelDataMap = StudyParser.parseSubFiles(sc);
 		
 		Assert.assertEquals(modelDataMap.keySet().isEmpty(), false );
 		
@@ -58,8 +59,8 @@ public class TestConvertWreslToTable {
 		Tools.deleteDir(outParent);
 
 		
-		PairMap pair = StudyParser.parseMainFile(f);
-		Map<String, Dataset> modelDataMap = StudyParser.parseSubFiles(pair);
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(f);
+		Map<String, Dataset> modelDataMap = StudyParser.parseSubFiles(sc);
 		
 		Assert.assertEquals(modelDataMap.keySet().isEmpty(), false );
 		
@@ -79,8 +80,8 @@ public class TestConvertWreslToTable {
 		Tools.deleteDir(outParent);
 
 		
-		PairMap pair = StudyParser.parseMainFile(f);
-		Map<String, Dataset> modelDataMap = StudyParser.parseSubFiles(pair);
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(f);
+		Map<String, Dataset> modelDataMap = StudyParser.parseSubFiles(sc);
 		
 		Assert.assertEquals(modelDataMap.keySet().isEmpty(), false );
 		
@@ -100,8 +101,8 @@ public class TestConvertWreslToTable {
 		Tools.deleteDir(outParent);
 
 		
-		PairMap pair = StudyParser.parseMainFile(f);
-		Map<String, Dataset> modelDataMap = StudyParser.parseSubFiles(pair);
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(f);
+		Map<String, Dataset> modelDataMap = StudyParser.parseSubFiles(sc);
 		
 		Assert.assertEquals(modelDataMap.keySet().isEmpty(), false );
 		
@@ -110,7 +111,7 @@ public class TestConvertWreslToTable {
 		Comparison.compareFolder(modelDataMap.keySet(), outParent, expectedParent);
 	}	
 
-	//@Test(groups = { "WRESL_to_Table"  })
+	@Test(groups = { "WRESL_to_Table"  })
 	public void calsimTest() throws RecognitionException, IOException {
 
 		//String f = "src\\test\\TestConvertWreslToTable_t1Map.wresl";
@@ -124,24 +125,12 @@ public class TestConvertWreslToTable {
 		Tools.deleteDir(outParent);
 
 		
-		PairMap pair = StudyParser.parseMainFile(f);
-		
-		File absMainFile = new File(f).getAbsoluteFile();
-		String absMainFilePath = absMainFile.getCanonicalPath();		
-		Map<Integer, String> sequence_map = pair.fileDataMap.get(absMainFilePath).sequence_map;
-		ArrayList<Integer> sequenceList = new ArrayList<Integer>();
-		for ( Integer i : sequence_map.keySet()){ sequenceList.add(i); }
-		Collections.sort(sequenceList);
-
-		PrintWriter out_sequence = Tools.openFile(outParent, "SEQUENCE_test.csv");
-		out_sequence.print(WriteCSV.sequence_header + "\n");
-		WriteCSV.sequence(sequence_map, sequenceList, out_sequence);
-		
-		Map<String, Dataset> modelDataMap = StudyParser.parseSubFiles(pair);
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(f);
+		Map<String, Dataset> modelDataMap = StudyParser.parseSubFiles(sc);
 		
 		Assert.assertEquals(modelDataMap.keySet().isEmpty(), false );
 		
-		WriteCSV.output(modelDataMap, outParent);
+		WriteCSV.study(sc, modelDataMap, outParent);
 		
 		Comparison.compareFolder(modelDataMap.keySet(), outParent, expectedParent);
 	}	
