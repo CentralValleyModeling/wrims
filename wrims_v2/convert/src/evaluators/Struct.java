@@ -221,7 +221,7 @@ public class Struct {
 			gl.lhs = lhs;
 			gl.caseCondition.add("always");
 			gl.caseName.add(Parameters.defaultCaseName);
-			gl.caseExpression.add(rhs);
+			gl.caseExpression.add(lhs+" = "+rhs);
 			gl.case_lhs_gt_rhs.add(lhs_gt_rhs);
 			gl.case_lhs_lt_rhs.add(lhs_lt_rhs);
 			gl.fromWresl = currentAbsolutePath;

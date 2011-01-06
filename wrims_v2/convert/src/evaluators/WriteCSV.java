@@ -19,7 +19,7 @@ public class WriteCSV {
 	  public static String svar_header ="NAME,DSS_B_PART,TYPE,UNITS,CONVERT_TO,OUTPUT,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
 	  public static String dvar_header ="NAME,TYPE,UNITS,LOWER_BOUND,UPPER_BOUND,FROM_WRESL_FILE";	  
 	  public static String alias_header ="NAME,TYPE,UNITS,OUTPUT,EXPRESSION,FROM_WRESL_FILE";
-	  public static String goal_header = "NAME,LHS,CASE,ORDER,CONDITION,EXPRESSION/RHS,LHS>RHS,LHS<RHS,FROM_WRESL_FILE";
+	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,LHS>RHS,LHS<RHS,FROM_WRESL_FILE";
 
 	public static void study(StudyConfig sc, Map<String, Dataset> modelDataMap, String outParent) {
 			
@@ -48,7 +48,7 @@ public class WriteCSV {
 			String outFolder = outParent + model;
 
 			try {
-				dataset(modelDataMap.get(model), "all", outFolder);
+				dataset(modelDataMap.get(model), outFolder);
 			}
 			catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -58,50 +58,49 @@ public class WriteCSV {
 
 	}
 
-	public static void dataset(Dataset ds, String scope, String outFolder) throws IOException {
-		PrintWriter out_ex = Tools.openFile(outFolder, "external.csv");
-		PrintWriter out_sv = Tools.openFile(outFolder, "svar.csv");
-		PrintWriter out_dv = Tools.openFile(outFolder, "dvar.csv");
-		PrintWriter out_goal = Tools.openFile(outFolder, "constraint.csv");
-		PrintWriter out_alias = Tools.openFile(outFolder, "alias.csv");
+	public static void dataset(Dataset ds, String outFolder) throws IOException {
 
-		out_ex.print(WriteCSV.external_header + "\n");
-		out_sv.print(WriteCSV.svar_header + "\n");
-		out_dv.print(WriteCSV.dvar_header + "\n");
-		out_goal.print(WriteCSV.goal_header + "\n");
-		out_alias.print(WriteCSV.alias_header + "\n");
+		PrintWriter out_ex;
+		PrintWriter out_sv;
+		PrintWriter out_dv;
+		PrintWriter out_goal;
+		PrintWriter out_alias;
+		
+		if(ds.exList.size()>0){
+			out_ex = Tools.openFile(outFolder, "external.csv");		
+			out_ex.print(WriteCSV.external_header + "\n");
+			external(ds.exMap, ds.exList, out_ex);	
+			out_ex.close();
+		}
 
-		if (scope == "all") {
-			external(ds.exMap, ds.exList, out_ex);
+		if(ds.svList.size()>0){
+			out_sv = Tools.openFile(outFolder, "svar.csv");	
+			out_sv.print(WriteCSV.svar_header + "\n");
 			svar(ds.svMap, ds.svList, out_sv);
+			out_sv.close();
+		}
+		if(ds.dvList.size()>0){
+			out_dv = Tools.openFile(outFolder, "dvar.csv");	
+			out_dv.print(WriteCSV.dvar_header + "\n");
 			dvar(ds.dvMap, ds.dvList, out_dv);
-			goal(ds.gMap, ds.gList, out_goal);
+			out_dv.close();
+		}
+		if(ds.gList.size()>0){
+			out_goal = Tools.openFile(outFolder, "constraint.csv");		
+			out_goal.print(WriteCSV.goal_header + "\n");
+			goal(ds.gMap, ds.gList, out_goal);	
+			out_goal.close();
+		}
+		if(ds.exList.size()>0){
+			out_alias = Tools.openFile(outFolder, "alias.csv");		
+			out_alias.print(WriteCSV.alias_header + "\n");
 			alias(ds.asMap, ds.asList, out_alias);
-		}
-		else if (scope == "global") {
-			external(ds.exMap, ds.exList_global, out_ex);
-			svar(ds.svMap, ds.svList_global, out_sv);
-			dvar(ds.dvMap, ds.dvList_global, out_dv);
-			goal(ds.gMap, ds.gList_global, out_goal);
-			alias(ds.asMap, ds.asList_global, out_alias);
-		}
-		else if (scope == "local") {
-			external(ds.exMap, ds.exList_local, out_ex);
-			svar(ds.svMap, ds.svList_local, out_sv);
-			dvar(ds.dvMap, ds.dvList_local, out_dv);
-			goal(ds.gMap, ds.gList_local, out_goal);
-			alias(ds.asMap, ds.asList_local, out_alias);
-		}
-		else {
-			System.out.println("WriteCSV scope error!!!");
+			out_alias.close();
 		}
 
-		out_ex.close();
-		out_sv.close();
-		out_dv.close();
-		out_goal.close();
-		out_alias.close();
-	};
+
+
+	};	
 
 	  public static void sequence(Map<Integer,Sequence> seqMap, ArrayList<Integer> list ,PrintWriter out) {
 		    
@@ -241,7 +240,7 @@ public class WriteCSV {
 		    	{
 			    	int caseOrder = i+1;
 			    out.print(k); // for GOAL NAME
-			    out.print(","+g.lhs); // for LHS
+			    //out.print(","+g.lhs); // for LHS
 		    	//out.print(","+p.scope);  // for SCOPE
 		    	//out.print(",Y"); //for INCLUDE
 		    	//out.print(","+p.format); //for FORMAT
@@ -251,8 +250,16 @@ public class WriteCSV {
 		    	out.print(","+g.caseName.get(i)); //for CASE 
 		    	out.print(","+caseOrder); //for ORDER 
 		    	out.print(","+g.caseCondition.get(i)); //for CONDITION
-		    	out.print(","+g.caseExpression.get(i)); //for EXPRESSION
-		    	out.print(","+g.case_lhs_gt_rhs.get(i)); //for EXPRESSION
+		    	
+		    	if (g.lhs != Parameters.undefined ) {
+		    		out.print("," + g.lhs + " = " + g.caseExpression.get(i) ); //for EXPRESSION
+		    	}
+		    	
+		    	else {
+		    		out.print("," + g.caseExpression.get(i) ); //for EXPRESSION
+		    	}
+		    	
+		    	out.print(","+g.case_lhs_gt_rhs.get(i)); //
 		    	out.print(","+g.case_lhs_lt_rhs.get(i)); //for EXPRESSION
 		    	
 

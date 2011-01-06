@@ -1016,7 +1016,7 @@ public class TestConvertWresl {
 		g.lhs = "C3_MIF";
 		g.caseName.add(Parameters.defaultCaseName);
 		g.caseCondition.add("always");
-		g.caseExpression.add("minflow_C3b2");
+		g.caseExpression.add("C3_MIF = minflow_C3b2");
 		g.case_lhs_gt_rhs.add("constrain");
 		g.case_lhs_lt_rhs.add("700.0");
 		expected_gMap.put("b2action1Whi_1", g);				

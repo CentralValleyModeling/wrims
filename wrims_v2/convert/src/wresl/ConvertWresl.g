@@ -74,11 +74,23 @@ evaluator
 
 
 pattern
-	:   model 
+	:   weight_table
+	|	model 
 	|   include
 	|	sequence 
 	| 	goal 
-	| 	define ;
+	| 	define 
+	;
+	
+weight_table
+	: OBJECTIVE ident 
+	'=' '{' weightItem+ '}'
+	;	
+	
+weightItem returns[String id, String value]
+	: '['  i=ident ',' e=expression ']' (',')?
+		{ $id = $i.text; $value = $e.text;  }
+	;
 
 model 
 scope { Struct M }
@@ -97,7 +109,7 @@ scope { Struct M }
 
 include 
 	@init { scope = "global"; }
-	:   INCLUDE ( LOCAL  {scope="local";} )? p=includeFilePath {
+	:   INCLUDE ( local  {scope="local";} )? p=includeFilePath {
 	
 			        if(inModel=="n") {         F.includeFile($p.path, scope);}
 	             	else             { $model::M.includeFile($p.path, scope);}
@@ -116,7 +128,7 @@ sequence
 
 goal	
 	@init { scope = "global";}
-	: GOAL ( LOCAL {scope="local";} )?  id=ident 
+	: GOAL ( local {scope="local";} )?  id=ident 
 	( goal_simple[$id.text, scope] 
 	| goal_case_or_noCase[$id.text, scope] 
 	) 
@@ -166,7 +178,7 @@ goalCaseStatements returns[Goal gl]
 			} )+ 
 	;	
 
-goalCaseStatement returns[String caseName, String condition, String rhs, String expression, String lhs_gt_rhs, String lhs_lt_rhs]
+goalCaseStatement returns[String caseName, String condition, String rhs, String lhs_gt_rhs, String lhs_lt_rhs]
 	:  CASE i=all_ident '{' c=conditionStatement g=goalStatement  '}' {			
 			$caseName = $i.text;
 			$condition = $c.str;
@@ -207,7 +219,7 @@ lhs_vs_rhs returns[ArrayList<String> list, String lhs_gt_rhs, String lhs_lt_rhs,
 /// define ///
 define
 	@init { scope = "global"; } 
-	:	DEFINE ( LOCAL {scope="local";} )? id=ident 
+	:	DEFINE ( local {scope="local";} )? id=ident 
 	(	svar_expression[$id.text, scope]
 	|	dvar_std[$id.text, scope]   | dvar_nonstd[$id.text, scope] | dvar_alias[$id.text, scope]
 	|	svar_table[$id.text, scope] | svar_dss[$id.text, scope]   | svar_cases[$id.text, scope]
@@ -536,7 +548,7 @@ equals : EQUALS;
 
 ident : IDENT_TOKEN;
 
-
+local     : '[' LOCAL_TOKEN ']';
 
 COMMENT : '!' .* ('\n'|'\r') {skip();}; //{$channel = HIDDEN;}; 
 MULTILINE_COMMENT : '/*' .* '*/' {skip();}; //{$channel = HIDDEN;};
@@ -563,6 +575,8 @@ SUM : 'sum'  ;
 
 
 /// reserved keywords ///
+LOCAL_TOKEN : 'local'| 'LOCAL';
+OBJECTIVE: 'objective' | 'Objective' | 'OBJECTIVE';
 TIMESERIES: 'timeseries';
 SELECT :  'select' | 'SELECT' ;
 FROM:     'from' | 'FROM' ;
@@ -589,7 +603,7 @@ SEQUENCE  : 'sequence' | 'SEQUENCE';
 MODEL     : 'model' | 'MODEL' | 'Model';
 ORDER     : 'order';
 INCLUDE   : 'include' | 'INCLUDE' | 'Include';
-LOCAL     : '[' ( 'local'| 'LOCAL') ']';
+
 
 
 /// comparison ///
@@ -651,6 +665,8 @@ IDENT_FOLLOWED_BY_LOGICAL
 	);
 
 IDENT_TOKEN : LETTER (LETTER | DIGIT | SYMBOLS )*;
+
+
 
 
 
