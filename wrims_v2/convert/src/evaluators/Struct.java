@@ -17,9 +17,16 @@ public class Struct {
 	public ArrayList<String> model_list = new ArrayList<String>();
 	public ArrayList<String> error_model_redefined = new ArrayList<String>();
 
-	// / sequence
-
+	// / weight table   // <objName,  <itemName, value>>
+	public WeightTable wt;
+	public Map<String, WeightTable> wtMap = new HashMap<String, WeightTable>();
+	public ArrayList<String> wtList = new ArrayList<String>();
+	public ArrayList<String> wtList_global = new ArrayList<String>();
+	public ArrayList<String> wtList_local = new ArrayList<String>();
+	public Map<String,String> error_obj_redefined = new HashMap<String, String>();
+	public Map<String,ArrayList<String>> error_weightVar_redefined_map = new HashMap<String, ArrayList<String>>();
 	
+	// / sequence
 	public ArrayList<Integer> error_sequence_order_redefined = new ArrayList<Integer>();
 	public ArrayList<String> error_sequence_redefined = new ArrayList<String>();	
 	
@@ -69,7 +76,8 @@ public class Struct {
 	public ArrayList<String> gList_global = new ArrayList<String>();
 	public ArrayList<String> gList_local = new ArrayList<String>();
 	public Map<String, Goal> gMap = new HashMap<String, Goal>();
-
+	public Map<String, String> error_goal_redefined = new HashMap<String, String>();
+	
 	// / errors
 	public Map<String, String> error_var_redefined = new HashMap<String, String>();
 
@@ -139,6 +147,36 @@ public class Struct {
 		}
 	}
 
+	public void putWeightTable(String tableName, Map<String,String> table, ArrayList<String> err_var_redefined, String scope) {
+		if (wtList.contains(tableName)) {
+			ErrMsg.print("Weight table objective redefined: "+tableName, currentAbsolutePath);
+			error_obj_redefined.put(tableName, currentAbsolutePath);
+		} 
+		else {
+
+			if (!err_var_redefined.isEmpty()){
+				for (String v : err_var_redefined){
+					ErrMsg.print("Weight table variable redefined: "+v, currentAbsolutePath);
+				}
+				error_weightVar_redefined_map.put(tableName, err_var_redefined);
+			}
+						
+			// / clearer data structure
+			wt = new WeightTable();
+			wt.table = table;
+			wt.fromWresl = currentAbsolutePath;
+			wtMap.put(tableName, wt);
+
+			wtList.add(tableName);
+			
+			if      (scope == "global"){wtList_global.add(tableName);}
+			else if (scope == "local") {wtList_local.add(tableName);}
+			else{ System.out.println("wrong scope!!");}
+			
+
+		}
+	}
+	
 	public void includeFile(String fileRelativePath, String scope)  {
 		
 		File absFile = new File(currentAbsoluteParent, fileRelativePath).getAbsoluteFile();
@@ -177,9 +215,9 @@ public class Struct {
 	}
 
 	public void goalSimple(String name, String scope, String content) {
-		if (var_all.containsKey(name)) {
+		if (gList.contains(name)) {
 			ErrMsg.print("Goal redefined: "+name, currentAbsolutePath);
-			error_var_redefined.put(name, "goal_simple");
+			error_goal_redefined.put(name, currentAbsolutePath);
 		} else {
 			goal_scope.put(name, scope);
 			goal_simple.put(name, content);
@@ -206,9 +244,9 @@ public class Struct {
 
 	public void goalNoCase(String name, String scope, String lhs, String rhs,
 			String lhs_gt_rhs, String lhs_lt_rhs) {
-		if (var_all.containsKey(name)) {
+		if (gList.contains(name)) {
 			ErrMsg.print("Goal redefined: "+name, currentAbsolutePath);
-			error_var_redefined.put(name, "goal_no_case");
+			error_goal_redefined.put(name, currentAbsolutePath);
 		} else {
 			// list.add(0,"lhs");list.add(1,lhs);
 			// goal_scope.put(name, scope);
@@ -236,9 +274,9 @@ public class Struct {
 	}
 
 	public void goalCase(String name, String scope, String lhs, Goal gl) {
-		if (var_all.containsKey(name)) {
+		if (gList.contains(name)) {
 			ErrMsg.print("Goal redefined: "+name, currentAbsolutePath);
-			error_var_redefined.put(name, "goal_cases");
+			error_goal_redefined.put(name, currentAbsolutePath);
 		} else {
 			goal_scope.put(name, scope);
 			var_all.put(name, "goal_cases");

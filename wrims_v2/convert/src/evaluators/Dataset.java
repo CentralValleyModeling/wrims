@@ -20,6 +20,14 @@ public class Dataset {
 	public ArrayList<String> seqList = new ArrayList<String>();
 
 	
+	// / weight table   // <objName,  <itemName, value>>
+
+	public Map<String, WeightTable> wtMap = new HashMap<String, WeightTable>();
+	public ArrayList<String> wtList = new ArrayList<String>();	
+	public ArrayList<String> wtList_global = new ArrayList<String>();
+	public ArrayList<String> wtList_local = new ArrayList<String>();
+	public Map<String,String> error_obj_redefined = new HashMap<String, String>();
+	public Map<String,ArrayList<String>> error_weightVar_redefined_map = new HashMap<String, ArrayList<String>>();
 	
 	
 	
@@ -64,6 +72,7 @@ public class Dataset {
 	public ArrayList<String> gList_global = new ArrayList<String>();
 	public ArrayList<String> gList_local = new ArrayList<String>();
 	public Map<String, Goal> gMap = new HashMap<String, Goal>();
+	public Map<String, String> error_goal_redefined = new HashMap<String, String>();
 
 	public Dataset() {
 	}
@@ -80,6 +89,13 @@ public class Dataset {
 
 		if(s==null) System.out.println("Fatal error!!! Dataset is null in file: "+filePath);
 
+		for (String e : s.wtList){ 
+			if (this.wtList.contains(e)) {
+				System.err.println("Error!!! Weight table objective redefined: "+e+" in file: "+filePath);
+				b = true;
+			}
+		}
+		
 		for (String e : s.incFileList){ 
 			if (this.incFileList.contains(e)) {
 				System.out.println("Error!!! Include file redefined: "+e+" in file: "+filePath);
@@ -137,7 +153,12 @@ public class Dataset {
 		
 		Dataset s = (Dataset)obj;
 		
-
+		if (!s.wtList.isEmpty()) {
+			this.wtList.addAll(s.wtList);
+			this.wtList_local.addAll(s.wtList);
+			this.wtMap.putAll(s.wtMap);
+		}
+		
 		if (!s.incFileList.isEmpty()) {
 			this.incFileList.addAll(s.incFileList);
 			this.incFileList_local.addAll(s.incFileList);
@@ -182,6 +203,12 @@ public class Dataset {
 
 	public Dataset convertToLocal() {		
 
+		if (!this.wtList.isEmpty()) {
+			this.wtList_local = new ArrayList<String>();
+			this.wtList_local.addAll(this.wtList);
+			this.wtList_global = new ArrayList<String>();
+		}
+		
 		if (!this.incFileList.isEmpty()) {
 			this.incFileList_local = new ArrayList<String>();
 			this.incFileList_local.addAll(this.incFileList);
@@ -220,6 +247,15 @@ public class Dataset {
 		
 		Dataset out = new Dataset() ;
 
+		if (!this.wtList_global.isEmpty()) {
+			out.wtList.addAll(this.wtList_global);
+			out.wtList_global.addAll(this.wtList_global);
+
+			for (String key : this.wtList_global) {
+				out.wtMap.put(key, this.wtMap.get(key));
+			}
+		}
+		
 		if (!this.incFileList_global.isEmpty()) {
 			out.incFileList.addAll(this.incFileList_global);
 			out.incFileList_global.addAll(this.incFileList_global);
@@ -272,6 +308,13 @@ public class Dataset {
 	
 	public Dataset remove(Dataset s) {
 		
+
+		if (!s.wtList.isEmpty()) {
+			this.wtList.removeAll(s.wtList);
+			this.wtList_global.removeAll(s.wtList);
+			this.wtList_local.removeAll(s.wtList);
+			this.wtMap.remove(s.wtList);
+		}
 		
 		if (!s.incFileList.isEmpty()) {
 			this.incFileList.removeAll(s.incFileList);
@@ -328,6 +371,13 @@ public class Dataset {
 
 	
 	public Dataset add(Dataset s) {
+
+		if (!s.wtList.isEmpty()) {
+			this.wtList.addAll(s.wtList);
+			if (!s.wtList_global.isEmpty()) {this.wtList_global.addAll(s.wtList_global);}
+			if (!s.wtList_local.isEmpty()) {this.wtList_local.addAll(s.wtList_local);}
+			this.wtMap.putAll(s.wtMap);
+		}
 		
 		if (!s.incFileList.isEmpty()) {
 			this.incFileList.addAll(s.incFileList);

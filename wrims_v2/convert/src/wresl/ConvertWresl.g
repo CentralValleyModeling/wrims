@@ -82,15 +82,7 @@ pattern
 	| 	define 
 	;
 	
-weight_table
-	: OBJECTIVE ident 
-	'=' '{' weightItem+ '}'
-	;	
-	
-weightItem returns[String id, String value]
-	: '['  i=ident ',' e=expression ']' (',')?
-		{ $id = $i.text; $value = $e.text;  }
-	;
+
 
 model 
 scope { Struct M }
@@ -101,11 +93,33 @@ scope { Struct M }
 				$model::M = new Struct(); 
 				$model::M.currentAbsolutePath=currentAbsolutePath;
 				$model::M.currentAbsoluteParent=currentAbsoluteParent;} 
-		 '{' c=(  include | goal | define )*  '}' 
+		 '{' c=(  include | goal | define | weight_table)*  '}' 
 		 	{
 	           //  System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " + $model::M.include_file_scope)
 	     	}    
 	;
+
+
+weight_table
+@init { scope = "global"; 
+	    Map<String,String> table = new HashMap<String,String>(); 
+		ArrayList<String> err_var_redefined = new ArrayList<String>(); 
+}
+	: OBJECTIVE ( local  {scope="local";} )? tableName=ident '=' '{' 
+		( w=weightItem  { table.put($w.id, $w.value); } )+ 
+		'}' 
+		{
+			        if(inModel=="n") {         F.putWeightTable($tableName.text, table, err_var_redefined, scope);}
+	             	else             { $model::M.putWeightTable($tableName.text, table, err_var_redefined, scope);}
+		
+		}
+	;	
+	
+weightItem returns[String id, String value]
+	: '['  i=ident ',' e=expression ']' (',')?
+		{ $id = $i.text; $value = $e.text;  }
+	;
+
 
 include 
 	@init { scope = "global"; }

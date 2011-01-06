@@ -108,7 +108,12 @@ public class Tools {
 		
 		Dataset out = new Dataset();
 
-
+		if (!s.wtList.isEmpty()) {
+			out.wtList.addAll(s.wtList);
+			out.wtList_local.addAll(s.wtList);
+			out.wtMap.putAll(s.wtMap);
+		}
+		
 		if (!s.incFileList.isEmpty()) {
 			out.incFileList.addAll(s.incFileList);
 			out.incFileList_local.addAll(s.incFileList);
@@ -156,6 +161,13 @@ public class Tools {
 		Dataset out = new Dataset();
 		Struct s = (Struct)obj;
 
+		if (!s.wtList.isEmpty()) {
+			out.wtList.addAll(s.wtList);
+			if (!s.wtList_global.isEmpty()) {out.wtList_global.addAll(s.wtList_global);}
+			if (!s.wtList_local.isEmpty()) {out.wtList_local.addAll(s.wtList_local);}
+			out.wtMap.putAll(s.wtMap);
+		}
+		
 		if (!s.incFileList.isEmpty()) {
 			out.incFileList.addAll(s.incFileList);
 			if (!s.incFileList_global.isEmpty()) {out.incFileList_global.addAll(s.incFileList_global);}
