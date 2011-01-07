@@ -19,12 +19,11 @@ public class Struct {
 
 	// / weight table   // <objName,  <itemName, value>>
 	public WeightTable wt;
-	public Map<String, WeightTable> wtMap = new HashMap<String, WeightTable>();
 	public ArrayList<String> wtList = new ArrayList<String>();
 	public ArrayList<String> wtList_global = new ArrayList<String>();
 	public ArrayList<String> wtList_local = new ArrayList<String>();
-	public Map<String,String> error_obj_redefined = new HashMap<String, String>();
-	public Map<String,ArrayList<String>> error_weightVar_redefined_map = new HashMap<String, ArrayList<String>>();
+	public Map<String, WeightTable> wtMap = new HashMap<String, WeightTable>();
+	public Map<String,String> error_weightVar_redefined = new HashMap<String, String>();
 	
 	// / sequence
 	public ArrayList<Integer> error_sequence_order_redefined = new ArrayList<Integer>();
@@ -147,36 +146,28 @@ public class Struct {
 		}
 	}
 
-	public void putWeightTable(String tableName, Map<String,String> table, ArrayList<String> err_var_redefined, String scope) {
-		if (wtList.contains(tableName)) {
-			ErrMsg.print("Weight table objective redefined: "+tableName, currentAbsolutePath);
-			error_obj_redefined.put(tableName, currentAbsolutePath);
+	public void mergeWeightTable(String name, String value, String scope) {
+		if (wtList.contains(name)) {
+			ErrMsg.print("Weight table decision variable redefined: "+name, currentAbsolutePath);
+			error_weightVar_redefined.put(name, currentAbsolutePath);
 		} 
 		else {
-
-			if (!err_var_redefined.isEmpty()){
-				for (String v : err_var_redefined){
-					ErrMsg.print("Weight table variable redefined: "+v, currentAbsolutePath);
-				}
-				error_weightVar_redefined_map.put(tableName, err_var_redefined);
-			}
-						
+					
 			// / clearer data structure
 			wt = new WeightTable();
-			wt.table = table;
-			wt.fromWresl = currentAbsolutePath;
-			wtMap.put(tableName, wt);
+			wt.weight = value;
+			wtMap.put(name, wt);
 
-			wtList.add(tableName);
+			wtList.add(name);
 			
-			if      (scope == "global"){wtList_global.add(tableName);}
-			else if (scope == "local") {wtList_local.add(tableName);}
+			if      (scope == "global"){wtList_global.add(name);}
+			else if (scope == "local") {wtList_local.add(name);}
 			else{ System.out.println("wrong scope!!");}
-			
 
 		}
 	}
-	
+
+
 	public void includeFile(String fileRelativePath, String scope)  {
 		
 		File absFile = new File(currentAbsoluteParent, fileRelativePath).getAbsoluteFile();

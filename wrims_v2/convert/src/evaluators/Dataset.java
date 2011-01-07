@@ -22,14 +22,14 @@ public class Dataset {
 	
 	// / weight table   // <objName,  <itemName, value>>
 
-	public Map<String, WeightTable> wtMap = new HashMap<String, WeightTable>();
+
 	public ArrayList<String> wtList = new ArrayList<String>();	
 	public ArrayList<String> wtList_global = new ArrayList<String>();
 	public ArrayList<String> wtList_local = new ArrayList<String>();
-	public Map<String,String> error_obj_redefined = new HashMap<String, String>();
-	public Map<String,ArrayList<String>> error_weightVar_redefined_map = new HashMap<String, ArrayList<String>>();
+	public Map<String, WeightTable> wtMap = new HashMap<String, WeightTable>();
+	public Map<String,String> error_weightVar_redefined = new HashMap<String, String>();
 	
-	
+
 	
 	// / includeFile data structure
 	public ArrayList<String> incFileList = new ArrayList<String>();

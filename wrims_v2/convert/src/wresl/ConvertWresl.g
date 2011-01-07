@@ -101,18 +101,15 @@ scope { Struct M }
 
 
 weight_table
+scope { Struct WT }
 @init { scope = "global"; 
-	    Map<String,String> table = new HashMap<String,String>(); 
-		ArrayList<String> err_var_redefined = new ArrayList<String>(); 
-}
-	: OBJECTIVE ( local  {scope="local";} )? tableName=ident '=' '{' 
-		( w=weightItem  { table.put($w.id, $w.value); } )+ 
-		'}' 
-		{
-			        if(inModel=="n") {         F.putWeightTable($tableName.text, table, err_var_redefined, scope);}
-	             	else             { $model::M.putWeightTable($tableName.text, table, err_var_redefined, scope);}
-		
+		if(inModel=="n") { $weight_table::WT = F;}
+		else			 { $weight_table::WT = $model::M;}
 		}
+	: OBJECTIVE ( local  {scope="local";} )? all_ident 
+	'=' '{' 
+		( w=weightItem  { $weight_table::WT.mergeWeightTable($w.id, $w.value, scope); } )+ 
+	'}' 
 	;	
 	
 weightItem returns[String id, String value]
