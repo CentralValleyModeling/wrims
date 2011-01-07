@@ -15,6 +15,7 @@ public class WriteCSV {
 	  //private static PrintWriter out;
 
 	  public static String sequence_header ="RUN_ORDER,MODEL,CONDITION";
+	  public static String weight_header ="DVAR,WEIGHT";
 	  public static String external_header ="NAME,TYPE,FROM_WRESL_FILE";
 	  public static String svar_header ="NAME,DSS_B_PART,TYPE,UNITS,CONVERT_TO,OUTPUT,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
 	  public static String dvar_header ="NAME,TYPE,UNITS,LOWER_BOUND,UPPER_BOUND,FROM_WRESL_FILE";	  
@@ -65,6 +66,7 @@ public class WriteCSV {
 		PrintWriter out_dv;
 		PrintWriter out_goal;
 		PrintWriter out_alias;
+		PrintWriter out_wt;
 		
 		if(ds.exList.size()>0){
 			out_ex = Tools.openFile(outFolder, "external.csv");		
@@ -97,11 +99,56 @@ public class WriteCSV {
 			alias(ds.asMap, ds.asList, out_alias);
 			out_alias.close();
 		}
+		if(ds.wtList.size()>0){
+			out_wt = Tools.openFile(outFolder, "weight.csv");		
+			out_wt.print(WriteCSV.weight_header + "\n");
+			weight(ds.wtMap, ds.wtList, out_wt);	
+			out_wt.close();
+		}
 
 
 
 	};	
 
+	  
+	  public static void svar(Map<String,Svar> sMap, ArrayList<String> list ,PrintWriter out) {
+		    
+			List<String> keys = list;
+			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
+		    //List<SvarProps> svarPropsList;
+			
+		    for (String k: keys ){
+		    	
+		    	//out.print(k);
+		    	Svar s = sMap.get(k);
+		    	
+		    	for (int i=0; i<s.caseCondition.size(); i++)
+
+		    	//	SvarProps p =sMap.get(k);
+		    	{
+			    	int caseOrder = i+1;
+			    out.print(k); // for SVAR NAME
+		    	//out.print(","+p.scope);  // for SCOPE
+		    	//out.print(",Y"); //for INCLUDE
+		    	//out.print(","+p.format); //for FORMAT
+			    out.print(","+s.dssBPart); //for DSS B Part	
+			    out.print(","+s.kind); //for KIND		    	
+		    	out.print(","+s.units); //for UNITS
+		    	out.print(","+s.convertToUnits); //for CONVERT
+		    	out.print(",Y"); //for OUTPUT
+		    	out.print(","+s.caseName.get(i)); //for CASE 
+		    	out.print(","+caseOrder); //for CASE 
+		    	out.print(","+s.caseCondition.get(i)); //for CONDITION
+		    	out.print(","+s.caseExpression.get(i)); //for EXPRESSION
+		    	
+
+				out.print(","+s.fromWresl);
+				out.print("\n");	
+		    	}
+			}
+	  };	  
+
+	
 	  public static void sequence(Map<Integer,Sequence> seqMap, ArrayList<Integer> list ,PrintWriter out) {
 		    
 			List<Integer> keys = list;
@@ -144,7 +191,7 @@ public class WriteCSV {
 	  };	  
 
 	  
-	  public static void svar(Map<String,Svar> sMap, ArrayList<String> list ,PrintWriter out) {
+	  public static void weight(Map<String,WeightTable> wtMap, ArrayList<String> list ,PrintWriter out) {
 		    
 			List<String> keys = list;
 			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
@@ -153,31 +200,15 @@ public class WriteCSV {
 		    for (String k: keys ){
 		    	
 		    	//out.print(k);
-		    	Svar s = sMap.get(k);
-		    	
-		    	for (int i=0; i<s.caseCondition.size(); i++)
-
-		    	//	SvarProps p =sMap.get(k);
-		    	{
-			    	int caseOrder = i+1;
-			    out.print(k); // for SVAR NAME
-		    	//out.print(","+p.scope);  // for SCOPE
-		    	//out.print(",Y"); //for INCLUDE
-		    	//out.print(","+p.format); //for FORMAT
-			    out.print(","+s.dssBPart); //for DSS B Part	
-			    out.print(","+s.kind); //for KIND		    	
-		    	out.print(","+s.units); //for UNITS
-		    	out.print(","+s.convertToUnits); //for CONVERT
-		    	out.print(",Y"); //for OUTPUT
-		    	out.print(","+s.caseName.get(i)); //for CASE 
-		    	out.print(","+caseOrder); //for CASE 
-		    	out.print(","+s.caseCondition.get(i)); //for CONDITION
-		    	out.print(","+s.caseExpression.get(i)); //for EXPRESSION
+		    	WeightTable s = wtMap.get(k);
 		    	
 
-				out.print(","+s.fromWresl);
+			    out.print(k); // for DVAR NAME
+
+			    out.print(","+s.weight); //for DSS B Part	
+
 				out.print("\n");	
-		    	}
+
 			}
 	  };	  
 

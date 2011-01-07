@@ -181,7 +181,7 @@ public class StudyParser {
 			Map<String,Dataset> fileDataMap_corrected = new HashMap<String, Dataset>();
 			fileDataMap_corrected.putAll(fileDataMap_thisModel);
 			
-			System.out.println("keysets in corrected"+fileDataMap_corrected.keySet());
+			//System.out.println("keysets in corrected"+fileDataMap_corrected.keySet());
 			
 			for (String f : fileDataMap_thisModel.keySet()) {
 
@@ -238,6 +238,9 @@ public class StudyParser {
 			//////////////////////////////////////////
 			
 			model_data_complete_map.put(model, model_data_complete);
+			
+			//System.out.println(" weight table keys: "+ model_data_complete.wtMap.keySet());
+			
 			System.out.println("######################################################");
 			System.out.println("####   Finished Processing model: "+model);
 			System.out.println("######################################################");
