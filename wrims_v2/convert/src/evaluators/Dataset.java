@@ -91,7 +91,7 @@ public class Dataset {
 
 		for (String e : s.wtList){ 
 			if (this.wtList.contains(e)) {
-				System.err.println("Error!!! Weight table objective redefined: "+e+" in file: "+filePath);
+				System.err.println("Error! Weight table decision variable duplicated: "+e+" in file: "+filePath);
 				b = true;
 			}
 		}
