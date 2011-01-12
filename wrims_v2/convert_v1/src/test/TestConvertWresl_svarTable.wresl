@@ -1,0 +1,4 @@
+define nov_trigger_cfs {
+        select    target
+        from      feather_fish_203
+        where   month = NOV}
