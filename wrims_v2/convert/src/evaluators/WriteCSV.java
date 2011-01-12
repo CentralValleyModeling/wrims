@@ -14,13 +14,13 @@ public class WriteCSV {
 	  //static Map<String, List<String>> mapStringList = new HashMap<String, List<String>>();
 	  //private static PrintWriter out;
 
-	  public static String sequence_header ="RUN_ORDER,MODEL,CONDITION";
+	  public static String sequence_header ="CYCLE,CONDITION";
 	  public static String weight_header ="DVAR,WEIGHT";
-	  public static String external_header ="NAME,TYPE,FROM_WRESL_FILE";
-	  public static String svar_header ="NAME,DSS_B_PART,TYPE,UNITS,CONVERT_TO,OUTPUT,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
-	  public static String dvar_header ="NAME,TYPE,UNITS,LOWER_BOUND,UPPER_BOUND,FROM_WRESL_FILE";	  
-	  public static String alias_header ="NAME,TYPE,UNITS,OUTPUT,EXPRESSION,FROM_WRESL_FILE";
-	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,LHS>RHS,LHS<RHS,FROM_WRESL_FILE";
+	  public static String external_header ="FUNCTION,FILE";
+	  public static String svar_header ="NAME,TYPE,UNITS,CONVERT_TO_UNITS,OUTPUT,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
+	  public static String dvar_header ="NAME,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE";	  
+	  public static String alias_header ="NAME,TYPE,UNITS,EXPRESSION,FROM_WRESL_FILE";
+	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,LHS_gt_RHS,LHS_lt_RHS,FROM_WRESL_FILE";
 
 	public static void study(StudyConfig sc, Map<String, Dataset> modelDataMap, String outParent) {
 			
@@ -131,11 +131,11 @@ public class WriteCSV {
 		    	//out.print(","+p.scope);  // for SCOPE
 		    	//out.print(",Y"); //for INCLUDE
 		    	//out.print(","+p.format); //for FORMAT
-			    out.print(","+s.dssBPart); //for DSS B Part	
+			    //out.print(","+s.dssBPart); //for DSS B Part	
 			    out.print(","+s.kind); //for KIND		    	
 		    	out.print(","+s.units); //for UNITS
 		    	out.print(","+s.convertToUnits); //for CONVERT
-		    	out.print(",Y"); //for OUTPUT
+		    	out.print(",n"); //for OUTPUT
 		    	out.print(","+s.caseName.get(i)); //for CASE 
 		    	out.print(","+caseOrder); //for CASE 
 		    	out.print(","+s.caseCondition.get(i)); //for CONDITION
@@ -160,9 +160,7 @@ public class WriteCSV {
 		    	//out.print(k);
 		    	//Sequence s = seqMap.get(k);
 		    	
-
-			    out.print(k); // 
-		    	out.print(","+seqMap.get(k).modelName);
+		    	out.print(seqMap.get(k).modelName);
 		    	out.print(","+seqMap.get(k).condition);
 				out.print("\n");	
 		    	
@@ -184,7 +182,7 @@ public class WriteCSV {
 			    out.print(k); // 
 		    	out.print(","+s.type); //for KIND		    	
 
-				out.print(","+s.fromWresl);
+				//out.print(","+s.fromWresl);
 				out.print("\n");	
 		    	
 			}
@@ -222,11 +220,12 @@ public class WriteCSV {
 		    	Dvar d = dMap.get(k);		    	
 
 			    out.print(k); // for DVAR NAME
-
-		    	out.print(","+d.kind); //for KIND		    	
-		    	out.print(","+d.units); //for UNITS
+		    	
 		    	out.print(","+d.lowerBound); //for UNITS
 		    	out.print(","+d.upperBound); //for UNITS
+		    	out.print(","+d.integer); //for KIND
+		    	out.print(","+d.units); //for UNITS
+		    	out.print(","+d.kind); //for KIND
 
 				out.print(","+d.fromWresl);
 				out.print("\n");	
@@ -246,7 +245,6 @@ public class WriteCSV {
 
 		    	out.print(","+a.kind); //for KIND		    	
 		    	out.print(","+a.units); //for UNITS
-		    	out.print(",Y"); //for OUTPUT
 		    	out.print(","+a.expression); //for expression
 
 				out.print(","+a.fromWresl);

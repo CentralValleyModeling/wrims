@@ -19,9 +19,9 @@ public class Svar {
 		scope=Parameters.undefined;
 		dssBPart=Parameters.undefined;
 		format=Parameters.undefined;
-		kind=Parameters.undefined;
-		units=Parameters.undefined;
-		convertToUnits =Parameters.undefined;
+		kind="undefined";
+		units="undefined";
+		convertToUnits ="undefined";
 		caseName       = new ArrayList<String>();
 		caseCondition  = new ArrayList<String>();
 		caseExpression = new ArrayList<String>();
