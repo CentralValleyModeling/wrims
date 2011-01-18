@@ -6,6 +6,7 @@ public class Svar {
 
 	private String type;
 	private String units;
+	private String convertUnits;
 	private ArrayList<String> caseCondition;
 	private ArrayList<ArrayList<String>> caseExpression;
 
@@ -22,6 +23,10 @@ public class Svar {
 
 	public void setUnits(String units){
 		this.units=units;
+	}
+	
+	public void setConvertUnits(String convertUnits){
+		this.convertUnits=convertUnits;
 	}
 
 	public void setCaseCondition(ArrayList<String> caseCondition){
@@ -46,6 +51,10 @@ public class Svar {
 
 	public String getUnits(){
 		return units;
+	}
+	
+	public String getConvertUnits(){
+		return convertUnits;
 	}
 }
 
