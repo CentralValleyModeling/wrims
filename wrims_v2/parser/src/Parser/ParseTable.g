@@ -25,6 +25,7 @@ options {
   import Components.Constraint;
   import Components.Svar;
   import Components.LRWeight;
+  import Components.IlpData;
 }
 
 @lexer::header {
@@ -71,6 +72,7 @@ options {
   
   private String svType= "NULL"; 
   private String svUnits = "NULL"; 
+  private String svConvertUnits = "NULL";
   private String preSV ="";
   private String preCondition = "always";
   private int n_always=0;
@@ -158,31 +160,43 @@ options {
   }
    
   public void setGlobal(){
-        nodeGlobal = node;
-        dvarGlobal = dvar;
-        svarGlobal = svar;
-        outputSvarGlobal = outputSvar;
-        weightGlobal = weight;
-        fileGlobal = file;
-        constraintGlobal = constraint;
-        lgrGlobal = lgr;
-        rglGlobal = rgl;
-        functionGlobal = function;
-        aliasGlobal = alias;
+        nodeGlobal.putAll(node);
+        dvarGlobal.putAll(dvar);
+        svarGlobal.putAll(svar);
+        outputSvarGlobal.addAll(outputSvar);
+        weightGlobal.putAll(weight);
+        fileGlobal.addAll(file);
+        constraintGlobal.putAll(constraint);
+        lgrGlobal.putAll(lgr);
+        rglGlobal.putAll(rgl);
+        functionGlobal.putAll(function);
+        aliasGlobal.putAll(alias);
   }
   
   public void initialCycle(){
-        node = nodeGlobal;
-        dvar = dvarGlobal;
-        svar = svarGlobal;
-        outputSvar = outputSvarGlobal;
-        weight = weightGlobal;
-        file = fileGlobal;
-        constraint = constraintGlobal;
-        lgr = lgrGlobal;
-        rgl = rglGlobal;
-        function=functionGlobal;
-        alias = aliasGlobal;        
+        node.putAll(nodeGlobal);
+        dvar.putAll(dvarGlobal);
+        svar.putAll(svarGlobal);
+        outputSvar.addAll(outputSvarGlobal);
+        weight.putAll(weightGlobal);
+        file.addAll(fileGlobal);
+        constraint.putAll(constraintGlobal);
+        lgr.putAll(lgrGlobal);
+        rgl.putAll(rglGlobal);
+        function.putAll(functionGlobal);
+        alias.putAll(aliasGlobal);        
+  }
+  
+  public void saveToIlpData(){
+        IlpData.addDvarToArray(dvar);
+        IlpData.addSvarToArray(svar);
+        IlpData.addOutputSvarToArray(outputSvar);
+        IlpData.addWeightToArray(weight);
+        IlpData.addConstraintToArray(constraint);
+        IlpData.addLgrToArray(lgr);
+        IlpData.addRglToArray(rgl);
+        IlpData.addFunctionToArray(function);
+        IlpData.addAliasToArray(alias);
   }
   
   @Override
@@ -259,32 +273,32 @@ headline_filetable
   ;
 	
 headline_dvartable
-	:	NAME ',' LOWERBOUND ',' UPPERBOUND ',' INTEGERTYPE ',' UNITS ',' TYPE{
+	:	NAME ',' LOWERBOUND ',' UPPERBOUND ',' INTEGERTYPE ',' UNITS ',' TYPE ',' FROM_WRESL_FILE{
 		}
 	;
 	
 headline_svartable
-	:	NAME ',' TYPE ',' UNITS ',' OUTPUT ',' CASE ',' ORDER ',' CONDITION ',' EXPRESSION {
+	:	NAME ',' TYPE ',' UNITS ',' CONVERTUNITS ',' OUTPUT ',' CASE ',' ORDER ',' CONDITION ',' EXPRESSION ',' FROM_WRESL_FILE{
 		}
 	;
 
 headline_constrainttable
-	:	NAME ',' CASE ',' ORDER ',' CONDITION ',' EXPRESSION ',' LHSGTRHS ',' LHSLTRHS {
+	:	NAME ',' CASE ',' ORDER ',' CONDITION ',' EXPRESSION ',' LHSGTRHS ',' LHSLTRHS ',' FROM_WRESL_FILE{
 		}
 	;
 		
 headline_weighttable
-	:	NAME ',' WEIGHT{
+	:	DVAR ',' WEIGHT{
 		}
 	;
 	
 headline_externaltable
-  : FUNCTION ',' FILE{
+  : FUNCTION ',' FILE ',' FROM_WRESL_FILE{
     }
   ;
   
 headline_aliastable
-  : NAME ',' TYPE ',' UNITS ',' EXPRESSION{
+  : NAME ',' TYPE ',' UNITS ',' EXPRESSION ',' FROM_WRESL_FILE{
     }
   ;
 
@@ -439,6 +453,8 @@ content_cycle
         fileAnchestry.remove(fileAnchestry.size()-1);
         
         dvTestDefineSV();
+        
+        saveToIlpData();
       }   
   }
   ;
@@ -486,18 +502,18 @@ content_file
   ;
 	
 content_dvar
-	:	i1=IDENT s1=',' lowerbound s2=',' upperbound ',' i3=IDENT ',' i4=IDENT ',' partC{
+	:	i1=IDENT s1=',' lowerbound s2=',' upperbound ',' i3=IDENT ',' units ',' partC ',' directory{
 	       if (dvar.containsKey($i1.text) || svar.containsKey($i1.text) || alias.containsKey($i1.text)){
             error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
          }else{
             Dvar currDvar=new Dvar();
-            if ($lowerbound.text.equals("ul")){
+            if ($lowerbound.text.equals("unbounded")){
               currDvar.setLowerBound("-1.e38");
             }else{
               currDvar.setLowerBound($lowerbound.text);
             }
             
-            if ($upperbound.text.equals("ul")){
+            if ($upperbound.text.equals("unbounded")){
               currDvar.setUpperBound("1.e38");
             }else{
               currDvar.setUpperBound($upperbound.text);
@@ -511,7 +527,7 @@ content_dvar
               error_grammer.add(currentFile+" "+$i3.line+"@"+($i3.pos+1)+": "+$i1.text+" integer field should be y or n");
             }
             
-            currDvar.setUnits($i4.text);
+            currDvar.setUnits($units.text);
             currDvar.setType($partC.text);
             currDvar.setSourceFileName(currentFile);
             currDvar.setLineNumber($s1.line);
@@ -523,16 +539,19 @@ content_dvar
 	;
 	
 content_svar
-	:	i1=IDENT  s1=',' i2=partC ',' i3=IDENT ',' i4=IDENT ',' IDENT ',' INTEGER s2=',' i5=conditionStatement ',' i6=tableExpression{
+	:	i1=IDENT  s1=',' i2=partC ',' i3=IDENT ',' i7=IDENT ',' i4=IDENT ',' (IDENT|usedKeywords) ',' INTEGER s2=',' i5=conditionStatement ',' i6=tableExpression ',' directory{
      				if ($i1.text.equals(preSV)){
 			        	if (!$i2.text.equals(svType)){
-			        	  error_grammer.add(currentFile+" "+$s1.line+"@"+($s1.pos+2)+": "+$i1.text+" type field should be the same");
+			        	  error_grammer.add(currentFile+" "+$s1.line+"@"+($s1.pos+2)+": "+$i1.text+" type field should be the same for the same variable");
 			        	}
 			        	if (!$i3.text.equals(svUnits)){
-                  error_grammer.add(currentFile+" "+$i3.line+"@"+($i3.pos+1)+": "+$i1.text+" units field should be the same");
+                  error_grammer.add(currentFile+" "+$i3.line+"@"+($i3.pos+1)+": "+$i1.text+" units field should be the same for the same variable");
+                }
+                if (!$i7.text.equals(svConvertUnits)){
+                  error_grammer.add(currentFile+" "+$i7.line+"@"+($i7.pos+1)+": "+$i1.text+" convert_to_units field should be the same for the same variable");
                 }
                 if (!$i4.text.equals(output)){
-                  error_grammer.add(currentFile+" "+$i4.line+"@"+($i4.pos+1)+": "+$i1.text+" output field should be the same");
+                  error_grammer.add(currentFile+" "+$i4.line+"@"+($i4.pos+1)+": "+$i1.text+" output field should be the same for the same variable");
                 }
 			        	if (!redefineSV){
 			        	   if ($i5.text.equals("always")){
@@ -551,6 +570,7 @@ content_svar
         		}else{
         			  svType=$i2.text;
                 svUnits=$i3.text;
+                svConvertUnits=$i7.text;
           			if (svar.containsKey($i1.text) || dvar.containsKey($i1.text) || alias.containsKey($i1.text)){
                     error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
                     redefineSV=true;
@@ -578,6 +598,7 @@ content_svar
             				Svar currSvar=new Svar();
             				currSvar.setType(svType);
                     currSvar.setUnits(svUnits);
+                    currSvar.setConvertUnits(svConvertUnits);
                     currSvar.getCaseCondition().add($i5.text);
 
             				ArrayList<String> list=new ArrayList<String>();
@@ -592,7 +613,7 @@ content_svar
 	;
 	
 content_constraint
-	:	i1=IDENT ',' i3=IDENT ',' INTEGER s1=',' i5=conditionStatement s2=',' i6=constraintStatement s3=',' ((i7=lhsrhs)|'#') s4=',' ((i8=lhsrhs)|'#'){
+	:	i1=IDENT ',' (IDENT|usedKeywords) ',' INTEGER s1=',' i5=conditionStatement s2=',' i6=constraintStatement s3=',' ((i7=lhsrhs)|'#') s4=',' ((i8=lhsrhs)|'#') ',' directory{
             ArrayList<String> list;
             if ($i1.text.equals(preConstraint)){
                 if (!redefineConstraint){
@@ -788,7 +809,7 @@ content_weight
 	;
 	
 content_external
-  : IDENT ',' externalFile{  
+  : IDENT ',' externalFile {  
      if (function.containsKey($IDENT.text)){
         error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": "+ $IDENT.text+" redefined");
      }else{
@@ -798,7 +819,7 @@ content_external
   ;
 	
 content_alias @init{testDefine=true;}
-  : i1=IDENT ',' partC ',' i2=IDENT ',' expression{
+  : i1=IDENT ',' partC ',' i2=IDENT ',' expression ',' directory{
       if (dvar.containsKey($i1.text) || svar.containsKey($i1.text) || alias.containsKey($i1.text)){
         error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
       }
@@ -816,15 +837,17 @@ content_alias @init{testDefine=true;}
 ///////////////////
 lhsrhs: weight|CONSTRAIN;
 
-weight	:	allnumber|(allnumber '*taf_cfs');
+weight	:	allnumber|(allnumber '*' TAFCFS);
+
+units: IDENT|(IDENT '/' IDENT);
 
 directory
-	:	(';'|'.'|'|'|'_'|'-'|'+'|'/'|BACKSLASH|IDENT|INTEGER|usedKeywords)+{
-	}
-	;
-	
+  : (':'|';'|'.'|'|'|SYMBOLS|'-'|'+'|'/'|BACKSLASH|IDENT|INTEGER|FLOAT|usedKeywords)+{
+  }
+  ;
+  
 externalFile
-  : (';'|'.'|'|'|'_'|'-'|'+'|IDENT|usedKeywords|INTEGER)+
+  : (';'|'.'|'|'|SYMBOLS|'-'|'+'|INTEGER|FLOAT|IDENT|usedKeywords)+
   ;
 	
 text	:	LETTER (LETTER | DIGIT )*;
@@ -837,6 +860,15 @@ tableExpression returns [ArrayList<String> list]
 	}
 	;
 
+func returns [String text]: 
+  max_func{text=$max_func.text;}|
+  min_func{text=$min_func.text;}|
+  int_func{text=$int_func.text;}|
+  abs_func{text=$abs_func.text;}|
+  log_func{text=$log_func.text;}|
+  log10_func{text=$log10_func.text;}|
+  pow_func{text=$pow_func.text;};
+
 max_func returns [String text]
 	: MAX '('{text="max(";} (e1=expression){text=text+$e1.list.get(1);} (';' (e2=expression){text=text+";"+$e2.list.get(1);})+ ')' {text=text+")";}
 	;
@@ -847,8 +879,23 @@ min_func returns [String text]
 	
 int_func returns [String text]
   : INT '(' {text="int(";} (e1=expression){text=text+$e1.list.get(1)+")";} ')'
-  ; 
+  ;
+  
+abs_func returns [String text]
+  : ABS '(' {text="abs(";} (e1=expression){text=text+$e1.list.get(1)+")";} ')'
+  ;
 
+log_func returns [String text]
+  : LOG '(' {text="log10(";} (e1=expression){text=text+$e1.list.get(1)+")";} ')'
+  ;
+
+log10_func returns [String text]
+  : LOG10 '(' {text="log10(";} (e1=expression){text=text+$e1.list.get(1)+")";} ')'
+  ;
+  
+pow_func returns [String text]
+  : POW '(' {text="pow(";} (e1=expression){text=text+$e1.list.get(1);} (';' (e2=expression){text=text+";"+$e2.list.get(1);})+ ')' {text=text+")";}
+  ;
 
 timeseriesWithUnits returns[ArrayList<String> list]
 	: 'timeseries' 'kind' '=' i1=partC 'units' '=' i2=IDENT{
@@ -900,14 +947,14 @@ argFunction returns [ArrayList<String> list]
   ;  
   
 arguements returns [String text] @init{text="";}:
-  '('{text="(";} ((i1=IDENT){text=text+"{"+$i1.text+"}"; }|(k1=knownDV){text=text+$k1.text;}) (';' ((i2=IDENT){text=text+";"+"{"+$i2.text+"}";}|(k2=knownDV){text=text+";"+"{"+$k2.text+"}";}))* ')' 
+  '('{text="(";} ((i1=IDENT){text=text+"{"+$i1.text+"}"; }|(k1=knownTS){text=text+$k1.text;}) (';' ((i2=IDENT){text=text+";"+"{"+$i2.text+"}";}|(k2=knownTS){text=text+";"+"{"+$k2.text+"}";}))* ')' 
   ;
 	
 partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
-usedKeywords: I|YEAR|MONTH|PASTMONTH|TAFCFS|SUM|MAX|MIN|INT|WHERE|CONSTRAIN|ALWAYS|NAME|CYCLE|FILE|CONDITION
-|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|TYPE|OUTPUT
-|CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION;
+usedKeywords: I|YEAR|MONTH|PASTMONTH|TAFCFS|SUM|MAX|MIN|INT|ABS|LOG|LOG10|POW|MOD|WHERE|CONSTRAIN|ALWAYS
+|NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
+|CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE;
 
 tableSQL returns[ArrayList<String> list]
 	: 'select' ((i1=IDENT)|(u1=usedKeywords)) 'from' i2=IDENT 
@@ -947,17 +994,21 @@ where_items returns[ArrayList<String> list]
 	;
 
 
-upperbound:	IDENT|allnumber|(allnumber '*taf_cfs');
+upperbound:	IDENT|allnumber|(allnumber '*' TAFCFS);
 
-lowerbound:	IDENT|allnumber|(allnumber '*taf_cfs');
+lowerbound:	IDENT|allnumber|(allnumber '*' TAFCFS);
 
 sumExpression returns [ArrayList<String> list] @init{isSumFunction=true;}
-  : SUM '(' I '=' e1=expression_sum ';' e2=expression_sum (';' INTEGER )? ')' e3=expression{
+  : SUM '(' I '=' e1=expression_sum ';' e2=expression_sum (';' (s='-')? INTEGER )? ')' e3=expression{
       String text;
       if ($INTEGER.text ==null){
         text="sum(i="+$e1.text+";"+$e2.text+") "+$e3.list.get(1);
       }else{
-        text="sum(i="+$e1.text+";"+$e2.text+";"+$INTEGER.text+") "+$e3.list.get(1);
+        if ($SUM.text==null){
+          text="sum(i="+$e1.text+";"+$e2.text+";"+$INTEGER.text+") "+$e3.list.get(1);
+        }else{
+          text="sum(i="+$e1.text+";"+$e2.text+";"+"-"+$INTEGER.text+") "+$e3.list.get(1);
+        }
       }
       list=new ArrayList<String>();
       list.add("SUM");
@@ -976,15 +1027,13 @@ expression_sum returns [String text]: add_sum {
 };
 
 term returns [String text]
-	:	(knownDV
+	:	(knownTS
 	| (i1=IDENT) 
 	|	'(' (e=expression) ')' 
 	|	(i=INTEGER) 
 	| (f=FLOAT) 
-	| max_func
-	| min_func
-	| int_func
-	| TAFCFS
+	| func
+	| tafcfs_term
 	| YEAR
 	| MONTH)
 	{
@@ -1004,8 +1053,8 @@ term returns [String text]
         text=$i1.text;
       }
     }
-    if ($knownDV.text !=null){
-      text=$knownDV.text;
+    if ($knownTS.text !=null){
+      text=$knownTS.text;
     }
     if ($e.list !=null){
       text="("+$e.list.get(1)+")";
@@ -1016,17 +1065,11 @@ term returns [String text]
     if ($f.text !=null){
       text=$f.text;
     }
-    if ($max_func.text !=null){
-      text=$max_func.text;
+    if ($func.text !=null){
+      text=$func.text;
     }
-    if ($min_func.text !=null){
-      text=$min_func.text;
-    }
-    if ($int_func.text !=null){
-      text=$int_func.text;
-    }
-    if ($TAFCFS.text !=null){
-      text="{"+$TAFCFS.text+"}";
+    if ($tafcfs_term.text !=null){
+      text="{"+$tafcfs_term.text+"}";
     }
     if ($YEAR.text !=null){
       text="{"+$YEAR.text+"}";
@@ -1037,11 +1080,13 @@ term returns [String text]
 	}
 	;
 	
-knownDV returns [String text] 
-  : pastMonthDV{text=$pastMonthDV.text;}|preMonthDV{text=$preMonthDV.text;}|pastCycleDV{text=$pastCycleDV.text;}
+tafcfs_term: TAFCFS|(TAFCFS'(' ('-')? INTEGER ')');
+	
+knownTS returns [String text] 
+  : pastMonthTS{text=$pastMonthTS.text;}|preMonthTS{text=$preMonthTS.text;}|pastCycleDV{text=$pastCycleDV.text;}
   ;
   
-pastMonthDV returns [String text] 
+pastMonthTS returns [String text] 
   : ((i1=IDENT)|TAFCFS) '(' ((p=PASTMONTH)|(i=I)) ')'{
     if (!isSumFunction && $i.text!=null){
       error_grammer.add(currentFile+" "+$i.line+"@"+($i.pos+1)+": i acts as a past month index of a decision variable can only be used in sum function");
@@ -1049,8 +1094,20 @@ pastMonthDV returns [String text]
     if ($i1.text ==null){
       text="{"+$TAFCFS.text+"}"+"("+$p.text+")";
     }else{
-      if (testDefine && !dvar.containsKey($i1.text) && !alias.containsKey($i1.text)){
-        error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": decision variable "+$i1.text+" is not defined before used");
+      if (!isSvFile && testDefine && !dvar.containsKey($i1.text) && !alias.containsKey($i1.text)){
+        if (svar.containsKey($i1.text)){
+          Svar currSv=svar.get($i1.text);
+          ArrayList<ArrayList<String>> list=currSv.getCaseExpression();
+          if (list.size()>1){
+            error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": state variable "+$i1.text+" should be a timeseries to be used for past month");
+          }else{
+            if (!list.get(0).get(0).equals("TIMESERIES")){
+              error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": state variable "+$i1.text+" should be a timeseries to be used for past month");
+            }
+          }
+        }else{  
+          error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": decision variable "+$i1.text+" is not defined before used");
+        }
       }
       if ($i.text == null){
         text="{"+$i1.text+"}"+"("+$p.text+")";
@@ -1061,12 +1118,28 @@ pastMonthDV returns [String text]
   }
   ;
   
-preMonthDV returns [String text]
-  : IDENT '(-' INTEGER ')'  {
-    if (testDefine && !dvar.containsKey($IDENT.text)&& !alias.containsKey($IDENT.text)){
-      error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": decision variable "+$IDENT.text+" is not defined before used");
-    }
-    text="{"+$IDENT.text+"}"+"(-"+$INTEGER.text+")";
+preMonthTS returns [String text]
+  : IDENT '(' (s='-')? INTEGER ')'  {
+      if (!isSvFile && testDefine && !dvar.containsKey($IDENT.text)&& !alias.containsKey($IDENT.text)){
+        if (svar.containsKey($IDENT.text)){
+          Svar currSv=svar.get($IDENT.text);
+          ArrayList<ArrayList<String>> list=currSv.getCaseExpression();
+          if (list.size()>1){
+            error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": state variable "+$IDENT.text+" should be a timeseries to be used for past month");
+          }else{
+            if (!list.get(0).get(0).equals("TIMESERIES")){
+              error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": state variable "+$IDENT.text+" should be a timeseries to be used for past month");
+            }
+          }
+        }else{  
+          error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": decision variable "+$IDENT.text+" is not defined before used");
+        }
+      }
+      if ($s.text ==null){
+        text="{"+$IDENT.text+"}"+"("+$INTEGER.text+")";
+      }else{
+        text="{"+$IDENT.text+"}"+"(-"+$INTEGER.text+")";
+      }
   }
   ;
   
@@ -1101,7 +1174,7 @@ allnumber
 	:	('-')? number;
 
 mult returns [String text] @init{text=""; String w="";}
-	:	(i1=unary) {text=$i1.text;} (('*'{w="*";} | '/' {w="/";}| 'mod'{w="mod";}) (i2=unary){text=text+w+$i2.text;})*
+	:	(i1=unary) {text=$i1.text;} (('*'{w="*";} | '/' {w="/";}| MOD {w="mod";}) (i2=unary){text=text+w+$i2.text;})*
 	;
 	
 add returns [String text] @init{text=""; String w="";}
@@ -1190,29 +1263,36 @@ FLOAT : INTEGER? '.' INTEGER
 I: 'i';
 YEAR: 'wateryear';
 MONTH: 'month'|'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'|'dec';
-PASTMONTH: 'prejan'|'prefeb'|'premar'|'preapr'|'premay'|'prejun'|'prejul'|'preaug'|'presep'|'preoct'|'prenov'|'predec';
+PASTMONTH: 'prevjan'|'prevfeb'|'prevmar'|'prevapr'|'prevmay'|'prevjun'|'prevjul'|'prevaug'|'prevsep'|'prevoct'|'prevnov'|'prevdec';
 
 
-TAFCFS: 'taf_cfs'|'cfs_taf';
+TAFCFS: 'taf_cfs'|'cfs_taf'|'cfs_af';
 
 SUM: 'sum';
 MAX : 'max';
 MIN : 'min';
 INT : 'int';
+ABS: 'abs';
+LOG: 'log';
+LOG10: 'log10';
+POW: 'pow';
+MOD: 'mod';
 WHERE : 'where';
 
 CONSTRAIN: 'constrain';
 ALWAYS: 'always';
 
 NAME: 'name';
+DVAR: 'dvar';
 CYCLE: 'cycle';
 FILE: 'file';
 CONDITION: 'condition';
 INCLUDE: 'include';
-LOWERBOUND: 'lowerbound';
-UPPERBOUND: 'upperbound';
+LOWERBOUND: 'lower_bound';
+UPPERBOUND: 'upper_bound';
 INTEGERTYPE: 'integer';
 UNITS: 'units';
+CONVERTUNITS: 'convert_to_units';
 TYPE: 'type';
 OUTPUT: 'output';
 CASE: 'case';
@@ -1222,6 +1302,7 @@ LHSGTRHS: 'lhs_gt_rhs';
 LHSLTRHS: 'lhs_lt_rhs';
 WEIGHT: 'weight';
 FUNCTION: 'function';
+FROM_WRESL_FILE: 'from_wresl_file';
 
 IDENT : LETTER (LETTER | DIGIT | SYMBOLS )*;
 IDENT1 : DIGIT (LETTER | DIGIT | SYMBOLS )*; 
