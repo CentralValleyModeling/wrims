@@ -339,7 +339,7 @@ content_aliasline
   ;
 
 content_global
-  : i1=IDENT ',' i2=directory ',' i3=conditionStatement{
+  : i1=IDENT ',' i2=fileName ',' i3=conditionStatement{
       if ($i1.text.equals("global")){
         node = new HashMap<String, ArrayList<String>>();
         dvar = new HashMap<String, Dvar>();
@@ -399,7 +399,7 @@ content_global
   ;
 
 content_cycle
-  : i1=IDENT ',' i2=directory ',' i3=conditionStatement{
+  : i1=IDENT ',' i2=fileName ',' i3=conditionStatement{
       node = new HashMap<String, ArrayList<String>>();
       dvar = new HashMap<String, Dvar>();
       svar = new HashMap<String, Svar>();
@@ -460,7 +460,7 @@ content_cycle
   ;
 
 content_file
-  : i1=directory ',' i2=IDENT {
+  : i1=fileName ',' i2=IDENT {
        if ($i2.text.equals("y")){
            if (file.contains($i1.text)) {
                error_grammer.add(currentFile+" "+$i2.line+"@"+"0"+": "+ $i1.text+" redefined");
@@ -502,7 +502,7 @@ content_file
   ;
 	
 content_dvar
-	:	i1=IDENT s1=',' lowerbound s2=',' upperbound ',' i3=IDENT ',' units ',' partC ',' directory{
+	:	i1=IDENT s1=',' lowerbound s2=',' upperbound ',' i3=IDENT ',' units ',' partC ',' fileName{
 	       if (dvar.containsKey($i1.text) || svar.containsKey($i1.text) || alias.containsKey($i1.text)){
             error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
          }else{
@@ -539,7 +539,7 @@ content_dvar
 	;
 	
 content_svar
-	:	i1=IDENT  s1=',' i2=partC ',' i3=IDENT ',' i7=IDENT ',' i4=IDENT ',' (IDENT|usedKeywords) ',' INTEGER s2=',' i5=conditionStatement ',' i6=tableExpression ',' directory{
+	:	i1=IDENT  s1=',' i2=partC ',' i3=IDENT ',' i7=IDENT ',' i4=IDENT ',' (IDENT|usedKeywords) ',' INTEGER s2=',' i5=conditionStatement ',' i6=tableExpression ',' fileName{
      				if ($i1.text.equals(preSV)){
 			        	if (!$i2.text.equals(svType)){
 			        	  error_grammer.add(currentFile+" "+$s1.line+"@"+($s1.pos+2)+": "+$i1.text+" type field should be the same for the same variable");
@@ -613,7 +613,7 @@ content_svar
 	;
 	
 content_constraint
-	:	i1=IDENT ',' (IDENT|usedKeywords) ',' INTEGER s1=',' i5=conditionStatement s2=',' i6=constraintStatement s3=',' ((i7=lhsrhs)|'#') s4=',' ((i8=lhsrhs)|'#') ',' directory{
+	:	i1=IDENT ',' (IDENT|usedKeywords) ',' INTEGER s1=',' i5=conditionStatement s2=',' i6=constraintStatement s3=',' ((i7=lhsrhs)|'#') s4=',' ((i8=lhsrhs)|'#') ',' fileName{
             ArrayList<String> list;
             if ($i1.text.equals(preConstraint)){
                 if (!redefineConstraint){
@@ -790,7 +790,7 @@ content_constraint
                 }
             }
             preCondition=$i5.text;
-            preConstraint=$i1.text;	       
+            preConstraint=$i1.text;	     
 	} 
 	;
 	
@@ -819,7 +819,7 @@ content_external
   ;
 	
 content_alias @init{testDefine=true;}
-  : i1=IDENT ',' partC ',' i2=IDENT ',' expression ',' directory{
+  : i1=IDENT ',' partC ',' i2=IDENT ',' expression ',' fileName{
       if (dvar.containsKey($i1.text) || svar.containsKey($i1.text) || alias.containsKey($i1.text)){
         error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
       }
@@ -841,8 +841,8 @@ weight	:	allnumber|(allnumber '*' TAFCFS);
 
 units: IDENT|(IDENT '/' IDENT);
 
-directory
-  : (':'|';'|'.'|'|'|SYMBOLS|'-'|'+'|'/'|BACKSLASH|IDENT|INTEGER|FLOAT|usedKeywords)+{
+fileName
+  : (':'|';'|'.'|'|'|SYMBOLS|'-'|'+'|'/'|BACKSLASH|IDENT|IDENT1|IDENT2|INTEGER|FLOAT|usedKeywords)+{
   }
   ;
   
@@ -1305,7 +1305,8 @@ FUNCTION: 'function';
 FROM_WRESL_FILE: 'from_wresl_file';
 
 IDENT : LETTER (LETTER | DIGIT | SYMBOLS )*;
-IDENT1 : DIGIT (LETTER | DIGIT | SYMBOLS )*; 
+IDENT1 : DIGIT (LETTER | DIGIT | SYMBOLS )*;
+IDENT2 : SYMBOLS (LETTER | DIGIT | SYMBOLS )*; 
 
 WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {$channel = HIDDEN;};
 COMMENT : '!' .* ('\n'|'\r') {$channel = HIDDEN;};
