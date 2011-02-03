@@ -1,5 +1,0 @@
-name,		include	,  x-coordinate	, y-coordinate ,	type, 		positive_error, negative_error
-Alamo, 		y   , 		38.46,  	-256.34, 	normal, 	999999,		999999
-S_Folsm, 	y   , 		38.46,  	-256.34, 	reservoir,	#,		#
-SJR2,		y,		38.46,  	-256.34,	normal,		999999,		999999
-SBay,		y,		38.46,  	-256.34,	normal,		999999,		999999

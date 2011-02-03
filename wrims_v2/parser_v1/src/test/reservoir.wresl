@@ -1,4 +1,0 @@
-name	,	include,	zone, 	zoneinclude	,	upbound	,		weight,		units	
-S_Orovl	,	  y,		zone1,  y	 	,	29.6	,		100*taf_cfs,	taf	
-S_Orovl  , 	  #,		zone2,  y		, timeseries kind=storage-level	, #,             #        		
-S_Orovl  ,        #,		zone3,  y		, min(2470.0, S_OrovlLevel2),    -100*taf_cfs,	 #          
