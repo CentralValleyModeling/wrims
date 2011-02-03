@@ -56,6 +56,9 @@ module tablemgr_io
   public
   private copyInTable,addTableFromFile,existsTable,loadNewTable,newTable,openAndReadName
   PRIVATE td, ntables
+  PRIVATE  initial_processing, file_exists, reread_tables, n_reread_tables
+
+  CHARACTER(LEN=KIWI), DIMENSION(50) :: reread_tables
 
   ! This is the table database directory
   !CHARACTER(LEN=6), parameter :: tableDatabasePath = 'lookup'
@@ -64,6 +67,10 @@ module tablemgr_io
   ! This is the table database
   TYPE(tableType), DIMENSION(MAX_TABLES) :: td
   INTEGER                                :: ntables = 0
+  INTEGER :: i, n_reread_tables
+  LOGICAL :: file_exists
+  LOGICAL :: initial_processing = .true.
+    
 
 contains
 
@@ -257,9 +264,108 @@ contains
     TYPE(tableType) :: getTable
     CHARACTER(LEN=kiwi):: tablename
     INTEGER pos
+
+
+    
+    OPEN (7, FILE = 'log_new.txt', ACCESS = 'APPEND')
+    OPEN (8, FILE = 'log_exist.txt', ACCESS = 'APPEND')
+    OPEN (9, FILE = 'log_misc.txt', ACCESS = 'APPEND')
+
+    if (initial_processing) then
+      INQUIRE(FILE='reread_lookup_tables.config', EXIST=file_exists)
+      if (file_exists) then
+        OPEN (62, FILE = 'reread_lookup_tables.config')
+        READ (62,*) n_reread_tables
+        
+        DO i = 1, n_reread_tables
+          READ (62,*) reread_tables(i)
+        ENDDO  
+      
+        close(62)
+      endif
+      
+      DO i = 1, n_reread_tables
+        WRITE (9,*) reread_tables(i)
+      ENDDO 
+      
+      initial_processing = .false.
+    endif  
+      
+      
+
+
+
+
+
+    !!!!!!!!!!!!!!!!! TODO: CAM: reload table for each time step !!!!
     pos = existsTable(tablename)
-    if (pos==0) pos = loadNewTable(tablename)
+
+
+    
+    if (pos==0) then
+    
+      pos = loadNewTable(tablename)
+      WRITE(7,*) uc(tablename)
+      
+    elseif (pos>0) then
+
+      if ( IsInCollection(tablename, reread_tables, n_reread_tables ) ) then
+        
+        WRITE(8,*) tablename, " this is in re-read list "       
+      
+      endif
+      
+    endif
+    
     getTable = td(pos)
+    
   END function getTable
 
+  function loadOldTable(tablename)
+    ! A subroutine that adds a new table file by forming a filename based on the table name
+    INTEGER :: loadOldTable
+    CHARACTER(LEN=KIWI), INTENT(IN) :: tablename
+    CHARACTER(LEN=32)  :: fixed_tablename
+    CHARACTER(LEN=255) :: filename  !shengjun revised
+    CHARACTER(LEN=255) :: commonfile  !shengjun revised
+    CHARACTER(LEN=KIWI):: tn_from_file
+100 FORMAT(a)
+101 FORMAT(a,'\',a,'.table')
+102 FORMAT("Table name disagreement",a,"File: ",a,", first line: ",a)
+    fixed_tablename = tablename        
+    call deNullify(fixed_tablename)    
+    WRITE(filename,101) TRIM(tableDatabasePath), TRIM(fixed_tablename)    
+    WRITE(commonfile,101) TRIM(tableCommonPath), TRIM(fixed_tablename)
+    tn_from_file = openAndReadName(10, filename, commonfile)
+    if (uc(tablename) /= uc(tn_from_file)) then
+       WRITE(msg,102) CHAR(13), filename, tn_from_file
+       call stopWithError
+    end if
+
+    td(ntables)%metadata%tabname = tn_from_file
+    call copyInTable( 10, td(ntables)%metadata, td(ntables)%goods)
+    CLOSE(10)
+    loadOldTable= ntables
+    RETURN
+  end function loadOldTable
+
+  function IsInCollection(member, collection, n_size )
+    implicit none
+    LOGICAL :: IsInCollection 
+    CHARACTER(LEN=KIWI), INTENT(IN)  :: member
+    CHARACTER(LEN=KIWI), DIMENSION(50), INTENT(IN)  :: collection
+    INTEGER, INTENT(IN)  :: n_size
+    
+    DO i = 1, n_size
+      
+      if ( uc(member) .eq. uc(collection(i)) ) then
+        IsInCollection = .true.
+        return
+      endif
+    ENDDO  
+      
+    IsInCollection = .false.
+      
+  END function IsInCollection
+  
 end module tablemgr_io
