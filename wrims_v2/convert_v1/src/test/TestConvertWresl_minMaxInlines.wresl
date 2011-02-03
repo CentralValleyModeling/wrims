@@ -1,1 +1,0 @@
-define a{value min(1000. + 0.5*max(S_Orovl(prevSep) - 1000. ,0.), S_OrovlLevel5)}

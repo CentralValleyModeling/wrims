@@ -1,2 +1,0 @@
-NAME,TYPE,UNITS,LOWER_BOUND,UPPER_BOUND,FROM_WRESL_FILE
-C_SacFea,FLOW-CHANNEL,CFS,0,6150*taf_cfs,D:\cvwrsm\wrims_v2\convert\src\test\TestConvertWreslToTable_globalVars.wresl

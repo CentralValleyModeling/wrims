@@ -1,6 +1,0 @@
-
-
-	INCLUDE 'TestConvertWresl_svarExpression.wresl'	 
-	!       INCLUDE[local] 'TestConvertWresl_alias.wresl'  
-	!	INCLUDE[local] 'TestConvertWresl_dvarNonStd.wresl' 
-
