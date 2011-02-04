@@ -114,6 +114,9 @@ SUBROUTINE WRAPPER (date, code, dss_init, reportsv, runDirectory)
   INTEGER :: flush_interval
   INTEGER :: cache_back, cache_forward
   !**************************************************************************
+  LOGICAL :: reload_table_log_exists
+  CHARACTER(LEN=100) :: reload_table_log_file
+  !-------------
   
   call cpu_time(ExeStartTime)
   ctime = 0.0
@@ -139,7 +142,37 @@ SUBROUTINE WRAPPER (date, code, dss_init, reportsv, runDirectory)
   stateFile(i+1:)="\statevars.out"
   errorLog(i+1:)="\error.log"
   outputDirectory=TRIM(runDirectory)
+  
+!-------------------------------------
+! delete previous reload table logs
 
+      reload_table_log_file = 'log_new_tables.txt'
+
+      INQUIRE(FILE = reload_table_log_file, EXIST=reload_table_log_exists )
+      if (reload_table_log_exists ) then
+        OPEN  (626, file=reload_table_log_file, status='scratch')
+        close (626) 
+      endif
+
+      reload_table_log_file = 'log_reload_tables.txt'
+
+      INQUIRE(FILE = reload_table_log_file, EXIST=reload_table_log_exists )
+      if (reload_table_log_exists ) then
+        OPEN  (626, file=reload_table_log_file, status='scratch')
+        close (626, status='delete') 
+      endif
+      
+      reload_table_log_file = 'log_existing_tables.txt'
+
+      INQUIRE(FILE = reload_table_log_file, EXIST=reload_table_log_exists )
+      if (reload_table_log_exists ) then
+        OPEN  (626, file=reload_table_log_file, status='scratch')
+        close (626, status='delete') 
+      endif
+
+
+
+!-------------------------------------
   OPEN (UNIT=12,FILE=traceFile,STATUS='REPLACE',ACTION='DENYWRITE')  ! trace file for debugging
   OPEN (UNIT=7, FILE=lpvarFile,STATUS='REPLACE',ACTION='DENYWRITE')  ! diagnostic file for non-Wresl decision variables
   OPEN (UNIT=15,FILE=stateFile,STATUS='REPLACE',ACTION='DENYWRITE')  ! diagnostic file for Wresl state variables

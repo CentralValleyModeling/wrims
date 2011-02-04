@@ -56,9 +56,9 @@ module tablemgr_io
   public
   private copyInTable,addTableFromFile,existsTable,loadNewTable,newTable,openAndReadName
   PRIVATE td, ntables
-  PRIVATE  initial_processing, file_exists, reread_tables, n_reread_tables
+  PRIVATE  initial_processing, file_exists, reload_tables, n_reload_tables
 
-  CHARACTER(LEN=KIWI), DIMENSION(50) :: reread_tables
+  CHARACTER(LEN=KIWI), DIMENSION(50) :: reload_tables
 
   ! This is the table database directory
   !CHARACTER(LEN=6), parameter :: tableDatabasePath = 'lookup'
@@ -67,7 +67,7 @@ module tablemgr_io
   ! This is the table database
   TYPE(tableType), DIMENSION(MAX_TABLES) :: td
   INTEGER                                :: ntables = 0
-  INTEGER :: i, n_reread_tables
+  INTEGER :: i, n_reload_tables
   LOGICAL :: file_exists
   LOGICAL :: initial_processing = .true.
     
@@ -264,43 +264,36 @@ contains
     TYPE(tableType) :: getTable
     CHARACTER(LEN=kiwi):: tablename
     INTEGER pos
+    character(len=300) :: reloadTableConfigPath
 
+    reloadTableConfigPath = TRIM(tableDatabasePath) // "\..\reload_tables.config"
 
     
-    OPEN (7, FILE = 'log_new.txt', ACCESS = 'APPEND')
-    OPEN (8, FILE = 'log_exist.txt', ACCESS = 'APPEND')
-    OPEN (9, FILE = 'log_misc.txt', ACCESS = 'APPEND')
+    OPEN (7, FILE = 'log_new_tables.txt', ACCESS = 'APPEND')
+    OPEN (8, FILE = 'log_existing_tables.txt', ACCESS = 'APPEND')
+    OPEN (9, FILE = 'log_reload_tables.txt', ACCESS = 'APPEND')
 
     if (initial_processing) then
-      INQUIRE(FILE='reread_lookup_tables.config', EXIST=file_exists)
+      INQUIRE(FILE = reloadTableConfigPath, EXIST=file_exists)
       if (file_exists) then
-        OPEN (62, FILE = 'reread_lookup_tables.config')
-        READ (62,*) n_reread_tables
+        OPEN (62, FILE = reloadTableConfigPath)
+        READ (62,*) n_reload_tables
         
-        DO i = 1, n_reread_tables
-          READ (62,*) reread_tables(i)
+        DO i = 1, n_reload_tables
+          READ (62,*) reload_tables(i)
         ENDDO  
       
         close(62)
       endif
       
-      DO i = 1, n_reread_tables
-        WRITE (9,*) reread_tables(i)
+      DO i = 1, n_reload_tables
+        WRITE (9,*) reload_tables(i)
       ENDDO 
       
       initial_processing = .false.
     endif  
       
-      
-
-
-
-
-
-    !!!!!!!!!!!!!!!!! TODO: CAM: reload table for each time step !!!!
     pos = existsTable(tablename)
-
-
     
     if (pos==0) then
     
@@ -309,9 +302,20 @@ contains
       
     elseif (pos>0) then
 
-      if ( IsInCollection(tablename, reread_tables, n_reread_tables ) ) then
+      if ( IsInCollection(tablename, reload_tables, n_reload_tables ) ) then
         
-        WRITE(8,*) tablename, " this is in re-read list "       
+        WRITE(8,*) tablename, " this is in reload list "
+        
+        ! reload lookup table for each query
+        if( loadOldTable(tablename, pos) ) then
+            WRITE(8,*) tablename, " reloading successful ", reloadTableConfigPath
+        else
+            WRITE(8,*) tablename, " reloading fail !!!!!!!!!!!! "
+        endif    
+                
+      else
+      
+        WRITE(8,*) tablename
       
       endif
       
@@ -321,9 +325,10 @@ contains
     
   END function getTable
 
-  function loadOldTable(tablename)
-    ! A subroutine that adds a new table file by forming a filename based on the table name
-    INTEGER :: loadOldTable
+  function loadOldTable(tablename, positionOfTable)
+    ! A subroutine that reloads a table file by forming a filename based on the table name
+    LOGICAL :: loadOldTable
+    INTEGER, INTENT(IN) :: positionOfTable
     CHARACTER(LEN=KIWI), INTENT(IN) :: tablename
     CHARACTER(LEN=32)  :: fixed_tablename
     CHARACTER(LEN=255) :: filename  !shengjun revised
@@ -332,6 +337,9 @@ contains
 100 FORMAT(a)
 101 FORMAT(a,'\',a,'.table')
 102 FORMAT("Table name disagreement",a,"File: ",a,", first line: ",a)
+
+    loadOldTable = .false.
+
     fixed_tablename = tablename        
     call deNullify(fixed_tablename)    
     WRITE(filename,101) TRIM(tableDatabasePath), TRIM(fixed_tablename)    
@@ -342,10 +350,10 @@ contains
        call stopWithError
     end if
 
-    td(ntables)%metadata%tabname = tn_from_file
-    call copyInTable( 10, td(ntables)%metadata, td(ntables)%goods)
+    ! td(positionOfTable)%metadata%tabname = tn_from_file
+    call copyInTable( 10, td(positionOfTable)%metadata, td(positionOfTable)%goods)
     CLOSE(10)
-    loadOldTable= ntables
+    loadOldTable= .true.
     RETURN
   end function loadOldTable
 
