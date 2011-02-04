@@ -308,14 +308,14 @@ contains
         
         ! reload lookup table for each query
         if( loadOldTable(tablename, pos) ) then
-            WRITE(8,*) tablename, " reloading successful ", reloadTableConfigPath
+            WRITE(8,*) tablename, " reloading successful "
         else
             WRITE(8,*) tablename, " reloading fail !!!!!!!!!!!! "
         endif    
                 
-      else
+      !else
       
-        WRITE(8,*) tablename
+        !WRITE(8,*) tablename
       
       endif
       
