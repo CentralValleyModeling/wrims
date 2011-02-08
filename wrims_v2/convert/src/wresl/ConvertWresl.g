@@ -198,7 +198,7 @@ goalCaseStatement returns[String caseName, String condition, String rhs, String 
 	};	
 
 goalStatement returns[String rhs, String lhs_gt_rhs, String lhs_lt_rhs]
-	@init { $lhs_gt_rhs=Parameters.constrain; $lhs_gt_rhs=Parameters.constrain; }
+	@init { $lhs_gt_rhs=Parameters.constrain; $lhs_lt_rhs=Parameters.constrain; }
 	: RHS i=expression  (v1=lhs_vs_rhs (v2=lhs_vs_rhs)? )? {       
 				
 				///clearer data structure
