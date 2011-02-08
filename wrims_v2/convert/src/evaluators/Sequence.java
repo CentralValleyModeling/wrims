@@ -10,7 +10,7 @@ public class Sequence {
 	public Sequence(){
 		sequenceName=Parameters.undefined;
 		modelName=Parameters.undefined;
-		condition="always";
+		condition=Parameters.always;
 		fromWresl = Parameters.undefined;
 	}
 	

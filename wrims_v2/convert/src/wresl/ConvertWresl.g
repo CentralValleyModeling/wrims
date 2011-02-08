@@ -14,7 +14,8 @@ options {
   import evaluators.Tools;
   import evaluators.Svar; 
   import evaluators.Goal; 
-  import evaluators.IncludeFile;    
+  import evaluators.IncludeFile; 
+  import evaluators.Parameters;   
 }
 
 @lexer::header {
@@ -182,9 +183,9 @@ goalCaseStatements returns[Goal gl]
 			$gl.caseCondition.add($c.condition);
 			$gl.caseExpression.add($c.rhs);
 			if ($c.lhs_gt_rhs!=null) $gl.case_lhs_gt_rhs.add($c.lhs_gt_rhs);
-			else					 $gl.case_lhs_gt_rhs.add("constrain");
+			else					 $gl.case_lhs_gt_rhs.add(Parameters.constrain);
 			if ($c.lhs_lt_rhs!=null) $gl.case_lhs_lt_rhs.add($c.lhs_lt_rhs);
-			else					 $gl.case_lhs_lt_rhs.add("constrain");
+			else					 $gl.case_lhs_lt_rhs.add(Parameters.constrain);
 			
 			} )+ 
 	;	
@@ -197,7 +198,7 @@ goalCaseStatement returns[String caseName, String condition, String rhs, String 
 	};	
 
 goalStatement returns[String rhs, String lhs_gt_rhs, String lhs_lt_rhs]
-	//@init { $list = new ArrayList<String>(); }
+	@init { $lhs_gt_rhs=Parameters.constrain; $lhs_gt_rhs=Parameters.constrain; }
 	: RHS i=expression  (v1=lhs_vs_rhs (v2=lhs_vs_rhs)? )? {       
 				
 				///clearer data structure
@@ -211,17 +212,17 @@ goalStatement returns[String rhs, String lhs_gt_rhs, String lhs_lt_rhs]
 				//else                     {$lhs_gt_rhs=$v2.lhs_gt_rhs;$lhs_lt_rhs=$v1.lhs_lt_rhs;}			
 	};
 
-lhs_vs_rhs returns[ArrayList<String> list, String lhs_gt_rhs, String lhs_lt_rhs, String scenario]
-	@init { $list = new ArrayList<String>(); $scenario="";}
+lhs_vs_rhs returns[String lhs_gt_rhs, String lhs_lt_rhs, String scenario]
+	@init { $scenario="";}
 	: LHS  
-	( '>' {$list.add("l>r"); $scenario = "l>r";}  |  '<' {$list.add("l<r"); $scenario = "l<r";} )  
+	( '>' {$scenario = "l>r";}  |  '<' {$scenario = "l<r";} )  
 	  RHS 
 	( CONSTRAIN 
-		{$list.add("constrain");$list.add(null);  
-		 if ($scenario == "l>r"){$lhs_gt_rhs="constrain";}
-		 else if ($scenario == "l<r"){$lhs_lt_rhs="constrain";}
+		{  //$list.add("constrain");$list.add(null);  
+		 if ($scenario == "l>r"){$lhs_gt_rhs=Parameters.constrain;}
+		 else if ($scenario == "l<r"){$lhs_lt_rhs=Parameters.constrain;}
 		 }
-	| PENALTY i=expression {$list.add("penalty");$list.add($i.text);
+	| PENALTY i=expression { //$list.add("penalty");$list.add($i.text);
 		 if ($scenario == "l>r"){$lhs_gt_rhs=$i.text;}
 		 else if ($scenario == "l<r"){$lhs_lt_rhs=$i.text;}
 		}
@@ -519,10 +520,13 @@ relation_group_2  :  '<' | '>'  ;
 
 assignStatement  :   expression '=' expression ;
 
-constraintStatement
-	: expression ('=' | r=relation_group_2 ) expression 
+constraintStatement returns [String text]
+	: i=constraintStatement_ {$text = $i.text.replace(",","; ");}
 	;
 
+constraintStatement_ 
+	: expression ('=' | r=relation_group_2 ) expression 
+	;
 
 
 relationStatement 

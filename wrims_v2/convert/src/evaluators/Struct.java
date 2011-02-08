@@ -221,8 +221,8 @@ public class Struct {
 			gl.caseCondition.add("always");
 			gl.caseName.add(Parameters.defaultCaseName);
 			gl.caseExpression.add(content);
-			gl.case_lhs_gt_rhs.add("#");
-			gl.case_lhs_lt_rhs.add("#");
+			gl.case_lhs_gt_rhs.add(Parameters.constrain);
+			gl.case_lhs_lt_rhs.add(Parameters.constrain);
 			gl.fromWresl = currentAbsolutePath;
 			gMap.put(name, gl);
 			gList.add(name);
@@ -276,6 +276,12 @@ public class Struct {
 
 			gl.scope = scope;
 			gl.lhs = lhs;
+			
+			// combine lhs and rhs with " = "
+	    	for (int i=0; i<gl.caseCondition.size(); i++){
+	    		gl.caseExpression.set(i, lhs+" = "+gl.caseExpression.get(i)) ; //for EXPRESSION
+	    	}
+			
 			gl.fromWresl = currentAbsolutePath;
 			gMap.put(name, gl);
 			gList.add(name);

@@ -213,10 +213,10 @@ public class TestConvertWresl {
 		Goal gl = new Goal();
 		gl.scope = "local";
 		gl.caseName.add(Parameters.defaultCaseName);
-		gl.caseCondition.add("always");
+		gl.caseCondition.add(Parameters.always);
 		gl.caseExpression.add("C607>500");
-		gl.case_lhs_gt_rhs.add("constrain");
-		gl.case_lhs_lt_rhs.add("constrain");	
+		gl.case_lhs_gt_rhs.add(Parameters.constrain);
+		gl.case_lhs_lt_rhs.add(Parameters.constrain);	
 		expected_struct.gMap.put("force_c607",gl);
 
 		Alias as = new Alias();
@@ -266,10 +266,10 @@ public class TestConvertWresl {
 		Goal gl = new Goal();
 		gl.scope = "local";
 		gl.caseName.add(Parameters.defaultCaseName);
-		gl.caseCondition.add("always");
+		gl.caseCondition.add(Parameters.always);
 		gl.caseExpression.add("C607>500");
-		gl.case_lhs_gt_rhs.add("constrain");
-		gl.case_lhs_lt_rhs.add("constrain");	
+		gl.case_lhs_gt_rhs.add(Parameters.constrain);
+		gl.case_lhs_lt_rhs.add(Parameters.constrain);	
 		expected_struct1.gMap.put("force_c607",gl);
 
 		Alias as = new Alias();
@@ -284,10 +284,10 @@ public class TestConvertWresl {
 		gl = new Goal();
 		gl.scope = "local";
 		gl.caseName.add(Parameters.defaultCaseName);
-		gl.caseCondition.add("always");
+		gl.caseCondition.add(Parameters.always);
 		gl.caseExpression.add("C607>500");
-		gl.case_lhs_gt_rhs.add("constrain");
-		gl.case_lhs_lt_rhs.add("constrain");	
+		gl.case_lhs_gt_rhs.add(Parameters.constrain);
+		gl.case_lhs_lt_rhs.add(Parameters.constrain);	
 		expected_struct2.gMap.put("test_goal",gl);
 		
 		expected_modelMap.put("model2",expected_struct2);
@@ -932,46 +932,46 @@ public class TestConvertWresl {
 		g = new Goal();
 		g.scope = "global";
 		g.caseName.add(Parameters.defaultCaseName);
-		g.caseCondition.add("always");
+		g.caseCondition.add(Parameters.always);
 		g.caseExpression.add("C5_WTS=C5_WTS_Stg1+C5_WTS_Stg2");
-		g.case_lhs_gt_rhs.add("constrain");
-		g.case_lhs_lt_rhs.add("constrain");	
+		g.case_lhs_gt_rhs.add(Parameters.constrain);
+		g.case_lhs_lt_rhs.add(Parameters.constrain);	
 		expected_gMap.put("split_C5_WTS", g);
 		
 		g = new Goal();
 		g.scope = "global";
 		g.caseName.add(Parameters.defaultCaseName);
-		g.caseCondition.add("always");
+		g.caseCondition.add(Parameters.always);
 		g.caseExpression.add("C5_WTS=C5_WTS_Stg1");
-		g.case_lhs_gt_rhs.add("constrain");
-		g.case_lhs_lt_rhs.add("constrain");	
+		g.case_lhs_gt_rhs.add(Parameters.constrain);
+		g.case_lhs_lt_rhs.add(Parameters.constrain);	
 		expected_gMap.put("C_SLCVP", g);
 		
 		g = new Goal();
 		g.scope = "global";
 		g.caseName.add(Parameters.defaultCaseName);
-		g.caseCondition.add("always");
+		g.caseCondition.add(Parameters.always);
 		g.caseExpression.add("b=c");
-		g.case_lhs_gt_rhs.add("constrain");
-		g.case_lhs_lt_rhs.add("constrain");	
+		g.case_lhs_gt_rhs.add(Parameters.constrain);
+		g.case_lhs_lt_rhs.add(Parameters.constrain);	
 		expected_gMap.put("a1", g);
 
 		g = new Goal();
 		g.scope = "local";
 		g.caseName.add(Parameters.defaultCaseName);
-		g.caseCondition.add("always");
+		g.caseCondition.add(Parameters.always);
 		g.caseExpression.add("b>c");
-		g.case_lhs_gt_rhs.add("constrain");
-		g.case_lhs_lt_rhs.add("constrain");		
+		g.case_lhs_gt_rhs.add(Parameters.constrain);
+		g.case_lhs_lt_rhs.add(Parameters.constrain);		
 		expected_gMap.put("a2", g);
 
 		g = new Goal();
 		g.scope = "global";
 		g.caseName.add(Parameters.defaultCaseName);
-		g.caseCondition.add("always");
+		g.caseCondition.add(Parameters.always);
 		g.caseExpression.add("b<c");
-		g.case_lhs_gt_rhs.add("constrain");
-		g.case_lhs_lt_rhs.add("constrain");	
+		g.case_lhs_gt_rhs.add(Parameters.constrain);
+		g.case_lhs_lt_rhs.add(Parameters.constrain);	
 		expected_gMap.put("a3", g);
 				
 		
@@ -1015,9 +1015,9 @@ public class TestConvertWresl {
 		g.scope = "global";
 		g.lhs = "C3_MIF";
 		g.caseName.add(Parameters.defaultCaseName);
-		g.caseCondition.add("always");
+		g.caseCondition.add(Parameters.always);
 		g.caseExpression.add("C3_MIF = minflow_C3b2");
-		g.case_lhs_gt_rhs.add("constrain");
+		g.case_lhs_gt_rhs.add(Parameters.constrain);
 		g.case_lhs_lt_rhs.add("700.0");
 		expected_gMap.put("b2action1Whi_1", g);				
 		
@@ -1065,14 +1065,14 @@ public class TestConvertWresl {
 		g.lhs   = "C3_MIF";
 		g.caseName.add("Action1WhiOn");
 		g.caseCondition.add("int(B2Action1WhiOn)==1");
-		g.caseExpression.add("minflow_C3b2");
-		g.case_lhs_gt_rhs.add("constrain");
+		g.caseExpression.add("C3_MIF = minflow_C3b2");
+		g.case_lhs_gt_rhs.add(Parameters.constrain);
 		g.case_lhs_lt_rhs.add("700.");
 		
 		g.caseName.add("Action1WhiOff");
 		g.caseCondition.add("int(B2Action1WhiOn)==0");
-		g.caseExpression.add("clear_min");
-		g.case_lhs_gt_rhs.add("constrain");
+		g.caseExpression.add("C3_MIF = clear_min");
+		g.case_lhs_gt_rhs.add(Parameters.constrain);
 		g.case_lhs_lt_rhs.add("0");		
 		
 		expected_gMap.put("b2action1Whi_1", g);				

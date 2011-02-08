@@ -20,7 +20,7 @@ public class WriteCSV {
 	  public static String svar_header ="NAME,TYPE,UNITS,CONVERT_TO_UNITS,OUTPUT,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
 	  public static String dvar_header ="NAME,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE";	  
 	  public static String alias_header ="NAME,TYPE,UNITS,EXPRESSION,FROM_WRESL_FILE";
-	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,LHS_gt_RHS,LHS_lt_RHS,FROM_WRESL_FILE";
+	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,LHS_GT_RHS,LHS_LT_RHS,FROM_WRESL_FILE";
 
 	public static void study(StudyConfig sc, Map<String, Dataset> modelDataMap, String outParent) {
 			
@@ -280,13 +280,8 @@ public class WriteCSV {
 		    	out.print(","+caseOrder); //for ORDER 
 		    	out.print(","+g.caseCondition.get(i)); //for CONDITION
 		    	
-		    	if (g.lhs != Parameters.undefined ) {
-		    		out.print("," + g.lhs + " = " + g.caseExpression.get(i) ); //for EXPRESSION
-		    	}
-		    	
-		    	else {
-		    		out.print("," + g.caseExpression.get(i) ); //for EXPRESSION
-		    	}
+		    	out.print("," + g.caseExpression.get(i) ); //for EXPRESSION
+
 		    	
 		    	out.print(","+g.case_lhs_gt_rhs.get(i)); //
 		    	out.print(","+g.case_lhs_lt_rhs.get(i)); //for EXPRESSION

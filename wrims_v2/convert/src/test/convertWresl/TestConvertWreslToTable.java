@@ -24,6 +24,28 @@ public class TestConvertWreslToTable {
 
 	
 	@Test(groups = { "WRESL_to_Table"  })
+	public void goal2() throws RecognitionException, IOException {
+		
+		String f = "src\\test\\TestConvertWreslToTable_goal2.wresl";
+		
+		String outParent = "test-csv\\TestConvertWreslToTable_goal2\\";
+		String expectedParent = "src\\test\\expected\\TestConvertWreslToTable_goal2\\";
+		
+		Tools.deleteDir(outParent);
+
+		
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(f);
+		Map<String, Dataset> modelDataMap = StudyParser.parseSubFiles(sc);
+		
+		Assert.assertEquals(modelDataMap.keySet().isEmpty(), false );
+		
+		WriteCSV.output(modelDataMap, outParent);
+		
+		Comparison.compareFolder(modelDataMap.keySet(), outParent, expectedParent);
+	}	
+	
+	
+	@Test(groups = { "WRESL_to_Table"  })
 	public void globalLocalVars() throws RecognitionException, IOException {
 		
 		String f = "src\\test\\TestConvertWreslToTable_globalLocalVars.wresl";
@@ -107,7 +129,7 @@ public class TestConvertWreslToTable {
 		Comparison.compareFolder(modelDataMap.keySet(), outParent, expectedParent);
 	}	
 
-	@Test(groups = { "WRESL_to_Table"  })
+	
 	public void calsimTest() throws RecognitionException, IOException {
 
 		//String f = "src\\test\\TestConvertWreslToTable_t1Map.wresl";
