@@ -1,0 +1,2 @@
+cycle,		file,			condition
+global,		src\test\case1\global.csv,	always
