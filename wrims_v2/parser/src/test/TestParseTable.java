@@ -608,13 +608,12 @@ public class TestParseTable {
 		Assert.assertEquals(var_node, expected1);
 	}	
 	
-	@Test
 	public void testMainTable() throws RecognitionException, IOException {
 
-        byte[] buffer = new byte[(int) new File("src//test//main.wresl").length()];
+        byte[] buffer = new byte[(int) new File("src//test//main.csv").length()];
         BufferedInputStream f = null;
         try {
-           f = new BufferedInputStream(new FileInputStream("src//test//main.wresl"));
+           f = new BufferedInputStream(new FileInputStream("src//test//main.csv"));
            f.read(buffer);
            f.close();
         } catch (Exception e) { 
@@ -745,6 +744,54 @@ public class TestParseTable {
 	      	  System.out.println(caseWeight.get(i));
 	      }
 		  System.out.println();
+	    }
+	}
+	
+	@Test
+	public void testCalsim() throws RecognitionException, IOException {
+
+        byte[] buffer = new byte[(int) new File("src//test//TestConvertWreslToTable_main//sequence1.csv").length()];
+        BufferedInputStream f = null;
+        try {
+           f = new BufferedInputStream(new FileInputStream("src//test//TestConvertWreslToTable_main//sequence1.csv"));
+           f.read(buffer);
+           f.close();
+        } catch (Exception e) { 
+           e.printStackTrace();
+        }
+        
+        String fileString=new String(buffer);
+        fileString=fileString.toLowerCase();
+        
+        try {
+           stream=new ANTLRStringStream(fileString);
+        }
+        catch(Exception e) {
+           e.printStackTrace();
+        }
+	    
+		ParseTableLexer lexer = new ParseTableLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ParseTableParser parser = new ParseTableParser(tokenStream);
+		parser.evaluator();
+		ArrayList<String> var_file = parser.file;
+		Map<String, Constraint> var_constraint = parser.constraint;
+		Map<String, LRWeight> var_lgr = parser.lgr;
+		Map<String, LRWeight> var_rgl = parser.rgl;
+		Map<String, Alias> var_alias=parser.alias;
+		Map<String, Dvar> var_dvar=parser.dvar;
+		Map<String, Svar> var_svar=parser.svar;
+		ArrayList<String> errorGrammer=parser.error_grammer;
+		
+		for (int i=0; i<errorGrammer.size(); i++){
+			System.out.println(errorGrammer.get(i));
+		}
+		
+		Map<String, Dvar> var_DvarGlobal=parser.dvarGlobal;
+	    Iterator iterator=var_DvarGlobal.keySet().iterator();
+	    while(iterator.hasNext()){ 
+	      String dvarName=(String)iterator.next();
+	      System.out.println(dvarName);
 	    }
 	}	
 }
