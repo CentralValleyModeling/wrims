@@ -20,7 +20,7 @@ public class MainConverter {
 		//String f = "D:\\CALSIM3.0_070110\\D1641\\Run\\maind1641.wresl";
 
 		
-		String outParent = "test-csv\\TestConvertWreslToTable_main\\";
+		String outParent = "..\\test-csv\\calsim3\\";
 		
 		Tools.deleteDir(outParent);
 
