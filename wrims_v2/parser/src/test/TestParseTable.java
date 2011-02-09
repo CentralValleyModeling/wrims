@@ -746,14 +746,15 @@ public class TestParseTable {
 		  System.out.println();
 	    }
 	}
-	
-	@Test
-	public void testCalsim() throws RecognitionException, IOException {
+		
 
-        byte[] buffer = new byte[(int) new File("src//test//TestConvertWreslToTable_main//sequence1.csv").length()];
+	@Test
+	public void testCalsim3() throws RecognitionException, IOException {
+
+        byte[] buffer = new byte[(int) new File("..\\test-csv\\sequence1.csv").length()];
         BufferedInputStream f = null;
         try {
-           f = new BufferedInputStream(new FileInputStream("src//test//TestConvertWreslToTable_main//sequence1.csv"));
+           f = new BufferedInputStream(new FileInputStream("..\\test-csv\\sequence1.csv"));
            f.read(buffer);
            f.close();
         } catch (Exception e) { 
@@ -794,4 +795,5 @@ public class TestParseTable {
 	      System.out.println(dvarName);
 	    }
 	}	
+
 }
