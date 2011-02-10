@@ -26,6 +26,7 @@ options {
   import Components.Svar;
   import Components.LRWeight;
   import Components.IlpData;
+  import Components.MainFile;
 }
 
 @lexer::header {
@@ -199,6 +200,14 @@ options {
         IlpData.addAliasToArray(alias);
   }
   
+  public String getFullPath(String fileName){
+    if (fileName.contains(":")){
+      return fileName;
+    }else{
+      return MainFile.mainDirectory+fileName;
+    }
+  }
+  
   @Override
   public void reportError(RecognitionException e) {
        error_grammer.add(currentFile+" "+e.line+"@"+e.charPositionInLine+": "+getErrorMessage(e, tokenNames));
@@ -354,17 +363,20 @@ content_global
         alias = new HashMap<String, Alias>();
       
         if (cycle.containsKey($i1.text)){
-          error_grammer.add("main file: cycle"+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
+          error_grammer.add(MainFile.fullPath+": cycle"+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
         }else{
           ArrayList<String> list = new ArrayList<String>();
+          
+          String fileFullPath=getFullPath($i2.text);
+          
           list.add($i3.text);
-          list.add($i2.text);
+          list.add(fileFullPath);
           cycle.put($i1.text, list);
         
-          byte[] buffer = new byte[(int) new File($i2.text).length()];
+          byte[] buffer = new byte[(int) new File(fileFullPath).length()];
           BufferedInputStream f = null;
           try {
-              f = new BufferedInputStream(new FileInputStream($i2.text));
+              f = new BufferedInputStream(new FileInputStream(fileFullPath));
               f.read(buffer);
               f.close();
           } catch (Exception e) { 
@@ -381,8 +393,8 @@ content_global
             e.printStackTrace();
           }
           
-          fileAnchestry.add("main file");   
-          currentFile=$i2.text;
+          fileAnchestry.add(MainFile.fullPath);   
+          currentFile=fileFullPath;
           ParseTableLexer lexer = new ParseTableLexer(stream);
           TokenStream tokenStream = new CommonTokenStream(lexer);
           ParseTableParser parser = new ParseTableParser(tokenStream);
@@ -415,18 +427,21 @@ content_cycle
       initialCycle();
       
       if (cycle.containsKey($i1.text)){
-        error_grammer.add("main file "+$i1.line+"@"+($i1.pos+1)+": cycle"+ $i1.text+" redefined");
+        error_grammer.add(MainFile.fullPath+$i1.line+"@"+($i1.pos+1)+": cycle"+ $i1.text+" redefined");
       }else{
         ArrayList<String> list = new ArrayList<String>();
+        
+        String fileFullPath=getFullPath($i2.text);
+        
         list.add($i3.text);
-        list.add($i2.text);
+        list.add(fileFullPath);
         cycle.put($i1.text, list);
         currentCycle=$i1.text;
         
-        byte[] buffer = new byte[(int) new File($i2.text).length()];
+        byte[] buffer = new byte[(int) new File(fileFullPath).length()];
         BufferedInputStream f = null;
         try {
-            f = new BufferedInputStream(new FileInputStream($i2.text));
+            f = new BufferedInputStream(new FileInputStream(fileFullPath));
             f.read(buffer);
             f.close();
         } catch (Exception e) { 
@@ -443,8 +458,8 @@ content_cycle
            e.printStackTrace();
         }
         
-        fileAnchestry.add("main file");
-        currentFile=$i2.text;     
+        fileAnchestry.add(MainFile.fullPath);
+        currentFile=fileFullPath;     
         ParseTableLexer lexer = new ParseTableLexer(stream);
         TokenStream tokenStream = new CommonTokenStream(lexer);
         ParseTableParser parser = new ParseTableParser(tokenStream);
@@ -462,14 +477,15 @@ content_cycle
 content_file
   : i1=fileName ',' i2=IDENT {
        if ($i2.text.equals("y")){
-           if (file.contains($i1.text)) {
+           String fileFullPath=getFullPath($i1.text);
+           if (file.contains(fileFullPath)) {
                error_grammer.add(currentFile+" "+$i2.line+"@"+"0"+": "+ $i1.text+" redefined");
            }else{
-             file.add($i1.text); 
-             byte[] buffer = new byte[(int) new File($i1.text).length()];
+             file.add(fileFullPath); 
+             byte[] buffer = new byte[(int) new File(fileFullPath).length()];
              BufferedInputStream f = null;
              try {
-                f = new BufferedInputStream(new FileInputStream($i1.text));
+                f = new BufferedInputStream(new FileInputStream(fileFullPath));
                 f.read(buffer);
                 f.close();
              } catch (Exception e) { 
@@ -487,7 +503,7 @@ content_file
              }
              
              fileAnchestry.add(currentFile);
-             currentFile=$i1.text;
+             currentFile=fileFullPath;
              ParseTableLexer lexer = new ParseTableLexer(stream);
              TokenStream tokenStream = new CommonTokenStream(lexer);
              ParseTableParser parser = new ParseTableParser(tokenStream);

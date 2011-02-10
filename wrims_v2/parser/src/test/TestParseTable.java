@@ -27,6 +27,7 @@ import Components.Dvar;
 import Components.Constraint;
 import Components.Svar;
 import Components.LRWeight;
+import Components.MainFile;
 
 public class TestParseTable {
 
@@ -746,15 +747,17 @@ public class TestParseTable {
 		  System.out.println();
 	    }
 	}
-		
-
+	
 	@Test
 	public void testCalsim3() throws RecognitionException, IOException {
 
-        byte[] buffer = new byte[(int) new File("..\\test-csv\\sequence1.csv").length()];
+        String mainFile="src\\test\\TestConvertWreslToTable_main\\sequence1.csv";
+        new MainFile(mainFile);
+        
+		byte[] buffer = new byte[(int) new File(mainFile).length()];
         BufferedInputStream f = null;
         try {
-           f = new BufferedInputStream(new FileInputStream("..\\test-csv\\sequence1.csv"));
+           f = new BufferedInputStream(new FileInputStream(mainFile));
            f.read(buffer);
            f.close();
         } catch (Exception e) { 
@@ -795,5 +798,4 @@ public class TestParseTable {
 	      System.out.println(dvarName);
 	    }
 	}	
-
 }
