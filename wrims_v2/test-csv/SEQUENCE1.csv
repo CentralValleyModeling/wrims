@@ -1,4 +1,4 @@
 cycle,file,condition
-Global,..\test-csv\global.csv,always
-SJRBASE,..\test-csv\SJRBASE.csv,always
-SJR_WQ1,..\test-csv\SJR_WQ1.csv,always
+Global,global.csv,always
+SJRBASE,SJRBASE.csv,always
+SJR_WQ1,SJR_WQ1.csv,always
