@@ -167,14 +167,6 @@ goal_case_or_noCase[String id, String sc]
 	) '}' 
 	;
 
-//goal_case[String id, String sc] 
-//	:   '{' LHS lhs=all_ident  g=goalCaseStatements '}'{
-//			 if(inModel=="n") {  F.goalCase($id, $sc, $lhs.text, $g.gl);}
-//	   		 else             { $model::M.goalCase($id, $sc, $lhs.text, $g.gl);}
-//				
-//	     }
-//	; 
-
 goalCaseStatements returns[Goal gl]					   
 	@init { $gl = new Goal(); }    
 	:  ( c=goalCaseStatement  {
@@ -218,11 +210,11 @@ lhs_vs_rhs returns[String lhs_gt_rhs, String lhs_lt_rhs, String scenario]
 	( '>' {$scenario = "l>r";}  |  '<' {$scenario = "l<r";} )  
 	  RHS 
 	( CONSTRAIN 
-		{  //$list.add("constrain");$list.add(null);  
+		{  
 		 if ($scenario == "l>r"){$lhs_gt_rhs=Parameters.constrain;}
 		 else if ($scenario == "l<r"){$lhs_lt_rhs=Parameters.constrain;}
 		 }
-	| PENALTY i=expression { //$list.add("penalty");$list.add($i.text);
+	| PENALTY i=expression { 
 		 if ($scenario == "l>r"){$lhs_gt_rhs=$i.text;}
 		 else if ($scenario == "l<r"){$lhs_lt_rhs=$i.text;}
 		}
@@ -270,28 +262,18 @@ svar_table[String id, String sc]
 
 svar_cases[String id, String sc]
 	:   '{' c=caseStatements '}' {   
-            if(inModel=="n") {         F.svarCase($id, $sc,  $c.sv,  $c.caseNames, $c.conditions, $c.expressions, $c.caseContent);}
-	        else             { $model::M.svarCase($id, $sc,  $c.sv,  $c.caseNames, $c.conditions, $c.expressions, $c.caseContent);}	        
+            if(inModel=="n") {         F.svarCase($id, $sc,  $c.sv);}
+	        else             { $model::M.svarCase($id, $sc,  $c.sv);}	        
     };
 	
-caseStatements returns[ArrayList<String> caseNames, 
-					   ArrayList<String> conditions, 
-					   ArrayList<String> expressions, 
-					   Map<String, ArrayList<String>> caseContent,
-					   Svar sv ]
+caseStatements returns[ Svar sv ]
 					   
-@init { $caseNames = new ArrayList<String>(); 
-        $conditions = new ArrayList<String>();
-        $expressions = new ArrayList<String>();
-        $caseContent = new HashMap<String, ArrayList<String>>();
+@init { 
         $sv = new Svar(); 
          }
         
 	:  ( c=caseStatement  {
-			$caseNames.add($c.caseNameStr);
-			$conditions.add($c.conditionStr);	
-			$expressions.add($c.expressionStr);			
-			$caseContent.put($c.caseNameStr, $c.contentList);		         
+		         
 			
 			/// clearer data structure		
 			$sv.caseName.add($c.caseNameStr);

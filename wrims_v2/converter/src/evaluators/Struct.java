@@ -293,19 +293,12 @@ public class Struct {
 		}
 	}
 
-	public void svarCase(String svarName, String scope, Svar sv,
-			ArrayList<String> caseName, ArrayList<String> condition,
-			ArrayList<String> expression,
-			Map<String, ArrayList<String>> caseContent) {
+	public void svarCase(String svarName, String scope, Svar sv) {
 
 		if (var_all.containsKey(svarName)) {
 			ErrMsg.print("Svar redefined: "+svarName, currentAbsolutePath);
 			error_var_redefined.put(svarName, "svar_cases");
 		} else {
-			svar_scope.put(svarName, scope);
-			svar_cases.put(svarName, caseName);
-			svar_conditions.put(svarName, condition);
-			svar_map_case_content.put(svarName, caseContent);
 			var_all.put(svarName, "svar_cases");
 
 			// ///////////////////
