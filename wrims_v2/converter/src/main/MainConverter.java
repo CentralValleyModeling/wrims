@@ -16,8 +16,8 @@ public class MainConverter {
 	public static void main(String[] args) throws RecognitionException, IOException {
 
 
-		String f = args[0];
-		//String f = "D:\\CALSIM3.0_070110\\D1641\\Run\\maind1641.wresl";
+		//String f = args[0];
+		String f = "D:\\CALSIM3.0_070110\\D1641\\Run\\maind1641.wresl";
 
 		
 		String outParent = "..\\test-csv\\calsim3\\";
