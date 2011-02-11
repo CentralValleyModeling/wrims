@@ -7,7 +7,8 @@ public class Parameters {
 	  public static String undefined= "undefined"; 
 	  public static String defaultCaseName = "default";
 	  public static String always = "always";
-	  public static String constrain = "#";
+	  public static String constrain = "constrain";
+	  public static String skip = "#";
 	  
 }
 
