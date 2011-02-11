@@ -1,4 +1,0 @@
-name,		include,	type, 		units,	writetodss,	case,    caseinclude,	condition,	expression
-Frcst_amrY,	y,		forcast,	#,	y,              case1,	y,		month=Feb,	select Feb from American_runoff_forcast where year=wateryear
-Frcst_amrY,	#,		#,		#,	#,		case2,	y,		always,		-123.4+bc(preSep)
-Evap_S_Shsta,	y,	    	evap-cf,	in,	y,		case1,	y,		always,		timeseries kind=evaporation-rate units=in

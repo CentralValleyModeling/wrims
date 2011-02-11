@@ -1,6 +1,0 @@
-name,		include,	case, caseinclude, condition,	expression,	lhs>rhs,	lhs<rhs
-ActfwflowY,	y,		case1,	y,	 Mon=Feb,	D_sacFea_A=D_SacFea_B, #, 	#
-ActfwflowY,	y,		case2,	y,	 always,	D_sacFea_A>D_SacFea_B, #, 	#
-constraint1,    y,      	case1,  y,       a3+a4<5,         f7<80.3+ghl,    constrain,      -6.0
-constraint1,    y,      	case1,  y,       a3+a4=5,         f7=80.3+ghl,     7.0,      constrain
-constraint1,    y,      	case2,  y,       always,          d12-e14=56*hn,    -8.0,      -6.0
