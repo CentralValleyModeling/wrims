@@ -1,0 +1,7 @@
+file, include
+src\test\case1\dvar.csv, y
+src\test\case1\svar.csv, y
+src\test\case1\alias.csv, y
+src\test\case1\constraint.csv, y
+
+
