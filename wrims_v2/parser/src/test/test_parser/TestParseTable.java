@@ -16,18 +16,18 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 
-import Parser.ParseTableLexer;
-import Parser.ParseTableParser;
+import parser.ParseTableLexer;
+import parser.ParseTableParser;
 
 import org.testng.annotations.*;
 import org.testng.Assert;
 
-import Components.Alias;
-import Components.Dvar;
-import Components.Constraint;
-import Components.Svar;
-import Components.LRWeight;
-import Components.MainFile;
+import components.Alias;
+import components.Dvar;
+import components.Constraint;
+import components.Svar;
+import components.LRWeight;
+import components.MainFile;
 
 public class TestParseTable {
 

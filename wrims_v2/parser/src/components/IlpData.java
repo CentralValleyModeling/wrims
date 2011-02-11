@@ -1,4 +1,4 @@
-package Components;
+package components;
 
 import java.util.ArrayList;
 import java.util.Map;

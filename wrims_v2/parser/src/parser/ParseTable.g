@@ -5,7 +5,7 @@ options {
 }
 
 @header {
-  package Parser;
+  package parser;
   import java.util.Map;
   import java.util.HashMap;
   import java.util.Iterator;
@@ -20,17 +20,17 @@ options {
   import org.antlr.runtime.RecognitionException;
   import org.antlr.runtime.TokenStream;
   
-  import Components.Alias;
-  import Components.Dvar;
-  import Components.Constraint;
-  import Components.Svar;
-  import Components.LRWeight;
-  import Components.IlpData;
-  import Components.MainFile;
+  import components.Alias;
+  import components.Dvar;
+  import components.Constraint;
+  import components.Svar;
+  import components.LRWeight;
+  import components.IlpData;
+  import components.MainFile;
 }
 
 @lexer::header {
-  package Parser;
+  package parser;
 }
 
 @members {

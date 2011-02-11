@@ -1,4 +1,4 @@
-package Components;
+package components;
 
 public class Alias {
 
