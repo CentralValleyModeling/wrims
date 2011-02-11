@@ -751,7 +751,7 @@ public class TestParseTable {
 	@Test
 	public void testCalsim3() throws RecognitionException, IOException {
 
-        String mainFile="D:\\cvwrsm\\trunk\\wrims_v2\\test-csv\\sequence1.csv";
+        String mainFile="..\\test-csv\\sequence1.csv";
         new MainFile(mainFile);
         
 		byte[] buffer = new byte[(int) new File(mainFile).length()];
