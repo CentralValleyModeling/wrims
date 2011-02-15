@@ -179,9 +179,6 @@ public class Struct {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//String absFilePath = absFile.getAbsolutePath().toLowerCase();
-		
-		//System.out.println("check: "+absFilePath);
 		
 		if (incFileList.contains(absFilePath)) {
 			ErrMsg.print("Include file redefined: " + fileRelativePath, currentAbsolutePath);
@@ -468,17 +465,10 @@ public class Struct {
 
 	public void dvarStd(String name, String scope, String integer, String kind, String units) {
 		if (var_all.containsKey(name)) {
-			ErrMsg.print("Dvar redefined: "+name, currentAbsolutePath);
+			ErrMsg.print("Dvar redefined: "+name, "\n"+currentAbsolutePath);
 			error_var_redefined.put(name, "dvar_std");
 		} else {
-			dvar_scope.put(name, scope);
-			list = new ArrayList<String>();
-			// list.add(scope);
-			list.add(kind);
-			list.add(units);
-			list.add("0");
-			list.add("unbounded");
-			dvar_std.put(name, list);
+
 			var_all.put(name, "dvar_std");
 
 			// / better data structure

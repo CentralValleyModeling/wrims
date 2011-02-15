@@ -17,7 +17,7 @@ public class StudyParser {
 	public static StudyConfig processMainFileIntoStudyConfig(String relativeMainFilePath) throws RecognitionException, IOException {
 		
 		File absMainFile = new File(relativeMainFilePath).getAbsoluteFile();
-		String absMainFilePath = absMainFile.getCanonicalPath();
+		String absMainFilePath = absMainFile.getCanonicalPath().toLowerCase();
 		
 		System.out.println("############################################");
 		System.out.println("Parsing study main file  ");
@@ -198,14 +198,14 @@ public class StudyParser {
 			System.out.println("========== Start data prioritization =========== ");	
 			
 			/// previous globals have lowest priority
-			model_data_complete.prioritize(adhoc_cumulative_globals, " cumulative adhoc globals");
+			model_data_complete.prioritize(adhoc_cumulative_globals, " cumulative adhoc globals", t1ReverseMap);
 			System.out.println("========== Finish initial prioritization =========== ");	
 			
 			/// for kid
 			for (String f : adhoc_include_previous_globals.incFileList) {
 					
 					System.out.println("========== Prioritize offsprings in file: "+f);
-					model_data_complete.prioritizeChildren(f, t1Map, fileDataMap_corrected);
+					model_data_complete.prioritizeChildren(f, t1Map, fileDataMap_corrected, t1ReverseMap);
 					
 			}
 			System.out.println("========== Finish children prioritization =========== ");
@@ -214,13 +214,13 @@ public class StudyParser {
 			for (String f : adhoc_include_previous_globals.incFileList) {
 				
 				System.out.println("========== Prioritize adhoc include file: "+f);
-				model_data_complete.prioritize(fileDataMap_corrected.get(f), f);
+				model_data_complete.prioritize(fileDataMap_corrected.get(f), f, t1ReverseMap);
 
 			}
 			
 			/// for vars in adhoc
 			System.out.println("========== Prioritize adhoc =========== ");
-			model_data_complete.prioritize(adhoc, absMainFilePath);
+			model_data_complete.prioritize(adhoc, absMainFilePath, t1ReverseMap);
 			System.out.println("========== Finish adhoc prioritization =========== ");
 			System.out.println("========== Finish all prioritization =========== ");
 			

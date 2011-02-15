@@ -3,6 +3,7 @@ package evaluators;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Dataset {
 
@@ -83,7 +84,7 @@ public class Dataset {
 	}	
 
 
-	public boolean hasDuplicateIn(Dataset s, String filePath){
+	public boolean hasDuplicateIn(Dataset s, String filePath, Map<String,Set<String>> reverseMap){
 		
 		boolean b = false;
 
@@ -112,8 +113,11 @@ public class Dataset {
 		}		
 
 		for (String e : s.dvList){ 
-			if (this.dvList.contains(e)) {
-				System.out.println("Error!!! Dvar redefined: "+e+" in file: "+filePath);	
+			if (this.dvList.contains(e)) {	
+				//ErrMsg.print("Dvar redefined: "+e, "\n"+filePath+"\n"+dvMap.get(e).fromWresl);
+				String f1 = filePath;
+				String f2 = dvMap.get(e).fromWresl;
+				ErrMsg.printParents("Dvar redefined: "+e, f1, f2, reverseMap);
 				b = true;
 			}
 		}	
@@ -443,29 +447,29 @@ public class Dataset {
 	
 
 	
-	public Dataset prioritize(Dataset laterFileData, String filePath_forErrorMessage) {
+	public Dataset prioritize(Dataset laterFileData, String filePath_forErrorMessage, Map<String,Set<String>> reverseMap) {
 
 		/// check duplicate and promote later included file data for higher priority 
 		if(laterFileData==null) System.out.println("Fatal error!!! Dataset is null in file: "+filePath_forErrorMessage);
 		
-		if ( this.hasDuplicateIn(laterFileData, filePath_forErrorMessage)) {
+		if ( this.hasDuplicateIn(laterFileData, filePath_forErrorMessage, reverseMap)) {
 			this.remove(laterFileData);
 		}
 		
 		return this.add(laterFileData); // later data has higher priority
 	}
 	
-	public Dataset prioritizeChildren(String nodeFile, Map<String,ArrayList<String>> t1Map, Map<String, Dataset> fileDataMap ) {
+	public Dataset prioritizeChildren(String nodeFile, Map<String,ArrayList<String>> t1Map, Map<String, Dataset> fileDataMap, Map<String,Set<String>> reverseMap ) {
 
 		
 		for (String childFile : t1Map.get(nodeFile)) {
 			
 			//System.out.println(" child file is: "+ childFile +" from node: " + nodeFile);
 						
-			if (t1Map.get(childFile)!=null)  this.prioritizeChildren(childFile, t1Map, fileDataMap);
+			if (t1Map.get(childFile)!=null)  this.prioritizeChildren(childFile, t1Map, fileDataMap, reverseMap);
 			
 			System.out.println("========== Prioritize file: " + childFile);
-			this.prioritize(fileDataMap.get(childFile), childFile);
+			this.prioritize(fileDataMap.get(childFile), childFile, reverseMap);
 		}
 		
 		return this;
