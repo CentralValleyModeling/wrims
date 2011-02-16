@@ -15,12 +15,25 @@ public class MainConverter {
 	
 	public static void main(String[] args) throws RecognitionException, IOException {
 
-
-		//String f = args[0];
-		String f = "D:\\CALSIM3.0_070110\\D1641\\Run\\maind1641.wresl";
-
+		String f;
+		String outParent;
 		
-		String outParent = "..\\test-csv\\calsim3\\";
+		
+		if (args.length > 0 ){
+			f = args[0];
+		} else {
+			f = "D:\\CALSIM3.0_070110\\D1641\\Run\\maind1641.wresl";
+		}
+		
+		//System.out.println("main file: "+f);
+
+		if (args.length > 1 ){
+			outParent = args[1];
+		} else {
+			outParent = "D:\\cvwrsm\\trunk\\wrims_v2\\test-csv\\calsim3\\";
+		}
+		
+		//System.out.println("output folder: "+outParent);
 		
 		Tools.deleteDir(outParent);
 
