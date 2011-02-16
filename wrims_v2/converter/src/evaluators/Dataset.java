@@ -106,26 +106,32 @@ public class Dataset {
 		
 		for (String e : s.svList){ 
 			if (this.svList.contains(e)) {
-				System.out.println("Error!!! Svar redefined: "+e+" in file: "+filePath);
-				LogUtils.errMsg("Svar redefined: "+e, filePath);
+				String f1 = filePath;
+				String f2 = svMap.get(e).fromWresl;
+				LogUtils.errMsgTree("State variable redefined: "+e, f1, f2, reverseMap);
 				b = true;
 			}
 		}		
 
 		for (String e : s.dvList){ 
 			if (this.dvList.contains(e)) {	
-				//ErrMsg.print("Dvar redefined: "+e, "\n"+filePath+"\n"+dvMap.get(e).fromWresl);
 				String f1 = filePath;
 				String f2 = dvMap.get(e).fromWresl;
-				LogUtils.errMsgTree("Dvar redefined: "+e, f1, f2, reverseMap);
+				LogUtils.errMsgTree("Decision varriable redefined: "+e, f1, f2, reverseMap);
 				b = true;
 			}
 		}	
 
 		for (String e : s.gList){ 
 			if (this.gList.contains(e)) {
-				System.out.println("Error!!! Goal redefined: "+e+" in file: "+filePath);	
+//				System.out.println("Error!!! Goal redefined: "+e+" in file: "+filePath);	
+//				b = true;
+				
+				String f1 = filePath;
+				String f2 = gMap.get(e).fromWresl;
+				LogUtils.errMsgTree("Goal redefined: "+e, f1, f2, reverseMap);
 				b = true;
+				
 			}
 		}
 		

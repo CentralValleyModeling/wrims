@@ -21,8 +21,7 @@ public class StudyParser {
 		File absMainFile = new File(relativeMainFilePath).getAbsoluteFile();
 		String absMainFilePath = absMainFile.getCanonicalPath().toLowerCase();
 		
-		System.out.println("############################################");
-		System.out.println("Parsing study main file  ");
+		System.out.println("# Parsing study main file  ");
 		
 		ConvertWreslParser parser = FileParser.parseFile(absMainFilePath);
 		
@@ -64,7 +63,7 @@ public class StudyParser {
 		
 		
 		for ( Integer i : sc.sequenceOrder){	
-			System.out.println("sequence: "+i+" ::: "+sc.sequenceMap.get(i).modelName);		
+			System.out.println("sequence: "+i+" : "+sc.sequenceMap.get(i).modelName);		
 		}	
 		
 		return sc;
@@ -97,11 +96,8 @@ public class StudyParser {
 
 			String model = seqMap.get(iSequence).modelName;
 		
-			
-			LogUtils.importantMsg("############################################");
-			LogUtils.importantMsg("####   Processing sequence: "+iSequence);
-			LogUtils.importantMsg("####                 model: "+model);
-			LogUtils.importantMsg("############################################");
+			LogUtils.importantMsg("# Processing sequence: "+iSequence+", model: "+model);
+
 			
 			Dataset adhoc = sc.modelAdhocMap.get(model);
 
@@ -244,15 +240,13 @@ public class StudyParser {
 			
 			//System.out.println(" weight table keys: "+ model_data_complete.wtMap.keySet());
 			
-			LogUtils.importantMsg("######################################################");
-			LogUtils.importantMsg("####   Finished Processing model: "+model);
-			LogUtils.importantMsg("######################################################");
+			LogUtils.importantMsg("# Finished processing sequence: "+iSequence+", model: "+model);
+
 		}
-		LogUtils.importantMsg("**********************************************************");
-		LogUtils.importantMsg("***********+----------------------------------+***********");
-		LogUtils.importantMsg("***********|   Finished all data processing   |***********");
-		LogUtils.importantMsg("***********+----------------------------------+***********");
-		LogUtils.importantMsg("**********************************************************");
+
+		LogUtils.importantMsg("# Finished all data processing");
+
+
 	
 		
 		

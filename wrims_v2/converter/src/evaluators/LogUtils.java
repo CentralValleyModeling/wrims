@@ -10,6 +10,8 @@ public class LogUtils {
 	public static void importantMsg(String msg){
 
 		System.out.println(msg);
+		
+		System.out.flush();
 	}
 	
 	public static void normalMsg(String msg){
@@ -17,6 +19,8 @@ public class LogUtils {
 		if (Parameters.printLevel>1){
 
 			System.out.println(msg);
+			
+			System.out.flush();
 		}
 	}
 	
@@ -30,15 +34,17 @@ public class LogUtils {
 
 	public static void errMsgTree(String msg, String file1, String file2,  Map<String,Set<String>> reverseMap){
 
+		System.out.flush();
 		
-		//System.out.println("Error!!! "+msg+" in file: "+file);
 		System.err.println("Error! "+msg+" in files: ");
+		
 		System.err.println(" "+file1);
-		printTree(file1,reverseMap, "");
-		
-		
+		printTree(file1,reverseMap, "");		
 		System.err.println(" "+file2);
 		printTree(file2,reverseMap, "");
+		
+		System.err.flush();
+
 
 	}	
 
@@ -46,7 +52,7 @@ public class LogUtils {
 
 		String arrow = ">";
 		if(reverseMap.get(f)!=null){
-			level = "-" + level;
+			level = "--" + level;
 			Set<String> parents = reverseMap.get(f);
 			for (String s : parents){
 				System.err.println(" "+level+arrow+s);
