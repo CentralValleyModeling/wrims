@@ -33,11 +33,11 @@ public class LogUtils {
 		
 		//System.out.println("Error!!! "+msg+" in file: "+file);
 		System.err.println("Error! "+msg+" in files: ");
-		System.err.println(file1);
+		System.err.println(" "+file1);
 		printTree(file1,reverseMap, "");
 		
 		
-		System.err.println(file2);
+		System.err.println(" "+file2);
 		printTree(file2,reverseMap, "");
 
 	}	
@@ -49,7 +49,7 @@ public class LogUtils {
 			level = "-" + level;
 			Set<String> parents = reverseMap.get(f);
 			for (String s : parents){
-				System.err.println(level+arrow+s);
+				System.err.println(" "+level+arrow+s);
 				printTree(s, reverseMap, level);
 				
 				
