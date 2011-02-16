@@ -2,11 +2,25 @@ package evaluators;
 
 import java.util.Map;
 import java.util.Set;
+import evaluators.Parameters;
 
-public class ErrMsg {
+public class LogUtils {
 	
+
+	public static void importantMsg(String msg){
+
+		System.out.println(msg);
+	}
 	
-	public static void print(String msg, String file){
+	public static void normalMsg(String msg){
+		
+		if (Parameters.printLevel>1){
+
+			System.out.println(msg);
+		}
+	}
+	
+	public static void errMsg(String msg, String file){
 
 		
 		//System.out.println("Error!!! "+msg+" in file: "+file);
@@ -14,17 +28,13 @@ public class ErrMsg {
 
 	}
 
-	public static void printParents(String msg, String file1, String file2,  Map<String,Set<String>> reverseMap){
+	public static void errMsgTree(String msg, String file1, String file2,  Map<String,Set<String>> reverseMap){
 
 		
 		//System.out.println("Error!!! "+msg+" in file: "+file);
 		System.err.println("Error! "+msg+" in files: ");
 		System.err.println(file1);
-		
-		for (String s : reverseMap.get(file1)){
-			System.err.println("-->"+s);
-			
-		}
+		printTree(file1,reverseMap, "");
 		
 		
 		System.err.println(file2);

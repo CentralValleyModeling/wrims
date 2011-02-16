@@ -137,7 +137,7 @@ public class Struct {
 
 	public void modelList(String name) {
 		if (model_list.contains(name)) {
-			ErrMsg.print("Model redefined: "+name, currentAbsolutePath);
+			LogUtils.errMsg("Model redefined: "+name, currentAbsolutePath);
 			error_model_redefined.add(name);
 		} else {
 			// file_include_file.get(name).add(filePath);
@@ -148,7 +148,7 @@ public class Struct {
 
 	public void mergeWeightTable(String name, String value, String scope) {
 		if (wtList.contains(name)) {
-			ErrMsg.print("Weight table decision variable redefined: "+name, currentAbsolutePath);
+			LogUtils.errMsg("Weight table decision variable redefined: "+name, currentAbsolutePath);
 			error_weightVar_redefined.put(name, currentAbsolutePath);
 		} 
 		else {
@@ -181,7 +181,7 @@ public class Struct {
 		}
 		
 		if (incFileList.contains(absFilePath)) {
-			ErrMsg.print("Include file redefined: " + fileRelativePath, currentAbsolutePath);
+			LogUtils.errMsg("Include file redefined: " + fileRelativePath, currentAbsolutePath);
 			error_includeFile_redefined.add(absFilePath);
 
 		} else {
@@ -204,7 +204,7 @@ public class Struct {
 
 	public void goalSimple(String name, String scope, String content) {
 		if (gList.contains(name)) {
-			ErrMsg.print("Goal redefined: "+name, currentAbsolutePath);
+			LogUtils.errMsg("Goal redefined: "+name, currentAbsolutePath);
 			error_goal_redefined.put(name, currentAbsolutePath);
 		} else {
 			goal_scope.put(name, scope);
@@ -233,7 +233,7 @@ public class Struct {
 	public void goalNoCase(String name, String scope, String lhs, String rhs,
 			String lhs_gt_rhs, String lhs_lt_rhs) {
 		if (gList.contains(name)) {
-			ErrMsg.print("Goal redefined: "+name, currentAbsolutePath);
+			LogUtils.errMsg("Goal redefined: "+name, currentAbsolutePath);
 			error_goal_redefined.put(name, currentAbsolutePath);
 		} else {
 			// list.add(0,"lhs");list.add(1,lhs);
@@ -263,7 +263,7 @@ public class Struct {
 
 	public void goalCase(String name, String scope, String lhs, Goal gl) {
 		if (gList.contains(name)) {
-			ErrMsg.print("Goal redefined: "+name, currentAbsolutePath);
+			LogUtils.errMsg("Goal redefined: "+name, currentAbsolutePath);
 			error_goal_redefined.put(name, currentAbsolutePath);
 		} else {
 			goal_scope.put(name, scope);
@@ -293,7 +293,7 @@ public class Struct {
 	public void svarCase(String svarName, String scope, Svar sv) {
 
 		if (var_all.containsKey(svarName)) {
-			ErrMsg.print("Svar redefined: "+svarName, currentAbsolutePath);
+			LogUtils.errMsg("Svar redefined: "+svarName, currentAbsolutePath);
 			error_var_redefined.put(svarName, "svar_cases");
 		} else {
 			var_all.put(svarName, "svar_cases");
@@ -313,7 +313,7 @@ public class Struct {
 
 	public void external(String name, String scope, String externalType) {
 		if (var_all.containsKey(name)) {
-			ErrMsg.print("Svar redefined: "+name, currentAbsolutePath);
+			LogUtils.errMsg("Svar redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "external");
 		} else {
 
@@ -335,7 +335,7 @@ public class Struct {
 	
 	public void svarExpression(String svarName, String scope, String expression) {
 		if (var_all.containsKey(svarName)) {
-			ErrMsg.print("Svar redefined: "+svarName, currentAbsolutePath);
+			LogUtils.errMsg("Svar redefined: "+svarName, currentAbsolutePath);
 			error_var_redefined.put(svarName, "svar_expression");
 		} else {
 			svar_scope.put(svarName, scope);
@@ -367,7 +367,7 @@ public class Struct {
 	public void svarSum(String name, String scope, ArrayList<String> content,
 			String sumStr) {
 		if (var_all.containsKey(name)) {
-			ErrMsg.print("Svar redefined: "+name, currentAbsolutePath);
+			LogUtils.errMsg("Svar redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "svar_sum");
 		} else {
 			svar_scope.put(name, scope);
@@ -394,7 +394,7 @@ public class Struct {
 	public void svarTable(String name, String scope, ArrayList<String> content,
 			String sqlStr) {
 		if (var_all.containsKey(name)) {
-			ErrMsg.print("Svar redefined: "+name, currentAbsolutePath);
+			LogUtils.errMsg("Svar redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "svar_table");
 		} else {
 			var_all.put(name, "svar_table");
@@ -430,7 +430,7 @@ public class Struct {
 
 	public void svarDSS(String name, String scope, String b_part, String kind, String units, String convertToUnits) {
 		if (var_all.containsKey(name)) {
-			ErrMsg.print("Svar redefined: "+name, currentAbsolutePath);
+			LogUtils.errMsg("Svar redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "svar_dss");
 		} else {
 			svar_scope.put(name, scope);
@@ -465,7 +465,7 @@ public class Struct {
 
 	public void dvarStd(String name, String scope, String integer, String kind, String units) {
 		if (var_all.containsKey(name)) {
-			ErrMsg.print("Dvar redefined: "+name, "\n"+currentAbsolutePath);
+			LogUtils.errMsg("Dvar redefined: "+name, "\n"+currentAbsolutePath);
 			error_var_redefined.put(name, "dvar_std");
 		} else {
 
@@ -493,7 +493,7 @@ public class Struct {
 	public void alias(String name, String scope, String kind, String units,
 			String alias) {
 		if (var_all.containsKey(name)) {
-			ErrMsg.print("Alias redefined: "+name, currentAbsolutePath);
+			LogUtils.errMsg("Alias redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "dvar_alias");
 		} else {
 			dvar_scope.put(name, scope);
@@ -527,7 +527,7 @@ public class Struct {
 			String units,  String lowerBound,
 			String upperBound) {
 		if (var_all.containsKey(name)) {
-			ErrMsg.print("Dvar redefined: "+name, currentAbsolutePath);
+			LogUtils.errMsg("Dvar redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "dvar_nonstd");
 		} else {
 			dvar_scope.put(name, scope);

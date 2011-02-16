@@ -56,7 +56,7 @@ public class FileParser {
 		parser.currentAbsolutePath = new File(inputFilePath).getAbsolutePath(); 
 		parser.currentAbsoluteParent = new File(inputFilePath).getAbsoluteFile().getParent();
 		
-		System.out.println("...Parsing file: "+parser.currentAbsolutePath);
+		LogUtils.normalMsg("...Parsing file: "+parser.currentAbsolutePath);
 		
 		parser.evaluator();
 		
@@ -73,7 +73,7 @@ public class FileParser {
 		out = Tools.convertStructToDataset(parser.F);
 			
 		if ( ! parser.F.model_list.isEmpty()){
-			ErrMsg.print("Model exists in this file.", inputFilePath);
+			LogUtils.errMsg("Model exists in this file.", inputFilePath);
 		}	
 		
 		return out;
@@ -135,13 +135,13 @@ public class FileParser {
 			out =Tools.convertDatasetToLocal(out);
 		}	
 		else if (scope == "global"){ /* Do nothing */ }
-		else { ErrMsg.print("Wrong scope: "+scope+ " for file: ", inputFilePath);}
+		else { LogUtils.errMsg("Wrong scope: "+scope+ " for file: ", inputFilePath);}
 		
 		
 
 		
 		if ( ! parser.F.model_list.isEmpty()){
-			ErrMsg.print("Model exists in this file.", inputFilePath);
+			LogUtils.errMsg("Model exists in this file.", inputFilePath);
 		}	
 		
 		return out;

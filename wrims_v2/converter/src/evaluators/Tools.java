@@ -382,8 +382,8 @@ public class Tools {
 
 				if (fileScopeMap.get(upperFile) == "local") {
 
-					System.out.println("...Convert this file data to local: " + f );
-					System.out.println("   due to  [local] specification for its parent file: " + upperFile + "\n");
+					LogUtils.normalMsg("...Convert this file data to local: " + f );
+					LogUtils.normalMsg("   due to  [local] specification for its parent file: " + upperFile + "\n");
 					
 					ds.convertToLocal();
 

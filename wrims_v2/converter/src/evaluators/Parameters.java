@@ -10,5 +10,7 @@ public class Parameters {
 	  public static String constrain = "constrain";
 	  public static String skip = "#";
 	  
+	  public static int printLevel = 1;
+	  
 }
 

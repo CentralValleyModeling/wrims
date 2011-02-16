@@ -11,6 +11,8 @@ import java.util.Set;
 import org.antlr.runtime.RecognitionException;
 import wresl.ConvertWreslParser;
 
+import evaluators.LogUtils;
+
 public class StudyParser {
 	
 	
@@ -40,7 +42,7 @@ public class StudyParser {
 			String modelName = sc.sequenceMap.get(i).modelName;
 
 			if (!parser.F.model_list.contains(modelName)){
-				ErrMsg.print(" This model doesn't exist: "+ modelName, absMainFilePath);
+				LogUtils.errMsg(" This model doesn't exist: "+ modelName, absMainFilePath);
 				
 			}
 		}
@@ -51,7 +53,7 @@ public class StudyParser {
 			
 			modelAdhocMap.putAll( Tools.convertStructMapToDatasetMap(parser.modelMap) );
 		}
-		else { ErrMsg.print(" No models found ", absMainFilePath); }
+		else { LogUtils.errMsg(" No models found ", absMainFilePath); }
 	
 		
 
@@ -96,10 +98,10 @@ public class StudyParser {
 			String model = seqMap.get(iSequence).modelName;
 		
 			
-			System.out.println("############################################");
-			System.out.println("####   Processing sequence: "+iSequence);
-			System.out.println("####                 model: "+model);
-			System.out.println("############################################");
+			LogUtils.importantMsg("############################################");
+			LogUtils.importantMsg("####   Processing sequence: "+iSequence);
+			LogUtils.importantMsg("####                 model: "+model);
+			LogUtils.importantMsg("############################################");
 			
 			Dataset adhoc = sc.modelAdhocMap.get(model);
 
@@ -127,7 +129,7 @@ public class StudyParser {
 				
 				if (existingSet.contains(f))  {
 					/// skip processing
-					System.out.println("....Skip file: "+f);
+					LogUtils.normalMsg("....Skip file: "+f);
 					fileDataMap_thisModel.put(f, fileDataMap_wholeStudy.get(f));
 					fileDataMap_thisModel.putAll(Tools.getAllOffSprings(f, t1Map_wholeStudy, fileDataMap_wholeStudy));
 					
@@ -175,7 +177,7 @@ public class StudyParser {
 
 
 			//////////////////////////////////////////////////////////////////////////////////////
-			System.out.println(".....Finished fileScopeMap & ReverseMap.");
+			LogUtils.normalMsg(".....Finished fileScopeMap & ReverseMap.");
 			
 			
 			Map<String,Dataset> fileDataMap_corrected = new HashMap<String, Dataset>();
@@ -195,34 +197,35 @@ public class StudyParser {
 			
 			/// prioritize data if redefined			
 			Dataset model_data_complete = new Dataset();
-			System.out.println("========== Start data prioritization =========== ");	
+			LogUtils.normalMsg("========== Start data prioritization =========== ");	
 			
 			/// previous globals have lowest priority
-			model_data_complete.prioritize(adhoc_cumulative_globals, " cumulative adhoc globals", t1ReverseMap);
-			System.out.println("========== Finish initial prioritization =========== ");	
+			model_data_complete.prioritize(adhoc_cumulative_globals, " cumulative adhoc globals", t1ReverseMap);	
+			LogUtils.normalMsg("========== Finish initial prioritization =========== ");
 			
 			/// for kid
 			for (String f : adhoc_include_previous_globals.incFileList) {
 					
-					System.out.println("========== Prioritize offsprings in file: "+f);
+				LogUtils.normalMsg("========== Prioritize offsprings in file: "+f);
 					model_data_complete.prioritizeChildren(f, t1Map, fileDataMap_corrected, t1ReverseMap);
 					
 			}
-			System.out.println("========== Finish children prioritization =========== ");
-
+			LogUtils.normalMsg("========== Finish children prioritization =========== ");
+			
 			/// for include files in adhoc
 			for (String f : adhoc_include_previous_globals.incFileList) {
 				
-				System.out.println("========== Prioritize adhoc include file: "+f);
+
+                LogUtils.normalMsg("========== Prioritize adhoc include file: "+f);
 				model_data_complete.prioritize(fileDataMap_corrected.get(f), f, t1ReverseMap);
 
 			}
 			
 			/// for vars in adhoc
-			System.out.println("========== Prioritize adhoc =========== ");
+			LogUtils.normalMsg("========== Prioritize adhoc =========== ");
 			model_data_complete.prioritize(adhoc, absMainFilePath, t1ReverseMap);
-			System.out.println("========== Finish adhoc prioritization =========== ");
-			System.out.println("========== Finish all prioritization =========== ");
+			LogUtils.normalMsg("========== Finish adhoc prioritization =========== ");
+			LogUtils.normalMsg("========== Finish all prioritization =========== ");
 			
 			/// update whole study
 			adhoc_cumulative_globals.add(adhoc.getGlobalVars());
@@ -241,19 +244,19 @@ public class StudyParser {
 			
 			//System.out.println(" weight table keys: "+ model_data_complete.wtMap.keySet());
 			
-			System.out.println("######################################################");
-			System.out.println("####   Finished Processing model: "+model);
-			System.out.println("######################################################");
+			LogUtils.importantMsg("######################################################");
+			LogUtils.importantMsg("####   Finished Processing model: "+model);
+			LogUtils.importantMsg("######################################################");
 		}
-		System.out.println("**********************************************************");
-		System.out.println("***********+----------------------------------+***********");
-		System.out.println("***********|   Finished all data processing   |***********");
-		System.out.println("***********+----------------------------------+***********");
-		System.out.println("**********************************************************");
+		LogUtils.importantMsg("**********************************************************");
+		LogUtils.importantMsg("***********+----------------------------------+***********");
+		LogUtils.importantMsg("***********|   Finished all data processing   |***********");
+		LogUtils.importantMsg("***********+----------------------------------+***********");
+		LogUtils.importantMsg("**********************************************************");
 	
 		
 		
-		System.out.println("All keyset: "+model_data_complete_map.keySet());
+		LogUtils.importantMsg("All keyset: "+model_data_complete_map.keySet());
 		
 		
 		

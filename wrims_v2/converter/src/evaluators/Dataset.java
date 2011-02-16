@@ -107,7 +107,7 @@ public class Dataset {
 		for (String e : s.svList){ 
 			if (this.svList.contains(e)) {
 				System.out.println("Error!!! Svar redefined: "+e+" in file: "+filePath);
-				ErrMsg.print("Svar redefined: "+e, filePath);
+				LogUtils.errMsg("Svar redefined: "+e, filePath);
 				b = true;
 			}
 		}		
@@ -117,7 +117,7 @@ public class Dataset {
 				//ErrMsg.print("Dvar redefined: "+e, "\n"+filePath+"\n"+dvMap.get(e).fromWresl);
 				String f1 = filePath;
 				String f2 = dvMap.get(e).fromWresl;
-				ErrMsg.printParents("Dvar redefined: "+e, f1, f2, reverseMap);
+				LogUtils.errMsgTree("Dvar redefined: "+e, f1, f2, reverseMap);
 				b = true;
 			}
 		}	
@@ -468,7 +468,7 @@ public class Dataset {
 						
 			if (t1Map.get(childFile)!=null)  this.prioritizeChildren(childFile, t1Map, fileDataMap, reverseMap);
 			
-			System.out.println("========== Prioritize file: " + childFile);
+			LogUtils.normalMsg("========== Prioritize file: " + childFile);
 			this.prioritize(fileDataMap.get(childFile), childFile, reverseMap);
 		}
 		
