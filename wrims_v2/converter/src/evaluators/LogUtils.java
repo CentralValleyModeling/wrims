@@ -52,7 +52,7 @@ public class LogUtils {
 			level = level + "--";
 			Set<String> parents = reverseMap.get(f);
 			for (String s : parents) {
-				System.out.println(level + s);
+				System.out.println(" "+level + "> "+ s);
 
 				printTree(s, reverseMap, level);
 
