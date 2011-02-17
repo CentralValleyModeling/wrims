@@ -105,7 +105,7 @@ public class Dataset {
 				// TODO: does this work???
 				String f1 = filePath;
 				String f2 = incFileMap.get(e).fromWresl;
-				LogUtils.errMsg("#### Include file redefined: "+e, f1, f2, reverseMap);
+				LogUtils.errMsg("**** Include file redefined: "+e, f1, f2, reverseMap);
 				b = true;
 				
 			}

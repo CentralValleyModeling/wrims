@@ -191,6 +191,7 @@ public class Struct {
 			incFile = new IncludeFile();
 
 			incFile.scope = scope;
+			incFile.fromWresl = currentAbsolutePath;
 			incFileList.add(absFilePath);
 			
 			incFileMap.put(absFilePath, incFile);
@@ -314,7 +315,7 @@ public class Struct {
 
 	public void external(String name, String scope, String externalType) {
 		if (var_all.containsKey(name)) {
-			LogUtils.errMsg("Svar redefined: "+name, currentAbsolutePath);
+			LogUtils.errMsg("External variable redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "external");
 		} else {
 
@@ -336,7 +337,7 @@ public class Struct {
 	
 	public void svarExpression(String svarName, String scope, String expression) {
 		if (var_all.containsKey(svarName)) {
-			LogUtils.errMsg("Svar redefined: "+svarName, currentAbsolutePath);
+			LogUtils.errMsg("State variable redefined: "+svarName, currentAbsolutePath);
 			error_var_redefined.put(svarName, "svar_expression");
 		} else {
 			svar_scope.put(svarName, scope);
@@ -368,7 +369,7 @@ public class Struct {
 	public void svarSum(String name, String scope, ArrayList<String> content,
 			String sumStr) {
 		if (var_all.containsKey(name)) {
-			LogUtils.errMsg("Svar redefined: "+name, currentAbsolutePath);
+			LogUtils.errMsg("State variable redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "svar_sum");
 		} else {
 			svar_scope.put(name, scope);
@@ -395,7 +396,7 @@ public class Struct {
 	public void svarTable(String name, String scope, ArrayList<String> content,
 			String sqlStr) {
 		if (var_all.containsKey(name)) {
-			LogUtils.errMsg("Svar redefined: "+name, currentAbsolutePath);
+			LogUtils.errMsg("State variable redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "svar_table");
 		} else {
 			var_all.put(name, "svar_table");
@@ -431,7 +432,7 @@ public class Struct {
 
 	public void svarDSS(String name, String scope, String b_part, String kind, String units, String convertToUnits) {
 		if (var_all.containsKey(name)) {
-			LogUtils.errMsg("Svar redefined: "+name, currentAbsolutePath);
+			LogUtils.errMsg("State variable redefined: "+name, currentAbsolutePath);
 			error_var_redefined.put(name, "svar_dss");
 		} else {
 			svar_scope.put(name, scope);

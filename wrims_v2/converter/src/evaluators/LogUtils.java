@@ -27,12 +27,16 @@ public class LogUtils {
 	public static void errMsg(String msg){
 
 		System.err.println("# Error: "+msg);
+		
+		System.err.flush();
 
 	}	
 	
 	public static void errMsg(String msg, String file){
 
 		System.err.println("# Error: "+msg+" @ "+file);
+		
+		System.err.flush();
 
 	}
 
