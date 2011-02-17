@@ -30,7 +30,7 @@ public class MainConverter {
 		if (args.length > 1 ){
 			outParent = args[1];
 		} else {
-			outParent = "D:\\cvwrsm\\trunk\\wrims_v2\\test-csv\\calsim3\\";
+			outParent = "..\\test-csv\\calsim3\\";
 		}
 		
 		//System.out.println("output folder: "+outParent);
