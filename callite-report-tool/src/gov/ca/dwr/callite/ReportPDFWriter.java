@@ -52,13 +52,35 @@ public class ReportPDFWriter implements Writer {
 	private Font subtitleFont;
 	private Font smallBoldFont;
 	private String dateStr;
+	
+	private Font tableFont;
+	private Font tableBoldFont;
 
+
+	
 	public ReportPDFWriter() {
 
 	}
 
 	public ReportPDFWriter(String filename) {
 		startDocument(filename);
+	}
+	
+	
+	public void setTableFontSize(String tableFontSize){
+		
+		int fontSize = 9;
+		try {
+	      fontSize = Integer.parseInt(tableFontSize.trim());
+	    } catch (NumberFormatException nfe){
+	      System.out.println("NumberFormatException: " + nfe.getMessage());
+	    } 
+
+		
+		tableFont = FontFactory.getFont("Arial", fontSize);
+		tableBoldFont = FontFactory.getFont("Arial", fontSize);
+		tableBoldFont.setStyle(Font.BOLD);		
+		
 	}
 
 	public void startDocument(String filename) {
@@ -143,7 +165,7 @@ public class ReportPDFWriter implements Writer {
 			summaryTable.setWidthPercentage(100);
 			new PdfOutline(writer.getRootOutline(),new PdfDestination(PdfDestination.FITH), "Summary Table");
 		}
-		addTableRow(headerRow, columnSpans, BOLD, true, null);
+		addTableRow(headerRow, columnSpans, BOLD, true);
 		PdfPRow row = summaryTable.getRow(summaryTable.getRows().size()-1);
 		PdfPCell[] cells = row.getCells();
 		for (int i = 0; i < cells.length; i++) {
@@ -156,20 +178,12 @@ public class ReportPDFWriter implements Writer {
 
 	@Override
 	public void addTableRow(List<String> rowData, int[] columnSpans, int style,
-			boolean centered, Font fontSizeAndStyle) {
+			boolean centered) {
 		for (int i = 0; i < rowData.size(); i++) {
 			
-			PdfPCell cell;
-			
-			if ( fontSizeAndStyle == null) {
-			
-				cell = new PdfPCell(new Phrase(rowData.get(i),
-					style == BOLD ? smallBoldFont : smallFont));
-			} else {
-				
-				cell = new PdfPCell(new Phrase(rowData.get(i), fontSizeAndStyle));				
-				
-			}
+			PdfPCell cell = new PdfPCell(new Phrase(rowData.get(i),
+					style == BOLD ? tableBoldFont : tableFont));
+
 						
 			if (centered) {
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);

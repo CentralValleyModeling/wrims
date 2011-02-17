@@ -46,13 +46,15 @@ public class Report {
 		void startDocument(String outputFile);
 
 		void endDocument();
+		
+		void setTableFontSize(String tableFontSize);
 
 		void addTableTitle(String string);
 
 		void addTableHeader(ArrayList<String> headerRow, int[] columnSpans);
 
 		void addTableRow(List<String> rowData, int[] columnSpans, int style,
-				boolean centered, Font fontSizeAndStyle);
+				boolean centered);
 
 		void endTable();
 
@@ -163,6 +165,7 @@ public class Report {
 			Utils.addMessage(msg);
 			return;
 		}
+
 		generateSummaryTable();
 		int dataIndex = 0;
 		for (PathnameMap pathMap : pathnameMaps) {
@@ -233,6 +236,10 @@ public class Report {
 	}
 
 	private void generateSummaryTable() {
+		
+		writer.setTableFontSize(scalars.get("TABLE_FONT_SIZE"));
+		
+		
 		writer.addTableTitle(String.format("System Flow Comparision: %s vs %s",
 				scalars.get("NAME_ALT"), scalars.get("NAME_BASE")));
 		writer.addTableSubTitle(scalars.get("NOTE").replace("\"", ""));
@@ -320,11 +327,11 @@ public class Report {
 					for (int i = 0; i < rowData.size(); i++) {
 						blankRow.add(" ");
 					}
-					writer.addTableRow(blankRow, null, Writer.NORMAL, false, null);
+					writer.addTableRow(blankRow, null, Writer.NORMAL, false);
 				}
-				writer.addTableRow(rowData, null, Writer.BOLD, false, null);
+				writer.addTableRow(rowData, null, Writer.BOLD, false);
 			} else {
-				writer.addTableRow(rowData, null, Writer.NORMAL, false, null);
+				writer.addTableRow(rowData, null, Writer.NORMAL, false);
 			}
 			firstDataRow = false;
 		}

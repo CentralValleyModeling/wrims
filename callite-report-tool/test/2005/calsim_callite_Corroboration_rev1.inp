@@ -1,0 +1,60 @@
+# A template file to compare calsim with callite
+SCALAR
+NAME		VALUE
+TABLE_FONT_SIZE   7
+FILE_BASE	test/2005/2005A01A_CVCJPOD_DV.DSS #input file for base scenario
+NAME_BASE	CalSim
+FILE_ALT	test/2005/CL_EXISTING_WHL_010511_DV.DSS # input file for alternative scenario
+NAME_ALT	CalLite
+OUTFILE		test/2005/Calsim_vs_Callite_020411.pdf
+NOTE		"Notes: Corroboration Study with BO; CalSim: BO version (01/05/2011) and CalLite: BO version*(01/03/2011)"
+ASSUMPTIONS 	"Assumptions: Current Condition; Wheeling is On"
+MODELER 	"Nazrul Islam"
+END
+
+PATHNAME_MAPPING
+VARIABLE				VAR_CATEGORY	REPORT_TYPE 	PATH_BASE 						PATH_ALT						ROW_TYPE	PLOT
+"Trinirty Storage"			S		Exceedance	//S1/STORAGE//1MON//					//S_Trnty/STORAGE//1MON//				N		Y
+"Shasta Storage"			S		Exceedance	//S4/STORAGE//1MON//					//S_Shsta/STORAGE//1MON//				N		Y
+"FolSom Storage"			S		Exceedance	//S8/STORAGE//1MON//					//S_Folsm/STORAGE//1MON//				N		Y
+"NOD Storage"				S		Exceedance_Post	//S1+S4+S8/STORAGE//1MON//				//S_Trnty+S_Shsta+S_Folsm/STORAGE//1MON//		N		Y
+"Orovile Storage"			S		Exceedance	//S6/STORAGE//1MON//					//S_Orovl/STORAGE//1MON//				N		Y
+"CVP SanLuis Storage"			S		Exceedance	//S11/STORAGE//1MON//					//S_SLCVP/STORAGE//1MON//				N		Y
+"SWP SanLuis Storage"			S		Exceedance	//S12/STORAGE//1MON//					//S_SLSWP/STORAGE//1MON//				N		Y
+"River Flow"				RF		Average		IGNORE							IGNORE							B		N
+"Trinity R blw Lewiston"		RF		Average		//C100/FLOW-CHANNEL//1MON//				//C_Lwstn/FLOW-CHANNEL//1MON//				N		N
+"Trinity Export"			RF		Average		//D100/FLOW-DELIVERY//1MON//				//D_ClearTu/FLOW-TUNNEL//1MON//				N		N
+"Clear Cr blw Whiskeytown"		RF		Average		//C3/FLOW-CHANNEL//1MON//				//C_Wkytn/FLOW-CHANNEL//1MON//				N		N
+"Sacramento R @ Keswick"		RF		Average		//C5/FLOW-CHANNEL//1MON//				//C_Kswck/FLOW-CHANNEL//1MON//				N		Y
+"Sacramento R @ Wilkins Slough"		RF		Average		//C129/FLOW-CHANNEL//1MON//				//C_Wilkns/FLOW-CHANNEL//1MON//				N		N
+"Feather R blw Thermalito"		RF		Average		//C203/FLOW-CHANNEL//1MON//				//C_Therm/FLOW-CHANNEL//1MON//				N		N
+"American R blw Nimbus"			RF		Average		//C9/FLOW-CHANNEL//1MON//				//C_Nimbus/FLOW-CHANNEL//1MON//				N		N
+"Delta Inflow"				DI		Average_post	//C400+C157+C504+C644/FLOW-CHANNEL//1MON//		//C_Hood+C_YoloBP+C_MoklmnR+C_SJR///1MON//		B		Y
+"Sacramento R @ Hood"			DI		Average		//C400/FLOW-CHANNEL//1MON//				//C_Hood/FLOW-CHANNEL//1MON//				N		N
+"Yolo Bypass"				DI		Average		//C157/FLOW-CHANNEL//1MON//				//C_YoloBP/FLOW-CHANNEL//1MON//				N		N
+"Mokelumne R"				DI		Average		//C504/FLOW-CHANNEL//1MON//				//C_MoklmnR/FLOW-ACCRDEPL//1MON//			N		N
+"San Joaquin R & Calaveras"		DI		Average		//C644/FLOW-CHANNEL//1MON//				//C_SJR/FLOW-ACCRDEPL//1MON//				N		N
+"Delta Outflow"				DO		Average		//C407/FLOW-CHANNEL//1MON//				//C_Delta/FLOW-CHANNEL//1MON//				B		N
+"Delta Outflow for X2 and NDO"		DO		Average		//D407/FLOW-DELIVERY//1MON//				//D_DeltaReqd/FLOW-DELIVERY//1MON//			N		N
+"Delta Exports"				DE		Average_post	//D419+D419_CVP+D418/FLOW-DELIVERY//1MON//		//D_Banks+D_Banks_CVP+D_Jones/FLOW-DELIVERY//1MON//	B		N
+"Banks SWP"				DE		Average		//D419/FLOW-DELIVERY//1MON//				//D_Banks/FLOW-DELIVERY//1MON//				N		N
+"Banks CVP"				DE		Average		//D419_CVP/FLOW-DELIVERY//1MON//			//D_Banks_CVP/FLOW-DELIVERY//1MON//			N		N
+"Jones"					DE		Average		//D418/FLOW-DELIVERY//1MON//				//D_Jones/FLOW-DELIVERY//1MON//				N		N
+"SWP SOD Deliveries"			SWPSOD		Avg_Excd_post	//SWP_TA_TOTAL+SWP_IN_TOTAL+SWP_CO_TOTAL///1MON//	//SWP_TA_TOTAL+SWP_IN_TOTAL+SWP_CO_TOTAL///1MON// 	B		Y
+"Table A (Incl. Article 56)"		SWPSOD		Average		//SWP_TA_TOTAL/SWP_DELIVERY//1MON//			//SWP_TA_TOTAL/SWP_DELIVERY//1MON//			N		N
+"Article 21"				SWPSOD		Average		//SWP_IN_TOTAL/SWP_DELIVERY//1MON//			//SWP_IN_TOTAL/SWP_DELIVERY//1MON//			N		N
+"Article 56"				SWPSOD		Average		//SWP_CO_TOTAL/SWP_DELIVERY//1MON//			//SWP_CO_TOTAL/SWP_DELIVERY//1MON//			N		N
+"CVP SOD Deliveries"			CVPSOD		Avg_Excd	//CVPTOTALDEL/FLOW-DELIVERY//1MON//			//CVPTOTALDEL/FLOW-DELIVERY//1MON//			B		Y
+"SWP Table A Allocation"		ALLOC		Exceedance	//SWP_PERDELDV/SWP-DELIVERY//1MON//			//SWP_PERDELDV/SWP-DELIVERY//1MON//			B		Y
+"CVP SOD AG Allocation"			ALLOC		Exceedance	//PERDV_CVPAG_S/PERCENT-DELIVERY//1MON//		//PERDV_CVPAG_S/PERCENT-DELIVERY//1MON//		B		Y
+"X2 Position"				X2		Timeseries	//X2_PRV/X2-POSITION-PREV//1MON//			//X2_PRV/X2-POSITION-PREV//1MON//			N		Y
+"Rock Slough EC"			EC		Timeseries	//RS_EC_MONTH/SALINITY//1MON//				//RS_EC_MONTH/SALINITY//1MON//				N		Y
+END
+
+
+TIME_PERIODS
+NAME			TIMEWINDOW
+"Long Term"	"31OCT1921 2400 - 30SEP2003 2400"
+"Dry Period 1"	"31OCT1928 2400 - 30SEP1934 2400"
+"Dry Period 2"	"31OCT1986 2400 - 30SEP1992 2400"
+END
