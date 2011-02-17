@@ -929,42 +929,7 @@ timeseries returns[ArrayList<String> list]
 		}
 	;
 	
-function returns [ArrayList<String> list]
-  : ((i1=noArgFunction)|(i2=argFunction)){
-      list=new ArrayList<String>();
-      if ($i1.list!=null){
-        list=$i1.list;
-      }else{
-        list=$i2.list;
-      }
-  }
-  ;
 
-noArgFunction returns [ArrayList<String> list]
-  : IDENT '(' ')'{
-      if (!function.containsKey($IDENT.text)){
-        error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": function "+$IDENT.text+" is not defined before used");
-      }
-      list=new ArrayList<String>();
-      list.add("FUNCTION");
-      list.add($IDENT.text+"()"); 
-  }
-  ;  
-
-argFunction returns [ArrayList<String> list] 
-  : IDENT arguements {
-      if (!function.containsKey($IDENT.text)){
-        error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": function "+$IDENT.text+" is not defined before used");
-      }
-      list=new ArrayList<String>();
-      list.add("FUNCTION");
-      list.add($IDENT.text+$arguements.text);
-  }
-  ;  
-  
-arguements returns [String text] @init{text="";}:
-  '('{text="(";} ((i1=IDENT){text=text+"{"+$i1.text+"}"; }|(k1=knownTS){text=text+$k1.text;}) (';' ((i2=IDENT){text=text+";"+"{"+$i2.text+"}";}|(k2=knownTS){text=text+";"+"{"+$k2.text+"}";}))* ')' 
-  ;
 	
 partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
@@ -1176,7 +1141,65 @@ pastCycleDV returns [String text]
     text="{"+$i1.text+"}"+"["+$i2.text+"]";
   }
   ; 
-	
+
+function returns [ArrayList<String> list]
+  : ((i1=noArgFunction)|(i2=argFunction)){
+      list=new ArrayList<String>();
+      if ($i1.list!=null){
+        list=$i1.list;
+      }else{
+        list=$i2.list;
+      }
+  }
+  ;
+
+noArgFunction returns [ArrayList<String> list]
+  : IDENT '(' ')'{
+      if (!function.containsKey($IDENT.text)){
+        error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": function "+$IDENT.text+" is not defined before used");
+      }
+      list=new ArrayList<String>();
+      list.add("FUNCTION");
+      list.add($IDENT.text+"()"); 
+  }
+  ;  
+
+argFunction returns [ArrayList<String> list] 
+  : IDENT arguments {
+      if (!function.containsKey($IDENT.text)){
+        error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": function "+$IDENT.text+" is not defined before used");
+      }
+      list=new ArrayList<String>();
+      list.add("FUNCTION");
+      list.add($IDENT.text+$arguments.text);
+  }
+  ;  
+  
+arguments returns [String text]
+  : (oneArgument|multiArguments) {
+      if ($oneArgument.text==null){
+        text=$multiArguments.text;
+      }else{
+        text=$oneArgument.text;
+      }
+    };
+
+oneArgument returns [String text]@init{text="";}: 
+    '(' ((IDENT{
+      if (svar.containsKey($IDENT.text)){
+        text=text+"({"+$IDENT.text+"})";
+      }else{
+        error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos)+": "+$IDENT.text+" should be a state variable");
+      }}) 
+    |(knownTS{text=text+$knownTS.text;}))
+    ')'{text=text+")";}
+    ;
+
+
+multiArguments returns [String text] @init{text="";}:
+  '('{text="(";} ((e1=expression){text=text+$e1.list.get(1); }) (';' (e2=expression){text=text+";"+$e2.list.get(1);})+ ')'{text=text+")";} 
+  ;
+  	
 unary returns [String text]
 	:	(i1='-')? term{
 	   if ($i1==null){
