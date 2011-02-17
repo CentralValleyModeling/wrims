@@ -46,7 +46,10 @@ public class FileParser {
 			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
 	    catch(Exception e) {
-	         e.printStackTrace();
+	         //e.printStackTrace();
+	         
+	         LogUtils.errMsg("File not found: "+ inputFilePath);
+	         
 	        }
 		    
 		ConvertWreslLexer lexer = new ConvertWreslLexer(stream);

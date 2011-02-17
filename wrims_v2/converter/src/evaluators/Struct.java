@@ -148,7 +148,7 @@ public class Struct {
 
 	public void mergeWeightTable(String name, String value, String scope) {
 		if (wtList.contains(name)) {
-			LogUtils.errMsg("Weight table decision variable redefined: "+name, currentAbsolutePath);
+			LogUtils.errMsg("Weight table variable redefined: "+name, currentAbsolutePath);
 			error_weightVar_redefined.put(name, currentAbsolutePath);
 		} 
 		else {
@@ -156,6 +156,7 @@ public class Struct {
 			// / clearer data structure
 			wt = new WeightTable();
 			wt.weight = value;
+			wt.fromWresl = currentAbsolutePath;
 			wtMap.put(name, wt);
 
 			wtList.add(name);

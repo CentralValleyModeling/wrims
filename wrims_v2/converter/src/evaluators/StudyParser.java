@@ -247,10 +247,8 @@ public class StudyParser {
 		LogUtils.importantMsg("Finished all data processing");
 
 
-	
 		
-		
-		LogUtils.importantMsg("All keyset: "+model_data_complete_map.keySet());
+		//LogUtils.importantMsg("All keyset: "+model_data_complete_map.keySet());
 		
 		
 		

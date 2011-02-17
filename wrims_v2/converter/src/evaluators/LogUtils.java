@@ -23,16 +23,20 @@ public class LogUtils {
 			System.out.flush();
 		}
 	}
+
+	public static void errMsg(String msg){
+
+		System.err.println("# Error: "+msg);
+
+	}	
 	
 	public static void errMsg(String msg, String file){
 
-		
-		//System.out.println("Error!!! "+msg+" in file: "+file);
-		System.err.println("Error! "+msg+" in file: "+file);
+		System.err.println("# Error: "+msg+" @ "+file);
 
 	}
 
-	public static void errMsgTree(String msg, String file1, String file2,  Map<String,Set<String>> reverseMap){
+	public static void errMsg(String msg, String file1, String file2,  Map<String,Set<String>> reverseMap){
 
 		System.out.flush();
 		

@@ -92,15 +92,22 @@ public class Dataset {
 
 		for (String e : s.wtList){ 
 			if (this.wtList.contains(e)) {
-				System.err.println("Error! Weight table decision variable duplicated: "+e+" in file: "+filePath);
+				String f1 = filePath;
+				String f2 = wtMap.get(e).fromWresl;
+				LogUtils.errMsg("Weight table variable redefined: "+e, f1, f2, reverseMap);
 				b = true;
 			}
 		}
 		
 		for (String e : s.incFileList){ 
 			if (this.incFileList.contains(e)) {
-				System.out.println("Error!!! Include file redefined: "+e+" in file: "+filePath);
+
+				// TODO: does this work???
+				String f1 = filePath;
+				String f2 = incFileMap.get(e).fromWresl;
+				LogUtils.errMsg("#### Include file redefined: "+e, f1, f2, reverseMap);
 				b = true;
+				
 			}
 		}
 		
@@ -108,7 +115,7 @@ public class Dataset {
 			if (this.svList.contains(e)) {
 				String f1 = filePath;
 				String f2 = svMap.get(e).fromWresl;
-				LogUtils.errMsgTree("State variable redefined: "+e, f1, f2, reverseMap);
+				LogUtils.errMsg("State variable redefined: "+e, f1, f2, reverseMap);
 				b = true;
 			}
 		}		
@@ -117,41 +124,41 @@ public class Dataset {
 			if (this.dvList.contains(e)) {	
 				String f1 = filePath;
 				String f2 = dvMap.get(e).fromWresl;
-				LogUtils.errMsgTree("Decision varriable redefined: "+e, f1, f2, reverseMap);
+				LogUtils.errMsg("Decision varriable redefined: "+e, f1, f2, reverseMap);
 				b = true;
 			}
 		}	
 
 		for (String e : s.gList){ 
-			if (this.gList.contains(e)) {
-//				System.out.println("Error!!! Goal redefined: "+e+" in file: "+filePath);	
-//				b = true;
-				
+			if (this.gList.contains(e)) {				
 				String f1 = filePath;
 				String f2 = gMap.get(e).fromWresl;
-				LogUtils.errMsgTree("Goal redefined: "+e, f1, f2, reverseMap);
-				b = true;
-				
+				LogUtils.errMsg("Goal redefined: "+e, f1, f2, reverseMap);
+				b = true;				
 			}
 		}
 		
 		for (String e : s.asList){ 
 			if (this.asList.contains(e)) {
-				System.out.println("Error!!! Alias redefined: "+e+" in file: "+filePath);	
-				b = true;
+				String f1 = filePath;
+				String f2 = asMap.get(e).fromWresl;
+				LogUtils.errMsg("Alias redefined: "+e, f1, f2, reverseMap);
+				b = true;	
 			}
 		}
 
 		for (String e : s.model_list){ 
-			if (this.model_list.contains(e)) {
-				System.out.println("Error!!! Model redefined: "+e+" in file: "+filePath);	
+			if (this.model_list.contains(e)) {				
+				// TODO: check 
+				LogUtils.errMsg("Error!!! Model redefined: "+e+" in file: "+filePath);	
 				b = true;
 			}
 		}
 		
 		for (String e : s.seqList){ 
 			if (this.seqList.contains(e)) {
-				System.out.println("Error!!! Sequence redefined: "+e+" in file: "+filePath);	
+				// TODO: check 
+				LogUtils.errMsg("Error!!! Sequence redefined: "+e+" in file: "+filePath);	
 				b = true;
 			}
 		}
