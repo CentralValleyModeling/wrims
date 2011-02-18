@@ -9,7 +9,7 @@ import evaluators.Parameters;
 
 public class LogUtils {
 
-	private static PrintWriter _logFile;
+	public static PrintWriter _logFile;
 
 
 	public static void setLogFile(){

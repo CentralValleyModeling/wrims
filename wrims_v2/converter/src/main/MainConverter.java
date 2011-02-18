@@ -45,6 +45,8 @@ public class MainConverter {
 		
 		WriteCSV.study(sc, modelDataMap, outParent);
 		
+		LogUtils._logFile.close();
+		
 
 	}
 
