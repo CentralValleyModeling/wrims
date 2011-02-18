@@ -9,6 +9,7 @@ import evaluators.StudyConfig;
 import evaluators.StudyParser;
 import evaluators.Tools;
 import evaluators.WriteCSV;
+import evaluators.LogUtils;
 
 public class MainConverter {
 	
@@ -37,7 +38,7 @@ public class MainConverter {
 		
 		Tools.deleteDir(outParent);
 
-		
+		LogUtils.setLogFile();
 		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(f);
 		Map<String, Dataset> modelDataMap = StudyParser.parseSubFiles(sc);
 		

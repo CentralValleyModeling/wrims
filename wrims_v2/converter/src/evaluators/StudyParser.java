@@ -21,7 +21,7 @@ public class StudyParser {
 		File absMainFile = new File(relativeMainFilePath).getAbsoluteFile();
 		String absMainFilePath = absMainFile.getCanonicalPath().toLowerCase();
 		
-		System.out.println("Parsing study main file: " + absMainFilePath);
+		LogUtils.importantMsg("Parsing study main file: " + absMainFilePath);
 		
 		ConvertWreslParser parser = FileParser.parseFile(absMainFilePath);
 		
@@ -45,25 +45,20 @@ public class StudyParser {
 				
 			}
 		}
-	
-		
 		
 		if ( ! parser.F.model_list.isEmpty()){
 			
 			modelAdhocMap.putAll( Tools.convertStructMapToDatasetMap(parser.modelMap) );
 		}
 		else { LogUtils.errMsg(" No models found ", absMainFilePath); }
-	
-		
 
 		sc.absMainFilePath = absMainFilePath;
 		sc.modelAdhocMap = modelAdhocMap;
 
 		sc.sequenceMap = dataset.seqMap;
-		
-		
+				
 		for ( Integer i : sc.sequenceOrder){	
-			System.out.println("sequence: "+i+" : "+sc.sequenceMap.get(i).modelName);		
+			LogUtils.importantMsg("sequence: "+i+" : "+sc.sequenceMap.get(i).modelName);		
 		}	
 		
 		return sc;
