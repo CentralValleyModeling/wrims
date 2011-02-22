@@ -11,10 +11,10 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <javaElement handleIdentifier="=converter/src&lt;main{MainConverter.java"/>
         <file path="/converter/src/wresl/ConvertWresl.tokens"/>
         <javaElement handleIdentifier="=converter/src&lt;wresl{ConvertWreslParser.java"/>
         <javaElement handleIdentifier="=converter/src&lt;wresl{ConvertWreslLexer.java"/>
-        <javaElement handleIdentifier="=converter/src&lt;evaluators"/>
-        <javaElement handleIdentifier="=converter/src&lt;main"/>
+        <javaElement handleIdentifier="=converter/src&lt;components"/>
     </selectedElements>
 </jardesc>
