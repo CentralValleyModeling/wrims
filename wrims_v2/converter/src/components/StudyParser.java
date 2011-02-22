@@ -1,4 +1,4 @@
-package evaluators;
+package components;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,9 +9,11 @@ import java.util.Map;
 import java.util.Set;
 
 import org.antlr.runtime.RecognitionException;
+
+import components.LogUtils;
+
 import wresl.ConvertWreslParser;
 
-import evaluators.LogUtils;
 
 public class StudyParser {
 	

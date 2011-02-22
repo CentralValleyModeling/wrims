@@ -1,4 +1,4 @@
-package evaluators;
+package components;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;

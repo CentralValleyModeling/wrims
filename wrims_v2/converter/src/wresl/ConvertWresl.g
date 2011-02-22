@@ -9,13 +9,13 @@ options {
   import java.util.Map;
   import java.util.HashMap;
   import java.util.Arrays;
-  import evaluators.Dataset;
-  import evaluators.Struct;
-  import evaluators.Tools;
-  import evaluators.Svar; 
-  import evaluators.Goal; 
-  import evaluators.IncludeFile; 
-  import evaluators.Parameters;   
+  import components.Dataset;
+  import components.Struct;
+  import components.Tools;
+  import components.Svar; 
+  import components.Goal; 
+  import components.IncludeFile; 
+  import components.Parameters;   
 }
 
 @lexer::header {

@@ -1,4 +1,4 @@
-package evaluators;
+package components;
 
 public class WeightTable {
 	

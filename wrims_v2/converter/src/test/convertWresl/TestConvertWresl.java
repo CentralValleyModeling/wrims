@@ -18,14 +18,15 @@ import wresl.ConvertWreslParser;
 import org.testng.annotations.*;
 import org.testng.Assert;
 
-import evaluators.Alias;
-import evaluators.Dvar;
-import evaluators.FileParser;
-import evaluators.Goal;
-import evaluators.IncludeFile;
-import evaluators.Struct;
-import evaluators.Svar;
-import evaluators.Parameters;
+import components.Alias;
+import components.Dvar;
+import components.FileParser;
+import components.Goal;
+import components.IncludeFile;
+import components.Parameters;
+import components.Struct;
+import components.Svar;
+
 
 
 public class TestConvertWresl {

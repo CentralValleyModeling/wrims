@@ -7,12 +7,13 @@ import java.util.Map;
 import org.antlr.runtime.RecognitionException;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import evaluators.Comparison;
-import evaluators.Dataset;
-import evaluators.StudyConfig;
-import evaluators.StudyParser;
-import evaluators.Tools;
-import evaluators.WriteCSV;
+
+import components.Comparison;
+import components.Dataset;
+import components.StudyConfig;
+import components.StudyParser;
+import components.Tools;
+import components.WriteCSV;
 
 
 public class TestConvertWreslToTable {

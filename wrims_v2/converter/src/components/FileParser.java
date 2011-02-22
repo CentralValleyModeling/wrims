@@ -1,4 +1,4 @@
-package evaluators;
+package components;
 
 import java.io.File;
 import java.io.IOException;

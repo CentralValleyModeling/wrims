@@ -1,4 +1,4 @@
-package evaluators;
+package components;
 
 import java.util.HashMap;
 import java.util.Map;

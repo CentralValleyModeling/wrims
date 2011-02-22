@@ -1,10 +1,11 @@
-package evaluators;
+package components;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
 import java.util.Set;
-import evaluators.Parameters;
+
+import components.Parameters;
 
 
 public class LogUtils {

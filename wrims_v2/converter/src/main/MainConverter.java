@@ -4,12 +4,13 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.antlr.runtime.RecognitionException;
-import evaluators.Dataset;
-import evaluators.StudyConfig;
-import evaluators.StudyParser;
-import evaluators.Tools;
-import evaluators.WriteCSV;
-import evaluators.LogUtils;
+
+import components.Dataset;
+import components.LogUtils;
+import components.StudyConfig;
+import components.StudyParser;
+import components.Tools;
+import components.WriteCSV;
 
 public class MainConverter {
 	

@@ -1,4 +1,4 @@
-package evaluators;
+package components;
 
 import java.io.IOException;
 import java.util.Map;

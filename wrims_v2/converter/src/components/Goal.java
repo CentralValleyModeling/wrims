@@ -1,30 +1,29 @@
-package evaluators;
+package components;
 
 import java.util.ArrayList;
 
-public class Svar {
+public class Goal {
 	
 	public String scope;
-	public String dssBPart;
-	public String format;
-	public String kind;
-	public String units;
-	public String convertToUnits;
+	//public String format;
+	//public String kind;
+	//public String units;
+	public String lhs;
 	public ArrayList<String> caseName;
 	public ArrayList<String> caseCondition;
 	public ArrayList<String> caseExpression;
+	public ArrayList<String> case_lhs_gt_rhs;
+	public ArrayList<String> case_lhs_lt_rhs;
 	public String fromWresl;
 	
-	public Svar(){
+	public Goal(){
 		scope=Parameters.undefined;
-		dssBPart=Parameters.undefined;
-		format=Parameters.undefined;
-		kind="undefined";
-		units="undefined";
-		convertToUnits ="undefined";
+		lhs=Parameters.undefined;
 		caseName       = new ArrayList<String>();
 		caseCondition  = new ArrayList<String>();
 		caseExpression = new ArrayList<String>();
+		case_lhs_gt_rhs = new ArrayList<String>();
+		case_lhs_lt_rhs = new ArrayList<String>();
 		fromWresl = Parameters.undefined;
 	}
 	
@@ -34,14 +33,16 @@ public class Svar {
 		String caseNameStr="";
 		String caseConditionStr="";
 		String caseExpressionStr="";
+		String case_lhs_gt_rhs_str="";
+		String case_lhs_lt_rhs_str="";
 		
 		for (String i: caseName){caseNameStr = caseNameStr + s + i;}
 		for (String i: caseCondition){caseConditionStr = caseConditionStr + s + i;}
-		for (String i: caseExpression){caseExpressionStr = caseExpressionStr + s + i;}
+		for (String i: caseExpression){caseExpressionStr = caseExpressionStr + s + i;}	
+		for (String i: case_lhs_gt_rhs){case_lhs_gt_rhs_str = case_lhs_gt_rhs_str + s + i;}	
+		for (String i: case_lhs_lt_rhs){case_lhs_lt_rhs_str = case_lhs_lt_rhs_str + s + i;}	
 		
-		
-		String temp = scope+s+dssBPart+format+s+kind+s+units+s+convertToUnits+s+
-		              caseNameStr+caseConditionStr+s+caseExpressionStr;
+		String temp = scope+s+lhs+s+caseNameStr+caseConditionStr+s+caseExpressionStr+s+case_lhs_gt_rhs_str+s+case_lhs_lt_rhs_str;
 		
 		return temp;
 	}
@@ -54,11 +55,11 @@ public class Svar {
 			return false;
 		}
 
-		else if (((Svar) obj).equalEva() == null) {
+		else if (((Goal) obj).equalEva() == null) {
 			return false;
 		}
 
-		else if (this.equalEva() == ((Svar) obj).equalEva()) {
+		else if (this.equalEva() == ((Goal) obj).equalEva()) {
 			return true;
 		}
 

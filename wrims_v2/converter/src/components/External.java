@@ -1,21 +1,23 @@
-package evaluators;
+package components;
 
-public class IncludeFile {
+public class External {
 	
 	public String scope;
-	public String absFilePath;
+	public String type;
 	public String fromWresl;
+
 	
-	public IncludeFile(){
+	public External(){
 		scope=Parameters.undefined;
+		type=Parameters.undefined;
 		fromWresl=Parameters.undefined;
-		//absFilePath=Parameters.undefined;
 
 	}
 	
 	public String equalEva(){
-		//String s = "|";				
-		String temp = scope; //+s+absFilePath;
+		
+		String s = "|";		
+		String temp = scope+s+type;
 		
 		return temp;
 	}
@@ -28,11 +30,11 @@ public class IncludeFile {
 			return false;
 		}
 
-		else if (((IncludeFile) obj).equalEva() == null) {
+		else if (((External) obj).equalEva() == null) {
 			return false;
 		}
 
-		else if (this.equalEva() == ((IncludeFile) obj).equalEva()) {
+		else if (this.equalEva() == ((External) obj).equalEva()) {
 			return true;
 		}
 
