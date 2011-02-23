@@ -5,9 +5,6 @@ import java.util.ArrayList;
 public class Goal {
 	
 	public String scope;
-	//public String format;
-	//public String kind;
-	//public String units;
 	public String lhs;
 	public ArrayList<String> caseName;
 	public ArrayList<String> caseCondition;

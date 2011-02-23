@@ -9,10 +9,6 @@ public class Alias {
 	public String expression;
 	public String fromWresl;
 
-//	public ArrayList<String> caseName;
-//	public ArrayList<String> caseCondition;
-//	public ArrayList<String> caseExpression;
-	
 	public Alias(){
 		scope=Parameters.undefined;
 //		format=Parameters.undefined;
@@ -21,9 +17,6 @@ public class Alias {
 		expression=Parameters.undefined;
 		fromWresl=Parameters.undefined;
 
-//		caseName       = new ArrayList<String>();
-//		caseCondition  = new ArrayList<String>();
-//		caseExpression = new ArrayList<String>();
 	}
 	
 	public String equalEva(){

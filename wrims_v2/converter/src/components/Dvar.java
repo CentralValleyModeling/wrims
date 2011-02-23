@@ -10,9 +10,6 @@ public class Dvar {
 	public String lowerBound;
 	public String upperBound;
 	public String fromWresl;
-//	public ArrayList<String> caseName;
-//	public ArrayList<String> caseCondition;
-//	public ArrayList<String> caseExpression;
 	
 	public Dvar(){
 		scope=Parameters.undefined;
@@ -23,16 +20,12 @@ public class Dvar {
 		lowerBound=Parameters.undefined;
 		upperBound=Parameters.undefined;
 		fromWresl=Parameters.undefined;
-//		caseName       = new ArrayList<String>();
-//		caseCondition  = new ArrayList<String>();
-//		caseExpression = new ArrayList<String>();
 	}
 	
 	public String equalEva(){
 		
 		String s = "|";
 		String temp = scope+s+integer+s+format+s+kind+s+units+lowerBound+upperBound;
-		              //+caseNameStr+caseConditionStr+s+caseExpressionStr;
 		
 		return temp;
 	}
