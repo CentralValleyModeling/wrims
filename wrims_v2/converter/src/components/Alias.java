@@ -3,7 +3,6 @@ package components;
 public class Alias {
 	
 	public String scope;
-//	public String format;
 	public String kind;
 	public String units;
 	public String expression;
@@ -11,7 +10,6 @@ public class Alias {
 
 	public Alias(){
 		scope=Parameters.undefined;
-//		format=Parameters.undefined;
 		kind=Parameters.undefined;
 		units=Parameters.undefined;
 		expression=Parameters.undefined;

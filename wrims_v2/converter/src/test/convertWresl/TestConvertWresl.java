@@ -82,7 +82,7 @@ public class TestConvertWresl {
 		
 		incFile = new IncludeFile();
 		incFile.scope = "local";
-		incFileMap.put("d:\\cvwrsm\\wrims_v2\\convert\\src\\test\\morewreslfiles\\testconvertwresl_alias.wresl", incFile);
+		incFileMap.put("d:\\cvwrsm\\wrims_v2\\trunk\\wrims_v2\\converter\\src\\test\\morewreslfiles\\testconvertwresl_alias.wresl", incFile);
 
 
 		expected_struct.incFileMap.putAll(incFileMap);
@@ -935,8 +935,8 @@ public class TestConvertWresl {
 		g.caseName.add(Parameters.defaultCaseName);
 		g.caseCondition.add(Parameters.always);
 		g.caseExpression.add("C5_WTS=C5_WTS_Stg1+C5_WTS_Stg2");
-		g.case_lhs_gt_rhs.add(Parameters.constrain);
-		g.case_lhs_lt_rhs.add(Parameters.constrain);	
+		g.case_lhs_gt_rhs.add(Parameters.skip);
+		g.case_lhs_lt_rhs.add(Parameters.skip);	
 		expected_gMap.put("split_C5_WTS", g);
 		
 		g = new Goal();
@@ -944,8 +944,8 @@ public class TestConvertWresl {
 		g.caseName.add(Parameters.defaultCaseName);
 		g.caseCondition.add(Parameters.always);
 		g.caseExpression.add("C5_WTS=C5_WTS_Stg1");
-		g.case_lhs_gt_rhs.add(Parameters.constrain);
-		g.case_lhs_lt_rhs.add(Parameters.constrain);	
+		g.case_lhs_gt_rhs.add(Parameters.skip);
+		g.case_lhs_lt_rhs.add(Parameters.skip);	
 		expected_gMap.put("C_SLCVP", g);
 		
 		g = new Goal();
@@ -953,8 +953,8 @@ public class TestConvertWresl {
 		g.caseName.add(Parameters.defaultCaseName);
 		g.caseCondition.add(Parameters.always);
 		g.caseExpression.add("b=c");
-		g.case_lhs_gt_rhs.add(Parameters.constrain);
-		g.case_lhs_lt_rhs.add(Parameters.constrain);	
+		g.case_lhs_gt_rhs.add(Parameters.skip);
+		g.case_lhs_lt_rhs.add(Parameters.skip);	
 		expected_gMap.put("a1", g);
 
 		g = new Goal();
@@ -962,8 +962,8 @@ public class TestConvertWresl {
 		g.caseName.add(Parameters.defaultCaseName);
 		g.caseCondition.add(Parameters.always);
 		g.caseExpression.add("b>c");
-		g.case_lhs_gt_rhs.add(Parameters.constrain);
-		g.case_lhs_lt_rhs.add(Parameters.constrain);		
+		g.case_lhs_gt_rhs.add(Parameters.skip);
+		g.case_lhs_lt_rhs.add(Parameters.skip);		
 		expected_gMap.put("a2", g);
 
 		g = new Goal();
@@ -971,8 +971,8 @@ public class TestConvertWresl {
 		g.caseName.add(Parameters.defaultCaseName);
 		g.caseCondition.add(Parameters.always);
 		g.caseExpression.add("b<c");
-		g.case_lhs_gt_rhs.add(Parameters.constrain);
-		g.case_lhs_lt_rhs.add(Parameters.constrain);	
+		g.case_lhs_gt_rhs.add(Parameters.skip);
+		g.case_lhs_lt_rhs.add(Parameters.skip);	
 		expected_gMap.put("a3", g);
 				
 		

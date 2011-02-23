@@ -13,7 +13,7 @@ public class Dvar {
 	
 	public Dvar(){
 		scope=Parameters.undefined;
-		integer="N";
+		integer=Parameters.no;
 		format=Parameters.undefined;
 		kind=Parameters.undefined;
 		units=Parameters.undefined;

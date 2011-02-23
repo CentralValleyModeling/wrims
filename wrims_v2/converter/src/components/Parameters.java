@@ -9,6 +9,7 @@ public class Parameters {
 	  public static String always = "always";
 	  public static String constrain = "constrain";
 	  public static String skip = "#";
+	  public static String no = "N";
 
 	  public static String converterLogFileName = "converter.log";
 	  public static int printLevel = 1;

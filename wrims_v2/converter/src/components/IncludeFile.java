@@ -9,13 +9,12 @@ public class IncludeFile {
 	public IncludeFile(){
 		scope=Parameters.undefined;
 		fromWresl=Parameters.undefined;
-		//absFilePath=Parameters.undefined;
 
 	}
 	
 	public String equalEva(){
-		//String s = "|";				
-		String temp = scope; //+s+absFilePath;
+			
+		String temp = scope; 
 		
 		return temp;
 	}
