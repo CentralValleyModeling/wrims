@@ -19,8 +19,17 @@ tokens {
 }
 
 evaluator
-	:	expression EOF!
+	:	pattern EOF!
 	;
+
+pattern
+	: expression
+	| define
+	;
+	
+define
+	: 'define' IDENT
+	;	
 
 term
 	:	IDENT
@@ -48,5 +57,6 @@ expression
 fragment LETTER : ('a'..'z' | 'A'..'Z') ;
 fragment DIGIT : '0'..'9';
 INTEGER : DIGIT+ ;
-IDENT : LETTER (LETTER | DIGIT)*;
+IDENT : LETTER (LETTER | DIGIT | '_')*;
+
 WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {$channel = HIDDEN;};
