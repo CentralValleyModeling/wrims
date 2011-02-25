@@ -34,6 +34,20 @@ public class TestWreslWalker {
 
 	}
 	
-	
+	@Test(groups = { "WRESL_elements" })
+	public void dvar_std() throws RecognitionException, IOException {
+		
+		inputFilePath ="src\\test\\TestConvertWresl_dvarStd.wresl";
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
+		
+		System.out.println("tree = " + walker.commonTree.toStringTree());
+		//System.out.println("result = " + walker.result);
+		
+
+	}	
 	
 }

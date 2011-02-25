@@ -10,6 +10,8 @@ options {
   package wresl;
   import java.util.Map;
   import java.util.HashMap;
+    import components.Struct;
+      import components.Tools;
 }
 
 @members {
@@ -18,16 +20,30 @@ options {
   public String currentAbsolutePath;
   	public String currentAbsoluteParent;
   private Map<String, Integer> variables = new HashMap<String, Integer>();
+  
+  	public Struct F = new Struct();	
 }
 
 evaluator returns [int result]
-	:	e=expression EOF { result = e; }
+	:	( e=expression EOF { result = e; } )
+	|   dvar*
 	;
 	
 //assignment
 //	:	^(':=' IDENT e=expression)
 //			{ variables.put($IDENT.text, e); }
 //	;
+
+dvar : DVAR_STD i=IDENT KIND k=QUOTE_STRING UNITS u=QUOTE_STRING
+	{ System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " +$i.text); 
+	System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " +Tools.strip($k.text)); 
+	System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " +Tools.strip($u.text)); 
+	
+	}
+	//{ F.dvarStd($i.text, "local", "", $k.text, $u.text); }
+	;
+
+
 	
 expression returns [int result]
 	:	^('+' op1=expression op2=expression) { result = op1 + op2; }
@@ -38,3 +54,4 @@ expression returns [int result]
 	|	IDENT { result = variables.get($IDENT.text); }
 	|	INTEGER { result = Integer.parseInt($INTEGER.text); }
 	;
+
