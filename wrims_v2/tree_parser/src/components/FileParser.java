@@ -53,6 +53,11 @@ public class FileParser {
 		TokenStream tokenStream = new CommonTokenStream(lexer);		
 
 		WreslTreeParser parser = new WreslTreeParser(tokenStream);
+		
+		parser.currentAbsolutePath = new File(inputFilePath).getAbsolutePath(); 
+		parser.currentAbsoluteParent = new File(inputFilePath).getAbsoluteFile().getParent();
+		
+		
 		WreslTreeParser.evaluator_return evaluator = parser.evaluator();
 		
 		commonTree = (CommonTree) evaluator.getTree();
@@ -61,11 +66,14 @@ public class FileParser {
 		WreslTreeWalker walker = new WreslTreeWalker(nodeStream);
 		
 		walker.commonTree = commonTree;
+
+		walker.currentAbsolutePath = new File(inputFilePath).getAbsolutePath(); 
+		walker.currentAbsoluteParent = new File(inputFilePath).getAbsoluteFile().getParent();
+
+		
 		walker.result = walker.evaluator();
 
 		
-		walker.currentAbsolutePath = new File(inputFilePath).getAbsolutePath(); 
-		walker.currentAbsoluteParent = new File(inputFilePath).getAbsoluteFile().getParent();
 		
 		LogUtils.consoleMsgOnly("...Parsing file: "+walker.currentAbsolutePath);
 		

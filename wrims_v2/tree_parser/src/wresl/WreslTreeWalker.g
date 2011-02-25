@@ -15,6 +15,7 @@ options {
 }
 
 @members {
+
   public int result;
   public CommonTree commonTree;
   public String currentAbsolutePath;
@@ -25,6 +26,10 @@ options {
 }
 
 evaluator returns [int result]
+@init { F.currentAbsolutePath=currentAbsolutePath;
+		F.currentAbsoluteParent=currentAbsoluteParent; }
+
+
 	:	( e=expression EOF { result = e; } )
 	|   dvar*
 	;
@@ -38,7 +43,7 @@ dvar : DVAR_STD i=IDENT KIND k=QUOTE_STRING UNITS u=QUOTE_STRING
 	{ System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " +$i.text); 
 	System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " +Tools.strip($k.text)); 
 	System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " +Tools.strip($u.text)); 
-	
+    F.dvarStd($i.text, "local", "", Tools.strip($k.text), Tools.strip($u.text));
 	}
 	//{ F.dvarStd($i.text, "local", "", $k.text, $u.text); }
 	;

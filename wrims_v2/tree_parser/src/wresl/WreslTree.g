@@ -20,6 +20,12 @@ tokens {
   package wresl;
 }
 
+@members {
+
+  public String currentAbsolutePath;
+  	public String currentAbsoluteParent;
+  	}
+
 evaluator
 	:	pattern EOF!
 	;
@@ -92,8 +98,8 @@ fragment LETTER : ('a'..'z' | 'A'..'Z') ;
 fragment DIGIT : '0'..'9';
 INTEGER : DIGIT+ ;
 
-QUOTE_STRING : '\'' IDENT( '-' | '/' | IDENT )* '\'';
-IDENT : LETTER (LETTER | DIGIT | '_')*;
+QUOTE_STRING : '\''  IDENT( '-' | '/' | IDENT )*  '\'';
+IDENT : LETTER (LETTER | DIGIT | '_')+;
 
 WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {$channel = HIDDEN;};
 

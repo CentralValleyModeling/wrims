@@ -8,6 +8,7 @@ import org.antlr.runtime.RecognitionException;
 import org.testng.annotations.Test;
 
 import components.FileParser;
+import components.LogUtils;
 
 import wresl.WreslTreeWalker;
 
@@ -42,7 +43,11 @@ public class TestWreslWalker {
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
 		
+		LogUtils.setLogFile("TestWreslWalker_dvar_std.log");
+		
 		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
+		
+		LogUtils._logFile.close();
 		
 		System.out.println("tree = " + walker.commonTree.toStringTree());
 		//System.out.println("result = " + walker.result);
