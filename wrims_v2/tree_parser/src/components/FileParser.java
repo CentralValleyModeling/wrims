@@ -57,6 +57,7 @@ public class FileParser {
 		parser.currentAbsolutePath = new File(inputFilePath).getAbsolutePath(); 
 		parser.currentAbsoluteParent = new File(inputFilePath).getAbsoluteFile().getParent();
 		
+		LogUtils.importantMsg("Parsing file: "+parser.currentAbsolutePath);
 		
 		WreslTreeParser.evaluator_return evaluator = parser.evaluator();
 		
@@ -70,12 +71,13 @@ public class FileParser {
 		walker.currentAbsolutePath = new File(inputFilePath).getAbsolutePath(); 
 		walker.currentAbsoluteParent = new File(inputFilePath).getAbsoluteFile().getParent();
 
+		LogUtils.importantMsg("Walking tree: "+parser.currentAbsolutePath);
 		
 		walker.result = walker.evaluator();
 
 		
 		
-		LogUtils.consoleMsgOnly("...Parsing file: "+walker.currentAbsolutePath);
+
 		
 
 		

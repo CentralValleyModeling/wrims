@@ -14,6 +14,7 @@ tokens {
 
 @header {
   package wresl;
+  import components.LogUtils; 
 }
 
 @lexer::header {
@@ -22,8 +23,21 @@ tokens {
 
 @members {
 
-  public String currentAbsolutePath;
+  	public String currentAbsolutePath;
   	public String currentAbsoluteParent;
+  	
+	/// error message	
+    public void displayRecognitionError(String[] tokenNames,
+                                        RecognitionException e) {
+        String hdr = getErrorHeader(e);
+        String msg = getErrorMessage(e, tokenNames);
+        LogUtils.errMsg(hdr + " " + msg, currentAbsolutePath);
+    }
+
+	
+
+	
+  	
   	}
 
 evaluator
