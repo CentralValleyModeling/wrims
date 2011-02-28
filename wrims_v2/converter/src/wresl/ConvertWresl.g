@@ -342,11 +342,11 @@ lower_or_upper returns[String lowerBound, String upperBound]
 	;
  
 lower returns[String str]
-	: 'lower' e=expression {$str =$e.text; }
+	: LOWER e=expression {$str =$e.text; }
 	;
 
 upper returns[String str]
-	: 'upper' e=expression {$str =$e.text; }
+	: UPPER e=expression {$str =$e.text; }
 	;
 
 alias returns [String str]
@@ -600,7 +600,8 @@ SEQUENCE  : 'sequence' | 'SEQUENCE';
 MODEL     : 'model' | 'MODEL' | 'Model';
 ORDER     : 'order';
 INCLUDE   : 'include' | 'INCLUDE' | 'Include';
-
+LOWER     : 'lower' | 'LOWER' | 'Lower' ;
+UPPER     : 'upper' | 'UPPER' | 'Upper' ;
 
 
 /// comparison ///
