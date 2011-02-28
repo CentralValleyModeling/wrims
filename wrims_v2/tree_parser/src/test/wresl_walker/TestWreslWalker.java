@@ -10,9 +10,12 @@ import org.testng.annotations.Test;
 
 import components.FileParser;
 import components.LogUtils;
+import components.RegUtils;
 import components.Tools;
 
 import wresl.WreslTreeWalker;
+
+import java.util.regex.*;
 
 public class TestWreslWalker {
 	
@@ -38,8 +41,6 @@ public class TestWreslWalker {
 		
 		System.out.println("tree = " + walker.commonTree.toStringTree());
 		System.out.println("result = " + walker.result);
-		
-
 	}
 
 	@Test(groups = { "WRESL_elements" })
@@ -58,11 +59,9 @@ public class TestWreslWalker {
 		
 		LogUtils._logFile.close();
 			
-		String fileText = Tools.readFileAsString(logFilePath);		
-		boolean hasError = fileText.indexOf("# Error:")>= 0 ; 
-		Assert.assertEquals(hasError, false);
-		
-
+		String fileText = Tools.readFileAsString(logFilePath);	
+		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
+		Assert.assertEquals(totalErrs, 0);	
 	}		
 	
 
@@ -83,9 +82,8 @@ public class TestWreslWalker {
 		LogUtils._logFile.close();
 			
 		String fileText = Tools.readFileAsString(logFilePath);	
-		boolean hasError = fileText.indexOf("# Error:")>= 0 ; 
-		Assert.assertEquals(hasError, false);
-		
+		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
+		Assert.assertEquals(totalErrs, 0);		
 	}	
 	
 	@Test(groups = { "WRESL_elements" })
@@ -104,11 +102,12 @@ public class TestWreslWalker {
 		
 		LogUtils._logFile.close();
 		
-		String fileText = Tools.readFileAsString(logFilePath);
-		boolean hasError = fileText.indexOf("# Error:")>= 0 ; 
-		Assert.assertEquals(hasError, false);
 		
-
+		String fileText = Tools.readFileAsString(logFilePath);
+		int redefineErrs = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: C_Banks");
+		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
+		Assert.assertEquals(redefineErrs, 1);
+		Assert.assertEquals(totalErrs, 1);		
 	}	
-	
+		
 }
