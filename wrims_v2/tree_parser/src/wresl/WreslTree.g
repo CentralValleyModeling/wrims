@@ -25,9 +25,7 @@ tokens {
 
 @lexer::header {
   package wresl;
-    import components.LogUtils; 
-    
-    
+    import components.LogUtils;    
 }
 
 
@@ -50,10 +48,26 @@ tokens {
     }	
 }
 
-evaluator
-	:	( pattern |  sequence | model )* EOF!
-	;
+@lexer::members {
+	List tokens = new ArrayList();
+	public void emit(Token token) {
+	        state.token = token;
+	    	tokens.add(token);
+	}
+	public Token nextToken() {
+	    	super.nextToken();
+	        if ( tokens.size()==0 ) {
+	            return Token.EOF_TOKEN;
+	        }
+	        return (Token)tokens.remove(0);
+	}
+}
 
+evaluator
+	:	( pattern |  sequence | model | sandbox )* EOF!
+	;
+	
+sandbox: IDENT AND IDENT ;
 pattern
 	: dvar
 	;
@@ -101,6 +115,14 @@ expression
 COMMENT : '!' .* ('\n'|'\r') {skip();}; //{$channel = HIDDEN;}; 
 MULTILINE_COMMENT : '/*' .* '*/' {skip();}; //{$channel = HIDDEN;};
 
+fragment LETTER : ('a'..'z' | 'A'..'Z') ;
+fragment DIGIT : '0'..'9';
+INTEGER : DIGIT+ ;
+
+/// logical ///
+AND : '.and.' | '.AND.';
+OR  : '.or.'  | '.OR.';
+
 /// reserved keywords ///
 LOCAL : '[local]'| '[LOCAL]';
 OBJECTIVE: 'objective' | 'Objective' | 'OBJECTIVE';
@@ -132,11 +154,16 @@ ORDER     : 'order' | 'ORDER';
 INCLUDE   : 'include' | 'INCLUDE' | 'Include';
 
 
-fragment LETTER : ('a'..'z' | 'A'..'Z') ;
-fragment DIGIT : '0'..'9';
-INTEGER : DIGIT+ ;
+
 
 QUOTE_STRING : '\''  IDENT( '-' | '/' | IDENT )*  '\'';
+
+IDENT_FOLLOWED_BY_LOGICAL 
+	: i=IDENT{$i.setType(IDENT); emit($i);}
+	( a=AND { $a.setType(AND); emit($a);}
+	| a=OR  { $a.setType(OR); emit($a);}
+	);
+
 IDENT : LETTER (LETTER | DIGIT | '_')+;
 
 WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {$channel = HIDDEN;};
