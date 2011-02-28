@@ -64,17 +64,16 @@ tokens {
 }
 
 evaluator
-	:	( pattern |  sequence | model | sandbox )* EOF!
+	:	( pattern |  sequence | model )* EOF!
 	;
 	
-sandbox: IDENT AND IDENT ;
 pattern
 	: dvar
 	;
 	
 model
 	: MODEL IDENT '{' (pattern )+  '}' 
-	-> {sometest($IDENT.text)}?  Model IDENT pattern+
+	-> {sometest($IDENT.text)}?  MODEL IDENT '{' (pattern )+  '}' 
 	->             
 	;
 sequence

@@ -40,14 +40,15 @@ evaluator returns [int result]
 
 
 
-	:	pattern* EOF
+	:	( pattern |  sequence | model )* EOF
 	;
 
+	
 pattern
 	: dvar
-	| sequence
-	| model
-	;	
+	;
+
+
 	
 	
 //assignment
@@ -55,7 +56,7 @@ pattern
 //			{ variables.put($IDENT.text, e); }
 //	;
 
-dvar : DVAR_STD i=IDENT KIND k=QUOTE_STRING UNITS u=QUOTE_STRING
+dvar : Dvar_std i=IDENT Kind k=QUOTE_STRING Units u=QUOTE_STRING
 	{ 	System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " +$i.text); 
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " +Tools.strip($k.text)); 
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " +Tools.strip($u.text)); 
@@ -65,10 +66,11 @@ dvar : DVAR_STD i=IDENT KIND k=QUOTE_STRING UNITS u=QUOTE_STRING
 	;
 
 model
-	: MODEL IDENT '{' ( dvar* )  '}'
+	: MODEL IDENT '{' (pattern )+  '}' 
 	;	
+	
 sequence
-	: SEQUENCE IDENT '{' MODEL IDENT ORDER INTEGER '}' ;
+	: SEQUENCE IDENT '{' MODEL IDENT ORDER INTEGER '}' ;	
 	
 expression returns [int result]
 	:	^('+' op1=expression op2=expression) { result = op1 + op2; }

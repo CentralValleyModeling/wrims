@@ -12,7 +12,8 @@ SEQUENCE CYCLE2 {
 MODEL first { 
 
 ! INCLUDE 'some.wresl'	
- define C_Banks {std kind 'FLOW-CHANNEL' units 'TAF'}    
+ define AA {std kind 'FLOW-CHANNEL' units 'TAF'}  
+ define BB {std kind 'FLOW-CHANNEL' units 'TAF'}   
 	
 	}
 	 
