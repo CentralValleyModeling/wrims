@@ -39,9 +39,16 @@ evaluator returns [int result]
 		F.currentAbsoluteParent=currentAbsoluteParent; }
 
 
-	:	( e=expression EOF { result = e; } )
-	|   dvar*
+
+	:	pattern* EOF
 	;
+
+pattern
+	: dvar
+	| sequence
+	| model
+	;	
+	
 	
 //assignment
 //	:	^(':=' IDENT e=expression)

@@ -9,7 +9,13 @@ options {
 tokens {
 	NEGATION;
 	NEW_LINE;
-	DVAR_STD;
+	Dvar_std;
+	Dvar_std_local;
+	Model;
+	Kind;
+	Units;
+	
+	
 }
 
 @header {
@@ -30,6 +36,10 @@ tokens {
 
   	public String currentAbsolutePath;
   	public String currentAbsoluteParent;
+  		public boolean sometest(String name) {
+		
+			return true;
+			}
   	
 	/// error message	
     public void displayRecognitionError(String[] tokenNames,
@@ -37,36 +47,35 @@ tokens {
         String hdr = getErrorHeader(e);
         String msg = getErrorMessage(e, tokenNames);
         LogUtils.errMsg(hdr + " " + msg);
-    }
-
-	
-
-	
-  	
-  	}
+    }	
+}
 
 evaluator
-	:	pattern* EOF!
+	:	( pattern |  sequence | model )* EOF!
 	;
 
 pattern
 	: dvar
-	| sequence
-	| model
 	;
 	
 model
-	: MODEL IDENT '{' ( dvar* )  '}'
-	;	
+	: MODEL IDENT '{' (pattern )+  '}' 
+	-> {sometest($IDENT.text)}?  Model IDENT pattern+
+	->             
+	;
 sequence
 	: SEQUENCE IDENT '{' MODEL IDENT ORDER INTEGER '}' ;
 
 	
-dvar : dvar_std ;	
+dvar : dvar_std | dvar_std_local ;	
 	
 dvar_std :
 	'define' IDENT '{' STD KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
-	-> DVAR_STD IDENT KIND $k UNITS $u ;
+	-> Dvar_std IDENT Kind $k Units $u ;
+
+dvar_std_local :
+	'define' IDENT LOCAL  '{' STD KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
+	-> Dvar_std_local IDENT Kind $k Units $u ;
 
 quote_string: 	QUOTE_STRING ;
 //ident: IDENT_TOKEN ;
@@ -93,7 +102,7 @@ COMMENT : '!' .* ('\n'|'\r') {skip();}; //{$channel = HIDDEN;};
 MULTILINE_COMMENT : '/*' .* '*/' {skip();}; //{$channel = HIDDEN;};
 
 /// reserved keywords ///
-LOCAL_TOKEN : 'local'| 'LOCAL';
+LOCAL : '[local]'| '[LOCAL]';
 OBJECTIVE: 'objective' | 'Objective' | 'OBJECTIVE';
 TIMESERIES: 'timeseries';
 SELECT :  'select' | 'SELECT' ;
