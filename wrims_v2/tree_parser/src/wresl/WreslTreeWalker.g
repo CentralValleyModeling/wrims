@@ -30,7 +30,7 @@ options {
                                         RecognitionException e) {
         String hdr = getErrorHeader(e);
         String msg = getErrorMessage(e, tokenNames);
-        LogUtils.errMsg(hdr + " " + msg, currentAbsolutePath);
+        LogUtils.errMsg(hdr + " " + msg);
     }
 }
 
@@ -57,7 +57,11 @@ dvar : DVAR_STD i=IDENT KIND k=QUOTE_STRING UNITS u=QUOTE_STRING
 
 	;
 
-
+model
+	: MODEL IDENT '{' ( dvar* )  '}'
+	;	
+sequence
+	: SEQUENCE IDENT '{' MODEL IDENT ORDER INTEGER '}' ;
 	
 expression returns [int result]
 	:	^('+' op1=expression op2=expression) { result = op1 + op2; }

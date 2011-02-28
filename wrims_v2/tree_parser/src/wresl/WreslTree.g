@@ -19,7 +19,12 @@ tokens {
 
 @lexer::header {
   package wresl;
+    import components.LogUtils; 
+    
+    
 }
+
+
 
 @members {
 
@@ -31,7 +36,7 @@ tokens {
                                         RecognitionException e) {
         String hdr = getErrorHeader(e);
         String msg = getErrorMessage(e, tokenNames);
-        LogUtils.errMsg(hdr + " " + msg, currentAbsolutePath);
+        LogUtils.errMsg(hdr + " " + msg);
     }
 
 	
@@ -41,13 +46,21 @@ tokens {
   	}
 
 evaluator
-	:	pattern EOF!
+	:	pattern* EOF!
 	;
 
 pattern
-	: expression
-	| dvar*
+	: dvar
+	| sequence
+	| model
 	;
+	
+model
+	: MODEL IDENT '{' ( dvar* )  '}'
+	;	
+sequence
+	: SEQUENCE IDENT '{' MODEL IDENT ORDER INTEGER '}' ;
+
 	
 dvar : dvar_std ;	
 	
@@ -76,6 +89,8 @@ mult
 expression
 	:	mult (('+'^ | '-'^) mult)*	;
 
+COMMENT : '!' .* ('\n'|'\r') {skip();}; //{$channel = HIDDEN;}; 
+MULTILINE_COMMENT : '/*' .* '*/' {skip();}; //{$channel = HIDDEN;};
 
 /// reserved keywords ///
 LOCAL_TOKEN : 'local'| 'LOCAL';
@@ -104,7 +119,7 @@ ALWAYS :'always';
 CONDITION : 'condition' | 'CONDITION';
 SEQUENCE  : 'sequence' | 'SEQUENCE';
 MODEL     : 'model' | 'MODEL' | 'Model';
-ORDER     : 'order';
+ORDER     : 'order' | 'ORDER';
 INCLUDE   : 'include' | 'INCLUDE' | 'Include';
 
 
@@ -118,3 +133,4 @@ IDENT : LETTER (LETTER | DIGIT | '_')+;
 WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {$channel = HIDDEN;};
 
 COMMENT_LAST_LINE : '!' (~('\n' | '\r'))* {skip();};
+//IGNORE : . {skip();};
