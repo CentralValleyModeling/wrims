@@ -9,7 +9,9 @@ options {
 tokens {
 	NEGATION;
 	NEW_LINE;
+	Dvar;
 	Dvar_std;
+	Dvar_nonStd;
 	Dvar_std_local;
 	Model;
 	Kind;
@@ -80,15 +82,21 @@ sequence
 	: SEQUENCE IDENT '{' MODEL IDENT ORDER INTEGER '}' ;
 
 	
-dvar : dvar_std | dvar_std_local ;	
+dvar : dvar_std | dvar_std_local | dvar_nonStd ;	
 	
 dvar_std :
-	'define' IDENT '{' STD KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
+	DEFINE IDENT '{' STD KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
 	-> Dvar_std IDENT Kind $k Units $u ;
 
 dvar_std_local :
-	'define' IDENT LOCAL  '{' STD KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
+	DEFINE LOCAL IDENT  '{' STD KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
 	-> Dvar_std_local IDENT Kind $k Units $u ;
+
+dvar_nonStd :
+	DEFINE IDENT '{' lower KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
+	-> Dvar_nonStd IDENT Kind $k Units $u ;
+
+lower: LOWER UNBOUNDED ;
 
 quote_string: 	QUOTE_STRING ;
 //ident: IDENT_TOKEN ;
@@ -151,8 +159,9 @@ SEQUENCE  : 'sequence' | 'SEQUENCE';
 MODEL     : 'model' | 'MODEL' | 'Model';
 ORDER     : 'order' | 'ORDER';
 INCLUDE   : 'include' | 'INCLUDE' | 'Include';
-
-
+LOWER     : 'lower' | 'LOWER' | 'Lower' ;
+UPPER     : 'upper' | 'UPPER' | 'Upper' ;
+UNBOUNDED : 'unbounded' | 'Unbounded' | 'UNBOUNDED';
 
 
 QUOTE_STRING : '\''  IDENT( '-' | '/' | IDENT )*  '\'';

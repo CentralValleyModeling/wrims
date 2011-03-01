@@ -3,6 +3,6 @@
 	<classpathentry excluding="**/.svn/|.svn/" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="libs/testng-5.14.1.jar"/>
-	<classpathentry kind="lib" path="libs/antlr-3.3-complete.jar"/>
+	<classpathentry kind="lib" path="libs/antlr-3.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
