@@ -13,11 +13,15 @@ tokens {
 	Dvar_std;
 	Dvar_nonStd;
 	Dvar_std_local;
+	Dvar_nonStd_local;
 	Model;
 	Kind;
 	Units;
-	
-	
+	Lower;
+	Upper;
+	Std;
+	Unbounded;	
+	Exp;
 }
 
 @header {
@@ -82,21 +86,37 @@ sequence
 	: SEQUENCE IDENT '{' MODEL IDENT ORDER INTEGER '}' ;
 
 	
-dvar : dvar_std | dvar_std_local | dvar_nonStd ;	
+dvar : DEFINE! (dvar_std | dvar_std_local | dvar_nonStd | dvar_nonStd_local) ;	
+
 	
 dvar_std :
-	DEFINE IDENT '{' STD KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
-	-> Dvar_std IDENT Kind $k Units $u ;
+	IDENT '{' STD KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
+	-> ^(Dvar_std IDENT Kind $k Units $u) ;	
 
 dvar_std_local :
-	DEFINE LOCAL IDENT  '{' STD KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
-	-> Dvar_std_local IDENT Kind $k Units $u ;
+	LOCAL IDENT  '{' STD KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
+	-> ^(Dvar_std_local IDENT Kind $k Units $u) ;
 
 dvar_nonStd :
-	DEFINE IDENT '{' lower KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
-	-> Dvar_nonStd IDENT Kind $k Units $u ;
+	IDENT '{' lower_and_or_upper KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
+	-> ^(Dvar_nonStd IDENT lower_and_or_upper Kind $k Units $u) ;
 
-lower: LOWER UNBOUNDED ;
+dvar_nonStd_local :
+	LOCAL IDENT '{' lower_and_or_upper KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
+	-> ^(Dvar_nonStd_local IDENT lower_and_or_upper Kind $k Units $u) ;
+
+lower_and_or_upper : lower_upper
+				   | upper_lower ;
+				   
+lower_upper : lower (upper -> lower upper)?
+					-> lower Upper Std
+				 ;
+upper_lower : upper (lower -> lower upper)? 
+                   -> Lower Std upper
+   				 ;				   
+
+lower: LOWER ( UNBOUNDED -> Lower Unbounded | expression -> Lower expression) ;
+upper: UPPER ( UNBOUNDED -> Upper Unbounded | expression -> Upper expression) ;
 
 quote_string: 	QUOTE_STRING ;
 //ident: IDENT_TOKEN ;

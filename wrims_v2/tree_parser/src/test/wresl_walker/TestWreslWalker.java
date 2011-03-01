@@ -15,8 +15,6 @@ import components.Tools;
 
 import wresl.WreslTreeWalker;
 
-import java.util.regex.*;
-
 public class TestWreslWalker {
 	
 	

@@ -56,14 +56,27 @@ pattern
 //			{ variables.put($IDENT.text, e); }
 //	;
 
-dvar : Dvar_std i=IDENT Kind k=QUOTE_STRING Units u=QUOTE_STRING
-	{ 	System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " +$i.text); 
-		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " +Tools.strip($k.text)); 
-		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$: " +Tools.strip($u.text)); 
+dvar : dvar_std | dvar_std_local | dvar_nonStd | dvar_nonStd_local ;
+
+dvar_std : ^(Dvar_std i=IDENT Kind k=QUOTE_STRING Units u=QUOTE_STRING)
+	{ 	
     	F.dvarStd($i.text, "local", "", Tools.strip($k.text), Tools.strip($u.text));
-	}
+	};
+	
+dvar_std_local : ^(Dvar_std_local i=IDENT Kind k=QUOTE_STRING Units u=QUOTE_STRING)
+	{ 	
+    	F.dvarStd($i.text, "local", "", Tools.strip($k.text), Tools.strip($u.text));
+	}	
 
 	;
+dvar_nonStd : ^(Dvar_nonStd IDENT lower upper Kind k=QUOTE_STRING Units u=QUOTE_STRING)
+	;
+
+dvar_nonStd_local : ^(Dvar_nonStd_local IDENT lower upper Kind k=QUOTE_STRING Units u=QUOTE_STRING)
+	;
+
+lower : Lower (Std |Unbounded | expression ) ;
+upper : Upper (Std |Unbounded | expression ) ;
 
 model
 	: MODEL IDENT '{' (pattern )+  '}' 
@@ -78,7 +91,7 @@ expression returns [int result]
 	|	^('*' op1=expression op2=expression) { result = op1 * op2; }
 	|	^('/' op1=expression op2=expression) { result = op1 / op2; }
 	|	^(NEGATION e=expression)  { result = -e; }
-	|	IDENT { result = variables.get($IDENT.text); }
-	|	INTEGER { result = Integer.parseInt($INTEGER.text); }
+	|	IDENT //{ result = variables.get($IDENT.text); }
+	|	INTEGER //{ result = Integer.parseInt($INTEGER.text); }
 	;
 
