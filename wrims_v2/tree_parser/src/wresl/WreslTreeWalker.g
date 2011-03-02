@@ -10,7 +10,7 @@ options {
   package wresl;
   import java.util.Map;
   import java.util.HashMap;
-  import components.Struct;
+  import components.StructTree;
   import components.Tools;
   import components.LogUtils; 
 }
@@ -23,7 +23,7 @@ options {
   	public String currentAbsoluteParent;
   private Map<String, Integer> variables = new HashMap<String, Integer>();
   
-  	public Struct F = new Struct();	
+  	public StructTree F = new StructTree();	
   	
   		/// error message	
     public void displayRecognitionError(String[] tokenNames,

@@ -1,0 +1,25 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   empty
+    order   2
+    }
+
+
+MODEL first { 
+
+ !INCLUDE[local] '..\test\moreWreslFiles\TestConvertWresl_alias.wresl'
+ INCLUDE[local] 'TestWreslWalker_dvarStd.wresl'
+ define AA {std kind 'FLOW-CHANNEL' units 'TAF'}  
+ define BB {std kind 'FLOW-CHANNEL' units 'TAF'}   
+	
+	}
+	 
+MODEL empty { 
+
+ define xyz {std kind 'FLOW-CHANNEL' units 'TAF'}  
+	 	
+     }
