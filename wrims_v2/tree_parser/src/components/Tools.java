@@ -159,7 +159,7 @@ public class Tools {
 	public static Dataset convertStructToDataset(Object obj) {
 		
 		Dataset out = new Dataset();
-		Struct s = (Struct)obj;
+		StructTree s = (StructTree)obj;
 
 		if (!s.wtList.isEmpty()) {
 			out.wtList.addAll(s.wtList);
@@ -221,7 +221,7 @@ public class Tools {
 		return out;
 	}
 
-	public static Map<String,Dataset> convertStructMapToDatasetMap(Map<String,Struct> s) {
+	public static Map<String,Dataset> convertStructMapToDatasetMap(Map<String,StructTree> s) {
 		
 		Map<String,Dataset> out = new HashMap<String, Dataset> ();
 		
