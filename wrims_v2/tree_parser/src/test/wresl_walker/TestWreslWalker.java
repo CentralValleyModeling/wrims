@@ -50,7 +50,7 @@ public class TestWreslWalker {
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
 		
-		LogUtils.setLogFile("TestWreslWalker_mainFile.log");
+		LogUtils.setLogFile(logFilePath);
 		
 		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
 		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
@@ -62,6 +62,26 @@ public class TestWreslWalker {
 		Assert.assertEquals(totalErrs, 0);	
 	}		
 	
+	@Test(groups = { "WRESL_elements" })
+	public void mainFile2() throws RecognitionException, IOException {
+		
+		inputFilePath ="src\\test\\TestWreslWalker_mainFile2.wresl";
+		logFilePath = "TestWreslWalker_mainFile2.log";
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		LogUtils.setLogFile(logFilePath);
+		
+		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
+		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
+		
+		LogUtils._logFile.close();
+			
+		String fileText = Tools.readFileAsString(logFilePath);	
+		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
+		Assert.assertEquals(totalErrs, 0);	
+	}		
 
 	@Test(groups = { "WRESL_elements" })
 	public void dvarNonStd() throws RecognitionException, IOException {
@@ -93,7 +113,7 @@ public class TestWreslWalker {
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
 		
-		LogUtils.setLogFile("TestWreslWalker_dvarStd.log");
+		LogUtils.setLogFile(logFilePath);
 		
 		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
 		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());

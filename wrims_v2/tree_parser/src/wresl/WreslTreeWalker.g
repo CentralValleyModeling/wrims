@@ -45,10 +45,12 @@ evaluator returns [int result]
 
 	
 pattern
-	: dvar
+	: dvar | includeFile
 	;
 
-
+includeFile
+	:	 ^(Include FILE_PATH)
+	;
 	
 	
 //assignment
