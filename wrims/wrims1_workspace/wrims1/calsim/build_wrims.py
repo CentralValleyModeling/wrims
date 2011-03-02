@@ -26,7 +26,7 @@ def version_generate(versionWRIMS, versionXA):
 	
 	XA_Automake_Template =  'MODULE=. \n'    \
 							'FILES=*.f90 \n' \
-							'COMPILE=@lf90 -nap -ndal -nchk -ntrace -inln -npca -nsav -nstchk -o3 -nw -nwo -c %fi -MOD %mo -ml msvc -dll -wisk -win \n' \
+							'COMPILE=@lf90 -nap -ndal -nchk -ntrace -inln -npca -nsav -nstchk -o3 -nw -nwo -c %fi -MOD %mo -ml msvc -dll -wisk -win -g \n' \
 							'LINK=@lf90 @%rf -exe %ex -ml msvc -mod %mo -dll -wisk -win -nomap -lib ..\wrangler\wrangler.lib,@{versionXA} \n' \
 							'TARGET=simsolver.dll \n'
 	
