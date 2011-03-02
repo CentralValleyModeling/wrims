@@ -9,22 +9,17 @@ options {
 tokens {
 	NEGATION;
 	NEW_LINE;
-	Dvar;
-	Dvar_std;
-	Dvar_nonStd;
-	Dvar_std_local;
-	Dvar_nonStd_local;
+	Dvar; Dvar_std; Dvar_nonStd; Dvar_std_local; Dvar_nonStd_local;
 	Model;
 	Sequence;
+	Condition;
 	Order;
-	Kind;
-	Units;
-	Lower;
-	Upper;
-	Std;
-	Unbounded;	
+	Kind; Units;
+	Lower; Upper;
+	Std; Unbounded;	
 	Exp;
 	Include;
+	Or; And;
 }
 
 @header {
@@ -41,6 +36,7 @@ tokens {
 
 @members {
 
+    public CommonTree commonTree;
   	public String currentAbsolutePath;
   	public String currentAbsoluteParent;
   		public boolean sometest(String name) {
@@ -86,9 +82,14 @@ model
 	->             
 	;
 sequence
-	: SEQUENCE IDENT '{' MODEL IDENT ORDER INTEGER '}' 
-	-> ^(Sequence IDENT Model IDENT Order INTEGER) 
+	: SEQUENCE IDENT '{' MODEL IDENT condition? ORDER INTEGER '}' 
+	-> ^(Sequence IDENT Model IDENT Order INTEGER condition?) 
 	;
+	
+condition
+	: CONDITION expression_comparison_logical
+	-> Condition expression_comparison_logical
+	;	
 
 includeFile
 	:	 INCLUDE FILE_PATH -> ^(Include FILE_PATH)
@@ -146,7 +147,16 @@ mult
 	
 expression
 	:	mult (('+'^ | '-'^) mult)*	;
+	
+expression_comparison
+	: expression '=='^ expression ;	
 
+expression_comparison_logical
+	: expression_comparison OR expression_comparison
+	-> ^(Or expression_comparison expression_comparison)
+	;	
+	
+	
 COMMENT : '!' .* ('\n'|'\r') {skip();}; //{$channel = HIDDEN;}; 
 MULTILINE_COMMENT : '/*' .* '*/' {skip();}; //{$channel = HIDDEN;};
 
@@ -182,7 +192,7 @@ KIND : 'kind' | 'KIND';
 GOAL : 'goal' | 'GOAL' | 'Goal';
 DEFINE :'define' | 'Define' | 'DEFINE';
 ALWAYS :'always';
-CONDITION : 'condition' | 'CONDITION';
+CONDITION : 'condition' | 'CONDITION' | 'Condition' ;
 SEQUENCE  : 'sequence' | 'SEQUENCE';
 MODEL     : 'model' | 'MODEL' | 'Model';
 ORDER     : 'order' | 'ORDER';

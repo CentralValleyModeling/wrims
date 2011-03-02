@@ -38,7 +38,7 @@ public class TestWreslWalker {
 		LogUtils._logFile.close();
 		
 		System.out.println("tree = " + walker.commonTree.toStringTree());
-		System.out.println("result = " + walker.result);
+		//System.out.println("result = " + walker.result);
 	}
 
 	@Test(groups = { "WRESL_elements" })

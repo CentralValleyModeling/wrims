@@ -36,8 +36,6 @@ public class FileParser {
 	public static WreslTreeWalker parseFile(String inputFilePath) throws RecognitionException, IOException {		
 
 		
-		
-		
 		try {
 			stream = new ANTLRFileStream(inputFilePath, "UTF8");
 			}
@@ -48,7 +46,6 @@ public class FileParser {
 	         
 	        }
 		    
-		CommonTree commonTree;
 		WreslTreeLexer lexer = new WreslTreeLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);		
 
@@ -59,27 +56,22 @@ public class FileParser {
 		
 		LogUtils.importantMsg("Parsing file: "+parser.currentAbsolutePath);
 		
-		WreslTreeParser.evaluator_return evaluator = parser.evaluator();
+		WreslTreeParser.evaluator_return parser_evaluator = parser.evaluator();
 		
-		commonTree = (CommonTree) evaluator.getTree();
-		
-		CommonTreeNodeStream nodeStream = new CommonTreeNodeStream(evaluator.getTree());
+		// / for debug info
+		parser.commonTree = (CommonTree) parser_evaluator.getTree();
+				
+		// / feed walker with parser's tree output
+		CommonTreeNodeStream nodeStream = new CommonTreeNodeStream(parser_evaluator.getTree());
 		WreslTreeWalker walker = new WreslTreeWalker(nodeStream);
 		
-		walker.commonTree = commonTree;
-
-		walker.currentAbsolutePath = new File(inputFilePath).getAbsolutePath(); 
-		walker.currentAbsoluteParent = new File(inputFilePath).getAbsoluteFile().getParent();
+		walker.commonTree = parser.commonTree;
+		walker.currentAbsolutePath = parser.currentAbsolutePath; 
+		walker.currentAbsoluteParent = parser.currentAbsoluteParent;
 
 		LogUtils.importantMsg("Walking tree: "+parser.currentAbsolutePath);
 		
-		walker.result = walker.evaluator();
-
-		
-		
-
-		
-
+		walker.evaluator();
 		
 		return walker;
 		

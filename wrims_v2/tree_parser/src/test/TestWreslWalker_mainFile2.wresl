@@ -1,5 +1,6 @@
 SEQUENCE CYCLE1 {
     model   first
+	condition month==APR.or. month==MAY
     order   1
     }
 
