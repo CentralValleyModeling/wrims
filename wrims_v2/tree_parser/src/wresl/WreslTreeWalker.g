@@ -79,11 +79,11 @@ lower : Lower (Std |Unbounded | expression ) ;
 upper : Upper (Std |Unbounded | expression ) ;
 
 model
-	: MODEL IDENT '{' (pattern )+  '}' 
+	: ^(Model IDENT  (pattern )+ ) 
 	;	
 	
 sequence
-	: SEQUENCE IDENT '{' MODEL IDENT ORDER INTEGER '}' ;	
+	: ^(Sequence IDENT Model IDENT Order INTEGER ) ;	
 	
 expression returns [int result]
 	:	^('+' op1=expression op2=expression) { result = op1 + op2; }

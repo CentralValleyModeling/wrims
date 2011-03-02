@@ -15,6 +15,8 @@ tokens {
 	Dvar_std_local;
 	Dvar_nonStd_local;
 	Model;
+	Sequence;
+	Order;
 	Kind;
 	Units;
 	Lower;
@@ -22,6 +24,7 @@ tokens {
 	Std;
 	Unbounded;	
 	Exp;
+	Include;
 }
 
 @header {
@@ -74,18 +77,23 @@ evaluator
 	;
 	
 pattern
-	: dvar
+	: dvar | includeFile
 	;
 	
 model
 	: MODEL IDENT '{' (pattern )+  '}' 
-	-> {sometest($IDENT.text)}?  MODEL IDENT '{' (pattern )+  '}' 
+	-> {sometest($IDENT.text)}?  ^(Model IDENT  (pattern )+  ) 
 	->             
 	;
 sequence
-	: SEQUENCE IDENT '{' MODEL IDENT ORDER INTEGER '}' ;
+	: SEQUENCE IDENT '{' MODEL IDENT ORDER INTEGER '}' 
+	-> ^(Sequence IDENT Model IDENT Order INTEGER) 
+	;
 
-	
+includeFile
+	:	 INCLUDE FILE_PATH -> ^(Include FILE_PATH)
+	;
+		
 dvar : DEFINE! (dvar_std | dvar_std_local | dvar_nonStd | dvar_nonStd_local) ;	
 
 	
@@ -182,6 +190,14 @@ INCLUDE   : 'include' | 'INCLUDE' | 'Include';
 LOWER     : 'lower' | 'LOWER' | 'Lower' ;
 UPPER     : 'upper' | 'UPPER' | 'Upper' ;
 UNBOUNDED : 'unbounded' | 'Unbounded' | 'UNBOUNDED';
+
+/// include file path ///
+FILE_PATH :  '\''   DIR_SPLIT? (DIR_ELEMENT | DIR_UP)*   WRESL_FILE  '\''  ;
+fragment WRESL_EXT :   '.wresl' | '.WRESL' ;
+fragment WRESL_FILE :  (LETTER | DIGIT | '_' |'-'  )+ WRESL_EXT ;
+fragment DIR_ELEMENT : (LETTER | DIGIT | '_' | '-' )+  '\\' ;
+fragment DIR_UP :                                   ('..') '\\' ;
+fragment DIR_SPLIT : '\\' ;
 
 
 QUOTE_STRING : '\''  IDENT( '-' | '/' | IDENT )*  '\'';
