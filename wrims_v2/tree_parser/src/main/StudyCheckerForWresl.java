@@ -7,7 +7,7 @@ import components.LogUtils;
 import components.StudyConfig;
 import components.StudyParser;
 
-public class StudyChecker {
+public class StudyCheckerForWresl {
 	
 	
 	public static void main(String[] args) throws RecognitionException, IOException {
@@ -17,7 +17,7 @@ public class StudyChecker {
 		if (args.length > 0 ){
 			f = args[0];
 		} else {
-			f = "D:\\CALSIM3.0_070110\\D1641\\Run\\maind1641.wresl";
+			f = "D:\\cvwrsm\\trunk\\wrims_v2\\tree_parser\\src\\test\\TestWreslWalker_mainFile2.wresl";
 		}
 		
 		//System.out.println("main file: "+f);
