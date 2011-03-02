@@ -117,7 +117,7 @@ public class StudyParser {
 			
 			
 
-			/// process include files both appear in this model and previous globals
+			/// process include files in this model and those in previous globals
 			for (String f: adhoc_include_previous_globals.incFileList) {
 				
 				if (existingSet.contains(f))  {
