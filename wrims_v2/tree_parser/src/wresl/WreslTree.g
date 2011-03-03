@@ -20,6 +20,7 @@ tokens {
 	Exp;
 	Include;
 	Or; And;
+	Always;
 }
 
 @header {
@@ -81,14 +82,15 @@ model
 	-> {sometest($IDENT.text)}?  ^(Model IDENT  (pattern )+  ) 
 	->             
 	;
-sequence
-	: SEQUENCE IDENT '{' MODEL IDENT condition? ORDER INTEGER '}' 
-	-> ^(Sequence IDENT Model IDENT Order INTEGER condition?) 
+sequence @init{boolean condition_exist=false;}
+	: SEQUENCE IDENT '{' MODEL IDENT ( c=condition {condition_exist = true;})? ORDER INTEGER '}' 
+	-> {condition_exist}? ^(Sequence IDENT Model IDENT Order INTEGER Condition $c )	 
+	->                    ^(Sequence IDENT Model IDENT Order INTEGER Condition Always ) 
 	;
 	
 condition
-	: CONDITION expression_comparison_logical
-	-> Condition expression_comparison_logical
+	: CONDITION e=expression_comparison_logical
+	-> CONDITION["{ "+$e.text+" }"] // $e.text is the text before e's rule rewriting
 	;	
 
 includeFile

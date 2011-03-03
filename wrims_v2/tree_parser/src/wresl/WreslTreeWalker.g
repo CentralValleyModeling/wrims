@@ -85,20 +85,14 @@ model
 	;	
 	
 sequence
-	: ^(Sequence s=IDENT Model m=IDENT Order i=INTEGER condition?) 
-		//{ F.sequenceOrder($s.text, $i.text, $m.text, $c.str ); } 
+	: ^(Sequence s=IDENT Model m=IDENT Order i=INTEGER condition ) 
+
 	;
 		
-condition
-	: Condition expression_comparison_logical
+condition 
+	: Condition ( CONDITION | Always ) 
 	;	
-	
-expression_comparison
-	: ^( '==' expression expression ) ;	
 
-expression_comparison_logical
-	: ^(Or expression_comparison expression_comparison)
-	;		
 //sequence
 //	:   SEQUENCE s=ident '{' MODEL m=ident c=conditionStatement? ORDER i=INTEGER'}'{
 //				F.sequenceOrder($s.text, $i.text, $m.text, $c.str );

@@ -60,7 +60,8 @@ public class FileParser {
 		
 		// / for debug info
 		parser.commonTree = (CommonTree) parser_evaluator.getTree();
-				
+		LogUtils.importantMsg("tree = " + parser.commonTree.toStringTree());
+		
 		// / feed walker with parser's tree output
 		CommonTreeNodeStream nodeStream = new CommonTreeNodeStream(parser_evaluator.getTree());
 		WreslTreeWalker walker = new WreslTreeWalker(nodeStream);
