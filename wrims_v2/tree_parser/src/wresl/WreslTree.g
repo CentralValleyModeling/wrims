@@ -90,7 +90,8 @@ sequence @init{boolean condition_exist=false;}
 	
 condition
 	: CONDITION e=expression_comparison_logical
-	-> CONDITION["{ "+$e.text+" }"] // $e.text is the text before e's rule rewriting
+	{ String test = $e.text; }
+	-> CONDITION["{ "+test+" }"] // $e.text is the text before e's rule rewriting
 	;	
 
 includeFile
@@ -153,8 +154,8 @@ expression
 expression_comparison
 	: expression '=='^ expression ;	
 
-expression_comparison_logical
-	: expression_comparison OR expression_comparison
+expression_comparison_logical returns[String text]
+	: expression_comparison OR expression_comparison 
 	-> ^(Or expression_comparison expression_comparison)
 	;	
 	
