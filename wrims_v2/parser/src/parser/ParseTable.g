@@ -67,10 +67,10 @@ options {
   
   private static boolean testDefine=false;
   private static boolean isSvFile=false;
+  private static boolean isAliasFile=false;
   private static boolean isConstraintStatement=false;
   private static boolean isSumFunction=false;
-  ///private final ArrayList<String> reservedToken=new ArrayList<String>(Arrays.asList("month", "wateryear","jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec")); 
-  
+    
   private String svType= "NULL"; 
   private String svUnits = "NULL"; 
   private String svConvertUnits = "NULL";
@@ -252,11 +252,7 @@ svartable @init {isSvFile=true;}
 	;
 	
 constrainttable
-	:	headline_constrainttable ('\n'|'\r'|COMMENT*) content_constraintline*{
-	    if (!(preCondition.equals("always"))){
-          error_grammer.add(currentFile+": "+preConstraint+" the last case should be always");
-      }
-	}
+	:	headline_constrainttable ('\n'|'\r'|COMMENT*) content_constraintline*
 	;
 
 weighttable
@@ -267,8 +263,11 @@ externaltable
   : headline_externaltable ('\n'|'\r'|COMMENT*) content_externalline*
   ;
   
-aliastable
+aliastable @init {isAliasFile=true;}
   : headline_aliastable ('\n'|'\r'|COMMENT*) content_aliasline*
+  {
+        isAliasFile=false;
+  }
   ;
 
 headline_cycletable
@@ -302,7 +301,7 @@ headline_weighttable
 	;
 	
 headline_externaltable
-  : FUNCTION ',' FILE ',' FROM_WRESL_FILE{
+  : FUNCTION ',' FILE {
     }
   ;
   
@@ -555,13 +554,13 @@ content_dvar
 	;
 	
 content_svar
-	:	i1=IDENT  s1=',' i2=partC ',' i3=IDENT ',' i7=IDENT ',' i4=IDENT ',' (IDENT|usedKeywords) ',' INTEGER s2=',' i5=conditionStatement ',' i6=tableExpression ',' fileName{
+	:	i1=IDENT  s1=',' i2=partC s2=',' units ',' i7=IDENT ',' i4=IDENT ',' (IDENT|usedKeywords) ',' INTEGER s3=',' i5=conditionStatement ',' i6=tableExpression ',' fileName{
      				if ($i1.text.equals(preSV)){
 			        	if (!$i2.text.equals(svType)){
 			        	  error_grammer.add(currentFile+" "+$s1.line+"@"+($s1.pos+2)+": "+$i1.text+" type field should be the same for the same variable");
 			        	}
-			        	if (!$i3.text.equals(svUnits)){
-                  error_grammer.add(currentFile+" "+$i3.line+"@"+($i3.pos+1)+": "+$i1.text+" units field should be the same for the same variable");
+			        	if (!$units.text.equals(svUnits)){
+                  error_grammer.add(currentFile+" "+$s2.line+"@"+($s2.pos+2)+": "+$i1.text+" units field should be the same for the same variable");
                 }
                 if (!$i7.text.equals(svConvertUnits)){
                   error_grammer.add(currentFile+" "+$i7.line+"@"+($i7.pos+1)+": "+$i1.text+" convert_to_units field should be the same for the same variable");
@@ -573,7 +572,7 @@ content_svar
 			        	   if ($i5.text.equals("always")){
             				  n_always=n_always+1;
 			        		    if (n_always>1){
-		              				error_grammer.add(currentFile+" "+$s2.line+"@"+($s2.pos+2)+": "+$i1.text+" has more than 1 always condition");
+		              				error_grammer.add(currentFile+" "+$s3.line+"@"+($s3.pos+2)+": "+$i1.text+" has more than 1 always condition");
             				  }
           			   }
                    
@@ -585,7 +584,7 @@ content_svar
           			}
         		}else{
         			  svType=$i2.text;
-                svUnits=$i3.text;
+                svUnits=$units.text;
                 svConvertUnits=$i7.text;
           			if (svar.containsKey($i1.text) || dvar.containsKey($i1.text) || alias.containsKey($i1.text)){
                     error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
@@ -604,7 +603,7 @@ content_svar
           				  }
           				
           				  if (!(preCondition.equals("always"))){
-            					error_grammer.add(currentFile+" "+$s2.line+"@"+($s2.pos+2)+": "+preSV+" the last case should be always");
+            					error_grammer.add(currentFile+" "+$s3.line+"@"+($s3.pos+2)+": "+preSV+" the last case should be always");
           				  }
           				  
           				  if ($i5.text.equals("always")){
@@ -714,10 +713,6 @@ content_constraint
                     redefineConstraint=false;
                     constraintOnly=false;
                     n_always=0;
-                  
-                    if (!(preCondition.equals("always"))){
-                      error_grammer.add(currentFile+" "+$s1.line+"@"+($s1.pos+2)+": "+preConstraint+" the last case should be always");
-                    }
 
                     if ($i5.text.equals("always")){
                       n_always=n_always+1;
@@ -835,13 +830,13 @@ content_external
   ;
 	
 content_alias @init{testDefine=true;}
-  : i1=IDENT ',' partC ',' i2=IDENT ',' expression ',' fileName{
+  : i1=IDENT ',' partC ',' units ',' expression ',' fileName{
       if (dvar.containsKey($i1.text) || svar.containsKey($i1.text) || alias.containsKey($i1.text)){
         error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
       }
       Alias currAlias=new Alias();
       currAlias.setType($partC.text);
-      currAlias.setUnits($i2.text);
+      currAlias.setUnits($units.text);
       currAlias.setExpression($expression.list.get(1));
       alias.put($i1.text, currAlias);
       testDefine=false;
@@ -853,12 +848,12 @@ content_alias @init{testDefine=true;}
 ///////////////////
 lhsrhs: weight|CONSTRAIN;
 
-weight	:	allnumber|(allnumber '*' TAFCFS);
+weight	:	(allnumber|(allnumber '*' TAFCFS)) (('+' allnumber)|('-' allnumber))?;
 
 units: IDENT|(IDENT '/' IDENT);
 
 fileName
-  : (':'|';'|'.'|'|'|SYMBOLS|'-'|'+'|'/'|BACKSLASH|IDENT|IDENT1|IDENT2|INTEGER|FLOAT|usedKeywords)+{
+  : (':'|';'|'.'|'|'|SYMBOLS|'-'|'+'|BACKSLASH|IDENT|IDENT1|IDENT2|INTEGER|FLOAT|usedKeywords)+{
   }
   ;
   
@@ -912,6 +907,9 @@ log10_func returns [String text]
 pow_func returns [String text]
   : POW '(' {text="pow(";} (e1=expression){text=text+$e1.list.get(1);} (';' (e2=expression){text=text+";"+$e2.list.get(1);})+ ')' {text=text+")";}
   ;
+  
+range_func
+  : RANGE '(' MONTH ';' MONTH_CONST ';' MONTH_CONST ')' ;
 
 timeseriesWithUnits returns[ArrayList<String> list]
 	: 'timeseries' 'kind' '=' i1=partC 'units' '=' i2=IDENT{
@@ -933,7 +931,7 @@ timeseries returns[ArrayList<String> list]
 	
 partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
-usedKeywords: I|YEAR|MONTH|PASTMONTH|TAFCFS|SUM|MAX|MIN|INT|ABS|LOG|LOG10|POW|MOD|WHERE|CONSTRAIN|ALWAYS
+usedKeywords: I|YEAR|MONTH|MONTH_CONST|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|ABS|LOG|LOG10|POW|MOD|WHERE|CONSTRAIN|ALWAYS
 |NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
 |CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE;
 
@@ -998,7 +996,7 @@ sumExpression returns [ArrayList<String> list] @init{isSumFunction=true;}
   } 
   ;
 
-term_sum: (MONTH|PASTMONTH|I|INTEGER|'(' expression_sum ')');
+term_sum: (MONTH|MONTH_CONST|PASTMONTH|I|INTEGER|'(' expression_sum ')');
 
 unary_sum : ('-')? term_sum ;
 add_sum  :  unary_sum(('+' | '-') unary_sum)* ;
@@ -1016,19 +1014,21 @@ term returns [String text]
 	| func
 	| tafcfs_term
 	| YEAR
-	| MONTH)
+	| MONTH
+	| MONTH_CONST
+	| DAYSIN)
 	{
     if ($i1 !=null){
-      if (testDefine && !isSvFile && !dvar.containsKey($i1.text) && !svar.containsKey($i1.text) && !alias.containsKey($i1.text)){
+      if (testDefine && !isSvFile && !isAliasFile && !dvar.containsKey($i1.text) && !svar.containsKey($i1.text) && !alias.containsKey($i1.text)){
         error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+$i1.text+" is not defined before used");
       }
-      if (!isConstraintStatement && dvar.containsKey($i1.text)){
-        error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": decision variable "+$i1.text+" in current month and current cycle can only be used in constraint relationship or defining weight");
+      if (!isConstraintStatement &&  !isAliasFile && dvar.containsKey($i1.text)){
+        error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": decision variable "+$i1.text+" in current month and current cycle can only be used in constraint relationship or defining weight or define alias");
       }
-      if (!isConstraintStatement && alias.containsKey($i1.text)){
-        error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": alias variable "+$i1.text+" in current month and current cycle can only be used in constraint relationship");
+      if (!isConstraintStatement && !isAliasFile && alias.containsKey($i1.text)){
+        error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": alias variable "+$i1.text+" in current month and current cycle can only be used in constraint relationship or define alias");
       }
-      if (svar.containsKey($i1.text)||alias.containsKey($i1.text)||isSvFile){
+      if (svar.containsKey($i1.text)||alias.containsKey($i1.text)||isSvFile||isAliasFile){
         text="{"+$i1.text+"}";
       }else{
         text=$i1.text;
@@ -1058,6 +1058,12 @@ term returns [String text]
     if ($MONTH.text !=null){
       text="{"+$MONTH.text+"}";
     }
+    if ($MONTH_CONST.text !=null){
+      text="{"+$MONTH_CONST.text+"}";
+    }
+    if ($DAYSIN.text !=null){
+      text="{"+$MONTH_CONST.text+"}";
+    }
 	}
 	;
 	
@@ -1068,7 +1074,7 @@ knownTS returns [String text]
   ;
   
 pastMonthTS returns [String text] 
-  : ((i1=IDENT)|TAFCFS) '(' ((p=PASTMONTH)|(i=I)) ')'{
+  : ((i1=IDENT)|TAFCFS) '(' ((p=PASTMONTH)|(i=I)|(pm=(MONTH_CONST '-' MONTH (('+'|'-') INTEGER)? ))|(mp=(MONTH '-' MONTH_CONST (('+'|'-') INTEGER)?))) ')'{
     if (!isSumFunction && $i.text!=null){
       error_grammer.add(currentFile+" "+$i.line+"@"+($i.pos+1)+": i acts as a past month index of a decision variable can only be used in sum function");
     }
@@ -1090,10 +1096,14 @@ pastMonthTS returns [String text]
           error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": decision variable "+$i1.text+" is not defined before used");
         }
       }
-      if ($i.text == null){
-        text="{"+$i1.text+"}"+"("+$p.text+")";
-      }else{
+      if ($i.text != null){
         text="{"+$i1.text+"}"+"("+$i.text+")";
+      }else if ($p.text != null){
+        text="{"+$i1.text+"}"+"("+$p.text+")";
+      }else if ($pm.text != null){
+        text="{"+$i1.text+"}"+"("+$pm.text+")";
+      }else if ($mp.text != null){
+        text="{"+$i1.text+"}"+"("+$mp.text+")";
       }
     }
   }
@@ -1128,7 +1138,7 @@ pastCycleDV returns [String text]
   : i1=IDENT '[' i2=IDENT ']'{
     if (testDefine){
       if (!dvar.containsKey($i1.text) && !alias.containsKey($i1.text)){
-        error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": decision variable"+$i1.text+" is not defined before used");
+        error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": decision variable "+$i1.text+" is not defined before used");
       }  
       if (!cycle.containsKey($i2.text)){
         error_grammer.add(currentFile+" "+$i2.line+"@"+($i2.pos+1)+": cycle name "+$i2.text+" is not defined before used");
@@ -1257,7 +1267,20 @@ whereStatement returns [String text]
   ;
 	
 relationStatementSeries returns [String text] @init { text=""; String w="";}
-  : (r1=relationStatement){text=$r1.text;} (('.and.'{w=" .and. ";}|'.or.' {w=" .or. ";}) (r2=relationStatement){text=text+w+$r2.text;})* ;
+  : ((r1=relationStatement)|(r2=range_func)){
+      if ($r2.text==null){
+        text=$r1.text;
+      }else{
+        text=$r2.text;
+      }
+    } 
+    (('.and.'{w=" .and. ";}|'.or.' {w=" .or. ";}) ((r3=relationStatement)|(r4=range_func)) {
+      if ($r4.text==null){
+        text=text+w+$r3.text;
+      }else{
+        text=text+w+$r4.text;  
+      }   
+    })* ;
 
 relationStatement returns [String text] @init { testDefine=true;}
 	:	(e1=expression) relation (e2=expression){
@@ -1301,11 +1324,13 @@ FLOAT : INTEGER? '.' INTEGER
 
 I: 'i';
 YEAR: 'wateryear';
-MONTH: 'month'|'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'|'dec';
+MONTH: 'month';
+MONTH_CONST: 'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'|'dec';
 PASTMONTH: 'prevjan'|'prevfeb'|'prevmar'|'prevapr'|'prevmay'|'prevjun'|'prevjul'|'prevaug'|'prevsep'|'prevoct'|'prevnov'|'prevdec';
-
+RANGE: 'range';
 
 TAFCFS: 'taf_cfs'|'cfs_taf'|'cfs_af';
+DAYSIN: 'daysin';
 
 SUM: 'sum';
 MAX : 'max';
