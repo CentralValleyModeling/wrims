@@ -17,7 +17,7 @@ public class StudyCheckerForWresl {
 		if (args.length > 0 ){
 			f = args[0];
 		} else {
-			f = "D:\\cvwrsm\\trunk\\wrims_v2\\tree_parser\\src\\test\\TestWreslWalker_mainFile2.wresl";
+			f = "D:\\cvwrsm\\trunk\\wrims_v2\\converter\\src\\test\\TestWreslWalker_mainFile2.wresl";
 		}
 		
 		//System.out.println("main file: "+f);
