@@ -28,6 +28,7 @@ import components.Constraint;
 import components.Svar;
 import components.LRWeight;
 import components.MainFile;
+import components.Error;
 
 public class TestParseTable {
 
@@ -61,7 +62,7 @@ public class TestParseTable {
 		Map<String, ArrayList<String>> var_node = parser.node;
 		Map<String, Dvar> var_dvar = parser.dvar;
 		Map<String, String> var_weight = parser.weight;
-		ArrayList<String> errorGrammer=parser.error_grammer;
+		ArrayList<String> errorGrammer=Error.error_grammer;
 
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
@@ -136,7 +137,7 @@ public class TestParseTable {
 		parser.evaluator();
 		Map<String, Svar> var_svar = parser.svar;
 
-		ArrayList<String> errorGrammer=parser.error_grammer;
+		ArrayList<String> errorGrammer=Error.error_grammer;
 
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
@@ -193,7 +194,7 @@ public class TestParseTable {
 		ParseTableParser parser = new ParseTableParser(tokenStream);
 		parser.evaluator();
 		Map<String, Dvar> var_dvar = parser.dvar;
-		ArrayList<String> errorGrammer=parser.error_grammer;
+		ArrayList<String> errorGrammer=Error.error_grammer;
 
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
@@ -228,7 +229,7 @@ public class TestParseTable {
 		parser.evaluator();
 		Map<String, Dvar> var_dvar = parser.dvar;
 		Map<String, Svar> var_svar = parser.svar;
-		ArrayList<String> errorGrammer=parser.error_grammer;
+		ArrayList<String> errorGrammer=Error.error_grammer;
 		
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
@@ -272,7 +273,7 @@ public class TestParseTable {
 		ParseTableParser parser = new ParseTableParser(tokenStream);
 		parser.evaluator();
 		Map<String, String> var_weight = parser.weight;
-		ArrayList<String> errorGrammer=parser.error_grammer;
+		ArrayList<String> errorGrammer=Error.error_grammer;
 		
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
@@ -302,7 +303,7 @@ public class TestParseTable {
 		ParseTableParser parser = new ParseTableParser(tokenStream);
 		parser.evaluator();
 		ArrayList<String> var_file = parser.file;
-		ArrayList<String> errorGrammer=parser.error_grammer;
+		ArrayList<String> errorGrammer=Error.error_grammer;
 		
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
@@ -334,7 +335,7 @@ public class TestParseTable {
 		Map<String, LRWeight> var_lgr = parser.lgr;
 		Map<String, LRWeight> var_rgl = parser.rgl;
 
-		ArrayList<String> errorGrammer=parser.error_grammer;
+		ArrayList<String> errorGrammer=Error.error_grammer;
 
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
@@ -428,7 +429,7 @@ public class TestParseTable {
 		Map<String, Svar> var_svar=parser.svar;
 		Map<String, Constraint> var_constraint=parser.constraint;
 		Map<String, String> var_weight = parser.weight;
-		ArrayList<String> errorGrammer=parser.error_grammer;
+		ArrayList<String> errorGrammer=Error.error_grammer;
 
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
@@ -555,7 +556,7 @@ public class TestParseTable {
 		parser.evaluator();
 		ArrayList<String> var_file = parser.file;
 		Map<String, ArrayList<String>> var_node = parser.node;
-		ArrayList<String> errorGrammer=parser.error_grammer;
+		ArrayList<String> errorGrammer=Error.error_grammer;
 		
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
@@ -646,7 +647,7 @@ public class TestParseTable {
 		Map<String, Alias> var_alias=parser.alias;
 		Map<String, Dvar> var_dvar=parser.dvar;
 		Map<String, Svar> var_svar=parser.svar;
-		ArrayList<String> errorGrammer=parser.error_grammer;
+		ArrayList<String> errorGrammer=Error.error_grammer;
 		
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
@@ -784,7 +785,7 @@ public class TestParseTable {
 		Map<String, Alias> var_alias=parser.alias;
 		Map<String, Dvar> var_dvar=parser.dvar;
 		Map<String, Svar> var_svar=parser.svar;
-		ArrayList<String> errorGrammer=parser.error_grammer;
+		ArrayList<String> errorGrammer=Error.error_grammer;
 		
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
@@ -835,11 +836,13 @@ public class TestParseTable {
 		Map<String, Alias> var_alias=parser.alias;
 		Map<String, Dvar> var_dvar=parser.dvar;
 		Map<String, Svar> var_svar=parser.svar;
-		ArrayList<String> errorGrammer=parser.error_grammer;
+		ArrayList<String> errorGrammer=Error.error_grammer;
 		
 		for (int i=0; i<errorGrammer.size(); i++){
 			System.out.println(errorGrammer.get(i));
 		}
+		
+		Error.writeErrorFile("ErrorLog.txt");
 		
 		Map<String, Dvar> var_DvarGlobal=parser.dvarGlobal;
 	    Iterator iterator=var_DvarGlobal.keySet().iterator();

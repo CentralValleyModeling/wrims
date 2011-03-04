@@ -27,6 +27,7 @@ options {
   import components.LRWeight;
   import components.IlpData;
   import components.MainFile;
+  import components.Error;
 }
 
 @lexer::header {
@@ -35,7 +36,6 @@ options {
 
 @members {
 
-  public static ArrayList<String>   error_grammer = new ArrayList<String> ();
   public static Map<String, ArrayList<String>>   cycle = new HashMap<String, ArrayList<String>>();
   public static Map<String, ArrayList<String>>   node = new HashMap<String, ArrayList<String>>();
   public static Map<String, Dvar>   dvar = new HashMap<String, Dvar>();
@@ -137,7 +137,7 @@ options {
             Double.parseDouble(lowerBound);
           }catch (NumberFormatException nfe2) {
             if (!svar.containsKey(lowerBound) && !lowerBound.contains("*")){
-              error_grammer.add(currDvar.getSourceFileName()+" "+currDvar.getLineNumber()+"@"+currDvar.getPosLowerBound()+": "+lowerBound+" as the lower bound of decision variable "+dvarName+" is not a defined state variable before used");
+              Error.error_grammer.add(currDvar.getSourceFileName()+" "+currDvar.getLineNumber()+"@"+currDvar.getPosLowerBound()+": "+lowerBound+" as the lower bound of decision variable "+dvarName+" is not a defined state variable before used");
             }
           }
         }   
@@ -152,7 +152,7 @@ options {
             Double.parseDouble(upperBound);
           }catch (NumberFormatException nfe5) {
             if (!svar.containsKey(upperBound) && !upperBound.contains("*")){
-              error_grammer.add(currDvar.getSourceFileName()+" "+currDvar.getLineNumber()+"@"+currDvar.getPosUpperBound()+": "+upperBound+" as the upper bound of decision variable "+dvarName+" is not a defined state variable before used");
+              Error.error_grammer.add(currDvar.getSourceFileName()+" "+currDvar.getLineNumber()+"@"+currDvar.getPosUpperBound()+": "+upperBound+" as the upper bound of decision variable "+dvarName+" is not a defined state variable before used");
             }
           }
         }   
@@ -210,7 +210,7 @@ options {
   
   @Override
   public void reportError(RecognitionException e) {
-       error_grammer.add(currentFile+" "+e.line+"@"+e.charPositionInLine+": "+getErrorMessage(e, tokenNames));
+       Error.error_grammer.add(currentFile+" "+e.line+"@"+e.charPositionInLine+": "+getErrorMessage(e, tokenNames));
   }
 }
 
@@ -246,7 +246,7 @@ svartable @init {isSvFile=true;}
 	:	headline_svartable ('\n'|'\r'|COMMENT*) content_svarline* {
 	    isSvFile=false;
       if (!(preCondition.equals("always"))){
-          error_grammer.add(currentFile+": "+preSV+" the last case should be always");
+          Error.error_grammer.add(currentFile+": "+preSV+" the last case should be always");
       }
 	  }
 	;
@@ -362,7 +362,7 @@ content_global
         alias = new HashMap<String, Alias>();
       
         if (cycle.containsKey($i1.text)){
-          error_grammer.add(MainFile.fullPath+": cycle"+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
+          Error.error_grammer.add(MainFile.fullPath+": cycle"+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
         }else{
           ArrayList<String> list = new ArrayList<String>();
           
@@ -404,7 +404,7 @@ content_global
           setGlobal();
         }           
       }else{
-        error_grammer.add("main file "+$i1.line+"@"+($i1.pos+1)+ ": cycle name "+$i1.text+" is wrong. The first line cycle name should be global");
+        Error.error_grammer.add("main file "+$i1.line+"@"+($i1.pos+1)+ ": cycle name "+$i1.text+" is wrong. The first line cycle name should be global");
       }      
   }
   ;
@@ -426,7 +426,7 @@ content_cycle
       initialCycle();
       
       if (cycle.containsKey($i1.text)){
-        error_grammer.add(MainFile.fullPath+$i1.line+"@"+($i1.pos+1)+": cycle"+ $i1.text+" redefined");
+        Error.error_grammer.add(MainFile.fullPath+$i1.line+"@"+($i1.pos+1)+": cycle"+ $i1.text+" redefined");
       }else{
         ArrayList<String> list = new ArrayList<String>();
         
@@ -478,7 +478,7 @@ content_file
        if ($i2.text.equals("y")){
            String fileFullPath=getFullPath($i1.text);
            if (file.contains(fileFullPath)) {
-               error_grammer.add(currentFile+" "+$i2.line+"@"+"0"+": "+ $i1.text+" redefined");
+               Error.error_grammer.add(currentFile+" "+$i2.line+"@"+"0"+": "+ $i1.text+" redefined");
            }else{
              file.add(fileFullPath); 
              byte[] buffer = new byte[(int) new File(fileFullPath).length()];
@@ -511,7 +511,7 @@ content_file
              fileAnchestry.remove(fileAnchestry.size()-1);
            }           
        }else if (!($i2.text.equals("n"))){
-           error_grammer.add(currentFile+" "+$i2.line+"@"+($i2.pos+1)+": "+$i1.text+" include field should be y or n");
+           Error.error_grammer.add(currentFile+" "+$i2.line+"@"+($i2.pos+1)+": "+$i1.text+" include field should be y or n");
        }
     }
   ;
@@ -519,7 +519,7 @@ content_file
 content_dvar
 	:	i1=IDENT s1=',' lowerbound s2=',' upperbound ',' i3=IDENT ',' units ',' partC ',' fileName{
 	       if (dvar.containsKey($i1.text) || svar.containsKey($i1.text) || alias.containsKey($i1.text)){
-            error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
+            Error.error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
          }else{
             Dvar currDvar=new Dvar();
             if ($lowerbound.text.equals("unbounded")){
@@ -539,7 +539,7 @@ content_dvar
             }else if ($i3.text.equals("n")){
               currDvar.setIntegerType(false);
             }else{
-              error_grammer.add(currentFile+" "+$i3.line+"@"+($i3.pos+1)+": "+$i1.text+" integer field should be y or n");
+              Error.error_grammer.add(currentFile+" "+$i3.line+"@"+($i3.pos+1)+": "+$i1.text+" integer field should be y or n");
             }
             
             currDvar.setUnits($units.text);
@@ -557,22 +557,22 @@ content_svar
 	:	i1=IDENT  s1=',' i2=partC s2=',' units ',' i7=IDENT ',' i4=IDENT ',' (IDENT|usedKeywords) ',' INTEGER s3=',' i5=conditionStatement ',' i6=tableExpression ',' fileName{
      				if ($i1.text.equals(preSV)){
 			        	if (!$i2.text.equals(svType)){
-			        	  error_grammer.add(currentFile+" "+$s1.line+"@"+($s1.pos+2)+": "+$i1.text+" type field should be the same for the same variable");
+			        	  Error.error_grammer.add(currentFile+" "+$s1.line+"@"+($s1.pos+2)+": "+$i1.text+" type field should be the same for the same variable");
 			        	}
 			        	if (!$units.text.equals(svUnits)){
-                  error_grammer.add(currentFile+" "+$s2.line+"@"+($s2.pos+2)+": "+$i1.text+" units field should be the same for the same variable");
+                  Error.error_grammer.add(currentFile+" "+$s2.line+"@"+($s2.pos+2)+": "+$i1.text+" units field should be the same for the same variable");
                 }
                 if (!$i7.text.equals(svConvertUnits)){
-                  error_grammer.add(currentFile+" "+$i7.line+"@"+($i7.pos+1)+": "+$i1.text+" convert_to_units field should be the same for the same variable");
+                  Error.error_grammer.add(currentFile+" "+$i7.line+"@"+($i7.pos+1)+": "+$i1.text+" convert_to_units field should be the same for the same variable");
                 }
                 if (!$i4.text.equals(output)){
-                  error_grammer.add(currentFile+" "+$i4.line+"@"+($i4.pos+1)+": "+$i1.text+" output field should be the same for the same variable");
+                  Error.error_grammer.add(currentFile+" "+$i4.line+"@"+($i4.pos+1)+": "+$i1.text+" output field should be the same for the same variable");
                 }
 			        	if (!redefineSV){
 			        	   if ($i5.text.equals("always")){
             				  n_always=n_always+1;
 			        		    if (n_always>1){
-		              				error_grammer.add(currentFile+" "+$s3.line+"@"+($s3.pos+2)+": "+$i1.text+" has more than 1 always condition");
+		              				Error.error_grammer.add(currentFile+" "+$s3.line+"@"+($s3.pos+2)+": "+$i1.text+" has more than 1 always condition");
             				  }
           			   }
                    
@@ -587,7 +587,7 @@ content_svar
                 svUnits=$units.text;
                 svConvertUnits=$i7.text;
           			if (svar.containsKey($i1.text) || dvar.containsKey($i1.text) || alias.containsKey($i1.text)){
-                    error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
+                    Error.error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
                     redefineSV=true;
                 }else{
                     redefineSV=false;
@@ -598,12 +598,12 @@ content_svar
             				}else if ($i4.text.equals("n")){
             				  output=$i4.text;
           				  }else{
-            					error_grammer.add(currentFile+" "+$i4.line+"@"+($i4.pos+1)+": "+$i1.text+" output field should be y or n");
+            					Error.error_grammer.add(currentFile+" "+$i4.line+"@"+($i4.pos+1)+": "+$i1.text+" output field should be y or n");
             					output="n";
           				  }
           				
           				  if (!(preCondition.equals("always"))){
-            					error_grammer.add(currentFile+" "+$s3.line+"@"+($s3.pos+2)+": "+preSV+" the last case should be always");
+            					Error.error_grammer.add(currentFile+" "+$s3.line+"@"+($s3.pos+2)+": "+preSV+" the last case should be always");
           				  }
           				  
           				  if ($i5.text.equals("always")){
@@ -635,7 +635,7 @@ content_constraint
                    if ($i5.text.equals("always")){
                       n_always=n_always+1;
                       if (n_always>1){
-                          error_grammer.add(currentFile+" "+$s1.line+"@"+($s1.pos+2)+": "+$i1.text+" has more than 1 always condition");
+                          Error.error_grammer.add(currentFile+" "+$s1.line+"@"+($s1.pos+2)+": "+$i1.text+" has more than 1 always condition");
                       }
                    }
                    if (constraintOnly){
@@ -643,7 +643,7 @@ content_constraint
                         currConstraint.getCaseCondition().add($i5.text);
                         currConstraint.getCaseExpression().add($i6.text);
                         if (!(($i7.text==null) && ($i8.text==null))){
-                          error_grammer.add(currentFile+" "+$s3.line+"@"+($s3.pos+2)+": "+$i1.text+" lhs_gt_rhs and rhs_gt_lhs fields can only be both # or neither");
+                          Error.error_grammer.add(currentFile+" "+$s3.line+"@"+($s3.pos+2)+": "+$i1.text+" lhs_gt_rhs and rhs_gt_lhs fields can only be both # or neither");
                         }
                    }else{
                         if ($i7.text.equals("constrain") && $i8.text.equals("constrain")){
@@ -707,7 +707,7 @@ content_constraint
                 }
             }else{
                 if (constraint.containsKey($i1.text)){
-                    error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
+                    Error.error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
                     redefineConstraint=true;
                 }else{
                     redefineConstraint=false;
@@ -725,7 +725,7 @@ content_constraint
                         currConstraint.getCaseExpression().add($i6.text);
                         constraint.put($i1.text, currConstraint);
                         if (!(($i7.text==null) && ($i8.text==null))){                          
-                          error_grammer.add(currentFile+" "+$s3.line+"@"+($s3.pos+2)+": "+$i1.text+" lhs_gt_rhs and rhs_lt_lhs fields can only be both # or neither");
+                          Error.error_grammer.add(currentFile+" "+$s3.line+"@"+($s3.pos+2)+": "+$i1.text+" lhs_gt_rhs and rhs_lt_lhs fields can only be both # or neither");
                         }
                     }else{
                         if ($i7.text.equals("constrain") && $i8.text.equals("constrain")){                        
@@ -809,12 +809,12 @@ content_weight
 	:	IDENT ',' weight{
 	   if (dvar.containsKey($IDENT.text)){  
 	     if (weight.containsKey($IDENT.text)){
-          error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": "+ $IDENT.text+" redefined");
+          Error.error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": "+ $IDENT.text+" redefined");
        }else{
           weight.put($IDENT.text, $weight.text);
        }
      }else{
-       error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": "+$IDENT.text+" is not defined before used");
+       Error.error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": "+$IDENT.text+" is not defined before used");
      }
 	} 
 	;
@@ -822,7 +822,7 @@ content_weight
 content_external
   : IDENT ',' externalFile {  
      if (function.containsKey($IDENT.text)){
-        error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": "+ $IDENT.text+" redefined");
+        Error.error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": "+ $IDENT.text+" redefined");
      }else{
         function.put($IDENT.text, $externalFile.text);
      }
@@ -832,7 +832,7 @@ content_external
 content_alias @init{testDefine=true;}
   : i1=IDENT ',' partC ',' units ',' expression ',' fileName{
       if (dvar.containsKey($i1.text) || svar.containsKey($i1.text) || alias.containsKey($i1.text)){
-        error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
+        Error.error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
       }
       Alias currAlias=new Alias();
       currAlias.setType($partC.text);
@@ -1020,13 +1020,13 @@ term returns [String text]
 	{
     if ($i1 !=null){
       if (testDefine && !isSvFile && !isAliasFile && !dvar.containsKey($i1.text) && !svar.containsKey($i1.text) && !alias.containsKey($i1.text)){
-        error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+$i1.text+" is not defined before used");
+        Error.error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": "+$i1.text+" is not defined before used");
       }
       if (!isConstraintStatement &&  !isAliasFile && dvar.containsKey($i1.text)){
-        error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": decision variable "+$i1.text+" in current month and current cycle can only be used in constraint relationship or defining weight or define alias");
+        Error.error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": decision variable "+$i1.text+" in current month and current cycle can only be used in constraint relationship or defining weight or define alias");
       }
       if (!isConstraintStatement && !isAliasFile && alias.containsKey($i1.text)){
-        error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": alias variable "+$i1.text+" in current month and current cycle can only be used in constraint relationship or define alias");
+        Error.error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": alias variable "+$i1.text+" in current month and current cycle can only be used in constraint relationship or define alias");
       }
       if (svar.containsKey($i1.text)||alias.containsKey($i1.text)||isSvFile||isAliasFile){
         text="{"+$i1.text+"}";
@@ -1076,7 +1076,7 @@ knownTS returns [String text]
 pastMonthTS returns [String text] 
   : ((i1=IDENT)|TAFCFS) '(' ((p=PASTMONTH)|(i=I)|(pm=(MONTH_CONST '-' MONTH (('+'|'-') INTEGER)? ))|(mp=(MONTH '-' MONTH_CONST (('+'|'-') INTEGER)?))) ')'{
     if (!isSumFunction && $i.text!=null){
-      error_grammer.add(currentFile+" "+$i.line+"@"+($i.pos+1)+": i acts as a past month index of a decision variable can only be used in sum function");
+      Error.error_grammer.add(currentFile+" "+$i.line+"@"+($i.pos+1)+": i acts as a past month index of a decision variable can only be used in sum function");
     }
     if ($i1.text ==null){
       text="{"+$TAFCFS.text+"}"+"("+$p.text+")";
@@ -1086,14 +1086,14 @@ pastMonthTS returns [String text]
           Svar currSv=svar.get($i1.text);
           ArrayList<ArrayList<String>> list=currSv.getCaseExpression();
           if (list.size()>1){
-            error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": state variable "+$i1.text+" should be a timeseries to be used for past month");
+            Error.error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": state variable "+$i1.text+" should be a timeseries to be used for past month");
           }else{
             if (!list.get(0).get(0).equals("TIMESERIES")){
-              error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": state variable "+$i1.text+" should be a timeseries to be used for past month");
+              Error.error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": state variable "+$i1.text+" should be a timeseries to be used for past month");
             }
           }
         }else{  
-          error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": decision variable "+$i1.text+" is not defined before used");
+          Error.error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": decision variable "+$i1.text+" is not defined before used");
         }
       }
       if ($i.text != null){
@@ -1116,14 +1116,14 @@ preMonthTS returns [String text]
           Svar currSv=svar.get($IDENT.text);
           ArrayList<ArrayList<String>> list=currSv.getCaseExpression();
           if (list.size()>1){
-            error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": state variable "+$IDENT.text+" should be a timeseries to be used for past month");
+            Error.error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": state variable "+$IDENT.text+" should be a timeseries to be used for past month");
           }else{
             if (!list.get(0).get(0).equals("TIMESERIES")){
-              error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": state variable "+$IDENT.text+" should be a timeseries to be used for past month");
+              Error.error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": state variable "+$IDENT.text+" should be a timeseries to be used for past month");
             }
           }
         }else{  
-          error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": decision variable "+$IDENT.text+" is not defined before used");
+          Error.error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": decision variable "+$IDENT.text+" is not defined before used");
         }
       }
       if ($s.text ==null){
@@ -1138,13 +1138,13 @@ pastCycleDV returns [String text]
   : i1=IDENT '[' i2=IDENT ']'{
     if (testDefine){
       if (!dvar.containsKey($i1.text) && !alias.containsKey($i1.text)){
-        error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": decision variable "+$i1.text+" is not defined before used");
+        Error.error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": decision variable "+$i1.text+" is not defined before used");
       }  
       if (!cycle.containsKey($i2.text)){
-        error_grammer.add(currentFile+" "+$i2.line+"@"+($i2.pos+1)+": cycle name "+$i2.text+" is not defined before used");
+        Error.error_grammer.add(currentFile+" "+$i2.line+"@"+($i2.pos+1)+": cycle name "+$i2.text+" is not defined before used");
       }else{
         if (currentCycle.equals($i2.text)){
-          error_grammer.add(currentFile+" "+$i2.line+"@"+($i2.pos+1)+": cycle name "+$i2.text+" should be previous cycle");
+          Error.error_grammer.add(currentFile+" "+$i2.line+"@"+($i2.pos+1)+": cycle name "+$i2.text+" should be previous cycle");
         }
       }
     } 
@@ -1166,7 +1166,7 @@ function returns [ArrayList<String> list]
 noArgFunction returns [ArrayList<String> list]
   : IDENT '(' ')'{
       if (!function.containsKey($IDENT.text)){
-        error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": function "+$IDENT.text+" is not defined before used");
+        Error.error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": function "+$IDENT.text+" is not defined before used");
       }
       list=new ArrayList<String>();
       list.add("FUNCTION");
@@ -1177,7 +1177,7 @@ noArgFunction returns [ArrayList<String> list]
 argFunction returns [ArrayList<String> list] 
   : IDENT arguments {
       if (!function.containsKey($IDENT.text)){
-        error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": function "+$IDENT.text+" is not defined before used");
+        Error.error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos+1)+": function "+$IDENT.text+" is not defined before used");
       }
       list=new ArrayList<String>();
       list.add("FUNCTION");
@@ -1199,7 +1199,7 @@ oneArgument returns [String text]@init{text="";}:
       if (svar.containsKey($IDENT.text)){
         text=text+"({"+$IDENT.text+"})";
       }else{
-        error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos)+": "+$IDENT.text+" should be a state variable");
+        Error.error_grammer.add(currentFile+" "+$IDENT.line+"@"+($IDENT.pos)+": "+$IDENT.text+" should be a state variable");
       }}) 
     |(knownTS{text=text+$knownTS.text;}))
     ')'{text=text+")";}
