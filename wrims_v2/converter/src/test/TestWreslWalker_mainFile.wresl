@@ -1,12 +1,11 @@
 SEQUENCE CYCLE1 {
     model   first
-	condition month==APR.or.(month/=MAY .and. .not.r == 7)
+	condition month==APR.or.(month/=MAY .and. (.not.r > 7))
     order   1
     }
 
 SEQUENCE CYCLE2 {
     model   empty
-	condition (month==APR).or.month>MAY
     order   2
     }
 

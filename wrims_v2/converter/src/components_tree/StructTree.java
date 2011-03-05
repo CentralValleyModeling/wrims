@@ -485,9 +485,9 @@ public class StructTree {
 			dvMap.put(name, dv);
 			dvList.add(name);
 			
-			if      (scope == "global"){dvList_global.add(name);}
-			else if (scope == "local") {dvList_local.add(name);}
-			else{ System.out.println("wrong scope!!");}
+			if      (scope == "Global"){dvList_global.add(name);}
+			else if (scope == "Local") {dvList_local.add(name);}
+			else{ LogUtils.errMsg("wrong scope!!");}
 
 		}
 	}

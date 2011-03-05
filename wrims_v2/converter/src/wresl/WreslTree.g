@@ -9,7 +9,8 @@ options {
 tokens {
 	NEGATION;
 	NEW_LINE;
-	Dvar; Dvar_std; Dvar_nonStd; Dvar_std_local; Dvar_nonStd_local;
+	Local; Global;
+	Dvar; Dvar_std; Dvar_nonStd; Dvar_std; Dvar_nonStd_local;
 	Model;
 	Sequence;
 	Condition;
@@ -26,11 +27,13 @@ tokens {
 @header {
   package wresl;
   import components_tree.LogUtils; 
+    import components_tree.Tools; 
 }
 
 @lexer::header {
   package wresl;
-    import components_tree.LogUtils;    
+    import components_tree.LogUtils; 
+  
 }
 
 
@@ -83,40 +86,43 @@ model
 	-> {sometest($IDENT.text)}?  ^(Model IDENT  (pattern )+  ) 
 	->             
 	;
-sequence @init{boolean condition_exist=false;}
-	: SEQUENCE IDENT '{' MODEL IDENT ( c=condition {condition_exist = true;})? ORDER INTEGER '}' 
-	-> {condition_exist}? ^(Sequence IDENT Model IDENT Order INTEGER Condition $c )	 
-	->                    ^(Sequence IDENT Model IDENT Order INTEGER Condition Always ) 
+sequence 
+	: SEQUENCE IDENT '{' MODEL IDENT ( c=condition)? ORDER INTEGER '}' 
+	-> {c!=null}? ^(Sequence IDENT Model IDENT Order INTEGER $c )	 
+	->            ^(Sequence IDENT Model IDENT Order INTEGER Condition Always ) 
 	;
 	
 condition
-	: CONDITION e=logical 
-	  
-	-> CONDITION[ "{ " + $e.text + " }" ] // $e.text is the text before e's rule rewriting
+	: CONDITION logical 
+	-> Condition logical 
 	;	
 
 includeFile
-	:	 INCLUDE FILE_PATH -> ^(Include FILE_PATH)
+	:	 INCLUDE FILE_PATH -> ^(Include INCLUDE[Tools.strip($FILE_PATH.text)])
 	;
 		
-dvar : DEFINE! (dvar_std | dvar_std_local | dvar_nonStd | dvar_nonStd_local) ;	
+dvar : DEFINE! (dvar_std | dvar_nonStd ) ;	
 
 	
 dvar_std :
-	IDENT '{' STD KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
-	-> ^(Dvar_std IDENT Kind $k Units $u) ;	
-
-dvar_std_local :
-	LOCAL IDENT  '{' STD KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
-	-> ^(Dvar_std_local IDENT Kind $k Units $u) ;
+	s=LOCAL? IDENT '{' STD KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
+	-> {s!=null}? ^(Dvar_std  Local["Local"]   IDENT Kind KIND[$k.text] Units UNITS[$u.text]) 	
+	->            ^(Dvar_std  Global["Global"] IDENT Kind KIND[$k.text] Units UNITS[$u.text]) 
+	;	
 
 dvar_nonStd :
-	IDENT '{' lower_and_or_upper KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
-	-> ^(Dvar_nonStd IDENT lower_and_or_upper Kind $k Units $u) ;
+	s=LOCAL? IDENT '{' lower_and_or_upper KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
+	-> {s!=null}? ^(Dvar_nonStd Local["Local"]   IDENT lower_and_or_upper Kind KIND[$k.text] Units UNITS[$u.text]) 
+	->            ^(Dvar_nonStd Global["Global"] IDENT lower_and_or_upper Kind KIND[$k.text] Units UNITS[$u.text]) 
+	;	
 
-dvar_nonStd_local :
-	LOCAL IDENT '{' lower_and_or_upper KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
-	-> ^(Dvar_nonStd_local IDENT lower_and_or_upper Kind $k Units $u) ;
+//dvar_nonStd :
+//	IDENT '{' lower_and_or_upper KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
+//	-> ^(Dvar_nonStd IDENT lower_and_or_upper Kind $k Units $u) ;
+//
+//dvar_nonStd_local :
+//	LOCAL IDENT '{' lower_and_or_upper KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
+//	-> ^(Dvar_nonStd_local IDENT lower_and_or_upper Kind $k Units $u) ;
 
 lower_and_or_upper : lower_upper
 				   | upper_lower ;
@@ -134,50 +140,39 @@ upper: UPPER ( UNBOUNDED -> Upper Unbounded | expression -> Upper expression) ;
 quote_string: 	QUOTE_STRING ;
 //ident: IDENT_TOKEN ;
 
+/// Expression ///
 term
 	:	IDENT
-	|	'(' expression ')'-> expression
+	|	'(' expression ')'
 	|	INTEGER
 	;
 	
-unary
-	:	('+'! | negation^)? term 	;
+unary :	('+'! | negation)? term 	;
 
-negation
-	:	'-' -> NEGATION	;
+negation :	'-' -> NEGATION	;
 
-mult
-	:	unary (('*'^ | '/'^ ) unary)* 	;
+mult :	unary (('*' | '/' ) unary)* 	;
 	
-expression
-	:	mult (('+'^ | '-'^) mult)*	;
+expression :	mult (('+' | '-') mult)*	;
 	
 c_term
-	: ( expression relation expression ) => expression relation^ expression
-	| ( '(' logical ')' ) => '(' logical ')' -> logical
+	: ( expression relation expression ) => expression relation expression
+	| ( '(' logical ')' ) => '(' logical ')' 
 	;	
 
-c_unary
-	:	(c_negation^)? c_term  	;
+c_unary :	(c_negation)? c_term  	;
 
-c_negation
-	:	NOT -> Not	;
+c_negation :	NOT -> Not	;
 
-logical
-	:  c_unary ( bin^ c_unary )* 
-	   
-	;  
+logical :  c_unary ( bin c_unary )* ;  
 	
-relation
-	: '>' | '<' | '>=' | '<=' | '==' | '/=' ;	
-	  
-//	  { $text = $e1.text + $x.text + $e2.text;  }	  
+relation : '>' | '<' | '>=' | '<=' | '==' | '/=' ;	
 
-bin returns[String text] 
-	: OR {$text = " .or. ";} -> Or | AND	{$text = " .and. ";} -> And
-	;	
+bin : OR -> Or | AND -> And ;	
 	
-	
+/// End Expression /// 	
+
+
 COMMENT : '!' .* ('\n'|'\r') {skip();}; //{$channel = HIDDEN;}; 
 MULTILINE_COMMENT : '/*' .* '*/' {skip();}; //{$channel = HIDDEN;};
 

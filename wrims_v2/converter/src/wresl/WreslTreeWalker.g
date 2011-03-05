@@ -48,7 +48,7 @@ pattern
 	;
 
 includeFile
-	:	 ^(Include FILE_PATH)
+	:	 ^(Include p=INCLUDE) {F.includeFile($p.text, "");}
 	;
 	
 	
@@ -57,26 +57,28 @@ includeFile
 //			{ variables.put($IDENT.text, e); }
 //	;
 
-dvar : dvar_std | dvar_std_local | dvar_nonStd | dvar_nonStd_local ;
+dvar : dvar_std | dvar_nonStd | dvar_nonStd_local ;
 
-dvar_std : ^(Dvar_std i=IDENT Kind k=QUOTE_STRING Units u=QUOTE_STRING)
-	{ 	
-    	F.dvarStd($i.text, "local", "", Tools.strip($k.text), Tools.strip($u.text));
-	};
+dvar_std  
+	@after{ F.dvarStd($i.text, $s.text, "", Tools.strip($k.text), Tools.strip($u.text)); }
+	:
+       ^(Dvar_std s=Global i=IDENT Kind k=KIND Units u=UNITS)
+	|  ^(Dvar_std s=Local  i=IDENT Kind k=KIND Units u=UNITS)
+	;
 	
-dvar_std_local : ^(Dvar_std_local i=IDENT Kind k=QUOTE_STRING Units u=QUOTE_STRING)
-	{ 	
-    	F.dvarStd($i.text, "local", "", Tools.strip($k.text), Tools.strip($u.text));
-	}	
+dvar_nonStd : 
+	   ^(Dvar_nonStd sc=Global i=IDENT lower upper Kind k=KIND Units u=UNITS)
+	   { System.out.println($i.text+ $sc.text+ $k.text+ $u.text+$lower.str);
 
-	;
-dvar_nonStd : ^(Dvar_nonStd IDENT lower upper Kind k=QUOTE_STRING Units u=QUOTE_STRING)
-	;
-
-dvar_nonStd_local : ^(Dvar_nonStd_local IDENT lower upper Kind k=QUOTE_STRING Units u=QUOTE_STRING)
+	   }
+	   //{F.dvarNonStd($i.text, $sc.text, $k.text, $u.text,  $lb.text, $ub.text);}
 	;
 
-lower : Lower (Std |Unbounded | expression ) ;
+dvar_nonStd_local : 
+	   ^(Dvar_nonStd Local  IDENT lower upper Kind k=KIND Units u=UNITS)
+	;
+
+lower returns[String str] : Lower (Std {$str = "Std";}|Unbounded {$str = "ub";}| e=expression {$str = "ee";}) ;
 upper : Upper (Std |Unbounded | expression ) ;
 
 model
@@ -89,7 +91,7 @@ sequence
 	;
 		
 condition 
-	: Condition ( CONDITION | Always ) 
+	: Condition ( logical | Always ) 
 	;	
 
 //sequence
@@ -99,13 +101,31 @@ condition
 //	;	
 	
 	
-expression 
-	:	^('+' op1=expression op2=expression) 
-	|	^('-' op1=expression op2=expression) 
-	|	^('*' op1=expression op2=expression) 
-	|	^('/' op1=expression op2=expression) 
-	|	^(NEGATION e=expression)  
-	|	IDENT 
-	|	INTEGER 
+/// Expression ///
+term
+	:	IDENT
+	|	'(' expression ')'
+	|	INTEGER
 	;
+	
+unary :	NEGATION? term 	;
+
+mult :	unary (('*' | '/' ) unary)* 	;
+	
+expression :	mult (('+' | '-') mult)*	;
+	
+c_term
+	: ( expression relation expression ) => expression relation expression
+	| ( '(' logical ')' ) => '(' logical ')' 
+	;	
+
+c_unary :	Not? c_term  	;
+
+logical :  c_unary ( bin c_unary )* ;  
+	
+relation : '>' | '<' | '>=' | '<=' | '==' | '/=' ;	
+
+bin : Or | And ;	
+	
+/// End Expression /// 
 
