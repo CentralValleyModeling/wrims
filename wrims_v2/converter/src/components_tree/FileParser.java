@@ -64,6 +64,7 @@ public class FileParser {
 		
 		// / feed walker with parser's tree output
 		CommonTreeNodeStream nodeStream = new CommonTreeNodeStream(parser_evaluator.getTree());
+		nodeStream.setTokenStream(tokenStream); // important trick to avoid null exception in tree walker
 		WreslTreeWalker walker = new WreslTreeWalker(nodeStream);
 		
 		walker.commonTree = parser.commonTree;
