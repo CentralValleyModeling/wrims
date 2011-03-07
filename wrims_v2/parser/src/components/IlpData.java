@@ -16,7 +16,7 @@ public class IlpData {
     private static ArrayList<Map<String, String>>  functionArray = new ArrayList<Map<String, String>>();
     private static ArrayList<Map<String, Alias>>  aliasArray = new ArrayList<Map<String, Alias>>();
     
-    public ArrayList<Map<String, Dvar>> getDvarArray(){
+    public static ArrayList<Map<String, Dvar>> getDvarArray(){
     	return dvarArray;
     }
     
@@ -24,7 +24,7 @@ public class IlpData {
     	dvarArray.add(dvar);
     }
     
-    public ArrayList<Map<String, Svar>> getSvarArray(){
+    public static ArrayList<Map<String, Svar>> getSvarArray(){
     	return svarArray;
     }
     
@@ -32,7 +32,7 @@ public class IlpData {
     	svarArray.add(svar);
     }
     
-    public ArrayList<ArrayList<String>> getOutputSvarArray(){
+    public static ArrayList<ArrayList<String>> getOutputSvarArray(){
     	return outputSvarArray;
     }
     
@@ -40,7 +40,7 @@ public class IlpData {
     	outputSvarArray.add(outputSvar);
     }
     
-    public ArrayList<Map<String, String>>  getWeightArray(){
+    public static ArrayList<Map<String, String>>  getWeightArray(){
     	return weightArray;
     }
     
@@ -48,7 +48,7 @@ public class IlpData {
     	weightArray.add(weight);
     }
     
-    public ArrayList<Map<String, Constraint>>  getConstraintArray(){
+    public static ArrayList<Map<String, Constraint>>  getConstraintArray(){
     	return constraintArray;
     }
     
@@ -56,7 +56,7 @@ public class IlpData {
     	constraintArray.add(constraint);
     }
     
-    public ArrayList<Map<String, LRWeight>>  getLgrArray(){
+    public static ArrayList<Map<String, LRWeight>>  getLgrArray(){
     	return lgrArray;
     }
     
@@ -64,7 +64,7 @@ public class IlpData {
     	lgrArray.add(lgr);
     }
     
-    public ArrayList<Map<String, LRWeight>>  getRglArray(){
+    public static ArrayList<Map<String, LRWeight>>  getRglArray(){
     	return rglArray;
     }
     
@@ -72,7 +72,7 @@ public class IlpData {
     	rglArray.add(rgl);
     }
     
-    public ArrayList<Map<String, String>>  getFunctionArray (){
+    public static ArrayList<Map<String, String>>  getFunctionArray (){
     	return functionArray;
     }
     
@@ -80,7 +80,7 @@ public class IlpData {
     	functionArray.add(function);
     }
     
-    public ArrayList<Map<String, Alias>>  getAliasArray(){
+    public static ArrayList<Map<String, Alias>>  getAliasArray(){
     	return aliasArray;
     }
     
