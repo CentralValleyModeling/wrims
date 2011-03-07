@@ -18,10 +18,11 @@ tokens {
 	Kind; Units;
 	Lower='Lower'; Upper='Upper';
 	Std='Std'; Unbounded='Unbounded';	
-	Exp;
+	Exp='Exp';
 	Include;
 	Or='Or'; And='And'; Not='Not';
 	Always;
+	RangeType;
 
 }
 
@@ -78,7 +79,7 @@ evaluator
 	:	(( pattern |  sequence | model )+ | test2) EOF!
 	;
 
-test:  INTEGER  INTEGER ;	
+test:  INTEGER  'test' ;	
 test2:  test ;	
 	
 pattern
@@ -132,14 +133,14 @@ lower_and_or_upper : lower_upper
 				   | upper_lower ;
 				   
 lower_upper : lower (upper -> lower upper)?
-					-> lower Upper Std
+					-> lower Upper RangeType["Std"]
 				 ;
 upper_lower : upper (lower -> lower upper)? 
-                   -> Lower Std upper
+                   -> Lower RangeType["Std"] upper
    				 ;				   
 
-lower: LOWER ( UNBOUNDED -> Lower Unbounded | expression -> Lower expression) ;
-upper: UPPER ( UNBOUNDED -> Upper Unbounded | expression -> Upper expression) ;
+lower: LOWER ( UNBOUNDED -> Lower RangeType["Unbounded"] | e=expression -> Lower RangeType[$e.tree.toStringTree()] ) ;
+upper: UPPER ( UNBOUNDED -> Upper RangeType["Unbounded"] | e=expression -> Upper RangeType[$e.tree.toStringTree()] ) ;
 
 
 /// Expression ///

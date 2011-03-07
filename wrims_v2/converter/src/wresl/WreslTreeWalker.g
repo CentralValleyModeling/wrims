@@ -38,11 +38,11 @@ evaluator
 @init { F.currentAbsolutePath=currentAbsolutePath;
 		F.currentAbsoluteParent=currentAbsoluteParent; }
 
-	:	( pattern |  sequence | model )+
+	:	( pattern |  sequence | model |test2 )+
 	     EOF
 	;
-
-	
+test:  INTEGER 'test' ;	
+test2:  t=test {  System.out.println("yyyyyyyyyyyyy"+$t.text  ); };		
 pattern
 	: dvar | includeFile
 	;
@@ -57,7 +57,7 @@ includeFile
 //			{ variables.put($IDENT.text, e); }
 //	;
 
-dvar : dvar_std | dvar_nonStd | dvar_nonStd_local ;
+dvar : dvar_std | dvar_nonStd   ;
 
 dvar_std  
 	@after{ F.dvarStd($i.text, $s.text, "", Tools.strip($k.text), Tools.strip($u.text)); }
@@ -67,19 +67,15 @@ dvar_std
 	;
 	
 dvar_nonStd : 
-	   ^(Dvar_nonStd sc=Global i=IDENT lower upper Kind k=STRING Units u=STRING)
-//	   { System.out.println($i.text+ $sc.text+ $k.text+ $u.text+$lower.str);
-//
-//	   }
+	   ^(Dvar_nonStd (sc=Global|sc=Local) i=IDENT Lower lr=RangeType Upper ur=RangeType Kind k=STRING Units u=STRING)
+	   { System.out.println("zzzzlrzzzzzzz"+$lr.text);
+	     System.out.println("zzzzurzzzzzzz"+$ur.text);
+
+	   }
 	   //{F.dvarNonStd($i.text, $sc.text, $k.text, $u.text,  $lb.text, $ub.text);}
 	;
 
-dvar_nonStd_local : 
-	   ^(Dvar_nonStd Local  IDENT lower upper Kind k=STRING Units u=STRING)
-	;
 
-lower returns[String str] : Lower (Std {$str = "Std";}|Unbounded {$str = "Unbounded";}| e=expression {$str = $e.text;}) ;
-upper returns[String str] : Upper (Std {$str = "Std";}|Unbounded {$str = "Unbounded";}| e=expression {$str = $e.text;}) ;
 
 model
 	: ^(Model IDENT  (pattern )+ ) 
