@@ -16,12 +16,13 @@ tokens {
 	Condition;
 	Order;
 	Kind; Units;
-	Lower; Upper;
-	Std; Unbounded;	
+	Lower='Lower'; Upper='Upper';
+	Std='Std'; Unbounded='Unbounded';	
 	Exp;
 	Include;
-	Or; And; Not;
+	Or='Or'; And='And'; Not='Not';
 	Always;
+
 }
 
 @header {
@@ -74,8 +75,11 @@ tokens {
 
 
 evaluator
-	:	(( pattern |  sequence | model )+ | expression) EOF!
+	:	(( pattern |  sequence | model )+ | test2) EOF!
 	;
+
+test:  INTEGER  INTEGER ;	
+test2:  test ;	
 	
 pattern
 	: dvar | includeFile 
@@ -106,14 +110,14 @@ dvar : DEFINE! (dvar_std | dvar_nonStd ) ;
 	
 dvar_std :
 	s=LOCAL? IDENT '{' STD KIND k=STRING UNITS u=STRING '}' 
-	-> {s!=null}? ^(Dvar_std  Local["Local"]   IDENT Kind $k Units $u) 	
-	->            ^(Dvar_std  Global["Global"] IDENT Kind $k Units $u) 
+	-> {s!=null}? ^(Dvar_std  Local  IDENT Kind $k Units $u) 	
+	->            ^(Dvar_std  Global IDENT Kind $k Units $u) 
 	;	
 
 dvar_nonStd :
 	s=LOCAL? IDENT '{' lower_and_or_upper KIND k=STRING UNITS u=STRING '}' 
-	-> {s!=null}? ^(Dvar_nonStd Local["Local"]   IDENT lower_and_or_upper Kind $k Units $u) 
-	->            ^(Dvar_nonStd Global["Global"] IDENT lower_and_or_upper Kind $k Units $u) 
+	-> {s!=null}? ^(Dvar_nonStd Local  IDENT lower_and_or_upper Kind $k Units $u) 
+	->            ^(Dvar_nonStd Global IDENT lower_and_or_upper Kind $k Units $u) 
 	;	
 
 //dvar_nonStd :
