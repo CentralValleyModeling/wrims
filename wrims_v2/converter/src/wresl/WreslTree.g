@@ -98,22 +98,22 @@ condition
 	;	
 
 includeFile
-	:	 INCLUDE FILE_PATH -> ^(Include INCLUDE[Tools.strip($FILE_PATH.text)])
+	:	 INCLUDE FILE_PATH -> ^(Include INCLUDE[$FILE_PATH.text])
 	;
 		
 dvar : DEFINE! (dvar_std | dvar_nonStd ) ;	
 
 	
 dvar_std :
-	s=LOCAL? IDENT '{' STD KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
-	-> {s!=null}? ^(Dvar_std  Local["Local"]   IDENT Kind KIND[$k.text] Units UNITS[$u.text]) 	
-	->            ^(Dvar_std  Global["Global"] IDENT Kind KIND[$k.text] Units UNITS[$u.text]) 
+	s=LOCAL? IDENT '{' STD KIND k=STRING UNITS u=STRING '}' 
+	-> {s!=null}? ^(Dvar_std  Local["Local"]   IDENT Kind $k Units $u) 	
+	->            ^(Dvar_std  Global["Global"] IDENT Kind $k Units $u) 
 	;	
 
 dvar_nonStd :
-	s=LOCAL? IDENT '{' lower_and_or_upper KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
-	-> {s!=null}? ^(Dvar_nonStd Local["Local"]   IDENT lower_and_or_upper Kind KIND[$k.text] Units UNITS[$u.text]) 
-	->            ^(Dvar_nonStd Global["Global"] IDENT lower_and_or_upper Kind KIND[$k.text] Units UNITS[$u.text]) 
+	s=LOCAL? IDENT '{' lower_and_or_upper KIND k=STRING UNITS u=STRING '}' 
+	-> {s!=null}? ^(Dvar_nonStd Local["Local"]   IDENT lower_and_or_upper Kind $k Units $u) 
+	->            ^(Dvar_nonStd Global["Global"] IDENT lower_and_or_upper Kind $k Units $u) 
 	;	
 
 //dvar_nonStd :
@@ -137,8 +137,6 @@ upper_lower : upper (lower -> lower upper)?
 lower: LOWER ( UNBOUNDED -> Lower Unbounded | expression -> Lower expression) ;
 upper: UPPER ( UNBOUNDED -> Upper Unbounded | expression -> Upper expression) ;
 
-quote_string: 	QUOTE_STRING ;
-//ident: IDENT_TOKEN ;
 
 /// Expression ///
 term
@@ -186,7 +184,7 @@ OR  : '.or.'  | '.OR.'  ;
 NOT : '.not.' | '.NOT.' ;
 
 /// reserved keywords ///
-LOCAL : '[local]'| '[LOCAL]';
+LOCAL : '[local]'| '[LOCAL]' ;
 OBJECTIVE: 'objective' | 'Objective' | 'OBJECTIVE';
 TIMESERIES: 'timeseries';
 SELECT :  'select' | 'SELECT' ;
@@ -227,7 +225,7 @@ fragment DIR_UP :                                   ('..') '\\' ;
 fragment DIR_SPLIT : '\\' ;
 
 
-QUOTE_STRING : '\''  IDENT( '-' | '/' | IDENT )*  '\'';
+STRING : '\''  IDENT( '-' | '/' | IDENT )*  '\'';
 
 IDENT_FOLLOWED_BY_LOGICAL 
 	: i=IDENT{$i.setType(IDENT); emit($i);}

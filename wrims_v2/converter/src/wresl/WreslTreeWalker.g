@@ -62,24 +62,24 @@ dvar : dvar_std | dvar_nonStd | dvar_nonStd_local ;
 dvar_std  
 	@after{ F.dvarStd($i.text, $s.text, "", Tools.strip($k.text), Tools.strip($u.text)); }
 	:
-       ^(Dvar_std s=Global i=IDENT Kind k=KIND Units u=UNITS)
-	|  ^(Dvar_std s=Local  i=IDENT Kind k=KIND Units u=UNITS)
+       ^(Dvar_std s=Global i=IDENT Kind k=STRING Units u=STRING)
+	|  ^(Dvar_std s=Local  i=IDENT Kind k=STRING Units u=STRING)
 	;
 	
 dvar_nonStd : 
-	   ^(Dvar_nonStd sc=Global i=IDENT lower upper Kind k=KIND Units u=UNITS)
-	   { System.out.println($i.text+ $sc.text+ $k.text+ $u.text+$lower.str);
-
-	   }
+	   ^(Dvar_nonStd sc=Global i=IDENT lower upper Kind k=STRING Units u=STRING)
+//	   { System.out.println($i.text+ $sc.text+ $k.text+ $u.text+$lower.str);
+//
+//	   }
 	   //{F.dvarNonStd($i.text, $sc.text, $k.text, $u.text,  $lb.text, $ub.text);}
 	;
 
 dvar_nonStd_local : 
-	   ^(Dvar_nonStd Local  IDENT lower upper Kind k=KIND Units u=UNITS)
+	   ^(Dvar_nonStd Local  IDENT lower upper Kind k=STRING Units u=STRING)
 	;
 
-lower returns[String str] : Lower (Std {$str = "Std";}|Unbounded {$str = "ub";}| e=expression {$str = "ee";}) ;
-upper : Upper (Std |Unbounded | expression ) ;
+lower returns[String str] : Lower (Std {$str = "Std";}|Unbounded {$str = "Unbounded";}| e=expression {$str = $e.text;}) ;
+upper returns[String str] : Upper (Std {$str = "Std";}|Unbounded {$str = "Unbounded";}| e=expression {$str = $e.text;}) ;
 
 model
 	: ^(Model IDENT  (pattern )+ ) 
