@@ -63,6 +63,7 @@ options {
   
   private static String currentFile="";
   private static String currentCycle="";
+  private static int currCycleIndex=0;
   private static ArrayList<String> fileAnchestry=new ArrayList<String>();
   
   private static boolean testDefine=false;
@@ -348,6 +349,7 @@ content_aliasline
 
 content_global
   : i1=IDENT ',' i2=fileName ',' i3=conditionStatement{
+      currCycleIndex=0;
       if ($i1.text.equals("global")){
         node = new HashMap<String, ArrayList<String>>();
         dvar = new HashMap<String, Dvar>();
@@ -370,6 +372,7 @@ content_global
           
           list.add($i3.text);
           list.add(fileFullPath);
+          list.add(Integer.toString(currCycleIndex));
           cycle.put($i1.text, list);
         
           byte[] buffer = new byte[(int) new File(fileFullPath).length()];
@@ -411,6 +414,7 @@ content_global
 
 content_cycle
   : i1=IDENT ',' i2=fileName ',' i3=conditionStatement{
+      currCycleIndex=currCycleIndex+1;
       node = new HashMap<String, ArrayList<String>>();
       dvar = new HashMap<String, Dvar>();
       svar = new HashMap<String, Svar>();
@@ -434,6 +438,7 @@ content_cycle
         
         list.add($i3.text);
         list.add(fileFullPath);
+        list.add(Integer.toString(currCycleIndex));
         cycle.put($i1.text, list);
         currentCycle=$i1.text;
         
@@ -1137,14 +1142,18 @@ preMonthTS returns [String text]
 pastCycleDV returns [String text]
   : i1=IDENT '[' i2=IDENT ']'{
     if (testDefine){
-      if (!dvar.containsKey($i1.text) && !alias.containsKey($i1.text)){
-        Error.error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": decision variable "+$i1.text+" is not defined before used");
-      }  
       if (!cycle.containsKey($i2.text)){
         Error.error_grammer.add(currentFile+" "+$i2.line+"@"+($i2.pos+1)+": cycle name "+$i2.text+" is not defined before used");
       }else{
         if (currentCycle.equals($i2.text)){
           Error.error_grammer.add(currentFile+" "+$i2.line+"@"+($i2.pos+1)+": cycle name "+$i2.text+" should be previous cycle");
+        }else{
+          int pastCycleIndex=Integer.parseInt(cycle.get($i2.text).get(2))-1;
+          Map<String, Dvar> pastCycleDvar=IlpData.getDvarArray().get(pastCycleIndex);
+          Map<String, Alias> pastCycleAlias=IlpData.getAliasArray().get(pastCycleIndex);
+          if (!pastCycleDvar.containsKey($i1.text) && !pastCycleAlias.containsKey($i1.text)){
+            Error.error_grammer.add(currentFile+" "+$i1.line+"@"+($i1.pos+1)+": decision variable "+$i1.text+" is not defined before used");
+          }         
         }
       }
     } 
