@@ -1,3 +1,0 @@
-NAME,TYPE,UNITS,OUTPUT,EXPRESSION
-D419_swpC6,undefined,CFS,Y,D419_swp[monthlyweighted5]
-QsacFth,flow-channel,CFS,Y,C_SacFea+D_SacFea
