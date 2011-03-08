@@ -20,9 +20,9 @@ tokens {
 	Std='Std'; Unbounded='Unbounded';	
 	Exp='Exp';
 	Include;
-	Or='Or'; And='And'; Not='Not';
+	//Or='.Or.'; And='.And.'; Not='.Not.';
 	Always;
-	RangeType;
+	LimitType;
 
 }
 
@@ -133,14 +133,14 @@ lower_and_or_upper : lower_upper
 				   | upper_lower ;
 				   
 lower_upper : lower (upper -> lower upper)?
-					-> lower Upper RangeType["Std"]
+					-> lower Upper LimitType["Std"]
 				 ;
 upper_lower : upper (lower -> lower upper)? 
-                   -> Lower RangeType["Std"] upper
+                   -> Lower LimitType["Std"] upper
    				 ;				   
 
-lower: LOWER ( UNBOUNDED -> Lower RangeType["Unbounded"] | e=expression -> Lower RangeType[$e.tree.toStringTree()] ) ;
-upper: UPPER ( UNBOUNDED -> Upper RangeType["Unbounded"] | e=expression -> Upper RangeType[$e.tree.toStringTree()] ) ;
+lower: LOWER ( UNBOUNDED -> Lower LimitType["Unbounded"] | e=expression -> Lower LimitType[$e.tree.toStringTree()] ) ;
+upper: UPPER ( UNBOUNDED -> Upper LimitType["Unbounded"] | e=expression -> Upper LimitType[$e.tree.toStringTree()] ) ;
 
 
 /// Expression ///
@@ -165,13 +165,13 @@ c_term
 
 c_unary :	(c_negation)? c_term  	;
 
-c_negation :	NOT -> Not	;
+c_negation :	NOT -> NOT[".NOT."]	;
 
 logical :  c_unary ( bin c_unary )* ;  
 	
 relation : '>' | '<' | '>=' | '<=' | '==' | '/=' ;	
 
-bin : OR -> Or | AND -> And ;	
+bin : OR -> OR[".OR."] | AND -> AND[".AND."] ;	
 	
 /// End Expression /// 	
 

@@ -59,15 +59,13 @@ includeFile
 
 dvar : dvar_std | dvar_nonStd   ;
 
-dvar_std  
-	@after{ F.dvarStd($i.text, $s.text, "", Tools.strip($k.text), Tools.strip($u.text)); }
-	:
-       ^(Dvar_std s=Global i=IDENT Kind k=STRING Units u=STRING)
-	|  ^(Dvar_std s=Local  i=IDENT Kind k=STRING Units u=STRING)
+dvar_std  :
+       ^(Dvar_std (s=Global|s=Local) i=IDENT Kind k=STRING Units u=STRING)
+       { F.dvarStd($i.text, $s.text, "", Tools.strip($k.text), Tools.strip($u.text)); }
 	;
 	
 dvar_nonStd : 
-	   ^(Dvar_nonStd (sc=Global|sc=Local) i=IDENT Lower lr=RangeType Upper ur=RangeType Kind k=STRING Units u=STRING)
+	   ^(Dvar_nonStd (sc=Global|sc=Local) i=IDENT Lower lr=LimitType Upper ur=LimitType Kind k=STRING Units u=STRING)
 	   { System.out.println("zzzzlrzzzzzzz"+$lr.text);
 	     System.out.println("zzzzurzzzzzzz"+$ur.text);
 
@@ -115,13 +113,13 @@ c_term
 	| ( '(' logical ')' ) => '(' logical ')' 
 	;	
 
-c_unary :	Not? c_term  	;
+c_unary :	NOT? c_term  	;
 
 logical :  c_unary ( bin c_unary )* ;  
 	
 relation : '>' | '<' | '>=' | '<=' | '==' | '/=' ;	
 
-bin : Or | And ;	
+bin : OR | AND ;	
 	
 /// End Expression /// 
 
