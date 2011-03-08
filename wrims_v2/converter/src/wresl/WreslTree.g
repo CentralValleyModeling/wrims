@@ -103,7 +103,9 @@ condition
 	;	
 
 includeFile
-	:	 INCLUDE FILE_PATH -> ^(Include INCLUDE[$FILE_PATH.text])
+	:	 INCLUDE s=LOCAL? FILE_PATH 
+	-> {s!=null}? ^(Include Local  FILE_PATH)
+	->            ^(Include Global FILE_PATH)
 	;
 		
 dvar : DEFINE! (dvar_std | dvar_nonStd ) ;	

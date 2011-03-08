@@ -14,5 +14,9 @@ public class Parameters {
 	  public static String converterLogFileName = "converter.log";
 	  public static int printLevel = 1;
 	  
+	  
+	  public static String global="Global";
+	  public static String local="Local";
+	  
 }
 

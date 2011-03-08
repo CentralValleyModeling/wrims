@@ -78,6 +78,9 @@ public class TestWreslWalker {
 		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
 		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
 		
+		LogUtils.varsList(walker.F);
+		
+		
 		LogUtils._logFile.close();
 			
 		String fileText = Tools.readFileAsString(logFilePath);	

@@ -2,6 +2,7 @@ package components_tree;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,11 +32,44 @@ public class LogUtils {
 	
 	}
 	
+	
+	public static void varsList(StructTree F){
+		
+		LogUtils.importantMsg("------------------------------");
+		LogUtils.importantMsg("Include Files:");
+		LogUtils.importantMsg(F.incFileList);
+		LogUtils.importantMsg("------------------------------");
+		LogUtils.importantMsg(" Globals:");
+		LogUtils.importantMsg(F.incFileList_global);
+		LogUtils.importantMsg("------------------------------");
+		LogUtils.importantMsg(" Locals:");
+		LogUtils.importantMsg(F.incFileList_local);
+		LogUtils.importantMsg("------------------------------");
+		
+		LogUtils.importantMsg("------------------------------");
+		LogUtils.importantMsg("Dvars:");
+		LogUtils.importantMsg(F.dvList);
+		LogUtils.importantMsg("------------------------------");
+		LogUtils.importantMsg(" Globals:");
+		LogUtils.importantMsg(F.dvList_global);
+		LogUtils.importantMsg("------------------------------");
+		LogUtils.importantMsg(" Locals:");
+		LogUtils.importantMsg(F.dvList_local);
+		LogUtils.importantMsg("------------------------------");
+		
+	}
 
 	public static void importantMsg(String msg){
 
 		System.out.println(msg);
 		_logFile.println(msg);
+	}
+	
+	public static void importantMsg(ArrayList<String> msg){
+		
+		for(String e: msg){
+			importantMsg(e+"\n");
+		}
 	}
 	
 	public static void normalMsg(String msg){
@@ -101,5 +135,10 @@ public class LogUtils {
 
 
 	}	
+	
+	
+	
+	
+	
 }
 	

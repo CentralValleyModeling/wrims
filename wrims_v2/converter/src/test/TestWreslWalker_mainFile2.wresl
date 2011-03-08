@@ -14,6 +14,7 @@ MODEL first {
 
  !INCLUDE[local] '..\test\moreWreslFiles\TestConvertWresl_alias.wresl'
  INCLUDE 'TestWreslWalker_dvarStd.wresl'
+  INCLUDE '\moreWreslFiles\TestWreslWalker_dvarNonStd.wresl'
  define AA {std kind 'FLOW-CHANNEL' units 'TAF'}  
  define BB {std kind 'FLOW-CHANNEL' units 'TAF'}   
 	

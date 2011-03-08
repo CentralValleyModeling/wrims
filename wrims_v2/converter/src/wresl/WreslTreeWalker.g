@@ -48,7 +48,7 @@ pattern
 	;
 
 includeFile
-	:	 ^(Include p=INCLUDE) {F.includeFile($p.text, "");}
+	:	 ^(Include (s=Global|s=Local) f=FILE_PATH) {F.includeFile(Tools.strip($f.text), $s.text);}
 	;
 	
 	
