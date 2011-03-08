@@ -1,0 +1,3 @@
+suggest to copy the dlls to 1 folder e.g. d:\wrims_v2\bin\
+set enviromental variable WRIMS_v2_path=d:\wrims_v2\bin\
+set system path = d:\wrims_v2\bin\
