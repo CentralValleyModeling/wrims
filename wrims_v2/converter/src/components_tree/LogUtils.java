@@ -61,8 +61,8 @@ public class LogUtils {
 		
 		LogUtils.importantMsg("------------------------------");
 		LogUtils.importantMsg("Include total "+list.size()+" sequences:");
-		for (int i=1; i<list.size()+1; i++){
-			LogUtils.importantMsg("Sequence: "+seqMap.get(i).sequenceName+"  Model: "+seqMap.get(i).modelName);
+		for (int i: seqMap.keySet()){
+			LogUtils.importantMsg("Order: "+i+"  Sequence: "+seqMap.get(i).sequenceName+"  Model: "+seqMap.get(i).modelName);
 		}
 		LogUtils.importantMsg("------------------------------");
 	
