@@ -75,8 +75,12 @@ tokens {
 }
 
 
-evaluator
-	:	(( pattern |  sequence | model )+ | test2) EOF!
+evaluator:	
+	(    pattern+ 
+	|  ( sequence | model )+ 
+	|    test2 
+	) 
+	    EOF!
 	;
 
 test:  INTEGER  'test' ;	
@@ -93,13 +97,13 @@ model
 	;
 sequence 
 	: SEQUENCE IDENT '{' MODEL IDENT ( c=condition)? ORDER INTEGER '}' 
-	-> {c!=null}? ^(Sequence IDENT Model IDENT Order INTEGER $c )	 
-	->            ^(Sequence IDENT Model IDENT Order INTEGER Condition Always ) 
+	-> {c!=null}? ^(Sequence IDENT Model IDENT Order INTEGER Condition condition )	 
+	->            ^(Sequence IDENT Model IDENT Order INTEGER Condition CONDITION["Always"] ) 
 	;
 	
 condition
 	: CONDITION logical 
-	-> Condition logical 
+	-> CONDITION[$logical.text]
 	;	
 
 includeFile

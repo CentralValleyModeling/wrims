@@ -21,9 +21,10 @@ options {
   public CommonTree commonTree;
   public String currentAbsolutePath;
   	public String currentAbsoluteParent;
-  private Map<String, Integer> variables = new HashMap<String, Integer>();
+
   
   	public StructTree F = new StructTree();	
+  	public Map<String, StructTree> modelMap = new HashMap<String, StructTree>();
   	
   		/// error message	
     public void displayRecognitionError(String[] tokenNames,
@@ -37,18 +38,44 @@ options {
 evaluator
 @init { F.currentAbsolutePath=currentAbsolutePath;
 		F.currentAbsoluteParent=currentAbsoluteParent; }
-
-	:	( pattern |  sequence | model |test2 )+
+	:	
+	(       pattern[F]+ 
+	|     ( sequence | model )+ 
+	|       test2 
+	)
 	     EOF
 	;
 test:  INTEGER 'test' ;	
 test2:  t=test {  System.out.println("yyyyyyyyyyyyy"+$t.text  ); };		
-pattern
-	: dvar | includeFile
+
+pattern[StructTree struct]
+
+	: dvar[$struct] | includeFile[$struct]
 	;
 
-includeFile
-	:	 ^(Include (s=Global|s=Local) f=FILE_PATH) {F.includeFile(Tools.strip($f.text), $s.text);}
+sequence 
+	:  ^(Sequence s=IDENT Model m=IDENT Order i=INTEGER Condition c=CONDITION ) 
+		{
+			F.sequenceOrder($s.text, $i.text, $m.text, $c.text);
+			
+			StructTree M = new StructTree();
+			M.currentAbsolutePath=currentAbsolutePath;
+			M.currentAbsoluteParent=currentAbsoluteParent;
+			modelMap.put($m.text, M);
+		}
+
+
+	;
+
+model
+	: ^(Model i=IDENT  			
+				{   F.modelList($i.text); } 
+				
+				(pattern[modelMap.get($i.text)] )+ ) 
+	;	
+
+includeFile[StructTree struct]
+	:	 ^(Include (s=Global|s=Local) f=FILE_PATH) {struct.includeFile(Tools.strip($f.text), $s.text);}
 	;
 	
 	
@@ -57,14 +84,14 @@ includeFile
 //			{ variables.put($IDENT.text, e); }
 //	;
 
-dvar : dvar_std | dvar_nonStd   ;
+dvar[StructTree struct] : dvar_std[$struct] | dvar_nonStd[$struct]   ;
 
-dvar_std  :
+dvar_std[StructTree struct]  :
        ^(Dvar_std (s=Global|s=Local) i=IDENT Kind k=STRING Units u=STRING)
-       { F.dvarStd($i.text, $s.text, "", Tools.strip($k.text), Tools.strip($u.text)); }
+       { struct.dvarStd($i.text, $s.text, "", Tools.strip($k.text), Tools.strip($u.text)); }
 	;
 	
-dvar_nonStd : 
+dvar_nonStd[StructTree struct] : 
 	   ^(Dvar_nonStd (sc=Global|sc=Local) i=IDENT Lower lr=LimitType Upper ur=LimitType Kind k=STRING Units u=STRING)
 	   { System.out.println("zzzzlrzzzzzzz"+$lr.text);
 	     System.out.println("zzzzurzzzzzzz"+$ur.text);
@@ -75,14 +102,9 @@ dvar_nonStd :
 
 
 
-model
-	: ^(Model IDENT  (pattern )+ ) 
-	;	
-	
-sequence
-	: ^(Sequence s=IDENT Model m=IDENT Order i=INTEGER condition ) 
 
-	;
+	
+
 		
 condition 
 	: Condition ( logical | Always ) 
