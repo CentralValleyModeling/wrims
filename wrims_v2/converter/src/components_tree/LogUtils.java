@@ -127,6 +127,19 @@ public class LogUtils {
 		 _logFile.println("# Error: "+msg);
 		
 	}	
+
+	public static void errMsg(String msg, ArrayList<String> list){
+
+		 
+		 for (String e: list){
+			 System.out.println("# Error: "+msg+e);		 
+		 }
+		 
+		 for (String e: list){
+			 _logFile.println("# Error: "+msg+e);			 
+		 }
+		
+	}	
 	
 	public static void errMsg(String msg, String file){
 

@@ -42,6 +42,9 @@ tokens {
 
 @members {
 
+    public ArrayList<String> model_in_sequence = new ArrayList<String>();
+    public ArrayList<String> model_list = new ArrayList<String>();
+    
     public CommonTree commonTree;
   	public String currentAbsolutePath;
   	public String currentAbsoluteParent;
@@ -92,13 +95,15 @@ pattern
 	
 model
 	: MODEL IDENT '{' (pattern )+  '}' 
-	-> {sometest($IDENT.text)}?  ^(Model IDENT  (pattern )+  ) 
+	   {model_list.add($IDENT.text);}
+	-> {model_in_sequence.contains($IDENT.text)}?  ^(Model IDENT  (pattern )+  ) 
 	->             
 	;
 sequence 
-	: SEQUENCE IDENT '{' MODEL IDENT ( c=condition)? ORDER INTEGER '}' 
-	-> {c!=null}? ^(Sequence IDENT Model IDENT Order INTEGER Condition condition )	 
-	->            ^(Sequence IDENT Model IDENT Order INTEGER Condition CONDITION["Always"] ) 
+	: SEQUENCE s=IDENT '{' MODEL m=IDENT ( c=condition)? ORDER INTEGER '}' 
+	  {model_in_sequence.add($m.text);}
+	-> {c!=null}? ^(Sequence $s Model $m Order INTEGER Condition condition )	 
+	->            ^(Sequence $s Model $m Order INTEGER Condition CONDITION["Always"] ) 
 	;
 	
 condition

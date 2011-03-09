@@ -133,8 +133,12 @@ public class TestWreslWalker {
 		LogUtils._logFile.close();
 			
 		String fileText = Tools.readFileAsString(logFilePath);	
+		
 		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
-		Assert.assertEquals(totalErrs, 0);	
+		Assert.assertEquals(totalErrs, 2);	
+		
+		int undefinedModelErrs = RegUtils.timesOfMatches(fileText, "# Error: Sequence has undefined models:");
+		Assert.assertEquals(undefinedModelErrs, 2);	
 	}		
 
 	@Test(groups = { "WRESL_elements" })

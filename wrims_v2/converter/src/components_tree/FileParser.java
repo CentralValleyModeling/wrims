@@ -2,6 +2,8 @@ package components_tree;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import org.antlr.runtime.ANTLRFileStream;
 import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -57,6 +59,13 @@ public class FileParser {
 		LogUtils.importantMsg("Parsing file: "+parser.currentAbsolutePath);
 		
 		WreslTreeParser.evaluator_return parser_evaluator = parser.evaluator();
+		
+		// / check if sequence contains models not defined
+		ArrayList<String> undefined_models = parser.model_in_sequence;
+		parser.model_in_sequence.removeAll(parser.model_list);
+		if (undefined_models.size()>0 ){
+			LogUtils.errMsg("Sequence has undefined models: ", undefined_models);
+		}
 		
 		// / for debug info
 		parser.commonTree = (CommonTree) parser_evaluator.getTree();

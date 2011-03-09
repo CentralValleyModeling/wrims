@@ -6,10 +6,19 @@ SEQUENCE CYCLE1 {
 
 SEQUENCE CYCLE2 {
     model   empty
-    order   2
+    order   52
     }
 
-
+SEQUENCE CYCLE_not_exit {
+    model   invisible
+    order   3
+    }	
+	
+SEQUENCE CYCLE_void {
+    model   void
+    order   4
+    }	
+	
 MODEL first { 
 
  !INCLUDE[local] '..\test\moreWreslFiles\TestConvertWresl_alias.wresl'
@@ -25,3 +34,15 @@ MODEL empty {
  define xyz {std kind 'FLOW-CHANNEL' units 'TAF'}  
 	 	
      }
+
+MODEL another { 
+
+ define xyz {std kind 'FLOW-CHANNEL' units 'TAF'}  
+	 	
+     }	 
+	 
+MODEL extra { 
+
+ define xyz {std kind 'FLOW-CHANNEL' units 'TAF'}  
+	 	
+     }	 
