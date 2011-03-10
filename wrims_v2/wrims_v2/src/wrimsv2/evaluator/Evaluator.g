@@ -15,6 +15,8 @@ options {
   
   import wrimsv2.components.Error;
   import wrimsv2.components.Evaluation;
+  import wrimsv2.components.EvalExpression;
+  import wrimsv2.components.EvalConstraint;
 }
 
 @lexer::header {
@@ -22,6 +24,8 @@ options {
 }
 
 @members {
+  public static EvalConstraint evalConstraint;
+  
   @Override
   public void reportError(RecognitionException e) {
        Error.error_evaluation.add(getErrorMessage(e, tokenNames));
@@ -29,18 +33,18 @@ options {
 }
 
 evaluator returns [String result]
-	:	expressionInput {result=$expressionInput.result;}|
-	goalInput {result=$goalInput.result;}|
-	conditionInput {result=$conditionInput.result;}
+	:	expressionInput |
+	goalInput|
+	conditionInput 
 	;
 
 ///////////////////
 /// input rules ///
 ///////////////////
 
-expressionInput returns [String result]: 'v:' expressionCollection;
-goalInput returns [String result]: 'g:' constraintStatement {result = $constraintStatement.result;};
-conditionInput returns [String result]: 'c:' conditionStatement;
+expressionInput: 'v:' expressionCollection;
+goalInput: 'g:' constraintStatement {evalConstraint = $constraintStatement.ec;};
+conditionInput: 'c:' conditionStatement;
 
 ///////////////////
 /// basic rules ///
@@ -62,9 +66,9 @@ externalFile
 	
 text	:	LETTER (LETTER | DIGIT )*;
 	
-expressionCollection returns [String result]
+expressionCollection returns [EvalExpression ee]
 	:	((expression{
-	   result=$expression.result;
+	   ee=$expression.ee;
 	})|(tableSQL)|(timeseriesWithUnits)|(timeseries)|(function)|(i1=sumExpression))
 	;
 
@@ -150,12 +154,13 @@ unary_sum : ('-')? term_sum ;
 add_sum  :  unary_sum(('+' | '-') unary_sum)* ;
 expression_sum: add_sum ;
 
-term returns [String text]
+term returns [EvalExpression ee]
 	:	(knownTS
-	| (i1=IDENT) 
-	|	'(' (e=expression) ')' 
-	|	(i=INTEGER) 
-	| (f=FLOAT) 
+	| (IDENT {ee=Evaluation.term_IDENT($IDENT.text);})
+	| (SVAR{ee=Evaluation.term_SVAR($SVAR.text);}) 
+	|	('(' (e=expression) ')' {ee=$e.ee;})
+	|	(INTEGER {ee=Evaluation.term_INTEGER($INTEGER.text);}) 
+	| (FLOAT {ee=Evaluation.term_FLOAT($FLOAT.text);}) 
 	| func
 	| tafcfs_term
 	| YEAR
@@ -206,23 +211,37 @@ multiArguments
   : '(' (e1=expression) (';' (e2=expression))+ ')' 
   ;
   	
-unary 
-	:	(i1='-')? term{
+unary returns [EvalExpression ee] 
+	:	(s='-')? term{ee=Evaluation.unary($s.text, $term.ee);
 	};
 	
-allnumber
-	:	('-')? number;
+allnumber returns [String result]@init{result="";} 
+	:	('-' {result="-";})? number{result=result+$number.result;};
 
-mult  
-	:	(i1=unary) (('*'| '/'| MOD) (i2=unary))*
+mult returns [EvalExpression ee]  
+	:	(u1=unary {ee=$u1.ee;}) (((s1='*')| (s2='/')| MOD) (u2=unary){
+	   if ($s1.text !=null){
+	     ee=Evaluation.mult(ee, $u2.ee);
+	   }else if ($s2.text !=null){
+	     ee=Evaluation.divide(ee, $u2.ee);
+	   }else if ($MOD.text !=null){
+	     ee=Evaluation.mod(ee, $u2.ee);
+	   }   
+  })*
 	;
 	
-add  
-	:	(i1=mult) (('+' | '-') (i2=mult))*
+add  returns [EvalExpression ee]
+	:	(m1=mult {ee=$m1.ee;}) (((s1='+') |(s2='-')) (m2=mult){
+     if ($s2.text ==null){
+       ee=Evaluation.add(ee, $m2.ee);
+     }else{
+       ee=Evaluation.minus(ee, $m2.ee);
+     }
+	})*
 	;
 
-expression returns [String result]  
-	:	i=add 
+expression returns [EvalExpression ee]  
+	:	i=add {ee=$add.ee;} 
 	;
 
 relation
@@ -249,12 +268,12 @@ relationStatement
 	:	(e1=expression) relation (e2=expression)
 	;
 
-constraintStatement returns [String result]
-  : e1=expression ((s='=')|(s='>')|(s='<')) e2=expression{result=Evaluation.constraintStatement($e1.result, $s.text, $e2.result);}
+constraintStatement returns [EvalConstraint ec]
+  : e1=expression ((s='=')|(s='>')|(s='<')) e2=expression{ec=Evaluation.constraintStatement($e1.ee, $e2.ee, $s.text);}
   ;
 
 assignStatement returns [String result]  
-  : IDENT '=' expression {result=Evaluation.assignStatement($IDENT.text, $expression.result);}
+  : IDENT '=' expression 
   ;
 
 number returns [String result]
