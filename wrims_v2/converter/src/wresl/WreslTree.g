@@ -80,7 +80,7 @@ tokens {
 
 evaluator:	
 	(    pattern+ 
-	|  ( sequence | model )+ 
+	|  ( sequence+ model+ ) 
 	|    test2 
 	) 
 	    EOF!

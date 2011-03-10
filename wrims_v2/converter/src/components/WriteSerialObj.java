@@ -11,7 +11,7 @@ public class WriteSerialObj {
 	  //private static PrintWriter out;
 
 
-		public static void writeObj(SimulationData data, String filePath){		
+		public static void writeObj(SimulationDataSet data, String filePath){		
 			
 			FileOutputStream f_out = null;
 			ObjectOutputStream obj_out = null;

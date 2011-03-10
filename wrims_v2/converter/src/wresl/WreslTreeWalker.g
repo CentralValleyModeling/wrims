@@ -11,6 +11,7 @@ options {
   import java.util.Map;
   import java.util.HashMap;
   import components_tree.StructTree;
+  import components_tree.SimulationDataSet;
   import components_tree.Tools;
   import components_tree.LogUtils; 
 }
@@ -24,8 +25,10 @@ options {
 
   
   	public StructTree F = new StructTree();	
-  	public Map<String, StructTree> modelMap = new HashMap<String, StructTree>();
-  	
+  	public SimulationDataSet mainDataSet = new SimulationDataSet();
+  	public SimulationDataSet S;
+  	  	
+  	public Map<String, SimulationDataSet> modelDataMap = new HashMap<String, SimulationDataSet>();  	
   		/// error message	
     public void displayRecognitionError(String[] tokenNames,
                                         RecognitionException e) {
@@ -36,11 +39,14 @@ options {
 }
 
 evaluator
-@init { F.currentAbsolutePath=currentAbsolutePath;
-		F.currentAbsoluteParent=currentAbsoluteParent; }
+@init { 
+		F.S = mainDataSet;
+		F.S.currentAbsolutePath = currentAbsolutePath;
+		F.S.currentAbsoluteParent = currentAbsoluteParent;
+	  }
 	:	
-	(       pattern[F]+ 
-	|     ( sequence | model )+ 
+	(       pattern+ 
+	|     ( sequence+  model+ ) 
 	|       test2 
 	)
 	     EOF
@@ -48,9 +54,9 @@ evaluator
 test:  INTEGER 'test' ;	
 test2:  t=test {  System.out.println("yyyyyyyyyyyyy"+$t.text  ); };		
 
-pattern[StructTree struct]
+pattern
 
-	: dvar[$struct] | includeFile[$struct]
+	: dvar | includeFile
 	;
 
 sequence 
@@ -58,24 +64,29 @@ sequence
 		{
 			F.sequenceOrder($s.text, $i.text, $m.text, $c.text);
 			
-			StructTree M = new StructTree();
+			SimulationDataSet M = new SimulationDataSet();
 			M.currentAbsolutePath=currentAbsolutePath;
 			M.currentAbsoluteParent=currentAbsoluteParent;
-			modelMap.put($m.text, M);
+			modelDataMap.put($m.text, M);
 		}
 
 
 	;
 
 model
+@after{ F.S = mainDataSet; }
 	: ^(Model i=IDENT  			
-				{   F.modelList($i.text); } 
+				{   
+					F.S = mainDataSet; F.modelList($i.text); 
+					
+				    F.S = modelDataMap.get($i.text);
+				} 
 				
-				(pattern[modelMap.get($i.text)] )+ ) 
+				(pattern )+ ) 
 	;	
 
-includeFile[StructTree struct]
-	:	 ^(Include (s=Global|s=Local) f=FILE_PATH) {struct.includeFile(Tools.strip($f.text), $s.text);}
+includeFile
+	:	 ^(Include (s=Global|s=Local) f=FILE_PATH) {F.includeFile(Tools.strip($f.text), $s.text);}
 	;
 	
 	
@@ -84,14 +95,14 @@ includeFile[StructTree struct]
 //			{ variables.put($IDENT.text, e); }
 //	;
 
-dvar[StructTree struct] : dvar_std[$struct] | dvar_nonStd[$struct]   ;
+dvar : dvar_std | dvar_nonStd   ;
 
-dvar_std[StructTree struct]  :
+dvar_std  :
        ^(Dvar_std (s=Global|s=Local) i=IDENT Kind k=STRING Units u=STRING)
-       { struct.dvarStd($i.text, $s.text, "", Tools.strip($k.text), Tools.strip($u.text)); }
+       { F.dvarStd($i.text, $s.text, "", Tools.strip($k.text), Tools.strip($u.text)); }
 	;
 	
-dvar_nonStd[StructTree struct] : 
+dvar_nonStd : 
 	   ^(Dvar_nonStd (sc=Global|sc=Local) i=IDENT Lower lr=LimitType Upper ur=LimitType Kind k=STRING Units u=STRING)
 	   { System.out.println("zzzzlrzzzzzzz"+$lr.text);
 	     System.out.println("zzzzurzzzzzzz"+$ur.text);

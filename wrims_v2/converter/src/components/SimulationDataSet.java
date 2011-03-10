@@ -7,7 +7,7 @@ import java.util.Map;
 
 import components.Svar;
 
-public class SimulationData implements Serializable{
+public class SimulationDataSet implements Serializable{
 	 
 	private static final long serialVersionUID = 1L;
 

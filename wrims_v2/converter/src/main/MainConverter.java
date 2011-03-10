@@ -8,7 +8,7 @@ import org.antlr.runtime.RecognitionException;
 import components.Dataset;
 import components.LogUtils;
 import components.ReadSerialObj;
-import components.SimulationData;
+import components.SimulationDataSet;
 import components.StudyConfig;
 import components.StudyParser;
 import components.Tools;
@@ -52,14 +52,14 @@ public class MainConverter {
 		LogUtils._logFile.close();
 		
 		
-		SimulationData obj = new SimulationData();
+		SimulationDataSet obj = new SimulationDataSet();
 		obj.svMap = modelDataMap.get("SJRBASE").svMap;
 		obj.svList = modelDataMap.get("SJRBASE").svList;
 		WriteSerialObj.writeObj(obj, "test.ilp");
 		
 		System.out.println("=== finished writing object ===");
 		
-		SimulationData obj_in = ReadSerialObj.readObj("test.ilp");;
+		SimulationDataSet obj_in = ReadSerialObj.readObj("test.ilp");;
 		
 		System.out.println("=== reading object ===");
 		String sv1 = obj_in.svList.get(0);

@@ -1,10 +1,8 @@
 package components;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 
 public class ReadSerialObj {
@@ -13,15 +11,15 @@ public class ReadSerialObj {
 	  //private static PrintWriter out;
 
 
-	public static SimulationData readObj(String filePath){
+	public static SimulationDataSet readObj(String filePath){
 		
 		FileInputStream f_in = null;
-		SimulationData obj_in = null;
+		SimulationDataSet obj_in = null;
 	
 		
 		try {
 			f_in = new FileInputStream(filePath);
-			obj_in = (SimulationData)(new ObjectInputStream (f_in).readObject());
+			obj_in = (SimulationDataSet)(new ObjectInputStream (f_in).readObject());
 		}
 		catch (IOException e) {
 			// TODO Auto-generated catch block

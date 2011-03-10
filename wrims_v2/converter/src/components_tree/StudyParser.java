@@ -31,7 +31,7 @@ public class StudyParser {
 		Map<String, Dataset> modelAdhocMap = new HashMap<String, Dataset>();
 		StudyConfig sc = new StudyConfig();
 
-		Dataset dataset = Tools.convertStructToDataset(walker.F);
+		SimulationDataSet dataset = walker.F.S;
 		sc.sequenceMap = dataset.seqMap;
 		
 		ArrayList<Integer> sequenceOrder = new ArrayList<Integer>();		
@@ -42,13 +42,13 @@ public class StudyParser {
 		for (Integer i : sequenceOrder){
 			String modelName = sc.sequenceMap.get(i).modelName;
 
-			if (!walker.F.model_list.contains(modelName)){
+			if (!walker.mainDataSet.model_list.contains(modelName)){
 				LogUtils.errMsg(" This model doesn't exist: "+ modelName, absMainFilePath);
 				
 			}
 		}
 		
-		if ( ! walker.F.model_list.isEmpty()){
+		if ( ! walker.mainDataSet.model_list.isEmpty()){
 			
 			//modelAdhocMap.putAll( Tools.convertStructMapToDatasetMap(walker.modelMap) );
 		}

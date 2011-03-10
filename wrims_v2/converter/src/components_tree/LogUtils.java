@@ -68,23 +68,23 @@ public class LogUtils {
 	
 	}	
 	
-	public static void fileSummary(StructTree F){
+	public static void fileSummary(SimulationDataSet S){
 
-		seqList(F.seqList, F.seqMap);
-		varsList(F.model_list, "models");
-		varsList(F.incFileList, F.incFileList_global, F.incFileList_local, "files");
-		varsList(F.dvList, F.dvList_global, F.dvList_local, "Dvars");
-		varsList(F.svList, F.svList_global, F.svList_local, "Svars");
+		seqList(S.seqList, S.seqMap);
+		varsList(S.model_list, "models");
+		varsList(S.incFileList, S.incFileList_global, S.incFileList_local, "files");
+		varsList(S.dvList, S.dvList_global, S.dvList_local, "Dvars");
+		varsList(S.svList, S.svList_global, S.svList_local, "Svars");
 		
 	}	
 
-	public static void mainFileSummary(StructTree F, Map<String, StructTree> modelMap){
+	public static void mainFileSummary(SimulationDataSet mainDataSet, Map<String, SimulationDataSet> modelDataMap){
 
-		seqList(F.seqList, F.seqMap);
-		varsList(F.model_list, "models");
+		seqList(mainDataSet.seqList, mainDataSet.seqMap);
+		varsList(mainDataSet.model_list, "models");
 		
-		for (String key: F.model_list){
-			StructTree M = modelMap.get(key);
+		for (String key: mainDataSet.model_list){
+			SimulationDataSet M = modelDataMap.get(key);
 			LogUtils.importantMsg("#####  Model: "+ key);
 			varsList(M.incFileList, M.incFileList_global, M.incFileList_local, "files");
 			varsList(M.dvList, M.dvList_global, M.dvList_local, "Dvars");
