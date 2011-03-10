@@ -75,6 +75,14 @@ tokens {
 	        }
 	        return (Token)tokens.remove(0);
 	}
+	
+	/// error message	
+    public void displayRecognitionError(String[] tokenNames,
+                                        RecognitionException e) {
+        String hdr = getErrorHeader(e);
+        String msg = getErrorMessage(e, tokenNames);
+        LogUtils.errMsg(hdr + " " + msg);
+    }
 }
 
 
