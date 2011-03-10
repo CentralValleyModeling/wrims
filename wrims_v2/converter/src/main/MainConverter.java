@@ -7,10 +7,13 @@ import org.antlr.runtime.RecognitionException;
 
 import components.Dataset;
 import components.LogUtils;
+import components.ReadSerialObj;
+import components.SimulationData;
 import components.StudyConfig;
 import components.StudyParser;
 import components.Tools;
 import components.WriteCSV;
+import components.WriteSerialObj;
 
 public class MainConverter {
 	
@@ -47,6 +50,26 @@ public class MainConverter {
 		WriteCSV.study(sc, modelDataMap, outParent);
 		
 		LogUtils._logFile.close();
+		
+		
+		SimulationData obj = new SimulationData();
+		obj.svMap = modelDataMap.get("SJRBASE").svMap;
+		obj.svList = modelDataMap.get("SJRBASE").svList;
+		WriteSerialObj.writeObj(obj, "test.ilp");
+		
+		System.out.println("=== finished writing object ===");
+		
+		SimulationData obj_in = ReadSerialObj.readObj("test.ilp");;
+		
+		System.out.println("=== reading object ===");
+		String sv1 = obj_in.svList.get(0);
+		System.out.println("Svar: " + sv1 + "   Expression: " + obj_in.svMap.get(sv1).caseExpression.get(0));
+		
+		
+		
+		
+		
+		
 		
 
 	}

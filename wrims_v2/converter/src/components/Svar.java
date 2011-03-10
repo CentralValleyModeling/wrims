@@ -1,9 +1,11 @@
 package components;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Svar {
+public class Svar implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	public String scope;
 	public String dssBPart;
 	public String format;
@@ -19,9 +21,9 @@ public class Svar {
 		scope=Parameters.undefined;
 		dssBPart=Parameters.undefined;
 		format=Parameters.undefined;
-		kind="undefined";
-		units="undefined";
-		convertToUnits ="undefined";
+		kind=Parameters.undefined;
+		units=Parameters.undefined;
+		convertToUnits =Parameters.undefined;
 		caseName       = new ArrayList<String>();
 		caseCondition  = new ArrayList<String>();
 		caseExpression = new ArrayList<String>();
