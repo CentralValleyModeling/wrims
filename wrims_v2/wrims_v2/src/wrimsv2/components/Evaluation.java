@@ -7,34 +7,158 @@ import org.antlr.runtime.TokenStream;
 import wrimsv2.evaluator.EvaluatorLexer;
 import wrimsv2.evaluator.EvaluatorParser;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Evaluation {
-	public static boolean isDouble(String text){
-		try {
-            Double.parseDouble(text);
-            return true;
-          }catch (NumberFormatException nfe5) {
-            return false;
-          }
+
+	public static double convertStringToDouble(String text){
+		return Double.valueOf(text);
 	}
 	
-	public static double convertStringToDouble(String text){
-		return Double.parseDouble(text);
+	public static String convertDoubleToString(double value){
+		return Double.toString(value);
 	}
 	
 	public static String assignStatement(String i, String e){
 		return i+"="+e;
 	}
 	
-	public static String constraintStatement (String e1, String s, String e2) throws RecognitionException{
-		if (isDouble(e2)) {
-			if (convertStringToDouble(e2)==0.0){
-				return e1+s+"0";
+	public static EvalConstraint constraintStatement (EvalExpression ee1, EvalExpression ee2, String s) {
+		EvalExpression ee=minus(ee1, ee2);
+		EvalConstraint ec=new EvalConstraint();
+		ec.setEvalExpression(ee);
+		ec.setSign(s);
+		return ec;
+	}
+	
+	public static EvalExpression term_IDENT (String ident){
+		EvalExpression ee=new EvalExpression();
+		HashMap<String, Double> multiplier=ee.getMultiplier();
+		multiplier.put(ident, 1.0);
+		return ee;
+	}
+	
+	public static EvalExpression term_SVAR (String ident){
+		EvalExpression ee=new EvalExpression();
+		//To Do: get data from Svar in the IlpData in the current cycle
+		ee.setValue("99999999999.0");
+		return ee;
+	}
+	
+	public static EvalExpression term_INTEGER (String integer){
+		EvalExpression ee=new EvalExpression();
+		ee.setValue(integer);
+		return ee;
+	}
+	
+	public static EvalExpression term_FLOAT (String floatValue){
+		EvalExpression ee=new EvalExpression();
+		ee.setValue(floatValue);
+		return ee;
+	}
+	
+	public static EvalExpression unary (String s, EvalExpression ee){
+		if (s=="-"){
+			double value=-convertStringToDouble(ee.getValue());
+			ee.setValue(convertDoubleToString(value));
+			Map<String, Double> multiplier=ee.getMultiplier();
+			for (String dvar : multiplier.keySet()) {
+				multiplier.put(dvar, -multiplier.get(dvar));				
 			}
 		}
-		ANTLRStringStream stream = new ANTLRStringStream("c:"+e1+"-("+e2+")"+s+"0");
-		EvaluatorLexer lexer = new EvaluatorLexer(stream);
-		TokenStream tokenStream = new CommonTokenStream(lexer);
-		EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
-		return evaluator.evaluator();		
+		return ee;
+	}
+	
+	public static EvalExpression mult(EvalExpression ee1, EvalExpression ee2){
+		if (ee1.isNumeric()){
+			double value1=convertStringToDouble(ee1.getValue());
+			double value2=convertStringToDouble(ee2.getValue());
+			ee2.setValue(convertDoubleToString(value1*value2));
+			Map<String, Double> multiplier=ee2.getMultiplier();
+			for (String dvar : multiplier.keySet()) {
+				multiplier.put(dvar, value1*multiplier.get(dvar));				
+			}
+			return ee2;
+		}else{
+			if (ee2.isNumeric()){
+				double value2=convertStringToDouble(ee2.getValue());
+				double value1=convertStringToDouble(ee1.getValue());
+				ee1.setValue(convertDoubleToString(value2*value1));
+				Map<String, Double> multiplier=ee1.getMultiplier();
+				for (String dvar : multiplier.keySet()) {
+					multiplier.put(dvar, value2*multiplier.get(dvar));				
+				}
+				return ee1;
+			}else{
+				Error.addEvaluationError("Decision variable multiply decision variable appears. The problem is not linear.");
+				return ee1;
+			}
+		}
+	}
+	
+	public static EvalExpression divide(EvalExpression ee1, EvalExpression ee2){
+		if (ee2.isNumeric()){
+			double value2=convertStringToDouble(ee2.getValue());
+			double value1=convertStringToDouble(ee1.getValue());
+			if (value2 ==0.0){
+				Error.addEvaluationError("0 appears in divisor");
+				return ee1;
+			}
+			ee1.setValue(convertDoubleToString(value1/value2));
+			Map<String, Double> multiplier=ee1.getMultiplier();
+			for (String dvar : multiplier.keySet()) {
+				multiplier.put(dvar, multiplier.get(dvar)/value2);				
+			}
+			return ee1;
+		}else{
+			Error.addEvaluationError("Decision variable appears in divisor. The problem is not linear.");
+			return ee1;
+		}
+	}
+	
+	public static EvalExpression mod(EvalExpression ee1, EvalExpression ee2){
+		if (ee1.isNumeric() && ee2.isNumeric()){
+			double value1=convertStringToDouble(ee1.getValue());
+			double value2=convertStringToDouble(ee2.getValue());
+			ee1.setValue(convertDoubleToString(value1%value2));			
+			return ee1;
+		}else{
+			Error.addEvaluationError("Decision variable appears in MOD calcualtion. The problem is not linear.");
+			return ee1;
+		}
+	}
+	
+	public static EvalExpression add(EvalExpression ee1, EvalExpression ee2){
+		double value1=convertStringToDouble(ee1.getValue());
+		double value2=convertStringToDouble(ee2.getValue());
+		ee1.setValue(convertDoubleToString(value1+value2));
+		Map<String, Double> multiplier1=ee1.getMultiplier();
+		Map<String, Double> multiplier2=ee2.getMultiplier();
+		for (String dvar : multiplier2.keySet()) {
+			if (multiplier1.containsKey(dvar)){
+				multiplier1.put(dvar, multiplier1.get(dvar)+multiplier2.get(dvar));
+			}else{
+				multiplier1.put(dvar, multiplier2.get(dvar));
+			}
+		}
+		return ee1;
+	}
+	
+	
+	public static EvalExpression minus(EvalExpression ee1, EvalExpression ee2){
+		double value1=convertStringToDouble(ee1.getValue());
+		double value2=convertStringToDouble(ee2.getValue());
+		ee1.setValue(convertDoubleToString(value1-value2));
+		Map<String, Double> multiplier1=ee1.getMultiplier();
+		Map<String, Double> multiplier2=ee2.getMultiplier();
+		for (String dvar : multiplier2.keySet()) {
+			if (multiplier1.containsKey(dvar)){
+				multiplier1.put(dvar, multiplier1.get(dvar)-multiplier2.get(dvar));
+			}else{
+				multiplier1.put(dvar, -multiplier2.get(dvar));
+			}
+		}
+		return ee1;
 	}
 }
