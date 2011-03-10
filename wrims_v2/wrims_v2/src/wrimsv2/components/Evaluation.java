@@ -20,8 +20,77 @@ public class Evaluation {
 		return Double.toString(value);
 	}
 	
-	public static String assignStatement(String i, String e){
-		return i+"="+e;
+	public static String assignStatement(String ident, EvalExpression ee){
+		if (!ee.isNumeric()){
+			Error.addEvaluationError("Decision variable can't be used in table definition");
+		}
+		return ident+"="+ee.getValue();
+	}
+	
+	public static boolean relationStatement(EvalExpression ee1, EvalExpression ee2, String relation){
+		if (!ee1.isNumeric() || !ee2.isNumeric()){
+			Error.addEvaluationError("Decision variable can't be used in define condition");
+		}
+		double value1=convertStringToDouble(ee1.getValue());
+		double value2=convertStringToDouble(ee2.getValue());
+		if (relation.equals("==")) {
+			if (value1==value2){
+				return true;
+			}else{
+				return false;
+			}
+		}else if (relation.equals(">")){
+			if (value1>value2){
+				return true;
+			}else{
+				return false;
+			}
+		}else if (relation.equals("<")){
+			if (value1<value2){
+				return true;
+			}else{
+				return false;
+			}
+		}else if (relation.equals(">=")){
+			if (value1>=value2){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			if (value1<=value2){
+				return true;
+			}else{
+				return false;
+			}
+		}
+	}
+	
+	public static boolean range(String m1, String m2){
+		int mon1=ControlData.findWaterMonth(m1);
+		int mon2=ControlData.findWaterMonth(m2);
+		
+		if (mon1<=mon2){
+			if (ControlData.currMonth>=mon1 && ControlData.currMonth<=mon2){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			if (ControlData.currMonth>=mon1 || ControlData.currMonth<=mon2){
+				return true;
+			}else{
+				return false;
+			}
+		}
+	}
+	
+	public static boolean relationStatementSeries(boolean r1, boolean r2, String s){
+		if (s.equals(".and.")) {
+			return (r1 && r2);
+		}else{
+			return (r1 || r2);
+		}
 	}
 	
 	public static EvalConstraint constraintStatement (EvalExpression ee1, EvalExpression ee2, String s) {
@@ -59,7 +128,7 @@ public class Evaluation {
 	}
 	
 	public static EvalExpression unary (String s, EvalExpression ee){
-		if (s=="-"){
+		if (s !=null){
 			double value=-convertStringToDouble(ee.getValue());
 			ee.setValue(convertDoubleToString(value));
 			Map<String, Double> multiplier=ee.getMultiplier();

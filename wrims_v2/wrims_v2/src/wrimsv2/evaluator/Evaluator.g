@@ -25,6 +25,7 @@ options {
 
 @members {
   public static EvalConstraint evalConstraint;
+  public static boolean evalCondition;
   
   @Override
   public void reportError(RecognitionException e) {
@@ -44,7 +45,7 @@ evaluator returns [String result]
 
 expressionInput: 'v:' expressionCollection;
 goalInput: 'g:' constraintStatement {evalConstraint = $constraintStatement.ec;};
-conditionInput: 'c:' conditionStatement;
+conditionInput: 'c:' conditionStatement {evalCondition=$conditionStatement.result;};
 
 ///////////////////
 /// basic rules ///
@@ -109,8 +110,8 @@ pow_func
   : POW '(' (e1=expression) (';' (e2=expression)) ')'
   ;
   
-range_func
-  : RANGE '(' MONTH ';' MONTH_CONST ';' MONTH_CONST ')' ;
+range_func returns [boolean result]
+  : RANGE '(' MONTH ';' m1=MONTH_CONST ';' m2=MONTH_CONST ')' {Evaluation.range($m1.text, $m2.text);};
 
 timeseriesWithUnits 
 	: 'timeseries' 'kind' '=' i1=partC 'units' '=' i2=IDENT
@@ -252,20 +253,25 @@ relation
 	| '<='
 	;	
 
-conditionStatement 
-	:	((i1=relationStatementSeries)|ALWAYS)
+conditionStatement returns [boolean result]
+	:	((r=relationStatementSeries{result=$r.result;})|ALWAYS{result=true;})
 	;
 
 whereStatement 
   : ((i=IDENT)|(u=usedKeywords)) '=' expression
   ;
 	
-relationStatementSeries  
-  : ((r1=relationStatement)|(r2=range_func)) 
-    (('.and.'|'.or.') (r3=relationStatement)|(r4=range_func) )* ;
+relationStatementSeries returns [boolean result] 
+  : r1=relationRangeStatement {result=$r1.result;} 
+    (((s='.and.')|(s='.or.')) r2=relationRangeStatement {result=Evaluation.relationStatementSeries(result, $r2.result, $s.text);})* ;
 
-relationStatement  
-	:	(e1=expression) relation (e2=expression)
+relationRangeStatement returns [boolean result]
+  : (r1=relationStatement{result=$r1.result;})|(r2=range_func{result=$r2.result;}){
+  }
+  ;
+
+relationStatement returns [boolean result] 
+	:	(e1=expression) relation (e2=expression){result=Evaluation.relationStatement($e1.ee, $e2.ee, $relation.text);}
 	;
 
 constraintStatement returns [EvalConstraint ec]
@@ -273,7 +279,7 @@ constraintStatement returns [EvalConstraint ec]
   ;
 
 assignStatement returns [String result]  
-  : IDENT '=' expression 
+  : IDENT '=' expression {result=Evaluation.assignStatement($IDENT.text,$expression.ee);} 
   ;
 
 number returns [String result]
