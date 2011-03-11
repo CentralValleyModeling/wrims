@@ -1,4 +1,4 @@
-package wrimsv2.sort;
+package wrimsv2.tools;
 
 import java.util.ArrayList;
 import java.util.Stack;
