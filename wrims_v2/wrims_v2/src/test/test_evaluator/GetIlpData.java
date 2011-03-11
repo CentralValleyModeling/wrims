@@ -15,7 +15,7 @@ public class GetIlpData {
 
 
 		
-		SimulationDataSet obj_in = ReadSerialObj.readObj("D:\\cvwrsm\\trunk\\wrims_v2\\converter\\test_ilp_svar_only.ilp");;
+		SimulationDataSet obj_in = ReadSerialObj.readObj("test_ilp_svar_only.ilp");;
 		
 		System.out.println("=== reading ILP Svar Map ===");
 		
