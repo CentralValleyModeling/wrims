@@ -141,4 +141,72 @@ public class TestExternalFunction {
 			System.out.println(((Number) stack.pop()).floatValue());
 		}
 	}
+	
+	@Test
+	public void testANNLineGen(){
+		new LoadInterfaceDll("InterfaceToAnn.dll");		
+		ExternalFunctionTable eft=new ExternalFunctionTable();
+		ExternalFunction ef=eft.externalFunctionsHashtable.get("annlinegen");
+		
+		Stack stack= new Stack();
+		stack.add(6472.58740234);
+		stack.add(8065.77587891);
+		stack.add(9674.55859375);
+		stack.add(7614.22070313); 
+		stack.add(1844.08239746);
+		stack.add(829.421325684);
+		stack.add(0.0);
+		stack.add(2808.64648438);  
+		stack.add(1565.21533203);
+		stack.add(799.454162598);
+		stack.add(645.070129395);
+		stack.add(816.196533203);
+		stack.add(1269.01464844); 
+		stack.add(0.0);
+		stack.add(26.0);
+		stack.add(31.0);
+		stack.add(31.0);
+		stack.add(30.0);
+		stack.add(1061.79003906);
+		stack.add(3956.91992188);
+		stack.add(3897.29638672);
+		stack.add(2362.15014648);
+		stack.add(1330.7467041);
+		stack.add(200.450531006);
+		stack.add(241.239242554);
+		stack.add(0.0);
+		stack.add(54.8862113953);
+		stack.add(-141); 
+		stack.add(330.817657471);
+		stack.add(365.760253906);
+		stack.add(384.316558838);
+		stack.add(375.362304688);
+		stack.add(346.135650635); 
+		stack.add(603.290405273);
+		stack.add(648.479736328);
+		stack.add(647.118896484);
+		stack.add(647.933044434);
+		stack.add(637.05291748); 
+		stack.add(31);
+		stack.add(30);
+		stack.add(31);
+		stack.add(31);
+		stack.add(30);
+		stack.add(964.91);
+		stack.add(10000);
+		stack.add(12000);
+		stack.add(2);
+		stack.add(2); 
+		stack.add(1);
+		stack.add(12);
+		stack.add(1990);
+		stack.add(3);
+		ef.execute(stack);
+		
+		if (stack.size()!=1){
+			System.out.println("stack size <>1");
+		}else{
+			System.out.println(((Number) stack.pop()).floatValue());
+		}		
+	}
 }

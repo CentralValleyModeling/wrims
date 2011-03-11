@@ -10,11 +10,11 @@ import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 import org.testng.annotations.Test;
 
+import wrimsv2.evaluator.EvalConstraint;
+import wrimsv2.evaluator.EvalExpression;
 import wrimsv2.evaluator.EvaluatorLexer;
 import wrimsv2.evaluator.EvaluatorParser;
 import wrimsv2.components.Error;
-import wrimsv2.components.EvalConstraint;
-import wrimsv2.components.EvalExpression;
 import wrimsv2.components.MainFile;
 
 public class TestEvaluator {

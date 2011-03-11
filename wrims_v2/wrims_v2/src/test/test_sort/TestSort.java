@@ -1,7 +1,7 @@
 package test.test_sort;
 
-import wrimsv2.components.Svar;
-import wrimsv2.sort.SVSort;
+import wrimsv2.commondata.ilpdata.Svar;
+import wrimsv2.tools.SVSort;
 
 import java.util.Map;
 import java.util.ArrayList;
