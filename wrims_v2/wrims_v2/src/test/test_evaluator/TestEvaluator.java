@@ -12,7 +12,6 @@ import org.testng.annotations.Test;
 
 import wrimsv2.evaluator.EvaluatorLexer;
 import wrimsv2.evaluator.EvaluatorParser;
-import wrimsv2.evaluator.EvaluatorTreeWalker;
 import wrimsv2.components.*;
 
 public class TestEvaluator {
