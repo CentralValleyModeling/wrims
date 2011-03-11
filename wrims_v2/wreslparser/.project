@@ -26,13 +26,6 @@
 		<nature>org.deved.antlride.core.nature</nature>
 		<nature>com.javadude.derived.warning.cleaner.derivedWarningCleanerNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>linked_src</name>
-			<type>2</type>
-			<location>D:/cvwrsm/trunk/wrims_v2/wrims_v2/src</location>
-		</link>
-	</linkedResources>
 	<filteredResources>
 		<filter>
 			<id>1299884784171</id>
