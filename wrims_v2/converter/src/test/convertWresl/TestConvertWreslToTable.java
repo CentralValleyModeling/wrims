@@ -8,12 +8,12 @@ import org.antlr.runtime.RecognitionException;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-import components.Comparison;
-import components.Dataset;
-import components.StudyConfig;
-import components.StudyParser;
-import components.Tools;
-import components.WriteCSV;
+import converter.components.Comparison;
+import converter.components.Dataset;
+import converter.components.StudyConfig;
+import converter.components.StudyParser;
+import converter.components.Tools;
+import converter.components.WriteCSV;
 
 
 public class TestConvertWreslToTable {

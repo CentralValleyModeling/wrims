@@ -5,15 +5,15 @@ import java.util.Map;
 
 import org.antlr.runtime.RecognitionException;
 
-import components.Dataset;
-import components.LogUtils;
-import components.ReadSerialObj;
-import components.SimulationDataSet;
-import components.StudyConfig;
-import components.StudyParser;
-import components.Tools;
-import components.WriteCSV;
-import components.WriteSerialObj;
+import converter.components.Dataset;
+import converter.components.LogUtils;
+import converter.components.ReadSerialObj;
+import converter.components.SimulationDataSet;
+import converter.components.StudyConfig;
+import converter.components.StudyParser;
+import converter.components.Tools;
+import converter.components.WriteCSV;
+import converter.components.WriteSerialObj;
 
 public class MainConverter {
 	

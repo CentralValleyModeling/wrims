@@ -3,9 +3,9 @@ package main;
 import java.io.IOException;
 import org.antlr.runtime.RecognitionException;
 
-import components.LogUtils;
-import components.StudyConfig;
-import components.StudyParser;
+import converter.components.LogUtils;
+import converter.components.StudyConfig;
+import converter.components.StudyParser;
 
 public class StudyChecker {
 	

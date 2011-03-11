@@ -18,14 +18,14 @@ import wresl.ConvertWreslParser;
 import org.testng.annotations.*;
 import org.testng.Assert;
 
-import components.Alias;
-import components.Dvar;
-import components.FileParser;
-import components.Goal;
-import components.IncludeFile;
-import components.Parameters;
-import components.Struct;
-import components.Svar;
+import converter.components.Alias;
+import converter.components.Dvar;
+import converter.components.FileParser;
+import converter.components.Goal;
+import converter.components.IncludeFile;
+import converter.components.Parameters;
+import converter.components.Struct;
+import converter.components.Svar;
 
 
 

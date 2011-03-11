@@ -9,13 +9,13 @@ options {
   import java.util.Map;
   import java.util.HashMap;
   import java.util.Arrays;
-  import components.Dataset;
-  import components.Struct;
-  import components.Tools;
-  import components.Svar; 
-  import components.Goal; 
-  import components.IncludeFile; 
-  import components.Parameters;   
+  import converter.components.Dataset;
+  import converter.components.Struct;
+  import converter.components.Tools;
+  import converter.components.Svar; 
+  import converter.components.Goal; 
+  import converter.components.IncludeFile; 
+  import converter.components.Parameters;   
 }
 
 @lexer::header {
