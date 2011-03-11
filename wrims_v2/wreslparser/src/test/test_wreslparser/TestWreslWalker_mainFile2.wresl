@@ -1,0 +1,48 @@
+SEQUENCE CYCLE1 {
+    model   first
+	condition month==APR.or. month==MAY
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   empty
+    order   52
+    }
+
+SEQUENCE CYCLE_not_exit {
+    model   invisible
+    order   3
+    }	
+	
+SEQUENCE CYCLE_void {
+    model   void
+    order   4
+    }	
+	
+MODEL first { 
+
+ !INCLUDE[local] '..\test\moreWreslFiles\TestConvertWresl_alias.wresl'
+ INCLUDE 'TestWreslWalker_dvarStd.wresl'
+  INCLUDE[local] '\moreWreslFiles\TestWreslWalker_dvarNonStd.wresl'
+ define AA {std kind 'FLOW-CHANNEL' units 'TAF'}  
+ define[local] BB {std kind 'FLOW-CHANNEL' units 'TAF'}   
+	
+	}
+	 
+MODEL empty { 
+
+ define xyz {std kind 'FLOW-CHANNEL' units 'TAF'}  
+	 	
+     }
+
+MODEL another { 
+
+ define xyz {std kind 'FLOW-CHANNEL' units 'TAF'}  
+	 	
+     }	 
+	 
+MODEL extra { 
+
+ define xyz {std kind 'FLOW-CHANNEL' units 'TAF'}  
+	 	
+     }	 
