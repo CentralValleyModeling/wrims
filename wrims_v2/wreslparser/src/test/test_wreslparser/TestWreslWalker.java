@@ -132,6 +132,44 @@ public class TestWreslWalker {
 		int undefinedModelErrs = RegUtils.timesOfMatches(fileText, "# Error: Sequence has undefined models:");
 		Assert.assertEquals(undefinedModelErrs, 2);	
 	}		
+	
+	@Test(groups = { "WRESL_elements" })
+	public void parseSubFiles() throws RecognitionException, IOException {
+		
+		inputFilePath =projectPath+"TestWreslWalker_parseSubFiles.wresl";
+		logFilePath = "TestWreslWalker_parseSubFiles.log";
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		LogUtils.setLogFile(logFilePath);
+		
+		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
+		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
+		
+		LogUtils.mainFileSummary(walker.mainDataSet, walker.modelDataMap);
+		
+		
+		for (String key : walker.mainDataSet.model_list){
+			
+			for (String subFile : walker.modelDataMap.get(key).incFileList){
+			
+				WreslTreeWalker sw = FileParser.parseFile(subFile);
+			
+				LogUtils.fileSummary(sw.mainDataSet);
+				
+			}
+		}
+		
+		
+		LogUtils._logFile.close();
+			
+		String fileText = Tools.readFileAsString(logFilePath);	
+		
+		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
+		Assert.assertEquals(totalErrs, 0);	
+		
+	}	
 
 	@Test(groups = { "WRESL_elements" })
 	public void mainFile3() throws RecognitionException, IOException {
