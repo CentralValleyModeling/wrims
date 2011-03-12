@@ -22,12 +22,12 @@ tokens {
 
 @header {
   package grammar;
-  import components_tree.LogUtils; 
+  import elements.LogUtils; 
 }
 
 @lexer::header {
   package grammar;
-    import components_tree.LogUtils;    
+    import elements.LogUtils;    
 }
 
 

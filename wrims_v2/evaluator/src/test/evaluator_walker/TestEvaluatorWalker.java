@@ -7,8 +7,10 @@ import java.io.IOException;
 import org.antlr.runtime.RecognitionException;
 import org.testng.annotations.Test;
 
-import components_tree.FileParser;
-import components_tree.LogUtils;
+
+import elements.LogUtils;
+import elements.ParserTools;
+import elements.Tools;
 import grammar.EvaluatorTreeWalker;
 
 public class TestEvaluatorWalker {
@@ -28,12 +30,48 @@ public class TestEvaluatorWalker {
 
 		LogUtils.setLogFile(logFilePath);
 		
-		EvaluatorTreeWalker walker = FileParser.parseFile(absFilePath);
+		EvaluatorTreeWalker walker = ParserTools.parseFile(absFilePath);
 		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
 		
 		LogUtils.importantMsg("result = " + walker.result);
 		LogUtils._logFile.close();
 		
 	}
+	
+	@Test(groups = { "example" })
+	public void parseString() throws RecognitionException, IOException {
 		
+		inputFilePath ="src\\test\\parseObj.wresl";
+		logFilePath = "TestEvaluatorWalker_parseString.log";
+		
+
+
+		LogUtils.setLogFile(logFilePath);
+		
+		EvaluatorTreeWalker walker = ParserTools.parseString("3+5");
+		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
+		
+		LogUtils.importantMsg("result = " + walker.result);
+		LogUtils._logFile.close();
+		
+	}
+
+	@Test(groups = { "example" })
+	public void parseObj() throws RecognitionException, IOException {
+		
+
+		
+
+		logFilePath = "TestEvaluatorWalker_parseObj.log";
+		
+		LogUtils.setLogFile(logFilePath);
+		
+		EvaluatorTreeWalker walker = ParserTools.parseString("3+5");
+		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
+		
+		LogUtils.importantMsg("result = " + walker.result);
+		LogUtils._logFile.close();
+		
+	}	
+	
 }
