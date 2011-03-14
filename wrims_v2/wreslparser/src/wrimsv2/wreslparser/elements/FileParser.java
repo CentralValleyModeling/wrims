@@ -1,7 +1,6 @@
 package wrimsv2.wreslparser.elements;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.antlr.runtime.ANTLRFileStream;

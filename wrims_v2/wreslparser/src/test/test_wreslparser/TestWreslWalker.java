@@ -199,28 +199,15 @@ public class TestWreslWalker {
 		StudyConfig sc=null;
 		
 		try {
-			sc=StudyParser.processMainFileIntoStudyConfig(inputFilePath);
+			sc=StudyParser.processMainFileIntoStudyConfig(absFilePath);
 		}
 		catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		//WreslTreeWalker walker = FileParser.parseFile(absFilePath);
 		
-//		LogUtils.mainFileSummary(walker.mainDataSet, walker.modelDataMap);
-//		
-//		
-//		for (String key : walker.mainDataSet.model_list){
-//			
-//			for (String subFile : walker.modelDataMap.get(key).incFileList){
-//			
-//				WreslTreeWalker sw = FileParser.parseFile(subFile);
-//			
-//				LogUtils.fileSummary(sw.mainDataSet);
-//				
-//			}
-//		}
+		LogUtils.mainFileSummary(sc);
 		
 		
 		LogUtils.closeLogFile();

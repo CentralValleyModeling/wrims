@@ -84,6 +84,22 @@ public class LogUtils {
 		
 	}	
 
+	public static void mainFileSummary(StudyConfig studyConfig){
+
+
+		seqList(studyConfig.sequenceList, studyConfig.sequenceMap);
+		//varsList(mainDataSet.model_list, "models");
+		
+		for (Integer i: studyConfig.sequenceMap.keySet()){
+			String modelName = studyConfig.sequenceMap.get(i).modelName;
+			SimulationDataSet M = studyConfig.modelDataMap.get(modelName);
+			LogUtils.importantMsg("#####  Model: "+ modelName);
+			varsList(M.incFileList, M.incFileList_global, M.incFileList_local, "files");
+			varsList(M.dvList, M.dvList_global, M.dvList_local, "Dvars");
+			varsList(M.svList, M.svList_global, M.svList_local, "Svars");
+		}
+	}		
+	
 	public static void mainFileSummary(SimulationDataSet mainDataSet, Map<String, SimulationDataSet> modelDataMap){
 
 		seqList(mainDataSet.seqList, mainDataSet.seqMap);

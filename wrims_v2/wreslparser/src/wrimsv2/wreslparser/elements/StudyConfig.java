@@ -8,7 +8,8 @@ public class StudyConfig {
     public String absMainFilePath;
 	public Map<Integer, Sequence> sequenceMap = new HashMap<Integer, Sequence>();
 	public ArrayList<Integer> sequenceOrder = new ArrayList<Integer>();
-    public Map<String, SimulationDataSet> modelAdhocMap = new HashMap<String, SimulationDataSet>();
+	public ArrayList<String> sequenceList = new ArrayList<String>();
+    public Map<String, SimulationDataSet> modelDataMap = new HashMap<String, SimulationDataSet>();
 
     public StudyConfig() {
 

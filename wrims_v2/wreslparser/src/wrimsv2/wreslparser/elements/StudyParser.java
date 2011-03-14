@@ -4,10 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 import org.antlr.runtime.RecognitionException;
 
 import wrimsv2.wreslparser.elements.LogUtils;
@@ -37,11 +33,18 @@ public class StudyParser {
 		ArrayList<Integer> sequenceOrder = new ArrayList<Integer>();		
 		for ( Integer i : sc.sequenceMap.keySet()){ sequenceOrder.add(i); }
 		Collections.sort(sequenceOrder);
+
 		
+		ArrayList<String> sequenceList = new ArrayList<String>();
+		for ( Integer i : sequenceOrder){ 
+			sequenceList.add(sc.sequenceMap.get(i).sequenceName);
+		}
+		
+		sc.sequenceList = sequenceList;
 		sc.sequenceOrder = sequenceOrder;
 
 		sc.absMainFilePath = absMainFilePath;
-		sc.modelAdhocMap = walker.modelDataMap;
+		sc.modelDataMap = walker.modelDataMap;
 
 				
 		for ( Integer i : sc.sequenceOrder){	
