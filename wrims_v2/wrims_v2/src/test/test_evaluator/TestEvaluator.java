@@ -14,6 +14,7 @@ import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.evaluator.EvalExpression;
 import wrimsv2.evaluator.EvaluatorLexer;
 import wrimsv2.evaluator.EvaluatorParser;
+import wrimsv2.external.LoadDll;
 import wrimsv2.components.Error;
 import wrimsv2.components.MainFile;
 
@@ -35,8 +36,7 @@ public class TestEvaluator {
 		System.out.println(ee.getValue());
 		System.out.println(ee.getMultiplier());
 	}
-	
-	@Test	
+		
 	public void testConditionStatement() throws RecognitionException, IOException {
         String mainFile="z:\\temp\\test";
         new MainFile(mainFile);
@@ -55,5 +55,21 @@ public class TestEvaluator {
 		
 		Error.writeEvaluationErrorFile("log.txt");
 	}
+	
+	@Test
+	public void testFunction() throws RecognitionException, IOException {
+        new LoadDll();
+
+        String mainFile="z:\\temp\\test";
+        new MainFile(mainFile);
 		
+		ANTLRStringStream stream = new ANTLRStringStream("v: 1+annlinegen(6472.58740234; 8065.77587891; 9674.55859375; 7614.22070313; 1844.08239746; 829.421325684; 0.0; 2808.64648438;  1565.21533203; 799.454162598; 645.070129395; 816.196533203; 1269.01464844; 0.0; 26.0; 31.0; 31.0; 30.0; 1061.79003906; 3956.91992188; 3897.29638672; 2362.15014648; 1330.7467041; 200.450531006; 241.239242554; 0.0; 54.8862113953; -141; 330.817657471; 365.760253906; 384.316558838; 375.362304688; 346.135650635; 603.290405273; 648.479736328; 647.118896484; 647.933044434; 637.05291748; 31; 30; 31; 31; 30; 964.91; 10000; 12000; 2; 2; 1; 12; 1990; 3)");
+		EvaluatorLexer lexer = new EvaluatorLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+		evaluator.evaluator();
+		System.out.println(evaluator.evalValue);
+		
+		Error.writeEvaluationErrorFile("log.txt");
+	}
 }
