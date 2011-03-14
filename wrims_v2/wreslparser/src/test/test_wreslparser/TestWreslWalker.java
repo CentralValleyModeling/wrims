@@ -176,6 +176,53 @@ public class TestWreslWalker {
 		int redefErrs2 = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: C_SacFea");
 		Assert.assertEquals(redefErrs2, 1);	
 	}		
+
+	@Test(groups = { "WRESL_elements" })
+	public void studyParser_subFiles() throws RecognitionException {
+		
+		inputFilePath =projectPath+"TestWreslWalker_studyParser_subFiles.wresl";
+		logFilePath = "TestWreslWalker_studyParser_studyParser_subFiles.log";
+		
+		File absFile=null;
+		String absFilePath=null;
+		try {
+			absFile = new File(inputFilePath).getAbsoluteFile();
+			absFilePath = absFile.getCanonicalPath().toLowerCase();
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		LogUtils.setLogFile(logFilePath);
+		
+		StudyConfig sc=null;
+		
+		try {
+			sc=StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		LogUtils.mainFileSummary(sc);
+		
+		
+		LogUtils.closeLogFile();
+			
+		String fileText = Tools.readFileAsString(logFilePath);	
+		
+		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
+		Assert.assertEquals(totalErrs, 0);	
+
+		int seq1 = RegUtils.timesOfMatches(fileText, "Sequence: 4 : CYCLE2   Model: empty");
+		Assert.assertEquals(seq1, 1);
+		
+		int seq2 = RegUtils.timesOfMatches(fileText, "Sequence: 15 : CYCLE1   Model: first");
+		Assert.assertEquals(seq2, 1);
+	}		
 	
 	@Test(groups = { "WRESL_elements" })
 	public void studyParser_sortSeq() throws RecognitionException {
