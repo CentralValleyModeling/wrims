@@ -12,12 +12,17 @@ import wrimsv2.wreslparser.elements.Parameters;
 
 public class LogUtils {
 
-	public static PrintWriter _logFile;
+	private static PrintWriter _logFile;
 
 
 	public static void setLogFile(){
 		
 		 setLogFile(Parameters.converterLogFileName);		
+	}
+
+	public static void closeLogFile(){
+		
+		_logFile.close();		
 	}
 	
 	public static void setLogFile(String logFileName){

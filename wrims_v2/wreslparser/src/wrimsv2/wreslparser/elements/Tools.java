@@ -40,12 +40,18 @@ public class Tools {
 
 	}
 
-	public static String readFileAsString(String filePath) throws IOException {
+	public static String readFileAsString(String filePath)  {
 		byte[] buffer = new byte[(int) new File(filePath).length()];
 		BufferedInputStream f = null;
 		try {
 			f = new BufferedInputStream(new FileInputStream(filePath));
 			f.read(buffer);
+		} catch ( IOException e){
+			
+	         LogUtils.errMsg("File not found: "+ filePath);
+
+	         System.exit(1);
+			
 		} finally {
 			if (f != null)
 				try {

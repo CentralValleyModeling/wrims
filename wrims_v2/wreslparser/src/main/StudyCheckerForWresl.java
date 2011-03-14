@@ -25,11 +25,11 @@ public class StudyCheckerForWresl {
 
 		LogUtils.setLogFile("studyChecker.log");
 		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(f);
-		StudyParser.parseSubFiles(sc);
+		//StudyParser.parseSubFiles(sc);
 		
 
 		
-		LogUtils._logFile.close();
+		LogUtils.closeLogFile();
 		
 
 	}

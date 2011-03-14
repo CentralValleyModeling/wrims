@@ -12,6 +12,8 @@ import org.testng.annotations.Test;
 import wrimsv2.wreslparser.elements.FileParser;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.RegUtils;
+import wrimsv2.wreslparser.elements.StudyConfig;
+import wrimsv2.wreslparser.elements.StudyParser;
 import wrimsv2.wreslparser.elements.Tools;
 import wrimsv2.wreslparser.grammar.WreslTreeWalker;
 
@@ -35,7 +37,7 @@ public class TestWreslWalker {
 		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
 		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
 		
-		LogUtils._logFile.close();
+		LogUtils.closeLogFile();
 			
 		String fileText = Tools.readFileAsString(logFilePath);	
 		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
@@ -57,7 +59,7 @@ public class TestWreslWalker {
 		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
 		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
 		
-		LogUtils._logFile.close();
+		LogUtils.closeLogFile();
 			
 		String fileText = Tools.readFileAsString(logFilePath);	
 		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
@@ -81,7 +83,7 @@ public class TestWreslWalker {
 		
 		LogUtils.fileSummary(walker.mainDataSet);
 		
-		LogUtils._logFile.close();
+		LogUtils.closeLogFile();
 			
 		String fileText = Tools.readFileAsString(logFilePath);	
 		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
@@ -122,7 +124,7 @@ public class TestWreslWalker {
 		
 		LogUtils.mainFileSummary(walker.mainDataSet, walker.modelDataMap);
 		
-		LogUtils._logFile.close();
+		LogUtils.closeLogFile();
 			
 		String fileText = Tools.readFileAsString(logFilePath);	
 		
@@ -132,7 +134,7 @@ public class TestWreslWalker {
 		int undefinedModelErrs = RegUtils.timesOfMatches(fileText, "# Error: Sequence has undefined models:");
 		Assert.assertEquals(undefinedModelErrs, 2);	
 	}		
-	
+
 	@Test(groups = { "WRESL_elements" })
 	public void parseSubFiles() throws RecognitionException, IOException {
 		
@@ -145,7 +147,6 @@ public class TestWreslWalker {
 		LogUtils.setLogFile(logFilePath);
 		
 		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
-		//LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
 		
 		LogUtils.mainFileSummary(walker.mainDataSet, walker.modelDataMap);
 		
@@ -162,7 +163,7 @@ public class TestWreslWalker {
 		}
 		
 		
-		LogUtils._logFile.close();
+		LogUtils.closeLogFile();
 			
 		String fileText = Tools.readFileAsString(logFilePath);	
 		
@@ -174,6 +175,66 @@ public class TestWreslWalker {
 		
 		int redefErrs2 = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: C_SacFea");
 		Assert.assertEquals(redefErrs2, 1);	
+	}		
+	
+	@Test(groups = { "WRESL_elements" })
+	public void studyParser_sortSeq() throws RecognitionException {
+		
+		inputFilePath =projectPath+"TestWreslWalker_studyParser_sortSeq.wresl";
+		logFilePath = "TestWreslWalker_studyParser_sortSeq.log";
+		
+		File absFile=null;
+		String absFilePath=null;
+		try {
+			absFile = new File(inputFilePath).getAbsoluteFile();
+			absFilePath = absFile.getCanonicalPath().toLowerCase();
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		LogUtils.setLogFile(logFilePath);
+		
+		StudyConfig sc=null;
+		
+		try {
+			sc=StudyParser.processMainFileIntoStudyConfig(inputFilePath);
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//WreslTreeWalker walker = FileParser.parseFile(absFilePath);
+		
+//		LogUtils.mainFileSummary(walker.mainDataSet, walker.modelDataMap);
+//		
+//		
+//		for (String key : walker.mainDataSet.model_list){
+//			
+//			for (String subFile : walker.modelDataMap.get(key).incFileList){
+//			
+//				WreslTreeWalker sw = FileParser.parseFile(subFile);
+//			
+//				LogUtils.fileSummary(sw.mainDataSet);
+//				
+//			}
+//		}
+		
+		
+		LogUtils.closeLogFile();
+			
+		String fileText = Tools.readFileAsString(logFilePath);	
+		
+		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
+		Assert.assertEquals(totalErrs, 0);	
+
+		int seq1 = RegUtils.timesOfMatches(fileText, "Sequence: 4 : CYCLE2   Model: empty");
+		Assert.assertEquals(seq1, 1);
+		
+		int seq2 = RegUtils.timesOfMatches(fileText, "Sequence: 15 : CYCLE1   Model: first");
+		Assert.assertEquals(seq2, 1);
 	}	
 
 	@Test(groups = { "WRESL_elements" })
@@ -190,7 +251,7 @@ public class TestWreslWalker {
 		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
 		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
 		
-		LogUtils._logFile.close();
+		LogUtils.closeLogFile();
 			
 		String fileText = Tools.readFileAsString(logFilePath);	
 		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
@@ -215,7 +276,7 @@ public class TestWreslWalker {
 		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
 		//LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
 		LogUtils.fileSummary(walker.mainDataSet);
-		LogUtils._logFile.close();
+		LogUtils.closeLogFile();
 			
 		String fileText = Tools.readFileAsString(logFilePath);	
 		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
@@ -236,7 +297,7 @@ public class TestWreslWalker {
 		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
 		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
 		
-		LogUtils._logFile.close();
+		LogUtils.closeLogFile();
 		
 		
 		String fileText = Tools.readFileAsString(logFilePath);

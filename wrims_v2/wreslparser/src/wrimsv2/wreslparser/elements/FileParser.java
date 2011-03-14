@@ -35,7 +35,7 @@ public class FileParser {
 
 	}
 
-	public static WreslTreeWalker parseFile(String inputFilePath) throws RecognitionException, IOException {		
+	public static WreslTreeWalker parseFile(String inputFilePath) throws RecognitionException  {		
 
 		
 		try {
@@ -45,6 +45,9 @@ public class FileParser {
 	         //e.printStackTrace();
 	         
 	         LogUtils.errMsg("File not found: "+ inputFilePath);
+	         LogUtils.closeLogFile();
+	         return null;
+	         //System.exit(1);
 	         
 	        }
 		    
