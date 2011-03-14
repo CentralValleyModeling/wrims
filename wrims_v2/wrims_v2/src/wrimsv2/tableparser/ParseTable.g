@@ -20,12 +20,12 @@ options {
   import org.antlr.runtime.RecognitionException;
   import org.antlr.runtime.TokenStream;
   
-  import wrimsv2.components.Alias;
-  import wrimsv2.components.Dvar;
-  import wrimsv2.components.Constraint;
-  import wrimsv2.components.Svar;
-  import wrimsv2.components.LRWeight;
-  import wrimsv2.components.IlpData;
+  import wrimsv2.commondata.ilpdata.Alias;
+  import wrimsv2.commondata.ilpdata.Dvar;
+  import wrimsv2.commondata.ilpdata.Constraint;
+  import wrimsv2.commondata.ilpdata.Svar;
+  import wrimsv2.commondata.ilpdata.LRWeight;
+  import wrimsv2.commondata.ilpdata.IlpData;
   import wrimsv2.components.MainFile;
   import wrimsv2.components.Error;
 }
