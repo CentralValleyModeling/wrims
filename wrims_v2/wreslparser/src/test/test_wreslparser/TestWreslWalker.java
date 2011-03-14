@@ -145,7 +145,7 @@ public class TestWreslWalker {
 		LogUtils.setLogFile(logFilePath);
 		
 		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
-		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
+		//LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
 		
 		LogUtils.mainFileSummary(walker.mainDataSet, walker.modelDataMap);
 		
@@ -167,8 +167,13 @@ public class TestWreslWalker {
 		String fileText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
-		Assert.assertEquals(totalErrs, 0);	
+		Assert.assertEquals(totalErrs, 2);	
+
+		int redefErrs1 = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: C_Banks");
+		Assert.assertEquals(redefErrs1, 1);
 		
+		int redefErrs2 = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: C_SacFea");
+		Assert.assertEquals(redefErrs2, 1);	
 	}	
 
 	@Test(groups = { "WRESL_elements" })
@@ -208,8 +213,8 @@ public class TestWreslWalker {
 		LogUtils.setLogFile(logFilePath);
 		
 		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
-		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
-		
+		//LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
+		LogUtils.fileSummary(walker.mainDataSet);
 		LogUtils._logFile.close();
 			
 		String fileText = Tools.readFileAsString(logFilePath);	

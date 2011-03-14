@@ -26,7 +26,7 @@ options {
   
   	public StructTree F = new StructTree();	
   	public SimulationDataSet mainDataSet = new SimulationDataSet();
-  	public SimulationDataSet S;
+  	private SimulationDataSet S;
   	  	
   	public Map<String, SimulationDataSet> modelDataMap = new HashMap<String, SimulationDataSet>();  	
   		/// error message	
@@ -98,17 +98,14 @@ includeFile
 dvar : dvar_std | dvar_nonStd   ;
 
 dvar_std  :
-       ^(Dvar_std (s=Global|s=Local) i=IDENT Kind k=STRING Units u=STRING)
-       { F.dvarStd($i.text, $s.text, "", Tools.strip($k.text), Tools.strip($u.text)); }
+       ^(Dvar_std (sc=Global|sc=Local) i=IDENT Kind k=STRING Units u=STRING)
+       { F.dvarStd($i.text, $sc.text, "", Tools.strip($k.text), Tools.strip($u.text)); }
 	;
 	
 dvar_nonStd : 
-	   ^(Dvar_nonStd (sc=Global|sc=Local) i=IDENT Lower lr=LimitType Upper ur=LimitType Kind k=STRING Units u=STRING)
-	   { System.out.println("zzzzlrzzzzzzz"+$lr.text);
-	     System.out.println("zzzzurzzzzzzz"+$ur.text);
+	   ^(Dvar_nonStd (sc=Global|sc=Local) i=IDENT Lower lowerbound=LimitType Upper upperbound=LimitType Kind k=STRING Units u=STRING)
+	   {F.dvarNonStd($i.text, $sc.text, $k.text, $u.text,  $lowerbound.text, $upperbound.text);}
 
-	   }
-	   //{F.dvarNonStd($i.text, $sc.text, $k.text, $u.text,  $lb.text, $ub.text);}
 	;
 
 

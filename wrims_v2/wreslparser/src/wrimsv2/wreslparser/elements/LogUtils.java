@@ -71,8 +71,8 @@ public class LogUtils {
 	
 	public static void fileSummary(SimulationDataSet S){
 
-		seqList(S.seqList, S.seqMap);
-		varsList(S.model_list, "models");
+		//seqList(S.seqList, S.seqMap);
+		//varsList(S.model_list, "models");
 		varsList(S.incFileList, S.incFileList_global, S.incFileList_local, "files");
 		varsList(S.dvList, S.dvList_global, S.dvList_local, "Dvars");
 		varsList(S.svList, S.svList_global, S.svList_local, "Svars");
