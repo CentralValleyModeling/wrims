@@ -1,4 +1,4 @@
-package test.test_evaluator;
+package test.test_wreslparser;
 
 import java.io.IOException;
 import org.antlr.runtime.RecognitionException;
