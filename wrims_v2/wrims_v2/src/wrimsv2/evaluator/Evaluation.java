@@ -6,9 +6,13 @@ import org.antlr.runtime.TokenStream;
 
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
+import wrimsv2.external.ExternalFunction;
+import wrimsv2.external.ExternalFunctionTable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.Stack;
 
 public class Evaluation {
 
@@ -99,6 +103,12 @@ public class Evaluation {
 		ec.setEvalExpression(ee);
 		ec.setSign(s);
 		return ec;
+	}
+	
+	public static EvalExpression term_knownTS(String result){
+		EvalExpression ee=new EvalExpression();
+		ee.setValue(result);
+		return ee;
 	}
 	
 	public static EvalExpression term_IDENT (String ident){
@@ -229,5 +239,64 @@ public class Evaluation {
 			}
 		}
 		return ee1;
+	}
+	
+	public static String noArgFunction(String ident){
+		//To Do call no ArgFunction
+		String result ="99999999999";
+		return result;
+	}
+	
+	public static String argFunction(String ident, ArrayList<EvalExpression> eeArray){
+		if (eeArray.size()==1){
+			//To Do: check if it is dvar or alias or function
+		}
+		
+		if (ExternalFunctionTable.externalFunctionsHashtable ==null){
+			Error.addEvaluationError("WRIMS V2 Engine error. Dlls have not been load.");
+			return "0.0";
+		}
+		
+		ExternalFunction ef=ExternalFunctionTable.externalFunctionsHashtable.get(ident);
+		if (ef == null){
+			Error.addEvaluationError("WRIMS V2 Engine error. Dlls have not been load.");
+			return "0.0";
+		}
+		
+		Stack stack = new Stack();
+		for (int i=0; i<eeArray.size(); i++){
+			EvalExpression ee=eeArray.get(i);
+			if (!ee.isNumeric()){
+				Error.addEvaluationError("argument in the function of "+ident+" contains decision variable.");
+				return "0.0";
+			}
+			
+			String value=ee.getValue();
+			try{        
+		        stack.push(Integer.parseInt(value));    
+		    } catch(NumberFormatException nie) {        
+		        try {
+		            stack.push(Double.parseDouble(value));
+		        }catch(NumberFormatException nde) {
+		        	Error.addEvaluationError("argument in the function of "+ident+" contains non-numeric value.");
+		        }
+		    }
+		}
+		
+		ef.execute(stack);
+		String result = ((Number)stack.pop()).toString();
+		return result;
+	}
+	
+	public static String pastCycleDV(String ident, String cycle){
+		//To Do: add function for getting past cycle dv
+		return "9999999";
+	}
+	
+	public static String expressionInput(EvalExpression ee){
+		if (!ee.isNumeric()){
+			Error.addEvaluationError("the value is not numeric and contains decision variable");
+		}
+		return ee.getValue();
 	}
 }

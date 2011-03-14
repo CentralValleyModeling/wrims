@@ -14,9 +14,6 @@ options {
   import org.antlr.runtime.TokenStream;
   
   import wrimsv2.components.Error;
-  import wrimsv2.components.Evaluation;
-  import wrimsv2.components.EvalExpression;
-  import wrimsv2.components.EvalConstraint;
 }
 
 @lexer::header {
@@ -24,6 +21,7 @@ options {
 }
 
 @members {
+  public static String evalValue;
   public static EvalConstraint evalConstraint;
   public static boolean evalCondition;
   
@@ -43,16 +41,16 @@ evaluator returns [String result]
 /// input rules ///
 ///////////////////
 
-expressionInput: 'v:' expressionCollection;
+expressionInput: 'v:' expressionCollection{evalValue=Evaluation.expressionInput($expressionCollection.ee);};
 goalInput: 'g:' constraintStatement {evalConstraint = $constraintStatement.ec;};
 conditionInput: 'c:' conditionStatement {evalCondition=$conditionStatement.result;};
 
 ///////////////////
 /// basic rules ///
 ///////////////////
-lhsrhs: weight|CONSTRAIN;
+lhsrhs: expression|CONSTRAIN;
 
-weight	:	(allnumber|(allnumber '*' TAFCFS)) (('+' allnumber)|('-' allnumber))?;
+//weight	:	(allnumber|(allnumber '*' TAFCFS)) (('+' allnumber)|('-' allnumber))?;
 
 units: IDENT|(IDENT '/' IDENT);
 
@@ -70,7 +68,7 @@ text	:	LETTER (LETTER | DIGIT )*;
 expressionCollection returns [EvalExpression ee]
 	:	((expression{
 	   ee=$expression.ee;
-	})|(tableSQL)|(timeseriesWithUnits)|(timeseries)|(function)|(i1=sumExpression))
+	})|(tableSQL)|(timeseriesWithUnits)|(timeseries)|(sumExpression))
 	;
 
 func : 
@@ -156,7 +154,7 @@ add_sum  :  unary_sum(('+' | '-') unary_sum)* ;
 expression_sum: add_sum ;
 
 term returns [EvalExpression ee]
-	:	(knownTS
+	:	((knownTS{ee=Evaluation.term_knownTS($knownTS.result);})
 	| (IDENT {ee=Evaluation.term_IDENT($IDENT.text);})
 	| (SVAR{ee=Evaluation.term_SVAR($SVAR.text);}) 
 	|	('(' (e=expression) ')' {ee=$e.ee;})
@@ -170,47 +168,33 @@ term returns [EvalExpression ee]
 	| DAYSIN)
 	;
 	
-tafcfs_term: TAFCFS|(TAFCFS'(' ('-')? INTEGER ')');
+tafcfs_term: TAFCFS ('(' expression ')')?;
 	
-knownTS  
-  : pastMonthTS|preMonthTS|pastCycleDV
+knownTS returns [String result]  
+  : (f=function{result=$f.result;})|(p=pastCycleDV {result=$p.result;}) 
   ;
   
-pastMonthTS  
-  : ((i1=IDENT)|TAFCFS) '(' ((p=PASTMONTH)|(i=I)|(pm=(MONTH_CONST '-' MONTH (('+'|'-') INTEGER)? ))|(mp=(MONTH '-' MONTH_CONST (('+'|'-') INTEGER)?))) ')'
-  ;
+//pastMonthTS  
+//  : ((i1=IDENT)|TAFCFS) '(' ((p=PASTMONTH)|(i=I)|(pm=(MONTH_CONST '-' MONTH (('+'|'-') INTEGER)? ))|(mp=(MONTH '-' MONTH_CONST (('+'|'-') INTEGER)?))) ')'
+//  ;
   
-preMonthTS 
-  : IDENT '(' (s='-')? INTEGER ')'  
-  ;
+//preMonthTS 
+//  : IDENT '(' (s='-')? INTEGER ')'  
+//  ;
   
-pastCycleDV 
-  : i1=IDENT '[' i2=IDENT ']'
+pastCycleDV returns [String result]
+  : i1=IDENT '[' i2=IDENT ']'{result=Evaluation.pastCycleDV($i1.text,$i2.text);}
   ; 
 
-function 
-  : ((i1=noArgFunction)|(i2=argFunction))
+function returns [String result]
+  : (n=noArgFunction{result=$n.result;})|(a=argFunction{result=$a.result;})
   ;
 
-noArgFunction 
-  : IDENT '(' ')' 
-  ;  
+noArgFunction returns [String result]
+  : IDENT '(' ')' {result=Evaluation.noArgFunction($IDENT.text);};
 
-argFunction  
-  : IDENT arguments 
-  ;  
-  
-arguments 
-  : (oneArgument|multiArguments);
-
-oneArgument 
-    :'(' ((IDENT|knownTS)) ')'
-    ;
-
-
-multiArguments  
-  : '(' (e1=expression) (';' (e2=expression))+ ')' 
-  ;
+argFunction returns [String result] @init{ArrayList<EvalExpression> eeArray = new ArrayList<EvalExpression>();}
+  : IDENT '(' (e1=expression {eeArray.add($e1.ee);}) (';' (e2=expression{eeArray.add($e2.ee);}))* ')'{result=Evaluation.argFunction($IDENT.text,eeArray);};
   	
 unary returns [EvalExpression ee] 
 	:	(s='-')? term{ee=Evaluation.unary($s.text, $term.ee);
