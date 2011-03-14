@@ -2,15 +2,15 @@ package wrimsv2.evaluator;
 import java.util.HashMap;
 
 public class EvalExpression {
-	private String value="0.0";
+	private double doubleValue=0.0;
 	private HashMap<String, Double> multiplier = new HashMap<String, Double>();
 	
-	public String getValue(){
-		return value;
+	public double getDoubleValue(){
+		return doubleValue;
 	}
 	
-	public void setValue(String value){
-		this.value =value; 
+	public void setDoubleValue(double value){
+		this.doubleValue =value; 
 	}
 	
 	public HashMap<String, Double> getMultiplier(){

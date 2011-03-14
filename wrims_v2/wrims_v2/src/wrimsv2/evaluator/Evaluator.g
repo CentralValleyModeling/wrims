@@ -21,7 +21,8 @@ options {
 }
 
 @members {
-  public static String evalValue;
+  public static Integer evalIntValue;
+  public static Double evalDoubleValue;
   public static EvalConstraint evalConstraint;
   public static boolean evalCondition;
   
@@ -41,7 +42,7 @@ evaluator returns [String result]
 /// input rules ///
 ///////////////////
 
-expressionInput: 'v:' expressionCollection{evalValue=Evaluation.expressionInput($expressionCollection.ee);};
+expressionInput: 'v:' expressionCollection{Evaluation.expressionInput($expressionCollection.ee); evalDoubleValue=$expressionCollection.ee.getDoubleValue();};
 goalInput: 'g:' constraintStatement {evalConstraint = $constraintStatement.ec;};
 conditionInput: 'c:' conditionStatement {evalCondition=$conditionStatement.result;};
 

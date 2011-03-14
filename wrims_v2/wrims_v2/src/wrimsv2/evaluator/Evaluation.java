@@ -28,15 +28,15 @@ public class Evaluation {
 		if (!ee.isNumeric()){
 			Error.addEvaluationError("Decision variable can't be used in table definition");
 		}
-		return ident+"="+ee.getValue();
+		return ident+"="+ee.getDoubleValue();
 	}
 	
 	public static boolean relationStatement(EvalExpression ee1, EvalExpression ee2, String relation){
 		if (!ee1.isNumeric() || !ee2.isNumeric()){
 			Error.addEvaluationError("Decision variable can't be used in define condition");
 		}
-		double value1=convertStringToDouble(ee1.getValue());
-		double value2=convertStringToDouble(ee2.getValue());
+		double value1=ee1.getDoubleValue();
+		double value2=ee2.getDoubleValue();
 		if (relation.equals("==")) {
 			if (value1==value2){
 				return true;
@@ -107,7 +107,7 @@ public class Evaluation {
 	
 	public static EvalExpression term_knownTS(String result){
 		EvalExpression ee=new EvalExpression();
-		ee.setValue(result);
+		ee.setDoubleValue(convertStringToDouble(result));
 		return ee;
 	}
 	
@@ -121,26 +121,26 @@ public class Evaluation {
 	public static EvalExpression term_SVAR (String ident){
 		EvalExpression ee=new EvalExpression();
 		//To Do: get data from Svar in the IlpData in the current cycle
-		ee.setValue("99999999999.0");
+		ee.setDoubleValue(99999999999.0);
 		return ee;
 	}
 	
 	public static EvalExpression term_INTEGER (String integer){
 		EvalExpression ee=new EvalExpression();
-		ee.setValue(integer);
+		ee.setDoubleValue(convertStringToDouble(integer));
 		return ee;
 	}
 	
 	public static EvalExpression term_FLOAT (String floatValue){
 		EvalExpression ee=new EvalExpression();
-		ee.setValue(floatValue);
+		ee.setDoubleValue(convertStringToDouble(floatValue));
 		return ee;
 	}
 	
 	public static EvalExpression unary (String s, EvalExpression ee){
 		if (s !=null){
-			double value=-convertStringToDouble(ee.getValue());
-			ee.setValue(convertDoubleToString(value));
+			double value=-ee.getDoubleValue();
+			ee.setDoubleValue(value);
 			Map<String, Double> multiplier=ee.getMultiplier();
 			for (String dvar : multiplier.keySet()) {
 				multiplier.put(dvar, -multiplier.get(dvar));				
@@ -151,9 +151,9 @@ public class Evaluation {
 	
 	public static EvalExpression mult(EvalExpression ee1, EvalExpression ee2){
 		if (ee1.isNumeric()){
-			double value1=convertStringToDouble(ee1.getValue());
-			double value2=convertStringToDouble(ee2.getValue());
-			ee2.setValue(convertDoubleToString(value1*value2));
+			double value1=ee1.getDoubleValue();
+			double value2=ee2.getDoubleValue();
+			ee2.setDoubleValue(value1*value2);
 			Map<String, Double> multiplier=ee2.getMultiplier();
 			for (String dvar : multiplier.keySet()) {
 				multiplier.put(dvar, value1*multiplier.get(dvar));				
@@ -161,9 +161,9 @@ public class Evaluation {
 			return ee2;
 		}else{
 			if (ee2.isNumeric()){
-				double value2=convertStringToDouble(ee2.getValue());
-				double value1=convertStringToDouble(ee1.getValue());
-				ee1.setValue(convertDoubleToString(value2*value1));
+				double value2=ee2.getDoubleValue();
+				double value1=ee1.getDoubleValue();
+				ee1.setDoubleValue(value2*value1);
 				Map<String, Double> multiplier=ee1.getMultiplier();
 				for (String dvar : multiplier.keySet()) {
 					multiplier.put(dvar, value2*multiplier.get(dvar));				
@@ -178,13 +178,13 @@ public class Evaluation {
 	
 	public static EvalExpression divide(EvalExpression ee1, EvalExpression ee2){
 		if (ee2.isNumeric()){
-			double value2=convertStringToDouble(ee2.getValue());
-			double value1=convertStringToDouble(ee1.getValue());
+			double value2=ee2.getDoubleValue();
+			double value1=ee1.getDoubleValue();
 			if (value2 ==0.0){
 				Error.addEvaluationError("0 appears in divisor");
 				return ee1;
 			}
-			ee1.setValue(convertDoubleToString(value1/value2));
+			ee1.setDoubleValue(value1/value2);
 			Map<String, Double> multiplier=ee1.getMultiplier();
 			for (String dvar : multiplier.keySet()) {
 				multiplier.put(dvar, multiplier.get(dvar)/value2);				
@@ -198,9 +198,9 @@ public class Evaluation {
 	
 	public static EvalExpression mod(EvalExpression ee1, EvalExpression ee2){
 		if (ee1.isNumeric() && ee2.isNumeric()){
-			double value1=convertStringToDouble(ee1.getValue());
-			double value2=convertStringToDouble(ee2.getValue());
-			ee1.setValue(convertDoubleToString(value1%value2));			
+			double value1=ee1.getDoubleValue();
+			double value2=ee2.getDoubleValue();
+			ee1.setDoubleValue(value1%value2);			
 			return ee1;
 		}else{
 			Error.addEvaluationError("Decision variable appears in MOD calcualtion. The problem is not linear.");
@@ -209,9 +209,9 @@ public class Evaluation {
 	}
 	
 	public static EvalExpression add(EvalExpression ee1, EvalExpression ee2){
-		double value1=convertStringToDouble(ee1.getValue());
-		double value2=convertStringToDouble(ee2.getValue());
-		ee1.setValue(convertDoubleToString(value1+value2));
+		double value1=ee1.getDoubleValue();
+		double value2=ee2.getDoubleValue();
+		ee1.setDoubleValue(value1+value2);
 		Map<String, Double> multiplier1=ee1.getMultiplier();
 		Map<String, Double> multiplier2=ee2.getMultiplier();
 		for (String dvar : multiplier2.keySet()) {
@@ -226,9 +226,9 @@ public class Evaluation {
 	
 	
 	public static EvalExpression minus(EvalExpression ee1, EvalExpression ee2){
-		double value1=convertStringToDouble(ee1.getValue());
-		double value2=convertStringToDouble(ee2.getValue());
-		ee1.setValue(convertDoubleToString(value1-value2));
+		double value1=ee1.getDoubleValue();
+		double value2=ee2.getDoubleValue();
+		ee1.setDoubleValue(value1-value2);
 		Map<String, Double> multiplier1=ee1.getMultiplier();
 		Map<String, Double> multiplier2=ee2.getMultiplier();
 		for (String dvar : multiplier2.keySet()) {
@@ -271,16 +271,8 @@ public class Evaluation {
 				return "0.0";
 			}
 			
-			String value=ee.getValue();
-			try{        
-		        stack.push(Integer.parseInt(value));    
-		    } catch(NumberFormatException nie) {        
-		        try {
-		            stack.push(Double.parseDouble(value));
-		        }catch(NumberFormatException nde) {
-		        	Error.addEvaluationError("argument in the function of "+ident+" contains non-numeric value.");
-		        }
-		    }
+			double value=ee.getDoubleValue();
+		    stack.push(value);      
 		}
 		
 		ef.execute(stack);
@@ -293,10 +285,9 @@ public class Evaluation {
 		return "9999999";
 	}
 	
-	public static String expressionInput(EvalExpression ee){
+	public static void expressionInput(EvalExpression ee){
 		if (!ee.isNumeric()){
 			Error.addEvaluationError("the value is not numeric and contains decision variable");
 		}
-		return ee.getValue();
 	}
 }
