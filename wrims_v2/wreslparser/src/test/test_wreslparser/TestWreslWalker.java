@@ -209,7 +209,6 @@ public class TestWreslWalker {
 		
 		LogUtils.mainFileSummary(sc);
 		
-		
 		LogUtils.closeLogFile();
 			
 		String fileText = Tools.readFileAsString(logFilePath);	

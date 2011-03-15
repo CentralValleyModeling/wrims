@@ -77,4 +77,22 @@ public class SimulationDataSet {
 	public ArrayList<String> gList_local = new ArrayList<String>();
 	public Map<String, Goal> gMap = new HashMap<String, Goal>();
 	public Map<String, String> error_goal_redefined = new HashMap<String, String>();
+	
+	public SimulationDataSet() {
+	}
+
+	public SimulationDataSet(SimulationDataSet s) {
+		
+		this.overwrittenWith(s);
+	}	
+
+	public SimulationDataSet overwrittenWith(SimulationDataSet s) {
+		return null;	
+		
+	}
+	
+	public SimulationDataSet overwrite(SimulationDataSet s) {
+		return null;	
+		
+	}	
 }
