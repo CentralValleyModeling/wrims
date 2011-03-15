@@ -33,15 +33,16 @@ public class TestEvaluator {
 		EvalConstraint ec=evaluator.evalConstraint;
 		EvalExpression ee=ec.getEvalExpression();
 		System.out.println(ec.getSign());
-		System.out.println(ee.getValue());
-		System.out.println(ee.getMultiplier());
+		System.out.println(ee.getValue().getData());
+		System.out.println(ee.getMultiplier().get("a").getData());
+		System.out.println(ee.getMultiplier().get("b").getData());
 	}
-		
+	
 	public void testConditionStatement() throws RecognitionException, IOException {
         String mainFile="z:\\temp\\test";
         new MainFile(mainFile);
 		
-		ANTLRStringStream stream = new ANTLRStringStream("c: (6+8)*4>(3-2) .or. 100-4<3");
+		ANTLRStringStream stream = new ANTLRStringStream("c: (6+8)*4>(3-2) .and. 100-4<3");
 		EvaluatorLexer lexer = new EvaluatorLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
@@ -56,7 +57,6 @@ public class TestEvaluator {
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
-	@Test
 	public void testFunction() throws RecognitionException, IOException {
         new LoadDll();
 
@@ -68,7 +68,23 @@ public class TestEvaluator {
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
 		evaluator.evaluator();
-		System.out.println(evaluator.evalValue);
+		System.out.println(evaluator.evalValue.getData());
+		
+		Error.writeEvaluationErrorFile("log.txt");
+	}
+	
+	@Test
+	public void testInteger() throws RecognitionException, IOException {
+
+        String mainFile="z:\\temp\\test";
+        new MainFile(mainFile);
+		
+		ANTLRStringStream stream = new ANTLRStringStream("g: 3a/2<1"); 
+		EvaluatorLexer lexer = new EvaluatorLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+		evaluator.evaluator();
+		System.out.println(evaluator.evalConstraint.getEvalExpression().getMultiplier().get("a").getData());
 		
 		Error.writeEvaluationErrorFile("log.txt");
 	}
