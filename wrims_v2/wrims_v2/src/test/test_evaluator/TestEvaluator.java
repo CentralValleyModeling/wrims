@@ -15,6 +15,7 @@ import wrimsv2.evaluator.EvalExpression;
 import wrimsv2.evaluator.EvaluatorLexer;
 import wrimsv2.evaluator.EvaluatorParser;
 import wrimsv2.external.LoadDll;
+import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 import wrimsv2.components.MainFile;
 
@@ -38,7 +39,6 @@ public class TestEvaluator {
 		System.out.println(ee.getMultiplier().get("b").getData());
 	}
 	
-	@Test
 	public void testInternalFunctions() throws RecognitionException, IOException {
 		ANTLRStringStream stream = new ANTLRStringStream("g: max(4;-3)*a+min(3.1;100.2)*b+pow(3;abs(-2))*c+int(5.43)*d+log(2)*e<log10(10.0)");
 		EvaluatorLexer lexer = new EvaluatorLexer(stream);
@@ -91,7 +91,6 @@ public class TestEvaluator {
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
-	@Test
 	public void testInteger() throws RecognitionException, IOException {
 
         String mainFile="z:\\temp\\test";
@@ -103,6 +102,24 @@ public class TestEvaluator {
 		EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
 		evaluator.evaluator();
 		System.out.println(evaluator.evalConstraint.getEvalExpression().getMultiplier().get("a").getData());
+		
+		Error.writeEvaluationErrorFile("log.txt");
+	}
+	
+	@Test
+	public void testDaysIn() throws RecognitionException, IOException {
+
+        String mainFile="z:\\temp\\test";
+        new MainFile(mainFile);
+		
+        ControlData.currMonth=5;
+        ControlData.currWateryear=1900;
+		ANTLRStringStream stream = new ANTLRStringStream("v: daysin"); 
+		EvaluatorLexer lexer = new EvaluatorLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+		evaluator.evaluator();
+		System.out.println(evaluator.evalValue.getData());
 		
 		Error.writeEvaluationErrorFile("log.txt");
 	}

@@ -529,6 +529,26 @@ public class Evaluation {
 		return id;
 	}
 	
+	public static EvalExpression daysIn(){
+		int days;
+		if (ControlData.currMonth==1 || ControlData.currMonth==3 || ControlData.currMonth==4 || ControlData.currMonth==6 
+				||ControlData.currMonth==8 || ControlData.currMonth==10 ||ControlData.currMonth==11){
+			days=31;
+		}else if (ControlData.currMonth==2|| ControlData.currMonth==7 || ControlData.currMonth==9 || ControlData.currMonth==12){ 
+			days=30;
+		}else {
+			if (ControlData.isLeapYear(ControlData.currWateryear)){
+				days=29;
+			}else{
+				days=28;
+			}
+		}
+		IntDouble id=new IntDouble(days, true);
+		EvalExpression ee=new EvalExpression();
+		ee.setValue(id);
+		return ee;
+	}
+	
 	public static IntDouble expressionInput(EvalExpression ee){
 		if (!ee.isNumeric()){
 			Error.addEvaluationError("the value is not numeric and contains decision variable");

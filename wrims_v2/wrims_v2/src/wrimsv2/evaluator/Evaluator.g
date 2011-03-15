@@ -179,7 +179,7 @@ term returns [EvalExpression ee]
 	| YEAR
 	| MONTH
 	| MONTH_CONST
-	| DAYSIN)
+	| DAYSIN{ee=Evaluation.daysIn();})
 	;
 	
 tafcfs_term: TAFCFS ('(' expression ')')?;
