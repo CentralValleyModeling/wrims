@@ -21,8 +21,7 @@ options {
 }
 
 @members {
-  public static Integer evalIntValue;
-  public static Double evalDoubleValue;
+  public static IntDouble evalValue;
   public static EvalConstraint evalConstraint;
   public static boolean evalCondition;
   
@@ -42,7 +41,7 @@ evaluator returns [String result]
 /// input rules ///
 ///////////////////
 
-expressionInput: 'v:' expressionCollection{Evaluation.expressionInput($expressionCollection.ee); evalDoubleValue=$expressionCollection.ee.getDoubleValue();};
+expressionInput: 'v:' expressionCollection{evalValue=Evaluation.expressionInput($expressionCollection.ee);};
 goalInput: 'g:' constraintStatement {evalConstraint = $constraintStatement.ec;};
 conditionInput: 'c:' conditionStatement {evalCondition=$conditionStatement.result;};
 
@@ -201,27 +200,27 @@ unary returns [EvalExpression ee]
 	:	(s='-')? term{ee=Evaluation.unary($s.text, $term.ee);
 	};
 	
-allnumber returns [String result]@init{result="";} 
-	:	('-' {result="-";})? number{result=result+$number.result;};
+allnumber 
+	:	('-')? number;
 
 mult returns [EvalExpression ee]  
-	:	(u1=unary {ee=$u1.ee;}) (((s1='*')| (s2='/')| MOD) (u2=unary){
-	   if ($s1.text !=null){
+	:	(u1=unary {ee=$u1.ee;}) (s=('*'| '/'| MOD) (u2=unary){
+	   if ($s.text.equals("*")){
 	     ee=Evaluation.mult(ee, $u2.ee);
-	   }else if ($s2.text !=null){
+	   }else if ($s.text.equals("/")){
 	     ee=Evaluation.divide(ee, $u2.ee);
-	   }else if ($MOD.text !=null){
+	   }else{
 	     ee=Evaluation.mod(ee, $u2.ee);
 	   }   
   })*
 	;
 	
 add  returns [EvalExpression ee]
-	:	(m1=mult {ee=$m1.ee;}) (((s1='+') |(s2='-')) (m2=mult){
-     if ($s2.text ==null){
+	:	(m1=mult {ee=$m1.ee;}) ((s=('+'|'-')) (m2=mult){
+     if ($s.text.equals("+")){
        ee=Evaluation.add(ee, $m2.ee);
      }else{
-       ee=Evaluation.minus(ee, $m2.ee);
+       ee=Evaluation.substract(ee, $m2.ee);
      }
 	})*
 	;
@@ -267,9 +266,9 @@ assignStatement returns [String result]
   : IDENT '=' expression {result=Evaluation.assignStatement($IDENT.text,$expression.ee);} 
   ;
 
-number returns [String result]
-	: INTEGER {result=$INTEGER.text;}
-	| FLOAT {result=$FLOAT.text;}
+number
+	: INTEGER 
+	| FLOAT
 	;
 
 MULTILINE_COMMENT : '/*' .* '*/' {$channel = HIDDEN;} ;

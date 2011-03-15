@@ -2,22 +2,22 @@ package wrimsv2.evaluator;
 import java.util.HashMap;
 
 public class EvalExpression {
-	private double doubleValue=0.0;
-	private HashMap<String, Double> multiplier = new HashMap<String, Double>();
+	private IntDouble intDouble=new IntDouble(0, true);
+	private HashMap<String, IntDouble> multiplier = new HashMap<String, IntDouble>();
 	
-	public double getDoubleValue(){
-		return doubleValue;
+	public IntDouble getValue(){
+		return intDouble;
 	}
 	
-	public void setDoubleValue(double value){
-		this.doubleValue =value; 
+	public void setValue(IntDouble intDouble){
+		this.intDouble=intDouble;
 	}
 	
-	public HashMap<String, Double> getMultiplier(){
+	public HashMap<String, IntDouble> getMultiplier(){
 		return multiplier;
 	}
 	
-	public void setMultiplier(HashMap<String, Double> multiplier){
+	public void setMultiplier(HashMap<String, IntDouble> multiplier){
 		this.multiplier=multiplier;
 	}
 	

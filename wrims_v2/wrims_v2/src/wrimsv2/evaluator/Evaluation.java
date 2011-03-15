@@ -20,6 +20,10 @@ public class Evaluation {
 		return Double.valueOf(text);
 	}
 	
+	public static double convertStringToInt(String text){
+		return Integer.valueOf(text);
+	}
+	
 	public static String convertDoubleToString(double value){
 		return Double.toString(value);
 	}
@@ -28,15 +32,17 @@ public class Evaluation {
 		if (!ee.isNumeric()){
 			Error.addEvaluationError("Decision variable can't be used in table definition");
 		}
-		return ident+"="+ee.getDoubleValue();
+		return ident+"="+ee.getValue().getData();
 	}
 	
 	public static boolean relationStatement(EvalExpression ee1, EvalExpression ee2, String relation){
 		if (!ee1.isNumeric() || !ee2.isNumeric()){
 			Error.addEvaluationError("Decision variable can't be used in define condition");
 		}
-		double value1=ee1.getDoubleValue();
-		double value2=ee2.getDoubleValue();
+		
+		double value1=ee1.getValue().getData().doubleValue();
+		double value2=ee2.getValue().getData().doubleValue();
+		
 		if (relation.equals("==")) {
 			if (value1==value2){
 				return true;
@@ -98,7 +104,7 @@ public class Evaluation {
 	}
 	
 	public static EvalConstraint constraintStatement (EvalExpression ee1, EvalExpression ee2, String s) {
-		EvalExpression ee=minus(ee1, ee2);
+		EvalExpression ee=substract(ee1, ee2);
 		EvalConstraint ec=new EvalConstraint();
 		ec.setEvalExpression(ee);
 		ec.setSign(s);
@@ -107,43 +113,61 @@ public class Evaluation {
 	
 	public static EvalExpression term_knownTS(String result){
 		EvalExpression ee=new EvalExpression();
-		ee.setDoubleValue(convertStringToDouble(result));
+		IntDouble intDouble= new IntDouble (convertStringToDouble(result), false);
+		ee.setValue(intDouble);
 		return ee;
 	}
 	
 	public static EvalExpression term_IDENT (String ident){
 		EvalExpression ee=new EvalExpression();
-		HashMap<String, Double> multiplier=ee.getMultiplier();
-		multiplier.put(ident, 1.0);
+		IntDouble intDouble0 = new IntDouble (0, true);
+		ee.setValue(intDouble0);
+		HashMap<String, IntDouble> multiplier=ee.getMultiplier();
+		IntDouble intDouble= new IntDouble(1,true); 
+		multiplier.put(ident, intDouble);
 		return ee;
 	}
 	
 	public static EvalExpression term_SVAR (String ident){
 		EvalExpression ee=new EvalExpression();
 		//To Do: get data from Svar in the IlpData in the current cycle
-		ee.setDoubleValue(99999999999.0);
+		IntDouble intDouble = new IntDouble(99999999999.0, false);
+		ee.setValue(intDouble);
 		return ee;
 	}
 	
 	public static EvalExpression term_INTEGER (String integer){
 		EvalExpression ee=new EvalExpression();
-		ee.setDoubleValue(convertStringToDouble(integer));
+		IntDouble intDouble = new IntDouble(convertStringToInt(integer), true);
+		ee.setValue(intDouble);
 		return ee;
 	}
 	
 	public static EvalExpression term_FLOAT (String floatValue){
 		EvalExpression ee=new EvalExpression();
-		ee.setDoubleValue(convertStringToDouble(floatValue));
+		IntDouble intDouble = new IntDouble(convertStringToDouble(floatValue), false);
+		ee.setValue(intDouble);
 		return ee;
 	}
 	
 	public static EvalExpression unary (String s, EvalExpression ee){
 		if (s !=null){
-			double value=-ee.getDoubleValue();
-			ee.setDoubleValue(value);
-			Map<String, Double> multiplier=ee.getMultiplier();
+			if (ee.getValue().isInt()){
+				int value=-ee.getValue().getData().intValue();
+				ee.getValue().setData(value);
+			}else{
+				double value=-ee.getValue().getData().doubleValue();
+				ee.getValue().setData(value);
+			}
+			Map<String, IntDouble> multiplier=ee.getMultiplier();
 			for (String dvar : multiplier.keySet()) {
-				multiplier.put(dvar, -multiplier.get(dvar));				
+				IntDouble intDouble=multiplier.get(dvar);
+				if (intDouble.isInt()){
+					intDouble.setData(-intDouble.getData().intValue());
+				}else{
+					intDouble.setData(-intDouble.getData().doubleValue());
+				}
+				multiplier.put(dvar, intDouble);				
 			}
 		}
 		return ee;
@@ -151,22 +175,22 @@ public class Evaluation {
 	
 	public static EvalExpression mult(EvalExpression ee1, EvalExpression ee2){
 		if (ee1.isNumeric()){
-			double value1=ee1.getDoubleValue();
-			double value2=ee2.getDoubleValue();
-			ee2.setDoubleValue(value1*value2);
-			Map<String, Double> multiplier=ee2.getMultiplier();
+			IntDouble id1=ee1.getValue();
+			IntDouble id2=ee2.getValue();
+			ee2.setValue(multiplyOperation(id1,id2));
+			Map<String, IntDouble> multiplier=ee2.getMultiplier();
 			for (String dvar : multiplier.keySet()) {
-				multiplier.put(dvar, value1*multiplier.get(dvar));				
+				multiplier.put(dvar, multiplyOperation(id1,multiplier.get(dvar)));				
 			}
 			return ee2;
 		}else{
 			if (ee2.isNumeric()){
-				double value2=ee2.getDoubleValue();
-				double value1=ee1.getDoubleValue();
-				ee1.setDoubleValue(value2*value1);
-				Map<String, Double> multiplier=ee1.getMultiplier();
+				IntDouble id2=ee2.getValue();
+				IntDouble id1=ee1.getValue();
+				ee1.setValue(multiplyOperation(id2,id1));
+				Map<String, IntDouble> multiplier=ee1.getMultiplier();
 				for (String dvar : multiplier.keySet()) {
-					multiplier.put(dvar, value2*multiplier.get(dvar));				
+					multiplier.put(dvar, multiplyOperation(id2,multiplier.get(dvar)));				
 				}
 				return ee1;
 			}else{
@@ -176,18 +200,32 @@ public class Evaluation {
 		}
 	}
 	
+	public static IntDouble multiplyOperation(IntDouble id1, IntDouble id2){
+		IntDouble id;
+		if (id1.isInt() && id2.isInt()){
+			id=new IntDouble(id1.getData().intValue()*id2.getData().intValue(), true);
+		}else if (id1.isInt() && !id2.isInt()){
+			id=new IntDouble(id1.getData().intValue()*id2.getData().doubleValue(), false);
+		}else if (!id1.isInt() && id2.isInt()){
+			id=new IntDouble(id1.getData().doubleValue()*id2.getData().intValue(), false);
+		}else{
+			id=new IntDouble(id1.getData().doubleValue()*id2.getData().doubleValue(), false);
+		}
+		return id;
+	}
+	
 	public static EvalExpression divide(EvalExpression ee1, EvalExpression ee2){
 		if (ee2.isNumeric()){
-			double value2=ee2.getDoubleValue();
-			double value1=ee1.getDoubleValue();
-			if (value2 ==0.0){
-				Error.addEvaluationError("0 appears in divisor");
+			IntDouble id2=ee2.getValue();
+			IntDouble id1=ee1.getValue();
+			if (id2.getData().doubleValue() ==0.0){
+				Error.addEvaluationError("0.0 appears in divisor");
 				return ee1;
 			}
-			ee1.setDoubleValue(value1/value2);
-			Map<String, Double> multiplier=ee1.getMultiplier();
+			ee1.setValue(divideOperation(id1,id2));
+			Map<String, IntDouble> multiplier=ee1.getMultiplier();
 			for (String dvar : multiplier.keySet()) {
-				multiplier.put(dvar, multiplier.get(dvar)/value2);				
+				multiplier.put(dvar, divideOperation(multiplier.get(dvar),id2));				
 			}
 			return ee1;
 		}else{
@@ -196,11 +234,25 @@ public class Evaluation {
 		}
 	}
 	
+	public static IntDouble divideOperation(IntDouble id1, IntDouble id2){
+		IntDouble id;
+		if (id1.isInt() && id2.isInt()){
+			id=new IntDouble(id1.getData().intValue()/id2.getData().intValue(), true);
+		}else if (id1.isInt() && !id2.isInt()){
+			id=new IntDouble(id1.getData().intValue()/id2.getData().doubleValue(), false);
+		}else if (!id1.isInt() && id2.isInt()){
+			id=new IntDouble(id1.getData().doubleValue()/id2.getData().intValue(), false);
+		}else{
+			id=new IntDouble(id1.getData().doubleValue()/id2.getData().doubleValue(), false);
+		}
+		return id;		
+	}
+	
 	public static EvalExpression mod(EvalExpression ee1, EvalExpression ee2){
 		if (ee1.isNumeric() && ee2.isNumeric()){
-			double value1=ee1.getDoubleValue();
-			double value2=ee2.getDoubleValue();
-			ee1.setDoubleValue(value1%value2);			
+			IntDouble id1=ee1.getValue();
+			IntDouble id2=ee2.getValue();
+			ee1.setValue(modOperation(id1,id2));			
 			return ee1;
 		}else{
 			Error.addEvaluationError("Decision variable appears in MOD calcualtion. The problem is not linear.");
@@ -208,15 +260,29 @@ public class Evaluation {
 		}
 	}
 	
+	public static IntDouble modOperation(IntDouble id1, IntDouble id2){
+		IntDouble id;
+		if (id1.isInt() && id2.isInt()){
+			id=new IntDouble(id1.getData().intValue()%id2.getData().intValue(), true);
+		}else if (id1.isInt() && !id2.isInt()){
+			id=new IntDouble(id1.getData().intValue()%id2.getData().doubleValue(), false);
+		}else if (!id1.isInt() && id2.isInt()){
+			id=new IntDouble(id1.getData().doubleValue()%id2.getData().intValue(), false);
+		}else{
+			id=new IntDouble(id1.getData().doubleValue()%id2.getData().doubleValue(), false);
+		}
+		return id;		
+	}
+	
 	public static EvalExpression add(EvalExpression ee1, EvalExpression ee2){
-		double value1=ee1.getDoubleValue();
-		double value2=ee2.getDoubleValue();
-		ee1.setDoubleValue(value1+value2);
-		Map<String, Double> multiplier1=ee1.getMultiplier();
-		Map<String, Double> multiplier2=ee2.getMultiplier();
+		IntDouble id1=ee1.getValue();
+		IntDouble id2=ee2.getValue();
+		ee1.setValue(addOperation(id1,id2));
+		Map<String, IntDouble> multiplier1=ee1.getMultiplier();
+		Map<String, IntDouble> multiplier2=ee2.getMultiplier();
 		for (String dvar : multiplier2.keySet()) {
 			if (multiplier1.containsKey(dvar)){
-				multiplier1.put(dvar, multiplier1.get(dvar)+multiplier2.get(dvar));
+				multiplier1.put(dvar, addOperation(multiplier1.get(dvar),multiplier2.get(dvar)));
 			}else{
 				multiplier1.put(dvar, multiplier2.get(dvar));
 			}
@@ -224,21 +290,49 @@ public class Evaluation {
 		return ee1;
 	}
 	
+	public static IntDouble addOperation(IntDouble id1, IntDouble id2){
+		IntDouble id;
+		if (id1.isInt() && id2.isInt()){
+			id=new IntDouble(id1.getData().intValue()+id2.getData().intValue(), true);
+		}else if (id1.isInt() && !id2.isInt()){
+			id=new IntDouble(id1.getData().intValue()+id2.getData().doubleValue(), false);
+		}else if (!id1.isInt() && id2.isInt()){
+			id=new IntDouble(id1.getData().doubleValue()+id2.getData().intValue(), false);
+		}else{
+			id=new IntDouble(id1.getData().doubleValue()+id2.getData().doubleValue(), false);
+		}
+		return id;		
+	}
 	
-	public static EvalExpression minus(EvalExpression ee1, EvalExpression ee2){
-		double value1=ee1.getDoubleValue();
-		double value2=ee2.getDoubleValue();
-		ee1.setDoubleValue(value1-value2);
-		Map<String, Double> multiplier1=ee1.getMultiplier();
-		Map<String, Double> multiplier2=ee2.getMultiplier();
+	public static EvalExpression substract(EvalExpression ee1, EvalExpression ee2){
+		IntDouble id1=ee1.getValue();
+		IntDouble id2=ee2.getValue();
+		ee1.setValue(substractOperation(id1,id2));
+		Map<String, IntDouble> multiplier1=ee1.getMultiplier();
+		Map<String, IntDouble> multiplier2=ee2.getMultiplier();
 		for (String dvar : multiplier2.keySet()) {
 			if (multiplier1.containsKey(dvar)){
-				multiplier1.put(dvar, multiplier1.get(dvar)-multiplier2.get(dvar));
+				multiplier1.put(dvar, substractOperation(multiplier1.get(dvar),multiplier2.get(dvar)));
 			}else{
-				multiplier1.put(dvar, -multiplier2.get(dvar));
+				IntDouble id0=new IntDouble(0,true);
+				multiplier1.put(dvar, substractOperation(id0,multiplier2.get(dvar)));
 			}
 		}
 		return ee1;
+	}
+	
+	public static IntDouble substractOperation(IntDouble id1, IntDouble id2){
+		IntDouble id;
+		if (id1.isInt() && id2.isInt()){
+			id=new IntDouble(id1.getData().intValue()-id2.getData().intValue(), true);
+		}else if (id1.isInt() && !id2.isInt()){
+			id=new IntDouble(id1.getData().intValue()-id2.getData().doubleValue(), false);
+		}else if (!id1.isInt() && id2.isInt()){
+			id=new IntDouble(id1.getData().doubleValue()-id2.getData().intValue(), false);
+		}else{
+			id=new IntDouble(id1.getData().doubleValue()-id2.getData().doubleValue(), false);
+		}
+		return id;		
 	}
 	
 	public static String noArgFunction(String ident){
@@ -271,8 +365,14 @@ public class Evaluation {
 				return "0.0";
 			}
 			
-			double value=ee.getDoubleValue();
-		    stack.push(value);      
+			IntDouble id=ee.getValue();
+			if (id.isInt()){
+				int value=id.getData().intValue();
+				stack.push(value);
+			}else{
+				double value=id.getData().doubleValue();
+				stack.push(value);
+			}      
 		}
 		
 		ef.execute(stack);
@@ -285,9 +385,10 @@ public class Evaluation {
 		return "9999999";
 	}
 	
-	public static void expressionInput(EvalExpression ee){
+	public static IntDouble expressionInput(EvalExpression ee){
 		if (!ee.isNumeric()){
 			Error.addEvaluationError("the value is not numeric and contains decision variable");
 		}
+		return ee.getValue();
 	}
 }
