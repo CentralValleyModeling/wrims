@@ -38,6 +38,24 @@ public class TestEvaluator {
 		System.out.println(ee.getMultiplier().get("b").getData());
 	}
 	
+	@Test
+	public void testInternalFunctions() throws RecognitionException, IOException {
+		ANTLRStringStream stream = new ANTLRStringStream("g: max(4;-3)*a+min(3.1;100.2)*b+pow(3;abs(-2))*c+int(5.43)*d+log(2)*e<log10(10.0)");
+		EvaluatorLexer lexer = new EvaluatorLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+		evaluator.evaluator();
+		EvalConstraint ec=evaluator.evalConstraint;
+		EvalExpression ee=ec.getEvalExpression();
+		System.out.println(ec.getSign());
+		System.out.println(ee.getValue().getData());
+		System.out.println(ee.getMultiplier().get("a").getData());
+		System.out.println(ee.getMultiplier().get("b").getData());
+		System.out.println(ee.getMultiplier().get("c").getData());
+		System.out.println(ee.getMultiplier().get("d").getData());
+		System.out.println(ee.getMultiplier().get("e").getData());
+	}
+	
 	public void testConditionStatement() throws RecognitionException, IOException {
         String mainFile="z:\\temp\\test";
         new MainFile(mainFile);
@@ -57,7 +75,7 @@ public class TestEvaluator {
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
-	public void testFunction() throws RecognitionException, IOException {
+	public void testExternalFunction() throws RecognitionException, IOException {
         new LoadDll();
 
         String mainFile="z:\\temp\\test";
@@ -79,7 +97,7 @@ public class TestEvaluator {
         String mainFile="z:\\temp\\test";
         new MainFile(mainFile);
 		
-		ANTLRStringStream stream = new ANTLRStringStream("g: 3a/2<1"); 
+		ANTLRStringStream stream = new ANTLRStringStream("g: 3*a/2<1"); 
 		EvaluatorLexer lexer = new EvaluatorLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		EvaluatorParser evaluator = new EvaluatorParser(tokenStream);

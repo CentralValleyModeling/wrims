@@ -385,6 +385,150 @@ public class Evaluation {
 		return "9999999";
 	}
 	
+	public static EvalExpression max(EvalExpression ee1, EvalExpression ee2){
+		if (!ee1.isNumeric() || !ee2.isNumeric()){
+			Error.error_evaluation.add("variable inside max function should not contain decision variable.");
+		}
+		EvalExpression ee=new EvalExpression();
+		ee.setValue(maxOperation(ee1.getValue(), ee2.getValue()));
+		return ee;
+	}
+	
+	public static IntDouble maxOperation(IntDouble id1, IntDouble id2){
+		IntDouble id;
+		if (id1.isInt() && id2.isInt()){
+			id=new IntDouble(Math.max(id1.getData().intValue(),id2.getData().intValue()), true);
+		}else if (id1.isInt() && !id2.isInt()){
+			id=new IntDouble(Math.max(id1.getData().doubleValue(),id2.getData().doubleValue()), false);
+		}else if (!id1.isInt() && id2.isInt()){
+			id=new IntDouble(Math.max(id1.getData().doubleValue(),id2.getData().doubleValue()), false);
+		}else{
+			id=new IntDouble(Math.max(id1.getData().doubleValue(),id2.getData().doubleValue()), false);
+		}
+		return id;
+	}
+	
+	public static EvalExpression min(EvalExpression ee1, EvalExpression ee2){
+		if (!ee1.isNumeric() || !ee2.isNumeric()){
+			Error.error_evaluation.add("variable inside min function should not contain decision variable.");
+		}
+		EvalExpression ee=new EvalExpression();
+		ee.setValue(minOperation(ee1.getValue(), ee2.getValue()));
+		return ee;
+	}
+	
+	public static IntDouble minOperation(IntDouble id1, IntDouble id2){
+		IntDouble id;
+		if (id1.isInt() && id2.isInt()){
+			id=new IntDouble(Math.min(id1.getData().intValue(),id2.getData().intValue()), true);
+		}else if (id1.isInt() && !id2.isInt()){
+			id=new IntDouble(Math.min(id1.getData().doubleValue(),id2.getData().doubleValue()), false);
+		}else if (!id1.isInt() && id2.isInt()){
+			id=new IntDouble(Math.min(id1.getData().doubleValue(),id2.getData().doubleValue()), false);
+		}else{
+			id=new IntDouble(Math.min(id1.getData().doubleValue(),id2.getData().doubleValue()), false);
+		}
+		return id;
+	}
+	
+	public static EvalExpression intFunc(EvalExpression ee1){
+		if (!ee1.isNumeric()){
+			Error.error_evaluation.add("variable inside int function should not contain decision variable.");
+		}
+		EvalExpression ee=new EvalExpression();
+		ee.setValue(intOperation(ee1.getValue()));
+		return ee;
+	}
+	
+	public static IntDouble intOperation(IntDouble id1){
+		IntDouble id;
+		if (!id1.isInt()){
+			id=new IntDouble(((int)id1.getData().doubleValue()), true);
+			return id;
+		}
+		return id1;
+	}
+	
+	public static EvalExpression abs(EvalExpression ee1){
+		if (!ee1.isNumeric()){
+			Error.error_evaluation.add("variable inside abs function should not contain decision variable.");
+		}
+		EvalExpression ee=new EvalExpression();
+		ee.setValue(absOperation(ee1.getValue()));
+		return ee;
+	}
+	
+	public static IntDouble absOperation(IntDouble id1){
+		IntDouble id;
+		if (id1.isInt()){
+			id=new IntDouble(Math.abs(id1.getData().intValue()), true);
+		}else{
+			id=new IntDouble(Math.abs(id1.getData().doubleValue()), false);
+		}
+		return id;
+	}
+	
+	public static EvalExpression log(EvalExpression ee1){
+		if (!ee1.isNumeric()){
+			Error.error_evaluation.add("variable inside log function should not contain decision variable.");
+		}
+		EvalExpression ee=new EvalExpression();
+		ee.setValue(logOperation(ee1.getValue()));
+		return ee;
+	}
+	
+	public static IntDouble logOperation(IntDouble id1){
+		IntDouble id;
+		if (id1.isInt()){
+			id=new IntDouble(Math.log(id1.getData().intValue()), false);
+		}else{
+			id=new IntDouble(Math.log(id1.getData().doubleValue()), false);
+		}
+		return id;
+	}
+	
+	public static EvalExpression log10(EvalExpression ee1){
+		if (!ee1.isNumeric()){
+			Error.error_evaluation.add("variable inside log10 function should not contain decision variable.");
+		}
+		EvalExpression ee=new EvalExpression();
+		ee.setValue(log10Operation(ee1.getValue()));
+		return ee;
+	}
+	
+	public static IntDouble log10Operation(IntDouble id1){
+		IntDouble id;
+		if (id1.isInt()){
+			id=new IntDouble(Math.log10(id1.getData().intValue()), false);
+		}else{
+			id=new IntDouble(Math.log10(id1.getData().doubleValue()), false);
+		}
+		return id;
+	}
+	
+	public static EvalExpression pow(EvalExpression ee1, EvalExpression ee2){
+		if (!ee1.isNumeric() || !ee2.isNumeric()){
+			Error.error_evaluation.add("variable inside pow function should not contain decision variable.");
+		}
+		EvalExpression ee=new EvalExpression();
+		ee.setValue(powOperation(ee1.getValue(), ee2.getValue()));
+		return ee;
+	}
+	
+	public static IntDouble powOperation(IntDouble id1, IntDouble id2){
+		IntDouble id;
+		if (id1.isInt() && id2.isInt()){
+			id=new IntDouble(Math.pow(id1.getData().intValue(),id2.getData().intValue()), false);
+		}else if (id1.isInt() && !id2.isInt()){
+			id=new IntDouble(Math.pow(id1.getData().doubleValue(),id2.getData().doubleValue()), false);
+		}else if (!id1.isInt() && id2.isInt()){
+			id=new IntDouble(Math.pow(id1.getData().doubleValue(),id2.getData().doubleValue()), false);
+		}else{
+			id=new IntDouble(Math.pow(id1.getData().doubleValue(),id2.getData().doubleValue()), false);
+		}
+		return id;
+	}
+	
 	public static IntDouble expressionInput(EvalExpression ee){
 		if (!ee.isNumeric()){
 			Error.addEvaluationError("the value is not numeric and contains decision variable");

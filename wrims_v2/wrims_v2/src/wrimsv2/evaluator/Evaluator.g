@@ -71,41 +71,55 @@ expressionCollection returns [EvalExpression ee]
 	})|(tableSQL)|(timeseriesWithUnits)|(timeseries)|(sumExpression))
 	;
 
-func : 
-  max_func|
-  min_func|
-  int_func|
-  abs_func|
-  log_func|
-  log10_func|
-  pow_func;
+func returns[EvalExpression ee]: 
+  (max_func{ee=$max_func.ee;})|
+  (min_func{ee=$min_func.ee;})|
+  (int_func{ee=$int_func.ee;})|
+  (abs_func{ee=$abs_func.ee;})|
+  (log_func{ee=$log_func.ee;})|
+  (log10_func{ee=$log10_func.ee;})|
+  (pow_func{ee=$pow_func.ee;});
 
-max_func 
-	: MAX '(' (e1=expression)(';' (e2=expression))+ ')'
+max_func returns[EvalExpression ee] 
+	: MAX '(' (e1=expression)(';' (e2=expression))+ ')'{
+	   ee=Evaluation.max($e1.ee, $e2.ee);
+	}
 	;
 
-min_func 
-	: MIN '(' (e1=expression)(';' (e2=expression))+ ')'
+min_func returns[EvalExpression ee]
+	: MIN '(' (e1=expression)(';' (e2=expression))+ ')'{
+	   ee=Evaluation.min($e1.ee, $e2.ee);
+	}
 	;
 	
-int_func 
-  : INT '(' (e1=expression) ')'
+int_func returns[EvalExpression ee]
+  : INT '(' (e=expression) ')'{
+     ee=Evaluation.intFunc($e.ee);
+  }
   ;
   
-abs_func 
-  : ABS '(' (e1=expression) ')'
+abs_func returns[EvalExpression ee]
+  : ABS '(' (e=expression) ')'{
+     ee=Evaluation.abs($e.ee);
+  }
   ;
 
-log_func 
-  : LOG '(' (e1=expression) ')'
+log_func returns[EvalExpression ee]
+  : LOG '(' (e=expression) ')'{
+     ee=Evaluation.log($e.ee);
+  }
   ;
 
-log10_func 
-  : LOG10 '(' (e1=expression) ')'
+log10_func returns[EvalExpression ee]
+  : LOG10 '(' (e=expression) ')'{
+    ee=Evaluation.log10($e.ee);
+  }
   ;
   
-pow_func 
-  : POW '(' (e1=expression) (';' (e2=expression)) ')'
+pow_func returns[EvalExpression ee]
+  : POW '(' (e1=expression) (';' (e2=expression)) ')'{
+     ee=Evaluation.pow($e1.ee, $e2.ee);
+  }
   ;
   
 range_func returns [boolean result]
@@ -160,7 +174,7 @@ term returns [EvalExpression ee]
 	|	('(' (e=expression) ')' {ee=$e.ee;})
 	|	(INTEGER {ee=Evaluation.term_INTEGER($INTEGER.text);}) 
 	| (FLOAT {ee=Evaluation.term_FLOAT($FLOAT.text);}) 
-	| func
+	| func{ee=$func.ee;}
 	| tafcfs_term
 	| YEAR
 	| MONTH
