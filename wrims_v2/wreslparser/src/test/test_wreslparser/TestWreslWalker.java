@@ -220,13 +220,13 @@ public class TestWreslWalker {
 		String fileText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
-		Assert.assertEquals(totalErrs, 0);	
+		Assert.assertEquals(totalErrs, 2);	
 
-		int seq1 = RegUtils.timesOfMatches(fileText, "Sequence: 4 : CYCLE2   Model: empty");
-		Assert.assertEquals(seq1, 1);
+		int err1 = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: C_Banks");
+		Assert.assertEquals(err1, 1);
 		
-		int seq2 = RegUtils.timesOfMatches(fileText, "Sequence: 15 : CYCLE1   Model: first");
-		Assert.assertEquals(seq2, 1);
+		int err2 = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: C_SacFea");
+		Assert.assertEquals(err2, 1);
 	}		
 	
 	@Test(groups = { "WRESL_elements" })
