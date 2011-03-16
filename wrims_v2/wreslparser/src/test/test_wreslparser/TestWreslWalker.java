@@ -3,6 +3,8 @@ package test.test_wreslparser;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.antlr.runtime.RecognitionException;
 import org.testng.Assert;
@@ -12,6 +14,7 @@ import org.testng.annotations.Test;
 import wrimsv2.wreslparser.elements.FileParser;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.RegUtils;
+import wrimsv2.wreslparser.elements.SimulationDataSet;
 import wrimsv2.wreslparser.elements.StudyConfig;
 import wrimsv2.wreslparser.elements.StudyParser;
 import wrimsv2.wreslparser.elements.Tools;
@@ -119,10 +122,10 @@ public class TestWreslWalker {
 		
 		LogUtils.setLogFile(logFilePath);
 		
-		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
-		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
+		//WreslTreeWalker walker = FileParser.parseFile(absFilePath);
 		
-		LogUtils.mainFileSummary(walker.mainDataSet, walker.modelDataMap);
+		StudyConfig sc=StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		LogUtils.mainFileSummary(sc);
 		
 		LogUtils.closeLogFile();
 			
@@ -148,7 +151,8 @@ public class TestWreslWalker {
 		
 		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
 		
-		LogUtils.mainFileSummary(walker.mainDataSet, walker.modelDataMap);
+		StudyConfig sc=StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		LogUtils.mainFileSummary(sc);
 		
 		
 		for (String key : walker.mainDataSet.model_list){
@@ -178,7 +182,7 @@ public class TestWreslWalker {
 	}		
 
 	@Test(groups = { "WRESL_elements" })
-	public void studyParser_subFiles() throws RecognitionException {
+	public void studyParser_subFiles() throws RecognitionException, IOException {
 		
 		inputFilePath =projectPath+"TestWreslWalker_studyParser_subFiles.wresl";
 		logFilePath = "TestWreslWalker_studyParser_studyParser_subFiles.log";
@@ -198,16 +202,18 @@ public class TestWreslWalker {
 		
 		StudyConfig sc=null;
 		
-		try {
-			sc=StudyParser.processMainFileIntoStudyConfig(absFilePath);
-		}
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+
+		sc=StudyParser.processMainFileIntoStudyConfig(absFilePath);
 		
 		LogUtils.mainFileSummary(sc);
+		
+		Map<String, SimulationDataSet> model_data_complete_map = new HashMap<String, SimulationDataSet>();
+		
+		model_data_complete_map =	StudyParser.parseSubFiles(sc);
+		
+
+		LogUtils.mainFileSummary(sc, model_data_complete_map);
+
 		
 		LogUtils.closeLogFile();
 			

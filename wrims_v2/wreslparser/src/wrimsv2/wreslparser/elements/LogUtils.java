@@ -100,12 +100,12 @@ public class LogUtils {
 		}
 	}		
 	
-	public static void mainFileSummary(SimulationDataSet mainDataSet, Map<String, SimulationDataSet> modelDataMap){
+	public static void mainFileSummary(StudyConfig studyConfig, Map<String, SimulationDataSet> modelDataMap){
 
-		seqList(mainDataSet.seqList, mainDataSet.seqMap);
-		varsList(mainDataSet.model_list, "models");
+		seqList(studyConfig.sequenceList, studyConfig.sequenceMap);
+
 		
-		for (String key: mainDataSet.model_list){
+		for (String key: studyConfig.model_list){
 			SimulationDataSet M = modelDataMap.get(key);
 			LogUtils.importantMsg("#####  Model: "+ key);
 			varsList(M.incFileList, M.incFileList_global, M.incFileList_local, "files");

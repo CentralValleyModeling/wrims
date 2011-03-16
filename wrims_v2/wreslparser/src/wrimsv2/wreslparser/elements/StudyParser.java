@@ -34,18 +34,17 @@ public class StudyParser {
 		sc.sequenceMap = walker.mainDataSet.seqMap;
 		
 		/// Sort sequence order
-		ArrayList<Integer> sequenceOrder = new ArrayList<Integer>();		
-		for ( Integer i : sc.sequenceMap.keySet()){ sequenceOrder.add(i); }
-		Collections.sort(sequenceOrder);
+		
+		for ( Integer i : sc.sequenceMap.keySet()){ sc.sequenceOrder.add(i); }
+		Collections.sort(sc.sequenceOrder);
 
 		
-		ArrayList<String> sequenceList = new ArrayList<String>();
-		for ( Integer i : sequenceOrder){ 
-			sequenceList.add(sc.sequenceMap.get(i).sequenceName);
+
+		for ( Integer i : sc.sequenceOrder){ 
+			sc.sequenceList.add(sc.sequenceMap.get(i).sequenceName);
+			sc.model_list.add(sc.sequenceMap.get(i).modelName);
 		}
 		
-		sc.sequenceList = sequenceList;
-		sc.sequenceOrder = sequenceOrder;
 
 		sc.absMainFilePath = absMainFilePath;
 		sc.modelDataMap = walker.modelDataMap;
@@ -95,10 +94,7 @@ public class StudyParser {
 			adhoc_include_previous_globals.addNonDuplicate(adhoc_cumulative_globals);
 			
 
-			
-//			Set<String> filesDataToCopy = new HashSet<String>();
-//			filesDataToCopy.addAll(adhoc.incFileList);
-//			filesDataToCopy.addAll(adhoc_cumulative_globals.incFileList);
+
 			
 			Set<String> existingSet = fileDataMap_wholeStudy.keySet();
 			
@@ -123,9 +119,9 @@ public class StudyParser {
 
 				} 
 				else { /// new file
-					//Map<String, SimulationDataSet> each = FileParser.processNestedFileExceptFor(f,existingSet);
-					//fileDataMap_newInModel.putAll(each);
-					//fileDataMap_wholeStudy.putAll(each);
+					Map<String, SimulationDataSet> each = FileParser.processNestedFileExceptFor(f,existingSet);
+					fileDataMap_newInModel.putAll(each);
+					fileDataMap_wholeStudy.putAll(each);
 				}				
 			}
 			

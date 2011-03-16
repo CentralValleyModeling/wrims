@@ -4,14 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PairMap {
-    public Map<String, Dataset> fileDataMap = new HashMap<String, Dataset>();
-    public Map<String, Dataset> modelAdhocMap = new HashMap<String, Dataset>();
+    public Map<String, SimulationDataSet> fileDataMap = new HashMap<String, SimulationDataSet>();
+    public Map<String, SimulationDataSet> modelAdhocMap = new HashMap<String, SimulationDataSet>();
 
     public PairMap() {
 
     }
     
-    public PairMap(Map<String, Dataset> fileMap, Map<String, Dataset> modelMap) {
+    public PairMap(Map<String, SimulationDataSet> fileMap, Map<String, SimulationDataSet> modelMap) {
         this.fileDataMap = fileMap;
         this.modelAdhocMap = modelMap;
     }

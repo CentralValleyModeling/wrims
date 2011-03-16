@@ -84,7 +84,7 @@ public class SimulationDataSet {
 
 	public SimulationDataSet(SimulationDataSet s) {
 		
-		this.overwrittenWith(s);
+		this.add(s);
 	}	
 
 	public SimulationDataSet overwrittenWith(SimulationDataSet s) {
