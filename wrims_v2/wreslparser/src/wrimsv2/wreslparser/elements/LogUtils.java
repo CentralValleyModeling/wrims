@@ -118,6 +118,7 @@ public class LogUtils {
 
 		System.out.println(msg);
 		_logFile.println(msg);
+		_logFile.flush();
 	}
 	
 	public static void importantMsg(ArrayList<String> msg){
@@ -147,33 +148,27 @@ public class LogUtils {
 
 		 System.out.println("# Error: "+msg);
 		 _logFile.println("# Error: "+msg);
+		 _logFile.flush();
 		
 	}	
 
 	public static void errMsg(String msg, ArrayList<String> list){
-
 		 
 		 for (String e: list){
-			 System.out.println("# Error: "+msg+e);		 
-		 }
-		 
-		 for (String e: list){
-			 _logFile.println("# Error: "+msg+e);			 
+			 errMsg(msg+e); 
 		 }
 		
 	}	
 	
 	public static void errMsg(String msg, String file){
 
-		 System.out.println("# Error: "+msg+" @ "+file);
-		 _logFile.println("# Error: "+msg+" @ "+file);
+		errMsg(msg+" @ "+file);
 		
 	}
 
 	public static void errMsg(String msg, String file1, String file2, Map<String, Set<String>> reverseMap) {
 
-		System.out.println("# Error: " + msg + " in files: ");
-		_logFile.println("# Error: " + msg + " in files: ");
+		errMsg(msg + " in files: ");
 
 		String sp = "  ";
 		System.out.println(sp + file1);
@@ -182,6 +177,8 @@ public class LogUtils {
 		System.out.println(sp + file2);
 		_logFile.println(sp + file2);
 		printTree(file2, reverseMap, sp);
+		
+		 _logFile.flush();
 
 	}
 
