@@ -3,6 +3,7 @@ package wrimsv2.wreslparser.elements;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class SimulationDataSet {
 	
@@ -94,5 +95,10 @@ public class SimulationDataSet {
 	public SimulationDataSet overwrite(SimulationDataSet s) {
 		return null;	
 		
-	}	
+	}
+	
+	public ArrayList getSortedList(Set s) {
+		return null;	
+		
+	}
 }
