@@ -96,13 +96,13 @@ public class Tools {
 		return dir.delete();
 	}
 
-	public static Map<String, Dataset> convertDatasetMapToLocal(Map<String, Dataset> s) {
+	public static Map<String, SimulationDataSet> convertSimulationDataSetMapToLocal(Map<String, SimulationDataSet> s) {
 		
-		Map<String, Dataset> out = new HashMap<String, Dataset>();
+		Map<String, SimulationDataSet> out = new HashMap<String, SimulationDataSet>();
 		
 		for (String key : s.keySet()){
 			
-			out.put(key, convertDatasetToLocal(s.get(key)));
+			out.put(key, convertSimulationDataSetToLocal(s.get(key)));
 			
 		}
 		
@@ -110,9 +110,9 @@ public class Tools {
 			
 	}
 	
-	public static Dataset convertDatasetToLocal(Dataset s) {
+	public static SimulationDataSet convertSimulationDataSetToLocal(SimulationDataSet s) {
 		
-		Dataset out = new Dataset();
+		SimulationDataSet out = new SimulationDataSet();
 
 		if (!s.wtList.isEmpty()) {
 			out.wtList.addAll(s.wtList);
@@ -199,13 +199,13 @@ public class Tools {
 	}
 	
 	/// type 1 map is the shallow included files, e.g., map( f1, [f7,f9])
-	public static Map<String, ArrayList<String>> getType1Map(Map<String, Dataset> dataMap) {
+	public static Map<String, ArrayList<String>> getType1Map(Map<String, SimulationDataSet> dataMap) {
 
 		Map<String, ArrayList<String>> out = new HashMap<String, ArrayList<String>>();
 		
 		for (String f : dataMap.keySet()){
 
-			Dataset data = dataMap.get(f);
+			SimulationDataSet data = dataMap.get(f);
 			
 			ArrayList<String> fileList = new ArrayList<String>();
 			fileList.addAll(data.incFileList);
@@ -260,7 +260,7 @@ public class Tools {
 		return out;
 	}
 
-	public static Map<String, String> getFileScopeMap(Map<String, Dataset> dataMap) {
+	public static Map<String, String> getFileScopeMap(Map<String, SimulationDataSet> dataMap) {
 
 		Map<String, String> out = new HashMap<String, String>();
 		//getScopeMap(adhoc.incFileList, adhoc.incFileList_local);
@@ -268,7 +268,7 @@ public class Tools {
 		
 		for (String f : dataMap.keySet()){
 
-			Dataset data = dataMap.get(f);
+			SimulationDataSet data = dataMap.get(f);
 			out.putAll(getScopeMap(data.incFileList, data.incFileList_local));
 
 		}
@@ -276,13 +276,13 @@ public class Tools {
 	}
 
 	/// type 1 map is the scope list for the shallow included files, e.g., map( f1, [f7 scope ,f9 scope])
-	public static Map<String, ArrayList<String>> getType1MapScope(Map<String, Dataset> dataMap) {
+	public static Map<String, ArrayList<String>> getType1MapScope(Map<String, SimulationDataSet> dataMap) {
 
 		Map<String, ArrayList<String>> out = new HashMap<String, ArrayList<String>>();
 		
 		for (String f : dataMap.keySet()){
 
-			Dataset data = dataMap.get(f);
+			SimulationDataSet data = dataMap.get(f);
 			
 			ArrayList<String> scopeList = new ArrayList<String>();
 			
@@ -297,7 +297,7 @@ public class Tools {
 		return out;
 	}
 	
-	public static Dataset correctDataScope(String f, Dataset ds, Map<String,String> fileScopeMap,
+	public static SimulationDataSet correctDataScope(String f, SimulationDataSet ds, Map<String,String> fileScopeMap,
 			Map<String,Set<String>> t1ReverseMap	) {
 
 		
@@ -325,8 +325,8 @@ public class Tools {
 	}
 	
 
-	public static Map<String,Dataset> getAllOffSprings(String nodeFile, Map<String,ArrayList<String>> t1Map, Map<String, Dataset> fileDataMap ) {
-		Map<String, Dataset> out = new HashMap<String, Dataset>();
+	public static Map<String,SimulationDataSet> getAllOffSprings(String nodeFile, Map<String,ArrayList<String>> t1Map, Map<String, SimulationDataSet> fileDataMap ) {
+		Map<String, SimulationDataSet> out = new HashMap<String, SimulationDataSet>();
 		
 		for (String child : t1Map.get(nodeFile)){
 			
@@ -339,10 +339,10 @@ public class Tools {
 		
 	}
 	
-	public static Map<String,Dataset> putDataFileMapFromWholeStudy(String file, Map<String,Dataset> fileDataMap) {
+	public static Map<String,SimulationDataSet> putDataFileMapFromWholeStudy(String file, Map<String,SimulationDataSet> fileDataMap) {
 		
 		
-		Map<String,Dataset> out = new HashMap<String, Dataset>();
+		Map<String,SimulationDataSet> out = new HashMap<String, SimulationDataSet>();
 		
 		out.put(file, fileDataMap.get(file));
 		

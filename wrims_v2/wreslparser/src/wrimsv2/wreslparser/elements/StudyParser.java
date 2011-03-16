@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.antlr.runtime.RecognitionException;
 
@@ -101,9 +102,9 @@ public class StudyParser {
 			
 			Set<String> existingSet = fileDataMap_wholeStudy.keySet();
 			
-			Map<String,Dataset> fileDataMap_newInModel = new HashMap<String, Dataset>() ;			
+			Map<String,SimulationDataSet> fileDataMap_newInModel = new HashMap<String, SimulationDataSet>() ;			
 			/// get all file data map for this study
-			Map<String,Dataset> fileDataMap_thisModel = new HashMap<String, Dataset>();
+			Map<String,SimulationDataSet> fileDataMap_thisModel = new HashMap<String, SimulationDataSet>();
 			
 			
 			
@@ -122,7 +123,7 @@ public class StudyParser {
 
 				} 
 				else { /// new file
-					//Map<String, Dataset> each = FileParser.processNestedFileExceptFor(f,existingSet);
+					//Map<String, SimulationDataSet> each = FileParser.processNestedFileExceptFor(f,existingSet);
 					//fileDataMap_newInModel.putAll(each);
 					//fileDataMap_wholeStudy.putAll(each);
 				}				
@@ -164,14 +165,14 @@ public class StudyParser {
 			LogUtils.normalMsg(".....Finished fileScopeMap & ReverseMap.");
 			
 			
-			Map<String,Dataset> fileDataMap_corrected = new HashMap<String, Dataset>();
+			Map<String,SimulationDataSet> fileDataMap_corrected = new HashMap<String, SimulationDataSet>();
 			fileDataMap_corrected.putAll(fileDataMap_thisModel);
 			
 			//System.out.println("keysets in corrected"+fileDataMap_corrected.keySet());
 			
 			for (String f : fileDataMap_thisModel.keySet()) {
 
-				Dataset ds = Tools.correctDataScope(f, fileDataMap_thisModel.get(f), fileScopeMap, t1ReverseMap);
+				SimulationDataSet ds = Tools.correctDataScope(f, fileDataMap_thisModel.get(f), fileScopeMap, t1ReverseMap);
 				
 				fileDataMap_corrected.put(f, ds);
 				
@@ -180,7 +181,7 @@ public class StudyParser {
 			
 			
 			/// prioritize data if redefined			
-			Dataset model_data_complete = new Dataset();
+			SimulationDataSet model_data_complete = new SimulationDataSet();
 			LogUtils.normalMsg("========== Start data prioritization =========== ");	
 			
 			/// previous globals have lowest priority
