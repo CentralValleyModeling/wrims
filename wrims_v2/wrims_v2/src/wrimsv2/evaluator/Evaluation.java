@@ -77,17 +77,17 @@ public class Evaluation {
 	}
 	
 	public static boolean range(String m1, String m2){
-		int mon1=TimeOperation.findWaterMonth(m1);
-		int mon2=TimeOperation.findWaterMonth(m2);
+		int mon1=TimeOperation.monthValue(m1);
+		int mon2=TimeOperation.monthValue(m2);
 		
 		if (mon1<=mon2){
-			if (ControlData.currWaterMonth>=mon1 && ControlData.currWaterMonth<=mon2){
+			if (ControlData.currMonth>=mon1 && ControlData.currMonth<=mon2){
 				return true;
 			}else{
 				return false;
 			}
 		}else{
-			if (ControlData.currWaterMonth>=mon1 || ControlData.currWaterMonth<=mon2){
+			if (ControlData.currMonth>=mon1 || ControlData.currMonth<=mon2){
 				return true;
 			}else{
 				return false;
@@ -530,7 +530,7 @@ public class Evaluation {
 	}
 	
 	public static EvalExpression daysIn(){
-		int days=TimeOperation.numberOfDays(ControlData.currWaterMonth, ControlData.currWaterYear);
+		int days=TimeOperation.numberOfDays(ControlData.currMonth, ControlData.currYear);
 		IntDouble id=new IntDouble(days, true);
 		EvalExpression ee=new EvalExpression();
 		ee.setValue(id);
@@ -539,8 +539,8 @@ public class Evaluation {
 	
 	public static EvalExpression tafcfs_term(String ident, EvalExpression ee){
 		if (ee==null){
-			ControlData.dataWaterMonth=ControlData.currWaterMonth;
-			ControlData.dataWaterYear=ControlData.dataWaterYear;
+			ControlData.dataMonth=ControlData.currMonth;
+			ControlData.dataYear=ControlData.dataYear;
 		}else{
 			if (!ee.isNumeric()){
 				Error.error_evaluation.add("The index of "+ident+" should not contain decision variable.");
@@ -560,7 +560,7 @@ public class Evaluation {
 	
 	public static double tafcfs(String ident){
 		double convert;
-		int days=TimeOperation.numberOfDays(ControlData.dataWaterMonth, ControlData.dataWaterYear);
+		int days=TimeOperation.numberOfDays(ControlData.dataMonth, ControlData.dataYear);
 		if (ident.equals("taf_cfs")){
 			return 504.1666667 / days;
 		}else if (ident.equals("cfs_taf")){
