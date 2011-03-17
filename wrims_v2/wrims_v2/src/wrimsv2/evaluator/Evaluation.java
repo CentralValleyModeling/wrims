@@ -111,10 +111,9 @@ public class Evaluation {
 		return ec;
 	}
 	
-	public static EvalExpression term_knownTS(String result){
+	public static EvalExpression term_knownTS(IntDouble result){
 		EvalExpression ee=new EvalExpression();
-		IntDouble intDouble= new IntDouble (convertStringToDouble(result), false);
-		ee.setValue(intDouble);
+		ee.setValue(result);
 		return ee;
 	}
 	
@@ -340,26 +339,36 @@ public class Evaluation {
 		return id;		
 	}
 	
-	public static String noArgFunction(String ident){
+	public static IntDouble noArgFunction(String ident){
 		//To Do call no ArgFunction
-		String result ="99999999999";
+		IntDouble result=new IntDouble(9999999999.9,false);
 		return result;
 	}
 	
-	public static String argFunction(String ident, ArrayList<EvalExpression> eeArray){
+	public static IntDouble argFunction(String ident, ArrayList<EvalExpression> eeArray){
+		IntDouble result;
 		if (eeArray.size()==1){
-			//To Do: check if it is dvar or alias or function
+			//To Do: check if it is dvar or alias or svar or function
+			//To Do: if it is a function
+			
+			if (TimeSeries.timeSeries.containsKey(ident)){
+				
+			}else{
+				
+			}
 		}
 		
 		if (ExternalFunctionTable.externalFunctionsHashtable ==null){
 			Error.addEvaluationError("WRIMS V2 Engine error. Dlls have not been load.");
-			return "0.0";
+			result=new IntDouble (0.0,false);
+			return result;
 		}
 		
 		ExternalFunction ef=ExternalFunctionTable.externalFunctionsHashtable.get(ident);
 		if (ef == null){
 			Error.addEvaluationError("WRIMS V2 Engine error. Dlls have not been load.");
-			return "0.0";
+			result=new IntDouble (0.0,false);
+			return result;
 		}
 		
 		Stack stack = new Stack();
@@ -367,7 +376,8 @@ public class Evaluation {
 			EvalExpression ee=eeArray.get(i);
 			if (!ee.isNumeric()){
 				Error.addEvaluationError("argument in the function of "+ident+" contains decision variable.");
-				return "0.0";
+				result=new IntDouble (0.0,false);
+				return result;
 			}
 			
 			IntDouble id=ee.getValue();
@@ -381,13 +391,18 @@ public class Evaluation {
 		}
 		
 		ef.execute(stack);
-		String result = ((Number)stack.pop()).toString();
+		if (ExternalFunctionTable.externalFunctionReturnType.get(ident).equals("double")){
+			result=new IntDouble((Number)stack.pop(), false);
+		}else{
+			result=new IntDouble((Number)stack.pop(), true);
+		}
 		return result;
 	}
 	
-	public static String pastCycleDV(String ident, String cycle){
+	public static IntDouble pastCycleDV(String ident, String cycle){
 		//To Do: add function for getting past cycle dv
-		return "9999999";
+		IntDouble result=new IntDouble(9999999999.9,false);
+		return result;
 	}
 	
 	public static EvalExpression max(EvalExpression ee1, EvalExpression ee2){

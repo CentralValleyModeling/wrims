@@ -186,7 +186,7 @@ tafcfs_term returns [EvalExpression ee]: TAFCFS ('(' expression ')')? {
     ee=Evaluation.tafcfs_term($TAFCFS.text, $expression.ee);
 };
 	
-knownTS returns [String result]  
+knownTS returns [IntDouble result]  
   : (f=function{result=$f.result;})|(p=pastCycleDV {result=$p.result;}) 
   ;
   
@@ -198,18 +198,18 @@ knownTS returns [String result]
 //  : IDENT '(' (s='-')? INTEGER ')'  
 //  ;
   
-pastCycleDV returns [String result]
+pastCycleDV returns [IntDouble result]
   : i1=IDENT '[' i2=IDENT ']'{result=Evaluation.pastCycleDV($i1.text,$i2.text);}
   ; 
 
-function returns [String result]
+function returns [IntDouble result]
   : (n=noArgFunction{result=$n.result;})|(a=argFunction{result=$a.result;})
   ;
 
-noArgFunction returns [String result]
+noArgFunction returns [IntDouble result]
   : IDENT '(' ')' {result=Evaluation.noArgFunction($IDENT.text);};
 
-argFunction returns [String result] @init{ArrayList<EvalExpression> eeArray = new ArrayList<EvalExpression>();}
+argFunction returns [IntDouble result] @init{ArrayList<EvalExpression> eeArray = new ArrayList<EvalExpression>();}
   : IDENT '(' (e1=expression {eeArray.add($e1.ee);}) (';' (e2=expression{eeArray.add($e2.ee);}))* ')'{result=Evaluation.argFunction($IDENT.text,eeArray);};
   	
 unary returns [EvalExpression ee] 
