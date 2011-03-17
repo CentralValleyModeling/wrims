@@ -77,17 +77,17 @@ public class Evaluation {
 	}
 	
 	public static boolean range(String m1, String m2){
-		int mon1=ControlData.findWaterMonth(m1);
-		int mon2=ControlData.findWaterMonth(m2);
+		int mon1=TimeOperation.findWaterMonth(m1);
+		int mon2=TimeOperation.findWaterMonth(m2);
 		
 		if (mon1<=mon2){
-			if (ControlData.currMonth>=mon1 && ControlData.currMonth<=mon2){
+			if (ControlData.currWaterMonth>=mon1 && ControlData.currWaterMonth<=mon2){
 				return true;
 			}else{
 				return false;
 			}
 		}else{
-			if (ControlData.currMonth>=mon1 || ControlData.currMonth<=mon2){
+			if (ControlData.currWaterMonth>=mon1 || ControlData.currWaterMonth<=mon2){
 				return true;
 			}else{
 				return false;
@@ -530,23 +530,46 @@ public class Evaluation {
 	}
 	
 	public static EvalExpression daysIn(){
-		int days;
-		if (ControlData.currMonth==1 || ControlData.currMonth==3 || ControlData.currMonth==4 || ControlData.currMonth==6 
-				||ControlData.currMonth==8 || ControlData.currMonth==10 ||ControlData.currMonth==11){
-			days=31;
-		}else if (ControlData.currMonth==2|| ControlData.currMonth==7 || ControlData.currMonth==9 || ControlData.currMonth==12){ 
-			days=30;
-		}else {
-			if (ControlData.isLeapYear(ControlData.currWateryear)){
-				days=29;
-			}else{
-				days=28;
-			}
-		}
+		int days=TimeOperation.numberOfDays(ControlData.currWaterMonth, ControlData.currWaterYear);
 		IntDouble id=new IntDouble(days, true);
 		EvalExpression ee=new EvalExpression();
 		ee.setValue(id);
 		return ee;
+	}
+	
+	public static EvalExpression tafcfs_term(String ident, EvalExpression ee){
+		if (ee==null){
+			ControlData.dataWaterMonth=ControlData.currWaterMonth;
+			ControlData.dataWaterYear=ControlData.dataWaterYear;
+		}else{
+			if (!ee.isNumeric()){
+				Error.error_evaluation.add("The index of "+ident+" should not contain decision variable.");
+			}
+			IntDouble id=ee.getValue();
+			if (!id.isInt()){
+				Error.error_evaluation.add("The index of "+ident+" should be integer.");
+			}
+			TimeOperation.findTime(id.getData().intValue());
+		}
+		double convert = tafcfs(ident);
+		IntDouble id1=new IntDouble(convert, false);
+		EvalExpression ee1=new EvalExpression();
+		ee1.setValue(id1);
+		return ee1;
+	}
+	
+	public static double tafcfs(String ident){
+		double convert;
+		int days=TimeOperation.numberOfDays(ControlData.dataWaterMonth, ControlData.dataWaterYear);
+		if (ident.equals("taf_cfs")){
+			return 504.1666667 / days;
+		}else if (ident.equals("cfs_taf")){
+			return days / 504.1666667;
+		}else if (ident.equals("af_cfs")){
+			return 504.1666667 / days / 1000.;
+		}else{
+			return days / 504.1666667 * 1000.;
+		}
 	}
 	
 	public static IntDouble expressionInput(EvalExpression ee){

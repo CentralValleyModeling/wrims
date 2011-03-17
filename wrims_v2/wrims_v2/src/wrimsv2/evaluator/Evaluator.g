@@ -175,14 +175,16 @@ term returns [EvalExpression ee]
 	|	(INTEGER {ee=Evaluation.term_INTEGER($INTEGER.text);}) 
 	| (FLOAT {ee=Evaluation.term_FLOAT($FLOAT.text);}) 
 	| func{ee=$func.ee;}
-	| tafcfs_term
+	| tafcfs_term{ee=$tafcfs_term.ee;}
 	| YEAR
 	| MONTH
 	| MONTH_CONST
 	| DAYSIN{ee=Evaluation.daysIn();})
 	;
 	
-tafcfs_term: TAFCFS ('(' expression ')')?;
+tafcfs_term returns [EvalExpression ee]: TAFCFS ('(' expression ')')? {
+    ee=Evaluation.tafcfs_term($TAFCFS.text, $expression.ee);
+};
 	
 knownTS returns [String result]  
   : (f=function{result=$f.result;})|(p=pastCycleDV {result=$p.result;}) 
@@ -305,7 +307,7 @@ MONTH_CONST: 'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'|'
 PASTMONTH: 'prevjan'|'prevfeb'|'prevmar'|'prevapr'|'prevmay'|'prevjun'|'prevjul'|'prevaug'|'prevsep'|'prevoct'|'prevnov'|'prevdec';
 RANGE: 'range';
 
-TAFCFS: 'taf_cfs'|'cfs_taf'|'cfs_af';
+TAFCFS: 'taf_cfs'|'cfs_taf'|'cfs_af'|'af_cfs';
 DAYSIN: 'daysin';
 
 SUM: 'sum';
