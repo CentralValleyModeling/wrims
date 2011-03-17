@@ -11,7 +11,7 @@ public class Error {
 	
 	public static void writeGrammerErrorFile(String fileName){
 		
-		String errorFileFullPath=MainFile.mainDirectory+fileName;
+		String errorFileFullPath=FilePaths.mainDirectory+fileName;
 		try{
 			FileWriter errorFile = new FileWriter(errorFileFullPath);
 			PrintWriter out = new PrintWriter(errorFile);
@@ -27,7 +27,7 @@ public class Error {
 	
 	public static void writeEvaluationErrorFile(String fileName){
 		
-		String errorFileFullPath=MainFile.mainDirectory+fileName;
+		String errorFileFullPath=FilePaths.mainDirectory+fileName;
 		try{
 			FileWriter errorFile = new FileWriter(errorFileFullPath);
 			PrintWriter out = new PrintWriter(errorFile);

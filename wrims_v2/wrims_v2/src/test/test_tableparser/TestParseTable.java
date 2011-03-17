@@ -24,7 +24,7 @@ import wrimsv2.commondata.ilpdata.Dvar;
 import wrimsv2.commondata.ilpdata.LRWeight;
 import wrimsv2.commondata.ilpdata.Svar;
 import wrimsv2.components.Error;
-import wrimsv2.components.MainFile;
+import wrimsv2.components.FilePaths;
 
 import org.testng.annotations.*;
 import org.testng.Assert;
@@ -752,7 +752,8 @@ public class TestParseTable {
 	public void testCalsim3() throws RecognitionException, IOException {
 
         String mainFile="..\\test-csv\\sequence1.csv";
-        new MainFile(mainFile);
+        FilePaths fp=new FilePaths();
+        fp.setMainFilePaths(mainFile);
 
 		byte[] buffer = new byte[(int) new File(mainFile).length()];
         BufferedInputStream f = null;
@@ -803,7 +804,8 @@ public class TestParseTable {
 	public void testCalLite() throws RecognitionException, IOException {
 
         String mainFile="..\\test-csv\\callite\\sequence.csv";
-        new MainFile(mainFile);
+        FilePaths fp=new FilePaths();
+        fp.setMainFilePaths(mainFile);
 
 		byte[] buffer = new byte[(int) new File(mainFile).length()];
         BufferedInputStream f = null;

@@ -312,7 +312,12 @@ public class Evaluation {
 		Map<String, IntDouble> multiplier2=ee2.getMultiplier();
 		for (String dvar : multiplier2.keySet()) {
 			if (multiplier1.containsKey(dvar)){
-				multiplier1.put(dvar, substractOperation(multiplier1.get(dvar),multiplier2.get(dvar)));
+				IntDouble id3=substractOperation(multiplier1.get(dvar),multiplier2.get(dvar));
+				if (id3.getData().doubleValue()==0.0){
+					multiplier1.remove(dvar);
+				}else{
+					multiplier1.put(dvar, id3);
+				}
 			}else{
 				IntDouble id0=new IntDouble(0,true);
 				multiplier1.put(dvar, substractOperation(id0,multiplier2.get(dvar)));

@@ -26,7 +26,7 @@ options {
   import wrimsv2.commondata.ilpdata.Svar;
   import wrimsv2.commondata.ilpdata.LRWeight;
   import wrimsv2.commondata.ilpdata.IlpData;
-  import wrimsv2.components.MainFile;
+  import wrimsv2.components.FilePaths;
   import wrimsv2.components.Error;
 }
 
@@ -205,7 +205,7 @@ options {
     if (fileName.contains(":")){
       return fileName;
     }else{
-      return MainFile.mainDirectory+fileName;
+      return FilePaths.mainDirectory+fileName;
     }
   }
   
@@ -364,7 +364,7 @@ content_global
         alias = new HashMap<String, Alias>();
       
         if (cycle.containsKey($i1.text)){
-          Error.error_grammer.add(MainFile.fullPath+": cycle"+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
+          Error.error_grammer.add(FilePaths.fullMainPath+": cycle"+" "+$i1.line+"@"+($i1.pos+1)+": "+ $i1.text+" redefined");
         }else{
           ArrayList<String> list = new ArrayList<String>();
           
@@ -395,7 +395,7 @@ content_global
             e.printStackTrace();
           }
           
-          fileAnchestry.add(MainFile.fullPath);   
+          fileAnchestry.add(FilePaths.fullMainPath);   
           currentFile=fileFullPath;
           ParseTableLexer lexer = new ParseTableLexer(stream);
           TokenStream tokenStream = new CommonTokenStream(lexer);
@@ -430,7 +430,7 @@ content_cycle
       initialCycle();
       
       if (cycle.containsKey($i1.text)){
-        Error.error_grammer.add(MainFile.fullPath+$i1.line+"@"+($i1.pos+1)+": cycle"+ $i1.text+" redefined");
+        Error.error_grammer.add(FilePaths.fullMainPath+$i1.line+"@"+($i1.pos+1)+": cycle"+ $i1.text+" redefined");
       }else{
         ArrayList<String> list = new ArrayList<String>();
         
@@ -462,7 +462,7 @@ content_cycle
            e.printStackTrace();
         }
         
-        fileAnchestry.add(MainFile.fullPath);
+        fileAnchestry.add(FilePaths.fullMainPath);
         currentFile=fileFullPath;     
         ParseTableLexer lexer = new ParseTableLexer(stream);
         TokenStream tokenStream = new CommonTokenStream(lexer);
