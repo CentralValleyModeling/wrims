@@ -106,15 +106,32 @@ public class TestEvaluator {
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
-	@Test
 	public void testDaysIn() throws RecognitionException, IOException {
 
         String mainFile="z:\\temp\\test";
         new MainFile(mainFile);
 		
-        ControlData.currMonth=5;
-        ControlData.currWateryear=1900;
+        ControlData.currWaterMonth=5;
+        ControlData.currWaterYear=2000;
 		ANTLRStringStream stream = new ANTLRStringStream("v: daysin"); 
+		EvaluatorLexer lexer = new EvaluatorLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+		evaluator.evaluator();
+		System.out.println(evaluator.evalValue.getData());
+		
+		Error.writeEvaluationErrorFile("log.txt");
+	}
+	
+	@Test
+	public void testTafcfs() throws RecognitionException, IOException {
+
+        String mainFile="z:\\temp\\test";
+        new MainFile(mainFile);
+		
+        ControlData.currWaterMonth=6;
+        ControlData.currWaterYear=2000;
+		ANTLRStringStream stream = new ANTLRStringStream("v: taf_cfs(-1)"); 
 		EvaluatorLexer lexer = new EvaluatorLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		EvaluatorParser evaluator = new EvaluatorParser(tokenStream);

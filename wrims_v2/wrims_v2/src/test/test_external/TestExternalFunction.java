@@ -10,14 +10,12 @@ import java.util.*;
 
 public class TestExternalFunction {
 
-	@Test
 	public void sample()
 	{
 		Assert.assertEquals(1,1);
         System.out.println("@Test sample: 1==1");
 	}
 
-	@Test
 	public void testAnnEC(){
 		
 		new LoadInterfaceDll("InterfaceToAnn.dll");
@@ -143,6 +141,43 @@ public class TestExternalFunction {
 	}
 	
 	@Test
+	public void testAnn_X2(){
+		
+		new LoadInterfaceDll("InterfaceToAnn.dll");
+		
+		ExternalFunctionTable eft=new ExternalFunctionTable();
+		ExternalFunction ef=eft.externalFunctionsHashtable.get("ann_x2");
+		Stack stack= new Stack();
+		stack.add(53.927);
+		stack.add(63.749);
+		stack.add(68.018);
+		stack.add(64.942);
+		stack.add(58.465);
+		stack.add(18401);
+		stack.add(15710);
+		stack.add(23054);
+		stack.add(34469);
+		stack.add(7047);
+		stack.add(28);
+		stack.add(31);
+		stack.add(30);
+		stack.add(31);
+		stack.add(30);
+		stack.add(1);
+		stack.add(9);
+		stack.add(2003);
+		stack.add(1);
+		stack.add(28);
+		
+		ef.execute(stack);
+		
+		if (stack.size()!=1){
+			System.out.println("stack size <>1");
+		}else{
+			System.out.println(((Number) stack.pop()).floatValue());
+		}
+	}
+	
 	public void testANNLineGen(){
 		new LoadInterfaceDll("InterfaceToAnn.dll");		
 		ExternalFunctionTable eft=new ExternalFunctionTable();
