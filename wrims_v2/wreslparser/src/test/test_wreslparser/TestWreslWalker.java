@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 
 
 import wrimsv2.wreslparser.elements.FileParser;
+import wrimsv2.wreslparser.elements.GlobalData;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.RegUtils;
 import wrimsv2.wreslparser.elements.SimulationDataSet;
@@ -124,8 +125,8 @@ public class TestWreslWalker {
 		
 		//WreslTreeWalker walker = FileParser.parseFile(absFilePath);
 		
-		StudyConfig sc=StudyParser.processMainFileIntoStudyConfig(absFilePath);
-		LogUtils.mainFileSummary(sc);
+		StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		LogUtils.mainFileSummary(GlobalData.studyConfig);
 		
 		LogUtils.closeLogFile();
 			
@@ -151,8 +152,8 @@ public class TestWreslWalker {
 		
 		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
 		
-		StudyConfig sc=StudyParser.processMainFileIntoStudyConfig(absFilePath);
-		LogUtils.mainFileSummary(sc);
+		StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		LogUtils.mainFileSummary(GlobalData.studyConfig);
 		
 		
 		for (String key : walker.thisFileDataSet.model_list){
@@ -200,19 +201,18 @@ public class TestWreslWalker {
 		
 		LogUtils.setLogFile(logFilePath);
 		
-		StudyConfig sc=null;
 		
 
-		sc=StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		StudyParser.processMainFileIntoStudyConfig(absFilePath);
 		
-		LogUtils.mainFileSummary(sc);
+		LogUtils.mainFileSummary(GlobalData.studyConfig);
 		
 		Map<String, SimulationDataSet> model_data_complete_map = new HashMap<String, SimulationDataSet>();
 		
-		model_data_complete_map =	StudyParser.parseSubFiles(sc);
+		model_data_complete_map =	StudyParser.parseSubFiles(GlobalData.studyConfig);
 		
 
-		LogUtils.mainFileSummary(sc, model_data_complete_map);
+		LogUtils.mainFileSummary(GlobalData.studyConfig, model_data_complete_map);
 
 		
 		LogUtils.closeLogFile();
@@ -251,7 +251,7 @@ public class TestWreslWalker {
 		StudyConfig sc=null;
 		
 		try {
-			sc=StudyParser.processMainFileIntoStudyConfig(absFilePath);
+			StudyParser.processMainFileIntoStudyConfig(absFilePath);
 		}
 		catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -259,7 +259,7 @@ public class TestWreslWalker {
 		}
 		
 		
-		LogUtils.mainFileSummary(sc);
+		LogUtils.mainFileSummary(GlobalData.studyConfig);
 		
 		
 		LogUtils.closeLogFile();

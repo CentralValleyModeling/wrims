@@ -24,7 +24,7 @@ public class StudyCheckerForWresl {
 		//System.out.println("main file: "+f);
 
 		LogUtils.setLogFile("studyChecker.log");
-		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(f);
+		StudyParser.processMainFileIntoStudyConfig(f);
 		//StudyParser.parseSubFiles(sc);
 		
 

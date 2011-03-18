@@ -1,0 +1,31 @@
+SEQUENCE CYCLE1 {
+    model   first
+	condition month==APR.or. month==MAY
+    order   1
+    }
+	
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }
+
+MODEL first { 
+
+ INCLUDE '\moreWreslFiles\Dvars.wresl'
+ define first_global_A {std kind 'FLOW-CHANNEL' units 'TAF'}  
+ define[local] first_local_B {upper unbounded kind 'FLOW-CHANNEL' units 'TAF'}   
+	
+	}	
+	
+MODEL second { 
+
+ define second_global_A {std kind 'FLOW-CHANNEL' units 'TAF'}
+ define[local] second_local_B {std kind 'FLOW-CHANNEL' units 'TAF'}  
+	 	
+     }	
+	
+
+	 
+
+
+ 

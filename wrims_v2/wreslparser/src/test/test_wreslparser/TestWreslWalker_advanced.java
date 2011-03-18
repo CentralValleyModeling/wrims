@@ -35,19 +35,17 @@ public class TestWreslWalker_advanced {
 		
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
-		
-		StudyConfig sc=null;	
 
-		sc=StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		StudyParser.processMainFileIntoStudyConfig(absFilePath);
 		
-		LogUtils.mainFileSummary(sc);
+		LogUtils.mainFileSummary(GlobalData.studyConfig);
 		
 		Map<String, SimulationDataSet> model_data_complete_map = new HashMap<String, SimulationDataSet>();
 		
-		model_data_complete_map =	StudyParser.parseSubFiles(sc);
+		model_data_complete_map =	StudyParser.parseSubFiles(GlobalData.studyConfig);
 		
 
-		LogUtils.mainFileSummary(sc, model_data_complete_map);
+		LogUtils.mainFileSummary(GlobalData.studyConfig, model_data_complete_map);
 
 		
 		LogUtils.closeLogFile();
@@ -80,7 +78,7 @@ public class TestWreslWalker_advanced {
 		
 		//StudyConfig sc=null;	
 
-		GlobalData.studyConfig=StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		StudyParser.processMainFileIntoStudyConfig(absFilePath);
 		
 		LogUtils.mainFileSummary(GlobalData.studyConfig);
 		
@@ -92,6 +90,49 @@ public class TestWreslWalker_advanced {
 		LogUtils.mainFileSummary(GlobalData.studyConfig, model_data_complete_map);
 
 		
+		LogUtils.closeLogFile();
+			
+		String fileText = Tools.readFileAsString(logFilePath);	
+		
+		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
+		Assert.assertEquals(totalErrs, 0);	
+
+		int str1 = RegUtils.timesOfMatches(fileText, 
+				"Model second Include total 5 Dvars:");
+		Assert.assertEquals(str1, 1);
+
+		int str2 = RegUtils.timesOfMatches(fileText, 
+				"Model second Include total 2 global Dvars:");
+		Assert.assertEquals(str2, 1);
+
+	}	
+	
+	@Test(groups = { "WRESL_elements" })
+	public void studyParser3() throws RecognitionException, IOException {
+		
+		inputFilePath =projectPath+"TestWreslWalker_advanced_studyParser3.wresl";
+		logFilePath = "TestWreslWalker_advanced_studyParser3.log";
+
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		GlobalData.initialize();
+
+		StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		
+		LogUtils.mainFileSummary(GlobalData.studyConfig);
+		
+		Map<String, SimulationDataSet> model_data_complete_map = new HashMap<String, SimulationDataSet>();
+		
+		StudyParser.parseModels(GlobalData.studyConfig);
+		
+		//model_data_complete_map =	StudyParser.parseSubFiles(GlobalData.studyConfig);
+		
+
+		LogUtils.mainFileSummary(GlobalData.studyConfig, GlobalData.model_dataset_map);
+
 		LogUtils.closeLogFile();
 			
 		String fileText = Tools.readFileAsString(logFilePath);	
