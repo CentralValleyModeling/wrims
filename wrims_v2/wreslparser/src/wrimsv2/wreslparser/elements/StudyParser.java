@@ -17,7 +17,15 @@ import wrimsv2.wreslparser.grammar.WreslTreeWalker;
 
 public class StudyParser {
 
+	public static Map<String,SimulationDataSet> fileDataMap_wholeStudy = new HashMap<String, SimulationDataSet>() ;	
+	public static Map<String,ArrayList<String>> t1Map_wholeStudy = new HashMap<String, ArrayList<String>>();	
+	public static Map<String,String> fileScopeMap_wholeStudy = new HashMap<String, String>();	
 	
+	/// this map will collect detailed info for models			
+	public static Map<String, SimulationDataSet> model_data_complete_map =  new HashMap<String, SimulationDataSet>();
+	
+	/// cumulative global vars and include files
+	public static SimulationDataSet adhoc_cumulative_globals = new SimulationDataSet();
 	
 	
 	public static StudyConfig processMainFileIntoStudyConfig(String relativeMainFilePath) throws RecognitionException, IOException {
@@ -31,7 +39,7 @@ public class StudyParser {
 		
 		StudyConfig sc = new StudyConfig();
 
-		sc.sequenceMap = walker.mainDataSet.seqMap;
+		sc.sequenceMap = walker.thisFileDataSet.seqMap;
 		
 		/// Sort sequence order
 		
@@ -42,7 +50,7 @@ public class StudyParser {
 
 		for ( Integer i : sc.sequenceOrder){ 
 			sc.sequenceList.add(sc.sequenceMap.get(i).sequenceName);
-			sc.model_list.add(sc.sequenceMap.get(i).modelName);
+			sc.modelList.add(sc.sequenceMap.get(i).modelName);
 		}
 		
 
@@ -68,15 +76,15 @@ public class StudyParser {
 	
 						
 		
-		Map<String,SimulationDataSet> fileDataMap_wholeStudy = new HashMap<String, SimulationDataSet>() ;
-		Map<String,ArrayList<String>> t1Map_wholeStudy = new HashMap<String, ArrayList<String>>();	
-		Map<String,String> fileScopeMap_wholeStudy = new HashMap<String, String>();	
+		//Map<String,SimulationDataSet> fileDataMap_wholeStudy = new HashMap<String, SimulationDataSet>() ;
+		//Map<String,ArrayList<String>> t1Map_wholeStudy = new HashMap<String, ArrayList<String>>();	
+		//Map<String,String> fileScopeMap_wholeStudy = new HashMap<String, String>();	
 
-		/// this map will collect detailed info for models			
-		Map<String, SimulationDataSet> model_data_complete_map =  new HashMap<String, SimulationDataSet>();
+		// /// this map will collect detailed info for models			
+		//Map<String, SimulationDataSet> model_data_complete_map =  new HashMap<String, SimulationDataSet>();
 		
-		/// cumulative global vars and include files
-		SimulationDataSet adhoc_cumulative_globals = new SimulationDataSet();
+		// /// cumulative global vars and include files
+		//SimulationDataSet adhoc_cumulative_globals = new SimulationDataSet();
 
 		/// for each model collected from the main files
 //###################################################################################################		
@@ -96,7 +104,7 @@ public class StudyParser {
 
 
 			
-			Set<String> existingSet = fileDataMap_wholeStudy.keySet();
+			//Set<String> existingSet = fileDataMap_wholeStudy.keySet();
 			
 			Map<String,SimulationDataSet> fileDataMap_newInModel = new HashMap<String, SimulationDataSet>() ;			
 			/// get all file data map for this study
@@ -108,7 +116,7 @@ public class StudyParser {
 			/// process include files in this model and those in previous globals
 			for (String f: adhoc_include_previous_globals.incFileList) {
 				
-				if (existingSet.contains(f))  {
+				if (fileDataMap_wholeStudy.keySet().contains(f))  {
 					/// skip processing
 					LogUtils.normalMsg("....Skip file: "+f);
 					fileDataMap_thisModel.put(f, fileDataMap_wholeStudy.get(f));
@@ -119,7 +127,7 @@ public class StudyParser {
 
 				} 
 				else { /// new file
-					Map<String, SimulationDataSet> each = FileParser.processNestedFileExceptFor(f,existingSet);
+					Map<String, SimulationDataSet> each = FileParser.processNestedFileExceptFor(f,fileDataMap_wholeStudy.keySet());
 					fileDataMap_newInModel.putAll(each);
 					fileDataMap_wholeStudy.putAll(each);
 				}				

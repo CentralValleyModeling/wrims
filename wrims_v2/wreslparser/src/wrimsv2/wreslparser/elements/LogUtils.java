@@ -105,7 +105,7 @@ public class LogUtils {
 		seqList(studyConfig.sequenceList, studyConfig.sequenceMap);
 
 		
-		for (String key: studyConfig.model_list){
+		for (String key: studyConfig.modelList){
 			SimulationDataSet M = modelDataMap.get(key);
 			LogUtils.importantMsg("#####  Model: "+ key);
 			varsList(M.incFileList, M.incFileList_global, M.incFileList_local, "files");

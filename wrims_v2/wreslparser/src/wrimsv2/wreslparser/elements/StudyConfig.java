@@ -9,7 +9,7 @@ public class StudyConfig {
 	public Map<Integer, Sequence> sequenceMap;
 	public ArrayList<Integer> sequenceOrder;
 	public ArrayList<String> sequenceList;
-	public ArrayList<String> model_list;
+	public ArrayList<String> modelList; // sorted model list based on sequence order
 	public Map<String, SimulationDataSet> modelDataMap;
 
     public StudyConfig() {
@@ -19,7 +19,7 @@ public class StudyConfig {
     	sequenceMap = new HashMap<Integer, Sequence>();
     	sequenceOrder = new ArrayList<Integer>();
     	sequenceList = new ArrayList<String>();
-    	model_list = new ArrayList<String>();
+    	modelList = new ArrayList<String>();
     	modelDataMap = new HashMap<String, SimulationDataSet>();
 
 

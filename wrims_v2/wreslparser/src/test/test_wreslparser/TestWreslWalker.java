@@ -84,7 +84,7 @@ public class TestWreslWalker {
 		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
 		
 		
-		LogUtils.fileSummary(walker.mainDataSet);
+		LogUtils.fileSummary(walker.thisFileDataSet);
 		
 		LogUtils.closeLogFile();
 			
@@ -155,13 +155,13 @@ public class TestWreslWalker {
 		LogUtils.mainFileSummary(sc);
 		
 		
-		for (String key : walker.mainDataSet.model_list){
+		for (String key : walker.thisFileDataSet.model_list){
 			
 			for (String subFile : walker.modelDataMap.get(key).incFileList){
 			
 				WreslTreeWalker sw = FileParser.parseFile(subFile);
 			
-				LogUtils.fileSummary(sw.mainDataSet);
+				LogUtils.fileSummary(sw.thisFileDataSet);
 				
 			}
 		}
@@ -314,7 +314,7 @@ public class TestWreslWalker {
 		
 		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
 		//LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
-		LogUtils.fileSummary(walker.mainDataSet);
+		LogUtils.fileSummary(walker.thisFileDataSet);
 		LogUtils.closeLogFile();
 			
 		String fileText = Tools.readFileAsString(logFilePath);	

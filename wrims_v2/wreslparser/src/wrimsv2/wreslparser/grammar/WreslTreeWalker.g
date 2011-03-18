@@ -25,7 +25,7 @@ options {
 
   
   	public StructTree F = new StructTree();	
-  	public SimulationDataSet mainDataSet = new SimulationDataSet();
+  	public SimulationDataSet thisFileDataSet = new SimulationDataSet();
   	private SimulationDataSet S;
   	  	
   	public Map<String, SimulationDataSet> modelDataMap = new HashMap<String, SimulationDataSet>();  	
@@ -40,7 +40,7 @@ options {
 
 evaluator
 @init { 
-		F.S = mainDataSet;
+		F.S = thisFileDataSet;
 		F.S.currentAbsolutePath = currentAbsolutePath;
 		F.S.currentAbsoluteParent = currentAbsoluteParent;
 	  }
@@ -74,10 +74,10 @@ sequence
 	;
 
 model
-@after{ F.S = mainDataSet; }
+@after{ F.S = thisFileDataSet; }
 	: ^(Model i=IDENT  			
 				{   
-					F.S = mainDataSet; F.modelList($i.text); 
+					F.S = thisFileDataSet; F.modelList($i.text); 
 					
 				    F.S = modelDataMap.get($i.text);
 				} 

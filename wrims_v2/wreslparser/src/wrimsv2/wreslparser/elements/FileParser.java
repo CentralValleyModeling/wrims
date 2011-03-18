@@ -100,7 +100,7 @@ public class FileParser {
 	
 	public static Map<String,SimulationDataSet> processNestedFile(String inputFilePath) throws RecognitionException, IOException {
 		
-		SimulationDataSet mainData = parseFile(inputFilePath).mainDataSet;
+		SimulationDataSet mainData = parseFile(inputFilePath).thisFileDataSet;
 
 		
 		Map<String,SimulationDataSet> out = new HashMap<String, SimulationDataSet>();
@@ -123,7 +123,7 @@ public class FileParser {
 		
 		//if(existingSet.contains(inputFilePath)) return null;
 		
-		SimulationDataSet mainData = parseFile(inputFilePath).mainDataSet;
+		SimulationDataSet mainData = parseFile(inputFilePath).thisFileDataSet;
 		
 		Map<String,SimulationDataSet> out = new HashMap<String, SimulationDataSet>();
 		out.put(inputFilePath, mainData);
@@ -149,7 +149,7 @@ public class FileParser {
 		WreslTreeWalker parser = parseFile(inputFilePath);
 		
 		SimulationDataSet out = new SimulationDataSet();
-		out = parser.mainDataSet;
+		out = parser.thisFileDataSet;
 		
 		if (scope == "Local"){
 			out =Tools.convertSimulationDataSetToLocal(out);
@@ -201,7 +201,7 @@ public class FileParser {
 		Map<String, SimulationDataSet> modelAdhocMap = new HashMap<String, SimulationDataSet>();
 		
 		SimulationDataSet dataset = new SimulationDataSet();
-		dataset = parser.mainDataSet;
+		dataset = parser.thisFileDataSet;
 		
 		if (scope == "Local"){
 			dataset =Tools.convertSimulationDataSetToLocal(dataset);
@@ -212,7 +212,7 @@ public class FileParser {
 		
 		fileDataMap.put(inputFilePath, dataset);
 		
-		if ( ! parser.mainDataSet.model_list.isEmpty()){
+		if ( ! parser.thisFileDataSet.model_list.isEmpty()){
 			
 			modelAdhocMap.putAll( parser.modelDataMap) ;
 		}	

@@ -25,23 +25,17 @@ public class TestWreslWalker_advanced {
 	public String logFilePath;		
 
 	@Test(groups = { "WRESL_elements" })
-	public void studyParser_subFiles() throws RecognitionException, IOException {
+	public void studyParser1() throws RecognitionException, IOException {
 		
-		inputFilePath =projectPath+"TestWreslWalker_studyParser_subFiles.wresl";
-		logFilePath = "TestWreslWalker_studyParser_studyParser_subFiles.log";
-		
-		File absFile=null;
-		String absFilePath=null;
-		try {
-			absFile = new File(inputFilePath).getAbsoluteFile();
-			absFilePath = absFile.getCanonicalPath().toLowerCase();
-		}
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		inputFilePath =projectPath+"TestWreslWalker_advanced_studyParser1.wresl";
+		logFilePath = "TestWreslWalker_advanced_studyParser1.log";
+
 		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+	
+		
 		
 		StudyConfig sc=null;
 		
