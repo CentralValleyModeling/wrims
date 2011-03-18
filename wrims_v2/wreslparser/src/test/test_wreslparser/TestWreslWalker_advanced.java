@@ -57,13 +57,16 @@ public class TestWreslWalker_advanced {
 		String fileText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
-		Assert.assertEquals(totalErrs, 2);	
+		Assert.assertEquals(totalErrs, 0);	
 
-		int err1 = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: C_Banks");
-		Assert.assertEquals(err1, 1);
-		
-		int err2 = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: C_SacFea");
-		Assert.assertEquals(err2, 1);
+		int str1 = RegUtils.timesOfMatches(fileText, 
+				"Model second Include total 3 Dvars:");
+		Assert.assertEquals(str1, 1);
+
+		int str2 = RegUtils.timesOfMatches(fileText, 
+				"Model second Include total 2 global Dvars:");
+		Assert.assertEquals(str2, 1);
+
 	}		
 	
 }

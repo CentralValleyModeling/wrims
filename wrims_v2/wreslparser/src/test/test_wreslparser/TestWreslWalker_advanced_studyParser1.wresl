@@ -5,23 +5,21 @@ SEQUENCE CYCLE1 {
     }
 	
 SEQUENCE CYCLE2 {
-    model   empty
-    order   52
+    model   second
+    order   2
     }
 
 MODEL first { 
 
- !INCLUDE[local] '..\test\moreWreslFiles\TestConvertWresl_alias.wresl'
- INCLUDE 'TestWreslWalker_dvarStd.wresl'
-  INCLUDE[local] '\moreWreslFiles\TestWreslWalker_dvarNonStd.wresl'
- define AA {std kind 'FLOW-CHANNEL' units 'TAF'}  
- define[local] BB {upper unbounded kind 'FLOW-CHANNEL' units 'TAF'}   
+ define first_global_A {std kind 'FLOW-CHANNEL' units 'TAF'}  
+ define[local] first_local_B {upper unbounded kind 'FLOW-CHANNEL' units 'TAF'}   
 	
 	}	
 	
-MODEL empty { 
+MODEL second { 
 
- define xyz {std kind 'FLOW-CHANNEL' units 'TAF'}  
+ define second_global_A {std kind 'FLOW-CHANNEL' units 'TAF'}
+ define[local] second_local_B {std kind 'FLOW-CHANNEL' units 'TAF'}  
 	 	
      }	
 	
