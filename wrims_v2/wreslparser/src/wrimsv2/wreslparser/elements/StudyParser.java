@@ -22,12 +22,17 @@ public class StudyParser {
 	public static Map<String,String> fileScopeMap_wholeStudy = new HashMap<String, String>();	
 	
 	/// this map will collect detailed info for models			
-	public static Map<String, SimulationDataSet> model_data_complete_map =  new HashMap<String, SimulationDataSet>();
+	public static Map<String, SimulationDataSet> model_dataset_map =  new HashMap<String, SimulationDataSet>();
+
+	/// map of model's global adhocs
+	public static Map<String, SimulationDataSet> model_global_adhoc_map = new HashMap<String, SimulationDataSet>();
+
 	
 	/// cumulative global vars and include files
 	public static SimulationDataSet cumulative_global_adhocs = new SimulationDataSet();
+
 	
-	
+		
 	public static StudyConfig processMainFileIntoStudyConfig(String relativeMainFilePath) throws RecognitionException, IOException {
 		
 		File absMainFile = new File(relativeMainFilePath).getAbsoluteFile();
@@ -46,17 +51,13 @@ public class StudyParser {
 		for ( Integer i : sc.sequenceMap.keySet()){ sc.sequenceOrder.add(i); }
 		Collections.sort(sc.sequenceOrder);
 
-		
-
 		for ( Integer i : sc.sequenceOrder){ 
 			sc.sequenceList.add(sc.sequenceMap.get(i).sequenceName);
 			sc.modelList.add(sc.sequenceMap.get(i).modelName);
-		}
-		
+		}		
 
 		sc.absMainFilePath = absMainFilePath;
 		sc.modelDataMap = walker.modelDataMap;
-
 				
 		for ( Integer i : sc.sequenceOrder){	
 			LogUtils.importantMsg("Sequence: "+i+" : "+sc.sequenceMap.get(i).sequenceName +"   Model: "+sc.sequenceMap.get(i).modelName);		
@@ -69,16 +70,13 @@ public class StudyParser {
 	
 	public static Map<String, SimulationDataSet> parseSubFiles(StudyConfig sc) throws RecognitionException, IOException {
  		
-		String absMainFilePath = sc.absMainFilePath;
-
-		Map<Integer, Sequence> seqMap = sc.sequenceMap;
 		
 
 		/// for each model collected from the main files
 //###################################################################################################		
 		for ( Integer iSequence : sc.sequenceOrder){	
 
-			String model = seqMap.get(iSequence).modelName;
+			String model = sc.sequenceMap.get(iSequence).modelName;
 		
 			LogUtils.importantMsg("Processing sequence: "+iSequence+", model: "+model);
 
@@ -106,7 +104,7 @@ public class StudyParser {
 				
 				if (fileDataMap_wholeStudy.keySet().contains(f))  {
 					/// skip processing
-					LogUtils.normalMsg("....Skip file: "+f);
+					LogUtils.importantMsg("....Skip file: "+f);
 					fileDataMap_thisModel.put(f, fileDataMap_wholeStudy.get(f));
 					fileDataMap_thisModel.putAll(Tools.getAllOffSprings(f, t1Map_wholeStudy, fileDataMap_wholeStudy));
 					
@@ -146,7 +144,7 @@ public class StudyParser {
 			fileScopeMap.putAll(Tools.getScopeMap(adhoc_include_previous_globals.incFileList, adhoc_include_previous_globals.incFileList_local));
 			
 			Map<String,ArrayList<String>> t1Map = new HashMap<String, ArrayList<String>>(t1Map_wholeStudy);
-			t1Map.put(absMainFilePath, adhoc_include_previous_globals.incFileList);
+			t1Map.put(sc.absMainFilePath, adhoc_include_previous_globals.incFileList);
 			
 			//Map<String,ArrayList<String>> t1ReverseMap = Tools.getReverseMap(t1Map);
 			Map<String,Set<String>> t1ReverseMap = Tools.getReverseMap(t1Map);
@@ -200,7 +198,7 @@ public class StudyParser {
 			
 			/// for vars in adhoc
 			LogUtils.normalMsg("========== Prioritize adhoc =========== ");
-			model_data_complete.prioritize(adhoc, absMainFilePath, t1ReverseMap);
+			model_data_complete.prioritize(adhoc, sc.absMainFilePath, t1ReverseMap);
 			LogUtils.normalMsg("========== Finish adhoc prioritization =========== ");
 			LogUtils.normalMsg("========== Finish all prioritization =========== ");
 			
@@ -217,7 +215,7 @@ public class StudyParser {
 			
 			//////////////////////////////////////////
 			
-			model_data_complete_map.put(model, model_data_complete);
+			model_dataset_map.put(model, model_data_complete);
 			
 			//System.out.println(" weight table keys: "+ model_data_complete.wtMap.keySet());
 			
@@ -233,7 +231,7 @@ public class StudyParser {
 		
 		
 		
-		return model_data_complete_map;
+		return model_dataset_map;
 	}
 	
 	
