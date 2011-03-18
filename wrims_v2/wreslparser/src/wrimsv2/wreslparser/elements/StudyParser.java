@@ -25,7 +25,7 @@ public class StudyParser {
 	public static Map<String, SimulationDataSet> model_data_complete_map =  new HashMap<String, SimulationDataSet>();
 	
 	/// cumulative global vars and include files
-	public static SimulationDataSet adhoc_cumulative_globals = new SimulationDataSet();
+	public static SimulationDataSet cumulative_global_adhocs = new SimulationDataSet();
 	
 	
 	public static StudyConfig processMainFileIntoStudyConfig(String relativeMainFilePath) throws RecognitionException, IOException {
@@ -73,18 +73,6 @@ public class StudyParser {
 
 		Map<Integer, Sequence> seqMap = sc.sequenceMap;
 		
-	
-						
-		
-		//Map<String,SimulationDataSet> fileDataMap_wholeStudy = new HashMap<String, SimulationDataSet>() ;
-		//Map<String,ArrayList<String>> t1Map_wholeStudy = new HashMap<String, ArrayList<String>>();	
-		//Map<String,String> fileScopeMap_wholeStudy = new HashMap<String, String>();	
-
-		// /// this map will collect detailed info for models			
-		//Map<String, SimulationDataSet> model_data_complete_map =  new HashMap<String, SimulationDataSet>();
-		
-		// /// cumulative global vars and include files
-		//SimulationDataSet adhoc_cumulative_globals = new SimulationDataSet();
 
 		/// for each model collected from the main files
 //###################################################################################################		
@@ -99,7 +87,7 @@ public class StudyParser {
 
 			
 			SimulationDataSet adhoc_include_previous_globals = new SimulationDataSet(adhoc);
-			adhoc_include_previous_globals.addNonDuplicate(adhoc_cumulative_globals);
+			adhoc_include_previous_globals.addNonDuplicate(cumulative_global_adhocs);
 			
 
 
@@ -189,7 +177,7 @@ public class StudyParser {
 			LogUtils.normalMsg("========== Start data prioritization =========== ");	
 			
 			/// previous globals have lowest priority
-			model_data_complete.prioritize(adhoc_cumulative_globals, " cumulative adhoc globals", t1ReverseMap);	
+			model_data_complete.prioritize(cumulative_global_adhocs, " cumulative adhoc globals", t1ReverseMap);	
 			LogUtils.normalMsg("========== Finish initial prioritization =========== ");
 			
 			/// for kid
@@ -217,7 +205,7 @@ public class StudyParser {
 			LogUtils.normalMsg("========== Finish all prioritization =========== ");
 			
 			/// update whole study
-			adhoc_cumulative_globals.add(adhoc.getGlobalVars());
+			cumulative_global_adhocs.add(adhoc.getGlobalVars());
 			
 
 
