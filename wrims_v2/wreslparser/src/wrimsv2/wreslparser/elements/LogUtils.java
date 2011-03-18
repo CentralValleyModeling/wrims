@@ -40,24 +40,24 @@ public class LogUtils {
 	
 
 	
-	public static void varsList(ArrayList<String> list_all, ArrayList<String> list_g, ArrayList<String> list_l, String description){
+	public static void varsList(String msg, ArrayList<String> list_all, ArrayList<String> list_g, ArrayList<String> list_l, String description){
 		
 		LogUtils.importantMsg("------------------------------");
-		LogUtils.importantMsg("Include total "+list_all.size()+" "+description+":");
+		LogUtils.importantMsg(msg+"Include total "+list_all.size()+" "+description+":");
 		LogUtils.importantMsg(list_all);
 		LogUtils.importantMsg("------------------------------");
-		LogUtils.importantMsg("Include total "+list_g.size()+" global "+description+":");
+		LogUtils.importantMsg(msg+"Include total "+list_g.size()+" global "+description+":");
 		LogUtils.importantMsg(list_g);
 		LogUtils.importantMsg("------------------------------");
-		LogUtils.importantMsg("Include total "+list_l.size()+" local "+description+":");
+		LogUtils.importantMsg(msg+"Include total "+list_l.size()+" local "+description+":");
 		LogUtils.importantMsg(list_l);
 		LogUtils.importantMsg("------------------------------");
 		
 	}
-	public static void varsList(ArrayList<String> list_all, String description){
+	public static void varsList(String msg, ArrayList<String> list_all, String description){
 		
 		LogUtils.importantMsg("------------------------------");
-		LogUtils.importantMsg("Include total "+list_all.size()+" "+description+":");
+		LogUtils.importantMsg(msg+"Include total "+list_all.size()+" "+description+":");
 		LogUtils.importantMsg(list_all);
 		LogUtils.importantMsg("------------------------------");
 	
@@ -78,9 +78,9 @@ public class LogUtils {
 
 		//seqList(S.seqList, S.seqMap);
 		//varsList(S.model_list, "models");
-		varsList(S.incFileList, S.incFileList_global, S.incFileList_local, "files");
-		varsList(S.dvList, S.dvList_global, S.dvList_local, "Dvars");
-		varsList(S.svList, S.svList_global, S.svList_local, "Svars");
+		varsList("", S.incFileList, S.incFileList_global, S.incFileList_local, "files");
+		varsList("", S.dvList, S.dvList_global, S.dvList_local, "Dvars");
+		varsList("", S.svList, S.svList_global, S.svList_local, "Svars");
 		
 	}	
 
@@ -94,9 +94,9 @@ public class LogUtils {
 			String modelName = studyConfig.sequenceMap.get(i).modelName;
 			SimulationDataSet M = studyConfig.modelDataMap.get(modelName);
 			LogUtils.importantMsg("#####  Model: "+ modelName);
-			varsList(M.incFileList, M.incFileList_global, M.incFileList_local, "files");
-			varsList(M.dvList, M.dvList_global, M.dvList_local, "Dvars");
-			varsList(M.svList, M.svList_global, M.svList_local, "Svars");
+			varsList("", M.incFileList, M.incFileList_global, M.incFileList_local, "files");
+			varsList("", M.dvList, M.dvList_global, M.dvList_local, "Dvars");
+			varsList("", M.svList, M.svList_global, M.svList_local, "Svars");
 		}
 	}		
 	
@@ -108,9 +108,11 @@ public class LogUtils {
 		for (String key: studyConfig.modelList){
 			SimulationDataSet M = modelDataMap.get(key);
 			LogUtils.importantMsg("#####  Model: "+ key);
-			varsList(M.incFileList, M.incFileList_global, M.incFileList_local, "files");
-			varsList(M.dvList, M.dvList_global, M.dvList_local, "Dvars");
-			varsList(M.svList, M.svList_global, M.svList_local, "Svars");
+			
+			String msg = "Model "+key+" ";
+			varsList(msg, M.incFileList, M.incFileList_global, M.incFileList_local, "files");
+			varsList(msg, M.dvList, M.dvList_global, M.dvList_local, "Dvars");
+			varsList(msg, M.svList, M.svList_global, M.svList_local, "Svars");
 		}
 	}	
 	
