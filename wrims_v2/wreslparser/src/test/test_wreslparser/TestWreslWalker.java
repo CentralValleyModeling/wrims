@@ -12,7 +12,6 @@ import org.testng.annotations.Test;
 
 
 import wrimsv2.wreslparser.elements.FileParser;
-import wrimsv2.wreslparser.elements.GlobalData;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.RegUtils;
 import wrimsv2.wreslparser.elements.SimulationDataSet;
@@ -125,8 +124,8 @@ public class TestWreslWalker {
 		
 		//WreslTreeWalker walker = FileParser.parseFile(absFilePath);
 		
-		StudyParser.processMainFileIntoStudyConfig(absFilePath);
-		LogUtils.mainFileSummary(GlobalData.studyConfig);
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		LogUtils.mainFileSummary(sc);
 		
 		LogUtils.closeLogFile();
 			
@@ -152,8 +151,8 @@ public class TestWreslWalker {
 		
 		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
 		
-		StudyParser.processMainFileIntoStudyConfig(absFilePath);
-		LogUtils.mainFileSummary(GlobalData.studyConfig);
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		LogUtils.mainFileSummary(sc);
 		
 		
 		for (String key : walker.thisFileDataSet.model_list){
@@ -200,19 +199,17 @@ public class TestWreslWalker {
 		}
 		
 		LogUtils.setLogFile(logFilePath);
-		
-		
 
-		StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
 		
-		LogUtils.mainFileSummary(GlobalData.studyConfig);
+		LogUtils.mainFileSummary(sc);
 		
 		Map<String, SimulationDataSet> model_data_complete_map = new HashMap<String, SimulationDataSet>();
 		
-		model_data_complete_map =	StudyParser.parseSubFiles(GlobalData.studyConfig);
+		model_data_complete_map = StudyParser.parseSubFiles(sc);
 		
 
-		LogUtils.mainFileSummary(GlobalData.studyConfig, model_data_complete_map);
+		LogUtils.mainFileSummary(sc, model_data_complete_map);
 
 		
 		LogUtils.closeLogFile();
@@ -230,7 +227,7 @@ public class TestWreslWalker {
 	}		
 	
 	@Test(groups = { "WRESL_elements" })
-	public void studyParser_sortSeq() throws RecognitionException {
+	public void studyParser_sortSeq() throws RecognitionException, IOException {
 		
 		inputFilePath =projectPath+"TestWreslWalker_studyParser_sortSeq.wresl";
 		logFilePath = "TestWreslWalker_studyParser_sortSeq.log";
@@ -248,19 +245,9 @@ public class TestWreslWalker {
 		
 		LogUtils.setLogFile(logFilePath);
 		
-		StudyConfig sc=null;
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
 		
-		try {
-			StudyParser.processMainFileIntoStudyConfig(absFilePath);
-		}
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		LogUtils.mainFileSummary(GlobalData.studyConfig);
-		
+		LogUtils.mainFileSummary(sc);
 		
 		LogUtils.closeLogFile();
 			

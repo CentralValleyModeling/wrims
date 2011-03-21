@@ -4,7 +4,6 @@ import java.io.IOException;
 import org.antlr.runtime.RecognitionException;
 
 import wrimsv2.wreslparser.elements.LogUtils;
-import wrimsv2.wreslparser.elements.StudyConfig;
 import wrimsv2.wreslparser.elements.StudyParser;
 
 

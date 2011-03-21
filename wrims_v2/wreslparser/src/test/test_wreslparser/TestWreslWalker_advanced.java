@@ -11,13 +11,13 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
-import wrimsv2.wreslparser.elements.GlobalData;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.RegUtils;
 import wrimsv2.wreslparser.elements.SimulationDataSet;
 import wrimsv2.wreslparser.elements.StudyConfig;
 import wrimsv2.wreslparser.elements.StudyParser;
 import wrimsv2.wreslparser.elements.Tools;
+import wrimsv2.wreslparser.elements.WreslData;
 
 public class TestWreslWalker_advanced {
 	
@@ -36,17 +36,17 @@ public class TestWreslWalker_advanced {
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
 
-		StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		StudyConfig sc = new StudyConfig();
 		
-		LogUtils.mainFileSummary(GlobalData.studyConfig);
+		sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		
+		LogUtils.mainFileSummary(sc);
 		
 		Map<String, SimulationDataSet> model_data_complete_map = new HashMap<String, SimulationDataSet>();
 		
-		model_data_complete_map =	StudyParser.parseSubFiles(GlobalData.studyConfig);
-		
+		model_data_complete_map =	StudyParser.parseSubFiles(sc);		
 
-		LogUtils.mainFileSummary(GlobalData.studyConfig, model_data_complete_map);
-
+		LogUtils.mainFileSummary(sc, model_data_complete_map);
 		
 		LogUtils.closeLogFile();
 			
@@ -75,20 +75,16 @@ public class TestWreslWalker_advanced {
 		
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
-		
-		//StudyConfig sc=null;	
 
-		StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
 		
-		LogUtils.mainFileSummary(GlobalData.studyConfig);
+		LogUtils.mainFileSummary(sc);
 		
 		Map<String, SimulationDataSet> model_data_complete_map = new HashMap<String, SimulationDataSet>();
 		
-		model_data_complete_map =	StudyParser.parseSubFiles(GlobalData.studyConfig);
-		
+		model_data_complete_map =	StudyParser.parseSubFiles(sc);		
 
-		LogUtils.mainFileSummary(GlobalData.studyConfig, model_data_complete_map);
-
+		LogUtils.mainFileSummary(sc, model_data_complete_map);
 		
 		LogUtils.closeLogFile();
 			
@@ -104,7 +100,6 @@ public class TestWreslWalker_advanced {
 		int str2 = RegUtils.timesOfMatches(fileText, 
 				"Model second Include total 2 global Dvars:");
 		Assert.assertEquals(str2, 1);
-
 	}	
 	
 	@Test(groups = { "WRESL_elements" })
@@ -118,20 +113,15 @@ public class TestWreslWalker_advanced {
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
 		
-		GlobalData.initialize();
+		WreslData wd = new WreslData();
 
-		StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		wd.studyConfig = StudyParser.processMainFileIntoStudyConfig(absFilePath);
 		
-		LogUtils.mainFileSummary(GlobalData.studyConfig);
+		LogUtils.mainFileSummary(wd.studyConfig);
 		
-		Map<String, SimulationDataSet> model_data_complete_map = new HashMap<String, SimulationDataSet>();
-		
-		StudyParser.parseModels(GlobalData.studyConfig);
-		
-		//model_data_complete_map =	StudyParser.parseSubFiles(GlobalData.studyConfig);
-		
+		wd.model_dataset_map=StudyParser.parseModels(wd);
 
-		LogUtils.mainFileSummary(GlobalData.studyConfig, GlobalData.model_dataset_map);
+		LogUtils.mainFileSummary(wd.studyConfig, wd.model_dataset_map);
 
 		LogUtils.closeLogFile();
 			
