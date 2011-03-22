@@ -66,9 +66,11 @@ externalFile
 text	:	LETTER (LETTER | DIGIT )*;
 	
 expressionCollection returns [EvalExpression ee]
-	:	((expression{
-	   ee=$expression.ee;
-	})|(tableSQL)|(timeseriesWithUnits)|(timeseries)|(sumExpression))
+	:	((expression{ee=$expression.ee;})
+	|(tableSQL)
+	|(timeseriesWithUnits)
+	|((timeseries){ee=$timeseries.ee;})
+	|(sumExpression))
 	;
 
 func returns[EvalExpression ee]: 
@@ -126,11 +128,11 @@ range_func returns [boolean result]
   : RANGE '(' MONTH ';' m1=MONTH_CONST ';' m2=MONTH_CONST ')' {Evaluation.range($m1.text, $m2.text);};
 
 timeseriesWithUnits 
-	: 'timeseries' 'kind' '=' i1=partC 'units' '=' i2=IDENT
+	: 'timeseries' 'kind' '=' partC 'units' '=' IDENT 
 	;
 
-timeseries 
-	: 'timeseries' 
+timeseries returns [EvalExpression ee]
+	: 'timeseries' {ee=Evaluation.timeseries();}
 	;
 	
 
