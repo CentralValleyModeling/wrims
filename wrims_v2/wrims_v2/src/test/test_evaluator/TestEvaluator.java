@@ -4,6 +4,8 @@ package test.test_evaluator;
 import java.io.File;
 import java.io.IOException;
 
+import junit.framework.TestCase;
+
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
@@ -14,12 +16,13 @@ import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.evaluator.EvalExpression;
 import wrimsv2.evaluator.EvaluatorLexer;
 import wrimsv2.evaluator.EvaluatorParser;
+import wrimsv2.evaluator.DssOperation;
 import wrimsv2.external.LoadDll;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 import wrimsv2.components.FilePaths;
 
-public class TestEvaluator {
+public class TestEvaluator extends TestCase{
 	
 	
 	public String inputFilePath;
@@ -41,6 +44,7 @@ public class TestEvaluator {
 		System.out.println(ee.getMultiplier().get("f").getData());
 	}
 	
+	@Test
 	public void testInternalFunctions() throws RecognitionException, IOException {
 		ANTLRStringStream stream = new ANTLRStringStream("g: max(4;-3)*a+min(3.1;100.2)*b+pow(3;abs(-2))*c+int(5.43)*d+log(2)*e<log10(10.0)");
 		EvaluatorLexer lexer = new EvaluatorLexer(stream);
@@ -79,6 +83,7 @@ public class TestEvaluator {
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
+	@Test
 	public void testExternalFunction() throws RecognitionException, IOException {
         new LoadDll();
 
@@ -96,6 +101,7 @@ public class TestEvaluator {
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
+	@Test
 	public void testInteger() throws RecognitionException, IOException {
 
         String mainFile="z:\\temp\\test";
@@ -141,6 +147,25 @@ public class TestEvaluator {
         ControlData.currMonth=4;
         ControlData.currYear=2000;
 		ANTLRStringStream stream = new ANTLRStringStream("v: taf_cfs(-1)"); 
+		EvaluatorLexer lexer = new EvaluatorLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+		evaluator.evaluator();
+		System.out.println(evaluator.evalValue.getData());
+		
+		Error.writeEvaluationErrorFile("log.txt");
+	}
+	
+	@Test
+	public void testTimeseries() throws RecognitionException, IOException {
+
+        String mainFile="z:\\temp\\test";
+        FilePaths fp=new FilePaths();
+        fp.setMainFilePaths(mainFile);
+		
+        new ControlData();
+        FilePaths.initDssFile="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09EINIT.DSS";
+		ANTLRStringStream stream = new ANTLRStringStream("v: cvp_sl(-1)"); 
 		EvaluatorLexer lexer = new EvaluatorLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		EvaluatorParser evaluator = new EvaluatorParser(tokenStream);

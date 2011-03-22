@@ -6,6 +6,7 @@ import org.antlr.runtime.TokenStream;
 
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
+import wrimsv2.components.FilePaths;
 import wrimsv2.external.ExternalFunction;
 import wrimsv2.external.ExternalFunctionTable;
 
@@ -13,6 +14,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.Date;
+
+import vista.db.dss.DSSUtil;
 
 public class Evaluation {
 
@@ -26,6 +30,10 @@ public class Evaluation {
 	
 	public static String convertDoubleToString(double value){
 		return Double.toString(value);
+	}
+	
+	public static String convertIntToString(int value){
+		return Integer.toString(value);
 	}
 	
 	public static String assignStatement(String ident, EvalExpression ee){
@@ -349,13 +357,8 @@ public class Evaluation {
 		IntDouble result;
 		if (eeArray.size()==1){
 			//To Do: check if it is dvar or alias or svar or function
-			//To Do: if it is a function
 			
-			if (TimeSeries.timeSeries.containsKey(ident)){
-				
-			}else{
-				
-			}
+			return timeSeries(ident, eeArray);
 		}
 		
 		if (ExternalFunctionTable.externalFunctionsHashtable ==null){
@@ -397,6 +400,127 @@ public class Evaluation {
 			result=new IntDouble((Number)stack.pop(), true);
 		}
 		return result;
+	}
+	
+	public static IntDouble timeSeries(String ident, ArrayList<EvalExpression> eeArray){
+		IntDouble result;
+		
+		EvalExpression ee=eeArray.get(0);
+		if (!ee.isNumeric()){
+			Error.addEvaluationError("The index of "+ident+" contains decision variable.");
+			result=new IntDouble (0.0,false);
+			return result;
+		}
+		IntDouble id=ee.getValue();
+		if (!id.isInt()){
+			Error.addEvaluationError("The index of "+ident+" should be integer.");
+			result=new IntDouble (0.0,false);
+			return result;
+		}
+
+		TimeOperation.findTime(id.getData().intValue());
+		
+		//To Do: check if ident is svar, dvar, or alias
+		
+		double value;
+		value=svarTimeSeries(ident);
+		value=dvarAliasTimeSeries(ident);
+		
+		return new IntDouble (value, false);
+	}
+	
+	public static double svarTimeSeries(String ident){
+		int index;
+		if (DataTimeSeries.svTS.containsKey(ident)){
+			DssDataSet dds=DataTimeSeries.svTS.get(ident);
+			index =timeSeriesIndex(dds);
+			ArrayList<Double> data=dds.getData();
+			if (index>=0 && index<data.size()){
+				double value=data.get(index);
+				if (dds.fromDssFile()){
+					if (value != 901.0){
+						return value;
+					}
+				}else{
+					return value;
+				}
+			}
+		}
+		if (DataTimeSeries.svInit.containsKey(ident)){
+			DssDataSet dds=DataTimeSeries.svInit.get(ident);
+			index =timeSeriesIndex(dds);
+			ArrayList<Double> data=dds.getData();
+			if (index>=0 && index<data.size()){
+				double value=data.get(index);
+				if (value !=901.0){
+					return value;
+				}
+			}
+		}
+		Error.addEvaluationError("The data requested for timeseries "+ident+" is outside of the time frame provided in dss file.");
+		return 1.0;
+	}
+	
+	public static double dvarAliasTimeSeries(String ident){
+		int index;
+		long dataTime;
+		long startTime;
+		long currTime;
+		if (ControlData.timeStep.equals("1MON")){
+			dataTime=new Date(ControlData.dataYear-1900, ControlData.dataMonth-1, 1).getTime();
+			startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, 1).getTime();
+			currTime=new Date(ControlData.currYear-1900, ControlData.currMonth-1, 1).getTime();
+		}else{
+			dataTime=new Date(ControlData.dataYear-1900, ControlData.dataMonth-1, ControlData.dataDay).getTime();
+			startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay).getTime();
+			currTime=new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay).getTime();
+		}
+		
+		if (dataTime>=currTime){
+			Error.addEvaluationError("The timeseries data for decision variable/alias "+ident+" is not available at or after current simulation period.");
+			return 1.0;
+		}else if(dataTime>=startTime && dataTime<currTime){
+			DssDataSet dds=DataTimeSeries.dvAliasTS.get(ident);
+			index=timeSeriesIndex(dds);
+			return dds.getData().get(index);
+		}
+		
+		if (!DataTimeSeries.dvAliasInit.containsKey(ident)){
+			if (!DssOperation.getInitTimeseries(ident, FilePaths.initDssFile)){
+				Error.addEvaluationError("Initial file doesn't have data for decision vairiable/alias " +ident);
+				return 1.0;
+			}
+		}
+		
+		DssDataSet dds=DataTimeSeries.dvAliasInit.get(ident);
+		index=timeSeriesIndex(dds);
+		ArrayList<Double> data=dds.getData();
+		if (index>=0 && index<data.size()){
+			double result=data.get(index);
+			if (result==-901.0){
+				Error.addEvaluationError("Initial file doesn't have data for decision vairiable/alias " +ident);
+				return 1.0;
+			}
+			return result;
+		}
+		
+		Error.addEvaluationError("The data requested for timeseries "+ident+" is outside of the time frame provided in dss file.");
+		return 1.0;
+	}
+	
+	public static int timeSeriesIndex(DssDataSet dds){
+		Date st=dds.getStartTime();
+		long sTime=st.getTime();
+		int sYear=st.getYear()+1900;
+		int sMonth=st.getMonth(); //Originally it should be getMonth()-1. However, dss data store at 24:00 Jan31, 1921 is considered to store at 0:00 Feb 1, 1921 
+		long dataTime=new Date(ControlData.dataYear-1900, ControlData.dataMonth-1, ControlData.dataDay).getTime();
+		int index;
+		if (dds.getTimeStep().equals("1MON")){
+			index=ControlData.dataYear*12+ControlData.dataMonth-(sYear*12+sMonth);
+		}else{
+			index=(int)((sTime-dataTime)/(1000*60*60*24));
+		}
+		return index;
 	}
 	
 	public static IntDouble pastCycleDV(String ident, String cycle){

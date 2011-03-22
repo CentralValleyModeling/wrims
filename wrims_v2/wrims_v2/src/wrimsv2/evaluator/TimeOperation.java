@@ -4,6 +4,22 @@ import wrimsv2.components.ControlData;
 import java.util.Date;
 
 public class TimeOperation {
+	public static String dssTimeFrame(int year1, int month1, int day1, int year2, int month2, int day2){
+		return dayName(day1)+monthName(month1)+year1+" 0100 - "+dayName(day2)+monthName(month2)+year2+" 0000";
+	}
+	
+	public static String dssTime(int year, int month, int day){
+		return dayName(day)+monthName(month)+year+" 0000"; 
+	}
+	
+	public static String dayName(int day){
+		if (day<10){
+			return "0"+Evaluation.convertIntToString(day);
+		}else{
+			return Evaluation.convertIntToString(day);
+		}
+	}
+	
 	public static int monthValue(String month){
 		if (month == "jan"){
 			return 1;
@@ -32,6 +48,34 @@ public class TimeOperation {
 		}
 	}
 	
+	public static String monthName(int month){
+		if (month == 1){
+			return "JAN";
+		}else if (month == 2){
+			return "FEB";
+		}else if (month == 3){
+			return "MAR";
+		}else if (month == 4){
+			return "APR";
+		}else if (month == 5){
+			return "MAY";
+		}else if (month == 6){
+			return "JUN";
+		}else if (month == 7){
+			return "JUL";
+		}else if (month == 8){
+			return "AUG";
+		}else if (month == 9){
+			return "SEP";
+		}else if (month == 10){
+			return "OCT";
+		}else if (month == 11){
+			return "NOV";
+		}else{
+			return "DEC";
+		}
+	}
+	
 	public static boolean isLeapYear(int year){
 		if (year % 4 == 0) {
 		    if (year % 100 != 0) {
@@ -47,7 +91,7 @@ public class TimeOperation {
 	}
 	
 	public static void findTime(int value){
-		if (ControlData.timeStep.equals("month")){
+		if (ControlData.timeStep.equals("1MON")){
 			int detYear=value/12;
 			int detMonth=value%12;
 			ControlData.dataMonth=ControlData.currMonth+detMonth;
@@ -66,11 +110,11 @@ public class TimeOperation {
 				ControlData.dataDay=days-numberOfDays(ControlData.currMonth, ControlData.currYear)+ControlData.currDay;
 			}
 		}else if(ControlData.timeStep.equals("day")){
-			Date currDate = new Date (ControlData.currYear, ControlData.currMonth-1, ControlData.currDay);
+			Date currDate = new Date (ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
 			long dataTime=currDate.getTime()+value;
 			Date dataDate = new Date (dataTime);
 			ControlData.dataMonth=dataDate.getMonth()+1;
-			ControlData.dataYear=dataDate.getYear();
+			ControlData.dataYear=dataDate.getYear()+1900;
 		}
 	}
 	
