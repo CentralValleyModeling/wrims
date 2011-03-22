@@ -42,13 +42,13 @@ public class Error {
 	}
 	
 	public static void addEvaluationError(String error){
-		if (ControlData.currFileTypeIndex == 0){
+		if (ControlData.currEvalTypeIndex == 0){
 			error_evaluation.add(ControlData.currEvalName+" in svar definition of Cycle "+ControlData.currCycleIndex+": "+error);
-		}else if (ControlData.currFileTypeIndex == 1){
+		}else if (ControlData.currEvalTypeIndex == 1){
 			error_evaluation.add(ControlData.currEvalName+" in dvar definition of Cycle "+ControlData.currCycleIndex+": "+error);
-		}else if (ControlData.currFileTypeIndex == 2){
+		}else if (ControlData.currEvalTypeIndex == 2){
 			error_evaluation.add(ControlData.currEvalName+" in constraint definition of Cycle "+ControlData.currCycleIndex+": "+error);
-		}else if (ControlData.currFileTypeIndex == 3){
+		}else if (ControlData.currEvalTypeIndex == 3){
 			error_evaluation.add(ControlData.currEvalName+" in alias definition of Cycle "+ControlData.currCycleIndex+": "+error);
 		}
 			

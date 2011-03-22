@@ -4,7 +4,7 @@ import wrimsv2.evaluator.TimeOperation;
 
 public class ControlData {
 	public static int currCycleIndex;
-	public static int currFileTypeIndex; //0=sv; 1=dv; 2=constraint; 3=alias
+	public static int currEvalTypeIndex; //0=sv; 1=dv; 2=constraint; 3=alias
 	public static String currEvalName;
 	public static int currDay=1;
 	public static int currMonth;

@@ -28,7 +28,6 @@ public class TestEvaluator extends TestCase{
 	public String inputFilePath;
 	public String logFilePath;
 	
-	@Test
 	public void testRelationStatement() throws RecognitionException, IOException {
 		ANTLRStringStream stream = new ANTLRStringStream("g: (2+a)*3.4-(5+6*7.0)*b+4*f<(2+b)*6+3*f");
 		EvaluatorLexer lexer = new EvaluatorLexer(stream);
@@ -44,7 +43,6 @@ public class TestEvaluator extends TestCase{
 		System.out.println(ee.getMultiplier().get("f").getData());
 	}
 	
-	@Test
 	public void testInternalFunctions() throws RecognitionException, IOException {
 		ANTLRStringStream stream = new ANTLRStringStream("g: max(4;-3)*a+min(3.1;100.2)*b+pow(3;abs(-2))*c+int(5.43)*d+log(2)*e<log10(10.0)");
 		EvaluatorLexer lexer = new EvaluatorLexer(stream);
@@ -62,7 +60,6 @@ public class TestEvaluator extends TestCase{
 		System.out.println(ee.getMultiplier().get("e").getData());
 	}
 	
-	@Test
 	public void testConditionStatement() throws RecognitionException, IOException {
         String mainFile="z:\\temp\\test";
         FilePaths fp=new FilePaths();
@@ -83,7 +80,6 @@ public class TestEvaluator extends TestCase{
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
-	@Test
 	public void testExternalFunction() throws RecognitionException, IOException {
         new LoadDll();
 
@@ -101,7 +97,6 @@ public class TestEvaluator extends TestCase{
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
-	@Test
 	public void testInteger() throws RecognitionException, IOException {
 
         String mainFile="z:\\temp\\test";
@@ -118,7 +113,6 @@ public class TestEvaluator extends TestCase{
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
-	@Test
 	public void testDaysIn() throws RecognitionException, IOException {
 
         String mainFile="z:\\temp\\test";
@@ -137,7 +131,6 @@ public class TestEvaluator extends TestCase{
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
-	@Test
 	public void testTafcfs() throws RecognitionException, IOException {
 
         String mainFile="z:\\temp\\test";
@@ -156,7 +149,6 @@ public class TestEvaluator extends TestCase{
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
-	@Test
 	public void testTimeseries() throws RecognitionException, IOException {
 
         String mainFile="z:\\temp\\test";
@@ -164,8 +156,29 @@ public class TestEvaluator extends TestCase{
         fp.setMainFilePaths(mainFile);
 		
         new ControlData();
-        FilePaths.initDssFile="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09EINIT.DSS";
+        FilePaths.fullInitDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09EINIT.DSS";
 		ANTLRStringStream stream = new ANTLRStringStream("v: cvp_sl(-1)"); 
+		EvaluatorLexer lexer = new EvaluatorLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+		evaluator.evaluator();
+		System.out.println(evaluator.evalValue.getData());
+		
+		Error.writeEvaluationErrorFile("log.txt");
+	}
+	
+	@Test
+	public void testSVTimeseries() throws RecognitionException, IOException {
+
+        String mainFile="z:\\temp\\test";
+        FilePaths fp=new FilePaths();
+        fp.setMainFilePaths(mainFile);
+		
+        new ControlData();
+        FilePaths.fullSvarDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09ESV.dss";
+        FilePaths.fullInitDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09EINIT.DSS";
+        ControlData.currEvalName="bf601";
+		ANTLRStringStream stream = new ANTLRStringStream("v: timeseries"); 
 		EvaluatorLexer lexer = new EvaluatorLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		EvaluatorParser evaluator = new EvaluatorParser(tokenStream);

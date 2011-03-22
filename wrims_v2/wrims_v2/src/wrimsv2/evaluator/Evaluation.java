@@ -17,6 +17,7 @@ import java.util.Stack;
 import java.util.Date;
 
 import vista.db.dss.DSSUtil;
+import vista.set.*;
 
 public class Evaluation {
 
@@ -358,7 +359,7 @@ public class Evaluation {
 		if (eeArray.size()==1){
 			//To Do: check if it is dvar or alias or svar or function
 			
-			return timeSeries(ident, eeArray);
+			return getTimeSeries(ident, eeArray);
 		}
 		
 		if (ExternalFunctionTable.externalFunctionsHashtable ==null){
@@ -402,7 +403,7 @@ public class Evaluation {
 		return result;
 	}
 	
-	public static IntDouble timeSeries(String ident, ArrayList<EvalExpression> eeArray){
+	public static IntDouble getTimeSeries(String ident, ArrayList<EvalExpression> eeArray){
 		IntDouble result;
 		
 		EvalExpression ee=eeArray.get(0);
@@ -486,7 +487,7 @@ public class Evaluation {
 		}
 		
 		if (!DataTimeSeries.dvAliasInit.containsKey(ident)){
-			if (!DssOperation.getInitTimeseries(ident, FilePaths.initDssFile)){
+			if (!DssOperation.getDVAliasInitTimeseries(ident, FilePaths.fullInitDssPath)){
 				Error.addEvaluationError("Initial file doesn't have data for decision vairiable/alias " +ident);
 				return 1.0;
 			}
@@ -521,6 +522,24 @@ public class Evaluation {
 			index=(int)((sTime-dataTime)/(1000*60*60*24));
 		}
 		return index;
+	}
+	
+	public static EvalExpression timeseries(){
+		String svName=ControlData.currEvalName;
+		//To Do: in the svar class, add flag to see if svTS has been loaded
+		if (!DataTimeSeries.svTS.containsKey(svName)){ //To Do check if svTS has been loaded. If no, load.
+			DssOperation.getSVTimeseries(svName, FilePaths.fullSvarDssPath);
+		}
+		//To Do: in the svar class, add flag to see if svInit has been loaded
+		if (!DataTimeSeries.svInit.containsKey(svName)){ //To Do check if svInit has been loaded. If no, load. 
+			DssOperation.getSVInitTimeseries(svName, FilePaths.fullInitDssPath);
+		}
+		TimeOperation.findTime(0);
+		double value=svarTimeSeries(svName);
+		IntDouble id=new IntDouble(value,false);
+		EvalExpression ee=new EvalExpression();
+		ee.setValue(id);
+		return ee;
 	}
 	
 	public static IntDouble pastCycleDV(String ident, String cycle){

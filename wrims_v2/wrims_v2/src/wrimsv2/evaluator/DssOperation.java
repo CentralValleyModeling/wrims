@@ -15,18 +15,93 @@ import java.util.Collections;
 import java.util.Arrays;
 
 public class DssOperation {
-	public static DataSet getSVTimeseries(String name, String file){
-		//To Do: find part C 
-		String path="/"+ControlData.partA+"/"+name+"/"+".*"+"/"+ControlData.simulationTimeFrame+"/"+ControlData.partE+"/"+ControlData.svDvPartF+"/";
-		try {
-			DataSet ds=DSSUtil.readData(file, path, true);
-			return ds;
-		}catch (IllegalArgumentException e){
-			e.printStackTrace();
-			throw new IllegalArgumentException(e);
+	public static boolean getSVTimeseries(String name, String file){
+		//To Do: find svar part C 
+		DataSet ds=getDataFor(file,ControlData.partA,name,"","",ControlData.partE, ControlData.svDvPartF);
+		
+		if (ds==null){
+			return false;
 		}
+		ds.getAttributes().getYUnits();
+		//To Do: test if units are right
+		if (!(ds instanceof RegularTimeSeries)){
+			return false;
+		}
+		RegularTimeSeries rts=(RegularTimeSeries)ds;
+		DssDataSet dds= new DssDataSet();
+		ArrayList<Double> dataArray= new ArrayList<Double>();
+		for (double dataEntry :  rts.getYArray()){
+			dataArray.add(dataEntry);
+		}
+        dds.setData(dataArray);
+        dds.setTimeStep(rts.getTimeInterval().toString());
+        dds.setStartTime(rts.getStartTime().getDate());
+        DataTimeSeries.svTS.put(name, dds);
+		return true;
 	}
 	
+	public static boolean getSVInitTimeseries(String name, String file){
+		//To Do: find svar part C 
+		DataSet ds=getDataFor(file,ControlData.partA,name,"","",ControlData.partE, ControlData.svDvPartF);
+		
+		if (ds==null){
+			return false;
+		}
+		ds.getAttributes().getYUnits();
+		//To Do: test if units are right
+		if (!(ds instanceof RegularTimeSeries)){
+			return false;
+		}
+		RegularTimeSeries rts=(RegularTimeSeries)ds;
+		DssDataSet dds= new DssDataSet();
+		ArrayList<Double> dataArray= new ArrayList<Double>();
+		for (double dataEntry :  rts.getYArray()){
+			dataArray.add(dataEntry);
+		}
+        dds.setData(dataArray);
+        dds.setTimeStep(rts.getTimeInterval().toString());
+        dds.setStartTime(rts.getStartTime().getDate());
+        DataTimeSeries.svInit.put(name, dds);
+		return true;
+	}
+	
+	public static boolean getDVAliasInitTimeseries(String name, String file){
+		//To Do: find dv or alias part C		
+		
+		DataSet ds=getDataFor(file,ControlData.partA,name,"","",ControlData.partE, ControlData.svDvPartF);
+		if (ds==null){
+			Error.error_evaluation.add("Intial data of "+name+" in dss file doesn't exist." );
+			return false;
+		}
+		ds.getAttributes().getYUnits();
+		//To Do: test if units are right
+		if (!(ds instanceof RegularTimeSeries)){
+			Error.error_evaluation.add("Intial data of "+name+" in dss file is not a regular timeseries." );
+			return false;
+		}
+		RegularTimeSeries rts=(RegularTimeSeries)ds;
+		DssDataSet dds= new DssDataSet();
+		ArrayList<Double> dataArray= new ArrayList<Double>();
+		for (double dataEntry :  rts.getYArray()){
+			dataArray.add(dataEntry);
+		}
+        dds.setData(dataArray);
+        dds.setTimeStep(rts.getTimeInterval().toString());
+        dds.setStartTime(rts.getStartTime().getDate());
+        DataTimeSeries.dvAliasInit.put(name, dds);
+		return true;
+	}
+	
+    public static DataSet getDataFor(String file, String apart, String bpart, String cpart, String dpart, String epart, String fpart){
+        Group group = DSSUtil.createGroup("local", file);
+        DataReference[] refs = group.find(new String[]{apart, bpart, cpart, dpart, epart, fpart});
+        if (refs.length==0){
+              return null;
+        } else {
+              return refs[0].getData();
+        }
+    }
+
 	public static void getAllInitTimeseries(String file){
 
 		DSSDataReader reader = new DSSDataReader();
@@ -69,42 +144,4 @@ public class DssOperation {
 			}
 		}
 	}
-	
-	public static boolean getInitTimeseries(String name, String file){
-		//To Do: find dv or alias part C		
-		
-		DataSet ds=getDataFor(file,ControlData.partA,name,"","",ControlData.partE, ControlData.svDvPartF);
-		if (ds==null){
-			Error.error_evaluation.add("Intial data of "+name+" in dss file doesn't exist." );
-			return false;
-		}
-		ds.getAttributes().getYUnits();
-		//To Do: test if units are right
-		if (!(ds instanceof RegularTimeSeries)){
-			Error.error_evaluation.add("Intial data of "+name+" in dss file is not a regular timeseries." );
-			return false;
-		}
-		RegularTimeSeries rts=(RegularTimeSeries)ds;
-		DssDataSet dds= new DssDataSet();
-		ArrayList<Double> dataArray= new ArrayList<Double>();
-		for (double dataEntry :  rts.getYArray()){
-			dataArray.add(dataEntry);
-		}
-        dds.setData(dataArray);
-        dds.setTimeStep(rts.getTimeInterval().toString());
-        dds.setStartTime(rts.getStartTime().getDate());
-        DataTimeSeries.dvAliasInit.put(name, dds);
-		return true;
-	}
-	
-    public static DataSet getDataFor(String file, String apart, String bpart, String cpart, String dpart, String epart, String fpart){
-        Group group = DSSUtil.createGroup("local", file);
-        DataReference[] refs = group.find(new String[]{apart, bpart, cpart, dpart, epart, fpart});
-        if (refs.length==0){
-              return null;
-        } else {
-              return refs[0].getData();
-        }
-  }
-
 }
