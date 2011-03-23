@@ -139,7 +139,7 @@ timeseries returns [EvalExpression ee]
 	
 partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
-usedKeywords: I|YEAR|MONTH|MONTH_CONST|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|ABS|LOG|LOG10|POW|MOD|WHERE|CONSTRAIN|ALWAYS
+usedKeywords: YEAR|MONTH|MONTH_CONST|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|ABS|LOG|LOG10|POW|MOD|WHERE|CONSTRAIN|ALWAYS
 |NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
 |CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE;
 
@@ -159,15 +159,20 @@ upperbound:	IDENT|allnumber|(allnumber '*' TAFCFS);
 
 lowerbound:	IDENT|allnumber|(allnumber '*' TAFCFS);
 
+//sumExpression 
+//  : SUM '(' I '=' e1=expression_sum ';' e2=expression_sum (';' (s='-')? INTEGER )? ')' e3=expression
+//  ;
+//term_sum: (MONTH|MONTH_CONST|PASTMONTH|I|INTEGER|'(' expression_sum ')');
+
+//unary_sum : ('-')? term_sum ;
+//add_sum  :  unary_sum(('+' | '-') unary_sum)* ;
+//expression_sum: add_sum ;
+
+//sumExpression was redesign. If not work, switch back to the original design above
+
 sumExpression 
-  : SUM '(' I '=' e1=expression_sum ';' e2=expression_sum (';' (s='-')? INTEGER )? ')' e3=expression
+  : SUM '(' IDENT{Evaluation.sumExpression_IDENT($IDENT.text);} '=' e1=expression ';' e2=expression (';' (s='-')? INTEGER )? ')' e3=expression{String text=$e3.text; System.out.println(text);}
   ;
-
-term_sum: (MONTH|MONTH_CONST|PASTMONTH|I|INTEGER|'(' expression_sum ')');
-
-unary_sum : ('-')? term_sum ;
-add_sum  :  unary_sum(('+' | '-') unary_sum)* ;
-expression_sum: add_sum ;
 
 term returns [EvalExpression ee]
 	:	((knownTS{ee=Evaluation.term_knownTS($knownTS.result);})
@@ -244,7 +249,7 @@ add  returns [EvalExpression ee]
 	;
 
 expression returns [EvalExpression ee]  
-	:	i=add {ee=$add.ee;} 
+	:	i=add {$ee=$add.ee;} 
 	;
 
 relation
@@ -302,7 +307,7 @@ FLOAT : INTEGER? '.' INTEGER
 	  | INTEGER '.' 
 	  ;
 
-I: 'i';
+//I: 'i';
 YEAR: 'wateryear';
 MONTH: 'month';
 MONTH_CONST: 'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'|'dec';
