@@ -70,7 +70,7 @@ expressionCollection returns [EvalExpression ee]
 	|(tableSQL)
 	|(timeseriesWithUnits)
 	|((timeseries){ee=$timeseries.ee;})
-	|(sumExpression))
+	|(sumExpression{ee=$sumExpression.ee;}))
 	;
 
 func returns[EvalExpression ee]: 
@@ -170,8 +170,8 @@ lowerbound:	IDENT|allnumber|(allnumber '*' TAFCFS);
 
 //sumExpression was redesign. If not work, switch back to the original design above
 
-sumExpression 
-  : SUM '(' IDENT{Evaluation.sumExpression_IDENT($IDENT.text);} '=' e1=expression ';' e2=expression (';' (s='-')? INTEGER )? ')' e3=expression{String text=$e3.text; System.out.println(text);}
+sumExpression returns [EvalExpression ee] @init{String s="";}
+  : SUM '(' IDENT{Evaluation.sumExpression_IDENT($IDENT.text);} '=' e1=expression ';' e2=expression (';' (('-'{s=s+"-";})? INTEGER {s=s+$INTEGER.text;}))? ')' e3=expression{ee=Evaluation.sumExpression($e1.ee,$e2.ee,s, $e3.text);}
   ;
 
 term returns [EvalExpression ee]

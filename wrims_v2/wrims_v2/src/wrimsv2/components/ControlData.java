@@ -1,6 +1,8 @@
 package wrimsv2.components;
 
 import wrimsv2.evaluator.TimeOperation;
+import wrimsv2.evaluator.LoopIndex;
+import java.util.Stack;
 
 public class ControlData {
 	public static int currCycleIndex;
@@ -24,6 +26,7 @@ public class ControlData {
 	public static String partA;
 	public static String svDvPartF;
 	public static String initPartF;
+	public static Stack<LoopIndex> sumIndex= new Stack <LoopIndex>();
 	
 	public ControlData(){
 		timeStep ="1MON"; //TO DO: allow input;

@@ -10,6 +10,7 @@ import wrimsv2.components.FilePaths;
 import wrimsv2.external.ExternalFunction;
 import wrimsv2.external.ExternalFunctionTable;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class Evaluation {
 		return Double.valueOf(text);
 	}
 	
-	public static double convertStringToInt(String text){
+	public static int convertStringToInt(String text){
 		return Integer.valueOf(text);
 	}
 	
@@ -405,13 +406,32 @@ public class Evaluation {
 	
 	public static IntDouble getTimeSeries(String ident, ArrayList<EvalExpression> eeArray){
 		IntDouble result;
+		boolean isSumIndex=false;
+		int indexValue=0;
 		
-		EvalExpression ee=eeArray.get(0);
+		EvalExpression ee=eeArray.get(0);	
+		
 		if (!ee.isNumeric()){
-			Error.addEvaluationError("The index of "+ident+" contains decision variable.");
-			result=new IntDouble (0.0,false);
-			return result;
+			HashMap<String, IntDouble> multiplier=ee.getMultiplier();
+			if (multiplier.size()==1){
+				LoopIndex li=ControlData.sumIndex.pop();
+				String indexName=li.getName();
+				indexValue=li.getValue();
+				ControlData.sumIndex.push(li);
+				if (!(multiplier.containsKey(indexName) && multiplier.get(indexName).getData().doubleValue()==1.0 && ee.getValue().getData().doubleValue()==0.0)){
+					Error.addEvaluationError("The index of "+ident+" contains decision variable.");
+					result=new IntDouble (0.0,false);
+					return result;
+				}else{
+					isSumIndex=true;
+				}
+			}else{
+				Error.addEvaluationError("The index of "+ident+" contains decision variable.");
+				result=new IntDouble (0.0,false);
+				return result;
+			}
 		}
+		
 		IntDouble id=ee.getValue();
 		if (!id.isInt()){
 			Error.addEvaluationError("The index of "+ident+" should be integer.");
@@ -419,13 +439,17 @@ public class Evaluation {
 			return result;
 		}
 
-		TimeOperation.findTime(id.getData().intValue());
+		if (isSumIndex){
+			TimeOperation.findTime(indexValue);
+		}else{
+			TimeOperation.findTime(id.getData().intValue());
+		}
 		
-		//To Do: check if ident is svar, dvar, or alias
+		//To Do: check if ident is svar, dvar, or alias, and treat separately
 		
 		double value;
-		value=svarTimeSeries(ident);
 		value=dvarAliasTimeSeries(ident);
+		value=svarTimeSeries(ident);
 		
 		return new IntDouble (value, false);
 	}
@@ -733,6 +757,95 @@ public class Evaluation {
 		}else{
 			return days / 504.1666667 * 1000.;
 		}
+	}
+	
+	public static void sumExpression_IDENT(String ident){
+		//To Do: check if svar, dvar, alias contains ident
+		LoopIndex li=new LoopIndex(ident, 0);
+		ControlData.sumIndex.push(li);
+	}
+	
+	public static EvalExpression sumExpression(EvalExpression ee1, EvalExpression ee2, String s, String expression){
+		int step=1;
+		if (!s.equals("")){
+			step=convertStringToInt(s);
+		}
+		if (!ee1.isNumeric()){
+			Error.addEvaluationError("the starting index can't contains decision variable");
+			EvalExpression ee=new EvalExpression();
+			IntDouble id=new IntDouble(1.0, false);
+			ee.setValue(id);
+			return ee;
+		}
+		if (!ee2.isNumeric()){
+			Error.addEvaluationError("the ending index can't contains decision variable");
+			EvalExpression ee=new EvalExpression();
+			IntDouble id=new IntDouble(1.0, false);
+			ee.setValue(id);
+			return ee;
+		}
+		IntDouble id1=ee1.getValue();
+		IntDouble id2=ee2.getValue();
+		if (!id1.isInt()){
+			Error.addEvaluationError("the starting index should be integer");
+			EvalExpression ee=new EvalExpression();
+			IntDouble id=new IntDouble(1.0, false);
+			ee.setValue(id);
+			return ee;
+		}
+		if (!id2.isInt()){
+			Error.addEvaluationError("the ending index should be integer");
+			EvalExpression ee=new EvalExpression();
+			IntDouble id=new IntDouble(1.0, false);
+			ee.setValue(id);
+			return ee;
+		}
+		int start=id1.getData().intValue();
+		int end=id2.getData().intValue();
+		IntDouble id=new IntDouble(0, true);
+		
+		if (step>=0){
+			for (int i=start; i<=end; i=step++){
+				LoopIndex li=ControlData.sumIndex.pop();
+				li.setValue(i);
+				ControlData.sumIndex.push(li);
+				ANTLRStringStream stream = new ANTLRStringStream("v: "+expression); 
+				EvaluatorLexer lexer = new EvaluatorLexer(stream);
+				TokenStream tokenStream = new CommonTokenStream(lexer);
+				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+				try{
+					evaluator.evaluator();
+				}catch (RecognitionException e){
+					Error.addEvaluationError(e.toString());
+				}
+			
+				IntDouble id0=evaluator.evalValue;
+				id=addOperation(id, id0);
+			}
+		}else{
+			for (int i=start; i>=end; i=step++){
+				LoopIndex li=ControlData.sumIndex.pop();
+				li.setValue(i);
+				ControlData.sumIndex.push(li);
+				ANTLRStringStream stream = new ANTLRStringStream("v: "+expression); 
+				EvaluatorLexer lexer = new EvaluatorLexer(stream);
+				TokenStream tokenStream = new CommonTokenStream(lexer);
+				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+				try{
+					evaluator.evaluator();
+				}catch (RecognitionException e){
+					Error.addEvaluationError(e.toString());
+				}
+			
+				IntDouble id0=evaluator.evalValue;
+				id=addOperation(id, id0);
+			}
+		}
+		
+		EvalExpression ee=new EvalExpression();
+		ee.setValue(id);
+		ControlData.sumIndex.pop();
+		return ee;
 	}
 	
 	public static IntDouble expressionInput(EvalExpression ee){
