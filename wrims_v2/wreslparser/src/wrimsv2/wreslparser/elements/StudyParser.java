@@ -63,7 +63,6 @@ public class StudyParser {
 		
 		return sc;
 	}
-
 	
 	public static Map<String, SimulationDataSet> parseModels(WreslData wd) throws RecognitionException, IOException {
 
@@ -75,18 +74,26 @@ public class StudyParser {
 		
 			LogUtils.importantMsg("Processing sequence: "+iSequence+", model: "+modelName);
 			
-			SimulationDataSet model_dataset = parseModel(wd, modelName);
+			SimulationDataSet model_dataset = parseModel(modelName, wd.studyConfig, 
+														wd.fileDataMap_wholeStudy, wd.t1Map_wholeStudy,
+														wd.fileScopeMap_wholeStudy, wd.cumulative_global_adhocs );
 		
 		    model_dataset_map.put(modelName, model_dataset);
 		}
 		return model_dataset_map;		
 	}
 
-
 	
-	public static SimulationDataSet parseModel(WreslData wd, String modelName ) throws RecognitionException, IOException {
+	public static SimulationDataSet parseModel( String modelName, StudyConfig studyConfig, 
+												Map<String, SimulationDataSet> fileDataMap_wholeStudy,
+												Map<String,ArrayList<String>> t1Map_wholeStudy,
+												Map<String,String> fileScopeMap_wholeStudy,
+												SimulationDataSet cumulative_global_adhocs
+												)
+	
+	throws RecognitionException, IOException {
 
-		SimulationDataSet adhoc = wd.studyConfig.modelDataMap.get(modelName);
+		SimulationDataSet adhoc = studyConfig.modelDataMap.get(modelName);
 		
 		Map<String,SimulationDataSet> fileDataMap_new = new HashMap<String, SimulationDataSet>() ;			
 		/// get all file data map for this study
@@ -95,40 +102,40 @@ public class StudyParser {
 			/// process include files in this model and those in previous globals
 			for (String f: adhoc.incFileList) {
 				
-				if (wd.fileDataMap_wholeStudy.keySet().contains(f))  {
+				if (fileDataMap_wholeStudy.keySet().contains(f))  {
 					/// skip processing and get data from fileDataMap_wholeStudy
 					LogUtils.importantMsg("....Skip file: "+f);
-					fileDataMap_thisModel.put(f, wd.fileDataMap_wholeStudy.get(f));
-					fileDataMap_thisModel.putAll(Tools.getAllOffSprings(f, wd.t1Map_wholeStudy, wd.fileDataMap_wholeStudy));
+					fileDataMap_thisModel.put(f, fileDataMap_wholeStudy.get(f));
+					fileDataMap_thisModel.putAll(Tools.getAllOffSprings(f, t1Map_wholeStudy, fileDataMap_wholeStudy));
 					/// TODO: need to put file f's children dataset					
 				} 
 				else { /// new file
-					Map<String, SimulationDataSet> each = FileParser.processNestedFileExceptFor(f,wd.fileDataMap_wholeStudy.keySet());
+					Map<String, SimulationDataSet> each = FileParser.processNestedFileExceptFor(f,fileDataMap_wholeStudy.keySet());
 					fileDataMap_new.putAll(each);
-					wd.fileDataMap_wholeStudy.putAll(each);
+					fileDataMap_wholeStudy.putAll(each);
 				}				
 			}		
 			
 			/// copy to this model
 			for (String f: adhoc.incFileList) {
 			
-				fileDataMap_thisModel.putAll(Tools.putDataFileMapFromWholeStudy(f,wd.fileDataMap_wholeStudy));
+				fileDataMap_thisModel.putAll(Tools.putDataFileMapFromWholeStudy(f,fileDataMap_wholeStudy));
 			}
 				
 			/// get fileScopeMap and ReverseMap
 			/// TODO: avoid repeated processing
 			
 			////// update whole study t1Map
-			wd.t1Map_wholeStudy.putAll(Tools.getType1Map(fileDataMap_new));
-			wd.fileScopeMap_wholeStudy.putAll(Tools.getFileScopeMap(fileDataMap_new));
+			t1Map_wholeStudy.putAll(Tools.getType1Map(fileDataMap_new));
+			fileScopeMap_wholeStudy.putAll(Tools.getFileScopeMap(fileDataMap_new));
 		    //////////////////////////////////////////////////////////////////////////////
 			
 			/// this model t1Map, fileScopeMap, and reverseMap
-			Map<String,String> fileScopeMap = new HashMap<String, String>(wd.fileScopeMap_wholeStudy);
+			Map<String,String> fileScopeMap = new HashMap<String, String>(fileScopeMap_wholeStudy);
 			fileScopeMap.putAll(Tools.getScopeMap(adhoc.incFileList, adhoc.incFileList_local));
 			
-			Map<String,ArrayList<String>> t1Map = new HashMap<String, ArrayList<String>>(wd.t1Map_wholeStudy);
-			t1Map.put(wd.studyConfig.absMainFilePath, adhoc.incFileList);
+			Map<String,ArrayList<String>> t1Map = new HashMap<String, ArrayList<String>>(t1Map_wholeStudy);
+			t1Map.put(studyConfig.absMainFilePath, adhoc.incFileList);
 			
 			//Map<String,ArrayList<String>> t1ReverseMap = Tools.getReverseMap(t1Map);
 			Map<String,Set<String>> t1ReverseMap = Tools.getReverseMap(t1Map);
@@ -155,7 +162,7 @@ public class StudyParser {
 			LogUtils.normalMsg("========== Start data prioritization =========== ");	
 			
 			/// previous globals have lowest priority
-			model_dataset.prioritize(wd.cumulative_global_adhocs, " cumulative adhoc globals", t1ReverseMap);	
+			model_dataset.prioritize(cumulative_global_adhocs, " cumulative adhoc globals", t1ReverseMap);	
 			LogUtils.normalMsg("========== Finish initial prioritization =========== ");
 			
 			/// for kid
@@ -177,12 +184,12 @@ public class StudyParser {
 			
 			/// for vars in adhoc
 			LogUtils.normalMsg("========== Prioritize adhoc =========== ");
-			model_dataset.prioritize(adhoc, wd.studyConfig.absMainFilePath, t1ReverseMap);
+			model_dataset.prioritize(adhoc, studyConfig.absMainFilePath, t1ReverseMap);
 			LogUtils.normalMsg("========== Finish adhoc prioritization =========== ");
 			LogUtils.normalMsg("========== Finish all prioritization =========== ");
 			
 			/// update whole study
-			wd.cumulative_global_adhocs.add(adhoc.getGlobalVars());
+			cumulative_global_adhocs.add(adhoc.getGlobalVars());
 		
 		return model_dataset;
 	}
