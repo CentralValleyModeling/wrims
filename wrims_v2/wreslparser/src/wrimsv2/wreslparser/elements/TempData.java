@@ -21,6 +21,7 @@ public class TempData {
 	
 	/// cumulative global vars and include files
 	public SimulationDataSet cumulative_global_adhocs;
+	public SimulationDataSet cumulative_global_complete;
 	
 	public TempData(){
 		
@@ -38,6 +39,8 @@ public class TempData {
 			
 		/// cumulative global vars and include files
 		cumulative_global_adhocs = new SimulationDataSet();
+		
+		cumulative_global_complete = new SimulationDataSet();
 		
 	}
 

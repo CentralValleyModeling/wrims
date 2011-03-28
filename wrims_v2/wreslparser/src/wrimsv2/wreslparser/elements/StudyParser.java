@@ -75,8 +75,11 @@ public class StudyParser {
 			LogUtils.importantMsg("Processing sequence: "+iSequence+", model: "+modelName);
 			
 			SimulationDataSet model_dataset = parseModel(modelName, sc, 
-														td.fileDataMap_wholeStudy, td.t1Map_wholeStudy,
-														td.fileScopeMap_wholeStudy, td.cumulative_global_adhocs );
+														td.fileDataMap_wholeStudy, 
+														td.t1Map_wholeStudy,
+														td.fileScopeMap_wholeStudy, 
+														td.cumulative_global_adhocs,
+														td.cumulative_global_complete);
 		
 		    model_dataset_map.put(modelName, model_dataset);
 		}
@@ -88,11 +91,15 @@ public class StudyParser {
 												Map<String, SimulationDataSet> fileDataMap_wholeStudy,
 												Map<String,ArrayList<String>> t1Map_wholeStudy,
 												Map<String,String> fileScopeMap_wholeStudy,
-												SimulationDataSet cumulative_global_adhocs
+												SimulationDataSet cumulative_global_adhocs,
+												SimulationDataSet cumulative_global_complete
 												)
 	
 	throws RecognitionException, IOException {
 
+		LogUtils.importantMsg("cumulative globals: "+cumulative_global_adhocs.incFileList_global);
+		LogUtils.importantMsg("cumulative globals: "+cumulative_global_adhocs.dvList_global);
+		
 		SimulationDataSet adhoc = studyConfig.modelDataMap.get(modelName);
 		
 		Map<String,SimulationDataSet> fileDataMap_new = new HashMap<String, SimulationDataSet>() ;			
@@ -105,22 +112,30 @@ public class StudyParser {
 				if (fileDataMap_wholeStudy.keySet().contains(f))  {
 					/// skip processing and get data from fileDataMap_wholeStudy
 					LogUtils.importantMsg("....Skip file: "+f);
-					fileDataMap_thisModel.put(f, fileDataMap_wholeStudy.get(f));
-					fileDataMap_thisModel.putAll(Tools.getAllOffSprings(f, t1Map_wholeStudy, fileDataMap_wholeStudy));
+					//fileDataMap_thisModel.put(f, fileDataMap_wholeStudy.get(f));
+					//fileDataMap_thisModel.putAll(Tools.getAllOffSprings(f, t1Map_wholeStudy, fileDataMap_wholeStudy));
 					/// TODO: need to put file f's children dataset					
 				} 
 				else { /// new file
 					Map<String, SimulationDataSet> each = FileParser.processNestedFileExceptFor(f,fileDataMap_wholeStudy.keySet());
 					fileDataMap_new.putAll(each);
-					fileDataMap_wholeStudy.putAll(each);
+
 				}				
 			}		
+
+			
+			// update whole study
+			fileDataMap_wholeStudy.putAll(fileDataMap_new);
+			
+			System.out.println("---"+fileDataMap_wholeStudy);
 			
 			/// copy to this model
 			for (String f: adhoc.incFileList) {
 			
 				fileDataMap_thisModel.putAll(Tools.putDataFileMapFromWholeStudy(f,fileDataMap_wholeStudy));
 			}
+			
+
 				
 			/// get fileScopeMap and ReverseMap
 			/// TODO: avoid repeated processing
@@ -162,7 +177,7 @@ public class StudyParser {
 			LogUtils.normalMsg("========== Start data prioritization =========== ");	
 			
 			/// previous globals have lowest priority
-			model_dataset.prioritize(cumulative_global_adhocs, " cumulative adhoc globals", t1ReverseMap);	
+			model_dataset.prioritize(cumulative_global_complete, " cumulative globals", t1ReverseMap);	
 			LogUtils.normalMsg("========== Finish initial prioritization =========== ");
 			
 			/// for kid
@@ -190,6 +205,7 @@ public class StudyParser {
 			
 			/// update whole study
 			cumulative_global_adhocs.add(adhoc.getGlobalVars());
+			cumulative_global_complete.add(model_dataset.getGlobalVars());
 		
 		return model_dataset;
 	}
@@ -343,8 +359,8 @@ public class StudyParser {
 			
 			/// update whole study
 			cumulative_global_adhocs.add(adhoc.getGlobalVars());
-			
 
+			
 
 
 //				System.out.println("all   : " + model_data_complete.svList);
@@ -356,7 +372,6 @@ public class StudyParser {
 			
 			model_dataset_map.put(model, model_data_complete);
 			
-			//System.out.println(" weight table keys: "+ model_data_complete.wtMap.keySet());
 			
 			LogUtils.importantMsg("Finished processing sequence: "+iSequence+", model: "+model);
 
