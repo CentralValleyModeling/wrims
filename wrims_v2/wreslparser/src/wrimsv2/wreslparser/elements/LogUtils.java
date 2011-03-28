@@ -100,7 +100,7 @@ public class LogUtils {
 		}
 	}		
 	
-	public static void mainFileSummary(StudyConfig studyConfig, Map<String, SimulationDataSet> modelDataMap){
+	public static void studySummary(StudyConfig studyConfig, Map<String, SimulationDataSet> modelDataMap){
 
 		seqList(studyConfig.sequenceList, studyConfig.sequenceMap);
 

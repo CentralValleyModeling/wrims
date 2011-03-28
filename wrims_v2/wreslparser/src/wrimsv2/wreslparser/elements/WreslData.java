@@ -6,38 +6,26 @@ import java.util.Map;
 
 
 public class WreslData {
-
-	public StudyConfig studyConfig;	
 	
-	public Map<String,SimulationDataSet> fileDataMap_wholeStudy ;	
-	public Map<String,ArrayList<String>> t1Map_wholeStudy;	
-	public Map<String,String> fileScopeMap_wholeStudy;	
+	
+	public ArrayList<String> sequence_of_models;
 	
 	/// this map will collect detailed info for models			
 	public Map<String, SimulationDataSet> model_dataset_map;
-
-	/// map of model's global adhocs
-	public Map<String, SimulationDataSet> model_global_adhoc_map;
 	
-	/// cumulative global vars and include files
-	public SimulationDataSet cumulative_global_adhocs;
+	/// global variables in first cycle
+	public SimulationDataSet global_vars;
+	
 	
 	public WreslData(){
 		
-		studyConfig = new StudyConfig();
-		
-		fileDataMap_wholeStudy  = new HashMap<String, SimulationDataSet>();	
-		t1Map_wholeStudy = new HashMap<String, ArrayList<String>>();	
-		fileScopeMap_wholeStudy = new HashMap<String, String>();	
+		sequence_of_models = new ArrayList<String>();	
 		
 		/// this map will collect detailed info for models			
 		model_dataset_map = new HashMap<String, SimulationDataSet>();
-
-		/// map of model's global adhocs
-		model_global_adhoc_map = new HashMap<String, SimulationDataSet>();
 			
 		/// cumulative global vars and include files
-		cumulative_global_adhocs = new SimulationDataSet();
+		global_vars = new SimulationDataSet();
 		
 	}
 

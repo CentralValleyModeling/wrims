@@ -209,7 +209,7 @@ public class TestWreslWalker {
 		model_data_complete_map = StudyParser.parseSubFiles(sc);
 		
 
-		LogUtils.mainFileSummary(sc, model_data_complete_map);
+		LogUtils.studySummary(sc, model_data_complete_map);
 
 		
 		LogUtils.closeLogFile();

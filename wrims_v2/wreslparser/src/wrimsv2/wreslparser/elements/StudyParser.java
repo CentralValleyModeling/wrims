@@ -64,19 +64,19 @@ public class StudyParser {
 		return sc;
 	}
 	
-	public static Map<String, SimulationDataSet> parseModels(WreslData wd) throws RecognitionException, IOException {
+	public static Map<String, SimulationDataSet> parseModels(StudyConfig sc, TempData td) throws RecognitionException, IOException {
 
 		Map<String, SimulationDataSet> model_dataset_map = new HashMap<String, SimulationDataSet>();
 		
-		for ( Integer iSequence : wd.studyConfig.sequenceOrder){	
+		for ( Integer iSequence : sc.sequenceOrder){	
 
-			String modelName = wd.studyConfig.sequenceMap.get(iSequence).modelName;
+			String modelName = sc.sequenceMap.get(iSequence).modelName;
 		
 			LogUtils.importantMsg("Processing sequence: "+iSequence+", model: "+modelName);
 			
-			SimulationDataSet model_dataset = parseModel(modelName, wd.studyConfig, 
-														wd.fileDataMap_wholeStudy, wd.t1Map_wholeStudy,
-														wd.fileScopeMap_wholeStudy, wd.cumulative_global_adhocs );
+			SimulationDataSet model_dataset = parseModel(modelName, sc, 
+														td.fileDataMap_wholeStudy, td.t1Map_wholeStudy,
+														td.fileScopeMap_wholeStudy, td.cumulative_global_adhocs );
 		
 		    model_dataset_map.put(modelName, model_dataset);
 		}
