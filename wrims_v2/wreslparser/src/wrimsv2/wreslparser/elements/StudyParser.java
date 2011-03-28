@@ -96,9 +96,6 @@ public class StudyParser {
 												)
 	
 	throws RecognitionException, IOException {
-
-		LogUtils.importantMsg("cumulative globals: "+cumulative_global_adhocs.incFileList_global);
-		LogUtils.importantMsg("cumulative globals: "+cumulative_global_adhocs.dvList_global);
 		
 		SimulationDataSet adhoc = studyConfig.modelDataMap.get(modelName);
 		
@@ -127,16 +124,12 @@ public class StudyParser {
 			// update whole study
 			fileDataMap_wholeStudy.putAll(fileDataMap_new);
 			
-			System.out.println("---"+fileDataMap_wholeStudy);
-			
 			/// copy to this model
 			for (String f: adhoc.incFileList) {
 			
 				fileDataMap_thisModel.putAll(Tools.putDataFileMapFromWholeStudy(f,fileDataMap_wholeStudy));
 			}
-			
-
-				
+						
 			/// get fileScopeMap and ReverseMap
 			/// TODO: avoid repeated processing
 			
@@ -203,7 +196,7 @@ public class StudyParser {
 			LogUtils.normalMsg("========== Finish adhoc prioritization =========== ");
 			LogUtils.normalMsg("========== Finish all prioritization =========== ");
 			
-			/// update whole study
+			/// update cumulative globals
 			cumulative_global_adhocs.add(adhoc.getGlobalVars());
 			cumulative_global_complete.add(model_dataset.getGlobalVars());
 		

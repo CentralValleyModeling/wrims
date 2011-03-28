@@ -38,7 +38,22 @@ public class LogUtils {
 	
 	}
 	
-
+	public static void dvarsList(String msg, ArrayList<String> list_all, ArrayList<String> list_g, ArrayList<String> list_l, Map<String, Dvar> dvMap){
+		
+		String description = "Dvars";
+		
+		LogUtils.importantMsg("------------------------------");
+		LogUtils.importantMsg(msg+"Include total "+list_all.size()+" "+description+":");
+		LogUtils.importantMsg(list_all, dvMap);
+		LogUtils.importantMsg("------------------------------");
+		LogUtils.importantMsg(msg+"Include total "+list_g.size()+" global "+description+":");
+		LogUtils.importantMsg(list_g, dvMap);
+		LogUtils.importantMsg("------------------------------");
+		LogUtils.importantMsg(msg+"Include total "+list_l.size()+" local "+description+":");
+		LogUtils.importantMsg(list_l, dvMap);
+		LogUtils.importantMsg("------------------------------");
+		
+	}
 	
 	public static void varsList(String msg, ArrayList<String> list_all, ArrayList<String> list_g, ArrayList<String> list_l, String description){
 		
@@ -99,6 +114,22 @@ public class LogUtils {
 			varsList("", M.svList, M.svList_global, M.svList_local, "Svars");
 		}
 	}		
+
+	public static void studySummary_details(StudyConfig studyConfig, Map<String, SimulationDataSet> modelDataMap){
+
+		seqList(studyConfig.sequenceList, studyConfig.sequenceMap);
+
+		
+		for (String key: studyConfig.modelList){
+			SimulationDataSet M = modelDataMap.get(key);
+			LogUtils.importantMsg("#####  Model: "+ key);
+			
+			String msg = "Model "+key+" ";
+			varsList(msg, M.incFileList, M.incFileList_global, M.incFileList_local, "files");
+			dvarsList(msg, M.dvList, M.dvList_global, M.dvList_local, M.dvMap);
+			varsList(msg, M.svList, M.svList_global, M.svList_local, "Svars");
+		}
+	}	
 	
 	public static void studySummary(StudyConfig studyConfig, Map<String, SimulationDataSet> modelDataMap){
 
@@ -122,11 +153,18 @@ public class LogUtils {
 		_logFile.println(msg);
 		_logFile.flush();
 	}
-	
+
 	public static void importantMsg(ArrayList<String> msg){
 		
 		for(String e: msg){
 			importantMsg(e+"\n");
+		}
+	}
+
+	public static void importantMsg(ArrayList<String> dvList, Map<String, Dvar> dvMap){
+		
+		for(String e: dvList){
+			importantMsg(e+"  kind: "+dvMap.get(e).kind +"\n");
 		}
 	}
 	

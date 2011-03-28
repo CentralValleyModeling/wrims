@@ -139,5 +139,47 @@ public class TestWreslWalker_advanced {
 		Assert.assertEquals(str2, 1);
 
 	}	
-	
+
+	@Test(groups = { "WRESL_elements" })
+	public void studyParser4() throws RecognitionException, IOException {
+		
+		inputFilePath =projectPath+"TestWreslWalker_advanced_studyParser4.wresl";
+		logFilePath = "TestWreslWalker_advanced_studyParser4.log";
+
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData wd = new TempData();
+
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		
+		//LogUtils.mainFileSummary(sc);
+		
+		wd.model_dataset_map=StudyParser.parseModels(sc,wd);
+
+		LogUtils.studySummary_details(sc, wd.model_dataset_map);
+
+		LogUtils.closeLogFile();
+			
+		String fileText = Tools.readFileAsString(logFilePath);	
+		
+		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
+		Assert.assertEquals(totalErrs, 1);	
+		
+		int Errs = RegUtils.timesOfMatches(fileText, "# Error: Decision varriable redefined: watch_this in files: ");
+		Assert.assertEquals(Errs, 1);	
+		
+
+		int str1 = RegUtils.timesOfMatches(fileText, 
+				"Model second Include total 5 Dvars:");
+		Assert.assertEquals(str1, 1);
+
+		int str2 = RegUtils.timesOfMatches(fileText, 
+				"Model second Include total 4 global Dvars:");
+		Assert.assertEquals(str2, 1);
+
+	}	
+
 }
