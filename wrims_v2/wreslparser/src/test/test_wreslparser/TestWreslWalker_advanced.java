@@ -155,8 +155,6 @@ public class TestWreslWalker_advanced {
 
 		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
 		
-		//LogUtils.mainFileSummary(sc);
-		
 		wd.model_dataset_map=StudyParser.parseModels(sc,wd);
 
 		LogUtils.studySummary_details(sc, wd.model_dataset_map);
