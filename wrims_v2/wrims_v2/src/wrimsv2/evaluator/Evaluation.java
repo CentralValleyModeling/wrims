@@ -408,6 +408,7 @@ public class Evaluation {
 		IntDouble result;
 		boolean isSumIndex=false;
 		int indexValue=0;
+		boolean isIndexStart=true;
 		
 		EvalExpression ee=eeArray.get(0);	
 		
@@ -417,6 +418,7 @@ public class Evaluation {
 				LoopIndex li=ControlData.sumIndex.pop();
 				String indexName=li.getName();
 				indexValue=li.getValue();
+				isIndexStart=li.getIndexStart();
 				ControlData.sumIndex.push(li);
 				if (!(multiplier.containsKey(indexName) && multiplier.get(indexName).getData().doubleValue()==1.0 && ee.getValue().getData().doubleValue()==0.0)){
 					Error.addEvaluationError("The index of "+ident+" contains decision variable.");
@@ -440,7 +442,12 @@ public class Evaluation {
 		}
 
 		if (isSumIndex){
-			TimeOperation.findTime(indexValue);
+			if (isIndexStart){
+				TimeOperation.findTime(indexValue);
+			}else{
+				result=new IntDouble (0.0,false);
+				return result;
+			}
 		}else{
 			TimeOperation.findTime(id.getData().intValue());
 		}
@@ -759,9 +766,44 @@ public class Evaluation {
 		}
 	}
 	
+	public static EvalExpression term_YEAR(){
+		IntDouble id=new IntDouble(TimeOperation.waterYearValue(), true);
+		EvalExpression ee=new EvalExpression();
+		ee.setValue(id);
+		return ee;
+	}
+	
+	public static EvalExpression term_MONTH(){
+		IntDouble id=new IntDouble(TimeOperation.waterMonthValue(ControlData.currMonth), true);
+		EvalExpression ee=new EvalExpression();
+		ee.setValue(id);
+		return ee;
+	}
+	
+	public static EvalExpression term_MONTH_CONST(String month){
+		int monthValue=TimeOperation.monthValue(month);
+		IntDouble id=new IntDouble(TimeOperation.waterMonthValue(monthValue), true);
+		EvalExpression ee=new EvalExpression();
+		ee.setValue(id);
+		return ee;
+	}
+	
+	public static EvalExpression term_PASTMONTH(String pastMonth){
+		pastMonth=pastMonth.substring(4);
+		int pastMonthValue=TimeOperation.monthValue(pastMonth);
+		int index=pastMonthValue-ControlData.currMonth;
+		if (index>=0){
+			index=index-12;
+		}
+		IntDouble id=new IntDouble(index,true);
+		EvalExpression ee=new EvalExpression();
+		ee.setValue(id);
+		return ee;
+	}
+	
 	public static void sumExpression_IDENT(String ident){
 		//To Do: check if svar, dvar, alias contains ident
-		LoopIndex li=new LoopIndex(ident, 0);
+		LoopIndex li=new LoopIndex(ident, 0, false);
 		ControlData.sumIndex.push(li);
 	}
 	
@@ -805,9 +847,10 @@ public class Evaluation {
 		IntDouble id=new IntDouble(0, true);
 		
 		if (step>=0){
-			for (int i=start; i<=end; i=step++){
+			for (int i=start; i<=end; i=i+step){
 				LoopIndex li=ControlData.sumIndex.pop();
 				li.setValue(i);
+				li.setIndexStart(true);
 				ControlData.sumIndex.push(li);
 				ANTLRStringStream stream = new ANTLRStringStream("v: "+expression); 
 				EvaluatorLexer lexer = new EvaluatorLexer(stream);
@@ -823,9 +866,10 @@ public class Evaluation {
 				id=addOperation(id, id0);
 			}
 		}else{
-			for (int i=start; i>=end; i=step++){
+			for (int i=start; i>=end; i=i+step){
 				LoopIndex li=ControlData.sumIndex.pop();
 				li.setValue(i);
+				li.setIndexStart(true);
 				ControlData.sumIndex.push(li);
 				ANTLRStringStream stream = new ANTLRStringStream("v: "+expression); 
 				EvaluatorLexer lexer = new EvaluatorLexer(stream);

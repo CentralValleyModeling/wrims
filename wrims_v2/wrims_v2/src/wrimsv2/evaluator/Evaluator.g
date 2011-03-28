@@ -183,9 +183,10 @@ term returns [EvalExpression ee]
 	| (FLOAT {ee=Evaluation.term_FLOAT($FLOAT.text);}) 
 	| func{ee=$func.ee;}
 	| tafcfs_term{ee=$tafcfs_term.ee;}
-	| YEAR
-	| MONTH
-	| MONTH_CONST
+	| YEAR{ee=Evaluation.term_YEAR();}
+	| MONTH{ee=Evaluation.term_MONTH();}
+	| MONTH_CONST{ee=Evaluation.term_MONTH_CONST($MONTH_CONST.text);}
+	| PASTMONTH{ee=Evaluation.term_PASTMONTH($PASTMONTH.text);}
 	| DAYSIN{ee=Evaluation.daysIn();})
 	;
 	
