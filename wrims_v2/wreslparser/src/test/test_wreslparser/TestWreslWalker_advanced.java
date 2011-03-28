@@ -117,7 +117,7 @@ public class TestWreslWalker_advanced {
 
 		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
 		
-		LogUtils.mainFileSummary(sc);
+		//LogUtils.mainFileSummary(sc);
 		
 		wd.model_dataset_map=StudyParser.parseModels(sc,wd);
 
@@ -135,7 +135,7 @@ public class TestWreslWalker_advanced {
 		Assert.assertEquals(str1, 1);
 
 		int str2 = RegUtils.timesOfMatches(fileText, 
-				"Model second Include total 2 global Dvars:");
+				"Model second Include total 4 global Dvars:");
 		Assert.assertEquals(str2, 1);
 
 	}	
