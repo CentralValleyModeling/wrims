@@ -18,7 +18,8 @@ public class TestExternalFunction {
 
 	public void testAnnEC(){
 		
-		new LoadInterfaceDll("InterfaceToAnn.dll");
+		new LoadDll("Ann7inp_CA.dll");
+		new LoadDll("InterfaceToAnn.dll");
 		
 		ExternalFunctionTable eft=new ExternalFunctionTable();
 		ExternalFunction ef=eft.externalFunctionsHashtable.get("annec");
@@ -143,7 +144,8 @@ public class TestExternalFunction {
 	@Test
 	public void testAnn_X2(){
 		
-		new LoadInterfaceDll("InterfaceToAnn.dll");
+		new LoadDll("Ann7inp_CA.dll");
+		new LoadDll("InterfaceToAnn.dll");
 		
 		ExternalFunctionTable eft=new ExternalFunctionTable();
 		ExternalFunction ef=eft.externalFunctionsHashtable.get("ann_x2");
@@ -179,7 +181,7 @@ public class TestExternalFunction {
 	}
 	
 	public void testANNLineGen(){
-		new LoadInterfaceDll("InterfaceToAnn.dll");		
+		new LoadDll("InterfaceToAnn.dll");		
 		ExternalFunctionTable eft=new ExternalFunctionTable();
 		ExternalFunction ef=eft.externalFunctionsHashtable.get("annlinegen");
 		

@@ -17,7 +17,7 @@ import wrimsv2.evaluator.EvalExpression;
 import wrimsv2.evaluator.EvaluatorLexer;
 import wrimsv2.evaluator.EvaluatorParser;
 import wrimsv2.evaluator.DssOperation;
-import wrimsv2.external.LoadDll;
+import wrimsv2.external.LoadAllDll;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 import wrimsv2.components.FilePaths;
@@ -80,8 +80,9 @@ public class TestEvaluator extends TestCase{
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
+	@Test
 	public void testExternalFunction() throws RecognitionException, IOException {
-        new LoadDll();
+        new LoadAllDll();
 
         String mainFile="z:\\temp\\test";
         FilePaths fp=new FilePaths();
