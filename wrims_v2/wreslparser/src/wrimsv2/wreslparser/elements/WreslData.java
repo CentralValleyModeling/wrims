@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class WreslData {
 	
+	public String absMainFilePath;
 	
 	public ArrayList<String> sequence_of_models;
 	

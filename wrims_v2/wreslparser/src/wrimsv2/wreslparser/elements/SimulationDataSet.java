@@ -88,15 +88,17 @@ public class SimulationDataSet {
 	}	
 
 	public SimulationDataSet overwrittenWith(SimulationDataSet s) {
-		return null;	
 		
+		this.remove(s);
+		this.add(s);
+		return this;	
 	}
 	
 	public SimulationDataSet overwrite(SimulationDataSet s) {
-		return null;	
-		
+		s.remove(this);
+		this.add(s);
+		return this;
 	}
-	
 	
 
 	public boolean hasDuplicateIn(SimulationDataSet s, String filePath, Map<String,Set<String>> reverseMap){
@@ -472,7 +474,20 @@ public class SimulationDataSet {
 
 		return this.add(s);
 	}
-	
+
+	public SimulationDataSet dePrioritize(SimulationDataSet laterFileData, String filePath_forErrorMessage, Map<String,Set<String>> reverseMap) {
+
+		/// check duplicate and promote later included file data for higher priority 
+		if(laterFileData==null) System.out.println("Fatal error!!! SimulationDataSet is null in file: "+filePath_forErrorMessage);
+		
+		if ( this.hasDuplicateIn(laterFileData, filePath_forErrorMessage, reverseMap)) {
+			this.overwrite(laterFileData);
+		} else {
+			this.add(laterFileData);
+		}
+		
+		return this; // later data has lower priority
+	}
 	
 	public SimulationDataSet prioritize(SimulationDataSet laterFileData, String filePath_forErrorMessage, Map<String,Set<String>> reverseMap) {
 
