@@ -45,6 +45,9 @@ public class TestWreslWalker_priority {
 		LogUtils.closeLogFile();
 			
 		String fileText = Tools.readFileAsString(logFilePath);	
+
+		int ex = RegUtils.timesOfMatches(fileText, "Model second watch_this .+This-should-not-exist-in-model-second");
+		Assert.assertEquals(ex, 0);
 		
 		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
 		Assert.assertEquals(totalErrs, 1);	

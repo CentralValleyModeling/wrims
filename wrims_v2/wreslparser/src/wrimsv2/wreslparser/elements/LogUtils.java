@@ -44,13 +44,13 @@ public class LogUtils {
 		
 		LogUtils.importantMsg("------------------------------");
 		LogUtils.importantMsg(msg+"Include total "+list_all.size()+" "+description+":");
-		LogUtils.importantMsg(list_all, dvMap);
+		LogUtils.importantMsg(msg, list_all, dvMap);
 		LogUtils.importantMsg("------------------------------");
 		LogUtils.importantMsg(msg+"Include total "+list_g.size()+" global "+description+":");
-		LogUtils.importantMsg(list_g, dvMap);
+		LogUtils.importantMsg(msg, list_g, dvMap);
 		LogUtils.importantMsg("------------------------------");
 		LogUtils.importantMsg(msg+"Include total "+list_l.size()+" local "+description+":");
-		LogUtils.importantMsg(list_l, dvMap);
+		LogUtils.importantMsg(msg, list_l, dvMap);
 		LogUtils.importantMsg("------------------------------");
 		
 	}
@@ -161,10 +161,10 @@ public class LogUtils {
 		}
 	}
 
-	public static void importantMsg(ArrayList<String> dvList, Map<String, Dvar> dvMap){
+	public static void importantMsg(String msg, ArrayList<String> dvList, Map<String, Dvar> dvMap){
 		
 		for(String e: dvList){
-			importantMsg(e+"  kind: "+dvMap.get(e).kind +"\n");
+			importantMsg(msg + e + "  kind: "+dvMap.get(e).kind +"\n");
 		}
 	}
 	
