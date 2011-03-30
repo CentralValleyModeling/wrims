@@ -6,8 +6,6 @@ import java.util.Map;
 
 
 public class TempData {
-
-	//public StudyConfig studyConfig;	
 	
 	public Map<String,SimulationDataSet> fileDataMap_wholeStudy ;	
 	public Map<String,ArrayList<String>> t1Map_wholeStudy;	
@@ -24,8 +22,6 @@ public class TempData {
 	public SimulationDataSet cumulative_global_complete;
 	
 	public TempData(){
-		
-		//studyConfig = new StudyConfig();
 		
 		fileDataMap_wholeStudy  = new HashMap<String, SimulationDataSet>();	
 		t1Map_wholeStudy = new HashMap<String, ArrayList<String>>();	

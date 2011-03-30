@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 import wrimsv2.commondata.wresldata.Dvar;
+import wrimsv2.commondata.wresldata.ModelDataSet;
+import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.wreslparser.elements.Parameters;
 
 
@@ -52,6 +54,17 @@ public class LogUtils {
 		LogUtils.importantMsg("------------------------------");
 		LogUtils.importantMsg(msg+"Include total "+list_l.size()+" local "+description+":");
 		LogUtils.importantMsg(msg, list_l, dvMap);
+		LogUtils.importantMsg("------------------------------");
+		
+	}
+	
+	public static void dvarsList(String msg, ArrayList<String> list_all, Map<String, Dvar> dvMap){
+		
+		String description = "Dvars";
+		
+		LogUtils.importantMsg("------------------------------");
+		LogUtils.importantMsg(msg+"Include total "+list_all.size()+" "+description+":");
+		LogUtils.importantMsg(msg, list_all, dvMap);
 		LogUtils.importantMsg("------------------------------");
 		
 	}
@@ -145,6 +158,19 @@ public class LogUtils {
 			varsList(msg, M.incFileList, M.incFileList_global, M.incFileList_local, "files");
 			varsList(msg, M.dvList, M.dvList_global, M.dvList_local, "Dvars");
 			varsList(msg, M.svList, M.svList_global, M.svList_local, "Svars");
+		}
+	}	
+	
+	public static void studySummary_details(StudyDataSet sd){
+		
+		for (String key: sd.getModelList()){
+			ModelDataSet M = sd.getModelDataSetMap().get(key);
+			LogUtils.importantMsg("#####  Model: "+ key);
+			
+			String msg = "Model "+key+" ";
+
+			dvarsList(msg, M.dvList, M.dvMap);
+
 		}
 	}	
 	

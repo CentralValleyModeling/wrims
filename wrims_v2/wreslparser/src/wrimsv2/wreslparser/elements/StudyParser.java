@@ -10,13 +10,53 @@ import java.util.Set;
 
 import org.antlr.runtime.RecognitionException;
 
+import wrimsv2.commondata.wresldata.ModelDataSet;
+import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.grammar.WreslTreeWalker;
 
 
 public class StudyParser {
 	
+	public static StudyDataSet writeWreslData(StudyConfig sc, TempData td){
 		
+		StudyDataSet studyDataSet = new StudyDataSet();
+		
+		studyDataSet.setModelList(sc.modelList);
+		
+		Map<String, ModelDataSet> modelDataSetMap = new HashMap<String, ModelDataSet>();
+		
+		for (String modelName: studyDataSet.getModelList()){
+			
+			SimulationDataSet ds = td.model_dataset_map.get(modelName);
+			ModelDataSet thisModelDataSet = new ModelDataSet();
+			
+			thisModelDataSet.dvList = ds.dvList; 
+			thisModelDataSet.dvMap = ds.dvMap; 
+
+			thisModelDataSet.svList = ds.svList; 
+			thisModelDataSet.svMap = ds.svMap;
+			
+			thisModelDataSet.gList = ds.gList; 
+			thisModelDataSet.gMap = ds.gMap;
+
+			thisModelDataSet.asList = ds.asList; 
+			thisModelDataSet.asMap = ds.asMap;
+
+			thisModelDataSet.exList = ds.exList; 
+			thisModelDataSet.exMap = ds.exMap;
+			
+			thisModelDataSet.wtList = ds.wtList; 
+			thisModelDataSet.wtMap = ds.wtMap;	
+			
+			modelDataSetMap.put(modelName, thisModelDataSet);
+		}
+		
+		studyDataSet.setModelDataSetMap(modelDataSetMap);
+		
+		return studyDataSet;
+	}
+	
 	public static StudyConfig processMainFileIntoStudyConfig(String relativeMainFilePath) throws RecognitionException, IOException {
 		
 		File absMainFile = new File(relativeMainFilePath).getAbsoluteFile();

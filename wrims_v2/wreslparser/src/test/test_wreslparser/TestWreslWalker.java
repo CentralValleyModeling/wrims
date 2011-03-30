@@ -205,11 +205,11 @@ public class TestWreslWalker {
 		
 		LogUtils.mainFileSummary(sc);
 		
-		TempData wd = new TempData();
+		TempData td = new TempData();
 
-		wd.model_dataset_map=StudyParser.parseModels(sc,wd);
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
 		
-		LogUtils.studySummary(sc, wd.model_dataset_map);
+		LogUtils.studySummary(sc, td.model_dataset_map);
 
 		
 		LogUtils.closeLogFile();
