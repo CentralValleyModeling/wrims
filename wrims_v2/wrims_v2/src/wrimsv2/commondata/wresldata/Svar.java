@@ -2,7 +2,6 @@ package wrimsv2.commondata.wresldata;
 
 import java.util.ArrayList;
 
-import wrimsv2.wreslparser.elements.Parameters;
 
 public class Svar {
 	

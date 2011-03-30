@@ -1,19 +1,16 @@
 package wrimsv2.commondata.wresldata;
 
 
-public class Alias {
+public class External {
 	
 	public String scope;
-	public String kind;
-	public String units;
-	public String expression;
+	public String type;
 	public String fromWresl;
 
-	public Alias(){
+	
+	public External(){
 		scope=Parameters.undefined;
-		kind=Parameters.undefined;
-		units=Parameters.undefined;
-		expression=Parameters.undefined;
+		type=Parameters.undefined;
 		fromWresl=Parameters.undefined;
 
 	}
@@ -21,7 +18,7 @@ public class Alias {
 	public String equalEva(){
 		
 		String s = "|";		
-		String temp = scope+s+kind+s+units+s+expression;
+		String temp = scope+s+type;
 		
 		return temp;
 	}
@@ -34,11 +31,11 @@ public class Alias {
 			return false;
 		}
 
-		else if (((Alias) obj).equalEva() == null) {
+		else if (((External) obj).equalEva() == null) {
 			return false;
 		}
 
-		else if (this.equalEva() == ((Alias) obj).equalEva()) {
+		else if (this.equalEva() == ((External) obj).equalEva()) {
 			return true;
 		}
 
