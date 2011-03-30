@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import wrimsv2.commondata.wresldata.Alias;
+import wrimsv2.commondata.wresldata.Dvar;
+import wrimsv2.commondata.wresldata.Goal;
+import wrimsv2.commondata.wresldata.Svar;
+import wrimsv2.commondata.wresldata.WeightElement;
+
 public class StructTree {
 	
 	public SimulationDataSet S;

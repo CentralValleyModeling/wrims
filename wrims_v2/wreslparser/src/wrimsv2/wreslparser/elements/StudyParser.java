@@ -15,20 +15,6 @@ import wrimsv2.wreslparser.grammar.WreslTreeWalker;
 
 
 public class StudyParser {
-
-//	public static Map<String,SimulationDataSet> fileDataMap_wholeStudy = new HashMap<String, SimulationDataSet>() ;	
-//	public static Map<String,ArrayList<String>> t1Map_wholeStudy = new HashMap<String, ArrayList<String>>();	
-//	public static Map<String,String> fileScopeMap_wholeStudy = new HashMap<String, String>();	
-//	
-//	/// this map will collect detailed info for models			
-//	//public static Map<String, SimulationDataSet> model_dataset_map =  new HashMap<String, SimulationDataSet>();
-//
-//	/// map of model's global adhocs
-//	public static Map<String, SimulationDataSet> model_global_adhoc_map = new HashMap<String, SimulationDataSet>();
-//	
-//	/// cumulative global vars and include files
-//	public static SimulationDataSet cumulative_global_adhocs = new SimulationDataSet();
-
 	
 		
 	public static StudyConfig processMainFileIntoStudyConfig(String relativeMainFilePath) throws RecognitionException, IOException {

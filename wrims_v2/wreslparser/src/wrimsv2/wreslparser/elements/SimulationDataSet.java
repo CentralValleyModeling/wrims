@@ -5,6 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import wrimsv2.commondata.wresldata.Alias;
+import wrimsv2.commondata.wresldata.Dvar;
+import wrimsv2.commondata.wresldata.Goal;
+import wrimsv2.commondata.wresldata.Svar;
+import wrimsv2.commondata.wresldata.WeightElement;
+
 public class SimulationDataSet {
 	
 

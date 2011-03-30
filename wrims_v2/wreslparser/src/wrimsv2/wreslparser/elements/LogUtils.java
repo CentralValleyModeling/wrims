@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
+import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.wreslparser.elements.Parameters;
 
 
