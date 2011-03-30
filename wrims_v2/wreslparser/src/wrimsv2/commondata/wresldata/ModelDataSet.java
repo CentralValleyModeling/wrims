@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import wrimsv2.wreslparser.elements.External;
 
 
 public class ModelDataSet {

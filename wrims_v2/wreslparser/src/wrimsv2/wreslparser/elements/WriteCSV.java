@@ -11,6 +11,7 @@ import java.util.Map;
 
 import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
+import wrimsv2.commondata.wresldata.External;
 import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.WeightElement;

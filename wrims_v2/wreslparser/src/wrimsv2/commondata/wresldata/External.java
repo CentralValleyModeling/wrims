@@ -1,6 +1,5 @@
-package wrimsv2.wreslparser.elements;
+package wrimsv2.commondata.wresldata;
 
-import wrimsv2.commondata.wresldata.Parameters;
 
 public class External {
 	
