@@ -14,8 +14,8 @@ SEQUENCE CYCLE2 {
 MODEL first { 
 
  !INCLUDE[local] '..\test\moreWreslFiles\TestConvertWresl_alias.wresl'
- INCLUDE 'TestWreslWalker_dvarStd.wresl'
-  INCLUDE[local] '\moreWreslFiles\TestWreslWalker_dvarNonStd.wresl'
+ INCLUDE 'TestWreslWalker_element_dvarStd.wresl'
+  INCLUDE[local] '\moreWreslFiles\TestWreslWalker_element_dvarNonStd.wresl'
  define AA {std kind 'FLOW-CHANNEL' units 'TAF'}  
  define[local] BB {std kind 'FLOW-CHANNEL' units 'TAF'}   
 	

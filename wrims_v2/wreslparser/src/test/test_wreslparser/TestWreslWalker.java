@@ -11,6 +11,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
+import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.wreslparser.elements.FileParser;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.RegUtils;
@@ -186,7 +187,7 @@ public class TestWreslWalker {
 	public void studyParser_subFiles() throws RecognitionException, IOException {
 		
 		inputFilePath =projectPath+"TestWreslWalker_studyParser_subFiles.wresl";
-		logFilePath = "TestWreslWalker_studyParser_studyParser_subFiles.log";
+		logFilePath = "TestWreslWalker_studyParser_subFiles.log";
 		
 		File absFile=null;
 		String absFilePath=null;
@@ -286,51 +287,6 @@ public class TestWreslWalker {
 		int orderErr = RegUtils.timesOfMatches(fileText, "# Error: line 17:0 missing EOF at \'SEQUENCE\'");
 		Assert.assertEquals(orderErr, 1);	
 		
-	}	
-	
-	@Test(groups = { "WRESL_elements" })
-	public void dvarNonStd() throws RecognitionException, IOException {
-		
-		inputFilePath =projectPath+"TestWreslWalker_dvarNonStd.wresl";
-		logFilePath = "TestWreslWalker_dvarNonStd.log";
-		
-		File absFile = new File(inputFilePath).getAbsoluteFile();
-		String absFilePath = absFile.getCanonicalPath().toLowerCase();
-		
-		LogUtils.setLogFile(logFilePath);
-		
-		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
-		//LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
-		LogUtils.fileSummary(walker.thisFileDataSet);
-		LogUtils.closeLogFile();
-			
-		String fileText = Tools.readFileAsString(logFilePath);	
-		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
-		Assert.assertEquals(totalErrs, 0);		
-	}	
-	
-	@Test(groups = { "WRESL_elements" })
-	public void dvarStd() throws RecognitionException, IOException {
-		
-		inputFilePath =projectPath+"TestWreslWalker_dvarStd.wresl";
-		logFilePath = "TestWreslWalker_dvarStd.log";
-		
-		File absFile = new File(inputFilePath).getAbsoluteFile();
-		String absFilePath = absFile.getCanonicalPath().toLowerCase();
-		
-		LogUtils.setLogFile(logFilePath);
-		
-		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
-		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
-		
-		LogUtils.closeLogFile();
-		
-		
-		String fileText = Tools.readFileAsString(logFilePath);
-		int redefineErrs = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: C_Banks");
-		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
-		Assert.assertEquals(redefineErrs, 1);
-		Assert.assertEquals(totalErrs, 1);		
 	}	
 		
 }
