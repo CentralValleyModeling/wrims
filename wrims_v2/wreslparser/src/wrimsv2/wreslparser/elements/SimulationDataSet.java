@@ -31,7 +31,7 @@ public class SimulationDataSet {
 	public ArrayList<String> wtList = new ArrayList<String>();	
 	public ArrayList<String> wtList_global = new ArrayList<String>();
 	public ArrayList<String> wtList_local = new ArrayList<String>();
-	public Map<String, WeightTable> wtMap = new HashMap<String, WeightTable>();
+	public Map<String, WeightElement> wtMap = new HashMap<String, WeightElement>();
 	public Map<String,String> error_weightVar_redefined = new HashMap<String, String>();
 	
 
@@ -95,8 +95,10 @@ public class SimulationDataSet {
 	}
 	
 	public SimulationDataSet overwrite(SimulationDataSet s) {
-		s.remove(this);
-		this.add(s);
+		
+		SimulationDataSet p = new SimulationDataSet(s);
+		p.remove(this);
+		this.add(p);
 		return this;
 	}
 	
@@ -347,58 +349,62 @@ public class SimulationDataSet {
 			this.wtList.removeAll(s.wtList);
 			this.wtList_global.removeAll(s.wtList);
 			this.wtList_local.removeAll(s.wtList);
-			this.wtMap.remove(s.wtList);
+			//this.wtMap.remove(s.wtList);
+			Tools.mapRemoveAll(this.wtMap, s.wtList);
 		}
 		
 		if (!s.incFileList.isEmpty()) {
 			this.incFileList.removeAll(s.incFileList);
 			this.incFileList_global.removeAll(s.incFileList);
 			this.incFileList_local.removeAll(s.incFileList);
-			this.incFileMap.remove(s.incFileList);
+			//this.incFileMap.remove(s.incFileList);
+			Tools.mapRemoveAll(this.incFileMap, s.incFileList);
 		}
 
 		if (!s.exList.isEmpty()) {
 			this.exList.removeAll(s.exList);
 			if (!s.exList_global.isEmpty()) {this.exList_global.removeAll(s.exList);}
 			if (!s.exList_local.isEmpty()) {this.exList_local.removeAll(s.exList);}
-			this.exMap.remove(s.exList);
+			//this.exMap.remove(s.exList);
+			Tools.mapRemoveAll(this.exMap, s.exList);
 		}
 		
 		if (!s.svList.isEmpty()) {
 			this.svList.removeAll(s.svList);
 			if (!s.svList_global.isEmpty()) {this.svList_global.removeAll(s.svList);}
 			if (!s.svList_local.isEmpty()) {this.svList_local.removeAll(s.svList);}
-			this.svMap.remove(s.svList);
+			//this.svMap.remove(s.svList);
+			Tools.mapRemoveAll(this.svMap, s.svList);
 		}
 
 		if (!s.dvList.isEmpty()) {
 			this.dvList.removeAll(s.dvList);
 			if (!s.dvList_global.isEmpty()) {this.dvList_global.removeAll(s.dvList);}
 			if (!s.dvList_local.isEmpty()) {this.dvList_local.removeAll(s.dvList);}
-			this.dvMap.remove(s.dvList);
+			//this.dvMap.remove(s.dvList);
+			Tools.mapRemoveAll(this.dvMap, s.dvList);
 		}
 		if (!s.asList.isEmpty()) {
 			this.asList.removeAll(s.gList);
 			if (!s.asList_global.isEmpty()) {this.asList_global.removeAll(s.asList);}
 			if (!s.asList_local.isEmpty()) {this.asList_local.removeAll(s.asList);}
-			this.asMap.remove(s.gList);
+			//this.asMap.remove(s.gList);
+			Tools.mapRemoveAll(this.asMap, s.asList);
 		}
 
 		if (!s.gList.isEmpty()) {
 			this.gList.removeAll(s.gList);
 			if (!s.gList_global.isEmpty()) {this.gList_global.removeAll(s.gList);}
 			if (!s.gList_local.isEmpty()) {this.gList_local.removeAll(s.gList);}
-			this.gMap.remove(s.gList);
+			//this.gMap.remove(s.gList);
+			Tools.mapRemoveAll(this.gMap, s.gList);
 		}
 
 		if (!s.model_list.isEmpty()) {
 			this.model_list.removeAll(s.model_list);
 		}
 		
-		if (!s.seqList.isEmpty()) {
-			this.seqList.removeAll(s.seqList);
-			this.seqMap.remove(s.seqList);
-		}
+		/// neglect sequence and seqMap
 
 		return this;
 	}	

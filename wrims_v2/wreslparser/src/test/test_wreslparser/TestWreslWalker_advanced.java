@@ -42,11 +42,11 @@ public class TestWreslWalker_advanced {
 		
 		LogUtils.mainFileSummary(sc);
 		
-		Map<String, SimulationDataSet> model_data_complete_map = new HashMap<String, SimulationDataSet>();
-		
-		model_data_complete_map =	StudyParser.parseSubFiles(sc);		
+		TempData wd = new TempData();
 
-		LogUtils.studySummary(sc, model_data_complete_map);
+		wd.model_dataset_map=StudyParser.parseModels(sc,wd);
+		
+		LogUtils.studySummary(sc, wd.model_dataset_map);
 		
 		LogUtils.closeLogFile();
 			
@@ -80,11 +80,11 @@ public class TestWreslWalker_advanced {
 		
 		LogUtils.mainFileSummary(sc);
 		
-		Map<String, SimulationDataSet> model_data_complete_map = new HashMap<String, SimulationDataSet>();
-		
-		model_data_complete_map =	StudyParser.parseSubFiles(sc);		
+		TempData wd = new TempData();
 
-		LogUtils.studySummary(sc, model_data_complete_map);
+		wd.model_dataset_map=StudyParser.parseModels(sc,wd);
+		
+		LogUtils.studySummary(sc, wd.model_dataset_map);
 		
 		LogUtils.closeLogFile();
 			
@@ -116,8 +116,6 @@ public class TestWreslWalker_advanced {
 		TempData wd = new TempData();
 
 		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
-		
-		//LogUtils.mainFileSummary(sc);
 		
 		wd.model_dataset_map=StudyParser.parseModels(sc,wd);
 

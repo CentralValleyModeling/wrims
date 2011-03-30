@@ -27,7 +27,7 @@ public class Dataset {
 	public ArrayList<String> wtList = new ArrayList<String>();	
 	public ArrayList<String> wtList_global = new ArrayList<String>();
 	public ArrayList<String> wtList_local = new ArrayList<String>();
-	public Map<String, WeightTable> wtMap = new HashMap<String, WeightTable>();
+	public Map<String, WeightElement> wtMap = new HashMap<String, WeightElement>();
 	public Map<String,String> error_weightVar_redefined = new HashMap<String, String>();
 	
 

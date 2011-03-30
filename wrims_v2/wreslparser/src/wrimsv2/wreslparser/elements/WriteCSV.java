@@ -189,7 +189,7 @@ public class WriteCSV {
 	  };	  
 
 	  
-	  public static void weight(Map<String,WeightTable> wtMap, ArrayList<String> list ,PrintWriter out) {
+	  public static void weight(Map<String,WeightElement> wtMap, ArrayList<String> list ,PrintWriter out) {
 		    
 			List<String> keys = list;
 			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
@@ -198,7 +198,7 @@ public class WriteCSV {
 		    for (String k: keys ){
 		    	
 		    	//out.print(k);
-		    	WeightTable s = wtMap.get(k);
+		    	WeightElement s = wtMap.get(k);
 		    	
 
 			    out.print(k); // for DVAR NAME

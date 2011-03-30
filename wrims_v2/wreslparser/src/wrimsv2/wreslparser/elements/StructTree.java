@@ -17,7 +17,7 @@ public class StructTree {
 	//public ArrayList<String> error_model_redefined = new ArrayList<String>();
 
 	// / weight table   // <objName,  <itemName, value>>
-	public WeightTable wt;
+	public WeightElement wt;
 
 	public Sequence seq;
 
@@ -63,7 +63,7 @@ public class StructTree {
 		else {
 					
 			// / clearer data structure
-			wt = new WeightTable();
+			wt = new WeightElement();
 			wt.weight = value;
 			wt.fromWresl = S.currentAbsolutePath;
 			S.wtMap.put(name, wt);

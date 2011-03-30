@@ -188,10 +188,10 @@ public class Tools {
 
 		for (String f : fileList) {
 			if (localList.contains(f)) {
-				scopeMap.put(f,"local");
+				scopeMap.put(f,Parameters.local);
 			}
 			else {
-				scopeMap.put(f,"global");
+				scopeMap.put(f,Parameters.global);
 			}
 		}
 		return scopeMap;
@@ -301,7 +301,7 @@ public class Tools {
 			Map<String,Set<String>> t1ReverseMap	) {
 
 		
-		if (fileScopeMap.get(f) == "local") {
+		if (fileScopeMap.get(f) == Parameters.local) {
 
 			ds.convertToLocal();
 
@@ -310,7 +310,7 @@ public class Tools {
 
 			for (String upperFile : t1ReverseMap.get(f)) {
 
-				if (fileScopeMap.get(upperFile) == "local") {
+				if (fileScopeMap.get(upperFile) == Parameters.local) {
 
 					LogUtils.normalMsg("...Convert this file data to local: " + f );
 					LogUtils.normalMsg("   due to  [local] specification for its parent file: " + upperFile + "\n");
@@ -357,6 +357,11 @@ public class Tools {
 		
 	}
 	
-	
-	
+	public static void mapRemoveAll (Map<String, ?> map, ArrayList<String> list){
+		for (String key: list){
+			map.remove(key);	
+		}
+	}
+
+
 }
