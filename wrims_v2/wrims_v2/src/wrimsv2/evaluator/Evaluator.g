@@ -13,6 +13,7 @@ options {
   import org.antlr.runtime.RecognitionException;
   import org.antlr.runtime.TokenStream;
   
+  import java.util.HashMap;
   import wrimsv2.components.Error;
 }
 
@@ -67,7 +68,7 @@ text	:	LETTER (LETTER | DIGIT )*;
 	
 expressionCollection returns [EvalExpression ee]
 	:	((expression{ee=$expression.ee;})
-	|(tableSQL)
+	|(tableSQL){ee=$tableSQL.ee;}
 	|(timeseriesWithUnits)
 	|((timeseries){ee=$timeseries.ee;})
 	|(sumExpression{ee=$sumExpression.ee;}))
@@ -143,15 +144,15 @@ usedKeywords: YEAR|MONTH|MONTH_CONST|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|I
 |NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
 |CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE;
 
-tableSQL 
-	: 'select' ((i1=IDENT)|(u1=usedKeywords)) 'from' i2=IDENT 
-	  ('given' i3=assignStatement)? ('use' i4=IDENT)? 
-	  (where_items)?	  
+tableSQL returns [EvalExpression ee] @init{String table=null; String select=null; String use=null; HashMap<String, Number> given=null; HashMap<String, Number> where=null;}
+	: 'select' ((i1=IDENT{select=$i1.text;})|(u1=usedKeywords{select=$u1.text;})) 'from' i2=IDENT{table=$i2.text;} 
+	  ('given' a=assignStatement{given=new HashMap<String, Number>(); given.put($a.assignIdent, $a.value);})? ('use' i3=IDENT{use=$i3.text;})? 
+	  (where_items{where=$where_items.where;})? {ee=Evaluation.tableSQL(table, select, where, given, use);}	  
 	;
 
-where_items 
-	:	 WHERE  (r1=whereStatement)
-	        (';' r=whereStatement)*
+where_items returns [HashMap<String, Number> where]
+	:	 WHERE  (r1=whereStatement{where=new HashMap<String, Number>(); where.put($r1.whereIdent, $r1.value);})
+	        (';' r=whereStatement{where.put($r.whereIdent, $r.value);})*
 	;
 
 
@@ -265,8 +266,8 @@ conditionStatement returns [boolean result]
 	:	((r=relationStatementSeries{result=$r.result;})|ALWAYS{result=true;})
 	;
 
-whereStatement 
-  : ((i=IDENT)|(u=usedKeywords)) '=' expression
+whereStatement returns [String whereIdent, Number value]
+  : ((i=IDENT{$whereIdent=$i.text;})|(u=usedKeywords{$whereIdent=$u.text;})) '=' expression{$value=Evaluation.assignWhereStatement($expression.ee);} 
   ;
 	
 relationStatementSeries returns [boolean result] 
@@ -286,8 +287,8 @@ constraintStatement returns [EvalConstraint ec]
   : e1=expression ((s='=')|(s='>')|(s='<')) e2=expression{ec=Evaluation.constraintStatement($e1.ee, $e2.ee, $s.text);}
   ;
 
-assignStatement returns [String result]  
-  : IDENT '=' expression {result=Evaluation.assignStatement($IDENT.text,$expression.ee);} 
+assignStatement returns [String assignIdent, Number value]  
+  : IDENT '=' expression {$assignIdent=$IDENT.text; $value=Evaluation.assignWhereStatement($expression.ee);} 
   ;
 
 number

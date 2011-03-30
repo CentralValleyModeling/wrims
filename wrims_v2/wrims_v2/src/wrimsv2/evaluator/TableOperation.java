@@ -129,7 +129,7 @@ public class TableOperation {
 	public static IntDouble findData(String table, String select, HashMap<String, Number> where, HashMap<String, Number> given, String use){
 		if (!TableSeries.tableSeries.containsKey(table)){
 			if (!retrieveLookUpData(table)){
-				return new IntDouble(1,true);
+				return new IntDouble(1.0,false);
 			}
 		}
 		
@@ -143,7 +143,7 @@ public class TableOperation {
 			selectIndex=field.get(select);
 		}else{
 			Error.addEvaluationError(select+" in the select statement is not a field name in Table "+table);
-			return new IntDouble(1,true);
+			return new IntDouble(1.0,false);
 		}
 		
 		Set whereSet=where.keySet();
@@ -158,7 +158,7 @@ public class TableOperation {
 				whereIndex[k]=field.get(whereName);
 			}else{
 				Error.addEvaluationError(whereName+" in the where statement is not a field name in Table "+table);
-				return new IntDouble(1,true);
+				return new IntDouble(1.0,false);
 			}
 			whereValue[k]=(Number)where.get(whereName);
 			k=k+1;
@@ -189,7 +189,7 @@ public class TableOperation {
 		
 		if (!whereTrue){
 			Error.addEvaluationError("Under those where statements, data could not be found in Table "+table);
-			return new IntDouble(1,true);
+			return new IntDouble(1.0,false);
 		}
 		
 		Number value=values[selectIndex];
@@ -208,7 +208,7 @@ public class TableOperation {
 			givenIndex=field.get(givenName);
 		}else{
 			Error.addEvaluationError(givenName+" in the given statement is not a field name in Table "+table);
-			return new IntDouble(1,true);
+			return new IntDouble(1.0,false);
 		}
 		Number givenValue=(Number)given.get(givenName);
 		
@@ -256,7 +256,7 @@ public class TableOperation {
 						return new IntDouble(value, false);
 					}else{
 						Error.addEvaluationError("Use statement can only be max, min, or linear in Table"+table);
-						return new IntDouble(1,true);
+						return new IntDouble(1.0,false);
 					}
 					return generateIntDouble(valueString);
 				}
@@ -264,7 +264,7 @@ public class TableOperation {
 			}
 		}
 		Error.addEvaluationError("Data not found in Table "+table);
-		return new IntDouble(1,true);
+		return new IntDouble(1.0,false);
 	}
 	
 	public static IntDouble generateIntDouble(String valueString){

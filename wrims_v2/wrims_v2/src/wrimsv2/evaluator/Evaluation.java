@@ -38,13 +38,6 @@ public class Evaluation {
 		return Integer.toString(value);
 	}
 	
-	public static String assignStatement(String ident, EvalExpression ee){
-		if (!ee.isNumeric()){
-			Error.addEvaluationError("Decision variable can't be used in table definition");
-		}
-		return ident+"="+ee.getValue().getData();
-	}
-	
 	public static boolean relationStatement(EvalExpression ee1, EvalExpression ee2, String relation){
 		if (!ee1.isNumeric() || !ee2.isNumeric()){
 			Error.addEvaluationError("Decision variable can't be used in define condition");
@@ -889,6 +882,21 @@ public class Evaluation {
 		EvalExpression ee=new EvalExpression();
 		ee.setValue(id);
 		ControlData.sumIndex.pop();
+		return ee;
+	}
+	
+	public static Number assignWhereStatement(EvalExpression ee){
+		if (ee.isNumeric()){
+			return ee.getValue().getData();
+		}else{
+			return 1.0;
+		}
+	}
+	
+	public static EvalExpression tableSQL(String table, String select, HashMap<String, Number> where, HashMap<String, Number> given, String use){
+		IntDouble id=TableOperation.findData(table, select, where, given, use);
+		EvalExpression ee=new EvalExpression();
+		ee.setValue(id);
 		return ee;
 	}
 	
