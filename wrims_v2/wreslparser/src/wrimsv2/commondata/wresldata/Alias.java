@@ -1,6 +1,5 @@
 package wrimsv2.commondata.wresldata;
 
-import wrimsv2.wreslparser.elements.Parameters;
 
 public class Alias {
 	

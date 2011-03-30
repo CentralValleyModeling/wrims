@@ -18,6 +18,7 @@ import org.antlr.runtime.tree.CommonTreeNodeStream;
 
 
 
+import wrimsv2.commondata.wresldata.Parameters;
 import wrimsv2.wreslparser.grammar.WreslTreeLexer;
 import wrimsv2.wreslparser.grammar.WreslTreeParser;
 import wrimsv2.wreslparser.grammar.WreslTreeWalker;

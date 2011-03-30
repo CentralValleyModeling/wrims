@@ -8,8 +8,8 @@ import java.util.Set;
 
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.ModelDataSet;
+import wrimsv2.commondata.wresldata.Parameters;
 import wrimsv2.commondata.wresldata.StudyDataSet;
-import wrimsv2.wreslparser.elements.Parameters;
 
 
 
@@ -17,11 +17,6 @@ public class LogUtils {
 
 	private static PrintWriter _logFile;
 
-
-	public static void setLogFile(){
-		
-		 setLogFile(Parameters.converterLogFileName);		
-	}
 
 	public static void closeLogFile(){
 		

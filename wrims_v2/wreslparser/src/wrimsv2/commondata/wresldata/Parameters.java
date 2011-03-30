@@ -1,4 +1,4 @@
-package wrimsv2.wreslparser.elements;
+package wrimsv2.commondata.wresldata;
 
 
 public class Parameters {
@@ -11,7 +11,7 @@ public class Parameters {
 	  public static String skip = "#";
 	  public static String no = "N";
 
-	  public static String converterLogFileName = "converter.log";
+
 	  public static int printLevel = 1;
 	  
 	  

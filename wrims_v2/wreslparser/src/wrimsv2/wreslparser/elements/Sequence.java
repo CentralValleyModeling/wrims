@@ -1,5 +1,7 @@
 package wrimsv2.wreslparser.elements;
 
+import wrimsv2.commondata.wresldata.Parameters;
+
 public class Sequence {
 
 	public String sequenceName;

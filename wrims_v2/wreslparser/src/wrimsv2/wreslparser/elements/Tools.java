@@ -15,6 +15,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import wrimsv2.commondata.wresldata.Parameters;
+
 public class Tools {
 	public static String strip(String s) {
 		return s.substring(1, s.length() - 1);
