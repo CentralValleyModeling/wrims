@@ -4,6 +4,8 @@ package test.test_evaluator;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.HashMap;
+
 import junit.framework.TestCase;
 
 import org.antlr.runtime.ANTLRStringStream;
@@ -17,6 +19,8 @@ import wrimsv2.evaluator.EvalExpression;
 import wrimsv2.evaluator.EvaluatorLexer;
 import wrimsv2.evaluator.EvaluatorParser;
 import wrimsv2.evaluator.DssOperation;
+import wrimsv2.evaluator.TableOperation;
+import wrimsv2.evaluator.IntDouble;
 import wrimsv2.external.LoadAllDll;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
@@ -235,6 +239,29 @@ public class TestEvaluator extends TestCase{
 		evaluator = new EvaluatorParser(tokenStream);
 		evaluator.evaluator();
 		System.out.println(evaluator.evalValue.getData());
+		
+		Error.writeEvaluationErrorFile("log.txt");
+	}
+	
+	@Test
+	public void testLookUpTable() throws RecognitionException, IOException {
+
+        String mainFile="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\main.wresl";
+        FilePaths fp=new FilePaths();
+        fp.setMainFilePaths(mainFile);
+		
+        new ControlData();
+        String table="swp_3pattern_demands";
+        String select="demand";
+        String use="linear";
+        HashMap<String, Number> given = new HashMap<String, Number>();
+        given.put("percent", 75);
+        HashMap<String, Number> where = new HashMap<String, Number>();
+        where.put("contractor", 1);
+        where.put("month",7);
+        
+        IntDouble id=TableOperation.findData(table, select, where, given, use);
+		System.out.println(id.getData());
 		
 		Error.writeEvaluationErrorFile("log.txt");
 	}
