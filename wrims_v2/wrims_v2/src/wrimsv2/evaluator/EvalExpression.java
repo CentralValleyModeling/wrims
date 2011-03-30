@@ -2,8 +2,18 @@ package wrimsv2.evaluator;
 import java.util.HashMap;
 
 public class EvalExpression {
-	private IntDouble intDouble=new IntDouble(0, true);
-	private HashMap<String, IntDouble> multiplier = new HashMap<String, IntDouble>();
+	private IntDouble intDouble;
+	private HashMap<String, IntDouble> multiplier;
+	
+	public EvalExpression(){
+		intDouble=new IntDouble(0, true);
+		multiplier = new HashMap<String, IntDouble>();
+	}
+	
+	public EvalExpression(IntDouble id){
+		intDouble=id;
+		multiplier = new HashMap<String, IntDouble>();
+	}
 	
 	public IntDouble getValue(){
 		return intDouble;

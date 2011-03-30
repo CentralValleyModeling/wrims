@@ -115,41 +115,33 @@ public class Evaluation {
 	}
 	
 	public static EvalExpression term_knownTS(IntDouble result){
-		EvalExpression ee=new EvalExpression();
-		ee.setValue(result);
-		return ee;
+		return new EvalExpression(result);
 	}
 	
 	public static EvalExpression term_IDENT (String ident){
 		EvalExpression ee=new EvalExpression();
-		IntDouble intDouble0 = new IntDouble (0, true);
-		ee.setValue(intDouble0);
+		IntDouble id0 = new IntDouble (0, true);
+		ee.setValue(id0);
 		HashMap<String, IntDouble> multiplier=ee.getMultiplier();
-		IntDouble intDouble= new IntDouble(1,true); 
-		multiplier.put(ident, intDouble);
+		IntDouble id= new IntDouble(1,true); 
+		multiplier.put(ident, id);
 		return ee;
 	}
 	
 	public static EvalExpression term_SVAR (String ident){
-		EvalExpression ee=new EvalExpression();
 		//To Do: get data from Svar in the IlpData in the current cycle
-		IntDouble intDouble = new IntDouble(99999999999.0, false);
-		ee.setValue(intDouble);
-		return ee;
+		IntDouble id = new IntDouble(99999999999.0, false);
+		return new EvalExpression(id);
 	}
 	
 	public static EvalExpression term_INTEGER (String integer){
-		EvalExpression ee=new EvalExpression();
-		IntDouble intDouble = new IntDouble(convertStringToInt(integer), true);
-		ee.setValue(intDouble);
-		return ee;
+		IntDouble id = new IntDouble(convertStringToInt(integer), true);
+		return new EvalExpression(id);
 	}
 	
 	public static EvalExpression term_FLOAT (String floatValue){
-		EvalExpression ee=new EvalExpression();
-		IntDouble intDouble = new IntDouble(convertStringToDouble(floatValue), false);
-		ee.setValue(intDouble);
-		return ee;
+		IntDouble id = new IntDouble(convertStringToDouble(floatValue), false);
+		return new EvalExpression(id);
 	}
 	
 	public static EvalExpression unary (String s, EvalExpression ee){
@@ -163,13 +155,13 @@ public class Evaluation {
 			}
 			Map<String, IntDouble> multiplier=ee.getMultiplier();
 			for (String dvar : multiplier.keySet()) {
-				IntDouble intDouble=multiplier.get(dvar);
-				if (intDouble.isInt()){
-					intDouble.setData(-intDouble.getData().intValue());
+				IntDouble id=multiplier.get(dvar);
+				if (id.isInt()){
+					id.setData(-id.getData().intValue());
 				}else{
-					intDouble.setData(-intDouble.getData().doubleValue());
+					id.setData(-id.getData().doubleValue());
 				}
-				multiplier.put(dvar, intDouble);				
+				multiplier.put(dvar, id);				
 			}
 		}
 		return ee;
@@ -561,9 +553,7 @@ public class Evaluation {
 		TimeOperation.findTime(0);
 		double value=svarTimeSeries(svName);
 		IntDouble id=new IntDouble(value,false);
-		EvalExpression ee=new EvalExpression();
-		ee.setValue(id);
-		return ee;
+		return new EvalExpression(id);
 	}
 	
 	public static IntDouble pastCycleDV(String ident, String cycle){
@@ -576,9 +566,7 @@ public class Evaluation {
 		if (!ee1.isNumeric() || !ee2.isNumeric()){
 			Error.error_evaluation.add("variable inside max function should not contain decision variable.");
 		}
-		EvalExpression ee=new EvalExpression();
-		ee.setValue(maxOperation(ee1.getValue(), ee2.getValue()));
-		return ee;
+		return new EvalExpression(maxOperation(ee1.getValue(), ee2.getValue()));
 	}
 	
 	public static IntDouble maxOperation(IntDouble id1, IntDouble id2){
@@ -599,9 +587,7 @@ public class Evaluation {
 		if (!ee1.isNumeric() || !ee2.isNumeric()){
 			Error.error_evaluation.add("variable inside min function should not contain decision variable.");
 		}
-		EvalExpression ee=new EvalExpression();
-		ee.setValue(minOperation(ee1.getValue(), ee2.getValue()));
-		return ee;
+		return new EvalExpression((minOperation(ee1.getValue(), ee2.getValue())));
 	}
 	
 	public static IntDouble minOperation(IntDouble id1, IntDouble id2){
@@ -622,9 +608,7 @@ public class Evaluation {
 		if (!ee1.isNumeric()){
 			Error.error_evaluation.add("variable inside int function should not contain decision variable.");
 		}
-		EvalExpression ee=new EvalExpression();
-		ee.setValue(intOperation(ee1.getValue()));
-		return ee;
+		return new EvalExpression(intOperation(ee1.getValue()));
 	}
 	
 	public static IntDouble intOperation(IntDouble id1){
@@ -640,9 +624,7 @@ public class Evaluation {
 		if (!ee1.isNumeric()){
 			Error.error_evaluation.add("variable inside abs function should not contain decision variable.");
 		}
-		EvalExpression ee=new EvalExpression();
-		ee.setValue(absOperation(ee1.getValue()));
-		return ee;
+		return new EvalExpression(absOperation(ee1.getValue()));
 	}
 	
 	public static IntDouble absOperation(IntDouble id1){
@@ -659,9 +641,7 @@ public class Evaluation {
 		if (!ee1.isNumeric()){
 			Error.error_evaluation.add("variable inside log function should not contain decision variable.");
 		}
-		EvalExpression ee=new EvalExpression();
-		ee.setValue(logOperation(ee1.getValue()));
-		return ee;
+		return new EvalExpression(logOperation(ee1.getValue()));
 	}
 	
 	public static IntDouble logOperation(IntDouble id1){
@@ -678,9 +658,7 @@ public class Evaluation {
 		if (!ee1.isNumeric()){
 			Error.error_evaluation.add("variable inside log10 function should not contain decision variable.");
 		}
-		EvalExpression ee=new EvalExpression();
-		ee.setValue(log10Operation(ee1.getValue()));
-		return ee;
+		return new EvalExpression(log10Operation(ee1.getValue()));
 	}
 	
 	public static IntDouble log10Operation(IntDouble id1){
@@ -697,9 +675,7 @@ public class Evaluation {
 		if (!ee1.isNumeric() || !ee2.isNumeric()){
 			Error.error_evaluation.add("variable inside pow function should not contain decision variable.");
 		}
-		EvalExpression ee=new EvalExpression();
-		ee.setValue(powOperation(ee1.getValue(), ee2.getValue()));
-		return ee;
+		return new EvalExpression(powOperation(ee1.getValue(), ee2.getValue()));
 	}
 	
 	public static IntDouble powOperation(IntDouble id1, IntDouble id2){
@@ -719,9 +695,7 @@ public class Evaluation {
 	public static EvalExpression daysIn(){
 		int days=TimeOperation.numberOfDays(ControlData.currMonth, ControlData.currYear);
 		IntDouble id=new IntDouble(days, true);
-		EvalExpression ee=new EvalExpression();
-		ee.setValue(id);
-		return ee;
+		return new EvalExpression(id);
 	}
 	
 	public static EvalExpression tafcfs_term(String ident, EvalExpression ee){
@@ -740,9 +714,7 @@ public class Evaluation {
 		}
 		double convert = tafcfs(ident);
 		IntDouble id1=new IntDouble(convert, false);
-		EvalExpression ee1=new EvalExpression();
-		ee1.setValue(id1);
-		return ee1;
+		return new EvalExpression(id1);
 	}
 	
 	public static double tafcfs(String ident){
@@ -761,24 +733,18 @@ public class Evaluation {
 	
 	public static EvalExpression term_YEAR(){
 		IntDouble id=new IntDouble(TimeOperation.waterYearValue(), true);
-		EvalExpression ee=new EvalExpression();
-		ee.setValue(id);
-		return ee;
+		return new EvalExpression(id);
 	}
 	
 	public static EvalExpression term_MONTH(){
 		IntDouble id=new IntDouble(TimeOperation.waterMonthValue(ControlData.currMonth), true);
-		EvalExpression ee=new EvalExpression();
-		ee.setValue(id);
-		return ee;
+		return new EvalExpression(id);
 	}
 	
 	public static EvalExpression term_MONTH_CONST(String month){
 		int monthValue=TimeOperation.monthValue(month);
 		IntDouble id=new IntDouble(TimeOperation.waterMonthValue(monthValue), true);
-		EvalExpression ee=new EvalExpression();
-		ee.setValue(id);
-		return ee;
+		return new EvalExpression(id);
 	}
 	
 	public static EvalExpression term_PASTMONTH(String pastMonth){
@@ -789,9 +755,7 @@ public class Evaluation {
 			index=index-12;
 		}
 		IntDouble id=new IntDouble(index,true);
-		EvalExpression ee=new EvalExpression();
-		ee.setValue(id);
-		return ee;
+		return new EvalExpression(id);
 	}
 	
 	public static void sumExpression_IDENT(String ident){
@@ -807,33 +771,25 @@ public class Evaluation {
 		}
 		if (!ee1.isNumeric()){
 			Error.addEvaluationError("the starting index can't contains decision variable");
-			EvalExpression ee=new EvalExpression();
 			IntDouble id=new IntDouble(1.0, false);
-			ee.setValue(id);
-			return ee;
+			return new EvalExpression(id);
 		}
 		if (!ee2.isNumeric()){
 			Error.addEvaluationError("the ending index can't contains decision variable");
-			EvalExpression ee=new EvalExpression();
 			IntDouble id=new IntDouble(1.0, false);
-			ee.setValue(id);
-			return ee;
+			return new EvalExpression(id);
 		}
 		IntDouble id1=ee1.getValue();
 		IntDouble id2=ee2.getValue();
 		if (!id1.isInt()){
 			Error.addEvaluationError("the starting index should be integer");
-			EvalExpression ee=new EvalExpression();
 			IntDouble id=new IntDouble(1.0, false);
-			ee.setValue(id);
-			return ee;
+			return new EvalExpression(id);
 		}
 		if (!id2.isInt()){
 			Error.addEvaluationError("the ending index should be integer");
-			EvalExpression ee=new EvalExpression();
 			IntDouble id=new IntDouble(1.0, false);
-			ee.setValue(id);
-			return ee;
+			return new EvalExpression(id);
 		}
 		int start=id1.getData().intValue();
 		int end=id2.getData().intValue();
@@ -879,10 +835,8 @@ public class Evaluation {
 			}
 		}
 		
-		EvalExpression ee=new EvalExpression();
-		ee.setValue(id);
 		ControlData.sumIndex.pop();
-		return ee;
+		return new EvalExpression(id);
 	}
 	
 	public static Number assignWhereStatement(EvalExpression ee){
@@ -895,9 +849,7 @@ public class Evaluation {
 	
 	public static EvalExpression tableSQL(String table, String select, HashMap<String, Number> where, HashMap<String, Number> given, String use){
 		IntDouble id=TableOperation.findData(table, select, where, given, use);
-		EvalExpression ee=new EvalExpression();
-		ee.setValue(id);
-		return ee;
+		return new EvalExpression(id);
 	}
 	
 	public static IntDouble expressionInput(EvalExpression ee){
