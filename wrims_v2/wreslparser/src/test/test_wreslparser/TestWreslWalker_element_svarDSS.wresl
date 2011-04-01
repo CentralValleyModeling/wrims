@@ -6,8 +6,8 @@ SEQUENCE CYCLE1 {
 MODEL first { 
 
 
-define evap_S_Orovl {timeseries kind 'EVAPORATION-RATE' units 'IN'}
-!define D408_est { timeseries 'UD_CCWD' kind 'DEMAND-CVP' units 'TAF' convert 'CFS'}
+define simple {timeseries kind 'EVAPORATION-RATE' units 'IN'}
+define complex { timeseries 'UD_CCWD' kind 'DEMAND-CVP' units 'TAF' convert 'CFS'}
 	
 	}	
 

@@ -28,7 +28,7 @@ public class WriteCSV {
 	  public static String sequence_header ="CYCLE,CONDITION";
 	  public static String weight_header ="DVAR,WEIGHT";
 	  public static String external_header ="FUNCTION,FILE";
-	  public static String svar_header ="NAME,TYPE,UNITS,CONVERT_TO_UNITS,OUTPUT,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
+	  public static String svar_header ="NAME,B_PART,TYPE,UNITS,CONVERT_TO_UNITS,OUTPUT,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
 	  public static String dvar_header ="NAME,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE";	  
 	  public static String alias_header ="NAME,TYPE,UNITS,EXPRESSION,FROM_WRESL_FILE";
 	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,LHS_GT_RHS,LHS_LT_RHS,FROM_WRESL_FILE";
@@ -145,7 +145,7 @@ public class WriteCSV {
 		    	//out.print(","+p.scope);  // for SCOPE
 		    	//out.print(",Y"); //for INCLUDE
 		    	//out.print(","+p.format); //for FORMAT
-			    //out.print(","+s.dssBPart); //for DSS B Part	
+			    out.print(","+s.dssBPart); //for DSS B Part	
 			    out.print(","+s.kind); //for KIND		    	
 		    	out.print(","+s.units); //for UNITS
 		    	out.print(","+s.convertToUnits); //for CONVERT

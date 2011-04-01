@@ -99,8 +99,8 @@ dvar : dvar_std | dvar_nonStd   ;
 svar : svar_dss ;
 
 svar_dss :
-       ^(Svar_dss (sc=Global|sc=Local) i=IDENT Kind k=STRING Units u=STRING)
-       { F.svarDSS($i.text, $sc.text, null, Tools.strip($k.text), Tools.strip($u.text), null); }
+       ^(Svar_dss (sc=Global|sc=Local) i=IDENT b=B_part Kind k=STRING Units u=STRING c=CONVERT )
+       { F.svarDSS($i.text, $sc.text, Tools.strip($b.text), Tools.strip($k.text), Tools.strip($u.text),  Tools.strip($c.text)); }
 	;
 
 dvar_std  :

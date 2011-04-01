@@ -131,9 +131,9 @@ svar : DEFINE! (svar_dss ) ;
 dvar : DEFINE! (dvar_std | dvar_nonStd ) ;	
 
 svar_dss : 
-	s=LOCAL? IDENT '{' TIMESERIES b=STRING? KIND k=STRING UNITS u=STRING '}'
-	-> {s!=null}? ^(Svar_dss  Local  IDENT  Kind $k Units $u) 	
-	->            ^(Svar_dss  Global IDENT  Kind $k Units $u) 
+	s=LOCAL? IDENT '{' TIMESERIES b=STRING? KIND k=STRING UNITS u=STRING (CONVERT c=STRING)? '}'
+	-> {s!=null}? ^(Svar_dss  Local  IDENT B_part[$b.text] Kind $k Units $u CONVERT[$c.text]) 	
+	->            ^(Svar_dss  Global IDENT B_part[$b.text] Kind $k Units $u CONVERT[$c.text])  
 	;		
 	
 dvar_std :
@@ -233,7 +233,7 @@ DLL :  IDENT ('.dll' | '.DLL' );
 INTEGER_WORD: 'integer' | 'INTEGER' ;
 STD : 'std' | 'STD' ;
 UNITS : 'units' | 'UNITS' | 'Units' ;
-CONVERT : 'convert' | 'CONVERT' ;
+CONVERT : 'convert' | 'CONVERT' | 'Convert';
 ALIAS : 'alias' | 'ALIAS';
 KIND : 'kind' | 'KIND';
 GOAL : 'goal' | 'GOAL' | 'Goal';
