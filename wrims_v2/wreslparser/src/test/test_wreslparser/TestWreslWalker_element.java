@@ -3,6 +3,7 @@ package test.test_wreslparser;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import org.testng.annotations.Test;
 
 
 import wrimsv2.commondata.wresldata.StudyDataSet;
+import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.wreslparser.elements.FileParser;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.RegUtils;
@@ -20,6 +22,7 @@ import wrimsv2.wreslparser.elements.StudyConfig;
 import wrimsv2.wreslparser.elements.StudyParser;
 import wrimsv2.wreslparser.elements.TempData;
 import wrimsv2.wreslparser.elements.Tools;
+import wrimsv2.wreslparser.elements.WriteCSV;
 import wrimsv2.wreslparser.grammar.WreslTreeWalker;
 
 public class TestWreslWalker_element {
@@ -95,6 +98,15 @@ public class TestWreslWalker_element {
 		LogUtils.studySummary_details(sd);
 
 		LogUtils.closeLogFile();
+		
+		
+		
+		String modelName = sd.getModelList().get(0);
+//		Map<String, Svar> svMap = sd.getModelDataSetMap().get(modelName).svMap;
+//		ArrayList<String> svList = sd.getModelDataSetMap().get(modelName).svList;
+		
+		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),"TestWreslWalker_element_svarDSS" ) ;
+
 			
 		String fileText = Tools.readFileAsString(logFilePath);	
 

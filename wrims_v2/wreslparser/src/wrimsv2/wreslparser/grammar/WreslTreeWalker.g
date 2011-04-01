@@ -55,8 +55,7 @@ test:  INTEGER 'test' ;
 test2:  t=test {  System.out.println("yyyyyyyyyyyyy"+$t.text  ); };		
 
 pattern
-
-	: dvar | includeFile
+	: dvar | svar | includeFile 
 	;
 
 sequence 
@@ -96,6 +95,13 @@ includeFile
 //	;
 
 dvar : dvar_std | dvar_nonStd   ;
+
+svar : svar_dss ;
+
+svar_dss :
+       ^(Svar_dss (sc=Global|sc=Local) i=IDENT Kind k=STRING Units u=STRING)
+       { F.svarDSS($i.text, $sc.text, null, Tools.strip($k.text), Tools.strip($u.text), null); }
+	;
 
 dvar_std  :
        ^(Dvar_std (sc=Global|sc=Local) i=IDENT Kind k=STRING Units u=STRING)

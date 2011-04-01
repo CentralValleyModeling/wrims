@@ -11,6 +11,7 @@ tokens {
 	NEW_LINE;
 	Local; Global;
 	Dvar; Dvar_std; Dvar_nonStd; Dvar_std; Dvar_nonStd_local;
+	Svar_dss; B_part;
 	Model;
 	Sequence;
 	Condition;
@@ -98,7 +99,7 @@ test:  INTEGER  'test' ;
 test2:  test ;	
 	
 pattern
-	: dvar | includeFile 
+	: dvar | svar | includeFile 
 	;
 	
 model
@@ -124,9 +125,16 @@ includeFile
 	-> {s!=null}? ^(Include Local  FILE_PATH)
 	->            ^(Include Global FILE_PATH)
 	;
+
+svar : DEFINE! (svar_dss ) ;
 		
 dvar : DEFINE! (dvar_std | dvar_nonStd ) ;	
 
+svar_dss : 
+	s=LOCAL? IDENT '{' TIMESERIES b=STRING? KIND k=STRING UNITS u=STRING '}'
+	-> {s!=null}? ^(Svar_dss  Local  IDENT  Kind $k Units $u) 	
+	->            ^(Svar_dss  Global IDENT  Kind $k Units $u) 
+	;		
 	
 dvar_std :
 	s=LOCAL? IDENT '{' STD KIND k=STRING UNITS u=STRING '}' 
@@ -210,7 +218,7 @@ NOT : '.not.' | '.NOT.' ;
 /// reserved keywords ///
 LOCAL : '[local]'| '[LOCAL]' ;
 OBJECTIVE: 'objective' | 'Objective' | 'OBJECTIVE';
-TIMESERIES: 'timeseries';
+TIMESERIES: 'timeseries' | 'TIMESERIES';
 SELECT :  'select' | 'SELECT' ;
 FROM:     'from' | 'FROM' ;
 WHERE : 'where' | 'WHERE';

@@ -13,14 +13,18 @@ import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.External;
 import wrimsv2.commondata.wresldata.Goal;
+import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.WeightElement;
+
+
+
 
 public class WriteCSV {
 	  
 	  //static Map<String, List<String>> mapStringList = new HashMap<String, List<String>>();
 	  //private static PrintWriter out;
-
+	
 	  public static String sequence_header ="CYCLE,CONDITION";
 	  public static String weight_header ="DVAR,WEIGHT";
 	  public static String external_header ="FUNCTION,FILE";
@@ -28,8 +32,9 @@ public class WriteCSV {
 	  public static String dvar_header ="NAME,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE";	  
 	  public static String alias_header ="NAME,TYPE,UNITS,EXPRESSION,FROM_WRESL_FILE";
 	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,LHS_GT_RHS,LHS_LT_RHS,FROM_WRESL_FILE";
-
-	public static void study(StudyConfig sc, Map<String, Dataset> modelDataMap, String outParent) {
+	  
+	  
+	public static void study(StudyConfig sc, Map<String, ModelDataSet> modelDataMap, String outParent) {
 			
 		
 		
@@ -49,7 +54,7 @@ public class WriteCSV {
 
 		}	  
 	  
-	public static void output(Map<String, Dataset> modelDataMap, String outParent) {
+	public static void output(Map<String, ModelDataSet> modelDataMap, String outParent) {
 
 		for (String model : modelDataMap.keySet()) {
 
@@ -66,7 +71,7 @@ public class WriteCSV {
 
 	}
 
-	public static void dataset(Dataset ds, String outFolder) throws IOException {
+	public static void dataset(ModelDataSet ds, String outFolder) throws IOException {
 
 		PrintWriter out_ex;
 		PrintWriter out_sv;
@@ -74,6 +79,8 @@ public class WriteCSV {
 		PrintWriter out_goal;
 		PrintWriter out_alias;
 		PrintWriter out_wt;
+		
+		outFolder = System.getProperty("user.dir")+"//"+outFolder;
 		
 		if(ds.exList.size()>0){
 			out_ex = Tools.openFile(outFolder, "external.csv");		
