@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.File;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -26,13 +27,29 @@ public class GenerateCompileFiles {
 	public static String workingDir;
 	
 	public static void generateBatchFile(){
+		String batchFileFullPath=workingDir+"processDll.bat";
+		Iterator fvni=functionVariableNames.keySet().iterator();
 		
+		try{
+			FileWriter javaFile = new FileWriter(batchFileFullPath);
+			PrintWriter out = new PrintWriter(javaFile);
+			while (fvni.hasNext()){
+				String functionName=(String)fvni.next();
+				out.println("javac -cp . wrimsv2\\external\\Function"+functionName+".java");				
+				out.println("javah -jni wrimsv2.external.Function"+functionName);
+			}
+			
+			out.close();
+		} catch (IOException e){
+			error.add(e.getMessage());
+		}	
 	}
 	
 	public static void generateJavaFile(String functionName){
-		String javaFileFullPath=workingDir+"\\wrimsv2\\external\\Funcation"+functionName+".java";
+		String javaFileFullPath=workingDir+"wrimsv2\\external\\Function"+functionName+".java";
+		String functionType=functionTypes.get(functionName);
 		String[] variableNames=functionVariableNames.get(functionName);
-		String[] variableTypes=functionVariableNames.get(functionName);
+		String[] variableTypes=functionVariableTypes.get(functionName);
 		try{
 			FileWriter javaFile = new FileWriter(javaFileFullPath);
 			PrintWriter out = new PrintWriter(javaFile);
@@ -57,27 +74,53 @@ public class GenerateCompileFiles {
 			out.println();
 			out.println("		//cast params to correct types:");
 			for (int i=variableNames.length; i>0; i--){
-				if (variableTypes[i].equals("int")){
-					out.println("		int "+ variableNames[i]+"= ((Number) param"+i+").intValue();");
-				}else if (variableTypes[i].equals("float")){
-					out.println("		float "+ variableNames[i]+"= ((Number) param"+i+").floatValue();");
-				}else if (variableTypes[i].equals("double")){
-					out.println("		double "+ variableNames[i]+"= ((Number) param"+i+").doubleValue();");
-				}
+					out.println("		"+variableTypes[i-1] +" "+ variableNames[i-1]+" = ((Number) param"+i+")."+variableTypes[i-1]+"Value();");
 			}
-						
+			out.println();
+			String resultString="";
+			resultString="		"+functionType+" result = "+functionName+"("; 	
+			for (int i=0; i<variableNames.length-1; i++){
+				resultString=resultString+variableNames[i]+", ";
+			}
+			resultString=resultString+variableNames[variableNames.length-1]+");";
+			out.println(resultString);
+			out.println();
+			out.println("		// push the result on the Stack");
+			if (functionType.equals("int")){
+				out.println("		stack.push(new Integer(result));");
+			}else if (functionType.equals("float")){
+				out.println("		stack.push(new Float(result));");
+			}if (functionType.equals("double")){
+				out.println("		stack.push(new Double(result));");
+			}	
+			out.println("	}");
+			out.println();
+			String nativeString="	public native "+functionType+" "+functionName+"(";
+			for (int i=0; i<variableNames.length-1; i++){
+				nativeString=nativeString+variableTypes[i]+" "+variableNames[i]+", ";
+			}
+			nativeString=nativeString+variableTypes[variableTypes.length-1]+" "+variableNames[variableNames.length-1]+");";
+			out.println(nativeString);
+			out.println("}");
 			out.close();
 		} catch (IOException e){
-			e.printStackTrace();
+			error.add(e.getMessage());
 		}		
 	}
 	
-	public static void generateCPlusPlusFile(){
-		
-	}
-	
-	public static void generateHeaderFile(){
-		
+	public static void generateCFile(String functionName){
+		String cFileFullPath=workingDir+functionName+".c";
+		String functionType=functionTypes.get(functionName);
+		String[] variableNames=functionVariableNames.get(functionName);
+		String[] variableTypes=functionVariableTypes.get(functionName);
+		try{
+			FileWriter javaFile = new FileWriter(javaFileFullPath);
+			PrintWriter out = new PrintWriter(javaFile);
+
+			out.close();
+		} catch (IOException e){
+			error.add(e.getMessage());
+		}		
 	}
 	
 	public static boolean setDllFunction(String fileName) {	
@@ -247,15 +290,21 @@ public class GenerateCompileFiles {
 	}
 	
 	public static void generateFiles(){
+		String strDirectory =workingDir+"wrimsv2\\external\\";
+		boolean isDone=(new File(strDirectory)).mkdirs();
+		
 		Iterator fvni=functionVariableNames.keySet().iterator();
 		while (fvni.hasNext()){
 			String functionName=(String)fvni.next();
 			generateJavaFile(functionName);
+			generateCFile(functionName);
 		}
+		
+		generateBatchFile();
 	}
 	
 	public static void reportErrors(){
-		String errorFileFullPath=workingDir+"\\error.log";
+		String errorFileFullPath=workingDir+"error.log";
 		try{
 			FileWriter errorFile = new FileWriter(errorFileFullPath);
 			PrintWriter out = new PrintWriter(errorFile);
@@ -269,13 +318,13 @@ public class GenerateCompileFiles {
 		}
 	}
 	
-	public static String getDirectory(String fileFullPath){
+	public static void setWorkingDirectory(String fileFullPath){
 		int index=fileFullPath.lastIndexOf("\\");
-		return fileFullPath.substring(0,index+1);
+		workingDir= fileFullPath.substring(0,index+1);
 	}
 	
 	public static void main(String args[]){
-		workingDir=getDirectory(args[0]);
+		setWorkingDirectory(args[0]);
 		if (setDllFunction(args[0])) generateFiles();
 		reportErrors();
 	}
