@@ -7,8 +7,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import wrimsv2.commondata.ilpdata.Dvar;
-import wrimsv2.commondata.ilpdata.Svar;
+import wrimsv2.commondata.tabledata.Dvar;
+import wrimsv2.commondata.tabledata.Svar;
 
 
 public class SVSort {

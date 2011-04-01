@@ -1,6 +1,6 @@
 package test.test_sort;
 
-import wrimsv2.commondata.ilpdata.Svar;
+import wrimsv2.commondata.tabledata.Svar;
 import wrimsv2.tools.SVSort;
 
 import java.util.Map;

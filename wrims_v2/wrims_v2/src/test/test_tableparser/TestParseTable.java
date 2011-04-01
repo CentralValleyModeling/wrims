@@ -18,11 +18,11 @@ import org.antlr.runtime.TokenStream;
 
 import wrimsv2.tableparser.ParseTableLexer;
 import wrimsv2.tableparser.ParseTableParser;
-import wrimsv2.commondata.ilpdata.Alias;
-import wrimsv2.commondata.ilpdata.Constraint;
-import wrimsv2.commondata.ilpdata.Dvar;
-import wrimsv2.commondata.ilpdata.LRWeight;
-import wrimsv2.commondata.ilpdata.Svar;
+import wrimsv2.commondata.tabledata.Alias;
+import wrimsv2.commondata.tabledata.Constraint;
+import wrimsv2.commondata.tabledata.Dvar;
+import wrimsv2.commondata.tabledata.LRWeight;
+import wrimsv2.commondata.tabledata.Svar;
 import wrimsv2.components.Error;
 import wrimsv2.components.FilePaths;
 
