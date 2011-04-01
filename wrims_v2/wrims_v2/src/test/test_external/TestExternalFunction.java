@@ -16,6 +16,25 @@ public class TestExternalFunction {
         System.out.println("@Test sample: 1==1");
 	}
 
+	@Test
+	public void testGenerateCompileFiles(){
+		String fileFullPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_external\\generateInerface.txt";
+		GenerateCompileFiles.setWorkingDirectory(fileFullPath);
+		if (GenerateCompileFiles.setDllFunction(fileFullPath)) GenerateCompileFiles.generateFiles();
+		
+		GenerateCompileFiles.setDllFunction("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_external\\generateInerface.txt");
+		System.out.print(GenerateCompileFiles.dllFunctions);
+		System.out.println();
+		System.out.print(GenerateCompileFiles.dllDlls);
+		System.out.println();
+		System.out.print(GenerateCompileFiles.functionVariableNames);
+		System.out.println();
+		System.out.print(GenerateCompileFiles.functionVariableTypes);
+		System.out.println();
+		System.out.print(GenerateCompileFiles.error);
+		System.out.println();
+	}
+	
 	public void testAnnEC(){
 		
 		new LoadDll("Ann7inp_CA.dll");
@@ -141,7 +160,6 @@ public class TestExternalFunction {
 		}
 	}
 	
-	@Test
 	public void testAnn_X2(){
 		
 		new LoadDll("Ann7inp_CA.dll");
@@ -180,7 +198,9 @@ public class TestExternalFunction {
 		}
 	}
 	
+	@Test
 	public void testANNLineGen(){
+		new LoadDll("Ann7inp_CA.dll");
 		new LoadDll("InterfaceToAnn.dll");		
 		ExternalFunctionTable eft=new ExternalFunctionTable();
 		ExternalFunction ef=eft.externalFunctionsHashtable.get("annlinegen");

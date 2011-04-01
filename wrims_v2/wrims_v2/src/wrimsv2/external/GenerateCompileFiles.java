@@ -29,16 +29,28 @@ public class GenerateCompileFiles {
 	public static void generateBatchFile(){
 		String batchFileFullPath=workingDir+"processDll.bat";
 		Iterator fvni=functionVariableNames.keySet().iterator();
+		Iterator dfi=dllFunctions.keySet().iterator();
 		
 		try{
-			FileWriter javaFile = new FileWriter(batchFileFullPath);
-			PrintWriter out = new PrintWriter(javaFile);
+			FileWriter batchFile = new FileWriter(batchFileFullPath);
+			PrintWriter out = new PrintWriter(batchFile);
 			while (fvni.hasNext()){
 				String functionName=(String)fvni.next();
 				out.println("javac -cp . wrimsv2\\external\\Function"+functionName+".java");				
 				out.println("javah -jni wrimsv2.external.Function"+functionName);
+				out.println("D:/cvwrsm/trunk/3rd_party/MinGW/bin/gcc -c -Wall -D_JNI_IMPLEMENTATION_ -Wl,--kill-at -I\"C:/Program Files (x86)/Java/jdk1.6.0_24/include\"  -I\"C:/Program Files (x86)/Java/jdk1.6.0_24/include/win32\" wrimsv2_external_Function"+functionName+".c");
 			}
-			
+			String compileString="D:/cvwrsm/trunk/3rd_party/MinGW/bin/gcc -Wall -D_JNI_IMPLEMENTATION_ -Wl,--kill-at -shared "; 
+			while (dfi.hasNext()){
+				String dllName=(String)dfi.next();
+				String fortranDllName=dllDlls.get(dllName);
+				String[] functions=dllFunctions.get(dllName);
+				for (int i=0; i<functions.length; i++){
+					compileString=compileString+"wrimsv2_external_Function"+functions[i]+".o "; 
+				}
+				compileString=compileString+"-o "+dllName+".dll -L./ "+fortranDllName+".dll";
+				out.println(compileString);
+			}
 			out.close();
 		} catch (IOException e){
 			error.add(e.getMessage());
@@ -109,14 +121,50 @@ public class GenerateCompileFiles {
 	}
 	
 	public static void generateCFile(String functionName){
-		String cFileFullPath=workingDir+functionName+".c";
+		String cFileFullPath=workingDir+"wrimsv2_external_Function"+functionName+".c";
 		String functionType=functionTypes.get(functionName);
 		String[] variableNames=functionVariableNames.get(functionName);
 		String[] variableTypes=functionVariableTypes.get(functionName);
 		try{
-			FileWriter javaFile = new FileWriter(javaFileFullPath);
-			PrintWriter out = new PrintWriter(javaFile);
-
+			FileWriter cFile = new FileWriter(cFileFullPath);
+			PrintWriter out = new PrintWriter(cFile);
+			out.println("#include <jni.h>");
+			out.println("#include \"wrimsv2_external_Function"+functionName+".h\"");
+			out.println();
+			String externalString="extern "+functionType+" "+functionName.toUpperCase()+"(";
+			String variableType;
+			for (int i=0; i<variableNames.length-1; i++){
+				if (variableTypes[i].equals("int")){
+					variableType="long";
+				}else{
+					variableType=variableTypes[i];
+				}
+				externalString=externalString+variableType+"* "+variableNames[i]+", ";
+			}
+			if (variableTypes[variableTypes.length-1].equals("int")){
+				variableType="long";
+			}else{
+				variableType=variableTypes[variableTypes.length-1];
+			}
+			externalString=externalString+variableType+"* "+variableNames[variableNames.length-1]+");";
+			out.println(externalString);
+			out.println();
+			out.println();
+			String modifiedFunctionName=functionName.replaceAll("_", "_1");
+			String exportString="JNIEXPORT j"+functionType+" JNICALL Java_wrimsv2_external_Function"+modifiedFunctionName+"_"+modifiedFunctionName+"(JNIEnv *env, jobject obj, ";
+			for (int i=0; i<variableNames.length-1; i++){
+				exportString=exportString+"j"+variableTypes[i]+" "+variableNames[i]+", ";
+			}
+			exportString=exportString+"j"+variableTypes[variableTypes.length-1]+" "+variableNames[variableNames.length-1]+") {";
+			out.println(exportString);
+			out.println();
+			String returnString="	return "+functionName.toUpperCase()+"(";
+			for (int i=0; i<variableNames.length-1; i++){
+				returnString=returnString+"&"+variableNames[i]+", ";
+			}
+			returnString=returnString+"&"+variableNames[variableNames.length-1]+");";
+			out.println(returnString);
+			out.println("}");
 			out.close();
 		} catch (IOException e){
 			error.add(e.getMessage());
