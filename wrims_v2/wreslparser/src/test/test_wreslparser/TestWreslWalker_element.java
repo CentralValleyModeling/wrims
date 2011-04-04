@@ -149,7 +149,7 @@ public class TestWreslWalker_element {
 		String logText = Tools.readFileAsString(logFilePath);	
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\svar.csv");	
 
-		int r1 = RegUtils.timesOfMatches(csvText, "minflow_C_Orovl,..,..,..,..,n,default,1,always,.29,");
+		int r1 = RegUtils.timesOfMatches(csvText, "minflow_C_Orovl,.+\\.29,");
 		Assert.assertEquals(r1, 1);
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error: State variable redefined");
@@ -186,11 +186,14 @@ public class TestWreslWalker_element {
 		String logText = Tools.readFileAsString(logFilePath);	
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\svar.csv");	
 
-		int r1 = RegUtils.timesOfMatches(csvText, "minflow_C_Orovl,..,..,..,..,n,default,1,always,.29,");
+		int r1 = RegUtils.timesOfMatches(csvText, "division_test,.+\\(A_Orovl_forward - A_Orovl_back\\)/\\(100\\*max\\(0\\.01; S_Orovl\\(-1\\)\\)\\)");
 		Assert.assertEquals(r1, 1);
+
+		int r2 = RegUtils.timesOfMatches(csvText, "min_test,.+min\\(max\\(a; b\\); 2.5\\)");
+		Assert.assertEquals(r2, 1);
 		
-		int totalErrs = RegUtils.timesOfMatches(logText, "# Error: State variable redefined");
-		Assert.assertEquals(totalErrs, 1);		
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);		
 	}
 	
 }

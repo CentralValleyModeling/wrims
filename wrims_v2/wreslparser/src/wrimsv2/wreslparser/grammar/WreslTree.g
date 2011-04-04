@@ -184,7 +184,7 @@ term
 	:	IDENT
 	|	'(' expression ')'
 	|  number
-	|  max_func  |  min_func 
+	|  max_func  |  min_func | external_func 
 	;
 	
 unary :	('+'! | negation)? term 	;
@@ -218,6 +218,9 @@ bin : OR -> OR[".OR."] | AND -> AND[".AND."] ;
 
 //range_func
 //	: RANGE '(' MONTH ',' MONTH_CONST ',' MONTH_CONST ')' ;
+
+external_func 
+	: IDENT '('  expression (',' expression )*  ')' ;
 
 max_func
 	: MAX '(' expression (',' expression)+ ')' ;
