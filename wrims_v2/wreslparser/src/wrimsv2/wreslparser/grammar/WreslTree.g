@@ -127,16 +127,15 @@ includeFile
 	->            ^(Include Global FILE_PATH)
 	;
 
-svar : DEFINE! (svar_dss | svar_const) ;
+svar : DEFINE! (svar_dss | svar_expr  ) ;
 		
 dvar : DEFINE! (dvar_std | dvar_nonStd ) ;	
 
-svar_const : 
-	s=LOCAL? IDENT '{' VALUE  n=number '}'
-	-> {s!=null}? ^(Svar_const  Local  IDENT Value[$n.text] ) 	
-	->            ^(Svar_const  Global IDENT Value[$n.text] )  
-	;		
-
+svar_expr : 
+	s=LOCAL? IDENT '{' VALUE  e=expression'}'
+	-> {s!=null}? ^(Svar_const  Local  IDENT Value[$e.text] ) 	
+	->            ^(Svar_const  Global IDENT Value[$e.text] )  
+	;	
 
 svar_dss : 
 	s=LOCAL? IDENT '{' TIMESERIES b=STRING? KIND k=STRING UNITS u=STRING (CONVERT c=STRING)? '}'
@@ -184,7 +183,8 @@ number : INTEGER | FLOAT ;
 term
 	:	IDENT
 	|	'(' expression ')'
-	|	INTEGER
+	|  number
+	|  max_func  |  min_func 
 	;
 	
 unary :	('+'! | negation)? term 	;
@@ -193,7 +193,9 @@ negation :	'-' -> NEGATION	;
 
 mult :	unary (('*' | '/' ) unary)* 	;
 	
-expression :	mult (('+' | '-') mult)*	;
+add :	mult (('+' | '-') mult)*	;
+	
+expression : add ;	
 	
 c_term
 	: ( expression relation expression ) => expression relation expression
@@ -212,6 +214,18 @@ bin : OR -> OR[".OR."] | AND -> AND[".AND."] ;
 	
 /// End Expression /// 	
 
+/// Intrinsic functions ///
+
+//range_func
+//	: RANGE '(' MONTH ',' MONTH_CONST ',' MONTH_CONST ')' ;
+
+max_func
+	: MAX '(' expression (',' expression)+ ')' ;
+
+min_func
+	: MIN '(' expression (',' expression)+ ')' ;
+	
+/// End Intrinsic functions ///	
 
 COMMENT : '!' .* ('\n'|'\r') {skip();}; //{$channel = HIDDEN;}; 
 MULTILINE_COMMENT : '/*' .* '*/' {skip();}; //{$channel = HIDDEN;};
@@ -228,6 +242,8 @@ OR  : '.or.'  | '.OR.'  ;
 NOT : '.not.' | '.NOT.' ;
 
 /// reserved keywords ///
+MAX :   'max' | 'MAX' | 'Max' ;
+MIN :   'min' | 'MIN' | 'Min' ;
 VALUE : 'value' | 'VALUE' | 'Value' ;
 LOCAL : '[local]'| '[LOCAL]' | '[Local]' ;
 OBJECTIVE: 'objective' | 'Objective' | 'OBJECTIVE';

@@ -96,11 +96,11 @@ includeFile
 
 dvar : dvar_std | dvar_nonStd   ;
 
-svar : svar_dss | svar_const ;
+svar : svar_dss | svar_expr ;
 
-svar_const : 
+svar_expr : 
 	   ^(Svar_const (sc=Global|sc=Local) i=IDENT v=Value )
-	   { F.svarExpression($i.text, $sc.text, $v.text); }
+	   { F.svarExpression($i.text, $sc.text, $v.text.replace(",","; ") ); }
 	;
 
 svar_dss :

@@ -142,10 +142,7 @@ public class TestWreslWalker_element {
 
 		LogUtils.closeLogFile();
 		
-		
 		String modelName = sd.getModelList().get(0);
-//		Map<String, Svar> svMap = sd.getModelDataSetMap().get(modelName).svMap;
-//		ArrayList<String> svList = sd.getModelDataSetMap().get(modelName).svList;
 		
 		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
 	
@@ -158,4 +155,42 @@ public class TestWreslWalker_element {
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error: State variable redefined");
 		Assert.assertEquals(totalErrs, 1);		
 	}
+	@Test(groups = { "WRESL_elements" })
+	public void svarExpression1() throws RecognitionException, IOException {
+		
+		inputFilePath =projectPath+"TestWreslWalker_element_svarExpression1.wresl";
+		logFilePath = "TestWreslWalker_element_svarExpression1.log";
+		csvFolderPath = "TestWreslWalker_element_svarExpression1";
+
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+
+		LogUtils.studySummary_details(sd);
+
+		LogUtils.closeLogFile();
+		
+		String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+	
+		String logText = Tools.readFileAsString(logFilePath);	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\svar.csv");	
+
+		int r1 = RegUtils.timesOfMatches(csvText, "minflow_C_Orovl,..,..,..,..,n,default,1,always,.29,");
+		Assert.assertEquals(r1, 1);
+		
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error: State variable redefined");
+		Assert.assertEquals(totalErrs, 1);		
+	}
+	
 }
