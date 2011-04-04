@@ -30,6 +30,7 @@ public class TestWreslWalker_element {
 	public String projectPath = "src\\test\\test_wreslparser\\";	
 	public String inputFilePath;
 	public String logFilePath;	
+	public String csvFolderPath;	
 	
 	@Test(groups = { "WRESL_elements" })
 	public void dvarNonStd() throws RecognitionException, IOException {
@@ -81,6 +82,7 @@ public class TestWreslWalker_element {
 		
 		inputFilePath =projectPath+"TestWreslWalker_element_svarDSS.wresl";
 		logFilePath = "TestWreslWalker_element_svarDSS.log";
+		csvFolderPath = "TestWreslWalker_element_svarDSS";
 
 		LogUtils.setLogFile(logFilePath);
 		
@@ -105,26 +107,18 @@ public class TestWreslWalker_element {
 //		Map<String, Svar> svMap = sd.getModelDataSetMap().get(modelName).svMap;
 //		ArrayList<String> svList = sd.getModelDataSetMap().get(modelName).svList;
 		
-		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),"TestWreslWalker_element_svarDSS" ) ;
+		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
 
 			
-		String fileText = Tools.readFileAsString(logFilePath);	
+		String logText = Tools.readFileAsString(logFilePath);	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\svar.csv");	
 
-		int correct = RegUtils.timesOfMatches(fileText, "Model second watch_this .+This-is-correct");
-		Assert.assertEquals(correct, 1);
-
-		int wrong = RegUtils.timesOfMatches(fileText, "Model second watch_this .+This-should-not-exist-in-model-second");
-		Assert.assertEquals(wrong, 0);
+		int r1 = RegUtils.timesOfMatches(csvText, "complex,UD_CCWD,DEMAND-CVP,TAF,CFS,n,default,1,always,timeseries,");
+		Assert.assertEquals(r1, 1);
 		
-		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
-		Assert.assertEquals(totalErrs, 1);	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error:");
+		Assert.assertEquals(totalErrs, 0);	
 		
-		int Errs = RegUtils.timesOfMatches(fileText, "# Error: Decision varriable redefined: watch_this in files: ");
-		Assert.assertEquals(Errs, 1);			
-
-		int str1 = RegUtils.timesOfMatches(fileText, 
-				"Model second Include total 5 Dvars:");
-		Assert.assertEquals(str1, 1);
 	}
 		
 }
