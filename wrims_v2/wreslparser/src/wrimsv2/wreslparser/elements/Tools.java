@@ -37,6 +37,7 @@ public class Tools {
 		s=s.replaceAll("\\s+", "");
 		return s;
 	}
+
 	public static Map<String, String> readFilesFromDirAsMap(String dir)
 			throws IOException {
 		File folder = new File(dir);

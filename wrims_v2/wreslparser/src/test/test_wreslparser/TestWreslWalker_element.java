@@ -109,13 +109,14 @@ public class TestWreslWalker_element {
 		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
 	
 		String logText = Tools.readFileAsString(logFilePath);	
+		
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error:");
+		Assert.assertEquals(totalErrs, 0);	
+		
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\svar.csv");	
 
 		int r1 = RegUtils.timesOfMatches(csvText, "complex,UD_CCWD,DEMAND-CVP,TAF,CFS,n,default,1,always,timeseries,");
-		Assert.assertEquals(r1, 1);
-		
-		int totalErrs = RegUtils.timesOfMatches(logText, "# Error:");
-		Assert.assertEquals(totalErrs, 0);		
+		Assert.assertEquals(r1, 1);	
 	}
 	
 	@Test(groups = { "WRESL_elements" })
@@ -147,13 +148,14 @@ public class TestWreslWalker_element {
 		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
 	
 		String logText = Tools.readFileAsString(logFilePath);	
+
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error: State variable redefined");
+		Assert.assertEquals(totalErrs, 1);	
+		
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\svar.csv");	
 
 		int r1 = RegUtils.timesOfMatches(csvText, "minflow_C_Orovl,.+\\.29,");
-		Assert.assertEquals(r1, 1);
-		
-		int totalErrs = RegUtils.timesOfMatches(logText, "# Error: State variable redefined");
-		Assert.assertEquals(totalErrs, 1);		
+		Assert.assertEquals(r1, 1);	
 	}
 	@Test(groups = { "WRESL_elements" })
 	public void svarExpression1() throws RecognitionException, IOException {
@@ -183,7 +185,11 @@ public class TestWreslWalker_element {
 		
 		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
 	
-		String logText = Tools.readFileAsString(logFilePath);	
+		String logText = Tools.readFileAsString(logFilePath);
+		
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);	
+		
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\svar.csv");	
 
 		String s;
@@ -197,10 +203,7 @@ public class TestWreslWalker_element {
 		s = "min_test#min(max(a;b);2.5)";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s);
-		Assert.assertEquals(n, 1);
-		
-		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);		
+		Assert.assertEquals(n, 1);		
 	}
 	@Test(groups = { "WRESL_elements" })
 	public void svarSum() throws RecognitionException, IOException {
@@ -231,6 +234,10 @@ public class TestWreslWalker_element {
 		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
 	
 		String logText = Tools.readFileAsString(logFilePath);	
+
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);	
+		
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\svar.csv");	
 		
 		String s;
@@ -240,8 +247,50 @@ public class TestWreslWalker_element {
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
+	}
+	@Test(groups = { "WRESL_elements" })
+	public void svarTable() throws RecognitionException, IOException {
 		
+		csvFolderPath = "TestWreslWalker_element_svarTable";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+		
+
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+
+		LogUtils.studySummary_details(sd);
+
+		LogUtils.closeLogFile();
+		
+		String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+	
+		String logText = Tools.readFileAsString(logFilePath);	
+
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);		
+		Assert.assertEquals(totalErrs, 0);	
+		
+		
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\svar.csv");	
+		
+		String s;
+		int n;
+	
+		s = "OroInfEst#(i=0;SEP-month;1) max(I_Orovl(i);dummy)*cfs_taf(i),";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
 	}
 }

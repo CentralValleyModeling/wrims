@@ -96,7 +96,13 @@ includeFile
 
 dvar : dvar_std | dvar_nonStd   ;
 
-svar : svar_dss | svar_expr | svar_sum;
+svar : svar_dss | svar_expr | svar_sum | svar_table;
+
+svar_table :
+	^( Svar_table (sc=Global|sc=Local) i=IDENT s=Select f=From w=Where  ) 
+	 {  String sqlStr = "select "+$s.text+" from "+$f.text+" where "+$w.text;
+	 	F.svarTable($i.text, $sc.text, sqlStr); } 
+	;
 
 svar_sum : 
 		^(Svar_sum (sc=Global|sc=Local) i=IDENT hdr=Sum_hdr v=Value )

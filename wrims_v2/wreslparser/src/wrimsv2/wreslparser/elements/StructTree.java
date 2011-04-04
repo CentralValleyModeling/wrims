@@ -310,24 +310,13 @@ public class StructTree {
 		}
 	}
 
-	public void svarTable(String name, String scope, ArrayList<String> content,
-			String sqlStr) {
+	public void svarTable(String name, String scope, String sqlStr) {
 		if (S.var_all.containsKey(name)) {
 			LogUtils.errMsg("State variable redefined: "+name, S.currentAbsolutePath);
 			S.error_var_redefined.put(name, "svar_table");
 		} else {
 			S.var_all.put(name, "svar_table");
-			//svar_scope.put(name, scope);
 
-			//list = new ArrayList<String>();
-			// list.add(scope);
-			//list.addAll(content);
-			//svar_table.put(name, list);
-
-			//list = new ArrayList<String>();
-			// list.add(scope);
-			//list.add(sqlStr);
-			//svar_table_text.put(name, list);
 
 			// / clearer data structure
 			sv = new Svar();
