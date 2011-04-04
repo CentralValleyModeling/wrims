@@ -186,14 +186,62 @@ public class TestWreslWalker_element {
 		String logText = Tools.readFileAsString(logFilePath);	
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\svar.csv");	
 
-		int r1 = RegUtils.timesOfMatches(csvText, "division_test,.+\\(A_Orovl_forward - A_Orovl_back\\)/\\(100\\*max\\(0\\.01; S_Orovl\\(-1\\)\\)\\)");
-		Assert.assertEquals(r1, 1);
+		String s;
+		int n;
+		
+		s = "division_test#(A_Orovl_forward-A_Orovl_back)/(100*max(0.01;S_Orovl(-1)))";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s);
+		Assert.assertEquals(n, 1);
 
-		int r2 = RegUtils.timesOfMatches(csvText, "min_test,.+min\\(max\\(a; b\\); 2.5\\)");
-		Assert.assertEquals(r2, 1);
+		s = "min_test#min(max(a;b);2.5)";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s);
+		Assert.assertEquals(n, 1);
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 		Assert.assertEquals(totalErrs, 0);		
 	}
+	@Test(groups = { "WRESL_elements" })
+	public void svarSum() throws RecognitionException, IOException {
+		
+		inputFilePath =projectPath+"TestWreslWalker_element_svarSum.wresl";
+		logFilePath = "TestWreslWalker_element_svarSum.log";
+		csvFolderPath = "TestWreslWalker_element_svarSum";
+
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+
+		LogUtils.studySummary_details(sd);
+
+		LogUtils.closeLogFile();
+		
+		String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
 	
+		String logText = Tools.readFileAsString(logFilePath);	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\svar.csv");	
+		
+		String s;
+		int n;
+		
+		s = "OroInfEst#(i=0;SEP-month;1) max(I_Orovl(i);dummy)*cfs_taf(i),";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);		
+	}
 }

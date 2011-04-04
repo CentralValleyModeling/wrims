@@ -12,7 +12,7 @@ tokens {
 	Local; Global;
 	Value;
 	Dvar; Dvar_std; Dvar_nonStd; Dvar_std; Dvar_nonStd_local;
-	Svar_dss; Svar_const; B_part;
+	Svar_dss; Svar_const; Svar_sum; Sum_hdr; B_part;
 	Model;
 	Sequence;
 	Condition;
@@ -127,7 +127,7 @@ includeFile
 	->            ^(Include Global FILE_PATH)
 	;
 
-svar : DEFINE! (svar_dss | svar_expr  ) ;
+svar : DEFINE! (svar_dss | svar_expr | svar_sum ) ;
 		
 dvar : DEFINE! (dvar_std | dvar_nonStd ) ;	
 
@@ -136,6 +136,16 @@ svar_expr :
 	-> {s!=null}? ^(Svar_const  Local  IDENT Value[$e.text] ) 	
 	->            ^(Svar_const  Global IDENT Value[$e.text] )  
 	;	
+
+svar_sum : s=LOCAL? IDENT '{' SUM hdr=sum_header e=expression'}' 
+	-> {s!=null}? ^(Svar_sum  Local  IDENT Sum_hdr[Tools.replace_ignoreChar($hdr.text)] Value[$e.text] ) 	
+	->            ^(Svar_sum  Global IDENT Sum_hdr[Tools.replace_ignoreChar($hdr.text)] Value[$e.text] )  
+	;
+
+sum_header
+	: ( '(' 'i=' expression ',' expression (',' '-'? INTEGER )? ')' ) 
+	
+	;
 
 svar_dss : 
 	s=LOCAL? IDENT '{' TIMESERIES b=STRING? KIND k=STRING UNITS u=STRING (CONVERT c=STRING)? '}'
@@ -195,7 +205,9 @@ mult :	unary (('*' | '/' ) unary)* 	;
 	
 add :	mult (('+' | '-') mult)*	;
 	
-expression : add ;	
+expression returns[String text]: 
+	add 
+	{  $text = Tools.replace_ignoreChar($add.text);  };	
 	
 c_term
 	: ( expression relation expression ) => expression relation expression
@@ -245,6 +257,7 @@ OR  : '.or.'  | '.OR.'  ;
 NOT : '.not.' | '.NOT.' ;
 
 /// reserved keywords ///
+SUM :  'sum' | 'SUM' | 'Sum' ;
 MAX :   'max' | 'MAX' | 'Max' ;
 MIN :   'min' | 'MIN' | 'Min' ;
 VALUE : 'value' | 'VALUE' | 'Value' ;

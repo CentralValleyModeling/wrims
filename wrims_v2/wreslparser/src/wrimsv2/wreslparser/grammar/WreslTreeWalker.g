@@ -96,11 +96,16 @@ includeFile
 
 dvar : dvar_std | dvar_nonStd   ;
 
-svar : svar_dss | svar_expr ;
+svar : svar_dss | svar_expr | svar_sum;
+
+svar_sum : 
+		^(Svar_sum (sc=Global|sc=Local) i=IDENT hdr=Sum_hdr v=Value )
+	   { F.svarSum($i.text, $sc.text, $hdr.text.replace(",",";"), $v.text.replace(",",";") ); }
+	;
 
 svar_expr : 
 	   ^(Svar_const (sc=Global|sc=Local) i=IDENT v=Value )
-	   { F.svarExpression($i.text, $sc.text, $v.text.replace(",","; ") ); }
+	   { F.svarExpression($i.text, $sc.text, $v.text.replace(",",";") ); }
 	;
 
 svar_dss :

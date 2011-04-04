@@ -284,8 +284,7 @@ public class StructTree {
 
 	}
 
-	public void svarSum(String name, String scope, ArrayList<String> content,
-			String sumStr) {
+	public void svarSum(String name, String scope, String hdr, String value) {
 		if (S.var_all.containsKey(name)) {
 			LogUtils.errMsg("State variable redefined: "+name, S.currentAbsolutePath);
 			S.error_var_redefined.put(name, "svar_sum");
@@ -298,7 +297,7 @@ public class StructTree {
 			sv.scope = scope;
 			sv.caseName.add(Parameters.defaultCaseName);
 			sv.caseCondition.add("always");
-			sv.caseExpression.add(sumStr);
+			sv.caseExpression.add(hdr + " " +value);
 			sv.fromWresl = S.currentAbsolutePath;
 
 			S.svMap.put(name, sv);

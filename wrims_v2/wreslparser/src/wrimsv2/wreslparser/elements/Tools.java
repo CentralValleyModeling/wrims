@@ -22,7 +22,21 @@ public class Tools {
 		if (s==null)  return null; 
 		return s.substring(1, s.length() - 1);
 	}
-
+	public static String replace_regex(String s) {
+		if (s==null)  return null; 
+		s=s.replaceAll("\\(", "\\\\(").replaceAll("\\)", "\\\\)");
+		s=s.replaceAll("\\.", "\\\\.");
+		s=s.replaceAll("\\*", "\\\\*");
+		s=s.replaceAll("#", ".+");
+		return s;
+	}
+	public static String replace_ignoreChar(String s) {
+		if (s==null)  return null; 
+		s=s.replaceAll("\n+", "").replaceAll("\r+", "");
+		s=s.replaceAll("\t+", "");
+		s=s.replaceAll("\\s+", "");
+		return s;
+	}
 	public static Map<String, String> readFilesFromDirAsMap(String dir)
 			throws IOException {
 		File folder = new File(dir);
