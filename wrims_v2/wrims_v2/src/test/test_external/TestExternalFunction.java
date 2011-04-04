@@ -16,7 +16,6 @@ public class TestExternalFunction {
         System.out.println("@Test sample: 1==1");
 	}
 
-	@Test
 	public void testGenerateCompileFiles(){
 		String fileFullPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_external\\generateInerface.txt";
 		GenerateCompileFiles.setWorkingDirectory(fileFullPath);
@@ -35,13 +34,11 @@ public class TestExternalFunction {
 		System.out.println();
 	}
 	
+	@Test
 	public void testAnnEC(){
 		
-		new LoadDll("Ann7inp_CA.dll");
-		new LoadDll("InterfaceToAnn.dll");
+		new LoadDll("interfacetoann.dll");
 		
-		ExternalFunctionTable eft=new ExternalFunctionTable();
-		ExternalFunction ef=eft.externalFunctionsHashtable.get("annec");
 		Stack stack= new Stack();
 		stack.add(81183.7421875);
 		stack.add(57666.609375);
@@ -92,7 +89,15 @@ public class TestExternalFunction {
 		stack.add(1);
 		stack.add(7);
 		stack.add(1996);
-		ef.execute(stack);
+		
+		Class function;
+		try {
+			function = Class.forName("wrimsv2.external.Functionannec");
+			ExternalFunction ef = (ExternalFunction)function.newInstance();
+			ef.execute(stack);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 		
 		if (stack.size()!=1){
 			System.out.println("stack size <>1");
@@ -151,7 +156,13 @@ public class TestExternalFunction {
 		stack.add(8);
 		stack.add(1996);
 		
-		ef.execute(stack);
+		try {
+			function = Class.forName("wrimsv2.external.Functionannec");
+			ExternalFunction ef = (ExternalFunction)function.newInstance();
+			ef.execute(stack);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 		
 		if (stack.size()!=1){
 			System.out.println("stack size <>1");
@@ -159,14 +170,12 @@ public class TestExternalFunction {
 			System.out.println(((Number) stack.pop()).floatValue());
 		}
 	}
-	
+
+	@Test
 	public void testAnn_X2(){
 		
-		new LoadDll("Ann7inp_CA.dll");
-		new LoadDll("InterfaceToAnn.dll");
+		new LoadDll("interfacetoann.dll");
 		
-		ExternalFunctionTable eft=new ExternalFunctionTable();
-		ExternalFunction ef=eft.externalFunctionsHashtable.get("ann_x2");
 		Stack stack= new Stack();
 		stack.add(53.927);
 		stack.add(63.749);
@@ -189,7 +198,14 @@ public class TestExternalFunction {
 		stack.add(1);
 		stack.add(28);
 		
-		ef.execute(stack);
+		Class function;
+		try {
+			function = Class.forName("wrimsv2.external.Functionann_x2");
+			ExternalFunction ef = (ExternalFunction)function.newInstance();
+			ef.execute(stack);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 		
 		if (stack.size()!=1){
 			System.out.println("stack size <>1");
@@ -200,10 +216,7 @@ public class TestExternalFunction {
 	
 	@Test
 	public void testANNLineGen(){
-		new LoadDll("Ann7inp_CA.dll");
-		new LoadDll("InterfaceToAnn.dll");		
-		ExternalFunctionTable eft=new ExternalFunctionTable();
-		ExternalFunction ef=eft.externalFunctionsHashtable.get("annlinegen");
+		new LoadDll("interfacetoann.dll");		
 		
 		Stack stack= new Stack();
 		stack.add(6472.58740234);
@@ -258,7 +271,15 @@ public class TestExternalFunction {
 		stack.add(12);
 		stack.add(1990);
 		stack.add(3);
-		ef.execute(stack);
+		
+		Class function;
+		try {
+			function = Class.forName("wrimsv2.external.Functionannlinegen");
+			ExternalFunction ef = (ExternalFunction)function.newInstance();
+			ef.execute(stack);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 		
 		if (stack.size()!=1){
 			System.out.println("stack size <>1");

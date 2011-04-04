@@ -7,8 +7,7 @@ import org.antlr.runtime.TokenStream;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 import wrimsv2.components.FilePaths;
-import wrimsv2.external.ExternalFunction;
-import wrimsv2.external.ExternalFunctionTable;
+import wrimsv2.external.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,6 +15,8 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.Stack;
 import java.util.Date;
+
+import java.lang.reflect.*;
 
 import vista.db.dss.DSSUtil;
 import vista.set.*;
@@ -347,46 +348,47 @@ public class Evaluation {
 			
 			return getTimeSeries(ident, eeArray);
 		}
-		
-		if (ExternalFunctionTable.externalFunctionsHashtable ==null){
-			Error.addEvaluationError("WRIMS V2 Engine error. Dlls have not been load.");
-			result=new IntDouble (0.0,false);
-			return result;
-		}
-		
-		ExternalFunction ef=ExternalFunctionTable.externalFunctionsHashtable.get(ident);
-		if (ef == null){
-			Error.addEvaluationError("WRIMS V2 Engine error. Dlls have not been load.");
-			result=new IntDouble (0.0,false);
-			return result;
-		}
-		
-		Stack stack = new Stack();
-		for (int i=0; i<eeArray.size(); i++){
-			EvalExpression ee=eeArray.get(i);
-			if (!ee.isNumeric()){
-				Error.addEvaluationError("argument in the function of "+ident+" contains decision variable.");
-				result=new IntDouble (0.0,false);
-				return result;
-			}
 			
-			IntDouble id=ee.getValue();
-			if (id.isInt()){
-				int value=id.getData().intValue();
-				stack.push(value);
-			}else{
-				double value=id.getData().doubleValue();
-				stack.push(value);
-			}      
-		}
+		Class function;
+		try {
+			function = Class.forName("wrimsv2.external.Function"+ident);
 		
-		ef.execute(stack);
-		if (ExternalFunctionTable.externalFunctionReturnType.get(ident).equals("double")){
-			result=new IntDouble((Number)stack.pop(), false);
-		}else{
-			result=new IntDouble((Number)stack.pop(), true);
+			Stack stack = new Stack();
+			for (int i=0; i<eeArray.size(); i++){
+				EvalExpression ee=eeArray.get(i);
+				if (!ee.isNumeric()){
+					Error.addEvaluationError("The function " +ident+" is not defined in the WRIMS engine. Re-run preprocessor for dlls.");
+					result=new IntDouble (0.0,false);
+					return result;
+				}
+			
+				IntDouble id=ee.getValue();
+				if (id.isInt()){
+					int value=id.getData().intValue();
+					stack.push(value);
+				}else{
+					double value=id.getData().doubleValue();
+					stack.push(value);
+				}      
+			}
+
+			ExternalFunction ef = (ExternalFunction)function.newInstance();
+			ef.execute(stack);
+			String valueString=stack.pop().toString();
+			
+			try{        
+				int intValue=Integer.parseInt(valueString);    
+				result=new IntDouble(intValue, true);
+			}catch(NumberFormatException nfe1){
+				result=new IntDouble(Double.parseDouble(valueString), false);
+			}
+			return result;
+			
+		} catch (Exception e) {
+			Error.addEvaluationError("The function " +ident+" is not defined in the WRIMS engine. Re-run preprocessor for dlls.");
+			result=new IntDouble (0.0,false);
+			return result;
 		}
-		return result;
 	}
 	
 	public static IntDouble getTimeSeries(String ident, ArrayList<EvalExpression> eeArray){
