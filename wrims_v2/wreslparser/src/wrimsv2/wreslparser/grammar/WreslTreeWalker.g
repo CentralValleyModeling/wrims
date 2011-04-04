@@ -96,7 +96,12 @@ includeFile
 
 dvar : dvar_std | dvar_nonStd   ;
 
-svar : svar_dss ;
+svar : svar_dss | svar_const ;
+
+svar_const : 
+	   ^(Svar_const (sc=Global|sc=Local) i=IDENT v=Value )
+	   { F.svarExpression($i.text, $sc.text, $v.text); }
+	;
 
 svar_dss :
        ^(Svar_dss (sc=Global|sc=Local) i=IDENT b=B_part Kind k=STRING Units u=STRING c=CONVERT )

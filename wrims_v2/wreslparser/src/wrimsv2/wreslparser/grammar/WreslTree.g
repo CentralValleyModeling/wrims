@@ -10,8 +10,9 @@ tokens {
 	NEGATION;
 	NEW_LINE;
 	Local; Global;
+	Value;
 	Dvar; Dvar_std; Dvar_nonStd; Dvar_std; Dvar_nonStd_local;
-	Svar_dss; B_part;
+	Svar_dss; Svar_const; B_part;
 	Model;
 	Sequence;
 	Condition;
@@ -126,9 +127,16 @@ includeFile
 	->            ^(Include Global FILE_PATH)
 	;
 
-svar : DEFINE! (svar_dss ) ;
+svar : DEFINE! (svar_dss | svar_const) ;
 		
 dvar : DEFINE! (dvar_std | dvar_nonStd ) ;	
+
+svar_const : 
+	s=LOCAL? IDENT '{' VALUE  n=number '}'
+	-> {s!=null}? ^(Svar_const  Local  IDENT Value[$n.text] ) 	
+	->            ^(Svar_const  Global IDENT Value[$n.text] )  
+	;		
+
 
 svar_dss : 
 	s=LOCAL? IDENT '{' TIMESERIES b=STRING? KIND k=STRING UNITS u=STRING (CONVERT c=STRING)? '}'
@@ -171,6 +179,8 @@ upper: UPPER ( UNBOUNDED -> Upper LimitType["Unbounded"] | e=expression -> Upper
 
 
 /// Expression ///
+number : INTEGER | FLOAT ;
+
 term
 	:	IDENT
 	|	'(' expression ')'
@@ -209,6 +219,8 @@ MULTILINE_COMMENT : '/*' .* '*/' {skip();}; //{$channel = HIDDEN;};
 fragment LETTER : ('a'..'z' | 'A'..'Z') ;
 fragment DIGIT : '0'..'9';
 INTEGER : DIGIT+ ;
+FLOAT : (INTEGER? '.' INTEGER)  |  (INTEGER '.') ;
+
 
 /// logical ///
 AND : '.and.' | '.AND.' ;
@@ -216,7 +228,8 @@ OR  : '.or.'  | '.OR.'  ;
 NOT : '.not.' | '.NOT.' ;
 
 /// reserved keywords ///
-LOCAL : '[local]'| '[LOCAL]' ;
+VALUE : 'value' | 'VALUE' | 'Value' ;
+LOCAL : '[local]'| '[LOCAL]' | '[Local]' ;
 OBJECTIVE: 'objective' | 'Objective' | 'OBJECTIVE';
 TIMESERIES: 'timeseries' | 'TIMESERIES';
 SELECT :  'select' | 'SELECT' ;
