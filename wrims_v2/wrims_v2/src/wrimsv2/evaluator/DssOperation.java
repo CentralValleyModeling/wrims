@@ -7,6 +7,9 @@ import vista.time.TimeInterval;
 import vista.time.TimeWindow;
 import vista.set.*;
 
+import wrimsv2.commondata.wresldata.Alias;
+import wrimsv2.commondata.wresldata.Dvar;
+import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 
@@ -16,14 +19,16 @@ import java.util.Arrays;
 
 public class DssOperation {
 	public static boolean getSVTimeseries(String name, String file){
-		//To Do: find svar part C 
-		DataSet ds=getDataFor(file,ControlData.partA,name,"","",ControlData.partE, ControlData.svDvPartF);
+		Svar svar=ControlData.currSvMap.get(name);
+		String partC=svar.kind;
+		DataSet ds=getDataFor(file,ControlData.partA,name,partC,"",ControlData.partE, ControlData.svDvPartF);
 		
 		if (ds==null){
 			return false;
 		}
-		ds.getAttributes().getYUnits();
-		//To Do: test if units are right
+		if (!ds.getAttributes().getYUnits().toUpperCase().equals(svar.units.toUpperCase())){
+			return false;
+		}	
 		if (!(ds instanceof RegularTimeSeries)){
 			return false;
 		}
@@ -41,14 +46,16 @@ public class DssOperation {
 	}
 	
 	public static boolean getSVInitTimeseries(String name, String file){
-		//To Do: find svar part C 
-		DataSet ds=getDataFor(file,ControlData.partA,name,"","",ControlData.partE, ControlData.svDvPartF);
+		Svar svar=ControlData.currSvMap.get(name);
+		String partC=svar.kind;
+		DataSet ds=getDataFor(file,ControlData.partA,name,partC,"",ControlData.partE, ControlData.svDvPartF);
 		
 		if (ds==null){
 			return false;
 		}
-		ds.getAttributes().getYUnits();
-		//To Do: test if units are right
+		if (!ds.getAttributes().getYUnits().toUpperCase().equals(svar.units.toUpperCase())){
+			return false;
+		}
 		if (!(ds instanceof RegularTimeSeries)){
 			return false;
 		}
@@ -66,15 +73,26 @@ public class DssOperation {
 	}
 	
 	public static boolean getDVAliasInitTimeseries(String name, String file){
-		//To Do: find dv or alias part C		
+		String units;
+		String partC;
+		if (ControlData.currDvMap.containsKey(name)){
+			Dvar dvar=ControlData.currDvMap.get(name);
+			partC=dvar.kind;
+			units=dvar.units;
+		}else{
+			Alias alias=ControlData.currAliasMap.get(name);
+			partC=alias.kind;
+			units=alias.units;
+		}
 		
-		DataSet ds=getDataFor(file,ControlData.partA,name,"","",ControlData.partE, ControlData.svDvPartF);
+		DataSet ds=getDataFor(file,ControlData.partA,name,partC,"",ControlData.partE, ControlData.svDvPartF);
 		if (ds==null){
 			Error.error_evaluation.add("Intial data of "+name+" in dss file doesn't exist." );
 			return false;
 		}
-		ds.getAttributes().getYUnits();
-		//To Do: test if units are right
+		if (!units.toUpperCase().equals(ds.getAttributes().getYUnits().toUpperCase())){
+			return false;
+		}
 		if (!(ds instanceof RegularTimeSeries)){
 			Error.error_evaluation.add("Intial data of "+name+" in dss file is not a regular timeseries." );
 			return false;

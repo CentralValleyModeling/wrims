@@ -125,9 +125,9 @@ public class TimeOperation {
 			}else{
 				ControlData.dataDay=days-numberOfDays(ControlData.currMonth, ControlData.currYear)+ControlData.currDay;
 			}
-		}else if(ControlData.timeStep.equals("day")){
+		}else if(ControlData.timeStep.equals("1DAY")){
 			Date currDate = new Date (ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
-			long dataTime=currDate.getTime()+value;
+			long dataTime=currDate.getTime()+value*1 * 24 * 60 * 60 * 1000;
 			Date dataDate = new Date (dataTime);
 			ControlData.dataMonth=dataDate.getMonth()+1;
 			ControlData.dataYear=dataDate.getYear()+1900;

@@ -14,21 +14,21 @@ public class FilePaths {
 	public static String initDssFile="";
 	public static String initDssDirectory="";
 
-	public void setMainFilePaths(String fullPath){
+	public static void setMainFilePaths(String fullPath){
 		fullMainPath=fullPath;
 		int index=fullPath.lastIndexOf("\\");
 		mainDirectory=fullPath.substring(0,index+1);
 		mainFile=fullPath.substring(index+1);
 	}
 	
-	public void setSvarDssPaths(String fullPath){
+	public static void setSvarDssPaths(String fullPath){
 		fullSvarDssPath=fullPath;
 		int index=fullPath.lastIndexOf("\\");
 		svarDssDirectory=fullPath.substring(0,index+1);
 		svarDssFile=fullPath.substring(index+1);
 	}
 	
-	public void setDvarDssPaths(String fullPath){
+	public static void setDvarDssPaths(String fullPath){
 		fullDvarDssPath=fullPath;
 		int index=fullPath.lastIndexOf("\\");
 		dvarDssDirectory=fullPath.substring(0,index+1);

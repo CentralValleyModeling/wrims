@@ -8,6 +8,7 @@ public class Alias {
 	public String units;
 	public String expression;
 	public String fromWresl;
+	public Number value;
 
 	public Alias(){
 		scope=Parameters.undefined;
@@ -45,6 +46,14 @@ public class Alias {
 		else {
 			return false;
 		}
+	}
+	
+	public void setValue(Number value){
+		this.value=value;
+	}
+	
+	public Number getValue(){
+		return value;
 	}
 }
 	

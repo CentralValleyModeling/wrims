@@ -11,6 +11,7 @@ public class Dvar {
 	public String lowerBound;
 	public String upperBound;
 	public String fromWresl;
+	public Number value;
 	
 	public Dvar(){
 		scope=Parameters.undefined;
@@ -50,6 +51,14 @@ public class Dvar {
 		else {
 			return false;
 		}
+	}
+	
+	public void setValue(Number value){
+		this.value=value;
+	}
+	
+	public Number getValue(){
+		return value;
 	}
 }
 	

@@ -1,10 +1,23 @@
 package wrimsv2.components;
 
+import wrimsv2.commondata.wresldata.Alias;
+import wrimsv2.commondata.wresldata.Dvar;
+import wrimsv2.commondata.wresldata.ModelDataSet;
+import wrimsv2.commondata.wresldata.StudyDataSet;
+import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.LoopIndex;
+
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.Stack;
 
 public class ControlData {
+	public static StudyDataSet currStudyDataSet=null;
+	public static ModelDataSet currModelDataSet=null;
+	public static Map<String, Svar> currSvMap=null;
+	public static Map<String, Dvar> currDvMap=null;
+	public static Map<String, Alias> currAliasMap=null;
 	public static int currCycleIndex;
 	public static int currEvalTypeIndex; //0=sv; 1=dv; 2=constraint; 3=alias
 	public static String currEvalName;

@@ -4,6 +4,7 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 
+import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 import wrimsv2.components.FilePaths;
@@ -130,9 +131,25 @@ public class Evaluation {
 	}
 	
 	public static EvalExpression term_SVAR (String ident){
-		//To Do: get data from Svar in the IlpData in the current cycle
-		IntDouble id = new IntDouble(99999999999.0, false);
-		return new EvalExpression(id);
+		if (!ControlData.currSvMap.containsKey(ident)){
+			Error.error_evaluation.add("State variable "+ident+" is not defined before used.");
+			IntDouble id=new IntDouble(1.0, false);
+			return new EvalExpression(id);
+		}
+		Number value=ControlData.currSvMap.get(ident).getValue();
+		if (value == null){
+			Error.error_evaluation.add("The value of state variable "+ident+" is not defined before used.");
+			IntDouble id=new IntDouble(1.0, false);
+			return new EvalExpression(id);
+		}
+		String valueString=value.toString();
+		try {
+			IntDouble id =new IntDouble (Integer.parseInt(valueString), true);
+			return new EvalExpression(id);
+		}catch (Exception e){
+			IntDouble id = new IntDouble(99999999999.0, false);
+			return new EvalExpression(id);
+		}
 	}
 	
 	public static EvalExpression term_INTEGER (String integer){
@@ -336,17 +353,36 @@ public class Evaluation {
 	}
 	
 	public static IntDouble noArgFunction(String ident){
-		//To Do call no ArgFunction
-		IntDouble result=new IntDouble(9999999999.9,false);
-		return result;
+		Class function;
+		IntDouble result;
+		try {
+			function = Class.forName("wrimsv2.external.Function"+ident);
+		
+			Stack stack = new Stack();
+
+			ExternalFunction ef = (ExternalFunction)function.newInstance();
+			ef.execute(stack);
+			String valueString=stack.pop().toString();
+			
+			try{        
+				int intValue=Integer.parseInt(valueString);    
+				result=new IntDouble(intValue, true);
+			}catch(NumberFormatException nfe1){
+				result=new IntDouble(Double.parseDouble(valueString), false);
+			}
+			return result;
+			
+		} catch (Exception e) {
+			Error.addEvaluationError("The function " +ident+" is not defined in the WRIMS engine. Re-run preprocessor for dlls.");
+			result=new IntDouble (1.0,false);
+			return result;
+		}
 	}
 	
 	public static IntDouble argFunction(String ident, ArrayList<EvalExpression> eeArray){
 		IntDouble result;
 		if (eeArray.size()==1){
-			//To Do: check if it is dvar or alias or svar or function
-			
-			return getTimeSeries(ident, eeArray);
+			if (ControlData.currSvMap.containsKey(ident)||ControlData.currDvMap.containsKey(ident)||ControlData.currAliasMap.containsKey(ident)) return getTimeSeries(ident, eeArray);
 		}
 			
 		Class function;
@@ -386,7 +422,7 @@ public class Evaluation {
 			
 		} catch (Exception e) {
 			Error.addEvaluationError("The function " +ident+" is not defined in the WRIMS engine. Re-run preprocessor for dlls.");
-			result=new IntDouble (0.0,false);
+			result=new IntDouble (1.0,false);
 			return result;
 		}
 	}
@@ -439,11 +475,12 @@ public class Evaluation {
 			TimeOperation.findTime(id.getData().intValue());
 		}
 		
-		//To Do: check if ident is svar, dvar, or alias, and treat separately
-		
 		double value;
-		value=dvarAliasTimeSeries(ident);
-		value=svarTimeSeries(ident);
+		if (ControlData.currDvMap.containsKey(ident)||ControlData.currAliasMap.containsKey(ident)){
+			value=dvarAliasTimeSeries(ident);
+		}else{
+			value=svarTimeSeries(ident);
+		}
 		
 		return new IntDouble (value, false);
 	}
@@ -559,8 +596,20 @@ public class Evaluation {
 	}
 	
 	public static IntDouble pastCycleDV(String ident, String cycle){
-		//To Do: add function for getting past cycle dv
-		IntDouble result=new IntDouble(9999999999.9,false);
+		ModelDataSet mds=ControlData.currStudyDataSet.getModelDataSetMap().get(cycle);
+		Number value=1.0;
+		if (mds.dvMap.containsKey(ident)){
+			value= mds.dvMap.get(ident).getValue();
+		}else if(mds.asMap.containsKey(ident)){
+			value=mds.asMap.get(ident).getValue();
+		}else if(mds.svList.contains(ident)){
+			value=mds.svMap.get(ident).getValue();
+		}else{
+			Error.error_evaluation.add("The variable "+ident+" is not defined in the past cycle of "+cycle+".");
+			IntDouble result=new IntDouble(value,false);
+			return result;
+		}
+		IntDouble result=new IntDouble(value,false);
 		return result;
 	}
 	
