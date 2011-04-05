@@ -1,6 +1,6 @@
 package wrimsv2.wreslparser.elements;
 
-import wrimsv2.commondata.wresldata.Parameters;
+import wrimsv2.commondata.wresldata.Param;
 
 public class Sequence {
 
@@ -10,10 +10,10 @@ public class Sequence {
 	public String fromWresl;
 	
 	public Sequence(){
-		sequenceName=Parameters.undefined;
-		modelName=Parameters.undefined;
-		condition=Parameters.always;
-		fromWresl = Parameters.undefined;
+		sequenceName=Param.undefined;
+		modelName=Param.undefined;
+		condition=Param.always;
+		fromWresl = Param.undefined;
 	}
 	
 	public String equalEva(){

@@ -14,6 +14,7 @@ import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.External;
 import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.ModelDataSet;
+import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.WeightElement;
 
@@ -142,21 +143,21 @@ public class WriteCSV {
 		    	{
 			    	int caseOrder = i+1;
 			    out.print(k); // for SVAR NAME
-		    	//out.print(","+p.scope);  // for SCOPE
+		    	//out.print(Parameters.csv_seperator+p.scope);  // for SCOPE
 		    	//out.print(",Y"); //for INCLUDE
-		    	//out.print(","+p.format); //for FORMAT
-			    out.print(","+s.dssBPart); //for DSS B Part	
-			    out.print(","+s.kind); //for KIND		    	
-		    	out.print(","+s.units); //for UNITS
-		    	out.print(","+s.convertToUnits); //for CONVERT
+		    	//out.print(Parameters.csv_seperator+p.format); //for FORMAT
+			    out.print(Param.csv_seperator+s.dssBPart); //for DSS B Part	
+			    out.print(Param.csv_seperator+s.kind); //for KIND		    	
+		    	out.print(Param.csv_seperator+s.units); //for UNITS
+		    	out.print(Param.csv_seperator+s.convertToUnits); //for CONVERT
 		    	out.print(",n"); //for OUTPUT
-		    	out.print(","+s.caseName.get(i)); //for CASE 
-		    	out.print(","+caseOrder); //for CASE 
-		    	out.print(","+s.caseCondition.get(i)); //for CONDITION
-		    	out.print(","+s.caseExpression.get(i)); //for EXPRESSION
+		    	out.print(Param.csv_seperator+s.caseName.get(i)); //for CASE 
+		    	out.print(Param.csv_seperator+caseOrder); //for CASE 
+		    	out.print(Param.csv_seperator+s.caseCondition.get(i)); //for CONDITION
+		    	out.print(Param.csv_seperator+s.caseExpression.get(i)); //for EXPRESSION
 		    	
 
-				out.print(","+s.fromWresl);
+				out.print(Param.csv_seperator+s.fromWresl);
 				out.print("\n");	
 		    	}
 			}
@@ -175,7 +176,7 @@ public class WriteCSV {
 		    	//Sequence s = seqMap.get(k);
 		    	
 		    	out.print(seqMap.get(k).modelName);
-		    	out.print(","+seqMap.get(k).condition);
+		    	out.print(Param.csv_seperator+seqMap.get(k).condition);
 				out.print("\n");	
 		    	
 			}
@@ -194,9 +195,9 @@ public class WriteCSV {
 		    	
 
 			    out.print(k); // 
-		    	out.print(","+s.type); //for KIND		    	
+		    	out.print(Param.csv_seperator+s.type); //for KIND		    	
 
-				//out.print(","+s.fromWresl);
+				//out.print(Parameters.csv_seperator+s.fromWresl);
 				out.print("\n");	
 		    	
 			}
@@ -217,7 +218,7 @@ public class WriteCSV {
 
 			    out.print(k); // for DVAR NAME
 
-			    out.print(","+s.weight); //for DSS B Part	
+			    out.print(Param.csv_seperator+s.weight); //for DSS B Part	
 
 				out.print("\n");	
 
@@ -235,13 +236,13 @@ public class WriteCSV {
 
 			    out.print(k); // for DVAR NAME
 		    	
-		    	out.print(","+d.lowerBound); //for UNITS
-		    	out.print(","+d.upperBound); //for UNITS
-		    	out.print(","+d.integer); //for KIND
-		    	out.print(","+d.units); //for UNITS
-		    	out.print(","+d.kind); //for KIND
+		    	out.print(Param.csv_seperator+d.lowerBound); //for UNITS
+		    	out.print(Param.csv_seperator+d.upperBound); //for UNITS
+		    	out.print(Param.csv_seperator+d.integer); //for KIND
+		    	out.print(Param.csv_seperator+d.units); //for UNITS
+		    	out.print(Param.csv_seperator+d.kind); //for KIND
 
-				out.print(","+d.fromWresl);
+				out.print(Param.csv_seperator+d.fromWresl);
 				out.print("\n");	
 		    	}
 	  };
@@ -257,11 +258,11 @@ public class WriteCSV {
 
 			    out.print(k); // for DVAR NAME
 
-		    	out.print(","+a.kind); //for KIND		    	
-		    	out.print(","+a.units); //for UNITS
-		    	out.print(","+a.expression); //for expression
+		    	out.print(Param.csv_seperator+a.kind); //for KIND		    	
+		    	out.print(Param.csv_seperator+a.units); //for UNITS
+		    	out.print(Param.csv_seperator+a.expression); //for expression
 
-				out.print(","+a.fromWresl);
+				out.print(Param.csv_seperator+a.fromWresl);
 				out.print("\n");	
 		    	}
 	  };		  
@@ -283,25 +284,25 @@ public class WriteCSV {
 		    	{
 			    	int caseOrder = i+1;
 			    out.print(k); // for GOAL NAME
-			    //out.print(","+g.lhs); // for LHS
-		    	//out.print(","+p.scope);  // for SCOPE
+			    //out.print(Parameters.csv_seperator+g.lhs); // for LHS
+		    	//out.print(Parameters.csv_seperator+p.scope);  // for SCOPE
 		    	//out.print(",Y"); //for INCLUDE
-		    	//out.print(","+p.format); //for FORMAT
-		    	//out.print(","+s.kind); //for KIND		    	
-		    	//out.print(","+s.units); //for UNITS
+		    	//out.print(Parameters.csv_seperator+p.format); //for FORMAT
+		    	//out.print(Parameters.csv_seperator+s.kind); //for KIND		    	
+		    	//out.print(Parameters.csv_seperator+s.units); //for UNITS
 		    	//out.print(",Y"); //for OUTPUT
-		    	out.print(","+g.caseName.get(i)); //for CASE 
-		    	out.print(","+caseOrder); //for ORDER 
-		    	out.print(","+g.caseCondition.get(i)); //for CONDITION
+		    	out.print(Param.csv_seperator+g.caseName.get(i)); //for CASE 
+		    	out.print(Param.csv_seperator+caseOrder); //for ORDER 
+		    	out.print(Param.csv_seperator+g.caseCondition.get(i)); //for CONDITION
 		    	
-		    	out.print("," + g.caseExpression.get(i) ); //for EXPRESSION
+		    	out.print(Param.csv_seperator + g.caseExpression.get(i) ); //for EXPRESSION
 
 		    	
-		    	out.print(","+g.case_lhs_gt_rhs.get(i)); //
-		    	out.print(","+g.case_lhs_lt_rhs.get(i)); //for EXPRESSION
+		    	out.print(Param.csv_seperator+g.case_lhs_gt_rhs.get(i)); //
+		    	out.print(Param.csv_seperator+g.case_lhs_lt_rhs.get(i)); //for EXPRESSION
 		    	
 
-				out.print(","+g.fromWresl);
+				out.print(Param.csv_seperator+g.fromWresl);
 				out.print("\n");	
 		    	}
 			}
@@ -326,7 +327,7 @@ public class WriteCSV {
 		    	out.print(k);		
 			
 				for(String i : mapAll.get(k)){
-					out.print(","+i);}
+					out.print(Param.csv_seperator+i);}
 				out.print("\n");	
 			}
 	  };	  

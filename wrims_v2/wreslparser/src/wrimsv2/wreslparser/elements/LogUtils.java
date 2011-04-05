@@ -8,7 +8,7 @@ import java.util.Set;
 
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.ModelDataSet;
-import wrimsv2.commondata.wresldata.Parameters;
+import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 
 
@@ -192,7 +192,7 @@ public class LogUtils {
 	
 	public static void normalMsg(String msg){
 		
-		if (Parameters.printLevel>1){
+		if (Param.printLevel>1){
 
 			System.out.println(msg);
 			_logFile.println(msg);

@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import wrimsv2.commondata.wresldata.Parameters;
+import wrimsv2.commondata.wresldata.Param;
 
 public class Tools {
 	public static String strip(String s) {
@@ -37,7 +37,11 @@ public class Tools {
 		s=s.replaceAll("\\s+", "");
 		return s;
 	}
-
+	public static String replace_seperator(String s) {
+		if (s==null)  return null; 
+		s=s.replaceAll(Param.arg_seperator,Param.new_seperator);
+		return s;
+	}
 	public static Map<String, String> readFilesFromDirAsMap(String dir)
 			throws IOException {
 		File folder = new File(dir);
@@ -206,10 +210,10 @@ public class Tools {
 
 		for (String f : fileList) {
 			if (localList.contains(f)) {
-				scopeMap.put(f,Parameters.local);
+				scopeMap.put(f,Param.local);
 			}
 			else {
-				scopeMap.put(f,Parameters.global);
+				scopeMap.put(f,Param.global);
 			}
 		}
 		return scopeMap;
@@ -319,7 +323,7 @@ public class Tools {
 			Map<String,Set<String>> t1ReverseMap	) {
 
 		
-		if (fileScopeMap.get(f) == Parameters.local) {
+		if (fileScopeMap.get(f) == Param.local) {
 
 			ds.convertToLocal();
 
@@ -328,7 +332,7 @@ public class Tools {
 
 			for (String upperFile : t1ReverseMap.get(f)) {
 
-				if (fileScopeMap.get(upperFile) == Parameters.local) {
+				if (fileScopeMap.get(upperFile) == Param.local) {
 
 					LogUtils.normalMsg("...Convert this file data to local: " + f );
 					LogUtils.normalMsg("   due to  [local] specification for its parent file: " + upperFile + "\n");

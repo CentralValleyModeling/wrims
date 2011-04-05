@@ -17,16 +17,16 @@ public class Svar {
 	public String fromWresl;
 	
 	public Svar(){
-		scope=Parameters.undefined;
-		dssBPart=Parameters.undefined;
-		format=Parameters.undefined;
-		kind=Parameters.undefined;
-		units=Parameters.undefined;
-		convertToUnits =Parameters.undefined;
+		scope=Param.undefined;
+		dssBPart=Param.undefined;
+		format=Param.undefined;
+		kind=Param.undefined;
+		units=Param.undefined;
+		convertToUnits =Param.undefined;
 		caseName       = new ArrayList<String>();
 		caseCondition  = new ArrayList<String>();
 		caseExpression = new ArrayList<String>();
-		fromWresl = Parameters.undefined;
+		fromWresl = Param.undefined;
 	}
 	
 	public String equalEva(){

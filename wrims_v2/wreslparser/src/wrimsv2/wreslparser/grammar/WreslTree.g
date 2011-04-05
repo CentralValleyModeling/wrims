@@ -33,6 +33,7 @@ tokens {
   package wrimsv2.wreslparser.grammar;
   import wrimsv2.wreslparser.elements.LogUtils; 
   import wrimsv2.wreslparser.elements.Tools; 
+  import wrimsv2.commondata.wresldata.Param;
 }
 
 @lexer::header {
@@ -114,7 +115,7 @@ sequence
 	: SEQUENCE s=IDENT '{' MODEL m=IDENT ( c=condition)? ORDER INTEGER '}' 
 	  {model_in_sequence.add($m.text);}
 	-> {c!=null}? ^(Sequence $s Model $m Order INTEGER Condition condition )	 
-	->            ^(Sequence $s Model $m Order INTEGER Condition CONDITION["Always"] ) 
+	->            ^(Sequence $s Model $m Order INTEGER Condition CONDITION[Param.always] ) 
 	;
 	
 condition

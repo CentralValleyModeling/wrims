@@ -1,6 +1,6 @@
 package wrimsv2.wreslparser.elements;
 
-import wrimsv2.commondata.wresldata.Parameters;
+import wrimsv2.commondata.wresldata.Param;
 
 public class IncludeFile {
 	
@@ -9,8 +9,8 @@ public class IncludeFile {
 	public String fromWresl;
 	
 	public IncludeFile(){
-		scope=Parameters.undefined;
-		fromWresl=Parameters.undefined;
+		scope=Param.undefined;
+		fromWresl=Param.undefined;
 
 	}
 	

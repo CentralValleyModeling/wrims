@@ -14,6 +14,7 @@ options {
   import wrimsv2.wreslparser.elements.SimulationDataSet;
   import wrimsv2.wreslparser.elements.Tools;
   import wrimsv2.wreslparser.elements.LogUtils; 
+  import wrimsv2.commondata.wresldata.Param;
 }
 
 @members {
@@ -100,18 +101,20 @@ svar : svar_dss | svar_expr | svar_sum | svar_table;
 
 svar_table :
 	^( Svar_table (sc=Global|sc=Local) i=IDENT s=Select f=From w=Where  ) 
-	 {  String sqlStr = "select "+$s.text+" from "+$f.text+" where "+$w.text;
+	 {  String sqlStr = "select "+$s.text+" from "+$f.text+" where "+ Tools.replace_seperator($w.text);
 	 	F.svarTable($i.text, $sc.text, sqlStr); } 
 	;
 
 svar_sum : 
 		^(Svar_sum (sc=Global|sc=Local) i=IDENT hdr=Sum_hdr v=Value )
-	   { F.svarSum($i.text, $sc.text, $hdr.text.replace(",",";"), $v.text.replace(",",";") ); }
+	   { F.svarSum($i.text, $sc.text, 
+	     Tools.replace_seperator($hdr.text), 
+	     Tools.replace_seperator($v.text) ); }
 	;
 
 svar_expr : 
 	   ^(Svar_const (sc=Global|sc=Local) i=IDENT v=Value )
-	   { F.svarExpression($i.text, $sc.text, $v.text.replace(",",";") ); }
+	   { F.svarExpression($i.text, $sc.text, Tools.replace_seperator($v.text) ); }
 	;
 
 svar_dss :
@@ -121,7 +124,7 @@ svar_dss :
 
 dvar_std  :
        ^(Dvar_std (sc=Global|sc=Local) i=IDENT Kind k=STRING Units u=STRING)
-       { F.dvarStd($i.text, $sc.text, "", Tools.strip($k.text), Tools.strip($u.text)); }
+       { F.dvarStd($i.text, $sc.text, null, Tools.strip($k.text), Tools.strip($u.text)); }
 	;
 	
 dvar_nonStd : 
