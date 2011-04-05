@@ -13,7 +13,7 @@ tokens {
 	Value;
 	Dvar; Dvar_std; Dvar_nonStd; Dvar_std; Dvar_nonStd_local;
 	Svar_dss; Svar_const; Svar_sum; Sum_hdr; B_part;
-	Svar_table; Select; From; Where; Given; Use;
+	Svar_table; Select; From; Where_content; Where_item_number; Given; Use;
 	Model;
 	Sequence;
 	Condition;
@@ -134,12 +134,17 @@ svar : DEFINE! (svar_dss | svar_expr | svar_sum | svar_table) ;
 dvar : DEFINE! (dvar_std | dvar_nonStd ) ;	
 
 svar_table :
-	s=LOCAL? IDENT '{' SELECT s=IDENT FROM f=IDENT (GIVEN g=assignment)? (USE u=IDENT)? WHERE w=where_items '}'
-	-> {s!=null}? ^(Svar_table Local  IDENT Select[$s.text] From[$f.text] Given[$g.text] Use[$u.text] Where[Tools.replace_ignoreChar($w.text)] ) 	
-	->            ^(Svar_table Global IDENT Select[$s.text] From[$f.text] Given[$g.text] Use[$u.text] Where[Tools.replace_ignoreChar($w.text)] )  	
+	s=LOCAL? i=IDENT '{' SELECT s=IDENT FROM f=IDENT (GIVEN g=assignment)? (USE u=IDENT)? WHERE w=where_items '}'
+-> {s!=null}? ^(Svar_table Local  $i Select[$s.text] From[$f.text] Given[$g.text] Use[$u.text] Where_item_number[$w.n] Where_content[Tools.replace_ignoreChar($w.text)] ) 	
+->            ^(Svar_table Global $i Select[$s.text] From[$f.text] Given[$g.text] Use[$u.text] Where_item_number[$w.n] Where_content[Tools.replace_ignoreChar($w.text)] )  	
 	;
 
-where_items : assignment (',' assignment  )* ;
+where_items returns[String n]
+@init{ int number = 1; } 
+	: assignment (',' assignment {number++;}  )*
+	  {$n = Integer.toString(number);} 
+	;
+
 
 svar_expr : 
 	s=LOCAL? IDENT '{' VALUE  e=expression'}'
