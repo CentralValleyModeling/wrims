@@ -288,7 +288,12 @@ public class TestWreslWalker_element {
 		String s;
 		int n;
 	
-		s = "OroInfEst#(i=0;SEP-month;1) max(I_Orovl(i);dummy)*cfs_taf(i),";
+		s = "multi_where#select target from res_level where res_num=1,level=4,month=month,";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+
+		s = "simple#select target from feather_fish_203 where month=NOV,";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
