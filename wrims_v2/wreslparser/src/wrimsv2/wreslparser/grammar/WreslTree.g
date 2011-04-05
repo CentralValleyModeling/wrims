@@ -13,7 +13,7 @@ tokens {
 	Value;
 	Dvar; Dvar_std; Dvar_nonStd; Dvar_std; Dvar_nonStd_local;
 	Svar_dss; Svar_const; Svar_sum; Sum_hdr; B_part;
-	Svar_table; Select; From; Where;
+	Svar_table; Select; From; Where; Given; Use;
 	Model;
 	Sequence;
 	Condition;
@@ -134,9 +134,9 @@ svar : DEFINE! (svar_dss | svar_expr | svar_sum | svar_table) ;
 dvar : DEFINE! (dvar_std | dvar_nonStd ) ;	
 
 svar_table :
-	s=LOCAL? IDENT '{' SELECT s=IDENT FROM f=IDENT WHERE w=where_items '}'
-	-> {s!=null}? ^(Svar_table Local  IDENT Select[$s.text] From[$f.text] Where[Tools.replace_ignoreChar($w.text)] ) 	
-	->            ^(Svar_table Global IDENT Select[$s.text] From[$f.text] Where[Tools.replace_ignoreChar($w.text)] )  	
+	s=LOCAL? IDENT '{' SELECT s=IDENT FROM f=IDENT (GIVEN g=assignment)? (USE u=IDENT)? WHERE w=where_items '}'
+	-> {s!=null}? ^(Svar_table Local  IDENT Select[$s.text] From[$f.text] Given[$g.text] Use[$u.text] Where[Tools.replace_ignoreChar($w.text)] ) 	
+	->            ^(Svar_table Global IDENT Select[$s.text] From[$f.text] Given[$g.text] Use[$u.text] Where[Tools.replace_ignoreChar($w.text)] )  	
 	;
 
 where_items : assignment (',' assignment  )* ;
@@ -280,8 +280,8 @@ TIMESERIES: 'timeseries' | 'TIMESERIES';
 SELECT :  'select' | 'SELECT' ;
 FROM:     'from' | 'FROM' ;
 WHERE : 'where' | 'WHERE';
-GIVEN:    'given' | 'GIVEN' ;
-USE:      'use' | 'USE' ;
+GIVEN:    'given' | 'Given' | 'GIVEN' ;
+USE:      'use' | 'Use' | 'USE' ;
 CASE : 'case' | 'Case' | 'CASE' ;
 LHS: 'lhs' | 'LHS' ;
 RHS: 'rhs' | 'RHS' ;

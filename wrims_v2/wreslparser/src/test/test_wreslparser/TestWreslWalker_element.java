@@ -288,12 +288,12 @@ public class TestWreslWalker_element {
 		String s;
 		int n;
 	
-		s = "multi_where#select target from res_level where res_num=1;level=4;month=month";
+		s = "multi_where#select target from res_level given null use null where res_num=1;level=4;month=month";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "simple#select target from feather_fish_203 where month=NOV";
+		s = "simple#select target from feather_fish_203 given null use null where month=NOV";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -338,7 +338,7 @@ public class TestWreslWalker_element {
 		String s;
 		int n;
 	
-		s = "multi_where#select target from res_level where res_num=1;level=4;month=month,";
+		s = "full_table#select area from res_info given storage=1000*S_Orovl(-1) use linear where res_num=6;somevalue=7";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);

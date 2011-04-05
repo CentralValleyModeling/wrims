@@ -100,8 +100,10 @@ dvar : dvar_std | dvar_nonStd   ;
 svar : svar_dss | svar_expr | svar_sum | svar_table;
 
 svar_table :
-	^( Svar_table (sc=Global|sc=Local) i=IDENT s=Select f=From w=Where  ) 
-	 {  String sqlStr = "select "+$s.text+" from "+$f.text+" where "+ Tools.replace_seperator($w.text);
+	^( Svar_table (sc=Global|sc=Local) i=IDENT s=Select f=From g=Given u=Use w=Where  ) 
+	 {  
+	 	//System.out.println("@@@@@@@@@@@@@"+$g.text);
+	 	String sqlStr = "select "+$s.text+" from "+$f.text+" given "+$g.text+" use "+$u.text+" where "+ Tools.replace_seperator($w.text);
 	 	F.svarTable($i.text, $sc.text, sqlStr); } 
 	;
 
