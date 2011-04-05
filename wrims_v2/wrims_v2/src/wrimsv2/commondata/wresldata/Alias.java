@@ -11,11 +11,11 @@ public class Alias {
 	public Number value;
 
 	public Alias(){
-		scope=Parameters.undefined;
-		kind=Parameters.undefined;
-		units=Parameters.undefined;
-		expression=Parameters.undefined;
-		fromWresl=Parameters.undefined;
+		scope=Param.undefined;
+		kind=Param.undefined;
+		units=Param.undefined;
+		expression=Param.undefined;
+		fromWresl=Param.undefined;
 
 	}
 	

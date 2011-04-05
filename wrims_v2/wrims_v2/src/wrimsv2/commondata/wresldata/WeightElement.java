@@ -9,8 +9,8 @@ public class WeightElement {
 	public String fromWresl;
 	
 	public WeightElement(){
-		weight = Parameters.undefined;
-		fromWresl = Parameters.undefined;
+		weight = Param.undefined;
+		fromWresl = Param.undefined;
 
 	}
 	

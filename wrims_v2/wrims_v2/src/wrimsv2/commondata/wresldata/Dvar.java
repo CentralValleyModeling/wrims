@@ -14,14 +14,14 @@ public class Dvar {
 	public Number value;
 	
 	public Dvar(){
-		scope=Parameters.undefined;
-		integer=Parameters.no;
-		format=Parameters.undefined;
-		kind=Parameters.undefined;
-		units=Parameters.undefined;
-		lowerBound=Parameters.undefined;
-		upperBound=Parameters.undefined;
-		fromWresl=Parameters.undefined;
+		scope=Param.undefined;
+		integer=Param.no;
+		format=Param.undefined;
+		kind=Param.undefined;
+		units=Param.undefined;
+		lowerBound=Param.undefined;
+		upperBound=Param.undefined;
+		fromWresl=Param.undefined;
 	}
 	
 	public String equalEva(){
