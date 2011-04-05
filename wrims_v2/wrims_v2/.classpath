@@ -5,5 +5,6 @@
 	<classpathentry kind="lib" path="libs/antlr-3.2.jar"/>
 	<classpathentry kind="lib" path="libs/testng-5.14.1.jar"/>
 	<classpathentry kind="lib" path="libs/ilpObj.jar"/>
+	<classpathentry kind="lib" path="libs/vista.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
