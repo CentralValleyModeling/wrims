@@ -10,6 +10,8 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 
+import wrimsv2.commondata.solverData.ConstraintData;
+import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
@@ -102,6 +104,44 @@ public class Controller {
 	}
 	
 	public static void processGoal(){
+		ModelDataSet mds=ControlData.currModelDataSet;
+		ArrayList<String> gList = mds.gList;
+		Map<String, Goal> gMap =mds.gMap;
+		ControlData.currGoalMap=gMap;
+		ControlData.currEvalTypeIndex=3;
+		for (String goalName: gList){
+			ControlData.currEvalName=goalName;
+			Goal goal=gMap.get(goalName);
+			ArrayList<String> caseCondition=goal.caseCondition;
+			boolean condition=false;
+			int i=-1;
+			while(!condition && i<=caseCondition.size()-2){
+				i=i+1;
+				ANTLRStringStream stream = new ANTLRStringStream("c: "+caseCondition.get(i));
+				EvaluatorLexer lexer = new EvaluatorLexer(stream);
+				TokenStream tokenStream = new CommonTokenStream(lexer);
+				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+				try{
+					evaluator.evaluator();
+					condition=evaluator.evalCondition;
+				}catch (Exception e){
+					Error.error_evaluation.add("Case condition evaluation has error.");
+					condition=false;
+				}
+			}
+			if (condition){
+				ANTLRStringStream stream = new ANTLRStringStream("g: "+goal.caseExpression.get(i));
+				EvaluatorLexer lexer = new EvaluatorLexer(stream);
+				TokenStream tokenStream = new CommonTokenStream(lexer);
+				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+				try {
+					evaluator.evaluator();
+					ConstraintData.getConstraintDataMap().put(goalName,evaluator.evalConstraint);
+				} catch (RecognitionException e) {
+					Error.error_evaluation.add("Case expression evaluation has error.");
+				}
+			}
+		}
 		
 	}
 		

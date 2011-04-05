@@ -2,6 +2,7 @@ package wrimsv2.components;
 
 import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
+import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
@@ -19,8 +20,9 @@ public class ControlData {
 	public static Map<String, Svar> currSvMap=new HashMap<String, Svar>() ;
 	public static Map<String, Dvar> currDvMap=new HashMap<String, Dvar>();
 	public static Map<String, Alias> currAliasMap=new HashMap<String, Alias>();
+	public static Map<String, Goal> currGoalMap=new HashMap<String, Goal>();
 	public static int currCycleIndex;
-	public static int currEvalTypeIndex; //0=sv; 1=dv; 2=constraint; 3=alias
+	public static int currEvalTypeIndex; //0=sv; 1=dv; 2=alias; 3=goal
 	public static String currEvalName;
 	public static int currDay=1;
 	public static int currMonth;

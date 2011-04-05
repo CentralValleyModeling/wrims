@@ -147,7 +147,7 @@ public class Evaluation {
 			IntDouble id =new IntDouble (Integer.parseInt(valueString), true);
 			return new EvalExpression(id);
 		}catch (Exception e){
-			IntDouble id = new IntDouble(99999999999.0, false);
+			IntDouble id = new IntDouble(Double.parseDouble(valueString), false);
 			return new EvalExpression(id);
 		}
 	}

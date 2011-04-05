@@ -178,7 +178,7 @@ sumExpression returns [EvalExpression ee] @init{String s="";}
 term returns [EvalExpression ee]
 	:	((knownTS{ee=Evaluation.term_knownTS($knownTS.result);})
 	| (IDENT {ee=Evaluation.term_IDENT($IDENT.text);})
-	| (SVAR{ee=Evaluation.term_SVAR($SVAR.text);}) 
+	| (SVAR{ee=Evaluation.term_SVAR($SVAR.text.replace("{","").replace("}",""));}) 
 	|	('(' (e=expression) ')' {ee=$e.ee;})
 	|	(INTEGER {ee=Evaluation.term_INTEGER($INTEGER.text);}) 
 	| (FLOAT {ee=Evaluation.term_FLOAT($FLOAT.text);}) 

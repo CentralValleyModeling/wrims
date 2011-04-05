@@ -43,13 +43,13 @@ public class Error {
 	
 	public static void addEvaluationError(String error){
 		if (ControlData.currEvalTypeIndex == 0){
-			error_evaluation.add(ControlData.currEvalName+" in svar definition of Cycle "+ControlData.currCycleIndex+": "+error);
+			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in svar definition of Cycle "+ControlData.currCycleIndex+": "+error);
 		}else if (ControlData.currEvalTypeIndex == 1){
-			error_evaluation.add(ControlData.currEvalName+" in dvar definition of Cycle "+ControlData.currCycleIndex+": "+error);
+			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in dvar definition of Cycle "+ControlData.currCycleIndex+": "+error);
 		}else if (ControlData.currEvalTypeIndex == 2){
-			error_evaluation.add(ControlData.currEvalName+" in constraint definition of Cycle "+ControlData.currCycleIndex+": "+error);
+			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in constraint definition of Cycle "+ControlData.currCycleIndex+": "+error);
 		}else if (ControlData.currEvalTypeIndex == 3){
-			error_evaluation.add(ControlData.currEvalName+" in alias definition of Cycle "+ControlData.currCycleIndex+": "+error);
+			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in alias definition of Cycle "+ControlData.currCycleIndex+": "+error);
 		}
 			
 	}

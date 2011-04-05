@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import junit.framework.TestCase;
 
@@ -13,6 +14,8 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 import org.testng.annotations.Test;
+
+import wrimsv2.commondata.wresldata.Svar;
 
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.evaluator.EvalExpression;
@@ -32,7 +35,6 @@ public class TestEvaluator extends TestCase{
 	public String inputFilePath;
 	public String logFilePath;
 	
-	@Test
 	public void testRelationStatement() throws RecognitionException, IOException {
 		ANTLRStringStream stream = new ANTLRStringStream("g: (2+a)*3.4-(5+6*7.0)*b+4*f<(2+b)*6+3*f");
 		EvaluatorLexer lexer = new EvaluatorLexer(stream);
@@ -48,7 +50,6 @@ public class TestEvaluator extends TestCase{
 		System.out.println(ee.getMultiplier().get("f").getData());
 	}
 	
-	@Test
 	public void testInternalFunctions() throws RecognitionException, IOException {
 		ANTLRStringStream stream = new ANTLRStringStream("g: max(4;-3)*a+min(3.1;100.2)*b+pow(3;abs(-2))*c+int(5.43)*d+log(2)*e<log10(10.0)");
 		EvaluatorLexer lexer = new EvaluatorLexer(stream);
@@ -66,7 +67,6 @@ public class TestEvaluator extends TestCase{
 		System.out.println(ee.getMultiplier().get("e").getData());
 	}
 	
-	@Test
 	public void testConditionStatement() throws RecognitionException, IOException {
         String mainFile="z:\\temp\\test";
         FilePaths fp=new FilePaths();
@@ -87,7 +87,6 @@ public class TestEvaluator extends TestCase{
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
-	@Test
 	public void testExternalFunction() throws RecognitionException, IOException {
         new LoadAllDll();
 
@@ -105,7 +104,6 @@ public class TestEvaluator extends TestCase{
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
-	@Test
 	public void testInteger() throws RecognitionException, IOException {
 
         String mainFile="z:\\temp\\test";
@@ -122,7 +120,6 @@ public class TestEvaluator extends TestCase{
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
-	@Test
 	public void testDaysIn() throws RecognitionException, IOException {
 
         String mainFile="z:\\temp\\test";
@@ -141,7 +138,6 @@ public class TestEvaluator extends TestCase{
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
-	@Test
 	public void testTafcfs() throws RecognitionException, IOException {
 
         String mainFile="z:\\temp\\test";
@@ -160,7 +156,6 @@ public class TestEvaluator extends TestCase{
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 
-	@Test
 	public void testTimeseries() throws RecognitionException, IOException {
 
         String mainFile="z:\\temp\\test";
@@ -179,7 +174,6 @@ public class TestEvaluator extends TestCase{
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
-	@Test
 	public void testSVTimeseries() throws RecognitionException, IOException {
 
         String mainFile="z:\\temp\\test";
@@ -208,6 +202,12 @@ public class TestEvaluator extends TestCase{
         fp.setMainFilePaths(mainFile);
 		
         new ControlData();
+        Svar svar=new Svar();
+        svar.kind="bf-flow";
+        svar.units="cfs";
+        Map<String, Svar> svMap =new HashMap<String, Svar>();
+        svMap.put("bf601", svar);
+        ControlData.currSvMap=svMap;
         FilePaths.fullSvarDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09ESV.dss";
         FilePaths.fullInitDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09EINIT.DSS";
         ControlData.currEvalName="bf601";
@@ -226,7 +226,6 @@ public class TestEvaluator extends TestCase{
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
-	@Test
 	public void testPastMonth() throws RecognitionException, IOException {
 
         String mainFile="z:\\temp\\test";
@@ -252,7 +251,6 @@ public class TestEvaluator extends TestCase{
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
-	@Test
 	public void testLookUpTable() throws RecognitionException, IOException {
 
         String mainFile="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\main.wresl";
@@ -275,7 +273,6 @@ public class TestEvaluator extends TestCase{
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
-	@Test
 	public void testLookUp() throws RecognitionException, IOException {
 
         String mainFile="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\main.wresl";
