@@ -9,15 +9,16 @@ import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.LoopIndex;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
 public class ControlData {
-	public static StudyDataSet currStudyDataSet=null;
-	public static ModelDataSet currModelDataSet=null;
-	public static Map<String, Svar> currSvMap=null;
-	public static Map<String, Dvar> currDvMap=null;
-	public static Map<String, Alias> currAliasMap=null;
+	public static StudyDataSet currStudyDataSet=new StudyDataSet();
+	public static ModelDataSet currModelDataSet=new ModelDataSet();
+	public static Map<String, Svar> currSvMap=new HashMap<String, Svar>() ;
+	public static Map<String, Dvar> currDvMap=new HashMap<String, Dvar>();
+	public static Map<String, Alias> currAliasMap=new HashMap<String, Alias>();
 	public static int currCycleIndex;
 	public static int currEvalTypeIndex; //0=sv; 1=dv; 2=constraint; 3=alias
 	public static String currEvalName;

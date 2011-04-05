@@ -7,7 +7,7 @@ public class DssDataSet {
 	private ArrayList<Double> data;
 	private String timeStep;
 	private Date startTime;
-	private boolean fromDssFile;
+	private boolean fromDssFile=false;
 	
 	public void setData(ArrayList<Double> data){
 		this.data=data;

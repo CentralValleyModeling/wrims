@@ -41,6 +41,7 @@ public class DssOperation {
         dds.setData(dataArray);
         dds.setTimeStep(rts.getTimeInterval().toString());
         dds.setStartTime(rts.getStartTime().getDate());
+        dds.setFromDssFile(true);
         DataTimeSeries.svTS.put(name, dds);
 		return true;
 	}

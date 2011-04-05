@@ -494,7 +494,7 @@ public class Evaluation {
 			if (index>=0 && index<data.size()){
 				double value=data.get(index);
 				if (dds.fromDssFile()){
-					if (value != 901.0){
+					if (value != -901.0){
 						return value;
 					}
 				}else{
@@ -582,12 +582,14 @@ public class Evaluation {
 	public static EvalExpression timeseries(){
 		String svName=ControlData.currEvalName;
 		//To Do: in the svar class, add flag to see if svTS has been loaded
-		if (!DataTimeSeries.svTS.containsKey(svName)){ //To Do check if svTS has been loaded. If no, load.
+		if (!DataTimeSeries.lookSvDss.contains(svName)){ 
 			DssOperation.getSVTimeseries(svName, FilePaths.fullSvarDssPath);
+			DataTimeSeries.lookSvDss.add(svName);
 		}
 		//To Do: in the svar class, add flag to see if svInit has been loaded
-		if (!DataTimeSeries.svInit.containsKey(svName)){ //To Do check if svInit has been loaded. If no, load. 
+		if (!DataTimeSeries.lookInitDss.contains(svName)){  
 			DssOperation.getSVInitTimeseries(svName, FilePaths.fullInitDssPath);
+			DataTimeSeries.lookInitDss.add(svName);
 		}
 		TimeOperation.findTime(0);
 		double value=svarTimeSeries(svName);
