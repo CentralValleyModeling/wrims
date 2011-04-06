@@ -1,0 +1,11 @@
+
+     HECDSS Condensed Catalog of Record Pathnames in File ../testdata/ex3-base.dss
+
+     Catalog Created on Jan 14, 2011 at 14:41    File Created on Oct 21, 1998
+     Number of Records:      4                   DSS Version 6-QE,  File 6-KE
+     Sort Order: ABCFED
+
+ Tag  A Part               B Part    C Part  F Part          E Part  D Part
+
+ T1   DSM2-HYDRO-4.2+CHAN  085_3500  STAGE   DWR-OSP-DMS+1C  15MIN   01NOV1987 - 01DEC1987
+ T3   DSM2-HYDRO-4.2+RSVR  CLFCT     STAGE   DWR-OSP-DMS+1C  15MIN   01NOV1987 - 01DEC1987

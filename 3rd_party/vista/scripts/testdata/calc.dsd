@@ -1,0 +1,31 @@
+
+     HECDSS Condensed Catalog of Record Pathnames in File D:\dev\wk-vista\vista\scripts\testdata\calc.dss
+
+     Catalog Created on Jan 13, 2011 at 16:05    File Created on Dec 15, 1999
+     Number of Records:    166                   DSS Version 6-QE,  File 6-KE
+     Sort Order: ABCFED
+
+ Tag   A Part     B Part     C Part  F Part          E Part  D Part
+
+ T112  (null)     CCC        EC      JAVA            1DAY    01JAN1984 - 01JAN1986
+ T115  - - - -    - - - -    - - -   JAVA ANN CALC   1DAY    01JAN1975 - 01JAN1992
+ T117  - - - -    EMM        EC      JAVA ANN CALC   1DAY    01JAN1975 - 01JAN1991
+ T116  - - - -    JPT        EC      JAVA ANN CALC   1DAY    01JAN1975 - 01JAN1991
+ T49   CALSIM     CCC        EC      ANN-MODEL-2020  1MON    01JAN1910 - 01JAN1990
+ T28   - - - -    - - - -    - - -   G-MODEL-2020    1MON    01JAN1910 - 01JAN1990
+ T76   - - - -    - - - -    EC-STD  MODEL-2020      1MON    01JAN1920 - 01JAN1990
+ T58   - - - -    EMMATON    EC      ANN-MODEL-2020  1MON    01JAN1910 - 01JAN1990
+ T10   - - - -    - - - -    - - -   G-MODEL-2020    1MON    01JAN1910 - 01JAN1990
+ T84   - - - -    - - - -    EC-STD  MODEL-2020      1MON    01JAN1920 - 01JAN1990
+ T67   - - - -    JERSEYPT   EC      ANN-MODEL-2020  1MON    01JAN1910 - 01JAN1990
+ T19   - - - -    - - - -    - - -   G-MODEL-2020    1MON    01JAN1910 - 01JAN1990
+ T92   - - - -    - - - -    EC-STD  MODEL-2020      1MON    01JAN1920 - 01JAN1990
+ T1    - - - -    PITTSBURG  EC      G-MODEL-2020    1MON    01JAN1910 - 01JAN1990
+ T109  DSM2-QUAL  CCC        EC      ANN-MODEL-2020  1MON    01JAN1970 - 01JAN1990
+ T46   - - - -    - - - -    - - -   G-MODEL-2020    1MON    01JAN1970 - 01JAN1990
+ T100  - - - -    EMMATON    EC      ANN-MODEL-2020  1MON    01JAN1970 - 01JAN1990
+ T37   - - - -    - - - -    - - -   G-MODEL-2020    1MON    01JAN1970 - 01JAN1990
+ T103  - - - -    JERSEYPT   EC      ANN-MODEL-2020  1MON    01JAN1970 - 01JAN1990
+ T40   - - - -    - - - -    - - -   G-MODEL-2020    1MON    01JAN1970 - 01JAN1990
+ T106  - - - -    PITTSBURG  EC      ANN-MODEL-2020  1MON    01JAN1970 - 01JAN1990
+ T43   - - - -    - - - -    - - -   G-MODEL-2020    1MON    01JAN1970 - 01JAN1990

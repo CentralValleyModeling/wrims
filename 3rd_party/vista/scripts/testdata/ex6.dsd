@@ -1,0 +1,32 @@
+
+     HECDSS Condensed Catalog of Record Pathnames in File ../testdata/ex6.dss
+
+     Catalog Created on Jan 13, 2011 at 16:12    File Created on Nov 13, 1998
+     Number of Records:     46                   DSS Version 6-QE,  File 6-KE
+     Sort Order: ABCFED
+
+ Tag  A Part                B Part     C Part  F Part            E Part  D Part
+
+ T29  DSM2-HYDRO-4.10+CHAN  001_0      FLOW    DWR-OSP-DMS+BOTH  1HOUR   01DEC3000 - 01JAN3001
+ T9   - - - - - - - - - -   - - - -    - - -   DWR-OSP-DMS+CHAN  1HOUR   01DEC3000 - 01JAN3001
+ T23  - - - - - - - - - -   - - - -    STAGE   DWR-OSP-DMS+BOTH  1HOUR   01DEC3000 - 01JAN3001
+ T3   - - - - - - - - - -   - - - -    - - -   DWR-OSP-DMS+CHAN  1HOUR   01DEC3000 - 01JAN3001
+ T31  - - - - - - - - - -   001_15000  FLOW    DWR-OSP-DMS+BOTH  1HOUR   01DEC3000 - 01JAN3001
+ T11  - - - - - - - - - -   - - - -    - - -   DWR-OSP-DMS+CHAN  1HOUR   01DEC3000 - 01JAN3001
+ T21  - - - - - - - - - -   - - - -    STAGE   DWR-OSP-DMS+BOTH  1HOUR   01DEC3000 - 01JAN3001
+ T1   - - - - - - - - - -   - - - -    - - -   DWR-OSP-DMS+CHAN  1HOUR   01DEC3000 - 01JAN3001
+ T33  - - - - - - - - - -   002_0      FLOW    DWR-OSP-DMS+BOTH  1HOUR   01DEC3000 - 01JAN3001
+ T13  - - - - - - - - - -   - - - -    - - -   DWR-OSP-DMS+CHAN  1HOUR   01DEC3000 - 01JAN3001
+ T25  - - - - - - - - - -   - - - -    STAGE   DWR-OSP-DMS+BOTH  1HOUR   01DEC3000 - 01JAN3001
+ T5   - - - - - - - - - -   - - - -    - - -   DWR-OSP-DMS+CHAN  1HOUR   01DEC3000 - 01JAN3001
+ T35  - - - - - - - - - -   002_15000  FLOW    DWR-OSP-DMS+BOTH  1HOUR   01DEC3000 - 01JAN3001
+ T15  - - - - - - - - - -   - - - -    - - -   DWR-OSP-DMS+CHAN  1HOUR   01DEC3000 - 01JAN3001
+ T37  - - - - - - - - - -   003_0      FLOW    DWR-OSP-DMS+BOTH  1HOUR   01DEC3000 - 01JAN3001
+ T17  - - - - - - - - - -   - - - -    - - -   DWR-OSP-DMS+CHAN  1HOUR   01DEC3000 - 01JAN3001
+ T27  - - - - - - - - - -   - - - -    STAGE   DWR-OSP-DMS+BOTH  1HOUR   01DEC3000 - 01JAN3001
+ T7   - - - - - - - - - -   - - - -    - - -   DWR-OSP-DMS+CHAN  1HOUR   01DEC3000 - 01JAN3001
+ T39  - - - - - - - - - -   003_15000  FLOW    DWR-OSP-DMS+BOTH  1HOUR   01DEC3000 - 01JAN3001
+ T19  - - - - - - - - - -   - - - -    - - -   DWR-OSP-DMS+CHAN  1HOUR   01DEC3000 - 01JAN3001
+ T41  DSM2-HYDRO-4.10+RSVR  1          STAGE   DWR-OSP-DMS+BOTH  1HOUR   01DEC3000 - 01JAN3001
+ T43  - - - - - - - - - -   1-NODE2    FLOW    DWR-OSP-DMS+BOTH  1HOUR   01DEC3000 - 01JAN3001
+ T45  - - - - - - - - - -   1-NODE3    FLOW    DWR-OSP-DMS+BOTH  1HOUR   01DEC3000 - 01JAN3001

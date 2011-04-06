@@ -1,0 +1,38 @@
+
+     HECDSS Condensed Catalog of Record Pathnames in File D:\dev\wk-vista\vista_trunk\scripts\testdata\gates_db.dss
+
+     Catalog Created on Feb 26, 2010 at 14:02    File Created on Nov 14, 2006
+     Number of Records:    202                   DSS Version 6-QE,  File 6-KE
+     Sort Order: ABCFED
+
+ Tag   A Part     B Part      C Part             F Part           E Part     D Part
+
+ T82   HIST+GATE  CHWST000    POS                DWR-OM-JOC-DSM2  IR-YEAR    01JAN1971 - 01JAN2009
+ T95   - - - -    GL_CN       FULLPART           DWR-BDO          IR-DECADE  01JAN1980 - 01JAN2020 *
+ T1    - - - -    - - - - -   INSTALL            DWR-BDO          IR-DECADE  01JAN1980 - 01JAN2020 *
+ T1    - - - -    - - - - -   PIPE_OP_DOWN       DWR-BDO          IR-DECADE  01JAN1980 - 01JAN2020 *
+ T6    - - - -    - - - - -   - - - - - - - -    DWR-BDO_OLD      IR-DECADE  01JAN1980 - 01JAN2020
+ T82   - - - -    MID_R       INSTALL            DWR-BDO          IR-DECADE  01JAN1980 - 01JAN2020 *
+ T22   - - - -    - - - - -   - - - - - - - -    DWR-BDO_OLD      IR-DECADE  01JAN1980 - 01JAN2020
+ T50   - - - -    - - - - -   PIPE_OP_DOWN       DWR-BDO          IR-DECADE  01JAN1980 - 01JAN2020 *
+ T16   - - - -    - - - - -   - - - - - - - -    DWR-BDO_OLD      IR-DECADE  01JAN1980 - 01JAN2020
+ T45   - - - -    MTZSL       BOATLOCK_OP        DWR-ESO          IR-DECADE  01JAN1980 - 01JAN2020 *
+ T47   - - - -    - - - - -   FLASHBOARD_OP      DWR-ESO          IR-DECADE  01JAN1980 - 01JAN2020 *
+ T58   - - - -    - - - - -   MOD_FLASHBOARD_OP  DWR-ESO          IR-DECADE  01JAN1980 - 01JAN2000
+ T35   - - - -    - - - - -   RADIAL_FRACT       DWR-ESO          IR-DECADE  01JAN1980 - 01JAN2020 *
+ T38   - - - -    - - - - -   RADIAL_OP          DWR-ESO          IR-DECADE  01JAN1980 - 01JAN2020 *
+ T186  - - - -    OLD_R       INSTALL            DWR-BDO          IR-DECADE  01JAN1980 - 01JAN2020 *
+ T17   - - - -    - - - - -   - - - - - - - -    DWR-BDO_OLD      IR-DECADE  01JAN1980 - 01JAN2020
+ T149  - - - -    - - - - -   PIPE_OP_DOWN       DWR-BDO          IR-DECADE  01JAN1980 - 01JAN2020 *
+ T24   - - - -    - - - - -   - - - - - - - -    DWR-BDO_OLD      IR-DECADE  01JAN1980 - 01JAN2020
+ T362  - - - -    ORHRB       INSTALL            DWR-BDO          IR-DECADE  01JAN1980 - 01JAN2020 *
+ T1    - - - -    - - - - -   - - - - - - - -    DWR-BDO_OLD      IR-DECADE  01JAN1910 - 01JAN2020 *
+ T31   - - - -    - - - - -   PIPEELEV           DWR-BDO          IR-DECADE  01JAN1980 - 01JAN2020 *
+ T348  - - - -    - - - - -   PIPE_OP            DWR-BDO          IR-DECADE  01JAN1980 - 01JAN2020 *
+ T29   - - - -    - - - - -   - - - - - - - -    DWR-BDO_OLD      IR-DECADE  01JAN1980 - 01JAN2020
+ T333  - - - -    - - - - -   WEIR_OP            DWR-BDO          IR-DECADE  01JAN1980 - 01JAN2020 *
+ T32   - - - -    - - - - -   - - - - - - - -    DWR-BDO_OLD      IR-DECADE  01JAN1980 - 01JAN2000
+ T333  - - - -    ORHRB_FALL  WEIR_OP            DWR-BDO          IR-DECADE  01JAN1980 - 01JAN2020 *
+ T44   - - - -    - - - - -   - - - - - - - -    DWR-BDO_OLD      IR-DECADE  01JAN1980 - 01JAN2000
+ T119  - - - -    RSAC128     POS                DWR-DMS-DSM2     IR-YEAR    01JAN1953 - 01JAN2020
+   *  Record time span has missing periods.
