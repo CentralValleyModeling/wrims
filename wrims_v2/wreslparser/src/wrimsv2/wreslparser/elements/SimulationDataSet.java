@@ -10,6 +10,7 @@ import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.External;
 import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.Svar;
+import wrimsv2.commondata.wresldata.SvarTimeseries;
 import wrimsv2.commondata.wresldata.WeightElement;
 
 public class SimulationDataSet {
@@ -60,6 +61,12 @@ public class SimulationDataSet {
 	public ArrayList<String> exList_local = new ArrayList<String>();
 	public Map<String, External> exMap = new HashMap<String, External>();
 
+
+	// / svar timeseries data structure
+	public ArrayList<String> svTsList = new ArrayList<String>();
+	public ArrayList<String> svTsList_global = new ArrayList<String>();
+	public ArrayList<String> svTsList_local = new ArrayList<String>();
+	public Map<String, SvarTimeseries> svTsMap = new HashMap<String, SvarTimeseries>();
 	
 	// / svar data structure
 	public ArrayList<String> svList = new ArrayList<String>();
@@ -134,6 +141,15 @@ public class SimulationDataSet {
 				LogUtils.errMsg("**** Include file redefined: "+e, f1, f2, reverseMap);
 				b = true;
 				
+			}
+		}
+
+		for (String e : s.svTsList){ 
+			if (this.svTsList.contains(e)) {
+				String f1 = filePath;
+				String f2 = svTsMap.get(e).fromWresl;
+				LogUtils.errMsg("State variable redefined: "+e, f1, f2, reverseMap);
+				b = true;
 			}
 		}
 		
@@ -213,6 +229,12 @@ public class SimulationDataSet {
 			this.exList_local.addAll(s.exList);
 			this.exMap.putAll(s.exMap);
 		}
+
+		if (!s.svTsList.isEmpty()) {
+			this.svTsList.addAll(s.svTsList);
+			this.svTsList_local.addAll(s.svTsList);
+			this.svTsMap.putAll(s.svTsMap);
+		}
 		
 		if (!s.svList.isEmpty()) {
 			this.svList.addAll(s.svList);
@@ -258,6 +280,12 @@ public class SimulationDataSet {
 			this.incFileList_global = new ArrayList<String>();
 		}
 
+		if (!this.svTsList.isEmpty()) {
+			this.svTsList_local = new ArrayList<String>();
+			this.svTsList_local.addAll(this.svTsList);
+			this.svTsList_global = new ArrayList<String>();
+		}
+		
 		if (!this.svList.isEmpty()) {
 			this.svList_local = new ArrayList<String>();
 			this.svList_local.addAll(this.svList);
@@ -314,6 +342,15 @@ public class SimulationDataSet {
 
 			for (String key : this.exList_global) {
 				out.exMap.put(key, this.exMap.get(key));
+			}
+		}
+
+		if (!this.svTsList_global.isEmpty()) {
+			out.svTsList.addAll(this.svTsList_global);
+			out.svTsList_global.addAll(this.svTsList_global);
+
+			for (String key : this.svTsList_global) {
+				out.svTsMap.put(key, this.svTsMap.get(key));
 			}
 		}
 		
@@ -374,6 +411,14 @@ public class SimulationDataSet {
 			if (!s.exList_local.isEmpty()) {this.exList_local.removeAll(s.exList);}
 			//this.exMap.remove(s.exList);
 			Tools.mapRemoveAll(this.exMap, s.exList);
+		}
+
+		if (!s.svTsList.isEmpty()) {
+			this.svTsList.removeAll(s.svTsList);
+			if (!s.svTsList_global.isEmpty()) {this.svTsList_global.removeAll(s.svTsList);}
+			if (!s.svTsList_local.isEmpty()) {this.svTsList_local.removeAll(s.svTsList);}
+			//this.svTsMap.remove(s.svTsList);
+			Tools.mapRemoveAll(this.svTsMap, s.svTsList);
 		}
 		
 		if (!s.svList.isEmpty()) {
@@ -438,6 +483,13 @@ public class SimulationDataSet {
 			if (!s.exList_global.isEmpty()) {this.exList_global.addAll(s.exList_global);}
 			if (!s.exList_local.isEmpty()) {this.exList_local.addAll(s.exList_local);}
 			this.exMap.putAll(s.exMap);
+		}
+
+		if (!s.svTsList.isEmpty()) {
+			this.svTsList.addAll(s.svTsList);
+			if (!s.svTsList_global.isEmpty()) {this.svTsList_global.addAll(s.svTsList_global);}
+			if (!s.svTsList_local.isEmpty()) {this.svTsList_local.addAll(s.svTsList_local);}
+			this.svTsMap.putAll(s.svTsMap);
 		}
 		
 		if (!s.svList.isEmpty()) {

@@ -34,6 +34,9 @@ public class StudyParser {
 			thisModelDataSet.dvList = ds.dvList; 
 			thisModelDataSet.dvMap = ds.dvMap; 
 
+			thisModelDataSet.svTsList = ds.svTsList; 
+			thisModelDataSet.svTsMap = ds.svTsMap;
+			
 			thisModelDataSet.svList = ds.svList; 
 			thisModelDataSet.svMap = ds.svMap;
 			

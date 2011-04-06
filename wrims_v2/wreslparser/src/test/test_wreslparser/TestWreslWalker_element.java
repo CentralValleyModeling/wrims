@@ -113,9 +113,9 @@ public class TestWreslWalker_element {
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error:");
 		Assert.assertEquals(totalErrs, 0);	
 		
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\svar.csv");	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\svar_timeseries.csv");	
 
-		int r1 = RegUtils.timesOfMatches(csvText, "complex.+UD_CCWD.+DEMAND-CVP.+TAF.+CFS.+n.+default.+1.+always.+timeseries");
+		int r1 = RegUtils.timesOfMatches(csvText, "complex.+UD_CCWD.+DEMAND-CVP.+TAF.+CFS");
 		Assert.assertEquals(r1, 1);	
 	}
 	

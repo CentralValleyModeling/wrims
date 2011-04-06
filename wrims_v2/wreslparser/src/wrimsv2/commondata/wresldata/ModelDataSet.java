@@ -16,6 +16,10 @@ public class ModelDataSet {
 	public ArrayList<String> exList = new ArrayList<String>();
 	public Map<String, External> exMap = new HashMap<String, External>();
 	
+	// / svar timeseries data structure
+	public ArrayList<String> svTsList = new ArrayList<String>();
+	public Map<String, SvarTimeseries> svTsMap = new HashMap<String, SvarTimeseries>();
+	
 	// / svar data structure
 	public ArrayList<String> svList = new ArrayList<String>();
 	public Map<String, Svar> svMap = new HashMap<String, Svar>();

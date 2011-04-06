@@ -12,6 +12,7 @@ import wrimsv2.commondata.wresldata.External;
 import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.Svar;
+import wrimsv2.commondata.wresldata.SvarTimeseries;
 import wrimsv2.commondata.wresldata.WeightElement;
 
 public class StructTree {
@@ -33,6 +34,8 @@ public class StructTree {
 
 	// / external function structure
 	public External ex;
+
+	public SvarTimeseries svTs;
 	
 	public Svar sv;
 
@@ -350,22 +353,19 @@ public class StructTree {
 			S.var_all.put(name, "svar_dss");
 
 			// / clearer data structure
-			Svar sv = new Svar();
-			sv.scope = scope;
-			if (b_part!=null) sv.dssBPart = b_part; 
-			sv.kind = kind;
-			sv.units = units;
-			if (convertToUnits!=null) {sv.convertToUnits = convertToUnits;}
-			sv.format = "timeseries";
-			sv.caseCondition.add("always");
-			sv.caseName.add(Param.defaultCaseName);
-			sv.caseExpression.add("timeseries");
-			sv.fromWresl = S.currentAbsolutePath;
-			S.svMap.put(name, sv);
-			S.svList.add(name);
+			SvarTimeseries svTs = new SvarTimeseries();
+			svTs.scope = scope;
+			if (b_part!=null) svTs.dssBPart = b_part; 
+			svTs.kind = kind;
+			svTs.units = units;
+			if (convertToUnits!=null) {svTs.convertToUnits = convertToUnits;}
+			svTs.format = "dss";
+			svTs.fromWresl = S.currentAbsolutePath;
+			S.svTsMap.put(name, svTs);
+			S.svTsList.add(name);
 			
-			if      (scope == Param.global){S.svList_global.add(name);}
-			else if (scope == Param.local) {S.svList_local.add(name);}
+			if      (scope == Param.global){S.svTsList_global.add(name);}
+			else if (scope == Param.local) {S.svTsList_local.add(name);}
 			else{ System.out.println("wrong scope!!");}
 
 		}
