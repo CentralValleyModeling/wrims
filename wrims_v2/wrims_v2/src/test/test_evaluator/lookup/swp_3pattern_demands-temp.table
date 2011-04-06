@@ -1,0 +1,8 @@
+! Version 9 of the Common Assumptions Common Model Package (CMP)
+! 2005 Level of Development Assumptions for the Common Assumptions Process
+! source spreadsheet: CACMPV9_SWP_SOD_2005_071507.xls
+   swp_3pattern_demands
+contractor       month            percent          demand           remainDemand
+1                4              100             0.00            25.56
+1                5              100             0.00            25.56
+1                4               50             2.00            20.49
