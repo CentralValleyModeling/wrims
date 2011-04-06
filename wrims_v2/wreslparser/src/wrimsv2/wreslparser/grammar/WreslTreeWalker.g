@@ -56,7 +56,7 @@ test:  INTEGER 'test' ;
 test2:  t=test {  System.out.println("yyyyyyyyyyyyy"+$t.text  ); };		
 
 pattern
-	: dvar | svar | includeFile 
+	: dvar | svar | goal | includeFile 
 	;
 
 sequence 
@@ -94,10 +94,16 @@ includeFile
 //	:	^(':=' IDENT e=expression)
 //			{ variables.put($IDENT.text, e); }
 //	;
+goal : goal_simple ;
 
 dvar : dvar_std | dvar_nonStd   ;
 
 svar : svar_dss | svar_expr | svar_sum | svar_table;
+
+goal_simple 
+	:  ^(Goal_simple (sc=Global|sc=Local) i=IDENT v=Constraint_content ) 
+		{ F.goalSimple($i.text, $sc.text, $v.text);} 
+	;
 
 svar_table :
 	^( Svar_table (sc=Global|sc=Local) i=IDENT s=Select f=From g=Given u=Use wi=Where_item_number wc=Where_content   ) 

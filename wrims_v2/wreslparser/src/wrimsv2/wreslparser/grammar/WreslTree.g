@@ -14,6 +14,8 @@ tokens {
 	Dvar; Dvar_std; Dvar_nonStd; Dvar_std; Dvar_nonStd_local;
 	Svar_dss; Svar_const; Svar_sum; Sum_hdr; B_part;
 	Svar_table; Select; From; Where_content; Where_item_number; Given; Use;
+	Goal_simple;
+	Constraint_content;
 	Model;
 	Sequence;
 	Condition;
@@ -102,7 +104,7 @@ test:  INTEGER  'test' ;
 test2:  test ;	
 	
 pattern
-	: dvar | svar | includeFile 
+	: dvar | svar | goal | includeFile 
 	;
 	
 model
@@ -128,6 +130,17 @@ includeFile
 	-> {s!=null}? ^(Include Local  FILE_PATH)
 	->            ^(Include Global FILE_PATH)
 	;
+
+goal : goal_simple ;
+
+goal_simple
+	:  GOAL s=LOCAL? i=IDENT '{' v=constraint_content '}'
+	{  System.out.println("#####"+$v.text); }
+-> {s!=null}? ^(Goal_simple Local  $i Constraint_content[Tools.replace_ignoreChar($v.text)] ) 	
+->            ^(Goal_simple Global $i Constraint_content[Tools.replace_ignoreChar($v.text)] )  	
+	
+	;
+
 
 svar : DEFINE! (svar_dss | svar_expr | svar_sum | svar_table) ;
 		
@@ -202,8 +215,11 @@ lower: LOWER ( UNBOUNDED -> Lower LimitType["Unbounded"] | e=expression -> Lower
 upper: UPPER ( UNBOUNDED -> Upper LimitType["Unbounded"] | e=expression -> Upper LimitType[$e.tree.toStringTree()] ) ;
 
 
-/// assignment ///
+/// IDENT =, <, > ///
+
+constraint_content : assignment | less_or_greater_than ;
 assignment  :   IDENT '=' expression ;
+less_or_greater_than :  IDENT ( '<' | '>' ) expression ;
 
 /// Expression ///
 number : INTEGER | FLOAT ;
