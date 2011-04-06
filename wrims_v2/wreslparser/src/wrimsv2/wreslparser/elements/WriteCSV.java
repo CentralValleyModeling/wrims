@@ -129,8 +129,7 @@ public class WriteCSV {
 	  public static void svar(Map<String,Svar> sMap, ArrayList<String> list ,PrintWriter out) {
 		    
 			List<String> keys = list;
-			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
-		    //List<SvarProps> svarPropsList;
+			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
 			
 		    for (String k: keys ){
 		    	
@@ -168,7 +167,6 @@ public class WriteCSV {
 		    
 			List<Integer> keys = list;
 			Collections.sort(keys);
-
 			
 		    for (Integer k: keys ){
 		    	
@@ -185,8 +183,7 @@ public class WriteCSV {
 	  public static void external(Map<String,External> eMap, ArrayList<String> list ,PrintWriter out) {
 		    
 			List<String> keys = list;
-			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
-
+			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
 			
 		    for (String k: keys ){
 		    	
@@ -207,8 +204,7 @@ public class WriteCSV {
 	  public static void weight(Map<String,WeightElement> wtMap, ArrayList<String> list ,PrintWriter out) {
 		    
 			List<String> keys = list;
-			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
-		    //List<SvarProps> svarPropsList;
+			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
 			
 		    for (String k: keys ){
 		    	
@@ -228,7 +224,7 @@ public class WriteCSV {
 	public static void dvar(Map<String,Dvar> dMap, ArrayList<String> list ,PrintWriter out) {
 		    
 			List<String> keys = list;
-			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
+			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
 			
 		    for (String k: keys ){
 		    	
@@ -250,7 +246,7 @@ public class WriteCSV {
 	public static void alias(Map<String,Alias> asMap, ArrayList<String> list ,PrintWriter out) {
 		    
 			List<String> keys = list;
-			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
+			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
 			
 		    for (String k: keys ){
 		    	
@@ -270,8 +266,7 @@ public class WriteCSV {
 	  public static void goal(Map<String,Goal> gMap, ArrayList<String> list ,PrintWriter out) {
 		    
 			List<String> keys = list;
-			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
-		    //List<SvarProps> svarPropsList;
+			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
 			
 		    for (String k: keys ){
 		    	
