@@ -1,5 +1,7 @@
 package test.test_evaluator;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +10,7 @@ import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import wrimsv2.commondata.wresldata.Goal;
@@ -18,9 +21,14 @@ import wrimsv2.components.ControlData;
 import wrimsv2.components.Controller;
 import wrimsv2.components.Error;
 import wrimsv2.components.FilePaths;
+import wrimsv2.wreslparser.elements.LogUtils;
+import wrimsv2.wreslparser.elements.StudyConfig;
+import wrimsv2.wreslparser.elements.StudyParser;
+import wrimsv2.wreslparser.elements.TempData;
+import wrimsv2.wreslparser.elements.WriteCSV;
 
 public class testController {
-	@Test
+
 	public void testSvControl(){
         FilePaths.fullSvarDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09ESV.dss";
         FilePaths.fullInitDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09EINIT.DSS";
@@ -126,5 +134,51 @@ public class testController {
 		
 		new Controller(sds);
 		Error.writeEvaluationErrorFile("runtime_error.txt");
+	}
+	
+	@Test
+	public void testParsedSV()throws RecognitionException, IOException{
+        FilePaths.fullSvarDssPath="D:\\CALSIM3.0_070110\\common\\DSS\\CalSimIII-06_SV.dss";
+        FilePaths.fullInitDssPath="D:\\CALSIM3.0_070110\\common\\DSS\\CALSIMIII-06INIT.dss";
+        FilePaths.setMainFilePaths("D:\\CALSIM3.0_070110\\D1641\\Run\\maind1641.wresl");
+		ControlData cd=new ControlData();
+		cd.endYear=1921;
+		cd.endMonth=11;
+		cd.endDay=30;
+		
+		StudyDataSet sds=parseCalsim3();
+		
+		new Controller(sds);
+		Error.writeEvaluationErrorFile("evaluation_error.txt");
+	}
+	
+	public StudyDataSet parseCalsim3() throws RecognitionException, IOException{
+		
+		String csvFolderPath = "TestWreslWalker_calsim3_firstCycle";
+		String inputFilePath = "D:\\CALSIM3.0_070110\\D1641\\Run\\maind1641.wresl";
+		String logFilePath = csvFolderPath+".log";	
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		
+		/// temporary dataset, don't use this because the structure will be changed soon. 
+		LogUtils.setLogFile(logFilePath);
+		TempData td = new TempData();
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		LogUtils.closeLogFile();
+		
+		
+		/// write to StudyDataSet
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+		
+		/// get the model name of the first cycle
+		String modelName = sd.getModelList().get(0);
+		
+		/// write model data to csv files
+		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+	
+		return sd;	
 	}
 }

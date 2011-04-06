@@ -10,7 +10,8 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 
-import wrimsv2.commondata.solverData.ConstraintData;
+import wrimsv2.commondata.solverData.SolverData;
+import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
@@ -46,8 +47,8 @@ public class Controller {
 	public static void processModel(){
 		processExternal();
 		processSvar();
-		processDvar();
-		processGoal();
+		//processDvar();	//To Do: allow process dvar
+		//processGoal();	//To Do: allow process goal
 	}
 	
 	public static void processExternal(){
@@ -68,7 +69,8 @@ public class Controller {
 			int i=-1;
 			while(!condition && i<=caseCondition.size()-2){
 				i=i+1;
-				ANTLRStringStream stream = new ANTLRStringStream("c: "+caseCondition.get(i));
+				String evalString="c: "+caseCondition.get(i);
+				ANTLRStringStream stream = new ANTLRStringStream(evalString);
 				EvaluatorLexer lexer = new EvaluatorLexer(stream);
 				TokenStream tokenStream = new CommonTokenStream(lexer);
 				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
@@ -81,7 +83,8 @@ public class Controller {
 				}
 			}
 			if (condition){
-				ANTLRStringStream stream = new ANTLRStringStream("v: "+svar.caseExpression.get(i));
+				String evalString="v: "+svar.caseExpression.get(i);
+				ANTLRStringStream stream = new ANTLRStringStream(evalString);
 				EvaluatorLexer lexer = new EvaluatorLexer(stream);
 				TokenStream tokenStream = new CommonTokenStream(lexer);
 				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
@@ -100,7 +103,42 @@ public class Controller {
 	}
 	
 	public static void processDvar(){
-		
+		ModelDataSet mds=ControlData.currModelDataSet;
+		ArrayList<String> dvList = mds.dvList;
+		Map<String, Dvar> dvMap =mds.dvMap;
+		ControlData.currDvMap=dvMap;
+		ControlData.currEvalTypeIndex=1;
+		for (String dvName: dvList){
+			ControlData.currEvalName=dvName;
+			Dvar dvar=dvMap.get(dvName);
+			SolverData.getDvarMap().put(dvName, dvar);
+			
+			String evalString="v: "+dvar.lowerBound;
+			ANTLRStringStream stream = new ANTLRStringStream(evalString);
+			EvaluatorLexer lexer = new EvaluatorLexer(stream);
+			TokenStream tokenStream = new CommonTokenStream(lexer);
+			EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+			try {
+				evaluator.evaluator();
+				dvar.lowerBoundValue=evaluator.evalValue.getData();
+			} catch (RecognitionException e) {
+				Error.error_evaluation.add("Lowerbound evaluation has error.");
+				dvar.lowerBoundValue=-901.0;
+			}
+			
+			evalString="v: "+dvar.upperBound;
+			stream = new ANTLRStringStream(evalString);
+			lexer = new EvaluatorLexer(stream);
+			tokenStream = new CommonTokenStream(lexer);
+			evaluator = new EvaluatorParser(tokenStream);
+			try {
+				evaluator.evaluator();
+				dvar.upperBoundValue=evaluator.evalValue.getData();
+			} catch (RecognitionException e) {
+				Error.error_evaluation.add("Lowerbound evaluation has error.");
+				dvar.lowerBoundValue=-901.0;
+			}
+		}
 	}
 	
 	public static void processGoal(){
@@ -117,7 +155,8 @@ public class Controller {
 			int i=-1;
 			while(!condition && i<=caseCondition.size()-2){
 				i=i+1;
-				ANTLRStringStream stream = new ANTLRStringStream("c: "+caseCondition.get(i));
+				String evalString="c: "+caseCondition.get(i);
+				ANTLRStringStream stream = new ANTLRStringStream(evalString);
 				EvaluatorLexer lexer = new EvaluatorLexer(stream);
 				TokenStream tokenStream = new CommonTokenStream(lexer);
 				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
@@ -130,13 +169,14 @@ public class Controller {
 				}
 			}
 			if (condition){
-				ANTLRStringStream stream = new ANTLRStringStream("g: "+goal.caseExpression.get(i));
+				String evalString="g: "+goal.caseExpression.get(i);
+				ANTLRStringStream stream = new ANTLRStringStream(evalString);
 				EvaluatorLexer lexer = new EvaluatorLexer(stream);
 				TokenStream tokenStream = new CommonTokenStream(lexer);
 				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
 				try {
 					evaluator.evaluator();
-					ConstraintData.getConstraintDataMap().put(goalName,evaluator.evalConstraint);
+					SolverData.getConstraintDataMap().put(goalName,evaluator.evalConstraint);
 				} catch (RecognitionException e) {
 					Error.error_evaluation.add("Case expression evaluation has error.");
 				}

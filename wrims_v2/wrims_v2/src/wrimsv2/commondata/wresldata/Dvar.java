@@ -12,6 +12,8 @@ public class Dvar {
 	public String upperBound;
 	public String fromWresl;
 	public Number value;
+	public Number upperBoundValue;
+	public Number lowerBoundValue;
 	
 	public Dvar(){
 		scope=Param.undefined;
