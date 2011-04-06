@@ -288,12 +288,12 @@ public class TestWreslWalker_element {
 		String s;
 		int n;
 	
-		s = "multi_where#SELECT target FROM res_level GIVEN null USE null WHERE 3 res_num=1;level=4;month=month";
+		s = "multi_where#SELECT target FROM res_level GIVEN null USE null WHERE res_num=1;level=4;month=month";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "simple#SELECT target FROM feather_fish_203 GIVEN null USE null WHERE 1 month=NOV";
+		s = "simple#SELECT target FROM feather_fish_203 GIVEN null USE null WHERE month=NOV";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -338,7 +338,7 @@ public class TestWreslWalker_element {
 		String s;
 		int n;
 	
-		s = "full_table#SELECT area FROM res_info GIVEN storage=1000*S_Orovl(-1) USE linear WHERE 2 res_num=6;somevalue=7";
+		s = "full_table#SELECT area FROM res_info GIVEN storage=1000*S_Orovl(-1) USE linear WHERE res_num=6;somevalue=7";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -382,7 +382,7 @@ public class TestWreslWalker_element {
 		String s;
 		int n;
 	
-		s = "full_table#SELECT area FROM res_info GIVEN storage=1000*S_Orovl(-1) USE linear WHERE 2 res_num=6;somevalue=7";
+		s = "full_table#SELECT area FROM res_info GIVEN storage=1000*S_Orovl(-1) USE linear WHERE res_num=6;somevalue=7";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
