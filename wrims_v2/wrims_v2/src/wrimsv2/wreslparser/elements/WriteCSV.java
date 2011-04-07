@@ -16,6 +16,7 @@ import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.Svar;
+import wrimsv2.commondata.wresldata.SvarTimeseries;
 import wrimsv2.commondata.wresldata.WeightElement;
 
 
@@ -29,7 +30,8 @@ public class WriteCSV {
 	  public static String sequence_header ="CYCLE,CONDITION";
 	  public static String weight_header ="DVAR,WEIGHT";
 	  public static String external_header ="FUNCTION,FILE";
-	  public static String svar_header ="NAME,B_PART,TYPE,UNITS,CONVERT_TO_UNITS,OUTPUT,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
+	  public static String svar_header   ="NAME,B_PART,TYPE,UNITS,CONVERT_TO_UNITS,OUTPUT,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
+	  public static String svarTs_header ="NAME,B_PART,TYPE,UNITS,CONVERT_TO_UNITS,OUTPUT,FROM_WRESL_FILE";
 	  public static String dvar_header ="NAME,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE";	  
 	  public static String alias_header ="NAME,TYPE,UNITS,EXPRESSION,FROM_WRESL_FILE";
 	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,LHS_GT_RHS,LHS_LT_RHS,FROM_WRESL_FILE";
@@ -75,6 +77,7 @@ public class WriteCSV {
 	public static void dataset(ModelDataSet ds, String outFolder) throws IOException {
 
 		PrintWriter out_ex;
+		PrintWriter out_svTs;
 		PrintWriter out_sv;
 		PrintWriter out_dv;
 		PrintWriter out_goal;
@@ -89,7 +92,12 @@ public class WriteCSV {
 			external(ds.exMap, ds.exList, out_ex);	
 			out_ex.close();
 		}
-
+		if(ds.svTsList.size()>0){
+			out_svTs = Tools.openFile(outFolder, "svar_timeseries.csv");	
+			out_svTs.print(WriteCSV.svarTs_header + "\n");
+			svarTs(ds.svTsMap, ds.svTsList, out_svTs);
+			out_svTs.close();
+		}
 		if(ds.svList.size()>0){
 			out_sv = Tools.openFile(outFolder, "svar.csv");	
 			out_sv.print(WriteCSV.svar_header + "\n");
@@ -125,12 +133,32 @@ public class WriteCSV {
 
 	};	
 
+	  public static void svarTs(Map<String,SvarTimeseries> sTsMap, ArrayList<String> list ,PrintWriter out) {
+		    
+			List<String> keys = list;
+			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
+			
+		    for (String k: keys ){
+		    	
+		    	SvarTimeseries s = sTsMap.get(k);
+		    	
+			    out.print(k); // for SVAR NAME
+			    out.print(Param.csv_seperator+s.dssBPart); //for DSS B Part	
+			    out.print(Param.csv_seperator+s.kind); //for KIND		    	
+		    	out.print(Param.csv_seperator+s.units); //for UNITS
+		    	out.print(Param.csv_seperator+s.convertToUnits); //for CONVERT
+		    	out.print(",n"); //for OUTPUT
+
+				out.print(Param.csv_seperator+s.fromWresl);
+				out.print("\n");	
+		    	
+			}
+	  };
 	  
 	  public static void svar(Map<String,Svar> sMap, ArrayList<String> list ,PrintWriter out) {
 		    
 			List<String> keys = list;
-			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
-		    //List<SvarProps> svarPropsList;
+			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
 			
 		    for (String k: keys ){
 		    	
@@ -143,9 +171,6 @@ public class WriteCSV {
 		    	{
 			    	int caseOrder = i+1;
 			    out.print(k); // for SVAR NAME
-		    	//out.print(Parameters.csv_seperator+p.scope);  // for SCOPE
-		    	//out.print(",Y"); //for INCLUDE
-		    	//out.print(Parameters.csv_seperator+p.format); //for FORMAT
 			    out.print(Param.csv_seperator+s.dssBPart); //for DSS B Part	
 			    out.print(Param.csv_seperator+s.kind); //for KIND		    	
 		    	out.print(Param.csv_seperator+s.units); //for UNITS
@@ -168,7 +193,6 @@ public class WriteCSV {
 		    
 			List<Integer> keys = list;
 			Collections.sort(keys);
-
 			
 		    for (Integer k: keys ){
 		    	
@@ -185,8 +209,7 @@ public class WriteCSV {
 	  public static void external(Map<String,External> eMap, ArrayList<String> list ,PrintWriter out) {
 		    
 			List<String> keys = list;
-			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
-
+			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
 			
 		    for (String k: keys ){
 		    	
@@ -207,8 +230,7 @@ public class WriteCSV {
 	  public static void weight(Map<String,WeightElement> wtMap, ArrayList<String> list ,PrintWriter out) {
 		    
 			List<String> keys = list;
-			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
-		    //List<SvarProps> svarPropsList;
+			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
 			
 		    for (String k: keys ){
 		    	
@@ -228,7 +250,7 @@ public class WriteCSV {
 	public static void dvar(Map<String,Dvar> dMap, ArrayList<String> list ,PrintWriter out) {
 		    
 			List<String> keys = list;
-			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
+			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
 			
 		    for (String k: keys ){
 		    	
@@ -250,7 +272,7 @@ public class WriteCSV {
 	public static void alias(Map<String,Alias> asMap, ArrayList<String> list ,PrintWriter out) {
 		    
 			List<String> keys = list;
-			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
+			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
 			
 		    for (String k: keys ){
 		    	
@@ -270,8 +292,7 @@ public class WriteCSV {
 	  public static void goal(Map<String,Goal> gMap, ArrayList<String> list ,PrintWriter out) {
 		    
 			List<String> keys = list;
-			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
-		    //List<SvarProps> svarPropsList;
+			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
 			
 		    for (String k: keys ){
 		    	

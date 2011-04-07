@@ -109,7 +109,7 @@ svar_table :
 	^( Svar_table (sc=Global|sc=Local) i=IDENT s=Select f=From g=Given u=Use wi=Where_item_number wc=Where_content   ) 
 	 {  
 	 	//System.out.println("@@@@@@@@@@@@@"+$g.text);
-	 	String sqlStr = "SELECT "+$s.text+" FROM "+$f.text+" GIVEN "+$g.text+" USE "+$u.text+" WHERE "+$wi.text+" "+ Tools.replace_seperator($wc.text);
+	 	String sqlStr = "SELECT "+$s.text+" FROM "+$f.text+" GIVEN "+$g.text+" USE "+$u.text+" WHERE "+ Tools.replace_seperator($wc.text);
 	 	F.svarTable($i.text, $sc.text, sqlStr); } 
 	;
 
