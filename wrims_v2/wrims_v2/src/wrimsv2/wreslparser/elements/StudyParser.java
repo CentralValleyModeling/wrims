@@ -52,6 +52,8 @@ public class StudyParser {
 			thisModelDataSet.wtList = ds.wtList; 
 			thisModelDataSet.wtMap = ds.wtMap;	
 			
+			thisModelDataSet.incFileList=ds.incFileList;
+			
 			modelDataSetMap.put(modelName, thisModelDataSet);
 		}
 		

@@ -34,7 +34,9 @@ public class ModelDataSet {
 
 	// / goal data structure
 	public ArrayList<String> gList = new ArrayList<String>();
-	public Map<String, Goal> gMap = new HashMap<String, Goal>();	
+	public Map<String, Goal> gMap = new HashMap<String, Goal>();
+	
+	public ArrayList<String> incFileList=new ArrayList<String>();
  
 }
 
