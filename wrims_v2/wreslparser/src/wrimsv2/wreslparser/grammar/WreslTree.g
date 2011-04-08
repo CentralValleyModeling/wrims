@@ -8,13 +8,14 @@ options {
 }
 tokens {
 	NEGATION;
-	NEW_LINE;
+	NEW_LINE; Op; Separator;
 	Local; Global;
 	Value;
 	Dvar; Dvar_std; Dvar_nonStd; Dvar_std; Dvar_nonStd_local;
 	Svar_dss; Svar_const; Svar_sum; Sum_hdr; B_part;
 	Svar_table; Select; From; Where_content; Where_item_number; Given; Use;
-	Goal_simple;
+	Goal_simple; Goal_no_case; Lhs_gt_rhs; Lhs_lt_rhs; Never; Penalty;
+	Lhs; Rhs; Weight;
 	Constraint_content;
 	Model;
 	Sequence;
@@ -43,8 +44,6 @@ tokens {
   import wrimsv2.wreslparser.elements.LogUtils; 
   
 }
-
-
 
 @members {
 
@@ -131,16 +130,43 @@ includeFile
 	->            ^(Include Global FILE_PATH)
 	;
 
-goal : goal_simple ;
+goal : GOAL! (goal_simple | goal_no_case );
 
 goal_simple
-	:  GOAL s=LOCAL? i=IDENT '{' v=constraint_content '}'
-	{  System.out.println("#####"+$v.text); }
+	:  s=LOCAL? i=IDENT '{' v=constraint_content '}'
 -> {s!=null}? ^(Goal_simple Local  $i Constraint_content[Tools.replace_ignoreChar($v.text)] ) 	
 ->            ^(Goal_simple Global $i Constraint_content[Tools.replace_ignoreChar($v.text)] )  	
 	
 	;
 
+goal_no_case 
+	:  i=IDENT '{' content '}'
+->  ^( Goal_no_case $i content ) 	
+	;
+
+content : LHS! l=IDENT! RHS! r=expression! 
+          ( lhs_gt_rhs[$l.text,$r.text] lhs_lt_rhs[$l.text,$r.text]? )
+         |
+          ( lhs_lt_rhs[$l.text,$r.text] lhs_gt_rhs[$l.text,$r.text]? )
+;
+	
+lhs_gt_rhs[String l, String r] 
+	: 
+LHS '>' RHS 
+	( ( CONSTRAIN -> Lhs[$l] Op[">"] Rhs[$r] Separator[""] Weight[""] )
+	| ( p=penalty -> Lhs[$l] Op["-"] Rhs[$r] Separator[":"] Weight["-"+$p.w] )
+	) 
+	;
+
+lhs_lt_rhs[String l, String r] 
+	: 
+LHS '<' RHS 
+	( ( CONSTRAIN -> Lhs[$l] Op["<"] Rhs[$r] Separator[""] Weight[""] )
+	| ( p=penalty -> Lhs[$r] Op["-"] Rhs[$l] Separator[":"] Weight["-"+$p.w] )
+	) 
+	;
+
+penalty returns[String w]: PENALTY n=number {$w=$n.text;} ;
 
 svar : DEFINE! (svar_dss | svar_expr | svar_sum | svar_table) ;
 		
@@ -291,6 +317,8 @@ OR  : '.or.'  | '.OR.'  ;
 NOT : '.not.' | '.NOT.' ;
 
 /// reserved keywords ///
+PENALTY : 'penalty' | 'PENALTY' ;
+CONSTRAIN : 'constrain' | 'CONSTRAIN' ;
 SUM :  'sum' | 'SUM' | 'Sum' ;
 MAX :   'max' | 'MAX' | 'Max' ;
 MIN :   'min' | 'MIN' | 'Min' ;

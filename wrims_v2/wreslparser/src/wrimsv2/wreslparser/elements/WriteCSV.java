@@ -34,7 +34,7 @@ public class WriteCSV {
 	  public static String svarTs_header ="NAME,B_PART,TYPE,UNITS,CONVERT_TO_UNITS,OUTPUT,FROM_WRESL_FILE";
 	  public static String dvar_header ="NAME,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE";	  
 	  public static String alias_header ="NAME,TYPE,UNITS,EXPRESSION,FROM_WRESL_FILE";
-	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,LHS_GT_RHS,LHS_LT_RHS,FROM_WRESL_FILE";
+	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
 	  
 	  
 	public static void study(StudyConfig sc, Map<String, ModelDataSet> modelDataMap, String outParent) {
@@ -319,8 +319,8 @@ public class WriteCSV {
 		    	out.print(Param.csv_seperator + g.caseExpression.get(i) ); //for EXPRESSION
 
 		    	
-		    	out.print(Param.csv_seperator+g.case_lhs_gt_rhs.get(i)); //
-		    	out.print(Param.csv_seperator+g.case_lhs_lt_rhs.get(i)); //for EXPRESSION
+//		    	out.print(Param.csv_seperator+g.case_lhs_gt_rhs.get(i)); //
+//		    	out.print(Param.csv_seperator+g.case_lhs_lt_rhs.get(i)); //for EXPRESSION
 		    	
 
 				out.print(Param.csv_seperator+g.fromWresl);

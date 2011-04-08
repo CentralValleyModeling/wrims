@@ -94,16 +94,32 @@ includeFile
 //	:	^(':=' IDENT e=expression)
 //			{ variables.put($IDENT.text, e); }
 //	;
-goal : goal_simple ;
+goal : goal_simple | goal_no_case  ;
 
-dvar : dvar_std | dvar_nonStd   ;
+dvar : dvar_std | dvar_nonStd    ;
 
 svar : svar_dss | svar_expr | svar_sum | svar_table;
 
 goal_simple 
 	:  ^(Goal_simple (sc=Global|sc=Local) i=IDENT v=Constraint_content ) 
-		{ F.goalSimple($i.text, $sc.text, $v.text);} 
+		{ F.goalSimple($i.text, $sc.text, $v.text+"; ");} 
 	;
+
+goal_no_case
+	:  ^( Goal_no_case i=IDENT  c1=content  c2=content?  )  
+		{ if (c2!=null) { F.goalSimple($i.text, "Global", $c1.str+"; "+$c2.str); }
+			else	{ F.goalSimple($i.text, "Global", $c1.str); }		  				
+		} 
+;
+
+content returns[String str]
+	: 
+		 l=Lhs o=Op r=Rhs s=Separator w=Weight
+		 { $str = $l.text + $o.text + $r.text + $s.text + $w.text;  } 
+
+
+;
+
 
 svar_table :
 	^( Svar_table (sc=Global|sc=Local) i=IDENT s=Select f=From g=Given u=Use wi=Where_item_number wc=Where_content   ) 

@@ -343,48 +343,4 @@ public class TestWreslWalker_element {
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 	}
-	@Test(groups = { "WRESL_elements" })
-	public void goalSimple() throws RecognitionException, IOException {
-		
-		csvFolderPath = "TestWreslWalker_element_goalSimple";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
-		logFilePath = csvFolderPath+".log";
-
-		LogUtils.setLogFile(logFilePath);
-		
-		File absFile = new File(inputFilePath).getAbsoluteFile();
-		String absFilePath = absFile.getCanonicalPath().toLowerCase();
-		
-		TempData td = new TempData();
-
-		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
-		
-		td.model_dataset_map=StudyParser.parseModels(sc,td);
-		
-		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
-
-		LogUtils.studySummary_details(sd);
-
-		LogUtils.closeLogFile();
-		
-		String modelName = sd.getModelList().get(0);
-		
-		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
-	
-		String logText = Tools.readFileAsString(logFilePath);	
-
-		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);	
-		
-	
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
-		
-		String s;
-		int n;
-	
-		s = "full_table#SELECT area FROM res_info GIVEN storage=1000*S_Orovl(-1) USE linear WHERE res_num=6;somevalue=7";
-		s = Tools.replace_regex(s);
-		n = RegUtils.timesOfMatches(csvText, s );
-		Assert.assertEquals(n, 1);
-	}
 }

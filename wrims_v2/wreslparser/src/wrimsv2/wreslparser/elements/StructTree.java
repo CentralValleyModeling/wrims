@@ -141,8 +141,8 @@ public class StructTree {
 			gl.caseCondition.add(Param.always);
 			gl.caseName.add(Param.defaultCaseName);
 			gl.caseExpression.add(content);
-			gl.case_lhs_gt_rhs.add(Param.skip);
-			gl.case_lhs_lt_rhs.add(Param.skip);
+//			gl.case_lhs_gt_rhs.add(Param.skip);
+//			gl.case_lhs_lt_rhs.add(Param.skip);
 			gl.fromWresl = S.currentAbsolutePath;
 			S.gMap.put(name, gl);
 			S.gList.add(name);
@@ -159,20 +159,18 @@ public class StructTree {
 			LogUtils.errMsg("Goal redefined: "+name, S.currentAbsolutePath);
 			S.error_goal_redefined.put(name, S.currentAbsolutePath);
 		} else {
-			// list.add(0,"lhs");list.add(1,lhs);
-			// goal_scope.put(name, scope);
-			// goal_no_case.put(name, list);
+
 			S.var_all.put(name, "goal_no_case");
 
 			// / clearer data structure
 			gl = new Goal();
 			gl.scope = scope;
 			gl.lhs = lhs;
-			gl.caseCondition.add("always");
+			gl.caseCondition.add(Param.always);
 			gl.caseName.add(Param.defaultCaseName);
 			gl.caseExpression.add(lhs+" = "+rhs);
-			gl.case_lhs_gt_rhs.add(lhs_gt_rhs);
-			gl.case_lhs_lt_rhs.add(lhs_lt_rhs);
+//			gl.case_lhs_gt_rhs.add(lhs_gt_rhs);
+//			gl.case_lhs_lt_rhs.add(lhs_lt_rhs);
 			gl.fromWresl = S.currentAbsolutePath;
 			S.gMap.put(name, gl);
 			S.gList.add(name);
