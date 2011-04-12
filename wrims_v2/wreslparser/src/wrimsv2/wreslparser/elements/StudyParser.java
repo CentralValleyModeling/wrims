@@ -32,27 +32,41 @@ public class StudyParser {
 			ModelDataSet thisModelDataSet = new ModelDataSet();
 			
 			thisModelDataSet.dvList = ds.dvList; 
+			thisModelDataSet.dvList_global = ds.dvList_global; 
+			thisModelDataSet.dvList_local = ds.dvList_local; 
 			thisModelDataSet.dvMap = ds.dvMap; 
 
 			thisModelDataSet.svTsList = ds.svTsList; 
+			thisModelDataSet.svTsList_global = ds.svTsList_global; 
+			thisModelDataSet.svTsList_local = ds.svTsList_local; 
 			thisModelDataSet.svTsMap = ds.svTsMap;
 			
 			thisModelDataSet.svList = ds.svList; 
+			thisModelDataSet.svList_global = ds.svList_global; 
+			thisModelDataSet.svList_local = ds.svList_local; 
 			thisModelDataSet.svMap = ds.svMap;
 			
 			thisModelDataSet.gList = ds.gList; 
+			thisModelDataSet.gList_global = ds.gList_global; 
+			thisModelDataSet.gList_local = ds.gList_local; 
 			thisModelDataSet.gMap = ds.gMap;
 
 			thisModelDataSet.asList = ds.asList; 
+			thisModelDataSet.asList_global = ds.asList_global; 
+			thisModelDataSet.asList_local = ds.asList_local; 
 			thisModelDataSet.asMap = ds.asMap;
 
 			thisModelDataSet.exList = ds.exList; 
+			thisModelDataSet.exList_global = ds.exList_global; 
+			thisModelDataSet.exList_local = ds.exList_local; 
 			thisModelDataSet.exMap = ds.exMap;
 			
 			thisModelDataSet.wtList = ds.wtList; 
 			thisModelDataSet.wtMap = ds.wtMap;	
 			
 			thisModelDataSet.incFileList=ds.incFileList;
+			thisModelDataSet.incFileList_global=ds.incFileList_global;
+			thisModelDataSet.incFileList_local=ds.incFileList_local;
 			
 			modelDataSetMap.put(modelName, thisModelDataSet);
 		}

@@ -9,12 +9,12 @@ options {
 tokens {
 	NEGATION;
 	NEW_LINE; Op; Separator;
-	Local; Global;
-	Value;
+	Local; Global; Scope;
+	Value; Case ;
 	Dvar; Dvar_std; Dvar_nonStd; Dvar_std; Dvar_nonStd_local;
 	Svar_dss; Svar_const; Svar_sum; Sum_hdr; B_part;
 	Svar_table; Select; From; Where_content; Where_item_number; Given; Use;
-	Goal_simple; Goal_no_case; Lhs_gt_rhs; Lhs_lt_rhs; Never; Penalty;
+	Goal_simple; Goal_no_case; Goal_case ; Lhs_gt_rhs; Lhs_lt_rhs; Never; Penalty;
 	Lhs; Rhs; Weight;
 	Constraint_content;
 	Model;
@@ -29,22 +29,18 @@ tokens {
 	//Or='.Or.'; And='.And.'; Not='.Not.';
 	Always;
 	LimitType;
-
 }
-
 @header {
   package wrimsv2.wreslparser.grammar;
   import wrimsv2.wreslparser.elements.LogUtils; 
   import wrimsv2.wreslparser.elements.Tools; 
   import wrimsv2.commondata.wresldata.Param;
 }
-
 @lexer::header {
   package wrimsv2.wreslparser.grammar;
   import wrimsv2.wreslparser.elements.LogUtils; 
   
 }
-
 @members {
 
     public ArrayList<String> model_in_sequence = new ArrayList<String>();
@@ -66,7 +62,6 @@ tokens {
         LogUtils.errMsg(hdr + " " + msg);
     }	
 }
-
 @lexer::members {
 	List tokens = new ArrayList();
 	public void emit(Token token) {
@@ -89,8 +84,6 @@ tokens {
         LogUtils.errMsg(hdr + " " + msg);
     }
 }
-
-
 evaluator:	
 	(    pattern+ 
 	|  ( sequence+ model+ ) 
@@ -110,7 +103,7 @@ model
 	: MODEL IDENT '{' (pattern )+  '}' 
 	   {model_list.add($IDENT.text);}
 	-> {model_in_sequence.contains($IDENT.text)}?  ^(Model IDENT  (pattern )+  ) 
-	->             
+	->   // ignore
 	;
 sequence 
 	: SEQUENCE s=IDENT '{' MODEL m=IDENT ( c=condition)? ORDER INTEGER '}' 
@@ -125,46 +118,51 @@ condition
 	;	
 
 includeFile
-	:	 INCLUDE s=LOCAL? FILE_PATH 
-	-> {s!=null}? ^(Include Local  FILE_PATH)
-	->            ^(Include Global FILE_PATH)
+	:	 INCLUDE ( '[' sc=LOCAL? ']' )? FILE_PATH 
+	->   ^(Include Scope[$sc.text] FILE_PATH)
 	;
 
-goal : GOAL! (goal_simple | goal_no_case );
+goal : GOAL! (goal_simple | goal_case_or_nocase  );
 
 goal_simple
-	:  s=LOCAL? i=IDENT '{' v=constraint_content '}'
--> {s!=null}? ^(Goal_simple Local  $i Constraint_content[Tools.replace_ignoreChar($v.text)] ) 	
-->            ^(Goal_simple Global $i Constraint_content[Tools.replace_ignoreChar($v.text)] )  	
+	:  ( '[' sc=LOCAL? ']' )? i=IDENT '{' v=constraint_statement '}'	
+->  ^(Goal_simple Scope[$sc.text] $i Constraint_content[Tools.replace_ignoreChar($v.text)] )  		
+	;
+
+goal_case_or_nocase 
+	:  ( '[' s=LOCAL? ']' )? i=IDENT '{' LHS l=expression 
+	( 
+	  ( goal_no_case_content[$l.text] ->  ^( Goal_no_case Scope[$s.text] $i goal_no_case_content )  ) 	
+    | ( goal_case_content[$l.text]+   ->  ^( Goal_case    Scope[$s.text] $i goal_case_content+ )   )
+    ) '}' 
+	;
+
+goal_case_content[String l] : 
+	CASE i=IDENT '{' CONDITION c=condition_statement RHS r=expression sub_content[$l,$r.text] '}'
+	-> ^( Case $i Condition[$c.text] sub_content )
+	;
+
+goal_no_case_content[String l] : RHS r=expression sub_content[$l,$r.text]
+       -> sub_content ;
 	
-	;
-
-goal_no_case 
-	:  i=IDENT '{' content '}'
-->  ^( Goal_no_case $i content ) 	
-	;
-
-content : LHS! l=IDENT! RHS! r=expression! 
-          ( lhs_gt_rhs[$l.text,$r.text] lhs_lt_rhs[$l.text,$r.text]? )
-         |
-          ( lhs_lt_rhs[$l.text,$r.text] lhs_gt_rhs[$l.text,$r.text]? )
-;
+sub_content[String l, String r] 
+	: ( lhs_gt_rhs[$l,$r] lhs_lt_rhs[$l,$r]? ) 
+	| ( lhs_lt_rhs[$l,$r] lhs_gt_rhs[$l,$r]? ) 
+	; 
 	
 lhs_gt_rhs[String l, String r] 
 	: 
 LHS '>' RHS 
-	( ( CONSTRAIN -> Lhs[$l] Op[">"] Rhs[$r] Separator[""] Weight[""] )
-	| ( p=penalty -> Lhs[$l] Op["-"] Rhs[$r] Separator[":"] Weight["-"+$p.w] )
-	) 
-	;
+	( ( CONSTRAIN -> Lhs[$l] Op[">"] Rhs[$r]         Separator[""] Weight[""] )
+	| ( p=penalty -> Lhs[$l] Op["-"] Rhs["("+$r+")"] Separator[":"] Weight["-"+$p.w] )
+	);
 
 lhs_lt_rhs[String l, String r] 
 	: 
 LHS '<' RHS 
-	( ( CONSTRAIN -> Lhs[$l] Op["<"] Rhs[$r] Separator[""] Weight[""] )
-	| ( p=penalty -> Lhs[$r] Op["-"] Rhs[$l] Separator[":"] Weight["-"+$p.w] )
-	) 
-	;
+	( ( CONSTRAIN -> Lhs[$l] Op["<"] Rhs[$r]         Separator[""] Weight[""] )
+	| ( p=penalty -> Lhs[$r] Op["-"] Rhs["("+$l+")"] Separator[":"] Weight["-"+$p.w] )
+	);
 
 penalty returns[String w]: PENALTY n=number {$w=$n.text;} ;
 
@@ -173,9 +171,8 @@ svar : DEFINE! (svar_dss | svar_expr | svar_sum | svar_table) ;
 dvar : DEFINE! (dvar_std | dvar_nonStd ) ;	
 
 svar_table :
-	s=LOCAL? i=IDENT '{' SELECT s=IDENT FROM f=IDENT (GIVEN g=assignment)? (USE u=IDENT)? WHERE w=where_items '}'
--> {s!=null}? ^(Svar_table Local  $i Select[$s.text] From[$f.text] Given[$g.text] Use[$u.text] Where_item_number[$w.n] Where_content[Tools.replace_ignoreChar($w.text)] ) 	
-->            ^(Svar_table Global $i Select[$s.text] From[$f.text] Given[$g.text] Use[$u.text] Where_item_number[$w.n] Where_content[Tools.replace_ignoreChar($w.text)] )  	
+	( '[' sc=LOCAL? ']' )? i=IDENT '{' SELECT s=IDENT FROM f=IDENT (GIVEN g=assignment)? (USE u=IDENT)? WHERE w=where_items '}'
+->  ^(Svar_table Scope[$sc.text] $i Select[$s.text] From[$f.text] Given[$g.text] Use[$u.text] Where_item_number[$w.n] Where_content[Tools.replace_ignoreChar($w.text)] )  	
 	;
 
 where_items returns[String n]
@@ -184,48 +181,33 @@ where_items returns[String n]
 	  {$n = Integer.toString(number);} 
 	;
 
-
 svar_expr : 
-	s=LOCAL? IDENT '{' VALUE  e=expression'}'
-	-> {s!=null}? ^(Svar_const  Local  IDENT Value[$e.text] ) 	
-	->            ^(Svar_const  Global IDENT Value[$e.text] )  
+	( '[' sc=LOCAL ']' )? IDENT '{' VALUE  e=expression'}'	
+	->  ^(Svar_const Scope[$sc.text] IDENT Value[$e.text] )  
 	;	
 
-svar_sum : s=LOCAL? IDENT '{' SUM hdr=sum_header e=expression'}' 
-	-> {s!=null}? ^(Svar_sum  Local  IDENT Sum_hdr[Tools.replace_ignoreChar($hdr.text)] Value[$e.text] ) 	
-	->            ^(Svar_sum  Global IDENT Sum_hdr[Tools.replace_ignoreChar($hdr.text)] Value[$e.text] )  
+svar_sum : ( '[' sc=LOCAL ']' )? IDENT '{' SUM hdr=sum_header e=expression'}' 
+	->  ^(Svar_sum  Scope[$sc.text] IDENT Sum_hdr[Tools.replace_ignoreChar($hdr.text)] Value[$e.text] )  
 	;
 
 sum_header
 	: ( '(' 'i=' expression ',' expression (',' '-'? INTEGER )? ')' ) 
-	
 	;
 
 svar_dss : 
-	s=LOCAL? IDENT '{' TIMESERIES b=STRING? KIND k=STRING UNITS u=STRING (CONVERT c=STRING)? '}'
-	-> {s!=null}? ^(Svar_dss  Local  IDENT B_part[$b.text] Kind $k Units $u CONVERT[$c.text]) 	
-	->            ^(Svar_dss  Global IDENT B_part[$b.text] Kind $k Units $u CONVERT[$c.text])  
+	( '[' sc=LOCAL ']' )? IDENT '{' TIMESERIES b=STRING? KIND k=STRING UNITS u=STRING (CONVERT c=STRING)? '}'
+	-> ^(Svar_dss  Scope[$sc.text]  IDENT B_part[$b.text] Kind $k Units $u CONVERT[$c.text]) 
 	;		
 	
 dvar_std :
-	s=LOCAL? IDENT '{' STD KIND k=STRING UNITS u=STRING '}' 
-	-> {s!=null}? ^(Dvar_std  Local  IDENT Kind $k Units $u) 	
-	->            ^(Dvar_std  Global IDENT Kind $k Units $u) 
+	( '[' sc=LOCAL ']' )? IDENT '{' STD KIND k=STRING UNITS u=STRING '}' 	
+	->  ^(Dvar_std  Scope[$sc.text] IDENT Kind $k Units $u) 
 	;	
 
 dvar_nonStd :
-	s=LOCAL? IDENT '{' lower_and_or_upper KIND k=STRING UNITS u=STRING '}' 
-	-> {s!=null}? ^(Dvar_nonStd Local  IDENT lower_and_or_upper Kind $k Units $u) 
-	->            ^(Dvar_nonStd Global IDENT lower_and_or_upper Kind $k Units $u) 
+	( '[' sc=LOCAL ']' )? IDENT '{' lower_and_or_upper KIND k=STRING UNITS u=STRING '}' 
+	->  ^(Dvar_nonStd Scope[$sc.text] IDENT lower_and_or_upper Kind $k Units $u) 
 	;	
-
-//dvar_nonStd :
-//	IDENT '{' lower_and_or_upper KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
-//	-> ^(Dvar_nonStd IDENT lower_and_or_upper Kind $k Units $u) ;
-//
-//dvar_nonStd_local :
-//	LOCAL IDENT '{' lower_and_or_upper KIND k=QUOTE_STRING UNITS u=QUOTE_STRING '}' 
-//	-> ^(Dvar_nonStd_local IDENT lower_and_or_upper Kind $k Units $u) ;
 
 lower_and_or_upper : lower_upper
 				   | upper_lower ;
@@ -243,19 +225,19 @@ upper: UPPER ( UNBOUNDED -> Upper LimitType["Unbounded"] | e=expression -> Upper
 
 /// IDENT =, <, > ///
 
-constraint_content : assignment | less_or_greater_than ;
-assignment  :   IDENT '=' expression ;
-less_or_greater_than :  IDENT ( '<' | '>' ) expression ;
+condition_statement :  term_simple ( '<' | '>' | '==' | '<=' | '>=' ) expression  ;
+constraint_statement : term_simple ( '<' | '>' | '='  ) expression  ;
+
+assignment  :           term_simple  '=' expression ;
+lt_or_gt :              term_simple ( '<'  | '>'  ) expression ;
+le_or_ge :              term_simple ( '<=' | '>=' ) expression ;
+equal_statement :       term_simple '==' expression ;
 
 /// Expression ///
 number : INTEGER | FLOAT ;
 
-term
-	:	IDENT
-	|	'(' expression ')'
-	|  number
-	|  max_func  |  min_func | external_func 
-	;
+term_simple : IDENT | number | function  ;
+term :	      IDENT | number | function  |  '(' expression ')' ;
 	
 unary :	('+'! | negation)? term 	;
 
@@ -291,6 +273,8 @@ bin : OR -> OR[".OR."] | AND -> AND[".AND."] ;
 //range_func
 //	: RANGE '(' MONTH ',' MONTH_CONST ',' MONTH_CONST ')' ;
 
+function : external_func | max_func | min_func | int_func ;
+
 external_func 
 	: IDENT '('  expression (',' expression )*  ')' ;
 
@@ -299,6 +283,8 @@ max_func
 
 min_func
 	: MIN '(' expression (',' expression)+ ')' ;
+
+int_func : INT '(' expression ')' ;
 	
 /// End Intrinsic functions ///	
 
@@ -319,11 +305,12 @@ NOT : '.not.' | '.NOT.' ;
 /// reserved keywords ///
 PENALTY : 'penalty' | 'PENALTY' ;
 CONSTRAIN : 'constrain' | 'CONSTRAIN' ;
+INT : 'int' | 'INT' | 'Int' ;
 SUM :  'sum' | 'SUM' | 'Sum' ;
 MAX :   'max' | 'MAX' | 'Max' ;
 MIN :   'min' | 'MIN' | 'Min' ;
 VALUE : 'value' | 'VALUE' | 'Value' ;
-LOCAL : '[local]'| '[LOCAL]' | '[Local]' ;
+LOCAL : 'local'| 'LOCAL' | 'Local' ;
 OBJECTIVE: 'objective' | 'Objective' | 'OBJECTIVE';
 TIMESERIES: 'timeseries' | 'TIMESERIES';
 SELECT :  'select' | 'SELECT' ;

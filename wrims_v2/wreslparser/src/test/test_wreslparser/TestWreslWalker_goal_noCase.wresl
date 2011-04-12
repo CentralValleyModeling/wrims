@@ -27,9 +27,15 @@ goal Goal_3 {
 
     lhs     x
     rhs     y + z
-    lhs<rhs     penalty 700.0 
+    lhs<rhs     constrain
 }	
-	
+
+goal Goal_4 {
+
+    lhs     x
+    rhs     y + z
+    lhs>rhs     penalty 700.0 
+}	
 	}	
 
 

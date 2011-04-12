@@ -3,21 +3,15 @@ package test.test_wreslparser;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.antlr.runtime.RecognitionException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
 import wrimsv2.commondata.wresldata.StudyDataSet;
-import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.wreslparser.elements.FileParser;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.RegUtils;
-import wrimsv2.wreslparser.elements.SimulationDataSet;
 import wrimsv2.wreslparser.elements.StudyConfig;
 import wrimsv2.wreslparser.elements.StudyParser;
 import wrimsv2.wreslparser.elements.TempData;
@@ -117,6 +111,9 @@ public class TestWreslWalker_element {
 
 		int r1 = RegUtils.timesOfMatches(csvText, "complex.+UD_CCWD.+DEMAND-CVP.+TAF.+CFS");
 		Assert.assertEquals(r1, 1);	
+		
+		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).svTsList_global.get(0),"simple" );
+		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).svTsList_local.get(0),"complex" );
 	}
 	
 	@Test(groups = { "WRESL_elements" })
@@ -297,6 +294,9 @@ public class TestWreslWalker_element {
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
+		
+		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).svList_global.get(0),"simple" );
+		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).svList_local.get(0),"multi_where" );
 	}
 	
 	@Test(groups = { "WRESL_elements" })

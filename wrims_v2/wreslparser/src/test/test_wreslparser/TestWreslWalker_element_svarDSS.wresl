@@ -7,7 +7,7 @@ MODEL first {
 
 
 define simple {timeseries kind 'EVAPORATION-RATE' units 'IN'}
-define complex { timeseries 'UD_CCWD' kind 'DEMAND-CVP' units 'TAF' convert 'CFS'}
+define[Local] complex { timeseries 'UD_CCWD' kind 'DEMAND-CVP' units 'TAF' convert 'CFS'}
 	
 	}	
 

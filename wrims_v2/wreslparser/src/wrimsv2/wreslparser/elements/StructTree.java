@@ -2,7 +2,6 @@ package wrimsv2.wreslparser.elements;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -110,15 +109,17 @@ public class StructTree {
 			// /clearer data structure
 			incFile = new IncludeFile();
 
-			incFile.scope = scope;
+			//incFile.scope = scope;
 			incFile.fromWresl = S.currentAbsolutePath;
 			
 			S.incFileList.add(absIncludeFilePath);
 			
 			S.incFileMap.put(absIncludeFilePath, incFile);
 			
-			if      (scope == Param.global){S.incFileList_global.add(absIncludeFilePath);}
-			else if (scope == Param.local) {S.incFileList_local.add(absIncludeFilePath);}
+			if      ( scope==null )
+					{S.incFileList_global.add(absIncludeFilePath); incFile.scope = Param.global; }
+			else if (scope.equalsIgnoreCase(Param.local))
+					{S.incFileList_local.add(absIncludeFilePath); incFile.scope = Param.local; }
 			else{ LogUtils.errMsg("Include file scope undefined: "+fileRelativePath, S.currentAbsolutePath);}
 			
 
@@ -136,7 +137,7 @@ public class StructTree {
 
 			// / clearer data structure
 			gl = new Goal();
-			gl.scope = scope;
+			//gl.scope = scope;
 			// gl.lhs="in expression";
 			gl.caseCondition.add(Param.always);
 			gl.caseName.add(Param.defaultCaseName);
@@ -147,42 +148,17 @@ public class StructTree {
 			S.gMap.put(name, gl);
 			S.gList.add(name);
 			
-			if      (scope == Param.global){S.gList_global.add(name);}
-			else if (scope == Param.local) {S.gList_local.add(name);}
-			else{ System.out.println("wrong scope!!");}
-		}
-	}
-
-	public void goalNoCase(String name, String scope, String lhs, String rhs,
-			String lhs_gt_rhs, String lhs_lt_rhs) {
-		if (S.gList.contains(name)) {
-			LogUtils.errMsg("Goal redefined: "+name, S.currentAbsolutePath);
-			S.error_goal_redefined.put(name, S.currentAbsolutePath);
-		} else {
-
-			S.var_all.put(name, "goal_no_case");
-
-			// / clearer data structure
-			gl = new Goal();
-			gl.scope = scope;
-			gl.lhs = lhs;
-			gl.caseCondition.add(Param.always);
-			gl.caseName.add(Param.defaultCaseName);
-			gl.caseExpression.add(lhs+" = "+rhs);
-//			gl.case_lhs_gt_rhs.add(lhs_gt_rhs);
-//			gl.case_lhs_lt_rhs.add(lhs_lt_rhs);
-			gl.fromWresl = S.currentAbsolutePath;
-			S.gMap.put(name, gl);
-			S.gList.add(name);
+			System.out.println("UUUUUUUUuu "+scope);
 			
-			if      (scope == Param.global){S.gList_global.add(name);}
-			else if (scope == Param.local) {S.gList_local.add(name);}
-			else{ System.out.println("wrong scope!!");}
-
+			if      ( scope == null )
+					{S.gList_global.add(name); gl.scope = Param.global;}
+			else if (scope.equalsIgnoreCase(Param.local)) 
+					{S.gList_local.add(name); gl.scope = Param.local;}
+			else{ LogUtils.errMsg("Goal scope undefined: "+name, S.currentAbsolutePath);}
 		}
 	}
 
-	public void goalCase(String name, String scope, String lhs, Goal gl) {
+	public void goalCase(String name, String scope, Goal gl) {
 		if (S.gList.contains(name)) {
 			LogUtils.errMsg("Goal redefined: "+name, S.currentAbsolutePath);
 			S.error_goal_redefined.put(name, S.currentAbsolutePath);
@@ -192,43 +168,45 @@ public class StructTree {
 
 			// / better data structure
 
-			gl.scope = scope;
-			gl.lhs = lhs;
+			//gl.scope = scope;
+			//gl.lhs = lhs;
 			
-			// combine lhs and rhs with " = "
-	    	for (int i=0; i<gl.caseCondition.size(); i++){
-	    		gl.caseExpression.set(i, lhs+" = "+gl.caseExpression.get(i)) ; //for EXPRESSION
-	    	}
+//			// combine lhs and rhs with " = "
+//	    	for (int i=0; i<gl.caseCondition.size(); i++){
+//	    		gl.caseExpression.set(i, lhs+" = "+gl.caseExpression.get(i)) ; //for EXPRESSION
+//	    	}
 			
 			gl.fromWresl = S.currentAbsolutePath;
 			S.gMap.put(name, gl);
 			S.gList.add(name);
 			
-			if      (scope == Param.global){S.gList_global.add(name);}
-			else if (scope == Param.local) {S.gList_local.add(name);}
-			else{ System.out.println("wrong scope!!");}
-
+			if      ( scope == null )
+					{S.gList_global.add(name); gl.scope = Param.global;}
+			else if (scope.equalsIgnoreCase(Param.local)) 
+					{S.gList_local.add(name); gl.scope = Param.local;}
+			else{ LogUtils.errMsg("Goal scope undefined: "+name, S.currentAbsolutePath);}
 		}
 	}
 
-	public void svarCase(String svarName, String scope, Svar sv) {
+	public void svarCase(String name, String scope, Svar sv) {
 
-		if (S.var_all.containsKey(svarName)) {
-			LogUtils.errMsg("Svar redefined: "+svarName, S.currentAbsolutePath);
-			S.error_var_redefined.put(svarName, "svar_cases");
+		if (S.var_all.containsKey(name)) {
+			LogUtils.errMsg("Svar redefined: "+name, S.currentAbsolutePath);
+			S.error_var_redefined.put(name, "svar_cases");
 		} else {
-			S.var_all.put(svarName, "svar_cases");
+			S.var_all.put(name, "svar_cases");
 
 			// ///////////////////
 			sv.scope = scope;
 			sv.fromWresl = S.currentAbsolutePath;
-			S.svMap.put(svarName, sv);
-			S.svList.add(svarName);
+			S.svMap.put(name, sv);
+			S.svList.add(name);
 			
-			if      (scope == Param.global){S.svList_global.add(svarName);}
-			else if (scope == Param.local) {S.svList_local.add(svarName);}
-			else{ System.out.println("wrong scope!!");}
-
+			if      ( scope == null )
+					{S.svList_global.add(name); sv.scope = Param.global;}
+			else if (scope.equalsIgnoreCase(Param.local)) 
+					{S.svList_local.add(name); sv.scope = Param.local;}
+			else{ LogUtils.errMsg("Svar scope undefined: "+name, S.currentAbsolutePath);}
 		}
 	}
 
@@ -254,33 +232,33 @@ public class StructTree {
 
 	}
 	
-	public void svarExpression(String svarName, String scope, String expression) {
-		if (S.var_all.containsKey(svarName)) {
-			LogUtils.errMsg("State variable redefined: "+svarName, S.currentAbsolutePath);
-			S.error_var_redefined.put(svarName, "svar_expression");
+	public void svarExpression(String name, String scope, String expression) {
+		if (S.var_all.containsKey(name)) {
+			LogUtils.errMsg("State variable redefined: "+name, S.currentAbsolutePath);
+			S.error_var_redefined.put(name, "svar_expression");
 		} else {
-			//svar_scope.put(svarName, scope);
-			//svar_expression.put(svarName, expression);
-			S.var_all.put(svarName, "svar_expression");
+
+			S.var_all.put(name, "svar_expression");
 
 			// / clearer data structure
-
 			String caseName = Param.defaultCaseName;
 			String condition = Param.always;
 
 			sv = new Svar();
-			sv.scope = scope;
+			//sv.scope = scope;
 			sv.caseName.add(caseName);
 			sv.caseCondition.add(condition);
 			sv.caseExpression.add(expression);
 			sv.fromWresl = S.currentAbsolutePath;
 
-			S.svMap.put(svarName, sv);
-			S.svList.add(svarName);
+			S.svMap.put(name, sv);
+			S.svList.add(name);
 			
-			if      (scope == Param.global){S.svList_global.add(svarName);}
-			else if (scope == Param.local) {S.svList_local.add(svarName);}
-			else{ System.out.println("wrong scope!!");}
+			if      (scope == null)
+					{S.svList_global.add(name); sv.scope = Param.global;}
+			else if (scope.equalsIgnoreCase(Param.local)) 
+					{S.svList_local.add(name); sv.scope = Param.local;}
+			else{ LogUtils.errMsg("Svar scope undefined: "+name, S.currentAbsolutePath);}
 		}
 
 	}
@@ -295,7 +273,7 @@ public class StructTree {
 			S.var_all.put(name, "svar_sum");
 
 			sv = new Svar();
-			sv.scope = scope;
+			//sv.scope = scope;
 			sv.caseName.add(Param.defaultCaseName);
 			sv.caseCondition.add("always");
 			sv.caseExpression.add(hdr + " " +value);
@@ -304,9 +282,12 @@ public class StructTree {
 			S.svMap.put(name, sv);
 			S.svList.add(name);
 			
-			if      (scope == Param.global){S.svList_global.add(name);}
-			else if (scope == Param.local) {S.svList_local.add(name);}
-			else{ System.out.println("wrong scope!!");}
+			if      (scope == null)
+					{S.svList_global.add(name); sv.scope = Param.global;}
+			else if (scope.equalsIgnoreCase(Param.local)) 
+					{S.svList_local.add(name); sv.scope = Param.local;}
+			else{ LogUtils.errMsg("Svar scope undefined: "+name, S.currentAbsolutePath);}
+
 
 		}
 	}
@@ -321,7 +302,7 @@ public class StructTree {
 
 			// / clearer data structure
 			sv = new Svar();
-			sv.scope = scope;
+			//sv.scope = scope;
 			sv.format = "lookup_table";
 			sv.caseCondition.add("always");
 			sv.caseName.add(Param.defaultCaseName);
@@ -330,10 +311,11 @@ public class StructTree {
 			S.svMap.put(name, sv);
 			S.svList.add(name);
 			
-			if      (scope == Param.global){S.svList_global.add(name);}
-			else if (scope == Param.local) {S.svList_local.add(name);}
-			else{ System.out.println("wrong scope!!");}
-
+			if      (scope == null)
+					{S.svList_global.add(name); sv.scope = Param.global;}
+			else if (scope.equalsIgnoreCase(Param.local)) 
+					{S.svList_local.add(name); sv.scope = Param.local;}
+			else{ LogUtils.errMsg("Svar scope undefined: "+name, S.currentAbsolutePath);}
 		}
 	}
 
@@ -342,17 +324,12 @@ public class StructTree {
 			LogUtils.errMsg("State variable redefined: "+name, S.currentAbsolutePath);
 			S.error_var_redefined.put(name, "svar_dss");
 		} else {
-			//svar_scope.put(name, scope);
-			//svar_type.put(name, "timeseries");
-			//list = new ArrayList<String>();
-			//list.add(kind);
-			//list.add(units);
-			//svar_dss.put(name, list);
+
 			S.var_all.put(name, "svar_dss");
 
 			// / clearer data structure
 			SvarTimeseries svTs = new SvarTimeseries();
-			svTs.scope = scope;
+			//svTs.scope = scope;
 			if (b_part!=null) svTs.dssBPart = b_part; 
 			svTs.kind = kind;
 			svTs.units = units;
@@ -362,9 +339,11 @@ public class StructTree {
 			S.svTsMap.put(name, svTs);
 			S.svTsList.add(name);
 			
-			if      (scope == Param.global){S.svTsList_global.add(name);}
-			else if (scope == Param.local) {S.svTsList_local.add(name);}
-			else{ System.out.println("wrong scope!!");}
+			if      (scope == null)
+					{S.svTsList_global.add(name); svTs.scope = Param.global;}
+			else if (scope.equalsIgnoreCase(Param.local))
+					{S.svTsList_local.add(name); svTs.scope = Param.local;}
+			else{ LogUtils.errMsg("Svar timeseries scope undefined: "+name, S.currentAbsolutePath);}
 
 		}
 	}
@@ -379,7 +358,7 @@ public class StructTree {
 
 			// / better data structure
 			dv = new Dvar();
-			dv.scope = scope;
+			//dv.scope = scope;
 			if (integer != null) {dv.integer = "Y";}
 			dv.kind = kind;
 			dv.units = units;
@@ -390,8 +369,10 @@ public class StructTree {
 			S.dvMap.put(name, dv);
 			S.dvList.add(name);
 			
-			if      (scope == Param.global){S.dvList_global.add(name);}
-			else if (scope == Param.local) {S.dvList_local.add(name);}
+			if      ( scope == null )
+					{S.dvList_global.add(name); dv.scope = Param.global;}
+			else if (scope.toLowerCase().equals(Param.local)) 
+					{S.dvList_local.add(name); dv.scope = Param.local;}
 			else{ LogUtils.errMsg("Dvar scope undefined: "+name, S.currentAbsolutePath);}
 
 		}
@@ -448,7 +429,7 @@ public class StructTree {
 
 			// / better data structure
 			dv = new Dvar();
-			dv.scope = scope;
+			//dv.scope = scope;
 			dv.kind = kind;
 			dv.units = units;
 			dv.lowerBound = lowerBound;
@@ -457,8 +438,10 @@ public class StructTree {
 			S.dvMap.put(name, dv);
 			S.dvList.add(name);
 			
-			if      (scope == Param.global){S.dvList_global.add(name);}
-			else if (scope == Param.local) {S.dvList_local.add(name);}
+			if      ( scope == null )
+					{S.dvList_global.add(name); dv.scope = Param.global;}
+			else if ( scope.equalsIgnoreCase(Param.local) ) 
+					{S.dvList_local.add(name); dv.scope = Param.local;}
 			else{ LogUtils.errMsg("Dvar scope undefined: "+name, S.currentAbsolutePath);}
 
 		}

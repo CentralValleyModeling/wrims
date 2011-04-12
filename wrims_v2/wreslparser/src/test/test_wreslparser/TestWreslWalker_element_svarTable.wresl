@@ -11,7 +11,7 @@ define simple {
         from      feather_fish_203
         where   month = NOV }
 		
-define multi_where { select target from res_level where res_num=1,level=4,month=month }		
+define[local] multi_where { select target from res_level where res_num=1,level=4,month=month }		
 	
 	}	
 
