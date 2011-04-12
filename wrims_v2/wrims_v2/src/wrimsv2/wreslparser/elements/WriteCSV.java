@@ -15,11 +15,10 @@ import wrimsv2.commondata.wresldata.External;
 import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.Param;
+import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.SvarTimeseries;
 import wrimsv2.commondata.wresldata.WeightElement;
-
-
 
 
 public class WriteCSV {
@@ -36,13 +35,27 @@ public class WriteCSV {
 	  public static String alias_header ="NAME,TYPE,UNITS,EXPRESSION,FROM_WRESL_FILE";
 	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
 	  
+	public static void study(StudyDataSet sd, String outParent) {
+			
+			Map<String,ModelDataSet> modelDataSetMap = sd.getModelDataSetMap();
+		
+			output(modelDataSetMap,outParent);
+			
+			try {
+				PrintWriter out_seq = Tools.openFile(outParent, "SEQUENCE.csv");
+				out_seq.print(WriteCSV.sequence_header + "\n");			
+				sequence(sd.getModelList(), sd.getModelConditionList(), out_seq);
+				out_seq.close();
+			}
+			catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 	  
 	public static void study(StudyConfig sc, Map<String, ModelDataSet> modelDataMap, String outParent) {
-			
-		
-		
+				
 			output(modelDataMap,outParent);
-			
 			
 			try {
 				PrintWriter out_seq = Tools.openFile(outParent, "SEQUENCE.csv");
@@ -54,14 +67,13 @@ public class WriteCSV {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-
 		}	  
 	  
 	public static void output(Map<String, ModelDataSet> modelDataMap, String outParent) {
 
 		for (String model : modelDataMap.keySet()) {
 
-			String outFolder = outParent + model;
+			String outFolder = outParent + "\\" + model;
 
 			try {
 				dataset(modelDataMap.get(model), outFolder);
@@ -188,6 +200,16 @@ public class WriteCSV {
 			}
 	  };	  
 
+	  public static void sequence(ArrayList<String> modelList, ArrayList<String> modelConditionList ,PrintWriter out) {
+		    
+		    for (int i = 0; i< modelList.size(); i++ ){
+		    			    	
+		    	out.print(modelList.get(i));
+		    	out.print(Param.csv_seperator+modelConditionList.get(i));
+				out.print("\n");	
+		    	
+			}
+	  };
 	
 	  public static void sequence(Map<Integer,Sequence> seqMap, ArrayList<Integer> list ,PrintWriter out) {
 		    

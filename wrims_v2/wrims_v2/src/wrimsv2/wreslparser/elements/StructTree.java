@@ -148,9 +148,7 @@ public class StructTree {
 			S.gMap.put(name, gl);
 			S.gList.add(name);
 			
-			System.out.println("UUUUUUUUuu "+scope);
-			
-			if      ( scope == null )
+			if      (scope == null)
 					{S.gList_global.add(name); gl.scope = Param.global;}
 			else if (scope.equalsIgnoreCase(Param.local)) 
 					{S.gList_local.add(name); gl.scope = Param.local;}

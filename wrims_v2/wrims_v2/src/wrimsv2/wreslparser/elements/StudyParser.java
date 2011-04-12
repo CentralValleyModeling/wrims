@@ -23,6 +23,7 @@ public class StudyParser {
 		StudyDataSet studyDataSet = new StudyDataSet();
 		
 		studyDataSet.setModelList(sc.modelList);
+		studyDataSet.setModelConditionList(sc.modelConditionList);
 		
 		Map<String, ModelDataSet> modelDataSetMap = new HashMap<String, ModelDataSet>();
 		
@@ -97,6 +98,8 @@ public class StudyParser {
 		for ( Integer i : sc.sequenceOrder){ 
 			sc.sequenceList.add(sc.sequenceMap.get(i).sequenceName);
 			sc.modelList.add(sc.sequenceMap.get(i).modelName);
+			
+			sc.modelConditionList.add(sc.sequenceMap.get(i).condition);
 		}		
 
 		sc.absMainFilePath = absMainFilePath;

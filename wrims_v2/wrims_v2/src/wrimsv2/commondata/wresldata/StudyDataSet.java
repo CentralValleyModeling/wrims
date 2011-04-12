@@ -11,6 +11,7 @@ public class StudyDataSet {
 	private String absMainFilePath;
 	
 	private ArrayList<String> modelList = new ArrayList<String>();
+	private ArrayList<String> modelConditionList = new ArrayList<String>();
 	
 	///  < modelName, modelDataSet > 		
 	private Map<String, ModelDataSet> modelDataSetMap = new HashMap<String, ModelDataSet>();
@@ -30,6 +31,14 @@ public class StudyDataSet {
 
 	public void setModelList(ArrayList<String> modelList) {
 		this.modelList = modelList;
+	}
+
+	public ArrayList<String> getModelConditionList() {
+		return modelConditionList;
+	}
+
+	public void setModelConditionList(ArrayList<String> modelConditionList) {
+		this.modelConditionList = modelConditionList;
 	}
 
 	public Map<String, ModelDataSet> getModelDataSetMap() {

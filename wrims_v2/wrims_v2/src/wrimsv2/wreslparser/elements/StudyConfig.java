@@ -10,7 +10,10 @@ public class StudyConfig {
 	public ArrayList<Integer> sequenceOrder;
 	public ArrayList<String> sequenceList;
 	public ArrayList<String> modelList; // sorted model list based on sequence order
+	public ArrayList<String> modelConditionList; // sorted condition for model on sequence order
+	
 	public Map<String, SimulationDataSet> modelDataMap;
+
 
     public StudyConfig() {
     	
@@ -20,6 +23,7 @@ public class StudyConfig {
     	sequenceOrder = new ArrayList<Integer>();
     	sequenceList = new ArrayList<String>();
     	modelList = new ArrayList<String>();
+    	modelConditionList = new ArrayList<String>();
     	modelDataMap = new HashMap<String, SimulationDataSet>();
 
 
