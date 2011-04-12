@@ -27,6 +27,8 @@ public class Tools {
 		s=s.replaceAll("\\(", "\\\\(").replaceAll("\\)", "\\\\)");
 		s=s.replaceAll("\\.", "\\\\.");
 		s=s.replaceAll("\\*", "\\\\*");
+		s=s.replaceAll("\\|", "\\\\|");
+		s=s.replaceAll("\\+", "\\\\+");
 		s=s.replaceAll("#", ".+");
 		return s;
 	}

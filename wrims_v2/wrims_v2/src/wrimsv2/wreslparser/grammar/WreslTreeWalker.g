@@ -1,11 +1,9 @@
 tree grammar WreslTreeWalker;
-
 options {
   language = Java;
   tokenVocab = WreslTree;
   ASTLabelType = CommonTree;
 }
-
 @header {
   package wrimsv2.wreslparser.grammar;
   import java.util.Map;
@@ -15,15 +13,14 @@ options {
   import wrimsv2.wreslparser.elements.Tools;
   import wrimsv2.wreslparser.elements.LogUtils; 
   import wrimsv2.commondata.wresldata.Param;
+  import wrimsv2.commondata.wresldata.Goal;
 }
-
 @members {
 
   public int result;
   public CommonTree commonTree;
   public String currentAbsolutePath;
   public String currentAbsoluteParent;
-
   
   	public StructTree F = new StructTree();	
   	public SimulationDataSet thisFileDataSet = new SimulationDataSet();
@@ -38,7 +35,6 @@ options {
         LogUtils.errMsg(hdr + " " + msg);
     }
 }
-
 evaluator
 @init { 
 		F.S = thisFileDataSet;
@@ -86,7 +82,7 @@ model
 	;	
 
 includeFile
-	:	 ^(Include (s=Global|s=Local) f=FILE_PATH) {F.includeFile(Tools.strip($f.text), $s.text);}
+	:	 ^(Include sc=Scope f=FILE_PATH) {F.includeFile(Tools.strip($f.text), $sc.text);}
 	;
 	
 	
@@ -94,19 +90,58 @@ includeFile
 //	:	^(':=' IDENT e=expression)
 //			{ variables.put($IDENT.text, e); }
 //	;
-goal : goal_simple ;
+goal : goal_simple | goal_nocase | goal_case ;
 
-dvar : dvar_std | dvar_nonStd   ;
+dvar : dvar_std | dvar_nonStd    ;
 
 svar : svar_dss | svar_expr | svar_sum | svar_table;
 
 goal_simple 
-	:  ^(Goal_simple (sc=Global|sc=Local) i=IDENT v=Constraint_content ) 
-		{ F.goalSimple($i.text, $sc.text, $v.text);} 
+	:  ^(Goal_simple sc=Scope i=IDENT v=Constraint_content ) 
+		{ F.goalSimple($i.text, $sc.text, $v.text+"| ");} 
 	;
 
+goal_nocase
+	:  ^( Goal_no_case sc=Scope i=IDENT  c=goal_contents  )  
+		{ 
+			 F.goalSimple($i.text, $sc.text, $c.str);	  				
+		} 
+;
+
+goal_case
+	@init { Goal gl = new Goal(); }   
+	:  ^( Goal_case sc=Scope i=IDENT  
+		( ^( Case n=IDENT c=Condition e=goal_contents 
+			{	
+				gl.caseName.add($n.text);
+				gl.caseCondition.add($c.text);
+				gl.caseExpression.add($e.str);
+			} 
+		) )+  
+		)  
+		{ 
+			 F.goalCase($i.text, $sc.text, gl);	  				
+		} 
+;
+
+goal_contents returns[String str] : c1=goal_content c2=goal_content? 
+		{ 
+		  if (c2!=null) { $str = $c1.str+"| "+$c2.str; }
+		  else	        { $str = $c1.str; }		  				
+		} 
+		;
+
+goal_content returns[String str]
+	: 
+		 l=Lhs o=Op r=Rhs s=Separator w=Weight
+		 { $str = $l.text + $o.text + $r.text + $s.text + $w.text;  } 
+
+
+;
+
+
 svar_table :
-	^( Svar_table (sc=Global|sc=Local) i=IDENT s=Select f=From g=Given u=Use wi=Where_item_number wc=Where_content   ) 
+	^( Svar_table sc=Scope i=IDENT s=Select f=From g=Given u=Use wi=Where_item_number wc=Where_content   ) 
 	 {  
 	 	//System.out.println("@@@@@@@@@@@@@"+$g.text);
 	 	String sqlStr = "SELECT "+$s.text+" FROM "+$f.text+" GIVEN "+$g.text+" USE "+$u.text+" WHERE "+ Tools.replace_seperator($wc.text);
@@ -114,29 +149,29 @@ svar_table :
 	;
 
 svar_sum : 
-		^(Svar_sum (sc=Global|sc=Local) i=IDENT hdr=Sum_hdr v=Value )
+		^(Svar_sum sc=Scope i=IDENT hdr=Sum_hdr v=Value )
 	   { F.svarSum($i.text, $sc.text, 
 	     Tools.replace_seperator($hdr.text), 
 	     Tools.replace_seperator($v.text) ); }
 	;
 
 svar_expr : 
-	   ^(Svar_const (sc=Global|sc=Local) i=IDENT v=Value )
+	   ^(Svar_const sc=Scope i=IDENT v=Value )
 	   { F.svarExpression($i.text, $sc.text, Tools.replace_seperator($v.text) ); }
 	;
 
 svar_dss :
-       ^(Svar_dss (sc=Global|sc=Local) i=IDENT b=B_part Kind k=STRING Units u=STRING c=CONVERT )
+       ^(Svar_dss sc=Scope i=IDENT b=B_part Kind k=STRING Units u=STRING c=CONVERT )
        { F.svarDSS($i.text, $sc.text, Tools.strip($b.text), Tools.strip($k.text), Tools.strip($u.text),  Tools.strip($c.text)); }
 	;
 
 dvar_std  :
-       ^(Dvar_std (sc=Global|sc=Local) i=IDENT Kind k=STRING Units u=STRING)
+       ^(Dvar_std sc=Scope i=IDENT Kind k=STRING Units u=STRING)
        { F.dvarStd($i.text, $sc.text, null, Tools.strip($k.text), Tools.strip($u.text)); }
 	;
 	
 dvar_nonStd : 
-	   ^(Dvar_nonStd (sc=Global|sc=Local) i=IDENT Lower lowerbound=LimitType Upper upperbound=LimitType Kind k=STRING Units u=STRING)
+	   ^(Dvar_nonStd sc=Scope i=IDENT Lower lowerbound=LimitType Upper upperbound=LimitType Kind k=STRING Units u=STRING)
 	   {F.dvarNonStd($i.text, $sc.text, $k.text, $u.text,  $lowerbound.text, $upperbound.text);}
 
 	;

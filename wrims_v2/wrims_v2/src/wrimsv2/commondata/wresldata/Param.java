@@ -18,8 +18,8 @@ public class Param {
 	  public static int printLevel = 1;
 	  
 	  
-	  public static String global="Global";
-	  public static String local="Local";
+	  public static String global="global";
+	  public static String local="local";
 	  
 }
 
