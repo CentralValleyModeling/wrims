@@ -15,6 +15,7 @@ public class Svar {
 	public ArrayList<String> caseCondition;
 	public ArrayList<String> caseExpression;
 	public String fromWresl;
+	private Number value; 
 	
 	public Svar(){
 		scope=Param.undefined;
@@ -66,6 +67,14 @@ public class Svar {
 		else {
 			return false;
 		}
+	}
+	
+	public void setValue(Number value){
+		this.value=value;
+	}
+	
+	public Number getValue(){
+		return value;
 	}
 }
 	
