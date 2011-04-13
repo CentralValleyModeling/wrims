@@ -96,7 +96,7 @@ test:  INTEGER  'test' ;
 test2:  test ;	
 	
 pattern
-	: dvar | svar | goal | includeFile 
+	: dvar | svar | goal | includeFile  
 	;
 	
 model
@@ -108,13 +108,13 @@ model
 sequence 
 	: SEQUENCE s=IDENT '{' MODEL m=IDENT ( c=condition)? ORDER INTEGER '}' 
 	  {model_in_sequence.add($m.text);}
-	-> {c!=null}? ^(Sequence $s Model $m Order INTEGER Condition condition )	 
-	->            ^(Sequence $s Model $m Order INTEGER Condition CONDITION[Param.always] ) 
+	-> {c!=null}? ^(Sequence $s Model $m Order INTEGER condition )	 
+	->            ^(Sequence $s Model $m Order INTEGER Condition[Param.always] ) 
 	;
 	
 condition
 	: CONDITION logical 
-	-> CONDITION[$logical.text]
+	-> Condition[$logical.text]
 	;	
 
 includeFile
@@ -138,8 +138,8 @@ goal_case_or_nocase
 	;
 
 goal_case_content[String l] : 
-	CASE i=IDENT '{' CONDITION c=condition_statement RHS r=expression sub_content[$l,$r.text] '}'
-	-> ^( Case $i Condition[$c.text] sub_content )
+	CASE i=IDENT '{' condition RHS r=expression sub_content[$l,$r.text] '}'
+	-> ^( Case $i condition sub_content )
 	;
 
 goal_no_case_content[String l] : RHS r=expression sub_content[$l,$r.text]
@@ -225,8 +225,8 @@ upper: UPPER ( UNBOUNDED -> Upper LimitType["Unbounded"] | e=expression -> Upper
 
 /// IDENT =, <, > ///
 
-condition_statement :  term_simple ( '<' | '>' | '==' | '<=' | '>=' ) expression  ;
-constraint_statement : term_simple ( '<' | '>' | '='  ) expression  ;
+
+constraint_statement : expression ( '<' | '>' | '='  ) expression  ;
 
 assignment  :           term_simple  '=' expression ;
 lt_or_gt :              term_simple ( '<'  | '>'  ) expression ;
@@ -360,6 +360,13 @@ IDENT_FOLLOWED_BY_LOGICAL
 	| a=NOT { $a.setType(NOT); emit($a);}
 	);
 
+INTEGER_FOLLOWED_BY_LOGICAL 
+	: i=INTEGER{$i.setType(INTEGER); emit($i);}
+	( a=AND { $a.setType(AND); emit($a);}
+	| a=OR  { $a.setType(OR); emit($a);}
+	| a=NOT { $a.setType(NOT); emit($a);}
+	);
+	
 IDENT : LETTER (LETTER | DIGIT | '_')*;
 
 WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {$channel = HIDDEN;};

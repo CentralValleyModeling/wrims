@@ -56,7 +56,7 @@ pattern
 	;
 
 sequence 
-	:  ^(Sequence s=IDENT Model m=IDENT Order i=INTEGER Condition c=CONDITION ) 
+	:  ^(Sequence s=IDENT Model m=IDENT Order i=INTEGER c=Condition ) 
 		{
 			F.sequenceOrder($s.text, $i.text, $m.text, $c.text);
 			
@@ -135,15 +135,12 @@ goal_content returns[String str]
 	: 
 		 l=Lhs o=Op r=Rhs s=Separator w=Weight
 		 { $str = $l.text + $o.text + $r.text + $s.text + $w.text;  } 
-
-
-;
+	;
 
 
 svar_table :
 	^( Svar_table sc=Scope i=IDENT s=Select f=From g=Given u=Use wi=Where_item_number wc=Where_content   ) 
 	 {  
-	 	//System.out.println("@@@@@@@@@@@@@"+$g.text);
 	 	String sqlStr = "SELECT "+$s.text+" FROM "+$f.text+" GIVEN "+$g.text+" USE "+$u.text+" WHERE "+ Tools.replace_seperator($wc.text);
 	 	F.svarTable($i.text, $sc.text, sqlStr); } 
 	;
@@ -173,25 +170,11 @@ dvar_std  :
 dvar_nonStd : 
 	   ^(Dvar_nonStd sc=Scope i=IDENT Lower lowerbound=LimitType Upper upperbound=LimitType Kind k=STRING Units u=STRING)
 	   {F.dvarNonStd($i.text, $sc.text, $k.text, $u.text,  $lowerbound.text, $upperbound.text);}
-
 	;
-
-
-
-
-	
-
 		
 condition 
 	: Condition ( logical | Always ) 
-	;	
-
-//sequence
-//	:   SEQUENCE s=ident '{' MODEL m=ident c=conditionStatement? ORDER i=INTEGER'}'{
-//				F.sequenceOrder($s.text, $i.text, $m.text, $c.str );
-//		}
-//	;	
-	
+	;		
 	
 /// Expression ///
 term
