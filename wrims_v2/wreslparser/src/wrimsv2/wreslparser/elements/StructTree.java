@@ -379,7 +379,7 @@ public class StructTree {
 
 			// / better data structure
 			as = new Alias();
-			as.scope = scope;
+			// as.scope = scope;
 			if (kind != null)
 				as.kind = kind;
 			if (units != null)
@@ -405,13 +405,7 @@ public class StructTree {
 			LogUtils.errMsg("Dvar redefined: "+name, S.currentAbsolutePath);
 			S.error_var_redefined.put(name, "dvar_nonstd");
 		} else {
-			//dvar_scope.put(name, scope);
-			//list = new ArrayList<String>();
-			// list.add(scope);
-			//list.add(kind);
-			//list.add(units);
-			//list.addAll(content);
-			//dvar_nonstd.put(name, list);
+
 			S.var_all.put(name, "dvar_nonstd");
 
 			// / better data structure
