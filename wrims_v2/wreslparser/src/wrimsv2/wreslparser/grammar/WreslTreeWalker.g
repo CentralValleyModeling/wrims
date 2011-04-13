@@ -126,7 +126,7 @@ goal_case
 
 goal_contents returns[String str] : c1=goal_content c2=goal_content? 
 		{ 
-		  if (c2!=null) { $str = $c1.str+"| "+$c2.str; }
+		  if (c2!=null) { $str = $c1.str+" | "+$c2.str; }
 		  else	        { $str = $c1.str; }		  				
 		} 
 		;

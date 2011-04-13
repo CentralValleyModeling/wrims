@@ -127,12 +127,12 @@ public class TestWreslWalker_goal {
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 		
-		s = "Goal_2#y+z-(x):-700.0| x>y+z";
+		s = "Goal_2#y+z-(x):-700.0 | x>y+z";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "Goal_1#x>y+z| y+z-(x):-700.0";
+		s = "Goal_1#x>y+z | y+z-(x):-700.0";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -177,12 +177,12 @@ public class TestWreslWalker_goal {
 		String s;
 		int n;
 	
-		s = "global_goal,ActionOn,1,int(B2On)==1,C3_M>minflow_C| minflow_C-(C3_M):-700.";
+		s = "global_goal,ActionOn,1,int(B2On)==1,C3_M>minflow_C | minflow_C-(C3_M):-700.";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 		
-		s = "global_goal,ActionOff,2,int(B2On)==0,C3_M>clear_min| clear_min-(C3_M):-0";
+		s = "global_goal,ActionOff,2,int(B2On)==0,C3_M>clear_min | clear_min-(C3_M):-0";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
