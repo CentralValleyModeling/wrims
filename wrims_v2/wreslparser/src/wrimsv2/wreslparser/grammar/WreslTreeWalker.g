@@ -14,6 +14,7 @@ options {
   import wrimsv2.wreslparser.elements.LogUtils; 
   import wrimsv2.commondata.wresldata.Param;
   import wrimsv2.commondata.wresldata.Goal;
+  import wrimsv2.commondata.wresldata.Svar;
 }
 @members {
 
@@ -94,7 +95,39 @@ goal : goal_simple | goal_nocase | goal_case ;
 
 dvar : dvar_std | dvar_nonStd    ;
 
-svar : svar_dss | svar_expr | svar_sum | svar_table;
+svar : svar_dss | svar_expr | svar_sum | svar_table | svar_case;
+
+svar_case 	
+@init { Svar sv = new Svar(); }  
+	: ^(Svar_case sc=Scope i=IDENT  ( c=case_content 
+	{	
+				sv.caseName.add($c.name);
+				sv.caseCondition.add( Tools.add_space_between_logical( $c.condition ) );
+				sv.caseExpression.add($c.expression);
+				
+			}
+	
+	)+ 
+	) 
+			 {F.svarCase($i.text, $sc.text, sv);}
+;
+
+
+case_content returns[String name, String condition, String expression] : 
+^(Case i=IDENT c=Condition e=( table_content | Value ) )
+ 
+{ $name = $i.text; $condition =$c.text; $expression = $e.text;
+
+}
+
+
+;
+
+
+table_content returns[String text] :  s=Select f=From g=Given u=Use wi=Where_item_number wc=Where_content  
+
+{ $text = "SELECT "+$s.text+" FROM "+$f.text+" GIVEN "+$g.text+" USE "+$u.text+" WHERE "+ Tools.replace_seperator($wc.text); }
+;
 
 alias  :
        ^(Alias sc=Scope i=IDENT e=Expression k=Kind u=Units)

@@ -13,7 +13,7 @@ tokens {
 	Value; Case ;
 	Alias; Expression;
 	Dvar; Dvar_std; Dvar_nonStd; Dvar_std; Dvar_nonStd_local;
-	Svar_dss; Svar_const; Svar_sum; Sum_hdr; B_part;
+	Svar_case; Svar_dss; Svar_const; Svar_sum; Sum_hdr; B_part;
 	Svar_table; Select; From; Where_content; Where_item_number; Given; Use;
 	Goal_simple; Goal_no_case; Goal_case ; Lhs_gt_rhs; Lhs_lt_rhs; Never; Penalty;
 	Lhs; Rhs; Weight;
@@ -111,13 +111,14 @@ model
 sequence 
 	: SEQUENCE s=IDENT '{' MODEL m=IDENT ( c=condition)? ORDER INTEGER '}' 
 	  {model_in_sequence.add($m.text);}
-	-> {c!=null}? ^(Sequence $s Model $m Order INTEGER condition )	 
-	->            ^(Sequence $s Model $m Order INTEGER Condition[Param.always] ) 
+	->  ^(Sequence $s Model $m Order INTEGER Condition[$c.text] )	 
 	;
 	
-condition
-	: CONDITION logical 
-	-> Condition[$logical.text]
+condition returns[String text]
+	: CONDITION 
+	( logical  {$text = $logical.text; }
+	| ALWAYS   {$text = Param.always; }
+	)
 	;	
 
 includeFile
@@ -145,8 +146,8 @@ goal_case_or_nocase
 	;
 
 goal_case_content[String l] : 
-	CASE i=IDENT '{' condition RHS r=expression sub_content[$l,$r.text] '}'
-	-> ^( Case $i condition sub_content )
+	CASE i=IDENT '{' c=condition RHS r=expression sub_content[$l,$r.text] '}'
+	-> ^( Case $i Condition[$c.text] sub_content )
 	;
 
 goal_no_case_content[String l] : RHS r=expression sub_content[$l,$r.text]
@@ -173,14 +174,32 @@ LHS '<' RHS
 
 penalty returns[String w]: PENALTY n=number {$w=$n.text;} ;
 
-svar : DEFINE! (svar_dss | svar_expr | svar_sum | svar_table) ;
+svar : DEFINE! (svar_dss | svar_expr | svar_sum | svar_table | svar_case ) ;
 		
 dvar : DEFINE! (dvar_std | dvar_nonStd ) ;	
 
+svar_case : ( '[' sc=LOCAL? ']' )? i=IDENT '{' case_content+ '}'
+->  ^(Svar_case Scope[$sc.text] $i  case_content+ )  ;
+
+
+case_content : CASE i=IDENT '{' c=condition ( table_content 
+	-> ^(Case $i Condition[$c.text] table_content  )
+
+	| value_content 
+	-> ^(Case $i Condition[$c.text] value_content  )
+) '}' 
+;
+
+value_content : VALUE e=expression -> Value[$e.text];
+
 svar_table :
-	( '[' sc=LOCAL? ']' )? i=IDENT '{' SELECT s=IDENT FROM f=IDENT (GIVEN g=assignment)? (USE u=IDENT)? WHERE w=where_items '}'
-->  ^(Svar_table Scope[$sc.text] $i Select[$s.text] From[$f.text] Given[$g.text] Use[$u.text] Where_item_number[$w.n] Where_content[Tools.replace_ignoreChar($w.text)] )  	
+	( '[' sc=LOCAL? ']' )? i=IDENT '{' table_content '}'
+->  ^(Svar_table Scope[$sc.text] $i table_content )  	
 	;
+
+table_content : SELECT s=IDENT FROM f=IDENT (GIVEN g=assignment)? (USE u=IDENT)? WHERE w=where_items 
+-> Select[$s.text] From[$f.text] Given[$g.text] Use[$u.text] Where_item_number[$w.n] Where_content[Tools.replace_ignoreChar($w.text)]
+;
 
 where_items returns[String n]
 @init{ int number = 1; } 

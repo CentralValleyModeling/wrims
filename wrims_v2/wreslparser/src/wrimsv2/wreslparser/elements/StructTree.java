@@ -187,7 +187,7 @@ public class StructTree {
 			S.var_all.put(name, "svar_cases");
 
 			// ///////////////////
-			sv.scope = scope;
+			//sv.scope = scope;
 			sv.fromWresl = S.currentAbsolutePath;
 			S.svMap.put(name, sv);
 			S.svList.add(name);
