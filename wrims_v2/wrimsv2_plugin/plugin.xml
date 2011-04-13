@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+      <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            type="wpp.launchType"
+            class="wrimsv2_plugin.debugger.launcher.WPPTabGroup"
+            id="wpp.tabGroup"/>
+   </extension>
+ <extension point = "org.eclipse.debug.core.launchConfigurationTypes">
+   <launchConfigurationType
+	   name="WPP Application"
+	   delegate="wrimsv2_plugin.debugger.launcher.WPPLaunchDelegate"
+	   modes= "run, debug"
+	   id="wpp.launchType"
+       sourcePathComputerId="org.eclipse.jdt.launching.sourceLookup.javaSourcePathComputer">
+   </launchConfigurationType>
+</extension>
+   <extension
+         point="org.eclipse.debug.ui.launchShortcuts">
+      <shortcut
+            label="WPP Application"
+            class="wrimsv2_plugin.debugger.launcher.WPPLaunchShortcut"
+            modes="run, debug"
+            id="WPP.launchShortcut">
+         <contextualLaunch>
+            <enablement>
+               <with variable="selection">
+                  <count value="1"/>
+                  <iterate>
+                     <instanceof value="org.eclipse.core.resources.IFile"/>
+                     <test
+                           value="*.wpp"
+                           property="org.eclipse.debug.ui.matchesPattern"/>
+                  </iterate>
+               </with>
+            </enablement>
+         </contextualLaunch>
+      </shortcut>
+   </extension>
+</plugin>
