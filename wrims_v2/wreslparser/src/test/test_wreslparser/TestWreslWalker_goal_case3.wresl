@@ -8,7 +8,7 @@ MODEL first {
 goal global_goal {
   lhs C3_M
   case ActionOn {
-    condition   int( B2On )==1.and.month==May
+    condition   int( B2On )==1.and.month<= May
     rhs     minflow_C
     lhs>rhs     constrain
     lhs<rhs     penalty 700. }

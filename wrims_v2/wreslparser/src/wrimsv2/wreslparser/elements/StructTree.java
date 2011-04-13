@@ -165,14 +165,6 @@ public class StructTree {
 			S.var_all.put(name, "goal_cases");
 
 			// / better data structure
-
-			//gl.scope = scope;
-			//gl.lhs = lhs;
-			
-//			// combine lhs and rhs with " = "
-//	    	for (int i=0; i<gl.caseCondition.size(); i++){
-//	    		gl.caseExpression.set(i, lhs+" = "+gl.caseExpression.get(i)) ; //for EXPRESSION
-//	    	}
 			
 			gl.fromWresl = S.currentAbsolutePath;
 			S.gMap.put(name, gl);

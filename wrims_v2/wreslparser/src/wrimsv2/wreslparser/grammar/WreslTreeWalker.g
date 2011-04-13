@@ -114,7 +114,7 @@ goal_case
 		( ^( Case n=IDENT c=Condition e=goal_contents 
 			{	
 				gl.caseName.add($n.text);
-				gl.caseCondition.add($c.text);
+				gl.caseCondition.add( Tools.add_space_between_logical( $c.text ) );
 				gl.caseExpression.add($e.str);
 			} 
 		) )+  
@@ -171,10 +171,7 @@ dvar_nonStd :
 	   ^(Dvar_nonStd sc=Scope i=IDENT Lower lowerbound=LimitType Upper upperbound=LimitType Kind k=STRING Units u=STRING)
 	   {F.dvarNonStd($i.text, $sc.text, $k.text, $u.text,  $lowerbound.text, $upperbound.text);}
 	;
-		
-condition 
-	: Condition ( logical | Always ) 
-	;		
+			
 	
 /// Expression ///
 term
