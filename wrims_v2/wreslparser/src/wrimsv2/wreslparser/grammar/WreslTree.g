@@ -11,6 +11,7 @@ tokens {
 	NEW_LINE; Op; Separator;
 	Local; Global; Scope;
 	Value; Case ;
+	Alias; Expression;
 	Dvar; Dvar_std; Dvar_nonStd; Dvar_std; Dvar_nonStd_local;
 	Svar_dss; Svar_const; Svar_sum; Sum_hdr; B_part;
 	Svar_table; Select; From; Where_content; Where_item_number; Given; Use;
@@ -96,9 +97,11 @@ test:  INTEGER  'test' ;
 test2:  test ;	
 	
 pattern
-	: dvar | svar | goal | includeFile  
+	: dvar | svar | goal | includeFile | alias
 	;
 	
+
+		
 model
 	: MODEL IDENT '{' (pattern )+  '}' 
 	   {model_list.add($IDENT.text);}
@@ -121,6 +124,10 @@ includeFile
 	:	 INCLUDE ( '[' sc=LOCAL? ']' )? FILE_PATH 
 	->   ^(Include Scope[$sc.text] FILE_PATH)
 	;
+	
+alias : DEFINE ( '[' sc=LOCAL? ']' )? i=IDENT '{' ALIAS e=expression (KIND k=STRING)? (UNITS u=STRING)? '}'
+	->  ^(Alias Scope[$sc.text] $i Expression[$e.text] Kind[$k.text] Units[$u.text])
+	;	
 
 goal : GOAL! (goal_simple | goal_case_or_nocase  );
 
@@ -273,7 +280,9 @@ bin : OR -> OR[".OR."] | AND -> AND[".AND."] ;
 //range_func
 //	: RANGE '(' MONTH ',' MONTH_CONST ',' MONTH_CONST ')' ;
 
-function : external_func | max_func | min_func | int_func ;
+function : external_func | max_func | min_func | int_func | var_model ;
+
+var_model : IDENT '[' IDENT ']' ;	
 
 external_func 
 	: IDENT '('  expression (',' expression )*  ')' ;

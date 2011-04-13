@@ -52,7 +52,7 @@ test:  INTEGER 'test' ;
 test2:  t=test {  System.out.println("yyyyyyyyyyyyy"+$t.text  ); };		
 
 pattern
-	: dvar | svar | goal | includeFile 
+	: dvar | svar | goal | includeFile | alias
 	;
 
 sequence 
@@ -95,6 +95,12 @@ goal : goal_simple | goal_nocase | goal_case ;
 dvar : dvar_std | dvar_nonStd    ;
 
 svar : svar_dss | svar_expr | svar_sum | svar_table;
+
+alias  :
+       ^(Alias sc=Scope i=IDENT e=Expression k=Kind u=Units)
+       { F.alias($i.text, $sc.text, Tools.strip($k.text), Tools.strip($u.text), $e.text  ); }
+	;
+
 
 goal_simple 
 	:  ^(Goal_simple sc=Scope i=IDENT v=Constraint_content ) 

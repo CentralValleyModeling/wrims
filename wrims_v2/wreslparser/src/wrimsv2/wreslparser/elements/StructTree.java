@@ -359,7 +359,7 @@ public class StructTree {
 			S.dvMap.put(name, dv);
 			S.dvList.add(name);
 			
-			if      ( scope == null )
+			if      (scope == null)
 					{S.dvList_global.add(name); dv.scope = Param.global;}
 			else if (scope.toLowerCase().equals(Param.local)) 
 					{S.dvList_local.add(name); dv.scope = Param.local;}
@@ -369,17 +369,12 @@ public class StructTree {
 	}
 
 	public void alias(String name, String scope, String kind, String units,
-			String alias) {
+			String expression) {
 		if (S.var_all.containsKey(name)) {
 			LogUtils.errMsg("Alias redefined: "+name, S.currentAbsolutePath);
 			S.error_var_redefined.put(name, "dvar_alias");
 		} else {
-			//dvar_scope.put(name, scope);
-			//list = new ArrayList<String>();
-			//list.add(kind);
-			//list.add(units);
-			//list.add(alias);
-			//dvar_alias.put(name, list);
+
 			S.var_all.put(name, "dvar_alias");
 
 			// / better data structure
@@ -389,14 +384,16 @@ public class StructTree {
 				as.kind = kind;
 			if (units != null)
 				as.units = units;
-			as.expression = alias;
+			as.expression = expression;
 			as.fromWresl = S.currentAbsolutePath;
 			S.asMap.put(name, as);
 			S.asList.add(name);
 			
-			if      (scope == Param.global){S.asList_global.add(name);}
-			else if (scope == Param.local) {S.asList_local.add(name);}
-			else{ System.out.println("wrong scope!!");}
+			if      (scope == null)
+					{S.asList_global.add(name); as.scope = Param.global;}
+			else if (scope.toLowerCase().equals(Param.local)) 
+					{S.asList_local.add(name); as.scope = Param.local;}
+			else{ LogUtils.errMsg("Alias scope undefined: "+name, S.currentAbsolutePath);}
 
 		}
 	}

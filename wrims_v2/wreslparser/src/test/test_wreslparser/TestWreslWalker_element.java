@@ -370,22 +370,22 @@ public class TestWreslWalker_element {
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 		Assert.assertEquals(totalErrs, 0);	
 		
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\alias.csv");	
 		
 		String s;
 		int n;
 	
-		s = "global_goal,ActionOn,1,int( B2On )==1,C3_M>minflow_C| minflow_C-(C3_M):-700.";
+		s = "alias_global,flow-channel,cfs,C_SacFea+D_SacFea";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 		
-		s = "global_goal,ActionOff,2,int( B2On )==0,C3_M>clear_min| clear_min-(C3_M):-0";
+		s = "alias_local,..,cfs,D419_swp[monthlyweighted5]";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 		
-		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).gList_global.get(0),"global_goal" );
-		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).gList_local.get(0),"local_goal" );
+		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).asList_global.get(0),"alias_global" );
+		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).asList_local.get(0),"alias_local" );
 	}
 }

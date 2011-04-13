@@ -129,16 +129,22 @@ public class WriteCSV {
 			out_goal.close();
 		}
 		if(ds.exList.size()>0){
-			out_alias = Tools.openFile(outFolder, "alias.csv");		
-			out_alias.print(WriteCSV.alias_header + "\n");
-			alias(ds.asMap, ds.asList, out_alias);
-			out_alias.close();
+			out_ex = Tools.openFile(outFolder, "external.csv");		
+			out_ex.print(WriteCSV.external_header + "\n");
+			external(ds.exMap, ds.exList, out_ex);
+			out_ex.close();
 		}
 		if(ds.wtList.size()>0){
 			out_wt = Tools.openFile(outFolder, "weight.csv");		
 			out_wt.print(WriteCSV.weight_header + "\n");
 			weight(ds.wtMap, ds.wtList, out_wt);	
 			out_wt.close();
+		}
+		if(ds.asList.size()>0){
+			out_alias = Tools.openFile(outFolder, "alias.csv");		
+			out_alias.print(WriteCSV.alias_header + "\n");
+			alias(ds.asMap, ds.asList, out_alias);	
+			out_alias.close();
 		}
 
 
