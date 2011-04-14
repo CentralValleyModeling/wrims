@@ -125,8 +125,8 @@ public class SimulationDataSet {
 
 		for (String e : s.wtList){ 
 			if (this.wtList.contains(e)) {
-				String f1 = filePath;
-				String f2 = wtMap.get(e).fromWresl;
+				String f1 = s.wtMap.get(e).fromWresl; //String f1 = filePath;
+				String f2 = this.wtMap.get(e).fromWresl;
 				LogUtils.errMsg("Weight table variable redefined: "+e, f1, f2, reverseMap);
 				b = true;
 			}
@@ -136,18 +136,17 @@ public class SimulationDataSet {
 			if (this.incFileList.contains(e)) {
 
 				// TODO: does this work???
-				String f1 = filePath;
-				String f2 = incFileMap.get(e).fromWresl;
-				LogUtils.errMsg("**** Include file redefined: "+e, f1, f2, reverseMap);
-				b = true;
-				
+				String f1 = s.incFileMap.get(e).fromWresl; //String f1 = filePath;
+				String f2 = this.incFileMap.get(e).fromWresl;
+				LogUtils.errMsg("Include file redefined: "+e, f1, f2, reverseMap);
+				b = true;			
 			}
 		}
 
 		for (String e : s.svTsList){ 
 			if (this.svTsList.contains(e)) {
-				String f1 = filePath;
-				String f2 = svTsMap.get(e).fromWresl;
+				String f1 = s.svTsMap.get(e).fromWresl; //String f1 = filePath;
+				String f2 = this.svTsMap.get(e).fromWresl;
 				LogUtils.errMsg("State variable redefined: "+e, f1, f2, reverseMap);
 				b = true;
 			}
@@ -155,8 +154,8 @@ public class SimulationDataSet {
 		
 		for (String e : s.svList){ 
 			if (this.svList.contains(e)) {
-				String f1 = filePath;
-				String f2 = svMap.get(e).fromWresl;
+				String f1 = s.svMap.get(e).fromWresl; //String f1 = filePath;
+				String f2 = this.svMap.get(e).fromWresl;
 				LogUtils.errMsg("State variable redefined: "+e, f1, f2, reverseMap);
 				b = true;
 			}
@@ -164,8 +163,8 @@ public class SimulationDataSet {
 
 		for (String e : s.dvList){ 
 			if (this.dvList.contains(e)) {	
-				String f1 = filePath;
-				String f2 = dvMap.get(e).fromWresl;
+				String f1 = s.dvMap.get(e).fromWresl;  //String f1 = filePath;
+				String f2 = this.dvMap.get(e).fromWresl;
 				LogUtils.errMsg("Decision varriable redefined: "+e, f1, f2, reverseMap);
 				b = true;
 			}
@@ -173,8 +172,8 @@ public class SimulationDataSet {
 
 		for (String e : s.gList){ 
 			if (this.gList.contains(e)) {				
-				String f1 = filePath;
-				String f2 = gMap.get(e).fromWresl;
+				String f1 = s.gMap.get(e).fromWresl; //String f1 = filePath;
+				String f2 = this.gMap.get(e).fromWresl;
 				LogUtils.errMsg("Goal redefined: "+e, f1, f2, reverseMap);
 				b = true;				
 			}
@@ -182,8 +181,8 @@ public class SimulationDataSet {
 		
 		for (String e : s.asList){ 
 			if (this.asList.contains(e)) {
-				String f1 = filePath;
-				String f2 = asMap.get(e).fromWresl;
+				String f1 = s.asMap.get(e).fromWresl; //String f1 = filePath;
+				String f2 = this.asMap.get(e).fromWresl;
 				LogUtils.errMsg("Alias redefined: "+e, f1, f2, reverseMap);
 				b = true;	
 			}

@@ -33,6 +33,16 @@ goal[local] local_goal {
     lhs<rhs     penalty 0 }
 }
 
+goal compute_rain_rel {
+    lhs Fr_rain_rel
+    case initialize {
+        condition month == sep .and. wateryear == 1921
+        rhs 0.0 }
+    case otherwise {
+        condition always
+        rhs max ( 0.0, S18(-1) + I18 *cfs_taf - curr_Fr_del - Friant_est_evap - s18level4 - C18_min)  } }
+
+
 }	
 
 

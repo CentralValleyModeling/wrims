@@ -17,7 +17,7 @@ import wrimsv2.wreslparser.elements.TempData;
 import wrimsv2.wreslparser.elements.Tools;
 import wrimsv2.wreslparser.elements.WriteCSV;
 
-public class TestWreslWalker_svar {
+public class TestWreslWalker_error {
 	
 	public String projectPath = "src\\test\\test_wreslparser\\";	
 	public String inputFilePath;
@@ -25,9 +25,9 @@ public class TestWreslWalker_svar {
 	public String csvFolderPath;	
 	
 	@Test(groups = { "WRESL_elements" })
-	public void svar_case() throws RecognitionException, IOException {
+	public void simple() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_svar_case";
+		csvFolderPath = "TestWreslWalker_error_redefine";
 		inputFilePath = projectPath+csvFolderPath+".wresl";
 		logFilePath = csvFolderPath+".log";
 
@@ -51,39 +51,16 @@ public class TestWreslWalker_svar {
 		String modelName = sd.getModelList().get(0);
 		
 		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
-		
+	
 		String logText = Tools.readFileAsString(logFilePath);	
 
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 		Assert.assertEquals(totalErrs, 0);	
 		
-	
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\svar.csv");	
-		
-		String s;
-		int n;
-	
-		s ="svar_global,case1,1,month>=JAN .AND. month<=FEB .AND. sri_ytp==5 .AND. C_Nimbus_fmp_mif(-1)<800.,SELECT FEB FROM sacramento_runoff GIVEN null USE null WHERE wateryear=wateryear";
-		s = Tools.replace_regex(s);
-		n = RegUtils.timesOfMatches(csvText, s );
-		Assert.assertEquals(n, 1);
-		
-		s = "svar_global,case2,2,always,300.0";
-		s = Tools.replace_regex(s);
-		n = RegUtils.timesOfMatches(csvText, s );
-		Assert.assertEquals(n, 1);
 
-		s = "svar_local,MAR_SEP,1,month>=MAR .AND. month<=SEP,SUM(i=-(month-MAY);SEP-month) I_Folsm(i)*cfs_taf(i)+I300(i)*cfs_taf(i)";
-		s = Tools.replace_regex(s);
-		n = RegUtils.timesOfMatches(csvText, s );
-		Assert.assertEquals(n, 1);
 		
-		s = "svar_local,other,2,always,MIN(Max(I_Folsm(i);200);I300(i))";
-		s = Tools.replace_regex(s);
-		n = RegUtils.timesOfMatches(csvText, s );
-		Assert.assertEquals(n, 1);
-		
-		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).svList_global.get(0),"svar_global" );
-		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).svList_local.get(0),"svar_local" );
-	}
+//		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).gList_global.get(0),"split_C5_WTS" );
+//		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).gList_local.get(0),"a2" );
+
+	}	
 }

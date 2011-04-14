@@ -1,0 +1,25 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }	
+
+MODEL first { 
+  include   'moreWreslFiles\Dvars.wresl'
+
+}	
+
+
+MODEL second{ 
+  include   'moreWreslFiles\Redefined.wresl'
+	 	
+}	
+	
+
+	 
+
+
+ 

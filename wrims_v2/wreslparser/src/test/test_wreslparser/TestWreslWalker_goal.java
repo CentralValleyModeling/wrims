@@ -229,6 +229,10 @@ public class TestWreslWalker_goal {
 		String s;
 		int n;
 	
+		s = "global_goal,ActionOn,1,.not.(range(month,oct,dec) .AND. month>=May),C3_M>minflow_C | minflow_C-(C3_M):-700.";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
 
 		
 		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).gList_global.get(0),"global_goal" );

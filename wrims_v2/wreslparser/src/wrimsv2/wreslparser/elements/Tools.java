@@ -45,10 +45,10 @@ public class Tools {
 		
 		s = replace_ignoreChar(s);
 		
-		s=s.replaceAll("\\.and\\.", " \\.and\\. ");
-		s=s.replaceAll("\\.or\\.", " \\.or\\. ");
 		s=s.replaceAll("\\.AND\\.", " \\.AND\\. ");
-		s=s.replaceAll("\\.OR\\.", " \\.OR\\. ");
+		s=s.replaceAll("\\.OR\\.",  " \\.OR\\. ");
+		s=s.replaceAll("\\.and\\.", " \\.AND\\. ");
+		s=s.replaceAll("\\.or\\.",  " \\.OR\\. ");
 		
 		return s;
 	}

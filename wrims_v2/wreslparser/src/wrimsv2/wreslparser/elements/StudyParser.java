@@ -152,6 +152,13 @@ public class StudyParser {
 			td.t1Map_wholeStudy.put(sc.absMainFilePath, adhoc.incFileList);
 			Map<String,Set<String>> t1ReverseMap_wholeStudy = Tools.getReverseMap(td.t1Map_wholeStudy);
 			
+//			String ttt="";
+//			Map<String,Set<String>> qwe = t1ReverseMap_wholeStudy;
+//			for (String s : qwe.keySet()){
+//				ttt = ttt + "{"+s+"}"+"::"+qwe.get(s);
+//			}
+//			LogUtils.errMsg(ttt);
+			
 			/// include global data
 			/// previous globals have lowest priority /TODO: remove reverse map
 			model_dataset.dePrioritize(td.cumulative_global_complete, "", t1ReverseMap_wholeStudy);	

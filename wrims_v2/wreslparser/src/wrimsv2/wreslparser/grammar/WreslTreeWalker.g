@@ -113,10 +113,15 @@ svar_case
 ;
 
 
-case_content returns[String name, String condition, String expression] : 
-^(Case i=IDENT c=Condition e=( table_content | Value ) )
+case_content returns[String name, String condition, String expression]  
+@init{ String expr = null;} :
+^(Case i=IDENT c=Condition ( 
+   t=table_content {expr =$t.text; }
+ | v=Value {expr =$v.text; }
+ | sum=sum_content {expr =$sum.hdr+" "+$sum.expr; } 
+ ) )
  
-{ $name = $i.text; $condition =$c.text; $expression = $e.text;
+{ $name = $i.text; $condition =$c.text; $expression = expr;
 
 }
 
@@ -124,9 +129,10 @@ case_content returns[String name, String condition, String expression] :
 ;
 
 
-table_content returns[String text] :  s=Select f=From g=Given u=Use wi=Where_item_number wc=Where_content  
-
-{ $text = "SELECT "+$s.text+" FROM "+$f.text+" GIVEN "+$g.text+" USE "+$u.text+" WHERE "+ Tools.replace_seperator($wc.text); }
+table_content returns[String text] :  
+^( s=Select f=From g=Given u=Use wi=Where_item_number wc=Where_content )
+{ $text = "SELECT "+$s.text+" FROM "+$f.text+" GIVEN "+$g.text+" USE "+$u.text+
+   " WHERE "+ Tools.replace_ignoreChar(Tools.replace_seperator($wc.text)); }
 ;
 
 alias  :
@@ -178,18 +184,22 @@ goal_content returns[String str]
 
 
 svar_table :
-	^( Svar_table sc=Scope i=IDENT s=Select f=From g=Given u=Use wi=Where_item_number wc=Where_content   ) 
-	 {  
-	 	String sqlStr = "SELECT "+$s.text+" FROM "+$f.text+" GIVEN "+$g.text+" USE "+$u.text+" WHERE "+ Tools.replace_seperator($wc.text);
-	 	F.svarTable($i.text, $sc.text, sqlStr); } 
+	^( Svar_table sc=Scope i=IDENT t=table_content ) 
+	 { F.svarTable($i.text, $sc.text, $t.text); } 
 	;
 
 svar_sum : 
-		^(Svar_sum sc=Scope i=IDENT hdr=Sum_hdr v=Value )
-	   { F.svarSum($i.text, $sc.text, 
-	     Tools.replace_seperator($hdr.text), 
-	     Tools.replace_seperator($v.text) ); }
+		^(Svar_sum sc=Scope i=IDENT sum=sum_content )
+	   { F.svarSum($i.text, $sc.text, $sum.hdr, $sum.expr ); }
 	;
+	
+sum_content returns[String hdr, String expr]: 
+^(h=Sum_hdr e=Expression) 
+	{ 
+		$hdr="SUM"+Tools.replace_ignoreChar( Tools.replace_seperator($h.text)); 
+    	$expr = $e.text;
+    }
+;	
 
 svar_expr : 
 	   ^(Svar_const sc=Scope i=IDENT v=Value )
