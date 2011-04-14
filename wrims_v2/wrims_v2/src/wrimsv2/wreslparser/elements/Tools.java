@@ -29,6 +29,7 @@ public class Tools {
 		s=s.replaceAll("\\*", "\\\\*");
 		s=s.replaceAll("\\|", "\\\\|");
 		s=s.replaceAll("\\+", "\\\\+");
+		s=s.replaceAll("\\[", "\\\\[").replaceAll("\\]", "\\\\]");
 		s=s.replaceAll("#", ".+");
 		return s;
 	}
@@ -37,6 +38,18 @@ public class Tools {
 		s=s.replaceAll("\n+", "").replaceAll("\r+", "");
 		s=s.replaceAll("\t+", "");
 		s=s.replaceAll("\\s+", "");
+		return s;
+	}
+	public static String add_space_between_logical(String s) {
+		if (s==null)  return null; 
+		
+		s = replace_ignoreChar(s);
+		
+		s=s.replaceAll("\\.AND\\.", " \\.AND\\. ");
+		s=s.replaceAll("\\.OR\\.",  " \\.OR\\. ");
+		s=s.replaceAll("\\.and\\.", " \\.AND\\. ");
+		s=s.replaceAll("\\.or\\.",  " \\.OR\\. ");
+		
 		return s;
 	}
 	public static String replace_seperator(String s) {

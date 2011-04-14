@@ -14,6 +14,7 @@ options {
   import wrimsv2.wreslparser.elements.LogUtils; 
   import wrimsv2.commondata.wresldata.Param;
   import wrimsv2.commondata.wresldata.Goal;
+  import wrimsv2.commondata.wresldata.Svar;
 }
 @members {
 
@@ -52,11 +53,11 @@ test:  INTEGER 'test' ;
 test2:  t=test {  System.out.println("yyyyyyyyyyyyy"+$t.text  ); };		
 
 pattern
-	: dvar | svar | goal | includeFile 
+	: dvar | svar | goal | includeFile | alias
 	;
 
 sequence 
-	:  ^(Sequence s=IDENT Model m=IDENT Order i=INTEGER Condition c=CONDITION ) 
+	:  ^(Sequence s=IDENT Model m=IDENT Order i=INTEGER c=Condition ) 
 		{
 			F.sequenceOrder($s.text, $i.text, $m.text, $c.text);
 			
@@ -94,7 +95,51 @@ goal : goal_simple | goal_nocase | goal_case ;
 
 dvar : dvar_std | dvar_nonStd    ;
 
-svar : svar_dss | svar_expr | svar_sum | svar_table;
+svar : svar_dss | svar_expr | svar_sum | svar_table | svar_case;
+
+svar_case 	
+@init { Svar sv = new Svar(); }  
+	: ^(Svar_case sc=Scope i=IDENT  ( c=case_content 
+	{	
+				sv.caseName.add($c.name);
+				sv.caseCondition.add( Tools.add_space_between_logical( $c.condition ) );
+				sv.caseExpression.add($c.expression);
+				
+			}
+	
+	)+ 
+	) 
+			 {F.svarCase($i.text, $sc.text, sv);}
+;
+
+
+case_content returns[String name, String condition, String expression]  
+@init{ String expr = null;} :
+^(Case i=IDENT c=Condition ( 
+   t=table_content {expr =$t.text; }
+ | v=Value {expr =$v.text; }
+ | sum=sum_content {expr =$sum.hdr+" "+$sum.expr; } 
+ ) )
+ 
+{ $name = $i.text; $condition =$c.text; $expression = expr;
+
+}
+
+
+;
+
+
+table_content returns[String text] :  
+^( s=Select f=From g=Given u=Use wi=Where_item_number wc=Where_content )
+{ $text = "SELECT "+$s.text+" FROM "+$f.text+" GIVEN "+$g.text+" USE "+$u.text+
+   " WHERE "+ Tools.replace_ignoreChar(Tools.replace_seperator($wc.text)); }
+;
+
+alias  :
+       ^(Alias sc=Scope i=IDENT e=Expression k=Kind u=Units)
+       { F.alias($i.text, $sc.text, Tools.strip($k.text), Tools.strip($u.text), $e.text  ); }
+	;
+
 
 goal_simple 
 	:  ^(Goal_simple sc=Scope i=IDENT v=Constraint_content ) 
@@ -114,7 +159,7 @@ goal_case
 		( ^( Case n=IDENT c=Condition e=goal_contents 
 			{	
 				gl.caseName.add($n.text);
-				gl.caseCondition.add($c.text);
+				gl.caseCondition.add( Tools.add_space_between_logical( $c.text ) );
 				gl.caseExpression.add($e.str);
 			} 
 		) )+  
@@ -126,7 +171,7 @@ goal_case
 
 goal_contents returns[String str] : c1=goal_content c2=goal_content? 
 		{ 
-		  if (c2!=null) { $str = $c1.str+"| "+$c2.str; }
+		  if (c2!=null) { $str = $c1.str+" | "+$c2.str; }
 		  else	        { $str = $c1.str; }		  				
 		} 
 		;
@@ -135,25 +180,26 @@ goal_content returns[String str]
 	: 
 		 l=Lhs o=Op r=Rhs s=Separator w=Weight
 		 { $str = $l.text + $o.text + $r.text + $s.text + $w.text;  } 
-
-
-;
+	;
 
 
 svar_table :
-	^( Svar_table sc=Scope i=IDENT s=Select f=From g=Given u=Use wi=Where_item_number wc=Where_content   ) 
-	 {  
-	 	//System.out.println("@@@@@@@@@@@@@"+$g.text);
-	 	String sqlStr = "SELECT "+$s.text+" FROM "+$f.text+" GIVEN "+$g.text+" USE "+$u.text+" WHERE "+ Tools.replace_seperator($wc.text);
-	 	F.svarTable($i.text, $sc.text, sqlStr); } 
+	^( Svar_table sc=Scope i=IDENT t=table_content ) 
+	 { F.svarTable($i.text, $sc.text, $t.text); } 
 	;
 
 svar_sum : 
-		^(Svar_sum sc=Scope i=IDENT hdr=Sum_hdr v=Value )
-	   { F.svarSum($i.text, $sc.text, 
-	     Tools.replace_seperator($hdr.text), 
-	     Tools.replace_seperator($v.text) ); }
+		^(Svar_sum sc=Scope i=IDENT sum=sum_content )
+	   { F.svarSum($i.text, $sc.text, $sum.hdr, $sum.expr ); }
 	;
+	
+sum_content returns[String hdr, String expr]: 
+^(h=Sum_hdr e=Expression) 
+	{ 
+		$hdr="SUM"+Tools.replace_ignoreChar( Tools.replace_seperator($h.text)); 
+    	$expr = $e.text;
+    }
+;	
 
 svar_expr : 
 	   ^(Svar_const sc=Scope i=IDENT v=Value )
@@ -173,25 +219,8 @@ dvar_std  :
 dvar_nonStd : 
 	   ^(Dvar_nonStd sc=Scope i=IDENT Lower lowerbound=LimitType Upper upperbound=LimitType Kind k=STRING Units u=STRING)
 	   {F.dvarNonStd($i.text, $sc.text, $k.text, $u.text,  $lowerbound.text, $upperbound.text);}
-
 	;
-
-
-
-
-	
-
-		
-condition 
-	: Condition ( logical | Always ) 
-	;	
-
-//sequence
-//	:   SEQUENCE s=ident '{' MODEL m=ident c=conditionStatement? ORDER i=INTEGER'}'{
-//				F.sequenceOrder($s.text, $i.text, $m.text, $c.str );
-//		}
-//	;	
-	
+			
 	
 /// Expression ///
 term

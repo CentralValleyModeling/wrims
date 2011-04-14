@@ -11,8 +11,9 @@ tokens {
 	NEW_LINE; Op; Separator;
 	Local; Global; Scope;
 	Value; Case ;
+	Alias; Expression;
 	Dvar; Dvar_std; Dvar_nonStd; Dvar_std; Dvar_nonStd_local;
-	Svar_dss; Svar_const; Svar_sum; Sum_hdr; B_part;
+	Svar_case; Svar_dss; Svar_const; Svar_sum; Sum_hdr; B_part;
 	Svar_table; Select; From; Where_content; Where_item_number; Given; Use;
 	Goal_simple; Goal_no_case; Goal_case ; Lhs_gt_rhs; Lhs_lt_rhs; Never; Penalty;
 	Lhs; Rhs; Weight;
@@ -96,9 +97,17 @@ test:  INTEGER  'test' ;
 test2:  test ;	
 	
 pattern
-	: dvar | svar | goal | includeFile 
+	: dvar | svar | goal | includeFile | alias | weight_table
 	;
 	
+weight_table
+	: OBJECTIVE ( '[' sc=LOCAL? ']' )? IDENT '=' '{' ( w=weightItem )+ '}' 
+	;	
+
+weightItem
+	: '['  i=IDENT ',' e=expression ']' (',')?
+	;
+		
 model
 	: MODEL IDENT '{' (pattern )+  '}' 
 	   {model_list.add($IDENT.text);}
@@ -108,19 +117,24 @@ model
 sequence 
 	: SEQUENCE s=IDENT '{' MODEL m=IDENT ( c=condition)? ORDER INTEGER '}' 
 	  {model_in_sequence.add($m.text);}
-	-> {c!=null}? ^(Sequence $s Model $m Order INTEGER Condition condition )	 
-	->            ^(Sequence $s Model $m Order INTEGER Condition CONDITION[Param.always] ) 
+	->  ^(Sequence $s Model $m Order INTEGER Condition[$c.text] )	 
 	;
 	
-condition
-	: CONDITION logical 
-	-> CONDITION[$logical.text]
+condition returns[String text]
+	: CONDITION 
+	( logical  {$text = $logical.text; }
+	| ALWAYS   {$text = Param.always; }
+	)
 	;	
 
 includeFile
 	:	 INCLUDE ( '[' sc=LOCAL? ']' )? FILE_PATH 
 	->   ^(Include Scope[$sc.text] FILE_PATH)
 	;
+	
+alias : DEFINE ( '[' sc=LOCAL? ']' )? i=IDENT '{' ALIAS e=expression (KIND k=STRING)? (UNITS u=STRING)? '}'
+	->  ^(Alias Scope[$sc.text] $i Expression[$e.text] Kind[$k.text] Units[$u.text])
+	;	
 
 goal : GOAL! (goal_simple | goal_case_or_nocase  );
 
@@ -138,12 +152,15 @@ goal_case_or_nocase
 	;
 
 goal_case_content[String l] : 
-	CASE i=IDENT '{' CONDITION c=condition_statement RHS r=expression sub_content[$l,$r.text] '}'
-	-> ^( Case $i Condition[$c.text] sub_content )
+	CASE i=IDENT '{' c=condition RHS r=expression (s=sub_content[$l,$r.text])? '}'
+	-> {s!=null}? ^( Case $i Condition[$c.text] $s )
+	->            ^( Case $i Condition[$c.text] Lhs[$l] Op["="] Rhs[$r.text] Separator[""] Weight[""])
 	;
 
-goal_no_case_content[String l] : RHS r=expression sub_content[$l,$r.text]
-       -> sub_content ;
+goal_no_case_content[String l] : RHS r=expression (s=sub_content[$l,$r.text])?
+       -> {s!=null}? $s 
+       ->            Lhs[$l] Op["="] Rhs[$r.text] Separator[""] Weight[""]
+       ;
 	
 sub_content[String l, String r] 
 	: ( lhs_gt_rhs[$l,$r] lhs_lt_rhs[$l,$r]? ) 
@@ -164,16 +181,38 @@ LHS '<' RHS
 	| ( p=penalty -> Lhs[$r] Op["-"] Rhs["("+$l+")"] Separator[":"] Weight["-"+$p.w] )
 	);
 
-penalty returns[String w]: PENALTY n=number {$w=$n.text;} ;
+penalty returns[String w]: PENALTY n=expression {$w=$n.text;} ;
 
-svar : DEFINE! (svar_dss | svar_expr | svar_sum | svar_table) ;
+svar : DEFINE! (svar_dss | svar_expr | svar_sum | svar_table | svar_case ) ;
 		
 dvar : DEFINE! (dvar_std | dvar_nonStd ) ;	
 
+svar_case : ( '[' sc=LOCAL? ']' )? i=IDENT '{' case_content+ '}'
+->  ^(Svar_case Scope[$sc.text] $i  case_content+ )  ;
+
+
+case_content : CASE i=IDENT '{' c=condition ( table_content 
+	-> ^(Case $i Condition[$c.text] table_content  )
+
+	| value_content 
+	-> ^(Case $i Condition[$c.text] value_content  )
+	
+	| sum_content
+	-> ^(Case $i Condition[$c.text] sum_content  )
+	
+) '}' 
+;
+
+value_content : VALUE e=expression -> Value[$e.text];
+
 svar_table :
-	( '[' sc=LOCAL? ']' )? i=IDENT '{' SELECT s=IDENT FROM f=IDENT (GIVEN g=assignment)? (USE u=IDENT)? WHERE w=where_items '}'
-->  ^(Svar_table Scope[$sc.text] $i Select[$s.text] From[$f.text] Given[$g.text] Use[$u.text] Where_item_number[$w.n] Where_content[Tools.replace_ignoreChar($w.text)] )  	
+	( '[' sc=LOCAL? ']' )? i=IDENT '{' table_content '}'
+->  ^(Svar_table Scope[$sc.text] $i table_content )  	
 	;
+
+table_content : SELECT s=IDENT FROM f=IDENT (GIVEN g=assignment)? (USE u=IDENT)? (WHERE w=where_items)? 
+-> ^( Select[$s.text] From[$f.text] Given[$g.text] Use[$u.text] Where_item_number[$w.n] Where_content[$w.text])
+;
 
 where_items returns[String n]
 @init{ int number = 1; } 
@@ -186,9 +225,13 @@ svar_expr :
 	->  ^(Svar_const Scope[$sc.text] IDENT Value[$e.text] )  
 	;	
 
-svar_sum : ( '[' sc=LOCAL ']' )? IDENT '{' SUM hdr=sum_header e=expression'}' 
-	->  ^(Svar_sum  Scope[$sc.text] IDENT Sum_hdr[Tools.replace_ignoreChar($hdr.text)] Value[$e.text] )  
+svar_sum : ( '[' sc=LOCAL ']' )? IDENT '{' sum_content '}' 
+	->  ^(Svar_sum  Scope[$sc.text] IDENT sum_content )  
 	;
+
+sum_content :SUM hdr=sum_header e=expression 
+-> ^( Sum_hdr[$hdr.text] Expression[$e.text] )
+;
 
 sum_header
 	: ( '(' 'i=' expression ',' expression (',' '-'? INTEGER )? ')' ) 
@@ -212,11 +255,13 @@ dvar_nonStd :
 lower_and_or_upper : lower_upper
 				   | upper_lower ;
 				   
-lower_upper : lower (upper -> lower upper)?
-					-> lower Upper LimitType["Std"]
+lower_upper : lower (u=upper)?
+				-> {u==null}? lower Upper LimitType["Std"]
+				->            lower $u
 				 ;
-upper_lower : upper (lower -> lower upper)? 
-                   -> Lower LimitType["Std"] upper
+upper_lower : upper (l=lower)? 
+                -> {l==null}? Lower LimitType["Std"] upper
+                ->            $l upper
    				 ;				   
 
 lower: LOWER ( UNBOUNDED -> Lower LimitType["Unbounded"] | e=expression -> Lower LimitType[$e.tree.toStringTree()] ) ;
@@ -225,8 +270,8 @@ upper: UPPER ( UNBOUNDED -> Upper LimitType["Unbounded"] | e=expression -> Upper
 
 /// IDENT =, <, > ///
 
-condition_statement :  term_simple ( '<' | '>' | '==' | '<=' | '>=' ) expression  ;
-constraint_statement : term_simple ( '<' | '>' | '='  ) expression  ;
+
+constraint_statement : expression ( '<' | '>' | '='  ) expression  ;
 
 assignment  :           term_simple  '=' expression ;
 lt_or_gt :              term_simple ( '<'  | '>'  ) expression ;
@@ -249,10 +294,14 @@ add :	mult (('+' | '-') mult)*	;
 	
 expression returns[String text]: 
 	add 
-	{  $text = Tools.replace_ignoreChar($add.text);  };	
+	{  $text = Tools.replace_ignoreChar($add.text); 
+	   $text = Tools.replace_seperator($text); 
+	
+	 };	
 	
 c_term
 	: ( expression relation expression ) => expression relation expression
+	| function_logical
 	| ( '(' logical ')' ) => '(' logical ')' 
 	;	
 
@@ -260,7 +309,8 @@ c_unary :	(c_negation)? c_term  	;
 
 c_negation :	NOT -> NOT[".NOT."]	;
 
-logical :  c_unary ( bin c_unary )* ;  
+logical :  c_unary ( bin c_unary )* 
+		;  
 	
 relation : '>' | '<' | '>=' | '<=' | '==' | '/=' ;	
 
@@ -273,10 +323,15 @@ bin : OR -> OR[".OR."] | AND -> AND[".AND."] ;
 //range_func
 //	: RANGE '(' MONTH ',' MONTH_CONST ',' MONTH_CONST ')' ;
 
-function : external_func | max_func | min_func | int_func ;
+function : external_func | max_func | min_func | int_func | var_model ;
+function_logical : range_func ;
+
+var_model : IDENT '[' IDENT ']' ;	
 
 external_func 
 	: IDENT '('  expression (',' expression )*  ')' ;
+
+range_func : RANGE '(' IDENT ',' IDENT ',' IDENT ')' ;
 
 max_func
 	: MAX '(' expression (',' expression)+ ')' ;
@@ -307,15 +362,16 @@ PENALTY : 'penalty' | 'PENALTY' ;
 CONSTRAIN : 'constrain' | 'CONSTRAIN' ;
 INT : 'int' | 'INT' | 'Int' ;
 SUM :  'sum' | 'SUM' | 'Sum' ;
+RANGE : 'range' | 'RANGE' | 'Range' ;
 MAX :   'max' | 'MAX' | 'Max' ;
 MIN :   'min' | 'MIN' | 'Min' ;
 VALUE : 'value' | 'VALUE' | 'Value' ;
 LOCAL : 'local'| 'LOCAL' | 'Local' ;
 OBJECTIVE: 'objective' | 'Objective' | 'OBJECTIVE';
 TIMESERIES: 'timeseries' | 'TIMESERIES';
-SELECT :  'select' | 'SELECT' ;
-FROM:     'from' | 'FROM' ;
-WHERE : 'where' | 'WHERE';
+SELECT :  'select' | 'Select' | 'SELECT' ;
+FROM:     'from' | 'From' | 'FROM' ;
+WHERE : 'where' | 'Where' | 'WHERE';
 GIVEN:    'given' | 'Given' | 'GIVEN' ;
 USE:      'use' | 'Use' | 'USE' ;
 CASE : 'case' | 'Case' | 'CASE' ;
@@ -360,6 +416,13 @@ IDENT_FOLLOWED_BY_LOGICAL
 	| a=NOT { $a.setType(NOT); emit($a);}
 	);
 
+INTEGER_FOLLOWED_BY_LOGICAL 
+	: i=INTEGER{$i.setType(INTEGER); emit($i);}
+	( a=AND { $a.setType(AND); emit($a);}
+	| a=OR  { $a.setType(OR); emit($a);}
+	| a=NOT { $a.setType(NOT); emit($a);}
+	);
+	
 IDENT : LETTER (LETTER | DIGIT | '_')*;
 
 WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {$channel = HIDDEN;};

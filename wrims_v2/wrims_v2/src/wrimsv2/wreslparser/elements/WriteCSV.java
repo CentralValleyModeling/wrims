@@ -29,8 +29,8 @@ public class WriteCSV {
 	  public static String sequence_header ="CYCLE,CONDITION";
 	  public static String weight_header ="DVAR,WEIGHT";
 	  public static String external_header ="FUNCTION,FILE";
-	  public static String svar_header   ="NAME,B_PART,TYPE,UNITS,CONVERT_TO_UNITS,OUTPUT,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
-	  public static String svarTs_header ="NAME,B_PART,TYPE,UNITS,CONVERT_TO_UNITS,OUTPUT,FROM_WRESL_FILE";
+	  public static String svar_header   ="NAME,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
+	  public static String svarTs_header ="NAME,B_PART,TYPE,UNITS,CONVERT_TO_UNITS,FROM_WRESL_FILE";
 	  public static String dvar_header ="NAME,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE";	  
 	  public static String alias_header ="NAME,TYPE,UNITS,EXPRESSION,FROM_WRESL_FILE";
 	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
@@ -129,16 +129,22 @@ public class WriteCSV {
 			out_goal.close();
 		}
 		if(ds.exList.size()>0){
-			out_alias = Tools.openFile(outFolder, "alias.csv");		
-			out_alias.print(WriteCSV.alias_header + "\n");
-			alias(ds.asMap, ds.asList, out_alias);
-			out_alias.close();
+			out_ex = Tools.openFile(outFolder, "external.csv");		
+			out_ex.print(WriteCSV.external_header + "\n");
+			external(ds.exMap, ds.exList, out_ex);
+			out_ex.close();
 		}
 		if(ds.wtList.size()>0){
 			out_wt = Tools.openFile(outFolder, "weight.csv");		
 			out_wt.print(WriteCSV.weight_header + "\n");
 			weight(ds.wtMap, ds.wtList, out_wt);	
 			out_wt.close();
+		}
+		if(ds.asList.size()>0){
+			out_alias = Tools.openFile(outFolder, "alias.csv");		
+			out_alias.print(WriteCSV.alias_header + "\n");
+			alias(ds.asMap, ds.asList, out_alias);	
+			out_alias.close();
 		}
 
 
@@ -183,11 +189,11 @@ public class WriteCSV {
 		    	{
 			    	int caseOrder = i+1;
 			    out.print(k); // for SVAR NAME
-			    out.print(Param.csv_seperator+s.dssBPart); //for DSS B Part	
-			    out.print(Param.csv_seperator+s.kind); //for KIND		    	
-		    	out.print(Param.csv_seperator+s.units); //for UNITS
-		    	out.print(Param.csv_seperator+s.convertToUnits); //for CONVERT
-		    	out.print(",n"); //for OUTPUT
+			    //out.print(Param.csv_seperator+s.dssBPart); //for DSS B Part	
+			    //out.print(Param.csv_seperator+s.kind); //for KIND		    	
+		    	//out.print(Param.csv_seperator+s.units); //for UNITS
+		    	//out.print(Param.csv_seperator+s.convertToUnits); //for CONVERT
+		    	//out.print(",n"); //for OUTPUT
 		    	out.print(Param.csv_seperator+s.caseName.get(i)); //for CASE 
 		    	out.print(Param.csv_seperator+caseOrder); //for CASE 
 		    	out.print(Param.csv_seperator+s.caseCondition.get(i)); //for CONDITION
