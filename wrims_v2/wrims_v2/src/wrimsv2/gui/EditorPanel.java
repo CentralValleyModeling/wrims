@@ -12,10 +12,7 @@
 package wrimsv2.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.Dimension;
-import java.awt.GridLayout;
-
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 

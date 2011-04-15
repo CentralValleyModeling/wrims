@@ -70,7 +70,8 @@ public class MainFrame extends javax.swing.JFrame {
     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+            @Override
+			public void run() {
                 new MainFrame().setVisible(true);
             }
         });

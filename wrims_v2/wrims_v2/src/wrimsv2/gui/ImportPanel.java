@@ -10,8 +10,6 @@
  */
 
 package wrimsv2.gui;
-
-import javax.swing.JSplitPane;
 /**
  *
  * @author hxie

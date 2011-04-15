@@ -1,15 +1,6 @@
 package wrimsv2.gui;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
-
-import wrimsv2.commondata.wresldata.Alias;
-import wrimsv2.commondata.wresldata.Dvar;
-import wrimsv2.commondata.wresldata.Goal;
-import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
-import wrimsv2.commondata.wresldata.Svar;
 
 public class Study {
 	public StudyDataSet currStudyDataSet=new StudyDataSet();
