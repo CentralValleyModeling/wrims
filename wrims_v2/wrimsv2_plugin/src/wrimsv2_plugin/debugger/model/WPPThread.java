@@ -65,6 +65,7 @@ public class WPPThread extends WPPDebugElement implements IThread, IWPPEventList
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IThread#getStackFrames()
 	 */
+	@Override
 	public IStackFrame[] getStackFrames() throws DebugException {
 		if (isSuspended()) {
 			String framesData = sendRequest("stack");
@@ -84,18 +85,21 @@ public class WPPThread extends WPPDebugElement implements IThread, IWPPEventList
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IThread#hasStackFrames()
 	 */
+	@Override
 	public boolean hasStackFrames() throws DebugException {
 		return isSuspended();
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IThread#getPriority()
 	 */
+	@Override
 	public int getPriority() throws DebugException {
 		return 0;
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IThread#getTopStackFrame()
 	 */
+	@Override
 	public IStackFrame getTopStackFrame() throws DebugException {
 		IStackFrame[] frames = getStackFrames();
 		if (frames.length > 0) {
@@ -106,12 +110,14 @@ public class WPPThread extends WPPDebugElement implements IThread, IWPPEventList
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IThread#getName()
 	 */
+	@Override
 	public String getName() {
 		return "Main thread";
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IThread#getBreakpoints()
 	 */
+	@Override
 	public IBreakpoint[] getBreakpoints() {
 		if (fBreakpoint == null) {
 			return new IBreakpoint[0];
@@ -132,88 +138,103 @@ public class WPPThread extends WPPDebugElement implements IThread, IWPPEventList
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ISuspendResume#canResume()
 	 */
+	@Override
 	public boolean canResume() {
 		return isSuspended();
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ISuspendResume#canSuspend()
 	 */
+	@Override
 	public boolean canSuspend() {
 		return !isSuspended();
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ISuspendResume#isSuspended()
 	 */
+	@Override
 	public boolean isSuspended() {
 		return fSuspended && !isTerminated();
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ISuspendResume#resume()
 	 */
+	@Override
 	public void resume() throws DebugException {
 		sendRequest("resume");
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ISuspendResume#suspend()
 	 */
+	@Override
 	public void suspend() throws DebugException {
 	    sendRequest("suspend");
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IStep#canStepInto()
 	 */
+	@Override
 	public boolean canStepInto() {
 		return false;
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IStep#canStepOver()
 	 */
+	@Override
 	public boolean canStepOver() {
 		return isSuspended();
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IStep#canStepReturn()
 	 */
+	@Override
 	public boolean canStepReturn() {
 		return false;
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IStep#isStepping()
 	 */
+	@Override
 	public boolean isStepping() {
 		return fStepping;
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IStep#stepInto()
 	 */
+	@Override
 	public void stepInto() throws DebugException {
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IStep#stepOver()
 	 */
+	@Override
 	public void stepOver() throws DebugException {
 		sendRequest("step");
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IStep#stepReturn()
 	 */
+	@Override
 	public void stepReturn() throws DebugException {
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ITerminate#canTerminate()
 	 */
+	@Override
 	public boolean canTerminate() {
 		return !isTerminated();
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ITerminate#isTerminated()
 	 */
+	@Override
 	public boolean isTerminated() {
 		return getDebugTarget().isTerminated();
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ITerminate#terminate()
 	 */
+	@Override
 	public void terminate() throws DebugException {
 		sendRequest("exit");
 	}
@@ -260,6 +281,7 @@ public class WPPThread extends WPPDebugElement implements IThread, IWPPEventList
 	/* (non-Javadoc)
 	 * @see example.debug.core.model.IWPPEventListener#handleEvent(java.lang.String)
 	 */
+	@Override
 	public void handleEvent(String event) {
 		// clear previous state
 		fBreakpoint = null;

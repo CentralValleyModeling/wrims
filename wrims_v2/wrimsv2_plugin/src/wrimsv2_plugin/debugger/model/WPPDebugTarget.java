@@ -17,21 +17,16 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Vector;
 
-import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IMarkerDelta;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.debug.core.DebugException;
-import org.eclipse.debug.core.IBreakpointManager;
-import org.eclipse.debug.core.IBreakpointManagerListener;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.debug.core.model.IDebugTarget;
@@ -67,6 +62,8 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IWP
 	private IThread[] fThreads;
 	private WPPThread fThread;
 	
+	private IValue[] fDataStack=new IValue[0];
+	
 	// event dispatch job
 	private EventDispatchJob fEventDispatch;
 	// event listeners
@@ -86,6 +83,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IWP
 		/* (non-Javadoc)
 		 * @see org.eclipse.core.runtime.jobs.Job#run(org.eclipse.core.runtime.IProgressMonitor)
 		 */
+		@Override
 		protected IStatus run(IProgressMonitor monitor) {
 			String event = "";
 			while (!isTerminated() && event != null) {
@@ -141,6 +139,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IWP
 	 */
 	public WPPDebugTarget(ILaunch launch, IProcess process, int requestPort, int eventPort) throws CoreException {
 		super(null);
+		DebugCorePlugin.target=this;
 		fLaunch = launch;
 		fProcess = process;
 		addEventListener(this);
@@ -164,8 +163,8 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IWP
 		fThreads = new IThread[] {fThread};
 		fEventDispatch = new EventDispatchJob();
 		fEventDispatch.schedule();
-		// initialize error hanlding to suspend on 'unimplemented instructions'
-		// and 'no such label' errors
+		
+		//To Do: add real debug code
 		sendRequest("to:4456");
 		String data=null;
 		try {
@@ -176,88 +175,122 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IWP
 		} catch (IOException e) {
 			requestFailed("Request failed: " + "to:4456", e);
 		}
+		data="i:4456#a(-1):123.0#reservoir:reservorlevel1%56:reservorlevel2%1234";
+		fDataStack=generateTree(data);
+		DebugCorePlugin.dataStack=fDataStack;
+				
 		sendRequest("step: ");
 		try {
 			data=fRequestReader.readLine();
 			System.out.println(data);
 		} catch (IOException e) {
 			requestFailed("Request failed: " + "to:4456", e);
-		}
+		}		
+		data="i:4457#a(-2):13.0#reservoir:reservorlevel1%59:reservorlevel2%1234";
+		fDataStack=generateTree(data);
+		DebugCorePlugin.dataStack=fDataStack;
+				
 		sendRequest("to:10001");
+		fProcess.terminate();
+	}
+	
+	public IValue[] generateTree(String data){
+		String[] dataStrings=data.split("#");
+		int size=dataStrings.length;
+		WPPValue[] values=new WPPValue[size];  
+		for (int i=0; i<size; i++){
+			String[] dataSubStrings=dataStrings[i].split(":",2);
+			WPPValue value=new WPPValue(this,dataSubStrings[1], dataSubStrings[0]); 
+			values[i]=value;
+		}
+		return values;
 	}
 
     /* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IDebugTarget#getProcess()
 	 */
+	@Override
 	public IProcess getProcess() {
 		return fProcess;
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IDebugTarget#getThreads()
 	 */
+	@Override
 	public IThread[] getThreads() throws DebugException {
 		return fThreads;
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IDebugTarget#hasThreads()
 	 */
+	@Override
 	public boolean hasThreads() throws DebugException {
 		return false;
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IDebugTarget#getName()
 	 */
+	@Override
 	public String getName() throws DebugException {
 		return "WPP";
 	}
+	@Override
 	public IDebugTarget getDebugTarget() {
 		return this;
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IDebugElement#getLaunch()
 	 */
+	@Override
 	public ILaunch getLaunch() {
 		return fLaunch;
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ITerminate#canTerminate()
 	 */
+	@Override
 	public boolean canTerminate() {
 		return getProcess().canTerminate();
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ITerminate#isTerminated()
 	 */
+	@Override
 	public boolean isTerminated() {
 		return fTerminated || getProcess().isTerminated();
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ITerminate#terminate()
 	 */
+	@Override
 	public void terminate() throws DebugException {
 		getThread().terminate();
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ISuspendResume#canResume()
 	 */
+	@Override
 	public boolean canResume() {
 		return !isTerminated() && isSuspended();
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ISuspendResume#canSuspend()
 	 */
+	@Override
 	public boolean canSuspend() {
 		return !isTerminated() && !isSuspended();
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ISuspendResume#isSuspended()
 	 */
+	@Override
 	public boolean isSuspended() {
 		return !isTerminated() && getThread().isSuspended();
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ISuspendResume#resume()
 	 */
+	@Override
 	public void resume() throws DebugException {
 		getThread().resume();
 	}	
@@ -265,35 +298,41 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IWP
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ISuspendResume#suspend()
 	 */
+	@Override
 	public void suspend() throws DebugException {
 		getThread().suspend();
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IDisconnect#canDisconnect()
 	 */
+	@Override
 	public boolean canDisconnect() {
 		return false;
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IDisconnect#disconnect()
 	 */
+	@Override
 	public void disconnect() throws DebugException {
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IDisconnect#isDisconnected()
 	 */
+	@Override
 	public boolean isDisconnected() {
 		return false;
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IMemoryBlockRetrieval#supportsStorageRetrieval()
 	 */
+	@Override
 	public boolean supportsStorageRetrieval() {
 		return false;
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IMemoryBlockRetrieval#getMemoryBlock(long, long)
 	 */
+	@Override
 	public IMemoryBlock getMemoryBlock(long startAddress, long length) throws DebugException {
 		return null;
 	}
@@ -339,22 +378,13 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IWP
 	 * @return the values on the data stack (top down)
 	 */
 	public IValue[] getDataStack() throws DebugException {
-		String dataStack = sendRequest("data");
-		if (dataStack != null && dataStack.length() > 0) {
-			String[] values = dataStack.split("\\|");
-			IValue[] theValues = new IValue[values.length];
-			for (int i = 0; i < values.length; i++) {
-				String value = values[values.length - i - 1];
-				theValues[i] = new WPPStackValue(this, value, i);
-			}
-			return theValues;
-		}
-		return new IValue[0];		
+		return fDataStack;
 	}
 	
 	/* (non-Javadoc)
 	 * @see example.debug.core.model.WPPDebugElement#sendRequest(java.lang.String)
 	 */
+	@Override
 	public String sendRequest(String request) throws DebugException {
 		synchronized (fRequestSocket) {
 			fRequestWriter.println(request);
@@ -429,6 +459,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IWP
 	/* (non-Javadoc)
 	 * @see example.debug.core.model.IWPPEventListener#handleEvent(java.lang.String)
 	 */
+	@Override
 	public void handleEvent(String event) {
 		System.out.print(event);
 	}

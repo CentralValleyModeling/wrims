@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension point="org.eclipse.ui.views">
+        <view id="wpp.variableview"
+             name="All Variables"
+          class="wrimsv2_plugin.debugger.view.WPPVariableView"/>
+</extension>
       <extension
          point="org.eclipse.debug.ui.launchConfigurationTabGroups">
       <launchConfigurationTabGroup
@@ -13,7 +18,7 @@
 	   name="WPP Application"
 	   delegate="wrimsv2_plugin.debugger.launcher.WPPLaunchDelegate"
 	   modes= "run, debug"
-	   id="wpp.launchType"
+	   id="wpp.launchtype"
        sourcePathComputerId="org.eclipse.jdt.launching.sourceLookup.javaSourcePathComputer">
    </launchConfigurationType>
 </extension>

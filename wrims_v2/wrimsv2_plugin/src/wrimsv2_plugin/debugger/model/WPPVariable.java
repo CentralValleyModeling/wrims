@@ -11,10 +11,10 @@
  *******************************************************************************/
 package wrimsv2_plugin.debugger.model;
 
-import org.eclipse.debug.core.DebugEvent;
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.model.IValue;
 import org.eclipse.debug.core.model.IVariable;
+
 
 /**
  * A variable in a WPP stack frame
@@ -24,6 +24,7 @@ public class WPPVariable extends WPPDebugElement implements IVariable {
 	// name & stack frmae
 	private String fName;
 	private WPPStackFrame fFrame;
+	private WPPValue fValue;
 	
 	/**
 	 * Constructs a variable contained in the given stack frame
@@ -38,59 +39,72 @@ public class WPPVariable extends WPPDebugElement implements IVariable {
 		fName = name;
 	}
 	
+	public WPPVariable(WPPDebugTarget target, WPPStackFrame frame, String name) {
+		super(target);
+		fFrame = frame;
+		fName = name;
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IVariable#getValue()
 	 */
+	@Override
 	public IValue getValue() throws DebugException {
-		String value = sendRequest("var " + getStackFrame().getIdentifier() + " " + getName());
-		return new WPPValue(this.getWPPDebugTarget(), value);
+		return fValue;
 	}
 	
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IVariable#getName()
 	 */
+	@Override
 	public String getName() throws DebugException {
 		return fName;
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IVariable#getReferenceTypeName()
 	 */
+	@Override
 	public String getReferenceTypeName() throws DebugException {
 		return "Thing";
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IVariable#hasValueChanged()
 	 */
+	@Override
 	public boolean hasValueChanged() throws DebugException {
 		return false;
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IValueModification#setValue(java.lang.String)
 	 */
+	@Override
 	public void setValue(String expression) throws DebugException {
-		sendRequest("setvar " + getStackFrame().getIdentifier() + " " + getName() + " " + expression);
-		fireChangeEvent(DebugEvent.CONTENT);
+		fValue=new WPPValue(this.getPDADebugTarget(), expression);
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IValueModification#setValue(org.eclipse.debug.core.model.IValue)
 	 */
+	@Override
 	public void setValue(IValue value) throws DebugException {
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IValueModification#supportsValueModification()
 	 */
+	@Override
 	public boolean supportsValueModification() {
 		return true;
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IValueModification#verifyValue(java.lang.String)
 	 */
+	@Override
 	public boolean verifyValue(String expression) throws DebugException {
 		return true;
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IValueModification#verifyValue(org.eclipse.debug.core.model.IValue)
 	 */
+	@Override
 	public boolean verifyValue(IValue value) throws DebugException {
 		return false;
 	}
@@ -102,6 +116,10 @@ public class WPPVariable extends WPPDebugElement implements IVariable {
 	 */
 	protected WPPStackFrame getStackFrame() {
 		return fFrame;
+	}
+	
+	protected WPPDebugTarget getPDADebugTarget() {
+	    return (WPPDebugTarget) getDebugTarget();
 	}
 
 }

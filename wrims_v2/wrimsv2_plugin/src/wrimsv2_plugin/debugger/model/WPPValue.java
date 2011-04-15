@@ -21,15 +21,37 @@ import org.eclipse.debug.core.model.IVariable;
 public class WPPValue extends WPPDebugElement implements IValue {
 	
 	private String fValue;
+	private String fVariable;
+	private WPPDebugTarget fTarget;
+	private IValue parentValue=null;
 	
 	public WPPValue(WPPDebugTarget target, String value) {
 		super(target);
 		fValue = value;
+		fTarget=target;
+		parentValue=null;
+	}
+	
+	public WPPValue(WPPDebugTarget target, String value, String variable) {
+		super(target);
+		fValue = value;
+		fVariable=variable;
+		fTarget=target;
+		parentValue=null;
+	}
+	
+	public WPPValue(WPPDebugTarget target, IValue parentValue, String value, String variable) {
+		super(target);
+		fValue = value;
+		fVariable=variable;
+		fTarget=target;
+		this.parentValue=parentValue;
 	}
 	
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IValue#getReferenceTypeName()
 	 */
+	@Override
 	public String getReferenceTypeName() throws DebugException {
 		try {
 			Integer.parseInt(fValue);
@@ -41,39 +63,79 @@ public class WPPValue extends WPPDebugElement implements IValue {
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IValue#getValueString()
 	 */
+	@Override
 	public String getValueString() throws DebugException {
 		return fValue;
 	}
+	
+	public String getVariableString() {
+		return fVariable;
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IValue#isAllocated()
 	 */
+	@Override
 	public boolean isAllocated() throws DebugException {
 		return true;
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IValue#getVariables()
 	 */
+	@Override
 	public IVariable[] getVariables() throws DebugException {
 		return new IVariable[0];
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IValue#hasVariables()
 	 */
+	@Override
 	public boolean hasVariables() throws DebugException {
-		return fValue.split("\\W+").length > 1;
+		if (fValue.contains(":")){ 
+			return true;
+		}else{
+			return false;
+		}
 	}
+	
+	public IValue[] getValues(){
+		String[] dataStrings=fValue.split(":");
+		int size=dataStrings.length;
+		WPPValue[] values=new WPPValue[size];  
+		for (int i=0; i<size; i++){
+			String[] dataSubStrings=dataStrings[i].split("%",2);
+			WPPValue value=new WPPValue(fTarget,this, dataSubStrings[1], dataSubStrings[0]); 
+			values[i]=value;
+		}
+		return values;
+	}
+	
+	public boolean hasParentValue(){
+		if (parentValue==null){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	public IValue getParentValue(){
+		return parentValue;
+	}
+	
 	/*
 	 *  (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         return obj instanceof WPPValue && ((WPPValue)obj).fValue.equals(fValue);
     }
     /*
      *  (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return fValue.hashCode();
     }
 }

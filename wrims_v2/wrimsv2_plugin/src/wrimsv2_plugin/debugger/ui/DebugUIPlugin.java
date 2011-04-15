@@ -62,6 +62,7 @@ public class DebugUIPlugin extends AbstractUIPlugin {
 	/**
 	 * This method is called upon plug-in activation
 	 */
+	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 	}
@@ -69,6 +70,7 @@ public class DebugUIPlugin extends AbstractUIPlugin {
 	/**
 	 * This method is called when the plug-in is stopped
 	 */
+	@Override
 	public void stop(BundleContext context) throws Exception {
 		super.stop(context);
 		plugin = null;
@@ -112,6 +114,7 @@ public class DebugUIPlugin extends AbstractUIPlugin {
 	/* (non-Javadoc)
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#initializeImageRegistry(org.eclipse.jface.resource.ImageRegistry)
 	 */
+	@Override
 	protected void initializeImageRegistry(ImageRegistry reg) {
 		declareImage(IMG_OBJ_PDA, PATH_OBJECT + "pda.gif");
 	    declareImage(IMG_ELCL_POP, PATH_ELOCALTOOL + "pop.gif");

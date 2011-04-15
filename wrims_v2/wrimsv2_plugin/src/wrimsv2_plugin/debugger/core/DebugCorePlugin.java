@@ -14,7 +14,11 @@ package wrimsv2_plugin.debugger.core;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.debug.core.model.IValue;
 import org.osgi.framework.BundleContext;
+
+import wrimsv2_plugin.debugger.model.WPPDebugTarget;
+import wrimsv2_plugin.debugger.view.WPPVariableView;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,13 +38,13 @@ public class DebugCorePlugin extends Plugin {
 	 * Unique identifier for the PDA debug model (value 
 	 * <code>wpp.debugModel</code>).
 	 */
-	public static final String ID_WPP_DEBUG_MODEL = "WPP.debugModel";
+	public static WPPDebugTarget target;
+	public static IValue[] dataStack;
 	
-	/**
-	 * Name of the string substitution variable that resolves to the
-	 * location of a local Perl executable (value <code>perlExecutable</code>).
-	 */
-	public static final String VARIALBE_PERL_EXECUTABLE = "perlExecutable";
+	public static final String ID_WPP_DEBUG_MODEL = "wpp.debugmodel";
+	
+	public static final String ID_WPP_VARIABLE_VIEW="wpp.variableview";
+	
 	/**
 	 * Launch configuration attribute key. Value is a path to a perl
 	 * program. The path is a string representing a full path
@@ -52,7 +56,7 @@ public class DebugCorePlugin extends Plugin {
 	 * Identifier for the WPP launch configuration type
 	 * (value <code>wpp.launchType</code>)
 	 */
-	public static final String ID_WPP_LAUNCH_CONFIGURATION_TYPE = "wpp.launchType";	
+	public static final String ID_WPP_LAUNCH_CONFIGURATION_TYPE = "wpp.launchtype";	
 	
 	/**
 	 * The constructor.
@@ -65,6 +69,7 @@ public class DebugCorePlugin extends Plugin {
 	/**
 	 * This method is called upon plug-in activation
 	 */
+	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 	}
@@ -72,6 +77,7 @@ public class DebugCorePlugin extends Plugin {
 	/**
 	 * This method is called when the plug-in is stopped
 	 */
+	@Override
 	public void stop(BundleContext context) throws Exception {
 		super.stop(context);
 		plugin = null;

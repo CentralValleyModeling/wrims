@@ -34,7 +34,8 @@ public class WPPLaunchShortcut implements ILaunchShortcut {
     /* (non-Javadoc)
      * @see org.eclipse.debug.ui.ILaunchShortcut#launch(org.eclipse.jface.viewers.ISelection, java.lang.String)
      */
-    public void launch(ISelection selection, String mode) {
+    @Override
+	public void launch(ISelection selection, String mode) {
         // must be a structured selection with one file selected
         IFile file = (IFile) ((IStructuredSelection)selection).getFirstElement();
 
@@ -70,7 +71,8 @@ public class WPPLaunchShortcut implements ILaunchShortcut {
     /* (non-Javadoc)
      * @see org.eclipse.debug.ui.ILaunchShortcut#launch(org.eclipse.ui.IEditorPart, java.lang.String)
      */
-    public void launch(IEditorPart editor, String mode) {
+    @Override
+	public void launch(IEditorPart editor, String mode) {
     }
 
 }

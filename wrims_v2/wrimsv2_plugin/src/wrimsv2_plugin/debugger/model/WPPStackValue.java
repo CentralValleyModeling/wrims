@@ -34,14 +34,16 @@ public class WPPStackValue extends WPPValue {
 	 *  (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         return super.equals(obj) && ((WPPStackValue)obj).fIndex == fIndex;
     }
     /*
      *  (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return super.hashCode() + fIndex;
     }
 }
