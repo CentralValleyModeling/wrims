@@ -53,7 +53,7 @@ test:  INTEGER 'test' ;
 test2:  t=test {  System.out.println("yyyyyyyyyyyyy"+$t.text  ); };		
 
 pattern
-	: dvar | svar | goal | includeFile | alias
+	: dvar | svar | goal | includeFile | alias | weight_table
 	;
 
 sequence 
@@ -86,6 +86,12 @@ includeFile
 	:	 ^(Include sc=Scope f=FILE_PATH) {F.includeFile(Tools.strip($f.text), $sc.text);}
 	;
 	
+weight_table
+	:  ^(Weight_table sc=Scope ( ^(i=IDENT e=Expression    
+	{ F.mergeWeightTable($i.text, $e.text, $sc.text); }
+	) )+  ) 
+	;	
+
 	
 //assignment
 //	:	^(':=' IDENT e=expression)

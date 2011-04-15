@@ -9,6 +9,7 @@ options {
 tokens {
 	NEGATION;
 	NEW_LINE; Op; Separator;
+	Weight_table;
 	Local; Global; Scope;
 	Value; Case ;
 	Alias; Expression;
@@ -101,11 +102,13 @@ pattern
 	;
 	
 weight_table
-	: OBJECTIVE ( '[' sc=LOCAL? ']' )? IDENT '=' '{' ( w=weightItem )+ '}' 
+	: OBJECTIVE ( '[' sc=LOCAL? ']' )? IDENT '=' '{'  w+=weightItem+ '}'
+	-> ^(Weight_table Scope[$sc.text] $w+  ) 
 	;	
 
 weightItem
-	: '['  i=IDENT ',' e=expression ']' (',')?
+	: '['  IDENT ',' e=expression ']' (',')? 
+	   -> ^(IDENT Expression[$e.text])
 	;
 		
 model
