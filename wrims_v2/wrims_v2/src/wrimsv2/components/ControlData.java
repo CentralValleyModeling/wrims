@@ -9,7 +9,6 @@ import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.LoopIndex;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
