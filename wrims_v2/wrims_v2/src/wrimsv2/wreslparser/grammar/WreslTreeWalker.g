@@ -135,11 +135,24 @@ case_content returns[String name, String condition, String expression]
 ;
 
 
-table_content returns[String text] :  
-^( s=Select f=From g=Given u=Use wi=Where_item_number wc=Where_content )
-{ $text = "SELECT "+$s.text+" FROM "+$f.text+" GIVEN "+$g.text+" USE "+$u.text+
-   " WHERE "+ Tools.replace_ignoreChar(Tools.replace_seperator($wc.text)); }
-;
+//table_content returns[String text] :  
+//^( s=Select f=From (g=Given u=Use)? wc=Where_content )
+//{ $text = "SELECT "+$s.text+" FROM "+$f.text+" GIVEN "+$g.text+" USE "+$u.text+
+//   " WHERE "+ Tools.replace_ignoreChar(Tools.replace_seperator($wc.text)); }
+//;
+
+table_content returns[String text] 
+	: 
+ ^( SELECT s=IDENT FROM f=IDENT   {$text = "SELECT "+$s.text+" FROM "+$f.text; }
+  (GIVEN g=Assignment USE u=IDENT {$text = $text+" GIVEN "+$g.text+" USE "+$u.text; } )? 
+  (WHERE w=where_items            {$text = $text+" WHERE "+ Tools.replace_ignoreChar(Tools.replace_seperator($w.text)); } )? 
+  )
+	;
+
+where_items returns[String text]
+	: a=Assignment {$text = $a.text;} (',' b=Assignment {$text = $text+","+$b.text;})*
+	;
+
 
 alias  :
        ^(Alias sc=Scope i=IDENT e=Expression k=Kind u=Units)

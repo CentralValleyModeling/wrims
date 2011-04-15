@@ -9,7 +9,7 @@ options {
 tokens {
 	NEGATION;
 	NEW_LINE; Op; Separator;
-	Weight_table;
+	Weight_table; Assignment;
 	Local; Global; Scope;
 	Value; Case ;
 	Alias; Expression;
@@ -213,14 +213,12 @@ svar_table :
 ->  ^(Svar_table Scope[$sc.text] $i table_content )  	
 	;
 
-table_content : SELECT s=IDENT FROM f=IDENT (GIVEN g=assignment)? (USE u=IDENT)? (WHERE w=where_items)? 
--> ^( Select[$s.text] From[$f.text] Given[$g.text] Use[$u.text] Where_item_number[$w.n] Where_content[$w.text])
+table_content : SELECT^ s=IDENT FROM f=IDENT (GIVEN g=assignment USE u=IDENT)? (WHERE w=where_items)? 
+//->  ^( Select[$s.text] From[$f.text] Given[$g.text] Use[$u.text] Where_content[$w.text] )
 ;
 
-where_items returns[String n]
-@init{ int number = 1; } 
-	: assignment (',' assignment {number++;}  )*
-	  {$n = Integer.toString(number);} 
+where_items
+	: assignment (',' assignment )*
 	;
 
 svar_expr : 
@@ -276,7 +274,9 @@ upper: UPPER ( UNBOUNDED -> Upper LimitType["Unbounded"] | e=expression -> Upper
 
 constraint_statement : expression ( '<' | '>' | '='  ) expression  ;
 
-assignment  :           term_simple  '=' expression ;
+assignment  :  t=term_simple  '=' e=expression  
+-> Assignment[$t.text+"="+$e.text]
+;
 lt_or_gt :              term_simple ( '<'  | '>'  ) expression ;
 le_or_ge :              term_simple ( '<=' | '>=' ) expression ;
 equal_statement :       term_simple '==' expression ;
