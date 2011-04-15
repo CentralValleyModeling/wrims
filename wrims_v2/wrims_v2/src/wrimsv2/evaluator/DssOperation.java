@@ -14,8 +14,6 @@ import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Arrays;
 
 public class DssOperation {
 	public static boolean getSVTimeseries(String name, String file){

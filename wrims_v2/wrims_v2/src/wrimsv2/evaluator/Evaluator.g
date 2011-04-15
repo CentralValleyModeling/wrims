@@ -23,6 +23,7 @@ options {
 
 @members {
   public static IntDouble evalValue;
+  public static EvalExpression evalExpression;
   public static EvalConstraint evalConstraint;
   public static boolean evalCondition;
   
@@ -34,6 +35,7 @@ options {
 
 evaluator returns [String result]
 	:	expressionInput |
+	softConstraint|
 	goalInput|
 	conditionInput 
 	;
@@ -43,6 +45,7 @@ evaluator returns [String result]
 ///////////////////
 
 expressionInput: 'v:' expressionCollection{evalValue=Evaluation.expressionInput($expressionCollection.ee);};
+softConstraint: 's:' expressionCollection{evalExpression=$expressionCollection.ee;};
 goalInput: 'g:' constraintStatement {evalConstraint = $constraintStatement.ec;};
 conditionInput: 'c:' conditionStatement {evalCondition=$conditionStatement.result;};
 
