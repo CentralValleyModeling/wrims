@@ -285,12 +285,12 @@ public class TestWreslWalker_element {
 		String s;
 		int n;
 	
-		s = "multi_where#SELECT target FROM res_level GIVEN null USE null WHERE res_num=1;level=4;month=month";
+		s = "multi_where#SELECT target FROM res_level WHERE res_num=1;level=4;month=month";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "simple#SELECT target FROM feather_fish_203 GIVEN null USE null WHERE month=NOV";
+		s = "simple#SELECT target FROM feather_fish_203 WHERE month=NOV";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);

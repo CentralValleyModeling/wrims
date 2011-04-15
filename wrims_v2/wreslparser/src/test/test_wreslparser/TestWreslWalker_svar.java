@@ -63,7 +63,7 @@ public class TestWreslWalker_svar {
 		String s;
 		int n;
 	
-		s ="svar_global,case1,1,month>=JAN .AND. month<=FEB .AND. sri_ytp==5 .AND. C_Nimbus_fmp_mif(-1)<800.,SELECT FEB FROM sacramento_runoff GIVEN null USE null WHERE wateryear=wateryear";
+		s ="svar_global,case1,1,month>=JAN .AND. month<=FEB .AND. sri_ytp==5 .AND. C_Nimbus_fmp_mif(-1)<800.,SELECT FEB FROM sacramento_runoff WHERE wateryear=wateryear";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
