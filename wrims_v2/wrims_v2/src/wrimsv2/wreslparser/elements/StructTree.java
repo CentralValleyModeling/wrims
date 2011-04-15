@@ -80,9 +80,11 @@ public class StructTree {
 
 			S.wtList.add(name);
 			
-			if      (scope == Param.global){S.wtList_global.add(name);}
-			else if (scope == Param.local) {S.wtList_local.add(name);}
-			else{ System.out.println("wrong scope!!");}
+			if      (scope == null)
+					{S.wtList_global.add(name);}
+			else if (scope.equalsIgnoreCase(Param.local)) 
+					{S.wtList_local.add(name);}
+			else{ LogUtils.errMsg("Weight table scope undefined: "+name, S.currentAbsolutePath);}
 
 		}
 	}
@@ -116,7 +118,7 @@ public class StructTree {
 			
 			S.incFileMap.put(absIncludeFilePath, incFile);
 			
-			if      ( scope==null )
+			if      (scope==null)
 					{S.incFileList_global.add(absIncludeFilePath); incFile.scope = Param.global; }
 			else if (scope.equalsIgnoreCase(Param.local))
 					{S.incFileList_local.add(absIncludeFilePath); incFile.scope = Param.local; }
