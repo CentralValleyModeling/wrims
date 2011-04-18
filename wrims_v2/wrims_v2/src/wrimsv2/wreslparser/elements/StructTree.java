@@ -217,11 +217,12 @@ public class StructTree {
 			S.exMap.put(name, ex);
 			S.exList.add(name);
 			
-			if      (scope == Param.global){S.exList_global.add(name);}
-			else if (scope == Param.local) {S.exList_local.add(name);}
-			else{ System.out.println("wrong scope!!");}
+			if      (scope == null)
+					{S.exList_global.add(name); ex.scope = Param.global;}
+			else if (scope.equalsIgnoreCase(Param.local)) 
+					{S.exList_local.add(name); ex.scope = Param.local;}
+			else{ LogUtils.errMsg("External scope undefined: "+name, S.currentAbsolutePath);}
 		}
-
 	}
 	
 	public void svarExpression(String name, String scope, String expression) {

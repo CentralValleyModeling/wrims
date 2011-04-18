@@ -45,15 +45,17 @@ evaluator
 	:	
 	(       pattern+ 
 	|     ( sequence+  model+ ) 
-	|       test2 
 	)
 	     EOF
 	;
-test:  INTEGER 'test' ;	
-test2:  t=test {  System.out.println("yyyyyyyyyyyyy"+$t.text  ); };		
 
 pattern
-	: dvar | svar | goal | includeFile | alias | weight_table
+	: dvar | svar | goal | includeFile | alias | weight_table | external
+	;
+
+external 
+	:  ^(External sc=Scope i=IDENT e=Expression )
+		{F.external($i.text, $sc.text, $e.text);}
 	;
 
 sequence 
