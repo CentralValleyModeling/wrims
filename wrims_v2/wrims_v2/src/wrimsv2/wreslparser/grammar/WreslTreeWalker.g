@@ -50,8 +50,13 @@ evaluator
 	;
 
 pattern
-	: dvar | svar | goal | includeFile | alias | weight_table | external
+	: dvar | svar | goal | includeFile | alias | weight_table | external | integer
 	;
+
+integer
+	:  ^(Dvar_integer sc=Scope i=IDENT k=Kind u=Units )
+	    {F.dvarStd($i.text, $sc.text, "integer", Tools.strip($k.text), Tools.strip($u.text)); }
+	; 
 
 external 
 	:  ^(External sc=Scope i=IDENT e=Expression )

@@ -351,12 +351,20 @@ public class StructTree {
 			// / better data structure
 			dv = new Dvar();
 			//dv.scope = scope;
-			if (integer != null) {dv.integer = "Y";}
+
 			dv.kind = kind;
 			dv.units = units;
 			dv.lowerBound = Param.dv_lowerBound;
 			dv.upperBound = Param.dv_upperBound;
 			dv.fromWresl = S.currentAbsolutePath;
+
+			if (integer != null) {
+				
+				dv.integer = "Y";
+				dv.lowerBound = Param.integer_lowerBound;
+				dv.upperBound = Param.integer_upperBound;
+				
+			}
 			
 			S.dvMap.put(name, dv);
 			S.dvList.add(name);
