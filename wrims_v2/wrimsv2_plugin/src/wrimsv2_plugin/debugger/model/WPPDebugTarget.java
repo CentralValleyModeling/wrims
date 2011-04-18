@@ -165,32 +165,22 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IWP
 		fEventDispatch.schedule();
 		
 		//To Do: add real debug code
-		sendRequest("to:4456");
-		String data=null;
-		try {
-			while (data==null){
-				data=fRequestReader.readLine();
-			}
-			System.out.println(data);
-		} catch (IOException e) {
-			requestFailed("Request failed: " + "to:4456", e);
-		}
+		String data;
+		data=sendRequest("to:4456");
+		System.out.println(data);
+		
 		data="i:4456#a(-1):123.0#reservoir:reservorlevel1%56:reservorlevel2%1234";
 		fDataStack=generateTree(data);
 		DebugCorePlugin.dataStack=fDataStack;
 				
-		sendRequest("step: ");
-		try {
-			data=fRequestReader.readLine();
-			System.out.println(data);
-		} catch (IOException e) {
-			requestFailed("Request failed: " + "to:4456", e);
-		}		
+		data=sendRequest("step: ");
+		System.out.println(data);
+	
 		data="i:4457#a(-2):13.0#reservoir:reservorlevel1%59:reservorlevel2%1234";
 		fDataStack=generateTree(data);
 		DebugCorePlugin.dataStack=fDataStack;
 				
-		sendRequest("to:10001");
+		sendRequest("end: ");
 		fProcess.terminate();
 	}
 	
@@ -389,6 +379,12 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IWP
 		synchronized (fRequestSocket) {
 			fRequestWriter.println(request);
 			fRequestWriter.flush();
+			try {
+				// wait for reply
+				return fRequestReader.readLine();
+			} catch (IOException e) {
+				requestFailed("Request failed: " + request, e);
+			}
 		}
 		return null;
 	}  

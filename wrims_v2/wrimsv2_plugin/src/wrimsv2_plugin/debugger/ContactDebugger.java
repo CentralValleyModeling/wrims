@@ -70,23 +70,36 @@ public class ContactDebugger implements IWPPEventListener{
 	}
 		
 	@Override
-	public void handleEvent(String event) {
-		String[] eventParts=event.split(":");
-		if (eventParts[0].equals("to")) {
-			pauseIndex=Integer.parseInt(eventParts[1]);
+	public void handleEvent(String request) {
+		String[] requestParts=request.split(":");
+		if (requestParts[0].equals("to")) {
+			pauseIndex=Integer.parseInt(requestParts[1]);
 			if (isStart){
 				runner.resume();
 			}else{
 				isStart=true;
 				runner.start();
 			}
-		} else if (event.equals("step: ")) {
+		} else if (request.equals("step: ")) {
 			pauseIndex=pauseIndex+1;
 			if (isStart){
 				runner.resume();
 			}else{
 				isStart=true;
 				runner.start();
+			}
+		}else if (request.equals("end: ")){
+			pauseIndex=10001;
+			if (isStart){
+				runner.resume();
+			}else{
+				isStart=true;
+				runner.start();
+			}
+			try {
+				sendRequest("end");
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 	}
