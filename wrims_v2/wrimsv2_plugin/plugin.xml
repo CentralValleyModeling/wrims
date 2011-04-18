@@ -44,4 +44,54 @@
          </contextualLaunch>
       </shortcut>
    </extension>
+      <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            filenames="*.wpp, *.wresl"
+            class="wrimsv2_plugin.editor.WPPEditor"
+            default="true"
+            name="WPP Editor"
+            id="wpp.editor"
+            extensions="wpp, wresl"/>
+   </extension>
+      <extension
+         point="org.eclipse.ui.editorActions">
+      <editorContribution
+            targetID="wpp.editor"
+            id="wpp.rulerActions">
+         <action
+               label="Not Used"
+               class="wrimsv2_plugin.editor.RulerToggleBreakpointAction"
+               style="push"
+               actionID="RulerDoubleClick"
+               id="wpp.doubleClickBreakpointAction"/>
+      </editorContribution>
+   </extension>
+     <extension
+         point="org.eclipse.debug.core.breakpoints">
+      <breakpoint
+            class="wrimsv2_plugin.debugger.breakpoint.WPPLineBreakpoint"
+            name="WPP Line Breakpoints"
+            markerType="wpp.markerType.lineBreakpoint"
+            id="pda.lineBreakpoint"/>
+      <breakpoint
+            class="wrimsv2_plugin.debugger.breakpoint.WPPWatchpoint"
+            name="PDA Watchpoints"
+            markerType="wpp.markerType.watchpoint"
+            id="pda.watchpoint"/>
+   </extension>
+   <extension
+         id="wpp.markerType.lineBreakpoint"
+         name="WPP Line Breakpoint Marker"
+         point="org.eclipse.core.resources.markers">
+      <super type="org.eclipse.debug.core.lineBreakpointMarker"/>
+      <persistent value="true"/>
+   </extension>
+   <extension
+         id="wpp.markerType.watchpoint"
+         name="WPP Watchpoint Marker"
+         point="org.eclipse.core.resources.markers">
+      <super type="wpp.markerType.lineBreakpoint"/>
+      <persistent value="true"/>
+   </extension>
 </plugin>
