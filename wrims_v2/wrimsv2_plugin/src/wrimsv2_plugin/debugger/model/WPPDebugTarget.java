@@ -20,13 +20,19 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IMarkerDelta;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.debug.core.DebugException;
+import org.eclipse.debug.core.IBreakpointManager;
+import org.eclipse.debug.core.IBreakpointManagerListener;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.debug.core.model.IDebugTarget;
@@ -35,12 +41,14 @@ import org.eclipse.debug.core.model.IProcess;
 import org.eclipse.debug.core.model.IThread;
 import org.eclipse.debug.core.model.IValue;
 
+import wrimsv2_plugin.debugger.breakpoint.WPPLineBreakpoint;
+import wrimsv2_plugin.debugger.breakpoint.WPPRunToLineBreakpoint;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 
 /**
  * WPP Debug Target
  */
-public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IWPPEventListener {
+public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBreakpointManagerListener, IWPPEventListener {
 	
 	// associated system process (VM)
 	private IProcess fProcess;
@@ -164,18 +172,18 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IWP
 		fEventDispatch = new EventDispatchJob();
 		fEventDispatch.schedule();
 		
+		IBreakpointManager breakpointManager = getBreakpointManager();
+        breakpointManager.addBreakpointListener(this);
+		breakpointManager.addBreakpointManagerListener(this);
+		
 		//To Do: add real debug code
 		installDeferredBreakpoints();
 		
 		String data;
-		data=sendRequest("year:4456");
-		System.out.println(data);
 		
 		data=sendRequest("start");
 		System.out.println(data);
 		
-		//data=sendRequest("step");
-		//System.out.println(data);
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
@@ -183,7 +191,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IWP
 			e.printStackTrace();
 		}
 		
-		data=sendRequest("step");
+		data=sendRequest("year:4456");
 		System.out.println(data);
 		
 		data=sendRequest("resume");
@@ -196,7 +204,19 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IWP
 			e.printStackTrace();
 		}
 		
-		sendRequest("end");
+		data=sendRequest("step");
+		System.out.println(data);
+		
+		//data=sendRequest("resume");
+		//System.out.println(data);
+		
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		fProcess.terminate();
 	}
 	
@@ -240,6 +260,33 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IWP
 	public String getName() throws DebugException {
 		return "WPP";
 	}
+	
+	public boolean supportsBreakpoint(IBreakpoint breakpoint) {
+		if (!isTerminated() && breakpoint.getModelIdentifier().equals(getModelIdentifier())) {
+			try {
+				String program = getLaunch().getLaunchConfiguration().getAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM, (String)null);
+				if (program != null) {
+					IResource resource = null;
+					if (breakpoint instanceof WPPRunToLineBreakpoint) {
+						WPPRunToLineBreakpoint rtl = (WPPRunToLineBreakpoint) breakpoint;
+						resource = rtl.getSourceFile();
+					} else {
+						IMarker marker = breakpoint.getMarker();
+						if (marker != null) {
+							resource = marker.getResource();
+						}
+					}
+					if (resource != null) {
+						IPath p = new Path(program);
+						return resource.getFullPath().equals(p);
+					}
+				}
+			} catch (CoreException e) {
+			}			
+		}
+		return false;
+	}
+	
 	@Override
 	public IDebugTarget getDebugTarget() {
 		return this;
@@ -308,6 +355,49 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IWP
 	public void suspend() throws DebugException {
 		getThread().suspend();
 	}
+	
+	/* (non-Javadoc)
+	 * @see org.eclipse.debug.core.IBreakpointListener#breakpointAdded(org.eclipse.debug.core.model.IBreakpoint)
+	 */
+	public void breakpointAdded(IBreakpoint breakpoint) {
+		if (supportsBreakpoint(breakpoint)) {
+			try {
+				if ((breakpoint.isEnabled() && getBreakpointManager().isEnabled()) || !breakpoint.isRegistered()) {
+					WPPLineBreakpoint wppBreakpoint = (WPPLineBreakpoint)breakpoint;
+				    wppBreakpoint.install(this);
+				}
+			} catch (CoreException e) {
+			}
+		}
+	}
+	/* (non-Javadoc)
+	 * @see org.eclipse.debug.core.IBreakpointListener#breakpointRemoved(org.eclipse.debug.core.model.IBreakpoint, org.eclipse.core.resources.IMarkerDelta)
+	 */
+	public void breakpointRemoved(IBreakpoint breakpoint, IMarkerDelta delta) {
+		if (supportsBreakpoint(breakpoint)) {
+			try {
+			    WPPLineBreakpoint wppBreakpoint = (WPPLineBreakpoint)breakpoint;
+				wppBreakpoint.remove(this);
+			} catch (CoreException e) {
+			}
+		}
+	}
+	/* (non-Javadoc)
+	 * @see org.eclipse.debug.core.IBreakpointListener#breakpointChanged(org.eclipse.debug.core.model.IBreakpoint, org.eclipse.core.resources.IMarkerDelta)
+	 */
+	public void breakpointChanged(IBreakpoint breakpoint, IMarkerDelta delta) {
+		if (supportsBreakpoint(breakpoint)) {
+			try {
+				if (breakpoint.isEnabled() && getBreakpointManager().isEnabled()) {
+					breakpointAdded(breakpoint);
+				} else {
+					breakpointRemoved(breakpoint, null);
+				}
+			} catch (CoreException e) {
+			}
+		}
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IDisconnect#canDisconnect()
 	 */
@@ -374,6 +464,9 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IWP
 		fTerminated = true;
 		fThread = null;
 		fThreads = new IThread[0];
+		IBreakpointManager breakpointManager = getBreakpointManager();
+        breakpointManager.removeBreakpointListener(this);
+		breakpointManager.removeBreakpointManagerListener(this);
 		fireTerminateEvent();
 		removeEventListener(this);
 	}
@@ -497,29 +590,5 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IWP
 	 */
 	protected synchronized WPPThread getThread() {
 		return fThread;
-	}
-
-	@Override
-	public void breakpointAdded(IBreakpoint breakpoint) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void breakpointRemoved(IBreakpoint breakpoint, IMarkerDelta delta) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void breakpointChanged(IBreakpoint breakpoint, IMarkerDelta delta) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean supportsBreakpoint(IBreakpoint breakpoint) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }

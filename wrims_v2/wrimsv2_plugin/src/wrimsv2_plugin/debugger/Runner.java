@@ -15,12 +15,21 @@ public class Runner extends Thread {
 		for (cd.i=0; cd.i<=10000; cd.i++){
 			if (cd.i==cd.pauseIndex){
 				try {
-					cd.fileOut.println("susepended");
 					cd.sendEvent("suspended");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 				this.suspend();
+			}else{
+				String currIndex=Integer.toString(cd.i);
+				if (cd.breakIndex.contains(currIndex)) {
+					try {
+						cd.sendEvent("suspended");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					this.suspend();
+				}
 			}
 		}
 	}

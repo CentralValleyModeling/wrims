@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import wrimsv2_plugin.debugger.model.IWPPEventListener;
 
@@ -20,6 +21,7 @@ public class ContactDebugger {
 	private PrintWriter eventOut;
 	private BufferedReader eventIn;
 	public int pauseIndex=-1;
+	public ArrayList<String> breakIndex=new ArrayList<String>();
 	public int i=-1;
 	private Runner runner;
 	private FileWriter statusFile;
@@ -111,17 +113,28 @@ public class ContactDebugger {
 		}else if (request.startsWith("year")){
 			requestParts=request.split(":");
 			pauseIndex=Integer.parseInt(requestParts[1]);
-			fileOut.println(pauseIndex);
 			try {
 				sendRequest("year defined");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}else if (request.equals("end")){
+		}else if (request.startsWith("set")){
+			requestParts=request.split(":");
+			breakIndex.add(requestParts[1]);
+			fileOut.println(requestParts[1]);
 			try {
-				runner.stop();
-				sendRequest("ended");
+				sendRequest("breakpoint setted");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if (request.startsWith("clear")){
+			requestParts=request.split(":");
+			breakIndex.remove(requestParts[1]);
+			fileOut.println(requestParts[1]);
+			try {
+				sendRequest("breakpoint removed");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
