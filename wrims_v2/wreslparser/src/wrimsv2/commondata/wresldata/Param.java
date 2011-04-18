@@ -4,6 +4,8 @@ package wrimsv2.commondata.wresldata;
 public class Param {
 	  public static String dv_lowerBound= "0"; 
 	  public static String dv_upperBound= "unbounded"; 
+	  public static String integer_lowerBound= "0"; 
+	  public static String integer_upperBound= "unbounded"; 
 	  public static String undefined= ".."; 
 	  public static String defaultCaseName = "default";
 	  public static String always = "always";

@@ -1,0 +1,21 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+	define int_global {INTEGER STD KIND 'INTEGER' UNITS 'NONE'}
+	define[local] int_local {INTEGER STD KIND 'INTEGER' UNITS 'NONE'}
+
+
+
+}	
+
+
+	
+
+	 
+
+
+ 

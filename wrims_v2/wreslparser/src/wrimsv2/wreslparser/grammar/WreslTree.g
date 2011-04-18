@@ -13,7 +13,7 @@ tokens {
 	Local; Global; Scope;
 	Value; Case ;
 	Alias; Expression;
-	Dvar; Dvar_std; Dvar_nonStd; Dvar_std; Dvar_nonStd_local;
+	Dvar; Dvar_std; Dvar_nonStd; Dvar_std; Dvar_nonStd_local; Dvar_integer;
 	Svar_case; Svar_dss; Svar_const; Svar_sum; Sum_hdr; B_part;
 	Svar_table; Select; From; Where_content; Where_item_number; Given; Use;
 	Goal_simple; Goal_no_case; Goal_case ; Lhs_gt_rhs; Lhs_lt_rhs; Never; Penalty;
@@ -95,7 +95,13 @@ evaluator:
 
 	
 pattern
-	: dvar | svar | goal | includeFile | alias | weight_table | external
+	: dvar | svar | goal | includeFile | alias | weight_table | external | integer
+	;
+
+integer
+	: DEFINE ( '[' sc=LOCAL? ']' )? i=IDENT '{' INTEGER_WORD STD KIND k=STRING UNITS u=STRING '}'
+		->  ^(Dvar_integer  Scope[$sc.text] $i Kind[$k.text] Units[$u.text]) 
+	
 	;
 
 external : DEFINE ( '[' sc=LOCAL? ']' )? i=IDENT '{' EXTERNAL (e=DLL|e=F90) '}'
@@ -385,7 +391,7 @@ RHS: 'rhs' | 'RHS' ;
 EXTERNAL : 'EXTERNAL' | 'external' | 'External' ;
 F90 : 'f90' | 'F90' ;
 DLL :  IDENT ('.dll' | '.DLL' );
-INTEGER_WORD: 'integer' | 'INTEGER' ;
+INTEGER_WORD: 'integer' | 'INTEGER' | 'Integer' ;
 STD : 'std' | 'STD' ;
 UNITS : 'units' | 'UNITS' | 'Units' ;
 CONVERT : 'convert' | 'CONVERT' | 'Convert';
