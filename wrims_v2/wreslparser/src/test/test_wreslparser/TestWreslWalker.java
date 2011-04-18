@@ -24,28 +24,6 @@ public class TestWreslWalker {
 	public String logFilePath;
 
 	@Test(groups = { "WRESL_elements" })
-	public void test2() throws RecognitionException, IOException {
-		
-		inputFilePath =projectPath+"TestWreslWalker_test2.wresl";
-		logFilePath = "TestWreslWalker_test2.log";
-		
-		File absFile = new File(inputFilePath).getAbsoluteFile();
-		String absFilePath = absFile.getCanonicalPath().toLowerCase();
-		
-		LogUtils.setLogFile(logFilePath);
-		
-		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
-		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
-		
-		LogUtils.closeLogFile();
-			
-		String fileText = Tools.readFileAsString(logFilePath);	
-		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
-		Assert.assertEquals(totalErrs, 0);	
-	}		
-	
-
-	@Test(groups = { "WRESL_elements" })
 	public void mainFile() throws RecognitionException, IOException {
 		
 		inputFilePath =projectPath+"TestWreslWalker_mainFile.wresl";

@@ -9,7 +9,7 @@ options {
 tokens {
 	NEGATION;
 	NEW_LINE; Op; Separator;
-	Weight_table; Assignment;
+	Weight_table; Assignment; External;
 	Local; Global; Scope;
 	Value; Case ;
 	Alias; Expression;
@@ -89,17 +89,19 @@ tokens {
 evaluator:	
 	(    pattern+ 
 	|  ( sequence+ model+ ) 
-	|    test2 
 	) 
 	    EOF!
 	;
 
-test:  INTEGER  'test' ;	
-test2:  test ;	
 	
 pattern
-	: dvar | svar | goal | includeFile | alias | weight_table
+	: dvar | svar | goal | includeFile | alias | weight_table | external
 	;
+
+external : DEFINE ( '[' sc=LOCAL? ']' )? i=IDENT '{' EXTERNAL (e=DLL|e=F90) '}'
+-> ^(External Scope[$sc.text] $i Expression[$e.text]   )
+;
+
 	
 weight_table
 	: OBJECTIVE ( '[' sc=LOCAL? ']' )? IDENT '=' '{'  w+=weightItem+ '}'
@@ -380,8 +382,8 @@ USE:      'use' | 'Use' | 'USE' ;
 CASE : 'case' | 'Case' | 'CASE' ;
 LHS: 'lhs' | 'LHS' ;
 RHS: 'rhs' | 'RHS' ;
-EXTERNAL : 'EXTERNAL' | 'external' ;
-F90 : 'f90';
+EXTERNAL : 'EXTERNAL' | 'external' | 'External' ;
+F90 : 'f90' | 'F90' ;
 DLL :  IDENT ('.dll' | '.DLL' );
 INTEGER_WORD: 'integer' | 'INTEGER' ;
 STD : 'std' | 'STD' ;

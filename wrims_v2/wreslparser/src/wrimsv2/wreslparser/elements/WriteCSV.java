@@ -28,7 +28,7 @@ public class WriteCSV {
 	
 	  public static String sequence_header ="CYCLE,CONDITION";
 	  public static String weight_header ="DVAR,WEIGHT";
-	  public static String external_header ="FUNCTION,FILE";
+	  public static String external_header ="FUNCTION,FILE,FROM_WRESL_FILE";
 	  public static String svar_header   ="NAME,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
 	  public static String svarTs_header ="NAME,B_PART,TYPE,UNITS,CONVERT_TO_UNITS,FROM_WRESL_FILE";
 	  public static String dvar_header ="NAME,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE";	  
@@ -234,7 +234,7 @@ public class WriteCSV {
 			}
 	  };	
 	
-	  public static void external(Map<String,External> eMap, ArrayList<String> list ,PrintWriter out) {
+	  public static void external(Map<String,External> exMap, ArrayList<String> list ,PrintWriter out) {
 		    
 			List<String> keys = list;
 			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
@@ -242,13 +242,13 @@ public class WriteCSV {
 		    for (String k: keys ){
 		    	
 		    	//out.print(k);
-		    	External s = eMap.get(k);
+		    	External s = exMap.get(k);
 		    	
 
 			    out.print(k); // 
-		    	out.print(Param.csv_seperator+s.type); //for KIND		    	
+		    	out.print(Param.csv_seperator+s.type); 	    	
 
-				//out.print(Parameters.csv_seperator+s.fromWresl);
+				out.print(Param.csv_seperator+s.fromWresl);
 				out.print("\n");	
 		    	
 			}

@@ -1,0 +1,21 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+	define extern_global {EXTERNAL CVGroundwater.dll} 
+	define[local] extern_local  {EXTERNAL f90}
+
+
+
+}	
+
+
+	
+
+	 
+
+
+ 
