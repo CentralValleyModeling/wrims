@@ -119,7 +119,7 @@ public class Controller {
 			}
 			if (condition){
 				String evalString="v: "+svar.caseExpression.get(i);
-				if (svName.equals("")) {   //To Do: remove
+				if (svName.equals("coef_evap_nbb")) {   //To Do: remove
 					int x=0;
 				}
 				ANTLRStringStream stream = new ANTLRStringStream(evalString);

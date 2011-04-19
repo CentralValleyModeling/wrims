@@ -267,6 +267,92 @@ public class TableOperation {
 		return new IntDouble(1.0,false);
 	}
 	
+	public static IntDouble findData(String table, String select, HashMap<String, Number> given, String use){
+		if (!TableSeries.tableSeries.containsKey(table)){
+			if (!retrieveLookUpData(table)){
+				return new IntDouble(1.0,false);
+			}
+		}
+		
+		LookUpTable lut=TableSeries.tableSeries.get(table);
+		ArrayList<Number[]> data=lut.getData();
+		HashMap<String, Integer> field= lut.getField();
+		int fieldSize=field.size();
+		
+		int selectIndex;
+		if (field.containsKey(select)){
+			selectIndex=field.get(select);
+		}else{
+			Error.addEvaluationError(select+" in the select statement is not a field name in Table "+table);
+			return new IntDouble(1.0,false);
+		}
+				
+		if (given==null){
+			Error.addEvaluationError("select data from table needs either where statement or given statement.");
+			return new IntDouble(1.0,false);
+		}
+		
+		Number[] values=new Number[fieldSize];
+
+		int givenIndex;
+		Set givenSet=given.keySet();
+		Iterator iterator=givenSet.iterator();
+		String givenName=(String)iterator.next();
+		String valueString;
+		
+		if (field.containsKey(givenName)){
+			givenIndex=field.get(givenName);
+		}else{
+			Error.addEvaluationError(givenName+" in the given statement is not a field name in Table "+table);
+			return new IntDouble(1.0,false);
+		}
+		Number givenValue=(Number)given.get(givenName);
+		
+		values=data.get(0);	
+		if (givenValue==values[givenIndex]){
+			valueString=values[selectIndex].toString();
+			return generateIntDouble(valueString);
+		}
+		
+		int i=-1;
+		boolean givenTrue=false;
+		while (i<data.size()-1 && !givenTrue){
+			i++;
+			Number[] newValues=data.get(i);	
+			if (givenValue==newValues[givenIndex]){
+				Number newValue=newValues[selectIndex];
+				valueString=newValue.toString();
+				return generateIntDouble(valueString);
+			}
+			if ((givenValue.doubleValue()-newValues[givenIndex].doubleValue())*(givenValue.doubleValue()-values[givenIndex].doubleValue())<0){  
+				if (use.equals("max")){
+					if (newValues[givenIndex].doubleValue()>values[givenIndex].doubleValue()){
+						valueString=newValues[selectIndex].toString();
+					}else{
+						valueString=values[selectIndex].toString();
+					}
+				}else if (use.equals("min")){
+					if (newValues[givenIndex].doubleValue()<values[givenIndex].doubleValue()){
+						valueString=newValues[selectIndex].toString();
+					}else{
+						valueString=values[selectIndex].toString();
+					}
+				}else if (use.equals("linear")){
+					double value=((newValues[givenIndex].doubleValue()-givenValue.doubleValue())/(newValues[givenIndex].doubleValue()-values[givenIndex].doubleValue())
+							*(newValues[selectIndex].doubleValue()-values[selectIndex].doubleValue())+values[selectIndex].doubleValue());
+					return new IntDouble(value, false);
+				}else{
+					Error.addEvaluationError("Use statement can only be max, min, or linear in Table"+table);
+					return new IntDouble(1.0,false);
+				}
+				return generateIntDouble(valueString);
+			}
+			values=newValues;
+		}
+		Error.addEvaluationError("Data not found in Table "+table);
+		return new IntDouble(1.0,false);
+	}
+	
 	public static IntDouble generateIntDouble(String valueString){
 		try{        
 			int intValue=Integer.parseInt(valueString);

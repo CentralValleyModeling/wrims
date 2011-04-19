@@ -143,13 +143,13 @@ timeseries returns [EvalExpression ee]
 	
 partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
-usedKeywords: YEAR|MONTH|MONTH_CONST|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|ABS|LOG|LOG10|POW|MOD|WHERE|CONSTRAIN|ALWAYS
-|NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
+usedKeywords: YEAR|MONTH|MONTH_CONST|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|ABS|LOG|LOG10|POW|MOD|SELECT|FROM|GIVEN|USE|WHERE
+|CONSTRAIN|ALWAYS|NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
 |CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE;
 
 tableSQL returns [EvalExpression ee] @init{String table=null; String select=null; String use=null; HashMap<String, Number> given=null; HashMap<String, Number> where=null;}
-	: 'select' ((i1=IDENT{select=$i1.text;})|(u1=usedKeywords{select=$u1.text;})) 'from' i2=IDENT{table=$i2.text;} 
-	  ('given' a=assignStatement{given=new HashMap<String, Number>(); given.put($a.assignIdent, $a.value);})? ('use' i3=IDENT{use=$i3.text;})? 
+	: SELECT ((i1=IDENT{select=$i1.text;})|(u1=usedKeywords{select=$u1.text;})) FROM i2=IDENT{table=$i2.text;} 
+	  (GIVEN a=assignStatement{given=new HashMap<String, Number>(); given.put($a.assignIdent, $a.value);})? (USE i3=IDENT{use=$i3.text;})? 
 	  (where_items{where=$where_items.where;})? {ee=Evaluation.tableSQL(table, select, where, given, use);}	  
 	;
 
@@ -331,6 +331,11 @@ LOG: 'log';
 LOG10: 'log10';
 POW: 'pow';
 MOD: 'mod';
+
+SELECT: 'select';
+FROM: 'from';
+GIVEN: 'given';
+USE: 'use';
 WHERE : 'where';
 
 CONSTRAIN: 'constrain';

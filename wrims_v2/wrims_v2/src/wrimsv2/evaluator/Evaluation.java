@@ -895,7 +895,12 @@ public class Evaluation {
 	}
 	
 	public static EvalExpression tableSQL(String table, String select, HashMap<String, Number> where, HashMap<String, Number> given, String use){
-		IntDouble id=TableOperation.findData(table, select, where, given, use);
+		IntDouble id;
+		if (where==null){	
+			id=TableOperation.findData(table, select, given, use);
+		}else{
+			id=TableOperation.findData(table, select, where, given, use);
+		}
 		return new EvalExpression(id);
 	}
 	
