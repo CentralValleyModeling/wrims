@@ -114,9 +114,9 @@ svar_case
 @init { Svar sv = new Svar(); }  
 	: ^(Svar_case sc=Scope i=IDENT  ( c=case_content 
 	{	
-				sv.caseName.add($c.name);
-				sv.caseCondition.add( Tools.add_space_between_logical( $c.condition ) );
-				sv.caseExpression.add($c.expression);
+				sv.caseName.add($c.name.toLowerCase());
+				sv.caseCondition.add( Tools.add_space_between_logical( $c.condition.toLowerCase() ) );
+				sv.caseExpression.add($c.expression.toLowerCase());
 				
 			}
 	
@@ -150,9 +150,9 @@ case_content returns[String name, String condition, String expression]
 
 table_content returns[String text] 
 	: 
- ^( SELECT s=IDENT FROM f=IDENT   {$text = "SELECT "+$s.text+" FROM "+$f.text; }
-  (GIVEN g=Assignment USE u=IDENT {$text = $text+" GIVEN "+$g.text+" USE "+$u.text; } )? 
-  (WHERE w=where_items            {$text = $text+" WHERE "+ Tools.replace_ignoreChar(Tools.replace_seperator($w.text)); } )? 
+ ^( SELECT s=IDENT FROM f=IDENT   {$text = "select "+$s.text+" from "+$f.text; }
+  (GIVEN g=Assignment USE u=IDENT {$text = $text+" given "+$g.text+" use "+$u.text; } )? 
+  (WHERE w=where_items            {$text = $text+" where "+ Tools.replace_ignoreChar(Tools.replace_seperator($w.text)); } )? 
   )
 	;
 
@@ -184,9 +184,9 @@ goal_case
 	:  ^( Goal_case sc=Scope i=IDENT  
 		( ^( Case n=IDENT c=Condition e=goal_contents 
 			{	
-				gl.caseName.add($n.text);
-				gl.caseCondition.add( Tools.add_space_between_logical( $c.text ) );
-				gl.caseExpression.add($e.str);
+				gl.caseName.add($n.text.toLowerCase());
+				gl.caseCondition.add( Tools.add_space_between_logical( $c.text.toLowerCase() ) );
+				gl.caseExpression.add($e.str.toLowerCase());
 			} 
 		) )+  
 		)  

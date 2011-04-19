@@ -55,6 +55,9 @@ public class StructTree {
 	// addAll(r_keys); addAll(r_mons); }};
 
 	public void modelList(String name) {
+		
+		name = name.toLowerCase();
+		
 		if (S.model_list.contains(name)) {
 			LogUtils.errMsg("Model redefined: "+name, S.currentAbsolutePath);
 			S.error_model_redefined.add(name);
@@ -66,6 +69,10 @@ public class StructTree {
 	}
 
 	public void mergeWeightTable(String name, String value, String scope) {
+		
+		name = name.toLowerCase();
+		value = value.toLowerCase();
+		
 		if (S.wtList.contains(name)) {
 			LogUtils.errMsg("Weight table variable redefined: "+name, S.currentAbsolutePath);
 			S.error_weightVar_redefined.put(name, S.currentAbsolutePath);
@@ -90,6 +97,8 @@ public class StructTree {
 	}
 
 	public void includeFile(String fileRelativePath, String scope)  {
+		
+		fileRelativePath = fileRelativePath.toLowerCase();
 		
 		File absIncludeFile = new File(S.currentAbsoluteParent, fileRelativePath).getAbsoluteFile();
 		String absIncludeFilePath = "Error with include file: "+fileRelativePath;
@@ -128,24 +137,21 @@ public class StructTree {
 		}
 	}
 
-	public void goalSimple(String name, String scope, String content) {
+	public void goalSimple(String name, String scope, String expression) {
+		
+		name = name.toLowerCase();
+		expression = expression.toLowerCase();
+		
 		if (S.gList.contains(name)) {
 			LogUtils.errMsg("Goal redefined: "+name, S.currentAbsolutePath);
 			S.error_goal_redefined.put(name, S.currentAbsolutePath);
 		} else {
-			//goal_scope.put(name, scope);
-			//goal_simple.put(name, content);
-			//S.var_all.put(name, "goal_simple");
 
 			// / clearer data structure
 			gl = new Goal();
-			//gl.scope = scope;
-			// gl.lhs="in expression";
 			gl.caseCondition.add(Param.always);
 			gl.caseName.add(Param.defaultCaseName);
-			gl.caseExpression.add(content);
-//			gl.case_lhs_gt_rhs.add(Param.skip);
-//			gl.case_lhs_lt_rhs.add(Param.skip);
+			gl.caseExpression.add(expression);
 			gl.fromWresl = S.currentAbsolutePath;
 			S.gMap.put(name, gl);
 			S.gList.add(name);
@@ -159,6 +165,9 @@ public class StructTree {
 	}
 
 	public void goalCase(String name, String scope, Goal gl) {
+		
+		name = name.toLowerCase();
+		
 		if (S.gList.contains(name)) {
 			LogUtils.errMsg("Goal redefined: "+name, S.currentAbsolutePath);
 			S.error_goal_redefined.put(name, S.currentAbsolutePath);
@@ -182,6 +191,8 @@ public class StructTree {
 
 	public void svarCase(String name, String scope, Svar sv) {
 
+		name = name.toLowerCase();
+		
 		if (S.var_all.containsKey(name)) {
 			LogUtils.errMsg("Svar redefined: "+name, S.currentAbsolutePath);
 			S.error_var_redefined.put(name, "svar_cases");
@@ -203,6 +214,10 @@ public class StructTree {
 	}
 
 	public void external(String name, String scope, String externalType) {
+		
+		name = name.toLowerCase();
+		externalType = externalType.toLowerCase();
+		
 		if (S.var_all.containsKey(name)) {
 			LogUtils.errMsg("External variable redefined: "+name, S.currentAbsolutePath);
 			S.error_var_redefined.put(name, "external");
@@ -226,6 +241,10 @@ public class StructTree {
 	}
 	
 	public void svarExpression(String name, String scope, String expression) {
+		
+		name = name.toLowerCase();
+		expression = expression.toLowerCase();
+		
 		if (S.var_all.containsKey(name)) {
 			LogUtils.errMsg("State variable redefined: "+name, S.currentAbsolutePath);
 			S.error_var_redefined.put(name, "svar_expression");
@@ -257,6 +276,11 @@ public class StructTree {
 	}
 
 	public void svarSum(String name, String scope, String hdr, String expression) {
+		
+		name = name.toLowerCase();
+		hdr = hdr.toLowerCase();
+		expression = expression.toLowerCase();
+		
 		if (S.var_all.containsKey(name)) {
 			LogUtils.errMsg("State variable redefined: "+name, S.currentAbsolutePath);
 			S.error_var_redefined.put(name, "svar_sum");
@@ -285,6 +309,10 @@ public class StructTree {
 	}
 
 	public void svarTable(String name, String scope, String sqlStr) {
+		
+		name = name.toLowerCase();
+		sqlStr = sqlStr.toLowerCase();
+		
 		if (S.var_all.containsKey(name)) {
 			LogUtils.errMsg("State variable redefined: "+name, S.currentAbsolutePath);
 			S.error_var_redefined.put(name, "svar_table");
@@ -312,6 +340,13 @@ public class StructTree {
 	}
 
 	public void svarDSS(String name, String scope, String b_part, String kind, String units, String convertToUnits) {
+		
+		name = name.toLowerCase();
+		if (b_part != null) b_part = b_part.toLowerCase();
+		kind = kind.toLowerCase();
+		units = units.toLowerCase();
+		if ( convertToUnits!=null) convertToUnits = convertToUnits.toLowerCase();
+		
 		if (S.var_all.containsKey(name)) {
 			LogUtils.errMsg("State variable redefined: "+name, S.currentAbsolutePath);
 			S.error_var_redefined.put(name, "svar_dss");
@@ -341,6 +376,11 @@ public class StructTree {
 	}
 
 	public void dvarStd(String name, String scope, String integer, String kind, String units) {
+		
+		name = name.toLowerCase();
+		kind = kind.toLowerCase();
+		units = units.toLowerCase();
+		
 		if (S.var_all.containsKey(name)) {
 			LogUtils.errMsg("Dvar redefined: "+name, "\n"+S.currentAbsolutePath);
 			S.error_var_redefined.put(name, "dvar_std");
@@ -350,7 +390,6 @@ public class StructTree {
 
 			// / better data structure
 			dv = new Dvar();
-			//dv.scope = scope;
 
 			dv.kind = kind;
 			dv.units = units;
@@ -360,7 +399,7 @@ public class StructTree {
 
 			if (integer != null) {
 				
-				dv.integer = "Y";
+				dv.integer = Param.yes;
 				dv.lowerBound = Param.integer_lowerBound;
 				dv.upperBound = Param.integer_upperBound;
 				
@@ -380,6 +419,12 @@ public class StructTree {
 
 	public void alias(String name, String scope, String kind, String units,
 			String expression) {
+		
+		name = name.toLowerCase();
+		if (kind!=null) kind = kind.toLowerCase();
+		if (units!=null) units = units.toLowerCase();
+		expression = expression.toLowerCase();
+		
 		if (S.var_all.containsKey(name)) {
 			LogUtils.errMsg("Alias redefined: "+name, S.currentAbsolutePath);
 			S.error_var_redefined.put(name, "dvar_alias");
@@ -411,6 +456,13 @@ public class StructTree {
 	public void dvarNonStd(String name, String scope, String kind,
 			String units,  String lowerBound,
 			String upperBound) {
+		
+		name = name.toLowerCase();
+		kind = kind.toLowerCase();
+		units = units.toLowerCase();
+		lowerBound = lowerBound.toLowerCase();
+		upperBound = upperBound.toLowerCase();
+		
 		if (S.var_all.containsKey(name)) {
 			LogUtils.errMsg("Dvar redefined: "+name, S.currentAbsolutePath);
 			S.error_var_redefined.put(name, "dvar_nonstd");
@@ -441,6 +493,12 @@ public class StructTree {
 	public void sequenceOrder(String sequenceName, String order,
 			String modelName, String condition) {
 
+		sequenceName = sequenceName.toLowerCase();
+		order = order.toLowerCase();
+		modelName = modelName.toLowerCase();
+		if (condition!=null) condition = condition.toLowerCase();
+		
+		
 		Integer i = Integer.parseInt(order);
 
 		if (S.seqList.contains(sequenceName)) {
