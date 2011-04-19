@@ -9,7 +9,7 @@ SEQUENCE CYCLE2 {
     order   2
     }
 
-MODEL first { 
+MODEL FIRST { 
 
  define first_global_A {std kind 'FLOW-CHANNEL' units 'TAF'}  
  define[local] first_local_B {upper unbounded kind 'FLOW-CHANNEL' units 'TAF'}   

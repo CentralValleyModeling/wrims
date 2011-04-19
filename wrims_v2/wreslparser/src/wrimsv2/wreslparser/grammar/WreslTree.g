@@ -120,15 +120,19 @@ weightItem
 	;
 		
 model
-	: MODEL IDENT '{' (pattern )+  '}' 
-	   {model_list.add($IDENT.text);}
-	-> {model_in_sequence.contains($IDENT.text)}?  ^(Model IDENT  (pattern )+  ) 
+@init { String id = null;}
+	: MODEL i=IDENT '{' (pattern )+  '}' 
+	   {id = $i.text.toLowerCase();  
+	    model_list.add(id);}
+	-> {model_in_sequence.contains(id)}?  ^(Model IDENT[id]  (pattern )+  ) 
 	->   // ignore
 	;
-sequence 
+sequence
+@init { String id = null;} 
 	: SEQUENCE s=IDENT '{' MODEL m=IDENT ( c=condition)? ORDER INTEGER '}' 
-	  {model_in_sequence.add($m.text);}
-	->  ^(Sequence $s Model $m Order INTEGER Condition[$c.text] )	 
+	  {id = $m.text.toLowerCase();
+	  	model_in_sequence.add(id);}
+	->  ^(Sequence $s Model IDENT[id] Order INTEGER Condition[$c.text] )	 
 	;
 	
 condition returns[String text]
