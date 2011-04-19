@@ -150,9 +150,9 @@ public class testController {
 	
 	public StudyDataSet parseCalsim3() throws RecognitionException, IOException{
 		
-		String csvFolderPath = "TestWreslWalker_calsim3_firstCycle";
+		String csvFolderPath = "TestWreslWalker_calsim3_full_study";
 		String inputFilePath = "D:\\CALSIM3.0_070110\\D1641\\Run\\maind1641.wresl";
-		String logFilePath = csvFolderPath+".log";	
+		String logFilePath = csvFolderPath+".log";
 		
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
@@ -168,12 +168,9 @@ public class testController {
 		
 		/// write to StudyDataSet
 		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
-		
-		/// get the model name of the first cycle
-		String modelName = sd.getModelList().get(0);
-		
-		/// write model data to csv files
-		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+				
+		/// write full study data to csv files
+		WriteCSV.study(sd, csvFolderPath ) ;
 	
 		return sd;	
 	}

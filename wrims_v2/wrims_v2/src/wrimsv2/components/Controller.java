@@ -11,6 +11,7 @@ import org.antlr.runtime.TokenStream;
 
 import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.Dvar;
+import wrimsv2.commondata.wresldata.External;
 import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
@@ -18,6 +19,7 @@ import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.evaluator.EvalExpression;
 import wrimsv2.evaluator.EvaluatorLexer;
 import wrimsv2.evaluator.EvaluatorParser;
+import wrimsv2.external.LoadAllDll;
 
 public class Controller {
 	public Controller(StudyDataSet sds){
@@ -26,6 +28,15 @@ public class Controller {
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
 		Date currTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 		Date endTime=new Date(ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
+		
+		for (int i=0; i<modelList.size(); i++){
+			String model=modelList.get(i);
+			ModelDataSet mds=modelDataSetMap.get(model);
+			ControlData.currModelDataSet=mds;
+			ControlData.currCycleIndex=i;
+			preProcess();
+		}
+		
 		while (currTime.getTime()<=endTime.getTime()){
 			for (int i=0; i<modelList.size(); i++){
 				String model=modelList.get(i);
@@ -42,16 +53,40 @@ public class Controller {
 			currTime=new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay); 
 		}
 	}
-
-	public static void processModel(){
+	
+	public static void preProcess(){
+		processSvarTimeseries();
 		processExternal();
+	}
+	
+	public static void processModel(){
 		processSvar();
-		//processDvar();	//To Do: allow process dvar
-		//processGoal();	//To Do: allow process goal
+		processDvar();	//To Do: allow process dvar
+		processGoal();	//To Do: allow process goal
+	}
+
+	public static void processSvarTimeseries(){
+		
 	}
 	
 	public static void processExternal(){
-		
+		ModelDataSet mds=ControlData.currModelDataSet;
+		ArrayList<String> exList = mds.exList;
+		Map<String, External> exMap =mds.exMap;
+		ControlData.currExMap=exMap;
+		ControlData.currEvalTypeIndex=4;
+		for (String exName: exList){
+			if (!ControlData.allExternalFunction.containsKey(exName)){
+				System.out.println("Process "+exName);
+				ControlData.currEvalName=exName;
+				External external=exMap.get(exName);
+				ControlData.allExternalFunction.put(exName, external.type);
+				if (!external.type.equals("f90") && !ControlData.allDll.contains(exName)){
+					ControlData.allDll.add(external.type);
+				}
+			}
+		}
+		new LoadAllDll(ControlData.allDll);
 	}
 	
 	public static void processSvar(){
@@ -62,6 +97,7 @@ public class Controller {
 		ControlData.currEvalTypeIndex=0;
 		for (String svName: svList){
 			ControlData.currEvalName=svName;
+			System.out.println("Process "+svName);
 			Svar svar=svMap.get(svName);
 			ArrayList<String> caseCondition=svar.caseCondition;
 			boolean condition=false;
@@ -83,6 +119,9 @@ public class Controller {
 			}
 			if (condition){
 				String evalString="v: "+svar.caseExpression.get(i);
+				if (svName.equals("")) {   //To Do: remove
+					int x=0;
+				}
 				ANTLRStringStream stream = new ANTLRStringStream(evalString);
 				EvaluatorLexer lexer = new EvaluatorLexer(stream);
 				TokenStream tokenStream = new CommonTokenStream(lexer);
@@ -99,6 +138,7 @@ public class Controller {
 				svar.setValue(0);
 			}
 		}
+		Error.writeEvaluationErrorFile("runtime_error.txt"); //To Do: relocate
 	}
 	
 	public static void processDvar(){

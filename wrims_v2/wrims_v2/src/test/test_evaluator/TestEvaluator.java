@@ -33,7 +33,7 @@ public class TestEvaluator extends TestCase{
 	public String inputFilePath;
 	public String logFilePath;
 	
-	@Test	public void testRelationStatement() throws RecognitionException, IOException {
+	public void testRelationStatement() throws RecognitionException, IOException {
 		ANTLRStringStream stream = new ANTLRStringStream("g: (2+a)*3.4-(5+6*7.0)*b+4*f<(2+b)*6+3*f");
 		EvaluatorLexer lexer = new EvaluatorLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
@@ -47,7 +47,7 @@ public class TestEvaluator extends TestCase{
 		System.out.println(ee.getMultiplier().get("b").getData());
 		System.out.println(ee.getMultiplier().get("f").getData());
 	}
-	@Test
+
 	public void testInternalFunctions() throws RecognitionException, IOException {
 		ANTLRStringStream stream = new ANTLRStringStream("g: max(4;-3)*a+min(3.1;100.2)*b+pow(3;abs(-2))*c+int(5.43)*d+log(2)*e<log10(10.0)");
 		EvaluatorLexer lexer = new EvaluatorLexer(stream);
@@ -64,7 +64,7 @@ public class TestEvaluator extends TestCase{
 		System.out.println(ee.getMultiplier().get("d").getData());
 		System.out.println(ee.getMultiplier().get("e").getData());
 	}
-	@Test
+
 	public void testConditionStatement() throws RecognitionException, IOException {
         String mainFile="z:\\temp\\test";
         FilePaths fp=new FilePaths();
@@ -84,7 +84,7 @@ public class TestEvaluator extends TestCase{
 		
 		Error.writeEvaluationErrorFile("log.txt");
 	}
-	@Test
+
 	public void testExternalFunction() throws RecognitionException, IOException {
         new LoadAllDll();
 
@@ -101,7 +101,7 @@ public class TestEvaluator extends TestCase{
 		
 		Error.writeEvaluationErrorFile("log.txt");
 	}
-	@Test
+
 	public void testInteger() throws RecognitionException, IOException {
 
         String mainFile="z:\\temp\\test";
@@ -117,7 +117,7 @@ public class TestEvaluator extends TestCase{
 		
 		Error.writeEvaluationErrorFile("log.txt");
 	}
-	@Test
+
 	public void testDaysIn() throws RecognitionException, IOException {
 
         String mainFile="z:\\temp\\test";
@@ -135,7 +135,7 @@ public class TestEvaluator extends TestCase{
 		
 		Error.writeEvaluationErrorFile("log.txt");
 	}
-	@Test
+
 	public void testTafcfs() throws RecognitionException, IOException {
 
         String mainFile="z:\\temp\\test";
@@ -153,7 +153,7 @@ public class TestEvaluator extends TestCase{
 		
 		Error.writeEvaluationErrorFile("log.txt");
 	}
-	@Test
+
 	public void testTimeseries() throws RecognitionException, IOException {
 
         String mainFile="z:\\temp\\test";
@@ -171,7 +171,7 @@ public class TestEvaluator extends TestCase{
 		
 		Error.writeEvaluationErrorFile("log.txt");
 	}
-	@Test
+
 	public void testSVTimeseries() throws RecognitionException, IOException {
 
         String mainFile="z:\\temp\\test";
@@ -192,7 +192,6 @@ public class TestEvaluator extends TestCase{
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
-	@Test
 	public void testSumExpression() throws RecognitionException, IOException {
 
         String mainFile="z:\\temp\\test";
@@ -223,7 +222,7 @@ public class TestEvaluator extends TestCase{
 		
 		Error.writeEvaluationErrorFile("log.txt");
 	}
-	@Test
+
 	public void testPastMonth() throws RecognitionException, IOException {
 
         String mainFile="z:\\temp\\test";
@@ -248,7 +247,7 @@ public class TestEvaluator extends TestCase{
 		
 		Error.writeEvaluationErrorFile("log.txt");
 	}
-	@Test
+
 	public void testLookUpTable() throws RecognitionException, IOException {
 
         String mainFile="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\main.wresl";
@@ -270,7 +269,7 @@ public class TestEvaluator extends TestCase{
 		
 		Error.writeEvaluationErrorFile("log.txt");
 	}
-	@Test
+
 	public void testLookUp() throws RecognitionException, IOException {
 
         String mainFile="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\main.wresl";
@@ -280,6 +279,23 @@ public class TestEvaluator extends TestCase{
         new ControlData();
 
         ANTLRStringStream stream = new ANTLRStringStream("v: select demand from swp_3pattern_demands given percent=75 use linear where contractor=1; month=7"); 
+		EvaluatorLexer  lexer = new EvaluatorLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+		evaluator.evaluator();
+		System.out.println(evaluator.evalValue.getData());
+		
+		Error.writeEvaluationErrorFile("log.txt");
+	}
+	
+	@Test
+	public void testLookUp1() throws RecognitionException, IOException {
+
+        FilePaths.setMainFilePaths("D:\\CALSIM3.0_070110\\D1641\\Run\\maind1641.wresl");
+		
+        new ControlData();
+
+        ANTLRStringStream stream = new ANTLRStringStream("v: SELECT target FROM res_level WHERE res_num=10;level=2;month=month"); 
 		EvaluatorLexer  lexer = new EvaluatorLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		EvaluatorParser evaluator = new EvaluatorParser(tokenStream);

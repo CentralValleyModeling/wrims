@@ -2,6 +2,7 @@ package wrimsv2.components;
 
 import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
+import wrimsv2.commondata.wresldata.External;
 import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
@@ -9,6 +10,7 @@ import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.LoopIndex;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -20,8 +22,11 @@ public class ControlData {
 	public static Map<String, Dvar> currDvMap=new HashMap<String, Dvar>();
 	public static Map<String, Alias> currAliasMap=new HashMap<String, Alias>();
 	public static Map<String, Goal> currGoalMap=new HashMap<String, Goal>();
+	public static Map<String, External> currExMap = new HashMap<String, External> ();
+	public static Map<String, String> allExternalFunction = new HashMap<String, String> ();
+	public static ArrayList<String> allDll= new ArrayList<String>() ;
 	public static int currCycleIndex;
-	public static int currEvalTypeIndex; //0=sv; 1=dv; 2=alias; 3=goal
+	public static int currEvalTypeIndex; //0=sv; 1=dv; 2=alias; 3=goal; 4=external
 	public static String currEvalName;
 	public static int currDay=1;
 	public static int currMonth;
