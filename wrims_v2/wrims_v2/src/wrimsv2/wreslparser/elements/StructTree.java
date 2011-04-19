@@ -198,6 +198,7 @@ public class StructTree {
 			S.error_var_redefined.put(name, "svar_cases");
 		} else {
 			S.var_all.put(name, "svar_cases");
+			S.svDvList.add(name);
 
 			// ///////////////////
 			//sv.scope = scope;
@@ -251,6 +252,7 @@ public class StructTree {
 		} else {
 
 			S.var_all.put(name, "svar_expression");
+			S.svDvList.add(name);
 
 			// / clearer data structure
 			String caseName = Param.defaultCaseName;
@@ -287,6 +289,7 @@ public class StructTree {
 		} else {
 
 			S.var_all.put(name, "svar_sum");
+			S.svDvList.add(name);
 
 			sv = new Svar();
 			//sv.scope = scope;
@@ -318,6 +321,7 @@ public class StructTree {
 			S.error_var_redefined.put(name, "svar_table");
 		} else {
 			S.var_all.put(name, "svar_table");
+			S.svDvList.add(name);
 
 
 			// / clearer data structure
@@ -353,6 +357,7 @@ public class StructTree {
 		} else {
 
 			S.var_all.put(name, "svar_dss");
+			S.svDvList.add(name);
 
 			// / clearer data structure
 			SvarTimeseries svTs = new SvarTimeseries();
@@ -387,6 +392,7 @@ public class StructTree {
 		} else {
 
 			S.var_all.put(name, "dvar_std");
+			S.svDvList.add(name);
 
 			// / better data structure
 			dv = new Dvar();
@@ -469,6 +475,7 @@ public class StructTree {
 		} else {
 
 			S.var_all.put(name, "dvar_nonstd");
+			S.svDvList.add(name);
 
 			// / better data structure
 			dv = new Dvar();
