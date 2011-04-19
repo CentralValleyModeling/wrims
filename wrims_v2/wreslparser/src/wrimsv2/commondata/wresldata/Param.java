@@ -11,7 +11,8 @@ public class Param {
 	  public static String always = "always";
 	  public static String constrain = "constrain";
 	  public static String skip = "#";
-	  public static String no = "N";
+	  public static String no =  "n";
+	  public static String yes = "y";	  
 	  public static String arg_seperator = ",";
 	  public static String new_seperator = ";";
 	  public static String csv_seperator = ",";

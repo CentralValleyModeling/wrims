@@ -63,7 +63,7 @@ public class TestWreslWalker_svar {
 		String s;
 		int n;
 	
-		s ="svar_global,case1,1,month>=JAN .AND. month<=FEB .AND. sri_ytp==5 .AND. C_Nimbus_fmp_mif(-1)<800.,SELECT FEB FROM sacramento_runoff WHERE wateryear=wateryear";
+		s ="svar_global,case1,1,month>=jan .and. month<=feb .and. sri_ytp==5 .and. c_nimbus_fmp_mif(-1)<800.,select feb from sacramento_runoff where wateryear=wateryear";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -73,12 +73,12 @@ public class TestWreslWalker_svar {
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "svar_local,MAR_SEP,1,month>=MAR .AND. month<=SEP,SUM(i=-(month-MAY);SEP-month) I_Folsm(i)*cfs_taf(i)+I300(i)*cfs_taf(i)";
+		s = "svar_local,mar_sep,1,month>=mar .and. month<=sep,sum(i=-(month-may);sep-month) i_folsm(i)*cfs_taf(i)+i300(i)*cfs_taf(i)";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 		
-		s = "svar_local,other,2,always,MIN(Max(I_Folsm(i);200);I300(i))";
+		s = "svar_local,other,2,always,min(max(i_folsm(i);200);i300(i))";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);

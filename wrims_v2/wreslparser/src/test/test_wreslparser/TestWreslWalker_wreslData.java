@@ -47,10 +47,10 @@ public class TestWreslWalker_wreslData {
 			
 		String fileText = Tools.readFileAsString(logFilePath);	
 
-		int correct = RegUtils.timesOfMatches(fileText, "Model second watch_this .+This-is-correct");
+		int correct = RegUtils.timesOfMatches(fileText, "Model second watch_this .+this-is-correct");
 		Assert.assertEquals(correct, 1);
 
-		int wrong = RegUtils.timesOfMatches(fileText, "Model second watch_this .+This-should-not-exist-in-model-second");
+		int wrong = RegUtils.timesOfMatches(fileText, "Model second watch_this .+this-should-not-exist-in-model-second");
 		Assert.assertEquals(wrong, 0);
 		
 		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");

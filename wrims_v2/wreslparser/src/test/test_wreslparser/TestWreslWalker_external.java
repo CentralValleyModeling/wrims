@@ -63,7 +63,7 @@ public class TestWreslWalker_external {
 		String s;
 		int n;
 	
-		s = "extern_global,CVGroundwater.dll";
+		s = "extern_global,cvgroundwater.dll";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);

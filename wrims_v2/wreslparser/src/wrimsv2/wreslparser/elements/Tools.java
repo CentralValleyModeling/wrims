@@ -44,11 +44,12 @@ public class Tools {
 		if (s==null)  return null; 
 		
 		s = replace_ignoreChar(s);
+		s = replace_seperator(s);
 		
-		s=s.replaceAll("\\.AND\\.", " \\.AND\\. ");
-		s=s.replaceAll("\\.OR\\.",  " \\.OR\\. ");
-		s=s.replaceAll("\\.and\\.", " \\.AND\\. ");
-		s=s.replaceAll("\\.or\\.",  " \\.OR\\. ");
+		s=s.replaceAll("\\.AND\\.", " \\.and\\. ");
+		s=s.replaceAll("\\.OR\\.",  " \\.or\\. ");
+		s=s.replaceAll("\\.and\\.", " \\.and\\. ");
+		s=s.replaceAll("\\.or\\.",  " \\.or\\. ");
 		
 		return s;
 	}

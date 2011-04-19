@@ -149,10 +149,10 @@ public class TestWreslWalker {
 		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
 		Assert.assertEquals(totalErrs, 2);	
 
-		int redefErrs1 = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: C_Banks");
+		int redefErrs1 = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: c_banks");
 		Assert.assertEquals(redefErrs1, 1);
 		
-		int redefErrs2 = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: C_SacFea");
+		int redefErrs2 = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: c_sacfea");
 		Assert.assertEquals(redefErrs2, 1);	
 	}		
 
@@ -193,10 +193,10 @@ public class TestWreslWalker {
 		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
 		Assert.assertEquals(totalErrs, 2);	
 
-		int err1 = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: C_Banks");
+		int err1 = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: c_banks");
 		Assert.assertEquals(err1, 1);
 		
-		int err2 = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: C_SacFea");
+		int err2 = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: c_sacfea");
 		Assert.assertEquals(err2, 1);
 	}		
 	
@@ -230,10 +230,10 @@ public class TestWreslWalker {
 		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
 		Assert.assertEquals(totalErrs, 0);	
 
-		int seq1 = RegUtils.timesOfMatches(fileText, "Sequence: 4 : CYCLE2   Model: empty");
+		int seq1 = RegUtils.timesOfMatches(fileText, "Sequence.+4.+cycle2.+empty");
 		Assert.assertEquals(seq1, 1);
 		
-		int seq2 = RegUtils.timesOfMatches(fileText, "Sequence: 15 : CYCLE1   Model: first");
+		int seq2 = RegUtils.timesOfMatches(fileText, "Sequence.+15.+cycle1.+first");
 		Assert.assertEquals(seq2, 1);
 	}	
 

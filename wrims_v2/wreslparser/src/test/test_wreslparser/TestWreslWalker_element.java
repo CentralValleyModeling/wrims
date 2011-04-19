@@ -65,7 +65,7 @@ public class TestWreslWalker_element {
 		
 		
 		String fileText = Tools.readFileAsString(logFilePath);
-		int redefineErrs = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: C_Banks");
+		int redefineErrs = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: c_banks");
 		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
 		Assert.assertEquals(redefineErrs, 1);
 		Assert.assertEquals(totalErrs, 1);		
@@ -109,7 +109,7 @@ public class TestWreslWalker_element {
 		
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\svar_timeseries.csv");	
 
-		int r1 = RegUtils.timesOfMatches(csvText, "complex.+UD_CCWD.+DEMAND-CVP.+TAF.+CFS");
+		int r1 = RegUtils.timesOfMatches(csvText, "complex.+ud_ccwd.+demand-cvp.+taf.+cfs");
 		Assert.assertEquals(r1, 1);	
 		
 		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).svTsList_global.get(0),"simple" );
@@ -151,7 +151,7 @@ public class TestWreslWalker_element {
 		
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\svar.csv");	
 
-		int r1 = RegUtils.timesOfMatches(csvText, "minflow_C_Orovl.+\\.29");
+		int r1 = RegUtils.timesOfMatches(csvText, "minflow_c_orovl.+\\.29");
 		Assert.assertEquals(r1, 1);	
 	}
 	@Test(groups = { "WRESL_elements" })
@@ -192,7 +192,7 @@ public class TestWreslWalker_element {
 		String s;
 		int n;
 		
-		s = "division_test#(A_Orovl_forward-A_Orovl_back)/(100*max(0.01;S_Orovl(-1)))";
+		s = "division_test#(a_orovl_forward-a_orovl_back)/(100*max(0.01;s_orovl(-1)))";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s);
 		Assert.assertEquals(n, 1);
@@ -240,7 +240,7 @@ public class TestWreslWalker_element {
 		String s;
 		int n;
 		
-		s = "OroInfEst#(i=0;SEP-month;1) max(I_Orovl(i);dummy)*cfs_taf(i)";
+		s = "oroinfest#(i=0;sep-month;1) max(i_orovl(i);dummy)*cfs_taf(i)";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -285,12 +285,12 @@ public class TestWreslWalker_element {
 		String s;
 		int n;
 	
-		s = "multi_where#SELECT target FROM res_level WHERE res_num=1;level=4;month=month";
+		s = "multi_where#select target from res_level where res_num=1;level=4;month=month";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "simple#SELECT target FROM feather_fish_203 WHERE month=NOV";
+		s = "simple#select target from feather_fish_203 where month=nov";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -338,7 +338,7 @@ public class TestWreslWalker_element {
 		String s;
 		int n;
 	
-		s = "full_table#SELECT area FROM res_info GIVEN storage=1000*S_Orovl(-1) USE linear WHERE res_num=6;somevalue=7";
+		s = "full_table#select area from res_info given storage=1000*s_orovl(-1) use linear where res_num=6;somevalue=7";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -375,12 +375,12 @@ public class TestWreslWalker_element {
 		String s;
 		int n;
 	
-		s = "alias_global,flow-channel,cfs,C_SacFea+D_SacFea";
+		s = "alias_global,flow-channel,cfs,c_sacfea+d_sacfea";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 		
-		s = "alias_local,..,cfs,D419_swp[monthlyweighted5]";
+		s = "alias_local,..,cfs,d419_swp[monthlyweighted5]";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
