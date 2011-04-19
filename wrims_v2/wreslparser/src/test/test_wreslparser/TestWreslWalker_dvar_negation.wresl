@@ -1,0 +1,22 @@
+SEQUENCE CYCLE1 {
+    model   First
+    order   1
+    }
+
+MODEL first { 
+
+
+define dvar_global {lower -99999 upper 999999 kind 'CHANNEL' units 'CFS'}
+define[local] dvar_local {lower -99999 upper 999999 kind 'CHANNEL' units 'CFS'}
+
+}	
+
+
+	
+
+	 
+
+
+ 
+
+

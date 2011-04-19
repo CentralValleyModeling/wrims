@@ -31,6 +31,8 @@ public class StudyParser {
 			
 			SimulationDataSet ds = td.model_dataset_map.get(modelName);
 			ModelDataSet thisModelDataSet = new ModelDataSet();
+
+			thisModelDataSet.svDvList = ds.svDvList; 
 			
 			thisModelDataSet.dvList = ds.dvList; 
 			thisModelDataSet.dvList_global = ds.dvList_global; 

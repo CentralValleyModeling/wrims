@@ -61,7 +61,10 @@ public class SimulationDataSet {
 	public ArrayList<String> exList_local = new ArrayList<String>();
 	public Map<String, External> exMap = new HashMap<String, External>();
 
-
+    //  / sv and dv list
+	public ArrayList<String> svDvList = new ArrayList<String>();	
+	
+	
 	// / svar timeseries data structure
 	public ArrayList<String> svTsList = new ArrayList<String>();
 	public ArrayList<String> svTsList_global = new ArrayList<String>();

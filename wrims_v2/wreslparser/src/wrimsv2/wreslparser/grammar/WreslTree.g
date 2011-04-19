@@ -301,7 +301,7 @@ term :	      IDENT | number | function  |  '(' expression ')' ;
 	
 unary :	('+'! | negation)? term 	;
 
-negation :	'-' -> NEGATION	;
+negation :	'-' -> NEGATION["-"]	;
 
 mult :	unary (('*' | '/' ) unary)* 	;
 	
