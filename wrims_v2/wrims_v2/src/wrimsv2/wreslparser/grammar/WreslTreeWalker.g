@@ -71,7 +71,7 @@ sequence
 			SimulationDataSet M = new SimulationDataSet();
 			M.currentAbsolutePath=currentAbsolutePath;
 			M.currentAbsoluteParent=currentAbsoluteParent;
-			modelDataMap.put($m.text, M);
+			modelDataMap.put($m.text.toLowerCase(), M);
 		}
 
 
@@ -81,9 +81,9 @@ model
 @after{ F.S = thisFileDataSet; }
 	: ^(Model i=IDENT  			
 				{   
-					F.S = thisFileDataSet; F.modelList($i.text); 
+					F.S = thisFileDataSet; F.modelList($i.text.toLowerCase()); 
 					
-				    F.S = modelDataMap.get($i.text);
+				    F.S = modelDataMap.get($i.text.toLowerCase());
 				} 
 				
 				(pattern )+ ) 
