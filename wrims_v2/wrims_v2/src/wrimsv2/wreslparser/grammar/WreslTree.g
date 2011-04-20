@@ -269,11 +269,11 @@ lower_and_or_upper : lower_upper
 				   | upper_lower ;
 				   
 lower_upper : lower (u=upper)?
-				-> {u==null}? lower Upper LimitType["Std"]
+				-> {u==null}? lower Upper LimitType["Unbounded"]
 				->            lower $u
 				 ;
 upper_lower : upper (l=lower)? 
-                -> {l==null}? Lower LimitType["Std"] upper
+                -> {l==null}? Lower LimitType["0"] upper
                 ->            $l upper
    				 ;				   
 
@@ -284,7 +284,16 @@ upper: UPPER ( UNBOUNDED -> Upper LimitType["Unbounded"] | e=expression -> Upper
 /// IDENT =, <, > ///
 
 
-constraint_statement : expression ( '<' | '>' | '='  ) expression  ;
+constraint_statement returns[String text]
+	: c=constraint_statement_preprocessed
+	 
+	 {  $text = Tools.replace_ignoreChar($c.text); 
+	    $text = Tools.replace_seperator($text); 
+	 };	
+
+constraint_statement_preprocessed: 
+	c=expression ( '<' | '>' | '='  ) expression;
+
 
 assignment  :  t=term_simple  '=' e=expression  
 -> Assignment[$t.text+"="+$e.text]
@@ -311,7 +320,6 @@ expression returns[String text]:
 	add 
 	{  $text = Tools.replace_ignoreChar($add.text); 
 	   $text = Tools.replace_seperator($text); 
-	
 	 };	
 	
 c_term
