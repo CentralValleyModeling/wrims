@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public class WriteCSV {
 	  public static String weight_header ="DVAR,WEIGHT";
 	  public static String external_header ="FUNCTION,FILE,FROM_WRESL_FILE";
 	  public static String svar_header   ="NAME,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
-	  public static String svarTs_header ="NAME,B_PART,TYPE,UNITS,CONVERT_TO_UNITS,FROM_WRESL_FILE";
+	  public static String timeseries_header ="NAME,B_PART,TYPE,UNITS,CONVERT_TO_UNITS,FROM_WRESL_FILE";
 	  public static String dvar_header ="NAME,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE";	  
 	  public static String alias_header ="NAME,TYPE,UNITS,EXPRESSION,FROM_WRESL_FILE";
 	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
@@ -46,6 +47,12 @@ public class WriteCSV {
 				out_seq.print(WriteCSV.sequence_header + "\n");			
 				sequence(sd.getModelList(), sd.getModelConditionList(), out_seq);
 				out_seq.close();
+				
+				PrintWriter out_timeseries_wholeStudy = Tools.openFile(outParent, "TIMESERIES.csv");
+				out_timeseries_wholeStudy.print(WriteCSV.timeseries_header + "\n");			
+				timeseries_wholeStudy( sd.getTimeseriesMap(), out_timeseries_wholeStudy);
+				out_timeseries_wholeStudy.close();
+				
 			}
 			catch (IOException e1) {
 				// TODO Auto-generated catch block
@@ -105,9 +112,9 @@ public class WriteCSV {
 			out_ex.close();
 		}
 		if(ds.tsList.size()>0){
-			out_svTs = Tools.openFile(outFolder, "svar_timeseries.csv");	
-			out_svTs.print(WriteCSV.svarTs_header + "\n");
-			svarTs(ds.tsMap, ds.tsList, out_svTs);
+			out_svTs = Tools.openFile(outFolder, "timeseries.csv");	
+			out_svTs.print(WriteCSV.timeseries_header + "\n");
+			timeseries_model(ds.tsMap, ds.tsList, out_svTs);
 			out_svTs.close();
 		}
 		if(ds.svList.size()>0){
@@ -151,7 +158,7 @@ public class WriteCSV {
 
 	};	
 
-	  public static void svarTs(Map<String,Timeseries> sTsMap, ArrayList<String> list ,PrintWriter out) {
+	  public static void timeseries_model(Map<String,Timeseries> sTsMap, ArrayList<String> list ,PrintWriter out) {
 		    
 			List<String> keys = list;
 			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
@@ -223,10 +230,7 @@ public class WriteCSV {
 			Collections.sort(keys);
 			
 		    for (Integer k: keys ){
-		    	
-		    	//out.print(k);
-		    	//Sequence s = seqMap.get(k);
-		    	
+		    			    	
 		    	out.print(seqMap.get(k).modelName);
 		    	out.print(Param.csv_seperator+seqMap.get(k).condition);
 				out.print("\n");	
@@ -234,6 +238,32 @@ public class WriteCSV {
 			}
 	  };	
 	
+	  
+	  public static void timeseries_wholeStudy(Map<String,Timeseries> tsMap, PrintWriter out) {
+		    
+			Set<String> kSet = tsMap.keySet();
+			
+			List<String> keys = new ArrayList<String>(kSet);
+			
+			Collections.sort(keys);
+			
+		    for (String k: keys ){
+		    	
+		    	Timeseries s = tsMap.get(k);
+		    	
+			    out.print(k); // for SVAR NAME
+			    out.print(Param.csv_seperator+s.dssBPart); //for DSS B Part	
+			    out.print(Param.csv_seperator+s.kind); //for KIND		    	
+		    	out.print(Param.csv_seperator+s.units); //for UNITS
+		    	out.print(Param.csv_seperator+s.convertToUnits); //for CONVERT
+		    	out.print(",n"); //for OUTPUT
+
+				out.print(Param.csv_seperator+s.fromWresl);
+				out.print("\n");	
+		    	
+			}
+	  };
+	  
 	  public static void external(Map<String,External> exMap, ArrayList<String> list ,PrintWriter out) {
 		    
 			List<String> keys = list;
