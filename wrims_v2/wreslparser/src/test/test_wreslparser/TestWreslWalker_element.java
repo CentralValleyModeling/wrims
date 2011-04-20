@@ -112,8 +112,8 @@ public class TestWreslWalker_element {
 		int r1 = RegUtils.timesOfMatches(csvText, "complex.+ud_ccwd.+demand-cvp.+taf.+cfs");
 		Assert.assertEquals(r1, 1);	
 		
-		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).svTsList_global.get(0),"simple" );
-		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).svTsList_local.get(0),"complex" );
+		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).tsList_global.get(0),"simple" );
+		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).tsList_local.get(0),"complex" );
 	}
 	
 	@Test(groups = { "WRESL_elements" })

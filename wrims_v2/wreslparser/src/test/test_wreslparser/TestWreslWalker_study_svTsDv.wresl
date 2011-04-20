@@ -1,0 +1,23 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL firsT { 
+
+
+define svar {sum(i=0,	SEP-month,1) max(I_Orovl(i),dummy)*	cfs_taf(i) }
+
+define ts {timeseries kind 'EVAPORATION-RATE' units 'IN'}
+
+define dvar {std kind 'FLOW-CHANNEL' units 'TAF'}  	
+	
+	}	
+
+
+	
+
+	 
+
+
+ 

@@ -21,14 +21,17 @@ public class ModelDataSet {
 	public Map<String, External> exMap = new HashMap<String, External>();
 	
 	
-    //  / sv and dv list
-	public ArrayList<String> svDvList = new ArrayList<String>();	
+    //  / sv, ts, and dv list
+	public ArrayList<String> svTsDvList = new ArrayList<String>();	
+	
+	//  / sv and ts list
+	public ArrayList<String> svTsList = new ArrayList<String>();
 	
 	// / svar timeseries data structure
-	public ArrayList<String> svTsList = new ArrayList<String>();
-	public ArrayList<String> svTsList_global = new ArrayList<String>();
-	public ArrayList<String> svTsList_local = new ArrayList<String>();
-	public Map<String, SvarTimeseries> svTsMap = new HashMap<String, SvarTimeseries>();
+	public ArrayList<String> tsList = new ArrayList<String>();
+	public ArrayList<String> tsList_global = new ArrayList<String>();
+	public ArrayList<String> tsList_local = new ArrayList<String>();
+	public Map<String, Timeseries> tsMap = new HashMap<String, Timeseries>();
 	
 	// / svar data structure
 	public ArrayList<String> svList = new ArrayList<String>();

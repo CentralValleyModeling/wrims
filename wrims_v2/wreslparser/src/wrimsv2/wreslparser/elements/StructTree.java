@@ -11,7 +11,7 @@ import wrimsv2.commondata.wresldata.External;
 import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.Svar;
-import wrimsv2.commondata.wresldata.SvarTimeseries;
+import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.commondata.wresldata.WeightElement;
 
 public class StructTree {
@@ -34,7 +34,7 @@ public class StructTree {
 	// / external function structure
 	public External ex;
 
-	public SvarTimeseries svTs;
+	public Timeseries svTs;
 	
 	public Svar sv;
 
@@ -198,7 +198,8 @@ public class StructTree {
 			S.error_var_redefined.put(name, "svar_cases");
 		} else {
 			S.var_all.put(name, "svar_cases");
-			S.svDvList.add(name);
+			S.svTsDvList.add(name);
+			S.svTsList.add(name);
 
 			// ///////////////////
 			//sv.scope = scope;
@@ -252,7 +253,8 @@ public class StructTree {
 		} else {
 
 			S.var_all.put(name, "svar_expression");
-			S.svDvList.add(name);
+			S.svTsDvList.add(name);
+			S.svTsList.add(name);
 
 			// / clearer data structure
 			String caseName = Param.defaultCaseName;
@@ -289,7 +291,8 @@ public class StructTree {
 		} else {
 
 			S.var_all.put(name, "svar_sum");
-			S.svDvList.add(name);
+			S.svTsDvList.add(name);
+			S.svTsList.add(name);
 
 			sv = new Svar();
 			//sv.scope = scope;
@@ -321,7 +324,8 @@ public class StructTree {
 			S.error_var_redefined.put(name, "svar_table");
 		} else {
 			S.var_all.put(name, "svar_table");
-			S.svDvList.add(name);
+			S.svTsDvList.add(name);
+			S.svTsList.add(name);
 
 
 			// / clearer data structure
@@ -357,10 +361,11 @@ public class StructTree {
 		} else {
 
 			S.var_all.put(name, "svar_dss");
-			S.svDvList.add(name);
+			S.svTsDvList.add(name);
+			S.svTsList.add(name);
 
 			// / clearer data structure
-			SvarTimeseries svTs = new SvarTimeseries();
+			Timeseries svTs = new Timeseries();
 			//svTs.scope = scope;
 			if (b_part!=null) svTs.dssBPart = b_part; 
 			svTs.kind = kind;
@@ -368,13 +373,13 @@ public class StructTree {
 			if (convertToUnits!=null) {svTs.convertToUnits = convertToUnits;}
 			svTs.format = "dss";
 			svTs.fromWresl = S.currentAbsolutePath;
-			S.svTsMap.put(name, svTs);
-			S.svTsList.add(name);
+			S.tsMap.put(name, svTs);
+			S.tsList.add(name);
 			
 			if      (scope == null)
-					{S.svTsList_global.add(name); svTs.scope = Param.global;}
+					{S.tsList_global.add(name); svTs.scope = Param.global;}
 			else if (scope.equalsIgnoreCase(Param.local))
-					{S.svTsList_local.add(name); svTs.scope = Param.local;}
+					{S.tsList_local.add(name); svTs.scope = Param.local;}
 			else{ LogUtils.errMsg("Svar timeseries scope undefined: "+name, S.currentAbsolutePath);}
 
 		}
@@ -392,7 +397,7 @@ public class StructTree {
 		} else {
 
 			S.var_all.put(name, "dvar_std");
-			S.svDvList.add(name);
+			S.svTsDvList.add(name);
 
 			// / better data structure
 			dv = new Dvar();
@@ -475,7 +480,7 @@ public class StructTree {
 		} else {
 
 			S.var_all.put(name, "dvar_nonstd");
-			S.svDvList.add(name);
+			S.svTsDvList.add(name);
 
 			// / better data structure
 			dv = new Dvar();

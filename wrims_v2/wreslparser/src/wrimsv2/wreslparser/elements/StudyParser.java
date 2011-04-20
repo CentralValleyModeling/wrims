@@ -32,17 +32,18 @@ public class StudyParser {
 			SimulationDataSet ds = td.model_dataset_map.get(modelName);
 			ModelDataSet thisModelDataSet = new ModelDataSet();
 
-			thisModelDataSet.svDvList = ds.svDvList; 
+			thisModelDataSet.svTsDvList = ds.svTsDvList; 
+			thisModelDataSet.svTsList = ds.svTsList; 
 			
 			thisModelDataSet.dvList = ds.dvList; 
 			thisModelDataSet.dvList_global = ds.dvList_global; 
 			thisModelDataSet.dvList_local = ds.dvList_local; 
 			thisModelDataSet.dvMap = ds.dvMap; 
 
-			thisModelDataSet.svTsList = ds.svTsList; 
-			thisModelDataSet.svTsList_global = ds.svTsList_global; 
-			thisModelDataSet.svTsList_local = ds.svTsList_local; 
-			thisModelDataSet.svTsMap = ds.svTsMap;
+			thisModelDataSet.tsList = ds.tsList; 
+			thisModelDataSet.tsList_global = ds.tsList_global; 
+			thisModelDataSet.tsList_local = ds.tsList_local; 
+			thisModelDataSet.tsMap = ds.tsMap;
 			
 			thisModelDataSet.svList = ds.svList; 
 			thisModelDataSet.svList_global = ds.svList_global; 

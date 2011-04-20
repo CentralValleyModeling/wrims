@@ -17,7 +17,7 @@ import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
-import wrimsv2.commondata.wresldata.SvarTimeseries;
+import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.commondata.wresldata.WeightElement;
 
 
@@ -104,10 +104,10 @@ public class WriteCSV {
 			external(ds.exMap, ds.exList, out_ex);	
 			out_ex.close();
 		}
-		if(ds.svTsList.size()>0){
+		if(ds.tsList.size()>0){
 			out_svTs = Tools.openFile(outFolder, "svar_timeseries.csv");	
 			out_svTs.print(WriteCSV.svarTs_header + "\n");
-			svarTs(ds.svTsMap, ds.svTsList, out_svTs);
+			svarTs(ds.tsMap, ds.tsList, out_svTs);
 			out_svTs.close();
 		}
 		if(ds.svList.size()>0){
@@ -151,14 +151,14 @@ public class WriteCSV {
 
 	};	
 
-	  public static void svarTs(Map<String,SvarTimeseries> sTsMap, ArrayList<String> list ,PrintWriter out) {
+	  public static void svarTs(Map<String,Timeseries> sTsMap, ArrayList<String> list ,PrintWriter out) {
 		    
 			List<String> keys = list;
 			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
 			
 		    for (String k: keys ){
 		    	
-		    	SvarTimeseries s = sTsMap.get(k);
+		    	Timeseries s = sTsMap.get(k);
 		    	
 			    out.print(k); // for SVAR NAME
 			    out.print(Param.csv_seperator+s.dssBPart); //for DSS B Part	

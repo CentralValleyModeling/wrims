@@ -1,7 +1,7 @@
 package wrimsv2.commondata.wresldata;
 
 
-public class SvarTimeseries {
+public class Timeseries {
 	
 	public String scope;
 	public String dssBPart;
@@ -11,7 +11,7 @@ public class SvarTimeseries {
 	public String convertToUnits;
 	public String fromWresl;
 	
-	public SvarTimeseries(){
+	public Timeseries(){
 		scope=Param.undefined;
 		dssBPart=Param.undefined;
 		format=Param.undefined;
@@ -39,11 +39,11 @@ public class SvarTimeseries {
 			return false;
 		}
 
-		else if (((SvarTimeseries) obj).equalEva() == null) {
+		else if (((Timeseries) obj).equalEva() == null) {
 			return false;
 		}
 
-		else if (this.equalEva() == ((SvarTimeseries) obj).equalEva()) {
+		else if (this.equalEva() == ((Timeseries) obj).equalEva()) {
 			return true;
 		}
 

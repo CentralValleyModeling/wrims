@@ -10,7 +10,7 @@ import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.External;
 import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.Svar;
-import wrimsv2.commondata.wresldata.SvarTimeseries;
+import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.commondata.wresldata.WeightElement;
 
 public class SimulationDataSet {
@@ -61,15 +61,18 @@ public class SimulationDataSet {
 	public ArrayList<String> exList_local = new ArrayList<String>();
 	public Map<String, External> exMap = new HashMap<String, External>();
 
-    //  / sv and dv list
-	public ArrayList<String> svDvList = new ArrayList<String>();	
+    //  / sv, ts, and dv list
+	public ArrayList<String> svTsDvList = new ArrayList<String>();	
+    
+	//  / sv and ts list
+	public ArrayList<String> svTsList = new ArrayList<String>();	
 	
 	
 	// / svar timeseries data structure
-	public ArrayList<String> svTsList = new ArrayList<String>();
-	public ArrayList<String> svTsList_global = new ArrayList<String>();
-	public ArrayList<String> svTsList_local = new ArrayList<String>();
-	public Map<String, SvarTimeseries> svTsMap = new HashMap<String, SvarTimeseries>();
+	public ArrayList<String> tsList = new ArrayList<String>();
+	public ArrayList<String> tsList_global = new ArrayList<String>();
+	public ArrayList<String> tsList_local = new ArrayList<String>();
+	public Map<String, Timeseries> tsMap = new HashMap<String, Timeseries>();
 	
 	// / svar data structure
 	public ArrayList<String> svList = new ArrayList<String>();
@@ -146,10 +149,10 @@ public class SimulationDataSet {
 			}
 		}
 
-		for (String e : s.svTsList){ 
-			if (this.svTsList.contains(e)) {
-				String f1 = s.svTsMap.get(e).fromWresl; //String f1 = filePath;
-				String f2 = this.svTsMap.get(e).fromWresl;
+		for (String e : s.tsList){ 
+			if (this.tsList.contains(e)) {
+				String f1 = s.tsMap.get(e).fromWresl; //String f1 = filePath;
+				String f2 = this.tsMap.get(e).fromWresl;
 				LogUtils.errMsg("State variable redefined: "+e, f1, f2, reverseMap);
 				b = true;
 			}
@@ -210,64 +213,6 @@ public class SimulationDataSet {
 		
 	}
 	
-	public SimulationDataSet addToLocal(Object obj) {
-		
-		SimulationDataSet s = (SimulationDataSet)obj;
-		
-		if (!s.wtList.isEmpty()) {
-			this.wtList.addAll(s.wtList);
-			this.wtList_local.addAll(s.wtList);
-			this.wtMap.putAll(s.wtMap);
-		}
-		
-		if (!s.incFileList.isEmpty()) {
-			this.incFileList.addAll(s.incFileList);
-			this.incFileList_local.addAll(s.incFileList);
-			this.incFileMap.putAll(s.incFileMap);
-		}
-
-		if (!s.exList.isEmpty()) {
-			this.exList.addAll(s.exList);
-			this.exList_local.addAll(s.exList);
-			this.exMap.putAll(s.exMap);
-		}
-
-		if (!s.svTsList.isEmpty()) {
-			this.svTsList.addAll(s.svTsList);
-			this.svTsList_local.addAll(s.svTsList);
-			this.svTsMap.putAll(s.svTsMap);
-		}
-		
-		if (!s.svList.isEmpty()) {
-			this.svList.addAll(s.svList);
-			this.svList_local.addAll(s.svList);
-			this.svMap.putAll(s.svMap);
-		}
-
-		if (!s.dvList.isEmpty()) {
-			this.dvList.addAll(s.dvList);
-			this.dvList_local.addAll(s.dvList);
-			this.dvMap.putAll(s.dvMap);
-		}
-		if (!s.asList.isEmpty()) {
-			this.asList.addAll(s.asList);
-			this.asList_local.addAll(s.asList);
-			this.asMap.putAll(s.asMap);
-		}
-
-		if (!s.gList.isEmpty()) {
-			this.gList.addAll(s.gList);
-			this.gList_local.addAll(s.gList);
-			this.gMap.putAll(s.gMap);
-		}
-
-		if (!s.model_list.isEmpty()) {
-			this.model_list.addAll(s.model_list);
-		}
-
-		return this;
-	}	
-
 	public SimulationDataSet convertToLocal() {		
 
 		if (!this.wtList.isEmpty()) {
@@ -282,10 +227,10 @@ public class SimulationDataSet {
 			this.incFileList_global = new ArrayList<String>();
 		}
 
-		if (!this.svTsList.isEmpty()) {
-			this.svTsList_local = new ArrayList<String>();
-			this.svTsList_local.addAll(this.svTsList);
-			this.svTsList_global = new ArrayList<String>();
+		if (!this.tsList.isEmpty()) {
+			this.tsList_local = new ArrayList<String>();
+			this.tsList_local.addAll(this.tsList);
+			this.tsList_global = new ArrayList<String>();
 		}
 		
 		if (!this.svList.isEmpty()) {
@@ -347,12 +292,12 @@ public class SimulationDataSet {
 			}
 		}
 
-		if (!this.svTsList_global.isEmpty()) {
-			out.svTsList.addAll(this.svTsList_global);
-			out.svTsList_global.addAll(this.svTsList_global);
+		if (!this.tsList_global.isEmpty()) {
+			out.tsList.addAll(this.tsList_global);
+			out.tsList_global.addAll(this.tsList_global);
 
-			for (String key : this.svTsList_global) {
-				out.svTsMap.put(key, this.svTsMap.get(key));
+			for (String key : this.tsList_global) {
+				out.tsMap.put(key, this.tsMap.get(key));
 			}
 		}
 		
@@ -390,7 +335,9 @@ public class SimulationDataSet {
 	
 	public SimulationDataSet remove(SimulationDataSet s) {
 		
-
+		if (!s.svTsDvList.isEmpty()) this.svTsDvList.removeAll(s.svTsDvList);
+		if (!s.svTsList.isEmpty()) this.svTsList.removeAll(s.svTsList);
+		
 		if (!s.wtList.isEmpty()) {
 			this.wtList.removeAll(s.wtList);
 			this.wtList_global.removeAll(s.wtList);
@@ -415,12 +362,12 @@ public class SimulationDataSet {
 			Tools.mapRemoveAll(this.exMap, s.exList);
 		}
 
-		if (!s.svTsList.isEmpty()) {
-			this.svTsList.removeAll(s.svTsList);
-			if (!s.svTsList_global.isEmpty()) {this.svTsList_global.removeAll(s.svTsList);}
-			if (!s.svTsList_local.isEmpty()) {this.svTsList_local.removeAll(s.svTsList);}
+		if (!s.tsList.isEmpty()) {
+			this.tsList.removeAll(s.tsList);
+			if (!s.tsList_global.isEmpty()) {this.tsList_global.removeAll(s.tsList);}
+			if (!s.tsList_local.isEmpty()) {this.tsList_local.removeAll(s.tsList);}
 			//this.svTsMap.remove(s.svTsList);
-			Tools.mapRemoveAll(this.svTsMap, s.svTsList);
+			Tools.mapRemoveAll(this.tsMap, s.tsList);
 		}
 		
 		if (!s.svList.isEmpty()) {
@@ -466,6 +413,9 @@ public class SimulationDataSet {
 	
 	public SimulationDataSet add(SimulationDataSet s) {
 
+		if (!s.svTsDvList.isEmpty()) this.svTsDvList.addAll(s.svTsDvList);
+		if (!s.svTsList.isEmpty()) this.svTsList.addAll(s.svTsList);
+		
 		if (!s.wtList.isEmpty()) {
 			this.wtList.addAll(s.wtList);
 			if (!s.wtList_global.isEmpty()) {this.wtList_global.addAll(s.wtList_global);}
@@ -487,11 +437,11 @@ public class SimulationDataSet {
 			this.exMap.putAll(s.exMap);
 		}
 
-		if (!s.svTsList.isEmpty()) {
-			this.svTsList.addAll(s.svTsList);
-			if (!s.svTsList_global.isEmpty()) {this.svTsList_global.addAll(s.svTsList_global);}
-			if (!s.svTsList_local.isEmpty()) {this.svTsList_local.addAll(s.svTsList_local);}
-			this.svTsMap.putAll(s.svTsMap);
+		if (!s.tsList.isEmpty()) {
+			this.tsList.addAll(s.tsList);
+			if (!s.tsList_global.isEmpty()) {this.tsList_global.addAll(s.tsList_global);}
+			if (!s.tsList_local.isEmpty()) {this.tsList_local.addAll(s.tsList_local);}
+			this.tsMap.putAll(s.tsMap);
 		}
 		
 		if (!s.svList.isEmpty()) {
