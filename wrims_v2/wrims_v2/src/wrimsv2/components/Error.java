@@ -47,9 +47,9 @@ public class Error {
 		}else if (ControlData.currEvalTypeIndex == 1){
 			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in dvar definition of Cycle "+ControlData.currCycleIndex+": "+error);
 		}else if (ControlData.currEvalTypeIndex == 2){
-			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in constraint definition of Cycle "+ControlData.currCycleIndex+": "+error);
-		}else if (ControlData.currEvalTypeIndex == 3){
 			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in alias definition of Cycle "+ControlData.currCycleIndex+": "+error);
+		}else if (ControlData.currEvalTypeIndex == 3){
+			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in constraint definition of Cycle "+ControlData.currCycleIndex+": "+error);
 		}else if (ControlData.currEvalTypeIndex == 4){
 			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in external function definition of Cycle "+ControlData.currCycleIndex+": "+error);
 		}		

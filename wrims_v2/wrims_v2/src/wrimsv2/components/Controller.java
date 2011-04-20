@@ -244,9 +244,9 @@ public class Controller {
 	}
 	
 	public static void evaluateGoal(String goalName, String goalString){
-		String[] stringList=goalString.split("|");
+		String[] stringList=goalString.split("\\|");
 		for (int i=0; i<=1; i++){
-			if (stringList[i]!=null){
+			if (stringList[i]!=" "){
 				if (stringList[i].contains(":")){
 					String constraint[]=stringList[i].split(":");
 					ANTLRStringStream stream = new ANTLRStringStream("s:"+constraint[0]);
