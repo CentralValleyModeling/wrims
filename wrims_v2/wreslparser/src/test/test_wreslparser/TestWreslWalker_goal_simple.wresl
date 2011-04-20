@@ -11,7 +11,7 @@ goal C_SLCVP { C5_WTS = C5_WTS_Stg1 }
 goal a1 { b = c }
 goal[local] a2 { b >  c }
 goal a3 { b < c }
-	
+goal semicolon { b < max(a,c)+min(d,e) }	
 	
 	}	
 

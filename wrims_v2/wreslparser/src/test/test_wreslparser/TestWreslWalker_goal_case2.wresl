@@ -22,10 +22,10 @@ goal global_goal {
 goal[local] local_goal {
   lhs x
   case case1 {
-    condition   int( B2On )==1
+    condition   min(200., qwe_r) > max(x3,y4)
     rhs     y
     lhs>rhs     constrain
-    lhs<rhs     penalty 700. }
+    lhs<rhs     penalty max(a,b) }
   case case2 {
     condition   int( B2On )==0
     rhs     z

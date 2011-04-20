@@ -68,7 +68,7 @@ public class TestWreslWalker_goal {
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "a2#b>c";
+		s = "semicolon,default,1,always,b<max(a;c)+min(d;e)|";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -234,6 +234,10 @@ public class TestWreslWalker_goal {
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
+		s = "local_goal,case1,1,min(200.;qwe_r)>max(x3;y4),x>y | y-(x):-max(a;b)";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
 		
 		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).gList_global.get(0),"global_goal" );
 		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).gList_local.get(0),"local_goal" );
