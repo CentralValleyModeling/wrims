@@ -1,0 +1,24 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+	goal compute_rain_rel {
+		lhs Fr_rain_rel
+		case initialize {
+			condition month == sep .and. wateryear == 1921
+			rhs 0.0 }
+
+
+	}
+}
+
+
+	
+
+	 
+
+
+ 
