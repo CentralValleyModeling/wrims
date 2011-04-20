@@ -13,9 +13,19 @@ public class StudyDataSet {
 	private ArrayList<String> modelList = new ArrayList<String>();
 	private ArrayList<String> modelConditionList = new ArrayList<String>();
 	
+	///  < timeseries name, timeseries object > 
+	private Map<String, Timeseries> timeseriesMap = new HashMap<String, Timeseries>();
+	
 	///  < modelName, modelDataSet > 		
 	private Map<String, ModelDataSet> modelDataSetMap = new HashMap<String, ModelDataSet>();
-	
+
+	public Map<String, Timeseries> getTimeseriesMap() {
+		return timeseriesMap;
+	}
+
+	public void setTimeseriesMap(Map<String, Timeseries> timeseriesMap) {
+		this.timeseriesMap = timeseriesMap;
+	}
 	
 	public String getAbsMainFilePath() {
 		return absMainFilePath;

@@ -50,8 +50,6 @@ public class TestWreslWalker_study {
 		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
 		
 		ArrayList<String> ttt = sd.getModelDataSetMap().get("first").svTsDvList;
-//		
-		System.out.println("QQQQQQQQQQQQ "+ttt);
 
 		LogUtils.studySummary_details(sd);
 
@@ -89,5 +87,48 @@ public class TestWreslWalker_study {
 		
 		Assert.assertEquals(s,e);
 		
+	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void timeseries() throws RecognitionException, IOException {
+		
+		csvFolderPath = "TestWreslWalker_study_timeseries";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		/// write full study data to csv files
+		WriteCSV.study(sd, csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);	
+		
+		Set<String> s;
+		Set<String> e;
+		
+		s = new HashSet<String>();
+		s.addAll(sd.getTimeseriesMap().keySet());
+		e = new HashSet<String>();
+		e.add("first_global"); e.add("first_local"); e.add("second_local");e.add("third_global");
+		
+		Assert.assertEquals(s,e);
 	}
 }

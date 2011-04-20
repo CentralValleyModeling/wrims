@@ -347,7 +347,7 @@ public class StructTree {
 		}
 	}
 
-	public void svarDSS(String name, String scope, String b_part, String kind, String units, String convertToUnits) {
+	public void timeseriesDss(String name, String scope, String b_part, String kind, String units, String convertToUnits) {
 		
 		name = name.toLowerCase();
 		if (b_part != null) b_part = b_part.toLowerCase();

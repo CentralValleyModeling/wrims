@@ -234,7 +234,7 @@ svar_expr :
 
 svar_dss :
        ^(Svar_dss sc=Scope i=IDENT b=B_part Kind k=STRING Units u=STRING c=CONVERT )
-       { F.svarDSS($i.text, $sc.text, Tools.strip($b.text), Tools.strip($k.text), Tools.strip($u.text),  Tools.strip($c.text)); }
+       { F.timeseriesDss($i.text, $sc.text, Tools.strip($b.text), Tools.strip($k.text), Tools.strip($u.text),  Tools.strip($c.text)); }
 	;
 
 dvar_std  :

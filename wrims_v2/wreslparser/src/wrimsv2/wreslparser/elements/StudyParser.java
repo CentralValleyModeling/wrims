@@ -12,6 +12,7 @@ import org.antlr.runtime.RecognitionException;
 
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
+import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.grammar.WreslTreeWalker;
 
@@ -26,6 +27,7 @@ public class StudyParser {
 		studyDataSet.setModelConditionList(sc.modelConditionList);
 		
 		Map<String, ModelDataSet> modelDataSetMap = new HashMap<String, ModelDataSet>();
+		Map<String, Timeseries> timeseriesMap = new HashMap<String, Timeseries>();
 		
 		for (String modelName: studyDataSet.getModelList()){
 			
@@ -73,9 +75,11 @@ public class StudyParser {
 			thisModelDataSet.incFileList_local=ds.incFileList_local;
 			
 			modelDataSetMap.put(modelName, thisModelDataSet);
+			timeseriesMap.putAll(ds.tsMap);
 		}
 		
 		studyDataSet.setModelDataSetMap(modelDataSetMap);
+		studyDataSet.setTimeseriesMap(timeseriesMap);
 		
 		return studyDataSet;
 	}

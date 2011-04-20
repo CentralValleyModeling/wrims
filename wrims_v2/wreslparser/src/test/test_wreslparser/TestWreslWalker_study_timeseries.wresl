@@ -1,0 +1,31 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }	
+
+SEQUENCE CYCLE3 {
+    model   third
+    order   3
+    }
+	
+MODEL firsT { 
+	define first_global {timeseries kind 'EVAPORATION-RATE' units 'IN'}
+	define[local] first_local {timeseries kind 'EVAPORATION-RATE' units 'IN'}	
+}	
+MODEL second { 
+	define[local] second_local{timeseries kind 'EVAPORATION-RATE' units 'IN'}	
+}
+MODEL third { 
+	define third_global {timeseries kind 'EVAPORATION-RATE' units 'IN'}
+}
+	
+
+	 
+
+
+ 
