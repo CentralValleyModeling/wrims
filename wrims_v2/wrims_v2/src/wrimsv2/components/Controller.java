@@ -42,6 +42,8 @@ public class Controller {
 				String model=modelList.get(i);
 				ModelDataSet mds=modelDataSetMap.get(model);
 				ControlData.currModelDataSet=mds;
+				ControlData.currSvMap=mds.svMap;
+				ControlData.currDvMap=mds.dvMap;
 				ControlData.currCycleIndex=i;
 				processModel();
 			}
@@ -93,7 +95,6 @@ public class Controller {
 		ModelDataSet mds=ControlData.currModelDataSet;
 		ArrayList<String> svList = mds.svList;
 		Map<String, Svar> svMap =mds.svMap;
-		ControlData.currSvMap=svMap;
 		ControlData.currEvalTypeIndex=0;
 		for (String svName: svList){
 			ControlData.currEvalName=svName;

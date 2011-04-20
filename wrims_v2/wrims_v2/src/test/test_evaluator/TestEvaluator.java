@@ -295,7 +295,7 @@ public class TestEvaluator extends TestCase{
 		
         new ControlData();
 
-        ANTLRStringStream stream = new ANTLRStringStream("v: SELECT target FROM res_level WHERE res_num=10;level=2;month=month"); 
+        ANTLRStringStream stream = new ANTLRStringStream("v: select ossjid from stan_yrossjid given nmf2 = nmforecast2 use  linear"); 
 		EvaluatorLexer  lexer = new EvaluatorLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
@@ -304,4 +304,5 @@ public class TestEvaluator extends TestCase{
 		
 		Error.writeEvaluationErrorFile("log.txt");
 	}
+	
 }

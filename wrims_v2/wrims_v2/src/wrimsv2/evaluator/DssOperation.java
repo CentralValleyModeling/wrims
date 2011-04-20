@@ -47,7 +47,7 @@ public class DssOperation {
 	public static boolean getSVInitTimeseries(String name, String file){
 		Svar svar=ControlData.currSvMap.get(name);
 		String partC=svar.kind;
-		DataSet ds=getDataFor(file,ControlData.partA,name,partC,"",ControlData.partE, ControlData.svDvPartF);
+		DataSet ds=getDataFor(file,ControlData.partA,name,partC,"",ControlData.partE, ControlData.initPartF);
 		
 		if (ds==null){
 			return false;
@@ -84,7 +84,7 @@ public class DssOperation {
 			units=alias.units;
 		}
 		
-		DataSet ds=getDataFor(file,ControlData.partA,name,partC,"",ControlData.partE, ControlData.svDvPartF);
+		DataSet ds=getDataFor(file,ControlData.partA,name,partC,"",ControlData.partE, ControlData.initPartF);
 		if (ds==null){
 			Error.error_evaluation.add("Intial data of "+name+" in dss file doesn't exist." );
 			return false;

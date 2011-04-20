@@ -121,7 +121,7 @@ public class TableOperation {
 		if (Character.isDigit(fieldName.charAt(0))){
 			return false;
 		}
-		Pattern alphaNumberic = Pattern.compile("[A-Za-z0-9]+");
+		Pattern alphaNumberic = Pattern.compile("[A-Za-z0-9_]+");
 		Matcher m = alphaNumberic.matcher(fieldName);
 		return m.matches();	
 	}

@@ -133,14 +133,21 @@ public class testController {
 	}
 	
 	@Test
-	public void testParsedSV()throws RecognitionException, IOException{
+	public void testParsedCalsim3()throws RecognitionException, IOException{
         FilePaths.fullSvarDssPath="D:\\CALSIM3.0_070110\\common\\DSS\\CalSimIII-06_SV.dss";
         FilePaths.fullInitDssPath="D:\\CALSIM3.0_070110\\common\\DSS\\CALSIMIII-06INIT.dss";
         FilePaths.setMainFilePaths("D:\\CALSIM3.0_070110\\D1641\\Run\\maind1641.wresl");
 		ControlData cd=new ControlData();
-		cd.endYear=1921;
+		cd.startYear=1996;
+		cd.startMonth=10;
+		cd.startDay=31;
+		cd.endYear=1996;
 		cd.endMonth=11;
 		cd.endDay=30;
+		cd.currYear=cd.startYear;
+		cd.currMonth=cd.startMonth;
+		cd.currDay=cd.startDay;
+		cd.initPartF="CALSIMIII06";
 		
 		StudyDataSet sds=parseCalsim3();
 		
