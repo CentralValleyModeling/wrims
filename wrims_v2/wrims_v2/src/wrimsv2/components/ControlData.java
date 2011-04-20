@@ -7,6 +7,7 @@ import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
+import wrimsv2.commondata.wresldata.SvarTimeseries;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.LoopIndex;
 
@@ -19,6 +20,7 @@ public class ControlData {
 	public static StudyDataSet currStudyDataSet=new StudyDataSet();
 	public static ModelDataSet currModelDataSet=new ModelDataSet();
 	public static Map<String, Svar> currSvMap=new HashMap<String, Svar>() ;
+	public static Map<String, SvarTimeseries> currSvTsMap=new HashMap<String, SvarTimeseries>();
 	public static Map<String, Dvar> currDvMap=new HashMap<String, Dvar>();
 	public static Map<String, Alias> currAliasMap=new HashMap<String, Alias>();
 	public static Map<String, Goal> currGoalMap=new HashMap<String, Goal>();

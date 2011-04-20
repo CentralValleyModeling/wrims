@@ -17,6 +17,9 @@ import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
+import wrimsv2.commondata.wresldata.SvarTimeseries;
+import wrimsv2.evaluator.DataTimeSeries;
+import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.EvalExpression;
 import wrimsv2.evaluator.EvaluatorLexer;
 import wrimsv2.evaluator.EvaluatorParser;
@@ -30,7 +33,8 @@ public class Controller {
 		Date currTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 		Date endTime=new Date(ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
 		
-		for (int i=0; i<modelList.size(); i++){
+		//To Do: change 1 to modelList.size()
+		for (int i=0; i<1; i++){
 			String model=modelList.get(i);
 			ModelDataSet mds=modelDataSetMap.get(model);
 			ControlData.currModelDataSet=mds;
@@ -73,7 +77,19 @@ public class Controller {
 	}
 
 	public static void processSvarTimeseries(){
-		
+		ModelDataSet mds=ControlData.currModelDataSet;
+		ArrayList<String> svTsList = mds.svTsList;
+		Map<String, SvarTimeseries> svTsMap =mds.svTsMap;
+		ControlData.currSvTsMap=svTsMap;
+		ControlData.currEvalTypeIndex=0;
+		for (String svTsName: svTsList){
+			System.out.println("Process svar timeseries "+svTsName);
+			//To Do: in the svar class, add flag to see if svTS has been loaded
+			if (!DataTimeSeries.lookSvDss.contains(svTsName)){ 
+				DssOperation.getSVTimeseries(svTsName, FilePaths.fullSvarDssPath);
+				DataTimeSeries.lookSvDss.add(svTsName);
+			}
+		}
 	}
 	
 	public static void processExternal(){
@@ -102,7 +118,7 @@ public class Controller {
 		ControlData.currEvalTypeIndex=0;
 		for (String svName: svList){
 			ControlData.currEvalName=svName;
-			System.out.println("Process "+svName);
+			System.out.println("Process svar"+svName);
 			Svar svar=svMap.get(svName);
 			ArrayList<String> caseCondition=svar.caseCondition;
 			boolean condition=false;
@@ -153,7 +169,7 @@ public class Controller {
 		ControlData.currEvalTypeIndex=1;
 		for (String dvName: dvList){
 			ControlData.currEvalName=dvName;
-			System.out.println("Process "+dvName);
+			System.out.println("Process dvar "+dvName);
 			Dvar dvar=dvMap.get(dvName);
 			SolverData.getDvarMap().put(dvName, dvar);
 			
@@ -192,7 +208,7 @@ public class Controller {
 		ControlData.currEvalTypeIndex=2;
 		for (String asName: asList){
 			ControlData.currEvalName=asName;
-			System.out.println("Process "+asName);
+			System.out.println("Process alias "+asName);
 			Alias alias=asMap.get(asName);
 			
 			String evalString="v: "+alias.expression;
@@ -217,7 +233,8 @@ public class Controller {
 		ControlData.currEvalTypeIndex=3;
 		for (String goalName: gList){
 			ControlData.currEvalName=goalName;
-			System.out.println("Process "+goalName);
+			System.out.println("Process constraint "+goalName);
+			Error.addEvaluationError("Process constraint "+goalName);
 			Goal goal=gMap.get(goalName);
 			ArrayList<String> caseCondition=goal.caseCondition;
 			boolean condition=false;

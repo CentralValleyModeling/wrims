@@ -147,6 +147,7 @@ public class testController {
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
+		cd.svDvPartF="CALSIMIII06";
 		cd.initPartF="CALSIMIII06";
 		
 		StudyDataSet sds=parseCalsim3();

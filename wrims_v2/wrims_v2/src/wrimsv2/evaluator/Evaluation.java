@@ -506,6 +506,19 @@ public class Evaluation {
 					return value;
 				}
 			}
+		}else{
+			DataTimeSeries.lookInitDss.add(ident);
+			if (DssOperation.getSVInitTimeseries(ident, FilePaths.fullInitDssPath)){
+				DssDataSet dds=DataTimeSeries.svInit.get(ident);
+				index =timeSeriesIndex(dds);
+				ArrayList<Double> data=dds.getData();
+				if (index>=0 && index<data.size()){
+					double value=data.get(index);
+					if (value !=901.0){
+						return value;
+					}
+				}
+			}
 		}
 		Error.addEvaluationError("The data requested for timeseries "+ident+" is outside of the time frame provided in dss file.");
 		return 1.0;
@@ -575,16 +588,6 @@ public class Evaluation {
 	
 	public static EvalExpression timeseries(){
 		String svName=ControlData.currEvalName;
-		//To Do: in the svar class, add flag to see if svTS has been loaded
-		if (!DataTimeSeries.lookSvDss.contains(svName)){ 
-			DssOperation.getSVTimeseries(svName, FilePaths.fullSvarDssPath);
-			DataTimeSeries.lookSvDss.add(svName);
-		}
-		//To Do: in the svar class, add flag to see if svInit has been loaded
-		if (!DataTimeSeries.lookInitDss.contains(svName)){  
-			DssOperation.getSVInitTimeseries(svName, FilePaths.fullInitDssPath);
-			DataTimeSeries.lookInitDss.add(svName);
-		}
 		TimeOperation.findTime(0);
 		double value=svarTimeSeries(svName);
 		IntDouble id=new IntDouble(value,false);

@@ -10,6 +10,7 @@ import vista.set.*;
 import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.Svar;
+import wrimsv2.commondata.wresldata.SvarTimeseries;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 
 public class DssOperation {
 	public static boolean getSVTimeseries(String name, String file){
-		Svar svar=ControlData.currSvMap.get(name);
+		SvarTimeseries svar=ControlData.currSvTsMap.get(name);
 		String partC=svar.kind;
 		DataSet ds=getDataFor(file,ControlData.partA,name,partC,"",ControlData.partE, ControlData.svDvPartF);
 		
@@ -45,9 +46,9 @@ public class DssOperation {
 	}
 	
 	public static boolean getSVInitTimeseries(String name, String file){
-		Svar svar=ControlData.currSvMap.get(name);
+		SvarTimeseries svar=ControlData.currSvTsMap.get(name);
 		String partC=svar.kind;
-		DataSet ds=getDataFor(file,ControlData.partA,name,partC,"",ControlData.partE, ControlData.initPartF);
+		DataSet ds=getDataForInitial(file,ControlData.partA,name,partC,"",ControlData.partE, ControlData.initPartF);
 		
 		if (ds==null){
 			return false;
@@ -84,7 +85,7 @@ public class DssOperation {
 			units=alias.units;
 		}
 		
-		DataSet ds=getDataFor(file,ControlData.partA,name,partC,"",ControlData.partE, ControlData.initPartF);
+		DataSet ds=getDataForInitial(file,ControlData.partA,name,partC,"",ControlData.partE, ControlData.initPartF);
 		if (ds==null){
 			Error.error_evaluation.add("Intial data of "+name+" in dss file doesn't exist." );
 			return false;
@@ -111,7 +112,14 @@ public class DssOperation {
 	
     public static DataSet getDataFor(String file, String apart, String bpart, String cpart, String dpart, String epart, String fpart){
         Group group = DSSUtil.createGroup("local", file);
-        DataReference[] refs = group.find(new String[]{apart, bpart, cpart, dpart, epart, fpart});
+        dpart = "01JAN1990";
+        DataReference ref = DSSUtil.createDataReference("local",file,Pathname.createPathname(new String[]{apart, bpart, cpart, dpart, epart, fpart}));
+        return ref.getData();
+    }
+    
+    public static DataSet getDataForInitial(String file, String apart, String bpart, String cpart, String dpart, String epart, String fpart){
+    	Group group = DSSUtil.createGroup("local", file);
+    	DataReference[] refs = group.find(new String[]{apart, bpart, cpart, dpart, epart, fpart});
         if (refs.length==0){
               return null;
         } else {
