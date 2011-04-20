@@ -33,6 +33,7 @@ public class TableOperation {
 			    
 			    while (!isEnd && isComment){
 			    	strLine=br.readLine();
+			    	strLine=removeLeadingTailingSpace(strLine);
 			    	line=line+1;
 			    	if (strLine==null){
 			    		isEnd=true;
@@ -46,6 +47,7 @@ public class TableOperation {
 			    	return false;
 			    }
 			    
+			    if (strLine.contains("!")) strLine=removeComment(strLine);
 			    strLine=removeLeadingTailingSpace(strLine);
 			    if (!(strLine.toLowerCase().equals(name))){
 			    	Error.addEvaluationError("The first line after comments in the table "+name+" should be table file name "+name+".table");
@@ -58,6 +60,8 @@ public class TableOperation {
 			    }
 			    line=line+1;
 			    LookUpTable lut=new LookUpTable();
+			    if (strLine.contains("!")) strLine=removeComment(strLine);
+		    	strLine=removeLeadingTailingSpace(strLine);
 			    String[] fieldNames=strLine.toLowerCase().split("\\s+");
 			    int fieldSize=fieldNames.length;
 			    for (int i=0; i<fieldSize; i++){
@@ -71,9 +75,15 @@ public class TableOperation {
 			    
 			    while ((strLine=br.readLine())!=null){
 			    	line=line+1;
+			    	if (strLine.contains("!")) strLine=removeComment(strLine);
 			    	strLine=removeLeadingTailingSpace(strLine);
 			    	String[] values=strLine.split("\\s+");
 			    	if (values.length!=fieldSize){
+			    		if (values[0].equals("") && lut.getData().size()>0) {
+			    			TableSeries.tableSeries.put(name,lut);
+			    			in.close();
+			    			return true;
+			    		}
 				    	Error.addEvaluationError("The number of data in the table "+name+" line"+line+" doesn't agree with the number of the field");
 				    	in.close();
 				    	return false;
@@ -109,6 +119,11 @@ public class TableOperation {
 			    Error.addEvaluationError(e.getMessage());
 		 }
 		 return true;
+	}
+	
+	public static String removeComment(String text){
+		int index=text.indexOf("!");
+		return text.substring(0,index);
 	}
 	
 	public static String removeLeadingTailingSpace(String text){
