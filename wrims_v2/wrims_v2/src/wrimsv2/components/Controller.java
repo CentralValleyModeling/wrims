@@ -10,6 +10,7 @@ import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 
 import wrimsv2.commondata.solverdata.SolverData;
+import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.External;
 import wrimsv2.commondata.wresldata.Goal;
@@ -44,8 +45,11 @@ public class Controller {
 				ControlData.currModelDataSet=mds;
 				ControlData.currSvMap=mds.svMap;
 				ControlData.currDvMap=mds.dvMap;
+				ControlData.currAliasMap=mds.asMap;
+				ControlData.currGoalMap=mds.gMap;
 				ControlData.currCycleIndex=i;
 				processModel();
+				Error.writeEvaluationErrorFile("evaluation_error.txt"); 
 			}
 			if (ControlData.timeStep.equals("1MON")){
 				currTimeAddOneMonth();
@@ -63,8 +67,9 @@ public class Controller {
 	
 	public static void processModel(){
 		processSvar();
-		processDvar();	//To Do: allow process dvar
-		processGoal();	//To Do: allow process goal
+		processDvar();	
+		processAlias();
+		processGoal();	
 	}
 
 	public static void processSvarTimeseries(){
@@ -79,7 +84,6 @@ public class Controller {
 		ControlData.currEvalTypeIndex=4;
 		for (String exName: exList){
 			if (!ControlData.allExternalFunction.containsKey(exName)){
-				System.out.println("Process "+exName);
 				ControlData.currEvalName=exName;
 				External external=exMap.get(exName);
 				ControlData.allExternalFunction.put(exName, external.type);
@@ -139,7 +143,6 @@ public class Controller {
 				svar.setValue(0);
 			}
 		}
-		Error.writeEvaluationErrorFile("runtime_error.txt"); //To Do: relocate
 	}
 	
 	public static void processDvar(){
@@ -150,6 +153,7 @@ public class Controller {
 		ControlData.currEvalTypeIndex=1;
 		for (String dvName: dvList){
 			ControlData.currEvalName=dvName;
+			System.out.println("Process "+dvName);
 			Dvar dvar=dvMap.get(dvName);
 			SolverData.getDvarMap().put(dvName, dvar);
 			
@@ -181,14 +185,39 @@ public class Controller {
 		}
 	}
 	
+	public static void processAlias(){
+		ModelDataSet mds=ControlData.currModelDataSet;
+		ArrayList<String> asList = mds.asList;
+		Map<String, Alias> asMap =mds.asMap;
+		ControlData.currEvalTypeIndex=2;
+		for (String asName: asList){
+			ControlData.currEvalName=asName;
+			System.out.println("Process "+asName);
+			Alias alias=asMap.get(asName);
+			
+			String evalString="v: "+alias.expression;
+			ANTLRStringStream stream = new ANTLRStringStream(evalString);
+			EvaluatorLexer lexer = new EvaluatorLexer(stream);
+			TokenStream tokenStream = new CommonTokenStream(lexer);
+			EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+			try {
+				evaluator.evaluator();
+				alias.value=evaluator.evalValue.getData();
+			} catch (RecognitionException e) {
+				Error.error_evaluation.add("Alias evaluation has error.");
+				alias.value=-901.0;
+			}
+		}
+	}
+	
 	public static void processGoal(){
 		ModelDataSet mds=ControlData.currModelDataSet;
 		ArrayList<String> gList = mds.gList;
 		Map<String, Goal> gMap =mds.gMap;
-		ControlData.currGoalMap=gMap;
 		ControlData.currEvalTypeIndex=3;
 		for (String goalName: gList){
 			ControlData.currEvalName=goalName;
+			System.out.println("Process "+goalName);
 			Goal goal=gMap.get(goalName);
 			ArrayList<String> caseCondition=goal.caseCondition;
 			boolean condition=false;
