@@ -52,7 +52,11 @@ public class Error {
 			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in constraint definition of Cycle "+ControlData.currCycleIndex+": "+error);
 		}else if (ControlData.currEvalTypeIndex == 4){
 			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in external function definition of Cycle "+ControlData.currCycleIndex+": "+error);
-		}		
+		}else if (ControlData.currEvalTypeIndex == 5){
+			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in timeseries definition of Cycle "+ControlData.currCycleIndex+": "+error);
+		}else if (ControlData.currEvalTypeIndex==6){
+			error_evaluation.add(ControlData.currEvalName+" in timeseries reading: "+error);
+		}
 	}
 }
 

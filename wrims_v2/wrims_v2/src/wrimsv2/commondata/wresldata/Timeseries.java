@@ -10,6 +10,7 @@ public class Timeseries {
 	public String units;
 	public String convertToUnits;
 	public String fromWresl;
+	private Number value;
 	
 	public Timeseries(){
 		scope=Param.undefined;
@@ -50,6 +51,14 @@ public class Timeseries {
 		else {
 			return false;
 		}
+	}
+	
+	public void setValue(Number value){
+		this.value=value;
+	}
+	
+	public Number getValue(){
+		return value;
 	}
 }
 	

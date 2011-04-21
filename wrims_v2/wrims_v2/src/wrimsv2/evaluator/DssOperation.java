@@ -10,7 +10,7 @@ import vista.set.*;
 import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.Svar;
-import wrimsv2.commondata.wresldata.SvarTimeseries;
+import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 
@@ -18,14 +18,14 @@ import java.util.ArrayList;
 
 public class DssOperation {
 	public static boolean getSVTimeseries(String name, String file){
-		SvarTimeseries svar=ControlData.currSvTsMap.get(name);
-		String partC=svar.kind;
+		Timeseries ts=ControlData.allTsMap.get(name);
+		String partC=ts.kind;
 		DataSet ds=getDataFor(file,ControlData.partA,name,partC,"",ControlData.partE, ControlData.svDvPartF);
 		
 		if (ds==null){
 			return false;
 		}
-		if (!ds.getAttributes().getYUnits().toUpperCase().equals(svar.units.toUpperCase())){
+		if (!ds.getAttributes().getYUnits().toUpperCase().equals(ts.units.toUpperCase())){
 			return false;
 		}	
 		if (!(ds instanceof RegularTimeSeries)){
@@ -46,14 +46,14 @@ public class DssOperation {
 	}
 	
 	public static boolean getSVInitTimeseries(String name, String file){
-		SvarTimeseries svar=ControlData.currSvTsMap.get(name);
-		String partC=svar.kind;
+		Timeseries ts=ControlData.currTsMap.get(name);
+		String partC=ts.kind;
 		DataSet ds=getDataForInitial(file,ControlData.partA,name,partC,"",ControlData.partE, ControlData.initPartF);
 		
 		if (ds==null){
 			return false;
 		}
-		if (!ds.getAttributes().getYUnits().toUpperCase().equals(svar.units.toUpperCase())){
+		if (!ds.getAttributes().getYUnits().toUpperCase().equals(ts.units.toUpperCase())){
 			return false;
 		}
 		if (!(ds instanceof RegularTimeSeries)){

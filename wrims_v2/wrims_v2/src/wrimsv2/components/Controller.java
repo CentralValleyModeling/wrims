@@ -1,8 +1,10 @@
 package wrimsv2.components;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Date;
+import java.util.Set;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -17,10 +19,11 @@ import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
-import wrimsv2.commondata.wresldata.SvarTimeseries;
+import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.EvalExpression;
+import wrimsv2.evaluator.Evaluation;
 import wrimsv2.evaluator.EvaluatorLexer;
 import wrimsv2.evaluator.EvaluatorParser;
 import wrimsv2.external.LoadAllDll;
@@ -33,13 +36,14 @@ public class Controller {
 		Date currTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 		Date endTime=new Date(ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
 		
-		//To Do: change 1 to modelList.size()
-		for (int i=0; i<1; i++){
+		ControlData.allTsMap=sds.getTimeseriesMap();
+		readTimeseries();
+		for (int i=0; i<modelList.size(); i++){
 			String model=modelList.get(i);
 			ModelDataSet mds=modelDataSetMap.get(model);
 			ControlData.currModelDataSet=mds;
 			ControlData.currCycleIndex=i;
-			preProcess();
+			processExternal();
 		}
 		
 		while (currTime.getTime()<=endTime.getTime()){
@@ -51,6 +55,7 @@ public class Controller {
 				ControlData.currDvMap=mds.dvMap;
 				ControlData.currAliasMap=mds.asMap;
 				ControlData.currGoalMap=mds.gMap;
+				ControlData.currTsMap=mds.tsMap;
 				ControlData.currCycleIndex=i;
 				processModel();
 				Error.writeEvaluationErrorFile("evaluation_error.txt"); 
@@ -64,30 +69,26 @@ public class Controller {
 		}
 	}
 	
-	public static void preProcess(){
-		processSvarTimeseries();
-		processExternal();
-	}
-	
 	public static void processModel(){
+		processTimeseries();
 		processSvar();
 		processDvar();	
 		processAlias();
 		processGoal();	
 	}
 
-	public static void processSvarTimeseries(){
-		ModelDataSet mds=ControlData.currModelDataSet;
-		ArrayList<String> svTsList = mds.svTsList;
-		Map<String, SvarTimeseries> svTsMap =mds.svTsMap;
-		ControlData.currSvTsMap=svTsMap;
-		ControlData.currEvalTypeIndex=0;
-		for (String svTsName: svTsList){
-			System.out.println("Process svar timeseries "+svTsName);
+	public static void readTimeseries(){
+		Map<String, Timeseries> tsMap=ControlData.currStudyDataSet.getTimeseriesMap();
+		ControlData.currEvalTypeIndex=6;
+		Set tsKeySet=tsMap.keySet();
+		Iterator iterator=tsKeySet.iterator();
+		while(iterator.hasNext()){
+			String tsName=(String)iterator.next();
+			System.out.println("Reading svar timeseries "+tsName);
 			//To Do: in the svar class, add flag to see if svTS has been loaded
-			if (!DataTimeSeries.lookSvDss.contains(svTsName)){ 
-				DssOperation.getSVTimeseries(svTsName, FilePaths.fullSvarDssPath);
-				DataTimeSeries.lookSvDss.add(svTsName);
+			if (!DataTimeSeries.lookSvDss.contains(tsName)){ 
+				DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarDssPath);
+				DataTimeSeries.lookSvDss.add(tsName);
 			}
 		}
 	}
@@ -158,6 +159,19 @@ public class Controller {
 				Error.error_evaluation.add("None of the case conditions is satisfied.");
 				svar.setValue(0);
 			}
+		}
+	}
+	
+	public static void processTimeseries(){
+		ModelDataSet mds=ControlData.currModelDataSet;
+		ArrayList<String> tsList = mds.tsList;
+		Map<String, Timeseries> tsMap =mds.tsMap;
+		ControlData.currEvalTypeIndex=5;
+		for (String tsName:tsList){
+			ControlData.currEvalName=tsName;
+			System.out.println("process timesereis"+tsName);
+			Timeseries ts=tsMap.get(tsName);
+			ts.setValue(Evaluation.timeseries(tsName));
 		}
 	}
 	

@@ -125,12 +125,19 @@ public class Evaluation {
 	}
 	
 	public static EvalExpression term_SVAR (String ident){
+		Number value;
 		if (!ControlData.currSvMap.containsKey(ident)){
-			Error.error_evaluation.add("State variable "+ident+" is not defined before used.");
-			IntDouble id=new IntDouble(1.0, false);
-			return new EvalExpression(id);
+			if (!ControlData.currTsMap.containsKey(ident)){
+				Error.error_evaluation.add("State variable "+ident+" is not defined before used.");
+				IntDouble id=new IntDouble(1.0, false);
+				return new EvalExpression(id);
+			}else{
+				value=ControlData.currTsMap.get(ident).getValue();
+			}
+		}else{
+			value=ControlData.currSvMap.get(ident).getValue();
 		}
-		Number value=ControlData.currSvMap.get(ident).getValue();
+		
 		if (value == null){
 			Error.error_evaluation.add("The value of state variable "+ident+" is not defined before used.");
 			IntDouble id=new IntDouble(1.0, false);
@@ -376,7 +383,7 @@ public class Evaluation {
 	public static IntDouble argFunction(String ident, ArrayList<EvalExpression> eeArray){
 		IntDouble result;
 		if (eeArray.size()==1){
-			if (ControlData.currSvMap.containsKey(ident)||ControlData.currDvMap.containsKey(ident)||ControlData.currAliasMap.containsKey(ident)) return getTimeSeries(ident, eeArray);
+			if (ControlData.currSvMap.containsKey(ident)||ControlData.currTsMap.containsKey(ident)||ControlData.currDvMap.containsKey(ident)||ControlData.currAliasMap.containsKey(ident)) return getTimeSeries(ident, eeArray);
 		}
 			
 		Class function;
@@ -592,6 +599,11 @@ public class Evaluation {
 		double value=svarTimeSeries(svName);
 		IntDouble id=new IntDouble(value,false);
 		return new EvalExpression(id);
+	}
+	
+	public static double timeseries(String tsName){
+		TimeOperation.findTime(0);
+		return svarTimeSeries(tsName);
 	}
 	
 	public static IntDouble pastCycleDV(String ident, String cycle){
