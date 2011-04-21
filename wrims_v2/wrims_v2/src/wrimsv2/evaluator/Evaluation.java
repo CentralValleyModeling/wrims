@@ -115,6 +115,17 @@ public class Evaluation {
 	}
 	
 	public static EvalExpression term_IDENT (String ident){
+		if (ControlData.currSvMap.containsKey(ident)){
+			EvalExpression ee=new EvalExpression();
+			IntDouble id0 = new IntDouble (ControlData.currSvMap.get(ident).getValue(), true);
+			ee.setValue(id0);
+			return ee;
+		}else if (ControlData.currTsMap.containsKey(ident)){
+			EvalExpression ee=new EvalExpression();
+			IntDouble id0 = new IntDouble (ControlData.currTsMap.get(ident).getValue(), true);
+			ee.setValue(id0);
+			return ee;
+		}
 		EvalExpression ee=new EvalExpression();
 		IntDouble id0 = new IntDouble (0, true);
 		ee.setValue(id0);

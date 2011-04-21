@@ -87,15 +87,15 @@ func returns[EvalExpression ee]:
   (pow_func{ee=$pow_func.ee;});
 
 max_func returns[EvalExpression ee] 
-	: MAX '(' (e1=expression)(';' (e2=expression))+ ')'{
-	   ee=Evaluation.max($e1.ee, $e2.ee);
-	}
+	: MAX '(' (e1=expression){ee=$e1.ee;}(';' (e2=expression{
+     ee=Evaluation.max(ee, $e2.ee);
+  }))+ ')'
 	;
 
 min_func returns[EvalExpression ee]
-	: MIN '(' (e1=expression)(';' (e2=expression))+ ')'{
-	   ee=Evaluation.min($e1.ee, $e2.ee);
-	}
+	: MIN '(' (e1=expression){ee=$e1.ee;}(';' (e2=expression{
+     ee=Evaluation.min(ee, $e2.ee);
+  }))+ ')'
 	;
 	
 int_func returns[EvalExpression ee]

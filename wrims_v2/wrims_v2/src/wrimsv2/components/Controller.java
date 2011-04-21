@@ -140,10 +140,10 @@ public class Controller {
 				}
 			}
 			if (condition){
-				String evalString="v: "+svar.caseExpression.get(i);
-				if (svName.equals("coef_evap_nbb")) {   //To Do: remove
+				if (svName.equals("sjrr_mon")){
 					int x=0;
 				}
+				String evalString="v: "+svar.caseExpression.get(i);
 				ANTLRStringStream stream = new ANTLRStringStream(evalString);
 				EvaluatorLexer lexer = new EvaluatorLexer(stream);
 				TokenStream tokenStream = new CommonTokenStream(lexer);
