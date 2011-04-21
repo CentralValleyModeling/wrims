@@ -1,0 +1,11 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+  define alias_global {alias C_SacFea+D_SacFea  kind 'flow-channel' units 'cfs'}
+  define[local] alias_local {alias D419_swp[monthlyweighted5] units 'cfs'}  
+
+}

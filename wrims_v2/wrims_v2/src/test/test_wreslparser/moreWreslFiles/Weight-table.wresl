@@ -1,0 +1,18 @@
+Objective obj = {
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! North of Delta      !!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+! Storage 
+[S_TRNTY_1, 20000*taf_cfs],
+[S_TRNTY_2,    93*taf_cfs],
+
+[ErrNeg_WKYTN  ,-99999], 
+[ErrPos_SHSTA  ,-99999], 
+
+ }
+ 
+ 
+ 
+ 

@@ -1,0 +1,54 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+goal global_goal {
+  lhs C3_M
+  case ActionOn {
+    condition   int( B2On )==1.and.month<= May
+    rhs     minflow_C
+    lhs>rhs     constrain
+    lhs<rhs     penalty 700. }
+  case ActionOff {
+    condition   x==2.3.or.month==Apr.or. month==Jun
+    rhs     clear_min
+    lhs>rhs     constrain
+    lhs<rhs     penalty 0 }
+}
+
+goal[local] local_goal {
+  lhs x
+  case case1 {
+    condition   int( B2On )==1
+    rhs     y
+    lhs>rhs     constrain
+    lhs<rhs     penalty 700. }
+  case case2 {
+    condition   int( B2On )==0
+    rhs     z
+    lhs>rhs     constrain
+    lhs<rhs     penalty 0 }
+}
+
+goal compute_rain_rel {
+    lhs Fr_rain_rel
+    case initialize {
+        condition month == sep .and. wateryear == 1921
+        rhs 0.0 }
+    case otherwise {
+        condition always
+        rhs max ( 0.0, S18(-1) + I18 *cfs_taf - curr_Fr_del - Friant_est_evap - s18level4 - C18_min)  } }
+
+
+}	
+
+
+	
+
+	 
+
+
+ 

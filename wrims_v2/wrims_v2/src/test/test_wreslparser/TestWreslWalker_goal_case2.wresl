@@ -1,0 +1,44 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+goal global_goal {
+  lhs C3_M
+  case ActionOn {
+    condition  .not. ( range(month,oct,dec) .and. month >=May )
+    rhs     minflow_C
+    lhs>rhs     constrain
+    lhs<rhs     penalty 700. }
+  case ActionOff {
+    condition   int( B2On )==0 .and. (month==May .or. month==Jun)
+    rhs     clear_min
+    lhs>rhs     constrain
+    lhs<rhs     penalty 0 }
+}
+
+goal[local] local_goal {
+  lhs x
+  case case1 {
+    condition   min(200., qwe_r) > max(x3,y4)
+    rhs     y
+    lhs>rhs     constrain
+    lhs<rhs     penalty max(a,b) }
+  case case2 {
+    condition   int( B2On )==0
+    rhs     z
+    lhs>rhs     constrain
+    lhs<rhs     penalty 0 }
+}
+
+}	
+
+
+	
+
+	 
+
+
+ 

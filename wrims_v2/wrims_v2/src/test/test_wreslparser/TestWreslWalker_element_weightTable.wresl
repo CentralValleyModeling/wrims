@@ -1,0 +1,10 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+  include 'moreWreslFiles\weight-table.wresl' 
+
+}

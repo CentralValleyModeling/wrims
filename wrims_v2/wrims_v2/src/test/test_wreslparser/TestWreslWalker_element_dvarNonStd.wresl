@@ -1,0 +1,3 @@
+define C_SLCVP {lower unbounded kind 'FLOW-CHANNEL' units 'CFS'}  
+define[local] C_SacFea {upper 8+(6150*taf_cfs) lower 0 kind 'FLOW-CHANNEL' units 'CFS'}  
+define D852_SB_LCP_Err {lower unbounded upper unbounded kind 'LCPSIM-ADJUST-ERROR' units 'CFS'}

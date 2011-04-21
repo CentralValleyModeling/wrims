@@ -1,0 +1,21 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+
+define full_table { select area from res_info given storage=1000*S_Orovl(-1) use linear 
+                    where res_num=6, somevalue=7 }
+	
+	
+	}	
+
+
+	
+
+	 
+
+
+ 

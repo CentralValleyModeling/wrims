@@ -1,0 +1,3 @@
+define includes_global_A {lower unbounded kind 'FLOW-CHANNEL' units 'CFS'}  
+
+ 
