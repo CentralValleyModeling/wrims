@@ -119,7 +119,7 @@ public class Controller {
 		ControlData.currEvalTypeIndex=0;
 		for (String svName: svList){
 			ControlData.currEvalName=svName;
-			System.out.println("Process svar"+svName);
+			System.out.println("Process svar "+svName);
 			Svar svar=svMap.get(svName);
 			ArrayList<String> caseCondition=svar.caseCondition;
 			boolean condition=false;

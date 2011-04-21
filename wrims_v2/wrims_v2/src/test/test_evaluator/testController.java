@@ -134,21 +134,21 @@ public class testController {
 	
 	@Test
 	public void testParsedCalsim3()throws RecognitionException, IOException{
-        FilePaths.fullSvarDssPath="D:\\CALSIM3.0_070110\\common\\DSS\\CalSimIII-06_SV.dss";
-        FilePaths.fullInitDssPath="D:\\CALSIM3.0_070110\\common\\DSS\\CALSIMIII-06INIT.dss";
-        FilePaths.setMainFilePaths("D:\\CALSIM3.0_070110\\D1641\\Run\\maind1641.wresl");
+        FilePaths.fullSvarDssPath="D:\\CALSIM30_041311_BO\\common\\DSS\\CalSim30_06_SV.dss";
+        FilePaths.fullInitDssPath="D:\\CALSIM30_041311_BO\\common\\DSS\\CalSim30_06Init.dss";
+        FilePaths.setMainFilePaths("D:\\CALSIM30_041311_BO\\CONV\\Run\\mainCONV_30.wresl");
 		ControlData cd=new ControlData();
-		cd.startYear=1996;
+		cd.startYear=1921;
 		cd.startMonth=10;
 		cd.startDay=31;
-		cd.endYear=1996;
+		cd.endYear=2006;
 		cd.endMonth=11;
 		cd.endDay=30;
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
-		cd.svDvPartF="CALSIMIII06";
-		cd.initPartF="CALSIMIII06";
+		cd.svDvPartF="CALSIM30_06";
+		cd.initPartF="CALSIM30_06";
 		
 		StudyDataSet sds=parseCalsim3();
 		
@@ -159,7 +159,7 @@ public class testController {
 	public StudyDataSet parseCalsim3() throws RecognitionException, IOException{
 		
 		String csvFolderPath = "TestWreslWalker_calsim3_full_study";
-		String inputFilePath = "D:\\CALSIM3.0_070110\\D1641\\Run\\maind1641.wresl";
+		String inputFilePath = "D:\\CALSIM30_041311_BO\\CONV\\Run\\mainCONV_30.wresl";
 		String logFilePath = csvFolderPath+".log";
 		
 		File absFile = new File(inputFilePath).getAbsoluteFile();

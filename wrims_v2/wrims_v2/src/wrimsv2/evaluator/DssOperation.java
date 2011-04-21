@@ -112,7 +112,7 @@ public class DssOperation {
 	
     public static DataSet getDataFor(String file, String apart, String bpart, String cpart, String dpart, String epart, String fpart){
         Group group = DSSUtil.createGroup("local", file);
-        dpart = "01JAN1990";
+        dpart = "01JAN1920";
         DataReference ref = DSSUtil.createDataReference("local",file,Pathname.createPathname(new String[]{apart, bpart, cpart, dpart, epart, fpart}));
         return ref.getData();
     }
