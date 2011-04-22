@@ -147,6 +147,7 @@ public class StructTree {
 			S.error_goal_redefined.put(name, S.currentAbsolutePath);
 		} else {
 
+			S.var_all.put(name, "goal_simple");
 			// / clearer data structure
 			gl = new Goal();
 			gl.caseCondition.add(Param.always);
@@ -200,13 +201,13 @@ public class StructTree {
 			S.var_all.put(name, "svar_cases");
 			S.svTsDvList.add(name);
 			S.svTsList.add(name);
-
+			S.svList.add(name);
+			
 			// ///////////////////
 			//sv.scope = scope;
 			sv.fromWresl = S.currentAbsolutePath;
 			S.svMap.put(name, sv);
-			S.svList.add(name);
-			
+	
 			if      ( scope == null )
 					{S.svList_global.add(name); sv.scope = Param.global;}
 			else if (scope.equalsIgnoreCase(Param.local)) 
@@ -224,7 +225,8 @@ public class StructTree {
 			LogUtils.errMsg("External variable redefined: "+name, S.currentAbsolutePath);
 			S.error_var_redefined.put(name, "external");
 		} else {
-
+			
+			S.var_all.put(name, "external");
 			// / clearer data structure
 
 			ex = new External();
@@ -255,7 +257,8 @@ public class StructTree {
 			S.var_all.put(name, "svar_expression");
 			S.svTsDvList.add(name);
 			S.svTsList.add(name);
-
+			S.svList.add(name);
+			
 			// / clearer data structure
 			String caseName = Param.defaultCaseName;
 			String condition = Param.always;
@@ -268,7 +271,6 @@ public class StructTree {
 			sv.fromWresl = S.currentAbsolutePath;
 
 			S.svMap.put(name, sv);
-			S.svList.add(name);
 			
 			if      (scope == null)
 					{S.svList_global.add(name); sv.scope = Param.global;}
@@ -293,7 +295,8 @@ public class StructTree {
 			S.var_all.put(name, "svar_sum");
 			S.svTsDvList.add(name);
 			S.svTsList.add(name);
-
+			S.svList.add(name);
+			
 			sv = new Svar();
 			//sv.scope = scope;
 			sv.caseName.add(Param.defaultCaseName);
@@ -302,7 +305,6 @@ public class StructTree {
 			sv.fromWresl = S.currentAbsolutePath;
 
 			S.svMap.put(name, sv);
-			S.svList.add(name);
 			
 			if      (scope == null)
 					{S.svList_global.add(name); sv.scope = Param.global;}
@@ -326,7 +328,7 @@ public class StructTree {
 			S.var_all.put(name, "svar_table");
 			S.svTsDvList.add(name);
 			S.svTsList.add(name);
-
+			S.svList.add(name);
 
 			// / clearer data structure
 			sv = new Svar();
@@ -337,7 +339,6 @@ public class StructTree {
 			sv.caseExpression.add(sqlStr);
 			sv.fromWresl = S.currentAbsolutePath;
 			S.svMap.put(name, sv);
-			S.svList.add(name);
 			
 			if      (scope == null)
 					{S.svList_global.add(name); sv.scope = Param.global;}
@@ -360,7 +361,7 @@ public class StructTree {
 			S.error_var_redefined.put(name, "svar_dss");
 		} else {
 
-			S.var_all.put(name, "svar_dss");
+			S.var_all.put(name, "timeseries");
 			S.svTsDvList.add(name);
 			S.svTsList.add(name);
 

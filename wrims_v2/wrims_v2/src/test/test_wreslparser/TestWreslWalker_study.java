@@ -48,8 +48,6 @@ public class TestWreslWalker_study {
 		td.model_dataset_map=StudyParser.parseModels(sc,td);
 		
 		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
-		
-		ArrayList<String> ttt = sd.getModelDataSetMap().get("first").svTsDvList;
 
 		LogUtils.studySummary_details(sd);
 
@@ -130,5 +128,122 @@ public class TestWreslWalker_study {
 		e.add("first_global"); e.add("first_local"); e.add("second_local");e.add("third_global");
 		
 		Assert.assertEquals(s,e);
+	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void order() throws RecognitionException, IOException {
+		
+		csvFolderPath = "TestWreslWalker_study_order";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);		
+		
+		ArrayList<String> s;
+		ArrayList<String> e;
+		
+
+		s = sd.getModelDataSetMap().get(modelName).tsList;
+		
+		System.out.println("sssss "+s);
+
+		e = new ArrayList<String>();
+		e.add("zero"); 
+		
+		e.add("first1_include1"); 
+		e.add("first2_include1"); 
+
+		e.add("second1_include2"); 
+		e.add("second2_include2_include"); 
+		e.add("second3_include2_include");
+		e.add("second4_include2");	
+		
+		e.add("third"); 
+		
+		Assert.assertEquals(s,e);
+	
+		
+
+		
+	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void order_simple() throws RecognitionException, IOException {
+		
+		csvFolderPath = "TestWreslWalker_study_order_simple";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);		
+		
+		ArrayList<String> s;
+		ArrayList<String> e;
+		
+	
+		s = sd.getModelDataSetMap().get(modelName).tsList;
+		
+		System.out.println("sssss "+s);
+	
+		e = new ArrayList<String>();
+
+		e.add("first1_include1"); 
+		e.add("first2_include1"); 
+		e.add("second1_include2"); 
+		e.add("second2_include2_include"); 
+		e.add("second3_include2_include");
+		e.add("second4_include2");		
+		Assert.assertEquals(s,e);
+	
+		
+	
+		
 	}
 }

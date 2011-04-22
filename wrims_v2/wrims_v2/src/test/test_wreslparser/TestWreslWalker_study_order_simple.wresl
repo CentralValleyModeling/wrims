@@ -1,0 +1,24 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL firsT { 
+
+
+include 'TestWreslWalker_study_order_include1.wresl'
+
+
+include 'TestWreslWalker_study_order_include2.wresl'
+
+
+	
+}	
+
+
+	
+
+	 
+
+
+ 

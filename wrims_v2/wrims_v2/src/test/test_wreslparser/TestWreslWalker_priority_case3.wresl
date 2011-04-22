@@ -1,0 +1,21 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+}
+	
+
+MODEL first { 
+
+  define main   {std kind 'This-is-correct' units 'TAF'} 
+ INCLUDE 'TestWreslWalker_priority_case3_include1.wresl'
+ INCLUDE 'TestWreslWalker_priority_case3_include2.wresl'
+  define main   {std kind 'This-is-not-right' units 'TAF'} 
+  
+}	
+	
+	
+
+	 
+
+
+ 

@@ -438,7 +438,7 @@ public class SimulationDataSet {
 		}
 
 		if (!s.tsList.isEmpty()) {
-			this.tsList.addAll(s.tsList);
+			this.tsList.addAll(0,s.tsList);
 			if (!s.tsList_global.isEmpty()) {this.tsList_global.addAll(s.tsList_global);}
 			if (!s.tsList_local.isEmpty()) {this.tsList_local.addAll(s.tsList_local);}
 			this.tsMap.putAll(s.tsMap);
@@ -494,7 +494,7 @@ public class SimulationDataSet {
 
 	public SimulationDataSet dePrioritize(SimulationDataSet laterFileData, String filePath_forErrorMessage, Map<String,Set<String>> reverseMap) {
 
-		/// check duplicate and promote later included file data for higher priority 
+		/// check duplicate and demote later included file data to lower priority 
 		if(laterFileData==null) System.out.println("Fatal error!!! SimulationDataSet is null in file: "+filePath_forErrorMessage);
 		
 		if ( this.hasDuplicateIn(laterFileData, filePath_forErrorMessage, reverseMap)) {
@@ -506,9 +506,9 @@ public class SimulationDataSet {
 		return this; // later data has lower priority
 	}
 	
-	public SimulationDataSet prioritize(SimulationDataSet laterFileData, String filePath_forErrorMessage, Map<String,Set<String>> reverseMap) {
+	public SimulationDataSet prioritize_append(SimulationDataSet laterFileData, String filePath_forErrorMessage, Map<String,Set<String>> reverseMap) {
 
-		/// check duplicate and promote later included file data for higher priority 
+		/// check duplicate and promote later included file data to higher priority 
 		if(laterFileData==null) System.out.println("Fatal error!!! SimulationDataSet is null in file: "+filePath_forErrorMessage);
 		
 		if ( this.hasDuplicateIn(laterFileData, filePath_forErrorMessage, reverseMap)) {
@@ -517,6 +517,18 @@ public class SimulationDataSet {
 		
 		return this.add(laterFileData); // later data has higher priority
 	}
+
+	public SimulationDataSet prioritize_prepend(SimulationDataSet laterFileData, String filePath_forErrorMessage, Map<String,Set<String>> reverseMap) {
+
+		/// check duplicate and promote later included file data to higher priority 
+		if(laterFileData==null) System.out.println("Fatal error!!! SimulationDataSet is null in file: "+filePath_forErrorMessage);
+		
+		if ( this.hasDuplicateIn(laterFileData, filePath_forErrorMessage, reverseMap)) {
+			this.remove(laterFileData);
+		}
+		
+		return this.insert(laterFileData); // later data has higher priority
+	}	
 	
 	public SimulationDataSet prioritizeChildren(String nodeFile, Map<String,ArrayList<String>> t1Map, Map<String, SimulationDataSet> fileDataMap, Map<String,Set<String>> reverseMap ) {
 
@@ -528,7 +540,7 @@ public class SimulationDataSet {
 			if (t1Map.get(childFile)!=null)  this.prioritizeChildren(childFile, t1Map, fileDataMap, reverseMap);
 			
 			LogUtils.normalMsg("========== Prioritize file: " + childFile);
-			this.prioritize(fileDataMap.get(childFile), childFile, reverseMap);
+			this.prioritize_prepend(fileDataMap.get(childFile), childFile, reverseMap);
 		}
 		
 		return this;
@@ -537,5 +549,77 @@ public class SimulationDataSet {
 	public ArrayList<String> getSortedList(Set<String> s) {
 		return null;	
 		
+	}
+
+	public SimulationDataSet insert(SimulationDataSet s) {
+	
+		if (!s.svTsDvList.isEmpty()) this.svTsDvList.addAll(0,s.svTsDvList);
+		if (!s.svTsList.isEmpty()) this.svTsList.addAll(0,s.svTsList);
+		
+		if (!s.wtList.isEmpty()) {
+			this.wtList.addAll(0,s.wtList);
+			if (!s.wtList_global.isEmpty()) {this.wtList_global.addAll(0,s.wtList_global);}
+			if (!s.wtList_local.isEmpty()) {this.wtList_local.addAll(0,s.wtList_local);}
+			this.wtMap.putAll(s.wtMap);
+		}
+		
+		if (!s.incFileList.isEmpty()) {
+			this.incFileList.addAll(0,s.incFileList);
+			if (!s.incFileList_global.isEmpty()) {this.incFileList_global.addAll(0,s.incFileList_global);}
+			if (!s.incFileList_local.isEmpty()) {this.incFileList_local.addAll(0,s.incFileList_local);}
+			this.incFileMap.putAll(s.incFileMap);
+		}
+	
+		if (!s.exList.isEmpty()) {
+			this.exList.addAll(0,s.exList);
+			if (!s.exList_global.isEmpty()) {this.exList_global.addAll(0,s.exList_global);}
+			if (!s.exList_local.isEmpty()) {this.exList_local.addAll(0,s.exList_local);}
+			this.exMap.putAll(s.exMap);
+		}
+	
+		if (!s.tsList.isEmpty()) {
+			this.tsList.addAll(0,s.tsList);
+			if (!s.tsList_global.isEmpty()) {this.tsList_global.addAll(0,s.tsList_global);}
+			if (!s.tsList_local.isEmpty()) {this.tsList_local.addAll(0,s.tsList_local);}
+			this.tsMap.putAll(s.tsMap);
+		}
+		
+		if (!s.svList.isEmpty()) {
+			this.svList.addAll(0,s.svList);
+			if (!s.svList_global.isEmpty()) {this.svList_global.addAll(0,s.svList_global);}
+			if (!s.svList_local.isEmpty()) {this.svList_local.addAll(0,s.svList_local);}
+			this.svMap.putAll(s.svMap);
+		}
+	
+		if (!s.dvList.isEmpty()) {
+			this.dvList.addAll(0,s.dvList);
+			if (!s.dvList_global.isEmpty()) {this.dvList_global.addAll(0,s.dvList_global);}
+			if (!s.dvList_local.isEmpty()) {this.dvList_local.addAll(0,s.dvList_local);}
+			this.dvMap.putAll(s.dvMap);
+		}
+		if (!s.asList.isEmpty()) {
+			this.asList.addAll(0,s.asList);
+			if (!s.asList_global.isEmpty()) {this.asList_global.addAll(0,s.asList_global);}
+			if (!s.asList_local.isEmpty()) {this.asList_local.addAll(0,s.asList_local);}
+			this.asMap.putAll(s.asMap);
+		}
+	
+		if (!s.gList.isEmpty()) {
+			this.gList.addAll(0,s.gList);
+			if (!s.gList_global.isEmpty()) {this.gList_global.addAll(0,s.gList_global);}
+			if (!s.gList_local.isEmpty()) {this.gList_local.addAll(0,s.gList_local);}
+			this.gMap.putAll(s.gMap);
+		}
+	
+		if (!s.model_list.isEmpty()) {
+			this.model_list.addAll(0,s.model_list);
+		}
+		
+		if (!s.seqList.isEmpty()) {
+			this.seqList.addAll(0,s.seqList);
+			this.seqMap.putAll(s.seqMap);
+		}
+	
+		return this;
 	}
 }
