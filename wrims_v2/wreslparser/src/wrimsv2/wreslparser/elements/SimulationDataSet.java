@@ -131,12 +131,12 @@ public class SimulationDataSet {
 		this.add(s);
 	}	
 
-	public SimulationDataSet overwrite_set(SimulationDataSet s) {
+	public SimulationDataSet overwrittenWith_set(SimulationDataSet s) {
 		
 		this.dvSet.addAll(s.dvSet);
 		this.dvSet_global.addAll(s.dvSet_global);
 		this.dvSet_local.addAll(s.dvSet_local);
-		this.dvMap.putAll(s.dvMap);
+		this.dvMap.putAll(s.dvMap); // this.dvMap is overwritten by s.dvMap
 		
 		this.svSet.addAll(s.svSet);
 		this.svSet_global.addAll(s.svSet_global);

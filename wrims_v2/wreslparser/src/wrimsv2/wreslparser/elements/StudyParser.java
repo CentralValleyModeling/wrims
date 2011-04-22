@@ -142,7 +142,7 @@ public class StudyParser {
 			
 			
 			/// copy file data map from updated whole study to this model
-			Map<String,SimulationDataSet> fileDataMap_thisModel = copyDataSetToThisModel(adhoc.incFileList, td.fileDataMap_wholeStudy);
+			Map<String,SimulationDataSet> fileDataMap_thisModel = copyDataSetToThisModel(adhoc.incFileSet, td.fileDataMap_wholeStudy);
 			
 			
 			/// correct scope and prioritize
@@ -202,14 +202,14 @@ public class StudyParser {
 		return fileDataMap_new;
 	}
 
-	public static Map<String,SimulationDataSet> copyDataSetToThisModel(ArrayList<String> incFileList, 
+	public static Map<String,SimulationDataSet> copyDataSetToThisModel(Set<String> incFileSet, 
 																	   Map<String,SimulationDataSet> fileDataMap_wholeStudy ){
 		
 		/// get all file data map for this study
 		Map<String,SimulationDataSet> fileDataMap_thisModel = new HashMap<String, SimulationDataSet>();		
 						
 			/// copy to this model
-			for (String f: incFileList) {
+			for (String f: incFileSet) {
 			
 				fileDataMap_thisModel.putAll(Tools.putDataFileMapFromWholeStudy(f,fileDataMap_wholeStudy));
 			}
