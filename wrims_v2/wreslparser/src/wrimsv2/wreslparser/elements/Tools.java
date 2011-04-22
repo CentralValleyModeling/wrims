@@ -220,12 +220,12 @@ public class Tools {
 
 	}
 
-	public static Map<String, String> getScopeMap(ArrayList<String> fileList, ArrayList<String> localList) {
+	public static Map<String, String> getScopeMap(Set<String> fileSet, Set<String> localSet) {
 
 		Map<String, String> scopeMap = new HashMap<String, String>();
 
-		for (String f : fileList) {
-			if (localList.contains(f)) {
+		for (String f : fileSet) {
+			if (localSet.contains(f)) {
 				scopeMap.put(f,Param.local);
 			}
 			else {
@@ -307,7 +307,7 @@ public class Tools {
 		for (String f : dataMap.keySet()){
 
 			SimulationDataSet data = dataMap.get(f);
-			out.putAll(getScopeMap(data.incFileList, data.incFileList_local));
+			out.putAll(getScopeMap(data.incFileSet, data.incFileSet_local));
 
 		}
 		return out;

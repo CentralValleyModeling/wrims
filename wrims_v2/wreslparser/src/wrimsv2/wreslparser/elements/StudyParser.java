@@ -232,7 +232,7 @@ public class StudyParser {
 			
 			/// this model t1Map, fileScopeMap, and reverseMap /TODO: avoid repeated processing
 			Map<String,String> fileScopeMap = new HashMap<String, String>(fileScopeMap_wholeStudy);
-			fileScopeMap.putAll(Tools.getScopeMap(adhoc.incFileList, adhoc.incFileList_local));
+			fileScopeMap.putAll(Tools.getScopeMap(adhoc.incFileSet, adhoc.incFileSet_local));
 			
 			Map<String,Set<String>> t1Map = new HashMap<String,Set<String>>(t1Map_wholeStudy);
 			t1Map.put(absMainFilePath, adhoc.incFileSet);
