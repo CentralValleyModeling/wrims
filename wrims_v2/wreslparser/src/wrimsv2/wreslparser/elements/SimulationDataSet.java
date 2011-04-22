@@ -599,7 +599,7 @@ public class SimulationDataSet {
 		return this.insert(laterFileData); // later data has higher priority
 	}	
 	
-	public SimulationDataSet prioritizeChildren(String nodeFile, Map<String,ArrayList<String>> t1Map, Map<String, SimulationDataSet> fileDataMap, Map<String,Set<String>> reverseMap ) {
+	public SimulationDataSet prioritizeChildren(String nodeFile, Map<String,Set<String>> t1Map, Map<String, SimulationDataSet> fileDataMap, Map<String,Set<String>> reverseMap ) {
 
 		
 		for (String childFile : t1Map.get(nodeFile)) {

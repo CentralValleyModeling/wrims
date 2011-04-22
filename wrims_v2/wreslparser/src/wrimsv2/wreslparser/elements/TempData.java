@@ -1,14 +1,14 @@
 package wrimsv2.wreslparser.elements;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 
 public class TempData {
 	
 	public Map<String,SimulationDataSet> fileDataMap_wholeStudy ;	
-	public Map<String,ArrayList<String>> t1Map_wholeStudy;	
+	public Map<String,Set<String>> t1Map_wholeStudy;	
 	public Map<String,String> fileScopeMap_wholeStudy;	
 	
 	/// this map will collect detailed info for models			
@@ -24,7 +24,7 @@ public class TempData {
 	public TempData(){
 		
 		fileDataMap_wholeStudy  = new HashMap<String, SimulationDataSet>();	
-		t1Map_wholeStudy = new HashMap<String, ArrayList<String>>();	
+		t1Map_wholeStudy = new HashMap<String, Set<String>>();	
 		fileScopeMap_wholeStudy = new HashMap<String, String>();	
 		
 		/// this map will collect detailed info for models			

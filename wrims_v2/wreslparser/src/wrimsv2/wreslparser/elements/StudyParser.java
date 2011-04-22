@@ -156,7 +156,7 @@ public class StudyParser {
 														);
 			
 			/// get whole study reverse map / TODO: not needed for global because source file is the same
-			td.t1Map_wholeStudy.put(sc.absMainFilePath, adhoc.incFileList);
+			td.t1Map_wholeStudy.put(sc.absMainFilePath, adhoc.incFileSet);
 			Map<String,Set<String>> t1ReverseMap_wholeStudy = Tools.getReverseMap(td.t1Map_wholeStudy);
 			
 //			String ttt="";
@@ -223,7 +223,7 @@ public class StudyParser {
 												String absMainFilePath,
 												Map<String,SimulationDataSet> fileDataMap_thisModel,
 												Map<String, SimulationDataSet> fileDataMap_wholeStudy,
-												Map<String,ArrayList<String>> t1Map_wholeStudy,
+												Map<String,Set<String>> t1Map_wholeStudy,
 												Map<String,String> fileScopeMap_wholeStudy
 												)
 	
@@ -234,8 +234,8 @@ public class StudyParser {
 			Map<String,String> fileScopeMap = new HashMap<String, String>(fileScopeMap_wholeStudy);
 			fileScopeMap.putAll(Tools.getScopeMap(adhoc.incFileList, adhoc.incFileList_local));
 			
-			Map<String,ArrayList<String>> t1Map = new HashMap<String, ArrayList<String>>(t1Map_wholeStudy);
-			t1Map.put(absMainFilePath, adhoc.incFileList);
+			Map<String,Set<String>> t1Map = new HashMap<String,Set<String>>(t1Map_wholeStudy);
+			t1Map.put(absMainFilePath, adhoc.incFileSet);
 			Map<String,Set<String>> t1ReverseMap = Tools.getReverseMap(t1Map);
 
 			//////////////////////////////////////////////////////////////////////////////////////

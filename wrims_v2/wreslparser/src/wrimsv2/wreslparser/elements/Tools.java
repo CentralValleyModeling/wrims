@@ -237,24 +237,24 @@ public class Tools {
 	}
 	
 	/// type 1 map is the shallow included files, e.g., map( f1, [f7,f9])
-	public static Map<String, ArrayList<String>> getType1Map(Map<String, SimulationDataSet> dataMap) {
+	public static Map<String, Set<String>> getType1Map(Map<String, SimulationDataSet> dataMap) {
 
-		Map<String, ArrayList<String>> out = new HashMap<String, ArrayList<String>>();
+		Map<String, Set<String>> out = new HashMap<String, Set<String>>();
 		
 		for (String f : dataMap.keySet()){
 
 			SimulationDataSet data = dataMap.get(f);
 			
-			ArrayList<String> fileList = new ArrayList<String>();
-			fileList.addAll(data.incFileList);
+			Set<String> fileSet = new HashSet<String>();
+			fileSet.addAll(data.incFileSet);
 			
-			out.put(f, fileList);
+			out.put(f, fileSet);
 		}
 		return out;
 	}
 
 	/// type 1 map is the shallow included files, e.g., map( f1, [f7,f9])
-	public static Map<String, Set<String>> getReverseMap(Map<String, ArrayList<String>> t1Map) {
+	public static Map<String, Set<String>> getReverseMap(Map<String, Set<String>> t1Map) {
 
 		Map<String, Set<String>> out = new HashMap<String, Set<String>>();
 		
