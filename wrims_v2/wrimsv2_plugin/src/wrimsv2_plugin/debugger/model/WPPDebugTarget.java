@@ -207,8 +207,21 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		data=sendRequest("step");
 		System.out.println(data);
 		
-		//data=sendRequest("resume");
-		//System.out.println(data);
+		data=sendRequest("resume");
+		System.out.println(data);
+		
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		data=sendRequest("year:10001");
+		System.out.println(data);
+		
+		data=sendRequest("resume");
+		System.out.println(data);
 		
 		try {
 			Thread.sleep(5000);
