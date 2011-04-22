@@ -1,0 +1,20 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+}
+	
+
+MODEL first { 
+
+ define watch_this {std kind 'This-is-correct' units 'TAF'} 
+ INCLUDE '\moreWreslFiles\Dvars.wresl'
+
+
+}	
+	
+	
+
+	 
+
+
+ 

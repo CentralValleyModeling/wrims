@@ -255,24 +255,32 @@ public class StudyParser {
 			SimulationDataSet model_dataset = new SimulationDataSet();
 			LogUtils.normalMsg("========== Start data prioritization =========== ");	
 			
+			ArrayList<String> reverseList = new ArrayList<String>(adhoc.incFileList); 
+			Collections.reverse(reverseList);
+			
 			/// for kids
 			for (String f : adhoc.incFileList) {
+				
+					SimulationDataSet model_dataset_temp = new SimulationDataSet();		
+				//LogUtils.normalMsg("========== Prioritize offsprings in file: "+f);
+					model_dataset_temp.prioritizeChildren(f, t1Map, fileDataMap_corrected, t1ReverseMap);
 					
-				LogUtils.normalMsg("========== Prioritize offsprings in file: "+f);
-					model_dataset.prioritizeChildren(f, t1Map, fileDataMap_corrected, t1ReverseMap);
+					model_dataset_temp.prioritize_prepend(fileDataMap_corrected.get(f), f, t1ReverseMap);
+					
+					model_dataset.prioritize_append(model_dataset_temp, f, t1ReverseMap);
 			}
-			LogUtils.normalMsg("========== Finish children prioritization =========== ");
+			//LogUtils.normalMsg("========== Finish children prioritization =========== ");
 			
 			/// for include files in adhoc
-			for (String f : adhoc.incFileList) {
-				
-                LogUtils.normalMsg("========== Prioritize adhoc include file: "+f);
-				model_dataset.prioritize(fileDataMap_corrected.get(f), f, t1ReverseMap);
-			}
+//			for (String f : adhoc.incFileList) {
+//				
+//                //LogUtils.normalMsg("========== Prioritize adhoc include file: "+f);
+////				model_dataset.prioritize(fileDataMap_corrected.get(f), f, t1ReverseMap);
+//			}
 			
 			/// for vars in adhoc
-			LogUtils.normalMsg("========== Prioritize adhoc =========== ");
-			model_dataset.prioritize(adhoc, absMainFilePath, t1ReverseMap);
+			//LogUtils.normalMsg("========== Prioritize adhoc =========== ");
+			model_dataset.prioritize_append(adhoc, absMainFilePath, t1ReverseMap);
 			LogUtils.normalMsg("========== Finish adhoc prioritization =========== ");
 //---------------------------------------------------------------------------------------			
 

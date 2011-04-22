@@ -1,0 +1,11 @@
+
+INCLUDE 'TestWreslWalker_priority_case3_include1_include.wresl'	
+
+ define include1 {std kind 'This-is-correct' units 'TAF'}  
+  define main   {std kind 'This-is-weird' units 'TAF'} 	
+	
+
+	 
+
+
+ 
