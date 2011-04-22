@@ -139,7 +139,7 @@ public class Evaluation {
 		Number value;
 		if (!ControlData.currSvMap.containsKey(ident)){
 			if (!ControlData.currTsMap.containsKey(ident)){
-				Error.error_evaluation.add("State variable "+ident+" is not defined before used.");
+				Error.addEvaluationError("State variable "+ident+" is not defined before used.");
 				IntDouble id=new IntDouble(1.0, false);
 				return new EvalExpression(id);
 			}else{
@@ -150,7 +150,7 @@ public class Evaluation {
 		}
 		
 		if (value == null){
-			Error.error_evaluation.add("The value of state variable "+ident+" is not defined before used.");
+			Error.addEvaluationError("The value of state variable "+ident+" is not defined before used.");
 			IntDouble id=new IntDouble(1.0, false);
 			return new EvalExpression(id);
 		}
@@ -627,7 +627,7 @@ public class Evaluation {
 		}else if(mds.svList.contains(ident)){
 			value=mds.svMap.get(ident).getValue();
 		}else{
-			Error.error_evaluation.add("The variable "+ident+" is not defined in the past cycle of "+cycle+".");
+			Error.addEvaluationError("The variable "+ident+" is not defined in the past cycle of "+cycle+".");
 			IntDouble result=new IntDouble(value,false);
 			return result;
 		}
@@ -637,7 +637,7 @@ public class Evaluation {
 	
 	public static EvalExpression max(EvalExpression ee1, EvalExpression ee2){
 		if (!ee1.isNumeric() || !ee2.isNumeric()){
-			Error.error_evaluation.add("variable inside max function should not contain decision variable.");
+			Error.addEvaluationError("variable inside max function should not contain decision variable.");
 		}
 		return new EvalExpression(maxOperation(ee1.getValue(), ee2.getValue()));
 	}
@@ -658,7 +658,7 @@ public class Evaluation {
 	
 	public static EvalExpression min(EvalExpression ee1, EvalExpression ee2){
 		if (!ee1.isNumeric() || !ee2.isNumeric()){
-			Error.error_evaluation.add("variable inside min function should not contain decision variable.");
+			Error.addEvaluationError("variable inside min function should not contain decision variable.");
 		}
 		return new EvalExpression((minOperation(ee1.getValue(), ee2.getValue())));
 	}
@@ -679,7 +679,7 @@ public class Evaluation {
 	
 	public static EvalExpression intFunc(EvalExpression ee1){
 		if (!ee1.isNumeric()){
-			Error.error_evaluation.add("variable inside int function should not contain decision variable.");
+			Error.addEvaluationError("variable inside int function should not contain decision variable.");
 		}
 		return new EvalExpression(intOperation(ee1.getValue()));
 	}
@@ -695,7 +695,7 @@ public class Evaluation {
 	
 	public static EvalExpression abs(EvalExpression ee1){
 		if (!ee1.isNumeric()){
-			Error.error_evaluation.add("variable inside abs function should not contain decision variable.");
+			Error.addEvaluationError("variable inside abs function should not contain decision variable.");
 		}
 		return new EvalExpression(absOperation(ee1.getValue()));
 	}
@@ -712,7 +712,7 @@ public class Evaluation {
 	
 	public static EvalExpression log(EvalExpression ee1){
 		if (!ee1.isNumeric()){
-			Error.error_evaluation.add("variable inside log function should not contain decision variable.");
+			Error.addEvaluationError("variable inside log function should not contain decision variable.");
 		}
 		return new EvalExpression(logOperation(ee1.getValue()));
 	}
@@ -729,7 +729,7 @@ public class Evaluation {
 	
 	public static EvalExpression log10(EvalExpression ee1){
 		if (!ee1.isNumeric()){
-			Error.error_evaluation.add("variable inside log10 function should not contain decision variable.");
+			Error.addEvaluationError("variable inside log10 function should not contain decision variable.");
 		}
 		return new EvalExpression(log10Operation(ee1.getValue()));
 	}
@@ -746,7 +746,7 @@ public class Evaluation {
 	
 	public static EvalExpression pow(EvalExpression ee1, EvalExpression ee2){
 		if (!ee1.isNumeric() || !ee2.isNumeric()){
-			Error.error_evaluation.add("variable inside pow function should not contain decision variable.");
+			Error.addEvaluationError("variable inside pow function should not contain decision variable.");
 		}
 		return new EvalExpression(powOperation(ee1.getValue(), ee2.getValue()));
 	}
@@ -777,11 +777,11 @@ public class Evaluation {
 			ControlData.dataYear=ControlData.dataYear;
 		}else{
 			if (!ee.isNumeric()){
-				Error.error_evaluation.add("The index of "+ident+" should not contain decision variable.");
+				Error.addEvaluationError("The index of "+ident+" should not contain decision variable.");
 			}
 			IntDouble id=ee.getValue();
 			if (!id.isInt()){
-				Error.error_evaluation.add("The index of "+ident+" should be integer.");
+				Error.addEvaluationError("The index of "+ident+" should be integer.");
 			}
 			TimeOperation.findTime(id.getData().intValue());
 		}

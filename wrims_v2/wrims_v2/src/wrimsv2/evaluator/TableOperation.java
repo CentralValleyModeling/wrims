@@ -195,7 +195,7 @@ public class TableOperation {
 			k=-1;
 			while (k<whereSize-1 && eachWhereTrue){
 				k++;
-				if (values[whereIndex[k]]!=whereValue[k]){
+				if (values[whereIndex[k]].doubleValue()!=whereValue[k].doubleValue()){
 					eachWhereTrue=false;
 				}
 			}
@@ -227,7 +227,7 @@ public class TableOperation {
 		}
 		Number givenValue=(Number)given.get(givenName);
 		
-		if (givenValue==values[givenIndex]){
+		if (givenValue.doubleValue()==values[givenIndex].doubleValue()){
 			valueString=value.toString();
 			return generateIntDouble(valueString);
 		}
@@ -240,14 +240,14 @@ public class TableOperation {
 			k=-1;
 			while (k<whereSize-1 && eachWhereTrue){
 				k++;
-				if (newValues[whereIndex[k]]!=whereValue[k]){
+				if (newValues[whereIndex[k]].doubleValue()!=whereValue[k].doubleValue()){
 					eachWhereTrue=false;
 				}
 			}
 			if (!eachWhereTrue) {
 				whereTrue=false;
 			}else{	
-				if (givenValue==newValues[givenIndex]){
+				if (givenValue.doubleValue()==newValues[givenIndex].doubleValue()){
 					Number newValue=newValues[selectIndex];
 					valueString=newValue.toString();
 					return generateIntDouble(valueString);
@@ -324,7 +324,7 @@ public class TableOperation {
 		Number givenValue=(Number)given.get(givenName);
 		
 		values=data.get(0);	
-		if (givenValue==values[givenIndex]){
+		if (givenValue.doubleValue()==values[givenIndex].doubleValue()){
 			valueString=values[selectIndex].toString();
 			return generateIntDouble(valueString);
 		}
@@ -334,7 +334,7 @@ public class TableOperation {
 		while (i<data.size()-1 && !givenTrue){
 			i++;
 			Number[] newValues=data.get(i);	
-			if (givenValue==newValues[givenIndex]){
+			if (givenValue.doubleValue()==newValues[givenIndex].doubleValue()){
 				Number newValue=newValues[selectIndex];
 				valueString=newValue.toString();
 				return generateIntDouble(valueString);

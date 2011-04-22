@@ -29,7 +29,7 @@ options {
   
   @Override
   public void reportError(RecognitionException e) {
-       Error.error_evaluation.add(getErrorMessage(e, tokenNames));
+       Error.addEvaluationError(getErrorMessage(e, tokenNames));
   }
 }
 

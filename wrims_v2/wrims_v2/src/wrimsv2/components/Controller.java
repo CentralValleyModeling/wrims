@@ -138,15 +138,18 @@ public class Controller {
 					evaluator.evaluator();
 					condition=evaluator.evalCondition;
 				}catch (Exception e){
-					Error.error_evaluation.add("Case condition evaluation has error.");
+					Error.addEvaluationError("Case condition evaluation has error.");
 					condition=false;
 				}
 			}
 			if (condition){
-				if (svName.equals("sjrr_mon")){
+				String evalString="v: "+svar.caseExpression.get(i);
+				if (svName.equals("cvp_targ")){
 					int x=0;
 				}
-				String evalString="v: "+svar.caseExpression.get(i);
+				if (svName.equals("transfersyear")){
+					int x=0;
+				}
 				ANTLRStringStream stream = new ANTLRStringStream(evalString);
 				EvaluatorLexer lexer = new EvaluatorLexer(stream);
 				TokenStream tokenStream = new CommonTokenStream(lexer);
@@ -155,11 +158,11 @@ public class Controller {
 					evaluator.evaluator();
 					svar.setValue(evaluator.evalValue.getData());
 				} catch (RecognitionException e) {
-					Error.error_evaluation.add("Case expression evaluation has error.");
+					Error.addEvaluationError("Case expression evaluation has error.");
 					svar.setValue(0);
 				}
 			}else{
-				Error.error_evaluation.add("None of the case conditions is satisfied.");
+				Error.addEvaluationError("None of the case conditions is satisfied.");
 				svar.setValue(0);
 			}
 		}
@@ -199,7 +202,7 @@ public class Controller {
 				evaluator.evaluator();
 				dvar.lowerBoundValue=evaluator.evalValue.getData();
 			} catch (RecognitionException e) {
-				Error.error_evaluation.add("Lowerbound evaluation has error.");
+				Error.addEvaluationError("Lowerbound evaluation has error.");
 				dvar.lowerBoundValue=-901.0;
 			}
 			
@@ -212,7 +215,7 @@ public class Controller {
 				evaluator.evaluator();
 				dvar.upperBoundValue=evaluator.evalValue.getData();
 			} catch (RecognitionException e) {
-				Error.error_evaluation.add("Lowerbound evaluation has error.");
+				Error.addEvaluationError("Lowerbound evaluation has error.");
 				dvar.lowerBoundValue=-901.0;
 			}
 		}
@@ -237,7 +240,7 @@ public class Controller {
 				evaluator.evaluator();
 				alias.value=evaluator.evalValue.getData();
 			} catch (RecognitionException e) {
-				Error.error_evaluation.add("Alias evaluation has error.");
+				Error.addEvaluationError("Alias evaluation has error.");
 				alias.value=-901.0;
 			}
 		}
@@ -267,7 +270,7 @@ public class Controller {
 					evaluator.evaluator();
 					condition=evaluator.evalCondition;
 				}catch (Exception e){
-					Error.error_evaluation.add("Case condition evaluation has error.");
+					Error.addEvaluationError("Case condition evaluation has error.");
 					condition=false;
 				}
 			}
@@ -297,7 +300,7 @@ public class Controller {
 						SolverData.getSoftConstraintExpression().add(ee);
 						SolverData.getSoftConstraintWeight().add(EvaluatorParser.evalValue.getData());
 					} catch (RecognitionException e) {
-						Error.error_evaluation.add("Case expression evaluation has error.");
+						Error.addEvaluationError("Case expression evaluation has error.");
 					}
 				}else{
 					ANTLRStringStream stream = new ANTLRStringStream("g:"+stringList[i]);
@@ -308,7 +311,7 @@ public class Controller {
 						evaluator.evaluator();
 						SolverData.getConstraintDataMap().put(goalName,EvaluatorParser.evalConstraint);
 					} catch (RecognitionException e) {
-						Error.error_evaluation.add("Case expression evaluation has error.");
+						Error.addEvaluationError("Case expression evaluation has error.");
 					}
 				}
 			}

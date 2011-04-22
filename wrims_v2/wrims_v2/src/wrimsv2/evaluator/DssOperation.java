@@ -114,14 +114,14 @@ public class DssOperation {
 		
 		DataSet ds=getDataForInitial(ControlData.partA,name,partC,"",ControlData.partE, ControlData.initPartF);
 		if (ds==null){
-			Error.error_evaluation.add("Intial data of "+name+" in dss file doesn't exist." );
+			Error.addEvaluationError("Intial data of "+name+" in dss file doesn't exist." );
 			return false;
 		}
 		if (!units.toUpperCase().equals(ds.getAttributes().getYUnits().toUpperCase())){
 			return false;
 		}
 		if (!(ds instanceof RegularTimeSeries)){
-			Error.error_evaluation.add("Intial data of "+name+" in dss file is not a regular timeseries." );
+			Error.addEvaluationError("Intial data of "+name+" in dss file is not a regular timeseries." );
 			return false;
 		}
 		RegularTimeSeries rts=(RegularTimeSeries)ds;

@@ -48,6 +48,34 @@ public class TimeOperation {
 		}
 	}
 	
+	public static int waterMonthValue(String month){
+		if (month.equals("jan")){
+			return 4;
+		}else if (month.equals("feb")){
+			return 5;
+		}else if (month.equals("mar")){
+			return 6;
+		}else if (month.equals("apr")){
+			return 7;
+		}else if (month.equals("may")){
+			return 8;
+		}else if (month.equals("jun")){
+			return 9;
+		}else if (month.equals("jul")){
+			return 10;
+		}else if (month.equals("aug")){
+			return 11;
+		}else if (month.equals("sep")){
+			return 12;
+		}else if (month.equals("oct")){
+			return 1;
+		}else if (month.equals("nov")){
+			return 2;
+		}else{
+			return 3;
+		}
+	}
+	
 	public static int waterMonthValue(int month){
 		if (month>=10){
 			return month-9;
@@ -57,7 +85,7 @@ public class TimeOperation {
 	}
 	
 	public static int waterYearValue(){
-		if (ControlData.currMonth>10){
+		if (ControlData.currMonth>=10){
 			return ControlData.currYear+1;
 		}else{
 			return ControlData.currYear;
