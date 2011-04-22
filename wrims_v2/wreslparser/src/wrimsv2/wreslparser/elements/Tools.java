@@ -401,5 +401,13 @@ public class Tools {
 		}
 	}
 
+	public static SimulationDataSet overwrite_set(SimulationDataSet main, SimulationDataSet s) {
+		
+		SimulationDataSet a = new SimulationDataSet(); a.add(main);
+		SimulationDataSet b = new SimulationDataSet(); b.add(s);
+		b.overwrittenWith_set(a);
+		
+		return b;
+	}
 
 }

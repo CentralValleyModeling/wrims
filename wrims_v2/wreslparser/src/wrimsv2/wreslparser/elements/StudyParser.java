@@ -168,15 +168,38 @@ public class StudyParser {
 			
 			/// include global data
 			/// previous globals have lowest priority /TODO: remove reverse map
-			model_dataset.dePrioritize(td.cumulative_global_complete, "", t1ReverseMap_wholeStudy);	
-			LogUtils.normalMsg("========== Finish cumulative globals prioritization =========== ");
+			System.out.println(" globals in common :"+td.cumulative_global_complete.dvSet_global );
+			System.out.println(" globals in model before :"+model_dataset.dvSet_global );
+	
+			///  a working route for overwrite_set
+			///////////////////////////////////////////////////////////
+			SimulationDataSet e = new SimulationDataSet();
+			e.overwrittenWith_set(td.cumulative_global_complete);
+			e.overwrittenWith_set(model_dataset);
+			model_dataset = e;
+			////////////////////////////////////////////////////////////
+			
+			System.out.println(" globals in model after :"+model_dataset.dvSet_global );			
 
+			
+			//LogUtils.normalMsg("========== Finish cumulative globals prioritization =========== ");
+
+			
+			////////////////////////////////////////////////////////////////
+
+			lousyConvert(model_dataset);
+
+			/////////////////////////////////////////////////////////////////////
+			
 			
 		    model_dataset_map.put(modelName, model_dataset);
 		    
 			/// update/overwrite cumulative globals
-			td.cumulative_global_adhocs.overwrittenWith(sc.modelDataMap.get(modelName).getGlobalVars());
-			td.cumulative_global_complete.overwrittenWith(model_dataset.getGlobalVars());		    
+			td.cumulative_global_adhocs.overwrittenWith_set(sc.modelDataMap.get(modelName).getGlobalVars_set());
+			td.cumulative_global_complete.overwrittenWith_set(model_dataset.getGlobalVars_set());	
+			
+			lousyConvert(td.cumulative_global_adhocs);
+			lousyConvert(td.cumulative_global_complete);
 
 		}
 		return model_dataset_map;		
@@ -263,11 +286,11 @@ public class StudyParser {
 				
 					SimulationDataSet temp = new SimulationDataSet();		
 				//LogUtils.normalMsg("========== Prioritize offsprings in file: "+f);
-					temp.prioritizeChildren(f, t1Map, fileDataMap_corrected, t1ReverseMap);
+					temp.addChildren(f, t1Map, fileDataMap_corrected);
 					
-					temp.prioritize_prepend(fileDataMap_corrected.get(f), f, t1ReverseMap);
+					temp.overwrittenWith_set(fileDataMap_corrected.get(f));
 					
-					model_dataset.prioritize_append(temp, f, t1ReverseMap);
+					model_dataset.overwrittenWith_set(temp);
 			}
 			//LogUtils.normalMsg("========== Finish children prioritization =========== ");
 			
@@ -280,11 +303,44 @@ public class StudyParser {
 			
 			/// for vars in adhoc
 			//LogUtils.normalMsg("========== Prioritize adhoc =========== ");
-			model_dataset.prioritize_append(adhoc, absMainFilePath, t1ReverseMap);
+			//model_dataset.prioritize_append(adhoc, absMainFilePath, t1ReverseMap);
+			model_dataset.overwrittenWith_set(adhoc);
 			LogUtils.normalMsg("========== Finish adhoc prioritization =========== ");
 //---------------------------------------------------------------------------------------			
 
 		return model_dataset;
+	}
+
+	public static void lousyConvert(SimulationDataSet q){
+		
+		q.asList = new ArrayList<String>(q.asSet);
+		q.asList_global = new ArrayList<String>(q.asSet_global);
+		q.asList_local = new ArrayList<String>(q.asSet_local);
+		
+		q.wtList = new ArrayList<String>(q.wtSet);
+		q.wtList_global = new ArrayList<String>(q.wtSet_global);
+		q.wtList_local = new ArrayList<String>(q.wtSet_local);
+		
+		q.svList = new ArrayList<String>(q.svSet);
+		q.svList_global = new ArrayList<String>(q.svSet_global);
+		q.svList_local = new ArrayList<String>(q.svSet_local);
+		
+		q.dvList = new ArrayList<String>(q.dvSet);
+		q.dvList_global = new ArrayList<String>(q.dvSet_global);
+		q.dvList_local = new ArrayList<String>(q.dvSet_local);
+		
+		q.tsList = new ArrayList<String>(q.tsSet);
+		q.tsList_global = new ArrayList<String>(q.tsSet_global);
+		q.tsList_local = new ArrayList<String>(q.tsSet_local);
+		
+		q.exList = new ArrayList<String>(q.exSet);
+		q.exList_global = new ArrayList<String>(q.exSet_global);
+		q.exList_local = new ArrayList<String>(q.exSet_local);
+		
+		q.incFileList = new ArrayList<String>(q.incFileSet);
+		q.incFileList_global = new ArrayList<String>(q.incFileSet_global);
+		q.incFileList_local = new ArrayList<String>(q.incFileSet_local);
+		
 	}
 	
 	

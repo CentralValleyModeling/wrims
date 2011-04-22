@@ -131,51 +131,6 @@ public class SimulationDataSet {
 		this.add(s);
 	}	
 
-	public SimulationDataSet overwrittenWith_set(SimulationDataSet s) {
-		
-		this.dvSet.addAll(s.dvSet);
-		this.dvSet_global.addAll(s.dvSet_global);
-		this.dvSet_local.addAll(s.dvSet_local);
-		this.dvMap.putAll(s.dvMap); // this.dvMap is overwritten by s.dvMap
-		
-		this.svSet.addAll(s.svSet);
-		this.svSet_global.addAll(s.svSet_global);
-		this.svSet_local.addAll(s.svSet_local);
-		this.svMap.putAll(s.svMap);
-		
-		this.tsSet.addAll(s.tsSet);
-		this.tsSet_global.addAll(s.tsSet_global);
-		this.tsSet_local.addAll(s.tsSet_local);
-		this.tsMap.putAll(s.tsMap);
-		
-		this.asSet.addAll(s.asSet);
-		this.asSet_global.addAll(s.asSet_global);
-		this.asSet_local.addAll(s.asSet_local);
-		this.asMap.putAll(s.asMap);
-		
-		this.gSet.addAll(s.gSet);
-		this.gSet_global.addAll(s.gSet_global);
-		this.gSet_local.addAll(s.gSet_local);
-		this.gMap.putAll(s.gMap);
-		
-		this.wtSet.addAll(s.wtSet);
-		this.wtSet_global.addAll(s.wtSet_global);
-		this.wtSet_local.addAll(s.wtSet_local);
-		this.wtMap.putAll(s.wtMap);
-		
-		this.exSet.addAll(s.exSet);
-		this.exSet_global.addAll(s.exSet_global);
-		this.exSet_local.addAll(s.exSet_local);
-		this.exMap.putAll(s.exMap);
-		
-		this.incFileSet.addAll(s.incFileSet);
-		this.incFileSet_global.addAll(s.incFileSet_global);
-		this.incFileSet_local.addAll(s.incFileSet_local);
-		this.incFileMap.putAll(s.incFileMap);
-		
-		return this;
-	}	
-	
 	public SimulationDataSet overwrittenWith(SimulationDataSet s) {
 		
 		this.remove(s);
@@ -599,17 +554,19 @@ public class SimulationDataSet {
 		return this.insert(laterFileData); // later data has higher priority
 	}	
 	
-	public SimulationDataSet prioritizeChildren(String nodeFile, Map<String,Set<String>> t1Map, Map<String, SimulationDataSet> fileDataMap, Map<String,Set<String>> reverseMap ) {
+	public SimulationDataSet addChildren(String nodeFile, Map<String,Set<String>> t1Map, Map<String, SimulationDataSet> fileDataMap) {
 
 		
 		for (String childFile : t1Map.get(nodeFile)) {
 			
 			System.out.println(" child file is: "+ childFile +" from node: " + nodeFile);
 						
-			if (t1Map.get(childFile)!=null)  this.prioritizeChildren(childFile, t1Map, fileDataMap, reverseMap);
+			if (t1Map.get(childFile)!=null)  this.addChildren(childFile, t1Map, fileDataMap);
 			
-			LogUtils.normalMsg("========== Prioritize file: " + childFile);
-			this.prioritize_prepend(fileDataMap.get(childFile), childFile, reverseMap);
+			//LogUtils.normalMsg("========== Prioritize file: " + childFile);
+			//this.prioritize_prepend(fileDataMap.get(childFile), childFile, reverseMap);
+			this.overwrittenWith_set(fileDataMap.get(childFile));
+			
 		}
 		
 		return this;
@@ -691,4 +648,110 @@ public class SimulationDataSet {
 	
 		return this;
 	}
+
+	public SimulationDataSet overwrittenWith_set(SimulationDataSet s) {
+		
+		this.dvSet.addAll(s.dvSet);
+		this.dvSet_global.addAll(s.dvSet_global);
+		this.dvSet_local.addAll(s.dvSet_local);
+		this.dvMap.putAll(s.dvMap); // this.dvMap is overwritten by s.dvMap
+		
+		this.svSet.addAll(s.svSet);
+		this.svSet_global.addAll(s.svSet_global);
+		this.svSet_local.addAll(s.svSet_local);
+		this.svMap.putAll(s.svMap);
+		
+		this.tsSet.addAll(s.tsSet);
+		this.tsSet_global.addAll(s.tsSet_global);
+		this.tsSet_local.addAll(s.tsSet_local);
+		this.tsMap.putAll(s.tsMap);
+		
+		this.asSet.addAll(s.asSet);
+		this.asSet_global.addAll(s.asSet_global);
+		this.asSet_local.addAll(s.asSet_local);
+		this.asMap.putAll(s.asMap);
+		
+		this.gSet.addAll(s.gSet);
+		this.gSet_global.addAll(s.gSet_global);
+		this.gSet_local.addAll(s.gSet_local);
+		this.gMap.putAll(s.gMap);
+		
+		this.wtSet.addAll(s.wtSet);
+		this.wtSet_global.addAll(s.wtSet_global);
+		this.wtSet_local.addAll(s.wtSet_local);
+		this.wtMap.putAll(s.wtMap);
+		
+		this.exSet.addAll(s.exSet);
+		this.exSet_global.addAll(s.exSet_global);
+		this.exSet_local.addAll(s.exSet_local);
+		this.exMap.putAll(s.exMap);
+		
+		this.incFileSet.addAll(s.incFileSet);
+		this.incFileSet_global.addAll(s.incFileSet_global);
+		this.incFileSet_local.addAll(s.incFileSet_local);
+		this.incFileMap.putAll(s.incFileMap);
+		
+		return this;
+	}
+
+	public SimulationDataSet getGlobalVars_set() {
+		
+		SimulationDataSet out = new SimulationDataSet() ;
+	
+
+			out.wtSet.addAll(this.wtSet_global);
+			out.wtSet_global.addAll(this.wtSet_global);
+	
+			for (String key : this.wtSet_global) {
+				out.wtMap.put(key, this.wtMap.get(key));
+			}
+		
+		
+			out.incFileSet.addAll(this.incFileSet_global);
+			out.incFileSet_global.addAll(this.incFileSet_global);
+	
+			for (String key : this.incFileSet_global) {
+				out.incFileMap.put(key, this.incFileMap.get(key));
+			}
+		
+			out.exSet.addAll(this.exSet_global);
+			out.exSet_global.addAll(this.exSet_global);
+	
+			for (String key : this.exSet_global) {
+				out.exMap.put(key, this.exMap.get(key));
+			}
+	
+			out.svSet.addAll(this.svSet_global);
+			out.svSet_global.addAll(this.svSet_global);
+	
+			for (String key : this.svSet_global) {
+				out.svMap.put(key, this.svMap.get(key));
+			}
+		
+			out.tsSet.addAll(this.tsSet_global);
+			out.tsSet_global.addAll(this.tsSet_global);
+	
+			for (String key : this.tsSet_global) {
+				out.tsMap.put(key, this.tsMap.get(key));
+			}
+	
+			out.dvSet.addAll(this.dvSet_global);
+			out.dvSet_global.addAll(this.dvSet_global);
+	
+			for (String key : this.dvSet_global) {
+				out.dvMap.put(key, this.dvMap.get(key));
+			}
+	
+			out.gSet.addAll(this.gSet_global);
+			out.gSet_global.addAll(this.gSet_global);
+	
+			for (String key : this.gSet_global) {
+				out.gMap.put(key, this.gMap.get(key));
+			}
+		
+	
+		return out;
+	}
+
+
 }

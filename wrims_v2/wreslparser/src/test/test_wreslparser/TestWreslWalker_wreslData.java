@@ -54,7 +54,7 @@ public class TestWreslWalker_wreslData {
 		Assert.assertEquals(wrong, 0);
 		
 		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
-		Assert.assertEquals(totalErrs, 1);	
+		Assert.assertEquals(totalErrs, 0);	
 		
 		int Errs = RegUtils.timesOfMatches(fileText, "# Error: Decision varriable redefined: watch_this in files: ");
 		Assert.assertEquals(Errs, 1);			
