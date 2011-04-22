@@ -15,12 +15,13 @@ import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DssOperation {
 	public static boolean getSVTimeseries(String name, String file){
 		Timeseries ts=ControlData.allTsMap.get(name);
 		String partC=ts.kind;
-		DataSet ds=getDataFor(file,ControlData.partA,name,partC,"",ControlData.partE, ControlData.svDvPartF);
+		DataSet ds=getDataForSvar(ControlData.partA,name,partC,"",ControlData.partE, ControlData.svDvPartF);
 		
 		if (ds==null){
 			return false;
@@ -34,21 +35,34 @@ public class DssOperation {
 		RegularTimeSeries rts=(RegularTimeSeries)ds;
 		DssDataSet dds= new DssDataSet();
 		ArrayList<Double> dataArray= new ArrayList<Double>();
-		for (double dataEntry :  rts.getYArray()){
-			dataArray.add(dataEntry);
+		Date startDate=rts.getStartTime().getDate();
+		if (ts.convertToUnits.equals("cfs")){
+			ControlData.dataYear=startDate.getYear()+1900;
+			ControlData.dataMonth=startDate.getMonth();
+			ControlData.dataDay=startDate.getDate();
+			int i=0;
+			for (double dataEntry :  rts.getYArray()){
+				TimeOperation.findTime(i);
+				dataArray.add(dataEntry*Evaluation.tafcfs("taf_cfs"));
+				i=i+1;
+			}
+		}else{
+			for (double dataEntry :  rts.getYArray()){
+				dataArray.add(dataEntry);
+			}
 		}
         dds.setData(dataArray);
         dds.setTimeStep(rts.getTimeInterval().toString());
-        dds.setStartTime(rts.getStartTime().getDate());
+        dds.setStartTime(startDate);
         dds.setFromDssFile(true);
         DataTimeSeries.svTS.put(name, dds);
 		return true;
 	}
 	
-	public static boolean getSVInitTimeseries(String name, String file){
+	public static boolean getSVInitTimeseries(String name){
 		Timeseries ts=ControlData.currTsMap.get(name);
 		String partC=ts.kind;
-		DataSet ds=getDataForInitial(file,ControlData.partA,name,partC,"",ControlData.partE, ControlData.initPartF);
+		DataSet ds=getDataForInitial(ControlData.partA,name,partC,"",ControlData.partE, ControlData.initPartF);
 		
 		if (ds==null){
 			return false;
@@ -62,17 +76,30 @@ public class DssOperation {
 		RegularTimeSeries rts=(RegularTimeSeries)ds;
 		DssDataSet dds= new DssDataSet();
 		ArrayList<Double> dataArray= new ArrayList<Double>();
-		for (double dataEntry :  rts.getYArray()){
-			dataArray.add(dataEntry);
+		Date startDate=rts.getStartTime().getDate();
+		if (ts.convertToUnits.equals("cfs")){
+			ControlData.dataYear=startDate.getYear()+1900;
+			ControlData.dataMonth=startDate.getMonth()+1;
+			ControlData.dataDay=startDate.getDate();
+			int i=0;
+			for (double dataEntry :  rts.getYArray()){
+				TimeOperation.findTime(i);
+				dataArray.add(dataEntry*Evaluation.tafcfs("taf_cfs"));
+				i=i+1;
+			}
+		}else{
+			for (double dataEntry :  rts.getYArray()){
+				dataArray.add(dataEntry);
+			}
 		}
         dds.setData(dataArray);
         dds.setTimeStep(rts.getTimeInterval().toString());
-        dds.setStartTime(rts.getStartTime().getDate());
+        dds.setStartTime(startDate);
         DataTimeSeries.svInit.put(name, dds);
 		return true;
 	}
 	
-	public static boolean getDVAliasInitTimeseries(String name, String file){
+	public static boolean getDVAliasInitTimeseries(String name){
 		String units;
 		String partC;
 		if (ControlData.currDvMap.containsKey(name)){
@@ -85,7 +112,7 @@ public class DssOperation {
 			units=alias.units;
 		}
 		
-		DataSet ds=getDataForInitial(file,ControlData.partA,name,partC,"",ControlData.partE, ControlData.initPartF);
+		DataSet ds=getDataForInitial(ControlData.partA,name,partC,"",ControlData.partE, ControlData.initPartF);
 		if (ds==null){
 			Error.error_evaluation.add("Intial data of "+name+" in dss file doesn't exist." );
 			return false;
@@ -111,15 +138,22 @@ public class DssOperation {
 	}
 	
     public static DataSet getDataFor(String file, String apart, String bpart, String cpart, String dpart, String epart, String fpart){
-        Group group = DSSUtil.createGroup("local", file);
-        dpart = "01JAN1920";
+        dpart = "01JAN1920"; //To Do: this method may be removed
         DataReference ref = DSSUtil.createDataReference("local",file,Pathname.createPathname(new String[]{apart, bpart, cpart, dpart, epart, fpart}));
         return ref.getData();
     }
     
-    public static DataSet getDataForInitial(String file, String apart, String bpart, String cpart, String dpart, String epart, String fpart){
-    	Group group = DSSUtil.createGroup("local", file);
-    	DataReference[] refs = group.find(new String[]{apart, bpart, cpart, dpart, epart, fpart});
+    public static DataSet getDataForSvar(String apart, String bpart, String cpart, String dpart, String epart, String fpart){
+    	DataReference[] refs = ControlData.groupSvar.find(new String[]{apart, bpart, cpart, dpart, epart, fpart});
+        if (refs.length==0){
+              return null;
+        } else {
+              return refs[0].getData();
+        }
+    }
+    
+    public static DataSet getDataForInitial(String apart, String bpart, String cpart, String dpart, String epart, String fpart){
+    	DataReference[] refs = ControlData.groupInit.find(new String[]{apart, bpart, cpart, dpart, epart, fpart});
         if (refs.length==0){
               return null;
         } else {

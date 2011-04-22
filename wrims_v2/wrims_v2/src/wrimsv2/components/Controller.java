@@ -11,6 +11,7 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 
+import vista.db.dss.DSSUtil;
 import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
@@ -36,6 +37,8 @@ public class Controller {
 		Date currTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 		Date endTime=new Date(ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
 		
+		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
+		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
 		ControlData.allTsMap=sds.getTimeseriesMap();
 		readTimeseries();
 		for (int i=0; i<modelList.size(); i++){

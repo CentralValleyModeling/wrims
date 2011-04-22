@@ -526,7 +526,7 @@ public class Evaluation {
 			}
 		}else{
 			DataTimeSeries.lookInitDss.add(ident);
-			if (DssOperation.getSVInitTimeseries(ident, FilePaths.fullInitDssPath)){
+			if (DssOperation.getSVInitTimeseries(ident)){
 				DssDataSet dds=DataTimeSeries.svInit.get(ident);
 				index =timeSeriesIndex(dds);
 				ArrayList<Double> data=dds.getData();
@@ -567,7 +567,7 @@ public class Evaluation {
 		}
 		
 		if (!DataTimeSeries.dvAliasInit.containsKey(ident)){
-			if (!DssOperation.getDVAliasInitTimeseries(ident, FilePaths.fullInitDssPath)){
+			if (!DssOperation.getDVAliasInitTimeseries(ident)){
 				Error.addEvaluationError("Initial file doesn't have data for decision vairiable/alias " +ident);
 				return 1.0;
 			}

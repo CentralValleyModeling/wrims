@@ -1,5 +1,7 @@
 package wrimsv2.components;
 
+import vista.db.dss.DSSUtil;
+import vista.set.Group;
 import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.External;
@@ -50,6 +52,8 @@ public class ControlData {
 	public static String svDvPartF;
 	public static String initPartF;
 	public static Stack<LoopIndex> sumIndex= new Stack <LoopIndex>();
+	public static Group groupInit;
+	public static Group groupSvar;
 	
 	public ControlData(){
 		timeStep ="1MON"; //TO DO: allow input;
