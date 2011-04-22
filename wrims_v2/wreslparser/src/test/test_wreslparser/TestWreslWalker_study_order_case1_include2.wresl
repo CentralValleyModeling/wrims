@@ -1,0 +1,11 @@
+
+
+
+
+include 'TestWreslWalker_study_order_case1_include2_include.wresl'
+	
+define second3_include2 {timeseries kind 'EVAPORATION-RATE' units 'IN'}
+define second4_include2 {timeseries kind 'EVAPORATION-RATE' units 'IN'}	 
+
+
+ 
