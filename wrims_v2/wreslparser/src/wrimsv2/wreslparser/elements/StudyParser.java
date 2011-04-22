@@ -261,13 +261,13 @@ public class StudyParser {
 			/// for kids
 			for (String f : adhoc.incFileList) {
 				
-					SimulationDataSet model_dataset_temp = new SimulationDataSet();		
+					SimulationDataSet temp = new SimulationDataSet();		
 				//LogUtils.normalMsg("========== Prioritize offsprings in file: "+f);
-					model_dataset_temp.prioritizeChildren(f, t1Map, fileDataMap_corrected, t1ReverseMap);
+					temp.prioritizeChildren(f, t1Map, fileDataMap_corrected, t1ReverseMap);
 					
-					model_dataset_temp.prioritize_prepend(fileDataMap_corrected.get(f), f, t1ReverseMap);
+					temp.prioritize_prepend(fileDataMap_corrected.get(f), f, t1ReverseMap);
 					
-					model_dataset.prioritize_append(model_dataset_temp, f, t1ReverseMap);
+					model_dataset.prioritize_append(temp, f, t1ReverseMap);
 			}
 			//LogUtils.normalMsg("========== Finish children prioritization =========== ");
 			
