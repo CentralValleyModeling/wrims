@@ -133,9 +133,9 @@ public class FileParser {
 		Map<String,SimulationDataSet> out = new HashMap<String, SimulationDataSet>();
 		out.put(inputFilePath, mainData);
 		
-		if (mainData.incFileList.isEmpty()) return out;
+		if (mainData.incFileSet.isEmpty()) return out;
 		else {
-			for (String file : mainData.incFileList) {
+			for (String file : mainData.incFileSet) {
 				
 				if (existingSet.contains(file)) continue; 
 				else {

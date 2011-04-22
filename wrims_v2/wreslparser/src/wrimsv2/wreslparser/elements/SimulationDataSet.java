@@ -2,6 +2,7 @@ package wrimsv2.wreslparser.elements;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -35,7 +36,9 @@ public class SimulationDataSet {
 	
 	// / weight table   // <objName,  <itemName, value>>
 
-
+	public Set<String> wtSet = new HashSet<String>();
+	public Set<String> wtSet_global = new HashSet<String>();
+	public Set<String> wtSet_local = new HashSet<String>();
 	public ArrayList<String> wtList = new ArrayList<String>();	
 	public ArrayList<String> wtList_global = new ArrayList<String>();
 	public ArrayList<String> wtList_local = new ArrayList<String>();
@@ -45,6 +48,9 @@ public class SimulationDataSet {
 
 	
 	// / includeFile data structure
+	public Set<String> incFileSet = new HashSet<String>();
+	public Set<String> incFileSet_global = new HashSet<String>();
+	public Set<String> incFileSet_local = new HashSet<String>();
 	public ArrayList<String> incFileList = new ArrayList<String>();
 	public ArrayList<String> incFileList_global = new ArrayList<String>();
 	public ArrayList<String> incFileList_local = new ArrayList<String>();
@@ -56,6 +62,9 @@ public class SimulationDataSet {
 	public Map<String, String> error_var_redefined = new HashMap<String, String>();
 
 	// / external function structure
+	public Set<String> exSet = new HashSet<String>();
+	public Set<String> exSet_global = new HashSet<String>();
+	public Set<String> exSet_local = new HashSet<String>();
 	public ArrayList<String> exList = new ArrayList<String>();
 	public ArrayList<String> exList_global = new ArrayList<String>();
 	public ArrayList<String> exList_local = new ArrayList<String>();
@@ -69,30 +78,45 @@ public class SimulationDataSet {
 	
 	
 	// / svar timeseries data structure
+	public Set<String> tsSet = new HashSet<String>();
+	public Set<String> tsSet_global = new HashSet<String>();
+	public Set<String> tsSet_local = new HashSet<String>();
 	public ArrayList<String> tsList = new ArrayList<String>();
 	public ArrayList<String> tsList_global = new ArrayList<String>();
 	public ArrayList<String> tsList_local = new ArrayList<String>();
 	public Map<String, Timeseries> tsMap = new HashMap<String, Timeseries>();
 	
 	// / svar data structure
+	public Set<String> svSet = new HashSet<String>();
+	public Set<String> svSet_global = new HashSet<String>();
+	public Set<String> svSet_local = new HashSet<String>();
 	public ArrayList<String> svList = new ArrayList<String>();
 	public ArrayList<String> svList_global = new ArrayList<String>();
 	public ArrayList<String> svList_local = new ArrayList<String>();
 	public Map<String, Svar> svMap = new HashMap<String, Svar>();
 
 	// / dvar data structure
+	public Set<String> dvSet = new HashSet<String>();
+	public Set<String> dvSet_global = new HashSet<String>();
+	public Set<String> dvSet_local = new HashSet<String>();
 	public ArrayList<String> dvList = new ArrayList<String>();
 	public ArrayList<String> dvList_global = new ArrayList<String>();
 	public ArrayList<String> dvList_local = new ArrayList<String>();
 	public Map<String, Dvar> dvMap = new HashMap<String, Dvar>();
 
 	// / alias data structure
+	public Set<String> asSet = new HashSet<String>();
+	public Set<String> asSet_global = new HashSet<String>();
+	public Set<String> asSet_local = new HashSet<String>();
 	public ArrayList<String> asList = new ArrayList<String>();
 	public ArrayList<String> asList_global = new ArrayList<String>();
 	public ArrayList<String> asList_local = new ArrayList<String>();
 	public Map<String, Alias> asMap = new HashMap<String, Alias>();
 
 	// / goal data structure
+	public Set<String> gSet = new HashSet<String>();
+	public Set<String> gSet_global = new HashSet<String>();
+	public Set<String> gSet_local = new HashSet<String>();
 	public ArrayList<String> gList = new ArrayList<String>();
 	public ArrayList<String> gList_global = new ArrayList<String>();
 	public ArrayList<String> gList_local = new ArrayList<String>();
@@ -107,6 +131,51 @@ public class SimulationDataSet {
 		this.add(s);
 	}	
 
+	public SimulationDataSet overwrite_set(SimulationDataSet s) {
+		
+		this.dvSet.addAll(s.dvSet);
+		this.dvSet_global.addAll(s.dvSet_global);
+		this.dvSet_local.addAll(s.dvSet_local);
+		this.dvMap.putAll(s.dvMap);
+		
+		this.svSet.addAll(s.svSet);
+		this.svSet_global.addAll(s.svSet_global);
+		this.svSet_local.addAll(s.svSet_local);
+		this.svMap.putAll(s.svMap);
+		
+		this.tsSet.addAll(s.tsSet);
+		this.tsSet_global.addAll(s.tsSet_global);
+		this.tsSet_local.addAll(s.tsSet_local);
+		this.tsMap.putAll(s.tsMap);
+		
+		this.asSet.addAll(s.asSet);
+		this.asSet_global.addAll(s.asSet_global);
+		this.asSet_local.addAll(s.asSet_local);
+		this.asMap.putAll(s.asMap);
+		
+		this.gSet.addAll(s.gSet);
+		this.gSet_global.addAll(s.gSet_global);
+		this.gSet_local.addAll(s.gSet_local);
+		this.gMap.putAll(s.gMap);
+		
+		this.wtSet.addAll(s.wtSet);
+		this.wtSet_global.addAll(s.wtSet_global);
+		this.wtSet_local.addAll(s.wtSet_local);
+		this.wtMap.putAll(s.wtMap);
+		
+		this.exSet.addAll(s.exSet);
+		this.exSet_global.addAll(s.exSet_global);
+		this.exSet_local.addAll(s.exSet_local);
+		this.exMap.putAll(s.exMap);
+		
+		this.incFileSet.addAll(s.incFileSet);
+		this.incFileSet_global.addAll(s.incFileSet_global);
+		this.incFileSet_local.addAll(s.incFileSet_local);
+		this.incFileMap.putAll(s.incFileMap);
+		
+		return this;
+	}	
+	
 	public SimulationDataSet overwrittenWith(SimulationDataSet s) {
 		
 		this.remove(s);

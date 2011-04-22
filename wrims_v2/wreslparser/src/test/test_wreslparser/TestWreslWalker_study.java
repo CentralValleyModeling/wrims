@@ -250,6 +250,17 @@ public class TestWreslWalker_study {
 	@Test(groups = { "WRESL_elements" })
 	public void order_case1() throws RecognitionException, IOException {
 		
+		ArrayList<String> x = new ArrayList<String>();
+		ArrayList<String> y = new ArrayList<String>();
+		
+		x.add("a");
+		x.add("b");
+		y.add("z");
+		y.addAll(x);
+		System.out.println("nnnnn: add: "+y);
+		y.addAll(0,x);
+		System.out.println("nnnnn: insert: "+y);		
+		
 		csvFolderPath = "TestWreslWalker_study_order_case1";
 		inputFilePath = projectPath+csvFolderPath+".wresl";
 		logFilePath = csvFolderPath+".log";

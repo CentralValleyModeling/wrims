@@ -132,7 +132,7 @@ public class StudyParser {
 			SimulationDataSet adhoc = sc.modelDataMap.get(modelName);
 			
 			/// get new dataset in this model
-			Map<String,SimulationDataSet> fileDataMap_new = getNewDataSet(adhoc.incFileList, td.fileDataMap_wholeStudy.keySet());
+			Map<String,SimulationDataSet> fileDataMap_new = getNewDataSet(adhoc.incFileSet, td.fileDataMap_wholeStudy.keySet());
 			
 			/// update whole study
 			td.fileDataMap_wholeStudy.putAll(fileDataMap_new);
@@ -182,12 +182,12 @@ public class StudyParser {
 		return model_dataset_map;		
 	}
 	
-	public static Map<String,SimulationDataSet> getNewDataSet(ArrayList<String> adhoc_incFileList, Set<String> fileDataMap_wholeStudy_keySet ) throws RecognitionException, IOException{
+	public static Map<String,SimulationDataSet> getNewDataSet(Set<String> adhoc_incFileSet, Set<String> fileDataMap_wholeStudy_keySet ) throws RecognitionException, IOException{
 		
 		Map<String,SimulationDataSet> fileDataMap_new = new HashMap<String, SimulationDataSet>();
 		
 		/// process include files in this model and those in previous globals
-		for (String f: adhoc_incFileList) {
+		for (String f: adhoc_incFileSet) {
 			
 			if (fileDataMap_wholeStudy_keySet.contains(f))  {
 				

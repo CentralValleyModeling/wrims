@@ -86,11 +86,12 @@ public class StructTree {
 			S.wtMap.put(name, wt);
 
 			S.wtList.add(name);
+			S.wtSet.add(name);
 			
 			if      (scope == null)
-					{S.wtList_global.add(name);}
+					{S.wtList_global.add(name);S.wtSet_global.add(name);}
 			else if (scope.equalsIgnoreCase(Param.local)) 
-					{S.wtList_local.add(name);}
+					{S.wtList_local.add(name);S.wtSet_local.add(name);}
 			else{ LogUtils.errMsg("Weight table scope undefined: "+name, S.currentAbsolutePath);}
 
 		}
@@ -122,15 +123,19 @@ public class StructTree {
 
 			//incFile.scope = scope;
 			incFile.fromWresl = S.currentAbsolutePath;
-			
-			S.incFileList.add(absIncludeFilePath);
-			
+						
 			S.incFileMap.put(absIncludeFilePath, incFile);
+			S.incFileList.add(absIncludeFilePath);
+			S.incFileSet.add(absIncludeFilePath);
 			
 			if      (scope==null)
-					{S.incFileList_global.add(absIncludeFilePath); incFile.scope = Param.global; }
+					{ S.incFileList_global.add(absIncludeFilePath);
+					  S.incFileSet_global.add(absIncludeFilePath);
+					  incFile.scope = Param.global; }
 			else if (scope.equalsIgnoreCase(Param.local))
-					{S.incFileList_local.add(absIncludeFilePath); incFile.scope = Param.local; }
+					{ S.incFileList_local.add(absIncludeFilePath); 
+					  S.incFileSet_local.add(absIncludeFilePath);
+					  incFile.scope = Param.local; }
 			else{ LogUtils.errMsg("Include file scope undefined: "+fileRelativePath, S.currentAbsolutePath);}
 			
 
@@ -156,11 +161,12 @@ public class StructTree {
 			gl.fromWresl = S.currentAbsolutePath;
 			S.gMap.put(name, gl);
 			S.gList.add(name);
+			S.gSet.add(name);
 			
-			if      (scope == null)
-					{S.gList_global.add(name); gl.scope = Param.global;}
+			if      ( scope == null )
+					{S.gList_global.add(name);S.gSet_global.add(name); gl.scope = Param.global;}
 			else if (scope.equalsIgnoreCase(Param.local)) 
-					{S.gList_local.add(name); gl.scope = Param.local;}
+					{S.gList_local.add(name);S.gSet_local.add(name); gl.scope = Param.local;}
 			else{ LogUtils.errMsg("Goal scope undefined: "+name, S.currentAbsolutePath);}
 		}
 	}
@@ -181,11 +187,12 @@ public class StructTree {
 			gl.fromWresl = S.currentAbsolutePath;
 			S.gMap.put(name, gl);
 			S.gList.add(name);
+			S.gSet.add(name);
 			
 			if      ( scope == null )
-					{S.gList_global.add(name); gl.scope = Param.global;}
+					{S.gList_global.add(name);S.gSet_global.add(name); gl.scope = Param.global;}
 			else if (scope.equalsIgnoreCase(Param.local)) 
-					{S.gList_local.add(name); gl.scope = Param.local;}
+					{S.gList_local.add(name);S.gSet_local.add(name); gl.scope = Param.local;}
 			else{ LogUtils.errMsg("Goal scope undefined: "+name, S.currentAbsolutePath);}
 		}
 	}
@@ -201,17 +208,18 @@ public class StructTree {
 			S.var_all.put(name, "svar_cases");
 			S.svTsDvList.add(name);
 			S.svTsList.add(name);
-			S.svList.add(name);
 			
 			// ///////////////////
 			//sv.scope = scope;
 			sv.fromWresl = S.currentAbsolutePath;
 			S.svMap.put(name, sv);
+			S.svList.add(name);
+			S.svSet.add(name);
 	
 			if      ( scope == null )
-					{S.svList_global.add(name); sv.scope = Param.global;}
+					{S.svList_global.add(name);S.svSet_global.add(name); sv.scope = Param.global;}
 			else if (scope.equalsIgnoreCase(Param.local)) 
-					{S.svList_local.add(name); sv.scope = Param.local;}
+					{S.svList_local.add(name);S.svSet_local.add(name); sv.scope = Param.local;}
 			else{ LogUtils.errMsg("Svar scope undefined: "+name, S.currentAbsolutePath);}
 		}
 	}
@@ -235,11 +243,12 @@ public class StructTree {
 
 			S.exMap.put(name, ex);
 			S.exList.add(name);
+			S.exSet.add(name);
 			
 			if      (scope == null)
-					{S.exList_global.add(name); ex.scope = Param.global;}
+					{S.exList_global.add(name);S.exSet_global.add(name); ex.scope = Param.global;}
 			else if (scope.equalsIgnoreCase(Param.local)) 
-					{S.exList_local.add(name); ex.scope = Param.local;}
+					{S.exList_local.add(name);S.exSet_local.add(name); ex.scope = Param.local;}
 			else{ LogUtils.errMsg("External scope undefined: "+name, S.currentAbsolutePath);}
 		}
 	}
@@ -257,7 +266,6 @@ public class StructTree {
 			S.var_all.put(name, "svar_expression");
 			S.svTsDvList.add(name);
 			S.svTsList.add(name);
-			S.svList.add(name);
 			
 			// / clearer data structure
 			String caseName = Param.defaultCaseName;
@@ -271,11 +279,13 @@ public class StructTree {
 			sv.fromWresl = S.currentAbsolutePath;
 
 			S.svMap.put(name, sv);
+			S.svList.add(name);
+			S.svSet.add(name);
 			
-			if      (scope == null)
-					{S.svList_global.add(name); sv.scope = Param.global;}
+			if      ( scope == null )
+					{S.svList_global.add(name);S.svSet_global.add(name); sv.scope = Param.global;}
 			else if (scope.equalsIgnoreCase(Param.local)) 
-					{S.svList_local.add(name); sv.scope = Param.local;}
+					{S.svList_local.add(name);S.svSet_local.add(name); sv.scope = Param.local;}
 			else{ LogUtils.errMsg("Svar scope undefined: "+name, S.currentAbsolutePath);}
 		}
 
@@ -295,7 +305,6 @@ public class StructTree {
 			S.var_all.put(name, "svar_sum");
 			S.svTsDvList.add(name);
 			S.svTsList.add(name);
-			S.svList.add(name);
 			
 			sv = new Svar();
 			//sv.scope = scope;
@@ -305,11 +314,13 @@ public class StructTree {
 			sv.fromWresl = S.currentAbsolutePath;
 
 			S.svMap.put(name, sv);
+			S.svList.add(name);
+			S.svSet.add(name);
 			
-			if      (scope == null)
-					{S.svList_global.add(name); sv.scope = Param.global;}
+			if      ( scope == null )
+					{S.svList_global.add(name);S.svSet_global.add(name); sv.scope = Param.global;}
 			else if (scope.equalsIgnoreCase(Param.local)) 
-					{S.svList_local.add(name); sv.scope = Param.local;}
+					{S.svList_local.add(name);S.svSet_local.add(name); sv.scope = Param.local;}
 			else{ LogUtils.errMsg("Svar scope undefined: "+name, S.currentAbsolutePath);}
 
 
@@ -328,7 +339,6 @@ public class StructTree {
 			S.var_all.put(name, "svar_table");
 			S.svTsDvList.add(name);
 			S.svTsList.add(name);
-			S.svList.add(name);
 
 			// / clearer data structure
 			sv = new Svar();
@@ -339,11 +349,13 @@ public class StructTree {
 			sv.caseExpression.add(sqlStr);
 			sv.fromWresl = S.currentAbsolutePath;
 			S.svMap.put(name, sv);
+			S.svList.add(name);
+			S.svSet.add(name);
 			
-			if      (scope == null)
-					{S.svList_global.add(name); sv.scope = Param.global;}
+			if      ( scope == null )
+					{S.svList_global.add(name);S.svSet_global.add(name); sv.scope = Param.global;}
 			else if (scope.equalsIgnoreCase(Param.local)) 
-					{S.svList_local.add(name); sv.scope = Param.local;}
+					{S.svList_local.add(name);S.svSet_local.add(name); sv.scope = Param.local;}
 			else{ LogUtils.errMsg("Svar scope undefined: "+name, S.currentAbsolutePath);}
 		}
 	}
@@ -366,22 +378,23 @@ public class StructTree {
 			S.svTsList.add(name);
 
 			// / clearer data structure
-			Timeseries svTs = new Timeseries();
+			Timeseries ts = new Timeseries();
 			//svTs.scope = scope;
-			if (b_part!=null) svTs.dssBPart = b_part; 
-			svTs.kind = kind;
-			svTs.units = units;
-			if (convertToUnits!=null) {svTs.convertToUnits = convertToUnits;}
-			svTs.format = "dss";
-			svTs.fromWresl = S.currentAbsolutePath;
-			S.tsMap.put(name, svTs);
+			if (b_part!=null) ts.dssBPart = b_part; 
+			ts.kind = kind;
+			ts.units = units;
+			if (convertToUnits!=null) {ts.convertToUnits = convertToUnits;}
+			ts.format = "dss";
+			ts.fromWresl = S.currentAbsolutePath;
+			S.tsMap.put(name, ts);
 			S.tsList.add(name);
+			S.tsSet.add(name);
 			
 			if      (scope == null)
-					{S.tsList_global.add(name); svTs.scope = Param.global;}
+					{S.tsList_global.add(name);S.tsSet_global.add(name); ts.scope = Param.global;}
 			else if (scope.equalsIgnoreCase(Param.local))
-					{S.tsList_local.add(name); svTs.scope = Param.local;}
-			else{ LogUtils.errMsg("Svar timeseries scope undefined: "+name, S.currentAbsolutePath);}
+					{S.tsList_local.add(name);S.tsSet_local.add(name); ts.scope = Param.local;}
+			else{ LogUtils.errMsg("Timeseries scope undefined: "+name, S.currentAbsolutePath);}
 
 		}
 	}
@@ -399,6 +412,7 @@ public class StructTree {
 
 			S.var_all.put(name, "dvar_std");
 			S.svTsDvList.add(name);
+			S.dvSet.add(name);
 
 			// / better data structure
 			dv = new Dvar();
@@ -419,11 +433,12 @@ public class StructTree {
 			
 			S.dvMap.put(name, dv);
 			S.dvList.add(name);
+			S.dvSet.add(name);
 			
-			if      (scope == null)
-					{S.dvList_global.add(name); dv.scope = Param.global;}
-			else if (scope.toLowerCase().equals(Param.local)) 
-					{S.dvList_local.add(name); dv.scope = Param.local;}
+			if      ( scope == null )
+					{S.dvList_global.add(name);S.dvSet_global.add(name); dv.scope = Param.global;}
+			else if ( scope.equalsIgnoreCase(Param.local) ) 
+					{S.dvList_local.add(name);S.dvSet_local.add(name); dv.scope = Param.local;}
 			else{ LogUtils.errMsg("Dvar scope undefined: "+name, S.currentAbsolutePath);}
 
 		}
@@ -455,11 +470,12 @@ public class StructTree {
 			as.fromWresl = S.currentAbsolutePath;
 			S.asMap.put(name, as);
 			S.asList.add(name);
+			S.asSet.add(name);
 			
 			if      (scope == null)
-					{S.asList_global.add(name); as.scope = Param.global;}
+					{S.asList_global.add(name);S.asSet_global.add(name); as.scope = Param.global;}
 			else if (scope.toLowerCase().equals(Param.local)) 
-					{S.asList_local.add(name); as.scope = Param.local;}
+					{S.asList_local.add(name);S.asSet_local.add(name); as.scope = Param.local;}
 			else{ LogUtils.errMsg("Alias scope undefined: "+name, S.currentAbsolutePath);}
 
 		}
@@ -493,11 +509,12 @@ public class StructTree {
 			dv.fromWresl = S.currentAbsolutePath;
 			S.dvMap.put(name, dv);
 			S.dvList.add(name);
+			S.dvSet.add(name);
 			
 			if      ( scope == null )
-					{S.dvList_global.add(name); dv.scope = Param.global;}
+					{S.dvList_global.add(name);S.dvSet_global.add(name); dv.scope = Param.global;}
 			else if ( scope.equalsIgnoreCase(Param.local) ) 
-					{S.dvList_local.add(name); dv.scope = Param.local;}
+					{S.dvList_local.add(name);S.dvSet_local.add(name); dv.scope = Param.local;}
 			else{ LogUtils.errMsg("Dvar scope undefined: "+name, S.currentAbsolutePath);}
 
 		}
