@@ -18,7 +18,7 @@
 	   name="WPP Application"
 	   delegate="wrimsv2_plugin.debugger.launcher.WPPLaunchDelegate"
 	   modes= "run, debug"
-	   id="wpp.launchtype"
+	   id="wpp.launchType"
        sourcePathComputerId="org.eclipse.jdt.launching.sourceLookup.javaSourcePathComputer">
    </launchConfigurationType>
 </extension>
@@ -44,7 +44,7 @@
          </contextualLaunch>
       </shortcut>
    </extension>
-      <extension
+   <extension
          point="org.eclipse.ui.editors">
       <editor
             filenames="*.wpp, *.wresl"

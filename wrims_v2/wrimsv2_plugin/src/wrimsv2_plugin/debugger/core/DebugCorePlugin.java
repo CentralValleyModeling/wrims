@@ -56,7 +56,7 @@ public class DebugCorePlugin extends Plugin {
 	 * Identifier for the WPP launch configuration type
 	 * (value <code>wpp.launchType</code>)
 	 */
-	public static final String ID_WPP_LAUNCH_CONFIGURATION_TYPE = "wpp.launchtype";	
+	public static final String ID_WPP_LAUNCH_CONFIGURATION_TYPE = "wpp.launchType";	
 	
 	/**
 	 * The constructor.
