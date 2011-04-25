@@ -39,7 +39,7 @@ import org.eclipse.ui.dialogs.ResourceListSelectionDialog;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 
 /**
- * Tab to specify the PDA program to run/debug.
+ * Tab to specify the WPP program to run/debug.
  */
 public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	
@@ -84,18 +84,18 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		fProgramButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				browsePDAFiles();
+				browseWPPFiles();
 			}
 		});
 	}
 	
 	/**
-	 * Open a resource chooser to select a PDA program 
+	 * Open a resource chooser to select a WPP program 
 	 */
-	protected void browsePDAFiles() {
+	protected void browseWPPFiles() {
 		ResourceListSelectionDialog dialog = new ResourceListSelectionDialog(getShell(), ResourcesPlugin.getWorkspace().getRoot(), IResource.FILE);
-		dialog.setTitle("PDA Program");
-		dialog.setMessage("Select PDA Program");
+		dialog.setTitle("WPP Program");
+		dialog.setMessage("Select WPP Program");
 		if (dialog.open() == Window.OK) {
 			Object[] files = dialog.getResult();
 			IFile file = (IFile) files[0];
@@ -168,6 +168,6 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#getImage()
 	 */
 	//public Image getImage() {
-	//	return DebugUIPlugin.getDefault().getImageRegistry().get(DebugUIPlugin.IMG_OBJ_PDA);
+	//	return DebugUIPlugin.getDefault().getImageRegistry().get(DebugUIPlugin.IMG_OBJ_WPP);
 	//}
 }

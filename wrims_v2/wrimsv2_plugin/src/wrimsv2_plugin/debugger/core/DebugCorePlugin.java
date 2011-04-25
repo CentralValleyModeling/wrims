@@ -35,7 +35,7 @@ public class DebugCorePlugin extends Plugin {
 	private ResourceBundle resourceBundle;
 	
 	/**
-	 * Unique identifier for the PDA debug model (value 
+	 * Unique identifier for the WPP debug model (value 
 	 * <code>wpp.debugModel</code>).
 	 */
 	public static WPPDebugTarget target;

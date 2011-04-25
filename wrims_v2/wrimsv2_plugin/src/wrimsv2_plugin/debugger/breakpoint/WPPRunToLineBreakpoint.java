@@ -28,9 +28,9 @@ public class WPPRunToLineBreakpoint extends WPPLineBreakpoint {
 	private IFile fSourceFile;
 	
 	/**
-	 * Constructs a run-to-line breakpoint in the given PDA program.
+	 * Constructs a run-to-line breakpoint in the given WPP program.
 	 * 
-	 * @param resource PDA source file
+	 * @param resource WPP source file
 	 * @param lineNumber line to run to
 	 * @exception DebugException if unable to create the breakpoint
 	 */
@@ -38,7 +38,7 @@ public class WPPRunToLineBreakpoint extends WPPLineBreakpoint {
 		IWorkspaceRunnable runnable = new IWorkspaceRunnable() {
 			public void run(IProgressMonitor monitor) throws CoreException {
 				// associate with workspace root to avoid drawing in editor ruler
-				IMarker marker = ResourcesPlugin.getWorkspace().getRoot().createMarker("example.debug.core.pda.markerType.lineBreakpoint");
+				IMarker marker = ResourcesPlugin.getWorkspace().getRoot().createMarker("wrimsv2_plugin.debugger.core.wpp.markerType.lineBreakpoint");
 				setMarker(marker);
 				marker.setAttribute(IBreakpoint.ENABLED, Boolean.TRUE);
 				marker.setAttribute(IMarker.LINE_NUMBER, lineNumber);

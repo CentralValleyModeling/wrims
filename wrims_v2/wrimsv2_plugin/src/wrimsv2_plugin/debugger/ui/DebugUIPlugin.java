@@ -47,9 +47,9 @@ public class DebugUIPlugin extends AbstractUIPlugin {
     public final static String IMG_DLCL_PUSH = "IMG_DLCL_PUSH";
     
     /**
-     * PDA program image
+     * WPP program image
      */
-    public final static String IMG_OBJ_PDA = "IMB_OBJ_PDA";
+    public final static String IMG_OBJ_WPP = "IMB_OBJ_WPP";
     	
 	/**
 	 * The constructor.
@@ -116,7 +116,7 @@ public class DebugUIPlugin extends AbstractUIPlugin {
 	 */
 	@Override
 	protected void initializeImageRegistry(ImageRegistry reg) {
-		declareImage(IMG_OBJ_PDA, PATH_OBJECT + "pda.gif");
+		declareImage(IMG_OBJ_WPP, PATH_OBJECT + "wpp.gif");
 	    declareImage(IMG_ELCL_POP, PATH_ELOCALTOOL + "pop.gif");
 	    declareImage(IMG_DLCL_POP, PATH_DLOCALTOOL + "pop.gif");
 	    declareImage(IMG_ELCL_PUSH, PATH_ELOCALTOOL + "push.gif");

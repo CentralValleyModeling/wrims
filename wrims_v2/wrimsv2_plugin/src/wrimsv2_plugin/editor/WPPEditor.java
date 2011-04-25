@@ -14,7 +14,7 @@ package wrimsv2_plugin.editor;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
 
 /**
- * PDA editor
+ * WPP editor
  */
 public class WPPEditor extends AbstractDecoratedTextEditor {
     

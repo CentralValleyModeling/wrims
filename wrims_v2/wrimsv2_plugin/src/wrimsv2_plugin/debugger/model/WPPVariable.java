@@ -79,7 +79,7 @@ public class WPPVariable extends WPPDebugElement implements IVariable {
 	 */
 	@Override
 	public void setValue(String expression) throws DebugException {
-		fValue=new WPPValue(this.getPDADebugTarget(), expression);
+		fValue=new WPPValue(this.getWPPDebugTarget(), expression);
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IValueModification#setValue(org.eclipse.debug.core.model.IValue)
@@ -118,7 +118,7 @@ public class WPPVariable extends WPPDebugElement implements IVariable {
 		return fFrame;
 	}
 	
-	protected WPPDebugTarget getPDADebugTarget() {
+	protected WPPDebugTarget getWPPDebugTarget() {
 	    return (WPPDebugTarget) getDebugTarget();
 	}
 

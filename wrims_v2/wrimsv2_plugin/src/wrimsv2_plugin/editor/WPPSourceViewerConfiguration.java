@@ -17,7 +17,7 @@ import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.ui.editors.text.TextSourceViewerConfiguration;
 
 /**
- * Source view configuration for the PDA editor
+ * Source view configuration for the WPP editor
  */
 public class WPPSourceViewerConfiguration extends TextSourceViewerConfiguration {
 
@@ -33,8 +33,7 @@ public class WPPSourceViewerConfiguration extends TextSourceViewerConfiguration 
 	 * @see org.eclipse.jface.text.source.SourceViewerConfiguration#getAnnotationHover(org.eclipse.jface.text.source.ISourceViewer)
 	 */
 	public IAnnotationHover getAnnotationHover(ISourceViewer sourceViewer) {
-		return null;
-		//return new AnnotationHover();
+		return new AnnotationHover();
 	}
     
     

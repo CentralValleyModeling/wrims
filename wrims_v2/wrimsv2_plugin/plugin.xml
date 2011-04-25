@@ -19,10 +19,23 @@
 	   delegate="wrimsv2_plugin.debugger.launcher.WPPLaunchDelegate"
 	   modes= "run, debug"
 	   id="wpp.launchType"
-       sourcePathComputerId="org.eclipse.jdt.launching.sourceLookup.javaSourcePathComputer">
+       sourcePathComputerId="wpp.sourcePathComputer">
    </launchConfigurationType>
 </extension>
-   <extension
+<extension
+         point="org.eclipse.debug.core.sourceLocators">
+      <sourceLocator
+            class="wrimsv2_plugin.debugger.sourcelookup.WPPSourceLookupDirector"
+            name="WPP Source Locator"
+            id="wpp.sourceLocator"/>
+</extension>
+<extension
+         point="org.eclipse.debug.core.sourcePathComputers">
+      <sourcePathComputer
+            class="wrimsv2_plugin.debugger.sourcelookup.WPPSourcePathComputerDelegate"
+            id="wpp.sourcePathComputer"/>
+</extension>
+<extension
          point="org.eclipse.debug.ui.launchShortcuts">
       <shortcut
             label="WPP Application"
@@ -73,12 +86,12 @@
             class="wrimsv2_plugin.debugger.breakpoint.WPPLineBreakpoint"
             name="WPP Line Breakpoints"
             markerType="wpp.markerType.lineBreakpoint"
-            id="pda.lineBreakpoint"/>
+            id="wpp.lineBreakpoint"/>
       <breakpoint
             class="wrimsv2_plugin.debugger.breakpoint.WPPWatchpoint"
-            name="PDA Watchpoints"
+            name="WPP Watchpoints"
             markerType="wpp.markerType.watchpoint"
-            id="pda.watchpoint"/>
+            id="wpp.watchpoint"/>
    </extension>
    <extension
          id="wpp.markerType.lineBreakpoint"
