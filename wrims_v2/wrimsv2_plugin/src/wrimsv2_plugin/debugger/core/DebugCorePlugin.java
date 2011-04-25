@@ -41,7 +41,7 @@ public class DebugCorePlugin extends Plugin {
 	public static WPPDebugTarget target;
 	public static IValue[] dataStack;
 	
-	public static final String ID_WPP_DEBUG_MODEL = "wpp.debugmodel";
+	public static final String ID_WPP_DEBUG_MODEL = "wpp.debugModel";
 	
 	public static final String ID_WPP_VARIABLE_VIEW="wpp.variableview";
 	

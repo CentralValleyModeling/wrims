@@ -38,8 +38,16 @@ import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.debug.core.model.IDebugTarget;
 import org.eclipse.debug.core.model.IMemoryBlock;
 import org.eclipse.debug.core.model.IProcess;
+import org.eclipse.debug.core.model.ISourceLocator;
 import org.eclipse.debug.core.model.IThread;
 import org.eclipse.debug.core.model.IValue;
+import org.eclipse.debug.core.sourcelookup.AbstractSourceLookupDirector;
+import org.eclipse.debug.ui.DebugUITools;
+import org.eclipse.debug.ui.sourcelookup.ISourceLookupResult;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.breakpoint.WPPLineBreakpoint;
 import wrimsv2_plugin.debugger.breakpoint.WPPRunToLineBreakpoint;
@@ -71,6 +79,8 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	private WPPThread fThread;
 	
 	private IValue[] fDataStack=new IValue[0];
+	private String fCurrFileName;
+	private ISourceLookupResult result;
 	
 	// event dispatch job
 	private EventDispatchJob fEventDispatch;
@@ -231,6 +241,14 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		}
 		
 		fProcess.terminate();
+	}
+	
+	public void setSourceName(String fileName){
+		fCurrFileName=fileName;
+	}
+	
+	public String getSourceName(){
+		return fCurrFileName;
 	}
 	
 	public IValue[] generateTree(String data){
@@ -591,7 +609,26 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			data="i:4456#a(-1):123.0#reservoir:reservorlevel1%56:reservorlevel2%1234";
 			fDataStack=generateTree(data);
 			DebugCorePlugin.dataStack=fDataStack;
+			setSourceName("a.wpp");
+			openSource();
 		}
+	}
+	
+	public void openSource(){
+		ISourceLocator fLocator =fLaunch.getSourceLocator();
+		result=DebugUITools.lookupSource(this, fLocator);
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() { 
+			public void run() { 
+				IWorkbenchPage page=PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+				try {
+					page.openEditor(result.getEditorInput(), result.getEditorId());
+				} catch (PartInitException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} 
+		}); 
+
 	}
 	
 	/**

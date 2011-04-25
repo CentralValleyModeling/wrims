@@ -17,9 +17,9 @@ import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
  * WPP editor
  */
 public class WPPEditor extends AbstractDecoratedTextEditor {
-    
+
     /**
-     * Creates a PDE editor
+     * Creates a WPP editor
      */
     public WPPEditor() {
         super();

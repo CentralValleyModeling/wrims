@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension point="org.eclipse.ui.views">
+<extension point="org.eclipse.ui.views">
         <view id="wpp.variableview"
              name="All Variables"
           class="wrimsv2_plugin.debugger.view.WPPVariableView"/>
 </extension>
-      <extension
+<extension
          point="org.eclipse.debug.ui.launchConfigurationTabGroups">
       <launchConfigurationTabGroup
             type="wpp.launchType"
@@ -19,6 +19,7 @@
 	   delegate="wrimsv2_plugin.debugger.launcher.WPPLaunchDelegate"
 	   modes= "run, debug"
 	   id="wpp.launchType"
+	   sourceLocatorId="wpp.sourceLocator"
        sourcePathComputerId="wpp.sourcePathComputer">
    </launchConfigurationType>
 </extension>
@@ -56,6 +57,12 @@
             </enablement>
          </contextualLaunch>
       </shortcut>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.debugModelPresentations">
+      <debugModelPresentation
+            class="wrimsv2_plugin.presentation.WPPModelPresentation"
+            id="wpp.debugModel"/>
    </extension>
    <extension
          point="org.eclipse.ui.editors">
