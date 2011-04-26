@@ -168,7 +168,7 @@ public class WPPLineBreakpoint extends LineBreakpoint implements IWPPEventListen
 	 * @see example.debug.core.model.IWPPEventListener#handleEvent(java.lang.String)
 	 */
 	public void handleEvent(String event) {
-		if (event.startsWith("suspended breakpoint")) {
+		if (event.startsWith("suspended:")) {
 			handleHit(event);
 		}
 	}

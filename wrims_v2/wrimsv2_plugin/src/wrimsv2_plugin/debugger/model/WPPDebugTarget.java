@@ -598,7 +598,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	@Override
 	public void handleEvent(String event) {
 		String data;
-		if (event.equals("suspended")) {
+		if (event.startsWith("suspended")) {
 			try {
 				data=sendRequest("data");
 				System.out.println(data);
