@@ -44,10 +44,15 @@ import org.eclipse.debug.core.model.IValue;
 import org.eclipse.debug.core.sourcelookup.AbstractSourceLookupDirector;
 import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.debug.ui.sourcelookup.ISourceLookupResult;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IRegion;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.texteditor.ITextEditor;
 
 import wrimsv2_plugin.debugger.breakpoint.WPPLineBreakpoint;
 import wrimsv2_plugin.debugger.breakpoint.WPPRunToLineBreakpoint;
@@ -81,6 +86,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	private IValue[] fDataStack=new IValue[0];
 	private String fCurrFileName;
 	private ISourceLookupResult result;
+	private int currLine;
 	
 	// event dispatch job
 	private EventDispatchJob fEventDispatch;
@@ -245,6 +251,10 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	
 	public void setSourceName(String fileName){
 		fCurrFileName=fileName;
+	}
+	
+	public void setCurrLine(int line){
+		currLine=line;
 	}
 	
 	public String getSourceName(){
@@ -610,6 +620,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			fDataStack=generateTree(data);
 			DebugCorePlugin.dataStack=fDataStack;
 			setSourceName("a.wpp");
+			setCurrLine(2);
 			openSource();
 		}
 	}
@@ -621,8 +632,13 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			public void run() { 
 				IWorkbenchPage page=PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 				try {
-					page.openEditor(result.getEditorInput(), result.getEditorId());
-				} catch (PartInitException e) {
+					IEditorPart textEditor=page.openEditor(result.getEditorInput(), result.getEditorId());
+					IDocument document = ((ITextEditor)textEditor).getDocumentProvider().getDocument(textEditor.getEditorInput());
+					IRegion lineInfo;
+					lineInfo = document.getLineInformation(currLine);
+					//((ITextEditor)textEditor).selectAndReveal(lineInfo.getOffset(), lineInfo.getLength());
+					((ITextEditor)textEditor).setHighlightRange(lineInfo.getOffset(), lineInfo.getLength(), true);
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
