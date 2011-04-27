@@ -55,10 +55,10 @@ public class TestWreslWalker_priority {
 		Assert.assertEquals(wrong, 0);
 		
 		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
-		Assert.assertEquals(totalErrs, 1);	
+		Assert.assertEquals(totalErrs, 0);	
 		
 		int Errs = RegUtils.timesOfMatches(fileText, "# Error: Decision varriable redefined: watch_this in files: ");
-		Assert.assertEquals(Errs, 1);	
+		Assert.assertEquals(Errs, 0);	
 		
 
 		int str1 = RegUtils.timesOfMatches(fileText, 
@@ -101,7 +101,7 @@ public class TestWreslWalker_priority {
 		String logText = Tools.readFileAsString(logFilePath);	
 
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 2);	
+		Assert.assertEquals(totalErrs, 0);	
 		
 	
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\dvar.csv");	
@@ -150,7 +150,7 @@ public class TestWreslWalker_priority {
 		String logText = Tools.readFileAsString(logFilePath);	
 
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 5);	
+		Assert.assertEquals(totalErrs, 2);	
 		
 	
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\dvar.csv");	

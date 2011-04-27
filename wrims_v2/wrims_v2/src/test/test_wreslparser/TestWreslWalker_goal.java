@@ -72,9 +72,6 @@ public class TestWreslWalker_goal {
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
-		
-		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).gList_global.get(0),"split_c5_wts" );
-		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).gList_local.get(0),"a2" );
 
 	}	
 	

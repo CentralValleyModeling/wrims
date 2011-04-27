@@ -41,7 +41,11 @@ public class FileParser {
 
 	}
 
-	public static WreslTreeWalker parseFile(String inputFilePath) throws RecognitionException  {		
+	public static WreslTreeWalker parseFile(String inputFilePath) throws RecognitionException{
+		
+		return parseFile(inputFilePath, false);
+	}
+	public static WreslTreeWalker parseFile(String inputFilePath, boolean showTree) throws RecognitionException  {		
 
 		
 		try {
@@ -78,7 +82,7 @@ public class FileParser {
 		
 		// / for debug info
 		parser.commonTree = (CommonTree) parser_evaluator.getTree();
-		LogUtils.importantMsg("tree = " + parser.commonTree.toStringTree());
+		if (showTree) LogUtils.importantMsg("tree = " + parser.commonTree.toStringTree());
 		
 		// / feed walker with parser's tree output
 		CommonTreeNodeStream nodeStream = new CommonTreeNodeStream(parser_evaluator.getTree());
@@ -89,7 +93,7 @@ public class FileParser {
 		walker.currentAbsolutePath = parser.currentAbsolutePath; 
 		walker.currentAbsoluteParent = parser.currentAbsoluteParent;
 
-		LogUtils.importantMsg("Walking tree: "+parser.currentAbsolutePath);
+		if (showTree) LogUtils.importantMsg("Walking tree: "+parser.currentAbsolutePath);
 		
 		walker.evaluator();
 		
@@ -129,9 +133,9 @@ public class FileParser {
 		Map<String,SimulationDataSet> out = new HashMap<String, SimulationDataSet>();
 		out.put(inputFilePath, mainData);
 		
-		if (mainData.incFileList.isEmpty()) return out;
+		if (mainData.incFileSet.isEmpty()) return out;
 		else {
-			for (String file : mainData.incFileList) {
+			for (String file : mainData.incFileSet) {
 				
 				if (existingSet.contains(file)) continue; 
 				else {

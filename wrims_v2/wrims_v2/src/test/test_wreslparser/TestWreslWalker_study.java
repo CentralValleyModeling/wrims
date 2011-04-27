@@ -246,4 +246,75 @@ public class TestWreslWalker_study {
 	
 		
 	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void order_case1() throws RecognitionException, IOException {
+		
+		ArrayList<String> x = new ArrayList<String>();
+		ArrayList<String> y = new ArrayList<String>();
+		
+		x.add("a");
+		x.add("b");
+		y.add("z");
+		y.addAll(x);
+		System.out.println("nnnnn: add: "+y);
+		y.addAll(0,x);
+		System.out.println("nnnnn: insert: "+y);		
+		
+		csvFolderPath = "TestWreslWalker_study_order_case1";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);		
+		
+		ArrayList<String> s;
+		ArrayList<String> e;
+		
+	
+		s = sd.getModelDataSetMap().get(modelName).tsList;
+		
+		System.out.println("sssss "+s);
+	
+		e = new ArrayList<String>();
+		
+		e.add("first1_include1"); 
+		e.add("first2_include1"); 
+	
+		e.add("second1_include2_include"); 
+		e.add("second2_include2_include"); 
+		e.add("second3_include2");
+		e.add("second4_include2");	
+		
+		e.add("third"); 
+		
+		Assert.assertEquals(s,e);
+	
+		
+	
+		
+	}
 }

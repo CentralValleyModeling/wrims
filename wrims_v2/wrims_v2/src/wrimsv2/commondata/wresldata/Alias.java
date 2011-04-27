@@ -1,5 +1,8 @@
 package wrimsv2.commondata.wresldata;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 public class Alias {
 	
@@ -9,6 +12,7 @@ public class Alias {
 	public String expression;
 	public String fromWresl;
 	public Number value;
+	public Set<String> dependants;
 
 	public Alias(){
 		scope=Param.undefined;
@@ -16,7 +20,7 @@ public class Alias {
 		units=Param.undefined;
 		expression=Param.undefined;
 		fromWresl=Param.undefined;
-
+		dependants = new HashSet<String>();
 	}
 	
 	public String equalEva(){

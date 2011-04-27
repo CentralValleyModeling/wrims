@@ -24,7 +24,7 @@ public class TestWreslWalker_error {
 	public String logFilePath;	
 	public String csvFolderPath;	
 	
-	@Test(groups = { "WRESL_elements" })
+	@Test(groups = { "WRESL_error" })
 	public void simple() throws RecognitionException, IOException {
 		
 		csvFolderPath = "TestWreslWalker_error_redefine";

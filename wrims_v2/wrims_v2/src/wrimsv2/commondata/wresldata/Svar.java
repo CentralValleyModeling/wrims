@@ -1,6 +1,8 @@
 package wrimsv2.commondata.wresldata;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class Svar {
@@ -15,7 +17,8 @@ public class Svar {
 	public ArrayList<String> caseCondition;
 	public ArrayList<String> caseExpression;
 	public String fromWresl;
-	private Number value; 
+	private Number value;
+	public Set<String> dependants;
 	
 	public Svar(){
 		scope=Param.undefined;
@@ -28,6 +31,7 @@ public class Svar {
 		caseCondition  = new ArrayList<String>();
 		caseExpression = new ArrayList<String>();
 		fromWresl = Param.undefined;
+		dependants = new HashSet<String>();
 	}
 	
 	public String equalEva(){

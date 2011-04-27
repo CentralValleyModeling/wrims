@@ -11,7 +11,7 @@ tokens {
 	NEW_LINE; Op; Separator;
 	Weight_table; Assignment; External;
 	Local; Global; Scope;
-	Value; Case ;
+	Value; Case ; Dependants;
 	Alias; Expression;
 	Dvar; Dvar_std; Dvar_nonStd; Dvar_std; Dvar_nonStd_local; Dvar_integer;
 	Svar_case; Svar_dss; Svar_const; Svar_sum; Sum_hdr; B_part;
@@ -37,6 +37,9 @@ tokens {
   import wrimsv2.wreslparser.elements.LogUtils; 
   import wrimsv2.wreslparser.elements.Tools; 
   import wrimsv2.commondata.wresldata.Param;
+  import java.util.Set;
+  import java.util.HashSet;
+  import java.util.Arrays;
 }
 @lexer::header {
   package wrimsv2.wreslparser.grammar;
@@ -44,7 +47,14 @@ tokens {
   
 }
 @members {
-
+;
+	public Set<String> reservedSet = new HashSet<String>(Arrays.asList
+	("month", "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec",
+	 "prevjan", "prevfeb", "prevmar", "prevapr", "prevmay", "prevjun", 
+	 "prevjul", "prevaug", "prevsep", "prevoct", "prevnov", "prevdec",
+	 "wateryear", "cfs_taf", "taf_cfs", "cfs_cfm", "af_cfs", "daysin", "daysinmonth",
+	 "i", "null"   ));
+	
     public ArrayList<String> model_in_sequence = new ArrayList<String>();
     public ArrayList<String> model_list = new ArrayList<String>();
     
@@ -135,9 +145,9 @@ sequence
 	->  ^(Sequence $s Model IDENT[id] Order INTEGER Condition[$c.text] )	 
 	;
 	
-condition returns[String text]
+condition returns[String text, String dependants]
 	: CONDITION 
-	( logical  {$text = $logical.text; }
+	( e=logical_expr {$text = $e.text; $dependants = $e.dependants;}
 	| ALWAYS   {$text = Param.always; }
 	)
 	;	
@@ -148,7 +158,7 @@ includeFile
 	;
 	
 alias : DEFINE ( '[' sc=LOCAL? ']' )? i=IDENT '{' ALIAS e=expression (KIND k=STRING)? (UNITS u=STRING)? '}'
-	->  ^(Alias Scope[$sc.text] $i Expression[$e.text] Kind[$k.text] Units[$u.text])
+	->  ^(Alias Scope[$sc.text] $i Expression[$e.text] Kind[$k.text] Units[$u.text] Dependants[$e.dependants])
 	;	
 
 goal : GOAL! (goal_simple | goal_case_or_nocase  );
@@ -207,35 +217,39 @@ svar_case : ( '[' sc=LOCAL? ']' )? i=IDENT '{' case_content+ '}'
 
 
 case_content : CASE i=IDENT '{' c=condition ( table_content 
-	-> ^(Case $i Condition[$c.text] table_content  )
+	-> ^(Case $i Condition[$c.text] Dependants[$c.dependants] table_content  )
 
 	| value_content 
-	-> ^(Case $i Condition[$c.text] value_content  )
+	-> ^(Case $i Condition[$c.text] Dependants[$c.dependants] value_content  )
 	
 	| sum_content
-	-> ^(Case $i Condition[$c.text] sum_content  )
+	-> ^(Case $i Condition[$c.text] Dependants[$c.dependants] sum_content  )
 	
 ) '}' 
 ;
 
-value_content : VALUE e=expression -> Value[$e.text];
+value_content : VALUE e=expression -> Value[$e.text] Dependants[$e.dependants] ;
 
 svar_table :
 	( '[' sc=LOCAL? ']' )? i=IDENT '{' table_content '}'
 ->  ^(Svar_table Scope[$sc.text] $i table_content )  	
 	;
 
-table_content : SELECT^ s=IDENT FROM f=IDENT (GIVEN g=assignment USE u=IDENT)? (WHERE w=where_items)? 
-//->  ^( Select[$s.text] From[$f.text] Given[$g.text] Use[$u.text] Where_content[$w.text] )
+table_content : SELECT s=IDENT FROM f=IDENT 
+				(GIVEN g=assignment USE u=IDENT)? 
+				(WHERE w=where_items)? 
+				
+->  ^( SELECT $s FROM $f (GIVEN $g Dependants[$g.dependants]  USE $u)? (WHERE $w Dependants[$w.dependants])? )
 ;
 
-where_items
-	: assignment (',' assignment )*
+where_items returns[String dependants]
+	: ai=assignment (',' a=assignment {$dependants =$dependants + " " + $a.dependants; } )*
+	 {$dependants =$dependants + " " + $ai.dependants; }
 	;
 
 svar_expr : 
 	( '[' sc=LOCAL ']' )? IDENT '{' VALUE  e=expression'}'	
-	->  ^(Svar_const Scope[$sc.text] IDENT Value[$e.text] )  
+	->  ^(Svar_const Scope[$sc.text] IDENT Expression[$e.text] Dependants[$e.dependants])  
 	;	
 
 svar_sum : ( '[' sc=LOCAL ']' )? IDENT '{' sum_content '}' 
@@ -243,7 +257,7 @@ svar_sum : ( '[' sc=LOCAL ']' )? IDENT '{' sum_content '}'
 	;
 
 sum_content :SUM hdr=sum_header e=expression 
--> ^( Sum_hdr[$hdr.text] Expression[$e.text] )
+-> ^( Sum_hdr[$hdr.text] Expression[$e.text] Dependants[$e.dependants])
 ;
 
 sum_header
@@ -295,9 +309,11 @@ constraint_statement_preprocessed:
 	c=expression ( '<' | '>' | '='  ) expression;
 
 
-assignment  :  t=term_simple  '=' e=expression  
--> Assignment[$t.text+"="+$e.text]
-;
+assignment returns[String dependants] 
+	:  t=term_simple  '=' e=expression { $dependants = $e.dependants;}  
+	-> Assignment[$t.text+"="+$e.text]
+	;
+	
 lt_or_gt :              term_simple ( '<'  | '>'  ) expression ;
 le_or_ge :              term_simple ( '<=' | '>=' ) expression ;
 equal_statement :       term_simple '==' expression ;
@@ -305,8 +321,15 @@ equal_statement :       term_simple '==' expression ;
 /// Expression ///
 number : INTEGER | FLOAT ;
 
-term_simple : IDENT | number | function  ;
-term :	      IDENT | number | function  |  '(' expression ')' ;
+term_simple : ident | number | function  ;
+
+ident: IDENT ;
+
+term :	      i=ident {$expression::SV.add($i.text.toLowerCase());} 
+	 |         number 
+	 |        function 
+	 |       '(' e=expression ')' {$expression::SV.addAll($e.members);} 
+	 ;
 	
 unary :	('+'! | negation)? term 	;
 
@@ -315,25 +338,56 @@ negation :	'-' -> NEGATION["-"]	;
 mult :	unary (('*' | '/' ) unary)* 	;
 	
 add :	mult (('+' | '-') mult)*	;
+
+logical_expr returns[Set<String> members, String dependants] 
+scope { Set<String> SV; } 
+@init { $logical_expr::SV = new HashSet<String>(); String dependants = null; } 
+	:  c_unary ( bin c_unary )* 	
 	
-expression returns[String text]: 
+	{  
+	   $logical_expr::SV.removeAll(reservedSet);
+	   $members = $logical_expr::SV;
+       for (String s : $logical_expr::SV) {
+       
+         System.out.println("lllllll :"+ s);
+	   	$dependants = $dependants +" "+s;
+	   }
+	   System.out.println("lllll_final :"+ $dependants);
+	   
+	};
+	
+expression returns[String text, Set<String> members, String dependants] 
+scope { Set<String> SV; } 
+@init { $expression::SV = new HashSet<String>(); 
+		String dependants = null; } 
+	:
 	add 
 	{  $text = Tools.replace_ignoreChar($add.text); 
-	   $text = Tools.replace_seperator($text); 
-	 };	
+	   $text = Tools.replace_seperator($text);
+	   
+	   $expression::SV.removeAll(reservedSet);
+	   $members = $expression::SV;
+       for (String s : $expression::SV) {
+       
+         System.out.println("wwwwwwwwwwwwwwatch :"+ s);
+	   	$dependants = $dependants +" "+s;
+	   }
+	   System.out.println("dddddddddddddddddddddh :"+ $dependants);
+	   
+	};	
 	
 c_term
-	: ( expression relation expression ) => expression relation expression
+	: ( expression relation expression ) => e1=expression relation e2=expression 
+		{$logical_expr::SV.addAll($e1.members); $logical_expr::SV.addAll($e2.members);} 
 	| function_logical
-	| ( '(' logical ')' ) => '(' logical ')' 
+	| ( '(' logical_expr ')' ) => '(' e=logical_expr ')' {$logical_expr::SV.addAll($e.members);} 
 	;	
 
 c_unary :	(c_negation)? c_term  	;
 
 c_negation :	NOT -> NOT[".NOT."]	;
 
-logical :  c_unary ( bin c_unary )* 
-		;  
+ 
 	
 relation : '>' | '<' | '>=' | '<=' | '==' | '/=' ;	
 
@@ -349,20 +403,30 @@ bin : OR -> OR[".OR."] | AND -> AND[".AND."] ;
 function : external_func | max_func | min_func | int_func | var_model ;
 function_logical : range_func ;
 
-var_model : IDENT '[' IDENT ']' ;	
+var_model : i=IDENT '[' IDENT ']' ; //{ $expression::DV.add($i.text.toLowerCase());} ;	
 
-external_func 
-	: IDENT '('  expression (',' expression )*  ')' ;
+external_func // this could be timeseries function
+	: i=IDENT '('  ie=expression (',' e=expression  {$expression::SV.addAll($e.members);}  )*  ')' 
+	  {  $expression::SV.addAll($ie.members);}  // $expression::EX.add($i.text.toLowerCase()); 
+	     
+	;
 
 range_func : RANGE '(' IDENT ',' IDENT ',' IDENT ')' ;
 
 max_func
-	: MAX '(' expression (',' expression)+ ')' ;
+	: MAX '(' ie=expression (',' e=expression  {$expression::SV.addAll($e.members);}   )+ ')' 
+	        {$expression::SV.addAll($ie.members);}
+	;
 
 min_func
-	: MIN '(' expression (',' expression)+ ')' ;
+	: MIN '(' ie=expression (',' e=expression  {$expression::SV.addAll($e.members);}    )+ ')' 
+	        {$expression::SV.addAll($ie.members);}	
+	;
 
-int_func : INT '(' expression ')' ;
+int_func 
+	: INT '(' e=expression ')' 
+	{$expression::SV.addAll($e.members);} 
+	;
 	
 /// End Intrinsic functions ///	
 

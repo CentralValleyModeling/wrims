@@ -111,30 +111,32 @@ dvar : dvar_std | dvar_nonStd    ;
 svar : svar_dss | svar_expr | svar_sum | svar_table | svar_case;
 
 svar_case 	
-@init { Svar sv = new Svar(); }  
+@init { Svar sv = new Svar(); String dependants=null;}  
 	: ^(Svar_case sc=Scope i=IDENT  ( c=case_content 
 	{	
 				sv.caseName.add($c.name.toLowerCase());
 				sv.caseCondition.add( Tools.add_space_between_logical( $c.condition.toLowerCase() ) );
 				sv.caseExpression.add($c.expression.toLowerCase());
-				
+				dependants = dependants + " " + $c.dependants;
 			}
 	
 	)+ 
 	) 
-			 {F.svarCase($i.text, $sc.text, sv);}
+			 {F.svarCase($i.text, $sc.text, sv, dependants);}
 ;
 
 
-case_content returns[String name, String condition, String expression]  
+case_content returns[String name, String condition, String expression, String dependants]  
 @init{ String expr = null;} :
-^(Case i=IDENT c=Condition ( 
-   t=table_content {expr =$t.text; }
- | v=Value {expr =$v.text; }
+^(Case i=IDENT c=Condition d=Dependants
+ 
+ ( t=table_content {expr =$t.text;}  // todo: add dependants
+ | v=Value  vd=Dependants {expr =$v.text; }
  | sum=sum_content {expr =$sum.hdr+" "+$sum.expr; } 
  ) )
  
-{ $name = $i.text; $condition =$c.text; $expression = expr;
+{ $name = $i.text; $condition =$c.text; $expression = expr; 
+  $dependants = $d.text + " " + $t.dependants + " " + $vd.text + " " + $sum.dependants; 
 
 }
 
@@ -148,12 +150,13 @@ case_content returns[String name, String condition, String expression]
 //   " WHERE "+ Tools.replace_ignoreChar(Tools.replace_seperator($wc.text)); }
 //;
 
-table_content returns[String text] 
+table_content returns[String text, String dependants] 
 	: 
  ^( SELECT s=IDENT FROM f=IDENT   {$text = "select "+$s.text+" from "+$f.text; }
-  (GIVEN g=Assignment USE u=IDENT {$text = $text+" given "+$g.text+" use "+$u.text; } )? 
-  (WHERE w=where_items            {$text = $text+" where "+ Tools.replace_ignoreChar(Tools.replace_seperator($w.text)); } )? 
+  (GIVEN g=Assignment d=Dependants  USE u=IDENT {$text = $text+" given "+$g.text+" use "+$u.text; } )? 
+  (WHERE w=where_items wd=Dependants            {$text = $text+" where "+ Tools.replace_ignoreChar(Tools.replace_seperator($w.text)); } )?
   )
+  {$dependants = $d.text +" " + $wd.text;}
 	;
 
 where_items returns[String text]
@@ -162,8 +165,8 @@ where_items returns[String text]
 
 
 alias  :
-       ^(Alias sc=Scope i=IDENT e=Expression k=Kind u=Units)
-       { F.alias($i.text, $sc.text, Tools.strip($k.text), Tools.strip($u.text), $e.text  ); }
+       ^(Alias sc=Scope i=IDENT e=Expression k=Kind u=Units d=Dependants)
+       { F.alias($i.text, $sc.text, Tools.strip($k.text), Tools.strip($u.text), $e.text, $d.text  ); }
 	;
 
 
@@ -211,25 +214,26 @@ goal_content returns[String str]
 
 svar_table :
 	^( Svar_table sc=Scope i=IDENT t=table_content ) 
-	 { F.svarTable($i.text, $sc.text, $t.text); } 
+	 { F.svarTable($i.text, $sc.text, $t.text, $t.dependants); } 
 	;
 
 svar_sum : 
 		^(Svar_sum sc=Scope i=IDENT sum=sum_content )
-	   { F.svarSum($i.text, $sc.text, $sum.hdr, $sum.expr ); }
+	   { F.svarSum($i.text, $sc.text, $sum.hdr, $sum.expr, $sum.dependants ); }
 	;
 	
-sum_content returns[String hdr, String expr]: 
-^(h=Sum_hdr e=Expression) 
+sum_content returns[String hdr, String expr, String dependants]: 
+^(h=Sum_hdr e=Expression d=Dependants) 
 	{ 
 		$hdr="SUM"+Tools.replace_ignoreChar( Tools.replace_seperator($h.text)); 
     	$expr = $e.text;
+    	$dependants = $d.text;
     }
 ;	
 
 svar_expr : 
-	   ^(Svar_const sc=Scope i=IDENT v=Value )
-	   { F.svarExpression($i.text, $sc.text, Tools.replace_seperator($v.text) ); }
+	   ^(Svar_const sc=Scope i=IDENT v=Expression d=Dependants)
+	   { F.svarExpression($i.text, $sc.text, Tools.replace_seperator($v.text), $d.text ); }
 	;
 
 svar_dss :

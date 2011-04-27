@@ -30,10 +30,10 @@ public class WriteCSV {
 	  public static String sequence_header ="CYCLE,CONDITION";
 	  public static String weight_header ="DVAR,WEIGHT";
 	  public static String external_header ="FUNCTION,FILE,FROM_WRESL_FILE";
-	  public static String svar_header   ="NAME,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
+	  public static String svar_header   ="NAME,CASE,ORDER,CONDITION,EXPRESSION,DEPENDANT,FROM_WRESL_FILE";
 	  public static String timeseries_header ="NAME,B_PART,TYPE,UNITS,CONVERT_TO_UNITS,FROM_WRESL_FILE";
 	  public static String dvar_header ="NAME,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE";	  
-	  public static String alias_header ="NAME,TYPE,UNITS,EXPRESSION,FROM_WRESL_FILE";
+	  public static String alias_header ="NAME,TYPE,UNITS,EXPRESSION,DEPENDANT,FROM_WRESL_FILE";
 	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
 	  
 	public static void study(StudyDataSet sd, String outParent) {
@@ -98,13 +98,27 @@ public class WriteCSV {
 		PrintWriter out_ex;
 		PrintWriter out_svTs;
 		PrintWriter out_sv;
+		PrintWriter out_sv_unknown;
 		PrintWriter out_dv;
 		PrintWriter out_goal;
 		PrintWriter out_alias;
 		PrintWriter out_wt;
+		PrintWriter out_incFile;
 		
 		outFolder = System.getProperty("user.dir")+"//"+outFolder;
-		
+
+		if(ds.incFileList.size()>0){
+			out_incFile = Tools.openFile(outFolder, "include_file.csv");		
+			//out_incFile.print(WriteCSV.incFile_header + "\n");
+			incFile(ds.incFileList, out_incFile);	
+			out_incFile.close();
+		}
+		if(ds.incFileList_global.size()>0){
+			out_incFile = Tools.openFile(outFolder, "include_file_global.csv");		
+			//out_incFile.print(WriteCSV.incFile_header + "\n");
+			incFile(ds.incFileList_global, out_incFile);	
+			out_incFile.close();
+		}
 		if(ds.exList.size()>0){
 			out_ex = Tools.openFile(outFolder, "external.csv");		
 			out_ex.print(WriteCSV.external_header + "\n");
@@ -122,6 +136,12 @@ public class WriteCSV {
 			out_sv.print(WriteCSV.svar_header + "\n");
 			svar(ds.svMap, ds.svList, out_sv);
 			out_sv.close();
+		}
+		if(ds.svSet_unknown.size()>0){
+			out_sv_unknown = Tools.openFile(outFolder, "svar_unknown.csv");	
+			out_sv_unknown.print(WriteCSV.svar_header + "\n");
+			svar(ds.svMap, new ArrayList<String>(ds.svSet_unknown), out_sv_unknown);
+			out_sv_unknown.close();
 		}
 		if(ds.dvList.size()>0){
 			out_dv = Tools.openFile(outFolder, "dvar.csv");	
@@ -206,8 +226,15 @@ public class WriteCSV {
 		    	out.print(Param.csv_seperator+s.caseCondition.get(i)); //for CONDITION
 		    	out.print(Param.csv_seperator+s.caseExpression.get(i)); //for EXPRESSION
 		    	
-
-				out.print(Param.csv_seperator+s.fromWresl);
+		    	out.print(Param.csv_seperator);
+		    	
+		    	if (s.dependants!=null){
+			    	for (String d: s.dependants){
+			    		out.print(d+";"); //for dependants		    	
+			    	}
+		    	}
+				
+		    	out.print(Param.csv_seperator+s.fromWresl);
 				out.print("\n");	
 		    	}
 			}
@@ -259,6 +286,23 @@ public class WriteCSV {
 		    	out.print(",n"); //for OUTPUT
 
 				out.print(Param.csv_seperator+s.fromWresl);
+				out.print("\n");	
+		    	
+			}
+	  };
+
+	  public static void incFile(ArrayList<String> list ,PrintWriter out) {
+		    
+			List<String> keys = list;
+			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
+			
+		    for (String k: keys ){
+		    	
+		    	//out.print(k);
+		    	
+
+			    out.print(k); // 
+
 				out.print("\n");	
 		    	
 			}
@@ -342,6 +386,14 @@ public class WriteCSV {
 		    	out.print(Param.csv_seperator+a.units); //for UNITS
 		    	out.print(Param.csv_seperator+a.expression); //for expression
 
+		    	out.print(Param.csv_seperator);
+		    	
+		    	if (a.dependants!=null){
+			    	for (String d: a.dependants){
+			    		out.print(d+";"); //for dependants		    	
+			    	}
+		    	}
+		    	
 				out.print(Param.csv_seperator+a.fromWresl);
 				out.print("\n");	
 		    	}

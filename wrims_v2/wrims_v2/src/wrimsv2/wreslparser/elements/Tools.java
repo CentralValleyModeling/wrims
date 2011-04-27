@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import wrimsv2.commondata.wresldata.Param;
 
@@ -220,12 +221,12 @@ public class Tools {
 
 	}
 
-	public static Map<String, String> getScopeMap(ArrayList<String> fileList, ArrayList<String> localList) {
+	public static Map<String, String> getScopeMap(Set<String> fileSet, Set<String> localSet) {
 
 		Map<String, String> scopeMap = new HashMap<String, String>();
 
-		for (String f : fileList) {
-			if (localList.contains(f)) {
+		for (String f : fileSet) {
+			if (localSet.contains(f)) {
 				scopeMap.put(f,Param.local);
 			}
 			else {
@@ -237,24 +238,24 @@ public class Tools {
 	}
 	
 	/// type 1 map is the shallow included files, e.g., map( f1, [f7,f9])
-	public static Map<String, ArrayList<String>> getType1Map(Map<String, SimulationDataSet> dataMap) {
+	public static Map<String, Set<String>> getType1Map(Map<String, SimulationDataSet> dataMap) {
 
-		Map<String, ArrayList<String>> out = new HashMap<String, ArrayList<String>>();
+		Map<String, Set<String>> out = new HashMap<String, Set<String>>();
 		
 		for (String f : dataMap.keySet()){
 
 			SimulationDataSet data = dataMap.get(f);
 			
-			ArrayList<String> fileList = new ArrayList<String>();
-			fileList.addAll(data.incFileList);
+			Set<String> fileSet = new HashSet<String>();
+			fileSet.addAll(data.incFileSet);
 			
-			out.put(f, fileList);
+			out.put(f, fileSet);
 		}
 		return out;
 	}
 
 	/// type 1 map is the shallow included files, e.g., map( f1, [f7,f9])
-	public static Map<String, Set<String>> getReverseMap(Map<String, ArrayList<String>> t1Map) {
+	public static Map<String, Set<String>> getReverseMap(Map<String, Set<String>> t1Map) {
 
 		Map<String, Set<String>> out = new HashMap<String, Set<String>>();
 		
@@ -307,7 +308,7 @@ public class Tools {
 		for (String f : dataMap.keySet()){
 
 			SimulationDataSet data = dataMap.get(f);
-			out.putAll(getScopeMap(data.incFileList, data.incFileList_local));
+			out.putAll(getScopeMap(data.incFileSet, data.incFileSet_local));
 
 		}
 		return out;
@@ -341,7 +342,7 @@ public class Tools {
 		
 		if (fileScopeMap.get(f) == Param.local) {
 
-			ds.convertToLocal();
+			ds.convertToLocal_set();
 
 		}
 		else {
@@ -353,7 +354,7 @@ public class Tools {
 					LogUtils.normalMsg("...Convert this file data to local: " + f );
 					LogUtils.normalMsg("   due to  [local] specification for its parent file: " + upperFile + "\n");
 					
-					ds.convertToLocal();
+					ds.convertToLocal_set();
 
 					break;
 				}
@@ -401,5 +402,26 @@ public class Tools {
 		}
 	}
 
+	public static SimulationDataSet overwrite_set(SimulationDataSet main, SimulationDataSet s) {
+		
+		SimulationDataSet a = new SimulationDataSet(); a.add(main);
+		SimulationDataSet b = new SimulationDataSet(); b.add(s);
+		b.overwrittenWith_set(a);
+		
+		return b;
+	}
+	
+	public static Set<String> convertStrToSet(String inStr){
+		
+		Set<String> out = new HashSet<String>();
+		StringTokenizer st = new StringTokenizer(inStr);
+
+		while (st.hasMoreTokens()) {
+			out.add(st.nextToken());
+		}
+		out.remove("null");
+		
+		return out;
+	}
 
 }

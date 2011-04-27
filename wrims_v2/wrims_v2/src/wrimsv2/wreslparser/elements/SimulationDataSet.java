@@ -2,6 +2,7 @@ package wrimsv2.wreslparser.elements;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -35,7 +36,9 @@ public class SimulationDataSet {
 	
 	// / weight table   // <objName,  <itemName, value>>
 
-
+	public Set<String> wtSet = new HashSet<String>();
+	public Set<String> wtSet_global = new HashSet<String>();
+	public Set<String> wtSet_local = new HashSet<String>();
 	public ArrayList<String> wtList = new ArrayList<String>();	
 	public ArrayList<String> wtList_global = new ArrayList<String>();
 	public ArrayList<String> wtList_local = new ArrayList<String>();
@@ -45,6 +48,9 @@ public class SimulationDataSet {
 
 	
 	// / includeFile data structure
+	public Set<String> incFileSet = new HashSet<String>();
+	public Set<String> incFileSet_global = new HashSet<String>();
+	public Set<String> incFileSet_local = new HashSet<String>();
 	public ArrayList<String> incFileList = new ArrayList<String>();
 	public ArrayList<String> incFileList_global = new ArrayList<String>();
 	public ArrayList<String> incFileList_local = new ArrayList<String>();
@@ -56,12 +62,18 @@ public class SimulationDataSet {
 	public Map<String, String> error_var_redefined = new HashMap<String, String>();
 
 	// / external function structure
+	public Set<String> exSet = new HashSet<String>();
+	public Set<String> exSet_global = new HashSet<String>();
+	public Set<String> exSet_local = new HashSet<String>();
 	public ArrayList<String> exList = new ArrayList<String>();
 	public ArrayList<String> exList_global = new ArrayList<String>();
 	public ArrayList<String> exList_local = new ArrayList<String>();
 	public Map<String, External> exMap = new HashMap<String, External>();
 
-    //  / sv, ts, and dv list
+    //  / sv, ts, and dv, includeFile list
+	public ArrayList<String> svTsDvFileList = new ArrayList<String>();
+	
+    //  / sv, ts, and dv list	
 	public ArrayList<String> svTsDvList = new ArrayList<String>();	
     
 	//  / sv and ts list
@@ -69,35 +81,53 @@ public class SimulationDataSet {
 	
 	
 	// / svar timeseries data structure
+	public Set<String> tsSet = new HashSet<String>();
+	public Set<String> tsSet_global = new HashSet<String>();
+	public Set<String> tsSet_local = new HashSet<String>();
 	public ArrayList<String> tsList = new ArrayList<String>();
 	public ArrayList<String> tsList_global = new ArrayList<String>();
 	public ArrayList<String> tsList_local = new ArrayList<String>();
 	public Map<String, Timeseries> tsMap = new HashMap<String, Timeseries>();
 	
 	// / svar data structure
+	public Set<String> svSet_unknown = new HashSet<String>();
+	public Set<String> svSet = new HashSet<String>();
+	public Set<String> svSet_global = new HashSet<String>();
+	public Set<String> svSet_local = new HashSet<String>();
 	public ArrayList<String> svList = new ArrayList<String>();
 	public ArrayList<String> svList_global = new ArrayList<String>();
 	public ArrayList<String> svList_local = new ArrayList<String>();
 	public Map<String, Svar> svMap = new HashMap<String, Svar>();
 
 	// / dvar data structure
+	public Set<String> dvSet = new HashSet<String>();
+	public Set<String> dvSet_global = new HashSet<String>();
+	public Set<String> dvSet_local = new HashSet<String>();
 	public ArrayList<String> dvList = new ArrayList<String>();
 	public ArrayList<String> dvList_global = new ArrayList<String>();
 	public ArrayList<String> dvList_local = new ArrayList<String>();
 	public Map<String, Dvar> dvMap = new HashMap<String, Dvar>();
 
 	// / alias data structure
+	public Set<String> asSet = new HashSet<String>();
+	public Set<String> asSet_global = new HashSet<String>();
+	public Set<String> asSet_local = new HashSet<String>();
 	public ArrayList<String> asList = new ArrayList<String>();
 	public ArrayList<String> asList_global = new ArrayList<String>();
 	public ArrayList<String> asList_local = new ArrayList<String>();
 	public Map<String, Alias> asMap = new HashMap<String, Alias>();
 
 	// / goal data structure
+	public Set<String> gSet = new HashSet<String>();
+	public Set<String> gSet_global = new HashSet<String>();
+	public Set<String> gSet_local = new HashSet<String>();
 	public ArrayList<String> gList = new ArrayList<String>();
 	public ArrayList<String> gList_global = new ArrayList<String>();
 	public ArrayList<String> gList_local = new ArrayList<String>();
 	public Map<String, Goal> gMap = new HashMap<String, Goal>();
 	public Map<String, String> error_goal_redefined = new HashMap<String, String>();
+
+
 	
 	public SimulationDataSet() {
 	}
@@ -530,17 +560,19 @@ public class SimulationDataSet {
 		return this.insert(laterFileData); // later data has higher priority
 	}	
 	
-	public SimulationDataSet prioritizeChildren(String nodeFile, Map<String,ArrayList<String>> t1Map, Map<String, SimulationDataSet> fileDataMap, Map<String,Set<String>> reverseMap ) {
+	public SimulationDataSet addChildren(String nodeFile, Map<String,Set<String>> t1Map, Map<String, SimulationDataSet> fileDataMap) {
 
 		
 		for (String childFile : t1Map.get(nodeFile)) {
 			
-			//System.out.println(" child file is: "+ childFile +" from node: " + nodeFile);
+			System.out.println(" child file is: "+ childFile +" from node: " + nodeFile);
 						
-			if (t1Map.get(childFile)!=null)  this.prioritizeChildren(childFile, t1Map, fileDataMap, reverseMap);
+			if (t1Map.get(childFile)!=null)  this.addChildren(childFile, t1Map, fileDataMap);
 			
-			LogUtils.normalMsg("========== Prioritize file: " + childFile);
-			this.prioritize_prepend(fileDataMap.get(childFile), childFile, reverseMap);
+			//LogUtils.normalMsg("========== Prioritize file: " + childFile);
+			//this.prioritize_prepend(fileDataMap.get(childFile), childFile, reverseMap);
+			this.overwrittenWith_set(fileDataMap.get(childFile));
+			
 		}
 		
 		return this;
@@ -622,4 +654,148 @@ public class SimulationDataSet {
 	
 		return this;
 	}
+
+	public SimulationDataSet overwrittenWith_set(SimulationDataSet s) {
+		
+		this.dvSet.addAll(s.dvSet);
+		this.dvSet_global.addAll(s.dvSet_global);
+		this.dvSet_local.addAll(s.dvSet_local);
+		this.dvMap.putAll(s.dvMap); // this.dvMap is overwritten by s.dvMap
+		
+		this.svSet.addAll(s.svSet);
+		this.svSet_global.addAll(s.svSet_global);
+		this.svSet_local.addAll(s.svSet_local);
+		this.svMap.putAll(s.svMap);
+		
+		this.tsSet.addAll(s.tsSet);
+		this.tsSet_global.addAll(s.tsSet_global);
+		this.tsSet_local.addAll(s.tsSet_local);
+		this.tsMap.putAll(s.tsMap);
+		
+		this.asSet.addAll(s.asSet);
+		this.asSet_global.addAll(s.asSet_global);
+		this.asSet_local.addAll(s.asSet_local);
+		this.asMap.putAll(s.asMap);
+		
+		this.gSet.addAll(s.gSet);
+		this.gSet_global.addAll(s.gSet_global);
+		this.gSet_local.addAll(s.gSet_local);
+		this.gMap.putAll(s.gMap);
+		
+		this.wtSet.addAll(s.wtSet);
+		this.wtSet_global.addAll(s.wtSet_global);
+		this.wtSet_local.addAll(s.wtSet_local);
+		this.wtMap.putAll(s.wtMap);
+		
+		this.exSet.addAll(s.exSet);
+		this.exSet_global.addAll(s.exSet_global);
+		this.exSet_local.addAll(s.exSet_local);
+		this.exMap.putAll(s.exMap);
+		
+		this.incFileSet.addAll(s.incFileSet);
+		this.incFileSet_global.addAll(s.incFileSet_global);
+		this.incFileSet_local.addAll(s.incFileSet_local);
+		this.incFileMap.putAll(s.incFileMap);
+		
+		return this;
+	}
+
+	public SimulationDataSet getGlobalVars_set() {
+		
+		SimulationDataSet out = new SimulationDataSet() ;
+	
+
+			out.asSet.addAll(this.asSet_global);
+			out.asSet_global.addAll(this.asSet_global);
+	
+			for (String key : this.asSet_global) {
+				out.asMap.put(key, this.asMap.get(key));
+			}
+		
+			out.wtSet.addAll(this.wtSet_global);
+			out.wtSet_global.addAll(this.wtSet_global);
+	
+			for (String key : this.wtSet_global) {
+				out.wtMap.put(key, this.wtMap.get(key));
+			}
+		
+		
+			out.incFileSet.addAll(this.incFileSet_global);
+			out.incFileSet_global.addAll(this.incFileSet_global);
+	
+			for (String key : this.incFileSet_global) {
+				out.incFileMap.put(key, this.incFileMap.get(key));
+			}
+		
+			out.exSet.addAll(this.exSet_global);
+			out.exSet_global.addAll(this.exSet_global);
+	
+			for (String key : this.exSet_global) {
+				out.exMap.put(key, this.exMap.get(key));
+			}
+	
+			out.svSet.addAll(this.svSet_global);
+			out.svSet_global.addAll(this.svSet_global);
+	
+			for (String key : this.svSet_global) {
+				out.svMap.put(key, this.svMap.get(key));
+			}
+		
+			out.tsSet.addAll(this.tsSet_global);
+			out.tsSet_global.addAll(this.tsSet_global);
+	
+			for (String key : this.tsSet_global) {
+				out.tsMap.put(key, this.tsMap.get(key));
+			}
+	
+			out.dvSet.addAll(this.dvSet_global);
+			out.dvSet_global.addAll(this.dvSet_global);
+	
+			for (String key : this.dvSet_global) {
+				out.dvMap.put(key, this.dvMap.get(key));
+			}
+	
+			out.gSet.addAll(this.gSet_global);
+			out.gSet_global.addAll(this.gSet_global);
+	
+			for (String key : this.gSet_global) {
+				out.gMap.put(key, this.gMap.get(key));
+			}
+		
+	
+		return out;
+	}
+
+	public SimulationDataSet convertToLocal_set() {		
+	
+
+		this.asSet_local.addAll(this.asSet);
+		this.asSet_global.clear();
+		
+		this.wtSet_local.addAll(this.wtSet);
+		this.wtSet_global.clear();
+		
+		this.tsSet_local.addAll(this.tsSet);
+		this.tsSet_global.clear();
+		
+		this.dvSet_local.addAll(this.dvSet);
+		this.dvSet_global.clear();
+		
+		this.svSet_local.addAll(this.svSet);
+		this.svSet_global.clear();
+		
+		this.exSet_local.addAll(this.exSet);
+		this.exSet_global.clear();
+		
+		this.gSet_local.addAll(this.gSet);
+		this.gSet_global.clear();
+		
+		this.incFileSet_local.addAll(this.incFileSet);
+		this.incFileSet_global.clear();
+
+	
+		return this;
+	}
+
+
 }
