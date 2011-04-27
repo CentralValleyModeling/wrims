@@ -2,7 +2,9 @@ package wrimsv2.commondata.wresldata;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 
 
@@ -34,6 +36,7 @@ public class ModelDataSet {
 	public Map<String, Timeseries> tsMap = new HashMap<String, Timeseries>();
 	
 	// / svar data structure
+	public Set<String> svSet_unknown = new HashSet<String>();
 	public ArrayList<String> svList = new ArrayList<String>();
 	public ArrayList<String> svList_global = new ArrayList<String>();
 	public ArrayList<String> svList_local = new ArrayList<String>();

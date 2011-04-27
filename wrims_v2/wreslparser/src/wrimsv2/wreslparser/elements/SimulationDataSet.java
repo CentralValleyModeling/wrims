@@ -70,7 +70,10 @@ public class SimulationDataSet {
 	public ArrayList<String> exList_local = new ArrayList<String>();
 	public Map<String, External> exMap = new HashMap<String, External>();
 
-    //  / sv, ts, and dv list
+    //  / sv, ts, and dv, includeFile list
+	public ArrayList<String> svTsDvFileList = new ArrayList<String>();
+	
+    //  / sv, ts, and dv list	
 	public ArrayList<String> svTsDvList = new ArrayList<String>();	
     
 	//  / sv and ts list
@@ -87,6 +90,7 @@ public class SimulationDataSet {
 	public Map<String, Timeseries> tsMap = new HashMap<String, Timeseries>();
 	
 	// / svar data structure
+	public Set<String> svSet_unknown = new HashSet<String>();
 	public Set<String> svSet = new HashSet<String>();
 	public Set<String> svSet_global = new HashSet<String>();
 	public Set<String> svSet_local = new HashSet<String>();
@@ -122,6 +126,8 @@ public class SimulationDataSet {
 	public ArrayList<String> gList_local = new ArrayList<String>();
 	public Map<String, Goal> gMap = new HashMap<String, Goal>();
 	public Map<String, String> error_goal_redefined = new HashMap<String, String>();
+
+
 	
 	public SimulationDataSet() {
 	}
@@ -699,6 +705,13 @@ public class SimulationDataSet {
 		SimulationDataSet out = new SimulationDataSet() ;
 	
 
+			out.asSet.addAll(this.asSet_global);
+			out.asSet_global.addAll(this.asSet_global);
+	
+			for (String key : this.asSet_global) {
+				out.asMap.put(key, this.asMap.get(key));
+			}
+		
 			out.wtSet.addAll(this.wtSet_global);
 			out.wtSet_global.addAll(this.wtSet_global);
 	
@@ -751,6 +764,37 @@ public class SimulationDataSet {
 		
 	
 		return out;
+	}
+
+	public SimulationDataSet convertToLocal_set() {		
+	
+
+		this.asSet_local.addAll(this.asSet);
+		this.asSet_global.clear();
+		
+		this.wtSet_local.addAll(this.wtSet);
+		this.wtSet_global.clear();
+		
+		this.tsSet_local.addAll(this.tsSet);
+		this.tsSet_global.clear();
+		
+		this.dvSet_local.addAll(this.dvSet);
+		this.dvSet_global.clear();
+		
+		this.svSet_local.addAll(this.svSet);
+		this.svSet_global.clear();
+		
+		this.exSet_local.addAll(this.exSet);
+		this.exSet_global.clear();
+		
+		this.gSet_local.addAll(this.gSet);
+		this.gSet_global.clear();
+		
+		this.incFileSet_local.addAll(this.incFileSet);
+		this.incFileSet_global.clear();
+
+	
+		return this;
 	}
 
 

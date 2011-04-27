@@ -1,0 +1,27 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+
+
+define b_2 {value (z_1 - timeseries2)/(100*max(0.01,ts1(-1))) }
+
+define a_4 {value (z_1 - sum_3)/(100*max(0.01,ts1(-1))) }
+
+define t1 { timeseries kind 'EVAPORATION-RATE' units 'IN' }
+define timeseries2 { timeseries 'UD_CCWD' kind 'DEMAND-CVP' units 'TAF' convert 'CFS' }
+
+define sum_3 {sum(i=0,SEP-month,1) (b_2 - sv_sum_ts1(i))*cfs_taf(i) }
+
+define z_1 {value min(max(t1,sv_second_dv1[model_1]),2.5)}
+
+define error_1 {value min(max(not_exist,sv_second_dv1[model_1]),2.5)}
+
+}
+
+
+
+

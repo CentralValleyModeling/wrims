@@ -3,7 +3,10 @@ package wrimsv2.wreslparser.elements;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.StringTokenizer;
 
 import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
@@ -126,6 +129,7 @@ public class StructTree {
 						
 			S.incFileMap.put(absIncludeFilePath, incFile);
 			S.incFileList.add(absIncludeFilePath);
+			S.svTsDvFileList.add(absIncludeFilePath);
 			S.incFileSet.add(absIncludeFilePath);
 			
 			if      (scope==null)
@@ -197,9 +201,10 @@ public class StructTree {
 		}
 	}
 
-	public void svarCase(String name, String scope, Svar sv) {
+	public void svarCase(String name, String scope, Svar sv, String dependants) {
 
 		name = name.toLowerCase();
+		if (dependants!=null) dependants = dependants.toLowerCase();
 		
 		if (S.var_all.containsKey(name)) {
 			LogUtils.errMsg("Svar redefined: "+name, S.currentAbsolutePath);
@@ -207,11 +212,15 @@ public class StructTree {
 		} else {
 			S.var_all.put(name, "svar_cases");
 			S.svTsDvList.add(name);
+			S.svTsDvFileList.add(name);
 			S.svTsList.add(name);
 			
 			// ///////////////////
 			//sv.scope = scope;
 			sv.fromWresl = S.currentAbsolutePath;
+			
+			if (dependants!=null) sv.dependants = Tools.convertStrToSet(dependants);	
+			
 			S.svMap.put(name, sv);
 			S.svList.add(name);
 			S.svSet.add(name);
@@ -253,10 +262,11 @@ public class StructTree {
 		}
 	}
 	
-	public void svarExpression(String name, String scope, String expression) {
+	public void svarExpression(String name, String scope, String expression, String dependants) {
 		
 		name = name.toLowerCase();
 		expression = expression.toLowerCase();
+		if (dependants!=null) dependants = dependants.toLowerCase();
 		
 		if (S.var_all.containsKey(name)) {
 			LogUtils.errMsg("State variable redefined: "+name, S.currentAbsolutePath);
@@ -265,6 +275,7 @@ public class StructTree {
 
 			S.var_all.put(name, "svar_expression");
 			S.svTsDvList.add(name);
+			S.svTsDvFileList.add(name);
 			S.svTsList.add(name);
 			
 			// / clearer data structure
@@ -277,6 +288,8 @@ public class StructTree {
 			sv.caseCondition.add(condition);
 			sv.caseExpression.add(expression);
 			sv.fromWresl = S.currentAbsolutePath;
+			
+			if (dependants!=null) sv.dependants = Tools.convertStrToSet(dependants);				
 
 			S.svMap.put(name, sv);
 			S.svList.add(name);
@@ -291,11 +304,12 @@ public class StructTree {
 
 	}
 
-	public void svarSum(String name, String scope, String hdr, String expression) {
+	public void svarSum(String name, String scope, String hdr, String expression, String dependants) {
 		
 		name = name.toLowerCase();
 		hdr = hdr.toLowerCase();
 		expression = expression.toLowerCase();
+		if (dependants!=null) dependants = dependants.toLowerCase();
 		
 		if (S.var_all.containsKey(name)) {
 			LogUtils.errMsg("State variable redefined: "+name, S.currentAbsolutePath);
@@ -304,6 +318,7 @@ public class StructTree {
 
 			S.var_all.put(name, "svar_sum");
 			S.svTsDvList.add(name);
+			S.svTsDvFileList.add(name);
 			S.svTsList.add(name);
 			
 			sv = new Svar();
@@ -312,6 +327,7 @@ public class StructTree {
 			sv.caseCondition.add("always");
 			sv.caseExpression.add(hdr + " " +expression);
 			sv.fromWresl = S.currentAbsolutePath;
+			if (dependants!=null) sv.dependants = Tools.convertStrToSet(dependants);	
 
 			S.svMap.put(name, sv);
 			S.svList.add(name);
@@ -327,10 +343,11 @@ public class StructTree {
 		}
 	}
 
-	public void svarTable(String name, String scope, String sqlStr) {
+	public void svarTable(String name, String scope, String sqlStr, String dependants) {
 		
 		name = name.toLowerCase();
 		sqlStr = sqlStr.toLowerCase();
+		if (dependants!=null) dependants = dependants.toLowerCase();
 		
 		if (S.var_all.containsKey(name)) {
 			LogUtils.errMsg("State variable redefined: "+name, S.currentAbsolutePath);
@@ -338,6 +355,7 @@ public class StructTree {
 		} else {
 			S.var_all.put(name, "svar_table");
 			S.svTsDvList.add(name);
+			S.svTsDvFileList.add(name);
 			S.svTsList.add(name);
 
 			// / clearer data structure
@@ -348,6 +366,8 @@ public class StructTree {
 			sv.caseName.add(Param.defaultCaseName);
 			sv.caseExpression.add(sqlStr);
 			sv.fromWresl = S.currentAbsolutePath;
+			if (dependants!=null) sv.dependants = Tools.convertStrToSet(dependants);	
+			
 			S.svMap.put(name, sv);
 			S.svList.add(name);
 			S.svSet.add(name);
@@ -375,6 +395,7 @@ public class StructTree {
 
 			S.var_all.put(name, "timeseries");
 			S.svTsDvList.add(name);
+			S.svTsDvFileList.add(name);
 			S.svTsList.add(name);
 
 			// / clearer data structure
@@ -412,6 +433,7 @@ public class StructTree {
 
 			S.var_all.put(name, "dvar_std");
 			S.svTsDvList.add(name);
+			S.svTsDvFileList.add(name);
 			S.dvSet.add(name);
 
 			// / better data structure
@@ -498,6 +520,7 @@ public class StructTree {
 
 			S.var_all.put(name, "dvar_nonstd");
 			S.svTsDvList.add(name);
+			S.svTsDvFileList.add(name);
 
 			// / better data structure
 			dv = new Dvar();

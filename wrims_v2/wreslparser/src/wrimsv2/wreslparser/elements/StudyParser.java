@@ -12,6 +12,7 @@ import org.antlr.runtime.RecognitionException;
 
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
+import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.grammar.WreslTreeWalker;
@@ -46,7 +47,8 @@ public class StudyParser {
 			thisModelDataSet.tsList_global = ds.tsList_global; 
 			thisModelDataSet.tsList_local = ds.tsList_local; 
 			thisModelDataSet.tsMap = ds.tsMap;
-			
+
+			thisModelDataSet.svSet_unknown = ds.svSet_unknown; 
 			thisModelDataSet.svList = ds.svList; 
 			thisModelDataSet.svList_global = ds.svList_global; 
 			thisModelDataSet.svList_local = ds.svList_local; 
@@ -83,15 +85,19 @@ public class StudyParser {
 		
 		return studyDataSet;
 	}
+
+	public static StudyConfig processMainFileIntoStudyConfig(String relativeMainFilePath) throws RecognitionException, IOException{
+		return processMainFileIntoStudyConfig(relativeMainFilePath, false);
+	}
 	
-	public static StudyConfig processMainFileIntoStudyConfig(String relativeMainFilePath) throws RecognitionException, IOException {
+	public static StudyConfig processMainFileIntoStudyConfig(String relativeMainFilePath, boolean showTree) throws RecognitionException, IOException {
 		
 		File absMainFile = new File(relativeMainFilePath).getAbsoluteFile();
 		String absMainFilePath = absMainFile.getCanonicalPath().toLowerCase();
 		
 		LogUtils.importantMsg("Parsing study main file: " + absMainFilePath);
 		
-		WreslTreeWalker walker = FileParser.parseFile(absMainFilePath);
+		WreslTreeWalker walker = FileParser.parseFile(absMainFilePath, showTree);
 		
 		StudyConfig sc = new StudyConfig();
 
@@ -168,8 +174,8 @@ public class StudyParser {
 			
 			/// include global data
 			/// previous globals have lowest priority /TODO: remove reverse map
-			System.out.println(" globals in common :"+td.cumulative_global_complete.dvSet_global );
-			System.out.println(" globals in model before :"+model_dataset.dvSet_global );
+			System.out.println(" globals in common :"+td.cumulative_global_complete.gSet_global );
+			System.out.println(" globals in model before :"+model_dataset.gSet_global );
 	
 			///  a working route for overwrite_set
 			///////////////////////////////////////////////////////////
@@ -179,7 +185,7 @@ public class StudyParser {
 			model_dataset = e;
 			////////////////////////////////////////////////////////////
 			
-			System.out.println(" globals in model after :"+model_dataset.dvSet_global );			
+			System.out.println(" globals in model after :"+model_dataset.gSet_global );			
 
 			
 			//LogUtils.normalMsg("========== Finish cumulative globals prioritization =========== ");
@@ -192,7 +198,28 @@ public class StudyParser {
 			/////////////////////////////////////////////////////////////////////
 			
 			
-		    model_dataset_map.put(modelName, model_dataset);
+			/// remove sv dependants on ts
+			for (Map.Entry<String, Svar> s: model_dataset.svMap.entrySet()){
+				s.getValue().dependants.removeAll(model_dataset.tsSet);
+			}
+			
+			// sort svList based on dependents
+			Sort sortSV = new Sort(model_dataset.svMap);
+			
+			System.out.println("svMap keyset: " +model_dataset.svMap.keySet());
+			
+			ArrayList<String> sortedList = new ArrayList<String>();
+
+			model_dataset.svSet_unknown = sortSV.sort(sortedList);
+			
+			model_dataset.svList = sortedList;
+			model_dataset.svList.addAll(model_dataset.svSet_unknown);
+			System.out.println("svList: " +model_dataset.svList);
+			
+		    
+			
+			
+			model_dataset_map.put(modelName, model_dataset);
 		    
 			/// update/overwrite cumulative globals
 			td.cumulative_global_adhocs.overwrittenWith_set(sc.modelDataMap.get(modelName).getGlobalVars_set());
@@ -336,6 +363,10 @@ public class StudyParser {
 		q.exList = new ArrayList<String>(q.exSet);
 		q.exList_global = new ArrayList<String>(q.exSet_global);
 		q.exList_local = new ArrayList<String>(q.exSet_local);
+
+		q.gList = new ArrayList<String>(q.gSet);
+		q.gList_global = new ArrayList<String>(q.gSet_global);
+		q.gList_local = new ArrayList<String>(q.gSet_local);
 		
 		q.incFileList = new ArrayList<String>(q.incFileSet);
 		q.incFileList_global = new ArrayList<String>(q.incFileSet_global);

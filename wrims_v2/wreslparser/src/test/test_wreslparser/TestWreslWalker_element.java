@@ -260,7 +260,7 @@ public class TestWreslWalker_element {
 		
 		TempData td = new TempData();
 
-		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath, true);
 		
 		td.model_dataset_map=StudyParser.parseModels(sc,td);
 		
@@ -294,9 +294,6 @@ public class TestWreslWalker_element {
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
-		
-		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).svList_global.get(0),"simple" );
-		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).svList_local.get(0),"multi_where" );
 	}
 	
 	@Test(groups = { "WRESL_elements" })

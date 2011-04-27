@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import wrimsv2.commondata.wresldata.Param;
 
@@ -341,7 +342,7 @@ public class Tools {
 		
 		if (fileScopeMap.get(f) == Param.local) {
 
-			ds.convertToLocal();
+			ds.convertToLocal_set();
 
 		}
 		else {
@@ -353,7 +354,7 @@ public class Tools {
 					LogUtils.normalMsg("...Convert this file data to local: " + f );
 					LogUtils.normalMsg("   due to  [local] specification for its parent file: " + upperFile + "\n");
 					
-					ds.convertToLocal();
+					ds.convertToLocal_set();
 
 					break;
 				}
@@ -408,6 +409,19 @@ public class Tools {
 		b.overwrittenWith_set(a);
 		
 		return b;
+	}
+	
+	public static Set<String> convertStrToSet(String inStr){
+		
+		Set<String> out = new HashSet<String>();
+		StringTokenizer st = new StringTokenizer(inStr);
+
+		while (st.hasMoreTokens()) {
+			out.add(st.nextToken());
+		}
+		out.remove("null");
+		
+		return out;
 	}
 
 }
