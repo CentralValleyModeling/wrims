@@ -50,7 +50,9 @@ tokens {
 ;
 	public Set<String> reservedSet = new HashSet<String>(Arrays.asList
 	("month", "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec",
-	 "wateryear",
+	 "prevjan", "prevfeb", "prevmar", "prevapr", "prevmay", "prevjun", 
+	 "prevjul", "prevaug", "prevsep", "prevoct", "prevnov", "prevdec",
+	 "wateryear", "cfs_taf", "taf_cfs", "cfs_cfm", "af_cfs", "daysin", "daysinmonth",
 	 "i", "null"   ));
 	
     public ArrayList<String> model_in_sequence = new ArrayList<String>();
@@ -156,7 +158,7 @@ includeFile
 	;
 	
 alias : DEFINE ( '[' sc=LOCAL? ']' )? i=IDENT '{' ALIAS e=expression (KIND k=STRING)? (UNITS u=STRING)? '}'
-	->  ^(Alias Scope[$sc.text] $i Expression[$e.text] Kind[$k.text] Units[$u.text])
+	->  ^(Alias Scope[$sc.text] $i Expression[$e.text] Kind[$k.text] Units[$u.text] Dependants[$e.dependants])
 	;	
 
 goal : GOAL! (goal_simple | goal_case_or_nocase  );
@@ -319,7 +321,7 @@ equal_statement :       term_simple '==' expression ;
 /// Expression ///
 number : INTEGER | FLOAT ;
 
-term_simple : IDENT | number | function  ;
+term_simple : ident | number | function  ;
 
 ident: IDENT ;
 

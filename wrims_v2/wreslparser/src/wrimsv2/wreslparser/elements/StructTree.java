@@ -201,6 +201,47 @@ public class StructTree {
 		}
 	}
 
+	public void alias(String name, String scope, String kind, String units,
+			String expression, String dependants) {
+		
+		name = name.toLowerCase();
+		if (kind!=null) kind = kind.toLowerCase();
+		if (units!=null) units = units.toLowerCase();
+		expression = expression.toLowerCase();
+		if (dependants!=null) dependants = dependants.toLowerCase();
+		
+		if (S.var_all.containsKey(name)) {
+			LogUtils.errMsg("Alias redefined: "+name, S.currentAbsolutePath);
+			S.error_var_redefined.put(name, "dvar_alias");
+		} else {
+
+			S.var_all.put(name, "dvar_alias");
+
+			// / better data structure
+			as = new Alias();
+			// as.scope = scope;
+			if (kind != null)
+				as.kind = kind;
+			if (units != null)
+				as.units = units;
+			as.expression = expression;
+			as.fromWresl = S.currentAbsolutePath;
+			if (dependants!=null) as.dependants = Tools.convertStrToSet(dependants);	
+			
+			
+			S.asMap.put(name, as);
+			S.asList.add(name);
+			S.asSet.add(name);
+			
+			if      (scope == null)
+					{S.asList_global.add(name);S.asSet_global.add(name); as.scope = Param.global;}
+			else if (scope.toLowerCase().equals(Param.local)) 
+					{S.asList_local.add(name);S.asSet_local.add(name); as.scope = Param.local;}
+			else{ LogUtils.errMsg("Alias scope undefined: "+name, S.currentAbsolutePath);}
+
+		}
+	}
+	
 	public void svarCase(String name, String scope, Svar sv, String dependants) {
 
 		name = name.toLowerCase();
@@ -466,42 +507,7 @@ public class StructTree {
 		}
 	}
 
-	public void alias(String name, String scope, String kind, String units,
-			String expression) {
-		
-		name = name.toLowerCase();
-		if (kind!=null) kind = kind.toLowerCase();
-		if (units!=null) units = units.toLowerCase();
-		expression = expression.toLowerCase();
-		
-		if (S.var_all.containsKey(name)) {
-			LogUtils.errMsg("Alias redefined: "+name, S.currentAbsolutePath);
-			S.error_var_redefined.put(name, "dvar_alias");
-		} else {
 
-			S.var_all.put(name, "dvar_alias");
-
-			// / better data structure
-			as = new Alias();
-			// as.scope = scope;
-			if (kind != null)
-				as.kind = kind;
-			if (units != null)
-				as.units = units;
-			as.expression = expression;
-			as.fromWresl = S.currentAbsolutePath;
-			S.asMap.put(name, as);
-			S.asList.add(name);
-			S.asSet.add(name);
-			
-			if      (scope == null)
-					{S.asList_global.add(name);S.asSet_global.add(name); as.scope = Param.global;}
-			else if (scope.toLowerCase().equals(Param.local)) 
-					{S.asList_local.add(name);S.asSet_local.add(name); as.scope = Param.local;}
-			else{ LogUtils.errMsg("Alias scope undefined: "+name, S.currentAbsolutePath);}
-
-		}
-	}
 
 	public void dvarNonStd(String name, String scope, String kind,
 			String units,  String lowerBound,

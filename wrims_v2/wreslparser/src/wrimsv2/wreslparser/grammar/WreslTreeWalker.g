@@ -165,8 +165,8 @@ where_items returns[String text]
 
 
 alias  :
-       ^(Alias sc=Scope i=IDENT e=Expression k=Kind u=Units)
-       { F.alias($i.text, $sc.text, Tools.strip($k.text), Tools.strip($u.text), $e.text  ); }
+       ^(Alias sc=Scope i=IDENT e=Expression k=Kind u=Units d=Dependants)
+       { F.alias($i.text, $sc.text, Tools.strip($k.text), Tools.strip($u.text), $e.text, $d.text  ); }
 	;
 
 

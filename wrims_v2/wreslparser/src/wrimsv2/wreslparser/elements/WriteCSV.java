@@ -33,7 +33,7 @@ public class WriteCSV {
 	  public static String svar_header   ="NAME,CASE,ORDER,CONDITION,EXPRESSION,DEPENDANT,FROM_WRESL_FILE";
 	  public static String timeseries_header ="NAME,B_PART,TYPE,UNITS,CONVERT_TO_UNITS,FROM_WRESL_FILE";
 	  public static String dvar_header ="NAME,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE";	  
-	  public static String alias_header ="NAME,TYPE,UNITS,EXPRESSION,FROM_WRESL_FILE";
+	  public static String alias_header ="NAME,TYPE,UNITS,EXPRESSION,DEPENDANT,FROM_WRESL_FILE";
 	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,FROM_WRESL_FILE";
 	  
 	public static void study(StudyDataSet sd, String outParent) {
@@ -103,9 +103,22 @@ public class WriteCSV {
 		PrintWriter out_goal;
 		PrintWriter out_alias;
 		PrintWriter out_wt;
+		PrintWriter out_incFile;
 		
 		outFolder = System.getProperty("user.dir")+"//"+outFolder;
-		
+
+		if(ds.incFileList.size()>0){
+			out_incFile = Tools.openFile(outFolder, "include_file.csv");		
+			//out_incFile.print(WriteCSV.incFile_header + "\n");
+			incFile(ds.incFileList, out_incFile);	
+			out_incFile.close();
+		}
+		if(ds.incFileList_global.size()>0){
+			out_incFile = Tools.openFile(outFolder, "include_file_global.csv");		
+			//out_incFile.print(WriteCSV.incFile_header + "\n");
+			incFile(ds.incFileList_global, out_incFile);	
+			out_incFile.close();
+		}
 		if(ds.exList.size()>0){
 			out_ex = Tools.openFile(outFolder, "external.csv");		
 			out_ex.print(WriteCSV.external_header + "\n");
@@ -277,6 +290,23 @@ public class WriteCSV {
 		    	
 			}
 	  };
+
+	  public static void incFile(ArrayList<String> list ,PrintWriter out) {
+		    
+			List<String> keys = list;
+			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
+			
+		    for (String k: keys ){
+		    	
+		    	//out.print(k);
+		    	
+
+			    out.print(k); // 
+
+				out.print("\n");	
+		    	
+			}
+	  };
 	  
 	  public static void external(Map<String,External> exMap, ArrayList<String> list ,PrintWriter out) {
 		    
@@ -356,6 +386,14 @@ public class WriteCSV {
 		    	out.print(Param.csv_seperator+a.units); //for UNITS
 		    	out.print(Param.csv_seperator+a.expression); //for expression
 
+		    	out.print(Param.csv_seperator);
+		    	
+		    	if (a.dependants!=null){
+			    	for (String d: a.dependants){
+			    		out.print(d+";"); //for dependants		    	
+			    	}
+		    	}
+		    	
 				out.print(Param.csv_seperator+a.fromWresl);
 				out.print("\n");	
 		    	}
