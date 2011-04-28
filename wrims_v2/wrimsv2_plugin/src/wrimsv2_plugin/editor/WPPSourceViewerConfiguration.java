@@ -25,8 +25,7 @@ public class WPPSourceViewerConfiguration extends TextSourceViewerConfiguration 
      * @see org.eclipse.jface.text.source.SourceViewerConfiguration#getTextHover(org.eclipse.jface.text.source.ISourceViewer, java.lang.String)
      */
     public ITextHover getTextHover(ISourceViewer sourceViewer, String contentType) {
-        return null;
-    	//return new TextHover();
+    	return new TextHover();
     }
 
 	/* (non-Javadoc)

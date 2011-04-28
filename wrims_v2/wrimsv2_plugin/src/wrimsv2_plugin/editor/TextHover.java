@@ -14,6 +14,7 @@ package wrimsv2_plugin.editor;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.model.IThread;
+import org.eclipse.debug.core.model.IValue;
 import org.eclipse.debug.core.model.IVariable;
 import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.jface.text.BadLocationException;
@@ -21,9 +22,12 @@ import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.ITextViewer;
 
+import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.model.WPPStackFrame;
 import wrimsv2_plugin.debugger.model.WPPThread;
+import wrimsv2_plugin.debugger.model.WPPValue;
+import wrimsv2_plugin.debugger.model.WPPVariable;
 
 /**
  * Produces debug hover for the WPP debugger.
@@ -40,44 +44,29 @@ public class TextHover implements ITextHover {
         } catch (BadLocationException e) {
            return null;
         }
-        if (varName.startsWith("$") && varName.length() > 1) {
-            varName = varName.substring(1);
-        }
    
-        WPPStackFrame frame = null;
-        IAdaptable debugContext = DebugUITools.getDebugContext();
-        if (debugContext instanceof WPPStackFrame) {
-           frame = (WPPStackFrame) debugContext;
-        } else if (debugContext instanceof WPPThread) {
-            WPPThread thread = (WPPThread) debugContext;
-            try {
-                frame = (WPPStackFrame) thread.getTopStackFrame();
-            } catch (DebugException e) {
-                return null;
-            }
-        } else if (debugContext instanceof WPPDebugTarget) {
-            WPPDebugTarget target = (WPPDebugTarget) debugContext;
-            try {
-                IThread[] threads = target.getThreads();
-                if (threads.length > 0) {
-                    frame = (WPPStackFrame) threads[0].getTopStackFrame();
-                }
-            } catch (DebugException e) {
-                return null;
-            }
-        }
-        if (frame != null) {
-            try {
-                IVariable[] variables = frame.getVariables();
-                for (int i = 0; i < variables.length; i++) {
-                    IVariable variable = variables[i];
-                    if (variable.getName().equals(varName)) {
-                        return varName + " = " + variable.getValue().getValueString(); 
-                    }
-                }
-            } catch (DebugException e) {
+        WPPValue[] dataStack=(WPPValue[]) DebugCorePlugin.dataStack;
+        for (int i = 0; i < dataStack.length; i++) {
+            if (varName.equals(dataStack[i].getVariableString())){
+				String hoverInfo=varName+"=";
+            	try {
+					if (dataStack[i].hasVariables()){
+						WPPValue[] subValues=(WPPValue[]) dataStack[i].getValues();
+						for (int j=0; j<subValues.length; j++){
+							hoverInfo=hoverInfo+subValues[j].getVariableString()+": "+subValues[j].getValueString()+"; ";
+						}
+						return hoverInfo;
+					}else{
+						hoverInfo=varName+"="+dataStack[i].getValueString();
+						return hoverInfo;
+					}
+				} catch (DebugException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         }
+
         return null;
     }
     	
