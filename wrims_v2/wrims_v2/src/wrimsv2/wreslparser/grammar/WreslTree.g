@@ -349,11 +349,8 @@ scope { Set<String> SV; }
 	   $members = $logical_expr::SV;
        for (String s : $logical_expr::SV) {
        
-         System.out.println("lllllll :"+ s);
 	   	$dependants = $dependants +" "+s;
-	   }
-	   System.out.println("lllll_final :"+ $dependants);
-	   
+	   }	   
 	};
 	
 expression returns[String text, Set<String> members, String dependants] 
@@ -369,11 +366,8 @@ scope { Set<String> SV; }
 	   $members = $expression::SV;
        for (String s : $expression::SV) {
        
-         System.out.println("wwwwwwwwwwwwwwatch :"+ s);
 	   	$dependants = $dependants +" "+s;
-	   }
-	   System.out.println("dddddddddddddddddddddh :"+ $dependants);
-	   
+	   }   
 	};	
 	
 c_term
