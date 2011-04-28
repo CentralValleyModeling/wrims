@@ -12,8 +12,8 @@ public class ModelDataSet {
 	
 	// / weight table   // <objName,  <itemName, value>>
 	public ArrayList<String> wtList = new ArrayList<String>();
-	public ArrayList<String> wtList_global = new ArrayList<String>();
-	public ArrayList<String> wtList_local = new ArrayList<String>();
+//	public ArrayList<String> wtList_global = new ArrayList<String>();
+//	public ArrayList<String> wtList_local = new ArrayList<String>();
 	public Map<String, WeightElement> wtMap = new HashMap<String, WeightElement>();
 
 	// / external function structure
@@ -49,6 +49,7 @@ public class ModelDataSet {
 	public Map<String, Dvar> dvMap = new HashMap<String, Dvar>();
 
 	// / alias data structure
+	public Set<String> asSet_unknown = new HashSet<String>();
 	public ArrayList<String> asList = new ArrayList<String>();
 	public ArrayList<String> asList_global = new ArrayList<String>();
 	public ArrayList<String> asList_local = new ArrayList<String>();

@@ -1,26 +1,22 @@
 package wrimsv2.wreslparser.elements;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import wrimsv2.commondata.wresldata.Alias;
-import wrimsv2.commondata.wresldata.Dvar;
-import wrimsv2.commondata.wresldata.External;
-import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.Svar;
-import wrimsv2.commondata.wresldata.Timeseries;
-import wrimsv2.commondata.wresldata.WeightElement;
 
 public class Sort {
 	
-	private Map<String, Set<String>> varDependentMap = new HashMap<String, Set<String>>();
+	private Map<String, Set<String>> varDependentMap;
 	private Set<String> previousSet = new HashSet<String>();;
 	
 	// for iteration only
-	private Set<String> out = new HashSet<String>();
+	private Set<String> outSet = new HashSet<String>();
 
 
 
@@ -34,26 +30,44 @@ public class Sort {
 	// NextGroup : recursive
 
 
-	public Sort(Map<String, Svar> in_svMap){
-
+	public Sort(Map<String, Svar> in_svMap, Set<String>tsSet){
+	
+		varDependentMap = new HashMap<String, Set<String>>();
 		
 		for (Map.Entry<String, Svar> e: in_svMap.entrySet()){
 			
-			varDependentMap.put(e.getKey(), e.getValue().dependants);
+			Set<String> d = e.getValue().dependants;
+			d.removeAll(tsSet);
+			varDependentMap.put(e.getKey(), d);
+		}	
+	}
+
+	public Sort(Map<String, Alias> in_asMap, Set<String> svSet, Set<String>dvSet, Set<String>tsSet){
+
+		varDependentMap = new HashMap<String, Set<String>>();
+		
+		for (Map.Entry<String, Alias> e: in_asMap.entrySet()){
+			
+			Set<String> d = e.getValue().dependants;
+			d.removeAll(dvSet);d.removeAll(svSet);d.removeAll(tsSet);
+			varDependentMap.put(e.getKey(), d);
 		}	
 	}
 	
-	public Set<String> sort(ArrayList<String> toBeSorted){
+	public Set<String> sort(ArrayList<String> toBeSortedList){
 		
-		toBeSorted.clear();
+		toBeSortedList.clear();
 		
 		// get first group
-		toBeSorted.addAll(getSvGroup1());
+		toBeSortedList.addAll(getSvGroup1());
 		
 		// recursive
-		while (getNextGroup(out)) {
-
-			toBeSorted.addAll(out);
+		while (getNextGroup(outSet)) {
+			
+			ArrayList<String> outList = new ArrayList<String>(outSet);
+			Collections.sort(outList);
+			
+			toBeSortedList.addAll(outList);
 		}
 		
 		// var depend on unknowns
@@ -76,16 +90,12 @@ public class Sort {
 			if (e.getValue().size()==0) {
 				
 				out.add(e.getKey());
-
-			}
-		                                  	
+			}	                                  	
 		}
 
-		
 		for ( String o : out ) {
 				varDependentMap.remove(o);	                                  	
-		}
-		
+		}		
 		previousSet.addAll(out);
 		return  out;
 	}

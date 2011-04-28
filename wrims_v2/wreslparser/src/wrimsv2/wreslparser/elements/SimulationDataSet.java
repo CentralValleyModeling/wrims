@@ -109,6 +109,7 @@ public class SimulationDataSet {
 	public Map<String, Dvar> dvMap = new HashMap<String, Dvar>();
 
 	// / alias data structure
+	public Set<String> asSet_unknown = new HashSet<String>();
 	public Set<String> asSet = new HashSet<String>();
 	public Set<String> asSet_global = new HashSet<String>();
 	public Set<String> asSet_local = new HashSet<String>();
@@ -126,6 +127,7 @@ public class SimulationDataSet {
 	public ArrayList<String> gList_local = new ArrayList<String>();
 	public Map<String, Goal> gMap = new HashMap<String, Goal>();
 	public Map<String, String> error_goal_redefined = new HashMap<String, String>();
+
 
 
 	

@@ -88,6 +88,52 @@ public class TestWreslWalker_sort {
 	}
 
 	@Test(groups = { "WRESL_elements" })
+	public void case2() throws RecognitionException, IOException {
+		
+		csvFolderPath = "TestWreslWalker_sort_case2";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath,true);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		String modelName = sd.getModelList().get(1);
+		
+		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);		
+		
+		System.out.println("#### orderList: "+sd.getModelDataSetMap().get(modelName).svList);
+		
+		ArrayList<String> e = new ArrayList<String>();
+		e.add("z_1"); e.add("b_2"); e.add("a_3");e.add("b_3");e.add("c_3");e.add("sum_3"); e.add("a_4"); e.add("error_1"); e.add("error_2");
+		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).svList, e);
+		
+		Set<String> es = new HashSet<String>();
+		es.add("error_1");es.add("error_2");
+		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).svSet_unknown, es);		
+		
+	
+	}
+
+	@Test(groups = { "WRESL_elements" })
 	public void case1() throws RecognitionException, IOException {
 		
 		csvFolderPath = "TestWreslWalker_sort_case1";
@@ -129,6 +175,52 @@ public class TestWreslWalker_sort {
 		Set<String> es = new HashSet<String>();
 		es.add("error_1");
 		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).svSet_unknown, es);		
+		
+	
+	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void alias() throws RecognitionException, IOException {
+		
+		csvFolderPath = "TestWreslWalker_sort_alias";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath,true);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		String modelName = sd.getModelList().get(1);
+		
+		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);		
+		
+		System.out.println("#### orderList: "+sd.getModelDataSetMap().get(modelName).asList);
+		
+		ArrayList<String> e = new ArrayList<String>();
+		e.add("b_alias_1"); e.add("a_alias_2"); e.add("error_1");
+		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).asList, e);
+		
+		Set<String> es = new HashSet<String>();
+		es.add("error_1");
+		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).asSet_unknown, es);		
 		
 	
 	}

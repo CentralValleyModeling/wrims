@@ -102,6 +102,7 @@ public class WriteCSV {
 		PrintWriter out_dv;
 		PrintWriter out_goal;
 		PrintWriter out_alias;
+		PrintWriter out_alias_unknown;
 		PrintWriter out_wt;
 		PrintWriter out_incFile;
 		
@@ -172,6 +173,12 @@ public class WriteCSV {
 			out_alias.print(WriteCSV.alias_header + "\n");
 			alias(ds.asMap, ds.asList, out_alias);	
 			out_alias.close();
+		}
+		if(ds.asSet_unknown.size()>0){
+			out_alias_unknown = Tools.openFile(outFolder, "alias_unknown.csv");	
+			out_alias_unknown.print(WriteCSV.alias_header + "\n");
+			alias(ds.asMap, new ArrayList<String>(ds.asSet_unknown), out_alias_unknown);
+			out_alias_unknown.close();
 		}
 
 
