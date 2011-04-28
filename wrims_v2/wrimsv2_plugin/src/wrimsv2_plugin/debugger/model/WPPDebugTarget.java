@@ -87,6 +87,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	private String fCurrFileName;
 	private ISourceLookupResult result;
 	private int currLine;
+	private IEditorPart fTextEditor;
 	
 	// event dispatch job
 	private EventDispatchJob fEventDispatch;
@@ -210,6 +211,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		data=sendRequest("year:4456");
 		System.out.println(data);
 		
+		((ITextEditor)fTextEditor).resetHighlightRange();
 		data=sendRequest("resume");
 		System.out.println(data);
 		
@@ -223,6 +225,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		data=sendRequest("step");
 		System.out.println(data);
 		
+		((ITextEditor)fTextEditor).resetHighlightRange();
 		data=sendRequest("resume");
 		System.out.println(data);
 		
@@ -236,6 +239,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		data=sendRequest("year:10001");
 		System.out.println(data);
 		
+		((ITextEditor)fTextEditor).resetHighlightRange();
 		data=sendRequest("resume");
 		System.out.println(data);
 		
@@ -620,8 +624,13 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			fDataStack=generateTree(data);
 			DebugCorePlugin.dataStack=fDataStack;
 			setSourceName("a.wpp");
-			setCurrLine(2);
-			openSource();
+			if (event.contains(":")) {
+				String[] eventPart=event.split(":");
+				setCurrLine(Integer.parseInt(eventPart[1]));
+				openSourceHighlight();
+			}else{
+				openSource();
+			}
 		}
 	}
 	
@@ -632,19 +641,34 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			public void run() { 
 				IWorkbenchPage page=PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 				try {
-					IEditorPart textEditor=page.openEditor(result.getEditorInput(), result.getEditorId());
-					IDocument document = ((ITextEditor)textEditor).getDocumentProvider().getDocument(textEditor.getEditorInput());
-					IRegion lineInfo;
-					lineInfo = document.getLineInformation(currLine);
-					//((ITextEditor)textEditor).selectAndReveal(lineInfo.getOffset(), lineInfo.getLength());
-					((ITextEditor)textEditor).setHighlightRange(lineInfo.getOffset(), lineInfo.getLength(), true);
+					fTextEditor=page.openEditor(result.getEditorInput(), result.getEditorId());
+					IDocument document = ((ITextEditor)fTextEditor).getDocumentProvider().getDocument(fTextEditor.getEditorInput());
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} 
 		}); 
-
+	}
+	
+	public void openSourceHighlight(){
+		ISourceLocator fLocator =fLaunch.getSourceLocator();
+		result=DebugUITools.lookupSource(this, fLocator);
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() { 
+			public void run() { 
+				IWorkbenchPage page=PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+				try {
+					fTextEditor=page.openEditor(result.getEditorInput(), result.getEditorId());
+					IDocument document = ((ITextEditor)fTextEditor).getDocumentProvider().getDocument(fTextEditor.getEditorInput());
+					IRegion lineInfo;
+					lineInfo = document.getLineInformation(currLine);
+					((ITextEditor)fTextEditor).setHighlightRange(lineInfo.getOffset(), lineInfo.getLength(), true);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} 
+		}); 
 	}
 	
 	/**
