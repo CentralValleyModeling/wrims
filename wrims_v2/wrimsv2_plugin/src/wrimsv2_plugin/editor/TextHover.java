@@ -46,6 +46,8 @@ public class TextHover implements ITextHover {
         }
    
         WPPValue[] dataStack=(WPPValue[]) DebugCorePlugin.dataStack;
+        if (dataStack==null) return null;
+        
         for (int i = 0; i < dataStack.length; i++) {
             if (varName.equals(dataStack[i].getVariableString())){
 				String hoverInfo=varName+"=";

@@ -48,7 +48,10 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -192,6 +195,40 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		IBreakpointManager breakpointManager = getBreakpointManager();
         breakpointManager.addBreakpointListener(this);
 		breakpointManager.addBreakpointManagerListener(this);
+		
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				IWorkbenchWindow window=workbench.getActiveWorkbenchWindow();
+				if (window !=null){
+					window.getActivePage().addPartListener(new IPartListener(){
+						@Override
+						public void partActivated(IWorkbenchPart part) {
+							if (part instanceof ITextEditor){
+								System.out.println("changes");
+								//To Do: parse file, send request, regenerate dataStack (viewer show automatically)
+							}
+						}
+
+						@Override
+						public void partBroughtToTop(IWorkbenchPart part) {
+						}
+
+						@Override
+						public void partClosed(IWorkbenchPart part) {	
+						}
+
+						@Override
+						public void partDeactivated(IWorkbenchPart part) {	
+						}
+
+						@Override
+						public void partOpened(IWorkbenchPart part) {	
+						}                                                                                                                                                                               
+					});
+				}
+			}
+		});
 		
 		//To Do: add real debug code
 		installDeferredBreakpoints();
