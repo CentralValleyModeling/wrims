@@ -36,6 +36,7 @@ public class ContactDebugger {
 		}
 		fileOut = new PrintWriter(statusFile);
 		fileOut.println("good!");
+		System.out.println("good!");
 		try {
 			requestSocket = new ServerSocket(requestPort);
 			eventSocket = new ServerSocket(eventPort);
