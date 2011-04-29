@@ -166,15 +166,6 @@ public class StudyParser {
 			td.t1Map_wholeStudy.put(sc.absMainFilePath, adhoc.incFileSet);
 			Map<String,Set<String>> t1ReverseMap_wholeStudy = Tools.getReverseMap(td.t1Map_wholeStudy);
 			
-//			String ttt="";
-//			Map<String,Set<String>> qwe = t1ReverseMap_wholeStudy;
-//			for (String s : qwe.keySet()){
-//				ttt = ttt + "{"+s+"}"+"::"+qwe.get(s);
-//			}
-//			LogUtils.errMsg(ttt);
-			
-			/// include global data
-			/// previous globals have lowest priority /TODO: remove reverse map
 
 	
 			///  a working route for overwrite_set
@@ -185,10 +176,7 @@ public class StudyParser {
 			model_dataset = e;
 			////////////////////////////////////////////////////////////
 			
-			//System.out.println(" globals in model after :"+model_dataset.gSet_global );			
 
-			
-			//LogUtils.normalMsg("========== Finish cumulative globals prioritization =========== ");
 
 			
 			////////////////////////////////////////////////////////////////
@@ -297,27 +285,16 @@ public class StudyParser {
 			for (String f : adhoc.incFileList) {
 				
 					SimulationDataSet temp = new SimulationDataSet();		
-				//LogUtils.normalMsg("========== Prioritize offsprings in file: "+f);
+
 					temp.addChildren(f, t1Map, fileDataMap_corrected);
 					
 					temp.overwrittenWith_set(fileDataMap_corrected.get(f));
 					
 					model_dataset.overwrittenWith_set(temp);
 			}
-			//LogUtils.normalMsg("========== Finish children prioritization =========== ");
-			
-			/// for include files in adhoc
-//			for (String f : adhoc.incFileList) {
-//				
-//                //LogUtils.normalMsg("========== Prioritize adhoc include file: "+f);
-////				model_dataset.prioritize(fileDataMap_corrected.get(f), f, t1ReverseMap);
-//			}
-			
-			/// for vars in adhoc
-			//LogUtils.normalMsg("========== Prioritize adhoc =========== ");
-			//model_dataset.prioritize_append(adhoc, absMainFilePath, t1ReverseMap);
+
 			model_dataset.overwrittenWith_set(adhoc);
-			//LogUtils.normalMsg("========== Finish adhoc prioritization =========== ");
+
 //---------------------------------------------------------------------------------------			
 
 		return model_dataset;
