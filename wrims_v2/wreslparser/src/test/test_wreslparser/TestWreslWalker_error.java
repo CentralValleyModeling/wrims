@@ -55,7 +55,7 @@ public class TestWreslWalker_error {
 		String logText = Tools.readFileAsString(logFilePath);	
 
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);	
+		Assert.assertEquals(totalErrs, 4);	
 		
 
 		
@@ -102,7 +102,7 @@ public class TestWreslWalker_error {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 8);	
+		Assert.assertEquals(totalErrs, 12);	
 		
 	
 		

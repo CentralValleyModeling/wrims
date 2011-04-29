@@ -12,6 +12,7 @@ import org.antlr.runtime.RecognitionException;
 
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
+import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.grammar.WreslTreeWalker;
@@ -198,28 +199,9 @@ public class StudyParser {
 			
 			
 
-			
-			/// sort svList based on dependents excluding tsSet
-			Sort sortSV = new Sort(model_dataset.svMap, model_dataset.tsSet);
-			
-			ArrayList<String> sortedSvList = new ArrayList<String>();
+		    sortDependency(model_dataset);
 
-			model_dataset.svSet_unknown = sortSV.sort(sortedSvList);			
 			
-			model_dataset.svList = sortedSvList;
-			model_dataset.svList.addAll(model_dataset.svSet_unknown);
-			//System.out.println("svList: " +model_dataset.svList);
-			
-			/// sort asList based on dependents excluding svSet and tsSet
-			Sort sortAs = new Sort(model_dataset.asMap, model_dataset.svSet, model_dataset.dvSet, model_dataset.tsSet);
-			
-			ArrayList<String> sortedAsList = new ArrayList<String>();
-
-			model_dataset.asSet_unknown = sortAs.sort(sortedAsList);			
-			
-			model_dataset.asList = sortedAsList;
-			model_dataset.asList.addAll(model_dataset.asSet_unknown);
-			//System.out.println("asList: " +model_dataset.asList);		    
 			
 			// assemble whole map
 			model_dataset_map.put(modelName, model_dataset);
@@ -341,6 +323,45 @@ public class StudyParser {
 		return model_dataset;
 	}
 
+	public static boolean sortDependency(SimulationDataSet model_dataset)  {
+		
+		boolean OK = true;
+		Set<String> var_with_unknown;
+		
+		/// sort svList based on dependents excluding tsSet
+		Sort sortSV = new Sort(model_dataset.svMap, model_dataset.tsSet);
+		
+		ArrayList<String> sortedSvList = new ArrayList<String>();
+
+		var_with_unknown = sortSV.sort(sortedSvList);		
+		
+		model_dataset.svList = sortedSvList;
+		
+		if (var_with_unknown.size()>0) {
+			OK = false;
+			model_dataset.svSet_unknown = var_with_unknown;
+			model_dataset.svList.addAll(model_dataset.svSet_unknown);
+		}
+		
+		
+		/// sort asList based on dependents excluding svSet and tsSet
+		Sort sortAs = new Sort(model_dataset.asMap, model_dataset.svSet, model_dataset.dvSet, model_dataset.tsSet);
+		
+		ArrayList<String> sortedAsList = new ArrayList<String>();
+
+		var_with_unknown = sortAs.sort(sortedAsList);
+		
+		model_dataset.asList = sortedAsList;
+		
+		if (var_with_unknown.size()>0) {	
+			OK = false;
+			model_dataset.asSet_unknown = var_with_unknown;				
+			model_dataset.asList.addAll(model_dataset.asSet_unknown);
+		}
+		
+		return OK;
+	}
+	
 	public static void lousyConvert(SimulationDataSet q){
 		
 		q.asList = new ArrayList<String>(q.asSet);
@@ -376,6 +397,8 @@ public class StudyParser {
 		q.incFileList_local = new ArrayList<String>(q.incFileSet_local);
 		
 	}
+
+
 	
 	
 	
