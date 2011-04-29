@@ -395,11 +395,13 @@ public class Tools {
 		return out;
 		
 	}
-	
-	public static void mapRemoveAll (Map<String, ?> map, ArrayList<String> list){
-		for (String key: list){
+	public static void mapRemoveAll (Map<String, ?> map, Set<String> set){
+		for (String key: set){
 			map.remove(key);	
 		}
+	}	
+	public static void mapRemoveAll (Map<String, ?> map, ArrayList<String> list){
+		mapRemoveAll (map, new HashSet<String>(list));
 	}
 
 	public static SimulationDataSet overwrite_set(SimulationDataSet main, SimulationDataSet s) {

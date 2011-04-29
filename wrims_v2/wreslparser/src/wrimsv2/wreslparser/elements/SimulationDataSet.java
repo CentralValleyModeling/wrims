@@ -656,7 +656,64 @@ public class SimulationDataSet {
 	
 		return this;
 	}
-
+	public SimulationDataSet overwrite_set(SimulationDataSet s) {
+		
+		SimulationDataSet x = new SimulationDataSet();
+		x.overwrittenWith_set(s);
+		
+		Tools.mapRemoveAll(x.dvMap, this.dvSet);
+		Tools.mapRemoveAll(x.svMap, this.svSet);
+		Tools.mapRemoveAll(x.asMap, this.asSet);
+		Tools.mapRemoveAll(x.wtMap, this.wtSet);
+		Tools.mapRemoveAll(x.tsMap, this.tsSet);
+		Tools.mapRemoveAll(x.gMap, this.gSet);
+		Tools.mapRemoveAll(x.exMap, this.exSet);
+		Tools.mapRemoveAll(x.incFileMap, this.incFileSet);
+		
+		
+		
+		this.dvSet.addAll(x.dvSet);
+		this.dvSet_global.addAll(x.dvSet_global);
+		this.dvSet_local.addAll(x.dvSet_local);
+		this.dvMap.putAll(x.dvMap); // this.dvMap is overwritten by s.dvMap
+		
+		this.svSet.addAll(x.svSet);
+		this.svSet_global.addAll(x.svSet_global);
+		this.svSet_local.addAll(x.svSet_local);
+		this.svMap.putAll(x.svMap);
+		
+		this.tsSet.addAll(x.tsSet);
+		this.tsSet_global.addAll(x.tsSet_global);
+		this.tsSet_local.addAll(x.tsSet_local);
+		this.tsMap.putAll(x.tsMap);
+		
+		this.asSet.addAll(x.asSet);
+		this.asSet_global.addAll(x.asSet_global);
+		this.asSet_local.addAll(x.asSet_local);
+		this.asMap.putAll(x.asMap);
+		
+		this.gSet.addAll(x.gSet);
+		this.gSet_global.addAll(x.gSet_global);
+		this.gSet_local.addAll(x.gSet_local);
+		this.gMap.putAll(x.gMap);
+		
+		this.wtSet.addAll(x.wtSet);
+		this.wtSet_global.addAll(x.wtSet_global);
+		this.wtSet_local.addAll(x.wtSet_local);
+		this.wtMap.putAll(x.wtMap);
+		
+		this.exSet.addAll(x.exSet);
+		this.exSet_global.addAll(x.exSet_global);
+		this.exSet_local.addAll(x.exSet_local);
+		this.exMap.putAll(x.exMap);
+		
+		this.incFileSet.addAll(x.incFileSet);
+		this.incFileSet_global.addAll(x.incFileSet_global);
+		this.incFileSet_local.addAll(x.incFileSet_local);
+		this.incFileMap.putAll(x.incFileMap);
+		
+		return this;
+	}
 	public SimulationDataSet overwrittenWith_set(SimulationDataSet s) {
 		
 		this.dvSet.addAll(s.dvSet);

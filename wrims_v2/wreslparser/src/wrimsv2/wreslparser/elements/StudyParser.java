@@ -126,7 +126,12 @@ public class StudyParser {
 		return sc;
 	}
 	
-	public static Map<String, SimulationDataSet> parseModels(StudyConfig sc, TempData td) throws RecognitionException, IOException {
+	public static Map<String, SimulationDataSet> parseModels(StudyConfig sc, TempData td) throws RecognitionException, IOException{
+		
+		return parseModels(sc, td, false);
+	}
+	
+	public static Map<String, SimulationDataSet> parseModels(StudyConfig sc, TempData td, boolean rewrite_list_based_on_dependency) throws RecognitionException, IOException {
 
 		Map<String, SimulationDataSet> model_dataset_map = new HashMap<String, SimulationDataSet>();
 		
@@ -168,15 +173,7 @@ public class StudyParser {
 			
 
 	
-			///  a working route for overwrite_set
-			///////////////////////////////////////////////////////////
-			SimulationDataSet e = new SimulationDataSet();
-			e.overwrittenWith_set(td.cumulative_global_complete);
-			e.overwrittenWith_set(model_dataset);
-			model_dataset = e;
-			////////////////////////////////////////////////////////////
-			
-
+			model_dataset.overwrite_set(td.cumulative_global_complete);
 
 			
 			////////////////////////////////////////////////////////////////
@@ -186,8 +183,8 @@ public class StudyParser {
 			/////////////////////////////////////////////////////////////////////
 			
 			
-
-		    sortDependency(model_dataset);
+			
+		    sortDependency(model_dataset,rewrite_list_based_on_dependency);
 
 			
 			
@@ -300,7 +297,7 @@ public class StudyParser {
 		return model_dataset;
 	}
 
-	public static boolean sortDependency(SimulationDataSet model_dataset)  {
+	public static boolean sortDependency(SimulationDataSet model_dataset, boolean rewrite_list_based_on_dependency)  {
 		
 		boolean OK = true;
 		Set<String> var_with_unknown;
@@ -311,11 +308,10 @@ public class StudyParser {
 		ArrayList<String> sortedSvList = new ArrayList<String>();
 
 		var_with_unknown = sortSV.sort(sortedSvList);		
+		if (var_with_unknown.size()>0) OK = false;
 		
-		model_dataset.svList = sortedSvList;
-		
-		if (var_with_unknown.size()>0) {
-			OK = false;
+		if (rewrite_list_based_on_dependency){
+			model_dataset.svList = sortedSvList;
 			model_dataset.svSet_unknown = var_with_unknown;
 			model_dataset.svList.addAll(model_dataset.svSet_unknown);
 		}
@@ -327,11 +323,10 @@ public class StudyParser {
 		ArrayList<String> sortedAsList = new ArrayList<String>();
 
 		var_with_unknown = sortAs.sort(sortedAsList);
+		if (var_with_unknown.size()>0) OK = false;
 		
-		model_dataset.asList = sortedAsList;
-		
-		if (var_with_unknown.size()>0) {	
-			OK = false;
+		if (rewrite_list_based_on_dependency){
+			model_dataset.asList = sortedAsList;
 			model_dataset.asSet_unknown = var_with_unknown;				
 			model_dataset.asList.addAll(model_dataset.asSet_unknown);
 		}
