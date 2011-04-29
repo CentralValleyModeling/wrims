@@ -26,6 +26,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.breakpoint.WPPLineBreakpoint;
 import wrimsv2_plugin.debugger.breakpoint.WPPWatchpoint;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
@@ -96,6 +97,7 @@ public class WPPModelPresentation extends LabelProvider implements IDebugModelPr
 			    return label + "WPP [" + path.lastSegment() + "]";
 			}
 		} catch (CoreException e) {
+			WPPException.handleException(e);
 		}
 		return "WPP";
 		
@@ -111,6 +113,7 @@ public class WPPModelPresentation extends LabelProvider implements IDebugModelPr
 	    try {
 	       return frame.getName() + " (line: " + frame.getLineNumber() + ")"; 
 	    } catch (DebugException e) {
+	    	WPPException.handleException(e);
 	    }
 	    return null;
 
@@ -143,6 +146,7 @@ public class WPPModelPresentation extends LabelProvider implements IDebugModelPr
 		            	    WPPWatchpoint watchpoint = (WPPWatchpoint)wppBreakpoint;
 		            	    label += " (watchpoint: " + watchpoint.getSuspendType() + " " + watchpoint.getVariableName() + ")";
 	            	    } catch (CoreException e) {
+	            	    	WPPException.handleException(e);
 	            	    }
 	            	} else if (wppBreakpoint.isRunToLineBreakpoint()) {
 	            		label += " (run to line)";
@@ -165,6 +169,7 @@ public class WPPModelPresentation extends LabelProvider implements IDebugModelPr
 		try {
 			detail = value.getValueString();
 		} catch (DebugException e) {
+			WPPException.handleException(e);
 		}
 		listener.detailComputed(value, detail);
 	}

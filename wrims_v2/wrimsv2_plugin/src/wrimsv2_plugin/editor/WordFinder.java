@@ -17,6 +17,8 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
 
+import wrimsv2_plugin.debugger.exception.WPPException;
+
 /**
  * Looks for an identifier in a source file
  */
@@ -63,6 +65,7 @@ public class WordFinder {
 			end= pos;
 			
 		} catch (BadLocationException x) {
+			WPPException.handleException(x);
 		}
 		
 		if (start > -1 && end > -1) {

@@ -21,6 +21,8 @@ import org.eclipse.debug.core.model.IStackFrame;
 import org.eclipse.debug.core.model.IThread;
 import org.eclipse.debug.core.model.IVariable;
 
+import wrimsv2_plugin.debugger.exception.WPPException;
+
 /**
  * A WPP thread. A WPP VM is single threaded.
  */
@@ -396,6 +398,7 @@ public class WPPThread extends WPPDebugElement implements IThread, IWPPEventList
 		try {
 			return getStackFrames().length > 1;
 		} catch (DebugException e) {
+			WPPException.handleException(e);
 		}
 		return false;
 	}

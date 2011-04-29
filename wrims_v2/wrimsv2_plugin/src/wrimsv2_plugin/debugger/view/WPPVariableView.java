@@ -24,6 +24,7 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.IWPPEventListener;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.model.WPPValue;
@@ -75,8 +76,7 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 						return ((WPPValue) element).getVariableString()+":"+((WPPValue) element).getValueString();
 					}
 				} catch (DebugException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					WPPException.handleException(e);
 				}
 			}
 			return null;
@@ -94,6 +94,7 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 				try {
 					return ((WPPDebugTarget)parentElement).getDataStack();
 				} catch (DebugException e) {
+					WPPException.handleException(e);
 				}
 			} else if (parentElement instanceof WPPValue){
 				try{
@@ -102,6 +103,7 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 					}
 				}
 				catch (DebugException e) {
+					WPPException.handleException(e);
 				}
 			}
 			return new Object[0];
@@ -161,7 +163,7 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 		new Thread(new Runnable() {
 			      public void run() {
 			         while (true) {
-			            try { Thread.sleep(1000); } catch (Exception e) { }
+			            try { Thread.sleep(1000); } catch (Exception e) { WPPException.handleException(e);}
 			            
 			            if (DebugCorePlugin.dataStack!=null){
 			            	if (!DebugCorePlugin.dataStack.equals(dataStack)) Display.getDefault().asyncExec(new Runnable() {

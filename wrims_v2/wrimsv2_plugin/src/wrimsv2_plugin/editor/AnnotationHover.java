@@ -20,6 +20,8 @@ import org.eclipse.jface.text.source.IAnnotationHover;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.ISourceViewer;
 
+import wrimsv2_plugin.debugger.exception.WPPException;
+
 /**
  * Returns hover for breakpoints.
  */
@@ -37,6 +39,7 @@ public class AnnotationHover implements IAnnotationHover {
 					return annotation.getText();
 				}
 			} catch (BadLocationException e) {
+				WPPException.handleException(e);
 			}
 		}
 		return null;

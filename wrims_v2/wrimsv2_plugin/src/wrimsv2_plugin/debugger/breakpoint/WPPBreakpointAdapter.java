@@ -27,6 +27,7 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.breakpoint.WPPLineBreakpoint;
 import wrimsv2_plugin.debugger.breakpoint.WPPWatchpoint;
 
@@ -163,7 +164,9 @@ public class WPPBreakpointAdapter implements IToggleBreakpointsTarget {
 	                return new String[] {varName, fcnName};
 	            }
 	        } catch (CoreException e) {
+	    		WPPException.handleException(e);
 	        } catch (BadLocationException e) {
+	        	WPPException.handleException(e);
 	        } finally {
 	            documentProvider.disconnect(this);
 	        }
@@ -198,6 +201,7 @@ public class WPPBreakpointAdapter implements IToggleBreakpointsTarget {
                 }
                 lineIndex--;
             } catch (BadLocationException e) {
+            	WPPException.handleException(e);
             }
 	    }
 	    return "_main_";

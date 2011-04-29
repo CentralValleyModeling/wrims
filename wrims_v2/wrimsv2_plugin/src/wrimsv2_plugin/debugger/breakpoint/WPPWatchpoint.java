@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.debug.core.model.IWatchpoint;
 
+import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 
 /**
@@ -215,6 +216,7 @@ public class WPPWatchpoint extends WPPLineBreakpoint implements IWatchpoint {
 					    notifyThread();
 					}
 				} catch (CoreException e) {
+					WPPException.handleException(e);
 				}
             }
     	}

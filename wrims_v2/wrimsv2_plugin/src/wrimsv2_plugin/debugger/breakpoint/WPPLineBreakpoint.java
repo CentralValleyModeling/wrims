@@ -22,6 +22,7 @@ import org.eclipse.debug.core.model.IThread;
 import org.eclipse.debug.core.model.LineBreakpoint;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.IWPPEventListener;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.model.WPPThread;
@@ -157,6 +158,7 @@ public class WPPLineBreakpoint extends LineBreakpoint implements IWPPEventListen
 	    			thread.suspendedBy(this);
 	    		}
 			} catch (DebugException e) {
+				WPPException.handleException(e);
 			}    		
     	}
     }
@@ -190,6 +192,7 @@ public class WPPLineBreakpoint extends LineBreakpoint implements IWPPEventListen
 					notifyThread();
 				}
     		} catch (CoreException e) {
+    			WPPException.handleException(e);
     		}
     	}
     }	

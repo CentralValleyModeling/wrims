@@ -23,6 +23,7 @@ import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.ITextViewer;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.model.WPPStackFrame;
 import wrimsv2_plugin.debugger.model.WPPThread;
@@ -63,8 +64,7 @@ public class TextHover implements ITextHover {
 						return hoverInfo;
 					}
 				} catch (DebugException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					WPPException.handleException(e);
 				}
             }
         }

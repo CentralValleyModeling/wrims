@@ -29,6 +29,7 @@ import org.eclipse.debug.core.model.IProcess;
 import org.eclipse.debug.core.model.LaunchConfigurationDelegate;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 
 import java.lang.Runtime;
@@ -63,8 +64,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			IDebugTarget target = new WPPDebugTarget(launch, p, requestPort, eventPort);
 			launch.addDebugTarget(target);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			WPPException.handleException(e);
 		}
 	}
 		
@@ -91,11 +91,13 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			socket= new ServerSocket(0);
 			return socket.getLocalPort();
 		} catch (IOException e) { 
+			WPPException.handleException(e);
 		} finally {
 			if (socket != null) {
 				try {
 					socket.close();
 				} catch (IOException e) {
+					WPPException.handleException(e);
 				}
 			}
 		}

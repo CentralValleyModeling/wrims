@@ -23,6 +23,7 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 import wrimsv2_plugin.debugger.breakpoint.WPPBreakpointAdapter;
+import wrimsv2_plugin.debugger.exception.WPPException;
 
 /**
  * Action to toggle a breakpoint
@@ -58,7 +59,9 @@ public class ToggleBreakpointAction extends Action {
 			IRegion region = document.getLineInformation(line);
 			selection = new TextSelection(document, region.getOffset(), region.getLength());
 		} catch (CoreException e1) {
+			WPPException.handleException(e1);
 		} catch (BadLocationException e) {
+			WPPException.handleException(e);
 		} finally {
 			provider.disconnect(this);
 		}
@@ -70,6 +73,7 @@ public class ToggleBreakpointAction extends Action {
 					adapter.toggleLineBreakpoints(fEditor, selection);
 				}
 			} catch (CoreException e) {
+				WPPException.handleException(e);
 			}
 		}
 	}

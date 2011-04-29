@@ -25,6 +25,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IEditorPart;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.exception.WPPException;
 
 /**
  * Launches a WPP file
@@ -64,6 +65,7 @@ public class WPPLaunchShortcut implements ILaunchShortcut {
             ILaunchConfiguration configuration = workingCopy.doSave();
             DebugUITools.launch(configuration, mode);
         } catch (CoreException e1) {
+        	WPPException.handleException(e1);
         }
     }
 

@@ -60,6 +60,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
 import wrimsv2_plugin.debugger.breakpoint.WPPLineBreakpoint;
 import wrimsv2_plugin.debugger.breakpoint.WPPRunToLineBreakpoint;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.exception.WPPException;
 
 /**
  * WPP Debug Target
@@ -91,6 +92,8 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	private ISourceLookupResult result;
 	private int currLine;
 	private IEditorPart fTextEditor;
+	private IWorkbenchPart fPart;
+	private IPartListener fPartListener;
 	
 	// event dispatch job
 	private EventDispatchJob fEventDispatch;
@@ -201,10 +204,11 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			public void run(){
 				IWorkbenchWindow window=workbench.getActiveWorkbenchWindow();
 				if (window !=null){
-					window.getActivePage().addPartListener(new IPartListener(){
+					fPartListener=new IPartListener(){
 						@Override
 						public void partActivated(IWorkbenchPart part) {
-							if (part instanceof ITextEditor){
+							if ((part instanceof ITextEditor) && (!part.equals(fPart))){
+								fPart=part;
 								System.out.println("changes");
 								//To Do: parse file, send request, regenerate dataStack (viewer show automatically)
 							}
@@ -225,7 +229,8 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 						@Override
 						public void partOpened(IWorkbenchPart part) {	
 						}                                                                                                                                                                               
-					});
+					};
+					window.getActivePage().addPartListener(fPartListener);
 				}
 			}
 		});
@@ -248,46 +253,52 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		data=sendRequest("year:4456");
 		System.out.println(data);
 		
-		((ITextEditor)fTextEditor).resetHighlightRange();
+		if (fTextEditor!=null) ((ITextEditor)fTextEditor).resetHighlightRange();
 		data=sendRequest("resume");
 		System.out.println(data);
 		
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			WPPException.handleException(e);
 		}
 		
 		data=sendRequest("step");
 		System.out.println(data);
 		
-		((ITextEditor)fTextEditor).resetHighlightRange();
+		if (fTextEditor!=null) ((ITextEditor)fTextEditor).resetHighlightRange();
 		data=sendRequest("resume");
 		System.out.println(data);
 		
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			WPPException.handleException(e);
 		}
 		
 		data=sendRequest("year:10001");
 		System.out.println(data);
 		
-		((ITextEditor)fTextEditor).resetHighlightRange();
+		if (fTextEditor!=null) ((ITextEditor)fTextEditor).resetHighlightRange();
 		data=sendRequest("resume");
 		System.out.println(data);
 		
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			WPPException.handleException(e);
 		}
 		
+		
 		fProcess.terminate();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				IWorkbenchWindow window=workbench.getActiveWorkbenchWindow();
+				if (window !=null){
+					window.getActivePage().removePartListener(fPartListener);
+				}
+			}
+		});
 	}
 	
 	public void setSourceName(String fileName){
@@ -364,6 +375,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 					}
 				}
 			} catch (CoreException e) {
+				WPPException.handleException(e);
 			}			
 		}
 		return false;
@@ -449,6 +461,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 				    wppBreakpoint.install(this);
 				}
 			} catch (CoreException e) {
+				WPPException.handleException(e);
 			}
 		}
 	}
@@ -461,6 +474,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			    WPPLineBreakpoint wppBreakpoint = (WPPLineBreakpoint)breakpoint;
 				wppBreakpoint.remove(this);
 			} catch (CoreException e) {
+				WPPException.handleException(e);
 			}
 		}
 	}
@@ -476,6 +490,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 					breakpointRemoved(breakpoint, null);
 				}
 			} catch (CoreException e) {
+				WPPException.handleException(e);
 			}
 		}
 	}
@@ -525,6 +540,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		try {
 			resume();
 		} catch (DebugException e) {
+			WPPException.handleException(e);
 		}
 	}
 	
@@ -604,6 +620,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	    try {
             return !isTerminated() && isSuspended() && getDataStack().length > 0;
         } catch (DebugException e) {
+        	WPPException.handleException(e);
         }
         return false;
 	}
@@ -654,8 +671,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 				data=sendRequest("data");
 				System.out.println(data);
 			} catch (DebugException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				WPPException.handleException(e);
 			}
 			data="i:4456#a(-1):123.0#reservoir:reservorlevel1%56:reservorlevel2%1234";
 			fDataStack=generateTree(data);
@@ -681,8 +697,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 					fTextEditor=page.openEditor(result.getEditorInput(), result.getEditorId());
 					IDocument document = ((ITextEditor)fTextEditor).getDocumentProvider().getDocument(fTextEditor.getEditorInput());
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					WPPException.handleException(e);
 				}
 			} 
 		}); 
@@ -701,8 +716,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 					lineInfo = document.getLineInformation(currLine);
 					((ITextEditor)fTextEditor).setHighlightRange(lineInfo.getOffset(), lineInfo.getLength(), true);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					WPPException.handleException(e);
 				}
 			} 
 		}); 
