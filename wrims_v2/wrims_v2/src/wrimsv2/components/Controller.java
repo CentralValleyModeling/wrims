@@ -77,7 +77,7 @@ public class Controller {
 		processTimeseries();
 		processSvar();
 		processDvar();	
-		processAlias();
+		//processAlias();
 		processGoal();	
 	}
 
@@ -145,9 +145,6 @@ public class Controller {
 			}
 			if (condition){
 				String evalString="v: "+svar.caseExpression.get(i);
-				if (svName.equals("")){
-					int x=0;
-				}
 				ANTLRStringStream stream = new ANTLRStringStream(evalString);
 				EvaluatorLexer lexer = new EvaluatorLexer(stream);
 				TokenStream tokenStream = new CommonTokenStream(lexer);
@@ -252,7 +249,6 @@ public class Controller {
 		for (String goalName: gList){
 			ControlData.currEvalName=goalName;
 			System.out.println("Process constraint "+goalName);
-			Error.addEvaluationError("Process constraint "+goalName);
 			Goal goal=gMap.get(goalName);
 			ArrayList<String> caseCondition=goal.caseCondition;
 			boolean condition=false;
@@ -281,7 +277,7 @@ public class Controller {
 	public static void evaluateGoal(String goalName, String goalString){
 		String[] stringList=goalString.split("\\|");
 		for (int i=0; i<=1; i++){
-			if (stringList[i]!=" "){
+			if (!stringList[i].equals(" ")){
 				if (stringList[i].contains(":")){
 					String constraint[]=stringList[i].split(":");
 					ANTLRStringStream stream = new ANTLRStringStream("s:"+constraint[0]);
