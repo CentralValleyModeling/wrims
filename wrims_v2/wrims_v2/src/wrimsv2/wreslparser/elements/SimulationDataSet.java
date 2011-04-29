@@ -71,13 +71,13 @@ public class SimulationDataSet {
 	public Map<String, External> exMap = new HashMap<String, External>();
 
     //  / sv, ts, and dv, includeFile list
-	public ArrayList<String> svTsDvFileList = new ArrayList<String>();
+	//public ArrayList<String> svTsDvFileList = new ArrayList<String>();
 	
     //  / sv, ts, and dv list	
-	public ArrayList<String> svTsDvList = new ArrayList<String>();	
+	//public ArrayList<String> svTsDvList = new ArrayList<String>();	
     
 	//  / sv and ts list
-	public ArrayList<String> svTsList = new ArrayList<String>();	
+	//public ArrayList<String> svTsList = new ArrayList<String>();	
 	
 	
 	// / svar timeseries data structure
@@ -367,8 +367,8 @@ public class SimulationDataSet {
 	
 	public SimulationDataSet remove(SimulationDataSet s) {
 		
-		if (!s.svTsDvList.isEmpty()) this.svTsDvList.removeAll(s.svTsDvList);
-		if (!s.svTsList.isEmpty()) this.svTsList.removeAll(s.svTsList);
+//		if (!s.svTsDvList.isEmpty()) this.svTsDvList.removeAll(s.svTsDvList);
+//		if (!s.svTsList.isEmpty()) this.svTsList.removeAll(s.svTsList);
 		
 		if (!s.wtList.isEmpty()) {
 			this.wtList.removeAll(s.wtList);
@@ -445,8 +445,8 @@ public class SimulationDataSet {
 	
 	public SimulationDataSet add(SimulationDataSet s) {
 
-		if (!s.svTsDvList.isEmpty()) this.svTsDvList.addAll(s.svTsDvList);
-		if (!s.svTsList.isEmpty()) this.svTsList.addAll(s.svTsList);
+//		if (!s.svTsDvList.isEmpty()) this.svTsDvList.addAll(s.svTsDvList);
+//		if (!s.svTsList.isEmpty()) this.svTsList.addAll(s.svTsList);
 		
 		if (!s.wtList.isEmpty()) {
 			this.wtList.addAll(s.wtList);
@@ -567,7 +567,7 @@ public class SimulationDataSet {
 		
 		for (String childFile : t1Map.get(nodeFile)) {
 			
-			System.out.println(" child file is: "+ childFile +" from node: " + nodeFile);
+			//System.out.println(" child file is: "+ childFile +" from node: " + nodeFile);
 						
 			if (t1Map.get(childFile)!=null)  this.addChildren(childFile, t1Map, fileDataMap);
 			
@@ -587,8 +587,8 @@ public class SimulationDataSet {
 
 	public SimulationDataSet insert(SimulationDataSet s) {
 	
-		if (!s.svTsDvList.isEmpty()) this.svTsDvList.addAll(0,s.svTsDvList);
-		if (!s.svTsList.isEmpty()) this.svTsList.addAll(0,s.svTsList);
+//		if (!s.svTsDvList.isEmpty()) this.svTsDvList.addAll(0,s.svTsDvList);
+//		if (!s.svTsList.isEmpty()) this.svTsList.addAll(0,s.svTsList);
 		
 		if (!s.wtList.isEmpty()) {
 			this.wtList.addAll(0,s.wtList);

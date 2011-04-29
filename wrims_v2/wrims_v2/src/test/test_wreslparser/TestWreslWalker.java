@@ -65,7 +65,7 @@ public class TestWreslWalker {
 			
 		String fileText = Tools.readFileAsString(logFilePath);	
 		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
-		Assert.assertEquals(totalErrs, 0);
+		Assert.assertEquals(totalErrs, 1);
 		
 		int incFiles = RegUtils.timesOfMatches(fileText, "Include total 2 files:");
 		Assert.assertEquals(incFiles, 1);

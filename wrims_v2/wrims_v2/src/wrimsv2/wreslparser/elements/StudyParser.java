@@ -12,7 +12,6 @@ import org.antlr.runtime.RecognitionException;
 
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
-import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.grammar.WreslTreeWalker;
@@ -35,8 +34,8 @@ public class StudyParser {
 			SimulationDataSet ds = td.model_dataset_map.get(modelName);
 			ModelDataSet thisModelDataSet = new ModelDataSet();
 
-			thisModelDataSet.svTsDvList = ds.svTsDvList; 
-			thisModelDataSet.svTsList = ds.svTsList; 
+//			thisModelDataSet.svTsDvList = ds.svTsDvList; 
+//			thisModelDataSet.svTsList = ds.svTsList; 
 			
 			thisModelDataSet.dvList = ds.dvList; 
 			thisModelDataSet.dvList_global = ds.dvList_global; 
@@ -175,8 +174,7 @@ public class StudyParser {
 			
 			/// include global data
 			/// previous globals have lowest priority /TODO: remove reverse map
-			System.out.println(" globals in common :"+td.cumulative_global_complete.gSet_global );
-			System.out.println(" globals in model before :"+model_dataset.gSet_global );
+
 	
 			///  a working route for overwrite_set
 			///////////////////////////////////////////////////////////
@@ -186,7 +184,7 @@ public class StudyParser {
 			model_dataset = e;
 			////////////////////////////////////////////////////////////
 			
-			System.out.println(" globals in model after :"+model_dataset.gSet_global );			
+			//System.out.println(" globals in model after :"+model_dataset.gSet_global );			
 
 			
 			//LogUtils.normalMsg("========== Finish cumulative globals prioritization =========== ");
@@ -210,7 +208,7 @@ public class StudyParser {
 			
 			model_dataset.svList = sortedSvList;
 			model_dataset.svList.addAll(model_dataset.svSet_unknown);
-			System.out.println("svList: " +model_dataset.svList);
+			//System.out.println("svList: " +model_dataset.svList);
 			
 			/// sort asList based on dependents excluding svSet and tsSet
 			Sort sortAs = new Sort(model_dataset.asMap, model_dataset.svSet, model_dataset.dvSet, model_dataset.tsSet);
@@ -221,7 +219,7 @@ public class StudyParser {
 			
 			model_dataset.asList = sortedAsList;
 			model_dataset.asList.addAll(model_dataset.asSet_unknown);
-			System.out.println("asList: " +model_dataset.asList);		    
+			//System.out.println("asList: " +model_dataset.asList);		    
 			
 			// assemble whole map
 			model_dataset_map.put(modelName, model_dataset);
@@ -246,7 +244,7 @@ public class StudyParser {
 			
 			if (fileDataMap_wholeStudy_keySet.contains(f))  {
 				
-				LogUtils.importantMsg("....Skip file: "+f);				
+				//LogUtils.importantMsg("....Skip file: "+f);				
 			} 
 			else { /// new file
 				Map<String, SimulationDataSet> each = FileParser.processNestedFileExceptFor(f,fileDataMap_wholeStudy_keySet);
@@ -337,7 +335,7 @@ public class StudyParser {
 			//LogUtils.normalMsg("========== Prioritize adhoc =========== ");
 			//model_dataset.prioritize_append(adhoc, absMainFilePath, t1ReverseMap);
 			model_dataset.overwrittenWith_set(adhoc);
-			LogUtils.normalMsg("========== Finish adhoc prioritization =========== ");
+			//LogUtils.normalMsg("========== Finish adhoc prioritization =========== ");
 //---------------------------------------------------------------------------------------			
 
 		return model_dataset;

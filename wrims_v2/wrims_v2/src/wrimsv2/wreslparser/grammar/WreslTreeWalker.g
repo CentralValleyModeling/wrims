@@ -248,7 +248,7 @@ dvar_std  :
 	
 dvar_nonStd : 
 	   ^(Dvar_nonStd sc=Scope i=IDENT Lower lowerbound=LimitType Upper upperbound=LimitType Kind k=STRING Units u=STRING)
-	   {F.dvarNonStd($i.text, $sc.text, $k.text, $u.text,  $lowerbound.text, $upperbound.text);}
+	   {F.dvarNonStd($i.text, $sc.text, Tools.strip($k.text), Tools.strip($u.text),  $lowerbound.text, $upperbound.text);}
 	;
 			
 	
