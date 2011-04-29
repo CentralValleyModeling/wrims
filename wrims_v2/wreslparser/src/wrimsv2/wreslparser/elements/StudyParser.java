@@ -244,7 +244,7 @@ public class StudyParser {
 			
 			if (fileDataMap_wholeStudy_keySet.contains(f))  {
 				
-				LogUtils.importantMsg("....Skip file: "+f);				
+				//LogUtils.importantMsg("....Skip file: "+f);				
 			} 
 			else { /// new file
 				Map<String, SimulationDataSet> each = FileParser.processNestedFileExceptFor(f,fileDataMap_wholeStudy_keySet);

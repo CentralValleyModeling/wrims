@@ -567,7 +567,7 @@ public class SimulationDataSet {
 		
 		for (String childFile : t1Map.get(nodeFile)) {
 			
-			System.out.println(" child file is: "+ childFile +" from node: " + nodeFile);
+			//System.out.println(" child file is: "+ childFile +" from node: " + nodeFile);
 						
 			if (t1Map.get(childFile)!=null)  this.addChildren(childFile, t1Map, fileDataMap);
 			

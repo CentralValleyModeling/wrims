@@ -71,7 +71,8 @@ public class Sort {
 		}
 		
 		// var depend on unknowns
-		if (varDependentMap.keySet().size()>0)  System.out.println(" ###%%$$ Error: "+ varDependentMap.keySet()); 		
+		if (varDependentMap.keySet().size()>0)  LogUtils.errMsg("Variables with unknown dependants: "+ varDependentMap.keySet()); 
+		
 		
 		// var depend on unknowns
 		return varDependentMap.keySet();
