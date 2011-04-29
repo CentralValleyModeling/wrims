@@ -1,0 +1,33 @@
+
+
+  define as {alias C_SacFea+D_SacFea  kind 'this-is-wrong' units 'cfs'}
+  define ts {timeseries kind 'this-is-wrong' units 'IN'} 
+  define dv {std kind 'this-is-wrong' units 'TAF'} 
+  define dv2 {lower unbounded upper unbounded kind 'this-is-wrong' units 'CFS'}  
+  define sv { value this_is_wrong }  
+  define[local] tab { select target from res_level where res_num=this_is_wrong }	
+  
+  goal gl {
+  lhs C3_M
+  case ActionOn {
+    condition  this-is-wrong>0
+    rhs     minflow_C
+    lhs>rhs     constrain
+    lhs<rhs     penalty 700. }
+  case ActionOff {
+    condition   x==2.3.or.month==Apr.or. month==Jun
+    rhs     clear_min
+    lhs>rhs     constrain
+    lhs<rhs     penalty 0 }
+  }
+
+  define sv2 {
+	case MAR_SEP {
+                condition       this_is_wrong>0
+                sum(i=-(month-MAY),SEP-month)  I_Folsm(i)*cfs_taf(i) + I300(i)*cfs_taf(i) }  ! sum of the may to sep inflow , changed to always be mar to may
+	case other {
+		condition		always
+		value   		MIN(Max( I_Folsm(i),200),I300(i))  }
+  }  
+  
+  

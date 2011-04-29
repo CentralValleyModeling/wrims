@@ -63,7 +63,7 @@ public class TestWreslWalker_dvar {
 		String s;
 		int n;
 	
-		s ="dvar_global,- 99999,999999,n,'cfs','channel'";
+		s ="dvar_global,- 99999,999999,n,cfs,channel";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);

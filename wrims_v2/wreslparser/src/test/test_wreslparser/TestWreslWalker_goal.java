@@ -272,12 +272,6 @@ public class TestWreslWalker_goal {
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 		Assert.assertEquals(totalErrs, 0);	
 		
-	
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
-		
-		String s;
-		int n;
-	
 
 		
 		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).gList_global.get(0),"global_goal" );

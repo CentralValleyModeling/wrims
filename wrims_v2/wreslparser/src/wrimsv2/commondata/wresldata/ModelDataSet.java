@@ -23,11 +23,11 @@ public class ModelDataSet {
 	public Map<String, External> exMap = new HashMap<String, External>();
 	
 	
-    //  / sv, ts, and dv list
-	public ArrayList<String> svTsDvList = new ArrayList<String>();	
-	
-	//  / sv and ts list
-	public ArrayList<String> svTsList = new ArrayList<String>();
+//    //  / sv, ts, and dv list
+//	public ArrayList<String> svTsDvList = new ArrayList<String>();	
+//	
+//	//  / sv and ts list
+//	public ArrayList<String> svTsList = new ArrayList<String>();
 	
 	// / svar timeseries data structure
 	public ArrayList<String> tsList = new ArrayList<String>();

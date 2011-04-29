@@ -24,10 +24,10 @@ public class TestWreslWalker_error {
 	public String logFilePath;	
 	public String csvFolderPath;	
 	
-	@Test(groups = { "WRESL_error" })
-	public void simple() throws RecognitionException, IOException {
+	@Test(groups = { "WRESL_elements" })
+	public void redefine2() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_error_redefine";
+		csvFolderPath = "TestWreslWalker_error_redefine2";
 		inputFilePath = projectPath+csvFolderPath+".wresl";
 		logFilePath = csvFolderPath+".log";
 
@@ -48,9 +48,9 @@ public class TestWreslWalker_error {
 
 		LogUtils.closeLogFile();
 		
-		String modelName = sd.getModelList().get(0);
+		String modelName = sd.getModelList().get(1);
 		
-		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		WriteCSV.study(sd,csvFolderPath ) ;
 	
 		String logText = Tools.readFileAsString(logFilePath);	
 
@@ -59,8 +59,62 @@ public class TestWreslWalker_error {
 		
 
 		
-//		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).gList_global.get(0),"split_C5_WTS" );
-//		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).gList_local.get(0),"a2" );
+		Assert.assertEquals(sd.getModelDataSetMap().get("second").tsMap.get("ts").kind,"second-model-only" );
+		Assert.assertEquals(sd.getModelDataSetMap().get("second").svMap.get("sv").caseExpression.get(0),"second_model_only" );
+		Assert.assertEquals(sd.getModelDataSetMap().get("second").svMap.get("sv2").caseCondition.get(0),"second-mmodel-only>0" );
+		Assert.assertEquals(sd.getModelDataSetMap().get("second").dvMap.get("dv").kind,"second-model-only" );
+		Assert.assertEquals(sd.getModelDataSetMap().get("second").dvMap.get("dv2").kind,"second-model-only" );
+		Assert.assertEquals(sd.getModelDataSetMap().get("second").asMap.get("as").kind,"second-model-only" );
+		Assert.assertEquals(sd.getModelDataSetMap().get("second").gMap.get("gl").caseCondition.get(0),"second-mmodel-only>0" );
+		Assert.assertEquals(sd.getModelDataSetMap().get("second").svMap.get("tab").dependants.toString(),"[second_model_only]" );
+		//		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).gList_local.get(0),"a2" );
 
+	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void redefine() throws RecognitionException, IOException {
+		
+		csvFolderPath = "TestWreslWalker_error_redefine";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		String modelName = sd.getModelList().get(1);
+		
+		WriteCSV.study(sd,csvFolderPath ) ;
+	
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 8);	
+		
+	
+		
+		Assert.assertEquals(sd.getModelDataSetMap().get("second").tsMap.get("ts").kind,"second-model-only" );
+		Assert.assertEquals(sd.getModelDataSetMap().get("second").svMap.get("sv").caseExpression.get(0),"second_model_only" );
+		Assert.assertEquals(sd.getModelDataSetMap().get("second").svMap.get("sv2").caseCondition.get(0),"second-mmodel-only>0" );
+		Assert.assertEquals(sd.getModelDataSetMap().get("second").dvMap.get("dv").kind,"second-model-only" );
+		Assert.assertEquals(sd.getModelDataSetMap().get("second").dvMap.get("dv2").kind,"second-model-only" );
+		Assert.assertEquals(sd.getModelDataSetMap().get("second").asMap.get("as").kind,"second-model-only" );
+		Assert.assertEquals(sd.getModelDataSetMap().get("second").gMap.get("gl").caseCondition.get(0),"second-mmodel-only>0" );
+		Assert.assertEquals(sd.getModelDataSetMap().get("second").svMap.get("tab").dependants.toString(),"[second_model_only]" );
+		//		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).gList_local.get(0),"a2" );
+	
 	}	
 }

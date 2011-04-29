@@ -85,7 +85,7 @@ public class Sort {
 		
 		for ( Map.Entry<String, Set<String>>  e : varDependentMap.entrySet() ) {
 			
-			System.out.println(" *** before: " + e.getKey());
+			//System.out.println(" *** before: " + e.getKey());
 			
 			if (e.getValue().size()==0) {
 				

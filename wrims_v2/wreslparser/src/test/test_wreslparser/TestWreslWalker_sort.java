@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.antlr.runtime.RecognitionException;
@@ -63,8 +62,6 @@ public class TestWreslWalker_sort {
 		Assert.assertEquals(totalErrs, 0);		
 		
 		Set<String> s;
-		Set<String> e;
-		
 		
 		s = sd.getModelDataSetMap().get(modelName).svMap.get("value_1").dependants;		
 		Assert.assertEquals(s.size(),1);

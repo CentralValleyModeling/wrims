@@ -4,6 +4,7 @@
  INCLUDE 'TestWreslWalker_dvarStd.wresl'
   INCLUDE[local] '\moreWreslFiles\TestWreslWalker_dvarNonStd.wresl'
  define AA {std kind 'FLOW-CHANNEL' units 'TAF'}  
+  define AA {std kind 'FLOW-CHANNEL' units 'TAF'}  
  define[local] BB {std kind 'FLOW-CHANNEL' units 'TAF'}   
 	
 
