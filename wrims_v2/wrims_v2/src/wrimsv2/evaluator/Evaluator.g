@@ -75,6 +75,7 @@ expressionCollection returns [EvalExpression ee]
 	|(timeseriesWithUnits)
 	|((timeseries){ee=$timeseries.ee;})
 	|(sumExpression{ee=$sumExpression.ee;}))
+	|(UNBOUNDED{ee=new EvalExpression(new IntDouble(1e38,true));})
 	;
 
 func returns[EvalExpression ee]: 
@@ -145,7 +146,7 @@ partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
 usedKeywords: YEAR|MONTH|MONTH_CONST|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|ABS|LOG|LOG10|POW|MOD|SELECT|FROM|GIVEN|USE|WHERE
 |CONSTRAIN|ALWAYS|NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
-|CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE;
+|CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE|UNBOUNDED;
 
 tableSQL returns [EvalExpression ee] @init{String table=null; String select=null; String use=null; HashMap<String, Number> given=null; HashMap<String, Number> where=null;}
 	: SELECT ((i1=IDENT{select=$i1.text;})|(u1=usedKeywords{select=$u1.text;})) FROM i2=IDENT{table=$i2.text;} 
@@ -362,6 +363,7 @@ LHSLTRHS: 'lhs_lt_rhs';
 WEIGHT: 'weight';
 FUNCTION: 'function';
 FROM_WRESL_FILE: 'from_wresl_file';
+UNBOUNDED: 'unbounded';
 
 SVAR: '{' IDENT '}';
 IDENT : LETTER (LETTER | DIGIT | SYMBOLS )*;

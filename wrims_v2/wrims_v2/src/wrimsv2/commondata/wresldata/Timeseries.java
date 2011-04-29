@@ -1,5 +1,7 @@
 package wrimsv2.commondata.wresldata;
 
+import wrimsv2.evaluator.IntDouble;
+
 
 public class Timeseries {
 	
@@ -10,7 +12,7 @@ public class Timeseries {
 	public String units;
 	public String convertToUnits;
 	public String fromWresl;
-	private Number value;
+	private IntDouble data;
 	
 	public Timeseries(){
 		scope=Param.undefined;
@@ -53,12 +55,12 @@ public class Timeseries {
 		}
 	}
 	
-	public void setValue(Number value){
-		this.value=value;
+	public void setData(IntDouble data){
+		this.data=data;
 	}
 	
-	public Number getValue(){
-		return value;
+	public IntDouble getData(){
+		return data;
 	}
 }
 	

@@ -117,12 +117,12 @@ public class Evaluation {
 	public static EvalExpression term_IDENT (String ident){
 		if (ControlData.currSvMap.containsKey(ident)){
 			EvalExpression ee=new EvalExpression();
-			IntDouble id0 = new IntDouble (ControlData.currSvMap.get(ident).getValue(), true);
+			IntDouble id0 = ControlData.currSvMap.get(ident).getData();
 			ee.setValue(id0);
 			return ee;
 		}else if (ControlData.currTsMap.containsKey(ident)){
 			EvalExpression ee=new EvalExpression();
-			IntDouble id0 = new IntDouble (ControlData.currTsMap.get(ident).getValue(), true);
+			IntDouble id0 = ControlData.currTsMap.get(ident).getData();
 			ee.setValue(id0);
 			return ee;
 		}
@@ -136,32 +136,25 @@ public class Evaluation {
 	}
 	
 	public static EvalExpression term_SVAR (String ident){
-		Number value;
+		IntDouble data;
 		if (!ControlData.currSvMap.containsKey(ident)){
 			if (!ControlData.currTsMap.containsKey(ident)){
 				Error.addEvaluationError("State variable "+ident+" is not defined before used.");
 				IntDouble id=new IntDouble(1.0, false);
 				return new EvalExpression(id);
 			}else{
-				value=ControlData.currTsMap.get(ident).getValue();
+				data=ControlData.currTsMap.get(ident).getData();
 			}
 		}else{
-			value=ControlData.currSvMap.get(ident).getValue();
+			data=ControlData.currSvMap.get(ident).getData();
 		}
 		
-		if (value == null){
+		if (data == null){
 			Error.addEvaluationError("The value of state variable "+ident+" is not defined before used.");
 			IntDouble id=new IntDouble(1.0, false);
 			return new EvalExpression(id);
 		}
-		String valueString=value.toString();
-		try {
-			IntDouble id =new IntDouble (Integer.parseInt(valueString), true);
-			return new EvalExpression(id);
-		}catch (Exception e){
-			IntDouble id = new IntDouble(Double.parseDouble(valueString), false);
-			return new EvalExpression(id);
-		}
+		return new EvalExpression(data);
 	}
 	
 	public static EvalExpression term_INTEGER (String integer){
@@ -480,7 +473,7 @@ public class Evaluation {
 			if (isIndexStart){
 				TimeOperation.findTime(indexValue);
 			}else{
-				result=new IntDouble (0.0,false);
+				result=new IntDouble (1.0,false);
 				return result;
 			}
 		}else{
@@ -619,20 +612,18 @@ public class Evaluation {
 	
 	public static IntDouble pastCycleDV(String ident, String cycle){
 		ModelDataSet mds=ControlData.currStudyDataSet.getModelDataSetMap().get(cycle);
-		Number value=1.0;
+		IntDouble data=new IntDouble(1.0,false);
 		if (mds.dvMap.containsKey(ident)){
-			value= mds.dvMap.get(ident).getValue();
+			data= mds.dvMap.get(ident).getData();
 		}else if(mds.asMap.containsKey(ident)){
-			value=mds.asMap.get(ident).getValue();
+			data=mds.asMap.get(ident).getData();
 		}else if(mds.svList.contains(ident)){
-			value=mds.svMap.get(ident).getValue();
+			data=mds.svMap.get(ident).getData();
 		}else{
 			Error.addEvaluationError("The variable "+ident+" is not defined in the past cycle of "+cycle+".");
-			IntDouble result=new IntDouble(value,false);
-			return result;
+			return data;
 		}
-		IntDouble result=new IntDouble(value,false);
-		return result;
+		return data;
 	}
 	
 	public static EvalExpression max(EvalExpression ee1, EvalExpression ee2){
@@ -776,10 +767,25 @@ public class Evaluation {
 			ControlData.dataMonth=ControlData.currMonth;
 			ControlData.dataYear=ControlData.dataYear;
 		}else{
+			IntDouble id=new IntDouble(0,true);
 			if (!ee.isNumeric()){
-				Error.addEvaluationError("The index of "+ident+" should not contain decision variable.");
+				HashMap<String, IntDouble> multiplier=ee.getMultiplier();
+				if (multiplier.size()==1){
+					if (ControlData.sumIndex.size()>0){
+						LoopIndex li=ControlData.sumIndex.pop();
+						String indexName=li.getName();
+						int indexValue=li.getValue();
+						ControlData.sumIndex.push(li);
+						id=new IntDouble(indexValue, true);
+					}else{
+						Error.addEvaluationError("The index of "+ident+" should not contain decision variable.");
+					}
+				}else{
+					Error.addEvaluationError("The index of "+ident+" should not contain decision variable.");
+				}
+			}else{
+				id=ee.getValue();
 			}
-			IntDouble id=ee.getValue();
 			if (!id.isInt()){
 				Error.addEvaluationError("The index of "+ident+" should be integer.");
 			}

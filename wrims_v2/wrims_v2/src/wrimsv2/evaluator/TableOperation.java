@@ -84,7 +84,7 @@ public class TableOperation {
 			    			in.close();
 			    			return true;
 			    		}
-				    	Error.addEvaluationError("The number of data in the table "+name+" line"+line+" doesn't agree with the number of the field");
+				    	Error.addEvaluationError("The number of data in the table "+name+" line "+line+" doesn't agree with the number of the field");
 				    	in.close();
 				    	return false;
 			    	}
@@ -187,10 +187,12 @@ public class TableOperation {
 		}
 		
 		Number[] values=new Number[fieldSize];
+		Number[] pastValues=new Number[fieldSize];
 		int i=-1;
 		while (i<data.size()-1 && !whereTrue){
 			i++;
 			values=data.get(i);
+			pastValues=values;
 			boolean eachWhereTrue=true;
 			k=-1;
 			while (k<whereSize-1 && eachWhereTrue){
@@ -253,13 +255,13 @@ public class TableOperation {
 					return generateIntDouble(valueString);
 				}
 				if ((givenValue.doubleValue()-newValues[givenIndex].doubleValue())*(givenValue.doubleValue()-values[givenIndex].doubleValue())<0){  
-					if (use.equals("max")){
+					if (use.equals("maximum")){
 						if (newValues[givenIndex].doubleValue()>values[givenIndex].doubleValue()){
 							valueString=newValues[selectIndex].toString();
 						}else{
 							valueString=values[selectIndex].toString();
 						}
-					}else if (use.equals("min")){
+					}else if (use.equals("minimum")){
 						if (newValues[givenIndex].doubleValue()<values[givenIndex].doubleValue()){
 							valueString=newValues[selectIndex].toString();
 						}else{
@@ -270,14 +272,38 @@ public class TableOperation {
 							*(newValues[selectIndex].doubleValue()-values[selectIndex].doubleValue())+values[selectIndex].doubleValue());
 						return new IntDouble(value, false);
 					}else{
-						Error.addEvaluationError("Use statement can only be max, min, or linear in Table"+table);
+						Error.addEvaluationError("Use statement can only be maximum, minimum, or linear in Table"+table);
 						return new IntDouble(1.0,false);
 					}
 					return generateIntDouble(valueString);
 				}
+				pastValues=values;
 				values=newValues;
 			}
 		}
+		
+		if ((givenValue.doubleValue()>pastValues[givenIndex].doubleValue()) && (givenValue.doubleValue()>values[givenIndex].doubleValue())){
+			if (pastValues[givenIndex].doubleValue()<values[givenIndex].doubleValue()){
+				value=(givenValue.doubleValue()-values[givenIndex].doubleValue())/(values[givenIndex].doubleValue()-pastValues[givenIndex].doubleValue())
+				*(values[selectIndex].doubleValue()-pastValues[selectIndex].doubleValue())+values[selectIndex].doubleValue();
+				return new IntDouble(value,false);
+			}else if (pastValues[givenIndex].doubleValue()>values[givenIndex].doubleValue()){
+				value=(givenValue.doubleValue()-pastValues[givenIndex].doubleValue())/(pastValues[givenIndex].doubleValue()-values[givenIndex].doubleValue())
+				*(pastValues[selectIndex].doubleValue()-values[selectIndex].doubleValue())+values[selectIndex].doubleValue();
+				return new IntDouble(value,false);
+			}
+		}else if((givenValue.doubleValue()<pastValues[givenIndex].doubleValue()) && (givenValue.doubleValue()<values[givenIndex].doubleValue())){
+			if (pastValues[givenIndex].doubleValue()>values[givenIndex].doubleValue()){
+				value=(givenValue.doubleValue()-values[givenIndex].doubleValue())/(values[givenIndex].doubleValue()-pastValues[givenIndex].doubleValue())
+				*(values[selectIndex].doubleValue()-pastValues[selectIndex].doubleValue())+values[selectIndex].doubleValue();
+				return new IntDouble(value,false);
+			}else if (pastValues[givenIndex].doubleValue()<values[givenIndex].doubleValue()){
+				value=(givenValue.doubleValue()-pastValues[givenIndex].doubleValue())/(pastValues[givenIndex].doubleValue()-values[givenIndex].doubleValue())
+				*(pastValues[selectIndex].doubleValue()-values[selectIndex].doubleValue())+values[selectIndex].doubleValue();
+				return new IntDouble(value,false);
+			}
+		}
+		
 		Error.addEvaluationError("Data not found in Table "+table);
 		return new IntDouble(1.0,false);
 	}
@@ -308,6 +334,7 @@ public class TableOperation {
 		}
 		
 		Number[] values=new Number[fieldSize];
+		Number[] pastValues=new Number[fieldSize];
 
 		int givenIndex;
 		Set givenSet=given.keySet();
@@ -324,6 +351,7 @@ public class TableOperation {
 		Number givenValue=(Number)given.get(givenName);
 		
 		values=data.get(0);	
+		pastValues=values;
 		if (givenValue.doubleValue()==values[givenIndex].doubleValue()){
 			valueString=values[selectIndex].toString();
 			return generateIntDouble(valueString);
@@ -340,13 +368,13 @@ public class TableOperation {
 				return generateIntDouble(valueString);
 			}
 			if ((givenValue.doubleValue()-newValues[givenIndex].doubleValue())*(givenValue.doubleValue()-values[givenIndex].doubleValue())<0){  
-				if (use.equals("max")){
+				if (use.equals("maximum")){
 					if (newValues[givenIndex].doubleValue()>values[givenIndex].doubleValue()){
 						valueString=newValues[selectIndex].toString();
 					}else{
 						valueString=values[selectIndex].toString();
 					}
-				}else if (use.equals("min")){
+				}else if (use.equals("minimum")){
 					if (newValues[givenIndex].doubleValue()<values[givenIndex].doubleValue()){
 						valueString=newValues[selectIndex].toString();
 					}else{
@@ -357,13 +385,37 @@ public class TableOperation {
 							*(newValues[selectIndex].doubleValue()-values[selectIndex].doubleValue())+values[selectIndex].doubleValue());
 					return new IntDouble(value, false);
 				}else{
-					Error.addEvaluationError("Use statement can only be max, min, or linear in Table"+table);
+					Error.addEvaluationError("Use statement can only be maximum, minimum, or linear in Table"+table);
 					return new IntDouble(1.0,false);
 				}
 				return generateIntDouble(valueString);
 			}
 			values=newValues;
+			pastValues=values;
 		}
+		
+		if ((givenValue.doubleValue()>pastValues[givenIndex].doubleValue()) && (givenValue.doubleValue()>values[givenIndex].doubleValue())){
+			if (pastValues[givenIndex].doubleValue()<values[givenIndex].doubleValue()){
+				double value=(givenValue.doubleValue()-values[givenIndex].doubleValue())/(values[givenIndex].doubleValue()-pastValues[givenIndex].doubleValue())
+				*(values[selectIndex].doubleValue()-pastValues[selectIndex].doubleValue())+values[selectIndex].doubleValue();
+				return new IntDouble(value,false);
+			}else if (pastValues[givenIndex].doubleValue()>values[givenIndex].doubleValue()){
+				double value=(givenValue.doubleValue()-pastValues[givenIndex].doubleValue())/(pastValues[givenIndex].doubleValue()-values[givenIndex].doubleValue())
+				*(pastValues[selectIndex].doubleValue()-values[selectIndex].doubleValue())+values[selectIndex].doubleValue();
+				return new IntDouble(value,false);
+			}
+		}else if((givenValue.doubleValue()<pastValues[givenIndex].doubleValue()) && (givenValue.doubleValue()<values[givenIndex].doubleValue())){
+			if (pastValues[givenIndex].doubleValue()>values[givenIndex].doubleValue()){
+				double value=(givenValue.doubleValue()-values[givenIndex].doubleValue())/(values[givenIndex].doubleValue()-pastValues[givenIndex].doubleValue())
+				*(values[selectIndex].doubleValue()-pastValues[selectIndex].doubleValue())+values[selectIndex].doubleValue();
+				return new IntDouble(value,false);
+			}else if (pastValues[givenIndex].doubleValue()<values[givenIndex].doubleValue()){
+				double value=(givenValue.doubleValue()-pastValues[givenIndex].doubleValue())/(pastValues[givenIndex].doubleValue()-values[givenIndex].doubleValue())
+				*(pastValues[selectIndex].doubleValue()-values[selectIndex].doubleValue())+values[selectIndex].doubleValue();
+				return new IntDouble(value,false);
+			}
+		}
+		
 		Error.addEvaluationError("Data not found in Table "+table);
 		return new IntDouble(1.0,false);
 	}

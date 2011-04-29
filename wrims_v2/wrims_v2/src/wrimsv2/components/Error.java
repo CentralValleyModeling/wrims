@@ -57,7 +57,7 @@ public class Error {
 		}else if (ControlData.currEvalTypeIndex==6){
 			error_evaluation.add(ControlData.currEvalName+" in timeseries reading: "+error);
 		}
-		System.out.println(ControlData.currEvalName+":"+error);
+		System.out.println("Error-"+ControlData.currEvalName+":"+error);
 	}
 }
 

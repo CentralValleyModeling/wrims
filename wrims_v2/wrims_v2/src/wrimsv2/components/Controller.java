@@ -27,6 +27,7 @@ import wrimsv2.evaluator.EvalExpression;
 import wrimsv2.evaluator.Evaluation;
 import wrimsv2.evaluator.EvaluatorLexer;
 import wrimsv2.evaluator.EvaluatorParser;
+import wrimsv2.evaluator.IntDouble;
 import wrimsv2.external.LoadAllDll;
 
 public class Controller {
@@ -41,7 +42,7 @@ public class Controller {
 		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
 		ControlData.allTsMap=sds.getTimeseriesMap();
 		readTimeseries();
-		for (int i=0; i<modelList.size(); i++){
+		for (int i=0; i<modelList.size(); i++){  
 			String model=modelList.get(i);
 			ModelDataSet mds=modelDataSetMap.get(model);
 			ControlData.currModelDataSet=mds;
@@ -144,10 +145,7 @@ public class Controller {
 			}
 			if (condition){
 				String evalString="v: "+svar.caseExpression.get(i);
-				if (svName.equals("cvp_targ")){
-					int x=0;
-				}
-				if (svName.equals("transfersyear")){
+				if (svName.equals("")){
 					int x=0;
 				}
 				ANTLRStringStream stream = new ANTLRStringStream(evalString);
@@ -156,14 +154,14 @@ public class Controller {
 				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
 				try {
 					evaluator.evaluator();
-					svar.setValue(evaluator.evalValue.getData());
+					svar.setData(evaluator.evalValue);
 				} catch (RecognitionException e) {
 					Error.addEvaluationError("Case expression evaluation has error.");
-					svar.setValue(0);
+					svar.setData(new IntDouble(1.0, false));
 				}
 			}else{
 				Error.addEvaluationError("None of the case conditions is satisfied.");
-				svar.setValue(0);
+				svar.setData(new IntDouble(1.0, false));
 			}
 		}
 	}
@@ -175,9 +173,9 @@ public class Controller {
 		ControlData.currEvalTypeIndex=5;
 		for (String tsName:tsList){
 			ControlData.currEvalName=tsName;
-			System.out.println("process timesereis"+tsName);
+			System.out.println("process timesereis "+tsName);
 			Timeseries ts=tsMap.get(tsName);
-			ts.setValue(Evaluation.timeseries(tsName));
+			ts.setData(new IntDouble(Evaluation.timeseries(tsName),false));
 		}
 	}
 	
@@ -238,10 +236,10 @@ public class Controller {
 			EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
 			try {
 				evaluator.evaluator();
-				alias.value=evaluator.evalValue.getData();
+				alias.data=evaluator.evalValue;
 			} catch (RecognitionException e) {
 				Error.addEvaluationError("Alias evaluation has error.");
-				alias.value=-901.0;
+				alias.data=new IntDouble(-901.0,false);
 			}
 		}
 	}

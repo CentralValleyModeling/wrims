@@ -1,5 +1,7 @@
 package wrimsv2.commondata.wresldata;
 
+import wrimsv2.evaluator.IntDouble;
+
 
 public class Dvar {
 	
@@ -11,7 +13,7 @@ public class Dvar {
 	public String lowerBound;
 	public String upperBound;
 	public String fromWresl;
-	public Number value;
+	public IntDouble data;
 	public Number upperBoundValue;
 	public Number lowerBoundValue;
 	
@@ -55,12 +57,12 @@ public class Dvar {
 		}
 	}
 	
-	public void setValue(Number value){
-		this.value=value;
+	public void setData(IntDouble data){
+		this.data=data;
 	}
 	
-	public Number getValue(){
-		return value;
+	public IntDouble getData(){
+		return data;
 	}
 }
 	
