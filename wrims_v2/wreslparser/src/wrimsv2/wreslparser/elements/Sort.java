@@ -29,6 +29,16 @@ public class Sort {
 	
 	// NextGroup : recursive
 
+	public Sort(Map<String, SimulationDataSet> file_data_map ){
+		
+		varDependentMap = new HashMap<String, Set<String>>();
+		
+		for (Map.Entry<String, SimulationDataSet> e: file_data_map.entrySet()){
+			
+			Set<String> d = e.getValue().incFileSet;
+			varDependentMap.put(e.getKey(), d);
+		}	
+	}
 
 	public Sort(Map<String, Svar> in_svMap, Set<String>tsSet){
 	
@@ -59,7 +69,7 @@ public class Sort {
 		toBeSortedList.clear();
 		
 		// get first group
-		toBeSortedList.addAll(getSvGroup1());
+		toBeSortedList.addAll(getGroup1());
 		
 		// recursive
 		while (getNextGroup(outSet)) {
@@ -80,7 +90,7 @@ public class Sort {
 	
   
 	// Group 1 : dependant.size ==0 
-	private Set<String> getSvGroup1() {
+	private Set<String> getGroup1() {
 		
 		Set<String> out = new HashSet<String>();
 		

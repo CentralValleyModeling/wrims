@@ -20,6 +20,9 @@ public class SimulationDataSet {
 	public String currentAbsolutePath;
 	public String currentAbsoluteParent;
 
+	
+	// / total errors
+	public int errors_total=0;
 
 	// / models appear in this parsed file
 	public ArrayList<String> model_list = new ArrayList<String>();
@@ -57,7 +60,13 @@ public class SimulationDataSet {
 	public Map<String, IncludeFile> incFileMap = new HashMap<String, IncludeFile>();
 	public ArrayList<String> error_includeFile_redefined = new ArrayList<String>();
 
-	// / svar, dvar, alias, !!! Not including goal
+	// / svar, dvar, alias, goal, and include files
+	public ArrayList<String> ordered_list_including_files = new ArrayList<String>();
+	public ArrayList<String> ordered_list = new ArrayList<String>();
+	
+	public ArrayList<String> ordered_list_including_files_global = new ArrayList<String>();
+	public ArrayList<String> ordered_list_global = new ArrayList<String>();
+	
 	public Map<String, String> var_all = new HashMap<String, String>();
 	public Map<String, String> error_var_redefined = new HashMap<String, String>();
 
@@ -126,7 +135,6 @@ public class SimulationDataSet {
 	public ArrayList<String> gList_global = new ArrayList<String>();
 	public ArrayList<String> gList_local = new ArrayList<String>();
 	public Map<String, Goal> gMap = new HashMap<String, Goal>();
-	public Map<String, String> error_goal_redefined = new HashMap<String, String>();
 
 
 

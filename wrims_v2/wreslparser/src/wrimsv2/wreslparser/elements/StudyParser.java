@@ -156,6 +156,26 @@ public class StudyParser {
 			/// copy file data map from updated whole study to this model
 			Map<String,SimulationDataSet> fileDataMap_thisModel = copyDataSetToThisModel(adhoc.incFileSet, td.fileDataMap_wholeStudy);
 			
+		    /// compile order list
+			// ArrayList<String> vars = getOrderedList( adhoc, fileDataMap_thisModel);
+						
+			/// sort incFileList based on file dependents 
+			Sort sortFile = new Sort(fileDataMap_thisModel);
+			
+			ArrayList<String> sortedFileList = new ArrayList<String>();
+
+			sortFile.sort(sortedFileList);		
+
+			System.out.println(" QQQQQQQQQQQQ Sorted file list:  ");
+			for (String wer: sortedFileList){
+				System.out.println(wer);	
+			}
+			System.out.println(" QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
+			
+			// compile order list
+			// TODO:
+			
+			
 			
 			/// correct scope and prioritize
 			SimulationDataSet model_dataset = correctScopeAndPrioritize(modelName,
@@ -165,7 +185,7 @@ public class StudyParser {
 														td.fileDataMap_wholeStudy,  
 														td.t1Map_wholeStudy,        
 														td.fileScopeMap_wholeStudy
-														);
+											  );
 			
 			/// get whole study reverse map / TODO: not needed for global because source file is the same
 			td.t1Map_wholeStudy.put(sc.absMainFilePath, adhoc.incFileSet);
@@ -176,16 +196,11 @@ public class StudyParser {
 			model_dataset.overwrite_set(td.cumulative_global_complete);
 
 			
-			////////////////////////////////////////////////////////////////
+
 
 			lousyConvert(model_dataset);
-
-			/////////////////////////////////////////////////////////////////////
-			
-			
 			
 		    sortDependency(model_dataset,rewrite_list_based_on_dependency);
-
 			
 			
 			// assemble whole map
@@ -194,6 +209,8 @@ public class StudyParser {
 			/// update/overwrite cumulative globals
 			td.cumulative_global_adhocs.overwrittenWith_set(sc.modelDataMap.get(modelName).getGlobalVars_set());
 			td.cumulative_global_complete.overwrittenWith_set(model_dataset.getGlobalVars_set());	
+			
+			
 			
 			lousyConvert(td.cumulative_global_adhocs);
 			lousyConvert(td.cumulative_global_complete);
@@ -245,7 +262,7 @@ public class StudyParser {
 												Map<String, SimulationDataSet> fileDataMap_wholeStudy,
 												Map<String,Set<String>> t1Map_wholeStudy,
 												Map<String,String> fileScopeMap_wholeStudy
-												)
+									)
 	
 	throws RecognitionException, IOException {
 			
@@ -259,10 +276,10 @@ public class StudyParser {
 			Map<String,Set<String>> t1ReverseMap = Tools.getReverseMap(t1Map);
 
 			//////////////////////////////////////////////////////////////////////////////////////
-			LogUtils.normalMsg(".....Finished fileScopeMap & ReverseMap.");
+			//LogUtils.normalMsg(".....Finished fileScopeMap & ReverseMap.");
 			
-			Map<String,SimulationDataSet> fileDataMap_corrected = new HashMap<String, SimulationDataSet>();
-			fileDataMap_corrected.putAll(fileDataMap_thisModel);			
+			Map<String,SimulationDataSet> fileDataMap_corrected = new HashMap<String, SimulationDataSet>(fileDataMap_thisModel);
+			
 			
 			for (String f : fileDataMap_thisModel.keySet()) {
 
@@ -273,10 +290,8 @@ public class StudyParser {
 //----------------------------------------------------------------------------------		
 			/// prioritize data if redefined			
 			SimulationDataSet model_dataset = new SimulationDataSet();
-			LogUtils.normalMsg("========== Start data prioritization =========== ");	
+			//LogUtils.normalMsg("========== Start data prioritization =========== ");	
 			
-			ArrayList<String> reverseList = new ArrayList<String>(adhoc.incFileList); 
-			Collections.reverse(reverseList);
 			
 			/// for kids
 			for (String f : adhoc.incFileList) {
@@ -301,6 +316,7 @@ public class StudyParser {
 		
 		boolean OK = true;
 		Set<String> var_with_unknown;
+
 		
 		/// sort svList based on dependents excluding tsSet
 		Sort sortSV = new Sort(model_dataset.svMap, model_dataset.tsSet);
@@ -367,6 +383,45 @@ public class StudyParser {
 		q.incFileList = new ArrayList<String>(q.incFileSet);
 		q.incFileList_global = new ArrayList<String>(q.incFileSet_global);
 		q.incFileList_local = new ArrayList<String>(q.incFileSet_local);
+		
+	}
+
+	public static ArrayList<String> getOrderedListMap(ArrayList<String> mainList, Map<String, SimulationDataSet> file_data_map){
+		
+		
+		Map<String, ArrayList<String>> out = new HashMap<String, ArrayList<String>>();
+		
+		for (String s1 : mainList){
+			ArrayList<String> value = file_data_map.get(s1).ordered_list_including_files;
+			ArrayList<String> incFileList = file_data_map.get(s1).incFileList;
+			
+			if (incFileList.size()>0){
+				for(String s2: incFileList){
+					value.addAll( value.indexOf(s2),file_data_map.get(s1).ordered_list_including_files);
+				
+				
+				}
+			}
+			
+			
+			
+			 
+			// #arrayList.add(1,"INSERTED ELEMENT");
+		}
+		
+		
+		// outList
+		// get incFileList and orderList -> outList = orderList
+		// if incFileList >0, { 
+		//  orderList replace filename with filename.orderList
+	    // }
+		// 
+		
+		
+		
+		
+		
+		return null;
 		
 	}
 

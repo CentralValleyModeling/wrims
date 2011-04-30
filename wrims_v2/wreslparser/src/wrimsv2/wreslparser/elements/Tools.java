@@ -351,8 +351,8 @@ public class Tools {
 
 				if (fileScopeMap.get(upperFile) == Param.local) {
 
-					LogUtils.normalMsg("...Convert this file data to local: " + f );
-					LogUtils.normalMsg("   due to  [local] specification for its parent file: " + upperFile + "\n");
+					//LogUtils.normalMsg("...Convert this file data to local: " + f );
+					//LogUtils.normalMsg("   due to  [local] specification for its parent file: " + upperFile + "\n");
 					
 					ds.convertToLocal_set();
 
