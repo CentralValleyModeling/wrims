@@ -20,9 +20,11 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IMarkerDelta;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -55,6 +57,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 import wrimsv2_plugin.debugger.breakpoint.WPPLineBreakpoint;
@@ -358,21 +361,8 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		if (!isTerminated() && breakpoint.getModelIdentifier().equals(getModelIdentifier())) {
 			try {
 				String program = getLaunch().getLaunchConfiguration().getAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM, (String)null);
-				if (program != null) {
-					IResource resource = null;
-					if (breakpoint instanceof WPPRunToLineBreakpoint) {
-						WPPRunToLineBreakpoint rtl = (WPPRunToLineBreakpoint) breakpoint;
-						resource = rtl.getSourceFile();
-					} else {
-						IMarker marker = breakpoint.getMarker();
-						if (marker != null) {
-							resource = marker.getResource();
-						}
-					}
-					if (resource != null) {
-						IPath p = new Path(program);
-						return resource.getFullPath().equals(p);
-					}
+				if (program.toLowerCase().endsWith(".wresl") || program.toLowerCase().endsWith(".wpp")) {
+					return true;
 				}
 			} catch (CoreException e) {
 				WPPException.handleException(e);
@@ -676,41 +666,24 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			data="i:4456#a(-1):123.0#reservoir:reservorlevel1%56:reservorlevel2%1234";
 			fDataStack=generateTree(data);
 			DebugCorePlugin.dataStack=fDataStack;
-			setSourceName("a.wpp");
 			if (event.contains(":")) {
 				String[] eventPart=event.split(":");
 				setCurrLine(Integer.parseInt(eventPart[1]));
+				setSourceName(eventPart[2]);
 				openSourceHighlight();
-			}else{
-				openSource();
 			}
 		}
 	}
 	
-	public void openSource(){
-		ISourceLocator fLocator =fLaunch.getSourceLocator();
-		result=DebugUITools.lookupSource(this, fLocator);
-		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() { 
-			public void run() { 
-				IWorkbenchPage page=PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-				try {
-					fTextEditor=page.openEditor(result.getEditorInput(), result.getEditorId());
-					IDocument document = ((ITextEditor)fTextEditor).getDocumentProvider().getDocument(fTextEditor.getEditorInput());
-				} catch (Exception e) {
-					WPPException.handleException(e);
-				}
-			} 
-		}); 
-	}
-	
 	public void openSourceHighlight(){
-		ISourceLocator fLocator =fLaunch.getSourceLocator();
-		result=DebugUITools.lookupSource(this, fLocator);
 		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() { 
 			public void run() { 
 				IWorkbenchPage page=PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 				try {
-					fTextEditor=page.openEditor(result.getEditorInput(), result.getEditorId());
+					IPath path = new Path(getSourceName());
+					IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+					FileEditorInput fileEditorInput=new FileEditorInput(file);
+					fTextEditor=page.openEditor(fileEditorInput, DebugCorePlugin.ID_WPP_EDITOR);
 					IDocument document = ((ITextEditor)fTextEditor).getDocumentProvider().getDocument(fTextEditor.getEditorInput());
 					IRegion lineInfo;
 					lineInfo = document.getLineInformation(currLine);

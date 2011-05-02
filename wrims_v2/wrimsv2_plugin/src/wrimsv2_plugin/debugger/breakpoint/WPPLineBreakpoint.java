@@ -108,7 +108,8 @@ public class WPPLineBreakpoint extends LineBreakpoint implements IWPPEventListen
      * @throws CoreException if request creation fails
      */
     protected void createRequest(WPPDebugTarget target) throws CoreException {
-    	target.sendRequest("set:" + (getLineNumber() - 1));
+    	String request="set:" + (getLineNumber() - 1)+":"+this.getMarker().getResource().getFullPath();
+    	target.sendRequest(request);
     }
     
     /**

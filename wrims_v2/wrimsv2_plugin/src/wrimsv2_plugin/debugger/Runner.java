@@ -23,8 +23,9 @@ public class Runner extends Thread {
 			}else{
 				String currIndex=Integer.toString(cd.i);
 				if (cd.breakIndex.contains(currIndex)) {
+					int j=cd.breakIndex.indexOf(currIndex);
 					try {
-						cd.sendEvent("suspended:"+cd.i);
+						cd.sendEvent("suspended:"+cd.i+":"+cd.breakFile.get(j));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}

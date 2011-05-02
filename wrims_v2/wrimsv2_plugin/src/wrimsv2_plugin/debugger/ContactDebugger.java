@@ -22,6 +22,7 @@ public class ContactDebugger {
 	private BufferedReader eventIn;
 	public int pauseIndex=-1;
 	public ArrayList<String> breakIndex=new ArrayList<String>();
+	public ArrayList<String> breakFile=new ArrayList<String>();
 	public int i=-1;
 	private Runner runner;
 	private FileWriter statusFile;
@@ -123,6 +124,7 @@ public class ContactDebugger {
 		}else if (request.startsWith("set")){
 			requestParts=request.split(":");
 			breakIndex.add(requestParts[1]);
+			breakFile.add(requestParts[2]);
 			fileOut.println(requestParts[1]);
 			try {
 				sendRequest("breakpoint setted");
