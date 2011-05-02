@@ -144,6 +144,9 @@ public class Controller {
 				}
 			}
 			if (condition){
+				if (svName.equals("x2_last")){
+					int x=0;
+				}
 				String evalString="v: "+svar.caseExpression.get(i);
 				ANTLRStringStream stream = new ANTLRStringStream(evalString);
 				EvaluatorLexer lexer = new EvaluatorLexer(stream);
@@ -170,7 +173,7 @@ public class Controller {
 		ControlData.currEvalTypeIndex=5;
 		for (String tsName:tsList){
 			ControlData.currEvalName=tsName;
-			System.out.println("process timesereis "+tsName);
+			System.out.println("process timeseries "+tsName);
 			Timeseries ts=tsMap.get(tsName);
 			ts.setData(new IntDouble(Evaluation.timeseries(tsName),false));
 		}

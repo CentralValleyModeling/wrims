@@ -288,7 +288,6 @@ public class TestEvaluator extends TestCase{
 		Error.writeEvaluationErrorFile("log.txt");
 	}
 	
-	@Test
 	public void testLookUp1() throws RecognitionException, IOException {
 
         FilePaths.setMainFilePaths("D:\\CALSIM3.0_070110\\D1641\\Run\\maind1641.wresl");
@@ -299,6 +298,32 @@ public class TestEvaluator extends TestCase{
 		EvaluatorLexer  lexer = new EvaluatorLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+		evaluator.evaluator();
+		System.out.println(evaluator.evalValue.getData());
+		
+		Error.writeEvaluationErrorFile("log.txt");
+	}
+	
+	@Test
+	public void testA56_allocation() throws RecognitionException, IOException {
+        new LoadAllDll();
+
+        String mainFile="z:\\temp\\test";
+        FilePaths fp=new FilePaths();
+        fp.setMainFilePaths(mainFile);
+		
+		ANTLRStringStream stream = new ANTLRStringStream("v: a56_allocation(1; 1; 0.0; 80.62; 0.0; 42.0; 0.0; 141.4; 0.0; 12.7; 0.0; 9.6; 0.0; 133.1; 0.0; 27.5; 0.0; 9.0; 0.0; 5.8; 0.0; 54.0; 0.0; 57.34; 0.0; 3.0; 0.0; 848.13; 0.0; 2.3; 0.0; 1911.5; 0.0; 75.8; 0.0; 29.02; 0.0; 5.7; 0.0; 21.3; 0.0; 102.6; 0.0; 28.8; 0.0; 17.3; 0.0; 25.0; 0.0; 45.49; 0.0; 100.0; 0.0; 47.76; 0.0; 96.23; 0.0; 20.0; 0.0; 134.6; 0.0; 82.5; 0.0)");
+		EvaluatorLexer lexer = new EvaluatorLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+		evaluator.evaluator();
+		System.out.println(evaluator.evalValue.getData());
+		
+		
+		stream = new ANTLRStringStream("v: 1+a56_allocation(0;4)");
+		lexer = new EvaluatorLexer(stream);
+		tokenStream = new CommonTokenStream(lexer);
+		evaluator = new EvaluatorParser(tokenStream);
 		evaluator.evaluator();
 		System.out.println(evaluator.evalValue.getData());
 		

@@ -132,7 +132,6 @@ public class testController {
 		Error.writeEvaluationErrorFile("runtime_error.txt");
 	}
 	
-	@Test
 	public void testParsedCalsim3()throws RecognitionException, IOException{
         FilePaths.fullSvarDssPath="D:\\CALSIM30_041311_BO\\common\\DSS\\CalSim30_06_SV.dss";
         FilePaths.fullInitDssPath="D:\\CALSIM30_041311_BO\\common\\DSS\\CalSim30_06Init.dss";
@@ -160,6 +159,57 @@ public class testController {
 		
 		String csvFolderPath = "TestWreslWalker_calsim3_full_study";
 		String inputFilePath = "D:\\CALSIM30_041311_BO\\CONV\\Run\\mainCONV_30.wresl";
+		String logFilePath = csvFolderPath+".log";
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		
+		/// temporary dataset, don't use this because the structure will be changed soon. 
+		LogUtils.setLogFile(logFilePath);
+		TempData td = new TempData();
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		LogUtils.closeLogFile();
+		
+		
+		/// write to StudyDataSet
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+				
+		/// write full study data to csv files
+		WriteCSV.study(sd, csvFolderPath ) ;
+	
+		return sd;	
+	}
+	
+	@Test
+	public void testParsedCalLite()throws RecognitionException, IOException{
+        FilePaths.fullSvarDssPath="D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss";
+        FilePaths.fullInitDssPath="D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss";
+        FilePaths.setMainFilePaths("D:\\CalLite_Beta_042611\\Run\\main_BO.wresl");
+		ControlData cd=new ControlData();
+		cd.startYear=1921;
+		cd.startMonth=10;
+		cd.startDay=31;
+		cd.endYear=2003;
+		cd.endMonth=9;
+		cd.endDay=30;
+		cd.currYear=cd.startYear;
+		cd.currMonth=cd.startMonth;
+		cd.currDay=cd.startDay;
+		cd.svDvPartF="2020D09E";
+		cd.initPartF="2020D09E";
+		
+		StudyDataSet sds=parseCalLite();
+		
+		new Controller(sds);
+		Error.writeEvaluationErrorFile("evaluation_error.txt");
+	}
+	
+	public StudyDataSet parseCalLite() throws RecognitionException, IOException{
+		
+		String csvFolderPath = "TestWreslWalker_callite_full_study";
+		String inputFilePath = "D:\\CalLite_Beta_042611\\Run\\main_BO.wresl";
 		String logFilePath = csvFolderPath+".log";
 		
 		File absFile = new File(inputFilePath).getAbsoluteFile();

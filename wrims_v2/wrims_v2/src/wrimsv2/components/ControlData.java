@@ -12,6 +12,7 @@ import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.LoopIndex;
+import wrimsv2.external.ExternalFunction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ public class ControlData {
 	public static Map<String, External> currExMap = new HashMap<String, External> ();
 	public static Map<String, Timeseries> allTsMap=new HashMap<String, Timeseries>();
 	public static Map<String, String> allExternalFunction = new HashMap<String, String> ();
+	public static Map<String, ExternalFunction> allExternalFunctionMap = new HashMap<String, ExternalFunction>();  
 	public static ArrayList<String> allDll= new ArrayList<String>() ;
 	public static int currCycleIndex;
 	public static int currEvalTypeIndex; //0=sv; 1=dv; 2=alias; 3=goal; 4=external

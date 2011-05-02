@@ -365,7 +365,13 @@ public class Evaluation {
 		
 			Stack stack = new Stack();
 
-			ExternalFunction ef = (ExternalFunction)function.newInstance();
+			ExternalFunction ef;
+			if (ControlData.allExternalFunctionMap.containsKey(ident)){
+				ef=ControlData.allExternalFunctionMap.get(ident);
+			}else{
+				ef = (ExternalFunction)function.newInstance();
+				ControlData.allExternalFunctionMap.put(ident, ef);
+			}
 			ef.execute(stack);
 			String valueString=stack.pop().toString();
 			
@@ -413,7 +419,13 @@ public class Evaluation {
 				}      
 			}
 
-			ExternalFunction ef = (ExternalFunction)function.newInstance();
+			ExternalFunction ef;
+			if (ControlData.allExternalFunctionMap.containsKey(ident)){
+				ef=ControlData.allExternalFunctionMap.get(ident);
+			}else{
+				ef = (ExternalFunction)function.newInstance();
+				ControlData.allExternalFunctionMap.put(ident, ef);
+			}
 			ef.execute(stack);
 			String valueString=stack.pop().toString();
 			
