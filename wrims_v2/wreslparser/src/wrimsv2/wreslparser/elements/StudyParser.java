@@ -169,7 +169,7 @@ public class StudyParser
       model_dataset.overwrite_set(td.cumulative_global_complete);
 
       lousyConvert(model_dataset);
-
+      //rewrite_list_based_on_dependency = true;
       sortDependency(model_dataset, rewrite_list_based_on_dependency);
 
       model_dataset_map.put(modelName, model_dataset);
@@ -340,7 +340,7 @@ public class StudyParser
     {
       SimulationDataSet ds = fileDataMap_thisModel.get(f);
 
-      ArrayList<String> new_ordered_list = ds.ordered_list_including_files;
+      ArrayList<String> new_ordered_list = new ArrayList<String>(ds.ordered_list_including_files);
 
       for (String inf : ds.incFileList)
       {
