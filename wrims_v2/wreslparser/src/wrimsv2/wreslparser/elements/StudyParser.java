@@ -174,7 +174,7 @@ public class StudyParser
 
       model_dataset_map.put(modelName, model_dataset);
 
-      td.cumulative_global_adhocs.overwrittenWith_set(((SimulationDataSet)sc.modelDataMap.get(modelName)).getGlobalVars_set());
+      td.cumulative_global_adhocs.overwrittenWith_set(sc.modelDataMap.get(modelName).getGlobalVars_set());
       td.cumulative_global_complete.overwrittenWith_set(model_dataset.getGlobalVars_set());
 
       lousyConvert(td.cumulative_global_adhocs);

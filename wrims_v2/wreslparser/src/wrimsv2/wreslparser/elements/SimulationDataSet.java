@@ -598,6 +598,10 @@ public class SimulationDataSet
   }
 
   public SimulationDataSet overwrite_set(SimulationDataSet s) {
+	  
+		this.ordered_list_including_files.addAll(0,s.ordered_list_including_files);  
+		this.ordered_list.addAll(0,s.ordered_list);   
+	  
     SimulationDataSet x = new SimulationDataSet();
     x.overwrittenWith_set(s);
 
@@ -678,6 +682,10 @@ public class SimulationDataSet
   }
 
   public SimulationDataSet overwrittenWith_set(SimulationDataSet s) {
+	 
+	this.ordered_list_including_files.addAll(s.ordered_list_including_files);  
+	this.ordered_list.addAll(s.ordered_list);  
+	  
     this.dvSet.addAll(s.dvSet);
     this.dvSet_global.addAll(s.dvSet_global);
     this.dvSet_local.addAll(s.dvSet_local);
