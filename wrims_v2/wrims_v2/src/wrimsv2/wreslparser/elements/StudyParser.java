@@ -5,364 +5,312 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
 import org.antlr.runtime.RecognitionException;
-
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Timeseries;
-import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.grammar.WreslTreeWalker;
 
+public class StudyParser
+{
+  public static StudyDataSet writeWreslData(StudyConfig sc, TempData td)
+  {
+    StudyDataSet studyDataSet = new StudyDataSet();
 
-public class StudyParser {
+    studyDataSet.setModelList(sc.modelList);
+    studyDataSet.setModelConditionList(sc.modelConditionList);
+
+    Map<String, ModelDataSet> modelDataSetMap = new HashMap<String, ModelDataSet>();
+    Map<String, Timeseries> timeseriesMap = new HashMap<String, Timeseries>();
+
+    for (String modelName : studyDataSet.getModelList())
+    {
+      SimulationDataSet ds = (SimulationDataSet)td.model_dataset_map.get(modelName);
+      ModelDataSet thisModelDataSet = new ModelDataSet();
+
+      thisModelDataSet.dvList = ds.dvList;
+      thisModelDataSet.dvList_global = ds.dvList_global;
+      thisModelDataSet.dvList_local = ds.dvList_local;
+      thisModelDataSet.dvMap = ds.dvMap;
+
+      thisModelDataSet.tsList = ds.tsList;
+      thisModelDataSet.tsList_global = ds.tsList_global;
+      thisModelDataSet.tsList_local = ds.tsList_local;
+      thisModelDataSet.tsMap = ds.tsMap;
+
+      thisModelDataSet.svSet_unknown = ds.svSet_unknown;
+      thisModelDataSet.svList = ds.svList;
+      thisModelDataSet.svList_global = ds.svList_global;
+      thisModelDataSet.svList_local = ds.svList_local;
+      thisModelDataSet.svMap = ds.svMap;
+
+      thisModelDataSet.gList = ds.gList;
+      thisModelDataSet.gList_global = ds.gList_global;
+      thisModelDataSet.gList_local = ds.gList_local;
+      thisModelDataSet.gMap = ds.gMap;
+
+      thisModelDataSet.asSet_unknown = ds.asSet_unknown;
+      thisModelDataSet.asList = ds.asList;
+      thisModelDataSet.asList_global = ds.asList_global;
+      thisModelDataSet.asList_local = ds.asList_local;
+      thisModelDataSet.asMap = ds.asMap;
+
+      thisModelDataSet.exList = ds.exList;
+      thisModelDataSet.exList_global = ds.exList_global;
+      thisModelDataSet.exList_local = ds.exList_local;
+      thisModelDataSet.exMap = ds.exMap;
+
+      thisModelDataSet.wtList = ds.wtList;
+      thisModelDataSet.wtMap = ds.wtMap;
+
+      thisModelDataSet.incFileList = ds.incFileList;
+      thisModelDataSet.incFileList_global = ds.incFileList_global;
+      thisModelDataSet.incFileList_local = ds.incFileList_local;
+
+      modelDataSetMap.put(modelName, thisModelDataSet);
+      timeseriesMap.putAll(ds.tsMap);
+    }
+
+    studyDataSet.setModelDataSetMap(modelDataSetMap);
+    studyDataSet.setTimeseriesMap(timeseriesMap);
+
+    return studyDataSet;
+  }
+
+  public static StudyConfig processMainFileIntoStudyConfig(String relativeMainFilePath) throws RecognitionException, IOException {
+    return processMainFileIntoStudyConfig(relativeMainFilePath, false);
+  }
+
+  public static StudyConfig processMainFileIntoStudyConfig(String relativeMainFilePath, boolean showTree) throws RecognitionException, IOException
+  {
+    File absMainFile = new File(relativeMainFilePath).getAbsoluteFile();
+    String absMainFilePath = absMainFile.getCanonicalPath().toLowerCase();
+
+    LogUtils.importantMsg("Parsing study main file: " + absMainFilePath);
+
+    WreslTreeWalker walker = FileParser.parseFile(absMainFilePath, showTree);
+
+    StudyConfig sc = new StudyConfig();
+
+    sc.sequenceMap = walker.thisFileDataSet.seqMap;
+    
+	/// Sort sequence order
 	
-	public static StudyDataSet writeWreslData(StudyConfig sc, TempData td){
-		
-		StudyDataSet studyDataSet = new StudyDataSet();
-		
-		studyDataSet.setModelList(sc.modelList);
-		studyDataSet.setModelConditionList(sc.modelConditionList);
-		
-		Map<String, ModelDataSet> modelDataSetMap = new HashMap<String, ModelDataSet>();
-		Map<String, Timeseries> timeseriesMap = new HashMap<String, Timeseries>();
-		
-		for (String modelName: studyDataSet.getModelList()){
-			
-			SimulationDataSet ds = td.model_dataset_map.get(modelName);
-			ModelDataSet thisModelDataSet = new ModelDataSet();
+	for ( Integer i : sc.sequenceMap.keySet()){ sc.sequenceOrder.add(i); }
+	Collections.sort(sc.sequenceOrder);
 
-//			thisModelDataSet.svTsDvList = ds.svTsDvList; 
-//			thisModelDataSet.svTsList = ds.svTsList; 
-			
-			thisModelDataSet.dvList = ds.dvList; 
-			thisModelDataSet.dvList_global = ds.dvList_global; 
-			thisModelDataSet.dvList_local = ds.dvList_local; 
-			thisModelDataSet.dvMap = ds.dvMap; 
+    for (Integer i : sc.sequenceOrder) {
+      sc.sequenceList.add(((Sequence)sc.sequenceMap.get(i)).sequenceName);
+      sc.modelList.add(((Sequence)sc.sequenceMap.get(i)).modelName);
 
-			thisModelDataSet.tsList = ds.tsList; 
-			thisModelDataSet.tsList_global = ds.tsList_global; 
-			thisModelDataSet.tsList_local = ds.tsList_local; 
-			thisModelDataSet.tsMap = ds.tsMap;
+      sc.modelConditionList.add(((Sequence)sc.sequenceMap.get(i)).condition);
+    }
 
-			thisModelDataSet.svSet_unknown = ds.svSet_unknown; 
-			thisModelDataSet.svList = ds.svList; 
-			thisModelDataSet.svList_global = ds.svList_global; 
-			thisModelDataSet.svList_local = ds.svList_local; 
-			thisModelDataSet.svMap = ds.svMap;
-			
-			thisModelDataSet.gList = ds.gList; 
-			thisModelDataSet.gList_global = ds.gList_global; 
-			thisModelDataSet.gList_local = ds.gList_local; 
-			thisModelDataSet.gMap = ds.gMap;
+    sc.absMainFilePath = absMainFilePath;
+    sc.modelDataMap = walker.modelDataMap;
 
-			thisModelDataSet.asSet_unknown = ds.asSet_unknown; 
-			thisModelDataSet.asList = ds.asList; 
-			thisModelDataSet.asList_global = ds.asList_global; 
-			thisModelDataSet.asList_local = ds.asList_local; 
-			thisModelDataSet.asMap = ds.asMap;
+    for (Integer i : sc.sequenceOrder) {
+      LogUtils.importantMsg("Sequence: " + i + " : " + ((Sequence)sc.sequenceMap.get(i)).sequenceName + "   Model: " + ((Sequence)sc.sequenceMap.get(i)).modelName);
+    }
 
-			thisModelDataSet.exList = ds.exList; 
-			thisModelDataSet.exList_global = ds.exList_global; 
-			thisModelDataSet.exList_local = ds.exList_local; 
-			thisModelDataSet.exMap = ds.exMap;
-			
-			thisModelDataSet.wtList = ds.wtList; 
-			thisModelDataSet.wtMap = ds.wtMap;	
-			
-			thisModelDataSet.incFileList=ds.incFileList;
-			thisModelDataSet.incFileList_global=ds.incFileList_global;
-			thisModelDataSet.incFileList_local=ds.incFileList_local;
-			
-			modelDataSetMap.put(modelName, thisModelDataSet);
-			timeseriesMap.putAll(ds.tsMap);
-		}
-		
-		studyDataSet.setModelDataSetMap(modelDataSetMap);
-		studyDataSet.setTimeseriesMap(timeseriesMap);
-		
-		return studyDataSet;
-	}
+    return sc;
+  }
 
-	public static StudyConfig processMainFileIntoStudyConfig(String relativeMainFilePath) throws RecognitionException, IOException{
-		return processMainFileIntoStudyConfig(relativeMainFilePath, false);
-	}
-	
-	public static StudyConfig processMainFileIntoStudyConfig(String relativeMainFilePath, boolean showTree) throws RecognitionException, IOException {
-		
-		File absMainFile = new File(relativeMainFilePath).getAbsoluteFile();
-		String absMainFilePath = absMainFile.getCanonicalPath().toLowerCase();
-		
-		LogUtils.importantMsg("Parsing study main file: " + absMainFilePath);
-		
-		WreslTreeWalker walker = FileParser.parseFile(absMainFilePath, showTree);
-		
-		StudyConfig sc = new StudyConfig();
+  public static Map<String, SimulationDataSet> parseModels(StudyConfig sc, TempData td) throws RecognitionException, IOException
+  {
+    return parseModels(sc, td, false);
+  }
 
-		sc.sequenceMap = walker.thisFileDataSet.seqMap;
-		
-		/// Sort sequence order
-		
-		for ( Integer i : sc.sequenceMap.keySet()){ sc.sequenceOrder.add(i); }
-		Collections.sort(sc.sequenceOrder);
+  public static Map<String, SimulationDataSet> parseModels(StudyConfig sc, TempData td, boolean rewrite_list_based_on_dependency) throws RecognitionException, IOException
+  {
+    Map<String, SimulationDataSet> model_dataset_map = new HashMap<String, SimulationDataSet>();
 
-		for ( Integer i : sc.sequenceOrder){ 
-			sc.sequenceList.add(sc.sequenceMap.get(i).sequenceName);
-			sc.modelList.add(sc.sequenceMap.get(i).modelName);
-			
-			sc.modelConditionList.add(sc.sequenceMap.get(i).condition);
-		}		
+    for (Integer iSequence : sc.sequenceOrder)
+    {
+      String modelName = sc.sequenceMap.get(iSequence).modelName;
 
-		sc.absMainFilePath = absMainFilePath;
-		sc.modelDataMap = walker.modelDataMap;
-				
-		for ( Integer i : sc.sequenceOrder){	
-			LogUtils.importantMsg("Sequence: "+i+" : "+sc.sequenceMap.get(i).sequenceName +"   Model: "+sc.sequenceMap.get(i).modelName);		
-		}	
-		
-		return sc;
-	}
-	
-	public static Map<String, SimulationDataSet> parseModels(StudyConfig sc, TempData td) throws RecognitionException, IOException {
+      LogUtils.importantMsg("Processing sequence: " + iSequence + ", model: " + modelName);
 
-		Map<String, SimulationDataSet> model_dataset_map = new HashMap<String, SimulationDataSet>();
-		
-		for ( Integer iSequence : sc.sequenceOrder){	
+      SimulationDataSet adhoc = sc.modelDataMap.get(modelName);
 
-			String modelName = sc.sequenceMap.get(iSequence).modelName;
-		
-			LogUtils.importantMsg("Processing sequence: "+iSequence+", model: "+modelName);
-			
-			SimulationDataSet adhoc = sc.modelDataMap.get(modelName);
-			
-			/// get new dataset in this model
-			Map<String,SimulationDataSet> fileDataMap_new = getNewDataSet(adhoc.incFileSet, td.fileDataMap_wholeStudy.keySet());
-			
-			/// update whole study
-			td.fileDataMap_wholeStudy.putAll(fileDataMap_new);
-			/// update whole study t1Map
-			td.t1Map_wholeStudy.putAll(Tools.getType1Map(fileDataMap_new));
-			td.fileScopeMap_wholeStudy.putAll(Tools.getFileScopeMap(fileDataMap_new));
-			
-			
-			/// copy file data map from updated whole study to this model
-			Map<String,SimulationDataSet> fileDataMap_thisModel = copyDataSetToThisModel(adhoc.incFileSet, td.fileDataMap_wholeStudy);
-			
-			
-			/// correct scope and prioritize
-			SimulationDataSet model_dataset = correctScopeAndPrioritize(modelName,
-														adhoc,
-														sc.absMainFilePath,
-														fileDataMap_thisModel,
-														td.fileDataMap_wholeStudy,  
-														td.t1Map_wholeStudy,        
-														td.fileScopeMap_wholeStudy
-														);
-			
-			/// get whole study reverse map / TODO: not needed for global because source file is the same
-			td.t1Map_wholeStudy.put(sc.absMainFilePath, adhoc.incFileSet);
-			Map<String,Set<String>> t1ReverseMap_wholeStudy = Tools.getReverseMap(td.t1Map_wholeStudy);
-			
-//			String ttt="";
-//			Map<String,Set<String>> qwe = t1ReverseMap_wholeStudy;
-//			for (String s : qwe.keySet()){
-//				ttt = ttt + "{"+s+"}"+"::"+qwe.get(s);
-//			}
-//			LogUtils.errMsg(ttt);
-			
-			/// include global data
-			/// previous globals have lowest priority /TODO: remove reverse map
+      Map<String, SimulationDataSet> fileDataMap_new = getNewDataSet(adhoc.incFileSet, td.fileDataMap_wholeStudy.keySet());
 
-	
-			///  a working route for overwrite_set
-			///////////////////////////////////////////////////////////
-			SimulationDataSet e = new SimulationDataSet();
-			e.overwrittenWith_set(td.cumulative_global_complete);
-			e.overwrittenWith_set(model_dataset);
-			model_dataset = e;
-			////////////////////////////////////////////////////////////
-			
-			//System.out.println(" globals in model after :"+model_dataset.gSet_global );			
+      td.fileDataMap_wholeStudy.putAll(fileDataMap_new);
 
-			
-			//LogUtils.normalMsg("========== Finish cumulative globals prioritization =========== ");
+      td.t1Map_wholeStudy.putAll(Tools.getType1Map(fileDataMap_new));
+      td.fileScopeMap_wholeStudy.putAll(Tools.getFileScopeMap(fileDataMap_new));
 
-			
-			////////////////////////////////////////////////////////////////
+      Map<String, SimulationDataSet> fileDataMap_thisModel = copyDataSetToThisModel(adhoc.incFileSet, td.fileDataMap_wholeStudy);
 
-			lousyConvert(model_dataset);
+      ArrayList<String> ordered_list_for_all_vars = getOrderedList(fileDataMap_thisModel, adhoc);
+      
 
-			/////////////////////////////////////////////////////////////////////
-			
-			
+      Set<String> duplicates = Tools.removeDuplicates(ordered_list_for_all_vars);
+      
 
-			
-			/// sort svList based on dependents excluding tsSet
-			Sort sortSV = new Sort(model_dataset.svMap, model_dataset.tsSet);
-			
-			ArrayList<String> sortedSvList = new ArrayList<String>();
+      if (duplicates.size() > 0) {
+        LogUtils.errMsg("Variables redefined. Model: " + modelName + "; Variables: " + duplicates);
+      }
 
-			model_dataset.svSet_unknown = sortSV.sort(sortedSvList);			
-			
-			model_dataset.svList = sortedSvList;
-			model_dataset.svList.addAll(model_dataset.svSet_unknown);
-			//System.out.println("svList: " +model_dataset.svList);
-			
-			/// sort asList based on dependents excluding svSet and tsSet
-			Sort sortAs = new Sort(model_dataset.asMap, model_dataset.svSet, model_dataset.dvSet, model_dataset.tsSet);
-			
-			ArrayList<String> sortedAsList = new ArrayList<String>();
+      
+      SimulationDataSet model_dataset = correctScopeAndPrioritize(modelName, 
+        adhoc, 
+        sc.absMainFilePath, 
+        fileDataMap_thisModel, 
+        td.fileDataMap_wholeStudy, 
+        td.t1Map_wholeStudy, 
+        td.fileScopeMap_wholeStudy);
 
-			model_dataset.asSet_unknown = sortAs.sort(sortedAsList);			
-			
-			model_dataset.asList = sortedAsList;
-			model_dataset.asList.addAll(model_dataset.asSet_unknown);
-			//System.out.println("asList: " +model_dataset.asList);		    
-			
-			// assemble whole map
-			model_dataset_map.put(modelName, model_dataset);
-		    
-			/// update/overwrite cumulative globals
-			td.cumulative_global_adhocs.overwrittenWith_set(sc.modelDataMap.get(modelName).getGlobalVars_set());
-			td.cumulative_global_complete.overwrittenWith_set(model_dataset.getGlobalVars_set());	
-			
-			lousyConvert(td.cumulative_global_adhocs);
-			lousyConvert(td.cumulative_global_complete);
+      model_dataset.svSet = Tools.restoreOrder(model_dataset.svList, ordered_list_for_all_vars, model_dataset.svSet);
+      model_dataset.asSet = Tools.restoreOrder(model_dataset.asList, ordered_list_for_all_vars, model_dataset.asSet);
 
-		}
-		return model_dataset_map;		
-	}
-	
-	public static Map<String,SimulationDataSet> getNewDataSet(Set<String> adhoc_incFileSet, Set<String> fileDataMap_wholeStudy_keySet ) throws RecognitionException, IOException{
-		
-		Map<String,SimulationDataSet> fileDataMap_new = new HashMap<String, SimulationDataSet>();
-		
-		/// process include files in this model and those in previous globals
-		for (String f: adhoc_incFileSet) {
-			
-			if (fileDataMap_wholeStudy_keySet.contains(f))  {
-				
-				//LogUtils.importantMsg("....Skip file: "+f);				
-			} 
-			else { /// new file
-				Map<String, SimulationDataSet> each = FileParser.processNestedFileExceptFor(f,fileDataMap_wholeStudy_keySet);
-				fileDataMap_new.putAll(each);
+      td.t1Map_wholeStudy.put(sc.absMainFilePath, adhoc.incFileSet);
+      Map<String, Set<String>> t1ReverseMap_wholeStudy = Tools.getReverseMap(td.t1Map_wholeStudy);
 
-			}				
-		}			
-		return fileDataMap_new;
-	}
+      model_dataset.overwrite_set(td.cumulative_global_complete);
 
-	public static Map<String,SimulationDataSet> copyDataSetToThisModel(Set<String> incFileSet, 
-																	   Map<String,SimulationDataSet> fileDataMap_wholeStudy ){
-		
-		/// get all file data map for this study
-		Map<String,SimulationDataSet> fileDataMap_thisModel = new HashMap<String, SimulationDataSet>();		
-						
-			/// copy to this model
-			for (String f: incFileSet) {
-			
-				fileDataMap_thisModel.putAll(Tools.putDataFileMapFromWholeStudy(f,fileDataMap_wholeStudy));
-			}
-		
-		return fileDataMap_thisModel;
-		
-	}
-	
-	public static SimulationDataSet correctScopeAndPrioritize( String modelName,
-												SimulationDataSet adhoc,
-												String absMainFilePath,
-												Map<String,SimulationDataSet> fileDataMap_thisModel,
-												Map<String, SimulationDataSet> fileDataMap_wholeStudy,
-												Map<String,Set<String>> t1Map_wholeStudy,
-												Map<String,String> fileScopeMap_wholeStudy
-												)
-	
-	throws RecognitionException, IOException {
-			
-			
-			/// this model t1Map, fileScopeMap, and reverseMap /TODO: avoid repeated processing
-			Map<String,String> fileScopeMap = new HashMap<String, String>(fileScopeMap_wholeStudy);
-			fileScopeMap.putAll(Tools.getScopeMap(adhoc.incFileSet, adhoc.incFileSet_local));
-			
-			Map<String,Set<String>> t1Map = new HashMap<String,Set<String>>(t1Map_wholeStudy);
-			t1Map.put(absMainFilePath, adhoc.incFileSet);
-			Map<String,Set<String>> t1ReverseMap = Tools.getReverseMap(t1Map);
+      lousyConvert(model_dataset);
 
-			//////////////////////////////////////////////////////////////////////////////////////
-			LogUtils.normalMsg(".....Finished fileScopeMap & ReverseMap.");
-			
-			Map<String,SimulationDataSet> fileDataMap_corrected = new HashMap<String, SimulationDataSet>();
-			fileDataMap_corrected.putAll(fileDataMap_thisModel);			
-			
-			for (String f : fileDataMap_thisModel.keySet()) {
+      sortDependency(model_dataset, rewrite_list_based_on_dependency);   
 
-				SimulationDataSet ds = Tools.correctDataScope(f, fileDataMap_thisModel.get(f), fileScopeMap, t1ReverseMap);				
-				fileDataMap_corrected.put(f, ds);
-			}
-			
-//----------------------------------------------------------------------------------		
-			/// prioritize data if redefined			
-			SimulationDataSet model_dataset = new SimulationDataSet();
-			LogUtils.normalMsg("========== Start data prioritization =========== ");	
-			
-			ArrayList<String> reverseList = new ArrayList<String>(adhoc.incFileList); 
-			Collections.reverse(reverseList);
-			
-			/// for kids
-			for (String f : adhoc.incFileList) {
-				
-					SimulationDataSet temp = new SimulationDataSet();		
-				//LogUtils.normalMsg("========== Prioritize offsprings in file: "+f);
-					temp.addChildren(f, t1Map, fileDataMap_corrected);
-					
-					temp.overwrittenWith_set(fileDataMap_corrected.get(f));
-					
-					model_dataset.overwrittenWith_set(temp);
-			}
-			//LogUtils.normalMsg("========== Finish children prioritization =========== ");
-			
-			/// for include files in adhoc
-//			for (String f : adhoc.incFileList) {
-//				
-//                //LogUtils.normalMsg("========== Prioritize adhoc include file: "+f);
-////				model_dataset.prioritize(fileDataMap_corrected.get(f), f, t1ReverseMap);
-//			}
-			
-			/// for vars in adhoc
-			//LogUtils.normalMsg("========== Prioritize adhoc =========== ");
-			//model_dataset.prioritize_append(adhoc, absMainFilePath, t1ReverseMap);
-			model_dataset.overwrittenWith_set(adhoc);
-			//LogUtils.normalMsg("========== Finish adhoc prioritization =========== ");
-//---------------------------------------------------------------------------------------			
+      model_dataset_map.put(modelName, model_dataset);
 
-		return model_dataset;
-	}
+      td.cumulative_global_adhocs.overwrittenWith_set(sc.modelDataMap.get(modelName).getGlobalVars_set());
+      td.cumulative_global_complete.overwrittenWith_set(model_dataset.getGlobalVars_set());
 
-	public static void lousyConvert(SimulationDataSet q){
-		
-		q.asList = new ArrayList<String>(q.asSet);
+      lousyConvert(td.cumulative_global_adhocs);
+      lousyConvert(td.cumulative_global_complete);
+    }
+
+    return model_dataset_map;
+  }
+
+  public static Map<String, SimulationDataSet> getNewDataSet(Set<String> adhoc_incFileSet, Set<String> fileDataMap_wholeStudy_keySet) throws RecognitionException, IOException
+  {
+    Map<String, SimulationDataSet> fileDataMap_new = new HashMap<String, SimulationDataSet>();
+
+    for (String f : adhoc_incFileSet)
+    {
+      if (fileDataMap_wholeStudy_keySet.contains(f))
+      {
+        continue;
+      }
+
+      Map<String, SimulationDataSet> each = FileParser.processNestedFileExceptFor(f, fileDataMap_wholeStudy_keySet);
+      fileDataMap_new.putAll(each);
+    }
+
+    return fileDataMap_new;
+  }
+
+  public static Map<String, SimulationDataSet> copyDataSetToThisModel(Set<String> incFileSet, Map<String, SimulationDataSet> fileDataMap_wholeStudy)
+  {
+    Map<String, SimulationDataSet> fileDataMap_thisModel = new HashMap<String, SimulationDataSet>();
+
+    for (String f : incFileSet)
+    {
+      fileDataMap_thisModel.putAll(Tools.putDataFileMapFromWholeStudy(f, fileDataMap_wholeStudy));
+    }
+
+    return fileDataMap_thisModel;
+  }
+
+  public static SimulationDataSet correctScopeAndPrioritize(String modelName, SimulationDataSet adhoc, String absMainFilePath, Map<String, SimulationDataSet> fileDataMap_thisModel, Map<String, SimulationDataSet> fileDataMap_wholeStudy, Map<String, Set<String>> t1Map_wholeStudy, Map<String, String> fileScopeMap_wholeStudy)
+    throws RecognitionException, IOException
+  {
+    Map<String, String> fileScopeMap = new HashMap<String, String>(fileScopeMap_wholeStudy);
+    fileScopeMap.putAll(Tools.getScopeMap(adhoc.incFileSet, adhoc.incFileSet_local));
+
+    Map<String, Set<String>> t1Map = new HashMap<String, Set<String>>(t1Map_wholeStudy);
+    t1Map.put(absMainFilePath, adhoc.incFileSet);
+    Map<String, Set<String>> t1ReverseMap = Tools.getReverseMap(t1Map);
+
+    Map<String, SimulationDataSet> fileDataMap_corrected = new HashMap<String, SimulationDataSet>(fileDataMap_thisModel);
+    SimulationDataSet ds;
+    for (String f : fileDataMap_thisModel.keySet())
+    {
+      ds = Tools.correctDataScope(f, (SimulationDataSet)fileDataMap_thisModel.get(f), fileScopeMap, t1ReverseMap);
+      fileDataMap_corrected.put(f, ds);
+    }
+
+    SimulationDataSet model_dataset = new SimulationDataSet();
+
+    for (String f : adhoc.incFileList)
+    {
+      SimulationDataSet temp = new SimulationDataSet();
+
+      temp.addChildren(f, t1Map, fileDataMap_corrected);
+
+      temp.overwrittenWith_set((SimulationDataSet)fileDataMap_corrected.get(f));
+
+      model_dataset.overwrittenWith_set(temp);
+    }
+
+    model_dataset.overwrittenWith_set(adhoc);
+
+    return model_dataset;
+  }
+
+  public static boolean sortDependency(SimulationDataSet model_dataset, boolean rewrite_list_based_on_dependency)
+  {
+    boolean OK = true;
+
+    Sort sortSV = new Sort(model_dataset.svMap, model_dataset.tsSet);
+
+    ArrayList<String> sortedSvList = new ArrayList<String>();
+
+    Set<String> var_with_unknown = sortSV.sort(sortedSvList);
+    if (var_with_unknown.size() > 0) OK = false;
+
+    model_dataset.svSet_unknown = var_with_unknown;
+    
+    if (rewrite_list_based_on_dependency) {
+      model_dataset.svList = sortedSvList;
+      model_dataset.svList.addAll(model_dataset.svSet_unknown);
+    }
+
+    Sort sortAs = new Sort(model_dataset.asMap, model_dataset.svSet, model_dataset.dvSet, model_dataset.tsSet);
+
+    ArrayList<String> sortedAsList = new ArrayList<String>();
+
+    var_with_unknown = sortAs.sort(sortedAsList);
+    if (var_with_unknown.size() > 0) OK = false;
+
+    model_dataset.asSet_unknown = var_with_unknown;
+    
+    if (rewrite_list_based_on_dependency) {
+      model_dataset.asList = sortedAsList;
+      model_dataset.asList.addAll(model_dataset.asSet_unknown);
+    }
+
+    return OK;
+  }
+
+  public static void lousyConvert(SimulationDataSet q)
+  {
+    q.asList = new ArrayList<String>(q.asSet);
 		q.asList_global = new ArrayList<String>(q.asSet_global);
 		q.asList_local = new ArrayList<String>(q.asSet_local);
-		
+
 		q.wtList = new ArrayList<String>(q.wtSet);
 		q.wtList_global = new ArrayList<String>(q.wtSet_global);
 		q.wtList_local = new ArrayList<String>(q.wtSet_local);
-		
+
 		q.svList = new ArrayList<String>(q.svSet);
 		q.svList_global = new ArrayList<String>(q.svSet_global);
 		q.svList_local = new ArrayList<String>(q.svSet_local);
-		
+
 		q.dvList = new ArrayList<String>(q.dvSet);
 		q.dvList_global = new ArrayList<String>(q.dvSet_global);
 		q.dvList_local = new ArrayList<String>(q.dvSet_local);
-		
+
 		q.tsList = new ArrayList<String>(q.tsSet);
 		q.tsList_global = new ArrayList<String>(q.tsSet_global);
 		q.tsList_local = new ArrayList<String>(q.tsSet_local);
-		
+
 		q.exList = new ArrayList<String>(q.exSet);
 		q.exList_global = new ArrayList<String>(q.exSet_global);
 		q.exList_local = new ArrayList<String>(q.exSet_local);
@@ -374,9 +322,70 @@ public class StudyParser {
 		q.incFileList = new ArrayList<String>(q.incFileSet);
 		q.incFileList_global = new ArrayList<String>(q.incFileSet_global);
 		q.incFileList_local = new ArrayList<String>(q.incFileSet_local);
-		
-	}
-	
-	
-	
+
+    q.incFileList = new ArrayList<String>(q.incFileSet);
+    q.incFileList_global = new ArrayList<String>(q.incFileSet_global);
+    q.incFileList_local = new ArrayList<String>(q.incFileSet_local);
+  }
+
+  public static ArrayList<String> getOrderedList(Map<String, SimulationDataSet> fileDataMap_thisModel, SimulationDataSet adhoc)
+  {
+    Map<String, ArrayList<String>> orderListMap = new HashMap<String, ArrayList<String>>();
+
+    ArrayList<String> complete_ordered_list = new ArrayList<String>();
+
+    Sort sortFile = new Sort(fileDataMap_thisModel);
+
+    ArrayList<String> sortedFileList = new ArrayList<String>();
+
+    sortFile.sort(sortedFileList);
+
+    //------------------------------------------------
+    // initialize
+    for (String f: sortedFileList){
+    	ArrayList<String> toBeAdded = new ArrayList<String>(fileDataMap_thisModel.get(f).ordered_list_including_files);
+    	orderListMap.put(f, toBeAdded);
+    }
+    
+    // iterate
+
+			for (String f : sortedFileList) {
+				SimulationDataSet ds = fileDataMap_thisModel.get(f);
+
+				ArrayList<String> new_ordered_list = new ArrayList<String>(ds.ordered_list_including_files);
+
+				// System.out.println(" new ordered_list_include_files: " +
+				// new_ordered_list);
+
+				for (String inf : ds.incFileList) {
+					ArrayList<String> toBeAdded = orderListMap.get(inf);
+
+					// System.out.println(" new ordered_list before: " +
+					// new_ordered_list);
+					// System.out.println(" toBeAdded: " + toBeAdded);
+
+					int pos = new_ordered_list.indexOf(inf);
+					new_ordered_list.addAll(pos, toBeAdded);
+					new_ordered_list.remove(inf);
+				}
+				orderListMap.put(f, new_ordered_list);
+				System.out.println(" order list Map: " + orderListMap);
+			}
+
+
+
+    //--------------------------------------------------
+
+    complete_ordered_list = new ArrayList<String>(adhoc.ordered_list_including_files);
+
+    for (String inf : adhoc.incFileList)
+    {
+      ArrayList<String> toBeAdded = orderListMap.get(inf);
+
+      int pos = complete_ordered_list.indexOf(inf);
+      complete_ordered_list.addAll(pos, toBeAdded);
+      complete_ordered_list.remove(inf);
+    }
+    return complete_ordered_list;
+  }
 }

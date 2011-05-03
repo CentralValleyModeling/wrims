@@ -1,0 +1,11 @@
+
+
+
+
+include 'TestWreslWalker_study_order_case1_include2_include.wresl'
+	
+define second3_include2 { value 5 }
+define second4_include2 { value 5 } 
+
+
+ 

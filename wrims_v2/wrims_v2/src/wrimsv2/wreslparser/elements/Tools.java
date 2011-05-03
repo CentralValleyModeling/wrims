@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -351,8 +352,8 @@ public class Tools {
 
 				if (fileScopeMap.get(upperFile) == Param.local) {
 
-					LogUtils.normalMsg("...Convert this file data to local: " + f );
-					LogUtils.normalMsg("   due to  [local] specification for its parent file: " + upperFile + "\n");
+					//LogUtils.normalMsg("...Convert this file data to local: " + f );
+					//LogUtils.normalMsg("   due to  [local] specification for its parent file: " + upperFile + "\n");
 					
 					ds.convertToLocal_set();
 
@@ -395,11 +396,13 @@ public class Tools {
 		return out;
 		
 	}
-	
-	public static void mapRemoveAll (Map<String, ?> map, ArrayList<String> list){
-		for (String key: list){
+	public static void mapRemoveAll (Map<String, ?> map, Set<String> set){
+		for (String key: set){
 			map.remove(key);	
 		}
+	}	
+	public static void mapRemoveAll (Map<String, ?> map, ArrayList<String> list){
+		mapRemoveAll (map, new HashSet<String>(list));
 	}
 
 	public static SimulationDataSet overwrite_set(SimulationDataSet main, SimulationDataSet s) {
@@ -423,5 +426,36 @@ public class Tools {
 		
 		return out;
 	}
+	
+	public static Set<String> restoreOrder(ArrayList<String> toBeRestored, ArrayList<String> referenceOrder,
+			Set<String> member) {
+
+		ArrayList<String> orderedList = new ArrayList<String>(referenceOrder);
+
+		Set<String> nonMember = new HashSet<String>(referenceOrder);
+		nonMember.removeAll(member);
+
+		orderedList.removeAll(nonMember);
+
+		toBeRestored = orderedList;
+
+		return new LinkedHashSet<String>(orderedList);
+	}
+	  
+	  public static Set<String> removeDuplicates(ArrayList<String> list)
+	  {
+	    Set<String> s = new LinkedHashSet<String>(list);
+
+	    ArrayList<String> duplicatesList = new ArrayList<String>(list);
+
+	    for (String x : s) {
+	      duplicatesList.remove(x);
+	    }
+
+	    list.clear();
+	    list.addAll(s);
+
+	    return new LinkedHashSet<String>(duplicatesList);
+	  }
 
 }

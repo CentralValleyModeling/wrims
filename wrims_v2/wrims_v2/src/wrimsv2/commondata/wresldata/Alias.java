@@ -3,8 +3,6 @@ package wrimsv2.commondata.wresldata;
 import java.util.HashSet;
 import java.util.Set;
 
-import wrimsv2.evaluator.IntDouble;
-
 
 public class Alias {
 	
@@ -13,7 +11,7 @@ public class Alias {
 	public String units;
 	public String expression;
 	public String fromWresl;
-	public IntDouble data;
+	public Number value;
 	public Set<String> dependants;
 
 	public Alias(){
@@ -54,12 +52,12 @@ public class Alias {
 		}
 	}
 	
-	public void setData(IntDouble data){
-		this.data=data;
+	public void setValue(Number value){
+		this.value=value;
 	}
 	
-	public IntDouble getData(){
-		return data;
+	public Number getValue(){
+		return value;
 	}
 }
 	

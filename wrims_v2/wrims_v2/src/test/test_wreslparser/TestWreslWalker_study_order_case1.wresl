@@ -1,0 +1,46 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }	
+
+SEQUENCE CYCLE3 {
+    model   third
+    order   3
+    }
+	
+MODEL firsT { 
+
+
+include 'TestWreslWalker_study_order_include1.wresl'
+
+include 'TestWreslWalker_study_order_case1_include2.wresl'
+
+define third { value 5 }	
+	
+}	
+
+MODEL second { 
+
+
+define cycle_second { value 5 }	
+	
+}	
+
+MODEL third { 
+
+
+define cycle_third { value 5 }	
+	
+}	
+
+	
+
+	 
+
+
+ 

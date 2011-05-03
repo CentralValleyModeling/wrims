@@ -1,0 +1,60 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }	
+
+MODEL first { 
+
+include 'TestWreslWalker_error_redefine2_include1.wresl'
+
+}	
+
+
+MODEL second{ 
+
+include 'TestWreslWalker_error_redefine2_include1.wresl'
+  
+  
+  define dv {std kind 'second-model-only' units 'TAF'}  
+  define dv2 {lower unbounded upper unbounded kind 'second-model-only' units 'CFS'}  
+  define sv { value second_model_only }  
+  define ts {timeseries kind 'second-model-only' units 'IN'} 
+  define as {alias C_SacFea+D_SacFea  kind 'second-model-only' units 'cfs'}
+  define[local] tab { select target from res_level where res_num=second_model_only }
+  
+  goal gl {
+  lhs C3_M
+  case ActionOn {
+    condition  second-mmodel-only>0
+    rhs     minflow_C
+    lhs>rhs     constrain
+    lhs<rhs     penalty 700. }
+  case ActionOff {
+    condition   x==2.3.or.month==Apr.or. month==Jun
+    rhs     clear_min
+    lhs>rhs     constrain
+    lhs<rhs     penalty 0 }
+  }
+  define sv2 {
+	case MAR_SEP {
+                condition       second-mmodel-only>0
+                sum(i=-(month-MAY),SEP-month)  I_Folsm(i)*cfs_taf(i) + I300(i)*cfs_taf(i) }  ! sum of the may to sep inflow , changed to always be mar to may
+	case other {
+		condition		always
+		value   		MIN(Max( I_Folsm(i),200),I300(i))  }
+  
+	}
+
+ include 'TestWreslWalker_error_redefine2_include2.wresl'
+	 	
+}	
+	
+
+	 
+
+
+ 

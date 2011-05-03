@@ -191,7 +191,7 @@ public class TestWreslWalker {
 		String fileText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
-		Assert.assertEquals(totalErrs, 2);	
+		Assert.assertEquals(totalErrs, 3);	
 
 		int err1 = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: c_banks");
 		Assert.assertEquals(err1, 1);

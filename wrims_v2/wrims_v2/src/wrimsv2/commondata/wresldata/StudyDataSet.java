@@ -20,7 +20,7 @@ public class StudyDataSet {
 	private Map<String, ModelDataSet> modelDataSetMap = new HashMap<String, ModelDataSet>();
 
 	public Map<String, Timeseries> getTimeseriesMap() {
-		return timeseriesMap;
+		return new HashMap<String, Timeseries>(timeseriesMap);
 	}
 
 	public void setTimeseriesMap(Map<String, Timeseries> timeseriesMap) {
@@ -28,7 +28,7 @@ public class StudyDataSet {
 	}
 	
 	public String getAbsMainFilePath() {
-		return absMainFilePath;
+		return new String(absMainFilePath);
 	}
 
 	public void setAbsMainFilePath(String absMainFilePath) {
@@ -36,7 +36,7 @@ public class StudyDataSet {
 	}
 
 	public ArrayList<String> getModelList() {
-		return modelList;
+		return new ArrayList<String>(modelList);
 	}
 
 	public void setModelList(ArrayList<String> modelList) {
@@ -44,7 +44,7 @@ public class StudyDataSet {
 	}
 
 	public ArrayList<String> getModelConditionList() {
-		return modelConditionList;
+		return new ArrayList<String>(modelConditionList);
 	}
 
 	public void setModelConditionList(ArrayList<String> modelConditionList) {
@@ -52,7 +52,7 @@ public class StudyDataSet {
 	}
 
 	public Map<String, ModelDataSet> getModelDataSetMap() {
-		return modelDataSetMap;
+		return new HashMap<String, ModelDataSet>(modelDataSetMap);
 	}
 
 	public void setModelDataSetMap(Map<String, ModelDataSet> modelDataSetMap) {

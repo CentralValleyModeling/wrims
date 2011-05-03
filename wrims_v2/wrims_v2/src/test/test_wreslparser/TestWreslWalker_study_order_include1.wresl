@@ -1,7 +1,7 @@
 
-define first1_include1 {timeseries kind 'EVAPORATION-RATE' units 'IN'}
+define first1_include1 { value 5 }
 
-define first2_include1 {timeseries kind 'EVAPORATION-RATE' units 'IN'}
+define first2_include1 { value 5 }
 
 
 	

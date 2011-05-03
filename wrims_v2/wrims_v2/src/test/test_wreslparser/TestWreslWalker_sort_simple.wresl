@@ -1,0 +1,45 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+define timeseries1 { timeseries kind 'EVAPORATION-RATE' units 'IN' }
+define[local] timeseries2 { timeseries 'UD_CCWD' kind 'DEMAND-CVP' units 'TAF' convert 'CFS' }
+
+define value_2 {value (first1 - first2)/(100*max(0.01,first_ts1(-1)))}
+define value_1 {value min(max(second1,sv_second_dv1[model_1]),2.5)}
+
+define sum_1 {sum(i=0,SEP-month,1) (sv_sum1 - sv_sum_ts1(i))*cfs_taf(i) }
+
+define table_2 {
+      select OnOff from Switch given trigger=sf(-1,timeseries2,max(given2,3)) use linear where  Facility = sv_w1}
+
+define case_3 {
+       case case1 {
+           condition  month>=JAN.and.month<=FEB.and. condition1 == 5.and. ts1(-1) < 800.
+           select     FEB
+           from       sacramento_runoff
+		   given      trigger=200
+		   use        minimum
+           where      wateryear=wateryear }
+       case case2 {
+           condition  timeseries1 == 5.
+           value      (300. - sv1)/(sv2*max(dv2[model_2],ts3(-1))) }
+       }
+
+define case_2 {
+       case case1 {
+           condition  month>=JAN.and.month<=FEB
+           select     FEB
+           from       sacramento_runoff
+		   given      trigger=ts2(-1)+timeseries1*max(500., given2)
+		   use        minimum
+           where      wateryear=sv_year }
+       case case2 {
+           condition  always
+           value     50. }
+       }	   
+}
+

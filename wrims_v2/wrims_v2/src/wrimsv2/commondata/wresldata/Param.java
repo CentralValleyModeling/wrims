@@ -2,27 +2,27 @@ package wrimsv2.commondata.wresldata;
 
 // global parameters
 public class Param {
-	  public static String dv_lowerBound= "0"; 
-	  public static String dv_upperBound= "unbounded"; 
-	  public static String integer_lowerBound= "0"; 
-	  public static String integer_upperBound= "unbounded"; 
-	  public static String undefined= ".."; 
-	  public static String defaultCaseName = "default";
-	  public static String always = "always";
-	  public static String constrain = "constrain";
-	  public static String skip = "#";
-	  public static String no =  "n";
-	  public static String yes = "y";	  
-	  public static String arg_seperator = ",";
-	  public static String new_seperator = ";";
-	  public static String csv_seperator = ",";
+	  public static final String dv_lowerBound= "0"; 
+	  public static final String dv_upperBound= "unbounded"; 
+	  public static final String integer_lowerBound= "0"; 
+	  public static final String integer_upperBound= "unbounded"; 
+	  public static final String undefined= ".."; 
+	  public static final String defaultCaseName = "default";
+	  public static final String always = "always";
+	  public static final String constrain = "constrain";
+	  public static final String skip = "#";
+	  public static final String no =  "n";
+	  public static final String yes = "y";	  
+	  public static final String arg_seperator = ",";
+	  public static final String new_seperator = ";";
+	  public static final String csv_seperator = ",";
 
 
 	  public static int printLevel = 1;
 	  
 	  
-	  public static String global="global";
-	  public static String local="local";
+	  public static final String global="global";
+	  public static final String local="local";
 	  
 }
 
