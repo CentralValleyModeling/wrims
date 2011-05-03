@@ -48,14 +48,14 @@ public class TestWreslWalker_error {
 
 		LogUtils.closeLogFile();
 		
-		String modelName = sd.getModelList().get(1);
+		//String modelName = sd.getModelList().get(1);
 		
 		WriteCSV.study(sd,csvFolderPath ) ;
 	
 		String logText = Tools.readFileAsString(logFilePath);	
 
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 4);	
+		Assert.assertEquals(totalErrs, 5);	
 		
 
 		
@@ -95,14 +95,14 @@ public class TestWreslWalker_error {
 	
 		LogUtils.closeLogFile();
 		
-		String modelName = sd.getModelList().get(1);
+		//String modelName = sd.getModelList().get(1);
 		
 		WriteCSV.study(sd,csvFolderPath ) ;
 	
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 12);	
+		Assert.assertEquals(totalErrs, 13);	
 		
 	
 		

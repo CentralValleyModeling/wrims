@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -425,5 +426,32 @@ public class Tools {
 		
 		return out;
 	}
+	  public static Set<String> restoreOrder(ArrayList<String> toBeRestored, ArrayList<String> referenceOrder, Set<String> member)
+  {
+    ArrayList<String> orderedList = new ArrayList<String>(referenceOrder);
+
+    Set<String> nonMember = new HashSet<String>(referenceOrder); nonMember.removeAll(member);
+
+    orderedList.removeAll(nonMember);
+
+    toBeRestored = orderedList;
+
+    return new LinkedHashSet<String>(orderedList);
+  }
+	  public static Set<String> removeDuplicates(ArrayList<String> list)
+	  {
+	    Set<String> s = new LinkedHashSet<String>(list);
+
+	    ArrayList<String> duplicatesList = new ArrayList<String>(list);
+
+	    for (String x : s) {
+	      duplicatesList.remove(x);
+	    }
+
+	    list.clear();
+	    list.addAll(s);
+
+	    return new LinkedHashSet<String>(duplicatesList);
+	  }
 
 }

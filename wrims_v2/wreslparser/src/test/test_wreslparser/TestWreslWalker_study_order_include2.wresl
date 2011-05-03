@@ -1,11 +1,11 @@
 
-define second1_include2 {timeseries kind 'EVAPORATION-RATE' units 'IN'}
+define second1_include2 { value 5 }
 
 
 include 'TestWreslWalker_study_order_include2_include.wresl'
 	
 
-define second4_include2 {timeseries kind 'EVAPORATION-RATE' units 'IN'}	 
+define second4_include2 { value 5 }
 
 
  

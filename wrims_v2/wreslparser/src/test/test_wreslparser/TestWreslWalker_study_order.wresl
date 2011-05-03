@@ -5,7 +5,7 @@ SEQUENCE CYCLE1 {
 
 MODEL firsT { 
 
-define zero {timeseries kind 'EVAPORATION-RATE' units 'IN'}	
+define zero { value 5 }
 
 include 'TestWreslWalker_study_order_include1.wresl'
 
@@ -13,7 +13,7 @@ include 'TestWreslWalker_study_order_include1.wresl'
 
  include 'TestWreslWalker_study_order_include2.wresl'
 
-define third {timeseries kind 'EVAPORATION-RATE' units 'IN'}	
+define third { value 5 }	
 	
 }	
 
