@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import org.antlr.runtime.RecognitionException;
@@ -145,13 +146,16 @@ public class StudyParser
       Map<String, SimulationDataSet> fileDataMap_thisModel = copyDataSetToThisModel(adhoc.incFileSet, td.fileDataMap_wholeStudy);
 
       ArrayList<String> ordered_list_for_all_vars = getOrderedList(fileDataMap_thisModel, adhoc);
+      
 
       Set<String> duplicates = Tools.removeDuplicates(ordered_list_for_all_vars);
+      
 
       if (duplicates.size() > 0) {
         LogUtils.errMsg("Variables redefined. Model: " + modelName + "; Variables: " + duplicates);
       }
 
+      
       SimulationDataSet model_dataset = correctScopeAndPrioritize(modelName, 
         adhoc, 
         sc.absMainFilePath, 
@@ -169,8 +173,8 @@ public class StudyParser
       model_dataset.overwrite_set(td.cumulative_global_complete);
 
       lousyConvert(model_dataset);
-      //rewrite_list_based_on_dependency = true;
-      sortDependency(model_dataset, rewrite_list_based_on_dependency);
+
+      sortDependency(model_dataset, rewrite_list_based_on_dependency);   
 
       model_dataset_map.put(modelName, model_dataset);
 
@@ -336,22 +340,41 @@ public class StudyParser
 
     sortFile.sort(sortedFileList);
 
-    for (String f : sortedFileList)
-    {
-      SimulationDataSet ds = fileDataMap_thisModel.get(f);
-
-      ArrayList<String> new_ordered_list = new ArrayList<String>(ds.ordered_list_including_files);
-
-      for (String inf : ds.incFileList)
-      {
-        ArrayList<String> toBeAdded = fileDataMap_thisModel.get(inf).ordered_list;
-
-        int pos = new_ordered_list.indexOf(inf);
-        new_ordered_list.addAll(pos, toBeAdded);
-        new_ordered_list.remove(inf);
-      }
-      orderListMap.put(f, new_ordered_list);
+    //------------------------------------------------
+    // initialize
+    for (String f: sortedFileList){
+    	ArrayList<String> toBeAdded = new ArrayList<String>(fileDataMap_thisModel.get(f).ordered_list_including_files);
+    	orderListMap.put(f, toBeAdded);
     }
+    
+    // iterate
+
+			for (String f : sortedFileList) {
+				SimulationDataSet ds = fileDataMap_thisModel.get(f);
+
+				ArrayList<String> new_ordered_list = new ArrayList<String>(ds.ordered_list_including_files);
+
+				// System.out.println(" new ordered_list_include_files: " +
+				// new_ordered_list);
+
+				for (String inf : ds.incFileList) {
+					ArrayList<String> toBeAdded = orderListMap.get(inf);
+
+					// System.out.println(" new ordered_list before: " +
+					// new_ordered_list);
+					// System.out.println(" toBeAdded: " + toBeAdded);
+
+					int pos = new_ordered_list.indexOf(inf);
+					new_ordered_list.addAll(pos, toBeAdded);
+					new_ordered_list.remove(inf);
+				}
+				orderListMap.put(f, new_ordered_list);
+				System.out.println(" order list Map: " + orderListMap);
+			}
+
+
+
+    //--------------------------------------------------
 
     complete_ordered_list = new ArrayList<String>(adhoc.ordered_list_including_files);
 

@@ -1,0 +1,23 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+	
+MODEL firsT { 
+
+
+
+
+include 'z.wresl'
+	
+}	
+
+
+
+	
+
+	 
+
+
+ 
