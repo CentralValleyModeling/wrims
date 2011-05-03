@@ -426,18 +426,22 @@ public class Tools {
 		
 		return out;
 	}
-	  public static Set<String> restoreOrder(ArrayList<String> toBeRestored, ArrayList<String> referenceOrder, Set<String> member)
-  {
-    ArrayList<String> orderedList = new ArrayList<String>(referenceOrder);
+	
+	public static Set<String> restoreOrder(ArrayList<String> toBeRestored, ArrayList<String> referenceOrder,
+			Set<String> member) {
 
-    Set<String> nonMember = new HashSet<String>(referenceOrder); nonMember.removeAll(member);
+		ArrayList<String> orderedList = new ArrayList<String>(referenceOrder);
 
-    orderedList.removeAll(nonMember);
+		Set<String> nonMember = new HashSet<String>(referenceOrder);
+		nonMember.removeAll(member);
 
-    toBeRestored = orderedList;
+		orderedList.removeAll(nonMember);
 
-    return new LinkedHashSet<String>(orderedList);
-  }
+		toBeRestored = orderedList;
+
+		return new LinkedHashSet<String>(orderedList);
+	}
+	  
 	  public static Set<String> removeDuplicates(ArrayList<String> list)
 	  {
 	    Set<String> s = new LinkedHashSet<String>(list);

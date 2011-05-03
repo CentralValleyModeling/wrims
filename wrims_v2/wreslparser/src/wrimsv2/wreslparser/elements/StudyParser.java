@@ -129,11 +129,11 @@ public class StudyParser
 
     for (Integer iSequence : sc.sequenceOrder)
     {
-      String modelName = ((Sequence)sc.sequenceMap.get(iSequence)).modelName;
+      String modelName = sc.sequenceMap.get(iSequence).modelName;
 
       LogUtils.importantMsg("Processing sequence: " + iSequence + ", model: " + modelName);
 
-      SimulationDataSet adhoc = (SimulationDataSet)sc.modelDataMap.get(modelName);
+      SimulationDataSet adhoc = sc.modelDataMap.get(modelName);
 
       Map<String, SimulationDataSet> fileDataMap_new = getNewDataSet(adhoc.incFileSet, td.fileDataMap_wholeStudy.keySet());
 
@@ -261,9 +261,10 @@ public class StudyParser
     Set<String> var_with_unknown = sortSV.sort(sortedSvList);
     if (var_with_unknown.size() > 0) OK = false;
 
+    model_dataset.svSet_unknown = var_with_unknown;
+    
     if (rewrite_list_based_on_dependency) {
       model_dataset.svList = sortedSvList;
-      model_dataset.svSet_unknown = var_with_unknown;
       model_dataset.svList.addAll(model_dataset.svSet_unknown);
     }
 
@@ -274,9 +275,10 @@ public class StudyParser
     var_with_unknown = sortAs.sort(sortedAsList);
     if (var_with_unknown.size() > 0) OK = false;
 
+    model_dataset.asSet_unknown = var_with_unknown;
+    
     if (rewrite_list_based_on_dependency) {
       model_dataset.asList = sortedAsList;
-      model_dataset.asSet_unknown = var_with_unknown;
       model_dataset.asList.addAll(model_dataset.asSet_unknown);
     }
 
