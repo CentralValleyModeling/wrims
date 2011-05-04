@@ -42,7 +42,7 @@ define sv2 {
 }	
 
 
-MODEL second{ 
+MODEL second { 
 
   define as {alias C_SacFea+D_SacFea  kind 'this-is-wrong' units 'cfs'}
   define ts {timeseries kind 'this-is-wrong' units 'IN'} 

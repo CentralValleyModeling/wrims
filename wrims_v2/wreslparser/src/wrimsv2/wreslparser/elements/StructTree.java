@@ -66,11 +66,13 @@ public class StructTree
     this.S.wtSet.add(name);
 
     if (scope == null) {
-      this.S.wtList_global.add(name); this.S.wtSet_global.add(name);
-    } else if (scope.equalsIgnoreCase(Param.local)) {
-      this.S.wtList_local.add(name); this.S.wtSet_local.add(name); } else {
+      this.S.wtList_global.add(name); this.S.wtSet_global.add(name);} 
+    else if (scope.equalsIgnoreCase(Param.local)) {
+      this.S.wtList_local.add(name); this.S.wtSet_local.add(name); } 
+    else {
       LogUtils.errMsg("Weight table scope undefined: " + name, this.S.currentAbsolutePath);
     }
+    
   }
 
   public void includeFile(String fileRelativePath, String scope)
@@ -113,10 +115,12 @@ public class StructTree
       this.incFile.scope = Param.global;
 
       this.S.ordered_list_including_files_global.add(absIncludeFilePath);
-    } else if (scope.equalsIgnoreCase(Param.local)) {
+    } 
+    else if (scope.equalsIgnoreCase(Param.local)) {
       this.S.incFileList_local.add(absIncludeFilePath);
       this.S.incFileSet_local.add(absIncludeFilePath);
-      this.incFile.scope = Param.local; } else {
+      this.incFile.scope = Param.local; } 
+    else {
       LogUtils.errMsg("Include file scope undefined: " + fileRelativePath, this.S.currentAbsolutePath);
     }
   }
@@ -207,10 +211,8 @@ public class StructTree
 
     this.as = new Alias();
 
-    if (kind != null)
-      this.as.kind = kind;
-    if (units != null)
-      this.as.units = units;
+    if (kind != null)  this.as.kind = kind;
+    if (units != null) this.as.units = units;
     this.as.expression = expression;
     this.as.fromWresl = this.S.currentAbsolutePath;
     if (dependants != null) this.as.dependants = Tools.convertStrToSet(dependants);
@@ -456,8 +458,8 @@ public class StructTree
   public void dvarStd(String name, String scope, String integer, String kind, String units)
   {
     name = name.toLowerCase();
-    kind = kind.toLowerCase();
-    units = units.toLowerCase();
+    if (kind.length()>0) kind = kind.toLowerCase();
+    if (units.length()>0) units = units.toLowerCase();
 
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("Dvar redefined: " + name, "\n" + this.S.currentAbsolutePath);
@@ -473,9 +475,10 @@ public class StructTree
     this.S.dvSet.add(name);
 
     this.dv = new Dvar();
-
-    this.dv.kind = kind;
-    this.dv.units = units;
+    System.out.println("units: "+units);
+    System.out.println("this units: "+this.dv.units);
+    if (kind.length()>0)  this.dv.kind = kind;
+    if (units.length()>0) this.dv.units = units;
     this.dv.lowerBound = Param.dv_lowerBound;
     this.dv.upperBound = Param.dv_upperBound;
     this.dv.fromWresl = this.S.currentAbsolutePath;
@@ -504,8 +507,8 @@ public class StructTree
   public void dvarNonStd(String name, String scope, String kind, String units, String lowerBound, String upperBound)
   {
     name = name.toLowerCase();
-    kind = kind.toLowerCase();
-    units = units.toLowerCase();
+    if (kind != null) kind = kind.toLowerCase();
+    if (units != null) units = units.toLowerCase();
     lowerBound = lowerBound.toLowerCase();
     upperBound = upperBound.toLowerCase();
 
@@ -522,8 +525,8 @@ public class StructTree
 
     this.dv = new Dvar();
 
-    this.dv.kind = kind;
-    this.dv.units = units;
+    if (kind != null)  this.dv.kind = kind;
+    if (units != null) this.dv.units = units;
     this.dv.lowerBound = lowerBound;
     this.dv.upperBound = upperBound;
     this.dv.fromWresl = this.S.currentAbsolutePath;

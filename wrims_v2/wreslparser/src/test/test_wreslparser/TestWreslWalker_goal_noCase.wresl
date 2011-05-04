@@ -11,7 +11,7 @@ goal Goal_1 {
     lhs     x
     rhs     y + z
     lhs>rhs     constrain
-    lhs<rhs     penalty 700.0 
+    lhs<rhs     penalty 500.0 
 
 }
 
@@ -19,7 +19,7 @@ goal Goal_2 {
 
     lhs     x
     rhs     y + z
-    lhs<rhs     penalty 700.0 
+    lhs<rhs     penalty 600.0 
     lhs>rhs     constrain
 }
 
@@ -35,6 +35,7 @@ goal Goal_4 {
     lhs     x
     rhs     y + z
     lhs>rhs     penalty 700.0 
+	lhs<rhs     penalty 0 
 }	
 	}	
 

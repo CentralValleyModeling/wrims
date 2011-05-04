@@ -200,15 +200,57 @@ goal_case
 
 goal_contents returns[String str] : c1=goal_content c2=goal_content? 
 		{ 
-		  if (c2!=null) { $str = $c1.str+" | "+$c2.str; }
-		  else	        { $str = $c1.str+" | "; }		  				
-		} 
+		  
+		
+		  if (c2!=null) {
+		   
+		  		if ( $c1.hasDvar && $c2.hasDvar ) { 
+		  				
+		  			$str = $c1.lhs + $c1.ss + $c2.ss + "=" + $c1.rhs ;
+		  			 
+		  		} else if  ( $c1.hasDvar) {
+		  		
+		  			$str = $c1.lhs + $c1.ss + "=" + $c1.rhs ; 
+		  		
+		  		} else if ( $c2.hasDvar) {
+		  		
+		  			$str = $c2.lhs + $c2.ss + "=" + $c2.rhs; 
+		  			
+		  		} else {  
+		  		
+		  			$str = $c1.lhs+"="+$c1.rhs ;
+		  			
+		  		}
+		  
+		  } else { 
+		  
+		  		if ( $c1.hasDvar ) { 
+		  		
+		   			$str = $c1.lhs + $c1.ss + "=" + $c1.rhs ; 
+		   			
+		   		} else {  
+		   		
+		   			$str = $c1.str ;   
+		   		
+		   		}		  				
+		  }  
+			
+	}
 		;
 
-goal_content returns[String str]
+goal_content returns[boolean hasDvar, String str, String ss, String weight, String lhs, String rhs]
+@init{$hasDvar=false; String kind=null;}
 	: 
-		 l=Lhs o=Op r=Rhs s=Separator w=Weight
-		 { $str = $l.text + $o.text + $r.text + $s.text + $w.text;  } 
+		 l=Lhs o=Op r=Rhs   ( Sign  Kind  s=Slack_Surplus  w=Weight  )?
+		 
+		 {  $str = $l.text + $o.text + $r.text; 
+		 
+		    if (s!=null) { 
+		    	F.dvarStd($s.text, Param.local, null, $Kind.text, "");  
+		    	F.mergeWeightTable($s.text, $w.text, Param.local);
+		 		$hasDvar = true; $ss = $Sign.text + $s.text; $weight = $w.text; $lhs = $l.text; $rhs = $r.text; 
+		 	}
+		 } 
 	;
 
 

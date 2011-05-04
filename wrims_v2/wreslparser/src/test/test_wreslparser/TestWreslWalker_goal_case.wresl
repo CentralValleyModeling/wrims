@@ -29,8 +29,8 @@ goal[local] local_goal {
   case case2 {
     condition   int( B2On )==0
     rhs     z
-    lhs>rhs     constrain
-    lhs<rhs     penalty 0 }
+    lhs<rhs     constrain
+    lhs>rhs     penalty 10 }
 }
 
 }	
