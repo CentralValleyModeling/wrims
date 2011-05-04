@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import org.antlr.runtime.RecognitionException;
@@ -14,10 +15,11 @@ import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.wreslparser.grammar.WreslTreeWalker;
 
-public class StudyParser
-{
-  public static StudyDataSet writeWreslData(StudyConfig sc, TempData td)
-  {
+public class StudyParser{
+	
+  public static int total_errors = 0;	
+	
+  public static StudyDataSet writeWreslData(StudyConfig sc, TempData td){
     StudyDataSet studyDataSet = new StudyDataSet();
 
     studyDataSet.setModelList(sc.modelList);
@@ -81,6 +83,8 @@ public class StudyParser
   }
 
   public static StudyConfig processMainFileIntoStudyConfig(String relativeMainFilePath) throws RecognitionException, IOException {
+	    /// reset total errors
+	    total_errors = 0;
     return processMainFileIntoStudyConfig(relativeMainFilePath, false);
   }
 
@@ -152,7 +156,7 @@ public class StudyParser
       
 
       if (duplicates.size() > 0) {
-        LogUtils.errMsg("Variables redefined. Model: " + modelName + "; Variables: " + duplicates);
+        LogUtils.errMsg("Variables redefined in model " + modelName + ": " + duplicates);
       }
 
       
@@ -170,8 +174,33 @@ public class StudyParser
       td.t1Map_wholeStudy.put(sc.absMainFilePath, adhoc.incFileSet);
       Map<String, Set<String>> t1ReverseMap_wholeStudy = Tools.getReverseMap(td.t1Map_wholeStudy);
 
-      model_dataset.overwrite_set(td.cumulative_global_complete);
+      
+      /// add previous globals
+      LogUtils.importantMsg("Adding previous global vars into model: "+modelName);
 
+      
+      /// check for redefined file
+      Set<String> redefined_globals = new LinkedHashSet<String>(td.cumulative_global_complete.incFileSet);
+      redefined_globals.retainAll(model_dataset.incFileSet);
+      if (redefined_globals.size()>0) LogUtils.errMsg("Global include files redefined: "+ redefined_globals); 
+      
+      /// check for redefined globals
+      redefined_globals = new LinkedHashSet<String>(td.cumulative_global_complete.getAllVarsSet_except_file_and_weight());
+      redefined_globals.retainAll(model_dataset.getAllVarsSet_except_file_and_weight());
+      if (redefined_globals.size()>0) LogUtils.errMsg("Global variables redefined: "+ redefined_globals);
+      
+      /// check for redefined weight
+      redefined_globals = new LinkedHashSet<String>(td.cumulative_global_complete.wtSet);
+      redefined_globals.retainAll(model_dataset.wtSet);
+      if (redefined_globals.size()>0) LogUtils.errMsg("Global weights redefined: "+ redefined_globals);      
+      
+      /// add previous globals
+      model_dataset.overwrite_set(td.cumulative_global_complete);
+      LogUtils.importantMsg("Finish adding previous global vars into model: "+modelName);
+      /// finish adding globals
+      
+
+      
       lousyConvert(model_dataset);
 
       sortDependency(model_dataset, rewrite_list_based_on_dependency);   
@@ -185,7 +214,9 @@ public class StudyParser
       lousyConvert(td.cumulative_global_complete);
     }
 
+
     return model_dataset_map;
+    
   }
 
   public static Map<String, SimulationDataSet> getNewDataSet(Set<String> adhoc_incFileSet, Set<String> fileDataMap_wholeStudy_keySet) throws RecognitionException, IOException
@@ -369,7 +400,7 @@ public class StudyParser
 					new_ordered_list.remove(inf);
 				}
 				orderListMap.put(f, new_ordered_list);
-				System.out.println(" order list Map: " + orderListMap);
+				//System.out.println(" order list Map: " + orderListMap);
 			}
 
 

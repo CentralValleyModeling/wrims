@@ -38,7 +38,7 @@ public class StructTree
 
     if (this.S.model_list.contains(name)) {
       LogUtils.errMsg("Model redefined: " + name, this.S.currentAbsolutePath);
-      this.S.error_model_redefined.add(name); this.S.errors_total += 1;
+      this.S.error_model_redefined.add(name); 
     }
     else {
       this.S.model_list.add(name);
@@ -53,8 +53,8 @@ public class StructTree
 
     if (this.S.wtList.contains(name)) {
       LogUtils.errMsg("Weight table variable redefined: " + name, this.S.currentAbsolutePath);
-      this.S.error_weightVar_redefined.put(name, this.S.currentAbsolutePath); this.S.errors_total += 1;
-      this.S.wtList.remove(name); this.S.wtList_global.remove(name); this.S.wtList_local.remove(name);
+      this.S.error_weightVar_redefined.put(name, this.S.currentAbsolutePath); 
+      //this.S.wtList.remove(name); this.S.wtList_global.remove(name); this.S.wtList_local.remove(name);
     }
 
     this.wt = new WeightElement();
@@ -66,11 +66,13 @@ public class StructTree
     this.S.wtSet.add(name);
 
     if (scope == null) {
-      this.S.wtList_global.add(name); this.S.wtSet_global.add(name);
-    } else if (scope.equalsIgnoreCase(Param.local)) {
-      this.S.wtList_local.add(name); this.S.wtSet_local.add(name); } else {
+      this.S.wtList_global.add(name); this.S.wtSet_global.add(name);} 
+    else if (scope.equalsIgnoreCase(Param.local)) {
+      this.S.wtList_local.add(name); this.S.wtSet_local.add(name); } 
+    else {
       LogUtils.errMsg("Weight table scope undefined: " + name, this.S.currentAbsolutePath);
     }
+    
   }
 
   public void includeFile(String fileRelativePath, String scope)
@@ -90,8 +92,8 @@ public class StructTree
 
     if (this.S.var_all.containsKey(absIncludeFilePath)) {
       LogUtils.errMsg("Include file redefined: " + fileRelativePath, this.S.currentAbsolutePath);
-      this.S.error_var_redefined.put(absIncludeFilePath, "file"); this.S.errors_total += 1;
-      this.S.incFileList.remove(absIncludeFilePath); this.S.incFileList_global.remove(absIncludeFilePath); this.S.incFileList_local.remove(absIncludeFilePath);
+      this.S.error_var_redefined.put(absIncludeFilePath, "file"); 
+      //this.S.incFileList.remove(absIncludeFilePath); this.S.incFileList_global.remove(absIncludeFilePath); this.S.incFileList_local.remove(absIncludeFilePath);
     }
 
     this.S.ordered_list_including_files.add(absIncludeFilePath);
@@ -113,10 +115,12 @@ public class StructTree
       this.incFile.scope = Param.global;
 
       this.S.ordered_list_including_files_global.add(absIncludeFilePath);
-    } else if (scope.equalsIgnoreCase(Param.local)) {
+    } 
+    else if (scope.equalsIgnoreCase(Param.local)) {
       this.S.incFileList_local.add(absIncludeFilePath);
       this.S.incFileSet_local.add(absIncludeFilePath);
-      this.incFile.scope = Param.local; } else {
+      this.incFile.scope = Param.local; } 
+    else {
       LogUtils.errMsg("Include file scope undefined: " + fileRelativePath, this.S.currentAbsolutePath);
     }
   }
@@ -128,8 +132,8 @@ public class StructTree
 
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("Goal redefined: " + name, this.S.currentAbsolutePath);
-      this.S.error_var_redefined.put(name, "goal"); this.S.errors_total += 1;
-      this.S.gList.remove(name); this.S.gList_global.remove(name); this.S.gList_local.remove(name);
+      this.S.error_var_redefined.put(name, "goal"); 
+     // this.S.gList.remove(name); this.S.gList_global.remove(name); this.S.gList_local.remove(name);
     }
 
     this.S.ordered_list.add(name);
@@ -162,8 +166,8 @@ public class StructTree
 
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("Goal redefined: " + name, this.S.currentAbsolutePath);
-      this.S.error_var_redefined.put(name, "goal"); this.S.errors_total += 1;
-      this.S.gList.remove(name); this.S.gList_global.remove(name); this.S.gList_local.remove(name);
+      this.S.error_var_redefined.put(name, "goal"); 
+     // this.S.gList.remove(name); this.S.gList_global.remove(name); this.S.gList_local.remove(name);
     }
 
     this.S.ordered_list.add(name);
@@ -196,8 +200,8 @@ public class StructTree
 
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("Alias redefined: " + name, this.S.currentAbsolutePath);
-      this.S.error_var_redefined.put(name, "alias"); this.S.errors_total += 1;
-      this.S.asList.remove(name); this.S.asList_global.remove(name); this.S.asList_local.remove(name);
+      this.S.error_var_redefined.put(name, "alias"); 
+      //this.S.asList.remove(name); this.S.asList_global.remove(name); this.S.asList_local.remove(name);
     }
 
     this.S.ordered_list.add(name);
@@ -207,10 +211,8 @@ public class StructTree
 
     this.as = new Alias();
 
-    if (kind != null)
-      this.as.kind = kind;
-    if (units != null)
-      this.as.units = units;
+    if (kind != null)  this.as.kind = kind;
+    if (units != null) this.as.units = units;
     this.as.expression = expression;
     this.as.fromWresl = this.S.currentAbsolutePath;
     if (dependants != null) this.as.dependants = Tools.convertStrToSet(dependants);
@@ -236,8 +238,8 @@ public class StructTree
 
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("Svar redefined: " + name, this.S.currentAbsolutePath);
-      this.S.error_var_redefined.put(name, "svar"); this.S.errors_total += 1;
-      this.S.svList.remove(name); this.S.svList_global.remove(name); this.S.svList_local.remove(name);
+      this.S.error_var_redefined.put(name, "svar"); 
+      //this.S.svList.remove(name); this.S.svList_global.remove(name); this.S.svList_local.remove(name);
     }
 
     this.S.ordered_list.add(name);
@@ -270,8 +272,8 @@ public class StructTree
 
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("External variable redefined: " + name, this.S.currentAbsolutePath);
-      this.S.error_var_redefined.put(name, "external"); this.S.errors_total += 1;
-      this.S.exList.remove(name); this.S.exList_global.remove(name); this.S.exList_local.remove(name);
+      this.S.error_var_redefined.put(name, "external"); 
+      //this.S.exList.remove(name); this.S.exList_global.remove(name); this.S.exList_local.remove(name);
     }
 
     this.S.var_all.put(name, "external");
@@ -301,8 +303,8 @@ public class StructTree
 
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("State variable redefined: " + name, this.S.currentAbsolutePath);
-      this.S.error_var_redefined.put(name, "svar"); this.S.errors_total += 1;
-      this.S.svList.remove(name); this.S.svList_global.remove(name); this.S.svList_local.remove(name);
+      this.S.error_var_redefined.put(name, "svar"); 
+      //this.S.svList.remove(name); this.S.svList_global.remove(name); this.S.svList_local.remove(name);
     }
 
     this.S.ordered_list.add(name);
@@ -345,8 +347,8 @@ public class StructTree
 
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("State variable redefined: " + name, this.S.currentAbsolutePath);
-      this.S.error_var_redefined.put(name, "svar"); this.S.errors_total += 1;
-      this.S.svList.remove(name); this.S.svList_global.remove(name); this.S.svList_local.remove(name);
+      this.S.error_var_redefined.put(name, "svar"); 
+      //this.S.svList.remove(name); this.S.svList_global.remove(name); this.S.svList_local.remove(name);
     }
 
     this.S.ordered_list.add(name);
@@ -384,8 +386,8 @@ public class StructTree
 
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("State variable redefined: " + name, this.S.currentAbsolutePath);
-      this.S.error_var_redefined.put(name, "svar"); this.S.errors_total += 1;
-      this.S.svList.remove(name); this.S.svList_global.remove(name); this.S.svList_local.remove(name);
+      this.S.error_var_redefined.put(name, "svar"); 
+      //this.S.svList.remove(name); this.S.svList_global.remove(name); this.S.svList_local.remove(name);
     }
 
     this.S.ordered_list.add(name);
@@ -426,8 +428,8 @@ public class StructTree
 
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("State variable redefined: " + name, this.S.currentAbsolutePath);
-      this.S.error_var_redefined.put(name, "timeseries"); this.S.errors_total += 1;
-      this.S.tsList.remove(name); this.S.tsList_global.remove(name); this.S.tsList_local.remove(name);
+      this.S.error_var_redefined.put(name, "timeseries"); 
+      //this.S.tsList.remove(name); this.S.tsList_global.remove(name); this.S.tsList_local.remove(name);
     }
 
     this.S.var_all.put(name, "timeseries");
@@ -456,13 +458,13 @@ public class StructTree
   public void dvarStd(String name, String scope, String integer, String kind, String units)
   {
     name = name.toLowerCase();
-    kind = kind.toLowerCase();
-    units = units.toLowerCase();
+    if (kind.length()>0) kind = kind.toLowerCase();
+    if (units.length()>0) units = units.toLowerCase();
 
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("Dvar redefined: " + name, "\n" + this.S.currentAbsolutePath);
-      this.S.error_var_redefined.put(name, "dvar"); this.S.errors_total += 1;
-      this.S.dvList.remove(name); this.S.dvList_global.remove(name); this.S.dvList_local.remove(name);
+      this.S.error_var_redefined.put(name, "dvar"); 
+     // this.S.dvList.remove(name); this.S.dvList_global.remove(name); this.S.dvList_local.remove(name);
     }
 
     this.S.ordered_list.add(name);
@@ -473,9 +475,8 @@ public class StructTree
     this.S.dvSet.add(name);
 
     this.dv = new Dvar();
-
-    this.dv.kind = kind;
-    this.dv.units = units;
+    if (kind.length()>0)  this.dv.kind = kind;
+    if (units.length()>0) this.dv.units = units;
     this.dv.lowerBound = Param.dv_lowerBound;
     this.dv.upperBound = Param.dv_upperBound;
     this.dv.fromWresl = this.S.currentAbsolutePath;
@@ -504,15 +505,15 @@ public class StructTree
   public void dvarNonStd(String name, String scope, String kind, String units, String lowerBound, String upperBound)
   {
     name = name.toLowerCase();
-    kind = kind.toLowerCase();
-    units = units.toLowerCase();
+    if (kind != null) kind = kind.toLowerCase();
+    if (units != null) units = units.toLowerCase();
     lowerBound = lowerBound.toLowerCase();
     upperBound = upperBound.toLowerCase();
 
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("Dvar redefined: " + name, this.S.currentAbsolutePath);
-      this.S.error_var_redefined.put(name, "dvar"); this.S.errors_total += 1;
-      this.S.dvList.remove(name); this.S.dvList_global.remove(name); this.S.dvList_local.remove(name);
+      this.S.error_var_redefined.put(name, "dvar"); 
+     // this.S.dvList.remove(name); this.S.dvList_global.remove(name); this.S.dvList_local.remove(name);
     }
 
     this.S.ordered_list.add(name);
@@ -522,8 +523,8 @@ public class StructTree
 
     this.dv = new Dvar();
 
-    this.dv.kind = kind;
-    this.dv.units = units;
+    if (kind != null)  this.dv.kind = kind;
+    if (units != null) this.dv.units = units;
     this.dv.lowerBound = lowerBound;
     this.dv.upperBound = upperBound;
     this.dv.fromWresl = this.S.currentAbsolutePath;
@@ -551,9 +552,9 @@ public class StructTree
     Integer i = Integer.valueOf(Integer.parseInt(order));
 
     if (this.S.seqList.contains(sequenceName)) {
-      this.S.error_sequence_redefined.add(sequenceName); this.S.errors_total += 1;
+      this.S.error_sequence_redefined.add(sequenceName); 
     } else if (this.S.seqMap.containsKey(i)) {
-      this.S.error_sequence_order_redefined.add(i); this.S.errors_total += 1;
+      this.S.error_sequence_order_redefined.add(i); 
     }
     else {
       this.seq = new Sequence();

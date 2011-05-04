@@ -2,6 +2,7 @@ package wrimsv2.wreslparser.elements;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -17,7 +18,6 @@ public class SimulationDataSet
 {
   public String currentAbsolutePath;
   public String currentAbsoluteParent;
-  public int errors_total = 0;
 
   public ArrayList<String> model_list = new ArrayList<String>();
   public ArrayList<String> error_model_redefined = new ArrayList<String>();
@@ -597,10 +597,13 @@ public class SimulationDataSet
     return this;
   }
 
-  public SimulationDataSet overwrite_set(SimulationDataSet s) {
+  public SimulationDataSet overwrite_set(SimulationDataSet s) { 
+	  return overwrite_set(s, false);
+  }
+  public SimulationDataSet overwrite_set(SimulationDataSet s, boolean errMessage) {
 	  
-		this.ordered_list_including_files.addAll(0,s.ordered_list_including_files);  
-		this.ordered_list.addAll(0,s.ordered_list);   
+//		this.ordered_list_including_files.addAll(0,s.ordered_list_including_files);  
+//		this.ordered_list.addAll(0,s.ordered_list);   
 	  
     SimulationDataSet x = new SimulationDataSet();
     x.overwrittenWith_set(s);
@@ -792,8 +795,8 @@ public class SimulationDataSet
     return out;
   }
 
-  public SimulationDataSet convertToLocal_set()
-  {
+  public SimulationDataSet convertToLocal_set(){
+	  
     this.asSet_local.addAll(this.asSet);
     this.asSet_global.clear();
 
@@ -819,5 +822,18 @@ public class SimulationDataSet
     this.incFileSet_global.clear();
 
     return this;
+  }
+
+public Set<String> getAllVarsSet_except_file_and_weight(){
+	
+	Set<String> out = new HashSet<String>();
+	
+	out.addAll(this.asSet);
+	out.addAll(this.dvSet);
+	out.addAll(this.svSet);
+	out.addAll(this.gSet);
+	out.addAll(this.exSet);
+
+    return out;
   }
 }

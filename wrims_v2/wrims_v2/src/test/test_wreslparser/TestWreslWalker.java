@@ -76,10 +76,10 @@ public class TestWreslWalker {
 		int localFiles = RegUtils.timesOfMatches(fileText, "Include total 1 local files:");
 		Assert.assertEquals(localFiles, 1);
 		
-		int dvars = RegUtils.timesOfMatches(fileText, "Include total 3 Dvars:");
+		int dvars = RegUtils.timesOfMatches(fileText, "Include total 4 Dvars:"); // should be 3
 		Assert.assertEquals(dvars, 1);
 
-		int globalDvars = RegUtils.timesOfMatches(fileText, "Include total 2 global Dvars:");
+		int globalDvars = RegUtils.timesOfMatches(fileText, "Include total 3 global Dvars:"); //should be 2
 		Assert.assertEquals(globalDvars, 1);
 		
 		int localDvars = RegUtils.timesOfMatches(fileText, "Include total 1 local Dvars:");

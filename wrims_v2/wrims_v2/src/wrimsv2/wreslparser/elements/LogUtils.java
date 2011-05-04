@@ -207,6 +207,8 @@ public class LogUtils {
 	}	
 	
 	public static void errMsg(String msg){
+		
+		 StudyParser.total_errors++;
 
 		 System.out.println("# Error: "+msg);
 		 _logFile.println("# Error: "+msg);

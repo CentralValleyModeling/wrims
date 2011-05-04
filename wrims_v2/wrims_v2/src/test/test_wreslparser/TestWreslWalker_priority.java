@@ -55,7 +55,7 @@ public class TestWreslWalker_priority {
 		Assert.assertEquals(wrong, 0);
 		
 		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
-		Assert.assertEquals(totalErrs, 0);	
+		Assert.assertEquals(totalErrs, 1);	
 		
 		int Errs = RegUtils.timesOfMatches(fileText, "# Error: Decision varriable redefined: watch_this in files: ");
 		Assert.assertEquals(Errs, 0);	

@@ -1,0 +1,60 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }	
+
+MODEL first { 
+
+   include 't.wresl'
+   include 'weight-table.wresl'
+  define dv {std kind 'fist-model-only' units 'TAF'}
+  define ts {timeseries kind 'fist-model-only' units 'IN'}  
+  define sv { value first_model_only }  
+  define[local] sv2 { value 3 }   
+  define as {alias C_SacFea+D_SacFea  kind 'fist-model-only' units 'cfs'}
+  define tab { select target from res_level where res_num=1,level=4,month=month }	
+  
+  goal gl {
+	  lhs C3_M
+	  case ActionOn {
+		condition  first-mmodel-only>0
+		rhs     minflow_C
+		lhs>rhs     constrain
+		lhs<rhs     penalty 700. }
+	  case ActionOff {
+		condition   x==2.3.or.month==Apr.or. month==Jun
+		rhs     clear_min
+		lhs>rhs     constrain
+		lhs<rhs     penalty 0 }
+  }
+}	
+
+MODEL second { 
+
+   include 'w.wresl'
+   include 'weight-table.wresl'
+  define dv {std kind 'fist-model-only' units 'TAF'}
+  define ts {timeseries kind 'fist-model-only' units 'IN'}  
+  define sv { value first_model_only }  
+  define[local] sv2 { value 3 }  
+  define as {alias C_SacFea+D_SacFea  kind 'fist-model-only' units 'cfs'}
+  define tab { select target from res_level where res_num=1,level=4,month=month }	
+  
+  goal gl {
+	  lhs C3_M
+	  case ActionOn {
+		condition  first-mmodel-only>0
+		rhs     minflow_C
+		lhs>rhs     constrain
+		lhs<rhs     penalty 700. }
+	  case ActionOff {
+		condition   x==2.3.or.month==Apr.or. month==Jun
+		rhs     clear_min
+		lhs>rhs     constrain
+		lhs<rhs     penalty 0 }
+  }
+}	

@@ -8,7 +8,7 @@ options {
 }
 tokens {
 	NEGATION;
-	NEW_LINE; Op; Separator;
+	NEW_LINE; Op; Separator; Slack_Surplus; Sign;
 	Weight_table; Assignment; External;
 	Local; Global; Scope;
 	Value; Case ; Dependants;
@@ -161,7 +161,9 @@ alias : DEFINE ( '[' sc=LOCAL? ']' )? i=IDENT '{' ALIAS e=expression (KIND k=STR
 	->  ^(Alias Scope[$sc.text] $i Expression[$e.text] Kind[$k.text] Units[$u.text] Dependants[$e.dependants])
 	;	
 
-goal : GOAL! (goal_simple | goal_case_or_nocase  );
+goal
+scope { String goalName; String caseName;} 
+	: GOAL! (goal_simple | goal_case_or_nocase  );
 
 goal_simple
 	:  ( '[' sc=LOCAL? ']' )? i=IDENT '{' v=constraint_statement '}'	
@@ -169,22 +171,26 @@ goal_simple
 	;
 
 goal_case_or_nocase 
-	:  ( '[' s=LOCAL? ']' )? i=IDENT '{' LHS l=expression 
+	:  ( '[' s=LOCAL? ']' )? i=IDENT { $goal::goalName = $i.text;  } 
+	'{' LHS l=expression 
 	( 
 	  ( goal_no_case_content[$l.text] ->  ^( Goal_no_case Scope[$s.text] $i goal_no_case_content )  ) 	
     | ( goal_case_content[$l.text]+   ->  ^( Goal_case    Scope[$s.text] $i goal_case_content+ )   )
     ) '}' 
 	;
 
-goal_case_content[String l] : 
-	CASE i=IDENT '{' c=condition RHS r=expression (s=sub_content[$l,$r.text])? '}'
+goal_case_content[String l] 
+	: CASE i=IDENT { $goal::caseName = $i.text;  } 
+	'{' c=condition RHS r=expression (s=sub_content[$l,$r.text])? '}'
 	-> {s!=null}? ^( Case $i Condition[$c.text] $s )
-	->            ^( Case $i Condition[$c.text] Lhs[$l] Op["="] Rhs[$r.text] Separator[""] Weight[""])
+	->            ^( Case $i Condition[$c.text] Lhs[$l] Op["="] Rhs[$r.text] )
 	;
 
-goal_no_case_content[String l] : RHS r=expression (s=sub_content[$l,$r.text])?
+goal_no_case_content[String l] 
+@init{ $goal::caseName = "default";}
+	: RHS r=expression (s=sub_content[$l,$r.text])?
        -> {s!=null}? $s 
-       ->            Lhs[$l] Op["="] Rhs[$r.text] Separator[""] Weight[""]
+       ->            Lhs[$l] Op["="] Rhs[$r.text] 
        ;
 	
 sub_content[String l, String r] 
@@ -195,15 +201,15 @@ sub_content[String l, String r]
 lhs_gt_rhs[String l, String r] 
 	: 
 LHS '>' RHS 
-	( ( CONSTRAIN -> Lhs[$l] Op[">"] Rhs[$r]         Separator[""] Weight[""] )
-	| ( p=penalty -> Lhs[$l] Op["-"] Rhs["("+$r+")"] Separator[":"] Weight["-"+$p.w] )
+	( ( CONSTRAIN -> Lhs[$l] Op["<"] Rhs[$r]  )
+	| ( p=penalty -> Lhs[$l] Op["="] Rhs[$r] Sign["-"] Kind["surplus"] Slack_Surplus["surplus_"+$goal::goalName+"_"+$goal::caseName] Weight["-"+$p.w] )
 	);
 
 lhs_lt_rhs[String l, String r] 
 	: 
 LHS '<' RHS 
-	( ( CONSTRAIN -> Lhs[$l] Op["<"] Rhs[$r]         Separator[""] Weight[""] )
-	| ( p=penalty -> Lhs[$r] Op["-"] Rhs["("+$l+")"] Separator[":"] Weight["-"+$p.w] )
+	( ( CONSTRAIN -> Lhs[$l] Op[">"] Rhs[$r] )
+	| ( p=penalty -> Lhs[$l] Op["="] Rhs[$r] Sign["+"] Kind["slack"] Slack_Surplus["slack_"+$goal::goalName+"_"+$goal::caseName]  Weight["-"+$p.w] )
 	);
 
 penalty returns[String w]: PENALTY n=expression {$w=$n.text;} ;

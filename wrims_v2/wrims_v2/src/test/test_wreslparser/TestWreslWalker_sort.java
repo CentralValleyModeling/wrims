@@ -207,7 +207,7 @@ public class TestWreslWalker_sort {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 3);		
+		Assert.assertEquals(totalErrs, 4);		
 		
 		System.out.println("#### orderList: "+sd.getModelDataSetMap().get(modelName).asList);
 		
