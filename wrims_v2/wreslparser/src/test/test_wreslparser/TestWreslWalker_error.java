@@ -55,9 +55,9 @@ public class TestWreslWalker_error {
 		String logText = Tools.readFileAsString(logFilePath);	
 
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 5);	
+		Assert.assertEquals(totalErrs, 7);	
 		
-
+		Assert.assertEquals(StudyParser.total_errors, 7);	
 		
 		Assert.assertEquals(sd.getModelDataSetMap().get("second").tsMap.get("ts").kind,"second-model-only" );
 		Assert.assertEquals(sd.getModelDataSetMap().get("second").svMap.get("sv").caseExpression.get(0),"second_model_only" );
@@ -69,6 +69,44 @@ public class TestWreslWalker_error {
 		Assert.assertEquals(sd.getModelDataSetMap().get("second").svMap.get("tab").dependants.toString(),"[second_model_only]" );
 		//		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).gList_local.get(0),"a2" );
 
+	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void redefine_global() throws RecognitionException, IOException {
+		
+		csvFolderPath = "TestWreslWalker_error_redefine_global";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		//String modelName = sd.getModelList().get(1);
+		
+		WriteCSV.study(sd,csvFolderPath ) ;
+	
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 7);	
+		Assert.assertEquals(StudyParser.total_errors, 7);
+
+
+	
 	}
 
 	@Test(groups = { "WRESL_elements" })
@@ -102,9 +140,9 @@ public class TestWreslWalker_error {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 17);	
+		Assert.assertEquals(totalErrs, 18);	
 		
-	
+		Assert.assertEquals(StudyParser.total_errors, 18);
 		
 		Assert.assertEquals(sd.getModelDataSetMap().get("second").tsMap.get("ts").kind,"second-model-only" );
 		Assert.assertEquals(sd.getModelDataSetMap().get("second").svMap.get("sv").caseExpression.get(0),"second_model_only" );

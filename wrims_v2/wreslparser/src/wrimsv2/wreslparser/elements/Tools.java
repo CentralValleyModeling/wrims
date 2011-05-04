@@ -396,13 +396,19 @@ public class Tools {
 		return out;
 		
 	}
-	public static void mapRemoveAll (Map<String, ?> map, Set<String> set){
+	public static Set<String> mapRemoveAll (Map<String, ?> map, Set<String> set){
+		
+		Set<String> removedKeys = new LinkedHashSet<String>();
+		
 		for (String key: set){
-			map.remove(key);	
+			
+			if (map.remove(key)!=null) removedKeys.add(key);	
 		}
+		return removedKeys;
 	}	
-	public static void mapRemoveAll (Map<String, ?> map, ArrayList<String> list){
-		mapRemoveAll (map, new HashSet<String>(list));
+	public static Set<String> mapRemoveAll (Map<String, ?> map, ArrayList<String> list){
+		
+		return mapRemoveAll (map, new LinkedHashSet<String>(list));
 	}
 
 	public static SimulationDataSet overwrite_set(SimulationDataSet main, SimulationDataSet s) {
