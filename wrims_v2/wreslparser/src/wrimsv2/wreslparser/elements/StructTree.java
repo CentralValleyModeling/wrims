@@ -46,13 +46,15 @@ public class StructTree
     }
   }
 
-  public void mergeWeightTable(String name, String value, String scope)
-  {
+  public void mergeWeightTable(String name, String value, String scope){
+	  
+	// TODO: weights redefined in different files are not checked within the same model
+	  
     name = name.toLowerCase();
     value = value.toLowerCase();
 
     if (this.S.wtList.contains(name)) {
-      LogUtils.errMsg("Weight table variable redefined: " + name, this.S.currentAbsolutePath);
+      LogUtils.errMsg("Weight redefined: " + name, this.S.currentAbsolutePath);
       this.S.error_weightVar_redefined.put(name, this.S.currentAbsolutePath); 
       //this.S.wtList.remove(name); this.S.wtList_global.remove(name); this.S.wtList_local.remove(name);
     }
