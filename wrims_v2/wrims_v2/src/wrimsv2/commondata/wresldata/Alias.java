@@ -3,7 +3,7 @@ package wrimsv2.commondata.wresldata;
 import java.util.HashSet;
 import java.util.Set;
 
-import wrimsv2.evaluator.IntDouble;
+import wrimsv2.components.IntDouble;
 
 
 public class Alias {

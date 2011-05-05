@@ -8,6 +8,7 @@ import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 import wrimsv2.components.FilePaths;
+import wrimsv2.components.IntDouble;
 import wrimsv2.external.*;
 
 import java.util.HashMap;

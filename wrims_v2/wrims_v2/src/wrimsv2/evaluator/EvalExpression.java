@@ -1,6 +1,8 @@
 package wrimsv2.evaluator;
 import java.util.HashMap;
 
+import wrimsv2.components.IntDouble;
+
 public class EvalExpression {
 	private IntDouble intDouble;
 	private HashMap<String, IntDouble> multiplier;

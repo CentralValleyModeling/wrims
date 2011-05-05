@@ -2,6 +2,7 @@ package wrimsv2.evaluator;
 
 import wrimsv2.components.FilePaths;
 import wrimsv2.components.Error;
+import wrimsv2.components.IntDouble;
 
 import java.io.FileInputStream;
 import java.io.DataInputStream;

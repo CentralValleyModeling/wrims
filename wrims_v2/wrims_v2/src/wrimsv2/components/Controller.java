@@ -28,8 +28,8 @@ import wrimsv2.evaluator.EvalExpression;
 import wrimsv2.evaluator.Evaluation;
 import wrimsv2.evaluator.EvaluatorLexer;
 import wrimsv2.evaluator.EvaluatorParser;
-import wrimsv2.evaluator.IntDouble;
 import wrimsv2.external.LoadAllDll;
+import wrimsv2.solver.Solver;
 
 public class Controller {
 	public Controller(StudyDataSet sds){
@@ -64,6 +64,7 @@ public class Controller {
 				ControlData.currCycleIndex=i;
 				processModel();
 				Error.writeEvaluationErrorFile("evaluation_error.txt"); 
+				new Solver();
 			}
 			if (ControlData.timeStep.equals("1MON")){
 				currTimeAddOneMonth();

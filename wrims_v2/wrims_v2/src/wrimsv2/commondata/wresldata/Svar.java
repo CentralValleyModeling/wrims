@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import wrimsv2.evaluator.IntDouble;
+import wrimsv2.components.IntDouble;
 
 
 public class Svar {
