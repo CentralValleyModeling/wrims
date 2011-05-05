@@ -21,6 +21,7 @@ import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
+import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.EvalExpression;
@@ -77,8 +78,8 @@ public class Controller {
 		processTimeseries();
 		processSvar();
 		processDvar();	
-		//processAlias();
 		processGoal();	
+		processWeight();
 	}
 
 	public static void readTimeseries(){
@@ -114,6 +115,41 @@ public class Controller {
 			}
 		}
 		new LoadAllDll(ControlData.allDll);
+	}
+	
+	public static void processWeight(){
+		ModelDataSet mds=ControlData.currModelDataSet;
+		ArrayList<String> wtList = mds.wtList;
+		Map<String, WeightElement> wtMap =mds.wtMap;
+		SolverData.setWeightMap(wtMap);
+		ControlData.currEvalTypeIndex=5;
+		for (String wtName: wtList){
+			ControlData.currEvalName=wtName;
+			System.out.println("Process weight "+wtName);
+			WeightElement wt=wtMap.get(wtName);
+			String wtString=wt.weight;
+			try{
+				wt.setValue(Double.parseDouble(wtString));
+			} catch (NumberFormatException e1){
+				try{
+					Integer wtValue=Integer.parseInt(wtString);
+					wt.setValue(wtValue.doubleValue());
+				}catch (NumberFormatException e2){
+					String evalString="v: "+wtString;
+					ANTLRStringStream stream = new ANTLRStringStream(evalString);
+					EvaluatorLexer lexer = new EvaluatorLexer(stream);
+					TokenStream tokenStream = new CommonTokenStream(lexer);
+					EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+					try {
+						evaluator.evaluator();
+						wt.setValue(evaluator.evalValue.getData().doubleValue());
+					} catch (RecognitionException e) {
+						Error.addEvaluationError("weight definition has error");
+						wt.setValue(0.0);
+					}
+				}
+			}
+		}
 	}
 	
 	public static void processSvar(){
@@ -183,13 +219,13 @@ public class Controller {
 		ModelDataSet mds=ControlData.currModelDataSet;
 		ArrayList<String> dvList = mds.dvList;
 		Map<String, Dvar> dvMap =mds.dvMap;
+		SolverData.setDvarMap(dvMap);
 		ControlData.currDvMap=dvMap;
 		ControlData.currEvalTypeIndex=1;
 		for (String dvName: dvList){
 			ControlData.currEvalName=dvName;
 			System.out.println("Process dvar "+dvName);
 			Dvar dvar=dvMap.get(dvName);
-			SolverData.getDvarMap().put(dvName, dvar);
 			
 			String evalString="v: "+dvar.lowerBound;
 			ANTLRStringStream stream = new ANTLRStringStream(evalString);

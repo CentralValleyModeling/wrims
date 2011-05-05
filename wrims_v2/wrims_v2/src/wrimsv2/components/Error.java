@@ -56,6 +56,8 @@ public class Error {
 			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in timeseries definition of Cycle "+ControlData.currCycleIndex+": "+error);
 		}else if (ControlData.currEvalTypeIndex==6){
 			error_evaluation.add(ControlData.currEvalName+" in timeseries reading: "+error);
+		}else if (ControlData.currEvalTypeIndex==7){
+			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in weight definition of Cycle "+ControlData.currCycleIndex+": "+error);
 		}
 		System.out.println("Error-"+ControlData.currEvalName+":"+error);
 	}

@@ -7,6 +7,7 @@ public class WeightElement {
 
 	public String weight;
 	public String fromWresl;
+	private double value;
 	
 	public WeightElement(){
 		weight = Param.undefined;
@@ -14,6 +15,12 @@ public class WeightElement {
 
 	}
 	
+	public void setValue(double value){
+		this.value=value;		
+	}
 
+	public double getValue(){
+		return value;		
+	}
 }
 	
