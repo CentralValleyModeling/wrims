@@ -172,7 +172,7 @@ alias  :
 
 goal_simple 
 	:  ^(Goal_simple sc=Scope i=IDENT v=Constraint_content ) 
-		{ F.goalSimple($i.text, $sc.text, $v.text+"| ");} 
+		{ F.goalSimple($i.text, $sc.text, $v.text);} 
 	;
 
 goal_nocase
