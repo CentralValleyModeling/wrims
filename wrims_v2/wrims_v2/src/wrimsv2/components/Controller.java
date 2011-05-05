@@ -308,47 +308,18 @@ public class Controller {
 				}
 			}
 			if (condition){
-				evaluateGoal(goalName,goal.caseExpression.get(i));		
+				ANTLRStringStream stream = new ANTLRStringStream("g:"+goal.caseExpression.get(i));
+				EvaluatorLexer lexer = new EvaluatorLexer(stream);
+				TokenStream tokenStream = new CommonTokenStream(lexer);
+				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+				try {
+					evaluator.evaluator();
+					SolverData.getConstraintDataMap().put(goalName,EvaluatorParser.evalConstraint);
+				} catch (RecognitionException e) {
+					Error.addEvaluationError("Case expression evaluation has error.");
+				}	
 			}
 		}
-	}
-	
-	public static void evaluateGoal(String goalName, String goalString){
-		String[] stringList=goalString.split("\\|");
-		for (int i=0; i<=1; i++){
-			if (!stringList[i].equals(" ")){
-				if (stringList[i].contains(":")){
-					String constraint[]=stringList[i].split(":");
-					ANTLRStringStream stream = new ANTLRStringStream("s:"+constraint[0]);
-					EvaluatorLexer lexer = new EvaluatorLexer(stream);
-					TokenStream tokenStream = new CommonTokenStream(lexer);
-					EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
-					EvalExpression ee=EvaluatorParser.evalExpression;
-					try {
-						evaluator.evaluator();
-						stream = new ANTLRStringStream("v:"+constraint[1]);
-						lexer = new EvaluatorLexer(stream);
-						tokenStream = new CommonTokenStream(lexer);
-						evaluator = new EvaluatorParser(tokenStream);
-						SolverData.getSoftConstraintExpression().add(ee);
-						SolverData.getSoftConstraintWeight().add(EvaluatorParser.evalValue.getData());
-					} catch (RecognitionException e) {
-						Error.addEvaluationError("Case expression evaluation has error.");
-					}
-				}else{
-					ANTLRStringStream stream = new ANTLRStringStream("g:"+stringList[i]);
-					EvaluatorLexer lexer = new EvaluatorLexer(stream);
-					TokenStream tokenStream = new CommonTokenStream(lexer);
-					EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
-					try {
-						evaluator.evaluator();
-						SolverData.getConstraintDataMap().put(goalName,EvaluatorParser.evalConstraint);
-					} catch (RecognitionException e) {
-						Error.addEvaluationError("Case expression evaluation has error.");
-					}
-				}
-			}
-		}		
 	}
 		
 	public static void currTimeAddOneMonth(){
