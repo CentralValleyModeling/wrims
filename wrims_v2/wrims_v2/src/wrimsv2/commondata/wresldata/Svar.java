@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import wrimsv2.evaluator.IntDouble;
+
 
 public class Svar {
 	
@@ -17,7 +19,7 @@ public class Svar {
 	public ArrayList<String> caseCondition;
 	public ArrayList<String> caseExpression;
 	public String fromWresl;
-	private Number value;
+	private IntDouble data;
 	public Set<String> dependants;
 	
 	public Svar(){
@@ -73,12 +75,12 @@ public class Svar {
 		}
 	}
 	
-	public void setValue(Number value){
-		this.value=value;
+	public void setData(IntDouble data){
+		this.data=data;
 	}
 	
-	public Number getValue(){
-		return value;
+	public IntDouble getData(){
+		return data;
 	}
 }
 	
