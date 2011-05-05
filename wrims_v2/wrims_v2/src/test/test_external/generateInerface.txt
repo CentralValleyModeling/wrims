@@ -1,8 +1,8 @@
 1
 interfacetoann
 Ann7inp_CA
-annlinegen annec ann_x2
-3
+annlinegen annec ann_x2 getndo_x2_curmonndosplit
+4
 annlinegen
 float
 float float float float float float float float float float float float float float float float float float float float float float float float float float float float float float float float float float float float float float int int int int int float float float int int int int int int
@@ -15,3 +15,7 @@ ann_x2
 float
 float float float float float float float float float float int int int int int int int int int int
 X2_prv0 X2_prv1 X2_prv2 X2_prv3 X2_prv4 DO_prv0 DO_prv1 DO_prv2 DO_prv3 DO_prv4 mon0 mon1 mon2 mon3 mon4 ave_type currMonth currYear BeginDay EndDay
+getndo_x2_curmonndosplit
+float
+float float float float float float float float float float float float int int int int int int int int int int int int
+X2 X2_prv0 X2_prv1 X2_prv2 X2_prv3 X2_prv4 DO_prv0 DO_prv1 DO_prv2 DO_prv3 DO_prv4_1 DO_prv4_2 mon0 mon1 mon2 mon3 mon4 mon4_1 mon4_2 ave_type currMonth currYear BeginDay EndDay

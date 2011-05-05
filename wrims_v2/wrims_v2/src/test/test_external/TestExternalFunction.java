@@ -16,6 +16,7 @@ public class TestExternalFunction {
         System.out.println("@Test sample: 1==1");
 	}
 
+	@Test
 	public void testGenerateCompileFiles(){
 		String fileFullPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_external\\generateInerface.txt";
 		GenerateCompileFiles.setWorkingDirectory(fileFullPath);
@@ -34,7 +35,6 @@ public class TestExternalFunction {
 		System.out.println();
 	}
 	
-	@Test
 	public void testAnnEC(){
 		
 		new LoadDll("interfacetoann.dll");
