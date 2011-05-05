@@ -1,0 +1,10 @@
+Option 1: load all dlls including dependent dll.
+	  copy the dlls to 1 folder e.g. d:\wrims_v2\bin
+	  set -Djava.library.path=d:\wrims_v2\bin
+
+
+Option 2: 
+only load interface file
+copy the dlls to 1 folder e.g. d:\wrims_v2\bin\
+set enviromental variable WRIMS_v2_path=d:\wrims_v2\bin\
+set system path = d:\wrims_v2\bin\
