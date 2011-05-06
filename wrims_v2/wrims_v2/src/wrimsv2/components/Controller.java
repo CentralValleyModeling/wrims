@@ -82,6 +82,7 @@ public class Controller {
 	
 	public void prepareSolver(){
 		ControlData.solver.openConnection();
+		ControlData.solver.setModelSize(32, 32);
 		ControlData.solver.setCommand("MUTE NO");
 		ControlData.solver.setCommand("FORCE YES");
 		ControlData.solver.setCommand("MATLIST BOTH");
@@ -195,9 +196,6 @@ public class Controller {
 				}
 			}
 			if (condition){
-				if (svName.equals("x2_last")){
-					int x=0;
-				}
 				String evalString="v: "+svar.caseExpression.get(i);
 				ANTLRStringStream stream = new ANTLRStringStream(evalString);
 				EvaluatorLexer lexer = new EvaluatorLexer(stream);
