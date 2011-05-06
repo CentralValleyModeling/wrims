@@ -72,4 +72,60 @@ public class TestWreslWalker_dvar {
 		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).dvList_global.get(0),"dvar_global" );
 		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).dvList_local.get(0),"dvar_local" );
 	}
+	
+	@Test(groups = { "WRESL_elements" })
+	public void nonStd() throws RecognitionException, IOException {
+		
+		csvFolderPath = "TestWreslWalker_dvar_nonStd";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+
+		LogUtils.studySummary_details(sd);
+
+		LogUtils.closeLogFile();
+		
+		String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);	
+		
+	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\dvar.csv");	
+		
+		String s;
+		int n;
+	
+		s = "c_slcvp,lower_unbounded,upper_unbounded,n,cfs,flow-channel";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+
+		s = "c_sacfea,0,8 + ( 6150 * taf_cfs ),n,cfs,flow-channel";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+
+		s = "d852_sb_lcp_err,lower_unbounded,upper_unbounded";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+	}
+	
 }

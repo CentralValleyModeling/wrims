@@ -63,12 +63,12 @@ public class TestWreslWalker_integer {
 		String s;
 		int n;
 	
-		s = "int_global,0,unbounded,y,none,integer";
+		s = "int_global,0,upper_unbounded,y,none,integer";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "int_local,0,unbounded,y,none,integer";
+		s = "int_local,0,upper_unbounded,y,none,integer";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);

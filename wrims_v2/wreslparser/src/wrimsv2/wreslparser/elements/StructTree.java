@@ -479,8 +479,8 @@ public class StructTree
     this.dv = new Dvar();
     if (kind.length()>0)  this.dv.kind = kind;
     if (units.length()>0) this.dv.units = units;
-    this.dv.lowerBound = Param.dv_lowerBound;
-    this.dv.upperBound = Param.dv_upperBound;
+    this.dv.lowerBound = Param.dv_std_lowerBound;
+    this.dv.upperBound = Param.dv_std_upperBound;
     this.dv.fromWresl = this.S.currentAbsolutePath;
 
     if (integer != null)

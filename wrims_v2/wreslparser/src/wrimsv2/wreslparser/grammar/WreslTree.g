@@ -289,7 +289,7 @@ lower_and_or_upper : lower_upper
 				   | upper_lower ;
 				   
 lower_upper : lower (u=upper)?
-				-> {u==null}? lower Upper LimitType["Unbounded"]
+				-> {u==null}? lower Upper LimitType[Param.upper_unbounded]
 				->            lower $u
 				 ;
 upper_lower : upper (l=lower)? 
@@ -297,8 +297,8 @@ upper_lower : upper (l=lower)?
                 ->            $l upper
    				 ;				   
 
-lower: LOWER ( UNBOUNDED -> Lower LimitType["Unbounded"] | e=expression -> Lower LimitType[$e.tree.toStringTree()] ) ;
-upper: UPPER ( UNBOUNDED -> Upper LimitType["Unbounded"] | e=expression -> Upper LimitType[$e.tree.toStringTree()] ) ;
+lower: LOWER ( UNBOUNDED -> Lower LimitType[Param.lower_unbounded] | e=expression -> Lower LimitType[$e.tree.toStringTree()] ) ;
+upper: UPPER ( UNBOUNDED -> Upper LimitType[Param.upper_unbounded] | e=expression -> Upper LimitType[$e.tree.toStringTree()] ) ;
 
 
 /// IDENT =, <, > ///
