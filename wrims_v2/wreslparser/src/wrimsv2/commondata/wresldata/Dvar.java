@@ -1,6 +1,6 @@
 package wrimsv2.commondata.wresldata;
 
-import wrimsv2.evaluator.IntDouble;
+import wrimsv2.components.IntDouble;
 
 
 public class Dvar {
