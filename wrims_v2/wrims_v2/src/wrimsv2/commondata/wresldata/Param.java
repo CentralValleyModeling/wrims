@@ -2,10 +2,12 @@ package wrimsv2.commondata.wresldata;
 
 // global parameters
 public class Param {
-	  public static final String dv_lowerBound= "0"; 
-	  public static final String dv_upperBound= "unbounded"; 
+	  public static final String dv_std_lowerBound= "0"; 
+	  public static final String dv_std_upperBound= "upper_unbounded"; 
+	  public static final String lower_unbounded= "lower_unbounded"; 
+	  public static final String upper_unbounded= "upper_unbounded"; 
 	  public static final String integer_lowerBound= "0"; 
-	  public static final String integer_upperBound= "unbounded"; 
+	  public static final String integer_upperBound= "upper_unbounded"; 
 	  public static final String undefined= "undefined"; 
 	  public static final String defaultCaseName = "default";
 	  public static final String always = "always";
