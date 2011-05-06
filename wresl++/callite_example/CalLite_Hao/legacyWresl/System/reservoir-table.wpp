@@ -1,0 +1,68 @@
+package calsim3.delta.north
+
+
+
+
+#LAKE OROVILLE
+reservoir S_Orovl ( ) {
+	
+	integer res_no;
+	float weight_2
+	
+	
+	connection { 
+		
+		inflow    inflow_1;
+		inflow	  inflow_2;
+		outflow   release_1;   
+		inoutflow inf_1;  
+	}
+	
+	rating {  
+				        
+		r1 { level = 543.0; area = 0;      storage = 0; discharge = 0; }
+		r2 { level = 600.0; area = 61.0;   storage = 975.0;    discharge = 1115.0; }
+		r3 { level = 760.0; area = 2374.0; storage = 160600.0; discharge = 2050.0; }
+		r4 { level = 920.0; area = 3446.0; storage = 846500.0; discharge = 9770.0; }		
+	}
+	
+	zone {		
+		
+		z1 { weight = 2000;        level_limit = 29.6;  }
+		z2 { weight = weight_2;    level_limit = 852; }
+		z3 { weight = 88*taf_cfs;  level_limit = min ( max (OroRuleCalc,S_OrovlLevel2),S_OrovlLevel4); }
+		z4 { weight = -20000;      level_limit = S_OrovlLevel4() ; }
+		z5 { weight = -20000;      level_limit = timeseries ( name, "storage-level", "taf" ); }
+		z6 { weight = -20000;      level_limit = 3538; }
+	}
+	
+	function float S_OrovlLevel4() {
+		
+		if ( month >= jun ) { return OroNextMonTarg; }
+		else                { return section.z5.level_limit; }
+	}
+	
+	function float OroNextMonTarg() {
+          
+		  float S_OrovlLevel5 = zone.z5.level_limit;
+		  float out;
+		  
+		  out = min(OroSepTarg + (max(S_Orovl.volume(-1 month) - OroSepTarg,0.)/(Sep-month+1.))*(Sep-month), S_OrovlLevel5);
+		  
+		  return out;	  
+	}
+	
+	function float OroSepTarg () {
+ 
+    if ( wateryear==1922 & month<=dec ) {
+    
+		return min (1000. + 0.5* max (S_Orovl(prevSep) - 1000. ,0.), S_OrovlLevel5) 
+	}
+	else {		
+		return min (1000. + 0.5 * (swp_allocation-tableA_loss)/SWP_TableA
+                          * max (S_Orovl(prevSep) - 1000. ,0.), S_OrovlLevel5)
+	}
+	
+			
+}
+
