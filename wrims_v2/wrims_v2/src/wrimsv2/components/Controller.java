@@ -84,9 +84,9 @@ public class Controller {
 		ControlData.solver.openConnection();
 		ControlData.solver.setModelSize(32, 32);
 		ControlData.solver.setCommand("MUTE NO");
-		ControlData.solver.setCommand("FORCE YES");
+		ControlData.solver.setCommand("FORCE NO");
 		ControlData.solver.setCommand("MATLIST BOTH");
-		ControlData.solver.setCommand("MPSX YES");
+		//ControlData.solver.setCommand("MPSX YES");
 		ControlData.solver.setCommand( "Output "+FilePaths.mainDirectory+"\\xa.log matlist var wait no" ) ;
 	}
 	
