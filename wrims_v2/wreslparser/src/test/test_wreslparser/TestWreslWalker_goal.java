@@ -68,7 +68,7 @@ public class TestWreslWalker_goal {
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "semicolon,default,1,always,b<max(a;c)+min(d;e)|";
+		s = "semicolon,default,1,always,b<max(a;c)+min(d;e)";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
