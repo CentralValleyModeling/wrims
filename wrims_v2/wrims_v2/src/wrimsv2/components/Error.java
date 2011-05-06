@@ -8,6 +8,7 @@ import java.io.IOException;
 public class Error {
 	public static ArrayList<String>   error_grammer = new ArrayList<String> ();
 	public static ArrayList<String>   error_evaluation= new ArrayList<String> ();
+	public static ArrayList<String>   error_solving=new ArrayList<String>();
 	
 	public static void writeGrammerErrorFile(String fileName){
 		
@@ -41,6 +42,22 @@ public class Error {
 		}
 	}
 	
+	public static void writeSolvingErrorFile(String fileName){
+		
+		String errorFileFullPath=FilePaths.mainDirectory+fileName;
+		try{
+			FileWriter errorFile = new FileWriter(errorFileFullPath);
+			PrintWriter out = new PrintWriter(errorFile);
+
+			for (int i=0; i<error_solving.size(); i++){
+				out.println(error_solving.get(i));
+			}
+			out.close();
+		} catch (IOException e){
+			e.printStackTrace();
+		}
+	}
+	
 	public static void addEvaluationError(String error){
 		if (ControlData.currEvalTypeIndex == 0){
 			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in svar definition of Cycle "+ControlData.currCycleIndex+": "+error);
@@ -60,6 +77,11 @@ public class Error {
 			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in weight definition of Cycle "+ControlData.currCycleIndex+": "+error);
 		}
 		System.out.println("Error-"+ControlData.currEvalName+":"+error);
+	}
+	
+	public static void addSolvingError(String error){
+		error_solving.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+" of Cycle "+ControlData.currCycleIndex+": "+error);
+		System.out.println("Error-"+error);
 	}
 }
 

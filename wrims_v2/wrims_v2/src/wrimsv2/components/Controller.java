@@ -51,8 +51,10 @@ public class Controller {
 			processExternal();
 		}
 		
-		while (currTime.getTime()<=endTime.getTime()){
-			for (int i=0; i<modelList.size(); i++){
+		prepareSolver();
+		while (currTime.getTime()<=endTime.getTime() && Error.error_solving.size()<1){
+			int i=0;
+			while (i<modelList.size() && Error.error_solving.size()<1){
 				String model=modelList.get(i);
 				ModelDataSet mds=modelDataSetMap.get(model);
 				ControlData.currModelDataSet=mds;
@@ -65,6 +67,8 @@ public class Controller {
 				processModel();
 				Error.writeEvaluationErrorFile("evaluation_error.txt"); 
 				new Solver();
+				Error.writeSolvingErrorFile("solving_error.txt");
+				i=i+1;
 			}
 			if (ControlData.timeStep.equals("1MON")){
 				currTimeAddOneMonth();
@@ -73,6 +77,16 @@ public class Controller {
 			}
 			currTime=new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay); 
 		}
+		ControlData.solver.close();
+	}
+	
+	public void prepareSolver(){
+		ControlData.solver.openConnection();
+		ControlData.solver.setCommand("MUTE NO");
+		ControlData.solver.setCommand("FORCE YES");
+		ControlData.solver.setCommand("MATLIST BOTH");
+		ControlData.solver.setCommand("MPSX YES");
+		ControlData.solver.setCommand( "Output "+FilePaths.mainDirectory+"\\xa.log matlist var wait no" ) ;
 	}
 	
 	public static void processModel(){

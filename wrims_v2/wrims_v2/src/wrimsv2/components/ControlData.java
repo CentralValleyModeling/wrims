@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import com.sunsetsoft.xa.Optimizer;
+
 public class ControlData {
 	public static StudyDataSet currStudyDataSet=new StudyDataSet();
 	public static ModelDataSet currModelDataSet=new ModelDataSet();
@@ -56,6 +58,7 @@ public class ControlData {
 	public static Stack<LoopIndex> sumIndex= new Stack <LoopIndex>();
 	public static Group groupInit;
 	public static Group groupSvar;
+	public static Optimizer solver=new Optimizer(25000);
 	
 	public ControlData(){
 		timeStep ="1MON"; //TO DO: allow input;

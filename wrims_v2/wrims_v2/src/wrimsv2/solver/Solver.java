@@ -10,22 +10,40 @@ import com.sunsetsoft.xa.XAException;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.commondata.solverdata.*;
+import wrimsv2.components.ControlData;
+import wrimsv2.components.FilePaths;
 import wrimsv2.components.IntDouble;
+import wrimsv2.components.Error;
 import wrimsv2.evaluator.EvalConstraint;
 
 public class Solver {
-	private Optimizer solver=new Optimizer(25000);
-
+	int modelStatus;
+	
 	public Solver(){
-		PrepareConstraintCoefficients();
-		PrepareWeights();
-		PrepareDVar();
+		prepareConstraint();
+		prepareDVar();
+		prepareWeight();
 		
-		solver.solve();
-
+		ControlData.solver.solve();
+		
+		modelStatus=ControlData.solver.getModelStatus();
+		System.out.println("Model status: "+modelStatus);
+		if (modelStatus>2)	getSolverInformation();
 	}
 	
-	public void PrepareDVar(){
+	public void getSolverInformation(){
+		System.out.println("Solver status: "+ControlData.solver.getSolverStatus());
+		System.out.println("Exception: "+ControlData.solver.getExceptionCode());
+		System.out.println("Message: "+ControlData.solver.getMessage());
+		System.out.println("Return code: "+ControlData.solver.getRc());
+		switch (modelStatus){
+			case 3: Error.addSolvingError("Unbounded solution."); break;
+			case 4: Error.addSolvingError("Infeasible solution."); break;
+			case 6: Error.addSolvingError("Intermediate infeasible solution."); break;
+		}
+	}
+	
+	public void prepareDVar(){
 		Map<String, Dvar> DvarMap = SolverData.getDvarMap();
 		Set DvarCollection = DvarMap.keySet();
 		Iterator dvarIterator=DvarCollection.iterator();
@@ -38,24 +56,24 @@ public class Solver {
 			double ub = dvar.upperBoundValue.doubleValue();
 			
 			if (dvar.integer.equals("y")){
-				solver.setColumnInteger(dvarName, lb, ub); }
+				ControlData.solver.setColumnInteger(dvarName, lb, ub); }
 			else {
-				solver.setColumnMinMax(dvarName, lb, ub);}
+				ControlData.solver.setColumnMinMax(dvarName, lb, ub);}
 		}
 	}
 
-	public void PrepareWeights(){
+	public void prepareWeight(){
 		Map<String, WeightElement> weightMap = SolverData.getWeightMap();
 		Set weightCollection = weightMap.keySet();
 		Iterator weightIterator = weightCollection.iterator();
 		
 		while(weightIterator.hasNext()){
 			String weightName=(String)weightIterator.next();
-			solver.setColumnObjective(weightName, weightMap.get(weightName).getValue());
+			ControlData.solver.setColumnObjective(weightName, weightMap.get(weightName).getValue());
 		}
 	}
 	
-	private void PrepareConstraintCoefficients() {
+	private void prepareConstraint() {
 		Map<String, EvalConstraint> constraintMap = SolverData.getConstraintDataMap();
 		Set constraintCollection = constraintMap.keySet();
 		Iterator constraintIterator = constraintCollection.iterator();
@@ -65,13 +83,13 @@ public class Solver {
 			EvalConstraint ec=constraintMap.get(constraintName);
 		
 			if (ec.getSign().equals("=")) {
-				solver.setRowFix(constraintName, ec.getEvalExpression().getValue().getData().doubleValue()); //string constraint name
+				ControlData.solver.setRowFix(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue()); //string constraint name
 			}
 			else if (ec.getSign().equals("<")){
-				solver.setRowMax(constraintName, ec.getEvalExpression().getValue().getData().doubleValue()); //string constraint name
+				ControlData.solver.setRowMax(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue()); //string constraint name
 			}
 			else if (ec.getSign().equals(">")){
-				solver.setRowMin(constraintName, ec.getEvalExpression().getValue().getData().doubleValue()); //string constraint name
+				ControlData.solver.setRowMin(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue()); //string constraint name
 			}
 			
 			HashMap<String, IntDouble> multMap = ec.getEvalExpression().getMultiplier();
@@ -80,7 +98,7 @@ public class Solver {
 			
 			while(multIterator.hasNext()){
 				String multName=(String)multIterator.next();
-				solver.loadToCurrentRow(multName, multMap.get(multName).getData().doubleValue());
+				ControlData.solver.loadToCurrentRow(multName, multMap.get(multName).getData().doubleValue());
 			}
 		}
 	}
