@@ -269,7 +269,7 @@ public class TableOperation {
 							valueString=values[selectIndex].toString();
 						}
 					}else if (use.equals("linear")){
-						value=((newValues[givenIndex].doubleValue()-givenValue.doubleValue())/(newValues[givenIndex].doubleValue()-values[givenIndex].doubleValue())
+						value=((givenValue.doubleValue()-values[givenIndex].doubleValue())/(newValues[givenIndex].doubleValue()-values[givenIndex].doubleValue())
 							*(newValues[selectIndex].doubleValue()-values[selectIndex].doubleValue())+values[selectIndex].doubleValue());
 						return new IntDouble(value, false);
 					}else{
@@ -382,7 +382,7 @@ public class TableOperation {
 						valueString=values[selectIndex].toString();
 					}
 				}else if (use.equals("linear")){
-					double value=((newValues[givenIndex].doubleValue()-givenValue.doubleValue())/(newValues[givenIndex].doubleValue()-values[givenIndex].doubleValue())
+					double value=((givenValue.doubleValue()-values[givenIndex].doubleValue())/(newValues[givenIndex].doubleValue()-values[givenIndex].doubleValue())
 							*(newValues[selectIndex].doubleValue()-values[selectIndex].doubleValue())+values[selectIndex].doubleValue());
 					return new IntDouble(value, false);
 				}else{
