@@ -35,7 +35,7 @@ public class FilePaths {
 		dvarDssFile=fullPath.substring(index+1);
 	}
 	
-	public void setInitDssPaths(String fullPath){
+	public static void setInitDssPaths(String fullPath){
 		fullInitDssPath=fullPath;
 		int index=fullPath.lastIndexOf("\\");
 		initDssDirectory=fullPath.substring(0,index+1);

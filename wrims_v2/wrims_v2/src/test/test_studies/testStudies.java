@@ -25,6 +25,11 @@ import wrimsv2.wreslparser.elements.WriteCSV;
 
 public class testStudies {
 
+	@Test
+	public void testMain() throws RecognitionException, IOException{
+		new Controller();
+	}
+	
 	public void testSimpleStudy() throws RecognitionException, IOException{
         FilePaths.fullSvarDssPath="Z:\\CalSimOrig\\CommonData\\BigExampleSV.dss";
         FilePaths.fullInitDssPath="Z:\\CalSimOrig\\CommonData\\BigExampleINIT.dss";
@@ -44,8 +49,7 @@ public class testStudies {
 		
 		StudyDataSet sds=parseSimpleStudy();
 		
-		new Controller(sds);
-		Error.writeEvaluationErrorFile("evaluation_error.txt");
+		new Controller();
 	}
 	
 	public StudyDataSet parseSimpleStudy() throws RecognitionException, IOException{
@@ -94,8 +98,7 @@ public class testStudies {
 		
 		StudyDataSet sds=parseCalsim3();
 		
-		new Controller(sds);
-		Error.writeEvaluationErrorFile("evaluation_error.txt");
+		new Controller();
 	}
 	
 	public StudyDataSet parseCalsim3() throws RecognitionException, IOException{
@@ -125,7 +128,6 @@ public class testStudies {
 		return sd;	
 	}
 
-	@Test
 	public void testParsedCalLite()throws RecognitionException, IOException{
         FilePaths.fullSvarDssPath="D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss";
         FilePaths.fullInitDssPath="D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss";
@@ -145,8 +147,7 @@ public class testStudies {
 		
 		StudyDataSet sds=parseCalLite();
 		
-		new Controller(sds);
-		Error.writeEvaluationErrorFile("evaluation_error.txt");
+		new Controller();
 	}
 	
 	public StudyDataSet parseCalLite() throws RecognitionException, IOException{

@@ -25,7 +25,7 @@ import wrimsv2.wreslparser.elements.WriteCSV;
 
 public class testController {
 
-	public void testSvControl(){
+	public void testSvControl() throws RecognitionException, IOException{
         FilePaths.fullSvarDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09ESV.dss";
         FilePaths.fullInitDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\2020D09EINIT.DSS";
         FilePaths.setMainFilePaths("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_evaluator\\main.wresl");
@@ -128,7 +128,7 @@ public class testController {
 		goal2.caseCondition.add("always");
 		goal2.caseExpression.add("max(4;-3)*a+min(3.1;100.2)*b+pow(3;abs(-2))*c+int(5.43)*d+log(2)*e<log10(10.0)");		
 		
-		new Controller(sds);
+		new Controller();
 		Error.writeEvaluationErrorFile("runtime_error.txt");
 	}
 	
@@ -151,7 +151,7 @@ public class testController {
 		
 		StudyDataSet sds=parseCalsim3();
 		
-		new Controller(sds);
+		new Controller();
 		Error.writeEvaluationErrorFile("evaluation_error.txt");
 	}
 	
@@ -202,7 +202,7 @@ public class testController {
 		
 		StudyDataSet sds=parseCalLite();
 		
-		new Controller(sds);
+		new Controller();
 		Error.writeEvaluationErrorFile("evaluation_error.txt");
 	}
 	

@@ -62,21 +62,6 @@ public class ControlData {
 	public static Optimizer solver=new Optimizer(25000);
 	
 	public ControlData(){
-		timeStep ="1MON"; //TO DO: allow input;
-		startYear=1921;       //TO DO: allow input
-		startMonth=10;
-		startDay=1;
-		endYear =2003;
-		endMonth=9;
-		endDay=30;
-		simulationTimeFrame=TimeOperation.dssTimeFrame(startYear, startMonth, startDay, endYear, endMonth, endDay);
-		partA = "CALSIM";
-		partE = getPartE();
-		svDvPartF = "2020D09E";
-		initPartF = "2020D09E";
-		currYear=startYear;
-		currMonth=startMonth;
-		currDay=startDay;
 	}
 	
 	public static String getPartE(){
