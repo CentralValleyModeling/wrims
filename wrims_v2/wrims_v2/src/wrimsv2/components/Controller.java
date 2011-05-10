@@ -25,6 +25,7 @@ import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.evaluator.DataTimeSeries;
+import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.evaluator.EvalExpression;
@@ -41,6 +42,9 @@ import wrimsv2.wreslparser.elements.TempData;
 import wrimsv2.wreslparser.elements.WriteCSV;
 
 public class Controller {
+	
+	private int totalTimeStep;
+	private Date startTime;
 	
 	public Controller() {
 		setControlData();
@@ -71,6 +75,11 @@ public class Controller {
         FilePaths.setInitDssPaths("D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss");
         FilePaths.setMainFilePaths("D:\\CalLite_Beta_042611\\Run\\main_BO.wresl");
 		ControlData cd=new ControlData();
+        cd.svDvPartF="2020D09E";
+        cd.initPartF="2020D09E";
+		cd.partA = "CALSIM";
+		cd.partE = "1MON";
+		cd.timeStep="1MON";
         cd.startYear=1921;
         cd.startMonth=10;
         cd.startDay=31;
@@ -81,10 +90,6 @@ public class Controller {
         cd.currYear=ControlData.startYear;
         cd.currMonth=ControlData.startMonth;
         cd.currDay=ControlData.startDay;
-        cd.svDvPartF="2020D09E";
-        cd.initPartF="2020D09E";
-		cd.partA = "CALSIM";
-		cd.partE = "1MON";
 	}
 	
 	public void setControlData(String[] args){
@@ -93,20 +98,21 @@ public class Controller {
         FilePaths.setInitDssPaths(args[2]);
         FilePaths.setDvarDssPaths(args[3]);
 		ControlData cd=new ControlData();
-		cd.startYear=Integer.parseInt(args[4]);
-		cd.startMonth=Integer.parseInt(args[5]);
-		cd.startDay=Integer.parseInt(args[6]);
-		cd.endYear=Integer.parseInt(args[7]);
-		cd.endMonth=Integer.parseInt(args[8]);
-		cd.endDay=Integer.parseInt(args[9]);
+		cd.svDvPartF=args[4];
+		cd.initPartF=args[5];
+		cd.partA = args[6];
+		cd.partE = args[7];
+		cd.timeStep = args[7];
+		cd.startYear=Integer.parseInt(args[8]);
+		cd.startMonth=Integer.parseInt(args[9]);
+		cd.startDay=Integer.parseInt(args[10]);
+		cd.endYear=Integer.parseInt(args[11]);
+		cd.endMonth=Integer.parseInt(args[12]);
+		cd.endDay=Integer.parseInt(args[13]);
 		cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
-		cd.svDvPartF=args[10];
-		cd.initPartF=args[11];
-		cd.partA = args[12];
-		cd.partE = args[13];
 	}
 	
 	public StudyDataSet parse()throws RecognitionException, IOException{
@@ -134,14 +140,13 @@ public class Controller {
 		ControlData.currStudyDataSet=sds;
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
-		Date currTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
-		Date endTime=new Date(ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
-		
+		startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
+				
 		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
 		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
 		ControlData.allTsMap=sds.getTimeseriesMap();
 		
-		long totalTimeStep=getTotalTimeStep();
+		totalTimeStep=getTotalTimeStep();
 		readTimeseries();
 		initialDvarAliasTS(totalTimeStep);
 		for (int i=0; i<modelList.size(); i++){
@@ -187,6 +192,7 @@ public class Controller {
 			}else{
 				currTimeAddOneDay();
 			}
+			System.out.println(ControlData.currYear+"/"+ControlData.currMonth);
 			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
 		ControlData.solver.close();
@@ -195,9 +201,7 @@ public class Controller {
 	public void prepareSolver(){
 		ControlData.solver.openConnection();
 		ControlData.solver.setModelSize(32, 32);
-		ControlData.solver.setCommand("MUTE NO");
-		ControlData.solver.setCommand("FORCE NO");
-		ControlData.solver.setCommand("MATLIST BOTH");
+		ControlData.solver.setCommand("MAXIMIZE Yes MUTE NO FORCE NO MATLIST BOTH");
 		//ControlData.solver.setCommand("MPSX YES");
 		ControlData.solver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log matlist v ToRcc Yes wait no" ) ;
 	}
@@ -436,6 +440,14 @@ public class Controller {
 			Dvar dvar=dvarMap.get(dvName);
 			double value=ControlData.solver.getColumnActivity(dvName);
 			dvar.setData(new IntDouble(value,false));
+			if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){
+				DssDataSetFixLength dds=new DssDataSetFixLength();
+				double[] data=new double[totalTimeStep];
+				dds.setData(data);
+				dds.setTimeStep(ControlData.partE);
+				dds.setStartTime(startTime);
+				DataTimeSeries.dvAliasTS.put(dvName,dds);
+			}
 			double[] dataList=DataTimeSeries.dvAliasTS.get(dvName).getData();
 			dataList[ControlData.currTimeStep]=value;
 		}
@@ -471,7 +483,7 @@ public class Controller {
 		}
 	}
 	
-	public long getTotalTimeStep(){
+	public int getTotalTimeStep(){
 		if (ControlData.timeStep.equals("1MON")){
 			return (ControlData.endYear-ControlData.startYear)*12+(ControlData.endMonth-ControlData.startMonth)+1;
 		}else{
@@ -479,7 +491,7 @@ public class Controller {
 			Date endDate=new Date (ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
 			long startTime=startDate.getTime();
 			long endTime=endDate.getTime();
-			return (endTime-startTime)/(24*60*60*1000)+1;
+			return (int)(endTime-startTime)/(24*60*60*1000)+1;
 		}
 	}
 	

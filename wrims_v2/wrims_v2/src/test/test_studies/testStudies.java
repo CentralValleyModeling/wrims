@@ -17,6 +17,7 @@ import wrimsv2.components.ControlData;
 import wrimsv2.components.Controller;
 import wrimsv2.components.Error;
 import wrimsv2.components.FilePaths;
+import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyConfig;
 import wrimsv2.wreslparser.elements.StudyParser;
@@ -31,21 +32,25 @@ public class testStudies {
 	}
 	
 	public void testSimpleStudy() throws RecognitionException, IOException{
-        FilePaths.fullSvarDssPath="Z:\\CalSimOrig\\CommonData\\BigExampleSV.dss";
-        FilePaths.fullInitDssPath="Z:\\CalSimOrig\\CommonData\\BigExampleINIT.dss";
+        FilePaths.setSvarDssPaths("Z:\\CalSimOrig\\CommonData\\BigExampleSV.dss");
+        FilePaths.setInitDssPaths("Z:\\CalSimOrig\\CommonData\\BigExampleINIT.dss");
         FilePaths.setMainFilePaths("Z:\\CalSimOrig\\Example10\\run\\Example10.wresl");
 		ControlData cd=new ControlData();
-		cd.startYear=1921;
-		cd.startMonth=10;
-		cd.startDay=31;
-		cd.endYear=1921;
-		cd.endMonth=11;
-		cd.endDay=30;
-		cd.currYear=cd.startYear;
-		cd.currMonth=cd.startMonth;
-		cd.currDay=cd.startDay;
 		cd.svDvPartF="EXAMPLE";
 		cd.initPartF="INIT";
+		cd.partA = "CALSIM";
+		cd.partE = "1MON";
+		cd.timeStep="1MON";
+        cd.startYear=1921;
+        cd.startMonth=10;
+        cd.startDay=31;
+        cd.endYear=2003;
+        cd.endMonth=9;
+        cd.endDay=30;
+        cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
+        cd.currYear=ControlData.startYear;
+        cd.currMonth=ControlData.startMonth;
+        cd.currDay=ControlData.startDay;
 		
 		StudyDataSet sds=parseSimpleStudy();
 		
@@ -129,21 +134,25 @@ public class testStudies {
 	}
 
 	public void testParsedCalLite()throws RecognitionException, IOException{
-        FilePaths.fullSvarDssPath="D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss";
-        FilePaths.fullInitDssPath="D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss";
+        FilePaths.setSvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss");
+        FilePaths.setInitDssPaths("D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss");
         FilePaths.setMainFilePaths("D:\\CalLite_Beta_042611\\Run\\main_BO.wresl");
 		ControlData cd=new ControlData();
-		cd.startYear=1921;
-		cd.startMonth=10;
-		cd.startDay=31;
-		cd.endYear=2003;
-		cd.endMonth=9;
-		cd.endDay=30;
-		cd.currYear=cd.startYear;
-		cd.currMonth=cd.startMonth;
-		cd.currDay=cd.startDay;
-		cd.svDvPartF="2020D09E";
-		cd.initPartF="2020D09E";
+        cd.svDvPartF="2020D09E";
+        cd.initPartF="2020D09E";
+		cd.partA = "CALSIM";
+		cd.partE = "1MON";
+		cd.timeStep="1MON";
+        cd.startYear=1921;
+        cd.startMonth=10;
+        cd.startDay=31;
+        cd.endYear=2003;
+        cd.endMonth=9;
+        cd.endDay=30;
+        cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
+        cd.currYear=ControlData.startYear;
+        cd.currMonth=ControlData.startMonth;
+        cd.currDay=ControlData.startDay;
 		
 		StudyDataSet sds=parseCalLite();
 		
