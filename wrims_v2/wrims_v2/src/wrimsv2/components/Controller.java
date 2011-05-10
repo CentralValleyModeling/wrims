@@ -172,6 +172,7 @@ public class Controller {
 				ControlData.currGoalMap=mds.gMap;
 				ControlData.currTsMap=mds.tsMap;
 				ControlData.currCycleIndex=i;
+				ControlData.isPostProcessing=false;
 				processModel();
 				if (Error.error_evaluation.size()>=1){
 					Error.writeEvaluationErrorFile("evaluation_error.txt");
@@ -180,6 +181,7 @@ public class Controller {
 				new Solver();
 				if (Error.error_solving.size()<1){
 					assignDvar();
+					ControlData.isPostProcessing=true;
 					processAlias();
 				}else{
 					Error.writeSolvingErrorFile("solving_error.txt");
@@ -300,6 +302,9 @@ public class Controller {
 			ArrayList<String> caseCondition=svar.caseCondition;
 			boolean condition=false;
 			int i=-1;
+			if (svName.equals("coreqsac")){
+				int x=0;
+			}
 			while(!condition && i<=caseCondition.size()-2){
 				i=i+1;
 				String evalString="c: "+caseCondition.get(i);
@@ -472,6 +477,14 @@ public class Controller {
 				evaluator.evaluator();
 				IntDouble id=evaluator.evalValue;
 				alias.data=id;
+				if (!DataTimeSeries.dvAliasTS.containsKey(asName)){
+					DssDataSetFixLength dds=new DssDataSetFixLength();
+					double[] data=new double[totalTimeStep];
+					dds.setData(data);
+					dds.setTimeStep(ControlData.partE);
+					dds.setStartTime(startTime);
+					DataTimeSeries.dvAliasTS.put(asName,dds);
+				}
 				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
 				dataList[ControlData.currTimeStep]=id.getData().doubleValue();
 			} catch (RecognitionException e) {

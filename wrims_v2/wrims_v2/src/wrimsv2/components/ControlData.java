@@ -60,6 +60,7 @@ public class ControlData {
 	public static Group groupInit;
 	public static Group groupSvar;
 	public static Optimizer solver=new Optimizer(25000);
+	public static boolean isPostProcessing=false;
 	
 	public ControlData(){
 	}

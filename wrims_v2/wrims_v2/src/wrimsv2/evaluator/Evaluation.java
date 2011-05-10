@@ -126,6 +126,16 @@ public class Evaluation {
 			IntDouble id0 = ControlData.currTsMap.get(ident).getData();
 			ee.setValue(id0);
 			return ee;
+		}else if (ControlData.isPostProcessing && ControlData.currDvMap.containsKey(ident)){
+			EvalExpression ee=new EvalExpression();
+			IntDouble id0 = ControlData.currDvMap.get(ident).getData();
+			ee.setValue(id0);
+			return ee;
+		}else if (ControlData.isPostProcessing && ControlData.currAliasMap.containsKey(ident)){
+			EvalExpression ee=new EvalExpression();
+			IntDouble id0 = ControlData.currAliasMap.get(ident).getData();
+			ee.setValue(id0);
+			return ee;
 		}
 		EvalExpression ee=new EvalExpression();
 		IntDouble id0 = new IntDouble (0, true);
