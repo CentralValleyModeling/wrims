@@ -495,7 +495,7 @@ public class Evaluation {
 		
 		double value;
 		if (ControlData.currDvMap.containsKey(ident)||ControlData.currAliasMap.containsKey(ident)){
-			value=dvarAliasTimeSeries(ident);
+			value=dvarAliasTimeSeries(ident,id.getData().intValue());
 		}else{
 			value=svarTimeSeries(ident);
 		}
@@ -567,9 +567,45 @@ public class Evaluation {
 			Error.addEvaluationError("The timeseries data for decision variable/alias "+ident+" is not available at or after current simulation period.");
 			return 1.0;
 		}else if(dataTime>=startTime && dataTime<currTime){
-			DssDataSet dds=DataTimeSeries.dvAliasTS.get(ident);
+			DssDataSetFixLength dds=DataTimeSeries.dvAliasTS.get(ident);
 			index=timeSeriesIndex(dds);
-			return dds.getData().get(index);
+			double[] data=dds.getData();
+			return data[index];
+		}
+		
+		if (!DataTimeSeries.dvAliasInit.containsKey(ident)){
+			if (!DssOperation.getDVAliasInitTimeseries(ident)){
+				Error.addEvaluationError("Initial file doesn't have data for decision vairiable/alias " +ident);
+				return 1.0;
+			}
+		}
+		
+		DssDataSet dds=DataTimeSeries.dvAliasInit.get(ident);
+		index=timeSeriesIndex(dds);
+		ArrayList<Double> data=dds.getData();
+		if (index>=0 && index<data.size()){
+			double result=data.get(index);
+			if (result==-901.0){
+				Error.addEvaluationError("Initial file doesn't have data for decision vairiable/alias " +ident);
+				return 1.0;
+			}
+			return result;
+		}
+		
+		Error.addEvaluationError("The data requested for timeseries "+ident+" is outside of the time frame provided in dss file.");
+		return 1.0;
+	}
+	
+	public static double dvarAliasTimeSeries(String ident, int indexValue){
+		if (indexValue>0){
+			Error.addEvaluationError("Can't access decision variable after the current time step.");
+		}
+		
+		int index=indexValue+ControlData.currTimeStep;
+		if (index>=0){
+			DssDataSetFixLength dds=DataTimeSeries.dvAliasTS.get(ident);
+			double[] data=dds.getData();
+			return data[index];
 		}
 		
 		if (!DataTimeSeries.dvAliasInit.containsKey(ident)){
@@ -596,6 +632,21 @@ public class Evaluation {
 	}
 	
 	public static int timeSeriesIndex(DssDataSet dds){
+		Date st=dds.getStartTime();
+		long sTime=st.getTime();
+		int sYear=st.getYear()+1900;
+		int sMonth=st.getMonth(); //Originally it should be getMonth()-1. However, dss data store at 24:00 Jan31, 1921 is considered to store at 0:00 Feb 1, 1921 
+		long dataTime=new Date(ControlData.dataYear-1900, ControlData.dataMonth-1, ControlData.dataDay).getTime();
+		int index;
+		if (dds.getTimeStep().equals("1MON")){
+			index=ControlData.dataYear*12+ControlData.dataMonth-(sYear*12+sMonth);
+		}else{
+			index=(int)((sTime-dataTime)/(1000*60*60*24));
+		}
+		return index;
+	}
+	
+	public static int timeSeriesIndex(DssDataSetFixLength dds){
 		Date st=dds.getStartTime();
 		long sTime=st.getTime();
 		int sYear=st.getYear()+1900;

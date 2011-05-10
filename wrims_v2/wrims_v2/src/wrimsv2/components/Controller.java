@@ -24,6 +24,7 @@ import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssOperation;
+import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.evaluator.EvalExpression;
 import wrimsv2.evaluator.Evaluation;
 import wrimsv2.evaluator.EvaluatorLexer;
@@ -43,7 +44,8 @@ public class Controller {
 		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
 		ControlData.allTsMap=sds.getTimeseriesMap();
 		readTimeseries();
-		for (int i=0; i<modelList.size(); i++){  
+		initialDvarAliasTS();
+		for (int i=0; i<modelList.size(); i++){
 			String model=modelList.get(i);
 			ModelDataSet mds=modelDataSetMap.get(model);
 			ControlData.currModelDataSet=mds;
@@ -52,9 +54,11 @@ public class Controller {
 		}
 		
 		prepareSolver();
-		while (currTime.getTime()<=endTime.getTime() && Error.error_solving.size()<1){
+		boolean noError=true;
+		ControlData.currTimeStep=0;
+		while (currTime.getTime()<=endTime.getTime() && noError){
 			int i=0;
-			while (i<modelList.size() && Error.error_solving.size()<1){
+			while (i<modelList.size() && noError){
 				String model=modelList.get(i);
 				ModelDataSet mds=modelDataSetMap.get(model);
 				ControlData.currModelDataSet=mds;
@@ -65,9 +69,18 @@ public class Controller {
 				ControlData.currTsMap=mds.tsMap;
 				ControlData.currCycleIndex=i;
 				processModel();
-				Error.writeEvaluationErrorFile("evaluation_error.txt"); 
+				if (Error.error_evaluation.size()>=1){
+					Error.writeEvaluationErrorFile("evaluation_error.txt");
+					noError=false;
+				}
 				new Solver();
-				Error.writeSolvingErrorFile("solving_error.txt");
+				if (Error.error_solving.size()<1){
+					assignDvar();
+					processAlias();
+				}else{
+					Error.writeSolvingErrorFile("solving_error.txt");
+					noError=false;
+				}
 				i=i+1;
 			}
 			if (ControlData.timeStep.equals("1MON")){
@@ -75,7 +88,8 @@ public class Controller {
 			}else{
 				currTimeAddOneDay();
 			}
-			currTime=new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay); 
+			currTime=new Date(ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
+			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
 		ControlData.solver.close();
 	}
@@ -87,7 +101,7 @@ public class Controller {
 		ControlData.solver.setCommand("FORCE NO");
 		ControlData.solver.setCommand("MATLIST BOTH");
 		//ControlData.solver.setCommand("MPSX YES");
-		ControlData.solver.setCommand( "Output "+FilePaths.mainDirectory+"\\xa.log matlist var wait no" ) ;
+		ControlData.solver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log matlist v ToRcc Yes wait no" ) ;
 	}
 	
 	public static void processModel(){
@@ -112,6 +126,10 @@ public class Controller {
 				DataTimeSeries.lookSvDss.add(tsName);
 			}
 		}
+	}
+	
+	public static void	initialDvarAliasTS(){
+		
 	}
 	
 	public static void processExternal(){
@@ -268,31 +286,6 @@ public class Controller {
 		}
 	}
 	
-	public static void processAlias(){
-		ModelDataSet mds=ControlData.currModelDataSet;
-		ArrayList<String> asList = mds.asList;
-		Map<String, Alias> asMap =mds.asMap;
-		ControlData.currEvalTypeIndex=2;
-		for (String asName: asList){
-			ControlData.currEvalName=asName;
-			System.out.println("Process alias "+asName);
-			Alias alias=asMap.get(asName);
-			
-			String evalString="v: "+alias.expression;
-			ANTLRStringStream stream = new ANTLRStringStream(evalString);
-			EvaluatorLexer lexer = new EvaluatorLexer(stream);
-			TokenStream tokenStream = new CommonTokenStream(lexer);
-			EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
-			try {
-				evaluator.evaluator();
-				alias.data=evaluator.evalValue;
-			} catch (RecognitionException e) {
-				Error.addEvaluationError("Alias evaluation has error.");
-				alias.data=new IntDouble(-901.0,false);
-			}
-		}
-	}
-	
 	public static void processGoal(){
 		ModelDataSet mds=ControlData.currModelDataSet;
 		ArrayList<String> gList = mds.gList;
@@ -331,6 +324,51 @@ public class Controller {
 				} catch (RecognitionException e) {
 					Error.addEvaluationError("Case expression evaluation has error.");
 				}	
+			}
+		}
+	}
+	
+	public void assignDvar(){
+		Map<String, Dvar> dvarMap = ControlData.currDvMap;
+		Set dvarCollection = dvarMap.keySet();
+		Iterator dvarIterator = dvarCollection.iterator();
+		
+		while(dvarIterator.hasNext()){ 
+			String dvName=(String)dvarIterator.next();
+			Dvar dvar=dvarMap.get(dvName);
+			double value=ControlData.solver.getColumnActivity(dvName);
+			dvar.setData(new IntDouble(value,false));
+			double[] data=DataTimeSeries.dvAliasTS.get(dvName).getData();
+			data[ControlData.currTimeStep]=value;
+		}
+	}
+	
+	public void processAlias(){
+		ModelDataSet mds=ControlData.currModelDataSet;
+		ArrayList<String> asList = mds.asList;
+		Map<String, Alias> asMap =mds.asMap;
+		ControlData.currEvalTypeIndex=2;
+		for (String asName: asList){
+			ControlData.currEvalName=asName;
+			System.out.println("Process alias "+asName);
+			Alias alias=asMap.get(asName);
+			
+			String evalString="v: "+alias.expression;
+			ANTLRStringStream stream = new ANTLRStringStream(evalString);
+			EvaluatorLexer lexer = new EvaluatorLexer(stream);
+			TokenStream tokenStream = new CommonTokenStream(lexer);
+			EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+			try {
+				evaluator.evaluator();
+				IntDouble id=evaluator.evalValue;
+				alias.data=id;
+				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
+				dataList[ControlData.currTimeStep]=id.getData().doubleValue();
+			} catch (RecognitionException e) {
+				Error.addEvaluationError("Alias evaluation has error.");
+				alias.data=new IntDouble(-901.0,false);
+				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
+				dataList[ControlData.currTimeStep]=-901.0;
 			}
 		}
 	}

@@ -22,6 +22,7 @@ import java.util.Stack;
 import com.sunsetsoft.xa.Optimizer;
 
 public class ControlData {
+	public static int currTimeStep;
 	public static StudyDataSet currStudyDataSet=new StudyDataSet();
 	public static ModelDataSet currModelDataSet=new ModelDataSet();
 	public static Map<String, Svar> currSvMap=new HashMap<String, Svar>() ;

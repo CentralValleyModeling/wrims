@@ -1,13 +1,22 @@
 package wrimsv2.solver;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.antlr.runtime.ANTLRStringStream;
+import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.RecognitionException;
+import org.antlr.runtime.TokenStream;
+
 import com.sunsetsoft.xa.Optimizer;
 import com.sunsetsoft.xa.XAException;
+
+import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
+import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.commondata.solverdata.*;
 import wrimsv2.components.ControlData;
@@ -15,6 +24,8 @@ import wrimsv2.components.FilePaths;
 import wrimsv2.components.IntDouble;
 import wrimsv2.components.Error;
 import wrimsv2.evaluator.EvalConstraint;
+import wrimsv2.evaluator.EvaluatorLexer;
+import wrimsv2.evaluator.EvaluatorParser;
 
 public class Solver {
 	int modelStatus;
