@@ -52,6 +52,35 @@ public class TestWreslWalker_callite {
 	}
 
 	@Test(groups = { "WRESL_Callite" })
+	public void callite_beta_debug() throws RecognitionException, IOException {
+		
+		csvFolderPath = "TestWreslWalker_callite_beta";
+		inputFilePath = "D:\\CalLite_Beta_042611_WRIMSv2_corroboration_debug\\Run\\main_BO.wresl";
+		logFilePath = csvFolderPath+".log";
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		
+		/// temporary dataset, don't use this because the structure will be changed soon. 
+		LogUtils.setLogFile(logFilePath);
+		TempData td = new TempData();
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		LogUtils.closeLogFile();
+		
+		
+		/// write to StudyDataSet
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+				
+		/// write full study data to csv files
+		WriteCSV.study(sd, csvFolderPath ) ;
+	
+		Assert.assertEquals(1, 0);	
+		
+	}
+
+	@Test(groups = { "WRESL_Callite" })
 	public void callite_beta() throws RecognitionException, IOException {
 		
 		csvFolderPath = "TestWreslWalker_callite_beta";

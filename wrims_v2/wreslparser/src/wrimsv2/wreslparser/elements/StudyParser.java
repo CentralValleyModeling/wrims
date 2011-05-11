@@ -184,9 +184,9 @@ public class StudyParser{
       redefined_globals.retainAll(model_dataset.incFileSet);
       if (redefined_globals.size()>0) LogUtils.errMsg("Global include files redefined: "+ redefined_globals); 
       
-      /// check for redefined globals
+      /// check for redefined globals  //TODO: has bug
       redefined_globals = new LinkedHashSet<String>(td.cumulative_global_complete.getAllVarsSet_except_file_and_weight());
-      redefined_globals.retainAll(model_dataset.getAllVarsSet_except_file_and_weight());
+      redefined_globals.retainAll(model_dataset.getAllGlobalVarsSet_except_file_and_weight());
       if (redefined_globals.size()>0) LogUtils.errMsg("Global variables redefined: "+ redefined_globals);
       
       /// check for redefined weight
