@@ -37,6 +37,7 @@ import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.external.LoadAllDll;
 import wrimsv2.solver.Solver;
+import wrimsv2.tools.RCCComparison;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyConfig;
 import wrimsv2.wreslparser.elements.StudyParser;
@@ -189,6 +190,7 @@ public class Controller {
 					Error.writeSolvingErrorFile("solving_error.txt");
 					noError=false;
 				}
+				new RCCComparison();
 				i=i+1;
 			}
 			if (ControlData.timeStep.equals("1MON")){
@@ -400,6 +402,7 @@ public class Controller {
 		ArrayList<String> gList = mds.gList;
 		Map<String, Goal> gMap =mds.gMap;
 		ControlData.currEvalTypeIndex=3;
+		SolverData.clearConstraintDataMap();
 		for (String goalName: gList){
 			ControlData.currEvalName=goalName;
 			System.out.println("Process constraint "+goalName);

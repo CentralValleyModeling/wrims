@@ -12,8 +12,6 @@ import wrimsv2.commondata.wresldata.WeightElement;
 public class SolverData {
 	private static Map<String, EvalConstraint> constraintDataMap=new HashMap<String, EvalConstraint>();
 	private static Map<String, Dvar> dvarMap= new HashMap<String, Dvar>();
-	private static ArrayList<EvalExpression> softConstraintExpression =new ArrayList<EvalExpression> ();
-	private static ArrayList<Number> softConstraintWeight=new ArrayList<Number> ();
 	private static Map<String, WeightElement> weightMap = new HashMap<String, WeightElement>();
 
 	public static Map<String, WeightElement> getWeightMap(){
@@ -27,6 +25,10 @@ public class SolverData {
 	public static Map<String, EvalConstraint> getConstraintDataMap(){
 		return constraintDataMap;
 	}
+	
+	public static void clearConstraintDataMap(){
+		constraintDataMap=new HashMap<String, EvalConstraint>();
+	}
 
 	public static Map<String, Dvar> getDvarMap(){
 		return dvarMap;
@@ -34,13 +36,5 @@ public class SolverData {
 
 	public static void setDvarMap(Map<String, Dvar>dvMap){
 		dvarMap=dvMap;
-	}
-
-	public static ArrayList<EvalExpression> getSoftConstraintExpression(){
-		return softConstraintExpression;
-	}
-
-	public static ArrayList<Number> getSoftConstraintWeight(){
-		return softConstraintWeight;
 	}
 }
