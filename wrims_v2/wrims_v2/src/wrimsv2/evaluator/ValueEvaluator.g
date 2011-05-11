@@ -1,4 +1,4 @@
-grammar Evaluator;
+grammar ValueEvaluator;
 
 options {
   language = Java;
@@ -24,8 +24,6 @@ options {
 
 @members {
   public static IntDouble evalValue;
-  public static EvalExpression evalExpression;
-  public static EvalConstraint evalConstraint;
   public static boolean evalCondition;
   
   @Override
@@ -35,19 +33,15 @@ options {
 }
 
 evaluator returns [String result]
-	:	 goalInput|
-	expressionInput |
-	softConstraint|
-	conditionInput 
+	:	expressionInput |
+		conditionInput 
 	;
 
 ///////////////////
 /// input rules ///
 ///////////////////
 
-goalInput: 'g:' constraintStatement {evalConstraint = $constraintStatement.ec;};
-expressionInput: 'v:' expressionCollection{evalValue=Evaluation.expressionInput($expressionCollection.ee);};
-softConstraint: 's:' expressionCollection{evalExpression=$expressionCollection.ee;};
+expressionInput: 'v:' expressionCollection{evalValue=ValueEvaluation.expressionInput($expressionCollection.id);};
 conditionInput: 'c:' conditionStatement {evalCondition=$conditionStatement.result;};
 
 ///////////////////
@@ -70,76 +64,76 @@ externalFile
 	
 text	:	LETTER (LETTER | DIGIT )*;
 	
-expressionCollection returns [EvalExpression ee]
-	:	((expression{ee=$expression.ee;})
-	|(tableSQL){ee=$tableSQL.ee;}
+expressionCollection returns [IntDouble id]
+	:	((expression{id=$expression.id;})
+	|(tableSQL){id=$tableSQL.id;}
 	|(timeseriesWithUnits)
-	|((timeseries){ee=$timeseries.ee;})
-	|(sumExpression{ee=$sumExpression.ee;}))
-	|(UPPERUNBOUNDED{ee=new EvalExpression(new IntDouble(1e38,true));})
-	|(LOWERUNBOUNDED{ee=new EvalExpression(new IntDouble(-1e38,true));})
+	|((timeseries){id=$timeseries.id;})
+	|(sumExpression{id=$sumExpression.id;}))
+	|(UPPERUNBOUNDED{id=new IntDouble(1e38,true);})
+	|(LOWERUNBOUNDED{id=new IntDouble(-1e38,true);})
 	;
 
-func returns[EvalExpression ee]: 
-  (max_func{ee=$max_func.ee;})|
-  (min_func{ee=$min_func.ee;})|
-  (int_func{ee=$int_func.ee;})|
-  (abs_func{ee=$abs_func.ee;})|
-  (log_func{ee=$log_func.ee;})|
-  (log10_func{ee=$log10_func.ee;})|
-  (pow_func{ee=$pow_func.ee;});
+func returns[IntDouble id]: 
+  (max_func{id=$max_func.id;})|
+  (min_func{id=$min_func.id;})|
+  (int_func{id=$int_func.id;})|
+  (abs_func{id=$abs_func.id;})|
+  (log_func{id=$log_func.id;})|
+  (log10_func{id=$log10_func.id;})|
+  (pow_func{id=$pow_func.id;});
 
-max_func returns[EvalExpression ee] 
-	: MAX '(' (e1=expression){ee=$e1.ee;}(';' (e2=expression{
-     ee=Evaluation.max(ee, $e2.ee);
+max_func returns[IntDouble id] 
+	: MAX '(' (e1=expression){id=$e1.id;}(';' (e2=expression{
+     id=ValueEvaluation.max(id, $e2.id);
   }))+ ')'
 	;
 
-min_func returns[EvalExpression ee]
-	: MIN '(' (e1=expression){ee=$e1.ee;}(';' (e2=expression{
-     ee=Evaluation.min(ee, $e2.ee);
+min_func returns[IntDouble id]
+	: MIN '(' (e1=expression){id=$e1.id;}(';' (e2=expression{
+     id=ValueEvaluation.min(id, $e2.id);
   }))+ ')'
 	;
 	
-int_func returns[EvalExpression ee]
+int_func returns[IntDouble id]
   : INT '(' (e=expression) ')'{
-     ee=Evaluation.intFunc($e.ee);
+     id=ValueEvaluation.intFunc($e.id);
   }
   ;
   
-abs_func returns[EvalExpression ee]
+abs_func returns[IntDouble id]
   : ABS '(' (e=expression) ')'{
-     ee=Evaluation.abs($e.ee);
+     id=ValueEvaluation.abs($e.id);
   }
   ;
 
-log_func returns[EvalExpression ee]
+log_func returns[IntDouble id]
   : LOG '(' (e=expression) ')'{
-     ee=Evaluation.log($e.ee);
+     id=ValueEvaluation.log($e.id);
   }
   ;
 
-log10_func returns[EvalExpression ee]
+log10_func returns[IntDouble id]
   : LOG10 '(' (e=expression) ')'{
-    ee=Evaluation.log10($e.ee);
+    id=ValueEvaluation.log10($e.id);
   }
   ;
   
-pow_func returns[EvalExpression ee]
+pow_func returns[IntDouble id]
   : POW '(' (e1=expression) (';' (e2=expression)) ')'{
-     ee=Evaluation.pow($e1.ee, $e2.ee);
+     id=ValueEvaluation.pow($e1.id, $e2.id);
   }
   ;
   
 range_func returns [boolean result]
-  : RANGE '(' MONTH ';' m1=MONTH_CONST ';' m2=MONTH_CONST ')' {Evaluation.range($m1.text, $m2.text);};
+  : RANGE '(' MONTH ';' m1=MONTH_CONST ';' m2=MONTH_CONST ')' {ValueEvaluation.range($m1.text, $m2.text);};
 
 timeseriesWithUnits 
 	: 'timeseries' 'kind' '=' partC 'units' '=' IDENT 
 	;
 
-timeseries returns [EvalExpression ee]
-	: 'timeseries' {ee=Evaluation.timeseries();}
+timeseries returns [IntDouble id]
+	: 'timeseries' {id=ValueEvaluation.timeseries();}
 	;
 	
 
@@ -150,10 +144,10 @@ usedKeywords: YEAR|MONTH|MONTH_CONST|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|I
 |CONSTRAIN|ALWAYS|NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
 |CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE|UPPERUNBOUNDED|LOWERUNBOUNDED;
 
-tableSQL returns [EvalExpression ee] @init{String table=null; String select=null; String use=null; HashMap<String, Number> given=null; HashMap<String, Number> where=null;}
+tableSQL returns [IntDouble id] @init{String table=null; String select=null; String use=null; HashMap<String, Number> given=null; HashMap<String, Number> where=null;}
 	: SELECT ((i1=IDENT{select=$i1.text;})|(u1=usedKeywords{select=$u1.text;})) FROM i2=IDENT{table=$i2.text;} 
 	  (GIVEN a=assignStatement{given=new HashMap<String, Number>(); given.put($a.assignIdent, $a.value);})? (USE i3=IDENT{use=$i3.text;})? 
-	  (where_items{where=$where_items.where;})? {ee=Evaluation.tableSQL(table, select, where, given, use);}	  
+	  (where_items{where=$where_items.where;})? {id=ValueEvaluation.tableSQL(table, select, where, given, use);}	  
 	;
 
 where_items returns [HashMap<String, Number> where]
@@ -177,28 +171,28 @@ lowerbound:	IDENT|allnumber|(allnumber '*' TAFCFS);
 
 //sumExpression was redesign. If not work, switch back to the original design above
 
-sumExpression returns [EvalExpression ee] @init{String s="";}
-  : SUM '(' IDENT{Evaluation.sumExpression_IDENT($IDENT.text);} '=' e1=expression ';' e2=expression (';' (('-'{s=s+"-";})? INTEGER {s=s+$INTEGER.text;}))? ')' e3=expression{ee=Evaluation.sumExpression($e1.ee,$e2.ee,s, $e3.text);}
+sumExpression returns [IntDouble id] @init{String s="";}
+  : SUM '(' IDENT{ValueEvaluation.sumExpression_IDENT($IDENT.text);} '=' e1=expression ';' e2=expression (';' (('-'{s=s+"-";})? INTEGER {s=s+$INTEGER.text;}))? (')'{ValueEvaluation.initSumExpression($e1.id, $e2.id, s);})  e3=expression{id=ValueEvaluation.sumExpression($e3.id, $e3.text);}
   ;
 
-term returns [EvalExpression ee]
-	:	((knownTS{ee=Evaluation.term_knownTS($knownTS.result);})
-	| (IDENT {ee=Evaluation.term_IDENT($IDENT.text);})
-	| (SVAR{ee=Evaluation.term_SVAR($SVAR.text.replace("{","").replace("}",""));}) 
-	|	('(' (e=expression) ')' {ee=$e.ee;})
-	|	(INTEGER {ee=Evaluation.term_INTEGER($INTEGER.text);}) 
-	| (FLOAT {ee=Evaluation.term_FLOAT($FLOAT.text);}) 
-	| func{ee=$func.ee;}
-	| tafcfs_term{ee=$tafcfs_term.ee;}
-	| YEAR{ee=Evaluation.term_YEAR();}
-	| MONTH{ee=Evaluation.term_MONTH();}
-	| MONTH_CONST{ee=Evaluation.term_MONTH_CONST($MONTH_CONST.text);}
-	| PASTMONTH{ee=Evaluation.term_PASTMONTH($PASTMONTH.text);}
-	| DAYSIN{ee=Evaluation.daysIn();})
+term returns [IntDouble id]
+	:	((knownTS{id=ValueEvaluation.term_knownTS($knownTS.result);})
+	| (IDENT {id=ValueEvaluation.term_IDENT($IDENT.text);})
+	| (SVAR{id=ValueEvaluation.term_SVAR($SVAR.text.replace("{","").replace("}",""));}) 
+	|	('(' (e=expression) ')' {id=$e.id;})
+	|	(INTEGER {id=ValueEvaluation.term_INTEGER($INTEGER.text);}) 
+	| (FLOAT {id=ValueEvaluation.term_FLOAT($FLOAT.text);}) 
+	| func{id=$func.id;}
+	| tafcfs_term{id=$tafcfs_term.id;}
+	| YEAR{id=ValueEvaluation.term_YEAR();}
+	| MONTH{id=ValueEvaluation.term_MONTH();}
+	| MONTH_CONST{id=ValueEvaluation.term_MONTH_CONST($MONTH_CONST.text);}
+	| PASTMONTH{id=ValueEvaluation.term_PASTMONTH($PASTMONTH.text);}
+	| DAYSIN{id=ValueEvaluation.daysIn();})
 	;
 	
-tafcfs_term returns [EvalExpression ee]: TAFCFS ('(' expression ')')? {
-    ee=Evaluation.tafcfs_term($TAFCFS.text, $expression.ee);
+tafcfs_term returns [IntDouble id]: TAFCFS ('(' expression ')')? {
+    id=ValueEvaluation.tafcfs_term($TAFCFS.text, $expression.id);
 };
 	
 knownTS returns [IntDouble result]  
@@ -214,7 +208,7 @@ knownTS returns [IntDouble result]
 //  ;
   
 pastCycleDV returns [IntDouble result]
-  : i1=IDENT '[' i2=IDENT ']'{result=Evaluation.pastCycleDV($i1.text,$i2.text);}
+  : i1=IDENT '[' i2=IDENT ']'{result=ValueEvaluation.pastCycleDV($i1.text,$i2.text);}
   ; 
 
 function returns [IntDouble result]
@@ -222,42 +216,42 @@ function returns [IntDouble result]
   ;
 
 noArgFunction returns [IntDouble result]
-  : IDENT '(' ')' {result=Evaluation.noArgFunction($IDENT.text);};
+  : IDENT '(' ')' {result=ValueEvaluation.noArgFunction($IDENT.text);};
 
-argFunction returns [IntDouble result] @init{ArrayList<EvalExpression> eeArray = new ArrayList<EvalExpression>();}
-  : IDENT '(' (e1=expression {eeArray.add($e1.ee);}) (';' (e2=expression{eeArray.add($e2.ee);}))* ')'{result=Evaluation.argFunction($IDENT.text,eeArray);};
+argFunction returns [IntDouble result] @init{ArrayList<IntDouble> idArray = new ArrayList<IntDouble>();}
+  : IDENT '(' (e1=expression {idArray.add($e1.id);}) (';' (e2=expression{idArray.add($e2.id);}))* ')'{result=ValueEvaluation.argFunction($IDENT.text,idArray);};
   	
-unary returns [EvalExpression ee] 
-	:	(s='-')? term{ee=Evaluation.unary($s.text, $term.ee);
+unary returns [IntDouble id] 
+	:	(s='-')? term{id=ValueEvaluation.unary($s.text, $term.id);
 	};
 	
 allnumber 
 	:	('-')? number;
 
-mult returns [EvalExpression ee]  
-	:	(u1=unary {ee=$u1.ee;}) (s=('*'| '/'| MOD) (u2=unary){
+mult returns [IntDouble id]  
+	:	(u1=unary {id=$u1.id;}) (s=('*'| '/'| MOD) (u2=unary){
 	   if ($s.text.equals("*")){
-	     ee=Evaluation.mult(ee, $u2.ee);
+	     id=ValueEvaluation.mult(id, $u2.id);
 	   }else if ($s.text.equals("/")){
-	     ee=Evaluation.divide(ee, $u2.ee);
+	     id=ValueEvaluation.divide(id, $u2.id);
 	   }else{
-	     ee=Evaluation.mod(ee, $u2.ee);
+	     id=ValueEvaluation.mod(id, $u2.id);
 	   }   
   })*
 	;
 	
-add  returns [EvalExpression ee]
-	:	(m1=mult {ee=$m1.ee;}) ((s=('+'|'-')) (m2=mult){
+add  returns [IntDouble id]
+	:	(m1=mult {id=$m1.id;}) ((s=('+'|'-')) (m2=mult){
      if ($s.text.equals("+")){
-       ee=Evaluation.add(ee, $m2.ee);
+       id=ValueEvaluation.add(id, $m2.id);
      }else{
-       ee=Evaluation.substract(ee, $m2.ee);
+       id=ValueEvaluation.substract(id, $m2.id);
      }
 	})*
 	;
 
-expression returns [EvalExpression ee]  
-	:	i=add {$ee=$add.ee;} 
+expression returns [IntDouble id]  
+	:	i=add {$id=$add.id;} 
 	;
 
 relation
@@ -273,12 +267,12 @@ conditionStatement returns [boolean result]
 	;
 
 whereStatement returns [String whereIdent, Number value]
-  : ((i=IDENT{$whereIdent=$i.text;})|(u=usedKeywords{$whereIdent=$u.text;})) '=' expression{$value=Evaluation.assignWhereStatement($expression.ee);} 
+  : ((i=IDENT{$whereIdent=$i.text;})|(u=usedKeywords{$whereIdent=$u.text;})) '=' expression{$value=ValueEvaluation.assignWhereStatement($expression.id);} 
   ;
 	
 relationStatementSeries returns [boolean result] 
   : r1=relationRangeStatement {result=$r1.result;} 
-    (((s='.and.')|(s='.or.')) r2=relationRangeStatement {result=Evaluation.relationStatementSeries(result, $r2.result, $s.text);})* ;
+    (((s='.and.')|(s='.or.')) r2=relationRangeStatement {result=ValueEvaluation.relationStatementSeries(result, $r2.result, $s.text);})* ;
 
 relationRangeStatement returns [boolean result]
   : (r1=relationStatement{result=$r1.result;})|(r2=range_func{result=$r2.result;}){
@@ -286,15 +280,11 @@ relationRangeStatement returns [boolean result]
   ;
 
 relationStatement returns [boolean result] 
-	:	(e1=expression) relation (e2=expression){result=Evaluation.relationStatement($e1.ee, $e2.ee, $relation.text);}
+	:	(e1=expression) relation (e2=expression){result=ValueEvaluation.relationStatement($e1.id, $e2.id, $relation.text);}
 	;
 
-constraintStatement returns [EvalConstraint ec]
-  : e1=expression ((s='=')|(s='>')|(s='<')) e2=expression{ec=Evaluation.constraintStatement($e1.ee, $e2.ee, $s.text);}
-  ;
-
 assignStatement returns [String assignIdent, Number value]  
-  : IDENT '=' expression {$assignIdent=$IDENT.text; $value=Evaluation.assignWhereStatement($expression.ee);} 
+  : IDENT '=' expression {$assignIdent=$IDENT.text; $value=ValueEvaluation.assignWhereStatement($expression.id);} 
   ;
 
 number

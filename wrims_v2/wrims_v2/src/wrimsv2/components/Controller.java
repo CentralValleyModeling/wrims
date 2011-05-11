@@ -33,6 +33,8 @@ import wrimsv2.evaluator.Evaluation;
 import wrimsv2.evaluator.EvaluatorLexer;
 import wrimsv2.evaluator.EvaluatorParser;
 import wrimsv2.evaluator.TimeOperation;
+import wrimsv2.evaluator.ValueEvaluatorLexer;
+import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.external.LoadAllDll;
 import wrimsv2.solver.Solver;
 import wrimsv2.wreslparser.elements.LogUtils;
@@ -275,9 +277,9 @@ public class Controller {
 				}catch (NumberFormatException e2){
 					String evalString="v: "+wtString;
 					ANTLRStringStream stream = new ANTLRStringStream(evalString);
-					EvaluatorLexer lexer = new EvaluatorLexer(stream);
+					ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
 					TokenStream tokenStream = new CommonTokenStream(lexer);
-					EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+					ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
 					try {
 						evaluator.evaluator();
 						wt.setValue(evaluator.evalValue.getData().doubleValue());
@@ -309,9 +311,9 @@ public class Controller {
 				i=i+1;
 				String evalString="c: "+caseCondition.get(i);
 				ANTLRStringStream stream = new ANTLRStringStream(evalString);
-				EvaluatorLexer lexer = new EvaluatorLexer(stream);
+				ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
 				TokenStream tokenStream = new CommonTokenStream(lexer);
-				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+				ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
 				try{
 					evaluator.evaluator();
 					condition=evaluator.evalCondition;
@@ -323,9 +325,9 @@ public class Controller {
 			if (condition){
 				String evalString="v: "+svar.caseExpression.get(i);
 				ANTLRStringStream stream = new ANTLRStringStream(evalString);
-				EvaluatorLexer lexer = new EvaluatorLexer(stream);
+				ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
 				TokenStream tokenStream = new CommonTokenStream(lexer);
-				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+				ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
 				try {
 					evaluator.evaluator();
 					svar.setData(evaluator.evalValue);
@@ -367,9 +369,9 @@ public class Controller {
 			
 			String evalString="v: "+dvar.lowerBound;
 			ANTLRStringStream stream = new ANTLRStringStream(evalString);
-			EvaluatorLexer lexer = new EvaluatorLexer(stream);
+			ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
 			TokenStream tokenStream = new CommonTokenStream(lexer);
-			EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+			ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
 			try {
 				evaluator.evaluator();
 				dvar.lowerBoundValue=evaluator.evalValue.getData();
@@ -380,9 +382,9 @@ public class Controller {
 			
 			evalString="v: "+dvar.upperBound;
 			stream = new ANTLRStringStream(evalString);
-			lexer = new EvaluatorLexer(stream);
+			lexer = new ValueEvaluatorLexer(stream);
 			tokenStream = new CommonTokenStream(lexer);
-			evaluator = new EvaluatorParser(tokenStream);
+			evaluator = new ValueEvaluatorParser(tokenStream);
 			try {
 				evaluator.evaluator();
 				dvar.upperBoundValue=evaluator.evalValue.getData();
@@ -470,9 +472,9 @@ public class Controller {
 			
 			String evalString="v: "+alias.expression;
 			ANTLRStringStream stream = new ANTLRStringStream(evalString);
-			EvaluatorLexer lexer = new EvaluatorLexer(stream);
+			ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
 			TokenStream tokenStream = new CommonTokenStream(lexer);
-			EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+			ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
 			try {
 				evaluator.evaluator();
 				IntDouble id=evaluator.evalValue;
