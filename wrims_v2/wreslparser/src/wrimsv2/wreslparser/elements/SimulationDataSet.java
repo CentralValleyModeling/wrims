@@ -617,68 +617,68 @@ public class SimulationDataSet
     Tools.mapRemoveAll(x.exMap, this.exSet);
     Tools.mapRemoveAll(x.incFileMap, this.incFileSet);
 
-//    x.dvSet.addAll(this.dvSet);
-//    x.dvSet_global.addAll(this.dvSet_global);
-//    x.dvSet_local.addAll(this.dvSet_local);
-    this.dvSet.addAll(s.dvSet);
-    this.dvSet_global.addAll(s.dvSet_global);
-    this.dvSet_local.addAll(s.dvSet_local);
+    x.dvSet.addAll(this.dvSet);
+    x.dvSet_global.addAll(this.dvSet_global);
+    x.dvSet_local.addAll(this.dvSet_local);
+    this.dvSet = x.dvSet;
+    this.dvSet_global = x.dvSet_global;
+    this.dvSet_local = x.dvSet_local;
     this.dvMap.putAll(x.dvMap);
 
     x.svSet.addAll(this.svSet);
     x.svSet_global.addAll(this.svSet_global);
     x.svSet_local.addAll(this.svSet_local);
-    this.svSet.addAll(s.svSet);
-    this.svSet_global.addAll(s.svSet_global);
-    this.svSet_local.addAll(s.svSet_local);
+    this.svSet = x.svSet;
+    this.svSet_global = x.svSet_global;
+    this.svSet_local = x.svSet_local;
     this.svMap.putAll(x.svMap);
 
     x.tsSet.addAll(this.tsSet);
     x.tsSet_global.addAll(this.tsSet_global);
     x.tsSet_local.addAll(this.tsSet_local);
-    this.tsSet.addAll(s.tsSet);
-    this.tsSet_global.addAll(s.tsSet_global);
-    this.tsSet_local.addAll(s.tsSet_local);
+    this.tsSet = x.tsSet;
+    this.tsSet_global = x.tsSet_global;
+    this.tsSet_local = x.tsSet_local;
     this.tsMap.putAll(x.tsMap);
 
     x.asSet.addAll(this.asSet);
     x.asSet_global.addAll(this.asSet_global);
     x.asSet_local.addAll(this.asSet_local);
-    this.asSet.addAll(s.asSet);
-    this.asSet_global.addAll(s.asSet_global);
-    this.asSet_local.addAll(s.asSet_local);
+    this.asSet = x.asSet;
+    this.asSet_global = x.asSet_global;
+    this.asSet_local = x.asSet_local;
     this.asMap.putAll(x.asMap);
 
     x.gSet.addAll(this.gSet);
     x.gSet_global.addAll(this.gSet_global);
     x.gSet_local.addAll(this.gSet_local);
-    this.gSet.addAll(s.gSet);
-    this.gSet_global.addAll(s.gSet_global);
-    this.gSet_local.addAll(s.gSet_local);
+    this.gSet = x.gSet;
+    this.gSet_global = x.gSet_global;
+    this.gSet_local = x.gSet_local;
     this.gMap.putAll(x.gMap);
 
     x.wtSet.addAll(this.wtSet);
     x.wtSet_global.addAll(this.wtSet_global);
     x.wtSet_local.addAll(this.wtSet_local);
-    this.wtSet.addAll(s.wtSet);
-    this.wtSet_global.addAll(s.wtSet_global);
-    this.wtSet_local.addAll(s.wtSet_local);
+    this.wtSet = x.wtSet;
+    this.wtSet_global = x.wtSet_global;
+    this.wtSet_local = x.wtSet_local;
     this.wtMap.putAll(x.wtMap);
 
     x.exSet.addAll(this.exSet);
     x.exSet_global.addAll(this.exSet_global);
     x.exSet_local.addAll(this.exSet_local);
-    this.exSet.addAll(s.exSet);
-    this.exSet_global.addAll(s.exSet_global);
-    this.exSet_local.addAll(s.exSet_local);
+    this.exSet = x.exSet;
+    this.exSet_global = x.exSet_global;
+    this.exSet_local = x.exSet_local;
     this.exMap.putAll(x.exMap);
 
     x.incFileSet.addAll(this.incFileSet);
     x.incFileSet_global.addAll(this.incFileSet_global);
     x.incFileSet_local.addAll(this.incFileSet_local);
-    this.incFileSet.addAll(s.incFileSet);
-    this.incFileSet_global.addAll(s.incFileSet_global);
-    this.incFileSet_local.addAll(s.incFileSet_local);
+    this.incFileSet = x.incFileSet;
+    this.incFileSet_global = x.incFileSet_global;
+    this.incFileSet_local = x.incFileSet_local;
     this.incFileMap.putAll(x.incFileMap);
 
     return this;
