@@ -47,14 +47,14 @@ public class RCCComparison {
 			int line=0;
 			while (!isEnd){
 			 	strLine=br.readLine();
-			  	if (strLine.startsWith(cycleName) && !strLine.startsWith(cycleName+"Objective")){
+			 	if (strLine==null || strLine.equals("")) isEnd=true;
+			  	if (!isEnd && strLine.startsWith(cycleName) && !strLine.startsWith(cycleName+"Objective")){
 			  		compare(strLine);
 				}
-				if (strLine==null) isEnd=true;
 			}
 			
 			for (int i=0; i<gNameArrayList.size(); i++){
-				out.write(gNameArrayList.get(i)+" is not in WRIMS1.");
+				out.write(gNameArrayList.get(i)+" is not in WRIMS1.\n");
 			}
 			out.close();
 		}catch (Exception e){
@@ -64,7 +64,7 @@ public class RCCComparison {
 	}
 	
 	public void compare(String strLine) throws IOException{
-		strLine=strLine.substring(2, strLine.length()-1).toLowerCase();
+		strLine=strLine.substring(2, strLine.length()).toLowerCase();
 		String[] subStrs=strLine.split(":");
 		gName=subStrs[0].substring(0, subStrs[0].lastIndexOf("/"));
 		Map<String, EvalConstraint> constraintMap=SolverData.getConstraintDataMap();
@@ -77,7 +77,7 @@ public class RCCComparison {
 			boolean isDifferent=false;
 			for (int i=0; i<coefVariable.length-1; i++){
 				String[] multiStrs=coefVariable[i].split(";");
-				if (multiplier.containsKey(multiStrs[0].toLowerCase())){
+				if (multiplier.containsKey(multiStrs[0])){
 					double coef=multiplier.get(multiStrs[0]).getData().doubleValue();
 					if (coef!=Double.parseDouble(multiStrs[1])){
 						isDifferent=true;
@@ -86,7 +86,7 @@ public class RCCComparison {
 				}
 			}
 			String[] signValue=subStrs[subStrs.length-1].split(";");
-			if (!signValue[0].replace(" ", "").equals(ec.getSign())){
+			if (!signValue[0].replaceAll(" ", "").equals(ec.getSign())){
 				isDifferent=true;
 				outLine=outLine+"("+signValue[0]+"|"+ec.getSign()+")";
 			}

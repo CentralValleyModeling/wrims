@@ -386,13 +386,11 @@ public class Evaluation {
 			ef.execute(stack);
 			String valueString=stack.pop().toString();
 			
-			try{        
-				int intValue=Integer.parseInt(valueString);    
-				result=new IntDouble(intValue, true);
-			}catch(NumberFormatException nfe1){
-				result=new IntDouble(Double.parseDouble(valueString), false);
+			if (valueString.contains(".")){       
+				return new IntDouble(Double.parseDouble(valueString), false);
+			}else{
+				return new IntDouble(Integer.parseInt(valueString), true);
 			}
-			return result;
 			
 		} catch (Exception e) {
 			Error.addEvaluationError("The function " +ident+" is not defined in the WRIMS engine. Re-run preprocessor for dlls.");
@@ -440,13 +438,11 @@ public class Evaluation {
 			ef.execute(stack);
 			String valueString=stack.pop().toString();
 			
-			try{        
-				int intValue=Integer.parseInt(valueString);    
-				result=new IntDouble(intValue, true);
-			}catch(NumberFormatException nfe1){
-				result=new IntDouble(Double.parseDouble(valueString), false);
+			if (valueString.contains(".")){       
+				return new IntDouble(Double.parseDouble(valueString), false);
+			}else{
+				return new IntDouble(Integer.parseInt(valueString), true);
 			}
-			return result;
 			
 		} catch (Exception e) {
 			Error.addEvaluationError("The function " +ident+" is not defined in the WRIMS engine. Re-run preprocessor for dlls.");

@@ -3,6 +3,7 @@ package wrimsv2.components;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Date;
@@ -176,21 +177,31 @@ public class Controller {
 				ControlData.currTsMap=mds.tsMap;
 				ControlData.currCycleIndex=i;
 				ControlData.isPostProcessing=false;
+				Calendar cal = Calendar.getInstance();
+				System.out.println("Before Evaluation: "+cal.getTimeInMillis());
 				processModel();
 				if (Error.error_evaluation.size()>=1){
 					Error.writeEvaluationErrorFile("evaluation_error.txt");
 					noError=false;
 				}
+				cal = Calendar.getInstance();
+				System.out.println(" After Evaluation: "+cal.getTimeInMillis());
 				new Solver();
+				cal = Calendar.getInstance();
+				System.out.println("    After solving: "+cal.getTimeInMillis());
 				if (Error.error_solving.size()<1){
 					assignDvar();
+					cal = Calendar.getInstance();
+					System.out.println(" After assign dvar: "+cal.getTimeInMillis());
 					ControlData.isPostProcessing=true;
 					processAlias();
 				}else{
 					Error.writeSolvingErrorFile("solving_error.txt");
 					noError=false;
 				}
-				new RCCComparison();
+				cal = Calendar.getInstance();
+				System.out.println("     After alias: "+cal.getTimeInMillis());
+				//new RCCComparison();
 				i=i+1;
 			}
 			if (ControlData.timeStep.equals("1MON")){
@@ -207,17 +218,27 @@ public class Controller {
 	public void prepareSolver(){
 		ControlData.solver.openConnection();
 		ControlData.solver.setModelSize(32, 32);
-		ControlData.solver.setCommand("MAXIMIZE Yes MUTE NO FORCE NO MATLIST BOTH");
+		ControlData.solver.setCommand("MAXIMIZE Yes MUTE NO FORCE No MATLIST BOTH");
 		//ControlData.solver.setCommand("MPSX YES");
 		ControlData.solver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log matlist v ToRcc Yes wait no" ) ;
 	}
 	
 	public void processModel(){
 		processTimeseries();
+		Calendar cal = Calendar.getInstance();
+		System.out.println(" After Timeseries: "+cal.getTimeInMillis());
 		processSvar();
+		cal = Calendar.getInstance();
+		System.out.println("       After svar: "+cal.getTimeInMillis());
 		processDvar();	
+		cal = Calendar.getInstance();
+		System.out.println("       After dvar: "+cal.getTimeInMillis());
 		processGoal();	
+		cal = Calendar.getInstance();
+		System.out.println("       After goal: "+cal.getTimeInMillis());
 		processWeight();
+		cal = Calendar.getInstance();
+		System.out.println("     After weight: "+cal.getTimeInMillis());
 	}
 
 	public void readTimeseries(){
@@ -267,29 +288,20 @@ public class Controller {
 		ControlData.currEvalTypeIndex=5;
 		for (String wtName: wtList){
 			ControlData.currEvalName=wtName;
-			System.out.println("Process weight "+wtName);
+			//System.out.println("Process weight "+wtName);
 			WeightElement wt=wtMap.get(wtName);
 			String wtString=wt.weight;
-			try{
-				wt.setValue(Double.parseDouble(wtString));
-			} catch (NumberFormatException e1){
-				try{
-					Integer wtValue=Integer.parseInt(wtString);
-					wt.setValue(wtValue.doubleValue());
-				}catch (NumberFormatException e2){
-					String evalString="v: "+wtString;
-					ANTLRStringStream stream = new ANTLRStringStream(evalString);
-					ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
-					TokenStream tokenStream = new CommonTokenStream(lexer);
-					ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
-					try {
-						evaluator.evaluator();
-						wt.setValue(evaluator.evalValue.getData().doubleValue());
-					} catch (RecognitionException e) {
-						Error.addEvaluationError("weight definition has error");
-						wt.setValue(0.0);
-					}
-				}
+			String evalString="v: "+wtString;
+			ANTLRStringStream stream = new ANTLRStringStream(evalString);
+			ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
+			TokenStream tokenStream = new CommonTokenStream(lexer);
+			ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
+			try {
+				evaluator.evaluator();
+				wt.setValue(evaluator.evalValue.getData().doubleValue());
+			} catch (RecognitionException e) {
+				Error.addEvaluationError("weight definition has error");
+				wt.setValue(0.0);
 			}
 		}
 	}
@@ -301,7 +313,7 @@ public class Controller {
 		ControlData.currEvalTypeIndex=0;
 		for (String svName: svList){
 			ControlData.currEvalName=svName;
-			System.out.println("Process svar "+svName);
+			//System.out.println("Process svar "+svName);
 			Svar svar=svMap.get(svName);
 			ArrayList<String> caseCondition=svar.caseCondition;
 			boolean condition=false;
@@ -351,7 +363,7 @@ public class Controller {
 		ControlData.currEvalTypeIndex=5;
 		for (String tsName:tsList){
 			ControlData.currEvalName=tsName;
-			System.out.println("process timeseries "+tsName);
+			//System.out.println("process timeseries "+tsName);
 			Timeseries ts=tsMap.get(tsName);
 			ts.setData(new IntDouble(Evaluation.timeseries(tsName),false));
 		}
@@ -366,7 +378,7 @@ public class Controller {
 		ControlData.currEvalTypeIndex=1;
 		for (String dvName: dvList){
 			ControlData.currEvalName=dvName;
-			System.out.println("Process dvar "+dvName);
+			//System.out.println("Process dvar "+dvName);
 			Dvar dvar=dvMap.get(dvName);
 			
 			String evalString="v: "+dvar.lowerBound;
@@ -405,7 +417,7 @@ public class Controller {
 		SolverData.clearConstraintDataMap();
 		for (String goalName: gList){
 			ControlData.currEvalName=goalName;
-			System.out.println("Process constraint "+goalName);
+			//System.out.println("Process constraint "+goalName);
 			Goal goal=gMap.get(goalName);
 			ArrayList<String> caseCondition=goal.caseCondition;
 			boolean condition=false;
@@ -414,9 +426,9 @@ public class Controller {
 				i=i+1;
 				String evalString="c: "+caseCondition.get(i);
 				ANTLRStringStream stream = new ANTLRStringStream(evalString);
-				EvaluatorLexer lexer = new EvaluatorLexer(stream);
+				ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
 				TokenStream tokenStream = new CommonTokenStream(lexer);
-				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+				ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
 				try{
 					evaluator.evaluator();
 					condition=evaluator.evalCondition;
@@ -470,7 +482,7 @@ public class Controller {
 		ControlData.currEvalTypeIndex=2;
 		for (String asName: asList){
 			ControlData.currEvalName=asName;
-			System.out.println("Process alias "+asName);
+			//System.out.println("Process alias "+asName);
 			Alias alias=asMap.get(asName);
 			
 			String evalString="v: "+alias.expression;

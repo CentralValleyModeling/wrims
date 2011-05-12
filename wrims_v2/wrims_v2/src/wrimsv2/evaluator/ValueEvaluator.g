@@ -41,7 +41,7 @@ evaluator returns [String result]
 /// input rules ///
 ///////////////////
 
-expressionInput: 'v:' expressionCollection{evalValue=ValueEvaluation.expressionInput($expressionCollection.id);};
+expressionInput: 'v:' expressionCollection{evalValue=$expressionCollection.id;};
 conditionInput: 'c:' conditionStatement {evalCondition=$conditionStatement.result;};
 
 ///////////////////

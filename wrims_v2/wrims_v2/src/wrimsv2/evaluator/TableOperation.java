@@ -93,15 +93,15 @@ public class TableOperation {
 			    	Number[] dataLine=new Number[fieldSize];
 			    	for (int i=0; i<fieldSize; i++){
 			    		try{        
-			    			dataLine[i]=Integer.parseInt(values[i]);    
-			    		} catch(NumberFormatException nfe1) {        
-			    			try {
+			    			if (values[i].contains(".")){       
 			    				dataLine[i]=Double.parseDouble(values[i]);
-			    			}catch (NumberFormatException nfe2) {
-			    	            Error.addEvaluationError("The No. " +(i+1)+" data in the table "+name+" line"+line+" is not numeric");
-						    	in.close();
-						    	return false;
+			    			}else{
+			    				dataLine[i]=Integer.parseInt(values[i]);
 			    			}
+			    		} catch(NumberFormatException nfe1) {        
+			    	        Error.addEvaluationError("The No. " +(i+1)+" data in the table "+name+" line"+line+" is not numeric");
+						    in.close();
+						    return false;
 			    		}   
 			    	}
 			    	lut.getData().add(dataLine);
