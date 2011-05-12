@@ -192,7 +192,7 @@ public class Controller {
 				if (Error.error_solving.size()<1){
 					assignDvar();
 					cal = Calendar.getInstance();
-					System.out.println(" After assign dvar: "+cal.getTimeInMillis());
+					System.out.println("After assign dvar: "+cal.getTimeInMillis());
 					ControlData.isPostProcessing=true;
 					processAlias();
 				}else{
@@ -200,7 +200,7 @@ public class Controller {
 					noError=false;
 				}
 				cal = Calendar.getInstance();
-				System.out.println("     After alias: "+cal.getTimeInMillis());
+				System.out.println("      After alias: "+cal.getTimeInMillis());
 				//new RCCComparison();
 				i=i+1;
 			}
