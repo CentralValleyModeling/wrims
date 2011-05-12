@@ -182,19 +182,19 @@ sumExpression returns [EvalExpression ee] @init{String s="";}
   ;
 
 term returns [EvalExpression ee]
-	:	((knownTS{ee=Evaluation.term_knownTS($knownTS.result);})
-	| (IDENT {ee=Evaluation.term_IDENT($IDENT.text);})
-	| (SVAR{ee=Evaluation.term_SVAR($SVAR.text.replace("{","").replace("}",""));}) 
-	|	('(' (e=expression) ')' {ee=$e.ee;})
-	|	(INTEGER {ee=Evaluation.term_INTEGER($INTEGER.text);}) 
+	:	(IDENT {ee=Evaluation.term_IDENT($IDENT.text);})
 	| (FLOAT {ee=Evaluation.term_FLOAT($FLOAT.text);}) 
+	| ('(' (e=expression) ')' {ee=$e.ee;})
+	| ((knownTS{ee=Evaluation.term_knownTS($knownTS.result);})
 	| func{ee=$func.ee;}
+	| (INTEGER {ee=Evaluation.term_INTEGER($INTEGER.text);}) 
 	| tafcfs_term{ee=$tafcfs_term.ee;}
 	| YEAR{ee=Evaluation.term_YEAR();}
 	| MONTH{ee=Evaluation.term_MONTH();}
 	| MONTH_CONST{ee=Evaluation.term_MONTH_CONST($MONTH_CONST.text);}
 	| PASTMONTH{ee=Evaluation.term_PASTMONTH($PASTMONTH.text);}
 	| DAYSIN{ee=Evaluation.daysIn();})
+	| (SVAR{ee=Evaluation.term_SVAR($SVAR.text.replace("{","").replace("}",""));}) 
 	;
 	
 tafcfs_term returns [EvalExpression ee]: TAFCFS ('(' expression ')')? {

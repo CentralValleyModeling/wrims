@@ -65,7 +65,7 @@ externalFile
 text	:	LETTER (LETTER | DIGIT )*;
 	
 expressionCollection returns [IntDouble id]
-	:	((expression{id=$expression.id;})
+	:((expression{id=$expression.id;})
 	|(tableSQL){id=$tableSQL.id;}
 	|(timeseriesWithUnits)
 	|((timeseries){id=$timeseries.id;})
@@ -176,19 +176,19 @@ sumExpression returns [IntDouble id] @init{String s="";}
   ;
 
 term returns [IntDouble id]
-	:	((knownTS{id=ValueEvaluation.term_knownTS($knownTS.result);})
-	| (IDENT {id=ValueEvaluation.term_IDENT($IDENT.text);})
-	| (SVAR{id=ValueEvaluation.term_SVAR($SVAR.text.replace("{","").replace("}",""));}) 
-	|	('(' (e=expression) ')' {id=$e.id;})
-	|	(INTEGER {id=ValueEvaluation.term_INTEGER($INTEGER.text);}) 
+	:	(IDENT {id=ValueEvaluation.term_IDENT($IDENT.text);})
 	| (FLOAT {id=ValueEvaluation.term_FLOAT($FLOAT.text);}) 
+	| ('(' (e=expression) ')' {id=$e.id;})
+	| ((knownTS{id=ValueEvaluation.term_knownTS($knownTS.result);}) 
 	| func{id=$func.id;}
+	| (INTEGER {id=ValueEvaluation.term_INTEGER($INTEGER.text);})
 	| tafcfs_term{id=$tafcfs_term.id;}
 	| YEAR{id=ValueEvaluation.term_YEAR();}
 	| MONTH{id=ValueEvaluation.term_MONTH();}
 	| MONTH_CONST{id=ValueEvaluation.term_MONTH_CONST($MONTH_CONST.text);}
 	| PASTMONTH{id=ValueEvaluation.term_PASTMONTH($PASTMONTH.text);}
 	| DAYSIN{id=ValueEvaluation.daysIn();})
+	| (SVAR{id=ValueEvaluation.term_SVAR($SVAR.text.replace("{","").replace("}",""));}) 
 	;
 	
 tafcfs_term returns [IntDouble id]: TAFCFS ('(' expression ')')? {

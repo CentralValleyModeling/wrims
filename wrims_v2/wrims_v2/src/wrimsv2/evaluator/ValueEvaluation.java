@@ -171,70 +171,70 @@ public class ValueEvaluation {
 		
 	public static IntDouble mult(IntDouble id1, IntDouble id2){
 		IntDouble id;
-		if (id1.isInt() && id2.isInt()){
-			id=new IntDouble(id1.getData().intValue()*id2.getData().intValue(), true);
+		if (!id1.isInt() && !id2.isInt()){
+			id=new IntDouble(id1.getData().doubleValue()*id2.getData().doubleValue(), false);
 		}else if (id1.isInt() && !id2.isInt()){
 			id=new IntDouble(id1.getData().intValue()*id2.getData().doubleValue(), false);
 		}else if (!id1.isInt() && id2.isInt()){
 			id=new IntDouble(id1.getData().doubleValue()*id2.getData().intValue(), false);
 		}else{
-			id=new IntDouble(id1.getData().doubleValue()*id2.getData().doubleValue(), false);
+			id=new IntDouble(id1.getData().intValue()*id2.getData().intValue(), true);
 		}
 		return id;
 	}
 	
 	public static IntDouble divide(IntDouble id1, IntDouble id2){
 		IntDouble id;
-		if (id1.isInt() && id2.isInt()){
-			id=new IntDouble(id1.getData().intValue()/id2.getData().intValue(), true);
+		if (!id1.isInt() && !id2.isInt()){
+			id=new IntDouble(id1.getData().doubleValue()/id2.getData().doubleValue(), false);
 		}else if (id1.isInt() && !id2.isInt()){
 			id=new IntDouble(id1.getData().intValue()/id2.getData().doubleValue(), false);
 		}else if (!id1.isInt() && id2.isInt()){
 			id=new IntDouble(id1.getData().doubleValue()/id2.getData().intValue(), false);
-		}else{
-			id=new IntDouble(id1.getData().doubleValue()/id2.getData().doubleValue(), false);
+		}else {
+			id=new IntDouble(id1.getData().intValue()/id2.getData().intValue(), true);
 		}
 		return id;		
 	}
 		
 	public static IntDouble mod(IntDouble id1, IntDouble id2){
 		IntDouble id;
-		if (id1.isInt() && id2.isInt()){
-			id=new IntDouble(id1.getData().intValue()%id2.getData().intValue(), true);
+		if (!id1.isInt() && !id2.isInt()){
+			id=new IntDouble(id1.getData().doubleValue()%id2.getData().doubleValue(), false);
 		}else if (id1.isInt() && !id2.isInt()){
 			id=new IntDouble(id1.getData().intValue()%id2.getData().doubleValue(), false);
 		}else if (!id1.isInt() && id2.isInt()){
 			id=new IntDouble(id1.getData().doubleValue()%id2.getData().intValue(), false);
 		}else{
-			id=new IntDouble(id1.getData().doubleValue()%id2.getData().doubleValue(), false);
+			id=new IntDouble(id1.getData().intValue()%id2.getData().intValue(), true);
 		}
 		return id;		
 	}
 		
 	public static IntDouble add(IntDouble id1, IntDouble id2){
 		IntDouble id;
-		if (id1.isInt() && id2.isInt()){
-			id=new IntDouble(id1.getData().intValue()+id2.getData().intValue(), true);
+		if (!id1.isInt() && !id2.isInt()){
+			id=new IntDouble(id1.getData().doubleValue()+id2.getData().doubleValue(), false);
 		}else if (id1.isInt() && !id2.isInt()){
 			id=new IntDouble(id1.getData().intValue()+id2.getData().doubleValue(), false);
 		}else if (!id1.isInt() && id2.isInt()){
 			id=new IntDouble(id1.getData().doubleValue()+id2.getData().intValue(), false);
-		}else{
-			id=new IntDouble(id1.getData().doubleValue()+id2.getData().doubleValue(), false);
+		}else {
+			id=new IntDouble(id1.getData().intValue()+id2.getData().intValue(), true);
 		}
 		return id;		
 	}
 	
 	public static IntDouble substract(IntDouble id1, IntDouble id2){
-		IntDouble id;
-		if (id1.isInt() && id2.isInt()){
-			id=new IntDouble(id1.getData().intValue()-id2.getData().intValue(), true);
+		IntDouble id;	
+		if (!id1.isInt() && !id2.isInt()){
+			id=new IntDouble(id1.getData().doubleValue()-id2.getData().doubleValue(), false);
 		}else if (id1.isInt() && !id2.isInt()){
 			id=new IntDouble(id1.getData().intValue()-id2.getData().doubleValue(), false);
 		}else if (!id1.isInt() && id2.isInt()){
 			id=new IntDouble(id1.getData().doubleValue()-id2.getData().intValue(), false);
 		}else{
-			id=new IntDouble(id1.getData().doubleValue()-id2.getData().doubleValue(), false);
+			id=new IntDouble(id1.getData().intValue()-id2.getData().intValue(), true);
 		}
 		return id;		
 	}
