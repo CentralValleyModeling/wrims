@@ -107,11 +107,13 @@ public class SimulationDataSet
 
   public SimulationDataSet()
   {
+	  
   }
 
   public SimulationDataSet(SimulationDataSet s)
   {
-    add(s);
+    this.overwrittenWith_set(s);
+	  //add(s);
   }
 
   public SimulationDataSet overwrittenWith(SimulationDataSet s)
@@ -605,9 +607,9 @@ public class SimulationDataSet
 //		this.ordered_list_including_files.addAll(0,s.ordered_list_including_files);  
 //		this.ordered_list.addAll(0,s.ordered_list);   
 	  
-    SimulationDataSet x = new SimulationDataSet();
-    x.overwrittenWith_set(s);
-
+    SimulationDataSet x = new SimulationDataSet(s);
+    //x.overwrittenWith_set(s);
+    
     Tools.mapRemoveAll(x.dvMap, this.dvSet);
     Tools.mapRemoveAll(x.svMap, this.svSet);
     Tools.mapRemoveAll(x.asMap, this.asSet);
@@ -628,6 +630,7 @@ public class SimulationDataSet
     x.svSet.addAll(this.svSet);
     x.svSet_global.addAll(this.svSet_global);
     x.svSet_local.addAll(this.svSet_local);
+    
     this.svSet = x.svSet;
     this.svSet_global = x.svSet_global;
     this.svSet_local = x.svSet_local;
@@ -686,8 +689,8 @@ public class SimulationDataSet
 
   public SimulationDataSet overwrittenWith_set(SimulationDataSet s) {
 	 
-	this.ordered_list_including_files.addAll(s.ordered_list_including_files);  
-	this.ordered_list.addAll(s.ordered_list);  
+	//this.ordered_list_including_files.addAll(s.ordered_list_including_files);  
+	//this.ordered_list.addAll(s.ordered_list);  
 	  
     this.dvSet.addAll(s.dvSet);
     this.dvSet_global.addAll(s.dvSet_global);
@@ -824,6 +827,32 @@ public class SimulationDataSet
     return this;
   }
 
+public Set<String> getAllGlobalVarsSet_except_file_and_weight(){
+		
+		Set<String> out = new HashSet<String>();
+		
+		out.addAll(this.asSet_global);
+		out.addAll(this.dvSet_global);
+		out.addAll(this.svSet_global);
+		out.addAll(this.gSet_global);
+		out.addAll(this.exSet_global);
+
+	    return out;
+	  }  
+
+public Set<String> getAllLocalVarsSet_except_file_and_weight(){
+	
+	Set<String> out = new HashSet<String>();
+	
+	out.addAll(this.asSet_local);
+	out.addAll(this.dvSet_local);
+	out.addAll(this.svSet_local);
+	out.addAll(this.gSet_local);
+	out.addAll(this.exSet_local);
+
+    return out;
+  } 
+
 public Set<String> getAllVarsSet_except_file_and_weight(){
 	
 	Set<String> out = new HashSet<String>();
@@ -835,5 +864,68 @@ public Set<String> getAllVarsSet_except_file_and_weight(){
 	out.addAll(this.exSet);
 
     return out;
+  }
+
+public SimulationDataSet remove_set(Set<String> s)
+  {
+
+//      this.wtSet.removeAll(s);
+//      this.wtSet_global.removeAll(s);
+//      this.wtSet_local.removeAll(s);
+//
+//      Tools.mapRemoveAll(this.wtMap, s);
+    
+
+      this.incFileSet.removeAll(s);
+      this.incFileSet_global.removeAll(s);
+      this.incFileSet_local.removeAll(s);
+
+      Tools.mapRemoveAll(this.incFileMap, s);
+      
+
+      this.exSet.removeAll(s);
+      this.exSet_global.removeAll(s);
+      this.exSet_local.removeAll(s);
+
+      Tools.mapRemoveAll(this.exMap, s);
+
+
+      this.tsSet.removeAll(s);
+      this.tsSet_global.removeAll(s);
+      this.tsSet_local.removeAll(s);
+
+      Tools.mapRemoveAll(this.tsMap, s);
+
+
+      this.svSet.removeAll(s);
+      this.svSet_global.removeAll(s);
+      this.svSet_local.removeAll(s);
+
+      Tools.mapRemoveAll(this.svMap, s);
+
+
+      this.dvSet.removeAll(s);
+      this.dvSet_global.removeAll(s);
+      this.dvSet_local.removeAll(s);
+
+      Tools.mapRemoveAll(this.dvMap, s);
+
+
+      this.asSet.removeAll(s);
+      this.asSet_global.removeAll(s);
+      this.asSet_local.removeAll(s);
+
+      Tools.mapRemoveAll(this.asMap, s);
+
+
+      this.gSet.removeAll(s);
+      this.gSet_global.removeAll(s);
+      this.gSet_local.removeAll(s);
+
+      Tools.mapRemoveAll(this.gMap, s);
+
+
+
+    return this;
   }
 }

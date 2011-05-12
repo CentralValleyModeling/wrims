@@ -205,6 +205,16 @@ public class LogUtils {
 		 System.out.println(msg);
 		
 	}	
+
+	public static void warningMsg(String msg){
+		
+		 StudyParser.total_warnings++;
+
+		 System.out.println("Warning: "+msg);
+		 _logFile.println("Warning: "+msg);
+		 _logFile.flush();
+		
+	}
 	
 	public static void errMsg(String msg){
 		

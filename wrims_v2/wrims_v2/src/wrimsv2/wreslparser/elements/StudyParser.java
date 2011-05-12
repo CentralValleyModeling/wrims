@@ -17,7 +17,8 @@ import wrimsv2.wreslparser.grammar.WreslTreeWalker;
 
 public class StudyParser{
 	
-  public static int total_errors = 0;	
+  public static int total_errors = 0;
+  public static int total_warnings = 0;
 	
   public static StudyDataSet writeWreslData(StudyConfig sc, TempData td){
     StudyDataSet studyDataSet = new StudyDataSet();
@@ -175,35 +176,49 @@ public class StudyParser{
       Map<String, Set<String>> t1ReverseMap_wholeStudy = Tools.getReverseMap(td.t1Map_wholeStudy);
 
       
-      /// add previous globals
-      LogUtils.importantMsg("Adding previous global vars into model: "+modelName);
+      ///////// add previous globals
+      //LogUtils.importantMsg("Adding previous global vars into model: "+modelName);
 
+      /// check for redefined weight // TODO: what to do?
+      Set<String> redefined_globals_wt = new LinkedHashSet<String>(td.cumulative_global_complete.wtSet);
+      redefined_globals_wt.retainAll(model_dataset.wtSet);
+      if (redefined_globals_wt.size()>0) LogUtils.errMsg("Global weights redefined: "+ redefined_globals_wt); 
       
       /// check for redefined file
       Set<String> redefined_globals = new LinkedHashSet<String>(td.cumulative_global_complete.incFileSet);
-      redefined_globals.retainAll(model_dataset.incFileSet);
+      redefined_globals.retainAll(model_dataset.incFileSet_global);
       if (redefined_globals.size()>0) LogUtils.errMsg("Global include files redefined: "+ redefined_globals); 
       
-      /// check for redefined globals
+      /// check for redefined globals        
       redefined_globals = new LinkedHashSet<String>(td.cumulative_global_complete.getAllVarsSet_except_file_and_weight());
-      redefined_globals.retainAll(model_dataset.getAllVarsSet_except_file_and_weight());
-      if (redefined_globals.size()>0) LogUtils.errMsg("Global variables redefined: "+ redefined_globals);
+      Set<String> redefined_globals_as_locals = new LinkedHashSet<String>(td.cumulative_global_complete.getAllVarsSet_except_file_and_weight());
       
-      /// check for redefined weight
-      redefined_globals = new LinkedHashSet<String>(td.cumulative_global_complete.wtSet);
-      redefined_globals.retainAll(model_dataset.wtSet);
-      if (redefined_globals.size()>0) LogUtils.errMsg("Global weights redefined: "+ redefined_globals);      
+      
+      redefined_globals.retainAll(model_dataset.getAllGlobalVarsSet_except_file_and_weight());
+      
+      redefined_globals_as_locals.retainAll(model_dataset.getAllLocalVarsSet_except_file_and_weight());
+      
+      if (redefined_globals.size()>0) LogUtils.errMsg("Global variables redefined: "+ redefined_globals);
+      if (redefined_globals_as_locals.size()>0) LogUtils.warningMsg("Global variables redefined as local: "+ redefined_globals_as_locals);
+      
+     
       
       /// add previous globals
-      model_dataset.overwrite_set(td.cumulative_global_complete);
-      LogUtils.importantMsg("Finish adding previous global vars into model: "+modelName);
+      
+      SimulationDataSet cumulative_global_remove_redefined = new SimulationDataSet(td.cumulative_global_complete);
+      //cumulative_global_remove_redefined.overwrittenWith_set(td.cumulative_global_complete);
+      cumulative_global_remove_redefined.remove_set(redefined_globals);
+      cumulative_global_remove_redefined.remove_set(redefined_globals_as_locals);
+      
+      model_dataset.overwrite_set(cumulative_global_remove_redefined);
+
+      //LogUtils.importantMsg("Finish adding previous global vars into model: "+modelName);
       /// finish adding globals
       
-
-      
+     
       lousyConvert(model_dataset);
-
-      sortDependency(model_dataset, rewrite_list_based_on_dependency);   
+      
+      sortDependency(model_dataset, rewrite_list_based_on_dependency);  
 
       model_dataset_map.put(modelName, model_dataset);
 
