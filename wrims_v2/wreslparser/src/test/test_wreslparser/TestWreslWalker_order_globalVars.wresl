@@ -1,0 +1,49 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }	
+SEQUENCE CYCLE3 {
+    model   third
+    order   3
+    }
+MODEL first { 
+
+  !include 'b.wresl'
+  
+  define sv3 { value 1 } 
+  define sv1 { value 1 } 
+  define sv2 { value 1 }   
+  define sv4 { value 1 }
+  define global { value 1 }
+
+}	
+
+
+MODEL second { 
+
+  !include 'b.wresl'
+
+  define[local] sv3 { value 2 }   
+  define[local] sv4 { value 2 }  
+  define        sv5 { value 2 } 
+  define        sv6 { value 2 }   
+  define global { value 2 }
+	 	
+}	
+	
+
+MODEL third { 
+
+  !include 'b.wresl'
+
+  define[local] sv7 { value 3 }   
+  define[local] sv8 { value 3 }   
+	 	
+}	 
+
+
+ 
