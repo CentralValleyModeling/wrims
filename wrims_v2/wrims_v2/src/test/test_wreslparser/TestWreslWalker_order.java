@@ -29,6 +29,58 @@ public class TestWreslWalker_order {
 	public String csvFolderPath;	
 	
 	@Test(groups = { "WRESL_elements" })
+	public void gobalVars() throws RecognitionException, IOException {
+		
+		csvFolderPath = "TestWreslWalker_order_globalVars";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath,true);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		String modelName1 = sd.getModelList().get(0);
+		String modelName2 = sd.getModelList().get(1);
+		String modelName3 = sd.getModelList().get(2);
+		
+	    System.out.println("====================:"+sd.getModelDataSetMap().get(modelName3).svList);
+		
+		WriteCSV.study(sd,csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 1);		
+		
+		//System.out.println("#### orderList: "+sd.getModelDataSetMap().get(modelName).asList);
+		
+		ArrayList<String> e = new ArrayList<String>();
+		e.add("sv3"); e.add("sv1"); e.add("sv2"); e.add("sv4"); e.add("global");
+		Assert.assertEquals(sd.getModelDataSetMap().get(modelName1).svList_global, e);
+		
+		e = new ArrayList<String>();
+		e.add("sv1"); e.add("sv2"); e.add("sv3"); e.add("sv4"); e.add("sv5"); e.add("sv6"); e.add("global");
+		Assert.assertEquals(sd.getModelDataSetMap().get(modelName2).svList, e);		
+		
+		e = new ArrayList<String>();
+		e.add("sv3"); e.add("sv1"); e.add("sv2"); e.add("sv4"); e.add("global"); e.add("sv5"); e.add("sv6"); e.add("sv7"); e.add("sv8");
+		Assert.assertEquals(sd.getModelDataSetMap().get(modelName3).svList, e);		
+	}
+
+	@Test(groups = { "WRESL_elements" })
 	public void alias() throws RecognitionException, IOException {
 		
 		csvFolderPath = "TestWreslWalker_order_alias";
