@@ -687,65 +687,107 @@ public class SimulationDataSet
     return this;
   }
 
-  public SimulationDataSet overwrittenWith_set(SimulationDataSet s) {
-	 
-	//this.ordered_list_including_files.addAll(s.ordered_list_including_files);  
-	//this.ordered_list.addAll(s.ordered_list);  
-	  
-    this.dvSet.addAll(s.dvSet);
-    this.dvSet_global.addAll(s.dvSet_global);
-    this.dvSet_local.addAll(s.dvSet_local);
-    this.dvMap.putAll(s.dvMap);
+	public SimulationDataSet replaceGlobalWithDuplicateGlobal(Set<String> keys, SimulationDataSet s) {
+		LogUtils.warningMsg("====== svSet before "+this.svSet);
 
-    this.svSet.addAll(s.svSet);
-    this.svSet_global.addAll(s.svSet_global);
-    this.svSet_local.addAll(s.svSet_local);
-    this.svMap.putAll(s.svMap);
+		for (String k : keys) {
 
-    this.tsSet.addAll(s.tsSet);
-    this.tsSet_global.addAll(s.tsSet_global);
-    this.tsSet_local.addAll(s.tsSet_local);
-    this.tsMap.putAll(s.tsMap);
+			if (this.dvSet.contains(k)){
+//				this.dvSet_global.remove(k);
+//				this.dvSet_local.add(k);
+				this.dvMap.put(k,s.dvMap.get(k));
+			}
+			if (this.svSet.contains(k)){
+//				this.svSet_global.remove(k);
+//				this.svSet_local.add(k);
+				this.svMap.put(k,s.svMap.get(k));
+			}
 
-    this.asSet.addAll(s.asSet);
-    this.asSet_global.addAll(s.asSet_global);
-    this.asSet_local.addAll(s.asSet_local);
-    this.asMap.putAll(s.asMap);
+			if (this.tsSet.contains(k)){
+//				this.tsSet_global.remove(k);
+//				this.tsSet_local.add(k);
+				this.tsMap.put(k,s.tsMap.get(k));
+			}
+			if (this.asSet.contains(k)){
+//				this.asSet_global.remove(k);
+//				this.asSet_local.add(k);
+				this.asMap.put(k,s.asMap.get(k));
+			}
+			if (this.gSet.contains(k)){
+//				this.gSet_global.remove(k);
+//				this.gSet_local.add(k);
+				this.gMap.put(k,s.gMap.get(k));
+			}
+			if (this.exSet.contains(k)){
+//				this.exSet_global.remove(k);
+//				this.exSet_local.add(k);
+				this.exMap.put(k,s.exMap.get(k));
+			}
 
-    this.gSet.addAll(s.gSet);
-    this.gSet_global.addAll(s.gSet_global);
-    this.gSet_local.addAll(s.gSet_local);
-    this.gMap.putAll(s.gMap);
+		}
+		
+		LogUtils.warningMsg("====== svSet"+this.svSet);
+		return this;
+	}
 
-    this.wtSet.addAll(s.wtSet);
-    this.wtSet_global.addAll(s.wtSet_global);
-    this.wtSet_local.addAll(s.wtSet_local);
-    this.wtMap.putAll(s.wtMap);
+	public SimulationDataSet replaceGlobalWithDuplicateLocal(Set<String> keys, SimulationDataSet s) {
 
-    this.exSet.addAll(s.exSet);
-    this.exSet_global.addAll(s.exSet_global);
-    this.exSet_local.addAll(s.exSet_local);
-    this.exMap.putAll(s.exMap);
+		for (String k : keys) {
 
-    this.incFileSet.addAll(s.incFileSet);
-    this.incFileSet_global.addAll(s.incFileSet_global);
-    this.incFileSet_local.addAll(s.incFileSet_local);
-    this.incFileMap.putAll(s.incFileMap);
+			if (this.dvSet.contains(k)){
+				this.dvSet_global.remove(k);
+				this.dvSet_local.add(k);
+				this.dvMap.put(k,s.dvMap.get(k));
+			}
+			if (this.svSet.contains(k)){
+				this.svSet_global.remove(k);
+				this.svSet_local.add(k);
+				this.svMap.put(k,s.svMap.get(k));
+			}
 
-    return this;
-  }
+			if (this.tsSet.contains(k)){
+				this.tsSet_global.remove(k);
+				this.tsSet_local.add(k);
+				this.tsMap.put(k,s.tsMap.get(k));
+			}
+			if (this.asSet.contains(k)){
+				this.asSet_global.remove(k);
+				this.asSet_local.add(k);
+				this.asMap.put(k,s.asMap.get(k));
+			}
+			if (this.gSet.contains(k)){
+				this.gSet_global.remove(k);
+				this.gSet_local.add(k);
+				this.gMap.put(k,s.gMap.get(k));
+			}
+			if (this.exSet.contains(k)){
+				this.exSet_global.remove(k);
+				this.exSet_local.add(k);
+				this.exMap.put(k,s.exMap.get(k));
+			}
 
-  public SimulationDataSet getGlobalVars_set()
+		}
+		
+		return this;
+	}
+	
+	public SimulationDataSet getGlobalVars_set()
   {
     SimulationDataSet out = new SimulationDataSet();
 
-    out.asSet.addAll(this.asSet_global);
+    Set<String> t;
+    t= new LinkedHashSet<String>(this.asSet);
+    t.retainAll(this.asSet_global);
+    
+    out.asSet.addAll(t);
     out.asSet_global.addAll(this.asSet_global);
 
     for (String key : this.asSet_global) {
       out.asMap.put(key, (Alias)this.asMap.get(key));
     }
 
+    t = new LinkedHashSet<String>(this.wtSet);
+    t.retainAll(this.wtSet_global);
     out.wtSet.addAll(this.wtSet_global);
     out.wtSet_global.addAll(this.wtSet_global);
 
@@ -753,6 +795,8 @@ public class SimulationDataSet
       out.wtMap.put(key, (WeightElement)this.wtMap.get(key));
     }
 
+    t = new LinkedHashSet<String>(this.incFileSet);
+    t.retainAll(this.incFileSet_global);
     out.incFileSet.addAll(this.incFileSet_global);
     out.incFileSet_global.addAll(this.incFileSet_global);
 
@@ -760,6 +804,8 @@ public class SimulationDataSet
       out.incFileMap.put(key, (IncludeFile)this.incFileMap.get(key));
     }
 
+    t = new LinkedHashSet<String>(this.exSet);
+    t.retainAll(this.exSet_global);
     out.exSet.addAll(this.exSet_global);
     out.exSet_global.addAll(this.exSet_global);
 
@@ -767,6 +813,8 @@ public class SimulationDataSet
       out.exMap.put(key, (External)this.exMap.get(key));
     }
 
+    t = new LinkedHashSet<String>(this.svSet);
+    t.retainAll(this.svSet_global);
     out.svSet.addAll(this.svSet_global);
     out.svSet_global.addAll(this.svSet_global);
 
@@ -774,6 +822,8 @@ public class SimulationDataSet
       out.svMap.put(key, (Svar)this.svMap.get(key));
     }
 
+    t = new LinkedHashSet<String>(this.tsSet);
+    t.retainAll(this.tsSet_global);
     out.tsSet.addAll(this.tsSet_global);
     out.tsSet_global.addAll(this.tsSet_global);
 
@@ -781,6 +831,8 @@ public class SimulationDataSet
       out.tsMap.put(key, (Timeseries)this.tsMap.get(key));
     }
 
+    t = new LinkedHashSet<String>(this.dvSet);
+    t.retainAll(this.dvSet_global);
     out.dvSet.addAll(this.dvSet_global);
     out.dvSet_global.addAll(this.dvSet_global);
 
@@ -788,6 +840,8 @@ public class SimulationDataSet
       out.dvMap.put(key, (Dvar)this.dvMap.get(key));
     }
 
+    t = new LinkedHashSet<String>(this.gSet);
+    t.retainAll(this.gSet_global);
     out.gSet.addAll(this.gSet_global);
     out.gSet_global.addAll(this.gSet_global);
 
@@ -925,6 +979,54 @@ public SimulationDataSet remove_set(Set<String> s)
       Tools.mapRemoveAll(this.gMap, s);
 
 
+
+    return this;
+  }
+
+public SimulationDataSet overwrittenWith_set(SimulationDataSet s) {
+	 
+	//this.ordered_list_including_files.addAll(s.ordered_list_including_files);  
+	//this.ordered_list.addAll(s.ordered_list);  
+	  
+    this.dvSet.addAll(s.dvSet);
+    this.dvSet_global.addAll(s.dvSet_global);
+    this.dvSet_local.addAll(s.dvSet_local);
+    this.dvMap.putAll(s.dvMap);
+
+    this.svSet.addAll(s.svSet);
+    this.svSet_global.addAll(s.svSet_global);
+    this.svSet_local.addAll(s.svSet_local);
+    this.svMap.putAll(s.svMap);
+
+    this.tsSet.addAll(s.tsSet);
+    this.tsSet_global.addAll(s.tsSet_global);
+    this.tsSet_local.addAll(s.tsSet_local);
+    this.tsMap.putAll(s.tsMap);
+
+    this.asSet.addAll(s.asSet);
+    this.asSet_global.addAll(s.asSet_global);
+    this.asSet_local.addAll(s.asSet_local);
+    this.asMap.putAll(s.asMap);
+
+    this.gSet.addAll(s.gSet);
+    this.gSet_global.addAll(s.gSet_global);
+    this.gSet_local.addAll(s.gSet_local);
+    this.gMap.putAll(s.gMap);
+
+    this.wtSet.addAll(s.wtSet);
+    this.wtSet_global.addAll(s.wtSet_global);
+    this.wtSet_local.addAll(s.wtSet_local);
+    this.wtMap.putAll(s.wtMap);
+
+    this.exSet.addAll(s.exSet);
+    this.exSet_global.addAll(s.exSet_global);
+    this.exSet_local.addAll(s.exSet_local);
+    this.exMap.putAll(s.exMap);
+
+    this.incFileSet.addAll(s.incFileSet);
+    this.incFileSet_global.addAll(s.incFileSet_global);
+    this.incFileSet_local.addAll(s.incFileSet_local);
+    this.incFileMap.putAll(s.incFileMap);
 
     return this;
   }

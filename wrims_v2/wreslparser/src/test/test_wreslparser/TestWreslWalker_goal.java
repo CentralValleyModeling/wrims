@@ -63,7 +63,7 @@ public class TestWreslWalker_goal {
 		String s;
 		int n;
 	
-		s = "c_slcvp#c5_wts=c5_wts_stg1";
+		s = "c_slcvp##c5_wts=c5_wts_stg1";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -384,7 +384,7 @@ public class TestWreslWalker_goal {
 		String s;
 		int n;
 	
-		s = "compute_rain_rel,initialize,1,month==sep .and. wateryear==1921,fr_rain_rel=0.0#";
+		s = "compute_rain_rel,initialize,1,month==sep .and. wateryear==1921,fr_rain_rel=0.0";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
