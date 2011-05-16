@@ -7,7 +7,7 @@ from collections import defaultdict
 
 rccfile=open('rccfile.txt','r') # read only
 outfile=open('rcc_reformatted.txt','w') # write
-testfile=open('rcc_test.txt','w') # write
+
 
 data = rccfile.readlines()
 
@@ -80,7 +80,7 @@ for label in nameList:
 	if sign_rhs.has_key(label):
 		s = s + " : " + sign_rhs[label]
 	
-	testfile.writelines( label +" : "+ s +"\n\n")
+	outfile.writelines( label +" : "+ s +"\n\n")
 
 	
 print "finished writing reformatted rcc file.\n"
