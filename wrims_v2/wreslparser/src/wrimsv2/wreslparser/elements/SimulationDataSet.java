@@ -19,101 +19,190 @@ public class SimulationDataSet
   public String currentAbsolutePath;
   public String currentAbsoluteParent;
 
-  public ArrayList<String> model_list = new ArrayList<String>();
-  public ArrayList<String> error_model_redefined = new ArrayList<String>();
+  public ArrayList<String> model_list;
+  public ArrayList<String> error_model_redefined;
 
-  public ArrayList<String> error_sequence_redefined = new ArrayList<String>();
-  public ArrayList<Integer> error_sequence_order_redefined = new ArrayList<Integer>();
+  public ArrayList<String> error_sequence_redefined;
+  public ArrayList<Integer> error_sequence_order_redefined;
 
-  public Map<Integer, Sequence> seqMap = new HashMap<Integer, Sequence>();
-  public ArrayList<String> seqList = new ArrayList<String>();
+  public Map<Integer, Sequence> seqMap;
+  public ArrayList<String> seqList;
 
-  public Set<String> wtSet = new LinkedHashSet<String>();
-  public Set<String> wtSet_global = new LinkedHashSet<String>();
-  public Set<String> wtSet_local = new LinkedHashSet<String>();
-  public ArrayList<String> wtList = new ArrayList<String>();
-  public ArrayList<String> wtList_global = new ArrayList<String>();
-  public ArrayList<String> wtList_local = new ArrayList<String>();
-  public Map<String, WeightElement> wtMap = new HashMap<String, WeightElement>();
-  public Map<String, String> error_weightVar_redefined = new HashMap<String, String>();
+  public Set<String> wtSet;
+  public Set<String> wtSet_global;
+  public Set<String> wtSet_local;
+  public ArrayList<String> wtList;
+  public ArrayList<String> wtList_global;
+  public ArrayList<String> wtList_local;
+  public Map<String, WeightElement> wtMap;
+  public Map<String, String> error_weightVar_redefined;
 
-  public Set<String> incFileSet = new LinkedHashSet<String>();
-  public Set<String> incFileSet_global = new LinkedHashSet<String>();
-  public Set<String> incFileSet_local = new LinkedHashSet<String>();
-  public ArrayList<String> incFileList = new ArrayList<String>();
-  public ArrayList<String> incFileList_global = new ArrayList<String>();
-  public ArrayList<String> incFileList_local = new ArrayList<String>();
-  public Map<String, IncludeFile> incFileMap = new HashMap<String, IncludeFile>();
-  public ArrayList<String> error_includeFile_redefined = new ArrayList<String>();
+  public Set<String> incFileSet;
+  public Set<String> incFileSet_global;
+  public Set<String> incFileSet_local;
+  public ArrayList<String> incFileList;
+  public ArrayList<String> incFileList_global;
+  public ArrayList<String> incFileList_local;
+  public Map<String, IncludeFile> incFileMap;
+  public ArrayList<String> error_includeFile_redefined;
 
-  public ArrayList<String> ordered_list_including_files = new ArrayList<String>();
-  public ArrayList<String> ordered_list = new ArrayList<String>();
+  public ArrayList<String> ordered_list_including_files;
+  public ArrayList<String> ordered_list;
 
-  public ArrayList<String> ordered_list_including_files_global = new ArrayList<String>();
-  public ArrayList<String> ordered_list_global = new ArrayList<String>();
+  public ArrayList<String> ordered_list_including_files_global;
+  public ArrayList<String> ordered_list_global;
 
-  public Map<String, String> var_all = new HashMap<String, String>();
-  public Map<String, String> error_var_redefined = new HashMap<String, String>();
+  public Map<String, String> var_all;
+  public Map<String, String> error_var_redefined;
 
-  public Set<String> exSet = new LinkedHashSet<String>();
-  public Set<String> exSet_global = new LinkedHashSet<String>();
-  public Set<String> exSet_local = new LinkedHashSet<String>();
-  public ArrayList<String> exList = new ArrayList<String>();
-  public ArrayList<String> exList_global = new ArrayList<String>();
-  public ArrayList<String> exList_local = new ArrayList<String>();
-  public Map<String, External> exMap = new HashMap<String, External>();
+  public Set<String> exSet;
+  public Set<String> exSet_global;
+  public Set<String> exSet_local;
+  public ArrayList<String> exList;
+  public ArrayList<String> exList_global;
+  public ArrayList<String> exList_local;
+  public Map<String, External> exMap;
 
-  public Set<String> tsSet = new LinkedHashSet<String>();
-  public Set<String> tsSet_global = new LinkedHashSet<String>();
-  public Set<String> tsSet_local = new LinkedHashSet<String>();
-  public ArrayList<String> tsList = new ArrayList<String>();
-  public ArrayList<String> tsList_global = new ArrayList<String>();
-  public ArrayList<String> tsList_local = new ArrayList<String>();
-  public Map<String, Timeseries> tsMap = new HashMap<String, Timeseries>();
+  public Set<String> tsSet;
+  public Set<String> tsSet_global;
+  public Set<String> tsSet_local;
+  public ArrayList<String> tsList;
+  public ArrayList<String> tsList_global;
+  public ArrayList<String> tsList_local;
+  public Map<String, Timeseries> tsMap;
 
-  public Set<String> svSet_unknown = new LinkedHashSet<String>();
-  public Set<String> svSet = new LinkedHashSet<String>();
-  public Set<String> svSet_global = new LinkedHashSet<String>();
-  public Set<String> svSet_local = new LinkedHashSet<String>();
-  public ArrayList<String> svList = new ArrayList<String>();
-  public ArrayList<String> svList_global = new ArrayList<String>();
-  public ArrayList<String> svList_local = new ArrayList<String>();
-  public Map<String, Svar> svMap = new HashMap<String, Svar>();
+  public Set<String> svSet_unknown;
+  public Set<String> svSet;
+  public Set<String> svSet_global;
+  public Set<String> svSet_local;
+  public ArrayList<String> svList;
+  public ArrayList<String> svList_global;
+  public ArrayList<String> svList_local;
+  public Map<String, Svar> svMap;
 
-  public Set<String> dvSet = new LinkedHashSet<String>();
-  public Set<String> dvSet_global = new LinkedHashSet<String>();
-  public Set<String> dvSet_local = new LinkedHashSet<String>();
-  public ArrayList<String> dvList = new ArrayList<String>();
-  public ArrayList<String> dvList_global = new ArrayList<String>();
-  public ArrayList<String> dvList_local = new ArrayList<String>();
-  public Map<String, Dvar> dvMap = new HashMap<String, Dvar>();
+  public Set<String> dvSet;
+  public Set<String> dvSet_global;
+  public Set<String> dvSet_local;
+  public ArrayList<String> dvList;
+  public ArrayList<String> dvList_global;
+  public ArrayList<String> dvList_local;
+  public Map<String, Dvar> dvMap;
 
-  public Set<String> asSet_unknown = new LinkedHashSet<String>();
-  public Set<String> asSet = new LinkedHashSet<String>();
-  public Set<String> asSet_global = new LinkedHashSet<String>();
-  public Set<String> asSet_local = new LinkedHashSet<String>();
-  public ArrayList<String> asList = new ArrayList<String>();
-  public ArrayList<String> asList_global = new ArrayList<String>();
-  public ArrayList<String> asList_local = new ArrayList<String>();
-  public Map<String, Alias> asMap = new HashMap<String, Alias>();
+  public Set<String> asSet_unknown;
+  public Set<String> asSet;
+  public Set<String> asSet_global;
+  public Set<String> asSet_local;
+  public ArrayList<String> asList;
+  public ArrayList<String> asList_global;
+  public ArrayList<String> asList_local;
+  public Map<String, Alias> asMap;
 
-  public Set<String> gSet = new LinkedHashSet<String>();
-  public Set<String> gSet_global = new LinkedHashSet<String>();
-  public Set<String> gSet_local = new LinkedHashSet<String>();
-  public ArrayList<String> gList = new ArrayList<String>();
-  public ArrayList<String> gList_global = new ArrayList<String>();
-  public ArrayList<String> gList_local = new ArrayList<String>();
-  public Map<String, Goal> gMap = new HashMap<String, Goal>();
+  public Set<String> gSet;
+  public Set<String> gSet_global;
+  public Set<String> gSet_local;
+  public ArrayList<String> gList;
+  public ArrayList<String> gList_global;
+  public ArrayList<String> gList_local;
+  public Map<String, Goal> gMap;
 
   public SimulationDataSet()
   {
-	  
+	  model_list = new ArrayList<String>();
+	  error_model_redefined = new ArrayList<String>();
+
+	  error_sequence_redefined = new ArrayList<String>();
+	  error_sequence_order_redefined = new ArrayList<Integer>();
+
+	  seqMap = new HashMap<Integer, Sequence>();
+	  seqList = new ArrayList<String>();
+
+	  wtSet = new LinkedHashSet<String>();
+	  wtSet_global = new LinkedHashSet<String>();
+	  wtSet_local = new LinkedHashSet<String>();
+	  wtList = new ArrayList<String>();
+	  wtList_global = new ArrayList<String>();
+	  wtList_local = new ArrayList<String>();
+	  wtMap = new HashMap<String, WeightElement>();
+	  error_weightVar_redefined = new HashMap<String, String>();
+
+	  incFileSet = new LinkedHashSet<String>();
+	  incFileSet_global = new LinkedHashSet<String>();
+	  incFileSet_local = new LinkedHashSet<String>();
+	  incFileList = new ArrayList<String>();
+	  incFileList_global = new ArrayList<String>();
+	  incFileList_local = new ArrayList<String>();
+	  incFileMap = new HashMap<String, IncludeFile>();
+	  error_includeFile_redefined = new ArrayList<String>();
+
+	  ordered_list_including_files = new ArrayList<String>();
+	  ordered_list = new ArrayList<String>();
+
+	  ordered_list_including_files_global = new ArrayList<String>();
+	  ordered_list_global = new ArrayList<String>();
+
+	  var_all = new HashMap<String, String>();
+	  error_var_redefined = new HashMap<String, String>();
+
+	  exSet = new LinkedHashSet<String>();
+	  exSet_global = new LinkedHashSet<String>();
+	  exSet_local = new LinkedHashSet<String>();
+	  exList = new ArrayList<String>();
+	  exList_global = new ArrayList<String>();
+	  exList_local = new ArrayList<String>();
+	  exMap = new HashMap<String, External>();
+
+	  tsSet = new LinkedHashSet<String>();
+	  tsSet_global = new LinkedHashSet<String>();
+	  tsSet_local = new LinkedHashSet<String>();
+	  tsList = new ArrayList<String>();
+	  tsList_global = new ArrayList<String>();
+	  tsList_local = new ArrayList<String>();
+	  tsMap = new HashMap<String, Timeseries>();
+
+	  svSet_unknown = new LinkedHashSet<String>();
+	  svSet = new LinkedHashSet<String>();
+	  svSet_global = new LinkedHashSet<String>();
+	  svSet_local = new LinkedHashSet<String>();
+	  svList = new ArrayList<String>();
+	  svList_global = new ArrayList<String>();
+	  svList_local = new ArrayList<String>();
+	  svMap = new HashMap<String, Svar>();
+
+	  dvSet = new LinkedHashSet<String>();
+	  dvSet_global = new LinkedHashSet<String>();
+	  dvSet_local = new LinkedHashSet<String>();
+	  dvList = new ArrayList<String>();
+	  dvList_global = new ArrayList<String>();
+	  dvList_local = new ArrayList<String>();
+	  dvMap = new HashMap<String, Dvar>();
+
+	  asSet_unknown = new LinkedHashSet<String>();
+	  asSet = new LinkedHashSet<String>();
+	  asSet_global = new LinkedHashSet<String>();
+	  asSet_local = new LinkedHashSet<String>();
+	  asList = new ArrayList<String>();
+	  asList_global = new ArrayList<String>();
+	  asList_local = new ArrayList<String>();
+	  asMap = new HashMap<String, Alias>();
+
+	  gSet = new LinkedHashSet<String>();
+	  gSet_global = new LinkedHashSet<String>();
+	  gSet_local = new LinkedHashSet<String>();
+	  gList = new ArrayList<String>();
+	  gList_global = new ArrayList<String>();
+	  gList_local = new ArrayList<String>();
+	  gMap = new HashMap<String, Goal>();  
+	    
   }
 
+  /// warning: this is partial copy
   public SimulationDataSet(SimulationDataSet s)
   {
+	  
+	this();
+	  
     this.overwrittenWith_set(s);
-	  //add(s);
+
   }
 
   public SimulationDataSet overwrittenWith(SimulationDataSet s)
@@ -985,7 +1074,7 @@ public SimulationDataSet overwrittenWith_set(SimulationDataSet s) {
 	 
 	//this.ordered_list_including_files.addAll(s.ordered_list_including_files);  
 	//this.ordered_list.addAll(s.ordered_list);  
-	  
+ 
     this.dvSet.addAll(s.dvSet);
     this.dvSet_global.addAll(s.dvSet_global);
     this.dvSet_local.addAll(s.dvSet_local);
@@ -1026,6 +1115,44 @@ public SimulationDataSet overwrittenWith_set(SimulationDataSet s) {
     this.incFileSet_local.addAll(s.incFileSet_local);
     this.incFileMap.putAll(s.incFileMap);
 
+    this.lousyConvert();
+    
     return this;
   }
+
+public void lousyConvert() {
+
+	this.asList = new ArrayList<String>(this.asSet);
+	this.asList_global = new ArrayList<String>(this.asSet_global);
+	this.asList_local = new ArrayList<String>(this.asSet_local);
+
+	this.wtList = new ArrayList<String>(this.wtSet);
+	this.wtList_global = new ArrayList<String>(this.wtSet_global);
+	this.wtList_local = new ArrayList<String>(this.wtSet_local);
+
+	this.svList = new ArrayList<String>(this.svSet);
+	this.svList_global = new ArrayList<String>(this.svSet_global);
+	this.svList_local = new ArrayList<String>(this.svSet_local);
+
+	this.dvList = new ArrayList<String>(this.dvSet);
+	this.dvList_global = new ArrayList<String>(this.dvSet_global);
+	this.dvList_local = new ArrayList<String>(this.dvSet_local);
+
+	this.tsList = new ArrayList<String>(this.tsSet);
+	this.tsList_global = new ArrayList<String>(this.tsSet_global);
+	this.tsList_local = new ArrayList<String>(this.tsSet_local);
+
+	this.exList = new ArrayList<String>(this.exSet);
+	this.exList_global = new ArrayList<String>(this.exSet_global);
+	this.exList_local = new ArrayList<String>(this.exSet_local);
+
+	this.gList = new ArrayList<String>(this.gSet);
+	this.gList_global = new ArrayList<String>(this.gSet_global);
+	this.gList_local = new ArrayList<String>(this.gSet_local);
+
+	this.incFileList = new ArrayList<String>(this.incFileSet);
+	this.incFileList_global = new ArrayList<String>(this.incFileSet_global);
+	this.incFileList_local = new ArrayList<String>(this.incFileSet_local);
+
+}
 }

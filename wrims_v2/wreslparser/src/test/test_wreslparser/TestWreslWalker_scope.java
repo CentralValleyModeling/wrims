@@ -157,4 +157,51 @@ public class TestWreslWalker_scope {
 	
 	}
 
+	@Test(groups = { "WRESL_elements" })
+	public void case3() throws RecognitionException, IOException {
+		
+		csvFolderPath = "TestWreslWalker_scope_case3";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath,true);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		String modelName2 = sd.getModelList().get(1);
+		
+		WriteCSV.study(sd,csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 1);		
+		
+		int n;
+		String s;
+		s ="# Error: Global variables redefined: [sv1]";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(logText, s );
+		Assert.assertEquals(n, 1);	
+		
+		ArrayList<String> e = new ArrayList<String>();
+		e.add("sv1"); e.add("sv2");
+		
+		Assert.assertEquals(sd.getModelDataSetMap().get(modelName2).svList, e);	
+	
+	}
+
 }
