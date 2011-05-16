@@ -688,7 +688,6 @@ public class SimulationDataSet
   }
 
 	public SimulationDataSet replaceGlobalWithDuplicateGlobal(Set<String> keys, SimulationDataSet s) {
-		LogUtils.warningMsg("====== svSet before "+this.svSet);
 
 		for (String k : keys) {
 
@@ -726,7 +725,6 @@ public class SimulationDataSet
 
 		}
 		
-		LogUtils.warningMsg("====== svSet"+this.svSet);
 		return this;
 	}
 
@@ -778,9 +776,8 @@ public class SimulationDataSet
     Set<String> t;
     t= new LinkedHashSet<String>(this.asSet);
     t.retainAll(this.asSet_global);
-    
     out.asSet.addAll(t);
-    out.asSet_global.addAll(this.asSet_global);
+    out.asSet_global.addAll(t);
 
     for (String key : this.asSet_global) {
       out.asMap.put(key, (Alias)this.asMap.get(key));
@@ -788,8 +785,8 @@ public class SimulationDataSet
 
     t = new LinkedHashSet<String>(this.wtSet);
     t.retainAll(this.wtSet_global);
-    out.wtSet.addAll(this.wtSet_global);
-    out.wtSet_global.addAll(this.wtSet_global);
+    out.wtSet.addAll(t);
+    out.wtSet_global.addAll(t);
 
     for (String key : this.wtSet_global) {
       out.wtMap.put(key, (WeightElement)this.wtMap.get(key));
@@ -797,8 +794,8 @@ public class SimulationDataSet
 
     t = new LinkedHashSet<String>(this.incFileSet);
     t.retainAll(this.incFileSet_global);
-    out.incFileSet.addAll(this.incFileSet_global);
-    out.incFileSet_global.addAll(this.incFileSet_global);
+    out.incFileSet.addAll(t);
+    out.incFileSet_global.addAll(t);
 
     for (String key : this.incFileSet_global) {
       out.incFileMap.put(key, (IncludeFile)this.incFileMap.get(key));
@@ -806,8 +803,8 @@ public class SimulationDataSet
 
     t = new LinkedHashSet<String>(this.exSet);
     t.retainAll(this.exSet_global);
-    out.exSet.addAll(this.exSet_global);
-    out.exSet_global.addAll(this.exSet_global);
+    out.exSet.addAll(t);
+    out.exSet_global.addAll(t);
 
     for (String key : this.exSet_global) {
       out.exMap.put(key, (External)this.exMap.get(key));
@@ -815,8 +812,9 @@ public class SimulationDataSet
 
     t = new LinkedHashSet<String>(this.svSet);
     t.retainAll(this.svSet_global);
-    out.svSet.addAll(this.svSet_global);
-    out.svSet_global.addAll(this.svSet_global);
+    
+    out.svSet.addAll(t);
+    out.svSet_global.addAll(t);
 
     for (String key : this.svSet_global) {
       out.svMap.put(key, (Svar)this.svMap.get(key));
@@ -824,8 +822,8 @@ public class SimulationDataSet
 
     t = new LinkedHashSet<String>(this.tsSet);
     t.retainAll(this.tsSet_global);
-    out.tsSet.addAll(this.tsSet_global);
-    out.tsSet_global.addAll(this.tsSet_global);
+    out.tsSet.addAll(t);
+    out.tsSet_global.addAll(t);
 
     for (String key : this.tsSet_global) {
       out.tsMap.put(key, (Timeseries)this.tsMap.get(key));
@@ -833,8 +831,8 @@ public class SimulationDataSet
 
     t = new LinkedHashSet<String>(this.dvSet);
     t.retainAll(this.dvSet_global);
-    out.dvSet.addAll(this.dvSet_global);
-    out.dvSet_global.addAll(this.dvSet_global);
+    out.dvSet.addAll(t);
+    out.dvSet_global.addAll(t);
 
     for (String key : this.dvSet_global) {
       out.dvMap.put(key, (Dvar)this.dvMap.get(key));
@@ -842,8 +840,8 @@ public class SimulationDataSet
 
     t = new LinkedHashSet<String>(this.gSet);
     t.retainAll(this.gSet_global);
-    out.gSet.addAll(this.gSet_global);
-    out.gSet_global.addAll(this.gSet_global);
+    out.gSet.addAll(t);
+    out.gSet_global.addAll(t);
 
     for (String key : this.gSet_global) {
       out.gMap.put(key, (Goal)this.gMap.get(key));
@@ -993,7 +991,7 @@ public SimulationDataSet overwrittenWith_set(SimulationDataSet s) {
     this.dvSet_local.addAll(s.dvSet_local);
     this.dvMap.putAll(s.dvMap);
 
-    this.svSet.addAll(s.svSet);
+	this.svSet.addAll(s.svSet);
     this.svSet_global.addAll(s.svSet_global);
     this.svSet_local.addAll(s.svSet_local);
     this.svMap.putAll(s.svMap);

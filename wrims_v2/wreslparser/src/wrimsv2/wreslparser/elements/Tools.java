@@ -350,9 +350,6 @@ public class Tools {
 
 			for (String upperFile : t1ReverseMap.get(f)) {
 				
-//				LogUtils.errMsg(" ===========:  "+f);
-//				LogUtils.errMsg(" $$$$$$$$$$$: files in reverseMap: "+upperFile);
-
 				if (fileScopeMap.get(upperFile) == Param.local) {
 
 					//LogUtils.normalMsg("...Convert this file data to local: " + f );

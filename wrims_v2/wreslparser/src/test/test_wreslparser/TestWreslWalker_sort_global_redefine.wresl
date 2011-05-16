@@ -6,24 +6,22 @@ SEQUENCE CYCLE1 {
 SEQUENCE CYCLE2 {
     model   second
     order   2
-    }
+    }	
 	
 MODEL first { 
 
-	define sv1{ value 1 }
-	include 'level4.wresl'
-	
-}	
+
+define sv { value min(max(not_exist,2),2.5) }
+
+}
 
 MODEL second { 
 
-	define sv1{ value 2 }
-	!include 'level4.wresl'
-	
-}	
-	
 
-	 
+define sv  { alias unknown1 }
+
+}
 
 
- 
+
+

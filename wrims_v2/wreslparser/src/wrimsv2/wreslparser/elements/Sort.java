@@ -13,6 +13,7 @@ import wrimsv2.commondata.wresldata.Svar;
 public class Sort {
 	
 	private Map<String, Set<String>> varDependentMap;
+	private Map<String, String> varTypeMap = new HashMap<String, String>();
 	private Set<String> previousSet = new HashSet<String>();;
 	
 	// for iteration only
@@ -37,6 +38,7 @@ public class Sort {
 			
 			Set<String> d = e.getValue().incFileSet;
 			varDependentMap.put(e.getKey(), d);
+			varTypeMap.put(e.getKey(), "Include File");
 		}	
 	}
 
@@ -49,6 +51,7 @@ public class Sort {
 			Set<String> d = e.getValue().dependants;
 			d.removeAll(tsSet);
 			varDependentMap.put(e.getKey(), d);
+			varTypeMap.put(e.getKey(), "Svar");
 		}	
 	}
 
@@ -61,6 +64,7 @@ public class Sort {
 			Set<String> d = e.getValue().dependants;
 			d.removeAll(dvSet);d.removeAll(svSet);d.removeAll(tsSet);
 			varDependentMap.put(e.getKey(), d);
+			varTypeMap.put(e.getKey(), "Alias");
 		}	
 	}
 	
@@ -81,8 +85,14 @@ public class Sort {
 		}
 		
 		// var depend on unknowns
-		if (varDependentMap.keySet().size()>0)  LogUtils.errMsg("Variables with unknown dependants: "+ varDependentMap.keySet()); 
+		if (varDependentMap.keySet().size()>0) {
 		
+			LogUtils.errMsg("Variables with unknown dependants: "+ varDependentMap.keySet()); 
+		
+			for (String key:varDependentMap.keySet() ){
+				LogUtils.warningMsg("Variables type of "+ key +": "+ varTypeMap.get(key)); 
+			}
+		}
 		
 		// var depend on unknowns
 		return varDependentMap.keySet();
