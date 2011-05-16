@@ -4,9 +4,6 @@ package test.test_wreslparser;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.antlr.runtime.RecognitionException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -96,7 +93,6 @@ public class TestWreslWalker_scope {
 	
 		LogUtils.closeLogFile();
 		
-		String modelName1 = sd.getModelList().get(0);
 		String modelName2 = sd.getModelList().get(1);
 		
 		WriteCSV.study(sd,csvFolderPath ) ;

@@ -200,7 +200,7 @@ public class TestWreslWalker_sort {
 	
 		LogUtils.closeLogFile();
 		
-		String modelName = sd.getModelList().get(1);
+		//String modelName = sd.getModelList().get(1);
 		
 		WriteCSV.study(sd,csvFolderPath ) ;
 		
