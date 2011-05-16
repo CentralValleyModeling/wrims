@@ -70,7 +70,7 @@ conditionStatement
 
 relationStatementSeries  
   : r1=relationRangeStatement  
-    (((s=('.and.'^|'.or.'^))) r2=relationRangeStatement) ;
+    (((s=('.and.'^|'.or.'^))) r2=relationRangeStatement)* ;
 
 relationRangeStatement
   : (relationStatement -> relationStatement)|(range_func -> range_func)
@@ -142,9 +142,7 @@ usedKeywords: YEAR|MONTH|MONTH_CONST|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|I
 |TIMESERIES|CONSTRAIN|ALWAYS|NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
 |CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE|UPPERUNBOUNDED|LOWERUNBOUNDED;
 
-tableSQL	: SELECT selectName FROM i1=IDENT
-	  (GIVEN a=assignStatement)? (USE i2=IDENT)? 
-	  (where_items)? 	  -> ^(SELECT selectName $i1 assignStatement? $i2? where_items?)
+tableSQL	: SELECT selectName FROM i1=IDENT (GIVEN a=assignStatement)? (USE i2=IDENT)? (where_items)? 	  -> ^(SELECT selectName $i1 assignStatement? $i2? where_items?)
 	;
 	
 selectName: (IDENT -> IDENT)|(usedKeywords -> usedKeywords);
@@ -258,7 +256,7 @@ whereStatement
 whereName: (IDENT -> IDENT)|(usedKeywords -> usedKeywords);
 
 assignStatement   
-  : IDENT '=' expression ^('=' IDENT expression) 
+  : IDENT '=' expression -> ^('=' IDENT expression) 
   ;
 
 number

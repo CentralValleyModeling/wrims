@@ -6,6 +6,7 @@ import java.util.Set;
 
 import wrimsv2.components.IntDouble;
 import wrimsv2.evaluator.ValueEvaluatorParser;
+import wrimsv2.evaluator.ValueEvaluatorTreeWalker;
 
 
 public class Svar {
@@ -19,8 +20,10 @@ public class Svar {
 	public ArrayList<String> caseName;
 	public ArrayList<String> caseCondition;
 	public ArrayList<ValueEvaluatorParser> caseConditionParsers;
+	public ArrayList<ValueEvaluatorTreeWalker> caseConditionWalkers;
 	public ArrayList<String> caseExpression;
 	public ArrayList<ValueEvaluatorParser> caseExpressionParsers;
+	public ArrayList<ValueEvaluatorTreeWalker> caseExpressionWalkers;
 	public String fromWresl;
 	private IntDouble data;
 	public Set<String> dependants;

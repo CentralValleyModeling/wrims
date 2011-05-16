@@ -98,6 +98,35 @@ public class TestAST extends TestCase{
 	
 		Error.writeEvaluationErrorFile("log.txt");
 	}
+	
+	@Test
+	public void testMonth() throws RecognitionException, IOException {
+        String mainFile="z:\\temp\\test";
+        FilePaths fp=new FilePaths();
+        fp.setMainFilePaths(mainFile);
+		
+		ANTLRStringStream stream = new ANTLRStringStream("c: month>=oct .and. month<=dec .and. wateryear>1922");
+		ValueEvaluatorTreeLexer lexer = new ValueEvaluatorTreeLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ValueEvaluatorTreeParser evaluator = new ValueEvaluatorTreeParser(tokenStream);
+		ValueEvaluatorTreeParser.evaluator_return parser_evaluator = evaluator.evaluator();
+		CommonTree commonTree = (CommonTree) parser_evaluator.getTree();
+		System.out.println(commonTree.toStringTree());
+		
+		CommonTreeNodeStream nodeStream = new CommonTreeNodeStream(commonTree);
+		nodeStream.setTokenStream(tokenStream); 
+		ValueEvaluatorTreeWalker walker = new ValueEvaluatorTreeWalker(nodeStream);
+		
+		walker.evaluator();
+		boolean eCondition=walker.evalCondition;
+		if (eCondition){
+			System.out.println("true");
+		}else{
+			System.out.println("false");
+		}
+	
+		Error.writeEvaluationErrorFile("log.txt");
+	}
 
 	public void testExternalFunction() throws RecognitionException, IOException {
         new LoadAllDll();

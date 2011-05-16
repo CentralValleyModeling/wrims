@@ -15,6 +15,7 @@ import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Controller;
+import wrimsv2.components.ControllerTree;
 import wrimsv2.components.Error;
 import wrimsv2.components.FilePaths;
 import wrimsv2.evaluator.TimeOperation;
@@ -26,9 +27,13 @@ import wrimsv2.wreslparser.elements.WriteCSV;
 
 public class testStudies {
 
-	@Test
 	public void testMain() throws RecognitionException, IOException{
 		new Controller();
+	}
+	
+	@Test
+	public void testMainTree() throws RecognitionException, IOException{
+		new ControllerTree();
 	}
 	
 	public void testSimpleStudy() throws RecognitionException, IOException{

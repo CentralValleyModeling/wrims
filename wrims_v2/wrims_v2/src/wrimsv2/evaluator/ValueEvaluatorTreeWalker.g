@@ -67,8 +67,8 @@ conditionStatement returns [boolean result]
   ;
   
 relationStatementSeries returns [boolean result] 
-  : ^((s=('.and.'|'.or.')) r1=relationRangeStatement {result=$r1.result;} 
-    r2=relationRangeStatement {result=ValueEvaluation.relationStatementSeries(result, $r2.result, $s.text);}) ;
+  : (r0=relationRangeStatement{result=$r0.result;})|(^((s=('.and.'|'.or.')) r1=relationRangeStatement {result=$r1.result;} 
+    (r2=relationRangeStatement {result=ValueEvaluation.relationStatementSeries(result, $r2.result, $s.text);}))) ;
 
 relationRangeStatement returns [boolean result]
   : (r1=relationStatement{result=$r1.result;})|(r2=range_func{result=$r2.result;})
@@ -260,7 +260,7 @@ whereStatement returns [String whereIdent, Number value]
   ;
 
 assignStatement returns [String assignIdent, Number value]  
-  : I^('=' IDENT  term {$assignIdent=$IDENT.text; $value=ValueEvaluation.assignWhereStatement($term.id);}) 
+  : ^('=' IDENT  term {$assignIdent=$IDENT.text; $value=ValueEvaluation.assignWhereStatement($term.id);}) 
   ;
 
 number
