@@ -32,7 +32,7 @@ public class Tools {
 		s=s.replaceAll("\\|", "\\\\|");
 		s=s.replaceAll("\\+", "\\\\+");
 		s=s.replaceAll("\\[", "\\\\[").replaceAll("\\]", "\\\\]");
-		s=s.replaceAll("#", ".+");
+		s=s.replaceAll("##", ".+");
 		return s;
 	}
 	public static String replace_ignoreChar(String s) {
@@ -337,7 +337,7 @@ public class Tools {
 		return out;
 	}
 	
-	public static SimulationDataSet correctDataScope(String f, SimulationDataSet ds, Map<String,String> fileScopeMap,
+	public static SimulationDataSet correctDataScope_shallow(String f, SimulationDataSet ds, Map<String,String> fileScopeMap,
 			Map<String,Set<String>> t1ReverseMap	) {
 
 		
@@ -349,7 +349,7 @@ public class Tools {
 		else {
 
 			for (String upperFile : t1ReverseMap.get(f)) {
-
+				
 				if (fileScopeMap.get(upperFile) == Param.local) {
 
 					//LogUtils.normalMsg("...Convert this file data to local: " + f );
@@ -365,6 +365,46 @@ public class Tools {
 	}
 	
 
+	public static SimulationDataSet correctDataScope_deep(String f, SimulationDataSet ds, Map<String,String> fileScopeMap,
+			Map<String,Set<String>> t1ReverseMap	) {
+
+		
+		if (fileScopeMap.get(f) == Param.local) {
+
+			ds.convertToLocal_set();
+			return ds;
+
+		}
+		
+		
+		if (!t1ReverseMap.keySet().contains(f)) return ds;
+
+		for (String upperFile : t1ReverseMap.get(f)) {
+
+			// LogUtils.errMsg(" ===========:  "+f);
+			// LogUtils.errMsg(" $$$$$$$$$$$: files in reverseMap: "+upperFile);
+
+			if (fileScopeMap.get(upperFile) == Param.local) {
+
+				// LogUtils.normalMsg("...Convert this file data to local: " + f
+				// );
+				// LogUtils.normalMsg("   due to  [local] specification for its parent file: "
+				// + upperFile + "\n");
+
+				ds.convertToLocal_set();
+
+				break;
+			}
+			else {
+
+				ds = correctDataScope_deep(upperFile, ds, fileScopeMap, t1ReverseMap);
+
+			}
+		}
+
+		return ds;
+	}	
+	
 	public static Map<String,SimulationDataSet> getAllOffSprings(String nodeFile, Map<String,ArrayList<String>> t1Map, Map<String, SimulationDataSet> fileDataMap ) {
 		Map<String, SimulationDataSet> out = new HashMap<String, SimulationDataSet>();
 		

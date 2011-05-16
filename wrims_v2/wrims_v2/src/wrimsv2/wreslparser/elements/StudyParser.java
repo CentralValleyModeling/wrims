@@ -185,12 +185,12 @@ public class StudyParser{
       if (redefined_globals_wt.size()>0) LogUtils.errMsg("Global weights redefined: "+ redefined_globals_wt); 
       
       /// check for redefined file
-      Set<String> redefined_globals = new LinkedHashSet<String>(td.cumulative_global_complete.incFileSet);
-      redefined_globals.retainAll(model_dataset.incFileSet_global);
-      if (redefined_globals.size()>0) LogUtils.errMsg("Global include files redefined: "+ redefined_globals); 
+      Set<String> redefined_global_file = new LinkedHashSet<String>(td.cumulative_global_complete.incFileSet);
+      redefined_global_file.retainAll(model_dataset.incFileSet_global);
+      if (redefined_global_file.size()>0) LogUtils.errMsg("Global include files redefined: "+ redefined_global_file); 
       
       /// check for redefined globals        
-      redefined_globals = new LinkedHashSet<String>(td.cumulative_global_complete.getAllVarsSet_except_file_and_weight());
+      Set<String> redefined_globals = new LinkedHashSet<String>(td.cumulative_global_complete.getAllVarsSet_except_file_and_weight());
       Set<String> redefined_globals_as_locals = new LinkedHashSet<String>(td.cumulative_global_complete.getAllVarsSet_except_file_and_weight());
       
       
@@ -205,26 +205,52 @@ public class StudyParser{
       
       /// add previous globals
       
+     
+     
+      // option 1 : remove redefined
       SimulationDataSet cumulative_global_remove_redefined = new SimulationDataSet(td.cumulative_global_complete);
-      //cumulative_global_remove_redefined.overwrittenWith_set(td.cumulative_global_complete);
       cumulative_global_remove_redefined.remove_set(redefined_globals);
-      cumulative_global_remove_redefined.remove_set(redefined_globals_as_locals);
+      cumulative_global_remove_redefined.remove_set(redefined_globals_as_locals); 
       
-      model_dataset.overwrite_set(cumulative_global_remove_redefined);
+      
+      // option 2 : replace redefined
+      SimulationDataSet cumulative_global_replace_redefined = new SimulationDataSet(td.cumulative_global_complete);
+      
+
+		
+     // cumulative_global_replace_redefined.replaceGlobalWithDuplicateGlobal(redefined_globals,model_dataset );
+
+
+      
+      cumulative_global_replace_redefined.replaceGlobalWithDuplicateLocal(redefined_globals_as_locals,model_dataset); 
+
+//      LogUtils.warningMsg(" ===    cumulative_global_replace_redefined.svSet    :  "+cumulative_global_replace_redefined.svSet);
+//      LogUtils.warningMsg(" ===    cumulative_global_replace_redefined.svSet_global    :  "+cumulative_global_replace_redefined.svSet_global);
+//      LogUtils.warningMsg(" ===    cumulative_global_replace_redefined.svMap.keySet()    :  "+cumulative_global_replace_redefined.svMap.keySet());
+//      LogUtils.warningMsg(" ===    cumulative_global_replace_redefined.svMap.values()    :  "+cumulative_global_replace_redefined.svMap.values());  
+//      
+//      LogUtils.warningMsg(" ===    model_dataset.svSet    :  "+model_dataset.svSet);
+//      LogUtils.warningMsg(" ===    model_dataset.svSet_global    :  "+model_dataset.svSet_global);
+//      LogUtils.warningMsg(" ===    model_dataset.svMap.keySet()    :  "+model_dataset.svMap.keySet());
+//      LogUtils.warningMsg(" ===    model_dataset.svMap.values()    :  "+model_dataset.svMap.values());      
+      
+      model_dataset.overwrite_set(cumulative_global_replace_redefined);
 
       //LogUtils.importantMsg("Finish adding previous global vars into model: "+modelName);
       /// finish adding globals
-      
+  
      
       lousyConvert(model_dataset);
+		
+
       
       sortDependency(model_dataset, rewrite_list_based_on_dependency);  
 
       model_dataset_map.put(modelName, model_dataset);
-
+		
       td.cumulative_global_adhocs.overwrittenWith_set(sc.modelDataMap.get(modelName).getGlobalVars_set());
       td.cumulative_global_complete.overwrittenWith_set(model_dataset.getGlobalVars_set());
-
+      
       lousyConvert(td.cumulative_global_adhocs);
       lousyConvert(td.cumulative_global_complete);
     }
@@ -278,7 +304,7 @@ public class StudyParser{
     SimulationDataSet ds;
     for (String f : fileDataMap_thisModel.keySet())
     {
-      ds = Tools.correctDataScope(f, (SimulationDataSet)fileDataMap_thisModel.get(f), fileScopeMap, t1ReverseMap);
+      ds = Tools.correctDataScope_deep(f, fileDataMap_thisModel.get(f), fileScopeMap, t1ReverseMap);
       fileDataMap_corrected.put(f, ds);
     }
 
@@ -290,7 +316,7 @@ public class StudyParser{
 
       temp.addChildren(f, t1Map, fileDataMap_corrected);
 
-      temp.overwrittenWith_set((SimulationDataSet)fileDataMap_corrected.get(f));
+      temp.overwrittenWith_set(fileDataMap_corrected.get(f));
 
       model_dataset.overwrittenWith_set(temp);
     }

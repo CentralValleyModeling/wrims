@@ -109,12 +109,12 @@ public class TestWreslWalker_priority {
 		String s;
 		int n;
 	
-		s ="watch_this#this-is-correct";
+		s ="watch_this##this-is-correct";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 		
-		s = "another#this-is-correct";
+		s = "another##this-is-correct";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -158,17 +158,17 @@ public class TestWreslWalker_priority {
 		String s;
 		int n;
 	
-		s ="include1#this-is-correct";
+		s ="include1##this-is-correct";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 		
-		s = "include2#this-is-correct";
+		s = "include2##this-is-correct";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "main#this-is-correct";
+		s = "main##this-is-correct";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);

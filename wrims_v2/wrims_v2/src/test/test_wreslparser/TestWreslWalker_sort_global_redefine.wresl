@@ -1,0 +1,27 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }	
+	
+MODEL first { 
+
+
+define sv { value min(max(not_exist,2),2.5) }
+
+}
+
+MODEL second { 
+
+
+define sv  { alias unknown1 }
+
+}
+
+
+
+

@@ -177,6 +177,50 @@ public class TestWreslWalker_sort {
 	}
 
 	@Test(groups = { "WRESL_elements" })
+	public void global_redefine() throws RecognitionException, IOException {
+		
+		csvFolderPath = "TestWreslWalker_sort_global_redefine";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath,true);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td,true);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		String modelName = sd.getModelList().get(1);
+		
+		WriteCSV.study(sd,csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 4);		
+
+		int n = RegUtils.timesOfMatches(logText, "Warning: Variables type of sv: Svar");
+		Assert.assertEquals(n, 2);	
+		
+		n = RegUtils.timesOfMatches(logText, "Warning: Variables type of sv: Alias");
+		Assert.assertEquals(n, 1);	
+		
+	
+		
+	
+	}
+
+	@Test(groups = { "WRESL_elements" })
 	public void alias() throws RecognitionException, IOException {
 		
 		csvFolderPath = "TestWreslWalker_sort_alias";
@@ -207,7 +251,7 @@ public class TestWreslWalker_sort {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 3);		
+		Assert.assertEquals(totalErrs, 4);		
 		
 		System.out.println("#### orderList: "+sd.getModelDataSetMap().get(modelName).asList);
 		

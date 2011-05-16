@@ -193,12 +193,12 @@ public class TestWreslWalker_element {
 		String s;
 		int n;
 		
-		s = "division_test#(a_orovl_forward-a_orovl_back)/(100*max(0.01;s_orovl(-1)))";
+		s = "division_test##(a_orovl_forward-a_orovl_back)/(100*max(0.01;s_orovl(-1)))";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s);
 		Assert.assertEquals(n, 1);
 
-		s = "min_test#min(max(a;b);2.5)";
+		s = "min_test##min(max(a;b);2.5)";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s);
 		Assert.assertEquals(n, 1);		
@@ -241,7 +241,7 @@ public class TestWreslWalker_element {
 		String s;
 		int n;
 		
-		s = "oroinfest#(i=0;sep-month;1) max(i_orovl(i);dummy)*cfs_taf(i)";
+		s = "oroinfest##(i=0;sep-month;1) max(i_orovl(i);dummy)*cfs_taf(i)";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -286,12 +286,12 @@ public class TestWreslWalker_element {
 		String s;
 		int n;
 	
-		s = "multi_where#select target from res_level where res_num=1;level=4;month=month";
+		s = "multi_where##select target from res_level where res_num=1;level=4;month=month";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "simple#select target from feather_fish_203 where month=nov";
+		s = "simple##select target from feather_fish_203 where month=nov";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -336,7 +336,7 @@ public class TestWreslWalker_element {
 		String s;
 		int n;
 	
-		s = "full_table#select area from res_info given storage=1000*s_orovl(-1) use linear where res_num=6;somevalue=7";
+		s = "full_table##select area from res_info given storage=1000*s_orovl(-1) use linear where res_num=6;somevalue=7";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -378,7 +378,7 @@ public class TestWreslWalker_element {
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 		
-		s = "alias_local#"+Param.undefined+"#cfs,d419_swp[monthlyweighted5]";
+		s = "alias_local##"+Param.undefined+"##cfs,d419_swp[monthlyweighted5]";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);

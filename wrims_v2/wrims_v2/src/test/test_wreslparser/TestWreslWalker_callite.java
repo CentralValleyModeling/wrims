@@ -54,7 +54,7 @@ public class TestWreslWalker_callite {
 	@Test(groups = { "WRESL_Callite" })
 	public void callite_beta_debug() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_callite_beta";
+		csvFolderPath = "TestWreslWalker_callite_beta_debug";
 		inputFilePath = "D:\\CalLite_Beta_042611_WRIMSv2_corroboration_debug\\Run\\main_BO.wresl";
 		logFilePath = csvFolderPath+".log";
 		

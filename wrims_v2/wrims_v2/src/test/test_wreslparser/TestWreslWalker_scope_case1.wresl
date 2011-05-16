@@ -1,0 +1,29 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }
+	
+MODEL first { 
+
+	define sv1{ value 1 }
+	include 'level4.wresl'
+	
+}	
+
+MODEL second { 
+
+	define[local] sv1{ value 1 }
+	include[local] 'level4.wresl'
+	
+}	
+	
+
+	 
+
+
+ 
