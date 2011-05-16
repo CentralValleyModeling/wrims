@@ -207,32 +207,24 @@ public class StudyParser{
       
      
      
-      // option 1 : remove redefined
-      SimulationDataSet cumulative_global_remove_redefined = new SimulationDataSet(td.cumulative_global_complete);
-      cumulative_global_remove_redefined.remove_set(redefined_globals);
-      cumulative_global_remove_redefined.remove_set(redefined_globals_as_locals); 
+//      // option 1 : remove redefined
+//      SimulationDataSet cumulative_global_remove_redefined = new SimulationDataSet(td.cumulative_global_complete);
+//      cumulative_global_remove_redefined.remove_set(redefined_globals);
+//      cumulative_global_remove_redefined.remove_set(redefined_globals_as_locals); 
       
       
       // option 2 : replace redefined
       SimulationDataSet cumulative_global_replace_redefined = new SimulationDataSet(td.cumulative_global_complete);
       
 
-		
+	 // comment out. redefining globals is not allowed	
      // cumulative_global_replace_redefined.replaceGlobalWithDuplicateGlobal(redefined_globals,model_dataset );
 
 
       
       cumulative_global_replace_redefined.replaceGlobalWithDuplicateLocal(redefined_globals_as_locals,model_dataset); 
 
-//      LogUtils.warningMsg(" ===    cumulative_global_replace_redefined.svSet    :  "+cumulative_global_replace_redefined.svSet);
-//      LogUtils.warningMsg(" ===    cumulative_global_replace_redefined.svSet_global    :  "+cumulative_global_replace_redefined.svSet_global);
-//      LogUtils.warningMsg(" ===    cumulative_global_replace_redefined.svMap.keySet()    :  "+cumulative_global_replace_redefined.svMap.keySet());
-//      LogUtils.warningMsg(" ===    cumulative_global_replace_redefined.svMap.values()    :  "+cumulative_global_replace_redefined.svMap.values());  
-//      
-//      LogUtils.warningMsg(" ===    model_dataset.svSet    :  "+model_dataset.svSet);
-//      LogUtils.warningMsg(" ===    model_dataset.svSet_global    :  "+model_dataset.svSet_global);
-//      LogUtils.warningMsg(" ===    model_dataset.svMap.keySet()    :  "+model_dataset.svMap.keySet());
-//      LogUtils.warningMsg(" ===    model_dataset.svMap.values()    :  "+model_dataset.svMap.values());      
+    
       
       model_dataset.overwrite_set(cumulative_global_replace_redefined);
 
