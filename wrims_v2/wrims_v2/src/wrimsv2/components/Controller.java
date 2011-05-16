@@ -33,6 +33,7 @@ import wrimsv2.evaluator.EvalExpression;
 import wrimsv2.evaluator.Evaluation;
 import wrimsv2.evaluator.EvaluatorLexer;
 import wrimsv2.evaluator.EvaluatorParser;
+import wrimsv2.evaluator.PreEvaluator;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
@@ -54,6 +55,7 @@ public class Controller {
 		setControlData();
 		try {
 			StudyDataSet sds = parse();
+			new PreEvaluator(sds);
 			runModel(sds);
 		} catch (RecognitionException e) {
 			e.printStackTrace();
@@ -66,6 +68,7 @@ public class Controller {
 		setControlData(args);
 		try {
 			StudyDataSet sds = parse();
+			new PreEvaluator(sds);
 			runModel(sds);
 		} catch (RecognitionException e) {
 			e.printStackTrace();
@@ -87,8 +90,8 @@ public class Controller {
         cd.startYear=1921;
         cd.startMonth=10;
         cd.startDay=31;
-        cd.endYear=2003;
-        cd.endMonth=9;
+        cd.endYear=1921;
+        cd.endMonth=11;
         cd.endDay=30;
         cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
         cd.currYear=ControlData.startYear;
@@ -120,6 +123,9 @@ public class Controller {
 	}
 	
 	public StudyDataSet parse()throws RecognitionException, IOException{
+		Calendar cal = Calendar.getInstance();
+		System.out.println("Before Parsser: "+cal.getTimeInMillis());
+		
 		String csvFolderPath = "TestWreslWalker";
 		String inputFilePath = FilePaths.fullMainPath;
 		String logFilePath = csvFolderPath+".log";
@@ -151,6 +157,8 @@ public class Controller {
 		ControlData.allTsMap=sds.getTimeseriesMap();
 		
 		totalTimeStep=getTotalTimeStep();
+		Calendar cal = Calendar.getInstance();
+		System.out.println("After Parsser: "+cal.getTimeInMillis());
 		readTimeseries();
 		initialDvarAliasTS(totalTimeStep);
 		for (int i=0; i<modelList.size(); i++){
@@ -177,7 +185,7 @@ public class Controller {
 				ControlData.currTsMap=mds.tsMap;
 				ControlData.currCycleIndex=i;
 				ControlData.isPostProcessing=false;
-				Calendar cal = Calendar.getInstance();
+				cal = Calendar.getInstance();
 				System.out.println("Before Evaluation: "+cal.getTimeInMillis());
 				processModel();
 				if (Error.error_evaluation.size()>=1){
@@ -248,7 +256,7 @@ public class Controller {
 		Iterator iterator=tsKeySet.iterator();
 		while(iterator.hasNext()){
 			String tsName=(String)iterator.next();
-			System.out.println("Reading svar timeseries "+tsName);
+			//System.out.println("Reading svar timeseries "+tsName);
 			//To Do: in the svar class, add flag to see if svTS has been loaded
 			if (!DataTimeSeries.lookSvDss.contains(tsName)){ 
 				DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarDssPath);
@@ -315,40 +323,35 @@ public class Controller {
 			ControlData.currEvalName=svName;
 			//System.out.println("Process svar "+svName);
 			Svar svar=svMap.get(svName);
-			ArrayList<String> caseCondition=svar.caseCondition;
+			ArrayList<ValueEvaluatorParser> caseConditions=svar.caseConditionParsers;
 			boolean condition=false;
 			int i=-1;
-			if (svName.equals("coreqsac")){
-				int x=0;
-			}
-			while(!condition && i<=caseCondition.size()-2){
+			while(!condition && i<=caseConditions.size()-2){
 				i=i+1;
-				String evalString="c: "+caseCondition.get(i);
-				ANTLRStringStream stream = new ANTLRStringStream(evalString);
-				ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
-				TokenStream tokenStream = new CommonTokenStream(lexer);
-				ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
+				ValueEvaluatorParser caseCondition=caseConditions.get(i);
 				try{
-					evaluator.evaluator();
-					condition=evaluator.evalCondition;
+					caseCondition.evaluator();
+					condition=caseCondition.evalCondition;
 				}catch (Exception e){
 					Error.addEvaluationError("Case condition evaluation has error.");
 					condition=false;
 				}
+				caseCondition.reset();
 			}
 			if (condition){
-				String evalString="v: "+svar.caseExpression.get(i);
-				ANTLRStringStream stream = new ANTLRStringStream(evalString);
-				ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
-				TokenStream tokenStream = new CommonTokenStream(lexer);
-				ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
+				ArrayList<ValueEvaluatorParser> caseExpressions=svar.caseExpressionParsers;
+				ValueEvaluatorParser caseExpression=caseExpressions.get(i);
+				if (svName.equals("lod_future")){
+					int x=0;
+				}
 				try {
-					evaluator.evaluator();
-					svar.setData(evaluator.evalValue);
+					caseExpression.evaluator();
+					svar.setData(caseExpression.evalValue);
 				} catch (RecognitionException e) {
 					Error.addEvaluationError("Case expression evaluation has error.");
 					svar.setData(new IntDouble(1.0, false));
 				}
+				caseExpression.reset();
 			}else{
 				Error.addEvaluationError("None of the case conditions is satisfied.");
 				svar.setData(new IntDouble(1.0, false));
