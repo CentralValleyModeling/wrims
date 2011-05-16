@@ -193,7 +193,7 @@ tafcfs_term : TAFCFS ('(' expression ')')? -> ^(TAFCFS expression?)
   ;
 	
 knownTS 
-  : (f=function -> function)|(p=pastCycleDV ->pastCycleDV) 
+  : (f=function -> $f)|(p=pastCycleDV ->$p) 
   ;
   
 //pastMonthTS  
@@ -216,7 +216,11 @@ noArgFunction
   : IDENT '(' ')' -> ^(IDENT '(' ')');
 
 argFunction 
-  : IDENT '(' (e1=expression ) (';' (e2=expression))* ')' -> ^(IDENT '(' $e1 $e2* ')' ) 
+  : IDENT '(' e1=expression  addarg* ')' -> ^(IDENT '(' $e1 addarg* ')' ) 
+  ;
+  
+addarg
+  : ';' expression 
   ;
   	
 unary 

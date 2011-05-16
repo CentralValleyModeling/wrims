@@ -323,7 +323,7 @@ public class ControllerTree {
 		ControlData.currEvalTypeIndex=0;
 		for (String svName: svList){
 			ControlData.currEvalName=svName;
-			System.out.println("Process svar "+svName);
+			//System.out.println("Process svar "+svName);
 			Svar svar=svMap.get(svName);
 			ArrayList<ValueEvaluatorTreeWalker> caseConditions=svar.caseConditionWalkers;
 			boolean condition=false;
@@ -343,9 +343,6 @@ public class ControllerTree {
 			if (condition){
 				ArrayList<ValueEvaluatorTreeWalker> caseExpressions=svar.caseExpressionWalkers;
 				ValueEvaluatorTreeWalker caseExpression=caseExpressions.get(i);
-				if (svName.equals("lod_future")){
-					int x=0;
-				}
 				try {
 					caseExpression.evaluator();
 					svar.setData(caseExpression.evalValue);

@@ -7,6 +7,7 @@ import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
+import org.antlr.runtime.tree.BufferedTreeNodeStream;
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.CommonTreeNodeStream;
 
@@ -52,7 +53,7 @@ public class PreEvaluatorTree {
 				try {
 					parser_evaluator = evaluator.evaluator();
 					CommonTree commonTree = (CommonTree) parser_evaluator.getTree();
-					CommonTreeNodeStream nodeStream = new CommonTreeNodeStream(commonTree);
+					BufferedTreeNodeStream nodeStream = new BufferedTreeNodeStream(commonTree);
 					nodeStream.setTokenStream(tokenStream); 
 					ValueEvaluatorTreeWalker walker = new ValueEvaluatorTreeWalker(nodeStream);
 					svar.caseConditionWalkers.add(walker);
@@ -70,7 +71,7 @@ public class PreEvaluatorTree {
 				try {
 					parser_evaluator = evaluator.evaluator();
 					CommonTree commonTree = (CommonTree) parser_evaluator.getTree();
-					CommonTreeNodeStream nodeStream = new CommonTreeNodeStream(commonTree);
+					BufferedTreeNodeStream nodeStream = new BufferedTreeNodeStream(commonTree);
 					nodeStream.setTokenStream(tokenStream); 
 					ValueEvaluatorTreeWalker walker = new ValueEvaluatorTreeWalker(nodeStream);
 					svar.caseExpressionWalkers.add(walker);

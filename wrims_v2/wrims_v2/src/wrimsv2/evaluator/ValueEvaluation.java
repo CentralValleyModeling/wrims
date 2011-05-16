@@ -23,11 +23,11 @@ public class ValueEvaluation {
 	private static int step;
 	
 	public static double convertStringToDouble(String text){
-		return Double.valueOf(text);
+		return Double.parseDouble(text);
 	}
 	
 	public static int convertStringToInt(String text){
-		return Integer.valueOf(text);
+		return Integer.parseInt(text);
 	}
 	
 	public static String convertDoubleToString(double value){

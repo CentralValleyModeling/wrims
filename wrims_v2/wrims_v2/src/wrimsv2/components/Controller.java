@@ -90,8 +90,8 @@ public class Controller {
         cd.startYear=1921;
         cd.startMonth=10;
         cd.startDay=31;
-        cd.endYear=1921;
-        cd.endMonth=11;
+        cd.endYear=2003;
+        cd.endMonth=9;
         cd.endDay=30;
         cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
         cd.currYear=ControlData.startYear;
@@ -209,7 +209,7 @@ public class Controller {
 				}
 				cal = Calendar.getInstance();
 				System.out.println("      After alias: "+cal.getTimeInMillis());
-				//new RCCComparison();
+				new RCCComparison();
 				i=i+1;
 			}
 			if (ControlData.timeStep.equals("1MON")){

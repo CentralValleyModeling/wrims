@@ -63,19 +63,23 @@ externalFile
 text	:	LETTER (LETTER | DIGIT )*;
 
 conditionStatement returns [boolean result]
-  : (^(r=relationStatementSeries{result=$r.result;})|ALWAYS{result=true;})
+  : (r=relationStatementTerm{result=$r.result;})|ALWAYS{result=true;}
   ;
   
-relationStatementSeries returns [boolean result] 
-  : (r0=relationRangeStatement{result=$r0.result;})|(^((s=('.and.'|'.or.')) r1=relationRangeStatement {result=$r1.result;} 
-    (r2=relationRangeStatement {result=ValueEvaluation.relationStatementSeries(result, $r2.result, $s.text);}))) ;
+relationStatementTerm returns [boolean result]
+  : r0=relationRangeStatement{result=$r0.result;}|r1=relationStatementSeries{result=$r1.result;}
+  ;
+ 
+relationStatementSeries returns [boolean result]
+  : (^((s=('.and.'|'.or.')) r1=relationStatementTerm {result=$r1.result;} 
+    (r2=relationStatementTerm {result=ValueEvaluation.relationStatementSeries(result, $r2.result, $s.text);}))) ;
 
 relationRangeStatement returns [boolean result]
   : (r1=relationStatement{result=$r1.result;})|(r2=range_func{result=$r2.result;})
   ;
 
 relationStatement returns [boolean result] 
-  : ^(relation (e1=term) (e2=term){result=ValueEvaluation.relationStatement($e1.id, $e2.id, $relation.text);})
+  : ^(s=relation e1=term e2=term){result=ValueEvaluation.relationStatement($e1.id, $e2.id, $s.text);}
   ;
 
 	
@@ -247,12 +251,12 @@ expression returns [IntDouble id]
   |^(UNARY t11=term{$id=ValueEvaluation.unary("-", $t11.id);}))
   ;
 
-relation
-	: '=='
-	| '<'
-	| '>'
-	| '>='
-	| '<='
+relation returns [String text]
+	: '=='{text="==";}
+	| '<'{text="<";}
+	| '>'{text=">";}
+	| '>='{text=">=";}
+	| '<='{text="<=";}
 	;	
 
 whereStatement returns [String whereIdent, Number value]
