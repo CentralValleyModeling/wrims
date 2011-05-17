@@ -93,8 +93,8 @@ public class ControllerTree {
         cd.startMonth=10;
         cd.startDay=31;
         cd.endYear=1921;
-        cd.endMonth=11;
-        cd.endDay=30;
+        cd.endMonth=10;
+        cd.endDay=31;
         cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
         cd.currYear=ControlData.startYear;
         cd.currMonth=ControlData.startMonth;
@@ -341,6 +341,9 @@ public class ControllerTree {
 				caseCondition.reset();
 			}
 			if (condition){
+				if (svName.equals("trinity_import1")){
+					int x=0;
+				}
 				ArrayList<ValueEvaluatorTreeWalker> caseExpressions=svar.caseExpressionWalkers;
 				ValueEvaluatorTreeWalker caseExpression=caseExpressions.get(i);
 				try {

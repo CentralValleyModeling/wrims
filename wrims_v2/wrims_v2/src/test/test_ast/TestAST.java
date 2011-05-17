@@ -99,12 +99,12 @@ public class TestAST extends TestCase{
 	}
 	
 	@Test
-	public void testMonth() throws RecognitionException, IOException {
+	public void testAST() throws RecognitionException, IOException {
         String mainFile="z:\\temp\\test";
         FilePaths fp=new FilePaths();
         fp.setMainFilePaths(mainFile);
 		
-		ANTLRStringStream stream = new ANTLRStringStream("v: annec(c_hood(-5);c_hood(-4);c_hood(-3);c_hood(-2);c_hood(-1);d_exptd(-5);d_exptd(-4);d_exptd(-3);d_exptd(-2);d_exptd(-1);sjr_ann(-5);sjr_ann(-4);sjr_ann(-3);sjr_ann(-2);sjr_ann(-1);dxc_daysopen(-5);dxc_daysopen(-4);dxc_daysopen(-3);dxc_daysopen(-2);dxc_daysopen(-1);net_dicu(-5);net_dicu(-4);net_dicu(-3);net_dicu(-2);net_dicu(-1);sac_oth(-5);sac_oth(-4);sac_oth(-3);sac_oth(-2);sac_oth(-1);exp_oth(-5);exp_oth(-4);exp_oth(-3);exp_oth(-2);exp_oth(-1);vernwqfinal(-5);vernwqfinal(-4);vernwqfinal(-3);vernwqfinal(-2);vernwqfinal(-1);int(daysindv(-5));int(daysindv(-4));int(daysindv(-3));int(daysindv(-2));int(daysindv(-1));int(jp);int(monthly_avg);12;(wateryear-1))");
+		ANTLRStringStream stream = new ANTLRStringStream("v: select flow from trinity_import where month=month;trinity_lev=trinity_level;shasta_lev=shasta_level");
 		ValueEvaluatorTreeLexer lexer = new ValueEvaluatorTreeLexer(stream);
 		TokenStream tokenStream = new CommonTokenStream(lexer);
 		ValueEvaluatorTreeParser evaluator = new ValueEvaluatorTreeParser(tokenStream);

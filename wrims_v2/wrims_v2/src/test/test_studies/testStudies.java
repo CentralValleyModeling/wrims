@@ -27,11 +27,11 @@ import wrimsv2.wreslparser.elements.WriteCSV;
 
 public class testStudies {
 
+	@Test
 	public void testMain() throws RecognitionException, IOException{
 		new Controller();
 	}
-	
-	@Test
+
 	public void testMainTree() throws RecognitionException, IOException{
 		new ControllerTree();
 	}

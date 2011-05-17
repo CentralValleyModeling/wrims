@@ -173,7 +173,7 @@ selectName: (IDENT |usedKeywords);
 
 where_items returns [HashMap<String, Number> where]
 	:	 ^(WHERE  (r1=whereStatement{where=new HashMap<String, Number>(); where.put($r1.whereIdent, $r1.value);})
-	        ( r=whereStatement{where.put($r.whereIdent, $r.value);})* )
+	        (r=whereStatement{where.put($r.whereIdent, $r.value);})* )
 	;
 
 
@@ -240,7 +240,7 @@ noArgFunction returns [IntDouble result]
   : ^(IDENT '(' ')' {result=ValueEvaluation.noArgFunction($IDENT.text);});
 
 argFunction returns [IntDouble result] @init{ArrayList<IntDouble> idArray = new ArrayList<IntDouble>();}
-  : ^(IDENT '(' (t1=term {idArray.add($t1.id);}) (';' (t2=term{idArray.add($t2.id);}))* ')'{result=ValueEvaluation.argFunction($IDENT.text,idArray);});
+  : ^(IDENT '(' (t1=term {idArray.add($t1.id);}) ((t2=term{idArray.add($t2.id);}))* ')'{result=ValueEvaluation.argFunction($IDENT.text,idArray);});
   	
 expression returns [IntDouble id]  
   : (^('+' t1=term t2=term{$id=ValueEvaluation.add($t1.id, $t2.id);})

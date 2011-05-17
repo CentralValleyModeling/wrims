@@ -149,9 +149,12 @@ selectName: (IDENT -> IDENT)|(usedKeywords -> usedKeywords);
 
 where_items
 	:	 WHERE  (w1=whereStatement)
-	        (';' w=whereStatement)* ->^(WHERE $w1 $w*)
+	        (addWhereStatement)* ->^(WHERE $w1 addWhereStatement*)
 	;
 
+addWhereStatement
+  : ';' whereStatement -> whereStatement
+  ;
 
 //upperbound:	(IDENT -> IDENT)|(allnumber->allnumber)|(((allnumber '*' TAFCFS) ->^('*' allnumber TAFCFS)));
 
@@ -220,7 +223,7 @@ argFunction
   ;
   
 addarg
-  : ';' expression 
+  : ';' expression -> expression
   ;
   	
 unary 

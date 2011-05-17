@@ -90,9 +90,9 @@ public class Controller {
         cd.startYear=1921;
         cd.startMonth=10;
         cd.startDay=31;
-        cd.endYear=2003;
-        cd.endMonth=9;
-        cd.endDay=30;
+        cd.endYear=1921;
+        cd.endMonth=10;
+        cd.endDay=31;
         cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
         cd.currYear=ControlData.startYear;
         cd.currMonth=ControlData.startMonth;
@@ -339,6 +339,9 @@ public class Controller {
 				caseCondition.reset();
 			}
 			if (condition){
+				if (svName.equals("trinity_import1")){
+					int x=0;
+				}
 				ArrayList<ValueEvaluatorParser> caseExpressions=svar.caseExpressionParsers;
 				ValueEvaluatorParser caseExpression=caseExpressions.get(i);
 				if (svName.equals("lod_future")){
