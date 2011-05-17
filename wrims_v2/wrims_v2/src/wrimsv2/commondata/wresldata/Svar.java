@@ -41,6 +41,21 @@ public class Svar {
 		fromWresl = Param.undefined;
 		dependants = new HashSet<String>();
 	}
+
+	public Svar(Svar s){
+		scope=s.scope;
+		dssBPart=s.dssBPart;
+		format=s.format;
+		kind=s.kind;
+		units=s.units;
+		convertToUnits =s.convertToUnits;
+		caseName       = new ArrayList<String>(s.caseName);
+		caseCondition  = new ArrayList<String>(s.caseCondition);
+		caseExpression = new ArrayList<String>(s.caseExpression);
+		fromWresl = s.fromWresl;
+		dependants = new HashSet<String>(s.dependants);
+		//data = new IntDouble(s.data.getData(),s.data.isInt()); 
+	}	
 	
 	public String equalEva(){
 		

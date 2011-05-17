@@ -121,6 +121,8 @@ public class TestWreslWalker_sort {
 		
 		ArrayList<String> e = new ArrayList<String>();
 		e.add("z_1"); e.add("b_2"); e.add("a_3");e.add("b_3");e.add("c_3");e.add("sum_3"); e.add("a_4"); e.add("error_1"); e.add("error_2");
+		
+		System.out.println(sd.getModelDataSetMap().get(modelName).svList);
 		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).svList, e);
 		
 		Set<String> es = new HashSet<String>();

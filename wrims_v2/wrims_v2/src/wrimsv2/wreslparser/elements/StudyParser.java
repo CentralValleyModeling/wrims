@@ -207,32 +207,24 @@ public class StudyParser{
       
      
      
-      // option 1 : remove redefined
-      SimulationDataSet cumulative_global_remove_redefined = new SimulationDataSet(td.cumulative_global_complete);
-      cumulative_global_remove_redefined.remove_set(redefined_globals);
-      cumulative_global_remove_redefined.remove_set(redefined_globals_as_locals); 
+//      // option 1 : remove redefined
+//      SimulationDataSet cumulative_global_remove_redefined = new SimulationDataSet(td.cumulative_global_complete);
+//      cumulative_global_remove_redefined.remove_set(redefined_globals);
+//      cumulative_global_remove_redefined.remove_set(redefined_globals_as_locals); 
       
       
       // option 2 : replace redefined
       SimulationDataSet cumulative_global_replace_redefined = new SimulationDataSet(td.cumulative_global_complete);
       
 
-		
+	 // comment out. redefining globals is not allowed	
      // cumulative_global_replace_redefined.replaceGlobalWithDuplicateGlobal(redefined_globals,model_dataset );
 
 
       
       cumulative_global_replace_redefined.replaceGlobalWithDuplicateLocal(redefined_globals_as_locals,model_dataset); 
 
-//      LogUtils.warningMsg(" ===    cumulative_global_replace_redefined.svSet    :  "+cumulative_global_replace_redefined.svSet);
-//      LogUtils.warningMsg(" ===    cumulative_global_replace_redefined.svSet_global    :  "+cumulative_global_replace_redefined.svSet_global);
-//      LogUtils.warningMsg(" ===    cumulative_global_replace_redefined.svMap.keySet()    :  "+cumulative_global_replace_redefined.svMap.keySet());
-//      LogUtils.warningMsg(" ===    cumulative_global_replace_redefined.svMap.values()    :  "+cumulative_global_replace_redefined.svMap.values());  
-//      
-//      LogUtils.warningMsg(" ===    model_dataset.svSet    :  "+model_dataset.svSet);
-//      LogUtils.warningMsg(" ===    model_dataset.svSet_global    :  "+model_dataset.svSet_global);
-//      LogUtils.warningMsg(" ===    model_dataset.svMap.keySet()    :  "+model_dataset.svMap.keySet());
-//      LogUtils.warningMsg(" ===    model_dataset.svMap.values()    :  "+model_dataset.svMap.values());      
+    
       
       model_dataset.overwrite_set(cumulative_global_replace_redefined);
 
@@ -240,19 +232,23 @@ public class StudyParser{
       /// finish adding globals
   
      
-      lousyConvert(model_dataset);
-		
-
+      model_dataset.lousyConvert();
+		      
       
+      // check if dependency is unknown TODO: sorted list will not have the same sequence as user's define in wresl 
       sortDependency(model_dataset, rewrite_list_based_on_dependency);  
 
+      //      // check if vars are used before being defined
+      checkUsedBeforeDefined(new SimulationDataSet(model_dataset));
+      
+      
       model_dataset_map.put(modelName, model_dataset);
 		
       td.cumulative_global_adhocs.overwrittenWith_set(sc.modelDataMap.get(modelName).getGlobalVars_set());
       td.cumulative_global_complete.overwrittenWith_set(model_dataset.getGlobalVars_set());
       
-      lousyConvert(td.cumulative_global_adhocs);
-      lousyConvert(td.cumulative_global_complete);
+      td.cumulative_global_adhocs.lousyConvert();
+      td.cumulative_global_complete.lousyConvert();
     }
 
 
@@ -260,7 +256,35 @@ public class StudyParser{
     
   }
 
-  public static Map<String, SimulationDataSet> getNewDataSet(Set<String> adhoc_incFileSet, Set<String> fileDataMap_wholeStudy_keySet) throws RecognitionException, IOException
+  private static void checkUsedBeforeDefined(SimulationDataSet ds) {
+	
+	  Set<String> dep;
+	  
+	  for (int i=0; i< ds.svList.size(); i++ ){
+		  
+		  String svName = ds.svList.get(i);
+		 // TODO: serious bug. Map object is not reinitialized
+		 //dep = new HashSet<String>(ds.svMap.get(svName).dependants);
+		 dep = ds.svMap.get(svName).dependants; // this will cause problem in shallow copy
+		  dep.removeAll(ds.tsSet);		  
+		  
+		  dep.removeAll(ds.svList.subList(0, i));
+		  
+		  if (dep.size()>0){
+			  
+			  LogUtils.warningMsg("Variables used before definition: "+dep  );
+			  
+		  }
+		 
+		
+		
+	  }
+	  
+	
+	
+  }
+
+public static Map<String, SimulationDataSet> getNewDataSet(Set<String> adhoc_incFileSet, Set<String> fileDataMap_wholeStudy_keySet) throws RecognitionException, IOException
   {
     Map<String, SimulationDataSet> fileDataMap_new = new HashMap<String, SimulationDataSet>();
 
@@ -342,6 +366,7 @@ public class StudyParser{
     if (rewrite_list_based_on_dependency) {
       model_dataset.svList = sortedSvList;
       model_dataset.svList.addAll(model_dataset.svSet_unknown);
+      model_dataset.svSet = new LinkedHashSet<String>(model_dataset.svList);
     }
 
     Sort sortAs = new Sort(model_dataset.asMap, model_dataset.svSet, model_dataset.dvSet, model_dataset.tsSet);
@@ -356,48 +381,10 @@ public class StudyParser{
     if (rewrite_list_based_on_dependency) {
       model_dataset.asList = sortedAsList;
       model_dataset.asList.addAll(model_dataset.asSet_unknown);
+      model_dataset.asSet = new LinkedHashSet<String>(model_dataset.asList);
     }
 
     return OK;
-  }
-
-  public static void lousyConvert(SimulationDataSet q)
-  {
-    q.asList = new ArrayList<String>(q.asSet);
-		q.asList_global = new ArrayList<String>(q.asSet_global);
-		q.asList_local = new ArrayList<String>(q.asSet_local);
-
-		q.wtList = new ArrayList<String>(q.wtSet);
-		q.wtList_global = new ArrayList<String>(q.wtSet_global);
-		q.wtList_local = new ArrayList<String>(q.wtSet_local);
-
-		q.svList = new ArrayList<String>(q.svSet);
-		q.svList_global = new ArrayList<String>(q.svSet_global);
-		q.svList_local = new ArrayList<String>(q.svSet_local);
-
-		q.dvList = new ArrayList<String>(q.dvSet);
-		q.dvList_global = new ArrayList<String>(q.dvSet_global);
-		q.dvList_local = new ArrayList<String>(q.dvSet_local);
-
-		q.tsList = new ArrayList<String>(q.tsSet);
-		q.tsList_global = new ArrayList<String>(q.tsSet_global);
-		q.tsList_local = new ArrayList<String>(q.tsSet_local);
-
-		q.exList = new ArrayList<String>(q.exSet);
-		q.exList_global = new ArrayList<String>(q.exSet_global);
-		q.exList_local = new ArrayList<String>(q.exSet_local);
-
-		q.gList = new ArrayList<String>(q.gSet);
-		q.gList_global = new ArrayList<String>(q.gSet_global);
-		q.gList_local = new ArrayList<String>(q.gSet_local);
-		
-		q.incFileList = new ArrayList<String>(q.incFileSet);
-		q.incFileList_global = new ArrayList<String>(q.incFileSet_global);
-		q.incFileList_local = new ArrayList<String>(q.incFileSet_local);
-
-    q.incFileList = new ArrayList<String>(q.incFileSet);
-    q.incFileList_global = new ArrayList<String>(q.incFileSet_global);
-    q.incFileList_local = new ArrayList<String>(q.incFileSet_local);
   }
 
   public static ArrayList<String> getOrderedList(Map<String, SimulationDataSet> fileDataMap_thisModel, SimulationDataSet adhoc)

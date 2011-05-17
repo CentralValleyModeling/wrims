@@ -110,10 +110,11 @@ public class SimulationDataSet
 	  
   }
 
+  /// warning: this is partial copy
   public SimulationDataSet(SimulationDataSet s)
   {
     this.overwrittenWith_set(s);
-	  //add(s);
+
   }
 
   public SimulationDataSet overwrittenWith(SimulationDataSet s)
@@ -994,7 +995,14 @@ public SimulationDataSet overwrittenWith_set(SimulationDataSet s) {
 	this.svSet.addAll(s.svSet);
     this.svSet_global.addAll(s.svSet_global);
     this.svSet_local.addAll(s.svSet_local);
-    this.svMap.putAll(s.svMap);
+    
+    /// experiment with deep copy
+    Map<String, Svar> t = new HashMap<String, Svar>();
+    for (Map.Entry<String, Svar> e : s.svMap.entrySet()){
+    	t.put(e.getKey(), new Svar(e.getValue()));
+    }
+    
+    this.svMap.putAll(t);
 
     this.tsSet.addAll(s.tsSet);
     this.tsSet_global.addAll(s.tsSet_global);
@@ -1026,6 +1034,44 @@ public SimulationDataSet overwrittenWith_set(SimulationDataSet s) {
     this.incFileSet_local.addAll(s.incFileSet_local);
     this.incFileMap.putAll(s.incFileMap);
 
+    this.lousyConvert();
+    
     return this;
   }
+
+public void lousyConvert() {
+
+	this.asList = new ArrayList<String>(this.asSet);
+	this.asList_global = new ArrayList<String>(this.asSet_global);
+	this.asList_local = new ArrayList<String>(this.asSet_local);
+
+	this.wtList = new ArrayList<String>(this.wtSet);
+	this.wtList_global = new ArrayList<String>(this.wtSet_global);
+	this.wtList_local = new ArrayList<String>(this.wtSet_local);
+
+	this.svList = new ArrayList<String>(this.svSet);
+	this.svList_global = new ArrayList<String>(this.svSet_global);
+	this.svList_local = new ArrayList<String>(this.svSet_local);
+
+	this.dvList = new ArrayList<String>(this.dvSet);
+	this.dvList_global = new ArrayList<String>(this.dvSet_global);
+	this.dvList_local = new ArrayList<String>(this.dvSet_local);
+
+	this.tsList = new ArrayList<String>(this.tsSet);
+	this.tsList_global = new ArrayList<String>(this.tsSet_global);
+	this.tsList_local = new ArrayList<String>(this.tsSet_local);
+
+	this.exList = new ArrayList<String>(this.exSet);
+	this.exList_global = new ArrayList<String>(this.exSet_global);
+	this.exList_local = new ArrayList<String>(this.exSet_local);
+
+	this.gList = new ArrayList<String>(this.gSet);
+	this.gList_global = new ArrayList<String>(this.gSet_global);
+	this.gList_local = new ArrayList<String>(this.gSet_local);
+
+	this.incFileList = new ArrayList<String>(this.incFileSet);
+	this.incFileList_global = new ArrayList<String>(this.incFileSet_global);
+	this.incFileList_local = new ArrayList<String>(this.incFileSet_local);
+
+}
 }
