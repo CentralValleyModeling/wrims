@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -265,8 +264,8 @@ public class StudyParser{
 		  
 		  String svName = ds.svList.get(i);
 		 // TODO: serious bug. Map object is not reinitialized
-		 dep = new HashSet<String>(ds.svMap.get(svName).dependants);
-		 //dep = ds.svMap.get(svName).dependants;
+		 //dep = new HashSet<String>(ds.svMap.get(svName).dependants);
+		 dep = ds.svMap.get(svName).dependants; // this will cause problem in shallow copy
 		  dep.removeAll(ds.tsSet);		  
 		  
 		  dep.removeAll(ds.svList.subList(0, i));

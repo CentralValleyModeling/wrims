@@ -181,7 +181,7 @@ public class TestWreslWalker_scope {
 	
 		LogUtils.closeLogFile();
 		
-		String modelName2 = sd.getModelList().get(1);
+		//String modelName2 = sd.getModelList().get(1);
 		
 		WriteCSV.study(sd,csvFolderPath ) ;
 		
@@ -192,15 +192,10 @@ public class TestWreslWalker_scope {
 		
 		int n;
 		String s;
-		s ="# Error: Global variables redefined: [sv1]";
+		s ="Variables used before definition: [sv1]";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(logText, s );
-		Assert.assertEquals(n, 1);	
-		
-		ArrayList<String> e = new ArrayList<String>();
-		e.add("sv1"); e.add("sv2");
-		
-		Assert.assertEquals(sd.getModelDataSetMap().get(modelName2).svList, e);	
+		Assert.assertEquals(n, 2);	
 	
 	}
 
