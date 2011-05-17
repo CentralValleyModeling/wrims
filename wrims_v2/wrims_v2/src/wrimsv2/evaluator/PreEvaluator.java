@@ -58,7 +58,7 @@ public class PreEvaluator {
 	
 	public void preEvaluateWeight(){
 		for (String wtName: wtList){
-			System.out.println("PreEvaluate weight "+wtName);
+			//System.out.println("PreEvaluate weight "+wtName);
 			WeightElement weight=wtMap.get(wtName);
 			
 			String evalString="v: "+weight.weight;
@@ -71,7 +71,7 @@ public class PreEvaluator {
 	
 	public void preEvaluateAlias(){
 		for (String asName: asList){
-			System.out.println("PreEvaluate alias "+asName);
+			//System.out.println("PreEvaluate alias "+asName);
 			Alias alias=asMap.get(asName);
 			
 			String evalString="v: "+alias.expression;
@@ -84,7 +84,7 @@ public class PreEvaluator {
 	
 	public void preEvaluateDvar(){
 		for (String dvName: dvList){
-			System.out.println("PreEvaluate dvar "+dvName);
+			//System.out.println("PreEvaluate dvar "+dvName);
 			Dvar dvar=dvMap.get(dvName);
 			
 			String evalString="v: "+dvar.upperBound;
@@ -103,7 +103,7 @@ public class PreEvaluator {
 
 	public void preEvaluateGoal(){
 		for (String gName: gList){
-			System.out.println("PreEvaluate svar "+gName);
+			//System.out.println("PreEvaluate constraint "+gName);
 			Goal goal=gMap.get(gName);
 			ArrayList<String> caseCondition=goal.caseCondition;
 			int i=-1;
