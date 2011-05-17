@@ -8,9 +8,13 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 
+import wrimsv2.commondata.wresldata.Alias;
+import wrimsv2.commondata.wresldata.Dvar;
+import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
+import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 import wrimsv2.components.IntDouble;
@@ -18,6 +22,14 @@ import wrimsv2.components.IntDouble;
 public class PreEvaluator {
 	private ArrayList<String> svList;
 	private Map<String, Svar> svMap;
+	private ArrayList<String> gList;
+	private Map<String, Goal> gMap;
+	private ArrayList<String> dvList;
+	private Map<String, Dvar> dvMap;
+	private ArrayList<String> asList;
+	private Map<String, Alias> asMap;
+	private ArrayList<String> wtList;
+	private Map<String, WeightElement> wtMap;
 
 	public PreEvaluator(StudyDataSet sds ){
 		ArrayList<String> modelList=sds.getModelList();
@@ -27,13 +39,98 @@ public class PreEvaluator {
 			ModelDataSet mds=modelDataSetMap.get(model);
 			svList=mds.svList;
 			svMap=mds.svMap;
+			gList=mds.gList;
+			gMap=mds.gMap;
+			dvList=mds.dvList;
+			dvMap=mds.dvMap;
+			asList=mds.asList;
+			asMap=mds.asMap;
+			wtList=mds.wtList;
+			wtMap=mds.wtMap;
+			
 			preEvaluateSvar();
+			preEvaluateGoal();
+			preEvaluateDvar();
+			preEvaluateAlias();
+			preEvaluateWeight();
+		}
+	}
+	
+	public void preEvaluateWeight(){
+		for (String wtName: wtList){
+			System.out.println("PreEvaluate weight "+wtName);
+			WeightElement weight=wtMap.get(wtName);
+			
+			String evalString="v: "+weight.weight;
+			ANTLRStringStream stream = new ANTLRStringStream(evalString);
+			ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
+			TokenStream tokenStream = new CommonTokenStream(lexer);
+			weight.weightParser = new ValueEvaluatorParser(tokenStream);
+		}
+	}
+	
+	public void preEvaluateAlias(){
+		for (String asName: asList){
+			System.out.println("PreEvaluate alias "+asName);
+			Alias alias=asMap.get(asName);
+			
+			String evalString="v: "+alias.expression;
+			ANTLRStringStream stream = new ANTLRStringStream(evalString);
+			ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
+			TokenStream tokenStream = new CommonTokenStream(lexer);
+			alias.expressionParser = new ValueEvaluatorParser(tokenStream);
+		}
+	}
+	
+	public void preEvaluateDvar(){
+		for (String dvName: dvList){
+			System.out.println("PreEvaluate dvar "+dvName);
+			Dvar dvar=dvMap.get(dvName);
+			
+			String evalString="v: "+dvar.upperBound;
+			ANTLRStringStream stream = new ANTLRStringStream(evalString);
+			ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
+			TokenStream tokenStream = new CommonTokenStream(lexer);
+			dvar.upperBoundParser = new ValueEvaluatorParser(tokenStream);
+			
+			evalString="v: "+dvar.lowerBound;
+			stream = new ANTLRStringStream(evalString);
+			lexer = new ValueEvaluatorLexer(stream);
+			tokenStream = new CommonTokenStream(lexer);
+			dvar.lowerBoundParser = new ValueEvaluatorParser(tokenStream);
 		}
 	}
 
+	public void preEvaluateGoal(){
+		for (String gName: gList){
+			System.out.println("PreEvaluate svar "+gName);
+			Goal goal=gMap.get(gName);
+			ArrayList<String> caseCondition=goal.caseCondition;
+			int i=-1;
+			goal.caseConditionParsers=new ArrayList<ValueEvaluatorParser>();
+			goal.caseExpressionParsers=new ArrayList<EvaluatorParser>();
+			while(i<=caseCondition.size()-2){
+				i=i+1;
+				String evalString="c: "+caseCondition.get(i);
+				ANTLRStringStream stream = new ANTLRStringStream(evalString);
+				ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
+				TokenStream tokenStream = new CommonTokenStream(lexer);
+				ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
+				goal.caseConditionParsers.add(evaluator);
+
+				String evalString1="g: "+goal.caseExpression.get(i);
+				ANTLRStringStream stream1 = new ANTLRStringStream(evalString1);
+				EvaluatorLexer lexer1 = new EvaluatorLexer(stream1);
+				TokenStream tokenStream1 = new CommonTokenStream(lexer1);
+				EvaluatorParser evaluator1 = new EvaluatorParser(tokenStream1);
+				goal.caseExpressionParsers.add(evaluator1);
+			}
+		}
+	}
+	
 	public void preEvaluateSvar(){
 		for (String svName: svList){
-			System.out.println("PreEvaluate svar "+svName);
+			//System.out.println("PreEvaluate svar "+svName);
 			Svar svar=svMap.get(svName);
 			ArrayList<String> caseCondition=svar.caseCondition;
 			int i=-1;
@@ -48,12 +145,12 @@ public class PreEvaluator {
 				ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
 				svar.caseConditionParsers.add(evaluator);
 
-				String evalString1="v: "+svar.caseExpression.get(i);
-				ANTLRStringStream stream1 = new ANTLRStringStream(evalString1);
-				ValueEvaluatorLexer lexer1 = new ValueEvaluatorLexer(stream1);
-				TokenStream tokenStream1 = new CommonTokenStream(lexer1);
-				ValueEvaluatorParser evaluator1 = new ValueEvaluatorParser(tokenStream1);
-				svar.caseExpressionParsers.add(evaluator1);
+				evalString="v: "+svar.caseExpression.get(i);
+				stream = new ANTLRStringStream(evalString);
+				lexer = new ValueEvaluatorLexer(stream);
+				tokenStream = new CommonTokenStream(lexer);
+				evaluator = new ValueEvaluatorParser(tokenStream);
+				svar.caseExpressionParsers.add(evaluator);
 			}
 		}
 	}

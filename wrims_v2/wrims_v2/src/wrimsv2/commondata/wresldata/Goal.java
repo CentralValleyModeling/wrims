@@ -2,6 +2,9 @@ package wrimsv2.commondata.wresldata;
 
 import java.util.ArrayList;
 
+import wrimsv2.evaluator.EvaluatorParser;
+import wrimsv2.evaluator.ValueEvaluatorParser;
+
 
 public class Goal {
 	
@@ -9,7 +12,9 @@ public class Goal {
 	public String lhs;
 	public ArrayList<String> caseName;
 	public ArrayList<String> caseCondition;
+	public ArrayList<ValueEvaluatorParser> caseConditionParsers;
 	public ArrayList<String> caseExpression;
+	public ArrayList<EvaluatorParser> caseExpressionParsers;
 //	public ArrayList<String> casePenalty;
 //	public ArrayList<String> case_lhs_gt_rhs;
 //	public ArrayList<String> case_lhs_lt_rhs;

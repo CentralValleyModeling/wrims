@@ -91,8 +91,8 @@ public class Controller {
         cd.startMonth=10;
         cd.startDay=31;
         cd.endYear=1921;
-        cd.endMonth=10;
-        cd.endDay=31;
+        cd.endMonth=11;
+        cd.endDay=30;
         cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
         cd.currYear=ControlData.startYear;
         cd.currMonth=ControlData.startMonth;
@@ -298,12 +298,7 @@ public class Controller {
 			ControlData.currEvalName=wtName;
 			//System.out.println("Process weight "+wtName);
 			WeightElement wt=wtMap.get(wtName);
-			String wtString=wt.weight;
-			String evalString="v: "+wtString;
-			ANTLRStringStream stream = new ANTLRStringStream(evalString);
-			ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
-			TokenStream tokenStream = new CommonTokenStream(lexer);
-			ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
+			ValueEvaluatorParser evaluator=wt.weightParser;
 			try {
 				evaluator.evaluator();
 				wt.setValue(evaluator.evalValue.getData().doubleValue());
@@ -311,6 +306,7 @@ public class Controller {
 				Error.addEvaluationError("weight definition has error");
 				wt.setValue(0.0);
 			}
+			evaluator.reset();
 		}
 	}
 	
@@ -387,11 +383,7 @@ public class Controller {
 			//System.out.println("Process dvar "+dvName);
 			Dvar dvar=dvMap.get(dvName);
 			
-			String evalString="v: "+dvar.lowerBound;
-			ANTLRStringStream stream = new ANTLRStringStream(evalString);
-			ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
-			TokenStream tokenStream = new CommonTokenStream(lexer);
-			ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
+			ValueEvaluatorParser evaluator=dvar.lowerBoundParser;
 			try {
 				evaluator.evaluator();
 				dvar.lowerBoundValue=evaluator.evalValue.getData();
@@ -399,12 +391,9 @@ public class Controller {
 				Error.addEvaluationError("Lowerbound evaluation has error.");
 				dvar.lowerBoundValue=-901.0;
 			}
+			evaluator.reset();
 			
-			evalString="v: "+dvar.upperBound;
-			stream = new ANTLRStringStream(evalString);
-			lexer = new ValueEvaluatorLexer(stream);
-			tokenStream = new CommonTokenStream(lexer);
-			evaluator = new ValueEvaluatorParser(tokenStream);
+			evaluator =dvar.upperBoundParser;
 			try {
 				evaluator.evaluator();
 				dvar.upperBoundValue=evaluator.evalValue.getData();
@@ -412,6 +401,7 @@ public class Controller {
 				Error.addEvaluationError("Lowerbound evaluation has error.");
 				dvar.lowerBoundValue=-901.0;
 			}
+			evaluator.reset();
 		}
 	}
 	
@@ -425,35 +415,31 @@ public class Controller {
 			ControlData.currEvalName=goalName;
 			//System.out.println("Process constraint "+goalName);
 			Goal goal=gMap.get(goalName);
-			ArrayList<String> caseCondition=goal.caseCondition;
+			ArrayList<ValueEvaluatorParser> caseConditions=goal.caseConditionParsers;
 			boolean condition=false;
 			int i=-1;
-			while(!condition && i<=caseCondition.size()-2){
+			while(!condition && i<=caseConditions.size()-2){
 				i=i+1;
-				String evalString="c: "+caseCondition.get(i);
-				ANTLRStringStream stream = new ANTLRStringStream(evalString);
-				ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
-				TokenStream tokenStream = new CommonTokenStream(lexer);
-				ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
+				ValueEvaluatorParser caseCondition=caseConditions.get(i);
 				try{
-					evaluator.evaluator();
-					condition=evaluator.evalCondition;
+					caseCondition.evaluator();
+					condition=caseCondition.evalCondition;
 				}catch (Exception e){
 					Error.addEvaluationError("Case condition evaluation has error.");
 					condition=false;
 				}
+				caseCondition.reset();
 			}
 			if (condition){
-				ANTLRStringStream stream = new ANTLRStringStream("g:"+goal.caseExpression.get(i));
-				EvaluatorLexer lexer = new EvaluatorLexer(stream);
-				TokenStream tokenStream = new CommonTokenStream(lexer);
-				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+				ArrayList<EvaluatorParser> caseExpressions=goal.caseExpressionParsers;
+				EvaluatorParser caseExpression=caseExpressions.get(i);
 				try {
-					evaluator.evaluator();
-					SolverData.getConstraintDataMap().put(goalName,EvaluatorParser.evalConstraint);
+					caseExpression.evaluator();
+					SolverData.getConstraintDataMap().put(goalName,caseExpression.evalConstraint);
 				} catch (RecognitionException e) {
 					Error.addEvaluationError("Case expression evaluation has error.");
 				}	
+				caseExpression.reset();
 			}
 		}
 	}
@@ -491,11 +477,7 @@ public class Controller {
 			//System.out.println("Process alias "+asName);
 			Alias alias=asMap.get(asName);
 			
-			String evalString="v: "+alias.expression;
-			ANTLRStringStream stream = new ANTLRStringStream(evalString);
-			ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
-			TokenStream tokenStream = new CommonTokenStream(lexer);
-			ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
+			ValueEvaluatorParser evaluator = alias.expressionParser;
 			try {
 				evaluator.evaluator();
 				IntDouble id=evaluator.evalValue;
@@ -516,6 +498,7 @@ public class Controller {
 				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
 				dataList[ControlData.currTimeStep]=-901.0;
 			}
+			evaluator.reset();
 		}
 	}
 	

@@ -1,6 +1,9 @@
 package wrimsv2.commondata.wresldata;
 
+import java.util.ArrayList;
+
 import wrimsv2.components.IntDouble;
+import wrimsv2.evaluator.ValueEvaluatorParser;
 
 
 public class Dvar {
@@ -11,7 +14,9 @@ public class Dvar {
 	public String kind;
 	public String units;
 	public String lowerBound;
+	public ValueEvaluatorParser lowerBoundParser;
 	public String upperBound;
+	public ValueEvaluatorParser upperBoundParser;
 	public String fromWresl;
 	public IntDouble data;
 	public Number upperBoundValue;

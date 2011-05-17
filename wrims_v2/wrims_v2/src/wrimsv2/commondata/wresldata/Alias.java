@@ -1,9 +1,11 @@
 package wrimsv2.commondata.wresldata;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import wrimsv2.components.IntDouble;
+import wrimsv2.evaluator.ValueEvaluatorParser;
 
 
 public class Alias {
@@ -12,6 +14,7 @@ public class Alias {
 	public String kind;
 	public String units;
 	public String expression;
+	public ValueEvaluatorParser expressionParser;
 	public String fromWresl;
 	public IntDouble data;
 	public Set<String> dependants;

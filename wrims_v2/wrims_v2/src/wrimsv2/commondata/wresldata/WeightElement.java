@@ -1,11 +1,16 @@
 package wrimsv2.commondata.wresldata;
 
+import java.util.ArrayList;
+
+import wrimsv2.evaluator.ValueEvaluatorParser;
+
 
 public class WeightElement {
 	
 
 
 	public String weight;
+	public ValueEvaluatorParser weightParser;
 	public String fromWresl;
 	private double value;
 	
