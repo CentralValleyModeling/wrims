@@ -1,38 +1,6 @@
-package Orovl 
-
-float I_Orovl = timeseries ( kind='FLOW-INFLOW' units='CFS' ) 
-
-
-network {
-
-	unknown  out_1
-
-	I_Orovl -> S_Orovl -> C_Orovl -> out_1 
-               S_Orovl -> D_Orovl 			  
-
-}
-
-
-channel C_Orovl ( ) {
-
-	upstream ;
-	downstream ;
-	
-	
-
-
-} 
-
-
-channel C_Orovl ( ) {
-
-
-
-} 
-
+package reservoir_table
 
 #LAKE OROVILLE
-# [ ] is used for array
 reservoir S_Orovl { 
 	
 	unknown float evaporation_rate 
@@ -43,7 +11,6 @@ reservoir S_Orovl {
 	
 	loss E_Orovl = evaporation ( area  evaporation_rate )  #timeseries ( kind='EVAPORATION-RATE' units='IN' 
 		
-	}
 	
 	parameter gis {
 	
@@ -74,6 +41,8 @@ reservoir S_Orovl {
 		return a * evap_rate 
 	
 	}
-			
+		
+
+		
 }
 
