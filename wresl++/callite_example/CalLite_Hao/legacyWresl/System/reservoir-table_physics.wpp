@@ -1,21 +1,49 @@
-package calsim3.delta.north
+system Orovl 
+
+float I_Orovl;
 
 
+network {
+
+	I_Orovl -> S_Orovl -> C_Orovl -> ? ;
+	           S_Orovl -> D_Orovl ;			  
+
+}
+
+
+channel C_Orovl ( ) {
+
+	upstream ;
+	downstream ;
+	
+	
+
+
+} 
+
+
+channel C_Orovl ( ) {
+
+
+
+} 
 
 
 #LAKE OROVILLE
 # [ ] is used for array
-
 reservoir S_Orovl ( ) { 
 	
+	link out_1;
+	link in_1;
 	
-	inflow in;     # I_Orovl = timeseries ( kind='FLOW-INFLOW' units='CFS' ); 
-	 
-	outflow out;   
 	
-	float evaporation_rate;
+	# I_Orovl = timeseries ( kind='FLOW-INFLOW' units='CFS' );  
 	
-	loss E_Orovl = area * evaporation_rate; #timeseries ( kind='EVAPORATION-RATE' units='IN' );
+	var evaporation_rate;
+	
+	loss  E_Orovl = area * evaporation_rate; #timeseries ( kind='EVAPORATION-RATE' units='IN' );
+	
+	
 	
 	rating {
 
