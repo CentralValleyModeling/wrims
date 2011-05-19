@@ -200,7 +200,6 @@ goal_case
 
 goal_contents returns[String str] : c1=goal_content c2=goal_content? 
 		{ 
-		  
 		
 		  if (c2!=null) {
 		   
@@ -233,7 +232,7 @@ goal_contents returns[String str] : c1=goal_content c2=goal_content?
 		   			$str = $c1.str ;   
 		   		
 		   		}		  				
-		  }  
+		  } 
 			
 	}
 		;
@@ -249,6 +248,9 @@ goal_content returns[boolean hasDvar, String str, String ss, String weight, Stri
 		    	F.dvarStd($s.text, Param.local, null, $Kind.text, "");  
 		    	F.mergeWeightTable($s.text, $w.text, Param.local);
 		 		$hasDvar = true; $ss = $Sign.text + $s.text; $weight = $w.text; $lhs = $l.text; $rhs = $r.text; 
+		 	} else {
+		 	
+		 	 	$lhs = $l.text; $rhs = $r.text; 
 		 	}
 		 } 
 	;

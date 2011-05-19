@@ -1,0 +1,38 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+	goal withcase {
+	
+	  lhs x
+	
+	case ActionOn {
+		condition  int(B2Action2On)==1
+		rhs        y
+		lhs>rhs    constrain
+		lhs<rhs    constrain }
+}
+
+
+	goal nocase {
+	
+	  lhs x
+
+		rhs        y
+		lhs>rhs    constrain
+		lhs<rhs    constrain 
+	}
+
+
+}
+
+
+	
+
+	 
+
+
+ 
