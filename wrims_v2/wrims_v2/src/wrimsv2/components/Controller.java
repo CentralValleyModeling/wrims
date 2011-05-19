@@ -198,11 +198,20 @@ public class Controller {
 				cal = Calendar.getInstance();
 				System.out.println("    After solving: "+cal.getTimeInMillis());
 				if (Error.error_solving.size()<1){
-					assignDvar();
-					cal = Calendar.getInstance();
-					System.out.println("After assign dvar: "+cal.getTimeInMillis());
-					ControlData.isPostProcessing=true;
-					processAlias();
+					if (i==modelList.size()-1) {
+						assignDvarTimeseries();
+						cal = Calendar.getInstance();
+						System.out.println("After assign dvar: "+cal.getTimeInMillis());
+						ControlData.isPostProcessing=true;
+						processAliasTimeseries();
+					}else{
+						assignDvar();
+						cal = Calendar.getInstance();
+						System.out.println("After assign dvar: "+cal.getTimeInMillis());
+						ControlData.isPostProcessing=true;
+						processAlias();
+					}
+					
 				}else{
 					Error.writeSolvingErrorFile("solving_error.txt");
 					noError=false;
@@ -340,9 +349,6 @@ public class Controller {
 				}
 				ArrayList<ValueEvaluatorParser> caseExpressions=svar.caseExpressionParsers;
 				ValueEvaluatorParser caseExpression=caseExpressions.get(i);
-				if (svName.equals("lod_future")){
-					int x=0;
-				}
 				try {
 					caseExpression.evaluator();
 					svar.setData(caseExpression.evalValue);
@@ -414,6 +420,9 @@ public class Controller {
 		for (String goalName: gList){
 			ControlData.currEvalName=goalName;
 			//System.out.println("Process constraint "+goalName);
+			if (goalName.equals("setb2_2_1")){
+				int x=0;
+			}
 			Goal goal=gMap.get(goalName);
 			ArrayList<ValueEvaluatorParser> caseConditions=goal.caseConditionParsers;
 			boolean condition=false;
@@ -462,12 +471,59 @@ public class Controller {
 				dds.setStartTime(startTime);
 				DataTimeSeries.dvAliasTS.put(dvName,dds);
 			}
+		}
+	}
+	
+	public void assignDvarTimeseries(){
+		Map<String, Dvar> dvarMap = ControlData.currDvMap;
+		Set dvarCollection = dvarMap.keySet();
+		Iterator dvarIterator = dvarCollection.iterator();
+		
+		while(dvarIterator.hasNext()){ 
+			String dvName=(String)dvarIterator.next();
+			Dvar dvar=dvarMap.get(dvName);
+			double value=ControlData.solver.getColumnActivity(dvName);
+			dvar.setData(new IntDouble(value,false));
+			if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){
+				DssDataSetFixLength dds=new DssDataSetFixLength();
+				double[] data=new double[totalTimeStep];
+				dds.setData(data);
+				dds.setTimeStep(ControlData.partE);
+				dds.setStartTime(startTime);
+				DataTimeSeries.dvAliasTS.put(dvName,dds);
+			}
 			double[] dataList=DataTimeSeries.dvAliasTS.get(dvName).getData();
 			dataList[ControlData.currTimeStep]=value;
+			if (dvName.equals("s_orovl")){
+				int x=0;
+			}
 		}
 	}
 	
 	public void processAlias(){
+		ModelDataSet mds=ControlData.currModelDataSet;
+		ArrayList<String> asList = mds.asList;
+		Map<String, Alias> asMap =mds.asMap;
+		ControlData.currEvalTypeIndex=2;
+		for (String asName: asList){
+			ControlData.currEvalName=asName;
+			//System.out.println("Process alias "+asName);
+			Alias alias=asMap.get(asName);
+			
+			ValueEvaluatorParser evaluator = alias.expressionParser;
+			try {
+				evaluator.evaluator();
+				IntDouble id=evaluator.evalValue;
+				alias.data=id;
+			} catch (RecognitionException e) {
+				Error.addEvaluationError("Alias evaluation has error.");
+				alias.data=new IntDouble(-901.0,false);
+			}
+			evaluator.reset();
+		}
+	}
+	
+	public void processAliasTimeseries(){
 		ModelDataSet mds=ControlData.currModelDataSet;
 		ArrayList<String> asList = mds.asList;
 		Map<String, Alias> asMap =mds.asMap;
