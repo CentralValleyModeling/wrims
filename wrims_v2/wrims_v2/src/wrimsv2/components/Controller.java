@@ -90,8 +90,8 @@ public class Controller {
         cd.startYear=1921;
         cd.startMonth=10;
         cd.startDay=31;
-        cd.endYear=2003;
-        cd.endMonth=9;
+        cd.endYear=1921;
+        cd.endMonth=11;
         cd.endDay=30;
         cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
         cd.currYear=ControlData.startYear;
@@ -174,7 +174,7 @@ public class Controller {
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<totalTimeStep && noError){
 			int i=0;
-			while (i<modelList.size() && noError){
+			while (i<modelList.size()  && noError){    
 				String model=modelList.get(i);
 				ModelDataSet mds=modelDataSetMap.get(model);
 				ControlData.currModelDataSet=mds;
@@ -209,7 +209,6 @@ public class Controller {
 				}
 				cal = Calendar.getInstance();
 				System.out.println("      After alias: "+cal.getTimeInMillis());
-				new RCCComparison();
 				i=i+1;
 			}
 			if (ControlData.timeStep.equals("1MON")){
@@ -221,6 +220,7 @@ public class Controller {
 			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
 		ControlData.solver.close();
+		new RCCComparison();
 	}
 	
 	public void prepareSolver(){

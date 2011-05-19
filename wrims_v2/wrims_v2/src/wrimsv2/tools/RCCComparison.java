@@ -21,7 +21,7 @@ import wrimsv2.components.IntDouble;
 import wrimsv2.evaluator.EvalConstraint;
 
 public class RCCComparison {
-	private String cycleName="00";
+	private String cycleName="02";
 	private BufferedWriter out; 
 	private String gName;
 	private ArrayList<Object> gNameArrayList=new ArrayList<Object> ();
@@ -47,10 +47,13 @@ public class RCCComparison {
 			int line=0;
 			while (!isEnd){
 			 	strLine=br.readLine();
-			 	if (strLine==null || strLine.equals("")) isEnd=true;
-			  	if (!isEnd && strLine.startsWith(cycleName) && !strLine.startsWith(cycleName+"Objective")){
-			  		compare(strLine);
-				}
+			 	if (strLine==null || strLine.equals("")) {
+			 		isEnd=true;
+			 	}else{
+			 		if (!isEnd && (strLine.startsWith("00") && !strLine.startsWith("00"+"Objective")) || (strLine.startsWith(cycleName) && !strLine.startsWith(cycleName+"Objective"))){
+			 			compare(strLine);
+			 		}
+			 	}
 			}
 			
 			for (int i=0; i<gNameArrayList.size(); i++){
@@ -73,13 +76,13 @@ public class RCCComparison {
 			gNameArrayList.remove(gName);
 			Map<String, IntDouble> multiplier=ec.getEvalExpression().getMultiplier();
 			String outLine=gName+":";
-			String[] coefVariable=subStrs[1].split("\\|");
+			String[] coefVariable=subStrs[1].replaceAll(" ","").split(";");
 			boolean isDifferent=false;
 			for (int i=0; i<coefVariable.length-1; i++){
-				String[] multiStrs=coefVariable[i].split(";");
+				String[] multiStrs=coefVariable[i].split("\\|");
 				if (multiplier.containsKey(multiStrs[0])){
 					double coef=multiplier.get(multiStrs[0]).getData().doubleValue();
-					if (coef!=Double.parseDouble(multiStrs[1])){
+					if (Math.abs(coef-Double.parseDouble(multiStrs[1]))>0.1){
 						isDifferent=true;
 						outLine=outLine+"("+multiStrs[1]+"|"+coef+")*"+multiStrs[0]+";";
 					}
@@ -91,7 +94,7 @@ public class RCCComparison {
 				outLine=outLine+"("+signValue[0]+"|"+ec.getSign()+")";
 			}
 			double value=-ec.getEvalExpression().getValue().getData().doubleValue();
-			if (Double.parseDouble(signValue[1])!=value){
+			if (Math.abs(Double.parseDouble(signValue[1]))-value >0.1){
 				isDifferent=true;
 				outLine=outLine+"("+signValue[1]+"|"+value+")";
 			}
