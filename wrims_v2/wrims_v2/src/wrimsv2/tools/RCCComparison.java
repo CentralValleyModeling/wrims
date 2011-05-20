@@ -15,26 +15,38 @@ import java.util.Set;
 
 import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.Goal;
+import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
 import wrimsv2.components.IntDouble;
 import wrimsv2.evaluator.EvalConstraint;
 
 public class RCCComparison {
-	private String cycleName="02";
-	private BufferedWriter out; 
+	private String cycleName="01";
+	private BufferedWriter out;
+	private BufferedWriter out1;
 	private String gName;
 	private ArrayList<Object> gNameArrayList=new ArrayList<Object> ();
+	private ArrayList<Object> wNameArrayList=new ArrayList<Object> ();
+	private Map<String, WeightElement> weightMap;
 	
 	public RCCComparison() {
 		Map<String, EvalConstraint> constraintMap=SolverData.getConstraintDataMap();
 		Object[] gNameArray=constraintMap.keySet().toArray();
 		Collections.addAll(gNameArrayList, gNameArray); 
 		
+		weightMap=SolverData.getWeightMap();
+		Object[] wNameArray=weightMap.keySet().toArray();
+		Collections.addAll(wNameArrayList, wNameArray);
+		
 		try{
-			String outPath=FilePaths.mainDirectory+"comparercc.txt";
+			String outPath=FilePaths.mainDirectory+"comparegoal.txt";
 			FileWriter outstream = new FileWriter(outPath);
 			out = new BufferedWriter(outstream);
+			
+			String outPath1=FilePaths.mainDirectory+"compareobject.txt";
+			FileWriter outstream1 = new FileWriter(outPath1);
+			out1 = new BufferedWriter(outstream1);
 
 			String filePath=FilePaths.mainDirectory+"rcc_reformatted.txt";
 		
@@ -50,8 +62,13 @@ public class RCCComparison {
 			 	if (strLine==null || strLine.equals("")) {
 			 		isEnd=true;
 			 	}else{
-			 		if (!isEnd && (strLine.startsWith("00") && !strLine.startsWith("00"+"Objective")) || (strLine.startsWith(cycleName) && !strLine.startsWith(cycleName+"Objective"))){
-			 			compare(strLine);
+			 		if (strLine.startsWith("00") || strLine.startsWith(cycleName)){
+			 			if (strLine.startsWith("00"+"Objective") || strLine.startsWith(cycleName+"Objective")){
+			 				compareObject(strLine);
+			 			}
+			 			else{
+			 				compareConstraint(strLine);
+			 			}
 			 		}
 			 	}
 			}
@@ -60,13 +77,40 @@ public class RCCComparison {
 				out.write(gNameArrayList.get(i)+" is not in WRIMS1.\n");
 			}
 			out.close();
+			
+			for (int i=0; i<wNameArrayList.size(); i++){
+				out1.write(wNameArrayList.get(i)+" is not in WRIMS1.\n");
+			}
+			out1.close();
 		}catch (Exception e){
 			e.printStackTrace();
 			System.out.println(gName);
 		}
 	}
 	
-	public void compare(String strLine) throws IOException{
+	public void compareObject(String strLine) throws IOException{
+		String outLine="Object:";
+		boolean isDifferent =false;
+		strLine=strLine.substring(2, strLine.length()).toLowerCase();
+		String[] subStrs=strLine.split(":");
+		String[] weightVariable=subStrs[1].replaceAll(" ","").split(";");
+		for (int i=1; i<weightVariable.length; i++){
+			String[] multiStrs=weightVariable[i].split("\\|");
+			if (weightMap.containsKey(multiStrs[0])){
+				wNameArrayList.remove(multiStrs[0]);
+				double coef=weightMap.get(multiStrs[0]).getValue();
+				if (Math.abs(coef-Double.parseDouble(multiStrs[1]))>0.1){
+					isDifferent=true;
+					outLine=outLine+"("+multiStrs[1]+"|"+coef+")*"+multiStrs[0]+";";
+				}
+			}else{
+				out1.write(multiStrs[0]+" is not in WRIMS v2.\n");
+			}
+		}
+		if (isDifferent) out1.write(outLine+"\n");
+	}
+	
+	public void compareConstraint(String strLine) throws IOException{
 		strLine=strLine.substring(2, strLine.length()).toLowerCase();
 		String[] subStrs=strLine.split(":");
 		gName=subStrs[0].substring(0, subStrs[0].lastIndexOf("/"));
@@ -78,7 +122,7 @@ public class RCCComparison {
 			String outLine=gName+":";
 			String[] coefVariable=subStrs[1].replaceAll(" ","").split(";");
 			boolean isDifferent=false;
-			for (int i=0; i<coefVariable.length-1; i++){
+			for (int i=0; i<coefVariable.length; i++){
 				String[] multiStrs=coefVariable[i].split("\\|");
 				if (multiplier.containsKey(multiStrs[0])){
 					double coef=multiplier.get(multiStrs[0]).getData().doubleValue();

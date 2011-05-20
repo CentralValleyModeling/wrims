@@ -31,9 +31,9 @@ public class Solver {
 	int modelStatus;
 	
 	public Solver(){
-		prepareConstraint();
-		prepareDVar();
-		prepareWeight();
+		setConstraints();
+		setDVars();
+		setWeights();
 		
 		ControlData.solver.solve();
 		
@@ -54,7 +54,7 @@ public class Solver {
 		}
 	}
 	
-	public void prepareDVar(){
+	public void setDVars(){
 		Map<String, Dvar> DvarMap = SolverData.getDvarMap();
 		Set DvarCollection = DvarMap.keySet();
 		Iterator dvarIterator=DvarCollection.iterator();
@@ -73,7 +73,7 @@ public class Solver {
 		}
 	}
 
-	public void prepareWeight(){
+	public void setWeights(){
 		Map<String, WeightElement> weightMap = SolverData.getWeightMap();
 		Set weightCollection = weightMap.keySet();
 		Iterator weightIterator = weightCollection.iterator();
@@ -84,7 +84,7 @@ public class Solver {
 		}
 	}
 	
-	private void prepareConstraint() {
+	private void setConstraints() {
 		Map<String, EvalConstraint> constraintMap = SolverData.getConstraintDataMap();
 		Set constraintCollection = constraintMap.keySet();
 		Iterator constraintIterator = constraintCollection.iterator();

@@ -91,8 +91,8 @@ public class Controller {
         cd.startMonth=10;
         cd.startDay=31;
         cd.endYear=1921;
-        cd.endMonth=11;
-        cd.endDay=30;
+        cd.endMonth=10;
+        cd.endDay=31;
         cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
         cd.currYear=ControlData.startYear;
         cd.currMonth=ControlData.startMonth;
@@ -174,7 +174,7 @@ public class Controller {
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<totalTimeStep && noError){
 			int i=0;
-			while (i<modelList.size()  && noError){    
+			while (i<1 && noError){  //modelList.size()
 				String model=modelList.get(i);
 				ModelDataSet mds=modelDataSetMap.get(model);
 				ControlData.currModelDataSet=mds;
@@ -344,9 +344,6 @@ public class Controller {
 				caseCondition.reset();
 			}
 			if (condition){
-				if (svName.equals("trinity_import1")){
-					int x=0;
-				}
 				ArrayList<ValueEvaluatorParser> caseExpressions=svar.caseExpressionParsers;
 				ValueEvaluatorParser caseExpression=caseExpressions.get(i);
 				try {
@@ -420,9 +417,6 @@ public class Controller {
 		for (String goalName: gList){
 			ControlData.currEvalName=goalName;
 			//System.out.println("Process constraint "+goalName);
-			if (goalName.equals("setb2_2_1")){
-				int x=0;
-			}
 			Goal goal=gMap.get(goalName);
 			ArrayList<ValueEvaluatorParser> caseConditions=goal.caseConditionParsers;
 			boolean condition=false;
