@@ -119,18 +119,27 @@ public class RCCComparison {
 			EvalConstraint ec=constraintMap.get(gName);
 			gNameArrayList.remove(gName);
 			Map<String, IntDouble> multiplier=ec.getEvalExpression().getMultiplier();
+			Object[] multiplierArray=multiplier.keySet().toArray();
+			ArrayList<Object> multiplierArrayList=new ArrayList<Object> ();
+			Collections.addAll(multiplierArrayList, multiplierArray);
 			String outLine=gName+":";
 			String[] coefVariable=subStrs[1].replaceAll(" ","").split(";");
 			boolean isDifferent=false;
 			for (int i=0; i<coefVariable.length; i++){
 				String[] multiStrs=coefVariable[i].split("\\|");
 				if (multiplier.containsKey(multiStrs[0])){
+					multiplierArrayList.remove(multiStrs[0]);
 					double coef=multiplier.get(multiStrs[0]).getData().doubleValue();
 					if (Math.abs(coef-Double.parseDouble(multiStrs[1]))>0.1){
 						isDifferent=true;
 						outLine=outLine+"("+multiStrs[1]+"|"+coef+")*"+multiStrs[0]+";";
 					}
+				}else{
+					outLine=outLine+"("+multiStrs[1]+"|no)*"+multiStrs[0]+";";
 				}
+			}
+			for (int i=0; i<multiplierArrayList.size(); i++){
+				outLine=outLine+"(no|"+multiplier.get(multiplierArrayList.get(i)).getData()+")"+multiplierArrayList.get(i)+";";
 			}
 			String[] signValue=subStrs[subStrs.length-1].split(";");
 			if (!signValue[0].replaceAll(" ", "").equals(ec.getSign())){
