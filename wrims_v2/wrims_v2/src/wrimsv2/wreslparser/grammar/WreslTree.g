@@ -202,17 +202,31 @@ lhs_gt_rhs[String l, String r]
 	: 
 LHS '>' RHS 
 	( ( CONSTRAIN -> Lhs[$l] Op["<"] Rhs[$r]  )
-	| ( p=penalty -> Lhs[$l] Op["="] Rhs[$r] Sign["-"] Kind["surplus"] Slack_Surplus["surplus_"+$goal::goalName+"_"+$goal::caseName] Weight["-"+$p.w] )
+	| ( p=penalty 
+		-> {$p.isZero}? 
+		-> 	  		    Lhs[$l] Op["="] Rhs[$r] Sign["-"] Kind["surplus"] Slack_Surplus["surplus_"+$goal::goalName+"_"+$goal::caseName] Weight["-"+$p.w]   )
 	);
 
 lhs_lt_rhs[String l, String r] 
 	: 
 LHS '<' RHS 
 	( ( CONSTRAIN -> Lhs[$l] Op[">"] Rhs[$r] )
-	| ( p=penalty -> Lhs[$l] Op["="] Rhs[$r] Sign["+"] Kind["slack"] Slack_Surplus["slack_"+$goal::goalName+"_"+$goal::caseName]  Weight["-"+$p.w] )
+	| ( p=penalty 
+		-> {$p.isZero}? 
+		-> Lhs[$l] Op["="] Rhs[$r] Sign["+"] Kind["slack"] Slack_Surplus["slack_"+$goal::goalName+"_"+$goal::caseName]  Weight["-"+$p.w] )
 	);
 
-penalty returns[String w]: PENALTY n=expression {$w=$n.text;} ;
+penalty returns[String w, boolean isZero]
+	: PENALTY n=expression 
+		{	$w=$n.text; 
+			$isZero = false;
+			
+			try { 
+				double p = Double.parseDouble($w); 
+				if ( p == 0 ) $isZero = true;
+			}
+			catch (Exception e) { }
+		} ;
 
 svar : DEFINE! (svar_dss | svar_expr | svar_sum | svar_table | svar_case ) ;
 		
