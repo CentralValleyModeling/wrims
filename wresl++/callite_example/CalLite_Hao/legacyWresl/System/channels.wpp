@@ -1,0 +1,27 @@
+package channels
+
+channel Orovl ( ) {
+
+	parameter node {
+	
+		<- downstream_node 
+		-> upstream_node 	
+	}	
+
+	parameter metrics {
+	
+		upperbound = 12913*taf_cfs
+		lowerbound = 0
+	}
+	
+	parameter geometry {
+	
+		this.length = 
+		upstream_node.coordinate   = [ ]
+		downstream_node.coordinate = [ ]
+	}
+} 
+
+
+
+
