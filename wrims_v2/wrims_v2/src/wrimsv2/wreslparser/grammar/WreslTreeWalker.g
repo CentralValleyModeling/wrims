@@ -198,63 +198,112 @@ goal_case
 		} 
 ;
 
-goal_contents returns[String str] : c1=goal_content c2=goal_content? 
+goal_contents returns[String str] 
+		: ( g=goal_contents_process_2 |g=goal_contents_process_1 | g=goal_content_simple )
+			
+			{$str = $g.str;}
+		;
+
+goal_contents_process_1 returns[String str] : t=One c1=goal_content 
 		{ 
-		
-		  if (c2!=null) {
-		   
-		  		if ( $c1.hasDvar && $c2.hasDvar ) { 
-		  				
-		  			$str = $c1.lhs + $c1.ss + $c2.ss + "=" + $c1.rhs ;
-		  			 
-		  		} else if  ( $c1.hasDvar) {
-		  		
-		  			$str = $c1.lhs + $c1.ss + "=" + $c1.rhs ; 
-		  		
-		  		} else if ( $c2.hasDvar) {
-		  		
-		  			$str = $c2.lhs + $c2.ss + "=" + $c2.rhs; 
-		  			
-		  		} else {  
-		  		
-		  			$str = $c1.lhs+"="+$c1.rhs ;
-		  			
-		  		}
+				// c -> =
+				// f -> f
+				// p -> =
 		  
-		  } else { 
-		  
-		  		if ( $c1.hasDvar ) { 
+		  		if ( $t.text.equals("c") ) { 
 		  		
-		   			$str = $c1.lhs + $c1.ss + "=" + $c1.rhs ; 
+		   			$str = $c1.lhs + "=" + $c1.rhs ; 
+		  		
+		  		} else if ( $t.text.equals("f") ) { 
+		  		
+		   			$str = $c1.str ;  
 		   			
 		   		} else {  
 		   		
-		   			$str = $c1.str ;   
+		   			$str = $c1.lhs + $c1.ss + "=" + $c1.rhs ;  
 		   		
 		   		}		  				
-		  } 
 			
 	}
 		;
 
-goal_content returns[boolean hasDvar, String str, String ss, String weight, String lhs, String rhs]
-@init{$hasDvar=false; String kind=null;}
+goal_contents_process_2 returns[String str] : t=Two c1=goal_content c2=goal_content
+		{ 
+		      // p: penalty f: free c: constrain
+		      // pp -> =
+		      // pc or cp -> =
+		      // pf or fp  -> f
+		      // fc or cf  -> f (same as c)		      
+		      // cc -> =  (simple string)
+		      // ff -> error
+
+		   
+		  		if ( $t.text.equals("pp") ) { 
+		  				
+		  			$str = $c1.lhs + $c1.ss + $c2.ss + "=" + $c1.rhs ;
+		  			 
+		  		} else if  ( $t.text.equals("pc") ) {
+		  		
+		  			$str = $c1.lhs + $c1.ss + "=" + $c1.rhs ; 
+		  			
+		  		} else if  ( $t.text.equals("cp") ) {
+		  		
+		  			$str = $c2.lhs + $c2.ss + "=" + $c2.rhs; 	
+
+		  		} else if  ( $t.text.equals("pf") ) {
+		  		
+		  			$str = $c1.lhs + $c1.ss + $c2.op + $c1.rhs ; 			
+		  		
+		  		} else if ( $t.text.equals("fp"))  {
+		  		
+		  			$str = $c2.lhs + $c2.ss + $c1.op + $c2.rhs; 
+		  		
+		  		} else if ( $t.text.equals("fc"))  {  
+		  		
+		  			$str = $c1.lhs + $c1.op + $c1.rhs ;
+		  			
+		  		} else if ( $t.text.equals("cf"))  {  
+		  		
+		  			$str = $c1.lhs + $c2.op + $c1.rhs ;
+		  					  		
+		  			
+		  		} else if ( $t.text.equals("cc"))  {  
+		  		
+		  			$str = $c1.lhs+"="+$c1.rhs ;
+		  			
+		  		} else  {  // ff
+		  		
+		  			$str = " 1 > 0 ";  // do something
+		  		}
+		  
+
+			
+	}
+		;
+
+goal_content returns[boolean hasDvar, String str, String ss, String weight, String lhs, String rhs, String type, String op]
+@init{$hasDvar=false; String kind=null; $type="constrain";}
 	: 
-		 l=Lhs o=Op r=Rhs   ( Sign  Kind  s=Slack_Surplus  w=Weight  )?
+		 ( Constrain | Free | Penalty )   l=Lhs o=Op r=Rhs   ( Sign  Kind  s=Slack_Surplus  w=Weight  )? 
 		 
 		 {  $str = $l.text + $o.text + $r.text; 
 		 
 		    if (s!=null) { 
 		    	F.dvarStd($s.text, Param.local, null, $Kind.text, "");  
 		    	F.mergeWeightTable($s.text, $w.text, Param.local);
-		 		$hasDvar = true; $ss = $Sign.text + $s.text; $weight = $w.text; $lhs = $l.text; $rhs = $r.text; 
-		 	} else {
+		 		$hasDvar = true; $ss = $Sign.text + $s.text; $weight = $w.text; }
+		 	//} else {
 		 	
-		 	 	$lhs = $l.text; $rhs = $r.text; 
-		 	}
+		 	 	$lhs = $l.text; $rhs = $r.text; $op = $o.text;
+		 	//}
 		 } 
 	;
 
+goal_content_simple returns[String str]
+	: 
+		  Simple  l=Lhs o=Op r=Rhs  
+		 {  $str = $l.text + $o.text + $r.text; } 
+	;
 
 svar_table :
 	^( Svar_table sc=Scope i=IDENT t=table_content ) 

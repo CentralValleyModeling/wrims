@@ -8,7 +8,7 @@ options {
 }
 tokens {
 	NEGATION;
-	NEW_LINE; Op; Separator; Slack_Surplus; Sign;
+	NEW_LINE; Op; Separator; Slack_Surplus; Sign; Constrain; Free; Simple; One; Two;
 	Weight_table; Assignment; External;
 	Local; Global; Scope;
 	Value; Case ; Dependants;
@@ -183,37 +183,51 @@ goal_case_content[String l]
 	: CASE i=IDENT { $goal::caseName = $i.text;  } 
 	'{' c=condition RHS r=expression (s=sub_content[$l,$r.text])? '}'
 	-> {s!=null}? ^( Case $i Condition[$c.text] $s )
-	->            ^( Case $i Condition[$c.text] Lhs[$l] Op["="] Rhs[$r.text] )
+	->            ^( Case $i Condition[$c.text] Simple Lhs[$l] Op["="] Rhs[$r.text] )
 	;
 
 goal_no_case_content[String l] 
 @init{ $goal::caseName = "default";}
 	: RHS r=expression (s=sub_content[$l,$r.text])?
        -> {s!=null}? $s 
-       ->            Lhs[$l] Op["="] Rhs[$r.text] 
+       ->            Simple Lhs[$l] Op["="] Rhs[$r.text] 
        ;
 	
 sub_content[String l, String r] 
-	: ( lhs_gt_rhs[$l,$r] lhs_lt_rhs[$l,$r]? ) 
-	| ( lhs_lt_rhs[$l,$r] lhs_gt_rhs[$l,$r]? ) 
+	: ( a=lhs_gt_rhs[$l,$r] ( b=lhs_lt_rhs[$l,$r])? 
+		-> {b==null}? One[$a.type] $a
+		->            Two[$a.type+$b.type] $a $b
+		) 
+		
+	| ( c=lhs_lt_rhs[$l,$r] ( d=lhs_gt_rhs[$l,$r] -> Two[$c.type+$d.type] $c $d )? 
+		-> {d==null}? One[$c.type] $c
+		->            Two[$c.type+$d.type] $c $d	
+		) 
 	; 
 	
-lhs_gt_rhs[String l, String r] 
+lhs_gt_rhs[String l, String r] returns[String type] 
+
 	: 
 LHS '>' RHS 
-	( ( CONSTRAIN -> Lhs[$l] Op["<"] Rhs[$r]  )
-	| ( p=penalty 
-		-> {$p.isZero}? 
-		-> 	  		    Lhs[$l] Op["="] Rhs[$r] Sign["-"] Kind["surplus"] Slack_Surplus["surplus_"+$goal::goalName+"_"+$goal::caseName] Weight["-"+$p.w]   )
+	( ( CONSTRAIN  { $type = "c"; } -> Constrain Lhs[$l] Op["<"] Rhs[$r] )
+	| ( p=penalty { 
+					if ($p.isZero){ $type = "f";   }
+					else 		  { $type = "p";   }
+				  }							 
+		-> {$p.isZero}? Free Lhs[$l] Op[">"] Rhs[$r]  
+		-> 	  		    Penalty Lhs[$l] Op["="] Rhs[$r] Sign["-"] Kind["surplus"] Slack_Surplus["surplus_"+$goal::goalName+"_"+$goal::caseName] Weight["-"+$p.w]   )
 	);
 
-lhs_lt_rhs[String l, String r] 
+lhs_lt_rhs[String l, String r]  returns[String type] 
 	: 
 LHS '<' RHS 
-	( ( CONSTRAIN -> Lhs[$l] Op[">"] Rhs[$r] )
-	| ( p=penalty 
-		-> {$p.isZero}? 
-		-> Lhs[$l] Op["="] Rhs[$r] Sign["+"] Kind["slack"] Slack_Surplus["slack_"+$goal::goalName+"_"+$goal::caseName]  Weight["-"+$p.w] )
+	( ( CONSTRAIN  { $type = "c"; } -> Constrain Lhs[$l] Op[">"] Rhs[$r])
+	| ( p=penalty { 
+					if ($p.isZero){ $type = "f";   }
+					else 		  { $type = "p";   }
+				  }
+		-> {$p.isZero}? Free Lhs[$l] Op["<"] Rhs[$r] 
+		->              Penalty Lhs[$l] Op["="] Rhs[$r] Sign["+"] Kind["slack"] Slack_Surplus["slack_"+$goal::goalName+"_"+$goal::caseName]  Weight["-"+$p.w] )
 	);
 
 penalty returns[String w, boolean isZero]

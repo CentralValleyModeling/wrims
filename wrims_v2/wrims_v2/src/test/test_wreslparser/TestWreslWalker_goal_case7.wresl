@@ -1,0 +1,79 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+	goal g_pp {   ! x + slack - surplus = y
+	
+	  lhs x
+
+		rhs        y
+		lhs>rhs    penalty 99
+		lhs<rhs    penalty 11
+	}
+
+	goal g_pc {   ! x - surplus = y
+	
+	  lhs x
+
+		rhs        y
+		lhs>rhs    penalty 99
+		lhs<rhs    constrain
+	}
+
+	goal g_cp {   ! x + slack = y
+	
+	  lhs x
+
+		rhs        y
+		lhs>rhs    constrain
+		lhs<rhs    penalty 11
+	}	
+
+	goal g_fp {   ! x + slack > y
+	
+	  lhs x
+
+		rhs        y
+		lhs>rhs    penalty 0
+		lhs<rhs    penalty 11
+	}	
+
+	goal g_pf {   ! x - surplus < y
+	
+	  lhs x
+
+		rhs        y
+		lhs>rhs    penalty 99
+		lhs<rhs    penalty 0
+	}	
+
+	goal g_fc {   ! x  > y
+	
+	  lhs x
+
+		rhs        y
+		lhs>rhs    penalty 0
+		lhs<rhs    constrain
+	}	
+
+	goal g_cf {   ! x < y
+	
+	  lhs x
+
+		rhs        y
+		lhs>rhs    constrain
+		lhs<rhs    penalty 0
+	}	
+
+	goal g_cc {   ! x = y
+	
+	  lhs x
+
+		rhs        y
+		lhs>rhs    constrain
+		lhs<rhs    constrain
+	}	
+}

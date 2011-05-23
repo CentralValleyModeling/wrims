@@ -140,9 +140,9 @@ public class TestWreslWalker_error {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 18);	
+		Assert.assertEquals(totalErrs, 16);	
 		
-		Assert.assertEquals(StudyParser.total_errors, 18);
+		Assert.assertEquals(StudyParser.total_errors, 16);
 		
 		Assert.assertEquals(sd.getModelDataSetMap().get("second").tsMap.get("ts").kind,"second-model-only" );
 		Assert.assertEquals(sd.getModelDataSetMap().get("second").svMap.get("sv").caseExpression.get(0),"second_model_only" );

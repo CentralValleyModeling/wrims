@@ -114,12 +114,7 @@ public class TestWreslWalker_goal {
 		String s;
 		int n;
 	
-		s = "goal_4,default,1,always,x-surplus_goal_4_default+slack_goal_4_default=y+z";
-		s = Tools.replace_regex(s);
-		n = RegUtils.timesOfMatches(csvText, s );
-		Assert.assertEquals(n, 1);
-
-		s = "goal_3,default,1,always,x>y+z";
+		s = "goal_4,default,1,always,x-surplus_goal_4_default<y+z";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -133,6 +128,31 @@ public class TestWreslWalker_goal {
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
+
+		s = "goal_5,default,1,always,x>y+z";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		s = "goal_6,default,1,always,x-surplus_goal_6_default=y+z";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+
+		s = "goal_7,default,1,always,x<y+z";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		s = "goal_8,default,1,always,x=y+z";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+
+		s = "goal_9,default,1,always,x=y+z";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);		
 		
 		csvText = Tools.readFileAsString(csvFolderPath+"\\weight.csv");	
 	
@@ -146,7 +166,7 @@ public class TestWreslWalker_goal {
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 		
-		s = "surplus_goal_4_default,-700.0";
+		s = "surplus_goal_4_default,-99";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -154,7 +174,7 @@ public class TestWreslWalker_goal {
 		s = "slack_goal_4_default,-0";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
-		Assert.assertEquals(n, 1);
+		Assert.assertEquals(n, 0);
 	}
 	
 	@Test(groups = { "WRESL_elements" })
@@ -201,7 +221,7 @@ public class TestWreslWalker_goal {
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 		
-		s = "global_goal,actionoff,2,int(b2on)==0,c3_m+slack_global_goal_actionoff=clear_min";
+		s = "global_goal,actionoff,2,int(b2on)==0,c3_m<clear_min";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -216,7 +236,7 @@ public class TestWreslWalker_goal {
 		s = "slack_global_goal_actionoff,-0";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
-		Assert.assertEquals(n, 1);
+		Assert.assertEquals(n, 0);
 
 		s = "slack_local_goal_case1,-700.";
 		s = Tools.replace_regex(s);
@@ -297,12 +317,12 @@ public class TestWreslWalker_goal {
 		s = "slack_global_goal_actionoff,0,upper_unbounded,n,undefined,slack";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
-		Assert.assertEquals(n, 1);
+		Assert.assertEquals(n, 0);
 
 		s = "slack_local_goal_case2,0,upper_unbounded,n,undefined,slack";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
-		Assert.assertEquals(n, 1);
+		Assert.assertEquals(n, 0);
 		
 		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).gList_global.get(0),"global_goal" );
 		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).gList_local.get(0),"local_goal" );
@@ -321,7 +341,7 @@ public class TestWreslWalker_goal {
 		
 		TempData td = new TempData();
 
-		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath, true);
 		
 		td.model_dataset_map=StudyParser.parseModels(sc,td);
 		
@@ -489,5 +509,120 @@ public class TestWreslWalker_goal {
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
+	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void goal_case7() throws RecognitionException, IOException {
+		
+		csvFolderPath = "TestWreslWalker_goal_case7";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath, true);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);	
+		
+	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
+		
+		String s;
+		int n;
+	
+		s = "g_pp##x-surplus_g_pp_default+slack_g_pp_default=y";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+	
+		s = "g_pc##x-surplus_g_pc_default=y";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		s = "g_cp##x+slack_g_cp_default=y";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		s = "g_fp##x+slack_g_fp_default>y";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		s = "g_pf##x-surplus_g_pf_default<y";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		s = "g_fc##x>y";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		s = "g_cf##x<y";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		s = "g_cc##x=y";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		
+		// weight 
+		csvText = Tools.readFileAsString(csvFolderPath+"\\weight.csv");
+		
+		s = "surplus_g_pp_default,-99";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		s = "slack_g_pp_default,-11";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		s = "surplus_g_pc_default,-99";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		s = "slack_g_cp_default,-11";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		s = "slack_g_fp_default,-11";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		s = "surplus_g_pf_default,-99";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
 	}
 }
