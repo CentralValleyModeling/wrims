@@ -79,7 +79,7 @@ public class RCCComparison {
 			out.close();
 			
 			for (int i=0; i<wNameArrayList.size(); i++){
-				out1.write(wNameArrayList.get(i)+" is not in WRIMS1.\n");
+				out1.write(weightMap.get(wNameArrayList.get(i)).getValue()+"*"+wNameArrayList.get(i)+" is not in WRIMS1.\n");
 			}
 			out1.close();
 		}catch (Exception e){
@@ -104,7 +104,7 @@ public class RCCComparison {
 					outLine=outLine+"("+multiStrs[1]+"|"+coef+")*"+multiStrs[0]+";";
 				}
 			}else{
-				out1.write(multiStrs[0]+" is not in WRIMS v2.\n");
+				out1.write(multiStrs[1]+"*"+multiStrs[0]+" is not in WRIMS v2.\n");
 			}
 		}
 		if (isDifferent) out1.write(outLine+"\n");
