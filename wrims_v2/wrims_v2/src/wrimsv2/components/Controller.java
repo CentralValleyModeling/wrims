@@ -1,6 +1,8 @@
 package wrimsv2.components;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -90,9 +92,9 @@ public class Controller {
         cd.startYear=1921;
         cd.startMonth=10;
         cd.startDay=31;
-        cd.endYear=1921;
-        cd.endMonth=10;
-        cd.endDay=31;
+        cd.endYear=2003;
+        cd.endMonth=9;
+        cd.endDay=30;
         cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
         cd.currYear=ControlData.startYear;
         cd.currMonth=ControlData.startMonth;
@@ -174,7 +176,7 @@ public class Controller {
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<totalTimeStep && noError){
 			int i=0;
-			while (i<1 && noError){  //modelList.size()
+			while (i<modelList.size()  && noError){   
 				String model=modelList.get(i);
 				ModelDataSet mds=modelDataSetMap.get(model);
 				ControlData.currModelDataSet=mds;
@@ -451,20 +453,27 @@ public class Controller {
 		Map<String, Dvar> dvarMap = ControlData.currDvMap;
 		Set dvarCollection = dvarMap.keySet();
 		Iterator dvarIterator = dvarCollection.iterator();
+	
+		String outPath=FilePaths.mainDirectory+"step"+ControlData.currTimeStep+"_"+ControlData.currCycleIndex+".txt";
+		FileWriter outstream;
 		
+		try {
+			outstream = new FileWriter(outPath);
+			BufferedWriter out = new BufferedWriter(outstream);
+			
 		while(dvarIterator.hasNext()){ 
 			String dvName=(String)dvarIterator.next();
 			Dvar dvar=dvarMap.get(dvName);
 			double value=ControlData.solver.getColumnActivity(dvName);
 			dvar.setData(new IntDouble(value,false));
-			if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){
-				DssDataSetFixLength dds=new DssDataSetFixLength();
-				double[] data=new double[totalTimeStep];
-				dds.setData(data);
-				dds.setTimeStep(ControlData.partE);
-				dds.setStartTime(startTime);
-				DataTimeSeries.dvAliasTS.put(dvName,dds);
-			}
+			
+			out.write(dvName+":"+value+"\n");
+		}
+		out.close();
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -473,6 +482,12 @@ public class Controller {
 		Set dvarCollection = dvarMap.keySet();
 		Iterator dvarIterator = dvarCollection.iterator();
 		
+		String outPath=FilePaths.mainDirectory+"step"+ControlData.currTimeStep+".txt";
+		FileWriter outstream;
+		try {
+			outstream = new FileWriter(outPath);
+			BufferedWriter out = new BufferedWriter(outstream);
+			
 		while(dvarIterator.hasNext()){ 
 			String dvName=(String)dvarIterator.next();
 			Dvar dvar=dvarMap.get(dvName);
@@ -488,9 +503,15 @@ public class Controller {
 			}
 			double[] dataList=DataTimeSeries.dvAliasTS.get(dvName).getData();
 			dataList[ControlData.currTimeStep]=value;
-			if (dvName.equals("s_orovl")){
-				int x=0;
-			}
+			
+			out.write(dvName+":"+value+"\n");
+		}
+		
+		out.close();
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
