@@ -251,7 +251,8 @@ public class StudyParser{
       td.cumulative_global_complete.lousyConvert();
     }
 
-
+    LogUtils.importantMsg("Finished parsing models. ");
+    
     return model_dataset_map;
     
   }
