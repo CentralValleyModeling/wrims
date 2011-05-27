@@ -1,0 +1,29 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+define D_Jones {std  KIND 'D' units 'CFS'  }
+define D_Banks {std  KIND 'D' units 'CFS'  }
+
+define esjrir_o { value 9 }
+define esjrir_m { value 9 }
+define SJR_ANN  { value 9 }
+
+define ExportActual {alias  D_Jones+D_Banks KIND 'EXPORT-PRJ' units 'CFS'  }
+
+goal export_SJRIR_comply { lhs ExportActual 
+        case EISJR_UDEF 
+             {condition EISJR_DLTSW == 1 
+             rhs esjrir_o + esjrir_m*SJR_ANN 
+             lhs<rhs penalty 0
+             lhs>rhs penalty 999999 
+             }
+}
+
+
+
+	
+}

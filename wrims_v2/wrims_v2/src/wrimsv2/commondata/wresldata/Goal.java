@@ -1,6 +1,8 @@
 package wrimsv2.commondata.wresldata;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import wrimsv2.evaluator.EvaluatorParser;
 import wrimsv2.evaluator.ValueEvaluatorParser;
@@ -14,6 +16,7 @@ public class Goal {
 	public ArrayList<String> caseCondition;
 	public ArrayList<ValueEvaluatorParser> caseConditionParsers;
 	public ArrayList<String> caseExpression;
+	public Set<String> expressionDependants;
 	public ArrayList<EvaluatorParser> caseExpressionParsers;
 //	public ArrayList<String> casePenalty;
 //	public ArrayList<String> case_lhs_gt_rhs;
@@ -26,6 +29,7 @@ public class Goal {
 		caseName       = new ArrayList<String>();
 		caseCondition  = new ArrayList<String>();
 		caseExpression = new ArrayList<String>();
+		expressionDependants = new HashSet<String>();
 //		casePenalty    = new ArrayList<String>();
 //		case_lhs_gt_rhs = new ArrayList<String>();
 //		case_lhs_lt_rhs = new ArrayList<String>();
@@ -45,6 +49,8 @@ public class Goal {
 		for (String i: caseName){caseNameStr = caseNameStr + s + i;}
 		for (String i: caseCondition){caseConditionStr = caseConditionStr + s + i;}
 		for (String i: caseExpression){caseExpressionStr = caseExpressionStr + s + i;}	
+		
+		//TODO: add expressionDependants
 //		for (String i: casePenalty){casePenaltyStr = casePenaltyStr + s + i;}	
 //		for (String i: case_lhs_gt_rhs){case_lhs_gt_rhs_str = case_lhs_gt_rhs_str + s + i;}	
 //		for (String i: case_lhs_lt_rhs){case_lhs_lt_rhs_str = case_lhs_lt_rhs_str + s + i;}	

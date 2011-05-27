@@ -171,25 +171,29 @@ alias  :
 
 
 goal_simple 
-	:  ^(Goal_simple sc=Scope i=IDENT v=Constraint_content ) 
-		{ F.goalSimple($i.text, $sc.text, $v.text);} 
+	:  ^(Goal_simple sc=Scope i=IDENT d=Dependants v=Constraint_content ) 
+		{ F.goalSimple($i.text, $sc.text, $v.text, $d.text);} 
 	;
 
 goal_nocase
-	:  ^( Goal_no_case sc=Scope i=IDENT  c=goal_contents  )  
+	:  ^( Goal_no_case sc=Scope i=IDENT  d=Dependants c=goal_contents  )  
 		{ 
-			 F.goalSimple($i.text, $sc.text, $c.str);	  				
+			 F.goalSimple($i.text, $sc.text, $c.str, $d.text);	  				
 		} 
 ;
 
 goal_case
 	@init { Goal gl = new Goal(); }   
 	:  ^( Goal_case sc=Scope i=IDENT  
-		( ^( Case n=IDENT c=Condition e=goal_contents 
+		( ^( Case n=IDENT c=Condition d=Dependants e=goal_contents 
 			{	
 				gl.caseName.add($n.text.toLowerCase());
 				gl.caseCondition.add( Tools.add_space_between_logical( $c.text.toLowerCase() ) );
 				gl.caseExpression.add($e.str.toLowerCase());
+				if (d != null) {
+					String dependants = $d.text.toLowerCase();
+					gl.expressionDependants.addAll(Tools.convertStrToSet(dependants));
+				}
 			} 
 		) )+  
 		)  

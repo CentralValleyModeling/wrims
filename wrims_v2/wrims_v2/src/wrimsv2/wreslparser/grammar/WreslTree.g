@@ -167,30 +167,30 @@ scope { String goalName; String caseName;}
 
 goal_simple
 	:  ( '[' sc=LOCAL? ']' )? i=IDENT '{' v=constraint_statement '}'	
-->  ^(Goal_simple Scope[$sc.text] $i Constraint_content[Tools.replace_ignoreChar($v.text)] )  		
+->  ^(Goal_simple Scope[$sc.text] $i Dependants[$v.dependants] Constraint_content[Tools.replace_ignoreChar($v.text)] )  		
 	;
 
 goal_case_or_nocase 
 	:  ( '[' s=LOCAL? ']' )? i=IDENT { $goal::goalName = $i.text;  } 
 	'{' LHS l=expression 
 	( 
-	  ( goal_no_case_content[$l.text] ->  ^( Goal_no_case Scope[$s.text] $i goal_no_case_content )  ) 	
-    | ( goal_case_content[$l.text]+   ->  ^( Goal_case    Scope[$s.text] $i goal_case_content+ )   )
+	  ( goal_no_case_content[$l.text, $l.dependants] ->  ^( Goal_no_case Scope[$s.text] $i goal_no_case_content )  ) 	
+    | ( goal_case_content[$l.text, $l.dependants]+   ->  ^( Goal_case    Scope[$s.text] $i goal_case_content+ )   )
     ) '}' 
 	;
 
-goal_case_content[String l] 
+goal_case_content[String l, String d] 
 	: CASE i=IDENT { $goal::caseName = $i.text;  } 
 	'{' c=condition RHS r=expression (s=sub_content[$l,$r.text])? '}'
-	-> {s!=null}? ^( Case $i Condition[$c.text] $s )
-	->            ^( Case $i Condition[$c.text] Simple Lhs[$l] Op["="] Rhs[$r.text] )
+	-> {s!=null}? ^( Case $i Condition[$c.text] Dependants[$d+" "+$r.dependants] $s )
+	->            ^( Case $i Condition[$c.text] Dependants[$d+" "+$r.dependants] Simple Lhs[$l] Op["="] Rhs[$r.text] )
 	;
 
-goal_no_case_content[String l] 
+goal_no_case_content[String l, String d] 
 @init{ $goal::caseName = "default";}
 	: RHS r=expression (s=sub_content[$l,$r.text])?
-       -> {s!=null}? $s 
-       ->            Simple Lhs[$l] Op["="] Rhs[$r.text] 
+       -> {s!=null}? Dependants[$d+" "+$r.dependants]  $s 
+       ->            Dependants[$d+" "+$r.dependants]  Simple Lhs[$l] Op["="] Rhs[$r.text] 
        ;
 	
 sub_content[String l, String r] 
@@ -332,15 +332,19 @@ upper: UPPER ( UNBOUNDED -> Upper LimitType[Param.upper_unbounded] | e=expressio
 /// IDENT =, <, > ///
 
 
-constraint_statement returns[String text]
+constraint_statement returns[String text, String dependants]
 	: c=constraint_statement_preprocessed
 	 
 	 {  $text = Tools.replace_ignoreChar($c.text); 
 	    $text = Tools.replace_seperator($text); 
+	    $dependants = $c.dependants;
 	 };	
 
-constraint_statement_preprocessed: 
-	c=expression ( '<' | '>' | '='  ) expression;
+constraint_statement_preprocessed returns[String dependants]
+	: c=expression ( '<' | '>' | '='  ) d=expression
+	{ $dependants = $c.dependants + " " + $d.dependants;}
+	
+	;
 
 
 assignment returns[String dependants] 
