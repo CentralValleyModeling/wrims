@@ -54,8 +54,7 @@ public class Controller {
 	private Date startTime;
 	
 	public Controller() {
-		//setControlData();
-		setControlData_callite_one_cycle();
+		setControlData();
 		try {
 			StudyDataSet sds = parse();
 			new PreEvaluator(sds);
@@ -101,28 +100,6 @@ public class Controller {
         cd.currMonth=ControlData.startMonth;
         cd.currDay=ControlData.startDay;
 	}
-
-	public void setControlData_callite_one_cycle(){
-        FilePaths.setSvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss");
-        FilePaths.setInitDssPaths("D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss");
-        FilePaths.setMainFilePaths("D:\\CalLite_Beta_042611\\Run\\main_BO-SingleCycle.wresl");
-		ControlData cd=new ControlData();
-        cd.svDvPartF="2020D09E";
-        cd.initPartF="2020D09E";
-		cd.partA = "CALSIM";
-		cd.partE = "1MON";
-		cd.timeStep="1MON";
-        cd.startYear=1921;
-        cd.startMonth=10;
-        cd.startDay=31;
-        cd.endYear=1921;
-        cd.endMonth=10;
-        cd.endDay=31;
-        cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
-        cd.currYear=ControlData.startYear;
-        cd.currMonth=ControlData.startMonth;
-        cd.currDay=ControlData.startDay;
-	}	
 	
 	public void setControlData(String[] args){
         FilePaths.setMainFilePaths(args[0]);
