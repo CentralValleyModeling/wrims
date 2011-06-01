@@ -665,17 +665,38 @@ public class TestWreslWalker_goal {
 		String s;
 		int n;
 	
-		s = "g_pp##x-surplus_g_pp_default+slack_g_pp_default=y";
+		s = "_alias_exportactual##exportactual=d_jones+d_banks";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
-	
+
 		
+		// confirm that the item is removed from alias
+		
+		File as_file = new File(csvFolderPath + "\\alias.csv");
+
+		if (as_file.exists()) {
+			csvText = Tools.readFileAsString(csvFolderPath + "\\alias.csv");
+
+			s = "exportactual";
+			s = Tools.replace_regex(s);
+			n = RegUtils.timesOfMatches(csvText, s);
+			Assert.assertEquals(n, 0);
+
+		}
+		
+		// check if dv has the item
+		csvText = Tools.readFileAsString(csvFolderPath+"\\dvar.csv");
+		
+		s = "exportactual,lower_unbounded,upper_unbounded,n,cfs,export-prj";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);		
 		
 		// weight 
 		csvText = Tools.readFileAsString(csvFolderPath+"\\weight.csv");
 		
-		s = "surplus_g_pp_default,-99";
+		s = "surplus_export_sjrir_comply_eisjr_udef,-999999";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);

@@ -352,7 +352,7 @@ public class StudyParser{
 				    gl.caseExpression.add(e+"="+as.expression);
 				    gl.fromWresl = as.fromWresl;
 				    
-				    String goalName = "alias_to_dvar_"+e;
+				    String goalName = "_alias_"+e;
 				    ds.gMap.put(goalName, gl);
 				    ds.gList.add(goalName);
 				    ds.gSet.add(goalName);
@@ -377,10 +377,6 @@ public class StudyParser{
 					ds.asSet_global.remove(e);
 					ds.asSet_local.remove(e);						
 					ds.asMap.remove(e);
-					
-
-					
-					
 					
 				}
 
