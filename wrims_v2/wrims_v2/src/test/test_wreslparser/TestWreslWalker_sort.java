@@ -12,6 +12,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
+import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.RegUtils;
@@ -185,6 +186,8 @@ public class TestWreslWalker_sort {
 		inputFilePath = projectPath+csvFolderPath+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
+		Param.debug = true;
+		
 		LogUtils.setLogFile(logFilePath);
 		
 		File absFile = new File(inputFilePath).getAbsoluteFile();

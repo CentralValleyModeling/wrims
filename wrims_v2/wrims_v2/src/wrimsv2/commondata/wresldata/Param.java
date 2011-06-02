@@ -2,6 +2,7 @@ package wrimsv2.commondata.wresldata;
 
 // global parameters
 public class Param {
+	  public static boolean debug= false; 
 	  public static final String dv_std_lowerBound= "0"; 
 	  public static final String dv_std_upperBound= "upper_unbounded"; 
 	  public static final String lower_unbounded= "lower_unbounded"; 
@@ -25,6 +26,9 @@ public class Param {
 	  
 	  public static final String global="global";
 	  public static final String local="local";
+	  
+	  
+	  
 	  
 }
 

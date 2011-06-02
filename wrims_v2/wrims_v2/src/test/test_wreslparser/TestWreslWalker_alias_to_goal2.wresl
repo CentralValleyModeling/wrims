@@ -1,0 +1,40 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }	
+	
+MODEL first { 
+
+
+	define zz {alias  x+y KIND 'alias' units 'CFS'  }
+
+	goal goal_1 { lhs zz 
+			case case1
+				 { condition cond == 1 
+					rhs a+b
+					lhs<rhs penalty 0
+					lhs>rhs penalty 999999 
+				 }
+	}
+	
+}
+
+MODEL second { 
+
+	define[local] zz {alias  x+y KIND 'alias' units 'CFS'  }
+
+	goal[local] goal_1 { lhs zz 
+			case case1
+				 { condition cond == 1 
+					rhs a+b
+					lhs<rhs penalty 0
+					lhs>rhs penalty 999999 
+				 }
+	}
+	
+}

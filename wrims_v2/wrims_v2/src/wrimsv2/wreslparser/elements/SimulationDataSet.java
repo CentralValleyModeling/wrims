@@ -729,37 +729,45 @@ public class SimulationDataSet
 		return this;
 	}
 
-	public SimulationDataSet replaceGlobalWithDuplicateLocal(Set<String> keys, SimulationDataSet s) {
+	public SimulationDataSet replaceGlobalWithDuplicateLocal(Set<String> keys, SimulationDataSet s) throws TypeRedefinedException {
 
 		for (String k : keys) {
 
 			if (this.dvSet.contains(k)){
+				
+				if( !s.dvSet.contains(k)) LogUtils.typeRedefinedErrMsg("Variable is redefined as different type: "+k);
+				
 				this.dvSet_global.remove(k);
 				this.dvSet_local.add(k);
 				this.dvMap.put(k,s.dvMap.get(k));
 			}
 			if (this.svSet.contains(k)){
+				if( !s.svSet.contains(k)) LogUtils.typeRedefinedErrMsg("Variable is redefined as different type: "+k);
 				this.svSet_global.remove(k);
 				this.svSet_local.add(k);
 				this.svMap.put(k,s.svMap.get(k));
 			}
 
 			if (this.tsSet.contains(k)){
+				if( !s.tsSet.contains(k)) LogUtils.typeRedefinedErrMsg("Variable is redefined as different type: "+k);
 				this.tsSet_global.remove(k);
 				this.tsSet_local.add(k);
 				this.tsMap.put(k,s.tsMap.get(k));
 			}
 			if (this.asSet.contains(k)){
+				if( !s.asSet.contains(k)) LogUtils.typeRedefinedErrMsg("Variable is redefined as different type: "+k);
 				this.asSet_global.remove(k);
 				this.asSet_local.add(k);
 				this.asMap.put(k,s.asMap.get(k));
 			}
 			if (this.gSet.contains(k)){
+				if( !s.gSet.contains(k)) LogUtils.typeRedefinedErrMsg("Variable is redefined as different type: "+k);
 				this.gSet_global.remove(k);
 				this.gSet_local.add(k);
 				this.gMap.put(k,s.gMap.get(k));
 			}
 			if (this.exSet.contains(k)){
+				if( !s.exSet.contains(k)) LogUtils.typeRedefinedErrMsg("Variable is redefined as different type: "+k);
 				this.exSet_global.remove(k);
 				this.exSet_local.add(k);
 				this.exMap.put(k,s.exMap.get(k));

@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import wrimsv2.commondata.wresldata.Alias;
+import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.Svar;
 
 public class Sort {
@@ -89,8 +90,10 @@ public class Sort {
 		
 			LogUtils.errMsg("Variables with unknown dependants: "+ varDependentMap.keySet()); 
 		
-			for (String key:varDependentMap.keySet() ){
-				LogUtils.warningMsg("Variables type of "+ key +": "+ varTypeMap.get(key)); 
+			if (Param.debug){
+				for (String key:varDependentMap.keySet() ){
+					LogUtils.warningMsg("Variables type of "+ key +": "+ varTypeMap.get(key)); 
+				}
 			}
 		}
 		

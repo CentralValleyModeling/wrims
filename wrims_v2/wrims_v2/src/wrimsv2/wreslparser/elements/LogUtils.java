@@ -215,6 +215,18 @@ public class LogUtils {
 		 _logFile.flush();
 		
 	}
+
+	public static void typeRedefinedErrMsg(String msg) throws TypeRedefinedException {
+		
+		 StudyParser.total_errors++;
+
+		 System.out.println("# Error: "+msg);
+		 _logFile.println("# Error: "+msg);
+		 _logFile.flush();
+		 
+		 throw new TypeRedefinedException();
+		 //if (!Param.debug) System.exit(0);
+	}	
 	
 	public static void errMsg(String msg){
 		

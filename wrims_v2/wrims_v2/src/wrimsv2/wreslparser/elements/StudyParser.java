@@ -228,7 +228,13 @@ public class StudyParser{
 
 
       
-      cumulative_global_replace_redefined.replaceGlobalWithDuplicateLocal(redefined_globals_as_locals,model_dataset); 
+    try {
+		cumulative_global_replace_redefined.replaceGlobalWithDuplicateLocal(redefined_globals_as_locals,model_dataset);
+	}
+	catch (TypeRedefinedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} 
 
     
       
@@ -248,9 +254,7 @@ public class StudyParser{
       checkUsedBeforeDefined(new SimulationDataSet(model_dataset));
       
       
-      // / check if alias is used in goal's constraint expression.
-      // / if yes, then move that alias to dvar and add additional goal
-      checkAliasInGoalExpression(model_dataset);
+
       
       
       
@@ -263,9 +267,20 @@ public class StudyParser{
       td.cumulative_global_adhocs.lousyConvert();
       td.cumulative_global_complete.lousyConvert();
     }
-
-    LogUtils.importantMsg("Finished parsing models. ");
     
+    // / check if alias is used in goal's constraint expression.
+    // / if yes, then move that alias to dvar and add additional goal
+    
+    LogUtils.importantMsg("Converting some aliases into dvars and constraints....");
+    
+    for (String key : model_dataset_map.keySet()){
+    	checkAliasInGoalExpression(model_dataset_map.get(key));
+    }
+
+    LogUtils.importantMsg("Finished converting aliases.");
+    LogUtils.importantMsg("==================================================");    
+    LogUtils.importantMsg("Total Errors in the study: "+ total_errors);
+    LogUtils.importantMsg("==================================================");      
     return model_dataset_map;
     
   }
@@ -301,8 +316,11 @@ public class StudyParser{
   private static void checkAliasInGoalExpression(SimulationDataSet ds) {
 		
 	  Set<String> dep;
+	  Set<String> asSet = new HashSet<String>(ds.asSet);
+	  Set<String> gSet = new HashSet<String>(ds.gSet);
 	  
-		for (String gName: ds.gSet) {
+	  
+		for (String gName: gSet) {
 
 			dep = new HashSet<String>(ds.gMap.get(gName).expressionDependants);
 
@@ -312,11 +330,15 @@ public class StudyParser{
 			
 			dep.removeAll(ds.dvSet);
 
+			
+			
 			for (String e : dep) {
 
-				System.out.println(" DDDDDD:  "+e);
 				
-				if ( ds.asSet.contains(e) ){
+				
+				
+				
+				if ( asSet.contains(e) ){
 					
 					Alias as = ds.asMap.get(e);
 					
@@ -328,6 +350,7 @@ public class StudyParser{
 				    dv.lowerBound = Param.lower_unbounded;
 				    dv.upperBound = Param.upper_unbounded;
 				    dv.fromWresl = as.fromWresl;
+				    
 				    ds.dvMap.put(e, dv);
 				    ds.dvList.add(e);
 				    ds.dvSet.add(e);
@@ -369,14 +392,14 @@ public class StudyParser{
 						LogUtils.errMsg("Scope error when adding constraint for alias: " + e, as.fromWresl);
 					}
 				    
-					// remove e from alias
+					// remove e from alias list and set, but keep it in the map
 					ds.asList.remove(e);
 					ds.asList_global.remove(e);
 					ds.asList_local.remove(e);
 					ds.asSet.remove(e);
 					ds.asSet_global.remove(e);
 					ds.asSet_local.remove(e);						
-					ds.asMap.remove(e);
+					//ds.asMap.remove(e);
 					
 				}
 
