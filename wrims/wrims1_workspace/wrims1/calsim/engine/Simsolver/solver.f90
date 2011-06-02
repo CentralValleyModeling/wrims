@@ -135,25 +135,34 @@ module xasolver
 
 
     ! This subroutine sets up the problem (poses it) to XA
-    subroutine solver_pose(problem)
+    subroutine solver_pose(icycle, problem)
         USE XATYPES
         USE xa_interface
         implicit none
+        INTEGER, INTENT(IN)     :: icycle
         TYPE(rcc), DIMENSION(:), INTENT(IN)     :: problem
         INTEGER(2) :: frc
         CHARACTER(LEN=150) :: msg
         integer :: ii
         CHARACTER(LEN=50) :: title, dummy1, dummy2
         CHARACTER(LEN=3) :: colon, oro, semicolon
+        Character(LEN=2)  numberstring
+        Character(LEN=50)  filestring
         
         dummy1=  'MIN'
         dummy2 = 'MAX'
         colon = " : "
         oro   = " | "
         semicolon = " ; "
-
         
-        open (unit=888, file='rccfile.txt')
+        if (icycle<10) then
+          write( numberstring, '(i1)' )  icycle
+        else
+          write( numberstring, '(i2)' )  icycle
+        endif
+        
+        filestring ='rccfile_cycle_'//trim(numberstring)//'.txt'        
+        open (unit=888, file=filestring)
         !open (unit=889, file='rccfile2.txt')
         
         do ii= 1,SIZE(problem)
