@@ -64,7 +64,7 @@ public class TestWreslWalker_alias {
 		String s;
 		int n;
 	
-		s = "_alias_exportactual##exportactual=d_jones+d_banks";
+		s = "exportactual_alias##exportactual=d_jones+d_banks";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -143,7 +143,7 @@ public class TestWreslWalker_alias {
 		String s;
 		int n;
 	
-		s = "_alias_zz##zz=x+y";
+		s = "zz_alias##zz=x+y";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);

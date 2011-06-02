@@ -375,7 +375,7 @@ public class StudyParser{
 				    gl.caseExpression.add(e+"="+as.expression);
 				    gl.fromWresl = as.fromWresl;
 				    
-				    String goalName = "_alias_"+e;
+				    String goalName = e+"_alias";
 				    ds.gMap.put(goalName, gl);
 				    ds.gList.add(goalName);
 				    ds.gSet.add(goalName);
