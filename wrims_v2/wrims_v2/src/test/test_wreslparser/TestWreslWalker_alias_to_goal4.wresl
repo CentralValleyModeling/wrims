@@ -1,0 +1,30 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+	define x { value 99 }
+	define y { value 9 }
+	
+	define dv { lower unbounded kind 'DICU_FLOW' units 'CFS' }
+
+	define a1 { ALIAS dv KIND 'NET-DICU' UNITS 'CFS' }
+
+	define a2 { alias x-a1 kind 'FLOW-INFLOW' units 'CFS'}
+	
+	define a3 { alias dv+a1+a2 kind 'FLOW-INFLOW' units 'CFS'}
+
+	define a4 { alias a3*5 kind 'FLOW-INFLOW' units 'CFS'}
+
+	goal goal_1 {
+	  lhs x
+	  case Normal {
+		condition always
+		rhs (a4+y)
+	  }
+	}
+
+	
+}

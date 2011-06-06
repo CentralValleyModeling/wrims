@@ -225,4 +225,71 @@ public class TestWreslWalker_alias {
 	
 		
 	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void alias_to_goal4() throws RecognitionException, IOException {
+	// deep embedding of alias
+		
+		csvFolderPath = "TestWreslWalker_alias_to_goal4";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+		
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath, true);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		//String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.study(sd, csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);		
+
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\constraint.csv");	
+		
+		String s;
+		int n;
+	
+		s = "a1_alias##a1=dv";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		// confirm that the item is removed from alias list or set?
+		
+		File as_file = new File(csvFolderPath + "\\first\\alias.csv");
+	
+		if (as_file.exists()) {
+			csvText = Tools.readFileAsString(csvFolderPath + "\\first\\alias.csv");
+	
+			s = "a1";
+			s = Tools.replace_regex(s);
+			n = RegUtils.timesOfMatches(csvText, s);
+			Assert.assertEquals(n, 0);
+	
+		}
+		
+		// check if dv has the item
+		csvText = Tools.readFileAsString(csvFolderPath+"\\first\\dvar.csv");
+		
+		s = "a1,lower_unbounded,upper_unbounded,n,cfs,net-dicu";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);			
+	}
 }

@@ -274,16 +274,23 @@ public class StudyParser{
     LogUtils.importantMsg("Converting some aliases into dvars and constraints....");
     
     for (String key : model_dataset_map.keySet()){
-    	checkAliasInGoalExpression(model_dataset_map.get(key));
+    	SimulationDataSet ds = model_dataset_map.get(key);
+    	
+    	Set<String> newGoals = checkAliasInGoalExpression(ds, new HashSet<String>(ds.gSet));
+    	
+    	// check for alias embedded in another alias
+    	while (newGoals.size()>0){
+    		newGoals = checkAliasInGoalExpression(ds, newGoals);
+    	}
     }
 
     LogUtils.importantMsg("Finished converting aliases.");
     LogUtils.importantMsg("==================================================");    
     LogUtils.importantMsg("Parsing complete. ");
     LogUtils.importantMsg("Total Errors in the study: "+ total_errors);
-    LogUtils.importantMsg("==================================================");      
-    return model_dataset_map;
+    LogUtils.importantMsg("==================================================");  
     
+    return model_dataset_map;
   }
 
   private static void checkUsedBeforeDefined(SimulationDataSet ds) {
@@ -305,39 +312,25 @@ public class StudyParser{
 			  LogUtils.warningMsg("Variables used before definition: "+dep  );
 			  
 		  }
-		 
-		
-		
 	  }
-	  
-	
-	
   }
 
-  private static void checkAliasInGoalExpression(SimulationDataSet ds) {
-		
+  private static Set<String> checkAliasInGoalExpression(SimulationDataSet ds, Set<String> goalSetToCheck) {
+	
+	  Set<String> out_newGoalSet = new LinkedHashSet<String>();
 	  Set<String> dep;
 	  Set<String> asSet = new HashSet<String>(ds.asSet);
-	  Set<String> gSet = new HashSet<String>(ds.gSet);
+	  //Set<String> goalSetToCheck = new HashSet<String>(ds.gSet);
 	  
-	  
-		for (String gName: gSet) {
+		for (String gName: goalSetToCheck) {
 
 			dep = new HashSet<String>(ds.gMap.get(gName).expressionDependants);
 
 			dep.removeAll(ds.tsSet);
-
-			dep.removeAll(ds.svSet);
-			
+			dep.removeAll(ds.svSet);			
 			dep.removeAll(ds.dvSet);
-
-			
 			
 			for (String e : dep) {
-
-				
-				
-				
 				
 				if ( asSet.contains(e) ){
 					
@@ -376,9 +369,11 @@ public class StudyParser{
 				    gl.caseCondition.add(Param.always);
 				    gl.caseName.add(Param.defaultCaseName);
 				    gl.caseExpression.add(e+"="+as.expression);
+				    gl.expressionDependants=as.dependants;
 				    gl.fromWresl = as.fromWresl;
 				    
 				    String goalName = e+"_alias";
+				    out_newGoalSet.add(goalName);
 				    ds.gMap.put(goalName, gl);
 				    ds.gList.add(goalName);
 				    ds.gSet.add(goalName);
@@ -405,13 +400,9 @@ public class StudyParser{
 					ds.asMap.remove(e);
 					
 				}
-
 			}
-
 		}
-	  
-	
-	
+		return out_newGoalSet;
   }  
   
 public static Map<String, SimulationDataSet> getNewDataSet(Set<String> adhoc_incFileSet, Set<String> fileDataMap_wholeStudy_keySet) throws RecognitionException, IOException
