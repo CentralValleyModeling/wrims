@@ -177,7 +177,7 @@ public class WriteCSV {
 		if(ds.asSet_unknown.size()>0){
 			out_alias_unknown = Tools.openFile(outFolder, "alias_unknown.csv");	
 			out_alias_unknown.print(WriteCSV.alias_header + "\n");
-			alias(ds.asMap, new ArrayList<String>(ds.asSet_unknown), out_alias_unknown);
+			alias_unknown(ds.asMap, ds.dvMap, new ArrayList<String>(ds.asSet_unknown), out_alias_unknown);
 			out_alias_unknown.close();
 		}
 
@@ -378,6 +378,59 @@ public class WriteCSV {
 		    	}
 	  };
 
+	public static void alias_unknown(Map<String,Alias> asMap, Map<String,Dvar> dvMap, ArrayList<String> list ,PrintWriter out) {
+		    
+			List<String> keys = list;
+			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
+			
+		for (String k : keys) {
+
+			if (asMap.keySet().contains(k)) {
+
+				Alias a = asMap.get(k);
+
+				out.print(k); // for DVAR NAME
+
+				out.print(Param.csv_seperator + a.kind); // for KIND
+				out.print(Param.csv_seperator + a.units); // for UNITS
+				out.print(Param.csv_seperator + a.expression); // for expression
+
+				out.print(Param.csv_seperator);
+
+				if (a.dependants != null) {
+					for (String d : a.dependants) {
+						out.print(d + ";"); // for dependants
+					}
+				}
+
+				out.print(Param.csv_seperator + a.fromWresl);
+				out.print("\n");
+			}
+			else { // converted to dv
+
+				Dvar a = dvMap.get(k);
+
+				out.print(k); // for DVAR NAME
+
+				out.print(Param.csv_seperator + a.kind); // for KIND
+				out.print(Param.csv_seperator + a.units); // for UNITS
+				out.print(Param.csv_seperator + a.expression); // for expression
+
+				out.print(Param.csv_seperator);
+
+				if (a.dependants != null) {
+					for (String d : a.dependants) {
+						out.print(d + ";"); // for dependants
+					}
+				}
+
+				out.print(Param.csv_seperator + a.fromWresl);
+				out.print("\n");				
+				
+			}
+		}
+	  };	  
+	  
 	public static void alias(Map<String,Alias> asMap, ArrayList<String> list ,PrintWriter out) {
 		    
 			List<String> keys = list;

@@ -1,6 +1,8 @@
 package wrimsv2.commondata.wresldata;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import wrimsv2.components.IntDouble;
 import wrimsv2.evaluator.ValueEvaluatorParser;
@@ -21,6 +23,8 @@ public class Dvar {
 	public IntDouble data;
 	public Number upperBoundValue;
 	public Number lowerBoundValue;
+	public String expression;
+	public Set<String> dependants;
 	
 	public Dvar(){
 		scope=Param.undefined;
@@ -31,6 +35,8 @@ public class Dvar {
 		lowerBound=Param.undefined;
 		upperBound=Param.undefined;
 		fromWresl=Param.undefined;
+		expression=Param.undefined;
+		dependants = new HashSet<String>();
 	}
 	
 	public String equalEva(){

@@ -279,6 +279,7 @@ public class StudyParser{
 
     LogUtils.importantMsg("Finished converting aliases.");
     LogUtils.importantMsg("==================================================");    
+    LogUtils.importantMsg("Parsing complete. ");
     LogUtils.importantMsg("Total Errors in the study: "+ total_errors);
     LogUtils.importantMsg("==================================================");      
     return model_dataset_map;
@@ -350,6 +351,8 @@ public class StudyParser{
 				    dv.lowerBound = Param.lower_unbounded;
 				    dv.upperBound = Param.upper_unbounded;
 				    dv.fromWresl = as.fromWresl;
+				    dv.expression = as.expression;
+				    dv.dependants = as.dependants;
 				    
 				    ds.dvMap.put(e, dv);
 				    ds.dvList.add(e);
@@ -392,14 +395,14 @@ public class StudyParser{
 						LogUtils.errMsg("Scope error when adding constraint for alias: " + e, as.fromWresl);
 					}
 				    
-					// remove e from alias list and set, but keep it in the map
+					// remove e from alias 
 					ds.asList.remove(e);
 					ds.asList_global.remove(e);
 					ds.asList_local.remove(e);
 					ds.asSet.remove(e);
 					ds.asSet_global.remove(e);
 					ds.asSet_local.remove(e);						
-					//ds.asMap.remove(e);
+					ds.asMap.remove(e);
 					
 				}
 
