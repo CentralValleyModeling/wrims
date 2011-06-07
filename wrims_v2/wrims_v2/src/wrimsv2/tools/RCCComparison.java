@@ -23,15 +23,25 @@ import wrimsv2.components.IntDouble;
 import wrimsv2.evaluator.EvalConstraint;
 
 public class RCCComparison {
-	private String cycleName="01";
+	private int cycle=1;
+	private String cycleName;
 	private BufferedWriter out;
 	private BufferedWriter out1;
+	private BufferedWriter out2;
 	private String gName;
 	private ArrayList<Object> gNameArrayList=new ArrayList<Object> ();
 	private ArrayList<Object> wNameArrayList=new ArrayList<Object> ();
+	private ArrayList<Object> dvarArrayList=new ArrayList<Object> ();
 	private Map<String, WeightElement> weightMap;
+	private Map<String, Dvar> dvarMap;
 	
 	public RCCComparison() {
+		if (cycle<10){
+			cycleName="0"+cycle;
+		}else{
+			cycleName=""+cycle;
+		}
+		
 		Map<String, EvalConstraint> constraintMap=SolverData.getConstraintDataMap();
 		Object[] gNameArray=constraintMap.keySet().toArray();
 		Collections.addAll(gNameArrayList, gNameArray); 
@@ -39,6 +49,8 @@ public class RCCComparison {
 		weightMap=SolverData.getWeightMap();
 		Object[] wNameArray=weightMap.keySet().toArray();
 		Collections.addAll(wNameArrayList, wNameArray);
+		
+		
 		
 		try{
 			String outPath=FilePaths.mainDirectory+"comparegoal.txt";
@@ -49,8 +61,7 @@ public class RCCComparison {
 			FileWriter outstream1 = new FileWriter(outPath1);
 			out1 = new BufferedWriter(outstream1);
 
-			String filePath=FilePaths.mainDirectory+"rcc_reformatted.txt";
-		
+			String filePath=FilePaths.mainDirectory+"rcc_reformatted_"+cycle+".txt";		
 			FileInputStream fstream = new FileInputStream(filePath);
 			DataInputStream in = new DataInputStream(fstream);
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
@@ -90,6 +101,65 @@ public class RCCComparison {
 			e.printStackTrace();
 			System.out.println(gName);
 		}
+		
+		dvarMap=SolverData.getDvarMap();
+		Object[] dvarArray=dvarMap.keySet().toArray();
+		Collections.addAll(dvarArrayList, dvarArray);
+		
+		try{
+			String outPath=FilePaths.mainDirectory+"comparedvar.txt";
+			FileWriter outstream = new FileWriter(outPath);
+			out2 = new BufferedWriter(outstream);
+
+			String filePath=FilePaths.mainDirectory+"rcc_dvar_"+cycle+".txt";		
+			FileInputStream fstream = new FileInputStream(filePath);
+			DataInputStream in = new DataInputStream(fstream);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			    
+			String strLine;
+			boolean isEnd=false;
+			int line=0;
+			while (!isEnd){
+			 	strLine=br.readLine();
+			 	if (strLine==null || strLine.equals("")) {
+			 		isEnd=true;
+			 	}else{
+			 		compareDvar(strLine);
+			 	}
+			}
+			
+			for (int i=0; i<dvarArrayList.size(); i++){	
+				out2.write(dvarArrayList.get(i)+" is not in WRIMS1.\n");
+			}
+			out2.close();
+		}catch (Exception e){
+			e.printStackTrace();
+			System.out.println(gName);
+		}
+	}
+	
+	public void compareDvar(String strLine) throws IOException{
+		boolean isDifferent =false;
+		String[] subStrs=strLine.toLowerCase().replaceAll(" ", "").split(":");
+		String outLine=subStrs[1]+":";
+		String[] bounds=subStrs[2].split(";");
+		if (dvarMap.containsKey(subStrs[1])){
+			dvarArrayList.remove(subStrs[1]);
+			Dvar dvar=dvarMap.get(subStrs[1]);
+			double lowBound=dvar.lowerBoundValue.doubleValue();
+			if (Math.abs(Double.parseDouble(bounds[0])-lowBound)>0.1){
+				outLine=outLine+"("+bounds[0]+","+lowBound+")lower:";
+				isDifferent=true;
+			}
+			double upBound=dvar.upperBoundValue.doubleValue();
+			if (Math.abs(Double.parseDouble(bounds[1])-upBound)>0.1){
+				outLine=outLine+"("+bounds[1]+","+upBound+")upper";
+				isDifferent=true;
+			}
+		}else{
+			out2.write(subStrs[1]+" is not in WRIMS v2.\n");
+		}
+		if (isDifferent) out2.write(outLine+"\n");
 	}
 	
 	public void compareObject(String strLine) throws IOException{
