@@ -136,7 +136,14 @@ public class Evaluation {
 			IntDouble id0 = ControlData.currAliasMap.get(ident).getData();
 			ee.setValue(id0);
 			return ee;
+		}else if (!ControlData.isPostProcessing && ControlData.currAliasMap.containsKey(ident) && !ControlData.currDvMap.containsKey(ident)){
+			EvalExpression ee=new EvalExpression();
+			IntDouble id0=new IntDouble(1.0, false);
+			ee.setValue(id0);
+			Error.addEvaluationError("Alias "+ident+" should not appear in constraint. ");
+			return ee;
 		}
+		
 		EvalExpression ee=new EvalExpression();
 		IntDouble id0 = new IntDouble (0, true);
 		ee.setValue(id0);

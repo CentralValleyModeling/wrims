@@ -220,6 +220,7 @@ public class Controller {
 				}
 				cal = Calendar.getInstance();
 				System.out.println("      After alias: "+cal.getTimeInMillis());
+				if (i==0 && ControlData.currTimeStep==1) new RCCComparison();
 				i=i+1;
 			}
 			if (ControlData.timeStep.equals("1MON")){
@@ -231,12 +232,11 @@ public class Controller {
 			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
 		ControlData.solver.close();
-		new RCCComparison();
 	}
 	
 	public void prepareSolver(){
 		ControlData.solver.openConnection();
-		ControlData.solver.setModelSize(32, 32);
+		ControlData.solver.setModelSize(100, 100);
 		ControlData.solver.setCommand("MAXIMIZE Yes MUTE NO FORCE No MATLIST BOTH");
 		//ControlData.solver.setCommand("MPSX YES");
 		ControlData.solver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log matlist v ToRcc Yes wait no" ) ;

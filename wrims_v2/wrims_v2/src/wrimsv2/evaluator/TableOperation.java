@@ -93,11 +93,7 @@ public class TableOperation {
 			    	Number[] dataLine=new Number[fieldSize];
 			    	for (int i=0; i<fieldSize; i++){
 			    		try{        
-			    			if (values[i].contains(".")){       
-			    				dataLine[i]=Double.parseDouble(values[i]);
-			    			}else{
-			    				dataLine[i]=Integer.parseInt(values[i]);
-			    			}
+			    			dataLine[i]=Double.parseDouble(values[i]);
 			    		} catch(NumberFormatException nfe1) {        
 			    	        Error.addEvaluationError("The No. " +(i+1)+" data in the table "+name+" line"+line+" is not numeric");
 						    in.close();
@@ -421,13 +417,8 @@ public class TableOperation {
 		return new IntDouble(1.0,false);
 	}
 	
-	public static IntDouble generateIntDouble(String valueString){
-		try{        
-			int intValue=Integer.parseInt(valueString);
-			return new IntDouble(intValue, true);
-		} catch(NumberFormatException nfe1) {        
-			double doubleValue=Double.parseDouble(valueString);
-			return new IntDouble(doubleValue, false);
-		} 
+	public static IntDouble generateIntDouble(String valueString){    
+		double doubleValue=Double.parseDouble(valueString);
+		return new IntDouble(doubleValue, false);
 	}
 }

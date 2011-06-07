@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 
 import wrimsv2.commondata.solverdata.SolverData;
+import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.components.ControlData;
@@ -73,12 +74,15 @@ public class RCCComparison {
 			 	}
 			}
 			
-			for (int i=0; i<gNameArrayList.size(); i++){
+			for (int i=0; i<gNameArrayList.size(); i++){	
 				out.write(gNameArrayList.get(i)+" is not in WRIMS1.\n");
 			}
 			out.close();
 			
 			for (int i=0; i<wNameArrayList.size(); i++){
+				//String wName=(String)wNameArrayList.get(i);
+				//Dvar dvar=SolverData.getDvarMap().get(wName);
+				//if (dvar.data.getData().doubleValue()!=0.0) out1.write(weightMap.get(wNameArrayList.get(i)).getValue()+"*"+wNameArrayList.get(i)+" is not in WRIMS1.\n");
 				out1.write(weightMap.get(wNameArrayList.get(i)).getValue()+"*"+wNameArrayList.get(i)+" is not in WRIMS1.\n");
 			}
 			out1.close();
