@@ -214,8 +214,7 @@ LHS '>' RHS
 					if ($p.isZero){ $type = "f";   }
 					else 		  { $type = "p";   }
 				  }							 
-		// TODO: activate this line.
-		//-> {$p.isZero}? Free Lhs[$l] Op[">"] Rhs[$r]  
+		-> {$p.isZero}? Free Lhs[$l] Op[">"] Rhs[$r]  
 		-> 	  		    Penalty Lhs[$l] Op["="] Rhs[$r] Sign["-"] Kind["surplus"] Slack_Surplus["surplus_"+$goal::goalName+"_"+$goal::caseName] Weight["-"+$p.w]   )
 	);
 
@@ -227,8 +226,7 @@ LHS '<' RHS
 					if ($p.isZero){ $type = "f";   }
 					else 		  { $type = "p";   }
 				  }
-		// TODO: activate this line.		  
-		//-> {$p.isZero}? Free Lhs[$l] Op["<"] Rhs[$r] 
+		-> {$p.isZero}? Free Lhs[$l] Op["<"] Rhs[$r] 
 		->              Penalty Lhs[$l] Op["="] Rhs[$r] Sign["+"] Kind["slack"] Slack_Surplus["slack_"+$goal::goalName+"_"+$goal::caseName]  Weight["-"+$p.w] )
 	);
 

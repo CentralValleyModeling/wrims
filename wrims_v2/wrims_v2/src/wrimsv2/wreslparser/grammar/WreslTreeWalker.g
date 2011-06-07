@@ -278,8 +278,6 @@ goal_contents_process_2 returns[String str] : t=Two c1=goal_content c2=goal_cont
 		  		} else  {  // ff
 		  		
 		  			$str = " 1 > 0 ";  // do something
-		  			// TODO:  This is for comparison with wrims1. Remove this after validation.
-		  			$str = $c1.lhs + $c1.ss + $c2.ss + "=" + $c1.rhs ;
 		  		}
 		  
 
