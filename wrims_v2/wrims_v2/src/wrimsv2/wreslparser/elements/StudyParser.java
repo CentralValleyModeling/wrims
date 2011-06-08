@@ -284,6 +284,16 @@ public class StudyParser{
     	}
 
         //convertRestAliasInGoalExpression(ds);
+    	
+    	/// check if var size > 100
+    	Set<String> allVar = new HashSet<String>();
+    	allVar.addAll(ds.dvSet);
+    	allVar.addAll(ds.asSet);
+    	allVar.addAll(ds.svSet);
+    	allVar.addAll(ds.gSet);
+    	allVar.addAll(ds.exSet);
+    	
+    	for (String e: allVar) { if (e.length()>99)  LogUtils.errMsg("Variable name is longer than 99 chars: "+ e);};
     }
 
     LogUtils.importantMsg("Finished converting aliases.");
@@ -424,7 +434,6 @@ public class StudyParser{
 					// add e into dvar					
 				    Dvar dv = new Dvar();
 
-				    System.out.println("as,kind:"+e);
 				    dv.kind = as.kind;
 				    dv.units = as.units;
 				    dv.lowerBound = Param.lower_unbounded;
