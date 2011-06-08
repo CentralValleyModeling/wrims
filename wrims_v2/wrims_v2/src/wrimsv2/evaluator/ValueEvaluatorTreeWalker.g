@@ -145,7 +145,7 @@ pow_func returns[IntDouble id]
   ;
   
 range_func returns [boolean result]
-  : ^(RANGE  MONTH m1=MONTH_CONST m2=MONTH_CONST ){ValueEvaluation.range($m1.text, $m2.text);};
+  : ^(RANGE  MONTH m1=MONTH_CONST m2=MONTH_CONST ){result=ValueEvaluation.range($m1.text, $m2.text);};
 
 timeseriesWithUnits 
 	: TIMESERIES 'kind' '=' partC 'units' '=' IDENT 
