@@ -319,7 +319,7 @@ public class StudyParser{
 	
 	  Set<String> out_newGoalSet = new LinkedHashSet<String>();
 	  Set<String> dep;
-	  Set<String> asSet = new HashSet<String>(ds.asSet);
+	  ArrayList<String> asList = new ArrayList<String>(ds.asSet);
 	  //Set<String> goalSetToCheck = new HashSet<String>(ds.gSet);
 	  
 		for (String gName: goalSetToCheck) {
@@ -330,9 +330,11 @@ public class StudyParser{
 			dep.removeAll(ds.svSet);			
 			dep.removeAll(ds.dvSet);
 			
+			Collections.reverse(asList);
 			for (String e : dep) {
+			//for (String e : asSet) {	
 				
-				if ( asSet.contains(e) ){
+				if ( asList.contains(e) ){
 					
 					Alias as = ds.asMap.get(e);
 					
