@@ -282,6 +282,8 @@ public class StudyParser{
     	while (newGoals.size()>0){
     		newGoals = checkAliasInGoalExpression(ds, newGoals);
     	}
+
+        //convertRestAliasInGoalExpression(ds);
     }
 
     LogUtils.importantMsg("Finished converting aliases.");
@@ -315,11 +317,91 @@ public class StudyParser{
 	  }
   }
 
+  private static void convertRestAliasInGoalExpression(SimulationDataSet ds) {
+	  
+	  	Set<String> asS = new LinkedHashSet<String>(ds.asSet);
+	  	
+		for (String e : asS) {
+			//for (String e : asSet) {	
+				
+
+					
+					Alias as = ds.asMap.get(e);
+					
+					// add e into dvar					
+				    Dvar dv = new Dvar();
+
+				    System.out.println("as,kind:"+e);
+				    dv.kind = as.kind;
+				    dv.units = as.units;
+				    dv.lowerBound = Param.lower_unbounded;
+				    dv.upperBound = Param.upper_unbounded;
+				    dv.fromWresl = as.fromWresl;
+				    dv.expression = as.expression;
+				    dv.dependants = as.dependants;
+				    
+				    ds.dvMap.put(e, dv);
+				    ds.dvList.add(e);
+				    ds.dvSet.add(e);
+
+					if (as.scope.equalsIgnoreCase(Param.global)) {
+						ds.dvList_global.add(e);
+						ds.dvSet_global.add(e);
+					}
+					else if (as.scope.equalsIgnoreCase(Param.local)) {
+						ds.dvList_local.add(e);
+						ds.dvSet_local.add(e);
+					}
+					else {
+						LogUtils.errMsg("Scope error when converting alias to dvar: " + e, as.fromWresl);
+					}
+					
+					// add additional goal
+				    
+				    Goal gl = new Goal();
+				    gl.caseCondition.add(Param.always);
+				    gl.caseName.add(Param.defaultCaseName);
+				    gl.caseExpression.add(e+"="+as.expression);
+				    gl.expressionDependants=as.dependants;
+				    gl.fromWresl = as.fromWresl;
+				    
+				    String goalName = e+"_alias";
+
+				    ds.gMap.put(goalName, gl);
+				    ds.gList.add(goalName);
+				    ds.gSet.add(goalName);
+
+					if (as.scope.equalsIgnoreCase(Param.global)) {
+						ds.gList_global.add(goalName);
+						ds.gSet_global.add(goalName);
+					}
+					else if (as.scope.equalsIgnoreCase(Param.local)) {
+						ds.gList_local.add(goalName);
+						ds.gSet_local.add(goalName);
+					}
+					else {
+						LogUtils.errMsg("Scope error when adding constraint for alias: " + e, as.fromWresl);
+					}
+				    
+					// remove e from alias 
+					ds.asList.remove(e);
+					ds.asList_global.remove(e);
+					ds.asList_local.remove(e);
+					ds.asSet.remove(e);
+					ds.asSet_global.remove(e);
+					ds.asSet_local.remove(e);						
+					ds.asMap.remove(e);
+					
+
+			}
+	
+  }
+
   private static Set<String> checkAliasInGoalExpression(SimulationDataSet ds, Set<String> goalSetToCheck) {
 	
 	  Set<String> out_newGoalSet = new LinkedHashSet<String>();
 	  Set<String> dep;
-	  ArrayList<String> asList = new ArrayList<String>(ds.asSet);
+	  Set<String> asSet = new LinkedHashSet<String>(ds.asSet);
 	  //Set<String> goalSetToCheck = new HashSet<String>(ds.gSet);
 	  
 		for (String gName: goalSetToCheck) {
@@ -330,17 +412,19 @@ public class StudyParser{
 			dep.removeAll(ds.svSet);			
 			dep.removeAll(ds.dvSet);
 			
-			Collections.reverse(asList);
+			//ArrayList<String> asL
+			//Collections.reverse(asSet);
 			for (String e : dep) {
 			//for (String e : asSet) {	
 				
-				if ( asList.contains(e) ){
+				if ( asSet.contains(e) ){
 					
 					Alias as = ds.asMap.get(e);
 					
 					// add e into dvar					
 				    Dvar dv = new Dvar();
 
+				    System.out.println("as,kind:"+e);
 				    dv.kind = as.kind;
 				    dv.units = as.units;
 				    dv.lowerBound = Param.lower_unbounded;
