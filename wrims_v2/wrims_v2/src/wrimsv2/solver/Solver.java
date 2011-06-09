@@ -31,6 +31,7 @@ public class Solver {
 	int modelStatus;
 	
 	public Solver(){
+		ControlData.solver.loadNewModel();
 		setConstraints();
 		setDVars();
 		setWeights();
@@ -92,11 +93,11 @@ public class Solver {
 		while(constraintIterator.hasNext()){                          
 			String constraintName=(String)constraintIterator.next();
 			EvalConstraint ec=constraintMap.get(constraintName);
-		
+			
 			if (ec.getSign().equals("=")) {
 				ControlData.solver.setRowFix(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue()); //string constraint name
 			}
-			else if (ec.getSign().equals("<")){
+			else if (ec.getSign().equals("<") || ec.getSign().equals("<=")){
 				ControlData.solver.setRowMax(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue()); //string constraint name
 			}
 			else if (ec.getSign().equals(">")){

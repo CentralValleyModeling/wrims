@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 
 import wrimsv2.commondata.solverdata.SolverData;
+import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.WeightElement;
@@ -34,6 +35,7 @@ public class RCCComparison {
 	private ArrayList<Object> dvarArrayList=new ArrayList<Object> ();
 	private Map<String, WeightElement> weightMap;
 	private Map<String, Dvar> dvarMap;
+	private Map<String, Alias> aliasMap;
 	
 	public RCCComparison() {
 		if (cycle<10){
@@ -106,6 +108,8 @@ public class RCCComparison {
 		Object[] dvarArray=dvarMap.keySet().toArray();
 		Collections.addAll(dvarArrayList, dvarArray);
 		
+		aliasMap=ControlData.currAliasMap;
+		
 		try{
 			String outPath=FilePaths.mainDirectory+"comparedvar.txt";
 			FileWriter outstream = new FileWriter(outPath);
@@ -157,7 +161,7 @@ public class RCCComparison {
 				isDifferent=true;
 			}
 		}else{
-			out2.write(subStrs[1]+" is not in WRIMS v2.\n");
+			if (!aliasMap.containsKey(subStrs[1])) out2.write(subStrs[1]+" is not in WRIMS v2.\n");
 		}
 		if (isDifferent) out2.write(outLine+"\n");
 	}
@@ -227,7 +231,7 @@ public class RCCComparison {
 			}
 			if (isDifferent) out.write(outLine+"\n");
 		}else{
-			out.write(gName+" is not in WRIMS v2.\n");
+			if (!gName.endsWith("_alias")) out.write(gName+" is not in WRIMS v2.\n");
 		}
 	}
 }
