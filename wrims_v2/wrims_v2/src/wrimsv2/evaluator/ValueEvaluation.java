@@ -5,6 +5,7 @@ import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 
 import wrimsv2.commondata.wresldata.ModelDataSet;
+import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 import wrimsv2.components.FilePaths;
@@ -108,13 +109,17 @@ public class ValueEvaluation {
 	
 	public static IntDouble term_IDENT (String ident){
 		if (ControlData.currSvMap.containsKey(ident)){
-			return ControlData.currSvMap.get(ident).getData();
+			IntDouble id0=ControlData.currSvMap.get(ident).getData();
+			return new IntDouble(id0.getData(),id0.isInt());
 		}else if (ControlData.currTsMap.containsKey(ident)){
-			return ControlData.currTsMap.get(ident).getData();
+			IntDouble id0=ControlData.currTsMap.get(ident).getData();
+			return new IntDouble(id0.getData(),id0.isInt());
 		}else if (ControlData.isPostProcessing && ControlData.currDvMap.containsKey(ident)){
-			return ControlData.currDvMap.get(ident).getData();
+			IntDouble id0=ControlData.currDvMap.get(ident).getData();
+			return new IntDouble(id0.getData(),id0.isInt());
 		}else if (ControlData.isPostProcessing && ControlData.currAliasMap.containsKey(ident)){
-			return ControlData.currAliasMap.get(ident).getData();
+			IntDouble id0=ControlData.currAliasMap.get(ident).getData();
+			return new IntDouble(id0.getData(),id0.isInt());
 		}
 		if (ControlData.sumIndex.size()>0){
 			LoopIndex li=ControlData.sumIndex.pop();

@@ -119,22 +119,26 @@ public class Evaluation {
 		if (ControlData.currSvMap.containsKey(ident)){
 			EvalExpression ee=new EvalExpression();
 			IntDouble id0 = ControlData.currSvMap.get(ident).getData();
-			ee.setValue(id0);
+			IntDouble id1 = new IntDouble(id0.getData(), id0.isInt());
+			ee.setValue(id1);
 			return ee;
 		}else if (ControlData.currTsMap.containsKey(ident)){
 			EvalExpression ee=new EvalExpression();
 			IntDouble id0 = ControlData.currTsMap.get(ident).getData();
-			ee.setValue(id0);
+			IntDouble id1 = new IntDouble(id0.getData(), id0.isInt());
+			ee.setValue(id1);
 			return ee;
 		}else if (ControlData.isPostProcessing && ControlData.currDvMap.containsKey(ident)){
 			EvalExpression ee=new EvalExpression();
 			IntDouble id0 = ControlData.currDvMap.get(ident).getData();
-			ee.setValue(id0);
+			IntDouble id1 = new IntDouble(id0.getData(), id0.isInt());
+			ee.setValue(id1);
 			return ee;
 		}else if (ControlData.isPostProcessing && ControlData.currAliasMap.containsKey(ident)){
 			EvalExpression ee=new EvalExpression();
 			IntDouble id0 = ControlData.currAliasMap.get(ident).getData();
-			ee.setValue(id0);
+			IntDouble id1 = new IntDouble(id0.getData(), id0.isInt());
+			ee.setValue(id1);
 			return ee;
 		}else if (!ControlData.isPostProcessing && ControlData.currAliasMap.containsKey(ident) && !ControlData.currDvMap.containsKey(ident)){
 			EvalExpression ee=new EvalExpression();
