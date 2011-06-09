@@ -217,6 +217,7 @@ public class RCCComparison {
 				}
 			}
 			for (int i=0; i<multiplierArrayList.size(); i++){
+				isDifferent=true;
 				outLine=outLine+"(no|"+multiplier.get(multiplierArrayList.get(i)).getData()+")"+multiplierArrayList.get(i)+";";
 			}
 			String[] signValue=subStrs[subStrs.length-1].split(";");
@@ -225,7 +226,7 @@ public class RCCComparison {
 				outLine=outLine+"("+signValue[0]+"|"+ec.getSign()+")";
 			}
 			double value=-ec.getEvalExpression().getValue().getData().doubleValue();
-			if (Math.abs(Double.parseDouble(signValue[1]))-value >0.1){
+			if (Math.abs(Double.parseDouble(signValue[1])-value) >0.1){
 				isDifferent=true;
 				outLine=outLine+"("+signValue[1]+"|"+value+")";
 			}
