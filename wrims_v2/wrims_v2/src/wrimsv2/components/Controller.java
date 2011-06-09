@@ -39,6 +39,7 @@ import wrimsv2.evaluator.PreEvaluator;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
+import wrimsv2.exception.WrimsException;
 import wrimsv2.external.LoadAllDll;
 import wrimsv2.solver.Solver;
 import wrimsv2.tools.RCCComparison;
@@ -78,6 +79,19 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
+
+	public Controller(String[] args, String solverName) {
+		setControlData(args, solverName);
+		try {
+			StudyDataSet sds = parse();
+			new PreEvaluator(sds);
+			runModel(sds);
+		} catch (RecognitionException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void setControlData(){
         FilePaths.setSvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss");
@@ -99,6 +113,8 @@ public class Controller {
         cd.currYear=ControlData.startYear;
         cd.currMonth=ControlData.startMonth;
         cd.currDay=ControlData.startDay;
+        
+        ControlData.initializeXASolver();
 	}
 	
 	public void setControlData(String[] args){
@@ -122,6 +138,34 @@ public class Controller {
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
+		
+		ControlData.initializeXASolver();
+	}
+
+	public void setControlData(String[] args, String solverName){
+        FilePaths.setMainFilePaths(args[0]);
+        FilePaths.setSvarDssPaths(args[1]);
+        FilePaths.setInitDssPaths(args[2]);
+        FilePaths.setDvarDssPaths(args[3]);
+		ControlData cd=new ControlData();
+		cd.svDvPartF=args[4];
+		cd.initPartF=args[5];
+		cd.partA = args[6];
+		cd.partE = args[7];
+		cd.timeStep = args[7];
+		cd.startYear=Integer.parseInt(args[8]);
+		cd.startMonth=Integer.parseInt(args[9]);
+		cd.startDay=Integer.parseInt(args[10]);
+		cd.endYear=Integer.parseInt(args[11]);
+		cd.endMonth=Integer.parseInt(args[12]);
+		cd.endDay=Integer.parseInt(args[13]);
+		cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
+		cd.currYear=cd.startYear;
+		cd.currMonth=cd.startMonth;
+		cd.currDay=cd.startDay;
+		
+		if (solverName.equalsIgnoreCase("XA")) { ControlData.initializeXASolver();  }
+		else { throw new WrimsException();  }
 	}
 	
 	public StudyDataSet parse()throws RecognitionException, IOException{

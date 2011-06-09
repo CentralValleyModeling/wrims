@@ -12,6 +12,7 @@ import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.LoopIndex;
+import wrimsv2.exception.WrimsException;
 import wrimsv2.external.ExternalFunction;
 
 import java.util.ArrayList;
@@ -59,13 +60,27 @@ public class ControlData {
 	public static Stack<LoopIndex> sumIndex= new Stack <LoopIndex>();
 	public static Group groupInit;
 	public static Group groupSvar;
-	public static Optimizer solver=new Optimizer(25000);
+	public static Optimizer solver=null; //new Optimizer(25000);
 	public static boolean isPostProcessing=false;
+	protected static boolean isSolverSet=false;
 	
 	public ControlData(){
 	}
 	
 	public static String getPartE(){
 		return timeStep;
+	}
+	
+	// use XA solver in wrims 2
+	public static void initializeXASolver() throws WrimsException {
+
+		if (isSolverSet != false) {
+			throw new WrimsException();
+		}
+		else {
+			isSolverSet = true;
+			solver = new Optimizer(25000);
+		}
+
 	}
 }
