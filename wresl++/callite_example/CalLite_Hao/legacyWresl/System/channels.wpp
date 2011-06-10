@@ -1,27 +1,46 @@
 package channels
 
-channel Orovl ( ) {
+channel Wkytn {
 
-	parameter node {
-	
-		<- downstream_node 
-		-> upstream_node 	
-	}	
+	<- out_1 { coordinate [ -122.365662  37.826988  ] } # -> [ -122.365662  37.826988  ]
+	<- D_
+	-> in_1  { coordinate [ -122.365662  37.826988  ] } # <- [ -122.365662  37.826988  ]
 
-	parameter metrics {
-	
-		upperbound = 12913*taf_cfs
-		lowerbound = 0
-	}
-	
-	parameter geometry {
-	
-		this.length = 
-		upstream_node.coordinate   = [ ]
-		downstream_node.coordinate = [ ]
-	}
+
+	flowrate { upperbound 12913*taf_cfs  lowerbound  0 }
+
+	coordinate  {  in_1.coordinate  [x2  y2 ]  [x3  y3 ]  [x4  y4 ]  [x5  y5 ] out_1.coordinate  }
 } 
 
+channel Orovl {
+
+	<- out_1 { coordinate [ -122.365662  37.826988  ] } # -> [ -122.365662  37.826988  ]
+	-> in_1  { coordinate [ -122.365662  37.826988  ] } # <- [ -122.365662  37.826988  ]
 
 
+	flowrate { upperbound 12913*taf_cfs  lowerbound  0 }
 
+	coordinate  {  in_1.coordinate  [x2  y2 ]  [x3  y3 ]  [x4  y4 ]  [x5  y5 ] out_1.coordinate  }
+} 
+
+channel Folsm {
+
+	<- out_1 { coordinate [ -122.365662  37.826988  ] } # -> [ -122.365662  37.826988  ]
+	-> in_1  { coordinate [ -122.365662  37.826988  ] } # <- [ -122.365662  37.826988  ]
+
+
+	flowrate { upperbound 12913*taf_cfs  lowerbound  0 }
+
+	coordinate  {  in_1.coordinate  [x2  y2 ]  [x3  y3 ]  [x4  y4 ]  [x5  y5 ] out_1.coordinate  }
+}
+
+channel Trnty {
+
+	<- out_1 { coordinate [ -122.365662  37.826988  ] } # -> [ -122.365662  37.826988  ]
+	-> in_1  { coordinate [ -122.365662  37.826988  ] } # <- [ -122.365662  37.826988  ]
+
+
+	flowrate { upperbound 12913*taf_cfs  lowerbound  0 }
+
+	coordinate  {  in_1.coordinate  [x2  y2 ]  [x3  y3 ]  [x4  y4 ]  [x5  y5 ] out_1.coordinate  }
+}
