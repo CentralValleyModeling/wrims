@@ -150,7 +150,7 @@ public class ValueEvaluation {
 			Error.addEvaluationError("The value of state variable "+ident+" is not defined before used.");
 			return new IntDouble(1.0, false);
 		}
-		return data;
+		return new IntDouble(data.getData(), data.isInt());
 	}
 	
 	public static IntDouble term_INTEGER (String integer){
@@ -538,7 +538,7 @@ public class ValueEvaluation {
 			Error.addEvaluationError("The variable "+ident+" is not defined in the past cycle of "+cycle+".");
 			return data;
 		}
-		return data;
+		return new IntDouble(data.getData(),data.isInt());
 	}
 	
 	public static IntDouble max(IntDouble id1, IntDouble id2){

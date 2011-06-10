@@ -176,7 +176,7 @@ public class Evaluation {
 			IntDouble id=new IntDouble(1.0, false);
 			return new EvalExpression(id);
 		}
-		return new EvalExpression(data);
+		return new EvalExpression(new IntDouble(data.getData(), data.isInt()));
 	}
 	
 	public static EvalExpression term_INTEGER (String integer){
@@ -704,7 +704,7 @@ public class Evaluation {
 			Error.addEvaluationError("The variable "+ident+" is not defined in the past cycle of "+cycle+".");
 			return data;
 		}
-		return data;
+		return new IntDouble(data.getData(),data.isInt());
 	}
 	
 	public static EvalExpression max(EvalExpression ee1, EvalExpression ee2){
