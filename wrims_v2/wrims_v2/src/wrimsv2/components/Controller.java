@@ -171,10 +171,11 @@ public class Controller {
 			processExternal();
 		}
 		
-		prepareSolver();
+		initialXASolver();
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<totalTimeStep && noError){
+			clearDvarValues(modelList, modelDataSetMap);
 			int i=0;
 			while (i<modelList.size()  && noError){   
 				String model=modelList.get(i);
@@ -200,19 +201,11 @@ public class Controller {
 				cal = Calendar.getInstance();
 				System.out.println("    After solving: "+cal.getTimeInMillis());
 				if (Error.error_solving.size()<1){
-					if (i==modelList.size()-1) {
-						assignDvarTimeseries();
-						cal = Calendar.getInstance();
-						System.out.println("After assign dvar: "+cal.getTimeInMillis());
-						ControlData.isPostProcessing=true;
-						processAliasTimeseries();
-					}else{
-						assignDvar();
-						cal = Calendar.getInstance();
-						System.out.println("After assign dvar: "+cal.getTimeInMillis());
-						ControlData.isPostProcessing=true;
-						processAlias();
-					}
+					assignDvarTimeseries();
+					cal = Calendar.getInstance();
+					System.out.println("After assign dvar: "+cal.getTimeInMillis());
+					ControlData.isPostProcessing=true;
+					processAliasTimeseries();
 					
 				}else{
 					Error.writeSolvingErrorFile("solving_error.txt");
@@ -234,7 +227,20 @@ public class Controller {
 		ControlData.xasolver.close();
 	}
 	
-	public void prepareSolver(){
+	public void clearDvarValues(ArrayList<String> modelList, Map<String, ModelDataSet> modelDataSetMap){
+		for (int i=0; i<modelList.size(); i++){   
+			String model=modelList.get(i);
+			ModelDataSet mds=modelDataSetMap.get(model);
+			ArrayList<String> dvList = mds.dvList;
+			Map<String, Dvar> dvMap =mds.dvMap;
+			for (String dvName: dvList){
+				Dvar dvar=dvMap.get(dvName);
+				dvar.setData(null);
+			}
+		}
+	}
+	
+	public void initialXASolver(){
 		ControlData.xasolver.openConnection();
 		ControlData.xasolver.setModelSize(100, 100);
 		ControlData.xasolver.setCommand("MAXIMIZE Yes MUTE NO FORCE No MATLIST BOTH ListInput Yes");
@@ -482,7 +488,7 @@ public class Controller {
 		Set dvarCollection = dvarMap.keySet();
 		Iterator dvarIterator = dvarCollection.iterator();
 		
-		String outPath=FilePaths.mainDirectory+"step"+ControlData.currTimeStep+".txt";
+		String outPath=FilePaths.mainDirectory+"step"+ControlData.currTimeStep+"_"+ControlData.currCycleIndex+".txt";
 		FileWriter outstream;
 		try {
 			outstream = new FileWriter(outPath);
