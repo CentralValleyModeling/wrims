@@ -40,7 +40,7 @@ import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.evaluator.ValueEvaluatorTreeWalker;
 import wrimsv2.external.LoadAllDll;
-import wrimsv2.solver.Solver;
+import wrimsv2.solver.XASolver;
 import wrimsv2.tools.RCCComparison;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyConfig;
@@ -196,7 +196,7 @@ public class ControllerTree {
 				}
 				cal = Calendar.getInstance();
 				System.out.println(" After Evaluation: "+cal.getTimeInMillis());
-				new Solver();
+				new XASolver();
 				cal = Calendar.getInstance();
 				System.out.println("    After solving: "+cal.getTimeInMillis());
 				if (Error.error_solving.size()<1){
@@ -222,15 +222,15 @@ public class ControllerTree {
 			System.out.println(ControlData.currYear+"/"+ControlData.currMonth);
 			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
-		ControlData.solver.close();
+		ControlData.xasolver.close();
 	}
 	
 	public void prepareSolver(){
-		ControlData.solver.openConnection();
-		ControlData.solver.setModelSize(32, 32);
-		ControlData.solver.setCommand("MAXIMIZE Yes MUTE NO FORCE No MATLIST BOTH");
+		ControlData.xasolver.openConnection();
+		ControlData.xasolver.setModelSize(32, 32);
+		ControlData.xasolver.setCommand("MAXIMIZE Yes MUTE NO FORCE No MATLIST BOTH");
 		//ControlData.solver.setCommand("MPSX YES");
-		ControlData.solver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log matlist v ToRcc Yes wait no" ) ;
+		ControlData.xasolver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log matlist v ToRcc Yes wait no" ) ;
 	}
 	
 	public void processModel(){
@@ -465,7 +465,7 @@ public class ControllerTree {
 		while(dvarIterator.hasNext()){ 
 			String dvName=(String)dvarIterator.next();
 			Dvar dvar=dvarMap.get(dvName);
-			double value=ControlData.solver.getColumnActivity(dvName);
+			double value=ControlData.xasolver.getColumnActivity(dvName);
 			dvar.setData(new IntDouble(value,false));
 			if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){
 				DssDataSetFixLength dds=new DssDataSetFixLength();

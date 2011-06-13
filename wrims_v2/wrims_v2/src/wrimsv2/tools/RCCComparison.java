@@ -24,7 +24,7 @@ import wrimsv2.components.IntDouble;
 import wrimsv2.evaluator.EvalConstraint;
 
 public class RCCComparison {
-	private int cycle=1;
+	private int cycle=2;
 	private String cycleName;
 	private BufferedWriter out;
 	private BufferedWriter out1;
@@ -213,6 +213,7 @@ public class RCCComparison {
 						outLine=outLine+"("+multiStrs[1]+"|"+coef+")*"+multiStrs[0]+";";
 					}
 				}else{
+					isDifferent=true;
 					outLine=outLine+"("+multiStrs[1]+"|no)*"+multiStrs[0]+";";
 				}
 			}

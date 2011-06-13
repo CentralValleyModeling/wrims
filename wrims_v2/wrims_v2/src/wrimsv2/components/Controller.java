@@ -39,9 +39,8 @@ import wrimsv2.evaluator.PreEvaluator;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
-import wrimsv2.exception.WrimsException;
 import wrimsv2.external.LoadAllDll;
-import wrimsv2.solver.Solver;
+import wrimsv2.solver.XASolver;
 import wrimsv2.tools.RCCComparison;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyConfig;
@@ -79,19 +78,6 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-
-	public Controller(String[] args, String solverName) {
-		setControlData(args, solverName);
-		try {
-			StudyDataSet sds = parse();
-			new PreEvaluator(sds);
-			runModel(sds);
-		} catch (RecognitionException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	public void setControlData(){
         FilePaths.setSvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss");
@@ -106,15 +92,13 @@ public class Controller {
         cd.startYear=1921;
         cd.startMonth=10;
         cd.startDay=31;
-        cd.endYear=1921;
-        cd.endMonth=11;
-        cd.endDay=30;
+        cd.endYear=2003;
+        cd.endMonth=9;
+        cd.endDay=31;
         cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
         cd.currYear=ControlData.startYear;
         cd.currMonth=ControlData.startMonth;
         cd.currDay=ControlData.startDay;
-        
-        ControlData.initializeXASolver();
 	}
 	
 	public void setControlData(String[] args){
@@ -138,34 +122,6 @@ public class Controller {
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
-		
-		ControlData.initializeXASolver();
-	}
-
-	public void setControlData(String[] args, String solverName){
-        FilePaths.setMainFilePaths(args[0]);
-        FilePaths.setSvarDssPaths(args[1]);
-        FilePaths.setInitDssPaths(args[2]);
-        FilePaths.setDvarDssPaths(args[3]);
-		ControlData cd=new ControlData();
-		cd.svDvPartF=args[4];
-		cd.initPartF=args[5];
-		cd.partA = args[6];
-		cd.partE = args[7];
-		cd.timeStep = args[7];
-		cd.startYear=Integer.parseInt(args[8]);
-		cd.startMonth=Integer.parseInt(args[9]);
-		cd.startDay=Integer.parseInt(args[10]);
-		cd.endYear=Integer.parseInt(args[11]);
-		cd.endMonth=Integer.parseInt(args[12]);
-		cd.endDay=Integer.parseInt(args[13]);
-		cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
-		cd.currYear=cd.startYear;
-		cd.currMonth=cd.startMonth;
-		cd.currDay=cd.startDay;
-		
-		if (solverName.equalsIgnoreCase("XA")) { ControlData.initializeXASolver();  }
-		else { throw new WrimsException();  }
 	}
 	
 	public StudyDataSet parse()throws RecognitionException, IOException{
@@ -240,7 +196,7 @@ public class Controller {
 				}
 				cal = Calendar.getInstance();
 				System.out.println(" After Evaluation: "+cal.getTimeInMillis());
-				new Solver();
+				new XASolver();
 				cal = Calendar.getInstance();
 				System.out.println("    After solving: "+cal.getTimeInMillis());
 				if (Error.error_solving.size()<1){
@@ -264,6 +220,7 @@ public class Controller {
 				}
 				cal = Calendar.getInstance();
 				System.out.println("      After alias: "+cal.getTimeInMillis());
+				if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();				
 				i=i+1;
 			}
 			if (ControlData.timeStep.equals("1MON")){
@@ -274,16 +231,15 @@ public class Controller {
 			System.out.println(ControlData.currYear+"/"+ControlData.currMonth);
 			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
-		ControlData.solver.close();
-		new RCCComparison();
+		ControlData.xasolver.close();
 	}
 	
 	public void prepareSolver(){
-		ControlData.solver.openConnection();
-		ControlData.solver.setModelSize(100, 100);
-		ControlData.solver.setCommand("MAXIMIZE Yes MUTE NO FORCE No MATLIST BOTH");
+		ControlData.xasolver.openConnection();
+		ControlData.xasolver.setModelSize(100, 100);
+		ControlData.xasolver.setCommand("MAXIMIZE Yes MUTE NO FORCE No MATLIST BOTH ListInput Yes");
 		//ControlData.solver.setCommand("MPSX YES");
-		ControlData.solver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log matlist v ToRcc Yes wait no" ) ;
+		ControlData.xasolver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log matlist v ToRcc Yes wait no" ) ;
 	}
 	
 	public void processModel(){
@@ -508,7 +464,7 @@ public class Controller {
 		while(dvarIterator.hasNext()){ 
 			String dvName=(String)dvarIterator.next();
 			Dvar dvar=dvarMap.get(dvName);
-			double value=ControlData.solver.getColumnActivity(dvName);
+			double value=ControlData.xasolver.getColumnActivity(dvName);
 			dvar.setData(new IntDouble(value,false));
 			
 			out.write(dvName+":"+value+"\n");
@@ -535,7 +491,7 @@ public class Controller {
 		while(dvarIterator.hasNext()){ 
 			String dvName=(String)dvarIterator.next();
 			Dvar dvar=dvarMap.get(dvName);
-			double value=ControlData.solver.getColumnActivity(dvName);
+			double value=ControlData.xasolver.getColumnActivity(dvName);
 			dvar.setData(new IntDouble(value,false));
 			if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){
 				DssDataSetFixLength dds=new DssDataSetFixLength();
