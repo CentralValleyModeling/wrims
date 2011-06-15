@@ -120,6 +120,7 @@ public class Controller {
 		cd.endMonth=Integer.parseInt(args[12]);
 		cd.endDay=Integer.parseInt(args[13]);
 		cd.solverName=args[14];
+		if (args.length>15) cd.csvFolderPath = args[15];
 		cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
@@ -130,7 +131,7 @@ public class Controller {
 		Calendar cal = Calendar.getInstance();
 		System.out.println("Before Parsser: "+cal.getTimeInMillis());
 		
-		String csvFolderPath = "TestWreslWalker";
+		String csvFolderPath = ControlData.csvFolderPath;
 		String inputFilePath = FilePaths.fullMainPath;
 		String logFilePath = csvFolderPath+".log";
 		

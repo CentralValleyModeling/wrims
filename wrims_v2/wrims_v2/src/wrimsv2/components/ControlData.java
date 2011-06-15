@@ -62,6 +62,7 @@ public class ControlData {
 	public static String solverName;
 	public static Optimizer xasolver=new Optimizer(25000);
 	public static boolean isPostProcessing=false;
+	public static String csvFolderPath="csv";
 	
 	public ControlData(){
 	}
