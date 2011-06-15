@@ -56,6 +56,7 @@ public class testStudies {
         cd.currYear=ControlData.startYear;
         cd.currMonth=ControlData.startMonth;
         cd.currDay=ControlData.startDay;
+        cd.solverName="XA";
 		
 		StudyDataSet sds=parseSimpleStudy();
 		
@@ -105,7 +106,8 @@ public class testStudies {
 		cd.currDay=cd.startDay;
 		cd.svDvPartF="CALSIM30_06";
 		cd.initPartF="CALSIM30_06";
-		
+        cd.solverName="XA";
+        
 		StudyDataSet sds=parseCalsim3();
 		
 		new Controller();
@@ -158,7 +160,8 @@ public class testStudies {
         cd.currYear=ControlData.startYear;
         cd.currMonth=ControlData.startMonth;
         cd.currDay=ControlData.startDay;
-		
+        cd.solverName="XA";
+        
 		StudyDataSet sds=parseCalLite();
 		
 		new Controller();

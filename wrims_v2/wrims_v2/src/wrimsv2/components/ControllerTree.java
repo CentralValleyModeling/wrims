@@ -99,6 +99,7 @@ public class ControllerTree {
         cd.currYear=ControlData.startYear;
         cd.currMonth=ControlData.startMonth;
         cd.currDay=ControlData.startDay;
+        cd.solverName="XA";
 	}
 	
 	public void setControlData(String[] args){
@@ -118,6 +119,7 @@ public class ControllerTree {
 		cd.endYear=Integer.parseInt(args[11]);
 		cd.endMonth=Integer.parseInt(args[12]);
 		cd.endDay=Integer.parseInt(args[13]);
+		cd.solverName=args[14];
 		cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
@@ -149,6 +151,14 @@ public class ControllerTree {
 	}
 	
 	public void runModel(StudyDataSet sds){
+		if (ControlData.solverName.equals("XA")){
+			runModelXA(sds);
+		}else if (ControlData.solverName.equals("Gurobi")){
+			runModelGurobi(sds);
+		}
+	}
+	
+	public void runModelXA(StudyDataSet sds){
 		ControlData.currStudyDataSet=sds;
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
@@ -171,10 +181,11 @@ public class ControllerTree {
 			processExternal();
 		}
 		
-		prepareSolver();
+		initialXASolver();
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<totalTimeStep && noError){
+			clearDvarValues(modelList, modelDataSetMap);
 			int i=0;
 			while (i<modelList.size() && noError){
 				String model=modelList.get(i);
@@ -225,7 +236,96 @@ public class ControllerTree {
 		ControlData.xasolver.close();
 	}
 	
-	public void prepareSolver(){
+	public void runModelGurobi(StudyDataSet sds){
+		ControlData.currStudyDataSet=sds;
+		ArrayList<String> modelList=sds.getModelList();
+		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
+		startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
+				
+		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
+		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
+		ControlData.allTsMap=sds.getTimeseriesMap();
+		
+		totalTimeStep=getTotalTimeStep();
+		Calendar cal = Calendar.getInstance();
+		System.out.println("After Parsser: "+cal.getTimeInMillis());
+		readTimeseries();
+		initialDvarAliasTS(totalTimeStep);
+		for (int i=0; i<modelList.size(); i++){
+			String model=modelList.get(i);
+			ModelDataSet mds=modelDataSetMap.get(model);
+			ControlData.currModelDataSet=mds;
+			ControlData.currCycleIndex=i;
+			processExternal();
+		}
+
+		boolean noError=true;
+		ControlData.currTimeStep=0;
+		while (ControlData.currTimeStep<totalTimeStep && noError){
+			clearDvarValues(modelList, modelDataSetMap);
+			int i=0;
+			while (i<modelList.size() && noError){
+				String model=modelList.get(i);
+				ModelDataSet mds=modelDataSetMap.get(model);
+				ControlData.currModelDataSet=mds;
+				ControlData.currSvMap=mds.svMap;
+				ControlData.currDvMap=mds.dvMap;
+				ControlData.currAliasMap=mds.asMap;
+				ControlData.currGoalMap=mds.gMap;
+				ControlData.currTsMap=mds.tsMap;
+				ControlData.currCycleIndex=i;
+				ControlData.isPostProcessing=false;
+				cal = Calendar.getInstance();
+				System.out.println("Before Evaluation: "+cal.getTimeInMillis());
+				processModel();
+				if (Error.error_evaluation.size()>=1){
+					Error.writeEvaluationErrorFile("evaluation_error.txt");
+					noError=false;
+				}
+				cal = Calendar.getInstance();
+				System.out.println(" After Evaluation: "+cal.getTimeInMillis());
+				//new GurobiSolver();
+				cal = Calendar.getInstance();
+				System.out.println("    After solving: "+cal.getTimeInMillis());
+				if (Error.error_solving.size()<1){
+					assignDvar();
+					cal = Calendar.getInstance();
+					System.out.println("After assign dvar: "+cal.getTimeInMillis());
+					ControlData.isPostProcessing=true;
+					processAlias();
+				}else{
+					Error.writeSolvingErrorFile("solving_error.txt");
+					noError=false;
+				}
+				cal = Calendar.getInstance();
+				System.out.println("      After alias: "+cal.getTimeInMillis());
+				//new RCCComparison();
+				i=i+1;
+			}
+			if (ControlData.timeStep.equals("1MON")){
+				currTimeAddOneMonth();
+			}else{
+				currTimeAddOneDay();
+			}
+			System.out.println(ControlData.currYear+"/"+ControlData.currMonth);
+			ControlData.currTimeStep=ControlData.currTimeStep+1;
+		}
+	}
+	
+	public void clearDvarValues(ArrayList<String> modelList, Map<String, ModelDataSet> modelDataSetMap){
+		for (int i=0; i<modelList.size(); i++){   
+			String model=modelList.get(i);
+			ModelDataSet mds=modelDataSetMap.get(model);
+			ArrayList<String> dvList = mds.dvList;
+			Map<String, Dvar> dvMap =mds.dvMap;
+			for (String dvName: dvList){
+				Dvar dvar=dvMap.get(dvName);
+				dvar.setData(null);
+			}
+		}
+	}
+	
+	public void initialXASolver(){
 		ControlData.xasolver.openConnection();
 		ControlData.xasolver.setModelSize(32, 32);
 		ControlData.xasolver.setCommand("MAXIMIZE Yes MUTE NO FORCE No MATLIST BOTH");

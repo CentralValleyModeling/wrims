@@ -59,6 +59,7 @@ public class ControlData {
 	public static Stack<LoopIndex> sumIndex= new Stack <LoopIndex>();
 	public static Group groupInit;
 	public static Group groupSvar;
+	public static String solverName;
 	public static Optimizer xasolver=new Optimizer(25000);
 	public static boolean isPostProcessing=false;
 	
