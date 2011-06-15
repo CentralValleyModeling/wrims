@@ -1,0 +1,3 @@
+define R3 {std kind 'FLOW-RETURN' units 'CFS'} !Red Bluff diversion return flow
+define rfactor_R3 {value 0.05}
+goal returnflowR3 {R3=rfactor_R3*D2}
