@@ -10,7 +10,7 @@ import wrimsv2.components.*;
 public class TestXASolver {
 
 	@Test(groups = { "xa_solver_example_studies" })
-	public void example1() throws RecognitionException, IOException{
+	public void example1_step1() throws RecognitionException, IOException{
 		
 		/// set control data		
 		String[] controlDataString = {
@@ -27,14 +27,16 @@ public class TestXASolver {
 		"10",
 		 "31",
 		 "1921",
-		 "11",
-		 "30", 
+		 "10",
+		 "31", 
 		 "XA", 
 		 "csv_Example1"};
 		
         new Controller(controlDataString);
 
-		// TODO: compare objective function value
+		// TODO: compare objective function value 
+        // wrims v1 XA16 OBJ: 41169932.383266 
+        // wrims v2 XA16 OBJ: 41169932.835543
 		Assert.assertEquals(0, 1);	
 	}
 }

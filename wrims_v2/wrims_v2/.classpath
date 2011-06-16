@@ -17,6 +17,7 @@
 	<classpathentry exported="true" kind="lib" path="D:/cvwrsm/trunk/3rd_party/vista/lib/xercesImpl.jar"/>
 	<classpathentry exported="true" kind="lib" path="D:/cvwrsm/trunk/3rd_party/vista/lib/xml-apis.jar"/>
 	<classpathentry exported="true" kind="lib" path="D:/cvwrsm/trunk/3rd_party/vista/lib/ojdbc6.jar"/>
-	<classpathentry kind="lib" path="D:/cvwrsm/trunk/wrims_v2/wrims_v2/src/wrimsv2/lib/XAOptimizer.jar"/>
+	<classpathentry kind="lib" path="src/wrimsv2/lib/XAOptimizer.jar"/>
+	<classpathentry kind="lib" path="src/wrimsv2/lib/gurobi.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
