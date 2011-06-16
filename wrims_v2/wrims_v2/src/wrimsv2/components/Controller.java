@@ -153,9 +153,9 @@ public class Controller {
 	}
 	
 	public void runModel(StudyDataSet sds){
-		if (ControlData.solverName.equals("XA")){
+		if (ControlData.solverName.equalsIgnoreCase("XA")){
 			runModelXA(sds);
-		}else if (ControlData.solverName.equals("Gurobi")){
+		}else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
 			runModelGurobi(sds);
 		}
 	}
