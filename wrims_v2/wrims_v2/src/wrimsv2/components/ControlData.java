@@ -60,9 +60,9 @@ public class ControlData {
 	public static Group groupInit;
 	public static Group groupSvar;
 	public static String solverName;
+	public static String csvFolderPath="csv";
 	public static Optimizer xasolver=new Optimizer(25000);
 	public static boolean isPostProcessing=false;
-	public static String csvFolderPath="csv";
 	
 	public ControlData(){
 	}

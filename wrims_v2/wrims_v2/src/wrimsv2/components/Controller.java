@@ -1,5 +1,7 @@
 package wrimsv2.components;
 
+import gurobi.GRBException;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -40,6 +42,7 @@ import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.external.LoadAllDll;
+import wrimsv2.solver.GurobiSolver;
 import wrimsv2.solver.XASolver;
 import wrimsv2.tools.RCCComparison;
 import wrimsv2.wreslparser.elements.LogUtils;
@@ -100,6 +103,7 @@ public class Controller {
         cd.currMonth=ControlData.startMonth;
         cd.currDay=ControlData.startDay;
         cd.solverName="XA";
+        cd.csvFolderPath="csv";
 	}
 	
 	public void setControlData(String[] args){
@@ -120,7 +124,7 @@ public class Controller {
 		cd.endMonth=Integer.parseInt(args[12]);
 		cd.endDay=Integer.parseInt(args[13]);
 		cd.solverName=args[14];
-		if (args.length>15) cd.csvFolderPath = args[15];
+		cd.csvFolderPath = args[15];
 		cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
@@ -286,11 +290,14 @@ public class Controller {
 				}
 				cal = Calendar.getInstance();
 				System.out.println(" After Evaluation: "+cal.getTimeInMillis());
-				//new GurobiSolver();
+				try{
+					new GurobiSolver();
+				}catch (GRBException e){
+					Error.addSolvingError("Gurobi solving error: "+e.getMessage());
+				}
 				cal = Calendar.getInstance();
 				System.out.println("    After solving: "+cal.getTimeInMillis());
 				if (Error.error_solving.size()<1){
-					assignDvarTimeseries();
 					cal = Calendar.getInstance();
 					System.out.println("After assign dvar: "+cal.getTimeInMillis());
 					ControlData.isPostProcessing=true;

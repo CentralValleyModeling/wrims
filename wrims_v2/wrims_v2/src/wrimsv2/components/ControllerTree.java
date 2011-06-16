@@ -1,6 +1,10 @@
 package wrimsv2.components;
 
+import gurobi.GRBException;
+
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,6 +44,7 @@ import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.evaluator.ValueEvaluatorTreeWalker;
 import wrimsv2.external.LoadAllDll;
+import wrimsv2.solver.GurobiSolver;
 import wrimsv2.solver.XASolver;
 import wrimsv2.tools.RCCComparison;
 import wrimsv2.wreslparser.elements.LogUtils;
@@ -211,11 +216,11 @@ public class ControllerTree {
 				cal = Calendar.getInstance();
 				System.out.println("    After solving: "+cal.getTimeInMillis());
 				if (Error.error_solving.size()<1){
-					assignDvar();
+					assignDvarTimeseries();
 					cal = Calendar.getInstance();
 					System.out.println("After assign dvar: "+cal.getTimeInMillis());
 					ControlData.isPostProcessing=true;
-					processAlias();
+					processAliasTimeseries();
 				}else{
 					Error.writeSolvingErrorFile("solving_error.txt");
 					noError=false;
@@ -284,15 +289,18 @@ public class ControllerTree {
 				}
 				cal = Calendar.getInstance();
 				System.out.println(" After Evaluation: "+cal.getTimeInMillis());
-				//new GurobiSolver();
+				try{
+					new GurobiSolver();
+				}catch (GRBException e){
+					Error.addSolvingError("Gurobi solving error: "+e.getMessage());
+				}
 				cal = Calendar.getInstance();
 				System.out.println("    After solving: "+cal.getTimeInMillis());
 				if (Error.error_solving.size()<1){
-					assignDvar();
 					cal = Calendar.getInstance();
 					System.out.println("After assign dvar: "+cal.getTimeInMillis());
 					ControlData.isPostProcessing=true;
-					processAlias();
+					processAliasTimeseries();
 				}else{
 					Error.writeSolvingErrorFile("solving_error.txt");
 					noError=false;
@@ -580,6 +588,45 @@ public class ControllerTree {
 		}
 	}
 	
+	
+	public void assignDvarTimeseries(){
+		Map<String, Dvar> dvarMap = ControlData.currDvMap;
+		Set dvarCollection = dvarMap.keySet();
+		Iterator dvarIterator = dvarCollection.iterator();
+		
+		String outPath=FilePaths.mainDirectory+"step"+ControlData.currTimeStep+"_"+ControlData.currCycleIndex+".txt";
+		FileWriter outstream;
+		try {
+			outstream = new FileWriter(outPath);
+			BufferedWriter out = new BufferedWriter(outstream);
+			
+		while(dvarIterator.hasNext()){ 
+			String dvName=(String)dvarIterator.next();
+			Dvar dvar=dvarMap.get(dvName);
+			double value=ControlData.xasolver.getColumnActivity(dvName);
+			dvar.setData(new IntDouble(value,false));
+			if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){
+				DssDataSetFixLength dds=new DssDataSetFixLength();
+				double[] data=new double[totalTimeStep];
+				dds.setData(data);
+				dds.setTimeStep(ControlData.partE);
+				dds.setStartTime(startTime);
+				DataTimeSeries.dvAliasTS.put(dvName,dds);
+			}
+			double[] dataList=DataTimeSeries.dvAliasTS.get(dvName).getData();
+			dataList[ControlData.currTimeStep]=value;
+			
+			out.write(dvName+":"+value+"\n");
+		}
+		
+		out.close();
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void processAlias(){
 		ModelDataSet mds=ControlData.currModelDataSet;
 		ArrayList<String> asList = mds.asList;
@@ -615,6 +662,41 @@ public class ControllerTree {
 				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
 				dataList[ControlData.currTimeStep]=-901.0;
 			}
+		}
+	}
+	
+	public void processAliasTimeseries(){
+		ModelDataSet mds=ControlData.currModelDataSet;
+		ArrayList<String> asList = mds.asList;
+		Map<String, Alias> asMap =mds.asMap;
+		ControlData.currEvalTypeIndex=2;
+		for (String asName: asList){
+			ControlData.currEvalName=asName;
+			//System.out.println("Process alias "+asName);
+			Alias alias=asMap.get(asName);
+			
+			ValueEvaluatorParser evaluator = alias.expressionParser;
+			try {
+				evaluator.evaluator();
+				IntDouble id=evaluator.evalValue;
+				alias.data=id;
+				if (!DataTimeSeries.dvAliasTS.containsKey(asName)){
+					DssDataSetFixLength dds=new DssDataSetFixLength();
+					double[] data=new double[totalTimeStep];
+					dds.setData(data);
+					dds.setTimeStep(ControlData.partE);
+					dds.setStartTime(startTime);
+					DataTimeSeries.dvAliasTS.put(asName,dds);
+				}
+				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
+				dataList[ControlData.currTimeStep]=id.getData().doubleValue();
+			} catch (RecognitionException e) {
+				Error.addEvaluationError("Alias evaluation has error.");
+				alias.data=new IntDouble(-901.0,false);
+				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
+				dataList[ControlData.currTimeStep]=-901.0;
+			}
+			evaluator.reset();
 		}
 	}
 	
