@@ -1,4 +1,7 @@
 package wrimsv2.solver;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -23,6 +26,8 @@ import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
 import wrimsv2.components.IntDouble;
 import wrimsv2.components.Error;
+import wrimsv2.evaluator.DataTimeSeries;
+import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.evaluator.EvaluatorLexer;
 import wrimsv2.evaluator.EvaluatorParser;
@@ -41,6 +46,7 @@ public class XASolver {
 		modelStatus=ControlData.xasolver.getModelStatus();
 		System.out.println("Model status: "+modelStatus);
 		if (modelStatus>2)	getSolverInformation();
+		if (Error.error_solving.size()<1) assignDvarTimeseries(); 
 	}
 	
 	public void getSolverInformation(){
@@ -112,6 +118,72 @@ public class XASolver {
 				String multName=(String)multIterator.next();
 				ControlData.xasolver.loadToCurrentRow(multName, multMap.get(multName).getData().doubleValue());
 			}
+		}
+	}
+	
+	public void assignDvar(){
+		Map<String, Dvar> dvarMap = ControlData.currDvMap;
+		Set dvarCollection = dvarMap.keySet();
+		Iterator dvarIterator = dvarCollection.iterator();
+	
+		String outPath=FilePaths.mainDirectory+"step"+ControlData.currTimeStep+"_"+ControlData.currCycleIndex+".txt";
+		FileWriter outstream;
+		
+		try {
+			outstream = new FileWriter(outPath);
+			BufferedWriter out = new BufferedWriter(outstream);
+			
+		while(dvarIterator.hasNext()){ 
+			String dvName=(String)dvarIterator.next();
+			Dvar dvar=dvarMap.get(dvName);
+			double value=ControlData.xasolver.getColumnActivity(dvName);
+			dvar.setData(new IntDouble(value,false));
+			
+			out.write(dvName+":"+value+"\n");
+		}
+		out.close();
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void assignDvarTimeseries(){
+		Map<String, Dvar> dvarMap = ControlData.currDvMap;
+		Set dvarCollection = dvarMap.keySet();
+		Iterator dvarIterator = dvarCollection.iterator();
+		
+		String outPath=FilePaths.mainDirectory+"step"+ControlData.currTimeStep+"_"+ControlData.currCycleIndex+".txt";
+		FileWriter outstream;
+		try {
+			outstream = new FileWriter(outPath);
+			BufferedWriter out = new BufferedWriter(outstream);
+			
+		while(dvarIterator.hasNext()){ 
+			String dvName=(String)dvarIterator.next();
+			Dvar dvar=dvarMap.get(dvName);
+			double value=ControlData.xasolver.getColumnActivity(dvName);
+			dvar.setData(new IntDouble(value,false));
+			if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){
+				DssDataSetFixLength dds=new DssDataSetFixLength();
+				double[] data=new double[ControlData.totalTimeStep];
+				dds.setData(data);
+				dds.setTimeStep(ControlData.partE);
+				dds.setStartTime(ControlData.startTime);
+				DataTimeSeries.dvAliasTS.put(dvName,dds);
+			}
+			double[] dataList=DataTimeSeries.dvAliasTS.get(dvName).getData();
+			dataList[ControlData.currTimeStep]=value;
+			
+			out.write(dvName+":"+value+"\n");
+		}
+		
+		out.close();
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

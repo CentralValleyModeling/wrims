@@ -15,6 +15,7 @@ import wrimsv2.evaluator.LoopIndex;
 import wrimsv2.external.ExternalFunction;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -52,6 +53,8 @@ public class ControlData {
 	public static int endYear ;
 	public static int endMonth;
 	public static int endDay;
+	public static int totalTimeStep;
+	public static Date startTime;
 	public static String simulationTimeFrame;
 	public static String partA;
 	public static String svDvPartF;

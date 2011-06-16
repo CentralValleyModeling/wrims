@@ -53,9 +53,6 @@ import wrimsv2.wreslparser.elements.WriteCSV;
 
 public class Controller {
 	
-	private int totalTimeStep;
-	private Date startTime;
-	
 	public Controller() {
 		setControlData();
 		try {
@@ -167,17 +164,17 @@ public class Controller {
 		ControlData.currStudyDataSet=sds;
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
-		startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
+		ControlData.startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 				
 		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
 		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
 		ControlData.allTsMap=sds.getTimeseriesMap();
 		
-		totalTimeStep=getTotalTimeStep();
+		ControlData.totalTimeStep=getTotalTimeStep();
 		Calendar cal = Calendar.getInstance();
 		System.out.println("After Parsser: "+cal.getTimeInMillis());
 		readTimeseries();
-		initialDvarAliasTS(totalTimeStep);
+		initialDvarAliasTS(ControlData.totalTimeStep);
 		for (int i=0; i<modelList.size(); i++){
 			String model=modelList.get(i);
 			ModelDataSet mds=modelDataSetMap.get(model);
@@ -189,7 +186,7 @@ public class Controller {
 		initialXASolver();
 		boolean noError=true;
 		ControlData.currTimeStep=0;
-		while (ControlData.currTimeStep<totalTimeStep && noError){
+		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
 			clearDvarValues(modelList, modelDataSetMap);
 			int i=0;
 			while (i<modelList.size()  && noError){   
@@ -216,7 +213,6 @@ public class Controller {
 				cal = Calendar.getInstance();
 				System.out.println("    After solving: "+cal.getTimeInMillis());
 				if (Error.error_solving.size()<1){
-					assignDvarTimeseries();
 					cal = Calendar.getInstance();
 					System.out.println("After assign dvar: "+cal.getTimeInMillis());
 					ControlData.isPostProcessing=true;
@@ -246,17 +242,17 @@ public class Controller {
 		ControlData.currStudyDataSet=sds;
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
-		startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
+		ControlData.startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 				
 		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
 		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
 		ControlData.allTsMap=sds.getTimeseriesMap();
 		
-		totalTimeStep=getTotalTimeStep();
+		ControlData.totalTimeStep=getTotalTimeStep();
 		Calendar cal = Calendar.getInstance();
 		System.out.println("After Parsser: "+cal.getTimeInMillis());
 		readTimeseries();
-		initialDvarAliasTS(totalTimeStep);
+		initialDvarAliasTS(ControlData.totalTimeStep);
 		for (int i=0; i<modelList.size(); i++){
 			String model=modelList.get(i);
 			ModelDataSet mds=modelDataSetMap.get(model);
@@ -267,7 +263,7 @@ public class Controller {
 		
 		boolean noError=true;
 		ControlData.currTimeStep=0;
-		while (ControlData.currTimeStep<totalTimeStep && noError){
+		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
 			clearDvarValues(modelList, modelDataSetMap);
 			int i=0;
 			while (i<modelList.size()  && noError){   
@@ -550,71 +546,7 @@ public class Controller {
 		}
 	}
 	
-	public void assignDvar(){
-		Map<String, Dvar> dvarMap = ControlData.currDvMap;
-		Set dvarCollection = dvarMap.keySet();
-		Iterator dvarIterator = dvarCollection.iterator();
-	
-		String outPath=FilePaths.mainDirectory+"step"+ControlData.currTimeStep+"_"+ControlData.currCycleIndex+".txt";
-		FileWriter outstream;
-		
-		try {
-			outstream = new FileWriter(outPath);
-			BufferedWriter out = new BufferedWriter(outstream);
-			
-		while(dvarIterator.hasNext()){ 
-			String dvName=(String)dvarIterator.next();
-			Dvar dvar=dvarMap.get(dvName);
-			double value=ControlData.xasolver.getColumnActivity(dvName);
-			dvar.setData(new IntDouble(value,false));
-			
-			out.write(dvName+":"+value+"\n");
-		}
-		out.close();
-		
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	public void assignDvarTimeseries(){
-		Map<String, Dvar> dvarMap = ControlData.currDvMap;
-		Set dvarCollection = dvarMap.keySet();
-		Iterator dvarIterator = dvarCollection.iterator();
-		
-		String outPath=FilePaths.mainDirectory+"step"+ControlData.currTimeStep+"_"+ControlData.currCycleIndex+".txt";
-		FileWriter outstream;
-		try {
-			outstream = new FileWriter(outPath);
-			BufferedWriter out = new BufferedWriter(outstream);
-			
-		while(dvarIterator.hasNext()){ 
-			String dvName=(String)dvarIterator.next();
-			Dvar dvar=dvarMap.get(dvName);
-			double value=ControlData.xasolver.getColumnActivity(dvName);
-			dvar.setData(new IntDouble(value,false));
-			if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){
-				DssDataSetFixLength dds=new DssDataSetFixLength();
-				double[] data=new double[totalTimeStep];
-				dds.setData(data);
-				dds.setTimeStep(ControlData.partE);
-				dds.setStartTime(startTime);
-				DataTimeSeries.dvAliasTS.put(dvName,dds);
-			}
-			double[] dataList=DataTimeSeries.dvAliasTS.get(dvName).getData();
-			dataList[ControlData.currTimeStep]=value;
-			
-			out.write(dvName+":"+value+"\n");
-		}
-		
-		out.close();
-		
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+
 	
 	public void processAlias(){
 		ModelDataSet mds=ControlData.currModelDataSet;
@@ -656,10 +588,10 @@ public class Controller {
 				alias.data=id;
 				if (!DataTimeSeries.dvAliasTS.containsKey(asName)){
 					DssDataSetFixLength dds=new DssDataSetFixLength();
-					double[] data=new double[totalTimeStep];
+					double[] data=new double[ControlData.totalTimeStep];
 					dds.setData(data);
 					dds.setTimeStep(ControlData.partE);
-					dds.setStartTime(startTime);
+					dds.setStartTime(ControlData.startTime);
 					DataTimeSeries.dvAliasTS.put(asName,dds);
 				}
 				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
