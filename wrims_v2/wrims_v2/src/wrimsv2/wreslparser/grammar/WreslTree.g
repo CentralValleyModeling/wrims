@@ -47,7 +47,6 @@ tokens {
   
 }
 @members {
-;
 	public Set<String> reservedSet = new HashSet<String>(Arrays.asList
 	("month", "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec",
 	 "prevjan", "prevfeb", "prevmar", "prevapr", "prevmay", "prevjun", 
