@@ -76,7 +76,7 @@ SUBROUTINE ADD_CONSTRAINT (Control_Tag,C,Dvar_Name,&
      Surpl_Label,Slack_Label,Pen_Surpl,Pen_Slack,&
      RHS,goal_count,ndvar)
   USE RCC_CACHE, ONLY: rcc_cache_add
-
+  USE messenger
   IMPLICIT NONE
   dll_export add_constraint
 
@@ -91,10 +91,15 @@ SUBROUTINE ADD_CONSTRAINT (Control_Tag,C,Dvar_Name,&
   INTEGER                                    :: i
   LOGICAL           			:: Slack_constrained,Surpl_constrained
   CHARACTER(LEN=2)			:: cyclenum
+  INTEGER :: i_tag, i_len
+  CHARACTER(LEN=200)       :: msg
 
 100 FORMAT('SURPL',i5.5)
 110 FORMAT('SLACK',i5.5)
 120 FORMAT(A2,'Objective')
+130 FORMAT('U_',a)
+140 FORMAT('L_',a)
+
 
   ! first we write the lhs decision variables and their coefficients
   DO i=1,ndvar
@@ -126,8 +131,22 @@ SUBROUTINE ADD_CONSTRAINT (Control_Tag,C,Dvar_Name,&
      ! get the priority number from the control tag, and prepare names for slack or surplus variables should they be needed
      READ( Control_Tag(1:2),FMT='(a2)') cyclenum
      WRITE( prioritized_objective, 120) cyclenum
-     WRITE(Surpl_Name,100) goal_count
-     WRITE(Slack_Name,110) goal_count
+
+     i_tag = index(Control_Tag,'/') ! allowed total len = i_tag + 2 < 32 => i_tag < 30
+                                    ! goal name = i_tag - 2 - 1 => goal name < 27
+     
+     
+    if ( (i_tag-2-1) > 26 ) then
+       write(msg,*) 'Goal name exceeds 26 chars: '//Control_Tag(3:i_tag-1)
+       call WindowMessage(3, 'WRIMS XA Error', msg)
+    end if
+     
+     !WRITE(Surpl_Name,100) goal_count     
+     WRITE(Surpl_Name,130) Control_Tag(3:i_tag-1)//'_'//Control_Tag(i_tag+1:i_tag+2)
+     !WRITE(Slack_Name,110) goal_count
+     !WRITE(Slack_Name,110) index(Control_Tag,'/')
+     !WRITE(Slack_Name,110) len_trim(Control_Tag)
+     WRITE(Slack_Name,140) Control_Tag(3:i_tag-1)//'_'//Control_Tag(i_tag+1:i_tag+2)
      IF (.not. Surpl_constrained) THEN
         call rcc_cache_add( Control_Tag, Surpl_Name, -1.)
         call rcc_cache_add( prioritized_objective, Surpl_Name, -1.*Pen_Surpl)
@@ -239,3 +258,5 @@ subroutine getvarvalue(var,names,values,val)
   end do
   val = -99999
 end subroutine getvarvalue
+
+

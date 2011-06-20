@@ -427,6 +427,7 @@ contains
        IF (chareq(solution(k)%id,'OBJ').and.k/=1) THEN
           EXIT
        ELSE IF (chareq(solution(k)%id(1:3),'OBJ').OR.chareq(solution(k)%id(1:5),'SLACK').OR.&
+            chareq(solution(k)%id(1:2),'U_').OR.chareq(solution(k)%id(1:2),'L_').OR.&
             chareq(solution(k)%id(1:5),'SURPL').OR.chareq(solution(k)%id(1:1),'').OR.&
             (ICHAR(solution(k)%id(1:1)) <= ICHAR('9')) ) THEN
           ! write OBJ and SLACK/SURPLUS variables to separate file
