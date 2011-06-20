@@ -49,7 +49,7 @@ Name: "main"; Description: "Main Files"; Types: full compact custom;
 [Files]
 
 Source: "..\bin\*";        Excludes: ".svn, xa*.dll, *.py";   DestDir: "{app}\bin\";          Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
-Source: "..\lib\*";        Excludes: ".svn, *.py, *.obj, *.mod, *.lib, *.txt";            DestDir: "{app}\lib\";                Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
+Source: "..\lib\*";        Excludes: ".svn";            DestDir: "{app}\lib\";                Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
 Source: "..\svg\*";        Excludes: ".svn";            DestDir: "{app}\svg\";                Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
 Source: "..\license\*";    Excludes: ".svn";            Destdir: "{app}\";                    Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
 Source: "..\graphics\*";   Excludes: ".svn";  Destdir: "{app}\lib\graphics\calsim\graphics";  Flags: ignoreversion recursesubdirs createallsubdirs ; Components: main
