@@ -161,8 +161,10 @@ alias : DEFINE ( '[' sc=LOCAL? ']' )? i=IDENT '{' ALIAS e=expression (KIND k=STR
 	;	
 
 goal
-scope { String goalName; String caseName;} 
-	: GOAL! (goal_simple | goal_case_or_nocase  );
+scope { String goalName; String caseName; int caseNumber;} 
+@init{ $goal::caseNumber = 0; }
+	: GOAL! (goal_simple | goal_case_or_nocase  )	
+	;
 
 goal_simple
 	:  ( '[' sc=LOCAL? ']' )? i=IDENT '{' v=constraint_statement '}'	
@@ -179,14 +181,14 @@ goal_case_or_nocase
 	;
 
 goal_case_content[String l, String d] 
-	: CASE i=IDENT { $goal::caseName = $i.text;  } 
+	: CASE i=IDENT { $goal::caseName = $i.text;  $goal::caseNumber++; } 
 	'{' c=condition RHS r=expression (s=sub_content[$l,$r.text])? '}'
 	-> {s!=null}? ^( Case $i Condition[$c.text] Dependants[$d+" "+$r.dependants] $s )
 	->            ^( Case $i Condition[$c.text] Dependants[$d+" "+$r.dependants] Simple Lhs[$l] Op["="] Rhs[$r.text] )
 	;
 
 goal_no_case_content[String l, String d] 
-@init{ $goal::caseName = "default";}
+@init{ $goal::caseName = "default";   $goal::caseNumber=1;}
 	: RHS r=expression (s=sub_content[$l,$r.text])?
        -> {s!=null}? Dependants[$d+" "+$r.dependants]  $s 
        ->            Dependants[$d+" "+$r.dependants]  Simple Lhs[$l] Op["="] Rhs[$r.text] 
@@ -214,7 +216,9 @@ LHS '>' RHS
 					else 		  { $type = "p";   }
 				  }							 
 		-> {$p.isZero}? Free Lhs[$l] Op[">"] Rhs[$r]  
-		-> 	  		    Penalty Lhs[$l] Op["="] Rhs[$r] Sign["-"] Kind["surplus"] Slack_Surplus["surplus_"+$goal::goalName+"_"+$goal::caseName] Weight["-"+$p.w]   )
+		-> 	  		    Penalty Lhs[$l] Op["="] Rhs[$r] Sign["-"] Kind["surplus"] Slack_Surplus["u_"+$goal::goalName+"_"+Integer.toString($goal::caseNumber)] Weight["-"+$p.w] 
+		//-> 	  		    Penalty Lhs[$l] Op["="] Rhs[$r] Sign["-"] Kind["surplus"] Slack_Surplus["surplus_"+$goal::goalName+"_"+$goal::caseName] Weight["-"+$p.w] 
+		)
 	);
 
 lhs_lt_rhs[String l, String r]  returns[String type] 
@@ -226,7 +230,9 @@ LHS '<' RHS
 					else 		  { $type = "p";   }
 				  }
 		-> {$p.isZero}? Free Lhs[$l] Op["<"] Rhs[$r] 
-		->              Penalty Lhs[$l] Op["="] Rhs[$r] Sign["+"] Kind["slack"] Slack_Surplus["slack_"+$goal::goalName+"_"+$goal::caseName]  Weight["-"+$p.w] )
+		->              Penalty Lhs[$l] Op["="] Rhs[$r] Sign["+"] Kind["slack"] Slack_Surplus["l_"+$goal::goalName+"_"+Integer.toString($goal::caseNumber)]  Weight["-"+$p.w]
+		//->              Penalty Lhs[$l] Op["="] Rhs[$r] Sign["+"] Kind["slack"] Slack_Surplus["slack_"+$goal::goalName+"_"+$goal::caseName]  Weight["-"+$p.w]		
+		)
 	);
 
 penalty returns[String w, boolean isZero]

@@ -9,7 +9,7 @@ import wrimsv2.components.*;
 import wrimsv2.wreslparser.elements.RegUtils;
 import wrimsv2.wreslparser.elements.Tools;
 
-public class TestXASolver {
+public class TestXASolver_simple {
 	
 	private double tolerance_perc = 0.1/1000000; // 0.1 ppm
 	private String logFilePath;	
