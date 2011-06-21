@@ -1,14 +1,19 @@
 package wrimsv2.solver;
 
-import gurobi.GRB;
+import gurobi.*;
+
 import gurobi.GRBEnv;
 import gurobi.GRBException;
 import gurobi.GRBLinExpr;
 import gurobi.GRBModel;
 import gurobi.GRBVar;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Iterator;
@@ -31,48 +36,28 @@ import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
 import wrimsv2.components.IntDouble;
 import wrimsv2.components.Error;
+import wrimsv2.evaluator.DataTimeSeries;
+import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.evaluator.EvaluatorLexer;
 import wrimsv2.evaluator.EvaluatorParser;
 import gurobi.*;
 
 public class GurobiSolver {
+	
 	int modelStatus;
-	GRBEnv    env   = new GRBEnv("model1.log");
+	GRBEnv    env   = new GRBEnv("mip1.log");
 	GRBModel  model = new GRBModel(env);
+	
 	Map<String, GRBVar> varMap = new HashMap <String, GRBVar> ();
 	
 	public GurobiSolver() throws GRBException{
-		//ControlData.xasolver.loadNewModel();
 		setConstraints();
 		setDVars();
-		//setWeights();
+		model.optimize();		
+		assignDvarTimeseries();
 
-		try {
-			model.optimize();
-		} catch (GRBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//ControlData.xasolver.solve();
-		/*
-		modelStatus=ControlData.xasolver.getModelStatus();
-		System.out.println("Model status: "+modelStatus);
-		if (modelStatus>2)	getSolverInformation();
-		*/
 	}
-	/*
-	public void getSolverInformation(){
-		System.out.println("Solver status: "+ControlData.xasolver.getSolverStatus());
-		System.out.println("Exception: "+ControlData.xasolver.getExceptionCode());
-		System.out.println("Message: "+ControlData.xasolver.getMessage());
-		System.out.println("Return code: "+ControlData.xasolver.getRc());
-		switch (modelStatus){
-			case 3: Error.addSolvingError("Unbounded solution."); break;
-			case 4: Error.addSolvingError("Infeasible solution."); break;
-			case 6: Error.addSolvingError("Intermediate infeasible solution."); break;
-		}
-	}*/
 	
 	public void setDVars() throws GRBException{
 		Map<String, Dvar> DvarMap = SolverData.getDvarMap();
@@ -91,28 +76,18 @@ public class GurobiSolver {
 			double lb = dvar.lowerBoundValue.doubleValue();
 			double ub = dvar.upperBoundValue.doubleValue();
 			
-			GRBVar VarName = model.addVar(lb, ub, weightMap.get(dvarName).getValue(), GRB.BINARY, dvarName);
-			varMap.put(dvarName, VarName);
+			if (weightMap.containsKey(dvarName)) {
+				GRBVar VarName = model.addVar(lb, ub, weightMap.get(dvarName).getValue(), GRB.BINARY, dvarName);
+				varMap.put(dvarName, VarName);
+			}else{
+				GRBVar VarName = model.addVar(lb, ub, 0, GRB.BINARY, dvarName);
+				varMap.put(dvarName, VarName);
+			}
+			
 			model.update();
-			/*
-			if (dvar.integer.equals("y")){
-				ControlData.xasolver.setColumnInteger(dvarName, lb, ub); }
-			else {
-				ControlData.xasolver.setColumnMinMax(dvarName, lb, ub);}*/
 		}
 	}
-	/*
-	public void setWeights(){
-		Map<String, WeightElement> weightMap = SolverData.getWeightMap();
-		Set weightCollection = weightMap.keySet();
-		Iterator weightIterator = weightCollection.iterator();
-		
-		while(weightIterator.hasNext()){
-			String weightName=(String)weightIterator.next();
-			ControlData.xasolver.setColumnObjective(weightName, weightMap.get(weightName).getValue());
-		}
-	}
-	*/
+
 	private void setConstraints() throws GRBException {
 		Map<String, EvalConstraint> constraintMap = SolverData.getConstraintDataMap();
 		Set constraintCollection = constraintMap.keySet();
@@ -123,15 +98,12 @@ public class GurobiSolver {
 			EvalConstraint ec=constraintMap.get(constraintName);
 			GRBLinExpr expr = new GRBLinExpr();
 			if (ec.getSign().equals("=")) {
-				//ControlData.xasolver.setRowFix(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue()); //string constraint name
 				model.addConstr(expr, GRB.EQUAL, -ec.getEvalExpression().getValue().getData().doubleValue(), constraintName); 
 			}
 			else if (ec.getSign().equals("<") || ec.getSign().equals("<=")){
-				//ControlData.xasolver.setRowMax(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue()); //string constraint name
 				model.addConstr(expr, GRB.LESS_EQUAL, -ec.getEvalExpression().getValue().getData().doubleValue(), constraintName); 
 			}
 			else if (ec.getSign().equals(">")){
-				//ControlData.xasolver.setRowMin(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue()); //string constraint name
 				model.addConstr(expr, GRB.GREATER_EQUAL, -ec.getEvalExpression().getValue().getData().doubleValue(), constraintName); 
 			}
 			
@@ -141,9 +113,46 @@ public class GurobiSolver {
 			
 			while(multIterator.hasNext()){
 				String multName=(String)multIterator.next();
-				//ControlData.xasolver.loadToCurrentRow(multName, multMap.get(multName).getData().doubleValue());
 				expr.addTerm(multMap.get(multName).getData().doubleValue(), varMap.get(multName));
 			}
+		}
+	}
+	
+	public void assignDvarTimeseries() throws GRBException{
+		Map<String, Dvar> dvarMap = ControlData.currDvMap;
+		Set dvarCollection = dvarMap.keySet();
+		Iterator dvarIterator = dvarCollection.iterator();
+		
+		String outPath=FilePaths.mainDirectory+"step"+ControlData.currTimeStep+"_"+ControlData.currCycleIndex+".txt";
+		FileWriter outstream;
+		try {
+			outstream = new FileWriter(outPath);
+			BufferedWriter out = new BufferedWriter(outstream);
+			
+		while(dvarIterator.hasNext()){ 
+			String dvName=(String)dvarIterator.next();
+			Dvar dvar=dvarMap.get(dvName);
+			double value=varMap.get(dvName).get(GRB.DoubleAttr.X); 
+			dvar.setData(new IntDouble(value,false));
+			if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){
+				DssDataSetFixLength dds=new DssDataSetFixLength();
+				double[] data=new double[ControlData.totalTimeStep];
+				dds.setData(data);
+				dds.setTimeStep(ControlData.partE);
+				dds.setStartTime(ControlData.startTime);
+				DataTimeSeries.dvAliasTS.put(dvName,dds);
+			}
+			double[] dataList=DataTimeSeries.dvAliasTS.get(dvName).getData();
+			dataList[ControlData.currTimeStep]=value;
+			
+			out.write(dvName+":"+value+"\n");
+		}
+		
+		out.close();
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
