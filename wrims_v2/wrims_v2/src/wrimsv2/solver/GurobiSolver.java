@@ -140,6 +140,8 @@ public class GurobiSolver {
 				dds.setData(data);
 				dds.setTimeStep(ControlData.partE);
 				dds.setStartTime(ControlData.startTime);
+				dds.setUnits(dvar.units);
+				dds.setKind(dvar.kind);
 				DataTimeSeries.dvAliasTS.put(dvName,dds);
 			}
 			double[] dataList=DataTimeSeries.dvAliasTS.get(dvName).getData();

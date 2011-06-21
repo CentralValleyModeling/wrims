@@ -6,6 +6,8 @@ import java.util.Date;
 public class DssDataSetFixLength {
 	private double[] data;
 	private String timeStep;
+	private String units;
+	private String kind;
 	private Date startTime;
 	private boolean fromDssFile=false;
 	
@@ -39,5 +41,21 @@ public class DssDataSetFixLength {
 	
 	public void setFromDssFile(boolean fromDssFile){
 		this.fromDssFile=fromDssFile;
+	}
+	
+	public void setUnits(String units){
+		this.units=units;
+	}
+	
+	public String getUnits(){
+		return units;
+	}
+	
+	public void setKind(String kind){
+		this.kind=kind;
+	}
+	
+	public String getKind(){
+		return kind;
 	}
 }
