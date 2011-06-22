@@ -69,4 +69,55 @@ public class TestXASolver_simple {
 	}
 	
 
+	@Test(groups = { "xa_solver_example_studies" })
+	public void example3_step1() throws RecognitionException, IOException{
+		
+		studyPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\example3\\";
+		dssPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\example3\\DSS\\";
+		
+		/// set control data		
+		String[] controlDataString = {
+		studyPath + "run\\mainEx3.wresl",
+		dssPath +   "ExampleSV.dss",
+		dssPath +   "ExampleINIT.dss",
+		"",
+	
+		"EXAMPLE",
+		"INIT",
+		"CALSIM",
+		"1MON",
+		"1921",
+		"10",
+		 "31",
+		 "1921",
+		 "10",
+		 "31", 
+		 "XA", 
+		 "csv_Example3"};
+		
+	    new Controller(controlDataString);
+	
+		// TODO: compare objective function value 
+	    // wrims v1 XA16 OBJ: 44636443.556727 
+	    // wrims v2 XA16 OBJ: 
+	    
+	    expected = 44636443.556727;
+	
+	    
+	    logFilePath = studyPath+"run//xa.log";
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int n = RegUtils.timesOfMatches(logText, objMatchString);
+		Assert.assertEquals(n, 1);
+		
+		String line = RegUtils.getLastMatch(logText, objMatchString);
+		String value = RegUtils.getLastMatch(line, "\\d+.\\d+");
+		
+		double obj_value =  Double.parseDouble(value);
+		
+		Assert.assertEquals(obj_value, expected, expected*tolerance_perc);	
+	
+	}
+	
+
 }

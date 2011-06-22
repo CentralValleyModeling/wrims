@@ -1,6 +1,6 @@
 SEQUENCE One { MODEL Mod1_mod ORDER 1 }
 
-MODEL Mod1_mod {
+MODEL Mod1 {
 	define I1 {timeseries kind 'FLOW-INFLOW' units 'TAF' convert 'CFS'} !Inflow to Shasta
 	
 	define C1 {lower 0 upper 50000 kind 'FLOW-CHANNEL' units 'CFS'} !Shasta Release
