@@ -84,6 +84,7 @@ public class ControllerTree {
 	public void setControlData(){
         FilePaths.setSvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss");
         FilePaths.setInitDssPaths("D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss");
+        FilePaths.setDvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\TestWRIMSV2DV.dss");
         FilePaths.setMainFilePaths("D:\\CalLite_Beta_042611\\Run\\main_BO.wresl");
 		ControlData cd=new ControlData();
         cd.svDvPartF="2020D09E";
@@ -101,7 +102,11 @@ public class ControllerTree {
         cd.currYear=ControlData.startYear;
         cd.currMonth=ControlData.startMonth;
         cd.currDay=ControlData.startDay;
+        cd.writeDssStartYear=ControlData.startYear;
+        cd.writeDssStartMonth=ControlData.startMonth;
+        cd.writeDssStartDay=ControlData.startDay;
         cd.solverName="XA";
+        cd.csvFolderPath="csv";
 	}
 	
 	public void setControlData(String[] args){
@@ -109,23 +114,28 @@ public class ControllerTree {
         FilePaths.setSvarDssPaths(args[1]);
         FilePaths.setInitDssPaths(args[2]);
         FilePaths.setDvarDssPaths(args[3]);
+        FilePaths.setDvarDssPaths(args[4]);
 		ControlData cd=new ControlData();
-		cd.svDvPartF=args[4];
-		cd.initPartF=args[5];
-		cd.partA = args[6];
-		cd.partE = args[7];
-		cd.timeStep = args[7];
-		cd.startYear=Integer.parseInt(args[8]);
-		cd.startMonth=Integer.parseInt(args[9]);
-		cd.startDay=Integer.parseInt(args[10]);
-		cd.endYear=Integer.parseInt(args[11]);
-		cd.endMonth=Integer.parseInt(args[12]);
-		cd.endDay=Integer.parseInt(args[13]);
-		cd.solverName=args[14];
+		cd.svDvPartF=args[5];
+		cd.initPartF=args[6];
+		cd.partA = args[7];
+		cd.partE = args[8];
+		cd.timeStep = args[8];
+		cd.startYear=Integer.parseInt(args[9]);
+		cd.startMonth=Integer.parseInt(args[10]);
+		cd.startDay=Integer.parseInt(args[11]);
+		cd.endYear=Integer.parseInt(args[12]);
+		cd.endMonth=Integer.parseInt(args[13]);
+		cd.endDay=Integer.parseInt(args[14]);
+		cd.solverName=args[15];
+		cd.csvFolderPath = args[16];
 		cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
+        cd.writeDssStartYear=cd.startYear;
+        cd.writeDssStartMonth=cd.startMonth;
+        cd.writeDssStartDay=cd.startDay;
 	}
 	
 	public StudyDataSet parse()throws RecognitionException, IOException{
@@ -586,6 +596,8 @@ public class ControllerTree {
 					dds.setData(data);
 					dds.setTimeStep(ControlData.partE);
 					dds.setStartTime(ControlData.startTime);
+					dds.setUnits(alias.units);
+					dds.setKind(alias.kind);
 					DataTimeSeries.dvAliasTS.put(asName,dds);
 				}
 				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
@@ -620,6 +632,8 @@ public class ControllerTree {
 					dds.setData(data);
 					dds.setTimeStep(ControlData.partE);
 					dds.setStartTime(ControlData.startTime);
+					dds.setUnits(alias.units);
+					dds.setKind(alias.kind);
 					DataTimeSeries.dvAliasTS.put(asName,dds);
 				}
 				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();

@@ -39,6 +39,7 @@ public class testStudies {
 	public void testSimpleStudy() throws RecognitionException, IOException{
         FilePaths.setSvarDssPaths("Z:\\CalSimOrig\\CommonData\\BigExampleSV.dss");
         FilePaths.setInitDssPaths("Z:\\CalSimOrig\\CommonData\\BigExampleINIT.dss");
+        FilePaths.setDvarDssPaths("Z:\\CalSimOrig\\Example10\\DSS\\TestWRIMSV2DV.dss");
         FilePaths.setMainFilePaths("Z:\\CalSimOrig\\Example10\\run\\Example10.wresl");
 		ControlData cd=new ControlData();
 		cd.svDvPartF="EXAMPLE";
@@ -56,6 +57,9 @@ public class testStudies {
         cd.currYear=ControlData.startYear;
         cd.currMonth=ControlData.startMonth;
         cd.currDay=ControlData.startDay;
+        cd.writeDssStartYear=ControlData.startYear;
+        cd.writeDssStartMonth=ControlData.startMonth;
+        cd.writeDssStartDay=ControlData.startDay;
         cd.solverName="XA";
         cd.csvFolderPath="csv";
 		
@@ -94,6 +98,7 @@ public class testStudies {
 	public void testParsedCalsim3()throws RecognitionException, IOException{
         FilePaths.fullSvarDssPath="D:\\CALSIM30_041311_BO\\common\\DSS\\CalSim30_06_SV.dss";
         FilePaths.fullInitDssPath="D:\\CALSIM30_041311_BO\\common\\DSS\\CalSim30_06Init.dss";
+        FilePaths.setDvarDssPaths("D:\\CALSIM30_041311_BO\\CONV\\DSS\\TestWRIMSV2DV.dss");
         FilePaths.setMainFilePaths("D:\\CALSIM30_041311_BO\\CONV\\Run\\mainCONV_30.wresl");
 		ControlData cd=new ControlData();
 		cd.startYear=1921;
@@ -105,6 +110,9 @@ public class testStudies {
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
+        cd.writeDssStartYear=ControlData.startYear;
+        cd.writeDssStartMonth=ControlData.startMonth;
+        cd.writeDssStartDay=ControlData.startDay;
 		cd.svDvPartF="CALSIM30_06";
 		cd.initPartF="CALSIM30_06";
         cd.solverName="XA";
@@ -145,6 +153,7 @@ public class testStudies {
 	public void testParsedCalLite()throws RecognitionException, IOException{
         FilePaths.setSvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss");
         FilePaths.setInitDssPaths("D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss");
+        FilePaths.setDvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\TestWRIMSV2DV.dss");
         FilePaths.setMainFilePaths("D:\\CalLite_Beta_042611\\Run\\main_BO.wresl");
 		ControlData cd=new ControlData();
         cd.svDvPartF="2020D09E";
@@ -162,6 +171,9 @@ public class testStudies {
         cd.currYear=ControlData.startYear;
         cd.currMonth=ControlData.startMonth;
         cd.currDay=ControlData.startDay;
+        cd.writeDssStartYear=ControlData.startYear;
+        cd.writeDssStartMonth=ControlData.startMonth;
+        cd.writeDssStartDay=ControlData.startDay;
         cd.solverName="XA";
         cd.csvFolderPath="csv";
         

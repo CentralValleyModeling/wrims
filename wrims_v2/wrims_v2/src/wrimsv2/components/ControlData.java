@@ -1,5 +1,6 @@
 package wrimsv2.components;
 
+import vista.db.dss.DSSDataWriter;
 import vista.db.dss.DSSUtil;
 import vista.set.Group;
 import wrimsv2.commondata.wresldata.Alias;
@@ -50,6 +51,9 @@ public class ControlData {
 	public static int startYear;       //TO DO: allow input
 	public static int startMonth;
 	public static int startDay;
+	public static int writeDssStartYear;
+	public static int writeDssStartMonth;
+	public static int writeDssStartDay;
 	public static int endYear ;
 	public static int endMonth;
 	public static int endDay;
@@ -62,6 +66,7 @@ public class ControlData {
 	public static Stack<LoopIndex> sumIndex= new Stack <LoopIndex>();
 	public static Group groupInit;
 	public static Group groupSvar;
+	public static DSSDataWriter writer;
 	public static String solverName;
 	public static String csvFolderPath="csv";
 	public static Optimizer xasolver=new Optimizer(25000);

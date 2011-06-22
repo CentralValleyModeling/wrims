@@ -9,6 +9,7 @@ public class Error {
 	public static ArrayList<String>   error_grammer = new ArrayList<String> ();
 	public static ArrayList<String>   error_evaluation= new ArrayList<String> ();
 	public static ArrayList<String>   error_solving=new ArrayList<String>();
+	public static ArrayList<String>   error_engine=new ArrayList<String>();
 	
 	public static void writeGrammerErrorFile(String fileName){
 		
@@ -82,6 +83,11 @@ public class Error {
 	public static void addSolvingError(String error){
 		error_solving.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+" of Cycle "+ControlData.currCycleIndex+": "+error);
 		System.out.println("Error-"+error);
+	}
+	
+	public static void addEngineError(String error){
+		error_engine.add("Engine error: "+error);
+		System.out.println("Engine error: "+error);
 	}
 }
 

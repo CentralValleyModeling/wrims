@@ -16,6 +16,8 @@ import wrimsv2.components.Error;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Set;
 
 public class DssOperation {
 	public static boolean getSVTimeseries(String name, String file){
@@ -201,6 +203,28 @@ public class DssOperation {
                 dds.setStartTime(tw.getStartTime().getDate());
                 DataTimeSeries.dvAliasInit.put(rName, dds);
 			}
+		}
+	}
+	
+	public static void writeRTSToDSS() {
+		String startDateStr=TimeOperation.dssTime(ControlData.writeDssStartYear, ControlData.writeDssStartMonth, ControlData.writeDssStartDay);		
+		long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
+		Set dvAliasSet=DataTimeSeries.dvAliasTS.keySet();
+		Iterator iterator = dvAliasSet.iterator();
+		while(iterator.hasNext()){
+			String dvAliasName=(String)iterator.next();
+			DssDataSetFixLength ddsfl=DataTimeSeries.dvAliasTS.get(dvAliasName);
+			double[] values=ddsfl.getData();
+			DSSData ds = new DSSData();
+			ds._dataType=DSSUtil.REGULAR_TIME_SERIES;
+			ds._yType="PER-AVER";
+			ds._numberRead=values.length;
+			ds._yUnits=ddsfl.getUnits();
+			ds._yValues = values;
+			boolean storeFlags = false;
+			String pathName="/"+ControlData.partA+"/"+dvAliasName+"/"+ddsfl.getKind()+"//"+ControlData.partE+"/"+ControlData.svDvPartF+"/";
+			ControlData.writer.storeTimeSeriesData(pathName, startJulmin, ds,
+				storeFlags);
 		}
 	}
 }
