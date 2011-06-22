@@ -1,4 +1,4 @@
-SEQUENCE One { MODEL Mod1_mod ORDER 1 }
+SEQUENCE One { MODEL Mod1 ORDER 1 }
 
 MODEL Mod1 {
 	define I1 {timeseries kind 'FLOW-INFLOW' units 'TAF' convert 'CFS'} !Inflow to Shasta
