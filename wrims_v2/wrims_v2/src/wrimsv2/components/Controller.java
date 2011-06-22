@@ -378,8 +378,8 @@ public class Controller {
 		ControlData.xasolver.openConnection();
 		ControlData.xasolver.setModelSize(100, 100);
 		ControlData.xasolver.setCommand("MAXIMIZE Yes MUTE NO FORCE No");
-		ControlData.xasolver.setCommand("set sortName Yes FileName d:\\temp Output v2%d.log MatList V MPSX Yes");
-		//ControlData.xasolver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log matlist v ToRcc Yes wait no" ) ;
+		//ControlData.xasolver.setCommand("set sortName Yes FileName d:\\temp Output v2%d.log MatList V MPSX Yes");
+		ControlData.xasolver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log matlist v ToRcc Yes wait no" ) ;
 	}
 	
 	public void processModel(){
