@@ -2,6 +2,8 @@ package wrimsv2.solver;
 
 import gurobi.*;
 
+import gurobi.GRB;
+import gurobi.GRBConstr;
 import gurobi.GRBEnv;
 import gurobi.GRBException;
 import gurobi.GRBLinExpr;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Iterator;
 import java.util.Set;
@@ -46,17 +49,20 @@ import gurobi.*;
 public class GurobiSolver {
 	
 	int modelStatus;
-	GRBEnv    env   = new GRBEnv("mip1.log");
+	GRBEnv    env   = new GRBEnv("TestGurobi.log");
 	GRBModel  model = new GRBModel(env);
 	
 	Map<String, GRBVar> varMap = new HashMap <String, GRBVar> ();
 	
-	public GurobiSolver() throws GRBException{
-		setConstraints();
+	public GurobiSolver() throws GRBException{	
+		
 		setDVars();
-		model.optimize();		
+		setConstraints();
+		model.optimize();	
+		//checkStatus();
 		assignDvarTimeseries();
-
+		Output();
+	
 	}
 	
 	public void setDVars() throws GRBException{
@@ -77,10 +83,11 @@ public class GurobiSolver {
 			double ub = dvar.upperBoundValue.doubleValue();
 			
 			if (weightMap.containsKey(dvarName)) {
-				GRBVar VarName = model.addVar(lb, ub, weightMap.get(dvarName).getValue(), GRB.BINARY, dvarName);
+				double weight=-weightMap.get(dvarName).getValue();
+				GRBVar VarName = model.addVar(lb, ub, weight, GRB.CONTINUOUS, dvarName);
 				varMap.put(dvarName, VarName);
 			}else{
-				GRBVar VarName = model.addVar(lb, ub, 0, GRB.BINARY, dvarName);
+				GRBVar VarName = model.addVar(lb, ub, 0, GRB.CONTINUOUS, dvarName);
 				varMap.put(dvarName, VarName);
 			}
 			
@@ -96,24 +103,24 @@ public class GurobiSolver {
 		while(constraintIterator.hasNext()){                          
 			String constraintName=(String)constraintIterator.next();
 			EvalConstraint ec=constraintMap.get(constraintName);
-			GRBLinExpr expr = new GRBLinExpr();
-			if (ec.getSign().equals("=")) {
-				model.addConstr(expr, GRB.EQUAL, -ec.getEvalExpression().getValue().getData().doubleValue(), constraintName); 
-			}
-			else if (ec.getSign().equals("<") || ec.getSign().equals("<=")){
-				model.addConstr(expr, GRB.LESS_EQUAL, -ec.getEvalExpression().getValue().getData().doubleValue(), constraintName); 
-			}
-			else if (ec.getSign().equals(">")){
-				model.addConstr(expr, GRB.GREATER_EQUAL, -ec.getEvalExpression().getValue().getData().doubleValue(), constraintName); 
-			}
-			
 			HashMap<String, IntDouble> multMap = ec.getEvalExpression().getMultiplier();
 			Set multCollection = multMap.keySet();
 			Iterator multIterator = multCollection.iterator();
+			GRBLinExpr expr = new GRBLinExpr();
 			
 			while(multIterator.hasNext()){
 				String multName=(String)multIterator.next();
-				expr.addTerm(multMap.get(multName).getData().doubleValue(), varMap.get(multName));
+				double coef=multMap.get(multName).getData().doubleValue();
+				GRBVar var=varMap.get(multName);
+				expr.addTerm(coef, var);		
+			}
+			if (ec.getSign().equals("=")) {
+				model.addConstr(expr, GRB.EQUAL, -ec.getEvalExpression().getValue().getData().doubleValue(), constraintName); 			}
+			else if (ec.getSign().equals("<") || ec.getSign().equals("<=")){
+				model.addConstr(expr, GRB.LESS_EQUAL, -ec.getEvalExpression().getValue().getData().doubleValue(), constraintName); 
+			}
+			else if (ec.getSign().equals(">") || ec.getSign().equals(">=")){
+				model.addConstr(expr, GRB.GREATER_EQUAL, -ec.getEvalExpression().getValue().getData().doubleValue(), constraintName); 
 			}
 		}
 	}
@@ -156,5 +163,83 @@ public class GurobiSolver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private void checkStatus() throws GRBException {
+	      int status = model.get(GRB.IntAttr.Status);
+	      if (status == GRB.Status.UNBOUNDED) {
+	        System.out.println("The model cannot be solved "
+	            + "because it is unbounded");
+	        return;
+	      }
+	      if (status == GRB.Status.OPTIMAL) {
+	        System.out.println("The optimal objective is " +
+	            model.get(GRB.DoubleAttr.ObjVal));
+	        return;
+	      }
+	      if (status != GRB.Status.INF_OR_UNBD && 
+	          status != GRB.Status.INFEASIBLE    ) {
+	        System.out.println("Optimization was stopped with status " + status);
+	        return;
+	      }
+
+	      // do IIS
+	      System.out.println("The model is infeasible; computing IIS");
+	      LinkedList<String> removed = new LinkedList<String>();
+
+	      // Loop until we reduce to a model that can be solved
+	      while (true) {
+	        model.computeIIS();
+	        System.out.println("\nThe following constraint cannot be satisfied:");
+	        for (GRBConstr c : model.getConstrs()) {
+	          if (c.get(GRB.IntAttr.IISConstr) == 1) {
+	            System.out.println(c.get(GRB.StringAttr.ConstrName));
+	            // Remove a single constraint from the model
+	            removed.add(c.get(GRB.StringAttr.ConstrName));
+	            model.remove(c);
+	            break;
+	          }
+	        }
+
+	        System.out.println();
+	        model.optimize();
+	        status = model.get(GRB.IntAttr.Status);
+
+	        if (status == GRB.Status.UNBOUNDED) {
+	          System.out.println("The model cannot be solved "
+	              + "because it is unbounded");
+	          return;
+	        }
+	        if (status == GRB.Status.OPTIMAL) {
+	          break;
+	        }
+	        if (status != GRB.Status.INF_OR_UNBD &&
+	            status != GRB.Status.INFEASIBLE    ) {
+	          System.out.println("Optimization was stopped with status " +
+	              status);
+	          return;
+	        }
+	      }
+
+	      System.out.println("\nThe following constraints were removed "
+	          + "to get a feasible LP:");
+	      for (String s : removed) {
+	        System.out.print(s + " ");
+	      }
+	      System.out.println();
+		}
+	
+	private void Output() throws GRBException {
+		Map<String, Dvar> dvarMap = ControlData.currDvMap;
+		Set dvarCollection = dvarMap.keySet();
+		Iterator dvarIterator = dvarCollection.iterator();
+		
+		while(dvarIterator.hasNext()){ 
+			String dvName=(String)dvarIterator.next();
+			Dvar dvar=dvarMap.get(dvName);
+			System.out.print(dvName + ": " + dvar.getData().getData() +"\n");
+		}
+		
+		System.out.println("Obj: " + model.get(GRB.DoubleAttr.ObjVal));
 	}
 }
