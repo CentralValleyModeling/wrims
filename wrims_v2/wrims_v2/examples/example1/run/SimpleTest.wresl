@@ -1,0 +1,53 @@
+/*
+  Kevin Fung
+  Simple Case
+*/
+
+! SEQUENCE block defines the model solution sequence
+SEQUENCE One {
+    MODEL   Mod1
+    ORDER   1
+}
+
+! MODEL block defines files included in model "MOD1"
+MODEL Mod1 {
+
+
+
+// Decision Variables
+	define X {integer lower 0 upper 1 kind 'Dvar' units 'num'} 
+	define Y {integer lower 0 upper 1 kind 'Dvar' units 'num'} 
+	define Z {integer lower 0 upper 1 kind 'Dvar' units 'num'} 
+	define ModelVal {integer lower -1000 upper 1000 kind 'Dvar' units 'num'} 
+	
+// Constraints
+	goal C1 {X + 2*Y +3*z = 4}
+	goal C2 {X+Y>1}
+	
+	goal C3 {ModelVal=-1*X-1*Y-2*Z}
+	
+	Objective obj = {
+		[ModelVal, 1]
+		
+		/*
+		[X, 1],
+		[Y, 1],
+		[Z, 2]
+		*/
+		}	
+		
+}
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
