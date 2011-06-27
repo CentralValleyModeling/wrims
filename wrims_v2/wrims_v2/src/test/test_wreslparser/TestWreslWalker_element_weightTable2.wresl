@@ -1,0 +1,23 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }
+	
+MODEL first { 
+
+  include[local] 'moreWreslFiles\weight-table.wresl' 
+
+}
+
+MODEL second { 
+
+  define x { std kind 'test' units 'cfs' }
+  
+  Objective obj = {[x, 20000]}
+
+}

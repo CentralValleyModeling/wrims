@@ -3,8 +3,30 @@ SEQUENCE CYCLE1 {
     order   1
     }
 
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }
+
+SEQUENCE CYCLE3 {
+    model   third
+    order   3
+    }
+	
 MODEL first { 
 
   include 'moreWreslFiles\weight-table.wresl' 
+
+}
+
+MODEL second { 
+
+  define x { value 99 }
+
+}
+
+MODEL third { 
+
+  define y { value 99 }
 
 }
