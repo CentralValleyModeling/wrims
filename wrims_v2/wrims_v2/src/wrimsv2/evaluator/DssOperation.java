@@ -219,7 +219,7 @@ public class DssOperation {
 			ds._dataType=DSSUtil.REGULAR_TIME_SERIES;
 			ds._yType="PER-AVER";
 			ds._numberRead=values.length;
-			ds._yUnits=ddsfl.getUnits();
+			ds._yUnits=ddsfl.getUnits().toUpperCase();
 			ds._yValues = values;
 			boolean storeFlags = false;
 			String pathName="/"+ControlData.partA+"/"+dvAliasName+"/"+ddsfl.getKind()+"//"+ControlData.partE+"/"+ControlData.svDvPartF+"/";
