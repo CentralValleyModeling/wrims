@@ -283,7 +283,7 @@ public class StudyParser{
     		newGoals = checkAliasInGoalExpression(ds, newGoals);
     	}
 
-        //convertRestAliasInGoalExpression(ds);
+        convertRestAliasInGoalExpression(ds);
     	
     	/// check if var size > 100
     	Set<String> allVar = new HashSet<String>();
