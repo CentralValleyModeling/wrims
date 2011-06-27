@@ -1,0 +1,11 @@
+
+
+
+goal b2action1Sha_2 {
+  lhs C_Kswck_MIF
+    rhs       minflow_C_Kswck_adj
+    lhs>rhs   constrain
+    lhs<rhs   penalty 99 } 
+
+
+

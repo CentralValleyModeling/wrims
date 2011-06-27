@@ -55,9 +55,9 @@ public class TestWreslWalker_error {
 		String logText = Tools.readFileAsString(logFilePath);	
 
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 7);	
+		Assert.assertEquals(totalErrs, 8);	
 		
-		Assert.assertEquals(StudyParser.total_errors, 7);	
+		Assert.assertEquals(StudyParser.total_errors, 8);	
 		
 		Assert.assertEquals(sd.getModelDataSetMap().get("second").tsMap.get("ts").kind,"second-model-only" );
 		Assert.assertEquals(sd.getModelDataSetMap().get("second").svMap.get("sv").caseExpression.get(0),"second_model_only" );
@@ -140,9 +140,9 @@ public class TestWreslWalker_error {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 16);	
+		Assert.assertEquals(totalErrs, 17);	
 		
-		Assert.assertEquals(StudyParser.total_errors, 16);
+		Assert.assertEquals(StudyParser.total_errors, 17);
 		
 		Assert.assertEquals(sd.getModelDataSetMap().get("second").tsMap.get("ts").kind,"second-model-only" );
 		Assert.assertEquals(sd.getModelDataSetMap().get("second").svMap.get("sv").caseExpression.get(0),"second_model_only" );

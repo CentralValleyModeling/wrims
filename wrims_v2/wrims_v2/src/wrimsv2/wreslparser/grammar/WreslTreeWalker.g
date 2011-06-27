@@ -104,7 +104,10 @@ weight_table
 //	:	^(':=' IDENT e=expression)
 //			{ variables.put($IDENT.text, e); }
 //	;
-goal : goal_simple | goal_nocase | goal_case ;
+goal 
+scope { String scop ;} 
+@init { $goal::scop = null; } 
+: goal_simple | goal_nocase | goal_case ;
 
 dvar : dvar_std | dvar_nonStd    ;
 
@@ -184,7 +187,7 @@ goal_nocase
 
 goal_case
 	@init { Goal gl = new Goal(); }   
-	:  ^( Goal_case sc=Scope i=IDENT  
+	:  ^( Goal_case sc=Scope {$goal::scop = $sc.text;} i=IDENT  
 		( ^( Case n=IDENT c=Condition d=Dependants e=goal_contents 
 			{	
 				gl.caseName.add($n.text.toLowerCase());
@@ -293,8 +296,9 @@ goal_content returns[boolean hasDvar, String str, String ss, String weight, Stri
 		 {  $str = $l.text + $o.text + $r.text; 
 		 
 		    if (s!=null) { 
-		    	F.dvarStd($s.text, Param.local, null, $Kind.text, "");  
-		    	F.mergeWeightTable($s.text, $w.text, Param.local);
+
+		    	F.dvarStd($s.text, $goal::scop, null, $Kind.text, "");  
+		    	F.mergeWeightTable($s.text, $w.text, $goal::scop);
 		 		$hasDvar = true; $ss = $Sign.text + $s.text; $weight = $w.text; }
 		 	//} else {
 		 	

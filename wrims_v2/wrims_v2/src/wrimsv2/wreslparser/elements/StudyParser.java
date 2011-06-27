@@ -187,7 +187,7 @@ public class StudyParser{
 
       /// check for redefined weight // TODO: what to do?
       Set<String> redefined_globals_wt = new LinkedHashSet<String>(td.cumulative_global_complete.wtSet);
-      redefined_globals_wt.retainAll(model_dataset.wtSet);
+      redefined_globals_wt.retainAll(model_dataset.wtSet_global);
       if (redefined_globals_wt.size()>0) LogUtils.errMsg("Global weights redefined: "+ redefined_globals_wt); 
       
       /// check for redefined file
