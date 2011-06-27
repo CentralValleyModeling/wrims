@@ -356,7 +356,7 @@ public class TestWreslWalker_element {
 		TempData td = new TempData();
 
 		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);		
-		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		td.model_dataset_map=StudyParser.parseModels(sc,td,false,false);
 		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
 		LogUtils.studySummary_details(sd);
 		LogUtils.closeLogFile();

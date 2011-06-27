@@ -95,7 +95,7 @@ public class TestWreslWalker_order {
 	
 		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath,true);
 		
-		td.model_dataset_map=StudyParser.parseModels(sc,td,true);
+		td.model_dataset_map=StudyParser.parseModels(sc,td,true,false);
 		
 		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
 	

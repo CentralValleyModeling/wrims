@@ -101,7 +101,7 @@ public class TestWreslWalker_sort {
 	
 		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath,true);
 		
-		td.model_dataset_map=StudyParser.parseModels(sc,td,true);
+		td.model_dataset_map=StudyParser.parseModels(sc,td,true,false);
 		
 		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
 	
@@ -149,7 +149,7 @@ public class TestWreslWalker_sort {
 	
 		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath,true);
 		
-		td.model_dataset_map=StudyParser.parseModels(sc,td,true);
+		td.model_dataset_map=StudyParser.parseModels(sc,td,true,false);
 		
 		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
 	
@@ -197,7 +197,7 @@ public class TestWreslWalker_sort {
 	
 		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath,true);
 		
-		td.model_dataset_map=StudyParser.parseModels(sc,td,true);
+		td.model_dataset_map=StudyParser.parseModels(sc,td,true,false);
 		
 		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
 	
@@ -241,7 +241,7 @@ public class TestWreslWalker_sort {
 	
 		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath,true);
 		
-		td.model_dataset_map=StudyParser.parseModels(sc,td,true);
+		td.model_dataset_map=StudyParser.parseModels(sc,td,true,false);
 		
 		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
 	

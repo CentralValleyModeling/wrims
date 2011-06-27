@@ -131,10 +131,10 @@ public class StudyParser{
 
   public static Map<String, SimulationDataSet> parseModels(StudyConfig sc, TempData td) throws RecognitionException, IOException
   {
-    return parseModels(sc, td, false);
+    return parseModels(sc, td, false, true);
   }
 
-  public static Map<String, SimulationDataSet> parseModels(StudyConfig sc, TempData td, boolean rewrite_list_based_on_dependency) throws RecognitionException, IOException
+  public static Map<String, SimulationDataSet> parseModels(StudyConfig sc, TempData td, boolean rewrite_list_based_on_dependency, boolean all_alias_to_dvar) throws RecognitionException, IOException
   {
     Map<String, SimulationDataSet> model_dataset_map = new HashMap<String, SimulationDataSet>();
 
@@ -283,7 +283,7 @@ public class StudyParser{
     		newGoals = checkAliasInGoalExpression(ds, newGoals);
     	}
 
-        convertRestAliasInGoalExpression(ds);
+        if(all_alias_to_dvar) convertRestAliasInGoalExpression(ds);
     	
     	/// check if var size > 100
     	Set<String> allVar = new HashSet<String>();
