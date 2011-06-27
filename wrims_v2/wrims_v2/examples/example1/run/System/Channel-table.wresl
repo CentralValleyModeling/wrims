@@ -1,0 +1,4 @@
+define C1 {lower 0 upper 50000 kind 'FLOW-CHANNEL' units 'CFS'} !Shasta Release
+define C2 {lower 0 upper 80000 kind 'FLOW-CHANNEL' units 'CFS'} !Sac Flow Below Red Bluff
+define C3 {lower 0 upper 80000 kind 'FLOW-CHANNEL' units 'CFS'} !Sac Flow Below Colusa
+define C4 {lower 0 upper 80000 kind 'FLOW-CHANNEL' units 'CFS'} !Sac Flow Below Verona

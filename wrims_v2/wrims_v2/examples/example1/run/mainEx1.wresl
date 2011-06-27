@@ -1,0 +1,68 @@
+SEQUENCE One { MODEL Mod1 ORDER 1 }
+
+MODEL Mod1 {
+	define I1 {timeseries kind 'FLOW-INFLOW' units 'TAF' convert 'CFS'} !Inflow to Shasta
+	
+	define C1 {lower 0 upper 50000 kind 'FLOW-CHANNEL' units 'CFS'} !Shasta Release
+	define C2 {lower 0 upper 80000 kind 'FLOW-CHANNEL' units 'CFS'} !Sac Flow Below Red Bluff
+	define C3 {lower 0 upper 80000 kind 'FLOW-CHANNEL' units 'CFS'} !Sac Flow Below Colusa
+	define C4 {lower 0 upper 80000 kind 'FLOW-CHANNEL' units 'CFS'} !Sac Flow Below Verona
+	
+	define D2 {upper 3000 kind 'FLOW-DELIVERY' units 'CFS'} !Red Bluff Diversion
+	
+	
+	define R3 {std kind 'FLOW-RETURN' units 'CFS'} !Red Bluff diversion return flow
+	define rfactor_R3 { value 0.05 }
+	goal returnflowR3 {R3=rfactor_R3*D2}
+	
+	define S1level1 { value 100 }
+	define S1_1 {std kind 'STORAGE-ZONE' units 'TAF'}
+	goal S1Zone1 {S1_1 < S1level1}
+	define S1level2 { value 500 }
+	define S1_2 {std kind 'STORAGE-ZONE' units 'TAF'}
+	goal S1Zone2 {S1_2 < S1level2-S1level1}
+	define S1level3 { value 2500 }
+	define S1_3 {std kind 'STORAGE-ZONE' units 'TAF'}
+	goal S1Zone3 {S1_3 < S1level3-S1level2}
+	define S1level4 {timeseries kind 'STORAGE-LEVEL' units 'TAF'}
+	define S1_4 {std kind 'STORAGE-ZONE' units 'TAF'}
+	goal S1Zone4 {S1_4 < S1level4-S1level3}
+	define S1level5 { value 4552 }
+	define S1_5 {std kind 'STORAGE-ZONE' units 'TAF'}
+	goal S1Zone5 {S1_5 < S1level5-S1level4}
+	define S1 {std kind 'STORAGE' units 'TAF'} !SHASTA RESERVOIR
+	goal storage1 {S1=S1_1+S1_2+S1_3+S1_4+S1_5}
+	define F1 {std kind 'FLOW-SPILL-NON-RECOV' units 'CFS'}
+	define E1 {lower unbounded kind 'EVAPORATION' units 'CFS'}
+	define A1 {std kind 'SURFACE-AREA' units 'ACRES'}
+	define evap_S1 {timeseries kind 'EVAPORATION-RATE' units 'IN'}
+	define A1last {select area from res_info given storage=1000*S1(-1) use linear where res_num=1}
+	define A1forward {select area from res_info given storage=1050*S1(-1) use linear where res_num=1}
+	define A1back {select area from res_info given storage=950*S1(-1) use linear where res_num=1}
+	define coefev1 {value (A1forward - A1back)/(100*max(0.01,S1(-1)))}
+	goal area1 {A1=A1last+1000*coefev1*S1-1000*coefev1*S1(-1)}
+	goal evap1 {E1*cfs_af=(evap_S1/24)*A1last+(evap_S1/24)*A1}
+	define relcap1 {select discharge from res_info given storage=1000*S1(-1) use linear where res_num=1}
+	goal maxrelease1 {C1<relcap1}
+	
+	goal continuity1 {I1-C1-F1-E1=S1*taf_cfs-S1(-1)*taf_cfs} !Shasta Reservoir
+	goal continuity2 {C1-C2-D2=0} !Red Bluff
+	goal continuity3 {C2+R3-C3=0} !Colusa
+	goal continuity4 {C3-C4=0} !Verona
+	
+	define wyt_SAC {
+		select index 
+		from wytypeSAC 
+		where wateryear=wateryear
+	}
+
+	! the following year type names can be used to represent the numbers found in the tables
+	define Wet          { value 1. }
+	define AboveNormal  { value 2. }
+	define BelowNormal  { value 3. }
+	define Dry          { value 4. }
+	define Critical     { value 5. }
+
+
+	INCLUDE 'system\weight-table.wresl'
+}
