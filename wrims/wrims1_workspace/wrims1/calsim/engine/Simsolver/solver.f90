@@ -135,16 +135,13 @@ module xasolver
 
 
     ! This subroutine sets up the problem (poses it) to XA
-    subroutine solver_pose(icycle, problem)
+    subroutine solver_pose(problem)
         USE XATYPES
         USE xa_interface
         implicit none
-        INTEGER, INTENT(IN)     :: icycle
         TYPE(rcc), DIMENSION(:), INTENT(IN)     :: problem
         INTEGER(2) :: frc
         CHARACTER(LEN=150) :: msg
-        Character(LEN=2)  numberstring
-        Character(LEN=50)  filestring
         
         ! set up XA and load the problem
         CALL xfrcci(frc, return_code, &
