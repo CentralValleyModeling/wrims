@@ -713,9 +713,9 @@ public class ValueEvaluation {
 				li.setIndexStart(true);
 				ControlData.sumIndex.push(li);
 				ANTLRStringStream stream = new ANTLRStringStream("v: "+expression); 
-				EvaluatorLexer lexer = new EvaluatorLexer(stream);
+				ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
 				TokenStream tokenStream = new CommonTokenStream(lexer);
-				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+				ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
 				try{
 					evaluator.evaluator();
 				}catch (RecognitionException e){
@@ -726,7 +726,7 @@ public class ValueEvaluation {
 				id=add(id, id0);
 			}
 		}else{
-			start=start-step;
+			start=start+step;
 			if (start<end) return id;
 			for (int i=start; i>=end; i=i+step){
 				LoopIndex li=ControlData.sumIndex.pop();
@@ -734,9 +734,9 @@ public class ValueEvaluation {
 				li.setIndexStart(true);
 				ControlData.sumIndex.push(li);
 				ANTLRStringStream stream = new ANTLRStringStream("v: "+expression); 
-				EvaluatorLexer lexer = new EvaluatorLexer(stream);
+				ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
 				TokenStream tokenStream = new CommonTokenStream(lexer);
-				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
+				ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
 				try{
 					evaluator.evaluator();
 				}catch (RecognitionException e){
