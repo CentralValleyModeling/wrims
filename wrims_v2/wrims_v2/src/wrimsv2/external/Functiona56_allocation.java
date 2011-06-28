@@ -406,8 +406,9 @@ public class Functiona56_allocation extends ExternalFunction {
 							if (tot_ta > 0.0005) {
 								adj = tot_surp*ta[i]/tot_ta;
 								_allocation[i] += adj;
-		        			} else
-								_allocation[i] = req_alloc[i];
+		        			} 
+						}else{
+							_allocation[i] = req_alloc[i];
 		        		}
 		        	} //end for
 		        } //end while
