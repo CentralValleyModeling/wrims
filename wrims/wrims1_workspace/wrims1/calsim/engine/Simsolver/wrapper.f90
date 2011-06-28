@@ -491,7 +491,7 @@ SUBROUTINE WRAPPER (date, code, dss_init, reportsv, runDirectory)
            if (showDialogWindow) call dialogUpdate(6000, 'Entering RCC_SETUP')
            ALLOCATE (problem( rcc_cache_size()))
            problem_size =  RCC_SETUP(problem)
-           call solver_pose(icycle,problem(1:problem_size))
+           call solver_pose(problem(1:problem_size))
            if (debug) write (12,*) 'Solving'
            if (debug) call flush(12)
            if (showDialogWindow) call dialogUpdate( 6000, 'Solving')
@@ -524,7 +524,7 @@ SUBROUTINE WRAPPER (date, code, dss_init, reportsv, runDirectory)
            if (debug) write (12,*) problem_size
            if (debug) call flush(12)
            if (showDialogWindow) call dialogUpdate( 6000, 'Solving')
-           if (needToSimulate) call solver_pose(icycle, problem(1:problem_size))
+           if (needToSimulate) call solver_pose(problem(1:problem_size))
            call timer(begin_time)
            if (needToSimulate) stats = solver( solution)
            call timer(end_time)
@@ -542,7 +542,7 @@ SUBROUTINE WRAPPER (date, code, dss_init, reportsv, runDirectory)
               problem_size = MOP_SEQ_SETUP(j,CurrentOBJvalue,problem)
               if (debug) write (12,*) 'Solving'
              if (showDialogWindow) call dialogUpdate( 6000, 'Solving')
-              call solver_pose(888, problem)
+              call solver_pose( problem)
               stats = solver( solution)
               WRITE (ObjId,FMT='("OBJ", i1)') j
               currentObjValue(j) = getSolutionValue(ObjId)
@@ -567,7 +567,7 @@ SUBROUTINE WRAPPER (date, code, dss_init, reportsv, runDirectory)
            problem_size = MOP_WGT_SETUP(bigMlevel,bigM,problem)
            if (debug) write (12,*) 'Solving'
            if (showDialogWindow) call dialogUpdate( 6000, 'Solving')
-           CALL solver_pose(999, problem(1:problem_size))
+           CALL solver_pose( problem(1:problem_size))
            stats = solver(solution)
            CurrentOBJvalue(1)=solution(1)%value
            if (debug) write (12,*) 'OBJ = ',CurrentOBJvalue(1)
@@ -675,7 +675,7 @@ SUBROUTINE WRAPPER (date, code, dss_init, reportsv, runDirectory)
 		write(report_cycle, fmt="('CYCLE ', i2)") icycle
 		call solver_message (report_cycle)
 !		call solver_message('')
-		if (needToSimulate) call solver_pose(icycle,problem(1:problem_size))
+		if (needToSimulate) call solver_pose(problem(1:problem_size))
 		if (needToSimulate) stats = solver( solution)
 	end if
   end if

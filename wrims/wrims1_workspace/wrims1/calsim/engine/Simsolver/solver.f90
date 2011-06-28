@@ -143,51 +143,8 @@ module xasolver
         TYPE(rcc), DIMENSION(:), INTENT(IN)     :: problem
         INTEGER(2) :: frc
         CHARACTER(LEN=150) :: msg
-        integer :: ii
-        CHARACTER(LEN=50) :: title, dummy1, dummy2
-        CHARACTER(LEN=3) :: colon, oro, semicolon
         Character(LEN=2)  numberstring
         Character(LEN=50)  filestring
-        
-        dummy1=  'MIN'
-        dummy2 = 'MAX'
-        colon = " : "
-        oro   = " | "
-        semicolon = " ; "
-        
-        if (icycle<10) then
-          write( numberstring, '(i1)' )  icycle
-        else
-          write( numberstring, '(i2)' )  icycle
-        endif
-        
-        filestring ='rccfile_cycle_'//trim(numberstring)//'.txt'        
-        open (unit=888, file=filestring)
-        !open (unit=889, file='rccfile2.txt')
-        
-        do ii= 1,SIZE(problem)
-          !if ((trim(problem(ii)%rowname) .ne. dummy1) .and. (trim(problem(ii)%rowname) .ne. dummy2)     ) then
-          !
-          !  if ( trim(title) .ne. trim(problem(ii)%rowname) ) then
-          !  
-          !    write(889,*) ' '
-          !    write(889, '(a,a,a,a,e16.8,a)',advance="no" ) trim(problem(ii)%rowname) ,colon, trim(problem(ii)%colname) , oro, problem(ii)%coef, semicolon
-          !    write(title,*) problem(ii)%rowname
-          !  
-          !  else
-          !  
-          !    write(889,'(a,a,e16.8,a)',advance="no") trim(problem(ii)%colname), oro, problem(ii)%coef, '  '
-          !
-          !  end if
-          !end if
-              
-            write(888, '(a,a,e16.8)') problem(ii)%rowname , problem(ii)%colname, problem(ii)%coef
-
-        enddo
-        
-        write(888, *) '@endfile'
-        close (unit = 888)
-        !close (unit = 889)
         
         ! set up XA and load the problem
         CALL xfrcci(frc, return_code, &
