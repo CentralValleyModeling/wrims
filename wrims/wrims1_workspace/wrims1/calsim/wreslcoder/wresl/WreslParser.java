@@ -1993,8 +1993,8 @@ public class WreslParser implements WreslParserConstants {
       jj_consume_token(-1);
       throw new ParseException();
     }
-                        if (tag.image.length()>26) {if (true) throw wreslError(tag,
-                                "Goal name '" + tag.image + "' exceeds max of 26 characters");}
+                        if (tag.image.length()>29) {if (true) throw wreslError(tag,
+                                "Goal name '" + tag.image + "' exceeds max of 29 characters");}
         if (scope.kind==LOCAL || _fileIsLocal) {
                 tag.image = _currentOrderString.concat(tag.image);
         } else {
