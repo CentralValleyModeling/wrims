@@ -720,11 +720,30 @@ subroutine checkunderscore(expr)
   ilen=LEN_TRIM(expr)
   if (ilen>maxLineLength) then
     do i=maxLineLength,ilen,maxLineLength
-      if (chareq(expr(i:i),'_')) then           
+      
+      ! prevent (1) "_" split
+      !         (2) ".and." splits into ".a&" and "&nd."
+      !         (3) ".or." splits into ".o&" and "&r."
+      if (chareq(expr(i:i),'_') ) then           
          expr(i+1:)=expr(i:)
          expr(i:i)='&'
          ilen=ilen+1
+
+      else if (chareq(expr(i-1:i+3),'.and.') )  then           
+         expr(i+1:)=expr(i-1:)
+         expr(i-1:i)='  '
+         !expr(i:i)='&'
+         ilen=ilen+2
+         
+      else if (chareq(expr(i-1:i+2),'.or.') )  then           
+         expr(i+1:)=expr(i-1:)
+         expr(i-1:i)='  '
+         !expr(i:i)='&'
+         ilen=ilen+2   
+         
       end if
+
+      
     end do
   end if
 
