@@ -13,6 +13,9 @@ public class FilePaths {
 	public static String fullInitDssPath="";
 	public static String initDssFile="";
 	public static String initDssDirectory="";
+	public static String fullIlpPath="";
+	public static String ilpFile="";
+	public static String ilpFileDirectory="";
 
 	public static void setMainFilePaths(String fullPath){
 		fullMainPath=fullPath;
@@ -41,4 +44,5 @@ public class FilePaths {
 		initDssDirectory=fullPath.substring(0,index+1);
 		initDssFile=fullPath.substring(index+1);
 	}
+
 }

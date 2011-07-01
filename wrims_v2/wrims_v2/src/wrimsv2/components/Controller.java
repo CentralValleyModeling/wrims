@@ -44,6 +44,7 @@ import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.external.LoadAllDll;
+import wrimsv2.ilp.IntermediateLP;
 import wrimsv2.solver.GurobiSolver;
 import wrimsv2.solver.XASolver;
 import wrimsv2.tools.RCCComparison;
@@ -690,13 +691,22 @@ public class Controller {
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
 		ControlData.startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 				
+		ControlData.writer = new DSSDataWriter(FilePaths.fullDvarDssPath);
+		try {
+			ControlData.writer.openDSSFile();
+		} catch (Exception e) {
+			ControlData.writer.closeDSSFile();
+			Error.addEngineError("Could not open dv file. "+e);
+			return;
+		}
+		
 		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
 		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
 		ControlData.allTsMap=sds.getTimeseriesMap();
 		
 		ControlData.totalTimeStep=getTotalTimeStep();
 		Calendar cal = Calendar.getInstance();
-		System.out.println("After Parsser: "+cal.getTimeInMillis());
+
 		readTimeseries();
 		initialDvarAliasTS(ControlData.totalTimeStep);
 		for (int i=0; i<modelList.size(); i++){
@@ -725,17 +735,20 @@ public class Controller {
 				ControlData.currCycleIndex=i;
 				ControlData.isPostProcessing=false;
 				cal = Calendar.getInstance();
-				System.out.println("Before Evaluation: "+cal.getTimeInMillis());
-				processModel();
+
+				processModel(); 
+				IntermediateLP.setIlpFile(FilePaths.ilpFileDirectory, i);
+				IntermediateLP.output();
+				
 				if (Error.error_evaluation.size()>=1){
 					Error.writeEvaluationErrorFile("evaluation_error.txt");
 					noError=false;
 				}
 				cal = Calendar.getInstance();
-				System.out.println(" After Evaluation: "+cal.getTimeInMillis());
+
 				new XASolver();
 				cal = Calendar.getInstance();
-				System.out.println("    After solving: "+cal.getTimeInMillis());
+
 				if (Error.error_solving.size()<1){
 					cal = Calendar.getInstance();
 					System.out.println("After assign dvar: "+cal.getTimeInMillis());
@@ -747,8 +760,8 @@ public class Controller {
 					noError=false;
 				}
 				cal = Calendar.getInstance();
-				System.out.println("      After alias: "+cal.getTimeInMillis());
-				if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();				
+
+		
 				i=i+1;
 			}
 			if (ControlData.timeStep.equals("1MON")){
@@ -760,5 +773,8 @@ public class Controller {
 			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
 		ControlData.xasolver.close();
+		DssOperation.writeRTSToDSS();
+		ControlData.writer.closeDSSFile();
+		IntermediateLP.closeIlpFile();
 	}
 }
