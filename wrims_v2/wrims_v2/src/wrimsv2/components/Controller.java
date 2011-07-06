@@ -84,7 +84,7 @@ public class Controller {
 	
 	public void setControlData(){
         FilePaths.setSvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss");  
-        FilePaths.setInitDssPaths("D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss");   
+        FilePaths.setInitDssPaths("D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss");    
         FilePaths.setDvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\TestWRIMSV2DV.dss");
         FilePaths.setMainFilePaths("D:\\CalLite_Beta_042611\\Run\\main_BO.wresl");
 		ControlData cd=new ControlData();
@@ -667,9 +667,6 @@ public class Controller {
 	}
 	
 	public void currTimeAddOneMonth(){
-		ControlData.writeDssEndYear=ControlData.currYear;
-		ControlData.writeDssEndMonth=ControlData.currMonth;
-		ControlData.writeDssEndDay=ControlData.currDay;
 		ControlData.currMonth=ControlData.currMonth+1;
 		ControlData.currYear=ControlData.currYear;
 		if (ControlData.currMonth>12){
@@ -679,9 +676,6 @@ public class Controller {
 	}
 
 	public void currTimeAddOneDay(){
-		ControlData.writeDssEndYear=ControlData.currYear;
-		ControlData.writeDssEndMonth=ControlData.currMonth;
-		ControlData.writeDssEndDay=ControlData.currDay;
 		Date currDate = new Date (ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
 		long currTime=currDate.getTime()+1 * 24 * 60 * 60 * 1000;
 		currDate = new Date (currTime);

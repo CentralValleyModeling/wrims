@@ -12,6 +12,10 @@ public class TimeOperation {
 		return dayName(day)+monthName(month)+year+" 0000"; 
 	}
 	
+	public static String dssTimeEndDay(int year, int month, int day){
+		return dayName(day)+monthName(month)+year+" 2400"; 
+	}
+	
 	public static String dayName(int day){
 		if (day<10){
 			return "0"+Evaluation.convertIntToString(day);

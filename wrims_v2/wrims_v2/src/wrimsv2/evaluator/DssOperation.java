@@ -210,7 +210,7 @@ public class DssOperation {
 		}
 	}
 	
-	public static void writeInitDvarAliasToDSS() {		
+	public static void writeInitDvarAliasToDSS() {				
 		Set initSet=DataTimeSeries.dvAliasInit.keySet();
 		Iterator iterator = initSet.iterator();
 		while(iterator.hasNext()){
@@ -229,8 +229,7 @@ public class DssOperation {
 			ds._yUnits=dds.getUnits().toUpperCase();
 			ds._yValues = values;
 			Date startDate=dds.getStartTime();
-			String startDateStr=TimeOperation.dssTime(startDate.getYear()+1900,startDate.getMonth()+1,startDate.getDate());		
-			long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
+			long startJulmin = TimeFactory.getInstance().createTime(startDate).getTimeInMinutes();
 			boolean storeFlags = false;
 			String pathName="/"+ControlData.partA+"/"+initName+"/"+dds.getKind()+"//"+ControlData.partE+"/"+ControlData.svDvPartF+"/";
 			ControlData.writer.storeTimeSeriesData(pathName, startJulmin, ds,
@@ -239,10 +238,8 @@ public class DssOperation {
 	}
 	
 	public static void writeDVAliasToDSS() {
-		String startDateStr=TimeOperation.dssTime(ControlData.writeDssStartYear, ControlData.writeDssStartMonth, ControlData.writeDssStartDay);
-		String endDateStr=TimeOperation.dssTime(ControlData.writeDssEndYear, ControlData.writeDssEndMonth, ControlData.writeDssEndDay);
+		String startDateStr=TimeOperation.dssTimeEndDay(ControlData.writeDssStartYear, ControlData.writeDssStartMonth, ControlData.writeDssStartDay);
 		long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
-		long endJulmin=TimeFactory.getInstance().createTime(endDateStr).getTimeInMinutes();
 		Set dvAliasSet=DataTimeSeries.dvAliasTS.keySet();
 		Iterator iterator = dvAliasSet.iterator();
 		while(iterator.hasNext()){

@@ -54,9 +54,6 @@ public class ControlData {
 	public static int writeDssStartYear;
 	public static int writeDssStartMonth;
 	public static int writeDssStartDay;
-	public static int writeDssEndYear;
-	public static int writeDssEndMonth;
-	public static int writeDssEndDay;
 	public static int endYear ;
 	public static int endMonth;
 	public static int endDay;
