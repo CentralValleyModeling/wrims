@@ -15,6 +15,7 @@ import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
@@ -133,6 +134,8 @@ public class DssOperation {
 			dataArray.add(dataEntry);
 		}
         dds.setData(dataArray);
+        dds.setUnits(units);
+        dds.setKind(partC);
         dds.setTimeStep(rts.getTimeInterval().toString());
         dds.setStartTime(rts.getStartTime().getDate());
         DataTimeSeries.dvAliasInit.put(name, dds);
@@ -199,6 +202,7 @@ public class DssOperation {
         			dataArray.add(dataEntry);
         		}
                 dds.setData(dataArray);
+                dds.setUnits(data._yUnits);
                 dds.setTimeStep(timeStep);
                 dds.setStartTime(tw.getStartTime().getDate());
                 DataTimeSeries.dvAliasInit.put(rName, dds);
@@ -206,25 +210,55 @@ public class DssOperation {
 		}
 	}
 	
-	public static void writeRTSToDSS() {
-		String startDateStr=TimeOperation.dssTime(ControlData.writeDssStartYear, ControlData.writeDssStartMonth, ControlData.writeDssStartDay);		
+	public static void writeInitDvarAliasToDSS() {		
+		Set initSet=DataTimeSeries.dvAliasInit.keySet();
+		Iterator iterator = initSet.iterator();
+		while(iterator.hasNext()){
+			String initName=(String)iterator.next();
+			DssDataSet dds=DataTimeSeries.dvAliasInit.get(initName);
+			ArrayList<Double> data=dds.getData();
+			int size=data.size();
+			double[] values=new double[size];
+			for (int i=0; i<size; i++){
+				values[i]=data.get(i);
+			}
+			DSSData ds = new DSSData();
+			ds._dataType=DSSUtil.REGULAR_TIME_SERIES;
+			ds._yType="PER-AVER";
+			ds._numberRead=values.length;
+			ds._yUnits=dds.getUnits().toUpperCase();
+			ds._yValues = values;
+			Date startDate=dds.getStartTime();
+			String startDateStr=TimeOperation.dssTime(startDate.getYear()+1900,startDate.getMonth()+1,startDate.getDate());		
+			long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
+			boolean storeFlags = false;
+			String pathName="/"+ControlData.partA+"/"+initName+"/"+dds.getKind()+"//"+ControlData.partE+"/"+ControlData.svDvPartF+"/";
+			ControlData.writer.storeTimeSeriesData(pathName, startJulmin, ds,
+				storeFlags);
+		}
+	}
+	
+	public static void writeDVAliasToDSS() {
+		String startDateStr=TimeOperation.dssTime(ControlData.writeDssStartYear, ControlData.writeDssStartMonth, ControlData.writeDssStartDay);
+		String endDateStr=TimeOperation.dssTime(ControlData.writeDssEndYear, ControlData.writeDssEndMonth, ControlData.writeDssEndDay);
 		long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
+		long endJulmin=TimeFactory.getInstance().createTime(endDateStr).getTimeInMinutes();
 		Set dvAliasSet=DataTimeSeries.dvAliasTS.keySet();
 		Iterator iterator = dvAliasSet.iterator();
 		while(iterator.hasNext()){
 			String dvAliasName=(String)iterator.next();
 			DssDataSetFixLength ddsfl=DataTimeSeries.dvAliasTS.get(dvAliasName);
 			double[] values=ddsfl.getData();
-			DSSData ds = new DSSData();
-			ds._dataType=DSSUtil.REGULAR_TIME_SERIES;
-			ds._yType="PER-AVER";
-			ds._numberRead=values.length;
-			ds._yUnits=ddsfl.getUnits().toUpperCase();
-			ds._yValues = values;
+			DSSData dd = new DSSData();
+			dd._dataType=DSSUtil.REGULAR_TIME_SERIES;
+			dd._yType="PER-AVER";
+			dd._numberRead=values.length;
+			dd._yUnits=ddsfl.getUnits().toUpperCase();
+			dd._yValues = values;
 			boolean storeFlags = false;
 			String pathName="/"+ControlData.partA+"/"+dvAliasName+"/"+ddsfl.getKind()+"//"+ControlData.partE+"/"+ControlData.svDvPartF+"/";
-			ControlData.writer.storeTimeSeriesData(pathName, startJulmin, ds,
-				storeFlags);
+			ControlData.writer.storeTimeSeriesData(pathName, startJulmin, dd,
+						storeFlags);
 		}
 	}
 }

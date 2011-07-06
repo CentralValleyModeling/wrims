@@ -244,6 +244,8 @@ public class ControllerTree {
 			System.out.println(ControlData.currYear+"/"+ControlData.currMonth);
 			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
+		DssOperation.writeInitDvarAliasToDSS();
+		DssOperation.writeDVAliasToDSS();
 		ControlData.xasolver.close();
 	}
 	
@@ -322,6 +324,8 @@ public class ControllerTree {
 				currTimeAddOneDay();
 			}
 			System.out.println(ControlData.currYear+"/"+ControlData.currMonth);
+			DssOperation.writeInitDvarAliasToDSS();
+			DssOperation.writeDVAliasToDSS();
 			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
 	}

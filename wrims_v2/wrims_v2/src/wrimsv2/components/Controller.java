@@ -83,8 +83,8 @@ public class Controller {
 	}
 	
 	public void setControlData(){
-        FilePaths.setSvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss");
-        FilePaths.setInitDssPaths("D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss");
+        FilePaths.setSvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss");  
+        FilePaths.setInitDssPaths("D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss");   
         FilePaths.setDvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\TestWRIMSV2DV.dss");
         FilePaths.setMainFilePaths("D:\\CalLite_Beta_042611\\Run\\main_BO.wresl");
 		ControlData cd=new ControlData();
@@ -257,7 +257,8 @@ public class Controller {
 			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
 		ControlData.xasolver.close();
-		DssOperation.writeRTSToDSS();
+		DssOperation.writeInitDvarAliasToDSS();
+		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 	}
 	
@@ -348,16 +349,17 @@ public class Controller {
 			System.out.println(ControlData.currYear+"/"+ControlData.currMonth);
 			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
-		DssOperation.writeRTSToDSS();
+		DssOperation.writeInitDvarAliasToDSS();
+		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 	}
 	
 	public void writeOutputDssEveryTenYears(){
 		if (ControlData.currMonth==12 && ControlData.currYear%10==0){
 			if (ControlData.timeStep.equals("1MON")){
-				DssOperation.writeRTSToDSS();
+				DssOperation.writeDVAliasToDSS();
 			}else if(ControlData.timeStep.equals("1DAY") && ControlData.currDay==31){
-				DssOperation.writeRTSToDSS();
+				DssOperation.writeDVAliasToDSS();
 			}
 		}
 	}
@@ -379,8 +381,8 @@ public class Controller {
 		ControlData.xasolver.openConnection();
 		ControlData.xasolver.setModelSize(100, 100);
 		ControlData.xasolver.setCommand("MAXIMIZE Yes MUTE NO FORCE No");
-		//ControlData.xasolver.setCommand("set sortName Yes FileName d:\\temp Output v2%d.log MatList V MPSX Yes");
-		ControlData.xasolver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log matlist v ToRcc Yes wait no" ) ;
+		//ControlData.xasolver.setCommand("set sortName Yes FileName d:\\temp Output v2%d.log MatList V MPSX Yes ToRcc Yes");
+		ControlData.xasolver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log matlist v set sortName Yes wait no" ) ;
 	}
 	
 	public void processModel(){
@@ -665,6 +667,9 @@ public class Controller {
 	}
 	
 	public void currTimeAddOneMonth(){
+		ControlData.writeDssEndYear=ControlData.currYear;
+		ControlData.writeDssEndMonth=ControlData.currMonth;
+		ControlData.writeDssEndDay=ControlData.currDay;
 		ControlData.currMonth=ControlData.currMonth+1;
 		ControlData.currYear=ControlData.currYear;
 		if (ControlData.currMonth>12){
@@ -674,6 +679,9 @@ public class Controller {
 	}
 
 	public void currTimeAddOneDay(){
+		ControlData.writeDssEndYear=ControlData.currYear;
+		ControlData.writeDssEndMonth=ControlData.currMonth;
+		ControlData.writeDssEndDay=ControlData.currDay;
 		Date currDate = new Date (ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
 		long currTime=currDate.getTime()+1 * 24 * 60 * 60 * 1000;
 		currDate = new Date (currTime);
@@ -772,6 +780,8 @@ public class Controller {
 			System.out.println(ControlData.currYear+"/"+ControlData.currMonth);
 			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
+		DssOperation.writeInitDvarAliasToDSS();
+		DssOperation.writeDVAliasToDSS();
 		ControlData.xasolver.close();
 		DssOperation.writeRTSToDSS();
 		ControlData.writer.closeDSSFile();
