@@ -783,7 +783,6 @@ public class Controller {
 		DssOperation.writeInitDvarAliasToDSS();
 		DssOperation.writeDVAliasToDSS();
 		ControlData.xasolver.close();
-		DssOperation.writeRTSToDSS();
 		ControlData.writer.closeDSSFile();
 		IntermediateLP.closeIlpFile();
 	}
