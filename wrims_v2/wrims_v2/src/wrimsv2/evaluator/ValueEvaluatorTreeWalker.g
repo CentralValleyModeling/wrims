@@ -99,6 +99,7 @@ func returns[IntDouble id]:
   (int_func{id=$int_func.id;})|
   (real_func{id=$real_func.id;})|
   (abs_func{id=$abs_func.id;})|
+  (exp_func{id=$exp_func.id;})|
   (log_func{id=$log_func.id;})|
   (log10_func{id=$log10_func.id;})|
   (pow_func{id=$pow_func.id;});
@@ -130,6 +131,12 @@ real_func returns[IntDouble id]
 abs_func returns[IntDouble id]
   : ^(ABS (t=term) {
      id=ValueEvaluation.abs($t.id);
+  })
+  ;
+
+exp_func returns[IntDouble id]
+  : ^(EXP (t=term) {
+     id=ValueEvaluation.exp($t.id);
   })
   ;
 

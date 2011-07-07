@@ -95,6 +95,7 @@ func:
   int_func|
   real_func|
   abs_func|
+  exp_func|
   log_func|
   log10_func|
   pow_func);
@@ -117,6 +118,10 @@ real_func
   
 abs_func 
   : ABS '(' (e=expression) ')'-> ^(ABS $e)
+  ;
+
+exp_func 
+  : EXP '(' (e=expression) ')' -> ^(EXP $e)
   ;
 
 log_func 
@@ -143,7 +148,7 @@ timeseries
 	
 partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
-usedKeywords: YEAR|MONTH|MONTH_CONST|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|REAL|ABS|LOG|LOG10|POW|MOD|UNARY|SELECT|FROM|GIVEN|USE|WHERE
+usedKeywords: YEAR|MONTH|MONTH_CONST|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|REAL|ABS|EXP|LOG|LOG10|POW|MOD|UNARY|SELECT|FROM|GIVEN|USE|WHERE
 |TIMESERIES|CONSTRAIN|ALWAYS|NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
 |CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE|UPPERUNBOUNDED|LOWERUNBOUNDED;
 
@@ -305,6 +310,7 @@ MIN : 'min';
 INT : 'int';
 REAL: 'real';
 ABS: 'abs';
+EXP: 'exp';
 LOG: 'log';
 LOG10: 'log10';
 POW: 'pow';

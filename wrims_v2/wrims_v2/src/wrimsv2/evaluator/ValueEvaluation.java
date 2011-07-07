@@ -597,6 +597,16 @@ public class ValueEvaluation {
 		return id;
 	}
 	
+	public static IntDouble exp(IntDouble id1){
+		IntDouble id;
+		if (id1.isInt()){
+			id=new IntDouble(Math.exp(id1.getData().intValue()), false);
+		}else{
+			id=new IntDouble(Math.exp(id1.getData().doubleValue()), false);
+		}
+		return id;
+	}
+	
 	public static IntDouble log(IntDouble id1){
 		IntDouble id;
 		if (id1.isInt()){

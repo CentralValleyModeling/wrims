@@ -798,6 +798,23 @@ public class Evaluation {
 		return id;
 	}
 	
+	public static EvalExpression exp(EvalExpression ee1){
+		if (!ee1.isNumeric()){
+			Error.addEvaluationError("variable inside log function should not contain decision variable.");
+		}
+		return new EvalExpression(expOperation(ee1.getValue()));
+	}
+	
+	public static IntDouble expOperation(IntDouble id1){
+		IntDouble id;
+		if (id1.isInt()){
+			id=new IntDouble(Math.exp(id1.getData().intValue()), false);
+		}else{
+			id=new IntDouble(Math.exp(id1.getData().doubleValue()), false);
+		}
+		return id;
+	}
+	
 	public static EvalExpression log(EvalExpression ee1){
 		if (!ee1.isNumeric()){
 			Error.addEvaluationError("variable inside log function should not contain decision variable.");

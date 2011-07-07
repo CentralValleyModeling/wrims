@@ -86,6 +86,7 @@ func returns[EvalExpression ee]:
   (int_func{ee=$int_func.ee;})|
   (real_func{ee=$real_func.ee;})|
   (abs_func{ee=$abs_func.ee;})|
+  (exp_func{ee=$exp_func.ee;})|
   (log_func{ee=$log_func.ee;})|
   (log10_func{ee=$log10_func.ee;})|
   (pow_func{ee=$pow_func.ee;});
@@ -117,6 +118,12 @@ real_func returns[EvalExpression ee]
 abs_func returns[EvalExpression ee]
   : ABS '(' (e=expression) ')'{
      ee=Evaluation.abs($e.ee);
+  }
+  ;
+
+exp_func returns[EvalExpression ee]
+  : EXP '(' (e=expression) ')'{
+     ee=Evaluation.exp($e.ee);
   }
   ;
 
@@ -153,7 +160,7 @@ timeseries returns [EvalExpression ee]
 	
 partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
-usedKeywords: YEAR|MONTH|MONTH_CONST|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|REAL|ABS|LOG|LOG10|POW|MOD|SELECT|FROM|GIVEN|USE|WHERE
+usedKeywords: YEAR|MONTH|MONTH_CONST|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|REAL|ABS|EXP|LOG|LOG10|POW|MOD|SELECT|FROM|GIVEN|USE|WHERE
 |CONSTRAIN|ALWAYS|NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
 |CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE|UPPERUNBOUNDED|LOWERUNBOUNDED;
 
@@ -338,6 +345,7 @@ MIN : 'min';
 INT : 'int';
 REAL: 'real';
 ABS: 'abs';
+EXP: 'exp';
 LOG: 'log';
 LOG10: 'log10';
 POW: 'pow';
