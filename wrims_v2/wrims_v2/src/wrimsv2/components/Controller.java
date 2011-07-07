@@ -83,26 +83,25 @@ public class Controller {
 	}
 	
 	public void setControlData(){
-        FilePaths.setSvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss");  
-        FilePaths.setInitDssPaths("D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss");    
-        FilePaths.setDvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\TestWRIMSV2DV.dss");
-        FilePaths.setMainFilePaths("D:\\CalLite_Beta_042611\\Run\\main_BO.wresl");
+        FilePaths.fullSvarDssPath="D:\\CALSIM30_051711_BO\\common\\DSS\\CalSim30_06_SV.dss";
+        FilePaths.fullInitDssPath="D:\\CALSIM30_051711_BO\\common\\DSS\\CalSim30_06Init.dss";
+        FilePaths.setDvarDssPaths("D:\\CALSIM30_051711_BO\\CONV\\DSS\\TestWRIMSV2DV.dss");
+        FilePaths.setMainFilePaths("D:\\CALSIM30_051711_BO\\CONV\\Run\\mainCONV_30.wresl");
 		ControlData cd=new ControlData();
-        cd.svDvPartF="2020D09E";
-        cd.initPartF="2020D09E";
-		cd.partA = "CALSIM";
-		cd.partE = "1MON";
-		cd.timeStep="1MON";
-        cd.startYear=1921;
-        cd.startMonth=10;
-        cd.startDay=31;
-        cd.endYear=2003;
-        cd.endMonth=9;
-        cd.endDay=30;
-        cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
-        cd.currYear=ControlData.startYear;
-        cd.currMonth=ControlData.startMonth;
-        cd.currDay=ControlData.startDay;
+		cd.startYear=1921;
+		cd.startMonth=10;
+		cd.startDay=31;
+		cd.endYear=2006;
+		cd.endMonth=11;
+		cd.endDay=30;
+		cd.currYear=cd.startYear;
+		cd.currMonth=cd.startMonth;
+		cd.currDay=cd.startDay;
+        cd.writeDssStartYear=ControlData.startYear;
+        cd.writeDssStartMonth=ControlData.startMonth;
+        cd.writeDssStartDay=ControlData.startDay;
+		cd.svDvPartF="CALSIM30_06";
+		cd.initPartF="CALSIM30_06";
         cd.writeDssStartYear=ControlData.startYear;
         cd.writeDssStartMonth=ControlData.startMonth;
         cd.writeDssStartDay=ControlData.startDay;
