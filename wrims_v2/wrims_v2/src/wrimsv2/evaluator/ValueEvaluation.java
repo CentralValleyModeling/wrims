@@ -578,6 +578,15 @@ public class ValueEvaluation {
 		return id1;
 	}
 	
+	public static IntDouble realFunc(IntDouble id1){
+		IntDouble id;
+		if (id1.isInt()){
+			id=new IntDouble((id1.getData().doubleValue()), false);
+			return id;
+		}
+		return id1;
+	}
+	
 	public static IntDouble abs(IntDouble id1){
 		IntDouble id;
 		if (id1.isInt()){

@@ -84,6 +84,7 @@ func returns[EvalExpression ee]:
   (max_func{ee=$max_func.ee;})|
   (min_func{ee=$min_func.ee;})|
   (int_func{ee=$int_func.ee;})|
+  (real_func{ee=$real_func.ee;})|
   (abs_func{ee=$abs_func.ee;})|
   (log_func{ee=$log_func.ee;})|
   (log10_func{ee=$log10_func.ee;})|
@@ -104,6 +105,12 @@ min_func returns[EvalExpression ee]
 int_func returns[EvalExpression ee]
   : INT '(' (e=expression) ')'{
      ee=Evaluation.intFunc($e.ee);
+  }
+  ;
+
+real_func returns[EvalExpression ee]
+  : REAL '(' (e=expression) ')'{
+    ee=Evaluation.realFunc($e.ee);
   }
   ;
   
@@ -146,7 +153,7 @@ timeseries returns [EvalExpression ee]
 	
 partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
-usedKeywords: YEAR|MONTH|MONTH_CONST|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|ABS|LOG|LOG10|POW|MOD|SELECT|FROM|GIVEN|USE|WHERE
+usedKeywords: YEAR|MONTH|MONTH_CONST|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|REAL|ABS|LOG|LOG10|POW|MOD|SELECT|FROM|GIVEN|USE|WHERE
 |CONSTRAIN|ALWAYS|NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
 |CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE|UPPERUNBOUNDED|LOWERUNBOUNDED;
 
@@ -323,12 +330,13 @@ PASTMONTH: 'prevjan'|'prevfeb'|'prevmar'|'prevapr'|'prevmay'|'prevjun'|'prevjul'
 RANGE: 'range';
 
 TAFCFS: 'taf_cfs'|'cfs_taf'|'cfs_af'|'af_cfs';
-DAYSIN: 'daysin';
+DAYSIN: 'daysin'|'daysinmonth';
 
 SUM: 'sum';
 MAX : 'max';
 MIN : 'min';
 INT : 'int';
+REAL: 'real';
 ABS: 'abs';
 LOG: 'log';
 LOG10: 'log10';

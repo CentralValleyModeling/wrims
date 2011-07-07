@@ -93,6 +93,7 @@ func:
   (max_func|
   min_func|
   int_func|
+  real_func|
   abs_func|
   log_func|
   log10_func|
@@ -108,6 +109,10 @@ min_func
 	
 int_func
   : INT '(' (e=expression) ')' -> ^(INT $e)
+  ;
+  
+real_func
+  : REAL '(' (e=expression) ')' -> ^(REAL $e)
   ;
   
 abs_func 
@@ -138,7 +143,7 @@ timeseries
 	
 partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
-usedKeywords: YEAR|MONTH|MONTH_CONST|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|ABS|LOG|LOG10|POW|MOD|UNARY|SELECT|FROM|GIVEN|USE|WHERE
+usedKeywords: YEAR|MONTH|MONTH_CONST|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|REAL|ABS|LOG|LOG10|POW|MOD|UNARY|SELECT|FROM|GIVEN|USE|WHERE
 |TIMESERIES|CONSTRAIN|ALWAYS|NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
 |CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE|UPPERUNBOUNDED|LOWERUNBOUNDED;
 
@@ -292,12 +297,13 @@ PASTMONTH: 'prevjan'|'prevfeb'|'prevmar'|'prevapr'|'prevmay'|'prevjun'|'prevjul'
 RANGE: 'range';
 
 TAFCFS: 'taf_cfs'|'cfs_taf'|'cfs_af'|'af_cfs';
-DAYSIN: 'daysin';
+DAYSIN: 'daysin'|'daysinmonth';
 
 SUM: 'sum';
 MAX : 'max';
 MIN : 'min';
 INT : 'int';
+REAL: 'real';
 ABS: 'abs';
 LOG: 'log';
 LOG10: 'log10';

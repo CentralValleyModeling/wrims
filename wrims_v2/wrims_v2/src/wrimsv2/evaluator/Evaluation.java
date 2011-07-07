@@ -765,6 +765,22 @@ public class Evaluation {
 		return id1;
 	}
 	
+	public static EvalExpression realFunc(EvalExpression ee1){
+		if (!ee1.isNumeric()){
+			Error.addEvaluationError("variable inside int function should not contain decision variable.");
+		}
+		return new EvalExpression(realOperation(ee1.getValue()));
+	}
+	
+	public static IntDouble realOperation(IntDouble id1){
+		IntDouble id;
+		if (id1.isInt()){
+			id=new IntDouble((id1.getData().doubleValue()), false);
+			return id;
+		}
+		return id1;
+	}
+	
 	public static EvalExpression abs(EvalExpression ee1){
 		if (!ee1.isNumeric()){
 			Error.addEvaluationError("variable inside abs function should not contain decision variable.");

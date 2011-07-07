@@ -97,6 +97,7 @@ func returns[IntDouble id]:
   (max_func{id=$max_func.id;})|
   (min_func{id=$min_func.id;})|
   (int_func{id=$int_func.id;})|
+  (real_func{id=$real_func.id;})|
   (abs_func{id=$abs_func.id;})|
   (log_func{id=$log_func.id;})|
   (log10_func{id=$log10_func.id;})|
@@ -117,6 +118,12 @@ min_func returns[IntDouble id]
 int_func returns[IntDouble id]
   : ^(INT (t=term) {
      id=ValueEvaluation.intFunc($t.id);
+  })
+  ;
+  
+real_func returns[IntDouble id]
+  : ^(REAL (t=term) {
+     id=ValueEvaluation.realFunc($t.id);
   })
   ;
   
