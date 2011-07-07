@@ -16,13 +16,31 @@ public class TestExternalFunction {
         System.out.println("@Test sample: 1==1");
 	}
 
-	@Test
-	public void testGenerateCompileFiles(){
-		String fileFullPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_external\\generateInerface.txt";
+	public void GenerateCompileFilesAnn(){
+		String fileFullPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_external\\generateInerfaceAnn.txt";
 		GenerateCompileFiles.setWorkingDirectory(fileFullPath);
 		if (GenerateCompileFiles.setDllFunction(fileFullPath)) GenerateCompileFiles.generateFiles();
 		
-		GenerateCompileFiles.setDllFunction("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_external\\generateInerface.txt");
+		GenerateCompileFiles.setDllFunction("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_external\\generateInerfaceAnn.txt");
+		System.out.print(GenerateCompileFiles.dllFunctions);
+		System.out.println();
+		System.out.print(GenerateCompileFiles.dllDlls);
+		System.out.println();
+		System.out.print(GenerateCompileFiles.functionVariableNames);
+		System.out.println();
+		System.out.print(GenerateCompileFiles.functionVariableTypes);
+		System.out.println();
+		System.out.print(GenerateCompileFiles.error);
+		System.out.println();
+	}
+	
+	@Test
+	public void GenerateCompileFilesGroundWater(){
+		String fileFullPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_external\\generateInerfaceGroundWater.txt";
+		GenerateCompileFiles.setWorkingDirectory(fileFullPath);
+		if (GenerateCompileFiles.setDllFunction(fileFullPath)) GenerateCompileFiles.generateFiles();
+		
+		GenerateCompileFiles.setDllFunction("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_external\\generateInerfaceGroundWater.txt");
 		System.out.print(GenerateCompileFiles.dllFunctions);
 		System.out.println();
 		System.out.print(GenerateCompileFiles.dllDlls);

@@ -1,0 +1,45 @@
+1
+interfacetogw
+CVGroundwater
+InitGWSystem SetGP SetDP SetStrmFlow SimGW GetSeep GetGW_H GetStrm_H GetPumpShort GetPercentPumpShort
+10
+InitGWSystem
+float
+int int int
+WaterYear Month iWRIMS1Run
+SetGP
+float
+float int
+Value WBAIndex
+SetDP
+float
+float int
+Value WBAIndex
+SetStrmFlow
+float
+float int
+Value StrmNodeIndex
+SimGW
+float
+int int
+WaterYear Month
+GetSeep
+float
+int
+indxStrm
+GetGW_H
+float
+int int
+indxGW Layer
+GetStrm_H
+float
+int
+indxStrm
+GetPumpShort
+float
+int
+iDummy
+GetPercentPumpShort
+float
+int
+iDummy
