@@ -244,7 +244,7 @@ public class Controller {
 				}
 				cal = Calendar.getInstance();
 				System.out.println("      After alias: "+cal.getTimeInMillis());
-				if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();				
+				//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();				
 				i=i+1;
 			}
 			if (ControlData.timeStep.equals("1MON")){
@@ -337,7 +337,7 @@ public class Controller {
 				}
 				cal = Calendar.getInstance();
 				System.out.println("      After alias: "+cal.getTimeInMillis());
-				if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();				
+				//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();				
 				i=i+1;
 			}
 			if (ControlData.timeStep.equals("1MON")){
