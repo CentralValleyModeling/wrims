@@ -41,9 +41,9 @@ public class TestILP_example {
 		 "10",
 		 "31", 
 		 "ILP", 
-		 "csv_ilp_Example1"};
+		 "csv_TestIlp_Example1"};
 
-		FilePaths.ilpFileDirectory = "ilp_ilp_Example1";
+		FilePaths.ilpFileDirectory = "ilp_TestIlp_Example1";
 		FilePaths.ilpFile = "test.ilp";
 		
         new Controller(controlDataString);
