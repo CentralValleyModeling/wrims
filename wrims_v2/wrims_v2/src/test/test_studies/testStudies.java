@@ -96,10 +96,10 @@ public class testStudies {
 	}
 	
 	public void testParsedCalsim3()throws RecognitionException, IOException{
-        FilePaths.fullSvarDssPath="D:\\CALSIM30_041311_BO\\common\\DSS\\CalSim30_06_SV.dss";
-        FilePaths.fullInitDssPath="D:\\CALSIM30_041311_BO\\common\\DSS\\CalSim30_06Init.dss";
-        FilePaths.setDvarDssPaths("D:\\CALSIM30_041311_BO\\CONV\\DSS\\TestWRIMSV2DV.dss");
-        FilePaths.setMainFilePaths("D:\\CALSIM30_041311_BO\\CONV\\Run\\mainCONV_30.wresl");
+		FilePaths.fullSvarDssPath="D:\\CALSIM30_051711_BO\\common\\DSS\\CalSim30_06_SV.dss";
+        FilePaths.fullInitDssPath="D:\\CALSIM30_051711_BO\\common\\DSS\\CalSim30_06Init.dss";
+        FilePaths.setDvarDssPaths("D:\\CALSIM30_051711_BO\\CONV\\DSS\\TestWRIMSV2DV.dss");
+        FilePaths.setMainFilePaths("D:\\CALSIM30_051711_BO\\CONV\\Run\\mainCONV_30.wresl");
 		ControlData cd=new ControlData();
 		cd.startYear=1921;
 		cd.startMonth=10;

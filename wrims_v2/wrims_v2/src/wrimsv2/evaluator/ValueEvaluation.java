@@ -283,8 +283,6 @@ public class ValueEvaluation {
 			
 		Class function;
 		try {
-			function = Class.forName("wrimsv2.external.Function"+ident);
-		
 			Stack stack = new Stack();
 			for (int i=0; i<idArray.size(); i++){
 				IntDouble id=idArray.get(i);
@@ -301,6 +299,7 @@ public class ValueEvaluation {
 			if (ControlData.allExternalFunctionMap.containsKey(ident)){
 				ef=ControlData.allExternalFunctionMap.get(ident);
 			}else{
+				function = Class.forName("wrimsv2.external.Function"+ident);
 				ef = (ExternalFunction)function.newInstance();
 				ControlData.allExternalFunctionMap.put(ident, ef);
 			}
