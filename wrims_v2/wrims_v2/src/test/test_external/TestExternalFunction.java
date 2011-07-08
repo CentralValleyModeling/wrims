@@ -16,6 +16,7 @@ public class TestExternalFunction {
         System.out.println("@Test sample: 1==1");
 	}
 
+	@Test
 	public void GenerateCompileFilesAnn(){
 		String fileFullPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_external\\generateInerfaceAnn.txt";
 		GenerateCompileFiles.setWorkingDirectory(fileFullPath);
@@ -34,7 +35,6 @@ public class TestExternalFunction {
 		System.out.println();
 	}
 	
-	@Test
 	public void GenerateCompileFilesGroundWater(){
 		String fileFullPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\src\\test\\test_external\\generateInerfaceGroundWater.txt";
 		GenerateCompileFiles.setWorkingDirectory(fileFullPath);
@@ -189,7 +189,6 @@ public class TestExternalFunction {
 		}
 	}
 
-	@Test
 	public void testAnn_X2(){
 		
 		new LoadDll("interfacetoann.dll");
@@ -232,7 +231,6 @@ public class TestExternalFunction {
 		}
 	}
 	
-	@Test
 	public void testANNLineGen(){
 		new LoadDll("interfacetoann.dll");		
 		
