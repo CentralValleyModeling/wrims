@@ -341,7 +341,7 @@ public class StudyParser{
 					// add e into dvar					
 				    Dvar dv = new Dvar();
 
-				    System.out.println("as,kind:"+e);
+				    // System.out.println("as,kind:"+e);
 				    dv.kind = as.kind;
 				    dv.units = as.units;
 				    dv.lowerBound = Param.lower_unbounded;
