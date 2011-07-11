@@ -68,7 +68,7 @@ Objective obj = {
 [S_NTOMA_4,    94*taf_cfs],
 [S_NTOMA_5,-10000*taf_cfs],
 
-[S_EPARK_2, 20000*taf_cfs],      
+[S_EPARK_1, 20000*taf_cfs],   ! S_EPARK_2 redefined. Could be a typo.   
 [S_EPARK_2, 14000*taf_cfs],
 [S_EPARK_3, 11000*taf_cfs],
 [S_EPARK_4, 10000*taf_cfs],
@@ -1334,7 +1334,7 @@ Objective obj = {
 [ErrPos_NFY029  ,-99999],
 [ErrPos_NFY017  ,-99999],
 [ErrPos_NNA013  ,-99999],
-[ErrPos_NTOMA   ,-99999],
+! [ErrPos_NTOMA   ,-99999],  ! this is defined in line 155
 [ErrPos_OGN005  ,-99999],
 [ErrPos_OGN004  ,-99999],
 [ErrPos_OMR002  ,-99999],
@@ -2034,7 +2034,7 @@ Objective obj = {
 [ErrNeg_NFY029 ,-99999],
 [ErrNeg_NFY017 ,-99999],
 [ErrNeg_NNA013 ,-99999],
-[ErrNeg_NTOMA  ,-99999],
+! [ErrNeg_NTOMA  ,-99999], ! this is defined in line 156
 [ErrNeg_OGN005  ,-99999],
 [ErrNeg_OGN004  ,-99999],
 [ErrNeg_OMR002  ,-99999],

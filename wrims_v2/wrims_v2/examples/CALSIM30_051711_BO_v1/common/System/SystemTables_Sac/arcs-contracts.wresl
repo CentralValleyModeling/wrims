@@ -2196,7 +2196,7 @@ define WRmon_BTC043_10_NA	{value 0.0}
 define WRmon_WEC000_BTC032 	{
 	case OctMar{
 		condition month >= 1 .and. month < 7
-		value 250.*cfs_taf(i)}
+		value 250.*cfs_taf}
 	case AprOct{
 		condition always
 		value 0.0} 
@@ -2678,7 +2678,7 @@ define WRmon_WTPFTH_03_SU	{value 0.}
 
 define WRann_WTPCSD_02_PU	{value 0.900 + 5.100} ! Townsend Flat Water Ditch Company Transfer + McConnell Foundation  
 define WRmon_WTPCSD_02_PU	{value max(0.0, WRann_WTPCSD_02_PU * UD_02_PU*cfs_taf / UDann_02_PU)} ! Monthly water right amount (TAF) patterned on demand
-define WR_WTPCSD_02_PU 		{alias WRmon_WTPCSD_02_PU kind 'WATER-RIGHT' units 'TAF'}
+define WR_WTPCSD_02_PU_alias 		{alias WRmon_WTPCSD_02_PU kind 'WATER-RIGHT' units 'TAF'}
 
 !define CLann_WTPCSD_02_PU	{select contract from CVPContractAmounts where diversion=12} ! Annual contract amount from lookup table
 define WR_WTPCSD_02_PU    	{select right from WaterRightAmounts where diversion=12}

@@ -163,7 +163,7 @@ define minflowFeaMouth {
 define minflowFeather {timeseries kind 'FLOW-MIN-REQUIRED' units 'CFS'}
 
 define minflow_C_FTR068 {select minflow from minflow where C_arc=200,month=month}
-goal minflow_C_FTR068 {C_FTR068_MIF < minflow_C_FTR068}
+goal minflow_C_FTR068_goal {C_FTR068_MIF < minflow_C_FTR068}
 goal minflow_C_FTR059 {C_FTR059_MIF < max(MF_C_FTR059,minflowFeather)} ! below Thermalito return
 goal minflow_C_FTR039 {C_FTR039_MIF < minflowFeather} ! below Sunset Pumps
 goal minflow_C_FTR003 {C_FTR003_MIF < minflowFeather} ! at the mouth
