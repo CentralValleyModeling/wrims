@@ -3,6 +3,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +42,12 @@ public class XASolver {
 		setDVars();
 		setWeights();
 		
+		Calendar cal = Calendar.getInstance();
+		System.out.println("After sending to solver: "+cal.getTimeInMillis());
 		ControlData.xasolver.solve();
+		cal=Calendar.getInstance();
+		System.out.println("After solved: "+cal.getTimeInMillis());
+		
 		
 		modelStatus=ControlData.xasolver.getModelStatus();
 		System.out.println("Model status: "+modelStatus);
@@ -156,9 +162,9 @@ public class XASolver {
 		
 		String outPath=FilePaths.mainDirectory+"step"+ControlData.currTimeStep+"_"+ControlData.currCycleIndex+".txt";
 		FileWriter outstream;
-		try {
-			outstream = new FileWriter(outPath);
-			BufferedWriter out = new BufferedWriter(outstream);
+		//try {
+			//outstream = new FileWriter(outPath);
+			//BufferedWriter out = new BufferedWriter(outstream);
 			
 		while(dvarIterator.hasNext()){ 
 			String dvName=(String)dvarIterator.next();
@@ -178,14 +184,14 @@ public class XASolver {
 			double[] dataList=DataTimeSeries.dvAliasTS.get(dvName).getData();
 			dataList[ControlData.currTimeStep]=value;
 			
-			out.write(dvName+":"+value+"\n");
+			//out.write(dvName+":"+value+"\n");
 		}
 		
-		out.close();
+		//out.close();
 		
-		} catch (IOException e) {
+		//} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//	e.printStackTrace();
+		//}
 	}
 }

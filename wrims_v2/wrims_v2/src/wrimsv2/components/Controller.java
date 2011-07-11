@@ -83,7 +83,7 @@ public class Controller {
 	}
 	
 	public void setControlData(){
-        FilePaths.fullSvarDssPath="D:\\CALSIM30_051711_BO\\common\\DSS\\CalSim30_06_SV.dss";
+		FilePaths.fullSvarDssPath="D:\\CALSIM30_051711_BO\\common\\DSS\\CalSim30_06_SV.dss";
         FilePaths.fullInitDssPath="D:\\CALSIM30_051711_BO\\common\\DSS\\CalSim30_06Init.dss";
         FilePaths.setDvarDssPaths("D:\\CALSIM30_051711_BO\\CONV\\DSS\\TestWRIMSV2DV.dss");
         FilePaths.setMainFilePaths("D:\\CALSIM30_051711_BO\\CONV\\Run\\mainCONV_30.wresl");
@@ -231,7 +231,7 @@ public class Controller {
 				System.out.println(" After Evaluation: "+cal.getTimeInMillis());
 				new XASolver();
 				cal = Calendar.getInstance();
-				System.out.println("    After solving: "+cal.getTimeInMillis());
+				System.out.println("    After solver: "+cal.getTimeInMillis());
 				if (Error.error_solving.size()<1){
 					cal = Calendar.getInstance();
 					System.out.println("After assign dvar: "+cal.getTimeInMillis());
@@ -379,9 +379,9 @@ public class Controller {
 	public void initialXASolver(){
 		ControlData.xasolver.openConnection();
 		ControlData.xasolver.setModelSize(100, 100);
-		ControlData.xasolver.setCommand("MAXIMIZE Yes MUTE NO FORCE No");
+		ControlData.xasolver.setCommand("MAXIMIZE Yes MUTE no FORCE No wait no matlist v set visible no");
 		//ControlData.xasolver.setCommand("set sortName Yes FileName d:\\temp Output v2%d.log MatList V MPSX Yes ToRcc Yes");
-		ControlData.xasolver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log matlist v set sortName Yes wait no" ) ;
+		//ControlData.xasolver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log set sortName Yes wait no" ) ;
 	}
 	
 	public void processModel(){
