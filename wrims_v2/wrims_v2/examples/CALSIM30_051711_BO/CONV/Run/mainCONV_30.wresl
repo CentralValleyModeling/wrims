@@ -183,7 +183,7 @@ MODEL VAMP_AND_DO {           !CYCLE 5
 
 
 MODEL SETUP {      !CYCLE 6
-    define  daysindv {alias daysin kind 'DAYS' units 'DAYS'}
+    !  define  daysindv {alias daysin kind 'DAYS' units 'DAYS'} ! This is defined in "AnnCommon1.wresl" 
     INCLUDE[LOCAL] '..\..\common\yuba\Misc_YUBA\lowerbasin\delivery.wresl'
     INCLUDE[local] '..\..\common\sanjoaquin\IntegratedOperations\SanLuisTransfers.wresl'    
     INCLUDE[local] '..\..\common\System\System_ALL.wresl'

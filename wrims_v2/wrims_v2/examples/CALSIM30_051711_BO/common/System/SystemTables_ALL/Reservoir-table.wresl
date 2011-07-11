@@ -517,7 +517,7 @@ define A30back {select area from res_info given storage=950*(S30(-1)+S31(-1)+S32
 define coefev30 {value (A30forward - A30back)/(100*max(0.01,S30(-1)+S31(-1)+S32(-1)+S33(-1)+S34(-1)))}
 goal area30 {A30=A30last+1000*coefev30*S30+1000*coefev30*S31+1000*coefev30*S32+1000*coefev30*S33+1000*coefev30*S34
                 -1000*coefev30*(S30(-1)+S31(-1)+S32(-1)+S33(-1)+S34(-1))}
-goal evapNODOS {EvapNODOS*cfs_af=(evap_S30/24)*A30last+(evap_S30/24)*A30}
+goal evapNODOS_goal {EvapNODOS*cfs_af=(evap_S30/24)*A30last+(evap_S30/24)*A30}
 define relcap30 {select discharge from res_info given storage=1000*(S30(-1)+S31(-1)+S32(-1)+S33(-1)+S34(-1)) use linear where res_num=30} !represents the release capacity for the entire NODOS Reservoir
 goal maxrelease30 {C30+C30A+C30C+D30+C31+C31A+C32+C32A+C32B+C32C+D32+C33+D33+C34+D34<relcap30}
 !
