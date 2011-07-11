@@ -258,7 +258,11 @@ public class Evaluation {
 			IntDouble id2=ee2.getValue();
 			IntDouble id1=ee1.getValue();
 			if (id2.getData().doubleValue() ==0.0){
-				Error.addEvaluationError("0.0 appears in divisor");
+				if (id1.getData().doubleValue()==0.0 && ee1.isNumeric()){
+					return ee1;
+				}else{
+					Error.addEvaluationError("0.0 appears in divisor");
+				}
 				return ee1;
 			}
 			ee1.setValue(divideOperation(id1,id2));
