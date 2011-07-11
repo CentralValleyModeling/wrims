@@ -83,15 +83,15 @@ public class Controller {
 	}
 	
 	public void setControlData(){
-		FilePaths.fullSvarDssPath="D:\\CALSIM30_051711_BO\\common\\DSS\\CalSim30_06_SV.dss";
-        FilePaths.fullInitDssPath="D:\\CALSIM30_051711_BO\\common\\DSS\\CalSim30_06Init.dss";
-        FilePaths.setDvarDssPaths("D:\\CALSIM30_051711_BO\\CONV\\DSS\\TestWRIMSV2DV.dss");
-        FilePaths.setMainFilePaths("D:\\CALSIM30_051711_BO\\CONV\\Run\\mainCONV_30.wresl");
+		FilePaths.fullSvarDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\common\\DSS\\CalSim30_06_SV.dss";
+        FilePaths.fullInitDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\common\\DSS\\CalSim30_06Init.dss";
+        FilePaths.setDvarDssPaths("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\CONV\\DSS\\TestWRIMSV2DV.dss");
+        FilePaths.setMainFilePaths("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\CONV\\Run\\mainCONV_30.wresl");
 		ControlData cd=new ControlData();
 		cd.startYear=1921;
 		cd.startMonth=10;
 		cd.startDay=31;
-		cd.endYear=2006;
+		cd.endYear=1921;
 		cd.endMonth=11;
 		cd.endDay=30;
 		cd.currYear=cd.startYear;
