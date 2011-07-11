@@ -44,7 +44,7 @@ public class TestILP_calsim3 {
 		 "csv_TestIlp_Calsim3"};
 
 		FilePaths.ilpFileDirectory = "ilp_TestIlp_Calsim3";
-		FilePaths.ilpFile = "test.ilp";
+		//FilePaths.ilpFile = "test.ilp";
 		
         new Controller(controlDataString);
 

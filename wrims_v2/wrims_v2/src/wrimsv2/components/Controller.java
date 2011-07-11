@@ -738,7 +738,7 @@ public class Controller {
 				cal = Calendar.getInstance();
 
 				processModel(); 
-				IntermediateLP.setIlpFile(FilePaths.ilpFileDirectory, i);
+				IntermediateLP.setIlpFile(FilePaths.ilpFileDirectory);
 				IntermediateLP.output();
 				
 				if (Error.error_evaluation.size()>=1){

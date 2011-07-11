@@ -12,6 +12,7 @@ import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.IntDouble;
+import wrimsv2.components.FilePaths;
 import wrimsv2.wreslparser.elements.Tools;
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.evaluator.EvalConstraint;
@@ -24,9 +25,15 @@ public class IntermediateLP {
 
 	}
 	
-	public static void setIlpFile(String dirPath, int timeStep){
+	public static void setIlpFile(String dirPath){
 		
-		String fileName = "test_"+Integer.toString(timeStep)+".ilp";
+		String fileName;
+		
+		if  (FilePaths.ilpFile.length()>3) {
+			fileName = FilePaths.ilpFile;
+		} else {
+			fileName = ControlData.currTimeStep+"_"+ControlData.currCycleIndex+".ilp";
+		}
 		
 		try {
 			_ilpFile = Tools.openFile(System.getProperty("user.dir")+"//"+dirPath, fileName);
