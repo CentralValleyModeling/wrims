@@ -1,0 +1,14 @@
+define S_TRNTY {std kind 'STORAGE' units 'TAF'}
+define S_TRNTYlevel4 {select target from res_level where res_num=1,level=4,month=month}
+define S_SHSTA {std kind 'STORAGE' units 'TAF'}
+define S_SHSTAlevel4 {timeseries kind 'STORAGE-LEVEL' units 'TAF'}
+define S_SHSTALevel5 {timeseries kind 'storage-level' units 'taf'}
+define S_SHSTA4 {std kind 'STORAGE' units 'TAF'}
+!define S_SHSTA4level5 {value 0.0}
+define S_OROVL {std kind 'STORAGE' units 'TAF'}
+define S_OROVLlevel5 {timeseries kind 'STORAGE-LEVEL' units 'TAF'}
+define S_FOLSM {std kind 'STORAGE' units 'TAF'}
+define S_FOLSMLevel5 {timeseries kind 'storage-level' units 'taf'}
+define S11 {std kind 'STORAGE' units 'TAF'}
+define S12 {std kind 'STORAGE' units 'TAF'}
+

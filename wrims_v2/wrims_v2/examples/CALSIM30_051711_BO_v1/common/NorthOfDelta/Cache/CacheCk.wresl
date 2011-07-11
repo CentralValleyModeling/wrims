@@ -1,0 +1,21 @@
+/*
+CALSIM III
+CACHECK.WRESL
+
+Edited ajdraper, MWH, November 15, 2006
+*/
+
+! Placerholder for allocation logic for YCFCWCD contract allocations
+
+define ALLOC_YCFCWCD {value 1.0} 
+goal setalloc_YCFCWCD_dv {alloc_YCFCWCD_dv = alloc_YCFCWCD}
+
+! Determine water year type for Cache Creek Minimum Flows
+
+
+! Minimum instream flow requirements
+define	Qmin_CCH030	{value 0.0}
+define	Qmin_CCH012	{value 0.0}
+
+goal setC_CCH030_MIF {C_CCH030_MIF < Qmin_CCH030}
+goal setC_CCH012_MIF {C_CCH012_MIF < Qmin_CCH012}

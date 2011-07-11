@@ -1,0 +1,147 @@
+! Minimum amount of groundwater pumping for demand unit
+! Value is expressed as fraction of agricultural applied water demand
+agmingw
+ID	Fraction
+1	0.00	  !Not used
+2	0.32	  !02_NA	Non-District
+3	0.00	  !02_PA	Clear Creek CSD
+4	0.06	  !02_SA	Anderson Cottonwood ID, Non-District (short-form)
+5	0.22	  !03_NA	Non-District
+6	0.01	  !03_PA	Bella Vista Water District
+7	0.01	  !03_SA	Anderson Cottonwood ID, Non-District (short-form)
+8	0.84	  !04_NA	Non-District
+9	0.30	  !04_PA1	Corning WD, Proberta WD, Thomes Creek WD
+10	0.30	  !04_PA2	Kirkwood WD - originally 20%, but deliveries low compared to demand.
+11	0.84	  !05_NA	Non-District
+12	0.59	  !06_NA	Non-District
+13	0.05	  !06_PA	Orland Unit WUA
+14	0.75	  !07N_NA	Non-District
+15	0.12	  !07N_PA	Glide WD, Holthouse WD, Kanawha WD, Orland-Artois WD
+16	0.86	  !07S_NA	Non-District
+17	0.30	  !07S_PA	4-M WD, Colusa County WD, Cortina WD, Davis WD, Dunnigan WD, Glenn Valley WD, Holthouse WD, Le Grande WD, Myers-Marsh MWC, Westside WD - originally 6%, but deliveries low compared to demand.
+18	0.61	  !08N_NA	Non-District
+19	0.02	  !08N_PA	Colusa Drain MWC
+20	0.10	  !08N_SA1	Maxwell ID, Princeton-Cordora-Glenn ID, Provident ID, Non-District (Short-Form)	- originally 5%, but deliveries low compared to demand.
+21	0.04	  !08N_SA2	Glenn-Colusa ID
+22	0.32	  !08S_NA1	Non-District
+23	0.10	  !08S_PA	Colusa Drain MWC
+24	0.08	  !08S_SA1	Maxwell ID, Roberts Ditch Co., Swinford Tract Irrigation Company, Non-District (Short-Form)
+25	0.00	  !08S_SA2 	Glenn-Colusa ID
+26	0.32	  !08S_NA2 	Non-District
+27	0.00	  !08S_SA3 	RD 108, River Garden Farms, Non-District (Short-Form)
+28	0.60	  !09_NA	LLano Seco (Parrot Ranch), Dayton MWC, Non-District 
+29	0.24	  !09_SA1 	M&T Chico Ranch Inc.
+30	0.05	  !09_SA2 	RD 1004, Sartain MWC, Colusa Properties, Non-District (Short-Form)
+31	0.76	  !10_NA 	Rancho  Esquon, Durham MWC, Non-District
+32	0.57	  !11_NA 	Sutter Butte MWC, Non-District 
+33	0.10	  !11_SA1 	Western Canal WD. Originally 0.06 - increased to 0.10 during calibration
+34	0.00	  !11_SA2 	Richvale ID
+35	0.90	  !12_NA 	Non-District
+36	0.36	  !13_NA 	South Feather Water and Power Agency
+37	0.15	  !14_NA 	Browns Valley ID (originally 4% - changed during validation)
+38	0.88	  !15N_NA1	Non-District
+39	0.02	  !15N_NA2	Cordua ID, Hallwood ID, Ramirez WD
+40	0.77	  !15S_NA1	Non-District
+41	0.40	  !15S_NA2	Brophy WD, Dry Creek MWC, South Yuba WD, Dantoni Area, Wheatland WD. Originally 0.55, chnaged to 0.40 during calibration
+42	0.41	  !15S_SA	Plumas MWC, Feather River riparian
+43	0.13	  !16_NA2	Non-District
+44	0.65	  !16_PA	Feather WD (originally 0.21 - chnaged during model validation)
+45	0.26	  !16_SA	Garden Highway MWC, Tudor ID, Oswald MWC, Feather River riparian (originally 0.35, changed during validation)
+46	0.50	  !17N_NA	Non-District
+47	0.40	  !08S_NA2	Non-District
+48	0.29	  !17S_NA	Sutter Bypass-Butte Slough WUA
+49	0.07	  !18_NA	Butte Slough Irrigation Company, Non-District 
+50	0.02	  !18_SA	Meridian Farms, Newhall Land & Farming, Sutter MWC, Tisdale IDC, Non-District (Short-Form)
+51	0.00	  !19_NA	Non-District: Placeholder - zero acreage
+52	0.00	  !19_SA	Reynen, Oji Bros. Farm, Inc., Oji Family Partnership, Pelger MWC, Sutter MWC,Non-District (Short-Form)
+53	0.39	  !20_NA1	Yolo County FCWCD
+54	0.81	  !20_NA2	Non-District
+55	0.06	  !21_NA	Non-District
+56	0.01	  !21_SA	RD 2035 (Conway Conservancy), Sacramento River Ranch LLC
+57	0.74	  !22_NA	Non-District
+58	0.10	  !22_SA1	Natomas Central MWD, Pleasant Grove-Verona MWC, Non-District (Short-Form) Originally 0.21 - changed during validation
+59	0.50	  !23_NA	Camp Far West ID, South Sutter WD (Originally 0.04 - changed during validation)
+60	0.02	  !24_NA1	Nevada ID
+61	0.14	  !24_NA2	PCWA Zone 5
+62	0.04	  !24_NA3	PCWA Zone 1
+63	0.00	  !25_PA2	Maine Prairie WD
+64	0.57	  !25_NA	North Delta WA, Non-District
+65	0.15	  !25_PA1	Solano ID, UC Davis. Originally 0.04. Increased as deliveries low compared to demand.
+66	1.00	  !26N_NA	Non-District
+67	0.95	  !26S_NA	Non-District
+68	0.00	  !22_SA2	GIS data gives 0.56, Feather River export to 7 riparians totaling 2,987 acres
+69	0.00	  !12_SA	GIS data gives 0.53,Feather River riparian
+70	0.00	  !15N_SA	GIS data gives 0.82,Feather River riparian
+71	0.00	  !17S_SA	Feather River riparian
+72	0.94	  !20_PA	UC Davis
+73	0.04	  !21_PA	Colusa Drain MWC
+74	0.00	  !		Not used 		
+75	0.09	  !11_SA3 	Biggs-West Gridley WD, Butte WD
+76	0.04	  !11_SA4 	Sutter Extension WD
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+	

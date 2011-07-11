@@ -1,0 +1,13 @@
+define InitGWSystem    {EXTERNAL CVGroundwater.dll}  !Construct and initialize the finite element groundwater model 
+define SetGP	       {EXTERNAL CVGroundwater.dll}  !Set the groundwater pumping at WBA level
+define SetDP           {EXTERNAL CVGroundwater.dll}  !Set the deep percolation at WBA level
+define SetStrmFlow     {EXTERNAL CVGroundwater.dll}  !Set the stream flow at a stream node
+define SimGW 	       {EXTERNAL CVGroundwater.dll}  !Simulate the groundwater system
+define GetSeep         {EXTERNAL CVGroundwater.dll}  !Get the seepage (gw-stream interaction) at a groundwater node
+define GetGW_H         {EXTERNAL CVGroundwater.dll}  !Get the head at a groundwater node corresponding to a stream node
+define GetStrm_H       {EXTERNAL CVGroundwater.dll}  !Get the stream stage at a stream node
+define GetPumpShort    {EXTERNAL CVGroundwater.dll}  !Get the total pumping shortage
+define GetPercentPumpShort    {EXTERNAL CVGroundwater.dll}  !Get the total pumping shortage as percentage of total pumping requested by CalSim
+define PrintGWResults    {EXTERNAL CVGroundwater.dll}  !Print results after last iteration
+define AdvanceGWState    {EXTERNAL CVGroundwater.dll}  !Advance system state after last iteration
+                                    

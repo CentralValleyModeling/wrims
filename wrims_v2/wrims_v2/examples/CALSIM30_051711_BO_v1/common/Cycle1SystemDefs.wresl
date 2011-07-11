@@ -1,0 +1,7 @@
+define S_TRNTY {std kind 'STORAGE' units 'TAF'}
+define S_SHSTA {std kind 'STORAGE' units 'TAF'}
+define S_OROVL {std kind 'STORAGE' units 'TAF'}
+define S_FOLSM {std kind 'STORAGE' units 'TAF'}
+define S11 {std kind 'STORAGE' units 'TAF'}
+define S12 {std kind 'STORAGE' units 'TAF'}
+

@@ -1,0 +1,136 @@
+/*
+CONSTRAINTS-WUFACTORS.WRESL
+CALSIM III SYSTEM FILE
+
+Purpose: Apply water use factors
+ 
+ NAMING TAKES THE FOLLOWING FORMS:
+ EL_{source prefix}_{demand unit} - evaporative loss (non-recoverable)
+ PL_{source prefix}_{demand unit} - percolation loss (to groundwater)
+ RL_{source prefix}_{demand unit} - return flow loss (seepage loss to canal toe drain, available for reuse)
+ SL_{source prefix}_{demand unit} - spill loss (canal spill to main drain, not available for reuse)
+  
+ DL_{source prefix}_{demand unit}   - total conveyance loss  associated with diversion (EL + PL + RL + SL)
+ DL_{demand unit}                   - total conveyance loss  associated with demand unit from multiple diversion arcs
+  
+ Edited ADraper, MWH, 05/11/08
+ Edited ADraper, MWH, 11/15/06/
+  
+  
+*/
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! WBA 60N     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!==============================
+! 60N_NA1 - Jackson Valley ID - Ag
+!============================== 
+
+goal setEL_AMADR_60N_NA1    {EL_AMADR_60N_NA1 = D_AMADR_60N_NA1 * EF_AMADR_60N_NA1} 
+goal setSL_AMADR_60N_NA1    {SL_AMADR_60N_NA1 = D_AMADR_60N_NA1 * SF_AMADR_60N_NA1} 
+goal setDL_AMADR_60N_NA1    {DL_AMADR_60N_NA1 = EL_AMADR_60N_NA1   + SL_AMADR_60N_NA1}
+
+goal setDL_60N_NA1  {DL_60N_NA1 = DL_AMADR_60N_NA1}
+
+!==============================
+! 60N_NA2
+!==============================
+goal setEV_60N_NA2  {EV_60N_NA2 = D_FSC015_60N_NA2 * EVF_FSC015_60N_NA2} 
+goal setDP_60N_NA2  {DP_60N_NA2 = D_FSC015_60N_NA2 * DPF_FSC015_60N_NA2} 
+goal setLF_60N_NA2  {LF_60N_NA2 = D_FSC015_60N_NA2 * LFF_FSC015_60N_NA2} 
+goal setOS_60N_NA2  {OS_60N_NA2 = D_FSC015_60N_NA2 * OSF_FSC015_60N_NA2} 
+goal setDL_60N_NA2  {DL_60N_NA2 = EV_60N_NA2  + DP_60N_NA2  + LF_60N_NA2 + OS_60N_NA2}
+! reuse
+goal set1RU_60N_NA2 {RU_60N_NA2 < /*R_60N_NA2* +*/ LF_60N_NA2} ! Unknown return flow
+goal set2RU_60N_NA2 {RU_60N_NA2 < RUF_60N_NA2*DG_60N_NA2}
+! riparian loss
+goal setRP_60N_NA2  {RP_60N_NA2 = AW_60N_NA2 * RPF_60N_NA2} 
+
+!==============================
+! 60N_NA3 - North San Joaquin WCD - Ag
+!============================== 
+goal setEL_MOK_60N_NA3  {EL_MOK_60N_NA3 = D_MOK050_60N_NA3 * EF_MOK_60N_NA3} 
+goal setSL_MOK_60N_NA3  {SL_MOK_60N_NA3 = D_MOK050_60N_NA3 * SF_MOK_60N_NA3} 
+goal setDL_MOK_60N_NA3  {DL_MOK_60N_NA3 = EL_MOK_60N_NA3   + SL_MOK_60N_NA3}
+
+goal setDL_60N_NA3      {DL_60N_NA3 = DL_MOK_60N_NA3}
+
+!==============================
+! 60N_NA4 - Woodbridge ID - Ag
+!============================== 
+goal setEL_MOK_60N_NA4  {EL_MOK_60N_NA4 = D_MOK035_60N_NA4 * EF_MOK_60N_NA4} 
+goal setSL_MOK_60N_NA4  {SL_MOK_60N_NA4 = D_MOK035_60N_NA4 * SF_MOK_60N_NA4} 
+goal setDL_MOK_60N_NA4  {DL_MOK_60N_NA4 = EL_MOK_60N_NA4   + SL_MOK_60N_NA4}
+
+goal setDL_60N_NA4      {DL_60N_NA4 = DL_MOK_60N_NA4}
+
+!==============================
+! 60N_NA5 - Non-District - Ag
+!============================== 
+goal setEL_MOK_60N_NA5  {EL_MOK_60N_NA5 = D_MOK050_60N_NA5 * EF_MOK_60N_NA5 + D_MOK034_60N_NA5 * EF_MOK_60N_NA5} 
+goal setSL_MOK_60N_NA5  {SL_MOK_60N_NA5 = D_MOK050_60N_NA5 * SF_MOK_60N_NA5 + D_MOK034_60N_NA5 * SF_MOK_60N_NA5} 
+goal setDL_MOK_60N_NA5  {DL_MOK_60N_NA5 = EL_MOK_60N_NA5   + SL_MOK_60N_NA5}
+
+goal setDL_60N_NA5      {DL_60N_NA5 = DL_MOK_60N_NA5}
+
+!==============================
+! 60N_NU2 - Rancho Murieta - M&I 
+!============================== 
+goal setEL_CSM_60N_NU2  {EL_CSM_60N_NU2 = D_CSM033_60N_NU2 * EF_CSM_60N_NU2} 
+goal setSL_CSM_60N_NU2  {SL_CSM_60N_NU2 = D_CSM033_60N_NU2 * SF_CSM_60N_NU2} 
+goal setDL_CSM_60N_NU2  {DL_CSM_60N_NU2 = EL_CSM_60N_NU2   + SL_CSM_60N_NU2}
+
+goal setDL_60N_NU2      {DL_60N_NU2 = DL_CSM_60N_NU2}
+
+!==============================
+! 60N_PU
+!==============================
+goal setEL_FSC025_60N_PU{EL_FSC025_60N_PU = D_FSC025_60N_PU  * EF_FSC025_60N_PU}
+goal setSL_FSC025_60N_PU{SL_FSC025_60N_PU = D_FSC025_60N_PU  * SF_FSC025_60N_PU}
+goal setDL_FSC025_60N_PU{DL_FSC025_60N_PU = EL_FSC025_60N_PU + SL_FSC025_60N_PU}
+
+goal setDL_60N_PU   {DL_60N_PU = DL_FSC025_60N_PU}
+
+
+
+
+/*
+!==============================
+! EBMUD
+!==============================
+goal setEL_FSC027_EBMUD     {EL_FSC027_EBMUD = D_FSC027_EBMUD  * EF_FSC027_EBMUD}
+goal setSL_FSC027_EBMUD     {SL_FSC027_EBMUD = D_FSC027_EBMUD  * SF_FSC027_EBMUD}
+goal setDL_FSC027_EBMUD     {DL_FSC027_EBMUD = EL_FSC027_EBMUD + SL_FSC027_EBMUD}
+
+goal setDL_EBMUD        {DL_EBMUD = DL_FSC027_EBMUD}
+*/
+!==============================
+! EBMUD
+!==============================
+goal setEL_EBA_EBMUD     {EL_EBA_EBMUD = D_EBA100_EBMUD  * EF_EBA_EBMUD}
+goal setSL_EBA_EBMUD     {SL_EBA_EBMUD = D_EBA100_EBMUD  * SF_EBA_EBMUD}
+goal setDL_EBA_EBMUD     {DL_EBA_EBMUD = EL_EBA_EBMUD + SL_EBA_EBMUD}
+
+goal setDL_EBMUD     {DL_EBMUD = DL_EBA_EBMUD}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! WBA 60S !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!==============================
+! 60S_PA1 - Stockton East WD - Ag
+!==============================
+goal setEL_CLV_60S_PA1  {EL_CLV_60S_PA1 = D_CLV023_60S_PA1 * EF_CLV_60S_PA1} 
+goal setSL_CLV_60S_PA1  {SL_CLV_60S_PA1 = D_CLV023_60S_PA1 * SF_CLV_60S_PA1} 
+goal setDL_CLV_60S_PA1  {DL_CLV_60S_PA1 = EL_CLV_60S_PA1   + SL_CLV_60S_PA1}
+
+goal setDL_60S_PA1  {DL_60S_PA1 = DL_CLV_60S_PA1}
+
+!==============================
+! 60S_NU1 - City of Stockton via SEWD - M&I 
+!==============================
+goal setEL_WTP_60S_NU1  {EL_WTP_60S_NU1 = D_WTPDWS_60S_NU1 * EF_WTP_60S_NU1 + D_WTPWDH_60S_NU1 * EF_WTP_60S_NU1} 
+goal setSL_WTP_60S_NU1  {SL_WTP_60S_NU1 = D_WTPDWS_60S_NU1 * SF_WTP_60S_NU1 + D_WTPWDH_60S_NU1 * SF_WTP_60S_NU1 } 
+goal setDL_WTP_60S_NU1  {DL_WTP_60S_NU1 = EL_WTP_60S_NU1   + SL_WTP_60S_NU1}
+
+goal setDL_60S_NU1      {DL_60S_NU1 = DL_WTP_60S_NU1 + DL_WTP_60S_NU1}
+

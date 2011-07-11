@@ -1,0 +1,11 @@
+! This file sets EWA wheeling to zero.
+
+goal D419EWAZero {D419_ewa = 0.0}
+goal C_NDOEWAZero {C_NDO_ewa = 0.0}
+goal C_NDOEWAZer2 {C_NDO_ewarels = 0.0}
+goal whlewa_zero3 {C_KSWCK_ewa = 0.0}
+goal whlewa_zero4 {C_NTOMA_ewa = 0.0}
+goal whlewa_zero5 {C_OROVL_ewa = 0.0}
+
+!Zero out Sac Flow Reop adjustment
+goal zeroC_NDO_ewa {C_NDO_ewa = 0.0}
