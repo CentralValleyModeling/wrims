@@ -1,0 +1,101 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C                        *** Version 3.02 ***
+C
+C*******************************************************************************
+C
+C                  TILE DRAINS PARAMETER DATA FILE
+C                        for IWFM Simulation
+C                            (Unit 17)                            
+C
+C
+C             Project:  C2VSIM: California Central Valley Groundwater-Surface Water Simulation Model
+C             Filename:  CVtiledrn.dat
+C
+C*******************************************************************************
+C                          File Description:
+C
+C   This data file contains tile drains parameter values.
+C
+C*******************************************************************************
+C              Tile Drains Data Specifications
+C
+C   NTD    ;  Number of groundwater nodes with tile drains
+C   FACTH  ;  Conversion factor for tile drain elevations
+C   FACTCDC;  Conversion factor for tile drain conductances
+C            It is used to convert only the spatial component of the unit; 
+C            DO NOT include the conversion factor for time component of the unit.
+C            * e.g. Unit of conductance listed in this file = AC/MONTH
+C                   Consistent unit used in simulation      = SQ.FT/DAY 
+C                   Enter FACTQ (AC/MONTH -> SQ.FT/MONTH)   = 2.29568E-05 
+C                    (conversion of MONTH -> DAY is performed automatically) 
+C   TUNIT ; Time unit of conductance.  This should be one of the units 
+C            recognized by HEC-DSS that are listed in the Main Control File.  
+C-------------------------------------------------------------------------------
+C       VALUE                   DESCRIPTION
+C-------------------------------------------------------------------------------
+        11                       /NTD
+        1.0                      /FACTH
+        60.0                     /FACTCDC  (convert ft^2/sec to ft^2/min)
+        1min                     /TUNIT
+C-------------------------------------------------------------------------------
+C                    Tile Drain Parameters
+C
+C   The following lists the groundwater node number, elevation and conductance 
+C   for each tile drain. The stream node that the tile drain flow contributes to 
+C   is also listed.
+C
+C   NODEDR ; Groundwater node number corresponding to the tile drain
+C        Case 1: For drainage out of node add -10000 to node number. For example,
+C          list node 898 as -10898,
+C          list node 98 as -10098,
+C          list node 1898 as -11898
+C        Case 2: For drainage into the node add 10000 to node number. For example,
+C          list node 898 as 10898,
+C          list node 98 as 10098,
+C          list node 1898 as 11898
+C   ELEVDR ; Elevation of the drain; [L]
+C   CDCDR  ; Hydraulic conductance of the interface between the aquifer and 
+C             the drain; [L^2/T]
+C   ISTRMDR; Stream node into which drain flows into (input 0 (zero) if the 
+C             drain flows out of the modeled area) 
+C
+C Initial drain conductance values:
+C   Conductance for on-farm drains in Grasslands area:
+C   Cdrn-n = 2.9e-3 ft^2/sec from MODGRASS (Brush and others 2006)
+C   (2.9e-3 ft^2/sec)*(1307 MODGRASS cells) = 3.79 ft^2/sec for entire area
+C   (3.79 ft^2/sec)/(11 C2VSIM nodes) = 0.3447 ft^2/sec for each C2VSIM node
+C
+C   Conductances for Westlands Water District Regional Drains:
+C   Cdrn-r = 3.3e-4 ft^2/sec from MODGRASS (Brush and others 2006)
+C   (3.3e-4 ft^2/sec)*(1167 MODGRASS cells) = 0.385 ft^2/sec for entire area
+C   (0.385 ft^2/sec)/(11 C2VSIM nodes) = 0.0350 ft^2/sec for each C2VSIM node
+C
+C Grassland Drainers Area conductances were then calibrated to match WY 1986-2002 
+C drain flows
+C-------------------------------------------------------------------------------
+C NODEDR     ELEVDR        CDCDR     ISTRMDR
+C-------------------------------------------------------------------------------
+  -794     110.70      0.1000       114.00
+  -815     181.70      0.1000       114.00
+  -816     115.70      0.1000       114.00
+  -827     133.70      0.1000       114.00
+  -828     130.70      0.1000       114.00
+  -840     188.70      0.1000       114.00
+  -841     167.70      0.1000       114.00
+  -842     149.70      0.1000       114.00
+  -855     189.70      0.1000       114.00
+  -856     190.70      0.1000       114.00
+  -857     187.70      0.1000       114.00
+c  -10867     219.90      0.0350       113.00
+c  -10870     219.90      0.0350       113.00
+c  -10871     173.90      0.0350       113.00
+c  -10872     148.90      0.0350       113.00
+c  -10884     210.90      0.0350       113.00
+c  -10885     160.90      0.0350       113.00
+c  -10890     190.90      0.0350       113.00
+c  -10891     158.90      0.0350       113.00
+c  -10905     179.90      0.0350       113.00
+c  -10906     155.90      0.0350       113.00
+c  -10922     161.90      0.0350       113.00

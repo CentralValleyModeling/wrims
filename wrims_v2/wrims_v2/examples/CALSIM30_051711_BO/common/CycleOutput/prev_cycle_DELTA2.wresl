@@ -1,0 +1,9 @@
+! previous values
+define pr_cyc_C_SAC041 {value C_SAC041[DELTA2]}
+define pr_cyc_D409 {value D409[DELTA2]}
+define pr_cyc_C639 {value C639[DELTA2]}
+define pr_cyc_DXC {value DXC[DELTA2]}
+define pr_cyc_net_DICU {value net_DICU[DELTA2]}
+define pr_cyc_sac_oth {value sac_oth[DELTA2]}
+define pr_cyc_exp_oth {value exp_oth[DELTA2]}
+define pr_cyc_VernWQ  {value VernWQfinal[DELTA2]}

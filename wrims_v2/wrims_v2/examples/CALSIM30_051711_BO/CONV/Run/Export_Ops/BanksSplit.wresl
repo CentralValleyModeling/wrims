@@ -1,0 +1,16 @@
+! Banks Split between SWP and CVP
+
+define D419_swp {std KIND 'FLOW-DELIVERY' UNITS 'CFS'} ! SWP Banks
+define D419_cvp {std kind 'FLOW-DELIVERY' UNITS 'CFS'} ! Total CVP wheeling at Banks
+define D419_cvc {std kind 'FLOW-DELIVERY' UNITS 'CFS'} ! CVC wheeling at Banks
+define D419_cvcrels {std kind 'FLOW-DELIVERY' UNITS 'CFS'} ! CVC wheeling at Banks
+define D419_cvcsurp {std kind 'FLOW-DELIVERY' UNITS 'CFS'} ! CVC wheeling at Banks
+define D419_cvcsurp1 {std kind 'FLOW-DELIVERY' UNITS 'CFS'} ! CVC wheeling at Banks
+define D419_cvcsurp2 {std kind 'FLOW-DELIVERY' UNITS 'CFS'} ! CVC wheeling at Banks
+define D419_cvpded {std kind 'FLOW-DELIVERY' UNITS 'CFS'} ! CVP dedicated capacity at Banks
+
+goal totalBanks {D419 = D419_swp + D419_cvp } !Total Banks: SWP export + CVP Wheeling
+goal totalcvpWheel {D419_cvp = D419_cvc + D419_cvpded} ! Total Wheeling at Banks for CVP.
+goal totalcvc {D419_cvc = D419_cvcrels + D419_cvcsurp} ! Total Wheeling at Banks for CVC.
+goal totalcvcsurp {D419_cvcsurp = D419_cvcsurp1 + D419_cvcsurp2}
+

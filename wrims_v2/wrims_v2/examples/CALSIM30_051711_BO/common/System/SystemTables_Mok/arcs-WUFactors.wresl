@@ -1,0 +1,173 @@
+/*
+  ARCS-WUFACTORS.WRESL
+ CALSIM III SYSTEM FILE
+  
+  Purpose: Define water use factors
+
+  NAMING TAKES THE FOLLOWING FORMS:
+  EVF_{Upstream CalSim-III node}_{demand unit} - evaporative conveyance loss
+  DPF_{Upstream CalSim-III node}_{demand unit} - deep percolation conveyance loss
+  LFF_{Upstream CalSim-III node}_{demand unit} - lateral flow conveyance loss (from canal to toe drain)
+  OSF_{Upstream CalSim-III node}_{demand unit} - spill conveyance loss (from canal to drain outfall - not available for reuse)
+  
+  RUF_{demand unit} - reuse fraction
+  RPF_{demand unit}     - riparian and miscellaneous field/on-farm evaporative losses 
+  EV_{demand unit}      - total evaporative loss associated with surface water conveyance           
+  DP_{demand unit}      - total deep percolation loss associated with surface water conveyance              
+  LF_{demand unit}      - total lateral flow loss associated with surface water conveyance              
+  OS_{demand unit}      - total spill associated with surface water conveyance              
+  DL_{demand unit}      - total loss associated with surface water conveyance (evaporation loss+deep percolation+lateral flow+spill)        
+  
+
+ Edited ADraper, MWH, 05/11/08
+ Edited by DJones 04/22/08
+ Edited ADraper, MWH, 11/15/06
+*/
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! WBA 60N     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!==============================
+! 60N_NA1 - Jackson Valley ID - Ag
+!==============================
+define EF_AMADR_60N_NA1 {value 0.00001} !non recoverable loss fraction
+define SF_AMADR_60N_NA1 {value 0.00005} !non recoverable loss fraction
+
+define EL_AMADR_60N_NA1 {std kind 'EVAPORATIVE-LOSS' units 'CFS'}
+define SL_AMADR_60N_NA1 {std kind 'SEEPAGE-LOSS'     units 'CFS'}
+define DL_AMADR_60N_NA1 {std kind 'DELIVERY-LOSS'  units 'CFS'}
+
+define DL_60N_NA1       {std kind 'DELIVERY-LOSS' units 'CFS'}
+define DP_60N_NA1       {std kind 'deep-percolation' units 'CFS'}
+
+!==============================
+! 60N_NA2
+!==============================
+define EVF_FSC015_60N_NA2   {value 0.01} !evaporative loss fraction
+define DPF_FSC015_60N_NA2   {value 0.03} !deep percolation loss fraction
+define LFF_FSC015_60N_NA2   {value 0.03} !lateral flow loss fraction lateral flow
+define OSF_FSC015_60N_NA2   {value 0.03} !canal operating spill fraction
+
+define RUF_60N_NA2      {value 0.10} !reuse fraction
+define RPF_60N_NA2      {value 0.05} !riparian and miscellaneous ET fraction
+
+define EV_60N_NA2       {std kind 'EVAPORATIVE-LOSS' units 'CFS'}
+define DP_60N_NA2       {std kind 'deep-percolation' units 'CFS'}
+define LF_60N_NA2       {std kind 'LATERAL-FLOW-LOSS' units 'CFS'}
+define OS_60N_NA2       {std kind 'SPILL-LOSS' units 'CFS'}
+define DL_60N_NA2       {std kind 'DELIVERY-LOSS' units 'CFS'}
+
+!==============================
+! 60N_NA3 - North San Joaquin WCD - Ag
+!============================== 
+define EF_MOK_60N_NA3   {value 0.00001} !non recoverable loss fraction
+define SF_MOK_60N_NA3   {value 0.00005} !non recoverable loss fraction
+
+define EL_MOK_60N_NA3   {std kind 'EVAPORATIVE-LOSS' units 'CFS'}
+define SL_MOK_60N_NA3   {std kind 'SEEPAGE-LOSS'     units 'CFS'}
+define DL_MOK_60N_NA3   {std kind 'DELIVERY-LOSS'  units 'CFS'}
+
+define DL_60N_NA3           {std kind 'DELIVERY-LOSS' units 'CFS'}
+
+!==============================
+! 60N_NA4 - Woodbridge ID - Ag
+!============================== 
+define EF_MOK_60N_NA4   {value 0.00001} !non recoverable loss fraction
+define SF_MOK_60N_NA4   {value 0.00005} !non recoverable loss fraction
+
+define EL_MOK_60N_NA4   {std kind 'EVAPORATIVE-LOSS' units 'CFS'}
+define SL_MOK_60N_NA4   {std kind 'SEEPAGE-LOSS'     units 'CFS'}
+define DL_MOK_60N_NA4   {std kind 'DELIVERY-LOSS'  units 'CFS'}
+
+define DL_60N_NA4           {std kind 'DELIVERY-LOSS' units 'CFS'}
+
+!==============================
+! 60N_NA5 - Non-District - Ag
+!============================== 
+define EF_MOK_60N_NA5   {value 0.00001} !non recoverable loss fraction
+define SF_MOK_60N_NA5   {value 0.00005} !non recoverable loss fraction
+
+define EL_MOK_60N_NA5   {std kind 'EVAPORATIVE-LOSS' units 'CFS'}
+define SL_MOK_60N_NA5   {std kind 'SEEPAGE-LOSS'     units 'CFS'}
+define DL_MOK_60N_NA5   {std kind 'DELIVERY-LOSS'  units 'CFS'}
+
+define DL_60N_NA5           {std kind 'DELIVERY-LOSS' units 'CFS'}
+
+!==============================
+! 60N_NU2 - Rancho Murieta - M&I 
+!============================== 
+define EF_CSM_60N_NU2   {value 0.00001} !non recoverable loss fraction
+define SF_CSM_60N_NU2   {value 0.00005} !non recoverable loss fraction
+
+define EL_CSM_60N_NU2   {std kind 'EVAPORATIVE-LOSS' units 'CFS'}
+define SL_CSM_60N_NU2   {std kind 'SEEPAGE-LOSS'     units 'CFS'}
+define DL_CSM_60N_NU2   {std kind 'DELIVERY-LOSS'  units 'CFS'}
+
+define DL_60N_NU2           {std kind 'DELIVERY-LOSS' units 'CFS'}
+
+!==============================
+! 60N_PU
+!==============================
+define EF_FSC025_60N_PU  {value 0.0}
+define SF_FSC025_60N_PU  {value 0.0}
+
+define DL_FSC025_60N_PU  {std kind 'DELIVERY-LOSS'    units 'CFS'}
+define EL_FSC025_60N_PU  {std kind 'EVAPORATIVE-LOSS' units 'CFS'}
+define SL_FSC025_60N_PU  {std kind 'SEEPAGE-LOSS'     units 'CFS'}
+
+define DL_60N_PU     {std kind 'DELIVERY-LOSS' units 'CFS'}
+/*
+!==============================
+! EBMUD
+!==============================
+define EF_FSC027_EBMUD  {value 0.05001}
+define SF_FSC027_EBMUD  {value 0.04999}
+
+define DL_FSC027_EBMUD  {std kind 'DELIVERY-LOSS'    units 'CFS'}
+define EL_FSC027_EBMUD  {std kind 'EVAPORATIVE-LOSS' units 'CFS'}
+define SL_FSC027_EBMUD  {std kind 'SEEPAGE-LOSS'     units 'CFS'}
+
+define DL_EBMUD     {std kind 'DELIVERY-LOSS' units 'CFS'}
+*/
+!==============================
+! EBMUD
+!==============================
+define EF_EBA_EBMUD {value 0.0}
+define SF_EBA_EBMUD {value 0.0}
+
+define DL_EBA_EBMUD {std kind 'DELIVERY-LOSS'    units 'CFS'}
+define EL_EBA_EBMUD {std kind 'EVAPORATIVE-LOSS' units 'CFS'}
+define SL_EBA_EBMUD {std kind 'SEEPAGE-LOSS'     units 'CFS'}
+
+define DL_EBMUD     {std kind 'DELIVERY-LOSS' units 'CFS'}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! WBA 60S !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!==============================
+! 60S_PA1 - Stockton East WD - Ag
+!==============================
+define EF_CLV_60S_PA1   {value 0.00001} !non recoverable loss fraction
+define SF_CLV_60S_PA1   {value 0.00005} !non recoverable loss fraction
+
+define EL_CLV_60S_PA1   {std kind 'EVAPORATIVE-LOSS' units 'CFS'}
+define SL_CLV_60S_PA1   {std kind 'SEEPAGE-LOSS'     units 'CFS'}
+define DL_CLV_60S_PA1   {std kind 'DELIVERY-LOSS'  units 'CFS'}
+
+define DL_60S_PA1   {std kind 'DELIVERY-LOSS' units 'CFS'}
+
+!==============================
+! 60S_NU1 - City of Stockton via SEWD - M&I 
+!==============================
+!Delivery losses assumed to be 5% of diversion.
+!Assume 10% of losses are due to evaporation and 90% due to seepage
+
+define EF_WTP_60S_NU1   {value 0.005} !non recoverable loss fraction
+define SF_WTP_60S_NU1   {value 0.045} !non recoverable loss fraction
+
+define EL_WTP_60S_NU1   {std kind 'EVAPORATIVE-LOSS' units 'CFS'}
+define SL_WTP_60S_NU1   {std kind 'SEEPAGE-LOSS'     units 'CFS'}
+define DL_WTP_60S_NU1   {std kind 'DELIVERY-LOSS'  units 'CFS'}
+
+define DL_60S_NU1           {std kind 'DELIVERY-LOSS' units 'CFS'}
+

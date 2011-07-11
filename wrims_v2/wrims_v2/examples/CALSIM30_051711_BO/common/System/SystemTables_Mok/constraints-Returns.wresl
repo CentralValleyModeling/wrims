@@ -1,0 +1,38 @@
+/*
+RETURN FLOWS FROM DEMAND UNITS
+
+NAMING TAKES THE FOLLOWING FORMS:
+R_{DEMAND UNIT}     - return flow from specific demand unit
+R_{WBA}_{DESTINATION}   - aggregated return from WBA to specific location
+
+Original formulation: C. Olson (MWH) December 2007
+*/
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! DIVERSIONS TO WBAS, AND SUB-ARCS
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! WBA 60N     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+define  R_60N_NA1   {timeseries kind 'DU-RETURN' units 'TAF' convert 'CFS'}
+goal setR_60N_DSC026    {R_60N_NA1_DSC026 = R_60N_NA1}
+
+define  R_60N_NA2   {timeseries kind 'DU-RETURN' units 'TAF' convert 'CFS'}
+goal setR_60N_CSM005    {R_60N_NA2_CSM005 = R_60N_NA2}
+
+define  R_60N_NA3   {timeseries kind 'DU-RETURN' units 'TAF' convert 'CFS'}
+goal setR_60N_SJR028    {R_60N_NA3_SJR028 = R_60N_NA3}
+
+define  R_60N_NA4   {timeseries kind 'DU-RETURN' units 'TAF' convert 'CFS'}
+goal setR_60N_SJR022    {R_60N_NA4_SJR022 = R_60N_NA4}
+
+! No return flows from 60N_NA5 (Non-district)
+
+! No return flows from 60N_NU1 (Galt, Lodi, small communities)
+! No return flows from 60N_NU2 (Rancho Murieta)
+! No return flows from 60N_PU (Rancho Seco PowerPlant)
+

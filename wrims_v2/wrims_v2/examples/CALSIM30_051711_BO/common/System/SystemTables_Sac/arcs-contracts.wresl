@@ -1,0 +1,2684 @@
+/*
+CALSIM 3.0 SYSTEM FILE
+ARCS-CONTRACTS.WRESL
+
+NAMING TAKES THE FOLLOWING FORMS:
+CLann_{ORIGIN PREFIX}_{DESTINATION}	- annual limitation on specific contractors diversion from particular source (state variable)
+CLmon_{ORIGIN PREFIX}_{DESTINATION}	- monthly limitation on specific contractors diversion from particular source (state variable)
+CL_{ORIGIN PREFIX}_{DESTINATION}		- monthly limitation on specific contractors diversion from particular source (decision variable for output)
+
+All units is TAF
+
+Edited ajdraper, MWH, November 28, 2007
+*/
+
+! The summation of annual applied water for CVP Ag, M&I and refuge is done in sumcvpDR_sys.wresl
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! CVP NOD AG Contractors !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+! Definition of annual contract amounts moved to sumcvpDR_sys.wresl
+
+!define CLann_WTPCSD_02_PA	{select contract from CVPContractAmounts where diversion=1}
+define CLmon_WTPCSD_02_PA	{value max(0.0, CLann_WTPCSD_02_PA * (AWR_02_PA + AWO_02_PA)*cfs_taf / (AWRann_02_PA + AWOann_02_PA))} ! Monthly contract amount (TAF) patterned on demand
+define CL_WTPCSD_02_PA  		{alias CLmon_WTPCSD_02_PA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!define CLann_SAC294_03_PA	{select contract from CVPContractAmounts where diversion=2}
+define CLmon_SAC294_03_PA	{value max(0.0, CLann_SAC294_03_PA * (AWR_03_PA + AWO_03_PA)*cfs_taf / (AWRann_03_PA + AWOann_03_PA))}  ! Monthly contract amount (TAF) patterned on demand
+define CL_SAC294_03_PA 		{alias CLmon_SAC294_03_PA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!define CLann_CCL005_04_PA1	{select contract from CVPContractAmounts where diversion=3}
+define CLmon_CCL005_04_PA1 	{value max(0.0, CLann_CCL005_04_PA1 * (AWR_04_PA1 + AWO_04_PA1)*cfs_taf / (AWRann_04_PA1 + AWOann_04_PA1))}  ! Monthly contract amount (TAF) patterned on demand
+define CL_CCL005_04_PA1 		{alias CLmon_CCL005_04_PA1 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!define CLann_TCC022_04_PA2	{select contract from CVPContractAmounts where diversion=4}
+define CLmon_TCC022_04_PA2 	{value max(0.0, CLann_TCC022_04_PA2 * (AWR_04_PA2 + AWO_04_PA2)*cfs_taf / (AWRann_04_PA2 + AWOann_04_PA2))}  ! Monthly contract amount (TAF) patterned on demand
+define CL_TCC022_04_PA2 		{alias CLmon_TCC022_04_PA2 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!define CLann_TCC036_07N_PA	{select contract from CVPContractAmounts where diversion=7}
+define CLmon_TCC036_07N_PA 	{value max(0.0, CLann_TCC036_07N_PA * (AWR_07N_PA + AWO_07N_PA)*cfs_taf / (AWRann_07N_PA + AWOann_07N_PA))}  ! Monthly contract amount (TAF) patterned on demand
+define CL_TCC036_07N_PA 		{alias CLmon_TCC036_07N_PA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!define CLann_TCC081_07S_PA	{select contract from CVPContractAmounts where diversion=8}
+define CLmon_TCC081_07S_PA 	{value max(0.0, CLann_TCC081_07S_PA * (AWR_07S_PA + AWO_07S_PA)*cfs_taf / (AWRann_07S_PA + AWOann_07S_PA))}  ! Monthly contract amount (TAF) patterned on demand
+define CL_TCC081_07S_PA 		{alias CLmon_TCC081_07S_PA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!define CLann_TCC111_07S_PA	{select contract from CVPContractAmounts where diversion=23}
+define CLmon_TCC111_07S_PA 	{value max(0.0, CLann_TCC111_07S_PA * (AWR_07S_PA + AWO_07S_PA)*cfs_taf / (AWRann_07S_PA + AWOann_07S_PA))}  ! Monthly contract amount (TAF) patterned on demand
+define CL_TCC111_07S_PA 		{alias CLmon_TCC111_07S_PA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!define CLann_FTR021_16_PA	{select contract from CVPContractAmounts where diversion=9}
+define CLmon_FTR021_16_PA 	{value max(0.0, CLann_FTR021_16_PA * (AWR_16_PA + AWO_16_PA)*cfs_taf / (AWRann_16_PA + AWOann_16_PA))}  ! Monthly contract amount (TAF) patterned on demand
+define CL_FTR021_16_PA  		{alias CLmon_FTR021_16_PA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+! Colusa Drain Mutual Water Company
+! Assume purchase from GCID is limted to land in rice production in 08S_PA
+! Assume all post-1914 water rights
+! Deficiencies are Jun 19%, Jul 87%, Aug 100%, Sep 99%
+! Water Requirement Jun 0.717, Jul 0.783, Aug 0.650, Sep 0.200
+! 10% allowance for non-crop consumptive use
+define CLmon_GCC065_08S_PA {
+    case OctMayBgnWY{
+    	condition month <= may
+        value 0.0 }
+    case June {
+        condition month == jun
+        value 16505.*0.717*0.19*1.1/1000. }
+    case July {
+        condition month == jul
+        value 16505.*0.783*0.87*1.1/1000. }
+    case August {
+	        condition month == aug
+        value 16505.*0.650*1.00*1.1/1000. }
+    case otherwise {
+        condition   always
+        value 16505.*0.200*0.99*1.1/1000. }
+        }
+        
+define CL_GCC065_08S_PA {alias CLmon_GCC065_08S_PA kind 'CONTRACT-LIMIT' units 'TAF'}        
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Reclamation Orland Project !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+define AWRann_06_PAdv	{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual applied water for rice
+define AWRann_06_PA {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_06_PA(i)*cfs_taf(i) }
+    case MarEndWY {
+        condition month == mar .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_06_PA(i)*cfs_taf(i) }
+    case march {
+        condition month == mar .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_06_PA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value AWRann_06_PAdv(-1) }
+        }
+       
+goal setAWRann_06_PAdv 	{AWRann_06_PAdv = AWRann_06_PA}
+
+define AWOann_06_PAdv	{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual applied water for all other crops
+define AWOann_06_PA {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWO_06_PA(i)*cfs_taf(i) }
+    case MarEndWY {
+        condition month == mar .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWO_06_PA(i)*cfs_taf(i) }
+    case march {
+        condition month == mar .and. wateryear < EndWY
+        sum(i=0,11,1) AWO_06_PA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value AWOann_06_PAdv(-1) }
+        }
+       
+goal setAWOann_06_PAdv 	{AWOann_06_PAdv = AWOann_06_PA}
+
+
+define CLann_STN026_06_PA		{select contract from Contracts_CVPService where diversion=5} ! Annual contract amount from lookup table
+define CLmon_STN026_06_PA	{value max(0.0, CLann_STN026_06_PA * (AWR_06_PA + AWO_06_PA)*cfs_taf / (AWRann_06_PA + AWOann_06_PA))}  ! Monthly contract amount (TAF) patterned on demand
+define CL_STN026_06_PA 		{alias CLmon_STN026_06_PA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+define CLann_STN021_06_PA		{select contract from Contracts_CVPService where diversion=6} ! Annual contract amount from lookup table
+define CLmon_STN021_06_PA	{value max(0.0, CLann_STN021_06_PA * (AWR_06_PA + AWO_06_PA)*cfs_taf / (AWRann_06_PA + AWOann_06_PA))}  ! Monthly contract amount (TAF) patterned on demand
+define CL_STN021_06_PA 		{alias CLmon_STN021_06_PA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!! Solano Project Contracts !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+!20_PA
+define CLann_PSC003_20_PA	{select contract from Contracts_CVPService where diversion=25} ! Annual contract amount from lookup table
+
+define AWRann_20_PAdv	{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual applied water for rice
+define AWRann_20_PA {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_20_PA(i)*cfs_taf(i) }
+    case MarEndWY {
+        condition month == mar .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_20_PA(i)*cfs_taf(i) }
+    case march {
+        condition month == mar .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_20_PA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value AWRann_20_PAdv(-1) }
+        }
+       
+goal setAWRann_20_PAdv 	{AWRann_20_PAdv = AWRann_20_PA}
+
+define AWOann_20_PAdv	{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual applied water for all other crops
+define AWOann_20_PA {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWO_20_PA(i)*cfs_taf(i) }
+    case MarEndWY {
+        condition month == mar .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWO_20_PA(i)*cfs_taf(i) }
+    case march {
+        condition month == mar .and. wateryear < EndWY
+        sum(i=0,11,1) AWO_20_PA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value AWOann_20_PAdv(-1) }
+        }
+       
+goal setAWOann_20_PAdv 	{AWOann_20_PAdv = AWOann_20_PA}
+   
+define CLmon_PSC003_20_PA 	{value max(0.0, CLann_PSC003_20_PA * (AWR_20_PA + AWO_20_PA)*cfs_taf / (AWRann_20_PA + AWOann_20_PA))}  ! Monthly contract amount (TAF) patterned on demand
+define CL_PSC003_20_PA 		{alias CLmon_PSC003_20_PA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+!25_PA1
+define AWRann_25_PA1dv	{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual applied water for rice
+define AWRann_25_PA1 {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_25_PA1(i)*cfs_taf(i) }
+    case MarEndWY {
+        condition month == mar .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_25_PA1(i)*cfs_taf(i) }
+    case march {
+        condition month == mar .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_25_PA1(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value AWRann_25_PA1dv(-1) }
+        }
+       
+goal setAWRann_25_PA1dv 	{AWRann_25_PA1dv = AWRann_25_PA1}
+
+define AWOann_25_PA1dv	{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual applied water for all other crops
+define AWOann_25_PA1 {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWO_25_PA1(i)*cfs_taf(i) }
+    case MarEndWY {
+        condition month == mar .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWO_25_PA1(i)*cfs_taf(i) }
+    case march {
+        condition month == mar .and. wateryear < EndWY
+        sum(i=0,11,1) AWO_25_PA1(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value AWOann_25_PA1dv(-1) }
+        }
+       
+goal setAWOann_25_PA1dv 	{AWOann_25_PA1dv = AWOann_25_PA1}
+ 
+define CLann_PSC003_25_PA1	{select contract from Contracts_CVPService where diversion=10} ! Annual contract amount from lookup table
+define CLmon_PSC003_25_PA1 	{value max(0.0, CLann_PSC003_25_PA1 * (AWR_25_PA1 + AWO_25_PA1)*cfs_taf / (AWRann_25_PA1 + AWOann_25_PA1))}  ! Monthly contract amount (TAF) patterned on demand
+define CL_PSC003_25_PA1 		{alias CLmon_PSC003_25_PA1 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+!25_PA2
+define AWRann_25_PA2dv	{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual applied water for rice
+define AWRann_25_PA2 {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_25_PA2(i)*cfs_taf(i) }
+    case MarEndWY {
+        condition month == mar .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_25_PA2(i)*cfs_taf(i) }
+    case march {
+        condition month == mar .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_25_PA2(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value AWRann_25_PA2dv(-1) }
+        }
+       
+goal setAWRann_25_PA2dv 	{AWRann_25_PA2dv = AWRann_25_PA2}
+
+define AWOann_25_PA2dv	{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual applied water for all other crops
+define AWOann_25_PA2 {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWO_25_PA2(i)*cfs_taf(i) }
+    case MarEndWY {
+        condition month == mar .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWO_25_PA2(i)*cfs_taf(i) }
+    case march {
+        condition month == mar .and. wateryear < EndWY
+        sum(i=0,11,1) AWO_25_PA2(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value AWOann_25_PA2dv(-1) }
+        }
+       
+goal setAWOann_25_PA2dv 	{AWOann_25_PA2dv = AWOann_25_PA2}
+
+define CLann_PSC006_25_PA2	{select contract from Contracts_CVPService where diversion=24} ! Annual contract amount from lookup table   
+define CLmon_PSC006_25_PA2 	{value max(0.0, CLann_PSC006_25_PA2 * (AWR_25_PA2 + AWO_25_PA2)*cfs_taf / (AWRann_25_PA2 + AWOann_25_PA2))}  ! Monthly contract amount (TAF) patterned on demand
+define CL_PSC006_25_PA2 		{alias CLmon_PSC006_25_PA2 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!25_PU
+define SumUD_25_PU		{std kind 'URBAN-DEMAND' units 'TAF'} ! Annual demand
+
+define SumUD_25_PU_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) UD_25_PU(i)*cfs_taf(i) }
+    case MarEndWY {
+    	condition month == mar .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) UD_25_PU(i)*cfs_taf(i) }
+    case march {
+        condition month == mar .and. wateryear < EndWY
+        sum(i=0,11,1) UD_25_PU(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumUD_25_PU(-1) }
+        }
+       
+goal setSumUD_25_PU 		{SumUD_25_PU=SumUD_25_PU_sv}
+
+! Monthly contract amount (TAF) patterned on demand   
+! This is the contract amount for Solano water. Contract amounts from the North Bay Aqueduct are handled in NBA.wresl
+! WTPDEF represents Vacaville's own water treatment plant and its share of the North Bay Regional water treatment plant
+define CLann_WTPDEF_25_PU	{select contract from Contracts_CVPService where diversion=26} ! Annual contract amount from lookup table
+define CLmon_WTPDEF_25_PU 	{value max(0.0, CLann_WTPDEF_25_PU * UD_25_PU*cfs_taf / SumUD_25_PU_sv)} 
+define CL_WTPDEF_25_PU  		{alias CLmon_WTPDEF_25_PU kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!CSPSO
+define SumUD_CSPSO		{std kind 'URBAN-DEMAND' units 'TAF'} ! Annual demand
+
+define SumUD_CSPSO_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) UD_CSPSO(i)*cfs_taf(i) }
+    case MarEndWY {
+    	condition month == mar .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) UD_CSPSO(i)*cfs_taf(i) }
+    case march {
+        condition month == mar .and. wateryear < EndWY
+        sum(i=0,11,1) UD_CSPSO(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumUD_CSPSO(-1) }
+        }
+       
+goal setSumUD_CSPSO 		{SumUD_CSPSO=SumUD_CSPSO_sv}
+
+! Monthly contract amount (TAF) patterned on demand   
+define CLann_PSC015_CSPSO	{select contract from Contracts_CVPService where diversion=27} ! Annual contract amount from lookup table
+define CLmon_PSC015_CSPSO 	{value max(0.0, CLann_PSC015_CSPSO * UD_CSPSO*cfs_taf / SumUD_CSPSO_sv)} 
+define CL_PSC015_CSPSO  	{alias CLmon_PSC015_CSPSO kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!SUISN
+define SumUD_SUISN		{std kind 'URBAN-DEMAND' units 'TAF'} ! Annual demand
+
+define SumUD_SUISN_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) UD_SUISN(i)*cfs_taf(i) }
+    case MarEndWY {
+    	condition month == mar .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) UD_SUISN(i)*cfs_taf(i) }
+    case march {
+        condition month == mar .and. wateryear < EndWY
+        sum(i=0,11,1) UD_SUISN(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumUD_SUISN(-1) }
+        }
+       
+goal setSumUD_SUISN 		{SumUD_SUISN=SumUD_SUISN_sv}
+
+! Monthly contract amount (TAF) patterned on demand   
+define CLann_WTPCMT_SUISN	{select contract from Contracts_CVPService where diversion=28} ! Annual contract amount from lookup table
+define CLmon_WTPCMT_SUISN 	{value max(0.0, CLann_WTPCMT_SUISN * UD_SUISN*cfs_taf / SumUD_SUISN_sv)} 
+define CL_WTPCMT_SUISN  		{alias CLmon_WTPCMT_SUISN kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!SIDSH (use pattern for 25_PA1)
+define AWOann_SIDSHdv	{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual applied water for all other crops
+define AWOann_SIDSH {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWO_25_PA1(i)*cfs_taf(i) }
+    case MarEndWY {
+        condition month == mar .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWO_25_PA1(i)*cfs_taf(i) }
+    case march {
+        condition month == mar .and. wateryear < EndWY
+        sum(i=0,11,1) AWO_25_PA1(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value AWOann_25_PA1dv(-1) }
+        }
+ 
+goal setAWOann_SIDSHdv 	{AWOann_SIDSHdv = AWOann_SIDSH}
+
+! Monthly contract amount (TAF) patterned on demand   
+define CLann_PSC024_SIDSH		{select contract from Contracts_CVPService where diversion=29} ! Annual contract amount from lookup table
+define CLmon_PSC024_SIDSH 	{value max(0.0, CLann_PSC024_SIDSH * AWO_SIDSH*cfs_taf / AWOann_SIDSH)} 
+define CL_PSC024_SIDSH  		{alias CLmon_PSC024_SIDSH kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+!FRFLD
+define SumUD_FRFLD		{std kind 'URBAN-DEMAND' units 'TAF'} ! Annual demand
+
+define SumUD_FRFLD_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) UD_FRFLD(i)*cfs_taf(i) }
+    case MarEndWY {
+    	condition month == mar .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) UD_FRFLD(i)*cfs_taf(i) }
+    case march {
+        condition month == mar .and. wateryear < EndWY
+        sum(i=0,11,1) UD_FRFLD(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumUD_FRFLD(-1) }
+        }
+       
+goal setSumUD_FRFLD 		{SumUD_FRFLD=SumUD_FRFLD_sv}
+
+! Monthly contract amount (TAF) patterned on demand   
+! This is the delivery from the Putah South Canal
+
+define CLann_WTPWMN_FRFLD	{select contract from Contracts_CVPService where diversion=30} ! Annual contract amount from lookup table
+define CLmon_WTPWMN_FRFLD 	{value max(0.0, CLann_WTPWMN_FRFLD * UD_FRFLD*cfs_taf / SumUD_FRFLD_sv)} 
+define CL_WTPWMN_FRFLD  		{alias CLmon_WTPWMN_FRFLD kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+!VLLJO
+define SumUD_VLLJO		{std kind 'URBAN-DEMAND' units 'TAF'} ! Annual demand
+
+define SumUD_VLLJO_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) UD_VLLJO(i)*cfs_taf(i) }
+    case MarEndWY {
+    	condition month == mar .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) UD_VLLJO(i)*cfs_taf(i) }
+    case march {
+        condition month == mar .and. wateryear < EndWY
+        sum(i=0,11,1) UD_VLLJO(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumUD_VLLJO(-1) }
+        }
+       
+goal setSumUD_VLLJO 		{SumUD_VLLJO=SumUD_VLLJO_sv}
+
+!BNCIA
+define SumUD_BNCIA		{std kind 'URBAN-DEMAND' units 'TAF'} ! Annual demand
+
+define SumUD_BNCIA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) UD_BNCIA(i)*cfs_taf(i) }
+    case MarEndWY {
+    	condition month == mar .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) UD_BNCIA(i)*cfs_taf(i) }
+    case march {
+        condition month == mar .and. wateryear < EndWY
+        sum(i=0,11,1) UD_BNCIA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumUD_BNCIA(-1) }
+        }
+       
+goal setSumUD_BNCIA 		{SumUD_BNCIA=SumUD_BNCIA_sv}
+
+! Monthly contract amount (TAF) patterned on demand
+! This is Solano Project water delivered from Putah South Canal
+define CLann_PSC033_VJB000_V	{select contract from Contracts_CVPService where diversion=31} ! Annual contract amount from lookup table
+define CLmon_PSC033_VJB000_V 	{value max(0.0, CLann_PSC033_VJB000_V * UD_VLLJO*cfs_taf / SumUD_VLLJO_sv)} 
+define CL_PSC033_VJB000_V		{alias CLmon_PSC033_VJB000_V kind 'CONTRACT-LIMIT' units 'TAF'}
+
+define CLann_PSC033_VJB000_B	{select contract from Contracts_CVPService where diversion=32} ! Annual contract amount from lookup table
+define CLmon_PSC033_VJB000_B 	{value max(0.0, CLann_PSC033_VJB000_B * UD_VLLJO*cfs_taf / SumUD_VLLJO_sv)} 
+define CL_PSC033_VJB000_B		{alias CLmon_PSC033_VJB000_B kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! CVP NOD Urban Contractors !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+! Definition of annual contract amounts moved to sumcvpDR_sys.wresl
+
+!define CLann_WTPCSD_02_PU	{select contract from CVPContractAmounts where diversion=12} ! Annual contract amount from lookup table
+define CLmon_WTPCSD_02_PU	{value max(0.0, CLann_WTPCSD_02_PU * UD_02_PU*cfs_taf / UDann_02_PU)} ! Monthly contract amount (TAF) patterned on demand
+define CL_WTPCSD_02_PU 		{alias CLmon_WTPCSD_02_PU kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!define CLann_WKYTN_02_PU	{select contract from CVPContractAmounts where diversion=13} ! Annual contract amount from lookup table
+define CLmon_WKYTN_02_PU 	{value max(0.0, CLann_WKYTN_02_PU * UD_02_PU*cfs_taf / UDann_02_PU)} ! Monthly contract amount (TAF) patterned on demand
+define CL_WKYTN_02_PU 		{alias CLmon_WKYTN_02_PU kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!define CLann_SHSTA_03_PU1	{select contract from CVPContractAmounts where diversion=14}
+define CLmon_SHSTA_03_PU1	{value max(0.0, CLann_SHSTA_03_PU1 * UD_03_PU1*cfs_taf / UDann_03_PU1)} ! Monthly contract amount (TAF) patterned on demand
+define CL_SHSTA_03_PU1 		{alias CLmon_SHSTA_03_PU1 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!define CLann_SAC294_03_PU2	{select contract from CVPContractAmounts where diversion=15}
+define CLmon_SAC294_03_PU2 	{value max(0.0, CLann_SAC294_03_PU2 * UD_03_PU2*cfs_taf / UDann_03_PU2)} ! Monthly contract amount (TAF) patterned on demand
+define CL_SAC294_03_PU2 		{alias CLmon_SAC294_03_PU2 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!define CLann_WTPBUK_03_PU3	{select contract from CVPContractAmounts where diversion=11}
+define CLmon_WTPBUK_03_PU3	{value max(0.0, CLann_WTPBUK_03_PU3 * UD_03_PU3*cfs_taf / UDann_03_PU3)} ! Monthly contract amount (TAF) patterned on demand
+define CL_WTPBUK_03_PU3 		{alias CLmon_WTPBUK_03_PU3 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! CVP NOD Refuge Contractors !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+! Definition of annual contract amounts moved to sumcvpDR_sys.wresl
+
+!define CLann_GCC027_08N_PR1	{select contract from CVPContractAmounts where diversion=16}
+define CLmon_GCC027_08N_PR1 	{value max(0.0, CLann_GCC027_08N_PR1 * (AWo_08N_PR1 + AWR_08N_PR1 + AWW_08N_PR1)*cfs_taf / (AWoann_08N_PR1 + AWRann_08N_PR1 + AWOann_08N_PR1))}  ! Monthly contract amount (TAF) patterned on demand
+define CL_GCC027_08N_PR1 		{alias CLmon_GCC027_08N_PR1 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!define CLann_GCC039_08N_PR2	{select contract from CVPContractAmounts where diversion=18}
+define CLmon_GCC039_08N_PR2 	{value max(0.0, CLann_GCC039_08N_PR2 * (AWo_08N_PR2 + AWR_08N_PR2 + AWW_08N_PR2)*cfs_taf / (AWoann_08N_PR2 + AWRann_08N_PR2 + AWOann_08N_PR2))}  ! Monthly contract amount (TAF) patterned on demand
+define CL_GCC039_08N_PR2  	{alias CLmon_GCC039_08N_PR2 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!define CLann_GCC056_08S_PR	{select contract from CVPContractAmounts where diversion=17}
+define CLmon_GCC056_08S_PR 	{value max(0.0, CLann_GCC056_08S_PR * (AWo_08S_PR + AWR_08S_PR + AWW_08S_PR)*cfs_taf / (AWoann_08S_PR + AWRann_08S_PR + AWOann_08S_PR))}  ! Monthly contract amount (TAF) patterned on demand
+define CL_GCC056_08S_PR  		{alias CLmon_GCC056_08S_PR kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!define CLann_CBD037_08S_PR	{select contract from CVPContractAmounts where diversion=22}
+define CLmon_CBD037_08S_PR 	{value max(0.0, CLann_CBD037_08S_PR * (AWo_08S_PR + AWR_08S_PR + AWW_08S_PR)*cfs_taf / (AWoann_08S_PR + AWRann_08S_PR + AWOann_08S_PR))}  ! Monthly contract amount (TAF) patterned on demand
+define CL_CBD037_08S_PR  		{alias CLmon_CBD037_08S_PR kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!define CLann_JBC002_17N_PR	{select contract from CVPContractAmounts where diversion=19}
+define CLmon_JBC002_17N_PR 	{value max(0.0, CLann_JBC002_17N_PR * (AWo_17N_PR + AWR_17N_PR + AWW_17N_PR)*cfs_taf / (AWoann_17N_PR + AWRann_17N_PR + AWOann_17N_PR))}  ! Monthly contract amount (TAF) patterned on demand
+define CL_JBC002_17N_PR  		{alias CLmon_JBC002_17N_PR kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!define CLann_SBP028_17S_PR	{select contract from CVPContractAmounts where diversion=20}
+!define CLmon_SBP028_17S_PR 	{value max(0.0, CLann_SBP028_17S_PR * (AWo_17S_PR + AWR_17S_PR + AWW_17S_PR)*cfs_taf / (AWoann_17S_PR + AWRann_17S_PR + AWOann_17S_PR))}  ! Monthly contract amount (TAF) patterned on demand
+!define CL_SBP028_17S_PR  		{alias CLmon_SBP028_17S_PR kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Other Managed Wetlands        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+! The Little Dry Creek Unit and Howard Slough Unit of the Upper Butte Basin Wildlife Area have been annexed
+! into Richvale ID and Western Canal WD, respectively. The agreements do not specify a fixed quantity of water
+! It is assumed that this water is subject to diversion limits for these two settlement contractors
+define WRmon_WEC000_11_PR	{value 99999.}
+define WRmon_RVC005_11_PR	{value 99999.}
+
+define CLmon_MTC000_09_PR	{value 99999.}
+
+define WRmon_CRK005_17N_NR	{value 99999.}
+
+define CL_MTC000_09_PR 		{alias CLmon_MTC000_09_PR kind 'CONTRACT-LIMIT' units 'TAF'}
+
+define WR_WEC000_11_PR 		{alias WRmon_WEC000_11_PR kind 'CONTRACT-LIMIT' units 'TAF'}
+
+define WR_RVC005_11_PR 		{alias WRmon_RVC005_11_PR kind 'CONTRACT-LIMIT' units 'TAF'}
+
+define WR_CRK005_17N_NR 	{alias WRmon_CRK005_17N_NR kind 'WATER-RIGHT' units 'TAF'}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! CVP Settlement Contractors !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+define SumAW_02_SA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define PeakAW_02_SA		{std kind 'PEAK-APPLIED-WATER' units 'TAF'} ! Peak demand
+
+! Summation of annual applied water (April-October)
+define SumAW_02_SA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=6,12,1) AWR_02_SA(i)*cfs_taf(i) + AWO_02_SA(i)*cfs_taf(i)}
+    case aprEndWY {	! Apr-Oct sum estimated to be 1.043*Apr-Sep
+        condition month == apr .and. wateryear==EndWY
+        sum(i=0,5,1) AWR_02_SA(i)*cfs_taf(i)*1.043 + AWO_02_SA(i)*cfs_taf(i)*1.043}
+    case april {
+        condition month == apr .and. wateryear < EndWY
+        sum(i=0,6,1) AWR_02_SA(i)*cfs_taf(i) + AWO_02_SA(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value SumAW_02_SA(-1) }
+        }
+       
+goal setSumAW_02_SA 	{SumAW_02_SA = SumAW_02_SA_sv}
+
+! Summation of peak applied water (July-August)
+define PeakAW_02_SA_sv {
+    case begin {
+        condition month == oct .and. wateryear == bgnWY
+        value 0.0 }
+    case april {
+        condition month == apr
+        sum(i=3,4,1) AWR_02_SA(i)*cfs_taf(i) + AWO_02_SA(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value PeakAW_02_SA(-1) }
+        }
+       
+goal setPeakAW_02_SA 	{PeakAW_02_SA = PeakAW_02_SA_sv}
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_SAC296_02_SA	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun .or. month == sep
+    	value max(0.0, CLN_SAC296_02_SA * (AWR_02_SA + AWO_02_SA)*cfs_taf / (SumAW_02_SA_sv - PeakAW_02_SA_sv))}
+    case peak {
+    	condition month >= jul .and. month <= aug
+    	value max(0.0, CLP_SAC296_02_SA * (AWR_02_SA + AWO_02_SA)*cfs_taf / PeakAW_02_SA_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+        
+define CL_SAC296_02_SA 	{alias CLmon_SAC296_02_SA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+define SumAW_03_SA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define PeakAW_03_SA		{std kind 'PEAK-APPLIED-WATER' units 'TAF'} ! Peak demand
+
+! Summation of annual applied water (April-October)
+define SumAW_03_SA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=6,12,1) AWR_03_SA(i)*cfs_taf(i) + AWO_03_SA(i)*cfs_taf(i)}
+    case aprEndWY {	! Apr-Oct sum estimated to be 1.043*Apr-Sep
+        condition month == apr .and. wateryear==EndWY
+        sum(i=0,5,1) AWR_03_SA(i)*cfs_taf(i)*1.043 + AWO_03_SA(i)*cfs_taf(i)*1.043}
+    case april {
+        condition month == apr .and. wateryear < EndWY
+        sum(i=0,6,1) AWR_03_SA(i)*cfs_taf(i) + AWO_03_SA(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value SumAW_03_SA(-1) }
+        }
+       
+goal setSumAW_03_SA 	{SumAW_03_SA = SumAW_03_SA_sv}
+
+! Summation of peak applied water (July-August)
+define PeakAW_03_SA_sv {
+    case begin {
+        condition month == oct .and. wateryear == bgnWY
+        value 0.0 }
+    case april {
+        condition month == apr
+        sum(i=3,4,1) AWR_03_SA(i)*cfs_taf(i) + AWO_03_SA(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value PeakAW_03_SA(-1) }
+        }
+       
+goal setPeakAW_03_SA 	{PeakAW_03_SA = PeakAW_03_SA_sv}
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_SAC289_03_SA	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun .or. month == sep
+    	value max(0.0, CLN_SAC289_03_SA * (AWR_03_SA + AWO_03_SA)*cfs_taf / (SumAW_03_SA_sv - PeakAW_03_SA_sv))}
+    case peak {
+    	condition month >= jul .and. month <= aug
+    	value max(0.0, CLP_SAC289_03_SA * (AWR_03_SA + AWO_03_SA)*cfs_taf / PeakAW_03_SA_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+        
+define CL_SAC289_03_SA 	{alias CLmon_SAC289_03_SA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+! Assume Redding urban settlement contract is not restricted to April-October         
+define SumUD_03_SU	{std kind 'URBAN-DEMAND' units 'TAF'} ! Annual demand
+define PeakUD_03_SU	{std kind 'URBAN-DEMAND' units 'TAF'} ! Peak demand
+
+! Summation of annual urban demand (March-February)
+define SumUD_03_SU_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) UD_03_SU(i)*cfs_taf(i) }
+    case MarEndWY {
+        condition month == mar .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) UD_03_SU(i)*cfs_taf(i) }
+    case march {
+        condition month == mar .and. wateryear < EndWY
+        sum(i=0,11,1) UD_03_SU(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumUD_03_SU(-1) }
+        }
+       
+goal setSumUD_03_SU 	{SumUD_03_SU = SumUD_03_SU_sv}
+
+! Summation of peak urban demand (July-August)
+define PeakUD_03_SU_sv {
+    case begin {
+        condition month == oct .and. wateryear == bgnWY
+        value 0.0 }
+    case march {
+        condition month == mar
+        sum(i=4,5,1) UD_03_SU(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value PeakUD_03_SU(-1) }
+        }
+       
+goal setPeakUD_03_SU 	{PeakUD_03_SU = PeakUD_03_SU_sv}
+   
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_WTPFTH_03_SU	{	
+    case peak {
+    	condition month >= jul .and. month <= aug
+    	value max(0.0, CLP_WTPFTH_03_SU * UD_03_SU*cfs_taf / PeakUD_03_SU_sv)}	
+    case otherwise {
+        condition   always
+        value max(0.0, CLN_WTPFTH_03_SU * UD_03_SU*cfs_taf / (SumUD_03_SU_sv - PeakUD_03_SU_sv))}
+        }
+
+define CL_WTPFTH_03_SU 	{alias CLmon_WTPFTH_03_SU kind 'CONTRACT-LIMIT' units 'TAF'}
+
+! Assume Redding urban settlement contract is not restricted to April-October 
+define SumUD_02_SU	{std kind 'URBAN-DEMAND' units 'TAF'} ! Annual demand
+define PeakUD_02_SU	{std kind 'URBAN-DEMAND' units 'TAF'} ! Peak demand
+
+! Summation of annual urban demand (March-February)
+define SumUD_02_SU_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) UD_02_SU(i)*cfs_taf(i) }
+    case MarEndWY {
+        condition month == mar .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) UD_02_SU(i)*cfs_taf(i) }
+    case march {
+        condition month == mar .and. wateryear < EndWY
+        sum(i=0,11,1) UD_02_SU(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumUD_02_SU(-1) }
+        }
+       
+goal setSumUD_02_SU 	{SumUD_02_SU = SumUD_02_SU_sv}
+
+! Summation of peak urban demand (July-August)
+define PeakUD_02_SU_sv {
+    case begin {
+        condition month == oct .and. wateryear == bgnWY
+        value 0.0 }
+    case march {
+        condition month == mar
+        sum(i=4,5,1) UD_02_SU(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value PeakUD_02_SU(-1) }
+        }
+       
+goal setPeakUD_02_SU 	{PeakUD_02_SU = PeakUD_02_SU_sv}
+   
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_WTPFTH_02_SU	{	
+    case peak {
+    	condition month >= jul .and. month <= aug
+    	value max(0.0, CLP_WTPFTH_02_SU * UD_02_SU*cfs_taf / PeakUD_02_SU_sv)}	
+    case otherwise {
+        condition   always
+        value max(0.0, CLN_WTPFTH_02_SU * UD_02_SU*cfs_taf / (SumUD_02_SU_sv - PeakUD_02_SU_sv))}
+        }
+
+define CL_WTPFTH_02_SU 	{alias CLmon_WTPFTH_02_SU kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+        
+define SumAW_08N_SA1		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define PeakAW_08N_SA1		{std kind 'PEAK-APPLIED-WATER' units 'TAF'} ! Peak demand
+
+! Summation of annual applied water (April-October)
+define SumAW_08N_SA1_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=6,12,1) AWR_08N_SA1(i)*cfs_taf(i) + AWO_08N_SA1(i)*cfs_taf(i)}
+    case aprEndWY {	! Apr-Oct sum estimated to be 1.043*Apr-Sep
+        condition month == apr .and. wateryear==EndWY
+        sum(i=0,5,1) AWR_08N_SA1(i)*cfs_taf(i)*1.043 + AWO_08N_SA1(i)*cfs_taf(i)*1.043}
+    case april {
+        condition month == apr .and. wateryear < EndWY
+        sum(i=0,6,1) AWR_08N_SA1(i)*cfs_taf(i) + AWO_08N_SA1(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value SumAW_08N_SA1(-1) }
+        }
+       
+goal setSumAW_08N_SA1 	{SumAW_08N_SA1 = SumAW_08N_SA1_sv}
+
+! Summation of peak applied water (July-September)
+define PeakAW_08N_SA1_sv {
+    case begin {
+        condition month == oct .and. wateryear == bgnWY
+        value 0.0 }
+    case april {
+        condition month == apr
+        sum(i=3,5,1) AWR_08N_SA1(i)*cfs_taf(i) + AWO_08N_SA1(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value PeakAW_08N_SA1(-1) }
+        }
+       
+goal setPeakAW_08N_SA1 	{PeakAW_08N_SA1 = PeakAW_08N_SA1_sv}
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_SAC178_08N_SA1	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun
+    	value max(0.0, CLN_SAC178_08N_SA1 * (AWR_08N_SA1 + AWO_08N_SA1)*cfs_taf / (SumAW_08N_SA1_sv - PeakAW_08N_SA1_sv))}
+    case peak {
+    	condition month >= jul .and. month <= sep
+    	value max(0.0, CLP_SAC178_08N_SA1 * (AWR_08N_SA1 + AWO_08N_SA1)*cfs_taf / PeakAW_08N_SA1_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_SAC159_08N_SA1	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun
+    	value max(0.0, CLN_SAC159_08N_SA1 * (AWR_08N_SA1 + AWO_08N_SA1)*cfs_taf / (SumAW_08N_SA1_sv - PeakAW_08N_SA1_sv))}
+    case peak {
+    	condition month >= jul .and. month <= sep
+    	value max(0.0, CLP_SAC159_08N_SA1 * (AWR_08N_SA1 + AWO_08N_SA1)*cfs_taf / PeakAW_08N_SA1_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+        
+define CL_SAC178_08N_SA1 	{alias CLmon_SAC178_08N_SA1 kind 'CONTRACT-LIMIT' units 'TAF'}
+define CL_SAC159_08N_SA1 	{alias CLmon_SAC159_08N_SA1 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+define SumAW_08N_SA2		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define PeakAW_08N_SA2	{std kind 'PEAK-APPLIED-WATER' units 'TAF'} ! Peak demand
+
+! Summation of annual applied water (April-October)
+define SumAW_08N_SA2_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=6,12,1) AWR_08N_SA2(i)*cfs_taf(i) + AWO_08N_SA2(i)*cfs_taf(i)}
+    case aprEndWY {	! Apr-Oct sum estimated to be 1.043*Apr-Sep
+        condition month == apr .and. wateryear==EndWY
+        sum(i=0,5,1) AWR_08N_SA2(i)*cfs_taf(i)*1.043 + AWO_08N_SA2(i)*cfs_taf(i)*1.043}
+    case april {
+        condition month == apr .and. wateryear < EndWY
+        sum(i=0,6,1) AWR_08N_SA2(i)*cfs_taf(i) + AWO_08N_SA2(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value SumAW_08N_SA2(-1) }
+        }
+       
+goal setSumAW_08N_SA2 	{SumAW_08N_SA2 = SumAW_08N_SA2_sv}
+
+! Summation of peak applied water (July-August)
+define PeakAW_08N_SA2_sv {
+    case begin {
+        condition month == oct .and. wateryear == bgnWY
+        value 0.0 }
+    case april {
+        condition month == apr
+        sum(i=3,4,1) AWR_08N_SA2(i)*cfs_taf(i) + AWO_08N_SA2(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value PeakAW_08N_SA2(-1) }
+        }
+       
+goal setPeakAW_08N_SA2 	{PeakAW_08N_SA2 = PeakAW_08N_SA2_sv}
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_GCC027_08N_SA2	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun .or. month == sep
+    	value max(0.0, CLN_GCC027_08N_SA2 * (AWR_08N_SA2 + AWO_08N_SA2)*cfs_taf / (SumAW_08N_SA2_sv - PeakAW_08N_SA2_sv))}
+    case peak {
+    	condition month >= jul .and. month <= aug
+    	value max(0.0, CLP_GCC027_08N_SA2 * (AWR_08N_SA2 + AWO_08N_SA2)*cfs_taf / PeakAW_08N_SA2_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+        
+define CL_GCC027_08N_SA2 	{alias CLmon_GCC027_08N_SA2 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+define SumAW_08S_SA1		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define PeakAW_08S_SA1		{std kind 'PEAK-APPLIED-WATER' units 'TAF'} ! Peak demand
+
+! Summation of annual applied water (April-October)
+define SumAW_08S_SA1_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=6,12,1) AWR_08S_SA1(i)*cfs_taf(i) + AWO_08S_SA1(i)*cfs_taf(i)}
+    case aprEndWY {	! Apr-Oct sum estimated to be 1.043*Apr-Sep
+        condition month == apr .and. wateryear==EndWY
+        sum(i=0,5,1) AWR_08S_SA1(i)*cfs_taf(i)*1.043 + AWO_08S_SA1(i)*cfs_taf(i)*1.043}
+    case april {
+        condition month == apr .and. wateryear < EndWY
+        sum(i=0,6,1) AWR_08S_SA1(i)*cfs_taf(i) + AWO_08S_SA1(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value SumAW_08S_SA1(-1) }
+        }
+       
+goal setSumAW_08S_SA1 	{SumAW_08S_SA1 = SumAW_08S_SA1_sv}
+
+! Summation of peak applied water (July-September)
+define PeakAW_08S_SA1_sv {
+    case begin {
+        condition month == oct .and. wateryear == bgnWY
+        value 0.0 }
+    case april {
+        condition month == apr
+        sum(i=3,5,1) AWR_08S_SA1(i)*cfs_taf(i) + AWO_08S_SA1(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value PeakAW_08S_SA1(-1) }
+        }
+       
+goal setPeakAW_08S_SA1 	{PeakAW_08S_SA1 = PeakAW_08S_SA1_sv}
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_SAC159_08S_SA1	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun
+    	value max(0.0, CLN_SAC159_08S_SA1 * (AWR_08S_SA1 + AWO_08S_SA1)*cfs_taf / (SumAW_08S_SA1_sv - PeakAW_08S_SA1_sv))}
+    case peak {
+    	condition month >= jul .and. month <= sep
+    	value max(0.0, CLP_SAC159_08S_SA1 * (AWR_08S_SA1 + AWO_08S_SA1)*cfs_taf / PeakAW_08S_SA1_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+        
+define CL_SAC159_08S_SA1 	{alias CLmon_SAC159_08S_SA1 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+
+define SumAW_08S_SA2		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define PeakAW_08S_SA2		{std kind 'PEAK-APPLIED-WATER' units 'TAF'} ! Peak demand
+
+! Summation of annual applied water (April-October)
+define SumAW_08S_SA2_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=6,12,1) AWR_08S_SA2(i)*cfs_taf(i) + AWO_08S_SA2(i)*cfs_taf(i)}
+    case aprEndWY {	! Apr-Oct sum estimated to be 1.043*Apr-Sep
+        condition month == apr .and. wateryear==EndWY
+        sum(i=0,5,1) AWR_08S_SA2(i)*cfs_taf(i)*1.043 + AWO_08S_SA2(i)*cfs_taf(i)*1.043}
+    case april {
+        condition month == apr .and. wateryear < EndWY
+        sum(i=0,6,1) AWR_08S_SA2(i)*cfs_taf(i) + AWO_08S_SA2(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value SumAW_08S_SA2(-1) }
+        }
+       
+goal setSumAW_08S_SA2 	{SumAW_08S_SA2 = SumAW_08S_SA2_sv}
+
+! Summation of peak applied water (July-August)
+define PeakAW_08S_SA2_sv {
+    case begin {
+        condition month == oct .and. wateryear == bgnWY
+        value 0.0 }
+    case april {
+        condition month == apr
+        sum(i=3,4,1) AWR_08S_SA2(i)*cfs_taf(i) + AWO_08S_SA2(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value PeakAW_08S_SA2(-1) }
+        }
+       
+goal setPeakAW_08S_SA2 	{PeakAW_08S_SA2 = PeakAW_08S_SA2_sv}
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_GCC056_08S_SA2	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun .or. month == sep
+    	value max(0.0, CLN_GCC056_08S_SA2 * (AWR_08S_SA2 + AWO_08S_SA2)*cfs_taf / (SumAW_08S_SA2_sv - PeakAW_08S_SA2_sv))}
+    case peak {
+    	condition month >= jul .and. month <= aug
+    	value max(0.0, CLP_GCC056_08S_SA2 * (AWR_08S_SA2 + AWO_08S_SA2)*cfs_taf / PeakAW_08S_SA2_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+        
+define CL_GCC056_08S_SA2 	{alias CLmon_GCC056_08S_SA2 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+define SumAW_08S_SA3		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define PeakAW_08S_SA3		{std kind 'PEAK-APPLIED-WATER' units 'TAF'} ! Peak demand
+
+! Summation of annual applied water (April-October)
+define SumAW_08S_SA3_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=6,12,1) AWR_08S_SA3(i)*cfs_taf(i) + AWO_08S_SA3(i)*cfs_taf(i)}
+    case aprEndWY {	! Apr-Oct sum estimated to be 1.043*Apr-Sep
+        condition month == apr .and. wateryear==EndWY
+        sum(i=0,5,1) AWR_08S_SA3(i)*cfs_taf(i)*1.043 + AWO_08S_SA3(i)*cfs_taf(i)*1.043}
+    case april {
+        condition month == apr .and. wateryear < EndWY
+        sum(i=0,6,1) AWR_08S_SA3(i)*cfs_taf(i) + AWO_08S_SA3(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value SumAW_08S_SA3(-1) }
+        }
+       
+goal setSumAW_08S_SA3 	{SumAW_08S_SA3 = SumAW_08S_SA3_sv}
+
+! Summation of peak applied water (July-September)
+define PeakAW_08S_SA3_sv {
+    case begin {
+        condition month == oct .and. wateryear == bgnWY
+        value 0.0 }
+    case april {
+        condition month == apr
+        sum(i=3,5,1) AWR_08S_SA3(i)*cfs_taf(i) + AWO_08S_SA3(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value PeakAW_08S_SA3(-1) }
+        }
+       
+goal setPeakAW_08S_SA3 	{PeakAW_08S_SA3 = PeakAW_08S_SA3_sv}
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_SAC121_08S_SA3	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun
+    	value max(0.0, CLN_SAC121_08S_SA3 * (AWR_08S_SA3 + AWO_08S_SA3)*cfs_taf / (SumAW_08S_SA3_sv - PeakAW_08S_SA3_sv))}
+    case peak {
+    	condition month >= jul .and. month <= sep
+    	value max(0.0, CLP_SAC121_08S_SA3 * (AWR_08S_SA3 + AWO_08S_SA3)*cfs_taf / PeakAW_08S_SA3_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_SAC109_08S_SA3	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun
+    	value max(0.0, CLN_SAC109_08S_SA3 * (AWR_08S_SA3 + AWO_08S_SA3)*cfs_taf / (SumAW_08S_SA3_sv - PeakAW_08S_SA3_sv))}
+    case peak {
+    	condition month >= jul .and. month <= sep
+    	value max(0.0, CLP_SAC109_08S_SA3 * (AWR_08S_SA3 + AWO_08S_SA3)*cfs_taf / PeakAW_08S_SA3_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+        
+define CL_SAC121_08S_SA3 	{alias CLmon_SAC121_08S_SA3 kind 'CONTRACT-LIMIT' units 'TAF'}
+define CL_SAC109_08S_SA3 	{alias CLmon_SAC109_08S_SA3 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+define SumAW_09_SA1		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define PeakAW_09_SA1		{std kind 'PEAK-APPLIED-WATER' units 'TAF'} ! Peak demand
+
+! Summation of annual applied water (April-October)
+define SumAW_09_SA1_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=6,12,1) AWR_09_SA1(i)*cfs_taf(i) + AWO_09_SA1(i)*cfs_taf(i)}
+    case aprEndWY {	! Apr-Oct sum estimated to be 1.043*Apr-Sep
+        condition month == apr .and. wateryear==EndWY
+        sum(i=0,5,1) AWR_09_SA1(i)*cfs_taf(i)*1.043 + AWO_09_SA1(i)*cfs_taf(i)*1.043}
+    case april {
+        condition month == apr .and. wateryear < EndWY
+        sum(i=0,6,1) AWR_09_SA1(i)*cfs_taf(i) + AWO_09_SA1(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value SumAW_09_SA1(-1) }
+        }
+       
+goal setSumAW_09_SA1 	{SumAW_09_SA1 = SumAW_09_SA1_sv}
+
+! Summation of peak applied water (July-September)
+define PeakAW_09_SA1_sv {
+    case begin {
+        condition month == oct .and. wateryear == bgnWY
+        value 0.0 }
+    case april {
+        condition month == apr
+        sum(i=3,5,1) AWR_09_SA1(i)*cfs_taf(i) + AWO_09_SA1(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value PeakAW_09_SA1(-1) }
+        }
+       
+goal setPeakAW_09_SA1 	{PeakAW_09_SA1 = PeakAW_09_SA1_sv}
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_MTC000_09_SA1	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun
+    	value max(0.0, CLN_MTC000_09_SA1 * (AWR_09_SA1 + AWO_09_SA1)*cfs_taf / (SumAW_09_SA1_sv - PeakAW_09_SA1_sv))}
+    case peak {
+    	condition month >= jul .and. month <= sep
+    	value max(0.0, CLP_MTC000_09_SA1 * (AWR_09_SA1 + AWO_09_SA1)*cfs_taf / PeakAW_09_SA1_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+        
+define CL_MTC000_09_SA1 	{alias CLmon_MTC000_09_SA1 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+define SumAW_09_SA2		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define PeakAW_09_SA2		{std kind 'PEAK-APPLIED-WATER' units 'TAF'} ! Peak demand
+
+! Summation of annual applied water (April-October)
+define SumAW_09_SA2_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=6,12,1) AWR_09_SA2(i)*cfs_taf(i) + AWO_09_SA2(i)*cfs_taf(i)}
+    case aprEndWY {	! Apr-Oct sum estimated to be 1.043*Apr-Sep
+        condition month == apr .and. wateryear==EndWY
+        sum(i=0,5,1) AWR_09_SA2(i)*cfs_taf(i)*1.043 + AWO_09_SA2(i)*cfs_taf(i)*1.043}
+    case april {
+        condition month == apr .and. wateryear < EndWY
+        sum(i=0,6,1) AWR_09_SA2(i)*cfs_taf(i) + AWO_09_SA2(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value SumAW_09_SA2(-1) }
+        }
+       
+goal setSumAW_09_SA2 	{SumAW_09_SA2 = SumAW_09_SA2_sv}
+
+! Summation of peak applied water (July-September)
+define PeakAW_09_SA2_sv {
+    case begin {
+        condition month == oct .and. wateryear == bgnWY
+        value 0.0 }
+    case april {
+        condition month == apr
+        sum(i=3,5,1) AWR_09_SA2(i)*cfs_taf(i) + AWO_09_SA2(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value PeakAW_09_SA2(-1) }
+        }
+       
+goal setPeakAW_09_SA2 	{PeakAW_09_SA2 = PeakAW_09_SA2_sv}
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_SAC162_09_SA2	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun
+    	value max(0.0, CLN_SAC162_09_SA2 * (AWR_09_SA2 + AWO_09_SA2)*cfs_taf / (SumAW_09_SA2_sv - PeakAW_09_SA2_sv))}
+    case peak {
+    	condition month >= jul .and. month <= sep
+    	value max(0.0, CLP_SAC162_09_SA2 * (AWR_09_SA2 + AWO_09_SA2)*cfs_taf / PeakAW_09_SA2_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+        
+define CL_SAC162_09_SA2 	{alias CLmon_SAC162_09_SA2 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+define SumAW_18_SA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define PeakAW_18_SA		{std kind 'PEAK-APPLIED-WATER' units 'TAF'} ! Peak demand
+
+! Summation of annual applied water (April-October)
+define SumAW_18_SA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=6,12,1) AWR_18_SA(i)*cfs_taf(i) + AWO_18_SA(i)*cfs_taf(i)}
+    case aprEndWY {	! Apr-Oct sum estimated to be 1.043*Apr-Sep
+        condition month == apr .and. wateryear==EndWY
+        sum(i=0,5,1) AWR_18_SA(i)*cfs_taf(i)*1.043 + AWO_18_SA(i)*cfs_taf(i)*1.043}
+    case april {
+        condition month == apr .and. wateryear < EndWY
+        sum(i=0,6,1) AWR_18_SA(i)*cfs_taf(i) + AWO_18_SA(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value SumAW_18_SA(-1) }
+        }
+       
+goal setSumAW_18_SA 	{SumAW_18_SA = SumAW_18_SA_sv}
+
+! Summation of peak applied water (July-September)
+define PeakAW_18_SA_sv {
+    case begin {
+        condition month == oct .and. wateryear == bgnWY
+        value 0.0 }
+    case april {
+        condition month == apr
+        sum(i=3,5,1) AWR_18_SA(i)*cfs_taf(i) + AWO_18_SA(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value PeakAW_18_SA(-1) }
+        }
+       
+goal setPeakAW_18_SA 	{PeakAW_18_SA = PeakAW_18_SA_sv}
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_SAC141_18_SA	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun
+    	value max(0.0, CLN_SAC141_18_SA * (AWR_18_SA + AWO_18_SA)*cfs_taf / (SumAW_18_SA_sv - PeakAW_18_SA_sv))}
+    case peak {
+    	condition month >= jul .and. month <= sep
+    	value max(0.0, CLP_SAC141_18_SA * (AWR_18_SA + AWO_18_SA)*cfs_taf / PeakAW_18_SA_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+        
+define CL_SAC141_18_SA 	{alias CLmon_SAC141_18_SA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+define SumAW_19_SA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define PeakAW_19_SA		{std kind 'PEAK-APPLIED-WATER' units 'TAF'} ! Peak demand
+
+! Summation of annual applied water (April-October)
+define SumAW_19_SA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=6,12,1) AWR_19_SA(i)*cfs_taf(i) + AWO_19_SA(i)*cfs_taf(i)}
+    case aprEndWY {	! Apr-Oct sum estimated to be 1.043*Apr-Sep
+        condition month == apr .and. wateryear==EndWY
+        sum(i=0,5,1) AWR_19_SA(i)*cfs_taf(i)*1.043 + AWO_19_SA(i)*cfs_taf(i)*1.043}
+    case april {
+        condition month == apr .and. wateryear < EndWY
+        sum(i=0,6,1) AWR_19_SA(i)*cfs_taf(i) + AWO_19_SA(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value SumAW_19_SA(-1) }
+        }
+       
+goal setSumAW_19_SA 	{SumAW_19_SA = SumAW_19_SA_sv}
+
+! Summation of peak applied water (July-September)
+define PeakAW_19_SA_sv {
+    case begin {
+        condition month == oct .and. wateryear == bgnWY
+        value 0.0 }
+    case april {
+        condition month == apr
+        sum(i=3,5,1) AWR_19_SA(i)*cfs_taf(i) + AWO_19_SA(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value PeakAW_19_SA(-1) }
+        }
+       
+goal setPeakAW_19_SA 	{PeakAW_19_SA = PeakAW_19_SA_sv}
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_SAC122_19_SA	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun
+    	value max(0.0, CLN_SAC122_19_SA * (AWR_19_SA + AWO_19_SA)*cfs_taf / (SumAW_19_SA_sv - PeakAW_19_SA_sv))}
+    case peak {
+    	condition month >= jul .and. month <= sep
+    	value max(0.0, CLP_SAC122_19_SA * (AWR_19_SA + AWO_19_SA)*cfs_taf / PeakAW_19_SA_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_SAC115_19_SA	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun
+    	value max(0.0, CLN_SAC115_19_SA * (AWR_19_SA + AWO_19_SA)*cfs_taf / (SumAW_19_SA_sv - PeakAW_19_SA_sv))}
+    case peak {
+    	condition month >= jul .and. month <= sep
+    	value max(0.0, CLP_SAC115_19_SA * (AWR_19_SA + AWO_19_SA)*cfs_taf / PeakAW_19_SA_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_SAC099_19_SA	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun
+    	value max(0.0, CLN_SAC099_19_SA * (AWR_19_SA + AWO_19_SA)*cfs_taf / (SumAW_19_SA_sv - PeakAW_19_SA_sv))}
+    case peak {
+    	condition month >= jul .and. month <= sep
+    	value max(0.0, CLP_SAC099_19_SA * (AWR_19_SA + AWO_19_SA)*cfs_taf / PeakAW_19_SA_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+        
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_SAC091_19_SA	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun
+    	value max(0.0, CLN_SAC091_19_SA * (AWR_19_SA + AWO_19_SA)*cfs_taf / (SumAW_19_SA_sv - PeakAW_19_SA_sv))}
+    case peak {
+    	condition month >= jul .and. month <= sep
+    	value max(0.0, CLP_SAC091_19_SA * (AWR_19_SA + AWO_19_SA)*cfs_taf / PeakAW_19_SA_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }        
+        
+define CL_SAC122_19_SA 	{alias CLmon_SAC122_19_SA kind 'CONTRACT-LIMIT' units 'TAF'}
+define CL_SAC115_19_SA 	{alias CLmon_SAC115_19_SA kind 'CONTRACT-LIMIT' units 'TAF'}
+define CL_SAC099_19_SA 	{alias CLmon_SAC099_19_SA kind 'CONTRACT-LIMIT' units 'TAF'}
+define CL_SAC091_19_SA 	{alias CLmon_SAC091_19_SA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+define SumAW_21_SA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define PeakAW_21_SA		{std kind 'PEAK-APPLIED-WATER' units 'TAF'} ! Peak demand
+
+! Summation of annual applied water (April-October)
+define SumAW_21_SA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=6,12,1) AWR_21_SA(i)*cfs_taf(i) + AWO_21_SA(i)*cfs_taf(i)}
+    case aprEndWY {	! Apr-Oct sum estimated to be 1.043*Apr-Sep
+        condition month == apr .and. wateryear==EndWY
+        sum(i=0,5,1) AWR_21_SA(i)*cfs_taf(i)*1.043 + AWO_21_SA(i)*cfs_taf(i)*1.043}
+    case april {
+        condition month == apr .and. wateryear < EndWY
+        sum(i=0,6,1) AWR_21_SA(i)*cfs_taf(i) + AWO_21_SA(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value SumAW_21_SA(-1) }
+        }
+       
+goal setSumAW_21_SA 	{SumAW_21_SA = SumAW_21_SA_sv}
+
+! Summation of peak applied water (July-September)
+define PeakAW_21_SA_sv {
+    case begin {
+        condition month == oct .and. wateryear == bgnWY
+        value 0.0 }
+    case april {
+        condition month == apr
+        sum(i=3,5,1) AWR_21_SA(i)*cfs_taf(i) + AWO_21_SA(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value PeakAW_21_SA(-1) }
+        }
+       
+goal setPeakAW_21_SA 	{PeakAW_21_SA = PeakAW_21_SA_sv}
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_SAC083_21_SA	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun
+    	value max(0.0, CLN_SAC083_21_SA * (AWR_21_SA + AWO_21_SA)*cfs_taf / (SumAW_21_SA_sv - PeakAW_21_SA_sv))}
+    case peak {
+    	condition month >= jul .and. month <= sep
+    	value max(0.0, CLP_SAC083_21_SA * (AWR_21_SA + AWO_21_SA)*cfs_taf / PeakAW_21_SA_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_SAC074_21_SA	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun
+    	value max(0.0, CLN_SAC074_21_SA * (AWR_21_SA + AWO_21_SA)*cfs_taf / (SumAW_21_SA_sv - PeakAW_21_SA_sv))}
+    case peak {
+    	condition month >= jul .and. month <= sep
+    	value max(0.0, CLP_SAC074_21_SA * (AWR_21_SA + AWO_21_SA)*cfs_taf / PeakAW_21_SA_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+        
+define CL_SAC083_21_SA 	{alias CLmon_SAC083_21_SA kind 'CONTRACT-LIMIT' units 'TAF'}
+define CL_SAC074_21_SA 	{alias CLmon_SAC074_21_SA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+define SumAW_22_SA1		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define PeakAW_22_SA1		{std kind 'PEAK-APPLIED-WATER' units 'TAF'} ! Peak demand
+
+! Summation of annual applied water (April-October)
+define SumAW_22_SA1_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=6,12,1) AWR_22_SA1(i)*cfs_taf(i) + AWO_22_SA1(i)*cfs_taf(i)}
+    case aprEndWY {	! Apr-Oct sum estimated to be 1.043*Apr-Sep
+        condition month == apr .and. wateryear==EndWY
+        sum(i=0,5,1) AWR_22_SA1(i)*cfs_taf(i)*1.043 + AWO_22_SA1(i)*cfs_taf(i)*1.043}
+    case april {
+        condition month == apr .and. wateryear < EndWY
+        sum(i=0,6,1) AWR_22_SA1(i)*cfs_taf(i) + AWO_22_SA1(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value SumAW_22_SA1(-1) }
+        }
+       
+goal setSumAW_22_SA1 	{SumAW_22_SA1 = SumAW_22_SA1_sv}
+
+! Summation of peak applied water (July-September)
+define PeakAW_22_SA1_sv {
+    case begin {
+        condition month == oct .and. wateryear == bgnWY
+        value 0.0 }
+    case april {
+        condition month == apr
+        sum(i=3,5,1) AWR_22_SA1(i)*cfs_taf(i) + AWO_22_SA1(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value PeakAW_22_SA1(-1) }
+        }
+       
+goal setPeakAW_22_SA1 	{PeakAW_22_SA1 = PeakAW_22_SA1_sv}
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_SAC082_22_SA1	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun
+    	value max(0.0, CLN_SAC082_22_SA1 * (AWR_22_SA1 + AWO_22_SA1)*cfs_taf / (SumAW_22_SA1_sv - PeakAW_22_SA1_sv))}
+    case peak {
+    	condition month >= jul .and. month <= sep
+    	value max(0.0, CLP_SAC082_22_SA1 * (AWR_22_SA1 + AWO_22_SA1)*cfs_taf / PeakAW_22_SA1_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_SAC078_22_SA1	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun
+    	value max(0.0, CLN_SAC078_22_SA1 * (AWR_22_SA1 + AWO_22_SA1)*cfs_taf / (SumAW_22_SA1_sv - PeakAW_22_SA1_sv))}
+    case peak {
+    	condition month >= jul .and. month <= sep
+    	value max(0.0, CLP_SAC078_22_SA1 * (AWR_22_SA1 + AWO_22_SA1)*cfs_taf / PeakAW_22_SA1_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+        
+define CL_SAC082_22_SA1 	{alias CLmon_SAC082_22_SA1 kind 'CONTRACT-LIMIT' units 'TAF'}
+define CL_SAC078_22_SA1 	{alias CLmon_SAC078_22_SA1 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+define SumAW_04_NA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define PeakAW_04_NA		{std kind 'PEAK-APPLIED-WATER' units 'TAF'} ! Peak demand
+
+! Summation of annual applied water (April-October)
+define SumAW_04_NA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=6,12,1) AWR_04_NA(i)*cfs_taf(i) + AWO_04_NA(i)*cfs_taf(i)}
+    case aprEndWY {	! Apr-Oct sum estimated to be 1.043*Apr-Sep
+        condition month == apr .and. wateryear==EndWY
+        sum(i=0,5,1) AWR_04_NA(i)*cfs_taf(i)*1.043 + AWO_04_NA(i)*cfs_taf(i)*1.043}
+    case april {
+        condition month == apr .and. wateryear < EndWY
+        sum(i=0,6,1) AWR_04_NA(i)*cfs_taf(i) + AWO_04_NA(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value SumAW_04_NA(-1) }
+        }
+       
+goal setSumAW_04_NA 	{SumAW_04_NA = SumAW_04_NA_sv}
+
+! Summation of peak applied water (July-September)
+define PeakAW_04_NA_sv {
+    case begin {
+        condition month == oct .and. wateryear == bgnWY
+        value 0.0 }
+    case april {
+        condition month == apr
+        sum(i=3,5,1) AWR_04_NA(i)*cfs_taf(i) + AWO_04_NA(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value PeakAW_04_NA(-1) }
+        }
+       
+goal setPeakAW_04_NA 	{PeakAW_04_NA = PeakAW_04_NA_sv}
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_SAC224_04_NA	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun
+    	value max(0.0, CLN_SAC224_04_NA * (AWR_04_NA + AWO_04_NA)*cfs_taf / (SumAW_04_NA_sv - PeakAW_04_NA_sv))}
+    case peak {
+    	condition month >= jul .and. month <= sep
+    	value max(0.0, CLP_SAC224_04_NA * (AWR_04_NA + AWO_04_NA)*cfs_taf / PeakAW_04_NA_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+        
+define CL_SAC224_04_NA 	{alias CLmon_SAC224_04_NA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+define SumAW_05_NA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define PeakAW_05_NA		{std kind 'PEAK-APPLIED-WATER' units 'TAF'} ! Peak demand
+
+! Summation of annual applied water (April-October)
+define SumAW_05_NA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=6,12,1) AWR_05_NA(i)*cfs_taf(i) + AWO_05_NA(i)*cfs_taf(i)}
+    case aprEndWY {	! Apr-Oct sum estimated to be 1.043*Apr-Sep
+        condition month == apr .and. wateryear==EndWY
+        sum(i=0,5,1) AWR_05_NA(i)*cfs_taf(i)*1.043 + AWO_05_NA(i)*cfs_taf(i)*1.043}
+    case april {
+        condition month == apr .and. wateryear < EndWY
+        sum(i=0,6,1) AWR_05_NA(i)*cfs_taf(i) + AWO_05_NA(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value SumAW_05_NA(-1) }
+        }
+       
+goal setSumAW_05_NA 	{SumAW_05_NA = SumAW_05_NA_sv}
+
+! Summation of peak applied water (July-September)
+define PeakAW_05_NA_sv {
+    case begin {
+        condition month == oct .and. wateryear == bgnWY
+        value 0.0 }
+    case april {
+        condition month == apr
+        sum(i=3,5,1) AWR_05_NA(i)*cfs_taf(i) + AWO_05_NA(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value PeakAW_05_NA(-1) }
+        }
+       
+goal setPeakAW_05_NA 	{PeakAW_05_NA = PeakAW_05_NA_sv}
+
+! Monthly contract amount (TAF) patterned on demand
+define	CLmon_SAC240_05_NA	{	
+    case nonpeak {
+    	condition month == oct .or. month >= apr .and. month <= jun
+    	value max(0.0, CLN_SAC240_05_NA * (AWR_05_NA + AWO_05_NA)*cfs_taf / (SumAW_05_NA_sv - PeakAW_05_NA_sv))}
+    case peak {
+    	condition month >= jul .and. month <= sep
+    	value max(0.0, CLP_SAC240_05_NA * (AWR_05_NA + AWO_05_NA)*cfs_taf / PeakAW_05_NA_sv)}	
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+        
+define CL_SAC240_05_NA 	{alias CLmon_SAC240_05_NA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Yuba River Contracts and Water Rights !!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+!14_NA
+define SumAW_14_NA	{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_14_NA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_14_NA(i)*cfs_taf(i) + AWO_14_NA(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_14_NA(i)*cfs_taf(i) + AWO_14_NA(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_14_NA(i)*cfs_taf(i) + AWO_14_NA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_14_NA(-1) }
+        }
+       
+goal setSumAW_14_NA 	{SumAW_14_NA=SumAW_14_NA_sv}
+
+! Summation of annual applied water (April-October)
+define Sum2AW_14_NA	{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Seasonal demand
+define Sum2AW_14_NA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=6,12,1) AWR_14_NA(i)*cfs_taf(i) + AWO_14_NA(i)*cfs_taf(i)}
+    case aprEndWY {	! Apr-Oct sum estimated to be 1.05*Apr-Sep
+        condition month == apr .and. wateryear==EndWY
+        sum(i=0,5,1) AWR_14_NA(i)*cfs_taf(i)*1.05 + AWO_14_NA(i)*cfs_taf(i)*1.05}
+    case april {
+        condition month == apr .and. wateryear < EndWY
+        sum(i=0,6,1) AWR_14_NA(i)*cfs_taf(i) + AWO_14_NA(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value Sum2AW_14_NA(-1) }
+        }
+       
+goal setSum2AW_14_NA 	{Sum2AW_14_NA=Sum2AW_14_NA_sv}
+
+
+
+define CLann_YUB013_14_NA		{select contract from Contracts_NonProject where diversion=1} ! Annual contract amount from lookup table
+! Contract diversion limited to April to October.
+define CLmon_YUB013_14_NA	{
+	case NovMar{
+    		condition month > 1 .and. month < 7
+    		value 0.}
+    	case otherwise{
+    		condition always
+    		value max(0.0,  CLann_YUB013_14_NA * (AWR_14_NA + AWO_14_NA)*cfs_taf / Sum2AW_14_NA_sv)}
+    		}
+    		
+define CL_YUB013_14_NA 		{alias CLmon_YUB013_14_NA kind 'NP-CONTRACT-LIMIT' units 'TAF'}
+
+define WRann_YUB013_14_NA	{select right from Contracts_NonProject where diversion=1} ! Annual water right amount from lookup table
+define WRmon_YUB013_14_NA	{value max(0.0,  WRann_YUB013_14_NA * (AWR_14_NA + AWO_14_NA)*cfs_taf / SumAW_14_NA_sv)}
+define WR_YUB013_14_NA 		{alias WRmon_YUB013_14_NA kind 'NP-CONTRACT-LIMIT' units 'TAF'}
+
+!15N_NA2
+define SumAW_15N_NA2			{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_15N_NA2_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_15N_NA2(i)*cfs_taf(i) + AWO_15N_NA2(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_15N_NA2(i)*cfs_taf(i) + AWO_15N_NA2(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_15N_NA2(i)*cfs_taf(i) + AWO_15N_NA2(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_15N_NA2(-1) }
+        }
+       
+goal setSumAW_15N_NA2 		{SumAW_15N_NA2=SumAW_15N_NA2_sv}
+ 
+define CLann_YUB011_15N_NA2	{select contract from Contracts_NonProject where diversion=2} ! Annual contract amount from lookup table
+define CLmon_YUB011_15N_NA2	{value max(0.0, CLann_YUB011_15N_NA2 * (AWR_15N_NA2 + AWO_15N_NA2)*cfs_taf / SumAW_15N_NA2_sv)}
+define CL_YUB011_15N_NA2 		{alias CLmon_YUB011_15N_NA2 kind 'NP-CONTRACT-LIMIT' units 'TAF'}
+
+define WRann_YUB011_15N_NA2	{select right from Contracts_NonProject where diversion=2} ! Annual water right amount from lookup table
+define WRmon_YUB011_15N_NA2	{value max(0.0, WRann_YUB011_15N_NA2 * (AWR_15N_NA2 + AWO_15N_NA2)*cfs_taf / SumAW_15N_NA2_sv)}
+define WR_YUB011_15N_NA2 		{alias WRmon_YUB011_15N_NA2 kind 'NP-CONTRACT-LIMIT' units 'TAF'}
+
+
+!15S_NA2
+define SumAW_15S_NA2			{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_15S_NA2_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_15S_NA2(i)*cfs_taf(i) + AWO_15S_NA2(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_15S_NA2(i)*cfs_taf(i) + AWO_15S_NA2(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_15S_NA2(i)*cfs_taf(i) + AWO_15S_NA2(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_15S_NA2(-1) }
+        }
+       
+goal setSumAW_15S_NA2 		{SumAW_15S_NA2=SumAW_15S_NA2_sv}
+ 
+define CLann_YUB011_15S_NA2	{select contract from Contracts_NonProject where diversion=3} ! Annual contract amount from lookup table 
+define CLmon_YUB011_15S_NA2	{value max(0.0, CLann_YUB011_15S_NA2 * (AWR_15S_NA2 + AWO_15S_NA2)*cfs_taf / SumAW_15S_NA2_sv)}
+define CL_YUB011_15S_NA2 		{alias CLmon_YUB011_15S_NA2 kind 'NP-CONTRACT-LIMIT' units 'TAF'}
+
+define WRann_YUB011_15S_NA2	{select right from Contracts_NonProject where diversion=3} ! Annual/monthly water right = 0 from lookup table
+define WRmon_YUB011_15S_NA2	{value max(0.0, WRann_YUB011_15S_NA2 * (AWR_15S_NA2 + AWO_15S_NA2)*cfs_taf / SumAW_15S_NA2_sv)}
+define WR_YUB011_15S_NA2 		{alias WRmon_YUB011_15S_NA2 kind 'NP-CONTRACT-LIMIT' units 'TAF'}
+
+!15_NU
+define SumUD_15N_NU			{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumUD_15N_NU_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) UD_15N_NU(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) UD_15N_NU(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) UD_15N_NU(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumUD_15N_NU(-1) }
+        }
+       
+goal setSumUD_15N_NU 		{SumUD_15N_NU=SumUD_15N_NU_sv}
+ 
+define CLann_YUB003_15N_NU	{select contract from Contracts_NonProject where diversion=4} ! Annual contract amount from lookup table
+define CLmon_YUB003_15N_NU	{value max(0.0, CLann_YUB003_15N_NU * UD_15N_NU*cfs_taf / SumUD_15N_NU_sv)}
+define CL_YUB003_15N_NU 		{alias CLmon_YUB003_15N_NU kind 'NP-CONTRACT-LIMIT' units 'TAF'}
+
+define WRann_YUB003_15N_NU	{select right from Contracts_NonProject where diversion=4} ! Annual/monthly water right = 0 from lookup table
+define WRmon_YUB003_15N_NU	{value max(0.0, WRann_YUB003_15N_NU * UD_15N_NU*cfs_taf / SumUD_15N_NU_sv)}
+define WR_YUB003_15N_NU 		{alias WRmon_YUB003_15N_NU kind 'NP-CONTRACT-LIMIT' units 'TAF'}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!! SWP FRSA Contracts and Water Rights !!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+define CLann_WEC000_11_SA1  	{select contract from Contracts_FRSA where contractor=1}
+define CLann_JBC004_11_SA3 	{select contract from Contracts_FRSA where contractor=2}
+define CLann_RVC005_11_SA2  	{select contract from Contracts_FRSA where contractor=3}
+define CLann_FTR039_11_SA4  	{select contract from Contracts_FRSA where contractor=4}
+define CLann_FTR021_16_SA   	{select contract from Contracts_FRSA where contractor=5} !Oswald WD
+define CLann_FTR018_15S_SA 	{select contract from Contracts_FRSA where contractor=6} !Plumas MWC
+define CLann_FTR018_16_SA  	{select contract from Contracts_FRSA where contractor=7} !Tudor MWC
+define CLann_FTR014_16_SA   	{select contract from Contracts_FRSA where contractor=8} !Garden Highway MWC
+define CL1ann_WTPCYC_16_PU  	{select contract from Contracts_FRSA where contractor=9} !City of Yuba City - SWP
+define CLann_JBC008_11_SA4  	{select contract from Contracts_FRSA where contractor=10} 
+
+define WRann_FTR014_16_SA   	{select right from WaterRightAmounts where diversion=3} !Garden Highway MWC
+define WRann_FTR018_15S_SA  	{select right from WaterRightAmounts where diversion=4} !Plumas MWC
+define WRann_FTR018_16_SA  	{select right from WaterRightAmounts where diversion=5} !Tudor MWC
+define WRann_WEC000_11_SA1	{select right from WaterRightAmounts where diversion=10}
+define WRann_LDC007_11_SA2 	{select right from WaterRightAmounts where diversion=11}
+define WRann_RVC005_11_SA2 	{select right from WaterRightAmounts where diversion=13}
+define WRann_JBC004_11_SA3 	{select right from WaterRightAmounts where diversion=14}
+define WRann_JBC008_11_SA4 	{select right from WaterRightAmounts where diversion=15}
+
+!11_SA1
+define SumAW_11_SA1			{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_11_SA1_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=5,12,1) AWR_11_SA1(i)*cfs_taf(i) + AWO_11_SA1(i)*cfs_taf(i) }
+    case MarEndWY {
+    	condition month == mar .and. wateryear==EndWY
+        sum(i=0,6,1) AWR_11_SA1(i)*cfs_taf(i) + AWO_11_SA1(i)*cfs_taf(i) + AWR_11_SA1(i-5)*cfs_taf(i-5) + AWO_11_SA1(i-5)*cfs_taf(i-5) }
+    case march {
+        condition month == mar .and. wateryear < EndWY
+        sum(i=0,7,1) AWR_11_SA1(i)*cfs_taf(i) + AWO_11_SA1(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_11_SA1(-1) }
+        }
+       
+goal setSumAW_11_SA1 		{SumAW_11_SA1=SumAW_11_SA1_sv}
+
+! Monthly contract amount (TAF) patterned on demand   
+define CLmon_WEC000_11_SA1 	{
+	case NovFeb{
+		condition month > 1 .and. month < 6
+		value 0.0}
+	case MarOct{
+		condition always
+		value max(0.0, CLann_WEC000_11_SA1 * (AWR_11_SA1*cfs_taf + AWO_11_SA1*cfs_taf) / SumAW_11_SA1_sv)} 
+		}
+		
+define CL_WEC000_11_SA1  	{alias CLmon_WEC000_11_SA1 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+  
+! 11_SA2
+define SumAW_11_SA2			{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_11_SA2_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=6,12,1) AWR_11_SA2(i)*cfs_taf(i) + AWO_11_SA2(i)*cfs_taf(i) }
+    case AprEndWY {
+    	condition month == apr .and. wateryear==EndWY
+        sum(i=0,5,1) AWR_11_SA2(i)*cfs_taf(i) + AWO_11_SA2(i)*cfs_taf(i) + AWR_11_SA2(i-6)*cfs_taf(i-6) + AWO_11_SA2(i-6)*cfs_taf(i-6) }
+    case march {
+        condition month == apr .and. wateryear < EndWY
+        sum(i=0,6,1) AWR_11_SA2(i)*cfs_taf(i) + AWO_11_SA2(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_11_SA2(-1) }
+        }
+       
+goal setSumAW_11_SA2 		{SumAW_11_SA2=SumAW_11_SA2_sv}
+
+define SumAW_11_SA2b			{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_11_SA2b_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=7,12,1) AWR_11_SA2(i)*cfs_taf(i) + AWO_11_SA2(i)*cfs_taf(i) }
+    case april {
+        condition month == apr .and. wateryear < EndWY
+        sum(i=0,5,1) AWR_11_SA2(i)*cfs_taf(i) + AWO_11_SA2(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_11_SA2b(-1) }
+        }
+        
+goal setSumAW_11_SA2b 		{SumAW_11_SA2b=SumAW_11_SA2b_sv}
+
+! Monthly contract amount (TAF) patterned on demand   
+define CLmon_RVC005_11_SA2 	{
+	case NovMar{
+		condition month > 1 .and. month < 7
+		value 0.0}
+	case AprOct{
+		condition always
+		value max(0.0, CLann_RVC005_11_SA2 * (AWR_11_SA2*cfs_taf + AWO_11_SA2*cfs_taf) / SumAW_11_SA2_sv)} 
+		}
+		
+define CL_RVC005_11_SA2  	{alias CLmon_RVC005_11_SA2 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+! Monthly water right amount (TAF) patterned on demand   
+define WRmon_RVC005_11_SA2 	{
+	case NovMar{
+		condition month > 1 .and. month < 7
+		value 99999.}
+	case AprOct{
+		condition always
+		value max(0.0, WRann_RVC005_11_SA2 * (AWR_11_SA2*cfs_taf + AWO_11_SA2*cfs_taf) / SumAW_11_SA2_sv)} 
+		}
+
+define WR_RVC005_11_SA2  	{alias WRmon_RVC005_11_SA2 kind 'WATER-RIGHT' units 'TAF'}
+
+! Monthly water right amount (TAF) patterned on demand
+! Little Dry Creek 18.3 TAF April-September
+define WRmon_LDC007_11_SA2  {
+	case OctMar{
+		condition month > 0 .and. month < 7
+		value 0.}
+	case AprSep{
+		condition always
+		value max(0.0, WRann_LDC007_11_SA2  * (AWR_11_SA2*cfs_taf + AWO_11_SA2*cfs_taf) / SumAW_11_SA2b_sv)} 
+		}
+		
+define WR_LDC007_11_SA2  		{alias WRmon_LDC007_11_SA2 kind 'WATER-RIGHT' units 'TAF'}
+
+
+!11_SA3
+define SumAW_11_SA3			{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_11_SA3_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=6,12,1) AWR_11_SA3(i)*cfs_taf(i) + AWO_11_SA3(i)*cfs_taf(i) }
+    case AprEndWY {
+    	condition month == apr .and. wateryear==EndWY
+        sum(i=0,5,1) AWR_11_SA3(i)*cfs_taf(i) + AWO_11_SA3(i)*cfs_taf(i) + AWR_11_SA3(i-6)*cfs_taf(i-6) + AWO_11_SA3(i-6)*cfs_taf(i-6) }
+    case april {
+        condition month == apr .and. wateryear < EndWY
+        sum(i=0,6,1) AWR_11_SA3(i)*cfs_taf(i) + AWO_11_SA3(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_11_SA3(-1) }
+        }
+       
+goal setSumAW_11_SA3 		{SumAW_11_SA3=SumAW_11_SA3_sv}
+
+! Monthly contract amount (TAF) patterned on demand   
+define CLmon_JBC004_11_SA3 	{
+	case NovMar{
+		condition month > 1 .and. month < 7
+		value 0.0}
+	case AprOct{
+		condition always
+		value max(0.0, CLann_JBC004_11_SA3 * (AWR_11_SA3*cfs_taf + AWO_11_SA3*cfs_taf) / SumAW_11_SA3_sv)} 
+		}
+		
+define CL_JBC004_11_SA3  	{alias CLmon_JBC004_11_SA3 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+! Monthly water right amount (TAF) patterned on demand   
+define WRmon_JBC004_11_SA3 	{
+	case NovMar{
+		condition month > 1 .and. month < 7
+		value 99999.}
+	case AprOct{
+		condition always
+		value max(0.0, WRann_JBC004_11_SA3 * (AWR_11_SA3*cfs_taf + AWO_11_SA3*cfs_taf) / SumAW_11_SA3_sv)} 
+		}
+
+define WR_JBC004_11_SA3  	{alias WRmon_JBC004_11_SA3 kind 'WATER-RIGHT' units 'TAF'}
+
+
+!11_SA4
+define SumAW_11_SA4		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_11_SA4_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=6,12,1) AWR_11_SA4(i)*cfs_taf(i) + AWO_11_SA4(i)*cfs_taf(i) }
+    case AprEndWY {
+    	condition month == apr .and. wateryear==EndWY
+        sum(i=0,5,1) AWR_11_SA4(i)*cfs_taf(i) + AWO_11_SA4(i)*cfs_taf(i) + AWR_11_SA4(i-6)*cfs_taf(i-6) + AWO_11_SA4(i-6)*cfs_taf(i-6) }
+    case april {
+        condition month == apr .and. wateryear < EndWY
+        sum(i=0,6,1) AWR_11_SA4(i)*cfs_taf(i) + AWO_11_SA4(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_11_SA4(-1) }
+        }
+       
+goal setSumAW_11_SA4 		{SumAW_11_SA4=SumAW_11_SA4_sv}
+
+
+! Monthly contract amount (TAF) patterned on demand   
+define CLmon_FTR039_11_SA4	{
+	case NovMar{
+		condition month > 1 .and. month < 7
+		value 0.0}
+	case AprOct{
+		condition always
+		value max(0.0, CLann_FTR039_11_SA4 * (AWR_11_SA4*cfs_taf + AWO_11_SA4*cfs_taf) / SumAW_11_SA4_sv)} 
+		}
+		
+define CL_FTR039_11_SA4  	{alias CLmon_FTR039_11_SA4 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+! Monthly contract amount (TAF) patterned on demand   
+define CLmon_JBC008_11_SA4	{
+	case NovMar{
+		condition month > 1 .and. month < 7
+		value 0.0}
+	case AprOct{
+		condition always
+		value max(0.0, CLann_JBC008_11_SA4 * (AWR_11_SA4*cfs_taf + AWO_11_SA4*cfs_taf) / SumAW_11_SA4_sv)} 
+		}
+		
+define CL_JBC008_11_SA4  	{alias CLmon_JBC008_11_SA4 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+define WRmon_JBC008_11_SA4 	{
+	case NovMar{
+		condition month > 1 .and. month < 7
+		value 99999.}
+	case AprOct{
+		condition always
+		value max(0.0, WRann_JBC008_11_SA4 * (AWR_11_SA4*cfs_taf + AWO_11_SA4*cfs_taf) / SumAW_11_SA4_sv)} 
+		}
+
+define WR_JBC008_11_SA4  	{alias WRmon_JBC008_11_SA4 kind 'WATER-RIGHT' units 'TAF'}
+
+
+!15_SA
+define SumAW_15S_SA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_15S_SA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_15S_SA(i)*cfs_taf(i) + AWO_15S_SA(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_15S_SA(i)*cfs_taf(i) + AWO_15S_SA(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_15S_SA(i)*cfs_taf(i) + AWO_15S_SA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_15S_SA(-1) }
+        }
+       
+goal setSumAW_15S_SA 	{SumAW_15S_SA=SumAW_15S_SA_sv}
+
+! Monthly contract amount (TAF) patterned on demand   
+define CLmon_FTR018_15S_SA 	{value max(0.0,CLann_FTR018_15S_SA * (AWR_15S_SA*cfs_taf + AWO_15S_SA*cfs_taf) / SumAW_15S_SA_sv)} 
+define CL_FTR018_15S_SA  		{alias CLmon_FTR018_15S_SA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+! Monthly water right amount (TAF) patterned on demand   
+define WRmon_FTR018_15S_SA	{value max(0.0,WRann_FTR018_15S_SA * (AWR_15S_SA*cfs_taf + AWO_15S_SA*cfs_taf) / SumAW_15S_SA_sv)} 
+define WR_FTR018_15S_SA  		{alias WRmon_FTR018_15S_SA kind 'WATER-RIGHT' units 'TAF'}
+
+!16_SA
+define SumAW_16_SA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_16_SA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_16_SA(i)*cfs_taf(i) + AWO_16_SA(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_16_SA(i)*cfs_taf(i) + AWO_16_SA(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_16_SA(i)*cfs_taf(i) + AWO_16_SA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_16_SA(-1) }
+        }
+       
+goal setSumAW_16_SA 		{SumAW_16_SA=SumAW_16_SA_sv}
+
+! Monthly contract amount (TAF) patterned on demand   
+define CLmon_FTR021_16_SA 	{value max (0.0,CLann_FTR021_16_SA * (AWR_16_SA*cfs_taf + AWO_16_SA*cfs_taf) / SumAW_16_SA_sv)} 
+define CL_FTR021_16_SA  		{alias CLmon_FTR021_16_SA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+define CLmon_FTR018_16_SA 	{value max(0.0,CLann_FTR018_16_SA * (AWR_16_SA*cfs_taf + AWO_16_SA*cfs_taf) / SumAW_16_SA_sv)} 
+define CL_FTR018_16_SA  		{alias CLmon_FTR018_16_SA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+define CLmon_FTR014_16_SA 	{value max(0.0,CLann_FTR014_16_SA * (AWR_16_SA*cfs_taf + AWO_16_SA*cfs_taf) / SumAW_16_SA_sv)} 
+define CL_FTR014_16_SA  		{alias CLmon_FTR014_16_SA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+! Monthly water right amount (TAF) patterned on demand   
+define WRmon_FTR014_16_SA	{value max(0.0,WRann_FTR014_16_SA * (AWR_16_SA*cfs_taf + AWO_16_SA*cfs_taf) / SumAW_16_SA_sv)} 
+define WR_FTR014_16_SA  		{alias WRmon_FTR014_16_SA kind 'WATER-RIGHT' units 'TAF'}
+
+define WRmon_FTR018_16_SA	{value max(0.0,WRann_FTR018_16_SA * (AWR_16_SA*cfs_taf + AWO_16_SA*cfs_taf) / SumAW_16_SA_sv)} 
+define WR_FTR018_16_SA  		{alias WRmon_FTR018_16_SA kind 'WATER-RIGHT' units 'TAF'}
+
+
+!16_PU City of Yuba City
+/*
+Yuba City’s existing surface water sources include two appropriative water rights, State Water
+Resources Control Board Permit 14045 (Application Number 0A18025) and 18558 (Application
+Number A025751) and two surface water supply contracts. Existing water sources are as
+follows:
+• State Water Resource Control Board Permit 14045 – Feather River
+• State Water Resource Control Board Permit 18558 - Feather River
+• Contract - Yuba County Water District - Feather River for 4,500 acre-feet per annum
+• Contract - Department of Water Resources, State Water Project - Feather River for
+9,600 acre-feet per annum
+• Water wells – Regions 1 and 2/3
+*/
+
+
+! Monthly contract amount (TAF) patterned on demand
+define CL2mon_WTPCYC_16_PU 	{select contract from YubaCityContractAmounts where diversion=1, month = month} 
+define CL2_WTPCYC_16_PU  		{alias CL2mon_WTPCYC_16_PU kind 'CONTRACT-LIMIT' units 'TAF'}
+
+! Monthly contract amount (TAF) patterned on demand   
+define WR1mon_WTPCYC_16_PU 	{select contract from YubaCityContractAmounts where diversion=2, month = month} 
+define WR1_WTPCYC_16_PU  	{alias WR1mon_WTPCYC_16_PU kind 'WATER-RIGHT' units 'TAF'}
+
+! Monthly contract amount (TAF) patterned on demand   
+define WR2mon_WTPCYC_16_PU 	{select contract from YubaCityContractAmounts where diversion=3, month = month} 
+define WR2_WTPCYC_16_PU  	{alias WR2mon_WTPCYC_16_PU kind 'WATER-RIGHT' units 'TAF'}
+
+! Assume SWP contract amount taken during months of April-September
+! Define urban demand pattern for months April-September
+define SumUD_16_PU	{std kind 'URBAN-DEMAND' units 'TAF'} ! Annual demand
+define SumUD_16_PU_sv {
+    case oct{
+    	condition month == oct 
+        sum(i=6,11,1) UD_16_PU(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumUD_16_PU(-1) }
+        }
+       
+goal setSumUD_16_PU 		{SumUD_16_PU=SumUD_16_PU_sv}
+
+! Monthly contract amount (TAF) patterned on demand   
+define CL1mon_WTPCYC_16_PU 	{
+case oct{
+    	condition month >= apr 
+        value max(0.0,CL1ann_WTPCYC_16_PU * UD_16_PU*cfs_taf / SumUD_16_PU_sv)} 
+    case otherwise {
+        condition   always
+        value 0.0 }
+        }
+
+define CL1_WTPCYC_16_PU  		{alias CL1mon_WTPCYC_16_PU kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!! SWP FRSA Miscellaneous Water Rights !!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+! Constrain deliveries to miscellaneous FRSA diverters to 1976 surveyed diversions
+! Diversions to 11_SA are small and are ignored
+define WRann_FTR003_17S_SA  	{select right from WaterRightAmounts where diversion=16} !Miscellaneous diverters
+define WRann_FTR008_16_SA	{select right from WaterRightAmounts where diversion=17} !Miscellaneous diverters
+define WRann_FTR003_22_SA2	{select right from WaterRightAmounts where diversion=18} !Miscellaneous diverters
+define WRann_FTR028_15S_SA  	{select right from WaterRightAmounts where diversion=19} !Miscellaneous diverters
+define WRann_FTR045_15N_SA  	{select right from WaterRightAmounts where diversion=20} !Miscellaneous diverters
+define WRann_FTR059_12_SA	{select right from WaterRightAmounts where diversion=21} !Miscellaneous diverters
+
+
+!D_FTR003_17S_SA
+define SumAW_17S_SA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_17S_SA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_17S_SA(i)*cfs_taf(i) + AWO_17S_SA(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_17S_SA(i)*cfs_taf(i) + AWO_17S_SA(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_17S_SA(i)*cfs_taf(i) + AWO_17S_SA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_17S_SA(-1) }
+        }
+       
+goal setSumAW_17S_SA 		{SumAW_17S_SA=SumAW_17S_SA_sv}
+
+! Monthly contract amount (TAF) patterned on demand   
+define WRmon_FTR003_17S_SA 	{value max (0.0,WRann_FTR003_17S_SA * (AWR_17S_SA*cfs_taf + AWO_17S_SA*cfs_taf) / SumAW_17S_SA_sv)} 
+define WR_FTR003_17S_SA  		{alias WRmon_FTR003_17S_SA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+!D_FTR008_16_SA
+/*
+define SumAW_16_SA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_16_SA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_16_SA(i)*cfs_taf(i) + AWO_16_SA(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_16_SA(i)*cfs_taf(i) + AWO_16_SA(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_16_SA(i)*cfs_taf(i) + AWO_16_SA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_16_SA(-1) }
+        }
+       
+goal setSumAW_16_SA 		{SumAW_16_SA=SumAW_16_SA_sv}
+*/
+! Monthly contract amount (TAF) patterned on demand   
+define WRmon_FTR008_16_SA 	{value max (0.0,WRann_FTR008_16_SA * (AWR_16_SA*cfs_taf + AWO_16_SA*cfs_taf) / SumAW_16_SA_sv)} 
+define WR_FTR008_16_SA  		{alias WRmon_FTR008_16_SA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!D_FTR003_22_SA2
+define SumAW_22_SA2		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_22_SA2_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_22_SA2(i)*cfs_taf(i) + AWO_22_SA2(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_22_SA2(i)*cfs_taf(i) + AWO_22_SA2(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_22_SA2(i)*cfs_taf(i) + AWO_22_SA2(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_22_SA2(-1) }
+        }
+       
+goal setSumAW_22_SA2 		{SumAW_22_SA2=SumAW_22_SA2_sv}
+
+! Monthly contract amount (TAF) patterned on demand   
+define WRmon_FTR003_22_SA2 	{value max (0.0,WRann_FTR003_22_SA2 * (AWR_22_SA2*cfs_taf + AWO_22_SA2*cfs_taf) / SumAW_22_SA2_sv)} 
+define WR_FTR003_22_SA2  		{alias WRmon_FTR003_22_SA2 kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+!D_FTR028_15S_SA
+/*
+define SumAW_15S_SA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_15S_SA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_15S_SA(i)*cfs_taf(i) + AWO_15S_SA(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_15S_SA(i)*cfs_taf(i) + AWO_15S_SA(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_15S_SA(i)*cfs_taf(i) + AWO_15S_SA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_15S_SA(-1) }
+        }
+       
+goal setSumAW_15S_SA 		{SumAW_15S_SA=SumAW_15S_SA_sv}
+*/
+
+! Monthly contract amount (TAF) patterned on demand   
+define WRmon_FTR028_15S_SA 	{value max (0.0,WRann_FTR028_15S_SA * (AWR_15S_SA*cfs_taf + AWO_15S_SA*cfs_taf) / SumAW_15S_SA_sv)} 
+define WR_FTR028_15S_SA  		{alias WRmon_FTR028_15S_SA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!D_FTR045_15N_SA
+define SumAW_15N_SA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_15N_SA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_15N_SA(i)*cfs_taf(i) + AWO_15N_SA(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_15N_SA(i)*cfs_taf(i) + AWO_15N_SA(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_15N_SA(i)*cfs_taf(i) + AWO_15N_SA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_15N_SA(-1) }
+        }
+       
+goal setSumAW_15N_SA 		{SumAW_15N_SA=SumAW_15N_SA_sv}
+
+! Monthly contract amount (TAF) patterned on demand   
+define WRmon_FTR045_15N_SA 	{value max (0.0,WRann_FTR045_15N_SA * (AWR_15N_SA*cfs_taf + AWO_15N_SA*cfs_taf) / SumAW_15N_SA_sv)} 
+define WR_FTR045_15N_SA  		{alias WRmon_FTR045_15N_SA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!D_FTR059_12_SA
+define SumAW_12_SA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_12_SA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_12_SA(i)*cfs_taf(i) + AWO_12_SA(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_12_SA(i)*cfs_taf(i) + AWO_12_SA(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_12_SA(i)*cfs_taf(i) + AWO_12_SA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_12_SA(-1) }
+        }
+       
+goal setSumAW_12_SA 		{SumAW_12_SA=SumAW_12_SA_sv}
+
+! Monthly contract amount (TAF) patterned on demand   
+define WRmon_FTR059_12_SA 	{value max (0.0,WRann_FTR059_12_SA * (AWR_12_SA*cfs_taf + AWO_12_SA*cfs_taf) / SumAW_12_SA_sv)} 
+define WR_FTR059_12_SA  		{alias WRmon_FTR059_12_SA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!! Miscellaneous Contracts!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+define	CLmon_MIO023_10_NA		{value 99999.} !PG&E contract amount
+define	CLmon_MIO023_12_NU1 	{value 3.0} !PG&E contract amount
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!! Miscellaneous Water Rights !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!Sutter National Wildlife Refuge diversion from Sutter Extension Water District (11_SA4)
+define WRann_SEC009_17S_PR  	{select right from WaterRightAmounts where diversion=2}
+
+define SumAW_17S_PR		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_17S_PR_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_17S_PR(i)*cfs_taf(i) + AWO_17S_PR(i)*cfs_taf(i) + AWW_17S_PR(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_17S_PR(i)*cfs_taf(i) + AWO_17S_PR(i)*cfs_taf(i) + AWW_17S_PR(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_17S_PR(i)*cfs_taf(i) + AWO_17S_PR(i)*cfs_taf(i) + AWW_17S_PR(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_17S_PR(-1) }
+        }
+       
+goal setSumAW_17S_PR 	{SumAW_17S_PR=SumAW_17S_PR_sv}
+
+! Monthly contract amount (TAF) patterned on demand   
+define WRmon_SEC009_17S_PR 	{value max (0.0,WRann_SEC009_17S_PR * (AWR_17S_PR*cfs_taf + AWO_17S_PR*cfs_taf + AWW_17S_PR*cfs_taf) / SumAW_17S_PR_sv)} 
+define WR_SEC009_17S_PR  	{alias WRmon_SEC009_17S_PR kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+!American River
+define WRmon_EBA100_EBMUD {value 0.10}
+
+!Butte Creek
+define WRmon_BTC012_09_SA2	{value 99999.}
+define WRmon_BTC036_10_NA	{value 32.4}
+define WRmon_BTC043_10_NA	{value 0.0}
+
+! The 1922 Agreement specifies November to March
+! Western Canal WD GM says water is delivered from after rice harvest through December
+! Model using October to December period
+! Western Canal is typucally closed mid-January
+
+define WRmon_WEC000_BTC032 	{
+	case OctMar{
+		condition month >= 1 .and. month < 7
+		value 250.*cfs_taf}
+	case AprOct{
+		condition always
+		value 0.0} 
+		}
+		
+define WR_WEC000_BTC032  	{alias WRmon_WEC000_BTC032 kind 'WATER-RIGHT' units 'TAF'}
+
+!Colusa Basin Drain
+define WRmon_CBD028_08S_PA	{value 99999.}
+define WRmon_CBD041_08S_SA1	{value 99999.}
+define WRmon_CBD041_08S_SA2	{value 99999.}
+define WRmon_CBD049_08N_PA	{value 99999.}
+define WRmon_CBD049_08N_SA1	{value 99999.}
+
+
+define WRmon_WEC000_11_SA1 	{
+	case NovFeb{
+		condition month > 1 .and. month < 6
+		value 99999.}
+	case MarOct{
+		condition always
+		value max(0.0, WRann_WEC000_11_SA1 * (AWR_11_SA1*cfs_taf + AWO_11_SA1*cfs_taf) / SumAW_11_SA1_sv)} 
+		}
+
+define WR_WEC000_11_SA1  	{alias WRmon_WEC000_11_SA1 kind 'WATER-RIGHT' units 'TAF'}
+
+
+! Butte County has a Table A amount of 27.5 TAF. The county acts as a wholesaler to other entities
+define SumUD_ButteC	{std kind 'URBAN-DEMAND' units 'TAF'} ! Annual demand
+define SumUD_ButteC_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) UD_11_NU1(i)*cfs_taf(i) + UD_12_NU1(i)*cfs_taf(i)}
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) UD_11_NU1(i)*cfs_taf(i) + UD_12_NU1(i)*cfs_taf(i)}
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) UD_11_NU1(i)*cfs_taf(i) + UD_12_NU1(i)*cfs_taf(i)}
+    case otherwise {
+        condition   always
+        value SumUD_ButteC(-1) }
+        }
+       
+goal setSumUD_ButteC {SumUD_ButteC = SumUD_ButteC_sv}
+
+! Monthly contract amount (TAF) patterned on demand   
+define CLann_ButteC      		{value 27.5}
+define CLmon_ButteC 			{value max(0.0, (CLann_ButteC * UD_11_NU1*cfs_taf + CLann_ButteC * UD_12_NU1*cfs_taf)/ SumUD_ButteC_sv)} 
+define CLmon_ButteC_11_NU1 	{std kind 'CONTRACT-SPLIT' units 'CFS'} 
+define CLmon_ButteC_12_NU1  	{std kind 'CONTRACT-SPLIT' units 'CFS'} 
+
+
+!Sacramento River
+define SumAW_02_NA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_02_NA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_02_NA(i)*cfs_taf(i) + AWO_02_NA(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_02_NA(i)*cfs_taf(i) + AWO_02_NA(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_02_NA(i)*cfs_taf(i) + AWO_02_NA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_02_NA(-1) }
+        }
+       
+goal setSumAW_02_NA 		{SumAW_02_NA=SumAW_02_NA_sv}
+
+define WRann_SAC281_02_NA    	{select right from WaterRightAmounts where diversion=22}	
+define WRmon_SAC281_02_NA	{value max(0.0,WRann_SAC281_02_NA * (AWR_02_NA*cfs_taf + AWO_02_NA*cfs_taf) / SumAW_02_NA_sv)} 
+define WR_SAC281_02_NA  	{alias WRmon_SAC281_02_NA kind 'WATER-RIGHT' units 'TAF'}
+
+define SumAW_03_NA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_03_NA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_03_NA(i)*cfs_taf(i) + AWO_03_NA(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_03_NA(i)*cfs_taf(i) + AWO_03_NA(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_03_NA(i)*cfs_taf(i) + AWO_03_NA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_03_NA(-1) }
+        }
+       
+goal setSumAW_03_NA 		{SumAW_03_NA=SumAW_03_NA_sv}
+
+define WRann_SAC273_03_NA    	{select right from WaterRightAmounts where diversion=23}	
+define WRmon_SAC273_03_NA	{value max(0.0,WRann_SAC273_03_NA * (AWR_03_NA*cfs_taf + AWO_03_NA*cfs_taf) / SumAW_03_NA_sv)} 
+define WR_SAC273_03_NA  	{alias WRmon_SAC273_03_NA kind 'WATER-RIGHT' units 'TAF'}
+
+!Applied water is summed by calender year for this water right
+define CYSumAW_04_NA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define CYSumAW_04_NA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        Sum(i=0,11,1) AWR_04_NA(i)*cfs_taf(i) + AWO_04_NA(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        Sum(i=prevOCT,SEP-month,1) AWR_04_NA(i)*cfs_taf(i) + AWO_04_NA(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        Sum(i=0,11,1) AWR_04_NA(i)*cfs_taf(i) + AWO_04_NA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value CYSumAW_04_NA(-1) }
+        }
+       
+goal setCYSumAW_04_NA 		{CYSumAW_04_NA=CYSumAW_04_NA_sv}
+
+define WRann_SAC224_04_NA    	{select right from WaterRightAmounts where diversion=8}
+define WRmon_SAC224_04_NA	{value max(0.0,WRann_SAC224_04_NA * (AWR_04_NA*cfs_taf + AWO_04_NA*cfs_taf) / CYSumAW_04_NA_sv)} 
+define WR_SAC224_04_NA  	{alias WRmon_SAC224_04_NA kind 'WATER-RIGHT' units 'TAF'}
+
+
+define CYSumAW_05_NA 	{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define CYSumAW_05_NA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        Sum(i=0,11,1) AWR_05_NA(i)*cfs_taf(i) + AWO_05_NA(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        Sum(i=prevOCT,SEP-month,1) AWR_05_NA(i)*cfs_taf(i) + AWO_05_NA(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        Sum(i=0,11,1) AWR_05_NA(i)*cfs_taf(i) + AWO_05_NA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value CYSumAW_05_NA(-1) }
+        }
+       
+goal setCYSumAW_05_NA 		{CYSumAW_05_NA=CYSumAW_05_NA_sv}
+
+define WRann_SAC240_05_NA    	{select right from WaterRightAmounts where diversion=9}
+define WRmon_SAC240_05_NA	{value max(0.0,WRann_SAC240_05_NA * (AWR_05_NA*cfs_taf + AWO_05_NA*cfs_taf) / CYSumAW_05_NA_sv)} 
+define WR_SAC240_05_NA  	{alias WRmon_SAC240_05_NA kind 'WATER-RIGHT' units 'TAF'}
+
+define SumAW_08N_NA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_08N_NA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_08N_NA(i)*cfs_taf(i) + AWO_08N_NA(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_08N_NA(i)*cfs_taf(i) + AWO_08N_NA(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_08N_NA(i)*cfs_taf(i) + AWO_08N_NA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_08N_NA(-1) }
+        }
+       
+goal setSumAW_08N_NA 		{SumAW_08N_NA=SumAW_08N_NA_sv}
+
+define WRann_SAC185_08N_NA    	{select right from WaterRightAmounts where diversion=24}	
+define WRmon_SAC185_08N_NA	{value max(0.0,WRann_SAC185_08N_NA * (AWR_08N_NA*cfs_taf + AWO_08N_NA*cfs_taf) / SumAW_08N_NA_sv)} 
+define WR_SAC185_08N_NA  	{alias WRmon_SAC185_08N_NA kind 'WATER-RIGHT' units 'TAF'}
+
+define SumAW_08S_NA1		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_08S_NA1_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_08S_NA1(i)*cfs_taf(i) + AWO_08S_NA1(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_08S_NA1(i)*cfs_taf(i) + AWO_08S_NA1(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_08S_NA1(i)*cfs_taf(i) + AWO_08S_NA1(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_08S_NA1(-1) }
+        }
+       
+goal setSumAW_08S_NA1 		{SumAW_08S_NA1=SumAW_08S_NA1_sv}
+
+define WRann_SAC146_08S_NA1    	{select right from WaterRightAmounts where diversion=25}	
+define WRmon_SAC146_08S_NA1	{value max(0.0,WRann_SAC146_08S_NA1 * (AWR_08S_NA1*cfs_taf + AWO_08S_NA1*cfs_taf) / SumAW_08S_NA1_sv)} 
+define WR_SAC146_08S_NA1  	{alias WRmon_SAC146_08S_NA1 kind 'WATER-RIGHT' units 'TAF'}
+
+define SumAW_08S_NA2		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_08S_NA2_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_08S_NA2(i)*cfs_taf(i) + AWO_08S_NA2(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_08S_NA2(i)*cfs_taf(i) + AWO_08S_NA2(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_08S_NA2(i)*cfs_taf(i) + AWO_08S_NA2(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_08S_NA2(-1) }
+        }
+       
+goal setSumAW_08S_NA2 		{SumAW_08S_NA2=SumAW_08S_NA2_sv}
+
+define WRann_SAC129_08S_NA2    	{select right from WaterRightAmounts where diversion=26}	
+define WRmon_SAC129_08S_NA2	{value max(0.0,WRann_SAC129_08S_NA2 * (AWR_08S_NA2*cfs_taf + AWO_08S_NA2*cfs_taf) / SumAW_08S_NA2_sv)} 
+define WR_SAC129_08S_NA2  	{alias WRmon_SAC129_08S_NA2 kind 'WATER-RIGHT' units 'TAF'}
+
+define SumAW_18_NA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_18_NA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_18_NA(i)*cfs_taf(i) + AWO_18_NA(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_18_NA(i)*cfs_taf(i) + AWO_18_NA(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_18_NA(i)*cfs_taf(i) + AWO_18_NA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_18_NA(-1) }
+        }
+       
+goal setSumAW_18_NA 		{SumAW_18_NA=SumAW_18_NA_sv}
+
+define WRann_SAC136_18_NA    	{select right from WaterRightAmounts where diversion=27}	
+define WRmon_SAC136_18_NA	{value max(0.0,WRann_SAC136_18_NA * (AWR_18_NA*cfs_taf + AWO_18_NA*cfs_taf) / SumAW_18_NA_sv)} 
+define WR_SAC136_18_NA  	{alias WRmon_SAC136_18_NA kind 'WATER-RIGHT' units 'TAF'}
+
+! This water right diversion from Sacramento River to 19_NA is represented by the diversion D_SAC109_19_SA
+define CYSumAW_19_SA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define CYSumAW_19_SA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_19_SA(i)*cfs_taf(i) + AWO_19_SA(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_19_SA(i)*cfs_taf(i) + AWO_19_SA(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_19_SA(i)*cfs_taf(i) + AWO_19_SA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value CYSumAW_19_SA(-1) }
+        }
+       
+goal setCYSumAW_19_SA 		{CYSumAW_19_SA=CYSumAW_19_SA_sv}
+
+define WRann_SAC109_19_SA    	{select right from WaterRightAmounts where diversion=28}	
+define WRmon_SAC109_19_SA	{value max(0.0,WRann_SAC109_19_SA * (AWR_19_SA*cfs_taf + AWO_19_SA*cfs_taf) / CYSumAW_19_SA_sv)} 
+define WR_SAC109_19_SA  	{alias WRmon_SAC109_19_SA kind 'WATER-RIGHT' units 'TAF'}
+
+define SumAW_21_NA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_21_NA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_21_NA(i)*cfs_taf(i) + AWO_21_NA(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_21_NA(i)*cfs_taf(i) + AWO_21_NA(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_21_NA(i)*cfs_taf(i) + AWO_21_NA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_21_NA(-1) }
+        }
+       
+goal setSumAW_21_NA 		{SumAW_21_NA=SumAW_21_NA_sv}
+
+define WRann_SAC081_21_NA    	{select right from WaterRightAmounts where diversion=29}	
+define WRmon_SAC081_21_NA	{value max(0.0,WRann_SAC081_21_NA * (AWR_21_NA*cfs_taf + AWO_21_NA*cfs_taf) / SumAW_21_NA_sv)} 
+define WR_SAC081_21_NA  	{alias WRmon_SAC081_21_NA kind 'WATER-RIGHT' units 'TAF'}
+
+define SumAW_22_NA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_22_NA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_22_NA(i)*cfs_taf(i) + AWO_22_NA(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_22_NA(i)*cfs_taf(i) + AWO_22_NA(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_22_NA(i)*cfs_taf(i) + AWO_22_NA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_22_NA(-1) }
+        }
+       
+goal setSumAW_22_NA 		{SumAW_22_NA=SumAW_22_NA_sv}
+
+define WRann_SAC075_22_NA    	{select right from WaterRightAmounts where diversion=30}	
+define WRmon_SAC075_22_NA	{value max(0.0,WRann_SAC075_22_NA * (AWR_22_NA*cfs_taf + AWO_22_NA*cfs_taf) / SumAW_22_NA_sv)} 
+define WR_SAC075_22_NA  	{alias WRmon_SAC075_22_NA kind 'WATER-RIGHT' units 'TAF'}
+
+! Little Chico Creek and Sacramento River
+define SumAW_09_NA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define SumAW_09_NA_sv {
+    case octBgnWY{
+    	condition month == oct .and. wateryear==bgnWY
+        sum(i=0,11,1) AWR_09_NA(i)*cfs_taf(i) + AWO_09_NA(i)*cfs_taf(i) + AWW_09_NA(i)*cfs_taf(i) }
+    case JanEndWY {
+    	condition month == jan .and. wateryear==EndWY
+        sum(i=prevOCT,SEP-month,1) AWR_09_NA(i)*cfs_taf(i) + AWO_09_NA(i)*cfs_taf(i) + AWW_09_NA(i)*cfs_taf(i) }
+    case january {
+        condition month == jan .and. wateryear < EndWY
+        sum(i=0,11,1) AWR_09_NA(i)*cfs_taf(i) + AWO_09_NA(i)*cfs_taf(i) + AWW_09_NA(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumAW_09_NA(-1) }
+        }
+       
+goal setSumAW_09_NA 		{SumAW_09_NA=SumAW_09_NA_sv}
+
+define WRann_LCC024_09_NA    	{select right from WaterRightAmounts where diversion=1}	
+define WRmon_LCC024_09_NA	{value max(0.0,WRann_LCC024_09_NA * (AWR_09_NA*cfs_taf + AWO_09_NA*cfs_taf + AWW_09_NA*cfs_taf) / SumAW_09_NA_sv)} 
+define WR_LCC024_09_NA  	{alias WRmon_LCC024_09_NA kind 'WATER-RIGHT' units 'TAF'}
+
+define WRann_SAC185_09_NA    	{select right from WaterRightAmounts where diversion=6}	
+define WRmon_SAC185_09_NA	{value max(0.0,WRann_SAC185_09_NA * (AWR_09_NA*cfs_taf + AWO_09_NA*cfs_taf + AWW_09_NA*cfs_taf) / SumAW_09_NA_sv)} 
+define WR_SAC185_09_NA  	{alias WRmon_SAC185_09_NA kind 'WATER-RIGHT' units 'TAF'}
+
+define WRmon_LCC029_09_SA1	{value 0.0} !No evidence of water right
+
+! Yolo Bypass/Cache Creek/Willow Slough
+! Conaway Preservation Conservancy has a water right to diversion from Willow Slough from Apr 15- Oct 31 of 9.4 cfs
+! also has a 10 TAF/year water right to diversion from Yolo Bypass/Cache Creek from Apr 15- Sep 30
+
+define Sum2AW_21_SA		{std kind 'ANNUAL-APPLIED-WATER' units 'TAF'} ! Annual demand
+define Sum2AW_21_SA_sv {
+    case oct{
+    	condition month == oct
+        sum(i=7,11,1) AWR_21_SA(i)*cfs_taf(i) + AWO_21_SA(i)*cfs_taf(i) + 0.5*AWR_21_SA(6)*cfs_taf(6) + 0.5*AWO_21_SA(6)*cfs_taf(6) }
+    case otherwise {
+        condition   always
+        value Sum2AW_21_SA(-1) }
+        }
+       
+goal setSum2AW_21_SA 		{Sum2AW_21_SA=Sum2AW_21_SA_sv}
+
+define WRann_YBP023_21_SA    	{value 10.}	
+define WRmon_YBP023_21_SA	{
+	case Apr{
+    		condition month == apr
+        	value max(0.0,WRann_YBP023_21_SA * (0.5*AWR_21_SA*cfs_taf + 0.5*AWO_21_SA*cfs_taf) / Sum2AW_21_SA_sv) + 0.5 * 9.4*cfs_taf} 
+    	case MaySep {
+		condition month >= may .and. month <= sep
+        	value max(0.0,WRann_YBP023_21_SA * (AWR_21_SA*cfs_taf + AWO_21_SA*cfs_taf) / Sum2AW_21_SA_sv) + 9.4*cfs_taf} 
+	case Oct {
+		condition month ==Oct
+        	value 9.4*cfs_taf}
+        case otherwise {
+        	condition always
+        	value 0.0}
+        }
+
+define WR_YBP023_21_SA  	{alias WRmon_YBP023_21_SA kind 'WATER-RIGHT' units 'TAF'}
+
+
+!Sacramento River
+!The majority of settlement contracts restricts diversions during the April to October irrigation season 
+!The City of Redding has an all-year-round period of diversion
+define WRmon_CVPSettlement {
+case novmar{
+    	condition month > OCT .and. month < APR
+        value 99999. }
+case otherwise {
+        condition always
+        value 0.0 }
+        }
+ 
+define WRmon_SAC074_21_SA	{value WRmon_CVPSettlement}
+define WRmon_SAC078_22_SA1	{value WRmon_CVPSettlement}
+define WRmon_SAC082_22_SA1	{value WRmon_CVPSettlement}
+define WRmon_SAC083_21_SA	{value WRmon_CVPSettlement}
+define WRmon_SAC091_19_SA	{value WRmon_CVPSettlement}
+define WRmon_SAC099_19_SA	{value WRmon_CVPSettlement}
+define WRmon_SAC109_08S_SA3	{value WRmon_CVPSettlement}
+define WRmon_SAC115_19_SA	{value WRmon_CVPSettlement}
+define WRmon_SAC122_19_SA	{value WRmon_CVPSettlement}
+define WRmon_SAC121_08S_SA3	{value WRmon_CVPSettlement}
+define WRmon_SAC141_18_SA	{value WRmon_CVPSettlement}
+define WRmon_SAC159_08N_SA1	{value WRmon_CVPSettlement}
+define WRmon_SAC159_08S_SA1	{value WRmon_CVPSettlement}
+define WRmon_SAC162_09_SA2	{value WRmon_CVPSettlement}
+define WRmon_SAC178_08N_SA1	{value WRmon_CVPSettlement}
+define WRmon_SAC289_03_SA	{value WRmon_CVPSettlement}
+define WRmon_SAC296_02_SA	{value WRmon_CVPSettlement}
+define WRmon_SAC296_WTPFTH	{value 0.0} !City of Redding
+
+define WRmon_GCC027_08N_SA2	{value WRmon_CVPSettlement}
+define WRmon_GCC056_08S_SA2	{value WRmon_CVPSettlement}
+
+!define WR_SAC196_09_NA
+   
+
+
+define WR_SAC289_03_SA 	{alias CLmon_SAC289_03_SA kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+
+define WRmon_BGD000_17N_PR	{value 23.5/12.}
+
+!21_PU City of West Sacramento
+define WRann_SAC065_21_PU	{value 23.6}
+
+define SumUD_21_PU	{std kind 'URBAN-DEMAND' units 'TAF'} ! Annual demand
+define SumUD_21_PU_sv {
+    case oct{
+    	condition month == oct 
+        sum(i=0,11,1) UD_21_PU(i)*cfs_taf(i) }
+    case otherwise {
+        condition   always
+        value SumUD_21_PU(-1) }
+        }
+       
+goal setSumUD_21_PU 		{SumUD_21_PU=SumUD_21_PU_sv}
+
+! Monthly contract amount (TAF) patterned on demand   
+define WRmon_SAC065_21_PU 	{value max(0.0,WRann_SAC065_21_PU * UD_21_PU*cfs_taf / SumUD_21_PU_sv)} 
+define WR_SAC065_21_PU  	{alias WRmon_SAC065_21_PU kind 'CONTRACT-LIMIT' units 'TAF'}
+
+
+define WRmon_STH004_24_NA3 	{value 99999.}
+
+
+define  CLmon_FSC015_60N_NA2	{value 0.0}
+define  CLmon_SAC075_24_NU2	{value 0.0}
+
+define  WRmon_ABN010_24_NA2	{value 99999.}
+define  WRmon_ABN024_24_NA1	{value 99999.}
+define  WRmon_LBC049_24_NA3	{value 99999.}
+
+define NBA_Losses		{timeseries kind 'SEEPAGE' units 'TAF' convert 'CFS'}
+define WRmon_ANT010_05_NA	{value 99999. }
+define WRmon_BCN005_03_NA	{value 99999. }
+define WRmon_BRR017_23_NA	{value 99999.}
+define WRmon_BSL001_18_NA	{value 99999. }
+
+define WRmon_BTL006_03_NA	{value 99999. }
+
+define WRmon_CCH030_20_NA1	{value 99999. }
+define WRmon_CCH052_20_NA1	{value 99999. }
+define WRmon_CLR009_02_NA	{value 99999. }
+define WRmon_COW014_03_NA	{value 99999. }
+define WRmon_CRC002_22_SA1	{value 99999. }
+define WRmon_CSL005_25_NA	{value 99999. }
+define WRmon_CWD009_02_NA	{value 99999. }
+define WRmon_DRC010_05_NA	{value 99999. }
+define WRmon_DRC006_05_NA	{value 99999. }
+define WRmon_DWRPS1_16_NA2	{value 99999. }
+define WRmon_DWRPS2_11_NA	{value 99999. }
+define WRmon_DWRPS2_16_SA	{value 99999. }
+define WRmon_ELD012_04_NA	{value 99999. }
+define WRmon_ESL008_09_SA1	{value 99999. }
+define WRmon_FDC006_14_NA	{value 99999. }
+define WRmon_KLR005_21_PA	{value 99999. }
+define WRmon_MLC006_05_NA	{value 99999. }
+define WRmon_MNRRH_13_NA	{value 99999. }
+define WRmon_MNRRH_13_NU2	{value 99999. }
+define WRmon_MNRRH_WTPMNR	{value 99999. }
+define WRmon_MTC000_09_NA	{value 99999. }
+define WRmon_MTC000_09_SA1	{value 99999. }
+define WRmon_OWC000_13_NA	{value 99999. }
+define WRmon_PCL000_11_NU1 	{value 8.0/12.} 
+define WRmon_RFS13_12_NA	{value 99999. }
+define WRmon_RFS25_25_PA2	{value 99999. }
+define WRmon_SBP028_17S_PR	{value 30. } !limit is 30 cfs
+define WRmon_SBP014_17S_NA	{value 99999. }
+define WRmon_SBP031_18_NA	{value 99999. }
+define WRmon_THM012_04_NA	{value 99999. }
+define WRmon_WTPFTH_02_SU	{value 0.}
+define WRmon_WTPFTH_03_SU	{value 0.}
+
+
+define WRann_WTPCSD_02_PU	{value 0.900 + 5.100} ! Townsend Flat Water Ditch Company Transfer + McConnell Foundation  
+define WRmon_WTPCSD_02_PU	{value max(0.0, WRann_WTPCSD_02_PU * UD_02_PU*cfs_taf / UDann_02_PU)} ! Monthly water right amount (TAF) patterned on demand
+define WR_WTPCSD_02_PU 		{alias WRmon_WTPCSD_02_PU kind 'WATER-RIGHT' units 'TAF'}
+
+!define CLann_WTPCSD_02_PU	{select contract from CVPContractAmounts where diversion=12} ! Annual contract amount from lookup table
+define WR_WTPCSD_02_PU    	{select right from WaterRightAmounts where diversion=12}
