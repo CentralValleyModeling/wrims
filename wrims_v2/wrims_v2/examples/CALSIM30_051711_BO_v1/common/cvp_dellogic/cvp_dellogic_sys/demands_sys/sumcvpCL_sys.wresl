@@ -93,14 +93,14 @@ define	CLN_SAC078_22_SA1	{select nonpeak from Contracts_CVPSettlement where dive
 define	CLN_SAC099_19_SA	{select nonpeak from Contracts_CVPSettlement where diversion=24}
 
 !Define demands for CVP contract water - reduced by WF agreement
-define[local] CLWF_ANN_PCWA_A   {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
-define[local] CLWF_ANN_FOLSM     {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
-define[local] CLWF_ANN_SJWD_S   {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
-define[local] CLWF_ANN_ELDOR     {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
-define[local] CLWF_ANN_SMUD       {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
-define[local] CLWF_ANN_SCWA       {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
-define[local] CLWF_ANN_ROSEV     {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
-define[local] CLWF_ANN_CAREC     {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
+define CLWF_ANN_PCWA_A   {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
+define CLWF_ANN_FOLSM     {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
+define CLWF_ANN_SJWD_S   {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
+define CLWF_ANN_ELDOR     {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
+define CLWF_ANN_SMUD       {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
+define CLWF_ANN_SCWA       {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
+define CLWF_ANN_ROSEV     {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
+define CLWF_ANN_CAREC     {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
 define CLann_ANN_SCWA_FRPT    		{VALUE 0.0}  !
 define CLann_ANN_EBMD_FRPT    		{VALUE 0.0}  !
 
