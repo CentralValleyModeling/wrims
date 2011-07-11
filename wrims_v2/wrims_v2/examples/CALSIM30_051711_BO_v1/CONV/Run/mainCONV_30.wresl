@@ -711,6 +711,7 @@ MODEL DELTA2 {      !CYCLE 10
      }
      
 MODEL TRANSFERS_STAGE1 {      !CYCLE 11
+	define[local] FSC_Losses       {timeseries kind 'SEEPAGE'  units 'TAF' convert 'CFS'}  !Seepage losses for Folsom South Canal
     !define  daysindv {alias daysin kind 'DAYS' units 'DAYS'}
     INCLUDE[LOCAL] '..\..\common\yuba\Misc_YUBA\lowerbasin\delivery.wresl'
     INCLUDE[local] '..\..\common\sanjoaquin\IntegratedOperations\SanLuisTransfers.wresl'    
