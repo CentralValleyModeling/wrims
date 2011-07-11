@@ -58,7 +58,7 @@ public class TestWreslWalker_calsim3 {
 	public void calsim3_full_study() throws RecognitionException, IOException {
 		
 		csvFolderPath = "TestWreslWalker_calsim3_full_study";
-		inputFilePath = "D:\\CALSIM30_041311_BO\\CONV\\Run\\mainCONV_30.wresl";
+		inputFilePath = "D:\\CALSIM30_051711_BO\\CONV\\Run\\mainCONV_30.wresl";
 		logFilePath = csvFolderPath+".log";
 		
 		File absFile = new File(inputFilePath).getAbsoluteFile();

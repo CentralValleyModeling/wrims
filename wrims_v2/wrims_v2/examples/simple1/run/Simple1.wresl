@@ -1,0 +1,21 @@
+SEQUENCE One {
+    MODEL   Mod1
+    ORDER   1
+}
+
+MODEL Mod1 {
+	define X {lower 0 upper 1 kind 'Dvar' units 'num'} 
+	define Y {lower 0 upper 1 kind 'Dvar' units 'num'} 
+	define Z {lower 0 upper 1 kind 'Dvar' units 'num'} 
+	
+	goal C1 {X + 2*Y +3*z < 4}
+	goal C2 {X+Y>1}
+	
+		
+	Objective obj = {
+		[x, 1]
+		[y, 1]
+		[z, 2]
+	}	
+		
+}
