@@ -104,7 +104,7 @@ public class Functiongetfinalmrdo extends ExternalFunction{
 			bday_col2, eday_col2, Qrsl1, bday_rsl1, eday_rsl1, Qrsl2, bday_rsl2, eday_rsl2, Qflw,
 			bday_flw, eday_flw, wyear, month, daysin)));
 		
-		System.gc();
+		//System.gc();
 
 	}
 
