@@ -219,7 +219,12 @@ public class Evaluation {
 			ee2.setValue(multiplyOperation(id1,id2));
 			Map<String, IntDouble> multiplier=ee2.getMultiplier();
 			for (String dvar : multiplier.keySet()) {
-				multiplier.put(dvar, multiplyOperation(id1,multiplier.get(dvar)));				
+				IntDouble id3=multiplyOperation(id1,multiplier.get(dvar));
+				if (id3.getData().doubleValue()==0.0){
+					multiplier.remove(dvar);
+				}else{
+					multiplier.put(dvar, id3);
+				}
 			}
 			return ee2;
 		}else{
@@ -229,7 +234,12 @@ public class Evaluation {
 				ee1.setValue(multiplyOperation(id2,id1));
 				Map<String, IntDouble> multiplier=ee1.getMultiplier();
 				for (String dvar : multiplier.keySet()) {
-					multiplier.put(dvar, multiplyOperation(id2,multiplier.get(dvar)));				
+					IntDouble id3=multiplyOperation(id2,multiplier.get(dvar));
+					if (id3.getData().doubleValue()==0.0){
+						multiplier.remove(dvar);
+					}else{
+						multiplier.put(dvar, id3);
+					}			
 				}
 				return ee1;
 			}else{
@@ -325,7 +335,12 @@ public class Evaluation {
 		Map<String, IntDouble> multiplier2=ee2.getMultiplier();
 		for (String dvar : multiplier2.keySet()) {
 			if (multiplier1.containsKey(dvar)){
-				multiplier1.put(dvar, addOperation(multiplier1.get(dvar),multiplier2.get(dvar)));
+				IntDouble id3=addOperation(multiplier1.get(dvar),multiplier2.get(dvar));
+				if (id3.getData().doubleValue()==0.0){
+					multiplier1.remove(dvar);
+				}else{
+					multiplier1.put(dvar, id3);
+				}
 			}else{
 				multiplier1.put(dvar, multiplier2.get(dvar));
 			}
