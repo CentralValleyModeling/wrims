@@ -150,8 +150,8 @@ define[local] C_SAC066_Cycle6 {alias C_SAC066[MONTHLYWEIGHTED] kind 'FLOW-CHANNE
 !define[local] C_SAC048IF400_Cycle6 {alias C_SAC048_IF400[MONTHLYWEIGHTED] kind 'FLOW-CHANNEL' units 'CFS'}
 define[local] C_SAC048_Cycle6 {alias C_SAC048[MONTHLYWEIGHTED] kind 'FLOW-CHANNEL' units 'CFS'}
 
-define[local] SP_SAC083_YBP034_Cycle6 {alias SP_SAC083_YBP034[MONTHLYWEIGHTED] kind 'FLOW-DELIVERY' units 'CFS'}
-define[local] SP_SAC066_YBP020_Cycle6 {alias SP_SAC066_YBP020[MONTHLYWEIGHTED] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] shortgoal9 {alias SP_SAC083_YBP034[MONTHLYWEIGHTED] kind 'FLOW-DELIVERY' units 'CFS'}
+define[local] shortgoal10 {alias SP_SAC066_YBP020[MONTHLYWEIGHTED] kind 'FLOW-DELIVERY' units 'CFS'}
 !define[local] D400_Cycle6 {alias D400[MONTHLYWEIGHTED] kind 'FLOW-DELIVERY' units 'CFS'}
 
 !UPSTREAM

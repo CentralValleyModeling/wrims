@@ -98,7 +98,7 @@ define AprMayExpCtrl {std kind 'EXPORT-CTRL-APRMAY' units 'CFS'}
 
 ! Monthly export restriction - day weighted
 
-goal Export_limit_during_pulse_mon {
+goal shortgoal6 {
     lhs    AprMayExpCtrl
         case April {
             condition     month == APR
@@ -125,7 +125,7 @@ goal Limit_Exports {
 
 define AprMayTracyCtrl {std kind 'EXPORT-CTRL-APRMAY' units 'CFS'}
 
-goal Export_limit_Tracy_pulse_mon {
+goal shortgoal7 {
     lhs    AprMayTracyCtrl
         case April {
             condition     month == APR
@@ -139,7 +139,7 @@ goal Export_limit_Tracy_pulse_mon {
 
 define AprMayBanksCtrl {std kind 'EXPORT-CTRL-APRMAY' units 'CFS'}
 
-goal Export_limit_Banks_pulse_mon {
+goal shortgoal8 {
     lhs    AprMayBanksCtrl
         case April {
             condition     month == APR

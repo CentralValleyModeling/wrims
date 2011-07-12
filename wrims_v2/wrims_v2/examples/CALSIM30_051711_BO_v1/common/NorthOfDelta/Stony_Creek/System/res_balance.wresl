@@ -28,7 +28,7 @@ goal EastParkStonyGorge_layer2 {
     lhs>rhs  penalty 500
     lhs<rhs  penalty 500}
 
-goal StonyGorgeBlackButte_layer2 {
+goal shortgoal2 {
     lhs  S_SGRGE_2/SGL2
     rhs  S_BLKBT_2/BBL2
     lhs>rhs  penalty 500
@@ -49,7 +49,7 @@ goal EastParkStonyGorge_layer3 {
     lhs>rhs  penalty 500
     lhs<rhs  penalty 500}
 
-goal StonyGorgeBlackButte_layer3 {
+goal shortgoal3 {
     lhs  S_SGRGE_3/SGL3
     rhs  S_BLKBT_3/BBL3
     lhs>rhs  penalty 500
@@ -70,7 +70,7 @@ goal EastParkStonyGorge_layer4 {
     lhs>rhs  penalty 500
     lhs<rhs  penalty 500}
 
-goal StonyGorgeBlackButte_layer4 {
+goal shortgoal4 {
     lhs  S_SGRGE_4/SGL4
     rhs  S_BLKBT_4/BBL4
     lhs>rhs  penalty 500
@@ -91,7 +91,7 @@ goal EastParkStonyGorge_layer5 {
     lhs>rhs  penalty 500
     lhs<rhs  penalty 500}
 
-goal StonyGorgeBlackButte_layer5 {
+goal shortgoal5 {
     lhs  S_SGRGE_5/SGL5
     rhs  S_BLKBT_5/BBL5
     lhs>rhs  penalty 500
