@@ -85,7 +85,7 @@ public class Controller {
 	}
 	
 	public void setControlData(){
-		FilePaths.studyDir="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\";
+		FilePaths.groundwaterDir="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\common\\CVGroundwater\\Data\\";
 		FilePaths.fullSvarDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\common\\DSS\\CalSim30_06_SV.dss";
         FilePaths.fullInitDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\common\\DSS\\CalSim30_06Init.dss";
         FilePaths.setDvarDssPaths("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\CONV\\DSS\\TestWRIMSV2DV.dss");
@@ -115,7 +115,7 @@ public class Controller {
 	}
 	
 	public void setControlData(String[] args){
-		FilePaths.studyDir=args[0];
+		FilePaths.groundwaterDir=args[0];
         FilePaths.setMainFilePaths(args[1]);
         FilePaths.setSvarDssPaths(args[2]);
         FilePaths.setInitDssPaths(args[3]);
@@ -157,7 +157,7 @@ public class Controller {
 			out.write("Time\n");
 			out.write("Note\n");
 			out.write("Version\n");
-			out.write(FilePaths.studyDir+"\n");
+			out.write(FilePaths.groundwaterDir+"\n");
 			out.write("StudyFileFullPath\n");
 			out.write(FilePaths.fullMainPath+"\n");
 			out.write(FilePaths.fullSvarDssPath+"\n");

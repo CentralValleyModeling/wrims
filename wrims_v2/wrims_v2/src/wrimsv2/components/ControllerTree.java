@@ -84,7 +84,7 @@ public class ControllerTree {
 	}
 	
 	public void setControlData(){
-		FilePaths.studyDir="D:\\CalLite_Beta_042611\\";
+		FilePaths.groundwaterDir="";
 		FilePaths.setSvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss");
         FilePaths.setInitDssPaths("D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss");
         FilePaths.setDvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\TestWRIMSV2DV.dss");
@@ -115,7 +115,7 @@ public class ControllerTree {
 	}
 	
 	public void setControlData(String[] args){
-		FilePaths.studyDir=args[0];
+		FilePaths.groundwaterDir=args[0];
         FilePaths.setMainFilePaths(args[1]);
         FilePaths.setSvarDssPaths(args[2]);
         FilePaths.setInitDssPaths(args[3]);
@@ -157,7 +157,7 @@ public class ControllerTree {
 			out.write("Time\n");
 			out.write("Note\n");
 			out.write("Version\n");
-			out.write(FilePaths.studyDir+"\n");
+			out.write(FilePaths.groundwaterDir+"\n");
 			out.write("StudyFileFullPath\n");
 			out.write(FilePaths.fullMainPath+"\n");
 			out.write(FilePaths.fullSvarDssPath+"\n");
