@@ -329,14 +329,14 @@ public class TestWreslWalker_element {
 
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 		Assert.assertEquals(totalErrs, 0);	
-		
+
 	
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\svar.csv");	
 		
 		String s;
 		int n;
 	
-		s = "full_table##select area from res_info given storage=1000*s_orovl(-1) use linear where res_num=6;somevalue=7";
+		s = "full_table##select area from res_info given storage=1000*s_orovl_extern(-1) use linear where res_num=6;somevalue=7";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);

@@ -294,4 +294,52 @@ public class TestWreslWalker_alias {
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);			
 	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void alias_unknown() throws RecognitionException, IOException {
+	// deep embedding of alias
+		
+		csvFolderPath = "TestWreslWalker_alias_unknown";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+		
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath, true);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		//String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.study(sd, csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 1);		
+	
+		String csvText;
+		String s;
+		int n;
+
+		
+		// check if dependents has the item
+		csvText = Tools.readFileAsString(csvFolderPath+"\\first\\svar.csv");
+		
+		s = "cfs_cfmp,default,1,always,daysindv(-1)*86400.0+x,daysindv;x;";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);			
+	}
 }

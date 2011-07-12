@@ -1,5 +1,9 @@
 package wrimsv2.commondata.wresldata;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 // global parameters
 public class Param {
 	  public static boolean debug= false; 
@@ -27,7 +31,12 @@ public class Param {
 	  public static final String global="global";
 	  public static final String local="local";
 	  
-	  
+	  public static Set<String> reservedSet = new HashSet<String>(Arrays.asList
+				("month", "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec",
+				 "prevjan", "prevfeb", "prevmar", "prevapr", "prevmay", "prevjun", 
+				 "prevjul", "prevaug", "prevsep", "prevoct", "prevnov", "prevdec",
+				 "wateryear", "cfs_taf", "taf_cfs", "cfs_cfm", "af_cfs", "daysin", "daysinmonth",
+				 "i", "null", "pow", "log10", "abs"   ));
 	  
 	  
 }

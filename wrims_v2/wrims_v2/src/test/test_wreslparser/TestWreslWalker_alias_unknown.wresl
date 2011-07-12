@@ -1,0 +1,11 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+	define  cfs_cfmp  {value daysindv(-1) * 86400.0 + x}
+
+	
+}

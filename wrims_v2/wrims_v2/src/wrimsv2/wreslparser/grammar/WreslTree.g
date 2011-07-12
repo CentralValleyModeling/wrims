@@ -47,12 +47,6 @@ tokens {
   
 }
 @members {
-	public Set<String> reservedSet = new HashSet<String>(Arrays.asList
-	("month", "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec",
-	 "prevjan", "prevfeb", "prevmar", "prevapr", "prevmay", "prevjun", 
-	 "prevjul", "prevaug", "prevsep", "prevoct", "prevnov", "prevdec",
-	 "wateryear", "cfs_taf", "taf_cfs", "cfs_cfm", "af_cfs", "daysin", "daysinmonth",
-	 "i", "null"   ));
 	
     public ArrayList<String> model_in_sequence = new ArrayList<String>();
     public ArrayList<String> model_list = new ArrayList<String>();
@@ -388,7 +382,7 @@ scope { Set<String> SV; }
 	:  c_unary ( bin c_unary )* 	
 	
 	{  
-	   $logical_expr::SV.removeAll(reservedSet);
+	   //$logical_expr::SV.removeAll(reservedSet);
 	   $members = $logical_expr::SV;
        for (String s : $logical_expr::SV) {
        
@@ -405,7 +399,7 @@ scope { Set<String> SV; }
 	{  $text = Tools.replace_ignoreChar($add.text); 
 	   $text = Tools.replace_seperator($text);
 	   
-	   $expression::SV.removeAll(reservedSet);
+	   //$expression::SV.removeAll(reservedSet);
 	   $members = $expression::SV;
        for (String s : $expression::SV) {
        
@@ -443,7 +437,7 @@ function_logical : range_func ;
 var_model : i=IDENT '[' IDENT ']' ; //{ $expression::DV.add($i.text.toLowerCase());} ;	
 
 external_func // this could be timeseries function
-	: i=IDENT '('  ie=expression (',' e=expression  {$expression::SV.addAll($e.members);}  )*  ')' 
+	: i=IDENT {$expression::SV.add($i.text);} '('  ie=expression (',' e=expression  {$expression::SV.addAll($e.members);}  )*  ')' 
 	  {  $expression::SV.addAll($ie.members);}  // $expression::EX.add($i.text.toLowerCase()); 
 	     
 	;

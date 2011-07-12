@@ -20,6 +20,8 @@ define z_1 {value min(max(t1,sv_second_dv1[model_1]),2.5)}
 
 define error_1 {value min(max(not_exist,sv_second_dv1[model_1]),2.5)}
 
+define ts1 { timeseries 'UD_CCWD' kind 'DEMAND-CVP' units 'TAF' convert 'CFS' }
+define sv_sum_ts1 { timeseries 'UD_CCWD' kind 'DEMAND-CVP' units 'TAF' convert 'CFS' }
 }
 
 

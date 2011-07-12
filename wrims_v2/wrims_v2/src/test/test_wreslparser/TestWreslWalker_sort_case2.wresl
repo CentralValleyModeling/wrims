@@ -24,7 +24,8 @@ define sum_3 {sum(i=0,SEP-month,1) (b_2 - sv_sum_ts1(i))*cfs_taf(i) }
 define z_1 {value min(max(t1,sv_second_dv1[model_1]),2.5)}
 
 define error_1 {value min(max(not_exist,sv_second_dv1[model_1]),2.5)}
-
+define ts1 { timeseries 'UD_CCWD' kind 'DEMAND-CVP' units 'TAF' convert 'CFS' }
+define sv_sum_ts1 { timeseries 'UD_CCWD' kind 'DEMAND-CVP' units 'TAF' convert 'CFS' }
 }
 
 MODEL second { 

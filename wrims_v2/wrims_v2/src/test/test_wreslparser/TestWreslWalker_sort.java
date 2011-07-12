@@ -68,19 +68,19 @@ public class TestWreslWalker_sort {
 		Assert.assertEquals(s.size(),1);
 
 		s = sd.getModelDataSetMap().get(modelName).svMap.get("value_2").dependants;		
-		Assert.assertEquals(s.size(),2);
+		Assert.assertEquals(s.size(),3);
 
 		s = sd.getModelDataSetMap().get(modelName).svMap.get("table_2").dependants;		
-		Assert.assertEquals(s.size(),2);
-		
-		s = sd.getModelDataSetMap().get(modelName).svMap.get("case_2").dependants;		
-		Assert.assertEquals(s.size(),2);
-		
-		s = sd.getModelDataSetMap().get(modelName).svMap.get("case_3").dependants;		
 		Assert.assertEquals(s.size(),3);
 		
+		s = sd.getModelDataSetMap().get(modelName).svMap.get("case_2").dependants;		
+		Assert.assertEquals(s.size(),3);
+		
+		s = sd.getModelDataSetMap().get(modelName).svMap.get("case_3").dependants;		
+		Assert.assertEquals(s.size(),5);
+		
 		s = sd.getModelDataSetMap().get(modelName).svMap.get("sum_1").dependants;		
-		Assert.assertEquals(s.size(),1);
+		Assert.assertEquals(s.size(),2);
 	
 	
 	}

@@ -21,15 +21,16 @@ public class TestILP_calsim3 {
 	@Test(groups = { "ilp_calsim3" })
 	public void calsim3_step1() throws RecognitionException, IOException{
 		
-		studyPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\CONV\\";
+		studyPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\";
 		dssPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\common\\DSS\\";
 		
 		/// set control data		
 		String[] controlDataString = {
-		studyPath + "run\\mainCONV_30.wresl",
+		studyPath + "common\\CVGroundwater\\Data\\",   //groundwater dir
+		studyPath + "CONV\\run\\mainCONV_30.wresl",
 		dssPath +   "CalSim30_06_SV.dss",
 		dssPath +   "CalSim30_06Init.dss",
-		dssPath +   "dv.dss",
+		studyPath + "CONV\\DSS\\dv.dss",
 		"CalSim30_06",       // sv dv F part
 		"CalSim30_06",   // init file F part
 		"CALSIM",        // part A

@@ -570,7 +570,7 @@ public static Map<String, SimulationDataSet> getNewDataSet(Set<String> adhoc_inc
   {
     boolean OK = true;
 
-    Sort sortSV = new Sort(model_dataset.svMap, model_dataset.tsSet);
+    Sort sortSV = new Sort(model_dataset.svMap, model_dataset.asSet, model_dataset.dvSet, model_dataset.tsSet, model_dataset.exSet, "forSV");
 
     ArrayList<String> sortedSvList = new ArrayList<String>();
 
@@ -585,7 +585,7 @@ public static Map<String, SimulationDataSet> getNewDataSet(Set<String> adhoc_inc
       model_dataset.svSet = new LinkedHashSet<String>(model_dataset.svList);
     }
 
-    Sort sortAs = new Sort(model_dataset.asMap, model_dataset.svSet, model_dataset.dvSet, model_dataset.tsSet);
+    Sort sortAs = new Sort(model_dataset.asMap, model_dataset.svSet, model_dataset.dvSet, model_dataset.tsSet, model_dataset.exSet);
 
     ArrayList<String> sortedAsList = new ArrayList<String>();
 

@@ -26,7 +26,7 @@ public class TestWreslWalker_calsim3 {
 	public void firstCycle() throws RecognitionException, IOException {
 		
 		csvFolderPath = "TestWreslWalker_calsim3_firstCycle";
-		inputFilePath = "D:\\CALSIM30_041311_BO\\CONV\\Run\\mainCONV_30.wresl";
+		inputFilePath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\CONV\\Run\\mainCONV_30_cycle1.wresl";
 		logFilePath = csvFolderPath+".log";
 		
 		File absFile = new File(inputFilePath).getAbsoluteFile();
@@ -54,11 +54,11 @@ public class TestWreslWalker_calsim3 {
 		
 	}
 	
-	@Test(groups = { "WRESL_Calsim3" })
+	//@Test(groups = { "WRESL_Calsim3" })
 	public void calsim3_full_study() throws RecognitionException, IOException {
 		
 		csvFolderPath = "TestWreslWalker_calsim3_full_study";
-		inputFilePath = "D:\\CALSIM30_051711_BO\\CONV\\Run\\mainCONV_30.wresl";
+		inputFilePath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\CONV\\Run\\mainCONV_30.wresl";
 		logFilePath = csvFolderPath+".log";
 		
 		File absFile = new File(inputFilePath).getAbsoluteFile();
