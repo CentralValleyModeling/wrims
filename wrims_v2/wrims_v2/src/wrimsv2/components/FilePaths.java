@@ -1,6 +1,7 @@
 package wrimsv2.components;
 
 public class FilePaths {
+	public static String studyDir="";  //for groundwater use.
 	public static String fullMainPath="";
 	public static String mainFile="";
 	public static String mainDirectory="";

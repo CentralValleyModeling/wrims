@@ -96,15 +96,16 @@ public class testStudies {
 	}
 	
 	public void testParsedCalsim3()throws RecognitionException, IOException{
-		FilePaths.fullSvarDssPath="D:\\CALSIM30_051711_BO\\common\\DSS\\CalSim30_06_SV.dss";
-        FilePaths.fullInitDssPath="D:\\CALSIM30_051711_BO\\common\\DSS\\CalSim30_06Init.dss";
-        FilePaths.setDvarDssPaths("D:\\CALSIM30_051711_BO\\CONV\\DSS\\TestWRIMSV2DV.dss");
-        FilePaths.setMainFilePaths("D:\\CALSIM30_051711_BO\\CONV\\Run\\mainCONV_30.wresl");
+		FilePaths.studyDir="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\";
+		FilePaths.fullSvarDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\common\\DSS\\CalSim30_06_SV.dss";
+        FilePaths.fullInitDssPath="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\common\\DSS\\CalSim30_06Init.dss";
+        FilePaths.setDvarDssPaths("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\CONV\\DSS\\TestWRIMSV2DV.dss");
+        FilePaths.setMainFilePaths("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\CONV\\Run\\mainCONV_30.wresl");
 		ControlData cd=new ControlData();
 		cd.startYear=1921;
 		cd.startMonth=10;
 		cd.startDay=31;
-		cd.endYear=2006;
+		cd.endYear=1921;
 		cd.endMonth=11;
 		cd.endDay=30;
 		cd.currYear=cd.startYear;
@@ -154,7 +155,8 @@ public class testStudies {
 	}
 
 	public void testParsedCalLite()throws RecognitionException, IOException{
-        FilePaths.setSvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss");
+		FilePaths.studyDir="D:\\CalLite_Beta_042611\\";
+		FilePaths.setSvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\CL_FUTURE_WHL042611_SV.dss");
         FilePaths.setInitDssPaths("D:\\CalLite_Beta_042611\\DSS\\CalLite2020D09EINIT.dss");
         FilePaths.setDvarDssPaths("D:\\CalLite_Beta_042611\\DSS\\TestWRIMSV2DV.dss");
         FilePaths.setMainFilePaths("D:\\CalLite_Beta_042611\\Run\\main_BO.wresl");
