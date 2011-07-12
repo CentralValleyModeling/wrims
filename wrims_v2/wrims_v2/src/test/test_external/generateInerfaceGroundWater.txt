@@ -1,8 +1,8 @@
 1
 interfacetogw
 CVGroundwater
-initgwsystem setgp setdp setstrmflow simgw getseep getgw_h getstrm_h getpumpshort getpercentpumpshort
-10
+initgwsystem setgp setdp setstrmflow simgw getseep getgw_h getstrm_h getpumpshort getpercentpumpshort printgwresults advancegwstate
+12
 initgwsystem
 float
 int int int
@@ -40,6 +40,14 @@ float
 int
 iDummy
 getpercentpumpshort
+float
+int
+iDummy
+printgwresults
+float
+int int
+WaterYear Month
+advancegwstate
 float
 int
 iDummy

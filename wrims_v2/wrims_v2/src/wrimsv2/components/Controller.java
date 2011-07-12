@@ -94,8 +94,8 @@ public class Controller {
 		cd.startYear=1921;
 		cd.startMonth=10;
 		cd.startDay=31;
-		cd.endYear=1921;
-		cd.endMonth=11;
+		cd.endYear=2006;
+		cd.endMonth=9;
 		cd.endDay=30;
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
@@ -437,7 +437,7 @@ public class Controller {
 	public void initialXASolver(){
 		ControlData.xasolver.openConnection();
 		ControlData.xasolver.setModelSize(100, 100);
-		ControlData.xasolver.setCommand("MAXIMIZE Yes MUTE no FORCE No wait no matlist v set visible no");
+		ControlData.xasolver.setCommand("MAXIMIZE Yes MUTE no FORCE No wait no matlist v set visible no set debug no");
 		//ControlData.xasolver.setCommand("set sortName Yes FileName d:\\temp Output v2%d.log MatList V MPSX Yes ToRcc Yes");
 		//ControlData.xasolver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log set sortName Yes wait no" ) ;
 	}
