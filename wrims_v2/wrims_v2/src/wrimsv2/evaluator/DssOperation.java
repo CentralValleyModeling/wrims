@@ -39,20 +39,20 @@ public class DssOperation {
 		DssDataSet dds= new DssDataSet();
 		ArrayList<Double> dataArray= new ArrayList<Double>();
 		Date startDate=rts.getStartTime().getDate();
+		int year=startDate.getYear()+1900;
+		int month=startDate.getMonth();;
+		int day = startDate.getDate();
 		if (ts.convertToUnits.equals("cfs")){
-			ControlData.dataYear=startDate.getYear()+1900;
-			ControlData.dataMonth=startDate.getMonth();
-			ControlData.dataDay=startDate.getDate();
 			int i=0;
 			for (double dataEntry :  rts.getYArray()){
 				if (dataEntry==-901.0){
 					dataArray.add(-901.0);
 				}else{
-					TimeOperation.findTime(i);
+					TimeOperation.findTime(i, year, month, day);
 					double dataEntryValue=dataEntry*Evaluation.tafcfs("taf_cfs");
 					dataArray.add(dataEntryValue);
-					i=i+1;
 				}
+				i=i+1;
 			}
 		}else{
 			for (double dataEntry :  rts.getYArray()){

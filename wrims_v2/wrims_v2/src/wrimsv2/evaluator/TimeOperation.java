@@ -166,6 +166,34 @@ public class TimeOperation {
 		}
 	}
 	
+	public static void findTime(int value, int year, int month,  int day){
+		if (ControlData.timeStep.equals("1MON")){
+			int detYear=value/12;
+			int detMonth=value%12;
+			ControlData.dataMonth=month+detMonth;
+			ControlData.dataYear=year+detYear;
+			if (ControlData.dataMonth<1){
+				ControlData.dataMonth=ControlData.dataMonth+12;
+				ControlData.dataYear=ControlData.dataYear-1;
+			}else if (ControlData.dataMonth>12){
+				ControlData.dataMonth=ControlData.dataMonth-12;
+				ControlData.dataYear=ControlData.dataYear+1;
+			}
+			int days=numberOfDays(ControlData.dataMonth, ControlData.dataYear);
+			if (day<=days){
+				ControlData.dataDay=day;
+			}else{
+				ControlData.dataDay=days-numberOfDays(month, year)+day;
+			}
+		}else if(ControlData.timeStep.equals("1DAY")){
+			Date thisDate = new Date (year-1900, month-1, day);
+			long dataTime=thisDate.getTime()+value*1 * 24 * 60 * 60 * 1000;
+			Date dataDate = new Date (dataTime);
+			ControlData.dataMonth=dataDate.getMonth()+1;
+			ControlData.dataYear=dataDate.getYear()+1900;
+		}
+	}
+	
 	public static int numberOfDays(int month, int year){
 		int days;
 		if (month==1 || month==3 || month==5 || month==7 
