@@ -45,9 +45,14 @@ public class DssOperation {
 			ControlData.dataDay=startDate.getDate();
 			int i=0;
 			for (double dataEntry :  rts.getYArray()){
-				TimeOperation.findTime(i);
-				dataArray.add(dataEntry*Evaluation.tafcfs("taf_cfs"));
-				i=i+1;
+				if (dataEntry==-901.0){
+					dataArray.add(-901.0);
+				}else{
+					TimeOperation.findTime(i);
+					double dataEntryValue=dataEntry*Evaluation.tafcfs("taf_cfs");
+					dataArray.add(dataEntryValue);
+					i=i+1;
+				}
 			}
 		}else{
 			for (double dataEntry :  rts.getYArray()){
