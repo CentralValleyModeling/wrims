@@ -103,6 +103,9 @@ public class Controller {
         cd.writeDssStartYear=ControlData.startYear;
         cd.writeDssStartMonth=ControlData.startMonth;
         cd.writeDssStartDay=ControlData.startDay;
+		cd.partA = "CALSIM";
+		cd.partE = "1MON";
+		cd.timeStep="1MON";
 		cd.svDvPartF="CALSIM30_06";
 		cd.initPartF="CALSIM30_06";
         cd.writeDssStartYear=ControlData.startYear;
@@ -303,7 +306,7 @@ public class Controller {
 				}
 				cal = Calendar.getInstance();
 				System.out.println("      After alias: "+cal.getTimeInMillis());
-				//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();				
+				//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();				
 				i=i+1;
 			}
 			if (ControlData.timeStep.equals("1MON")){
@@ -437,9 +440,9 @@ public class Controller {
 	public void initialXASolver(){
 		ControlData.xasolver.openConnection();
 		ControlData.xasolver.setModelSize(100, 100);
-		ControlData.xasolver.setCommand("MAXIMIZE Yes MUTE no FORCE No wait no matlist v set visible no set debug no");
+		ControlData.xasolver.setCommand("MAXIMIZE Yes MUTE yes FORCE No wait no matlist v set visible no set debug no");
 		//ControlData.xasolver.setCommand("set sortName Yes FileName d:\\temp Output v2%d.log MatList V MPSX Yes ToRcc Yes");
-		//ControlData.xasolver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log set sortName Yes wait no" ) ;
+		//ControlData.xasolver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log set sortName Yes" ) ;
 	}
 	
 	public void processModel(){

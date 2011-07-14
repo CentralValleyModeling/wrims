@@ -115,6 +115,9 @@ public class testStudies {
         cd.writeDssStartYear=ControlData.startYear;
         cd.writeDssStartMonth=ControlData.startMonth;
         cd.writeDssStartDay=ControlData.startDay;
+		cd.partA = "CALSIM";
+		cd.partE = "1MON";
+		cd.timeStep="1MON";
 		cd.svDvPartF="CALSIM30_06";
 		cd.initPartF="CALSIM30_06";
         cd.writeDssStartYear=ControlData.startYear;

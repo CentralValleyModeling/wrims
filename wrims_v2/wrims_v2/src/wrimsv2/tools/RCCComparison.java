@@ -24,7 +24,7 @@ import wrimsv2.components.IntDouble;
 import wrimsv2.evaluator.EvalConstraint;
 
 public class RCCComparison {
-	private int cycle=2;
+	private int cycle=3;
 	private String cycleName;
 	private BufferedWriter out;
 	private BufferedWriter out1;
