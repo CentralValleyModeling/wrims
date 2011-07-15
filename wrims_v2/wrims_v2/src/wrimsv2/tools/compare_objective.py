@@ -2,7 +2,7 @@
 
 #### common setting
 compare_number_of_decimal = 6
-total_cycle = 2
+total_cycle = 11
 
 #### v1
 v1_label_local = ["01OBJECTIVE:","02OBJECTIVE:"]
