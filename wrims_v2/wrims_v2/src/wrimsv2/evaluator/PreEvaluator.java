@@ -30,6 +30,7 @@ public class PreEvaluator {
 	private Map<String, Alias> asMap;
 	private ArrayList<String> wtList;
 	private Map<String, WeightElement> wtMap;
+	private ArrayList<String> modelConditionList;
 
 	public PreEvaluator(StudyDataSet sds ){
 		ArrayList<String> modelList=sds.getModelList();
@@ -54,6 +55,21 @@ public class PreEvaluator {
 			preEvaluateAlias();
 			preEvaluateWeight();
 		}
+		modelConditionList=sds.getModelConditionList();
+		preEvaluateModelCondition(sds);
+	}
+	
+	public void preEvaluateModelCondition(StudyDataSet sds){
+		 ArrayList<ValueEvaluatorParser> modelConditionParsers=new ArrayList<ValueEvaluatorParser>(); 
+		for (String modelCondition: modelConditionList){
+			//System.out.println("PreEvaluate model condition"+modelCondition);
+			String evalString="c: "+modelCondition;
+			ANTLRStringStream stream = new ANTLRStringStream(evalString);
+			ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
+			TokenStream tokenStream = new CommonTokenStream(lexer);
+			modelConditionParsers.add(new ValueEvaluatorParser(tokenStream));
+		}
+		sds.setModelConditionParsers(modelConditionParsers);
 	}
 	
 	public void preEvaluateWeight(){

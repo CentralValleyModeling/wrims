@@ -266,47 +266,61 @@ public class Controller {
 		}
 		
 		initialXASolver();
+		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
 			clearDvarValues(modelList, modelDataSetMap);
 			int i=0;
-			while (i<modelList.size()  && noError){   
-				String model=modelList.get(i);
-				ModelDataSet mds=modelDataSetMap.get(model);
-				ControlData.currModelDataSet=mds;
-				ControlData.currSvMap=mds.svMap;
-				ControlData.currDvMap=mds.dvMap;
-				ControlData.currAliasMap=mds.asMap;
-				ControlData.currGoalMap=mds.gMap;
-				ControlData.currTsMap=mds.tsMap;
-				ControlData.currCycleIndex=i;
-				ControlData.isPostProcessing=false;
-				cal = Calendar.getInstance();
-				System.out.println("Before Evaluation: "+cal.getTimeInMillis());
-				processModel();
-				if (Error.error_evaluation.size()>=1){
-					Error.writeEvaluationErrorFile("evaluation_error.txt");
-					noError=false;
+			while (i<modelList.size()  && noError){  
+				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
+				boolean condition=false;
+				try{
+					modelCondition.evaluator();
+					condition=modelCondition.evalCondition;
+				}catch (Exception e){
+					Error.addEvaluationError("Model condition evaluation has error.");
+					condition=false;
 				}
-				cal = Calendar.getInstance();
-				System.out.println(" After Evaluation: "+cal.getTimeInMillis());
-				new XASolver();
-				cal = Calendar.getInstance();
-				System.out.println("    After solver: "+cal.getTimeInMillis());
-				if (Error.error_solving.size()<1){
+				modelCondition.reset();
+				
+				if (condition){
+					String model=modelList.get(i);
+					ModelDataSet mds=modelDataSetMap.get(model);
+					ControlData.currModelDataSet=mds;
+					ControlData.currSvMap=mds.svMap;
+					ControlData.currDvMap=mds.dvMap;
+					ControlData.currAliasMap=mds.asMap;
+					ControlData.currGoalMap=mds.gMap;
+					ControlData.currTsMap=mds.tsMap;
+					ControlData.currCycleIndex=i;
+					ControlData.isPostProcessing=false;
 					cal = Calendar.getInstance();
-					System.out.println("After assign dvar: "+cal.getTimeInMillis());
-					ControlData.isPostProcessing=true;
-					processAliasTimeseries();
+					System.out.println("Before Evaluation: "+cal.getTimeInMillis());
+					processModel();
+					if (Error.error_evaluation.size()>=1){
+						Error.writeEvaluationErrorFile("evaluation_error.txt");
+						noError=false;
+					}
+					cal = Calendar.getInstance();
+					System.out.println(" After Evaluation: "+cal.getTimeInMillis());
+					new XASolver();
+					cal = Calendar.getInstance();
+					System.out.println("    After solver: "+cal.getTimeInMillis());
+					if (Error.error_solving.size()<1){
+						cal = Calendar.getInstance();
+						System.out.println("After assign dvar: "+cal.getTimeInMillis());
+						ControlData.isPostProcessing=true;
+						processAliasTimeseries();
 					
-				}else{
-					Error.writeSolvingErrorFile("solving_error.txt");
-					noError=false;
+					}else{
+						Error.writeSolvingErrorFile("solving_error.txt");
+						noError=false;
+					}
+					cal = Calendar.getInstance();
+					System.out.println("      After alias: "+cal.getTimeInMillis());
+					//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
 				}
-				cal = Calendar.getInstance();
-				System.out.println("      After alias: "+cal.getTimeInMillis());
-				//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();				
 				i=i+1;
 			}
 			if (ControlData.timeStep.equals("1MON")){
@@ -354,51 +368,65 @@ public class Controller {
 			processExternal();
 		}
 		
+		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
 			clearDvarValues(modelList, modelDataSetMap);
 			int i=0;
 			while (i<modelList.size()  && noError){   
-				String model=modelList.get(i);
-				ModelDataSet mds=modelDataSetMap.get(model);
-				ControlData.currModelDataSet=mds;
-				ControlData.currSvMap=mds.svMap;
-				ControlData.currDvMap=mds.dvMap;
-				ControlData.currAliasMap=mds.asMap;
-				ControlData.currGoalMap=mds.gMap;
-				ControlData.currTsMap=mds.tsMap;
-				ControlData.currCycleIndex=i;
-				ControlData.isPostProcessing=false;
-				cal = Calendar.getInstance();
-				System.out.println("Before Evaluation: "+cal.getTimeInMillis());
-				processModel();
-				if (Error.error_evaluation.size()>=1){
-					Error.writeEvaluationErrorFile("evaluation_error.txt");
-					noError=false;
-				}
-				cal = Calendar.getInstance();
-				System.out.println(" After Evaluation: "+cal.getTimeInMillis());
+				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
+				boolean condition=false;
 				try{
-					new GurobiSolver();
-				}catch (GRBException e){
-					Error.addSolvingError("Gurobi solving error: "+e.getMessage());
+					modelCondition.evaluator();
+					condition=modelCondition.evalCondition;
+				}catch (Exception e){
+					Error.addEvaluationError("Model condition evaluation has error.");
+					condition=false;
 				}
-				cal = Calendar.getInstance();
-				System.out.println("    After solving: "+cal.getTimeInMillis());
-				if (Error.error_solving.size()<1){
+				modelCondition.reset();
+				
+				if (condition){
+					String model=modelList.get(i);
+					ModelDataSet mds=modelDataSetMap.get(model);
+					ControlData.currModelDataSet=mds;
+					ControlData.currSvMap=mds.svMap;
+					ControlData.currDvMap=mds.dvMap;
+					ControlData.currAliasMap=mds.asMap;
+					ControlData.currGoalMap=mds.gMap;
+					ControlData.currTsMap=mds.tsMap;
+					ControlData.currCycleIndex=i;
+					ControlData.isPostProcessing=false;
 					cal = Calendar.getInstance();
-					System.out.println("After assign dvar: "+cal.getTimeInMillis());
-					ControlData.isPostProcessing=true;
-					processAliasTimeseries();
+					System.out.println("Before Evaluation: "+cal.getTimeInMillis());
+					processModel();
+					if (Error.error_evaluation.size()>=1){
+						Error.writeEvaluationErrorFile("evaluation_error.txt");
+						noError=false;
+					}
+					cal = Calendar.getInstance();
+					System.out.println(" After Evaluation: "+cal.getTimeInMillis());
+					try{
+						new GurobiSolver();
+					}catch (GRBException e){
+						Error.addSolvingError("Gurobi solving error: "+e.getMessage());
+					}
+					cal = Calendar.getInstance();
+					System.out.println("    After solving: "+cal.getTimeInMillis());
+					if (Error.error_solving.size()<1){
+						cal = Calendar.getInstance();
+						System.out.println("After assign dvar: "+cal.getTimeInMillis());
+						ControlData.isPostProcessing=true;
+						processAliasTimeseries();
 					
-				}else{
-					Error.writeSolvingErrorFile("solving_error.txt");
-					noError=false;
+					}else{
+						Error.writeSolvingErrorFile("solving_error.txt");
+						noError=false;
+					}
+					cal = Calendar.getInstance();
+					System.out.println("      After alias: "+cal.getTimeInMillis());
+					//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();
 				}
-				cal = Calendar.getInstance();
-				System.out.println("      After alias: "+cal.getTimeInMillis());
-				//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();				
 				i=i+1;
 			}
 			if (ControlData.timeStep.equals("1MON")){
@@ -779,49 +807,62 @@ public class Controller {
 		}
 		
 		initialXASolver();
+		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
 			clearDvarValues(modelList, modelDataSetMap);
 			int i=0;
 			while (i<modelList.size()  && noError){   
-				String model=modelList.get(i);
-				ModelDataSet mds=modelDataSetMap.get(model);
-				ControlData.currModelDataSet=mds;
-				ControlData.currSvMap=mds.svMap;
-				ControlData.currDvMap=mds.dvMap;
-				ControlData.currAliasMap=mds.asMap;
-				ControlData.currGoalMap=mds.gMap;
-				ControlData.currTsMap=mds.tsMap;
-				ControlData.currCycleIndex=i;
-				ControlData.isPostProcessing=false;
-				cal = Calendar.getInstance();
-
-				processModel(); 
-				IntermediateLP.setIlpFile(FilePaths.ilpFileDirectory);
-				IntermediateLP.output();
+				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
+				boolean condition=false;
+				try{
+					modelCondition.evaluator();
+					condition=modelCondition.evalCondition;
+				}catch (Exception e){
+					Error.addEvaluationError("Model condition evaluation has error.");
+					condition=false;
+				}
+				modelCondition.reset();
 				
-				if (Error.error_evaluation.size()>=1){
-					Error.writeEvaluationErrorFile("evaluation_error.txt");
-					noError=false;
-				}
-				cal = Calendar.getInstance();
-
-				new XASolver();
-				cal = Calendar.getInstance();
-
-				if (Error.error_solving.size()<1){
+				if (condition){
+					String model=modelList.get(i);
+					ModelDataSet mds=modelDataSetMap.get(model);
+					ControlData.currModelDataSet=mds;
+					ControlData.currSvMap=mds.svMap;
+					ControlData.currDvMap=mds.dvMap;
+					ControlData.currAliasMap=mds.asMap;
+					ControlData.currGoalMap=mds.gMap;
+					ControlData.currTsMap=mds.tsMap;
+					ControlData.currCycleIndex=i;
+					ControlData.isPostProcessing=false;
 					cal = Calendar.getInstance();
-					System.out.println("After assign dvar: "+cal.getTimeInMillis());
-					ControlData.isPostProcessing=true;
-					processAliasTimeseries();
-					
-				}else{
-					Error.writeSolvingErrorFile("solving_error.txt");
-					noError=false;
-				}
-				cal = Calendar.getInstance();
 
+					processModel(); 
+					IntermediateLP.setIlpFile(FilePaths.ilpFileDirectory);
+					IntermediateLP.output();
+				
+					if (Error.error_evaluation.size()>=1){
+						Error.writeEvaluationErrorFile("evaluation_error.txt");
+						noError=false;
+					}
+					cal = Calendar.getInstance();
+
+					new XASolver();
+					cal = Calendar.getInstance();
+
+					if (Error.error_solving.size()<1){
+						cal = Calendar.getInstance();
+						System.out.println("After assign dvar: "+cal.getTimeInMillis());
+						ControlData.isPostProcessing=true;
+						processAliasTimeseries();
+					
+					}else{
+						Error.writeSolvingErrorFile("solving_error.txt");
+						noError=false;
+					}
+					cal = Calendar.getInstance();
+				}
 		
 				i=i+1;
 			}

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import wrimsv2.evaluator.ValueEvaluatorParser;
+
 
 public class StudyDataSet {
 	
@@ -12,6 +14,7 @@ public class StudyDataSet {
 	
 	private ArrayList<String> modelList = new ArrayList<String>();
 	private ArrayList<String> modelConditionList = new ArrayList<String>();
+	private ArrayList<ValueEvaluatorParser> modelConditionParsers=new ArrayList<ValueEvaluatorParser>();
 	
 	///  < timeseries name, timeseries object > 
 	private Map<String, Timeseries> timeseriesMap = new HashMap<String, Timeseries>();
@@ -49,6 +52,14 @@ public class StudyDataSet {
 
 	public void setModelConditionList(ArrayList<String> modelConditionList) {
 		this.modelConditionList = modelConditionList;
+	}
+	
+	public ArrayList<ValueEvaluatorParser> getModelConditionParsers() {
+		return modelConditionParsers;
+	}
+	
+	public void setModelConditionParsers(ArrayList<ValueEvaluatorParser> modelConditionParsers) {
+		this.modelConditionParsers=modelConditionParsers;
 	}
 
 	public Map<String, ModelDataSet> getModelDataSetMap() {
