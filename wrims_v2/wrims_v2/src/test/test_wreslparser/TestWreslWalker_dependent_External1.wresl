@@ -1,0 +1,12 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+	define external_var2 { external some2.dll } 
+	define  sv  { value external_var1(-1)+external_var2(-1) }
+
+	
+}

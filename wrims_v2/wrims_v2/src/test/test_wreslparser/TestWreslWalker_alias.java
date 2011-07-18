@@ -136,7 +136,7 @@ public class TestWreslWalker_alias {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 2);	
+		Assert.assertEquals(totalErrs, 4);	
 		
 	
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\second\\constraint.csv");	
@@ -216,16 +216,11 @@ public class TestWreslWalker_alias {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 3);	
+		Assert.assertEquals(totalErrs, 5);	
 		
-
 		int err = RegUtils.timesOfMatches(logText, "# Error: Variable is redefined as different type: zz");
-		Assert.assertEquals(totalErrs, 3);	
-		
-
-		
-	
-		
+		Assert.assertEquals(totalErrs, 5);	
+				
 	}
 
 	@Test(groups = { "WRESL_elements" })
@@ -327,7 +322,7 @@ public class TestWreslWalker_alias {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 1);		
+		Assert.assertEquals(totalErrs, 2);		
 	
 		String csvText;
 		String s;

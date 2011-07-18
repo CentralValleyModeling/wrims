@@ -188,14 +188,14 @@ public class TestWreslWalker_scope {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 1);		
+		Assert.assertEquals(totalErrs, 3);		
 		
 		int n;
 		String s;
-		s ="Variables used before definition: [sv1]";
+		s ="Variables with unknown dependants: [sv2]";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(logText, s );
-		Assert.assertEquals(n, 2);	
+		Assert.assertEquals(n, 1);	
 	
 	}
 

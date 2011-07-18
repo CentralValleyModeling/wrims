@@ -60,7 +60,7 @@ public class TestWreslWalker_sort {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 1);		
+		Assert.assertEquals(totalErrs, 7);		
 		
 		Set<String> s;
 		
@@ -116,7 +116,7 @@ public class TestWreslWalker_sort {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 2);		
+		Assert.assertEquals(totalErrs, 7);		
 		
 		System.out.println("#### orderList: "+sd.getModelDataSetMap().get(modelName).svList);
 		
@@ -164,7 +164,7 @@ public class TestWreslWalker_sort {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 1);		
+		Assert.assertEquals(totalErrs, 4);		
 		
 		System.out.println("#### orderList: "+sd.getModelDataSetMap().get(modelName).svList);
 		
@@ -212,10 +212,10 @@ public class TestWreslWalker_sort {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 4);		
+		Assert.assertEquals(totalErrs, 6);		
 
 		int n = RegUtils.timesOfMatches(logText, "Warning: Variables type of sv: Svar");
-		Assert.assertEquals(n, 2);	
+		Assert.assertEquals(n, 1);	
 		
 		n = RegUtils.timesOfMatches(logText, "Warning: Variables type of sv: Alias");
 		Assert.assertEquals(n, 1);	
@@ -256,7 +256,7 @@ public class TestWreslWalker_sort {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 4);		
+		Assert.assertEquals(totalErrs, 9);		
 		
 		System.out.println("#### orderList: "+sd.getModelDataSetMap().get(modelName).asList);
 		

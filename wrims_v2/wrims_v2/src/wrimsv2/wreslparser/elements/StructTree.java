@@ -280,6 +280,9 @@ public class StructTree
       //this.S.exList.remove(name); this.S.exList_global.remove(name); this.S.exList_local.remove(name);
     }
 
+    this.S.ordered_list.add(name);
+    this.S.ordered_list_including_files.add(name);
+    
     this.S.var_all.put(name, "external");
 
     this.ex = new External();
@@ -292,6 +295,8 @@ public class StructTree
 
     if (scope == null) {
       this.S.exList_global.add(name); this.S.exSet_global.add(name); this.ex.scope = Param.global;
+      this.S.ordered_list_global.add(name);
+      this.S.ordered_list_including_files_global.add(name);
     }
     else if (scope.equalsIgnoreCase(Param.local)) {
       this.S.exList_local.add(name); this.S.exSet_local.add(name); this.ex.scope = Param.local; } else {

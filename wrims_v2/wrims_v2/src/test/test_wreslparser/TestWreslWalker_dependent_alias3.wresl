@@ -1,0 +1,14 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+	define  sv_defined  { value 5 }
+	define  alias1 { alias alias2 }
+	define  alias2 { alias alias1 }
+	
+	
+	
+}

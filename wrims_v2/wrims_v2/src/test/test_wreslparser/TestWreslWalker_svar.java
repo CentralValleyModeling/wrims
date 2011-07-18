@@ -55,7 +55,7 @@ public class TestWreslWalker_svar {
 		String logText = Tools.readFileAsString(logFilePath);	
 
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 1);	
+		Assert.assertEquals(totalErrs, 3);	
 		
 	
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\svar.csv");	

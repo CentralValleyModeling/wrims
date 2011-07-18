@@ -1,0 +1,13 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+	
+	define  sv  { value alias2(-2) }
+	define alias1 { alias unknown1 kind 'demand' units 'taf' }
+	define alias2 { alias alias1 kind 'demand' units 'taf' }
+	
+}

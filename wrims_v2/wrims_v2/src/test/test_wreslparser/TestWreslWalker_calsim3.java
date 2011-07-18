@@ -22,7 +22,7 @@ public class TestWreslWalker_calsim3 {
 	public String logFilePath;	
 	public String csvFolderPath;	
 	
-	@Test(groups = { "WRESL_Calsim3" })
+	//@Test(groups = { "WRESL_Calsim3" })
 	public void firstCycle() throws RecognitionException, IOException {
 		
 		csvFolderPath = "TestWreslWalker_calsim3_firstCycle";
@@ -54,7 +54,7 @@ public class TestWreslWalker_calsim3 {
 		
 	}
 	
-	//@Test(groups = { "WRESL_Calsim3" })
+	@Test(groups = { "WRESL_Calsim3" })
 	public void calsim3_full_study() throws RecognitionException, IOException {
 		
 		csvFolderPath = "TestWreslWalker_calsim3_full_study";

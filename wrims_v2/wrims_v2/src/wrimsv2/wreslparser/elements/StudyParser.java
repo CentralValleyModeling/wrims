@@ -195,7 +195,7 @@ public class StudyParser{
       redefined_global_file.retainAll(model_dataset.incFileSet_global);
       if (redefined_global_file.size()>0) LogUtils.errMsg("Global include files redefined: "+ redefined_global_file); 
       
-      /// check for redefined globals        
+      /// check for redefined globals       
       Set<String> redefined_globals = new LinkedHashSet<String>(td.cumulative_global_complete.getAllVarsSet_except_file_and_weight());
       Set<String> redefined_globals_as_locals = new LinkedHashSet<String>(td.cumulative_global_complete.getAllVarsSet_except_file_and_weight());
       
@@ -250,8 +250,18 @@ public class StudyParser{
       // check if dependency is unknown TODO: sorted list will not have the same sequence as user's define in wresl 
       sortDependency(model_dataset, rewrite_list_based_on_dependency);  
 
-      //      // check if vars are used before being defined
-      checkUsedBeforeDefined(new SimulationDataSet(model_dataset));
+      //// check if vars are used before being defined
+      Set<String> svar_alias_extern_set = new HashSet<String>();
+      svar_alias_extern_set.addAll(model_dataset.svSet);
+      svar_alias_extern_set.addAll(model_dataset.asSet);
+      svar_alias_extern_set.addAll(model_dataset.exSet);
+      
+      ArrayList<String> ordered_list_svar_alias_extern = new ArrayList<String>(ordered_list_for_all_vars);
+      ordered_list_svar_alias_extern.retainAll(svar_alias_extern_set);
+      
+      Set<String> previous_global_svar_alias_extern_timeseries = new LinkedHashSet<String>(td.cumulative_global_complete.getSvarAliasExternTimeseries());
+
+      checkUsedBeforeDefined(new SimulationDataSet(model_dataset), ordered_list_svar_alias_extern, previous_global_svar_alias_extern_timeseries);
       
       
 
@@ -270,8 +280,11 @@ public class StudyParser{
     
     // / check if alias is used in goal's constraint expression.
     // / if yes, then move that alias to dvar and add additional goal
-    
-    LogUtils.importantMsg("Converting some aliases into dvars and constraints....");
+    if(send_all_alias_to_dvar) {
+    	LogUtils.importantMsg("Converting all aliases into dvars and constraints....");
+    } else {   
+    	LogUtils.importantMsg("Converting some aliases into dvars and constraints....");
+    }
     
     for (String key : model_dataset_map.keySet()){
     	SimulationDataSet ds = model_dataset_map.get(key);
@@ -283,7 +296,9 @@ public class StudyParser{
     		newGoals = checkAliasInGoalExpression(ds, newGoals);
     	}
 
-        if(send_all_alias_to_dvar) convertRestAliasInGoalExpression(ds);
+        if(send_all_alias_to_dvar) {
+        	convertRestAliasInGoalExpression(ds);
+        }
     	
     	/// check if var size > 100
     	Set<String> allVar = new HashSet<String>();
@@ -305,7 +320,7 @@ public class StudyParser{
     return model_dataset_map;
   }
 
-  private static void checkUsedBeforeDefined(SimulationDataSet ds) {
+  private static void checkUsedBeforeDefined(SimulationDataSet ds, ArrayList<String> ordered_list_sv_as_ex, Set<String> previous_global_sv_as_ex_ts) {
 	
 	  Set<String> dep;
 	  
@@ -315,13 +330,43 @@ public class StudyParser{
 		 // TODO: serious bug. Map object is not reinitialized
 		 //dep = new HashSet<String>(ds.svMap.get(svName).dependants);
 		 dep = ds.svMap.get(svName).dependants; // this will cause problem in shallow copy
-		  dep.removeAll(ds.tsSet);		  
+		  dep.removeAll(ds.tsSet);	
+		  dep.removeAll(previous_global_sv_as_ex_ts);	
 		  
-		  dep.removeAll(ds.svList.subList(0, i));
+		  
+		  //dep.removeAll(ds.svList.subList(0, i)); 
+		  if (ordered_list_sv_as_ex.contains(svName)) { 
+			  int index_sv = ordered_list_sv_as_ex.indexOf(svName);
+			  dep.removeAll(ordered_list_sv_as_ex.subList(0, index_sv));
+		  }
 		  
 		  if (dep.size()>0){
 			  
-			  LogUtils.warningMsg("Variables used before definition: "+dep  );
+			  //Set<String> undefinedVar = new HashSet<String>(dep);
+			  //undefinedVar.removeAll(ds.asSet);
+			  LogUtils.errMsg("Inside Svar ["+svName+"] variables used before definition: "+dep+"\n In file: "+ds.svMap.get(svName).fromWresl    );
+			  
+		  }
+	  }
+	  
+	  for (int i=0; i< ds.asList.size(); i++ ){
+		  
+		  String asName = ds.asList.get(i);
+		 // TODO: serious bug. Map object is not reinitialized
+		 //dep = new HashSet<String>(ds.asMap.get(asName).dependants);
+		 dep = ds.asMap.get(asName).dependants; // this will cause problem in shallow copy
+		  dep.removeAll(ds.tsSet);		  
+		  dep.removeAll(previous_global_sv_as_ex_ts);
+		  
+		  //dep.removeAll(ds.asList.subList(0, i));
+		  if (ordered_list_sv_as_ex.contains(asName)) { 
+			  int index_as = ordered_list_sv_as_ex.indexOf(asName);
+			  dep.removeAll(ordered_list_sv_as_ex.subList(0, index_as));
+		  }
+		  
+		  if (dep.size()>0){
+			  
+			  LogUtils.errMsg("Inside Alias ["+asName +"] variables used before definition: "+dep+"\n In file: "+ds.asMap.get(asName).fromWresl  );
 			  
 		  }
 	  }
@@ -566,42 +611,79 @@ public static Map<String, SimulationDataSet> getNewDataSet(Set<String> adhoc_inc
     return model_dataset;
   }
 
-  public static boolean sortDependency(SimulationDataSet model_dataset, boolean rewrite_list_based_on_dependency)
-  {
-    boolean OK = true;
+	public static boolean sortDependency(SimulationDataSet model_dataset, boolean rewrite_list_based_on_dependency) {
+		boolean OK = true;
 
-    Sort sortSV = new Sort(model_dataset.svMap, model_dataset.asSet, model_dataset.dvSet, model_dataset.tsSet, model_dataset.exSet, "forSV");
+		// // sort Svar
+		// Sort sortSV = new Sort(model_dataset.svMap, model_dataset.asSet,
+		// model_dataset.dvSet, model_dataset.tsSet, model_dataset.exSet,
+		// "forSV");
+		//
+		// ArrayList<String> sortedSvList = new ArrayList<String>();
+		//
+		// Set<String> var_with_unknown = sortSV.sort(sortedSvList);
+		// if (var_with_unknown.size() > 0) OK = false;
+		//
+		// model_dataset.svSet_unknown = var_with_unknown;
+		//
+		// if (rewrite_list_based_on_dependency) {
+		// model_dataset.svList = sortedSvList;
+		// model_dataset.svList.addAll(model_dataset.svSet_unknown);
+		// model_dataset.svSet = new
+		// LinkedHashSet<String>(model_dataset.svList);
+		// }
+		//
+		// // sort Alias
+		// Sort sortAs = new Sort(model_dataset.asMap, model_dataset.svSet,
+		// model_dataset.dvSet, model_dataset.tsSet, model_dataset.exSet);
+		//
+		// ArrayList<String> sortedAsList = new ArrayList<String>();
+		//
+		// var_with_unknown = sortAs.sort(sortedAsList);
+		// if (var_with_unknown.size() > 0) OK = false;
+		//
+		// model_dataset.asSet_unknown = var_with_unknown;
+		//
+		// if (rewrite_list_based_on_dependency) {
+		// model_dataset.asList = sortedAsList;
+		// model_dataset.asList.addAll(model_dataset.asSet_unknown);
+		// model_dataset.asSet = new
+		// LinkedHashSet<String>(model_dataset.asList);
+		// }
 
-    ArrayList<String> sortedSvList = new ArrayList<String>();
+		// sort Svar + Alias
+		Sort sort_Sv_As = new Sort(model_dataset.svMap, model_dataset.asMap, model_dataset.dvSet, model_dataset.tsSet, model_dataset.exSet);
+				//model_dataset.exSet);
 
-    Set<String> var_with_unknown = sortSV.sort(sortedSvList);
-    if (var_with_unknown.size() > 0) OK = false;
+		ArrayList<String> sortedSvAsList = new ArrayList<String>();
 
-    model_dataset.svSet_unknown = var_with_unknown;
-    
-    if (rewrite_list_based_on_dependency) {
-      model_dataset.svList = sortedSvList;
-      model_dataset.svList.addAll(model_dataset.svSet_unknown);
-      model_dataset.svSet = new LinkedHashSet<String>(model_dataset.svList);
-    }
+		Set<String> var_with_unknown = sort_Sv_As.sort(sortedSvAsList);
+		if (var_with_unknown.size() > 0) OK = false;
 
-    Sort sortAs = new Sort(model_dataset.asMap, model_dataset.svSet, model_dataset.dvSet, model_dataset.tsSet, model_dataset.exSet);
+		ArrayList<String> sortedSvList = new ArrayList<String>(sortedSvAsList);
+		ArrayList<String> sortedAsList = new ArrayList<String>(sortedSvAsList);
+		
+		sortedAsList.retainAll(model_dataset.asSet);
+		sortedSvList.retainAll(model_dataset.svSet);
 
-    ArrayList<String> sortedAsList = new ArrayList<String>();
+		model_dataset.asSet_unknown = new HashSet<String>(var_with_unknown);
+		model_dataset.asSet_unknown.retainAll(model_dataset.asSet);
 
-    var_with_unknown = sortAs.sort(sortedAsList);
-    if (var_with_unknown.size() > 0) OK = false;
+		model_dataset.svSet_unknown = new HashSet<String>(var_with_unknown);
+		model_dataset.svSet_unknown.retainAll(model_dataset.svSet);
 
-    model_dataset.asSet_unknown = var_with_unknown;
-    
-    if (rewrite_list_based_on_dependency) {
-      model_dataset.asList = sortedAsList;
-      model_dataset.asList.addAll(model_dataset.asSet_unknown);
-      model_dataset.asSet = new LinkedHashSet<String>(model_dataset.asList);
-    }
+		if (rewrite_list_based_on_dependency) {
+			model_dataset.asList = sortedAsList;
+			model_dataset.asList.addAll(model_dataset.asSet_unknown);
+			model_dataset.asSet = new LinkedHashSet<String>(model_dataset.asList);
 
-    return OK;
-  }
+			model_dataset.svList = sortedSvList;
+			model_dataset.svList.addAll(model_dataset.svSet_unknown);
+			model_dataset.svSet = new LinkedHashSet<String>(model_dataset.svList);
+		}
+
+		return OK;
+	}
 
   public static ArrayList<String> getOrderedList(Map<String, SimulationDataSet> fileDataMap_thisModel, SimulationDataSet adhoc)
   {

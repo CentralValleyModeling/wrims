@@ -927,6 +927,18 @@ public Set<String> getAllVarsSet_except_file_and_weight(){
     return out;
   }
 
+public Set<String> getSvarAliasExternTimeseries(){
+	
+	Set<String> out = new HashSet<String>();
+	
+	out.addAll(this.asSet);
+	out.addAll(this.svSet);
+	out.addAll(this.tsSet);
+	out.addAll(this.exSet);
+
+    return out;
+  }
+
 public SimulationDataSet remove_set(Set<String> s)
   {
 

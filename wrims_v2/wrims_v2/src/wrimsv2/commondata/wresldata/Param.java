@@ -36,7 +36,7 @@ public class Param {
 				 "prevjan", "prevfeb", "prevmar", "prevapr", "prevmay", "prevjun", 
 				 "prevjul", "prevaug", "prevsep", "prevoct", "prevnov", "prevdec",
 				 "wateryear", "cfs_taf", "taf_cfs", "cfs_cfm", "af_cfs", "daysin", "daysinmonth",
-				 "i", "null", "pow", "log10", "abs"   ));
+				 "i", "null", "pow", "exp", "log", "log10", "abs", "real"   ));
 	  
 	  
 }

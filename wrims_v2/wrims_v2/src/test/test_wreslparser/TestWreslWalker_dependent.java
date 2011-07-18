@@ -74,10 +74,10 @@ public class TestWreslWalker_dependent {
 	}
 
 	@Test(groups = { "WRESL_elements" })
-	public void ignore_external() throws RecognitionException, IOException {
+	public void external1() throws RecognitionException, IOException {
 	// deep embedding of alias
 		
-		csvFolderPath = "TestWreslWalker_dependent_ignoreExternal";
+		csvFolderPath = "TestWreslWalker_dependent_External1";
 		inputFilePath = projectPath+csvFolderPath+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -105,7 +105,7 @@ public class TestWreslWalker_dependent {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);		
+		Assert.assertEquals(totalErrs, 2);		
 	
 		String csvText;
 		String s;
@@ -115,17 +115,17 @@ public class TestWreslWalker_dependent {
 		// check if dependents has the item
 		csvText = Tools.readFileAsString(csvFolderPath+"\\first\\svar.csv");
 		
-		s = "sv,default,1,always,external_var(-1),,";
+		s = "sv##external_var2;external_var1";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);			
 	}
 
 	@Test(groups = { "WRESL_elements" })
-	public void ignore_alias() throws RecognitionException, IOException {
+	public void alias1() throws RecognitionException, IOException {
 	// deep embedding of alias
 		
-		csvFolderPath = "TestWreslWalker_dependent_ignoreAlias";
+		csvFolderPath = "TestWreslWalker_dependent_alias1";
 		inputFilePath = projectPath+csvFolderPath+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -153,7 +153,7 @@ public class TestWreslWalker_dependent {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);		
+		Assert.assertEquals(totalErrs, 3);		
 	
 		String csvText;
 		String s;
@@ -163,7 +163,91 @@ public class TestWreslWalker_dependent {
 		// check if dependents has the item
 		csvText = Tools.readFileAsString(csvFolderPath+"\\first\\svar.csv");
 		
-		s = "sv,default,1,always,alias1(-2),,";
+		s = "sv##alias2;";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);			
+	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void alias3() throws RecognitionException, IOException {
+	// deep embedding of alias
+		
+		csvFolderPath = "TestWreslWalker_dependent_alias3";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+		
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath, true);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		//String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.study(sd, csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 2);		
+		
+	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void alias2() throws RecognitionException, IOException {
+	// deep embedding of alias
+		
+		csvFolderPath = "TestWreslWalker_dependent_alias2";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+		
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath, true);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		//String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.study(sd, csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 1);		
+	
+		int n;
+		
+		String csvText;
+		String s;	
+		
+		// check if dependents has the item
+		csvText = Tools.readFileAsString(csvFolderPath+"\\first\\svar.csv");
+		
+		s = "sv1##alias_defined;";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);			
