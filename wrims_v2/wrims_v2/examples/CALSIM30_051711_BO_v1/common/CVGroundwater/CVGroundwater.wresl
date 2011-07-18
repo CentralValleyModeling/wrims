@@ -82,7 +82,7 @@ define  indxE321     {value  67}
 !*********************************************************************
 define rInitGWSystem {case first{
                        condition wateryear == bgnWY .and. month == Oct
-                              value InitGWSystem(wateryear,month,1) }     !Returns value of 0 if successfully executed
+                              value InitGWSystem(wateryear,month,0) }     !Returns value of 0 if successfully executed
                       case other{
                        condition always
                               value  0.0 }}
