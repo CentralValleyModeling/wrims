@@ -36,7 +36,7 @@ define max_14day_running_ave {value 6}
 define ave_first_15days {value 7}
 define ave_last_15days {value 8}
 
-define daysindv {alias daysin kind 'DAYS' units 'DAYS'}
+!define daysindv {alias daysin kind 'DAYS' units 'DAYS'}
 
 !*************************************************************************************************************
 ! define the other flows that go into making the export component
