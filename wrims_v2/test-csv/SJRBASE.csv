@@ -1,5 +1,0 @@
-FILE, INCLUDE
-calsim3\SJRBASE\dvar.csv, y
-calsim3\SJRBASE\svar.csv, y
-calsim3\SJRBASE\constraint.csv,y
-calsim3\SJRBASE\weight.csv,y
