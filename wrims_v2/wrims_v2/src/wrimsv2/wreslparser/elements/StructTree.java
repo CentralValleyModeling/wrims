@@ -493,8 +493,8 @@ public class StructTree
     if (integer != null)
     {
       this.dv.integer = Param.yes;
-      this.dv.lowerBound = Param.integer_lowerBound;
-      this.dv.upperBound = Param.integer_upperBound;
+      this.dv.lowerBound = Param.dv_std_integer_lowerBound;
+      this.dv.upperBound = Param.dv_std_integer_upperBound;
     }
 
     this.S.dvMap.put(name, this.dv);
@@ -511,7 +511,7 @@ public class StructTree
     }
   }
 
-  public void dvarNonStd(String name, String scope, String kind, String units, String lowerBound, String upperBound)
+  public void dvarNonStd(String name, String scope, String integer, String kind, String units, String lowerBound, String upperBound)
   {
     name = name.toLowerCase();
     if (kind != null) kind = kind.toLowerCase();
@@ -537,6 +537,11 @@ public class StructTree
     this.dv.lowerBound = lowerBound;
     this.dv.upperBound = upperBound;
     this.dv.fromWresl = this.S.currentAbsolutePath;
+    
+    if (integer != null){
+      this.dv.integer = Param.yes;
+    }
+      
     this.S.dvMap.put(name, this.dv);
     this.S.dvList.add(name);
     this.S.dvSet.add(name);

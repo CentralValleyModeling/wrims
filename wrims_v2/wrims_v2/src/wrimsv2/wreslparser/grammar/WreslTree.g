@@ -102,9 +102,18 @@ pattern
 	;
 
 integer
+	: integer_std | integer_nonStd
+	;
+
+// this is actually a binary
+integer_std
 	: DEFINE ( '[' sc=LOCAL? ']' )? i=IDENT '{' INTEGER_WORD STD KIND k=STRING UNITS u=STRING '}'
 		->  ^(Dvar_integer  Scope[$sc.text] $i Kind[$k.text] Units[$u.text]) 
-	
+	;
+
+integer_nonStd
+	: DEFINE ( '[' sc=LOCAL? ']' )? i=IDENT '{' INTEGER_WORD lower_and_or_upper KIND k=STRING UNITS u=STRING '}'
+		->  ^(Dvar_integer  Scope[$sc.text] $i lower_and_or_upper Kind[$k.text] Units[$u.text]) 
 	;
 
 external : DEFINE ( '[' sc=LOCAL? ']' )? i=IDENT '{' EXTERNAL (e=DLL|e=F90) '}'
@@ -324,8 +333,8 @@ upper_lower : upper (l=lower)?
                 ->            $l upper
    				 ;				   
 
-lower: LOWER ( UNBOUNDED -> Lower LimitType[Param.lower_unbounded] | e=expression -> Lower LimitType[$e.tree.toStringTree()] ) ;
-upper: UPPER ( UNBOUNDED -> Upper LimitType[Param.upper_unbounded] | e=expression -> Upper LimitType[$e.tree.toStringTree()] ) ;
+lower: LOWER ( UNBOUNDED -> Lower LimitType[Param.lower_unbounded] | e=expression -> Lower LimitType[$e.tree.toStringTree().replaceAll("\\s+", "")] ) ;
+upper: UPPER ( UNBOUNDED -> Upper LimitType[Param.upper_unbounded] | e=expression -> Upper LimitType[$e.tree.toStringTree().replaceAll("\\s+", "")] ) ;
 
 
 /// IDENT =, <, > ///

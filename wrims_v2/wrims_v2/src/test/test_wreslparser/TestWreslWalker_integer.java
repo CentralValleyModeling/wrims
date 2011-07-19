@@ -63,12 +63,12 @@ public class TestWreslWalker_integer {
 		String s;
 		int n;
 	
-		s = "int_global,0,upper_unbounded,y,none,integer";
+		s = "int_global,0,1,y,none,integer";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "int_local,0,upper_unbounded,y,none,integer";
+		s = "int_local,0,1,y,none,integer";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -76,5 +76,64 @@ public class TestWreslWalker_integer {
 		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).dvList_global.get(0),"int_global" );
 		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).dvList_local.get(0),"int_local" );
 
+	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void nonStd() throws RecognitionException, IOException {
+		
+		csvFolderPath = "TestWreslWalker_integer_nonStd";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+	
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);	
+		
+	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\dvar.csv");	
+		
+		String s;
+		int n;
+	
+		s = "int_global,-3,5,y,none,integer";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+	
+		s = "int_local,0,5,y,none,integer";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+
+		s = "int_negative,-99,-20,y,none,integer";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).dvList_global.get(0),"int_global" );
+		Assert.assertEquals(sd.getModelDataSetMap().get(modelName).dvList_local.get(0),"int_local" );
+	
 	}
 }

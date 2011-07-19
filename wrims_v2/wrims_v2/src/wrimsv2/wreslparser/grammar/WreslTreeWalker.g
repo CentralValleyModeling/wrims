@@ -54,9 +54,18 @@ pattern
 	;
 
 integer
+	: integer_std | integer_nonStd
+	; 
+
+integer_std
 	:  ^(Dvar_integer sc=Scope i=IDENT k=Kind u=Units )
 	    {F.dvarStd($i.text, $sc.text, "integer", Tools.strip($k.text), Tools.strip($u.text)); }
 	; 
+	
+integer_nonStd
+	:  ^(Dvar_integer sc=Scope i=IDENT Lower lowerbound=LimitType Upper upperbound=LimitType k=Kind u=Units )
+	    {F.dvarNonStd($i.text, $sc.text, "integer", Tools.strip($k.text), Tools.strip($u.text),  $lowerbound.text, $upperbound.text); }
+	; 	
 
 external 
 	:  ^(External sc=Scope i=IDENT e=Expression )
@@ -349,7 +358,7 @@ dvar_std  :
 	
 dvar_nonStd : 
 	   ^(Dvar_nonStd sc=Scope i=IDENT Lower lowerbound=LimitType Upper upperbound=LimitType Kind k=STRING Units u=STRING)
-	   {F.dvarNonStd($i.text, $sc.text, Tools.strip($k.text), Tools.strip($u.text),  $lowerbound.text, $upperbound.text);}
+	   {F.dvarNonStd($i.text, $sc.text, null, Tools.strip($k.text), Tools.strip($u.text),  $lowerbound.text, $upperbound.text);}
 	;
 			
 	

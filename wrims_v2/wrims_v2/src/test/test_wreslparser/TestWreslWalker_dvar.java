@@ -63,7 +63,7 @@ public class TestWreslWalker_dvar {
 		String s;
 		int n;
 	
-		s ="dvar_global,- 99999,999999,n,cfs,channel";
+		s ="dvar_global,-99999,999999,n,cfs,channel";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -117,12 +117,17 @@ public class TestWreslWalker_dvar {
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "c_sacfea,0,8 + ( 6150 * taf_cfs ),n,cfs,flow-channel";
+		s = "c_sacfea,0,8+(6150*taf_cfs),n,cfs,flow-channel";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
 		s = "d852_sb_lcp_err,lower_unbounded,upper_unbounded";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		s = "negative_dvar,-333,-99";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
