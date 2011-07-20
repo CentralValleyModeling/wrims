@@ -81,10 +81,10 @@ public class TestWreslWalker_callite {
 	}
 
 	@Test(groups = { "WRESL_Callite" })
-	public void callite_beta() throws RecognitionException, IOException {
+	public void callite_beta_042611() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_callite_beta";
-		inputFilePath = "D:\\CalLite_Beta_042611\\Run\\main_BO.wresl";
+		csvFolderPath = "TestWreslWalker_callite_beta_042611";
+		inputFilePath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CalLite_Beta_042611\\Run\\main_BO.wresl";
 		logFilePath = csvFolderPath+".log";
 		
 		File absFile = new File(inputFilePath).getAbsoluteFile();

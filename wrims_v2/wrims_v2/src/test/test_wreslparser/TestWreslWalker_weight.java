@@ -53,10 +53,16 @@ public class TestWreslWalker_weight {
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 		Assert.assertEquals(totalErrs, 1);	
 	
-		                               
+		int Errs;
+		String s;
+		
+		s = "# Error: Weight var not found in dvar: [x]";
+		s = Tools.replace_regex(s);
+		Errs = RegUtils.timesOfMatches(logText, s);
+		Assert.assertEquals(Errs, 1);	 
+		
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\second\\weight.csv");	
 		
-		String s;
 		int n;
 	
 		s = "y,100";
@@ -105,9 +111,21 @@ public class TestWreslWalker_weight {
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 		Assert.assertEquals(totalErrs, 2);	
 		
+		int Errs;
+		String s;
+		
+		s = "# Error: Weight var not found in dvar: [s_trnty_2, errpos_shsta, s_trnty_1, errneg_wkytn, y, x]";
+		s = Tools.replace_regex(s);
+		Errs = RegUtils.timesOfMatches(logText, s);
+		Assert.assertEquals(Errs, 1);	
+
+		s = "# Error: Weight var not found in dvar: [y]";
+		s = Tools.replace_regex(s);
+		Errs = RegUtils.timesOfMatches(logText, s);
+		Assert.assertEquals(Errs, 1);
+		
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\second\\weight.csv");	
 		
-		String s;
 		int n;
 	
 		s = "errpos_shsta,-99999";
