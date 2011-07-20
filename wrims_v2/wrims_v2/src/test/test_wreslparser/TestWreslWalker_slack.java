@@ -54,7 +54,7 @@ public class TestWreslWalker_slack {
 		String logText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);	
+		Assert.assertEquals(totalErrs, 2);	
 		
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\second\\dvar.csv");			
 		String s;

@@ -1,0 +1,36 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }
+	
+MODEL first { 
+
+	goal g_pp {   ! x + slack - surplus = y
+	
+	  lhs x
+
+		rhs        y
+		lhs>rhs    penalty 99
+		lhs<rhs    penalty 11
+	}
+
+	define[local] y { value 99 }
+}
+
+MODEL second { 
+
+	goal[local] g_pp {   ! x + slack - surplus = y
+	
+	  lhs x
+
+		rhs        y
+		lhs>rhs    penalty 99
+		lhs<rhs    penalty 11
+	}
+
+}

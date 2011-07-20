@@ -55,7 +55,7 @@ public class TestWreslWalker_goal {
 		String logText = Tools.readFileAsString(logFilePath);	
 
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);	
+		Assert.assertEquals(totalErrs, 6);	
 		
 	
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
@@ -106,7 +106,7 @@ public class TestWreslWalker_goal {
 		String logText = Tools.readFileAsString(logFilePath);	
 
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);	
+		Assert.assertEquals(totalErrs, 8);	
 		
 	
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
@@ -216,7 +216,7 @@ public class TestWreslWalker_goal {
 		String logText = Tools.readFileAsString(logFilePath);	
 
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);	
+		Assert.assertEquals(totalErrs, 2);	
 		
 	
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
@@ -295,7 +295,7 @@ public class TestWreslWalker_goal {
 		String logText = Tools.readFileAsString(logFilePath);	
 
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);	
+		Assert.assertEquals(totalErrs, 2);	
 		
 	
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
@@ -377,7 +377,7 @@ public class TestWreslWalker_goal {
 		String logText = Tools.readFileAsString(logFilePath);	
 
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);	
+		Assert.assertEquals(totalErrs, 3);	
 		
 
 		
@@ -415,7 +415,7 @@ public class TestWreslWalker_goal {
 		String logText = Tools.readFileAsString(logFilePath);	
 
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);	
+		Assert.assertEquals(totalErrs, 1);	
 		
 	
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
@@ -461,7 +461,7 @@ public class TestWreslWalker_goal {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);	
+		Assert.assertEquals(totalErrs, 2);	
 		
 	
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
@@ -511,7 +511,7 @@ public class TestWreslWalker_goal {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);	
+		Assert.assertEquals(totalErrs, 2);	
 		
 	
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
@@ -561,7 +561,7 @@ public class TestWreslWalker_goal {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);	
+		Assert.assertEquals(totalErrs, 8);	
 		
 	
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
@@ -652,6 +652,54 @@ public class TestWreslWalker_goal {
 		s = "u_g_pf_1,-99";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void goal_var_unknown() throws RecognitionException, IOException {
+		
+		csvFolderPath = "TestWreslWalker_goal_var_unknown";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath, true);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 2);	
+				
+		String s;
+		int n;
+	
+		s = "# Error: Inside Goal [g_pp] variables used before definition: [x]";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(logText, s );
+		Assert.assertEquals(n, 1);
+
+		s = "# Error: Inside Goal [g_pp] variables used before definition: [y, x]";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(logText, s );
 		Assert.assertEquals(n, 1);
 		
 	}

@@ -263,14 +263,36 @@ public class StudyParser{
 
       checkUsedBeforeDefined(new SimulationDataSet(model_dataset), ordered_list_svar_alias_extern, previous_global_svar_alias_extern_timeseries);
       
+
+      /// check if goal dependents are defined 
+      // 1. get union of previous global vars and current model vars
+      Set<String> allVars = new HashSet<String>();
+      allVars.addAll(td.cumulative_global_complete.dvSet); allVars.addAll(model_dataset.dvSet); 
+      allVars.addAll(td.cumulative_global_complete.svSet); allVars.addAll(model_dataset.svSet);
+      allVars.addAll(td.cumulative_global_complete.tsSet); allVars.addAll(model_dataset.tsSet);
+      allVars.addAll(td.cumulative_global_complete.exSet); allVars.addAll(model_dataset.exSet);    
+      allVars.addAll(td.cumulative_global_complete.asSet); allVars.addAll(model_dataset.asSet); 
       
+      // 2. find undefined
+      for (String key: model_dataset.gSet){
+    	  
+          Set<String> goal_dependents_undefined = new HashSet<String>();
+          goal_dependents_undefined.addAll(model_dataset.gMap.get(key).expressionDependants);
+          goal_dependents_undefined.removeAll(allVars);
+          goal_dependents_undefined.removeAll(Param.reservedSet);
+          
+          if (goal_dependents_undefined.size()>0) {
+        	  LogUtils.errMsg("Inside Goal ["+key+"] variables used before definition: "+goal_dependents_undefined+
+        			  				"\n In file: "+model_dataset.gMap.get(key).fromWresl    );
+          }         
+      }
 
       /// check if weight var is defined in dvar set
       // 1. get union of previous global dvar and current model dvar
       Set<String> allDvars = new HashSet<String>();
       allDvars.addAll(td.cumulative_global_complete.dvSet);
-      allDvars.addAll(model_dataset.dvList);
-      
+      allDvars.addAll(model_dataset.dvSet);
+      // 2. find undefined
       Set<String> weightElement_undefined = new HashSet<String>();
       weightElement_undefined.addAll(model_dataset.wtSet);
       
@@ -289,8 +311,8 @@ public class StudyParser{
       td.cumulative_global_complete.lousyConvert();
     }
     
-    // / check if alias is used in goal's constraint expression.
-    // / if yes, then move that alias to dvar and add additional goal
+    ///  check if alias is used in goal's constraint expression.
+    //   if yes, then move that alias to dvar and add additional goal
     if(send_all_alias_to_dvar) {
     	LogUtils.importantMsg("Converting all aliases into dvars and constraints....");
     } else {   
