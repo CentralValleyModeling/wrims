@@ -1,0 +1,118 @@
+
+package test.test_wreslparser;
+
+import java.io.File;
+import java.io.IOException;
+import org.antlr.runtime.RecognitionException;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+
+import wrimsv2.commondata.wresldata.Param;
+import wrimsv2.commondata.wresldata.StudyDataSet;
+import wrimsv2.wreslparser.elements.FileParser;
+import wrimsv2.wreslparser.elements.LogUtils;
+import wrimsv2.wreslparser.elements.RegUtils;
+import wrimsv2.wreslparser.elements.StudyConfig;
+import wrimsv2.wreslparser.elements.StudyParser;
+import wrimsv2.wreslparser.elements.TempData;
+import wrimsv2.wreslparser.elements.Tools;
+import wrimsv2.wreslparser.elements.WriteCSV;
+import wrimsv2.wreslparser.grammar.WreslTreeWalker;
+
+public class TestWreslWalker_weight {
+	
+	public String projectPath = "src\\test\\test_wreslparser\\";	
+	public String inputFilePath;
+	public String logFilePath;	
+	public String csvFolderPath;	
+	
+	@Test(groups = { "WRESL_elements" })
+	public void weightTable1() throws RecognitionException, IOException {
+		
+		csvFolderPath = "TestWreslWalker_weightTable1";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+		LogUtils.studySummary_details(sd);
+		LogUtils.closeLogFile();
+		
+		WriteCSV.study(sd,csvFolderPath ) ;
+		String logText = Tools.readFileAsString(logFilePath);	
+
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);	
+		
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\second\\weight.csv");	
+		
+		String s;
+		int n;
+	
+		s = "errpos_shsta,-99999";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		csvText = Tools.readFileAsString(csvFolderPath+"\\third\\weight.csv");	
+	
+		s = "errpos_shsta,-99999";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		
+	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void weightTable2() throws RecognitionException, IOException {
+		
+		csvFolderPath = "TestWreslWalker_weightTable2";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+		LogUtils.studySummary_details(sd);
+		LogUtils.closeLogFile();
+			
+		WriteCSV.study(sd,csvFolderPath ) ;
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);	
+		
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\second\\weight.csv");	
+		
+		String s;
+		int n;
+	
+		s = "errpos_shsta,-99999";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 0);
+
+		s = "x,20000";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+	
+	}
+}
