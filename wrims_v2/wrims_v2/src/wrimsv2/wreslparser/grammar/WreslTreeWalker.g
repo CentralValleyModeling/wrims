@@ -307,7 +307,6 @@ goal_content returns[boolean hasDvar, String str, String ss, String weight, Stri
 		    if (s!=null) { 
 
 		    	F.dvarStd($s.text, $goal::scop, null, $Kind.text, "");  
-		    	System.out.println("Scope: "+$goal::scop);
 		    	F.mergeWeightTable($s.text, $w.text, $goal::scop);
 		 		$hasDvar = true; $ss = $Sign.text + $s.text; $weight = $w.text; }
 		 	//} else {
