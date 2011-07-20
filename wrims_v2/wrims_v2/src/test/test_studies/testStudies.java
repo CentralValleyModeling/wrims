@@ -106,8 +106,8 @@ public class testStudies {
 		cd.startYear=1921;
 		cd.startMonth=10;
 		cd.startDay=31;
-		cd.endYear=1921;
-		cd.endMonth=11;
+		cd.endYear=2003;
+		cd.endMonth=9;
 		cd.endDay=30;
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
@@ -141,8 +141,8 @@ public class testStudies {
 		cd.startYear=1921;
 		cd.startMonth=10;
 		cd.startDay=31;
-		cd.endYear=1921;
-		cd.endMonth=11;
+		cd.endYear=2003;
+		cd.endMonth=9;
 		cd.endDay=30;
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
