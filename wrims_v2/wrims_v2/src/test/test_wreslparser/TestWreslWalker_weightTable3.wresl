@@ -1,0 +1,29 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }
+	
+MODEL first { 
+
+ ! generate weight for slack or surplus
+	goal[local] g_pp {   ! x + slack - surplus = y	
+	  lhs x
+	  rhs        y
+	  lhs>rhs    penalty 99
+	  lhs<rhs    penalty 11
+	}
+
+}
+
+MODEL second { 
+
+	! check if the weight is carried into second cycle
+  define x { std kind 'test' units 'cfs' }
+  
+  
+}

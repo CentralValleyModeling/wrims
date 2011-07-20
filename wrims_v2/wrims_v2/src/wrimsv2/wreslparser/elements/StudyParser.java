@@ -265,6 +265,17 @@ public class StudyParser{
       
       
 
+      /// check if weight var is defined in dvar set
+      // 1. get union of previous global dvar and current model dvar
+      Set<String> allDvars = new HashSet<String>();
+      allDvars.addAll(td.cumulative_global_complete.dvSet);
+      allDvars.addAll(model_dataset.dvList);
+      
+      Set<String> weightElement_undefined = new HashSet<String>();
+      weightElement_undefined.addAll(model_dataset.wtSet);
+      
+      weightElement_undefined.removeAll(allDvars);
+      if (weightElement_undefined.size()>0) LogUtils.errMsg("Weight var not found in dvar: "+ weightElement_undefined);
       
       
       
@@ -299,7 +310,8 @@ public class StudyParser{
         if(send_all_alias_to_dvar) {
         	convertRestAliasInGoalExpression(ds);
         }
-    	
+        
+        
     	/// check if var size > 100
     	Set<String> allVar = new HashSet<String>();
     	allVar.addAll(ds.dvSet);

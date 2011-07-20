@@ -44,21 +44,27 @@ public class TestWreslWalker_weight {
 		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);		
 		td.model_dataset_map=StudyParser.parseModels(sc,td);
 		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
-		LogUtils.studySummary_details(sd);
+		//LogUtils.studySummary_details(sd);
 		LogUtils.closeLogFile();
 		
 		WriteCSV.study(sd,csvFolderPath ) ;
 		String logText = Tools.readFileAsString(logFilePath);	
 
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);	
-		
+		Assert.assertEquals(totalErrs, 1);	
+	
+		                               
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\second\\weight.csv");	
 		
 		String s;
 		int n;
 	
-		s = "errpos_shsta,-99999";
+		s = "y,100";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+
+		s = "z,100";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -90,14 +96,14 @@ public class TestWreslWalker_weight {
 		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);		
 		td.model_dataset_map=StudyParser.parseModels(sc,td);
 		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
-		LogUtils.studySummary_details(sd);
+		//LogUtils.studySummary_details(sd);
 		LogUtils.closeLogFile();
 			
 		WriteCSV.study(sd,csvFolderPath ) ;
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);	
+		Assert.assertEquals(totalErrs, 2);	
 		
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\second\\weight.csv");	
 		
@@ -113,6 +119,55 @@ public class TestWreslWalker_weight {
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
+	
+	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void weightTable3() throws RecognitionException, IOException {
+		
+		csvFolderPath = "TestWreslWalker_weightTable3";
+		inputFilePath = projectPath+csvFolderPath+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+		//LogUtils.studySummary_details(sd);
+		
+		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
+		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
+		LogUtils.closeLogFile();
+			
+		WriteCSV.study(sd,csvFolderPath ) ;
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);	
+		
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\dvar.csv");	
+		
+		String s;
+		int n;
+	
+		s = "u_g_pp_1";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		csvText = Tools.readFileAsString(csvFolderPath+"\\second\\dvar.csv");	
+	
+		s = "u_g_pp_1";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 0);
+
 	
 	}
 }

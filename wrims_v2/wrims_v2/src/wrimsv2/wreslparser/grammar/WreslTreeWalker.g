@@ -183,12 +183,12 @@ alias  :
 
 
 goal_simple 
-	:  ^(Goal_simple sc=Scope i=IDENT d=Dependants v=Constraint_content ) 
+	:  ^(Goal_simple sc=Scope {$goal::scop = $sc.text;} i=IDENT d=Dependants v=Constraint_content ) 
 		{ F.goalSimple($i.text, $sc.text, $v.text, $d.text);} 
 	;
 
 goal_nocase
-	:  ^( Goal_no_case sc=Scope i=IDENT  d=Dependants c=goal_contents  )  
+	:  ^( Goal_no_case sc=Scope {$goal::scop = $sc.text;} i=IDENT  d=Dependants c=goal_contents  )  
 		{ 
 			 F.goalSimple($i.text, $sc.text, $c.str, $d.text);	  				
 		} 
@@ -307,6 +307,7 @@ goal_content returns[boolean hasDvar, String str, String ss, String weight, Stri
 		    if (s!=null) { 
 
 		    	F.dvarStd($s.text, $goal::scop, null, $Kind.text, "");  
+		    	System.out.println("Scope: "+$goal::scop);
 		    	F.mergeWeightTable($s.text, $w.text, $goal::scop);
 		 		$hasDvar = true; $ss = $Sign.text + $s.text; $weight = $w.text; }
 		 	//} else {

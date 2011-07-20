@@ -11,6 +11,7 @@ SEQUENCE CYCLE2 {
 MODEL first { 
 
   include[local] 'moreWreslFiles\weight-table.wresl' 
+  Objective obj = {[x, 20000] [y, 10000]}
 
 }
 
@@ -18,6 +19,6 @@ MODEL second {
 
   define x { std kind 'test' units 'cfs' }
   
-  Objective obj = {[x, 20000]}
+  
 
 }
