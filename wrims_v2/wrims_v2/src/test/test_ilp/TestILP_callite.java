@@ -26,6 +26,7 @@ public class TestILP_callite {
 		
 		/// set control data		
 		String[] controlDataString = {
+		studyPath + "",   //groundwater dir
 		studyPath + "run\\main_BO.wresl",
 		dssPath +   "CL_FUTURE_WHL042611_SV.dss",
 		dssPath +   "CalLite2020D09EINIT.dss",
@@ -52,7 +53,7 @@ public class TestILP_callite {
 	    expected = 41169932.383266;
 	
 	    
-	    logFilePath = studyPath+"run//xa.log";
+	    logFilePath = studyPath+"run\\xa.log";
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int n = RegUtils.timesOfMatches(logText, objMatchString);
