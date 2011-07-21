@@ -81,7 +81,7 @@ public class WriteCSV {
 		for (String model : modelDataMap.keySet()) {
 
 			String outFolder = outParent + "\\" + model;
-
+			
 			try {
 				dataset(modelDataMap.get(model), outFolder);
 			}
@@ -106,7 +106,7 @@ public class WriteCSV {
 		PrintWriter out_wt;
 		PrintWriter out_incFile;
 		
-		outFolder = System.getProperty("user.dir")+"//"+outFolder;
+		//outFolder = System.getProperty("user.dir")+"//"+outFolder;
 
 		if(ds.incFileList.size()>0){
 			out_incFile = Tools.openFile(outFolder, "include_file.csv");		

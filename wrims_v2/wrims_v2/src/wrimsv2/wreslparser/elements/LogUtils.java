@@ -22,6 +22,18 @@ public class LogUtils {
 		
 		_logFile.close();		
 	}
+
+	public static void setLogFile(String parentDir, String logFileName){
+		
+		try {
+			_logFile = Tools.openFile(parentDir, logFileName);
+			
+		}
+		catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}	
+	}	
 	
 	public static void setLogFile(String logFileName){
 				
@@ -32,8 +44,7 @@ public class LogUtils {
 		catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
-	
+		}	
 	}
 	
 	public static void dvarsList(String msg, ArrayList<String> list_all, ArrayList<String> list_g, ArrayList<String> list_l, Map<String, Dvar> dvMap){
