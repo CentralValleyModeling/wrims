@@ -19,15 +19,19 @@ import wrimsv2.wreslparser.grammar.WreslTreeWalker;
 
 public class TestWreslWalker {
 	
-	public String projectPath = "src\\test\\test_wreslparser\\";	
+	public String projectPath = "src\\test\\test_wreslparser\\wresl_files\\";	
 	public String inputFilePath;
-	public String logFilePath;
+	public String logFilePath;	
+	public String csvFolderPath;
+	public String testName;	
 
 	@Test(groups = { "WRESL_elements" })
 	public void mainFile() throws RecognitionException, IOException {
 		
-		inputFilePath =projectPath+"TestWreslWalker_mainFile.wresl";
-		logFilePath = "TestWreslWalker_mainFile.log";
+		testName = "TestWreslWalker_mainFile";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
 		
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
@@ -47,8 +51,10 @@ public class TestWreslWalker {
 	@Test(groups = { "WRESL_elements" })
 	public void dvarsAndIncludes() throws RecognitionException, IOException {
 		
-		inputFilePath =projectPath+"TestWreslWalker_dvarsAndIncludes.wresl";
-		logFilePath = "TestWreslWalker_dvarsAndIncludes.log";
+		testName = "TestWreslWalker_dvarsAndIncludes";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
 		
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
@@ -89,8 +95,10 @@ public class TestWreslWalker {
 	@Test(groups = { "WRESL_elements" })
 	public void mainFile2() throws RecognitionException, IOException {
 		
-		inputFilePath =projectPath+"TestWreslWalker_mainFile2.wresl";
-		logFilePath = "TestWreslWalker_mainFile2.log";
+		testName = "TestWreslWalker_mainFile2";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
 		
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
@@ -116,8 +124,10 @@ public class TestWreslWalker {
 	@Test(groups = { "WRESL_elements" })
 	public void parseSubFiles() throws RecognitionException, IOException {
 		
-		inputFilePath =projectPath+"TestWreslWalker_parseSubFiles.wresl";
-		logFilePath = "TestWreslWalker_parseSubFiles.log";
+		testName = "TestWreslWalker_parseSubFiles";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
 		
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
@@ -159,8 +169,10 @@ public class TestWreslWalker {
 	@Test(groups = { "WRESL_elements" })
 	public void studyParser_subFiles() throws RecognitionException, IOException {
 		
-		inputFilePath =projectPath+"TestWreslWalker_studyParser_subFiles.wresl";
-		logFilePath = "TestWreslWalker_studyParser_subFiles.log";
+		testName = "TestWreslWalker_studyParser_subFiles";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
 		
 		File absFile=null;
 		String absFilePath=null;
@@ -203,8 +215,10 @@ public class TestWreslWalker {
 	@Test(groups = { "WRESL_elements" })
 	public void studyParser_sortSeq() throws RecognitionException, IOException {
 		
-		inputFilePath =projectPath+"TestWreslWalker_studyParser_sortSeq.wresl";
-		logFilePath = "TestWreslWalker_studyParser_sortSeq.log";
+		testName = "TestWreslWalker_studyParser_sortSeq";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
 		
 		File absFile=null;
 		String absFilePath=null;
@@ -240,8 +254,10 @@ public class TestWreslWalker {
 	@Test(groups = { "WRESL_elements" })
 	public void mainFile3() throws RecognitionException, IOException {
 		
-		inputFilePath =projectPath+"TestWreslWalker_mainFile3.wresl";
-		logFilePath = "TestWreslWalker_mainFile3.log";
+		testName = "TestWreslWalker_mainFile3";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
 		
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();

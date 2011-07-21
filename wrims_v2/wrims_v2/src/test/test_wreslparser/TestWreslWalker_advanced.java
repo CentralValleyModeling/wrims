@@ -17,15 +17,19 @@ import wrimsv2.wreslparser.elements.TempData;
 
 public class TestWreslWalker_advanced {
 	
-	public String projectPath = "src\\test\\test_wreslparser\\";	
+	public String projectPath = "src\\test\\test_wreslparser\\wresl_files\\";	
 	public String inputFilePath;
-	public String logFilePath;		
+	public String logFilePath;	
+	public String csvFolderPath;
+	public String testName;			
 
 	@Test(groups = { "WRESL_elements" })
 	public void studyParser1() throws RecognitionException, IOException {
 		
-		inputFilePath =projectPath+"TestWreslWalker_advanced_studyParser1.wresl";
-		logFilePath = "TestWreslWalker_advanced_studyParser1.log";
+		testName = "TestWreslWalker_advanced_studyParser1";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
 
 		LogUtils.setLogFile(logFilePath);
 		
@@ -64,8 +68,11 @@ public class TestWreslWalker_advanced {
 	@Test(groups = { "WRESL_elements" })
 	public void studyParser2() throws RecognitionException, IOException {
 		
-		inputFilePath =projectPath+"TestWreslWalker_advanced_studyParser2.wresl";
-		logFilePath = "TestWreslWalker_advanced_studyParser2.log";
+		testName = "TestWreslWalker_advanced_studyParser2";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
+		
 
 		LogUtils.setLogFile(logFilePath);
 		
@@ -101,8 +108,10 @@ public class TestWreslWalker_advanced {
 	@Test(groups = { "WRESL_elements" })
 	public void studyParser3() throws RecognitionException, IOException {
 		
-		inputFilePath =projectPath+"TestWreslWalker_advanced_studyParser3.wresl";
-		logFilePath = "TestWreslWalker_advanced_studyParser3.log";
+		testName = "TestWreslWalker_advanced_studyParser3";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
 
 		LogUtils.setLogFile(logFilePath);
 		

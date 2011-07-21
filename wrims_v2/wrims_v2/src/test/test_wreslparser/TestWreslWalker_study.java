@@ -20,18 +20,20 @@ import wrimsv2.wreslparser.elements.WriteCSV;
 
 public class TestWreslWalker_study
 {
-  public String projectPath = "src\\test\\test_wreslparser\\";
+  public String projectPath = "src\\test\\test_wreslparser\\wresl_files\\";
   public String inputFilePath;
   public String logFilePath;
   public String csvFolderPath;
+	public String testName;
 
   @Test(groups={"WRESL_elements"})
   public void timeseries()
     throws RecognitionException, IOException
   {
-    this.csvFolderPath = "TestWreslWalker_study_timeseries";
-    this.inputFilePath = (this.projectPath + this.csvFolderPath + ".wresl");
-    this.logFilePath = (this.csvFolderPath + ".log");
+    testName = "TestWreslWalker_study_timeseries";
+	csvFolderPath = "testResult\\"+testName;
+	inputFilePath = projectPath + testName+".wresl";
+	logFilePath = csvFolderPath+".log";
 
     LogUtils.setLogFile(this.logFilePath);
 
@@ -67,9 +69,10 @@ public class TestWreslWalker_study
 
   @Test(groups={"WRESL_elements"})
   public void order() throws RecognitionException, IOException {
-    this.csvFolderPath = "TestWreslWalker_study_order";
-    this.inputFilePath = (this.projectPath + this.csvFolderPath + ".wresl");
-    this.logFilePath = (this.csvFolderPath + ".log");
+	  testName = "TestWreslWalker_study_order";
+	  csvFolderPath = "testResult\\"+testName;
+	  inputFilePath = projectPath + testName + ".wresl";
+	  logFilePath = csvFolderPath + ".log";
 
     LogUtils.setLogFile(this.logFilePath);
 
@@ -123,9 +126,10 @@ public class TestWreslWalker_study
   public void order_simple()
     throws RecognitionException, IOException
   {
-    this.csvFolderPath = "TestWreslWalker_study_order_simple";
-    this.inputFilePath = (this.projectPath + this.csvFolderPath + ".wresl");
-    this.logFilePath = (this.csvFolderPath + ".log");
+    testName = "TestWreslWalker_study_order_simple";
+	csvFolderPath = "testResult\\"+testName;
+	inputFilePath = projectPath + testName+".wresl";
+	logFilePath = csvFolderPath+".log";
 
     LogUtils.setLogFile(this.logFilePath);
 
@@ -172,9 +176,10 @@ public class TestWreslWalker_study
   public void order_case1()
     throws RecognitionException, IOException
   {
-    this.csvFolderPath = "TestWreslWalker_study_order_case1";
-    this.inputFilePath = (this.projectPath + this.csvFolderPath + ".wresl");
-    this.logFilePath = (this.csvFolderPath + ".log");
+    testName = "TestWreslWalker_study_order_case1";
+	csvFolderPath = "testResult\\"+testName;
+	inputFilePath = projectPath + testName+".wresl";
+	logFilePath = csvFolderPath+".log";
 
     LogUtils.setLogFile(this.logFilePath);
 
@@ -222,9 +227,10 @@ public class TestWreslWalker_study
   }
   @Test(groups={"WRESL_elements"})
   public void order_case1_globals() throws RecognitionException, IOException {
-    this.csvFolderPath = "TestWreslWalker_study_order_case1";
-    this.inputFilePath = (this.projectPath + this.csvFolderPath + ".wresl");
-    this.logFilePath = (this.csvFolderPath + ".log");
+    testName = "TestWreslWalker_study_order_case1";
+	csvFolderPath = "testResult\\"+testName;
+    inputFilePath = projectPath + testName + ".wresl";
+    logFilePath = csvFolderPath + ".log";
 
     LogUtils.setLogFile(this.logFilePath);
 

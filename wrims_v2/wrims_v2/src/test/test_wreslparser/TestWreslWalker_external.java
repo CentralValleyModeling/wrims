@@ -19,16 +19,18 @@ import wrimsv2.wreslparser.elements.WriteCSV;
 
 public class TestWreslWalker_external {
 	
-	public String projectPath = "src\\test\\test_wreslparser\\";	
+	public String projectPath = "src\\test\\test_wreslparser\\wresl_files\\";	
 	public String inputFilePath;
 	public String logFilePath;	
-	public String csvFolderPath;	
+	public String csvFolderPath;
+	public String testName;	
 	
 	@Test(groups = { "WRESL_elements" })
 	public void dll_f90() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_external_dll_f90";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_external_dll_f90";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
 		LogUtils.setLogFile(logFilePath);

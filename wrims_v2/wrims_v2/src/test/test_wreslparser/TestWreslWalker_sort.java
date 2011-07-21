@@ -24,16 +24,18 @@ import wrimsv2.wreslparser.elements.WriteCSV;
 
 public class TestWreslWalker_sort {
 	
-	public String projectPath = "src\\test\\test_wreslparser\\";	
+	public String projectPath = "src\\test\\test_wreslparser\\wresl_files\\";	
 	public String inputFilePath;
 	public String logFilePath;	
-	public String csvFolderPath;	
+	public String csvFolderPath;
+	public String testName;	
 	
 	@Test(groups = { "WRESL_elements" })
 	public void simple() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_sort_simple";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_sort_simple";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
 		LogUtils.setLogFile(logFilePath);
@@ -88,8 +90,9 @@ public class TestWreslWalker_sort {
 	@Test(groups = { "WRESL_elements" })
 	public void case2() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_sort_case2";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_sort_case2";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
 		LogUtils.setLogFile(logFilePath);
@@ -136,8 +139,9 @@ public class TestWreslWalker_sort {
 	@Test(groups = { "WRESL_elements" })
 	public void case1() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_sort_case1";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_sort_case1";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
 		LogUtils.setLogFile(logFilePath);
@@ -182,8 +186,9 @@ public class TestWreslWalker_sort {
 	@Test(groups = { "WRESL_elements" })
 	public void global_redefine() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_sort_global_redefine";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_sort_global_redefine";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
 		Param.debug = true;
@@ -228,8 +233,9 @@ public class TestWreslWalker_sort {
 	@Test(groups = { "WRESL_elements" })
 	public void alias() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_sort_alias";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_sort_alias";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
 		LogUtils.setLogFile(logFilePath);

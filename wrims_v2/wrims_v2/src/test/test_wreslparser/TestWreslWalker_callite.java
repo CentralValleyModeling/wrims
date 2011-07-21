@@ -17,15 +17,17 @@ import wrimsv2.wreslparser.elements.WriteCSV;
 
 public class TestWreslWalker_callite {
 	
-	public String projectPath = "src\\test\\test_wreslparser\\";	
+	public String projectPath = "src\\test\\test_wreslparser\\wresl_files\\";	
 	public String inputFilePath;
 	public String logFilePath;	
-	public String csvFolderPath;	
+	public String csvFolderPath;
+	public String testName;	
 	
 	@Test(groups = { "WRESL_Callite" })
 	public void callite_hao() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_callite_hao";
+		testName = "TestWreslWalker_callite_hao";
+		csvFolderPath = "testResult\\"+testName;
 		inputFilePath = "D:\\Haos_CalLite\\Run\\main.wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -54,7 +56,8 @@ public class TestWreslWalker_callite {
 	@Test(groups = { "WRESL_Callite" })
 	public void callite_beta_debug() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_callite_beta_debug";
+		testName = "TestWreslWalker_callite_beta_debug";
+		csvFolderPath = "testResult\\"+testName;
 		inputFilePath = "D:\\CalLite_Beta_042611_WRIMSv2_corroboration_debug\\Run\\main_BO.wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -83,7 +86,8 @@ public class TestWreslWalker_callite {
 	@Test(groups = { "WRESL_Callite" })
 	public void callite_beta_042611() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_callite_beta_042611";
+		testName = "TestWreslWalker_callite_beta_042611";
+		csvFolderPath = "testResult\\"+testName;
 		inputFilePath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CalLite_Beta_042611\\Run\\main_BO.wresl";
 		logFilePath = csvFolderPath+".log";
 		

@@ -17,15 +17,17 @@ import wrimsv2.wreslparser.elements.WriteCSV;
 
 public class TestWreslWalker_calsim3 {
 	
-	public String projectPath = "src\\test\\test_wreslparser\\";	
+	public String projectPath = "src\\test\\test_wreslparser\\wresl_files\\";	
 	public String inputFilePath;
 	public String logFilePath;	
-	public String csvFolderPath;	
+	public String csvFolderPath;
+	public String testName;	
 	
 	//@Test(groups = { "WRESL_Calsim3" })
 	public void firstCycle() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_calsim3_firstCycle";
+		testName = "TestWreslWalker_calsim3_firstCycle";
+		csvFolderPath = "testResult\\"+testName;
 		inputFilePath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\CONV\\Run\\mainCONV_30_cycle1.wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -57,7 +59,8 @@ public class TestWreslWalker_calsim3 {
 	@Test(groups = { "WRESL_Calsim3" })
 	public void calsim3_full_study() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_calsim3_full_study";
+		testName = "TestWreslWalker_calsim3_full_study";
+		csvFolderPath = "testResult\\"+testName;
 		inputFilePath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\CONV\\Run\\mainCONV_30.wresl";
 		logFilePath = csvFolderPath+".log";
 		

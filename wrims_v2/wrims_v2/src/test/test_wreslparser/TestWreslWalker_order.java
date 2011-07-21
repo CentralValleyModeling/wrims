@@ -23,16 +23,18 @@ import wrimsv2.wreslparser.elements.WriteCSV;
 
 public class TestWreslWalker_order {
 	
-	public String projectPath = "src\\test\\test_wreslparser\\";	
+	public String projectPath = "src\\test\\test_wreslparser\\wresl_files\\";	
 	public String inputFilePath;
 	public String logFilePath;	
-	public String csvFolderPath;	
+	public String csvFolderPath;
+	public String testName;	
 	
 	@Test(groups = { "WRESL_elements" })
 	public void gobalVars() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_order_globalVars";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_order_globalVars";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
 		LogUtils.setLogFile(logFilePath);
@@ -82,8 +84,9 @@ public class TestWreslWalker_order {
 	@Test(groups = { "WRESL_elements" })
 	public void alias() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_order_alias";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_order_alias";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
 		LogUtils.setLogFile(logFilePath);

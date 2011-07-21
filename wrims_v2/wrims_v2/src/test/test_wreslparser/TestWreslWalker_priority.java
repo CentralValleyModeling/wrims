@@ -19,17 +19,20 @@ import wrimsv2.wreslparser.elements.WriteCSV;
 
 public class TestWreslWalker_priority {
 	
-	public String projectPath = "src\\test\\test_wreslparser\\";	
+	public String projectPath = "src\\test\\test_wreslparser\\wresl_files\\";	
 	public String inputFilePath;
 	public String logFilePath;	
-	public String csvFolderPath;	
+	public String csvFolderPath;
+	public String testName;	
 
 
 	@Test(groups = { "WRESL_elements" })
 	public void global1() throws RecognitionException, IOException {
 		
-		inputFilePath =projectPath+"TestWreslWalker_priority_global1.wresl";
-		logFilePath = "TestWreslWalker_priority_global1.log";
+		testName = "TestWreslWalker_priority_global1";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
 
 		LogUtils.setLogFile(logFilePath);
 		
@@ -73,8 +76,9 @@ public class TestWreslWalker_priority {
 	@Test(groups = { "WRESL_elements" })
 	public void case2() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_priority_case2";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_priority_case2";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
 		LogUtils.setLogFile(logFilePath);
@@ -122,8 +126,9 @@ public class TestWreslWalker_priority {
 	@Test(groups = { "WRESL_elements" })
 	public void case3() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_priority_case3";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_priority_case3";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
 		LogUtils.setLogFile(logFilePath);

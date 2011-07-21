@@ -19,16 +19,18 @@ import wrimsv2.wreslparser.elements.WriteCSV;
 
 public class TestWreslWalker_slack {
 	
-	public String projectPath = "src\\test\\test_wreslparser\\TestWreslWalker_slack_cycle2\\";	
+	public String projectPath = "src\\test\\test_wreslparser\\wresl_files\\";	
 	public String inputFilePath;
 	public String logFilePath;	
-	public String csvFolderPath;	
+	public String csvFolderPath;
+	public String testName;	
 	
 	@Test(groups = { "WRESL_elements" })
 	public void slack_cycle2() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_slack_cycle2";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_slack_cycle2";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath+ testName +"\\"+testName +".wresl";
 		logFilePath = csvFolderPath+".log";
 	
 		LogUtils.setLogFile(logFilePath);

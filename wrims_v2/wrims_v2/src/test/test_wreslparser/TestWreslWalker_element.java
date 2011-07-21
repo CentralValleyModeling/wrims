@@ -22,16 +22,19 @@ import wrimsv2.wreslparser.grammar.WreslTreeWalker;
 
 public class TestWreslWalker_element {
 	
-	public String projectPath = "src\\test\\test_wreslparser\\";	
+	public String projectPath = "src\\test\\test_wreslparser\\wresl_files\\";	
 	public String inputFilePath;
 	public String logFilePath;	
-	public String csvFolderPath;	
+	public String csvFolderPath;
+	public String testName;	
 	
 	@Test(groups = { "WRESL_elements" })
 	public void dvarNonStd() throws RecognitionException, IOException {
 		
-		inputFilePath =projectPath+"TestWreslWalker_element_dvarNonStd.wresl";
-		logFilePath = "TestWreslWalker_element_dvarNonStd.log";
+		testName = "TestWreslWalker_element_dvarNonStd";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
 		
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
@@ -51,8 +54,10 @@ public class TestWreslWalker_element {
 	@Test(groups = { "WRESL_elements" })
 	public void dvarStd() throws RecognitionException, IOException {
 		
-		inputFilePath =projectPath+"TestWreslWalker_element_dvarStd.wresl";
-		logFilePath = "TestWreslWalker_element_dvarStd.log";
+		testName = "TestWreslWalker_element_dvarStd";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
 		
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
@@ -75,9 +80,10 @@ public class TestWreslWalker_element {
 	@Test(groups = { "WRESL_elements" })
 	public void svarDSS() throws RecognitionException, IOException {
 		
-		inputFilePath =projectPath+"TestWreslWalker_element_svarDSS.wresl";
-		logFilePath = "TestWreslWalker_element_svarDSS.log";
-		csvFolderPath = "TestWreslWalker_element_svarDSS";
+		testName = "TestWreslWalker_element_svarDSS";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName + ".wresl";
+		logFilePath = csvFolderPath+".log";
 
 		LogUtils.setLogFile(logFilePath);
 		
@@ -120,9 +126,10 @@ public class TestWreslWalker_element {
 	@Test(groups = { "WRESL_elements" })
 	public void svarConst() throws RecognitionException, IOException {
 		
-		inputFilePath =projectPath+"TestWreslWalker_element_svarConst.wresl";
-		logFilePath = "TestWreslWalker_element_svarConst.log";
-		csvFolderPath = "TestWreslWalker_element_svarConst";
+		testName = "TestWreslWalker_element_svarConst";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
 
 		LogUtils.setLogFile(logFilePath);
 		
@@ -158,9 +165,10 @@ public class TestWreslWalker_element {
 	@Test(groups = { "WRESL_elements" })
 	public void svarExpression1() throws RecognitionException, IOException {
 		
-		inputFilePath =projectPath+"TestWreslWalker_element_svarExpression1.wresl";
-		logFilePath = "TestWreslWalker_element_svarExpression1.log";
-		csvFolderPath = "TestWreslWalker_element_svarExpression1";
+		testName = "TestWreslWalker_element_svarExpression1";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
 
 		LogUtils.setLogFile(logFilePath);
 		
@@ -206,9 +214,10 @@ public class TestWreslWalker_element {
 	@Test(groups = { "WRESL_elements" })
 	public void svarSum() throws RecognitionException, IOException {
 		
-		inputFilePath =projectPath+"TestWreslWalker_element_svarSum.wresl";
-		logFilePath = "TestWreslWalker_element_svarSum.log";
-		csvFolderPath = "TestWreslWalker_element_svarSum";
+		testName = "TestWreslWalker_element_svarSum";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
 
 		LogUtils.setLogFile(logFilePath);
 		
@@ -249,8 +258,9 @@ public class TestWreslWalker_element {
 	@Test(groups = { "WRESL_elements" })
 	public void svarTable() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_element_svarTable";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_element_svarTable";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
 
@@ -300,8 +310,9 @@ public class TestWreslWalker_element {
 	@Test(groups = { "WRESL_elements" })
 	public void svarTableFull() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_element_svarTableFull";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_element_svarTableFull";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
 		LogUtils.setLogFile(logFilePath);
@@ -344,8 +355,9 @@ public class TestWreslWalker_element {
 	@Test(groups = { "WRESL_elements" })
 	public void alias() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_element_alias";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_element_alias";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
 		LogUtils.setLogFile(logFilePath);

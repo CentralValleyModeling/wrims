@@ -20,16 +20,18 @@ import wrimsv2.wreslparser.elements.WriteCSV;
 
 public class TestWreslWalker_alias {
 	
-	public String projectPath = "src\\test\\test_wreslparser\\";	
+	public String projectPath = "src\\test\\test_wreslparser\\wresl_files\\";	
 	public String inputFilePath;
 	public String logFilePath;	
-	public String csvFolderPath;	
+	public String csvFolderPath;
+	public String testName;	
 	
 	@Test(groups = { "WRESL_elements" })
 	public void alias_to_goal() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_alias_to_goal";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_alias_to_goal";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
 		LogUtils.setLogFile(logFilePath);
@@ -108,8 +110,9 @@ public class TestWreslWalker_alias {
 	@Test(groups = { "WRESL_elements" })
 	public void alias_to_goal2() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_alias_to_goal2";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_alias_to_goal2";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
 		LogUtils.setLogFile(logFilePath);
@@ -188,8 +191,9 @@ public class TestWreslWalker_alias {
 	@Test(groups = { "WRESL_elements" })
 	public void alias_to_goal3() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_alias_to_goal3";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_alias_to_goal3";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
 		LogUtils.setLogFile(logFilePath);
@@ -227,8 +231,9 @@ public class TestWreslWalker_alias {
 	public void alias_to_goal4() throws RecognitionException, IOException {
 	// deep embedding of alias
 		
-		csvFolderPath = "TestWreslWalker_alias_to_goal4";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_alias_to_goal4";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
 		LogUtils.setLogFile(logFilePath);
@@ -294,8 +299,9 @@ public class TestWreslWalker_alias {
 	public void alias_unknown() throws RecognitionException, IOException {
 	// deep embedding of alias
 		
-		csvFolderPath = "TestWreslWalker_alias_unknown";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_alias_unknown";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
 		LogUtils.setLogFile(logFilePath);

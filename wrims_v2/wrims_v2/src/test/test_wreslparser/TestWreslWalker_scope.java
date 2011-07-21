@@ -20,16 +20,18 @@ import wrimsv2.wreslparser.elements.WriteCSV;
 
 public class TestWreslWalker_scope {
 	
-	public String projectPath = "src\\test\\test_wreslparser\\";	
+	public String projectPath = "src\\test\\test_wreslparser\\wresl_files\\";	
 	public String inputFilePath;
 	public String logFilePath;	
-	public String csvFolderPath;	
+	public String csvFolderPath;
+	public String testName;	
 	
 	@Test(groups = { "WRESL_elements" })
 	public void simple() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_scope_simple";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_scope_simple";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
 		LogUtils.setLogFile(logFilePath);
@@ -72,8 +74,9 @@ public class TestWreslWalker_scope {
 	@Test(groups = { "WRESL_elements" })
 	public void case2() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_scope_case2";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_scope_case2";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
 		LogUtils.setLogFile(logFilePath);
@@ -119,8 +122,9 @@ public class TestWreslWalker_scope {
 	@Test(groups = { "WRESL_elements" })
 	public void case1() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_scope_case1";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_scope_case1";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
 		LogUtils.setLogFile(logFilePath);
@@ -160,8 +164,9 @@ public class TestWreslWalker_scope {
 	@Test(groups = { "WRESL_elements" })
 	public void case3() throws RecognitionException, IOException {
 		
-		csvFolderPath = "TestWreslWalker_scope_case3";
-		inputFilePath = projectPath+csvFolderPath+".wresl";
+		testName = "TestWreslWalker_scope_case3";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
 		LogUtils.setLogFile(logFilePath);
