@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for WreslCheck">
+
+    <target name="create_run_jar">
+
+    	<delete file="bin/version.xml"/>
+        <delete dir="jar_out"/>
+        <mkdir dir="jar_out"/>
+    		
+    	<exec dir="." executable="python" failonerror="true">
+    	    <arg line="generate_version.py" />
+    	</exec>
+    	
+        <jar destfile="jar_out/WreslCheck_all.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="main.WreslCheck"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="D:/cvwrsm/trunk/wrims_v2/wrims_v2/bin">
+				<include name="main/**/*.class"/>
+				<include name="wrimsv2/commondata/wresldata/**"/>
+				<include name="wrimsv2/wreslparser/**/*.class"/>
+            	<include name="wrimsv2/components/Versions.class"/>
+            	<include name="version.xml"/>
+				<exclude name="**/*.g"/>
+			</fileset>
+            <zipfileset excludes="META-INF/*.SF" src="D:/cvwrsm/trunk/wrims_v2/wrims_v2/src/wrimsv2/lib/antlr-runtime-3.2.jar"/>
+       </jar>
+    </target>
+</project>
