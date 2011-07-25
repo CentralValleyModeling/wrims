@@ -15,10 +15,8 @@
 	<classpathentry kind="lib" path="calsim/lib/jpython.jar"/>
 	<classpathentry kind="lib" path="calsim/lib/modtable.txt"/>
 	<classpathentry kind="lib" path="calsim/lib/msgsystem.jar"/>
-	<classpathentry kind="lib" path="calsim/lib/registry"/>
 	<classpathentry kind="lib" path="calsim/lib/rma.jar"/>
 	<classpathentry kind="lib" path="calsim/lib/vista.jar"/>
-	<classpathentry kind="lib" path="calsim/lib/webstart.jar"/>
 	<classpathentry kind="lib" path="calsim/lib/WrimsSchematic.jar"/>
 	<classpathentry kind="lib" path="calsim/lib/xml.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
