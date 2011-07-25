@@ -11,7 +11,7 @@
     	    <arg line="generate_version.py" />
     	</exec>
     	
-        <jar destfile="jar_out/WreslCheck_all.jar" filesetmanifest="mergewithoutmain">
+        <jar destfile="jar_out/WreslCheck.jar" filesetmanifest="mergewithoutmain">
             <manifest>
                 <attribute name="Main-Class" value="main.WreslCheck"/>
                 <attribute name="Class-Path" value="."/>
