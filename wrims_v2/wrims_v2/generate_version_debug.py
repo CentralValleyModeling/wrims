@@ -1,23 +1,15 @@
 import os
 
-Version_Main    = "2.0"  # First two number of 8.0b1
-Version_Status  = "a1"   
+Version_Main    = "2.0"  
+Version_Status  = "debug"   
+Version_SVN     = "99999"
 
 setupTemplate = open("version.template",'r')
 
 
-(dummy, Version_SVN) = os.popen4("svnversion ../wrims_v2 ")
-
-
-Version_SVN = Version_SVN.readlines()[0]
-
-Version_SVN = Version_SVN.strip()
-
-
-print ' SVN version of ../wrims_v2:                 '+ Version_SVN
+print ' Debug build......  '
 
 try:
-	test = int(Version_SVN)
 
 	setupTemplateTxt = setupTemplate.read()
    
@@ -31,5 +23,5 @@ try:
         
 
 except:
-	print 'Abort.... Try SVN update and commit before generating setup script.'
+	print 'Abort.... Error in generate_version_debug.'
     

@@ -1,33 +1,85 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="Standalone_WreslCheck" name="Create Standalone Runnable Jar for WreslCheck">
 
-    <target name="Standalone_WreslCheck">
+	<target name="Standalone_WreslCheck" depends="Clean_files, Generate_version, Build_jar_zip">
 
-    	<delete file="bin/version.xml"/>
-     	<exec dir="." executable="python" failonerror="true">
-    	    <arg line="generate_version.py" />
-    	</exec>
-    	
-        <delete dir="jar_out"/>
-        <mkdir dir="jar_out"/>
-    	
-        <jar destfile="jar_out/WreslCheck.jar" filesetmanifest="mergewithoutmain">
-            <manifest>
-                <attribute name="Main-Class" value="main.WreslCheckGUI"/>
-                <attribute name="Class-Path" value="."/>
-            </manifest>
-            <fileset dir="D:/cvwrsm/trunk/wrims_v2/wrims_v2/bin">
+		<echo message="Finish Standalone_WreslCheck" />
+		
+	</target>
+	
+	<target name="Debug_WreslCheck" depends="Clean_files, Generate_version_debug, Build_jar_zip">
+
+		<echo message="Finish Debug_WreslCheck" />
+		
+	</target>
+
+	<target name="Clean_files" >
+		<echo message="Running Clean_Files" />
+		<delete file="bin/version.xml"/>
+		<delete dir="jar_out"/>
+		<delete file="zip_out/*.zip"/>
+		<delete dir="zip_out"/>
+		<mkdir dir="jar_out"/>
+		<mkdir dir="zip_out"/>
+	</target>
+
+	<target name="Generate_version" >
+		<echo message="Running Generate_version" />
+		<exec dir="." executable="python" failonerror="true">
+			<arg line="generate_version.py" />
+		</exec>
+
+	</target>
+
+	<target name="Generate_version_debug" >
+		<echo message="Running Generate_version_debug" />
+		<exec dir="." executable="python" failonerror="true">
+			<arg line="generate_version_debug.py" />
+		</exec>
+	</target>
+
+	<target name="Build_jar_zip" >
+
+		<available file="bin/version.xml" property="version_file.present" />
+		<fail>
+			<condition>
+				<not>
+					<isset property="version_file.present" />
+				</not>
+			</condition>
+		</fail>
+
+		<echo message="Running Build_jar_zip" />
+
+		<jar destfile="jar_out/WreslCheck.jar" filesetmanifest="mergewithoutmain">
+			<manifest>
+				<attribute name="Main-Class" value="main.WreslCheckGUI"/>
+				<attribute name="Class-Path" value="."/>
+			</manifest>
+			<fileset dir="D:/cvwrsm/trunk/wrims_v2/wrims_v2/bin">
 				<include name="main/**/*.class"/>
 				<include name="wrimsv2/commondata/wresldata/**/*.class"/>
 				<include name="wrimsv2/wreslparser/**/*.class"/>
-            	<include name="wrimsv2/components/Versions.class"/>
-            	<include name="version.xml"/>
+				<include name="wrimsv2/components/Versions.class"/>
+				<include name="version.xml"/>
 				<exclude name="**/*.g"/>
 			</fileset>
-            <zipfileset excludes="META-INF/*.SF" src="D:/cvwrsm/trunk/wrims_v2/wrims_v2/src/wrimsv2/lib/antlr-runtime-3.2.jar"/>
-       </jar>
-       <delete dir="zip_out"/>
-       <mkdir dir="zip_out"/>
-       <zip destfile="zip_out/WreslCheck_standalone.zip"  basedir="jar_out" />
-    </target>
+			<zipfileset excludes="META-INF/*.SF" src="D:/cvwrsm/trunk/wrims_v2/wrims_v2/src/wrimsv2/lib/antlr-runtime-3.2.jar"/>
+		</jar>
+
+		<zip destfile="zip_out/WreslCheck_standalone.zip"  basedir="jar_out" />
+
+		<available file="zip_out/WreslCheck_standalone.zip" property="zip_file.present" />
+		<fail>
+			<condition>
+				<not>
+					<isset property="zip_file.present" />
+				</not>
+			</condition>
+		</fail>
+		
+		<echo message="Finished Build_jar_zip" />
+
+	</target>
+
 </project>
