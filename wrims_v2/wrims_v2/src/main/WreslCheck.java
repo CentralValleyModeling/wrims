@@ -32,11 +32,11 @@ public class WreslCheck {
 		} else if ( args.length>1 || args.length<1 ){
 			
 			//System.out.println("Usage 1:  java -jar WreslCheck.jar \"path to main wresl file\" ");
-			System.out.println("Usage 2:  java -cp WreslCheck.jar main.WreslCheck.command \"path to main wresl file\" ");
+			System.out.println("Usage 2:  java -cp WreslCheck.jar main.WreslCheck \"path to main wresl file\" ");
 			
 		} else if (args[0].equalsIgnoreCase("version")) {
 			
-			System.out.println("Wresl Study Check Tool (svn: "+svn_version+" )");
+			System.out.println("Wresl Study Check Tool ( svn: "+svn_version+" )");
 			
 		} else {
 			
