@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="create_run_jar" name="Create Runnable Jar for WreslCheck">
+<project default="Standalone_WreslCheck" name="Create Standalone Runnable Jar for WreslCheck">
 
-    <target name="create_run_jar">
+    <target name="Standalone_WreslCheck">
 
     	<delete file="bin/version.xml"/>
         <delete dir="jar_out"/>
@@ -18,7 +18,7 @@
             </manifest>
             <fileset dir="D:/cvwrsm/trunk/wrims_v2/wrims_v2/bin">
 				<include name="main/**/*.class"/>
-				<include name="wrimsv2/commondata/wresldata/**"/>
+				<include name="wrimsv2/commondata/wresldata/**/*.class"/>
 				<include name="wrimsv2/wreslparser/**/*.class"/>
             	<include name="wrimsv2/components/Versions.class"/>
             	<include name="version.xml"/>
@@ -26,5 +26,8 @@
 			</fileset>
             <zipfileset excludes="META-INF/*.SF" src="D:/cvwrsm/trunk/wrims_v2/wrims_v2/src/wrimsv2/lib/antlr-runtime-3.2.jar"/>
        </jar>
+       <delete dir="zip_out"/>
+       <mkdir dir="zip_out"/>
+       <zip destfile="zip_out/WreslCheck_standalone.zip"  basedir="jar_out" />
     </target>
 </project>

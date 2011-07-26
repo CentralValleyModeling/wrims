@@ -1,5 +1,6 @@
 package wrimsv2.components;
 
+import java.io.File;
 import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -14,13 +15,13 @@ public class Versions {
 	public int getSVN() {
 
 		try {
-			
-			InputStream is = getClass().getClassLoader().getResourceAsStream("version.xml");
-			//File file = new File("version.xml");
+			//System.out.println(System.getProperty("user.dir"));			
+			InputStream inStream = getClass().getClassLoader().getResourceAsStream("version.xml");
+			//File inStream = new File("version.xml");
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			//Document doc = db.parse(file);
-			Document doc = db.parse(is);
+			Document doc = db.parse(inStream);
 			doc.getDocumentElement().normalize();
 			//System.out.println("Root element " + doc.getDocumentElement().getNodeName());
 			NodeList nodeLst = doc.getElementsByTagName("svn_number");
@@ -41,6 +42,6 @@ public class Versions {
 			e.printStackTrace();
 		}
 		
-		return 0;	
+		return -1;	
 	}
 }
