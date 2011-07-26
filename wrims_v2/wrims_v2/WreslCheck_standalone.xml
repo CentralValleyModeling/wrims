@@ -13,7 +13,7 @@
     	
         <jar destfile="jar_out/WreslCheck.jar" filesetmanifest="mergewithoutmain">
             <manifest>
-                <attribute name="Main-Class" value="main.WreslCheck"/>
+                <attribute name="Main-Class" value="main.WreslCheckGUI"/>
                 <attribute name="Class-Path" value="."/>
             </manifest>
             <fileset dir="D:/cvwrsm/trunk/wrims_v2/wrims_v2/bin">
