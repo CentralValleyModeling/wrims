@@ -20,7 +20,7 @@ public class WreslCheck {
 	private static String csvFolderPath;
 		
 
-	public static void command(String[] args) throws RecognitionException, IOException {
+	public static void main(String[] args) throws RecognitionException, IOException {
 
 		Versions vers = new Versions();
 		int svn_version = vers.getSVN();
