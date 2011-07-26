@@ -32,7 +32,7 @@ public class WreslCheck {
 		} else if ( args.length>1 || args.length<1 ){
 			
 			//System.out.println("Usage 1:  java -jar WreslCheck.jar \"path to main wresl file\" ");
-			System.out.println("Usage 2:  java -cp WreslCheck.jar main.WreslCheck \"path to main wresl file\" ");
+			System.out.println("Usage:  java -cp WreslCheck.jar main.WreslCheck \"path to main wresl file\" ");
 			
 		} else if (args[0].equalsIgnoreCase("version")) {
 			
@@ -53,21 +53,23 @@ public class WreslCheck {
 
 		if (m.length()<7){
 			errMessage = "This is not a Wresl file.";
+			System.out.println(errMessage);
 			return errMessage;
 		}
 		
 		String extension = m.substring(m.length() - 5);
-		System.out.println(extension);
 		
 		if (!extension.equalsIgnoreCase("wresl")){
 			errMessage = "This is not a Wresl file.";
+			System.out.println(errMessage);
 			return errMessage;
 		}
 		
 		try {
 			validatedAbsFile = new File(mainWreslFile).getAbsoluteFile();
 			if(!validatedAbsFile.exists()){
-				errMessage = "File not exist.";
+				errMessage = "File not found.";
+				System.out.println(errMessage);
 				return errMessage;
 			}
 			String absFilePath = validatedAbsFile.getCanonicalPath().toLowerCase();
@@ -107,7 +109,7 @@ public class WreslCheck {
 				csvFolderPath = absParentFolder+"\\=WreslCheck_csv=";
 				logFileName = "=WreslCheck=.log";
 				
-				System.out.println("absParentFolder: "+absParentFolder);
+				//System.out.println("absParentFolder: "+absParentFolder);
 				
 				
 			try {				

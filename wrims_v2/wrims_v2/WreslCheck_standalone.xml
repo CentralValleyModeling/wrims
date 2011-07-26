@@ -4,12 +4,12 @@
     <target name="Standalone_WreslCheck">
 
     	<delete file="bin/version.xml"/>
-        <delete dir="jar_out"/>
-        <mkdir dir="jar_out"/>
-    		
-    	<exec dir="." executable="python" failonerror="true">
+     	<exec dir="." executable="python" failonerror="true">
     	    <arg line="generate_version.py" />
     	</exec>
+    	
+        <delete dir="jar_out"/>
+        <mkdir dir="jar_out"/>
     	
         <jar destfile="jar_out/WreslCheck.jar" filesetmanifest="mergewithoutmain">
             <manifest>
