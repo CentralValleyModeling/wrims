@@ -2,45 +2,42 @@ package channels
 
 channel Wkytn {
 
-	<- out_1 { coordinate [ -122.365662  37.826988  ] } # -> [ -122.365662  37.826988  ]
+	<- out_1 
 	<- D_
-	-> in_1  { coordinate [ -122.365662  37.826988  ] } # <- [ -122.365662  37.826988  ]
+	-> in_1  
 
 
 	flowrate { upperbound 12913*taf_cfs  lowerbound  0 }
 
-	coordinate  {  in_1.coordinate  [x2  y2 ]  [x3  y3 ]  [x4  y4 ]  [x5  y5 ] out_1.coordinate  }
 } 
 
 channel Orovl {
 
-	<- out_1 { coordinate [ -122.365662  37.826988  ] } # -> [ -122.365662  37.826988  ]
-	-> in_1  { coordinate [ -122.365662  37.826988  ] } # <- [ -122.365662  37.826988  ]
+	<- out_1 
+	-> in_1  
 
 
 	flowrate { upperbound 12913*taf_cfs  lowerbound  0 }
 
-	coordinate  {  in_1.coordinate  [x2  y2 ]  [x3  y3 ]  [x4  y4 ]  [x5  y5 ] out_1.coordinate  }
+
 } 
 
 channel Folsm {
 
-	<- out_1 { coordinate [ -122.365662  37.826988  ] } # -> [ -122.365662  37.826988  ]
-	-> in_1  { coordinate [ -122.365662  37.826988  ] } # <- [ -122.365662  37.826988  ]
+	<- out_1 
+	-> in_1  
 
 
 	flowrate { upperbound 12913*taf_cfs  lowerbound  0 }
 
-	coordinate  {  in_1.coordinate  [x2  y2 ]  [x3  y3 ]  [x4  y4 ]  [x5  y5 ] out_1.coordinate  }
 }
 
 channel Trnty {
 
-	<- out_1 { coordinate [ -122.365662  37.826988  ] } # -> [ -122.365662  37.826988  ]
-	-> in_1  { coordinate [ -122.365662  37.826988  ] } # <- [ -122.365662  37.826988  ]
+	<- out_1 
+	-> in_1  
 
 
 	flowrate { upperbound 12913*taf_cfs  lowerbound  0 }
 
-	coordinate  {  in_1.coordinate  [x2  y2 ]  [x3  y3 ]  [x4  y4 ]  [x5  y5 ] out_1.coordinate  }
 }

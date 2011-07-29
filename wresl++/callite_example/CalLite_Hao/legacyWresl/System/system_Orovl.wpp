@@ -7,9 +7,9 @@ import channels as C
 
 network Orovl {
 
-	<- out_1 { coordinate [ -122.365662  37.826988  ] }
-	<- out_2 { coordinate [ -122.365662  37.826988  ] }
-	-> in_1  { coordinate [ -122.365662  37.826988  ] }
+	<- out_1 
+	<- out_2 
+	-> in_1  
 
 	connection {
 	
