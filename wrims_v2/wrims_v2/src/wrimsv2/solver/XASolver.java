@@ -193,5 +193,7 @@ public class XASolver {
 			// TODO Auto-generated catch block
 		//	e.printStackTrace();
 		//}
+		
+		System.out.println("Objective Value: "+ControlData.xasolver.getObjective());
 	}
 }
