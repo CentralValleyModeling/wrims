@@ -3,6 +3,7 @@
 	<name>wrims_schematics</name>
 	<comment></comment>
 	<projects>
+		<project>wrims_v2</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -42,6 +42,11 @@ import vista.gui.VistaUtils;
 import java.util.*;
 import javax.swing.*;
 //import javax.swing.border.*;
+import wrimsv2.components.ControlData;
+import wrimsv2.components.Controller;
+import wrimsv2.components.FilePaths;
+import wrimsv2.evaluator.TimeOperation;
+
 /**
  * The panel for the general tab.
  *
@@ -275,8 +280,38 @@ public class InputPanel extends JPanel {
     panel.setLayout(new FlowLayout(FlowLayout.LEFT));
 	JButton runButton=new JButton("Run");
 	panel.add(runButton);
+	runButton.addActionListener(new GuiTaskListener("Running Study ... ","Done"){
+	      public void doWork(){
+			 runStudy();
+	      }
+	    });
 	return panel;
   }
+  
+  void runStudy(){
+	String[] args=new String[17];
+	args[0]=_fileText[4].getText()+"\\";
+    args[1]=_fileText[0].getText();
+    args[2]=_fileText[1].getText();
+    args[3]=_fileText[3].getText();
+    args[4]=_fileText[2].getText();
+	args[5]=_entryText[3].getText();
+	args[6]=_entryText[4].getText();
+	args[7]=_entryText[5].getText();
+	args[8]=(String)_timeStep.getSelectedItem();
+	args[9]=(String)_year[0].getSelectedItem();
+	String startMonth=(String)_month[0].getSelectedItem();
+	args[10]=String.valueOf(TimeOperation.monthValue(startMonth.toLowerCase()));
+	args[11]=(String)_day[0].getSelectedItem();
+	args[12]=(String)_year[1].getSelectedItem();;
+	String endMonth=(String)_month[1].getSelectedItem();
+	args[13]=String.valueOf(TimeOperation.monthValue(endMonth.toLowerCase()));
+	args[14]=(String)_day[1].getSelectedItem();
+	args[15]="XA";
+	args[16]="csv";
+	new Controller(args);  
+  }
+  
   /**
    * Create the file choose button
    */
