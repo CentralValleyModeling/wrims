@@ -25,5 +25,6 @@
 	<classpathentry kind="lib" path="lib/JGo.jar"/>
 	<classpathentry kind="lib" path="lib/JGoSVG.jar"/>
 	<classpathentry kind="lib" path="D:/cvwrsm/trunk/wrims_schematics/lib/vista.jar"/>
+	<classpathentry kind="lib" path="D:/cvwrsm/trunk/wrims_schematics/lib/xml.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -456,6 +456,9 @@ public class InputPanel extends JPanel {
     _fileText[1].setText(study.getSvFile());
     _fileText[2].setText(study.getDvFile());
     _fileText[3].setText(study.getInitFile());
+    _fileText[4].setText(study.getGroundWaterFolder());
+    _entryText[3].setText(study.getSVFileFPart());
+    _entryText[5].setText(study.getSVFileAPart());
     _entryText[4].setText(study.getInitFileFPart());
     _year[0].setSelectedItem(study.getStartYear().toString());
     _month[0].setSelectedItem(study.getStartMonth());
@@ -464,10 +467,50 @@ public class InputPanel extends JPanel {
     _simOption.setSelectedItem(study.getSimOption());
     _numSeq.setSelectedItem(study.getNumberSequences().toString());
     //DJE***********************************************************
-    _timeStep.setSelectedItem(study.getTimeStep());//DJE
-    _day[0].setSelectedItem(study.getStartDay());//DJE
-    _day[1].setSelectedItem(study.getStopDay());//DJE
+    if (study.isUpdatedStudyObject()) {
+        _timeStep.setSelectedItem(study.getTimeStep());//DJE
+        _day[0].setSelectedItem(study.getStartDay());//DJE
+        _day[1].setSelectedItem(study.getStopDay());//DJE
+    }
+    else {
+        _timeStep.setSelectedItem("1MON");
+        updateStudy(study);
+    }
+    //****************************************************************
 
+  }
+
+  /**
+   * Update the study
+   */
+  public void updateStudy(Study study) {
+    study.setName(_entryText[0].getText());
+    study.setAuthor(_entryText[1].getText());
+    study.setDate(new Date());
+    study.setDescription(_desc.getText().replaceAll("\n", ""));
+    //   study.setHydrologyVersion(_entryText[3].getText());
+    //   study.setStudyDir(_fileText[4].getText());
+    study.setWreslFile(_fileText[0].getText());
+    study.setSvFile(_fileText[1].getText());
+    study.setDvFile(_fileText[2].getText());
+    study.setInitFile(_fileText[3].getText());
+    study.setGroundWaterFolder(_fileText[4].getText());
+    study.setSVFileAPart(_entryText[5].getText());  
+    study.setSVFileFPart(_entryText[3].getText());
+    study.setInitFileFPart(_entryText[4].getText());
+    //DJE**************************************************
+    study.setTimeStep(_timeStep.getSelectedItem().toString());
+    study.setNumberSteps(_numberSteps.getText());
+    study.setStartDay(_day[0].getSelectedItem().toString());
+    study.setStopDay(_day[1].getSelectedItem().toString());
+    //*******************************************************
+    study.setStartMonth(_month[0].getSelectedItem().toString());
+    study.setStartYear(new Integer(_year[0].getSelectedItem().toString()));
+    study.setStopMonth(_month[1].getSelectedItem().toString());
+    study.setStopYear(new Integer(_year[1].getSelectedItem().toString()));
+    study.setSimOption(_simOption.getSelectedItem().toString());
+    study.setNumberSequences(new Integer(_numSeq.getSelectedItem().toString()));
+    study.updateStudyObject();//DJE************************
   }
 
   public static void enableDateBoxes(boolean enable) {

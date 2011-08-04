@@ -9,6 +9,7 @@ import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Event;
+import java.awt.FileDialog;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -72,6 +73,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
+import vista.gui.VistaUtils;
 import wrims.dss.DssFrame;
 import wrims.dss.DssViewer;
 
@@ -1477,6 +1479,32 @@ public class Schematic extends JApplet implements Runnable, DocumentListener { /
 		filemenu.setText("File");
 		filemenu.setMnemonic('F');
 
+		JMenuItem openitem = new JMenuItem("Open Study");
+		openitem.addActionListener(new GuiTaskListener("Opening Study..."){
+		      public void doWork(){
+						openStudy();
+		      };
+		    });
+		filemenu.add(openitem);
+		
+	    JMenuItem saveitem = new JMenuItem("Save Study");
+		saveitem.addActionListener(new GuiTaskListener("Saving Study..."){
+	        public void doWork(){
+	  				saveStudy();
+	        };
+	      });
+		filemenu.add(saveitem);
+		
+	    JMenuItem saveasitem = new JMenuItem("Save Study As");
+	    saveasitem.addActionListener(new GuiTaskListener("Saving Study As..."){
+	        public void doWork(){
+	  				saveAsStudy();
+	        };
+	      });	
+		filemenu.add(saveasitem);
+		
+		filemenu.addSeparator();
+		
 		if (IS_DEVELOPER) { // CB added
 			item = filemenu.add(FileNewAction);
 			item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
@@ -3957,6 +3985,63 @@ public class Schematic extends JApplet implements Runnable, DocumentListener { /
 			}
 		});
 	}
+	
+	  /**
+	   * open study
+	   */
+	 void openStudy(){
+	    String styFile = VistaUtils.getFilenameFromDialog(this,FileDialog.LOAD,
+							      "sty","Study files (*.sty)");
+	    if ( styFile == null ) return;
+	    // open and load project
+	    sty = new Study();
+	    try {
+	      sty.load(styFile);
+	      //DJE********************************************************
+	      if (!sty.isUpdatedStudyObject()) {
+	        String msg = styFile + " was created with a previous version of CALSIM.";
+	        JOptionPane.showMessageDialog(this, msg, "Warning", JOptionPane.WARNING_MESSAGE);
+	      }
+	      inputPane.setStudy(sty);
+	      //*************************************************************
+	    }catch(IOException ioe){
+	      VistaUtils.displayException(this,ioe);
+	    }
+	  }
+	  /**
+	   * save study
+	   */
+	 void saveStudy(){
+	    inputPane.updateStudy(sty);
+	    String styFile = sty.getFileName();
+	    if ( styFile.equals("") ){
+	      styFile = VistaUtils.getFilenameFromDialog(this,FileDialog.SAVE,
+							 "sty","Study files (*.sty)");
+	      if ( styFile == null ) return;
+	    }
+	    try{
+	      if ( styFile.indexOf(".") == -1 )  styFile += ".sty";
+	      sty.save(styFile);
+	    }catch(IOException ioe){
+	      VistaUtils.displayException(this,ioe);
+	    }
+	  }
+	  /**
+	   * save study
+	   */
+	  void saveAsStudy(){
+		inputPane.updateStudy(sty);
+	    String styFile = VistaUtils.getFilenameFromDialog(this,FileDialog.SAVE,
+							      "sty","Study files (*.sty)");
+	    if ( styFile == null ) return;
+	    try{
+	      if ( styFile.indexOf((int)'.') == -1 )  //no extension
+		styFile += ".sty";  //set default extension
+	      sty.save(styFile);
+	    }catch(IOException ioe){
+	      VistaUtils.displayException(this,ioe);
+	    }
+	  }
 
 	public static boolean IS_DEVELOPER = false; // CB added to switch to
 	// user-only mode after
@@ -4143,4 +4228,6 @@ public class Schematic extends JApplet implements Runnable, DocumentListener { /
 
 	private static Preferences _userPrefs = Preferences // CB added
 			.userNodeForPackage(Schematic.class);
+	
+	private Study sty;
 }

@@ -41,6 +41,8 @@ import java.io.*;
 //import com.sun.xml.tree.TreeWalker;
 import org.w3c.dom.Element;
 
+import com.sun.xml.tree.XmlDocument;
+
 /**
 	* Contains all necessary properties required to run a study
  * @author Armin Munevar
@@ -64,6 +66,9 @@ public class Study {
     _svFile = "";
     _dvFile = "";
     _initFile = "";
+    _groundwaterFolder="";
+    _svFileAPart="";
+    _svFileFPart="";
     _initFileFPart = "";
     //DJE*************************
     _timeStep = "";
@@ -134,6 +139,15 @@ public class Study {
   }
   public String getInitFile() {
     return _initFile;
+  }
+  public String getGroundWaterFolder(){
+	return _groundwaterFolder;
+  }
+  public String getSVFileAPart(){
+	  return _svFileAPart;
+  }
+  public String getSVFileFPart(){
+	  return _svFileFPart;
   }
   public String getInitFileFPart() {
     return _initFileFPart;
@@ -263,8 +277,17 @@ public class Study {
   public void setInitFile(String fname) {
     _initFile = fname;
   }
-  public void setInitFileFPart(String fname) {
-    _initFileFPart = fname;
+  public void setGroundWaterFolder(String fname) {
+	_groundwaterFolder = fname;
+  }
+  public void setSVFileAPart(String part) {
+	_svFileAPart = part;
+  }
+  public void setSVFileFPart(String part) {
+	_svFileFPart = part;
+  }
+  public void setInitFileFPart(String part) {
+    _initFileFPart = part;
   }
   //DJE*********************************************
   public void setTimeStep(String ts) {
@@ -365,6 +388,9 @@ public class Study {
     v.addElement(_svFile);
     v.addElement(_dvFile);
     v.addElement(_initFile);
+    v.addElement(_groundwaterFolder);
+    v.addElement(_svFileAPart);
+    v.addElement(_svFileFPart);
     //DJE********************************************************
     v.addElement(_timeStep);
 
@@ -398,6 +424,33 @@ public class Study {
   }
 
   /**
+   * saves all the study data in a binary format
+   */
+  public void save(String saveFile) throws IOException{
+    XmlDocument doc = new XmlDocument();
+    _filename = saveFile;
+    this.toXml(doc);
+    PrintWriter pw = new PrintWriter(new FileOutputStream(saveFile));
+    doc.write(pw); pw.close();
+    _modified = false;
+  }
+  
+  /**
+   * reads all the study data from a file in binary format
+   */
+  public void load(String loadFile) throws IOException{
+    Study sty = this;
+    try {
+      XmlDocument doc = XmlDocument.createXmlDocument(new FileInputStream(loadFile),false);
+      sty.fromXml(doc.getDocumentElement());
+    }catch(Exception e){
+      e.printStackTrace(System.err);
+      throw new IOException("Invalid study file: " + loadFile);
+    }
+    setFileName(loadFile);
+  }
+  
+  /**
    * @return true if the study has been changed since a save
    * had been executed
    */
@@ -426,6 +479,9 @@ public class Study {
     setSvFile(se.getAttribute("svfile"));
     setDvFile(se.getAttribute("dvfile"));
     setInitFile(se.getAttribute("initfile"));
+    setGroundWaterFolder(se.getAttribute("groundwaterfolder"));
+    setSVFileAPart(se.getAttribute("svfileapart")); 
+    setSVFileFPart(se.getAttribute("svfilefpart"));    
     setInitFileFPart(se.getAttribute("initfilefpart"));
     //DJE*************************************************
     if (se.getAttribute("ts").equals("")) _newStudyObject = false;
@@ -442,6 +498,42 @@ public class Study {
     setCommonPath(se.getAttribute("common"));
   }
  
+  /**
+   * Returns a element of an xml document
+   */
+  public void toXml(XmlDocument doc){
+    Element styElement = doc.createElement("study");
+    styElement.appendChild(doc.createComment("study xml format"));
+    styElement.setAttribute("name", getName());
+    styElement.setAttribute("author", getAuthor());
+    styElement.setAttribute("date", getDate().toString());
+    styElement.setAttribute("desc", getDescription());
+    styElement.setAttribute("hydrology", getHydrologyVersion());
+    styElement.setAttribute("dir", getStudyDir());
+    styElement.setAttribute("filename", getFileName());
+    styElement.setAttribute("wreslfile", getWreslFile());
+    styElement.setAttribute("svfile", getSvFile());
+    styElement.setAttribute("dvfile", getDvFile());
+    styElement.setAttribute("initfile", getInitFile());
+    styElement.setAttribute("groundwaterfolder", getGroundWaterFolder());
+    styElement.setAttribute("svfileapart", getSVFileAPart()); 
+    styElement.setAttribute("svfilefpart", getSVFileFPart()); 
+    styElement.setAttribute("initfilefpart", getInitFileFPart());
+    //DJE********************************************************
+    styElement.setAttribute("ts", getTimeStep());
+    styElement.setAttribute("startday", getStartDay());
+    styElement.setAttribute("stopday", getStopDay());
+    //***********************************************************
+    styElement.setAttribute("startmo", getStartMonth());
+    styElement.setAttribute("startyr", getStartYear().toString());
+    styElement.setAttribute("stopmo", getStopMonth());
+    styElement.setAttribute("stopyr", getStopYear().toString());
+    styElement.setAttribute("simopt", getSimOption());
+    styElement.setAttribute("numseq", getNumberSequences().toString());
+    styElement.setAttribute("common", getCommonPath());
+    doc.appendChild(styElement);
+  }
+
   // Study properties
   private String _name;
   private String _author;
@@ -454,6 +546,9 @@ public class Study {
   private String _svFile;
   private String _dvFile;
   private String _initFile;
+  private String _groundwaterFolder;
+  private String _svFileAPart;
+  private String _svFileFPart;
   private String _initFileFPart;
   private String _timeStep; //DJE
   private String _numberSteps, _startDay, _stopDay; //DJE
