@@ -162,8 +162,17 @@ public class Schematic extends JApplet implements Runnable, DocumentListener { /
 			barPanel.add(toolBar2); // CB added
 
 			// CB contentPane.add(toolBar, "North");
-			contentPane.add(barPanel, "North");
-
+			tabbedPane =new JTabbedPane();
+			contentPane.add(tabbedPane);
+			
+			inputPane=new InputPanel();
+			tabbedPane.add(inputPane,"Input");
+			
+			outputPane=new JPanel();
+			tabbedPane.add(outputPane, "Output");
+			outputPane.setLayout(new BorderLayout());
+			outputPane.add(barPanel,"North");
+			
 			if (IS_DEVELOPER) { // CB added check
 				JSplitPane splitPane = new JSplitPane(
 						JSplitPane.HORIZONTAL_SPLIT);
@@ -172,11 +181,11 @@ public class Schematic extends JApplet implements Runnable, DocumentListener { /
 				splitPane.setLeftComponent(myPaletteTabbedPane);
 				splitPane.setRightComponent(getDesktop());
 				splitPane.setDividerLocation(100);
-				contentPane.add(splitPane, "Center");
+				outputPane.add(splitPane, "Center");
 			} else {
-				contentPane.add(getDesktop(), "Center");
+				outputPane.add(getDesktop(), "Center");
 			}
-			contentPane.validate();
+			outputPane.validate();
 
 			// CB moved the below here from main(args)
 			mainFrame = new JFrame();
@@ -4043,6 +4052,12 @@ public class Schematic extends JApplet implements Runnable, DocumentListener { /
 
 	static JFrame mainFrame;
 
+	protected JTabbedPane tabbedPane;
+	
+	protected InputPanel inputPane;
+	
+	protected JPanel outputPane;
+	
 	protected HashMap myMap = new HashMap();
 
 	// CB protected SchematicView myCurrentView; CHANGED INTERNALFRAME TO HAVE A
