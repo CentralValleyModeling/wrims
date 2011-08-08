@@ -231,6 +231,7 @@ public class Controller {
 		}else if (ControlData.solverName.equalsIgnoreCase("ILP")){
 			runModelILP(sds);
 		}
+		System.out.println("Run ends!");
 	}
 	
 	public void runModelXA(StudyDataSet sds){
