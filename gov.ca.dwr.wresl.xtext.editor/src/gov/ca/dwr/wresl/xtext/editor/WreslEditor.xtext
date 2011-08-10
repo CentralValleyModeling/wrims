@@ -1,0 +1,251 @@
+grammar gov.ca.dwr.wresl.xtext.editor.WreslEditor with org.eclipse.xtext.common.Terminals
+
+generate wreslEditor "http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor"
+
+WreslEvaluator:
+	pattern+=(Alias | Pattern)+
+	| (sequence+=Sequence+ model+=Model+);
+
+Pattern:
+	Define | IncludeFile | Goal | Objective;
+
+Objective:
+	('objective' | 'OBJECTIVE') ('[' local?=('local' | 'LOCAL') ']')? name=ID '=' '{' weights+=WeightItem+ '}';
+
+WeightItem:
+	'[' name=ID ',' expression=Expression ']' (',')?;
+
+Define:
+	('define' | 'DEFINE') ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=(DVar | SVar | DVarInteger |
+	External)
+	'}';
+
+External:
+	('external' | 'EXTERNAL') ((name=ID ('.dll' | '.DLL')) | {External} ('f90' | 'F90'));
+
+Alias: //name=[SVar|ID] to be changed to reference after scoping is resolved across files
+	('define' | 'DEFINE') ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' ('alias' | 'ALIAS') expression=Expression
+	(('kind' |
+	'KIND') kind=STRING)? (('units' | 'UNITS') units=STRING)? '}';
+
+DVar:
+	(DVarStd | DVarNonStd);
+
+DVarNonStd:
+	lowerUpper=LowerAndOrUpper ("kind" | "KIND") kind=STRING ("units" | "UNITS")
+	units=STRING;
+
+DVarStd:
+	("std" | "STD") ("kind" | "KIND") kind=STRING ("units" | "UNITS") units=STRING;
+
+DVarInteger:
+	DVarIntegerStd | DVarIntegerNonStd;
+
+DVarIntegerStd:
+	("integer" | "INTEGER") ("std" | "STD") ("kind" | "KIND") kind=STRING ("units" | "UNITS") units=STRING;
+
+DVarIntegerNonStd:
+	("integer" | "INTEGER") LowerAndOrUpper ("kind" | "KIND") kind=STRING ("units" | "UNITS") units=STRING;
+
+SVar:
+	SVarDSS | SVarExpression | SVarSum | SVarTable | SVarCase;
+
+SVarDSS:
+	("timeseries" | "TIMESERIES") bPart=STRING? ("kind" | "KIND")
+	kind=STRING ("units" | "UNITS") units=STRING (("convert" | "CONVERT") convert=STRING)?;
+
+SVarExpression:
+	("value" | "VALUE") expression=Expression;
+
+SVarSum:
+	sumContent=SumContent;
+
+SVarTable:
+	tableContent=TableContent;
+
+SVarCase:
+	caseContent+=(CaseContent)+;
+
+CaseContent:
+	("case" | "CASE") caseName=ID '{' condition=Condition (content=TableContent | content=ValueContent |
+	content=SumContent)
+	'}';
+
+SumContent:
+	("sum" | "SUM") header=SumHeader expression=Expression;
+
+SumHeader:
+	'(' 'i=' expression1=Expression ',' expression2=Expression (',' '-'? INT)? ')';
+
+ValueContent:
+	("value" | "VALUE") expression=Expression;
+
+TableContent:
+	("select" | "SELECT") tableName=ID ("from" | "FROM") from=ID (("given" | "GIVEN") given=Assignment ("use" | "USE")
+	use=ID)? (("where" | "WHERE") where=WhereItems)?;
+
+WhereItems:
+	assignment+=Assignment (',' assignment+=Assignment)*;
+
+Assignment:
+	term=TermSimple '=' expression=Expression;
+
+TermSimple:
+	ID | Number | Function;
+
+LowerAndOrUpper:
+	lowerUpper | upperLower;
+
+upperLower:
+	upper=Upper (lower=Lower)?;
+
+lowerUpper:
+	lower=Lower (upper=Upper)?;
+
+Upper:
+	("upper" | "UPPER") ({Upper} ("unbounded" | "UNBOUNDED") | expression=Expression);
+
+Lower:
+	("lower" | "LOWER") ({Lower} ("unbounded" | "UNBOUNDED") | expression=Expression);
+
+Goal:
+	("goal" | "GOAL") ('[' local?=('local' | 'LOCAL') ']')? goalName=ID '{' definition=(GoalSimple | GoalCase) '}';
+
+GoalCase:
+	('lhs' | 'LHS') lhs=Expression (content=GoalNoCaseContent | caseContent+=GoalCaseContent+);
+
+GoalCaseContent:
+	("case" | "CASE") caseName=ID '{' condition=Condition ("rhs" | "RHS") rhs=Expression (subContent=SubContent)? '}';
+
+GoalNoCaseContent:
+	("rhs" | "RHS") rhs=Expression (subContent=SubContent)?;
+
+SubContent:
+	gt=LhsGtRhs (lt=LhsLtRhs)? | lt=LhsLtRhs (gt=LhsGtRhs)?; //FIXME: replace with unordered groups
+LhsGtRhs:
+	("lhs" | "LHS") '>' ("rhs" | "RHS") ({LhsGtRhs} ("constrain" | "CONSTRAIN") | penalty=Penalty);
+
+LhsLtRhs:
+	("lhs" | "LHS") '<' ("rhs" | "RHS") ({LhsLtRhs} ("constrain" | "CONSTRAIN") | penalty=Penalty);
+
+Penalty:
+	('penalty' | 'PENALTY') expression=Expression;
+
+GoalSimple:
+	constraint=Constraint;
+
+Constraint:
+	lhs=Expression operator=('<' | '>' | '=') rhs=Expression;
+
+Model:
+	("model" | "MODEL") name=ID '{' (pattern+=Pattern|alias+=Alias)+ '}';
+
+Sequence:
+	("sequence" | "SEQUENCE") name=ID '{' ("model" | "MODEL") model=[Model|ID] (condition=Condition)? (ORDER order=INT)?
+	'}';
+
+Condition:
+	("condition" | "CONDITION") (logical=LogicalExpression | {Condition} ALWAYS);
+
+LogicalExpression:
+	ConditionalUnary (BinaryOp ConditionalUnary)*;
+
+BinaryOp:
+	OR | AND;
+
+ConditionalUnary:
+	(ConditionalNegation)? ConditionalTerm;
+
+ConditionalNegation:
+	NOT;
+
+ConditionalTerm:
+	Expression Relation Expression | LogicalFunction //| '(' LogicalExpression ')'
+;
+
+Relation:
+	'>' | '<' | '>=' | '<=' | '==' | '/=';
+
+Expression:
+	Add;
+
+Add:
+	Multiply (('+' | '-') Multiply)*;
+
+Multiply:
+	Unary (('*' | '/') Unary)*;
+
+Unary:
+	('+' | Negation)? Term;
+
+Negation:
+	'-';
+
+Term:
+	Ident | Number | Function | '(' Expression ')';
+
+Function:
+	ExternalFunction | MaxFunction | MinFunction | IntFunction | VarModel;
+
+ExternalFunction:
+	ID '(' Expression (',' Expression)* ')';
+
+MaxFunction:
+	MAX '(' Expression (',' Expression)* ')';
+
+MinFunction:
+	MIN '(' Expression (',' Expression)* ')';
+
+IntFunction:
+	INT '(' Expression ')';
+
+LogicalFunction:
+	RangeFunction;
+
+VarModel:
+	ID '[' ID ']';
+
+RangeFunction:
+	RANGE '(' ID ',' ID ',' ID ')';
+
+Ident:
+	ID;
+
+Number:
+	INT | FLOAT;
+
+IncludeFile:
+	("include" | "INCLUDE") ('[' local?=("local" | "LOCAL") ']')? file=STRING;
+
+terminal RANGE:
+	'range' | 'RANGE' | 'Range';
+
+terminal MIN:
+	'min' | 'MIN';
+
+terminal MAX:
+	'max' | 'MAX';
+
+terminal FLOAT:
+	INT '.' (INT)* | '.' (INT)+;
+
+terminal AND:
+	'.and.' | '.AND.';
+
+terminal OR:
+	'.or.' | '.OR.';
+
+terminal NOT:
+	'.not.' | '.NOT.';
+
+terminal ALWAYS:
+	"always";
+
+terminal ORDER:
+	"order";
+
+terminal STRING:
+	"'" (!("'" | '\n' | '\r'))* "'";
+
+terminal SL_COMMENT:
+	'!' !('\n' | '\r')* ('\r'? '\n')?;

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="DWR"
+            id="gov.ca.dwr.hecdssvue">
+      </category>
+      <view
+            name="DSS Catalog View"
+            icon="icons/sample.gif"
+            category="gov.ca.dwr.hecdssvue"
+            class="gov.ca.dwr.hecdssvue.views.DSSCatalogView"
+            id="gov.ca.dwr.hecdssvue.views.DSSCatalogView">
+      </view>
+      <view
+            category="gov.ca.dwr.hecdssvue"
+            class="org.eclipse.ui.navigator.CommonNavigator"
+            icon="icons/sample.gif"
+            id="gov.ca.dwr.view.navigator"
+            name="Navigator">
+      </view>
+      <view
+            category="gov.ca.dwr.hecdssvue"
+            class="gov.ca.dwr.hecdssvue.views.DSSPlotView"
+            icon="icons/sample.gif"
+            id="gov.ca.dwr.hecdssvue.views.DSSPlotView"
+            name="DSS Plot">
+      </view>
+      <view
+            category="gov.ca.dwr.hecdssvue"
+            class="gov.ca.dwr.hecdssvue.views.DSSTableView"
+            icon="icons/sample.gif"
+            id="gov.ca.dwr.hecdssvue.views.DSSTableView"
+            name="DSS Table View">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               ratio="0.5"
+               relative="org.eclipse.ui.views.TaskList"
+               relationship="right"
+               id="gov.ca.dwr.hecdssvue.views.DSSCatalogView">
+         </view>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="org.eclipse.ui.resourcePerspective">
+         <view
+               id="gov.ca.dwr.view.navigator"
+               ratio="0.5"
+               relationship="stack"
+               relative="org.eclipse.ui.navigator.ProjectExplorer">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+   <extension
+         point="org.eclipse.ui.navigator.viewer">
+      <viewerActionBinding
+            viewerId="gov.ca.dwr.view.navigator">
+         <includes>
+            <actionExtension
+                  pattern="org.eclipse.ui.navigator.resources.*">
+            </actionExtension>
+         </includes>
+      </viewerActionBinding>
+      <viewerContentBinding
+            viewerId="gov.ca.dwr.view.navigator">
+         <includes>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resourceContent">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resources.filters.*">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resources.linkHelper">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resources.workingSets">
+            </contentExtension>
+         </includes>
+      </viewerContentBinding>
+   </extension>
+
+</plugin>

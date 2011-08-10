@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+    <extension
+            point="org.eclipse.ui.editors">
+        <editor
+            class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+            default="true"
+            extensions="wresl"
+            id="gov.ca.dwr.wresl.xtext.editor.WreslEditor"
+            name="WreslEditor Editor">
+        </editor>
+    </extension>
+    <extension
+        point="org.eclipse.ui.handlers">
+        <handler
+            class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
+            <activeWhen>
+                <reference
+                    definitionId="gov.ca.dwr.wresl.xtext.editor.WreslEditor.Editor.opened">
+                </reference>
+            </activeWhen>
+        </handler>
+        <handler
+            class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+            commandId="gov.ca.dwr.wresl.xtext.editor.WreslEditor.validate">
+         <activeWhen>
+            <reference
+                    definitionId="gov.ca.dwr.wresl.xtext.editor.WreslEditor.Editor.opened">
+            </reference>
+         </activeWhen>
+      </handler>
+    </extension>
+    <extension point="org.eclipse.core.expressions.definitions">
+        <definition id="gov.ca.dwr.wresl.xtext.editor.WreslEditor.Editor.opened">
+            <and>
+                <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
+                <with variable="activeEditor">
+                    <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
+                        value="gov.ca.dwr.wresl.xtext.editor.WreslEditor" 
+                        forcePluginActivation="true"/>
+                </with>        
+            </and>
+        </definition>
+    </extension>
+    <extension
+            point="org.eclipse.ui.preferencePages">
+        <page
+            class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="gov.ca.dwr.wresl.xtext.editor.WreslEditor"
+            name="WreslEditor">
+            <keywordReference id="gov.ca.dwr.wresl.xtext.editor.ui.keyword_WreslEditor"/>
+        </page>
+        <page
+            category="gov.ca.dwr.wresl.xtext.editor.WreslEditor"
+            class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="gov.ca.dwr.wresl.xtext.editor.WreslEditor.coloring"
+            name="Syntax Coloring">
+            <keywordReference id="gov.ca.dwr.wresl.xtext.editor.ui.keyword_WreslEditor"/>
+        </page>
+        <page
+            category="gov.ca.dwr.wresl.xtext.editor.WreslEditor"
+            class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            id="gov.ca.dwr.wresl.xtext.editor.WreslEditor.templates"
+            name="Templates">
+            <keywordReference id="gov.ca.dwr.wresl.xtext.editor.ui.keyword_WreslEditor"/>
+        </page>
+    </extension>
+    <extension
+        point="org.eclipse.ui.keywords">
+        <keyword
+            id="gov.ca.dwr.wresl.xtext.editor.ui.keyword_WreslEditor"
+            label="WreslEditor"/>
+    </extension>
+    <extension
+         point="org.eclipse.ui.commands">
+      <command
+            description="Trigger expensive validation"
+            id="gov.ca.dwr.wresl.xtext.editor.WreslEditor.validate"
+            name="Validate">
+      </command>
+    </extension>
+    <extension point="org.eclipse.ui.menus">
+        <menuContribution
+            locationURI="popup:#TextEditorContext?after=group.edit">
+             <command
+                 commandId="gov.ca.dwr.wresl.xtext.editor.WreslEditor.validate"
+                 style="push"
+                 tooltip="Trigger expensive validation">
+            <visibleWhen checkEnabled="false">
+                <reference
+                    definitionId="gov.ca.dwr.wresl.xtext.editor.WreslEditor.Editor.opened">
+                </reference>
+            </visibleWhen>
+         </command>  
+         </menuContribution>
+    </extension>
+    <extension point="org.eclipse.ui.menus">
+		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
+			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
+				<visibleWhen checkEnabled="false">
+                	<reference definitionId="gov.ca.dwr.wresl.xtext.editor.WreslEditor.Editor.opened">
+                	</reference>
+            	</visibleWhen>
+			</command>
+		</menuContribution>
+	</extension>
+	<extension point="org.eclipse.ui.handlers">
+	    <handler
+            class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            commandId="org.eclipse.xtext.ui.editor.FindReferences">
+            <activeWhen>
+                <reference
+                    definitionId="gov.ca.dwr.wresl.xtext.editor.WreslEditor.Editor.opened">
+                </reference>
+            </activeWhen>
+        </handler>
+    </extension>   
+
+<!-- adding resource factories -->
+
+	<extension
+		point="org.eclipse.emf.ecore.extension_parser">
+		<parser
+			class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			type="wresl">
+		</parser>
+	</extension>
+	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
+        <resourceServiceProvider
+            class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            uriExtension="wresl">
+        </resourceServiceProvider>
+    </extension>
+
+
+
+   <extension
+         point="org.eclipse.xtext.builder.participant">
+      <participant
+            class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant">
+      </participant>
+   </extension>
+
+	<!-- Quick Outline -->
+	<extension
+		point="org.eclipse.ui.handlers">
+		<handler 
+			class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
+			<activeWhen>
+				<reference
+					definitionId="gov.ca.dwr.wresl.xtext.editor.WreslEditor.Editor.opened">
+				</reference>
+			</activeWhen>
+		</handler>
+	</extension>
+	<extension
+		point="org.eclipse.ui.commands">
+		<command
+			description="Open the quick outline."
+			id="org.eclipse.xtext.ui.editor.outline.QuickOutline"
+			name="Quick Outline">
+		</command>
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution
+			locationURI="popup:#TextEditorContext?after=group.open">
+			<command commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline"
+				style="push"
+				tooltip="Open Quick Outline">
+				<visibleWhen checkEnabled="false">
+					<reference definitionId="gov.ca.dwr.wresl.xtext.editor.WreslEditor.Editor.opened"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+	</extension>
+   <!-- quickfix marker resolution generator -->
+   <extension
+         point="org.eclipse.ui.ide.markerResolution">
+      <markerResolutionGenerator
+            class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
+      </markerResolutionGenerator>
+   </extension>
+
+   	<!-- Rename Refactoring -->
+	<extension point="org.eclipse.ui.handlers">
+		<handler 
+			class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RenameElementHandler"
+			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
+			<activeWhen>
+				<reference
+					definitionId="gov.ca.dwr.wresl.xtext.editor.WreslEditor.Editor.opened">
+				</reference>
+			</activeWhen>
+		</handler>
+	</extension>
+    <extension point="org.eclipse.ui.menus">
+         <menuContribution
+            locationURI="popup:#TextEditorContext?after=group.edit">
+         <command commandId="org.eclipse.xtext.ui.refactoring.RenameElement"
+               style="push">
+            <visibleWhen checkEnabled="false">
+               <reference
+                     definitionId="gov.ca.dwr.wresl.xtext.editor.WreslEditor.Editor.opened">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+
+  <extension point="org.eclipse.compare.contentViewers">
+    <viewer id="gov.ca.dwr.wresl.xtext.editor.WreslEditor.compare.contentViewers"
+            class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="wresl">
+    </viewer>
+  </extension>
+  <extension point="org.eclipse.compare.contentMergeViewers">
+    <viewer id="gov.ca.dwr.wresl.xtext.editor.WreslEditor.compare.contentMergeViewers"
+            class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="wresl" label="WreslEditor Compare">
+     </viewer>
+  </extension>
+  <extension point="org.eclipse.ui.editors.documentProviders">
+    <provider id="gov.ca.dwr.wresl.xtext.editor.WreslEditor.editors.documentProviders"
+            class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+            extensions="wresl">
+    </provider>
+  </extension>
+
+</plugin>
