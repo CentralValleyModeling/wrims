@@ -45,13 +45,6 @@
    </requires>
 
    <plugin
-         id="gov.ca.dwr.calsim.jdiagram"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="gov.ca.dwr.hecdssvue"
          download-size="0"
          install-size="0"
@@ -67,6 +60,13 @@
 
    <plugin
          id="gov.ca.dwr.wresl.xtext.editor.ui"
+         download-size="0"
+         install-size="0"
+         version="1.0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="gov.ca.dwr.jdiagram"
          download-size="0"
          install-size="0"
          version="1.0.0.0"
