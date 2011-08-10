@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="**/.svn/|.svn/" kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="libs/antlr-3.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/testng-5.14.1.jar"/>
 	<classpathentry kind="lib" path="src/wrimsv2/lib/XAOptimizer.jar"/>
 	<classpathentry kind="lib" path="src/wrimsv2/lib/gurobi.jar"/>
 	<classpathentry kind="lib" path="src/wrimsv2/lib/lpsolve55j.jar"/>
-	<classpathentry kind="lib" path="/3rd_party/vista/lib/dsm2-input-model.jar"/>
-	<classpathentry kind="lib" path="/3rd_party/vista/lib/heclib.jar"/>
-	<classpathentry kind="lib" path="/3rd_party/vista/lib/jhall.jar"/>
-	<classpathentry kind="lib" path="/3rd_party/vista/lib/jhdf5.jar"/>
-	<classpathentry kind="lib" path="/3rd_party/vista/lib/jhdf5obj.jar"/>
-	<classpathentry kind="lib" path="/3rd_party/vista/lib/jhdfobj.jar"/>
-	<classpathentry kind="lib" path="/3rd_party/vista/lib/jnios.jar"/>
-	<classpathentry kind="lib" path="/3rd_party/vista/lib/jpy.jar"/>
-	<classpathentry kind="lib" path="/3rd_party/vista/lib/jyson-1.0.1.jar"/>
-	<classpathentry kind="lib" path="/3rd_party/vista/lib/misc.jar"/>
-	<classpathentry kind="lib" path="/3rd_party/vista/lib/ojdbc6.jar"/>
-	<classpathentry kind="lib" path="/3rd_party/vista/lib/pd.jar"/>
-	<classpathentry kind="lib" path="/3rd_party/vista/lib/postgresql-8.4-702.jdbc4.jar"/>
-	<classpathentry kind="lib" path="/3rd_party/vista/lib/vista.jar"/>
-	<classpathentry kind="lib" path="/3rd_party/vista/lib/xercesImpl.jar"/>
-	<classpathentry kind="lib" path="/3rd_party/vista/lib/xml-apis.jar"/>
+	<classpathentry kind="lib" path="3rd_party/vista/lib/dsm2-input-model.jar"/>
+	<classpathentry kind="lib" path="3rd_party/vista/lib/heclib.jar"/>
+	<classpathentry kind="lib" path="3rd_party/vista/lib/jhall.jar"/>
+	<classpathentry kind="lib" path="3rd_party/vista/lib/jhdf5.jar"/>
+	<classpathentry kind="lib" path="3rd_party/vista/lib/jhdf5obj.jar"/>
+	<classpathentry kind="lib" path="3rd_party/vista/lib/jhdfobj.jar"/>
+	<classpathentry kind="lib" path="3rd_party/vista/lib/jnios.jar"/>
+	<classpathentry kind="lib" path="3rd_party/vista/lib/jpy.jar"/>
+	<classpathentry kind="lib" path="3rd_party/vista/lib/jyson-1.0.1.jar"/>
+	<classpathentry kind="lib" path="3rd_party/vista/lib/misc.jar"/>
+	<classpathentry kind="lib" path="3rd_party/vista/lib/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="3rd_party/vista/lib/pd.jar"/>
+	<classpathentry kind="lib" path="3rd_party/vista/lib/postgresql-8.4-702.jdbc4.jar"/>
+	<classpathentry kind="lib" path="3rd_party/vista/lib/vista.jar"/>
+	<classpathentry kind="lib" path="3rd_party/vista/lib/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="3rd_party/vista/lib/xml-apis.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
