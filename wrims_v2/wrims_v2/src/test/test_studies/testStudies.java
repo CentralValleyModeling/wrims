@@ -97,34 +97,34 @@ public class testStudies {
 	}
 	
 	public void testCalsim3_BO()throws RecognitionException, IOException{
-		FilePaths.groundwaterDir="D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\CVGroundwater\\Data";
+		FilePaths.groundwaterDir="D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\CVGroundwater\\Data\\";
+		FilePaths.setMainFilePaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\CONV\\Run\\mainCONV_30.wresl");
 		FilePaths.setSvarDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06_SV.dss");
-        FilePaths.setInitDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06Init.dss");
+        FilePaths.setInitDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06Init.dss");   
         FilePaths.setDvarDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\CONV\\DSS\\TestWRIMSV2DV.dss");
-        FilePaths.setMainFilePaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\CONV\\Run\\mainCONV_30.wresl");
 		ControlData cd=new ControlData();
+		cd.svDvPartF="CALSIM30_06";
+		cd.initPartF="CALSIM30_06";
+		cd.partA = "CALSIM";
+		cd.partE = "1MON";
+		cd.timeStep="1MON";
 		cd.startYear=1921;
 		cd.startMonth=10;
 		cd.startDay=31;
 		cd.endYear=2003;
 		cd.endMonth=9;
 		cd.endDay=30;
+        cd.solverName="XA";
+        cd.csvFolderPath="csv";
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
         cd.writeDssStartYear=ControlData.startYear;
         cd.writeDssStartMonth=ControlData.startMonth;
         cd.writeDssStartDay=ControlData.startDay;
-		cd.partA = "CALSIM";
-		cd.partE = "1MON";
-		cd.timeStep="1MON";
-		cd.svDvPartF="CALSIM30_06";
-		cd.initPartF="CALSIM30_06";
         cd.writeDssStartYear=ControlData.startYear;
         cd.writeDssStartMonth=ControlData.startMonth;
         cd.writeDssStartDay=ControlData.startDay;
-        cd.solverName="XA";
-        cd.csvFolderPath="csv";
         
 		StudyDataSet sds=parseCalsim3();
 		
@@ -132,34 +132,34 @@ public class testStudies {
 	}
 	
 	public void testParsedCalsim3()throws RecognitionException, IOException{
-		FilePaths.groundwaterDir="D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\common\\CVGroundwater\\Data\\";
-		FilePaths.setSvarDssPaths("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\common\\DSS\\CalSim30_06_SV.dss");
-        FilePaths.setInitDssPaths("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\common\\DSS\\CalSim30_06Init.dss");
-        FilePaths.setDvarDssPaths("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\CONV\\DSS\\TestWRIMSV2DV.dss");
-        FilePaths.setMainFilePaths("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CALSIM30_051711_BO\\CONV\\Run\\mainCONV_30.wresl");
+		FilePaths.groundwaterDir="D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\CVGroundwater\\Data\\";
+		FilePaths.setMainFilePaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\CONV\\Run\\mainCONV_30.wresl");
+		FilePaths.setSvarDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06_SV.dss");
+        FilePaths.setInitDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06Init.dss");   
+        FilePaths.setDvarDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\CONV\\DSS\\TestWRIMSV2DV.dss");
 		ControlData cd=new ControlData();
+		cd.svDvPartF="CALSIM30_06";
+		cd.initPartF="CALSIM30_06";
+		cd.partA = "CALSIM";
+		cd.partE = "1MON";
+		cd.timeStep="1MON";
 		cd.startYear=1921;
 		cd.startMonth=10;
 		cd.startDay=31;
 		cd.endYear=2003;
 		cd.endMonth=9;
 		cd.endDay=30;
+        cd.solverName="XA";
+        cd.csvFolderPath="csv";
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
         cd.writeDssStartYear=ControlData.startYear;
         cd.writeDssStartMonth=ControlData.startMonth;
         cd.writeDssStartDay=ControlData.startDay;
-		cd.partA = "CALSIM";
-		cd.partE = "1MON";
-		cd.timeStep="1MON";
-		cd.svDvPartF="CALSIM30_06";
-		cd.initPartF="CALSIM30_06";
         cd.writeDssStartYear=ControlData.startYear;
         cd.writeDssStartMonth=ControlData.startMonth;
         cd.writeDssStartDay=ControlData.startDay;
-        cd.solverName="XA";
-        cd.csvFolderPath="csv";
         
 		StudyDataSet sds=parseCalsim3();
 		
