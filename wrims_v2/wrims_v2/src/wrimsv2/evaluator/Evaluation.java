@@ -146,13 +146,13 @@ public class Evaluation {
 			ee.setValue(id0);
 			Error.addEvaluationError("Alias "+ident+" should not appear in constraint. ");
 			return ee;
-		}else if (!ControlData.isPostProcessing && !ControlData.currAliasMap.containsKey(ident) && !ControlData.currDvMap.containsKey(ident) ){
+		}/* else if (!ControlData.isPostProcessing && !ControlData.currAliasMap.containsKey(ident) && !ControlData.currDvMap.containsKey(ident) ){
 			EvalExpression ee=new EvalExpression();
 			IntDouble id0=new IntDouble(1.0, false);
 			ee.setValue(id0);
 			Error.addEvaluationError(ident+" is not defined before used.");
 			return ee;
-		}
+		}*/
 		
 		EvalExpression ee=new EvalExpression();
 		IntDouble id0 = new IntDouble (0, true);
