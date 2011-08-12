@@ -1,0 +1,20 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }	
+	
+MODEL first { 
+
+	define[local] x { upper 10 lower -10 kind 'cycle1_local' units 'CFS' } 
+	goal goal_1 { x < 99 }
+}
+
+MODEL second { 
+
+	goal goal_2 { x < 99 }
+}
