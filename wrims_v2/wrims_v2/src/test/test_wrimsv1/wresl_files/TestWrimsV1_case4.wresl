@@ -1,0 +1,25 @@
+! duplicate weight declaration in weight-table
+
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+	
+	
+MODEL first { 
+
+	define[local] x_1 { std kind 'cycle1_local' units 'CFS' } 
+	define[local] x_2 { std kind 'cycle1_local' units 'CFS' } 
+	define[local] x_3 { std kind 'cycle1_local' units 'CFS' } 
+	define[local] x_4 { std kind 'cycle1_local' units 'CFS' } 
+	define[local] x_5 { std kind 'cycle1_local' units 'CFS' } 
+
+	Objective obj = {
+
+		[x_1, 100], 
+		[x_1, 200], 
+		[x_3, 300], 
+		[x_4, 400],
+		[x_5, 400]
+	}
+}

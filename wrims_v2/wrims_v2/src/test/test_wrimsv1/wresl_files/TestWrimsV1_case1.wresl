@@ -1,3 +1,5 @@
+! local dvar in first cycle is leaked into the second cycle.
+
 SEQUENCE CYCLE1 {
     model   first
     order   1
