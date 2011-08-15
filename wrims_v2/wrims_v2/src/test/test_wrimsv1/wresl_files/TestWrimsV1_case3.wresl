@@ -1,3 +1,5 @@
+! local svar is leaked into second cycle
+
 SEQUENCE CYCLE1 {
     model   first
     order   1
@@ -10,12 +12,11 @@ SEQUENCE CYCLE2 {
 	
 MODEL first { 
 
-	define[local] x { upper 10 lower -10 kind 'cycle1_local' units 'CFS' } 
+	define[local] x { std kind 'cycle1_local' units 'CFS' } 
 	define[local] y { value 7 } 
-	goal goal_1 { x < 99 }
 }
 
 MODEL second { 
 
-	goal goal_2 { x + y < 99 }
+	goal goal_1 { x + y < 99 }
 }

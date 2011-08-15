@@ -1,4 +1,4 @@
-! local dvar in first cycle is leaked into the second cycle.
+! what is the constraint for dvar x?
 
 SEQUENCE CYCLE1 {
     model   first
@@ -13,11 +13,14 @@ SEQUENCE CYCLE2 {
 MODEL first { 
 
 	define[local] x { std kind 'cycle1_local' units 'CFS' } 
-	
+	goal goal_1 { x < 44 }
 }
 
 MODEL second { 
 
-	goal goal_1 { x < 99 }
-
+	goal[local] goal_1 { x < 99 }
+	
+		Objective obj = {
+		[x, 100]
+	}
 }
