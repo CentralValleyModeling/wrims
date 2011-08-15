@@ -1,7 +1,7 @@
 import os
 
 Version_Main    = "2.0"  # First two number of 8.0b1
-Version_Status  = "a1"   
+Version_Status  = "beta"   
 
 setupTemplate = open("version.template",'r')
 

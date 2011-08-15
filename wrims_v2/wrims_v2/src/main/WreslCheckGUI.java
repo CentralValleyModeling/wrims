@@ -26,8 +26,10 @@ public class WreslCheckGUI {
 		
 		Versions vers = new Versions();
 		int version_svn = vers.getSVN();
+		String version_main = vers.getMainVersion();
+		String version_status = vers.getStatus().toLowerCase();
 		
-		JFrame frame = new JFrame("Wresl Study Check Tool   ( svn: "+version_svn+" )");
+		JFrame frame = new JFrame("Wresl Study Check Tool   ( v"+version_main+version_status+" svn"+version_svn+" )");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		JPanel wreslCheckPanel = new JPanel();
 		wreslCheckPanel.setLayout(new BoxLayout(wreslCheckPanel, BoxLayout.Y_AXIS));

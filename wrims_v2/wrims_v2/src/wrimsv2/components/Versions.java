@@ -9,39 +9,73 @@ import org.w3c.dom.Document;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
 
 public class Versions {
 	
+	private String xmlFileName = "version.xml";
+	private Document xmlDocument = null;
+
 	public int getSVN() {
+
+		if (xmlDocument == null) setXmlDocument(xmlFileName);
+		String svnStr = getTagValue("svn_number");
+
+		try {
+			int version_svn_number = Integer.parseInt(svnStr);
+
+			return version_svn_number;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -99;
+	}	
+
+	public String getMainVersion() {
+
+		if (xmlDocument == null) setXmlDocument(xmlFileName);
+		
+		String version_main = getTagValue("main");
+		
+		return version_main;
+	}
+
+	public String getStatus() {
+
+		if (xmlDocument == null) setXmlDocument(xmlFileName);
+		
+		String version_status = getTagValue("status");
+		
+		return version_status;
+	}
+	
+	private void setXmlDocument(String xmlFileName) {
 
 		try {
 			//System.out.println(System.getProperty("user.dir"));			
-			InputStream inStream = getClass().getClassLoader().getResourceAsStream("version.xml");
+			InputStream inStream = getClass().getClassLoader().getResourceAsStream(xmlFileName);
 			//File inStream = new File("version.xml");
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			//Document doc = db.parse(file);
 			Document doc = db.parse(inStream);
 			doc.getDocumentElement().normalize();
-			//System.out.println("Root element " + doc.getDocumentElement().getNodeName());
-			NodeList nodeLst = doc.getElementsByTagName("svn_number");
-			NodeList svn_number_node = ((Element) nodeLst.item(0)).getChildNodes();
-			
-				
-			try {
-				int version_svn_number = Integer.parseInt(svn_number_node.item(0).getNodeValue());	
-			
-				return version_svn_number;
-			} 
-			catch (Exception e){
-				e.printStackTrace();	
-			}
-
+			xmlDocument = doc;
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return -1;	
+	
+	}	
+	
+	private String getTagValue(String xmlTag) {
+
+		// System.out.println("Root element " +
+		// doc.getDocumentElement().getNodeName());
+		NodeList nodeLst = xmlDocument.getElementsByTagName(xmlTag);
+		String nodeValue = ((Element) nodeLst.item(0)).getChildNodes().item(0).getNodeValue();
+
+		return nodeValue;
 	}
 }
