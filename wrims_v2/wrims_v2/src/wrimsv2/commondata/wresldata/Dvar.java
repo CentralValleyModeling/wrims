@@ -44,6 +44,26 @@ public class Dvar {
 		upperBoundValue = null;
 		lowerBoundValue = null;
 	}
+
+	public Dvar(Dvar input){
+		scope=input.scope;
+		integer=input.integer;
+		format=input.format;
+		kind=input.kind;
+		units=input.units;
+		lowerBound=input.lowerBound;
+		upperBound=input.upperBound;
+		fromWresl=input.fromWresl;
+		expression=input.expression;
+		dependants = input.dependants;
+
+		lowerBoundParser = input.lowerBoundParser;
+		upperBoundParser = input.upperBoundParser;
+		upperBoundValue = input.upperBoundValue;
+		lowerBoundValue = input.lowerBoundValue;
+		
+		data = null; // this is not copied to new Dvar
+	}	
 	
 	public String equalEva(){
 		
