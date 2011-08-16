@@ -37,6 +37,12 @@ public class Dvar {
 		fromWresl=Param.undefined;
 		expression=Param.undefined;
 		dependants = new HashSet<String>();
+
+		lowerBoundParser = null;
+		upperBoundParser = null;
+		data = null;
+		upperBoundValue = null;
+		lowerBoundValue = null;
 	}
 	
 	public String equalEva(){
