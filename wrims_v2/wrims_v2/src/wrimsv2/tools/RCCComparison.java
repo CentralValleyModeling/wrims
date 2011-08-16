@@ -24,7 +24,7 @@ import wrimsv2.components.IntDouble;
 import wrimsv2.evaluator.EvalConstraint;
 
 public class RCCComparison {
-	private int cycle=3;
+	private int cycle=1;
 	private String cycleName;
 	private BufferedWriter out;
 	private BufferedWriter out1;
@@ -133,7 +133,10 @@ public class RCCComparison {
 			}
 			
 			for (int i=0; i<dvarArrayList.size(); i++){	
-				out2.write(dvarArrayList.get(i)+" is not in WRIMS1.\n");
+				Dvar dvar=dvarMap.get(dvarArrayList.get(i));
+				if (dvar.lowerBoundValue.doubleValue()!=0 || dvar.upperBoundValue.doubleValue()!=1.0e38){
+					out2.write(dvarArrayList.get(i)+" is not in WRIMS1.\n");
+				}
 			}
 			out2.close();
 		}catch (Exception e){
