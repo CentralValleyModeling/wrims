@@ -237,18 +237,18 @@ public class StudyParser{
 	} 
 
     
-	  // find the previous global dvar names excluding current dvar names
-      Set<String> globalDvarNames = cumulative_global_replace_redefined.dvSet_global;
-      globalDvarNames.removeAll(model_dataset.dvSet);    
+//	  // find the previous global dvar names excluding current dvar names
+//      Set<String> globalDvarNames = cumulative_global_replace_redefined.dvSet_global;
+//      globalDvarNames.removeAll(model_dataset.dvSet);    
       
       // put all previous global vars into current cycle 
       model_dataset.overwrite_set(cumulative_global_replace_redefined);
       
-      // create new instances of previous global dvar
-      Map<String, Dvar> t = cumulative_global_replace_redefined.dvMap;
-      for (String key: globalDvarNames){
-    	  model_dataset.dvMap.put(key, new Dvar(t.get(key)));
-      }
+//      // create new instances of previous global dvar
+//      Map<String, Dvar> t = cumulative_global_replace_redefined.dvMap;
+//      for (String key: globalDvarNames){
+//    	  model_dataset.dvMap.put(key, new Dvar(t.get(key)));
+//      }
    
       
       //LogUtils.importantMsg("Finish adding previous global vars into model: "+modelName);
