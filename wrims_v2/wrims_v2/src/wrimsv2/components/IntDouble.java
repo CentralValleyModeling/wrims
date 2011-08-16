@@ -2,7 +2,17 @@ package wrimsv2.components;
 
 public class IntDouble {
 	private Number data;
-	private boolean isInteger;
+	private Boolean isInteger;
+
+	public IntDouble(){
+		this.data = null;
+		this.isInteger = null;	
+	}
+	
+	public IntDouble( IntDouble input){
+		this.data = input.data;
+		this.isInteger = input.isInteger;	
+	}
 	
 	public IntDouble(Number value, boolean isInt) {
 		data=value;

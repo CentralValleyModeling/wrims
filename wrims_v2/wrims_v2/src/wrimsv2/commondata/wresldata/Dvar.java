@@ -40,7 +40,7 @@ public class Dvar {
 
 		lowerBoundParser = null;
 		upperBoundParser = null;
-		data = null;
+		data = new IntDouble();
 		upperBoundValue = null;
 		lowerBoundValue = null;
 	}
@@ -75,7 +75,7 @@ public class Dvar {
 	}
 	
 	public void setData(IntDouble data){
-		this.data=data;
+		this.data= new IntDouble(data);
 	}
 	
 	public IntDouble getData(){
