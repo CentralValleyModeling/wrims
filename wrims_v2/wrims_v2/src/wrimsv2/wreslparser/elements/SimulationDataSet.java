@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+
 import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.External;
@@ -105,6 +106,10 @@ public class SimulationDataSet
   public ArrayList<String> gList_local = new ArrayList<String>();
   public Map<String, Goal> gMap = new HashMap<String, Goal>();
 
+  public Set<String> varNeedEarlierCycle = new LinkedHashSet<String>();
+  public Map<String, Set<String>> var_neededVarCycle_map = new HashMap<String, Set<String>>();
+
+  
   public SimulationDataSet()
   {
 	  
@@ -333,6 +338,17 @@ public class SimulationDataSet
 
     }
 
+    if (!this.varNeedEarlierCycle.isEmpty()) {
+        out.varNeedEarlierCycle.addAll(this.varNeedEarlierCycle);
+        out.varNeedEarlierCycle.retainAll(out.svList_global);
+        out.varNeedEarlierCycle.retainAll(out.asList_global);
+
+        for (String key : out.varNeedEarlierCycle) {
+          out.var_neededVarCycle_map.put(key, this.var_neededVarCycle_map.get(key));
+        }
+
+     }
+    
     return out;
   }
 
@@ -401,6 +417,12 @@ public class SimulationDataSet
       Tools.mapRemoveAll(this.gMap, s.gList);
     }
 
+    if (!s.varNeedEarlierCycle.isEmpty()) {
+        this.varNeedEarlierCycle.removeAll(s.varNeedEarlierCycle);
+
+        Tools.mapRemoveAll(this.var_neededVarCycle_map, s.varNeedEarlierCycle);
+      }
+    
     if (!s.model_list.isEmpty()) {
       this.model_list.removeAll(s.model_list);
     }
@@ -465,6 +487,11 @@ public class SimulationDataSet
       this.gMap.putAll(s.gMap);
     }
 
+    if (!s.varNeedEarlierCycle.isEmpty()) {
+        this.varNeedEarlierCycle.addAll(s.varNeedEarlierCycle);
+        this.var_neededVarCycle_map.putAll(s.var_neededVarCycle_map);
+    }
+    
     if (!s.model_list.isEmpty()) {
       this.model_list.addAll(s.model_list);
     }
@@ -588,6 +615,12 @@ public class SimulationDataSet
       this.gMap.putAll(s.gMap);
     }
 
+    if (!s.varNeedEarlierCycle.isEmpty()) {
+    	// TODO: find a way to insert linkedHashSet
+        this.varNeedEarlierCycle.addAll(s.varNeedEarlierCycle);
+        this.var_neededVarCycle_map.putAll(s.var_neededVarCycle_map);
+      }
+    
     if (!s.model_list.isEmpty()) {
       this.model_list.addAll(0, s.model_list);
     }
@@ -619,6 +652,7 @@ public class SimulationDataSet
     Tools.mapRemoveAll(x.gMap, this.gSet);
     Tools.mapRemoveAll(x.exMap, this.exSet);
     Tools.mapRemoveAll(x.incFileMap, this.incFileSet);
+    Tools.mapRemoveAll(x.var_neededVarCycle_map, this.varNeedEarlierCycle);
 
     x.dvSet.addAll(this.dvSet);
     x.dvSet_global.addAll(this.dvSet_global);
@@ -630,8 +664,7 @@ public class SimulationDataSet
 
     x.svSet.addAll(this.svSet);
     x.svSet_global.addAll(this.svSet_global);
-    x.svSet_local.addAll(this.svSet_local);
-    
+    x.svSet_local.addAll(this.svSet_local);  
     this.svSet = x.svSet;
     this.svSet_global = x.svSet_global;
     this.svSet_local = x.svSet_local;
@@ -685,6 +718,10 @@ public class SimulationDataSet
     this.incFileSet_local = x.incFileSet_local;
     this.incFileMap.putAll(x.incFileMap);
 
+    x.varNeedEarlierCycle.addAll(this.varNeedEarlierCycle);
+    this.varNeedEarlierCycle = x.varNeedEarlierCycle;
+    this.var_neededVarCycle_map.putAll(x.var_neededVarCycle_map);
+    
     return this;
   }
 
@@ -723,7 +760,9 @@ public class SimulationDataSet
 //				this.exSet_local.add(k);
 				this.exMap.put(k,s.exMap.get(k));
 			}
-
+			if (this.varNeedEarlierCycle.contains(k)){
+				this.var_neededVarCycle_map.put(k,s.var_neededVarCycle_map.get(k));
+			}
 		}
 		
 		return this;
@@ -772,7 +811,9 @@ public class SimulationDataSet
 				this.exSet_local.add(k);
 				this.exMap.put(k,s.exMap.get(k));
 			}
-
+			if (this.varNeedEarlierCycle.contains(k)){
+				this.var_neededVarCycle_map.put(k,s.var_neededVarCycle_map.get(k));
+			}
 		}
 		
 		return this;
@@ -856,6 +897,15 @@ public class SimulationDataSet
       out.gMap.put(key, (Goal)this.gMap.get(key));
     }
 
+    ////////
+    t = new LinkedHashSet<String>(this.varNeedEarlierCycle);
+    t.retainAll(this.svSet_global);
+    t.retainAll(this.asSet_global);
+    out.varNeedEarlierCycle.addAll(t);
+    for (String key : out.varNeedEarlierCycle) {
+        out.var_neededVarCycle_map.put(key, this.var_neededVarCycle_map.get(key));
+    }
+    
     return out;
   }
 
@@ -997,7 +1047,11 @@ public SimulationDataSet remove_set(Set<String> s)
 
       Tools.mapRemoveAll(this.gMap, s);
 
+      
+      this.varNeedEarlierCycle.removeAll(s);
 
+      Tools.mapRemoveAll(this.var_neededVarCycle_map, s);
+      
 
     return this;
   }
@@ -1054,6 +1108,9 @@ public SimulationDataSet overwrittenWith_set(SimulationDataSet s) {
     this.incFileSet_local.addAll(s.incFileSet_local);
     this.incFileMap.putAll(s.incFileMap);
 
+    this.varNeedEarlierCycle.addAll(s.varNeedEarlierCycle);
+    this.var_neededVarCycle_map.putAll(s.var_neededVarCycle_map);
+    
     this.lousyConvert();
     
     return this;

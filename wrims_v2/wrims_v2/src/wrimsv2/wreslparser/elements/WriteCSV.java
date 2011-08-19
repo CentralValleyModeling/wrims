@@ -35,6 +35,8 @@ public class WriteCSV {
 	  public static String dvar_header ="NAME,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE,USED_IN_LATER_CYCLE";	  
 	  public static String alias_header ="NAME,TYPE,UNITS,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,USED_IN_LATER_CYCLE";
 	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,DEPENDANT,FROM_WRESL_FILE";
+	  private static ModelDataSet currentModelDataSet;
+	  
 	  
 	public static void study(StudyDataSet sd, String outParent) {
 			
@@ -105,6 +107,9 @@ public class WriteCSV {
 		PrintWriter out_alias_unknown;
 		PrintWriter out_wt;
 		PrintWriter out_incFile;
+		
+		currentModelDataSet = ds;
+		
 		
 		//outFolder = System.getProperty("user.dir")+"//"+outFolder;
 
@@ -245,15 +250,18 @@ public class WriteCSV {
 		    	
 		    	out.print(Param.csv_seperator);
 		    	
-		    	if (s.neededVarInCycle!=null){
-			    	for (String d: s.neededVarInCycle){
+		    	if (s.neededVarInCycleSet!=null){
+			    	for (String d: s.neededVarInCycleSet){
 			    		out.print(d+";"); //for dependantName[cycleName]		    	
 			    	}
 		    	}
 		    	
 		    	out.print(Param.csv_seperator);
 		    	
-		    	out.print(s.usedInLaterCycle);
+		    	boolean usedByLaterCycle = false;
+		    	if (currentModelDataSet.varUsedByLaterCycle.contains(k)) usedByLaterCycle = true;
+		    	
+		    	out.print( usedByLaterCycle);
 		    	
 				out.print("\n");	
 		    	}
@@ -390,7 +398,10 @@ public class WriteCSV {
 				
 		    	out.print(Param.csv_seperator);
 		    	
-		    	out.print(d.usedInLaterCycle);
+		    	boolean usedByLaterCycle = false;
+		    	if (currentModelDataSet.varUsedByLaterCycle.contains(k)) usedByLaterCycle = true;
+		    	
+		    	out.print( usedByLaterCycle);
 		    	
 				out.print("\n");	
 		    	}
@@ -476,15 +487,18 @@ public class WriteCSV {
 				
 		    	out.print(Param.csv_seperator);
 		    	
-		    	if (a.neededVarInCycle!=null){
-			    	for (String d: a.neededVarInCycle){
+		    	if (a.neededVarInCycleSet!=null){
+			    	for (String d: a.neededVarInCycleSet){
 			    		out.print(d+";"); //for dependantName[cycleName]		    	
 			    	}
 		    	}
 		    	
 		    	out.print(Param.csv_seperator);
 		    	
-		    	out.print(a.usedInLaterCycle);
+		    	boolean usedByLaterCycle = false;
+		    	if (currentModelDataSet.varUsedByLaterCycle.contains(k)) usedByLaterCycle = true;
+		    	
+		    	out.print( usedByLaterCycle);
 				
 				out.print("\n");	
 		    	}

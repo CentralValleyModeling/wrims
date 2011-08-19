@@ -39,8 +39,24 @@ MODEL third {
 
 MODEL fourth { 
 
-	define[local] sv_expr1 { value sv_1[first] + dv_2[second] }
-	define sv_expr2 { value min(max(as_3[third],sv_2[not_exist]),sv_2[second] + dv_2_global[second]) }
-	define sv_expr3 { value int(min(int_3[third],dv_1[first])) }
+
+	define[local] sv_expr1 {
+           select     di
+           from       wsi_di_cvp_sys
+           given      wsi=sv_1[first] + dv_2[second]
+           use        linear       
+	}		
+	define sv_expr2 {
+           select     di
+           from       wsi_di_cvp_sys
+           given      wsi=min(max(as_3[third],sv_2[not_exist]),sv_2[second] + dv_2_global[second])
+           use        linear       
+	}	
+	define sv_expr3 {
+           select     di
+           from       wsi_di_cvp_sys
+           given      wsi=int(min(int_3[third],dv_1[first]))
+           use        linear       
+	}
 	
 }

@@ -76,9 +76,9 @@ public class TestWreslWalker_dvar {
 	}
 	
 	@Test(groups = { "WRESL_elements" })
-	public void deepCopy() throws RecognitionException, IOException {
+	public void globalShare() throws RecognitionException, IOException {
 		
-		testName = "TestWreslWalker_dvar_deepCopy";
+		testName = "TestWreslWalker_dvar_globalShare";
 		csvFolderPath = "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
@@ -106,7 +106,7 @@ public class TestWreslWalker_dvar {
 
 		String originalKind = sd.getModelDataSetMap().get("first").dvMap.get("x").kind;
 		
-		Assert.assertEquals(originalKind, "original");	
+		Assert.assertEquals(originalKind, "overwritten");	
 
 	}
 

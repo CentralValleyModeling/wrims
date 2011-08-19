@@ -26,6 +26,7 @@ public class StudyDataSet {
 	/// this map contains value of vars needed for WRESL syntax: varName[cycleName] 
 	/// < VarName, < CycleName, Value >>		
 	private Map<String, Map<String, IntDouble>> varCycleValueMap = new HashMap<String, Map<String, IntDouble>>();
+
 	
 	public Map<String, Timeseries> getTimeseriesMap() {
 		return new HashMap<String, Timeseries>(timeseriesMap);

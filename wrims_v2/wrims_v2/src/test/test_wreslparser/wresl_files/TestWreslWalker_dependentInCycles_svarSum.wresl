@@ -39,8 +39,8 @@ MODEL third {
 
 MODEL fourth { 
 
-	define[local] sv_expr1 { value sv_1[first] + dv_2[second] }
-	define sv_expr2 { value min(max(as_3[third],sv_2[not_exist]),sv_2[second] + dv_2_global[second]) }
-	define sv_expr3 { value int(min(int_3[third],dv_1[first])) }
-	
+	define[local] sv_expr1 { sum(i=0,SEP-month,1) max(sv_1[first],dv_2[second])*cfs_taf(i)  }
+	define sv_expr2 { sum(i=0,SEP-month,1) min(max(as_3[third],sv_2[not_exist]),sv_2[second] + dv_2_global[second])*cfs_taf(i)  }	
+	define sv_expr3 { sum(i=0,SEP-month,1) int(min(int_3[third],dv_1[first]))*cfs_taf(i)  }
+
 }

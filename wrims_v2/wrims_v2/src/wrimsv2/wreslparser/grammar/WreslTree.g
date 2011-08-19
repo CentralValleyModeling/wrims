@@ -160,7 +160,7 @@ includeFile
 	;
 	
 alias : DEFINE ( '[' sc=LOCAL? ']' )? i=IDENT '{' ALIAS e=expression (KIND k=STRING)? (UNITS u=STRING)? '}'
-	->  ^(Alias Scope[$sc.text] $i Expression[$e.text] Kind[$k.text] Units[$u.text] Dependants[$e.dependants])
+	->  ^(Alias Scope[$sc.text] $i Expression[$e.text] Kind[$k.text] Units[$u.text] Dependants[$e.dependants] VarInCycle[$e.strVarInCycle])
 	;	
 
 goal
@@ -270,7 +270,7 @@ case_content : CASE i=IDENT '{' c=condition ( table_content
 ) '}' 
 ;
 
-value_content : VALUE e=expression -> Value[$e.text] Dependants[$e.dependants] ;
+value_content : VALUE e=expression -> Value[$e.text] Dependants[$e.dependants]  VarInCycle[$e.strVarInCycle];
 
 svar_table :
 	( '[' sc=LOCAL? ']' )? i=IDENT '{' table_content '}'
@@ -281,7 +281,7 @@ table_content : SELECT s=IDENT FROM f=IDENT
 				(GIVEN g=assignment USE u=IDENT)? 
 				(WHERE w=where_items)? 
 				
-->  ^( SELECT $s FROM $f (GIVEN $g Dependants[$g.dependants]  USE $u)? (WHERE $w Dependants[$w.dependants])? )
+->  ^( SELECT $s FROM $f (GIVEN $g Dependants[$g.dependants] VarInCycle[$g.varInCycle]  USE $u)? (WHERE $w Dependants[$w.dependants])? )
 ;
 
 where_items returns[String dependants]
@@ -299,7 +299,7 @@ svar_sum : ( '[' sc=LOCAL ']' )? IDENT '{' sum_content '}'
 	;
 
 sum_content :SUM hdr=sum_header e=expression 
--> ^( Sum_hdr[$hdr.text] Expression[$e.text] Dependants[$e.dependants])
+-> ^( Sum_hdr[$hdr.text] Expression[$e.text] Dependants[$e.dependants] VarInCycle[$e.strVarInCycle])
 ;
 
 sum_header
@@ -355,9 +355,9 @@ constraint_statement_preprocessed returns[String dependants]
 	;
 
 
-assignment returns[String dependants] 
-	:  t=term_simple  '=' e=expression { $dependants = $e.dependants;}  
-	-> Assignment[$t.text+"="+$e.text]
+assignment returns[String dependants, String varInCycle] 
+	:  t=term_simple  '=' e=expression { $dependants = $e.dependants; $varInCycle = $e.strVarInCycle;}  
+	-> Assignment[$t.text+"="+$e.text] 
 	;
 	
 lt_or_gt :              term_simple ( '<'  | '>'  ) expression ;

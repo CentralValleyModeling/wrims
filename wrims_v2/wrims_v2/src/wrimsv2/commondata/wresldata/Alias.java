@@ -1,6 +1,5 @@
 package wrimsv2.commondata.wresldata;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,7 +7,7 @@ import wrimsv2.components.IntDouble;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 
 
-public class Alias {
+public class Alias extends Var{
 	
 	public String scope;
 	public String kind;
@@ -18,9 +17,8 @@ public class Alias {
 	public String fromWresl;
 	public IntDouble data;
 	public Set<String> dependants;
-	public Set<String> neededVarInCycle;
+	public Set<String> neededVarInCycleSet;
 	public boolean needVarFromEarlierCycle;
-	public boolean usedInLaterCycle;
 
 	public Alias(){
 		scope=Param.undefined;
@@ -31,9 +29,8 @@ public class Alias {
 		dependants = new HashSet<String>();
 		expressionParser = null;
 		data = null;
-		neededVarInCycle = new HashSet<String>();
+		neededVarInCycleSet = new HashSet<String>();
 		needVarFromEarlierCycle = false;
-		usedInLaterCycle  = false;
 	}
 	
 	public String equalEva(){

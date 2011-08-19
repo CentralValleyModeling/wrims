@@ -1,6 +1,5 @@
 package wrimsv2.commondata.wresldata;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,7 +24,6 @@ public class Dvar {
 	public Number lowerBoundValue;
 	public String expression;
 	public Set<String> dependants;
-	public boolean usedInLaterCycle;
 	
 	public Dvar(){
 		scope=Param.undefined;
@@ -44,8 +42,6 @@ public class Dvar {
 		data = null;
 		upperBoundValue = null;
 		lowerBoundValue = null;
-		
-		usedInLaterCycle  = false;
 	}
 
 	public Dvar(Dvar input){

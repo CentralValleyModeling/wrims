@@ -194,13 +194,14 @@ public class StructTree
     }
   }
 
-  public void alias(String name, String scope, String kind, String units, String expression, String dependants)
+  public void alias(String name, String scope, String kind, String units, String expression, String dependants, String varInCycle)
   {
     name = name.toLowerCase();
     if (kind != null) kind = kind.toLowerCase();
     if (units != null) units = units.toLowerCase();
     expression = expression.toLowerCase();
     if (dependants != null) dependants = dependants.toLowerCase();
+    if (varInCycle != null) varInCycle = varInCycle.toLowerCase();
 
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("Alias redefined: " + name, this.S.currentAbsolutePath);
@@ -220,6 +221,10 @@ public class StructTree
     this.as.expression = expression;
     this.as.fromWresl = this.S.currentAbsolutePath;
     if (dependants != null) this.as.dependants = Tools.convertStrToSet(dependants);
+    if (varInCycle != null) { 
+    	this.as.neededVarInCycleSet = Tools.convertStrToSet(varInCycle);
+    	this.as.needVarFromEarlierCycle = true;
+    }
 
     this.S.asMap.put(name, this.as);
     this.S.asList.add(name);
@@ -235,11 +240,12 @@ public class StructTree
     }
   }
 
-  public void svarCase(String name, String scope, Svar sv, String dependants)
+  public void svarCase(String name, String scope, Svar sv, String dependants, String varInCycle)
   {
     name = name.toLowerCase();
     if (dependants != null) dependants = dependants.toLowerCase();
-
+    if (varInCycle != null) varInCycle = varInCycle.toLowerCase();
+    
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("Svar redefined: " + name, this.S.currentAbsolutePath);
       this.S.error_var_redefined.put(name, "svar"); 
@@ -254,6 +260,10 @@ public class StructTree
     sv.fromWresl = this.S.currentAbsolutePath;
 
     if (dependants != null) sv.dependants = Tools.convertStrToSet(dependants);
+    if (varInCycle != null) { 
+    	sv.neededVarInCycleSet = Tools.convertStrToSet(varInCycle);
+    	sv.needVarFromEarlierCycle = true;
+    }
 
     this.S.svMap.put(name, sv);
     this.S.svList.add(name);
@@ -334,7 +344,7 @@ public class StructTree
 
     if (dependants != null) this.sv.dependants = Tools.convertStrToSet(dependants);
     if (varInCycle != null) { 
-    	this.sv.neededVarInCycle = Tools.convertStrToSet(varInCycle);
+    	this.sv.neededVarInCycleSet = Tools.convertStrToSet(varInCycle);
     	this.sv.needVarFromEarlierCycle = true;
     }
     
@@ -352,12 +362,13 @@ public class StructTree
     }
   }
 
-  public void svarSum(String name, String scope, String hdr, String expression, String dependants)
+  public void svarSum(String name, String scope, String hdr, String expression, String dependants, String varInCycle)
   {
     name = name.toLowerCase();
     hdr = hdr.toLowerCase();
     expression = expression.toLowerCase();
     if (dependants != null) dependants = dependants.toLowerCase();
+    if (varInCycle != null) varInCycle = varInCycle.toLowerCase();
 
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("State variable redefined: " + name, this.S.currentAbsolutePath);
@@ -377,6 +388,10 @@ public class StructTree
     this.sv.caseExpression.add(hdr + " " + expression);
     this.sv.fromWresl = this.S.currentAbsolutePath;
     if (dependants != null) this.sv.dependants = Tools.convertStrToSet(dependants);
+    if (varInCycle != null) { 
+    	this.sv.neededVarInCycleSet = Tools.convertStrToSet(varInCycle);
+    	this.sv.needVarFromEarlierCycle = true;
+    }
 
     this.S.svMap.put(name, this.sv);
     this.S.svList.add(name);
@@ -392,11 +407,12 @@ public class StructTree
     }
   }
 
-  public void svarTable(String name, String scope, String sqlStr, String dependants)
+  public void svarTable(String name, String scope, String sqlStr, String dependants, String varInCycle)
   {
     name = name.toLowerCase();
     sqlStr = sqlStr.toLowerCase();
     if (dependants != null) dependants = dependants.toLowerCase();
+    if (varInCycle != null) varInCycle = varInCycle.toLowerCase();
 
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("State variable redefined: " + name, this.S.currentAbsolutePath);
@@ -417,7 +433,11 @@ public class StructTree
     this.sv.caseExpression.add(sqlStr);
     this.sv.fromWresl = this.S.currentAbsolutePath;
     if (dependants != null) this.sv.dependants = Tools.convertStrToSet(dependants);
-
+    if (varInCycle != null) { 
+    	this.sv.neededVarInCycleSet = Tools.convertStrToSet(varInCycle);
+    	this.sv.needVarFromEarlierCycle = true;
+    }
+    
     this.S.svMap.put(name, this.sv);
     this.S.svList.add(name);
     this.S.svSet.add(name);

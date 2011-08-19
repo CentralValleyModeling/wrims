@@ -27,9 +27,8 @@ public class Svar {
 	public String fromWresl;
 	private IntDouble data;
 	public Set<String> dependants;
-	public Set<String> neededVarInCycle;
+	public Set<String> neededVarInCycleSet;
 	public boolean needVarFromEarlierCycle;
-	public boolean usedInLaterCycle;
 	
 	public Svar(){
 		scope=Param.undefined;
@@ -40,13 +39,16 @@ public class Svar {
 		convertToUnits =Param.undefined;
 		caseName       = new ArrayList<String>();
 		caseCondition  = new ArrayList<String>();
+		caseConditionParsers = new ArrayList<ValueEvaluatorParser>();
+		caseConditionWalkers = new ArrayList<ValueEvaluatorTreeWalker>();
 		caseExpression = new ArrayList<String>();
+		caseExpressionParsers = new ArrayList<ValueEvaluatorParser>();
+		caseExpressionWalkers = new ArrayList<ValueEvaluatorTreeWalker>();
 		fromWresl = Param.undefined;
 		dependants = new HashSet<String>();
 		data = null;
-		neededVarInCycle = new HashSet<String>();
+		neededVarInCycleSet = new HashSet<String>();
 		needVarFromEarlierCycle = false;
-		usedInLaterCycle  = false;
 	}
 
 	public Svar(Svar s){
@@ -61,9 +63,9 @@ public class Svar {
 		caseExpression = new ArrayList<String>(s.caseExpression);
 		fromWresl = s.fromWresl;
 		dependants = new HashSet<String>(s.dependants);
-		neededVarInCycle = new HashSet<String>(s.neededVarInCycle);
+		neededVarInCycleSet = new HashSet<String>(s.neededVarInCycleSet);
 		needVarFromEarlierCycle = s.needVarFromEarlierCycle;
-		usedInLaterCycle  = s.usedInLaterCycle;
+		// TODO: check if cause error
 		//data = new IntDouble(s.data.getData(),s.data.isInt()); 
 	}	
 	
