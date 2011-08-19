@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import wrimsv2.components.IntDouble;
+
 
 public class TempData {
 	
@@ -14,12 +16,21 @@ public class TempData {
 	/// this map will collect detailed info for models			
 	public Map<String, SimulationDataSet> model_dataset_map;
 
+//	/// this map contains value of vars needed for WRESL syntax: varName[cycleName] 
+//	/// < VarName, < CycleName, Value >>
+//	public Map<String, HashMap<String, IntDouble>> var_cycle_value_map;
+	
 	/// map of model's global adhocs
 	public Map<String, SimulationDataSet> model_global_adhoc_map;
 	
 	/// cumulative global vars and include files
 	public SimulationDataSet cumulative_global_adhocs;
 	public SimulationDataSet cumulative_global_complete;
+	
+//	/// this map contains value of vars needed for WRESL syntax: varName[cycleName] 
+//	/// < VarName, < CycleName, Value >>		
+//	public Map<String, Map<String, IntDouble>> varCycleValueMap = new HashMap<String, Map<String, IntDouble>>();
+
 	
 	public TempData(){
 		
@@ -37,6 +48,10 @@ public class TempData {
 		cumulative_global_adhocs = new SimulationDataSet();
 		
 		cumulative_global_complete = new SimulationDataSet();
+		
+//		/// this map contains value of vars needed for WRESL syntax: varName[cycleName] 
+//		/// < VarName, < CycleName, Value >>		
+//		varCycleValueMap = new HashMap<String, Map<String, IntDouble>>();
 		
 	}
 

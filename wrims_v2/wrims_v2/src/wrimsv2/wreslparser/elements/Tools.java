@@ -503,5 +503,31 @@ public class Tools {
 
 	    return new LinkedHashSet<String>(duplicatesList);
 	  }
+	  
+	  public static Map<String,Set<String>> getCycleVarMap(Set<String> setVarCycle)
+	  {
+		  Map<String,Set<String>> out = new HashMap<String,Set<String>>();
 
+		  for (String x : setVarCycle) {
+			  
+			  int posStart = x.indexOf("[");
+			  int posEnd = x.indexOf("]");
+			  
+			  String varName = x.substring(0,posStart);
+			  String cycleName = x.substring(posStart+1, posEnd);
+
+			  if (out.keySet().contains(cycleName)){
+		  
+				  out.get(cycleName).add(varName);
+			  }
+			  else{
+				  
+				  Set<String> setVarName = new HashSet<String>();
+				  setVarName.add(varName);
+				  out.put(cycleName, setVarName);
+			  }
+		  }
+
+	    return out;
+	  }
 }

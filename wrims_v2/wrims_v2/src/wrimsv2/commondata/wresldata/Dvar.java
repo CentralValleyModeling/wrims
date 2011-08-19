@@ -25,6 +25,7 @@ public class Dvar {
 	public Number lowerBoundValue;
 	public String expression;
 	public Set<String> dependants;
+	public boolean usedInLaterCycle;
 	
 	public Dvar(){
 		scope=Param.undefined;
@@ -43,6 +44,8 @@ public class Dvar {
 		data = null;
 		upperBoundValue = null;
 		lowerBoundValue = null;
+		
+		usedInLaterCycle  = false;
 	}
 
 	public Dvar(Dvar input){

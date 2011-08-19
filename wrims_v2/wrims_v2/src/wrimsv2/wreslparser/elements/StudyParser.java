@@ -17,13 +17,16 @@ import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
+import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
+import wrimsv2.components.IntDouble;
 import wrimsv2.wreslparser.grammar.WreslTreeWalker;
 
 public class StudyParser{
 	
   public static int total_errors = 0;
   public static int total_warnings = 0;
+  //public static Map<String, Map<String, String>> cycleVarTypeMap = new HashMap<String, Map<String,String>>();
 	
   public static StudyDataSet writeWreslData(StudyConfig sc, TempData td){
     StudyDataSet studyDataSet = new StudyDataSet();
@@ -84,6 +87,7 @@ public class StudyParser{
 
     studyDataSet.setModelDataSetMap(modelDataSetMap);
     studyDataSet.setTimeseriesMap(timeseriesMap);
+    //studyDataSet.setVarCycleValueMap(td.varCycleValueMap);
 
     return studyDataSet;
   }
@@ -354,6 +358,21 @@ public class StudyParser{
     	allVar.addAll(ds.exSet);
     	
     	for (String e: allVar) { if (e.length()>99)  LogUtils.errMsg("Variable name is longer than 99 chars: "+ e);};
+    	
+    	
+//    	/// create map for var and varType
+//		Map<String,String> varTypeMap = new HashMap<String, String>();
+//    	for (String v: ds.dvSet){
+//    		varTypeMap.put(v, "dv");
+//    	}
+//    	for (String v: ds.svSet){
+//    		varTypeMap.put(v, "sv");
+//    	}    	
+//    	for (String v: ds.asSet){
+//    		varTypeMap.put(v, "as");
+//    	}    	
+//    	cycleVarTypeMap.put(key, varTypeMap);
+
     }
 
     LogUtils.importantMsg("Finished converting aliases.");
@@ -365,6 +384,131 @@ public class StudyParser{
     return model_dataset_map;
   }
 
+  
+	public static void analyzeVarNeededFromCycles(StudyConfig sc, StudyDataSet td) {
+		
+		Map<String, ModelDataSet> mdsm = td.getModelDataSetMap();
+		Map<String, Map<String, String>> cycleVarTypeMap = new HashMap<String, Map<String,String>>();
+		Set<String> allValidCycleNames = mdsm.keySet();
+		
+		
+		for (String key: mdsm.keySet()){
+			
+			ModelDataSet ds = mdsm.get(key);
+		
+	    	/// create map for var and varType
+			Map<String,String> varTypeMap = new HashMap<String, String>();
+	    	for (String v: ds.dvList){
+	    		varTypeMap.put(v, "dv");
+	    	}
+	    	for (String v: ds.svList){
+	    		varTypeMap.put(v, "sv");
+	    	}    	
+	    	for (String v: ds.asList){
+	    		varTypeMap.put(v, "as");
+	    	}    	
+	    	cycleVarTypeMap.put(key, varTypeMap);
+		
+		}
+		
+		
+//		for (String k : cycleVarTypeMap.keySet()){
+//			
+//			Map<String,String> m = cycleVarTypeMap.get(k);
+//			for (String s: m.keySet()){
+//				System.out.println(s+":"+m.get(s));
+//			}
+//			
+//		}
+		
+		for (Integer iSequence : sc.sequenceOrder) {
+
+			String cycleKey = sc.sequenceMap.get(iSequence).modelName;
+
+			ModelDataSet ds = mdsm.get(cycleKey);
+
+			// / 1. check needVarFromEarlierCycle in svar and alias;
+			// / 2. create space in td.varCycleValueMap
+			// / 3. set usedInLaterCycle for dvar, svar and alias;
+			for (String varName : ds.svList) {
+
+				Svar svar = ds.svMap.get(varName);
+
+				if (svar.needVarFromEarlierCycle) {
+
+					Map<String, Set<String>> cycleVarMap = Tools.getCycleVarMap(svar.neededVarInCycle);
+					String varUsedPrint = "";
+					for (String neededCycle : cycleVarMap.keySet()) {
+
+						Set<String> varUsedByLaterCycle = cycleVarMap.get(neededCycle);
+						
+						//String varUsedPrint = "";
+						for (String s: varUsedByLaterCycle){
+							
+							varUsedPrint = varUsedPrint + s+"["+neededCycle+"], ";
+						}
+						
+						//LogUtils.importantMsg(varName + "[" + cycleKey + "] need: " + varUsedPrint);
+
+
+						for (String neededVar : varUsedByLaterCycle) {
+
+							// / find var type
+							//LogUtils.errMsg("neededVar: "+neededVar+" neededCycle: "+neededCycle);
+							
+							String vtype = "";
+							
+							// / check if exist
+							if (!allValidCycleNames.contains(neededCycle)) {
+								
+								LogUtils.errMsg(neededVar+"["+neededCycle+"] doesn't exist.");
+								break;
+								
+							} else if (!cycleVarTypeMap.get(neededCycle).keySet().contains(neededVar)){
+								
+								LogUtils.errMsg(neededVar+"["+neededCycle+"] doesn't exist.");
+								break;
+								
+							} else {
+								
+							// / find var type
+								vtype = cycleVarTypeMap.get(neededCycle).get(neededVar);
+							}
+							
+
+								
+							// / create space in varCycleValue map
+							Map<String, Map<String, IntDouble>> vcv = td.getVarCycleValueMap();
+							if (vcv.keySet().contains(neededVar)){
+								vcv.get(neededVar).put(neededCycle, null);
+							}
+
+							// / set boolean usedInLaterCycle
+							if (vtype == "sv") {
+								
+								mdsm.get(neededCycle).svMap.get(neededVar).usedInLaterCycle = true;
+								//LogUtils.errMsg("check "+neededVar+":"+mdsm.get(neededCycle).svMap.get(neededVar).usedInLaterCycle);
+							}
+							else if (vtype == "dv") {
+								mdsm.get(neededCycle).dvMap.get(neededVar).usedInLaterCycle = true;
+							}
+							else if (vtype == "as") {
+								mdsm.get(neededCycle).asMap.get(neededVar).usedInLaterCycle = true;
+							}
+							else {
+								LogUtils.errMsg("Check variable Type for "+neededVar+"["+neededCycle+"]");
+							}
+						}
+					}
+					LogUtils.importantMsg(varName + "[" + cycleKey + "] needs: " + varUsedPrint);
+				}
+
+			}
+
+		}
+
+	}
+  
   private static void checkUsedBeforeDefined(SimulationDataSet ds, ArrayList<String> ordered_list_sv_as_ex, Set<String> previous_global_sv_as_ex_ts) {
 	
 	  Set<String> dep;

@@ -11,7 +11,7 @@ tokens {
 	NEW_LINE; Op; Separator; Slack_Surplus; Sign; Constrain; Free; Simple; One; Two;
 	Weight_table; Assignment; External;
 	Local; Global; Scope;
-	Value; Case ; Dependants;
+	Value; Case ; Dependants; VarInCycle;
 	Alias; Expression;
 	Dvar; Dvar_std; Dvar_nonStd; Dvar_std; Dvar_nonStd_local; Dvar_integer;
 	Svar_case; Svar_dss; Svar_const; Svar_sum; Sum_hdr; B_part;
@@ -291,7 +291,7 @@ where_items returns[String dependants]
 
 svar_expr : 
 	( '[' sc=LOCAL ']' )? IDENT '{' VALUE  e=expression'}'	
-	->  ^(Svar_const Scope[$sc.text] IDENT Expression[$e.text] Dependants[$e.dependants])  
+	->  ^(Svar_const Scope[$sc.text] IDENT Expression[$e.text] Dependants[$e.dependants] VarInCycle[$e.strVarInCycle])  
 	;	
 
 svar_sum : ( '[' sc=LOCAL ']' )? IDENT '{' sum_content '}' 
@@ -399,10 +399,12 @@ scope { Set<String> SV; }
 	   }	   
 	};
 	
-expression returns[String text, Set<String> members, String dependants] 
-scope { Set<String> SV; } 
+expression returns[String text, Set<String> members, String dependants, Set<String> setVarInCycle, String strVarInCycle] 
+scope { Set<String> SV; Set<String> varInCycle } 
 @init { $expression::SV = new HashSet<String>(); 
-		String dependants = null; } 
+		$expression::varInCycle = new HashSet<String>(); 
+		String dependants = null;
+		String strVarInCycle = null; } 
 	:
 	add 
 	{  $text = Tools.replace_ignoreChar($add.text); 
@@ -413,7 +415,13 @@ scope { Set<String> SV; }
        for (String s : $expression::SV) {
        
 	   	$dependants = $dependants +" "+s;
-	   }   
+	   }
+	   
+	   $setVarInCycle = $expression::varInCycle;
+	   for (String s : $expression::varInCycle) {
+       
+	   	$strVarInCycle = $strVarInCycle +" "+s;
+	   }    
 	};	
 	
 c_term
@@ -443,7 +451,9 @@ bin : OR -> OR[".OR."] | AND -> AND[".AND."] ;
 function : external_func | max_func | min_func | int_func | var_model ;
 function_logical : range_func ;
 
-var_model : i=IDENT '[' IDENT ']' ; //{ $expression::DV.add($i.text.toLowerCase());} ;	
+var_model 
+	: varName=IDENT '[' cycleName = IDENT ']' 
+	  {  $expression::varInCycle.add($varName.text+'['+$cycleName.text+']' );} ; //{ $expression::DV.add($i.text.toLowerCase());} ;	
 
 external_func // this could be timeseries function
 	: i=IDENT {$expression::SV.add($i.text);} '('  ie=expression (',' e=expression  {$expression::SV.addAll($e.members);}  )*  ')' 
@@ -454,18 +464,41 @@ external_func // this could be timeseries function
 range_func : RANGE '(' IDENT ',' IDENT ',' IDENT ')' ;
 
 max_func
-	: MAX '(' ie=expression (',' e=expression  {$expression::SV.addAll($e.members);}   )+ ')' 
-	        {$expression::SV.addAll($ie.members);}
+	: MAX '(' ie=expression (',' e=expression  
+				{
+					$expression::SV.addAll($e.members);
+					$expression::varInCycle.addAll($e.setVarInCycle);
+				}  
+				 
+			)+ ')' 
+	        	
+	        	{
+	        		$expression::SV.addAll($ie.members);
+	        		$expression::varInCycle.addAll($ie.setVarInCycle);
+	        	}
 	;
 
 min_func
-	: MIN '(' ie=expression (',' e=expression  {$expression::SV.addAll($e.members);}    )+ ')' 
-	        {$expression::SV.addAll($ie.members);}	
+	: MIN '(' ie=expression (',' e=expression  
+				{
+					$expression::SV.addAll($e.members);
+					$expression::varInCycle.addAll($e.setVarInCycle);
+				}
+				    
+			)+ ')' 
+	        	
+	        	{	
+	        		$expression::SV.addAll($ie.members);
+	        		$expression::varInCycle.addAll($ie.setVarInCycle);
+	        	}	
 	;
 
 int_func 
 	: INT '(' e=expression ')' 
-	{$expression::SV.addAll($e.members);} 
+	{
+		$expression::SV.addAll($e.members);
+		$expression::varInCycle.addAll($e.setVarInCycle);
+	} 
 	;
 	
 /// End Intrinsic functions ///	

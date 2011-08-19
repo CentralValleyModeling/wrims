@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import wrimsv2.components.IntDouble;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 
 
@@ -22,6 +23,10 @@ public class StudyDataSet {
 	///  < modelName, modelDataSet > 		
 	private Map<String, ModelDataSet> modelDataSetMap = new HashMap<String, ModelDataSet>();
 
+	/// this map contains value of vars needed for WRESL syntax: varName[cycleName] 
+	/// < VarName, < CycleName, Value >>		
+	private Map<String, Map<String, IntDouble>> varCycleValueMap = new HashMap<String, Map<String, IntDouble>>();
+	
 	public Map<String, Timeseries> getTimeseriesMap() {
 		return new HashMap<String, Timeseries>(timeseriesMap);
 	}
@@ -70,4 +75,12 @@ public class StudyDataSet {
 		this.modelDataSetMap = modelDataSetMap;
 	}
 
+	public Map<String, Map<String, IntDouble>> getVarCycleValueMap() {
+		return this.varCycleValueMap;
+	}
+	
+	public void setVarCycleValueMap(Map<String, Map<String, IntDouble>> varCycleValueMap) {
+		this.varCycleValueMap = varCycleValueMap;
+	}
+	
 }

@@ -18,6 +18,9 @@ public class Alias {
 	public String fromWresl;
 	public IntDouble data;
 	public Set<String> dependants;
+	public Set<String> neededVarInCycle;
+	public boolean needVarFromEarlierCycle;
+	public boolean usedInLaterCycle;
 
 	public Alias(){
 		scope=Param.undefined;
@@ -26,6 +29,11 @@ public class Alias {
 		expression=Param.undefined;
 		fromWresl=Param.undefined;
 		dependants = new HashSet<String>();
+		expressionParser = null;
+		data = null;
+		neededVarInCycle = new HashSet<String>();
+		needVarFromEarlierCycle = false;
+		usedInLaterCycle  = false;
 	}
 	
 	public String equalEva(){

@@ -342,8 +342,8 @@ sum_content returns[String hdr, String expr, String dependants]:
 ;	
 
 svar_expr : 
-	   ^(Svar_const sc=Scope i=IDENT v=Expression d=Dependants)
-	   { F.svarExpression($i.text, $sc.text, Tools.replace_seperator($v.text), $d.text ); }
+	   ^(Svar_const sc=Scope i=IDENT v=Expression d=Dependants vc=VarInCycle)
+	   { F.svarExpression($i.text, $sc.text, Tools.replace_seperator($v.text), $d.text, $vc.text ); }
 	;
 
 svar_dss :

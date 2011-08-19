@@ -27,6 +27,9 @@ public class Svar {
 	public String fromWresl;
 	private IntDouble data;
 	public Set<String> dependants;
+	public Set<String> neededVarInCycle;
+	public boolean needVarFromEarlierCycle;
+	public boolean usedInLaterCycle;
 	
 	public Svar(){
 		scope=Param.undefined;
@@ -40,6 +43,10 @@ public class Svar {
 		caseExpression = new ArrayList<String>();
 		fromWresl = Param.undefined;
 		dependants = new HashSet<String>();
+		data = null;
+		neededVarInCycle = new HashSet<String>();
+		needVarFromEarlierCycle = false;
+		usedInLaterCycle  = false;
 	}
 
 	public Svar(Svar s){
@@ -54,6 +61,9 @@ public class Svar {
 		caseExpression = new ArrayList<String>(s.caseExpression);
 		fromWresl = s.fromWresl;
 		dependants = new HashSet<String>(s.dependants);
+		neededVarInCycle = new HashSet<String>(s.neededVarInCycle);
+		needVarFromEarlierCycle = s.needVarFromEarlierCycle;
+		usedInLaterCycle  = s.usedInLaterCycle;
 		//data = new IntDouble(s.data.getData(),s.data.isInt()); 
 	}	
 	

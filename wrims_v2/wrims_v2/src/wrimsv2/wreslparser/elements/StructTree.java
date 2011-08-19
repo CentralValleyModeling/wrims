@@ -304,12 +304,13 @@ public class StructTree
     }
   }
 
-  public void svarExpression(String name, String scope, String expression, String dependants)
+  public void svarExpression(String name, String scope, String expression, String dependants, String varInCycle)
   {
     name = name.toLowerCase();
     expression = expression.toLowerCase();
     if (dependants != null) dependants = dependants.toLowerCase();
-
+    if (varInCycle != null) varInCycle = varInCycle.toLowerCase();
+    
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("State variable redefined: " + name, this.S.currentAbsolutePath);
       this.S.error_var_redefined.put(name, "svar"); 
@@ -332,7 +333,11 @@ public class StructTree
     this.sv.fromWresl = this.S.currentAbsolutePath;
 
     if (dependants != null) this.sv.dependants = Tools.convertStrToSet(dependants);
-
+    if (varInCycle != null) { 
+    	this.sv.neededVarInCycle = Tools.convertStrToSet(varInCycle);
+    	this.sv.needVarFromEarlierCycle = true;
+    }
+    
     this.S.svMap.put(name, this.sv);
     this.S.svList.add(name);
     this.S.svSet.add(name);

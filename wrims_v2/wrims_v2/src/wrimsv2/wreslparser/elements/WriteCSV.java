@@ -30,10 +30,10 @@ public class WriteCSV {
 	  public static String sequence_header ="CYCLE,CONDITION";
 	  public static String weight_header ="DVAR,WEIGHT";
 	  public static String external_header ="FUNCTION,FILE,FROM_WRESL_FILE";
-	  public static String svar_header   ="NAME,CASE,ORDER,CONDITION,EXPRESSION,DEPENDANT,FROM_WRESL_FILE";
+	  public static String svar_header   ="NAME,CASE,ORDER,CONDITION,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,USED_IN_LATER_CYCLE";
 	  public static String timeseries_header ="NAME,B_PART,TYPE,UNITS,CONVERT_TO_UNITS,FROM_WRESL_FILE";
-	  public static String dvar_header ="NAME,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE";	  
-	  public static String alias_header ="NAME,TYPE,UNITS,EXPRESSION,DEPENDANT,FROM_WRESL_FILE";
+	  public static String dvar_header ="NAME,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE,USED_IN_LATER_CYCLE";	  
+	  public static String alias_header ="NAME,TYPE,UNITS,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,USED_IN_LATER_CYCLE";
 	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,DEPENDANT,FROM_WRESL_FILE";
 	  
 	public static void study(StudyDataSet sd, String outParent) {
@@ -242,6 +242,19 @@ public class WriteCSV {
 		    	}
 				
 		    	out.print(Param.csv_seperator+s.fromWresl);
+		    	
+		    	out.print(Param.csv_seperator);
+		    	
+		    	if (s.neededVarInCycle!=null){
+			    	for (String d: s.neededVarInCycle){
+			    		out.print(d+";"); //for dependantName[cycleName]		    	
+			    	}
+		    	}
+		    	
+		    	out.print(Param.csv_seperator);
+		    	
+		    	out.print(s.usedInLaterCycle);
+		    	
 				out.print("\n");	
 		    	}
 			}
@@ -374,6 +387,11 @@ public class WriteCSV {
 		    	out.print(Param.csv_seperator+d.kind); //for KIND
 
 				out.print(Param.csv_seperator+d.fromWresl);
+				
+		    	out.print(Param.csv_seperator);
+		    	
+		    	out.print(d.usedInLaterCycle);
+		    	
 				out.print("\n");	
 		    	}
 	  };
@@ -455,6 +473,19 @@ public class WriteCSV {
 		    	}
 		    	
 				out.print(Param.csv_seperator+a.fromWresl);
+				
+		    	out.print(Param.csv_seperator);
+		    	
+		    	if (a.neededVarInCycle!=null){
+			    	for (String d: a.neededVarInCycle){
+			    		out.print(d+";"); //for dependantName[cycleName]		    	
+			    	}
+		    	}
+		    	
+		    	out.print(Param.csv_seperator);
+		    	
+		    	out.print(a.usedInLaterCycle);
+				
 				out.print("\n");	
 		    	}
 	  };		  
