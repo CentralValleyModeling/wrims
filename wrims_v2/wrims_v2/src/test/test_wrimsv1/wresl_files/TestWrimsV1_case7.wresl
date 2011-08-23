@@ -1,0 +1,26 @@
+! what is the constraint for dvar x?
+
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }	
+	
+MODEL first { 
+
+	define[local] x { std kind 'cycle1_local' units 'CFS' } 
+	goal[local] goal_1 { x < 844 }
+}
+
+MODEL second { 
+
+	goal[local] goal_1 { x < 99 }
+	
+		Objective obj = {
+		[x, 100]
+	}
+}
