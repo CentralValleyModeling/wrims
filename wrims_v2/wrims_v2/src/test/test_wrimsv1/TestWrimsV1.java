@@ -204,4 +204,41 @@ public class TestWrimsV1 {
 		Assert.assertEquals(totalErrs, 6);	
 	
 	}
+
+	@Test(groups = { "WRIMS_V1" })
+	public void case7() throws RecognitionException, IOException {
+		
+		testName = "TestWrimsV1_case7";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+	
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 6);	
+	
+	}
+
 }
