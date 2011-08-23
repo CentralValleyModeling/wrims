@@ -41,7 +41,7 @@ public class TestWreslWalker_dependantOfGoalInCycles {
 		
 		TempData td = new TempData();
 	
-		StudyParser.clear();
+		StudyParser.reset();
 		
 		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath, true);
 		
@@ -150,7 +150,7 @@ public class TestWreslWalker_dependantOfGoalInCycles {
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
 		
-		StudyParser.clear();
+		StudyParser.reset();
 		
 		TempData td = new TempData();
 	
@@ -261,7 +261,7 @@ public class TestWreslWalker_dependantOfGoalInCycles {
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
 		
-		StudyParser.clear();
+		StudyParser.reset();
 		
 		TempData td = new TempData();
 	
@@ -372,7 +372,7 @@ public class TestWreslWalker_dependantOfGoalInCycles {
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
 		
-		StudyParser.clear();
+		StudyParser.reset();
 		
 		TempData td = new TempData();
 	

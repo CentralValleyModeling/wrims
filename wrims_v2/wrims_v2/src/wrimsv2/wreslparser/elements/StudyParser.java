@@ -30,11 +30,11 @@ public class StudyParser{
   public static Set<String> allValidCycleNames;
 
 	
-  public static void clear(){  
+  public static void reset(){  
 	  total_errors = 0;
 	  total_warnings = 0;
-	  if  (cycleVarTypeMap!=null) cycleVarTypeMap.clear();
-	  if  (allValidCycleNames!=null) allValidCycleNames.clear(); 
+	  cycleVarTypeMap = null;
+	  allValidCycleNames = null; 
   }
   
   public static StudyDataSet writeWreslData(StudyConfig sc, TempData td){
@@ -501,7 +501,7 @@ public class StudyParser{
 			if (!allValidCycleNames.contains(neededCycle)) {
 
 				for (String s : neededVarSet) {
-					LogUtils.errMsg("In file: " + fromWresl + "\n" + "Variable [" + varName + "] has Invalid items: "+ s + "[" + neededCycle + "]");
+					LogUtils.errMsg("In file: " + fromWresl + "\n" + "Variable [" + varName + "] has an item with undefined cycle: "+ s + "[" + neededCycle + "]");
 				}
 				continue;
 			}
@@ -513,7 +513,7 @@ public class StudyParser{
 
 				if (!validVarNames.contains(neededVar)) {
 
-					LogUtils.errMsg("In file: " + fromWresl + "\n" + "Variable [" + varName + "] has Invalid items: "+ neededVar + "[" + neededCycle + "]");
+					LogUtils.errMsg("In file: " + fromWresl + "\n" + "Variable [" + varName + "] has an item with undefined variable: "+ neededVar + "[" + neededCycle + "]");
 					continue;
 				}
 
