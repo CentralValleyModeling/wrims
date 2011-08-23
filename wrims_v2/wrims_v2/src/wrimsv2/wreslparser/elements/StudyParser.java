@@ -529,7 +529,7 @@ public class StudyParser{
 
 				// / add to set varUsedByLaterCycle
 				mdsm.get(neededCycle).varUsedByLaterCycle.add(neededVar);
-				LogUtils.importantMsg(mdsm.get(neededCycle).varUsedByLaterCycle + "[" + neededCycle + "]");
+				// LogUtils.importantMsg(mdsm.get(neededCycle).varUsedByLaterCycle + "[" + neededCycle + "]");
 			}
 		}
 
