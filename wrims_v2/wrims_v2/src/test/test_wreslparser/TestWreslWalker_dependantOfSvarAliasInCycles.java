@@ -17,7 +17,7 @@ import wrimsv2.wreslparser.elements.TempData;
 import wrimsv2.wreslparser.elements.Tools;
 import wrimsv2.wreslparser.elements.WriteCSV;
 
-public class TestWreslWalker_dependantInCycles {
+public class TestWreslWalker_dependantOfSvarAliasInCycles {
 	
 	public String projectPath = "src\\test\\test_wreslparser\\wresl_files\\";	
 	public String inputFilePath;
@@ -29,7 +29,7 @@ public class TestWreslWalker_dependantInCycles {
 	public void svarExpr() throws RecognitionException, IOException {
 	// deep embedding of alias
 		
-		testName = "TestWreslWalker_dependentInCycles_svarExpr";
+		testName = "TestWreslWalker_dependantOfSvarAliasInCycles_svarExpr";
 		csvFolderPath = "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
@@ -136,7 +136,7 @@ public class TestWreslWalker_dependantInCycles {
 	public void svarSum() throws RecognitionException, IOException {
 	// deep embedding of alias
 		
-		testName = "TestWreslWalker_dependentInCycles_svarSum";
+		testName = "TestWreslWalker_dependantOfSvarAliasInCycles_svarSum";
 		csvFolderPath = "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
@@ -243,7 +243,7 @@ public class TestWreslWalker_dependantInCycles {
 	public void svarTable() throws RecognitionException, IOException {
 	// deep embedding of alias
 		
-		testName = "TestWreslWalker_dependentInCycles_svarTable";
+		testName = "TestWreslWalker_dependantOfSvarAliasInCycles_svarTable";
 		csvFolderPath = "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
@@ -350,7 +350,7 @@ public class TestWreslWalker_dependantInCycles {
 	public void svarCase() throws RecognitionException, IOException {
 	// deep embedding of alias
 		
-		testName = "TestWreslWalker_dependentInCycles_svarCase";
+		testName = "TestWreslWalker_dependantOfSvarAliasInCycles_svarCase";
 		csvFolderPath = "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
@@ -457,7 +457,7 @@ public class TestWreslWalker_dependantInCycles {
 	public void alias() throws RecognitionException, IOException {
 	// deep embedding of alias
 		
-		testName = "TestWreslWalker_dependentInCycles_alias";
+		testName = "TestWreslWalker_dependantOfSvarAliasInCycles_alias";
 		csvFolderPath = "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
