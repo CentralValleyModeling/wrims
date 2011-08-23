@@ -38,19 +38,16 @@ public class TestWreslWalker_calsim3 {
 		/// temporary dataset, don't use this because the structure will be changed soon. 
 		LogUtils.setLogFile(logFilePath);
 		TempData td = new TempData();
+		StudyParser.reset();
 		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
 		td.model_dataset_map=StudyParser.parseModels(sc,td);
-		LogUtils.closeLogFile();
-		
-		
 		/// write to StudyDataSet
 		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+		StudyParser.analyzeVarNeededFromCycles(sc, sd);
+		/// write study data to csv files
+		WriteCSV.study(sd,csvFolderPath ) ;
 		
-		/// get the model name of the first cycle
-		String modelName = sd.getModelList().get(0);
-		
-		/// write model data to csv files
-		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		LogUtils.closeLogFile();
 	
 		Assert.assertEquals(1, 0);	
 		
