@@ -123,17 +123,21 @@ public class WreslCheck {
 			    LogUtils.importantMsg("============================================");
 				
 				TempData td = new TempData();
+				StudyParser.reset();
 				StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
-				td.model_dataset_map=StudyParser.parseModels(sc,td);
-				LogUtils.closeLogFile();
 				
+				//td.model_dataset_map=StudyParser.parseModels(sc,td);
+				td.model_dataset_map=StudyParser.parseModels(sc,td,false,false);
 				
-				/// write to StudyDataSet
-				StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
-						
+				StudyDataSet sd = StudyParser.writeWreslData(sc, td);
+				
+				StudyParser.analyzeVarNeededFromCycles(sc, sd);
+				
 				/// write full study data to csv files
-				WriteCSV.study(sd, csvFolderPath ) ;
+				WriteCSV.study(sd, csvFolderPath ) ;			
 				
+				LogUtils.closeLogFile();
+					
 			}
 			catch (Exception e){
 				e.printStackTrace();	
