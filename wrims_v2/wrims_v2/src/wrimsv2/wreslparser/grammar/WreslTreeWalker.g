@@ -135,9 +135,8 @@ svar_case
 	
 	)+ 
 	) 
-			 { System.out.println("UUUUUUUUUU "+ varInCycle);
-			 
-			 F.svarCase($i.text, $sc.text, sv, dependants, varInCycle);}
+			 {
+			 	F.svarCase($i.text, $sc.text, sv, dependants, varInCycle); }
 ;
 
 
