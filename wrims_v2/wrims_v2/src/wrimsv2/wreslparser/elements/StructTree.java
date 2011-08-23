@@ -187,9 +187,11 @@ public class StructTree
     this.S.var_all.put(name, "goal");
 
     gl.fromWresl = this.S.currentAbsolutePath;
+
     this.S.gMap.put(name, gl);
     this.S.gList.add(name);
     this.S.gSet.add(name);
+
 
     if (scope == null) {
       this.S.gList_global.add(name); this.S.gSet_global.add(name); gl.scope = Param.global;

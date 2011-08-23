@@ -35,6 +35,12 @@ public class Tools {
 		s=s.replaceAll("##", ".+");
 		return s;
 	}
+	public static String remove_nulls(String s) {
+		if (s==null)  return null; 
+		s=s.replaceAll("null", "");
+		s=s.replaceAll("\\s+", " ");
+		return s;
+	}
 	public static String replace_ignoreChar(String s) {
 		if (s==null)  return null; 
 		s=s.replaceAll("\n+", "").replaceAll("\r+", "");

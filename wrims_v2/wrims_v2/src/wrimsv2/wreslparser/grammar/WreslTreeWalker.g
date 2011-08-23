@@ -200,7 +200,7 @@ goal_nocase
 goal_case
 	@init { Goal gl = new Goal(); }   
 	:  ^( Goal_case sc=Scope {$goal::scop = $sc.text;} i=IDENT  
-		( ^( Case n=IDENT c=Condition d=Dependants e=goal_contents 
+		( ^( Case n=IDENT c=Condition d=Dependants vc=VarInCycle e=goal_contents 
 			{	
 				gl.caseName.add($n.text.toLowerCase());
 				gl.caseCondition.add( Tools.add_space_between_logical( $c.text.toLowerCase() ) );
@@ -208,6 +208,11 @@ goal_case
 				if (d != null) {
 					String dependants = $d.text.toLowerCase();
 					gl.expressionDependants.addAll(Tools.convertStrToSet(dependants));
+				}
+				if (vc != null) {
+					String varInCycle = $vc.text.toLowerCase();
+					gl.neededVarInCycleSet.addAll(Tools.convertStrToSet(varInCycle));
+					gl.needVarFromEarlierCycle = true;
 				}
 			} 
 		) )+  

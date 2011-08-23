@@ -147,9 +147,9 @@ sequence
 	->  ^(Sequence $s Model IDENT[id] Order INTEGER Condition[$c.text] )	 
 	;
 	
-condition returns[String text, String dependants]
+condition returns[String text, String dependants, String varInCycle]
 	: CONDITION 
-	( e=logical_expr {$text = $e.text; $dependants = $e.dependants;}
+	( e=logical_expr {$text=$e.text; $dependants=$e.dependants; $varInCycle=$e.strVarInCycle;}
 	| ALWAYS   {$text = Param.always; }
 	)
 	;	
@@ -179,15 +179,19 @@ goal_case_or_nocase
 	'{' LHS l=expression 
 	( 
 	  ( goal_no_case_content[$l.text, $l.dependants, $l.strVarInCycle] ->  ^( Goal_no_case Scope[$s.text] $i goal_no_case_content )  ) 	
-    | ( goal_case_content[$l.text, $l.dependants]+   ->  ^( Goal_case    Scope[$s.text] $i goal_case_content+ )   )
+    | ( goal_case_content[$l.text, $l.dependants, $l.strVarInCycle]+   ->  ^( Goal_case    Scope[$s.text] $i goal_case_content+ )   )
     ) '}' 
 	;
 
-goal_case_content[String l, String d] 
+goal_case_content[String l, String d, String vc] 
+@init{ String varInCycle_nullsRemoved = null; String dependants_nullsRemoved = null; }
 	: CASE i=IDENT { $goal::caseName = $i.text;  $goal::caseNumber++; } 
 	'{' c=condition RHS r=expression (s=sub_content[$l,$r.text])? '}'
-	-> {s!=null}? ^( Case $i Condition[$c.text] Dependants[$d+" "+$r.dependants] $s )
-	->            ^( Case $i Condition[$c.text] Dependants[$d+" "+$r.dependants] Simple Lhs[$l] Op["="] Rhs[$r.text] )
+	{ varInCycle_nullsRemoved =   Tools.remove_nulls($vc+" "+$r.strVarInCycle+" "+$c.varInCycle);
+	  dependants_nullsRemoved =   Tools.remove_nulls($d+" "+$r.dependants);   
+	}
+	-> {s!=null}? ^( Case $i Condition[$c.text] Dependants[dependants_nullsRemoved] VarInCycle[varInCycle_nullsRemoved] $s )
+	->            ^( Case $i Condition[$c.text] Dependants[dependants_nullsRemoved] VarInCycle[varInCycle_nullsRemoved] Simple Lhs[$l] Op["="] Rhs[$r.text] )
 	;
 
 goal_no_case_content[String l, String d, String vc] 
@@ -377,7 +381,7 @@ ident: IDENT ;
 term :	      i=ident {$expression::SV.add($i.text.toLowerCase());} 
 	 |         number 
 	 |        function 
-	 |       '(' e=expression ')' {$expression::SV.addAll($e.members);} 
+	 |       '(' e=expression ')' {$expression::SV.addAll($e.members);$expression::varInCycle.addAll($e.setVarInCycle);} 
 	 ;
 	
 unary :	('+'! | negation)? term 	;
@@ -388,9 +392,12 @@ mult :	unary (('*' | '/' ) unary)* 	;
 	
 add :	mult (('+' | '-') mult)*	;
 
-logical_expr returns[Set<String> members, String dependants] 
-scope { Set<String> SV; } 
-@init { $logical_expr::SV = new HashSet<String>(); String dependants = null; } 
+logical_expr returns[Set<String> members, String dependants, Set<String> setVarInCycle, String strVarInCycle] 
+scope { Set<String> SV; Set<String> varInCycle } 
+@init { $logical_expr::SV = new HashSet<String>(); 
+        $logical_expr::varInCycle = new HashSet<String>(); 
+        String dependants = null; 
+        String strVarInCycle = null; } 
 	:  c_unary ( bin c_unary )* 	
 	
 	{  
@@ -399,7 +406,13 @@ scope { Set<String> SV; }
        for (String s : $logical_expr::SV) {
        
 	   	$dependants = $dependants +" "+s;
-	   }	   
+	   }
+	   
+	   $setVarInCycle = $logical_expr::varInCycle;
+	   for (String s : $logical_expr::varInCycle) {
+       
+	   	$strVarInCycle = $strVarInCycle +" "+s;
+	   } 	   
 	};
 	
 expression returns[String text, Set<String> members, String dependants, Set<String> setVarInCycle, String strVarInCycle] 
@@ -429,9 +442,18 @@ scope { Set<String> SV; Set<String> varInCycle }
 	
 c_term
 	: ( expression relation expression ) => e1=expression relation e2=expression 
-		{$logical_expr::SV.addAll($e1.members); $logical_expr::SV.addAll($e2.members);} 
+		{
+			$logical_expr::SV.addAll($e1.members); 
+			$logical_expr::SV.addAll($e2.members);
+			$logical_expr::varInCycle.addAll($e1.setVarInCycle);
+			$logical_expr::varInCycle.addAll($e2.setVarInCycle);
+		} 
 	| function_logical
-	| ( '(' logical_expr ')' ) => '(' e=logical_expr ')' {$logical_expr::SV.addAll($e.members);} 
+	| ( '(' logical_expr ')' ) => '(' e=logical_expr ')' 
+		{
+			$logical_expr::SV.addAll($e.members);
+			$logical_expr::varInCycle.addAll($e.setVarInCycle);
+		} 
 	;	
 
 c_unary :	(c_negation)? c_term  	;
@@ -459,8 +481,8 @@ var_model
 	  {  $expression::varInCycle.add($varName.text+'['+$cycleName.text+']' );} ; //{ $expression::DV.add($i.text.toLowerCase());} ;	
 
 external_func // this could be timeseries function
-	: i=IDENT {$expression::SV.add($i.text);} '('  ie=expression (',' e=expression  {$expression::SV.addAll($e.members);}  )*  ')' 
-	  {  $expression::SV.addAll($ie.members);}  // $expression::EX.add($i.text.toLowerCase()); 
+	: i=IDENT {$expression::SV.add($i.text);} '('  ie=expression (',' e=expression  {$expression::SV.addAll($e.members);$expression::varInCycle.addAll($e.setVarInCycle);}  )*  ')' 
+	  {  $expression::SV.addAll($ie.members);$expression::varInCycle.addAll($ie.setVarInCycle);}  // $expression::EX.add($i.text.toLowerCase()); 
 	     
 	;
 
