@@ -43,12 +43,6 @@ MODEL fourth {
 	define[local] B2On { value 1 }
 	define[local] dummy { value 10 }
 	
-	! goal g1 { dv = sv_1[first] }
-	! goal[local] g2 { sv_2[second] >  dv + dv_2_global[second]}
-	! goal g3 { as_3[third] < dv }
-	! goal g4 { dv < max(int(dv_1[first]),300)+min(100,int_3[third]) }
-	! goal g_invalid { dv < max(int(dv_2[second]),300)+min(100,sv_2[not_exist]) }
-	
 	goal goal_1 {
 		lhs dv
 		case ActionOn {
@@ -71,7 +65,7 @@ MODEL fourth {
 		}
 		case ActionOff {
 		condition   int( B2On )==0
-			rhs     dv + dv_2_global[second]
+			rhs     ((dv + dv_2_global[second])*sv_2[second])+1
 			lhs<rhs     penalty 10 
 		}
 	}
