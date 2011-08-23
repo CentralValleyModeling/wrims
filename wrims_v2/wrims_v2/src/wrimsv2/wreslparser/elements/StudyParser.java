@@ -442,6 +442,23 @@ public class StudyParser{
 			}
 		}
 		
+		
+		for (String cycleName : allValidCycleNames ){
+			
+			ModelDataSet md = mdsm.get(cycleName);
+			
+			md.svarUsedByLaterCycle = new HashSet<String>(md.varUsedByLaterCycle);
+			md.svarUsedByLaterCycle.retainAll(md.svList);
+
+			md.dvarUsedByLaterCycle = new HashSet<String>(md.varUsedByLaterCycle);
+			md.dvarUsedByLaterCycle.retainAll(md.dvList);
+			
+			md.aliasUsedByLaterCycle = new HashSet<String>(md.varUsedByLaterCycle);
+			md.aliasUsedByLaterCycle.retainAll(md.asList);	
+			
+		}
+		
+		
 	    LogUtils.importantMsg("==================================================");    
 	    LogUtils.importantMsg("VariableName[CycleName] checking complete. ");
 	    LogUtils.importantMsg("Total Errors in the study: "+ total_errors);

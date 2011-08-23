@@ -66,6 +66,10 @@ public class ModelDataSet {
 	public ArrayList<String> incFileList_local=new ArrayList<String>();
 	
 	public Set<String> varUsedByLaterCycle = new HashSet<String>();
+	
+	public Set<String> dvarUsedByLaterCycle = new HashSet<String>();
+	public Set<String> svarUsedByLaterCycle = new HashSet<String>();
+	public Set<String> aliasUsedByLaterCycle = new HashSet<String>();
 	 
 }
 

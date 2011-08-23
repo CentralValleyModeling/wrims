@@ -259,7 +259,7 @@ public class WriteCSV {
 		    	out.print(Param.csv_seperator);
 		    	
 		    	boolean usedByLaterCycle = false;
-		    	if (currentModelDataSet.varUsedByLaterCycle.contains(k)) usedByLaterCycle = true;
+		    	if (currentModelDataSet.svarUsedByLaterCycle.contains(k)) usedByLaterCycle = true;
 		    	
 		    	out.print( usedByLaterCycle);
 		    	
@@ -399,7 +399,7 @@ public class WriteCSV {
 		    	out.print(Param.csv_seperator);
 		    	
 		    	boolean usedByLaterCycle = false;
-		    	if (currentModelDataSet.varUsedByLaterCycle.contains(k)) usedByLaterCycle = true;
+		    	if (currentModelDataSet.dvarUsedByLaterCycle.contains(k)) usedByLaterCycle = true;
 		    	
 		    	out.print( usedByLaterCycle);
 		    	
@@ -496,7 +496,7 @@ public class WriteCSV {
 		    	out.print(Param.csv_seperator);
 		    	
 		    	boolean usedByLaterCycle = false;
-		    	if (currentModelDataSet.varUsedByLaterCycle.contains(k)) usedByLaterCycle = true;
+		    	if (currentModelDataSet.aliasUsedByLaterCycle.contains(k)) usedByLaterCycle = true;
 		    	
 		    	out.print( usedByLaterCycle);
 				
