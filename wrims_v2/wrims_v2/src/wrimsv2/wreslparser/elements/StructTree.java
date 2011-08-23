@@ -127,11 +127,12 @@ public class StructTree
     }
   }
 
-  public void goalSimple(String name, String scope, String expression, String dependants)
+  public void goalSimple(String name, String scope, String expression, String dependants, String varInCycle)
   {
     name = name.toLowerCase();
     expression = expression.toLowerCase();
     if (dependants != null) dependants = dependants.toLowerCase();
+    if (varInCycle != null) varInCycle = varInCycle.toLowerCase();
 
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("Goal redefined: " + name, this.S.currentAbsolutePath);
@@ -148,8 +149,14 @@ public class StructTree
     this.gl.caseCondition.add(Param.always);
     this.gl.caseName.add(Param.defaultCaseName);
     this.gl.caseExpression.add(expression);
-    if (dependants != null) this.gl.expressionDependants.addAll(Tools.convertStrToSet(dependants));
     this.gl.fromWresl = this.S.currentAbsolutePath;
+    if (dependants != null) this.gl.expressionDependants.addAll(Tools.convertStrToSet(dependants));
+    if (varInCycle != null) { 
+    	this.gl.neededVarInCycleSet = Tools.convertStrToSet(varInCycle);
+    	this.gl.needVarFromEarlierCycle = true;
+    }
+    
+    
     this.S.gMap.put(name, this.gl);
     this.S.gList.add(name);
     this.S.gSet.add(name);

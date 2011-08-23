@@ -409,10 +409,24 @@ public class StudyParser{
 
 			ModelDataSet ds = mdsm.get(cycleKey);
 
-			// / 1. check needVarFromEarlierCycle in svar and alias;
+			// / 1. check needVarFromEarlierCycle in goal, svar and alias;
 			// / 2. create space in td.varCycleValueMap
 			// / 3. set usedInLaterCycle for dvar, svar and alias;
-						
+
+			for (String varName : ds.gList) {
+				
+				Goal someVar = ds.gMap.get(varName);
+				
+				boolean needVarFromEarlierCycle = someVar.needVarFromEarlierCycle;
+				Set<String> neededVarInCycle = someVar.neededVarInCycleSet;
+				String fromWresl = someVar.fromWresl;
+
+				if (needVarFromEarlierCycle) {
+					analyzeVarNeededFromCycle_subfunction(varName, neededVarInCycle, fromWresl, sd);
+			
+				}
+			}			
+			
 			for (String varName : ds.svList) {
 				
 				Svar someVar = ds.svMap.get(varName);

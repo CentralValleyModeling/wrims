@@ -186,14 +186,14 @@ alias  :
 
 
 goal_simple 
-	:  ^(Goal_simple sc=Scope {$goal::scop = $sc.text;} i=IDENT d=Dependants v=Constraint_content ) 
-		{ F.goalSimple($i.text, $sc.text, $v.text, $d.text);} 
+	:  ^(Goal_simple sc=Scope {$goal::scop = $sc.text;} i=IDENT d=Dependants v=Constraint_content vc=VarInCycle) 
+		{ F.goalSimple($i.text, $sc.text, $v.text, $d.text, $vc.text);} 
 	;
 
 goal_nocase
-	:  ^( Goal_no_case sc=Scope {$goal::scop = $sc.text;} i=IDENT  d=Dependants c=goal_contents  )  
+	:  ^( Goal_no_case sc=Scope {$goal::scop = $sc.text;} i=IDENT  d=Dependants vc=VarInCycle c=goal_contents  )  
 		{ 
-			 F.goalSimple($i.text, $sc.text, $c.str, $d.text);	  				
+			 F.goalSimple($i.text, $sc.text, $c.str, $d.text, $vc.text);	  				
 		} 
 ;
 

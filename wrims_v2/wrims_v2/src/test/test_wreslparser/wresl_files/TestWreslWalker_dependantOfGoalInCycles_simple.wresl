@@ -1,0 +1,49 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }	
+
+SEQUENCE CYCLE3 {
+    model   third
+    order   3
+    }
+
+SEQUENCE CYCLE4 {
+    model   fourth
+    order   4
+    }
+	
+MODEL first { 
+
+	define sv_1 { value 1 }
+	define[local] dv_1 { std kind 'CHANNEL' units 'CFS'}
+	define c { value 1 }
+}
+
+MODEL second { 
+
+	define[local] sv_2 { value 2 }
+	define dv_2_global { lower 400 upper 600 kind 'CHANNEL' units 'CFS'}
+}
+
+MODEL third { 
+
+	define[local] as_3 { alias dv_2_global }	
+	define[local] int_3 { integer lower 10 upper 20 kind 'integer' units 'CFS'}	
+}
+
+MODEL fourth { 
+
+	define[local] dv { std kind 'CHANNEL' units 'CFS'}
+	
+	goal g1 { dv = sv_1[first] }
+	goal[local] g2 { sv_2[second] >  dv + dv_2_global[second]}
+	goal g3 { as_3[third] < dv }
+	goal g4 { dv < max(int(dv_1[first]),300)+min(100,int_3[third]) }
+	goal g_invalid { dv < max(int(dv_2[second]),300)+min(100,sv_2[not_exist]) }
+}

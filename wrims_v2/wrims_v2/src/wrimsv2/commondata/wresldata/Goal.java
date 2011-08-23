@@ -22,6 +22,8 @@ public class Goal {
 //	public ArrayList<String> case_lhs_gt_rhs;
 //	public ArrayList<String> case_lhs_lt_rhs;
 	public String fromWresl;
+	public Set<String> neededVarInCycleSet;
+	public boolean needVarFromEarlierCycle;
 	
 	public Goal(){
 		scope=Param.undefined;
@@ -34,6 +36,8 @@ public class Goal {
 //		case_lhs_gt_rhs = new ArrayList<String>();
 //		case_lhs_lt_rhs = new ArrayList<String>();
 		fromWresl = Param.undefined;
+		neededVarInCycleSet = new HashSet<String>();
+		needVarFromEarlierCycle = false;
 	}
 	
 	public String equalEva(){

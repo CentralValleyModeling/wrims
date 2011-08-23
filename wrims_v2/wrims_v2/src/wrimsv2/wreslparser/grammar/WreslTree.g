@@ -171,14 +171,14 @@ scope { String goalName; String caseName; int caseNumber;}
 
 goal_simple
 	:  ( '[' sc=LOCAL? ']' )? i=IDENT '{' v=constraint_statement '}'	
-->  ^(Goal_simple Scope[$sc.text] $i Dependants[$v.dependants] Constraint_content[Tools.replace_ignoreChar($v.text)] )  		
+->  ^(Goal_simple Scope[$sc.text] $i Dependants[$v.dependants] Constraint_content[Tools.replace_ignoreChar($v.text)] VarInCycle[$v.varInCycle])  		
 	;
 
 goal_case_or_nocase 
 	:  ( '[' s=LOCAL? ']' )? i=IDENT { $goal::goalName = $i.text;  } 
 	'{' LHS l=expression 
 	( 
-	  ( goal_no_case_content[$l.text, $l.dependants] ->  ^( Goal_no_case Scope[$s.text] $i goal_no_case_content )  ) 	
+	  ( goal_no_case_content[$l.text, $l.dependants, $l.strVarInCycle] ->  ^( Goal_no_case Scope[$s.text] $i goal_no_case_content )  ) 	
     | ( goal_case_content[$l.text, $l.dependants]+   ->  ^( Goal_case    Scope[$s.text] $i goal_case_content+ )   )
     ) '}' 
 	;
@@ -190,11 +190,11 @@ goal_case_content[String l, String d]
 	->            ^( Case $i Condition[$c.text] Dependants[$d+" "+$r.dependants] Simple Lhs[$l] Op["="] Rhs[$r.text] )
 	;
 
-goal_no_case_content[String l, String d] 
+goal_no_case_content[String l, String d, String vc] 
 @init{ $goal::caseName = "default";   $goal::caseNumber=1;}
 	: RHS r=expression (s=sub_content[$l,$r.text])?
-       -> {s!=null}? Dependants[$d+" "+$r.dependants]  $s 
-       ->            Dependants[$d+" "+$r.dependants]  Simple Lhs[$l] Op["="] Rhs[$r.text] 
+       -> {s!=null}? Dependants[$d+" "+$r.dependants] VarInCycle[$vc+" "+$r.strVarInCycle] $s 
+       ->            Dependants[$d+" "+$r.dependants] VarInCycle[$vc+" "+$r.strVarInCycle] Simple Lhs[$l] Op["="] Rhs[$r.text] 
        ;
 	
 sub_content[String l, String r] 
@@ -340,17 +340,20 @@ upper: UPPER ( UNBOUNDED -> Upper LimitType[Param.upper_unbounded] | e=expressio
 /// IDENT =, <, > ///
 
 
-constraint_statement returns[String text, String dependants]
+constraint_statement returns[String text, String dependants, String varInCycle]
 	: c=constraint_statement_preprocessed
 	 
 	 {  $text = Tools.replace_ignoreChar($c.text); 
 	    $text = Tools.replace_seperator($text); 
 	    $dependants = $c.dependants;
+	    $varInCycle = $c.varInCycle;
 	 };	
 
-constraint_statement_preprocessed returns[String dependants]
+constraint_statement_preprocessed returns[String dependants, String varInCycle]
 	: c=expression ( '<' | '>' | '='  ) d=expression
-	{ $dependants = $c.dependants + " " + $d.dependants;}
+	{ $dependants = $c.dependants + " " + $d.dependants;
+	  $varInCycle = $c.strVarInCycle + " " + $d.strVarInCycle;
+	}
 	
 	;
 
