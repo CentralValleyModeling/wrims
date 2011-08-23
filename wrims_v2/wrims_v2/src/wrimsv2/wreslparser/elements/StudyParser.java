@@ -30,6 +30,13 @@ public class StudyParser{
   public static Set<String> allValidCycleNames;
 
 	
+  public static void clear(){  
+	  total_errors = 0;
+	  total_warnings = 0;
+	  if  (cycleVarTypeMap!=null) cycleVarTypeMap.clear();
+	  if  (allValidCycleNames!=null) allValidCycleNames.clear(); 
+  }
+  
   public static StudyDataSet writeWreslData(StudyConfig sc, TempData td){
     StudyDataSet studyDataSet = new StudyDataSet();
 

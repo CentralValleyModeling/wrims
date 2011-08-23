@@ -1,0 +1,76 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }	
+
+SEQUENCE CYCLE3 {
+    model   third
+    order   3
+    }
+
+SEQUENCE CYCLE4 {
+    model   fourth
+    order   4
+    }
+	
+MODEL first { 
+
+	define sv_1 { value 1 }
+	define[local] dv_1 { std kind 'CHANNEL' units 'CFS'}
+	define c { value 1 }
+}
+
+MODEL second { 
+
+	define[local] sv_2 { value 2 }
+	define dv_2_global { lower 400 upper 600 kind 'CHANNEL' units 'CFS'}
+}
+
+MODEL third { 
+
+	define[local] as_3 { alias dv_2_global }	
+	define[local] int_3 { integer lower 10 upper 20 kind 'integer' units 'CFS'}	
+}
+
+MODEL fourth { 
+
+	define[local] dv { std kind 'CHANNEL' units 'CFS'}
+	
+	
+	goal Goal_1 {
+		lhs     dv
+		rhs     sv_1[first]
+		lhs>rhs     constrain
+		lhs<rhs     penalty 500.0 
+	}
+	goal Goal_2 {
+		lhs     sv_2[second]
+		rhs     dv + dv_2_global[second]
+		lhs<rhs     penalty 600.0 
+		lhs>rhs     constrain
+	}
+	goal Goal_3 {
+		lhs     as_3[third]
+		rhs     dv
+		lhs>rhs     penalty 99.0 
+		lhs<rhs     penalty 0 
+	}
+	goal Goal_4 {
+		lhs     dv
+		rhs     max(int(dv_1[first]),300)+min(100,int_3[third])
+		lhs>rhs     penalty 99.0 
+		lhs<rhs     penalty 0 
+	}
+	goal Goal_invalid {
+		lhs     dv
+		rhs     max(int(dv_2[second]),300)+min(100,sv_2[not_exist])
+		lhs>rhs     penalty 99.0 
+		lhs<rhs     penalty 0 
+	}
+
+}
