@@ -160,7 +160,7 @@ public class LPSolveSolver {
 			double value=var[VarMap.get(dvName)]; 
 			IntDouble id=new IntDouble(value,false);
 			dvar.setData(id);
-			if (varCycleValueMap.containsKey(dvName)){
+			if (dvarUsedByLaterCycle.contains(dvName)){
 				varCycleValueMap.get(dvName).put(model, id);
 			}
 			if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){

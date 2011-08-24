@@ -147,7 +147,7 @@ public class XASolver {
 			double value=ControlData.xasolver.getColumnActivity(dvName);
 			IntDouble id=new IntDouble(value,false);
 			dvar.setData(id);
-			if (varCycleValueMap.containsKey(dvName)){
+			if (dvarUsedByLaterCycle.contains(dvName)){
 				varCycleValueMap.get(dvName).put(model, id);
 			}
 			if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){

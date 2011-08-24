@@ -291,6 +291,7 @@ public class Controller {
 					ControlData.currAliasMap=mds.asMap;
 					ControlData.currGoalMap=mds.gMap;
 					ControlData.currTsMap=mds.tsMap;
+					ControlData.currCycleName=model;
 					ControlData.currCycleIndex=i;
 					ControlData.isPostProcessing=false;
 					cal = Calendar.getInstance();
@@ -585,14 +586,14 @@ public class Controller {
 					caseExpression.evaluator();
 					IntDouble evalValue=caseExpression.evalValue;
 					svar.setData(evalValue);
-					if (varCycleValueMap.containsKey(svName)){
+					if (svarUsedByLaterCycle.contains(svName)){
 						varCycleValueMap.get(svName).put(model, evalValue);
 					}
 				} catch (RecognitionException e) {
 					Error.addEvaluationError("Case expression evaluation has error.");
 					IntDouble evalValue=new IntDouble(1.0, false);
 					svar.setData(evalValue);
-					if (varCycleValueMap.containsKey(svName)){
+					if (svarUsedByLaterCycle.contains(svName)){
 						varCycleValueMap.get(svName).put(model, evalValue);
 					}
 				}
@@ -708,7 +709,7 @@ public class Controller {
 				evaluator.evaluator();
 				IntDouble id=evaluator.evalValue;
 				alias.data=id;
-				if (varCycleValueMap.containsKey(asName)){
+				if (aliasUsedByLaterCycle.contains(asName)){
 					varCycleValueMap.get(asName).put(model, id);
 				}
 				if (!DataTimeSeries.dvAliasTS.containsKey(asName)){
@@ -727,7 +728,7 @@ public class Controller {
 				Error.addEvaluationError("Alias evaluation has error.");
 				IntDouble id=new IntDouble(-901.0,false);
 				alias.data=id;
-				if (varCycleValueMap.containsKey(asName)){
+				if (aliasUsedByLaterCycle.contains(asName)){
 					varCycleValueMap.get(asName).put(model, id);
 				}
 				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
