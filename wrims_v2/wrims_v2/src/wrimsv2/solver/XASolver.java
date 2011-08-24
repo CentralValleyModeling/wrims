@@ -52,7 +52,7 @@ public class XASolver {
 		modelStatus=ControlData.xasolver.getModelStatus();
 		System.out.println("Model status: "+modelStatus);
 		if (modelStatus>2)	getSolverInformation();
-		if (Error.error_solving.size()<1) assignDvarTimeseries(); 
+		if (Error.error_solving.size()<1) assignDvar(); 
 	}
 	
 	public void getSolverInformation(){
@@ -131,34 +131,9 @@ public class XASolver {
 		Map<String, Dvar> dvarMap = ControlData.currDvMap;
 		Set dvarCollection = dvarMap.keySet();
 		Iterator dvarIterator = dvarCollection.iterator();
-	
-		String outPath=FilePaths.mainDirectory+"step"+ControlData.currTimeStep+"_"+ControlData.currCycleIndex+".txt";
-		FileWriter outstream;
-		
-		try {
-			outstream = new FileWriter(outPath);
-			BufferedWriter out = new BufferedWriter(outstream);
-			
-		while(dvarIterator.hasNext()){ 
-			String dvName=(String)dvarIterator.next();
-			Dvar dvar=dvarMap.get(dvName);
-			double value=ControlData.xasolver.getColumnActivity(dvName);
-			dvar.setData(new IntDouble(value,false));
-			
-			out.write(dvName+":"+value+"\n");
-		}
-		out.close();
-		
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	public void assignDvarTimeseries(){
-		Map<String, Dvar> dvarMap = ControlData.currDvMap;
-		Set dvarCollection = dvarMap.keySet();
-		Iterator dvarIterator = dvarCollection.iterator();
+		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
+		Set<String> dvarUsedByLaterCycle = ControlData.currModelDataSet.dvarUsedByLaterCycle;
+		String model=ControlData.currCycleName;
 		
 		String outPath=FilePaths.mainDirectory+"step"+ControlData.currTimeStep+"_"+ControlData.currCycleIndex+".txt";
 		FileWriter outstream;
@@ -170,7 +145,11 @@ public class XASolver {
 			String dvName=(String)dvarIterator.next();
 			Dvar dvar=dvarMap.get(dvName);
 			double value=ControlData.xasolver.getColumnActivity(dvName);
-			dvar.setData(new IntDouble(value,false));
+			IntDouble id=new IntDouble(value,false);
+			dvar.setData(id);
+			if (varCycleValueMap.containsKey(dvName)){
+				varCycleValueMap.get(dvName).put(model, id);
+			}
 			if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){
 				DssDataSetFixLength dds=new DssDataSetFixLength();
 				double[] data=new double[ControlData.totalTimeStep];

@@ -525,14 +525,16 @@ public class ValueEvaluation {
 	}
 	
 	public static IntDouble pastCycleDV(String ident, String cycle){
-		ModelDataSet mds=ControlData.currStudyDataSet.getModelDataSetMap().get(cycle);
+		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
 		IntDouble data=new IntDouble(1.0,false);
-		if (mds.dvMap.containsKey(ident)){
-			data= mds.dvMap.get(ident).getData();
-		}else if(mds.asMap.containsKey(ident)){
-			data=mds.asMap.get(ident).getData();
-		}else if(mds.svList.contains(ident)){
-			data=mds.svMap.get(ident).getData();
+		if (varCycleValueMap.containsKey(ident)){
+			Map<String, IntDouble> var= varCycleValueMap.get(ident);
+			if (var.containsKey(cycle)){
+				data=var.get(cycle);
+			}else{
+				Error.addEvaluationError("The variable "+ident+" is not defined in the past cycle of "+cycle+".");
+				return data;
+			}
 		}else{
 			Error.addEvaluationError("The variable "+ident+" is not defined in the past cycle of "+cycle+".");
 			return data;

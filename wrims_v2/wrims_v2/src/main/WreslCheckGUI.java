@@ -40,7 +40,6 @@ public class WreslCheckGUI {
 		wreslCheckPanel.add(runButton);
 		runButton.addActionListener(new ActionListener() {
 
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				runButton.setEnabled(false);
 				runButton.setText("Parsing...");
@@ -90,7 +89,6 @@ public class WreslCheckGUI {
 			this.add(browseButton = new JButton("Browse..."));
 			browseButton.addActionListener(new ActionListener() {
 
-				@Override
 				public void actionPerformed(ActionEvent e) {
 					JFileChooser fileChooser = new JFileChooser(System.getProperty("user.dir"));
 					fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);

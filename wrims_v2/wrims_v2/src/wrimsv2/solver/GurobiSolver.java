@@ -60,7 +60,7 @@ public class GurobiSolver {
 		setConstraints();
 		model.optimize();	
 		//checkStatus();
-		assignDvarTimeseries();
+		assignDvar();
 		Output();
 	
 	}
@@ -125,10 +125,13 @@ public class GurobiSolver {
 		}
 	}
 	
-	public void assignDvarTimeseries() throws GRBException{
+	public void assignDvar() throws GRBException{
 		Map<String, Dvar> dvarMap = ControlData.currDvMap;
 		Set dvarCollection = dvarMap.keySet();
 		Iterator dvarIterator = dvarCollection.iterator();
+		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
+		Set<String> dvarUsedByLaterCycle = ControlData.currModelDataSet.dvarUsedByLaterCycle;
+		String model=ControlData.currCycleName;
 		
 		String outPath=FilePaths.mainDirectory+"step"+ControlData.currTimeStep+"_"+ControlData.currCycleIndex+".txt";
 		FileWriter outstream;
@@ -140,7 +143,11 @@ public class GurobiSolver {
 			String dvName=(String)dvarIterator.next();
 			Dvar dvar=dvarMap.get(dvName);
 			double value=varMap.get(dvName).get(GRB.DoubleAttr.X); 
-			dvar.setData(new IntDouble(value,false));
+			IntDouble id=new IntDouble(value,false);
+			dvar.setData(id);
+			if (varCycleValueMap.containsKey(dvName)){
+				varCycleValueMap.get(dvName).put(model, id);
+			}
 			if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){
 				DssDataSetFixLength dds=new DssDataSetFixLength();
 				double[] data=new double[ControlData.totalTimeStep];

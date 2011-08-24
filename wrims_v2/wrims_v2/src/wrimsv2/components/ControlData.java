@@ -37,6 +37,7 @@ public class ControlData {
 	public static Map<String, String> allExternalFunction = new HashMap<String, String> ();
 	public static Map<String, ExternalFunction> allExternalFunctionMap = new HashMap<String, ExternalFunction>();  
 	public static ArrayList<String> allDll= new ArrayList<String>() ;
+	public static String currCycleName;
 	public static int currCycleIndex;
 	public static int currEvalTypeIndex; //0=sv; 1=dv; 2=alias; 3=goal; 4=external; 5=timeseries define; 6=timeseries reading; 7=weight
 	public static String currEvalName;

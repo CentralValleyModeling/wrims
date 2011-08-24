@@ -99,9 +99,9 @@ public class Controller {
 		cd.startYear=1921;
 		cd.startMonth=10;
 		cd.startDay=31;
-		cd.endYear=2003;
-		cd.endMonth=9;
-		cd.endDay=30;
+		cd.endYear=1921;
+		cd.endMonth=10;
+		cd.endDay=31;
         cd.solverName="XA";
         cd.csvFolderPath="csv";
 		cd.currYear=cd.startYear;
@@ -311,7 +311,7 @@ public class Controller {
 						cal = Calendar.getInstance();
 						System.out.println("After assign dvar: "+cal.getTimeInMillis());
 						ControlData.isPostProcessing=true;
-						processAliasTimeseries();
+						processAlias();
 					
 					}else{
 						Error.writeSolvingErrorFile("solving_error.txt");
@@ -396,6 +396,7 @@ public class Controller {
 					ControlData.currGoalMap=mds.gMap;
 					ControlData.currTsMap=mds.tsMap;
 					ControlData.currCycleIndex=i;
+					ControlData.currCycleName=model;
 					ControlData.isPostProcessing=false;
 					cal = Calendar.getInstance();
 					System.out.println("Before Evaluation: "+cal.getTimeInMillis());
@@ -417,7 +418,7 @@ public class Controller {
 						cal = Calendar.getInstance();
 						System.out.println("After assign dvar: "+cal.getTimeInMillis());
 						ControlData.isPostProcessing=true;
-						processAliasTimeseries();
+						processAlias();
 					
 					}else{
 						Error.writeSolvingErrorFile("solving_error.txt");
@@ -557,6 +558,9 @@ public class Controller {
 		ArrayList<String> svList = mds.svList;
 		Map<String, Svar> svMap =mds.svMap;
 		ControlData.currEvalTypeIndex=0;
+		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
+		Set<String> svarUsedByLaterCycle = mds.svarUsedByLaterCycle;
+		String model=ControlData.currCycleName;
 		for (String svName: svList){
 			ControlData.currEvalName=svName;
 			//System.out.println("Process svar "+svName);
@@ -581,10 +585,18 @@ public class Controller {
 				ValueEvaluatorParser caseExpression=caseExpressions.get(i);
 				try {
 					caseExpression.evaluator();
-					svar.setData(caseExpression.evalValue);
+					IntDouble evalValue=caseExpression.evalValue;
+					svar.setData(evalValue);
+					if (varCycleValueMap.containsKey(svName)){
+						varCycleValueMap.get(svName).put(model, evalValue);
+					}
 				} catch (RecognitionException e) {
 					Error.addEvaluationError("Case expression evaluation has error.");
-					svar.setData(new IntDouble(1.0, false));
+					IntDouble evalValue=new IntDouble(1.0, false);
+					svar.setData(evalValue);
+					if (varCycleValueMap.containsKey(svName)){
+						varCycleValueMap.get(svName).put(model, evalValue);
+					}
 				}
 				caseExpression.reset();
 			}else{
@@ -680,13 +692,14 @@ public class Controller {
 		}
 	}
 	
-
-	
 	public void processAlias(){
 		ModelDataSet mds=ControlData.currModelDataSet;
 		ArrayList<String> asList = mds.asList;
 		Map<String, Alias> asMap =mds.asMap;
 		ControlData.currEvalTypeIndex=2;
+		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
+		Set<String> aliasUsedByLaterCycle = mds.aliasUsedByLaterCycle;
+		String model=ControlData.currCycleName;
 		for (String asName: asList){
 			ControlData.currEvalName=asName;
 			//System.out.println("Process alias "+asName);
@@ -697,29 +710,9 @@ public class Controller {
 				evaluator.evaluator();
 				IntDouble id=evaluator.evalValue;
 				alias.data=id;
-			} catch (RecognitionException e) {
-				Error.addEvaluationError("Alias evaluation has error.");
-				alias.data=new IntDouble(-901.0,false);
-			}
-			evaluator.reset();
-		}
-	}
-	
-	public void processAliasTimeseries(){
-		ModelDataSet mds=ControlData.currModelDataSet;
-		ArrayList<String> asList = mds.asList;
-		Map<String, Alias> asMap =mds.asMap;
-		ControlData.currEvalTypeIndex=2;
-		for (String asName: asList){
-			ControlData.currEvalName=asName;
-			//System.out.println("Process alias "+asName);
-			Alias alias=asMap.get(asName);
-			
-			ValueEvaluatorParser evaluator = alias.expressionParser;
-			try {
-				evaluator.evaluator();
-				IntDouble id=evaluator.evalValue;
-				alias.data=id;
+				if (varCycleValueMap.containsKey(asName)){
+					varCycleValueMap.get(asName).put(model, id);
+				}
 				if (!DataTimeSeries.dvAliasTS.containsKey(asName)){
 					DssDataSetFixLength dds=new DssDataSetFixLength();
 					double[] data=new double[ControlData.totalTimeStep];
@@ -734,7 +727,11 @@ public class Controller {
 				dataList[ControlData.currTimeStep]=id.getData().doubleValue();
 			} catch (RecognitionException e) {
 				Error.addEvaluationError("Alias evaluation has error.");
-				alias.data=new IntDouble(-901.0,false);
+				IntDouble id=new IntDouble(-901.0,false);
+				alias.data=id;
+				if (varCycleValueMap.containsKey(asName)){
+					varCycleValueMap.get(asName).put(model, id);
+				}
 				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
 				dataList[ControlData.currTimeStep]=-901.0;
 			}
@@ -855,7 +852,7 @@ public class Controller {
 						cal = Calendar.getInstance();
 						System.out.println("After assign dvar: "+cal.getTimeInMillis());
 						ControlData.isPostProcessing=true;
-						processAliasTimeseries();
+						processAlias();
 					
 					}else{
 						Error.writeSolvingErrorFile("solving_error.txt");

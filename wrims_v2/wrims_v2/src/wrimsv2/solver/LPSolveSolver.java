@@ -45,7 +45,7 @@ public class LPSolveSolver {
 		setConstraints();
 		setObjective();
 		Model.solve();
-		assignDvarTimeseries();
+		assignDvar();
 		Output();
 	}
 		
@@ -139,10 +139,13 @@ public class LPSolveSolver {
 		}
 	}
 	
-	public void assignDvarTimeseries() throws LpSolveException{
+	public void assignDvar() throws LpSolveException{
 		Map<String, Dvar> dvarMap = ControlData.currDvMap;
 		Set dvarCollection = dvarMap.keySet();
 		Iterator dvarIterator = dvarCollection.iterator();
+		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
+		Set<String> dvarUsedByLaterCycle = ControlData.currModelDataSet.dvarUsedByLaterCycle;
+		String model=ControlData.currCycleName;
 		
 		String outPath=FilePaths.mainDirectory+"step"+ControlData.currTimeStep+"_"+ControlData.currCycleIndex+".txt";
 		FileWriter outstream;
@@ -155,7 +158,11 @@ public class LPSolveSolver {
 			Dvar dvar=dvarMap.get(dvName);
 			double[] var = Model.getPtrVariables();
 			double value=var[VarMap.get(dvName)]; 
-			dvar.setData(new IntDouble(value,false));
+			IntDouble id=new IntDouble(value,false);
+			dvar.setData(id);
+			if (varCycleValueMap.containsKey(dvName)){
+				varCycleValueMap.get(dvName).put(model, id);
+			}
 			if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){
 				DssDataSetFixLength dds=new DssDataSetFixLength();
 				double[] data=new double[ControlData.totalTimeStep];
