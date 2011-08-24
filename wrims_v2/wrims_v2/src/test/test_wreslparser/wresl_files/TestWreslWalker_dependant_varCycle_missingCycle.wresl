@@ -1,0 +1,25 @@
+SEQUENCE CYCLE1 {
+    model   first
+	condition month==APR .or. month==MAY
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }	
+
+	
+MODEL first { 
+
+	define[local] sv_1 { value 99 }
+	define[local] dv_1 { std kind 'test' units 'cfs' }
+	goal[local] g_1 { dv_1 = sv_1 }
+}
+
+MODEL second { 
+
+	define dv_2 { std kind 'test' units 'cfs' }
+	goal g_2 { dv_2 = dv_1[first] }
+	
+}

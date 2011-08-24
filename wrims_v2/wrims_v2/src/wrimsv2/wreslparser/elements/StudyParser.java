@@ -28,6 +28,7 @@ public class StudyParser{
   public static int total_warnings = 0;
   public static Map<String, Map<String, String>> cycleVarTypeMap;
   public static Set<String> allValidCycleNames;
+  public static Map<String, String> cycleNameConditionMap;
 
 	
   public static void reset(){  
@@ -35,6 +36,7 @@ public class StudyParser{
 	  total_warnings = 0;
 	  cycleVarTypeMap = null;
 	  allValidCycleNames = null; 
+	  cycleNameConditionMap = null;
   }
   
   public static StudyDataSet writeWreslData(StudyConfig sc, TempData td){
@@ -124,11 +126,14 @@ public class StudyParser{
 	for ( Integer i : sc.sequenceMap.keySet()){ sc.sequenceOrder.add(i); }
 	Collections.sort(sc.sequenceOrder);
 
+	cycleNameConditionMap = new HashMap<String, String>();
+	
     for (Integer i : sc.sequenceOrder) {
-      sc.sequenceList.add(((Sequence)sc.sequenceMap.get(i)).sequenceName);
-      sc.modelList.add(((Sequence)sc.sequenceMap.get(i)).modelName);
+      sc.sequenceList.add(sc.sequenceMap.get(i).sequenceName);
+      sc.modelList.add(sc.sequenceMap.get(i).modelName);
 
-      sc.modelConditionList.add(((Sequence)sc.sequenceMap.get(i)).condition);
+      sc.modelConditionList.add(sc.sequenceMap.get(i).condition);
+      cycleNameConditionMap.put(sc.sequenceMap.get(i).modelName, sc.sequenceMap.get(i).condition );
     }
 
     sc.absMainFilePath = absMainFilePath;
@@ -504,6 +509,12 @@ public class StudyParser{
 					LogUtils.errMsg("In file: " + fromWresl + "\n" + "Variable [" + varName + "] has an item with undefined cycle: "+ s + "[" + neededCycle + "]");
 				}
 				continue;
+				
+			} else if ( cycleNameConditionMap.get(neededCycle).length()>1){
+				
+				for (String s : neededVarSet) {
+					LogUtils.warningMsg("In file: " + fromWresl + "\n" + "Variable [" + varName + "] has an item " + s + "[" + neededCycle + "]"+" depending on cycle condition: "+ cycleNameConditionMap.get(neededCycle));
+				}				
 			}
 
 			for (String neededVar : neededVarSet) {
