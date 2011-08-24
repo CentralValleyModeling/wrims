@@ -262,14 +262,20 @@ svar_case : ( '[' sc=LOCAL? ']' )? i=IDENT '{' case_content+ '}'
 ->  ^(Svar_case Scope[$sc.text] $i  case_content+ )  ;
 
 
-case_content : CASE i=IDENT '{' c=condition ( table_content 
-	-> ^(Case $i Condition[$c.text] Dependants[$c.dependants] table_content  )
+case_content 
+@init{ String dependants_nullsRemoved = ""; String varInCycle_nullsRemoved = ""; }	
+	: CASE i=IDENT '{' c=condition 
+	{   varInCycle_nullsRemoved =   Tools.remove_nulls($c.varInCycle);
+		dependants_nullsRemoved =   Tools.remove_nulls($c.dependants); }
+
+    ( table_content 
+	-> ^(Case $i Condition[$c.text] Dependants[dependants_nullsRemoved] VarInCycle[varInCycle_nullsRemoved] table_content  )
 
 	| value_content 
-	-> ^(Case $i Condition[$c.text] Dependants[$c.dependants] value_content  )
+	-> ^(Case $i Condition[$c.text] Dependants[dependants_nullsRemoved] VarInCycle[varInCycle_nullsRemoved] value_content  )
 	
 	| sum_content
-	-> ^(Case $i Condition[$c.text] Dependants[$c.dependants] sum_content  )
+	-> ^(Case $i Condition[$c.text] Dependants[dependants_nullsRemoved] VarInCycle[varInCycle_nullsRemoved] sum_content  )
 	
 ) '}' 
 ;
@@ -363,7 +369,9 @@ constraint_statement_preprocessed returns[String dependants, String varInCycle]
 
 
 assignment returns[String dependants, String varInCycle] 
-	:  t=term_simple  '=' e=expression { $dependants = $e.dependants; $varInCycle = $e.strVarInCycle;}  
+	:  t=term_simple  '=' e=expression 
+		{ $dependants = Tools.remove_nulls($e.dependants); 
+		  $varInCycle = Tools.remove_nulls($e.strVarInCycle);}  
 	-> Assignment[$t.text+"="+$e.text] 
 	;
 	

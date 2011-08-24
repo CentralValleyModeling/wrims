@@ -1,0 +1,89 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }	
+
+SEQUENCE CYCLE3 {
+    model   third
+    order   3
+    }
+
+SEQUENCE CYCLE4 {
+    model   fourth
+    order   4
+    }
+	
+MODEL first { 
+
+	define sv_1 { value 1 }
+	define[local] dv_1 { std kind 'CHANNEL' units 'CFS'}
+	define c { value 1 }
+}
+
+MODEL second { 
+
+	define[local] sv_2 { value 2 }
+	define dv_2_global { lower 400 upper 600 kind 'CHANNEL' units 'CFS'}
+}
+
+MODEL third { 
+
+	define[local] as_3 { alias dv_2_global }	
+	define[local] int_3 { integer lower 10 upper 20 kind 'integer' units 'CFS'}	
+}
+
+MODEL fourth { 
+
+
+	
+	define[local] sv_expr1 {
+		
+		case caseA {
+			condition  month>=JAN .and. month<=int(sv_1[first]) 
+			select     FEB
+			from       sacramento_runoff
+			given      wsi=1
+			use        linear
+			where      wateryear=wateryear 
+		}
+		
+		case caseB {
+			condition  always
+			value      300.0  
+		}
+    }
+	   
+	define sv_expr2 {
+		
+		case MAR_SEP {
+            condition       month >= min(max(as_3[third],3),sv_2[second] + dv_2_global[second]) .and. month <= SEP
+            sum(i=0,SEP-month,1) min(1,2)*cfs_taf(i) 
+		}  
+			
+		case other {
+			condition		always
+			value   		300 
+		}
+	}	
+
+	define sv_expr3 {
+					
+		case other {
+			condition		month >= MAR .and. month <= int(min(int_3[third],dv_1[first]))
+			value   		9  
+		}
+	}
+
+	define sv_expr_not_exist	{
+					
+		case other {
+			condition		month >= dv_2[second] .and. month <= sv_2[not_exist]
+			value   		9  
+		}
+	}	
+}

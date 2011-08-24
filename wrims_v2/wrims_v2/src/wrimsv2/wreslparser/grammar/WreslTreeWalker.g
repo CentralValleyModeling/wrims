@@ -142,7 +142,7 @@ svar_case
 
 case_content returns[String name, String condition, String expression, String dependants, String varInCycle]  
 @init{ String expr = null;} :
-^(Case i=IDENT c=Condition d=Dependants
+^(Case i=IDENT c=Condition d=Dependants cvc=VarInCycle
  
  ( t=table_content {expr =$t.text;}  // todo: add dependants
  | v=Value  vd=Dependants vvc=VarInCycle {expr =$v.text; }
@@ -151,7 +151,7 @@ case_content returns[String name, String condition, String expression, String de
  
 { $name = $i.text; $condition =$c.text; $expression = expr; 
   $dependants = $d.text + " " + $t.dependants + " " + $vd.text + " " + $sum.dependants; 
-  $varInCycle = $t.varInCycle + " " + $sum.varInCycle + " " + $vvc.text;
+  $varInCycle = $cvc.text + " "+ $t.varInCycle + " " + $sum.varInCycle + " " + $vvc.text;
 
 }
 
