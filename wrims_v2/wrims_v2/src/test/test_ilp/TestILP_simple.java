@@ -26,6 +26,7 @@ public class TestILP_simple {
 		
 		/// set control data		
 		String[] controlDataString = {
+		studyPath + "run\\",   //groundwater dir
 		studyPath + "run\\Simple1.wresl",
 		dssPath +   "SV.dss",
 		dssPath +   "INIT.dss",
