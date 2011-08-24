@@ -213,13 +213,11 @@ public class Controller {
 		LogUtils.setLogFile(logFilePath);
 		TempData td = new TempData();
 		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
-		td.model_dataset_map=StudyParser.parseModels(sc,td, false, true);
-		LogUtils.closeLogFile();
-		
+		td.model_dataset_map=StudyParser.parseModels(sc,td, false, true);		
 		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
-				
+		StudyParser.analyzeVarNeededFromCycles(sc, sd);
 		WriteCSV.study(sd, csvFolderPath ) ;
-	
+		LogUtils.closeLogFile();
 		return sd;	
 	}
 	
