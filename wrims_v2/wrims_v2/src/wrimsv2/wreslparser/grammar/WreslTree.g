@@ -427,8 +427,8 @@ expression returns[String text, Set<String> members, String dependants, Set<Stri
 scope { Set<String> SV; Set<String> varInCycle } 
 @init { $expression::SV = new HashSet<String>(); 
 		$expression::varInCycle = new HashSet<String>(); 
-		String dependants = null;
-		String strVarInCycle = null; } 
+		String dependants = "";
+		String strVarInCycle = ""; } 
 	:
 	add 
 	{  $text = Tools.replace_ignoreChar($add.text); 
