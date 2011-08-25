@@ -1,0 +1,53 @@
+! What is the value of dvar in cycle4 ?
+
+
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   second
+	condition  99 < 0
+    order   2
+    }	
+
+SEQUENCE CYCLE3 {
+    model   third
+    order   3
+    }
+
+SEQUENCE CYCLE4 {
+    model   fourth
+    order   4
+    }
+	
+MODEL first { 
+
+	define dvar { std kind 'test' units 'cfs' }
+	
+	goal goal_12 { dvar < 3 }
+	
+	include 'weight-table.wresl'	
+}
+
+MODEL second { 
+
+	goal[local] goal_12 { dvar < 2 }
+
+	include 'weight-table.wresl'	
+}
+
+MODEL third { 
+	
+	goal goal_34 { dvar < 1 }
+	
+	include 'weight-table.wresl'	
+}
+
+MODEL fourth { 
+	
+	goal[local] goal_34 { dvar < dvar[second] }
+	
+	include 'weight-table.wresl'
+}

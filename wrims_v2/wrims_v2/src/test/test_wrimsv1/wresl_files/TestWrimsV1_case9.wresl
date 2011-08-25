@@ -1,0 +1,41 @@
+! What is the value of dvar in cycle3 ?
+
+
+SEQUENCE CYCLE1 {
+    model   first
+	condition  99 < 0
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }	
+
+SEQUENCE CYCLE3 {
+    model   third
+    order   3
+    }
+	
+MODEL first { 
+
+	define[local] dvar { upper 99 kind 'test' units 'cfs' }
+	
+	include 'weight-table.wresl'
+}
+
+MODEL second { 
+
+	define[local] dvar { std kind 'test' units 'cfs' }
+	
+	include 'weight-table.wresl'
+}
+
+MODEL third { 
+
+	define[local] dvar { std kind 'test' units 'cfs' }
+	
+	goal[local] g { dvar = dvar[first] }
+	
+	include 'weight-table.wresl'
+}

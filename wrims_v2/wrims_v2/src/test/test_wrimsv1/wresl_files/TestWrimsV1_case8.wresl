@@ -20,7 +20,7 @@ MODEL second {
 
 	goal[local] goal_1 { x < 99 }
 	
-		Objective obj = {
+	Objective obj = {
 		[x, 100]
 	}
 }
