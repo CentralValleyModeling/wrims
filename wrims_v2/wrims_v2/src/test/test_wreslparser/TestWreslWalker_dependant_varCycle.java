@@ -142,10 +142,10 @@ public class TestWreslWalker_dependant_varCycle {
 		cycleName = "fourth";
 		csvText = Tools.readFileAsString(csvFolderPath+"\\"+cycleName+"\\dvar.csv");
 
-		s = "dv##true";
+		s = "dv##false";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
-		Assert.assertEquals(n, 0);
+		Assert.assertEquals(n, 1);
 		Assert.assertFalse(sd.getVarCycleValueMap().get("dv").keySet().contains(cycleName));
 		
 	}
