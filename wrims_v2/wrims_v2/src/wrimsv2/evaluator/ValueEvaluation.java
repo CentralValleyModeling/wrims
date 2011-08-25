@@ -531,7 +531,6 @@ public class ValueEvaluation {
 			Map<String, IntDouble> var= varCycleValueMap.get(ident);
 			if (var.containsKey(cycle)){
 				data=var.get(cycle);
-				System.out.println(ident+" "+cycle+" "+ data);
 			}else{
 				Error.addEvaluationError("The variable "+ident+" is not defined in the past cycle of "+cycle+".");
 				return data;
