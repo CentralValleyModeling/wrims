@@ -1,0 +1,23 @@
+SEQUENCE CYCLE1 {
+    model   sjrbase
+    order   1
+}
+
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+}	
+	
+MODEL sjrbase { 
+
+	define f { value 9 }
+	define[local] NMforecast1dv { alias f kind 'forecast' units 'taf' }
+	
+}
+
+MODEL second { 
+
+	define NMforecast1dv { alias NMforecast1dv[sjrbase] kind 'forecast' units 'taf' }
+}
+
+

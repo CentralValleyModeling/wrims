@@ -29,8 +29,9 @@ public class StudyParser{
   public static Map<String, Map<String, String>> cycleVarTypeMap;
   public static Set<String> allValidCycleNames;
   public static Map<String, String> cycleNameConditionMap;
+  private static int n_buffer = 3;
 
-	
+
   public static void reset(){  
 	  total_errors = 0;
 	  total_warnings = 0;
@@ -510,7 +511,7 @@ public class StudyParser{
 				}
 				continue;
 				
-			} else if ( cycleNameConditionMap.get(neededCycle).length()>1){
+			} else if ( cycleNameConditionMap.get(neededCycle).length()>0 && !cycleNameConditionMap.get(neededCycle).equalsIgnoreCase("always")){
 				
 				for (String s : neededVarSet) {
 					LogUtils.warningMsg("In file: " + fromWresl + "\n" + "Variable [" + varName + "] has an item " + s + "[" + neededCycle + "]"+" depending on cycle condition: "+ cycleNameConditionMap.get(neededCycle));
@@ -533,10 +534,20 @@ public class StudyParser{
 				
 				// / create space in varCycleValue map where cycles contains neededCycle and past cycles
 				
-				int indexOfNeededCycle = sd.getModelList().indexOf(neededCycle);
-				ArrayList<String> cycleList = sd.getModelList();
+				ArrayList<String> cycleListBase = new ArrayList<String>(sd.getModelList());
+				ArrayList<String> cycleList = new ArrayList<String>(sd.getModelList());
 				
-				for (int i=0; i <= indexOfNeededCycle; i++){
+				int indexOfNeededCycle = cycleListBase.indexOf(neededCycle);
+				
+				
+//				for (int i=1 ; i <= n_buffer; i++){
+//					cycleList.add(0, cycleListBase.get(cycleListBase.size()-i));
+//				}
+//				indexOfNeededCycle = indexOfNeededCycle + n_buffer ;
+
+				int beginIndex = Math.max( indexOfNeededCycle-n_buffer, 0);				
+				
+				for (int i= beginIndex ; i <= indexOfNeededCycle; i++){
 					String cycleN = cycleList.get(i);
 				
 					//===================
@@ -657,6 +668,8 @@ public class StudyParser{
 				    gl.caseExpression.add(e+"="+as.expression);
 				    gl.expressionDependants=as.dependants;
 				    gl.fromWresl = as.fromWresl;
+				    gl.needVarFromEarlierCycle = as.needVarFromEarlierCycle;
+				    gl.neededVarInCycleSet = new HashSet<String>(as.neededVarInCycleSet);
 				    
 				    String goalName = e+"_alias";
 

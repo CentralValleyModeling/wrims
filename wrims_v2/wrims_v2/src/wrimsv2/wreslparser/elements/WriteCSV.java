@@ -34,7 +34,7 @@ public class WriteCSV {
 	  public static String timeseries_header ="NAME,B_PART,TYPE,UNITS,CONVERT_TO_UNITS,FROM_WRESL_FILE";
 	  public static String dvar_header ="NAME,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE,USED_IN_LATER_CYCLE";	  
 	  public static String alias_header ="NAME,TYPE,UNITS,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,USED_IN_LATER_CYCLE";
-	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,DEPENDANT,FROM_WRESL_FILE";
+	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,";
 	  private static ModelDataSet currentModelDataSet;
 	  
 	  
@@ -546,6 +546,13 @@ public class WriteCSV {
 		    	
 
 				out.print(Param.csv_seperator+g.fromWresl);
+		    	out.print(Param.csv_seperator);
+		    	
+		    	if (g.neededVarInCycleSet!=null){
+			    	for (String d: g.neededVarInCycleSet){
+			    		out.print(d+";"); //for dependantName[cycleName]		    	
+			    	}
+		    	}
 				out.print("\n");	
 		    	}
 			}

@@ -149,4 +149,61 @@ public class TestWreslWalker_dependant_varCycle {
 		Assert.assertFalse(sd.getVarCycleValueMap().get("dv").keySet().contains(cycleName));
 		
 	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void alias() throws RecognitionException, IOException {
+	// deep embedding of alias
+		
+		testName = "TestWreslWalker_dependant_varCycle_alias";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
+		
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyParser.reset();
+		
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath, true);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td);
+		
+		StudyParser.analyzeVarNeededFromCycles(sc, sd);
+		
+		WriteCSV.study(sd, csvFolderPath ) ;
+		
+		LogUtils.closeLogFile();
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);		
+		Assert.assertEquals(StudyParser.total_errors, 0);
+	
+//		int totalWarnings = RegUtils.timesOfMatches(logText, "Warning:");
+//		Assert.assertEquals(totalWarnings, 1);		
+	
+		String csvText;
+		String s;
+		String cycleName;
+		int n;
+	
+		cycleName = "sjrbase";
+		csvText = Tools.readFileAsString(csvFolderPath+"\\"+cycleName+"\\dvar.csv");
+	
+		s = "nmforecast1dv##true";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		Assert.assertTrue(sd.getVarCycleValueMap().get("nmforecast1dv").keySet().contains(cycleName));
+	
+
+		
+	}
 }
