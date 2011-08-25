@@ -530,17 +530,29 @@ public class StudyParser{
 
 				// / create space in varCycleValue map
 				Map<String, Map<String, IntDouble>> vcv = sd.getVarCycleValueMap();
-				if (vcv.keySet().contains(neededVar)) {
-					vcv.get(neededVar).put(neededCycle, null);
-				} else {
-					Map<String, IntDouble> t = new HashMap<String, IntDouble>();
-					t.put(neededCycle, null);
-					vcv.put(neededVar, t);
+				
+				// / create space in varCycleValue map where cycles contains neededCycle and past cycles
+				
+				int indexOfNeededCycle = sd.getModelList().indexOf(neededCycle);
+				ArrayList<String> cycleList = sd.getModelList();
+				
+				for (int i=0; i <= indexOfNeededCycle; i++){
+					String cycleN = cycleList.get(i);
+				
+					//===================
+					if (vcv.keySet().contains(neededVar)) {
+						vcv.get(neededVar).put(cycleN, null);
+					} else {
+						Map<String, IntDouble> t = new HashMap<String, IntDouble>();
+						t.put(cycleN, null);
+						vcv.put(neededVar, t);
+					}
+	
+					// / add to set varUsedByLaterCycle
+					mdsm.get(cycleN).varUsedByLaterCycle.add(neededVar);
+					//===================
 				}
-
-				// / add to set varUsedByLaterCycle
-				mdsm.get(neededCycle).varUsedByLaterCycle.add(neededVar);
-				// LogUtils.importantMsg(mdsm.get(neededCycle).varUsedByLaterCycle + "[" + neededCycle + "]");
+				
 			}
 		}
 
