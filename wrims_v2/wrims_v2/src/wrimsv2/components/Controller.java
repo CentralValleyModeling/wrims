@@ -31,6 +31,7 @@ import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.commondata.wresldata.WeightElement;
+import wrimsv2.evaluator.AssignPastCycleVariable;
 import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.DssOperation;
@@ -282,17 +283,18 @@ public class Controller {
 				}
 				modelCondition.reset();
 				
+				String model=modelList.get(i);
+				ModelDataSet mds=modelDataSetMap.get(model);
+				ControlData.currModelDataSet=mds;
+				ControlData.currCycleName=model;
+				ControlData.currCycleIndex=i;
+				
 				if (condition){
-					String model=modelList.get(i);
-					ModelDataSet mds=modelDataSetMap.get(model);
-					ControlData.currModelDataSet=mds;
 					ControlData.currSvMap=mds.svMap;
 					ControlData.currDvMap=mds.dvMap;
 					ControlData.currAliasMap=mds.asMap;
 					ControlData.currGoalMap=mds.gMap;
 					ControlData.currTsMap=mds.tsMap;
-					ControlData.currCycleName=model;
-					ControlData.currCycleIndex=i;
 					ControlData.isPostProcessing=false;
 					cal = Calendar.getInstance();
 					System.out.println("Before Evaluation: "+cal.getTimeInMillis());
@@ -319,6 +321,8 @@ public class Controller {
 					cal = Calendar.getInstance();
 					System.out.println("      After alias: "+cal.getTimeInMillis());
 					//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
+				}else{
+					new AssignPastCycleVariable();
 				}
 				i=i+1;
 			}
@@ -385,17 +389,18 @@ public class Controller {
 				}
 				modelCondition.reset();
 				
+				String model=modelList.get(i);
+				ModelDataSet mds=modelDataSetMap.get(model);
+				ControlData.currModelDataSet=mds;
+				ControlData.currCycleName=model;
+				ControlData.currCycleIndex=i;
+				
 				if (condition){
-					String model=modelList.get(i);
-					ModelDataSet mds=modelDataSetMap.get(model);
-					ControlData.currModelDataSet=mds;
 					ControlData.currSvMap=mds.svMap;
 					ControlData.currDvMap=mds.dvMap;
 					ControlData.currAliasMap=mds.asMap;
 					ControlData.currGoalMap=mds.gMap;
 					ControlData.currTsMap=mds.tsMap;
-					ControlData.currCycleIndex=i;
-					ControlData.currCycleName=model;
 					ControlData.isPostProcessing=false;
 					cal = Calendar.getInstance();
 					System.out.println("Before Evaluation: "+cal.getTimeInMillis());
@@ -426,6 +431,8 @@ public class Controller {
 					cal = Calendar.getInstance();
 					System.out.println("      After alias: "+cal.getTimeInMillis());
 					//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();
+				}else{
+					new AssignPastCycleVariable();
 				}
 				i=i+1;
 			}
