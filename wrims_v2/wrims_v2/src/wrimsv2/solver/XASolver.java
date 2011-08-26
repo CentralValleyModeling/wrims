@@ -42,12 +42,7 @@ public class XASolver {
 		setDVars();
 		setWeights();
 		
-		Calendar cal = Calendar.getInstance();
-		System.out.println("After sending to solver: "+cal.getTimeInMillis());
 		ControlData.xasolver.solve();
-		cal=Calendar.getInstance();
-		System.out.println("After solved: "+cal.getTimeInMillis());
-		
 		
 		modelStatus=ControlData.xasolver.getModelStatus();
 		System.out.println("Model status: "+modelStatus);

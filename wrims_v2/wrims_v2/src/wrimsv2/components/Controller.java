@@ -252,8 +252,6 @@ public class Controller {
 		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
 		ControlData.allTsMap=sds.getTimeseriesMap();
 		
-		Calendar cal = Calendar.getInstance();
-		System.out.println("After Parsser: "+cal.getTimeInMillis());
 		readTimeseries();
 		initialDvarAliasTS(ControlData.totalTimeStep);
 		for (int i=0; i<modelList.size(); i++){
@@ -269,7 +267,7 @@ public class Controller {
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
-			clearDvarValues(modelList, modelDataSetMap);
+			clearValues(modelList, modelDataSetMap);
 			int i=0;
 			while (i<modelList.size()  && noError){  
 				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
@@ -296,30 +294,21 @@ public class Controller {
 					ControlData.currGoalMap=mds.gMap;
 					ControlData.currTsMap=mds.tsMap;
 					ControlData.isPostProcessing=false;
-					cal = Calendar.getInstance();
-					System.out.println("Before Evaluation: "+cal.getTimeInMillis());
 					mds.processModel();
 					if (Error.error_evaluation.size()>=1){
 						Error.writeEvaluationErrorFile("evaluation_error.txt");
 						noError=false;
 					}
-					cal = Calendar.getInstance();
-					System.out.println(" After Evaluation: "+cal.getTimeInMillis());
 					new XASolver();
-					cal = Calendar.getInstance();
-					System.out.println("    After solver: "+cal.getTimeInMillis());
+					System.out.println("Solving Done.");
 					if (Error.error_solving.size()<1){
-						cal = Calendar.getInstance();
-						System.out.println("After assign dvar: "+cal.getTimeInMillis());
 						ControlData.isPostProcessing=true;
 						mds.processAlias();
-					
+						System.out.println("Assign Alias Done.");
 					}else{
 						Error.writeSolvingErrorFile("solving_error.txt");
 						noError=false;
 					}
-					cal = Calendar.getInstance();
-					System.out.println("      After alias: "+cal.getTimeInMillis());
 					//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
 				}else{
 					new AssignPastCycleVariable();
@@ -359,8 +348,6 @@ public class Controller {
 		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
 		ControlData.allTsMap=sds.getTimeseriesMap();
 		
-		Calendar cal = Calendar.getInstance();
-		System.out.println("After Parsser: "+cal.getTimeInMillis());
 		readTimeseries();
 		initialDvarAliasTS(ControlData.totalTimeStep);
 		for (int i=0; i<modelList.size(); i++){
@@ -375,7 +362,7 @@ public class Controller {
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
-			clearDvarValues(modelList, modelDataSetMap);
+			clearValues(modelList, modelDataSetMap);
 			int i=0;
 			while (i<modelList.size()  && noError){   
 				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
@@ -402,34 +389,26 @@ public class Controller {
 					ControlData.currGoalMap=mds.gMap;
 					ControlData.currTsMap=mds.tsMap;
 					ControlData.isPostProcessing=false;
-					cal = Calendar.getInstance();
-					System.out.println("Before Evaluation: "+cal.getTimeInMillis());
 					mds.processModel();
 					if (Error.error_evaluation.size()>=1){
 						Error.writeEvaluationErrorFile("evaluation_error.txt");
 						noError=false;
 					}
-					cal = Calendar.getInstance();
-					System.out.println(" After Evaluation: "+cal.getTimeInMillis());
 					try{
 						new GurobiSolver();
 					}catch (GRBException e){
 						Error.addSolvingError("Gurobi solving error: "+e.getMessage());
 					}
-					cal = Calendar.getInstance();
-					System.out.println("    After solving: "+cal.getTimeInMillis());
+					System.out.println("Solving Done.");
 					if (Error.error_solving.size()<1){
-						cal = Calendar.getInstance();
-						System.out.println("After assign dvar: "+cal.getTimeInMillis());
+						System.out.println("Assign Dvar Done.");
 						ControlData.isPostProcessing=true;
 						mds.processAlias();
-					
+						System.out.println("Assign Alias Done.");
 					}else{
 						Error.writeSolvingErrorFile("solving_error.txt");
 						noError=false;
 					}
-					cal = Calendar.getInstance();
-					System.out.println("      After alias: "+cal.getTimeInMillis());
 					//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();
 				}else{
 					new AssignPastCycleVariable();
@@ -459,7 +438,7 @@ public class Controller {
 		}
 	}
 	
-	public void clearDvarValues(ArrayList<String> modelList, Map<String, ModelDataSet> modelDataSetMap){
+	public void clearValues(ArrayList<String> modelList, Map<String, ModelDataSet> modelDataSetMap){
 		for (int i=0; i<modelList.size(); i++){   
 			String model=modelList.get(i);
 			ModelDataSet mds=modelDataSetMap.get(model);
@@ -468,6 +447,18 @@ public class Controller {
 			for (String dvName: dvList){
 				Dvar dvar=dvMap.get(dvName);
 				dvar.setData(null);
+			}
+			ArrayList<String> svList = mds.svList;
+			Map<String, Svar> svMap =mds.svMap;
+			for (String svName: svList){
+				Svar svar=svMap.get(svName);
+				svar.setData(null);
+			}
+			ArrayList<String> asList = mds.asList;
+			Map<String, Alias> asMap =mds.asMap;
+			for (String asName: asList){
+				Alias alias=asMap.get(asName);
+				alias.setData(null);
 			}
 		}
 	}
@@ -494,6 +485,7 @@ public class Controller {
 				DataTimeSeries.lookSvDss.add(tsName);
 			}
 		}
+		System.out.println("Timeseries Reading Done.");
 	}
 	
 	public void	initialDvarAliasTS(long totalTimeStep){
@@ -570,8 +562,6 @@ public class Controller {
 		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
 		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
 		ControlData.allTsMap=sds.getTimeseriesMap();
-		
-		Calendar cal = Calendar.getInstance();
 
 		readTimeseries();
 		initialDvarAliasTS(ControlData.totalTimeStep);
@@ -588,7 +578,7 @@ public class Controller {
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
-			clearDvarValues(modelList, modelDataSetMap);
+			clearValues(modelList, modelDataSetMap);
 			int i=0;
 			while (i<modelList.size()  && noError){   
 				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
@@ -613,7 +603,6 @@ public class Controller {
 					ControlData.currTsMap=mds.tsMap;
 					ControlData.currCycleIndex=i;
 					ControlData.isPostProcessing=false;
-					cal = Calendar.getInstance();
 
 					mds.processModel(); 
 					IntermediateLP.setIlpFile(FilePaths.ilpFileDirectory);
@@ -623,22 +612,18 @@ public class Controller {
 						Error.writeEvaluationErrorFile("evaluation_error.txt");
 						noError=false;
 					}
-					cal = Calendar.getInstance();
 
 					new XASolver();
-					cal = Calendar.getInstance();
 
 					if (Error.error_solving.size()<1){
-						cal = Calendar.getInstance();
-						System.out.println("After assign dvar: "+cal.getTimeInMillis());
+						System.out.println("Assign Dvar Done.");
 						ControlData.isPostProcessing=true;
 						mds.processAlias();
-					
+						System.out.println("Assign Alias Done.");
 					}else{
 						Error.writeSolvingErrorFile("solving_error.txt");
 						noError=false;
 					}
-					cal = Calendar.getInstance();
 				}
 		
 				i=i+1;
