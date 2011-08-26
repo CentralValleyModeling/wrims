@@ -309,6 +309,7 @@ public class Controller {
 						Error.writeSolvingErrorFile("solving_error.txt");
 						noError=false;
 					}
+					System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
 					//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
 				}else{
 					new AssignPastCycleVariable();
@@ -320,7 +321,6 @@ public class Controller {
 			}else{
 				currTimeAddOneDay();
 			}
-			System.out.println(ControlData.currYear+"/"+ControlData.currMonth);
 			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
 		ControlData.xasolver.close();
@@ -409,6 +409,7 @@ public class Controller {
 						Error.writeSolvingErrorFile("solving_error.txt");
 						noError=false;
 					}
+					System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
 					//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();
 				}else{
 					new AssignPastCycleVariable();
@@ -420,7 +421,6 @@ public class Controller {
 			}else{
 				currTimeAddOneDay();
 			}
-			System.out.println(ControlData.currYear+"/"+ControlData.currMonth);
 			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
 		DssOperation.writeInitDvarAliasToDSS();
