@@ -298,7 +298,7 @@ public class Controller {
 					ControlData.isPostProcessing=false;
 					cal = Calendar.getInstance();
 					System.out.println("Before Evaluation: "+cal.getTimeInMillis());
-					processModel();
+					mds.processModel();
 					if (Error.error_evaluation.size()>=1){
 						Error.writeEvaluationErrorFile("evaluation_error.txt");
 						noError=false;
@@ -312,7 +312,7 @@ public class Controller {
 						cal = Calendar.getInstance();
 						System.out.println("After assign dvar: "+cal.getTimeInMillis());
 						ControlData.isPostProcessing=true;
-						processAlias();
+						mds.processAlias();
 					
 					}else{
 						Error.writeSolvingErrorFile("solving_error.txt");
@@ -404,7 +404,7 @@ public class Controller {
 					ControlData.isPostProcessing=false;
 					cal = Calendar.getInstance();
 					System.out.println("Before Evaluation: "+cal.getTimeInMillis());
-					processModel();
+					mds.processModel();
 					if (Error.error_evaluation.size()>=1){
 						Error.writeEvaluationErrorFile("evaluation_error.txt");
 						noError=false;
@@ -422,7 +422,7 @@ public class Controller {
 						cal = Calendar.getInstance();
 						System.out.println("After assign dvar: "+cal.getTimeInMillis());
 						ControlData.isPostProcessing=true;
-						processAlias();
+						mds.processAlias();
 					
 					}else{
 						Error.writeSolvingErrorFile("solving_error.txt");
@@ -479,24 +479,6 @@ public class Controller {
 		//ControlData.xasolver.setCommand("set sortName Yes FileName d:\\temp Output v2%d.log MatList V MPSX Yes ToRcc Yes");
 		//ControlData.xasolver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log set sortName Yes MatList V MPSX Yes ToRcc Yes set debug Yes  ListInput Yes" ) ;
 	}
-	
-	public void processModel(){
-		processTimeseries();
-		Calendar cal = Calendar.getInstance();
-		System.out.println(" After Timeseries: "+cal.getTimeInMillis());
-		processSvar();
-		cal = Calendar.getInstance();
-		System.out.println("       After svar: "+cal.getTimeInMillis());
-		processDvar();	
-		cal = Calendar.getInstance();
-		System.out.println("       After dvar: "+cal.getTimeInMillis());
-		processGoal();	
-		cal = Calendar.getInstance();
-		System.out.println("       After goal: "+cal.getTimeInMillis());
-		processWeight();
-		cal = Calendar.getInstance();
-		System.out.println("     After weight: "+cal.getTimeInMillis());
-	}
 
 	public void readTimeseries(){
 		Map<String, Timeseries> tsMap=ControlData.currStudyDataSet.getTimeseriesMap();
@@ -535,214 +517,6 @@ public class Controller {
 			}
 		}
 		new LoadAllDll(ControlData.allDll);
-	}
-	
-	public void processWeight(){
-		ModelDataSet mds=ControlData.currModelDataSet;
-		ArrayList<String> wtList = mds.wtList;
-		Map<String, WeightElement> wtMap =mds.wtMap;
-		SolverData.setWeightMap(wtMap);
-		ControlData.currEvalTypeIndex=5;
-		for (String wtName: wtList){
-			ControlData.currEvalName=wtName;
-			//System.out.println("Process weight "+wtName);
-			WeightElement wt=wtMap.get(wtName);
-			ValueEvaluatorParser evaluator=wt.weightParser;
-			try {
-				evaluator.evaluator();
-				wt.setValue(evaluator.evalValue.getData().doubleValue());
-			} catch (RecognitionException e) {
-				Error.addEvaluationError("weight definition has error");
-				wt.setValue(0.0);
-			}
-			evaluator.reset();
-		}
-	}
-	
-	public void processSvar(){
-		ModelDataSet mds=ControlData.currModelDataSet;
-		ArrayList<String> svList = mds.svList;
-		Map<String, Svar> svMap =mds.svMap;
-		ControlData.currEvalTypeIndex=0;
-		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
-		Set<String> svarUsedByLaterCycle = mds.svarUsedByLaterCycle;
-		String model=ControlData.currCycleName;
-		for (String svName: svList){
-			ControlData.currEvalName=svName;
-			//System.out.println("Process svar "+svName);
-			Svar svar=svMap.get(svName);
-			ArrayList<ValueEvaluatorParser> caseConditions=svar.caseConditionParsers;
-			boolean condition=false;
-			int i=-1;
-			while(!condition && i<=caseConditions.size()-2){
-				i=i+1;
-				ValueEvaluatorParser caseCondition=caseConditions.get(i);
-				try{
-					caseCondition.evaluator();
-					condition=caseCondition.evalCondition;
-				}catch (Exception e){
-					Error.addEvaluationError("Case condition evaluation has error.");
-					condition=false;
-				}
-				caseCondition.reset();
-			}
-			if (condition){
-				ArrayList<ValueEvaluatorParser> caseExpressions=svar.caseExpressionParsers;
-				ValueEvaluatorParser caseExpression=caseExpressions.get(i);
-				try {
-					caseExpression.evaluator();
-					IntDouble evalValue=caseExpression.evalValue;
-					svar.setData(evalValue);
-					if (svarUsedByLaterCycle.contains(svName)){
-						varCycleValueMap.get(svName).put(model, evalValue);
-					}
-				} catch (RecognitionException e) {
-					Error.addEvaluationError("Case expression evaluation has error.");
-					IntDouble evalValue=new IntDouble(1.0, false);
-					svar.setData(evalValue);
-					if (svarUsedByLaterCycle.contains(svName)){
-						varCycleValueMap.get(svName).put(model, evalValue);
-					}
-				}
-				caseExpression.reset();
-			}else{
-				Error.addEvaluationError("None of the case conditions is satisfied.");
-				svar.setData(new IntDouble(1.0, false));
-			}
-		}
-	}
-	
-	public void processTimeseries(){
-		ModelDataSet mds=ControlData.currModelDataSet;
-		ArrayList<String> tsList = mds.tsList;
-		Map<String, Timeseries> tsMap =mds.tsMap;
-		ControlData.currEvalTypeIndex=5;
-		for (String tsName:tsList){
-			ControlData.currEvalName=tsName;
-			//System.out.println("process timeseries "+tsName);
-			Timeseries ts=tsMap.get(tsName);
-			ts.setData(new IntDouble(Evaluation.timeseries(tsName),false));
-		}
-	}
-	
-	public void processDvar(){
-		ModelDataSet mds=ControlData.currModelDataSet;
-		ArrayList<String> dvList = mds.dvList;
-		Map<String, Dvar> dvMap =mds.dvMap;
-		SolverData.setDvarMap(dvMap);
-		ControlData.currDvMap=dvMap;
-		ControlData.currEvalTypeIndex=1;
-		for (String dvName: dvList){
-			ControlData.currEvalName=dvName;
-			//System.out.println("Process dvar "+dvName);
-			Dvar dvar=dvMap.get(dvName);
-			
-			ValueEvaluatorParser evaluator=dvar.lowerBoundParser;
-			try {
-				evaluator.evaluator();
-				dvar.lowerBoundValue=evaluator.evalValue.getData();
-			} catch (RecognitionException e) {
-				Error.addEvaluationError("Lowerbound evaluation has error.");
-				dvar.lowerBoundValue=-901.0;
-			}
-			evaluator.reset();
-			
-			evaluator =dvar.upperBoundParser;
-			try {
-				evaluator.evaluator();
-				dvar.upperBoundValue=evaluator.evalValue.getData();
-			} catch (RecognitionException e) {
-				Error.addEvaluationError("Lowerbound evaluation has error.");
-				dvar.lowerBoundValue=-901.0;
-			}
-			evaluator.reset();
-		}
-	}
-	
-	public void processGoal(){
-		ModelDataSet mds=ControlData.currModelDataSet;
-		ArrayList<String> gList = mds.gList;
-		Map<String, Goal> gMap =mds.gMap;
-		ControlData.currEvalTypeIndex=3;
-		SolverData.clearConstraintDataMap();
-		for (String goalName: gList){
-			ControlData.currEvalName=goalName;
-			//System.out.println("Process constraint "+goalName);
-			Goal goal=gMap.get(goalName);
-			ArrayList<ValueEvaluatorParser> caseConditions=goal.caseConditionParsers;
-			boolean condition=false;
-			int i=-1;
-			while(!condition && i<=caseConditions.size()-2){
-				i=i+1;
-				ValueEvaluatorParser caseCondition=caseConditions.get(i);
-				try{
-					caseCondition.evaluator();
-					condition=caseCondition.evalCondition;
-				}catch (Exception e){
-					Error.addEvaluationError("Case condition evaluation has error.");
-					condition=false;
-				}
-				caseCondition.reset();
-			}
-			if (condition){		
-				ArrayList<EvaluatorParser> caseExpressions=goal.caseExpressionParsers;
-				EvaluatorParser caseExpression=caseExpressions.get(i);
-				try {
-					caseExpression.evaluator();
-					SolverData.getConstraintDataMap().put(goalName,caseExpression.evalConstraint);
-				} catch (RecognitionException e) {
-					Error.addEvaluationError("Case expression evaluation has error.");
-				}	
-				caseExpression.reset();
-			}
-		}
-	}
-	
-	public void processAlias(){
-		ModelDataSet mds=ControlData.currModelDataSet;
-		ArrayList<String> asList = mds.asList;
-		Map<String, Alias> asMap =mds.asMap;
-		ControlData.currEvalTypeIndex=2;
-		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
-		Set<String> aliasUsedByLaterCycle = mds.aliasUsedByLaterCycle;
-		String model=ControlData.currCycleName;
-		for (String asName: asList){
-			ControlData.currEvalName=asName;
-			//System.out.println("Process alias "+asName);
-			Alias alias=asMap.get(asName);
-			
-			ValueEvaluatorParser evaluator = alias.expressionParser;
-			try {
-				evaluator.evaluator();
-				IntDouble id=evaluator.evalValue;
-				alias.data=id;
-				if (aliasUsedByLaterCycle.contains(asName)){
-					varCycleValueMap.get(asName).put(model, id);
-				}
-				if (!DataTimeSeries.dvAliasTS.containsKey(asName)){
-					DssDataSetFixLength dds=new DssDataSetFixLength();
-					double[] data=new double[ControlData.totalTimeStep];
-					dds.setData(data);
-					dds.setTimeStep(ControlData.partE);
-					dds.setStartTime(ControlData.startTime);
-					dds.setUnits(alias.units);
-					dds.setKind(alias.kind);
-					DataTimeSeries.dvAliasTS.put(asName,dds);
-				}
-				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
-				dataList[ControlData.currTimeStep]=id.getData().doubleValue();
-			} catch (RecognitionException e) {
-				Error.addEvaluationError("Alias evaluation has error.");
-				IntDouble id=new IntDouble(-901.0,false);
-				alias.data=id;
-				if (aliasUsedByLaterCycle.contains(asName)){
-					varCycleValueMap.get(asName).put(model, id);
-				}
-				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
-				dataList[ControlData.currTimeStep]=-901.0;
-			}
-			evaluator.reset();
-		}
 	}
 	
 	public int getTotalTimeStep(){
@@ -841,7 +615,7 @@ public class Controller {
 					ControlData.isPostProcessing=false;
 					cal = Calendar.getInstance();
 
-					processModel(); 
+					mds.processModel(); 
 					IntermediateLP.setIlpFile(FilePaths.ilpFileDirectory);
 					IntermediateLP.output();
 				
@@ -858,7 +632,7 @@ public class Controller {
 						cal = Calendar.getInstance();
 						System.out.println("After assign dvar: "+cal.getTimeInMillis());
 						ControlData.isPostProcessing=true;
-						processAlias();
+						mds.processAlias();
 					
 					}else{
 						Error.writeSolvingErrorFile("solving_error.txt");
