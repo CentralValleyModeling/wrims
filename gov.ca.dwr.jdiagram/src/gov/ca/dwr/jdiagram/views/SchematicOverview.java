@@ -53,7 +53,6 @@ public class SchematicOverview extends ViewPart {
 		Frame frame = SWT_AWT.new_Frame(swingContainer);
 		Panel panel = new Panel(new BorderLayout()) {
 			public void update(java.awt.Graphics g) {
-				/* Do not erase the background */
 				paint(g);
 			}
 		};

@@ -1,39 +1,34 @@
 package gov.ca.dwr.jdiagram.views;
 
 import gov.ca.dwr.jdiagram.Activator;
-import gov.ca.dwr.jdiagram.TextSearchQueryProvider;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.Panel;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Float;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.JLayeredPane;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.search.internal.ui.SearchPlugin;
-import org.eclipse.search.ui.ISearchQuery;
-import org.eclipse.search.ui.NewSearchUI;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -46,9 +41,12 @@ import com.mindfusion.diagramming.Diagram;
 import com.mindfusion.diagramming.DiagramAdapter;
 import com.mindfusion.diagramming.DiagramItem;
 import com.mindfusion.diagramming.DiagramLink;
+import com.mindfusion.diagramming.DiagramLinkList;
+import com.mindfusion.diagramming.DiagramNode;
 import com.mindfusion.diagramming.DiagramView;
 import com.mindfusion.diagramming.LinkEvent;
 import com.mindfusion.diagramming.NodeEvent;
+import com.mindfusion.diagramming.Overview;
 import com.mindfusion.diagramming.ShapeNode;
 
 /**
@@ -69,7 +67,7 @@ public class SchematicView extends ViewPart {
 	private Diagram diagram;
 
 	private Action zoomInAction;
-	
+
 	private Action zoomOutAction;
 
 	private Action openSchematicAction;
@@ -105,15 +103,19 @@ public class SchematicView extends ViewPart {
 		JRootPane root = new JRootPane();
 		panel.add(root);
 		java.awt.Container contentPane = root.getContentPane();
+		JLayeredPane layeredPane = new JLayeredPane();
+		contentPane.add(layeredPane);
 		diagramView = new DiagramView(diagram = new Diagram());
 		diagramView.setAllowInplaceEdit(false);
 		diagramView.setBehavior(Behavior.DoNothing);
-		getSite().setSelectionProvider(selectionProvider = new DiagramSelectionProvider());
-		diagram.addDiagramListener(new DiagramAdapter(){
+		getSite().setSelectionProvider(
+				selectionProvider = new DiagramSelectionProvider());
+		diagram.addDiagramListener(new DiagramAdapter() {
 
 			@Override
 			public void linkClicked(LinkEvent e) {
-				selectionProvider.setSelection(new DiagramItemSelection(e.getLink()));
+				selectionProvider.setSelection(new DiagramItemSelection(e
+						.getLink()));
 			}
 
 			@Override
@@ -122,32 +124,22 @@ public class SchematicView extends ViewPart {
 
 			@Override
 			public void nodeClicked(NodeEvent e) {
-				selectionProvider.setSelection(new DiagramItemSelection(e.getNode()));
-				/*
-				System.out.println("Clicked on link: "+e.getNode());
-				DiagramNode node = e.getNode();
-				System.out.println("Text: "+node.getTextToEdit());
-				DiagramLinkList incomingLinks = node.getIncomingLinks();
-				for (int i=0; i < incomingLinks.size(); i++) {
-					DiagramLink diagramLink = incomingLinks.get(i);
-					System.out.println("Incoming link #"+i+":"+diagramLink.getOrigin().getTextToEdit());
-				}
-				DiagramLinkList outgoingLinks = node.getOutgoingLinks();
-				for (int i=0; i < outgoingLinks.size(); i++) {
-					DiagramLink diagramLink = outgoingLinks.get(i);
-					System.out.println("Outgoing link #"+i+":"+diagramLink.getOrigin().getTextToEdit());
-				}
-				*/
+				selectionProvider.setSelection(new DiagramItemSelection(e
+						.getNode()));
 			}
 
 			@Override
 			public void nodeDoubleClicked(NodeEvent e) {
 			}
-			
+
 		});
-		contentPane.add(new JScrollPane(diagramView));
+		layeredPane.add(new JScrollPane(diagramView));
+		Overview overview = new Overview();
+		overview.setDiagramView(diagramView);
+		layeredPane.add(overview,1);
 		IWorkbenchPage activePage = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage();
+		/*
 		if (activePage != null) {
 			IViewPart sview = activePage.findView(SchematicOverview.ID);
 			if (sview != null) {
@@ -155,6 +147,7 @@ public class SchematicView extends ViewPart {
 				overview.setDiagramView(diagramView);
 			}
 		}
+		*/
 		// Create the help context id for the viewer's control
 		PlatformUI.getWorkbench().getHelpSystem()
 				.setHelp(swingContainer, "gov.ca.dwr.calsim.jdiagram.viewer");
@@ -205,7 +198,7 @@ public class SchematicView extends ViewPart {
 				Activator.getImageDescriptor("ZoomNormal24.gif")) {
 
 			public void run() {
-				_zoomFactor=100;
+				_zoomFactor = 100;
 				diagramView.setZoomFactor(_zoomFactor);
 			};
 		};
@@ -213,16 +206,21 @@ public class SchematicView extends ViewPart {
 				Activator.getImageDescriptor("ZoomIn24.gif")) {
 
 			public void run() {
-				_zoomFactor*=2;
-				diagramView.setZoomFactor(_zoomFactor);
+				//_zoomFactor *= 2;
+				//diagramView.setZoomFactor(_zoomFactor);
+				Rectangle2D.Float rect = diagramView.deviceToDoc(diagramView.getVisibleRect());
+				rect.setRect(rect.x+rect.width/4, rect.y+rect.height/4, rect.width/2, rect.height/2);
+				diagramView.zoomToFit(rect);
 			};
 		};
 		zoomOutAction = new Action("Zoom Out",
 				Activator.getImageDescriptor("ZoomOut24.gif")) {
 
 			public void run() {
-				_zoomFactor/=2;
-				diagramView.setZoomFactor(_zoomFactor);
+				//_zoomFactor /= 2;
+				Rectangle2D.Float rect = diagramView.deviceToDoc(diagramView.getVisibleRect());
+				rect.setRect(rect.x-rect.width/2, rect.y-rect.height/2, rect.width*2, rect.height*2);
+				diagramView.zoomToFit(rect);
 			};
 		};
 	}
@@ -241,17 +239,19 @@ public class SchematicView extends ViewPart {
 	public DiagramView getDiagramView() {
 		return diagramView;
 	}
-	
+
 	/**
 	 * Selection wrapper for DiagramItem
+	 * 
 	 * @author psandhu
-	 *
+	 * 
 	 */
-	public static final class DiagramItemSelection implements IStructuredSelection, IAdaptable{
-		
+	public static final class DiagramItemSelection implements
+			IStructuredSelection, IAdaptable {
+
 		private DiagramItem item;
 
-		public DiagramItemSelection(DiagramItem item){
+		public DiagramItemSelection(DiagramItem item) {
 			this.item = item;
 		}
 
@@ -271,7 +271,7 @@ public class SchematicView extends ViewPart {
 		@SuppressWarnings("rawtypes")
 		@Override
 		public Object getAdapter(Class adapter) {
-			if (adapter == IPropertySource.class){
+			if (adapter == IPropertySource.class) {
 				return new DiagramItemPropertySource(item);
 			}
 			return null;
@@ -295,7 +295,7 @@ public class SchematicView extends ViewPart {
 
 		@Override
 		public Object[] toArray() {
-			return new Object[]{getFirstElement()};
+			return new Object[] { getFirstElement() };
 		}
 
 		@SuppressWarnings("rawtypes")
@@ -303,18 +303,20 @@ public class SchematicView extends ViewPart {
 		public List toList() {
 			return Collections.singletonList(getFirstElement());
 		}
-		
+
 	}
-	
-	
-	public static final class DiagramItemPropertySource implements IPropertySource{
+
+	public static final class DiagramItemPropertySource implements
+			IPropertySource {
 		public static final String LABEL = "label";
+		public static final String INCOMING = "incoming";
+		public static final String OUTGOING = "outgoing";
 		private DiagramItem item;
-		
-		public DiagramItemPropertySource(DiagramItem item){
+
+		public DiagramItemPropertySource(DiagramItem item) {
 			this.item = item;
 		}
-		
+
 		@Override
 		public Object getEditableValue() {
 			return null;
@@ -322,26 +324,67 @@ public class SchematicView extends ViewPart {
 
 		@Override
 		public IPropertyDescriptor[] getPropertyDescriptors() {
-			PropertyDescriptor labelDescriptor = new PropertyDescriptor(LABEL, "label");
-			return new IPropertyDescriptor[]{labelDescriptor};
+			PropertyDescriptor labelDescriptor = new PropertyDescriptor(LABEL,
+					"label");
+			PropertyDescriptor incomingDescriptor = new PropertyDescriptor(
+					INCOMING, "incoming");
+			PropertyDescriptor outgoingDescriptor = new PropertyDescriptor(
+					OUTGOING, "outgoing");
+			return new IPropertyDescriptor[] { labelDescriptor,
+					incomingDescriptor, outgoingDescriptor };
 		}
 
 		@Override
 		public Object getPropertyValue(Object id) {
-			if (id.equals(LABEL)){
-				if (item instanceof ShapeNode){
+			if (id.equals(LABEL)) {
+				if (item instanceof ShapeNode) {
 					return ((ShapeNode) item).getPlainText();
-				} else if (item instanceof DiagramLink){
+				} else if (item instanceof DiagramLink) {
 					return ((DiagramLink) item).getText();
 				}
 				return "";
+			} else if (id.equals(INCOMING) || id.equals(OUTGOING)){
+				if (item instanceof DiagramNode){
+					DiagramNode node = (DiagramNode) item;
+					if (id.equals(INCOMING)){
+						return getIncomingNodes(node);
+					} else {
+						return getOutgoingNodes(node);
+					}
+				}
 			}
 			return "";
 		}
 
+		private Object getIncomingNodes(DiagramNode node) {
+			DiagramLinkList incomingLinks = node.getIncomingLinks();
+			StringBuffer buf = new StringBuffer();
+			for (int i = 0; i < incomingLinks.size(); i++) {
+				DiagramLink diagramLink = incomingLinks.get(i);
+				if (i>0){
+					buf.append(", ");
+				}
+				buf.append(diagramLink.getOrigin().getTextToEdit());
+			}
+			return buf.toString();
+		}
+		
+		private Object getOutgoingNodes(DiagramNode node) {
+			DiagramLinkList outgoingLinks = node.getOutgoingLinks();
+			StringBuffer buf = new StringBuffer();
+			for (int i = 0; i < outgoingLinks.size(); i++) {
+				DiagramLink diagramLink = outgoingLinks.get(i);
+				if (i>0){
+					buf.append(", ");
+				}
+				buf.append(diagramLink.getDestination().getTextToEdit());
+			}
+			return buf.toString();
+		}
+
 		@Override
 		public boolean isPropertySet(Object id) {
-			if (id.equals(LABEL)){
+			if (id.equals(LABEL)) {
 				return true;
 			}
 			return false;
@@ -354,6 +397,6 @@ public class SchematicView extends ViewPart {
 		@Override
 		public void setPropertyValue(Object id, Object value) {
 		}
-		
+
 	}
 }
