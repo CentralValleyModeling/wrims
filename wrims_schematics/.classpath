@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jrockit-jre1.6.0_26-R28.1.4"/>
 	<classpathentry kind="lib" path="lib/calsim.jar"/>
 	<classpathentry kind="lib" path="lib/hec.jar"/>
 	<classpathentry kind="lib" path="lib/heclib.jar"/>

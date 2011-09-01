@@ -16,6 +16,7 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Label;
 import java.awt.MediaTracker;
+import java.awt.TextArea;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -63,6 +64,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
@@ -169,6 +171,9 @@ public class Schematic extends JApplet implements Runnable, DocumentListener { /
 			
 			inputPane=new InputPanel();
 			tabbedPane.add(inputPane,"Input");
+			
+			consolePane=new ConsolePanel(new JTextArea());
+			tabbedPane.add(consolePane, "Console");
 			
 			outputPane=new JPanel();
 			tabbedPane.add(outputPane, "Output");
@@ -4140,6 +4145,8 @@ public class Schematic extends JApplet implements Runnable, DocumentListener { /
 	protected JTabbedPane tabbedPane;
 	
 	protected InputPanel inputPane;
+	
+	protected ConsolePanel consolePane;
 	
 	protected JPanel outputPane;
 	
