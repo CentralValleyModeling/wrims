@@ -334,7 +334,7 @@ public class InputPanel extends JPanel {
 			out.println("set path="+externalPath+";"+vistaLibPath+";"+engineLibPath+";%path%");
 			out.println();
 
-			String javaFullPath=wrimsv2EnginePath=System.getenv("Java_Home")+"java";
+			String javaFullPath=wrimsv2EnginePath=System.getenv("Java_Bin")+"java";
 			String executeCommand=javaFullPath+" -Xmx1600m -Xss1024K -Djava.library.path="+externalPath+";"+vistaLibPath+";"+engineLibPath+" -cp \""+engineLibPath+"\\WRIMSv2.jar"+";"+engineLibPath+"\\XAOptimizer.jar"+";"+engineLibPath+"\\gurobi.jar"+";"+engineLibPath+"\\ilpObj.jar"+";"+vistaLibPath+"\\*\""+" wrimsv2.components.Controller ";
 			for (int i=0; i<17; i++){
 				executeCommand=executeCommand+args[i]+" ";

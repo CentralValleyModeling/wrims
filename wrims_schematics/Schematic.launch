@@ -7,7 +7,7 @@
 <listEntry value="1"/>
 </listAttribute>
 <mapAttribute key="org.eclipse.debug.core.environmentVariables">
-<mapEntry key="Java_Home" value="D:\cvwrsm\trunk\3rd_party\jrockit-jre1.6.0_26-R28.1.4\bin\"/>
+<mapEntry key="Java_Bin" value="D:\cvwrsm\trunk\3rd_party\jrockit-jre1.6.0_26-R28.1.4\bin\"/>
 <mapEntry key="Vista_Lib" value="D:\cvwrsm\trunk\3rd_party\vista\lib"/>
 <mapEntry key="WRIMSv2_Engine_Home" value="D:\cvwrsm\trunk\wrims_v2\wrimsv2_plugin\Engine\"/>
 <mapEntry key="path" value="D:\cvwrsm\trunk\calsim30\calsim30_bo\conv\Run\External;D:\CalLite_Beta_042611\Run\External;D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\CALSIM30_051711_BO\CONV\Run\External;D:\cvwrsm\trunk\wrims_v2\wrims_v2\src\wrimsv2\lib"/>
