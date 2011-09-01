@@ -39,6 +39,11 @@ import java.awt.*;
 import java.awt.event.*;
 import vista.gui.VistaUtils;
 //import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.*;
 import javax.swing.*;
 //import javax.swing.border.*;
@@ -87,7 +92,7 @@ public class InputPanel extends JPanel {
   /**
    * constructor
    */
-  public InputPanel() {
+  public InputPanel(JTabbedPane tabbedPane) {
     setLayout(new BorderLayout());
     _fileText = new JTextField[5];
     _entryText = new JTextField[6];
@@ -98,6 +103,7 @@ public class InputPanel extends JPanel {
     dl = new DayItemListener[2];
     ml = new MYItemListener[2];
     yl = new MYItemListener[2];
+    this.tabbedPane=tabbedPane;
     //******************************************************
     add(createLabelPanel(), BorderLayout.WEST);
     add(createAttribPanel(), BorderLayout.CENTER);
@@ -289,27 +295,79 @@ public class InputPanel extends JPanel {
   }
   
   void runStudy(){
-	String[] args=new String[17];
-	args[0]=_fileText[4].getText()+"\\";
-    args[1]=_fileText[0].getText();
-    args[2]=_fileText[1].getText();
-    args[3]=_fileText[3].getText();
-    args[4]=_fileText[2].getText();
-	args[5]=_entryText[3].getText();
-	args[6]=_entryText[4].getText();
-	args[7]=_entryText[5].getText();
-	args[8]=(String)_timeStep.getSelectedItem();
-	args[9]=(String)_year[0].getSelectedItem();
-	String startMonth=(String)_month[0].getSelectedItem();
-	args[10]=String.valueOf(TimeOperation.monthValue(startMonth.toLowerCase()));
-	args[11]=(String)_day[0].getSelectedItem();
-	args[12]=(String)_year[1].getSelectedItem();;
-	String endMonth=(String)_month[1].getSelectedItem();
-	args[13]=String.valueOf(TimeOperation.monthValue(endMonth.toLowerCase()));
-	args[14]=(String)_day[1].getSelectedItem();
-	args[15]="XA";
-	args[16]="csv";
-	new Controller(args);  
+	  String wrimsv2EnginePath=System.getenv("WRIMSv2_Engine_Home");
+	  String runFileFullPath=wrimsv2EnginePath+"WRIMSv2_Engine.bat";
+  	  try{
+			FileWriter runFile = new FileWriter(runFileFullPath);
+			PrintWriter out = new PrintWriter(runFile);
+
+			String[] args=new String[17];
+			args[0]=_fileText[4].getText()+"\\";
+		    args[1]=_fileText[0].getText();
+		    args[2]=_fileText[1].getText();
+		    args[3]=_fileText[3].getText();
+		    args[4]=_fileText[2].getText();
+			args[5]=_entryText[3].getText();
+			args[6]=_entryText[4].getText();
+			args[7]=_entryText[5].getText();
+			args[8]=(String)_timeStep.getSelectedItem();
+			args[9]=(String)_year[0].getSelectedItem();
+			String startMonth=(String)_month[0].getSelectedItem();
+			args[10]=String.valueOf(TimeOperation.monthValue(startMonth.toLowerCase()));
+			args[11]=(String)_day[0].getSelectedItem();
+			args[12]=(String)_year[1].getSelectedItem();;
+			String endMonth=(String)_month[1].getSelectedItem();
+			args[13]=String.valueOf(TimeOperation.monthValue(endMonth.toLowerCase()));
+			args[14]=(String)_day[1].getSelectedItem();
+			args[15]="XA";
+			args[16]="csv";
+
+			out.println("@echo off");
+			out.println();
+			
+			int index=args[1].lastIndexOf("\\");
+			String mainDirectory=args[1].substring(0,index+1);
+			String externalPath=mainDirectory+"External";
+			String vistaLibPath=System.getenv("Vista_Lib");
+			String engineLibPath=wrimsv2EnginePath+"lib";
+			
+			out.println("set path="+externalPath+";"+vistaLibPath+";"+engineLibPath+";%path%");
+			out.println();
+
+			String javaFullPath=wrimsv2EnginePath=System.getenv("Java_Home")+"java";
+			String executeCommand=javaFullPath+" -Xmx1600m -Xss1024K -Djava.library.path="+externalPath+";"+vistaLibPath+";"+engineLibPath+" -cp \""+engineLibPath+"\\WRIMSv2.jar"+";"+engineLibPath+"\\XAOptimizer.jar"+";"+engineLibPath+"\\gurobi.jar"+";"+engineLibPath+"\\ilpObj.jar"+";"+vistaLibPath+"\\*\""+" wrimsv2.components.Controller ";
+			for (int i=0; i<17; i++){
+				executeCommand=executeCommand+args[i]+" ";
+			}
+			out.println(executeCommand);
+			
+			out.close();
+			
+            tabbedPane.setSelectedIndex(1);
+			
+			Process p = Runtime.getRuntime().exec(runFileFullPath);
+			
+			BufferedReader stdInput = new BufferedReader(new 
+            InputStreamReader(p.getInputStream()));
+
+            BufferedReader stdError = new BufferedReader(new 
+            InputStreamReader(p.getErrorStream()));
+            
+            String s=null;
+	        // read the output from the command
+            while ((s = stdInput.readLine()) != null) {
+                System.out.println(s);
+            }
+            
+            // read any errors from the attempted command
+            while ((s = stdError.readLine()) != null) {
+                System.out.println(s);
+            }
+
+  	  } catch (IOException e){
+			e.printStackTrace();
+	  }
+	   
   }
   
   /**
@@ -586,5 +644,6 @@ public class InputPanel extends JPanel {
   //*********************************************************
 
   private JTextArea _desc;
+  private JTabbedPane tabbedPane;
   public static int _numYearsMax = 201;
 }

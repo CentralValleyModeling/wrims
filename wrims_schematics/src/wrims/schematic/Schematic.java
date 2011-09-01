@@ -169,7 +169,7 @@ public class Schematic extends JApplet implements Runnable, DocumentListener { /
 			tabbedPane =new JTabbedPane();
 			contentPane.add(tabbedPane);
 			
-			inputPane=new InputPanel();
+			inputPane=new InputPanel(tabbedPane);
 			tabbedPane.add(inputPane,"Input");
 			
 			consolePane=new ConsolePanel(new JTextArea());
