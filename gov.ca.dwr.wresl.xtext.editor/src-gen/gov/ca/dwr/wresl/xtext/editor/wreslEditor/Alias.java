@@ -1,0 +1,163 @@
+/**
+ * <copyright>
+ * </copyright>
+ *
+
+ */
+package gov.ca.dwr.wresl.xtext.editor.wreslEditor;
+
+import org.eclipse.emf.ecore.EObject;
+
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Alias</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * <p>
+ * The following features are supported:
+ * <ul>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias#isLocal <em>Local</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias#getName <em>Name</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias#getExpression <em>Expression</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias#getKind <em>Kind</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias#getUnits <em>Units</em>}</li>
+ * </ul>
+ * </p>
+ *
+ * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getAlias()
+ * @model
+ * @generated
+ */
+public interface Alias extends EObject
+{
+  /**
+   * Returns the value of the '<em><b>Local</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Local</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Local</em>' attribute.
+   * @see #setLocal(boolean)
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getAlias_Local()
+   * @model
+   * @generated
+   */
+  boolean isLocal();
+
+  /**
+   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias#isLocal <em>Local</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Local</em>' attribute.
+   * @see #isLocal()
+   * @generated
+   */
+  void setLocal(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Name</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Name</em>' attribute.
+   * @see #setName(String)
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getAlias_Name()
+   * @model
+   * @generated
+   */
+  String getName();
+
+  /**
+   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias#getName <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Name</em>' attribute.
+   * @see #getName()
+   * @generated
+   */
+  void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Expression</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Expression</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Expression</em>' attribute.
+   * @see #setExpression(String)
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getAlias_Expression()
+   * @model
+   * @generated
+   */
+  String getExpression();
+
+  /**
+   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias#getExpression <em>Expression</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Expression</em>' attribute.
+   * @see #getExpression()
+   * @generated
+   */
+  void setExpression(String value);
+
+  /**
+   * Returns the value of the '<em><b>Kind</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Kind</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Kind</em>' attribute.
+   * @see #setKind(String)
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getAlias_Kind()
+   * @model
+   * @generated
+   */
+  String getKind();
+
+  /**
+   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias#getKind <em>Kind</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Kind</em>' attribute.
+   * @see #getKind()
+   * @generated
+   */
+  void setKind(String value);
+
+  /**
+   * Returns the value of the '<em><b>Units</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Units</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Units</em>' attribute.
+   * @see #setUnits(String)
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getAlias_Units()
+   * @model
+   * @generated
+   */
+  String getUnits();
+
+  /**
+   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias#getUnits <em>Units</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Units</em>' attribute.
+   * @see #getUnits()
+   * @generated
+   */
+  void setUnits(String value);
+
+} // Alias
