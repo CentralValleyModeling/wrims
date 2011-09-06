@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- ====================================================================== 
-	builds wrimsv2 GUI
+	builds wrimsv2 SG
      psandhu; Hao Xie                                                               
      ====================================================================== -->
-<project name="wrimsv2_GUI" default="default">
+<project name="wrimsv2_SG" default="default">
 	<description>
-            builds wrimsv2_GUI distribution
+            builds wrimsv2_SG distribution
     </description>
-	<property name="dist.dir" location="build/dist/wrimsv2_GUI"/>
-	<property name="wrimsv2_GUI.lib" location="lib" />
+	<property name="dist.dir" location="build/dist/wrimsv2_SG"/>
+	<property name="wrimsv2_SG.lib" location="lib" />
 	<property name="jre6.installdir" location="D:\cvwrsm\trunk\3rd_party\jrockit-jre1.6.0_26-R28.1.4"/>
+	<property name="vista.dir" location="D:\cvwrsm\trunk\3rd_party\vista"/>
 
 	<!-- ================================= 
           target: default              
          ================================= -->
-	<target name="default" depends="package" description="builds wrimsv2_GUI distribution">
+	<target name="default" depends="package" description="builds wrimsv2_SG distribution">
 		<tstamp/>
 	</target>
 
@@ -50,8 +51,13 @@
 				<include name="**/**"/>
 			</fileset>
 		</copy>
-		<jar destfile="${dist.dir}/lib/wrimsv2_GUI.jar" basedir="build/classes"></jar>
-		<zip destfile="build/wrimsv2_GUI-${DSTAMP}.zip" basedir="${dist.dir}/.." />
+		<copy todir="${dist.dir}/vista/">
+			<fileset dir="${vista.dir}">
+				<include name="**/**"/>
+			</fileset>
+		</copy>
+		<jar destfile="${dist.dir}/lib/wrimsv2_SG.jar" basedir="build/classes"></jar>
+		<zip destfile="build/wrimsv2_SG-${DSTAMP}.zip" basedir="${dist.dir}/.." />
 	</target>
 	
 	<target name="clean">

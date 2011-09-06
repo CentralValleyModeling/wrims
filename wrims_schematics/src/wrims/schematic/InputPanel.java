@@ -340,10 +340,13 @@ public class InputPanel extends JPanel {
 				executeCommand=executeCommand+args[i]+" ";
 			}
 			out.println(executeCommand);
+			out.println("exit");
 			
 			out.close();
 			
             tabbedPane.setSelectedIndex(1);
+            ConsolePanel consolePane=(ConsolePanel)tabbedPane.getComponent(1);
+            consolePane.textArea.setText("");
 			
 			Process p = Runtime.getRuntime().exec(runFileFullPath);
 			
