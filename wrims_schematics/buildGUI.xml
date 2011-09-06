@@ -24,9 +24,11 @@
          - - - - - - - - - - - - - - - - - -->
 	<target name="compile">
 		<mkdir dir="build/classes"/>
-		<fileset dir="bin">
-			<include name="wrims/**/*.class"/>
-		</fileset>
+		<copy todir="build/classes">
+			<fileset dir="bin">
+				<include name="wrims/**/*.class"/>
+			</fileset>
+		</copy>			
 		<copy todir="build/classes">
 			<fileset dir="src">
 				<include name="**/*.gif"/>
