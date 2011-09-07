@@ -171,7 +171,7 @@ public class Controller {
 			out.write(ControlData.totalTimeStep+"\n");
 			out.write(ControlData.startDay+"\n");
 			out.write(ControlData.startMonth+"\n");
-			out.write(ControlData.startDay+"\n");
+			out.write(ControlData.startYear+"\n");
 			out.write("SLP\n");
 			out.write("CycleNumber\n");
 			out.write("FALSE\n");
