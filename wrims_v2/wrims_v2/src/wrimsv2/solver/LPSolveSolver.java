@@ -1,8 +1,4 @@
 package wrimsv2.solver;
-import gurobi.GRB;
-import gurobi.GRBException;
-import gurobi.GRBLinExpr;
-import gurobi.GRBVar;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -36,12 +32,13 @@ import wrimsv2.evaluator.EvaluatorParser;
 import lpsolve.*;
 
 public class LPSolveSolver {
-	LpSolve Model = LpSolve.makeLp(0, 0);
+	LpSolve Model = LpSolve.makeLp(10000, 25000);
 	Map <String, Integer> VarMap = new HashMap <String, Integer>();
     double [] addConstraint;
     int [] constraintNum;
     
 	public LPSolveSolver() throws LpSolveException{
+		//setDVars();
 		setConstraints();
 		setObjective();
 		Model.solve();
@@ -95,9 +92,9 @@ public class LPSolveSolver {
 			HashMap<String, IntDouble> multMap = ec.getEvalExpression().getMultiplier();
 			Set multCollection = multMap.keySet();
 			Iterator multIterator = multCollection.iterator();
-			int colNum = 0;
-		    addConstraint = new double[multCollection.size()];
-		    constraintNum = new int[multCollection.size()];
+			int colNum = 1;
+		    addConstraint = new double[multCollection.size()+1];
+		    constraintNum = new int[multCollection.size()+1];
 		    
 			while(multIterator.hasNext()){
 				String multName=(String)multIterator.next();

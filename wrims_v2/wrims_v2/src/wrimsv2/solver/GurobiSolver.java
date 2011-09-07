@@ -14,6 +14,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -59,7 +60,6 @@ public class GurobiSolver {
 		setDVars();
 		setConstraints();
 		model.optimize();	
-		//checkStatus();
 		assignDvar();
 		Output();
 	
@@ -73,7 +73,8 @@ public class GurobiSolver {
 		while(dvarIterator.hasNext()){                          
 			String dvarName=(String)dvarIterator.next();
 			Dvar dvar=DvarMap.get(dvarName);
-
+			double testWeight=0;
+			
 			Map<String, WeightElement> weightMap = SolverData.getWeightMap();
 			Set weightCollection = weightMap.keySet();
 			Iterator weightIterator = weightCollection.iterator();
@@ -86,11 +87,12 @@ public class GurobiSolver {
 				double weight=-weightMap.get(dvarName).getValue();
 				GRBVar VarName = model.addVar(lb, ub, weight, GRB.CONTINUOUS, dvarName);
 				varMap.put(dvarName, VarName);
+				
+				testWeight = weight;
 			}else{
 				GRBVar VarName = model.addVar(lb, ub, 0, GRB.CONTINUOUS, dvarName);
 				varMap.put(dvarName, VarName);
 			}
-			
 			model.update();
 		}
 	}
@@ -107,12 +109,16 @@ public class GurobiSolver {
 			Set multCollection = multMap.keySet();
 			Iterator multIterator = multCollection.iterator();
 			GRBLinExpr expr = new GRBLinExpr();
+			double [] jack = new double[multCollection.size()+1];
+			int counter = 1;
 			
 			while(multIterator.hasNext()){
 				String multName=(String)multIterator.next();
 				double coef=multMap.get(multName).getData().doubleValue();
 				GRBVar var=varMap.get(multName);
-				expr.addTerm(coef, var);		
+				expr.addTerm(coef, var);
+				jack[counter] = coef;
+				counter++;
 			}
 			if (ec.getSign().equals("=")) {
 				model.addConstr(expr, GRB.EQUAL, -ec.getEvalExpression().getValue().getData().doubleValue(), constraintName); 			}

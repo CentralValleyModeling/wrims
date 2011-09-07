@@ -54,6 +54,7 @@ import wrimsv2.wreslparser.elements.StudyConfig;
 import wrimsv2.wreslparser.elements.StudyParser;
 import wrimsv2.wreslparser.elements.TempData;
 import wrimsv2.wreslparser.elements.WriteCSV;
+import lpsolve.*;
 
 public class Controller {
 	
@@ -229,10 +230,112 @@ public class Controller {
 			runModelGurobi(sds);
 		}else if (ControlData.solverName.equalsIgnoreCase("ILP")){
 			runModelILP(sds);
+		}else if (ControlData.solverName.equalsIgnoreCase("LPSolve")){
+			try {
+				runModeLPSolve(sds);
+			} catch (LpSolveException e) {
+				e.printStackTrace();
+			}
 		}
 		System.out.println("Run ends!");
 	}
 	
+	public void runModeLPSolve(StudyDataSet sds) throws LpSolveException{
+		ControlData.currStudyDataSet=sds;
+		ArrayList<String> modelList=sds.getModelList();
+		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
+		ControlData.startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
+		
+		ControlData.writer = new DSSDataWriter(FilePaths.fullDvarDssPath);
+		try {
+			ControlData.writer.openDSSFile();
+		} catch (Exception e) {
+			ControlData.writer.closeDSSFile();
+			Error.addEngineError("Could not open dv file. "+e);
+			return;
+		}
+		
+		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
+		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
+		ControlData.allTsMap=sds.getTimeseriesMap();
+		
+		readTimeseries();
+		initialDvarAliasTS(ControlData.totalTimeStep);
+		for (int i=0; i<modelList.size(); i++){
+			String model=modelList.get(i);
+			ModelDataSet mds=modelDataSetMap.get(model);
+			ControlData.currModelDataSet=mds;
+			ControlData.currCycleIndex=i;
+			processExternal();
+		}
+		
+		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
+		boolean noError=true;
+		ControlData.currTimeStep=0;
+		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
+			clearValues(modelList, modelDataSetMap);
+			int i=0;
+			while (i<modelList.size()  && noError){   
+				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
+				boolean condition=false;
+				try{
+					modelCondition.evaluator();
+					condition=modelCondition.evalCondition;
+				}catch (Exception e){
+					Error.addEvaluationError("Model condition evaluation has error.");
+					condition=false;
+				}
+				modelCondition.reset();
+				
+				String model=modelList.get(i);
+				ModelDataSet mds=modelDataSetMap.get(model);
+				ControlData.currModelDataSet=mds;
+				ControlData.currCycleName=model;
+				ControlData.currCycleIndex=i;
+				
+				if (condition){
+					ControlData.currSvMap=mds.svMap;
+					ControlData.currDvMap=mds.dvMap;
+					ControlData.currAliasMap=mds.asMap;
+					ControlData.currGoalMap=mds.gMap;
+					ControlData.currTsMap=mds.tsMap;
+					ControlData.isPostProcessing=false;
+					mds.processModel();
+					if (Error.error_evaluation.size()>=1){
+						Error.writeEvaluationErrorFile("evaluation_error.txt");
+						noError=false;
+					}
+				
+					new LPSolveSolver();
+
+					System.out.println("Solving Done.");
+					if (Error.error_solving.size()<1){
+						System.out.println("Assign Dvar Done.");
+						ControlData.isPostProcessing=true;
+						mds.processAlias();
+						System.out.println("Assign Alias Done.");
+					}else{
+						Error.writeSolvingErrorFile("solving_error.txt");
+						noError=false;
+					}
+					System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
+					//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();
+				}else{
+					new AssignPastCycleVariable();
+				}
+				i=i+1;
+			}
+			if (ControlData.timeStep.equals("1MON")){
+				currTimeAddOneMonth();
+			}else{
+				currTimeAddOneDay();
+			}
+			ControlData.currTimeStep=ControlData.currTimeStep+1;
+		}
+		DssOperation.writeInitDvarAliasToDSS();
+		DssOperation.writeDVAliasToDSS();
+		ControlData.writer.closeDSSFile();
+	}
 	public void runModelXA(StudyDataSet sds){
 		ControlData.currStudyDataSet=sds;
 		ArrayList<String> modelList=sds.getModelList();
