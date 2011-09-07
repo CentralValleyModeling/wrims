@@ -333,12 +333,12 @@ public class InputPanel extends JPanel {
 			String javaBin=System.getenv("Java_Bin_Batch");
 			String javaFullPath=wrimsv2EnginePath=javaBin+"java";
 			
-			javaBin=convertPathBatchToFortran(javaBin);
-			out.println("set Java_Bin_Fortran="+javaBin);
+			//javaBin=convertPathBatchToFortran(javaBin);
+			//out.println("set Java_Bin_Fortran="+javaBin);
 			out.println("set path="+externalPath+";"+vistaLibPath+";"+engineLibPath+";%path%");
 			out.println();
 
-			String executeCommand=javaFullPath+" -Xmx1600m -Xss1024K -Djava.library.path="+externalPath+";"+vistaLibPath+";"+engineLibPath+" -cp \""+engineLibPath+"\\WRIMSv2.jar"+";"+engineLibPath+"\\wrimsv2\\external\\*.class;"+engineLibPath+"\\XAOptimizer.jar"+";"+engineLibPath+"\\gurobi.jar"+";"+engineLibPath+"\\ilpObj.jar"+";"+vistaLibPath+"\\*\""+" wrimsv2.components.Controller ";
+			String executeCommand=javaFullPath+" -Xmx1600m -Xss1024K -Djava.library.path="+externalPath+";"+vistaLibPath+";"+engineLibPath+" -cp \""+engineLibPath+"\\WRIMSv2.jar"+";"+engineLibPath+"\\wrimsv2\\external\\*.class;"+engineLibPath+"\\XAOptimizer.jar"+";"+engineLibPath+"\\gurobi.jar"+";"+engineLibPath+"\\ilpObj.jar"+";"+vistaLibPath+"\\*\""+" wrimsv2.components.ControllerSG ";
 			for (int i=0; i<17; i++){
 				executeCommand=executeCommand+args[i]+" ";
 			}
