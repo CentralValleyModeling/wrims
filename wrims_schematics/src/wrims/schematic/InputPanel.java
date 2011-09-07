@@ -330,12 +330,15 @@ public class InputPanel extends JPanel {
 			String externalPath=mainDirectory+"External";
 			String vistaLibPath=System.getenv("Vista_Lib");
 			String engineLibPath=wrimsv2EnginePath+"lib";
+			String javaBin=System.getenv("Java_Bin_Batch");
+			String javaFullPath=wrimsv2EnginePath=javaBin+"java";
 			
+			javaBin=convertPathBatchToFortran(javaBin);
+			out.println("set Java_Bin_Fortran="+javaBin);
 			out.println("set path="+externalPath+";"+vistaLibPath+";"+engineLibPath+";%path%");
 			out.println();
 
-			String javaFullPath=wrimsv2EnginePath=System.getenv("Java_Bin")+"java";
-			String executeCommand=javaFullPath+" -Xmx1600m -Xss1024K -Djava.library.path="+externalPath+";"+vistaLibPath+";"+engineLibPath+" -cp \""+engineLibPath+"\\WRIMSv2.jar"+";"+engineLibPath+"\\XAOptimizer.jar"+";"+engineLibPath+"\\gurobi.jar"+";"+engineLibPath+"\\ilpObj.jar"+";"+vistaLibPath+"\\*\""+" wrimsv2.components.Controller ";
+			String executeCommand=javaFullPath+" -Xmx1600m -Xss1024K -Djava.library.path="+externalPath+";"+vistaLibPath+";"+engineLibPath+" -cp \""+engineLibPath+"\\WRIMSv2.jar"+";"+engineLibPath+"\\wrimsv2\\external\\*.class;"+engineLibPath+"\\XAOptimizer.jar"+";"+engineLibPath+"\\gurobi.jar"+";"+engineLibPath+"\\ilpObj.jar"+";"+vistaLibPath+"\\*\""+" wrimsv2.components.Controller ";
 			for (int i=0; i<17; i++){
 				executeCommand=executeCommand+args[i]+" ";
 			}
@@ -371,6 +374,21 @@ public class InputPanel extends JPanel {
 			e.printStackTrace();
 	  }
 	   
+  }
+  
+  String convertPathBatchToFortran(String path){
+	  path=path.replace("/", "\\");
+	  path=path.replace("\\\\", "\\");
+	  while (path.contains("\\..\\")){
+		  int uplevelSignIndex=path.indexOf("\\..\\");
+		  String firstPart=path.substring(0,uplevelSignIndex);
+		  String secondPart=path.substring(uplevelSignIndex);
+		  int uplevelStringIndex=firstPart.lastIndexOf("\\");
+		  firstPart=firstPart.substring(0,uplevelStringIndex);
+		  secondPart=secondPart.substring(3);
+		  path=firstPart+secondPart;
+	  }
+	  return path;
   }
   
   /**

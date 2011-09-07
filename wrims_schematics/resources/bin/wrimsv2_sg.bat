@@ -4,7 +4,7 @@ rem Batch file for running wrims schematic
 rem ###################################
 setlocal
 set wrims_schematic_home=%~dp0/..
-set Java_Bin=%~dp0/../jre6/bin/
+set Java_Bin_Batch=%~dp0/../jre6/bin/
 set WRIMSv2_Engine_Home=%~dp0/../
 set Vista_Lib=%~dp0/../vista/lib
 rem echo %wrims_schematic_home%
@@ -58,6 +58,8 @@ set APPJARS=%JARDIR%\hecdata.jar;%APPJARS%
 set APPJARS=%JARDIR%\gridUtil.jar;%APPJARS%
 set APPJARS=%JARDIR%\hec.jar;%APPJARS%
 set APPJARS=%JARDIR%\help\dssvueHelp.jar;%APPJARS%
+set APPJARS=%JARDIR%\xml.jar;%APPJARS%
+set APPJARS=%JARDIR%\wrimsv2.jar;%APPJARS%
 set APPJARS=%Vista_Lib%\vista.jar;%APPJARS%
 :-----------------:
 : schematic jars  :
