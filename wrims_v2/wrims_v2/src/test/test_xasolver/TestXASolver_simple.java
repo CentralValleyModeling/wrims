@@ -80,7 +80,7 @@ public class TestXASolver_simple {
 		studyPath + "run\\mainEx3.wresl",
 		dssPath +   "ExampleSV.dss",
 		dssPath +   "ExampleINIT.dss",
-		"",
+		dssPath +   "dv.dss",
 	
 		"EXAMPLE",
 		"INIT",
