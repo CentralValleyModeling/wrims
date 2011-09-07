@@ -83,6 +83,7 @@ public class ControllerSG {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.exit(0);
 	}
 	
 	public void setControlData(){
