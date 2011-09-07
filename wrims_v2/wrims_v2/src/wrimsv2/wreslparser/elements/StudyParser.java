@@ -514,7 +514,8 @@ public class StudyParser{
 			} else if ( cycleNameConditionMap.get(neededCycle).length()>0 && !cycleNameConditionMap.get(neededCycle).equalsIgnoreCase("always")){
 				
 				for (String s : neededVarSet) {
-					LogUtils.warningMsg("In file: " + fromWresl + "\n" + "Variable [" + varName + "] has an item " + s + "[" + neededCycle + "]"+" depending on cycle condition: "+ cycleNameConditionMap.get(neededCycle));
+					//LogUtils.warningMsg("In file: " + fromWresl + "\n" + "Variable [" + varName + "] has an item " + s + "[" + neededCycle + "]"+" depending on cycle condition: "+ cycleNameConditionMap.get(neededCycle));
+					//LogUtils.warningMsg("Variable [" + varName + "] has an item " + s + "[" + neededCycle + "]"+" depending on cycle condition: "+ cycleNameConditionMap.get(neededCycle));
 				}				
 			}
 
