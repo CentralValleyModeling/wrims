@@ -381,11 +381,11 @@ public class GenerateCompileFiles {
 	
 	public static void main(String args[]){
 		setWorkingDirectory(args[0]);
-		if (setDllFunction(args[0])) generateFiles();
 		if (args.length>1) {
 			setPath=true;
 			currentDirectory=args[1];
 		}
+		if (setDllFunction(args[0])) generateFiles();
 		reportErrors();
 	}
 }
