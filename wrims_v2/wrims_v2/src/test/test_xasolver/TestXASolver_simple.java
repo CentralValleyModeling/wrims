@@ -6,16 +6,12 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import wrimsv2.components.*;
-import wrimsv2.wreslparser.elements.RegUtils;
-import wrimsv2.wreslparser.elements.Tools;
 
 public class TestXASolver_simple {
 	
 	private double tolerance_perc = 0.1/1000000; // 0.1 ppm
-	private String logFilePath;	
 	private String studyPath;	
 	private String dssPath;	
-	private String objMatchString = "L P   O P T I M A L   S O L U T I O N ---> OBJ:\\s+\\d+.\\d+";
 	private double expected;
 	
 	@Test(groups = { "xa_solver_example_studies" })
@@ -26,10 +22,12 @@ public class TestXASolver_simple {
 		
 		/// set control data		
 		String[] controlDataString = {
+		
+		studyPath + "run\\",  // groundwater path
 		studyPath + "run\\mainEx1.wresl",
 		dssPath +   "ExampleSV.dss",
 		dssPath +   "ExampleINIT.dss",
-		"",
+		dssPath +   "dv.dss",
 
 		"EXAMPLE",
 		"INIT",
@@ -51,21 +49,10 @@ public class TestXASolver_simple {
         // wrims v2 XA16 OBJ: 41169932.835543
         
         expected = 41169932.383266;
-
-        
-        logFilePath = studyPath+"run//xa.log";
-		String logText = Tools.readFileAsString(logFilePath);	
-
-		int n = RegUtils.timesOfMatches(logText, objMatchString);
-		Assert.assertEquals(n, 1);
 		
-		String line = RegUtils.getLastMatch(logText, objMatchString);
-		String value = RegUtils.getLastMatch(line, "\\d+.\\d+");
-		
-		double obj_value =  Double.parseDouble(value);
+		double obj_value =  ControlData.xasolver.getObjective();
 		
 		Assert.assertEquals(obj_value, expected, expected*tolerance_perc);	
-
 	}
 	
 
@@ -77,6 +64,8 @@ public class TestXASolver_simple {
 		
 		/// set control data		
 		String[] controlDataString = {
+				
+		studyPath + "run\\",  // groundwater path		
 		studyPath + "run\\mainEx3.wresl",
 		dssPath +   "ExampleSV.dss",
 		dssPath +   "ExampleINIT.dss",
@@ -103,20 +92,9 @@ public class TestXASolver_simple {
 	    
 	    expected = 44636443.556727;
 	
-	    
-	    logFilePath = studyPath+"run//xa.log";
-		String logText = Tools.readFileAsString(logFilePath);	
-	
-		int n = RegUtils.timesOfMatches(logText, objMatchString);
-		Assert.assertEquals(n, 1);
-		
-		String line = RegUtils.getLastMatch(logText, objMatchString);
-		String value = RegUtils.getLastMatch(line, "\\d+.\\d+");
-		
-		double obj_value =  Double.parseDouble(value);
+		double obj_value =  ControlData.xasolver.getObjective();
 		
 		Assert.assertEquals(obj_value, expected, expected*tolerance_perc);	
-	
 	}
 	
 
