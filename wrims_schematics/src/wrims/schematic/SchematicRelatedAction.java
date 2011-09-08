@@ -17,14 +17,14 @@ public abstract class SchematicRelatedAction extends ContainerRelatedAction {
 //	}
 
 	public SchematicView getView() {
-		if (getApp() != null && getApp() instanceof Schematic) {
-			return ((Schematic)getApp()).getCurrentView();
+		if (getApp() != null && getApp() instanceof MainFrame) {
+			return ((MainFrame)getApp()).getCurrentView();
 		} else return null;
 	}
 
 	public Plotter getPlotter() {
-		if (getApp() != null && getApp() instanceof Schematic) {
-			return ((Schematic)getApp()).getPlotter();
+		if (getApp() != null && getApp() instanceof MainFrame) {
+			return ((MainFrame)getApp()).getPlotter();
 		} else return null;
 	}
 

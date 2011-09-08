@@ -68,7 +68,7 @@ public class SchematicDialog extends JDialog {
     panel1.add(nameField);
     nameField.setBounds(new Rectangle(50,40,200,24));
     nameField.setEnabled(myObject.isModifiable());
-    nameField.setEditable(Schematic.IS_DEVELOPER);  //CB added
+    nameField.setEditable(MainFrame.IS_DEVELOPER);  //CB added
     label2.setText("Path:");
     label2.setHorizontalAlignment(JLabel.LEFT);
     panel1.add(label2);
@@ -76,7 +76,7 @@ public class SchematicDialog extends JDialog {
     panel1.add(locField);
     locField.setBounds(new Rectangle(50,100,200,24));
     locField.setEnabled(myObject.isModifiable());
-    locField.setEditable(Schematic.IS_DEVELOPER);  //CB added
+    locField.setEditable(MainFrame.IS_DEVELOPER);  //CB added
     readonly.setText("Read Only");
     readonly.setBounds(new Rectangle(50, 150, 100, 14));
     panel1.add(readonly);

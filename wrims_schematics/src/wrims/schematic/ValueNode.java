@@ -32,7 +32,7 @@ public class ValueNode extends JGoBasicNode implements Describable {
 		this();
 		if (_altColorHashtable.get(altNumber) == null) return;
 		init(altNumber);
-		if (Schematic.IS_DEVELOPER) //CB added block
+		if (MainFrame.IS_DEVELOPER) //CB added block
 			setSelectable(true);
 		else
 			setSelectable(false);
@@ -43,7 +43,7 @@ public class ValueNode extends JGoBasicNode implements Describable {
 		loadHashtable();
 		if (_altColorHashtable.get(altNumber) == null) return;
 		init(altNumber, label);
-		if (Schematic.IS_DEVELOPER) //CB added block
+		if (MainFrame.IS_DEVELOPER) //CB added block
 			setSelectable(true);
 		else
 			setSelectable(false);
@@ -57,7 +57,7 @@ public class ValueNode extends JGoBasicNode implements Describable {
 	private void loadHashtable() {
 		_altColorHashtable.put(ALT_1, Color.YELLOW);
 //		_altColorHashtable.put(ALT_2, Color.ORANGE); // not distinguishable enough from Color.YELLOW
-		_altColorHashtable.put(ALT_2, Schematic.BURNT_ORANGE);
+		_altColorHashtable.put(ALT_2, MainFrame.BURNT_ORANGE);
 	}
 
 	public void setDescription(String description) {

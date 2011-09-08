@@ -63,7 +63,7 @@ public class NodeDialog extends JDialog {
 		jLabel1.setText("Node Name:");
 		nameField.grabFocus();
 
-		if (!Schematic.IS_DEVELOPER) nameField.setEditable(false);  //CB added the check
+		if (!MainFrame.IS_DEVELOPER) nameField.setEditable(false);  //CB added the check
 
 		jLabel2.setText("Description:"); // CB
 		/*
@@ -174,7 +174,7 @@ public class NodeDialog extends JDialog {
 				.getFont().getStyle()
 				+ Font.BOLD, nameField.getFont().getSize()));
 		nameField.setMargin(new Insets(0, 3, 2, 0));
-		if (!Schematic.IS_DEVELOPER) nameField.setEditable(false);  //CB added the check
+		if (!MainFrame.IS_DEVELOPER) nameField.setEditable(false);  //CB added the check
 		panel1.add(nameField);
 
 		jLabel2.setText("Description");
@@ -186,7 +186,7 @@ public class NodeDialog extends JDialog {
 		descriptionArea.setLineWrap(true);
 		descriptionArea.setWrapStyleWord(true);
 		descriptionArea.setMargin(new Insets(0, 3, 2, 3));
-		if (!Schematic.IS_DEVELOPER) descriptionArea.setEditable(false);  //CB added the check
+		if (!MainFrame.IS_DEVELOPER) descriptionArea.setEditable(false);  //CB added the check
 		JScrollPane pane = new JScrollPane(descriptionArea);
 		pane.setBounds(95, 55, 200, 100);
 		pane.setBorder(LineBorder.createGrayLineBorder());
@@ -195,7 +195,7 @@ public class NodeDialog extends JDialog {
 		OKButton.setText("OK");
 		OKButton.setFont(new Font("Dialog", Font.PLAIN, 12));
 
-		if (Schematic.IS_DEVELOPER) {  //CB added the check
+		if (MainFrame.IS_DEVELOPER) {  //CB added the check
 			OKButton.setBounds(new Rectangle(65, 178, 79, 22));
 			panel1.add(OKButton);
 			CancelButton.setText("Cancel");

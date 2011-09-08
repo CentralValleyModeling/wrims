@@ -63,7 +63,7 @@ public class SchematicDocument extends JGoDocument {
 		// method wants no arg constructor (it uses
 		// reflection)
 		setUndoManager(new JGoUndoManager());
-		if (Schematic.IS_DEVELOPER) {
+		if (MainFrame.IS_DEVELOPER) {
 			setModifiable(true);
 		} else {
 			setModifiable(false);
@@ -96,7 +96,7 @@ public class SchematicDocument extends JGoDocument {
 				// _allVariables.add(((NetworkNode)getObjectAtPos(position)).getText());
 				_allVariables.put(((NetworkNode) getObjectAtPos(position))
 						.getText(), dummy);
-			} else if (!Schematic.IS_DEVELOPER) {
+			} else if (!MainFrame.IS_DEVELOPER) {
 				if (getObjectAtPos(position) instanceof Arc) {
 					((Arc) getObjectAtPos(position)).setSelectable(false);
 				} else if (getObjectAtPos(position) instanceof Link) {
@@ -159,7 +159,7 @@ public class SchematicDocument extends JGoDocument {
 				for (int i = 0; i < _nameToValueNodeHashtable.length; ++i) {
 					if ((((ValueNode) getObjectAtPos(position)).getLinkName() != null)
 							&& ((ValueNode) getObjectAtPos(position)).getText()
-									.startsWith(Schematic.ALT_STRINGS[i])) {
+									.startsWith(MainFrame.ALT_STRINGS[i])) {
 						_nameToValueNodeHashtable[i].put(
 								((ValueNode) getObjectAtPos(position))
 										.getLinkName(),
@@ -442,8 +442,8 @@ public class SchematicDocument extends JGoDocument {
 			System.out.println("currentFile: " + currentFile);
 			if (currentFile.exists()) {
 				if (currentFile.isAbsolute() && !currentFile.isDirectory()) {
-					if ((parent instanceof Schematic)
-							&& !((Schematic) parent)
+					if ((parent instanceof MainFrame)
+							&& !((MainFrame) parent)
 									.isSchematicFileOpen(location)) {
 						// String loc = defaultLocation.substring(0,
 						// defaultLocation.lastIndexOf("\\"));//CB added - but
@@ -471,8 +471,8 @@ public class SchematicDocument extends JGoDocument {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			String name = chooser.getSelectedFile().getName();
 			String loc = chooser.getSelectedFile().getAbsolutePath();
-			if ((parent instanceof Schematic)
-					&& !((Schematic) parent).isSchematicFileOpen(loc)) {
+			if ((parent instanceof MainFrame)
+					&& !((MainFrame) parent).isSchematicFileOpen(loc)) {
 				return openDoc(parent, loc, name); // CB added to eliminate
 				// duplicate code below
 				/*

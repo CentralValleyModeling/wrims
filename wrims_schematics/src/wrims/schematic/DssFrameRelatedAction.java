@@ -90,8 +90,8 @@ public abstract class DssFrameRelatedAction extends SchematicRelatedAction {
 	}
 
 	public boolean canAct() {
-		return getApp() != null && getApp() instanceof Schematic
-			&& ((Schematic)getApp())._DssFrame != null;
+		return getApp() != null && getApp() instanceof MainFrame
+			&& ((MainFrame)getApp())._DssFrame != null;
 	}
 
 	boolean actionPerfomedHelper(String outputTypeText, String variableTypeText) {
@@ -119,8 +119,8 @@ public abstract class DssFrameRelatedAction extends SchematicRelatedAction {
 		}
 
 		if (variableType == INFLOWS || variableType == OUTFLOWS) {
-			Vector selectedObjects = ((Schematic)getApp()).getCurrentView()
-				.createSelectionVector(((((Schematic)getApp()).getCurrentView()
+			Vector selectedObjects = ((MainFrame)getApp()).getCurrentView()
+				.createSelectionVector(((((MainFrame)getApp()).getCurrentView()
 					.getSelection())));
 			if (selectedObjects.size() > 0) {
 				Vector<String> names = new Vector<String>();
@@ -128,10 +128,10 @@ public abstract class DssFrameRelatedAction extends SchematicRelatedAction {
 				while (selectedEnum.hasMoreElements()) {
 					Object object = selectedEnum.nextElement();
 					if (object instanceof NetworkNode) {
-						JGoListPosition position = ((Schematic)getApp())
+						JGoListPosition position = ((MainFrame)getApp())
 							.getCurrentView().getDoc().getFirstObjectPos();
 						while (position != null) {
-							JGoObject obj = ((Schematic)getApp()).getCurrentView()
+							JGoObject obj = ((MainFrame)getApp()).getCurrentView()
 								.getDoc().getObjectAtPos(position);
 							//CB TO DO: either eliminate Link class and change all CalSim III links to arcs with no label OR
 							//          do the above except change labelless arcs to arcs with a bordered label and eliminate
@@ -168,23 +168,23 @@ public abstract class DssFrameRelatedAction extends SchematicRelatedAction {
 													.getText());
 								}
 							}
-							position = ((Schematic)getApp()).getCurrentView()
+							position = ((MainFrame)getApp()).getCurrentView()
 								.getDoc().getNextObjectPos(position);
 						}
 					}
 				}
 				if (names.size() > 0) {
-					((Schematic)getApp())._DssFrame.getFP()
+					((MainFrame)getApp())._DssFrame.getFP()
 						.retrieve(outputType, isExceedence, isAnnualTotal, names);
 				} else
-					JOptionPane.showMessageDialog(((Schematic)getApp())._DssFrame,
+					JOptionPane.showMessageDialog(((MainFrame)getApp())._DssFrame,
 						"No variables in dss files that match any of the selected items",
 						"Match Not Found", JOptionPane.WARNING_MESSAGE);
 			}
 			return true;
 		} else if (variableType == STORAGE || (variableType >= EVAP && variableType <= SPILL)) {
-			Vector<JGoObject> selectedObjects = ((Schematic)getApp()).getCurrentView()
-				.createSelectionVector(((((Schematic)getApp()).getCurrentView().getSelection())));
+			Vector<JGoObject> selectedObjects = ((MainFrame)getApp()).getCurrentView()
+				.createSelectionVector(((((MainFrame)getApp()).getCurrentView().getSelection())));
 			if (selectedObjects.size() > 0) {
 				Vector<String> objectNames = new Vector<String>();
 				Enumeration<JGoObject> selectedEnum = selectedObjects.elements();
@@ -207,13 +207,13 @@ public abstract class DssFrameRelatedAction extends SchematicRelatedAction {
 						objectNames.add(((NetworkNode)object).getText().toUpperCase());
 					}
 				}
-				((Schematic)getApp())._DssFrame.getFP()
+				((MainFrame)getApp())._DssFrame.getFP()
 					.retrieve(outputType, isExceedence, isAnnualTotal, objectNames);
 			}
 			return true;
 		} else if (variableType == FLOW) {
-			Vector selectedObjects = ((Schematic)getApp()).getCurrentView()
-				.createSelectionVector(((((Schematic)getApp()).getCurrentView().getSelection())));
+			Vector selectedObjects = ((MainFrame)getApp()).getCurrentView()
+				.createSelectionVector(((((MainFrame)getApp()).getCurrentView().getSelection())));
 			if (selectedObjects.size() > 0) {
 				Vector objectNames = new Vector();
 				Enumeration selectedEnum = selectedObjects.elements();
@@ -225,7 +225,7 @@ public abstract class DssFrameRelatedAction extends SchematicRelatedAction {
 						objectNames.add(((NetworkNode)object).getText());
 					}
 				}
-				((Schematic)getApp())._DssFrame.getFP()
+				((MainFrame)getApp())._DssFrame.getFP()
 					.retrieve(outputType, isExceedence, isAnnualTotal, objectNames);
 			}
 		} else {

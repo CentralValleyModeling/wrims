@@ -254,7 +254,7 @@ public class NetworkNode extends JGoBasicNode implements ActionListener, Seriali
 			clr = Color.yellow;
 		else if (scolor.equals("green"))
 			clr = Color.green;
-		else if (scolor.equals(Schematic.NODE_GREEN)) //CB replaced Color.GREEN
+		else if (scolor.equals(MainFrame.NODE_GREEN)) //CB replaced Color.GREEN
 			clr = Color.green;
 		else if (scolor.equals("maroon"))
 			clr = Color.magenta;
@@ -583,9 +583,9 @@ public class NetworkNode extends JGoBasicNode implements ActionListener, Seriali
 			shape = (JGoObject) pg;
 			setDrawable((JGoDrawable) shape);
 			setToolTipText("LCPSIM Storage");
-			setPen(JGoPen.make(JGoPen.SOLID, 2, Schematic.VIOLET));
+			setPen(JGoPen.make(JGoPen.SOLID, 2, MainFrame.VIOLET));
 			setBrush(JGoBrush.makeStockBrush(Color.WHITE));
-			text.setTextColor(Schematic.VIOLET);
+			text.setTextColor(MainFrame.VIOLET);
 			setAutoResize(false);
 			// setResizable(false);
 			text.setWrapping(true);
@@ -693,7 +693,7 @@ public class NetworkNode extends JGoBasicNode implements ActionListener, Seriali
 				setDrawable((JGoDrawable) rect);
 				// setAutoResize(false);
 //CB				pen = JGoPen.make(JGoPen.SOLID, 1, Color.green);
-				pen = JGoPen.make(JGoPen.SOLID, 2, Schematic.ARC_GREEN);  //CB
+				pen = JGoPen.make(JGoPen.SOLID, 2, MainFrame.ARC_GREEN);  //CB
 //CB?				pen = JGoPen.make(JGoPen.SOLID, 2, strokeColor);  //CB
 				text.setWrapping(true);
 				text.setWrappingWidth(120);
@@ -901,7 +901,7 @@ public class NetworkNode extends JGoBasicNode implements ActionListener, Seriali
 
 	// copy
 	public JGoObject copyObject(JGoCopyEnvironment env) {
-		if (!Schematic.IS_DEVELOPER) return null;  //CB added
+		if (!MainFrame.IS_DEVELOPER) return null;  //CB added
 		NetworkNode newobj = (NetworkNode) super.copyObject(env);
 		if (newobj != null) {
 			// the ID should *not* be copied blindly--leave as -1 so

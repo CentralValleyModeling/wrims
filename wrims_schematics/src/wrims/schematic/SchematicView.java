@@ -35,7 +35,7 @@ public class SchematicView extends JGoView implements JGoViewListener {
 			setName(doc.getName());
 	}
 
-	public void initialize(Schematic app, JInternalFrame frame) {
+	public void initialize(MainFrame app, JInternalFrame frame) {
 		myApp = app;
 		myInternalFrame = frame;
 		addViewListener(this);
@@ -49,7 +49,7 @@ public class SchematicView extends JGoView implements JGoViewListener {
 //			System.out.println("getDoc() width = " + getDoc().getDocumentSize().height);
 //		}
 		// cb added background image
-		if (!Schematic.IS_DEVELOPER) { //because was coming up off-white!!!!!!!!!!!  Slows it way down even if done right.  If window resized - slow!!!!!!!!!
+		if (!MainFrame.IS_DEVELOPER) { //because was coming up off-white!!!!!!!!!!!  Slows it way down even if done right.  If window resized - slow!!!!!!!!!
 //		if (false) { //background image is too slow to use for large document
 //			InputStream is = getClass().getResourceAsStream("images/white_background_small.jpg"); //too much cpu time to convert!!!
 			InputStream is = getClass().getResourceAsStream("images/white_background.jpg"); //too much RAM????  50 GB as of
@@ -120,7 +120,7 @@ public class SchematicView extends JGoView implements JGoViewListener {
 		return (SchematicDocument) getDocument();
 	}
 
-	Schematic getApp() {
+	MainFrame getApp() {
 		return myApp;
 	}
 
@@ -385,9 +385,9 @@ public class SchematicView extends JGoView implements JGoViewListener {
 				if (popup == null)
 					return false;
 				popup.addSeparator();
-				if (Schematic.IS_DEVELOPER)  //CB added
+				if (MainFrame.IS_DEVELOPER)  //CB added
 					popup.add(insertPointAction);
-				if (Schematic.IS_DEVELOPER) { //CB added check
+				if (MainFrame.IS_DEVELOPER) { //CB added check
 					if (((JGoLink) obj).getNumPoints() > (((JGoLink) obj)
 							.isOrthogonal() ? 6 : 2))
 						popup.add(removeSegmentAction);
@@ -397,7 +397,7 @@ public class SchematicView extends JGoView implements JGoViewListener {
 				popup = new JPopupMenu();  //CB trying to popup on JBasicNode because left click no longer allows text editing!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			}
 			if (popup != null) {
-				if (Schematic.IS_DEVELOPER) {  //CB added
+				if (MainFrame.IS_DEVELOPER) {  //CB added
 					popup.addSeparator();
 					popup.add(getApp().CopyAction);
 					popup.add(getApp().CutAction);
@@ -406,7 +406,7 @@ public class SchematicView extends JGoView implements JGoViewListener {
 				popup.insert(getApp().ObjectPropertiesAction, 0);
 				if (popup.getComponentCount() > 1)
 					popup.insert(new JPopupMenu.Separator(), 1);
-				if (Schematic.IS_DEVELOPER) {
+				if (MainFrame.IS_DEVELOPER) {
 					popup.insert(new JPopupMenu.Separator(), 1);
 					popup.insert(getApp().LinkObjectsForDSSAction, 1);  //CB added
 				}
@@ -414,7 +414,7 @@ public class SchematicView extends JGoView implements JGoViewListener {
 				return true;
 			}
 		} else {
-			if (Schematic.IS_DEVELOPER && canPaste()) {
+			if (MainFrame.IS_DEVELOPER && canPaste()) {
 				popup = new JPopupMenu();
 				popup.add(getApp().PasteAction);
 				popup.show(this, vc.x, vc.y);
@@ -649,7 +649,7 @@ public class SchematicView extends JGoView implements JGoViewListener {
 							int type = 0;
 							if (((NetworkNode)tobj).getStrokeColor().equals(Color.GREEN))
 								type = Arc.MODULE_BOUNDARY;
-							else if (((NetworkNode)tobj).getStrokeColor().equals(Schematic.VIOLET))
+							else if (((NetworkNode)tobj).getStrokeColor().equals(MainFrame.VIOLET))
 								type = Arc.LCPSIM;
 							else if (((NetworkNode)tobj).getStrokeColor().equals(Color.WHITE))
 								type = Arc.LCPSIM_DASHED;
@@ -671,14 +671,14 @@ public class SchematicView extends JGoView implements JGoViewListener {
 								type = Arc.FUTURE;
 							else
 								type = Arc.RIVER;
-						else if (((NetworkNode)tobj).getStrokeColor().equals(Schematic.ARC_GREEN)) type = Arc.RETURN;
+						else if (((NetworkNode)tobj).getStrokeColor().equals(MainFrame.ARC_GREEN)) type = Arc.RETURN;
 						else if (((NetworkNode)tobj).getStrokeColor().equals(Color.RED)) type = Arc.DIVERSION;
 						else if (((NetworkNode)tobj).getStrokeColor().equals(Color.BLACK)) type = Arc.SPILL;
 						else if (((NetworkNode)tobj).getStrokeColor().equals(Color.GRAY)) type = Arc.CHANNEL;
 //						else if (((NetworkNode)tobj).getStrokeColor().equals(Schematic.ALMOST_YELLOW)) type = Arc.BYPASS;   //CB added
-						else if (((NetworkNode)tobj).getStrokeColor().equals(Schematic.MUSTARD)) type = Arc.BYPASS;  //CB added
+						else if (((NetworkNode)tobj).getStrokeColor().equals(MainFrame.MUSTARD)) type = Arc.BYPASS;  //CB added
 						else if (((NetworkNode)tobj).getStrokeColor().equals(Color.MAGENTA)) type = Arc.GWGW;  //CB added
-						else if (((NetworkNode)tobj).getStrokeColor().equals(Schematic.VIOLET)) type = Arc.LCPSIM;  //CB added
+						else if (((NetworkNode)tobj).getStrokeColor().equals(MainFrame.VIOLET)) type = Arc.LCPSIM;  //CB added
 						else if (((NetworkNode)tobj).getStrokeColor().equals(Color.GREEN)) type = Arc.MODULE_BOUNDARY;  //CB added
 						else if (((NetworkNode)tobj).getStrokeColor().equals(Color.WHITE)) type = Arc.LCPSIM_DASHED;  //CB added
 						arc = new Arc(from, to, false, type);
@@ -694,14 +694,14 @@ public class SchematicView extends JGoView implements JGoViewListener {
 								type = Arc.FUTURE;
 							else
 								type = Arc.RIVER;
-						else if (((NetworkNode)fobj).getStrokeColor().equals(Schematic.ARC_GREEN)) type = Arc.RETURN;
+						else if (((NetworkNode)fobj).getStrokeColor().equals(MainFrame.ARC_GREEN)) type = Arc.RETURN;
 						else if (((NetworkNode)fobj).getStrokeColor().equals(Color.RED)) type = Arc.DIVERSION;
 						else if (((NetworkNode)fobj).getStrokeColor().equals(Color.BLACK)) type = Arc.SPILL;
 						else if (((NetworkNode)fobj).getStrokeColor().equals(Color.GRAY)) type = Arc.CHANNEL;
 //						else if (((NetworkNode)fobj).getStrokeColor().equals(Schematic.ALMOST_YELLOW)) type = Arc.BYPASS;   //CB added
-						else if (((NetworkNode)fobj).getStrokeColor().equals(Schematic.MUSTARD)) type = Arc.BYPASS;   //CB added
+						else if (((NetworkNode)fobj).getStrokeColor().equals(MainFrame.MUSTARD)) type = Arc.BYPASS;   //CB added
 						else if (((NetworkNode)fobj).getStrokeColor().equals(Color.MAGENTA)) type = Arc.GWGW;  //CB added
-						else if (((NetworkNode)fobj).getStrokeColor().equals(Schematic.VIOLET)) type = Arc.LCPSIM;  //CB added
+						else if (((NetworkNode)fobj).getStrokeColor().equals(MainFrame.VIOLET)) type = Arc.LCPSIM;  //CB added
 						else if (((NetworkNode)fobj).getStrokeColor().equals(Color.GREEN)) type = Arc.MODULE_BOUNDARY;  //CB added
 						else if (((NetworkNode)fobj).getStrokeColor().equals(Color.WHITE)) type = Arc.LCPSIM_DASHED;  //CB added
 						arc = new Arc(from, to, false, type);
@@ -811,18 +811,18 @@ public class SchematicView extends JGoView implements JGoViewListener {
 
 			if (!obj.isTopLevel())
 				continue;
-			if (Schematic.IS_DEVELOPER && obj instanceof Link)
+			if (MainFrame.IS_DEVELOPER && obj instanceof Link)
 				editLink((Link) obj);
-			else if (Schematic.IS_DEVELOPER && obj instanceof Arc)
+			else if (MainFrame.IS_DEVELOPER && obj instanceof Arc)
 				editArc((Arc) obj);
 			else if (obj instanceof NetworkNode)
 				editNetworkNode((NetworkNode) obj);
 			//CB TODO: extend JGoBasicNode and use it for all below XXXX[X]Node classes' superclass OR add an interface and implement???
-			else if (Schematic.IS_DEVELOPER && obj instanceof TextNode)
+			else if (MainFrame.IS_DEVELOPER && obj instanceof TextNode)
 				editTextNode((TextNode) obj);
 			else if (obj instanceof GageNode)
 				editGageNode((GageNode) obj);
-			else if (Schematic.IS_DEVELOPER && obj instanceof ValueNode)
+			else if (MainFrame.IS_DEVELOPER && obj instanceof ValueNode)
 				editValueNode((ValueNode) obj);
 		}
 
@@ -1135,7 +1135,7 @@ public class SchematicView extends JGoView implements JGoViewListener {
 
 	private Point copyPoint = new Point(0, 0); //CB added
 
-	protected Schematic myApp = null;
+	protected MainFrame myApp = null;
 
 	protected JInternalFrame myInternalFrame = null;
 	// static protected JPopupMenu myPopupMenu = new JPopupMenu();

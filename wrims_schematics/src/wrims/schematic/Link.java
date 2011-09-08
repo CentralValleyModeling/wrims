@@ -45,7 +45,7 @@ public class Link extends JGoLink implements Describable {
 
 	public Link() {
 		super();
-		if (Schematic.IS_DEVELOPER) //CB added block
+		if (MainFrame.IS_DEVELOPER) //CB added block
 			setSelectable(true);
 		else
 			setSelectable(false);
@@ -53,7 +53,7 @@ public class Link extends JGoLink implements Describable {
 
 	public Link(JGoPort from, JGoPort to) {
 		super(from, to);
-		if (Schematic.IS_DEVELOPER) //CB added block
+		if (MainFrame.IS_DEVELOPER) //CB added block
 			setSelectable(true);
 		else
 			setSelectable(false);
@@ -83,9 +83,9 @@ public class Link extends JGoLink implements Describable {
 			setType(INFLOW);
 		else if (color.equals(Color.RED))
 			setType(DIVERSION);
-		else if (color.equals(Schematic.ARC_GREEN)) //CB replaced Color.GREEN
+		else if (color.equals(MainFrame.ARC_GREEN)) //CB replaced Color.GREEN
 			setType(RETURN);
-		else if (color.equals(Schematic.YUCK))
+		else if (color.equals(MainFrame.YUCK))
 			setType(DIVERSION);
 		else if (color.equals(Color.CYAN))
 			setType(INFLOW);
@@ -193,7 +193,7 @@ public class Link extends JGoLink implements Describable {
 			break;
 		case RETURN:
 //CB			color = Color.green;
-			color = Schematic.ARC_GREEN; //CB
+			color = MainFrame.ARC_GREEN; //CB
 			break;
 		case GWGW:
 			color = Color.magenta;
@@ -209,13 +209,13 @@ public class Link extends JGoLink implements Describable {
 			style = JGoPen.DASHED;
 			break;
 		case LCPSIM:  //CB added section
-			color = Schematic.VIOLET;
+			color = MainFrame.VIOLET;
 			break;
 		case MODULE_BOUNDARY:  //CB added section
 			color = Color.GREEN;
 			break;
 		case LCPSIM_DASHED:  //CB added section
-			color = Schematic.VIOLET;
+			color = MainFrame.VIOLET;
 			style = JGoPen.DASHED;
 			break;
 		default:
@@ -247,7 +247,7 @@ public class Link extends JGoLink implements Describable {
 	public boolean doMouseDblClick(int modifiers, Point dc, Point vc,
 			JGoView view) {
 		SchematicView sview = (SchematicView) view;
-		if (Schematic.IS_DEVELOPER)  //CB added
+		if (MainFrame.IS_DEVELOPER)  //CB added
 			sview.editLink(this);
 		return true;
 	}

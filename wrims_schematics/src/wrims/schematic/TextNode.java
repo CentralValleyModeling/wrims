@@ -18,7 +18,7 @@ public class TextNode extends JGoBasicNode implements Describable {
 
 	public TextNode() {
 		super();
-		if (Schematic.IS_DEVELOPER) //CB added block
+		if (MainFrame.IS_DEVELOPER) //CB added block
 			setSelectable(true);
 		else
 			setSelectable(false);
@@ -27,7 +27,7 @@ public class TextNode extends JGoBasicNode implements Describable {
 	public TextNode(String label) {
 		super(label);
 		init();
-		if (Schematic.IS_DEVELOPER) //CB added block
+		if (MainFrame.IS_DEVELOPER) //CB added block
 			setSelectable(true);
 		else
 			setSelectable(false);

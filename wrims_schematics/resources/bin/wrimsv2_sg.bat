@@ -3,12 +3,12 @@ rem ###################################
 rem Batch file for running wrims schematic
 rem ###################################
 setlocal
-set wrims_schematic_home=%~dp0/..
+set wrims_home=%~dp0/..
 set Java_Bin_Batch=%~dp0/../jre6/bin/
 set WRIMSv2_Engine_Home=%~dp0/../
 set Vista_Lib=%~dp0/../vista/lib
-rem echo %wrims_schematic_home%
-if exist "%wrims_schematic_home%/lib/wrimsv2_SG.jar" goto :valid
+rem echo %wrims_home%
+if exist "%wrims_home%/lib/wrimsv2_SG.jar" goto :valid
 
 
 :notfound
@@ -18,7 +18,7 @@ echo   Error: WRIMS Schematic files not found
 echo   ___
 echo   Installation instructions
 echo   ___
-echo   The value of the environment variable wrims_schematic_home in the 
+echo   The value of the environment variable wrims_home in the 
 echo   file wrims_schematic.bat needs to match the location where
 echo   WRIMS Schematic has been installed
 echo ############################################################
@@ -29,10 +29,10 @@ goto :end
 rem ###############
 rem Set path to location of dll
 rem ###############
-set JNILIB=%wrims_schematic_home%/lib
-set JARDIR=%wrims_schematic_home%/lib
-set SYSJARDIR=%wrims_schematic_home%/lib/sys
-set path=%wrims_schematic_home%/lib;%path%
+set JNILIB=%wrims_home%/lib
+set JARDIR=%wrims_home%/lib
+set SYSJARDIR=%wrims_home%/lib/sys
+set path=%wrims_home%/lib;%path%
 :-------------:
 : system jars :
 :-------------:       
@@ -74,7 +74,7 @@ rem ###############
 rem starting wrims schematic
 rem ###############
 :start
-"%wrims_schematic_home%/jre6/bin/java" -mx512m  -Djava.library.path="%JNILIB%" %CLASSPATH%  wrims.schematic.Schematic %1%
+"%wrims_home%/jre6/bin/java" -mx512m  -Djava.library.path="%JNILIB%" %CLASSPATH%  wrims.schematic.MainFrame %1%
 :end
 endlocal 
 rem 

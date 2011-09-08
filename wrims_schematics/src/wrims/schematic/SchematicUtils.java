@@ -24,7 +24,7 @@ public final class SchematicUtils {
 	public static String VERSION = "WRIMS Schematic 1.0 Beta";
 
 	//general objects
-	static Schematic schematic;  //CB TODO should make this private in the future if not too much trouble
+	static MainFrame schematic;  //CB TODO should make this private in the future if not too much trouble
 
 	public static final String[] MONTHS =
 		{ "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" };
@@ -45,7 +45,7 @@ public final class SchematicUtils {
 	 * not how it should have been initially planned.
 	 * @return
 	 */
-	public static Schematic getSchematic() {
+	public static MainFrame getSchematic() {
 		return schematic;
 	}
 

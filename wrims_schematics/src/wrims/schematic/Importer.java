@@ -28,7 +28,7 @@ public class Importer {
 	}
 
 	// CB public Importer(SchematicDocument d, String fn) {
-	public Importer(Schematic schem, String fn) { // CB
+	public Importer(MainFrame schem, String fn) { // CB
 		boolean excelType = false;
 		// CB doc = d;
 		fileName = fn;
@@ -474,7 +474,7 @@ public class Importer {
 			clr = Color.yellow;
 		else if (scolor.equals("green"))
 //CB			clr = Color.green;
-			clr = Schematic.ARC_GREEN; //CB replaced with darker green
+			clr = MainFrame.ARC_GREEN; //CB replaced with darker green
 		else if (scolor.equals("maroon"))
 			clr = Color.magenta;
 		else if (scolor.equals("silver"))

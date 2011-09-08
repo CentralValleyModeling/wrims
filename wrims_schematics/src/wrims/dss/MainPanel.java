@@ -16,7 +16,7 @@ public class MainPanel extends JPanel { // implements ActionListener {  //CB add
     private FilterPanel _filterPanel;
     private MessagePanel _messagePanel;
     private DssAppAction _aa;
-    private Schematic _schematic;  //CB added
+    private MainFrame _schematic;  //CB added
     private Timer _threadMonitor; //CB added
     private Thread _checker = null; //CB added
 
@@ -308,7 +308,7 @@ public class MainPanel extends JPanel { // implements ActionListener {  //CB add
 		}
 	};
 
-    public MainPanel(Schematic schematic, JFrame frame) { //CB added Schematic arg
+    public MainPanel(MainFrame schematic, JFrame frame) { //CB added Schematic arg
         _frame = frame;
         _aa = new DssAppAction(this);
         initApp(schematic);
@@ -527,7 +527,7 @@ public class MainPanel extends JPanel { // implements ActionListener {  //CB add
     /**
      * CB added.
      */
-    private void setSchematic(Schematic schematic) {
+    private void setSchematic(MainFrame schematic) {
     	_schematic = schematic;
 	}
 
@@ -758,7 +758,7 @@ public class MainPanel extends JPanel { // implements ActionListener {  //CB add
 
     public DssAppAction getActions() { return _aa; }
 
-    void initApp(Schematic schematic) {
+    void initApp(MainFrame schematic) {
         _frame.setJMenuBar(initMenus());
         setLayout(new BorderLayout(5,5));
         setSchematic(schematic);

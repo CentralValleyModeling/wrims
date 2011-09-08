@@ -29,7 +29,7 @@ public class MapOverview extends JGoView implements JGoViewListener {
 
 	private Point copyPoint = new Point(0, 0); //CB added
 
-	protected Schematic _app;
+	protected MainFrame _app;
 
 //	protected JFrame _frame;
 
@@ -47,13 +47,13 @@ public class MapOverview extends JGoView implements JGoViewListener {
 //		initialize(app, backgroundImage);
 //	}
 
-	public MapOverview(SchematicDocument doc, Schematic app, Image backgroundImage) {
+	public MapOverview(SchematicDocument doc, MainFrame app, Image backgroundImage) {
 		super(doc);
 		initialize(app, backgroundImage);
 		doc.setModifiable(false);
 	}
 
-	public void initialize(Schematic app, Image backgroundImage) {
+	public void initialize(MainFrame app, Image backgroundImage) {
 		_app = app;
 //		_frame = frame;
 		addViewListener(this);
@@ -508,7 +508,7 @@ public class MapOverview extends JGoView implements JGoViewListener {
 	};
 
 	SchematicRelatedAction ZoomInAction = new SchematicRelatedAction("Zoom In",
-			Schematic.createIconImage("images/ZoomIn24.gif"), this) {
+			MainFrame.createIconImage("images/ZoomIn24.gif"), this) {
 		public void actionPerformed(ActionEvent e) {
 			getView().zoomIn();
 		}
@@ -519,7 +519,7 @@ public class MapOverview extends JGoView implements JGoViewListener {
 	};
 
 	SchematicRelatedAction ZoomOutAction = new SchematicRelatedAction("Zoom Out",
-			Schematic.createIconImage("images/ZoomOut24.gif"), this) {
+			MainFrame.createIconImage("images/ZoomOut24.gif"), this) {
 		public void actionPerformed(ActionEvent e) {
 			getView().zoomOut();
 		}
@@ -542,7 +542,7 @@ public class MapOverview extends JGoView implements JGoViewListener {
 		return (SchematicDocument) getDocument();
 	}
 
-	Schematic getApp() {
+	MainFrame getApp() {
 		return _app;
 	}
 

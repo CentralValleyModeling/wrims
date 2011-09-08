@@ -75,8 +75,8 @@ public abstract class DssFrameRelatedPopup {
 			public void actionPerformed(ActionEvent e) {
 				if (canAct()) {
 					String outputType = "";
-					if (((Schematic)getApp())._DssFrame.getFP().filterByBpart
-							(getPlotter().parseSelection(((((Schematic)getApp()).getCurrentView()
+					if (((MainFrame)getApp())._DssFrame.getFP().filterByBpart
+							(getPlotter().parseSelection(((((MainFrame)getApp()).getCurrentView()
 									.getSelection()))))) {
 						String variableType = "";
 						if (e.getSource() instanceof JMenuItem) {
@@ -100,15 +100,15 @@ public abstract class DssFrameRelatedPopup {
 						}
 						actionPerfomedHelper(outputType, variableType);
 					} else { //CB added else block
-						JOptionPane.showMessageDialog(((Schematic)getApp())._DssFrame,
+						JOptionPane.showMessageDialog(((MainFrame)getApp())._DssFrame,
 							"No variables in dss files that match any of the selected items",
 							"Match Not Found", JOptionPane.WARNING_MESSAGE);
 					}
 				}
 			}
 			public boolean canAct() {
-				return getApp() != null && getApp() instanceof Schematic
-					&& ((Schematic)getApp())._DssFrame != null;
+				return getApp() != null && getApp() instanceof MainFrame
+					&& ((MainFrame)getApp())._DssFrame != null;
 			}
 		}; // doesn't depend on a view
 	}
@@ -120,8 +120,8 @@ public abstract class DssFrameRelatedPopup {
 			public void actionPerformed(ActionEvent e) {
 				if (canAct()) {
 					String outputType = "";
-					if (((Schematic)getApp())._DssFrame.getFP().filterByBpart
-							(getPlotter().parseSelection(((((Schematic)getApp()).getCurrentView()
+					if (((MainFrame)getApp())._DssFrame.getFP().filterByBpart
+							(getPlotter().parseSelection(((((MainFrame)getApp()).getCurrentView()
 									.getSelection()))))) {
 						String variableType = "";
 						if (e.getSource() instanceof JMenuItem) {
@@ -145,15 +145,15 @@ public abstract class DssFrameRelatedPopup {
 						}
 						actionPerfomedHelper(outputType, variableType);
 					} else { //CB added else block
-						JOptionPane.showMessageDialog(((Schematic)getApp())._DssFrame,
+						JOptionPane.showMessageDialog(((MainFrame)getApp())._DssFrame,
 							"No variables in dss files that match any of the selected items",
 							"Match Not Found", JOptionPane.WARNING_MESSAGE);
 					}
 				}
 			}
 			public boolean canAct() {
-				return getApp() != null && getApp() instanceof Schematic
-					&& ((Schematic)getApp())._DssFrame != null;
+				return getApp() != null && getApp() instanceof MainFrame
+					&& ((MainFrame)getApp())._DssFrame != null;
 			}
 		}; // doesn't depend on a view
 	}
@@ -165,8 +165,8 @@ public abstract class DssFrameRelatedPopup {
 			public void actionPerformed(ActionEvent e) {
 				if (canAct()) {
 					String outputType = "";
-					if (((Schematic)getApp())._DssFrame.getFP().filterByBpart
-							(getPlotter().parseSelection(((((Schematic)getApp()).getCurrentView()
+					if (((MainFrame)getApp())._DssFrame.getFP().filterByBpart
+							(getPlotter().parseSelection(((((MainFrame)getApp()).getCurrentView()
 									.getSelection()))))) {
 						String variableType = "";
 						if (e.getSource() instanceof JMenuItem) {
@@ -190,15 +190,15 @@ public abstract class DssFrameRelatedPopup {
 						}
 						actionPerfomedHelper(outputType, variableType);
 					} else { //CB added else block
-						JOptionPane.showMessageDialog(((Schematic)getApp())._DssFrame,
+						JOptionPane.showMessageDialog(((MainFrame)getApp())._DssFrame,
 							"No variables in dss files that match any of the selected items",
 							"Match Not Found", JOptionPane.WARNING_MESSAGE);
 					}
 				}
 			}
 			public boolean canAct() {
-				return getApp() != null && getApp() instanceof Schematic
-					&& ((Schematic)getApp())._DssFrame != null;
+				return getApp() != null && getApp() instanceof MainFrame
+					&& ((MainFrame)getApp())._DssFrame != null;
 			}
 		}; // doesn't depend on a view
 	}
@@ -210,8 +210,8 @@ public abstract class DssFrameRelatedPopup {
 			public void actionPerformed(ActionEvent e) {
 				if (canAct()) {
 					String outputType = "";
-					if (((Schematic)getApp())._DssFrame.getFP().filterByBpart
-							(getPlotter().parseSelection(((((Schematic)getApp()).getCurrentView()
+					if (((MainFrame)getApp())._DssFrame.getFP().filterByBpart
+							(getPlotter().parseSelection(((((MainFrame)getApp()).getCurrentView()
 									.getSelection()))))) {
 						String variableType = "";
 						if (e.getSource() instanceof JMenuItem) {
@@ -235,15 +235,15 @@ public abstract class DssFrameRelatedPopup {
 						}
 						actionPerfomedHelper(outputType, variableType);
 					} else { //CB added else block
-						JOptionPane.showMessageDialog(((Schematic)getApp())._DssFrame,
+						JOptionPane.showMessageDialog(((MainFrame)getApp())._DssFrame,
 							"No variables in dss files that match any of the selected items",
 							"Match Not Found", JOptionPane.WARNING_MESSAGE);
 					}
 				}
 			}
 			public boolean canAct() {
-				return getApp() != null && getApp() instanceof Schematic
-					&& ((Schematic)getApp())._DssFrame != null;
+				return getApp() != null && getApp() instanceof MainFrame
+					&& ((MainFrame)getApp())._DssFrame != null;
 			}
 		}; // doesn't depend on a view
 	}
@@ -259,8 +259,8 @@ public abstract class DssFrameRelatedPopup {
 			public void actionPerformed(ActionEvent e) {
 				if (canAct()) {
 					String outputType = "";
-					if (((Schematic)getApp())._DssFrame.getFP().filterByBpart
-							(getPlotter().parseSelection(((((Schematic)getApp()).getCurrentView()
+					if (((MainFrame)getApp())._DssFrame.getFP().filterByBpart
+							(getPlotter().parseSelection(((((MainFrame)getApp()).getCurrentView()
 									.getSelection()))))) {
 						String variableType = "";
 						if (e.getSource() instanceof JMenuItem) {
@@ -284,15 +284,15 @@ public abstract class DssFrameRelatedPopup {
 						}
 						actionPerfomedHelper(outputType, variableType);
 					} else { //CB added else block
-						JOptionPane.showMessageDialog(((Schematic)getApp())._DssFrame,
+						JOptionPane.showMessageDialog(((MainFrame)getApp())._DssFrame,
 							"No variables in dss files that match any of the selected items",
 							"Match Not Found", JOptionPane.WARNING_MESSAGE);
 					}
 				}
 			}
 			public boolean canAct() {
-				return getApp() != null && getApp() instanceof Schematic
-					&& ((Schematic)getApp())._DssFrame != null;
+				return getApp() != null && getApp() instanceof MainFrame
+					&& ((MainFrame)getApp())._DssFrame != null;
 			}
 		}; // doesn't depend on a view
 	}
@@ -303,8 +303,8 @@ public abstract class DssFrameRelatedPopup {
 		monthlyAction = new DssFrameRelatedAction(DssViewer.MONTHLY_STRING, SchematicUtils.schematic) {
 			public void actionPerformed(ActionEvent e) {
 				if (canAct()) {
-					if (((Schematic)getApp())._DssFrame.getFP().filterByBpart
-							(getPlotter().parseSelection(((((Schematic)getApp()).getCurrentView()
+					if (((MainFrame)getApp())._DssFrame.getFP().filterByBpart
+							(getPlotter().parseSelection(((((MainFrame)getApp()).getCurrentView()
 									.getSelection()))))) {
 						String outputType = "";
 						String variableType = "";
@@ -320,15 +320,15 @@ public abstract class DssFrameRelatedPopup {
 						}
 						actionPerfomedHelper(outputType, variableType);
 					} else { //CB added else block
-						JOptionPane.showMessageDialog(((Schematic)getApp())._DssFrame,
+						JOptionPane.showMessageDialog(((MainFrame)getApp())._DssFrame,
 							"No variables in dss files that match any of the selected items",
 							"Match Not Found", JOptionPane.WARNING_MESSAGE);
 					}
 				}
 			}
 			public boolean canAct() {
-				return getApp() != null && getApp() instanceof Schematic
-					&& ((Schematic)getApp())._DssFrame != null;
+				return getApp() != null && getApp() instanceof MainFrame
+					&& ((MainFrame)getApp())._DssFrame != null;
 			}
 		}; // doesn't depend on a view
 	}
@@ -341,8 +341,8 @@ public abstract class DssFrameRelatedPopup {
 //				System.out.println("entering actionPerformed of DssFrameRelatedAction tableAction");
 				if (canAct()) {
 //					System.out.println(((Schematic)getApp()).getCurrentView());
-					if (((Schematic)getApp())._DssFrame.getFP().filterByBpart
-							(getPlotter().parseSelection(((((Schematic)getApp()).getCurrentView()
+					if (((MainFrame)getApp())._DssFrame.getFP().filterByBpart
+							(getPlotter().parseSelection(((((MainFrame)getApp()).getCurrentView()
 									.getSelection()))))) {
 						String outputType = "";
 						String variableType = "";
@@ -357,15 +357,15 @@ public abstract class DssFrameRelatedPopup {
 						}
 						actionPerfomedHelper(outputType, variableType);
 					} else { //CB added else block
-						JOptionPane.showMessageDialog(((Schematic)getApp())._DssFrame,
+						JOptionPane.showMessageDialog(((MainFrame)getApp())._DssFrame,
 							"No variables in dss files that match any of the selected items",
 							"Match Not Found", JOptionPane.WARNING_MESSAGE);
 					}
 				}
 			}
 			public boolean canAct() {
-				return getApp() != null && getApp() instanceof Schematic
-					&& ((Schematic)getApp())._DssFrame != null;
+				return getApp() != null && getApp() instanceof MainFrame
+					&& ((MainFrame)getApp())._DssFrame != null;
 			}
 		}; // doesn't depend on a view
 	}
@@ -376,8 +376,8 @@ public abstract class DssFrameRelatedPopup {
 		allAction = new DssFrameRelatedAction(DssViewer.ALL_STRING, SchematicUtils.schematic) {
 			public void actionPerformed(ActionEvent e) {
 				if (canAct()) {
-					if (((Schematic)getApp())._DssFrame.getFP().filterByBpart
-							(getPlotter().parseSelection(((((Schematic)getApp()).getCurrentView()
+					if (((MainFrame)getApp())._DssFrame.getFP().filterByBpart
+							(getPlotter().parseSelection(((((MainFrame)getApp()).getCurrentView()
 									.getSelection()))))) {
 						String outputType = "";
 						String variableType = "";
@@ -392,15 +392,15 @@ public abstract class DssFrameRelatedPopup {
 						}
 						actionPerfomedHelper(outputType, variableType);
 					} else { //CB added else block
-						JOptionPane.showMessageDialog(((Schematic)getApp())._DssFrame,
+						JOptionPane.showMessageDialog(((MainFrame)getApp())._DssFrame,
 							"No variables in dss files that match any of the selected items",
 							"Match Not Found", JOptionPane.WARNING_MESSAGE);
 					}
 				}
 			}
 			public boolean canAct() {
-				return getApp() != null && getApp() instanceof Schematic
-					&& ((Schematic)getApp())._DssFrame != null;
+				return getApp() != null && getApp() instanceof MainFrame
+					&& ((MainFrame)getApp())._DssFrame != null;
 			}
 		}; // doesn't depend on a view
 	}

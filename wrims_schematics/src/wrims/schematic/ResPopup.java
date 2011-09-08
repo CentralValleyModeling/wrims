@@ -81,7 +81,7 @@ public class ResPopup extends DssFrameRelatedPopup { // CB - implemented Actions
 		zonesAction = new ContainerRelatedAction("Zones", SchematicUtils.schematic) {
 			public void actionPerformed(ActionEvent e) {
 				if (canAct()) {
-					String zonesDir = (new File(((Schematic)getApp()).getPropertiesLocation())).getParent() + "\\common\\System";
+					String zonesDir = (new File(((MainFrame)getApp()).getPropertiesLocation())).getParent() + "\\common\\System";
 					if (zonesDir == null) return;
 					File directory = new File(zonesDir);
 //					System.out.println("parent directory = " + zonesDir);
@@ -93,7 +93,7 @@ public class ResPopup extends DssFrameRelatedPopup { // CB - implemented Actions
 						File[] childFiles = files[i].listFiles();
 //						Vector selectedObjects = ((Schematic)getApp()).getCurrentView()
 //						.createSelectionVector(((((Schematic)getApp()).getCurrentView().getCurrentObject())));
-						JGoObject current = ((Schematic)getApp()).getCurrentView().getCurrentObject();
+						JGoObject current = ((MainFrame)getApp()).getCurrentView().getCurrentObject();
 						if (current instanceof NetworkNode && (((NetworkNode)current).getType()
 								== NetworkNode.RESERVOIR || ((NetworkNode)current).getType()
 								== NetworkNode.RRESERVOIR || ((NetworkNode)current).getType()
@@ -161,7 +161,7 @@ public class ResPopup extends DssFrameRelatedPopup { // CB - implemented Actions
 					if (true) {
 						//SHOW TABLE OF VALUES
 					} else { //CB added else block
-						JOptionPane.showMessageDialog(((Schematic)getApp())._DssFrame,
+						JOptionPane.showMessageDialog(((MainFrame)getApp())._DssFrame,
 							"No variables in dss files that match any of the selected items",
 							"Match Not Found", JOptionPane.WARNING_MESSAGE);
 					}
@@ -172,7 +172,7 @@ public class ResPopup extends DssFrameRelatedPopup { // CB - implemented Actions
 				}
 			}
 			public boolean canAct() {
-				return  (((Schematic)getApp()).getPropertiesLocation() != null);
+				return  (((MainFrame)getApp()).getPropertiesLocation() != null);
 			}
 		}; // doesn't depend on a view
 	}
@@ -186,20 +186,20 @@ public class ResPopup extends DssFrameRelatedPopup { // CB - implemented Actions
 		ratingsAction = new ContainerRelatedAction("Ratings", SchematicUtils.schematic) {
 			public void actionPerformed(ActionEvent e) {
 				if (canAct()) {
-					String ratingsDir = ((Schematic)getApp()).getPropertiesLocation() + "/run/Lookup/";
+					String ratingsDir = ((MainFrame)getApp()).getPropertiesLocation() + "/run/Lookup/";
 					//NEED RESERVOIR NAME using _currentOpenPropertyLocation;
 					//LOOK FOR RES IN PERINENT TABLE
 					if (true) {
 						//SHOW TABLE OF VALUES
 					} else { //CB added else block
-						JOptionPane.showMessageDialog(((Schematic)getApp())._DssFrame,
+						JOptionPane.showMessageDialog(((MainFrame)getApp())._DssFrame,
 							"No variables in dss files that match any of the selected items",
 							"Match Not Found", JOptionPane.WARNING_MESSAGE);
 					}
 				}
 			}
 			public boolean canAct() {
-				return  (((Schematic)getApp()).getPropertiesLocation() != null);
+				return  (((MainFrame)getApp()).getPropertiesLocation() != null);
 			}
 		}; // doesn't depend on a view
 	}

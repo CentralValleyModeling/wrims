@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Vector;
 import java.util.prefs.Preferences; //CB added
 import javax.swing.border.LineBorder;
-import wrims.schematic.Schematic;
+import wrims.schematic.MainFrame;
 
 /**
  *
@@ -472,9 +472,9 @@ public class MessagePanel {
 	public JPanel createUnitsPanel(int schematicUnits) {
 		JPanel panel = new JPanel();
 		ButtonGroup g = new ButtonGroup();
-		if (schematicUnits == Schematic.TAF)
+		if (schematicUnits == MainFrame.TAF)
 			taf.setSelected(true);
-		else if (schematicUnits == Schematic.CFS)
+		else if (schematicUnits == MainFrame.CFS)
 			cfs.setSelected(true);
 		g.add(taf);
 		g.add(cfs);
@@ -483,7 +483,7 @@ public class MessagePanel {
 				if (DEBUG)
 					System.out.println("TAF");
 				// ctp if (taf.isSelected()) AppUtils.useUnits(AppUtils.TAF);
-				_mainPanel.updateSchematicUnitsButtons(Schematic.TAF);
+				_mainPanel.updateSchematicUnitsButtons(MainFrame.TAF);
 			}
 		});
 		cfs.addActionListener(new ActionListener() {
@@ -491,7 +491,7 @@ public class MessagePanel {
 				if (DEBUG)
 					System.out.println("CFS");
 				// ctp if (cfs.isSelected()) AppUtils.useUnits(AppUtils.CFS);
-				_mainPanel.updateSchematicUnitsButtons(Schematic.CFS);
+				_mainPanel.updateSchematicUnitsButtons(MainFrame.CFS);
 			}
 		});
 		taf.setFont(new Font(f.getName(), f.getStyle(), 10));
@@ -1061,10 +1061,10 @@ public class MessagePanel {
 	 * @param units
 	 */
 	public void updateUnitsButtons(int units) {
-		if (units == Schematic.TAF) {
+		if (units == MainFrame.TAF) {
 			if (!taf.isSelected())
 				taf.setSelected(true);
-		} else if (units == Schematic.CFS) {
+		} else if (units == MainFrame.CFS) {
 			if (!cfs.isSelected())
 				cfs.setSelected(true);
 		}

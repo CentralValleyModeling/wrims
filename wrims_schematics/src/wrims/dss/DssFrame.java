@@ -2,7 +2,7 @@ package wrims.dss;
 
 import java.awt.event.*;
 import javax.swing.*;
-import wrims.schematic.Schematic;
+import wrims.schematic.MainFrame;
 
 public class DssFrame extends JFrame {
 
@@ -11,7 +11,7 @@ public class DssFrame extends JFrame {
 //    private Schematic _schematic;  //CB added, then saw it is better in MainPanel due to this and FilterPanel having it.
 
 	//CB added the argument because I could not get the JTextField documentListener to work for Schematic in a hurry
-	public DssFrame(Schematic schematic) {
+	public DssFrame(MainFrame schematic) {
 		super("Wrims DSS Viewer");
 //		setSchematic(schematic);  //CB added
 		raiseWindow(schematic);
@@ -26,12 +26,12 @@ public class DssFrame extends JFrame {
 		});
 	}
 	//CB added the Schematic argument because I could not get the JTextField documentListener to work in a hurry
-	public DssFrame(Schematic schematic, boolean isVisible) {
+	public DssFrame(MainFrame schematic, boolean isVisible) {
 		this(schematic);
         setVisible(isVisible);
 	}
 
-	private void raiseWindow(Schematic schematic) {
+	private void raiseWindow(MainFrame schematic) {
 		this.addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent e) {
 			    JFrame tmp = (JFrame)e.getSource();

@@ -102,7 +102,7 @@ public class ArcDialog extends JDialog {
     label2.setBounds(new Rectangle(24,36,48,24));
     panel1.add(nameField);
     nameField.setBounds(new Rectangle(84,36,80,24));
-    if (!Schematic.IS_DEVELOPER)
+    if (!MainFrame.IS_DEVELOPER)
     	nameField.setEditable(false);
 
     // type panel

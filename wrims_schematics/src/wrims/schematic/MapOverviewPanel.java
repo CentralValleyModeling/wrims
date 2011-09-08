@@ -23,7 +23,7 @@ public class MapOverviewPanel extends JPanel {
 		_overview = new MapOverview(doc);
 	} */
 
-	public MapOverviewPanel(SchematicDocument doc, Schematic app, Image backgroundImage) {
+	public MapOverviewPanel(SchematicDocument doc, MainFrame app, Image backgroundImage) {
 		super();
 		_overview = new MapOverview(doc, app, backgroundImage);
 		initialize();
@@ -63,21 +63,21 @@ public class MapOverviewPanel extends JPanel {
 	}
 
 	MapOverviewRelatedAction ZoomToFitAction = new MapOverviewRelatedAction("Zoom To Fit",
-			Schematic.createIconImage("images/ZoomToFit24.gif"), this) {
+			MainFrame.createIconImage("images/ZoomToFit24.gif"), this) {
 		public void actionPerformed(ActionEvent e) {
 			getView().zoomToFit();
 		}
 	};
 
 	MapOverviewRelatedAction ZoomNormalAction = new MapOverviewRelatedAction("Normal Zoom",
-			Schematic.createIconImage("images/ZoomNormal24.gif"), this) {
+			MainFrame.createIconImage("images/ZoomNormal24.gif"), this) {
 		public void actionPerformed(ActionEvent e) {
 			getView().zoomNormal();
 		}
 	};
 
 	MapOverviewRelatedAction ZoomInAction = new MapOverviewRelatedAction("Zoom In",
-			Schematic.createIconImage("images/ZoomIn24.gif"), this) {
+			MainFrame.createIconImage("images/ZoomIn24.gif"), this) {
 		public void actionPerformed(ActionEvent e) {
 			getView().zoomIn();
 		}
@@ -88,7 +88,7 @@ public class MapOverviewPanel extends JPanel {
 	};
 
 	MapOverviewRelatedAction ZoomOutAction = new MapOverviewRelatedAction("Zoom Out",
-			Schematic.createIconImage("images/ZoomOut24.gif"), this) {
+			MainFrame.createIconImage("images/ZoomOut24.gif"), this) {
 		public void actionPerformed(ActionEvent e) {
 			this.getView().zoomOut();
 		}

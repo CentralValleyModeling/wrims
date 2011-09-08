@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+	builds wrimsv2 SG Dev
+     psandhu; Hao Xie                                                               
+     ====================================================================== -->
+<project name="wrimsv2_SGDev" default="default">
+	<description>
+            builds wrimsv2_SGDev distribution
+    </description>
+	<property name="dist.dir" location="build/dist/wrimsv2_SGDev"/>
+	<property name="wrimsv2_SG.lib" location="lib" />
+	<property name="jre6.installdir" location="D:\cvwrsm\trunk\3rd_party\jrockit-jre1.6.0_26-R28.1.4"/>
+	<property name="jdk6.installdir" location="D:\cvwrsm\trunk\3rd_party\jrockit-jdk1.6.0_26-R28.1.4-4.0.1"/>
+	<property name="mingw.installdir" location="D:\cvwrsm\trunk\3rd_party\MingW_SV"/>
+	<property name="dllwrapper.dir" location="dllwrapper"/>
+	<property name="vista.dir" location="D:\cvwrsm\trunk\3rd_party\vista"/>
+
+	<!-- ================================= 
+          target: default              
+         ================================= -->
+	<target name="default" depends="package" description="builds wrimsv2_SGDev distribution">
+		<tstamp/>
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: compile                      
+         - - - - - - - - - - - - - - - - - -->
+	<target name="compile">
+		<mkdir dir="build/classes"/>
+		<copy todir="build/classes">
+			<fileset dir="bin">
+				<include name="wrims/**/*.class"/>
+			</fileset>
+		</copy>			
+		<copy todir="build/classes">
+			<fileset dir="src">
+				<include name="**/*.gif"/>
+				<include name="**/*.png"/>
+				<include name="**/*.jpg"/>
+				<include name="**/*.properties"/>
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="package" depends="compile">
+		<tstamp/>
+		<mkdir dir="${dist.dir}"/>
+		<copy todir="${dist.dir}">
+			<fileset dir="resources"/>
+		</copy>
+		<copy todir="${dist.dir}/lib">
+			<fileset dir="lib"/>
+		</copy>
+		<copy todir="${dist.dir}/jre6/">
+			<fileset dir="${jre6.installdir}">
+				<include name="**/**"/>
+			</fileset>
+		</copy>
+		<copy todir="${dist.dir}/jdk6/">
+			<fileset dir="${jdk6.installdir}">
+				<include name="**/**"/>
+			</fileset>
+		</copy>
+		<copy todir="${dist.dir}/mingw/">
+			<fileset dir="${mingw.installdir}">
+				<include name="**/**"/>
+			</fileset>
+		</copy>
+		<copy todir="${dist.dir}/dllwrapper/">
+			<fileset dir="${dllwrapper.dir}">
+				<include name="**/**"/>
+			</fileset>
+		</copy>
+		<copy todir="${dist.dir}/vista/">
+			<fileset dir="${vista.dir}">
+				<include name="**/**"/>
+			</fileset>
+		</copy>
+		<jar destfile="${dist.dir}/lib/wrimsv2_SG.jar" basedir="build/classes"></jar>
+		<zip destfile="build/wrimsv2_SGDev-${DSTAMP}.zip" basedir="${dist.dir}/.." />
+	</target>
+	
+	<target name="clean">
+		<delete dir="build"/>
+	</target>
+	
+	</project>

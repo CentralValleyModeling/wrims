@@ -19,8 +19,8 @@ public abstract class MapOverviewRelatedAction extends ContainerRelatedAction {
 	}
 
 	public Plotter getPlotter() {
-		if (getApp() != null && getApp() instanceof Schematic) {
-			return ((Schematic)getApp()).getPlotter();
+		if (getApp() != null && getApp() instanceof MainFrame) {
+			return ((MainFrame)getApp()).getPlotter();
 		} else return null;
 	}
 

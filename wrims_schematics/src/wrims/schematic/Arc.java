@@ -47,7 +47,7 @@ public class Arc extends JGoLabeledLink implements Describable {
 
 	public Arc() {
 		super();
-		if (Schematic.IS_DEVELOPER) //CB added block
+		if (MainFrame.IS_DEVELOPER) //CB added block
 			setSelectable(true);
 		else
 			setSelectable(false);
@@ -65,7 +65,7 @@ public class Arc extends JGoLabeledLink implements Describable {
 			text.setBkColor(new Color(255, 255, 255, 200)); // translucent white
 			setMidLabel(text);
 		}
-		if (Schematic.IS_DEVELOPER) //CB added block
+		if (MainFrame.IS_DEVELOPER) //CB added block
 			setSelectable(true);
 		else
 			setSelectable(false);
@@ -101,9 +101,9 @@ public class Arc extends JGoLabeledLink implements Describable {
 			setType(INFLOW);
 		else if (color.equals(Color.RED))
 			setType(DIVERSION);
-		else if (color.equals(Schematic.ARC_GREEN))
+		else if (color.equals(MainFrame.ARC_GREEN))
 			setType(RETURN);
-		else if (color.equals(Schematic.YUCK))
+		else if (color.equals(MainFrame.YUCK))
 			setType(DIVERSION);
 		else if (color.equals(Color.CYAN))
 			setType(INFLOW);
@@ -113,7 +113,7 @@ public class Arc extends JGoLabeledLink implements Describable {
 			setType(CHANNEL);
 		else if (color.equals(Color.MAGENTA)) //CB added section
 			setType(GWGW);
-		else if (color.equals(Schematic.VIOLET)) //CB added section
+		else if (color.equals(MainFrame.VIOLET)) //CB added section
 			setType(LCPSIM);
 		else if (color.equals(Color.GREEN)) //CB added section
 			setType(MODULE_BOUNDARY);
@@ -346,9 +346,9 @@ public class Arc extends JGoLabeledLink implements Describable {
 		case RETURN:
 			if (getMidLabel() != null) //CB added to make only CalSim II return types as Color.green  - CB NO LONGER
 //				color = Color.green;
-				color = Schematic.ARC_GREEN;
+				color = MainFrame.ARC_GREEN;
 			else  //CB added to make CalSim III return types as a better green (more like the Excel version)
-				color = Schematic.ARC_GREEN;
+				color = MainFrame.ARC_GREEN;
 			break;
 		case CHANNEL:
 			color = Color.GRAY;
@@ -371,16 +371,16 @@ public class Arc extends JGoLabeledLink implements Describable {
 		case BYPASS:  //CB added section
 //			color = Color.YELLOW;
 //			color = Schematic.ALMOST_YELLOW;
-			color = Schematic.MUSTARD;
+			color = MainFrame.MUSTARD;
 			break;
 		case LCPSIM:  //CB added section
-			color = Schematic.VIOLET;
+			color = MainFrame.VIOLET;
 			break;
 		case MODULE_BOUNDARY:  //CB added section
 			color = Color.GREEN;
 			break;
 		case LCPSIM_DASHED:  //CB added section
-			color = Schematic.VIOLET;
+			color = MainFrame.VIOLET;
 			style = JGoPen.DASHED;
 			break;
 		default:
@@ -442,7 +442,7 @@ public class Arc extends JGoLabeledLink implements Describable {
 	public boolean doMouseDblClick(int modifiers, Point dc, Point vc,
 			JGoView view) {
 		SchematicView schematicView = (SchematicView) view;
-		if (Schematic.IS_DEVELOPER)  //CB added
+		if (MainFrame.IS_DEVELOPER)  //CB added
 			schematicView.editArc(this);
 		return true;
 	}

@@ -21,26 +21,26 @@ public class RatingsAction extends ContainerRelatedAction {
 	}
 
 	public SchematicView getView() {
-		if (getApp() != null && getApp() instanceof Schematic) {
-			return ((Schematic)getApp()).getCurrentView();
+		if (getApp() != null && getApp() instanceof MainFrame) {
+			return ((MainFrame)getApp()).getCurrentView();
 		} else return null;
 	}
 
 	public Plotter getPlotter() {
-		if (getApp() != null && getApp() instanceof Schematic) {
-			return ((Schematic)getApp()).getPlotter();
+		if (getApp() != null && getApp() instanceof MainFrame) {
+			return ((MainFrame)getApp()).getPlotter();
 		} else return null;
 	}
 
 	public boolean canAct() {
-		return getApp() != null && getApp() instanceof Schematic
-			&& ((Schematic)getApp())._DssFrame != null;
+		return getApp() != null && getApp() instanceof MainFrame
+			&& ((MainFrame)getApp())._DssFrame != null;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		if (canAct()) {
-			if (((Schematic)getApp())._DssFrame.getFP().filterByBpart
-					(getPlotter().parseSelection(((((Schematic)getApp()).getCurrentView()
+			if (((MainFrame)getApp())._DssFrame.getFP().filterByBpart
+					(getPlotter().parseSelection(((((MainFrame)getApp()).getCurrentView()
 							.getSelection()))))) {
 				String outputType = "";
 				String variableType = "";
@@ -55,7 +55,7 @@ public class RatingsAction extends ContainerRelatedAction {
 				}
 //				actionPerfomedHelper(outputType, variableType);  //CB in progress?
 			} else { //CB added else block
-				JOptionPane.showMessageDialog(((Schematic)getApp())._DssFrame,
+				JOptionPane.showMessageDialog(((MainFrame)getApp())._DssFrame,
 					"No variables in dss files that match any of the selected items",
 					"Match Not Found", JOptionPane.WARNING_MESSAGE);
 			}
