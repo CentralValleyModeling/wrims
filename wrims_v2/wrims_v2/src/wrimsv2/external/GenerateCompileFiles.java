@@ -25,15 +25,23 @@ public class GenerateCompileFiles {
 	private static ArrayList<String> functionArray=new ArrayList<String>();
 	public static ArrayList<String> error=new ArrayList<String>(); 
 	public static String workingDir;
+	public static boolean setPath=false;
+	private static String currentDirectory;
 	
 	public static void generateBatchFile(){
 		String batchFileFullPath=workingDir+"processDll.bat";
+
 		Iterator fvni=functionVariableNames.keySet().iterator();
 		Iterator dfi=dllFunctions.keySet().iterator();
 		
 		try{
 			FileWriter batchFile = new FileWriter(batchFileFullPath);
 			PrintWriter out = new PrintWriter(batchFile);
+
+			if (setPath){
+				out.println("set path="+currentDirectory+"/../jdk6/bin;"+currentDirectory+"/../mingw/bin;");
+			}
+			
 			while (fvni.hasNext()){
 				String functionName=(String)fvni.next();
 				out.println("javac -cp . wrimsv2\\external\\Function"+functionName+".java");				
@@ -374,6 +382,10 @@ public class GenerateCompileFiles {
 	public static void main(String args[]){
 		setWorkingDirectory(args[0]);
 		if (setDllFunction(args[0])) generateFiles();
+		if (args.length>1) {
+			setPath=true;
+			currentDirectory=args[1];
+		}
 		reportErrors();
 	}
 }
