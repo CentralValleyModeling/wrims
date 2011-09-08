@@ -44,7 +44,11 @@ public class GenerateCompileFiles {
 			
 			while (fvni.hasNext()){
 				String functionName=(String)fvni.next();
-				out.println("javac -cp . wrimsv2\\external\\Function"+functionName+".java");				
+				if (setPath){
+					out.println("javac -cp "+currentDirectory+"/../lib/wrimsv2.jar "+"wrimsv2\\external\\Function"+functionName+".java");
+				}else{
+					out.println("javac -cp . wrimsv2\\external\\Function"+functionName+".java");
+				}
 				out.println("javah -jni wrimsv2.external.Function"+functionName);
 				out.println("D:/cvwrsm/trunk/3rd_party/MinGW/bin/gcc -c -Wall -D_JNI_IMPLEMENTATION_ -Wl,--kill-at -I\"C:/Program Files (x86)/Java/jdk1.6.0_24/include\"  -I\"C:/Program Files (x86)/Java/jdk1.6.0_24/include/win32\" wrimsv2_external_Function"+functionName+".c");
 			}
