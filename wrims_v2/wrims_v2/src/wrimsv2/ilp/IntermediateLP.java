@@ -34,9 +34,10 @@ public class IntermediateLP {
 		} else {
 			fileName = ControlData.currTimeStep+"_"+ControlData.currCycleIndex+".ilp";
 		}
-		
+//		System.out.println("################# "+fileName);
+//		System.out.println("################# "+System.getProperty("user.dir")+"\\"+dirPath);
 		try {
-			_ilpFile = Tools.openFile(System.getProperty("user.dir")+"//"+dirPath, fileName);
+			_ilpFile = Tools.openFile(System.getProperty("user.dir")+"\\"+dirPath, fileName);
 			
 		}
 		catch (IOException e1) {
@@ -57,7 +58,8 @@ public class IntermediateLP {
 		_ilpFile.print("\n");
 		writeConstraint();
 		_ilpFile.print("\n");
-		writeDvar();		
+		writeDvar();
+		_ilpFile.flush();
 	}
 	
 	private static void writeObj(){

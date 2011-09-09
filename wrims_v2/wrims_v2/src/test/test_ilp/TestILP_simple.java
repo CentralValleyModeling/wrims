@@ -55,19 +55,9 @@ public class TestILP_simple {
         // wrims v1 XA16 OBJ: 41169932.383266 
         // wrims v2 XA16 OBJ: 41169932.835543
         
-        expected = 41169932.383266;
+        expected = 3.0;
 
-        
-        logFilePath = studyPath+"run\\xa.log";
-		String logText = Tools.readFileAsString(logFilePath);	
-
-		int n = RegUtils.timesOfMatches(logText, objMatchString);
-		Assert.assertEquals(n, 1);
-		
-		String line = RegUtils.getLastMatch(logText, objMatchString);
-		String value = RegUtils.getLastMatch(line, "\\d+.\\d+");
-		
-		double obj_value =  Double.parseDouble(value);
+		double obj_value =  ControlData.xasolver.getObjective();
 		
 		Assert.assertEquals(obj_value, expected, expected*tolerance_perc);	
 

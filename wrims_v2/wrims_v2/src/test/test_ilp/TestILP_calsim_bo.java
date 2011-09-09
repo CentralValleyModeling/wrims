@@ -37,7 +37,7 @@ public class TestILP_calsim_bo {
 		 "1921",
 		 "10",
 		 "31", 
-		 "XA", 
+		 "ILP", 
 		 "csv_TestIlp_Calsim_BO"};
 
 		FilePaths.ilpFileDirectory = "ilp_TestIlp_Calsim3";
