@@ -1,0 +1,13 @@
+! CCWD_ann_demand - EXISTING LEVEL
+! Los Vaqueros Reservoir Demand
+! Wyear_type = water year type (SAC_index)
+! CCWD_base_demand = Contra Costa Water District future (2030) demand (TAF) for Service Area C.  End of February
+! CCWD_rel_demand = Contra Costa Water District reliability demand (TAF).  End of February
+! Source information: CCWD December 2003 Tech Memo and SWRI spreadsheet model
+CCWD_ann_demand
+wyear_type      CCWD_base_demand    CCWD_rel_demand
+1               111.                0.
+2               118.                0.
+3               124.                0.
+4               135.                0.
+5               144.                0.

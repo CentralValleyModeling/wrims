@@ -1,0 +1,510 @@
+/*
+CalSim 3.0
+BearRiver.wresl
+
+Edited A Draper, MWH, June 16, 2011
+*/
+
+! Operational logic for export from Bear River to PG&E, PCWA and NID.
+! Operations for Camp Far West Reservoir releases
+! Operational Logic for diversions from Bear River to Camp Far West ID and Soth Sutter WD (Demand Unit 22_NA)
+! Operations are taken from the Bear River Model
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Bear River                  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/*
+Reach 1: Short, 0.3-mile-long section of the upper Bear River that extends from
+the Drum Canal spill gate (measured by gage YB-137) downstream to the South Yuba Canal
+spill gate (measured by YB-139).
+
+Reach 2: Extends 7.6 miles from the Bear River at the South Yuba Canal spill gate downstream to Drum Afterbay.
+Flows in this reach are measured by gage YB-198 (USGS gage 11421710)
+
+Reach 3: Drum Afterbay to Dutch Flat Afterbay. PG&E required to meet 5 cfs from 1 January to 28 February and 1 October to 31 December; 10 cfs from
+1 March to 30 September (Article 39 of FERC license)
+
+Reach 4: Dutch Flat Afterbay to Rollins Reservoir.
+
+PG&E is currently required to maintain 5 cfs year-round in the Bear River as measured at the gage YB-198
+located adjacent to Highway 20 in Bear Valley. This minimum flow requirement is maintained by augmenting water from two
+Project canals. PG&E can release water from either the Drum Canal at YB-137 or the South
+Yuba Canal at YB-139 into the Bear River.
+
+These spill facilities are utilized for various operational purposes, such as flow augmentation,
+excess storm water removal from the canal, emergency operational conditions, such as a canal
+failure downstream, and for the movement of water downstream in the Project during wet years.
+For example, the canals can be utilized under emergency conditions to protect the integrity of the
+downstream canal facilities by providing the ability to remove excess storm water runoff from
+the canal that can occur during periods of heavy inflows. They are also utilized to move water
+down through the Project during wet years when water would have otherwise spilled at Lake
+Spaulding.
+
+PG&E frequently releases 200 cfs of water from the Drum Canal into the Bear River in order
+to ensure facility safety and meet PG&E’s winter operating plan. In wet water years, water is
+routinely released from the canals into the Bear River during the late winter and early spring
+when Lake Spaulding is forecast to fill and spill. Up to 800 cfs is diverted through Spaulding
+No. 1 Powerhouse down the Drum Canal, and 200 cfs or less is released through the Drum Canal
+at YB-137 into the Bear River. This leaves up to 600 cfs in the Drum Canal, which is the
+maximum allowed by Licensee’s winter operating plan during periods of storm runoff.
+
+The waste gate from the South Yuba Canal is used to supplement
+flow to the Bear River in order to ensure that PG&E meets the minimum flow requirement of 5
+cfs year round at YB-198 (Bear River at Highway 20), due to the smaller size of the side gate,
+which allows for more precise control of the released water.
+
+*/
+
+! Minimum flow requirement of 5 cfs defined in arcs-minflows.wresl and constraints-minflows.wresl
+! Weights on min flows set in weight-table.wresl
+! Set penalty on Drum canal 
+!goal setC_DRM001 {
+!	lhs C_DRM001 
+!	case WinterOps{
+!		condition month >=DEC .and. month <= APR
+!		rhs 600.
+!	lhs>rhs constrain
+!	lhs<rhs penalty 0}
+!}
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Drum-Spaulding Canal                     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/*
+The Drum No. 1 and No. 2 Development includes Lake Valley Reservoir, Kelly Lake, Lake
+Valley Canal Diversion Dam, Lake Valley Canal, Drum Canal, Drum Forebay, Drum No. 1
+Powerhouse penstocks No. 1 and No. 2, Drum No. 2 Powerhouse Penstock No. 3, Drum No. 1
+Powerhouse, and Drum No. 2 Powerhouse. Lake Valley Reservoir and Kelly Lake are operated
+as storage reservoirs to fill with spring runoff that accumulates during the snowmelt season,
+providing water for consumptive downstream demand, hydroelectric generation, environmental
+water releases, and recreational benefits. Lake Valley Canal Diversion Dam diverts water
+released upstream from the Lake Valley Reservoir and Kelly Lake to the Lake Valley Canal
+which delivers up to 36 cfs of water to the Drum Canal.
+
+Spaulding No. 1 Powerhouse is located downstream of Lake Spaulding and discharges, along with the
+Spaulding No. 1 Powerhouse Bypass, up to 840 cfs into Drum Canal (part of the Drum No. 1 and
+No. 2 Development).
+
+The Nevada Diversion transfers up to 80 cfs via pipe and natural channel from
+the Drum Canal to the South Yuba Canal when Spaulding No. 2 Powerhouse is out of service
+primarily to transfer water to NID (via Deer Creek Powerhouse) and to make PG&E’s minimum
+streamflow release in the Bear River via YB-244.
+
+USGS gage 11414170 (YB-28) Drum Canal Tunnel Outlet near Emigrant Gap, measures flow in Drum Canal.
+gage YB-137 Bear River Waste Gate on Drum Canal measures flow out of Bear River Waste Gate from Drum Canal to Bear River.
+*/
+
+! Penalize wasteway releases so only made if required to meet minimum flows or maximum canal flow limits
+goal setD_DRM001_BRR074 {lhs D_DRM001_BRR074 rhs 0. lhs>rhs penalty 5. lhs<rhs penalty 0}
+
+! Set Nevada Diversion to zero
+goal setD_DRM001_SYC002 {D_DRM001_SYC002 = 0.}
+
+! Assume 1% canal loss
+! Use C_DRM000 otherwise canal loss influences discharge through wastegate to Bear River
+goal setD_DRM007_DRMLOS {D_DRM008_DRMLOS = 0.01*C_DRM000 + 0.01*C_LVC001}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Lower Boardman Canal Diversion     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/* In Bear River Model this diversion is equal to D290 less R291
+
+The Alta Development includes Towle Diversion, Towle Canal Diversion Dam, Towle Canal,
+Alta Forebay, and Alta Powerhouse. Towle Canal diverts water (up to 42 cfs) from Canyon
+Creek (primarily consisting of deliveries from Drum Forebay into Canyon Creek upstream via
+Towle Diversion) to Alta Forebay. Alta Forebay is operated as a re-regulating reservoir,
+regulating flow into Alta Powerhouse. Alta Powerhouse is located below Alta Forebay,
+northeast of Alta. The water that discharges from Alta Powerhouse enters into the
+Alta Powerhouse tailrace area where most of it is immediately re-diverted into PCWA’s Lower
+Boardman Canal for downstream consumptive water demands.
+
+Historically, PCWA water demand in the Lower Boardman Canal has ranged from a low of 2 cfs to a
+maximum of 22 cfs. With the exception of a few weeks during the spring runoff period, Alta Powerhouse
+is operated to meet PCWA’s demand downstream.
+
+Deliveries at this location are recorded by YB-197, located at the head of PCWA’s Lower
+Boardman Canal below Alta Powerhouse Tailrace. Water is supplied from Alta Powerhouse and
+natural runoff from the Little Bear River above the tailrace. The historical annual delivery
+volume at this delivery point ranges from 7,000 to 10,000 acre-feet, although PCWA has a
+contractual right to request up to 25,000 acre-feet at this location.
+
+Gage YB-184 measures flow in Lower Boardman Canal below Alta Powerhouse.
+
+Assume the following demand based on PCWA 2001-2009 delivery data
+(source: "YBDS water delivery historical and projected summary 2001-2009 JG 031111.xls"
+Drum Spaulding FERC Project No. 2310-173, Final License Application)
+
+Oct	1.304
+Nov	0.936
+Dec	0.494
+Jan	0.412
+Feb	0.311
+Mar	0.290
+Apr	0.373
+May	0.721
+Jun	1.024
+Jul	1.335
+Aug	1.283
+Sep	1.176
+
+Assume 12 percent canal losses (Drum Spaulding FERC Project No. 2310-173, Final License Application)
+*/
+
+goal setD_CYN009_TWL005 	{D_CYN009_TWL005 = D_DRM009_CYN010 }
+goal setD_LBR002_LBC002 	{D_LBR002_LBC001 = D_CYN009_TWL005}
+goal setD_LBC001_LBCLOS	{D_LBC001_LBCLOS = 0.12 * D_LBR002_LBC001}
+
+! Impose penalty on C_LBC010 to limit excess diversion from Drum Canal to Lower Boardman Canal
+!goal setC_LBC010 {lhs C_LBC010 rhs 0. lhs<rhs penalty 0 lhs>rhs penalty 5}
+goal setC_LBC010 {C_LBC010= 0.0}
+
+! Set flow in Bowman Feeder to zero
+goal set_D_LBC030_BEC021	{D_LBC030_BEC021 = 0.}
+
+! Discourage flow in Ragsdale Tunnel other than to meet Auburn WTP demand
+!goal setD_BEC021_LBC032 {lhs D_BEC021_LBC032 rhs 0. lhs<rhs penalty 0 lhs>rhs penalty 1}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Lake Valley Canal Diversion              !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/*
+Licensee will also increase Minimum Streamflows at Rucker Creek below Rucker Lake (increase
+Minimum Streamflow from 0.2 cfs to 0.3 cfs and increase Target Streamflows from 0.50 cfs to
+0.75 cfs) and at the North Fork of the North Fork American River below Lake Valley Reservoir
+Dam (increase Minimum Streamflows from 1 cfs to 3 cfs from June through September in all
+water year types, maintain existing Minimum Streamflows of 1 cfs from October through May in
+all water year types). Licensee will increase the Target Streamflows at Rucker Creek below Blue
+Lake from 0.50 cfs to 0.75 cfs.
+
+Currently pre-operated.
+Recalculate inflow to Lake Valley reservoir
+Impose Minimum flows
+Divert all released water other than min flow
+*/
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Bear River Canal                               !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/*The Halsey Development includes the Bear River Canal Diversion Dam, Bear River Canal,
+Halsey Forebay, Halsey Powerhouse Penstock, and the Halsey Powerhouse. Bear River Canal
+diverts up to 470 cfs from the Bear River to Halsey Forebay. Water diverted at Bear River Canal
+Diversion Dam consists of Yuba-Bear Hydroelectric Project water and Drum-Spaulding Project
+water.
+
+USGS gage 11422000 (YB-50) Bear River Canal near Colfax measures flow in the Bear River Canal
+above Halsey Forebay
+
+PCWA buys water from the Bear River Canal at
+
+	YB-87 – Bowman Diversion Canal at Halsey Forebay
+	YB-56 – Ragsdale Diversion
+
+Assume the following demand based on PCWA 2001-2009 delivery data 
+(source: "YBDS water delivery historical and projected summary 2001-2009 JG 031111.xls"
+Drum Spaulding FERC Project No. 2310-173, Final License Application)
+
+Oct	1.156
+Nov	0.729
+Dec	0.682
+Jan	0.642
+Feb	0.536
+Mar	0.657
+Apr	0.837
+May	1.291
+Jun	1.552
+Jul	1.774
+Aug	1.762
+Sep	1.580
+
+For the period Oct 1999 - Sep 2004: YB-87 57% of YB-87 + YB-56
+
+Additional 6.9 percent loss on PCWA deliveries
+
+*/
+goal setD_BEC021_BECLOS	{D_BEC021_BECLOS = 0.07 * D_BRR050_BEC000}
+goal setD_BEC022_WTPBWM	{D_BEC022_WTPBWM = 0.57 * D_BEC022_WTPBWM + 0.57 * D_LBC038_WTPAUB}
+
+! Impose diversion limits on Bear River Canal as Drum Spaulding FERC Project No. 2310-173, Final License Application
+define D_BRR050_BEC000_Max {
+	case JanMar 	{condition month >= JAN .and. month <= MAR value 400.}
+	case AprSep 	{condition month >= APR .and. month <= SEP value 450.}
+	case Oct 		{condition month == OCT value 290.}
+	case Nov 	{condition month == NOV value 235.}
+  	case Dec 		{condition always value 435. } }
+
+goal setD_BRR050_BEC000 {D_BRR050_BEC000 < D_BRR050_BEC000_max}
+
+!Impose constraint so that flows through Ragsdale Tunnel are limited to supply to City of Auburn supply
+goal setD_BEC021_LBC032	{D_BEC021_LBC032 < D_LBC038_WTPAUB}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Wise Canal                               !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/*
+The Wise Development includes Halsey Afterbay, Rock Creek Reservoir, Wise Canal, Wise
+Forebay, Wise Powerhouse Penstock, Wise Powerhouse, and one distribution interconnection.
+Halsey Afterbay is operated as a re-regulating reservoir diverting flows in Dry Creek and from
+Halsey Powerhouse into Wise Canal. During periods of extreme high flow in Dry Creek, water
+is occasionally spilled into the downstream reach. Upper Wise Canal diverts up to 488 cfs to
+Rock Creek Reservoir, also operated as a re-regulating reservoir. Rock Creek Reservoir diverts
+flows in Rock Creek and Upper Wise Canal into the Lower Wise Canal which continues to Wise
+Forebay. During periods of high flow in Rock Creek, water is occasionally spilled into the
+downstream reach. Spills into Auburn Ravine occur below Wise Powerhouse and Wise No. 2
+Powerhouse due to 1) capacity differences between the powerhouses and South Canal, and
+2) water deliveries to NID and PCWA.
+
+Assume 7 percent canal losses (Drum Spaulding FERC Project No. 2310-173, Final License Application)
+
+PCWA buys water at YB-69 from the Upper Wise Canal and from YB-73 from the lower Wise Canal.
+
+	YB-69 – Middle Fiddler Green Canal below Ophir Pipe
+	YB-73 – Fiddler Green Canal below Wise Forebay
+
+CalSim 3.0 aggregates these at the diversion upstream of Rock Creek Reservoir.
+
+YB-69 diversions:
+Oct	1.433
+Nov	0.962
+Dec	0.880
+Jan	0.766
+Feb	0.602
+Mar	0.687
+Apr	1.015
+May	1.522
+Jun	1.724
+Jul	1.850
+Aug	1.849
+Sep	1.804
+
+YB-73 diversions:
+Oct	0.500
+Nov	0.325
+Dec	0.191
+Jan	0.174
+Feb	0.157
+Mar	0.235
+Apr	0.278
+May	0.443
+Jun	0.531
+Jul	0.596
+Aug	0.584
+Sep	0.532
+
+
+NID purchases water from the Wise Canal at the following locations:
+	YB-64 – Ophir Canal at Lower End Fiddler Green Siphon
+	YB-86 – NID Delivery below Rock Creek Reservoir
+	YB-108 – Edgewood Canal at Flume #1 below Fiddler Green
+	YB-255 – Rock Creek Delivery to NID
+
+Oct	0.606
+Nov	0.263
+Dec	0.296
+Jan	0.243
+Feb	0.203
+Mar	0.462
+Apr	0.618
+May	0.920
+Jun	1.198
+Jul	1.422
+Aug	1.514
+Sep	1.298
+*/
+
+!No additional conveyance loss for Wise Canal
+! Build conveyance loss into demand unit
+
+! Pre-operate deliveries to PCWA from Wise Canal
+define D_WSE003_PCWA_SV 		{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'}
+goal setD_WSE003_LBC040		{lhs D_WSE003_LBC040 rhs D_WSE003_PCWA_SV lhs<rhs penalty 9999 lhs>rhs penalty 9999}
+
+! Pre-operate deliveries to NID from Wise Canal
+define D_WSE004_NID_SV 		{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'}
+goal setD_WSE004_24_NA1_SV	{lhs D_WSE004_24_NA1 + D_WSE004_24_NU3 rhs D_WSE004_NID_SV lhs<rhs penalty 9999 lhs>rhs penalty 9999}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! South Canal                             !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+/*
+The Newcastle Development includes the South Canal, Newcastle Powerhouse Header Box,
+Newcastle Penstock, and Newcastle Powerhouse. The South Canal currently
+diverts up to 375 cfs from the two Wise powerhouses to Newcastle Powerhouse. The 
+South Canal is comprised of open ditch, flume, and tunnel sections, and traverses over (or under
+in the event of a tunnel crossing) the Dutch, Secret, and Miners ravine watersheds, respectively.
+No water (outside of minimal leakage) is released or spilled from South Canal into these
+drainages; see Exhibit E, Section 5 for a detailed schematic of this region. South Canal flows are
+delivered to the Newcastle Penstock, a pipe with steel and concrete sections and a capacity of
+392 cfs, via the Newcastle Powerhouse Header Box. The header box delivers a minimum
+instream flow, as well as periodic spills, from the South Canal into Mormon Ravine.
+
+PCWA buys water at yhe following locations from the South Canal.
+	YB-76 – Dutch Ravine Diversion from South Canal
+	YB-91 – Greely Canal below South Canal
+	YB-136 – Delivery - South Canal at Tunnel #11
+	YB-278 – South Canal Diversion to Foothill Water Treatment Plant
+	YB-78 – South Canal Diversion to the Lower Boardman Canal
+
+Oct	3.363
+Nov	1.431
+Dec	2.191
+Jan	2.133
+Feb	1.970
+Mar	2.558
+Apr	4.255
+May	7.451
+Jun	8.803
+Jul	9.737
+Aug	9.693
+Sep	8.559
+
+NID buys water at YB-132 and YB-259 from the South Canal which are delivered via the Auburn Ravine
+	YB-132 – South Canal Delivery to NID at Auburn Ravine
+	YB-259 – Wise Powerhouse Tailrace Delivery to NID
+	
+Oct	1.501
+Nov	0.000
+Dec	0.000
+Jan	0.000
+Feb	0.000
+Mar	0.000
+Apr	4.097
+May	5.057
+Jun	5.287
+Jul	8.402
+Aug	6.752
+Sep	3.278
+*/
+
+! Code for Auburn Ravine Spills
+define D_STH000_ABN027_NID 	{std kind 'DIVERSION' units 'CFS'}
+define D_STH000_ABN027_PCWA 	{std kind 'DIVERSION' units 'CFS'}
+define D_STH000_ABN027_SPILL 	{std kind 'DIVERSION' units 'CFS'}
+
+goal totalD_STH000_ABN027		{D_STH000_ABN027 = D_STH000_ABN027_NID + D_STH000_ABN027_PCWA + D_STH000_ABN027_SPILL}
+goal setD_ABN024_24_NA1		{D_ABN024_24_NA1 + D_ABN024_23_NA = D_STH000_ABN027_NID}! Deliveries to NID plus sales to SSWD
+goal setD_ABN010_24_NA2		{D_ABN010_24_NA2 = D_STH000_ABN027_PCWA + C_ABT002} ! Deliveries to PCWA Zone 5
+
+! Pre-operate deliveries from South Canal to NID via Auburn Ravine 
+define D_STH000_ABN027_NID_SV 	{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'}
+goal setD_STH000_ABN027 			{lhs D_STH000_ABN027_NID rhs D_STH000_ABN027_NID_SV lhs<rhs penalty 9999 lhs>rhs penalty 9999}
+
+! Pre-operate deliveries from South Canal to PCWA Zone 5 via Auburn Ravine and to Zone 1
+! Currently, only aggregate known
+! Greater weight placed on Zone 1 deliveries
+define D_STH000_ABN027_PCWA_SV 	{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'} !Currently set to zero
+define D_STH004_PCWA_SV 			{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'} !Currently includes deliveries to Zone 1 and Zone 5
+goal setD_STH000_ABN027_PCWA		{lhs D_STH000_ABN027_PCWA + D_STH004_24_NA3 + D_STH004_WTPFSS - D_ABT002_STH001
+								 rhs D_STH000_ABN027_PCWA_SV + D_STH004_PCWA_SV lhs<rhs penalty 9999 lhs>rhs penalty 9999}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Rollins Reservoir                              !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Bear River Canal Diversion Dam Reach  !!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+/*The Bear River Canal Diversion Dam Reach is located on the Bear River, is 10.4 miles long, and
+extends from the Bear River Canal Diversion Dam to the normal high-water elevation of NID
+Combie Reservoir. Minimum streamflow requirements in this reach range from 15 cfs to 75 cfs,
+depending on the season and year type, and are required under Article 33 of the NID Yuba-Bear
+Hydroelectric Project existing FERC license.
+*/
+
+/*
+During normal or above-normal water year types, the minimum streamflow requirement is 75 cfs from
+May through October, and 20 cfs November through April.
+*/
+
+/*
+In below-normal water years, the minimum streamflow requirement is 40 cfs
+from May through October, and 15 cfs from November through April.
+*/
+
+/* PG&E Bear River Diversion Dam facility is immediately downstream of NID Yuba-Bear Hydroelectric Project
+Rollins Reservoir. Operation of Rollins Reservoir and Licensee’s Bear River Canal Diversion
+Dam are coordinated, and Licensee diverts a portion of the flows released by NID. PG&E
+generally bypasses NID’s minimum required streamflows from June through November or
+December. This reach also receives spill from NID’s Rollins Reservoir in most years; NID’s
+Rollins Reservoir spilled in 24 out of 33 years within the Period of Record, for periods ranging
+from 3 to 6 months. Portions of the spills from Rollins Reservoir may be diverted into the Bear
+River Canal (maximum capacity approximately 470 cfs) by the Licensee, but Licensee generally
+does not have canal capacity to divert the full volume of spills during the winter and spring
+months, from January through May or June.
+Flows in this reach are measured by USGS gage 11421900 (YB-196). The Period of Record has
+a complete data set at this location. For the Period of Record the annual 90 percent exceedance
+flow was 22.0 cfs, the 50 percent exceedance flow was 141.0 cfs, and the 10 percent exceedance
+flow was 944.0 cfs. Flows in the Bear River in the Bear River Canal Diversion Dam Reach are
+composed partly of water imported from other watersheds via the Drum Canal; therefore, under
+regulated conditions, the annual volume of water that flows through this reach may be greater
+than it would be under unimpaired conditions.
+*/
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Lake Combie and Combie Canal        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+/*
+Diversions from Combie Reservoir are diverted to the Combie Phase I, II, and III systems which are north of the Bear River,
+diverted to Magnolia Reservoir which is also north of the Bear River,
+and diverted to the Combie-Ophir system which is south of the Bear River and is the only part represented in CalSim 3.0
+
+The average monthly diversions 10/99 - 09/09 from Lake Combie (gage BR-301) are as follows:
+
+Oct	5.35 
+Nov	2.46 
+Dec	2.12 
+Jan	2.63 
+Feb	2.38 
+Mar	 2.85 
+Apr	4.65 
+May	6.83 
+Jun	7.66 
+Jul	8.42 
+Aug	 8.34 
+Sep	7.38 
+
+The average monthly diversions 10/99 - 09/09 fto Combie-Ophir System (gage BR-313) are as follows:
+
+Oct 	3.68 
+Nov 	1.89 
+Dec 	1.53 
+Jan 	1.61 						       
+Feb 	1.55 
+Mar 	1.76 
+Apr 	2.99 
+May  4.51 
+Jun 	5.08 
+Jul 	5.63 
+Aug 	5.53 
+Sep 	4.84 
+*/
+
+! Pre-operate deliveries from Lake Combie
+define D_CMBIE_CBC000_SV 	{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'}
+define C_CBC000_SV 		{timeseries kind 'CHANNEL' units 'TAF' convert 'CFS'}
+
+!goal setD_CMBIE_CBC000 	{lhs D_CMBIE_CBC000 rhs D_CMBIE_CBC000_SV lhs<rhs penalty 9999 lhs>rhs penalty 50000}
+!goal setC_CBC000 			{lhs C_CBC000 rhs C_CBC000_SV lhs<rhs penalty 9999 lhs>rhs penalty 10000}
+goal setD_CBC000_NIDDC	{D_CBC000_NIDDC < D_CMBIE_CBC000_SV - C_CBC000_SV}
+goal setD_CBC001_CCK036	{D_CBC001_CCK036 = 0.0 * C_CBC000} !Fix spill if diversions from Combie Canal are not pre-operated
+
+! Limit releases from Combie Reservoir to flood releases - not releases for downstream water supply
+goal setC_CMBIE{lhs C_CMBIE rhs C_CMBIE_MIF 	lhs>rhs penalty 9999 lhs<rhs penalty 0}
+
+! Raw Water Master Plan Update, NID, 2005. assumes 15% conveyance loss
+goal setD_CBC001_CBCLOS	{D_CBC001_CBCLOS = 0.15 * C_CBC000}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Camp Far West Reservoir    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!	
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/*
+Limit releases from Camp Far West Reservoir and Dam to flood releases, and releases for 
+Camp Far West ID and South Sutter WD, not releases for demand downstream of Wheatland gage
+*/
+goal setC_BRR017 {lhs C_BRR017 rhs C_BRR017_MIF lhs>rhs penalty 9999 lhs<rhs penalty 0}

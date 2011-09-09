@@ -1,0 +1,456 @@
+/*
+File Name: constraints-seepage_cycle7.wresl
+CalSim 3.0 System File
+
+Purpose:
+
+Naming takes the following form:
+
+positive seepage = gaining stream
+negative seepage = loosing stream
+
+*/
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Folsom South Canal  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+define FSC_Losses       {timeseries kind 'SEEPAGE'  units 'TAF' convert 'CFS'}  !Seepage losses for Folsom South Canal
+goal setSG_FSC003       {SG_FSC003 < -FSC_Losses}
+
+INCLUDE '..\..\CVGroundwater\SaveHeads_Stages.wresl'
+
+goal setFOLSM_389  { SG_FOLSM_389  =  SG_FOLSM_389[delta2]    }
+goal setNTOMA_385  { SG_NTOMA_385  =  SG_NTOMA_385[delta2]    }
+goal setAMR020_384 { SG_AMR020_384 =  SG_AMR020_384[delta2]    }
+goal setAMR015_380 { SG_AMR015_380 =  SG_AMR015_380[delta2]    }
+goal setAMR009_375 { SG_AMR009_375 =  SG_AMR009_375[delta2]    }
+goal setAMR004_374 { SG_AMR004_374 =  SG_AMR004_374[delta2]    }
+goal setANT010_073 { SG_ANT010_073 =  SG_ANT010_073[delta2]    }
+goal setBTL006_038 { SG_BTL006_038 =  SG_BTL006_038[delta2]    }
+goal setBRR017_333 { SG_BRR017_333 =  SG_BRR017_333[delta2]    }
+goal setBRR011_332 { SG_BRR011_332 =  SG_BRR011_332[delta2]    }
+goal setBRR004_331 { SG_BRR004_331 =  SG_BRR004_331[delta2]    }
+goal setBCC012_132 { SG_BCC012_132 =  SG_BCC012_132[delta2]    }
+goal setBCC006_131 { SG_BCC006_131 =  SG_BCC006_131[delta2]    }
+goal setBCC004_130 { SG_BCC004_130 =  SG_BCC004_130[delta2]    }
+goal setBTC043_143 { SG_BTC043_143 =  SG_BTC043_143[delta2]    }
+goal setBTC036_147 { SG_BTC036_147 =  SG_BTC036_147[delta2]    }
+goal setBTC032_157 { SG_BTC032_157 =  SG_BTC032_157[delta2]    }
+goal setBTC029_173 { SG_BTC029_173 =  SG_BTC029_173[delta2]    }
+goal setBTC024_188 { SG_BTC024_188 =  SG_BTC024_188[delta2]    }
+goal setBTC018_204 { SG_BTC018_204 =  SG_BTC018_204[delta2]    }
+goal setBTC012_223 { SG_BTC012_223 =  SG_BTC012_223[delta2]    }
+goal setBTC007_242 { SG_BTC007_242 =  SG_BTC007_242[delta2]    }
+goal setBTC003_255 { SG_BTC003_255 =  SG_BTC003_255[delta2]    }
+goal setBSL001_263 { SG_BSL001_263 =  SG_BSL001_263[delta2]    }
+goal setCCH030_335 { SG_CCH030_335 =  SG_CCH030_335[delta2]    }
+goal setCCH023_336 { SG_CCH023_336 =  SG_CCH023_336[delta2]    }
+goal setCCH017_347 { SG_CCH017_347 =  SG_CCH017_347[delta2]    }
+goal setCCH012_348 { SG_CCH012_348 =  SG_CCH012_348[delta2]    }
+goal setCCH006_358 { SG_CCH006_358 =  SG_CCH006_358[delta2]    }
+goal setCCH003_359 { SG_CCH003_359 =  SG_CCH003_359[delta2]    }
+goal setCCH030_FNLdv { SG_CCH030_335 =  SG_CCH030_335[delta2]    }
+goal setCCH023_FNLdv { SG_CCH023_336 =  SG_CCH023_336[delta2]    }
+goal setCCH017_FNLdv { SG_CCH017_347 =  SG_CCH017_347[delta2]    }
+goal setCCH012_FNLdv { SG_CCH012_348 =  SG_CCH012_348[delta2]    }
+goal setCCH006_FNLdv { SG_CCH006_358 =  SG_CCH006_358[delta2]    }
+goal setCCH003_FNLdv { SG_CCH003_359 =  SG_CCH003_359[delta2]    }
+goal setCBD049_220 { SG_CBD049_220 =  SG_CBD049_220[delta2]    }
+goal setCBD044_239 { SG_CBD044_239 =  SG_CBD044_239[delta2]    }
+goal setCBD041_253 { SG_CBD041_253 =  SG_CBD041_253[delta2]    }
+goal setCBD037_260 { SG_CBD037_260 =  SG_CBD037_260[delta2]    }
+goal setCBD031_268 { SG_CBD031_268 =  SG_CBD031_268[delta2]    }
+goal setCBD028_275 { SG_CBD028_275 =  SG_CBD028_275[delta2]    }
+goal setCBD023_289 { SG_CBD023_289 =  SG_CBD023_289[delta2]    }
+goal setCBD018_302 { SG_CBD018_302 =  SG_CBD018_302[delta2]    }
+goal setCBD012_314 { SG_CBD012_314 =  SG_CBD012_314[delta2]    }
+goal setCBD005_326 { SG_CBD005_326 =  SG_CBD005_326[delta2]    }
+goal setCWD004_036 { SG_CWD004_036 =  SG_CWD004_036[delta2]    }
+goal setCOW014_012 { SG_COW014_012 =  SG_COW014_012[delta2]    }
+goal setCOW007_011 { SG_COW007_011 =  SG_COW007_011[delta2]    }
+goal setCOW003_017 { SG_COW003_017 =  SG_COW003_017[delta2]    }
+goal setDRC010_096 { SG_DRC010_096 =  SG_DRC010_096[delta2]    }
+goal setDRC006_100 { SG_DRC006_100 =  SG_DRC006_100[delta2]    }
+goal setELD027_081 { SG_ELD027_081 =  SG_ELD027_081[delta2]    }
+goal setELD022_082 { SG_ELD022_082 =  SG_ELD022_082[delta2]    }
+goal setELD017_083 { SG_ELD017_083 =  SG_ELD017_083[delta2]    }
+goal setELD012_084 { SG_ELD012_084 =  SG_ELD012_084[delta2]    }
+goal setELD005_085 { SG_ELD005_085 =  SG_ELD005_085[delta2]    }
+goal setFSC003     { SG_FSC003     =  SG_FSC003[delta2]        }
+goal setFTR068_162 { SG_FTR068_162 =  SG_FTR068_162[delta2]    }
+goal setFTR063_161 { SG_FTR063_161 =  SG_FTR063_161[delta2]    }
+goal setFTR059_177 { SG_FTR059_177 =  SG_FTR059_177[delta2]    }
+goal setFTR053_192 { SG_FTR053_192 =  SG_FTR053_192[delta2]    }
+goal setFTR048_208 { SG_FTR048_208 =  SG_FTR048_208[delta2]    }
+goal setFTR045_232 { SG_FTR045_232 =  SG_FTR045_232[delta2]    }
+goal setFTR036_246 { SG_FTR036_246 =  SG_FTR036_246[delta2]    }
+goal setFTR029_283 { SG_FTR029_283 =  SG_FTR029_283[delta2]    }
+goal setFTR025_295 { SG_FTR025_295 =  SG_FTR025_295[delta2]    }
+goal setFTR021_307 { SG_FTR021_307 =  SG_FTR021_307[delta2]    }
+goal setFTR016_318 { SG_FTR016_318 =  SG_FTR016_318[delta2]    }
+goal setFTR012_330 { SG_FTR012_330 =  SG_FTR012_330[delta2]    }
+goal setFTR008_329 { SG_FTR008_329 =  SG_FTR008_329[delta2]    }
+goal setFTR003_340 { SG_FTR003_340 =  SG_FTR003_340[delta2]    }
+goal setGCC010_139 { SG_GCC010_139 =  SG_GCC010_139[delta2]    }
+goal setGCC015_154 { SG_GCC015_154 =  SG_GCC015_154[delta2]    }
+goal setGCC022_169 { SG_GCC022_169 =  SG_GCC022_169[delta2]    }
+goal setGCC027_183 { SG_GCC027_183 =  SG_GCC027_183[delta2]    }
+goal setGCC032_198 { SG_GCC032_198 =  SG_GCC032_198[delta2]    }
+goal setGCC036_211 { SG_GCC036_211 =  SG_GCC036_211[delta2]    }
+goal setGCC039_216 { SG_GCC039_216 =  SG_GCC039_216[delta2]    }
+goal setGCC042_227 { SG_GCC042_227 =  SG_GCC042_227[delta2]    }
+goal setGCC046_236 { SG_GCC046_236 =  SG_GCC046_236[delta2]    }
+goal setGCC050_250 { SG_GCC050_250 =  SG_GCC050_250[delta2]    }
+goal setGCC056_258 { SG_GCC056_258 =  SG_GCC056_258[delta2]    }
+goal setGCC060_266 { SG_GCC060_266 =  SG_GCC060_266[delta2]    }
+goal setGCC065_267 { SG_GCC065_267 =  SG_GCC065_267[delta2]    }
+goal setMLC006_088 { SG_MLC006_088 =  SG_MLC006_088[delta2]    }
+goal setMLC004_087 { SG_MLC004_087 =  SG_MLC004_087[delta2]    }
+goal setPYN001_046 { SG_PYN001_046 =  SG_PYN001_046[delta2]    }
+goal setPTH024_428 { SG_PTH024_428 =  SG_PTH024_428[delta2]    }
+goal setPTH020_410 { SG_PTH020_410 =  SG_PTH020_410[delta2]    }
+goal setPTH015_411 { SG_PTH015_411 =  SG_PTH015_411[delta2]    }
+goal setPTH011_412 { SG_PTH011_412 =  SG_PTH011_412[delta2]    }
+goal setPTH007_413 { SG_PTH007_413 =  SG_PTH007_413[delta2]    }
+goal setSAC296_001 { SG_SAC296_001 =  SG_SAC296_001[delta2]     }
+goal setSAC294_005 { SG_SAC294_005 =  SG_SAC294_005[delta2]    }
+goal setSAC289_009 { SG_SAC289_009 =  SG_SAC289_009[delta2]    }
+goal setSAC287_015 { SG_SAC287_015 =  SG_SAC287_015[delta2]    }
+goal setSAC281_022 { SG_SAC281_022 =  SG_SAC281_022[delta2]    }
+goal setSAC277_023 { SG_SAC277_023 =  SG_SAC277_023[delta2]    }
+goal setSAC275_029 { SG_SAC275_029 =  SG_SAC275_029[delta2]    }
+goal setSAC269_037 { SG_SAC269_037 =  SG_SAC269_037[delta2]    }
+goal setSAC265_045 { SG_SAC265_045 =  SG_SAC265_045[delta2]    }
+goal setSAC259_056 { SG_SAC259_056 =  SG_SAC259_056[delta2]    }
+goal setSAC254_055 { SG_SAC254_055 =  SG_SAC254_055[delta2]    }
+goal setSAC250_067 { SG_SAC250_067 =  SG_SAC250_067[delta2]    }
+goal setSAC247_068 { SG_SAC247_068 =  SG_SAC247_068[delta2]    }
+goal setSAC240_072 { SG_SAC240_072 =  SG_SAC240_072[delta2]    }
+goal setSAC232_079 { SG_SAC232_079 =  SG_SAC232_079[delta2]    }
+goal setSAC228_086 { SG_SAC228_086 =  SG_SAC228_086[delta2]    }
+goal setSAC224_094 { SG_SAC224_094 =  SG_SAC224_094[delta2]    }
+goal setSAC218_099 { SG_SAC218_099 =  SG_SAC218_099[delta2]    }
+goal setSAC214_105 { SG_SAC214_105 =  SG_SAC214_105[delta2]    }
+goal setSAC207_113 { SG_SAC207_113 =  SG_SAC207_113[delta2]    }
+goal setSAC196_129 { SG_SAC196_129 =  SG_SAC196_129[delta2]    }
+goal setSAC193_140 { SG_SAC193_140 =  SG_SAC193_140[delta2]    }
+goal setSAC185_144 { SG_SAC185_144 =  SG_SAC185_144[delta2]    }
+goal setSAC182_155 { SG_SAC182_155 =  SG_SAC182_155[delta2]    }
+goal setSAC178_171 { SG_SAC178_171 =  SG_SAC178_171[delta2]    }
+goal setSAC174_186 { SG_SAC174_186 =  SG_SAC174_186[delta2]    }
+goal setSAC168_202 { SG_SAC168_202 =  SG_SAC168_202[delta2]    }
+goal setSAC162_221 { SG_SAC162_221 =  SG_SAC162_221[delta2]    }
+goal setSAC154_240 { SG_SAC154_240 =  SG_SAC154_240[delta2]    }
+goal setSAC148_254 { SG_SAC148_254 =  SG_SAC148_254[delta2]    }
+goal setSAC141_262 { SG_SAC141_262 =  SG_SAC141_262[delta2]    }
+goal setSAC134_269 { SG_SAC134_269 =  SG_SAC134_269[delta2]    }
+goal setSAC129_277 { SG_SAC129_277 =  SG_SAC129_277[delta2]    }
+goal setSAC122_291 { SG_SAC122_291 =  SG_SAC122_291[delta2]    }
+goal setSAC115_303 { SG_SAC115_303 =  SG_SAC115_303[delta2]    }
+goal setSAC106_315 { SG_SAC106_315 =  SG_SAC106_315[delta2]    }
+goal setSAC097_327 { SG_SAC097_327 =  SG_SAC097_327[delta2]    }
+goal setSAC093_339 { SG_SAC093_339 =  SG_SAC093_339[delta2]    }
+goal setSAC085_349 { SG_SAC085_349 =  SG_SAC085_349[delta2]    }
+goal setSAC083_350 { SG_SAC083_350 =  SG_SAC083_350[delta2]    }
+goal setSAC082_351 { SG_SAC082_351 =  SG_SAC082_351[delta2]    }
+goal setSAC081_363 { SG_SAC081_363 =  SG_SAC081_363[delta2]    }
+goal setSAC078_362 { SG_SAC078_362 =  SG_SAC078_362[delta2]    }
+goal setSAC075_361 { SG_SAC075_361 =  SG_SAC075_361[delta2]    }
+goal setSAC066_372 { SG_SAC066_372 =  SG_SAC066_372[delta2]    }
+goal setSAC063_373 { SG_SAC063_373 =  SG_SAC063_373[delta2]    }
+goal setSAC057_416 { SG_SAC057_416 =  SG_SAC057_416[delta2]    }
+goal setSAC053_435 { SG_SAC053_435 =  SG_SAC053_435[delta2]    }
+goal setSAC048_451 { SG_SAC048_451 =  SG_SAC048_451[delta2]    }
+goal setSAC041_463 { SG_SAC041_463 =  SG_SAC041_463[delta2]    }
+goal setSAC036_475 { SG_SAC036_475 =  SG_SAC036_475[delta2]    }
+goal setSAC030_476 { SG_SAC030_476 =  SG_SAC030_476[delta2]    }
+goal setSAC022_493 { SG_SAC022_493 =  SG_SAC022_493[delta2]    }
+goal setSAC017_492 { SG_SAC017_492 =  SG_SAC017_492[delta2]    }
+goal setSAC011_527 { SG_SAC011_527 =  SG_SAC011_527[delta2]    }
+goal setSAC007_526 { SG_SAC007_526 =  SG_SAC007_526[delta2]    }
+goal setSAC003_525 { SG_SAC003_525 =  SG_SAC003_525[delta2]    }
+goal setSAC000_531 { SG_SAC000_531 =  SG_SAC000_531[delta2]    }
+goal setSTN026_124 { SG_STN026_124 =  SG_STN026_124[delta2]    }
+goal setSTN021_125 { SG_STN021_125 =  SG_STN021_125[delta2]    }
+goal setSTN014_126 { SG_STN014_126 =  SG_STN014_126[delta2]    }
+goal setSTN009_127 { SG_STN009_127 =  SG_STN009_127[delta2]    }
+goal setSTN004_128 { SG_STN004_128 =  SG_STN004_128[delta2]    }
+goal setSBP031_270 { SG_SBP031_270 =  SG_SBP031_270[delta2]    }
+goal setSBP028_278 { SG_SBP028_278 =  SG_SBP028_278[delta2]    }
+goal setSBP024_281 { SG_SBP024_281 =  SG_SBP024_281[delta2]    }
+goal setSBP021_293 { SG_SBP021_293 =  SG_SBP021_293[delta2]    }
+goal setSBP018_305 { SG_SBP018_305 =  SG_SBP018_305[delta2]    }
+goal setSBP014_317 { SG_SBP014_317 =  SG_SBP014_317[delta2]    }
+goal setTHM026_108 { SG_THM026_108 =  SG_THM026_108[delta2]    }
+goal setTHM021_101 { SG_THM021_101 =  SG_THM021_101[delta2]    }
+goal setTHM017_091 { SG_THM017_091 =  SG_THM017_091[delta2]    }
+goal setTHM012_092 { SG_THM012_092 =  SG_THM012_092[delta2]    }
+goal setTHM005_093 { SG_THM005_093 =  SG_THM005_093[delta2]    }
+goal setYBP032_360 { SG_YBP032_360 =  SG_YBP032_360[delta2]    }
+goal setYBP026_401 { SG_YBP026_401 =  SG_YBP026_401[delta2]    }
+goal setYBP023_407 { SG_YBP023_407 =  SG_YBP023_407[delta2]    }
+goal setYBP020_414 { SG_YBP020_414 =  SG_YBP020_414[delta2]    }
+goal setYBP016_433 { SG_YBP016_433 =  SG_YBP016_433[delta2]    }
+goal setYBP014_432 { SG_YBP014_432 =  SG_YBP014_432[delta2]    }
+goal setYBP011_448 { SG_YBP011_448 =  SG_YBP011_448[delta2]    }
+goal setYBP007_460 { SG_YBP007_460 =  SG_YBP007_460[delta2]    }
+goal setYBP002_473 { SG_YBP002_473 =  SG_YBP002_473[delta2]    }
+goal setYUB011_285 { SG_YUB011_285 =  SG_YUB011_285[delta2]    }
+goal setYUB006_284 { SG_YUB006_284 =  SG_YUB006_284[delta2]    }
+
+! Calculate total seepage per river reach
+goal setSG_AMR_Total {SG_AMR_Total = SG_FOLSM_389 + SG_NTOMA_385 + SG_AMR020_384 + SG_AMR015_380 + SG_AMR009_375 + SG_AMR004_374}      
+goal setSG_ANT_Total {SG_ANT_Total = SG_ANT010_073}     
+goal setSG_BTL_Total {SG_BTL_Total = SG_BTL006_038}   
+goal setSG_BRR_Total {SG_BRR_Total = /*SG_BRR018_334 +*/ SG_BRR017_333 + SG_BRR011_332 + SG_BRR004_331}     
+goal setSG_BCC_Total {SG_BCC_Total = SG_BCC012_132 + SG_BCC006_131 + SG_BCC004_130}     
+goal setSG_BTC_Total {SG_BTC_Total = SG_BTC043_143 + SG_BTC036_147 + SG_BTC032_157 + SG_BTC029_173 + SG_BTC024_188 + SG_BTC018_204 + SG_BTC012_223 + SG_BTC007_242 + SG_BTC003_255 + SG_BSL001_263}     
+goal setSG_CCH_Total {SG_CCH_Total = SG_CCH030_335 + SG_CCH023_336 + SG_CCH017_347 + SG_CCH012_348 + SG_CCH006_358 + SG_CCH003_359}     
+goal setSG_CBD_Total {SG_CBD_Total = SG_CBD049_220 + SG_CBD044_239 + SG_CBD041_253 + SG_CBD037_260 + SG_CBD031_268 + SG_CBD028_275 + SG_CBD023_289 + SG_CBD018_302 + SG_CBD012_314 + SG_CBD005_326}             
+goal setSG_CWD_Total {SG_CWD_Total = SG_CWD004_036}     
+goal setSG_COW_Total {SG_COW_Total = SG_COW014_012 + SG_COW007_011 + SG_COW003_017}     
+goal setSG_DRC_Total {SG_DRC_Total = SG_DRC010_096 + SG_DRC006_100}     
+goal setSG_ELD_Total {SG_ELD_Total = SG_ELD027_081 + SG_ELD022_082 + SG_ELD017_083 + SG_ELD012_084 + SG_ELD005_085}     
+goal setSG_FTR_Total {SG_FTR_Total = SG_FTR068_162 + SG_FTR063_161 + SG_FTR059_177 + SG_FTR053_192 + SG_FTR048_208 + SG_FTR045_232 + SG_FTR036_246 + SG_FTR029_283 + SG_FTR025_295 + SG_FTR021_307 + SG_FTR016_318 + SG_FTR012_330 + SG_FTR008_329 + SG_FTR003_340}     
+goal setSG_FSC_Total {SG_FSC_Total = SG_FSC003}
+goal setSG_GCC_Total {SG_GCC_Total = SG_GCC010_139 + SG_GCC015_154 + SG_GCC022_169 + SG_GCC027_183 + SG_GCC032_198 + SG_GCC036_211 + SG_GCC039_216 + SG_GCC042_227 + SG_GCC046_236 + SG_GCC050_250 + SG_GCC056_258 + SG_GCC060_266 + SG_GCC065_267}     
+goal setSG_MLC_Total {SG_MLC_Total = SG_MLC006_088 + SG_MLC004_087}     
+goal setSG_PYN_Total {SG_PYN_Total = SG_PYN001_046}     
+goal setSG_PTH_Total {SG_PTH_Total = SG_PTH024_428 + SG_PTH020_410 + SG_PTH015_411 + SG_PTH011_412 + SG_PTH007_413}     
+goal setSG_SAC1_Total {SG_SAC1_Total = SG_SAC296_001 + SG_SAC294_005 + SG_SAC289_009 + SG_SAC287_015 + SG_SAC281_022 + SG_SAC277_023 + SG_SAC275_029 + SG_SAC269_037 + SG_SAC265_045 + SG_SAC259_056 + SG_SAC254_055 + SG_SAC250_067 + SG_SAC247_068}
+goal setSG_SAC2_Total {SG_SAC2_Total = SG_SAC240_072+SG_SAC232_079+SG_SAC228_086+SG_SAC224_094+SG_SAC218_099+SG_SAC214_105+SG_SAC207_113+SG_SAC196_129+SG_SAC193_140+SG_SAC185_144}
+goal setSG_SAC3_Total {SG_SAC3_Total = SG_SAC182_155+SG_SAC178_171+SG_SAC174_186+SG_SAC168_202+SG_SAC162_221+SG_SAC154_240+SG_SAC148_254+SG_SAC141_262+SG_SAC134_269+SG_SAC129_277+SG_SAC122_291+SG_SAC115_303+SG_SAC106_315+SG_SAC097_327+SG_SAC093_339+SG_SAC085_349+SG_SAC083_350+SG_SAC082_351}
+goal setSG_SAC4_Total {SG_SAC4_Total = SG_SAC081_363+SG_SAC078_362+SG_SAC075_361+SG_SAC066_372+SG_SAC063_373+SG_SAC057_416+SG_SAC053_435}
+goal setSG_SAC5_Total {SG_SAC5_Total = SG_SAC048_451+SG_SAC041_463+SG_SAC036_475+SG_SAC030_476+SG_SAC022_493+SG_SAC017_492+SG_SAC011_527+SG_SAC007_526+SG_SAC003_525+SG_SAC000_531}
+goal setSG_SAC_Total {SG_SAC_Total = SG_SAC1_Total +SG_SAC2_Total +SG_SAC3_Total +SG_SAC4_Total +SG_SAC5_Total }
+goal setSG_STN_Total {SG_STN_Total = SG_STN026_124 + SG_STN021_125 + SG_STN014_126 + SG_STN009_127 + SG_STN004_128}     
+goal setSG_SBP_Total {SG_SBP_Total = SG_SBP031_270 + SG_SBP028_278 + SG_SBP024_281 + SG_SBP021_293 + SG_SBP018_305 + SG_SBP014_317}     
+goal setSG_THM_Total {SG_THM_Total = SG_THM026_108 + SG_THM021_101 + SG_THM017_091 + SG_THM012_092 + SG_THM005_093}     
+goal setSG_YBP_Total {SG_YBP_Total = SG_YBP032_360 + SG_YBP026_401 + SG_YBP023_407 + SG_YBP020_414 + SG_YBP016_433 + SG_YBP014_432 + SG_YBP011_448 + SG_YBP007_460 + SG_YBP002_473}     
+goal setSG_YUB_Total {SG_YUB_Total = SG_YUB011_285 + SG_YUB006_284}
+
+! Calculate total river seepage for Sac basin
+goal setSG_Total 		{SG_Total = SG_AMR_Total + SG_ANT_Total + SG_BTL_Total + SG_BRR_Total + SG_BCC_Total + SG_BTC_Total + SG_CCH_Total + SG_CBD_Total + SG_CWD_Total + SG_COW_Total + SG_DRC_Total + SG_ELD_Total + SG_FTR_Total + SG_FSC_Total + SG_GCC_Total + SG_MLC_Total + SG_PYN_Total + SG_PTH_Total + SG_SAC_Total + SG_STN_Total + SG_SBP_Total + SG_THM_Total + SG_YBP_Total + SG_YUB_Total}
+
+!Output seepage from SETUP cycle
+goal dSG_CCH030_335_1 {SG_CCH030_335_1 = SG_CCH030_335[SETUP]}
+goal dSG_CCH023_336_1 {SG_CCH023_336_1 = SG_CCH023_336[SETUP]}
+goal dSG_CCH017_347_1 {SG_CCH017_347_1 = SG_CCH017_347[SETUP]}
+goal dSG_CCH012_348_1 {SG_CCH012_348_1 = SG_CCH012_348[SETUP]}
+goal dSG_CCH006_358_1 {SG_CCH006_358_1 = SG_CCH006_358[SETUP]}
+goal dSG_CCH003_359_1 {SG_CCH003_359_1 = SG_CCH003_359[SETUP]}
+
+goal setSG_AMR_Total1 	{SG_AMR_Total1 	= SG_AMR_Total[SETUP]}	
+goal setSG_ANT_Total1 	{SG_ANT_Total1 	= SG_ANT_Total[SETUP]} 	
+goal setSG_BTL_Total1 	{SG_BTL_Total1 	= SG_BTL_Total[SETUP]} 	
+goal setSG_BRR_Total1 	{SG_BRR_Total1 	= SG_BRR_Total[SETUP]} 	
+goal setSG_BCC_Total1 	{SG_BCC_Total1 	= SG_BCC_Total[SETUP]} 	
+goal setSG_BTC_Total1 	{SG_BTC_Total1	= SG_BTC_Total[SETUP]} 	
+goal setSG_CCH_Total1 	{SG_CCH_Total1 	= SG_CCH_Total[SETUP]} 	
+goal setSG_CBD_Total1 	{SG_CBD_Total1 	= SG_CBD_Total[SETUP]} 	
+goal setSG_CWD_Total1 {SG_CWD_Total1 	= SG_CWD_Total[SETUP]} 	
+goal setSG_COW_Total1	{SG_COW_Total1 	= SG_COW_Total[SETUP]} 	
+goal setSG_DRC_Total1	{SG_DRC_Total1 	= SG_DRC_Total[SETUP]} 	
+goal setSG_ELD_Total1 	{SG_ELD_Total1 	= SG_ELD_Total[SETUP]} 	
+goal setSG_FTR_Total1 	{SG_FTR_Total1 	= SG_FTR_Total[SETUP]}
+goal setSG_FSC_Total1 	{SG_FSC_Total1 	= SG_FSC_Total[SETUP]}
+goal setSG_GCC_Total1 	{SG_GCC_Total1 	= SG_GCC_Total[SETUP]} 	
+goal setSG_MLC_Total1 	{SG_MLC_Total1 	= SG_MLC_Total[SETUP]} 	
+goal setSG_PYN_Total1 	{SG_PYN_Total1 	= SG_PYN_Total[SETUP]} 	
+goal setSG_PTH_Total1 	{SG_PTH_Total1 	= SG_PTH_Total[SETUP]} 	
+goal setSG_SAC1_Total1 {SG_SAC1_Total1 	= SG_SAC1_Total[SETUP]} 	
+goal setSG_SAC2_Total1 {SG_SAC2_Total1 	= SG_SAC2_Total[SETUP]} 	
+goal setSG_SAC3_Total1 {SG_SAC3_Total1 	= SG_SAC3_Total[SETUP]} 	
+goal setSG_SAC4_Total1{SG_SAC4_Total1 	= SG_SAC4_Total[SETUP]} 	
+goal setSG_SAC5_Total1{SG_SAC5_Total1 	= SG_SAC5_Total[SETUP]} 	
+goal setSG_SAC_Total1 	{SG_SAC_Total1 	= SG_SAC_Total[SETUP]}
+goal setSG_STN_Total1 	{SG_STN_Total1	= SG_STN_Total[SETUP]} 	
+goal setSG_SBP_Total1 	{SG_SBP_Total1 	= SG_SBP_Total[SETUP]} 	
+goal setSG_THM_Total1 	{SG_THM_Total1 	= SG_THM_Total[SETUP]} 	
+goal setSG_YBP_Total1 	{SG_YBP_Total1	= SG_YBP_Total[SETUP]} 	
+goal setSG_YUB_Total1 	{SG_YUB_Total1 	= SG_YUB_Total[SETUP]}
+goal setSG_Total1 	{SG_Total1 = SG_AMR_Total1 + SG_ANT_Total1 + SG_BTL_Total1 + SG_BRR_Total1 + SG_BCC_Total1 + SG_BTC_Total1 + SG_CCH_Total1 + SG_CBD_Total1 + SG_CWD_Total1 + SG_COW_Total1 + SG_DRC_Total1 + SG_ELD_Total1 + SG_FTR_Total1 + SG_FSC_Total1 + SG_GCC_Total1 + SG_MLC_Total1 + SG_PYN_Total1 + SG_PTH_Total1 + SG_SAC_Total1 + SG_STN_Total1 + SG_SBP_Total1 + SG_THM_Total1 + SG_YBP_Total1 + SG_YUB_Total1}
+
+define C_CCH032_1  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH030_1  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH023_1  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH017_1  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH012_1  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH006_1  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH003_1  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+
+goal setC_CCH032_1  {C_CCH032_1 = C_CCH032[SETUP] }
+goal setC_CCH030_1  {C_CCH030_1 = C_CCH030[SETUP] }
+goal setC_CCH023_1  {C_CCH023_1 = C_CCH023[SETUP] }
+goal setC_CCH017_1  {C_CCH017_1 = C_CCH017[SETUP] }
+goal setC_CCH012_1  {C_CCH012_1 = C_CCH012[SETUP] }
+goal setC_CCH006_1  {C_CCH006_1 = C_CCH006[SETUP] }
+goal setC_CCH003_1  {C_CCH003_1 = C_CCH003[SETUP] }
+
+!Output seepage from MONTHLYWEIGHTED cycle
+goal dSG_CCH030_335_2 {SG_CCH030_335_2 = SG_CCH030_335[MONTHLYWEIGHTED]}
+goal dSG_CCH023_336_2 {SG_CCH023_336_2 = SG_CCH023_336[MONTHLYWEIGHTED]}
+goal dSG_CCH017_347_2 {SG_CCH017_347_2 = SG_CCH017_347[MONTHLYWEIGHTED]}
+goal dSG_CCH012_348_2 {SG_CCH012_348_2 = SG_CCH012_348[MONTHLYWEIGHTED]}
+goal dSG_CCH006_358_2 {SG_CCH006_358_2 = SG_CCH006_358[MONTHLYWEIGHTED]}
+goal dSG_CCH003_359_2 {SG_CCH003_359_2 = SG_CCH003_359[MONTHLYWEIGHTED]}
+
+goal setSG_AMR_Total2 	{SG_AMR_Total2 	= SG_AMR_Total[MONTHLYWEIGHTED]}	
+goal setSG_ANT_Total2 	{SG_ANT_Total2 	= SG_ANT_Total[MONTHLYWEIGHTED]} 	
+goal setSG_BTL_Total2 	{SG_BTL_Total2 	= SG_BTL_Total[MONTHLYWEIGHTED]} 	
+goal setSG_BRR_Total2 	{SG_BRR_Total2 	= SG_BRR_Total[MONTHLYWEIGHTED]} 	
+goal setSG_BCC_Total2 	{SG_BCC_Total2 	= SG_BCC_Total[MONTHLYWEIGHTED]} 	
+goal setSG_BTC_Total2 	{SG_BTC_Total2 	= SG_BTC_Total[MONTHLYWEIGHTED]} 	
+goal setSG_CCH_Total2 	{SG_CCH_Total2 	= SG_CCH_Total[MONTHLYWEIGHTED]} 	
+goal setSG_CBD_Total2 	{SG_CBD_Total2 	= SG_CBD_Total[MONTHLYWEIGHTED]} 	
+goal setSG_CWD_Total2 {SG_CWD_Total2 	= SG_CWD_Total[MONTHLYWEIGHTED]} 	
+goal setSG_COW_Total2	{SG_COW_Total2 	= SG_COW_Total[MONTHLYWEIGHTED]} 	
+goal setSG_DRC_Total2	{SG_DRC_Total2 	= SG_DRC_Total[MONTHLYWEIGHTED]} 	
+goal setSG_ELD_Total2	{SG_ELD_Total2 	= SG_ELD_Total[MONTHLYWEIGHTED]} 	
+goal setSG_FTR_Total2 	{SG_FTR_Total2 	= SG_FTR_Total[MONTHLYWEIGHTED]}
+goal setSG_FSC_Total2 	{SG_FSC_Total2 	= SG_FSC_Total[MONTHLYWEIGHTED]}
+goal setSG_GCC_Total2 	{SG_GCC_Total2 	= SG_GCC_Total[MONTHLYWEIGHTED]} 	
+goal setSG_MLC_Total2 	{SG_MLC_Total2 	= SG_MLC_Total[MONTHLYWEIGHTED]} 	
+goal setSG_PYN_Total2 	{SG_PYN_Total2 	= SG_PYN_Total[MONTHLYWEIGHTED]} 	
+goal setSG_PTH_Total2 	{SG_PTH_Total2 	= SG_PTH_Total[MONTHLYWEIGHTED]} 	
+goal setSG_SAC1_Total2 {SG_SAC1_Total2 	= SG_SAC1_Total[MONTHLYWEIGHTED]} 	
+goal setSG_SAC2_Total2 {SG_SAC2_Total2 	= SG_SAC2_Total[MONTHLYWEIGHTED]} 	
+goal setSG_SAC3_Total2 {SG_SAC3_Total2 	= SG_SAC3_Total[MONTHLYWEIGHTED]} 	
+goal setSG_SAC4_Total2 {SG_SAC4_Total2 	= SG_SAC4_Total[MONTHLYWEIGHTED]} 	
+goal setSG_SAC5_Total2	{SG_SAC5_Total2 = SG_SAC5_Total[MONTHLYWEIGHTED]} 	
+goal setSG_SAC_Total2 	{SG_SAC_Total2 	= SG_SAC_Total[MONTHLYWEIGHTED]}
+goal setSG_STN_Total2 	{SG_STN_Total2 	= SG_STN_Total[MONTHLYWEIGHTED]} 	
+goal setSG_SBP_Total2 	{SG_SBP_Total2 	= SG_SBP_Total[MONTHLYWEIGHTED]} 	
+goal setSG_THM_Total2 	{SG_THM_Total2 	= SG_THM_Total[MONTHLYWEIGHTED]} 	
+goal setSG_YBP_Total2 	{SG_YBP_Total2 	= SG_YBP_Total[MONTHLYWEIGHTED]} 	
+goal setSG_YUB_Total2 	{SG_YUB_Total2 	= SG_YUB_Total[MONTHLYWEIGHTED]}
+goal setSG_Total2 	{SG_Total2 = SG_AMR_Total2 + SG_ANT_Total2 + SG_BTL_Total2 + SG_BRR_Total2 + SG_BCC_Total2 + SG_BTC_Total2 + SG_CCH_Total2 + SG_CBD_Total2 + SG_CWD_Total2 + SG_COW_Total2 + SG_DRC_Total2 + SG_ELD_Total2 + SG_FTR_Total2 + SG_FSC_Total2 + SG_GCC_Total2 + SG_MLC_Total2 + SG_PYN_Total2 + SG_PTH_Total2 + SG_SAC_Total2 + SG_STN_Total2 + SG_SBP_Total2 + SG_THM_Total2 + SG_YBP_Total2 + SG_YUB_Total2}
+
+define C_CCH032_2  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH030_2  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH023_2  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH017_2  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH012_2  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH006_2  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH003_2  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+
+goal setC_CCH032_2  {C_CCH032_2 = C_CCH032[MONTHLYWEIGHTED] }
+goal setC_CCH030_2  {C_CCH030_2 = C_CCH030[MONTHLYWEIGHTED] }
+goal setC_CCH023_2  {C_CCH023_2 = C_CCH023[MONTHLYWEIGHTED] }
+goal setC_CCH017_2  {C_CCH017_2 = C_CCH017[MONTHLYWEIGHTED] }
+goal setC_CCH012_2  {C_CCH012_2 = C_CCH012[MONTHLYWEIGHTED] }
+goal setC_CCH006_2  {C_CCH006_2 = C_CCH006[MONTHLYWEIGHTED] }
+goal setC_CCH003_2  {C_CCH003_2 = C_CCH003[MONTHLYWEIGHTED] }
+
+!Output seepage from UPSTREAM cycle
+
+goal dSG_CCH030_335_3 {SG_CCH030_335_3 = SG_CCH030_335[UPSTREAM]}
+goal dSG_CCH023_336_3 {SG_CCH023_336_3 = SG_CCH023_336[UPSTREAM]}
+goal dSG_CCH017_347_3 {SG_CCH017_347_3 = SG_CCH017_347[UPSTREAM]}
+goal dSG_CCH012_348_3 {SG_CCH012_348_3 = SG_CCH012_348[UPSTREAM]}
+goal dSG_CCH006_358_3 {SG_CCH006_358_3 = SG_CCH006_358[UPSTREAM]}
+goal dSG_CCH003_359_3 {SG_CCH003_359_3 = SG_CCH003_359[UPSTREAM]}
+
+goal setSG_AMR_Total3 {SG_AMR_Total3 	= SG_AMR_Total[UPSTREAM]}	
+goal setSG_ANT_Total3 {SG_ANT_Total3 	= SG_ANT_Total[UPSTREAM]} 	
+goal setSG_BTL_Total3 	{SG_BTL_Total3 	= SG_BTL_Total[UPSTREAM]} 	
+goal setSG_BRR_Total3 {SG_BRR_Total3 	= SG_BRR_Total[UPSTREAM]} 	
+goal setSG_BCC_Total3 {SG_BCC_Total3 	= SG_BCC_Total[UPSTREAM]} 	
+goal setSG_BTC_Total3 {SG_BTC_Total3 	= SG_BTC_Total[UPSTREAM]} 	
+goal setSG_CCH_Total3 {SG_CCH_Total3 	= SG_CCH_Total[UPSTREAM]} 	
+goal setSG_CBD_Total3 {SG_CBD_Total3 	= SG_CBD_Total[UPSTREAM]} 	
+goal setSG_CWD_Total3 {SG_CWD_Total3 	= SG_CWD_Total[UPSTREAM]} 	
+goal setSG_COW_Total3{SG_COW_Total3 	= SG_COW_Total[UPSTREAM]} 	
+goal setSG_DRC_Total3	{SG_DRC_Total3 	= SG_DRC_Total[UPSTREAM]} 	
+goal setSG_ELD_Total3	{SG_ELD_Total3 	= SG_ELD_Total[UPSTREAM]} 	
+goal setSG_FTR_Total3 	{SG_FTR_Total3 	= SG_FTR_Total[UPSTREAM]}
+goal setSG_FSC_Total3 	{SG_FSC_Total3 	= SG_FSC_Total[UPSTREAM]}
+goal setSG_GCC_Total3 {SG_GCC_Total3 	= SG_GCC_Total[UPSTREAM]} 	
+goal setSG_MLC_Total3 {SG_MLC_Total3 	= SG_MLC_Total[UPSTREAM]} 	
+goal setSG_PYN_Total3 {SG_PYN_Total3 	= SG_PYN_Total[UPSTREAM]} 	
+goal setSG_PTH_Total3 {SG_PTH_Total3 	= SG_PTH_Total[UPSTREAM]} 	
+goal setSG_SAC1_Total3 {SG_SAC1_Total3 	= SG_SAC1_Total[UPSTREAM]} 	
+goal setSG_SAC2_Total3 {SG_SAC2_Total3 	= SG_SAC2_Total[UPSTREAM]} 	
+goal setSG_SAC3_Total3 {SG_SAC3_Total3 	= SG_SAC3_Total[UPSTREAM]} 	
+goal setSG_SAC4_Total3 {SG_SAC4_Total3 	= SG_SAC4_Total[UPSTREAM]} 	
+goal setSG_SAC5_Total3{SG_SAC5_Total3 	= SG_SAC5_Total[UPSTREAM]} 	
+goal setSG_SAC_Total3 {SG_SAC_Total3 	= SG_SAC_Total[UPSTREAM]}
+goal setSG_STN_Total3 {SG_STN_Total3 	= SG_STN_Total[UPSTREAM]} 	
+goal setSG_SBP_Total3 {SG_SBP_Total3 	= SG_SBP_Total[UPSTREAM]} 	
+goal setSG_THM_Total3 {SG_THM_Total3 	= SG_THM_Total[UPSTREAM]} 	
+goal setSG_YBP_Total3 {SG_YBP_Total3 	= SG_YBP_Total[UPSTREAM]} 	
+goal setSG_YUB_Total3 {SG_YUB_Total3 	= SG_YUB_Total[UPSTREAM]}
+goal setSG_Total3 	{SG_Total3 = SG_AMR_Total3 + SG_ANT_Total3 + SG_BTL_Total3 + SG_BRR_Total3 + SG_BCC_Total3 + SG_BTC_Total3 + SG_CCH_Total3 + SG_CBD_Total3 + SG_CWD_Total3 + SG_COW_Total3 + SG_DRC_Total3 + SG_ELD_Total3 + SG_FTR_Total3 + SG_FSC_Total3 + SG_GCC_Total3 + SG_MLC_Total3 + SG_PYN_Total3 + SG_PTH_Total3 + SG_SAC_Total3 + SG_STN_Total3 + SG_SBP_Total3 + SG_THM_Total3 + SG_YBP_Total3 + SG_YUB_Total3}
+ 
+define C_CCH032_3  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH030_3  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH023_3  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH017_3  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH012_3  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH006_3  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH003_3  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+
+goal setC_CCH032_3  {C_CCH032_3 = C_CCH032[UPSTREAM] }
+goal setC_CCH030_3  {C_CCH030_3 = C_CCH030[UPSTREAM] }
+goal setC_CCH023_3  {C_CCH023_3 = C_CCH023[UPSTREAM] }
+goal setC_CCH017_3  {C_CCH017_3 = C_CCH017[UPSTREAM] }
+goal setC_CCH012_3  {C_CCH012_3 = C_CCH012[UPSTREAM] }
+goal setC_CCH006_3  {C_CCH006_3 = C_CCH006[UPSTREAM] }
+goal setC_CCH003_3  {C_CCH003_3 = C_CCH003[UPSTREAM] }
+
+!Output seepage from DELTA cycle
+
+goal dSG_CCH030_335_4 {SG_CCH030_335_4 = SG_CCH030_335[DELTA]}
+goal dSG_CCH023_336_4 {SG_CCH023_336_4 = SG_CCH023_336[DELTA]}
+goal dSG_CCH017_347_4 {SG_CCH017_347_4 = SG_CCH017_347[DELTA]}
+goal dSG_CCH012_348_4 {SG_CCH012_348_4 = SG_CCH012_348[DELTA]}
+goal dSG_CCH006_358_4 {SG_CCH006_358_4 = SG_CCH006_358[DELTA]}
+goal dSG_CCH003_359_4 {SG_CCH003_359_4 = SG_CCH003_359[DELTA]}
+
+goal setSG_AMR_Total4 {SG_AMR_Total4 	= SG_AMR_Total[DELTA]}	
+goal setSG_ANT_Total4 {SG_ANT_Total4 	= SG_ANT_Total[DELTA]} 	
+goal setSG_BTL_Total4 	{SG_BTL_Total4 	= SG_BTL_Total[DELTA]} 	
+goal setSG_BRR_Total4 {SG_BRR_Total4 	= SG_BRR_Total[DELTA]} 	
+goal setSG_BCC_Total4 {SG_BCC_Total4 	= SG_BCC_Total[DELTA]} 	
+goal setSG_BTC_Total4 {SG_BTC_Total4 	= SG_BTC_Total[DELTA]} 	
+goal setSG_CCH_Total4 {SG_CCH_Total4 	= SG_CCH_Total[DELTA]} 	
+goal setSG_CBD_Total4 {SG_CBD_Total4 	= SG_CBD_Total[DELTA]} 	
+goal setSG_CWD_Total4 {SG_CWD_Total4 	= SG_CWD_Total[DELTA]} 	
+goal setSG_COW_Total4{SG_COW_Total4 	= SG_COW_Total[DELTA]} 	
+goal setSG_DRC_Total4	{SG_DRC_Total4 	= SG_DRC_Total[DELTA]} 	
+goal setSG_ELD_Total4	{SG_ELD_Total4 	= SG_ELD_Total[DELTA]} 	
+goal setSG_FTR_Total4 	{SG_FTR_Total4 	= SG_FTR_Total[DELTA]}
+goal setSG_FSC_Total4 	{SG_FSC_Total4 	= SG_FSC_Total[DELTA]}
+goal setSG_GCC_Total4 {SG_GCC_Total4 	= SG_GCC_Total[DELTA]} 	
+goal setSG_MLC_Total4 {SG_MLC_Total4 	= SG_MLC_Total[DELTA]} 	
+goal setSG_PYN_Total4 {SG_PYN_Total4 	= SG_PYN_Total[DELTA]} 	
+goal setSG_PTH_Total4 {SG_PTH_Total4 	= SG_PTH_Total[DELTA]} 	
+goal setSG_SAC1_Total4 {SG_SAC1_Total4 	= SG_SAC1_Total[DELTA]} 	
+goal setSG_SAC2_Total4 {SG_SAC2_Total4 	= SG_SAC2_Total[DELTA]} 	
+goal setSG_SAC3_Total4 {SG_SAC3_Total4 	= SG_SAC3_Total[DELTA]} 	
+goal setSG_SAC4_Total4 {SG_SAC4_Total4 	= SG_SAC4_Total[DELTA]} 	
+goal setSG_SAC5_Total4{SG_SAC5_Total4 	= SG_SAC5_Total[DELTA]} 	
+goal setSG_SAC_Total4 {SG_SAC_Total4 	= SG_SAC_Total[DELTA]}
+goal setSG_STN_Total4 {SG_STN_Total4 	= SG_STN_Total[DELTA]} 	
+goal setSG_SBP_Total4 {SG_SBP_Total4 	= SG_SBP_Total[DELTA]} 	
+goal setSG_THM_Total4 {SG_THM_Total4 	= SG_THM_Total[DELTA]} 	
+goal setSG_YBP_Total4 {SG_YBP_Total4 	= SG_YBP_Total[DELTA]} 	
+goal setSG_YUB_Total4 {SG_YUB_Total4 	= SG_YUB_Total[DELTA]}
+goal setSG_Total4 	{SG_Total4 = SG_AMR_Total4 + SG_ANT_Total4 + SG_BTL_Total4 + SG_BRR_Total4 + SG_BCC_Total4 + SG_BTC_Total4 + SG_CCH_Total4 + SG_CBD_Total4 + SG_CWD_Total4 + SG_COW_Total4 + SG_DRC_Total4 + SG_ELD_Total4 + SG_FTR_Total4 + SG_FSC_Total4 + SG_GCC_Total4 + SG_MLC_Total4 + SG_PYN_Total4 + SG_PTH_Total4 + SG_SAC_Total4 + SG_STN_Total4 + SG_SBP_Total4 + SG_THM_Total4 + SG_YBP_Total4 + SG_YUB_Total4}
+
+define C_CCH032_4  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH030_4  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH023_4  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH017_4  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH012_4  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH006_4  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+define C_CCH003_4  {lower 0 upper 99999 kind 'CHANNEL' units 'cfs'}
+
+goal setC_CCH032_4  {C_CCH032_4 = C_CCH030[DELTA] }	
+goal setC_CCH030_4  {C_CCH030_4 = C_CCH030[DELTA] }
+goal setC_CCH023_4  {C_CCH023_4 = C_CCH023[DELTA] }
+goal setC_CCH017_4  {C_CCH017_4 = C_CCH017[DELTA] }
+goal setC_CCH012_4  {C_CCH012_4 = C_CCH012[DELTA] }
+goal setC_CCH006_4  {C_CCH006_4 = C_CCH006[DELTA] }
+goal setC_CCH003_4  {C_CCH003_4 = C_CCH003[DELTA] }
+

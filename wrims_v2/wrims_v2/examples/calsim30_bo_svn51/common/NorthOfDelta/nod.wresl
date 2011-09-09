@@ -1,0 +1,55 @@
+! This is the North of Delta include file
+
+INCLUDE 'american\WaterForum.wresl'
+INCLUDE 'american\NimbusHistMinQ.wresl'
+INCLUDE 'american\HSt_base.wresl'
+INCLUDE 'american\FolRuleCurv.wresl'
+INCLUDE 'american\NimbusPower.wresl'
+INCLUDE 'american\FMPInput.wresl'
+
+INCLUDE 'Clear\ClearCk.wresl'
+
+INCLUDE 'Sacramento\Keswickmin.wresl'
+INCLUDE 'Sacramento\RedBluff_bypassflow.wresl'
+INCLUDE 'Sacramento\RedBluffOps.wresl'
+INCLUDE 'Sacramento\HamiltonCity_bypassflow.wresl'
+INCLUDE 'Sacramento\NCP_relax.wresl'
+INCLUDE 'Sacramento\ShaRuleCurv.wresl'
+INCLUDE 'Sacramento\KeswickPower.wresl'
+!INCLUDE 'Sacramento\KnightsLandingOps.wresl'
+INCLUDE 'Sacramento\setdailyadjmif.wresl'
+
+INCLUDE 'Trinity\Trinitymin.wresl'
+INCLUDE 'Trinity\trinity_import.wresl'
+INCLUDE 'Trinity\TrinRuleCurv.wresl'
+INCLUDE 'Trinity\TrinityDamPower.wresl'
+INCLUDE 'Trinity\LewistonSpill.wresl'
+
+!INCLUDE 'Sacramento\NODOS\NODOS_diversion.wresl'
+!INCLUDE 'Sacramento\NODOS\WQ\NODOS_div_x2limit.wresl'
+!define ERP_C5MIF {value 0.}                                !DEBUGGING
+!INCLUDE 'Sacramento\NODOS\ERP\NODOS_ERP.wresl'
+
+!INCLUDE 'Sacramento\GCCanalLosses.wresl'
+INCLUDE 'Stony\StonyCr_main.wresl'
+INCLUDE 'Sacramento\TCGCIntertie.wresl'
+
+INCLUDE 'feather\feather_special.wresl'
+INCLUDE 'feather\WestBranchFeather.wresl'
+INCLUDE 'feather\OroRuleCurv.wresl'
+INCLUDE 'feather\ThermalitoPower.wresl'
+INCLUDE 'feather\FRSA.wresl'
+
+!INCLUDE 'Yuba\Yuba.wresl'
+INCLUDE 'Bear\BearRiver.wresl'
+INCLUDE 'Putah\PutahCk.wresl'
+INCLUDE 'Putah\PutahSouthCanal.wresl'
+
+INCLUDE 'Balance.wresl'
+
+INCLUDE 'Cache\CacheCk.wresl'
+INCLUDE 'Colusa\CBD.wresl'
+INCLUDE 'Misc\ButteSlough.wresl'
+
+
+INCLUDE 'MinorTribs\MinorTribs.wresl'

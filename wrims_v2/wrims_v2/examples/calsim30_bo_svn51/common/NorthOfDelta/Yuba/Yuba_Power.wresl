@@ -1,0 +1,11 @@
+/*
+File Name: Yuba_Power.wresl
+CalSim 3.0  File for New Bullards Bar Dam and Lower Yuba River Operations
+
+Purpose: Establish minimum power release for New Bullards Bar Dam
+
+*/
+
+ goal minPGERel1 {C_NBLDB_POW = C_NBLDB_POW_MIN + C_NBLDB_POW_ADD}
+ goal minPGERel2 {C_NBLDB_POW_MIN < (18.500/1.13)*taf_cfs}
+ 

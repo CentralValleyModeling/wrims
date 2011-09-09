@@ -1,0 +1,58 @@
+/*
+Constraints-preoperations.wresl
+CalSim 3.0 System File
+
+Purpose:
+
+Naming takes the following form:
+
+*/
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! FEATHER RIVER	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!goal set_D_SFF011_MNRRH		{D_SFF011_MNRRH		< D_SFF011_MNRRH_SV}
+goal set_D_LST004_OWC000	{D_LST004_OWC000	< D_LST004_OWC000_SV}
+goal set_R_MNRRH_FTR072		{R_MNRRH_FTR072		< R_MNRRH_FTR072_SV}
+goal set_D_OROVL_13_NU1		{D_OROVL_13_NU1		< D_OROVL_13_NU1_SV} 
+!goal set_D_WBF030_TTC011	{D_WBF030_TTC011	< D_WBF030_TTC011_SV}
+!goal set_D_WBF015_MIO023	{D_WBF015_MIO023	< D_WBF015_MIO023_SV}
+goal set_D_SLT009_SCT000	{D_SLT009_SCT000	< D_SLT009_SCT000_SV}
+
+goal set_S_LGRSV	{S_LGRSV < S_LGRSV_SV}
+goal set_S_SLYCK	{S_SLYCK < S_SLYCK_SV}
+!goal Evap_LGRSV		{E_LGRSV < E_LGRSV_SV}
+!goal Evap_SLYCK		{E_SLYCK < E_SLYCK_SV}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Bear River		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setD_SYC002_BRR074		{D_SYC002_BRR074 = D_SYC002_BRR074_SV}
+goal setD_SPLDG_DRM000		{D_SPLDG_DRM000 = D_SPLDG_DRM000_SV}
+!goal set_D_LBC010_PCWA3	{D_LBC010_PCWA3	< D_LBC010_PCWA3_SV}
+!goal set_D_LBC038_WTPAUB	{D_LBC038_WTPAUB < D_LBC038_WTPAUB_SV}
+!goal set_D_BEC022_WTPBWM	{D_BEC022_WTPBWM < D_BEC022_WTPBWM_SV}
+!goal set_D_STH004_WTPFSS	{D_STH004_WTPFSS < D_STH004_WTPFSS_SV}
+
+goal set_C_STH007 {C_STH007 < C_STH007_SV}
+goal set_C_MRM001 {C_MRM001 < C_MRM001_SV}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Wolf Creek		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setD_WLF013_TARRD		{D_WLF013_TARRD < D_WLF013_TARRD_SV}
+goal setR_DSCNL_WLF021		{R_DSCNL_WLF021 = R_DSCNL_WLF021_SV}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! American River		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal set_D_NNA013_LVC001	{D_NNA013_LVC001 < D_NNA013_LVC001_SV}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! East Park Reservoir		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal set_D_EPARK_SCKWD	{D_EPARK_SCKWD < D_EPARK_SCKWD_SV}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Yuba River		!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!goal set_D_OGN005_CMT000	{D_OGN005_CMT000 < D_OGN005_CMT000_SV}

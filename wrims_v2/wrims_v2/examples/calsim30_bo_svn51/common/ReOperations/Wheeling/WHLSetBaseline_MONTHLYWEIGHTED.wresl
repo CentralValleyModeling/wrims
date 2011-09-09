@@ -1,0 +1,5 @@
+define D418_Base {value D418[MONTHLYWEIGHTED]}
+define D419_Base {value D419[MONTHLYWEIGHTED]}
+define C_NDO_cvp_Base {value C_NDO_cvp[MONTHLYWEIGHTED]}
+define C_NDO_swp_Base {value C_NDO_swp[MONTHLYWEIGHTED]}
+

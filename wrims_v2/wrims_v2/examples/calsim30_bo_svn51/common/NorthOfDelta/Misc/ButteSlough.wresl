@@ -1,0 +1,27 @@
+/*
+CALSIM 3.0 NORTH OF DELTA OPERATIONS FILE
+BUTTESLOUGH.WRESL
+
+Created ajdraper, MWH, August 24, 2010
+*/
+
+!Butte Slough has a capacity of approximately 1,000 cfs; flows greater than this cause flooding of adjacent agricultural land
+!During the irrigation season (April-September), excess water is diverted through the Butte Slough Outfall Gates
+
+!Define sub-arcs
+define C_BSL001b_max 	{lower 0 upper 1000 kind 'CHANNEL' units 'CFS'}
+define C_BSL001b_exc  	{lower 0 upper 150000 kind 'CHANNEL' units 'CFS'}
+
+goal setC_BSL001b 	{C_BSL001b = C_BSL001b_max + C_BSL001b_exc}
+
+goal setC_BSL001b_exc  {
+	lhs C_BSL001b_exc
+  		case Season {
+    		condition   month < 7
+    	rhs     1000
+    	lhs>rhs     penalty 9999
+    	lhs<rhs     penalty 0 }
+}
+
+!define	D_BSL000_SAC141_SV	{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'}
+!goal set_D_BSL000_SAC141_SV 	{D_BSL000_SAC141 < D_BSL000_SAC141_SV}

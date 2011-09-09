@@ -1,0 +1,363 @@
+! E. Reyes 10/27/00
+
+! This file sums the monthly contract limits by type into annual contract limits
+
+define CLann_WTPCSD_02_PA	{select contract from Contracts_CVPService where diversion=1}
+
+define CLann_WTPCSD_02_PU	{select contract from Contracts_CVPService where diversion=12}
+
+define CLann_WKYTN_02_PU	{select contract from Contracts_CVPService where diversion=13}
+
+define CLann_WTPBUK_03_PU3	{select contract from Contracts_CVPService where diversion=11}
+
+define CLann_SHSTA_03_PU1	{select contract from Contracts_CVPService where diversion=14}
+
+define CLann_SAC294_03_PU2	{select contract from Contracts_CVPService where diversion=15}
+
+define CLann_SAC294_03_PA	{select contract from Contracts_CVPService where diversion=2}
+
+define CLann_CCL005_04_PA1	{select contract from Contracts_CVPService where diversion=3}
+
+define CLann_TCC022_04_PA2	{select contract from Contracts_CVPService where diversion=4}
+
+define CLann_TCC036_07N_PA	{select contract from Contracts_CVPService where diversion=7}
+
+define CLann_TCC081_07S_PA	{select contract from Contracts_CVPService where diversion=8}
+
+define CLann_TCC111_07S_PA	{select contract from Contracts_CVPService where diversion=23}
+
+define CLann_GCC027_08N_PR1	{select contract from Contracts_CVPService where diversion=16}
+
+define CLann_GCC039_08N_PR2	{select contract from Contracts_CVPService where diversion=18}
+
+define CLann_CBD037_08S_PR	{select contract from Contracts_CVPService where diversion=22} ! Water diverted under water right
+
+define CLann_GCC056_08S_PR	{select contract from Contracts_CVPService where diversion=17}
+
+define CLann_JBC002_17N_PR	{select contract from Contracts_CVPService where diversion=19}
+
+!define CLann_SBP028_17S_PR	{select contract from Contracts_CVPService where diversion=20}
+
+define CLann_FTR021_16_PA	{select contract from Contracts_CVPService where diversion=9}
+
+! Define CVP Settlement Contract limits for peak months (July-August or July-September)
+define	CLP_WTPFTH_02_SU	{select peak from Contracts_CVPSettlement where diversion=1}
+define	CLP_SAC296_02_SA	{select peak from Contracts_CVPSettlement where diversion=2}
+define	CLP_WTPFTH_03_SU	{select peak from Contracts_CVPSettlement where diversion=3}
+define	CLP_SAC289_03_SA	{select peak from Contracts_CVPSettlement where diversion=4}
+define	CLP_SAC224_04_NA	{select peak from Contracts_CVPSettlement where diversion=5}
+define	CLP_SAC240_05_NA	{select peak from Contracts_CVPSettlement where diversion=6}
+define	CLP_SAC178_08N_SA1	{select peak from Contracts_CVPSettlement where diversion=7}
+define	CLP_SAC159_08N_SA1	{select peak from Contracts_CVPSettlement where diversion=8}
+define	CLP_GCC027_08N_SA2	{select peak from Contracts_CVPSettlement where diversion=9}
+define	CLP_SAC159_08S_SA1	{select peak from Contracts_CVPSettlement where diversion=10}
+define	CLP_GCC056_08S_SA2	{select peak from Contracts_CVPSettlement where diversion=11}
+define	CLP_SAC121_08S_SA3	{select peak from Contracts_CVPSettlement where diversion=12}
+define	CLP_SAC109_08S_SA3	{select peak from Contracts_CVPSettlement where diversion=13}
+define	CLP_MTC000_09_SA1	{select peak from Contracts_CVPSettlement where diversion=14}
+define	CLP_SAC162_09_SA2	{select peak from Contracts_CVPSettlement where diversion=15}
+define	CLP_SAC136_18_SA	{select peak from Contracts_CVPSettlement where diversion=16}
+define	CLP_SAC122_19_SA	{select peak from Contracts_CVPSettlement where diversion=17}
+define	CLP_SAC115_19_SA	{select peak from Contracts_CVPSettlement where diversion=18}
+define	CLP_SAC091_19_SA	{select peak from Contracts_CVPSettlement where diversion=19}
+define	CLP_SAC083_21_SA	{select peak from Contracts_CVPSettlement where diversion=20}
+define	CLP_SAC074_21_SA	{select peak from Contracts_CVPSettlement where diversion=21}
+define	CLP_SAC082_22_SA1	{select peak from Contracts_CVPSettlement where diversion=22}
+define	CLP_SAC078_22_SA1	{select peak from Contracts_CVPSettlement where diversion=23}
+define	CLP_SAC099_19_SA	{select peak from Contracts_CVPSettlement where diversion=24}
+
+! Define CVP Settlement Contract limits for non-peak months
+define	CLN_WTPFTH_02_SU	{select nonpeak from Contracts_CVPSettlement where diversion=1}
+define	CLN_SAC296_02_SA	{select nonpeak from Contracts_CVPSettlement where diversion=2}
+define	CLN_WTPFTH_03_SU	{select nonpeak from Contracts_CVPSettlement where diversion=3}
+define	CLN_SAC289_03_SA	{select nonpeak from Contracts_CVPSettlement where diversion=4}
+define	CLN_SAC224_04_NA	{select nonpeak from Contracts_CVPSettlement where diversion=5}
+define	CLN_SAC240_05_NA	{select nonpeak from Contracts_CVPSettlement where diversion=6}
+define	CLN_SAC178_08N_SA1	{select nonpeak from Contracts_CVPSettlement where diversion=7}
+define	CLN_SAC159_08N_SA1	{select nonpeak from Contracts_CVPSettlement where diversion=8}
+define	CLN_GCC027_08N_SA2	{select nonpeak from Contracts_CVPSettlement where diversion=9}
+define	CLN_SAC159_08S_SA1	{select nonpeak from Contracts_CVPSettlement where diversion=10}
+define	CLN_GCC056_08S_SA2	{select nonpeak from Contracts_CVPSettlement where diversion=11}
+define	CLN_SAC121_08S_SA3	{select nonpeak from Contracts_CVPSettlement where diversion=12}
+define	CLN_SAC109_08S_SA3	{select nonpeak from Contracts_CVPSettlement where diversion=13}
+define	CLN_MTC000_09_SA1	{select nonpeak from Contracts_CVPSettlement where diversion=14}
+define	CLN_SAC162_09_SA2	{select nonpeak from Contracts_CVPSettlement where diversion=15}
+define	CLN_SAC136_18_SA	{select nonpeak from Contracts_CVPSettlement where diversion=16}
+define	CLN_SAC122_19_SA	{select nonpeak from Contracts_CVPSettlement where diversion=17}
+define	CLN_SAC115_19_SA	{select nonpeak from Contracts_CVPSettlement where diversion=18}
+define	CLN_SAC091_19_SA	{select nonpeak from Contracts_CVPSettlement where diversion=19}
+define	CLN_SAC083_21_SA	{select nonpeak from Contracts_CVPSettlement where diversion=20}
+define	CLN_SAC074_21_SA	{select nonpeak from Contracts_CVPSettlement where diversion=21}
+define	CLN_SAC082_22_SA1	{select nonpeak from Contracts_CVPSettlement where diversion=22}
+define	CLN_SAC078_22_SA1	{select nonpeak from Contracts_CVPSettlement where diversion=23}
+define	CLN_SAC099_19_SA	{select nonpeak from Contracts_CVPSettlement where diversion=24}
+
+!Define demands for CVP contract water - reduced by WF agreement
+define CLWF_ANN_PCWA_A   {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
+define CLWF_ANN_FOLSM     {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
+define CLWF_ANN_SJWD_S   {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
+define CLWF_ANN_ELDOR_ID     {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
+define CLWF_ANN_ELDOR_CO     {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
+define CLWF_ANN_SMUD       {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
+define CLWF_ANN_SCWA       {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
+define CLWF_ANN_ROSEV     {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
+define CLWF_ANN_CAREC     {timeseries kind 'CVPWF-CONTRACT-LIMIT'  units 'TAF'}  !
+define CLann_ANN_SCWA_FRPT    		{VALUE 0.0}  !
+define CLann_ANN_EBMD_FRPT    		{VALUE 0.0}  !
+
+
+!  NORTH OF DELTA
+!=====================================================================================================
+!=====================================================================================================
+
+! AG DEMANDS
+! Do not include CLann_STN021_06_PA, CLann_STN026_06_PA,CLann_PTH024_25_PA1
+! as allocations are separately calculated.
+define anncvpCL_pag_ndv {std kind 'contract-annual' units 'taf'}
+
+define anncvpCL_pag_n { value  ! CVP SOD AG DEMANDS, used in cvpcut_n and cvpmkup_n
+         CLann_WTPCSD_02_PA
+       +CLann_SAC294_03_PA
+       +CLann_CCL005_04_PA1
+       +CLann_TCC022_04_PA2
+       +CLann_TCC036_07N_PA
+       +CLann_TCC081_07S_PA
+       +CLann_TCC111_07S_PA
+       +CLann_FTR021_16_PA }
+
+goal set_annual_ag_n {anncvpCL_pag_ndv = anncvpCL_pag_n}
+ 
+ 
+! MI DEMANDS
+define anncvpCL_pmi_ndv {std kind 'contract-annual' units 'taf'}
+define anncvpCL_pmi_n { value
+      CLann_WTPCSD_02_PU
+      +CLann_WTPBUK_03_PU3
+      +CLann_WKYTN_02_PU
+      +CLann_SHSTA_03_PU1
+      +CLann_SAC294_03_PU2
+      +CLWF_ANN_PCWA_A
+      +CLWF_ANN_FOLSM
+      +CLWF_ANN_SJWD_S
+      +CLWF_ANN_ELDOR_ID
+      +CLWF_ANN_ELDOR_CO
+      +CLWF_ANN_SMUD
+      +CLWF_ANN_SCWA
+      +CLWF_ANN_ROSEV
+      +CLWF_ANN_CAREC
+      +CLann_ANN_SCWA_FRPT
+      +CLann_ANN_EBMD_FRPT}
+
+goal set_annual_mi_n {anncvpCL_pmi_ndv = anncvpCL_pmi_n}
+ 
+ 
+! SETTLEMENT CONTRACT DEMANDS
+! Only include diversions from the Sacramento River
+define anncvpCL_psc_ndv {std kind 'contract-annual' units 'taf'}
+define anncvpCL_psc_n { value      
+        CLP_SAC296_02_SA	       	+CLN_SAC296_02_SA
+       +CLP_SAC289_03_SA	       	+CLN_SAC289_03_SA
+       +CLP_WTPFTH_03_SU	       	+CLN_WTPFTH_03_SU
+       +CLP_WTPFTH_02_SU	       	+CLN_WTPFTH_02_SU
+       +CLP_SAC178_08N_SA1      	+CLN_SAC178_08N_SA1
+       +CLP_SAC159_08N_SA1      	+CLN_SAC159_08N_SA1
+       +CLP_GCC027_08N_SA2      	+CLN_GCC027_08N_SA2
+       +CLP_SAC159_08S_SA1      	+CLN_SAC159_08S_SA1
+       +CLP_GCC056_08S_SA2      	+CLN_GCC056_08S_SA2
+       +CLP_SAC121_08S_SA3      	+CLN_SAC121_08S_SA3
+       +CLP_SAC109_08S_SA3      	+CLN_SAC109_08S_SA3
+       +CLP_MTC000_09_SA1	+CLN_MTC000_09_SA1
+       +CLP_SAC162_09_SA2	+CLN_SAC162_09_SA2
+       +CLP_SAC136_18_SA	+CLN_SAC136_18_SA
+       +CLP_SAC122_19_SA	+CLN_SAC122_19_SA
+       +CLP_SAC115_19_SA	+CLN_SAC115_19_SA
+       +CLP_SAC099_19_SA        +CLN_SAC099_19_SA  
+       +CLP_SAC091_19_SA        +CLN_SAC091_19_SA  
+       +CLP_SAC083_21_SA	+CLN_SAC083_21_SA
+       +CLP_SAC074_21_SA	+CLN_SAC074_21_SA
+       +CLP_SAC082_22_SA1       +CLN_SAC082_22_SA1
+       +CLP_SAC078_22_SA1       +CLN_SAC078_22_SA1}
+
+goal set_annual_sc_n {anncvpCL_psc_ndv = anncvpCL_psc_n}
+
+! REFUGE DEMANDS
+define anncvpCL_prf_ndv {std kind 'contract-annual' units 'taf'}
+define anncvpCL_prf_n {value
+          CLann_GCC027_08N_PR1
+       + CLann_GCC039_08N_PR2
+       + CLann_GCC056_08S_PR
+       + CLann_CBD037_08S_PR
+       + CLann_JBC002_17N_PR}
+       
+!       + CLann_SBP028_17S_PR}                       
+        
+goal set_annual_rf_n {anncvpCL_prf_ndv = anncvpCL_prf_n}
+        
+
+
+!***   TOTAL  NORTH *************************************************************************************
+define anncvpCL_tot_n   	{value anncvpCL_pag_n + anncvpCL_pmi_n + anncvpCL_psc_n + anncvpCL_prf_n }
+define anncvpCL_tot_ndv 	{std kind 'contract-annual' units 'taf'}
+goal set_anncvpCL_tot_n 	{anncvpCL_tot_ndv = anncvpCL_tot_n} 
+
+
+!  SOUTH OF DELTA
+!=====================================================================================================
+!=====================================================================================================
+
+!******************* CUMULATIVE MONTHLY DEMANDS  ****************************
+define dem_totcvps_pag {timeseries kind 'demand-cvp-ag' units 'taf'}
+define dem_totcvps_pmi {timeseries kind 'demand-cvp-mi' units 'taf'}
+define dem_totcvps_pex {timeseries kind 'demand-cvp-ex' units 'taf'}
+define dem_totcvps_prf {timeseries kind 'demand-cvp-rf' units 'taf'}
+define dem_totcvps_pls {timeseries kind 'demand-cvp-ls' units 'taf'}
+
+!******************* CUMULATIVE YEARLY DEMANDS  ****************************
+! This section calculates the ANNUAL CVP SOD demands based on Maximum Demands in input
+
+! AG DEMANDS
+define anncvpCL_pag_sdv {std kind 'demand-annual' units 'taf'}
+
+define anncvpCL_pag_s {   ! CVP SOD AG DEMANDS, used in cvpcut_s and cvpmkup_s
+
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       condition month == OCT .and. wateryear == bgnWY
+       sum(i=0,11,1) dem_totcvps_pag(i) }
+
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       condition month == MAR .and. wateryear == EndWY
+       sum(i=prevOCT,SEP-month,1) dem_totcvps_pag(i) }
+
+       case March { ! March for wateryears bgnWY - year before EndWY
+       condition month == MAR .and. wateryear < EndWY
+       sum(i=0,11,1) dem_totcvps_pag(i) }
+
+       case Rest { 
+       condition always
+       value anncvpCL_pag_sdv(-1) }
+
+        }
+                                              
+goal set_annual_ag_s {anncvpCL_pag_sdv = anncvpCL_pag_s}                                              
+                                              
+! MI DEMANDS
+define anncvpCL_pmi_sdv {std kind 'demand-annual' units 'taf'}
+
+define anncvpCL_pmi_s {   ! CVP SOD MI DEMANDS, used in cvpcut_s and cvpmkup_s
+
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       condition month == OCT .and. wateryear == bgnWY
+       sum(i=0,11,1) dem_totcvps_pmi(i) }
+
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       condition month == MAR .and. wateryear == EndWY
+       sum(i=prevOCT,SEP-month,1) dem_totcvps_pmi(i) }
+
+       case March { ! March for wateryears bgnWY - year before EndWY
+       condition month == MAR .and. wateryear < EndWY
+       sum(i=0,11,1) dem_totcvps_pmi(i) }
+
+       case Rest { 
+       condition always
+       value anncvpCL_pmi_sdv(-1) }
+
+        }
+        
+goal set_annual_mi_s {anncvpCL_pmi_sdv = anncvpCL_pmi_s}        
+        
+! EXCHANGE DEMANDS
+define anncvpCL_pex_sdv {std kind 'demand-annual' units 'taf'}
+
+define anncvpCL_pex_s {    ! CVP SOD EX DEMANDS, used in cvpcut_s and cvpmkup_s
+                                      
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       condition month == OCT .and. wateryear == bgnWY
+       sum(i=0,11,1) dem_totcvps_pex(i) }
+
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       condition month == MAR .and. wateryear == EndWY
+       sum(i=prevOCT,SEP-month,1) dem_totcvps_pex(i) }
+
+       case March { ! March for wateryears bgnWY - year before EndWY
+       condition month == MAR .and. wateryear < EndWY
+       sum(i=0,11,1) dem_totcvps_pex(i) }
+
+       case Rest { 
+       condition always
+       value anncvpCL_pex_sdv(-1) }
+
+        }
+
+goal set_annual_ex_s {anncvpCL_pex_sdv = anncvpCL_pex_s}        
+                                      
+! REFUGE DEMANDS
+define anncvpCL_prf_sdv {std kind 'demand-annual' units 'taf'}
+
+define anncvpCL_prf_s {    ! CVP SOD REFUGE DEMANDS, used in cvpcut_s and cvpmkup_s
+
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       condition month == OCT .and. wateryear == bgnWY
+       sum(i=0,11,1) dem_totcvps_prf(i) }
+
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       condition month == MAR .and. wateryear == EndWY
+       sum(i=prevOCT,SEP-month,1) dem_totcvps_prf(i) }
+
+       case March { ! March for wateryears bgnWY - year before EndWY
+       condition month == MAR .and. wateryear < EndWY
+       sum(i=0,11,1) dem_totcvps_prf(i) }
+
+       case Rest { 
+       condition always
+       value anncvpCL_prf_sdv(-1) }
+
+        }                                      
+  
+goal set_annual_rf_s {anncvpCL_prf_sdv = anncvpCL_prf_s}  
+  
+! LOSSES
+define anncvpCL_pls_sdv {std kind 'demand-annual' units 'taf'}
+
+define anncvpCL_pls_s {   
+
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       condition month == OCT .and. wateryear == bgnWY
+       sum(i=0,11,1) dem_totcvps_pls(i) }
+
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       condition month == MAR .and. wateryear == EndWY
+       sum(i=prevOCT,SEP-month,1) dem_totcvps_pls(i) }
+
+       case March { ! March for wateryears bgnWY - year before EndWY
+       condition month == MAR .and. wateryear < EndWY
+       sum(i=0,11,1) dem_totcvps_pls(i) }
+
+       case Rest { 
+       condition always
+       value anncvpCL_pls_sdv(-1) }
+
+        }
+
+goal set_annual_ls_s {anncvpCL_pls_sdv = anncvpCL_pls_s}
+
+!***   TOTAL  SOUTH ************************************************************************************
+define anncvpCL_tot_s   {value anncvpCL_pag_s + anncvpCL_pmi_s + anncvpCL_pex_s + anncvpCL_prf_s + anncvpCL_pls_s }
+define anncvpCL_tot_sdv {std kind 'contract-annual' units 'taf'}
+goal set_anncvpCL_tot_s {anncvpCL_tot_sdv = anncvpCL_tot_s} 
+
+
+
+!   TOTAL SYSTEM
+!=======================================================================================================
+!=======================================================================================================
+
+define anncvpCL_pag_sys {value anncvpCL_pag_n + anncvpCL_pag_s}
+define anncvpCL_pmi_sys {value anncvpCL_pmi_n + anncvpCL_pmi_s}
+define anncvpCL_pex_sys {value anncvpCL_pex_s}
+define anncvpCL_psc_sys {value anncvpCL_psc_n}
+define anncvpCL_prf_sys {value anncvpCL_prf_n + anncvpCL_prf_s}
+define anncvpCL_pls_sys {value anncvpCL_pls_s}
+
+define anncvpCL_tot_sys {value anncvpCL_tot_n + anncvpCL_tot_s}
+define anncvpCL_sysdv   {std kind 'contract-annual' units 'taf'}
+goal set_anncvpCL_sysdv {anncvpCL_sysdv = anncvpCL_tot_sys} 

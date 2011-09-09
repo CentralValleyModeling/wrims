@@ -1,0 +1,1338 @@
+! E. Reyes 12/12/00
+
+! This file sums the monthly maximum stream diversion requirements into annual diversion requirements
+
+!  NORTH OF DELTA
+!=====================================================================================================
+!=====================================================================================================
+!**********************************************************************************
+!Define Annual Applied Water Rice Demand and Annual Urban Demand 
+!**********************************************************************************
+define AWRann_02_PAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+define AWRann_02_PA{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWR_02_PA(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWR_02_PA(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWR_02_PA(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWRann_02_PAdv(-1) } }
+       			
+goal setAWRann_02_PAdv {AWRann_02_PAdv = AWRann_02_PA}
+       			
+!Define Annual Demands
+define AWRann_03_PAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+define AWRann_03_PA{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWR_03_PA(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWR_03_PA(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWR_03_PA(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWRann_03_PAdv(-1) } }
+       			
+goal setAWRann_03_PAdv {AWRann_03_PAdv = AWRann_03_PA}
+       			       			
+       			
+define AWRann_04_PA1dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWRann_04_PA1{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWR_04_PA1(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWR_04_PA1(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWR_04_PA1(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWRann_04_PA1dv(-1) } }
+       			
+goal setAWRann_04_PA1dv {AWRann_04_PA1dv = AWRann_04_PA1}
+       			       			
+
+define AWRann_04_PA2dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWRann_04_PA2{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWR_04_PA2(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWR_04_PA2(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWR_04_PA2(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+        			value AWRann_04_PA2dv(-1) } }
+       			
+goal setAWRann_04_PA2dv {AWRann_04_PA2dv = AWRann_04_PA2}
+       			      			
+ 
+ define AWRann_07N_PAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+ define AWRann_07N_PA{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        			sum(i=0,11,1)  AWR_07N_PA(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        			sum(i=prevOCT,SEP-month,1) AWR_07N_PA(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        			sum(i=0,11,1)  AWR_07N_PA(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+        			value AWRann_07N_PAdv(-1) } }
+       			
+goal setAWRann_07N_PAdv {AWRann_07N_PAdv = AWRann_07N_PA}
+       			      			
+ 
+ define AWRann_07S_PAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+ define AWRann_07S_PA{   
+         case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+         		condition month == OCT .and. wateryear == bgnWY
+         			sum(i=0,11,1)  AWR_07S_PA(i)*cfs_taf(i)}
+         case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+         		condition month == MAR .and. wateryear == EndWY
+         			sum(i=prevOCT,SEP-month,1) AWR_07S_PA(i)*cfs_taf(i)}
+         case March { ! March for wateryears BgnWY - year before EndWY
+         		condition month == MAR .and. wateryear < EndWY
+         			sum(i=0,11,1)  AWR_07S_PA(i)*cfs_taf(i)}
+         case Rest { 
+         		condition always
+        			value AWRann_07S_PAdv(-1) } }
+       			
+goal setAWRann_07S_PAdv {AWRann_07S_PAdv = AWRann_07S_PA}
+       			      			
+        			
+ !Define Annual Demands
+ define AWRann_16_PAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+ define AWRann_16_PA{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        			sum(i=0,11,1)  AWR_16_PA(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        			sum(i=prevOCT,SEP-month,1) AWR_16_PA(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        			sum(i=0,11,1)  AWR_16_PA(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+        			value AWRann_16_PAdv(-1) } }
+       			
+goal setAWRann_16_PAdv {AWRann_16_PAdv = AWRann_16_PA}
+       			       			
+ 
+ define UDann_02_PUdv {std kind 'ANNUAL-URBAN-DEMAND' units 'taf'}
+ define UDann_02_PU{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        		sum(i=0,11,1)  UD_02_PU(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        		sum(i=prevOCT,SEP-month,1) UD_02_PU(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        		sum(i=0,11,1)  UD_02_PU(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+       			value UDann_02_PUdv(-1) } }
+       			
+goal setUDann_02_PUdv {UDann_02_PUdv = UDann_02_PU}
+       			       			
+ 
+define UDann_03_PU3dv {std kind 'ANNUAL-URBAN-DEMAND' units 'taf'}
+define UDann_03_PU3{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  UD_03_PU3(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) UD_03_PU3(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  UD_03_PU3(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value UDann_03_PU3dv(-1) } }
+       			
+goal setUDann_03_PU3dv {UDann_03_PU3dv = UDann_03_PU3}
+       			       			
+
+define UDann_03_PU1dv {std kind 'ANNUAL-URBAN-DEMAND' units 'taf'}       			
+define UDann_03_PU1{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        			sum(i=0,11,1)  UD_03_PU1(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        			sum(i=prevOCT,SEP-month,1) UD_03_PU1(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        			sum(i=0,11,1)  UD_03_PU1(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+       			value UDann_03_PU1dv(-1) } }
+       			
+goal setUDann_03_PU1dv {UDann_03_PU1dv = UDann_03_PU1}
+       			       			
+
+define UDann_03_PU2dv {std kind 'ANNUAL-URBAN-DEMAND' units 'taf'}       			
+define UDann_03_PU2{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  UD_03_PU2(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) UD_03_PU2(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  UD_03_PU2(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value UDann_03_PU2dv(-1) } }
+       			
+goal setUDann_03_PU2dv {UDann_03_PU2dv = UDann_03_PU2}
+       			       			
+       			
+!Define Annual Demands
+define AWRann_02_SAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+define AWRann_02_SA{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWR_02_SA(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWR_02_SA(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWR_02_SA(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWRann_02_SAdv(-1) } }
+       			
+goal setAWRann_02_SAdv {AWRann_02_SAdv = AWRann_02_SA}
+       			       			
+
+define AWRann_03_SAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWRann_03_SA{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWR_03_SA(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWR_03_SA(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWR_03_SA(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWRann_03_SAdv(-1) } }
+       			
+goal setAWRann_03_SAdv {AWRann_03_SAdv = AWRann_03_SA}
+       			       			
+
+define UDann_03_SUdv {std kind 'ANNUAL-URBAN-DEMAND' units 'taf'}       			
+define UDann_03_SU{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  UD_03_SU(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) UD_03_SU(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  UD_03_SU(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value UDann_03_SUdv(-1) } }
+       			
+goal setUDann_03_SUdv {UDann_03_SUdv = UDann_03_SU}
+       			       			
+       			
+define UDann_02_SUdv {std kind 'ANNUAL-URBAN-DEMAND' units 'taf'}       			
+define UDann_02_SU{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  UD_02_SU(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) UD_02_SU(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  UD_02_SU(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value UDann_02_SUdv(-1) } }
+       			
+goal setUDann_02_SUdv {UDann_02_SUdv = UDann_02_SU}
+       			       			       			
+
+define AWRann_08N_SA1dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWRann_08N_SA1{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWR_08N_SA1(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWR_08N_SA1(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWR_08N_SA1(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWRann_08N_SA1dv(-1) } }
+       			
+goal setAWRann_08N_SA1dv {AWRann_08N_SA1dv = AWRann_08N_SA1}
+       			       			
+
+define AWRann_08N_SA2dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWRann_08N_SA2{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWR_08N_SA2(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWR_08N_SA2(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWR_08N_SA2(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+        			value AWRann_08N_SA2dv(-1) } }
+       			
+goal setAWRann_08N_SA2dv {AWRann_08N_SA2dv = AWRann_08N_SA2}
+       			      			
+ 
+ define AWRann_08S_SA1dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+ define AWRann_08S_SA1{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        			sum(i=0,11,1)  AWR_08S_SA1(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        			sum(i=prevOCT,SEP-month,1) AWR_08S_SA1(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        			sum(i=0,11,1)  AWR_08S_SA1(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+        			value AWRann_08S_SA1dv(-1) } }
+       			
+goal setAWRann_08S_SA1dv {AWRann_08S_SA1dv = AWRann_08S_SA1}
+       			       			
+ 
+ define AWRann_08S_SA2dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+ define AWRann_08S_SA2{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        			sum(i=0,11,1)  AWR_08S_SA2(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        			sum(i=prevOCT,SEP-month,1) AWR_08S_SA2(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        			sum(i=0,11,1)  AWR_08S_SA2(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+        			value AWRann_08S_SA2dv(-1) } }
+       			
+goal setAWRann_08S_SA2dv {AWRann_08S_SA2dv = AWRann_08S_SA2}
+       			       			
+ 
+ define AWRann_08S_SA3dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+ define AWRann_08S_SA3{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        			sum(i=0,11,1)  AWR_08S_SA3(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        			sum(i=prevOCT,SEP-month,1) AWR_08S_SA3(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        			sum(i=0,11,1)  AWR_08S_SA3(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+        			value AWRann_08S_SA3dv(-1) } }
+       			
+goal setAWRann_08S_SA3dv {AWRann_08S_SA3dv = AWRann_08S_SA3}
+       			       			
+        			
+ define AWRann_09_SA1dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+ define AWRann_09_SA1{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        			sum(i=0,11,1)  AWR_09_SA1(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        			sum(i=prevOCT,SEP-month,1) AWR_09_SA1(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        			sum(i=0,11,1)  AWR_09_SA1(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+       			value AWRann_09_SA1dv(-1) } }
+       			
+goal setAWRann_09_SA1dv {AWRann_09_SA1dv = AWRann_09_SA1}
+       			       			
+
+define AWRann_09_SA2dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWRann_09_SA2{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWR_09_SA2(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWR_09_SA2(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWR_09_SA2(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWRann_09_SA2dv(-1) } }
+       			
+goal setAWRann_09_SA2dv {AWRann_09_SA2dv = AWRann_09_SA2}
+       			       			
+define AWRann_18_SAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWRann_18_SA{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWR_18_SA(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWR_18_SA(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWR_18_SA(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWRann_18_SAdv(-1) } }
+       			
+goal setAWRann_18_SAdv {AWRann_18_SAdv = AWRann_18_SA}
+       			       			
+       			       			
+define AWRann_19_SAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWRann_19_SA{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWR_19_SA(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWR_19_SA(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWR_19_SA(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWRann_19_SAdv(-1) } }
+       			
+goal setAWRann_19_SAdv {AWRann_19_SAdv = AWRann_19_SA}
+       			       			
+
+define AWRann_21_SAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWRann_21_SA{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWR_21_SA(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWR_21_SA(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWR_21_SA(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWRann_21_SAdv(-1) } }
+       			
+goal setAWRann_21_SAdv {AWRann_21_SAdv = AWRann_21_SA}
+       			       			
+
+define AWRann_22_SA1dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWRann_22_SA1{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWR_22_SA1(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWR_22_SA1(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWR_22_SA1(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWRann_22_SA1dv(-1) } }
+       			
+goal setAWRann_22_SA1dv {AWRann_22_SA1dv = AWRann_22_SA1}
+       			       			
+
+define AWRann_08N_PR1dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWRann_08N_PR1{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWR_08N_PR1(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWR_08N_PR1(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWR_08N_PR1(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWRann_08N_PR1dv(-1) } }
+       			
+goal setAWRann_08N_PR1dv {AWRann_08N_PR1dv = AWRann_08N_PR1}
+       			       			
+
+define AWRann_08N_PR2dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			     			
+define AWRann_08N_PR2{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWR_08N_PR2(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWR_08N_PR2(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWR_08N_PR2(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWRann_08N_PR2dv(-1) } }
+       			
+goal setAWRann_08N_PR2dv {AWRann_08N_PR2dv = AWRann_08N_PR2}
+       			       			
+ 
+ define AWRann_08S_PRdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+ define AWRann_08S_PR{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        			sum(i=0,11,1)  AWR_08S_PR(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        			sum(i=prevOCT,SEP-month,1) AWR_08S_PR(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        			sum(i=0,11,1)  AWR_08S_PR(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+       			value AWRann_08S_PRdv(-1) } }
+       			
+goal setAWRann_08S_PRdv {AWRann_08S_PRdv = AWRann_08S_PR}
+       			        			
+
+define AWRann_17N_PRdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}        			
+define AWRann_17N_PR{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWR_17N_PR(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWR_17N_PR(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWR_17N_PR(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWRann_17N_PRdv(-1) } }
+       			
+goal setAWRann_17N_PRdv {AWRann_17N_PRdv = AWRann_17N_PR}
+       			       			        			
+/*
+define AWRann_17S_PRdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWann_17S_PR{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  (AWR_17S_PR(i)+AWO_17S_PR(i)+AWW_17S_PR(i))*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) (AWR_17S_PR(i)+AWO_17S_PR(i)+AWW_17S_PR(i))*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  (AWR_17S_PR(i)+AWO_17S_PR(i)+AWW_17S_PR(i))*cfs_taf(i)}
+       case Rest { 
+       		condition always
+        			value AWann_17S_PRdv(-1) } }
+       			
+goal setAWRann_17S_PRdv {AWRann_17S_PRdv = AWRann_17S_PR}
+*/       			      			      			       			
+
+!****************************************************************************
+!Define Annual Applied Water Demand for crops other than rice
+!****************************************************************************
+define AWOann_02_PAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+define AWOann_02_PA{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWO_02_PA(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWO_02_PA(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWO_02_PA(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWOann_02_PAdv(-1) } }
+
+goal setAWOann_02_PAdv {AWOann_02_PAdv = AWOann_02_PA}
+       			
+!Define Annual Demands
+define AWOann_03_PAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+define AWOann_03_PA{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWO_03_PA(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWO_03_PA(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWO_03_PA(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWOann_03_PAdv(-1) } }
+
+goal setAWOann_03_PAdv {AWOann_03_PAdv = AWOann_03_PA}
+       			       			
+
+define AWOann_04_PA1dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWOann_04_PA1{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWO_04_PA1(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWO_04_PA1(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWO_04_PA1(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWOann_04_PA1dv(-1) } }
+
+goal setAWOann_04_PA1dv {AWOann_04_PA1dv = AWOann_04_PA1}
+       			       			
+
+define AWOann_04_PA2dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWOann_04_PA2{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWO_04_PA2(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWO_04_PA2(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWO_04_PA2(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+        			value AWOann_04_PA2dv(-1) } }
+
+goal setAWOann_04_PA2dv {AWOann_04_PA2dv = AWOann_04_PA2}
+       			      			
+ 
+ define AWOann_07N_PAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+ define AWOann_07N_PA{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        			sum(i=0,11,1)  AWO_07N_PA(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        			sum(i=prevOCT,SEP-month,1) AWO_07N_PA(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        			sum(i=0,11,1)  AWO_07N_PA(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+       			value AWOann_07N_PAdv(-1) } }
+
+goal setAWOann_07N_PAdv {AWOann_07N_PAdv = AWOann_07N_PA}
+       			       			
+ 
+ define AWOann_07S_PAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+ define AWOann_07S_PA{   
+         case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+         		condition month == OCT .and. wateryear == bgnWY
+         			sum(i=0,11,1)  AWO_07S_PA(i)*cfs_taf(i)}
+         case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+         		condition month == MAR .and. wateryear == EndWY
+         			sum(i=prevOCT,SEP-month,1) AWO_07S_PA(i)*cfs_taf(i)}
+         case March { ! March for wateryears BgnWY - year before EndWY
+         		condition month == MAR .and. wateryear < EndWY
+         			sum(i=0,11,1)  AWO_07S_PA(i)*cfs_taf(i)}
+         case Rest { 
+         		condition always
+        			value AWOann_07S_PAdv(-1) } }
+
+goal setAWOann_07S_PAdv {AWOann_07S_PAdv = AWOann_07S_PA}
+       			      			
+        			
+ !Define Annual Demands
+ define AWOann_16_PAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+ define AWOann_16_PA{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        			sum(i=0,11,1)  AWO_16_PA(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        			sum(i=prevOCT,SEP-month,1) AWO_16_PA(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        			sum(i=0,11,1)  AWO_16_PA(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+        			value AWOann_16_PAdv(-1) } }
+
+goal setAWOann_16_PAdv {AWOann_16_PAdv = AWOann_16_PA}
+       			       			
+        			
+        			
+!Define Annual Demands
+define AWOann_02_SAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+define AWOann_02_SA{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWO_02_SA(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWO_02_SA(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWO_02_SA(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWOann_02_SAdv(-1) } }
+
+goal setAWOann_02_SAdv {AWOann_02_SAdv = AWOann_02_SA}
+       			       			
+
+define AWOann_03_SAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWOann_03_SA{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWO_03_SA(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWO_03_SA(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWO_03_SA(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWOann_03_SAdv(-1) } }
+
+goal setAWOann_03_SAdv {AWOann_03_SAdv = AWOann_03_SA}
+       			       			
+       			
+define AWOann_08N_SA1dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWOann_08N_SA1{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWO_08N_SA1(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWO_08N_SA1(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWO_08N_SA1(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWOann_08N_SA1dv(-1) } }
+
+goal setAWOann_08N_SA1dv {AWOann_08N_SA1dv = AWOann_08N_SA1}
+       			       			
+
+define AWOann_08N_SA2dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWOann_08N_SA2{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWO_08N_SA2(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWO_08N_SA2(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWO_08N_SA2(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+        			value AWOann_08N_SA2dv(-1) } }
+
+goal setAWOann_08N_SA2dv {AWOann_08N_SA2dv = AWOann_08N_SA2}
+       			      			
+ 
+ define AWOann_08S_SA1dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+ define AWOann_08S_SA1{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        			sum(i=0,11,1)  AWO_08S_SA1(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        			sum(i=prevOCT,SEP-month,1) AWO_08S_SA1(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        			sum(i=0,11,1)  AWO_08S_SA1(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+        			value AWOann_08S_SA1dv(-1) } }
+
+goal setAWOann_08S_SA1dv {AWOann_08S_SA1dv = AWOann_08S_SA1}
+       			       			
+ 
+ define AWOann_08S_SA2dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+ define AWOann_08S_SA2{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        			sum(i=0,11,1)  AWO_08S_SA2(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        			sum(i=prevOCT,SEP-month,1) AWO_08S_SA2(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        			sum(i=0,11,1)  AWO_08S_SA2(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+        			value AWOann_08S_SA2dv(-1) } }
+
+goal setAWOann_08S_SA2dv {AWOann_08S_SA2dv = AWOann_08S_SA2}
+       			       			
+ 
+ define AWOann_08S_SA3dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+ define AWOann_08S_SA3{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        			sum(i=0,11,1)  AWO_08S_SA3(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        			sum(i=prevOCT,SEP-month,1) AWO_08S_SA3(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        			sum(i=0,11,1)  AWO_08S_SA3(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+        			value AWOann_08S_SA3dv(-1) } }
+
+goal setAWOann_08S_SA3dv {AWOann_08S_SA3dv = AWOann_08S_SA3}
+       			       			
+ 
+ define AWOann_09_SA1dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+ define AWOann_09_SA1{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        			sum(i=0,11,1)  AWO_09_SA1(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        			sum(i=prevOCT,SEP-month,1) AWO_09_SA1(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        			sum(i=0,11,1)  AWO_09_SA1(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+       			value AWOann_09_SA1dv(-1) } }
+
+goal setAWOann_09_SA1dv {AWOann_09_SA1dv = AWOann_09_SA1}
+       			       			
+
+define AWOann_09_SA2dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWOann_09_SA2{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWO_09_SA2(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWO_09_SA2(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWO_09_SA2(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWOann_09_SA2dv(-1) } }
+
+goal setAWOann_09_SA2dv {AWOann_09_SA2dv = AWOann_09_SA2}
+       			       			
+
+define AWOann_18_SAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWOann_18_SA{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWO_18_SA(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWO_18_SA(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWO_18_SA(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWOann_18_SAdv(-1) } }
+
+goal setAWOann_18_SAdv {AWOann_18_SAdv = AWOann_18_SA}
+       			       			
+
+define AWOann_19_SAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWOann_19_SA{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWO_19_SA(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWO_19_SA(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWO_19_SA(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWOann_19_SAdv(-1) } }
+
+goal setAWOann_19_SAdv {AWOann_19_SAdv = AWOann_19_SA}
+       			       			
+
+define AWOann_21_SAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWOann_21_SA{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWO_21_SA(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWO_21_SA(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWO_21_SA(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWOann_21_SAdv(-1) } }
+
+goal setAWOann_21_SAdv {AWOann_21_SAdv = AWOann_21_SA}
+       			       			
+
+define AWOann_22_SA1dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWOann_22_SA1{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWO_22_SA1(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWO_22_SA1(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWO_22_SA1(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWOann_22_SA1dv(-1) } }
+
+goal setAWOann_22_SA1dv {AWOann_22_SA1dv = AWOann_22_SA1}
+
+define AWOann_08N_PR1dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWOann_08N_PR1{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWO_08N_PR1(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWO_08N_PR1(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWO_08N_PR1(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWOann_08N_PR1dv(-1) } }
+
+goal setAWOann_08N_PR1dv {AWOann_08N_PR1dv = AWOann_08N_PR1}
+       			       			
+
+define AWOann_08N_PR2dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			     			
+define AWOann_08N_PR2{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWO_08N_PR2(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWO_08N_PR2(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWO_08N_PR2(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+        			value AWOann_08N_PR2dv(-1) } }
+
+goal setAWOann_08N_PR2dv {AWOann_08N_PR2dv = AWOann_08N_PR2}
+       			      			
+ 
+ define AWOann_08S_PRdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+ define AWOann_08S_PR{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        			sum(i=0,11,1)  AWO_08S_PR(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        			sum(i=prevOCT,SEP-month,1) AWO_08S_PR(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        			sum(i=0,11,1)  AWO_08S_PR(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+        			value AWOann_08S_PRdv(-1) } }
+
+goal setAWOann_08S_PRdv {AWOann_08S_PRdv = AWOann_08S_PR}
+
+define AWOann_17N_PRdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+ define AWOann_17N_PR{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        			sum(i=0,11,1)  AWO_17N_PR(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        			sum(i=prevOCT,SEP-month,1) AWO_17N_PR(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        			sum(i=0,11,1)  AWO_17N_PR(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+        			value AWOann_17N_PRdv(-1) } }
+
+goal setAWOann_17N_PRdv {AWOann_17N_PRdv = AWOann_17N_PR}
+/*
+define AWOann_17S_PRdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+ define AWOann_17S_PR{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        			sum(i=0,11,1)  AWO_17S_PR(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        			sum(i=prevOCT,SEP-month,1) AWO_17S_PR(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        			sum(i=0,11,1)  AWO_17S_PR(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+        			value AWOann_17S_PRdv(-1) } }
+
+goal setAWOann_17S_PRdv {AWOann_17S_PRdv = AWOann_17S_PR}
+*/       			       					       			
+!**********************************************************************************
+!Define Annual Applied Water Demand for Wetlands 
+!**********************************************************************************
+define AWWann_08N_PAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWWann_08N_PA{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWW_08N_PA(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWW_08N_PA(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWW_08N_PA(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWWann_08N_PAdv(-1) } }
+
+goal setAWWann_08N_PAdv {AWWann_08N_PAdv = AWWann_08N_PA}
+
+define AWWann_08N_SA1dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWWann_08N_SA1{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWW_08N_SA1(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWW_08N_SA1(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWW_08N_SA1(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWWann_08N_SA1dv(-1) } }
+
+goal setAWWann_08N_SA1dv {AWWann_08N_SA1dv = AWWann_08N_SA1}
+
+define AWWann_08N_SA2dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWWann_08N_SA2{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWW_08N_SA2(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWW_08N_SA2(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWW_08N_SA2(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWWann_08N_SA2dv(-1) } }
+
+goal setAWWann_08N_SA2dv {AWWann_08N_SA2dv = AWWann_08N_SA2}
+
+define AWWann_08S_SA1dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWWann_08S_SA1{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWW_08S_SA1(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWW_08S_SA1(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWW_08S_SA1(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWWann_08S_SA1dv(-1) } }
+
+goal setAWWann_08S_SA1dv {AWWann_08S_SA1dv = AWWann_08S_SA1}
+
+define AWWann_08S_SA2dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWWann_08S_SA2{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWW_08S_SA2(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWW_08S_SA2(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWW_08S_SA2(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWWann_08S_SA2dv(-1) } }
+
+goal setAWWann_08S_SA2dv {AWWann_08S_SA2dv = AWWann_08S_SA2}
+
+define AWWann_08S_PAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWWann_08S_PA{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWW_08S_PA(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWW_08S_PA(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWW_08S_PA(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWWann_08S_PAdv(-1) } }
+
+goal setAWWann_08S_PAdv {AWWann_08S_PAdv = AWWann_08S_PA}
+
+define AWWann_09_SA2dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWWann_09_SA2{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWW_09_SA2(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWW_09_SA2(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWW_09_SA2(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWWann_09_SA2dv(-1) } }
+
+goal setAWWann_09_SA2dv {AWWann_09_SA2dv = AWWann_09_SA2}
+
+define AWWann_21_PAdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWWann_21_PA{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWW_21_PA(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWW_21_PA(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWW_21_PA(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWWann_21_PAdv(-1) } }
+
+goal setAWWann_21_PAdv {AWWann_21_PAdv = AWWann_21_PA}
+
+define AWWann_08N_PR1dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			
+define AWWann_08N_PR1{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWW_08N_PR1(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWW_08N_PR1(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWW_08N_PR1(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWWann_08N_PR1dv(-1) } }
+
+goal setAWWann_08N_PR1dv {AWWann_08N_PR1dv = AWWann_08N_PR1}
+       			       			
+
+define AWWann_08N_PR2dv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}       			     			
+define AWWann_08N_PR2{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWW_08N_PR2(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWW_08N_PR2(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWW_08N_PR2(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+        			value AWWann_08N_PR2dv(-1) } }
+
+goal setAWWann_08N_PR2dv {AWWann_08N_PR2dv = AWWann_08N_PR2}
+       			      			
+ 
+ define AWWann_08S_PRdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}
+ define AWWann_08S_PR{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        			sum(i=0,11,1)  AWW_08S_PR(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        			sum(i=prevOCT,SEP-month,1) AWW_08S_PR(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        			sum(i=0,11,1)  AWW_08S_PR(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+        			value AWWann_08S_PRdv(-1) } }
+
+goal setAWWann_08S_PRdv {AWWann_08S_PRdv = AWWann_08S_PR}
+       			       			
+
+define AWWann_09_PRdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'}        			
+define AWWann_09_PR{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+       		condition month == OCT .and. wateryear == bgnWY
+       			sum(i=0,11,1)  AWW_09_PR(i)*cfs_taf(i)}
+       case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+       		condition month == MAR .and. wateryear == EndWY
+       			sum(i=prevOCT,SEP-month,1) AWW_09_PR(i)*cfs_taf(i)}
+       case March { ! March for wateryears BgnWY - year before EndWY
+       		condition month == MAR .and. wateryear < EndWY
+       			sum(i=0,11,1)  AWW_09_PR(i)*cfs_taf(i)}
+       case Rest { 
+       		condition always
+       			value AWWann_09_PRdv(-1) } }
+
+goal setAWWann_09_PRdv {AWWann_09_PRdv = AWWann_09_PR}
+       			       			       			
+define AWWann_17N_PRdv {std kind 'ANNUAL-APPLIED-WATER' units 'taf'} 
+define AWWann_17N_PR{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        			sum(i=0,11,1)  AWW_17N_PR(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        			sum(i=prevOCT,SEP-month,1) AWW_17N_PR(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        			sum(i=0,11,1)  AWW_17N_PR(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+        			value AWWann_17N_PRdv(-1) } }
+        			
+ goal setAWWann_17N_PRdv {AWWann_17N_PRdv = AWWann_17N_PR}       			
+/*        			
+ define AWWann_17S_PR{   
+        case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+        		condition month == OCT .and. wateryear == bgnWY
+        			sum(i=0,11,1)  AWW_17S_PR(i)*cfs_taf(i)}
+        case MarEndWY {  ! special case for last wateryear, Sum Oct-Sep
+        		condition month == MAR .and. wateryear == EndWY
+        			sum(i=prevOCT,SEP-month,1) AWW_17S_PR(i)*cfs_taf(i)}
+        case March { ! March for wateryears BgnWY - year before EndWY
+        		condition month == MAR .and. wateryear < EndWY
+        			sum(i=0,11,1)  AWW_17S_PR(i)*cfs_taf(i)}
+        case Rest { 
+        		condition always
+        			value 0.0 } }
+*/
+
+! Define diversion requirement
+! CVP Agricultural Water Service Contractors
+define DR_02_PA  	{value  MAX(0.0,MIN(CLann_WTPCSD_02_PA,	(AWRann_02_PA  *(1- RUFR_02_PA)  +AWOann_02_PA  *(1- RUFO_02_PA))   	* (1+ RPF_02_PA)  	*(1-GPmin_02_PA  )	*(1 + EVF_WTPCSD_02_PA  + DPF_WTPCSD_02_PA + LFF_WTPCSD_02_PA + OSF_WTPCSD_02_PA	)))}
+define DR_03_PA  	{value  MAX(0.0,MIN(CLann_SAC294_03_PA,		(AWRann_03_PA  *(1- RUFR_03_PA)  +AWOann_03_PA  *(1- RUFO_03_PA))   	* (1+ RPF_03_PA)  	*(1-GPmin_03_PA  )	*(1 + EVF_SAC294_03_PA  + DPF_SAC294_03_PA + LFF_SAC294_03_PA + OSF_SAC294_03_PA	)))}
+define DR_04_PA1  	{value  MAX(0.0,MIN(CLann_CCL005_04_PA1,	(AWRann_04_PA1 *(1- RUFR_04_PA1) +AWOann_04_PA1 *(1- RUFO_04_PA1))  	* (1+ RPF_04_PA1) 	*(1-GPmin_04_PA1  )	*(1 + EVF_CCL005_04_PA1  + DPF_CCL005_04_PA1 + LFF_CCL005_04_PA1 + OSF_CCL005_04_PA1	)))}
+define DR_04_PA2  	{value  MAX(0.0,MIN(CLann_TCC022_04_PA2,	(AWRann_04_PA2 *(1- RUFR_04_PA2) +AWOann_04_PA2 *(1- RUFO_04_PA2))  	* (1+ RPF_04_PA2) 	*(1-GPmin_04_PA2  )	*(1 + EVF_TCC022_04_PA2  + DPF_TCC022_04_PA2 + LFF_TCC022_04_PA2 + OSF_TCC022_04_PA2	)))}			
+define DR_07N_PA  	{value  MAX(0.0,MIN(CLann_TCC036_07N_PA,	(AWRann_07N_PA *(1- RUFR_07N_PA) +AWOann_07N_PA *(1- RUFO_07N_PA))  	* (1+ RPF_07N_PA) 	*(1-GPmin_07N_PA  )	*(1 + EVF_TCC036_07N_PA  + DPF_TCC036_07N_PA + LFF_TCC036_07N_PA + OSF_TCC036_07N_PA	)))}
+define DR_07S_PA  	{value  MAX(0.0,MIN(CLann_TCC081_07S_PA,	(AWRann_07S_PA *(1- RUFR_07S_PA) +AWOann_07S_PA *(1- RUFO_07S_PA))  	* (1+ RPF_07S_PA) 	*(1-GPmin_07S_PA  )	*(1 + EVF_TCC081_07S_PA  + DPF_TCC081_07S_PA + LFF_TCC081_07S_PA + OSF_TCC081_07S_PA	)))}
+define DR_16_PA  	{value  MAX(0.0,MIN(CLann_FTR021_16_PA,		(AWRann_16_PA *(1- RUFR_16_PA) +AWOann_16_PA *(1- RUFO_16_PA))  	* (1+ RPF_16_PA) 	*(1-GPmin_16_PA  )	*(1 + EVF_FTR021_16_PA  + DPF_FTR021_16_PA + LFF_FTR021_16_PA + OSF_FTR021_16_PA	)))}
+
+define anncvpDR_pag_n {value DR_02_PA + DR_03_PA + DR_04_PA1 + DR_04_PA2 + DR_07N_PA + DR_07S_PA + DR_16_PA}
+
+! CVP Urban Water Service Contractors
+define DR_02_PU  	{value  MAX(0.0,MIN(CLann_WTPCSD_02_PU + CLann_WKYTN_02_PU,	UDann_02_PU		*(1-GPmin_02_PU  )	*(1 + EF_WTPCSD_02_PU + SF_WTPCSD_02_PU)))}				
+define DR_03_PU3 	{value  MAX(0.0,MIN(CLann_WTPBUK_03_PU3,  			UDann_03_PU3 		*(1-GPmin_03_PU3 )	*(1 + EF_WTPBUK_03_PU3 + SF_WTPBUK_03_PU3 	)))}		
+define DR_03_PU1 	{value  MAX(0.0,MIN(CLann_SHSTA_03_PU1,   			UDann_03_PU1 		*(1-GPmin_03_PU1 )	*(1 + EF_WTPJMS_03_PU1  + SF_WTPJMS_03_PU1	)))}		
+define DR_03_PU2 	{value  MAX(0.0,MIN(CLann_SAC294_03_PU2,  			UDann_03_PU2 		*(1-GPmin_03_PU2 )	*(1 + EF_SAC294_03_PU2 	+ SF_SAC294_03_PU2	)))}
+
+define anncvpDR_pmi_n {value DR_02_PU + DR_03_PU3 + DR_03_PU1 + DR_03_PU2 }
+
+! CVP Settlement Contractors (for multiple diversions assume losses the same to simplify code)
+define DR_02_SA 		{value  MAX(0.0,MIN(CLP_SAC296_02_SA   + CLN_SAC296_02_SA,	(AWRann_02_SA   *(1- RUFR_02_SA)	 +AWOann_02_SA   *(1- RUFO_02_SA))	* (1+ RPF_02_SA)        	*(1-GPmin_02_SA )	*(1 + EVF_SAC296_02_SA  + DPF_SAC296_02_SA + LFF_SAC296_02_SA + OSF_SAC296_02_SA	)))}		
+define DR_03_SA 		{value  MAX(0.0,MIN(CLP_SAC289_03_SA   + CLN_SAC289_03_SA,	(AWRann_03_SA   *(1- RUFR_03_SA)	 +AWOann_03_SA   *(1- RUFO_03_SA))	* (1+ RPF_03_SA)        	*(1-GPmin_03_SA )	*(1 + EVF_SAC289_03_SA  + DPF_SAC289_03_SA + LFF_SAC289_03_SA + OSF_SAC289_03_SA	)))}
+define DR_08N_SA1_A 	{value  MAX(0.0,MIN(CLP_SAC178_08N_SA1 + CLN_SAC178_08N_SA1,	(AWRann_08N_SA1 *(1- RUFR_08N_SA1) +AWOann_08N_SA1 *(1- RUFO_08N_SA1) + AWwann_08N_SA1 *(1- RUFw_08N_SA1)) 	* (1+ RPF_08N_SA1)	*(1-GPmin_08N_SA1 )	*(1 + EVF_SAC178_08N_SA1  + DPF_SAC178_08N_SA1 + LFF_SAC178_08N_SA1 + OSF_SAC178_08N_SA1	)))}
+define DR_08N_SA1_B 	{value  MAX(0.0,MIN(CLP_SAC159_08N_SA1 + CLN_SAC159_08N_SA1,	(AWRann_08N_SA1 *(1- RUFR_08N_SA1) +AWOann_08N_SA1 *(1- RUFO_08N_SA1) + AWwann_08N_SA1 *(1- RUFw_08N_SA1)) 	* (1+ RPF_08N_SA1)	*(1-GPmin_08N_SA1 )	*(1 + EVF_SAC159_08N_SA1  + DPF_SAC159_08N_SA1 + LFF_SAC159_08N_SA1 + OSF_SAC159_08N_SA1	)))}
+define DR_08N_SA2 	{value  MAX(0.0,MIN(CLP_GCC027_08N_SA2 + CLN_GCC027_08N_SA2,(AWRann_08N_SA2 *(1- RUFR_08N_SA2) +AWOann_08N_SA2 *(1- RUFO_08N_SA2) + AWwann_08N_SA2 *(1- RUFw_08N_SA2))	* (1+ RPF_08N_SA2)	*(1-GPmin_08N_SA2 )	*(1 + EVF_GCC027_08N_SA2  + DPF_GCC027_08N_SA2 + LFF_GCC027_08N_SA2 + OSF_GCC027_08N_SA2	)))}
+define DR_08S_SA1 	{value  MAX(0.0,MIN(CLP_SAC159_08S_SA1 + CLN_SAC159_08S_SA1,	(AWRann_08S_SA1 *(1- RUFR_08S_SA1) +AWOann_08S_SA1 *(1- RUFO_08S_SA1) + AWwann_08S_SA1 *(1- RUFw_08S_SA1))	* (1+ RPF_08S_SA1)     	*(1-GPmin_08S_SA1 )	*(1 + EVF_SAC159_08S_SA1  + DPF_SAC159_08S_SA1 + LFF_SAC159_08S_SA1 + OSF_SAC159_08S_SA1	)))}
+define DR_08S_SA2 	{value  MAX(0.0,MIN(CLP_GCC056_08S_SA2 + CLN_GCC056_08S_SA2,(AWRann_08S_SA2 *(1- RUFR_08S_SA2) +AWOann_08S_SA2 *(1- RUFO_08S_SA2) + AWwann_08S_SA2 *(1- RUFw_08S_SA2))	* (1+ RPF_08S_SA2)     	*(1-GPmin_08S_SA2 )	*(1 + EVF_GCC056_08S_SA2  + DPF_GCC056_08S_SA2 + LFF_GCC056_08S_SA2 + OSF_GCC056_08S_SA2	)))}
+define DR_08S_SA3_A 	{value  MAX(0.0,MIN(CLP_SAC121_08S_SA3 + CLN_SAC121_08S_SA3,	(AWRann_08S_SA3 *(1- RUFR_08S_SA3) +AWOann_08S_SA3 *(1- RUFO_08S_SA3))	* (1+ RPF_08S_SA3)	*(1-GPmin_08S_SA3 )	*(1 + EVF_SAC121_08S_SA3  + DPF_SAC121_08S_SA3 + LFF_SAC121_08S_SA3 + OSF_SAC121_08S_SA3	)))}
+define DR_08S_SA3_B 	{value  MAX(0.0,MIN(CLP_SAC109_08S_SA3 + CLN_SAC109_08S_SA3,	(AWRann_08S_SA3 *(1- RUFR_08S_SA3) +AWOann_08S_SA3 *(1- RUFO_08S_SA3))	* (1+ RPF_08S_SA3)	*(1-GPmin_08S_SA3 )	*(1 + EVF_SAC109_08S_SA3  + DPF_SAC109_08S_SA3 + LFF_SAC109_08S_SA3 + OSF_SAC109_08S_SA3	)))}
+define DR_09_SA1 		{value  MAX(0.0,MIN(CLP_MTC000_09_SA1  + CLN_MTC000_09_SA1,	(AWRann_09_SA1  *(1- RUFR_09_SA1)	 +AWOann_09_SA1  *(1- RUFO_09_SA1))	* (1+ RPF_09_SA1) 	*(1-GPmin_09_SA1 )	*(1 + EVF_MTC000_09_SA1  + DPF_MTC000_09_SA1 + LFF_MTC000_09_SA1 + OSF_MTC000_09_SA1	)))}
+define DR_09_SA2 		{value  MAX(0.0,MIN(CLP_SAC162_09_SA2  + CLN_SAC162_09_SA2,	(AWRann_09_SA2  *(1- RUFR_09_SA2)	 +AWOann_09_SA2  *(1- RUFO_09_SA2))	* (1+ RPF_09_SA2) 	*(1-GPmin_09_SA2 )	*(1 + EVF_SAC162_09_SA2  + DPF_SAC162_09_SA2 + LFF_SAC162_09_SA2 + OSF_SAC162_09_SA2	)))}
+define DR_18_SA 		{value  MAX(0.0,MIN(CLP_SAC136_18_SA  + CLN_SAC136_18_SA,		(AWRann_18_SA  *(1- RUFR_18_SA)	 +AWOann_18_SA  *(1- RUFO_18_SA))	* (1+ RPF_18_SA) 	*(1-GPmin_18_SA )	*(1 + EVF_SAC136_18_SA  + DPF_SAC136_18_SA + LFF_SAC136_18_SA + OSF_SAC136_18_SA	)))}
+define DR_19_SA_A 	{value  MAX(0.0,MIN(CLP_SAC122_19_SA  + CLN_SAC122_19_SA,		(AWRann_19_SA  *(1- RUFR_19_SA)	 +AWOann_19_SA  *(1- RUFO_19_SA))	* (1+ RPF_19_SA) 	*(1-GPmin_19_SA )	*(1 + EVF_SAC122_19_SA  + DPF_SAC122_19_SA + LFF_SAC122_19_SA + OSF_SAC122_19_SA	)))}
+define DR_19_SA_B 	{value  MAX(0.0,MIN(CLP_SAC115_19_SA  + CLN_SAC115_19_SA,  	(AWRann_19_SA  *(1- RUFR_19_SA)	 +AWOann_19_SA  *(1- RUFO_19_SA))	* (1+ RPF_19_SA) 	*(1-GPmin_19_SA )	*(1 + EVF_SAC115_19_SA  + DPF_SAC115_19_SA + LFF_SAC115_19_SA + OSF_SAC115_19_SA	)))}
+define DR_19_SA_C 	{value  MAX(0.0,MIN(CLP_SAC099_19_SA  + CLN_SAC099_19_SA,  	(AWRann_19_SA  *(1- RUFR_19_SA)	 +AWOann_19_SA  *(1- RUFO_19_SA))	* (1+ RPF_19_SA) 	*(1-GPmin_19_SA )	*(1 + EVF_SAC099_19_SA  + DPF_SAC099_19_SA + LFF_SAC099_19_SA + OSF_SAC099_19_SA	)))}
+define DR_19_SA_D 	{value  MAX(0.0,MIN(CLP_SAC091_19_SA  + CLN_SAC091_19_SA,  	(AWRann_19_SA  *(1- RUFR_19_SA)	 +AWOann_19_SA  *(1- RUFO_19_SA))	* (1+ RPF_19_SA) 	*(1-GPmin_19_SA )	*(1 + EVF_SAC091_19_SA  + DPF_SAC091_19_SA + LFF_SAC091_19_SA + OSF_SAC091_19_SA	)))}
+define DR_21_SA_A 	{value  MAX(0.0,MIN(CLP_SAC083_21_SA  + CLN_SAC083_21_SA,		(AWRann_21_SA  *(1- RUFR_21_SA)	 +AWOann_21_SA  *(1- RUFO_21_SA))	* (1+ RPF_21_SA) 	*(1-GPmin_21_SA )	*(1 + EVF_SAC083_21_SA  + DPF_SAC083_21_SA + LFF_SAC083_21_SA + OSF_SAC083_21_SA	)))}
+define DR_21_SA_B 	{value  MAX(0.0,MIN(CLP_SAC074_21_SA  + CLN_SAC074_21_SA,		(AWRann_21_SA  *(1- RUFR_21_SA)	 +AWOann_21_SA  *(1- RUFO_21_SA))	* (1+ RPF_21_SA) 	*(1-GPmin_21_SA )	*(1 + EVF_SAC074_21_SA  + DPF_SAC074_21_SA + LFF_SAC074_21_SA + OSF_SAC074_21_SA	)))}
+define DR_22_SA1_A 	{value  MAX(0.0,MIN(CLP_SAC082_22_SA1 + CLN_SAC082_22_SA1,	(AWRann_22_SA1 *(1- RUFR_22_SA1) +AWOann_22_SA1 *(1- RUFO_22_SA1)) 	* (1+ RPF_22_SA1)	*(1-GPmin_22_SA1 )	*(1 + EVF_SAC082_22_SA1  + DPF_SAC082_22_SA1 + LFF_SAC082_22_SA1 + OSF_SAC082_22_SA1	)))}
+define DR_22_SA1_B 	{value  MAX(0.0,MIN(CLP_SAC078_22_SA1 + CLN_SAC078_22_SA1,	(AWRann_22_SA1 *(1- RUFR_22_SA1) +AWOann_22_SA1 *(1- RUFO_22_SA1)) 	* (1+ RPF_22_SA1)	*(1-GPmin_22_SA1 )	*(1 + EVF_SAC078_22_SA1  + DPF_SAC078_22_SA1 + LFF_SAC078_22_SA1 + OSF_SAC078_22_SA1	)))}
+define DR_03_SU 		{value  MAX(0.0,MIN(CLP_WTPFTH_03_SU   + CLN_WTPFTH_03_SU,  		UDann_03_SU 		*(1-GPmin_03_SU )	*(1 + EF_WTPFTH_03_SU  + SF_WTPFTH_03_SU	)))}
+define DR_02_SU 		{value  MAX(0.0,MIN(CLP_WTPFTH_02_SU   + CLN_WTPFTH_02_SU,  		UDann_02_SU 		*(1-GPmin_02_SU )	*(1 + EF_WTPFTH_02_SU  + SF_WTPFTH_02_SU	)))}
+
+define anncvpDR_psc_n {value DR_02_SA + DR_03_SA + DR_08N_SA1_A + DR_08N_SA1_B + DR_08N_SA2 + DR_08S_SA1 +  DR_08S_SA2 + DR_08S_SA3_A + DR_08S_SA3_B +  DR_09_SA1 + DR_09_SA2 + DR_18_SA + DR_19_SA_A + DR_19_SA_B + DR_19_SA_C + DR_19_SA_D + DR_21_SA_A + DR_21_SA_B + DR_22_SA1_A + DR_22_SA1_B + DR_03_SU + DR_02_SU}
+
+! Refuges
+define DR_08N_PR1 	{value  MAX(0.0,MIN(CLann_GCC027_08N_PR1,	(AWRann_08N_PR1 *(1- RUFR_08N_PR1) +AWOann_08N_PR1 *(1- RUFO_08N_PR1)	+AWWann_08N_PR1 *(1- RUFW_08N_PR1))	* (1+ RPF_08N_PR1) 	*(1-GPmin_08N_PR1 )	*(1 + EVF_GCC027_08N_PR1  + DPF_GCC027_08N_PR1 + LFF_GCC027_08N_PR1 + OSF_GCC027_08N_PR1)))}
+define DR_08N_PR2 	{value  MAX(0.0,MIN(CLann_GCC039_08N_PR2,	(AWRann_08N_PR2 *(1- RUFR_08N_PR2) +AWOann_08N_PR2 *(1- RUFO_08N_PR2)	+AWWann_08N_PR2 *(1- RUFW_08N_PR2))	* (1+ RPF_08N_PR2) 	*(1-GPmin_08N_PR2 )	*(1 + EVF_GCC039_08N_PR2  + DPF_GCC039_08N_PR2 + LFF_GCC039_08N_PR2 + OSF_GCC039_08N_PR2)))}
+define DR_08S_PR_A 	{value  MAX(0.0,MIN(CLann_GCC056_08S_PR,	(AWRann_08S_PR 	*(1- RUFR_08S_PR)	+AWOann_08S_PR  *(1- RUFO_08S_PR)		+AWWann_08S_PR  *(1- RUFW_08S_PR))	* (1+ RPF_08S_PR)  	*(1-GPmin_08S_PR )	*(1 + EVF_GCC056_08S_PR   + DPF_GCC056_08S_PR  + LFF_GCC056_08S_PR  + OSF_GCC056_08S_PR	)))}
+define DR_08S_PR_B 	{value  MAX(0.0,MIN(CLann_CBD037_08S_PR,	(AWRann_08S_PR  	*(1- RUFR_08S_PR)	+AWOann_08S_PR  *(1- RUFO_08S_PR)		+AWWann_08S_PR  *(1- RUFW_08S_PR))	* (1+ RPF_08S_PR)  	*(1-GPmin_08S_PR )	*(1 + EVF_CBD037_08S_PR   + DPF_CBD037_08S_PR  + LFF_CBD037_08S_PR  + OSF_CBD037_08S_PR	)))}
+define DR_17N_PR		{value  MAX(0.0,MIN(CLann_JBC002_17N_PR, 	(AWRann_17N_PR  	*(1- RUFR_17N_PR)	+AWOann_17N_PR  *(1- RUFO_17N_PR)		+AWWann_17N_PR  *(1- RUFW_17N_PR))	* (1+ RPF_17N_PR)  	*(1-GPmin_17N_PR )	*(1 + EVF_JBC002_17N_PR   + DPF_JBC002_17N_PR  + LFF_JBC002_17N_PR  + OSF_JBC002_17N_PR	)))}
+!define DR_17S_PR		{value  MAX(0.0,MIN(CLann_SBP028_17S_PR, 	(AWRann_17S_PR  	*(1- RUFR_17S_PR)	+AWOann_17S_PR  *(1- RUFO_17S_PR)		+AWWann_17S_PR  *(1- RUFW_17S_PR))	* (1+ RPF_17S_PR)  	*(1-GPmin_17S_PR )	*(1 + EVF_SBP028_17S_PR   + DPF_SBP028_17S_PR  + LFF_SBP028_17S_PR  + OSF_SBP028_17S_PR	)))}
+
+define anncvpDR_prf_n {value  DR_08N_PR1 + DR_08N_PR2 + DR_08S_PR_A + DR_08S_PR_B + DR_17N_PR /*+ DR_17S_PR*/}
+
+! Water Forum
+define anncvpDR_wf_n {value CLWF_ANN_PCWA_A+CLWF_ANN_FOLSM+CLWF_ANN_SJWD_S+CLWF_ANN_ELDOR_ID+CLWF_ANN_ELDOR_CO+CLWF_ANN_SMUD+CLWF_ANN_SCWA+ CLWF_ANN_ROSEV+CLWF_ANN_CAREC+CLANN_ANN_SCWA_FRPT+CLANN_ANN_EBMD_FRPT }
+
+define anncvpDR_sysdv {std kind 'ANNUAL-DIVR-REQMNT' units 'taf'}
+
+! Total system
+define anncvpDR_sys{   
+       case octBgnWY {  ! special case for first wateryear, Sum Oct-Sep
+                                condition month == OCT .and. wateryear == bgnWY
+                                                value min(anncvpDR_pag_n + anncvpDR_pmi_n +  anncvpDR_psc_n + anncvpDR_prf_n + anncvpDR_wf_n, anncvpCL_tot_n) + anncvpCL_tot_s }
+       case March { ! March for wateryears BgnWY - year before EndWY
+                                condition month == MAR
+                                                value min(anncvpDR_pag_n + anncvpDR_pmi_n +  anncvpDR_psc_n + anncvpDR_prf_n + anncvpDR_wf_n, anncvpCL_tot_n) + anncvpCL_tot_s }
+       case Rest { 
+                                condition always
+                                                value anncvpDR_sysdv(-1) } }
+
+goal set_annual_dr_sys {anncvpDR_sysdv = anncvpDR_sys}
+ 

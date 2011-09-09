@@ -1,0 +1,22 @@
+/*
+CALSIM III SYSTEM FILE
+ARCS-SPILLS.WRESL
+
+NAMING TAKES THE FOLLOWING FORM:
+SP_{CalSim-III river node which looses water to another river, channel or bypass}
+
+OR
+
+OS_{CalSim-III Demand Unit which "spills" water for operational requirements}
+
+Original formulation: C. Olson (MWH) December 2007
+*/
+
+/*
+*************************OPERATIONAL SPILLS***************************************
+*/
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! WBA 60N	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+define	OS_60N_NA1	{std kind 'OPERATIONAL-SPILL' units 'CFS'} 
+define	OS_60N_NA2	{std kind 'OPERATIONAL-SPILL' units 'CFS'}

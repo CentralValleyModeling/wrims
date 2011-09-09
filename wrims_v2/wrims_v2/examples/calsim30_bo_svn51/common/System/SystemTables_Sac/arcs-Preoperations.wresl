@@ -1,0 +1,61 @@
+/*
+File Name: arcs-preoperations.wresl
+CalSim 3.0 System File
+
+Purpose:
+
+Naming takes the following form:
+
+*/
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! FEATHER RIVER	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+define D_SFF011_MNRRH_SV	{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'} !Only for OroRuleCurv.wresl and X2days_FWS.wresl
+
+define D_LST004_OWC000_SV	{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'}
+define R_MNRRH_FTR072_SV	{timeseries kind 'RETURN-FLOW' units 'TAF' convert 'CFS'}
+define D_OROVL_13_NU1_SV	{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'}
+define D_WBF030_HKC002_SV	{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'} !Only for OroRuleCurv.wresl and X2days_FWS.wresl
+define D_WBF015_MIO023_SV	{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'} !Only for OroRuleCurv.wresl and X2days_FWS.wresl
+define S_LGRSV_SV		{timeseries kind 'STORAGE' units 'TAF'}
+define S_SLYCK_SV		{timeseries kind 'STORAGE' units 'TAF'}
+define E_LGRSV_SV		{timeseries kind 'EVAPORATION' units 'TAF' convert 'CFS'}
+define E_SLYCK_SV		{timeseries kind 'EVAPORATION' units 'TAF' convert 'CFS'}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! YUBA RIVER	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+define	D_SLT009_SCT000_SV	{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'} ! Slate Creek Tunnel
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! COMBIE CANAL	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+define	D_CBC000_NID_N1	{std kind 'DIVERSION' units 'CFS'}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! BEAR RIVER	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+define	D_SYC002_BRR074_SV	{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'}
+define	D_SPLDG_DRM000_SV	{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'}
+!define	D_LBC010_PCWA3_SV	{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'}
+!define	D_LBC038_WTPAUB_SV	{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'}
+!define	D_BEC022_WTPBWM_SV	{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'}
+!define	D_STH004_WTPFSS_SV	{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'}
+define	C_STH007_SV		{timeseries kind 'CHANNEL' units 'TAF' convert 'CFS'}
+define	C_MRM001_SV		{timeseries kind 'CHANNEL' units 'TAF' convert 'CFS'}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Wolf Creek	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+define	D_WLF013_TARRD_SV	{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'}
+define  R_DSCNL_WLF021_SV	{timeseries kind 'RETURN-FLOW' units 'TAF' convert 'CFS'}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! AMERICAN RIVER	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+define	D_NNA013_LVC001_SV	{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! EAST PARK RESERVOIR	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+define	D_EPARK_SCKWD_SV	{timeseries kind 'DIVERSION' units 'TAF' convert 'CFS'}

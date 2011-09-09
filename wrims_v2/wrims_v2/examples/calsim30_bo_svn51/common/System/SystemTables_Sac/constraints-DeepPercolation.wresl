@@ -1,0 +1,180 @@
+/*
+File Name: constraints-deeppercolation.wresl
+CalSim 3.0 System File
+
+Purpose:
+
+Naming takes the following form:
+
+The total deep perc for each WBA that are input to CalSim-III are passed
+to GW module using SetDP function.  The deep perc amounts are for each
+WBA area, and not all WBAs are covered by C2VSIM domain.  Then, it is 
+assumed that deep perc rate is uniform over the WBA so, the total deep
+perc at a WBA is scaled back using fDP_WBA_?? factor based on its area 
+overlaid by C2VSIM domain.  This scaled back deep perc is passed to the 
+GW module.
+
+*/
+
+!*********************************************************************
+!*********************************************************************
+!***  Deep Perc reduction fractions for each WBA
+!*********************************************************************
+!*********************************************************************
+define fDP_WBA_2       {value 0.765300}
+define fDP_WBA_3       {value 0.483492}
+define fDP_WBA_4       {value 0.872396}
+define fDP_WBA_5       {value 0.863460}
+define fDP_WBA_6       {value 0.989377}
+define fDP_WBA_7N      {value 0.659092}
+define fDP_WBA_7S      {value 0.640658}
+define fDP_WBA_8N      {value 1.000000}
+define fDP_WBA_8S      {value 0.998462}
+define fDP_WBA_9       {value 1.000000}
+define fDP_WBA_10      {value 0.667199}
+define fDP_WBA_11      {value 0.939634}
+define fDP_WBA_12      {value 0.936876}
+define fDP_WBA_13      {value 0.117455}
+define fDP_WBA_14      {value 0.099593}
+define fDP_WBA_15N     {value 0.974323}
+define fDP_WBA_15S     {value 0.896003}
+define fDP_WBA_16      {value 1.000000}
+define fDP_WBA_17N     {value 1.000000}
+define fDP_WBA_17S     {value 1.000000}
+define fDP_WBA_18      {value 1.000000}
+define fDP_WBA_19      {value 1.000000}
+define fDP_WBA_20      {value 0.643077}
+define fDP_WBA_21      {value 1.000000}
+define fDP_WBA_22      {value 1.000000}
+define fDP_WBA_23      {value 0.995585}
+define fDP_WBA_24      {value 0.453422}
+define fDP_WBA_25      {value 0.871243}
+define fDP_WBA_26N     {value 0.960061}
+define fDP_WBA_26S     {value 0.923919}
+
+
+!*********************************************************************
+!*********************************************************************
+!Time series definitions for field level deep percolation
+!from precipitation and irrigation
+!*********************************************************************
+!*********************************************************************
+define DP_02    			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_2		{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_2   	{DP_WBATotal_2 = DP_02 * fDP_WBA_2 + DP_02_NA  + DP_02_SA + DP_02_PA}
+
+define DP_03    			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_3		{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_3   	{DP_WBATotal_3 = DP_03 * fDP_WBA_3 + DP_03_NA  + DP_03_SA + DP_03_PA}
+
+define DP_04    			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_4 		{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_4   	{DP_WBATotal_4 = DP_04 * fDP_WBA_4 + DP_04_NA  + DP_04_PA1 + DP_04_PA2 + DP_04_TCCL}
+
+define DP_05    			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_5		{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_5   	{DP_WBATotal_5 = DP_05 * fDP_WBA_5 + DP_05_NA}
+
+define DP_06    			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_6 		{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_6   	{DP_WBATotal_6 = DP_06 * fDP_WBA_6 + DP_06_PA /*+ DP_06_STNL*/}
+
+define DP_07N				{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_7N		{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_7N   	{DP_WBATotal_7N = DP_07N * fDP_WBA_7N + DP_07N_PA} !In future include T-C losses to WBA 7N
+
+define DP_07S   			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_7S 	{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_7S   	{DP_WBATotal_7S = DP_07S * fDP_WBA_7S + DP_07S_PA} !In future include T-C losses to WBA 7S
+
+define DP_08N   			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_8N 	{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_8N   	{DP_WBATotal_8N = DP_08N * fDP_WBA_8N + DP_08N_PR1 + DP_08N_PR2 + DP_08N_SA1 + DP_08N_SA2 + DP_08N_PA}
+
+define DP_08S   			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_8S 	{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_8S   	{DP_WBATotal_8S = DP_08S * fDP_WBA_8S + DP_08S_SA1 + DP_08S_SA2 + DP_08S_SA3 + DP_08S_PR + DP_08S_PA}
+
+define DP_09    			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_9 		{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_9   	{DP_WBATotal_9 = DP_09 * fDP_WBA_9 + DP_09_NA  + DP_09_SA1 + DP_09_SA2 + DP_09_PR}
+
+define DP_10   			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_10 		{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_10   	{DP_WBATotal_10 = DP_10 * fDP_WBA_10 + DP_10_NA}
+
+define DP_11   			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_11 		{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_11   	{DP_WBATotal_11 = DP_11 * fDP_WBA_11 + DP_11_NA  + DP_11_SA1 + DP_11_SA2 + DP_11_SA3 + DP_11_SA4 + DP_11_PR}
+
+define DP_12   			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_12  	{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_12   	{DP_WBATotal_12 = DP_12 * fDP_WBA_12 + DP_12_NA + DP_12_SA}
+
+define DP_13   			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_13 		{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_13   	{DP_WBATotal_13 = DP_13 * fDP_WBA_13 + DP_13_NA}
+
+define DP_14   			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_14  	{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_14   	{DP_WBATotal_14 = DP_14 * fDP_WBA_14 + DP_14_NA}
+
+define DP_15N  			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_15N	{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_15N   	{DP_WBATotal_15N = DP_15N * fDP_WBA_15N + DP_15N_NA2 + DP_15N_SA}
+
+define DP_15S  			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_15S 	{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_15S   	{DP_WBATotal_15S = DP_15S * fDP_WBA_15S + DP_15S_NA2  + DP_15S_SA}
+
+define DP_16   			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_16		{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_16   	{DP_WBATotal_16 = DP_16 * fDP_WBA_16 + DP_16_NA2  + DP_16_PA + DP_16_SA}
+
+define DP_17N  			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_17N	{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_17N   	{DP_WBATotal_17N = DP_17N * fDP_WBA_17N + DP_17N_PR  + DP_17N_NR}
+
+define DP_17S  			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_17S	{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_17S   	{DP_WBATotal_17S = DP_17S * fDP_WBA_17S + DP_17S_NA  + DP_17S_PR + DP_17S_SA}
+
+define DP_18   			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_18		{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_18   	{DP_WBATotal_18 = DP_18 * fDP_WBA_18 + DP_18_NA  + DP_18_SA}
+
+define DP_19   			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_19 		{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_19   	{DP_WBATotal_19 = DP_19 * fDP_WBA_19 /*+ DP_19_NA*/  + DP_19_SA}
+
+define DP_20   			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_20 		{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_20   	{DP_WBATotal_20 = DP_20 * fDP_WBA_20 + DP_20_NA1 + DP_20_PA}
+
+define DP_21   			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_21		{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_21   	{DP_WBATotal_21 = DP_21 * fDP_WBA_21 + DP_21_SA + DP_21_PA}
+
+define DP_22   			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_22		{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_22   	{DP_WBATotal_22 = DP_22 * fDP_WBA_22 + DP_22_SA1 + DP_22_SA2}
+
+define DP_23   			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_23 		{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_23   	{DP_WBATotal_23 = DP_23 * fDP_WBA_23 + DP_23_NA}
+
+define DP_24   			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_24 		{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_24   	{DP_WBATotal_24 = DP_24 * fDP_WBA_24 + DP_24_NA1  + DP_24_NA2 + DP_24_NA3}
+
+define DP_25   			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_25		{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_25   	{DP_WBATotal_25 = DP_25 * fDP_WBA_25 + DP_25_NA  + DP_25_PA1 + DP_25_PA2}
+
+define DP_26N  			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_26N 	{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_26N   	{DP_WBATotal_26N = DP_26N * fDP_WBA_26N}
+
+define DP_26S  			{timeseries kind 'deep-percolation' units 'TAF' convert 'CFS'}
+define DP_WBATotal_26S  	{std kind 'deep-percolation' units 'CFS'}
+goal setDP_WBATotal_26S   	{DP_WBATotal_26S = DP_26S * fDP_WBA_26S}

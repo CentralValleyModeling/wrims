@@ -1,0 +1,1434 @@
+C*******************************************************************************
+C
+C                  INTEGRATED WATER FLOW MODEL (IWFM)
+C                         *** Version 3.0 ***
+C
+C*******************************************************************************
+C
+C                  BOUNDARY CONDITIONS DATA FILE
+C                      for IWFM Simulation
+C                           (Unit 8)                            
+C
+C
+C             Project : C2VSIM: Calibrated w/r IWFM
+C             Filename: CVbound(061201).dat 
+C    modified small watershed descriptions to remove inconsistencies
+C    modified constant head nodes from 29 to 0
+C
+C*******************************************************************************
+C                          File Description:
+C
+C   This data file contains five types of boundary conditions for each layer.
+C   The boundary conditions are set as constant head, prescribed flux,
+C   rating table and general head for each layer which is to be followed by
+C   boundary conditions for small watershed inflow computation.
+C
+C*******************************************************************************
+C
+C                      Layer 1  Boundary Conditions
+C
+C   The following lists the specified flux, constant head, rating table
+C   and general head boundary conditions for Layer 1
+C
+C-------------------------------------------------------------------------------
+C            Specified flux boundary conditions specifications (Layer 1)
+C
+C   NQB  ;    Number of nodes with specified flux
+C   FACT ;    Conversion factor for specified flux data 
+C              It is used to convert only the spatial component of the unit; 
+C              DO NOT include the conversion factor for time component of the unit.
+C              * e.g. Unit of flux listed in this file        = AC-FT/MONTH
+C                     Consistent unit used in simulation      = CU.FT/DAY 
+C                     Enter FACT (AC-FT/MONTH -> CU.FT/MONTH) = 2.29568E-05 
+C                      (conversion of MONTH -> DAY is performed automatically) 
+C   TUNIT;    Time unit of flux boundary conditions.  This should be one of the units 
+C             recognized by HEC-DSS that are listed in the Main Control File.  
+C
+C  *Note* If the specified flux is zero, the nodes do not need to be specified
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+      0                          / NQB
+      1.0                        / FACT
+                                 / TUNIT
+C-------------------------------------------------------------------------------
+C
+C              Specified flux boundary condition data (Layer 1) 
+C      (Skip if there are no nodes with a specified flux, i.e. NQB = 0)
+C
+C   INODE;   Groundwater node with a specified flux
+C   BQ   ;   Specified flux value at groundwater node INODE; [L^3/T]
+C              (If less than -10000.0, then -(BQ+10000.0) indicates the column
+C               number in unit 9 corresponding to the time series boundary 
+C               condition data)
+C-------------------------------------------------------------------------------
+C     INODE     BQ
+C-------------------------------------------------------------------------------
+*
+*
+C-------------------------------------------------------------------------------
+C*******************************************************************************
+C
+C          Specified head boundary conditions specifications (Layer 1)
+C
+C   NHB ;    Number of groundwater nodes with specified head 
+C   FACT;    Conversion factor for specified head data 
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+      32                          / NHB   
+      1.0                         / FACT
+C-------------------------------------------------------------------------------
+C
+C              Specified head boundary condition data (Layer 1) 
+C   (Skip if there are no nodes with a specified head, i.e. NHB = 0)
+C
+C   INODE;   Groundwater node with a specified head
+C   BH   ;   Specified head value for node INODE relative to a common datum; [L]
+C              (If less than -10000.0, then -(BH+10000.0) indicates the column
+C               number in unit 9 corresponding to the time series boundary 
+C               condition data)
+C-------------------------------------------------------------------------------
+C    INODE      BH
+C-------------------------------------------------------------------------------
+611     94.9198
+612     67.0461
+593     3.3455
+577     -11.4104
+568     -17.6157
+578     -11.1589
+584     4.1131
+585     9.1724
+586     37.6757
+587     67.2761
+599     91.3587
+600     420.0000
+487     0.0
+489     0.0
+520     0.0
+522     0.0
+523     0.0
+524     0.0
+525     0.0
+526     0.0
+527     0.0
+528     0.0
+529     0.0
+530     0.0
+531     0.0
+532     0.0
+533     0.0
+534     0.0
+538     0.0
+539     0.0
+540     0.0
+542     0.0
+C-------------------------------------------------------------------------------
+C*******************************************************************************
+C
+C            Rating table boundary conditions specifications (Layer 1)
+C
+C   NMB  ;   Number of nodes with a rating table boundary condition
+C   NMTB ;   Number of points in the rating table
+C   FACTH;   Conversion factor for head value
+C   FACTQ;   Conversion factor for flow rate
+C              It is used to convert only the spatial component of the unit; 
+C              DO NOT include the conversion factor for time component of the unit.
+C              * e.g. Unit of flow rate listed in this file   = AC-FT/MONTH
+C                     Consistent unit used in simulation      = CU.FT/DAY 
+C                     Enter FACT (AC-FT/MONTH -> CU.FT/MONTH) = 2.29568E-05 
+C                      (conversion of MONTH -> DAY is performed automatically) 
+C   TUNIT;    Time unit of flow rate.  This should be one of the units 
+C             recognized by HEC-DSS that are listed in the Main Control File.  
+C-------------------------------------------------------------------------------
+C       VALUE                   DESCRIPTION
+C-------------------------------------------------------------------------------
+         0                      / NMB
+         0                      / NMTB
+         1.0                    / FACTH
+         1.0                    / FACTQ
+                                / TUNIT
+C-------------------------------------------------------------------------------
+C
+C              Rating table boundary condition data (Layer 1)
+C  (Skip if there are no nodes with rating table boundary conditions, ie. NMB = 0)
+C
+C   INODE;   Node number corresponding to a rating table boundary condition
+C   HMTB ;   Head value; [L]
+C   QMTB ;   Flow rate at the specified head HMTB; [L^3/T]
+C            
+C-------------------------------------------------------------------------------
+C   INODE       HMTB         QMTB
+C-------------------------------------------------------------------------------
+*
+*
+C-------------------------------------------------------------------------------
+C*******************************************************************************
+C
+C            General head boundary conditions specifications (Layer 1)
+C
+C   NGB   ;  Number of groundwater nodes with general head boundary conditions
+C   FACTH ;  Conversion factor for head 
+C   FACTAR;  Conversion factor for area 
+C-------------------------------------------------------------------------------
+C       VALUE                   DESCRIPTION
+C-------------------------------------------------------------------------------
+          0                     / NGB
+          1.0                   / FACTH
+          1.0                   / FACTAR
+C-------------------------------------------------------------------------------
+C
+C             General head boundary conditions data (Layer 1)
+C  (Skip if there are no nodes with general head boundary conditions, ie. NGB = 0)
+C             
+C
+C   INODE;   Node number corresponding to the general head boundary condition
+C   BH   ;   Fixed head at the distance BD from the groundwater node INODE; [L]
+C              (If less than -10000.0, then -(BH+10000.0) indicates the column
+C               number in unit 9 corresponding to the time series boundary 
+C               codition data)
+C   BA;      Area of influence surrounding groundwater node INODE; [L^2]
+C   BD;      Distance from the groundwater node INODE to the source of the
+C             fixed head BH; [L]
+C-------------------------------------------------------------------------------
+C   INODE       BH        BA         BD
+C-------------------------------------------------------------------------------
+*
+*
+C*******************************************************************************
+C
+C                      Layer 2 Boundary Conditions
+C
+C   The following lists the specified flux, constant head, rating table
+C   and general head boundary conditions for Layer 2
+C
+C-------------------------------------------------------------------------------
+C            Specified flux boundary conditions specifications (Layer 2)
+C
+C   NQB  ;    Number of nodes with specified flux
+C   FACT ;    Conversion factor for specified flux data 
+C              It is used to convert only the spatial component of the unit; 
+C              DO NOT include the conversion factor for time component of the unit.
+C              * e.g. Unit of flux listed in this file        = AC-FT/MONTH
+C                     Consistent unit used in simulation      = CU.FT/DAY 
+C                     Enter FACT (AC-FT/MONTH -> CU.FT/MONTH) = 2.29568E-05 
+C                      (conversion of MONTH -> DAY is performed automatically) 
+C   TUNIT;    Time unit of flux boundary conditions.  This should be one of the units 
+C             recognized by HEC-DSS that are listed in the Main Control File.  
+C
+C  *Note* If the specified flux is zero, the nodes do not need to be specified
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+      0                          / NQB
+      1.0                        / FACT
+                                 / TUNIT
+C-------------------------------------------------------------------------------
+C
+C              Specified flux boundary condition data (Layer 2) 
+C      (Skip if there are no nodes with a specified flux, i.e. NQB = 0)
+C
+C   INODE;   Groundwater node with a specified flux
+C   BQ   ;   Specified flux value at groundwater node INODE; [L^3/T]
+C              (If less than -10000.0, then -(BQ+10000.0) indicates the column
+C               number in unit 9 corresponding to the time series boundary 
+C               condition data)
+C-------------------------------------------------------------------------------
+C     INODE     BQ
+C-------------------------------------------------------------------------------
+*
+*
+C-------------------------------------------------------------------------------
+C*******************************************************************************
+C
+C          Specified head boundary conditions specifications (Layer 2)
+C
+C   NHB ;    Number of groundwater nodes with specified head 
+C   FACT;    Conversion factor for specified head data
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+     32                          / NHB
+     1.0                        / FACT
+C-------------------------------------------------------------------------------
+C
+C              Specified head boundary condition data (Layer 2) 
+C   (Skip if there are no nodes with a specified head, i.e. NHB = 0)
+C
+C   INODE;   Groundwater node with a specified head
+C   BH   ;   Specified head value for node INODE relative to a common datum; [L]
+C              (If less than -10000.0, then -(BH+10000.0) indicates the column
+C               number in unit 9 corresponding to the time series boundary 
+C               condition data)
+C-------------------------------------------------------------------------------
+C    INODE     BH
+C-------------------------------------------------------------------------------
+611     94.9198
+612     67.0461
+593     3.3455
+577     -11.4104
+568     -17.6157
+578     -11.1589
+584     4.1131
+585     9.1724
+586     37.6757
+587     67.2761
+599     91.3587
+600     420.0000
+487     0.0
+489     0.0
+520     0.0
+522     0.0
+523     0.0
+524     0.0
+525     0.0
+526     0.0
+527     0.0
+528     0.0
+529     0.0
+530     0.0
+531     0.0
+532     0.0
+533     0.0
+534     0.0
+538     0.0
+539     0.0
+540     0.0
+542     0.0
+C-------------------------------------------------------------------------------
+C*******************************************************************************
+C
+C            Rating table boundary conditions specifications (Layer 2)
+C
+C   NMB  ;   Number of nodes with a rating table boundary condition
+C   NMTB ;   Number of points in the rating table
+C   FACTH;   Conversion factor for head value
+C   FACTQ;   Conversion factor for flow rate
+C              It is used to convert only the spatial component of the unit; 
+C              DO NOT include the conversion factor for time component of the unit.
+C              * e.g. Unit of flow rate listed in this file   = AC-FT/MONTH
+C                     Consistent unit used in simulation      = CU.FT/DAY 
+C                     Enter FACT (AC-FT/MONTH -> CU.FT/MONTH) = 2.29568E-05 
+C                      (conversion of MONTH -> DAY is performed automatically) 
+C   TUNIT;    Time unit of flow rate.  This should be one of the units 
+C             recognized by HEC-DSS that are listed in the Main Control File.  
+C-------------------------------------------------------------------------------
+C       VALUE                   DESCRIPTION
+C-------------------------------------------------------------------------------
+          0                     / NMB
+          0                     / NMTB
+          1.0                   / FACTH
+          1.0                   / FACTQ
+                                / TUNIT
+C-------------------------------------------------------------------------------
+C
+C              Rating table boundary condition data (Layer 2)
+C  (Skip if there are no nodes with rating table boundary conditions, ie. NMB = 0)
+C
+C   INODE;   Node number corresponding to a rating table boundary condition
+C   HMTB ;   Head value; [L]
+C   QMTB ;   Flow rate at the specified head HMTB; [L^3/T]
+C            
+C-------------------------------------------------------------------------------
+C   INODE       HMTB         QMTB
+C-------------------------------------------------------------------------------
+*
+*
+C-------------------------------------------------------------------------------
+C*******************************************************************************
+C
+C            General head boundary conditions specifications (Layer 2)
+C
+C   NGB   ;  Number of groundwater nodes with general head boundary conditions
+C   FACTH ;  Conversion factor for head 
+C   FACTAR;  Conversion factor for area
+C-------------------------------------------------------------------------------
+C       VALUE                   DESCRIPTION
+C-------------------------------------------------------------------------------
+          0                     / NGB
+          1.0                   / FACTH
+          1.0                   / FACTAR
+C-------------------------------------------------------------------------------
+C
+C             General head boundary conditions data (Layer 2)
+C  (Skip if there are no nodes with general head boundary conditions, ie. NGB = 0)
+C             
+C
+C   INODE;   Node number corresponding to the general head boundary condition
+C   BH   ;   Fixed head at the distance BD from the groundwater node INODE; [L]
+C              (If less than -10000.0, then -(BH+10000.0) indicates the column
+C               number in unit 9 corresponding to the time series boundary 
+C               codition data)
+C   BA;      Area of influence surrounding groundwater node INODE; [L^2]
+C   BD;      Distance from the groundwater node INODE to the source of the
+C             fixed head BH; [L]
+C-------------------------------------------------------------------------------
+C   INODE       BH        BA         BD
+C-------------------------------------------------------------------------------
+*
+*
+C*******************************************************************************
+C
+C                      Layer 3 Boundary Conditions
+C
+C   The following lists the specified flux, constant head, rating table
+C   and general head boundary conditions for Layer 3
+C
+C-------------------------------------------------------------------------------
+C            Specified flux boundary conditions specifications (Layer 3)
+C
+C   NQB  ;    Number of nodes with specified flux
+C   FACT ;    Conversion factor for specified flux data 
+C              It is used to convert only the spatial component of the unit; 
+C              DO NOT include the conversion factor for time component of the unit.
+C              * e.g. Unit of flux listed in this file        = AC-FT/MONTH
+C                     Consistent unit used in simulation      = CU.FT/DAY 
+C                     Enter FACT (AC-FT/MONTH -> CU.FT/MONTH) = 2.29568E-05 
+C                      (conversion of MONTH -> DAY is performed automatically) 
+C   TUNIT;    Time unit of flux boundary conditions.  This should be one of the units 
+C             recognized by HEC-DSS that are listed in the Main Control File.  
+C
+C  *Note* If the specified flux is zero, the nodes do not need to be specified
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+      0                          / NQB
+      1.0                        / FACT
+                                 / TUNIT
+C-------------------------------------------------------------------------------
+C
+C              Specified flux boundary condition data (Layer 3) 
+C      (Skip if there are no nodes with a specified flux, i.e. NQB = 0)
+C
+C   INODE;   Groundwater node with a specified flux
+C   BQ   ;   Specified flux value at groundwater node INODE; [L^3/T]
+C              (If less than -10000.0, then -(BQ+10000.0) indicates the column
+C               number in unit 9 corresponding to the time series boundary 
+C               condition data)
+C-------------------------------------------------------------------------------
+C     INODE     BQ
+C-------------------------------------------------------------------------------
+*
+*
+C-------------------------------------------------------------------------------
+C*******************************************************************************
+C
+C          Specified head boundary conditions specifications (Layer 3)
+C
+C   NHB ;    Number of groundwater nodes with specified head 
+C   FACT;    Conversion factor for specified head data
+C-------------------------------------------------------------------------------
+C   VALUE                       DESCRIPTION
+C-------------------------------------------------------------------------------
+     32                         / NHB
+     1.0                        / FACT
+C-------------------------------------------------------------------------------
+C
+C              Specified head boundary condition data (Layer 3) 
+C   (Skip if there are no nodes with a specified head, i.e. NHB = 0)
+C
+C   INODE;   Groundwater node with a specified head
+C   BH   ;   Specified head value for node INODE relative to a common datum; [L]
+C              (If less than -10000.0, then -(BH+10000.0) indicates the column
+C               number in unit 9 corresponding to the time series boundary 
+C               condition data)
+C-------------------------------------------------------------------------------
+C    INODE     BH
+C-------------------------------------------------------------------------------
+611     94.9198
+612     67.0461
+593     3.3455
+577     -11.4104
+568     -17.6157
+578     -11.1589
+584     4.1131
+585     9.1724
+586     37.6757
+587     67.2761
+599     91.3587
+600     420.0000
+487     0.0
+489     0.0
+520     0.0
+522     0.0
+523     0.0
+524     0.0
+525     0.0
+526     0.0
+527     0.0
+528     0.0
+529     0.0
+530     0.0
+531     0.0
+532     0.0
+533     0.0
+534     0.0
+538     0.0
+539     0.0
+540     0.0
+542     0.0
+C-------------------------------------------------------------------------------
+C*******************************************************************************
+C
+C            Rating table boundary conditions specifications (Layer 3)
+C
+C   NMB  ;   Number of nodes with a rating table boundary condition
+C   NMTB ;   Number of points in the rating table
+C   FACTH;   Conversion factor for head value
+C   FACTQ;   Conversion factor for flow rate
+C              It is used to convert only the spatial component of the unit; 
+C              DO NOT include the conversion factor for time component of the unit.
+C              * e.g. Unit of flow rate listed in this file   = AC-FT/MONTH
+C                     Consistent unit used in simulation      = CU.FT/DAY 
+C                     Enter FACT (AC-FT/MONTH -> CU.FT/MONTH) = 2.29568E-05 
+C                      (conversion of MONTH -> DAY is performed automatically) 
+C   TUNIT;    Time unit of flow rate.  This should be one of the units 
+C             recognized by HEC-DSS that are listed in the Main Control File.  
+C-------------------------------------------------------------------------------
+C       VALUE                   DESCRIPTION
+C-------------------------------------------------------------------------------
+          0                     / NMB
+          0                     / NMTB
+          1.0                   / FACTH
+          1.0                   / FACTQ
+                                / TUNIT
+C-------------------------------------------------------------------------------
+C
+C              Rating table boundary condition data (Layer 3)
+C  (Skip if there are no nodes with rating table boundary conditions, ie. NMB = 0)
+C
+C   INODE;   Node number corresponding to a rating table boundary condition
+C   HMTB ;   Head value; [L]
+C   QMTB ;   Flow rate at the specified head HMTB; [L^3/T]
+C            
+C-------------------------------------------------------------------------------
+C   INODE       HMTB         QMTB
+C-------------------------------------------------------------------------------
+*
+*
+C-------------------------------------------------------------------------------
+C*******************************************************************************
+C
+C            General head boundary conditions specifications (Layer 3)
+C
+C   NGB   ;  Number of groundwater nodes with general head boundary conditions
+C   FACTH ;  Conversion factor for head 
+C   FACTAR;  Conversion factor for area
+C-------------------------------------------------------------------------------
+C       VALUE                   DESCRIPTION
+C-------------------------------------------------------------------------------
+          0                     / NGB
+          1.0                   / FACTH
+          1.0                   / FACTAR
+C-------------------------------------------------------------------------------
+C
+C             General head boundary conditions data (Layer 3)
+C  (Skip if there are no nodes with general head boundary conditions, ie. NGB = 0)
+C             
+C
+C   INODE;   Node number corresponding to the general head boundary condition
+C   BH   ;   Fixed head at the distance BD from the groundwater node INODE; [L]
+C              (If less than -10000.0, then -(BH+10000.0) indicates the column
+C               number in unit 9 corresponding to the time series boundary 
+C               codition data)
+C   BA;      Area of influence surrounding groundwater node INODE; [L^2]
+C   BD;      Distance from the groundwater node INODE to the source of the
+C             fixed head BH; [L]
+C-------------------------------------------------------------------------------
+C   INODE       BH        BA         BD
+C-------------------------------------------------------------------------------
+*
+*
+C-------------------------------------------------------------------------------
+C*******************************************************************************
+C
+C          Boundary Conditions for Small Watershed Inflow Computation
+C
+C   NTWB  ; Number of small watersheds where inflows will be computed
+C            and specified as boundary flux
+C   FACTA ; Conversion factor for small watershed drainage area
+C   FACTQ ; Conversion factor for maximum recharge rate
+C            It is used to convert only the spatial component of the unit; 
+C            DO NOT include the conversion factor for time component of the unit.
+C            * e.g. Unit of max. recharge rate listed in this file   = AC-FT/MONTH
+C                   Consistent unit used in simulation               = CU.FT/DAY 
+C                   Enter FACT (AC-FT/MONTH -> CU.FT/MONTH)          = 2.29568E-05 
+C                    (conversion of MONTH -> DAY is performed automatically) 
+C   TUNIT ; Time unit of max. recharge rate.  This should be one of the units 
+C            recognized by HEC-DSS that are listed in the Main Control File.  
+C
+C   *Note*   Skip data input if no small watersheds are modeled (NSW=0)
+C-------------------------------------------------------------------------------
+C       VALUE                   DESCRIPTION
+C-------------------------------------------------------------------------------
+        210                     / NTWB
+        43560.0                 / FACTA  (ac --> ft^2)    
+        43560.0                 / FACTQ  (ac.ft/mon --> cu.ft./mon)  
+        1mon                    / TUNIT
+C------------------------------------------------------------------------------
+C   ID    ; Small watershed identification number
+C   IWBS  ; Watershed group number corresponding to the watershed parameter
+C            groups specified in the parameter data file Unit 7
+C   AREAS ; Drainage area of the small watershed; [L^2]
+C   IWBTS ; Stream node that receives the surface runoff from the small watershed
+C   NWB   ; Number of groundwater nodes that receive the base flow and the
+C            percolation of surface flow from the small watershed
+C   IWB   ; Groundwater node number small watershed baseflow is routed through
+C   QMAXWB; Maximum recharge rate for each node; [L^3/T]
+C           (Enter -1 to specify which groundwater node(s) receive baseflow
+C            from the small watersheds)
+C
+C       ID      IWBS     AREAS     IWBTS       NWB      IWB        QMAXWB
+C------------------------------------------------------------------------------
+       1       1   49028.0     434       3    1371           -1
+                                              1369    200.0000
+                                              1370    200.0000
+       2       2   30353.2     434       3    1368           -1
+                                              1369    200.0000
+                                              1370    200.0000
+       3       3   22328.1     434       3    1360           -1
+                                              1361    200.0000
+                                              1362    200.0000
+       4       4   21033.9     434       3    1349           -1
+                                              1350    200.0000
+                                              1351    200.0000
+       5       5   10209.9     434       3    1339           -1
+                                              1340    200.0000
+                                              1341    200.0000
+       6       6   14708.0     434       4    1329           -1
+                                              1330    200.0000
+                                              1340    200.0000
+                                              1341    200.0000
+       7       7   20688.2     434       5    1318           -1
+                                              1319    200.0000
+                                              1320    200.0000
+                                              1321    200.0000
+                                              1341    200.0000
+       8       8    4958.3     440       3    1305           -1
+                                              1294    200.0000
+                                              1295    200.0000
+       9       9   10090.8     440       3    1293           -1
+                                              1294    200.0000
+                                              1295    200.0000
+      10      10   12979.9     440       3    1280           -1
+                                              1281    200.0000
+                                              1282    200.0000
+      11      11   11592.3     441       3    1267           -1
+                                              1268    200.0000
+                                              1269    200.0000
+      12      12    7097.2     441       3    1255           -1
+                                              1256    200.0000
+                                              1257    200.0000
+      13      13    3714.3     442       4    1253           -1
+                                              1254    200.0000
+                                              1247    200.0000
+                                              1248    200.0000
+      14      14   48526.4     446       6    1244           -1
+                                              1245    200.0000
+                                              1246    200.0000
+                                              1231    200.0000
+                                              1232    200.0000
+                                              1216    200.0000
+      15      15    9734.8     446       6    1228           -1
+                                              1229    200.0000
+                                              1230    200.0000
+                                              1231    200.0000
+                                              1232    200.0000
+                                              1216    200.0000
+      16      16   50032.8     446       6    1212           -1
+                                              1229    200.0000
+                                              1230    200.0000
+                                              1231    200.0000
+                                              1232    200.0000
+                                              1216    200.0000
+      17      17    2770.4     446       4    1213           -1
+                                              1241    200.0000
+                                              1215    200.0000
+                                              1216    200.0000
+      18      18   10827.3     446       4    1210           -1
+                                              1214    200.0000
+                                              1215    200.0000
+                                              1216    200.0000
+      19      19   10053.4     446       5    1208           -1
+                                              1210    200.0000
+                                              1214    200.0000
+                                              1215    200.0000
+                                              1216    200.0000
+      20      20   57666.3     446       5    1209           -1
+                                              1211    200.0000
+                                              1214    200.0000
+                                              1215    200.0000
+                                              1216    200.0000
+      21      21   97234.8     446       3    1214           -1
+                                              1215    200.0000
+                                              1216    200.0000
+      22      22    3247.0     447       2    1194           -1
+                                              1195    200.0000
+      23      23    8144.4     448       2    1187           -1
+                                              1188    200.0000
+      24      24   12207.3      22       2    1152           -1
+                                              1153    200.0000
+      25      25    6935.6      22       2    1113           -1
+                                              1124    200.0000
+      26      26    3993.3      22       2    1061           -1
+                                              1062    200.0000
+      27      27    3796.4      39       3    1052           -1
+                                              1053    200.0000
+                                              1062    200.0000
+      28      28    1842.2      39       4    1036           -1
+                                              1037    200.0000
+                                              1053    200.0000
+                                              1062    200.0000
+      29      29   54027.5      42       7    1035           -1
+                                              1018    200.0000
+                                              1019    200.0000
+                                              1008    200.0000
+                                              1009    200.0000
+                                              1010    200.0000
+                                              1011    200.0000
+      30      30   42012.4      42       7    1017           -1
+                                              1018    200.0000
+                                              1019    200.0000
+                                              1008    200.0000
+                                              1009    200.0000
+                                              1010    200.0000
+                                              1011    200.0000
+      31      31   76429.3      42       7    1005           -1
+                                              1018    200.0000
+                                              1019    200.0000
+                                              1008    200.0000
+                                              1009    200.0000
+                                              1010    200.0000
+                                              1011    200.0000
+      32      32   82263.7      42       7    1003           -1
+                                              1018    200.0000
+                                              1019    200.0000
+                                              1008    200.0000
+                                              1009    200.0000
+                                              1010    200.0000
+                                              1011    200.0000
+      33      33   21109.7      42       7    1004           -1
+                                              1018    200.0000
+                                              1019    200.0000
+                                              1008    200.0000
+                                              1009    200.0000
+                                              1010    200.0000
+                                              1011    200.0000
+      34      34    4996.3      42       6    1006           -1
+                                              1019    200.0000
+                                              1008    200.0000
+                                              1009    200.0000
+                                              1010    200.0000
+                                              1011    200.0000
+      35      35    1886.4      42       5    1007           -1
+                                              1008    200.0000
+                                              1009    200.0000
+                                              1010    200.0000
+                                              1011    200.0000
+      36      36   39448.2      43       5     988           -1
+                                               989    200.0000
+                                               990    200.0000
+                                               991    200.0000
+                                               992    200.0000
+      37      37    4497.2      44       5     976           -1
+                                               977    200.0000
+                                               978    200.0000
+                                               989    200.0000
+                                               980    200.0000
+      38      38   12916.9      45       5     960           -1
+                                               961    200.0000
+                                               962    200.0000
+                                               963    200.0000
+                                               964    200.0000
+      39      39   15285.6      46       5     952           -1
+                                               953    200.0000
+                                               954    200.0000
+                                               955    200.0000
+                                               956    200.0000
+      40      40   31012.4      47       5     944           -1
+                                               945    200.0000
+                                               946    200.0000
+                                               947    200.0000
+                                               948    200.0000
+      41      41   15433.4      48       5     936           -1
+                                               937    200.0000
+                                               938    200.0000
+                                               939    200.0000
+                                               940    200.0000
+      42      42    8646.3      49       5     918           -1
+                                               919    200.0000
+                                               920    200.0000
+                                               921    200.0000
+                                               922    200.0000
+      43      43    4388.4      50       5     902           -1
+                                               903    200.0000
+                                               904    200.0000
+                                               905    200.0000
+                                               906    200.0000
+      44      44   19186.7      51       5     887           -1
+                                               888    200.0000
+                                               889    200.0000
+                                               890    200.0000
+                                               891    200.0000
+      45      45    3379.2      52       5     881           -1
+                                               882    200.0000
+                                               883    200.0000
+                                               884    200.0000
+                                               885    200.0000
+      46      46  189271.3      64       5     864           -1
+                                               868    200.0000
+                                               866    200.0000
+                                               867    200.0000
+                                               857    200.0000
+      47      47    9104.7      65       5     861           -1
+                                               862    200.0000
+                                               863    200.0000
+                                               856    200.0000
+                                               842    200.0000
+      48      48   13678.5      65       5     853           -1
+                                               854    200.0000
+                                               855    200.0000
+                                               841    200.0000
+                                               842    200.0000
+      49      49   26617.3      66       5     852           -1
+                                               839    200.0000
+                                               840    200.0000
+                                               827    200.0000
+                                               828    200.0000
+      50      50   18319.9      66       5     838           -1
+                                               839    200.0000
+                                               840    200.0000
+                                               827    200.0000
+                                               828    200.0000
+      51      51    8204.8      66       4     839           -1
+                                               840    200.0000
+                                               827    200.0000
+                                               828    200.0000
+      52      52   10153.1      67       4     814           -1
+                                               815    200.0000
+                                               816    200.0000
+                                               817    200.0000
+      53      53   39081.3      89       4     793           -1
+                                               794    200.0000
+                                               795    200.0000
+                                               796    200.0000
+      54      54   85049.7      90       4     780           -1
+                                               781    200.0000
+                                               782    200.0000
+                                               783    200.0000
+      55      55    7881.1      91       4     764           -1
+                                               765    200.0000
+                                               766    200.0000
+                                               767    200.0000
+      56      56   65571.0     102       5     763           -1
+                                               759    200.0000
+                                               760    200.0000
+                                               761    200.0000
+                                               762    200.0000
+      57      57   14771.0     102       5     758           -1
+                                               759    200.0000
+                                               760    200.0000
+                                               761    200.0000
+                                               762    200.0000
+      58      58   20320.9     103       5     723           -1
+                                               724    200.0000
+                                               725    200.0000
+                                               726    200.0000
+                                               727    200.0000
+      59      59   38171.6     113       4     711           -1
+                                               712    200.0000
+                                               713    200.0000
+                                               714    200.0000
+      60      60   17139.5     129       1     680           -1
+      61      61   20800.6     131       2     669           -1
+                                               670    200.0000
+      62      62   23948.3     132       2     658           -1
+                                               659    200.0000
+      63      63   27198.4     133       2     647           -1
+                                               648    200.0000
+      64      64   14047.7     144       2     631           -1
+                                               632    200.0000
+      65      65   23524.7     155       2     613           -1
+                                               614    200.0000
+      66      66   18872.2     156       2     611           -1
+                                               612    200.0000
+      67      67   39832.5     157       3     609           -1
+                                               610    200.0000
+                                               604    200.0000
+      68      68    2296.2     158       4     607           -1
+                                               608    200.0000
+                                               603    200.0000
+                                               591    200.0000
+      69      69   21011.2     158       4     601           -1
+                                               602    200.0000
+                                               603    200.0000
+                                               591    200.0000
+      70      70   14244.5     170       4     589           -1
+                                               574    200.0000
+                                               556    200.0000
+                                               542    200.0000
+      71      71   55589.9     202       3     554           -1
+                                               555    200.0000
+                                               538    200.0000
+      72      72   13554.7     202       2     537           -1
+                                               538    200.0000
+      73      73    8889.5     203       1     536           -1
+      74      74    7852.8     418       1     535           -1
+      75      75    6505.0     431       1     530           -1
+      76      76   40606.1     429       2     468           -1
+                                               487    40.00000
+      77      77    3832.4     429       2     469           -1
+                                               487    40.00000
+      78      78   11981.8     411       4     456           -1
+                                               457    40.00000
+                                               471    40.00000
+                                               472    40.00000
+      79      79    3751.0     411       4     444           -1
+                                               445    40.00000
+                                               458    40.00000
+                                               472    40.00000
+      80      80    7087.5     401       1     409           -1
+      81      81    6860.4     401       2     402           -1
+                                               403    40.00000
+      82      82   11551.8     391       1     396           -1
+      83      83    8838.2     391       2     322           -1
+                                               323    40.00000
+      84      84    5508.2     327       3     311           -1
+                                               312    40.00000
+                                               313    40.00000
+      85      85    4480.4     326       3     299           -1
+                                               300    40.00000
+                                               301    40.00000
+      86      86    6970.7     325       3     298           -1
+                                               287    40.00000
+                                               288    40.00000
+      87      87    7725.9     324       3     286           -1
+                                               273    40.00000
+                                               274    40.00000
+      88      88    3934.1     321       3     272           -1
+                                               265    40.00000
+                                               259    40.00000
+      89      89   10930.3     321       3     264           -1
+                                               265    40.00000
+                                               259    40.00000
+      90      90   24112.5     320       4     257           -1
+                                               258    40.00000
+                                               251    40.00000
+                                               252    40.00000
+      91      91   10400.4     320       4     249           -1
+                                               250    40.00000
+                                               251    40.00000
+                                               252    40.00000
+      92      92    3378.6     320       4     235           -1
+                                               236    40.00000
+                                               237    40.00000
+                                               252    40.00000
+      93      93   26095.2     320       4     226           -1
+                                               236    40.00000
+                                               237    40.00000
+                                               252    40.00000
+      94      94   34055.6     239       4     215           -1
+                                               227    40.00000
+                                               228    40.00000
+                                               238    40.00000
+      95      95    2986.9     220       5     210           -1
+                                               211    40.00000
+                                               217    40.00000
+                                               218    40.00000
+                                               219    40.00000
+      96      96   13464.6     220       5     197           -1
+                                               211    40.00000
+                                               217    40.00000
+                                               218    40.00000
+                                               219    40.00000
+      97      97   15833.2     220       5     196           -1
+                                               198    40.00000
+                                               212    40.00000
+                                               218    40.00000
+                                               219    40.00000
+      98      98   49825.3     220       6     195           -1
+                                               183    40.00000
+                                               199    40.00000
+                                               213    40.00000
+                                               218    40.00000
+                                               219    40.00000
+      99      99    8252.3     220       6     194           -1
+                                               182    40.00000
+                                               169    40.00000
+                                               185    40.00000
+                                               201    40.00000
+                                               214    40.00000
+     100     100    5102.6     220       7     180           -1
+                                               181    40.00000
+                                               182    40.00000
+                                               169    40.00000
+                                               185    40.00000
+                                               201    40.00000
+                                               214    40.00000
+     101     101    6510.3     251       5     122           -1
+                                               123    40.00000
+                                               110    40.00000
+                                               103    40.00000
+                                                97    40.00000
+     102     102    5562.6     238       2      89           -1
+                                                90    40.00000
+     103     103    2973.6     231       4      74           -1
+                                                75    40.00000
+                                                76    40.00000
+                                                71    40.00000
+     104     104   29731.8     231       4      62           -1
+                                                69    40.00000
+                                                70    40.00000
+                                                71    40.00000
+C 105-112 are repeating the Cottonwood Creek specified inflow
+C so set the areas to 0.1 Ac to test results with these turned off
+C        105       105   90436.1       218         5        57        -1
+     105     105       0.1     218       5      57           -1
+                                                51    40.00000
+                                                41    40.00000
+                                                42    40.00000
+                                                35    40.00000
+C        106       106   32146.5       218         5        50        -1
+     106     106       0.1     218       5      50           -1
+                                                51    40.00000
+                                                41    40.00000
+                                                42    40.00000
+                                                35    40.00000
+C        107       107   27439.1       218         5        48        -1
+     107     107       0.1     218       5      48           -1
+                                                49    40.00000
+                                                41    40.00000
+                                                42    40.00000
+                                                35    40.00000
+C             108   48164.     218       5      39           -1
+     108     108       0.1     218       5      39           -1
+                                                40    40.00000
+                                                33    40.00000
+                                                34    40.00000
+                                                35    40.00000
+C        109       109  155610.7       218         5        31        -1
+     109     109       0.1     218       5      31           -1
+                                                32    40.00000
+                                                33    40.00000
+                                                34    40.00000
+                                                35    40.00000
+C        110       110   23373.5       218         4        25        -1
+     110     110       0.1     218       4      25           -1
+                                                33    40.00000
+                                                34    40.00000
+                                                35    40.00000
+C        111       111   59990.9       218         4        19        -1
+     111     111       0.1     218       4      19           -1
+                                                26    40.00000
+                                                34    40.00000
+                                                35    40.00000
+C        112       112    4254.6       218         4        13        -1
+     112     112       0.1     218       4      13           -1
+                                                20    40.00000
+                                                27    40.00000
+                                                35    40.00000
+     113     113   25656.3     208       1      14           -1
+     114     114   10195.3     207       1       8           -1
+     115     115   26734.5     206       1       2           -1
+     116     116   22258.0     209       4       3           -1
+                                                 6    40.00000
+                                                10    40.00000
+                                                16    40.00000
+     117     117   61556.7     213       1      18           -1
+     118     118    1716.4     215       1      24           -1
+     119     119   15474.1     216       1      30           -1
+     120     120   35454.3     234       1      80           -1
+     121     121   19398.4     261       2     107           -1
+                                               114    40.00000
+     122     122   27846.0     261       2     115           -1
+                                               114    40.00000
+     123     123   21780.5     273       3     118           -1
+                                               117    40.00000
+                                               116    40.00000
+     124     124   21456.7     271       3     121           -1
+                                               120    40.00000
+                                               119    40.00000
+     125     125   26508.4     287       4     148           -1
+                                               149    40.00000
+                                               158    40.00000
+                                               174    40.00000
+     126     126   25374.4     287       4     150           -1
+                                               151    40.00000
+                                               158    40.00000
+                                               174    40.00000
+     127     127    6109.9     287       3     152           -1
+                                               159    40.00000
+                                               174    40.00000
+     128     128    5452.8     342       1     163           -1
+     129     129    6221.6     342       1     164           -1
+     130     130    5909.0     344       1     178           -1
+     131     131   83043.8     345       2     234           -1
+                                               209    40.00000
+     132     132    4114.7     352       2     248           -1
+                                               247    40.00000
+     133     133    5032.0     354       2     297           -1
+                                               308    40.00000
+     134     134   10411.9     354       3     310           -1
+                                               309    40.00000
+                                               308    40.00000
+     135     135   50330.1     358       1     321           -1
+     136     136   32531.6     365       6     346           -1
+                                               345    40.00000
+                                               344    40.00000
+                                               343    40.00000
+                                               342    40.00000
+                                               341    40.00000
+     137     137   35200.9     368       6     357           -1
+                                               356    40.00000
+                                               355    40.00000
+                                               354    40.00000
+                                               353    40.00000
+                                               352    40.00000
+     138     138    1375.7     368       6     369           -1
+                                               368    40.00000
+                                               367    40.00000
+                                               354    40.00000
+                                               353    40.00000
+                                               352    40.00000
+     139     139   18574.6     381       6     393           -1
+                                               392    40.00000
+                                               391    40.00000
+                                               387    40.00000
+                                               382    40.00000
+                                               377    40.00000
+     140     140   16817.9     381       5     390           -1
+                                               388    40.00000
+                                               387    40.00000
+                                               382    40.00000
+                                               377    40.00000
+     141     141   16009.7     189       1     423           -1
+     142     142   30604.0     189       1     427           -1
+     143     143    4250.0     193       6     485           -1
+                                               484    40.00000
+                                               483    40.00000
+                                               482    40.00000
+                                               481    40.00000
+                                               467    40.00000
+     144     144   10470.1     193       6     501           -1
+                                               484    40.00000
+                                               483    40.00000
+                                               482    40.00000
+                                               481    40.00000
+                                               467    40.00000
+     145     145   49406.7     183       1     507           -1
+     146     146    3145.6     183       2     510           -1
+                                               509    40.00000
+     147     147   33954.2     174       1     518           -1
+     148     148   20444.5     158       6     573           -1
+                                               582    40.00000
+                                               581    40.00000
+                                               580    40.00000
+                                               578    200.0000
+                                               577    200.0000
+     149     149   10306.7     158       6     583           -1
+                                               582    40.00000
+                                               581    40.00000
+                                               580    40.00000
+                                               578    200.0000
+                                               577    200.0000
+     150     150    9574.0     158       7     588           -1
+                                               587    200.0000
+                                               586    200.0000
+                                               581    40.00000
+                                               580    40.00000
+                                               578    200.0000
+                                               577    200.0000
+     151     151   24506.7     158       8     600           -1
+                                               599    200.0000
+                                               587    200.0000
+                                               586    200.0000
+                                               581    40.00000
+                                               580    40.00000
+                                               578    200.0000
+                                               577    200.0000
+     152     152   16159.4     153       7     630           -1
+                                               629    200.0000
+                                               628    200.0000
+                                               627    200.0000
+                                               626    200.0000
+                                               625    200.0000
+                                               624    200.0000
+     153     153   25092.7     138       4     641           -1
+                                               640    200.0000
+                                               639    200.0000
+                                               643    200.0000
+     154     154   13679.1     136       1     646           -1
+     155     155   22917.0     119       3     679           -1
+                                               690    200.0000
+                                               689    200.0000
+     156     156    6415.8     117       1     691           -1
+     157     157    4972.1     108       3     710           -1
+                                               721    200.0000
+                                               733    200.0000
+     158     158   28744.0     107       2     722           -1
+                                               734    200.0000
+     159     159   10500.2     106       1     735           -1
+     160     160   63512.5     111       7     748           -1
+                                               747    200.0000
+                                               746    200.0000
+                                               745    200.0000
+                                               744    200.0000
+                                               743    200.0000
+                                               742    200.0000
+     161     161   12425.9      94       1     779           -1
+     162     162    5096.7      74       5     806           -1
+                                               805    200.0000
+                                               804    200.0000
+                                               810    200.0000
+                                               809    200.0000
+     163     163   15088.3      73       4     813           -1
+                                               812    200.0000
+                                               811    200.0000
+                                               810    200.0000
+     164     164   16308.0      64       7     837           -1
+                                               836    200.0000
+                                               835    200.0000
+                                               848    200.0000
+                                               847    200.0000
+                                               846    200.0000
+                                               845    200.0000
+     165     165    8509.9      64       7     851           -1
+                                               850    200.0000
+                                               849    200.0000
+                                               848    200.0000
+                                               847    200.0000
+                                               846    200.0000
+                                               845    200.0000
+     166     166    3023.9      55       1     901           -1
+     167     167   16196.8      58       5     917           -1
+                                               916    200.0000
+                                               900    200.0000
+                                               899    200.0000
+                                               898    200.0000
+     168     168   71296.4      49      12     935           -1
+                                               934    200.0000
+                                               933    200.0000
+                                               932    200.0000
+                                               931    200.0000
+                                               930    200.0000
+                                               929    200.0000
+                                               928    200.0000
+                                               927    200.0000
+                                               926    200.0000
+                                               925    200.0000
+                                               924    200.0000
+     169     169   15588.2      49      12     975           -1
+                                               974    200.0000
+                                               933    200.0000
+                                               932    200.0000
+                                               931    200.0000
+                                               930    200.0000
+                                               929    200.0000
+                                               928    200.0000
+                                               927    200.0000
+                                               926    200.0000
+                                               925    200.0000
+                                               924    200.0000
+     170     170    8260.7      26       2    1034           -1
+                                              1050    200.0000
+     171     171    6306.2      27       3    1051           -1
+                                              1050    200.0000
+                                              1049    200.0000
+     172     172   10919.6      27       3    1078           -1
+                                              1050    200.0000
+                                              1049    200.0000
+     173     173   23638.2      38       9    1083           -1
+                                              1082    200.0000
+                                              1081    200.0000
+                                              1080    200.0000
+                                              1079    200.0000
+                                              1046    200.0000
+                                              1060    200.0000
+                                              1059    200.0000
+                                              1069    200.0000
+     174     174   10223.0      38       9    1086           -1
+                                              1082    200.0000
+                                              1081    200.0000
+                                              1080    200.0000
+                                              1079    200.0000
+                                              1046    200.0000
+                                              1060    200.0000
+                                              1059    200.0000
+                                              1069    200.0000
+     175     175   29449.8     421       2    1093           -1
+                                              1093    200.0000
+     176     176    2516.6     421       2    1097           -1
+                                              1097    200.0000
+     177     177   15809.8     421       2    1103           -1
+                                              1103    200.0000
+     178     178   42452.8     423       4    1104           -1
+                                              1104    200.0000
+                                              1102    200.0000
+                                              1101    200.0000
+     179     179   18484.5     424       3    1112           -1
+                                              1111    200.0000
+                                              1110    200.0000
+     180     180    5113.3      13       3    1136           -1
+                                              1135    200.0000
+                                              1134    200.0000
+     181     181   80825.7      38      10    1151           -1
+                                              1150    200.0000
+                                              1165    200.0000
+                                              1170    200.0000
+                                              1182    200.0000
+                                              1181    200.0000
+                                              1180    200.0000
+                                              1159    200.0000
+                                              1158    200.0000
+                                              1138    200.0000
+     182     182   20004.1      38      11    1174           -1
+                                              1173    200.0000
+                                              1185    200.0000
+                                              1172    200.0000
+                                              1184    200.0000
+                                              1193    200.0000
+                                              1192    200.0000
+                                              1191    200.0000
+                                              1190    200.0000
+                                              1179    200.0000
+                                              1157    200.0000
+     183     183   70529.6      38      10    1186           -1
+                                              1185    200.0000
+                                              1172    200.0000
+                                              1184    200.0000
+                                              1193    200.0000
+                                              1192    200.0000
+                                              1191    200.0000
+                                              1190    200.0000
+                                              1179    200.0000
+                                              1157    200.0000
+     184     184    3506.8      38      10    1207           -1
+                                              1206    200.0000
+                                              1205    200.0000
+                                              1184    200.0000
+                                              1193    200.0000
+                                              1192    200.0000
+                                              1191    200.0000
+                                              1190    200.0000
+                                              1179    200.0000
+                                              1157    200.0000
+     185     185   49202.8      38      10    1227           -1
+                                              1226    200.0000
+                                              1205    200.0000
+                                              1184    200.0000
+                                              1193    200.0000
+                                              1192    200.0000
+                                              1191    200.0000
+                                              1190    200.0000
+                                              1179    200.0000
+                                              1157    200.0000
+     186     186   16489.2      38      11    1243           -1
+                                              1242    200.0000
+                                              1241    200.0000
+                                              1240    200.0000
+                                              1239    200.0000
+                                              1222    200.0000
+                                              1201    200.0000
+                                              1200    200.0000
+                                              1190    200.0000
+                                              1179    200.0000
+                                              1157    200.0000
+     187     187    3094.0      38      11    1266           -1
+                                              1265    200.0000
+                                              1264    200.0000
+                                              1240    200.0000
+                                              1239    200.0000
+                                              1222    200.0000
+                                              1201    200.0000
+                                              1200    200.0000
+                                              1190    200.0000
+                                              1179    200.0000
+                                              1157    200.0000
+     188     188    1449.3      38      12    1279           -1
+                                              1278    200.0000
+                                              1277    200.0000
+                                              1263    200.0000
+                                              1262    200.0000
+                                              1239    200.0000
+                                              1222    200.0000
+                                              1201    200.0000
+                                              1200    200.0000
+                                              1190    200.0000
+                                              1179    200.0000
+                                              1157    200.0000
+     189     189  169335.1       2       1    1292           -1
+     190     190    5556.3       2       1    1316           -1
+     191     191  292815.2     434       4    1338           -1
+                                              1337    200.0000
+                                              1336    200.0000
+                                              1345    200.0000
+     192     192    7592.2     434       5    1359           -1
+                                              1358    200.0000
+                                              1357    200.0000
+                                              1356    200.0000
+                                              1355    200.0000
+     193     193   18427.1     434       5    1381           -1
+                                              1358    200.0000
+                                              1357    200.0000
+                                              1356    200.0000
+                                              1355    200.0000
+     194     194   24062.0     434       4    1380           -1
+                                              1357    200.0000
+                                              1356    200.0000
+                                              1355    200.0000
+     195     195    9251.2     434       4    1385           -1
+                                              1367    200.0000
+                                              1356    200.0000
+                                              1355    200.0000
+     196     196   15722.5     434       5    1389           -1
+                                              1385    200.0000
+                                              1367    200.0000
+                                              1356    200.0000
+                                              1355    200.0000
+     197     197   66961.6     434       6    1393           -1
+                                              1389    200.0000
+                                              1385    200.0000
+                                              1367    200.0000
+                                              1356    200.0000
+                                              1355    200.0000
+     198     198   38545.7     434       7    1392           -1
+                                              1388    200.0000
+                                              1384    200.0000
+                                              1378    200.0000
+                                              1367    200.0000
+                                              1356    200.0000
+                                              1355    200.0000
+     199     199   38298.0     434       6    1391           -1
+                                              1387    200.0000
+                                              1383    200.0000
+                                              1377    200.0000
+                                              1366    200.0000
+                                              1355    200.0000
+     200     200   48393.8     434       5    1390           -1
+                                              1383    200.0000
+                                              1377    200.0000
+                                              1366    200.0000
+                                              1355    200.0000
+     201     201   17878.9     434       5    1386           -1
+                                              1383    200.0000
+                                              1377    200.0000
+                                              1366    200.0000
+                                              1355    200.0000
+     202     202    1489.7     434       5    1382           -1
+                                              1375    200.0000
+                                              1376    200.0000
+                                              1365    200.0000
+                                              1355    200.0000
+     203     203   22138.7     434       5    1374           -1
+                                              1375    200.0000
+                                              1376    200.0000
+                                              1365    200.0000
+                                              1355    200.0000
+     204     204    7179.6     290       1     243           -1
+     205     205    5629.0     291       1     256           -1
+     206     206    6060.8     333       1     263           -1
+     207     207    8412.2     334       1     270           -1
+     208     208    5272.4     335       1     271           -1
+     209     209    4213.5     347       1     245           -1
+     210     210    4580.6     346       2     244           -1
+                                               231    40.00000

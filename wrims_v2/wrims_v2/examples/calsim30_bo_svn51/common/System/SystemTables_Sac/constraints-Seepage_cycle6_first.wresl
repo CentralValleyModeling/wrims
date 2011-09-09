@@ -1,0 +1,1593 @@
+/*
+File Name: constraints-seepage_cycle6_first.wresl
+CalSim 3.0 System File
+
+Purpose:
+
+Naming takes the following form:
+
+The sign of GetSeep is with respect to groundwater; i.e.
+
+  positive seepage (GetSeep) = loosing stream
+  negative seepage (GetSeep) = gaining stream
+
+When multiplied by -1, it reflects stream's perspective.  
+
+*/
+
+
+!*********************************************************************
+!*********************************************************************
+!***  Conversion factor from CFS to CF/MONTH
+!*********************************************************************
+!*********************************************************************
+define  cfs_cfm  {value daysin * 86400.0}
+define  cfs_cfmp {case first{
+                     condition wateryear == bgnWY .and. month == Oct
+                          value daysin * 86400.0}
+                  case other{
+                     condition always
+                          value  daysindv(-1) * 86400.0 }}
+
+!*********************************************************************
+!*********************************************************************
+!***  Groundwater simulation
+!*********************************************************************
+!*********************************************************************
+! NCLUDE '..\..\CVGroundwater\CVGroundwater.wresl'
+
+         
+!*********************************************************************
+!*********************************************************************
+!***  Define goals
+!*********************************************************************
+!********************************************************************* 
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!        !
+!!! Glenn_Colusa Canal (use timeseries)  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!        !
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!        !
+goal setGCC010_139 { SG_GCC010_139 = SG_GCC010_139_est }
+goal setGCC015_154 { SG_GCC015_154 = SG_GCC015_154_est }
+goal setGCC022_169 { SG_GCC022_169 = SG_GCC022_169_est }
+goal setGCC027_183 { SG_GCC027_183 = SG_GCC027_183_est }
+goal setGCC032_198 { SG_GCC032_198 = SG_GCC032_198_est }
+goal setGCC036_211 { SG_GCC036_211 = SG_GCC036_211_est }
+goal setGCC039_216 { SG_GCC039_216 = SG_GCC039_216_est }
+goal setGCC042_227 { SG_GCC042_227 = SG_GCC042_227_est }
+goal setGCC046_236 { SG_GCC046_236 = SG_GCC046_236_est }
+goal setGCC050_250 { SG_GCC050_250 = SG_GCC050_250_est }
+goal setGCC056_258 { SG_GCC056_258 = SG_GCC056_258_est }
+goal setGCC060_266 { SG_GCC060_266 = SG_GCC060_266_est }
+goal setGCC065_267 { SG_GCC065_267 = SG_GCC065_267_est }
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! American River      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!        
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!        
+goal setFOLSM_389  {
+	lhs SG_FOLSM_389
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_FOLSM_389(-1)}}
+		
+goal setNTOMA_385  {
+	lhs SG_NTOMA_385
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_NTOMA_385(-1)}}
+		
+goal setAMR020_384  {
+	lhs SG_AMR020_384
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_AMR020_384(-1)}}
+		
+goal setAMR015_380  {
+	lhs SG_AMR015_380
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_AMR015_380(-1)}}
+		
+goal setAMR009_375  {
+	lhs SG_AMR009_375
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_AMR009_375(-1)}}
+
+goal setAMR004_374  {
+	lhs SG_AMR004_374
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_AMR004_374(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Antelope Creek      !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setANT010_073  {
+	lhs SG_ANT010_073
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_ANT010_073(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Big Chico Creek     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setBCC012_132  {
+	lhs SG_BCC012_132
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_BCC012_132(-1)}}
+
+goal setBCC006_131  {
+	lhs SG_BCC006_131
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_BCC006_131(-1)}}
+
+goal setBCC004_130  {
+	lhs SG_BCC004_130
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_BCC004_130(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Bear River          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setBRR017_333  {
+	lhs SG_BRR017_333
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_BRR017_333(-1)}}
+
+goal setBRR011_332  {
+	lhs SG_BRR011_332
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_BRR011_332(-1)}}
+
+goal setBRR004_331  {
+	lhs SG_BRR004_331
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_BRR004_331(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Butte Creek         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setBTC043_143  {
+	lhs SG_BTC043_143
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_BTC043_143(-1)}}
+
+goal setBTC036_147  {
+	lhs SG_BTC036_147
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_BTC036_147(-1)}}
+
+goal setBTC032_157  {
+	lhs SG_BTC032_157
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_BTC032_157(-1)}}
+
+goal setBTC029_173  {
+	lhs SG_BTC029_173
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_BTC029_173(-1)}}
+
+goal setBTC024_188  {
+	lhs SG_BTC024_188
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_BTC024_188(-1)}}
+
+goal setBTC018_204  {
+	lhs SG_BTC018_204
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_BTC018_204(-1)}}
+
+goal setBTC012_223  {
+	lhs SG_BTC012_223
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_BTC012_223(-1)}}
+
+goal setBTC007_242  {
+	lhs SG_BTC007_242
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_BTC007_242(-1)}}
+
+goal setBTC003_255  {
+	lhs SG_BTC003_255
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_BTC003_255(-1)}}
+
+goal setBSL001_263  {
+	lhs SG_BSL001_263
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_BSL001_263(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Battle Creek        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setBTL006_038  {
+	lhs SG_BTL006_038
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_BTL006_038(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Cache Creek         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setCCH030_335  {
+	lhs SG_CCH030_335
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_CCH030_335(-1)}}
+
+goal setCCH023_336  {
+	lhs SG_CCH023_336
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_CCH023_336(-1)}}
+
+goal setCCH017_347  {
+	lhs SG_CCH017_347
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_CCH017_347(-1)}}
+
+goal setCCH012_348  {
+	lhs SG_CCH012_348
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_CCH012_348(-1)}}
+
+goal setCCH006_358  {
+	lhs SG_CCH006_358
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_CCH006_358(-1)}}
+
+goal setCCH003_359  {
+	lhs SG_CCH003_359
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_CCH003_359(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Colusa Basin Drain  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setCBD049_220  {
+	lhs SG_CBD049_220
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_CBD049_220(-1)}}
+
+goal setCBD044_239  {
+	lhs SG_CBD044_239
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_CBD044_239(-1)}}
+
+goal setCBD041_253  {
+	lhs SG_CBD041_253
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_CBD041_253(-1)}}
+
+goal setCBD037_260  {
+	lhs SG_CBD037_260
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_CBD037_260(-1)}}
+
+goal setCBD031_268  {
+	lhs SG_CBD031_268
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_CBD031_268(-1)}}
+
+goal setCBD028_275  {
+	lhs SG_CBD028_275
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_CBD028_275(-1)}}
+
+goal setCBD023_289  {
+	lhs SG_CBD023_289
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_CBD023_289(-1)}}
+
+goal setCBD018_302  {
+	lhs SG_CBD018_302
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_CBD018_302(-1)}}
+
+goal setCBD012_314  {
+	lhs SG_CBD012_314
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_CBD012_314(-1)}}
+
+goal setCBD005_326  {
+	lhs SG_CBD005_326
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_CBD005_326(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Cottonwood Creek    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setCWD004_036  {
+	lhs SG_CWD004_036
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_CWD004_036(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Cow Creek           !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setCOW014_012  {
+	lhs SG_COW014_012
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_COW014_012(-1)}}
+
+goal setCOW007_011  {
+	lhs SG_COW007_011
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_COW007_011(-1)}}
+
+goal setCOW003_017  {
+	lhs SG_COW003_017
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_COW003_017(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Deer Creek          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setDRC010_096  {
+	lhs SG_DRC010_096
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_DRC010_096(-1)}}
+
+goal setDRC006_100  {
+	lhs SG_DRC006_100
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_DRC006_100(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Elder Creek         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setELD027_081  {
+	lhs SG_ELD027_081
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_ELD027_081(-1)}}
+
+goal setELD022_082  {
+	lhs SG_ELD022_082
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_ELD022_082(-1)}}
+
+goal setELD017_083  {
+	lhs SG_ELD017_083
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_ELD017_083(-1)}}
+
+goal setELD012_084  {
+	lhs SG_ELD012_084
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_ELD012_084(-1)}}
+
+goal setELD005_085  {
+	lhs SG_ELD005_085
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_ELD005_085(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Feather River       !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setFTR068_162  {
+	lhs SG_FTR068_162
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_FTR068_162(-1)}}
+
+goal setFTR063_161  {
+	lhs SG_FTR063_161
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_FTR063_161(-1)}}
+
+goal setFTR059_177  {
+	lhs SG_FTR059_177
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_FTR059_177(-1)}}
+
+goal setFTR053_192  {
+	lhs SG_FTR053_192
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_FTR053_192(-1)}}
+
+goal setFTR048_208  {
+	lhs SG_FTR048_208
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_FTR048_208(-1)}}
+
+goal setFTR045_232  {
+	lhs SG_FTR045_232
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_FTR045_232(-1)}}
+
+goal setFTR036_246  {
+	lhs SG_FTR036_246
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_FTR036_246(-1)}}
+
+goal setFTR029_283  {
+	lhs SG_FTR029_283
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_FTR029_283(-1)}}
+
+goal setFTR025_295  {
+	lhs SG_FTR025_295
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_FTR025_295(-1)}}
+
+goal setFTR021_307  {
+	lhs SG_FTR021_307
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_FTR021_307(-1)}}
+
+goal setFTR016_318  {
+	lhs SG_FTR016_318
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_FTR016_318(-1)}}
+
+goal setFTR012_330  {
+	lhs SG_FTR012_330
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_FTR012_330(-1)}}
+
+goal setFTR008_329  {
+	lhs SG_FTR008_329
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_FTR008_329(-1)}}
+
+goal setFTR003_340  {
+	lhs SG_FTR003_340
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_FTR003_340(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Mill Creek          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setMLC006_088  {
+	lhs SG_MLC006_088
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_MLC006_088(-1)}}
+
+goal setMLC004_087  {
+	lhs SG_MLC004_087
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_MLC004_087(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Paynes Creek        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setPYN001_046  {
+	lhs SG_PYN001_046
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_PYN001_046(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Putah Creek         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setPTH024_428  {
+	lhs SG_PTH024_428
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_PTH024_428(-1)}}
+
+goal setPTH020_410  {
+	lhs SG_PTH020_410
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_PTH020_410(-1)}}
+
+goal setPTH015_411  {
+	lhs SG_PTH015_411
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_PTH015_411(-1)}}
+
+goal setPTH011_412  {
+	lhs SG_PTH011_412
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_PTH011_412(-1)}}
+
+goal setPTH007_413  {
+	lhs SG_PTH007_413
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_PTH007_413(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Sacramento River    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setSAC296_001  {
+	lhs SG_SAC296_001
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC296_001(-1)}}
+
+goal setSAC294_005  {
+	lhs SG_SAC294_005
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC294_005(-1)}}
+
+goal setSAC289_009  {
+	lhs SG_SAC289_009
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC289_009(-1)}}
+
+goal setSAC287_015  {
+	lhs SG_SAC287_015
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC287_015(-1)}}
+
+goal setSAC281_022  {
+	lhs SG_SAC281_022
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC281_022(-1)}}
+
+goal setSAC277_023  {
+	lhs SG_SAC277_023
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC277_023(-1)}}
+
+goal setSAC275_029  {
+	lhs SG_SAC275_029
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC275_029(-1)}}
+
+goal setSAC269_037  {
+	lhs SG_SAC269_037
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC269_037(-1)}}
+
+goal setSAC265_045  {
+	lhs SG_SAC265_045
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC265_045(-1)}}
+
+goal setSAC259_056  {
+	lhs SG_SAC259_056
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC259_056(-1)}}
+
+goal setSAC254_055  {
+	lhs SG_SAC254_055
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC254_055(-1)}}
+
+goal setSAC250_067  {
+	lhs SG_SAC250_067
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC250_067(-1)}}
+
+goal setSAC247_068  {
+	lhs SG_SAC247_068
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC247_068(-1)}}
+
+goal setSAC240_072  {
+	lhs SG_SAC240_072
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC240_072(-1)}}
+
+goal setSAC232_079  {
+	lhs SG_SAC232_079
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC232_079(-1)}}
+
+goal setSAC228_086  {
+	lhs SG_SAC228_086
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC228_086(-1)}}
+
+goal setSAC224_094  {
+	lhs SG_SAC224_094
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC224_094(-1)}}
+
+goal setSAC218_099  {
+	lhs SG_SAC218_099
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC218_099(-1)}}
+
+goal setSAC214_105  {
+	lhs SG_SAC214_105
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC214_105(-1)}}
+
+goal setSAC207_113  {
+	lhs SG_SAC207_113
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC207_113(-1)}}
+
+goal setSAC196_129  {
+	lhs SG_SAC196_129
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC196_129(-1)}}
+
+goal setSAC193_140  {
+	lhs SG_SAC193_140
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC193_140(-1)}}
+
+goal setSAC185_144  {
+	lhs SG_SAC185_144
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC185_144(-1)}}
+
+goal setSAC182_155  {
+	lhs SG_SAC182_155
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC182_155(-1)}}
+
+goal setSAC178_171  {
+	lhs SG_SAC178_171
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC178_171(-1)}}
+
+goal setSAC174_186  {
+	lhs SG_SAC174_186
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC174_186(-1)}}
+
+goal setSAC168_202  {
+	lhs SG_SAC168_202
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC168_202(-1)}}
+
+goal setSAC162_221  {
+	lhs SG_SAC162_221
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC162_221(-1)}}
+
+goal setSAC154_240  {
+	lhs SG_SAC154_240
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC154_240(-1)}}
+
+goal setSAC148_254  {
+	lhs SG_SAC148_254
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC148_254(-1)}}
+
+goal setSAC141_262  {
+	lhs SG_SAC141_262
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC141_262(-1)}}
+
+goal setSAC134_269  {
+	lhs SG_SAC134_269
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC134_269(-1)}}
+
+goal setSAC129_277  {
+	lhs SG_SAC129_277
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC129_277(-1)}}
+
+goal setSAC122_291  {
+	lhs SG_SAC122_291
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC122_291(-1)}}
+
+goal setSAC115_303  {
+	lhs SG_SAC115_303
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC115_303(-1)}}
+
+goal setSAC106_315  {
+	lhs SG_SAC106_315
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC106_315(-1)}}
+
+goal setSAC097_327  {
+	lhs SG_SAC097_327
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC097_327(-1)}}
+
+goal setSAC093_339  {
+	lhs SG_SAC093_339
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC093_339(-1)}}
+
+goal setSAC085_349  {
+	lhs SG_SAC085_349
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC085_349(-1)}}
+
+goal setSAC083_350  {
+	lhs SG_SAC083_350
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC083_350(-1)}}
+
+goal setSAC082_351  {
+	lhs SG_SAC082_351
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC082_351(-1)}}
+
+goal setSAC081_363  {
+	lhs SG_SAC081_363
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC081_363(-1)}}
+
+goal setSAC078_362  {
+	lhs SG_SAC078_362
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC078_362(-1)}}
+
+goal setSAC075_361  {
+	lhs SG_SAC075_361
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC075_361(-1)}}
+
+goal setSAC066_372  {
+	lhs SG_SAC066_372
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC066_372(-1)}}
+
+goal setSAC063_373  {
+	lhs SG_SAC063_373
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC063_373(-1)}}
+
+goal setSAC057_416  {
+	lhs SG_SAC057_416
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC057_416(-1)}}
+
+goal setSAC053_435  {
+	lhs SG_SAC053_435
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC053_435(-1)}}
+
+goal setSAC048_451  {
+	lhs SG_SAC048_451
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC048_451(-1)}}
+
+goal setSAC041_463  {
+	lhs SG_SAC041_463
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC041_463(-1)}}
+
+goal setSAC036_475  {
+	lhs SG_SAC036_475
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC036_475(-1)}}
+
+goal setSAC030_476  {
+	lhs SG_SAC030_476
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC030_476(-1)}}
+
+goal setSAC022_493  {
+	lhs SG_SAC022_493
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC022_493(-1)}}
+
+goal setSAC017_492  {
+	lhs SG_SAC017_492
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC017_492(-1)}}
+
+goal setSAC011_527  {
+	lhs SG_SAC011_527
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC011_527(-1)}}
+
+goal setSAC007_526  {
+	lhs SG_SAC007_526
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC007_526(-1)}}
+
+goal setSAC003_525  {
+	lhs SG_SAC003_525
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC003_525(-1)}}
+
+goal setSAC000_531  {
+	lhs SG_SAC000_531
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SAC000_531(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Stony Creek         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setSTN026_124  {
+	lhs SG_STN026_124
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_STN026_124(-1)}}
+
+goal setSTN021_125  {
+	lhs SG_STN021_125
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_STN021_125(-1)}}
+
+goal setSTN014_126  {
+	lhs SG_STN014_126
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_STN014_126(-1)}}
+
+goal setSTN009_127  {
+	lhs SG_STN009_127
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_STN009_127(-1)}}
+
+goal setSTN004_128  {
+	lhs SG_STN004_128
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_STN004_128(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Sutter Bypass       !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setSBP031_270  {
+	lhs SG_SBP031_270
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SBP031_270(-1)}}
+
+goal setSBP028_278  {
+	lhs SG_SBP028_278
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SBP028_278(-1)}}
+
+goal setSBP024_281  {
+	lhs SG_SBP024_281
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SBP024_281(-1)}}
+
+goal setSBP021_293  {
+	lhs SG_SBP021_293
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SBP021_293(-1)}}
+
+goal setSBP018_305  {
+	lhs SG_SBP018_305
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SBP018_305(-1)}}
+
+goal setSBP014_317  {
+	lhs SG_SBP014_317
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_SBP014_317(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Thomes Creek        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setTHM026_108  {
+	lhs SG_THM026_108
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_THM026_108(-1)}}
+
+goal setTHM021_101  {
+	lhs SG_THM021_101
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_THM021_101(-1)}}
+
+goal setTHM017_091  {
+	lhs SG_THM017_091
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_THM017_091(-1)}}
+
+goal setTHM012_092  {
+	lhs SG_THM012_092
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_THM012_092(-1)}}
+
+goal setTHM005_093  {
+	lhs SG_THM005_093
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_THM005_093(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Yolo Bypass         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setYBP032_360  {
+	lhs SG_YBP032_360
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_YBP032_360(-1)}}
+
+goal setYBP026_401  {
+	lhs SG_YBP026_401
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_YBP026_401(-1)}}
+
+goal setYBP023_407  {
+	lhs SG_YBP023_407
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_YBP023_407(-1)}}
+
+goal setYBP020_414  {
+	lhs SG_YBP020_414
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_YBP020_414(-1)}}
+
+goal setYBP016_433  {
+	lhs SG_YBP016_433
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_YBP016_433(-1)}}
+
+goal setYBP014_432  {
+	lhs SG_YBP014_432
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_YBP014_432(-1)}}
+
+goal setYBP011_448  {
+	lhs SG_YBP011_448
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_YBP011_448(-1)}}
+
+goal setYBP007_460  {
+	lhs SG_YBP007_460
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_YBP007_460(-1)}}
+
+goal setYBP002_473  {
+	lhs SG_YBP002_473
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_YBP002_473(-1)}}
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Yuba River          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+goal setYUB011_285  {
+	lhs SG_YUB011_285
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_YUB011_285(-1)}}
+
+goal setYUB006_284  {
+	lhs SG_YUB006_284
+	case first {
+		condition wateryear == bgnWY .and. month == Oct
+		rhs 0.}
+	case other {
+		condition always
+		rhs SG_YUB006_284(-1)}}
+
+                                        
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! Folsom South Canal  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+define FSC_Losses       {timeseries kind 'SEEPAGE'  units 'TAF' convert 'CFS'}  !Seepage losses for Folsom South Canal
+goal setSG_FSC003       {SG_FSC003 < -FSC_Losses}   
+
+! Calculate total seepage per river reach
+goal setSG_AMR_Total 	{SG_AMR_Total = SG_FOLSM_389 + SG_NTOMA_385 + SG_AMR020_384 + SG_AMR015_380 + SG_AMR009_375 + SG_AMR004_374}      
+goal setSG_ANT_Total 	{SG_ANT_Total = SG_ANT010_073}     
+goal setSG_BTL_Total 	{SG_BTL_Total = SG_BTL006_038}   
+
+goal setSG_BRR_Total 	{SG_BRR_Total = /*SG_BRR018_334 +*/ SG_BRR017_333 + SG_BRR011_332 + SG_BRR004_331}     
+
+goal setSG_BCC_Total 	{SG_BCC_Total = SG_BCC012_132 + SG_BCC006_131 + SG_BCC004_130}     
+goal setSG_BTC_Total 	{SG_BTC_Total = SG_BTC043_143 + SG_BTC036_147 + SG_BTC032_157 + SG_BTC029_173 + SG_BTC024_188 + SG_BTC018_204 + SG_BTC012_223 + SG_BTC007_242 + SG_BTC003_255 + SG_BSL001_263}     
+goal setSG_CCH_Total 	{SG_CCH_Total = SG_CCH030_335 + SG_CCH023_336 + SG_CCH017_347 + SG_CCH012_348 + SG_CCH006_358 + SG_CCH003_359}     
+goal setSG_CBD_Total 	{SG_CBD_Total = SG_CBD049_220 + SG_CBD044_239 + SG_CBD041_253 + SG_CBD037_260 + SG_CBD031_268 + SG_CBD028_275 + SG_CBD023_289 + SG_CBD018_302 + SG_CBD012_314 + SG_CBD005_326}             
+goal setSG_CWD_Total 	{SG_CWD_Total = SG_CWD004_036}     
+goal setSG_COW_Total 	{SG_COW_Total = SG_COW014_012 + SG_COW007_011 + SG_COW003_017}     
+goal setSG_DRC_Total 	{SG_DRC_Total = SG_DRC010_096 + SG_DRC006_100}     
+goal setSG_ELD_Total 	{SG_ELD_Total = SG_ELD027_081 + SG_ELD022_082 + SG_ELD017_083 + SG_ELD012_084 + SG_ELD005_085}     
+goal setSG_FTR_Total 	{SG_FTR_Total = SG_FTR068_162 + SG_FTR063_161 + SG_FTR059_177 + SG_FTR053_192 + SG_FTR048_208 + SG_FTR045_232 + SG_FTR036_246 + SG_FTR029_283 + SG_FTR025_295 + SG_FTR021_307 + SG_FTR016_318 + SG_FTR012_330 + SG_FTR008_329 + SG_FTR003_340}     
+goal setSG_FSC_Total 	{SG_FSC_Total = SG_FSC003}
+goal setSG_GCC_Total 	{SG_GCC_Total = SG_GCC010_139 + SG_GCC015_154 + SG_GCC022_169 + SG_GCC027_183 + SG_GCC032_198 + SG_GCC036_211 + SG_GCC039_216 + SG_GCC042_227 + SG_GCC046_236 + SG_GCC050_250 + SG_GCC056_258 + SG_GCC060_266 + SG_GCC065_267}     
+goal setSG_MLC_Total 	{SG_MLC_Total = SG_MLC006_088 + SG_MLC004_087}     
+goal setSG_PYN_Total 	{SG_PYN_Total = SG_PYN001_046}     
+goal setSG_PTH_Total 	{SG_PTH_Total = SG_PTH024_428 + SG_PTH020_410 + SG_PTH015_411 + SG_PTH011_412 + SG_PTH007_413}     
+goal setSG_SAC1_Total	{SG_SAC1_Total = SG_SAC296_001 + SG_SAC294_005 + SG_SAC289_009 + SG_SAC287_015 + SG_SAC281_022 + SG_SAC277_023 + SG_SAC275_029 + SG_SAC269_037 + SG_SAC265_045 + SG_SAC259_056 + SG_SAC254_055 + SG_SAC250_067 + SG_SAC247_068}
+goal setSG_SAC2_Total 	{SG_SAC2_Total = SG_SAC240_072+SG_SAC232_079+SG_SAC228_086+SG_SAC224_094+SG_SAC218_099+SG_SAC214_105+SG_SAC207_113+SG_SAC196_129+SG_SAC193_140+SG_SAC185_144}
+goal setSG_SAC3_Total 	{SG_SAC3_Total = SG_SAC182_155+SG_SAC178_171+SG_SAC174_186+SG_SAC168_202+SG_SAC162_221+SG_SAC154_240+SG_SAC148_254+SG_SAC141_262+SG_SAC134_269+SG_SAC129_277+SG_SAC122_291+SG_SAC115_303+SG_SAC106_315+SG_SAC097_327+SG_SAC093_339+SG_SAC085_349+SG_SAC083_350+SG_SAC082_351}
+goal setSG_SAC4_Total 	{SG_SAC4_Total = SG_SAC081_363+SG_SAC078_362+SG_SAC075_361+SG_SAC066_372+SG_SAC063_373+SG_SAC057_416+SG_SAC053_435}
+goal setSG_SAC5_Total 	{SG_SAC5_Total = SG_SAC048_451+SG_SAC041_463+SG_SAC036_475+SG_SAC030_476+SG_SAC022_493+SG_SAC017_492+SG_SAC011_527+SG_SAC007_526+SG_SAC003_525+SG_SAC000_531}
+goal setSG_SAC_Total 	{SG_SAC_Total = SG_SAC1_Total +SG_SAC2_Total +SG_SAC3_Total +SG_SAC4_Total +SG_SAC5_Total }
+goal setSG_STN_Total 	{SG_STN_Total = SG_STN026_124 + SG_STN021_125 + SG_STN014_126 + SG_STN009_127 + SG_STN004_128}     
+goal setSG_SBP_Total 	{SG_SBP_Total = SG_SBP031_270 + SG_SBP028_278 + SG_SBP024_281 + SG_SBP021_293 + SG_SBP018_305 + SG_SBP014_317}     
+goal setSG_THM_Total 	{SG_THM_Total = SG_THM026_108 + SG_THM021_101 + SG_THM017_091 + SG_THM012_092 + SG_THM005_093}     
+goal setSG_YBP_Total 	{SG_YBP_Total = SG_YBP032_360 + SG_YBP026_401 + SG_YBP023_407 + SG_YBP020_414 + SG_YBP016_433 + SG_YBP014_432 + SG_YBP011_448 + SG_YBP007_460 + SG_YBP002_473}     
+goal setSG_YUB_Total 	{SG_YUB_Total = SG_YUB011_285 + SG_YUB006_284}
+
+! Calculate total river seepage for Sac basin
+goal setSG_Total 	{SG_Total = SG_AMR_Total + SG_ANT_Total + SG_BTL_Total + SG_BRR_Total + SG_BCC_Total + SG_BTC_Total + SG_CCH_Total + SG_CBD_Total + SG_CWD_Total + SG_COW_Total + SG_DRC_Total + SG_ELD_Total + SG_FTR_Total + SG_FSC_Total + SG_GCC_Total + SG_MLC_Total + SG_PYN_Total + SG_PTH_Total + SG_SAC_Total + SG_STN_Total + SG_SBP_Total + SG_THM_Total + SG_YBP_Total + SG_YUB_Total}
+

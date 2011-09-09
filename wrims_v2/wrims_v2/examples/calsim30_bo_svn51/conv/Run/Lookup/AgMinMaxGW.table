@@ -1,0 +1,144 @@
+! Minimum and maximum amounts of groundwater pumping for demand unit
+! Values are expressed as fraction of agricultural applied water demand
+agminmaxgw				
+ID	MinFraction	MaxFraction		
+1	0.32	1	!02_NA	Non-District
+2	0	1	!02_PA	Clear Creek CSD
+3	0.06	1	!02_SA	Anderson Cottonwood ID, Non-District (short-form)
+4	0.22	1	!03_NA	Non-District
+5	0.01	1	!03_PA	Bella Vista Water District
+6	0.01	1	!03_SA	Anderson Cottonwood ID, Non-District (short-form)
+7	0.84	1	!04_NA	Non-District
+8	0.3	1	!04_PA1	Corning WD, Proberta WD, Thomes Creek WD
+9	0.2	1	!04_PA2	Kirkwood WD
+10	0.84	1	!05_NA	Non-District
+11	0.59	1	!06_NA	Non-District (LandUseSurveys =0.96, increased as no surface water supply)
+12	0.05	1	!06_PA	Orland Unit WUA
+13	0.75	1	!07N_NA	Non-District (LandUseSurveys =0.93, increased as no surface water supply)
+14	0.12	1	!07N_PA	Glide WD, Holthouse WD, Kanawha WD, Orland-Artois WD
+15	0.86	1	!07S_NA	Non-District (LandUseSurveys =0.97, increased as no surface water supply)
+16	0.06	1	!07S_PA	4-M WD, Colusa County WD, Cortina WD, Davis WD, Dunnigan WD,Glenn ValleyWD, Holthouse WD, Le Grande WD, Myers-Marsh MWC, Westside WD
+17	0.61	1	!08N_NA	Non-District
+18	0.02	1	!08N_PA	Colusa Drain MWC
+19	0.05	1	!08N_SA1	Maxwell ID, Princeton-Cordora-Glenn ID, Provident ID, Non-District(Short-Form)
+20	0.04	1	!08N_SA2	Glenn-Colusa ID
+21	0.32	1	!08S_NA1	Non-District
+22	0.4	1	!08S_NA2	Non-District
+23	0.1	1	!08S_PA	Colusa Drain MWC
+24	0.08	1	!08S_SA1	Maxwell ID, Roberts Ditch Co., Swinford Tract Irrigation Company,Non-District (Short-Form)
+25	0	1	!08S_SA2	Glenn-Colusa ID
+26	0	1	!08S_SA3	RD 108, River Garden Farms, Non-District (Short-Form)
+27	0.6	1	!09_NA	LLano Seco (Parrot Ranch), Dayton MWC, Non-District
+28	0.24	1	!09_SA1	M&T Chico Ranch Inc.
+29	0.05	1	!09_SA2	RD 1004, Sartain MWC, Colusa Properties, Non-District (Short-Form)
+30	0.76	1	!10_NA	Rancho  Esquon, Durham MWC, Non-District
+31	0.57	1	!11_NA	Sutter Butte MWC, Non-District
+32	0.06	1	!11_SA1	Western Canal WD
+33	0	1	!11_SA2	Richvale ID
+34	0.09	1	!11_SA3	Biggs-West Gridley WD, Butte WD
+35	0.04	1	!11_SA4	Sutter Extension WD
+36	0.96	1	!12_NA	Non-District
+37	0.53	1	!12_SA	Feather River riparian
+38	0.36	1	!13_NA	South Feather Water and Power Agency
+39	0.04	1	!14_NA	Browns Valley ID
+40	0.88	1	!15N_NA1	Non-District (LandUseSurveys =0.93, increased as no surface water supply)
+41	0.02	1	!15N_NA2	Cordua ID, Hallwood ID, Ramirez WD
+42	0.82	1	!15N_SA	Feather River riparian
+43	0.77	1	!15S_NA1	Non-District (LandUseSurveys =0.95, increased as no surface water supply)
+44	0.45	1	!15S_NA2	Brophy WD, Dry Creek MWC, South Yuba WD, Dantoni Area,Wheatland WD
+45	0.41	1	!15S_SA	Plumas MWC, Feather River riparian
+46	0.13	1	!16_NA1	Non-District(LandUseSurveys =0.30, increased as no surface water supply)
+47	0.13	1	!16_NA2	Non-District 
+48	0.21	1	!16_PA	Feather WD
+49	0.35	1	!16_SA	Garden Highway MWC, Tudor ID, Oswald MWC, Feather River riparian
+50	0.5	1	!17N_NA	Non-District (LandUseSurveys =0.81, increased as no surface water supply)
+51	0.29	1	!17S_NA	Sutter Bypass-Butte Slough WUA
+52	0	1	!17S_SA	Feather River riparian
+53	0.07	1	!18_NA	Butte Slough Irrigation Company, Non-District
+54	0.02	1	!18_SA	Meridian Farms, Newhall Land & Farming, Sutter MWC, TisdaleIDC, Non-District (Short-Form)
+55	0	1	!19_NA	Non-District: Placeholder - zero acreage
+56	0	1	!19_SA	Reynen, Oji Bros. Farm, Inc., Oji Family Partnership, PelgerMWC, SutterMWC,Non-District (Short-Form)
+57	0.39	1	!20_NA1	Yolo County FCWCD
+58	0.81	1	!20_NA2	Non-District (LandUseSurveys =0.99, increased as no surface water supply)
+59	0.94	1	!20_PA	UC Davis
+60	0.06	1	!21_NA	Non-District
+61	0.04	1	!21_PA	Colusa Drain MWC
+62	0.01	1	!21_SA	RD 2035 (Conway Conservancy), Sacramento River Ranch LLC
+63	0.74	1	!22_NA	Non-District
+64	0.21	1	!22_SA1	Natomas Central MWD, Pleasant Grove-Verona MWC, Non-District(Short-Form)
+65	0.56	1	!22_SA2	Feather River riparian
+66	0.04	1	!23_NA	Camp Far West ID, South Sutter WD
+67	0.02	1	!24_NA1	Nevada ID
+68	0.14	1	!24_NA2	PCWA Zone 5
+69	0.04	1	!24_NA3	PCWA Zone 1
+70	0.57	1	!25_NA	North Delta WA, Non-District
+71	0.04	1	!25_PA1	Solano ID
+72	0	1	!25_PA2	Maine Prairie WD
+73	1	1	!26N_NA	Non-District
+74	0.95	1	!26S_NA	Non-District (LandUseSurveys =0.99, increased as no surface water supply)          
+
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+
+     

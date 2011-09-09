@@ -38,9 +38,9 @@ public class TestILP_calsim_bo {
 		 "10",
 		 "31", 
 		 "ILP", 
-		 "csv_TestIlp_Calsim_BO"};
+		 "csv_TestILp_calsim_bo"};
 
-		FilePaths.ilpFileDirectory = "ilp_TestIlp_Calsim3";
+		FilePaths.ilpFileDirectory = "ilp_TestILp_calsim_bo";
 		//FilePaths.ilpFile = "test.ilp";
 		
         new Controller(controlDataString);

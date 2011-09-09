@@ -1,0 +1,11 @@
+!This is the Export Operations include file  (E. Reyes)
+
+INCLUDE 'BanksSplit.wresl'
+INCLUDE '..\..\..\common\export_ops\banks_limits.wresl'
+INCLUDE 'banks_pump_allow.wresl'
+
+INCLUDE '..\..\..\common\export_ops\tracysplit.wresl'
+INCLUDE '..\..\..\common\export_ops\tracy_limits.wresl'
+
+INCLUDE '..\..\..\common\export_ops\exportratio.wresl'
+INCLUDE '..\..\..\common\export_ops\april_may_maxexport.wresl'

@@ -1,0 +1,502 @@
+/*
+File Name: constraints-GPmin.wresl
+CalSim 3.0 System File
+
+Purpose:
+Constrain the Groundwater Pumping with DLT (diversion limit)
+ 
+Z. Richard Chen, DWR, Aug 17, 2011 
+*/
+
+!==============================
+! 04_PA2 -
+!==============================
+define DLTsv_04_PA2	{value CLmon_TCC022_04_PA2 *taf_cfs* perdel_cvpag_sys}
+define DLsv_04_PA2 {value (EVF_TCC022_04_PA2+DPF_TCC022_04_PA2+LFF_TCC022_04_PA2+OSF_TCC022_04_PA2) * DLTsv_04_PA2}
+
+define GPest_04_PA2 {value AWR_04_PA2 + AWO_04_PA2          !AW_ 
+               + (AWR_04_PA2 + AWO_04_PA2)* RPF_04_PA2      !RP_ 
+               + DLsv_04_PA2
+               - DLTsv_04_PA2                
+               - min(TW_04_PA2, RUFR_04_PA2*AWR_04_PA2 + RUFO_04_PA2*AWO_04_PA2)           !RU_ 
+}
+               
+goal limitDG_04_PA2 { lhs DG_04_PA2 
+                    case  GP_larger_GPmin { condition GPest_04_PA2 > GPmin_04_PA2
+                    rhs DLTsv_04_PA2 
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                    }
+                   }
+!==============================
+! 07N_PA -
+!==============================	                     
+define DLTsv_07N_PA {value CLmon_TCC036_07N_PA *taf_cfs* perdel_cvpag_sys}
+define DLsv_07N_PA {value (EVF_TCC036_07N_PA+DPF_TCC036_07N_PA+LFF_TCC036_07N_PA+OSF_TCC036_07N_PA) * DLTsv_07N_PA}
+
+define GPest_07N_PA {value AWR_07N_PA + AWO_07N_PA          !AW_ 
+               + (AWR_07N_PA + AWO_07N_PA)* RPF_07N_PA      !RP_ 
+               + DLsv_07N_PA
+               - DLTsv_07N_PA                
+               - min(TW_07N_PA, RUFR_07N_PA*AWR_07N_PA + RUFO_07N_PA*AWO_07N_PA)           !RU_ 
+}
+               
+goal limitDG_07N_PA { lhs DG_07N_PA 
+                    case  GP_larger_GPmin { condition GPest_07N_PA > GPmin_07N_PA
+                    rhs DLTsv_07N_PA 
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                    }
+                   }
+!==============================
+! 07S_PA -
+!==============================	                     
+define DLTsv_TCC081_07S_PA	{value CLmon_TCC081_07S_PA *taf_cfs* perdel_cvpag_sys}
+define DLTsv_TCC111_07S_PA	{value CLmon_TCC111_07S_PA *taf_cfs* perdel_cvpag_sys}
+define DLTsv_07S_PA	{value DLTsv_TCC081_07S_PA + DLTsv_TCC111_07S_PA}
+define DLsv_07S_PA {value  (EVF_TCC081_07S_PA+DPF_TCC081_07S_PA+LFF_TCC081_07S_PA+OSF_TCC081_07S_PA) * DLTsv_TCC081_07S_PA    !DL_ 
+                         + (EVF_TCC111_07S_PA+DPF_TCC111_07S_PA+LFF_TCC111_07S_PA+OSF_TCC111_07S_PA) * DLTsv_TCC111_07S_PA}     
+ 
+define GPest_07S_PA {value AWR_07S_PA + AWO_07S_PA          !AW_ 
+               + (AWR_07S_PA + AWO_07S_PA)* RPF_07S_PA      !RP_ 
+               + DLsv_07S_PA
+               - DLTsv_07S_PA                
+               - min(TW_07S_PA, RUFR_07S_PA*AWR_07S_PA + RUFO_07S_PA*AWO_07S_PA)           !RU_ 
+}
+               
+goal limitDG_07S_PA { lhs DG_07S_PA 
+                    case  GP_larger_GPmin { condition GPest_07S_PA > GPmin_07S_PA
+                    rhs DLTsv_07S_PA 
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                    }
+                   }
+!==============================
+! 07N_PR -
+!==============================	                     
+define DLTsv_JBC002_17N_PR	{value CLmon_JBC002_17N_PR*taf_cfs}
+define DLTsv_BGD000_17N_PR	{value WRmon_BGD000_17N_PR*taf_cfs}
+define DLTsv_17N_PR	{value DLTsv_JBC002_17N_PR + DLTsv_BGD000_17N_PR}
+define DLsv_17N_PR {value  (EVF_JBC002_17N_PR+DPF_JBC002_17N_PR+LFF_JBC002_17N_PR+OSF_JBC002_17N_PR) * DLTsv_JBC002_17N_PR    !DL_ 
+                         + (EVF_BGD000_17N_PR+DPF_BGD000_17N_PR+LFF_BGD000_17N_PR+OSF_BGD000_17N_PR) * DLTsv_BGD000_17N_PR}     
+
+define GPest_17N_PR {value  AWR_17N_PR + AWO_17N_PR + AWW_17N_PR    !AW_ 
+               + (AWR_17N_PR + AWO_17N_PR + AWW_17N_PR)* RPF_17N_PR      !RP_ 
+               + DLsv_17N_PR
+               - DLTsv_17N_PR                
+               - min(TW_17N_PR, RUFR_17N_PR*AWR_17N_PR + RUFO_17N_PR*AWO_17N_PR + RUFW_17N_PR*AWW_17N_PR)           !RU_ 
+}
+               
+goal limitDG_17N_PR { lhs DG_17N_PR 
+                    case  GP_larger_GPmin { condition GPest_17N_PR > GPmin_17N_PR
+                    rhs DLTsv_17N_PR 
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                    }
+                   }
+
+
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! WBA 8 North          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!==============================
+! 8N_PA -
+!==============================
+! loses
+! reuse
+! riparian loss
+
+define DLTsv_08N_PA	{value CLmon_CBD049_08N_PA *taf_cfs* perdel_cvpag_sys + WRmon_CBD049_08N_PA*taf_cfs}
+
+define DLsv_08N_PA {value  (EVF_CBD049_08N_PA+DPF_CBD049_08N_PA+LFF_CBD049_08N_PA+OSF_CBD049_08N_PA) * DLTsv_08N_PA }   !DL_     
+
+define GPest_08N_PA {value AWR_08N_PA + AWO_08N_PA + AWW_08S_PA          !AW_ 
+               + (AWR_08S_PA + AWO_08S_PA + AWW_08S_PA)* RPF_08S_PA      !RP_ 
+               + DLsv_08N_PA 
+               - DLTsv_08N_PA             
+               -  min(TW_08N_PA, RUFR_08N_PA*AWR_08N_PA + RUFO_08N_PA*AWO_08N_PA + RUFW_08N_PA*AWW_08N_PA)    !RU_ 
+}  
+               
+goal limitDG_08N_PA { lhs DG_08N_PA 
+                    case  GP_larger_GPmin { condition GPest_08N_PA > GPmin_08N_PA
+                    rhs DLTsv_08N_PA 
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                    }
+                   }
+
+!==============================
+! 08N_NA -
+!==============================
+
+define DLTsv_08N_NA {value WRmon_SAC185_08N_NA*taf_cfs}
+define DLsv_08N_NA {value  (EVF_SAC185_08N_NA+DPF_SAC185_08N_NA+LFF_SAC185_08N_NA+OSF_SAC185_08N_NA) * DLTsv_08N_NA }   !DL_     
+
+define GPest_08N_NA {value AWR_08N_NA + AWO_08N_NA          !AW_ 
+               + (AWR_08N_NA + AWO_08N_NA)* RPF_08N_NA      !RP_ 
+               + DLsv_08N_NA 
+               - DLTsv_08N_NA             
+               - min(TW_08N_NA, RUFR_08N_NA*AWR_08N_NA + RUFO_08N_NA*AWO_08N_NA)      !RU_ 
+}  
+               
+goal limitDG_08N_NA { lhs DG_08N_NA 
+                    case  GP_larger_GPmin { condition GPest_08N_NA > GPmin_08N_NA
+                    rhs DLTsv_08N_NA 
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                    }
+                   }
+
+!==============================
+! 8N_SA2 -
+!==============================
+define DLTsv_08N_SA2 {value CLmon_GCC027_08N_SA2*taf_cfs*perdel_cvpsc_sys + 1.0*WRmon_GCC027_08N_SA2*taf_cfs }
+define DLsv_08N_SA2 {value  (EVF_GCC027_08N_SA2+DPF_GCC027_08N_SA2+LFF_GCC027_08N_SA2+OSF_GCC027_08N_SA2) * DLTsv_08N_SA2}
+   
+define GPest_08N_SA2 {value AWR_08N_SA2 + AWO_08N_SA2 + AWW_08N_SA2            !AW_ 
+               + (AWR_08N_SA2 + AWO_08N_SA2 + AWW_08N_SA2)* RPF_08N_SA2         !RP_ 
+               + DLsv_08N_SA2
+               - DLTsv_08N_SA2                
+               - min(TW_08N_SA2, RUFR_08N_SA2*AWR_08N_SA2 + RUFO_08N_SA2*AWO_08N_SA2 + RUFW_08N_SA2*AWW_08N_SA2)           !RU_  
+}               
+goal limitDG_08N_SA2 { lhs DG_08N_SA2 
+              case  GP_larger_GPmin 
+                   {condition GPest_08N_SA2 > GPmin_08N_SA2
+                     rhs DLTsv_08N_SA2
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                   }
+}
+
+
+!==============================
+! 8N_SA1 -
+!==============================
+define DLTsv_SAC159_08N_SA1 {value CLmon_SAC159_08N_SA1*taf_cfs*perdel_cvpsc_sys + 1.0*WRmon_SAC159_08N_SA1*taf_cfs}
+define DLTsv_SAC178_08N_SA1 {value CLmon_SAC178_08N_SA1*taf_cfs*perdel_cvpsc_sys + 1.0*WRmon_SAC178_08N_SA1*taf_cfs}
+define DLTsv_CBD049_08N_SA1 {value WRmon_CBD049_08N_SA1*taf_cfs}  
+define DLTsv_08N_SA1 {value  DLTsv_SAC159_08N_SA1+ DLTsv_SAC178_08N_SA1+ DLTsv_CBD049_08N_SA1}
+
+define DLsv_08N_SA1 {value  (EVF_CBD049_08N_SA1+DPF_CBD049_08N_SA1+LFF_CBD049_08N_SA1+OSF_CBD049_08N_SA1) * DLTsv_CBD049_08N_SA1    !DL_ 
+                          + (EVF_SAC159_08N_SA1+DPF_SAC159_08N_SA1+LFF_SAC159_08N_SA1+OSF_SAC159_08N_SA1) * DLTsv_SAC159_08N_SA1     
+                          + (EVF_SAC178_08N_SA1+DPF_SAC178_08N_SA1+LFF_SAC178_08N_SA1+OSF_SAC178_08N_SA1) * DLTsv_SAC178_08N_SA1 }     
+
+define GPest_08N_SA1 {value AWR_08N_SA1 + AWO_08N_SA1 + AWW_08N_SA1            !AW_ 
+               + (AWR_08N_SA1 + AWO_08N_SA1 + AWW_08N_SA1)* RPF_08N_SA1         !RP_ 
+               + DLsv_08N_SA1
+               - DLTsv_08N_SA1                
+               - min(TW_08N_SA1, RUFR_08N_SA1*AWR_08N_SA1 + RUFO_08N_SA1*AWO_08N_SA1 + RUFW_08N_SA1*AWW_08N_SA1)           !RU_  
+}               
+goal limitDG_08N_SA1 { lhs DG_08N_SA1 
+              case  GP_larger_GPmin 
+                   {condition GPest_08N_SA1 > GPmin_08N_SA1
+                     rhs DLTsv_08N_SA1
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                   }
+}
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! WBA 8S          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!==============================
+! 8S_PA -
+!==============================
+define DLTsv_CBD028_08S_PA {value CLmon_CBD028_08S_PA *taf_cfs* perdel_cvpag_sys + WRmon_CBD028_08S_PA*taf_cfs }
+define DLTsv_GCC065_08S_PA {value CLmon_GCC065_08S_PA*taf_cfs }
+define DLTsv_08S_PA {value DLTsv_CBD028_08S_PA + DLTsv_GCC065_08S_PA}
+
+
+define DLsv_08S_PA {value (EVF_CBD028_08S_PA+DPF_CBD028_08S_PA+LFF_CBD028_08S_PA+OSF_CBD028_08S_PA) * DLTsv_CBD028_08S_PA    !DL_ 
+                        + (EVF_GCC065_08S_PA+DPF_GCC065_08S_PA+LFF_GCC065_08S_PA+OSF_GCC065_08S_PA) * DLTsv_GCC065_08S_PA}                 
+
+
+define GPest_08S_PA {value AWR_08S_PA + AWO_08S_PA + AWW_08S_PA          !AW_08S_PA
+               + (AWR_08S_PA + AWO_08S_PA + AWW_08S_PA)* RPF_08S_PA      !RP_08N_PA
+               + DLsv_08S_PA
+               - DLTsv_08S_PA                
+               - min(TW_08S_PA, RUFR_08S_PA*AWR_08S_PA + RUFO_08S_PA*AWO_08S_PA + RUFW_08S_PA*AWW_08S_PA)           !RU_08S_PA 
+}
+               
+goal limitDG_08S_PA { lhs DG_08S_PA 
+                    case  GP_larger_GPmin { condition GPest_08S_PA > GPmin_08S_PA
+                    rhs DLTsv_08S_PA 
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                    }
+                   }
+	                     
+!==============================
+! 08S_NA1 -
+!==============================
+define DLTsv_08S_NA1 {value WRmon_SAC146_08S_NA1*taf_cfs}
+define DLsv_08S_NA1 {value  (EVF_SAC146_08S_NA1+DPF_SAC146_08S_NA1+LFF_SAC146_08S_NA1+OSF_SAC146_08S_NA1) * DLTsv_08S_NA1 }   !DL_     
+
+define GPest_08S_NA1 {value AWR_08S_NA1 + AWO_08S_NA1          !AW_ 
+               + (AWR_08S_NA1 + AWO_08S_NA1)* RPF_08S_NA1      !RP_ 
+               + DLsv_08S_NA1 
+               - DLTsv_08S_NA1             
+               -  min(TW_08S_NA1, RUFR_08S_NA1*AWR_08S_NA1 + RUFO_08S_NA1*AWO_08S_NA1)     !RU_ 
+}  
+               
+goal limitDG_08S_NA1 { lhs DG_08S_NA1 
+                    case  GP_larger_GPmin { condition GPest_08S_NA1 > GPmin_08S_NA1
+                    rhs DLTsv_08S_NA1 
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                    }
+                   }
+
+!==============================
+! 08S_NA2 -
+!==============================
+define DLTsv_08S_NA2 {value WRmon_SAC129_08S_NA2*taf_cfs}
+define DLsv_08S_NA2 {value  (EVF_SAC129_08S_NA2+DPF_SAC129_08S_NA2+LFF_SAC129_08S_NA2+OSF_SAC129_08S_NA2) * DLTsv_08S_NA2 }   !DL_     
+
+define GPest_08S_NA2 {value AWR_08S_NA2 + AWO_08S_NA2          !AW_ 
+               + (AWR_08S_NA2 + AWO_08S_NA2)* RPF_08S_NA2      !RP_ 
+               + DLsv_08S_NA2 
+               - DLTsv_08S_NA2             
+               -  min(TW_08S_NA2, RUFR_08S_NA2*AWR_08S_NA2 + RUFO_08S_NA2*AWO_08S_NA2)     !RU_ 
+}  
+               
+goal limitDG_08S_NA2 { lhs DG_08S_NA2 
+                    case  GP_larger_GPmin { condition GPest_08S_NA2 > GPmin_08S_NA2
+                    rhs DLTsv_08S_NA2 
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                    }
+                   }
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! WBA 8S          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!==============================
+! 8S_SA1 -
+!==============================
+define DLTsv_SAC159_08S_SA1 {value CLmon_SAC159_08S_SA1*taf_cfs*perdel_cvpsc_sys + 1.0*WRmon_SAC159_08S_SA1*taf_cfs }
+define DLTsv_CBD041_08S_SA1 {value WRmon_CBD041_08S_SA1*taf_cfs }
+define DLTsv_08S_SA1 {value DLTsv_SAC159_08S_SA1 + DLTsv_CBD041_08S_SA1}
+
+define DLsv_08S_SA1 {value  (EVF_CBD041_08S_SA1+DPF_CBD041_08S_SA1+LFF_CBD041_08S_SA1+OSF_CBD041_08S_SA1) * DLTsv_CBD041_08S_SA1    !DL_ 
+                          + (EVF_SAC159_08S_SA1+DPF_SAC159_08S_SA1+LFF_SAC159_08S_SA1+OSF_SAC159_08S_SA1) * DLTsv_SAC159_08S_SA1}     
+                          
+define GPest_08S_SA1 {value AWR_08S_SA1 + AWO_08S_SA1 + AWW_08S_SA1            !AW_ 
+               + (AWR_08S_SA1 + AWO_08S_SA1 + AWW_08S_SA1)* RPF_08S_SA1         !RP_ 
+               + DLsv_08S_SA1
+               - DLTsv_08S_SA1                
+               - min(TW_08S_SA1, RUFR_08S_SA1*AWR_08S_SA1 + RUFO_08S_SA1*AWO_08S_SA1 + RUFW_08S_SA1*AWW_08S_SA1)           !RU_  
+}               
+goal limitDG_08S_SA1 { lhs DG_08S_SA1 
+              case  GP_larger_GPmin 
+                   {condition GPest_08S_SA1 > GPmin_08S_SA1
+                     rhs DLTsv_08S_SA1
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                   }
+}
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! WBA 12          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!==============================
+! 12_SA -
+!==============================
+define DLTsv_12_SA {value WRmon_FTR059_12_SA*taf_cfs }
+define DLsv_12_SA {value  (EVF_FTR059_12_SA+DPF_FTR059_12_SA+LFF_FTR059_12_SA+OSF_FTR059_12_SA) * DLTsv_12_SA }   !DL_     
+
+define GPest_12_SA {value AWR_12_SA + AWO_12_SA          !AW_ 
+               + (AWR_12_SA + AWO_12_SA)* RPF_12_SA      !RP_ 
+               + DLsv_12_SA 
+               - DLTsv_12_SA             
+               - min(TW_12_SA, RUFR_12_SA*AWR_12_SA + RUFO_12_SA*AWO_12_SA)      !RU_ 
+}  
+               
+goal limitDG_12_SA { lhs DG_12_SA 
+                    case  GP_larger_GPmin { condition GPest_12_SA > GPmin_12_SA
+                    rhs DLTsv_12_SA 
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                    }
+                   }
+	                     
+!==============================
+! 15N_NA2 - 
+!============================== 
+define DLTsv_15N_NA2 {value WRmon_YUB011_15N_NA2*taf_cfs}
+define DLsv_15N_NA2 {value  (EVF_YUB011_15N_NA2+DPF_YUB011_15N_NA2+LFF_YUB011_15N_NA2+OSF_YUB011_15N_NA2) * DLTsv_15N_NA2 }   !DL_     
+
+define GPest_15N_NA2 {value AWR_15N_NA2 + AWO_15N_NA2          !AW_ 
+               + (AWR_15N_NA2 + AWO_15N_NA2)* RPF_15N_NA2      !RP_ 
+               + DLsv_15N_NA2 
+               - DLTsv_15N_NA2             
+               -  min(TW_15N_NA2, RUFR_15N_NA2*AWR_15N_NA2 + RUFO_15N_NA2*AWO_15N_NA2)     !RU_ 
+}  
+               
+goal limitDG_15N_NA2 { lhs DG_15N_NA2 
+                    case  GP_larger_GPmin { condition GPest_15N_NA2 > GPmin_15N_NA2
+                    rhs DLTsv_15N_NA2 
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                    }
+                   }
+
+!==============================
+! 15N_SA - 
+!============================== 
+define DLTsv_15N_SA {value WRmon_FTR045_15N_SA*taf_cfs}
+define DLsv_15N_SA {value  (EVF_FTR045_15N_SA+DPF_FTR045_15N_SA+LFF_FTR045_15N_SA+OSF_FTR045_15N_SA) * DLTsv_15N_SA}
+   
+define GPest_15N_SA {value AWR_15N_SA + AWO_15N_SA            !AW_ 
+               + (AWR_15N_SA + AWO_15N_SA )* RPF_15N_SA         !RP_ 
+               + DLsv_15N_SA
+               - DLTsv_15N_SA                
+               - min(TW_15N_SA, RUFR_15N_SA*AWR_15N_SA + RUFO_15N_SA*AWO_15N_SA)           !RU_  
+}               
+goal limitDG_15N_SA { lhs DG_15N_SA 
+              case  GP_larger_GPmin 
+                   {condition GPest_15N_SA > GPmin_15N_SA
+                     rhs DLTsv_15N_SA
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                   }
+}
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!! WBA 15-South    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!==============================
+! 15S_NA2 - 
+!==============================
+define DLTsv_15S_NA2 {value WRmon_YUB011_15S_NA2*taf_cfs}
+define DLsv_15S_NA2 {value  (EVF_YUB011_15S_NA2+DPF_YUB011_15S_NA2+LFF_YUB011_15S_NA2+OSF_YUB011_15S_NA2) * DLTsv_15S_NA2 }   !DL_     
+
+define GPest_15S_NA2 {value AWR_15S_NA2 + AWO_15S_NA2          !AW_ 
+               + (AWR_15S_NA2 + AWO_15S_NA2)* RPF_15S_NA2      !RP_ 
+               + DLsv_15S_NA2 
+               - DLTsv_15S_NA2             
+               -  min(TW_15S_NA2, RUFR_15S_NA2*AWR_15S_NA2 + RUFO_15S_NA2*AWO_15S_NA2)     !RU_ 
+}  
+               
+goal limitDG_15S_NA2 { lhs DG_15S_NA2 
+                    case  GP_larger_GPmin { condition GPest_15S_NA2 > GPmin_15S_NA2
+                    rhs DLTsv_15S_NA2 
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                    }
+                   }
+!==============================
+! 15S_SA - 
+!==============================
+define DLTsv_FTR018_15S_SA	{value perdel_swp_fsc*CLmon_FTR018_15S_SA*taf_cfs + 1.0*WRmon_FTR018_15S_SA*taf_cfs}
+define DLTsv_FTR028_15S_SA	{value WRmon_FTR028_15S_SA*taf_cfs}
+define DLTsv_15S_SA {value DLTsv_FTR018_15S_SA +DLTsv_FTR028_15S_SA}
+
+define DLsv_15S_SA {value  (EVF_FTR018_15S_SA+DPF_FTR018_15S_SA+LFF_FTR018_15S_SA+OSF_FTR018_15S_SA) * DLTsv_FTR018_15S_SA 
+                          +(EVF_FTR028_15S_SA+DPF_FTR028_15S_SA+LFF_FTR028_15S_SA+OSF_FTR028_15S_SA) * DLTsv_FTR028_15S_SA}
+
+define GPest_15S_SA {value AWR_15S_SA + AWO_15S_SA          !AW_ 
+               + (AWR_15S_SA + AWO_15S_SA )* RPF_15S_SA         !RP_ 
+               + DLsv_15S_SA
+               - DLTsv_15S_SA                
+               - min(TW_15S_SA, RUFR_15S_SA*AWR_15S_SA + RUFO_15S_SA*AWO_15S_SA)           !RU_  
+}               
+goal limitDG_15S_SA { lhs DG_15S_SA 
+              case  GP_larger_GPmin 
+                   {condition GPest_15S_SA > GPmin_15S_SA
+                     rhs DLTsv_15S_SA
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                   }
+}
+
+!==============================
+! 18_SA -
+!==============================
+define DLTsv_18_SA {value CLmon_SAC136_18_SA*taf_cfs*perdel_cvpsc_sys + 1.0*WRmon_SAC136_18_SA*taf_cfs }
+define DLsv_18_SA {value  (EVF_SAC136_18_SA+DPF_SAC136_18_SA+LFF_SAC136_18_SA+OSF_SAC136_18_SA) * DLTsv_18_SA}
+   
+define GPest_18_SA {value AWR_18_SA + AWO_18_SA            !AW_ 
+               + (AWR_18_SA + AWO_18_SA )* RPF_18_SA         !RP_ 
+               + DLsv_18_SA
+               - DLTsv_18_SA                
+               - min(TW_18_SA, RUFR_18_SA*AWR_18_SA + RUFO_18_SA*AWO_18_SA)           !RU_  
+}               
+goal limitDG_18_SA { lhs DG_18_SA 
+              case  GP_larger_GPmin 
+                   {condition GPest_18_SA > GPmin_18_SA
+                     rhs DLTsv_18_SA
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                   }
+}
+
+!==============================
+! 20_PA -
+!==============================
+define DLTsv_20_PA	{value CLmon_PSC003_20_PA*1.0*taf_cfs}
+
+define DLsv_20_PA {value (EVF_PSC003_20_PA+DPF_PSC003_20_PA+LFF_PSC003_20_PA+OSF_PSC003_20_PA) * DLTsv_20_PA}
+
+define GPest_20_PA {value AWR_20_PA + AWO_20_PA         !AW_20_PA
+               + (AWR_20_PA + AWO_20_PA)* RPF_20_PA      !RP_08N_PA
+               + DLsv_20_PA
+               - DLTsv_20_PA                
+               - min(TW_20_PA, RUFR_20_PA*AWR_20_PA + RUFO_20_PA*AWO_20_PA)           !RU_20_PA 
+}
+               
+goal limitDG_20_PA { lhs DG_20_PA 
+                    case  GP_larger_GPmin { condition GPest_20_PA > GPmin_20_PA
+                    rhs DLTsv_20_PA 
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                    }
+                   }
+	                     
+!==============================
+! 21_PA -
+!==============================
+define DLTsv_21_PA  {value CLmon_KLR005_21_PA*taf_cfs* perdel_cvpag_sys + WRmon_KLR005_21_PA*taf_cfs}
+define DLsv_21_PA {value (EVF_KLR005_21_PA+DPF_KLR005_21_PA+LFF_KLR005_21_PA+OSF_KLR005_21_PA) * DLTsv_21_PA}
+
+define GPest_21_PA {value AWR_21_PA + AWO_21_PA + AWW_21_PA          !AW_21_PA
+               + (AWR_21_PA + AWO_21_PA + AWW_21_PA)* RPF_21_PA      !RP_08N_PA
+               + DLsv_21_PA
+               - DLTsv_21_PA                
+               - min(TW_21_PA, RUFR_21_PA*AWR_21_PA + RUFO_21_PA*AWO_21_PA + RUFW_21_PA*AWW_21_PA)           !RU_21_PA 
+}
+               
+goal limitDG_21_PA { lhs DG_21_PA 
+                    case  GP_larger_GPmin { condition GPest_21_PA > GPmin_21_PA
+                    rhs DLTsv_21_PA 
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                    }
+                   }
+	                     
+
+!==============================
+! 22_SA2 -
+!==============================
+define DLTsv_22_SA2	{value WRmon_FTR003_22_SA2*taf_cfs }
+
+define DLsv_22_SA2 {value  (EVF_FTR003_22_SA2+DPF_FTR003_22_SA2+LFF_FTR003_22_SA2+OSF_FTR003_22_SA2) * DLTsv_22_SA2}
+   
+define GPest_22_SA2 {value AWR_22_SA2 + AWO_22_SA2            !AW_ 
+               + (AWR_22_SA2 + AWO_22_SA2)* RPF_22_SA2         !RP_ 
+               + DLsv_22_SA2
+               - DLTsv_22_SA2                
+               - min(TW_22_SA2, RUFR_22_SA2*AWR_22_SA2 + RUFO_22_SA2*AWO_22_SA2)           !RU_  
+}               
+goal limitDG_22_SA2 { lhs DG_22_SA2 
+              case  GP_larger_GPmin 
+                   {condition GPest_22_SA2 > GPmin_22_SA2
+                     rhs DLTsv_22_SA2
+                     lhs<rhs penalty 99999
+                     lhs>rhs penalty 0
+                   }
+}

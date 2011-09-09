@@ -1,0 +1,15 @@
+/*
+CalSim 3.0
+PutahSouthCanal.wresl
+Edited A Draper, MWH, June 6, 2011
+*/
+
+!All code relating to Solano County Water Agency (SCWA) and operation of Putah South Canal is located here
+
+
+! Placerholder for allocation logic for Solano ID contract allocations
+
+define ALLOC_SID {value 1.0} 
+goal setalloc_SID_dv {alloc_SID_dv = alloc_SID}
+
+

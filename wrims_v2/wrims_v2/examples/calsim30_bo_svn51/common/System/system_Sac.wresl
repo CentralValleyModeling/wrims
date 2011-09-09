@@ -1,0 +1,56 @@
+/*
+CALSIM III SYSTEM FILE
+SYSTEM_SAC.WRESL
+
+! THIS FILE CONTAINS THE NAMES OF ALL INCLUDE FILES FOR THE SYSTEM DESCRIPTION
+! FOR THE SACRAMENTO VALLEY AS UPDATED FOR CALSIM III
+
+
+Edited ajdraper, MWH, November 15, 2006
+*/
+
+INCLUDE 'systemtables_Sac\arcs-Channels.wresl'
+!INCLUDE 'systemtables_Sac\arcs-Deliveries.wresl' !see cycle 1
+!INCLUDE 'systemtables_Sac\arcs-GWPumping.wresl' !see cycle 1
+INCLUDE 'systemtables_Sac\arcs-Inflows.wresl'
+INCLUDE 'systemtables_Sac\arcs-Weirs.wresl'
+INCLUDE 'systemtables_Sac\arcs-Diversions.wresl'
+INCLUDE 'systemtables_Sac\arcs-Seepage.wresl'
+INCLUDE 'systemtables_Sac\arcs-Returns.wresl'
+INCLUDE 'systemtables_Sac\arcs-Contracts.wresl'
+INCLUDE 'systemtables_Sac\arcs-Contracts-FRSA.wresl'
+INCLUDE 'systemtables_Sac\arcs-Contracts-Refuges.wresl'
+INCLUDE 'systemtables_Sac\arcs-Errors.wresl'
+INCLUDE 'systemtables_Sac\arcs-Preoperations.wresl'
+!INCLUDE 'systemtables_Sac\arcs-WUFactors.wresl' !see cycle 1
+INCLUDE 'systemtables_Sac\arcs-Reservoirs.wresl'
+INCLUDE 'systemtables_Sac\arcs-MinFlows.wresl'
+
+INCLUDE 'systemtables_Sac\constraints-Runoff.wresl'
+INCLUDE 'systemtables_Sac\constraints-Reservoirs.wresl'
+INCLUDE 'systemtables_Sac\constraints-Returns.wresl'
+INCLUDE 'systemtables_Sac\constraints-WUFactors.wresl'
+!INCLUDE 'systemtables_Sac\constraints-Seepage_zero.wresl'
+INCLUDE 'systemtables_Sac\constraints-Deliveries.wresl'
+INCLUDE 'systemtables_Sac\constraints-Connectivity.wresl'
+INCLUDE 'systemtables_Sac\constraints-MinFlows.wresl'
+INCLUDE 'systemtables_Sac\constraints-Contracts.wresl'
+INCLUDE 'systemtables_Sac\constraints-Weirs.wresl'
+INCLUDE 'systemtables_Sac\constraints-Preoperations.wresl'
+INCLUDE 'systemtables_Sac\constraints-GWPumping.wresl'
+INCLUDE 'systemtables_Sac\constraints-DeepPercolation.wresl'
+
+
+define C_SAC041_ANN {std kind 'FLOW-ANN' units 'CFS'}
+define C_SAC041_WQ {std kind 'FLOW-WQ' units 'CFS'}
+goal C400total_ann {C_SAC041=C_SAC041_ANN + C_SAC041_WQ}
+
+define C_YBP002_ANN {std kind 'FLOW-ANN' units 'CFS'}
+
+goal setC_SAC041_WQ {C_SAC041_WQ=0.0} ! Remove this goal if NODOS activated
+
+
+
+
+
+
