@@ -63,6 +63,7 @@ public class GenerateCompileFiles {
 				compileString=compileString+"-o "+dllName+".dll -L./ "+fortranDllName+".dll";
 				out.println(compileString);
 			}
+			out.println("Exit");
 			out.close();
 		} catch (IOException e){
 			error.add(e.getMessage());

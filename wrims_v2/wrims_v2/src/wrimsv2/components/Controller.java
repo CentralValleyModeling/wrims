@@ -151,7 +151,7 @@ public class Controller {
 	}
 	
 	public void generateStudyFile(){
-		String outPath=System.getenv("Java_Bin_Fortran")+"study.sty";
+		String outPath=System.getenv("Java_Bin")+"study.sty";
 		FileWriter outstream;
 		try {
 			outstream = new FileWriter(outPath);
