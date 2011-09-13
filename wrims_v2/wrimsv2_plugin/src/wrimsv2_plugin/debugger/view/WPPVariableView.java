@@ -160,23 +160,6 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 		viewer.setContentProvider(new ViewContentProvider());
 		getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(IDebugUIConstants.ID_DEBUG_VIEW, this);
 		getSite().setSelectionProvider(viewer);
-		new Thread(new Runnable() {
-			      public void run() {
-			         while (true) {
-			            try { Thread.sleep(1000); } catch (Exception e) { WPPException.handleException(e);}
-			            
-			            if (DebugCorePlugin.dataStack!=null){
-			            	if (!DebugCorePlugin.dataStack.equals(dataStack)) Display.getDefault().asyncExec(new Runnable() {
-			            		public void run() {
-			            			dataStack=DebugCorePlugin.dataStack;
-			            			updateView();
-			            		}
-			            	});
-			            }
-			         }
-			      }
-		}).start();
-
 		return viewer;
 	}
 
@@ -215,6 +198,7 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 	}
 	
 	public void updateView(){
+		dataStack=DebugCorePlugin.dataStack;
 		Viewer viewer=getViewer();
 		viewer.setInput(DebugCorePlugin.target);
 		viewer.refresh();

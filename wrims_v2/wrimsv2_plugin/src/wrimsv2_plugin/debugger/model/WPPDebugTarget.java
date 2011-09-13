@@ -64,6 +64,8 @@ import wrimsv2_plugin.debugger.breakpoint.WPPLineBreakpoint;
 import wrimsv2_plugin.debugger.breakpoint.WPPRunToLineBreakpoint;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.debugger.view.WPPExceptionView;
+import wrimsv2_plugin.debugger.view.WPPVariableView;
 
 /**
  * WPP Debug Target
@@ -666,6 +668,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			data="i:4456#a(-1):123.0#reservoir:reservorlevel1%56:reservorlevel2%1234";
 			fDataStack=generateTree(data);
 			DebugCorePlugin.dataStack=fDataStack;
+			updateDataView();
 			if (event.contains(":")) {
 				String[] eventPart=event.split(":");
 				setCurrLine(Integer.parseInt(eventPart[1]));
@@ -673,6 +676,20 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 				openSourceHighlight();
 			}
 		}
+	}
+	
+	public void updateDataView(){
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				try {
+					WPPVariableView variableView = (WPPVariableView) workbench.getActiveWorkbenchWindow().getActivePage().showView("wpp.variableview");
+					variableView.updateView();
+				} catch (PartInitException e) {
+					WPPException.handleException(e);
+				}
+			}
+		});
 	}
 	
 	public void openSourceHighlight(){
