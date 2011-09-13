@@ -119,4 +119,14 @@
       <super type="wpp.markerType.lineBreakpoint"/>
       <persistent value="true"/>
    </extension>
+<extension point="org.eclipse.ui.menus">
+   <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar">
+     <toolbar id="wpp.toolbar">
+       <control
+            class="wrimsv2_plugin.debugger.toolbaritem.CycleMenu"
+            id="wpp.cyclemenu">
+       </control>   
+     </toolbar>
+   </menuContribution>
+ </extension>
 </plugin>

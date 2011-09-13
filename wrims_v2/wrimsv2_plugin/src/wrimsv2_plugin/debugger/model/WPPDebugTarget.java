@@ -683,7 +683,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
 				try {
-					WPPVariableView variableView = (WPPVariableView) workbench.getActiveWorkbenchWindow().getActivePage().showView("wpp.variableview");
+					WPPVariableView variableView = (WPPVariableView) workbench.getActiveWorkbenchWindow().getActivePage().showView(DebugCorePlugin.ID_WPP_VARIABLE_VIEW);
 					variableView.updateView();
 				} catch (PartInitException e) {
 					WPPException.handleException(e);

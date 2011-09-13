@@ -190,7 +190,7 @@ public class WPPModelPresentation extends LabelProvider implements IDebugModelPr
 	 */
 	public String getEditorId(IEditorInput input, Object element) {
 		if (element instanceof IFile || element instanceof ILineBreakpoint) {
-			return "wpp.editor";
+			return DebugCorePlugin.ID_WPP_EDITOR;
 		}
 		return null;
 	}
