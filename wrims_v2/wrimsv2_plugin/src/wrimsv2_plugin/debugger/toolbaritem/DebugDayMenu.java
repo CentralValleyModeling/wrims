@@ -7,10 +7,11 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.menus.WorkbenchWindowControlContribution;
 
 public class DebugDayMenu extends WorkbenchWindowControlContribution{
-
+	private Combo combo;
+	
 	@Override
     protected Control createControl(Composite parent) {
-        Combo combo = new Combo(parent, SWT.DROP_DOWN);
+        combo = new Combo(parent, SWT.DROP_DOWN);
         
         for (int i=1; i<=31; i++){
         	combo.add(String.valueOf(i));
@@ -21,6 +22,10 @@ public class DebugDayMenu extends WorkbenchWindowControlContribution{
 
         return combo;
 
+	}
+	
+	public void resetValue(){
+		combo.setText("11");
 	}
 
 }
