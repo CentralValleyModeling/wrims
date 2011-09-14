@@ -6,17 +6,18 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.menus.WorkbenchWindowControlContribution;
 
-public class CycleMenu extends WorkbenchWindowControlContribution{
+public class DebugYearMenu extends WorkbenchWindowControlContribution{
 
 	@Override
     protected Control createControl(Composite parent) {
         Combo combo = new Combo(parent, SWT.DROP_DOWN);
-        for (int i=1; i<=99; i++){
+        for (int i=1921; i<=2006; i++){
         	combo.add(String.valueOf(i));
         }
         
         combo.setSize(10, 10);
-        combo.setToolTipText("Go To Cycle:");
+        combo.select(0);
+        combo.setToolTipText("Go To Year:");
 
         return combo;
 
