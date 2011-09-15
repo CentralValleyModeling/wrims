@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.debug.core.model.IValue;
+import org.eclipse.swt.widgets.Combo;
 import org.osgi.framework.BundleContext;
 
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;

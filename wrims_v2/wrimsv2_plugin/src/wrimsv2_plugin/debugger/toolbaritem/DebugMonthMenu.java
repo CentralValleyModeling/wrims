@@ -57,7 +57,8 @@ public class DebugMonthMenu extends WorkbenchWindowControlContribution{
 							 IContributionItem toolbar = coolBarManager.find(toolbarId);
 							 IToolBarManager toolbarManager=((ToolBarContributionItem2)toolbar).getToolBarManager();
 							 IContributionItem dayMenu=toolbarManager.find("wpp.debugdaymenu");
-							 ((DynamicToolBarContributionItem)dayMenu).createControl(parent);
+							 //((DynamicToolBarContributionItem)dayMenu).createControl(parent);
+							 //((DebugDayMenu)dayMenu).resetValue();
 
 						} catch (Exception e) {
 							WPPException.handleException(e);

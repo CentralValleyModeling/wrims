@@ -6,6 +6,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.menus.WorkbenchWindowControlContribution;
 
+import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+
 public class DebugDayMenu extends WorkbenchWindowControlContribution{
 	private Combo combo;
 	

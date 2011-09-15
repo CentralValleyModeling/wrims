@@ -123,21 +123,9 @@
    <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar">
      <toolbar id="wpp.toolbar">
        <control
-            class="wrimsv2_plugin.debugger.toolbaritem.DebugYearMenu"
-            id="wpp.debugyearmenu">
-       </control>
-       <control
-            class="wrimsv2_plugin.debugger.toolbaritem.DebugMonthMenu"
-            id="wpp.debugmonthmenu">
-       </control> 
-       <control
-            class="wrimsv2_plugin.debugger.toolbaritem.DebugDayMenu"
-            id="wpp.debugdaymenu">
-       </control> 
-       <control
-            class="wrimsv2_plugin.debugger.toolbaritem.CycleMenu"
-            id="wpp.cyclemenu">
-       </control>   
+            class="wrimsv2_plugin.debugger.toolbaritem.DebugSet"
+            id="wpp.debugset">
+       </control>  
      </toolbar>
    </menuContribution>
  </extension>
