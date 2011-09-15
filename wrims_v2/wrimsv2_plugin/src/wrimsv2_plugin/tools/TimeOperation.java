@@ -31,4 +31,23 @@ public class TimeOperation {
 		}
 		return days;
 	}
+	
+	public static int[] searchYearMonth(int noOfMonths, int startYear, int startMonth){
+		int detYear=noOfMonths/12;
+		int detMonth=noOfMonths%12;
+		int debugMonth=startMonth+detMonth;
+		int debugYear=startYear+detYear;
+		if (debugMonth>12){
+			debugMonth=debugMonth-12;
+			debugYear=debugYear+1;
+		}
+		int[] yearMonth=new int[2];
+		yearMonth[0]=debugYear;
+		yearMonth[1]=debugMonth;
+		return yearMonth;
+	}
+	
+	public static int findTotalMonth(int startYear, int startMonth, int endYear, int endMonth){
+		return (endYear-startYear)*12+endMonth-startMonth+1;
+	}
 }

@@ -9,6 +9,8 @@ import org.eclipse.jface.internal.provisional.action.ToolBarContributionItem2;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
@@ -38,6 +40,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 	private int endDebugYear=2003;
 	private int endDebugMonth=9;
 	private boolean checkReasonableTime=true;
+	private int totalMonth;
 	
 	@Override
     protected Control createControl(Composite parent) {
@@ -82,7 +85,33 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 
 	public void createTimeSlider(Composite parent){
 		timeSlider=new Slider(parent, SWT.HORIZONTAL);
-		timeSlider.setToolTipText("Go To Year/Month");
+		timeSlider.setToolTipText("Go To Year/Month:");
+		totalMonth=TimeOperation.findTotalMonth(startDebugYear, startDebugMonth, endDebugYear, endDebugMonth);
+		timeSlider.setMaximum(totalMonth+10);
+		
+		timeSlider.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+				int selection = timeSlider.getSelection();
+				int[] yearMonth=TimeOperation.searchYearMonth(selection,startDebugYear, startDebugMonth);
+				comboYear.setText(String.valueOf(yearMonth[0]));
+				comboMonth.setText(String.valueOf(yearMonth[1]));
+			}
+			
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	}
 	
 	public void createComboCycle(Composite parent){
