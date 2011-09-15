@@ -41,6 +41,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 	private int endDebugMonth=9;
 	private boolean checkReasonableTime=true;
 	private int totalMonth;
+	private boolean setTimeSlider=true;
 	
 	@Override
     protected Control createControl(Composite parent) {
@@ -86,8 +87,8 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 	public void createTimeSlider(Composite parent){
 		timeSlider=new Slider(parent, SWT.HORIZONTAL);
 		timeSlider.setToolTipText("Go To Year/Month:");
-		totalMonth=TimeOperation.findTotalMonth(startDebugYear, startDebugMonth, endDebugYear, endDebugMonth);
-		timeSlider.setMaximum(totalMonth+10);
+		totalMonth=TimeOperation.findMonthInBetween(startDebugYear, startDebugMonth, endDebugYear, endDebugMonth);
+		timeSlider.setMaximum(totalMonth+9);
 		
 		timeSlider.addMouseListener(new MouseListener(){
 
@@ -95,8 +96,10 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 			public void mouseUp(MouseEvent e) {
 				int selection = timeSlider.getSelection();
 				int[] yearMonth=TimeOperation.searchYearMonth(selection,startDebugYear, startDebugMonth);
+				setTimeSlider=false;
 				comboYear.setText(String.valueOf(yearMonth[0]));
 				comboMonth.setText(String.valueOf(yearMonth[1]));
+				setTimeSlider=true;
 			}
 			
 			@Override
@@ -138,6 +141,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 			public void modifyText(ModifyEvent e) {
 				if (checkReasonableTime) resetDebugMonth();
 				if (checkReasonableTime) resetEndofDay();
+				if (setTimeSlider) resetSliderBar();
 			}
           });
 	}
@@ -157,6 +161,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 			public void widgetSelected(SelectionEvent e) {
 					if (checkReasonableTime) resetDebugMonth();
 					if (checkReasonableTime) resetEndofDay();
+					if (setTimeSlider) resetSliderBar();
 			}
 
 			@Override
@@ -193,6 +198,12 @@ public class DebugSet extends WorkbenchWindowControlContribution{
           });
 	}
 	
+	public void resetSliderBar(){
+		int debugYear=Integer.valueOf(comboYear.getText());
+		int debugMonth=Integer.valueOf(comboMonth.getText());
+		int selection=TimeOperation.findMonthInBetween(startDebugYear, startDebugMonth, debugYear, debugMonth);
+		timeSlider.setSelection(selection);
+	}
 	
 	public void resetEndofDay(){
 		int maxDay=TimeOperation.numberOfDays(Integer.valueOf(comboMonth.getText()), Integer.valueOf(comboYear.getText()));

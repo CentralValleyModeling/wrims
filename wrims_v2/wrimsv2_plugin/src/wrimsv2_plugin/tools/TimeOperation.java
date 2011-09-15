@@ -47,7 +47,7 @@ public class TimeOperation {
 		return yearMonth;
 	}
 	
-	public static int findTotalMonth(int startYear, int startMonth, int endYear, int endMonth){
+	public static int findMonthInBetween(int startYear, int startMonth, int endYear, int endMonth){
 		return (endYear-startYear)*12+endMonth-startMonth+1;
 	}
 }
