@@ -1,5 +1,7 @@
 package wrimsv2_plugin.debugger.toolbaritem;
 
+import java.util.Date;
+
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.ICoolBarManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -7,6 +9,8 @@ import org.eclipse.jface.internal.provisional.action.ToolBarContributionItem2;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -20,12 +24,18 @@ import org.eclipse.ui.internal.WorkbenchWindow;
 import org.eclipse.ui.menus.WorkbenchWindowControlContribution;
 
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.tools.TimeOperation;
 
 public class DebugSet extends WorkbenchWindowControlContribution{
 	private Combo comboYear;
 	private Combo comboMonth;
 	private Combo comboDay;
 	private Combo comboCycle;
+	private int startDebugYear=1921;
+	private int startDebugMonth=10;
+	private int endDebugYear=2003;
+	private int endDebugMonth=9;
+	private boolean checkReasonableTime=true;
 	
 	@Override
     protected Control createControl(Composite parent) {
@@ -35,32 +45,31 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 		createComboYear(coolbar);
 		CoolItem itemYear = new CoolItem(coolbar, SWT.None); 
 		itemYear.setControl(comboYear);
-		Point pt=comboYear.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		//Point pt=comboYear.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		//itemYear.setSize(itemYear.computeSize(pt.x, pt.y));
 		itemYear.setSize(100,10);
 				
 		createComboMonth(coolbar);
 		CoolItem itemMonth = new CoolItem(coolbar, SWT.NONE);	
 		itemMonth.setControl(comboMonth);
-		pt=comboMonth.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		//pt=comboMonth.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		//itemMonth.setSize(itemMonth.computeSize(pt.x, pt.y));
 		itemMonth.setSize(100,10);
 		
 		createComboDay(coolbar);
 		CoolItem itemDay = new CoolItem(coolbar, SWT.NONE);	
 		itemDay.setControl(comboDay);
-		pt=comboDay.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		//pt=comboDay.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		//itemDay.setSize(itemDay.computeSize(pt.x, pt.y));
 		itemDay.setSize(100,10);
 		
 		createComboCycle(coolbar);
 		CoolItem itemCycle = new CoolItem(coolbar, SWT.NONE);	
 		itemCycle.setControl(comboCycle);
-		pt=comboCycle.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		//pt=comboCycle.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		//itemCycle.setSize(itemCycle.computeSize(pt.x, pt.y));
 		itemCycle.setSize(100,10);
 		
-		//coolbar.setSize(200, 10);
         return coolbar;
 	}
 
@@ -70,20 +79,26 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 			comboCycle.add(String.valueOf(i));
 		}
      
-		//comboCycle.setSize(40, 10);
 		comboCycle.select(0);
 		comboCycle.setToolTipText("Go To Cycle:");
 	}
 	
 	public void createComboYear(Composite parent){
         comboYear = new Combo(parent, SWT.DROP_DOWN);
-        for (int i=1921; i<=2006; i++){
+        for (int i=startDebugYear; i<=endDebugYear; i++){
         	comboYear.add(String.valueOf(i));
         }
         
-        //comboYear.setSize(70, 10);
         comboYear.select(0);
         comboYear.setToolTipText("Go To Year:");
+        
+        comboYear.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				if (checkReasonableTime) resetDebugMonth();
+				if (checkReasonableTime) resetEndofDay();
+			}
+          });
 	}
 	
 	public void createComboMonth(Composite parent){
@@ -92,23 +107,21 @@ public class DebugSet extends WorkbenchWindowControlContribution{
         	comboMonth.add(String.valueOf(i));
         }
         
-        //comboMonth.setSize(40, 10);
-        comboMonth.select(0);
+        comboMonth.select(9);
         comboMonth.setToolTipText("Go To Month:");
         
-		comboMonth.addModifyListener(new ModifyListener() {
+		comboMonth.addSelectionListener(new SelectionListener() {
+
 			@Override
-			public void modifyText(ModifyEvent e) {
-				final IWorkbench workbench=PlatformUI.getWorkbench();
-				workbench.getDisplay().asyncExec(new Runnable(){
-					public void run(){
-						try {
-							 comboDay.setText("11");
-						} catch (Exception e) {
-							WPPException.handleException(e);
-						}
-					}
-				});
+			public void widgetSelected(SelectionEvent e) {
+					if (checkReasonableTime) resetDebugMonth();
+					if (checkReasonableTime) resetEndofDay();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
 			}
           });
 
@@ -121,8 +134,49 @@ public class DebugSet extends WorkbenchWindowControlContribution{
         	comboDay.add(String.valueOf(i));
         }
         comboDay.select(30);
-        //comboDay.setSize(40, 10);
         comboDay.setToolTipText("Go To Day:");
+        
+		comboDay.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (checkReasonableTime) resetEndofDay();
+				comboDay.update();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+          });
+	}
+	
+	
+	public void resetEndofDay(){
+		int maxDay=TimeOperation.numberOfDays(Integer.valueOf(comboMonth.getText()), Integer.valueOf(comboYear.getText()));
+		if (Integer.valueOf(comboDay.getText())>maxDay){
+			comboDay.setText(String.valueOf(maxDay));
+		}
+	}
+	
+	public void resetDebugMonth(){
+		int year=Integer.valueOf(comboYear.getText());
+		int month=Integer.valueOf(comboMonth.getText());
+		Date debugDate =new Date(year-1900, month, 1);
+		Date startDebugDate=new Date(startDebugYear-1900, startDebugMonth, 1);
+		Date endDebugDate=new Date(endDebugYear-1900, endDebugMonth, 1);
+		if (debugDate.before(startDebugDate)){
+			checkReasonableTime=false;
+			comboYear.setText(String.valueOf(startDebugYear));
+			comboMonth.setText(String.valueOf(startDebugMonth));
+			checkReasonableTime=true;
+		}else if (debugDate.after(endDebugDate)){
+			checkReasonableTime=false;
+			comboYear.setText(String.valueOf(endDebugYear));
+			comboMonth.setText(String.valueOf(endDebugMonth));
+			checkReasonableTime=true;
+		}
 	}
 
 }
