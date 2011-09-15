@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.CoolBar;
 import org.eclipse.swt.widgets.CoolItem;
+import org.eclipse.swt.widgets.Slider;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -31,6 +32,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 	private Combo comboMonth;
 	private Combo comboDay;
 	private Combo comboCycle;
+	private Slider timeSlider;
 	private int startDebugYear=1921;
 	private int startDebugMonth=10;
 	private int endDebugYear=2003;
@@ -42,37 +44,47 @@ public class DebugSet extends WorkbenchWindowControlContribution{
        
 		CoolBar coolbar=new CoolBar(parent, SWT.HORIZONTAL|SWT.FLAT);
 
+		createTimeSlider(coolbar);
+		CoolItem itemTime=new CoolItem(coolbar, SWT.NONE);
+		itemTime.setControl(timeSlider);
+		itemTime.setSize(300,20);
+		
 		createComboYear(coolbar);
 		CoolItem itemYear = new CoolItem(coolbar, SWT.None); 
 		itemYear.setControl(comboYear);
 		//Point pt=comboYear.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		//itemYear.setSize(itemYear.computeSize(pt.x, pt.y));
-		itemYear.setSize(100,10);
+		itemYear.setSize(100,20);
 				
 		createComboMonth(coolbar);
 		CoolItem itemMonth = new CoolItem(coolbar, SWT.NONE);	
 		itemMonth.setControl(comboMonth);
 		//pt=comboMonth.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		//itemMonth.setSize(itemMonth.computeSize(pt.x, pt.y));
-		itemMonth.setSize(100,10);
+		itemMonth.setSize(100,20);
 		
 		createComboDay(coolbar);
 		CoolItem itemDay = new CoolItem(coolbar, SWT.NONE);	
 		itemDay.setControl(comboDay);
 		//pt=comboDay.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		//itemDay.setSize(itemDay.computeSize(pt.x, pt.y));
-		itemDay.setSize(100,10);
+		itemDay.setSize(100,20);
 		
 		createComboCycle(coolbar);
 		CoolItem itemCycle = new CoolItem(coolbar, SWT.NONE);	
 		itemCycle.setControl(comboCycle);
 		//pt=comboCycle.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		//itemCycle.setSize(itemCycle.computeSize(pt.x, pt.y));
-		itemCycle.setSize(100,10);
+		itemCycle.setSize(100,20);
 		
         return coolbar;
 	}
 
+	public void createTimeSlider(Composite parent){
+		timeSlider=new Slider(parent, SWT.HORIZONTAL);
+		timeSlider.setToolTipText("Go To Year/Month");
+	}
+	
 	public void createComboCycle(Composite parent){
 		comboCycle = new Combo(parent, SWT.DROP_DOWN);
 		for (int i=1; i<=99; i++){
