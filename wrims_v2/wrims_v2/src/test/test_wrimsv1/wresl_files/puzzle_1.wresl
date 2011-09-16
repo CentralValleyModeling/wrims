@@ -1,0 +1,31 @@
+! local dvar in first cycle is leaked into the second cycle.
+
+SEQUENCE cycle1 {
+    model   first
+    order   1
+}
+SEQUENCE cycle2 {
+    model   second
+    order   2
+}		
+MODEL first { 
+
+	define[local] dvar { lower 0 upper 10 kind 'k' units 'c' } 	
+}
+MODEL second { 
+
+	define[local] dvar { std kind 'k' units 'c' } 
+	goal g { dvar < 99 }
+	
+	objective obj = {
+		[ dvar, 100 ]
+	}
+}
+
+
+
+
+
+
+
+

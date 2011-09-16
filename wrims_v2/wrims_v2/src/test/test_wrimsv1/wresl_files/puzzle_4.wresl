@@ -1,0 +1,45 @@
+! What is the value of dvar in cycle4 ? hint: cycle2 does not exist.
+
+
+SEQUENCE cycle1 {
+    model   first
+    order   1
+}
+
+SEQUENCE cycle2 {
+    model   second
+	condition  9 < 5
+    order   2
+}	
+
+SEQUENCE cycle3 {
+    model   third
+    order   3
+}
+
+SEQUENCE cycle4 {
+    model   fourth
+    order   4
+}
+	
+MODEL first { 
+	define dvar { std kind 'k' units 'u' }	
+	goal goal_a { dvar < 3 }
+	include 'weight-table.wresl'	
+}
+
+MODEL second { 
+	goal[local] goal_a { dvar < 2 }
+	include 'weight-table.wresl'	
+}
+
+MODEL third { 
+	goal goal_b { dvar < 1 }
+	include 'weight-table.wresl'	
+}
+
+MODEL fourth { 
+	goal[local] goal_b { dvar < dvar[second]}
+	include 'weight-table.wresl'
+}
+

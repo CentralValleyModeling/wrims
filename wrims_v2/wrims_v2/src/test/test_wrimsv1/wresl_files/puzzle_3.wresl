@@ -1,0 +1,41 @@
+! What is the value of dvar in cycle4 ? hint: cycle2 doesn't exist
+
+
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+}
+
+SEQUENCE CYCLE2 {
+    model   second
+	condition  9 < 5
+    order   2
+}	
+
+SEQUENCE CYCLE3 {
+    model   third
+    order   3
+}
+
+SEQUENCE CYCLE4 {
+    model   fourth
+    order   4
+}
+	
+MODEL first { 
+	define dvar { std kind 'k' units 'u' }
+	goal[local] g { dvar = 3 }		
+}
+
+MODEL second { 
+	goal[local] g { dvar = 2 }	
+}
+
+MODEL third { 	
+	goal[local] g { dvar = 1 }	
+}
+
+MODEL fourth { 
+	goal[local] g { dvar = dvar[second] }
+}
+
