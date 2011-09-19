@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.testng.eclipse.launchconfig">
+<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+<listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.testng.remote.RemoteTestNG"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="wrims_v2"/>
+<mapAttribute key="org.testng.eclipse.ALL_CLASS_METHODS">
+<mapEntry key="test.test_wreslparser.TestWreslWalker" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_advanced" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_alias" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_dependantOfGoalInCycles" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_dependantOfSvarAliasInCycles" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_dependant_varCycle" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_dependent" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_dvar" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_element" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_error" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_external" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_goal" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_integer" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_order" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_priority" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_scope" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_slack" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_sort" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_study" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_svar" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_weight" value=""/>
+<mapEntry key="test.test_wreslparser.TestWreslWalker_wreslData" value=""/>
+</mapAttribute>
+<listAttribute key="org.testng.eclipse.CLASS_TEST_LIST"/>
+<listAttribute key="org.testng.eclipse.GROUP_LIST">
+<listEntry value="WRESL_elements"/>
+</listAttribute>
+<listAttribute key="org.testng.eclipse.GROUP_LIST_CLASS">
+<listEntry value="test.test_wreslparser.TestWreslWalker_slack"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker_sort"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker_dependantOfGoalInCycles"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker_study"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker_order"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker_integer"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker_priority"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker_dependent"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker_wreslData"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker_external"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker_error"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker_element"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker_svar"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker_dvar"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker_scope"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker_advanced"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker_goal"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker_dependant_varCycle"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker_weight"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker_alias"/>
+<listEntry value="test.test_wreslparser.TestWreslWalker_dependantOfSvarAliasInCycles"/>
+</listAttribute>
+<stringAttribute key="org.testng.eclipse.LOG_LEVEL" value="2"/>
+<listAttribute key="org.testng.eclipse.METHOD_TEST_LIST"/>
+<listAttribute key="org.testng.eclipse.PACKAGE_TEST_LIST">
+<listEntry value="test.test_wreslparser"/>
+</listAttribute>
+<mapAttribute key="org.testng.eclipse.PARAMETERS"/>
+<intAttribute key="org.testng.eclipse.TYPE" value="2"/>
+</launchConfiguration>
