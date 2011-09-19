@@ -64,8 +64,10 @@ public class Controller {
 		generateStudyFile();
 		try {
 			StudyDataSet sds = parse();
-			new PreEvaluator(sds);
-			runModel(sds);
+			if (StudyParser.total_errors==0){
+				new PreEvaluator(sds);
+				runModel(sds);
+			}
 		} catch (RecognitionException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -78,8 +80,10 @@ public class Controller {
 		generateStudyFile();
 		try {
 			StudyDataSet sds = parse();
-			new PreEvaluator(sds);
-			runModel(sds);
+			if (StudyParser.total_errors==0){
+				new PreEvaluator(sds);
+				runModel(sds);
+			}
 		} catch (RecognitionException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -225,6 +229,7 @@ public class Controller {
 	}
 	
 	public void runModel(StudyDataSet sds){
+		preRunModel(sds);
 		if (ControlData.solverName.equalsIgnoreCase("XA")){
 			runModelXA(sds);
 		}else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
@@ -241,12 +246,12 @@ public class Controller {
 		System.out.println("Run ends!");
 	}
 	
-	public void runModeLPSolve(StudyDataSet sds) throws LpSolveException{
+	public void preRunModel(StudyDataSet sds){
 		ControlData.currStudyDataSet=sds;
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
 		ControlData.startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
-		
+				
 		ControlData.writer = new DSSDataWriter(FilePaths.fullDvarDssPath);
 		try {
 			ControlData.writer.openDSSFile();
@@ -269,6 +274,11 @@ public class Controller {
 			ControlData.currCycleIndex=i;
 			processExternal();
 		}
+	}
+	
+	public void runModeLPSolve(StudyDataSet sds) throws LpSolveException{
+		ArrayList<String> modelList=sds.getModelList();
+		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
 		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
@@ -337,34 +347,10 @@ public class Controller {
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 	}
+	
 	public void runModelXA(StudyDataSet sds){
-		ControlData.currStudyDataSet=sds;
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
-		ControlData.startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
-				
-		ControlData.writer = new DSSDataWriter(FilePaths.fullDvarDssPath);
-		try {
-			ControlData.writer.openDSSFile();
-		} catch (Exception e) {
-			ControlData.writer.closeDSSFile();
-			Error.addEngineError("Could not open dv file. "+e);
-			return;
-		}
-		
-		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
-		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
-		ControlData.allTsMap=sds.getTimeseriesMap();
-		
-		readTimeseries();
-		initialDvarAliasTS(ControlData.totalTimeStep);
-		for (int i=0; i<modelList.size(); i++){
-			String model=modelList.get(i);
-			ModelDataSet mds=modelDataSetMap.get(model);
-			ControlData.currModelDataSet=mds;
-			ControlData.currCycleIndex=i;
-			processExternal();
-		}
 		
 		initialXASolver();
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
@@ -434,33 +420,8 @@ public class Controller {
 	}
 	
 	public void runModelGurobi(StudyDataSet sds){
-		ControlData.currStudyDataSet=sds;
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
-		ControlData.startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
-		
-		ControlData.writer = new DSSDataWriter(FilePaths.fullDvarDssPath);
-		try {
-			ControlData.writer.openDSSFile();
-		} catch (Exception e) {
-			ControlData.writer.closeDSSFile();
-			Error.addEngineError("Could not open dv file. "+e);
-			return;
-		}
-		
-		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
-		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
-		ControlData.allTsMap=sds.getTimeseriesMap();
-		
-		readTimeseries();
-		initialDvarAliasTS(ControlData.totalTimeStep);
-		for (int i=0; i<modelList.size(); i++){
-			String model=modelList.get(i);
-			ModelDataSet mds=modelDataSetMap.get(model);
-			ControlData.currModelDataSet=mds;
-			ControlData.currCycleIndex=i;
-			processExternal();
-		}
 		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
@@ -649,33 +610,8 @@ public class Controller {
 	}
 
 	public void runModelILP(StudyDataSet sds){
-		ControlData.currStudyDataSet=sds;
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
-		ControlData.startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
-				
-		ControlData.writer = new DSSDataWriter(FilePaths.fullDvarDssPath);
-		try {
-			ControlData.writer.openDSSFile();
-		} catch (Exception e) {
-			ControlData.writer.closeDSSFile();
-			Error.addEngineError("Could not open dv file. "+e);
-			return;
-		}
-		
-		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
-		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
-		ControlData.allTsMap=sds.getTimeseriesMap();
-		
-		readTimeseries();
-		initialDvarAliasTS(ControlData.totalTimeStep);
-		for (int i=0; i<modelList.size(); i++){
-			String model=modelList.get(i);
-			ModelDataSet mds=modelDataSetMap.get(model);
-			ControlData.currModelDataSet=mds;
-			ControlData.currCycleIndex=i;
-			processExternal();
-		}
 		
 		initialXASolver();
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();

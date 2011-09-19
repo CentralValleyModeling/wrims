@@ -62,8 +62,10 @@ public class ControllerSG {
 		generateStudyFile();
 		try {
 			StudyDataSet sds = parse();
-			new PreEvaluator(sds);
-			runModel(sds);
+			if (StudyParser.total_errors==0){
+				new PreEvaluator(sds);
+				runModel(sds);
+			}
 		} catch (RecognitionException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -76,8 +78,10 @@ public class ControllerSG {
 		generateStudyFile();
 		try {
 			StudyDataSet sds = parse();
-			new PreEvaluator(sds);
-			runModel(sds);
+			if (StudyParser.total_errors==0){
+				new PreEvaluator(sds);
+				runModel(sds);
+			}
 		} catch (RecognitionException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -224,6 +228,7 @@ public class ControllerSG {
 	}
 	
 	public void runModel(StudyDataSet sds){
+		preRunModel(sds);
 		if (ControlData.solverName.equalsIgnoreCase("XA")){
 			runModelXA(sds);
 		}else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
@@ -234,7 +239,7 @@ public class ControllerSG {
 		System.out.println("Run ends!");
 	}
 	
-	public void runModelXA(StudyDataSet sds){
+	public void preRunModel(StudyDataSet sds){
 		ControlData.currStudyDataSet=sds;
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
@@ -262,6 +267,11 @@ public class ControllerSG {
 			ControlData.currCycleIndex=i;
 			processExternal();
 		}
+	}
+	
+	public void runModelXA(StudyDataSet sds){
+		ArrayList<String> modelList=sds.getModelList();
+		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
 		
 		initialXASolver();
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
@@ -331,33 +341,8 @@ public class ControllerSG {
 	}
 	
 	public void runModelGurobi(StudyDataSet sds){
-		ControlData.currStudyDataSet=sds;
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
-		ControlData.startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
-		
-		ControlData.writer = new DSSDataWriter(FilePaths.fullDvarDssPath);
-		try {
-			ControlData.writer.openDSSFile();
-		} catch (Exception e) {
-			ControlData.writer.closeDSSFile();
-			Error.addEngineError("Could not open dv file. "+e);
-			return;
-		}
-		
-		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
-		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
-		ControlData.allTsMap=sds.getTimeseriesMap();
-		
-		readTimeseries();
-		initialDvarAliasTS(ControlData.totalTimeStep);
-		for (int i=0; i<modelList.size(); i++){
-			String model=modelList.get(i);
-			ModelDataSet mds=modelDataSetMap.get(model);
-			ControlData.currModelDataSet=mds;
-			ControlData.currCycleIndex=i;
-			processExternal();
-		}
 		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
@@ -546,33 +531,8 @@ public class ControllerSG {
 	}
 
 	public void runModelILP(StudyDataSet sds){
-		ControlData.currStudyDataSet=sds;
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
-		ControlData.startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
-				
-		ControlData.writer = new DSSDataWriter(FilePaths.fullDvarDssPath);
-		try {
-			ControlData.writer.openDSSFile();
-		} catch (Exception e) {
-			ControlData.writer.closeDSSFile();
-			Error.addEngineError("Could not open dv file. "+e);
-			return;
-		}
-		
-		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
-		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
-		ControlData.allTsMap=sds.getTimeseriesMap();
-
-		readTimeseries();
-		initialDvarAliasTS(ControlData.totalTimeStep);
-		for (int i=0; i<modelList.size(); i++){
-			String model=modelList.get(i);
-			ModelDataSet mds=modelDataSetMap.get(model);
-			ControlData.currModelDataSet=mds;
-			ControlData.currCycleIndex=i;
-			processExternal();
-		}
 		
 		initialXASolver();
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
