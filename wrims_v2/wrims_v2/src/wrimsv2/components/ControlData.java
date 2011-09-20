@@ -69,7 +69,6 @@ public class ControlData {
 	public static Group groupSvar;
 	public static DSSDataWriter writer;
 	public static String solverName;
-	public static String csvFolderPath="csv";
 	public static Optimizer xasolver=new Optimizer(25000);
 	public static boolean isPostProcessing=false;
 	

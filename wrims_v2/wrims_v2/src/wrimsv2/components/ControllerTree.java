@@ -109,7 +109,7 @@ public class ControllerTree {
         cd.writeDssStartMonth=ControlData.startMonth;
         cd.writeDssStartDay=ControlData.startDay;
         cd.solverName="XA";
-        cd.csvFolderPath="csv";
+        FilePaths.csvFolderName="csv";
         
 		cd.totalTimeStep=getTotalTimeStep();
 	}
@@ -133,7 +133,7 @@ public class ControllerTree {
 		cd.endMonth=Integer.parseInt(args[13]);
 		cd.endDay=Integer.parseInt(args[14]);
 		cd.solverName=args[15];
-		cd.csvFolderPath = args[16];
+		FilePaths.csvFolderName = args[16];
 		cd.simulationTimeFrame=TimeOperation.dssTimeFrame(cd.startYear, cd.startMonth, cd.startDay, cd.endYear, cd.endMonth, cd.endDay);
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;

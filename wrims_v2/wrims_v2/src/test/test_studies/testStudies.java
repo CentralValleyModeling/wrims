@@ -62,7 +62,7 @@ public class testStudies {
         cd.writeDssStartMonth=ControlData.startMonth;
         cd.writeDssStartDay=ControlData.startDay;
         cd.solverName="XA";
-        cd.csvFolderPath="csv";
+        FilePaths.csvFolderName="csv";
 		
 		StudyDataSet sds=parseSimpleStudy();
 		
@@ -115,7 +115,7 @@ public class testStudies {
 		cd.endMonth=9;
 		cd.endDay=30;
         cd.solverName="XA";
-        cd.csvFolderPath="csv";
+        FilePaths.csvFolderName="csv";
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
@@ -150,7 +150,7 @@ public class testStudies {
 		cd.endMonth=9;
 		cd.endDay=30;
         cd.solverName="XA";
-        cd.csvFolderPath="csv";
+        FilePaths.csvFolderName="csv";
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
@@ -219,7 +219,7 @@ public class testStudies {
         cd.writeDssStartMonth=ControlData.startMonth;
         cd.writeDssStartDay=ControlData.startDay;
         cd.solverName="XA";
-        cd.csvFolderPath="csv";
+        FilePaths.csvFolderName="csv";
         
 		StudyDataSet sds=parseCalLite();
 		

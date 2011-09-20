@@ -52,6 +52,7 @@ import wrimsv2.tools.RCCComparison;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyConfig;
 import wrimsv2.wreslparser.elements.StudyParser;
+import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.elements.TempData;
 import wrimsv2.wreslparser.elements.WriteCSV;
 
@@ -109,7 +110,7 @@ public class ControllerSG {
 		cd.endMonth=9;
 		cd.endDay=30;
         cd.solverName="XA";
-        cd.csvFolderPath="csv";
+        FilePaths.csvFolderName="csv";
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
@@ -142,7 +143,7 @@ public class ControllerSG {
 		cd.endMonth=Integer.parseInt(args[13]);
 		cd.endDay=Integer.parseInt(args[14]);
 		cd.solverName=args[15];
-		cd.csvFolderPath = args[16];
+		FilePaths.csvFolderName = args[16];
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
@@ -209,22 +210,12 @@ public class ControllerSG {
 		Calendar cal = Calendar.getInstance();
 		System.out.println("Before Parsser: "+cal.getTimeInMillis());
 		
-		String csvFolderPath = ControlData.csvFolderPath;
+		String csvFolderName = FilePaths.csvFolderName;
 		String inputFilePath = FilePaths.fullMainPath;
-		String logFilePath = csvFolderPath+".log";
+		String logFileName = csvFolderName+".log";
 		
-		File absFile = new File(inputFilePath).getAbsoluteFile();
-		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		return StudyUtils.checkStudy(inputFilePath, logFileName, csvFolderName);
 		
-		LogUtils.setLogFile(logFilePath);
-		TempData td = new TempData();
-		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
-		td.model_dataset_map=StudyParser.parseModels(sc,td, false, true);		
-		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
-		StudyParser.analyzeVarNeededFromCycles(sc, sd);
-		WriteCSV.study(sd, csvFolderPath ) ;
-		LogUtils.closeLogFile();
-		return sd;	
 	}
 	
 	public void runModel(StudyDataSet sds){
