@@ -13,6 +13,7 @@ import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.RegUtils;
 import wrimsv2.wreslparser.elements.StudyConfig;
 import wrimsv2.wreslparser.elements.StudyParser;
+import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.elements.TempData;
 import wrimsv2.wreslparser.elements.Tools;
 import wrimsv2.wreslparser.elements.WriteCSV;
@@ -61,6 +62,10 @@ public class TestWreslWalker_dependantOfGoalInCycles {
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 		Assert.assertEquals(totalErrs, 2);		
 		Assert.assertEquals(StudyParser.total_errors, 2);
+		
+		StudyUtils.checkStudy(absFilePath, false);
+		
+		Assert.assertEquals(StudyUtils.total_errors, 2);
 		
 		String csvText;
 		String s;

@@ -50,12 +50,8 @@ import wrimsv2.solver.GurobiSolver;
 import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.solver.XASolver;
 import wrimsv2.tools.RCCComparison;
-import wrimsv2.wreslparser.elements.LogUtils;
-import wrimsv2.wreslparser.elements.StudyConfig;
-import wrimsv2.wreslparser.elements.StudyParser;
 import wrimsv2.wreslparser.elements.StudyUtils;
-import wrimsv2.wreslparser.elements.TempData;
-import wrimsv2.wreslparser.elements.WriteCSV;
+
 import lpsolve.*;
 
 public class Controller {
@@ -65,7 +61,7 @@ public class Controller {
 		generateStudyFile();
 		try {
 			StudyDataSet sds = parse();
-			if (StudyParser.total_errors==0){
+			if (StudyUtils.total_errors==0){
 				new PreEvaluator(sds);
 				runModel(sds);
 			}
@@ -81,7 +77,7 @@ public class Controller {
 		generateStudyFile();
 		try {
 			StudyDataSet sds = parse();
-			if (StudyParser.total_errors==0){
+			if (StudyUtils.total_errors==0){
 				new PreEvaluator(sds);
 				runModel(sds);
 			}
@@ -211,11 +207,7 @@ public class Controller {
 		Calendar cal = Calendar.getInstance();
 		System.out.println("Before Parsser: "+cal.getTimeInMillis());
 		
-		String csvFolderName = FilePaths.csvFolderName;
-		String inputFilePath = FilePaths.fullMainPath;
-		String logFileName = csvFolderName+".log";
-		
-		return StudyUtils.checkStudy(inputFilePath, logFileName, csvFolderName);
+		return StudyUtils.checkStudy(FilePaths.fullMainPath, true);
 	
 	}
 	

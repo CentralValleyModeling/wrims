@@ -13,6 +13,7 @@ import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.RegUtils;
 import wrimsv2.wreslparser.elements.StudyConfig;
 import wrimsv2.wreslparser.elements.StudyParser;
+import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.elements.TempData;
 import wrimsv2.wreslparser.elements.Tools;
 import wrimsv2.wreslparser.elements.WriteCSV;
@@ -59,7 +60,10 @@ public class TestWreslWalker_error {
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 		Assert.assertEquals(totalErrs, 16);	
 		
-		Assert.assertEquals(StudyParser.total_errors, 16);	
+		Assert.assertEquals(StudyParser.total_errors, 16);
+		
+		StudyUtils.checkStudy(absFilePath, false);
+		Assert.assertEquals(StudyUtils.total_errors, 16);	
 		
 		Assert.assertEquals(sd.getModelDataSetMap().get("second").tsMap.get("ts").kind,"second-model-only" );
 		Assert.assertEquals(sd.getModelDataSetMap().get("second").svMap.get("sv").caseExpression.get(0),"second_model_only" );
@@ -107,6 +111,9 @@ public class TestWreslWalker_error {
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 		Assert.assertEquals(totalErrs, 15);	
 		Assert.assertEquals(StudyParser.total_errors, 15);
+		
+		StudyUtils.checkStudy(absFilePath, false);
+		Assert.assertEquals(StudyUtils.total_errors, 15);
 
 
 	
@@ -147,6 +154,9 @@ public class TestWreslWalker_error {
 		Assert.assertEquals(totalErrs, 24);	
 		
 		Assert.assertEquals(StudyParser.total_errors, 24);
+		
+		StudyUtils.checkStudy(absFilePath, false);
+		Assert.assertEquals(StudyUtils.total_errors, 24);
 		
 		Assert.assertEquals(sd.getModelDataSetMap().get("second").tsMap.get("ts").kind,"second-model-only" );
 		Assert.assertEquals(sd.getModelDataSetMap().get("second").svMap.get("sv").caseExpression.get(0),"second_model_only" );

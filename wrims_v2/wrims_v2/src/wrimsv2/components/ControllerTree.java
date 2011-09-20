@@ -47,11 +47,8 @@ import wrimsv2.external.LoadAllDll;
 import wrimsv2.solver.GurobiSolver;
 import wrimsv2.solver.XASolver;
 import wrimsv2.tools.RCCComparison;
-import wrimsv2.wreslparser.elements.LogUtils;
-import wrimsv2.wreslparser.elements.StudyConfig;
-import wrimsv2.wreslparser.elements.StudyParser;
-import wrimsv2.wreslparser.elements.TempData;
-import wrimsv2.wreslparser.elements.WriteCSV;
+import wrimsv2.wreslparser.elements.StudyUtils;
+
 
 public class ControllerTree {
 	
@@ -201,24 +198,8 @@ public class ControllerTree {
 		Calendar cal = Calendar.getInstance();
 		System.out.println("Before Parsser: "+cal.getTimeInMillis());
 		
-		String csvFolderPath = "TestWreslWalker";
-		String inputFilePath = FilePaths.fullMainPath;
-		String logFilePath = csvFolderPath+".log";
+		return StudyUtils.checkStudy(FilePaths.fullMainPath, true);
 		
-		File absFile = new File(inputFilePath).getAbsoluteFile();
-		String absFilePath = absFile.getCanonicalPath().toLowerCase();
-		
-		LogUtils.setLogFile(logFilePath);
-		TempData td = new TempData();
-		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
-		td.model_dataset_map=StudyParser.parseModels(sc,td);
-		LogUtils.closeLogFile();
-		
-		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
-				
-		WriteCSV.study(sd, csvFolderPath ) ;
-	
-		return sd;	
 	}
 	
 	public void runModel(StudyDataSet sds){

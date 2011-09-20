@@ -19,9 +19,6 @@ import wrimsv2.components.Versions;
 import wrimsv2.wreslparser.elements.StudyUtils;
 
 public class WreslCheckGUI {
-
-	private static String csvFolderName = "=WreslCheck_csv=";
-	private static String logFileName = "=WreslCheck=.log";
 	
 	public static void main(String[] args) {
 				
@@ -69,9 +66,9 @@ public class WreslCheckGUI {
 							long start = System.currentTimeMillis();
 							
 							if (chk_csv.isSelected()){
-								StudyUtils.checkStudy(inputFilePanel.getFile(),logFileName, csvFolderName);
+								StudyUtils.checkStudy(inputFilePanel.getFile(), true);
 							} else {
-								StudyUtils.checkStudy(inputFilePanel.getFile(),logFileName, null);
+								StudyUtils.checkStudy(inputFilePanel.getFile(), null, true);
 							}
 							
 							

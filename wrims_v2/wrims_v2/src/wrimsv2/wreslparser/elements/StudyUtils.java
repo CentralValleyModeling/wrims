@@ -14,13 +14,32 @@ import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.components.Versions;
 
 public class StudyUtils {
+	
+	public static int total_errors = 0;
 
 	private StudyUtils() {
 
 	}
 
-	public static StudyDataSet checkStudy(String inMainWreslPath, String logFileName, String csvFolderName)
-			throws IOException {
+	public static StudyDataSet checkStudy(String inMainWreslPath, boolean sendAliasToDvar) throws IOException {
+
+		String csvFolderName = "=WreslCheck_csv=";
+		String logFileName = "=WreslCheck=.log";
+
+		return checkStudy(inMainWreslPath, logFileName, csvFolderName, sendAliasToDvar);
+
+	}
+
+	public static StudyDataSet checkStudy(String inMainWreslPath, String csvFolderName, boolean sendAliasToDvar) throws IOException {
+
+		String logFileName = "=WreslCheck=.log";
+
+		return checkStudy(inMainWreslPath, logFileName, csvFolderName, sendAliasToDvar);
+
+	}
+	
+	public static StudyDataSet checkStudy(String inMainWreslPath, String logFileName, String csvFolderName,
+			boolean sendAliasToDvar) throws IOException {
 
 		StudyDataSet sds = null;
 
@@ -31,7 +50,7 @@ public class StudyUtils {
 		LogUtils.titleMsg(Param.wreslChekerName + new Versions().getComplete());
 
 		try {
-			sds = parseWresl(mainWreslFile);
+			sds = parseWresl(mainWreslFile, sendAliasToDvar);
 		}
 		catch (RecognitionException e) {
 			// TODO Auto-generated catch block
@@ -86,7 +105,8 @@ public class StudyUtils {
 
 	}
 
-	private static StudyDataSet parseWresl(File validatedMainWreslFile) throws RecognitionException, IOException {
+	private static StudyDataSet parseWresl(File validatedMainWreslFile, boolean sendAliasToDvar)
+			throws RecognitionException, IOException {
 
 		try {
 
@@ -95,11 +115,13 @@ public class StudyUtils {
 			StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(validatedMainWreslFile.getCanonicalPath());
 
 			// td.model_dataset_map=StudyParser.parseModels(sc,td);
-			td.model_dataset_map = StudyParser.parseModels(sc, td, false, true);
+			td.model_dataset_map = StudyParser.parseModels(sc, td, false, sendAliasToDvar);
 
 			StudyDataSet sd = StudyParser.writeWreslData(sc, td);
 
 			StudyParser.analyzeVarNeededFromCycles(sc, sd);
+			
+			total_errors = StudyParser.total_errors;
 
 			return sd;
 
