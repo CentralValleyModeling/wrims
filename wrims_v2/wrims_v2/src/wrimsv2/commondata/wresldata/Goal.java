@@ -1,5 +1,6 @@
 package wrimsv2.commondata.wresldata;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,8 +9,9 @@ import wrimsv2.evaluator.EvaluatorParser;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 
 
-public class Goal {
+public class Goal implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	public String scope;
 	public String lhs;
 	public ArrayList<String> caseName;

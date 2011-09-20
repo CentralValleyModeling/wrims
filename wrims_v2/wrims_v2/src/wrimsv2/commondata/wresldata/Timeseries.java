@@ -1,10 +1,13 @@
 package wrimsv2.commondata.wresldata;
 
+import java.io.Serializable;
+
 import wrimsv2.components.IntDouble;
 
 
-public class Timeseries {
+public class Timeseries implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	public String scope;
 	public String dssBPart;
 	public String format;

@@ -64,6 +64,8 @@ public class WriteCSV {
 	  
 	public static void study(StudyConfig sc, Map<String, ModelDataSet> modelDataMap, String outParent) {
 				
+		  	Tools.deleteDir(outParent);
+		
 			output(modelDataMap,outParent);
 			
 			try {

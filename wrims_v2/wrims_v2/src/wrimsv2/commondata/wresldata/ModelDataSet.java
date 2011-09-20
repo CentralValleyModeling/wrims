@@ -1,5 +1,6 @@
 package wrimsv2.commondata.wresldata;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,8 +20,9 @@ import org.antlr.runtime.RecognitionException;
 import wrimsv2.components.Error;
 
 
-public class ModelDataSet {
+public class ModelDataSet implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	// / weight table   // <objName,  <itemName, value>>
 	public ArrayList<String> wtList = new ArrayList<String>();
 //	public ArrayList<String> wtList_global = new ArrayList<String>();

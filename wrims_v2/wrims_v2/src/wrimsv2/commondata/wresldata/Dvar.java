@@ -1,5 +1,6 @@
 package wrimsv2.commondata.wresldata;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,8 +8,9 @@ import wrimsv2.components.IntDouble;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 
 
-public class Dvar {
+public class Dvar implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	public String scope;
 	public String integer;
 	public String format;

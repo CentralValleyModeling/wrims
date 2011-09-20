@@ -1,5 +1,6 @@
 package wrimsv2.commondata.wresldata;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,8 +10,9 @@ import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.evaluator.ValueEvaluatorTreeWalker;
 
 
-public class Svar {
+public class Svar implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	public String scope;
 	public String dssBPart;
 	public String format;

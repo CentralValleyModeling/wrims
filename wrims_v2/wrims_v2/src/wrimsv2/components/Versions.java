@@ -1,6 +1,5 @@
 package wrimsv2.components;
 
-import java.io.File;
 import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -9,13 +8,27 @@ import org.w3c.dom.Document;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
 
 public class Versions {
 	
 	private String xmlFileName = "version.xml";
 	private Document xmlDocument = null;
 
+	public String getComplete() {
+		
+		String version_complete = "";
+		
+		if (xmlDocument == null) setXmlDocument(xmlFileName);
+		String version_svn = getTagValue("svn_number");
+		String version_main = getTagValue("main");
+		String version_status = getTagValue("status").toLowerCase();
+		
+		version_complete = "v"+version_main+" "+version_status+" (svn:"+version_svn+")";
+		return version_complete;
+	}
+	
+
+	
 	public int getSVN() {
 
 		if (xmlDocument == null) setXmlDocument(xmlFileName);

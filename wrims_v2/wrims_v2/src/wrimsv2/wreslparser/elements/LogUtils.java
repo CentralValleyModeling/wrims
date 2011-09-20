@@ -179,6 +179,19 @@ public class LogUtils {
 
 		}
 	}	
+
+	public static void titleMsg(String msg){
+
+		System.out.println("============================================");
+		System.out.println(msg);
+		System.out.println("============================================");
+		
+		_logFile.println("============================================");
+		_logFile.println(msg);
+		_logFile.println("============================================");
+		
+		_logFile.flush();
+	}	
 	
 	public static void importantMsg(String msg){
 

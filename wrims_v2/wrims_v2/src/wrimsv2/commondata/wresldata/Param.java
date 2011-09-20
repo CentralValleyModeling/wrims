@@ -23,6 +23,7 @@ public class Param {
 	  public static final String arg_seperator = ",";
 	  public static final String new_seperator = ";";
 	  public static final String csv_seperator = ",";
+	  public static final String wreslChekerName = "Wresl Checker ";
 
 
 	  public static int printLevel = 1;

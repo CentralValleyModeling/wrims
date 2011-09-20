@@ -1,5 +1,6 @@
 package wrimsv2.commondata.wresldata;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,9 +9,10 @@ import wrimsv2.components.IntDouble;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 
 
-public class StudyDataSet {
+public class StudyDataSet implements Serializable {
 	
-	
+	private static final long serialVersionUID = 1L;
+
 	private String absMainFilePath;
 	
 	private ArrayList<String> modelList = new ArrayList<String>();
