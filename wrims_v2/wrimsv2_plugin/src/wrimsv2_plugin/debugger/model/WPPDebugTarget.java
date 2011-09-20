@@ -248,16 +248,14 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		data=sendRequest("start");
 		System.out.println(data);
 		
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		data=sendRequest("year:4456");
+		data=sendRequest("time:1922\\9\\30");
 		System.out.println(data);
 		
+		data=sendRequest("varaibles:s_shsta#s_folsm");
+		System.out.println(data);
+		
+		
+		/*
 		if (fTextEditor!=null) ((ITextEditor)fTextEditor).resetHighlightRange();
 		data=sendRequest("resume");
 		System.out.println(data);
@@ -304,6 +302,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 				}
 			}
 		});
+		*/
 	}
 	
 	public void setSourceName(String fileName){
@@ -657,7 +656,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	 */
 	@Override
 	public void handleEvent(String event) {
-		String data;
+		String data="";
 		if (event.startsWith("suspended")) {
 			try {
 				data=sendRequest("data");
@@ -665,7 +664,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			} catch (DebugException e) {
 				WPPException.handleException(e);
 			}
-			data="i:4456#a(-1):123.0#reservoir:reservorlevel1%56:reservorlevel2%1234";
+			//data="i:4456#a(-1):123.0#reservoir:reservorlevel1%56:reservorlevel2%1234";
 			fDataStack=generateTree(data);
 			DebugCorePlugin.dataStack=fDataStack;
 			updateDataView();
