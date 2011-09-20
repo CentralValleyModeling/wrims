@@ -95,7 +95,7 @@ public class StudyUtils {
 			StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(validatedMainWreslFile.getCanonicalPath());
 
 			// td.model_dataset_map=StudyParser.parseModels(sc,td);
-			td.model_dataset_map = StudyParser.parseModels(sc, td, false, false);
+			td.model_dataset_map = StudyParser.parseModels(sc, td, false, true);
 
 			StudyDataSet sd = StudyParser.writeWreslData(sc, td);
 
