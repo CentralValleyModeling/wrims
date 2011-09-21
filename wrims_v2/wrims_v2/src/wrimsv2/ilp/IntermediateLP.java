@@ -4,19 +4,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-
 import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.components.ControlData;
-import wrimsv2.components.IntDouble;
 import wrimsv2.components.FilePaths;
 import wrimsv2.wreslparser.elements.Tools;
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.evaluator.EvalConstraint;
+
+// for LpSolve select 1.Rows 2.Cols 3.Elimeq2 in Presolve
 
 public class IntermediateLP {
 
@@ -180,25 +178,29 @@ public class IntermediateLP {
 			String upperStr = dvarMap.get(key).upperBound;
 			String toPrint = null;
 
-			if (dvarMap.get(key).integer.equals(Param.yes)) {
+			if (dvarMap.get(key).integer.equalsIgnoreCase(Param.yes)) {
 				intList.add(key);
 			}
 
-			if (lowerStr.equals(Param.lower_unbounded) && upperStr.equals(Param.upper_unbounded)) {
+			if (lowerStr.equalsIgnoreCase(Param.lower_unbounded) && upperStr.equalsIgnoreCase(Param.upper_unbounded)) {
 				freeList.add(key);
 				continue;
 			}
-			else if (lowerStr.equals(Param.lower_unbounded)) {
+			else if (lowerStr.equalsIgnoreCase(Param.lower_unbounded)) {
 				toPrint = key + " < " + upper;
+				_ilpFile.print(toPrint + " ;\n");
 			}
-			else if (upperStr.equals(Param.upper_unbounded)) {
-				toPrint = key + " > " + lower;
+			else if (upperStr.equalsIgnoreCase(Param.upper_unbounded)) {
+
+				if (lower != 0) _ilpFile.print(key + " > " + lower + " ;\n");
+
 			}
 			else {
-				toPrint = key + " > " + lower + "; " + key + " < " + upper;
-			}
 
-			_ilpFile.print(toPrint + " ;\n");
+				if (lower != 0) _ilpFile.print(key + " > " + lower + " ;\n");
+
+				_ilpFile.print(key + " < " + upper + " ;\n");
+			}
 
 		}
 
