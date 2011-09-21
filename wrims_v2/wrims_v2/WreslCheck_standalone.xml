@@ -56,7 +56,7 @@
 				<attribute name="Main-Class" value="main.WreslCheckGUI"/>
 				<attribute name="Class-Path" value="."/>
 			</manifest>
-			<fileset dir="D:/cvwrsm/trunk/wrims_v2/wrims_v2/bin">
+			<fileset dir="bin/">
 				<include name="main/**/*.class"/>
 				<include name="wrimsv2/commondata/wresldata/**/*.class"/>
 				<include name="wrimsv2/wreslparser/**/*.class"/>
