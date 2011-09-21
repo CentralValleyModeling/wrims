@@ -107,7 +107,9 @@ public class IntermediateLP {
 		
 		for (String constraintName : sortedConstraint){
 		
-			String toPrint = "";
+			String lhs = "";
+			
+			if (!constraintMap.get(constraintName).getEvalExpression().isNumeric()){
 			
 			ArrayList<String> sortedTerm = new ArrayList<String>(constraintMap.get(constraintName).getEvalExpression().getMultiplier().keySet());
 			Collections.sort(sortedTerm);
@@ -128,19 +130,24 @@ public class IntermediateLP {
 				} else { // coefDouble >= 0
 					term = " + " + coefStr + " " + var;
 				}
-				toPrint = toPrint + term;
+				lhs = lhs + term;
+			}
+			
+			} else {
+				
+				lhs = "0";
 			}
 			
 			String sign = constraintMap.get(constraintName).getSign();
 			double val = constraintMap.get(constraintName).getEvalExpression().getValue().getData().doubleValue();
 				
 			if ( val == 0 ) {
-				toPrint = constraintName + ": " + toPrint + " " + sign + " " + "0";
+				lhs = constraintName + ": " + lhs + " " + sign + " " + "0";
 			} else {
-				toPrint = constraintName + ": " + toPrint + " " + sign + " " + val*-1;
+				lhs = constraintName + ": " + lhs + " " + sign + " " + val*-1;
 			}
 			
-			_ilpFile.println(toPrint+" ;");
+			_ilpFile.println(lhs+" ;");
 			
 		}
 	}
