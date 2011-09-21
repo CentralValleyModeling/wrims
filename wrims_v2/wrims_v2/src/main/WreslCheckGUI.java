@@ -78,6 +78,7 @@ public class WreslCheckGUI {
 							
 
 						} catch (Exception ex) {
+							text_parsingTime.setText(" ");
 							JOptionPane.showMessageDialog(runButton, ex
 									.getMessage(), "Error",
 									JOptionPane.ERROR_MESSAGE);
