@@ -74,7 +74,7 @@ public class WreslCheckGUI {
 							
 							float elapsedSec = (System.currentTimeMillis()-start)/1000F;
 							String elapsedSecStr = Float.toString(elapsedSec);
-							text_parsingTime.setText(" Parsing time in seconds: "+elapsedSecStr);
+							text_parsingTime.setText("Total errors: " + StudyUtils.total_errors +"; Parsing time in seconds: "+elapsedSecStr);
 							
 
 						} catch (Exception ex) {
