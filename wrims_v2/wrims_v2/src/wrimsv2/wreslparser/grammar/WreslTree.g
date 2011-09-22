@@ -494,7 +494,7 @@ external_func // this could be timeseries function
 	     
 	;
 
-range_func : RANGE '(' IDENT ',' IDENT ',' IDENT ')' ;
+range_func : RANGE '(' IDENT ',' ( IDENT | number ) ',' ( IDENT | number ) ')' ;
 
 max_func
 	: MAX '(' ie=expression (',' e=expression  
