@@ -272,7 +272,7 @@ public class LogUtils {
 	
 	public static void errMsg(String msg, String file){
 
-		errMsg(msg+" @ "+file);
+		errMsg(msg+" in file: "+file);
 		
 	}
 
