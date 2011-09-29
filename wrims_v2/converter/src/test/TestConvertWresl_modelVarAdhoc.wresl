@@ -1,4 +1,0 @@
- MODEL CVCWHEELING {      !CYCLE 11
-     define D419_swpC6 {alias D419_swp[monthlyweighted5] units 'cfs'}          
-     goal[local] force_c607 {C607 > 500}          
-     }

@@ -1,4 +1,0 @@
-name, type, units, expression
-a, undefine, cfs, DI_CVP_s+ResAction1Sha*cfs_taf
-b, undefine, taf, C_Kswck_Exc1
-c, test, in, C_Kswck_Exc1(-1)+C_Kswck_Exc1(preSep)+C_Kswck_Exc1[base]

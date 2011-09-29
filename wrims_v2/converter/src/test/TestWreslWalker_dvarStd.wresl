@@ -1,3 +1,0 @@
-define[local] C_Tracy {std kind 'FLOW-CHANNEL' units 'CFS'}   
-define C_Banks {std kind 'FLOW-CHANNEL' units 'TAF'}  
-define C_Banks {std kind 'FLOW-CHANNEL-THIS-IS-NOT-IN-THE--DATA' units 'TAF'}  

@@ -1,2 +1,0 @@
-NAME,CASE,ORDER,CONDITION,EXPRESSION,LHS_GT_RHS,LHS_LT_RHS,FROM_WRESL_FILE
-set_carryover_NBB,default,1,always,S_NBB_SEP_sss = carryover_NBB_target,#,1000*taf_cfs,D:\cvwrsm\wrims_v2\convert\src\test\TestConvertWreslToTable_goal2.wresl

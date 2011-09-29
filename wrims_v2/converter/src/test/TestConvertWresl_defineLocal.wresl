@@ -1,2 +1,0 @@
-define[local] minflow_C {value 60} 
-define D419_swpC6 {alias D419_swp[monthlyweighted5] units 'cfs'}  
