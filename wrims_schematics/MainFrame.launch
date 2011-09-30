@@ -12,6 +12,8 @@
 <mapEntry key="WRIMSv2_Engine_Home" value="D:\cvwrsm\trunk\wrims_v2\wrimsv2_plugin\Engine\"/>
 </mapAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="wrims.schematic.MainFrame"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="."/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="wrims_schematics"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Djava.library.path=&quot;lib;D:\cvwrsm\trunk\3rd_party\vista\lib;D:\cvwrsm\trunk\wrims_v2\wrims_v2\src\wrimsv2\lib&quot;"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Djava.library.path=../lib"/>
+<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:wrims_schematics/resources}"/>
 </launchConfiguration>

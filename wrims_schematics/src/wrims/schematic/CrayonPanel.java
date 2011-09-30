@@ -31,127 +31,134 @@
 
 package wrims.schematic;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.event.*;
-import javax.swing.colorchooser.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JToggleButton;
+import javax.swing.border.Border;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
+import javax.swing.colorchooser.ColorSelectionModel;
 
 /**
  * 
  * @author - Sun programmer
  * @author Clay Booher
- *
+ * 
  */
-public class CrayonPanel extends AbstractColorChooserPanel
-                         implements ActionListener {
-    JToggleButton redCrayon;
-    JToggleButton yellowCrayon;
-    JToggleButton greenCrayon;
-    JToggleButton blueCrayon;
-    
-    /**
-     * CB added
-     */
-    public CrayonPanel() {
-    	buildChooser();
-    }
+public class CrayonPanel extends AbstractColorChooserPanel implements
+		ActionListener {
+	JToggleButton redCrayon;
+	JToggleButton yellowCrayon;
+	JToggleButton greenCrayon;
+	JToggleButton blueCrayon;
 
-    public void updateChooser() {
-    	ColorSelectionModel csModel = getColorSelectionModel();
-        Color color = getColorFromModel();
-        if (Color.red.equals(color)) {
-            redCrayon.setSelected(true);
-        } else if (Color.yellow.equals(color)) {
-            yellowCrayon.setSelected(true);
-        } else if (Color.green.equals(color)) {
-            greenCrayon.setSelected(true);
-        } else if (Color.blue.equals(color)) {
-            blueCrayon.setSelected(true);
-        }
-    }
+	/**
+	 * CB added
+	 */
+	public CrayonPanel() {
+		buildChooser();
+	}
 
-    protected JToggleButton createCrayon(String name,
-                                         Border normalBorder) {
-        JToggleButton crayon = new JToggleButton();
-        crayon.setActionCommand(name);
-        crayon.addActionListener(this);
+	public void updateChooser() {
+		ColorSelectionModel csModel = getColorSelectionModel();
+		Color color = getColorFromModel();
+		if (Color.red.equals(color)) {
+			redCrayon.setSelected(true);
+		} else if (Color.yellow.equals(color)) {
+			yellowCrayon.setSelected(true);
+		} else if (Color.green.equals(color)) {
+			greenCrayon.setSelected(true);
+		} else if (Color.blue.equals(color)) {
+			blueCrayon.setSelected(true);
+		}
+	}
 
-        //Set the image or, if that's invalid, equivalent text.
-        ImageIcon icon = createImageIcon("images/" + name + ".gif");
-        if (icon != null) {
-            crayon.setIcon(icon);
-            crayon.setToolTipText("The " + name + " crayon");
-            crayon.setBorder(normalBorder);
-        } else {
-            crayon.setText("Image not found. This is the "
-                           + name + " button.");
-            crayon.setFont(crayon.getFont().deriveFont(Font.ITALIC));
-            crayon.setHorizontalAlignment(JButton.HORIZONTAL);
-            crayon.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        }
+	protected JToggleButton createCrayon(String name, Border normalBorder) {
+		JToggleButton crayon = new JToggleButton();
+		crayon.setActionCommand(name);
+		crayon.addActionListener(this);
 
-        return crayon;
-    }
+		// Set the image or, if that's invalid, equivalent text.
+		ImageIcon icon = createImageIcon("images/" + name + ".gif");
+		if (icon != null) {
+			crayon.setIcon(icon);
+			crayon.setToolTipText("The " + name + " crayon");
+			crayon.setBorder(normalBorder);
+		} else {
+			crayon.setText("Image not found. This is the " + name + " button.");
+			crayon.setFont(crayon.getFont().deriveFont(Font.ITALIC));
+			crayon.setHorizontalAlignment(JButton.HORIZONTAL);
+			crayon.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		}
 
-    protected void buildChooser() {
-        setLayout(new GridLayout(0, 1));
+		return crayon;
+	}
 
-        ButtonGroup boxOfCrayons = new ButtonGroup();
-        Border border = BorderFactory.createEmptyBorder(4,4,4,4);
+	protected void buildChooser() {
+		setLayout(new GridLayout(0, 1));
 
-        redCrayon = createCrayon("red", border);
-        boxOfCrayons.add(redCrayon);
-        add(redCrayon);
+		ButtonGroup boxOfCrayons = new ButtonGroup();
+		Border border = BorderFactory.createEmptyBorder(4, 4, 4, 4);
 
-        yellowCrayon = createCrayon("yellow", border);
-        boxOfCrayons.add(yellowCrayon);
-        add(yellowCrayon);
+		redCrayon = createCrayon("red", border);
+		boxOfCrayons.add(redCrayon);
+		add(redCrayon);
 
-        greenCrayon = createCrayon("green", border);
-        boxOfCrayons.add(greenCrayon);
-        add(greenCrayon);
+		yellowCrayon = createCrayon("yellow", border);
+		boxOfCrayons.add(yellowCrayon);
+		add(yellowCrayon);
 
-        blueCrayon = createCrayon("blue", border);
-        boxOfCrayons.add(blueCrayon);
-        add(blueCrayon);
-    }
+		greenCrayon = createCrayon("green", border);
+		boxOfCrayons.add(greenCrayon);
+		add(greenCrayon);
 
-    /** Returns an ImageIcon, or null if the path was invalid. */
-    protected static ImageIcon createImageIcon(String path) {
-        java.net.URL imgURL = CrayonPanel.class.getResource(path);
-        if (imgURL != null) {
-            return new ImageIcon(imgURL);
-        } else {
-            System.err.println("Couldn't find file: " + path);
-            return null;
-        }
-    }
+		blueCrayon = createCrayon("blue", border);
+		boxOfCrayons.add(blueCrayon);
+		add(blueCrayon);
+	}
 
-    public void actionPerformed(ActionEvent e) {
-        Color newColor = null;
-        String command = ((JToggleButton)e.getSource()).getActionCommand();
-        if ("green".equals(command))
-            newColor = Color.green;
-        else if ("red".equals(command))
-            newColor = Color.red;
-        else if ("yellow".equals(command))
-            newColor = Color.yellow;
-        else if ("blue".equals(command))
-            newColor = Color.blue;
-        getColorSelectionModel().setSelectedColor(newColor);
-    }
+	/** Returns an ImageIcon, or null if the path was invalid. */
+	protected static ImageIcon createImageIcon(String path) {
+		java.net.URL imgURL = CrayonPanel.class.getResource(path);
+		if (imgURL != null) {
+			return new ImageIcon(imgURL);
+		} else {
+			System.err.println("Couldn't find file: " + path);
+			return null;
+		}
+	}
 
-    public String getDisplayName() {
-        return "Crayons";
-    }
+	public void actionPerformed(ActionEvent e) {
+		Color newColor = null;
+		String command = ((JToggleButton) e.getSource()).getActionCommand();
+		if ("green".equals(command))
+			newColor = Color.green;
+		else if ("red".equals(command))
+			newColor = Color.red;
+		else if ("yellow".equals(command))
+			newColor = Color.yellow;
+		else if ("blue".equals(command))
+			newColor = Color.blue;
+		getColorSelectionModel().setSelectedColor(newColor);
+	}
 
-    public Icon getSmallDisplayIcon() {
-        return null;
-    }
+	public String getDisplayName() {
+		return "Crayons";
+	}
 
-    public Icon getLargeDisplayIcon() {
-        return null;
-    }
+	public Icon getSmallDisplayIcon() {
+		return null;
+	}
+
+	public Icon getLargeDisplayIcon() {
+		return null;
+	}
 }

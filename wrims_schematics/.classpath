@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6"/>
 	<classpathentry kind="lib" path="lib/calsim.jar"/>
-	<classpathentry kind="lib" path="lib/hec.jar"/>
-	<classpathentry kind="lib" path="lib/heclib.jar"/>
+	<classpathentry kind="lib" path="lib/hec.jar" sourcepath="D:/dev/wk-vista/hecdssvue/src"/>
+	<classpathentry kind="lib" path="lib/heclib.jar" sourcepath="D:/dev/wk-vista/hecdssvue/src"/>
 	<classpathentry kind="lib" path="lib/rma.jar"/>
 	<classpathentry kind="lib" path="lib/gridUtil.jar"/>
 	<classpathentry kind="lib" path="lib/hecData.jar"/>
@@ -21,11 +23,9 @@
 	<classpathentry kind="lib" path="lib/sys/jython.jar"/>
 	<classpathentry kind="lib" path="lib/sys/jythonlib.jar"/>
 	<classpathentry kind="lib" path="lib/sys/jythonUtils.jar"/>
-	<classpathentry kind="lib" path="lib/JGo.jar"/>
-	<classpathentry kind="lib" path="lib/JGoSVG.jar"/>
 	<classpathentry kind="src" path="/wrims_v2"/>
 	<classpathentry kind="lib" path="lib/vista.jar"/>
 	<classpathentry kind="lib" path="lib/xml.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/JDiagram.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

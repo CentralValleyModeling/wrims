@@ -32,19 +32,21 @@ Sacramento, CA  95814
 916-653-7921
 sushil@water.ca.gov
 
-*/
+ */
 
 package wrims.schematic;
 
 /**
- * Intended for JTable data model use. Specifies the method for getting GUI table name.
+ * Intended for JTable data model use. Specifies the method for getting GUI
+ * table name.
+ * 
  * @author Clay Booher
  */
-public interface Describable  {
-   /**
+public interface Describable {
+	/**
     *
     */
-   void setDescription(String description);
-   
-   String getDescription();
+	void setDescription(String description);
+
+	String getDescription();
 }

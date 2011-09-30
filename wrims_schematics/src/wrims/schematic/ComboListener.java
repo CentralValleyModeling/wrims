@@ -1,13 +1,14 @@
 package wrims.schematic;
 
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JComboBox;
 
-
 /**
- * Listens to list item selection changes (actions actually) and disallows
- * the attempted change if the user-selected item is disabled.
- *
+ * Listens to list item selection changes (actions actually) and disallows the
+ * attempted change if the user-selected item is disabled.
+ * 
  * @author Clay Booher (after a Japanese programmer - name unknown)
  */
 public class ComboListener implements ActionListener {
@@ -16,7 +17,7 @@ public class ComboListener implements ActionListener {
 
 	public ComboListener(JComboBox combo) {
 		_combo = combo;
-//		combo.setSelectedIndex(0);
+		// combo.setSelectedIndex(0);
 		_currentItem = combo.getSelectedItem();
 	}
 
@@ -24,9 +25,9 @@ public class ComboListener implements ActionListener {
 		Object tempItem = _combo.getSelectedItem();
 		ComboItem comboItem;
 		if (tempItem instanceof String) {
-			comboItem = new ComboItem((String)tempItem);
+			comboItem = new ComboItem((String) tempItem);
 		} else {
-			comboItem = (ComboItem)tempItem;
+			comboItem = (ComboItem) tempItem;
 		}
 		if (!comboItem.isEnabled()) {
 			_combo.setSelectedItem(_currentItem);

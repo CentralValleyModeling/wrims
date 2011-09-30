@@ -1,10 +1,10 @@
 package wrims.schematic;
 
 import java.awt.Container;
+import java.util.Vector;
+
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
-//import com.nwoods.jgo.*;
-import java.util.Vector;
 
 // Define an Action that knows about views and supports enabling/disabling
 // depending on the current context.
@@ -26,7 +26,7 @@ public abstract class ContainerRelatedAction extends AbstractAction {
 		init(app);
 		putValue(SHORT_DESCRIPTION, desc);
 	}
-	
+
 	public ContainerRelatedAction(String name, Icon icon, Container app) {
 		super(name, icon);
 		init(app);
@@ -56,7 +56,8 @@ public abstract class ContainerRelatedAction extends AbstractAction {
 	// keep track of all instances of AppAction
 	public static void updateAllActions() {
 		for (int i = 0; i < myAllActions.size(); i++) {
-			ContainerRelatedAction act = (ContainerRelatedAction) myAllActions.elementAt(i);
+			ContainerRelatedAction act = (ContainerRelatedAction) myAllActions
+					.elementAt(i);
 			act.updateEnabled();
 		}
 	}

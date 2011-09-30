@@ -28,6 +28,13 @@ import java.util.prefs.Preferences;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import wrims.dss.dts.DTSWrapper;
+import wrims.dss.dts.DerivedTimeSeries;
+import wrims.dss.monthly.MonthlyTableFrame;
+import wrims.dss.monthly.Outputer;
+import wrims.schematic.FilterPanel;
+import wrims.schematic.MainPanel;
+import wrims.schematic.MessagePanel;
 import wrims.schematic.SchematicUtils;
 
 /**
@@ -120,28 +127,8 @@ public class DssViewer implements Outputer {
 	private boolean _keepVariableData = true; // CB added for updating variable
 	// period value boxes
 
-	private Hashtable<String, HecMath>[] _allVariableData; // CB added for
-	// updating variable
-	// period value
-	// boxes for single
-	// month periods
-
-	// private Hashtable<String, Hashtable<String, HecMath>> _allVariableTWData;
-	// //CB added for updating variable period value boxes for time window
-	// periods
-
-	private Hashtable<String, Hashtable<String, String[]>> _allVariableTWData; // CB
-	// added
-	// for
-	// updating
-	// variable
-	// period
-	// value
-	// boxes
-	// for
-	// time
-	// window
-	// periods
+	private Hashtable<String, HecMath>[] _allVariableData;
+	private Hashtable<String, Hashtable<String, String[]>> _allVariableTWData;
 
 	private Hashtable<String, Double> _longTermTafToCfsConversionFactors;
 
@@ -218,7 +205,7 @@ public class DssViewer implements Outputer {
 			HashMap<Integer, Object> DssFiles, HashMap<Integer, Object> Fparts,
 			int[] keys, ArrayList months, Hashtable<String, Object> variables) {
 		this(mode, annualMode, tw, paths, DssFiles, Fparts, keys, months);
-		_variables = variables;
+		setVariables(variables);
 	}
 
 	/**
@@ -280,7 +267,7 @@ public class DssViewer implements Outputer {
 
 	// CB void show(int type, String units, boolean exceedence, boolean
 	// annualTotal) {
-	void show(int type, String units) { // CB
+	public void show(int type, String units) { // CB
 		boolean exceedence = false; // CB
 		boolean annualTotal = false; // CB
 		boolean monthlyAverage = false; // CB
@@ -335,12 +322,8 @@ public class DssViewer implements Outputer {
 	 * @param units
 	 * @param periodDate
 	 */
-	// Hashtable<String, Double>[] show(String units, String periodDate) { //CB
-	// or use list index
-	Hashtable<String, String>[] show(String units, String periodDate) { // CB or
-		// use
-		// list
-		// index
+	public Hashtable<String, String>[] show(String units, String periodDate) {
+
 		if (periodDate.trim().equals("")) {
 			return null;
 		}
@@ -351,32 +334,21 @@ public class DssViewer implements Outputer {
 					JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
-		// loadVariableData(units, -1); //TO DO: set _units using listener on
-		// the units swing component?
+
 		_units = units;
-		// At this point, _allvariableData contains data sets of variables which
-		// have associated units
-		// Hashtable<String, Double>[] results = new
-		// Hashtable[_allvariableData.length];
+
 		Hashtable<String, String>[] results = new Hashtable[_allVariableData.length];
-		Hashtable<String, String[]> twData = _allVariableTWData.get(periodDate); // long-term
-		// average
-		// (time
-		// window)
-		// data
+		Hashtable<String, String[]> twData = _allVariableTWData.get(periodDate);
 
 		for (int i = 0; i < _allVariableData.length; ++i) {
 			// results[i] = new Hashtable<String, Double>();
 			results[i] = new Hashtable<String, String>();
 		}
-		// NumberFormat formatter = new DecimalFormat("#."); //"##" shows one
-		// decimal place and so does "0"!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		// NumberFormat formatter = new DecimalFormat("%6.0f");
+
 		Enumeration<String> variableEnum = _variables.keys();
 		while (variableEnum.hasMoreElements()) {
 			String name = variableEnum.nextElement();
-			// if (name.toUpperCase().equals("S_TRNTY"))
-			// System.out.print("");
+
 			for (int j = 0; j < _allVariableData.length; ++j) {
 				if (_allVariableData[j].get(name) != null) {
 					HecMath dataSet = _allVariableData[j].get(name);
@@ -385,19 +357,14 @@ public class DssViewer implements Outputer {
 					dataSet = unitsConversion(dataSet, isTAFSelected);
 					try {
 						TimeSeriesContainer tsc = (TimeSeriesContainer) dataSet
-								.getData(); // will contain only one value
-						// tsc.precision = 0; //CB does not appear to work
+								.getData();
 						HecTime hecStartTime = new HecTime();
 						hecStartTime.set(tsc.startTime);
 						HecTime ht = new HecTime();
 						if (periodDate.indexOf("-") == -1) {
 							ht.setDate(periodDate);
 							int valueIndex = (ht.year() - hecStartTime.year())
-									* 12 + (ht.month() - hecStartTime.month()); // offset
-							// (index)
-							// from
-							// the
-							// startdate
+									* 12 + (ht.month() - hecStartTime.month());
 							if (valueIndex < 0) {
 								System.out.println();
 							}
@@ -416,13 +383,7 @@ public class DssViewer implements Outputer {
 									double val = Double.parseDouble(value)
 											/ _longTermTafToCfsConversionFactors
 													.get(periodDate);
-									results[j].put(name, val + " taf"); // j is
-									// 0 for
-									// alt.
-									// 1 OR
-									// 1 for
-									// alt.
-									// 2
+									results[j].put(name, val + " taf");
 								} else if (!isTAFSelected
 										&& _initialUnits.equals("TAF")
 										&& (tsc.fullName.indexOf("STORAGE/") == -1)) {
@@ -432,25 +393,9 @@ public class DssViewer implements Outputer {
 									double val = Double.parseDouble(value)
 											* _longTermTafToCfsConversionFactors
 													.get(periodDate);
-									results[j].put(name, val + " cfs"); // j is
-									// 0 for
-									// alt.
-									// 1 OR
-									// 1 for
-									// alt.
-									// 2
+									results[j].put(name, val + " cfs");
 								} else {
-									results[j].put(name, twData.get(name)[j]); // j
-									// is
-									// 0
-									// for
-									// alt.
-									// 1
-									// OR
-									// 1
-									// for
-									// alt.
-									// 2
+									results[j].put(name, twData.get(name)[j]);
 								}
 							}
 						}
@@ -474,107 +419,14 @@ public class DssViewer implements Outputer {
 	 * CB added to load long-term averages in background This should be called
 	 * from within <code>SwingUtilities.invokeLater</code>.
 	 */
-	/*
-	 * public void calculateLongTermAverages_worksslower(Vector<String> periods)
-	 * { long startTime = System.currentTimeMillis(); _initialUnits = _units;
-	 * _longTermTafToCfsConversionFactors = new Hashtable<String, Double>();
-	 * _allVariableTWData = new Hashtable<String, Hashtable<String,
-	 * String[]>>(); //for time window periods Hashtable<String, String[]>
-	 * results; // for one time window! Enumeration<String> periodEnum =
-	 * periods.elements(); while (periodEnum.hasMoreElements()) { String period
-	 * = periodEnum.nextElement(); if (period.indexOf("-") == -1) { break; //
-	 * not a multi-month period, so go to next period } else { // multiple-month
-	 * time window results = new Hashtable<String, String[]>(); // for one time
-	 * window!
-	 * 
-	 * String[] split = period.split(" +"); String startMonth =
-	 * split[0].substring(0, 3); String endMonth = split[2].substring(0, 3);
-	 * String startYear = split[0].substring(3); String endYear =
-	 * split[2].substring(3); int firstStartMonthIndex = -1;
-	 * 
-	 * int endMonthIndex = -1; for (int i = 0; i < DssViewer.months.length; ++i)
-	 * { if (DssViewer.months[i].equalsIgnoreCase(startMonth))
-	 * firstStartMonthIndex = i; if
-	 * (DssViewer.months[i].equalsIgnoreCase(endMonth)) endMonthIndex = i; } int
-	 * sYear = Integer.parseInt(startYear); int eYear =
-	 * Integer.parseInt(endYear); String date = ""; int eMonth = -1;
-	 * Enumeration<String> variableEnum = _variables.keys(); boolean
-	 * isCalculatedConversions = false; boolean setCalculatedConversionsTrue =
-	 * true; while (variableEnum.hasMoreElements()) { String name =
-	 * variableEnum.nextElement(); // if (name.equals("S_SHSTA")) //
-	 * System.out.print(""); String[] dataPair = new
-	 * String[_allVariableData.length]; for (int j = 0; j <
-	 * _allVariableData.length; ++j) { if (_allVariableData[j].get(name) !=
-	 * null) { HecMath dataSet = (HecMath)_allVariableData[j].get(name); HecMath
-	 * dataSetCopy = null; //to calculate conversion factor for the term
-	 * TimeSeriesContainer tscOfCopy = null; //to calculate conversion factor
-	 * for the term boolean isTAFSelected = (_units.equalsIgnoreCase("taf") ?
-	 * true : false); try { if (!isCalculatedConversions) dataSetCopy =
-	 * dataSet.copy(); dataSet = unitsConversion(dataSet, isTAFSelected);
-	 * TimeSeriesContainer tsc = (TimeSeriesContainer) dataSet.getData(); //
-	 * will contain only one value
-	 * 
-	 * HecTime hecStartTime = new HecTime(); hecStartTime.set(tsc.startTime);
-	 * HecTime ht = new HecTime();
-	 * 
-	 * if (!isCalculatedConversions) tscOfCopy = (TimeSeriesContainer)
-	 * dataSetCopy.getData(); // will contain only one value if
-	 * (!isCalculatedConversions) { if (tsc.units.equals(tscOfCopy.units)) { if
-	 * (tscOfCopy.units.equalsIgnoreCase("CFS")) { dataSetCopy =
-	 * unitsConversion(dataSetCopy, true); tscOfCopy = (TimeSeriesContainer)
-	 * dataSetCopy.getData(); } else if
-	 * (tscOfCopy.units.equalsIgnoreCase("TAF")) { dataSetCopy =
-	 * unitsConversion(dataSetCopy, false); tscOfCopy = (TimeSeriesContainer)
-	 * dataSetCopy.getData(); } } } int numValues = 0; //reset it double sum =
-	 * 0.0; //reset it double sumOfCopy = 0.0; //reset it int startMonthIndex =
-	 * firstStartMonthIndex; //reset it for (int year = sYear; year <= eYear;
-	 * ++year) { if (year != sYear) startMonthIndex = 0; if (year != eYear)
-	 * eMonth = 11; else eMonth = endMonthIndex; for (int month =
-	 * startMonthIndex; month <= eMonth; ++month) { date =
-	 * DssViewer.months[month] + String.valueOf(year); ht.setDate(date); int
-	 * valueIndex = (ht.year() - hecStartTime.year()) * 12 + (ht.month() -
-	 * hecStartTime.month()); //offset (index) from the startdate sum +=
-	 * tsc.values[valueIndex]; if (!isCalculatedConversions) sumOfCopy +=
-	 * tscOfCopy.values[valueIndex]; ++numValues; } } if
-	 * (!isCalculatedConversions) { if (tscOfCopy.units.equalsIgnoreCase("CFS"))
-	 * { _longTermTafToCfsConversionFactors.put(period, sumOfCopy/sum);
-	 * setCalculatedConversionsTrue = true; } else if
-	 * (tscOfCopy.units.equalsIgnoreCase("TAF")) {
-	 * _longTermTafToCfsConversionFactors.put(period, sum/sumOfCopy);
-	 * setCalculatedConversionsTrue = true; } } try { dataPair[j] =
-	 * sum/numValues + " " + dataSet.getUnits(); //j is 0 for alt. 1 OR 1 for
-	 * alt. 2 if (j == _allVariableData.length - 1) { //only need to add once
-	 * results.put(name, dataPair); // System.out.println(name + ": " +
-	 * dataPair[0] + ", " + dataPair[1]); } } catch (NumberFormatException nfe)
-	 * { //TODO do anything? } if (setCalculatedConversionsTrue) {
-	 * isCalculatedConversions = true; setCalculatedConversionsTrue = false; } }
-	 * catch (HecMathException hme){ hme.printStackTrace(); } } else { } } }
-	 * _allVariableTWData.put(period, results); } } long stopTime =
-	 * System.currentTimeMillis();
-	 * System.out.println("long term averages calculation time = " + (stopTime -
-	 * startTime)); }
-	 */
-
-	/**
-	 * CB added to load long-term averages in background This should be called
-	 * from within <code>SwingUtilities.invokeLater</code>.
-	 */
 	public boolean calculateLongTermAverages(Vector<String> periods,
 			int dssType, boolean isSelectedFiles) {
-		// public Hashtable<String, Hashtable<String, String[]>>
-		// calculateLongTermAverages(Vector<String> periods) {//trying to fix
-		// GUI lockup
 		long startTime = System.currentTimeMillis();
 		_initialUnits = _units;
 		_longTermTafToCfsConversionFactors = new Hashtable<String, Double>();
-		// Hashtable<String, String[]>[] results = new
-		// Hashtable[periods.size()];
+
 		Hashtable<String, String[]>[] results = null;
-		// Hashtable<String, Hashtable<String, String[]>> allVariableTWData =
-		// new Hashtable<String, Hashtable<String, String[]>>(); //for time
-		// window periods
-		// _allVariableTWData = new Hashtable<String, Hashtable<String,
-		// String[]>>(); //for time window periods
+
 		if (_allVariableTWData == null) { // for time window periods
 			_allVariableTWData = new Hashtable<String, Hashtable<String, String[]>>();
 		}
@@ -614,18 +466,7 @@ public class DssViewer implements Outputer {
 			} else { // multiple-month time window
 				terms[index] = period;
 				if (_allVariableTWData.get(period) == null) {
-					results[index] = new Hashtable<String, String[]>(); // for
-					// one
-					// time
-					// window
-					// (term)
-					// TODO
-					// - set
-					// size
-					// based
-					// on
-					// _allVariableData[0]
-					// size
+					results[index] = new Hashtable<String, String[]>();
 				} else {
 					results[index] = _allVariableTWData.get(period);
 				}
@@ -655,14 +496,6 @@ public class DssViewer implements Outputer {
 				endDate.add(-1440);
 				endTimes[index++] = endDate;
 			}
-			// CB added block for progress bar in the Schematic - TODO this is
-			// better than doing it repeatedly in while
-			// (variableEnum.hasMoreElements()) block if OK
-			/*
-			 * numPeriods = 12 * (endDate.year() - startDate.year()) +
-			 * (endDate.month() - startDate.month() + 1); ++periodIndex;
-			 * System.out.println(numPeriods); totalPeriods += numPeriods;
-			 */
 		}
 		Enumeration<String> variableEnum = _variables.keys();
 		boolean isCalculatedConversions = false;
@@ -734,19 +567,15 @@ public class DssViewer implements Outputer {
 			if ((newPercentage = (int) (variableCount * factor + startPercentage)) > oldPercentage) {
 				oldPercentage = newPercentage;
 				// update Schematic's long-term average progress bar
-				SchematicUtils.getSchematic()
-						.setLongtermProgress(newPercentage);
+				/*
+				 * FIXME: by giving idea of progress some other way
+				 * SchematicUtils.getSchematic()
+				 * .setLongtermProgress(newPercentage);
+				 */
 				// System.out.println(newPercentage);
 			}
 			for (int j = 0; j < _allVariableData.length; ++j) { // CB TODO use
-				// the keys to
-				// only consider
-				// the files
-				// type
-				// (selected OR
-				// unselected)
-				// TODO check the current files .get(j) first and continue if
-				// not here
+
 				if (DssFiles.get(j) == null) {
 					continue;
 				}
@@ -854,15 +683,12 @@ public class DssViewer implements Outputer {
 							// 1921 at 2400 to December 30, 1921
 							// at 2400.
 						}
-
-						if (numbersOfValues[0] < 984) {
-							System.out.println("For variable = "
-									+ name
-									+ " number of values = " // debugging
-									+ numbersOfValues[0]
-									+ " which is less than 984");
-						}
-
+						/*
+						 * if (numbersOfValues[0] < 984) {
+						 * System.out.println("For variable = " + name +
+						 * " number of values = " // debugging +
+						 * numbersOfValues[0] + " which is less than 984"); }
+						 */
 						if (!isCalculatedConversions) {
 							for (int i = 0; i < periods.size(); ++i) {
 								if (tscOfCopy.units.equalsIgnoreCase("CFS")) {
@@ -909,13 +735,7 @@ public class DssViewer implements Outputer {
 								return false;
 							}
 						}
-						// if (name.equals("S_SHSTA")) {
-						// String[] shasta0results = results[0].get(name);
-						// String[] shasta1results = results[1].get(name);
-						// String[] shasta2results = results[2].get(name);
-						// String[] shasta3results = results[3].get(name);
-						// System.out.print("");
-						// }
+
 						if (setCalculatedConversionsTrue) {
 							isCalculatedConversions = true;
 							setCalculatedConversionsTrue = false;
@@ -930,119 +750,8 @@ public class DssViewer implements Outputer {
 		for (int i = 0; i < periods.size(); ++i) {
 			_allVariableTWData.put(terms[i], results[i]);
 		}
-		// String[] shastaResults =
-		// _allVariableTWData.get(terms[0]).get("S_SHSTA");
-		long stopTime = System.currentTimeMillis();
-		if (isSelectedFiles) {
-			System.out
-					.println("Selected Files long term averages calculation time = "
-							+ (stopTime - startTime));
-		} else {
-			System.out
-					.println("Unselected Files long term averages calculation time = "
-							+ (stopTime - startTime));
-		}
 		return true;
 	}
-
-	/**
-	 * CB added to load long-term averages in background This should be called
-	 * from within <code>SwingUtilities.invokeLater</code>.
-	 */
-	/*
-	 * public void calculateLongTermAverages_firsttry(Vector<String> periods) {
-	 * _initialUnits = _units; _longTermTafToCfsConversionFactors = new
-	 * Hashtable<String, Double>(); _allVariableTWData = new Hashtable<String,
-	 * Hashtable<String, String[]>>(); //for time window periods //
-	 * Hashtable<String, String[]> results = new
-	 * Hashtable[_allVariableData.length]; // for one time window!
-	 * Hashtable<String, String[]> results = new Hashtable<String, String[]>();
-	 * // for one time window! // for (int i = 0; i < _allVariableData.length;
-	 * ++i) // results[i] = new Hashtable<String, String>();
-	 * 
-	 * // for (int i = 0; i < _allVariableTWData.size(); ++i) { //
-	 * _allVariableTWData.put(MessagePanel._twSelections[i], new
-	 * Hashtable<String, HecMath>()); // } Enumeration<String> variableEnum =
-	 * _variables.keys(); boolean isCalculatedConversions = false; boolean
-	 * setCalculatedConversionsTrue = true; while
-	 * (variableEnum.hasMoreElements()) { String name =
-	 * variableEnum.nextElement(); String[] dataPair = new
-	 * String[_allVariableData.length]; for (int j = 0; j <
-	 * _allVariableData.length; ++j) { if (_allVariableData[j].get(name) !=
-	 * null) { HecMath dataSet = (HecMath)_allVariableData[j].get(name); HecMath
-	 * dataSetCopy = null; //to calculate conversion factor for the term
-	 * TimeSeriesContainer tscOfCopy = null; //to calculate conversion factor
-	 * for the term boolean isTAFSelected = (_units.equalsIgnoreCase("taf") ?
-	 * true : false); try { if (!isCalculatedConversions) dataSetCopy =
-	 * dataSet.copy(); dataSet = unitsConversion(dataSet, isTAFSelected);
-	 * TimeSeriesContainer tsc = (TimeSeriesContainer) dataSet.getData(); //
-	 * will contain only one value if (!isCalculatedConversions) tscOfCopy =
-	 * (TimeSeriesContainer) dataSetCopy.getData(); // will contain only one
-	 * value if (!isCalculatedConversions) { if
-	 * (tsc.units.equals(tscOfCopy.units)) { if
-	 * (tscOfCopy.units.equalsIgnoreCase("CFS")) { dataSetCopy =
-	 * unitsConversion(dataSetCopy, true); tscOfCopy = (TimeSeriesContainer)
-	 * dataSetCopy.getData(); } else if
-	 * (tscOfCopy.units.equalsIgnoreCase("TAF")) { dataSetCopy =
-	 * unitsConversion(dataSetCopy, false); tscOfCopy = (TimeSeriesContainer)
-	 * dataSetCopy.getData(); } } }
-	 * 
-	 * // tsc.precision = 0; //CB does not appear to work HecTime hecStartTime =
-	 * new HecTime(); hecStartTime.set(tsc.startTime); HecTime ht = new
-	 * HecTime(); Enumeration<String> periodEnum = periods.elements(); while
-	 * (periodEnum.hasMoreElements()) { String period =
-	 * periodEnum.nextElement(); if (period.indexOf("-") == -1) { break; // not
-	 * a multi-month period, so go to next period } else { // multiple-month
-	 * time window String[] split = period.split(" +"); String startMonth =
-	 * split[0].substring(0, 3); String endMonth = split[2].substring(0, 3);
-	 * String startYear = split[0].substring(3); String endYear =
-	 * split[2].substring(3); int startMonthIndex = -1; int endMonthIndex = -1;
-	 * for (int i = 0; i < DssViewer.months.length; ++i) { if
-	 * (DssViewer.months[i].equalsIgnoreCase(startMonth)) startMonthIndex = i;
-	 * if (DssViewer.months[i].equalsIgnoreCase(endMonth)) endMonthIndex = i; }
-	 * System.out.print(""); try { int sYear = Integer.parseInt(startYear); int
-	 * eYear = Integer.parseInt(endYear); int numValues = 0; double sum = 0.0;
-	 * double sumOfCopy = 0.0; String date = ""; int eMonth = -1; for (int year
-	 * = sYear; year <= eYear; ++year) { if (year != sYear) startMonthIndex = 0;
-	 * if (year != eYear) eMonth = 11; else eMonth = endMonthIndex; for (int
-	 * month = startMonthIndex; month <= eMonth; ++month) { date =
-	 * DssViewer.months[month] + String.valueOf(year); ht.setDate(date); int
-	 * valueIndex = (ht.year() - hecStartTime.year()) * 12 + (ht.month() -
-	 * hecStartTime.month()); //offset (index) from the startdate sum +=
-	 * tsc.values[valueIndex]; if (!isCalculatedConversions) sumOfCopy +=
-	 * tscOfCopy.values[valueIndex]; ++numValues; } } if
-	 * (!isCalculatedConversions) { if (tscOfCopy.units.equalsIgnoreCase("CFS"))
-	 * { _longTermTafToCfsConversionFactors.put(period, sumOfCopy/sum);
-	 * setCalculatedConversionsTrue = true; } else if
-	 * (tscOfCopy.units.equalsIgnoreCase("TAF")) {
-	 * _longTermTafToCfsConversionFactors.put(period, sum/sumOfCopy);
-	 * setCalculatedConversionsTrue = true; } } // results[j].put(name,
-	 * sum/numValues + " " + dataSet.getUnits()); //j is 0 for alt. 1 OR 1 for
-	 * alt. 2 dataPair[j] = sum/numValues + " " + dataSet.getUnits(); //j is 0
-	 * for alt. 1 OR 1 for alt. 2
-	 * 
-	 * if (j == _allVariableData.length - 1) { //only need to add once
-	 * results.put(name, dataPair); _allVariableTWData.put(period, results); }
-	 * 
-	 * } catch (NumberFormatException nfe) { //TODO do anything? } } } if
-	 * (setCalculatedConversionsTrue) { isCalculatedConversions = true;
-	 * setCalculatedConversionsTrue = false; } } catch (HecMathException hme){
-	 * hme.printStackTrace(); } } else { } }
-	 * 
-	 * } }
-	 */
-	/**
-	 * CB added.
-	 * 
-	 * @param studyNumber
-	 */
-	/*
-	 * CB void loadVariableData(int dssType, HashMap<Integer, Object>
-	 * dssFileNames, boolean selectedFiles) { if (!_keepVariableData) return;
-	 * //CB TO DO: need this variable and statement????
-	 * generateVariableData(dssType, dssFileNames, selectedFiles);
-	 * System.out.print(""); }
-	 */
 
 	/**
 	 * CB added.
@@ -1050,11 +759,9 @@ public class DssViewer implements Outputer {
 	 * @param units
 	 * @param studyNumber
 	 */
-	boolean loadVariableData(String units, int dssType, boolean selectedFiles) {
-		_units = units; // TO DO: set _units using listener on the units swing
-		// component?
-		// if (!_keepVariableData) return; //CB TO DO: need this variable and
-		// statement????
+	public boolean loadVariableData(String units, int dssType,
+			boolean selectedFiles) {
+		_units = units;
 		return generateVariableData(dssType, selectedFiles);
 	}
 
@@ -1069,8 +776,7 @@ public class DssViewer implements Outputer {
 					"NULL paths!", JOptionPane.ERROR_MESSAGE);
 		} else { // TODO
 			if (_allVariableData == null) {
-				_allVariableData = new Hashtable[4]; // CB TODO use Java
-				// constant instead
+				_allVariableData = new Hashtable[4];
 				for (int i = 0; i < _allVariableData.length; ++i) {
 					_allVariableData[i] = new Hashtable<String, HecMath>();
 				}
@@ -1218,15 +924,6 @@ public class DssViewer implements Outputer {
 						continue;
 					}
 					Enumeration<String> fileElements = files.elements(); // CB
-					// added
-					// files
-					// is
-					// null
-					// now
-					// if
-					// row
-					// is
-					// unchecked!!!!!
 					int fileElementCount = -1; // CB added
 					float percentFilesDone = 0f;
 					float factor = 100f
@@ -1240,34 +937,12 @@ public class DssViewer implements Outputer {
 						if (dssType > -1) {
 							System.out.print("");
 						}
-						// Was trying to optimize, but not sucessful and had to
-						// wrap it up quickly (for now).
-						// if (dssType > -1 && files.size() == 2 &&
-						// (fileElementCount != dssType % 4)) { //CB added check
-						// for dssType arg being even or odd to reduce one file
-						// from processing
-						// // if (dssType > -1 && files.size() == 2 &&
-						// (fileElementCount == 0)) { //CB added check for
-						// dssType arg being even or odd to reduce one file from
-						// processing
-						// if (dssType > -1 && (fileElementCount == 1 && dssType
-						// % 4 == 1)) { //CB to reduce one file from processing
-						// (IFF dv and sv paths are separate)
-						// // fileElements.nextElement(); //skip the current
-						// file
-						// // factor *= 2;
-						// // continue;
-						// / } else {
-						// ++fileCount;
-						// // }
 						++fileCount;
 						theFile = DSS.open(fileElements.nextElement(),
 								_timewindow); // CB added
 						if (MainPanel.STOP_DSSVIEWER_METHODS) {
 							return false;
 						}
-						// CB TODO use isSelected and numberOfSelectedFiles and
-						// numberOfUnselectedFiles to calculate newpercentage
 						if (isSelectedFiles) {
 							percentFilesDone = 100
 									* ((float) fileCount - 1)
@@ -1280,31 +955,23 @@ public class DssViewer implements Outputer {
 						}
 						pathAccesses = 0;
 						for (int i = 0; i < _paths.size(); i++) { // CB _paths
-							// size is
-							// the
-							// number of
-							// variables
-							// for which
-							// data is
-							// to be
-							// retrieved.
 							thePath = _paths.get(i);
+
 							++pathAccesses;
-							// if (pathAccesses == 1222) //debugged - looked for
-							// SVs
-							// System.out.print("");
-							// only update the progress bar if the percentage
-							// that should be shown is different from that shown
 							if ((newPercentage = (int) (pathAccesses * factor + percentFilesDone)) > oldPercentage) {
 								oldPercentage = newPercentage;
 								// update Schematic's long-term average progress
 								// bar
-								SchematicUtils.getSchematic()
-										.setMonthlyProgress(newPercentage);
+								/*
+								 * SchematicUtils.getSchematic()
+								 * .setMonthlyProgress(newPercentage);
+								 */
 							} else if ((oldPercentage == 99)
 									&& (i == _paths.size() - 1)) {
-								SchematicUtils.getSchematic()
-										.setMonthlyProgress(100);
+								/*
+								 * SchematicUtils.getSchematic()
+								 * .setMonthlyProgress(100);
+								 */
 							}
 							boolean wasFoundInFile = false;
 							for (int k = 0; k < baseF.length; ++k) {
@@ -1334,46 +1001,26 @@ public class DssViewer implements Outputer {
 								int index1 = thePath.indexOf('/');
 								int index2 = thePath.indexOf('/', index1 + 1);
 								int index3 = thePath.indexOf('/', index2 + 1);
-								// if variable not in the dv file, look in the
-								// sv file for it
-								// if
-								// (_allVariableData[allDataIndex].get(thePath.substring(index2
-								// + 1, index3)) == null) { // NO, may need to
-								// overwrite
 								if (!baseF[k].equalsIgnoreCase(F)) {
 									thePath = thePath.replace(baseF[k], F); // CB
-									// TO
-									// DO:
-									// ALTER
-									// FOR
-									// WRIMS
-									// 2
 								}
 								try {
+									if (_allVariableData[allDataIndex]
+											.containsKey(thePath.substring(
+													index2 + 1, index3))) {
+										// System.out.println("Already read data for "+thePath);
+										continue;
+									}
 									dataSet = theFile.read(thePath); // CB TO
-									// DO:
-									// check
-									// the
-									// F-parts
-									// of
-									// the
-									// SV
-									// file
-									// paths
-									// units conversAtion CFS->TAF
 									dataSet = unitsConversion(dataSet, false);
 									_allVariableData[allDataIndex].put(thePath
 											.substring(index2 + 1, index3),
 											dataSet);
 									wasFoundInFile = true; // CB added
 								} catch (DSSFileException e) {
-									// path not found probably, message from
-									// elsewhere; continue with the rest so do
-									// nothing
 								}
 								if (wasFoundInFile) {
 									break;
-									// }
 								}
 							}
 						}
@@ -1384,14 +1031,13 @@ public class DssViewer implements Outputer {
 				e.printStackTrace();
 			}
 		}
-		long stopTime = System.currentTimeMillis();
-		if (isSelectedFiles) {
-			System.out.println("Selected Files monthly data loading time = "
-					+ (stopTime - startTime));
-		} else {
-			System.out.println("Unselected Files monthly data loading time = "
-					+ (stopTime - startTime));
-		}
+		/*
+		 * long stopTime = System.currentTimeMillis(); if (isSelectedFiles) {
+		 * System.out.println("Selected Files monthly data loading time = " +
+		 * (stopTime - startTime)); } else {
+		 * System.out.println("Unselected Files monthly data loading time = " +
+		 * (stopTime - startTime)); }
+		 */
 		return true;
 	}
 
@@ -1410,17 +1056,6 @@ public class DssViewer implements Outputer {
 	 */
 	public MonthlyTableFrame monthly(String title) {
 		MonthlyTableFrame frame = loadMonthlyTable(title, _annualTypeMode); // CB
-		// TODO:
-		// add
-		// checkbox
-		// check;
-		// replace
-		// boolean
-		// with
-		// constant;
-		// add
-		// contract
-		// year
 		frame.getTable().setupModel();
 		frame.showTable();
 		return frame;
@@ -1432,8 +1067,6 @@ public class DssViewer implements Outputer {
 	public HecDataTableFrame tabulate(String title) {
 		HecDataTableFrame frame = loadTable(title);
 		frame.showTable(); // CB added
-		// CB - added; needs listeners added? (extend or use G2dDialog and
-		// TableFrame?)
 		frame.setCommasState(getTableCommaPreference());
 		return frame;
 	}
@@ -1527,89 +1160,6 @@ public class DssViewer implements Outputer {
 		return title;
 	}
 
-	// CB G2dDialog loadG2d(String title, boolean isExceedence, boolean
-	// isAnnualTotal) {
-	/*
-	 * G2dDialog loadG2d_originalversion(String title, int type) { //CB String
-	 * thePath = null; //CB String keys[] = {"Base", "1", "2", "3"}; G2dDialog
-	 * thePlot = null;
-	 * 
-	 * DSSFile theFile = null; thePlot = Plot.newPlot(title); //CB String baseF
-	 * = (String) _Fparts.get("Base"); String[] baseF = null; //CB added
-	 * capability of more than one f-part for each key if (_Fparts.get("Base")
-	 * instanceof Vector) { baseF = new
-	 * String[((Vector<String>)_Fparts.get("Base")).size()]; for (int i = 0; i <
-	 * baseF.length; ++i) { baseF[i] =
-	 * (String)((Vector<String>)_Fparts.get("Base")).get(i); } } else { // it is
-	 * a String baseF = new String[1]; //CB 5/2008 bug fix - was missing
-	 * baseF[0] = (String)_Fparts.get("Base"); } String F = null; HecMath
-	 * baseSet = null; HecMath dataSet = null; try { for (int j = 0; j <
-	 * _keys.length; j++) { if (!_DssFiles.containsKey(_keys[j])) continue;
-	 * Vector<String> files = null; //CB added check for multiple files (Vector)
-	 * option if (_DssFiles.get(_keys[j]) instanceof String) { files = new
-	 * Vector<String>(); if
-	 * (!((String)_DssFiles.get(_keys[j])).trim().equals("")) //CB 5/2008 added
-	 * check to prevent empty String file name!
-	 * files.add((String)_DssFiles.get(_keys[j])); } else { if
-	 * (_DssFiles.get(_keys[j]) instanceof Vector) files =
-	 * (Vector<String>)_DssFiles.get(_keys[j]); //TO DO: check if instanceof? }
-	 * Enumeration<String> fileElements = files.elements(); //CB added int
-	 * fileElementCount = 0; //CB added while (fileElements.hasMoreElements()) {
-	 * //CB theFile = DSS.open((String) _DssFiles.get(keys[j]), _timewindow);
-	 * theFile = DSS.open((String) fileElements.nextElement(), _timewindow);
-	 * //CB fileElementCount++; //CB added for (int i = 0; i < _paths.size();
-	 * i++) { thePath = (String) _paths.get(i); boolean wasFoundInFile = false;
-	 * for (int k = 0; k < baseF.length; ++k) { //CB if (_Fparts.get(_keys[j])
-	 * instanceof String) { //CB added the check //
-	 * System.out.println("String fpart = " + (String) _Fparts.get(keys[j]));
-	 * //CB debugging F = (String) _Fparts.get(_keys[j]); } else { //CB added
-	 * section; it must be a Vector Enumeration<String> fpartenum =
-	 * ((Vector<String>)_Fparts.get(_keys[j])).elements(); int fpartenumCount =
-	 * 0; while (fpartenum.hasMoreElements()) { fpartenumCount++; if
-	 * (fileElementCount == fpartenumCount) { F =
-	 * (String)fpartenum.nextElement(); break; } } } //CB F = (String)
-	 * _Fparts.get(keys[j]); thePath = thePath.replace(baseF[k], F); try { if
-	 * (_mode.equals("Diff")) { if (_keys[j].equals("Base")) { baseSet =
-	 * theFile.read(thePath); continue; } dataSet = theFile.read(thePath);
-	 * wasFoundInFile = true; dataSet = dataSet.subtract(baseSet); } else {
-	 * dataSet = theFile.read(thePath); wasFoundInFile = true; }
-	 * 
-	 * // units conversion CFS->TAF //CB if (isAnnualTotal) { // to force the
-	 * units as TAF or not if (type == ANNUAL_TOTAL || type ==
-	 * ANNUAL_TOTAL_EXCEEDENCE) { //CB boolean forceTAF = true; dataSet =
-	 * unitsConversion(dataSet, forceTAF); } else { String [] parts =
-	 * thePath.split("/"); if (parts[3].toLowerCase().indexOf("storage") > -1)
-	 * dataSet = unitsConversion(dataSet, true); else dataSet =
-	 * unitsConversion(dataSet, false); }
-	 * 
-	 * //CB if (isAnnualTotal && isExceedence) { if (type ==
-	 * ANNUAL_TOTAL_EXCEEDENCE) { //CB if (_months.size() < 12)
-	 * thePlot.addData(getExceedence(getAnnualTotals(getMonthlyData(dataSet,
-	 * _months)))); else thePlot.addData(getExceedence(getAnnualTotals
-	 * ((TimeSeriesContainer)dataSet.getData())));
-	 * 
-	 * //CB } else if (isExceedence) { } else if (type == EXCEEDENCE) { //CB if
-	 * (_months.size() < 12)
-	 * thePlot.addData(getExceedence(getMonthlyData(dataSet, _months))); else
-	 * thePlot.addData(getExceedence((TimeSeriesContainer) dataSet.getData()));
-	 * 
-	 * //CB } else if (isAnnualTotal) { } else if (type == ANNUAL_TOTAL) { //CB
-	 * if (_months.size() < 12)
-	 * thePlot.addData(getAnnualTotals(getMonthlyData(dataSet, _months))); else
-	 * thePlot.addData(getAnnualTotals((TimeSeriesContainer)dataSet
-	 * .getData())); } else if (type == MONTHLY_AVERAGE) { //CB added section if
-	 * (_months.size() < 12)
-	 * thePlot.addData(getMonthlyAverages(getMonthlyData(dataSet, _months)));
-	 * else thePlot.addData(getMonthlyAverages((TimeSeriesContainer)dataSet
-	 * .getData())); } else { if (_months.size() < 12)
-	 * thePlot.addData(getMonthlyData(dataSet, _months)); else
-	 * thePlot.addData(dataSet.getData()); } // if (dataSet != null) break; }
-	 * catch (DSSFileException dssFE) { // Do nothing as we don't want one bad
-	 * path to kick us out. } if (wasFoundInFile) break; } } theFile.close(); }
-	 * } } catch (Exception e) { e.printStackTrace(); } return thePlot; }
-	 */
-	// CB G2dDialog loadG2d(String title, boolean isExceedence, boolean
-	// isAnnualTotal) {
 	G2dDialog loadG2d(String title, int type) { // CB
 		G2dDialog thePlot = Plot.newPlot(title);
 		// CB String thePath = null;
@@ -1781,149 +1331,17 @@ public class DssViewer implements Outputer {
 			e.printStackTrace();
 		}
 
-		// CB the following black was done to investigate turning off the lower
-		// part of the x-axis for Monthly Average plots
-		// (i.e., the year labels). After 3 hours, I gave up.
-		/*
-		 * Component[] components = thePlot.getComponents(); for (int i = 0; i <
-		 * components.length; ++i) { Object component = components[i]; if
-		 * (component instanceof JRootPane) { Component[] rpComponents =
-		 * ((JRootPane)component).getComponents(); for (int j = 0; j <
-		 * rpComponents.length; ++j) { Object rpComponent = rpComponents[j];
-		 * Component[] jpComponents = null; if (rpComponent instanceof JPanel) {
-		 * //or JLayeredPane jpComponents =
-		 * ((JPanel)rpComponent).getComponents(); } else if (rpComponent
-		 * instanceof JLayeredPane) { jpComponents =
-		 * ((JLayeredPane)rpComponent).getComponents(); } for (int k = 0; k <
-		 * jpComponents.length; ++k) { Object jpComponent = jpComponents[k]; if
-		 * (jpComponent instanceof JPanel) { Component[] jp2Components =
-		 * ((JPanel)jpComponent).getComponents(); for (int l = 0; l <
-		 * jp2Components.length; ++l) { Object jp2Component = jp2Components[l];
-		 * if (jp2Component instanceof G2dPanel) { Component[] g2dpComponents =
-		 * ((JPanel)jp2Component).getComponents(); for (int m = 0; m <
-		 * g2dpComponents.length; ++m) { Object g2dpComponent =
-		 * g2dpComponents[m]; System.out.println("g2dpComponent class = " +
-		 * g2dpComponent.getClass()); // if (g2dpComponent instanceof
-		 * hec.gfx2d.AxisLabel) { //all 3 are empty Strings if (g2dpComponent
-		 * instanceof hec.gfx2d.AxisTics) { // hec.gfx2d.G2dSpacer //
-		 * hec.gfx2d.AxisTics // hec.gfx2d.AxisScrollbar // hec.gfx2d.Viewport
-		 * // hec.gfx2d.TitlePanel // hec.gfx2d.ViewportToolbar Component[]
-		 * atComponents = ((hec.gfx2d.AxisTics)g2dpComponent).getComponents();
-		 * //0 components Object axis =
-		 * ((hec.gfx2d.AxisTics)g2dpComponent).getAxis(); axis = null; } else if
-		 * (g2dpComponent instanceof hec.gfx2d.Viewport) { Object viewport =
-		 * (hec.gfx2d.Viewport)g2dpComponent; System.out.print(""); } else if
-		 * (g2dpComponent instanceof hec.gfx2d.TitlePanel) { Object titlePanel =
-		 * (hec.gfx2d.TitlePanel)g2dpComponent; System.out.print(""); } } } } }
-		 * } } } }
-		 */
-		// thePlot.setEditable(true); //no effect?
-		// thePlot.setXAxisColor(Color.BLUE); //no effect
 		return thePlot;
 	}
 
 	// CB added
-	/*
-	 * TableFrame loadTable_originalversion(String title) { TableFrame theTable
-	 * = Tabulate.newTable(title); //No effect on title
-	 * theTable.setTableTitleText(title); //No effect on title; puts title just
-	 * below menubar
-	 * 
-	 * String thePath = null; //CB String keys[] = { "Base", "1", "2", "3" };
-	 * DSSFile theFile = null; //CB String baseF = (String) _Fparts.get("Base");
-	 * String[] baseF = null; //CB added capability of more than one fpart for
-	 * each key if (_Fparts.get("Base") instanceof Vector) { baseF = new
-	 * String[((Vector)_Fparts.get("Base")).size()]; for (int i = 0; i <
-	 * baseF.length; ++i) { baseF[i] =
-	 * (String)((Vector)_Fparts.get("Base")).get(i); } } else { // it is a
-	 * String baseF = new String[1]; //CB 5/2008 bug fix - was missing baseF[0]
-	 * = (String)_Fparts.get("Base"); } String F = null; HecMath baseSet = null;
-	 * HecMath dataSet = null;
-	 * 
-	 * try { for (int j = 0; j < _keys.length; j++) { if
-	 * (!_DssFiles.containsKey(_keys[j])) continue; //CB _DssFiles contains the
-	 * number of files that are checked! Vector<String> files = null; //CB added
-	 * check for multiple files (Vector) option if (_DssFiles.get(_keys[j])
-	 * instanceof String) { files = new Vector<String>(); if
-	 * (!((String)_DssFiles.get(_keys[j])).trim().equals("")) //CB 5/2008 added
-	 * check to prevent empty String file name!
-	 * files.add((String)_DssFiles.get(_keys[j])); } else { if
-	 * (_DssFiles.get(_keys[j]) instanceof Vector) files =
-	 * (Vector<String>)_DssFiles.get(_keys[j]); //TO DO: check if instanceof? }
-	 * Enumeration<String> fileElements = files.elements(); //CB added int
-	 * fileElementCount = 0; //CB added while (fileElements.hasMoreElements()) {
-	 * //CB theFile = DSS.open((String) _DssFiles.get(keys[j]), _timewindow);
-	 * theFile = DSS.open((String) fileElements.nextElement(), _timewindow);
-	 * //CB fileElementCount++; //CB added
-	 * 
-	 * //CB added block for derived timeseries addition Vector<Object>
-	 * pathsAndDTSs = null; if (_paths != null) { pathsAndDTSs = new
-	 * Vector<Object>(); pathsAndDTSs.addAll(_paths); if (_dtsWrappers != null)
-	 * { pathsAndDTSs.addAll(_dtsWrappers); } } else { if (_dtsWrappers != null)
-	 * { pathsAndDTSs = new Vector<Object>(); pathsAndDTSs.addAll(_dtsWrappers);
-	 * } } //CB for (int i = 0; i < _paths.size(); i++) { for (int i = 0; i <
-	 * pathsAndDTSs.size(); i++) { //CB thePath = (String) _paths.get(i);
-	 * boolean wasFoundInFile = false; for (int k = 0; k < baseF.length; ++k) {
-	 * //CB if (_Fparts.get(_keys[j]) instanceof String) { //CB added the check
-	 * // System.out.println("String fpart = " + (String) _Fparts.get(keys[j]));
-	 * //CB debugging F = (String) _Fparts.get(_keys[j]); } else { //CB added
-	 * section; it must be a Vector Enumeration<String> fpartenum =
-	 * ((Vector<String>)_Fparts.get(_keys[j])).elements(); int fpartenumCount =
-	 * 0; while (fpartenum.hasMoreElements()) { fpartenumCount++; if
-	 * (fileElementCount == fpartenumCount) { F =
-	 * (String)fpartenum.nextElement(); break; } } } //CB F = (String)
-	 * _Fparts.get(keys[j]); try { //CB added to prevent exit after one bad
-	 * path. Then moved to here from below if (pathsAndDTSs.get(i) instanceof
-	 * String) { thePath = (String) _paths.get(i); thePath =
-	 * thePath.replace(baseF[k], F); dataSet = theFile.read(thePath); //CB moved
-	 * to here from below // units conversion CFS->TAF CB moved here from below
-	 * even though it required less calcs there String [] parts =
-	 * thePath.split("/");
-	 * //NO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! if
-	 * (parts[3].toLowerCase().indexOf("storage") > -1) dataSet =
-	 * unitsConversion(dataSet, true); else dataSet = unitsConversion(dataSet,
-	 * false); } else if (pathsAndDTSs.get(i) instanceof DtsWrapper) { dataSet =
-	 * calculateDTSDataset((DtsWrapper)pathsAndDTSs.get(i), theFile, baseF[k],
-	 * F); }
-	 * 
-	 * //CB try { //CB added to prevent exit after one bad path. //CB dataSet =
-	 * theFile.read(thePath); if (_mode.equals("Diff")) { if
-	 * (_keys[j].equals("Base")) { //CB baseSet = theFile.read(thePath); baseSet
-	 * = dataSet; //Cb replaced the above continue; } //CB dataSet =
-	 * theFile.read(thePath); dataSet = dataSet.subtract(baseSet);
-	 * wasFoundInFile = true; //CB added } else { //CB dataSet =
-	 * theFile.read(thePath); wasFoundInFile = true; //CB added }
-	 * 
-	 * // units conversion CFS->TAF // moved up units block even though requires
-	 * less calcs. here // String [] parts = thePath.split("/");
-	 * //NO!!!!!!!!!!!!
-	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	 * !!!!!!!!!!!!!!!!! // if (parts[3].toLowerCase().indexOf("storage") > -1)
-	 * // dataSet = unitsConversion(dataSet, true); // else // dataSet =
-	 * unitsConversion(dataSet, false);
-	 * 
-	 * if (_months.size() < 12) theTable.addData(getMonthlyData(dataSet,
-	 * _months)); else theTable.addData(dataSet.getData()); } catch
-	 * (DSSFileException dssFE) { // path not found probably - message given
-	 * from elsewhere // we want to continue with the rest so do nothing } // if
-	 * (wasFoundInFile) break; } } theFile.close(); } } } catch (Exception e) {
-	 * e.printStackTrace(); } return theTable; }
-	 */
 
 	// CB added
 	HecDataTableFrame loadTable(String title) {
-		HecDataTableFrame theTable = Tabulate.newTable(title); // No
-		// effect
-		// on
-		// title
-		theTable.setTableTitleText(title); // No effect on title; puts title
-		// just below menubar
-		// CB String thePath = null;
-		// CB String keys[] = { "Base", "1", "2", "3" };
+		HecDataTableFrame theTable = Tabulate.newTable(title);
+		theTable.setTableTitleText(title);
 		DSSFile theFile = null;
-		Vector<DSSFile> theFilePair = null; // CB added
-		// CB String baseF = (String) _Fparts.get("Base");
+		Vector<DSSFile> theFilePair = null;
 		String[] baseF = null; // CB added capability of more than one fpart for
 		// each key
 		// CB if (_Fparts.get("Base") instanceof Vector) {
@@ -1960,11 +1378,7 @@ public class DssViewer implements Outputer {
 					}
 				} else {
 					if (_DssFiles.get(_keys[j]) instanceof Vector) {
-						files = (Vector<String>) _DssFiles.get(_keys[j]); // TO
-						// DO:
-						// check
-						// if
-						// instanceof?
+						files = (Vector<String>) _DssFiles.get(_keys[j]);
 					}
 				}
 				Enumeration<String> fileElements = files.elements(); // CB added
@@ -2012,30 +1426,16 @@ public class DssViewer implements Outputer {
 								}
 							}
 						}
-						// dataSet = retrieveDataSet(pathsAndDTSs.get(i),
-						// baseF[k], F, theFile, _keys[j]); //CB added TODO
-						// study why DIFFERENCE HERE!!!!!!!!
+
 						dataSet = retrieveDataSet(pathsAndDTSs.get(i),
-								baseF[k], F, theFilePair, _keys[j]); // CB added
-						// TODO
-						// study
-						// why
-						// DIFFERENCE
-						// HERE!!!!!!!!
+								baseF[k], F, theFilePair, _keys[j]);
 						if (dataSet != null) {
 							if (!isDiff || ((j > 0) && isDiff)) { // CB added
 								if (_months.size() < 12) {
 									theTable.addData(getMonthlyData(dataSet,
 											_months));
 								} else {
-									theTable.addData(dataSet.getData()); // CB
-									// TODO
-									// Reservoir
-									// Non-recov
-									// spills
-									// had
-									// NPE
-									// here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+									theTable.addData(dataSet.getData());
 								}
 							}
 							break;
@@ -2055,99 +1455,6 @@ public class DssViewer implements Outputer {
 		}
 		return theTable;
 	}
-
-	// CB added
-	/*
-	 * MonthlyTableFrame loadMonthlyTable_originalversion(String title, boolean
-	 * isWateryear) { String thePath = null; //CB String keys[] = {"Base", "1",
-	 * "2", "3" }; MonthlyTableFrame theTable = null;
-	 * 
-	 * try { DSSFile theFile = null; theTable = new MonthlyTableFrame(this);
-	 * //CB String baseF = (String) _Fparts.get("Base"); String[] baseF = null;
-	 * //CB added capability of more than one fpart for each key if
-	 * (_Fparts.get("Base") instanceof Vector) { baseF = new
-	 * String[((Vector)_Fparts.get("Base")).size()]; for (int i = 0; i <
-	 * baseF.length; ++i) { baseF[i] =
-	 * (String)((Vector)_Fparts.get("Base")).get(i); } } else { // it is a
-	 * String baseF = new String[1]; //CB 5/2008 bug fix - was missing baseF[0]
-	 * = (String)_Fparts.get("Base"); } String F = null; // HecMath[] baseSet =
-	 * new HecMath[_paths.size()]; // HecMath[] dataSet = new
-	 * HecMath[_paths.size()]; HecMath baseSet = null; HecMath dataSet = null;
-	 * 
-	 * for (int j = 0; j < _keys.length; j++) { if
-	 * (!_DssFiles.containsKey(_keys[j])) continue; //CB _DssFiles contains the
-	 * number of files that are checked! Vector<String> files = null; //CB added
-	 * check for multiple files (Vector) option if (_DssFiles.get(_keys[j])
-	 * instanceof String) { files = new Vector<String>(); if
-	 * (!((String)_DssFiles.get(_keys[j])).trim().equals("")) //CB 5/2008 added
-	 * check to prevent empty String file name!
-	 * files.add((String)_DssFiles.get(_keys[j])); } else { if
-	 * (_DssFiles.get(_keys[j]) instanceof Vector) files =
-	 * (Vector<String>)_DssFiles.get(_keys[j]); //TO DO: check if instanceof? }
-	 * Enumeration<String> fileElements = files.elements(); //CB added int
-	 * fileElementCount = 0; //CB added while (fileElements.hasMoreElements()) {
-	 * //CB theFile = DSS.open((String) _DssFiles.get(keys[j]), _timewindow);
-	 * theFile = DSS.open((String) fileElements.nextElement(), _timewindow);
-	 * //CB fileElementCount++; //CB added
-	 * 
-	 * //CB added block for derived timeseries addition Vector<Object>
-	 * pathsAndDTSs = null; if (_paths != null) { pathsAndDTSs = new
-	 * Vector<Object>(); pathsAndDTSs.addAll(_paths); if (_dtsWrappers != null)
-	 * { pathsAndDTSs.addAll(_dtsWrappers); } } else { if (_dtsWrappers != null)
-	 * { pathsAndDTSs = new Vector<Object>(); pathsAndDTSs.addAll(_dtsWrappers);
-	 * } } //CB for (int i = 0; i < _paths.size(); i++) { for (int i = 0; i <
-	 * pathsAndDTSs.size(); i++) { //CB thePath = (String) _paths.get(i);
-	 * boolean wasFoundInFile = false; for (int k = 0; k < baseF.length; ++k) {
-	 * if (_Fparts.get(_keys[j]) instanceof String) { //CB added the check F =
-	 * (String) _Fparts.get(_keys[j]); } else { //CB added section - it must be
-	 * a Vector, Victor Enumeration<String> fpartenum =
-	 * ((Vector<String>)_Fparts.get(_keys[j])).elements(); int fpartenumCount =
-	 * 0; while (fpartenum.hasMoreElements()) { fpartenumCount++; if
-	 * (fileElementCount == fpartenumCount) { F =
-	 * (String)fpartenum.nextElement(); break; } } } //CB F = (String)
-	 * _Fparts.get(keys[j]); if (F == null) continue; try { //CB added to
-	 * prevent exit after one bad path. Then moved to here from below if
-	 * (pathsAndDTSs.get(i) instanceof String) { thePath = (String)
-	 * _paths.get(i); if (!baseF[k].equalsIgnoreCase(F)) thePath =
-	 * thePath.replace(baseF[k], F); //CB TO DO: ALTER FOR WRIMS 2 dataSet =
-	 * theFile.read(thePath); //CB moved to here from below // units conversion
-	 * CFS->TAF CB moved here from below even though it required less calcs
-	 * there String [] parts = thePath.split("/"); if
-	 * (parts[3].toLowerCase().indexOf("storage") > -1) dataSet =
-	 * unitsConversion(dataSet, true); else dataSet = unitsConversion(dataSet,
-	 * false); } else if (pathsAndDTSs.get(i) instanceof DtsWrapper) { dataSet =
-	 * calculateDTSDataset((DtsWrapper)pathsAndDTSs.get(i), theFile, baseF[k],
-	 * F); }
-	 * 
-	 * if (_mode.equals("Diff")) { if (_keys[j].equals("Base")) { //CB baseSet =
-	 * theFile.read(thePath); baseSet = dataSet; //Cb replaced the above
-	 * continue; } //CB dataSet = theFile.read(thePath); dataSet =
-	 * dataSet.subtract(baseSet); wasFoundInFile = true; //CB added } else {
-	 * //CB dataSet = theFile.read(thePath); wasFoundInFile = true; //CB added }
-	 * 
-	 * // units conversion CFS->TAF // moved up units block even though requires
-	 * less calcs. here // String [] parts = thePath.split("/");
-	 * //NO!!!!!!!!!!!!
-	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	 * !!!!!!!!!!!!!!!!! // if (parts[3].toLowerCase().indexOf("storage") > -1)
-	 * // dataSet = unitsConversion(dataSet, true); // else // dataSet =
-	 * unitsConversion(dataSet, false);
-	 * 
-	 * //CB allow??? if (_months.size() < 12) //CB
-	 * theTable.addData(getMonthlyData(dataSet, _months)); //CB else //CB
-	 * theTable.addData(dataSet.getData()); // TO DO: check out the return value
-	 * "status" if (isWateryear) // theTable.addData(dataSet[i].getData(), 0);
-	 * // TO DO: check out the return value "status"
-	 * theTable.addData(dataSet.getData(), 0); // TO DO: check out the return
-	 * value "status" else // theTable.addData(dataSet[i].getData(), 3); // TO
-	 * DO: calendar year theTable.addData(dataSet.getData(), 3); // TO DO:
-	 * calendar year } catch (DSSFileException e) { //
-	 * System.out.println(thePath + " is NOT in file: " +
-	 * _DssFiles.get(keys[j])); // path not found probably - message given from
-	 * elsewhere // we want to continue with the rest so do nothing } if
-	 * (wasFoundInFile) break; } } theFile.close(); } } } catch (Exception e) {
-	 * e.printStackTrace(); } return theTable; }
-	 */
 
 	// CB added
 	MonthlyTableFrame loadMonthlyTable(String title, int annualType) {
@@ -2297,20 +1604,6 @@ public class DssViewer implements Outputer {
 		return theTable;
 	}
 
-	/**
-	 * CB added to do the work common to all three output types.
-	 * 
-	 * @param pathOrDTS
-	 * @param baseF
-	 * @param F
-	 * @param file
-	 * @param key
-	 * @return
-	 */
-	// CB private HecMath retrieveDataSet(Object pathOrDTS, String baseF, String
-	// F, DSSFile file, String key) {
-	// private HecMath retrieveDataSet(Object pathOrDTS, String baseF, String F,
-	// DSSFile file, int key) {
 	private HecMath retrieveDataSet(Object pathOrDTS, String baseF, String F,
 			Vector<DSSFile> files, int key) {
 		// HecMath baseSet = null;
@@ -2363,89 +1656,6 @@ public class DssViewer implements Outputer {
 		return dataSet;
 	}
 
-	/**
-	 * CB added.
-	 * 
-	 * @param dtsWrapper
-	 * @param file
-	 * @param baseFpart
-	 * @param fPart
-	 * @return
-	 */
-	/*
-	 * private HecMath calculateDTSDataset_oldandwrong(DTSWrapper dtsWrapper,
-	 * DSSFile file, String baseFpart, String fPart) { HecMath totalDataSet =
-	 * null; DerivedTimeSeries dts = dtsWrapper.getDerivedTimeSeries();
-	 * Hashtable<String, String> varnameToPathMap =
-	 * dtsWrapper.getVariableNameToDssPathMap(); for (int i = 0; i <
-	 * dts.getNumberOfDataReferences(); ++i) { HecMath dataSet = null; try { if
-	 * (dts.getBPartAt(i) != null && !dts.getBPartAt(i).trim().equals("")) {
-	 * //TODO: test when row has DTS (bpart may be blank?)!!!! String path =
-	 * varnameToPathMap.get((String)dts.getBPartAt(i)); // TODO: may be null!
-	 * System.out.println(dts.getBPartAt(i)); try { if (path == null) {
-	 * JOptionPane.showMessageDialog(null, "path, " + path +
-	 * " is null for dts, " + dtsWrapper.getDTSName(),
-	 * "Null Path - DTS not calculated", JOptionPane.ERROR_MESSAGE); return
-	 * null; } path = path.replace(baseFpart, fPart); //CB TODO: add check for
-	 * sameness first dataSet = file.read(path); // if (i ==
-	 * dts.getNumberOfDataReferences() - 1) { // units conversion CFS->TAF
-	 * String [] parts = path.split("/"); if
-	 * (parts[3].toLowerCase().indexOf("storage") > -1) dataSet =
-	 * unitsConversion(dataSet, true); else dataSet = unitsConversion(dataSet,
-	 * false); // } } catch (HecMathException hme) { hme.printStackTrace();
-	 * System.out.println("Error calculating dataset for derived timeseries, " +
-	 * dts.getName()); } } else { //row must contain a DerivedTimeSeries instead
-	 * if (dts.getDTSNameAt(i) != null) { //use dtsList Vector<DTSWrapper>
-	 * dtsList = dtsWrapper.getDTSList(); Enumeration<DTSWrapper> dtsWrappers =
-	 * dtsList.elements(); while (dtsWrappers.hasMoreElements()) { DTSWrapper
-	 * wrapper = dtsWrappers.nextElement(); if (dataSet == null) dataSet =
-	 * calculateDTSDataset(wrapper, file, baseFpart, fPart); // grabs dataset
-	 * for each line in DTS table (ops handled in called method) else { //
-	 * HecMath dataSet2 = null; // temp?????? // dataSet2 =
-	 * calculateDTSDataset(wrapper, file, baseFpart, fPart); // temp??????
-	 * dataSet = dataSet.add(calculateDTSDataset(wrapper, file, baseFpart,
-	 * fPart)); // grabs and adds dataset for each line in DTS table (ops
-	 * handled in called method) } } // DTSWrapper dtsWrapper2 = new
-	 * DTSWrapper(dts.getDTSNameAt(i), // new
-	 * DerivedTimeSeries(dts.getDTSNameAt(i)), varnameToPathMap); //TODO:
-	 * calculateDTSDataset must handle unit conversion for "storage" variables!
-	 * // dataSet = calculateDTSDataset(dtsWrapper2, file, baseFpart, fPart); }
-	 * } if (i == 0) { // same as if (totalDataSet == null) totalDataSet =
-	 * dataSet; } String operator = dts.getOperationAt(i); char op =
-	 * operator.trim().charAt(0); switch (op) { case '+': if (i != 0)
-	 * totalDataSet = totalDataSet.add(dataSet); break; case '-': if (i != 0)
-	 * totalDataSet = totalDataSet.subtract(dataSet); else totalDataSet =
-	 * totalDataSet.inverse(); //TODO: check if correct!!!!!!!!!!!!! break; case
-	 * '*': if (i != 0) totalDataSet = totalDataSet.multiply(dataSet); else
-	 * JOptionPane.showMessageDialog(null, "Operator for " + dts.getBPartAt(i) +
-	 * " row must be + or -", "Error in First Row of DerivedTimeSeries",
-	 * JOptionPane.ERROR_MESSAGE); break; case '/': if (i != 0) totalDataSet =
-	 * totalDataSet.divide(dataSet); else JOptionPane.showMessageDialog(null,
-	 * "Operator for " + dts.getBPartAt(i) + " row must be + or -",
-	 * "Error in First Row of DerivedTimeSeries", JOptionPane.ERROR_MESSAGE);
-	 * break; default: System.out.println("Operator, " + op +
-	 * " is not allowed at this time"); } } catch (HecMathException hme) {
-	 * hme.printStackTrace();
-	 * System.out.println("Error calculating dataset for derived timeseries, " +
-	 * dts.getName()); }
-	 * 
-	 * } try { totalDataSet.setLocation(dtsWrapper.getDTSName()); } catch
-	 * (HecMathException hme) { hme.printStackTrace();
-	 * System.out.println("Error renaming dataset to DTS name"); } return
-	 * totalDataSet; }
-	 */
-
-	/**
-	 * CB added.
-	 * 
-	 * @param dtsWrapper
-	 * @param file
-	 * @param baseFpart
-	 * @param fPart
-	 * @return
-	 */
-	// CB private HecMath calculateDTSDataset(DTSWrapper dtsWrapper, DSSFile
-	// file, String baseFpart,
 	private HecMath calculateDTSDataset(DTSWrapper dtsWrapper,
 			Vector<DSSFile> files, String baseFpart, String fPart) {
 		HecMath totalDataSet = null;
@@ -2518,35 +1728,14 @@ public class DssViewer implements Outputer {
 							DTSWrapper wrapper = dtsWrappers.nextElement();
 							if (wrapper.getDTSName()
 									.equals(dts.getDTSNameAt(i))) {
-								// if (dataSet == null)
-								// dataSet = calculateDTSDataset(wrapper, file,
-								// baseFpart, fPart); // grabs dataset for each
-								// line in DTS table (ops handled in called
-								// method)
+
 								dataSet = calculateDTSDataset(wrapper, files,
-										baseFpart, fPart); // grabs dataset for
-								// each line in DTS
-								// table (ops
-								// handled in called
-								// method)
-								// else {
-								// dataSet =
-								// dataSet.add(calculateDTSDataset(wrapper,
-								// file, baseFpart, fPart)); // grabs and adds
-								// dataset for each line in DTS table (ops
-								// handled in called method)
+										baseFpart, fPart);
 								// }
 								break;
 							}
 						}
-						// DTSWrapper dtsWrapper2 = new
-						// DTSWrapper(dts.getDTSNameAt(i),
-						// new DerivedTimeSeries(dts.getDTSNameAt(i)),
-						// varnameToPathMap);
-						// TODO: calculateDTSDataset must handle unit conversion
-						// for "storage" variables!
-						// dataSet = calculateDTSDataset(dtsWrapper2, file,
-						// baseFpart, fPart);
+
 					}
 				}
 				boolean isFirstNonNullSet = false;
@@ -3306,7 +2495,7 @@ public class DssViewer implements Outputer {
 		return _DssFiles;
 	}
 
-	void setDssFiles(HashMap<Integer, Object> dssFiles) {
+	public void setDssFiles(HashMap<Integer, Object> dssFiles) {
 		_DssFiles = dssFiles;
 	}
 
@@ -3314,7 +2503,7 @@ public class DssViewer implements Outputer {
 		return _unselectedDssFiles;
 	}
 
-	void setUncheckedDssFiles(HashMap<Integer, Object> unselectedDssFiles) {
+	public void setUncheckedDssFiles(HashMap<Integer, Object> unselectedDssFiles) {
 		_unselectedDssFiles = unselectedDssFiles;
 	}
 

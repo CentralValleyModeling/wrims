@@ -8,12 +8,12 @@ import hec.heclib.util.HecTime;
 
 import java.util.Vector;
 
-class CondensedReference {
+public class CondensedReference {
 
 	public String nominalPathname;
 	public Vector pathnameList;
 
-	CondensedReference() {
+	public CondensedReference() {
 		nominalPathname = null;
 		pathnameList = null;
 	}
@@ -52,6 +52,10 @@ class CondensedReference {
 	}
 
 	public String toString() {
+		return getNominalPathname();
+	}
+
+	public String getNominalPathname() {
 		if (nominalPathname == null) {
 			return "";
 		} else {
