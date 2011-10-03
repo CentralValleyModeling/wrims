@@ -101,7 +101,7 @@ public class ControllerDebug extends Thread {
 		cd.endMonth=9;
 		cd.endDay=30;
         cd.solverName="XA";
-        cd.csvFolderPath="csv";
+        FilePaths.csvFolderName="csv";
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
@@ -134,7 +134,7 @@ public class ControllerDebug extends Thread {
 		cd.endMonth=Integer.parseInt(args[13]);
 		cd.endDay=Integer.parseInt(args[14]);
 		cd.solverName=args[15];
-		cd.csvFolderPath = args[16];
+		FilePaths.csvFolderName = args[16];
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
@@ -201,7 +201,7 @@ public class ControllerDebug extends Thread {
 		Calendar cal = Calendar.getInstance();
 		System.out.println("Before Parsser: "+cal.getTimeInMillis());
 		
-		String csvFolderPath = ControlData.csvFolderPath;
+		String csvFolderPath = FilePaths.csvFolderName;
 		String inputFilePath = FilePaths.fullMainPath;
 		String logFilePath = csvFolderPath+".log";
 		
