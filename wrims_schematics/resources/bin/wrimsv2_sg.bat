@@ -64,7 +64,7 @@ set APPJARS=%Vista_Lib%\vista.jar;%APPJARS%
 :-----------------:
 : schematic jars  :
 :-----------------:
-set SCHJARS=%JARDIR%\JGo.jar;%JARDIR%\JGoSVG.jar;%JARDIR%\wrimsv2_SG.jar
+set SCHJARS=%JARDIR%\JDiagram.jar;%JARDIR%\wrimsv2_SG.jar
 :------------:
 : class path :
 :------------:
@@ -74,7 +74,7 @@ rem ###############
 rem starting wrims schematic
 rem ###############
 :start
-"%wrims_home%/jre6/bin/java" -mx512m  -Djava.library.path="%JNILIB%" %CLASSPATH%  wrims.schematic.MainFrame %1%
+"%wrims_home%/jre6/bin/java" -mx512m  -Djava.library.path="%JNILIB%" %CLASSPATH%  wrims.schematic.MainFrame "%wrims_home%"
 :end
 endlocal 
 rem 
