@@ -56,7 +56,7 @@ public class SchematicViewer extends JPanel {
 	private Overview overview;
 	private ElementTask clickTask;
 	private boolean enableClick;
-	private float zoomFactor = 1.25f;
+	private float zoomFactor = 1.15f;
 	protected Rectangle2D.Float lastVisibleRect;
 	private MainFrame schematic;
 	private boolean showValueBoxes;

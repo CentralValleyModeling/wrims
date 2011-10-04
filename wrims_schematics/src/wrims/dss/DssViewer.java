@@ -1653,6 +1653,15 @@ public class DssViewer implements Outputer {
 				}
 			}
 		}
+		try {
+			String path = dataSet.getPath();
+			String fpart = path.split("/")[6] + " :: "+(key== 0 ? "BASE" : "ALT "+key) + (_mode.equals("Diff") ? " - BASE" : "");
+			dataSet.setVersion(fpart);
+		} catch (HecMathException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// finally modify fparts to indicate base vs alt ? reference
 		return dataSet;
 	}
 

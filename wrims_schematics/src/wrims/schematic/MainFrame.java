@@ -24,6 +24,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
@@ -65,6 +66,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileFilter;
 
+import com.mindfusion.diagramming.XmlException;
+
 import vista.gui.VistaUtils;
 import wrims.dss.DssViewer;
 import wrims.schematic.element.Element;
@@ -81,7 +84,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		this("", false);
 	}
 
-	public MainFrame(String mainDir, boolean isStandalone) {
+	public MainFrame(final String mainDir, boolean isStandalone) {
 		HecDSSFileAccess.setMessageLevel(_messageLevel);
 
 		// clearRecentFilePreferences(); // CB added for development phase only;
@@ -91,7 +94,19 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 			mainFrame = new JFrame();
 			_viewer = new SchematicViewer();
 			_viewer.setSchematic(this);
-			_viewer.load(mainDir + "/wrims/schematic/CS3_NetworkSchematic.xml");
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						long ti=System.currentTimeMillis();
+						_viewer.load(mainDir + "/wrims/schematic/CS3_NetworkSchematic.xml");
+						System.out.println("Time to load schematic: "+(System.currentTimeMillis()-ti));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}, "Schematic Loader").start();
 			_viewer.setClickTask(new ElementTask() {
 
 				@Override
@@ -1149,161 +1164,8 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		button.setToolTipText("Monthly Table"); // CB added
 		button = toolBar.add(ExceedanceAction);
 		button.setToolTipText("Exceedance Plot");
-		// CB added progress bar section
-		GridBagConstraints gc = new GridBagConstraints();
-		JPanel progressBarPanel = new JPanel(new GridBagLayout());
-		gc.anchor = GridBagConstraints.CENTER;
-		gc.weightx = 0.0;
-		gc.ipadx = 5;
-		gc.weighty = 0;
-		gc.fill = GridBagConstraints.NONE;
-		progressBarPanel.add(_monthlyProgressLabel, gc);
-		gc.fill = GridBagConstraints.HORIZONTAL;
-		gc.weightx = 1.0;
-		gc.ipadx = 50;
-		progressBarPanel.add(_monthlyProgressBar, gc);
-		gc.fill = GridBagConstraints.NONE;
-		gc.ipadx = 0;
-		gc.weightx = 0.0;
-		progressBarPanel.add(new Label(" "), gc);
-
-		gc.anchor = GridBagConstraints.CENTER;
-		gc.weightx = 0.0;
-		gc.ipadx = 5;
-		gc.weighty = 0;
-		gc.fill = GridBagConstraints.NONE;
-		progressBarPanel.add(_longtermProgressLabel, gc);
-		gc.fill = GridBagConstraints.HORIZONTAL;
-		gc.weightx = 1.0;
-		gc.ipadx = 50;
-		progressBarPanel.add(_longtermProgressBar, gc);
-		gc.fill = GridBagConstraints.NONE;
-		gc.ipadx = 0;
-		gc.weightx = 0.0;
-		progressBarPanel.add(new Label("  "), gc);
-		setProgressVisibility(false);
 
 		toolBar.addSeparator();
-		toolBar.add(progressBarPanel, "West");
-
-		return toolBar;
-	}
-
-	protected JToolBar initToolbar2() { // CB renamed
-		JToolBar toolBar = new JToolBar();
-		toolBar.setAlignmentX(0);
-		JPanel dssPeriodControlPanel = new JPanel();
-		dssPeriodControlPanel.setLayout(new GridBagLayout());
-		GridBagConstraints gc = new GridBagConstraints();
-
-		gc.anchor = GridBagConstraints.CENTER;
-		gc.weightx = 0.0;
-		gc.ipadx = 5;
-		gc.weighty = 0;
-		gc.fill = GridBagConstraints.NONE;
-
-		dssPeriodControlPanel.add(new JLabel("Units:"), gc);
-		ButtonGroup g = new ButtonGroup();
-		g.add(_TAFButton);
-		g.add(_CFSButton);
-		_CFSButton.setSelected(true);
-		dssPeriodControlPanel.add(_TAFButton);
-		dssPeriodControlPanel.add(new JLabel("TAF"));
-		dssPeriodControlPanel.add(_CFSButton);
-		dssPeriodControlPanel.add(new JLabel("CFS"));
-
-		/**
-		 * CB added.
-		 */
-		_TAFButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				_DssFrame.mainPanel.getMessagePanel().updateUnitsButtons(
-						MainFrame.TAF);
-				// update the value boxes IFF a selection exists
-				if (_dateBox.getSelectedIndex() != 0) {
-					// String date =
-					// ((ComboItem)_dateBox.getSelectedItem()).toString();
-					// updateValues(date);
-					updateValues();
-				}
-			}
-		});
-		/**
-		 * CB added.
-		 */
-		_CFSButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				_DssFrame.mainPanel.getMessagePanel().updateUnitsButtons(
-						MainFrame.CFS);
-				// update the value boxes IFF a selection exists
-				if (_dateBox.getSelectedIndex() != 0) {
-					// String date =
-					// ((ComboItem)_dateBox.getSelectedItem()).toString();
-					// updateValues(date);
-					updateValues();
-				}
-			}
-		});
-
-		JLabel showValueBoxesLabel = new JLabel("Show Values");
-		_showValueBoxesCheckbox = new JCheckBox();
-		_showValueBoxesCheckbox.setSelected(true);
-		getCurrentView().setShowValueBoxes(true);
-		_showValueBoxesCheckbox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				if (event.getSource() instanceof JCheckBox) {
-					boolean isVisible = ((JCheckBox) event.getSource())
-							.isSelected();
-					getCurrentView().setShowValueBoxes(isVisible);
-				}
-			}
-		});
-
-		String location = "D:/WrimsSchematic/wrims/schematic/images";
-		_forward1PeriodButton = new JButton(new ImageIcon(location
-				+ "/forward.gif"));
-		_forward1PeriodButton.setAction(Forward1Action);
-		_back1PeriodButton = new JButton(new ImageIcon(location + "/back.gif"));
-		_back1PeriodButton.setAction(Back1Action);
-		_forward1BlockButton = new JButton(new ImageIcon(location
-				+ "/fastforward.gif"));
-		_forward1BlockButton.setAction(ForwardBlockAction);
-		_back1BlockButton = new JButton(new ImageIcon(location
-				+ "/fastback.gif"));
-		_back1BlockButton.setAction(BackBlockAction);
-
-		dssPeriodControlPanel.add(new JLabel("        "), gc);
-		dssPeriodControlPanel.add(showValueBoxesLabel, gc);
-		dssPeriodControlPanel.add(_showValueBoxesCheckbox, gc);
-		dssPeriodControlPanel.add(new JLabel("      "), gc);
-		dssPeriodControlPanel.add(_forward1PeriodButton, gc);
-		dssPeriodControlPanel.add(_back1PeriodButton, gc);
-		dssPeriodControlPanel.add(_forward1BlockButton, gc);
-		dssPeriodControlPanel.add(_back1BlockButton, gc);
-		dssPeriodControlPanel.add(new Label("  "), gc);
-		/*
-		 * No - does not work in toolBar toolBar.add(showValueBoxesLabel, gc);
-		 * toolBar.add(_showValueBoxesCheckbox, gc); toolBar.add(new
-		 * JLabel(" "), gc); toolBar.add(_forward1PeriodButton, gc);
-		 * toolBar.add(_back1PeriodButton, gc);
-		 * toolBar.add(_forward1BlockButton, gc); toolBar.add(_back1BlockButton,
-		 * gc); toolBar.add(new Label("  "), gc);
-		 */
-
-		dssPeriodControlPanel.add(new JLabel("Date: "), gc);
-		// No toolBar.add(dateLabel, gc);
-		_dateBox = new JComboBox();
-		_dateBox.setAction(SingleStepValuesAction);
-		gc.anchor = GridBagConstraints.CENTER;
-		gc.weightx = 0.0;
-		gc.ipadx = 50;
-		dssPeriodControlPanel.add(_dateBox, gc);
-		gc.ipadx = 0;
-		gc.weightx = 1.0;
-		dssPeriodControlPanel.add(new Label(" "), gc);
-		toolBar.add(dssPeriodControlPanel, "East");
-		// No toolBar.add(_dateBox, gc);
-		// No toolBar.add(new Label(" "), gc);
 
 		final JTextField findTextField = new JTextField();
 		findTextField.addKeyListener(new KeyAdapter() {
@@ -1327,8 +1189,69 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		findPanel.setLayout(new BorderLayout());
 		findPanel.add(findButton, "East");
 		findPanel.add(findTextField);
-		toolBar.add(findPanel, "East");
+		toolBar.add(findPanel, "West");
 
+		return toolBar;
+	}
+
+	protected JToolBar initToolbar2() { // CB renamed
+		JToolBar toolBar = new JToolBar();
+		toolBar.setAlignmentX(0);
+		JPanel dssPeriodControlPanel = new JPanel();
+		dssPeriodControlPanel.setLayout(new GridBagLayout());
+		GridBagConstraints gc = new GridBagConstraints();
+
+		gc.anchor = GridBagConstraints.CENTER;
+		gc.weightx = 0.0;
+		gc.ipadx = 5;
+		gc.weighty = 0;
+		gc.fill = GridBagConstraints.NONE;
+
+		JLabel showValueBoxesLabel = new JLabel("Show Values");
+		_showValueBoxesCheckbox = new JCheckBox();
+		_showValueBoxesCheckbox.setSelected(true);
+		getCurrentView().setShowValueBoxes(true);
+		_showValueBoxesCheckbox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				if (event.getSource() instanceof JCheckBox) {
+					boolean isVisible = ((JCheckBox) event.getSource())
+							.isSelected();
+					getCurrentView().setShowValueBoxes(isVisible);
+				}
+			}
+		});
+
+		String location = "";
+		_forward1PeriodButton = new JButton(Forward1Action);
+		_back1PeriodButton = new JButton(Back1Action);
+		_forward1BlockButton = new JButton(ForwardBlockAction);
+		_back1BlockButton = new JButton(BackBlockAction);
+
+		dssPeriodControlPanel.add(new JLabel("        "), gc);
+		dssPeriodControlPanel.add(showValueBoxesLabel, gc);
+		dssPeriodControlPanel.add(_showValueBoxesCheckbox, gc);
+		dssPeriodControlPanel.add(new JLabel("      "), gc);
+		dssPeriodControlPanel.add(_forward1PeriodButton, gc);
+		dssPeriodControlPanel.add(_back1PeriodButton, gc);
+		dssPeriodControlPanel.add(_forward1BlockButton, gc);
+		dssPeriodControlPanel.add(_back1BlockButton, gc);
+		dssPeriodControlPanel.add(new Label("  "), gc);
+		
+
+		dssPeriodControlPanel.add(new JLabel("Date: "), gc);
+		// No toolBar.add(dateLabel, gc);
+		_dateBox = new JComboBox();
+		_dateBox.setAction(SingleStepValuesAction);
+		gc.anchor = GridBagConstraints.CENTER;
+		gc.weightx = 0.0;
+		gc.ipadx = 50;
+		dssPeriodControlPanel.add(_dateBox, gc);
+		gc.ipadx = 0;
+		gc.weightx = 1.0;
+		dssPeriodControlPanel.add(new Label(" "), gc);
+		toolBar.add(dssPeriodControlPanel, "East");
+		// No toolBar.add(_dateBox, gc);
+		// No toolBar.add(new Label(" "), gc);
 		return toolBar;
 	}
 
@@ -1400,7 +1323,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	}
 
 	void showAbout() {
-		JOptionPane.showMessageDialog(this, "Calsim 3 Schematic UI", "About",
+		JOptionPane.showMessageDialog(this, "Calsim 3 Schematic UI: $Revision: 000 $", "About",
 				JOptionPane.INFORMATION_MESSAGE);
 	}
 
