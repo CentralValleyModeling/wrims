@@ -703,12 +703,12 @@ public class TestWreslWalker_goal {
 		String s;
 		int n;
 	
-		s = "# Error: Inside Goal [g_pp] variables used before definition: [x]";
+		s = "# Error: ##variable names used before definition: [x] in Goal named [g_pp]";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(logText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "# Error: Inside Goal [g_pp] variables used before definition: [y, x]";
+		s = "# Error: ##variable names used before definition: [y, x] in Goal named [g_pp]";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(logText, s );
 		Assert.assertEquals(n, 1);

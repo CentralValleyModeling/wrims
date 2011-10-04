@@ -311,8 +311,7 @@ public class StudyParser{
           goal_dependents_undefined.removeAll(Param.reservedSet);
           
           if (goal_dependents_undefined.size()>0) {
-        	  LogUtils.errMsg("Inside Goal ["+key+"] variables used before definition: "+goal_dependents_undefined+
-        			  				"\n In file: "+model_dataset.gMap.get(key).fromWresl    );
+        	  LogUtils.errMsg(model_dataset.gMap.get(key).fromWresl +" variable names used before definition: "+goal_dependents_undefined+" in Goal named ["+key+"]");
           }         
       }
 
@@ -526,7 +525,7 @@ public class StudyParser{
 
 				if (!validVarNames.contains(neededVar)) {
 
-					LogUtils.errMsg("In file: " + fromWresl + "\n" + "Variable [" + varName + "] has an item with undefined variable: "+ neededVar + "[" + neededCycle + "]");
+					LogUtils.errMsg( fromWresl + " variable named [" + varName + "] has an item with undefined variable: "+ neededVar + "[" + neededCycle + "]");
 					continue;
 				}
 
@@ -594,7 +593,7 @@ public class StudyParser{
 			  
 			  //Set<String> undefinedVar = new HashSet<String>(dep);
 			  //undefinedVar.removeAll(ds.asSet);
-			  LogUtils.errMsg("Inside Svar ["+svName+"] variables used before definition: "+dep+"\n In file: "+ds.svMap.get(svName).fromWresl    );
+			  LogUtils.errMsg(ds.svMap.get(svName).fromWresl + " variable names used before definition: "+dep+" in Svar named ["+svName+"]"   );
 			  
 		  }
 	  }
@@ -616,7 +615,7 @@ public class StudyParser{
 		  
 		  if (dep.size()>0){
 			  
-			  LogUtils.errMsg("Inside Alias ["+asName +"] variables used before definition: "+dep+"\n In file: "+ds.asMap.get(asName).fromWresl  );
+			  LogUtils.errMsg( ds.asMap.get(asName).fromWresl + " variable names used before definition: " + dep + " in Alias named ["+asName +"]"  );
 			  
 		  }
 	  }
