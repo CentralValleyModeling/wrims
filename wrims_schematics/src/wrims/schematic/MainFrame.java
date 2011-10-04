@@ -1323,7 +1323,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	}
 
 	void showAbout() {
-		JOptionPane.showMessageDialog(this, "Calsim 3 Schematic UI: $Revision: 000 $", "About",
+		JOptionPane.showMessageDialog(this, "Calsim 3 Schematic UI: $Revision: 000$", "About",
 				JOptionPane.INFORMATION_MESSAGE);
 	}
 
