@@ -113,6 +113,7 @@ public class DebugInterface {
 			controllerDebug.debugMonth=Integer.parseInt(yearMonthDayCycle[1]);
 			controllerDebug.debugDay=Integer.parseInt(yearMonthDayCycle[2]);
 			controllerDebug.debugCycle=Integer.parseInt(yearMonthDayCycle[3]);
+			System.out.println("Debug time defined: "+controllerDebug.debugYear+"/"+controllerDebug.debugMonth+"/"+controllerDebug.debugDay+"/"+controllerDebug.debugCycle);
 			try {
 				sendRequest("time defined");
 			} catch (IOException e) {
