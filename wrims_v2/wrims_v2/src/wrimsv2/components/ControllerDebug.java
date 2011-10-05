@@ -63,9 +63,15 @@ public class ControllerDebug extends Thread {
 	public int debugMonth;
 	public int debugDay;
 	public int debugCycle;
+	public String[] args;
 		
 	public ControllerDebug(String[] args, DebugInterface di) {
 		this.di=di;
+		this.args=args;
+	}
+	
+	@Override
+	public void run() {
 		setControlData(args);
 		generateStudyFile();
 		try {
