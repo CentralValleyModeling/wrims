@@ -101,7 +101,9 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 					try {
 						long ti=System.currentTimeMillis();
 						_viewer.load(mainDir + "/wrims/schematic/CS3_NetworkSchematic.xml");
-						System.out.println("Time to load schematic: "+(System.currentTimeMillis()-ti));
+						_viewer.findInView("S_SHS");
+						_viewer.zoomOut();
+						_viewer.zoomOut();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

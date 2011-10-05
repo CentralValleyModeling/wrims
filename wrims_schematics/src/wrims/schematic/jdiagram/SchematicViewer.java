@@ -179,17 +179,9 @@ public class SchematicViewer extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				overview.suspendRepaint();
-				diagramView.suspendRepaint();
-				Rectangle2D.Float rect = diagramView.deviceToDoc(diagramView
-						.getVisibleRect());
-				rect.setRect(rect.x + rect.width / 2 * (1 - 1 / zoomFactor),
-						rect.y + rect.height / 2 * (1 - 1 / zoomFactor),
-						rect.width / zoomFactor, rect.height / zoomFactor);
-				diagramView.zoomToFit(rect);
-				diagramView.resumeRepaint();
-				overview.resumeRepaint();
+				zoomIn();
 			}
+
 
 		};
 		zoomInAction.putValue(Action.SHORT_DESCRIPTION, "zoom in");
@@ -200,16 +192,7 @@ public class SchematicViewer extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				overview.suspendRepaint();
-				diagramView.suspendRepaint();
-				Rectangle2D.Float rect = diagramView.deviceToDoc(diagramView
-						.getVisibleRect());
-				rect.setRect(rect.x - rect.width / 2 * (zoomFactor - 1), rect.y
-						- rect.height / 2 * (zoomFactor - 1), rect.width
-						* zoomFactor, rect.height * zoomFactor);
-				diagramView.zoomToFit(rect);
-				diagramView.resumeRepaint();
-				overview.resumeRepaint();
+				zoomOut();
 			}
 
 		};
@@ -227,6 +210,32 @@ public class SchematicViewer extends JPanel {
 		return zoomOutAction;
 	}
 
+	public void zoomIn() {
+		overview.suspendRepaint();
+		diagramView.suspendRepaint();
+		Rectangle2D.Float rect = diagramView.deviceToDoc(diagramView
+				.getVisibleRect());
+		rect.setRect(rect.x + rect.width / 2 * (1 - 1 / zoomFactor),
+				rect.y + rect.height / 2 * (1 - 1 / zoomFactor),
+				rect.width / zoomFactor, rect.height / zoomFactor);
+		diagramView.zoomToFit(rect);
+		diagramView.resumeRepaint();
+		overview.resumeRepaint();
+	}
+	
+	public void zoomOut(){
+		overview.suspendRepaint();
+		diagramView.suspendRepaint();
+		Rectangle2D.Float rect = diagramView.deviceToDoc(diagramView
+				.getVisibleRect());
+		rect.setRect(rect.x - rect.width / 2 * (zoomFactor - 1), rect.y
+				- rect.height / 2 * (zoomFactor - 1), rect.width
+				* zoomFactor, rect.height * zoomFactor);
+		diagramView.zoomToFit(rect);
+		diagramView.resumeRepaint();
+		overview.resumeRepaint();
+	}
+	
 	public Action getZoomNormalAction() {
 		// TODO Auto-generated method stub
 		return null;
