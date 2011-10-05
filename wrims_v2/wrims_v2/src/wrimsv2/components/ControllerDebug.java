@@ -321,7 +321,7 @@ public class ControllerDebug extends Thread {
 						noError=false;
 					}
 					System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
-					stopForDebug(i);
+					pauseForDebug(i);
 					//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();
 				}else{
 					new AssignPastCycleVariable();
@@ -392,7 +392,7 @@ public class ControllerDebug extends Thread {
 						noError=false;
 					}
 					System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
-					stopForDebug(i);
+					pauseForDebug(i);
 					//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
 				}else{
 					new AssignPastCycleVariable();
@@ -468,7 +468,7 @@ public class ControllerDebug extends Thread {
 						noError=false;
 					}
 					System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
-					stopForDebug(i);
+					pauseForDebug(i);
 					//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();
 				}else{
 					new AssignPastCycleVariable();
@@ -487,11 +487,13 @@ public class ControllerDebug extends Thread {
 		ControlData.writer.closeDSSFile();
 	}
 	
-	public void stopForDebug(int i){
+	public void pauseForDebug(int i){
+		System.out.println(debugYear+"/"+debugMonth+"/"+debugDay+"/"+debugCycle);
 		if (ControlData.timeStep.equals("1MON")){
 			if (ControlData.currYear==debugYear && ControlData.currMonth==debugMonth && i==debugCycle-1){
 				try {
 					di.sendEvent("suspended");
+					System.out.println("pause");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
