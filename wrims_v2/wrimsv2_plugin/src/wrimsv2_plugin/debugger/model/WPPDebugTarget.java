@@ -248,7 +248,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		data=sendRequest("start");
 		System.out.println(data);
 		
-		data=sendRequest("time:1922\\9\\30");
+		data=sendRequest("time:1922\\1\\31\\1");
 		System.out.println(data);
 		
 		data=sendRequest("varaibles:s_shsta#s_folsm");

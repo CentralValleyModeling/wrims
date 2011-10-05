@@ -12,7 +12,9 @@
 package wrimsv2_plugin.debugger.launcher;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,18 +54,31 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			abort("Unable to find free port", null);
 		}
 			
-		String commandLine[]=new String[4];
-		commandLine[0]="D:\\cvwrsm\\trunk\\3rd_party\\jre6\\bin\\java";
-		commandLine[1]="test.testApplication";
-		commandLine[2]=Integer.toString(requestPort);
-		commandLine[3]=Integer.toString(eventPort);
+		createDebugBatch(requestPort, eventPort);
 		
 		try {
-			Process process = Runtime.getRuntime().exec(commandLine, null, new File("D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\bin\\"));
+			Process process = Runtime.getRuntime().exec("D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\WRIMSv2_Debugger.bat");
 			IProcess p = DebugPlugin.newProcess(launch, process, "DebugWPP");
 			IDebugTarget target = new WPPDebugTarget(launch, p, requestPort, eventPort);
 			launch.addDebugTarget(target);
 		} catch (IOException e) {
+			WPPException.handleException(e);
+		}
+	}
+	
+	public void createDebugBatch(int requestPort, int eventPort){
+		String debugFileFullPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\WRIMSv2_Debugger.bat";
+		try {
+			FileWriter debugFile = new FileWriter(debugFileFullPath);
+			PrintWriter out = new PrintWriter(debugFile);
+			out.println("@echo off");
+			out.println();
+			out.println("set Java_Bin=D:\\cvwrsm\\trunk\\3rd_party\\jrockit-jre1.6.0_26-R28.1.4\\bin\\");
+			out.println("set path=D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\conv\\Run\\External;D:\\cvwrsm\\trunk\\3rd_party\\vista\\lib;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib;%path%");
+			out.println();
+			out.println("D:\\cvwrsm\\trunk\\3rd_party\\jrockit-jre1.6.0_26-R28.1.4\\bin\\java -Xmx1600m -Xss1024K -Djava.library.path=\"D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\conv\\Run\\External;D:\\cvwrsm\\trunk\\3rd_party\\vista\\lib;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\" -cp \"D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\lpsolve55j.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\WRIMSv2.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\wrimsv2\\external\\*.class;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\XAOptimizer.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\gurobi.jar;D:\\cvwrsm\\trunk\\3rd_party\\vista\\lib\\*\" wrimsv2.components.DebugInterface "+requestPort+" "+eventPort+" D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\CVGroundwater\\Data\\ D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\conv\\Run\\mainCONV_30.wresl D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06_SV.dss D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06Init.dss D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\conv\\DSS\\TestWRIMSV2DV.dss CalSim30_06 CalSim30_06 CALSIM 1MON 1921 10 31 1922 10 31 XA csv");
+			out.close();
+		}catch (IOException e) {
 			WPPException.handleException(e);
 		}
 	}
