@@ -47,8 +47,13 @@ public class StudyUtils {
 
 		LogUtils.setLogFile(mainWreslFile.getParentFile().getCanonicalPath(), logFileName);
 
-		LogUtils.titleMsg(Param.wreslChekerName + new Versions().getComplete());
-
+		try {
+			LogUtils.titleMsg(Param.wreslChekerName + new Versions().getComplete());
+		}
+		catch ( Exception e){
+			LogUtils.titleMsg(Param.wreslChekerName + " version unknown");
+		}
+			
 		try {
 			sds = parseWresl(mainWreslFile, sendAliasToDvar);
 		}
