@@ -42,4 +42,6 @@ public interface ISchematic {
 
 	Vector<String> getSelectedNames();
 
+	void clearValues();
+
 }

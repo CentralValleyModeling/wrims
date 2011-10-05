@@ -87,7 +87,11 @@ public class SchematicViewer extends JPanel {
 		diagram.addDiagramListener(new DiagramAdapter() {
 			@Override
 			public void viewportChanged() {
-				refreshValues(false);
+				SwingUtilities.invokeLater(new Runnable(){
+					public void run(){
+						refreshValues(false);
+					}
+				});
 			}
 
 			@Override
@@ -328,7 +332,7 @@ public class SchematicViewer extends JPanel {
 		}
 	}
 
-	protected void clearAllValueBoxes() {
+	public void clearAllValueBoxes() {
 		DiagramNode node;
 		while ((node = diagram.findNodeById(VALUE_TEXT)) != null) {
 			diagram.getNodes().remove(node);

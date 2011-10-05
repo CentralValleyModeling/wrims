@@ -1803,6 +1803,10 @@ public class FilterPanel extends JPanel {
 		return false;
 	}
 
+	public void resetAllCache() {
+		_periodValueViewer = null;
+	}
+
 	// //////////////////////////////////////////////////////////////////////////////
 	// TEST DRIVER
 	// [070413] TP

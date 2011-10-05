@@ -473,38 +473,9 @@ public class MainPanel extends JPanel { // implements ActionListener { //CB
 	 * CB added.
 	 */
 	public void stopMonthlyDataWork() {
-		STOP_DSSVIEWER_METHODS = true;
-		/*
-		 * CB tried the following, but the long runtime methods continued
-		 * because references to MainPanel still existed and maybe more
-		 * references existed. if (_selectedFilesThread != null) { if
-		 * (_selectedFilesThread.isAlive()) {
-		 * System.out.println("Attempting to stop SelectedFilesThread");
-		 * _selectedFilesThread.interrupt();
-		 * System.out.println("Stopped SelectedFilesThread");
-		 * _selectedFilesThread = null; } } if (_updateSchematicValuesThread !=
-		 * null) { if (_updateSchematicValuesThread.isAlive()) {
-		 * System.out.println("Attempting to stop UpdateSchematicValuesThread");
-		 * _updateSchematicValuesThread.interrupt();
-		 * System.out.println("Stopped UpdateSchematicValuesThread");
-		 * _updateSchematicValuesThread = null; } } if (_unselectedFilesThread
-		 * != null) { if (_unselectedFilesThread.isAlive()) {
-		 * System.out.println("Attempting to stop UnselectedFilesThread");
-		 * _unselectedFilesThread.interrupt();
-		 * System.out.println("Stopped UnselectedFilesThread");
-		 * _unselectedFilesThread = null; } } if (_longTermAverageThread !=
-		 * null) { if (_longTermAverageThread.isAlive()) {
-		 * System.out.println("Attempting to stop LongTermAveragesThread");
-		 * _longTermAverageThread.interrupt();
-		 * System.out.println("Stopped LongTermAveragesThread");
-		 * _longTermAverageThread = null; } } if
-		 * (_updateSchematicDateBoxListThread != null) { if
-		 * (_updateSchematicDateBoxListThread.isAlive()) {
-		 * System.out.println("Attempting to stop UpdateSchematicDateBoxListThread"
-		 * ); _updateSchematicDateBoxListThread.interrupt();
-		 * System.out.println("Stopped UpdateSchematicDateBoxListThread");
-		 * _updateSchematicDateBoxListThread = null; } }
-		 */
+		//STOP_DSSVIEWER_METHODS = true;
+		_schematic.clearValues();
+		getFilterPanel().resetAllCache();
 	}
 
 	/**

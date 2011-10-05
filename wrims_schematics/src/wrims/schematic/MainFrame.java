@@ -1403,6 +1403,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 				if (!_DssFrame.isVisible()) {
 					_DssFrame.setVisible(true);
 				}
+				_DssFrame.mainPanel.stopMonthlyDataWork();
 				SchematicRelatedAction.updateAllActions();
 			}
 		});
@@ -1636,7 +1637,6 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		_DssFrame.getFP().getValueViewer().setVariables(names);
 		_DssFrame.getFP().getValueViewer().calculateLongTermAverages(
 				getTimeWindows(), -1, true);
-		_DssFrame.mainPanel.setCursor(Cursor.getDefaultCursor());
 
 		if (_DssFrame.getFP().getValueViewer() == null) {
 			values = _DssFrame.getFP().retrieve(
@@ -1651,6 +1651,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		HashMap<Integer, Object> dssFileMap = _DssFrame.mainPanel
 				.getMessagePanel().getDSSFileNames("BOTH");
 
+		_DssFrame.mainPanel.setCursor(Cursor.getDefaultCursor());
 		if (values != null) {
 			getCurrentView().setValues(values);
 		} else {
@@ -2397,5 +2398,10 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		File selectedFile = chooser.getSelectedFile();
 		p.put("SCHEMATICS_DIRECTORY", selectedFile.getParent());
 		return selectedFile.getAbsolutePath();
+	}
+
+	@Override
+	public void clearValues() {
+		getCurrentView().clearAllValueBoxes();
 	}
 }
