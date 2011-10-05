@@ -1141,7 +1141,7 @@ public class FilterPanel extends JPanel {
 			int[] keys = _mainPanel.getMessagePanel().getSelectedFilesKeys();
 
 			Vector<String> allPaths = null; // = new Vector<String>();
-			boolean isNeedToCreate = true;
+			boolean isNeedToCreate = false;
 
 			if (dssType >= -1 && dssType <= 1) {
 				if (selectedFiles) {
@@ -1152,12 +1152,8 @@ public class FilterPanel extends JPanel {
 					// else { //TODO have separate DV and SV paths Vectors
 					if (_dvarTable != null
 							&& _dvarTable.getTableModel() != null) {
-						PathnameTableModel dvarTMclone = (PathnameTableModel) _dvarTable
-								.getTableModel().clone();
-						dvarTMclone.showAllRows();
-						for (int row = 0; row < dvarTMclone.getRowCount(); ++row)
-							if (names.get(dvarTMclone.getBpart(row)) != null)
-								allPaths.add(dvarTMclone.getPlotPath(row));
+						allPaths.addAll( _dvarTable
+								.getTableModel().getPathsForNames(names));
 					}
 					// }
 					if (dssType == 0
@@ -1166,12 +1162,7 @@ public class FilterPanel extends JPanel {
 					// else {
 					if (_svarTable != null
 							&& _svarTable.getTableModel() != null) {
-						PathnameTableModel svarTMclone = (PathnameTableModel) _svarTable
-								.getTableModel().clone();
-						svarTMclone.showAllRows();
-						for (int row = 0; row < svarTMclone.getRowCount(); ++row)
-							if (names.get(svarTMclone.getBpart(row)) != null)
-								allPaths.add(svarTMclone.getPlotPath(row));
+						allPaths.addAll(_svarTable.getTableModel().getPathsForNames(names));
 					}
 					// }
 				} else {
@@ -1180,14 +1171,16 @@ public class FilterPanel extends JPanel {
 			} else {
 				isNeedToCreate = false;
 			}
-			if (isNeedToCreate) {
+			if (_periodValueViewer == null || isNeedToCreate) {
 				_periodValueViewer = new DssViewer("Base", _mainPanel
 						.getMessagePanel().getAnnualType(),
 						DEFAULT_TIME_WINDOW, allPaths, dssFiles, dssFparts,
 						keys, null, names);
 			} else {
-				if (allPaths != null)
+				if (allPaths != null){
 					_periodValueViewer.setPaths(allPaths);
+					_periodValueViewer.setVariables(names);
+				}
 				_periodValueViewer.setDssFiles(dssFiles);
 				_periodValueViewer.setFparts(dssFparts);
 			}

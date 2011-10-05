@@ -2,6 +2,8 @@ package wrims.schematic;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 import java.util.regex.Pattern;
@@ -372,6 +374,26 @@ public class PathnameTableModel extends AbstractTableModel {
 	public String getBpart(int row) {
 		// System.out.println(_pathnameParts[getNumber(row,_rowsVisible)][1]);
 		return _pathnameParts[getNumber(row, _rowsVisible)][1];
+	}
+
+	private HashMap<String, String> nameToPathMap;
+	public List<String> getPathsForNames(Hashtable<String, Object> names){
+		if (nameToPathMap == null){
+			nameToPathMap = new HashMap<String, String>();
+			PathnameTableModel m = (PathnameTableModel) this.clone();
+			m.showAllRows();
+			for (int row = 0; row < m.getRowCount(); ++row){
+				nameToPathMap.put(m.getBpart(row),m.getPlotPath(row));
+			}
+		}
+		ArrayList<String> paths = new ArrayList<String>();
+		for(String name: names.keySet()){
+			String path = nameToPathMap.get(name);
+			if (path != null){	
+				paths.add(path);
+			}
+		}
+		return paths;
 	}
 
 }

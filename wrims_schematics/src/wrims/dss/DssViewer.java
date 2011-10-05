@@ -402,12 +402,7 @@ public class DssViewer implements Outputer {
 					} catch (HecMathException hme) {
 						hme.printStackTrace();
 					} catch (NullPointerException npe) {
-						JOptionPane
-								.showMessageDialog(
-										null,
-										"Long-term data not quite ready, please try equest again",
-										"Too Soon!", JOptionPane.ERROR_MESSAGE);
-						return results;
+						npe.printStackTrace();
 					}
 				}
 			}
@@ -415,6 +410,7 @@ public class DssViewer implements Outputer {
 		return results;
 	}
 
+	Hashtable<String, String[]>[] results = null;
 	/**
 	 * CB added to load long-term averages in background This should be called
 	 * from within <code>SwingUtilities.invokeLater</code>.
@@ -425,7 +421,6 @@ public class DssViewer implements Outputer {
 		_initialUnits = _units;
 		_longTermTafToCfsConversionFactors = new Hashtable<String, Double>();
 
-		Hashtable<String, String[]>[] results = null;
 
 		if (_allVariableTWData == null) { // for time window periods
 			_allVariableTWData = new Hashtable<String, Hashtable<String, String[]>>();
@@ -581,6 +576,19 @@ public class DssViewer implements Outputer {
 				}
 				if (MainPanel.STOP_DSSVIEWER_METHODS) {
 					return false;
+				}
+				if (results[j].get(name) != null){
+					boolean allCalculated=true;
+					String[] values = results[j].get(name);
+					for(Integer k: keys){
+						if (values[k.intValue()]==null){
+							allCalculated=false;
+							break;
+						}
+					}
+					if (allCalculated){
+						continue;
+					}
 				}
 				if (_allVariableData[j].get(name) != null) {
 					HecMath dataSet = _allVariableData[j].get(name);
