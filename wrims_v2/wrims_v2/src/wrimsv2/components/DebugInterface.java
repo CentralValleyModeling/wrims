@@ -168,7 +168,14 @@ public class DebugInterface {
 		return dataString;
 	}
 	
-	public static void main(int requestPort, int eventPort, String[] args){
-		new DebugInterface(requestPort, eventPort, args);
+	public static void main(String[] args){
+		int argsSize=args.length;
+		String[] modArgs=new String[argsSize-2];
+		for (int i=0; i<argsSize-3; i++){
+			modArgs[i]=args[i+2];
+		}
+		int requestPort=Integer.parseInt(args[0]);
+		int eventPort=Integer.parseInt(args[1]);
+		new DebugInterface(requestPort, eventPort, modArgs);
 	}
 }
