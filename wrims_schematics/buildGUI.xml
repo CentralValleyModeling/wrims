@@ -9,8 +9,8 @@
     </description>
 	<property name="dist.dir" location="build/dist/wrimsv2_SG"/>
 	<property name="wrimsv2_SG.lib" location="lib" />
-	<property name="jre6.installdir" location="D:\cvwrsm\trunk\3rd_party\jrockit-jre1.6.0_26-R28.1.4"/>
-	<property name="vista.dir" location="D:\cvwrsm\trunk\3rd_party\vista"/>
+	<property name="jre6.installdir" location="..\3rd_party\jrockit-jre1.6.0_26-R28.1.4"/>
+	<property name="vista.dir" location="..\3rd_party\vista"/>
 
 	<!-- ================================= 
           target: default              
