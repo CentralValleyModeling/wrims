@@ -241,17 +241,17 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		});
 		
 		//To Do: add real debug code
-		installDeferredBreakpoints();
+		//installDeferredBreakpoints();
 		
 		String data;
 		
 		data=sendRequest("start");
 		System.out.println(data);
 		
-		data=sendRequest("time:1922\\1\\31\\1");
+		data=sendRequest("time:1922/1/31/10");
 		System.out.println(data);
 		
-		data=sendRequest("varaibles:s_shsta#s_folsm");
+		data=sendRequest("variables:s_shsta#s_folsm");
 		System.out.println(data);
 		
 		
