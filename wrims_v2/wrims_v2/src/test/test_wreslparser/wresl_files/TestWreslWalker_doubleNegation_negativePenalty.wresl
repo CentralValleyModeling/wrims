@@ -1,0 +1,19 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+	goal someGoal {
+		lhs x
+		case DryCritical {
+			condition wyt_NODOS + prev_wyt_SAC >= 8
+			rhs 0.0
+			lhs>rhs penalty -500.}
+		case otherwise {
+			condition always
+			rhs 0.
+			lhs>rhs penalty 100.}
+	}	
+}

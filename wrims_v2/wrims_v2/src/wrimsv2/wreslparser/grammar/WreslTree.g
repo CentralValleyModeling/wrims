@@ -214,42 +214,48 @@ sub_content[String l, String r]
 	; 
 	
 lhs_gt_rhs[String l, String r] returns[String type] 
-
+@init{ String penalty2Weight = "";}
 	: 
 LHS '>' RHS 
 	( ( CONSTRAIN  { $type = "c"; } -> Constrain Lhs[$l] Op["<"] Rhs[$r] )
 	| ( p=penalty { 
-					if ($p.isZero){ $type = "f";   }
-					else 		  { $type = "p";   }
+					if      ($p.isZero)       { $type = "f";   }
+					else if ($p.isNegative)   { $type = "p"; penalty2Weight = $p.w; }
+					else 		              { $type = "p"; penalty2Weight = "-"+$p.w; }
 				  }							 
 		-> {$p.isZero}? Free Lhs[$l] Op[">"] Rhs[$r]  
-		-> 	  		    Penalty Lhs[$l] Op["="] Rhs[$r] Sign["-"] Kind["surplus"] Slack_Surplus["u_"+$goal::goalName+"_"+Integer.toString($goal::caseNumber)] Weight["-"+$p.w] 
+		-> 	  		    Penalty Lhs[$l] Op["="] Rhs[$r] Sign["-"] Kind["surplus"] Slack_Surplus["u_"+$goal::goalName+"_"+Integer.toString($goal::caseNumber)] Weight[penalty2Weight] 
 		//-> 	  		    Penalty Lhs[$l] Op["="] Rhs[$r] Sign["-"] Kind["surplus"] Slack_Surplus["surplus_"+$goal::goalName+"_"+$goal::caseName] Weight["-"+$p.w] 
 		)
 	);
 
-lhs_lt_rhs[String l, String r]  returns[String type] 
+lhs_lt_rhs[String l, String r]  returns[String type]
+@init{ String penalty2Weight = "";}
 	: 
 LHS '<' RHS 
 	( ( CONSTRAIN  { $type = "c"; } -> Constrain Lhs[$l] Op[">"] Rhs[$r])
 	| ( p=penalty { 
-					if ($p.isZero){ $type = "f";   }
-					else 		  { $type = "p";   }
+					if      ($p.isZero)       { $type = "f";   }
+					else if ($p.isNegative)   { $type = "p"; penalty2Weight = $p.w; }
+					else 		              { $type = "p"; penalty2Weight = "-"+$p.w; }					
 				  }
 		-> {$p.isZero}? Free Lhs[$l] Op["<"] Rhs[$r] 
-		->              Penalty Lhs[$l] Op["="] Rhs[$r] Sign["+"] Kind["slack"] Slack_Surplus["l_"+$goal::goalName+"_"+Integer.toString($goal::caseNumber)]  Weight["-"+$p.w]
+		->              Penalty Lhs[$l] Op["="] Rhs[$r] Sign["+"] Kind["slack"] Slack_Surplus["l_"+$goal::goalName+"_"+Integer.toString($goal::caseNumber)]  Weight[penalty2Weight]
 		//->              Penalty Lhs[$l] Op["="] Rhs[$r] Sign["+"] Kind["slack"] Slack_Surplus["slack_"+$goal::goalName+"_"+$goal::caseName]  Weight["-"+$p.w]		
 		)
 	);
 
-penalty returns[String w, boolean isZero]
+penalty returns[String w, boolean isZero, boolean isNegative]
 	: PENALTY n=expression 
 		{	$w=$n.text; 
 			$isZero = false;
+			$isNegative = false;
 			
 			try { 
-				double p = Double.parseDouble($w); 
-				if ( p == 0 ) $isZero = true;
+				double p = Double.parseDouble($n.text); 
+				if      ( p == 0 ) { $isZero = true;     $w = "0";}
+				else if ( p < 0  ) { $isNegative = true; $w = Double.toString(-p);} 
+				else               { $w = Double.toString(p);} 
 			}
 			catch (Exception e) { }
 		} ;
