@@ -494,7 +494,6 @@ public class ControllerDebug extends Thread {
 	}
 	
 	public void pauseForDebug(int i){
-		System.out.println(debugYear+"/"+debugMonth+"/"+debugDay+"/"+debugCycle);
 		if (ControlData.timeStep.equals("1MON")){
 			if (ControlData.currYear==debugYear && ControlData.currMonth==debugMonth && i==debugCycle-1){
 				try {
@@ -509,6 +508,7 @@ public class ControllerDebug extends Thread {
 			if (ControlData.currYear==debugYear && ControlData.currMonth==debugMonth && ControlData.currDay==debugDay && i==debugCycle-1){
 				try {
 					di.sendEvent("suspended");
+					System.out.println("pause");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

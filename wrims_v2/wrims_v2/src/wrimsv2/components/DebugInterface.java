@@ -51,7 +51,6 @@ public class DebugInterface {
 			eventIn=new BufferedReader(new InputStreamReader(eventConnection.getInputStream()));
 			String message="";
 			controllerDebug=new ControllerDebug(args, this);
-			controllerDebug.suspend();
 			do {
 				try{
 					message=requestIn.readLine();
@@ -108,12 +107,11 @@ public class DebugInterface {
 			}
 		}else if (request.startsWith("time")){
 			requestParts=request.split(":");
-			String[] yearMonthDayCycle=requestParts[1].split("\\");
+			String[] yearMonthDayCycle=requestParts[1].split("/");
 			controllerDebug.debugYear=Integer.parseInt(yearMonthDayCycle[0]);
 			controllerDebug.debugMonth=Integer.parseInt(yearMonthDayCycle[1]);
 			controllerDebug.debugDay=Integer.parseInt(yearMonthDayCycle[2]);
 			controllerDebug.debugCycle=Integer.parseInt(yearMonthDayCycle[3]);
-			System.out.println("Debug time defined: "+controllerDebug.debugYear+"/"+controllerDebug.debugMonth+"/"+controllerDebug.debugDay+"/"+controllerDebug.debugCycle);
 			try {
 				sendRequest("time defined");
 			} catch (IOException e) {
@@ -123,6 +121,12 @@ public class DebugInterface {
 		}else if (request.startsWith("variables:")){
 			requestParts=request.split(":");
 			allDebugVariables=requestParts[1].split("#");
+			try {
+				sendRequest("variables defined");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -154,15 +158,15 @@ public class DebugInterface {
 			String variable=allDebugVariables[i];
 			if (ControlData.currSvMap.containsKey(variable)){
 				Number value=ControlData.currSvMap.get(variable).getData().getData();
-				dataString=dataString+":"+value+"#";
+				dataString=dataString+variable+":"+value+"#";
 			}
 			if (ControlData.currDvMap.containsKey(variable)){
 				Number value=ControlData.currDvMap.get(variable).getData().getData();
-				dataString=dataString+":"+value+"#";
+				dataString=dataString+variable+":"+value+"#";
 			}
 			if (ControlData.currAliasMap.containsKey(variable)){
 				Number value=ControlData.currAliasMap.get(variable).getData().getData();
-				dataString=dataString+":"+value+"#";
+				dataString=dataString+variable+":"+value+"#";
 			}
 		}
 		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-2);
