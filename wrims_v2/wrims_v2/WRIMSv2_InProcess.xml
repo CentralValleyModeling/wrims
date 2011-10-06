@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="WRIMSv2" name="Create Standalone Runnable Jar for WRIMSv2">
+
+	<target name="WRIMSv2" depends="Clean_files, Generate_version, Build_jar_zip">
+
+		<echo message="Finish WRIMS v2" />
+		
+	</target>
+	
+	<target name="Debug_WRIMSv2" depends="Clean_files, Generate_version_debug, Build_jar_zip">
+
+		<echo message="Finish Debug_WRIMSv2" />
+		
+	</target>
+
+	<target name="Clean_files" >
+		<echo message="Running Clean_Files" />
+		<delete file="bin/version.xml"/>
+		<delete dir="jar_out"/>
+		<delete file="zip_out/*.zip"/>
+		<delete dir="zip_out"/>
+		<mkdir dir="jar_out"/>
+		<mkdir dir="zip_out"/>
+	</target>
+
+	<target name="Generate_version" >
+		<echo message="Running Generate_version" />
+		<exec dir="." executable="python" failonerror="true">
+			<arg line="generate_version.py" />
+		</exec>
+
+	</target>
+
+	<target name="Generate_version_debug" >
+		<echo message="Running Generate_version_debug" />
+		<exec dir="." executable="python" failonerror="true">
+			<arg line="generate_version_debug.py" />
+		</exec>
+	</target>
+
+	<target name="Build_jar_zip" >
+
+		<available file="bin/version.xml" property="version_file.present" />
+
+		<echo message="Running Build_jar_zip" />
+
+		<jar destfile="jar_out/WRIMSv2.jar" filesetmanifest="mergewithoutmain">
+			<manifest>
+				<attribute name="Main-Class" value="wrimsv2.components.Controller"/>
+				<attribute name="Class-Path" value="."/>
+			</manifest>
+			<fileset dir="D:/cvwrsm/trunk/wrims_v2/wrims_v2/bin">
+				<include name="wrimsv2/**/*.class"/>
+				<include name="version.xml"/>
+				<exclude name="**/*.g"/>
+			</fileset>
+			<zipfileset excludes="META-INF/*.SF" src="D:/cvwrsm/trunk/wrims_v2/wrims_v2/src/wrimsv2/lib/antlr-runtime-3.2.jar"/>
+		</jar>
+
+		<zip destfile="zip_out/WRIMSv2.zip"  basedir="jar_out" />
+
+		<available file="zip_out/WRIMSv2.zip" property="zip_file.present" />
+		<fail>
+			<condition>
+				<not>
+					<isset property="zip_file.present" />
+				</not>
+			</condition>
+		</fail>
+		
+		<echo message="Finished Build_jar_zip" />
+
+	</target>
+
+</project>

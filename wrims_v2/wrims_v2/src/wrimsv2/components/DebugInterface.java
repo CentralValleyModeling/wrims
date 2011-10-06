@@ -20,7 +20,7 @@ public class DebugInterface {
 	private BufferedReader eventIn;
 	public ArrayList<String> breakIndex=new ArrayList<String>();
 	public ArrayList<String> breakFile=new ArrayList<String>();
-	public boolean isRunning=true;
+	public boolean isDebugging=true;
 	private ControllerDebug controllerDebug;
 	private FileWriter statusFile;
 	public PrintWriter fileOut;
@@ -58,7 +58,7 @@ public class DebugInterface {
 				}catch (Exception e){
 					e.printStackTrace();
 				}
-			}while (isRunning);
+			}while (isDebugging);
 		} catch (IOException e){
 			System.out.println(e.getMessage());
 		}		

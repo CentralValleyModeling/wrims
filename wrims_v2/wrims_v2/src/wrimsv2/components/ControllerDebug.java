@@ -85,7 +85,7 @@ public class ControllerDebug extends Thread {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		di.isRunning=false;
+		di.isDebugging=false;
 	}
 	
 	public void setControlData(){
