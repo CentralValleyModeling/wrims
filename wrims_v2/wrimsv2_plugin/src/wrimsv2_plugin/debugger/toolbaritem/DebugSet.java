@@ -2,6 +2,7 @@ package wrimsv2_plugin.debugger.toolbaritem;
 
 import java.util.Date;
 
+import org.eclipse.debug.core.DebugException;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.ICoolBarManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -26,6 +27,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.WorkbenchWindow;
 import org.eclipse.ui.menus.WorkbenchWindowControlContribution;
 
+import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.tools.TimeOperation;
 
@@ -100,6 +102,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 				comboYear.setText(String.valueOf(yearMonth[0]));
 				comboMonth.setText(String.valueOf(yearMonth[1]));
 				setTimeSlider=true;
+				updateDebugTimeSet();
 			}
 			
 			@Override
@@ -125,6 +128,12 @@ public class DebugSet extends WorkbenchWindowControlContribution{
      
 		comboCycle.select(0);
 		comboCycle.setToolTipText("Go To Cycle:");
+		comboCycle.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				updateDebugTimeSet();
+			}
+          });
 	}
 	
 	public void createComboYear(Composite parent){
@@ -142,6 +151,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 				if (checkReasonableTime) resetDebugMonth();
 				if (checkReasonableTime) resetEndofDay();
 				if (setTimeSlider) resetSliderBar();
+				updateDebugTimeSet();
 			}
           });
 	}
@@ -162,6 +172,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 					if (checkReasonableTime) resetDebugMonth();
 					if (checkReasonableTime) resetEndofDay();
 					if (setTimeSlider) resetSliderBar();
+					updateDebugTimeSet();
 			}
 
 			@Override
@@ -188,6 +199,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 			public void widgetSelected(SelectionEvent e) {
 				if (checkReasonableTime) resetEndofDay();
 				comboDay.update();
+				updateDebugTimeSet();
 			}
 
 			@Override
@@ -228,6 +240,20 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 			comboYear.setText(String.valueOf(endDebugYear));
 			comboMonth.setText(String.valueOf(endDebugMonth));
 			checkReasonableTime=true;
+		}
+	}
+	
+	public void updateDebugTimeSet(){
+		DebugCorePlugin.debugYear=Integer.parseInt(comboYear.getText());
+		DebugCorePlugin.debugMonth=Integer.parseInt(comboMonth.getText());
+		DebugCorePlugin.debugDay=Integer.parseInt(comboDay.getText());
+		DebugCorePlugin.debugCycle=Integer.parseInt(comboCycle.getText());
+		if (DebugCorePlugin.isDebugging){
+			try {
+				DebugCorePlugin.target.sendRequest("time:"+DebugCorePlugin.debugYear+"/"+DebugCorePlugin.debugMonth+"/"+DebugCorePlugin.debugDay+"/"+DebugCorePlugin.debugCycle);
+			} catch (DebugException e) {
+				WPPException.handleException(e);
+			}
 		}
 	}
 

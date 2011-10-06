@@ -40,7 +40,18 @@ public class DebugCorePlugin extends Plugin {
 	 * <code>wpp.debugModel</code>).
 	 */
 	public static WPPDebugTarget target;
+	
 	public static IValue[] dataStack;
+	
+	public static int debugYear=1921;
+	
+	public static int debugMonth=10;
+	
+	public static int debugDay=31;
+	
+	public static int debugCycle=1;
+	
+	public static boolean isDebugging=false;
 	
 	public static final String ID_WPP_DEBUG_MODEL = "wpp.debugModel";
 	

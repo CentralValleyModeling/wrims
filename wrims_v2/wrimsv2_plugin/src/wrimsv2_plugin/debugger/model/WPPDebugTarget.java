@@ -240,7 +240,6 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			}
 		});
 		
-		//To Do: add real debug code
 		//installDeferredBreakpoints();
 		
 		String data;
@@ -248,7 +247,9 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		data=sendRequest("start");
 		System.out.println(data);
 		
-		data=sendRequest("time:1922/1/31/10");
+		DebugCorePlugin.isDebugging=true;
+		
+		data=sendRequest("time:"+DebugCorePlugin.debugYear+"/"+DebugCorePlugin.debugMonth+"/"+DebugCorePlugin.debugDay+"/"+DebugCorePlugin.debugCycle);
 		System.out.println(data);
 		
 		data=sendRequest("variables:s_shsta#s_folsm");
