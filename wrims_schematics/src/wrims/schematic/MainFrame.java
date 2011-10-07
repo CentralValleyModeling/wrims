@@ -551,7 +551,8 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	{
 		FileSaveAsAction = new SchematicRelatedAction("Save As", this) {
 			public void actionPerformed(ActionEvent e) {
-				saveAsSchematic("default.xml");
+				String fileToSave = chooseFileToSave();
+				saveAsSchematic(fileToSave);
 			}
 		};
 	}
@@ -1061,10 +1062,8 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		item.setMnemonic('O');
 		item.setIcon(null); // choose not to use icon in menu
 
-		item = filemenu.add(FileCloseAction);
-		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4,
-				Event.CTRL_MASK));
-		item.setMnemonic('C');
+		item = filemenu.add(FileSaveAsAction);
+		item.setMnemonic('S');
 
 		setRecentSchematicFileOpenActions(true); // CB added
 
@@ -1404,6 +1403,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 					_DssFrame.setVisible(true);
 				}
 				_DssFrame.mainPanel.stopMonthlyDataWork();
+				_DssFrame.mainPanel.updateSchematicValues();
 				SchematicRelatedAction.updateAllActions();
 			}
 		});
@@ -2388,7 +2388,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 			@Override
 			public boolean accept(File f) {
 				return f != null && f.isFile()
-						&& f.getName().toLowerCase().endsWith(".xml");
+						&& (f.getName().toLowerCase().endsWith(".xml") || f.getName().toLowerCase().endsWith(".sch"));
 			}
 		});
 		int rval = chooser.showOpenDialog(this);
@@ -2400,6 +2400,32 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		return selectedFile.getAbsolutePath();
 	}
 
+	private String chooseFileToSave() {
+		Preferences p = Preferences.userNodeForPackage(MainFrame.class);
+		String currentDirectory = p.get("SCHEMATICS_DIRECTORY", System
+				.getProperty("user.dir"));
+		JFileChooser chooser = new JFileChooser(currentDirectory);
+		chooser.setFileFilter(new FileFilter() {
+
+			@Override
+			public String getDescription() {
+				return "schematics";
+			}
+
+			@Override
+			public boolean accept(File f) {
+				return f != null && f.isFile();
+						
+			}
+		});
+		int rval = chooser.showSaveDialog(this);
+		if (rval != JFileChooser.APPROVE_OPTION) {
+			return null;
+		}
+		File selectedFile = chooser.getSelectedFile();
+		p.put("SCHEMATICS_DIRECTORY", selectedFile.getParent());
+		return selectedFile.getAbsolutePath();
+	}
 	@Override
 	public void clearValues() {
 		getCurrentView().clearAllValueBoxes();

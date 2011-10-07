@@ -39,6 +39,8 @@ import com.mindfusion.diagramming.SelectionStyle;
 import com.mindfusion.diagramming.ShapeNode;
 import com.mindfusion.diagramming.TextFormat;
 import com.mindfusion.diagramming.XmlException;
+import com.mindfusion.diagramming.export.PdfExporter;
+import com.mindfusion.diagramming.export.SvgExporter;
 
 /**
  * View schematic
@@ -267,12 +269,28 @@ public class SchematicViewer extends JPanel {
 	 */
 	public void load(String filename) throws FileNotFoundException,
 			IOException, XmlException {
+		long ti = System.currentTimeMillis();
 		if (filename.endsWith(".xml")) {
 			diagram.loadFromXml(filename);
 		} else {
 			diagram.loadFrom(filename);
 		}
 		this.filename = filename;
+		System.out.println("Time to load "+filename+": "+(System.currentTimeMillis()-ti));
+	}
+	
+	public void save(String filename) throws Exception{
+		if (filename.endsWith(".xml")){
+			diagram.saveToXml(filename);
+		} else if (filename.endsWith(".pdf")){
+			PdfExporter pdfExp = new PdfExporter();
+            pdfExp.export(diagram, filename);
+        } else if (filename.endsWith(".svg")){
+        	SvgExporter svgExp = new SvgExporter(diagram, filename);
+        	svgExp.export();
+		} else {
+			diagram.saveTo(filename);
+		}
 	}
 
 	public Hashtable<String, Object> getVisibleNodes() {
@@ -362,8 +380,7 @@ public class SchematicViewer extends JPanel {
 
 	public void saveAs(String filename) {
 		try {
-			diagram.saveToXml(filename);
-			this.filename = filename;
+			save(filename);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

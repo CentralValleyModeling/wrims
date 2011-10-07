@@ -595,7 +595,6 @@ public class DssAppAction {
 			System.out.println("DssAppAction.openViewerFile()");
 		if (DEBUG)
 			System.out.println(filename);
-
 		_mp.setDateBoxModel(new DefaultComboBoxModel(_mp.loadDateBoxList()));
 		// FIXME: _mp.doMonthlyDataWork();
 		_mp.updateDSSMenu(filename, true); // TODO test this call with boolean

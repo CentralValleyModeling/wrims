@@ -592,6 +592,7 @@ public class MessagePanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				_mainPanel.stopMonthlyDataWork();
+				_mainPanel.updateSchematicValues();
 			}
 		});
 		diff.addActionListener(new ActionListener() {
@@ -599,6 +600,7 @@ public class MessagePanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				_mainPanel.stopMonthlyDataWork();
+				_mainPanel.updateSchematicValues();
 			}
 		});
 		

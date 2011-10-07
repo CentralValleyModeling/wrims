@@ -694,6 +694,10 @@ public class MainPanel extends JPanel { // implements ActionListener { //CB
 	 * @param model
 	 */
 	void setDateBoxModel(ComboBoxModel model) {
+		ComboBoxModel oldModel= _schematic.getDateBox().getModel();
+		if (oldModel != null){
+			model.setSelectedItem(oldModel.getSelectedItem());
+		}
 		_schematic.getDateBox().setModel(model);
 		_schematic.getDateBox().setRenderer(new ComboRenderer()); // CB TODO -
 																	// find
