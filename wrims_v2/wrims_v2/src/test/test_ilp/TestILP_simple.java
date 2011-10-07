@@ -12,10 +12,8 @@ import wrimsv2.wreslparser.elements.Tools;
 public class TestILP_simple {
 	
 	private double tolerance_perc = 0.1/1000000; // 0.1 ppm
-	private String logFilePath;	
 	private String studyPath;	
 	private String dssPath;	
-	private String objMatchString = "L P   O P T I M A L   S O L U T I O N ---> OBJ:\\s+\\d+.\\d+";
 	private double expected;
 	
 	@Test(groups = { "ilp_simple" })
