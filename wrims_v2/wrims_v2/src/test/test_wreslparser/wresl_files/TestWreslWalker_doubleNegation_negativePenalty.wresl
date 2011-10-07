@@ -5,10 +5,12 @@ SEQUENCE CYCLE1 {
 
 MODEL first { 
 
+	define x {std kind 'CHANNEL' units 'CFS'}
+
 	goal someGoal {
 		lhs x
 		case DryCritical {
-			condition wyt_NODOS + prev_wyt_SAC >= 8
+			condition 5 > 9
 			rhs 0.0
 			lhs>rhs penalty -500.}
 		case otherwise {

@@ -21,8 +21,6 @@ public class Goal implements Serializable {
 	public Set<String> expressionDependants;
 	public ArrayList<EvaluatorParser> caseExpressionParsers;
 //	public ArrayList<String> casePenalty;
-//	public ArrayList<String> case_lhs_gt_rhs;
-//	public ArrayList<String> case_lhs_lt_rhs;
 	public String fromWresl;
 	public Set<String> neededVarInCycleSet;
 	public boolean needVarFromEarlierCycle;
@@ -35,8 +33,6 @@ public class Goal implements Serializable {
 		caseExpression = new ArrayList<String>();
 		expressionDependants = new HashSet<String>();
 //		casePenalty    = new ArrayList<String>();
-//		case_lhs_gt_rhs = new ArrayList<String>();
-//		case_lhs_lt_rhs = new ArrayList<String>();
 		fromWresl = Param.undefined;
 		neededVarInCycleSet = new HashSet<String>();
 		needVarFromEarlierCycle = false;
