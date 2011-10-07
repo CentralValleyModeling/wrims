@@ -361,6 +361,7 @@ public class DssViewer implements Outputer {
 						HecTime hecStartTime = new HecTime();
 						hecStartTime.set(tsc.startTime);
 						HecTime ht = new HecTime();
+						String value = "";
 						if (periodDate.indexOf("-") == -1) {
 							ht.setDate(periodDate);
 							int valueIndex = (ht.year() - hecStartTime.year())
@@ -368,36 +369,49 @@ public class DssViewer implements Outputer {
 							if (valueIndex < 0) {
 								System.out.println();
 							}
-							results[j].put(name, tsc.values[valueIndex] + " "
-									+ dataSet.getUnits()); // j is 0 for alt. 1
-							// OR 1 for alt. 2
+							value = tsc.values[valueIndex] + " "
+									+ dataSet.getUnits();
 						} else { // multiple-month time window LONG-TERM
 							// AVERAGES
 							if (twData.get(name) != null) {
 								if (isTAFSelected
 										&& _initialUnits.equals("CFS")
 										&& (tsc.fullName.indexOf("STORAGE/") == -1)) {
-									String value = twData.get(name)[j]
+									String tValue = twData.get(name)[j]
 											.substring(0, twData.get(name)[j]
 													.indexOf(" "));
-									double val = Double.parseDouble(value)
+									double val = Double.parseDouble(tValue)
 											/ _longTermTafToCfsConversionFactors
 													.get(periodDate);
-									results[j].put(name, val + " taf");
+									value = val + " taf";
 								} else if (!isTAFSelected
 										&& _initialUnits.equals("TAF")
 										&& (tsc.fullName.indexOf("STORAGE/") == -1)) {
-									String value = twData.get(name)[j]
+									String tValue = twData.get(name)[j]
 											.substring(0, twData.get(name)[j]
 													.indexOf(" "));
-									double val = Double.parseDouble(value)
+									double val = Double.parseDouble(tValue)
 											* _longTermTafToCfsConversionFactors
 													.get(periodDate);
-									results[j].put(name, val + " cfs");
+									value = val + " cfs";
 								} else {
-									results[j].put(name, twData.get(name)[j]);
+									value = twData.get(name)[j];
 								}
 							}
+						}
+						if (_mode.equals("Diff")) {
+							if (j > 0) {
+								String[] baseFields = results[0].get(name)
+										.split("\\s");
+								String[] altFields = value.split("\\s");
+								double baseVal = Double.parseDouble(baseFields[0]);
+								double altVal = Double.parseDouble(altFields[0]);
+								results[j].put(name, (altVal - baseVal) + " " + baseFields[1]);
+							} else {
+								results[j].put(name, value);
+							}
+						} else {
+							results[j].put(name, value);
 						}
 					} catch (HecMathException hme) {
 						hme.printStackTrace();
@@ -411,6 +425,7 @@ public class DssViewer implements Outputer {
 	}
 
 	Hashtable<String, String[]>[] results = null;
+
 	/**
 	 * CB added to load long-term averages in background This should be called
 	 * from within <code>SwingUtilities.invokeLater</code>.
@@ -420,7 +435,6 @@ public class DssViewer implements Outputer {
 		long startTime = System.currentTimeMillis();
 		_initialUnits = _units;
 		_longTermTafToCfsConversionFactors = new Hashtable<String, Double>();
-
 
 		if (_allVariableTWData == null) { // for time window periods
 			_allVariableTWData = new Hashtable<String, Hashtable<String, String[]>>();
@@ -577,16 +591,16 @@ public class DssViewer implements Outputer {
 				if (MainPanel.STOP_DSSVIEWER_METHODS) {
 					return false;
 				}
-				if (results[j].get(name) != null){
-					boolean allCalculated=true;
+				if (results[j].get(name) != null) {
+					boolean allCalculated = true;
 					String[] values = results[j].get(name);
-					for(Integer k: keys){
-						if (values[k.intValue()]==null){
-							allCalculated=false;
+					for (Integer k : keys) {
+						if (values[k.intValue()] == null) {
+							allCalculated = false;
 							break;
 						}
 					}
-					if (allCalculated){
+					if (allCalculated) {
 						continue;
 					}
 				}
@@ -1663,7 +1677,9 @@ public class DssViewer implements Outputer {
 		}
 		try {
 			String path = dataSet.getPath();
-			String fpart = path.split("/")[6] + " :: "+(key== 0 ? "BASE" : "ALT "+key) + (_mode.equals("Diff") ? " - BASE" : "");
+			String fpart = path.split("/")[6] + " :: "
+					+ (key == 0 ? "BASE" : "ALT " + key)
+					+ (_mode.equals("Diff") ? " - BASE" : "");
 			dataSet.setVersion(fpart);
 		} catch (HecMathException e) {
 			// TODO Auto-generated catch block
@@ -2554,5 +2570,9 @@ public class DssViewer implements Outputer {
 
 	public void setVariables(Hashtable<String, Object> variables) {
 		_variables = variables;
+	}
+
+	public void setMode(String val) {
+		_mode = val;
 	}
 }

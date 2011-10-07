@@ -93,6 +93,13 @@ public class SchematicViewer extends JPanel {
 					}
 				});
 			}
+			
+
+			@Override
+			public void nodeSelected(NodeEvent arg0) {
+				//System.out.println("Selected node: "+arg0.getNode());
+			}
+
 
 			@Override
 			public void linkModifying(LinkValidationEvent arg0) {
@@ -281,6 +288,9 @@ public class SchematicViewer extends JPanel {
 		for (ShapeNode item : items) {
 			if (!item.getBounds().intersects(visibleRect))
 				continue;
+			if (item.getTransparent()){// ignore transparent text nodes
+				continue;
+			}
 			variables.put(((ShapeNode) item).getTextToEdit(), item);
 		}
 		return variables;
@@ -418,10 +428,6 @@ public class SchematicViewer extends JPanel {
 						createTextNode(studyId, value, shapeNode);
 					}
 				}
-				/*
-				 * System.out.println("Setting studyId: " + studyId + " : " +
-				 * name + " : " + object + " -> value: " + value);
-				 */
 			}
 		}
 	}
@@ -456,6 +462,7 @@ public class SchematicViewer extends JPanel {
 			tf = new TextFormat(Align.Near, Align.Far);
 			break;
 		}
+		
 		ShapeNode transparentTextNode = diagram.getFactory()
 				.createShapeNode(r2);
 		transparentTextNode.setId(VALUE_TEXT);
@@ -466,6 +473,7 @@ public class SchematicViewer extends JPanel {
 		transparentTextNode.setBrush(shapeNode.getBrush());
 		transparentTextNode.setTextFormat(tf);
 		transparentTextNode.attachTo(shapeNode, attachPos);
+		//System.out.println("Creating text node: "+attachPos+":"+r2+":"+value+":"+shapeNode+":"+transparentTextNode);
 	}
 
 	private String truncateAfterDecimal(String value, int i) {

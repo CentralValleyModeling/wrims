@@ -1142,7 +1142,9 @@ public class FilterPanel extends JPanel {
 
 			Vector<String> allPaths = null; // = new Vector<String>();
 			boolean isNeedToCreate = false;
-
+			if (_periodValueViewer != null){
+				_periodValueViewer.setMode(_mainPanel.getMessagePanel().isCompMode() ? "Comp" : "Diff");
+			}
 			if (dssType >= -1 && dssType <= 1) {
 				if (selectedFiles) {
 					allPaths = new Vector<String>();
@@ -1176,6 +1178,7 @@ public class FilterPanel extends JPanel {
 						.getMessagePanel().getAnnualType(),
 						DEFAULT_TIME_WINDOW, allPaths, dssFiles, dssFparts,
 						keys, null, names);
+				_periodValueViewer.setMode(_mainPanel.getMessagePanel().isCompMode() ? "Comp" : "Diff");
 			} else {
 				if (allPaths != null){
 					_periodValueViewer.setPaths(allPaths);
@@ -1185,7 +1188,6 @@ public class FilterPanel extends JPanel {
 				_periodValueViewer.setFparts(dssFparts);
 			}
 			_periodValueViewer.setUncheckedDssFiles(unselectedDssFiles);
-
 			String units = _mainPanel.getMessagePanel().getUnits();
 			boolean wasSuccessful = _periodValueViewer.loadVariableData(units,
 					dssType, selectedFiles);

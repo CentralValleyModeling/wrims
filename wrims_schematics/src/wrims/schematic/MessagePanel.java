@@ -28,6 +28,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * 
@@ -585,7 +587,21 @@ public class MessagePanel {
 		// base = new JRadioButton(_aa.BaseModeAction);
 		comp = new JRadioButton(_aa.CompModeAction);
 		diff = new JRadioButton(_aa.DiffModeAction);
-
+		comp.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				_mainPanel.stopMonthlyDataWork();
+			}
+		});
+		diff.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				_mainPanel.stopMonthlyDataWork();
+			}
+		});
+		
 		JPanel panel = new JPanel();
 		ButtonGroup g = new ButtonGroup();
 		// g.add(base); g.add(comp); g.add(diff);
