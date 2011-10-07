@@ -26,6 +26,6 @@
 	<classpathentry kind="src" path="/wrims_v2"/>
 	<classpathentry kind="lib" path="lib/vista.jar"/>
 	<classpathentry kind="lib" path="lib/xml.jar"/>
-	<classpathentry kind="lib" path="lib/JDiagram.jar"/>
+	<classpathentry kind="lib" path="lib/JDiagram.jar" sourcepath="lib/JDiagram.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
