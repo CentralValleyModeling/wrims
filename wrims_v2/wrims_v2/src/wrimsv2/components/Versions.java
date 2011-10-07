@@ -14,70 +14,88 @@ public class Versions {
 	private String xmlFileName = "version.xml";
 	private Document xmlDocument = null;
 
+	public Versions(){
+		
+		setXmlDocument(xmlFileName);
+		
+	}
+	
 	public String getComplete() {
-		
-		String version_complete = "";
-		
-		if (xmlDocument == null) setXmlDocument(xmlFileName);
-		String version_svn = getTagValue("svn_number");
-		String version_main = getTagValue("main");
-		String version_status = getTagValue("status").toLowerCase();
-		
-		version_complete = "v"+version_main+" "+version_status+" (svn:"+version_svn+")";
+
+		String version_complete = "version unknown";
+
+		try {
+			String version_svn = getTagValue("svn_number");
+			String version_main = getTagValue("main");
+			String version_status = getTagValue("status").toLowerCase();
+
+			version_complete = "v" + version_main + " " + version_status + " (svn:" + version_svn + ")";
+		}
+		catch (Exception e) {
+			// e.printStackTrace();
+		}
+
 		return version_complete;
 	}
 	
-
-	
 	public int getSVN() {
 
-		if (xmlDocument == null) setXmlDocument(xmlFileName);
-		String svnStr = getTagValue("svn_number");
-
 		try {
+			String svnStr = getTagValue("svn_number");
 			int version_svn_number = Integer.parseInt(svnStr);
 
 			return version_svn_number;
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			// e.printStackTrace();
+			return -99999;
 		}
-		return -99;
 	}	
 
 	public String getMainVersion() {
 
-		if (xmlDocument == null) setXmlDocument(xmlFileName);
-		
-		String version_main = getTagValue("main");
-		
-		return version_main;
+		try {
+			String version_main = getTagValue("main");
+
+			return version_main;
+		}
+		catch (Exception e) {
+			// e.printStackTrace();
+			return "0";
+		}
 	}
 
 	public String getStatus() {
 
-		if (xmlDocument == null) setXmlDocument(xmlFileName);
-		
-		String version_status = getTagValue("status");
-		
-		return version_status;
+		try {
+			String version_status = getTagValue("status");
+
+			return version_status;
+		}
+		catch (Exception e) {
+			// e.printStackTrace();
+			return "debug";
+		}
 	}
 	
 	private void setXmlDocument(String xmlFileName) {
+		
+		if (xmlDocument == null) {
+			try {
+				//System.out.println(System.getProperty("user.dir"));			
+				InputStream inStream = getClass().getClassLoader().getResourceAsStream(xmlFileName);
+				//File inStream = new File("version.xml");
+				DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+				DocumentBuilder db = dbf.newDocumentBuilder();
+				//Document doc = db.parse(file);
+				Document doc = db.parse(inStream);
+				doc.getDocumentElement().normalize();
+				xmlDocument = doc;
+			}
+			catch (Exception e) {
+				//e.printStackTrace();
+			}
 
-		try {
-			//System.out.println(System.getProperty("user.dir"));			
-			InputStream inStream = getClass().getClassLoader().getResourceAsStream(xmlFileName);
-			//File inStream = new File("version.xml");
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			//Document doc = db.parse(file);
-			Document doc = db.parse(inStream);
-			doc.getDocumentElement().normalize();
-			xmlDocument = doc;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
 		}
 	
 	}	
