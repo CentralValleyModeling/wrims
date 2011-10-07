@@ -349,25 +349,30 @@ public class InputPanel extends JPanel {
 			int index = args[1].lastIndexOf("\\");
 			String mainDirectory = args[1].substring(0, index + 1);
 			String externalPath = mainDirectory + "External";
-			String vistaLibPath = System.getenv("Vista_Lib");
+			//String vistaLibPath = System.getenv("Vista_Lib");
 			String engineLibPath = wrimsv2EnginePath + "lib";
 			String javaBin = System.getenv("Java_Bin_Batch");
 			String javaFullPath = wrimsv2EnginePath = javaBin + "java";
 
 			// javaBin=convertPathBatchToFortran(javaBin);
 			// out.println("set Java_Bin_Fortran="+javaBin);
-			out.println("set path=" + externalPath + ";" + vistaLibPath + ";"
+			out.println("set path=" + externalPath + ";" //+ vistaLibPath + ";"
 					+ engineLibPath + ";%path%");
 			out.println();
 
 			String executeCommand = javaFullPath
 					+ " -Xmx1600m -Xss1024K -Djava.library.path="
-					+ externalPath + ";" + vistaLibPath + ";" + engineLibPath
+					+ externalPath + ";" + engineLibPath
 					+ " -cp \"" + engineLibPath + "\\WRIMSv2.jar" + ";"
 					+ engineLibPath + "\\wrimsv2\\external\\*.class;"
-					+ engineLibPath + "\\XAOptimizer.jar" + ";" + engineLibPath
-					+ "\\gurobi.jar" + ";" + engineLibPath + "\\ilpObj.jar"
-					+ ";" + vistaLibPath + "\\*\""
+					+ engineLibPath + "\\XAOptimizer.jar" + ";" 
+					+ engineLibPath + "\\gurobi.jar" + ";"
+					+ engineLibPath + "\\heclib.jar" + ";"
+					+ engineLibPath + "\\jnios.jar" + ";"
+					+ engineLibPath + "\\jpy.jar" + ";"
+					+ engineLibPath + "\\misc.jar" + ";"
+					+ engineLibPath + "\\pd.jar" + ";"
+					+ engineLibPath + "\\vista.jar\""
 					+ " wrimsv2.components.ControllerSG ";
 			for (int i = 0; i < 17; i++) {
 				executeCommand = executeCommand + args[i] + " ";
