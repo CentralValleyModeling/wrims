@@ -10,14 +10,15 @@ public class WeightElement implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	public String weight;
+	public String condition;
 	public ValueEvaluatorParser weightParser;
 	public String fromWresl;
 	private double value;
 	
 	public WeightElement(){
 		weight = Param.undefined;
+		condition = Param.always;
 		fromWresl = Param.undefined;
-
 	}
 	
 	public void setValue(double value){

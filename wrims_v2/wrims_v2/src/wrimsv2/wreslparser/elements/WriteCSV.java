@@ -28,7 +28,7 @@ public class WriteCSV {
 	  //private static PrintWriter out;
 	
 	  public static String sequence_header ="CYCLE,CONDITION";
-	  public static String weight_header ="DVAR,WEIGHT";
+	  public static String weight_header ="DVAR,CONDITION,WEIGHT";
 	  public static String external_header ="FUNCTION,FILE,FROM_WRESL_FILE";
 	  public static String svar_header   ="NAME,CASE,ORDER,CONDITION,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,USED_IN_LATER_CYCLE";
 	  public static String timeseries_header ="NAME,B_PART,TYPE,UNITS,CONVERT_TO_UNITS,FROM_WRESL_FILE";
@@ -372,7 +372,9 @@ public class WriteCSV {
 
 			    out.print(k); // for DVAR NAME
 
-			    out.print(Param.csv_seperator+s.weight); //for DSS B Part	
+			    out.print(Param.csv_seperator+s.condition); 
+			    
+			    out.print(Param.csv_seperator+s.weight); 
 
 				out.print("\n");	
 
