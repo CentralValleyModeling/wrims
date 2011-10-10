@@ -254,7 +254,7 @@ penalty returns[String w, boolean isZero, boolean isNegative]
 			try { 
 				double p = Double.parseDouble($n.text); 
 				if      ( p == 0 ) { $isZero = true;     $w = "0";}
-				else if ( p < 0  ) { $isNegative = true; $w = Double.toString(-p);} 
+				else if ( p < 0  ) { $isNegative = true; $w = Double.toString(-p); LogUtils.errMsg(" In Goal named \""+$goal::goalName+"\" negative penalty is not supported in WRIMS v2 beta yet.");} 
 				else               { $w = Double.toString(p);} 
 			}
 			catch (Exception e) { }
