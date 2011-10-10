@@ -201,12 +201,8 @@ public class ControllerSG {
 		}
 	}
 	
-	public StudyDataSet parse()throws RecognitionException, IOException{
-		Calendar cal = Calendar.getInstance();
-		System.out.println("Before Parsser: "+cal.getTimeInMillis());
-		
-		return StudyUtils.checkStudy(FilePaths.fullMainPath, true);
-		
+	public StudyDataSet parse()throws RecognitionException, IOException{	
+		return StudyUtils.checkStudy(FilePaths.fullMainPath, true);	
 	}
 	
 	public void runModel(StudyDataSet sds){

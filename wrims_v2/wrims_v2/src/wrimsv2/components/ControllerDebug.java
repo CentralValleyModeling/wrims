@@ -53,6 +53,7 @@ import wrimsv2.tools.RCCComparison;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyConfig;
 import wrimsv2.wreslparser.elements.StudyParser;
+import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.elements.TempData;
 import wrimsv2.wreslparser.elements.WriteCSV;
 import lpsolve.*;
@@ -203,26 +204,8 @@ public class ControllerDebug extends Thread {
 		}
 	}
 	
-	public StudyDataSet parse()throws RecognitionException, IOException{
-		Calendar cal = Calendar.getInstance();
-		System.out.println("Before Parsser: "+cal.getTimeInMillis());
-		
-		String csvFolderPath = FilePaths.csvFolderName;
-		String inputFilePath = FilePaths.fullMainPath;
-		String logFilePath = csvFolderPath+".log";
-		
-		File absFile = new File(inputFilePath).getAbsoluteFile();
-		String absFilePath = absFile.getCanonicalPath().toLowerCase();
-		
-		LogUtils.setLogFile(logFilePath);
-		TempData td = new TempData();
-		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
-		td.model_dataset_map=StudyParser.parseModels(sc,td, false, true);		
-		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
-		StudyParser.analyzeVarNeededFromCycles(sc, sd);
-		WriteCSV.study(sd, csvFolderPath ) ;
-		LogUtils.closeLogFile();
-		return sd;	
+	public StudyDataSet parse()throws RecognitionException, IOException{	
+		return StudyUtils.checkStudy(FilePaths.fullMainPath, true);	
 	}
 	
 	public void runModel(StudyDataSet sds){

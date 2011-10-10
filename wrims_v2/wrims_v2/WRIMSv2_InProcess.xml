@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="WRIMSv2" name="Create Standalone Runnable Jar for WRIMSv2">
 
-	<target name="WRIMSv2" depends="Clean_files, Generate_version, Build_jar_zip">
+	<target name="WRIMSv2" depends="Clean_files,Build_jar_zip">
 
 		<echo message="Finish WRIMS v2" />
 		
@@ -15,8 +15,6 @@
 
 	<target name="Clean_files" >
 		<echo message="Running Clean_Files" />
-		<delete file="bin/version.xml"/>
-		<delete dir="jar_out"/>
 		<delete file="zip_out/*.zip"/>
 		<delete dir="zip_out"/>
 		<mkdir dir="jar_out"/>
