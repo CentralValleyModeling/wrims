@@ -53,6 +53,7 @@ import java.io.PrintWriter;
 import java.util.Date;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -309,6 +310,8 @@ public class InputPanel extends JPanel {
 				runStudy();
 			}
 		});
+		JCheckBox xalog=new JCheckBox("xa log");
+		panel.add(xalog);
 		return panel;
 	}
 
@@ -340,7 +343,11 @@ public class InputPanel extends JPanel {
 			args[13] = String.valueOf(TimeOperation.monthValue(endMonth
 					.toLowerCase()));
 			args[14] = (String) _day[1].getSelectedItem();
-			args[15] = "XA";
+			if (xalog.isSelected()) {
+				args[15] = "XALOG";
+			}else{
+				args[15] = "XA";
+			}
 			args[16] = "csv";
 
 			out.println("@echo off");
@@ -722,5 +729,6 @@ public class InputPanel extends JPanel {
 
 	private JTextArea _desc;
 	private JTabbedPane tabbedPane;
+	private JCheckBox xalog;
 	public static int _numYearsMax = 201;
 }
