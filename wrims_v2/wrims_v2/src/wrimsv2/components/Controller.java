@@ -89,14 +89,14 @@ public class Controller {
 	}
 	
 	public void setControlData(){
-		FilePaths.groundwaterDir="D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\CVGroundwater\\Data\\";
-		FilePaths.setMainFilePaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\CONV\\Run\\mainCONV_30.wresl");
-		FilePaths.setSvarDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06_SV.dss");
-        FilePaths.setInitDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06Init.dss");   
-        FilePaths.setDvarDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\CONV\\DSS\\TestWRIMSV2DV.dss");
+		FilePaths.groundwaterDir="D:\\BDCP_MODEL\\calsim30_alt1_elt_roa25_slr15_cc5_100411_w2\\calsim30_bo\\common\\CVGroundwater\\Data\\";
+		FilePaths.setMainFilePaths("D:\\BDCP_MODEL\\calsim30_alt1_elt_roa25_slr15_cc5_100411_w2\\calsim30_bo\\conv\\Run\\mainCONV_30.wresl");
+		FilePaths.setSvarDssPaths("D:\\BDCP_MODEL\\calsim30_alt1_elt_roa25_slr15_cc5_100411_w2\\calsim30_bo\\common\\DSS\\CalSim30_2020_SV.dss");
+        FilePaths.setInitDssPaths("D:\\BDCP_MODEL\\calsim30_alt1_elt_roa25_slr15_cc5_100411_w2\\calsim30_bo\\common\\DSS\\CalSim30_2020Init.dss");   
+        FilePaths.setDvarDssPaths("D:\\BDCP_MODEL\\calsim30_alt1_elt_roa25_slr15_cc5_100411_w2\\calsim30_bo\\conv\\DSS\\ALT1_ELT_100411_DV.dss");
 		ControlData cd=new ControlData();
-		cd.svDvPartF="CALSIM30_06";
-		cd.initPartF="CALSIM30_06";
+		cd.svDvPartF="CALSIM30_2020";
+		cd.initPartF="CALSIM30_2020";
 		cd.partA = "CALSIM";
 		cd.partE = "1MON";
 		cd.timeStep="1MON";
@@ -213,7 +213,7 @@ public class Controller {
 	
 	public void runModel(StudyDataSet sds){
 		preRunModel(sds);
-		if (ControlData.solverName.equalsIgnoreCase("XA")){
+		if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG") ){
 			runModelXA(sds);
 		}else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
 			runModelGurobi(sds);
@@ -516,7 +516,7 @@ public class Controller {
 		ControlData.xasolver.setModelSize(100, 100);
 		ControlData.xasolver.setCommand("MAXIMIZE Yes MUTE yes FORCE No wait no matlist v set visible no");
 		//ControlData.xasolver.setCommand("set sortName Yes FileName d:\\temp Output v2%d.log MatList V MPSX Yes ToRcc Yes");
-		//ControlData.xasolver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log set sortName Yes MatList V MPSX Yes ToRcc Yes set debug Yes  ListInput Yes" ) ;
+		if (ControlData.solverName.equalsIgnoreCase("XALOG") ) ControlData.xasolver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log set sortName Yes MatList V MPSX Yes ToRcc Yes set debug Yes  ListInput Yes" ) ;
 	}
 
 	public void readTimeseries(){

@@ -227,7 +227,7 @@ public class ControllerDebug extends Thread {
 	
 	public void runModel(StudyDataSet sds){
 		preRunModel(sds);
-		if (ControlData.solverName.equalsIgnoreCase("XA")){
+		if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG") ){
 			runModelXA(sds);
 		}else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
 			runModelGurobi(sds);
@@ -557,7 +557,7 @@ public class ControllerDebug extends Thread {
 		ControlData.xasolver.setModelSize(100, 100);
 		ControlData.xasolver.setCommand("MAXIMIZE Yes MUTE yes FORCE No wait no matlist v set visible no");
 		//ControlData.xasolver.setCommand("set sortName Yes FileName d:\\temp Output v2%d.log MatList V MPSX Yes ToRcc Yes");
-		//ControlData.xasolver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log set sortName Yes MatList V MPSX Yes ToRcc Yes set debug Yes  ListInput Yes" ) ;
+		if (ControlData.solverName.equalsIgnoreCase("XALOG") ) ControlData.xasolver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log set sortName Yes MatList V MPSX Yes ToRcc Yes set debug Yes  ListInput Yes" ) ;
 	}
 
 	public void readTimeseries(){
