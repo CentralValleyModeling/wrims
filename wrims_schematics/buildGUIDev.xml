@@ -71,11 +71,6 @@
 				<include name="**/**"/>
 			</fileset>
 		</copy>
-		<copy todir="${dist.dir}/vista/">
-			<fileset dir="${vista.dir}">
-				<include name="**/**"/>
-			</fileset>
-		</copy>
 		<jar destfile="${dist.dir}/lib/wrimsv2_SG.jar" basedir="build/classes"></jar>
 		<zip destfile="build/wrimsv2_SGDev-${DSTAMP}.zip" basedir="${dist.dir}/.." />
 	</target>
