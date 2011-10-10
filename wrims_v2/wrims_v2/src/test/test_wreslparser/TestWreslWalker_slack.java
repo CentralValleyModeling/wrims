@@ -69,7 +69,7 @@ public class TestWreslWalker_slack {
 		
 		csvText = Tools.readFileAsString(csvFolderPath+"\\second\\weight.csv");	
 
-		s = "l_b2action1sha_2_1,-99";
+		s = "l_b2action1sha_2_1,always,-99";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);

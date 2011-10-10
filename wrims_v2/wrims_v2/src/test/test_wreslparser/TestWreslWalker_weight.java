@@ -67,19 +67,19 @@ public class TestWreslWalker_weight {
 		
 		int n;
 	
-		s = "y,100";
+		s = "y,always,100";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "z,100";
+		s = "z,always,100";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 		
 		csvText = Tools.readFileAsString(csvFolderPath+"\\third\\weight.csv");	
 	
-		s = "errpos_shsta,-99999";
+		s = "errpos_shsta,always,-99999";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -136,7 +136,7 @@ public class TestWreslWalker_weight {
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 0);
 
-		s = "x,20000";
+		s = "x,always,20000";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
