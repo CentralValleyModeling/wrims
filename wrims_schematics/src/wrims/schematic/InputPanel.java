@@ -310,7 +310,7 @@ public class InputPanel extends JPanel {
 				runStudy();
 			}
 		});
-		JCheckBox xalog=new JCheckBox("xa log");
+		xalog=new JCheckBox("xa log");
 		panel.add(xalog);
 		return panel;
 	}
