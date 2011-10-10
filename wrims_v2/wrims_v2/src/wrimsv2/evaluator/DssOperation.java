@@ -215,7 +215,8 @@ public class DssOperation {
 		}
 	}
 	
-	public static void writeInitDvarAliasToDSS() {				
+	public static void writeInitDvarAliasToDSS() {	
+		System.out.println("write initial data for dvar and alias to dv dss");
 		Set initSet=DataTimeSeries.dvAliasInit.keySet();
 		Iterator iterator = initSet.iterator();
 		while(iterator.hasNext()){
@@ -243,6 +244,7 @@ public class DssOperation {
 	}
 	
 	public static void writeDVAliasToDSS() {
+		System.out.println("write dvar and alias to dv dss");
 		String startDateStr=TimeOperation.dssTimeEndDay(ControlData.writeDssStartYear, ControlData.writeDssStartMonth, ControlData.writeDssStartDay);
 		long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
 		Set dvAliasSet=DataTimeSeries.dvAliasTS.keySet();
