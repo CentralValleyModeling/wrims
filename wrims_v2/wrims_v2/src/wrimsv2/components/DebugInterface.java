@@ -127,6 +127,28 @@ public class DebugInterface {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}else if (request.equals("terminate")) {
+			if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG")) {
+				ControlData.xasolver.close();
+			}
+			controllerDebug.stop();
+			System.out.println("terminated");
+			try {
+				sendRequest("terminated");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			isDebugging=false;
+		}else if (request.equals("suspend")) {
+			controllerDebug.suspend();
+			System.out.println("suspended");
+			try {
+				sendRequest("suspended");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
