@@ -23,8 +23,8 @@ import javax.swing.Timer;
 
 import wrims.dss.DssViewer;
 
-public class MainPanel extends JPanel { // implements ActionListener { //CB
-										// added ActionListener
+public class MainPanel extends JPanel { 
+	private static final boolean DISABLE_ALL_THREAD_WORK = true;
 	public static boolean DEBUG = false;
 	public JLabel _status; // CB TODO make this private too
 	private JFrame _frame;
@@ -505,6 +505,9 @@ public class MainPanel extends JPanel { // implements ActionListener { //CB
 	 * @return
 	 */
 	void doMonthlyDataWork(final int dssType) {
+		if (DISABLE_ALL_THREAD_WORK){
+			return;
+		}
 		_checker = new Thread() {
 			public void run() {
 				while (!isReadyForMonthlyWork()) {
@@ -546,7 +549,7 @@ public class MainPanel extends JPanel { // implements ActionListener { //CB
 
 		_selectedFilesLongTermAverageThread = new SelectedFilesLongTermAveragesThread(
 				dssType);
-		_selectedFilesLongTermAverageThread.start();
+		//_selectedFilesLongTermAverageThread.start();
 
 		_unselectedFilesThread = new UnselectedFilesThread(dssType);
 		_unselectedFilesThread.start();

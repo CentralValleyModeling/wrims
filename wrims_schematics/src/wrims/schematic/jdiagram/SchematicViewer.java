@@ -391,8 +391,8 @@ public class SchematicViewer extends JPanel {
 		if (lastVisibleRect == null) {
 			lastVisibleRect = visibleRect;
 		}
-		//System.out.println("viewportChanged: " + visibleRect + " on "
-		//		+ new Date());
+		// System.out.println("viewportChanged: " + visibleRect + " on "
+		// + new Date());
 		clearValueBoxes(lastVisibleRect);
 		lastVisibleRect = visibleRect;
 		schematic.updateValues();
@@ -532,8 +532,8 @@ public class SchematicViewer extends JPanel {
 			break;
 		case 3:
 			attachPos = AttachToNode.TopRight;
-			r2 = new Rectangle2D.Float(r.x + r.width / 2, r.y + r.height / 2,
-					r.width / 2, r.height / 2);
+			r2 = new Rectangle2D.Float(r.x + r.width / 2, r.y, r.width / 2,
+					r.height / 2);
 			tf = new TextFormat(Align.Far, Align.Near);
 			break;
 		default:
