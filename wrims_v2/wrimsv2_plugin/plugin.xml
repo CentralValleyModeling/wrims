@@ -129,4 +129,42 @@
      </toolbar>
    </menuContribution>
  </extension>
+ <extension
+	point="org.eclipse.ui.actionSets">
+	<actionSet
+		label="debug"
+		visible="true"
+		id="wpp.debugcontrol">
+		<action
+			label="Suspend"
+			class="wrimsv2_plugin.debugger.menuitem.SuspendMenu"
+			menubarPath="org.eclipse.ui.run/debug"
+			id="wpp.suspend">
+		</action>
+		<action
+			label="Terminate"
+			class="wrimsv2_plugin.debugger.menuitem.TerminateMenu"
+			menubarPath="org.eclipse.ui.run/debug"
+			id="wpp.terminate">
+		</action>
+		<action
+			label="Next time step"
+			class="wrimsv2_plugin.debugger.menuitem.NextTimeStepMenu"
+			menubarPath="org.eclipse.ui.run/debug"
+			id="wpp.nexttimestep">
+		</action>
+		<action
+			label="Next cycle"
+			class="wrimsv2_plugin.debugger.menuitem.NextCycleMenu"
+			menubarPath="org.eclipse.ui.run/debug"
+			id="wpp.nextcycle">
+		</action>
+		<action
+			label="Resume"
+			class="wrimsv2_plugin.debugger.menuitem.ResumeMenu"
+			menubarPath="org.eclipse.ui.run/debug"
+			id="wpp.resume">
+		</action>
+	</actionSet>
+</extension>
 </plugin>

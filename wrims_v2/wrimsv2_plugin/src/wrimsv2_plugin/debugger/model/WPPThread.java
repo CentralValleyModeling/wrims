@@ -238,7 +238,7 @@ public class WPPThread extends WPPDebugElement implements IThread, IWPPEventList
 	 */
 	@Override
 	public void terminate() throws DebugException {
-		sendRequest("exit");
+		sendRequest("terminate");
 	}
 	
 	/**
