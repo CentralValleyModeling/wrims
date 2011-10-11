@@ -33,6 +33,7 @@ import java.util.Hashtable;
 import java.util.Vector;
 import java.util.prefs.Preferences;
 
+import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
@@ -58,6 +59,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
@@ -72,6 +74,7 @@ import vista.gui.VistaUtils;
 import wrims.dss.DssViewer;
 import wrims.schematic.element.Element;
 import wrims.schematic.jdiagram.ElementTask;
+import wrims.schematic.jdiagram.ImageUtil;
 import wrims.schematic.jdiagram.SchematicViewer;
 
 public class MainFrame extends JPanel implements Runnable, DocumentListener,
@@ -95,12 +98,13 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 			_viewer = new SchematicViewer();
 			_viewer.setSchematic(this);
 			new Thread(new Runnable() {
-				
+
 				@Override
 				public void run() {
 					try {
-						long ti=System.currentTimeMillis();
-						_viewer.load(mainDir + "/wrims/schematic/CS3_NetworkSchematic.xml");
+						long ti = System.currentTimeMillis();
+						_viewer.load(mainDir
+								+ "/wrims/schematic/CS3_NetworkSchematic.xml");
 						_viewer.findInView("S_SHS");
 						_viewer.zoomOut();
 						_viewer.zoomOut();
@@ -624,7 +628,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	};
 
 	SchematicRelatedAction Forward1Action = new DssFrameRelatedAction("",
-			createIconImage("images/forward.gif"), this) {
+			createIconImage("images/toolbar/forward.png"), this) {
 
 		public void actionPerformed(ActionEvent e) {
 			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -654,7 +658,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	};
 
 	SchematicRelatedAction Back1Action = new DssFrameRelatedAction("",
-			createIconImage("images/back.gif"), this) {
+			createIconImage("images/toolbar/backward.png"), this) {
 		public void actionPerformed(ActionEvent e) {
 			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 			JComboBox dateBox = _dateBox;
@@ -679,7 +683,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	};
 
 	SchematicRelatedAction ForwardBlockAction = new DssFrameRelatedAction("",
-			createIconImage("images/fastforward.gif"), this) {
+			createIconImage("images/toolbar/forward_block.png"), this) {
 		public void actionPerformed(ActionEvent e) {
 			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 			JComboBox dateBox = _dateBox;
@@ -707,7 +711,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		}
 	};
 	SchematicRelatedAction BackBlockAction = new DssFrameRelatedAction("",
-			createIconImage("images/fastback.gif"), this) {
+			createIconImage("images/toolbar/backward_block.png"), this) {
 		public void actionPerformed(ActionEvent e) {
 			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 			JComboBox dateBox = _dateBox;
@@ -1145,6 +1149,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		mainFrame.setJMenuBar(mainMenuBar);
 	}
 
+	@SuppressWarnings("serial")
 	private JToolBar initToolbar1() { // CB renamed and changed to private
 		JToolBar toolBar = new JToolBar();
 		toolBar.setAlignmentX(0);
@@ -1156,6 +1161,22 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		button.setToolTipText("Zoom In");
 		button = toolBar.add(_viewer.getZoomOutAction());
 		button.setToolTipText("Zoom Out");
+		button = toolBar.add(_viewer.getZoomToFitAction());
+		button.setToolTipText("Zoom To All");
+		button = toolBar.add(_viewer.getZoomNormalAction());
+		
+		toolBar.addSeparator();
+		final JToggleButton panToggle = new JToggleButton(ImageUtil.createImageIcon("/wrims/schematic/images/toolbar/pan.png"));
+		panToggle.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				_viewer.setPanMode(panToggle.isSelected());
+			}
+		});
+		panToggle.setToolTipText("Pan");
+		toolBar.add(panToggle);
+
 		toolBar.addSeparator();
 		button = toolBar.add(PlotAction);
 		button.setToolTipText("Plot");
@@ -1237,7 +1258,6 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		dssPeriodControlPanel.add(_forward1BlockButton, gc);
 		dssPeriodControlPanel.add(_back1BlockButton, gc);
 		dssPeriodControlPanel.add(new Label("  "), gc);
-		
 
 		dssPeriodControlPanel.add(new JLabel("Date: "), gc);
 		// No toolBar.add(dateLabel, gc);
@@ -1324,7 +1344,8 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	}
 
 	void showAbout() {
-		JOptionPane.showMessageDialog(this, "Calsim 3 Schematic UI: $Revision$", "About",
+		JOptionPane.showMessageDialog(this,
+				"Calsim 3 Schematic UI: $Revision$", "About",
 				JOptionPane.INFORMATION_MESSAGE);
 	}
 
@@ -2387,8 +2408,10 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 
 			@Override
 			public boolean accept(File f) {
-				return f != null && f.isFile()
-						&& (f.getName().toLowerCase().endsWith(".xml") || f.getName().toLowerCase().endsWith(".sch"));
+				return f != null
+						&& f.isFile()
+						&& (f.getName().toLowerCase().endsWith(".xml") || f
+								.getName().toLowerCase().endsWith(".sch"));
 			}
 		});
 		int rval = chooser.showOpenDialog(this);
@@ -2415,7 +2438,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 			@Override
 			public boolean accept(File f) {
 				return f != null && f.isFile();
-						
+
 			}
 		});
 		int rval = chooser.showSaveDialog(this);
@@ -2426,6 +2449,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		p.put("SCHEMATICS_DIRECTORY", selectedFile.getParent());
 		return selectedFile.getAbsolutePath();
 	}
+
 	@Override
 	public void clearValues() {
 		getCurrentView().clearAllValueBoxes();

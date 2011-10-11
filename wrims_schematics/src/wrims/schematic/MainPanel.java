@@ -35,8 +35,6 @@ public class MainPanel extends JPanel { // implements ActionListener { //CB
 	private Timer _threadMonitor; // CB added
 	private Thread _checker = null; // CB added
 
-	public static boolean STOP_DSSVIEWER_METHODS = false;
-
 	// CB added. A thread for calculating long-term averages for the Schematic
 	// ValueNodes.
 	private UpdateSchematicValuesThread _updateSchematicValuesThread = null;
@@ -507,7 +505,6 @@ public class MainPanel extends JPanel { // implements ActionListener { //CB
 	 * @return
 	 */
 	void doMonthlyDataWork(final int dssType) {
-		STOP_DSSVIEWER_METHODS = true;
 		_checker = new Thread() {
 			public void run() {
 				while (!isReadyForMonthlyWork()) {
@@ -537,12 +534,6 @@ public class MainPanel extends JPanel { // implements ActionListener { //CB
 		// System.out.println("Entered startMonthlyDataWork(dssType)");
 
 		_schematic.resetProgressBars();
-
-		STOP_DSSVIEWER_METHODS = true;
-
-		if (STOP_DSSVIEWER_METHODS) {
-			return;
-		}
 
 		_selectedFilesThread = new SelectedFilesThread(dssType);
 		_selectedFilesThread.start();

@@ -99,8 +99,6 @@ public class PanelWithCollapsibleInsetPanel extends JPanel {
 	public void expand() {
 		insetPanel.setPreferredSize(insetPanelSize);
 		this.doLayout();
-		insetPanel.invalidate();
-		insetPanel.doLayout();
 		insetPanel.paintAll(insetPanel.getGraphics());
 	}
 

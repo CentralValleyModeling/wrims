@@ -464,9 +464,6 @@ public class DssViewer implements Outputer {
 		Enumeration<String> periodEnum = periods.elements();
 		// int periodIndex = 0;
 		while (periodEnum.hasMoreElements()) {
-			if (MainPanel.STOP_DSSVIEWER_METHODS) {
-				return false;
-			}
 			String period = periodEnum.nextElement();
 			HecTime startDate = new HecTime();
 			HecTime endDate = new HecTime();
@@ -587,9 +584,6 @@ public class DssViewer implements Outputer {
 
 				if (DssFiles.get(j) == null) {
 					continue;
-				}
-				if (MainPanel.STOP_DSSVIEWER_METHODS) {
-					return false;
 				}
 				if (results[j].get(name) != null) {
 					boolean allCalculated = true;
@@ -811,9 +805,6 @@ public class DssViewer implements Outputer {
 			}
 			String thePath;
 			try {
-				if (MainPanel.STOP_DSSVIEWER_METHODS) {
-					return false;
-				}
 				DSSFile theFile = null;
 				// Transfer base file(s) F-part(s) to a String array of size 1
 				// or 2 for use later
@@ -952,9 +943,6 @@ public class DssViewer implements Outputer {
 							/ (numberOfSelectedFiles + numberOfUnselectedFiles)
 							/ _paths.size();
 					while (fileElements.hasMoreElements()) {
-						if (MainPanel.STOP_DSSVIEWER_METHODS) {
-							return false;
-						}
 						++fileElementCount; // CB added
 						if (dssType > -1) {
 							System.out.print("");
@@ -962,9 +950,6 @@ public class DssViewer implements Outputer {
 						++fileCount;
 						theFile = DSS.open(fileElements.nextElement(),
 								_timewindow); // CB added
-						if (MainPanel.STOP_DSSVIEWER_METHODS) {
-							return false;
-						}
 						if (isSelectedFiles) {
 							percentFilesDone = 100
 									* ((float) fileCount - 1)
@@ -997,9 +982,6 @@ public class DssViewer implements Outputer {
 							}
 							boolean wasFoundInFile = false;
 							for (int k = 0; k < baseF.length; ++k) {
-								if (MainPanel.STOP_DSSVIEWER_METHODS) {
-									return false;
-								}
 								if (_Fparts.get(key) instanceof String) { // CB
 									// added
 									// the

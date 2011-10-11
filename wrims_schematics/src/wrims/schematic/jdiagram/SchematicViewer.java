@@ -1,13 +1,17 @@
 package wrims.schematic.jdiagram;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Float;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 
 import javax.swing.AbstractAction;
@@ -16,6 +20,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
+
+import sun.swing.SwingUtilities2;
 
 import wrims.schematic.MainFrame;
 import wrims.schematic.element.Element;
@@ -62,6 +68,8 @@ public class SchematicViewer extends JPanel {
 	protected Rectangle2D.Float lastVisibleRect;
 	private MainFrame schematic;
 	private boolean showValueBoxes;
+	private AbstractAction zoomNormalAction;
+	private AbstractAction zoomBestFitAction;
 
 	/**
 	 * Add diagram viewer to a scrollpane
@@ -81,27 +89,40 @@ public class SchematicViewer extends JPanel {
 
 		overview = new Overview();
 		overview.setDiagramView(diagramView);
+
 		overview.setFitAll(true);
 		panel.getInsetPanel().add(overview);
 
 		diagram.getSelection().setStyle(SelectionStyle.SelectionHandles);
 		diagram.getSelection().setAllowMultipleSelection(true);
 		diagram.addDiagramListener(new DiagramAdapter() {
+			private Timer refreshTimer = new Timer();
+			private TimerTask refreshTask;
+			private int delay = 250;
+
 			@Override
 			public void viewportChanged() {
-				SwingUtilities.invokeLater(new Runnable(){
-					public void run(){
-						refreshValues(false);
+				refreshTimer.cancel();
+				refreshTimer = new Timer();
+				refreshTask = new TimerTask() {
+
+					@Override
+					public void run() {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								refreshValues(false);
+							}
+						});
 					}
-				});
+
+				};
+				refreshTimer.schedule(refreshTask, delay);
 			}
-			
 
 			@Override
 			public void nodeSelected(NodeEvent arg0) {
-				//System.out.println("Selected node: "+arg0.getNode());
-			}
 
+			}
 
 			@Override
 			public void linkModifying(LinkValidationEvent arg0) {
@@ -119,6 +140,8 @@ public class SchematicViewer extends JPanel {
 					return;
 				}
 				DiagramNode node = e.getNode();
+				ShapeNode shapeNode = (ShapeNode) node;
+				String id = shapeNode.getShape().getId();
 				Element el = createElement(node);
 				final Element fel = el;
 				SwingUtilities.invokeLater(new Runnable() {
@@ -195,11 +218,13 @@ public class SchematicViewer extends JPanel {
 				zoomIn();
 			}
 
-
 		};
 		zoomInAction.putValue(Action.SHORT_DESCRIPTION, "zoom in");
-		zoomInAction.putValue(Action.SMALL_ICON, ImageUtil
-				.createImageIcon("/wrims/schematic/images/ZoomIn16.gif"));
+		zoomInAction
+				.putValue(
+						Action.SMALL_ICON,
+						ImageUtil
+								.createImageIcon("/wrims/schematic/images/toolbar/zoom_in.png"));
 
 		zoomOutAction = new AbstractAction() {
 
@@ -210,8 +235,39 @@ public class SchematicViewer extends JPanel {
 
 		};
 		zoomOutAction.putValue(Action.SHORT_DESCRIPTION, "zoom out");
-		zoomOutAction.putValue(Action.SMALL_ICON, ImageUtil
-				.createImageIcon("/wrims/schematic/images/ZoomOut16.gif"));
+		zoomOutAction
+				.putValue(
+						Action.SMALL_ICON,
+						ImageUtil
+								.createImageIcon("/wrims/schematic/images/toolbar/zoom_out.png"));
+
+		zoomNormalAction = new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				zoomNormal();
+			}
+		};
+		zoomNormalAction.putValue(Action.SHORT_DESCRIPTION, "zoom normal");
+		zoomNormalAction
+				.putValue(
+						Action.SMALL_ICON,
+						ImageUtil
+								.createImageIcon("/wrims/schematic/images/toolbar/zoom_original.png"));
+
+		zoomBestFitAction = new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				zoomToAll();
+			}
+		};
+		zoomBestFitAction.putValue(Action.SHORT_DESCRIPTION, "zoom all");
+		zoomBestFitAction
+				.putValue(
+						Action.SMALL_ICON,
+						ImageUtil
+								.createImageIcon("/wrims/schematic/images/toolbar/zoom_best_fit.png"));
 
 	}
 
@@ -223,40 +279,47 @@ public class SchematicViewer extends JPanel {
 		return zoomOutAction;
 	}
 
+	public Action getZoomNormalAction() {
+		return zoomNormalAction;
+	}
+
+	public Action getZoomToFitAction() {
+		return zoomBestFitAction;
+	}
+
 	public void zoomIn() {
 		overview.suspendRepaint();
 		diagramView.suspendRepaint();
 		Rectangle2D.Float rect = diagramView.deviceToDoc(diagramView
 				.getVisibleRect());
-		rect.setRect(rect.x + rect.width / 2 * (1 - 1 / zoomFactor),
-				rect.y + rect.height / 2 * (1 - 1 / zoomFactor),
-				rect.width / zoomFactor, rect.height / zoomFactor);
+		rect.setRect(rect.x + rect.width / 2 * (1 - 1 / zoomFactor), rect.y
+				+ rect.height / 2 * (1 - 1 / zoomFactor), rect.width
+				/ zoomFactor, rect.height / zoomFactor);
 		diagramView.zoomToFit(rect);
 		diagramView.resumeRepaint();
 		overview.resumeRepaint();
 	}
-	
-	public void zoomOut(){
+
+	public void zoomOut() {
 		overview.suspendRepaint();
 		diagramView.suspendRepaint();
 		Rectangle2D.Float rect = diagramView.deviceToDoc(diagramView
 				.getVisibleRect());
 		rect.setRect(rect.x - rect.width / 2 * (zoomFactor - 1), rect.y
-				- rect.height / 2 * (zoomFactor - 1), rect.width
-				* zoomFactor, rect.height * zoomFactor);
+				- rect.height / 2 * (zoomFactor - 1), rect.width * zoomFactor,
+				rect.height * zoomFactor);
 		diagramView.zoomToFit(rect);
 		diagramView.resumeRepaint();
 		overview.resumeRepaint();
 	}
-	
-	public Action getZoomNormalAction() {
-		// TODO Auto-generated method stub
-		return null;
+
+	public void zoomToAll() {
+		System.out.println("zoomFactor: " + diagramView.getZoomFactor());
+		diagramView.zoomToFit();
 	}
 
-	public Action getZoomToFitAction() {
-		// TODO Auto-generated method stub
-		return null;
+	public void zoomNormal() {
+		diagramView.setZoomFactor(35.0f);
 	}
 
 	/**
@@ -276,18 +339,19 @@ public class SchematicViewer extends JPanel {
 			diagram.loadFrom(filename);
 		}
 		this.filename = filename;
-		System.out.println("Time to load "+filename+": "+(System.currentTimeMillis()-ti));
+		System.out.println("Time to load " + filename + ": "
+				+ (System.currentTimeMillis() - ti));
 	}
-	
-	public void save(String filename) throws Exception{
-		if (filename.endsWith(".xml")){
+
+	public void save(String filename) throws Exception {
+		if (filename.endsWith(".xml")) {
 			diagram.saveToXml(filename);
-		} else if (filename.endsWith(".pdf")){
+		} else if (filename.endsWith(".pdf")) {
 			PdfExporter pdfExp = new PdfExporter();
-            pdfExp.export(diagram, filename);
-        } else if (filename.endsWith(".svg")){
-        	SvgExporter svgExp = new SvgExporter(diagram, filename);
-        	svgExp.export();
+			pdfExp.export(diagram, filename);
+		} else if (filename.endsWith(".svg")) {
+			SvgExporter svgExp = new SvgExporter(diagram, filename);
+			svgExp.export();
 		} else {
 			diagram.saveTo(filename);
 		}
@@ -306,7 +370,7 @@ public class SchematicViewer extends JPanel {
 		for (ShapeNode item : items) {
 			if (!item.getBounds().intersects(visibleRect))
 				continue;
-			if (item.getTransparent()){// ignore transparent text nodes
+			if (item.getTransparent()) {// ignore transparent text nodes
 				continue;
 			}
 			variables.put(((ShapeNode) item).getTextToEdit(), item);
@@ -327,8 +391,8 @@ public class SchematicViewer extends JPanel {
 		if (lastVisibleRect == null) {
 			lastVisibleRect = visibleRect;
 		}
-		// System.out.println("viewportChanged: "+visibleRect+" on "+new
-		// Date());
+		//System.out.println("viewportChanged: " + visibleRect + " on "
+		//		+ new Date());
 		clearValueBoxes(lastVisibleRect);
 		lastVisibleRect = visibleRect;
 		schematic.updateValues();
@@ -479,7 +543,7 @@ public class SchematicViewer extends JPanel {
 			tf = new TextFormat(Align.Near, Align.Far);
 			break;
 		}
-		
+
 		ShapeNode transparentTextNode = diagram.getFactory()
 				.createShapeNode(r2);
 		transparentTextNode.setId(VALUE_TEXT);
@@ -490,7 +554,7 @@ public class SchematicViewer extends JPanel {
 		transparentTextNode.setBrush(shapeNode.getBrush());
 		transparentTextNode.setTextFormat(tf);
 		transparentTextNode.attachTo(shapeNode, attachPos);
-		//System.out.println("Creating text node: "+attachPos+":"+r2+":"+value+":"+shapeNode+":"+transparentTextNode);
+		// System.out.println("Creating text node: "+attachPos+":"+r2+":"+value+":"+shapeNode+":"+transparentTextNode);
 	}
 
 	private String truncateAfterDecimal(String value, int i) {
@@ -521,6 +585,14 @@ public class SchematicViewer extends JPanel {
 				diagramView.bringIntoView(n);
 				return;
 			}
+		}
+	}
+
+	public void setPanMode(boolean selected) {
+		if (selected) {
+			diagramView.setBehavior(Behavior.Pan);
+		} else {
+			diagramView.setBehavior(Behavior.Modify);
 		}
 	}
 }
