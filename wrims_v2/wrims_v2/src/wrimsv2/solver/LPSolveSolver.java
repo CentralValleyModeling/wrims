@@ -40,14 +40,10 @@ public class LPSolveSolver {
     
 	public LPSolveSolver() throws LpSolveException{
 		setDVars();
-		System.out.println("set Dvars passed yahoo");
 		setConstraints();
-		System.out.println("set constraints passed yahoo");
 		setObjective();
-		System.out.println("set objective passed yahoo");
 		Model.setMaxim();
 		Model.solve();
-		System.out.println("Model Solved yahoo");
 		assignDvar();
 		Output();
 	}
