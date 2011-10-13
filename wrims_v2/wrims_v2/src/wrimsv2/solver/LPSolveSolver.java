@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,10 +39,15 @@ public class LPSolveSolver {
     int [] constraintNum;
     
 	public LPSolveSolver() throws LpSolveException{
-		//setDVars();
+		setDVars();
+		System.out.println("set Dvars passed yahoo");
 		setConstraints();
+		System.out.println("set constraints passed yahoo");
 		setObjective();
+		System.out.println("set objective passed yahoo");
+		Model.setMaxim();
 		Model.solve();
+		System.out.println("Model Solved yahoo");
 		assignDvar();
 		Output();
 	}
@@ -50,8 +56,8 @@ public class LPSolveSolver {
 		Map<String, Dvar> DvarMap = SolverData.getDvarMap();
 		Set DvarCollection = DvarMap.keySet();
 		Iterator dvarIterator=DvarCollection.iterator();
-		int ColNum = 0;
-		
+		int ColNum = 1;
+
 		while(dvarIterator.hasNext()){                          
 			String dvarName=(String)dvarIterator.next();
 			Dvar dvar=DvarMap.get(dvarName);
@@ -59,13 +65,12 @@ public class LPSolveSolver {
 			double lb = dvar.lowerBoundValue.doubleValue();
 			double ub = dvar.upperBoundValue.doubleValue();
 			
-			if (dvar.integer.equals("y")){
-				Model.setBounds(ColNum, lb, ub);
-				VarMap.put(dvarName, ColNum);}
-			else {
-				Model.setBounds(ColNum, 0, 0);
-				VarMap.put(dvarName, ColNum);}
+			Model.setBounds(ColNum, lb, ub);
+			VarMap.put(dvarName, ColNum);
+		
+			ColNum++;
 		}
+		
 	}
 
 	public void setObjective() throws LpSolveException{
@@ -73,12 +78,16 @@ public class LPSolveSolver {
 		Set weightCollection = weightMap.keySet();
 		Iterator weightIterator = weightCollection.iterator();
 		double[] weightArray = new double[weightCollection.size()];
+		int[] colArray = new int[weightCollection.size()];
+		int counter = 0;
 		
 		while(weightIterator.hasNext()){
 			String weightName=(String)weightIterator.next();
-			weightArray[VarMap.get(weightName)]=weightMap.get(weightName).getValue();
+			weightArray[counter]=weightMap.get(weightName).getValue();
+			colArray[counter]=VarMap.get(weightName);
+			counter++;
 		}
-		Model.setObjFnex(VarMap.size(), weightArray, constraintNum);
+		Model.setObjFnex(weightArray.length, weightArray, colArray);
 	}
 	
 	private void setConstraints() throws LpSolveException {
@@ -92,17 +101,15 @@ public class LPSolveSolver {
 			HashMap<String, IntDouble> multMap = ec.getEvalExpression().getMultiplier();
 			Set multCollection = multMap.keySet();
 			Iterator multIterator = multCollection.iterator();
-			int colNum = 1;
-		    addConstraint = new double[multCollection.size()+1];
-		    constraintNum = new int[multCollection.size()+1];
+			int colNum = 0;
+		    addConstraint = new double[multCollection.size()];
+		    constraintNum = new int[multCollection.size()];
 		    
 			while(multIterator.hasNext()){
 				String multName=(String)multIterator.next();
 				double coef=multMap.get(multName).getData().doubleValue();
-				
 				addConstraint[colNum]= coef;
-				constraintNum[colNum]=colNum;
-				VarMap.put(multName, colNum);
+				constraintNum[colNum]=VarMap.get(multName);
 				colNum++;
 			}
 			
@@ -110,28 +117,15 @@ public class LPSolveSolver {
 			Set DvarCollection = DvarMap.keySet();
 			Iterator dvarIterator=DvarCollection.iterator();
 			
-			while(dvarIterator.hasNext()){                          
-				String dvarName=(String)dvarIterator.next();
-				Dvar dvar=DvarMap.get(dvarName);
-				
-				double lb = dvar.lowerBoundValue.doubleValue();
-				double ub = dvar.upperBoundValue.doubleValue();
-				
-				Model.setColName(VarMap.get(dvarName), dvarName);
-				
-				if (dvar.integer.equals("y")){
-					Model.setBounds(VarMap.get(dvarName), lb, ub);}
-				else {
-					Model.setBounds(VarMap.get(dvarName), lb, ub);}
-			}
 			
 			if (ec.getSign().equals("=")) {		
-				Model.addConstraintex(addConstraint.length,addConstraint,constraintNum,3,ec.getEvalExpression().getValue().getData().doubleValue());} //LE(1); GE(2): EQ(3)
+				Model.addConstraintex(addConstraint.length,addConstraint,constraintNum,Model.EQ,-ec.getEvalExpression().getValue().getData().doubleValue()); //LE(1); GE(2): EQ(3)
+			}
 			else if (ec.getSign().equals("<") || ec.getSign().equals("<=")){
-				Model.addConstraintex(addConstraint.length,addConstraint,constraintNum,1,ec.getEvalExpression().getValue().getData().doubleValue());
+				Model.addConstraintex(addConstraint.length,addConstraint,constraintNum,Model.LE,-ec.getEvalExpression().getValue().getData().doubleValue());
 			}
 			else if (ec.getSign().equals(">") || ec.getSign().equals(">=")){
-				Model.addConstraintex(addConstraint.length,addConstraint,constraintNum,2,ec.getEvalExpression().getValue().getData().doubleValue());
+				Model.addConstraintex(addConstraint.length,addConstraint,constraintNum,Model.GE,-ec.getEvalExpression().getValue().getData().doubleValue());
 			}
 		}
 	}
