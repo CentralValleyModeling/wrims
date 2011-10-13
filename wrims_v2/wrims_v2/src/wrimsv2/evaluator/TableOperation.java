@@ -1,5 +1,6 @@
 package wrimsv2.evaluator;
 
+import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
 import wrimsv2.components.Error;
 import wrimsv2.components.IntDouble;
@@ -203,6 +204,10 @@ public class TableOperation {
 		
 		if (!whereTrue){
 			Error.addEvaluationError("Under those where statements, data could not be found in Table "+table);
+			for (String key: where.keySet()){
+				Error.addEvaluationError(key+": "+where.get(key));
+			}
+			Error.addEvaluationError("ControlData.currMonth: "+ControlData.currMonth);
 			return new IntDouble(1.0,false);
 		}
 		
