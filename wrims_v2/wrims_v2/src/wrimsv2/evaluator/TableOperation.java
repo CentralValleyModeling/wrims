@@ -203,11 +203,11 @@ public class TableOperation {
 		}
 		
 		if (!whereTrue){
-			Error.addEvaluationError("Under those where statements, data could not be found in Table "+table);
+			String whereError="";
 			for (String key: where.keySet()){
-				Error.addEvaluationError(key+": "+where.get(key));
+				whereError=whereError+"("+key+": "+where.get(key)+")";
 			}
-			Error.addEvaluationError("ControlData.currMonth: "+ControlData.currMonth);
+			Error.addEvaluationError("Under those where statements"+whereError+", data could not be found in Table "+table);
 			return new IntDouble(1.0,false);
 		}
 		
