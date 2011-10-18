@@ -7,9 +7,9 @@
 <listEntry value="1"/>
 </listAttribute>
 <mapAttribute key="org.eclipse.debug.core.environmentVariables">
-<mapEntry key="WRIMSv2_Engine_Home" value="D:\cvwrsm\trunk\wrims_v2\wrimsv2_plugin\Engine\"/>
+<mapEntry key="Java_Bin_Batch" value="D:\cvwrsm\trunk\3rd_party\jrockit-jre1.6.0_26-R28.1.4\bin\"/>
 <mapEntry key="Vista_Lib" value="D:\cvwrsm\trunk\3rd_party\vista\lib"/>
-<mapEntry key="Java_Bin" value="D:\cvwrsm\trunk\wrims_schematics\build\dist\wrimsv2_SG\bin\/../jre6/bin/"/>
+<mapEntry key="WRIMSv2_Engine_Home" value="D:\cvwrsm\trunk\wrims_schematics\"/>
 </mapAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="wrims.schematic.MainFrame"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="."/>
