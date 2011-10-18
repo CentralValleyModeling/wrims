@@ -48,7 +48,7 @@ public class TestILP_example_calsim30_bo_step1 {
         new Controller(controlDataString);
 
         
-        expected = 1.748286645871391E10; //17482866458.7
+        expected = 1.7482860400375587E10; //17482866458.7
 		
 		double obj_value =  ControlData.xasolver.getObjective();
 		
