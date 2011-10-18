@@ -13,7 +13,6 @@
 	<property name="jdk6.installdir" location="D:\cvwrsm\trunk\3rd_party\jrockit-jdk1.6.0_26-R28.1.4-4.0.1"/>
 	<property name="mingw.installdir" location="D:\cvwrsm\trunk\3rd_party\MingW_SV"/>
 	<property name="dllwrapper.dir" location="dllwrapper"/>
-	<property name="vista.dir" location="D:\cvwrsm\trunk\3rd_party\vista"/>
 
 	<!-- ================================= 
           target: default              

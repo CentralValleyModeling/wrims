@@ -1,5 +1,5 @@
 @echo off
-set control_file=D:/cvwrsm/trunk/wrims_schematics/build/dist/wrimsv2_SGDev/dllwrapper/generateInerfaceAnn.txt
+set control_file=generateInerfaceAnn.txt
 
 set wrims_home=%~dp0/..
 set JNILIB=%wrims_home%/lib
