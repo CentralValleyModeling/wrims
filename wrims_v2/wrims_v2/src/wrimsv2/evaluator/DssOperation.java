@@ -24,7 +24,7 @@ public class DssOperation {
 	public static boolean getSVTimeseries(String name, String file){
 		Timeseries ts=ControlData.allTsMap.get(name);
 		String partC=ts.kind;
-		DataSet ds=getDataForSvar(ControlData.partA,name,partC,"",ControlData.partE, ControlData.svDvPartF);
+		DataSet ds=getDataForSvar(regularExp(ControlData.partA),regularExp(name),regularExp(partC),"",regularExp(ControlData.partE), regularExp(ControlData.svDvPartF));
 		
 		if (ds==null){
 			return false;
@@ -70,7 +70,7 @@ public class DssOperation {
 	public static boolean getSVInitTimeseries(String name){
 		Timeseries ts=ControlData.currTsMap.get(name);
 		String partC=ts.kind;
-		DataSet ds=getDataForInitial(ControlData.partA,name,partC,"",ControlData.partE, ControlData.initPartF);
+		DataSet ds=getDataForInitial(regularExp(ControlData.partA),regularExp(name),regularExp(partC),"",regularExp(ControlData.partE), regularExp(ControlData.initPartF));
 		
 		if (ds==null){
 			return false;
@@ -91,8 +91,12 @@ public class DssOperation {
 			ControlData.dataDay=startDate.getDate();
 			int i=0;
 			for (double dataEntry :  rts.getYArray()){
-				TimeOperation.findTime(i);
-				dataArray.add(dataEntry*Evaluation.tafcfs("taf_cfs"));
+				if (dataEntry==-901.0){
+					dataArray.add(-901.0);
+				}else{
+					TimeOperation.findTime(i);
+					dataArray.add(dataEntry*Evaluation.tafcfs("taf_cfs"));
+				}
 				i=i+1;
 			}
 		}else{
@@ -105,6 +109,10 @@ public class DssOperation {
         dds.setStartTime(startDate);
         DataTimeSeries.svInit.put(name, dds);
 		return true;
+	}
+	
+	public static String regularExp(String part){
+		return "^"+part+"$";
 	}
 	
 	public static boolean getDVAliasInitTimeseries(String name){
