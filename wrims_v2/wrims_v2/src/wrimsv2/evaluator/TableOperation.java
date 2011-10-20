@@ -314,7 +314,11 @@ public class TableOperation {
 			return new IntDouble(values[selectIndex],false);
 		}
 		
-		Error.addEvaluationError("Data not found in Table "+table);
+		String givenError="";
+		for (String key: given.keySet()){
+			givenError=givenError+"("+key+": "+given.get(key)+")";
+		}
+		Error.addEvaluationError("Under the given conditon of "+givenError+" Data not found in Table "+table);
 		return new IntDouble(1.0,false);
 	}
 	
@@ -434,7 +438,11 @@ public class TableOperation {
 			return new IntDouble(values[selectIndex],false);
 		}
 		
-		Error.addEvaluationError("Data not found in Table "+table);
+		String givenError="";
+		for (String key: given.keySet()){
+			givenError=givenError+"("+key+": "+given.get(key)+")";
+		}
+		Error.addEvaluationError("Under the given conditon of "+givenError+" Data not found in Table "+table);
 		return new IntDouble(1.0,false);
 	}
 	
