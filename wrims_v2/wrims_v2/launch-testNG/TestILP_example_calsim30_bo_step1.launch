@@ -4,11 +4,12 @@
 <mapEntry key="Java_Bin" value="D:\cvwrsm\trunk\3rd_party\jrockit-jre1.6.0_26-R28.1.4\bin\"/>
 <mapEntry key="PATH" value="D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\calsim30_bo_svn51\CONV\Run\External;D:\cvwrsm\trunk\wrims_v2\wrims_v2\src\wrimsv2\lib;"/>
 </mapAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/SVN_jrockit-jre1.6.0_26-R28.1.4"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.testng.remote.RemoteTestNG"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="wrims_v2"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx1200m -Xss1024K -Djava.library.path=&quot;D:\cvwrsm\trunk\3rd_party\vista\lib;D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\calsim30_bo_svn51\CONV\Run\External;D:\cvwrsm\trunk\wrims_v2\wrims_v2\src\wrimsv2\lib&quot;"/>
 <mapAttribute key="org.testng.eclipse.ALL_CLASS_METHODS">
-<mapEntry key="test.test_ilp.TestILP_example_calsim30_bo_step1" value="calsim3_step1"/>
+<mapEntry key="test.test_ilp.TestILP_example_calsim30_bo_step1" value=""/>
 </mapAttribute>
 <listAttribute key="org.testng.eclipse.CLASS_TEST_LIST">
 <listEntry value="test.test_ilp.TestILP_example_calsim30_bo_step1"/>
@@ -19,5 +20,5 @@
 <listAttribute key="org.testng.eclipse.METHOD_TEST_LIST"/>
 <listAttribute key="org.testng.eclipse.PACKAGE_TEST_LIST"/>
 <mapAttribute key="org.testng.eclipse.PARAMETERS"/>
-<intAttribute key="org.testng.eclipse.TYPE" value="4"/>
+<intAttribute key="org.testng.eclipse.TYPE" value="1"/>
 </launchConfiguration>
