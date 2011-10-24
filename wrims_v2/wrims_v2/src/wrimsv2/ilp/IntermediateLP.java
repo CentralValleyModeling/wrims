@@ -62,6 +62,15 @@ public class IntermediateLP {
 		_ilpFile.flush();
 	}
 
+	public static void writeObjValue() {
+		
+		double objValue = ControlData.xasolver.getObjective();
+		_ilpFile.println("\n");
+		_ilpFile.println("\n");
+		_ilpFile.println("/* objective value: "+objValue+"    */");
+		_ilpFile.flush();
+	}
+	
 	private static void writeObj() {
 
 		_ilpFile.println("/* objective function */");

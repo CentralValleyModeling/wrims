@@ -633,6 +633,8 @@ public class Controller {
 						noError=false;
 					}
 					new XASolver();
+					IntermediateLP.writeObjValue();
+					IntermediateLP.closeIlpFile();
 					System.out.println("Solving Done.");
 					if (Error.error_solving.size()<1){
 						ControlData.isPostProcessing=true;
@@ -660,6 +662,5 @@ public class Controller {
 		DssOperation.writeInitDvarAliasToDSS();
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
-		IntermediateLP.closeIlpFile();
 	}
 }
