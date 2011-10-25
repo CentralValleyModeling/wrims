@@ -28,7 +28,7 @@ public class TestILP_example_calsim30_bo_step4 {
 		studyPath + "CONV\\run\\mainCONV_30.wresl",
 		dssPath +   "CalSim30_06_SV.dss",
 		studyPath + "CONV\\DSS\\Init.dss",   // Init
-		studyPath + "CONV\\DSS\\Init.dss",   // dv
+		studyPath + "CONV\\DSS\\dv.dss",   // dv
 		"CalSim30_06",       // sv dv F part
 		"CalSim30_06",   // init file F part
 		"CALSIM",        // part A
