@@ -9,10 +9,10 @@
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="wrims_v2"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx1200m -Xss1024K -Djava.library.path=&quot;D:\cvwrsm\trunk\3rd_party\vista\lib;D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\calsim30_bo_svn51\CONV\Run\External;D:\cvwrsm\trunk\wrims_v2\wrims_v2\src\wrimsv2\lib&quot;"/>
 <mapAttribute key="org.testng.eclipse.ALL_CLASS_METHODS">
-<mapEntry key="test.test_ilp.TestILP_example_calsim30_bo_step60" value="calsim3_step60"/>
+<mapEntry key="test.test_ilp.TestILP_example_calsim30_bo_step4" value="calsim3_step4"/>
 </mapAttribute>
 <listAttribute key="org.testng.eclipse.CLASS_TEST_LIST">
-<listEntry value="test.test_ilp.TestILP_example_calsim30_bo_step60"/>
+<listEntry value="test.test_ilp.TestILP_example_calsim30_bo_step4"/>
 </listAttribute>
 <listAttribute key="org.testng.eclipse.GROUP_LIST"/>
 <listAttribute key="org.testng.eclipse.GROUP_LIST_CLASS"/>

@@ -9,7 +9,7 @@ import wrimsv2.components.*;
 import wrimsv2.wreslparser.elements.RegUtils;
 import wrimsv2.wreslparser.elements.Tools;
 
-public class TestILP_example_calsim30_bo_step24 {
+public class TestILP_example_calsim30_bo_step4 {
 	
 	private double tolerance_perc = 0.1/1000000; // 0.1 ppm
 	private String studyPath;	
@@ -17,7 +17,7 @@ public class TestILP_example_calsim30_bo_step24 {
 	private double expected;
 	
 	@Test(groups = { "ilp_example_calsim3" })
-	public void calsim3_step24() throws RecognitionException, IOException{
+	public void calsim3_step4() throws RecognitionException, IOException{
 		
 		studyPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\calsim30_bo_svn51\\";
 		dssPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\calsim30_bo_svn51\\common\\DSS\\";
@@ -27,28 +27,28 @@ public class TestILP_example_calsim30_bo_step24 {
 		studyPath + "common\\CVGroundwater\\Data\\",   //groundwater dir
 		studyPath + "CONV\\run\\mainCONV_30.wresl",
 		dssPath +   "CalSim30_06_SV.dss",
-		dssPath +   "CalSim30_06Init.dss",
-		studyPath + "CONV\\DSS\\dv.dss",
+		studyPath + "CONV\\DSS\\Init.dss",   // Init
+		studyPath + "CONV\\DSS\\Init.dss",   // dv
 		"CalSim30_06",       // sv dv F part
 		"CalSim30_06",   // init file F part
 		"CALSIM",        // part A
 		"1MON",
-		"1921",
-		"10",
+		"1922",
+		"1",
 		 "31",
-		 "1923",
-		 "9",
-		 "30", 
+		 "1922",
+		 "1",
+		 "31", 
 		 "ILP", 
 		 "csv"};
 
-		FilePaths.ilpFileDirectory = "ilp_TestIlp_example_calsim30_bo_step24";
+		FilePaths.ilpFileDirectory = "ilp_TestIlp_example_calsim30_bo_step4";
 		//FilePaths.ilpFile = "test.ilp";
 		
         new Controller(controlDataString);
 
         
-        expected = 1.909271529297351E10;
+        expected = 1.6762305478805702E10; 
                                             
 		
 		double obj_value =  ControlData.xasolver.getObjective();

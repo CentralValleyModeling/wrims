@@ -27,14 +27,14 @@ public class TestILP_example_calsim30_bo_step3 {
 		studyPath + "common\\CVGroundwater\\Data\\",   //groundwater dir
 		studyPath + "CONV\\run\\mainCONV_30.wresl",
 		dssPath +   "CalSim30_06_SV.dss",
-		dssPath +   "CalSim30_06Init.dss",
-		studyPath + "CONV\\DSS\\dv.dss",
+		studyPath + "CONV\\DSS\\Init.dss",   // Init
+		studyPath + "CONV\\DSS\\Init.dss",   // dv
 		"CalSim30_06",       // sv dv F part
 		"CalSim30_06",   // init file F part
 		"CALSIM",        // part A
 		"1MON",
 		"1921",
-		"10",
+		"12",
 		 "31",
 		 "1921",
 		 "12",
@@ -48,7 +48,7 @@ public class TestILP_example_calsim30_bo_step3 {
         new Controller(controlDataString);
 
         
-        expected = 1.643754258492466E10; 
+        expected = 1.6437560326968699E10; 
                                             
 		
 		double obj_value =  ControlData.xasolver.getObjective();

@@ -27,15 +27,15 @@ public class TestILP_example_calsim30_bo_step2 {
 		studyPath + "common\\CVGroundwater\\Data\\",   //groundwater dir
 		studyPath + "CONV\\run\\mainCONV_30.wresl",
 		dssPath +   "CalSim30_06_SV.dss",
-		dssPath +   "CalSim30_06Init.dss",
-		studyPath + "CONV\\DSS\\dv.dss",
+		studyPath + "CONV\\DSS\\Init.dss",   // Init
+		studyPath + "CONV\\DSS\\Init.dss",   // dv
 		"CalSim30_06",       // sv dv F part
 		"CalSim30_06",   // init file F part
 		"CALSIM",        // part A
 		"1MON",
 		"1921",
-		"10",
-		 "31",
+		"11",
+		 "30",
 		 "1921",
 		 "11",
 		 "30", 
