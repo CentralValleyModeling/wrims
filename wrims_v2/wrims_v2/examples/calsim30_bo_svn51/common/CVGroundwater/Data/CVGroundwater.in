@@ -30,7 +30,7 @@ C-----------------------------------------------------------------------------
                                                    / 8: AQUIFER PARAMETER OVER-WRITE DATA FILE (INPUT, OPTIONAL) 
  CVbound(091015)_Modified.dat                      / 9: BOUNDARY CONDITIONS DATA FILE (INPUT, REQUIRED)
                                                    /10: TIME SERIES BOUNDARY CONDITIONS (INPUT, OPTIONAL)
- CVinitial_Oct1996_VerificationRun.dat             /11: INITIAL CONDITIONS DATA FILE (INPUT, REQUIRED)
+ CVInitial_Restart.dat             /11: INITIAL CONDITIONS DATA FILE (INPUT, REQUIRED)
  CVprecip(20100923).dat                            /12: PRECIPITATION DATA FILE (INPUT, OPTIONAL)
  CVPuSp(20100405).dat                              /13: PUMPING SPECIFICATION DATA FILE (INPUT, REQUIRED)
  CVtiledrn(081209).dat                             /14: TILE DRAINS PARAMETER DATA FILE (INPUT, OPTIONAL)
