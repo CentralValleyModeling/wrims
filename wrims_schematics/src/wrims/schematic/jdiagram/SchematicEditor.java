@@ -13,9 +13,12 @@ import java.awt.geom.Rectangle2D.Float;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import javax.swing.AbstractAction;
+import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -26,7 +29,6 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
 
-import com.mindfusion.diagramming.Align;
 import com.mindfusion.diagramming.AutoResize;
 import com.mindfusion.diagramming.Behavior;
 import com.mindfusion.diagramming.Diagram;
@@ -227,15 +229,24 @@ public class SchematicEditor extends SchematicViewer {
 		}
 
 		Point2D.Float alignPoint = controlPoints.get(0);
+		Point2D.Float endAlignPoint = controlPoints
+				.get(controlPoints.size() - 1);
 		int size = controlPoints.size();
+		float stepX = 1, stepY = 1;
+		if (size > 1) {
+			stepX = (endAlignPoint.x - alignPoint.x) / (size - 1);
+			stepY = (endAlignPoint.y - alignPoint.y) / (size - 1);
+		}
 		int index = 0;
 		for (Point2D.Float p : controlPoints) {
 			if (index == size - 1)
 				break; // don't do the end points
 			if (direction == Orientation.Vertical) {
 				p.x = alignPoint.x;
+				p.y = alignPoint.y + index * stepY;
 			} else if (direction == Orientation.Horizontal) {
 				p.y = alignPoint.y;
+				p.x = alignPoint.x + index * stepX;
 			}
 			index++;
 		}
@@ -248,28 +259,83 @@ public class SchematicEditor extends SchematicViewer {
 		}
 	}
 
-	public void alignSelectedNodes(int orientation) {
+	private boolean spaceNodesEvenly = false;
+
+	public void alignSelectedNodes(final int orientation) {
 		Diagram diagram = getDiagram();
 		DiagramNodeList nodes = diagram.getSelection().getNodes();
+		ArrayList<DiagramNode> sortedNodes = new ArrayList<DiagramNode>();
+		sortedNodes.addAll(nodes);
+		Collections.sort(sortedNodes, new Comparator<DiagramNode>() {
+
+			@Override
+			public int compare(DiagramNode arg0, DiagramNode arg1) {
+				if (orientation == Orientation.Horizontal) {
+					return (int) Math.signum(arg0.getBounds().x - arg1.getBounds().x);
+				} else if (orientation == Orientation.Vertical) {
+					return (int) Math.signum(arg0.getBounds().y - arg1.getBounds().y);
+				} else {
+					return 0;
+				}
+			}
+
+		});
 		if (nodes.size() == 0) {
 			return;
 		}
-		DiagramNode alignNode = getLeftUpperMostNode(nodes, orientation);
+		DiagramNode alignNode = sortedNodes.get(0);
 		Float bounds0 = alignNode.getBounds();
 		double centerX = bounds0.getCenterX();
 		double centerY = bounds0.getCenterY();
-		for (DiagramNode n : nodes) {
+		DiagramNode endAlignNode = sortedNodes.get(sortedNodes.size()-1);
+		Float bounds1 = endAlignNode.getBounds();
+		int size = nodes.size();
+		float spaceX = 1, spaceY = 1;
+		if (size > 1) {
+			spaceX = (bounds1.x - bounds0.x) / (size - 1);
+			spaceY = (bounds1.y - bounds0.y) / (size - 1);
+		}
+		int index = 0;
+		for (DiagramNode n : sortedNodes) {
 			Float bounds = n.getBounds();
 			if (orientation == Orientation.Vertical) {
 				double delX = bounds.getCenterX() - centerX;
 				bounds.x = bounds.x - (float) delX;
+				if (spaceNodesEvenly) {
+					bounds.y = bounds0.y + index * spaceY;
+				}
 			} else if (orientation == Orientation.Horizontal) {
 				double delY = bounds.getCenterY() - centerY;
 				bounds.y = bounds.y - (float) delY;
+				if (spaceNodesEvenly) {
+					bounds.x = bounds0.x + index * spaceX;
+				}
 			}
-			n.moveTo(bounds.x, bounds.y);
+			n.moveTo(Math.round(bounds.x/diagram.getGridSizeX())*diagram.getGridSizeX(), Math.round(bounds.y/diagram.getGridSizeY())*diagram.getGridSizeY());
+			index++;
 		}
 		diagram.repaint();
+	}
+
+	private DiagramNode getRightBottomMostNode(DiagramNodeList nodes,
+			int orientation) {
+		DiagramNode alignNode = null;
+		for (DiagramNode n : nodes) {
+			if (alignNode == null) {
+				alignNode = n;
+				continue;
+			}
+			if (orientation == Orientation.Vertical) {
+				if (n.getBounds().y > alignNode.getBounds().y) {
+					alignNode = n;
+				}
+			} else if (orientation == Orientation.Horizontal) {
+				if (n.getBounds().x > alignNode.getBounds().x) {
+					alignNode = n;
+				}
+			}
+		}
+		return alignNode;
 	}
 
 	private DiagramNode getLeftUpperMostNode(DiagramNodeList nodes,
@@ -548,6 +614,21 @@ public class SchematicEditor extends SchematicViewer {
 		};
 	}
 
+	public Action getToggleEvenlySpaceNodes() {
+		return new AbstractAction("Evenly Space Nodes", ImageUtil
+				.createImageIcon("images/evenly_space_nodes.png")) {
+
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				Object source = evt.getSource();
+				if (source instanceof AbstractButton) {
+					AbstractButton toggleButton = (AbstractButton) source;
+					spaceNodesEvenly = toggleButton.isSelected();
+				}
+			}
+		};
+	}
+
 	public Action getToggleGridLinesAction() {
 		return new AbstractAction("Show Grid", ImageUtil
 				.createImageIcon("images/show_grid.png")) {
@@ -565,7 +646,8 @@ public class SchematicEditor extends SchematicViewer {
 	}
 
 	public Action getHorizontalAlignAction() {
-		return new AbstractAction("Align Horizontal", ImageUtil.createImageIcon("images/align_horizontal.png")) {
+		return new AbstractAction("Align Horizontal", ImageUtil
+				.createImageIcon("images/align_horizontal.png")) {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -576,7 +658,8 @@ public class SchematicEditor extends SchematicViewer {
 	}
 
 	public Action getVerticalAlignAction() {
-		return new AbstractAction("Align Vertical", ImageUtil.createImageIcon("images/align_vertical.png")) {
+		return new AbstractAction("Align Vertical", ImageUtil
+				.createImageIcon("images/align_vertical.png")) {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

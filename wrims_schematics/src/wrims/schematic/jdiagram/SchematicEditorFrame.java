@@ -8,6 +8,8 @@ import java.util.prefs.Preferences;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Icon;
+import javax.swing.JCheckBox;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -86,6 +88,7 @@ public class SchematicEditorFrame extends JFrame{
 	bar.add(new JToggleButton(editor.getToggleAutoAlignAction()));
 	bar.add(editor.getVerticalAlignAction());
 	bar.add(editor.getHorizontalAlignAction());
+	bar.add(new JCheckBox(editor.getToggleEvenlySpaceNodes()));
 	//bar.add(new JToggleButton(editor.getToggleGridLinesAction()));
 	bar.addSeparator();
 	bar.add(editor.createFindPanel());
@@ -115,6 +118,7 @@ public class SchematicEditorFrame extends JFrame{
 	JMenu toolMenu = new JMenu("Tools");
 	toolMenu.add(editor.getHorizontalAlignAction());
 	toolMenu.add(editor.getVerticalAlignAction());
+	toolMenu.add(new JCheckBoxMenuItem(editor.getToggleEvenlySpaceNodes()));
 	mbar.add(toolMenu);
 	
 	fr.setJMenuBar(mbar);
