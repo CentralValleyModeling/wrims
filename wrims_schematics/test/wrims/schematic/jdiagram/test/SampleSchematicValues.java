@@ -95,7 +95,7 @@ public class SampleSchematicValues {
 
 		try {
 			diagram
-					.loadFromXml("resources/wrims/schematic/CS3_NetworkSchematic151.xml");
+					.loadFromXml("resources/wrims/schematic/CS3_NetworkSchematic.xml");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

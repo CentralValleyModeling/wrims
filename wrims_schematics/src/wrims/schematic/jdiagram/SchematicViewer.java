@@ -70,6 +70,7 @@ public class SchematicViewer extends JPanel {
 	private boolean showValueBoxes;
 	private AbstractAction zoomNormalAction;
 	private AbstractAction zoomBestFitAction;
+	protected DiagramAdapter listener;
 
 	/**
 	 * Add diagram viewer to a scrollpane
@@ -89,13 +90,13 @@ public class SchematicViewer extends JPanel {
 
 		overview = new Overview();
 		overview.setDiagramView(diagramView);
-
+		overview.setDoubleBuffered(true);
 		overview.setFitAll(true);
 		panel.getInsetPanel().add(overview);
 
 		diagram.getSelection().setStyle(SelectionStyle.SelectionHandles);
 		diagram.getSelection().setAllowMultipleSelection(true);
-		diagram.addDiagramListener(new DiagramAdapter() {
+		diagram.addDiagramListener(listener = new DiagramAdapter() {
 			private Timer refreshTimer = new Timer();
 			private TimerTask refreshTask;
 			private int delay = 250;
@@ -111,6 +112,7 @@ public class SchematicViewer extends JPanel {
 						SwingUtilities.invokeLater(new Runnable() {
 							public void run() {
 								refreshValues(false);
+								//overview.resumeRepaint();
 							}
 						});
 					}
@@ -595,4 +597,9 @@ public class SchematicViewer extends JPanel {
 			diagramView.setBehavior(Behavior.Modify);
 		}
 	}
+	
+	public DiagramView getDiagramView(){
+		return diagramView;
+	}
+	
 }

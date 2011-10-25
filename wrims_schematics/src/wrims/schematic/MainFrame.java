@@ -2423,7 +2423,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		return selectedFile.getAbsolutePath();
 	}
 
-	private String chooseFileToSave() {
+	public String chooseFileToSave() {
 		Preferences p = Preferences.userNodeForPackage(MainFrame.class);
 		String currentDirectory = p.get("SCHEMATICS_DIRECTORY", System
 				.getProperty("user.dir"));
