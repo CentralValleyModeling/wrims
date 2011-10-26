@@ -50,6 +50,7 @@ import com.mindfusion.diagramming.PointList;
 import com.mindfusion.diagramming.RerouteLinks;
 import com.mindfusion.diagramming.RoutingOptions;
 import com.mindfusion.diagramming.ShapeNode;
+import com.mindfusion.diagramming.UndoEvent;
 import com.mindfusion.diagramming.UndoManager;
 import com.mindfusion.diagramming.XmlException;
 
@@ -86,6 +87,13 @@ public class SchematicEditor extends SchematicViewer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				getDiagram().getUndoManager().undo();
+				Object source = e.getSource();
+				if (source instanceof AbstractButton) {
+					if (getDiagram().getUndoManager().getHistory()
+							.getNextUndo() == null) {
+						((AbstractButton) source).setEnabled(false);
+					} 
+				}
 			}
 		};
 
@@ -94,6 +102,13 @@ public class SchematicEditor extends SchematicViewer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				getDiagram().getUndoManager().redo();
+				Object source = e.getSource();
+				if (source instanceof AbstractButton) {
+					if (getDiagram().getUndoManager().getHistory()
+							.getNextRedo() == null) {
+						((AbstractButton) source).setEnabled(false);
+					} 
+				}
 			}
 		};
 
@@ -151,7 +166,6 @@ public class SchematicEditor extends SchematicViewer {
 		getDiagram().removeDiagramListener(listener);
 		getDiagram().addDiagramListener(new DiagramAdapter() {
 			public void nodeSelected(NodeEvent e) {
-				// getDiagram().alignPointToGrid(point);
 				e.getNode().setHandlesStyle(HandlesStyle.EasyMove);
 			}
 
@@ -172,7 +186,48 @@ public class SchematicEditor extends SchematicViewer {
 			public void clicked(DiagramEvent e) {
 				diagramClicked(e);
 			}
+			
+			// undo/redo events
+			
+			@Override
+			public void actionRecorded(UndoEvent e) {
+				undoAction.setEnabled(true);
+				redoAction.setEnabled(false);
+			}
 
+			@Override
+			public void actionRedone(UndoEvent e) {
+				undoAction.setEnabled(true);
+				if (getDiagram().getUndoManager().getHistory().getNextRedo()==null){
+					redoAction.setEnabled(false);
+				}
+			}
+
+			@Override
+			public void actionUndone(UndoEvent e) {
+				redoAction.setEnabled(true);
+				if (getDiagram().getUndoManager().getHistory().getNextUndo()==null){
+					undoAction.setEnabled(false);
+				}
+			}
+			private Float previousBounds=null;
+			@Override
+			public void viewportChanged() {
+				Float bounds = getDiagram().getBounds();
+				if (previousBounds==null){
+					previousBounds=bounds;
+				}
+				if (badValue(bounds.x) || badValue(bounds.y) || badValue(bounds.height) || badValue(bounds.width)){
+					getDiagram().setBounds(previousBounds);
+				} else {
+					previousBounds=bounds;
+				}
+				//System.out.println("Diagram bounds: "+getDiagram().getBounds());
+			}
+			
+			private boolean badValue(float x){
+				return java.lang.Float.isNaN(x) || java.lang.Float.isInfinite(x) || x==java.lang.Float.MIN_VALUE || x==java.lang.Float.MAX_VALUE || ((int)x == Integer.MAX_VALUE) || ((int) x == Integer.MIN_VALUE);
+			}
 		});
 
 		pastePopupMenu = new JPopupMenu("Paste Popup");
@@ -271,9 +326,11 @@ public class SchematicEditor extends SchematicViewer {
 			@Override
 			public int compare(DiagramNode arg0, DiagramNode arg1) {
 				if (orientation == Orientation.Horizontal) {
-					return (int) Math.signum(arg0.getBounds().x - arg1.getBounds().x);
+					return (int) Math.signum(arg0.getBounds().x
+							- arg1.getBounds().x);
 				} else if (orientation == Orientation.Vertical) {
-					return (int) Math.signum(arg0.getBounds().y - arg1.getBounds().y);
+					return (int) Math.signum(arg0.getBounds().y
+							- arg1.getBounds().y);
 				} else {
 					return 0;
 				}
@@ -287,7 +344,7 @@ public class SchematicEditor extends SchematicViewer {
 		Float bounds0 = alignNode.getBounds();
 		double centerX = bounds0.getCenterX();
 		double centerY = bounds0.getCenterY();
-		DiagramNode endAlignNode = sortedNodes.get(sortedNodes.size()-1);
+		DiagramNode endAlignNode = sortedNodes.get(sortedNodes.size() - 1);
 		Float bounds1 = endAlignNode.getBounds();
 		int size = nodes.size();
 		float spaceX = 1, spaceY = 1;
@@ -311,52 +368,13 @@ public class SchematicEditor extends SchematicViewer {
 					bounds.x = bounds0.x + index * spaceX;
 				}
 			}
-			n.moveTo(Math.round(bounds.x/diagram.getGridSizeX())*diagram.getGridSizeX(), Math.round(bounds.y/diagram.getGridSizeY())*diagram.getGridSizeY());
+			n.moveTo(Math.round(bounds.x / diagram.getGridSizeX())
+					* diagram.getGridSizeX(), Math.round(bounds.y
+					/ diagram.getGridSizeY())
+					* diagram.getGridSizeY());
 			index++;
 		}
 		diagram.repaint();
-	}
-
-	private DiagramNode getRightBottomMostNode(DiagramNodeList nodes,
-			int orientation) {
-		DiagramNode alignNode = null;
-		for (DiagramNode n : nodes) {
-			if (alignNode == null) {
-				alignNode = n;
-				continue;
-			}
-			if (orientation == Orientation.Vertical) {
-				if (n.getBounds().y > alignNode.getBounds().y) {
-					alignNode = n;
-				}
-			} else if (orientation == Orientation.Horizontal) {
-				if (n.getBounds().x > alignNode.getBounds().x) {
-					alignNode = n;
-				}
-			}
-		}
-		return alignNode;
-	}
-
-	private DiagramNode getLeftUpperMostNode(DiagramNodeList nodes,
-			int orientation) {
-		DiagramNode alignNode = null;
-		for (DiagramNode n : nodes) {
-			if (alignNode == null) {
-				alignNode = n;
-				continue;
-			}
-			if (orientation == Orientation.Vertical) {
-				if (n.getBounds().y < alignNode.getBounds().y) {
-					alignNode = n;
-				}
-			} else if (orientation == Orientation.Horizontal) {
-				if (n.getBounds().x < alignNode.getBounds().x) {
-					alignNode = n;
-				}
-			}
-		}
-		return alignNode;
 	}
 
 	public JPanel createFindPanel() {
@@ -417,12 +435,15 @@ public class SchematicEditor extends SchematicViewer {
 	public void onCopy() {
 		Diagram d = getDiagram();
 		copiedItems = new ArrayList<DiagramItem>();
+		HashMap<DiagramNode, DiagramNode> selectedToAddedMap = new HashMap<DiagramNode, DiagramNode>();
 		if (!(d.getSelection().getNodes().isEmpty())) {
 			DiagramNodeList nodes = d.getSelection().getNodes();
 			for (DiagramNode node : nodes) {
 				if (node instanceof ShapeNode) {
 					ShapeNode snode = (ShapeNode) node;
-					copiedItems.add(snode);
+					ShapeNode clone = (ShapeNode) snode.clone(true);
+					copiedItems.add(clone);
+					selectedToAddedMap.put(snode, clone);
 				}
 			}
 		}
@@ -430,11 +451,28 @@ public class SchematicEditor extends SchematicViewer {
 			DiagramLinkList links = d.getSelection().getLinks();
 			for (DiagramLink link : links) {
 				if (link instanceof DiagramLink) {
-					copiedItems.add(link);
+					DiagramLink linkClone = (DiagramLink) link.clone(true);
+					copiedItems.add(linkClone);
+					// connect it up if origin or destination nodes were selected and
+					// copied over
+					DiagramNode origin = link.getOrigin();
+					if (origin != null) {
+						DiagramNode originCopy = selectedToAddedMap.get(origin);
+						if (originCopy != null) {
+							linkClone.setOrigin(originCopy);
+						}
+					}
+					DiagramNode dest = link.getDestination();
+					if (dest != null) {
+						DiagramNode destCopy = selectedToAddedMap.get(dest);
+						if (destCopy != null) {
+							linkClone.setDestination(destCopy);
+						}
+					}
 				}
 			}
 		}
-	}
+}
 
 	public void onPaste() {
 		if (lastMouseClickedPosition == null || copiedItems == null
@@ -512,6 +550,7 @@ public class SchematicEditor extends SchematicViewer {
 	public void boxClicked(NodeEvent e) {
 		if (e.getMouseButton() == MouseEvent.BUTTON1) {
 		} else if (e.getMouseButton() == MouseEvent.BUTTON3) {
+			e.getNode().setLocked(false);
 			int x;
 			int y;
 
@@ -529,9 +568,10 @@ public class SchematicEditor extends SchematicViewer {
 	public void arrowClicked(LinkEvent e) {
 		if (e.getMouseButton() == MouseEvent.BUTTON1) {
 		} else if (e.getMouseButton() == MouseEvent.BUTTON3) {
+			e.getLink().setLocked(false);
 			int x;
 			int y;
-
+			
 			Point2D event = e.getMousePosition();
 			x = (int) event.getX();
 			y = (int) event.getY();
@@ -591,7 +631,8 @@ public class SchematicEditor extends SchematicViewer {
 
 		UndoManager undoManager = getDiagram().getUndoManager();
 		undoManager.setUndoEnabled(true);
-
+		redoAction.setEnabled(false);
+		undoAction.setEnabled(false);
 	}
 
 	public Action getToggleAutoAlignAction() {
