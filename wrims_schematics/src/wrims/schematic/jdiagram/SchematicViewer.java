@@ -550,6 +550,7 @@ public class SchematicViewer extends JPanel {
 				.createShapeNode(r2);
 		transparentTextNode.setId(VALUE_TEXT);
 		transparentTextNode.setTransparent(true);
+		transparentTextNode.setLocked(true);
 		transparentTextNode.setText(value);
 		transparentTextNode.setFont(shapeNode.getFont());
 		transparentTextNode.setPen(shapeNode.getPen());
