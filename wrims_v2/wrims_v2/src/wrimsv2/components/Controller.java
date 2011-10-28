@@ -89,11 +89,11 @@ public class Controller {
 	}
 	
 	public void setControlData(){
-		FilePaths.groundwaterDir="D:\\BDCP_MODEL\\calsim30_alt1_elt_roa25_slr15_cc5_100411_w2\\calsim30_bo\\common\\CVGroundwater\\Data\\";
-		FilePaths.setMainFilePaths("D:\\BDCP_MODEL\\calsim30_alt1_elt_roa25_slr15_cc5_100411_w2\\calsim30_bo\\conv\\Run\\mainCONV_30.wresl");
-		FilePaths.setSvarDssPaths("D:\\BDCP_MODEL\\calsim30_alt1_elt_roa25_slr15_cc5_100411_w2\\calsim30_bo\\common\\DSS\\CalSim30_2020_SV.dss");
-        FilePaths.setInitDssPaths("D:\\BDCP_MODEL\\calsim30_alt1_elt_roa25_slr15_cc5_100411_w2\\calsim30_bo\\common\\DSS\\CalSim30_2020Init.dss");   
-        FilePaths.setDvarDssPaths("D:\\BDCP_MODEL\\calsim30_alt1_elt_roa25_slr15_cc5_100411_w2\\calsim30_bo\\conv\\DSS\\ALT1_ELT_100411_DV.dss");
+		FilePaths.groundwaterDir="D:\\BDCP_MODEL\\calsim30_alt1_elt_roa25_slr15_cc5_101111_w2\\calsim30_bo\\common\\CVGroundwater\\Data\\";
+		FilePaths.setMainFilePaths("D:\\BDCP_MODEL\\calsim30_alt1_elt_roa25_slr15_cc5_101111_w2\\calsim30_bo\\conv\\Run\\mainCONV_30.wresl");
+		FilePaths.setSvarDssPaths("D:\\BDCP_MODEL\\calsim30_alt1_elt_roa25_slr15_cc5_101111_w2\\calsim30_bo\\common\\DSS\\CalSim30_2020_SV.dss");
+        FilePaths.setInitDssPaths("D:\\BDCP_MODEL\\calsim30_alt1_elt_roa25_slr15_cc5_101111_w2\\calsim30_bo\\conv\\DSS\\ALT1_ELT_102011_DV.dss");   
+        FilePaths.setDvarDssPaths("D:\\BDCP_MODEL\\calsim30_alt1_elt_roa25_slr15_cc5_101111_w2\\calsim30_bo\\conv\\DSS\\ALT1_ELT_102011_DV.dss");
 		ControlData cd=new ControlData();
 		cd.svDvPartF="CALSIM30_2020";
 		cd.initPartF="CALSIM30_2020";
@@ -574,6 +574,7 @@ public class Controller {
 			ControlData.currMonth=ControlData.currMonth-12;
 			ControlData.currYear=ControlData.currYear+1;
 		}
+		ControlData.currDay=TimeOperation.numberOfDays(ControlData.currMonth, ControlData.currYear);
 	}
 
 	public void currTimeAddOneDay(){
@@ -582,6 +583,7 @@ public class Controller {
 		currDate = new Date (currTime);
 		ControlData.currMonth=currDate.getMonth()+1;
 		ControlData.currYear=currDate.getYear()+1900;
+		ControlData.currDay=currDate.getDate();
 	}
 	
 	public static void main(String[] args){

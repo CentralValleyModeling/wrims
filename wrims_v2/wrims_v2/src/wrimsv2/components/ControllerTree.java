@@ -709,6 +709,7 @@ public class ControllerTree {
 			ControlData.currMonth=ControlData.currMonth-12;
 			ControlData.currYear=ControlData.currYear+1;
 		}
+		ControlData.currDay=TimeOperation.numberOfDays(ControlData.currMonth, ControlData.currYear);
 	}
 
 	public void currTimeAddOneDay(){
@@ -717,6 +718,7 @@ public class ControllerTree {
 		currDate = new Date (currTime);
 		ControlData.currMonth=currDate.getMonth()+1;
 		ControlData.currYear=currDate.getYear()+1900;
+		ControlData.currDay=currDate.getDate();
 	}
 	
 	public static void main(String[] args){

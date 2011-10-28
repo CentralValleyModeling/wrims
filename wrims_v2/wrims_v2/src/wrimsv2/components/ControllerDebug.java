@@ -602,6 +602,7 @@ public class ControllerDebug extends Thread {
 			ControlData.currMonth=ControlData.currMonth-12;
 			ControlData.currYear=ControlData.currYear+1;
 		}
+		ControlData.currDay=TimeOperation.numberOfDays(ControlData.currMonth, ControlData.currYear);
 	}
 
 	public void currTimeAddOneDay(){
@@ -610,8 +611,9 @@ public class ControllerDebug extends Thread {
 		currDate = new Date (currTime);
 		ControlData.currMonth=currDate.getMonth()+1;
 		ControlData.currYear=currDate.getYear()+1900;
+		ControlData.currDay=currDate.getDate();
 	}
-
+	
 	public void runModelILP(StudyDataSet sds){
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
