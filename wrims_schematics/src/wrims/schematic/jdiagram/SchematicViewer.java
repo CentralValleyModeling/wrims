@@ -71,6 +71,7 @@ public class SchematicViewer extends JPanel {
 	private AbstractAction zoomNormalAction;
 	private AbstractAction zoomBestFitAction;
 	protected DiagramAdapter listener;
+	private AbstractAction zoomRectAction;
 
 	/**
 	 * Add diagram viewer to a scrollpane
@@ -270,6 +271,26 @@ public class SchematicViewer extends JPanel {
 						Action.SMALL_ICON,
 						ImageUtil
 								.createImageIcon("/wrims/schematic/images/toolbar/zoom_best_fit.png"));
+		
+		zoomRectAction = new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				diagramView.setBehavior(Behavior.DoNothing);
+				Cursor previousCursor = diagramView.getCursor();
+				diagramView.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+				
+				
+				//diagramView.setCursor(previousCursor);
+				//diagramView.setBehavior(Behavior.Modify);
+			}
+		};
+		zoomRectAction.putValue(Action.SHORT_DESCRIPTION, "zoom rectangle");
+		zoomRectAction
+				.putValue(
+						Action.SMALL_ICON,
+						ImageUtil
+								.createImageIcon("/wrims/schematic/images/toolbar/zoom_region.png"));
 
 	}
 
@@ -287,6 +308,10 @@ public class SchematicViewer extends JPanel {
 
 	public Action getZoomToFitAction() {
 		return zoomBestFitAction;
+	}
+	
+	public Action getZoomRectangleAction(){
+		return zoomRectAction;
 	}
 
 	public void zoomIn() {

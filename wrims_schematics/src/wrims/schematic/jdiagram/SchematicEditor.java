@@ -52,6 +52,7 @@ import com.mindfusion.diagramming.RoutingOptions;
 import com.mindfusion.diagramming.ShapeNode;
 import com.mindfusion.diagramming.UndoEvent;
 import com.mindfusion.diagramming.UndoManager;
+import com.mindfusion.diagramming.Utilities;
 import com.mindfusion.diagramming.XmlException;
 
 /**
@@ -303,6 +304,9 @@ public class SchematicEditor extends SchematicViewer {
 				p.y = alignPoint.y;
 				p.x = alignPoint.x + index * stepX;
 			}
+			//java.awt.geom.Point2D.Float pointOnGrid = getDiagram().alignPointToGrid(p);
+			//p.x=pointOnGrid.x;
+			//p.y=pointOnGrid.y;
 			index++;
 		}
 
@@ -368,10 +372,9 @@ public class SchematicEditor extends SchematicViewer {
 					bounds.x = bounds0.x + index * spaceX;
 				}
 			}
-			n.moveTo(Math.round(bounds.x / diagram.getGridSizeX())
-					* diagram.getGridSizeX(), Math.round(bounds.y
-					/ diagram.getGridSizeY())
-					* diagram.getGridSizeY());
+			//java.awt.geom.Point2D.Float pointOnGrid = diagram.alignPointToGrid(new Point2D.Float(bounds.x, bounds.y));
+			//n.moveTo(pointOnGrid.x, pointOnGrid.y);
+			n.moveTo(bounds.x, bounds.y);
 			index++;
 		}
 		diagram.repaint();
@@ -611,8 +614,8 @@ public class SchematicEditor extends SchematicViewer {
 		getDiagram().setAdjustmentHandlesSize(6);
 		getDiagram().setAdjustmentHandlesSize(8);
 
-		// getDiagram().setAllowUnanchoredLinks(true);
-		// getDiagram().setAllowUnconnectedLinks(true);
+		//getDiagram().setAllowUnanchoredLinks(true);
+		//getDiagram().setAllowUnconnectedLinks(true);
 		getDiagram().setDynamicLinks(true);
 		getDiagram().setAlignToGrid(true);
 

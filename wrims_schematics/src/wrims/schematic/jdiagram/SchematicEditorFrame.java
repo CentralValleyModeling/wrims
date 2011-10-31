@@ -89,6 +89,7 @@ public class SchematicEditorFrame extends JFrame {
 		bar.add(editor.getUndoAction());
 		bar.add(editor.getRedoAction());
 		bar.addSeparator();
+		//bar.add(editor.getZoomRectangleAction());
 		bar.add(editor.getZoomInAction());
 		bar.add(editor.getZoomOutAction());
 		bar.add(editor.getZoomNormalAction());
