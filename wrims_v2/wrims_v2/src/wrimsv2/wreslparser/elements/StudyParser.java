@@ -55,6 +55,7 @@ public class StudyParser{
       ModelDataSet thisModelDataSet = new ModelDataSet();
 
       thisModelDataSet.dvList = ds.dvList;
+      Collections.sort(thisModelDataSet.dvList,String.CASE_INSENSITIVE_ORDER);
       thisModelDataSet.dvList_global = ds.dvList_global;
       thisModelDataSet.dvList_local = ds.dvList_local;
       thisModelDataSet.dvMap = ds.dvMap;
@@ -71,6 +72,7 @@ public class StudyParser{
       thisModelDataSet.svMap = ds.svMap;
 
       thisModelDataSet.gList = ds.gList;
+      Collections.sort(thisModelDataSet.gList,String.CASE_INSENSITIVE_ORDER);
       thisModelDataSet.gList_global = ds.gList_global;
       thisModelDataSet.gList_local = ds.gList_local;
       thisModelDataSet.gMap = ds.gMap;
@@ -87,6 +89,7 @@ public class StudyParser{
       thisModelDataSet.exMap = ds.exMap;
 
       thisModelDataSet.wtList = ds.wtList;
+      Collections.sort(thisModelDataSet.wtList,String.CASE_INSENSITIVE_ORDER);
       thisModelDataSet.wtMap = ds.wtMap;
 
       thisModelDataSet.incFileList = ds.incFileList;
