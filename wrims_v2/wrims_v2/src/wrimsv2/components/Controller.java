@@ -19,6 +19,8 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 
+import com.sunsetsoft.xa.Optimizer;
+
 import vista.db.dss.DSSDataWriter;
 import vista.db.dss.DSSUtil;
 import wrimsv2.commondata.solverdata.SolverData;
@@ -508,6 +510,7 @@ public class Controller {
 	}
 	
 	public void initialXASolver(){
+		ControlData.xasolver=new Optimizer(25000);
 		ControlData.xasolver.openConnection();
 		ControlData.xasolver.setModelSize(100, 100);
 		ControlData.xasolver.setCommand("MAXIMIZE Yes MUTE yes FORCE No wait no matlist v set visible no");
@@ -636,6 +639,7 @@ public class Controller {
 					}
 					new XASolver();
 					IntermediateLP.writeObjValue();
+					IntermediateLP.writeDvarValue();
 					IntermediateLP.closeIlpFile();
 					System.out.println("Solving Done.");
 					if (Error.error_solving.size()<1){

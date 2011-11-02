@@ -1,5 +1,6 @@
 package wrimsv2.ilp;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.Collections;
 import java.util.Map;
 import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.Dvar;
+import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
@@ -19,6 +21,9 @@ import wrimsv2.evaluator.EvalConstraint;
 public class IntermediateLP {
 
 	private static PrintWriter _ilpFile;
+	private static PrintWriter _svarFile;
+	private static PrintWriter _dvarFile;
+	private static File ilpParentDir;
 
 	public IntermediateLP() {
 
@@ -26,18 +31,39 @@ public class IntermediateLP {
 
 	public static void setIlpFile(String dirPath) {
 
-		String fileName;
+		String ilpFileName;
+		String svarFileName;
+		String dvarFileName;
+		String twoDigitMonth = String.format("%02d", ControlData.currMonth);
+		String twoDigitCycle = String.format("%02d", ControlData.currCycleIndex+1);
 
-		if (FilePaths.ilpFile.length() > 3) {
-			fileName = FilePaths.ilpFile;
+		
+		if (dirPath.length() > 1) {
+			ilpParentDir = new File(dirPath);
+		} else {
+			ilpParentDir = new File(FilePaths.mainDirectory, "=ILP="); 
 		}
-		else {
-			fileName = ControlData.currTimeStep + "_" + ControlData.currCycleIndex + ".ilp";
+		
+		if (FilePaths.ilpFile.length() > 4) {
+			ilpFileName = FilePaths.ilpFile;
+		} else {
+			ilpFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".ilp";
 		}
+		
+		svarFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".svar";
+		dvarFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".dvar";
 		// System.out.println("################# "+fileName);
 		// System.out.println("################# "+System.getProperty("user.dir")+"\\"+dirPath);
 		try {
-			_ilpFile = Tools.openFile(System.getProperty("user.dir") + "\\" + dirPath, fileName);
+			//_ilpFile = Tools.openFile(System.getProperty("user.dir") + "\\" + dirPath, fileName);
+			
+			String ilpDir = new File(ilpParentDir, "ilp").getAbsolutePath();
+			String varDir = new File(ilpParentDir, "var").getAbsolutePath();
+			//private static File ilpDir = new File(ilpParentDir, "ilp");
+			
+			_ilpFile = Tools.openFile(ilpDir, ilpFileName);
+			_svarFile = Tools.openFile(varDir, svarFileName);
+			_dvarFile = Tools.openFile(varDir, dvarFileName);
 
 		}
 		catch (IOException e1) {
@@ -50,24 +76,65 @@ public class IntermediateLP {
 	public static void closeIlpFile() {
 
 		_ilpFile.close();
+		_svarFile.close();
+		_dvarFile.close();
 	}
 
 	public static void output() {
 
+		writeInfo();
 		writeObj();
 		_ilpFile.print("\n");
 		writeConstraint();
 		_ilpFile.print("\n");
 		writeDvar();
 		_ilpFile.flush();
+		
+		// write to _svarFile
+		writeSvarValue();
 	}
 
+	public static void writeDvarValue() {
+		
+		Map<String, Dvar> dvMap = ControlData.currDvMap;
+		for (String s : dvMap.keySet()){
+			String dvName = String.format("%-35s", s);
+			_dvarFile.print(dvName + ":  " + dvMap.get(s).getData().getData() +"\n"  );
+			
+		}
+	}	
+	
+	private static void writeSvarValue() {
+		
+		Map<String, Svar> svMap = ControlData.currSvMap;
+		for (String s : svMap.keySet()){
+			String svName = String.format("%-35s", s);
+			_svarFile.print(svName + ":  " + svMap.get(s).getData().getData() +"\n"  );
+			
+		}
+	}
+	
+	private static void writeInfo() {
+		
+		String twoDigitMonth = String.format("%02d", ControlData.currMonth);
+		String twoDigitCycle = String.format("%02d", ControlData.currCycleIndex+1);
+		
+		String CurrDate = Integer.toString(ControlData.currYear)+"."
+		                 + twoDigitMonth;
+		
+		_ilpFile.println("/* Date: "+CurrDate+"    */");
+		_ilpFile.println("/* Cycle: "+twoDigitCycle+"    */");
+		_ilpFile.println("/* Solver: "+ControlData.solverName+"    */");
+		_ilpFile.flush();
+		
+	}
+	
 	public static void writeObjValue() {
 		
 		double objValue = ControlData.xasolver.getObjective();
 		_ilpFile.println("\n");
 		_ilpFile.println("\n");
-		_ilpFile.println("/* objective value: "+objValue+"    */");
+		_ilpFile.println("/* objective value (Note: This might be last cycle value): "+objValue+"    */");
 		_ilpFile.flush();
 	}
 	
