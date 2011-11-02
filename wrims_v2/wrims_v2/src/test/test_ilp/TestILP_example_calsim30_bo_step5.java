@@ -11,7 +11,7 @@ import wrimsv2.wreslparser.elements.Tools;
 
 public class TestILP_example_calsim30_bo_step5 {
 	
-	private double tolerance_perc = 0.1/1000000; // 0.1 ppm
+	private double tolerance_perc = 0.0001/1000000; // 0.1 ppb
 	private String studyPath;	
 	private String dssPath;	
 	private double expected;
@@ -48,7 +48,7 @@ public class TestILP_example_calsim30_bo_step5 {
         new Controller(controlDataString);
 
         
-        expected = 1.5022887623455383E10; 
+        expected = 1.5022883810508015E10; 
                                             
 		
 		double obj_value =  ControlData.xasolver.getObjective();
