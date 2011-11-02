@@ -64,8 +64,9 @@ public class XASolver {
 	
 	public void setDVars(){
 		Map<String, Dvar> DvarMap = SolverData.getDvarMap();
-		Set DvarCollection = DvarMap.keySet();
-		Iterator dvarIterator=DvarCollection.iterator();
+		//Set DvarCollection = DvarMap.keySet();
+		ArrayList<String> DvarCollection = ControlData.currModelDataSet.dvList;
+		Iterator<String> dvarIterator=DvarCollection.iterator();
 		
 		while(dvarIterator.hasNext()){                          
 			String dvarName=(String)dvarIterator.next();
@@ -83,8 +84,9 @@ public class XASolver {
 
 	public void setWeights(){
 		Map<String, WeightElement> weightMap = SolverData.getWeightMap();
-		Set weightCollection = weightMap.keySet();
-		Iterator weightIterator = weightCollection.iterator();
+		//Set weightCollection = weightMap.keySet();
+		ArrayList<String> weightCollection = ControlData.currModelDataSet.wtList;
+		Iterator<String> weightIterator = weightCollection.iterator();
 		
 		while(weightIterator.hasNext()){
 			String weightName=(String)weightIterator.next();
@@ -94,8 +96,10 @@ public class XASolver {
 	
 	private void setConstraints() {
 		Map<String, EvalConstraint> constraintMap = SolverData.getConstraintDataMap();
-		Set constraintCollection = constraintMap.keySet();
-		Iterator constraintIterator = constraintCollection.iterator();
+		//Set constraintCollection = constraintMap.keySet();
+		ArrayList<String> constraintCollection = new ArrayList<String>(ControlData.currModelDataSet.gList);
+		constraintCollection.retainAll(constraintMap.keySet());
+		Iterator<String> constraintIterator = constraintCollection.iterator();
 		
 		while(constraintIterator.hasNext()){                          
 			String constraintName=(String)constraintIterator.next();
@@ -125,7 +129,7 @@ public class XASolver {
 	public void assignDvar(){
 		Map<String, Dvar> dvarMap = ControlData.currDvMap;
 		Set dvarCollection = dvarMap.keySet();
-		Iterator dvarIterator = dvarCollection.iterator();
+		Iterator<String> dvarIterator = dvarCollection.iterator();
 		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
 		Set<String> dvarUsedByLaterCycle = ControlData.currModelDataSet.dvarUsedByLaterCycle;
 		String model=ControlData.currCycleName;
