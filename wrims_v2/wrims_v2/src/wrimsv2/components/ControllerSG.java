@@ -534,7 +534,7 @@ public class ControllerSG {
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
 			clearValues(modelList, modelDataSetMap);
 			int i=0;
-			while (i<modelList.size()  && noError){   
+			while (i<modelList.size()  && noError){  
 				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
 				boolean condition=false;
 				try{
@@ -546,19 +546,20 @@ public class ControllerSG {
 				}
 				modelCondition.reset();
 				
+				String model=modelList.get(i);
+				ModelDataSet mds=modelDataSetMap.get(model);
+				ControlData.currModelDataSet=mds;
+				ControlData.currCycleName=model;
+				ControlData.currCycleIndex=i;
+				
 				if (condition){
-					String model=modelList.get(i);
-					ModelDataSet mds=modelDataSetMap.get(model);
-					ControlData.currModelDataSet=mds;
 					ControlData.currSvMap=mds.svMap;
 					ControlData.currDvMap=mds.dvMap;
 					ControlData.currAliasMap=mds.asMap;
 					ControlData.currGoalMap=mds.gMap;
 					ControlData.currTsMap=mds.tsMap;
-					ControlData.currCycleIndex=i;
 					ControlData.isPostProcessing=false;
-
-					mds.processModel(); 
+					mds.processModel();
 					IntermediateLP.setIlpFile(FilePaths.ilpFileDirectory);
 					IntermediateLP.output();
 				
@@ -566,11 +567,12 @@ public class ControllerSG {
 						Error.writeEvaluationErrorFile("evaluation_error.txt");
 						noError=false;
 					}
-
 					new XASolver();
-
+					IntermediateLP.writeObjValue();
+					IntermediateLP.writeDvarValue();
+					IntermediateLP.closeIlpFile();
+					System.out.println("Solving Done.");
 					if (Error.error_solving.size()<1){
-						System.out.println("Assign Dvar Done.");
 						ControlData.isPostProcessing=true;
 						mds.processAlias();
 						System.out.println("Assign Alias Done.");
@@ -578,8 +580,11 @@ public class ControllerSG {
 						Error.writeSolvingErrorFile("solving_error.txt");
 						noError=false;
 					}
+					System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
+					//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
+				}else{
+					new AssignPastCycleVariable();
 				}
-		
 				i=i+1;
 			}
 			if (ControlData.timeStep.equals("1MON")){
@@ -587,13 +592,11 @@ public class ControllerSG {
 			}else{
 				currTimeAddOneDay();
 			}
-			System.out.println(ControlData.currYear+"/"+ControlData.currMonth);
 			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
+		ControlData.xasolver.close();
 		DssOperation.writeInitDvarAliasToDSS();
 		DssOperation.writeDVAliasToDSS();
-		ControlData.xasolver.close();
 		ControlData.writer.closeDSSFile();
-		IntermediateLP.closeIlpFile();
 	}
 }
