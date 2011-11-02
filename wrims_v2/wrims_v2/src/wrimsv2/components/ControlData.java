@@ -69,7 +69,7 @@ public class ControlData {
 	public static Group groupSvar;
 	public static DSSDataWriter writer;
 	public static String solverName;
-	public static Optimizer xasolver=new Optimizer(25000);
+	public static Optimizer xasolver;
 	public static boolean isPostProcessing=false;
 	
 	public ControlData(){
