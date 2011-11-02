@@ -97,7 +97,11 @@ public class IntermediateLP {
 	public static void writeDvarValue() {
 		
 		Map<String, Dvar> dvMap = ControlData.currDvMap;
-		for (String s : dvMap.keySet()){
+		
+		ArrayList<String> sortedTerm = new ArrayList<String>(dvMap.keySet());
+		Collections.sort(sortedTerm);
+		
+		for (String s : sortedTerm){
 			String dvName = String.format("%-35s", s);
 			_dvarFile.print(dvName + ":  " + dvMap.get(s).getData().getData() +"\n"  );
 			
@@ -107,7 +111,11 @@ public class IntermediateLP {
 	private static void writeSvarValue() {
 		
 		Map<String, Svar> svMap = ControlData.currSvMap;
-		for (String s : svMap.keySet()){
+		
+		ArrayList<String> sortedTerm = new ArrayList<String>(svMap.keySet());
+		Collections.sort(sortedTerm);
+		
+		for (String s : sortedTerm){
 			String svName = String.format("%-35s", s);
 			_svarFile.print(svName + ":  " + svMap.get(s).getData().getData() +"\n"  );
 			

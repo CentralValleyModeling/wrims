@@ -42,7 +42,7 @@ public class TestILP_example_calsim30_bo_step2 {
 		 "ILP", 
 		 "csv"};
 
-		FilePaths.ilpFileDirectory = "ilp_TestIlp_example_calsim30_bo_step2";
+		FilePaths.ilpFileDirectory = studyPath + "ilp_TestIlp_example_calsim30_bo_step2";
 		//FilePaths.ilpFile = "test.ilp";
 		
         new Controller(controlDataString);
