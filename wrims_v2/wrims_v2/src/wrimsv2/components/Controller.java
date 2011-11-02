@@ -59,6 +59,7 @@ import lpsolve.*;
 public class Controller {
 	
 	public Controller() {
+		long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
 		setControlData();
 		generateStudyFile();
 		try {
@@ -72,9 +73,13 @@ public class Controller {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		long endTimeInMillis = Calendar.getInstance().getTimeInMillis();
+		int runPeriod=(int) (endTimeInMillis-startTimeInMillis);
+		System.out.println("=================Run Time is "+runPeriod/60000+"min"+Math.round((runPeriod/60000.0-runPeriod/60000)*60)+"sec====");
 	}
 	
 	public Controller(String[] args) {
+		long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
 		setControlData(args);
 		generateStudyFile();
 		try {
@@ -88,6 +93,9 @@ public class Controller {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		long endTimeInMillis = Calendar.getInstance().getTimeInMillis();
+		int runPeriod=(int) (endTimeInMillis-startTimeInMillis);
+		System.out.println("=================Run Time is "+runPeriod/60000+"min"+Math.round((runPeriod/60000.0-runPeriod/60000)*60)+"sec====");
 	}
 	
 	public void setControlData(){
@@ -210,7 +218,9 @@ public class Controller {
 	}
 	
 	public void runModel(StudyDataSet sds){
+		System.out.println("=============Prepare Run Study===========");
 		preRunModel(sds);
+		System.out.println("==============Run Study Start============");
 		if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG") ){
 			runModelXA(sds);
 		}else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
@@ -224,7 +234,7 @@ public class Controller {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("Run ends!");
+		System.out.println("=================Run ends!================");
 	}
 	
 	public void preRunModel(StudyDataSet sds){

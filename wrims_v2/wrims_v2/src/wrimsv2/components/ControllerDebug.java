@@ -211,7 +211,9 @@ public class ControllerDebug extends Thread {
 	}
 	
 	public void runModel(StudyDataSet sds){
+		System.out.println("=============Prepare Run Study===========");
 		preRunModel(sds);
+		System.out.println("==============Run Study Start============");
 		if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG") ){
 			runModelXA(sds);
 		}else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
@@ -225,7 +227,7 @@ public class ControllerDebug extends Thread {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("Run ends!");
+		System.out.println("=================Run ends!================");
 	}
 	
 	public void preRunModel(StudyDataSet sds){
