@@ -209,7 +209,7 @@ goal_nocase
 ;
 
 goal_case
-	@init { $goal::gl = new Goal(); $goal::caseNumber=0; $goal::case_condition="conditional"; }   
+	@init { $goal::gl = new Goal(); $goal::caseNumber=0; $goal::case_condition=Param.conditional; }   
 	:  ^( Goal_case sc=Scope {$goal::scop = $sc.text;} i=IDENT  
 		( 
 			{ 	$goal::gl.dvarWeightMapList.add(null);	
@@ -335,11 +335,13 @@ goal_content returns[boolean hasDvar, String str, String ss, String weight, Stri
 		 
 		    if (s!=null) { 
 		    	
-		    	$goal::dvarWeightMap.put($s.text.toLowerCase(), $w.text.toLowerCase());
-		    	$goal::dvarSlackSurplus.add($s.text.toLowerCase());
-		    	$goal::gl.dvarWeightMapList.set($goal::caseNumber,$goal::dvarWeightMap);	
-		    	$goal::gl.dvarSlackSurplusList.set($goal::caseNumber,$goal::dvarSlackSurplus);	
-		    	
+		    	if ($goal::case_condition.equalsIgnoreCase(Param.conditional)){
+		    		
+		    		$goal::dvarWeightMap.put($s.text.toLowerCase(), $w.text.toLowerCase());
+		    		$goal::dvarSlackSurplus.add($s.text.toLowerCase());
+		    		$goal::gl.dvarWeightMapList.set($goal::caseNumber,$goal::dvarWeightMap);	
+		    		$goal::gl.dvarSlackSurplusList.set($goal::caseNumber,$goal::dvarSlackSurplus);	
+		    	}
 		    	//System.out.println($s.text.toLowerCase()+": "+$w.text.toLowerCase());
 		    	//$goal::gl.dvarName.set($goal::caseNumber, $s.text.toLowerCase());
 		    	//$goal::gl.dvarWeight.set($goal::caseNumber, $w.text.toLowerCase());

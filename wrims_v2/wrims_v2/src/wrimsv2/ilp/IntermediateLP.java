@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -101,26 +102,28 @@ public class IntermediateLP {
 		
 		Map<String, Dvar> dvMap = SolverData.getDvarMap();
 		Map<String, WeightElement> wtMap = SolverData.getWeightMap();
-		Set<String> allDvar = new HashSet<String>(dvMap.keySet());
-		allDvar.addAll(wtMap.keySet());
+		//Map<String, WeightElement> wtSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
 		
-		ArrayList<String> sorted_weighted_dvar = new ArrayList<String>(wtMap.keySet());
-		ArrayList<String> sorted_unweighted_dvar = new ArrayList<String>(dvMap.keySet());
-		sorted_unweighted_dvar.removeAll(wtMap.keySet());
+		ArrayList<String> dvar_weighted = new ArrayList<String>(wtMap.keySet());
+		dvar_weighted.addAll(ControlData.currModelDataSet.usedWtSlackSurplusList);
+		
+		ArrayList<String> dvar_unweighted = new ArrayList<String>(dvMap.keySet());
+		dvar_unweighted.removeAll(wtMap.keySet());
+		dvar_unweighted.removeAll(ControlData.currModelDataSet.usedWtSlackSurplusList);
 		
 		
-		Collections.sort(sorted_weighted_dvar);
-		Collections.sort(sorted_unweighted_dvar);
+		Collections.sort(dvar_weighted);
+		Collections.sort(dvar_unweighted);
 		
 		
 		_dvarFile.println("/* Weighted Dvar    */");
-		for (String s : sorted_weighted_dvar){
+		for (String s : dvar_weighted){
 			String dvName = String.format("%-35s", s);
 			_dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
 		}
 		_dvarFile.println();
 		_dvarFile.println("/* Unweighted Dvar    */");	
-		for (String s : sorted_unweighted_dvar){
+		for (String s : dvar_unweighted){
 			String dvName = String.format("%-35s", s);
 			_dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
 		}
@@ -169,16 +172,19 @@ public class IntermediateLP {
 		_ilpFile.println("/* objective function */");
 		_ilpFile.println("max: ");
 
-		Map<String, WeightElement> weightMap = SolverData.getWeightMap();
-
+		//Map<String, WeightElement> weightMap = SolverData.getWeightMap();
+		Map<String, WeightElement> allWeightMap = new HashMap<String, WeightElement>();
+		allWeightMap.putAll(SolverData.getWeightMap());
+		allWeightMap.putAll(SolverData.getWeightSlackSurplusMap());
 		String toPrint = "";
 
-		ArrayList<String> sortedTerm = new ArrayList<String>(weightMap.keySet());
+		ArrayList<String> sortedTerm = new ArrayList<String>(SolverData.getWeightMap().keySet());
+		sortedTerm.addAll(ControlData.currModelDataSet.usedWtSlackSurplusList);
 		Collections.sort(sortedTerm);
 
 		for (String dvar : sortedTerm) {
 
-			double weight = weightMap.get(dvar).getValue();
+			double weight = allWeightMap.get(dvar).getValue();
 
 			if (weight > 0) {
 

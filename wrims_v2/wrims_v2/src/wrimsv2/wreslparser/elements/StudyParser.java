@@ -60,7 +60,7 @@ public class StudyParser{
       thisModelDataSet.dvList_local = ds.dvList_local;
       
       for (String d: ds.dvList){
-    	  if (ds.dvMap.get(d).condition.equalsIgnoreCase("conditional")){
+    	  if (ds.dvMap.get(d).condition.equalsIgnoreCase(Param.conditional)){
     		  thisModelDataSet.dvSlackSurplusList.add(d);
     		  thisModelDataSet.dvSlackSurplusMap.put(d, ds.dvMap.get(d));
     		  ds.dvMap.remove(d);
@@ -105,7 +105,7 @@ public class StudyParser{
       Collections.sort(thisModelDataSet.wtList,String.CASE_INSENSITIVE_ORDER);
       
       for (String w: ds.wtList){
-    	  if (ds.wtMap.get(w).condition.equalsIgnoreCase("conditional")){
+    	  if (ds.wtMap.get(w).condition.equalsIgnoreCase(Param.conditional)){
     		  thisModelDataSet.wtSlackSurplusList.add(w); 
     		  thisModelDataSet.wtSlackSurplusMap.put(w, ds.wtMap.get(w));
     		  ds.wtMap.remove(w);
