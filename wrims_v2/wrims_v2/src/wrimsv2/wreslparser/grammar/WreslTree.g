@@ -224,7 +224,7 @@ LHS '>' RHS
 					else 		              { $type = "p"; penalty2Weight = "-"+$p.w; }
 				  }							 
 		-> {$p.isZero}? Free Lhs[$l] Op[">"] Rhs[$r]  
-		-> 	  		    Penalty Lhs[$l] Op["="] Rhs[$r] Sign["-"] Kind["surplus"] Slack_Surplus["u_"+$goal::goalName+"_"+Integer.toString($goal::caseNumber)] Weight[penalty2Weight] 
+		-> 	  		    Penalty Lhs[$l] Op["="] Rhs[$r] Sign["-"] Kind["surplus"] Slack_Surplus["surplus__"+$goal::goalName+"_"+Integer.toString($goal::caseNumber)] Weight[penalty2Weight] 
 		//-> 	  		    Penalty Lhs[$l] Op["="] Rhs[$r] Sign["-"] Kind["surplus"] Slack_Surplus["surplus_"+$goal::goalName+"_"+$goal::caseName] Weight["-"+$p.w] 
 		)
 	);
@@ -240,7 +240,7 @@ LHS '<' RHS
 					else 		              { $type = "p"; penalty2Weight = "-"+$p.w; }					
 				  }
 		-> {$p.isZero}? Free Lhs[$l] Op["<"] Rhs[$r] 
-		->              Penalty Lhs[$l] Op["="] Rhs[$r] Sign["+"] Kind["slack"] Slack_Surplus["l_"+$goal::goalName+"_"+Integer.toString($goal::caseNumber)]  Weight[penalty2Weight]
+		->              Penalty Lhs[$l] Op["="] Rhs[$r] Sign["+"] Kind["slack"] Slack_Surplus["slack__"+$goal::goalName+"_"+Integer.toString($goal::caseNumber)]  Weight[penalty2Weight]
 		//->              Penalty Lhs[$l] Op["="] Rhs[$r] Sign["+"] Kind["slack"] Slack_Surplus["slack_"+$goal::goalName+"_"+$goal::caseName]  Weight["-"+$p.w]		
 		)
 	);
