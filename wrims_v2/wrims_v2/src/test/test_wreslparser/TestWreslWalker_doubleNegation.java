@@ -55,7 +55,7 @@ public class TestWreslWalker_doubleNegation {
 		String logText = Tools.readFileAsString(logFilePath);	
 
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 1);	
+		Assert.assertEquals(totalErrs, 0);	
 		
 	
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\weight.csv");	
@@ -63,7 +63,7 @@ public class TestWreslWalker_doubleNegation {
 		String s;
 		int n;
 	
-		s = "u_somegoal_1,always,500.";
+		s = "u_somegoal_1,conditional,500.";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);

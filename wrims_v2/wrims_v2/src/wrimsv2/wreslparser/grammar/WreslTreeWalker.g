@@ -114,8 +114,8 @@ weight_table
 //			{ variables.put($IDENT.text, e); }
 //	;
 goal 
-scope { String scop ;} 
-@init { $goal::scop = null; } 
+scope { String scop ; Goal gl; String case_condition; int caseNumber; Map<String, String> dvarWeightMap;} 
+@init { $goal::scop = null; $goal::gl = new Goal(); $goal::caseNumber=0; $goal::case_condition="always";} 
 : goal_simple | goal_nocase | goal_case ;
 
 dvar : dvar_std | dvar_nonStd    ;
@@ -191,34 +191,50 @@ goal_simple
 	;
 
 goal_nocase
-	:  ^( Goal_no_case sc=Scope {$goal::scop = $sc.text;} i=IDENT  d=Dependants vc=VarInCycle c=goal_contents  )  
+	@init { $goal::gl = new Goal(); $goal::caseNumber=0; $goal::case_condition="always";} 
+	:  ^( Goal_no_case sc=Scope {$goal::scop = $sc.text;} i=IDENT  d=Dependants vc=VarInCycle 
+			{ 	
+				$goal::gl = F.goalSimple($i.text, $sc.text, "", $d.text, $vc.text);
+				$goal::gl.dvarWeightMapList.add(null);
+				$goal::dvarWeightMap = new HashMap<String, String>();				 
+				//$goal::gl.dvarName.add(""); $goal::gl.dvarWeight.add("");
+			}
+		  c=goal_contents  )
+		    
 		{ 
-			 F.goalSimple($i.text, $sc.text, $c.str, $d.text, $vc.text);	  				
+			 $goal::gl.caseExpression.set(0, $c.str.toLowerCase()); 	  				
 		} 
 ;
 
 goal_case
-	@init { Goal gl = new Goal(); }   
+	@init { $goal::gl = new Goal(); $goal::caseNumber=0; $goal::case_condition="conditional"; }   
 	:  ^( Goal_case sc=Scope {$goal::scop = $sc.text;} i=IDENT  
-		( ^( Case n=IDENT c=Condition d=Dependants vc=VarInCycle e=goal_contents 
-			{	
-				gl.caseName.add($n.text.toLowerCase());
-				gl.caseCondition.add( Tools.add_space_between_logical( $c.text.toLowerCase() ) );
-				gl.caseExpression.add($e.str.toLowerCase());
+		( 
+			{ 	$goal::gl.dvarWeightMapList.add(null);	
+				$goal::dvarWeightMap = new HashMap<String, String>();	
+				//$goal::gl.dvarName.add(""); $goal::gl.dvarWeight.add(""); 
+			}
+			
+			^( Case n=IDENT c=Condition d=Dependants vc=VarInCycle e=goal_contents 
+			{	$goal::caseNumber++;
+				$goal::dvarWeightMap = new HashMap<String, String>();	
+				$goal::gl.caseName.add($n.text.toLowerCase());
+				$goal::gl.caseCondition.add( Tools.add_space_between_logical( $c.text.toLowerCase() ) );
+				$goal::gl.caseExpression.add($e.str.toLowerCase());
 				if (d != null) {
 					String dependants = $d.text.toLowerCase();
-					gl.expressionDependants.addAll(Tools.convertStrToSet(dependants));
+					$goal::gl.expressionDependants.addAll(Tools.convertStrToSet(dependants));
 				}
 				if (vc != null) {
 					String varInCycle = $vc.text.toLowerCase();
-					gl.neededVarInCycleSet.addAll(Tools.convertStrToSet(varInCycle));
-					gl.needVarFromEarlierCycle = true;
+					$goal::gl.neededVarInCycleSet.addAll(Tools.convertStrToSet(varInCycle));
+					$goal::gl.needVarFromEarlierCycle = true;
 				}
 			} 
 		) )+  
 		)  
 		{ 
-			 F.goalCase($i.text, $sc.text, gl);	  				
+			 F.goalCase($i.text, $sc.text, $goal::gl);	  				
 		} 
 ;
 
@@ -313,9 +329,16 @@ goal_content returns[boolean hasDvar, String str, String ss, String weight, Stri
 		 {  $str = $l.text + $o.text + $r.text; 
 		 
 		    if (s!=null) { 
-
-		    	F.dvarStd($s.text, $goal::scop, null, $Kind.text, "");  
-		    	F.mergeWeightTable($s.text, $w.text, $goal::scop);
+		    	
+		    	$goal::dvarWeightMap.put($s.text.toLowerCase(), $w.text.toLowerCase());
+		    	$goal::gl.dvarWeightMapList.set($goal::caseNumber,$goal::dvarWeightMap);	
+		    	
+		    	//System.out.println($s.text.toLowerCase()+": "+$w.text.toLowerCase());
+		    	//$goal::gl.dvarName.set($goal::caseNumber, $s.text.toLowerCase());
+		    	//$goal::gl.dvarWeight.set($goal::caseNumber, $w.text.toLowerCase());
+		    	//F.dvarStd($s.text, $goal::scop, null, $Kind.text, "");  
+		    	F.dvarSlackSurplus($s.text, $goal::scop, $Kind.text, "", $goal::case_condition);  
+		    	F.mergeSlackSurplusIntoWeightTable($s.text, $w.text, $goal::scop, $goal::case_condition);
 		 		$hasDvar = true; $ss = $Sign.text + $s.text; $weight = $w.text; }
 		 	//} else {
 		 	

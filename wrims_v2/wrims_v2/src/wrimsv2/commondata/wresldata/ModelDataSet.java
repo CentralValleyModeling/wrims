@@ -14,9 +14,14 @@ import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.Evaluation;
 import wrimsv2.evaluator.EvaluatorParser;
+import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 
+import org.antlr.runtime.ANTLRStringStream;
+import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
+import org.antlr.runtime.TokenStream;
+
 import wrimsv2.components.Error;
 
 
@@ -25,9 +30,12 @@ public class ModelDataSet implements Serializable {
 	private static final long serialVersionUID = 1L;
 	// / weight table   // <objName,  <itemName, value>>
 	public ArrayList<String> wtList = new ArrayList<String>();
+	public ArrayList<String> wtSlackSurplusList = new ArrayList<String>();
+
 //	public ArrayList<String> wtList_global = new ArrayList<String>();
 //	public ArrayList<String> wtList_local = new ArrayList<String>();
 	public Map<String, WeightElement> wtMap = new HashMap<String, WeightElement>();
+	public Map<String, WeightElement> wtSlackSurplusMap = new HashMap<String, WeightElement>();	
 
 	// / external function structure
 	public ArrayList<String> exList = new ArrayList<String>();
@@ -57,9 +65,11 @@ public class ModelDataSet implements Serializable {
 
 	// / dvar data structure
 	public ArrayList<String> dvList = new ArrayList<String>();
+	public ArrayList<String> dvSlackSurplusList = new ArrayList<String>();
 	public ArrayList<String> dvList_global = new ArrayList<String>();
 	public ArrayList<String> dvList_local = new ArrayList<String>();
 	public Map<String, Dvar> dvMap = new HashMap<String, Dvar>();
+	public Map<String, Dvar> dvSlackSurplusMap = new HashMap<String, Dvar>();
 
 	// / alias data structure
 	public Set<String> asSet_unknown = new HashSet<String>();
@@ -83,8 +93,9 @@ public class ModelDataSet implements Serializable {
 	public Set<String> dvarUsedByLaterCycle = new HashSet<String>();
 	public Set<String> svarUsedByLaterCycle = new HashSet<String>();
 	public Set<String> aliasUsedByLaterCycle = new HashSet<String>();
-	
+		
 	public void processModel(){
+		resetWeight(); // this clears slack and surplus vars
 		processTimeseries();
 		System.out.println("Process Timeseries Done.");
 		processSvar();
@@ -95,6 +106,13 @@ public class ModelDataSet implements Serializable {
 		System.out.println("Process Goal Done.");
 		processWeight();
 		System.out.println("Process Weight Done.");
+	}
+
+	public void resetWeight(){
+		wtList.removeAll(wtSlackSurplusList);
+		for (String e: wtSlackSurplusList){
+			wtMap.remove(e);
+		}
 	}
 	
 	public void processWeight(){
@@ -246,14 +264,43 @@ public class ModelDataSet implements Serializable {
 			}
 			if (condition){		
 				ArrayList<EvaluatorParser> caseExpressions=goal.caseExpressionParsers;
-				EvaluatorParser caseExpression=caseExpressions.get(i);
+				EvaluatorParser caseExpression=caseExpressions.get(i);				
 				try {
 					caseExpression.evaluator();
 					SolverData.getConstraintDataMap().put(goalName,caseExpression.evalConstraint);
 				} catch (RecognitionException e) {
 					Error.addEvaluationError("Case expression evaluation has error.");
-				}	
+				}
 				caseExpression.reset();
+				
+				// add slack or surplus as dvar and weight
+				if (goal.dvarWeightMapList.size()>i && goal.dvarWeightMapList.get(i)!=null ){
+					
+					Map<String,String> dwm = goal.dvarWeightMapList.get(i);
+					
+					try {
+						for (String d : dwm.keySet()){
+							
+							WeightElement wt = new WeightElement();
+							wt.weight = dwm.get(d).toLowerCase();
+							
+							// preEvaluate
+							String evalString="v: "+dwm.get(d).toLowerCase();
+							ANTLRStringStream stream = new ANTLRStringStream(evalString);
+							ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
+							TokenStream tokenStream = new CommonTokenStream(lexer);
+							wt.weightParser = new ValueEvaluatorParser(tokenStream);
+							
+							// add to weight map
+							mds.wtMap.put(d.toLowerCase(), wt);
+							mds.wtList.add(d.toLowerCase());
+					
+						}
+						
+					} catch (Exception e) {
+						Error.addEvaluationError("Case slack or surplus weight evaluation has error.");
+					}
+				}
 			}
 		}
 	}

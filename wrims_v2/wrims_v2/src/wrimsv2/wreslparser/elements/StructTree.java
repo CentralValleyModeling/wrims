@@ -127,7 +127,7 @@ public class StructTree
     }
   }
 
-  public void goalSimple(String name, String scope, String expression, String dependants, String varInCycle)
+  public Goal goalSimple(String name, String scope, String expression, String dependants, String varInCycle)
   {
     name = name.toLowerCase();
     expression = expression.toLowerCase();
@@ -169,6 +169,7 @@ public class StructTree
       this.S.gList_local.add(name); this.S.gSet_local.add(name); this.gl.scope = Param.local; } else {
       LogUtils.errMsg("Goal scope undefined: " + name, this.S.currentAbsolutePath);
     }
+	return gl;
   }
 
   public void goalCase(String name, String scope, Goal gl)
@@ -614,5 +615,78 @@ public class StructTree
       this.S.seqMap.put(i, this.seq);
       this.S.seqList.add(sequenceName);
     }
+  }
+
+public void dvarSlackSurplus(String name, String scope, String kind, String units, String conditionStr)
+  {
+    name = name.toLowerCase();
+    if (kind.length()>0) kind = kind.toLowerCase();
+    if (units.length()>0) units = units.toLowerCase();
+
+    if (this.S.var_all.containsKey(name)) {
+      LogUtils.errMsg("Dvar redefined: " + name, "\n" + this.S.currentAbsolutePath);
+      this.S.error_var_redefined.put(name, "dvar"); 
+     // this.S.dvList.remove(name); this.S.dvList_global.remove(name); this.S.dvList_local.remove(name);
+    }
+
+    this.S.ordered_list.add(name);
+    this.S.ordered_list_including_files.add(name);
+
+    this.S.var_all.put(name, "dvar");
+
+    this.dv = new Dvar();
+    if (kind.length()>0)  this.dv.kind = kind;
+    if (units.length()>0) this.dv.units = units;
+    this.dv.lowerBound = Param.dv_std_lowerBound;
+    this.dv.upperBound = Param.dv_std_upperBound;
+    this.dv.fromWresl = this.S.currentAbsolutePath;
+    this.dv.condition = conditionStr;
+
+
+
+    this.S.dvMap.put(name, this.dv);
+    this.S.dvList.add(name);
+    this.S.dvSet.add(name);
+
+    if (scope == null) {
+      this.S.dvList_global.add(name); this.S.dvSet_global.add(name); this.dv.scope = Param.global;
+      this.S.ordered_list_global.add(name);
+      this.S.ordered_list_including_files_global.add(name);
+    } else if (scope.equalsIgnoreCase(Param.local)) {
+      this.S.dvList_local.add(name); this.S.dvSet_local.add(name); this.dv.scope = Param.local; } else {
+      LogUtils.errMsg("Dvar (Slack or Surplus) scope undefined: " + name, this.S.currentAbsolutePath);
+    }
+  }
+
+public void mergeSlackSurplusIntoWeightTable(String name, String value, String scope, String conditionStr){
+	  
+	// TODO: weights redefined in different files are not checked within the same model
+	  
+    name = name.toLowerCase();
+    value = value.toLowerCase();
+
+    if (this.S.wtList.contains(name)) {
+      LogUtils.errMsg("Weight redefined: " + name, this.S.currentAbsolutePath);
+      this.S.error_weightVar_redefined.put(name, this.S.currentAbsolutePath); 
+      //this.S.wtList.remove(name); this.S.wtList_global.remove(name); this.S.wtList_local.remove(name);
+    }
+
+    this.wt = new WeightElement();
+    this.wt.weight = value;
+    this.wt.fromWresl = this.S.currentAbsolutePath;
+    this.wt.condition = conditionStr;
+    this.S.wtMap.put(name, this.wt);
+
+    this.S.wtList.add(name);
+    this.S.wtSet.add(name);
+
+    if (scope == null) {
+      this.S.wtList_global.add(name); this.S.wtSet_global.add(name);} 
+    else if (scope.equalsIgnoreCase(Param.local)) {
+      this.S.wtList_local.add(name); this.S.wtSet_local.add(name); } 
+    else {
+      LogUtils.errMsg("Weight table (Slack or Surplus) scope undefined: " + name, this.S.currentAbsolutePath);
+    }
+    
   }
 }

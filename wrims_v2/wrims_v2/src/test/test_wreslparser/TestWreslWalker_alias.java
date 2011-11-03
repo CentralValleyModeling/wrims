@@ -89,7 +89,7 @@ public class TestWreslWalker_alias {
 		// check if dv has the item
 		csvText = Tools.readFileAsString(csvFolderPath+"\\dvar.csv");
 		
-		s = "exportactual,lower_unbounded,upper_unbounded,n,cfs,export-prj";
+		s = "exportactual,always,lower_unbounded,upper_unbounded,n,cfs,export-prj";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);		
@@ -170,7 +170,7 @@ public class TestWreslWalker_alias {
 		// check if dv has the item
 		csvText = Tools.readFileAsString(csvFolderPath+"\\second\\dvar.csv");
 		
-		s = "zz,lower_unbounded,upper_unbounded,n,cfs,alias";
+		s = "zz,always,lower_unbounded,upper_unbounded,n,cfs,alias";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);		
@@ -289,7 +289,7 @@ public class TestWreslWalker_alias {
 		// check if dv has the item
 		csvText = Tools.readFileAsString(csvFolderPath+"\\first\\dvar.csv");
 		
-		s = "a1,lower_unbounded,upper_unbounded,n,cfs,net-dicu";
+		s = "a1,always,lower_unbounded,upper_unbounded,n,cfs,net-dicu";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);			

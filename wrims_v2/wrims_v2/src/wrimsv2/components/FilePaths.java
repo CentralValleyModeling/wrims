@@ -46,5 +46,26 @@ public class FilePaths {
 		initDssDirectory=fullPath.substring(0,index+1);
 		initDssFile=fullPath.substring(index+1);
 	}
+	
+	public static void clear(){
+		
+		groundwaterDir=""; 
+		fullMainPath="";
+		mainFile="";
+		mainDirectory="";
+		fullSvarDssPath="";
+		svarDssFile="";
+		svarDssDirectory="";
+		fullDvarDssPath="";
+		dvarDssFile="";
+		dvarDssDirectory="";
+		fullInitDssPath="";
+		initDssFile="";
+		initDssDirectory="";
+		fullIlpPath="";
+		ilpFile="";
+		ilpFileDirectory="";
+		csvFolderName="";		
+	}
 
 }

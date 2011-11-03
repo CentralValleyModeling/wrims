@@ -65,12 +65,12 @@ public class TestWreslWalker_integer {
 		String s;
 		int n;
 	
-		s = "int_global,0,1,y,none,integer";
+		s = "int_global,always,0,1,y,none,integer";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "int_local,0,1,y,none,integer";
+		s = "int_local,always,0,1,y,none,integer";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -120,17 +120,17 @@ public class TestWreslWalker_integer {
 		String s;
 		int n;
 	
-		s = "int_global,-3,5,y,none,integer";
+		s = "int_global,always,-3,5,y,none,integer";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 	
-		s = "int_local,0,5,y,none,integer";
+		s = "int_local,always,0,5,y,none,integer";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "int_negative,-99,-20,y,none,integer";
+		s = "int_negative,always,-99,-20,y,none,integer";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);

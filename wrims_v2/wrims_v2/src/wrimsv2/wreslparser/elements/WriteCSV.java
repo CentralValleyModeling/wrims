@@ -32,7 +32,7 @@ public class WriteCSV {
 	  public static String external_header ="FUNCTION,FILE,FROM_WRESL_FILE";
 	  public static String svar_header   ="NAME,CASE,ORDER,CONDITION,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,USED_IN_LATER_CYCLE";
 	  public static String timeseries_header ="NAME,B_PART,TYPE,UNITS,CONVERT_TO_UNITS,FROM_WRESL_FILE";
-	  public static String dvar_header ="NAME,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE,USED_IN_LATER_CYCLE";	  
+	  public static String dvar_header ="NAME,CONDITION,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE,USED_IN_LATER_CYCLE";	  
 	  public static String alias_header ="NAME,TYPE,UNITS,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,USED_IN_LATER_CYCLE";
 	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,";
 	  private static ModelDataSet currentModelDataSet;
@@ -151,10 +151,14 @@ public class WriteCSV {
 			svar(ds.svMap, new ArrayList<String>(ds.svSet_unknown), out_sv_unknown);
 			out_sv_unknown.close();
 		}
-		if(ds.dvList.size()>0){
+		if((ds.dvList.size()+ds.dvSlackSurplusList.size())>0){
 			out_dv = Tools.openFile(outFolder, "dvar.csv");	
 			out_dv.print(WriteCSV.dvar_header + "\n");
-			dvar(ds.dvMap, ds.dvList, out_dv);
+			ArrayList<String> allDvList = new ArrayList<String>(ds.dvList);
+			allDvList.addAll(ds.dvSlackSurplusList);
+			Map<String,Dvar> allDvMap = new HashMap<String, Dvar>(ds.dvMap);
+			allDvMap.putAll(ds.dvSlackSurplusMap);
+			dvar(allDvMap, allDvList, out_dv);
 			out_dv.close();
 		}
 		if(ds.gList.size()>0){
@@ -169,10 +173,14 @@ public class WriteCSV {
 			external(ds.exMap, ds.exList, out_ex);
 			out_ex.close();
 		}
-		if(ds.wtList.size()>0){
+		if((ds.wtList.size()+ds.wtSlackSurplusList.size())>0){
 			out_wt = Tools.openFile(outFolder, "weight.csv");		
 			out_wt.print(WriteCSV.weight_header + "\n");
-			weight(ds.wtMap, ds.wtList, out_wt);	
+			ArrayList<String> allWtList = new ArrayList<String>(ds.wtList);
+			allWtList.addAll(ds.wtSlackSurplusList);
+			Map<String,WeightElement> allWtMap = new HashMap<String, WeightElement>(ds.wtMap);
+			allWtMap.putAll(ds.wtSlackSurplusMap);
+			weight(allWtMap, allWtList, out_wt);	
 			out_wt.close();
 		}
 		if(ds.asList.size()>0){
@@ -391,7 +399,7 @@ public class WriteCSV {
 		    	Dvar d = dMap.get(k);		    	
 
 			    out.print(k); // for DVAR NAME
-		    	
+			    out.print(Param.csv_seperator+d.condition); // for DVAR CONDITION
 		    	out.print(Param.csv_seperator+d.lowerBound); //for UNITS
 		    	out.print(Param.csv_seperator+d.upperBound); //for UNITS
 		    	out.print(Param.csv_seperator+d.integer); //for KIND

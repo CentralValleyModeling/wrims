@@ -20,6 +20,7 @@ public class Dvar implements Serializable {
 	public ValueEvaluatorParser lowerBoundParser;
 	public String upperBound;
 	public ValueEvaluatorParser upperBoundParser;
+	public String condition;
 	public String fromWresl;
 	public IntDouble data;
 	public Number upperBoundValue;
@@ -35,6 +36,7 @@ public class Dvar implements Serializable {
 		units=Param.undefined;
 		lowerBound=Param.undefined;
 		upperBound=Param.undefined;
+		condition = Param.always;
 		fromWresl=Param.undefined;
 		expression=Param.undefined;
 		dependants = new HashSet<String>();
@@ -54,6 +56,7 @@ public class Dvar implements Serializable {
 		units=input.units;
 		lowerBound=input.lowerBound;
 		upperBound=input.upperBound;
+		condition=input.condition;
 		fromWresl=input.fromWresl;
 		expression=input.expression;
 		dependants = input.dependants;

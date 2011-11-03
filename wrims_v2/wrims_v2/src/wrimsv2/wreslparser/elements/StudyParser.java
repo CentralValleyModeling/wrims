@@ -58,6 +58,18 @@ public class StudyParser{
       Collections.sort(thisModelDataSet.dvList,String.CASE_INSENSITIVE_ORDER);
       thisModelDataSet.dvList_global = ds.dvList_global;
       thisModelDataSet.dvList_local = ds.dvList_local;
+      
+      for (String d: ds.dvList){
+    	  if (ds.dvMap.get(d).condition.equalsIgnoreCase("conditional")){
+    		  thisModelDataSet.dvSlackSurplusList.add(d);
+    		  thisModelDataSet.dvSlackSurplusMap.put(d, ds.dvMap.get(d));
+    		  ds.dvMap.remove(d);
+    	  }	  
+      }
+      
+      thisModelDataSet.dvList.removeAll(thisModelDataSet.dvSlackSurplusList);
+      thisModelDataSet.dvList_global.removeAll(thisModelDataSet.dvSlackSurplusList);
+      thisModelDataSet.dvList_local.removeAll(thisModelDataSet.dvSlackSurplusList);
       thisModelDataSet.dvMap = ds.dvMap;
 
       thisModelDataSet.tsList = ds.tsList;
@@ -88,9 +100,24 @@ public class StudyParser{
       thisModelDataSet.exList_local = ds.exList_local;
       thisModelDataSet.exMap = ds.exMap;
 
+
       thisModelDataSet.wtList = ds.wtList;
       Collections.sort(thisModelDataSet.wtList,String.CASE_INSENSITIVE_ORDER);
+      
+      for (String w: ds.wtList){
+    	  if (ds.wtMap.get(w).condition.equalsIgnoreCase("conditional")){
+    		  thisModelDataSet.wtSlackSurplusList.add(w); 
+    		  thisModelDataSet.wtSlackSurplusMap.put(w, ds.wtMap.get(w));
+    		  ds.wtMap.remove(w);
+    	  }	  
+      }
+      
+      thisModelDataSet.wtList.removeAll(thisModelDataSet.wtSlackSurplusList);
+      //System.out.println("thisModelDataSet.wtList : "+thisModelDataSet.wtList);
       thisModelDataSet.wtMap = ds.wtMap;
+      
+      //Tools.mapRemoveAll(thisModelDataSet.wtMap, thisModelDataSet.wtSlackSurplusList);
+      
 
       thisModelDataSet.incFileList = ds.incFileList;
       thisModelDataSet.incFileList_global = ds.incFileList_global;
@@ -580,8 +607,8 @@ public class StudyParser{
 		  
 		  String svName = ds.svList.get(i);
 		 // TODO: serious bug. Map object is not reinitialized
-		 //dep = new HashSet<String>(ds.svMap.get(svName).dependants);
-		 dep = ds.svMap.get(svName).dependants; // this will cause problem in shallow copy
+		 dep = new HashSet<String>(ds.svMap.get(svName).dependants);
+		 //dep = ds.svMap.get(svName).dependants; // this will cause problem in shallow copy
 		  dep.removeAll(ds.tsSet);	
 		  dep.removeAll(previous_global_sv_as_ex_ts);	
 		  

@@ -62,7 +62,7 @@ public class TestWreslWalker_slack {
 		String s;
 		int n;
 	
-		s = "l_b2action1sha_2_1,0,upper_unbounded##slack";
+		s = "l_b2action1sha_2_1,always,0,upper_unbounded##slack";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
