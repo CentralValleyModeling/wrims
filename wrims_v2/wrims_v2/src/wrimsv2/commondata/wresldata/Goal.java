@@ -20,6 +20,7 @@ public class Goal implements Serializable {
 	
 	//     ArrayList< Map< dvarName, Weight > >
 	public ArrayList<Map<String,String>> dvarWeightMapList;
+	public ArrayList<ArrayList<String>> dvarSlackSurplusList;	
 	public ArrayList<String> dvarName; // from slack or surplus
 	public ArrayList<String> dvarWeight; // for the slack or surplus. Negative penalty leads to positive weight
 	public ArrayList<String> caseCondition;
