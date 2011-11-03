@@ -104,16 +104,25 @@ public class IntermediateLP {
 		Set<String> allDvar = new HashSet<String>(dvMap.keySet());
 		allDvar.addAll(wtMap.keySet());
 		
-		ArrayList<String> sortedTerm = new ArrayList<String>(allDvar);
-		Collections.sort(sortedTerm);
+		ArrayList<String> sorted_weighted_dvar = new ArrayList<String>(wtMap.keySet());
+		ArrayList<String> sorted_unweighted_dvar = new ArrayList<String>(dvMap.keySet());
+		sorted_unweighted_dvar.removeAll(wtMap.keySet());
 		
-		for (String s : sortedTerm){
+		
+		Collections.sort(sorted_weighted_dvar);
+		Collections.sort(sorted_unweighted_dvar);
+		
+		
+		_dvarFile.println("/* Weighted Dvar    */");
+		for (String s : sorted_weighted_dvar){
 			String dvName = String.format("%-35s", s);
-			try{
-				_dvarFile.print(dvName + ":  " + dvMap.get(s).getData().getData() +"\n"  );
-			} catch(Exception e) {
-				_dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
-			}
+			_dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
+		}
+		_dvarFile.println();
+		_dvarFile.println("/* Unweighted Dvar    */");	
+		for (String s : sorted_unweighted_dvar){
+			String dvName = String.format("%-35s", s);
+			_dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
 		}
 	}	
 	
