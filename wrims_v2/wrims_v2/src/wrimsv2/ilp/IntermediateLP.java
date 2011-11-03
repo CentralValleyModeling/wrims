@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+
 import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.Svar;
@@ -96,15 +99,21 @@ public class IntermediateLP {
 
 	public static void writeDvarValue() {
 		
-		Map<String, Dvar> dvMap = ControlData.currDvMap;
+		Map<String, Dvar> dvMap = SolverData.getDvarMap();
+		Map<String, WeightElement> wtMap = SolverData.getWeightMap();
+		Set<String> allDvar = new HashSet<String>(dvMap.keySet());
+		allDvar.addAll(wtMap.keySet());
 		
-		ArrayList<String> sortedTerm = new ArrayList<String>(dvMap.keySet());
+		ArrayList<String> sortedTerm = new ArrayList<String>(allDvar);
 		Collections.sort(sortedTerm);
 		
 		for (String s : sortedTerm){
 			String dvName = String.format("%-35s", s);
-			_dvarFile.print(dvName + ":  " + dvMap.get(s).getData().getData() +"\n"  );
-			
+			try{
+				_dvarFile.print(dvName + ":  " + dvMap.get(s).getData().getData() +"\n"  );
+			} catch(Exception e) {
+				_dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
+			}
 		}
 	}	
 	
