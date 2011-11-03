@@ -1,0 +1,31 @@
+SEQUENCE One {
+    MODEL   Mod1
+    ORDER   1
+}
+
+MODEL Mod1 {
+
+	define X { std kind 'Dvar' units 'num' } 	
+	
+	goal pushc31andd31_32 {
+		lhs x
+		case DryCritical {
+			condition month == MAR
+			rhs 0.
+			lhs>rhs penalty -500. }
+
+		case otherwise {
+			condition always
+			rhs 0.
+			lhs>rhs penalty 250. }
+	}
+	
+	goal g2 { x < 100 }
+	goal g3 { x > month }
+		
+	Objective obj = {
+		[x, 1]
+	}			
+}
+
+

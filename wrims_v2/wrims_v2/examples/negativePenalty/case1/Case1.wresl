@@ -1,0 +1,28 @@
+SEQUENCE One {
+    MODEL   Mod1
+    ORDER   1
+}
+
+MODEL Mod1 {
+
+	define X { std kind 'Dvar' units 'num' } 
+	define Y { std kind 'Dvar' units 'num' } 
+	define Z { std kind 'Dvar' units 'num' } 
+
+	goal pushC {
+		lhs X
+		case case1 {
+			condition 8 > 5
+			rhs 0.0
+			lhs>rhs penalty -1000. 
+		}
+	}
+	
+	goal g2 { x+y+z=10 }
+		
+	Objective obj = {
+		[x, 1]
+		[y, 2]
+		[z, 3]
+	}			
+}
