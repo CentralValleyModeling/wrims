@@ -38,6 +38,7 @@ public class Goal implements Serializable {
 		lhs=Param.undefined;
 		caseName       = new ArrayList<String>();
 		dvarWeightMapList = new ArrayList<Map<String, String>>(); // ArrayList< Map< dvarName, Weight > >
+		dvarSlackSurplusList = new ArrayList<ArrayList<String>>(); // ArrayList< ArrayList< dvarName > >
 		dvarName       = new ArrayList<String>();
 		dvarWeight     = new ArrayList<String>();		
 		caseCondition  = new ArrayList<String>();
