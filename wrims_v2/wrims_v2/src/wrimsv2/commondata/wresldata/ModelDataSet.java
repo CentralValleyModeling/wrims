@@ -31,6 +31,7 @@ public class ModelDataSet implements Serializable {
 	// / weight table   // <objName,  <itemName, value>>
 	public ArrayList<String> wtList = new ArrayList<String>();
 	public ArrayList<String> wtSlackSurplusList = new ArrayList<String>();
+	public ArrayList<String> usedWtSlackSurplusList = new ArrayList<String>(); 
 
 //	public ArrayList<String> wtList_global = new ArrayList<String>();
 //	public ArrayList<String> wtList_local = new ArrayList<String>();
@@ -95,7 +96,7 @@ public class ModelDataSet implements Serializable {
 	public Set<String> aliasUsedByLaterCycle = new HashSet<String>();
 		
 	public void processModel(){
-		resetWeight(); // this clears slack and surplus vars
+		resetSlackSurplusWeight(); // this clears slack and surplus vars
 		processTimeseries();
 		System.out.println("Process Timeseries Done.");
 		processSvar();
@@ -106,13 +107,12 @@ public class ModelDataSet implements Serializable {
 		System.out.println("Process Goal Done.");
 		processWeight();
 		System.out.println("Process Weight Done.");
+		processWeightSlackSurplus();
+		System.out.println("Process Weight Slack Surplus Done.");
 	}
 
-	public void resetWeight(){
-		wtList.removeAll(wtSlackSurplusList);
-		for (String e: wtSlackSurplusList){
-			wtMap.remove(e);
-		}
+	public void resetSlackSurplusWeight(){
+		usedWtSlackSurplusList = new ArrayList<String>();
 	}
 	
 	public void processWeight(){
@@ -136,7 +136,29 @@ public class ModelDataSet implements Serializable {
 			evaluator.reset();
 		}
 	}
-		
+	
+	public void processWeightSlackSurplus(){
+		ModelDataSet mds=ControlData.currModelDataSet;
+		ArrayList<String> usedWtSlackSurplusList = mds.usedWtSlackSurplusList;
+		Map<String, WeightElement> wtSlackSurplusMap =mds.wtSlackSurplusMap;
+		SolverData.setWeightSlackSurplusMap(wtSlackSurplusMap);
+		ControlData.currEvalTypeIndex=5;
+		for (String wtSlackSurplusName: usedWtSlackSurplusList){
+			ControlData.currEvalName=wtSlackSurplusName;
+			//System.out.println("Process weight "+wtName);
+			WeightElement wtSlackSurplus=wtSlackSurplusMap.get(wtSlackSurplusName);
+			ValueEvaluatorParser evaluator=wtSlackSurplus.weightParser;
+			try {
+				evaluator.evaluator();
+				wtSlackSurplus.setValue(evaluator.evalValue.getData().doubleValue());
+			} catch (RecognitionException e) {
+				Error.addEvaluationError("weight definition has error");
+				wtSlackSurplus.setValue(0.0);
+			}
+			evaluator.reset();
+		}
+	}
+	
 	public void processSvar(){
 		ModelDataSet mds=ControlData.currModelDataSet;
 		ArrayList<String> svList = mds.svList;
@@ -275,31 +297,8 @@ public class ModelDataSet implements Serializable {
 				
 				// add slack or surplus as dvar and weight
 				if (goal.dvarWeightMapList.size()>i && goal.dvarWeightMapList.get(i)!=null ){
-					
-					Map<String,String> dwm = goal.dvarWeightMapList.get(i);
-					
-					try {
-						for (String d : dwm.keySet()){
-							
-							WeightElement wt = new WeightElement();
-							wt.weight = dwm.get(d).toLowerCase();
-							
-							// preEvaluate
-							String evalString="v: "+dwm.get(d).toLowerCase();
-							ANTLRStringStream stream = new ANTLRStringStream(evalString);
-							ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
-							TokenStream tokenStream = new CommonTokenStream(lexer);
-							wt.weightParser = new ValueEvaluatorParser(tokenStream);
-							
-							// add to weight map
-							mds.wtMap.put(d.toLowerCase(), wt);
-							mds.wtList.add(d.toLowerCase());
-					
-						}
-						
-					} catch (Exception e) {
-						Error.addEvaluationError("Case slack or surplus weight evaluation has error.");
-					}
+					ArrayList<String> dwl = goal.dvarSlackSurplusList.get(i);
+					usedWtSlackSurplusList.addAll(dwl);
 				}
 			}
 		}

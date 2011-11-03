@@ -84,13 +84,21 @@ public class XASolver {
 
 	public void setWeights(){
 		Map<String, WeightElement> weightMap = SolverData.getWeightMap();
-		//Set weightCollection = weightMap.keySet();
 		ArrayList<String> weightCollection = ControlData.currModelDataSet.wtList;
 		Iterator<String> weightIterator = weightCollection.iterator();
 		
 		while(weightIterator.hasNext()){
 			String weightName=(String)weightIterator.next();
 			ControlData.xasolver.setColumnObjective(weightName, weightMap.get(weightName).getValue());
+		}
+		
+		Map<String, WeightElement> weightSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
+		ArrayList<String> usedWeightSlackSurplusCollection = ControlData.currModelDataSet.usedWtSlackSurplusList;
+		Iterator<String> weightSlackSurplusIterator = usedWeightSlackSurplusCollection.iterator();
+		
+		while(weightSlackSurplusIterator.hasNext()){
+			String weightSlackSurplusName=(String)weightSlackSurplusIterator.next();
+			ControlData.xasolver.setColumnObjective(weightSlackSurplusName, weightSlackSurplusMap.get(weightSlackSurplusName).getValue());
 		}
 	}
 	

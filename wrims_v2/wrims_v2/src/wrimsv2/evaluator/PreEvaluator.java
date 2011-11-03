@@ -30,6 +30,8 @@ public class PreEvaluator {
 	private Map<String, Alias> asMap;
 	private ArrayList<String> wtList;
 	private Map<String, WeightElement> wtMap;
+	private ArrayList<String> wtSlackSurplusList;
+	private Map<String, WeightElement> wtSlackSurplusMap;	
 	private ArrayList<String> modelConditionList;
 
 	public PreEvaluator(StudyDataSet sds ){
@@ -48,12 +50,15 @@ public class PreEvaluator {
 			asMap=mds.asMap;
 			wtList=mds.wtList;
 			wtMap=mds.wtMap;
+			wtSlackSurplusList=mds.wtSlackSurplusList;
+			wtSlackSurplusMap=mds.wtSlackSurplusMap;
 			
 			preEvaluateSvar();
 			preEvaluateGoal();
 			preEvaluateDvar();
 			preEvaluateAlias();
 			preEvaluateWeight();
+			preEvaluateWeightSlackSurplus();
 		}
 		modelConditionList=sds.getModelConditionList();
 		preEvaluateModelCondition(sds);
@@ -82,6 +87,19 @@ public class PreEvaluator {
 			ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
 			TokenStream tokenStream = new CommonTokenStream(lexer);
 			weight.weightParser = new ValueEvaluatorParser(tokenStream);
+		}
+	}
+	
+	public void preEvaluateWeightSlackSurplus(){
+		for (String wtSlackSurplusName: wtSlackSurplusList){
+			//System.out.println("PreEvaluate weight slack surplus"+wtName);
+			WeightElement weightSurplusMap=wtSlackSurplusMap.get(wtSlackSurplusName);
+			
+			String evalString="v: "+weightSurplusMap.weight;
+			ANTLRStringStream stream = new ANTLRStringStream(evalString);
+			ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
+			TokenStream tokenStream = new CommonTokenStream(lexer);
+			weightSurplusMap.weightParser = new ValueEvaluatorParser(tokenStream);
 		}
 	}
 	

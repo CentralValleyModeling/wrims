@@ -13,6 +13,7 @@ public class SolverData {
 	private static Map<String, EvalConstraint> constraintDataMap=new HashMap<String, EvalConstraint>();
 	private static Map<String, Dvar> dvarMap= new HashMap<String, Dvar>();
 	private static Map<String, WeightElement> weightMap = new HashMap<String, WeightElement>();
+	private static Map<String, WeightElement> weightSlackSurplusMap = new HashMap<String, WeightElement>();
 
 	public static Map<String, WeightElement> getWeightMap(){
 		return weightMap;
@@ -20,6 +21,14 @@ public class SolverData {
 	
 	public static void setWeightMap(Map<String, WeightElement> wtMap){
 		weightMap=wtMap;
+	}
+	
+	public static Map<String, WeightElement> getWeightSlackSurplusMap(){
+		return weightSlackSurplusMap;
+	}
+	
+	public static void setWeightSlackSurplusMap(Map<String, WeightElement> wtSlackSurplusMap){
+		weightSlackSurplusMap=wtSlackSurplusMap;
 	}
 	
 	public static Map<String, EvalConstraint> getConstraintDataMap(){
