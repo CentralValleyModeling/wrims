@@ -94,11 +94,11 @@ public class XASolver {
 		
 		Map<String, WeightElement> weightSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
 		ArrayList<String> usedWeightSlackSurplusCollection = ControlData.currModelDataSet.usedWtSlackSurplusList;
-		Iterator<String> weightSlackSurplusIterator = usedWeightSlackSurplusCollection.iterator();
+		Iterator<String> usedWeightSlackSurplusIterator = usedWeightSlackSurplusCollection.iterator();
 		
-		while(weightSlackSurplusIterator.hasNext()){
-			String weightSlackSurplusName=(String)weightSlackSurplusIterator.next();
-			ControlData.xasolver.setColumnObjective(weightSlackSurplusName, weightSlackSurplusMap.get(weightSlackSurplusName).getValue());
+		while(usedWeightSlackSurplusIterator.hasNext()){
+			String usedWeightSlackSurplusName=(String)usedWeightSlackSurplusIterator.next();
+			ControlData.xasolver.setColumnObjective(usedWeightSlackSurplusName, weightSlackSurplusMap.get(usedWeightSlackSurplusName).getValue());
 		}
 	}
 	
