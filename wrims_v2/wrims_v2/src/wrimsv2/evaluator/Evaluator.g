@@ -295,7 +295,7 @@ relationStatementSeries returns [boolean result]
     (((s='.and.')|(s='.or.')) r2=relationRangeStatementAdvanced {result=Evaluation.relationStatementSeries(result, $r2.result, $s.text);})* ; 
 
 relationRangeStatementAdvanced returns [boolean result]
-  : (r1=relationRangeStatement{result=$r1.result;})|('$'r2=relationStatementSeries'$'{result=$r2.result;})
+  : (r1=relationRangeStatement{result=$r1.result;})|(('('relationStatementSeries')')=> '('r2=relationStatementSeries')' {result=$r2.result;})
   ;
 
 relationRangeStatement returns [boolean result]
