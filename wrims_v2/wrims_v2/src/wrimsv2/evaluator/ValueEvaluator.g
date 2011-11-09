@@ -289,12 +289,12 @@ relationStatementSeries returns [boolean result]
     (((s='.and.')|(s='.or.')) r2=relationRangeStatement {result=ValueEvaluation.relationStatementSeries(result, $r2.result, $s.text);})* ;
 
 relationRangeStatement returns [boolean result]
-  : (r1=relationStatement{result=$r1.result;})|(r2=range_func{result=$r2.result;}){
-  }
+  : (r1=relationStatement{result=$r1.result;})|(r2=range_func{result=$r2.result;})
   ;
 
 relationStatement returns [boolean result] 
-	:	(e1=expression) relation (e2=expression){result=ValueEvaluation.relationStatement($e1.id, $e2.id, $relation.text);}
+	: (	( expression relation expression) => e1=expression relation e2=expression {result=ValueEvaluation.relationStatement($e1.id, $e2.id, $relation.text);} )
+	| ( ( '('relationStatementSeries')'  ) => '('r2=relationStatementSeries')' {result=$r2.result;} )
 	;
 
 assignStatement returns [String assignIdent, Number value]  

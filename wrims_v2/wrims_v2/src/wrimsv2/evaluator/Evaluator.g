@@ -282,28 +282,25 @@ relation
 	| '<='
 	;	
 
+conditionStatement returns [boolean result]
+	:	((r=relationStatementSeries{result=$r.result;})|ALWAYS{result=true;})
+	;
+
 whereStatement returns [String whereIdent, Number value]
   : ((i=IDENT{$whereIdent=$i.text;})|(u=usedKeywords{$whereIdent=$u.text;})) '=' expression{$value=Evaluation.assignWhereStatement($expression.ee);} 
   ;
 	
-conditionStatement returns [boolean result]
-  : ((r=relationStatementSeries{result=$r.result;})|ALWAYS{result=true;})
-  ;
-  	
 relationStatementSeries returns [boolean result] 
-  : r1=relationRangeStatementAdvanced {result=$r1.result;} 
-    (((s='.and.')|(s='.or.')) r2=relationRangeStatementAdvanced {result=Evaluation.relationStatementSeries(result, $r2.result, $s.text);})* ; 
-
-relationRangeStatementAdvanced returns [boolean result]
-  : (r1=relationRangeStatement{result=$r1.result;})|(('('relationStatementSeries')')=> '('r2=relationStatementSeries')' {result=$r2.result;})
-  ;
+  : r1=relationRangeStatement {result=$r1.result;} 
+    (((s='.and.')|(s='.or.')) r2=relationRangeStatement {result=Evaluation.relationStatementSeries(result, $r2.result, $s.text);})* ;
 
 relationRangeStatement returns [boolean result]
   : (r1=relationStatement{result=$r1.result;})|(r2=range_func{result=$r2.result;})
-  ;
+  ;  
 
 relationStatement returns [boolean result] 
-	:	(e1=expression) relation (e2=expression){result=Evaluation.relationStatement($e1.ee, $e2.ee, $relation.text);}
+	: (	( expression relation expression ) => (e1=expression) relation (e2=expression) {result=Evaluation.relationStatement($e1.ee, $e2.ee, $relation.text);} )
+	| ( ( '('relationStatementSeries')'  ) => '('r2=relationStatementSeries')' {result=$r2.result;} )
 	;
 
 constraintStatement returns [EvalConstraint ec]
