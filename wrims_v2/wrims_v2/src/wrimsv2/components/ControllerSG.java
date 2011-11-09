@@ -562,7 +562,7 @@ public class ControllerSG {
 					ControlData.isPostProcessing=false;
 					mds.processModel();
 					IntermediateLP.setIlpFile(FilePaths.ilpFileDirectory);
-					IntermediateLP.output();
+					Set<String> usedDvar=IntermediateLP.output();
 				
 					if (Error.error_evaluation.size()>=1){
 						Error.writeEvaluationErrorFile("evaluation_error.txt");
@@ -570,7 +570,7 @@ public class ControllerSG {
 					}
 					new XASolver();
 					IntermediateLP.writeObjValue();
-					IntermediateLP.writeDvarValue();
+					IntermediateLP.writeDvarValue(usedDvar);
 					IntermediateLP.closeIlpFile();
 					System.out.println("Solving Done.");
 					if (Error.error_solving.size()<1){

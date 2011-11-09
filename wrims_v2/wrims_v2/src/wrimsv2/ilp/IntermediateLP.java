@@ -84,21 +84,22 @@ public class IntermediateLP {
 		_dvarFile.close();
 	}
 
-	public static void output() {
-
+	public static Set<String> output() {
+		
 		writeInfo();
 		writeObj();
 		_ilpFile.print("\n");
-		writeConstraint();
+		Set<String> usedDvar=writeConstraint();
 		_ilpFile.print("\n");
-		writeDvar();
+		writeDvar(usedDvar);
 		_ilpFile.flush();
 		
 		// write to _svarFile
 		writeSvarValue();
+		return usedDvar;
 	}
 
-	public static void writeDvarValue() {
+	public static void writeDvarValue(Set<String> usedDvar) {
 		
 		Map<String, Dvar> dvMap = SolverData.getDvarMap();
 		Map<String, WeightElement> wtMap = SolverData.getWeightMap();
@@ -111,7 +112,7 @@ public class IntermediateLP {
 		dvar_unweighted.removeAll(wtMap.keySet());
 		dvar_unweighted.removeAll(ControlData.currModelDataSet.usedWtSlackSurplusList);
 		
-		
+		dvar_unweighted.retainAll(usedDvar);
 		Collections.sort(dvar_weighted);
 		Collections.sort(dvar_unweighted);
 		
@@ -204,8 +205,9 @@ public class IntermediateLP {
 
 	}
 
-	private static void writeConstraint() {
+	private static Set<String> writeConstraint() {
 
+		Set<String> usedDvar = new HashSet<String>();
 		_ilpFile.println("/* constraint */");
 
 		Map<String, EvalConstraint> constraintMap = SolverData.getConstraintDataMap();
@@ -222,7 +224,7 @@ public class IntermediateLP {
 				ArrayList<String> sortedTerm = new ArrayList<String>(constraintMap.get(constraintName)
 						.getEvalExpression().getMultiplier().keySet());
 				Collections.sort(sortedTerm);
-
+				usedDvar.addAll(sortedTerm);
 				for (String var : sortedTerm) {
 
 					Number coef = constraintMap.get(constraintName).getEvalExpression().getMultiplier().get(var)
@@ -265,14 +267,16 @@ public class IntermediateLP {
 			_ilpFile.println(lhs + " ;");
 
 		}
+		return usedDvar;
 	}
 
-	private static void writeDvar() {
+	private static void writeDvar(Set<String> usedDvar) {
 
 		_ilpFile.println("/* dvar */");
 
 		Map<String, Dvar> dvarMap = SolverData.getDvarMap();
 		ArrayList<String> sortedDvar = new ArrayList<String>(dvarMap.keySet());
+		sortedDvar.retainAll(usedDvar);
 		Collections.sort(sortedDvar);
 
 		ArrayList<String> intList = new ArrayList<String>();
