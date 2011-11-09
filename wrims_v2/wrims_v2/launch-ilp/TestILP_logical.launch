@@ -7,7 +7,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="wrims_v2"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx1200m -Xss1024K -Djava.library.path=&quot;D:\cvwrsm\trunk\3rd_party\vista\lib;D:\cvwrsm\trunk\wrims_v2\wrims_v2\src\wrimsv2\lib&quot;"/>
 <mapAttribute key="org.testng.eclipse.ALL_CLASS_METHODS">
-<mapEntry key="test.test_ilp.TestILP_table" value=""/>
+<mapEntry key="test.test_ilp.TestILP_logical" value=""/>
 </mapAttribute>
 <listAttribute key="org.testng.eclipse.CLASS_TEST_LIST">
 <listEntry value="test.test_ilp.TestILP_logical"/>
