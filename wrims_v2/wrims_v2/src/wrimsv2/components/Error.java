@@ -89,5 +89,19 @@ public class Error {
 		error_engine.add("Engine error: "+error);
 		System.out.println("Engine error: "+error);
 	}
+	
+	public static int getTotalError(){
+		return Error.error_engine.size()+
+				 Error.error_evaluation.size()+
+				 Error.error_grammer.size()+
+				 Error.error_solving.size();
+	}
+	
+	public static void clear(){
+		Error.error_engine = new ArrayList<String>();
+		Error.error_evaluation = new ArrayList<String>();
+		Error.error_grammer = new ArrayList<String>();
+		Error.error_solving = new ArrayList<String>();
+	}
 }
 
