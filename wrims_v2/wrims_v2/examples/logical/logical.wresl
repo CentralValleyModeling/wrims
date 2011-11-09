@@ -1,0 +1,31 @@
+SEQUENCE One {
+    MODEL   Mod1
+    ORDER   1
+}
+
+MODEL Mod1 {
+
+	define x { std kind 'test' units 'cfs' }
+	
+	define S { value 10 } 	
+	
+		
+	goal test {
+		 lhs x
+		 case Low {
+			  condition   ( S <= 130.0 .and. month >= AUG ) .or. ( S <= 130.0 .and. month == OCT )
+			  rhs 30
+		 }
+		 case other {
+			  condition always
+			  rhs 999.
+		 }
+	}
+		
+	
+	Objective obj = {
+		[x, 1]
+	}			
+}
+
+
