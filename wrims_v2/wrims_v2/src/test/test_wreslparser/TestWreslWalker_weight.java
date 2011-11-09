@@ -178,14 +178,14 @@ public class TestWreslWalker_weight {
 		String s;
 		int n;
 	
-		s = "u_g_pp_1";
+		s = "surplus__g_pp_1";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 		
 		csvText = Tools.readFileAsString(csvFolderPath+"\\second\\dvar.csv");	
 	
-		s = "u_g_pp_1";
+		s = "surplus__g_pp_1";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 0);

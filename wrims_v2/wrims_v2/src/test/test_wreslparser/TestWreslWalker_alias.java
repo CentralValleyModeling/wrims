@@ -98,7 +98,7 @@ public class TestWreslWalker_alias {
 		csvText = Tools.readFileAsString(csvFolderPath+"\\weight.csv");
 		
 		//s = "surplus_export_sjrir_comply_eisjr_udef,-999999";
-		s = "u_export_sjrir_comply_1,##-999999";
+		s = "surplus__export_sjrir_comply_1,##-999999";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -179,7 +179,7 @@ public class TestWreslWalker_alias {
 		csvText = Tools.readFileAsString(csvFolderPath+"\\second\\weight.csv");
 		
 		//s = "surplus_goal_1_case1,-999999";
-		s = "u_goal_1_1,##-999999";
+		s = "surplus__goal_1_1,##-999999";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);

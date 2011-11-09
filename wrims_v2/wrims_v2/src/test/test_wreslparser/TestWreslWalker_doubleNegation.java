@@ -63,7 +63,7 @@ public class TestWreslWalker_doubleNegation {
 		String s;
 		int n;
 	
-		s = "u_somegoal_1,conditional,500.";
+		s = "surplus__somegoal_1,conditional,500.";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
