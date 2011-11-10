@@ -5,9 +5,10 @@ import org.antlr.runtime.RecognitionException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import wrimsv2.components.*;
-import wrimsv2.wreslparser.elements.RegUtils;
-import wrimsv2.wreslparser.elements.Tools;
+import wrimsv2.components.ControlData;
+import wrimsv2.components.Controller;
+import wrimsv2.components.Error;
+import wrimsv2.components.FilePaths;
 
 public class TestILP_example_calsim30_bo_step5 {
 	
@@ -44,18 +45,13 @@ public class TestILP_example_calsim30_bo_step5 {
 
 		FilePaths.ilpFileDirectory = studyPath + "ilp_TestIlp_example_calsim30_bo_step5";
 		//FilePaths.ilpFile = "test.ilp";
-		
+		Error.clear();
         new Controller(controlDataString);
-
         
-        expected = 1.5022878034739819E10; 
-                                            
+        expected = 1.5022880534965034E10;                                          
 		
 		double obj_value =  ControlData.xasolver.getObjective();
-		
+		Assert.assertEquals(Error.getTotalError(), 0);	
 		Assert.assertEquals(obj_value, expected, expected*tolerance_perc);	
-
 	}
-	
-
 }
