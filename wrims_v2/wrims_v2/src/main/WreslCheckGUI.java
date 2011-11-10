@@ -33,7 +33,7 @@ public class WreslCheckGUI {
 		//Font displayFont = new Font("Consolas", Font.BOLD, 14);
 		
 		final JButton runButton = new JButton("Run Wresl Checker");
-		final JCheckBox chk_csv =new JCheckBox("Generate CSV");	
+		final JCheckBox chk_csv =new JCheckBox("Generate report");	
 		final JTextArea text_parsingTime = new JTextArea(" ");
 //		final JProgressBar progressBar = new JProgressBar(0);
 //		
@@ -66,9 +66,9 @@ public class WreslCheckGUI {
 							long start = System.currentTimeMillis();
 							
 							if (chk_csv.isSelected()){
-								StudyUtils.checkStudy(inputFilePanel.getFile(), true);
+								StudyUtils.checkStudy(inputFilePanel.getFile(), "=WreslCheck_csv=", false);
 							} else {
-								StudyUtils.checkStudy(inputFilePanel.getFile(), null, true);
+								StudyUtils.checkStudy(inputFilePanel.getFile(), null, false);
 							}
 							
 							

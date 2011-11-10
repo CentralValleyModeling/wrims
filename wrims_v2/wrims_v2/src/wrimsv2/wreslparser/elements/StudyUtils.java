@@ -11,6 +11,7 @@ import org.antlr.runtime.RecognitionException;
 
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
+import wrimsv2.components.ControlData;
 import wrimsv2.components.Versions;
 
 public class StudyUtils {
@@ -22,9 +23,13 @@ public class StudyUtils {
 	}
 
 	public static StudyDataSet checkStudy(String inMainWreslPath, boolean sendAliasToDvar) throws IOException {
-
+		
 		String csvFolderName = "=WreslCheck_csv=";
 		String logFileName = "=WreslCheck=.log";
+		
+		if (!ControlData.outputWreslCSV) {
+			csvFolderName = "";  // disable csv output
+		}
 
 		return checkStudy(inMainWreslPath, logFileName, csvFolderName, sendAliasToDvar);
 
