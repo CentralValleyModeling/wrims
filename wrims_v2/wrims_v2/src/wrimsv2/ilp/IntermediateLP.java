@@ -16,6 +16,7 @@ import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
+import wrimsv2.components.Error;
 import wrimsv2.wreslparser.elements.Tools;
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.evaluator.EvalConstraint;
@@ -164,7 +165,11 @@ public class IntermediateLP {
 		double objValue = ControlData.xasolver.getObjective();
 		_ilpFile.println("\n");
 		_ilpFile.println("\n");
-		_ilpFile.println("/* objective value (Note: This might be last cycle value): "+objValue+"    */");
+		if (Error.getTotalError()==0) {
+		_ilpFile.println("/* objective value:   "+objValue+"    */");
+		} else {
+		_ilpFile.println("/* objective value:   Error!   */");	
+		}
 		_ilpFile.flush();
 	}
 	
