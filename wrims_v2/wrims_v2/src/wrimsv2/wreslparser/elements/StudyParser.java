@@ -26,9 +26,9 @@ public class StudyParser{
 	
   public static int total_errors = 0;
   public static int total_warnings = 0;
-  public static Map<String, Map<String, String>> cycleVarTypeMap;
-  public static Set<String> allValidCycleNames;
-  public static Map<String, String> cycleNameConditionMap;
+  private static Map<String, Map<String, String>> cycleVarTypeMap;
+  private static Set<String> allValidCycleNames;
+  private static Map<String, String> cycleNameConditionMap;
   private static int n_buffer = 3;
 
 
@@ -631,9 +631,9 @@ public class StudyParser{
 	  for (int i=0; i< ds.asList.size(); i++ ){
 		  
 		  String asName = ds.asList.get(i);
-		 // TODO: serious bug. Map object is not reinitialized
-		 //dep = new HashSet<String>(ds.asMap.get(asName).dependants);
-		 dep = ds.asMap.get(asName).dependants; // this will cause problem in shallow copy
+
+		  dep = new HashSet<String>(ds.asMap.get(asName).dependants);
+
 		  dep.removeAll(ds.tsSet);		  
 		  dep.removeAll(previous_global_sv_as_ex_ts);
 		  
@@ -651,182 +651,48 @@ public class StudyParser{
 	  }
   }
 
-  private static void convertRestAliasInGoalExpression(SimulationDataSet ds) {
-	  
-	  	Set<String> asS = new LinkedHashSet<String>(ds.asSet);
-	  	
+	private static void convertRestAliasInGoalExpression(SimulationDataSet ds) {
+
+		Set<String> asS = new LinkedHashSet<String>(ds.asSet);
+
 		for (String e : asS) {
-			//for (String e : asSet) {	
-				
-
 					
-					Alias as = ds.asMap.get(e);
-					
-					// add e into dvar					
-				    Dvar dv = new Dvar();
+			String goalName = e+"__alias";
+			convertAlias(ds, e, goalName);
 
-				    // System.out.println("as,kind:"+e);
-				    dv.kind = as.kind;
-				    dv.units = as.units;
-				    dv.lowerBound = Param.lower_unbounded;
-				    dv.upperBound = Param.upper_unbounded;
-				    dv.fromWresl = as.fromWresl;
-				    dv.expression = as.expression;
-				    dv.dependants = as.dependants;
-				    
-				    ds.dvMap.put(e, dv);
-				    ds.dvList.add(e);
-				    ds.dvSet.add(e);
-
-					if (as.scope.equalsIgnoreCase(Param.global)) {
-						ds.dvList_global.add(e);
-						ds.dvSet_global.add(e);
-					}
-					else if (as.scope.equalsIgnoreCase(Param.local)) {
-						ds.dvList_local.add(e);
-						ds.dvSet_local.add(e);
-					}
-					else {
-						LogUtils.errMsg("Scope error when converting alias to dvar: " + e, as.fromWresl);
-					}
-					
-					// add additional goal
-				    
-				    Goal gl = new Goal();
-				    gl.caseCondition.add(Param.always);
-				    gl.caseName.add(Param.defaultCaseName);
-				    gl.caseExpression.add(e+"="+as.expression);
-				    gl.expressionDependants=as.dependants;
-				    gl.fromWresl = as.fromWresl;
-				    gl.needVarFromEarlierCycle = as.needVarFromEarlierCycle;
-				    gl.neededVarInCycleSet = new HashSet<String>(as.neededVarInCycleSet);
-				    
-				    String goalName = e+"_alias";
-
-				    ds.gMap.put(goalName, gl);
-				    ds.gList.add(goalName);
-				    ds.gSet.add(goalName);
-
-					if (as.scope.equalsIgnoreCase(Param.global)) {
-						ds.gList_global.add(goalName);
-						ds.gSet_global.add(goalName);
-					}
-					else if (as.scope.equalsIgnoreCase(Param.local)) {
-						ds.gList_local.add(goalName);
-						ds.gSet_local.add(goalName);
-					}
-					else {
-						LogUtils.errMsg("Scope error when adding constraint for alias: " + e, as.fromWresl);
-					}
-				    
-					// remove e from alias 
-					ds.asList.remove(e);
-					ds.asList_global.remove(e);
-					ds.asList_local.remove(e);
-					ds.asSet.remove(e);
-					ds.asSet_global.remove(e);
-					ds.asSet_local.remove(e);						
-					ds.asMap.remove(e);
-					
-
-			}
-	
-  }
+		}
+	}
 
   private static Set<String> checkAliasInGoalExpression(SimulationDataSet ds, Set<String> goalSetToCheck) {
 	
 	  Set<String> out_newGoalSet = new LinkedHashSet<String>();
-	  Set<String> dep;
+	  ArrayList<String> dep;
 	  Set<String> asSet = new LinkedHashSet<String>(ds.asSet);
-	  //Set<String> goalSetToCheck = new HashSet<String>(ds.gSet);
 	  
 		for (String gName: goalSetToCheck) {
 
-			dep = new HashSet<String>(ds.gMap.get(gName).expressionDependants);
+			dep = new ArrayList<String>(ds.gMap.get(gName).expressionDependants);
 
 			dep.removeAll(ds.tsSet);
 			dep.removeAll(ds.svSet);			
 			dep.removeAll(ds.dvSet);
 			
-			//ArrayList<String> asL
-			//Collections.reverse(asSet);
+			Collections.sort(dep);
 			for (String e : dep) {
-			//for (String e : asSet) {	
 				
 				if ( asSet.contains(e) ){
 					
-					Alias as = ds.asMap.get(e);
+					String goalName = e+"__alias";
+					convertAlias(ds, e, goalName);
 					
-					// add e into dvar					
-				    Dvar dv = new Dvar();
-
-				    dv.kind = as.kind;
-				    dv.units = as.units;
-				    dv.lowerBound = Param.lower_unbounded;
-				    dv.upperBound = Param.upper_unbounded;
-				    dv.fromWresl = as.fromWresl;
-				    dv.expression = as.expression;
-				    dv.dependants = as.dependants;
-				    
-				    ds.dvMap.put(e, dv);
-				    ds.dvList.add(e);
-				    ds.dvSet.add(e);
-
-					if (as.scope.equalsIgnoreCase(Param.global)) {
-						ds.dvList_global.add(e);
-						ds.dvSet_global.add(e);
-					}
-					else if (as.scope.equalsIgnoreCase(Param.local)) {
-						ds.dvList_local.add(e);
-						ds.dvSet_local.add(e);
-					}
-					else {
-						LogUtils.errMsg("Scope error when converting alias to dvar: " + e, as.fromWresl);
-					}
-					
-					// add additional goal
-				    
-				    Goal gl = new Goal();
-				    gl.caseCondition.add(Param.always);
-				    gl.caseName.add(Param.defaultCaseName);
-				    gl.caseExpression.add(e+"="+as.expression);
-				    gl.expressionDependants=as.dependants;
-				    gl.fromWresl = as.fromWresl;
-				    
-				    String goalName = e+"_alias";
-				    out_newGoalSet.add(goalName);
-				    ds.gMap.put(goalName, gl);
-				    ds.gList.add(goalName);
-				    ds.gSet.add(goalName);
-
-					if (as.scope.equalsIgnoreCase(Param.global)) {
-						ds.gList_global.add(goalName);
-						ds.gSet_global.add(goalName);
-					}
-					else if (as.scope.equalsIgnoreCase(Param.local)) {
-						ds.gList_local.add(goalName);
-						ds.gSet_local.add(goalName);
-					}
-					else {
-						LogUtils.errMsg("Scope error when adding constraint for alias: " + e, as.fromWresl);
-					}
-				    
-					// remove e from alias 
-					ds.asList.remove(e);
-					ds.asList_global.remove(e);
-					ds.asList_local.remove(e);
-					ds.asSet.remove(e);
-					ds.asSet_global.remove(e);
-					ds.asSet_local.remove(e);						
-					ds.asMap.remove(e);
-					
+					out_newGoalSet.add(goalName);
 				}
 			}
 		}
 		return out_newGoalSet;
   }  
   
-public static Map<String, SimulationDataSet> getNewDataSet(Set<String> adhoc_incFileSet, Set<String> fileDataMap_wholeStudy_keySet) throws RecognitionException, IOException
+private static Map<String, SimulationDataSet> getNewDataSet(Set<String> adhoc_incFileSet, Set<String> fileDataMap_wholeStudy_keySet) throws RecognitionException, IOException
   {
     Map<String, SimulationDataSet> fileDataMap_new = new HashMap<String, SimulationDataSet>();
 
@@ -844,7 +710,7 @@ public static Map<String, SimulationDataSet> getNewDataSet(Set<String> adhoc_inc
     return fileDataMap_new;
   }
 
-  public static Map<String, SimulationDataSet> copyDataSetToThisModel(Set<String> incFileSet, Map<String, SimulationDataSet> fileDataMap_wholeStudy)
+  private static Map<String, SimulationDataSet> copyDataSetToThisModel(Set<String> incFileSet, Map<String, SimulationDataSet> fileDataMap_wholeStudy)
   {
     Map<String, SimulationDataSet> fileDataMap_thisModel = new HashMap<String, SimulationDataSet>();
 
@@ -856,7 +722,7 @@ public static Map<String, SimulationDataSet> getNewDataSet(Set<String> adhoc_inc
     return fileDataMap_thisModel;
   }
 
-  public static SimulationDataSet correctScopeAndPrioritize(String modelName, SimulationDataSet adhoc, String absMainFilePath, Map<String, SimulationDataSet> fileDataMap_thisModel, Map<String, SimulationDataSet> fileDataMap_wholeStudy, Map<String, Set<String>> t1Map_wholeStudy, Map<String, String> fileScopeMap_wholeStudy)
+  private static SimulationDataSet correctScopeAndPrioritize(String modelName, SimulationDataSet adhoc, String absMainFilePath, Map<String, SimulationDataSet> fileDataMap_thisModel, Map<String, SimulationDataSet> fileDataMap_wholeStudy, Map<String, Set<String>> t1Map_wholeStudy, Map<String, String> fileScopeMap_wholeStudy)
     throws RecognitionException, IOException
   {
     Map<String, String> fileScopeMap = new HashMap<String, String>(fileScopeMap_wholeStudy);
@@ -892,7 +758,7 @@ public static Map<String, SimulationDataSet> getNewDataSet(Set<String> adhoc_inc
     return model_dataset;
   }
 
-	public static boolean sortDependency(SimulationDataSet model_dataset, boolean rewrite_list_based_on_dependency) {
+	private static boolean sortDependency(SimulationDataSet model_dataset, boolean rewrite_list_based_on_dependency) {
 		boolean OK = true;
 
 		// // sort Svar
@@ -966,7 +832,7 @@ public static Map<String, SimulationDataSet> getNewDataSet(Set<String> adhoc_inc
 		return OK;
 	}
 
-  public static ArrayList<String> getOrderedList(Map<String, SimulationDataSet> fileDataMap_thisModel, SimulationDataSet adhoc)
+  private static ArrayList<String> getOrderedList(Map<String, SimulationDataSet> fileDataMap_thisModel, SimulationDataSet adhoc)
   {
     Map<String, ArrayList<String>> orderListMap = new HashMap<String, ArrayList<String>>();
 
@@ -1026,4 +892,74 @@ public static Map<String, SimulationDataSet> getNewDataSet(Set<String> adhoc_inc
     }
     return complete_ordered_list;
   }
+
+	private static void convertAlias(SimulationDataSet ds, String aliasName, String goalName) {
+
+		Alias as = ds.asMap.get(aliasName);
+
+		// add e into dvar
+		Dvar dv = new Dvar();
+
+		dv.kind = as.kind;
+		dv.units = as.units;
+		dv.lowerBound = Param.lower_unbounded;
+		dv.upperBound = Param.upper_unbounded;
+		dv.fromWresl = as.fromWresl;
+		dv.expression = as.expression;
+		dv.dependants = as.dependants;
+
+		ds.dvMap.put(aliasName, dv);
+		ds.dvList.add(aliasName);
+		ds.dvSet.add(aliasName);
+
+		if (as.scope.equalsIgnoreCase(Param.global)) {
+			ds.dvList_global.add(aliasName);
+			ds.dvSet_global.add(aliasName);
+		}
+		else if (as.scope.equalsIgnoreCase(Param.local)) {
+			ds.dvList_local.add(aliasName);
+			ds.dvSet_local.add(aliasName);
+		}
+		else {
+			LogUtils.errMsg("Scope error when converting alias to dvar: " + aliasName, as.fromWresl);
+		}
+
+		// add additional goal
+
+		Goal gl = new Goal();
+		gl.caseCondition.add(Param.always);
+		gl.caseName.add(Param.defaultCaseName);
+		gl.caseExpression.add(aliasName + "=" + as.expression);
+		gl.expressionDependants = as.dependants;
+		gl.fromWresl = as.fromWresl;
+	    gl.needVarFromEarlierCycle = as.needVarFromEarlierCycle;
+	    gl.neededVarInCycleSet = new HashSet<String>(as.neededVarInCycleSet);
+
+
+		ds.gMap.put(goalName, gl);
+		ds.gList.add(goalName);
+		ds.gSet.add(goalName);
+
+		if (as.scope.equalsIgnoreCase(Param.global)) {
+			ds.gList_global.add(goalName);
+			ds.gSet_global.add(goalName);
+		}
+		else if (as.scope.equalsIgnoreCase(Param.local)) {
+			ds.gList_local.add(goalName);
+			ds.gSet_local.add(goalName);
+		}
+		else {
+			LogUtils.errMsg("Scope error when adding constraint for alias: " + aliasName, as.fromWresl);
+		}
+
+		// remove e from alias
+		ds.asList.remove(aliasName);
+		ds.asList_global.remove(aliasName);
+		ds.asList_local.remove(aliasName);
+		ds.asSet.remove(aliasName);
+		ds.asSet_global.remove(aliasName);
+		ds.asSet_local.remove(aliasName);
+		ds.asMap.remove(aliasName);
+
+	}
 }

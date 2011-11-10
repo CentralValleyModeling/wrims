@@ -1,0 +1,24 @@
+SEQUENCE One {
+    MODEL   Mod1
+    ORDER   1
+}
+
+
+MODEL Mod1 {
+	
+	! x1 = 650
+	define x1 { upper 9999 kind 'test' units 'cfs' }
+	
+	define x2 { alias x1*2 }
+	
+	define x3 { alias x2 + 100 }
+	
+	define x4 { alias x3 + 100 }
+		
+	goal limit { x2 < 1000 }
+	
+	Objective obj = {
+		[x1, 1]
+	}			
+}
+

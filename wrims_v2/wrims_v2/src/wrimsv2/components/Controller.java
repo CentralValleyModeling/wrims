@@ -214,7 +214,7 @@ public class Controller {
 	}
 	
 	public StudyDataSet parse()throws RecognitionException, IOException{		
-		return StudyUtils.checkStudy(FilePaths.fullMainPath, true);
+		return StudyUtils.checkStudy(FilePaths.fullMainPath, ControlData.sendAliasToDvar);
 	}
 	
 	public void runModel(StudyDataSet sds){
