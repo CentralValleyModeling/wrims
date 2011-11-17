@@ -60,6 +60,9 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	private Button fInitFileButton;
 	private Text groundWaterFolderText;
 	private Button groundWaterFolderButton;
+	private Text svAPartText;
+	private Text svFPartText;
+	private Text initFPartText;
 	
 	
 	/* (non-Javadoc)
@@ -281,6 +284,60 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 				browseFolders(groundWaterFolderText);
 			}
 		});
+		
+		Label svAPart = new Label(comp, SWT.NONE);
+		svAPart.setText("&SV A-Part:");
+		gd = new GridData(GridData.BEGINNING);
+		svAPart.setLayoutData(gd);
+		svAPart.setFont(font);
+		
+		svAPartText = new Text(comp, SWT.SINGLE | SWT.BORDER);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 6;
+		svAPartText.setLayoutData(gd);
+		svAPartText.setFont(font);
+		svAPartText.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+		});
+		
+		Label svFPart = new Label(comp, SWT.NONE);
+		svFPart.setText("&SV F-Part:");
+		gd = new GridData(GridData.BEGINNING);
+		svFPart.setLayoutData(gd);
+		svFPart.setFont(font);
+		
+		svFPartText = new Text(comp, SWT.SINGLE | SWT.BORDER);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 6;
+		svFPartText.setLayoutData(gd);
+		svFPartText.setFont(font);
+		svFPartText.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+		});
+		
+		Label initFPart = new Label(comp, SWT.NONE);
+		initFPart.setText("&Init F-Part:");
+		gd = new GridData(GridData.BEGINNING);
+		initFPart.setLayoutData(gd);
+		initFPart.setFont(font);
+		
+		initFPartText = new Text(comp, SWT.SINGLE | SWT.BORDER);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 6;
+		initFPartText.setLayoutData(gd);
+		initFPartText.setFont(font);
+		initFPartText.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+		});
 	}
 	
 	protected void browseFiles(Text fileLocationText) {
@@ -350,6 +407,21 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			if (gwDataFolder != null) {
 				groundWaterFolderText.setText(gwDataFolder);
 			}
+			String svAPart = null;
+			svAPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVAPART, (String)null);
+			if (svAPart != null) {
+				svAPartText.setText(svAPart);
+			}
+			String svFPart = null;
+			svFPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVFPART, (String)null);
+			if (svFPart != null) {
+				svFPartText.setText(svFPart);
+			}
+			String initFPart = null;
+			initFPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFPART, (String)null);
+			if (initFPart != null) {
+				initFPartText.setText(initFPart);
+			}
 		} catch (CoreException e) {
 			setErrorMessage(e.getMessage());
 		}
@@ -395,6 +467,18 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		if (gwDataFolder.length() == 0) {
 			gwDataFolder = null;
 		}
+		String svAPart = svAPartText.getText().trim();
+		if (svAPart.length() == 0) {
+			svAPart = null;
+		}
+		String svFPart = svFPartText.getText().trim();
+		if (svFPart.length() == 0) {
+			svFPart = null;
+		}
+		String initFPart = initFPartText.getText().trim();
+		if (initFPart.length() == 0) {
+			initFPart = null;
+		}
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_STUDY, studyName);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_AUTHOR, author);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DATE, date);
@@ -404,6 +488,9 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SVARFILE, svarFile);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_INITFILE, initFile);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_GWDATAFOLDER, gwDataFolder);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SVAPART, svAPart);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SVFPART, svFPart);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_INITFPART, initFPart);
 	}
 	
 	/* (non-Javadoc)
