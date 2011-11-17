@@ -73,7 +73,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		setControl(comp);
 		GridLayout topLayout = new GridLayout();
 		topLayout.verticalSpacing = 0;
-		topLayout.numColumns = 3;
+		topLayout.numColumns = 7;
 		comp.setLayout(topLayout);
 		comp.setFont(font);
 		
@@ -87,7 +87,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		
 		studyText = new Text(comp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.horizontalSpan = 2;
+		gd.horizontalSpan = 6;
 		studyText.setLayoutData(gd);
 		studyText.setFont(font);
 		studyText.addModifyListener(new ModifyListener() {
@@ -105,7 +105,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		
 		authorText = new Text(comp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.horizontalSpan = 2;
+		gd.horizontalSpan = 6;
 		authorText.setLayoutData(gd);
 		authorText.setFont(font);
 		authorText.addModifyListener(new ModifyListener() {
@@ -123,7 +123,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		
 		dateText = new Text(comp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.horizontalSpan = 2;
+		gd.horizontalSpan = 6;
 		dateText.setLayoutData(gd);
 		dateText.setFont(font);
 		dateText.addModifyListener(new ModifyListener() {
@@ -142,7 +142,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		
 		descriptionText = new Text(comp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.horizontalSpan = 2;
+		gd.horizontalSpan = 6;
 		descriptionText.setLayoutData(gd);
 		descriptionText.setFont(font);
 		descriptionText.addModifyListener(new ModifyListener() {
@@ -160,6 +160,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		
 		fMainFileText = new Text(comp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 5;
 		fMainFileText.setLayoutData(gd);
 		fMainFileText.setFont(font);
 		fMainFileText.addModifyListener(new ModifyListener() {
@@ -169,7 +170,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			}
 		});
 		
-		fMainFileButton = createPushButton(comp, "&Browse...", null); //$NON-NLS-1$
+		fMainFileButton = createPushButton(comp, "&Browse", null); //$NON-NLS-1$
 		fMainFileButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -185,6 +186,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		
 		fDvarFileText = new Text(comp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 5;
 		fDvarFileText.setLayoutData(gd);
 		fDvarFileText.setFont(font);
 		fDvarFileText.addModifyListener(new ModifyListener() {
@@ -194,7 +196,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			}
 		});
 		
-		fDvarFileButton = createPushButton(comp, "&Browse...", null); //$NON-NLS-1$
+		fDvarFileButton = createPushButton(comp, "&Browse", null); //$NON-NLS-1$
 		fDvarFileButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -210,6 +212,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		
 		fSvarFileText = new Text(comp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 5;
 		fSvarFileText.setLayoutData(gd);
 		fSvarFileText.setFont(font);
 		fSvarFileText.addModifyListener(new ModifyListener() {
@@ -219,7 +222,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			}
 		});
 		
-		fSvarFileButton = createPushButton(comp, "&Browse...", null); //$NON-NLS-1$
+		fSvarFileButton = createPushButton(comp, "&Browse", null); //$NON-NLS-1$
 		fSvarFileButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -235,6 +238,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		
 		fInitFileText = new Text(comp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 5;
 		fInitFileText.setLayoutData(gd);
 		fInitFileText.setFont(font);
 		fInitFileText.addModifyListener(new ModifyListener() {
@@ -244,7 +248,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			}
 		});
 		
-		fInitFileButton = createPushButton(comp, "&Browse...", null); //$NON-NLS-1$
+		fInitFileButton = createPushButton(comp, "&Browse", null); //$NON-NLS-1$
 		fInitFileButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -253,13 +257,14 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		});
 		
 		Label groundwaterFolderLabel = new Label(comp, SWT.NONE);
-		groundwaterFolderLabel.setText("&Groundwater Data Folder:");
+		groundwaterFolderLabel.setText("&Groundwater Folder:");
 		gd = new GridData(GridData.BEGINNING);
 		groundwaterFolderLabel.setLayoutData(gd);
 		groundwaterFolderLabel.setFont(font);
 		
 		groundWaterFolderText = new Text(comp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 5;
 		groundWaterFolderText.setLayoutData(gd);
 		groundWaterFolderText.setFont(font);
 		groundWaterFolderText.addModifyListener(new ModifyListener() {
@@ -269,7 +274,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			}
 		});
 		
-		groundWaterFolderButton = createPushButton(comp, "&Browse...", null); //$NON-NLS-1$
+		groundWaterFolderButton = createPushButton(comp, "&Browse", null); //$NON-NLS-1$
 		groundWaterFolderButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
