@@ -70,6 +70,7 @@ public class DebugInterface {
 				requestOut.close();
 				requestSocket.close();
 				eventSocket.close();
+				System.exit(0);
 			}
 			catch(IOException ioException){
 				ioException.printStackTrace();
@@ -128,10 +129,10 @@ public class DebugInterface {
 				e.printStackTrace();
 			}
 		}else if (request.equals("terminate")) {
+			controllerDebug.stop();
 			if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG")) {
 				ControlData.xasolver.close();
 			}
-			controllerDebug.stop();
 			System.out.println("terminated");
 			try {
 				sendRequest("terminated");
