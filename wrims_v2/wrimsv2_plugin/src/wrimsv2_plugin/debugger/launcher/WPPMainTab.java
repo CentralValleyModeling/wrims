@@ -47,6 +47,9 @@ import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	
 	private Text studyText;
+	private Text authorText;
+	private Text dateText;
+	private Text descriptionText;
 	private Text fMainFileText;
 	private Button fMainFileButton;
 	private Text fDvarFileText;
@@ -88,6 +91,61 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		studyText.setLayoutData(gd);
 		studyText.setFont(font);
 		studyText.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+		});
+		
+		Label authorLabel = new Label(comp, SWT.NONE);
+		authorLabel.setText("&Author:");
+		gd = new GridData(GridData.BEGINNING);
+		studyLabel.setLayoutData(gd);
+		studyLabel.setFont(font);
+		
+		authorText = new Text(comp, SWT.SINGLE | SWT.BORDER);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 2;
+		authorText.setLayoutData(gd);
+		authorText.setFont(font);
+		authorText.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+		});
+		
+		Label dateLabel = new Label(comp, SWT.NONE);
+		dateLabel.setText("&Date:");
+		gd = new GridData(GridData.BEGINNING);
+		studyLabel.setLayoutData(gd);
+		studyLabel.setFont(font);
+		
+		dateText = new Text(comp, SWT.SINGLE | SWT.BORDER);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 2;
+		dateText.setLayoutData(gd);
+		dateText.setFont(font);
+		dateText.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+		});
+		
+		
+		Label descriptionLabel = new Label(comp, SWT.NONE);
+		descriptionLabel.setText("&Description:");
+		gd = new GridData(GridData.BEGINNING);
+		studyLabel.setLayoutData(gd);
+		studyLabel.setFont(font);
+		
+		descriptionText = new Text(comp, SWT.SINGLE | SWT.BORDER);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 2;
+		descriptionText.setLayoutData(gd);
+		descriptionText.setFont(font);
+		descriptionText.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				updateLaunchConfigurationDialog();
@@ -246,7 +304,22 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			studyName = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STUDY, (String)null);
 			if (studyName != null) {
 				studyText.setText(studyName);
-			}			
+			}		
+			String author=null;
+			author = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_AUTHOR, (String)null);
+			if (author != null) {
+				authorText.setText(author);
+			}	
+			String date=null;
+			date = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DATE, (String)null);
+			if (date != null) {
+				dateText.setText(date);
+			}	
+			String description=null;
+			description = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DESCRIPTION, (String)null);
+			if (description != null) {
+				descriptionText.setText(description);
+			}	
 			String mainFile = null;
 			mainFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM, (String)null);
 			if (mainFile != null) {
@@ -284,7 +357,19 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		String studyName = studyText.getText().trim();
 		if (studyName.length() == 0) {
 			studyName = null;
-		}		
+		}	
+		String author = authorText.getText().trim();
+		if (author.length() == 0) {
+			author = null;
+		}	
+		String date = dateText.getText().trim();
+		if (date.length() == 0) {
+			date = null;
+		}	
+		String description = descriptionText.getText().trim();
+		if (description.length() == 0) {
+			description = null;
+		}	
 		String mainFile = fMainFileText.getText().trim();
 		if (mainFile.length() == 0) {
 			mainFile = null;
@@ -306,6 +391,9 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			gwDataFolder = null;
 		}
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_STUDY, studyName);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_AUTHOR, author);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DATE, date);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DESCRIPTION, description);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM, mainFile);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE, dvarFile);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SVARFILE, svarFile);
