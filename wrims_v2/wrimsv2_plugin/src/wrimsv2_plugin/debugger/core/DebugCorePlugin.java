@@ -72,6 +72,10 @@ public class DebugCorePlugin extends Plugin {
 	public static final String ATTR_WPP_SVARFILE = ID_WPP_DEBUG_MODEL + ".ATTR_WPP_SVAR";
 	public static final String ATTR_WPP_INITFILE = ID_WPP_DEBUG_MODEL + ".ATTR_WPP_INIT";
 	public static final String ATTR_WPP_GWDATAFOLDER=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_GWDATA";
+	public static final String ATTR_WPP_SVAPART=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_SVAPART";
+	public static final String ATTR_WPP_SVFPART=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_SVFPART";
+	public static final String ATTR_WPP_INITFPART=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_INITFPART";
+	
 	
 	/**
 	 * Identifier for the WPP launch configuration type
