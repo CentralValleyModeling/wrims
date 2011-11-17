@@ -33,6 +33,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -53,6 +54,8 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	private Button fSvarFileButton;
 	private Text fInitFileText;
 	private Button fInitFileButton;
+	private Text groundWaterFolderText;
+	private Button groundWaterFolderButton;
 	
 	
 	/* (non-Javadoc)
@@ -171,15 +174,43 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 				browseFiles(fInitFileText);
 			}
 		});
+		
+		Label groundwaterFolderLabel = new Label(comp, SWT.NONE);
+		groundwaterFolderLabel.setText("&Groundwater Data Folder:");
+		gd = new GridData(GridData.BEGINNING);
+		groundwaterFolderLabel.setLayoutData(gd);
+		groundwaterFolderLabel.setFont(font);
+		
+		groundWaterFolderText = new Text(comp, SWT.SINGLE | SWT.BORDER);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		groundWaterFolderText.setLayoutData(gd);
+		groundWaterFolderText.setFont(font);
+		groundWaterFolderText.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+		});
+		
+		groundWaterFolderButton = createPushButton(comp, "&Browse...", null); //$NON-NLS-1$
+		groundWaterFolderButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				browseFolders(groundWaterFolderText);
+			}
+		});
 	}
 	
-	/**
-	 * Open a resource chooser to select a WPP program 
-	 */
 	protected void browseFiles(Text fileLocationText) {
 		FileDialog dlg =new FileDialog(getShell(),SWT.OPEN);
 		fileLocationText.setText(dlg.open());
 	}
+	
+	protected void browseFolders(Text folderLocationText) {
+		DirectoryDialog dlg =new DirectoryDialog(getShell(),SWT.OPEN);
+		folderLocationText.setText(dlg.open());
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#setDefaults(org.eclipse.debug.core.ILaunchConfigurationWorkingCopy)
 	 */
@@ -212,6 +243,11 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			if (initFile != null) {
 				fInitFileText.setText(initFile);
 			}
+			String gwDataFolder = null;
+			gwDataFolder = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_GWDATAFOLDER, (String)null);
+			if (gwDataFolder != null) {
+				groundWaterFolderText.setText(gwDataFolder);
+			}
 		} catch (CoreException e) {
 			setErrorMessage(e.getMessage());
 		}
@@ -237,10 +273,15 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		if (initFile.length() == 0) {
 			initFile = null;
 		}
+		String gwDataFolder = groundWaterFolderText.getText().trim();
+		if (gwDataFolder.length() == 0) {
+			gwDataFolder = null;
+		}
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM, mainFile);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE, dvarFile);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SVARFILE, svarFile);
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_INITFILE, svarFile);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_INITFILE, initFile);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_GWDATAFOLDER, gwDataFolder);
 	}
 	
 	/* (non-Javadoc)
@@ -258,16 +299,6 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	public boolean isValid(ILaunchConfiguration launchConfig) {
 		setErrorMessage(null);
 		setMessage(null);
-		String text = fMainFileText.getText();
-		if (text.length() > 0) {
-			IPath path = new Path(text);
-			if (ResourcesPlugin.getWorkspace().getRoot().findMember(path) == null) {
-				setErrorMessage("Specified program does not exist");
-				return false;
-			}
-		} else {
-			setMessage("Specify a program");
-		}
 		return true;
 	}
 
