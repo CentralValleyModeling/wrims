@@ -14,6 +14,7 @@ package wrimsv2_plugin.debugger.launcher;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -32,6 +33,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ResourceListSelectionDialog;
@@ -43,8 +45,15 @@ import wrimsv2_plugin.debugger.core.DebugCorePlugin;
  */
 public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	
-	private Text fProgramText;
-	private Button fProgramButton;
+	private Text fMainFileText;
+	private Button fMainFileButton;
+	private Text fDvarFileText;
+	private Button fDvarFileButton;
+	private Text fSvarFileText;
+	private Button fSvarFileButton;
+	private Text fInitFileText;
+	private Button fInitFileButton;
+	
 	
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#createControl(org.eclipse.swt.widgets.Composite)
@@ -64,27 +73,27 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		createVerticalSpacer(comp, 3);
 		
 		Label programLabel = new Label(comp, SWT.NONE);
-		programLabel.setText("&Program:");
+		programLabel.setText("&Main WRESL File:");
 		GridData gd = new GridData(GridData.BEGINNING);
 		programLabel.setLayoutData(gd);
 		programLabel.setFont(font);
 		
-		fProgramText = new Text(comp, SWT.SINGLE | SWT.BORDER);
+		fMainFileText = new Text(comp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
-		fProgramText.setLayoutData(gd);
-		fProgramText.setFont(font);
-		fProgramText.addModifyListener(new ModifyListener() {
+		fMainFileText.setLayoutData(gd);
+		fMainFileText.setFont(font);
+		fMainFileText.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				updateLaunchConfigurationDialog();
 			}
 		});
 		
-		fProgramButton = createPushButton(comp, "&Browse...", null); //$NON-NLS-1$
-		fProgramButton.addSelectionListener(new SelectionAdapter() {
+		fMainFileButton = createPushButton(comp, "&Browse...", null); //$NON-NLS-1$
+		fMainFileButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				browseWPPFiles();
+				browseFiles(fMainFileText);
 			}
 		});
 	}
@@ -92,16 +101,9 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	/**
 	 * Open a resource chooser to select a WPP program 
 	 */
-	protected void browseWPPFiles() {
-		ResourceListSelectionDialog dialog = new ResourceListSelectionDialog(getShell(), ResourcesPlugin.getWorkspace().getRoot(), IResource.FILE);
-		dialog.setTitle("WPP Program");
-		dialog.setMessage("Select WPP Program");
-		if (dialog.open() == Window.OK) {
-			Object[] files = dialog.getResult();
-			IFile file = (IFile) files[0];
-			fProgramText.setText(file.getFullPath().toString());
-		}
-		
+	protected void browseFiles(Text fileLocationText) {
+		FileDialog dlg =new FileDialog(getShell(),SWT.OPEN);
+		fileLocationText.setText(dlg.open());
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#setDefaults(org.eclipse.debug.core.ILaunchConfigurationWorkingCopy)
@@ -118,7 +120,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			String program = null;
 			program = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM, (String)null);
 			if (program != null) {
-				fProgramText.setText(program);
+				fMainFileText.setText(program);
 			}
 		} catch (CoreException e) {
 			setErrorMessage(e.getMessage());
@@ -129,7 +131,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	 */
 	@Override
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
-		String program = fProgramText.getText().trim();
+		String program = fMainFileText.getText().trim();
 		if (program.length() == 0) {
 			program = null;
 		}
@@ -141,7 +143,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	 */
 	@Override
 	public String getName() {
-		return "Main";
+		return "Study1";
 	}
 	
 	/* (non-Javadoc)
@@ -151,7 +153,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	public boolean isValid(ILaunchConfiguration launchConfig) {
 		setErrorMessage(null);
 		setMessage(null);
-		String text = fProgramText.getText();
+		String text = fMainFileText.getText();
 		if (text.length() > 0) {
 			IPath path = new Path(text);
 			if (ResourcesPlugin.getWorkspace().getRoot().findMember(path) == null) {

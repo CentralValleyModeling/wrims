@@ -55,7 +55,7 @@
                   <iterate>
                      <instanceof value="org.eclipse.core.resources.IFile"/>
                      <test
-                           value="*.wpp"
+                           value="*.wpp, *.wresl"
                            property="org.eclipse.debug.ui.matchesPattern"/>
                   </iterate>
                </with>
