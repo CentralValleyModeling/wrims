@@ -64,6 +64,9 @@ public class DebugCorePlugin extends Plugin {
 	 * to a perl program in the workspace. 
 	 */
 	public static final String ATTR_WPP_PROGRAM = ID_WPP_DEBUG_MODEL + ".ATTR_WPP_PROGRAM";
+	public static final String ATTR_WPP_DVARFILE = ID_WPP_DEBUG_MODEL + ".ATTR_WPP_DVAR";
+	public static final String ATTR_WPP_SVARFILE = ID_WPP_DEBUG_MODEL + ".ATTR_WPP_SVAR";
+	public static final String ATTR_WPP_INITFILE = ID_WPP_DEBUG_MODEL + ".ATTR_WPP_INIT";
 	
 	/**
 	 * Identifier for the WPP launch configuration type

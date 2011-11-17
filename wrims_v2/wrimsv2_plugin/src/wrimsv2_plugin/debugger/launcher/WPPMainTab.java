@@ -72,11 +72,11 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		
 		createVerticalSpacer(comp, 3);
 		
-		Label programLabel = new Label(comp, SWT.NONE);
-		programLabel.setText("&Main WRESL File:");
+		Label mainFileLabel = new Label(comp, SWT.NONE);
+		mainFileLabel.setText("&Main WRESL File:");
 		GridData gd = new GridData(GridData.BEGINNING);
-		programLabel.setLayoutData(gd);
-		programLabel.setFont(font);
+		mainFileLabel.setLayoutData(gd);
+		mainFileLabel.setFont(font);
 		
 		fMainFileText = new Text(comp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -94,6 +94,81 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				browseFiles(fMainFileText);
+			}
+		});
+		
+		Label dvarFileLabel = new Label(comp, SWT.NONE);
+		dvarFileLabel.setText("&Dvar DSS File:");
+		gd = new GridData(GridData.BEGINNING);
+		dvarFileLabel.setLayoutData(gd);
+		dvarFileLabel.setFont(font);
+		
+		fDvarFileText = new Text(comp, SWT.SINGLE | SWT.BORDER);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		fDvarFileText.setLayoutData(gd);
+		fDvarFileText.setFont(font);
+		fDvarFileText.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+		});
+		
+		fDvarFileButton = createPushButton(comp, "&Browse...", null); //$NON-NLS-1$
+		fDvarFileButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				browseFiles(fDvarFileText);
+			}
+		});
+		
+		Label svarFileLabel = new Label(comp, SWT.NONE);
+		svarFileLabel.setText("&Svar DSS File:");
+		gd = new GridData(GridData.BEGINNING);
+		svarFileLabel.setLayoutData(gd);
+		svarFileLabel.setFont(font);
+		
+		fSvarFileText = new Text(comp, SWT.SINGLE | SWT.BORDER);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		fSvarFileText.setLayoutData(gd);
+		fSvarFileText.setFont(font);
+		fSvarFileText.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+		});
+		
+		fSvarFileButton = createPushButton(comp, "&Browse...", null); //$NON-NLS-1$
+		fSvarFileButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				browseFiles(fSvarFileText);
+			}
+		});
+		
+		Label initFileLabel = new Label(comp, SWT.NONE);
+		initFileLabel.setText("&Init DSS File:");
+		gd = new GridData(GridData.BEGINNING);
+		initFileLabel.setLayoutData(gd);
+		initFileLabel.setFont(font);
+		
+		fInitFileText = new Text(comp, SWT.SINGLE | SWT.BORDER);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		fInitFileText.setLayoutData(gd);
+		fInitFileText.setFont(font);
+		fInitFileText.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+		});
+		
+		fInitFileButton = createPushButton(comp, "&Browse...", null); //$NON-NLS-1$
+		fInitFileButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				browseFiles(fInitFileText);
 			}
 		});
 	}
@@ -117,10 +192,25 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	@Override
 	public void initializeFrom(ILaunchConfiguration configuration) {
 		try {
-			String program = null;
-			program = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM, (String)null);
-			if (program != null) {
-				fMainFileText.setText(program);
+			String mainFile = null;
+			mainFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM, (String)null);
+			if (mainFile != null) {
+				fMainFileText.setText(mainFile);
+			}
+			String dvarFile = null;
+			dvarFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE, (String)null);
+			if (dvarFile != null) {
+				fDvarFileText.setText(dvarFile);
+			}
+			String svarFile = null;
+			svarFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVARFILE, (String)null);
+			if (svarFile != null) {
+				fSvarFileText.setText(svarFile);
+			}
+			String initFile = null;
+			initFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFILE, (String)null);
+			if (initFile != null) {
+				fInitFileText.setText(initFile);
 			}
 		} catch (CoreException e) {
 			setErrorMessage(e.getMessage());
@@ -131,11 +221,26 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	 */
 	@Override
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
-		String program = fMainFileText.getText().trim();
-		if (program.length() == 0) {
-			program = null;
+		String mainFile = fMainFileText.getText().trim();
+		if (mainFile.length() == 0) {
+			mainFile = null;
 		}
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM, program);
+		String dvarFile = fDvarFileText.getText().trim();
+		if (dvarFile.length() == 0) {
+			dvarFile = null;
+		}
+		String svarFile = fSvarFileText.getText().trim();
+		if (svarFile.length() == 0) {
+			svarFile = null;
+		}
+		String initFile = fInitFileText.getText().trim();
+		if (initFile.length() == 0) {
+			initFile = null;
+		}
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM, mainFile);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE, dvarFile);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SVARFILE, svarFile);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_INITFILE, svarFile);
 	}
 	
 	/* (non-Javadoc)
