@@ -46,6 +46,7 @@ import wrimsv2_plugin.debugger.core.DebugCorePlugin;
  */
 public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	
+	private Text studyText;
 	private Text fMainFileText;
 	private Button fMainFileButton;
 	private Text fDvarFileText;
@@ -75,9 +76,27 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		
 		createVerticalSpacer(comp, 3);
 		
+		Label studyLabel = new Label(comp, SWT.NONE);
+		studyLabel.setText("&Study Name:");
+		GridData gd = new GridData(GridData.BEGINNING);
+		studyLabel.setLayoutData(gd);
+		studyLabel.setFont(font);
+		
+		studyText = new Text(comp, SWT.SINGLE | SWT.BORDER);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 2;
+		studyText.setLayoutData(gd);
+		studyText.setFont(font);
+		studyText.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				updateLaunchConfigurationDialog();
+			}
+		});
+		
 		Label mainFileLabel = new Label(comp, SWT.NONE);
 		mainFileLabel.setText("&Main WRESL File:");
-		GridData gd = new GridData(GridData.BEGINNING);
+		gd = new GridData(GridData.BEGINNING);
 		mainFileLabel.setLayoutData(gd);
 		mainFileLabel.setFont(font);
 		
@@ -223,6 +242,11 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	@Override
 	public void initializeFrom(ILaunchConfiguration configuration) {
 		try {
+			String studyName=null;
+			studyName = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STUDY, (String)null);
+			if (studyName != null) {
+				studyText.setText(studyName);
+			}			
 			String mainFile = null;
 			mainFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM, (String)null);
 			if (mainFile != null) {
@@ -257,6 +281,10 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	 */
 	@Override
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
+		String studyName = studyText.getText().trim();
+		if (studyName.length() == 0) {
+			studyName = null;
+		}		
 		String mainFile = fMainFileText.getText().trim();
 		if (mainFile.length() == 0) {
 			mainFile = null;
@@ -277,6 +305,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		if (gwDataFolder.length() == 0) {
 			gwDataFolder = null;
 		}
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_STUDY, studyName);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM, mainFile);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE, dvarFile);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SVARFILE, svarFile);
