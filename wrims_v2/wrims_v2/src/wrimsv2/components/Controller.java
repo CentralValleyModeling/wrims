@@ -81,11 +81,13 @@ public class Controller {
 	public Controller(String[] args) {
 		long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
 		setControlData(args);
-		generateStudyFile();
+
 		try {
 			StudyDataSet sds = parse();
 			if (StudyUtils.total_errors==0){
 				new PreEvaluator(sds);
+				preRunModel(sds);
+				if(ControlData.isGeneratingStudyFile ) generateStudyFile();
 				runModel(sds);
 			}
 		} catch (RecognitionException e) {
@@ -218,8 +220,6 @@ public class Controller {
 	}
 	
 	public void runModel(StudyDataSet sds){
-		System.out.println("=============Prepare Run Study===========");
-		preRunModel(sds);
 		System.out.println("==============Run Study Start============");
 		if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG") ){
 			runModelXA(sds);
@@ -238,6 +238,7 @@ public class Controller {
 	}
 	
 	public void preRunModel(StudyDataSet sds){
+		System.out.println("=============Prepare Run Study===========");
 		ControlData.currStudyDataSet=sds;
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
