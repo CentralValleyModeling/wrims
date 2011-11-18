@@ -364,7 +364,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		timeStep.setLayoutData(gd);
 		timeStep.setFont(font);
 				
-		timeStepCombo=new Combo(comp, SWT.None);
+		timeStepCombo=new Combo(comp, SWT.READ_ONLY);
 		timeStepCombo.setItems(timeSteps);
 		gd = new GridData(GridData.BEGINNING);
 		gd.horizontalSpan = 6;
@@ -379,7 +379,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		startDate.setLayoutData(gd);
 		startDate.setFont(font);
 		
-		startYearCombo=new Combo(comp, SWT.None);
+		startYearCombo=new Combo(comp, SWT.READ_ONLY);
 		for (int i=1900; i<=2100; i++){
 			startYearCombo.add(String.valueOf(i));
 		}
@@ -395,7 +395,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		year.setLayoutData(gd);
 		year.setFont(font);
 		
-		startMonthCombo=new Combo(comp, SWT.None);
+		startMonthCombo=new Combo(comp, SWT.READ_ONLY);
 		startMonthCombo.setItems(months);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		startMonthCombo.setLayoutData(gd);
@@ -409,7 +409,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		month.setLayoutData(gd);
 		month.setFont(font);
 		
-		startDayCombo=new Combo(comp, SWT.None);
+		startDayCombo=new Combo(comp, SWT.READ_ONLY);
 		for (int i=1; i<=31; i++){
 			startDayCombo.add(String.valueOf(i));
 		}
@@ -512,6 +512,26 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			if (initFPart != null) {
 				initFPartText.setText(initFPart);
 			}
+			String timeStep = null;
+			timeStep = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_TIMESTEP, (String)null);
+			if (timeStep != null) {
+				timeStepCombo.setText(timeStep);
+			}
+			String startYear = null;
+			startYear = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTYEAR, (String)null);
+			if (startYear != null) {
+				startYearCombo.setText(startYear);
+			}
+			String startMonth = null;
+			startMonth = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTMONTH, (String)null);
+			if (startMonth != null) {
+				startMonthCombo.setText(startMonth);
+			}
+			String startDay = null;
+			startYear = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTDAY, (String)null);
+			if (startDay != null) {
+				startDayCombo.setText(startDay);
+			}
 		} catch (CoreException e) {
 			setErrorMessage(e.getMessage());
 		}
@@ -569,6 +589,23 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		if (initFPart.length() == 0) {
 			initFPart = null;
 		}
+		String timeStep = timeStepCombo.getText().trim();
+		if (timeStep.length() == 0) {
+			timeStep = null;
+		}
+		String startYear = startYearCombo.getText().trim();
+		if (startYear.length() == 0) {
+			startYear = null;
+		}
+		String startMonth = startMonthCombo.getText().trim();
+		if (startMonth.length() == 0) {
+			startMonth = null;
+		}
+		String startDay = startDayCombo.getText().trim();
+		if (startDay.length() == 0) {
+			startDay = null;
+		}
+
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_STUDY, studyName);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_AUTHOR, author);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DATE, date);
@@ -581,6 +618,10 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SVAPART, svAPart);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SVFPART, svFPart);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_INITFPART, initFPart);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_TIMESTEP, timeStep);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_STARTYEAR, startYear);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_STARTMONTH, startMonth);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_STARTDAY, startDay);
 	}
 	
 	/* (non-Javadoc)
@@ -605,6 +646,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		
 		@Override
 		public void modifyText(ModifyEvent e) {
+			updateLaunchConfigurationDialog();
 			String _strTimeStep =timeStepCombo.getText();
 			if (_strTimeStep.equalsIgnoreCase("1MON")) {
 				startDayCombo.removeModifyListener(sdl);
@@ -630,6 +672,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 
 		@Override
 		public void modifyText(ModifyEvent e) {
+			updateLaunchConfigurationDialog();
 			if (type==1){
 				int startMonth=TimeOperation.monthValue(startMonthCombo.getText());
 				int startYear=Integer.parseInt(startYearCombo.getText());	
@@ -654,6 +697,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 
 		@Override
 		public void modifyText(ModifyEvent e) {
+			updateLaunchConfigurationDialog();
 			if (type==1){
 				int startMonth=TimeOperation.monthValue(startMonthCombo.getText());
 				int startYear=Integer.parseInt(startYearCombo.getText());	

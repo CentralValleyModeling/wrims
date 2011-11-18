@@ -75,6 +75,11 @@ public class DebugCorePlugin extends Plugin {
 	public static final String ATTR_WPP_SVAPART=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_SVAPART";
 	public static final String ATTR_WPP_SVFPART=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_SVFPART";
 	public static final String ATTR_WPP_INITFPART=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_INITFPART";
+	public static final String ATTR_WPP_TIMESTEP=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_TIMESTEP";
+	public static final String ATTR_WPP_STARTYEAR=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_STARTYEAR";
+	public static final String ATTR_WPP_STARTMONTH=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_STARTMONTH";
+	public static final String ATTR_WPP_STARTDAY=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_STARTDAY";
+	
 	
 	
 	/**
