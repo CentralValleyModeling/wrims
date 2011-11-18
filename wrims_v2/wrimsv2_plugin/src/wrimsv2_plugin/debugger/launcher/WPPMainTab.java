@@ -12,6 +12,8 @@
 package wrimsv2_plugin.debugger.launcher;
 
 
+import java.awt.event.ItemListener;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -32,6 +34,7 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.FileDialog;
@@ -40,6 +43,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ResourceListSelectionDialog;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.tools.TimeOperation;
 
 /**
  * Tab to specify the WPP program to run/debug.
@@ -63,6 +67,21 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	private Text svAPartText;
 	private Text svFPartText;
 	private Text initFPartText;
+	private Combo timeStepCombo;
+	private Combo startYearCombo;
+	private Combo startMonthCombo;
+	private Combo startDayCombo;
+	
+	private DayItemListener sdl=new DayItemListener(1);
+	private DayItemListener edl=new DayItemListener(2);
+	private MYItemListener sml=new MYItemListener(1);
+	private MYItemListener eml=new MYItemListener(2);
+	private MYItemListener syl=new MYItemListener(1);
+	private MYItemListener eyl=new MYItemListener(2);	
+	
+	public static String[] months = { "OCT", "NOV", "DEC", "JAN", "FEB", "MAR",
+		"APR", "MAY", "JUN", "JUL", "AUG", "SEP" };
+	public static String[] timeSteps = { "1MON", "1DAY" };
 	
 	
 	/* (non-Javadoc)
@@ -338,6 +357,77 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 				updateLaunchConfigurationDialog();
 			}
 		});
+		
+		Label timeStep = new Label(comp, SWT.NONE);
+		timeStep.setText("&Time Step:");
+		gd = new GridData(GridData.BEGINNING);
+		timeStep.setLayoutData(gd);
+		timeStep.setFont(font);
+				
+		timeStepCombo=new Combo(comp, SWT.None);
+		timeStepCombo.setItems(timeSteps);
+		gd = new GridData(GridData.BEGINNING);
+		gd.horizontalSpan = 6;
+		timeStepCombo.setLayoutData(gd);
+		timeStepCombo.setFont(font);
+		timeStepCombo.select(0);
+		timeStepCombo.addModifyListener(new TSItemListener());
+		
+		Label startDate = new Label(comp, SWT.NONE);
+		startDate.setText("&Start Date:");
+		gd = new GridData(GridData.BEGINNING);
+		startDate.setLayoutData(gd);
+		startDate.setFont(font);
+		
+		startYearCombo=new Combo(comp, SWT.None);
+		for (int i=1900; i<=2100; i++){
+			startYearCombo.add(String.valueOf(i));
+		}
+		gd = new GridData(GridData.BEGINNING);
+		startYearCombo.setLayoutData(gd);
+		startYearCombo.setFont(font);
+		startYearCombo.select(21);
+		startYearCombo.addModifyListener(syl);
+		
+		Label year = new Label(comp, SWT.NONE);
+		year.setText("year");
+		gd = new GridData(GridData.BEGINNING);
+		year.setLayoutData(gd);
+		year.setFont(font);
+		
+		startMonthCombo=new Combo(comp, SWT.None);
+		startMonthCombo.setItems(months);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		startMonthCombo.setLayoutData(gd);
+		startMonthCombo.setFont(font);
+		startMonthCombo.select(0);
+		startMonthCombo.addModifyListener(sml);
+		
+		Label month = new Label(comp, SWT.NONE);
+		month.setText("month");
+		gd = new GridData(GridData.BEGINNING);
+		month.setLayoutData(gd);
+		month.setFont(font);
+		
+		startDayCombo=new Combo(comp, SWT.None);
+		for (int i=1; i<=31; i++){
+			startDayCombo.add(String.valueOf(i));
+		}
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		startDayCombo.setLayoutData(gd);
+		startDayCombo.setFont(font);
+		startDayCombo.select(30);
+		startDayCombo.addModifyListener(sdl);
+		startDayCombo.setEnabled(false);
+		
+		Label day = new Label(comp, SWT.NONE);
+		day.setText("day");
+		gd = new GridData(GridData.BEGINNING);
+		day.setLayoutData(gd);
+		day.setFont(font);
+		
+		
+		
 	}
 	
 	protected void browseFiles(Text fileLocationText) {
@@ -511,10 +601,71 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#getImage()
-	 */
-	//public Image getImage() {
-	//	return DebugUIPlugin.getDefault().getImageRegistry().get(DebugUIPlugin.IMG_OBJ_WPP);
-	//}
+	private class TSItemListener implements ModifyListener {
+		
+		@Override
+		public void modifyText(ModifyEvent e) {
+			String _strTimeStep =timeStepCombo.getText();
+			if (_strTimeStep.equalsIgnoreCase("1MON")) {
+				startDayCombo.removeModifyListener(sdl);
+				int startMonth=TimeOperation.monthValue(startMonthCombo.getText());
+				int startYear=Integer.parseInt(startYearCombo.getText());	
+				startDayCombo.select(TimeOperation.numberOfDays(startMonth, startYear)-1);
+				startDayCombo.addModifyListener(sdl);
+				startDayCombo.setEnabled(false);
+			} else {
+				for (int i = 0; i < 2; i++)
+					startDayCombo.setEnabled(true);
+			}
+			
+		}
+	}
+
+	private class DayItemListener implements  ModifyListener {
+		int type;
+		
+		public DayItemListener(int i) {
+			type = i;
+		}
+
+		@Override
+		public void modifyText(ModifyEvent e) {
+			if (type==1){
+				int startMonth=TimeOperation.monthValue(startMonthCombo.getText());
+				int startYear=Integer.parseInt(startYearCombo.getText());	
+				int maxDayInMonth=TimeOperation.numberOfDays(startMonth, startYear);
+				if (Integer.parseInt(startDayCombo.getText())>maxDayInMonth){
+					startDayCombo.removeModifyListener(sdl);
+					startDayCombo.select(TimeOperation.numberOfDays(startMonth, startYear)-1);
+					startDayCombo.addModifyListener(sdl);
+				}
+			}else{
+				
+			}
+		}
+	}
+
+	private class MYItemListener implements ModifyListener {
+		int type;
+
+		public MYItemListener(int i) {
+			type = i;
+		}
+
+		@Override
+		public void modifyText(ModifyEvent e) {
+			if (type==1){
+				int startMonth=TimeOperation.monthValue(startMonthCombo.getText());
+				int startYear=Integer.parseInt(startYearCombo.getText());	
+				int maxDayInMonth=TimeOperation.numberOfDays(startMonth, startYear);
+				if (Integer.parseInt(startDayCombo.getText())>maxDayInMonth || timeStepCombo.getText().equalsIgnoreCase("1MON")){
+					startDayCombo.removeModifyListener(sdl);
+					startDayCombo.select(TimeOperation.numberOfDays(startMonth, startYear)-1);
+					startDayCombo.addModifyListener(sdl);
+				}
+			}
+			
+		}
+	}
+
 }
