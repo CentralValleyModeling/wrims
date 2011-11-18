@@ -56,29 +56,10 @@ import wrimsv2.wreslparser.elements.StudyUtils;
 
 import lpsolve.*;
 
-public class ControllerPA {
+public class ControllerBatch {
 	
-	public ControllerPA() {
-		long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
-		setControlData();
-		generateStudyFile();
-		try {
-			StudyDataSet sds = parse();
-			if (StudyUtils.total_errors==0){
-				new PreEvaluator(sds);
-				runModel(sds);
-			}
-		} catch (RecognitionException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		long endTimeInMillis = Calendar.getInstance().getTimeInMillis();
-		int runPeriod=(int) (endTimeInMillis-startTimeInMillis);
-		System.out.println("=================Run Time is "+runPeriod/60000+"min"+Math.round((runPeriod/60000.0-runPeriod/60000)*60)+"sec====");
-	}
 	
-	public ControllerPA(String[] args) {
+	public ControllerBatch(String[] args) {
 		long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
 		setControlData(args);
 
@@ -98,39 +79,6 @@ public class ControllerPA {
 		long endTimeInMillis = Calendar.getInstance().getTimeInMillis();
 		int runPeriod=(int) (endTimeInMillis-startTimeInMillis);
 		System.out.println("=================Run Time is "+runPeriod/60000+"min"+Math.round((runPeriod/60000.0-runPeriod/60000)*60)+"sec====");
-	}
-	
-	public void setControlData(){
-		FilePaths.groundwaterDir="D:\\BDCP_MODEL\\calsim30_alt1_elt_roa25_slr15_cc5_101111_w2\\calsim30_bo\\common\\CVGroundwater\\Data\\";
-		FilePaths.setMainFilePaths("D:\\BDCP_MODEL\\calsim30_alt1_elt_roa25_slr15_cc5_101111_w2\\calsim30_bo\\conv\\Run\\mainCONV_30.wresl");
-		FilePaths.setSvarDssPaths("D:\\BDCP_MODEL\\calsim30_alt1_elt_roa25_slr15_cc5_101111_w2\\calsim30_bo\\common\\DSS\\CalSim30_2020_SV.dss");
-        FilePaths.setInitDssPaths("D:\\BDCP_MODEL\\calsim30_alt1_elt_roa25_slr15_cc5_101111_w2\\calsim30_bo\\conv\\DSS\\ALT1_ELT_102011_DV.dss");   
-        FilePaths.setDvarDssPaths("D:\\BDCP_MODEL\\calsim30_alt1_elt_roa25_slr15_cc5_101111_w2\\calsim30_bo\\conv\\DSS\\ALT1_ELT_102011_DV.dss");
-		ControlData cd=new ControlData();
-		cd.svDvPartF="CALSIM30_2020";
-		cd.initPartF="CALSIM30_2020";
-		cd.partA = "CALSIM";
-		cd.partE = "1MON";
-		cd.timeStep="1MON";
-		cd.startYear=1921;
-		cd.startMonth=10;
-		cd.startDay=31;
-		cd.endYear=2003;
-		cd.endMonth=9;
-		cd.endDay=30;
-        cd.solverName="XA";
-        FilePaths.csvFolderName="csv";
-		cd.currYear=cd.startYear;
-		cd.currMonth=cd.startMonth;
-		cd.currDay=cd.startDay;
-        cd.writeDssStartYear=ControlData.startYear;
-        cd.writeDssStartMonth=ControlData.startMonth;
-        cd.writeDssStartDay=ControlData.startDay;
-        cd.writeDssStartYear=ControlData.startYear;
-        cd.writeDssStartMonth=ControlData.startMonth;
-        cd.writeDssStartDay=ControlData.startDay;
-        
-		cd.totalTimeStep=getTotalTimeStep();
 	}
 	
 	public void setControlData(String[] args){
