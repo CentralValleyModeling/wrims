@@ -48,6 +48,7 @@ import wrimsv2.evaluator.ValueEvaluatorTreeWalker;
 import wrimsv2.external.LoadAllDll;
 import wrimsv2.solver.GurobiSolver;
 import wrimsv2.solver.XASolver;
+import wrimsv2.solver.initialXASolver;
 import wrimsv2.tools.RCCComparison;
 import wrimsv2.wreslparser.elements.StudyUtils;
 
@@ -234,7 +235,7 @@ public class ControllerTree {
 			processExternal();
 		}
 		
-		initialXASolver();
+		new initialXASolver();
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
@@ -381,15 +382,6 @@ public class ControllerTree {
 				dvar.setData(null);
 			}
 		}
-	}
-	
-	public void initialXASolver(){
-		ControlData.xasolver=new Optimizer(25000);
-		ControlData.xasolver.openConnection();
-		ControlData.xasolver.setModelSize(32, 32);
-		ControlData.xasolver.setCommand("MAXIMIZE Yes MUTE NO FORCE No MATLIST BOTH");
-		//ControlData.solver.setCommand("MPSX YES");
-		ControlData.xasolver.setCommand( "FileName  "+FilePaths.mainDirectory+"  Output "+FilePaths.mainDirectory+"\\xa.log matlist v ToRcc Yes wait no" ) ;
 	}
 	
 	public void processModel(){
