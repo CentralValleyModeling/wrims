@@ -13,6 +13,7 @@ import java.util.Set;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.ControllerBatch;
 import wrimsv2.components.FilePaths;
+import wrimsv2.components.Versions;
 import wrimsv2.evaluator.TimeOperation;
 
 public class ConfigUtils {
@@ -21,6 +22,16 @@ public class ConfigUtils {
 
 	public static void loadArgs(String[] args) {
 
+
+		// print version number then exit
+		if (args.length==1 && args[0].equalsIgnoreCase("-version") ) {
+		
+			System.out.println("WRIMS "+new Versions().getComplete());
+			System.exit(0);
+		}
+		
+		
+		
 		argsMap = new HashMap<String, String>();
 
 		for (int i = 0; i < args.length; i++) {
@@ -35,6 +46,8 @@ public class ConfigUtils {
 			catch (Exception e) {
 				System.out.println("Example: ");
 				System.out.println("-config=\"D:\\test\\example.cfg\"");
+				System.out.println("Example: ");
+				System.out.println("-mainwresl=\"C:\\study\\main.wresl\"");
 				System.exit(1);
 			}
 
@@ -42,28 +55,29 @@ public class ConfigUtils {
 
 		}
 
+
+		
+		// load config file
 		if (argsMap.keySet().contains("-config")) {
 
 			System.out.println("Loading config file: "+argsMap.get("-config"));
 			StudyUtils.configFilePath = argsMap.get("-config");
 			loadConfig(StudyUtils.configFilePath);
 
+		// compile to serial object named *.par
 		} else if (argsMap.keySet().contains("-mainwresl")) {
 
 			System.out.println("Compiling main wresl file: "+argsMap.get("-mainwresl"));
 			StudyUtils.compileOnly = true;
 			FilePaths.setMainFilePaths(argsMap.get("-mainwresl"));
 
+		} else {
+			System.out.println("Example: ");
+			System.out.println("-config=\"D:\\test\\example.cfg\"");
+			System.out.println("Example: ");
+			System.out.println("-mainwresl=\"C:\\study\\main.wresl\"");
+			System.exit(1);
 		}
-
-
-//		if (argsMap.keySet().contains("-compile")) {
-//
-//			if (argsMap.get("-compile").equalsIgnoreCase("Yes")) {
-//				StudyUtils.loadParserData = false;
-//				StudyUtils.saveParserData = true;
-//			}
-//		}
 
 	}
 
