@@ -38,9 +38,10 @@ public class ConfigUtils {
 
 			try {
 				String key = args[i].substring(0, args[i].indexOf("="));
-				String val = args[i].substring(args[i].indexOf("=") + 2, args[i].length() - 1);
+				String val = args[i].substring(args[i].indexOf("=") + 1, args[i].length());
+				val=val.replaceAll("\"", "");
 
-				argsMap.put(key.toLowerCase(), val); // parsing data file
+				argsMap.put(key.toLowerCase(), val); 
 
 			}
 			catch (Exception e) {
