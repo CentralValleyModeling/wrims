@@ -12,16 +12,30 @@ import org.antlr.runtime.RecognitionException;
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.components.ControlData;
+import wrimsv2.components.FilePaths;
 import wrimsv2.components.Versions;
 
 public class StudyUtils {
-	
-	public static int total_errors = 0;
 
+	public static int config_errors = 0;
+	public static int total_errors = 0;
+	public static boolean loadParserData=false;
+	public static boolean compileOnly=false;
+	public static String runDir = "";
+	public static String parserDataPath = "";
+	public static String configFilePath = "";
+	
 	private StudyUtils() {
 
 	}
 
+	public static StudyDataSet compileStudy(String inMainWreslPath) throws IOException {
+		
+		StudyUtils.compileOnly = true;
+		return checkStudy(inMainWreslPath, false);
+
+	}	
+	
 	public static StudyDataSet checkStudy(String inMainWreslPath, boolean sendAliasToDvar) throws IOException {
 		
 		String csvFolderName = "=WreslCheck_csv=";
@@ -55,6 +69,8 @@ public class StudyUtils {
 			
 		try {
 			sds = parseWresl(mainWreslFile, sendAliasToDvar);
+			
+			
 		}
 		catch (RecognitionException e) {
 			// TODO Auto-generated catch block
@@ -65,7 +81,19 @@ public class StudyUtils {
 			String csvFolderPath = mainWreslFile.getParentFile() + "\\" + csvFolderName;
 			WriteCSV.study(sds, csvFolderPath);
 		}
-
+		
+		if (StudyUtils.compileOnly) {
+			
+			if (StudyUtils.total_errors ==0) {
+				StudyUtils.compileObject(FilePaths.fullMainPath, sds);
+				//System.exit(0);
+			} else {
+				LogUtils.errMsg("Compilation unsuccessful.");
+				//System.exit(1);
+			}
+	
+		}
+		
 		LogUtils.closeLogFile();
 
 		return sds;
@@ -75,15 +103,23 @@ public class StudyUtils {
 	public static void compileObject(String inMainWreslPath, StudyDataSet sds) {
 
 		StringBuilder b = new StringBuilder(inMainWreslPath);
-		b.replace(inMainWreslPath.lastIndexOf("."), inMainWreslPath.length(), ".object");
+		b.replace(inMainWreslPath.lastIndexOf("."), inMainWreslPath.length(), ".par");
 		String objFilePath = b.toString();
 
+		StringBuilder b2 = new StringBuilder(FilePaths.mainFile);
+		b2.replace(FilePaths.mainFile.lastIndexOf("."), FilePaths.mainFile.length(), ".par");
+		String objFileName = b2.toString();
+		
+		LogUtils.importantMsg("Writing parser data....");
 		writeObj(sds, objFilePath);
+		LogUtils.importantMsg("Wresl files are compiled into a binary file: "+objFileName );
 
 	}
 
 	public static StudyDataSet loadObject(String objFilePath) {
 
+		System.out.println("Loading precompiled parser data: "+objFilePath);
+		
 		return readObj(objFilePath);
 
 	}
