@@ -470,7 +470,7 @@ public class ControllerBatch {
 	}
 	
 	public static void main(String[] args){
-		new Controller(args);
+		new ControllerBatch(args);
 	}
 
 	public void runModelILP(StudyDataSet sds){
