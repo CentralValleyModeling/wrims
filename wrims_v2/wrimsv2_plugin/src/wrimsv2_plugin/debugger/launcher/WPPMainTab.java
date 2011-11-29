@@ -71,6 +71,9 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	private Combo startYearCombo;
 	private Combo startMonthCombo;
 	private Combo startDayCombo;
+	private Combo endYearCombo;
+	private Combo endMonthCombo;
+	private Combo endDayCombo;
 	
 	private DayItemListener sdl=new DayItemListener(1);
 	private DayItemListener edl=new DayItemListener(2);
@@ -426,8 +429,59 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		day.setLayoutData(gd);
 		day.setFont(font);
 		
+		Label endDate = new Label(comp, SWT.NONE);
+		endDate.setText("&End Date:");
+		gd = new GridData(GridData.BEGINNING);
+		endDate.setLayoutData(gd);
+		endDate.setFont(font);
 		
+		endYearCombo=new Combo(comp, SWT.READ_ONLY);
+		for (int i=1900; i<=2100; i++){
+			endYearCombo.add(String.valueOf(i));
+		}
+		gd = new GridData(GridData.BEGINNING);
+		endYearCombo.setLayoutData(gd);
+		endYearCombo.setFont(font);
+		endYearCombo.select(103);
+		endYearCombo.addModifyListener(eyl);
 		
+		Label year1 = new Label(comp, SWT.NONE);
+		year1.setText("year");
+		gd = new GridData(GridData.BEGINNING);
+		year1.setLayoutData(gd);
+		year1.setFont(font);
+		
+		endMonthCombo=new Combo(comp, SWT.READ_ONLY);
+		endMonthCombo.setItems(months);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		endMonthCombo.setLayoutData(gd);
+		endMonthCombo.setFont(font);
+		endMonthCombo.select(11);
+		endMonthCombo.addModifyListener(eml);
+		
+		Label month1 = new Label(comp, SWT.NONE);
+		month1.setText("month");
+		gd = new GridData(GridData.BEGINNING);
+		month1.setLayoutData(gd);
+		month1.setFont(font);
+		
+		endDayCombo=new Combo(comp, SWT.READ_ONLY);
+		for (int i=1; i<=31; i++){
+			endDayCombo.add(String.valueOf(i));
+		}
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		endDayCombo.setLayoutData(gd);
+		endDayCombo.setFont(font);
+		endDayCombo.select(30);
+		endDayCombo.addModifyListener(edl);
+		endDayCombo.setEnabled(false);
+		
+		Label day1 = new Label(comp, SWT.NONE);
+		day1.setText("day");
+		gd = new GridData(GridData.BEGINNING);
+		day1.setLayoutData(gd);
+		day1.setFont(font);
+
 	}
 	
 	protected void browseFiles(Text fileLocationText) {
@@ -532,6 +586,21 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			if (startDay != null) {
 				startDayCombo.setText(startDay);
 			}
+			String endYear = null;
+			endYear = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDYEAR, (String)null);
+			if (endYear != null) {
+				endYearCombo.setText(endYear);
+			}
+			String endMonth = null;
+			endMonth = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDMONTH, (String)null);
+			if (endMonth != null) {
+				endMonthCombo.setText(endMonth);
+			}
+			String endDay = null;
+			endYear = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, (String)null);
+			if (endDay != null) {
+				endDayCombo.setText(endDay);
+			}
 		} catch (CoreException e) {
 			setErrorMessage(e.getMessage());
 		}
@@ -605,7 +674,19 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		if (startDay.length() == 0) {
 			startDay = null;
 		}
-
+		String endYear = endYearCombo.getText().trim();
+		if (endYear.length() == 0) {
+			endYear = null;
+		}
+		String endMonth = endMonthCombo.getText().trim();
+		if (endMonth.length() == 0) {
+			endMonth = null;
+		}
+		String endDay = endDayCombo.getText().trim();
+		if (endDay.length() == 0) {
+			endDay = null;
+		}
+		
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_STUDY, studyName);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_AUTHOR, author);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_DATE, date);
@@ -622,6 +703,9 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_STARTYEAR, startYear);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_STARTMONTH, startMonth);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_STARTDAY, startDay);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_ENDYEAR, endYear);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_ENDMONTH, endMonth);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, endDay);
 	}
 	
 	/* (non-Javadoc)
@@ -655,9 +739,16 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 				startDayCombo.select(TimeOperation.numberOfDays(startMonth, startYear)-1);
 				startDayCombo.addModifyListener(sdl);
 				startDayCombo.setEnabled(false);
+				
+				endDayCombo.removeModifyListener(edl);
+				int endMonth=TimeOperation.monthValue(endMonthCombo.getText());
+				int endYear=Integer.parseInt(endYearCombo.getText());	
+				endDayCombo.select(TimeOperation.numberOfDays(endMonth, endYear)-1);
+				endDayCombo.addModifyListener(edl);
+				endDayCombo.setEnabled(false);
 			} else {
-				for (int i = 0; i < 2; i++)
-					startDayCombo.setEnabled(true);
+				startDayCombo.setEnabled(true);
+				endDayCombo.setEnabled(true);
 			}
 			
 		}
@@ -683,7 +774,14 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 					startDayCombo.addModifyListener(sdl);
 				}
 			}else{
-				
+				int endMonth=TimeOperation.monthValue(endMonthCombo.getText());
+				int endYear=Integer.parseInt(endYearCombo.getText());	
+				int maxDayInMonth=TimeOperation.numberOfDays(endMonth, endYear);
+				if (Integer.parseInt(endDayCombo.getText())>maxDayInMonth){
+					endDayCombo.removeModifyListener(edl);
+					endDayCombo.select(TimeOperation.numberOfDays(endMonth, endYear)-1);
+					endDayCombo.addModifyListener(edl);
+				}
 			}
 		}
 	}
@@ -707,8 +805,16 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 					startDayCombo.select(TimeOperation.numberOfDays(startMonth, startYear)-1);
 					startDayCombo.addModifyListener(sdl);
 				}
-			}
-			
+			}else{
+				int endMonth=TimeOperation.monthValue(endMonthCombo.getText());
+				int endYear=Integer.parseInt(endYearCombo.getText());	
+				int maxDayInMonth=TimeOperation.numberOfDays(endMonth, endYear);
+				if (Integer.parseInt(endDayCombo.getText())>maxDayInMonth || timeStepCombo.getText().equalsIgnoreCase("1MON")){
+					endDayCombo.removeModifyListener(edl);
+					endDayCombo.select(TimeOperation.numberOfDays(endMonth, endYear)-1);
+					endDayCombo.addModifyListener(edl);
+				}
+			}		
 		}
 	}
 
