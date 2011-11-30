@@ -222,7 +222,7 @@ public class Controller {
 	
 	public void runModel(StudyDataSet sds){
 		System.out.println("=============Prepare Run Study===========");
-		preRunModel(sds);
+		new PreRunModel(sds);
 		System.out.println("==============Run Study Start============");
 		if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG") ){
 			runModelXA(sds);
@@ -238,36 +238,6 @@ public class Controller {
 			}
 		}
 		System.out.println("=================Run ends!================");
-	}
-	
-	public void preRunModel(StudyDataSet sds){
-		ControlData.currStudyDataSet=sds;
-		ArrayList<String> modelList=sds.getModelList();
-		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
-		ControlData.startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
-				
-		ControlData.writer = new DSSDataWriter(FilePaths.fullDvarDssPath);
-		try {
-			ControlData.writer.openDSSFile();
-		} catch (Exception e) {
-			ControlData.writer.closeDSSFile();
-			Error.addEngineError("Could not open dv file. "+e);
-			return;
-		}
-		
-		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
-		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
-		ControlData.allTsMap=sds.getTimeseriesMap();
-		
-		readTimeseries();
-		initialDvarAliasTS(ControlData.totalTimeStep);
-		for (int i=0; i<modelList.size(); i++){
-			String model=modelList.get(i);
-			ModelDataSet mds=modelDataSetMap.get(model);
-			ControlData.currModelDataSet=mds;
-			ControlData.currCycleIndex=i;
-			processExternal();
-		}
 	}
 	
 	public void runModeLPSolve(StudyDataSet sds) throws LpSolveException{
@@ -521,46 +491,6 @@ public class Controller {
 				alias.setData(null);
 			}
 		}
-	}
-
-	public void readTimeseries(){
-		Map<String, Timeseries> tsMap=ControlData.currStudyDataSet.getTimeseriesMap();
-		ControlData.currEvalTypeIndex=6;
-		Set tsKeySet=tsMap.keySet();
-		Iterator iterator=tsKeySet.iterator();
-		while(iterator.hasNext()){
-			String tsName=(String)iterator.next();
-			//System.out.println("Reading svar timeseries "+tsName);
-			//To Do: in the svar class, add flag to see if svTS has been loaded
-			if (!DataTimeSeries.lookSvDss.contains(tsName)){ 
-				DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarDssPath);
-				DataTimeSeries.lookSvDss.add(tsName);
-			}
-		}
-		System.out.println("Timeseries Reading Done.");
-	}
-	
-	public void	initialDvarAliasTS(long totalTimeStep){
-		DataTimeSeries.dvAliasTS=new HashMap<String, DssDataSetFixLength>();
-	}
-	
-	public void processExternal(){
-		ModelDataSet mds=ControlData.currModelDataSet;
-		ArrayList<String> exList = mds.exList;
-		Map<String, External> exMap =mds.exMap;
-		ControlData.currExMap=exMap;
-		ControlData.currEvalTypeIndex=4;
-		for (String exName: exList){
-			if (!ControlData.allExternalFunction.containsKey(exName)){
-				ControlData.currEvalName=exName;
-				External external=exMap.get(exName);
-				ControlData.allExternalFunction.put(exName, external.type);
-				if (!external.type.equals("f90") && !ControlData.allDll.contains(exName)){
-					ControlData.allDll.add(external.type);
-				}
-			}
-		}
-		new LoadAllDll(ControlData.allDll);
 	}
 	
 	public int getTotalTimeStep(){
