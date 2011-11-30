@@ -50,7 +50,7 @@ public class ControllerBatch {
 			
 			if (StudyUtils.total_errors==0 && !StudyUtils.compileOnly){
 				new PreEvaluator(sds);
-				preRunModel(sds);
+				new PreRunModel(sds);
 				generateStudyFile();
 				runModel(sds);
 			} 
@@ -190,37 +190,78 @@ public class ControllerBatch {
 		System.out.println("=================Run ends!================");
 	}
 	
-	public void preRunModel(StudyDataSet sds){
-		System.out.println("=============Prepare Run Study===========");
-		ControlData.currStudyDataSet=sds;
+	public void runModelXA(StudyDataSet sds){
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
-		ControlData.startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
+		
+		new initialXASolver();
+		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
+		boolean noError=true;
+		ControlData.currTimeStep=0;
+		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
+			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
+			clearValues(modelList, modelDataSetMap);
+			int i=0;
+			while (i<modelList.size()  && noError){  
+				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
+				boolean condition=false;
+				try{
+					modelCondition.evaluator();
+					condition=modelCondition.evalCondition;
+				}catch (Exception e){
+					Error.addEvaluationError("Model condition evaluation has error.");
+					condition=false;
+				}
+				modelCondition.reset();
 				
-		ControlData.writer = new DSSDataWriter(FilePaths.fullDvarDssPath);
-		try {
-			ControlData.writer.openDSSFile();
-		} catch (Exception e) {
-			ControlData.writer.closeDSSFile();
-			Error.addEngineError("Could not open dv file. "+e);
-			return;
+				String model=modelList.get(i);
+				ModelDataSet mds=modelDataSetMap.get(model);
+				ControlData.currModelDataSet=mds;
+				ControlData.currCycleName=model;
+				ControlData.currCycleIndex=i;
+				
+				if (condition){
+					ControlData.currSvMap=mds.svMap;
+					ControlData.currDvMap=mds.dvMap;
+					ControlData.currAliasMap=mds.asMap;
+					ControlData.currGoalMap=mds.gMap;
+					ControlData.currTsMap=mds.tsMap;
+					ControlData.isPostProcessing=false;
+					mds.processModel();
+					if (Error.error_evaluation.size()>=1){
+						Error.writeEvaluationErrorFile("evaluation_error.txt");
+						noError=false;
+					}
+					new XASolver();
+					System.out.println("Solving Done.");
+					if (Error.error_solving.size()<1){
+						ControlData.isPostProcessing=true;
+						mds.processAlias();
+						System.out.println("Assign Alias Done.");
+					}else{
+						Error.writeSolvingErrorFile("solving_error.txt");
+						noError=false;
+					}
+					System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
+					//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
+				}else{
+					new AssignPastCycleVariable();
+				}
+				i=i+1;
+			}
+			if (ControlData.timeStep.equals("1MON")){
+				currTimeAddOneMonth();
+			}else{
+				currTimeAddOneDay();
+			}
+			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
-		
-		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
-		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
-		ControlData.allTsMap=sds.getTimeseriesMap();
-		
-		readTimeseries();
-		initialDvarAliasTS(ControlData.totalTimeStep);
-		for (int i=0; i<modelList.size(); i++){
-			String model=modelList.get(i);
-			ModelDataSet mds=modelDataSetMap.get(model);
-			ControlData.currModelDataSet=mds;
-			ControlData.currCycleIndex=i;
-			processExternal();
-		}
+		ControlData.xasolver.close();
+		DssOperation.writeInitDvarAliasToDSS();
+		DssOperation.writeDVAliasToDSS();
+		ControlData.writer.closeDSSFile();
 	}
-	
+
 	public void runModeLPSolve(StudyDataSet sds) throws LpSolveException{
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
@@ -236,7 +277,7 @@ public class ControllerBatch {
 				boolean condition=false;
 				try{
 					modelCondition.evaluator();
-					condition=ValueEvaluatorParser.evalCondition;
+					condition=modelCondition.evalCondition;
 				}catch (Exception e){
 					Error.addEvaluationError("Model condition evaluation has error.");
 					condition=false;
@@ -293,78 +334,6 @@ public class ControllerBatch {
 		ControlData.writer.closeDSSFile();
 	}
 	
-	public void runModelXA(StudyDataSet sds){
-		ArrayList<String> modelList=sds.getModelList();
-		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
-		
-		new initialXASolver();
-		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
-		boolean noError=true;
-		ControlData.currTimeStep=0;
-		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
-			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
-			clearValues(modelList, modelDataSetMap);
-			int i=0;
-			while (i<modelList.size()  && noError){  
-				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
-				boolean condition=false;
-				try{
-					modelCondition.evaluator();
-					condition=ValueEvaluatorParser.evalCondition;
-				}catch (Exception e){
-					Error.addEvaluationError("Model condition evaluation has error.");
-					condition=false;
-				}
-				modelCondition.reset();
-				
-				String model=modelList.get(i);
-				ModelDataSet mds=modelDataSetMap.get(model);
-				ControlData.currModelDataSet=mds;
-				ControlData.currCycleName=model;
-				ControlData.currCycleIndex=i;
-				
-				if (condition){
-					ControlData.currSvMap=mds.svMap;
-					ControlData.currDvMap=mds.dvMap;
-					ControlData.currAliasMap=mds.asMap;
-					ControlData.currGoalMap=mds.gMap;
-					ControlData.currTsMap=mds.tsMap;
-					ControlData.isPostProcessing=false;
-					mds.processModel();
-					if (Error.error_evaluation.size()>=1){
-						Error.writeEvaluationErrorFile("evaluation_error.txt");
-						noError=false;
-					}
-					new XASolver();
-					System.out.println("Solving Done.");
-					if (Error.error_solving.size()<1){
-						ControlData.isPostProcessing=true;
-						mds.processAlias();
-						System.out.println("Assign Alias Done.");
-					}else{
-						Error.writeSolvingErrorFile("solving_error.txt");
-						noError=false;
-					}
-					System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
-					//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
-				}else{
-					new AssignPastCycleVariable();
-				}
-				i=i+1;
-			}
-			if (ControlData.timeStep.equals("1MON")){
-				currTimeAddOneMonth();
-			}else{
-				currTimeAddOneDay();
-			}
-			ControlData.currTimeStep=ControlData.currTimeStep+1;
-		}
-		ControlData.xasolver.close();
-		DssOperation.writeInitDvarAliasToDSS();
-		DssOperation.writeDVAliasToDSS();
-		ControlData.writer.closeDSSFile();
-	}
-	
 	public void writeOutputDssEveryTenYears(){
 		if (ControlData.currMonth==12 && ControlData.currYear%10==0){
 			if (ControlData.timeStep.equals("1MON")){
@@ -400,46 +369,6 @@ public class ControllerBatch {
 		}
 	}
 
-	public void readTimeseries(){
-		Map<String, Timeseries> tsMap=ControlData.currStudyDataSet.getTimeseriesMap();
-		ControlData.currEvalTypeIndex=6;
-		Set tsKeySet=tsMap.keySet();
-		Iterator iterator=tsKeySet.iterator();
-		while(iterator.hasNext()){
-			String tsName=(String)iterator.next();
-			//System.out.println("Reading svar timeseries "+tsName);
-			//To Do: in the svar class, add flag to see if svTS has been loaded
-			if (!DataTimeSeries.lookSvDss.contains(tsName)){ 
-				DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarDssPath);
-				DataTimeSeries.lookSvDss.add(tsName);
-			}
-		}
-		System.out.println("Timeseries Reading Done.");
-	}
-	
-	public void	initialDvarAliasTS(long totalTimeStep){
-		DataTimeSeries.dvAliasTS=new HashMap<String, DssDataSetFixLength>();
-	}
-	
-	public void processExternal(){
-		ModelDataSet mds=ControlData.currModelDataSet;
-		ArrayList<String> exList = mds.exList;
-		Map<String, External> exMap =mds.exMap;
-		ControlData.currExMap=exMap;
-		ControlData.currEvalTypeIndex=4;
-		for (String exName: exList){
-			if (!ControlData.allExternalFunction.containsKey(exName)){
-				ControlData.currEvalName=exName;
-				External external=exMap.get(exName);
-				ControlData.allExternalFunction.put(exName, external.type);
-				if (!external.type.equals("f90") && !ControlData.allDll.contains(exName)){
-					ControlData.allDll.add(external.type);
-				}
-			}
-		}
-		new LoadAllDll(ControlData.allDll);
-	}
-	
 	public static int getTotalTimeStep(){
 		if (ControlData.timeStep.equals("1MON")){
 			return (ControlData.endYear-ControlData.startYear)*12+(ControlData.endMonth-ControlData.startMonth)+1;
@@ -492,7 +421,7 @@ public class ControllerBatch {
 				boolean condition=false;
 				try{
 					modelCondition.evaluator();
-					condition=ValueEvaluatorParser.evalCondition;
+					condition=modelCondition.evalCondition;
 				}catch (Exception e){
 					Error.addEvaluationError("Model condition evaluation has error.");
 					condition=false;
