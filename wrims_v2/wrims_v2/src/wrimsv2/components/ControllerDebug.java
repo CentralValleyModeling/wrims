@@ -51,6 +51,7 @@ import wrimsv2.ilp.IntermediateLP;
 import wrimsv2.solver.GurobiSolver;
 import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.solver.XASolver;
+import wrimsv2.solver.initialXALog;
 import wrimsv2.solver.initialXASolver;
 import wrimsv2.tools.RCCComparison;
 import wrimsv2.wreslparser.elements.LogUtils;
@@ -343,6 +344,7 @@ public class ControllerDebug extends Thread {
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
+			if (ControlData.currTimeStep==ControlData.totalTimeStep-1) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
 			int i=0;
 			while (i<modelList.size()  && noError){  
@@ -620,6 +622,7 @@ public class ControllerDebug extends Thread {
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
+			if (ControlData.currTimeStep==ControlData.totalTimeStep-1) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
 			int i=0;
 			while (i<modelList.size()  && noError){  

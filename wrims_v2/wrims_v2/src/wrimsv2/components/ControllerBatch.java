@@ -32,6 +32,7 @@ import wrimsv2.external.LoadAllDll;
 import wrimsv2.ilp.IntermediateLP;
 import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.solver.XASolver;
+import wrimsv2.solver.initialXALog;
 import wrimsv2.solver.initialXASolver;
 import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.elements.ConfigUtils;
@@ -301,6 +302,7 @@ public class ControllerBatch {
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
+			if (ControlData.currTimeStep==ControlData.totalTimeStep-1) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
 			int i=0;
 			while (i<modelList.size()  && noError){  
@@ -482,6 +484,7 @@ public class ControllerBatch {
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
+			if (ControlData.currTimeStep==ControlData.totalTimeStep-1) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
 			int i=0;
 			while (i<modelList.size()  && noError){  
