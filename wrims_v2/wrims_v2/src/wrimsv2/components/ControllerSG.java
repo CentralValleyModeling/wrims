@@ -270,7 +270,7 @@ public class ControllerSG {
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
-			if (ControlData.currTimeStep==ControlData.totalTimeStep-1) new initialXALog();
+			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
 			int i=0;
 			while (i<modelList.size()  && noError){  
@@ -526,7 +526,7 @@ public class ControllerSG {
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
-			if (ControlData.currTimeStep==ControlData.totalTimeStep-1) new initialXALog();
+			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
 			int i=0;
 			while (i<modelList.size()  && noError){  
