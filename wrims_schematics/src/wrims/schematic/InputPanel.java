@@ -370,8 +370,8 @@ public class InputPanel extends JPanel {
 			String executeCommand = javaFullPath
 					+ " -Xmx1600m -Xss1024K -Djava.library.path="
 					+ externalPath + ";" + engineLibPath
-					+ " -cp \"" + engineLibPath + "\\WRIMSv2.jar" + ";"
-					+ engineLibPath + "\\wrimsv2\\external\\*.class;"
+					+ " -cp \"" + engineLibPath + "\\wrimsv2\\external\\*.class;" 
+					+ engineLibPath + "\\WRIMSv2.jar" + ";"
 					+ engineLibPath + "\\XAOptimizer.jar" + ";" 
 					+ engineLibPath + "\\gurobi.jar" + ";"
 					+ engineLibPath + "\\heclib.jar" + ";"
