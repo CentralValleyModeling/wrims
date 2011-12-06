@@ -54,7 +54,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			abort("Unable to find free port", null);
 		}
 			
-		createDebugBatch(requestPort, eventPort);
+		createDebugBatch(configuration, requestPort, eventPort);
 		
 		try {
 			Process process = Runtime.getRuntime().exec("D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\WRIMSv2_Debugger.bat");
@@ -66,19 +66,84 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 		}
 	}
 	
-	public void createDebugBatch(int requestPort, int eventPort){
-		String debugFileFullPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\WRIMSv2_Debugger.bat";
+	public void createDebugBatch(ILaunchConfiguration configuration, int requestPort, int eventPort){
 		try {
-			FileWriter debugFile = new FileWriter(debugFileFullPath);
-			PrintWriter out = new PrintWriter(debugFile);
-			out.println("@echo off");
-			out.println();
-			out.println("set Java_Bin=D:\\cvwrsm\\trunk\\3rd_party\\jrockit-jre1.6.0_26-R28.1.4\\bin\\");
-			out.println("set path=D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\conv\\Run\\External;D:\\cvwrsm\\trunk\\3rd_party\\vista\\lib;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib;%path%");
-			out.println();
-			out.println("D:\\cvwrsm\\trunk\\3rd_party\\jrockit-jre1.6.0_26-R28.1.4\\bin\\java -Xmx1600m -Xss1024K -Djava.library.path=\"D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\conv\\Run\\External;D:\\cvwrsm\\trunk\\3rd_party\\vista\\lib;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\" -cp \"D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\lpsolve55j.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\WRIMSv2.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\wrimsv2\\external\\*.class;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\XAOptimizer.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\gurobi.jar;D:\\cvwrsm\\trunk\\3rd_party\\vista\\lib\\*\" wrimsv2.components.DebugInterface "+requestPort+" "+eventPort+" D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\CVGroundwater\\Data\\ D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\conv\\Run\\mainCONV_30.wresl D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06_SV.dss D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06Init.dss D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\conv\\DSS\\TestWRIMSV2DV.dss CalSim30_06 CalSim30_06 CALSIM 1MON 1921 10 31 1922 10 31 XA csv");
-			out.close();
-		}catch (IOException e) {
+			String studyName=null;
+			studyName = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STUDY, (String)null);
+					
+			String author=null;
+			author = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_AUTHOR, (String)null);
+				
+			String date=null;
+			date = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DATE, (String)null);
+			
+			String description=null;
+			description = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DESCRIPTION, (String)null);
+				
+			String mainFile = null;
+			mainFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM, (String)null);
+			
+			String dvarFile = null;
+			dvarFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE, (String)null);
+			
+			String svarFile = null;
+			svarFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVARFILE, (String)null);
+			
+			String initFile = null;
+			initFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFILE, (String)null);
+			
+			String gwDataFolder = null;
+			gwDataFolder = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_GWDATAFOLDER, (String)null);
+			
+			String svAPart = null;
+			svAPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVAPART, (String)null);
+			
+			String svFPart = null;
+			svFPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVFPART, (String)null);
+			
+			String initFPart = null;
+			initFPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFPART, (String)null);
+			
+			String timeStep = null;
+			timeStep = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_TIMESTEP, (String)null);
+			
+			String startYear = null;
+			startYear = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTYEAR, (String)null);
+			
+			String startMonth = null;
+			startMonth = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTMONTH, (String)null);
+			
+			String startDay = null;
+			startYear = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTDAY, (String)null);
+			
+			String endYear = null;
+			endYear = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDYEAR, (String)null);
+			
+			String endMonth = null;
+			endMonth = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDMONTH, (String)null);
+			
+			String endDay = null;
+			endYear = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, (String)null);
+		
+			int index = mainFile.lastIndexOf("\\");
+			String mainDirectory = mainFile.substring(0, index + 1);
+			String externalPath = mainDirectory + "External";
+			
+			String debugFileFullPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\WRIMSv2_Debugger.bat";
+			try {
+				FileWriter debugFile = new FileWriter(debugFileFullPath);
+				PrintWriter out = new PrintWriter(debugFile);
+				out.println("@echo off");
+				out.println();
+				//out.println("set Java_Bin=D:\\cvwrsm\\trunk\\3rd_party\\jrockit-jre1.6.0_26-R28.1.4\\bin\\");
+				out.println("set path=" + externalPath + ";"+"D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib;%path%");
+				out.println();
+				out.println("D:\\cvwrsm\\trunk\\3rd_party\\jrockit-jre1.6.0_26-R28.1.4\\bin\\java -Xmx1600m -Xss1024K -Djava.library.path=\"" + externalPath + ";D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\" -cp \"D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\lpsolve55j.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\wrimsv2\\external\\*.class;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\WRIMSv2.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\XAOptimizer.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\gurobi.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\heclib.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\jnios.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\jpy.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\misc.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\pd.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\vista.jar;\" wrimsv2.components.DebugInterface "+requestPort+" "+eventPort+" D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\CVGroundwater\\Data\\ D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\conv\\Run\\mainCONV_30.wresl D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06_SV.dss D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06Init.dss D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\conv\\DSS\\TestWRIMSV2DV.dss CalSim30_06 CalSim30_06 CALSIM 1MON 1921 10 31 1922 10 31 XA csv");
+				out.close();
+			}catch (IOException e) {
+				WPPException.handleException(e);
+			}
+		} catch (CoreException e) {
 			WPPException.handleException(e);
 		}
 	}
