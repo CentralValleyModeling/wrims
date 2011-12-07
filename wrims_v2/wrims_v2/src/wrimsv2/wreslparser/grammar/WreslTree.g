@@ -254,8 +254,8 @@ penalty returns[String w, boolean isZero, boolean isNegative]
 			try { 
 				double p = Double.parseDouble($n.text); 
 				if      ( p == 0 ) { $isZero = true;     $w = "0";}
-				else if ( p < 0  ) { $isNegative = true; $w = Double.toString(-p);} 
-				else               { $w = Double.toString(p);} 
+				else if ( p < 0  ) { $isNegative = true; $w = $n.text.replace("-","");} 
+				else               { $w = $n.text;} 
 			}
 			catch (Exception e) { }
 		} ;
