@@ -37,6 +37,8 @@ import wrimsv2_plugin.tools.TimeOperation;
 
 import java.lang.Runtime;
 
+import javax.jws.WebParam.Mode;
+
 
 public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	/* (non-Javadoc)
@@ -55,19 +57,24 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			abort("Unable to find free port", null);
 		}
 			
-		createDebugBatch(configuration, requestPort, eventPort);
+		createBatch(configuration, requestPort, eventPort, mode);
 		
 		try {
-			Process process = Runtime.getRuntime().exec("D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\WRIMSv2_Debugger.bat");
-			IProcess p = DebugPlugin.newProcess(launch, process, "DebugWPP");
-			IDebugTarget target = new WPPDebugTarget(launch, p, requestPort, eventPort);
-			launch.addDebugTarget(target);
+			if (mode.equals("debug")){
+				Process process = Runtime.getRuntime().exec("WRIMSv2_Engine.bat");
+				IProcess p = DebugPlugin.newProcess(launch, process, "DebugWPP");
+				IDebugTarget target = new WPPDebugTarget(launch, p, requestPort, eventPort);
+				launch.addDebugTarget(target);
+			}else{
+				Process process = Runtime.getRuntime().exec("WRIMSv2_Engine.bat");
+				IProcess p = DebugPlugin.newProcess(launch, process, "RunWPP");
+			}
 		} catch (IOException e) {
 			WPPException.handleException(e);
 		}
 	}
 	
-	public void createDebugBatch(ILaunchConfiguration configuration, int requestPort, int eventPort){
+	public void createBatch(ILaunchConfiguration configuration, int requestPort, int eventPort, String mode){
 		try {
 			String studyName=null;
 			studyName = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STUDY, (String)null);
@@ -128,16 +135,17 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			String mainDirectory = mainFile.substring(0, index + 1);
 			String externalPath = mainDirectory + "External";
 			
-			String debugFileFullPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\WRIMSv2_Debugger.bat";
+			String engineFileFullPath = "WRIMSv2_Engine.bat";
 			try {
-				FileWriter debugFile = new FileWriter(debugFileFullPath);
+				FileWriter debugFile = new FileWriter(engineFileFullPath);
 				PrintWriter out = new PrintWriter(debugFile);
 				out.println("@echo off");
 				out.println();
 				//out.println("set Java_Bin=D:\\cvwrsm\\trunk\\3rd_party\\jrockit-jre1.6.0_26-R28.1.4\\bin\\");
-				out.println("set path=" + externalPath + ";"+"D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib;%path%");
+				out.println("set path=" + externalPath + ";"+"lib;%path%");
 				out.println();
-				out.println("D:\\cvwrsm\\trunk\\3rd_party\\jrockit-jre1.6.0_26-R28.1.4\\bin\\java -Xmx1600m -Xss1024K -Djava.library.path=\"" + externalPath + ";D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\" -cp \"D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\lpsolve55j.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\wrimsv2\\external\\*.class;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\WRIMSv2.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\XAOptimizer.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\gurobi.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\heclib.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\jnios.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\jpy.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\misc.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\pd.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\vista.jar;\" wrimsv2.components.DebugInterface "+requestPort+" "+eventPort+" "
+				if (mode.equals("debug")){
+					out.println("jre6\\bin\\java -Xmx1600m -Xss1024K -Djava.library.path=\"" + externalPath + ";lib\" -cp \"lib\\lpsolve55j.jar;lib\\wrimsv2\\external\\*.class;lib\\WRIMSv2.jar;lib\\XAOptimizer.jar;lib\\gurobi.jar;lib\\heclib.jar;lib\\jnios.jar;lib\\jpy.jar;lib\\misc.jar;lib\\pd.jar;lib\\vista.jar;\" wrimsv2.components.DebugInterface "+requestPort+" "+eventPort+" "
 						+ gwDataFolder+" "
 						+ mainFile + " "
 						+ svarFile + " "
@@ -154,6 +162,25 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 						+ endMonth + " " 
 						+ endDay + " "
 						+ "XALOG csv");
+				}else{
+					out.println("jre6\\bin\\java -Xmx1600m -Xss1024K -Djava.library.path=\"" + externalPath + ";lib\" -cp \"lib\\lpsolve55j.jar;lib\\wrimsv2\\external\\*.class;lib\\WRIMSv2.jar;lib\\XAOptimizer.jar;lib\\gurobi.jar;lib\\heclib.jar;lib\\jnios.jar;lib\\jpy.jar;lib\\misc.jar;lib\\pd.jar;lib\\vista.jar;\" wrimsv2.components.ControllerSG "
+							+ gwDataFolder+" "
+							+ mainFile + " "
+							+ svarFile + " "
+							+ initFile + " " 
+							+ dvarFile + " " 
+							+ svFPart + " "
+							+ initFPart + " "
+							+ aPart + " "
+							+ timeStep + " " 
+							+ startYear + " " 
+							+ startMonth + " "
+							+ startDay + " " 
+							+ endYear + " "
+							+ endMonth + " " 
+							+ endDay + " "
+							+ "XALOG csv");
+				}
 				out.close();
 			}catch (IOException e) {
 				WPPException.handleException(e);
