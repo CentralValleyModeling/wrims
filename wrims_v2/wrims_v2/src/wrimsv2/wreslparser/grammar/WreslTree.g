@@ -257,7 +257,15 @@ penalty returns[String w, boolean isZero, boolean isNegative]
 				else if ( p < 0  ) { $isNegative = true; $w = $n.text.replace("-","");} 
 				else               { $w = $n.text;} 
 			}
-			catch (Exception e) { }
+			catch (Exception e) { 
+//				String ptext=$n.text;
+//				Integer lineNumber=$pt.getLine();
+//				Integer columnNumber=$pt.getCharPositionInLine();
+//				if (ptext.substring(0,1).equals("-")) {
+//					$isNegative = true;
+//				    $w = ptext.substring(1,ptext.length());
+//				}
+			}
 		} ;
 
 svar : DEFINE! (svar_dss | svar_expr | svar_sum | svar_table | svar_case ) ;
