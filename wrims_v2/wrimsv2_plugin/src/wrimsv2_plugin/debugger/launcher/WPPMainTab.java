@@ -64,7 +64,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	private Button fInitFileButton;
 	private Text groundWaterFolderText;
 	private Button groundWaterFolderButton;
-	private Text svAPartText;
+	private Text aPartText;
 	private Text svFPartText;
 	private Text initFPartText;
 	private Combo timeStepCombo;
@@ -82,8 +82,8 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	private MYItemListener syl=new MYItemListener(1);
 	private MYItemListener eyl=new MYItemListener(2);	
 	
-	public static String[] months = { "OCT", "NOV", "DEC", "JAN", "FEB", "MAR",
-		"APR", "MAY", "JUN", "JUL", "AUG", "SEP" };
+	public static String[] months = { "oct", "nov", "dec", "jan", "feb", "mar",
+		"apr", "may", "jun", "jul", "aug", "sep" };
 	public static String[] timeSteps = { "1MON", "1DAY" };
 	
 	
@@ -307,18 +307,18 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			}
 		});
 		
-		Label svAPart = new Label(comp, SWT.NONE);
-		svAPart.setText("&SV A-Part:");
+		Label aPart = new Label(comp, SWT.NONE);
+		aPart.setText("&A-Part:");
 		gd = new GridData(GridData.BEGINNING);
-		svAPart.setLayoutData(gd);
-		svAPart.setFont(font);
+		aPart.setLayoutData(gd);
+		aPart.setFont(font);
 		
-		svAPartText = new Text(comp, SWT.SINGLE | SWT.BORDER);
+		aPartText = new Text(comp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 6;
-		svAPartText.setLayoutData(gd);
-		svAPartText.setFont(font);
-		svAPartText.addModifyListener(new ModifyListener() {
+		aPartText.setLayoutData(gd);
+		aPartText.setFont(font);
+		aPartText.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				updateLaunchConfigurationDialog();
@@ -551,10 +551,10 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			if (gwDataFolder != null) {
 				groundWaterFolderText.setText(gwDataFolder);
 			}
-			String svAPart = null;
-			svAPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVAPART, (String)null);
-			if (svAPart != null) {
-				svAPartText.setText(svAPart);
+			String aPart = null;
+			aPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_APART, (String)null);
+			if (aPart != null) {
+				aPartText.setText(aPart);
 			}
 			String svFPart = null;
 			svFPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVFPART, (String)null);
@@ -646,9 +646,9 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		if (gwDataFolder.length() == 0) {
 			gwDataFolder = null;
 		}
-		String svAPart = svAPartText.getText().trim();
-		if (svAPart.length() == 0) {
-			svAPart = null;
+		String aPart = aPartText.getText().trim();
+		if (aPart.length() == 0) {
+			aPart = null;
 		}
 		String svFPart = svFPartText.getText().trim();
 		if (svFPart.length() == 0) {
@@ -696,7 +696,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SVARFILE, svarFile);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_INITFILE, initFile);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_GWDATAFOLDER, gwDataFolder);
-		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SVAPART, svAPart);
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_APART, aPart);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_SVFPART, svFPart);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_INITFPART, initFPart);
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_TIMESTEP, timeStep);

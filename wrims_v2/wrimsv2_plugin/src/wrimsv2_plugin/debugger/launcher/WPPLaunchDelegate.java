@@ -33,6 +33,7 @@ import org.eclipse.debug.core.model.LaunchConfigurationDelegate;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
+import wrimsv2_plugin.tools.TimeOperation;
 
 import java.lang.Runtime;
 
@@ -93,10 +94,10 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			initFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFILE, (String)null);
 			
 			String gwDataFolder = null;
-			gwDataFolder = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_GWDATAFOLDER, (String)null);
+			gwDataFolder = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_GWDATAFOLDER, (String)null)+"\\";
 			
-			String svAPart = null;
-			svAPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVAPART, (String)null);
+			String aPart = null;
+			aPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_APART, (String)null);
 			
 			String svFPart = null;
 			svFPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVFPART, (String)null);
@@ -107,24 +108,22 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			String timeStep = null;
 			timeStep = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_TIMESTEP, (String)null);
 			
-			String startYear = null;
-			startYear = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTYEAR, (String)null);
+			int startYear = Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTYEAR, (String)null));
+			int startMonth = TimeOperation.monthValue(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTMONTH, (String)null));
 			
-			String startMonth = null;
-			startMonth = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTMONTH, (String)null);
+			int endYear = Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDYEAR, (String)null));
+			int endMonth = TimeOperation.monthValue(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDMONTH, (String)null));
 			
-			String startDay = null;
-			startYear = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTDAY, (String)null);
-			
-			String endYear = null;
-			endYear = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDYEAR, (String)null);
-			
-			String endMonth = null;
-			endMonth = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDMONTH, (String)null);
-			
-			String endDay = null;
-			endYear = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, (String)null);
-		
+			int startDay;
+			int endDay;
+			if (timeStep.equals("1MON")){
+				startDay=TimeOperation.numberOfDays(startMonth, startYear);
+				endDay=TimeOperation.numberOfDays(endMonth, endYear);
+			}else{
+				startDay= Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTDAY, (String)null));
+				endDay=Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, (String)null));
+			}
+					
 			int index = mainFile.lastIndexOf("\\");
 			String mainDirectory = mainFile.substring(0, index + 1);
 			String externalPath = mainDirectory + "External";
@@ -138,7 +137,23 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				//out.println("set Java_Bin=D:\\cvwrsm\\trunk\\3rd_party\\jrockit-jre1.6.0_26-R28.1.4\\bin\\");
 				out.println("set path=" + externalPath + ";"+"D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib;%path%");
 				out.println();
-				out.println("D:\\cvwrsm\\trunk\\3rd_party\\jrockit-jre1.6.0_26-R28.1.4\\bin\\java -Xmx1600m -Xss1024K -Djava.library.path=\"" + externalPath + ";D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\" -cp \"D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\lpsolve55j.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\wrimsv2\\external\\*.class;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\WRIMSv2.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\XAOptimizer.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\gurobi.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\heclib.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\jnios.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\jpy.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\misc.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\pd.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\vista.jar;\" wrimsv2.components.DebugInterface "+requestPort+" "+eventPort+" D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\CVGroundwater\\Data\\ D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\conv\\Run\\mainCONV_30.wresl D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06_SV.dss D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06Init.dss D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\conv\\DSS\\TestWRIMSV2DV.dss CalSim30_06 CalSim30_06 CALSIM 1MON 1921 10 31 1922 10 31 XA csv");
+				out.println("D:\\cvwrsm\\trunk\\3rd_party\\jrockit-jre1.6.0_26-R28.1.4\\bin\\java -Xmx1600m -Xss1024K -Djava.library.path=\"" + externalPath + ";D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\" -cp \"D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\lpsolve55j.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\wrimsv2\\external\\*.class;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\WRIMSv2.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\XAOptimizer.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\gurobi.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\heclib.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\jnios.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\jpy.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\misc.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\pd.jar;D:\\cvwrsm\\trunk\\wrims_v2\\wrimsv2_plugin\\Engine\\lib\\vista.jar;\" wrimsv2.components.DebugInterface "+requestPort+" "+eventPort+" "
+						+ gwDataFolder+" "
+						+ mainFile + " "
+						+ svarFile + " "
+						+ initFile + " " 
+						+ dvarFile + " " 
+						+ svFPart + " "
+						+ initFPart + " "
+						+ aPart + " "
+						+ timeStep + " " 
+						+ startYear + " " 
+						+ startMonth + " "
+						+ startDay + " " 
+						+ endYear + " "
+						+ endMonth + " " 
+						+ endDay + " "
+						+ "XALOG csv");
 				out.close();
 			}catch (IOException e) {
 				WPPException.handleException(e);
