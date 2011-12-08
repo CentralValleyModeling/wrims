@@ -157,7 +157,7 @@ public class ControllerDebug extends Thread {
 	}
 	
 	public void generateStudyFile(){
-		String outPath=System.getenv("Java_Bin")+"study.sty";
+		String outPath="study.sty";
 		FileWriter outstream;
 		try {
 			outstream = new FileWriter(outPath);
