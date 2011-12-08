@@ -258,6 +258,8 @@ penalty returns[String w, boolean isZero, boolean isNegative]
 				else               { $w = $n.text;} 
 			}
 			catch (Exception e) { 
+			
+				$w = "("+$n.text+")";
 //				String ptext=$n.text;
 //				Integer lineNumber=$pt.getLine();
 //				Integer columnNumber=$pt.getCharPositionInLine();

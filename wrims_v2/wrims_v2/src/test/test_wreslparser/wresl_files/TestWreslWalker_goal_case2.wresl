@@ -33,6 +33,15 @@ goal[local] local_goal {
     lhs<rhs     penalty 0 }
 }
 
+goal double_negation {
+  lhs x
+  case case1 {
+    condition   always
+    rhs     y
+    lhs>rhs     constrain
+    lhs<rhs     penalty -max(a,b) }
+}
+
 }	
 
 

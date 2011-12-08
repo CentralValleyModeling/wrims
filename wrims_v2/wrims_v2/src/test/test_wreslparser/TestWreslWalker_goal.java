@@ -300,7 +300,7 @@ public class TestWreslWalker_goal {
 		String logText = Tools.readFileAsString(logFilePath);	
 
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 2);	
+		Assert.assertEquals(totalErrs, 3);	
 		
 	
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
@@ -329,7 +329,13 @@ public class TestWreslWalker_goal {
 		Assert.assertEquals(n, 1);
 
 		//s = "slack_local_goal_case1,-max(a;b)";
-		s = "slack__local_goal_1,##-max(a;b)";
+		s = "slack__local_goal_1,##-(max(a;b))";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+
+		//s = "slack_local_goal_case1,-max(a;b)";
+		s = "slack__double_negation_1,##-(-max(a;b))";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
