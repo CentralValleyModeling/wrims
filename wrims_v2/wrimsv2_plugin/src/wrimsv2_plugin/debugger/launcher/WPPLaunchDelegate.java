@@ -114,6 +114,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			
 			String timeStep = null;
 			timeStep = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_TIMESTEP, (String)null);
+			DebugCorePlugin.timeStep=timeStep;
 			
 			int startYear = Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTYEAR, (String)null));
 			int startMonth = TimeOperation.monthValue(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTMONTH, (String)null));

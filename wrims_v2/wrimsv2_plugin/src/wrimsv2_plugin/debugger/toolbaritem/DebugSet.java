@@ -47,7 +47,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 	
 	@Override
     protected Control createControl(Composite parent) {
-       
+       	
 		CoolBar coolbar=new CoolBar(parent, SWT.HORIZONTAL|SWT.FLAT);
 
 		createTimeSlider(coolbar);
@@ -83,9 +83,27 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 		//itemCycle.setSize(itemCycle.computeSize(pt.x, pt.y));
 		itemCycle.setSize(100,20);
 		
+		DebugCorePlugin.debugSet=this;
+		
         return coolbar;
 	}
 
+	public Combo getComboYear(){
+		return comboYear;
+	}
+	
+	public Combo getComboMonth(){
+		return comboMonth;
+	}
+	
+	public Combo getComboDay(){
+		return comboDay;
+	}
+	
+	public Combo getComboCycle(){
+		return comboCycle;
+	}
+	
 	public void createTimeSlider(Composite parent){
 		timeSlider=new Slider(parent, SWT.HORIZONTAL);
 		timeSlider.setToolTipText("Go To Year/Month:");
@@ -258,4 +276,26 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 		}
 	}
 
+	public void nextTimeStep(){
+		if (DebugCorePlugin.timeStep.equals("1MON")){
+			timeSlider.setSelection(timeSlider.getSelection()+1);
+			int selection = timeSlider.getSelection();
+			int[] yearMonth=TimeOperation.searchYearMonth(selection,startDebugYear, startDebugMonth);
+			setTimeSlider=false;
+			comboMonth.setText(String.valueOf(yearMonth[1]));
+			comboYear.setText(String.valueOf(yearMonth[0]));
+			setTimeSlider=true;
+			updateDebugTimeSet();
+		}else{
+			Date endDate= new Date(DebugCorePlugin.endYear-1900, DebugCorePlugin.endMonth-1, DebugCorePlugin.endDay);
+			Date debugDate = new Date (DebugCorePlugin.debugYear-1900, DebugCorePlugin.debugMonth-1, DebugCorePlugin.debugDay);
+			if (endDate.after(debugDate)){
+				long newDebugTime=debugDate.getTime()+1 * 24 * 60 * 60 * 1000;
+				debugDate = new Date (newDebugTime);
+				comboDay.setText(String.valueOf(debugDate.getDate()));
+				comboMonth.setText(String.valueOf(debugDate.getMonth()+1));
+				comboYear.setText(String.valueOf(debugDate.getYear()+1900));
+			}
+		}
+	}
 }

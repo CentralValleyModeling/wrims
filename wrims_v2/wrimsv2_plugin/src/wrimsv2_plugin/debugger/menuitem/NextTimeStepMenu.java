@@ -5,15 +5,17 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
+import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+
 public class NextTimeStepMenu implements IWorkbenchWindowActionDelegate{
 	public NextTimeStepMenu(){
-		
+
 	}
 
 	@Override
 	public void run(IAction action) {
 		// TODO Auto-generated method stub
-		
+		DebugCorePlugin.debugSet.nextTimeStep();
 	}
 
 	@Override
