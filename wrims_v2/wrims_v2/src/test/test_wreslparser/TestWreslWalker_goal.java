@@ -335,7 +335,7 @@ public class TestWreslWalker_goal {
 		Assert.assertEquals(n, 1);
 
 		//s = "slack_local_goal_case1,-max(a;b)";
-		s = "slack__double_negation_1,##-(-max(a;b))";
+		s = "slack__double_negation_1,##-(-max(a;b)+1)";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);

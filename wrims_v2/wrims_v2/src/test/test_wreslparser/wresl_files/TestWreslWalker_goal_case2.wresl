@@ -39,7 +39,7 @@ goal double_negation {
     condition   always
     rhs     y
     lhs>rhs     constrain
-    lhs<rhs     penalty -max(a,b) }
+    lhs<rhs     penalty -max(a,b)+1 }
 }
 
 }	
