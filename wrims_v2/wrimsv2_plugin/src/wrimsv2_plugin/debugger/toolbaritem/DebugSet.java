@@ -46,6 +46,8 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 	private int totalMonth;
 	private boolean checkReasonableTime=true;
 	private boolean setTimeSlider=true;
+	private ModifyListener yl;
+	private MouseListener tl;
 	
 	@Override
     protected Control createControl(Composite parent) {
@@ -113,7 +115,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 		timeSlider.setMaximum(totalMonth+9);
 		timeSlider.setSelection(totalMonth+8);
 		
-		timeSlider.addMouseListener(new MouseListener(){
+		timeSlider.addMouseListener(tl=new MouseListener(){
 
 			@Override
 			public void mouseUp(MouseEvent e) {
@@ -166,7 +168,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
         comboYear.select(82);
         comboYear.setToolTipText("Go To Year:");
         
-        comboYear.addModifyListener(new ModifyListener() {
+        comboYear.addModifyListener(yl=new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				if (checkReasonableTime) resetDebugMonth();
@@ -234,7 +236,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 	public void resetSliderBar(){
 		int debugYear=Integer.valueOf(comboYear.getText());
 		int debugMonth=Integer.valueOf(comboMonth.getText());
-		int selection=TimeOperation.findMonthInBetween(startDebugYear, startDebugMonth, debugYear, debugMonth);
+		int selection=TimeOperation.findMonthInBetween(startDebugYear, startDebugMonth, debugYear, debugMonth)-1;
 		timeSlider.setSelection(selection);
 	}
 	
@@ -302,23 +304,37 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 	}
 	
 	public void reset(){
-		checkReasonableTime=false;
-		setTimeSlider=false;
 		
 		final IWorkbench workbench=PlatformUI.getWorkbench();
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
-				comboYear.setText(String.valueOf(DebugCorePlugin.endYear));
-				comboMonth.setText(String.valueOf(DebugCorePlugin.endMonth));
-				comboDay.setText(String.valueOf(DebugCorePlugin.endDay));
-					
+				timeSlider.removeMouseListener(tl);
 				totalMonth=TimeOperation.findMonthInBetween(DebugCorePlugin.startYear, DebugCorePlugin.startMonth, DebugCorePlugin.endYear, DebugCorePlugin.endMonth);
 				timeSlider.setMaximum(totalMonth+9);
 				timeSlider.setSelection(totalMonth+8);
+				timeSlider.addMouseListener(tl);
+				
+				comboYear.removeModifyListener(yl);
+				comboYear.removeAll();
+				for (int i=DebugCorePlugin.startYear; i<=DebugCorePlugin.endYear; i++){
+					comboYear.add(String.valueOf(i));
+				}		
+				comboYear.addModifyListener(yl);
+				
+				Date startDate = new Date(DebugCorePlugin.startYear-1900, DebugCorePlugin.startMonth-1, DebugCorePlugin.startDay);
+				Date endDate = new Date(DebugCorePlugin.endYear-1900, DebugCorePlugin.endMonth-1, DebugCorePlugin.endDay);
+				Date debugDate = new Date (DebugCorePlugin.debugYear-1900, DebugCorePlugin.debugMonth-1, DebugCorePlugin.debugDay);
+				
+				if (debugDate.after(endDate) || debugDate.before(startDate)){
+					comboYear.setText(String.valueOf(DebugCorePlugin.endYear));
+					comboMonth.setText(String.valueOf(DebugCorePlugin.endMonth));
+					comboDay.setText(String.valueOf(DebugCorePlugin.endDay));
+				}else{
+					comboMonth.setText(String.valueOf(DebugCorePlugin.debugMonth));
+					comboYear.setText(String.valueOf(DebugCorePlugin.debugYear));
+					comboDay.setText(String.valueOf(DebugCorePlugin.debugDay));
+				}
 			}
 		});
-		
-		checkReasonableTime=true;
-		setTimeSlider=true;
 	}
 }
