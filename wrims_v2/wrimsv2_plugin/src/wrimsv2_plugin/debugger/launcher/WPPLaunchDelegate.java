@@ -61,6 +61,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 		
 		try {
 			if (mode.equals("debug")){
+				DebugCorePlugin.debugSet.reset();
 				Process process = Runtime.getRuntime().exec("WRIMSv2_Engine.bat");
 				IProcess p = DebugPlugin.newProcess(launch, process, "DebugWPP");
 				IDebugTarget target = new WPPDebugTarget(launch, p, requestPort, eventPort);
@@ -118,9 +119,13 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			
 			int startYear = Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTYEAR, (String)null));
 			int startMonth = TimeOperation.monthValue(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTMONTH, (String)null));
+			DebugCorePlugin.startYear=startYear;
+			DebugCorePlugin.startMonth=startMonth;
 			
 			int endYear = Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDYEAR, (String)null));
 			int endMonth = TimeOperation.monthValue(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDMONTH, (String)null));
+			DebugCorePlugin.endYear=endYear;
+			DebugCorePlugin.endMonth=endMonth;
 			
 			int startDay;
 			int endDay;
@@ -131,6 +136,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				startDay= Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTDAY, (String)null));
 				endDay=Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, (String)null));
 			}
+			DebugCorePlugin.startDay=startDay;
+			DebugCorePlugin.endDay=endDay;
 					
 			int index = mainFile.lastIndexOf("\\");
 			String mainDirectory = mainFile.substring(0, index + 1);

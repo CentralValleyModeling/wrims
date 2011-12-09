@@ -23,12 +23,14 @@ import org.eclipse.swt.widgets.CoolItem;
 import org.eclipse.swt.widgets.Slider;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.WorkbenchWindow;
 import org.eclipse.ui.menus.WorkbenchWindowControlContribution;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.debugger.view.WPPVariableView;
 import wrimsv2_plugin.tools.TimeOperation;
 
 public class DebugSet extends WorkbenchWindowControlContribution{
@@ -41,8 +43,8 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 	private int startDebugMonth=10;
 	private int endDebugYear=2003;
 	private int endDebugMonth=9;
-	private boolean checkReasonableTime=true;
 	private int totalMonth;
+	private boolean checkReasonableTime=true;
 	private boolean setTimeSlider=true;
 	
 	@Override
@@ -297,5 +299,26 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 				comboYear.setText(String.valueOf(debugDate.getYear()+1900));
 			}
 		}
+	}
+	
+	public void reset(){
+		checkReasonableTime=false;
+		setTimeSlider=false;
+		
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				comboYear.setText(String.valueOf(DebugCorePlugin.endYear));
+				comboMonth.setText(String.valueOf(DebugCorePlugin.endMonth));
+				comboDay.setText(String.valueOf(DebugCorePlugin.endDay));
+					
+				totalMonth=TimeOperation.findMonthInBetween(DebugCorePlugin.startYear, DebugCorePlugin.startMonth, DebugCorePlugin.endYear, DebugCorePlugin.endMonth);
+				timeSlider.setMaximum(totalMonth+9);
+				timeSlider.setSelection(totalMonth+8);
+			}
+		});
+		
+		checkReasonableTime=true;
+		setTimeSlider=true;
 	}
 }
