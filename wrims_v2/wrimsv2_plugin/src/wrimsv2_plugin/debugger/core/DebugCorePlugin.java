@@ -43,11 +43,13 @@ public class DebugCorePlugin extends Plugin {
 	
 	public static IValue[] dataStack;
 	
-	public static int debugYear=1921;
+	public static int totalNoOfCycle=1;
 	
-	public static int debugMonth=10;
+	public static int debugYear=2003;
 	
-	public static int debugDay=31;
+	public static int debugMonth=9;
+	
+	public static int debugDay=30;
 	
 	public static int debugCycle=1;
 	

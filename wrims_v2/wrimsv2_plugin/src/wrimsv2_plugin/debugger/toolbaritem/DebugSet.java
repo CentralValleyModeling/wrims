@@ -91,6 +91,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 		timeSlider.setToolTipText("Go To Year/Month:");
 		totalMonth=TimeOperation.findMonthInBetween(startDebugYear, startDebugMonth, endDebugYear, endDebugMonth);
 		timeSlider.setMaximum(totalMonth+9);
+		timeSlider.setSelection(totalMonth+8);
 		
 		timeSlider.addMouseListener(new MouseListener(){
 
@@ -99,8 +100,8 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 				int selection = timeSlider.getSelection();
 				int[] yearMonth=TimeOperation.searchYearMonth(selection,startDebugYear, startDebugMonth);
 				setTimeSlider=false;
-				comboYear.setText(String.valueOf(yearMonth[0]));
 				comboMonth.setText(String.valueOf(yearMonth[1]));
+				comboYear.setText(String.valueOf(yearMonth[0]));
 				setTimeSlider=true;
 				updateDebugTimeSet();
 			}
@@ -142,7 +143,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
         	comboYear.add(String.valueOf(i));
         }
         
-        comboYear.select(0);
+        comboYear.select(82);
         comboYear.setToolTipText("Go To Year:");
         
         comboYear.addModifyListener(new ModifyListener() {
@@ -162,7 +163,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
         	comboMonth.add(String.valueOf(i));
         }
         
-        comboMonth.select(9);
+        comboMonth.select(8);
         comboMonth.setToolTipText("Go To Month:");
         
 		comboMonth.addSelectionListener(new SelectionListener() {
@@ -190,7 +191,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
         for (int i=1; i<=31; i++){
         	comboDay.add(String.valueOf(i));
         }
-        comboDay.select(30);
+        comboDay.select(29);
         comboDay.setToolTipText("Go To Day:");
         
 		comboDay.addSelectionListener(new SelectionListener() {

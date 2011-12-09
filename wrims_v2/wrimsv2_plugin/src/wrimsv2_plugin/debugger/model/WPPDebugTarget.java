@@ -675,6 +675,8 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 				setSourceName(eventPart[2]);
 				openSourceHighlight();
 			}
+		}else if(event.startsWith("totalcycle#")){
+			DebugCorePlugin.totalNoOfCycle=Integer.parseInt(event.replace("totalcycle#", ""));
 		}
 	}
 	
