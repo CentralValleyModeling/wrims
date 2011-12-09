@@ -81,6 +81,7 @@ public class ControllerDebug extends Thread {
 		generateStudyFile();
 		try {
 			StudyDataSet sds = parse();
+			di.sendEvent("totalcycle#"+sds.getModelList().size());
 			if (StudyParser.total_errors==0){
 				new PreEvaluator(sds);
 				runModel(sds);
