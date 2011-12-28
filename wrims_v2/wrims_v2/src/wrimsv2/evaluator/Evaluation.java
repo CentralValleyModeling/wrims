@@ -939,7 +939,7 @@ public class Evaluation {
 	
 	public static double tafcfs(String ident){
 		double convert;
-		int days=TimeOperation.numberOfDays(ControlData.dataMonth, ControlData.dataYear);
+		int days=TimeOperation.numberOfDays(ControlData.currMonth, ControlData.currYear);
 		if (ident.equals("taf_cfs")){
 			return 504.1666667 / days;
 		}else if (ident.equals("cfs_taf")){
