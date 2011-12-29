@@ -906,7 +906,7 @@ public class Evaluation {
 	public static EvalExpression tafcfs_term(String ident, EvalExpression ee){
 		if (ee==null){
 			ControlData.dataMonth=ControlData.currMonth;
-			ControlData.dataYear=ControlData.dataYear;
+			ControlData.dataYear=ControlData.currYear;
 		}else{
 			IntDouble id=new IntDouble(0,true);
 			if (!ee.isNumeric()){
@@ -939,7 +939,7 @@ public class Evaluation {
 	
 	public static double tafcfs(String ident){
 		double convert;
-		int days=TimeOperation.numberOfDays(ControlData.currMonth, ControlData.currYear);
+		int days=TimeOperation.numberOfDays(ControlData.dataMonth, ControlData.dataYear);
 		if (ident.equals("taf_cfs")){
 			return 504.1666667 / days;
 		}else if (ident.equals("cfs_taf")){
