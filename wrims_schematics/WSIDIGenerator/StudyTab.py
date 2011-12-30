@@ -42,7 +42,7 @@ class StudyTabCl:
    def execute(self):
       print tab+ "Running Model"
    
-      #os.system('WRIMSv2_Engine.bat')
+      os.system('WRIMSv2_Engine.bat')
       return 0
 
    # run WSI-DI procedure
