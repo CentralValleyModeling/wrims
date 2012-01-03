@@ -12,7 +12,9 @@
 	<property name="jre6.installdir" location="D:\cvwrsm\trunk\3rd_party\jrockit-jre1.6.0_26-R28.1.4"/>
 	<property name="jdk6.installdir" location="D:\cvwrsm\trunk\3rd_party\jrockit-jdk1.6.0_26-R28.1.4-4.0.1"/>
 	<property name="mingw.installdir" location="D:\cvwrsm\trunk\3rd_party\MingW_SV"/>
+	<property name="vista.installdir" location="D:\cvwrsm\trunk\3rd_party\vista"/>
 	<property name="dllwrapper.dir" location="dllwrapper"/>
+	<property name="wsidi.dir" location="WSIDIGenerator"/>
 
 	<!-- ================================= 
           target: default              
@@ -65,8 +67,18 @@
 				<include name="**/**"/>
 			</fileset>
 		</copy>
+		<copy todir="${dist.dir}/vista/">
+			<fileset dir="${vista.installdir}">
+				<include name="**/**"/>
+			</fileset>
+		</copy>
 		<copy todir="${dist.dir}/dllwrapper/">
 			<fileset dir="${dllwrapper.dir}">
+				<include name="**/**"/>
+			</fileset>
+		</copy>
+		<copy todir="${dist.dir}/WSIDIGenerator/">
+			<fileset dir="${wsidi.dir}">
 				<include name="**/**"/>
 			</fileset>
 		</copy>
