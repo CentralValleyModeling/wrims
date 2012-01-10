@@ -19,16 +19,16 @@ public class TestLPSolve_Simple {
 	@Test(groups = { "xa_solver_example_studies" })
 	public void example1_step1() throws RecognitionException, IOException{
 		
-		studyPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\example1\\";
-		dssPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\example1\\DSS\\";
+		studyPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\example10\\";
+		dssPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\example10\\DSS\\";
 		
 		/// set control data		
 		String[] controlDataString = {
 		studyPath + "gw",
-		studyPath + "run\\mainEx1.wresl",
+		studyPath + "run\\Example10.wresl",
 		dssPath +   "ExampleSV.dss",
 		dssPath +   "ExampleINIT.dss",
-		dssPath +   "LPSolve_dv.dss",
+		dssPath +   "dv.dss",
 
 		"EXAMPLE",
 		"INIT",
