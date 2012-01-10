@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Vector;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
@@ -115,6 +116,12 @@ public class FilterPanel extends JPanel {
 	JTable _table = null;
 	private PathnameTable _dvarTable;
 	private PathnameTable _svarTable;
+	private PathnameTable[] _dvarTableComp;
+
+	private PathnameTable[] _svarTableComp;
+
+	//
+	
 	// CB private JPanel _upperPanel;
 	private JList _monthlist;
 	private JTabbedPane _resultsPane;
@@ -486,6 +493,12 @@ public class FilterPanel extends JPanel {
 	public void newViewerFile() {
 		_dvarTable.resetTable();
 		_svarTable.resetTable();
+		
+		for(int ci=1; ci<4; ci++){
+			_dvarTableComp[ci].resetTable();
+			_svarTableComp[ci].resetTable();
+		}
+		
 		_baseDVfn = null;
 		_baseSVfn = null;
 		updateTabs(0, 0);
@@ -518,6 +531,17 @@ public class FilterPanel extends JPanel {
 		// refreshFilter(type);
 		refreshFilter(dssType);
 		AppAction.updateAllActions();
+		_mainPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+	}
+
+	public void setCompDSSName(String fn, int dssType) {
+		_mainPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		int index = dssType/4;
+		if (dssType % 4 == 0) {
+			_dvarTableComp[index].catalog(fn);
+		} else {
+			_svarTableComp[index].catalog(fn);
+		}
 		_mainPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}
 
@@ -1154,9 +1178,14 @@ public class FilterPanel extends JPanel {
 					// else { //TODO have separate DV and SV paths Vectors
 					if (_dvarTable != null
 							&& _dvarTable.getTableModel() != null) {
-						allPaths.addAll( _dvarTable
-								.getTableModel().getPathsForNames(names));
+						 List<String> pathsForNames = _dvarTable
+							.getTableModel().getPathsForNames(names);
+						 for(int ci = 1; ci < _dvarTableComp.length; ci++){
+							 pathsForNames.addAll(_dvarTableComp[ci].getTableModel().getPathsForNames(names));
+						 }
+						 allPaths.addAll(pathsForNames);
 					}
+					
 					// }
 					if (dssType == 0
 							&& _mainPanel.getMessagePanel().isSvarBaseActive())
@@ -1164,7 +1193,11 @@ public class FilterPanel extends JPanel {
 					// else {
 					if (_svarTable != null
 							&& _svarTable.getTableModel() != null) {
-						allPaths.addAll(_svarTable.getTableModel().getPathsForNames(names));
+						List<String> pathsForNames = _svarTable.getTableModel().getPathsForNames(names);
+						 for(int ci = 1; ci < _svarTableComp.length; ci++){
+							 pathsForNames.addAll(_svarTableComp[ci].getTableModel().getPathsForNames(names));
+						 }
+						allPaths.addAll(pathsForNames);
 					}
 					// }
 				} else {
@@ -1383,6 +1416,13 @@ public class FilterPanel extends JPanel {
 		_svarTable = new PathnameTable();
 		tabbedPane.setTabPlacement(JTabbedPane.BOTTOM);
 		tabbedPane.addTab("SVAR", _svarTable);
+		
+		_dvarTableComp = new PathnameTable[4];
+		_svarTableComp = new PathnameTable[4];
+		for(int ci=1; ci < 4; ci++){
+			_dvarTableComp[ci] = new PathnameTable();
+			_svarTableComp[ci] = new PathnameTable();
+		}
 
 		_resultsPane = tabbedPane;
 		_resultsPane.setEnabledAt(0, false);
@@ -1808,6 +1848,7 @@ public class FilterPanel extends JPanel {
 	public void resetAllCache() {
 		_periodValueViewer = null;
 	}
+
 
 	// //////////////////////////////////////////////////////////////////////////////
 	// TEST DRIVER

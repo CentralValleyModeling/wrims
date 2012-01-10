@@ -635,6 +635,8 @@ public class DssAppAction {
 		if (dssType / 4 == 0)
 			// getFilterPanel().setBaseDSSName(fn, dss);
 			getFilterPanel().setBaseDSSName(fn, dssType);
+		else 
+			getFilterPanel().setCompDSSName(fn, dssType);
 		// getFilterPanel().setFpart(fn, dss);
 		getFilterPanel().setFpart(fn, dssType);
 	}

@@ -8,6 +8,7 @@ import java.util.prefs.Preferences;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
@@ -15,6 +16,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
@@ -23,6 +26,7 @@ import javax.swing.filechooser.FileFilter;
 @SuppressWarnings("serial")
 public class SchematicEditorFrame extends JFrame {
 
+	protected static final String VERSION_ID = "1.0-v12/13/2011";
 	private SchematicEditor editor;
 	private String currentFilenameOpen;
 
@@ -121,6 +125,8 @@ public class SchematicEditorFrame extends JFrame {
 		JMenu editMenu = new JMenu("Edit");
 		editMenu.add(editor.getUndoAction());
 		editMenu.add(editor.getRedoAction());
+		editMenu.addSeparator();
+		editMenu.add(editor.getShrinkToElementsAction());
 		mbar.add(editMenu);
 
 		JMenu toolMenu = new JMenu("Tools");
@@ -128,6 +134,20 @@ public class SchematicEditorFrame extends JFrame {
 		toolMenu.add(editor.getVerticalAlignAction());
 		toolMenu.add(new JCheckBoxMenuItem(editor.getToggleEvenlySpaceNodes()));
 		mbar.add(toolMenu);
+		
+		JMenu helpMenu = new JMenu("Help");
+		Action aboutAction = new AbstractAction("About") {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(SchematicEditorFrame.this, "Schematic Editor Version: "+VERSION_ID);
+			}
+		};
+		helpMenu.add(new JMenuItem(aboutAction));
+		
+		
+		mbar.add(Box.createHorizontalGlue());
+		mbar.add(helpMenu);
 
 		fr.setJMenuBar(mbar);
 

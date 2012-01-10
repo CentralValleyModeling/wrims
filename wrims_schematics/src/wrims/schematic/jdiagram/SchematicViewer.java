@@ -113,7 +113,7 @@ public class SchematicViewer extends JPanel {
 						SwingUtilities.invokeLater(new Runnable() {
 							public void run() {
 								refreshValues(false);
-								//overview.resumeRepaint();
+								// overview.resumeRepaint();
 							}
 						});
 					}
@@ -271,18 +271,18 @@ public class SchematicViewer extends JPanel {
 						Action.SMALL_ICON,
 						ImageUtil
 								.createImageIcon("/wrims/schematic/images/toolbar/zoom_best_fit.png"));
-		
+
 		zoomRectAction = new AbstractAction() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				diagramView.setBehavior(Behavior.DoNothing);
 				Cursor previousCursor = diagramView.getCursor();
-				diagramView.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-				
-				
-				//diagramView.setCursor(previousCursor);
-				//diagramView.setBehavior(Behavior.Modify);
+				diagramView.setCursor(Cursor
+						.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+
+				// diagramView.setCursor(previousCursor);
+				// diagramView.setBehavior(Behavior.Modify);
 			}
 		};
 		zoomRectAction.putValue(Action.SHORT_DESCRIPTION, "zoom rectangle");
@@ -309,8 +309,8 @@ public class SchematicViewer extends JPanel {
 	public Action getZoomToFitAction() {
 		return zoomBestFitAction;
 	}
-	
-	public Action getZoomRectangleAction(){
+
+	public Action getZoomRectangleAction() {
 		return zoomRectAction;
 	}
 
@@ -374,8 +374,9 @@ public class SchematicViewer extends JPanel {
 		if (filename.endsWith(".xml")) {
 			diagram.saveToXml(filename);
 		} else if (filename.endsWith(".pdf")) {
-			PdfExporter pdfExp = new PdfExporter();
-			pdfExp.export(diagram, filename);
+			// PdfExporter pdfExp = new PdfExporter();
+			// pdfExp.export(diagram, filename);
+			PDFiTextExporter.export(diagram, filename);
 		} else if (filename.endsWith(".svg")) {
 			SvgExporter svgExp = new SvgExporter(diagram, filename);
 			svgExp.export();
@@ -526,17 +527,31 @@ public class SchematicViewer extends JPanel {
 						DiagramNodeList attachedNodes = subordinateGroup
 								.getAttachedNodes();
 						if (attachedNodes.size() < studyId + 1) {
-							createTextNode(studyId, value, shapeNode);
+							createTextNodeWithIntermediates(studyId, attachedNodes.size(), value, shapeNode);
 						} else {
 							DiagramNode diagramNode = attachedNodes
 									.get(studyId);
 							diagramNode.setEditedText(value);
 						}
 					} else {
-						createTextNode(studyId, value, shapeNode);
+						createTextNodeWithIntermediates(studyId, 0, value, shapeNode);
 					}
 				}
 			}
+		}
+	}
+	
+	private void createTextNodeWithIntermediates(int studyId, int startingWithId, String value, ShapeNode shapeNode){
+		int id = startingWithId;
+		while (id < studyId + 1) {
+			String str = "";
+			if (id == studyId) {
+				str = value;
+			} else {
+				str = "";
+			}
+			createTextNode(id, str, shapeNode);
+			id++;
 		}
 	}
 
@@ -623,9 +638,9 @@ public class SchematicViewer extends JPanel {
 			diagramView.setBehavior(Behavior.Modify);
 		}
 	}
-	
-	public DiagramView getDiagramView(){
+
+	public DiagramView getDiagramView() {
 		return diagramView;
 	}
-	
+
 }

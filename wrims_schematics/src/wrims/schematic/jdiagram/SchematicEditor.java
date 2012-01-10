@@ -3,15 +3,18 @@ package wrims.schematic.jdiagram;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Float;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -22,19 +25,25 @@ import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
+
+import org.w3c.dom.Document;
 
 import com.mindfusion.diagramming.AutoResize;
 import com.mindfusion.diagramming.Behavior;
+import com.mindfusion.diagramming.CompositeCmd;
 import com.mindfusion.diagramming.Diagram;
 import com.mindfusion.diagramming.DiagramAdapter;
 import com.mindfusion.diagramming.DiagramEvent;
 import com.mindfusion.diagramming.DiagramItem;
+import com.mindfusion.diagramming.DiagramItemList;
 import com.mindfusion.diagramming.DiagramLink;
 import com.mindfusion.diagramming.DiagramLinkList;
 import com.mindfusion.diagramming.DiagramNode;
@@ -49,10 +58,10 @@ import com.mindfusion.diagramming.Orientation;
 import com.mindfusion.diagramming.PointList;
 import com.mindfusion.diagramming.RerouteLinks;
 import com.mindfusion.diagramming.RoutingOptions;
+import com.mindfusion.diagramming.Shape;
 import com.mindfusion.diagramming.ShapeNode;
 import com.mindfusion.diagramming.UndoEvent;
 import com.mindfusion.diagramming.UndoManager;
-import com.mindfusion.diagramming.Utilities;
 import com.mindfusion.diagramming.XmlException;
 
 /**
@@ -72,7 +81,8 @@ public class SchematicEditor extends SchematicViewer {
 	private AbstractAction copyAction;
 	private AbstractAction pasteAction;
 	private JMenuItem shortenPointsMenuItem;
-
+	private JMenuItem editShapeMenuItem;
+	private JMenuItem shrinkToElementsMenuItem;
 	public SchematicEditor() {
 		super();
 		getDiagramView().setBehavior(Behavior.Modify);
@@ -93,7 +103,7 @@ public class SchematicEditor extends SchematicViewer {
 					if (getDiagram().getUndoManager().getHistory()
 							.getNextUndo() == null) {
 						((AbstractButton) source).setEnabled(false);
-					} 
+					}
 				}
 			}
 		};
@@ -108,7 +118,7 @@ public class SchematicEditor extends SchematicViewer {
 					if (getDiagram().getUndoManager().getHistory()
 							.getNextRedo() == null) {
 						((AbstractButton) source).setEnabled(false);
-					} 
+					}
 				}
 			}
 		};
@@ -164,6 +174,36 @@ public class SchematicEditor extends SchematicViewer {
 
 		});
 
+		editShapeMenuItem = new JMenuItem("Edit Shape");
+		editShapeMenuItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (clickedItem != null && clickedItem instanceof DiagramItem) {
+					// showShapeDialog();
+					try {
+						addToShapeLibrary();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		
+		shrinkToElementsMenuItem = new JMenuItem("Shrink Bounds to Elements");
+		shrinkToElementsMenuItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try{
+					shrinkDiagramToElements();
+				}catch(Exception ex){
+					ex.printStackTrace();
+				}
+			}
+		});
+
 		getDiagram().removeDiagramListener(listener);
 		getDiagram().addDiagramListener(new DiagramAdapter() {
 			public void nodeSelected(NodeEvent e) {
@@ -187,9 +227,9 @@ public class SchematicEditor extends SchematicViewer {
 			public void clicked(DiagramEvent e) {
 				diagramClicked(e);
 			}
-			
+
 			// undo/redo events
-			
+
 			@Override
 			public void actionRecorded(UndoEvent e) {
 				undoAction.setEnabled(true);
@@ -199,7 +239,7 @@ public class SchematicEditor extends SchematicViewer {
 			@Override
 			public void actionRedone(UndoEvent e) {
 				undoAction.setEnabled(true);
-				if (getDiagram().getUndoManager().getHistory().getNextRedo()==null){
+				if (getDiagram().getUndoManager().getHistory().getNextRedo() == null) {
 					redoAction.setEnabled(false);
 				}
 			}
@@ -207,27 +247,37 @@ public class SchematicEditor extends SchematicViewer {
 			@Override
 			public void actionUndone(UndoEvent e) {
 				redoAction.setEnabled(true);
-				if (getDiagram().getUndoManager().getHistory().getNextUndo()==null){
+				if (getDiagram().getUndoManager().getHistory().getNextUndo() == null) {
 					undoAction.setEnabled(false);
 				}
 			}
-			private Float previousBounds=null;
+
+			private Float previousBounds = null;
+
 			@Override
 			public void viewportChanged() {
 				Float bounds = getDiagram().getBounds();
-				if (previousBounds==null){
-					previousBounds=bounds;
+				if (previousBounds == null) {
+					previousBounds = bounds;
 				}
-				if (badValue(bounds.x) || badValue(bounds.y) || badValue(bounds.height) || badValue(bounds.width)){
+				if (badValue(bounds.x) || badValue(bounds.y)
+						|| badValue(bounds.height) || badValue(bounds.width)) {
 					getDiagram().setBounds(previousBounds);
 				} else {
-					previousBounds=bounds;
+					previousBounds = bounds;
 				}
-				//System.out.println("Diagram bounds: "+getDiagram().getBounds());
+				float zoomFactor = getDiagramView().getZoomFactor();
+				getDiagram().setAdjustmentHandlesSize(
+						Math.round(10 + 150 / zoomFactor));
 			}
-			
-			private boolean badValue(float x){
-				return java.lang.Float.isNaN(x) || java.lang.Float.isInfinite(x) || x==java.lang.Float.MIN_VALUE || x==java.lang.Float.MAX_VALUE || ((int)x == Integer.MAX_VALUE) || ((int) x == Integer.MIN_VALUE);
+
+			private boolean badValue(float x) {
+				return java.lang.Float.isNaN(x)
+						|| java.lang.Float.isInfinite(x)
+						|| x == java.lang.Float.MIN_VALUE
+						|| x == java.lang.Float.MAX_VALUE
+						|| ((int) x == Integer.MAX_VALUE)
+						|| ((int) x == Integer.MIN_VALUE);
 			}
 		});
 
@@ -239,7 +289,8 @@ public class SchematicEditor extends SchematicViewer {
 		popupMenu.setName("editPopup");
 		popupMenu.add(copyMenuItem);
 		popupMenu.add(deleteMenuItem);
-		popupMenu.add(shortenPointsMenuItem);
+		popupMenu.add(editShapeMenuItem);
+		// popupMenu.add(shortenPointsMenuItem);
 
 	}
 
@@ -304,9 +355,10 @@ public class SchematicEditor extends SchematicViewer {
 				p.y = alignPoint.y;
 				p.x = alignPoint.x + index * stepX;
 			}
-			//java.awt.geom.Point2D.Float pointOnGrid = getDiagram().alignPointToGrid(p);
-			//p.x=pointOnGrid.x;
-			//p.y=pointOnGrid.y;
+			// java.awt.geom.Point2D.Float pointOnGrid =
+			// getDiagram().alignPointToGrid(p);
+			// p.x=pointOnGrid.x;
+			// p.y=pointOnGrid.y;
 			index++;
 		}
 
@@ -372,8 +424,9 @@ public class SchematicEditor extends SchematicViewer {
 					bounds.x = bounds0.x + index * spaceX;
 				}
 			}
-			//java.awt.geom.Point2D.Float pointOnGrid = diagram.alignPointToGrid(new Point2D.Float(bounds.x, bounds.y));
-			//n.moveTo(pointOnGrid.x, pointOnGrid.y);
+			// java.awt.geom.Point2D.Float pointOnGrid =
+			// diagram.alignPointToGrid(new Point2D.Float(bounds.x, bounds.y));
+			// n.moveTo(pointOnGrid.x, pointOnGrid.y);
 			n.moveTo(bounds.x, bounds.y);
 			index++;
 		}
@@ -413,9 +466,14 @@ public class SchematicEditor extends SchematicViewer {
 	public Action getRedoAction() {
 		return redoAction;
 	}
+	
+	public JMenuItem getShrinkToElementsAction(){
+		return shrinkToElementsMenuItem;
+	}
 
 	public void onDelete() {
 		Diagram d = getDiagram();
+		CompositeCmd compositeCmd = d.getUndoManager().startComposite("DeleteALot");
 		if (!(d.getSelection().getNodes().isEmpty())) {
 			for (DiagramNode n : d.getSelection().getNodes()) {
 				n.setLocked(false);
@@ -428,7 +486,7 @@ public class SchematicEditor extends SchematicViewer {
 			}
 			d.getLinks().removeAll(d.getSelection().getLinks());
 		}
-
+		compositeCmd.execute();
 	}
 
 	private ArrayList<DiagramItem> copiedItems;
@@ -437,6 +495,7 @@ public class SchematicEditor extends SchematicViewer {
 
 	public void onCopy() {
 		Diagram d = getDiagram();
+		CompositeCmd compositeCmd = d.getUndoManager().startComposite("CopyALot");
 		copiedItems = new ArrayList<DiagramItem>();
 		HashMap<DiagramNode, DiagramNode> selectedToAddedMap = new HashMap<DiagramNode, DiagramNode>();
 		if (!(d.getSelection().getNodes().isEmpty())) {
@@ -456,7 +515,8 @@ public class SchematicEditor extends SchematicViewer {
 				if (link instanceof DiagramLink) {
 					DiagramLink linkClone = (DiagramLink) link.clone(true);
 					copiedItems.add(linkClone);
-					// connect it up if origin or destination nodes were selected and
+					// connect it up if origin or destination nodes were
+					// selected and
 					// copied over
 					DiagramNode origin = link.getOrigin();
 					if (origin != null) {
@@ -475,15 +535,22 @@ public class SchematicEditor extends SchematicViewer {
 				}
 			}
 		}
-}
+		compositeCmd.execute();
+	}
 
 	public void onPaste() {
 		if (lastMouseClickedPosition == null || copiedItems == null
 				|| copiedItems.size() == 0) {
 			return;
 		}
+		
+		
 		Diagram diagram = getDiagram();
 		DiagramView diagramView = getDiagramView();
+
+		CompositeCmd compositeCmd = diagram.getUndoManager().startComposite("PasteALot");
+		diagram.getLinkRouter().Suspend();
+		
 		DiagramItem diagramItem = copiedItems.get(0);
 		Float bounds = diagramItem.getBounds();
 		float delX = (float) lastMouseClickedPosition.getX() - bounds.x;
@@ -499,7 +566,7 @@ public class SchematicEditor extends SchematicViewer {
 				continue;
 			}
 			DiagramItem item = itemOriginal.clone(true);
-			diagram.add(item);
+			diagram.add(item, true);
 			Float bounds2 = item.getBounds();
 			bounds2.x = bounds2.x + delX;
 			bounds2.y = bounds2.y + delY;
@@ -519,7 +586,7 @@ public class SchematicEditor extends SchematicViewer {
 			}
 			DiagramLink linkOriginal = (DiagramLink) itemOriginal;
 			DiagramItem item = itemOriginal.clone(true);
-			diagram.add(item);
+			diagram.add(item, true);
 			Float bounds2 = item.getBounds();
 			bounds2.x = bounds2.x + delX;
 			bounds2.y = bounds2.y + delY;
@@ -547,6 +614,8 @@ public class SchematicEditor extends SchematicViewer {
 			}
 			// FIXME: alignTo grid
 		}
+		
+		compositeCmd.execute();
 
 	}
 
@@ -562,7 +631,7 @@ public class SchematicEditor extends SchematicViewer {
 			y = (int) event.getY();
 			Point mousePos = getMousePosition();
 			clickedItem = e.getNode();
-			shortenPointsMenuItem.setEnabled(false);
+			// shortenPointsMenuItem.setEnabled(false);
 			// display context menu at right mouse click
 			popupMenu.show(this, mousePos.x, mousePos.y);
 		}
@@ -574,7 +643,7 @@ public class SchematicEditor extends SchematicViewer {
 			e.getLink().setLocked(false);
 			int x;
 			int y;
-			
+
 			Point2D event = e.getMousePosition();
 			x = (int) event.getX();
 			y = (int) event.getY();
@@ -582,7 +651,7 @@ public class SchematicEditor extends SchematicViewer {
 
 			clickedItem = e.getLink();
 			// display context menu at right mouse click
-			shortenPointsMenuItem.setEnabled(true);
+			// shortenPointsMenuItem.setEnabled(true);
 			popupMenu.show(this, mousePos.x, mousePos.y);
 		}
 	}
@@ -614,8 +683,8 @@ public class SchematicEditor extends SchematicViewer {
 		getDiagram().setAdjustmentHandlesSize(6);
 		getDiagram().setAdjustmentHandlesSize(8);
 
-		//getDiagram().setAllowUnanchoredLinks(true);
-		//getDiagram().setAllowUnconnectedLinks(true);
+		// getDiagram().setAllowUnanchoredLinks(true);
+		// getDiagram().setAllowUnconnectedLinks(true);
 		getDiagram().setDynamicLinks(true);
 		getDiagram().setAlignToGrid(true);
 
@@ -630,7 +699,7 @@ public class SchematicEditor extends SchematicViewer {
 		routingOptions.setLengthCost((short) 100);
 		routingOptions.setSmartPolylineEnds(true);
 		routingOptions.setMinSegmentsMode();
-		routingOptions.setTriggerRerouting(RerouteLinks.WhenIntersectNode);
+		routingOptions.setTriggerRerouting(RerouteLinks.Never);
 
 		UndoManager undoManager = getDiagram().getUndoManager();
 		undoManager.setUndoEnabled(true);
@@ -711,6 +780,54 @@ public class SchematicEditor extends SchematicViewer {
 				alignSelectedLinks(Orientation.Vertical);
 			}
 		};
+	}
+
+	public void showShapeDialog() {
+		JDialog dialog = new JDialog(SwingUtilities.getWindowAncestor(this),
+				"Edit Shape", ModalityType.APPLICATION_MODAL);
+		EditSchematicElementPanel editPanel = new EditSchematicElementPanel();
+		dialog.getContentPane().add(editPanel);
+		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		editPanel.setDiagramItem(clickedItem);
+		dialog.pack();
+		dialog.setLocation(this.getLocation());
+		dialog.show();
+		clickedItem.getPen().setColor(editPanel.getColor());
+		if (clickedItem instanceof ShapeNode) {
+			ShapeNode shapeNode = (ShapeNode) clickedItem;
+			shapeNode.getShape().setId(editPanel.getShape());
+			shapeNode.setTextColor(editPanel.getColor());
+		}
+		if (clickedItem instanceof DiagramLink) {
+			DiagramLink link = (DiagramLink) clickedItem;
+			link.getHeadPen().setColor(editPanel.getColor());
+		}
+	}
+	
+	public void shrinkDiagramToElements() throws Exception{
+		DiagramItemList items = getDiagram().getItems();
+		float minx=java.lang.Float.MAX_VALUE, miny = java.lang.Float.MAX_VALUE, maxx=java.lang.Float.MIN_VALUE, maxy=java.lang.Float.MIN_VALUE;
+		for(DiagramItem item: items){
+			Float itemBounds = item.getBounds();
+			minx = Math.min(minx, itemBounds.x);
+			miny = Math.min(miny, itemBounds.y);
+			maxx = Math.max(maxx, itemBounds.x+itemBounds.width);
+			maxy = Math.max(maxy,itemBounds.y+itemBounds.height);
+		}
+		Rectangle2D.Float calculatedBounds = new Rectangle2D.Float(minx-100,miny-100,maxx-minx+200,maxy-miny+200);
+		getDiagram().setBounds(calculatedBounds);
+		getDiagram().repaint();
+	}
+
+	public void addToShapeLibrary() throws Exception {
+		String filename = "d:/temp/shapes.xml";
+		if (clickedItem instanceof ShapeNode) {
+			ShapeNode snode = (ShapeNode) clickedItem;
+			Shape s = snode.getShape();
+			Document doc = XmlUtilities.newDocument();
+			doc.appendChild(s.toDOM(doc));
+			XmlUtilities.saveTo(doc, filename);
+		}
 	}
 
 }
