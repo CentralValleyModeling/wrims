@@ -31,5 +31,17 @@
 	<classpathentry kind="lib" path="lib/jpy.jar"/>
 	<classpathentry kind="lib" path="lib/misc.jar"/>
 	<classpathentry kind="lib" path="lib/pd.jar"/>
+	<classpathentry kind="lib" path="lib/jxbrowser/engine-gecko.jar"/>
+	<classpathentry kind="lib" path="lib/jxbrowser/engine-ie.jar"/>
+	<classpathentry kind="lib" path="lib/jxbrowser/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="lib/jxbrowser/MozillaGlue.jar"/>
+	<classpathentry kind="lib" path="lib/jxbrowser/MozillaInterfaces.jar"/>
+	<classpathentry kind="lib" path="lib/jxbrowser/slf4j-api-1.5.8.jar"/>
+	<classpathentry kind="lib" path="lib/jxbrowser/slf4j-log4j12-1.5.8.jar"/>
+	<classpathentry kind="lib" path="lib/jxbrowser/winpack-3.8.2.jar"/>
+	<classpathentry kind="lib" path="lib/jxbrowser/xulrunner-windows.jar"/>
+	<classpathentry kind="lib" path="lib/jxbrowser/engine-webkit.jar"/>
+	<classpathentry kind="lib" path="lib/jxbrowser/development.jar"/>
+	<classpathentry kind="lib" path="lib/jxbrowser/jxbrowser-2.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
