@@ -371,17 +371,24 @@ public class SchematicViewer extends JPanel {
 	}
 
 	public void save(String filename) throws Exception {
-		if (filename.endsWith(".xml")) {
-			diagram.saveToXml(filename);
-		} else if (filename.endsWith(".pdf")) {
-			// PdfExporter pdfExp = new PdfExporter();
-			// pdfExp.export(diagram, filename);
-			PDFiTextExporter.export(diagram, filename);
-		} else if (filename.endsWith(".svg")) {
-			SvgExporter svgExp = new SvgExporter(diagram, filename);
-			svgExp.export();
-		} else {
-			diagram.saveTo(filename);
+		if (filename == null)
+			return;
+		Cursor previousCursor = diagramView.getCursor();
+		diagramView.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		try {
+			if (filename.endsWith(".xml")) {
+				diagram.saveToXml(filename);
+			} else if (filename.endsWith(".pdf")) {
+				PdfExporter pdfExp = new PdfExporter();
+				pdfExp.export(diagram, filename);
+			} else if (filename.endsWith(".svg")) {
+				SvgExporter svgExp = new SvgExporter(diagram, filename);
+				svgExp.export();
+			} else {
+				diagram.saveTo(filename);
+			}
+		} finally {
+			diagramView.setCursor(previousCursor);
 		}
 	}
 
@@ -527,21 +534,24 @@ public class SchematicViewer extends JPanel {
 						DiagramNodeList attachedNodes = subordinateGroup
 								.getAttachedNodes();
 						if (attachedNodes.size() < studyId + 1) {
-							createTextNodeWithIntermediates(studyId, attachedNodes.size(), value, shapeNode);
+							createTextNodeWithIntermediates(studyId,
+									attachedNodes.size(), value, shapeNode);
 						} else {
 							DiagramNode diagramNode = attachedNodes
 									.get(studyId);
 							diagramNode.setEditedText(value);
 						}
 					} else {
-						createTextNodeWithIntermediates(studyId, 0, value, shapeNode);
+						createTextNodeWithIntermediates(studyId, 0, value,
+								shapeNode);
 					}
 				}
 			}
 		}
 	}
-	
-	private void createTextNodeWithIntermediates(int studyId, int startingWithId, String value, ShapeNode shapeNode){
+
+	private void createTextNodeWithIntermediates(int studyId,
+			int startingWithId, String value, ShapeNode shapeNode) {
 		int id = startingWithId;
 		while (id < studyId + 1) {
 			String str = "";
