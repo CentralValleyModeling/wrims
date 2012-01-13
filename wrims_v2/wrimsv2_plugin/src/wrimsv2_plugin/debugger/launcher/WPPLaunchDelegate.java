@@ -153,7 +153,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				out.println("set path=" + externalPath + ";"+"lib;%path%");
 				out.println();
 				if (mode.equals("debug")){
-					out.println("jre6\\bin\\java -Xmx1600m -Xss1024K -Djava.library.path=\"" + externalPath + ";lib\" -cp \"lib\\lpsolve55j.jar;lib\\wrimsv2\\external\\*.class;lib\\WRIMSv2.jar;lib\\XAOptimizer.jar;lib\\gurobi.jar;lib\\heclib.jar;lib\\jnios.jar;lib\\jpy.jar;lib\\misc.jar;lib\\pd.jar;lib\\vista.jar;\" wrimsv2.components.DebugInterface "+requestPort+" "+eventPort+" "
+					out.println("jre6\\bin\\java -Xmx1600m -Xss1024K -Djava.library.path=\"" + externalPath + ";lib\" -cp \""+externalPath+";"+"lib;lib\\WRIMSv2.jar;lib\\XAOptimizer.jar;lib\\lpsolve55j.jar;lib\\gurobi.jar;lib\\heclib.jar;lib\\jnios.jar;lib\\jpy.jar;lib\\misc.jar;lib\\pd.jar;lib\\vista.jar;\" wrimsv2.components.DebugInterface "+requestPort+" "+eventPort+" "
 						+ gwDataFolder+" "
 						+ mainFile + " "
 						+ svarFile + " "
@@ -171,7 +171,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 						+ endDay + " "
 						+ "XALOG csv");
 				}else{
-					out.println("jre6\\bin\\java -Xmx1600m -Xss1024K -Djava.library.path=\"" + externalPath + ";lib\" -cp \"lib\\lpsolve55j.jar;lib\\wrimsv2\\external\\*.class;lib\\WRIMSv2.jar;lib\\XAOptimizer.jar;lib\\gurobi.jar;lib\\heclib.jar;lib\\jnios.jar;lib\\jpy.jar;lib\\misc.jar;lib\\pd.jar;lib\\vista.jar;\" wrimsv2.components.ControllerSG "
+					out.println("jre6\\bin\\java -Xmx1600m -Xss1024K -Djava.library.path=\"" + externalPath + ";lib\" -cp \""+externalPath+";"+"lib;lib\\WRIMSv2.jar;lib\\XAOptimizer.jar;lib\\lpsolve55j.jar;lib\\gurobi.jar;lib\\heclib.jar;lib\\jnios.jar;lib\\jpy.jar;lib\\misc.jar;lib\\pd.jar;lib\\vista.jar;\" wrimsv2.components.ControllerSG "
 							+ gwDataFolder+" "
 							+ mainFile + " "
 							+ svarFile + " "
