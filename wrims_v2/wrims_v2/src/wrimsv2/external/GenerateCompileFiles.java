@@ -50,7 +50,7 @@ public class GenerateCompileFiles {
 					out.println("javac -cp . wrimsv2\\external\\Function"+functionName+".java");
 				}
 				out.println("javah -jni wrimsv2.external.Function"+functionName);
-				out.println("gcc -c -Wall -D_JNI_IMPLEMENTATION_ -Wl,--kill-at -I\""+currentDirectory+"/../jdk/include\"  -I\""+currentDirectory+"/../jdk/include/win32\" wrimsv2_external_Function"+functionName+".c");
+				out.println("gcc -c -Wall -D_JNI_IMPLEMENTATION_ -Wl,--kill-at -I\""+currentDirectory+"/../jdk6/include\"  -I\""+currentDirectory+"/../jdk6/include/win32\" wrimsv2_external_Function"+functionName+".c");
 			}
 			String compileString="gcc -Wall -D_JNI_IMPLEMENTATION_ -Wl,--kill-at -shared "; 
 			while (dfi.hasNext()){
