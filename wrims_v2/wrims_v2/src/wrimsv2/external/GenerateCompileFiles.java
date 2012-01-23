@@ -50,9 +50,9 @@ public class GenerateCompileFiles {
 					out.println("javac -cp . wrimsv2\\external\\Function"+functionName+".java");
 				}
 				out.println("javah -jni wrimsv2.external.Function"+functionName);
-				out.println("D:/cvwrsm/trunk/3rd_party/MinGW/bin/gcc -c -Wall -D_JNI_IMPLEMENTATION_ -Wl,--kill-at -I\"C:/Program Files (x86)/Java/jdk1.6.0_24/include\"  -I\"C:/Program Files (x86)/Java/jdk1.6.0_24/include/win32\" wrimsv2_external_Function"+functionName+".c");
+				out.println("gcc -c -Wall -D_JNI_IMPLEMENTATION_ -Wl,--kill-at -I\"C:/Program Files (x86)/Java/jdk1.6.0_24/include\"  -I\"C:/Program Files (x86)/Java/jdk1.6.0_24/include/win32\" wrimsv2_external_Function"+functionName+".c");
 			}
-			String compileString="D:/cvwrsm/trunk/3rd_party/MinGW/bin/gcc -Wall -D_JNI_IMPLEMENTATION_ -Wl,--kill-at -shared "; 
+			String compileString="gcc -Wall -D_JNI_IMPLEMENTATION_ -Wl,--kill-at -shared "; 
 			while (dfi.hasNext()){
 				String dllName=(String)dfi.next();
 				String fortranDllName=dllDlls.get(dllName);
