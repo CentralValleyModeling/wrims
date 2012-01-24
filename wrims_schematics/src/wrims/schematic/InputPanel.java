@@ -310,14 +310,24 @@ public class InputPanel extends JPanel {
 				runStudy();
 			}
 		});
+		
+		JButton batchFileButton = new JButton("Generate File");
+		panel.add(batchFileButton);
+		batchFileButton.addActionListener(new GuiTaskListener("Generating Batch File ... ", 
+				"Done"){
+			public void doWork(){
+				String wrimsv2EnginePath = System.getenv("WRIMSv2_Engine_Home");
+				String runFileFullPath = wrimsv2EnginePath + "WRIMSv2_Engine.bat";
+				generateBatchFile(runFileFullPath, wrimsv2EnginePath);
+			}
+		});
+		
 		xalog=new JCheckBox("xa log");
 		panel.add(xalog);
 		return panel;
 	}
 
-	void runStudy() {
-		String wrimsv2EnginePath = System.getenv("WRIMSv2_Engine_Home");
-		String runFileFullPath = wrimsv2EnginePath + "WRIMSv2_Engine.bat";
+	void generateBatchFile(String runFileFullPath, String wrimsv2EnginePath){
 		try {
 			FileWriter runFile = new FileWriter(runFileFullPath);
 			PrintWriter out = new PrintWriter(runFile);
@@ -371,7 +381,7 @@ public class InputPanel extends JPanel {
 					+ " -Xmx1600m -Xss1024K -Djava.library.path="
 					+ externalPath + ";" + engineLibPath
 					+ " -cp \"" + externalPath + ";"
-					+ engineLibPath + ";" 
+					+ engineLibPath + "\\external" + ";" 
 					+ engineLibPath + "\\WRIMSv2.jar" + ";"
 					+ engineLibPath + "\\XAOptimizer.jar" + ";" 
 					+ engineLibPath + "\\gurobi.jar" + ";"
@@ -389,19 +399,30 @@ public class InputPanel extends JPanel {
 			out.println("exit");
 
 			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	void runStudy() {
+		String wrimsv2EnginePath = System.getenv("WRIMSv2_Engine_Home");
+		String runFileFullPath = wrimsv2EnginePath + "WRIMSv2_Engine.bat";
+		generateBatchFile(runFileFullPath, wrimsv2EnginePath);
+		
+		tabbedPane.setSelectedIndex(1);
+		ConsolePanel consolePane = (ConsolePanel) tabbedPane
+				.getComponent(1);
+		consolePane.textArea.setText("");
 
-			tabbedPane.setSelectedIndex(1);
-			ConsolePanel consolePane = (ConsolePanel) tabbedPane
-					.getComponent(1);
-			consolePane.textArea.setText("");
-
-			Process p = Runtime.getRuntime().exec(runFileFullPath);
+		Process p;
+		try {
+			p = Runtime.getRuntime().exec(runFileFullPath);
 
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(
-					p.getInputStream()));
+				p.getInputStream()));
 
 			BufferedReader stdError = new BufferedReader(new InputStreamReader(
-					p.getErrorStream()));
+				p.getErrorStream()));
 
 			String s = null;
 			// read the output from the command
@@ -413,11 +434,9 @@ public class InputPanel extends JPanel {
 			while ((s = stdError.readLine()) != null) {
 				System.out.println(s);
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	String convertPathBatchToFortran(String path) {
