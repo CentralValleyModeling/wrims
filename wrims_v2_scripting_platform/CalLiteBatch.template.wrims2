@@ -1,0 +1,26 @@
+REM ----------------------------------------------------------
+REM set study config
+pause
+set MainFile={MainFile}
+set SvarFile={SvarFile}
+set SvarFPart={SvarFPart}
+set InitFile={InitFile}
+set InitFPart={InitFPart}
+set DvarFile={DvarFile}
+set StartYear={StartYear}
+set StartMonth={StartMonth}
+set StartDay={StartDay}
+set EndYear={EndYear}
+set EndMonth={EndMonth}
+set EndDay={EndDay}
+
+REM ----------------------------------------------------------
+REM set wrims v2 lib
+
+set lib=%~dp0%lib\wrims2
+set runDir={run_dir}
+
+set path=%lib%;%runDir%\external;
+
+jre6\bin\java -Xmx1000m -Xss1024K -Djava.library.path=%path% -cp "%lib%\WRIMSv2.jar;%lib%\CalLiteV16.jar;%lib%\gurobi.jar;%lib%\heclib.jar;%lib%\jnios.jar;%lib%\jpy.jar;%lib%\misc.jar;%lib%\pd.jar;%lib%\vista.jar" wrimsv2.components.ControllerSG \ %MainFile% %SvarFile% %InitFile% %DvarFile% %SvarFPart% %InitFPart% CalLite 1MON %StartYear% %StartMonth% %StartDay% %EndYear% %EndMonth% %EndDay% XA csv
+
