@@ -1141,8 +1141,7 @@ public final class MonthlyTableModel extends AbstractTableModel { // extends
 				// number of data)
 				// avgColumnValues[avgColumnValues.length - 1] =
 				// totalSum/totalNumValid;
-				averageColumnValues[averageColumnValues.length - 1] = totalSum
-						/ totalNumValid;
+				averageColumnValues[averageColumnValues.length - 1] = totalSum/numColumnValues[numColumnValues.length-1];
 				row = new Object[2];
 				row[0] = "AVG";
 				row[1] = new HecDoubleArray(averageColumnValues);

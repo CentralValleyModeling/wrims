@@ -80,11 +80,11 @@ public class FilterPanel extends JPanel {
 	 * DASHBOARD_BUILT_IN_NAMES
 	 */
 	public static final String[] DASHBOARD_BUILT_IN_VALUES = {
-			"+, , 1, swp_TA_total, +, , 1, swp_CO_total, -, , 1, swp_TA_feath, -, , 1, swp_CO_feath",
+		    "+, , 1, swp_TA_total, +, , 1, swp_CO_total, -, , 1, swp_TA_feath, -, , 1, swp_CO_feath",
 			"+, , 1, swp_TA_feath, +, , 1, swp_CO_feath",
 			"+, , 1, del_swp_pin", "+, , 1, del_cvp_total_n",
 			"+, , 1, del_cvp_total_s, +, , 1, d855", "+, , 1, d419",
-			"+, , 1, d418", "+, , 1, c_sac000", "+, , 1, c_sac041",
+			"+, , 1, d418", "+, , 1, C_SAC000_MIN, + , , 1, C_SAC000_ADD", "+, , 1, c_sac041",
 			"+, , 1, sg_total", "+, , 1, S_SHSTA", "+, , 1, S_OROVL",
 			"+, , 1, S_FOLSM", "+, , 1, S_TRNTY", "+, , 1, D_LWSTN_CCT011" };
 
