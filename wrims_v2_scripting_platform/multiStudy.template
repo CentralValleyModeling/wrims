@@ -3,6 +3,7 @@ REM set study config
 pause
 set MainFile={MainFile}
 set SvarFile={SvarFile}
+set SvarAPart=CalLite
 set SvarFPart={SvarFPart}
 set InitFile={InitFile}
 set InitFPart={InitFPart}
@@ -22,5 +23,5 @@ set runDir={run_dir}
 
 set path=%lib%;%runDir%\external;
 
-jre6\bin\java -Xmx1000m -Xss1024K -Djava.library.path=%path% -cp "%lib%\WRIMSv2.jar;%lib%\CalLiteV16.jar;%lib%\gurobi.jar;%lib%\heclib.jar;%lib%\jnios.jar;%lib%\jpy.jar;%lib%\misc.jar;%lib%\pd.jar;%lib%\vista.jar" wrimsv2.components.ControllerSG \ %MainFile% %SvarFile% %InitFile% %DvarFile% %SvarFPart% %InitFPart% CalLite 1MON %StartYear% %StartMonth% %StartDay% %EndYear% %EndMonth% %EndDay% XA csv
+jre6\bin\java -Xmx1000m -Xss1024K -Djava.library.path=%path% -cp "%lib%\WRIMSv2.jar;%lib%\CalLiteV16.jar;%lib%\gurobi.jar;%lib%\heclib.jar;%lib%\jnios.jar;%lib%\jpy.jar;%lib%\misc.jar;%lib%\pd.jar;%lib%\vista.jar" wrimsv2.components.ControllerSG \ %MainFile% %SvarFile% %InitFile% %DvarFile% %SvarFPart% %InitFPart% %SvarAPart% 1MON %StartYear% %StartMonth% %StartDay% %EndYear% %EndMonth% %EndDay% XA csv
 
