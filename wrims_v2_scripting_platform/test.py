@@ -1,4 +1,4 @@
-import scripts.PA_Utils as PA
+import scripts.positionAnalysis.PA_Utils as PA
 import os
 
 #=======================================================
@@ -12,7 +12,7 @@ dssBufferYRs = 2
 tableBufferYRs = 2  
 
 #studyDir      = r"{app}\studies\BST_2005A01A_Existing\CALSIM_040110_PA"
-studyDir      = r"D:\cvwrsm\trunk\pa\CalSimPA\studies\BST_2005A01A_Existing\CALSIM_040110_PA"
+studyDir      = r"D:\cvwrsm\trunk\wrims_v2_scripting_platform\studies\BST_2005A01A_Existing\CALSIM_040110_PA"
 
 
 runDir        = os.path.join( studyDir, "CONV\Run")
