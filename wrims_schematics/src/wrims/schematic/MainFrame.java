@@ -168,6 +168,9 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 			consolePane = new ConsolePanel(new JTextArea());
 			tabbedPane.add(consolePane, "Console");
 
+			// batchPane = new BatchPanel(tabbedPane);
+			// tabbedPane.add(batchPane, "Batch");
+			
 			outputPane = new JPanel();
 			tabbedPane.add(outputPane, "Output");
 			outputPane.setLayout(new BorderLayout());
@@ -2155,6 +2158,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 						JOptionPane.WARNING_MESSAGE);
 			}
 			inputPane.setStudy(sty);
+			// batchPane.setStudy(sty);
 			// *************************************************************
 		} catch (IOException ioe) {
 			VistaUtils.displayException(this, ioe);
@@ -2166,6 +2170,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	 */
 	void saveStudy() {
 		inputPane.updateStudy(sty);
+		// batchPane.setStudy(sty);
 		String styFile = sty.getFileName();
 		if (styFile.equals("")) {
 			styFile = VistaUtils.getFilenameFromDialog(this, FileDialog.SAVE,
@@ -2187,6 +2192,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	 */
 	void saveAsStudy() {
 		inputPane.updateStudy(sty);
+		// batchPane.setStudy(sty);
 		String styFile = VistaUtils.getFilenameFromDialog(this,
 				FileDialog.SAVE, "sty", "Study files (*.sty)");
 		if (styFile == null)
@@ -2298,6 +2304,8 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 
 	protected InputPanel inputPane;
 
+	// protected BatchPanel batchPane;
+	
 	protected ConsolePanel consolePane;
 
 	protected JPanel outputPane;
