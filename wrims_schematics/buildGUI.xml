@@ -54,7 +54,7 @@
 			</fileset>
 		</copy>
 		<jar destfile="${dist.dir}/lib/wrimsv2_SG.jar" basedir="build/classes"></jar>
-		<zip destfile="build/wrimsv2_SG-${DSTAMP}.zip" basedir="${dist.dir}/.." />
+		<zip destfile="build/wrimsv2_SG-${DSTAMP}.zip" basedir="${dist.dir}/.." excludes="**/*study.sty" />
 	</target>
 	
 	<target name="clean">
