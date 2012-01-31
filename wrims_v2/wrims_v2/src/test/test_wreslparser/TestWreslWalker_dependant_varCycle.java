@@ -61,8 +61,8 @@ public class TestWreslWalker_dependant_varCycle {
 		Assert.assertEquals(totalErrs, 0);		
 		Assert.assertEquals(StudyParser.total_errors, 0);
 
-		int totalWarnings = RegUtils.timesOfMatches(logText, "Warning:");
-		Assert.assertEquals(totalWarnings, 1);		
+		//int totalWarnings = RegUtils.timesOfMatches(logText, "Warning:");
+		//Assert.assertEquals(totalWarnings, 1);		
 	
 	}
 
@@ -102,8 +102,8 @@ public class TestWreslWalker_dependant_varCycle {
 		Assert.assertEquals(totalErrs, 0);		
 		Assert.assertEquals(StudyParser.total_errors, 0);
 	
-		int totalWarnings = RegUtils.timesOfMatches(logText, "Warning:");
-		Assert.assertEquals(totalWarnings, 1);		
+		//int totalWarnings = RegUtils.timesOfMatches(logText, "Warning:");
+		//Assert.assertEquals(totalWarnings, 1);		
 	
 		String csvText;
 		String s;

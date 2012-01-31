@@ -74,53 +74,6 @@ public class TestWreslWalker_smallPenalty {
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-
-		
-
-
 	}
 	
-	@Test(groups = { "WRESL_elements" })
-	public void smallPenalty_run() throws RecognitionException, IOException {
-		
-		testName = "TestWreslWalker_smallPenalty";
-		csvFolderPath = "testResult\\"+testName;
-		inputFilePath = projectPath + testName+".wresl";
-
-
-		String studyPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\calsim30_bo_svn51\\";
-		String dssPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\calsim30_bo_svn51\\common\\DSS\\";
-		
-		/// set control data		
-		String[] controlDataString = {
-		studyPath + "common\\CVGroundwater\\Data\\",   //groundwater dir
-		inputFilePath,
-		dssPath +   "CalSim30_06_SV.dss",
-		studyPath + "CONV\\DSS\\Init.dss",   // Init
-		studyPath + "CONV\\DSS\\dv.dss",   // dv
-		"CalSim30_06",       // sv dv F part
-		"CalSim30_06",   // init file F part
-		"CALSIM",        // part A
-		"1MON",
-		"1921",
-		"10",
-		 "31",
-		 "1921",
-		 "10",
-		 "31", 
-		 "ILP", 
-		 "csv"};
-
-		FilePaths.ilpFileDirectory = "TestWreslWalker_smallPenalty_run";
-		//FilePaths.ilpFile = "test.ilp";		
-		Error.clear();
-        new Controller(controlDataString);
-        
-        double expected = 8.999991; 
-        double tolerance_perc = 0.00001/1000000; // 0.01 ppb
-        
-		double obj_value =  ControlData.xasolver.getObjective();		
-		Assert.assertEquals(Error.getTotalError(), 0);	
-		Assert.assertEquals(obj_value, expected, expected*tolerance_perc);	
-	}
 }
