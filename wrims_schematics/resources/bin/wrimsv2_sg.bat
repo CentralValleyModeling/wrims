@@ -4,7 +4,7 @@ rem Batch file for running wrims schematic
 rem ###################################
 setlocal
 set wrims_home=%~dp0..
-set Java_Bin=%~dp0..\jre6\bin\
+set Java_Bin_Batch=%~dp0..\jre6\bin\
 set WRIMSv2_Engine_Home=%~dp0..\
 rem echo %wrims_home%
 if exist "%wrims_home%\lib\wrimsv2_SG.jar" goto :valid
