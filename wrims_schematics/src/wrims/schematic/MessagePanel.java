@@ -20,6 +20,7 @@ import java.util.prefs.Preferences;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -653,7 +654,7 @@ public class MessagePanel {
 	public JComboBox createTWBox() {
 		for (int i = 0; i < _twSelections.length; i++)
 			_twitems.addElement(_twSelections[i]);
-		JComboBox twbox = new JComboBox(_twitems);
+		final JComboBox twbox = new JComboBox(_twitems);
 		twbox.setEditable(true);
 		twbox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -665,6 +666,9 @@ public class MessagePanel {
 				// AppUtils.getCurrentProject().setTimeWindow(tw);
 
 				if (!_mainPanel.dateBoxContainsTimeWindow(tw)) {
+					((DefaultComboBoxModel)twbox.getModel())
+					.insertElementAt(tw, 0);
+					twbox.setSelectedIndex(0);
 					_mainPanel.updateSchematicDateBox((String) tb.getModel()
 							.getSelectedItem());
 				}

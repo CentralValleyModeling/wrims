@@ -753,10 +753,10 @@ public class MainPanel extends JPanel {
 		// CB TODO need to check time window for
 		// validity!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		if (!dateBoxContainsTimeWindow(selectedTimeWindow)) {
-			if (_schematic.getDateBox() != null
+			if (_schematic.getDateBox() != null && _schematic.getDateBox().getModel().getSize() > 0
 					&& _schematic.getDateBox().getModel() instanceof DefaultComboBoxModel) {
 				((DefaultComboBoxModel) _schematic.getDateBox().getModel())
-						.insertElementAt(selectedTimeWindow, 1); // 0 is the
+						.insertElementAt(new ComboItem(selectedTimeWindow), 1); // 0 is the
 																	// blank one
 
 			}
