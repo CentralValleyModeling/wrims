@@ -48,7 +48,7 @@ public class TestILP_example_calsim30_bo_step2 {
 		Error.clear();
         new Controller(controlDataString);
  
-        expected = 1.7664981254895817E10;                                        
+        expected = 1.7664979975632977E10;                                        
 		
 		double obj_value =  ControlData.xasolver.getObjective();
 		Assert.assertEquals(Error.getTotalError(), 0);			
