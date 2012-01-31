@@ -3,11 +3,11 @@ rem ###################################
 rem Batch file for running wrims schematic
 rem ###################################
 setlocal
-set wrims_home=%~dp0/..
-set Java_Bin_Batch=%~dp0/../jre6/bin/
-set WRIMSv2_Engine_Home=%~dp0/../
+set wrims_home=%~dp0..
+set Java_Bin=%~dp0..\jre6\bin\
+set WRIMSv2_Engine_Home=%~dp0..\
 rem echo %wrims_home%
-if exist "%wrims_home%/lib/wrimsv2_SG.jar" goto :valid
+if exist "%wrims_home%\lib\wrimsv2_SG.jar" goto :valid
 
 
 :notfound
@@ -28,10 +28,10 @@ goto :end
 rem ###############
 rem Set path to location of dll
 rem ###############
-set JNILIB=%wrims_home%/lib
-set JARDIR=%wrims_home%/lib
-set SYSJARDIR=%wrims_home%/lib/sys
-set path=%wrims_home%/lib;%path%
+set JNILIB=%wrims_home%\lib
+set JARDIR=%wrims_home%\lib
+set SYSJARDIR=%wrims_home%\lib\sys
+set path=%wrims_home%\lib;%path%
 :-------------:
 : system jars :
 :-------------:       
@@ -73,7 +73,7 @@ rem ###############
 rem starting wrims schematic
 rem ###############
 :start
-"%wrims_home%/jre6/bin/java" -mx512m  -Djava.library.path="%JNILIB%" %CLASSPATH%  wrims.schematic.MainFrame "%wrims_home%"
+"%wrims_home%\jre6\bin\java" -mx512m  -Djava.library.path="%JNILIB%" %CLASSPATH%  wrims.schematic.MainFrame "%wrims_home%"
 :end
 endlocal 
 rem 
