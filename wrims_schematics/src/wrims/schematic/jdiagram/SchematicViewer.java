@@ -626,9 +626,9 @@ public class SchematicViewer extends JPanel {
 		this.schematic = schematic;
 	}
 
-	public void findInView(String text) {
+	public boolean findInView(String text) {
 		if (diagram == null || text == null) {
-			return;
+			return false;
 		}
 		text = text.toLowerCase();
 		DiagramNodeList nodes = diagram.getNodes();
@@ -636,9 +636,10 @@ public class SchematicViewer extends JPanel {
 			String nodeText = n.getTextToEdit();
 			if (nodeText != null && nodeText.toLowerCase().contains(text)) {
 				diagramView.bringIntoView(n);
-				return;
+				return true;
 			}
 		}
+		return false;
 	}
 
 	public void setPanMode(boolean selected) {

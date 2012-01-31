@@ -103,13 +103,28 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 				public void run() {
 					try {
 						long ti = System.currentTimeMillis();
-						_viewer.load(mainDir
-								+ "/wrims/schematic/CS3_NetworkSchematic.xml");
-						_viewer.findInView("S_SHS");
+						
+						// check previously loaded schematics
+
+						String filename = Preferences.userNodeForPackage(
+								MainFrame.class).get("last.schematic",
+										mainDir
+										+ "/wrims/schematic/CS3_NetworkSchematic.xml");
+						
+						_viewer.load(filename);	
+						
+						if(_viewer.findInView("S_SHS")){
+							
+						} else if (_viewer.findInView("S1")) {
+
+						}
+
 						_viewer.zoomOut();
 						_viewer.zoomOut();
+						
 					} catch (Exception e) {
 						e.printStackTrace();
+
 					}
 				}
 			}, "Schematic Loader").start();
@@ -519,6 +534,10 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 				SchematicViewer view = getCurrentView();
 				try {
 					view.load(filename);
+					
+					Preferences.userNodeForPackage(MainFrame.class).put(
+							"last.schematic", filename);
+					
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
