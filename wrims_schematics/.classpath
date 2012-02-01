@@ -43,5 +43,6 @@
 	<classpathentry kind="lib" path="lib/jxbrowser/engine-webkit.jar"/>
 	<classpathentry kind="lib" path="lib/jxbrowser/development.jar"/>
 	<classpathentry kind="lib" path="lib/jxbrowser/jxbrowser-2.9.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

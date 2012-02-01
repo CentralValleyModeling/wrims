@@ -60,6 +60,8 @@ set APPJARS=%JARDIR%\help\dssvueHelp.jar;%APPJARS%
 set APPJARS=%JARDIR%\xml.jar;%APPJARS%
 set APPJARS=%JARDIR%\wrimsv2.jar;%APPJARS%
 set APPJARS=%JARDIR%\vista.jar;%APPJARS%
+set APPJARS=%JARDIR%\commons-io-2.1.jar;%APPJARS%
+
 :-----------------:
 : schematic jars  :
 :-----------------:

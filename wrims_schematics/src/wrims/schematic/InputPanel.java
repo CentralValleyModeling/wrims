@@ -390,6 +390,7 @@ public class InputPanel extends JPanel {
 					+ engineLibPath + "\\jpy.jar" + ";"
 					+ engineLibPath + "\\misc.jar" + ";"
 					+ engineLibPath + "\\pd.jar" + ";"
+					+ engineLibPath + "\\commons-io-2.1.jar" + ";"
 					+ engineLibPath + "\\vista.jar\""
 					+ " wrimsv2.components.ControllerSG ";
 			for (int i = 0; i < 17; i++) {
