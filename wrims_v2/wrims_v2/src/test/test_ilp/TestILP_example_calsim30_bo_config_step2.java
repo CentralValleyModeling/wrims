@@ -23,7 +23,7 @@ public class TestILP_example_calsim30_bo_config_step2 {
 		/// set control data		
 		String[] controlDataString = {
 
-		"-config=\"D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\calsim30_bo_svn51\\conv\\Run\\step2.cfg\"" 
+		"-config=\"D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\calsim30_bo_svn51\\conv\\Run\\step2.config\"" 
 
 		};
 
@@ -32,7 +32,7 @@ public class TestILP_example_calsim30_bo_config_step2 {
 		Error.clear();
         new ControllerBatch(controlDataString);
         
-        expected = 1.766497222383591E10;
+        expected = 1.766497094428481E10;
 		
 		double obj_value =  ControlData.xasolver.getObjective();		
 		Assert.assertEquals(Error.getTotalError(), 0);	
