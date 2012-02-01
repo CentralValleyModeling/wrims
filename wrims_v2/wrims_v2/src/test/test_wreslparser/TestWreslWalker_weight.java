@@ -163,7 +163,7 @@ public class TestWreslWalker_weight {
 		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
 		//LogUtils.studySummary_details(sd);
 		
-		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
+		WreslTreeWalker walker = FileParser.parseMainFile(absFilePath);
 		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
 		LogUtils.closeLogFile();
 			

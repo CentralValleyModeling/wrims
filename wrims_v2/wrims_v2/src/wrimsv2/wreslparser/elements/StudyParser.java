@@ -146,7 +146,7 @@ public class StudyParser{
 
     LogUtils.importantMsg("Parsing study main file: " + absMainFilePath);
 
-    WreslTreeWalker walker = FileParser.parseFile(absMainFilePath, showTree);
+    WreslTreeWalker walker = FileParser.parseMainFile(absMainFilePath, showTree);
 
     StudyConfig sc = new StudyConfig();
 

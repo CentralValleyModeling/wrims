@@ -48,6 +48,7 @@ tokens {
 }
 @members {
 	
+	public String wresl_version = null;
     public ArrayList<String> model_in_sequence = new ArrayList<String>();
     public ArrayList<String> model_list = new ArrayList<String>();
     
@@ -89,14 +90,21 @@ tokens {
         LogUtils.errMsg(hdr + " " + msg);
     }
 }
-evaluator:	
-	(    pattern+ 
-	|  ( sequence+ model+ ) 
-	) 
-	    EOF!
+
+mainFile
+	: ( version_tag! )? sequence+ model+
+	  EOF! 
 	;
 
+version_tag : '[' 'wresl_version' vn=version_number ']' {wresl_version=$vn.text;} ;
 	
+version_number : FLOAT;
+
+evaluator
+	: pattern+ 
+	  EOF!
+	;
+
 pattern
 	: dvar | svar | goal | includeFile | alias | weight_table | external | integer
 	;
@@ -549,6 +557,7 @@ int_func
 		$expression::varInCycle.addAll($e.setVarInCycle);
 	} 
 	;
+
 	
 /// End Intrinsic functions ///	
 

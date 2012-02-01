@@ -73,12 +73,12 @@ public class FileParser {
 		
 		WreslTreeParser.evaluator_return parser_evaluator = parser.evaluator();
 		
-		// / check if sequence contains models not defined
-		ArrayList<String> undefined_models = parser.model_in_sequence;
-		parser.model_in_sequence.removeAll(parser.model_list);
-		if (undefined_models.size()>0 ){
-			LogUtils.errMsg("Sequence has undefined models: ", undefined_models);
-		}
+//		// / check if sequence contains models not defined
+//		ArrayList<String> undefined_models = parser.model_in_sequence;
+//		parser.model_in_sequence.removeAll(parser.model_list);
+//		if (undefined_models.size()>0 ){
+//			LogUtils.errMsg("Sequence has undefined models: ", undefined_models);
+//		}
 		
 		// / for debug info
 		parser.commonTree = (CommonTree) parser_evaluator.getTree();
@@ -194,6 +194,76 @@ public class FileParser {
 
 			return out;
 		}
+	}
+	
+	public static WreslTreeWalker parseMainFile(String inputFilePath) throws RecognitionException{
+		
+		return parseMainFile(inputFilePath, false);
+	}
+
+	public static WreslTreeWalker parseMainFile(String inputFilePath, boolean showTree) throws RecognitionException  {		
+	
+		
+		try {
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
+			}
+	    catch(Exception e) {
+	         //e.printStackTrace();
+	         
+	         LogUtils.errMsg("File not found: "+ inputFilePath);
+	         LogUtils.closeLogFile();
+	         return null;
+	         //System.exit(1);
+	         
+	        }
+		    
+		WreslTreeLexer lexer = new WreslTreeLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);		
+	
+		WreslTreeParser parser = new WreslTreeParser(tokenStream);
+		
+		parser.currentAbsolutePath = new File(inputFilePath).getAbsolutePath(); 
+		parser.currentAbsoluteParent = new File(inputFilePath).getAbsoluteFile().getParent();
+		
+		LogUtils.importantMsg("Parsing file: "+parser.currentAbsolutePath);
+		
+		WreslTreeParser.mainFile_return parser_return = parser.mainFile();
+		
+		// check wresl version number
+		try {
+			float wresl_version = Float.parseFloat(parser.wresl_version);
+			LogUtils.importantMsg("Wresl version: "+wresl_version);
+		} catch (Exception e) {
+			// TODO: handle exception
+			LogUtils.importantMsg("Wresl version: 2.0");
+		}
+		
+		// / check if sequence contains models not defined
+		ArrayList<String> undefined_models = parser.model_in_sequence;
+		parser.model_in_sequence.removeAll(parser.model_list);
+		if (undefined_models.size()>0 ){
+			LogUtils.errMsg("Sequence has undefined models: ", undefined_models);
+		}
+		
+		// / for debug info
+		parser.commonTree = (CommonTree) parser_return.getTree();
+		if (showTree) LogUtils.importantMsg("tree = " + parser.commonTree.toStringTree());
+		
+		// / feed walker with parser's tree output
+		CommonTreeNodeStream nodeStream = new CommonTreeNodeStream(parser_return.getTree());
+		nodeStream.setTokenStream(tokenStream); // important trick to avoid null exception in tree walker
+		WreslTreeWalker walker = new WreslTreeWalker(nodeStream);
+		
+		walker.commonTree = parser.commonTree;
+		walker.currentAbsolutePath = parser.currentAbsolutePath; 
+		walker.currentAbsoluteParent = parser.currentAbsoluteParent;
+	
+		if (showTree) LogUtils.importantMsg("Walking tree: "+parser.currentAbsolutePath);
+		
+		walker.evaluator();
+		
+		return walker;
+		
 	}	
 
 

@@ -38,7 +38,7 @@ public class TestWreslWalker {
 		
 		LogUtils.setLogFile(logFilePath);
 		
-		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
+		WreslTreeWalker walker = FileParser.parseMainFile(absFilePath);
 		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
 		
 		LogUtils.closeLogFile();
@@ -134,7 +134,7 @@ public class TestWreslWalker {
 		
 		LogUtils.setLogFile(logFilePath);
 		
-		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
+		WreslTreeWalker walker = FileParser.parseMainFile(absFilePath);
 		
 		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
 		LogUtils.mainFileSummary(sc);
@@ -264,7 +264,7 @@ public class TestWreslWalker {
 		
 		LogUtils.setLogFile(logFilePath);
 		
-		WreslTreeWalker walker = FileParser.parseFile(absFilePath);
+		WreslTreeWalker walker = FileParser.parseMainFile(absFilePath);
 		LogUtils.importantMsg("tree = " + walker.commonTree.toStringTree());
 		
 		LogUtils.closeLogFile();
