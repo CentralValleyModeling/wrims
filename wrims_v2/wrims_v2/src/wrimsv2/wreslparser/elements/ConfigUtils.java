@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import org.apache.commons.io.FilenameUtils;
+
 import wrimsv2.components.ControlData;
 import wrimsv2.components.ControllerBatch;
 import wrimsv2.components.FilePaths;
@@ -46,9 +48,9 @@ public class ConfigUtils {
 			}
 			catch (Exception e) {
 				System.out.println("Example: ");
-				System.out.println("-config=\"D:\\test\\example.cfg\"");
-				System.out.println("Example: ");
-				System.out.println("-mainwresl=\"C:\\study\\main.wresl\"");
+				System.out.println("-config=\"D:\\test\\example.config\"");
+//				System.out.println("Example: ");
+//				System.out.println("-mainwresl=\"C:\\study\\main.wresl\"");
 				System.exit(1);
 			}
 
@@ -60,7 +62,10 @@ public class ConfigUtils {
 		
 		// load config file
 		if (argsMap.keySet().contains("-config")) {
-
+			
+			String configFilePath = FilenameUtils.removeExtension(argsMap.get("-config"))+".config";
+			argsMap.put("-config", configFilePath);
+			
 			System.out.println("Loading config file: "+argsMap.get("-config"));
 			StudyUtils.configFilePath = argsMap.get("-config");
 			loadConfig(StudyUtils.configFilePath);
@@ -74,9 +79,9 @@ public class ConfigUtils {
 
 		} else {
 			System.out.println("Example: ");
-			System.out.println("-config=\"D:\\test\\example.cfg\"");
-			System.out.println("Example: ");
-			System.out.println("-mainwresl=\"C:\\study\\main.wresl\"");
+			System.out.println("-config=\"D:\\test\\example.config\"");
+//			System.out.println("Example: ");
+//			System.out.println("-mainwresl=\"C:\\study\\main.wresl\"");
 			System.exit(1);
 		}
 
@@ -177,14 +182,13 @@ public class ConfigUtils {
 
 	}
 
-	private static Map<String, String> checkConfigFile(String configFileName) {
+	private static Map<String, String> checkConfigFile(String configFilePath) {
 
-		final File configFile = new File(configFileName);
-	
+		final File configFile = new File(configFilePath);
+
 		
-
 		if (!configFile.exists()) {
-			System.out.println("Config file not found: " + configFileName);
+			System.out.println("Config file not found: " + configFilePath);
 			System.exit(1);
 		}
 
@@ -230,7 +234,7 @@ public class ConfigUtils {
 
 		}
 		catch (Exception e) {
-			System.out.println("Invalid Config File: " + configFileName);
+			System.out.println("Invalid Config File: " + configFilePath);
 			System.exit(1);
 			// e.printStackTrace();
 		}
