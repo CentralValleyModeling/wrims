@@ -32,7 +32,7 @@ public class TestILP_example_calsim30_bo_config_step5 {
 		Error.clear();
         new ControllerBatch(controlDataString);
         
-        expected = 1.502287771441569E10; 
+        expected = 1.5022911240484152E10; 
 		
 		double obj_value =  ControlData.xasolver.getObjective();		
 		Assert.assertEquals(Error.getTotalError(), 0);	
