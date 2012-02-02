@@ -32,7 +32,7 @@ public class TestILP_example_callite_config {
 		Error.clear();
         new ControllerBatch(controlDataString);
         
-        expected = 1.7482866878787083E10; 
+        expected = 9.651284053783159E8; 
 		
 		double obj_value =  ControlData.xasolver.getObjective();		
 		Assert.assertEquals(Error.getTotalError(), 0);	
