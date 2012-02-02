@@ -75,36 +75,6 @@ public class Sort {
 	}	
 	
 	
-	// TODO: alias that used in a svar could has another svar that is undefined.
-	//       need to check dependents in an alias, instead of removing aliases from dependents
-	public Sort(Map<String, Svar> in_svMap, Set<String>asSet, Set<String>dvSet, Set<String>tsSet, Set<String>externalSet, String someString){
-	
-		varDependentMap = new HashMap<String, Set<String>>();
-		
-		for (Map.Entry<String, Svar> e: in_svMap.entrySet()){
-			
-			Set<String> d = e.getValue().dependants;
-			d.removeAll(Param.reservedSet);
-			d.removeAll(dvSet);d.removeAll(asSet);d.removeAll(tsSet);d.removeAll(externalSet);
-			varDependentMap.put(e.getKey(), d);
-			varTypeMap.put(e.getKey(), "Svar");
-		}	
-	}
-
-	public Sort(Map<String, Alias> in_asMap, Set<String> svSet, Set<String>dvSet, Set<String>tsSet, Set<String>externalSet){
-
-		varDependentMap = new HashMap<String, Set<String>>();
-		
-		for (Map.Entry<String, Alias> e: in_asMap.entrySet()){
-			
-			Set<String> d = e.getValue().dependants;
-			d.removeAll(Param.reservedSet);
-			d.removeAll(dvSet);d.removeAll(svSet);d.removeAll(tsSet);d.removeAll(externalSet);
-			varDependentMap.put(e.getKey(), d);
-			varTypeMap.put(e.getKey(), "Alias");
-		}	
-	}
-	
 	public Set<String> sort(ArrayList<String> toBeSortedList){
 		
 		toBeSortedList.clear();

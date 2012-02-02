@@ -116,7 +116,7 @@ public class StudyParser{
       //System.out.println("thisModelDataSet.wtList : "+thisModelDataSet.wtList);
       thisModelDataSet.wtMap = ds.wtMap;
       
-      //Tools.mapRemoveAll(thisModelDataSet.wtMap, thisModelDataSet.wtSlackSurplusList);
+
       
 
       thisModelDataSet.incFileList = ds.incFileList;
@@ -283,21 +283,10 @@ public class StudyParser{
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	} 
-
-    
-//	  // find the previous global dvar names excluding current dvar names
-//      Set<String> globalDvarNames = cumulative_global_replace_redefined.dvSet_global;
-//      globalDvarNames.removeAll(model_dataset.dvSet);    
+   
       
       // put all previous global vars into current cycle 
-      model_dataset.overwrite_set(cumulative_global_replace_redefined);
-      
-//      // create new instances of previous global dvar
-//      Map<String, Dvar> t = cumulative_global_replace_redefined.dvMap;
-//      for (String key: globalDvarNames){
-//    	  model_dataset.dvMap.put(key, new Dvar(t.get(key)));
-//      }
-   
+      model_dataset.overwrite_set(cumulative_global_replace_redefined);   
       
       //LogUtils.importantMsg("Finish adding previous global vars into model: "+modelName);
       /// finish adding globals
@@ -761,42 +750,6 @@ private static Map<String, SimulationDataSet> getNewDataSet(Set<String> adhoc_in
 	private static boolean sortDependency(SimulationDataSet model_dataset, boolean rewrite_list_based_on_dependency) {
 		boolean OK = true;
 
-		// // sort Svar
-		// Sort sortSV = new Sort(model_dataset.svMap, model_dataset.asSet,
-		// model_dataset.dvSet, model_dataset.tsSet, model_dataset.exSet,
-		// "forSV");
-		//
-		// ArrayList<String> sortedSvList = new ArrayList<String>();
-		//
-		// Set<String> var_with_unknown = sortSV.sort(sortedSvList);
-		// if (var_with_unknown.size() > 0) OK = false;
-		//
-		// model_dataset.svSet_unknown = var_with_unknown;
-		//
-		// if (rewrite_list_based_on_dependency) {
-		// model_dataset.svList = sortedSvList;
-		// model_dataset.svList.addAll(model_dataset.svSet_unknown);
-		// model_dataset.svSet = new
-		// LinkedHashSet<String>(model_dataset.svList);
-		// }
-		//
-		// // sort Alias
-		// Sort sortAs = new Sort(model_dataset.asMap, model_dataset.svSet,
-		// model_dataset.dvSet, model_dataset.tsSet, model_dataset.exSet);
-		//
-		// ArrayList<String> sortedAsList = new ArrayList<String>();
-		//
-		// var_with_unknown = sortAs.sort(sortedAsList);
-		// if (var_with_unknown.size() > 0) OK = false;
-		//
-		// model_dataset.asSet_unknown = var_with_unknown;
-		//
-		// if (rewrite_list_based_on_dependency) {
-		// model_dataset.asList = sortedAsList;
-		// model_dataset.asList.addAll(model_dataset.asSet_unknown);
-		// model_dataset.asSet = new
-		// LinkedHashSet<String>(model_dataset.asList);
-		// }
 
 		// sort Svar + Alias
 		Sort sort_Sv_As = new Sort(model_dataset.svMap, model_dataset.asMap, model_dataset.dvSet, model_dataset.tsSet, model_dataset.exSet);
