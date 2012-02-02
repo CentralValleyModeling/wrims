@@ -27,37 +27,6 @@ public class Timeseries implements Serializable {
 		fromWresl = Param.undefined;
 	}
 	
-	public String equalEva(){
-		
-		String s = "|";
-				
-		
-		String temp = scope+s+dssBPart+format+s+kind+s+units+s+convertToUnits+s;
-		
-		return temp;
-	}
-
-	@Override
-	public boolean equals(Object obj)
-	{
-
-		if ((obj == null) || (obj.getClass() != this.getClass())) {
-			return false;
-		}
-
-		else if (((Timeseries) obj).equalEva() == null) {
-			return false;
-		}
-
-		else if (this.equalEva() == ((Timeseries) obj).equalEva()) {
-			return true;
-		}
-
-		else {
-			return false;
-		}
-	}
-	
 	public void setData(IntDouble data){
 		this.data=data;
 	}

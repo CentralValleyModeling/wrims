@@ -69,35 +69,6 @@ public class Dvar implements Serializable {
 		data = null; // this is not copied to new Dvar
 	}	
 	
-	public String equalEva(){
-		
-		String s = "|";
-		String temp = scope+s+integer+s+format+s+kind+s+units+lowerBound+upperBound;
-		
-		return temp;
-	}
-
-	@Override
-	public boolean equals(Object obj)
-	{
-
-		if ((obj == null) || (obj.getClass() != this.getClass())) {
-			return false;
-		}
-
-		else if (((Dvar) obj).equalEva() == null) {
-			return false;
-		}
-
-		else if (this.equalEva() == ((Dvar) obj).equalEva()) {
-			return true;
-		}
-
-		else {
-			return false;
-		}
-	}
-	
 	public void setData(IntDouble data){
 		this.data=data;
 	}

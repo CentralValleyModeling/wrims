@@ -2,7 +2,6 @@ package wrimsv2.commondata.wresldata;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -28,7 +27,6 @@ public class Goal implements Serializable {
 	public ArrayList<String> caseExpression;
 	public Set<String> expressionDependants;
 	public ArrayList<EvaluatorParser> caseExpressionParsers;
-//	public ArrayList<String> casePenalty;
 	public String fromWresl;
 	public Set<String> neededVarInCycleSet;
 	public boolean needVarFromEarlierCycle;
@@ -44,55 +42,9 @@ public class Goal implements Serializable {
 		caseCondition  = new ArrayList<String>();
 		caseExpression = new ArrayList<String>();
 		expressionDependants = new HashSet<String>();
-//		casePenalty    = new ArrayList<String>();
 		fromWresl = Param.undefined;
 		neededVarInCycleSet = new HashSet<String>();
 		needVarFromEarlierCycle = false;
-	}
-	
-	public String equalEva(){
-		
-		String s = "|";
-		String caseNameStr="";
-		String caseConditionStr="";
-//		String casePenaltyStr="";
-		String caseExpressionStr="";
-//		String case_lhs_gt_rhs_str="";
-//		String case_lhs_lt_rhs_str="";
-		
-		for (String i: caseName){caseNameStr = caseNameStr + s + i;}
-		for (String i: caseCondition){caseConditionStr = caseConditionStr + s + i;}
-		for (String i: caseExpression){caseExpressionStr = caseExpressionStr + s + i;}	
-		
-		//TODO: add expressionDependants
-//		for (String i: casePenalty){casePenaltyStr = casePenaltyStr + s + i;}	
-//		for (String i: case_lhs_gt_rhs){case_lhs_gt_rhs_str = case_lhs_gt_rhs_str + s + i;}	
-//		for (String i: case_lhs_lt_rhs){case_lhs_lt_rhs_str = case_lhs_lt_rhs_str + s + i;}	
-		
-		String temp = scope+s+lhs+s+caseNameStr+caseConditionStr+s+caseExpressionStr;
-		
-		return temp;
-	}
-
-	@Override
-	public boolean equals(Object obj)
-	{
-
-		if ((obj == null) || (obj.getClass() != this.getClass())) {
-			return false;
-		}
-
-		else if (((Goal) obj).equalEva() == null) {
-			return false;
-		}
-
-		else if (this.equalEva() == ((Goal) obj).equalEva()) {
-			return true;
-		}
-
-		else {
-			return false;
-		}
 	}
 }
 	

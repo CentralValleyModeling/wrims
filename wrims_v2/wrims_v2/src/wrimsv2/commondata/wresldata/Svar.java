@@ -71,45 +71,6 @@ public class Svar implements Serializable {
 		//data = new IntDouble(s.data.getData(),s.data.isInt()); 
 	}	
 	
-	public String equalEva(){
-		
-		String s = "|";
-		String caseNameStr="";
-		String caseConditionStr="";
-		String caseExpressionStr="";
-		
-		for (String i: caseName){caseNameStr = caseNameStr + s + i;}
-		for (String i: caseCondition){caseConditionStr = caseConditionStr + s + i;}
-		for (String i: caseExpression){caseExpressionStr = caseExpressionStr + s + i;}
-		
-		
-		String temp = scope+s+dssBPart+format+s+kind+s+units+s+convertToUnits+s+
-		              caseNameStr+caseConditionStr+s+caseExpressionStr;
-		
-		return temp;
-	}
-
-	@Override
-	public boolean equals(Object obj)
-	{
-
-		if ((obj == null) || (obj.getClass() != this.getClass())) {
-			return false;
-		}
-
-		else if (((Svar) obj).equalEva() == null) {
-			return false;
-		}
-
-		else if (this.equalEva() == ((Svar) obj).equalEva()) {
-			return true;
-		}
-
-		else {
-			return false;
-		}
-	}
-	
 	public void setData(IntDouble data){
 		this.data=data;
 	}

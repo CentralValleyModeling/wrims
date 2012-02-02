@@ -8,7 +8,7 @@ import wrimsv2.components.IntDouble;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 
 
-public class Alias extends Var implements Serializable {
+public class Alias implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	public String scope;
@@ -33,35 +33,6 @@ public class Alias extends Var implements Serializable {
 		data = null;
 		neededVarInCycleSet = new HashSet<String>();
 		needVarFromEarlierCycle = false;
-	}
-	
-	public String equalEva(){
-		
-		String s = "|";		
-		String temp = scope+s+kind+s+units+s+expression;
-		
-		return temp;
-	}
-
-	@Override
-	public boolean equals(Object obj)
-	{
-
-		if ((obj == null) || (obj.getClass() != this.getClass())) {
-			return false;
-		}
-
-		else if (((Alias) obj).equalEva() == null) {
-			return false;
-		}
-
-		else if (this.equalEva() == ((Alias) obj).equalEva()) {
-			return true;
-		}
-
-		else {
-			return false;
-		}
 	}
 	
 	public void setData(IntDouble data){

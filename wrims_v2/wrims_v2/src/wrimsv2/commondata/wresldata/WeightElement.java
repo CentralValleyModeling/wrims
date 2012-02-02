@@ -1,8 +1,6 @@
 package wrimsv2.commondata.wresldata;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-
 import wrimsv2.evaluator.ValueEvaluatorParser;
 
 
