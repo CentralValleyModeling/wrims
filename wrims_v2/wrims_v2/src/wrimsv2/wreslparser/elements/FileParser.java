@@ -229,15 +229,6 @@ public class FileParser {
 		
 		WreslTreeParser.mainFile_return parser_return = parser.mainFile();
 		
-		// check wresl version number
-		try {
-			float wresl_version = Float.parseFloat(parser.wresl_version);
-			LogUtils.importantMsg("Wresl version: "+wresl_version);
-		} catch (Exception e) {
-			// TODO: handle exception
-			LogUtils.importantMsg("Wresl version: 2.0");
-		}
-		
 		// / check if sequence contains models not defined
 		ArrayList<String> undefined_models = parser.model_in_sequence;
 		parser.model_in_sequence.removeAll(parser.model_list);
