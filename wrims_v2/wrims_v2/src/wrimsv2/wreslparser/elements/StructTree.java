@@ -501,7 +501,13 @@ public class StructTree
 
   public void dvarStd(String name, String scope, String integer, String kind, String units)
   {
+	  dvarStd(name, scope, integer, kind, units, "0");
+  }
+
+  public void dvarStd(String name, String scope, String integer, String kind, String units, String timeArraySizeStr)
+  {
     name = name.toLowerCase();
+    timeArraySizeStr = timeArraySizeStr.toLowerCase();
     if (kind.length()>0) kind = kind.toLowerCase();
     if (units.length()>0) units = units.toLowerCase();
 
@@ -524,6 +530,7 @@ public class StructTree
     this.dv.lowerBound = Param.dv_std_lowerBound;
     this.dv.upperBound = Param.dv_std_upperBound;
     this.dv.fromWresl = this.S.currentAbsolutePath;
+    this.dv.timeArraySize = timeArraySizeStr;
 
     if (integer != null)
     {
@@ -548,7 +555,13 @@ public class StructTree
 
   public void dvarNonStd(String name, String scope, String integer, String kind, String units, String lowerBound, String upperBound)
   {
+	dvarNonStd(name, scope, integer, kind, units, lowerBound, upperBound, "0");
+  }
+
+  public void dvarNonStd(String name, String scope, String integer, String kind, String units, String lowerBound, String upperBound, String timeArraySizeStr)
+  {
     name = name.toLowerCase();
+    timeArraySizeStr = timeArraySizeStr.toLowerCase();
     if (kind != null) kind = kind.toLowerCase();
     if (units != null) units = units.toLowerCase();
     lowerBound = lowerBound.toLowerCase();
@@ -572,6 +585,7 @@ public class StructTree
     this.dv.lowerBound = lowerBound;
     this.dv.upperBound = upperBound;
     this.dv.fromWresl = this.S.currentAbsolutePath;
+    this.dv.timeArraySize = timeArraySizeStr;
     
     if (integer != null){
       this.dv.integer = Param.yes;
@@ -591,7 +605,7 @@ public class StructTree
     }
   }
 
-  public void sequenceOrder(String sequenceName, String order, String modelName, String condition)
+public void sequenceOrder(String sequenceName, String order, String modelName, String condition)
   {
     sequenceName = sequenceName.toLowerCase();
     order = order.toLowerCase();

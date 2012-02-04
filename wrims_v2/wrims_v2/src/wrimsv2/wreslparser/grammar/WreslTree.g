@@ -14,6 +14,8 @@ tokens {
 	Value; Case ; Dependants; VarInCycle;
 	Alias; Expression;
 	Dvar; Dvar_std; Dvar_nonStd; Dvar_std; Dvar_nonStd_local; Dvar_integer;
+	DvarTimeArray_std; DvarTimeArray_nonStd;  
+	TimeArraySize; 
 	Svar_case; Svar_dss; Svar_const; Svar_sum; Sum_hdr; B_part;
 	Svar_table; Select; From; Where_content; Where_item_number; Given; Use;
 	Goal_simple; Goal_no_case; Goal_case ; Lhs_gt_rhs; Lhs_lt_rhs; Never; Penalty;
@@ -92,7 +94,7 @@ tokens {
 }
 
 mainFile
-	: ( version_tag! )? sequence+ model+
+	: sequence+ model+
 	  EOF! 
 	;
 
@@ -345,14 +347,21 @@ svar_dss :
 	-> ^(Svar_dss  Scope[$sc.text]  IDENT B_part[$b.text] Kind $k Units $u CONVERT[$c.text]) 
 	;		
 	
+timeArraySize 
+	: INTEGER | function_to ;
+	
+function_to : ( 'to' | 'TO' | 'To' ) '(' IDENT  ')';	
+	
 dvar_std :
-	( '[' sc=LOCAL ']' )? IDENT '{' STD KIND k=STRING UNITS u=STRING '}' 	
-	->  ^(Dvar_std  Scope[$sc.text] IDENT Kind $k Units $u) 
-	;	
+	( '[' sc=LOCAL ']' )? ( '(' ta=timeArraySize ')')? IDENT '{' STD KIND k=STRING UNITS u=STRING '}' 	
+	->  {ta==null}? ^(Dvar_std                                  Scope[$sc.text] IDENT Kind $k Units $u) 
+	->	            ^(DvarTimeArray_std TimeArraySize[$ta.text] Scope[$sc.text] IDENT Kind $k Units $u)
+	; 	
 
 dvar_nonStd :
-	( '[' sc=LOCAL ']' )? IDENT '{' lower_and_or_upper KIND k=STRING UNITS u=STRING '}' 
-	->  ^(Dvar_nonStd Scope[$sc.text] IDENT lower_and_or_upper Kind $k Units $u) 
+	( '[' sc=LOCAL ']' )? ( '(' ta=timeArraySize ')')? IDENT '{' lower_and_or_upper KIND k=STRING UNITS u=STRING '}' 
+	->  {ta==null}? ^(Dvar_nonStd                                  Scope[$sc.text] IDENT lower_and_or_upper Kind $k Units $u) 
+	->              ^(DvarTimeArray_nonStd TimeArraySize[$ta.text] Scope[$sc.text] IDENT lower_and_or_upper Kind $k Units $u) 
 	;	
 
 lower_and_or_upper : lower_upper
@@ -410,7 +419,10 @@ term_simple : ident | number | function  ;
 
 ident: IDENT ;
 
+array_iterator : '$m' ;
+
 term :	      i=ident {$expression::SV.add($i.text.toLowerCase());} 
+	 |        array_iterator
 	 |         number 
 	 |        function 
 	 |       '(' e=expression ')' {$expression::SV.addAll($e.members);$expression::varInCycle.addAll($e.setVarInCycle);} 
@@ -506,6 +518,7 @@ bin : OR -> OR[".OR."] | AND -> AND[".AND."] ;
 //	: RANGE '(' MONTH ',' MONTH_CONST ',' MONTH_CONST ')' ;
 
 function : external_func | max_func | min_func | int_func | var_model ;
+
 function_logical : range_func ;
 
 var_model 

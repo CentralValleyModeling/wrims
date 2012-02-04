@@ -118,7 +118,7 @@ scope { String scop ; Goal gl; String case_condition; int caseNumber; Map<String
 @init { $goal::scop = null; $goal::gl = new Goal(); $goal::caseNumber=0; $goal::case_condition="always";} 
 : goal_simple | goal_nocase | goal_case ;
 
-dvar : dvar_std | dvar_nonStd    ;
+dvar : dvar_std | dvar_nonStd | dvar_timeArray_std | dvar_timeArray_nonStd   ;
 
 svar : svar_dss | svar_expr | svar_sum | svar_table | svar_case;
 
@@ -396,12 +396,21 @@ dvar_std  :
        ^(Dvar_std sc=Scope i=IDENT Kind k=STRING Units u=STRING)
        { F.dvarStd($i.text, $sc.text, null, Tools.strip($k.text), Tools.strip($u.text)); }
 	;
-	
+
 dvar_nonStd : 
 	   ^(Dvar_nonStd sc=Scope i=IDENT Lower lowerbound=LimitType Upper upperbound=LimitType Kind k=STRING Units u=STRING)
 	   {F.dvarNonStd($i.text, $sc.text, null, Tools.strip($k.text), Tools.strip($u.text),  $lowerbound.text, $upperbound.text);}
 	;
+
+dvar_timeArray_std  :
+       ^(DvarTimeArray_std ta=TimeArraySize sc=Scope i=IDENT Kind k=STRING Units u=STRING)
+       { F.dvarStd($i.text, $sc.text, null, Tools.strip($k.text), Tools.strip($u.text), $ta.text ); }
+	;
 			
+dvar_timeArray_nonStd : 
+	   ^(DvarTimeArray_nonStd ta=TimeArraySize sc=Scope i=IDENT Lower lowerbound=LimitType Upper upperbound=LimitType Kind k=STRING Units u=STRING)
+	   {F.dvarNonStd($i.text, $sc.text, null, Tools.strip($k.text), Tools.strip($u.text),  $lowerbound.text, $upperbound.text, $ta.text);}
+	;
 	
 /// Expression ///
 term

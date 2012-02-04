@@ -32,7 +32,7 @@ public class WriteCSV {
 	  public static String external_header ="FUNCTION,FILE,FROM_WRESL_FILE";
 	  public static String svar_header   ="NAME,CASE,ORDER,CONDITION,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,USED_IN_LATER_CYCLE";
 	  public static String timeseries_header ="NAME,B_PART,TYPE,UNITS,CONVERT_TO_UNITS,FROM_WRESL_FILE";
-	  public static String dvar_header ="NAME,CONDITION,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE,USED_IN_LATER_CYCLE";	  
+	  public static String dvar_header ="NAME,CONDITION,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE,USED_IN_LATER_CYCLE,TIME_ARRAY_SIZE";	  
 	  public static String alias_header ="NAME,TYPE,UNITS,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,USED_IN_LATER_CYCLE";
 	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,";
 	  private static ModelDataSet currentModelDataSet;
@@ -414,6 +414,10 @@ public class WriteCSV {
 		    	if (currentModelDataSet.dvarUsedByLaterCycle.contains(k)) usedByLaterCycle = true;
 		    	
 		    	out.print( usedByLaterCycle);
+		    	
+		    	out.print(Param.csv_seperator);
+		    	
+		    	out.print(d.timeArraySize);
 		    	
 				out.print("\n");	
 		    	}
