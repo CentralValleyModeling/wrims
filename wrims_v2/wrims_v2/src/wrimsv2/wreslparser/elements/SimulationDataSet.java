@@ -1070,13 +1070,13 @@ public SimulationDataSet overwrittenWith_set(SimulationDataSet s) {
     this.svSet_global.addAll(s.svSet_global);
     this.svSet_local.addAll(s.svSet_local);
     
-    /// experiment with deep copy
-    Map<String, Svar> t = new HashMap<String, Svar>();
-    for (Map.Entry<String, Svar> e : s.svMap.entrySet()){
-    	t.put(e.getKey(), new Svar(e.getValue()));
-    }
+//    /// experiment with deep copy
+//    Map<String, Svar> t = new HashMap<String, Svar>();
+//    for (Map.Entry<String, Svar> e : s.svMap.entrySet()){
+//    	t.put(e.getKey(), new Svar(e.getValue()));
+//    }
     
-    this.svMap.putAll(t);
+    this.svMap.putAll(s.svMap);
 
     this.tsSet.addAll(s.tsSet);
     this.tsSet_global.addAll(s.tsSet_global);
