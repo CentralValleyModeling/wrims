@@ -13,14 +13,7 @@ define S_Trntylevel2 {timeseries kind 'STORAGE-LEVEL' units 'TAF'}
 define(CAMmonths) S_Trnty_2 {std kind 'STORAGE-ZONE' units 'TAF'}
 goal(CAMmonths) S_TrntyZone2 {S_Trnty_2($m) < S_Trntylevel2($m)-S_Trntylevel1}
 define(CAMmonths) S_Trnty_3 {std kind 'STORAGE-ZONE' units 'TAF'}
-define(CAMmonths) S_Trntylevel4 {
-			case beforeSep{
-				condition month+$m<=12
-				select target from res_level where res_num=1,level=4,month=month+$m}
-			case afterSep{
-				condition month+$m>12
-				select target from res_level where res_num=1,level=4,month=month+$m-12}
-		}
+define(CAMmonths) S_Trntylevel4 {select target from res_level where res_num=1,level=4,month=monthvalue(month+$m)}
 define(CAMmonths) S_Trnty_4 {std kind 'STORAGE-ZONE' units 'TAF'}
 define S_Trntylevel5 {value 2447.}
 define(CAMmonths) S_Trnty_5 {std kind 'STORAGE-ZONE' units 'TAF'}
@@ -33,34 +26,13 @@ define E_Trnty {timeseries kind 'EVAPORATION' units 'CFS'}
 define S_Wkytnlevel1 {value 180.}
 define(CAMmonths) S_Wkytn_1 {std kind 'STORAGE-ZONE' units 'TAF'}
 goal(CAMmonths) S_WkytnZone1 {S_Wkytn_1($m) < S_Wkytnlevel1}
-define(CAMmonths) S_Wkytnlevel2 {
-			case beforeSep{
-				condition month+$m<=12
-				select target from res_level where res_num=3,level=2,month=month+$m}
-			case afterSep{
-				conditon month+$m>12
-				select target from res_level where res_num=3,level=2,month=month+$m-12}			
-		}
+define(CAMmonths) S_Wkytnlevel2 {select target from res_level where res_num=3,level=2,month=monthvalue(month+$m)}
 define(CAMmonths) S_Wkytn_2 {std kind 'STORAGE-ZONE' units 'TAF'}
 goal(CAMmonths) S_WkytnZone2 {S_Wkytn_2($m) < S_Wkytnlevel2($m)-S_Wkytnlevel1}
-define(CAMmonths) S_Wkytnlevel3 {
-			case beforeSep{
-				condition month+$m<=12
-				select target from res_level where res_num=3,level=3,month=month+$m}
-			case afterSep{
-				condition month+$m>12
-				select target from res_level where res_num=3,level=3,month=month+$m-12}
-		}	
+define(CAMmonths) S_Wkytnlevel3 {select target from res_level where res_num=3,level=3,month=monthvlaue(month+$m)}	
 define(CAMmonths) S_Wkytn_3 {std kind 'STORAGE-ZONE' units 'TAF'}
 goal(CAMmonths) S_WkytnZone3 {S_Wkytn_3($m) < S_Wkytnlevel3($m)-S_Wkytnlevel2($m)}
-define(CAMmonths) S_Wkytnlevel4 {
-			case beforeSep{
-				condition month+$m<=12
-				select target from res_level where res_num=3,level=4,month=month+$m}
-			case afterSep{
-				condition month+$m>12
-				select target from res_level where res_num=3,level=4,month=month+$m-12}
-		}
+define(CAMmonths) S_Wkytnlevel4 {select target from res_level where res_num=3,level=4,month=monthvalue(month+$m)}
 define(CAMmonths) S_Wkytn_4 {std kind 'STORAGE-ZONE' units 'TAF'}
 goal(CAMmonths) S_WkytnZone4 {S_Wkytn_4($m) < S_Wkytnlevel4($m)-S_Wkytnlevel3($m)}
 define S_Wkytnlevel5 {value 240.}

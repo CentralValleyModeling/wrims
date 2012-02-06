@@ -7,16 +7,9 @@ Sets minimum flow on Trinity River below Lewiston in CAM
 *************************************/
 
 define minflow_C_Lewiston(CAMmonths) {
-	case beforeSep{
-		condition month+$m<=12
-       		select       river_q
-       		from         Trinitymin
-       		where        month=month+$m, wyt_TRIN=wyt_TRIN}
-       	case afterSep{
-		condition month+$m>12
-	       	select       river_q
-	       	from         Trinitymin
-       		where        month=month+$m-12, wyt_TRIN=wyt_TRIN}
+   	select       river_q
+       	from         Trinitymin
+       	where        month=monthvalue(month+$m), wyt_TRIN=wyt_TRIN($m)}
 }
 
 goal(CAMmonths) TrinityMin {C_Lwstn_MIF($m) < minflow_C_Lewiston($m) }
