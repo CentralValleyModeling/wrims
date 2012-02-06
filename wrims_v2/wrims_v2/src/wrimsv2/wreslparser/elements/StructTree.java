@@ -250,8 +250,14 @@ public class StructTree
     }
   }
 
-  public void svarCase(String name, String scope, Svar sv, String dependants, String varInCycle)
+  public void svarCase(String name, String scope, Svar sv, String dependants, String varInCycle)  
   {
+	  svarCase(name, scope, sv, dependants, varInCycle, "0"); 
+  }
+  
+  public void svarCase(String name, String scope, Svar sv, String dependants, String varInCycle, String timeArraySizeStr)
+  {
+	timeArraySizeStr = timeArraySizeStr.toLowerCase();  
     name = name.toLowerCase();
     if (dependants != null) dependants = dependants.toLowerCase();
     if (varInCycle != null) varInCycle = varInCycle.toLowerCase();
@@ -268,6 +274,7 @@ public class StructTree
     this.S.var_all.put(name, "svar");
 
     sv.fromWresl = this.S.currentAbsolutePath;
+    sv.timeArraySize = timeArraySizeStr;
 
     if (dependants != null) sv.dependants = Tools.convertStrToSet(dependants);
     if (varInCycle != null) { 
@@ -326,6 +333,12 @@ public class StructTree
 
   public void svarExpression(String name, String scope, String expression, String dependants, String varInCycle)
   {
+	  svarExpression(name, scope, expression, dependants, varInCycle, "0");
+  }
+  
+  public void svarExpression(String name, String scope, String expression, String dependants, String varInCycle, String timeArraySizeStr)
+  {
+	timeArraySizeStr = timeArraySizeStr.toLowerCase();
     name = name.toLowerCase();
     expression = expression.toLowerCase();
     if (dependants != null) dependants = dependants.toLowerCase();
@@ -351,6 +364,7 @@ public class StructTree
     this.sv.caseCondition.add(condition);
     this.sv.caseExpression.add(expression);
     this.sv.fromWresl = this.S.currentAbsolutePath;
+    this.sv.timeArraySize = timeArraySizeStr;
 
     if (dependants != null) this.sv.dependants = Tools.convertStrToSet(dependants);
     if (varInCycle != null) { 

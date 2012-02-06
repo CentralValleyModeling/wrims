@@ -16,6 +16,7 @@ tokens {
 	Dvar; Dvar_std; Dvar_nonStd; Dvar_std; Dvar_nonStd_local; Dvar_integer;
 	DvarTimeArray_std; DvarTimeArray_nonStd;  
 	TimeArraySize; 
+	SvarTimeArray_const; SvarTimeArray_case;
 	Svar_case; Svar_dss; Svar_const; Svar_sum; Sum_hdr; B_part;
 	Svar_table; Select; From; Where_content; Where_item_number; Given; Use;
 	Goal_simple; Goal_no_case; Goal_case ; Lhs_gt_rhs; Lhs_lt_rhs; Never; Penalty;
@@ -109,6 +110,7 @@ evaluator
 
 pattern
 	: dvar | svar | goal | includeFile | alias | weight_table | external | integer
+	| svar_timeArray
 	;
 
 integer
@@ -281,12 +283,16 @@ penalty returns[String w, boolean isZero, boolean isNegative]
 		} ;
 
 svar : DEFINE! (svar_dss | svar_expr | svar_sum | svar_table | svar_case ) ;
+
+svar_timeArray :  DEFINE! ( svar_timeArray_expr | svar_timeArray_case ) ;
 		
 dvar : DEFINE! (dvar_std | dvar_nonStd ) ;	
 
 svar_case : ( '[' sc=LOCAL? ']' )? i=IDENT '{' case_content+ '}'
-->  ^(Svar_case Scope[$sc.text] $i  case_content+ )  ;
+->     ^(Svar_case Scope[$sc.text] $i  case_content+ )  ;
 
+svar_timeArray_case : ( '[' sc=LOCAL? ']' )? '(' ta=timeArraySize ')' i=IDENT '{' case_content+ '}'
+->     ^(SvarTimeArray_case TimeArraySize[$ta.text] Dependants[$ta.dependant] Scope[$sc.text] $i  case_content+ )  ;
 
 case_content 
 @init{ String dependants_nullsRemoved = ""; String varInCycle_nullsRemoved = ""; }	
@@ -330,6 +336,11 @@ svar_expr :
 	->  ^(Svar_const Scope[$sc.text] IDENT Expression[$e.text] Dependants[$e.dependants] VarInCycle[$e.strVarInCycle])  
 	;	
 
+svar_timeArray_expr :
+	'(' ta=timeArraySize ')' ( '[' sc=LOCAL ']' )? IDENT '{' VALUE  e=expression'}'	
+	->  ^(SvarTimeArray_const TimeArraySize[$ta.text] Scope[$sc.text] IDENT Expression[$e.text] Dependants[$e.dependants+" "+$ta.dependant] VarInCycle[$e.strVarInCycle])  
+	;
+
 svar_sum : ( '[' sc=LOCAL ']' )? IDENT '{' sum_content '}' 
 	->  ^(Svar_sum  Scope[$sc.text] IDENT sum_content )  
 	;
@@ -348,18 +359,23 @@ svar_dss :
 	;		
 	
 timeArraySize 
-	: INTEGER | function_to ;
+returns[String dependant] 
+@init { String dependant = ""; }
+	: INTEGER | function_to 
+	| ( i=IDENT { $dependant=$i.text; } )  
+	| ( i=IDENT '(' '-'? INTEGER ')' { $dependant=$i.text; } )  
+	;
 	
 function_to : ( 'to' | 'TO' | 'To' ) '(' IDENT  ')';	
 	
 dvar_std :
-	( '[' sc=LOCAL ']' )? ( '(' ta=timeArraySize ')')? IDENT '{' STD KIND k=STRING UNITS u=STRING '}' 	
+	( '(' ta=timeArraySize ')')? ( '[' sc=LOCAL ']' )? IDENT '{' STD KIND k=STRING UNITS u=STRING '}' 	
 	->  {ta==null}? ^(Dvar_std                                  Scope[$sc.text] IDENT Kind $k Units $u) 
 	->	            ^(DvarTimeArray_std TimeArraySize[$ta.text] Scope[$sc.text] IDENT Kind $k Units $u)
 	; 	
 
 dvar_nonStd :
-	( '[' sc=LOCAL ']' )? ( '(' ta=timeArraySize ')')? IDENT '{' lower_and_or_upper KIND k=STRING UNITS u=STRING '}' 
+	( '(' ta=timeArraySize ')')? ( '[' sc=LOCAL ']' )? IDENT '{' lower_and_or_upper KIND k=STRING UNITS u=STRING '}' 
 	->  {ta==null}? ^(Dvar_nonStd                                  Scope[$sc.text] IDENT lower_and_or_upper Kind $k Units $u) 
 	->              ^(DvarTimeArray_nonStd TimeArraySize[$ta.text] Scope[$sc.text] IDENT lower_and_or_upper Kind $k Units $u) 
 	;	

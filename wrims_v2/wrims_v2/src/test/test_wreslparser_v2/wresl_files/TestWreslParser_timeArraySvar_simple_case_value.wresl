@@ -1,0 +1,40 @@
+
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+
+MODEL first { 
+
+	
+	define I3Jan50 { external test.dll }
+	define I3Feb50 { value 1 }
+	define I3Mar50 { value 1 }
+	define I3Apr50 { value 1 }
+	define I3May50 { value 1 }
+	define I3Jun50 { value 1 }
+	
+	define (To(SEP)) I3 { 
+						  case a { condition month==JAN value I3Jan50($m-month) }
+                          case b { condition month==FEB value I3FEB50($m-month) }
+						  case c { condition month==MAR value I3MAR50($m-month) }
+						  case d { condition month==APR value I3APR50($m-month) }
+					      case e { condition month==MAY value I3MAY50($m-month) }
+						  case f { condition always value I3JUN50($m-month) }
+				  }
+
+	define (someSvar) I4 { 
+						  case a { condition month==JAN value I3Jan50($m-month) }
+                          case b { condition month==FEB value I3FEB50($m-month) }
+				  }				  
+
+}	
+
+
+	
+
+	 
+
+
+ 

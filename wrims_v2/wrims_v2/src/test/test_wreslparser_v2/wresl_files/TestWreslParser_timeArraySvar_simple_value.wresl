@@ -1,0 +1,27 @@
+
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+
+MODEL first { 
+
+	define xyz { value 1}
+	define abc { value 1}
+	
+	define (someSvar) I2 { value xyz($m-month) }
+	define (someTimeFunc(-1)) I3 { value xyz($m-month) }
+	
+	define (To(OCT))[local] I4 { value abc($m-month) }
+
+
+}	
+
+
+	
+
+	 
+
+
+ 

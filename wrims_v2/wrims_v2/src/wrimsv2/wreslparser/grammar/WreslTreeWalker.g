@@ -51,6 +51,7 @@ evaluator
 
 pattern
 	: dvar | svar | goal | includeFile | alias | weight_table | external | integer
+	| svar_timeArray
 	;
 
 integer
@@ -121,6 +122,25 @@ scope { String scop ; Goal gl; String case_condition; int caseNumber; Map<String
 dvar : dvar_std | dvar_nonStd | dvar_timeArray_std | dvar_timeArray_nonStd   ;
 
 svar : svar_dss | svar_expr | svar_sum | svar_table | svar_case;
+
+svar_timeArray : svar_timeArray_expr | svar_timeArray_case ;
+
+svar_timeArray_case
+@init { Svar sv = new Svar(); String dependants=null; String varInCycle=null;}  
+	: ^(SvarTimeArray_case ta=TimeArraySize tad=Dependants sc=Scope i=IDENT  ( c=case_content 
+	{	
+				sv.caseName.add($c.name.toLowerCase());
+				sv.caseCondition.add( Tools.add_space_between_logical( $c.condition.toLowerCase() ) );
+				sv.caseExpression.add($c.expression.toLowerCase());
+				dependants = dependants + " " + $c.dependants;
+				varInCycle = varInCycle + " " + $c.varInCycle;
+			}
+	
+	)+ 
+	) 
+			 {
+			 	F.svarCase($i.text, $sc.text, sv, dependants+" "+$tad.text, varInCycle, $ta.text); }
+;
 
 svar_case 	
 @init { Svar sv = new Svar(); String dependants=null; String varInCycle=null;}  
@@ -385,6 +405,11 @@ sum_content returns[String hdr, String expr, String dependants, String varInCycl
 svar_expr : 
 	   ^(Svar_const sc=Scope i=IDENT v=Expression d=Dependants vc=VarInCycle)
 	   { F.svarExpression($i.text, $sc.text, Tools.replace_seperator($v.text), $d.text, $vc.text ); }
+	;
+
+svar_timeArray_expr : 
+	   ^(SvarTimeArray_const ta=TimeArraySize sc=Scope i=IDENT v=Expression d=Dependants vc=VarInCycle)
+	   { F.svarExpression($i.text, $sc.text, Tools.replace_seperator($v.text), $d.text, $vc.text, $ta.text ); }
 	;
 
 svar_dss :
