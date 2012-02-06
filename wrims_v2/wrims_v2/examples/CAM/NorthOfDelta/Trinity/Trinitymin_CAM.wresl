@@ -1,0 +1,24 @@
+/*************************************
+Trinitymin_CAM.wresl
+
+Hao Xie and Nazrul Islam 2/6/2012
+
+Sets minimum flow on Trinity River below Lewiston in CAM
+*************************************/
+
+define minflow_C_Lewiston(CAMmonths) {
+	case beforeSep{
+		condition month+$m<=12
+       		select       river_q
+       		from         Trinitymin
+       		where        month=month+$m, wyt_TRIN=wyt_TRIN}
+       	case afterSep{
+		condition month+$m>12
+	       	select       river_q
+	       	from         Trinitymin
+       		where        month=month+$m-12, wyt_TRIN=wyt_TRIN}
+}
+
+goal(CAMmonths) TrinityMin {C_Lwstn_MIF($m) < minflow_C_Lewiston($m) }
+
+define(CAMmonths) MIF_C_Lewistondv {alias minflow_C_Lewiston($m) kind 'flow-min-required' units 'cfs'}

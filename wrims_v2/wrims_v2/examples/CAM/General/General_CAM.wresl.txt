@@ -1,0 +1,18 @@
+/*************************************
+General_CAM.wresl
+
+Hao Xie and Nazrul Islam 2/6/2012
+
+General setup for CAM
+*************************************/
+
+define CAMmonths {
+	case OctToDec{
+		condition month<=3
+       		value 3-month
+       	}
+       	case JanToSep{
+		condition month>3
+		value 15-month
+	}
+}

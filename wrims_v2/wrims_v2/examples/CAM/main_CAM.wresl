@@ -1,0 +1,23 @@
+/************************************
+main_CAM.wresl
+
+Hao Xie and Nazrul Islam DWR 2/6/2012
+
+Main file for CAM
+
+**************************************/
+
+SEQUENCE CYCLE1 {
+    model   CAM
+    order   1
+    }
+
+
+    
+MODEL CAM {         !CYCLE 1
+	include 'general\General_CAM.wresl'
+	include 'wytypes\wytypes_CAM.wresl'
+	include 'system\system_CAM.wresl'
+	include 'NorthOfDelta\nod_CAM.wresl'
+}
+

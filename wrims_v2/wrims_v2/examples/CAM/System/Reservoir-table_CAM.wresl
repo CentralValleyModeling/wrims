@@ -1,0 +1,164 @@
+/*************************************
+Reservoir-table_CAM.wresl
+ 
+Hao Xie and Nazrul Islam DWR (2/6/2012)
+
+Reservoir Table for CAM
+***************************************/
+
+define S_Trntylevel1 {value 240.}
+define(CAMmonths) S_Trnty_1 {std kind 'STORAGE-ZONE' units 'TAF'}
+goal(CAMmonths) S_TrntyZone1 {S_Trnty_1($m) < S_Trntylevel1}
+define S_Trntylevel2 {timeseries kind 'STORAGE-LEVEL' units 'TAF'}
+define(CAMmonths) S_Trnty_2 {std kind 'STORAGE-ZONE' units 'TAF'}
+goal(CAMmonths) S_TrntyZone2 {S_Trnty_2($m) < S_Trntylevel2($m)-S_Trntylevel1}
+define(CAMmonths) S_Trnty_3 {std kind 'STORAGE-ZONE' units 'TAF'}
+define(CAMmonths) S_Trntylevel4 {
+			case beforeSep{
+				condition month+$m<=12
+				select target from res_level where res_num=1,level=4,month=month+$m}
+			case afterSep{
+				condition month+$m>12
+				select target from res_level where res_num=1,level=4,month=month+$m-12}
+		}
+define(CAMmonths) S_Trnty_4 {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_Trntylevel5 {value 2447.}
+define(CAMmonths) S_Trnty_5 {std kind 'STORAGE-ZONE' units 'TAF'}
+define(CAMmonths) S_Trnty {std kind 'STORAGE' units 'TAF'} !CLAIR ENGLE LAKE AKA RES_NUM = 1
+goal(CAMmonths) storage_Trnty {S_Trnty($m)=S_Trnty_1($m)+S_Trnty_2($m)+S_Trnty_3($m)+S_Trnty_4($m)+S_Trnty_5($m)}
+define(CAMmonths) F_Trnty {std kind 'FLOW-SPILL-NON-RECOV' units 'CFS'}
+define E_Trnty {timeseries kind 'EVAPORATION' units 'CFS'}
+!define(CAMmonths) relcap_Trnty {select discharge from res_info given storage=1000*S_Trnty(-1) use linear where res_num=1}
+!goal(CAMmonths) maxrelease_Trnty {C_TRNTY<relcap_Trnty}
+define S_Wkytnlevel1 {value 180.}
+define(CAMmonths) S_Wkytn_1 {std kind 'STORAGE-ZONE' units 'TAF'}
+goal(CAMmonths) S_WkytnZone1 {S_Wkytn_1($m) < S_Wkytnlevel1}
+define(CAMmonths) S_Wkytnlevel2 {
+			case beforeSep{
+				condition month+$m<=12
+				select target from res_level where res_num=3,level=2,month=month+$m}
+			case afterSep{
+				conditon month+$m>12
+				select target from res_level where res_num=3,level=2,month=month+$m-12}			
+		}
+define(CAMmonths) S_Wkytn_2 {std kind 'STORAGE-ZONE' units 'TAF'}
+goal(CAMmonths) S_WkytnZone2 {S_Wkytn_2($m) < S_Wkytnlevel2($m)-S_Wkytnlevel1}
+define(CAMmonths) S_Wkytnlevel3 {
+			case beforeSep{
+				condition month+$m<=12
+				select target from res_level where res_num=3,level=3,month=month+$m}
+			case afterSep{
+				condition month+$m>12
+				select target from res_level where res_num=3,level=3,month=month+$m-12}
+		}	
+define(CAMmonths) S_Wkytn_3 {std kind 'STORAGE-ZONE' units 'TAF'}
+goal(CAMmonths) S_WkytnZone3 {S_Wkytn_3($m) < S_Wkytnlevel3($m)-S_Wkytnlevel2($m)}
+define(CAMmonths) S_Wkytnlevel4 {
+			case beforeSep{
+				condition month+$m<=12
+				select target from res_level where res_num=3,level=4,month=month+$m}
+			case afterSep{
+				condition month+$m>12
+				select target from res_level where res_num=3,level=4,month=month+$m-12}
+		}
+define(CAMmonths) S_Wkytn_4 {std kind 'STORAGE-ZONE' units 'TAF'}
+goal(CAMmonths) S_WkytnZone4 {S_Wkytn_4($m) < S_Wkytnlevel4($m)-S_Wkytnlevel3($m)}
+define S_Wkytnlevel5 {value 240.}
+define(CAMmonths) S_Wkytn_5 {std kind 'STORAGE-ZONE' units 'TAF'}
+goal(CAMmonths) S_WkytnZone5 {S_Wkytn_5($m) < S_Wkytnlevel5-S_Wkytnlevel4($m)}
+define(CAMmonths) S_Wkytn {std kind 'STORAGE' units 'TAF'} !WHISKEYTOWN LAKE AKA RES_NUM = 3
+goal(CAMmonths) storage_Wkytn {S_Wkytn($m)=S_Wkytn_1($m)+S_Wkytn_2($m)+S_Wkytn_3($m)+S_Wkytn_4($m)+S_Wkytn_5($m)}
+define(CAMmonths) F_Wkytn {std kind 'FLOW-SPILL-NON-RECOV' units 'CFS'}
+define E_Wkytn {timeseries kind 'EVAPORATION' units 'CFS'}
+!define(CAMmonths) relcap_Wkytn {select discharge from res_info given storage=1000*S_Wkytn(-1) use linear where res_num=3}
+!goal(CAMmonths) maxrelease_Wkytn {C_Wkytn<relcap_Wkytn}
+define S_Shstalevel1 {value 550.}
+define(CAMmonths) S_Shsta_1 {std kind 'STORAGE-ZONE' units 'TAF'}
+goal(CAMmonths) S_ShstaZone1 {S_Shsta_1($m) < S_Shstalevel1}
+define S_Shstalevel2 {timeseries kind 'STORAGE-LEVEL' units 'TAF'}
+define(CAMmonths) S_Shsta_2 {std kind 'STORAGE-ZONE' units 'TAF'}
+goal(CAMmonths) S_ShstaZone2 {S_Shsta_2($m) < S_Shstalevel2($m)-S_Shstalevel1}
+define(CAMmonths) S_Shsta_3 {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_Shstalevel4 {timeseries kind 'STORAGE-LEVEL' units 'TAF'}
+define(CAMmonths) S_Shsta_4 {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_Shstalevel5 {timeseries kind 'STORAGE-LEVEL' units 'TAF'}
+define(CAMmonths) S_Shsta_5 {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_Shstalevel6 {value 4552.}
+define(CAMmonths) S_Shsta_6 {std kind 'STORAGE-ZONE' units 'TAF'}
+define(CAMmonths) S_Shsta {std kind 'STORAGE' units 'TAF'} !SHASTA LAKE AKA RES_NUM = 4
+goal(CAMmonths) storage_Shsta {S_Shsta($m)=S_Shsta_1($m)+S_Shsta_2($m)+S_Shsta_3($m)+S_Shsta_4($m)+S_Shsta_5($m)+S_Shsta_6($m)}
+define(CAMmonths) F_Shsta {std kind 'FLOW-SPILL-NON-RECOV' units 'CFS'}
+define E_Shsta {timeseries kind 'EVAPORATION' units 'CFS'}
+!define(CAMmonths) relcap_Shsta {select discharge from res_info given storage=1000*S_Shsta(-1) use linear where res_num=4}
+!goal(CAMmonths) maxrelease_Shsta {C_Shsta<relcap_Shsta}
+define S_Orovllevel1 {value 29.6}
+define(CAMmonths) S_Orovl_1 {std kind 'STORAGE-ZONE' units 'TAF'}
+goal(CAMmonths) S_OrovlZone1 {S_Orovl_1($m) < S_Orovllevel1}
+define S_Orovllevel2 {value 825.}
+define(CAMmonths) S_Orovl_2 {std kind 'STORAGE-ZONE' units 'TAF'}
+goal(CAMmonths) S_OrovlZone2 {S_Orovl_2($m) < S_Orovllevel2-S_Orovllevel1}
+define(CAMmonths) S_Orovl_3 {std kind 'STORAGE-ZONE' units 'TAF'}
+define(CAMmonths) S_Orovl_4 {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_Orovllevel5 {timeseries kind 'STORAGE-LEVEL' units 'TAF'}
+define(CAMmonths) S_Orovl_5 {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_Orovllevel6 {value 3558.}
+define(CAMmonths) S_Orovl_6 {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_Orovl {std kind 'STORAGE' units 'TAF'} !OROVILLE LAKE AKA RES_NUM = 6
+goal(CAMmonths) storage_Orovl {S_Orovl($m)=S_Orovl_1($m)+S_Orovl_2($m)+S_Orovl_3($m)+S_Orovl_4($m)+S_Orovl_5($m)+S_Orovl_6($m)}
+define(CAMmonths) F_Orovl {std kind 'FLOW-SPILL-NON-RECOV' units 'CFS'}
+define E_Orovl {timeseries kind 'EVAPORATION' units 'CFS'}
+!define(CAMmonths) relcap_Orovl {select discharge from res_info given storage=1000*S_Orovl(-1) use linear where res_num=6}
+!goal(CAMmonths) maxrelease_Orovl {C_Orovl<relcap_Orovl}
+define S_Folsmlevel1 {value 90.}
+define(CAMmonths) S_Folsm_1 {std kind 'STORAGE-ZONE' units 'TAF'}
+goal(CAMmonths) S_FolsmZone1 {S_Folsm_1($m) < S_Folsmlevel1}
+define S_Folsmlevel2 {timeseries kind 'STORAGE-LEVEL' units 'TAF'}
+define(CAMmonths) S_Folsm_2 {std kind 'STORAGE-ZONE' units 'TAF'}
+goal(CAMmonths) S_FolsmZone2 {S_Folsm_2($m) < S_Folsmlevel2($m)-S_Folsmlevel1}
+define(CAMmonths) S_Folsm_3 {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_Folsmlevel4 {timeseries kind 'STORAGE-LEVEL' units 'TAF'}
+define(CAMmonths) S_Folsm_4 {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_Folsmlevel5 {timeseries kind 'STORAGE-LEVEL' units 'TAF'}
+define(CAMmonths) S_Folsm_5 {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_Folsmlevel6 {value 975.}
+define(CAMmonths) S_Folsm_6 {std kind 'STORAGE-ZONE' units 'TAF'}
+define(CAMmonths) S_Folsm {std kind 'STORAGE' units 'TAF'} !FOLSOM LAKE AKA RES_NUM = 8
+goal(CAMmonths) storage_Folsm {S_Folsm($m)=S_Folsm_1($m)+S_Folsm_2($m)+S_Folsm_3($m)+S_Folsm_4($m)+S_Folsm_5($m)+S_Folsm_6($m)}
+define(CAMmonths) F_Folsm {std kind 'FLOW-SPILL-NON-RECOV' units 'CFS'}
+define E_Folsm {timeseries kind 'EVAPORATION' units 'CFS'}
+!define(CAMmonths) relcap_Folsm {select discharge from res_info given storage=1000*S_Folsm(-1) use linear where res_num=8}
+!goal(CAMmonths) maxrelease_Folsm {C_Folsm<relcap_Folsm}
+define S_SLCVPlevel1 {value 45.}
+define(CAMmonths) S_SLCVP_1 {std kind 'STORAGE-ZONE' units 'TAF'}
+goal(CAMmonths) S_SLCVPZone1 {S_SLCVP_1($m) < S_SLCVPlevel1}
+define S_SLCVPlevel2 {value 45.}
+define(CAMmonths) S_SLCVP_2 {std kind 'STORAGE-ZONE' units 'TAF'}
+goal(CAMmonths) S_SLCVPZone2 {S_SLCVP_2($m) < S_SLCVPlevel2-S_SLCVPlevel1}
+define(CAMmonths) S_SLCVP_3 {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_SLCVPlevel4 {value 972.}
+define(CAMmonths) S_SLCVP_4 {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_SLCVPlevel5 {value 972.}
+define(CAMmonths) S_SLCVP_5 {std kind 'STORAGE-ZONE' units 'TAF'}
+define(CAMmonths) S_SLCVP {std kind 'STORAGE' units 'TAF'} !CVP SAN LUIS RESERVOIR AKA RES_NUM = 11
+goal(CAMmonths) storage_SLCVP {S_SLCVP($m)=S_SLCVP_1($m)+S_SLCVP_2($m)+S_SLCVP_3($m)+S_SLCVP_4($m)+S_SLCVP_5($m)}
+define(CAMmonths) F_SLCVP {std kind 'FLOW-SPILL-NON-RECOV' units 'CFS'}
+define E_SLCVP {timeseries kind 'EVAPORATION' units 'CFS'}
+!define(CAMmonths) relcap_SLCVP {select discharge from res_info given storage=1000*S_SLCVP(-1) use linear where res_num=11}
+!goal(CAMmonths) maxrelease_SLCVP {C_SLCVP<relcap_SLCVP}
+define S_SLSWPlevel1 {value 55.}
+define(CAMmonths) S_SLSWP_1 {std kind 'STORAGE-ZONE' units 'TAF'}
+goal(CAMmonths) S_SLSWPZone1 {S_SLSWP_1($m) < S_SLSWPlevel1}
+define S_SLSWPlevel2 {value 55}
+define(CAMmonths) S_SLSWP_2 {std kind 'STORAGE-ZONE' units 'TAF'}
+goal(CAMmonths) S_SLSWPZone2 {S_SLSWP_2($m) < S_SLSWPlevel2-S_SLSWPlevel1}
+define(CAMmonths) S_SLSWP_3 {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_SLSWPlevel4 {value 1067.}
+define(CAMmonths) S_SLSWP_4 {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_SLSWPlevel5 {value 1067.}
+define(CAMmonths) S_SLSWP_5 {std kind 'STORAGE-ZONE' units 'TAF'}
+define(CAMmonths) S_SLSWP {std kind 'STORAGE' units 'TAF'} !SWP SAN LUIS RESERVOIR AKA RES_NUM = 12
+goal(CAMmonths) storage_SLSWP {S_SLSWP($m)=S_SLSWP_1($m)+S_SLSWP_2($m)+S_SLSWP_3($m)+S_SLSWP_4($m)+S_SLSWP_5($m)}
+define(CAMmonths) F_SLSWP {std kind 'FLOW-SPILL-NON-RECOV' units 'CFS'}
+define E_SLSWP {timeseries kind 'EVAPORATION' units 'CFS'}
+!define(CAMmonths) relcap_SLSWP {select discharge from res_info given storage=1000*S_SLSWP(-1) use linear where res_num=12}
+!goal(CAMmonths) maxrelease_SLSWP {C_SLSWP<relcap_SLSWP}
