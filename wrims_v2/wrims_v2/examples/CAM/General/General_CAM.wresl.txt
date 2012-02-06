@@ -16,3 +16,13 @@ define CAMmonths {
 		value 15-month
 	}
 }
+
+define(CAMmonths) mv{
+	Case OctToAug{
+		condition mod(month+$m, 12)<>0
+		value mod(month+$m, 12)
+	Case Sep{
+		always
+		value 12
+	}
+}

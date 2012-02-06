@@ -31,14 +31,7 @@ define(CAMmonths) C_Wilkns_MIF_DAILY {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
 define(CAMmonths) C_Wilkns_EXC {std kind 'FLOW-EXCESS-INSTREAM' units 'CFS'}
 goal(CAMmonths) C_Wilknstotal {C_Wilkns($m)=C_Wilkns_MIF($m)+C_Wilkns_MIF_DAILY($m)+C_Wilkns_EXC($m)}
 define(CAMmonths) C_Orovl {lower 0. upper 12913.*taf_cfs($m) kind 'FLOW-CHANNEL' units 'CFS'} !FEATHER RIVER DOWNSTREAM OF OROVILLE
-define(CAMmonths) minflow_C_Orovl {
-			case beforeSep{
-				condition month+$m<=12
-				select minflow from minflow where C_arc=200.1,month=month+$m} !use values in the range of 700-800 to replace 600 cfs
-			case afterSep{
-				condition month+$m>12
-				select minflow from minflow where C_arc=200.1,month=month+$m-12} !use values in the range of 700-800 to replace 600 cfs	
-		}
+define(CAMmonths) minflow_C_Orovl {select minflow from minflow where C_arc=200.1,month=mv($m)} !use values in the range of 700-800 to replace 600 cfs
 define(CAMmonths) C_Orovl_MIF {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
 define(CAMmonths) C_Orovl_EXC {std kind 'FLOW-EXCESS-INSTREAM' units 'CFS'}
 goal(CAMmonths) C_Orovltotal {C_Orovl($m)=C_Orovl_MIF($m)+C_Orovl_EXC($m)}

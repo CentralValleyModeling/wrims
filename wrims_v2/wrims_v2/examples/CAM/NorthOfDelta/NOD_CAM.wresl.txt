@@ -11,4 +11,5 @@ Include 'Clear_Creek\clear_ck_min_CAM.wresl'
 Include 'Trinity\Trinitymin_CAM.wresl' 
 Include 'Sacramento\keswickmin_CAM.wresl'   
 Include 'Aermican\Aermicanmin_CAM.wresl' 
+Include 'Feather\feather_special_CAM.wresl'
 

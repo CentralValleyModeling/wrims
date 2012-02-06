@@ -9,7 +9,7 @@ Sets minimum flow on Clear Creek below Whiskeytown for CAM.
 define(CAMmonths) ClearCrk_min {
 	select flow
         from   clear_ck_min
-        where  month=monthvalue(month+$m),wytype=wyt_SHASTA_cvp($m)
+        where  month=mv($m),wytype=wyt_SHASTA_cvp($m)
 }
                     	
 define(CAMmonths) minflow_C_Wkytn {alias ClearCrk_min($m) kind 'flow-min-required' units 'cfs'}  

@@ -9,7 +9,7 @@ Sets minimum flow on Trinity River below Lewiston in CAM
 define minflow_C_Lewiston(CAMmonths) {
    	select       river_q
        	from         Trinitymin
-       	where        month=monthvalue(month+$m), wyt_TRIN=wyt_TRIN($m)}
+       	where        month=mv($m), wyt_TRIN=wyt_TRIN($m)}
 }
 
 goal(CAMmonths) TrinityMin {C_Lwstn_MIF($m) < minflow_C_Lewiston($m) }
