@@ -10,14 +10,14 @@ import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
+import wrimsv2.components.ControlData;
 
 
 
 public class LogUtils {
 
 	private static PrintWriter _logFile;
-
-
+	
 	public static void closeLogFile(){
 		
 		_logFile.close();		
@@ -195,7 +195,7 @@ public class LogUtils {
 	
 	public static void importantMsg(String msg){
 
-		System.out.println(msg);
+		if (ControlData.showWreslLog) System.out.println(msg);
 		_logFile.println(msg);
 		_logFile.flush();
 	}
@@ -218,7 +218,7 @@ public class LogUtils {
 		
 		if (Param.printLevel>1){
 
-			System.out.println(msg);
+			if (ControlData.showWreslLog) System.out.println(msg);
 			_logFile.println(msg);
 
 		}
@@ -226,7 +226,7 @@ public class LogUtils {
 
 	public static void consoleMsgOnly(String msg){
 
-		 System.out.println(msg);
+		if (ControlData.showWreslLog) System.out.println(msg);
 		
 	}	
 
@@ -234,7 +234,7 @@ public class LogUtils {
 		
 		 StudyParser.total_warnings++;
 
-		 System.out.println("Warning: "+msg);
+		if (ControlData.showWreslLog) System.out.println("Warning: "+msg);
 		 _logFile.println("Warning: "+msg);
 		 _logFile.flush();
 		
@@ -244,7 +244,7 @@ public class LogUtils {
 		
 		 StudyParser.total_errors++;
 
-		 System.out.println("# Error: "+msg);
+		if (ControlData.showWreslLog) System.out.println("# Error: "+msg);
 		 _logFile.println("# Error: "+msg);
 		 _logFile.flush();
 		 
@@ -256,7 +256,7 @@ public class LogUtils {
 		
 		 StudyParser.total_errors++;
 
-		 System.out.println("# Error: "+msg);
+		if (ControlData.showWreslLog) System.out.println("# Error: "+msg);
 		 _logFile.println("# Error: "+msg);
 		 _logFile.flush();
 		
@@ -281,10 +281,10 @@ public class LogUtils {
 		errMsg(msg + " in files: ");
 
 		String sp = "  ";
-		System.out.println(sp + file1);
+		if (ControlData.showWreslLog) System.out.println(sp + file1);
 		_logFile.println(sp + file1);
 		printTree(file1, reverseMap, sp);
-		System.out.println(sp + file2);
+		if (ControlData.showWreslLog) System.out.println(sp + file2);
 		_logFile.println(sp + file2);
 		printTree(file2, reverseMap, sp);
 		
@@ -299,7 +299,7 @@ public class LogUtils {
 			level = level + "--";
 			Set<String> parents = reverseMap.get(f);
 			for (String s : parents) {
-				System.out.println(" "+level + "> "+ s);
+				if (ControlData.showWreslLog) System.out.println(" "+level + "> "+ s);
 				_logFile.println(" "+level + "> "+ s);
 
 				printTree(s, reverseMap, level);

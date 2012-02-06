@@ -120,6 +120,9 @@ public class ConfigUtils {
 		FilePaths.setDvarDssPaths(new File(StudyUtils.runDir, configMap.get("dvarfile")).getAbsolutePath());
 		FilePaths.csvFolderName = "";
 
+
+		ControlData.showWreslLog = !(configMap.get("showwresllog").equalsIgnoreCase("no"));
+		
 		ControlData.svDvPartF = configMap.get("svarfpart");
 		ControlData.initPartF = configMap.get("initfpart");
 		ControlData.partA = configMap.get("svarapart");
@@ -201,7 +204,8 @@ public class ConfigUtils {
 				String line = scanner.nextLine();
 
 				line = line.trim();
-
+				line = line.replace('\t', ' ');
+				//System.out.println(line);
 				if (line.indexOf("#") > -1) {
 					line = line.substring(0, line.indexOf("#"));
 					line = line.trim();
@@ -275,10 +279,12 @@ public class ConfigUtils {
 
 		Map<String, String> configMap = new HashMap<String, String>();
 
-		configMap.put("SaveParserData".toLowerCase(), "No");
-		configMap.put("Solver".toLowerCase(), "XA");
-		configMap.put("TimeStep".toLowerCase(), "1MON");
-		configMap.put("GroundWaterDir".toLowerCase(), "\\");
+		configMap.put("saveparserdata".toLowerCase(), "No");
+		configMap.put("solver".toLowerCase(), "XA");
+		configMap.put("timestep".toLowerCase(), "1MON");
+		configMap.put("groundwaterdir".toLowerCase(), "\\");
+		configMap.put("showwresllog".toLowerCase(), "yes");
+
 
 		return configMap;
 

@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import org.antlr.runtime.RecognitionException;
+import org.apache.commons.io.FilenameUtils;
 
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
@@ -38,8 +39,10 @@ public class StudyUtils {
 	
 	public static StudyDataSet checkStudy(String inMainWreslPath, boolean sendAliasToDvar) throws IOException {
 		
-		String csvFolderName = "=WreslCheck_csv=";
-		String logFileName = "=WreslCheck=.log";
+		String mainFileName = FilenameUtils.removeExtension(FilePaths.mainFile);
+		
+		String csvFolderName = "=WreslCheck_"+mainFileName+"=";
+		String logFileName = "=WreslCheck_"+mainFileName+"=.log";
 		
 		if (!ControlData.outputWreslCSV) {
 			csvFolderName = "";  // disable csv output
@@ -51,7 +54,9 @@ public class StudyUtils {
 
 	public static StudyDataSet checkStudy(String inMainWreslPath, String csvFolderName, boolean sendAliasToDvar) throws IOException {
 
-		String logFileName = "=WreslCheck=.log";
+		String mainFileName = FilenameUtils.removeExtension(FilePaths.mainFile);
+		
+		String logFileName = "=WreslCheck_"+mainFileName+"=.log";
 
 		return checkStudy(inMainWreslPath, logFileName, csvFolderName, sendAliasToDvar);
 
