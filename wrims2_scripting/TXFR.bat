@@ -1,9 +1,9 @@
 REM ----------------------------------------------------------
 REM set study config
 
+set StudyDir=%~dp0%studies\callite_svn47\TXFR
+set ConfigFilePath=%StudyDir%\run\TXFR.config
 
-set StudyDir=%~dp0%studies\callite_svn47
-set ConfigFilePath=%StudyDir%\run\test1.config
 
 
 :------------------:
@@ -36,10 +36,10 @@ set PATH=%ExternalDir%;%JarDir%
 :----------------------:
 : generated sty path   :
 :----------------------:
-set Java_Bin=%~dp0%jre6\bin\
+set Java_Bin=%~dp0%\lib\jre6\bin\
 
 REM ----------------------------------------------------------
 
 
-jre6\bin\java -Xmx1000m -Xss1024K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
+%Java_Bin%java -Xmx1000m -Xss1024K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
 
