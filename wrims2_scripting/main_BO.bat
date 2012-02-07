@@ -6,11 +6,10 @@ set StudyDir=%~dp0%studies\callite_svn47
 set ConfigFilePath=%StudyDir%\run\test1.config
 
 
-set JarDir=%~dp0%lib\wrims2
-
 :------------------:
 : wrims2 lib jars  :
 :------------------:
+set JarDir=%~dp0%lib\wrims2
 set AppJars=%JarDir%\WRIMSv2.jar
 set AppJars=%AppJars%;%JarDir%\gurobi.jar
 set AppJars=%AppJars%;%JarDir%\heclib.jar
@@ -33,6 +32,11 @@ set CLASSPATH=-classpath "%ExternalDir%;%AppJars%"
 : dll path   :
 :------------:
 set PATH=%ExternalDir%;%JarDir%
+
+:----------------------:
+: generated sty path   :
+:----------------------:
+set Java_Bin=%~dp0%jre6\bin\
 
 REM ----------------------------------------------------------
 
