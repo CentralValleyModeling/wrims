@@ -1,0 +1,13 @@
+/************************************
+export_ops_CAM.wresl
+
+Hao Xie and Nazrul Islam DWR 2/6/2012
+
+File for including export operations for CAM
+
+**************************************/
+
+include 'exportratio_CAM.wresl'
+include 'april_may_maxexport_CAM.wresl'
+
+

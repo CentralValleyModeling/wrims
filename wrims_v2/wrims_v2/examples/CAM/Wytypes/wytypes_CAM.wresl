@@ -13,12 +13,12 @@ define EndWY {value 2003}
 ! the 40-30-30 index for Sacramento Basin
 define(CAMmonths) wyt_SAC{
     case OCTtoJAN_CurrentWaterYear {
-         condition  month+$m<=12 and month+$m >= OCT .and. month+$m <= JAN
+         condition  month+$m<=12 .and. month+$m >= OCT .and. month+$m <= JAN
          select     SACindex
          from       wytypes
          where      wateryear=wateryear - 1.}
     case AfterFeb_NextWaterYear{
-         condition  month+$m>12 and month+$m-12 >= Feb
+         condition  month+$m>12 .and. month+$m-12 >= Feb
          select     SACindex
          from       wytypes
          where      wateryear=wateryear+1}
@@ -34,12 +34,12 @@ define(CAMmonths) wyt_SAC{
 ! the Shasta index as defined by the CVP (changes in March)
 define(CAMmonths) wyt_SHASTA_cvp {
         case OCTtoFEB_CurrentWaterYear {
-        	condition   month+$m<=12 and month+$m >= OCT .and. month+$m <= FEB
+        	condition   month+$m<=12 .and. month+$m >= OCT .and. month+$m <= FEB
         	select      SHASTAindex
         	from        wytypes
         	where       wateryear=wateryear - 1.}
 	case AfterMarch_NextWaterYear{
-         	condition   month+$m>12 and month+$m-12 >= Mar
+         	condition   month+$m>12 .and. month+$m-12 >= Mar
          	select      SHASTAindex
 		from        wytypes
         	where       wateryear=wateryear + 1.}
@@ -53,13 +53,13 @@ define(CAMmonths) wyt_SHASTA_cvp {
 ! the American River D893 index as defined by the CVP (changes in March)
 define(CAMmonths) wyt_AMERd893_cvp {
         case OCTtoFEB_CurrentWaterYear {
-        condition   month+$m<=12 and month+$m  >= OCT .and. month+$m <= FEB
+        condition   month+$m<=12 .and. month+$m  >= OCT .and. month+$m <= FEB
         select      AmerD893
         from        wytypes
         where       wateryear=wateryear - 1.}
 	
 	case AfterMarch_NextWaterYear {
-        condition   month+$m>12 and month+$m-12  >= Mar
+        condition   month+$m>12 .and. month+$m-12  >= Mar
         select      AmerD893
 	from        wytypes
         where       wateryear=wateryear + 1.}
@@ -82,13 +82,13 @@ define Critical     {value 5}
 ! the Trinity index   1=Very Wet, 2=Wet, 3=Normal, 4=Dry, 5=Critically Dry: Note: Index changes in Apr.
 define(CAMmonths) wyt_TRIN {
          case OCTtoMar_CurrentWaterYear {
-                   condition        month+$m<=12 and month+$m >= OCT .and. month+$m <= MAR
+                   condition        month+$m<=12 .and. month+$m >= OCT .and. month+$m <= MAR
                    select           Trinityindex
                    from               wytypes
                    where            wateryear=wateryear - 1.}
                    
          case AfterApril_NextWaterYear {
-        	   condition   	    month+$m>12 and month+$m-12  >= April
+        	   condition   	    month+$m>12 .and. month+$m-12  >= April
         	   select           Trinityindex
 		   from               wytypes
                    where            wateryear=wateryear + 1.}
@@ -101,7 +101,7 @@ define(CAMmonths) wyt_TRIN {
 ! So first define the calendar year since deliveries are based on Jan-Dec year
 define(CAMmonths) calendaryear {
     case JantoSep_CurrentWaterYear {
-        condition   month+$m<=12 and month+$m >= 4 .and. month+$m <= 15
+        condition   month+$m<=12 .and. month+$m >= 4 .and. month+$m <= 15
         value       wateryear }
     case JantoSep_NextWaterYear {
         condition   month+$m>15
@@ -114,13 +114,13 @@ define(CAMmonths) calendaryear {
 ! the Feather Index for the Feather River Basin
 define(CAMmonths) wyt_FEATHER {
     case OCTtoJAN_CurrentWaterYear {
-         condition  month+$m<=12 and month+$m  >= OCT .and. month+$m <= JAN
+         condition  month+$m<=12 .and. month+$m  >= OCT .and. month+$m <= JAN
          select     FEATHERindex
          from       wytypes
          where      wateryear=wateryear - 1.}
     
     case AfterFeb_NextWaterYear {
-         condition  month+$m>12 and month+$m-12  >= Feb
+         condition  month+$m>12 .and. month+$m-12  >= Feb
          select     FEATHERindex
          from       wytypes
          where      wateryear=wateryear + 1.}

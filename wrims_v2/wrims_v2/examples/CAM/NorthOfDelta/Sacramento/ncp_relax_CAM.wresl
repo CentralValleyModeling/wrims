@@ -22,7 +22,7 @@ define(CAMmonths) minflow_C_Wilkns {std kind 'flow-min-required' units 'cfs'}
 goal(CAMmonths) set_ncp_relax_final {
      lhs minflow_C_Wilkns
      case yr1922a {
-          condition month+$m<=12 .and. month+$m <= MAR .and. wateryear == 1922
+          condition mv($m) <= MAR .and. wy($m) == 1922
           rhs     ncp_with_relax
           }
      case JanthruMay {
