@@ -62,7 +62,7 @@ public class ControllerBatch {
 		long endTimeInMillis = Calendar.getInstance().getTimeInMillis();
 		int runPeriod=(int) (endTimeInMillis-startTimeInMillis);
 		System.out.println("=================Run Time is "+runPeriod/60000+"min"+Math.round((runPeriod/60000.0-runPeriod/60000)*60)+"sec====");
-		System.exit(0);	
+		if(!System.getenv("WRIMS_DEBUG").equalsIgnoreCase("TRUE")) System.exit(0);	
 	}
 
 	public void processArgs(String[] args){
