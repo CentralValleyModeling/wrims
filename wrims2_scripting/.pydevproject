@@ -4,7 +4,8 @@
 <pydev_project>
 <pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">Default</pydev_property>
 <pydev_property name="org.python.pydev.PYTHON_PROJECT_VERSION">jython 2.5</pydev_property>
+
 <pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">
-<path>/WRIMS2_Scripting/scripts/positionAnalysis</path>
+<path>/WRIMS2_Scripting/bin_dev</path>
 </pydev_pathproperty>
 </pydev_project>

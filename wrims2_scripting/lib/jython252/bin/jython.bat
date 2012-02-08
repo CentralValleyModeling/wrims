@@ -7,6 +7,7 @@ rem
 rem   JAVA_HOME      Java installation directory
 set JAVA_HOME=%~dp0%..\..\jre6
 set HECDSS_HOME=%~dp0%..\..\hecdss
+set MULTISTUDY_HOME=%~dp0%..\..\misc
 rem
 rem   JYTHON_HOME    Jython installation directory
 rem
@@ -78,6 +79,10 @@ set path=%HECDSS_HOME%;%path%
 rem echo %path%
 
 for %%j in (%HECDSS_HOME%\*.jar) do (
+   set _CP=!_CP!;"%%j"
+)
+
+for %%j in (%MULTISTUDY_HOME%\*.jar) do (
    set _CP=!_CP!;"%%j"
 )
 
