@@ -394,10 +394,10 @@ public class StudyParser{
     }
 
     LogUtils.importantMsg("Finished converting aliases.");
-    LogUtils.importantMsg("==================================================");    
-    LogUtils.importantMsg("Parsing complete. ");
-    LogUtils.importantMsg("Total Errors in the study: "+ total_errors);
-    LogUtils.importantMsg("==================================================");  
+    LogUtils.criticalMsg("============================================");    
+    LogUtils.criticalMsg("Wresl Parsing complete. ");
+    if (total_errors>0) LogUtils.criticalMsg("Total Errors in the study: "+ total_errors);
+    LogUtils.criticalMsg("============================================");  
     
     return model_dataset_map;
   }

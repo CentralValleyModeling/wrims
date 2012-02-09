@@ -192,6 +192,13 @@ public class LogUtils {
 		
 		_logFile.flush();
 	}	
+
+	public static void criticalMsg(String msg){
+
+		System.out.println(msg);
+		_logFile.println(msg);
+		_logFile.flush();
+	}	
 	
 	public static void importantMsg(String msg){
 
