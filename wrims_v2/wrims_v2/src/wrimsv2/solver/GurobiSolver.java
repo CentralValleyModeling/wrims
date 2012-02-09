@@ -176,6 +176,7 @@ public class GurobiSolver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if (ControlData.showRunTimeMessage) System.out.println("Assign Dvar Done.");
 	}
 
 	private void checkStatus() throws GRBException {

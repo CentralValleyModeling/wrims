@@ -45,7 +45,7 @@ public class XASolver {
 		ControlData.xasolver.solve();
 		
 		modelStatus=ControlData.xasolver.getModelStatus();
-		System.out.println("Model status: "+modelStatus);
+		if (ControlData.showRunTimeMessage) System.out.println("Model status: "+modelStatus);
 		if (modelStatus>2)	getSolverInformation();
 		if (Error.error_solving.size()<1) assignDvar(); 
 	}
@@ -180,6 +180,9 @@ public class XASolver {
 		//	e.printStackTrace();
 		//}
 		
-		System.out.println("Objective Value: "+ControlData.xasolver.getObjective());
+		if (ControlData.showRunTimeMessage) {
+			System.out.println("Objective Value: "+ControlData.xasolver.getObjective());
+			System.out.println("Assign Dvar Done.");
+		}
 	}
 }

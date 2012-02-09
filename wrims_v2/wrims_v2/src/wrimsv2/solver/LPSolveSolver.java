@@ -201,6 +201,8 @@ public class LPSolveSolver {
 			double[] dataList=DataTimeSeries.dvAliasTS.get(dvName).getData();
 			dataList[ControlData.currTimeStep]=value;
 		}
+		
+		if (ControlData.showRunTimeMessage) System.out.println("Assign Dvar Done.");
 	}
 	
 	private void Output() throws  LpSolveException{

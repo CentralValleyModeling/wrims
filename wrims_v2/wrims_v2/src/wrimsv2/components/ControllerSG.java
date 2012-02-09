@@ -274,11 +274,11 @@ public class ControllerSG {
 						noError=false;
 					}
 					new XASolver();
-					System.out.println("Solving Done.");
+					if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
 					if (Error.error_solving.size()<1){
 						ControlData.isPostProcessing=true;
 						mds.processAlias();
-						System.out.println("Assign Alias Done.");
+						if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
 					}else{
 						Error.writeSolvingErrorFile("solving_error.txt");
 						noError=false;
@@ -348,12 +348,11 @@ public class ControllerSG {
 					}catch (GRBException e){
 						Error.addSolvingError("Gurobi solving error: "+e.getMessage());
 					}
-					System.out.println("Solving Done.");
+					if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
 					if (Error.error_solving.size()<1){
-						System.out.println("Assign Dvar Done.");
 						ControlData.isPostProcessing=true;
 						mds.processAlias();
-						System.out.println("Assign Alias Done.");
+						if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
 					}else{
 						Error.writeSolvingErrorFile("solving_error.txt");
 						noError=false;
@@ -496,11 +495,11 @@ public class ControllerSG {
 					IntermediateLP.writeObjValue();
 					IntermediateLP.writeDvarValue(usedDvar);
 					IntermediateLP.closeIlpFile();
-					System.out.println("Solving Done.");
+					if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
 					if (Error.error_solving.size()<1){
 						ControlData.isPostProcessing=true;
 						mds.processAlias();
-						System.out.println("Assign Alias Done.");
+						if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
 					}else{
 						Error.writeSolvingErrorFile("solving_error.txt");
 						noError=false;

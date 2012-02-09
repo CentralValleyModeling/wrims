@@ -98,17 +98,17 @@ public class ModelDataSet implements Serializable {
 	public void processModel(){
 		resetSlackSurplusWeight(); // this clears slack and surplus vars
 		processTimeseries();
-		System.out.println("Process Timeseries Done.");
+		if (ControlData.showRunTimeMessage) System.out.println("Process Timeseries Done.");
 		processSvar();
-		System.out.println("Process Svar Done.");
+		if (ControlData.showRunTimeMessage) System.out.println("Process Svar Done.");
 		processDvar();	
-		System.out.println("Process Dvar Done.");
+		if (ControlData.showRunTimeMessage) System.out.println("Process Dvar Done.");
 		processGoal();	
-		System.out.println("Process Goal Done.");
+		if (ControlData.showRunTimeMessage) System.out.println("Process Goal Done.");
 		processWeight();
-		System.out.println("Process Weight Done.");
+		if (ControlData.showRunTimeMessage) System.out.println("Process Weight Done.");
 		processWeightSlackSurplus();
-		System.out.println("Process Weight Slack Surplus Done.");
+		if (ControlData.showRunTimeMessage) System.out.println("Process Weight Slack Surplus Done.");
 	}
 
 	public void resetSlackSurplusWeight(){
