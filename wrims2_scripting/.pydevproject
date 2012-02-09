@@ -7,5 +7,6 @@
 
 <pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">
 <path>/WRIMS2_Scripting/bin_dev</path>
+<path>/WRIMS2_Scripting/lib/wrims2/WRIMSv2.jar</path>
 </pydev_pathproperty>
 </pydev_project>

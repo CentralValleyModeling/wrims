@@ -8,6 +8,7 @@ rem   JAVA_HOME      Java installation directory
 set JAVA_HOME=%~dp0%..\..\jre6
 set HECDSS_HOME=%~dp0%..\..\hecdss
 set MULTISTUDY_HOME=%~dp0%..\..\misc
+set WRIMS2JAR=%~dp0%..\..\wrims2\WRIMSv2.jar
 rem
 rem   JYTHON_HOME    Jython installation directory
 rem
@@ -85,6 +86,9 @@ for %%j in (%HECDSS_HOME%\*.jar) do (
 for %%j in (%MULTISTUDY_HOME%\*.jar) do (
    set _CP=!_CP!;"%%j"
 )
+
+set _CP=!_CP!;"%WRIMS2JAR%"
+
 
 set _JAVA_MEM=-Xmx512m
 rem 1152k is the minimum for test_marshal to pass. Windows' default is
