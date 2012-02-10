@@ -213,7 +213,7 @@ public class ConfigUtils {
 				if (line.indexOf(" ") < 0) continue;
 				if (line.lastIndexOf(" ") + 1 >= line.length()) continue;
 				if (line.length() < 5) continue;
-
+				
 				//System.out.println(line);
 
 				String key = line.substring(0, line.indexOf(" "));
@@ -228,7 +228,11 @@ public class ConfigUtils {
 				else {
 					value = value.substring(0, value.indexOf(" "));
 				}
-
+				
+				// break at the line "End Config"
+				if (key.equalsIgnoreCase("end") & value.equalsIgnoreCase("config") ) break;
+			
+				//System.out.println(key+ " & "+value);
 				configMap.put(key.toLowerCase(), value);
 			}
 
@@ -243,19 +247,76 @@ public class ConfigUtils {
 			// e.printStackTrace();
 		}
 
-
-
+		
 		// check missing fields
 		String[] requiredFields = { "MainFile", "Solver", "DvarFile", "SvarFile", "SvarAPart",
-				"SvarFPart", "InitFile", "InitFPart", "TimeStep", "StartYear", "StartMonth", "StartDay",
-				"EndYear", "EndMonth", "EndDay", "GroundWaterDir" };
+				"SvarFPart", "InitFile", "InitFPart", "TimeStep", "StartYear", "StartMonth",
+				"GroundWaterDir" };
 
 		for (String k : requiredFields) {
 			if (!configMap.keySet().contains(k.toLowerCase())) {
 				System.out.println("Config file missing field: " + k);
 				StudyUtils.config_errors++;
+				System.exit(1);
 			}
-		}		
+		}	
+		
+		// convert number of steps to end date
+		int bYr= Integer.parseInt(configMap.get("startyear"));
+		int bMon= Integer.parseInt(configMap.get("startmonth"));
+		
+		if (configMap.keySet().contains("numberofsteps")){
+			
+			int nsteps = Integer.parseInt(configMap.get("numberofsteps"));
+			
+			int iBegin = bYr*12 + bMon;
+			int iEnd = iBegin + nsteps -1 ; 
+					
+			int eYr = iEnd/12;
+			int eMon = iEnd%12;
+			
+			configMap.put("endyear", Integer.toString(eYr));
+			configMap.put("endmonth", Integer.toString(eMon));
+			
+		} else {
+			// check missing fields
+			String[] endDateFields = {"EndYear", "EndMonth"};
+
+			for (String k : endDateFields) {
+				if (!configMap.keySet().contains(k.toLowerCase())) {
+					System.out.println("Config file missing field: " + k);
+					StudyUtils.config_errors++;
+					System.exit(1);
+				}
+			}			
+		}
+		
+		// fill-in start day and end day
+		
+		int bday=TimeOperation.numberOfDays(bMon, bYr);
+		configMap.put("startday", Integer.toString(bday));
+		
+		int endYr= Integer.parseInt(configMap.get("endyear"));
+		int endMon= Integer.parseInt(configMap.get("endmonth"));
+		int endday= TimeOperation.numberOfDays(endMon, endYr);
+		configMap.put("endday", Integer.toString(endday));
+
+
+		
+		
+		
+		// support only monthly time step
+		if (!configMap.get("timestep").equalsIgnoreCase("1mon")){
+			
+			System.out.println("Only monthly timestep supported, i.e., \"TimeStep  1MON\" ");
+			StudyUtils.config_errors++;
+			System.exit(1);
+		}
+		
+		
+
+		
+		// exit for above checks
 		if (StudyUtils.config_errors>0) System.exit(1);
 			
 	
