@@ -47,6 +47,8 @@ public class DssOperation {
 			for (double dataEntry :  rts.getYArray()){
 				if (dataEntry==-901.0){
 					dataArray.add(-901.0);
+				}else if (dataEntry==-902.0){
+					dataArray.add(-902.0);
 				}else{
 					TimeOperation.findTime(i, year, month, day);
 					double dataEntryValue=dataEntry*Evaluation.tafcfs("taf_cfs");
@@ -93,6 +95,8 @@ public class DssOperation {
 			for (double dataEntry :  rts.getYArray()){
 				if (dataEntry==-901.0){
 					dataArray.add(-901.0);
+				}else if (dataEntry==-902.0){
+					dataArray.add(-902.0);
 				}else{
 					TimeOperation.findTime(i);
 					dataArray.add(dataEntry*Evaluation.tafcfs("taf_cfs"));

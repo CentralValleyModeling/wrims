@@ -363,7 +363,7 @@ public class ValueEvaluation {
 			if (index>=0 && index<data.size()){
 				double value=data.get(index);
 				if (dds.fromDssFile()){
-					if (value != -901.0){
+					if (value != -901.0 && value !=902.0){
 						return value;
 					}
 				}else{
@@ -436,7 +436,7 @@ public class ValueEvaluation {
 		ArrayList<Double> data=dds.getData();
 		if (index>=0 && index<data.size()){
 			double result=data.get(index);
-			if (result==-901.0){
+			if (result==-901.0 || result==-902.0){
 				Error.addEvaluationError("Initial file doesn't have data for decision vairiable/alias " +ident);
 				return 1.0;
 			}
@@ -471,7 +471,7 @@ public class ValueEvaluation {
 		ArrayList<Double> data=dds.getData();
 		if (index>=0 && index<data.size()){
 			double result=data.get(index);
-			if (result==-901.0){
+			if (result==-901.0 || result==-902.0){
 				Error.addEvaluationError("Initial file doesn't have data for decision vairiable/alias " +ident);
 				return 1.0;
 			}
