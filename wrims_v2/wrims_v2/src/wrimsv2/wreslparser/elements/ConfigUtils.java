@@ -133,8 +133,8 @@ public class ConfigUtils {
 		ControlData.startMonth = Integer.parseInt(configMap.get("startmonth"));
 		ControlData.startDay = TimeOperation.numberOfDays(ControlData.startMonth, ControlData.startYear);
 
-		ControlData.endYear = Integer.parseInt(configMap.get("endyear"));
-		ControlData.endMonth = Integer.parseInt(configMap.get("endmonth"));
+		ControlData.endYear = Integer.parseInt(configMap.get("stopyear"));
+		ControlData.endMonth = Integer.parseInt(configMap.get("stopmonth"));
 		ControlData.endDay = TimeOperation.numberOfDays(ControlData.endMonth, ControlData.endYear);
 
 		ControlData.solverName = configMap.get("solver");
@@ -251,7 +251,7 @@ public class ConfigUtils {
 		// check missing fields
 		String[] requiredFields = { "MainFile", "Solver", "DvarFile", "SvarFile", "SvarAPart",
 				"SvarFPart", "InitFile", "InitFPart", "TimeStep", "StartYear", "StartMonth",
-				"GroundWaterDir" };
+				"GroundwaterDir" };
 
 		for (String k : requiredFields) {
 			if (!configMap.keySet().contains(k.toLowerCase())) {
@@ -275,12 +275,12 @@ public class ConfigUtils {
 			int eYr = iEnd/12;
 			int eMon = iEnd%12;
 			
-			configMap.put("endyear", Integer.toString(eYr));
-			configMap.put("endmonth", Integer.toString(eMon));
+			configMap.put("stopyear", Integer.toString(eYr));
+			configMap.put("stopmonth", Integer.toString(eMon));
 			
 		} else {
 			// check missing fields
-			String[] endDateFields = {"EndYear", "EndMonth"};
+			String[] endDateFields = {"StopYear", "StopMonth"};
 
 			for (String k : endDateFields) {
 				if (!configMap.keySet().contains(k.toLowerCase())) {
@@ -296,10 +296,10 @@ public class ConfigUtils {
 		int bday=TimeOperation.numberOfDays(bMon, bYr);
 		configMap.put("startday", Integer.toString(bday));
 		
-		int endYr= Integer.parseInt(configMap.get("endyear"));
-		int endMon= Integer.parseInt(configMap.get("endmonth"));
+		int endYr= Integer.parseInt(configMap.get("stopyear"));
+		int endMon= Integer.parseInt(configMap.get("stopmonth"));
 		int endday= TimeOperation.numberOfDays(endMon, endYr);
-		configMap.put("endday", Integer.toString(endday));
+		configMap.put("stopday", Integer.toString(endday));
 
 
 		
