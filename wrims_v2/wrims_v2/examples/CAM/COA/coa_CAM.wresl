@@ -1,0 +1,188 @@
+/************************************************
+
+coa_CAM.wresl
+
+Hao Xie and Nazrul Islam 2/9/2012
+
+This file contains the logic for the Coordinated Operation Agreement (COA) for CAM.
+This logic is based on the 1986 COA document and on DWRSIM documentation and logic.
+The concept of the COA is as follows:
+
+    1) If total CVP and SWP exports are greater than what was withdrawn from storage then
+       there was excess water in the system called unstored water for export (UWFE).
+       This water must be shared using the negotiated formulas.  The current formula
+       gives CVP 55% of this water.  The rest goes to SWP. INT_IBU_UWFE = 1
+
+    2) If total CVP and SWP storage withdrawals are greater than the total exports then
+       there were In-Basin-Uses (IBU) that required storage withdrawals.  The responsibility
+       for these requirements is to be shared according to the negotiated formulas. The
+       current formula requires CVP to provide 75% of these storage withdrawals.  The rest
+       is provided by SWP.  INT_IBU_UWFE = 0
+
+    3) Often after meeting it's COA obligation one of the projects (usually CVP) can't
+       export all the water it's entitled to due to export capacity.  This logic allows
+       the other project to take any unused portion.  It's important that a project
+       be allowed to take all that it wants before giving up any of its share.
+
+    4) There are very specific definitions for UWFE and IBU in the COA document.  These
+       definitions have been followed as closely as possible. Some things to keep in mind:
+       - Storage increases are considered part of the UWFE and are shared as per the formulas.
+       - CVP only includes Whiskeytown storage withdrawals, not storage increases in its
+         definition of change in storage.
+
+    5) Weights have been placed on the CVP share of UWFE (CVP_UWFE) and each project's unused
+       share to allow each project only to take what it's entitled to plus any unused share.
+       You don't want CVP cutting its export to allow SWP to take more water.
+
+    6) For SWPDS, SHADS and FOLDS: positive is storage withdrawal, negative is storage increase.
+
+    7) Total exports are defined as total Banks pumping including wheeling plus Jones pumping
+       plus Contra Costa Export.  Wheeling is considered as a CVP export and is defined with
+       separate wresl logic. 
+       
+************************************************/
+
+
+! These statements define the decision variables that are used in the COA statements.
+
+define(CAMmonths) SWPDS {lower -1000000. upper 1000000. kind 'STORAGE-CHANGE' UNITS 'CFS'}     !  SWP change in storage
+define(CAMmonths) SHADS {lower -1000000. upper 1000000. kind 'STORAGE-CHANGE' UNITS 'CFS'}     !  Shasta change in storage
+define(CAMmonths) FOLDS {lower -1000000. upper 1000000. kind 'STORAGE-CHANGE' UNITS 'CFS'}     !  Folsom change in storage
+define(CAMmonths) WHSSW {std kind 'STORAGE-WDL' UNITS 'CFS'}                                   !  Whiskeytown storage withdrawal
+define(CAMmonths) WHSSI {std kind 'STORAGE-INC' UNITS 'CFS'}                                   !  Whiskeytown storage increase
+define(CAMmonths) IBU   {std kind 'IBU' UNITS 'CFS'}                                           !  Total In-Basin-Uses met with storage withdrawals
+define(CAMmonths) UWFE  {std kind 'UWFE' UNITS 'CFS'}                                          !  Total Unstored-Water-For-Export
+define(CAMmonths) CVP_SHARE {std kind 'PERCENT-COA' UNITS 'NONE'}                              !  CVP COA Share
+define(CAMmonths) SWP_SHARE {std kind 'PERCENT-COA' UNITS 'NONE'}                              !  SWP COA Share
+define(CAMmonths) UNUSED_FS {std kind 'UNUSED-FS' UNITS 'CFS'}                                 !  Unused Federal Share of surplus
+define(CAMmonths) UNUSED_SS {std kind 'UNUSED-SS' UNITS 'CFS'}                                 !  Unused State Share of surplus
+    
+! These statements define binary 'integer' decision variables that are used to force other variables to be either positive or zero.
+
+define(CAMmonths) int_WHS_stor_chg {INTEGER std kind 'INTEGER' UNITS 'NONE'}                   ! this defines an integer with bounds [0,1]
+define(CAMmonths) int_IBU_UWFE     {INTEGER std kind 'INTEGER' UNITS 'NONE'}                   ! this defines an integer with bounds [0,1]
+
+! Define maximum values for the above two decision variables.  These simply need to be
+! sufficiently large such that the variable will never exceed the value, but small enough
+! to avoid truncation/roundoff errors in the force constraints.
+
+define WHS_stor_chg_max {value 3000.*taf_cfs}
+define IBU_UWFE_max     {value 9999999.}
+
+! **************************** SWP STORAGE CHANGE DEFINITIONS ****************************
+
+/*  COA document actually defines SWPSW as:
+    Palermo Canal Diversion + Thermalito DD Release to Feather River
+  + Thermalito DD Diversion to Hatchery + Butte County Diversion
+  + Thermalito ID Diversion + Richvale Canal + Western Canal + PG&E Lateral
+  + Sutter Butte Canal + Thermalito Afterbay Release to Feather River
+  - Lake Oroville Inflow - Kelly Ridge Power Plant Discharge             */
+
+goal(CAMmonths) swp_storage_change {SWPDS($m) = C_Therm($m) + D_Therm($m) + D_Orovl($m) - I_Orovl($m) - I_KellyRidge($m)}  !Define SWP Storage Change
+
+! **************************** CVP STORAGE CHANGE DEFINITIONS ****************************
+
+! Shasta Reservoir
+
+/*  COA document actually defines Shasta storage withdrawal as:
+    Keswick Dam Release + Keswick Diversions + Shasta Diversions
+    - Shasta Inflow - Discharge from Spring Creek Power Plant
+    This results in:                            */
+
+goal(CAMmonths) shasta_storage_change {SHADS($m) = C_Kswck_m($m) - I_Shsta($m) - D_Spring_m($m)}                   !Define Shasta Storage Change
+
+! Folsom Reservoir
+
+/*  COA Document actually defines Folsom storage withdrawal as:
+    Nimbus Release + Nimbus Diversion to Folsom South Canal
+    + Diversions from Folsom Lake - Inflow to Folsom
+    Including local inflow into Nimbus this results in: */
+
+goal(CAMmonths) folsom_storage_change {FOLDS($m) = C_Nimbus_m($m) + D_Nimbus($m) + D_Folsm($m) - I_Folsm($m) - I_Nimbus($m)}       !Define Folsom Storage Change
+
+! Whiskeytown Reservoir
+
+goal(CAMmonths) whiskey_storage_change {WHSSW($m) - WHSSI($m) = C_Wkytn_m($m) + D_Spring_m($m) - I_Wkytn($m)}
+
+goal(CAMmonths) WHSSW_force {WHSSW($m) < int_WHS_stor_chg($m) * WHS_stor_chg_max}                      ! if int=0, WHSSW=0, WHSSI=pos
+goal(CAMmonths) WHSSI_force {WHSSI($m) < WHS_stor_chg_max - int_WHS_stor_chg($m) * WHS_stor_chg_max}   ! if int=1, WHSSW=pos, WHSSI=0
+
+! **************************** COA BALANCE CONSTRAINTS ****************************
+
+/* This goal is the guts of COA.  It includes delta surplus plus total exports and
+   total change in storage. If RHS is positive you have UWFE, If negative you have IBU.
+   D_Jones = Pumping at Jones
+   D_Banks = Puming at Banks
+   C_Delta = Surplus Delta outflow 
+   D_CCWD = Diversions at Contra Costa Water District */
+   
+define(CAMmonths) D_Jones_EXP1 {std kind 'flow-delivery' units 'cfs'}
+define(CAMmonths) D_Jones_EXP2 {std kind 'flow-delivery' units 'cfs'}
+
+define(CAMmonths) D_Banks_EXP1 {std kind 'flow-delivery' units 'cfs'}
+define(CAMmonths) D_Banks_EXP2 {std kind 'flow-delivery' units 'cfs'}
+
+define(CAMmonths) C_Delta_CVP {std kind 'FLOW-CHANNEL' units 'CFS'}
+define(CAMmonths) C_Delta_SWP {std kind 'FLOW-CHANNEL' units 'CFS'}
+define(CAMmonths) C_Delta_ANN {std kind 'FLOW-CHANNEL' units 'CFS'}
+
+goal(CAMmonths) CVPArcSplit {D_Jones_CVP($m) = D_Jones_EXP1($m) + D_Jones_EXP2($m) }
+goal(CAMmonths) SWPArcSplit {D_Banks_SWP($m) = D_Banks_EXP1($m) + D_Banks_EXP2($m) }
+
+goal(CAMmonths) SrpArcSplit {C_Delta($m) = C_Delta_CVP($m) + C_Delta_SWP($m) + C_Delta_ANN($m)}
+
+goal(CAMmonths) COA_Balance {UWFE($m) - IBU($m) = C_Delta_CVP($m) + C_Delta_SWP($m) + D_CCWD($m) + 2./3.*D_Napa($m) + 2./3.* D_Solano($m) + D_Jones_EXP1($m) + D_Banks_EXP1($m)
+                               + Surp1Terms($m) + Surp2Terms($m) - SHADS($m) - FOLDS($m) - WHSSW($m) - SWPDS($m) + UNUSED_FS($m) + UNUSED_SS($m)}
+
+goal(CAMmonths) UWFE_force {UWFE($m) < int_IBU_UWFE($m) * IBU_UWFE_max}                                ! if int=0, UWFE=0, IBU=pos
+goal(CAMmonths) IBU_force  {IBU < IBU_UWFE_max - int_IBU_UWFE($m) * IBU_UWFE_max}                  ! if int=1, UWFE=pos, IBU=0
+
+define CVP_UWFE {value 0.55}                                                        ! CVP COA Share of unstored water for export
+define CVP_IBU  {value 0.75}                                                        ! CVP COA Share of storage withdrawals
+goal(CAMmonths) CVP_Split {CVP_share($m) = int_IBU_UWFE * CVP_UWFE($m) + CVP_IBU($m) - CVP_IBU($m) * int_IBU_UWFE($m)}  !CVP Share
+goal(CAMmonths) SWP_Split {SWP_share($m) = 1.0 - CVP_share($m) }                                       !SWP Share
+
+/*  Restrict exports to satisfy COA:  Exports = storage withdrawal - storage increase -
+    share of in basin uses + share of unstored water for export + other party's unused share  */
+
+goal(CAMmonths) COA_CVP { D_Jones_EXP1($m) + Surp1Terms($m) + D_CCWD($m) = SHADS($m) + FOLDS($m) + WHSSW($m) - .75*IBU($m) + .55*UWFE($m) - UNUSED_FS($m) - C_Delta_CVP($m)}
+goal(CAMmonths) COA_SWP { D_Banks_EXP1($m) + 2./3.*D_Napa($m) + 2./3.* D_Solano($m) + Surp2Terms($m) = SWPDS($m) - .25*IBU($m) + .45*UWFE($m) - UNUSED_SS($m) - C_Delta_SWP($m)}
+
+goal(CAMmonths) setUNUSED_FS { D_Banks_EXP2($m) < UNUSED_FS($m) }
+goal(CAMmonths) setUNUSED_SS { D_Jones_EXP2($m) < UNUSED_SS($m) }
+
+  
+! Attempt to split export even during EI control situations
+
+goal(CAMmonths) EI_split_swp {
+    lhs     D_Banks_EXP1($m)
+     rhs        0.5*EiExpCtrl($m)
+     lhs>rhs    penalty 1290
+     lhs<rhs    penalty 0
+}
+goal(CAMmonths) EI_split_cvp {
+    lhs     D_Jones_EXP1($m)
+     rhs        0.5*EiExpCtrl($m)
+     lhs>rhs    penalty 1290
+     lhs<rhs    penalty 0
+}
+
+! Attempt to split export even during April-May pulse and Vamp control situations
+goal(CAMmonths) AprMay_split_swp {
+    lhs     D_Banks_EXP1($m)
+     case AprMay {
+        condition      range(mv($m),apr,may) .and. VAMP_DLTSW == 1
+     rhs        0.5*AprMayExpCtrl($m)
+     lhs>rhs    penalty 1290
+     lhs<rhs    penalty 0
+     }
+}
+goal(CAMmonths) AprMay_split_cvp {
+    lhs     D_Jones_EXP1($m) 
+     case AprMay {
+        condition      range(mv($m),apr,may) .and. VAMP_DLTSW == 1
+     rhs        0.5*AprMayExpCtrl($m)
+     lhs>rhs    penalty 1290
+     lhs<rhs        penalty 0
+     }
+}

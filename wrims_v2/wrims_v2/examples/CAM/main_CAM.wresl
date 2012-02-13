@@ -21,5 +21,6 @@ MODEL CAM {         !CYCLE 1
 	include 'system\system_CAM.wresl'
 	include 'NorthOfDelta\nod_CAM.wresl'
 	include 'Export_Ops\export_ops_CAM.wresl'
+	include 'coa\coa_CAM.wresl'
 }
 

@@ -27,7 +27,7 @@ define(CAMmonths) mv{
 	}
 }
 
-define(CAMmonths) yv{
+define(CAMmonths) wy{
 	value int((month+$m-1)/12.)+wateryear
 }
 
