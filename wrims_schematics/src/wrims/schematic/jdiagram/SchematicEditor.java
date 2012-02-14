@@ -2,6 +2,7 @@ package wrims.schematic.jdiagram;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -27,6 +29,7 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
@@ -36,9 +39,14 @@ import javax.swing.SwingUtilities;
 
 import org.w3c.dom.Document;
 
+import wrims.schematic.MainFrame;
+
 import com.mindfusion.diagramming.AutoResize;
 import com.mindfusion.diagramming.Behavior;
+import com.mindfusion.diagramming.Brush;
 import com.mindfusion.diagramming.CompositeCmd;
+import com.mindfusion.diagramming.CustomDraw;
+import com.mindfusion.diagramming.DashStyle;
 import com.mindfusion.diagramming.Diagram;
 import com.mindfusion.diagramming.DiagramAdapter;
 import com.mindfusion.diagramming.DiagramEvent;
@@ -49,17 +57,20 @@ import com.mindfusion.diagramming.DiagramLinkList;
 import com.mindfusion.diagramming.DiagramNode;
 import com.mindfusion.diagramming.DiagramNodeList;
 import com.mindfusion.diagramming.DiagramView;
+import com.mindfusion.diagramming.DrawNodeEvent;
 import com.mindfusion.diagramming.DummyNode;
 import com.mindfusion.diagramming.GridStyle;
 import com.mindfusion.diagramming.HandlesStyle;
 import com.mindfusion.diagramming.LinkEvent;
 import com.mindfusion.diagramming.NodeEvent;
 import com.mindfusion.diagramming.Orientation;
+import com.mindfusion.diagramming.Pen;
 import com.mindfusion.diagramming.PointList;
 import com.mindfusion.diagramming.RerouteLinks;
 import com.mindfusion.diagramming.RoutingOptions;
 import com.mindfusion.diagramming.Shape;
 import com.mindfusion.diagramming.ShapeNode;
+import com.mindfusion.diagramming.SolidBrush;
 import com.mindfusion.diagramming.UndoEvent;
 import com.mindfusion.diagramming.UndoManager;
 import com.mindfusion.diagramming.XmlException;
@@ -83,10 +94,35 @@ public class SchematicEditor extends SchematicViewer {
 	private JMenuItem shortenPointsMenuItem;
 	private JMenuItem editShapeMenuItem;
 	private JMenuItem shrinkToElementsMenuItem;
+	private JMenuItem changePointsMenuItem;
+	private AbstractAction exportAction;
+	private static HashMap<String, String> attributeMap;
+	
+
 	public SchematicEditor() {
 		super();
 		getDiagramView().setBehavior(Behavior.Modify);
 		getDiagramView().setAllowInplaceEdit(true);
+
+		attributeMap = new HashMap<String, String>();
+
+		Icon exportIcon = ImageUtil.createImageIcon("images/export_attr.png");
+		exportAction = new AbstractAction("Export Attributes", exportIcon) {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String fileToSave = MainFrame
+						.chooseFileToSave(SchematicEditor.this);
+				try {
+					saveAttributesTo(fileToSave);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					JOptionPane.showMessageDialog(SchematicEditor.this, ex
+							.getMessage());
+				}
+			}
+
+		};
 
 		Icon undoIcon = ImageUtil.createImageIcon("images/undo.png");
 		Icon redoIcon = ImageUtil.createImageIcon("images/redo.png");
@@ -142,12 +178,12 @@ public class SchematicEditor extends SchematicViewer {
 		};
 		// pasteAction.putValue(Action.ACCELERATOR_KEY,
 		// KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
-		getDiagramView().getInputMap().put(KeyStroke.getKeyStroke("Control C"),
-				copyAction);
-		getDiagramView().getInputMap().put(KeyStroke.getKeyStroke("Control V"),
-				pasteAction);
-		getDiagramView().getInputMap().put(KeyStroke.getKeyStroke("Control Z"),
-				undoAction);
+		getDiagramView().getInputMap().put(
+				KeyStroke.getKeyStroke("ctrl typed c"), copyAction);
+		getDiagramView().getInputMap().put(
+				KeyStroke.getKeyStroke("ctrl typed v"), pasteAction);
+		getDiagramView().getInputMap().put(
+				KeyStroke.getKeyStroke("ctrl typed z"), undoAction);
 
 		deleteMenuItem = new JMenuItem();
 		deleteMenuItem.setName("_menuItemDelete");
@@ -174,13 +210,52 @@ public class SchematicEditor extends SchematicViewer {
 
 		});
 
+		changePointsMenuItem = new JMenuItem(
+				"Change Number of Intermediate Points");
+		changePointsMenuItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (clickedItem != null && clickedItem instanceof DiagramLink) {
+					onChangePoints((DiagramLink) clickedItem);
+				}
+			}
+
+		});
+
 		editShapeMenuItem = new JMenuItem("Edit Shape");
 		editShapeMenuItem.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (clickedItem != null && clickedItem instanceof DiagramItem) {
+					if (clickedItem instanceof DiagramLink) {
+						Pen p = ((Pen) clickedItem.getPen().clone());
+						clickedItem.setPen(p);
+						clickedItem.getPen().setDashStyle(DashStyle.Dash);
+						return;
+					}
+
 					// showShapeDialog();
+					ShapeNode snode = (ShapeNode) clickedItem;
+					snode.setCustomDraw(CustomDraw.Additional);
+					/*
+					 * Shape shape = snode.getShape(); ElementTemplate[] outline
+					 * = shape.getOutline().clone(); int
+					 * d1x=2,d2x=98,d1y=5,d2y=95; ElementTemplate[] decorations
+					 * = new ElementTemplate[]{ new LineTemplate(d1x, d1y, d2x,
+					 * d1y), new LineTemplate(d2x, d1y, d2x, d2y), new
+					 * LineTemplate(d2x, d2y, d1x, d2y), new LineTemplate(d1x,
+					 * d2y, d1x, d1y) }; for(int i=0; i< decorations.length;
+					 * i++){ //decorations[i].setColor(Color.GRAY);
+					 * decorations[i].setWidth(0.75f); } Shape newShape = new
+					 * Shape(outline, decorations, shape.getTextArea(),
+					 * GeneralPath.WIND_NON_ZERO,"DOUBLE BORDER");
+					 * snode.setShape(newShape);
+					 */
+					// Pen p = ((Pen)clickedItem.getPen().clone());
+					// clickedItem.setPen(p);
+					// clickedItem.getPen().setDashStyle(DashStyle.Dash);
 					try {
 						addToShapeLibrary();
 					} catch (Exception e1) {
@@ -190,15 +265,15 @@ public class SchematicEditor extends SchematicViewer {
 				}
 			}
 		});
-		
+
 		shrinkToElementsMenuItem = new JMenuItem("Shrink Bounds to Elements");
 		shrinkToElementsMenuItem.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try{
+				try {
 					shrinkDiagramToElements();
-				}catch(Exception ex){
+				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			}
@@ -226,6 +301,22 @@ public class SchematicEditor extends SchematicViewer {
 
 			public void clicked(DiagramEvent e) {
 				diagramClicked(e);
+			}
+
+			@Override
+			/**
+			 * Raised when a diagram node must be custom drawn.
+			 */
+			public void drawNode(DrawNodeEvent e) {
+				Rectangle2D rect = e.getBounds();
+				rect.setFrame(rect.getMinX() + 9, rect.getMinY() + 9, rect
+						.getWidth() - 16, rect.getHeight() - 16);
+
+				Graphics2D g = e.getGraphics();
+				Pen pen = (Pen) e.getNode().getPen().clone();
+				pen.setWidth(1);
+				pen.applyTo(g);
+				g.draw(rect);
 			}
 
 			// undo/redo events
@@ -289,16 +380,82 @@ public class SchematicEditor extends SchematicViewer {
 		popupMenu.setName("editPopup");
 		popupMenu.add(copyMenuItem);
 		popupMenu.add(deleteMenuItem);
-		popupMenu.add(editShapeMenuItem);
-		// popupMenu.add(shortenPointsMenuItem);
+		popupMenu.add(changePointsMenuItem);
+	}
+
+	
+	
+	protected void saveAttributesTo(String fileToSave) throws Exception {
+		AttributeMapper mapper = new AttributeMapper();
+		Diagram d = getDiagram();
+		PrintWriter wr = new PrintWriter(fileToSave);
+		for (DiagramNode n : d.items(DiagramNode.class)) {
+			Pen pen = n.getPen();
+			Color fillColor = null;
+			Brush brush = n.getBrush();
+			if (brush instanceof SolidBrush) {
+				fillColor = ((SolidBrush) brush).getColor();
+			} else {
+				System.err.println("brush type is :" + brush.getClass()
+						+ " for node: " + n.getTextToEdit());
+			}
+			String id = n.getTextToEdit().split("\n")[0].trim();
+			String attributeName = mapper.getAttributeName(pen,brush);
+			wr.println(String.format("%-45s|%s|%s|%3.1f|%s|%s", id,
+					formatColor(pen.getColor()), formatStyle(pen.getDashStyle()), pen.getWidth(), formatColor(fillColor), attributeName));
+		}
+		wr.close();
 
 	}
+	
+	protected String formatColor(Color c){
+		if (c==null){
+			return "";
+		}
+		return String.format("(%03d,%03d,%03d)", c.getRed(), c.getGreen(), c.getBlue());
+	}
+	
+	protected String formatStyle(DashStyle s){
+		if (s==null){
+			return "";
+		}
+		return String.format("(%10.2f,%s)",s.getDashPhase(),Arrays.toString(s.getDashArray()));
+	}
+	
 
 	public void onShortenPoints(DiagramLink link) {
 		try {
 			PointList controlPoints = link.getControlPoints();
 			controlPoints.removeRange(1, Math
 					.max(1, link.getSegmentCount() - 1));
+			// link.updateFromPoints(false, true);
+			link.updateFromPoints();
+			// link.route();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+
+	}
+
+	public void onChangePoints(DiagramLink link) {
+		try {
+			PointList controlPoints = link.getControlPoints();
+			String result = JOptionPane.showInputDialog(
+					"Set points in link to: ", controlPoints.size() - 1);
+			int npoints = Integer.parseInt(result);
+			if (npoints <= 3)
+				return;
+			// link.setSegmentCount(npoints);
+			if (npoints < controlPoints.size()) {
+				controlPoints.removeRange(1, Math.max(controlPoints.size() - 1,
+						npoints));
+			} else {
+				java.awt.geom.Point2D.Float float1 = controlPoints
+						.get(controlPoints.size() - 1);
+				for (int i = controlPoints.size(); i < npoints; i++) {
+					controlPoints.add(float1);
+				}
+			}
 			// link.updateFromPoints(false, true);
 			link.updateFromPoints();
 			// link.route();
@@ -415,13 +572,13 @@ public class SchematicEditor extends SchematicViewer {
 				double delX = bounds.getCenterX() - centerX;
 				bounds.x = bounds.x - (float) delX;
 				if (spaceNodesEvenly) {
-					bounds.y = bounds0.y + index * spaceY;
+					bounds.y = bounds0.y + index * spaceY - bounds.height / 2;
 				}
 			} else if (orientation == Orientation.Horizontal) {
 				double delY = bounds.getCenterY() - centerY;
 				bounds.y = bounds.y - (float) delY;
 				if (spaceNodesEvenly) {
-					bounds.x = bounds0.x + index * spaceX;
+					bounds.x = bounds0.x + index * spaceX - bounds.width / 2;
 				}
 			}
 			// java.awt.geom.Point2D.Float pointOnGrid =
@@ -466,14 +623,15 @@ public class SchematicEditor extends SchematicViewer {
 	public Action getRedoAction() {
 		return redoAction;
 	}
-	
-	public JMenuItem getShrinkToElementsAction(){
+
+	public JMenuItem getShrinkToElementsAction() {
 		return shrinkToElementsMenuItem;
 	}
 
 	public void onDelete() {
 		Diagram d = getDiagram();
-		CompositeCmd compositeCmd = d.getUndoManager().startComposite("DeleteALot");
+		CompositeCmd compositeCmd = d.getUndoManager().startComposite(
+				"DeleteALot");
 		if (!(d.getSelection().getNodes().isEmpty())) {
 			for (DiagramNode n : d.getSelection().getNodes()) {
 				n.setLocked(false);
@@ -495,7 +653,13 @@ public class SchematicEditor extends SchematicViewer {
 
 	public void onCopy() {
 		Diagram d = getDiagram();
-		CompositeCmd compositeCmd = d.getUndoManager().startComposite("CopyALot");
+		CompositeCmd compositeCmd = d.getUndoManager().startComposite(
+				"CopyALot");
+		onCopy(d);
+		compositeCmd.execute();
+	}
+
+	public void onCopy(Diagram d) {
 		copiedItems = new ArrayList<DiagramItem>();
 		HashMap<DiagramNode, DiagramNode> selectedToAddedMap = new HashMap<DiagramNode, DiagramNode>();
 		if (!(d.getSelection().getNodes().isEmpty())) {
@@ -535,7 +699,6 @@ public class SchematicEditor extends SchematicViewer {
 				}
 			}
 		}
-		compositeCmd.execute();
 	}
 
 	public void onPaste() {
@@ -543,14 +706,14 @@ public class SchematicEditor extends SchematicViewer {
 				|| copiedItems.size() == 0) {
 			return;
 		}
-		
-		
+
 		Diagram diagram = getDiagram();
 		DiagramView diagramView = getDiagramView();
 
-		CompositeCmd compositeCmd = diagram.getUndoManager().startComposite("PasteALot");
+		CompositeCmd compositeCmd = diagram.getUndoManager().startComposite(
+				"PasteALot");
 		diagram.getLinkRouter().Suspend();
-		
+
 		DiagramItem diagramItem = copiedItems.get(0);
 		Float bounds = diagramItem.getBounds();
 		float delX = (float) lastMouseClickedPosition.getX() - bounds.x;
@@ -614,7 +777,7 @@ public class SchematicEditor extends SchematicViewer {
 			}
 			// FIXME: alignTo grid
 		}
-		
+
 		compositeCmd.execute();
 
 	}
@@ -803,18 +966,19 @@ public class SchematicEditor extends SchematicViewer {
 			link.getHeadPen().setColor(editPanel.getColor());
 		}
 	}
-	
-	public void shrinkDiagramToElements() throws Exception{
+
+	public void shrinkDiagramToElements() throws Exception {
 		DiagramItemList items = getDiagram().getItems();
-		float minx=java.lang.Float.MAX_VALUE, miny = java.lang.Float.MAX_VALUE, maxx=java.lang.Float.MIN_VALUE, maxy=java.lang.Float.MIN_VALUE;
-		for(DiagramItem item: items){
+		Rectangle2D.Float calculatedBounds = null;
+		float minx = java.lang.Float.MAX_VALUE, miny = java.lang.Float.MAX_VALUE, maxx = java.lang.Float.MIN_VALUE, maxy = java.lang.Float.MIN_VALUE;
+		for (DiagramItem item : items) {
 			Float itemBounds = item.getBounds();
-			minx = Math.min(minx, itemBounds.x);
-			miny = Math.min(miny, itemBounds.y);
-			maxx = Math.max(maxx, itemBounds.x+itemBounds.width);
-			maxy = Math.max(maxy,itemBounds.y+itemBounds.height);
+			if (calculatedBounds == null) {
+				calculatedBounds = (Rectangle2D.Float) itemBounds.clone();
+			} else {
+				calculatedBounds.add(itemBounds);
+			}
 		}
-		Rectangle2D.Float calculatedBounds = new Rectangle2D.Float(minx-100,miny-100,maxx-minx+200,maxy-miny+200);
 		getDiagram().setBounds(calculatedBounds);
 		getDiagram().repaint();
 	}
@@ -828,6 +992,10 @@ public class SchematicEditor extends SchematicViewer {
 			doc.appendChild(s.toDOM(doc));
 			XmlUtilities.saveTo(doc, filename);
 		}
+	}
+
+	public Action getExportAction() {
+		return exportAction;
 	}
 
 }

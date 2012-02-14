@@ -2,26 +2,34 @@ package wrims.schematic.jdiagram;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Float;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Date;
-import java.util.Enumeration;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
+import java.util.logging.Logger;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
-
-import sun.swing.SwingUtilities2;
 
 import wrims.schematic.MainFrame;
 import wrims.schematic.element.Element;
@@ -36,11 +44,13 @@ import com.mindfusion.diagramming.DiagramItemList;
 import com.mindfusion.diagramming.DiagramNode;
 import com.mindfusion.diagramming.DiagramNodeList;
 import com.mindfusion.diagramming.DiagramView;
+import com.mindfusion.diagramming.DrawNodeEvent;
 import com.mindfusion.diagramming.Group;
 import com.mindfusion.diagramming.LinkValidationEvent;
 import com.mindfusion.diagramming.NodeEvent;
 import com.mindfusion.diagramming.NodeValidationEvent;
 import com.mindfusion.diagramming.Overview;
+import com.mindfusion.diagramming.Pen;
 import com.mindfusion.diagramming.SelectionStyle;
 import com.mindfusion.diagramming.ShapeNode;
 import com.mindfusion.diagramming.TextFormat;
@@ -56,6 +66,7 @@ import com.mindfusion.diagramming.export.SvgExporter;
  */
 public class SchematicViewer extends JPanel {
 
+	public static final String WRIMS_SCHEMATIC = "wrims.schematic";
 	private static final Object VALUE_TEXT = "__VT__";
 	private DiagramView diagramView;
 	private Diagram diagram;
@@ -66,12 +77,47 @@ public class SchematicViewer extends JPanel {
 	private boolean enableClick;
 	private float zoomFactor = 1.15f;
 	protected Rectangle2D.Float lastVisibleRect;
+	protected ViewPosition lastViewPosition;
 	private MainFrame schematic;
 	private boolean showValueBoxes;
 	private AbstractAction zoomNormalAction;
 	private AbstractAction zoomBestFitAction;
 	protected DiagramAdapter listener;
 	private AbstractAction zoomRectAction;
+	private LegendPanel legendPanel;
+	private static ArrayList<ViewPosition> viewHistory = new ArrayList<ViewPosition>();
+	private static int viewHistoryPointer = 0;
+	private AbstractAction forwardViewAction;
+	private AbstractAction backwardViewAction;
+	private AbstractAction toggleLegendAction;
+	private JSplitPane splitPane;
+	private AbstractAction selectFontAction;
+	private int precision = 2;
+	private AbstractAction selectPrecisionAction;
+	private boolean showUnits = true;
+	private AbstractAction markViewAction;
+	private JComboBox markViewComboBox;
+	private AbstractAction deleteViewAction;
+
+	private static Preferences userPrefs;
+	static {
+		userPrefs = Preferences.userNodeForPackage(SchematicViewer.class);
+		try {
+			String[] childrenNames = userPrefs.keys();
+			viewHistory = new ArrayList<ViewPosition>();
+			for (String name : childrenNames) {
+				try {
+					viewHistory.add(toViewPosition(userPrefs.get(name, null)));
+				} catch (Exception ex) {
+					userPrefs.remove(name);
+				}
+			}
+			viewHistoryPointer = viewHistory.size();
+		} catch (BackingStoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Add diagram viewer to a scrollpane
@@ -87,7 +133,14 @@ public class SchematicViewer extends JPanel {
 		diagramView = new DiagramView();
 		diagramView.setDiagram(diagram);
 		diagramView.setBehavior(Behavior.Modify);
-		panel.getMainPanel().add(new JScrollPane(diagramView));
+
+		legendPanel = new LegendPanel(this);
+		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+				new JScrollPane(legendPanel), new JScrollPane(diagramView));
+		splitPane.setOneTouchExpandable(true);
+		splitPane.setDividerLocation(0);
+
+		panel.getMainPanel().add(splitPane);
 
 		overview = new Overview();
 		overview.setDiagramView(diagramView);
@@ -112,8 +165,15 @@ public class SchematicViewer extends JPanel {
 					public void run() {
 						SwingUtilities.invokeLater(new Runnable() {
 							public void run() {
-								refreshValues(false);
-								// overview.resumeRepaint();
+								try {
+									// diagramView.suspendRepaint();
+									// overview.suspendRepaint();
+									refreshValues(false);
+								} finally {
+									// diagramView.resumeRepaint();
+									// overview.resumeRepaint();
+								}
+
 							}
 						});
 					}
@@ -123,8 +183,19 @@ public class SchematicViewer extends JPanel {
 			}
 
 			@Override
-			public void nodeSelected(NodeEvent arg0) {
+			/**
+			 * Raised when a diagram node must be custom drawn.
+			 */
+			public void drawNode(DrawNodeEvent e) {
+				Rectangle2D rect = e.getBounds();
+				rect.setFrame(rect.getMinX() + 9, rect.getMinY() + 9, rect
+						.getWidth() - 18, rect.getHeight() - 18);
 
+				Graphics2D g = e.getGraphics();
+				Pen pen = (Pen) e.getNode().getPen().clone();
+				pen.setWidth(1);
+				pen.applyTo(g);
+				g.draw(rect);
 			}
 
 			@Override
@@ -196,6 +267,35 @@ public class SchematicViewer extends JPanel {
 		createActions();
 	}
 
+	private static ViewPosition toViewPosition(String val) {
+		String[] fields = val.split(",");
+		ViewPosition vp = new ViewPosition();
+		vp.name = fields[0];
+		vp.scrollX = java.lang.Float.parseFloat(fields[1]);
+		vp.scrollY = java.lang.Float.parseFloat(fields[2]);
+		vp.zoomFactor = java.lang.Float.parseFloat(fields[3]);
+		return vp;
+	}
+
+	private static String fromViewPosition(ViewPosition vp) {
+		return vp.name + "," + vp.scrollX + "," + vp.scrollY + ","
+				+ vp.zoomFactor;
+	}
+
+	private static void saveViewHistory() {
+		userPrefs = Preferences.userNodeForPackage(SchematicViewer.class);
+		try {
+			userPrefs.clear();
+			for (ViewPosition vp : viewHistory) {
+				userPrefs.put(vp.name, fromViewPosition(vp));
+			}
+			userPrefs.sync();
+		} catch (BackingStoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public void setEnableClick(boolean click) {
 		enableClick = true;
 	}
@@ -265,7 +365,9 @@ public class SchematicViewer extends JPanel {
 				zoomToAll();
 			}
 		};
-		zoomBestFitAction.putValue(Action.SHORT_DESCRIPTION, "zoom all");
+		zoomBestFitAction.putValue(Action.NAME, "Zoom to Rectangle");
+		zoomBestFitAction.putValue(Action.SHORT_DESCRIPTION,
+				"Zoom to Rectangle");
 		zoomBestFitAction
 				.putValue(
 						Action.SMALL_ICON,
@@ -273,16 +375,22 @@ public class SchematicViewer extends JPanel {
 								.createImageIcon("/wrims/schematic/images/toolbar/zoom_best_fit.png"));
 
 		zoomRectAction = new AbstractAction() {
+			private int behavior = 0;
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				diagramView.setBehavior(Behavior.DoNothing);
-				Cursor previousCursor = diagramView.getCursor();
-				diagramView.setCursor(Cursor
-						.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-
-				// diagramView.setCursor(previousCursor);
-				// diagramView.setBehavior(Behavior.Modify);
+			public void actionPerformed(ActionEvent evt) {
+				Object source = evt.getSource();
+				if (!(source instanceof JToggleButton)) {
+					return;
+				}
+				JToggleButton toggleButton = (JToggleButton) source;
+				if (toggleButton.isSelected()) {
+					behavior = diagramView.getBehavior();
+					diagramView.setCustomBehavior(new RectangleZoomBehavior(
+							diagramView));
+				} else {
+					diagramView.setBehavior(behavior);
+				}
 			}
 		};
 		zoomRectAction.putValue(Action.SHORT_DESCRIPTION, "zoom rectangle");
@@ -291,7 +399,190 @@ public class SchematicViewer extends JPanel {
 						Action.SMALL_ICON,
 						ImageUtil
 								.createImageIcon("/wrims/schematic/images/toolbar/zoom_region.png"));
+		forwardViewAction = new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				forwardView();
+			}
+		};
+		forwardViewAction.setEnabled(false);
+		forwardViewAction.putValue(Action.NAME, "Forward View");
+		forwardViewAction
+				.putValue(
+						Action.SMALL_ICON,
+						ImageUtil
+								.createImageIcon("/wrims/schematic/images/toolbar/forward_view.png"));
+		backwardViewAction = new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				backwardView();
+			}
+		};
+		backwardViewAction.setEnabled(false);
+		backwardViewAction.putValue(Action.NAME, "Forward View");
+		backwardViewAction
+				.putValue(
+						Action.SMALL_ICON,
+						ImageUtil
+								.createImageIcon("/wrims/schematic/images/toolbar/backward_view.png"));
 
+		markViewAction = new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				markView();
+			}
+		};
+		markViewAction.putValue(Action.NAME, "Mark View");
+		markViewAction
+				.putValue(
+						Action.SMALL_ICON,
+						ImageUtil
+								.createImageIcon("/wrims/schematic/images/toolbar/mark_view.png"));
+		deleteViewAction = new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				deleteView();
+			}
+		};
+		deleteViewAction.putValue(Action.NAME, "Delete View");
+		deleteViewAction
+				.putValue(
+						Action.SMALL_ICON,
+						ImageUtil
+								.createImageIcon("/wrims/schematic/images/toolbar/delete_view.png"));
+
+		markViewComboBox = new JComboBox();
+		markViewComboBox.setEditable(true);
+		for (ViewPosition vp : viewHistory) {
+			markViewComboBox.addItem(vp.name);
+		}
+		markViewComboBox.setSelectedIndex(-1);
+
+		markViewComboBox.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				updateToViewNamed(markViewComboBox.getSelectedItem().toString());
+			}
+		});
+
+		toggleLegendAction = new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				Object source = evt.getSource();
+				if (!(source instanceof JCheckBoxMenuItem)) {
+					return;
+				}
+
+				JCheckBoxMenuItem cb = (JCheckBoxMenuItem) source;
+
+				showLegend(cb.isSelected());
+			}
+
+		};
+		toggleLegendAction.putValue(Action.NAME, "Show Legend");
+
+		selectFontAction = new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				selectFont();
+			}
+		};
+		selectFontAction.putValue(Action.NAME, "Select Font...");
+
+		selectPrecisionAction = new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				selectPrecision();
+			}
+
+		};
+		selectPrecisionAction.putValue(Action.NAME, "Change Precision...");
+
+	}
+
+	protected void deleteView() {
+		for (int i = 0; i < viewHistory.size(); i++) {
+			if (viewHistory.get(i).name.equals(markViewComboBox
+					.getSelectedItem().toString())) {
+				viewHistory.remove(i);
+				markViewComboBox.removeItem(markViewComboBox.getSelectedItem());
+				break;
+			}
+		}
+	}
+
+	protected ViewPosition getOrAddViewPosition(String name) {
+		for (ViewPosition p : viewHistory) {
+			if (p.name.equals(name)) {
+				return p;
+			}
+		}
+		ViewPosition vp = new ViewPosition();
+		vp.name = name;
+		viewHistory.add(vp);
+		markViewComboBox.addItem(name);
+		return vp;
+	}
+
+	protected void markView() {
+		updateViewButtonState();
+		// moving on from the point
+		Object selectedItem = markViewComboBox.getSelectedItem();
+		String text = selectedItem == null ? "" : markViewComboBox
+				.getSelectedItem().toString();
+		if (text == null || text.equals("")) {
+			text = ViewPosition.generateUniqueName();
+		}
+		// if combo box does not contain name add a viewposition with that name
+		// to history and to combo box
+		ViewPosition viewPosition = getOrAddViewPosition(text);
+		viewPosition.setPosition(diagramView.getScrollX(), diagramView
+				.getScrollY(), diagramView.getZoomFactor());
+		saveViewHistory();
+		lastViewPosition = viewPosition;
+	}
+
+	private void updateViewButtonState() {
+		if (!hasForwardView()) {
+			forwardViewAction.setEnabled(false);
+		} else {
+			forwardViewAction.setEnabled(true);
+		}
+		if (!hasBackwardView()) {
+			backwardViewAction.setEnabled(false);
+		} else {
+			backwardViewAction.setEnabled(true);
+		}
+	}
+
+	protected void selectPrecision() {
+		String value = JOptionPane.showInputDialog(this,
+				"Select number of decimal places to show", precision);
+		try {
+			precision = Integer.parseInt(value);
+			refreshValues(true);
+		} catch (NumberFormatException nfe) {
+			nfe.printStackTrace();
+		}
+	}
+
+	protected void showLegend(boolean selected) {
+		if (selected) {
+			splitPane.setDividerLocation(650);
+		} else {
+			splitPane.setDividerLocation(0);
+		}
+	}
+
+	protected void increaseFontSize() {
+		Iterable<ShapeNode> items = diagram.items(ShapeNode.class);
+		for (ShapeNode item : items) {
+			TextFormat textFormat = item.getTextFormat();
+		}
 	}
 
 	public Action getZoomInAction() {
@@ -312,6 +603,38 @@ public class SchematicViewer extends JPanel {
 
 	public Action getZoomRectangleAction() {
 		return zoomRectAction;
+	}
+
+	private Action getForwardViewAction() {
+		return forwardViewAction;
+	}
+
+	private Action getBackwardViewAction() {
+		return backwardViewAction;
+	}
+
+	public Action getMarkViewAction() {
+		return markViewAction;
+	}
+
+	public Action getDeleteViewAction() {
+		return deleteViewAction;
+	}
+
+	public JComboBox getMarkViewComboBox() {
+		return markViewComboBox;
+	}
+
+	public Action getToggleLegendAction() {
+		return toggleLegendAction;
+	}
+
+	public Action getSelectFontAction() {
+		return selectFontAction;
+	}
+
+	public Action getSelectPrecisionAction() {
+		return selectPrecisionAction;
 	}
 
 	public void zoomIn() {
@@ -341,12 +664,11 @@ public class SchematicViewer extends JPanel {
 	}
 
 	public void zoomToAll() {
-		System.out.println("zoomFactor: " + diagramView.getZoomFactor());
 		diagramView.zoomToFit();
 	}
 
 	public void zoomNormal() {
-		diagramView.setZoomFactor(35.0f);
+		diagramView.setZoomFactor(40.0f);
 	}
 
 	/**
@@ -360,14 +682,27 @@ public class SchematicViewer extends JPanel {
 	public void load(String filename) throws FileNotFoundException,
 			IOException, XmlException {
 		long ti = System.currentTimeMillis();
+		diagramView.suspendRepaint();
 		if (filename.endsWith(".xml")) {
 			diagram.loadFromXml(filename);
 		} else {
 			diagram.loadFrom(filename);
 		}
 		this.filename = filename;
-		System.out.println("Time to load " + filename + ": "
-				+ (System.currentTimeMillis() - ti));
+		Logger.getLogger(WRIMS_SCHEMATIC).fine(
+				"Time to load " + filename + ": "
+						+ (System.currentTimeMillis() - ti));
+		Rectangle2D rect = diagram.getBounds();
+		diagramView.zoomToFit(rect);
+		diagramView.resumeRepaint();
+		/*
+		 * if (markViewComboBox.getItemCount() > 0) {
+		 * markViewComboBox.setSelectedItem(viewHistory.get(0).name); }
+		 */
+	}
+
+	public static ArrayList<ViewPosition> getHistory() {
+		return viewHistory;
 	}
 
 	public void save(String filename) throws Exception {
@@ -415,22 +750,82 @@ public class SchematicViewer extends JPanel {
 	}
 
 	public void refreshValues(boolean force) {
+		refreshValues(force, true);
+	}
+
+	public void refreshValues(boolean force, boolean addToHistory) {
 		if (!showValueBoxes || schematic == null) {
 			return;
 		}
-		Rectangle2D.Float visibleRect = diagramView.deviceToDoc(diagramView
-				.getVisibleRect());
-		if (!force && visibleRect.equals(lastVisibleRect)) {
-			return;
-		}
-		if (lastVisibleRect == null) {
+		synchronized (diagramView) {
+			Rectangle2D.Float visibleRect = diagramView.deviceToDoc(diagramView
+					.getVisibleRect());
+			if (!force && visibleRect.equals(lastVisibleRect)) {
+				return;
+			}
+			if (lastVisibleRect == null) {
+				lastVisibleRect = visibleRect;
+			}
+			clearValueBoxes(lastVisibleRect);
 			lastVisibleRect = visibleRect;
 		}
-		// System.out.println("viewportChanged: " + visibleRect + " on "
-		// + new Date());
-		clearValueBoxes(lastVisibleRect);
-		lastVisibleRect = visibleRect;
 		schematic.updateValues();
+	}
+
+	public boolean hasForwardView() {
+		return (viewHistoryPointer < viewHistory.size() - 1);
+	}
+
+	public void forwardView() {
+		if (!hasForwardView()) {
+			return;
+		}
+		viewHistoryPointer++;
+		updateToView();
+	}
+
+	public boolean hasBackwardView() {
+		return viewHistoryPointer > 0;
+	}
+
+	public void backwardView() {
+		if (!hasBackwardView()) {
+			return;
+		}
+		viewHistoryPointer--;
+		updateToView();
+	}
+
+	void updateToView() {
+		ViewPosition vp = viewHistory.get(viewHistoryPointer);
+		diagramView.setZoomFactor(vp.zoomFactor);
+		diagramView.scrollTo(vp.scrollX, vp.scrollY);
+		if (vp.name != null) {
+			markViewComboBox.setSelectedItem(vp.name);
+		}
+		refreshValues(false, false);
+		updateViewButtonState();
+	}
+
+	void updateToViewNamed(String name) {
+		ViewPosition vp = null;
+		int i = 0;
+		for (i = 0; i < viewHistory.size(); i++) {
+			vp = viewHistory.get(i);
+			if (vp.name != null && vp.name.equals(name)) {
+				break;
+			}
+		}
+		if (i == viewHistory.size()) {
+			return;
+		}
+		viewHistoryPointer = i;
+		diagramView.setZoomFactor(vp.zoomFactor);
+		diagramView.scrollTo(vp.scrollX, vp.scrollY);
+		if (vp.name != null) {
+			markViewComboBox.setSelectedItem(vp.name);
+		}
+		refreshValues(false, false);
 	}
 
 	public void setShowValueBoxes(boolean show) {
@@ -453,17 +848,28 @@ public class SchematicViewer extends JPanel {
 				ShapeNode shapeNode = (ShapeNode) o;
 				Object id = shapeNode.getId();
 				if (id != null && id.equals(VALUE_TEXT)) {
-					nodes.remove(shapeNode);
+					shapeNode.setText("");
+					// nodes.remove(shapeNode);
 				}
 			}
 		}
 	}
 
 	public void clearAllValueBoxes() {
-		DiagramNode node;
-		while ((node = diagram.findNodeById(VALUE_TEXT)) != null) {
-			diagram.getNodes().remove(node);
+		for (DiagramItem item : diagram.items(ShapeNode.class)) {
+			if (item == null || !(item instanceof ShapeNode)) {
+				continue;
+			}
+			ShapeNode snode = (ShapeNode) item;
+			Object id = snode.getId();
+			if (id != null && id.equals(VALUE_TEXT)) {
+				snode.setText("");
+			}
 		}
+		/*
+		 * DiagramNode node; while ((node = diagram.findNodeById(VALUE_TEXT)) !=
+		 * null) { //diagram.getNodes().remove(node); }
+		 */
 	}
 
 	public Vector<String> getSelectedNames() {
@@ -516,37 +922,46 @@ public class SchematicViewer extends JPanel {
 		if (!showValueBoxes) {
 			return;
 		}
-		Hashtable<String, Object> visibleNodes = getVisibleNodes();
-		Enumeration<String> variables = visibleNodes.keys();
-		for (int studyId = 0; studyId < values.length; studyId++) {
-			Hashtable<String, String> valuesInStudy = values[studyId];
-			for (String name : valuesInStudy.keySet()) {
-				Object object = visibleNodes.get(name);
-				if (object == null) {
-					continue;
-				}
-				String value = valuesInStudy.get(name);
-				value = truncateAfterDecimal(value, 2);
-				if (object instanceof ShapeNode) {
-					ShapeNode shapeNode = (ShapeNode) object;
-					Group subordinateGroup = shapeNode.getSubordinateGroup();
-					if (subordinateGroup != null) {
-						DiagramNodeList attachedNodes = subordinateGroup
-								.getAttachedNodes();
-						if (attachedNodes.size() < studyId + 1) {
-							createTextNodeWithIntermediates(studyId,
-									attachedNodes.size(), value, shapeNode);
-						} else {
-							DiagramNode diagramNode = attachedNodes
-									.get(studyId);
-							diagramNode.setEditedText(value);
+		try {
+			diagramView.suspendRepaint();
+			synchronized (diagramView) {
+				Hashtable<String, Object> visibleNodes = getVisibleNodes();
+				for (int studyId = 0; studyId < values.length; studyId++) {
+					Hashtable<String, String> valuesInStudy = values[studyId];
+					for (String name : valuesInStudy.keySet()) {
+						Object object = visibleNodes.get(name);
+						if (object == null) {
+							continue;
 						}
-					} else {
-						createTextNodeWithIntermediates(studyId, 0, value,
-								shapeNode);
+						String value = valuesInStudy.get(name);
+						value = truncateAfterDecimal(value, precision,
+								showUnits);
+						if (object instanceof ShapeNode) {
+							ShapeNode shapeNode = (ShapeNode) object;
+							Group subordinateGroup = shapeNode
+									.getSubordinateGroup();
+							if (subordinateGroup != null) {
+								DiagramNodeList attachedNodes = subordinateGroup
+										.getAttachedNodes();
+								if (attachedNodes.size() < studyId + 1) {
+									createTextNodeWithIntermediates(studyId,
+											attachedNodes.size(), value,
+											shapeNode);
+								} else {
+									DiagramNode diagramNode = attachedNodes
+											.get(studyId);
+									diagramNode.setEditedText(value);
+								}
+							} else {
+								createTextNodeWithIntermediates(studyId, 0,
+										value, shapeNode);
+							}
+						}
 					}
 				}
 			}
+		} finally {
+			diagramView.resumeRepaint();
 		}
 	}
 
@@ -610,7 +1025,8 @@ public class SchematicViewer extends JPanel {
 		// System.out.println("Creating text node: "+attachPos+":"+r2+":"+value+":"+shapeNode+":"+transparentTextNode);
 	}
 
-	private String truncateAfterDecimal(String value, int i) {
+	private String truncateAfterDecimal(String value, int i,
+			boolean displayUnits) {
 		if (value == null) {
 			return null;
 		}
@@ -619,7 +1035,7 @@ public class SchematicViewer extends JPanel {
 			return value;
 		}
 		return String.format("%." + i + "f %s", Double.parseDouble(fields[0]),
-				fields[1]);
+				displayUnits ? fields[1] : "");
 	}
 
 	public void setSchematic(MainFrame schematic) {
@@ -650,8 +1066,54 @@ public class SchematicViewer extends JPanel {
 		}
 	}
 
+	public void selectFont() {
+		Font font = getDiagram().getFont();
+		JFontChooser jFontChooser = new JFontChooser();
+		jFontChooser.setSelectedFont(font);
+		jFontChooser.showDialog(this);
+		Font newFont = jFontChooser.getSelectedFont();
+		getDiagramView().suspendRepaint();
+		getDiagram().setFont(newFont);
+		Diagram diagram = getDiagram();
+		for (DiagramItem item : diagram.items(DiagramItem.class)) {
+			item.setFont(newFont);
+			if (item instanceof ShapeNode) {
+				ShapeNode snode = (ShapeNode) item;
+			}
+		}
+		getDiagramView().resumeRepaint();
+	}
+
 	public DiagramView getDiagramView() {
 		return diagramView;
+	}
+
+	public static class ViewPosition {
+		public String name;
+		public float scrollX, scrollY, zoomFactor;
+		public static int uniqueId = 0;
+
+		public void setPosition(float x, float y, float z) {
+			scrollX = x;
+			scrollY = y;
+			zoomFactor = z;
+		}
+
+		public static String generateUniqueName() {
+			return String.format("View #%3d", uniqueId++);
+		}
+
+		public boolean isSameAs(ViewPosition lastViewPosition) {
+			return lastViewPosition != null
+					&& Math.abs(this.scrollX - lastViewPosition.scrollX) < 1e-03
+					&& Math.abs(this.scrollY - lastViewPosition.scrollY) < 1e-03
+					&& Math.abs(this.zoomFactor - lastViewPosition.zoomFactor) < 1e-03;
+		}
+
+		public String toString() {
+			return "View Position: " + scrollX + "," + scrollY + ","
+					+ zoomFactor;
+		}
 	}
 
 }

@@ -33,7 +33,6 @@ import wrims.dss.dts.DerivedTimeSeries;
 import wrims.dss.monthly.MonthlyTableFrame;
 import wrims.dss.monthly.Outputer;
 import wrims.schematic.FilterPanel;
-import wrims.schematic.MainPanel;
 import wrims.schematic.MessagePanel;
 import wrims.schematic.SchematicUtils;
 
@@ -401,6 +400,9 @@ public class DssViewer implements Outputer {
 						}
 						if (_mode.equals("Diff")) {
 							if (j > 0) {
+								if (results[0] == null){
+									continue;
+								}
 								String[] baseFields = results[0].get(name)
 										.split("\\s");
 								String[] altFields = value.split("\\s");

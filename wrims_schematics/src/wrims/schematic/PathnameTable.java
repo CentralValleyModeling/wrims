@@ -5,10 +5,7 @@ import hec.heclib.dss.DSSPathname;
 import java.awt.Color;
 import java.awt.Component;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JCheckBox;

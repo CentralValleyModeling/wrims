@@ -2,12 +2,10 @@ package wrims.schematic.jdiagram;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.util.HashMap;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.ListCellRenderer;
 
 import com.mindfusion.diagramming.DiagramItem;
 import com.mindfusion.diagramming.DiagramLink;

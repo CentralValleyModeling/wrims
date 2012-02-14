@@ -389,13 +389,12 @@ public class MainPanel extends JPanel {
 	 */
 	public void updateSchematicValues() { // CB TODO add String arg version IF
 											// needed
-		if (_updateSchematicValuesThread == null) {
-			_updateSchematicValuesThread = new UpdateSchematicValuesThread();
-		} else if (_updateSchematicValuesThread.isAlive()) {
-			_updateSchematicValuesThread.interrupt();
-			_updateSchematicValuesThread = new UpdateSchematicValuesThread();
+		String date = getSchematicDate();
+		if (date != null && !date.trim().equals("")) {
+			// No longer if (date.indexOf("-") == -1) //CB long-term
+			// averages need time for recalculation (see below)
+			_schematic.updateValues(date);
 		}
-		_updateSchematicValuesThread.start();
 	}
 
 	/**

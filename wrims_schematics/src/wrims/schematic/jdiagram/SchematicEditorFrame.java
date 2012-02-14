@@ -26,7 +26,7 @@ import javax.swing.filechooser.FileFilter;
 @SuppressWarnings("serial")
 public class SchematicEditorFrame extends JFrame {
 
-	protected static final String VERSION_ID = "1.0-v12/13/2011";
+	protected static final String VERSION_ID = "1.0-v02/07/2011";
 	private SchematicEditor editor;
 	private String currentFilenameOpen;
 
@@ -90,6 +90,8 @@ public class SchematicEditorFrame extends JFrame {
 		bar.add(fileSaveAction);
 		bar.add(fileSaveAsAction);
 		bar.addSeparator();
+		bar.add(editor.getExportAction());
+		bar.addSeparator();
 		bar.add(editor.getUndoAction());
 		bar.add(editor.getRedoAction());
 		bar.addSeparator();
@@ -99,7 +101,9 @@ public class SchematicEditorFrame extends JFrame {
 		bar.add(editor.getZoomNormalAction());
 		bar.add(editor.getZoomToFitAction());
 		bar.addSeparator();
-		bar.add(new JToggleButton(editor.getToggleAutoAlignAction()));
+		JToggleButton autoAlignButton = new JToggleButton(editor.getToggleAutoAlignAction());
+		autoAlignButton.doClick();
+		bar.add(autoAlignButton);
 		bar.add(editor.getVerticalAlignAction());
 		bar.add(editor.getHorizontalAlignAction());
 		bar.add(new JCheckBox(editor.getToggleEvenlySpaceNodes()));
@@ -127,6 +131,8 @@ public class SchematicEditorFrame extends JFrame {
 		editMenu.add(editor.getRedoAction());
 		editMenu.addSeparator();
 		editMenu.add(editor.getShrinkToElementsAction());
+		editMenu.addSeparator();
+		editMenu.add(editor.getSelectFontAction());
 		mbar.add(editMenu);
 
 		JMenu toolMenu = new JMenu("Tools");

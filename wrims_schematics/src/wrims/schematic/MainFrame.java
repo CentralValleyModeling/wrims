@@ -24,24 +24,25 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Properties;
 import java.util.Vector;
+import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
-import javax.swing.AbstractAction;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JDesktopPane;
 import javax.swing.JDialog;
@@ -62,13 +63,14 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+import javax.swing.ProgressMonitor;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileFilter;
 
-import com.mindfusion.diagramming.XmlException;
+import org.jfree.ui.tabbedui.VerticalLayout;
 
 import vista.gui.VistaUtils;
 import wrims.dss.DssViewer;
@@ -90,8 +92,6 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	public MainFrame(final String mainDir, boolean isStandalone) {
 		HecDSSFileAccess.setMessageLevel(_messageLevel);
 
-		// clearRecentFilePreferences(); // CB added for development phase only;
-		// save for possible user use
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			mainFrame = new JFrame();
@@ -103,25 +103,17 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 				public void run() {
 					try {
 						long ti = System.currentTimeMillis();
-						
+
 						// check previously loaded schematics
 
-						String filename = Preferences.userNodeForPackage(
-								MainFrame.class).get("last.schematic",
+						String filename = Preferences
+								.userNodeForPackage(MainFrame.class)
+								.get(
+										"last.schematic",
 										mainDir
-										+ "/wrims/schematic/CS3_NetworkSchematic.xml");
-						
-						_viewer.load(filename);	
-						
-						if(_viewer.findInView("S_SHS")){
-							
-						} else if (_viewer.findInView("S1")) {
+												+ "/wrims/schematic/CS3_NetworkSchematic.xml");
 
-						}
-
-						_viewer.zoomOut();
-						_viewer.zoomOut();
-						
+						_viewer.load(filename);
 					} catch (Exception e) {
 						e.printStackTrace();
 
@@ -185,7 +177,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 
 			// batchPane = new BatchPanel(tabbedPane);
 			// tabbedPane.add(batchPane, "Batch");
-			
+
 			outputPane = new JPanel();
 			tabbedPane.add(outputPane, "Output");
 			outputPane.setLayout(new BorderLayout());
@@ -196,8 +188,6 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 
 			// CB moved the below here from main(args)
 			theApp = mainFrame;
-
-			addExitCommand();
 
 			mainFrame.setTitle("WRIMS Schematic");
 			mainFrame.setSize(new Dimension(800, 600));
@@ -525,7 +515,8 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	{
 		// Icon icon = iconImage("images/open.gif");
 		Icon icon = createIconImage("images/Open24.gif");
-		FileOpenAction = new SchematicRelatedAction("Open", icon, this) {
+		FileOpenAction = new SchematicRelatedAction("Open Schematic", icon,
+				this) {
 			public void actionPerformed(ActionEvent e) {
 				String filename = chooseFileToOpen();
 				if (filename == null) {
@@ -534,10 +525,10 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 				SchematicViewer view = getCurrentView();
 				try {
 					view.load(filename);
-					
+
 					Preferences.userNodeForPackage(MainFrame.class).put(
 							"last.schematic", filename);
-					
+
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -562,7 +553,8 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	SchematicRelatedAction FileSaveAction = null;
 	{
 		Icon icon = createIconImage("images/Save24.gif");
-		FileSaveAction = new SchematicRelatedAction("Save", icon, this) {
+		FileSaveAction = new SchematicRelatedAction("Save Schematic", icon,
+				this) {
 			public void actionPerformed(ActionEvent e) {
 				saveSchematic();
 			}
@@ -575,7 +567,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 
 	SchematicRelatedAction FileSaveAsAction = null;
 	{
-		FileSaveAsAction = new SchematicRelatedAction("Save As", this) {
+		FileSaveAsAction = new SchematicRelatedAction("Save Schematic As", this) {
 			public void actionPerformed(ActionEvent e) {
 				String fileToSave = chooseFileToSave();
 				saveAsSchematic(fileToSave);
@@ -1096,6 +1088,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		// CB added if (RecentFilesOpenActions[0] != null)
 		// filemenu.addSeparator(); //CB not needed addExitCommand adds
 		// separator
+		addExitCommand();
 		mainMenuBar.add(filemenu);
 
 		viewmenu.setText("View");
@@ -1118,11 +1111,20 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		item.setMnemonic('O');
 		item.setIcon(null); // choose not to use icon in menu
 
-		item = viewmenu.add(_viewer.getZoomToFitAction());
+		item = viewmenu.add(_viewer.getZoomRectangleAction());
 		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F6, 0));
 		item.setMnemonic('Z');
 
+		item = viewmenu.add(new JCheckBoxMenuItem(_viewer
+				.getZoomRectangleAction()));
+
 		viewmenu.addSeparator();
+
+		item = viewmenu.add(new JCheckBoxMenuItem(_viewer
+				.getToggleLegendAction()));
+		item = viewmenu.add(_viewer.getSelectFontAction());
+		item = viewmenu.add(_viewer.getSelectPrecisionAction());
+
 		mainMenuBar.add(viewmenu);
 
 		// DSS menu
@@ -1186,11 +1188,29 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		button = toolBar.add(_viewer.getZoomToFitAction());
 		button.setToolTipText("Zoom To All");
 		button = toolBar.add(_viewer.getZoomNormalAction());
-		
 		toolBar.addSeparator();
-		final JToggleButton panToggle = new JToggleButton(ImageUtil.createImageIcon("/wrims/schematic/images/toolbar/pan.png"));
+		toolBar.add(new JToggleButton(_viewer.getZoomRectangleAction()));
+		toolBar.addSeparator();
+		// button = toolBar.add(_viewer.getBackwardViewAction());
+		// button.setToolTipText("Go Backward in View");
+		// button = toolBar.add(_viewer.getForwardViewAction());
+		// button.setToolTipText("Go Forward in View");
+
+		JPanel markPanel = new JPanel();
+		markPanel.setLayout(new BorderLayout());
+		JPanel eastPanel = new JPanel();
+		eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.LINE_AXIS));
+		eastPanel.add(new JButton(_viewer.getMarkViewAction()));
+		eastPanel.add(new JButton(_viewer.getDeleteViewAction()));
+		markPanel.add(eastPanel, "East");
+		markPanel.add(_viewer.getMarkViewComboBox());
+		toolBar.add(markPanel);
+
+		toolBar.addSeparator();
+		final JToggleButton panToggle = new JToggleButton(ImageUtil
+				.createImageIcon("/wrims/schematic/images/toolbar/pan.png"));
 		panToggle.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				_viewer.setPanMode(panToggle.isSelected());
@@ -1366,8 +1386,22 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	}
 
 	void showAbout() {
-		JOptionPane.showMessageDialog(this,
-				"Calsim 3 Schematic UI: $Revision$", "About",
+		Properties buildProps = new Properties();
+		buildProps.put("name", "WRIMS 2 UI");
+		buildProps.put("version", "1.0");
+		try {
+			buildProps.load(getClass().getResourceAsStream(
+					"/wrims/schematic/build.props"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String message = buildProps.getProperty("name") + "\n"
+				+ buildProps.getProperty("version");
+		message += "\n" + buildProps.getProperty("build") + "\n"
+				+ buildProps.getProperty("buildtime");
+		message += "\n" + buildProps.getProperty("builder") + "\n"
+				+ buildProps.getProperty("system");
+		JOptionPane.showMessageDialog(this, message, "About",
 				JOptionPane.INFORMATION_MESSAGE);
 	}
 
@@ -1653,7 +1687,12 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 				&& (_dateBox.getSelectedItem() != null)
 				&& !(((ComboItem) _dateBox.getSelectedItem()).toString().trim()
 						.equals(""))) {
-			updateValues(((ComboItem) _dateBox.getSelectedItem()).toString());
+			new Thread(new Runnable() {
+				public void run() {
+					updateValues(((ComboItem) _dateBox.getSelectedItem())
+							.toString());
+				}
+			}).start();
 		}
 	}
 
@@ -1667,20 +1706,35 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		if (_DssFrame == null) {
 			return;
 		}
+
+		ProgressMonitor monitor = new ProgressMonitor(this,
+				"Updating values...", "", 0, 10);
+		monitor.setProgress(0);
+		long ti = System.currentTimeMillis();
 		Hashtable<String, Object> visibleNodes = getCurrentView()
 				.getVisibleNodes();
-		Hashtable<String, Object> names = new Hashtable<String, Object>();
-
+		monitor.setProgress(1);
+		Logger.getLogger(SchematicViewer.WRIMS_SCHEMATIC).fine("Visible nodes calculated in : "
+				+ (System.currentTimeMillis() - ti));
+		final Hashtable<String, Object> names = new Hashtable<String, Object>();
 		for (String v : visibleNodes.keySet()) {
 			names.put(v, v);
 		}
 		_DssFrame.mainPanel.setCursor(Cursor
 				.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		monitor.setProgress(2);
+		ti = System.currentTimeMillis();
 		_DssFrame.getFP().loadAllVariableData(names, -1, true);
+		Logger.getLogger(SchematicViewer.WRIMS_SCHEMATIC).fine("Loading all variable date took : "
+				+ (System.currentTimeMillis() - ti));
+		ti = System.currentTimeMillis();
+		monitor.setProgress(5);
 		_DssFrame.getFP().getValueViewer().setVariables(names);
 		_DssFrame.getFP().getValueViewer().calculateLongTermAverages(
 				getTimeWindows(), -1, true);
-
+		Logger.getLogger(SchematicViewer.WRIMS_SCHEMATIC).fine("Calculating Long Term Averages took : "
+				+ (System.currentTimeMillis() - ti));
+		monitor.setProgress(9);
 		if (_DssFrame.getFP().getValueViewer() == null) {
 			values = _DssFrame.getFP().retrieve(
 					DssViewer.getOutputType(DssViewer.VALUES_STRING), date,
@@ -1696,13 +1750,18 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 
 		_DssFrame.mainPanel.setCursor(Cursor.getDefaultCursor());
 		if (values != null) {
+			ti = System.currentTimeMillis();
 			getCurrentView().setValues(values);
+			Logger.getLogger(SchematicViewer.WRIMS_SCHEMATIC).fine("Setting values took : "
+					+ (System.currentTimeMillis() - ti));
 		} else {
 			System.out
 					.println("No values yet for method updateValues(String date)");
 			JOptionPane.showMessageDialog(null, "No values yet for date = "
 					+ date, "Date Does Not Exist", JOptionPane.ERROR_MESSAGE);
 		}
+		monitor.setProgress(10);
+		monitor.close();
 	}
 
 	/**
@@ -2324,7 +2383,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	protected InputPanel inputPane;
 
 	// protected BatchPanel batchPane;
-	
+
 	protected ConsolePanel consolePane;
 
 	protected JPanel outputPane;
@@ -2451,6 +2510,10 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	}
 
 	public String chooseFileToSave() {
+		return chooseFileToSave(this);
+	}
+
+	public static String chooseFileToSave(Component parent) {
 		Preferences p = Preferences.userNodeForPackage(MainFrame.class);
 		String currentDirectory = p.get("SCHEMATICS_DIRECTORY", System
 				.getProperty("user.dir"));
@@ -2468,7 +2531,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 
 			}
 		});
-		int rval = chooser.showSaveDialog(this);
+		int rval = chooser.showSaveDialog(parent);
 		if (rval != JFileChooser.APPROVE_OPTION) {
 			return null;
 		}

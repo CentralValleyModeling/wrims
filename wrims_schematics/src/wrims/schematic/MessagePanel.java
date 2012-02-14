@@ -9,10 +9,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 import java.util.prefs.Preferences;
@@ -24,13 +26,14 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * 
@@ -47,12 +50,17 @@ public class MessagePanel {
 	public static final int FEDERAL_CONTRACT_YEAR = 2; // CB added
 
 	/** CB added */
-	public static final String[] _twSelections = { "OCT1921 - SEP2003",
+	public static String[] _twSelections = { "OCT1921 - SEP2003",
 			"OCT1921 - SEP1994", "MAY1928 - OCT1934", "JUN1986 - SEP1992",
 			"OCT1975 - SEP1977", "OCT1983 - SEP1993", };
 	private int _annualType; // CB added
 
-	private Preferences _userPrefs; // CB added
+	private static Preferences _userPrefs; // CB added
+	static {
+		_userPrefs = Preferences.userNodeForPackage(MessagePanel.class);
+		String tws = _userPrefs.get("timewindows", "OCT1921 - SEP2003,OCT1921 - SEP1994,MAY1928 - OCT1934,JUN1986 - SEP1992,OCT1975 - SEP1977,OCT1983 - SEP1993");
+		_twSelections = tws.split(",");
+	}
 	public static String CHECKED = "checked";
 
 	public static String[] labelText = {
@@ -230,8 +238,7 @@ public class MessagePanel {
 	}
 
 	public MessagePanel(MainPanel mainPanel, int schematicUnits) {
-		_messagePanelComp = createMessagePanel(schematicUnits);
-		_mainPanel = mainPanel;
+		this(null,mainPanel,schematicUnits);
 	}
 
 	/**
@@ -296,12 +303,6 @@ public class MessagePanel {
 		_comp3sv.setFont(f);
 		_comp3sv.setSize(8, 7);
 
-		_userPrefs = Preferences.userNodeForPackage(getClass()); // CB added for
-																	// remembering
-																	// user
-																	// checks
-																	// upon last
-																	// close
 		_basebox.setSelected(true); // CB changed back to always selected
 		_basebox.setEnabled(false); // CB decided to make "Base" always selected
 		_basebox.addItemListener(al1);
@@ -1554,6 +1555,34 @@ public class MessagePanel {
 	// CB added
 	public int getAnnualTypePreference() {
 		return _userPrefs.getInt("annualType", _annualType);
+	}
+	
+	
+	public void editTimeWindows(){
+		JTable table = new JTable(new DefaultTableModel(new Object[][]{_twSelections}, new Object[]{"Time Windows"}));
+		JDialog dialog = new JDialog(SwingUtilities.getWindowAncestor(_mainPanel), "Edit Time Windows", ModalityType.MODELESS.APPLICATION_MODAL);
+		JButton done = new JButton("Done");
+		dialog.getContentPane().add(table);
+		dialog.getContentPane().add(done);
+		dialog.setVisible(true);
+
+		int nrows = table.getModel().getRowCount();
+		ArrayList<String> tws = new ArrayList<String>();
+		for(int i=0; i < nrows; i++){
+			String valueAt = table.getModel().getValueAt(i, 0).toString();
+			if (valueAt==null || valueAt.length()==0){
+				continue;
+			}
+			tws.add(valueAt);
+		}
+		_twSelections = new String[tws.size()];
+		tws.toArray(_twSelections);
+
+		String value = "";
+		for(String tw: _twSelections){
+			value+=tw+",";
+		}
+		_userPrefs.put("timewindows", value);
 	}
 
 } // end of class MessagePanel
