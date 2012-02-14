@@ -1,0 +1,61 @@
+/*************************************
+Banks_pump_allow_FAM.wresl
+ 
+Hao Xie and Nazrul Islam DWR (02/08/2012)
+
+Defines Standard allowable & Max allowable pumping at Banks in FAM.  Banks can increase pumping
+up to 1/3 of San Joaquin River flow at Vernalis if flow at Vernalis is greater than 1000 cfs.
+
+   If SJR flow @ Vernalis > 1000 cfs then,
+   Banks_max_allow = Banks_standard_allow + 1/3*(SJR @ Vernalis)
+   But only upto physical capacity.
+   Banks minimum
+**************************************/
+
+ 
+! Number of days in which the Banks limit *IS* increased by 1/3 of SJR flow
+define(FAMmonths) BanksDaysIncr {
+    select   DaysIncr
+    from    BanksLimits
+    where   month=mv($m)
+}
+
+! Number of days in which the Banks limit *IS NOT* increased by 1/3 of SJR flow
+define(FAMmonths) BanksDaysNoIncr { value di($m) - BanksDaysIncr($m)}
+
+! Finds the Max Pump Capacity with the allowable increase
+define(FAMmonths) BanksMax1 {
+    case Increase {
+         condition  AD_SJR_VAMP($m) > 1000.0
+         value      max(BanksCapPermit($m),
+                        min(BanksCapPermit1($m) + AD_SJR_VAMP($m)/3.0, BanksCapPermit2($m)) - EWAReservedCap($m)) }
+    case NoIncrease {
+         condition  always
+         value      BanksCapPermit($m) }
+}
+
+! Limit Pumping to allowable, weight for days in which increase is allowed
+define(FAMmonths) BanksMaxAllow {value BanksMax1($m)*BanksDaysIncr($m)/di($m) + BanksCapPermit($m)*BanksDaysNoIncr($m)/di($m) }
+
+! Limit Pumping to Allowable and Physical Capacity, whichever is less
+goal(FAMmonths) banksLessThanAllow { D_Banks($m) < BanksMaxAllow($m)}
+goal(FAMmonths) banksLessThanPhys  { D_Banks($m) < BanksCapPhys($m)}
+
+! Limit Pumping with added WTS and EWA pumping
+goal(FAMmonths) banksLessThanResrvd { D_Banks_SWP_TD($m) + D_Banks_CVP_TD($m) + D_Banks_WTS_TD($m) + D_Banks_EWA_TD($m)
+                          < BanksMaxAllow($m) + EWAReservedCap($m)}
+**/
+
+! Output Allowable Pumping Cap for Checking Only
+define(FAMmonths) BanksAllowOut {alias BanksMaxAllow($m) kind 'EXPORT-CTRL-BANKS' UNITS 'CFS' }
+
+! Banks PP Minimum Cap
+define banksminpump {value 300.}
+
+goal(FAMmonths) setbanksminpump {
+    lhs D_Banks_SWP($m)
+    rhs banksminpump
+    lhs>rhs penalty 0
+    lhs<rhs penalty 2700
+}
+

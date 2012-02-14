@@ -1,0 +1,147 @@
+/*************************************
+april_may_maxexport_FAM.wresl
+ 
+Hao Xie and Nazrul Islam DWR (02/07/2012)
+
+This code defines the reduced export limit during the April 15 - May 15 pulse period for FAM.
+During this period, allowable export is set to certain limits based upon the flow of the
+San Joaquin River.  The allowable exports for April and May are the weighted averages
+of allowable exports inside and outside of the pulse period.  The non-pulse period April and May
+Export is the smaller of the pump capacity and the Export Allowed by thr E/I ratio for that period.
+**************************************/
+
+! Delta inflow using the previous cycle SJR flow
+define(FAMmonths) Dinflow {alias C_Hood_ANN($m)+AD_Mokelumne($m)+C_YoloBP($m)+AD_Calaveras($m)+AD_SJR_VAMP($m)  kind 'INFLOW-PULSE' units 'CFS'}
+
+!############ PULSE PERIOD #############################
+! Allowable export is set to certain limits based upon the flow of the San Joaquin River.
+
+! Pulse period export control variable
+define(FAMmonths) PulseExpCtrl {std kind 'EXPORT-CTRL-PULSE' UNITS 'CFS'}
+
+! Total export permissible by pumps and/or permits (TAF) only used in Apr-May
+define(FAMmonths) ExportCapacity {value JonesCapPermit($m) + BanksCapPermit($m)}
+
+! Limit exports during the pulse periods to the maximum of 1500 cfs or the SJR flow
+! not including the pulse or Vamp flows (C639[SJR_WQ2]).
+goal(FAMmonths) compare_sjrflow {!PulseExpCtrl($m) < max(1500.0, AD_SJR_Pulse($m))}
+	lhs PulseExpCtrl
+        case VAMPexpCtrlOff {
+            condition    VAMP_DLTSW == 0 .and. mv($m)>=Apr .and. mv($m)<=May 
+            rhs          99999.
+            lhs<rhs      penalty 0 }
+        case otherwise {
+            condition     always
+            rhs           max(1500.0, AD_SJR_Pulse($m))
+            lhs<rhs       penalty 0 }
+}
+
+
+! Limit to EI ratio (WQCP) during the pulse period.
+goal(FAMmonths) compare_ratio {PulseExpCtrl($m) < Dinflow($m)*ExpRatio($m)}
+
+! Limit to pump capacity during the pulse period.
+goal(FAMmonths) compare_capacity {PulseExpCtrl($m) < ExportCapacity($m)}
+
+!############ NON-PULSE PERIOD #############################
+! For the non pulse periods in April and May, the allowable export is the smaller of
+! the pump capacity or 0.35*INFLOW.  The allowable export due to the E/I ratio
+! is defined in 'expratio.wresl' as 'EiExpCtrl'.
+
+! Non-pulse export restriction variable
+define(FAMmonths) NonPulseExpCtrl {std KIND 'EXPORT-CTRL-NON-PULSE' UNITS 'CFS'}
+
+! Limit to EI ratio
+goal(FAMmonths) from_ratio {NonPulseExpCtrl($m) < EiExpCtrl($m)}
+
+! Limit to pump capacity
+goal(FAMmonths) from_capacity {NonPulseExpCtrl($m) < ExportCapacity($m)}
+
+!############ WEIGHTED EXPORT RESTRICTION FOR PERIOD (PULSE + NON-PULSE) #############################
+! The monthly allowable export is the day-weighted average of the allowable export in the pulse and
+! non-pulse periods.
+
+! Combination pulse + non-pulse export restriction variable
+define(FAMmonths) AprMayExpCtrl {std kind 'EXPORT-CTRL-APRMAY' units 'CFS'}
+
+! Monthly export restriction - day weighted
+goal(FAMmonths) Export_limit_during_pulse_mon {
+    lhs AprMayExpCtrl($m)
+        case April {
+            condition     mv($m) == APR
+            rhs           NonPulseExpCtrl($m)*14.0/30.0 + PulseExpCtrl($m)*16.0/30.0
+            lhs<rhs       penalty 0 }
+        case May {
+            condition     mv($m) == MAY
+            rhs           NonPulseExpCtrl($m)*16.0/31.0 + PulseExpCtrl($m)*15.0/31.0
+            lhs<rhs       penalty 0 }
+        case otherwise {
+	    condition   always
+	    rhs     99999.
+	    lhs<rhs     penalty 0}
+}
+
+! Limit the actual export to the day weighted average allowable export for each month.
+goal(FAMmonths) Limit_Exports {
+    lhs  ExportActual($m)
+        case APR_MAY {
+            condition     mv($m)>=Apr .and. mv($m)<=May
+            rhs           AprMayExpCtrl($m)
+            lhs<rhs       penalty 0 }
+}
+
+
+! Monthly export restriction - day weighted for each project to take individual pump capacities into account
+
+define(FAMmonths) AprMayJonesCtrl {std kind 'EXPORT-CTRL-APRMAY' units 'CFS'}
+
+goal(FAMmonths) Export_limit_Jones_pulse_mon {
+    lhs    AprMayJonesCtrl($m)
+        case April {
+            condition     mv($m) == APR
+            rhs           JonesCapPermit($m)*14.0/30.0 + PulseExpCtrl($m)*0.5*16.0/30.0
+            lhs<rhs       penalty 0 }
+        case May {
+            condition     mv($m) == MAY
+            rhs           JonesCapPermit($m)*16.0/31.0 + PulseExpCtrl($m)*0.5*15.0/31.0
+            lhs<rhs       penalty 0 }
+        case otherwise {
+	    condition   always
+	    rhs     99999.
+	    lhs<rhs     penalty 0}
+}
+
+define(FAMmonths) AprMayBanksCtrl {std kind 'EXPORT-CTRL-APRMAY' units 'CFS'}
+
+goal(FAMmonths) Export_limit_Banks_pulse_mon {
+    lhs    AprMayBanksCtrl
+        case April {
+            condition     mv($m) == APR
+            rhs           BanksMaxAllow($m)*14.0/30.0 + PulseExpCtrl($m)*0.5*16.0/30.0
+            lhs<rhs       penalty 0 }
+        case May {
+            condition     month == MAY
+            rhs           BanksMaxAllow($m)*16.0/31.0 + PulseExpCtrl($m)*0.5*15.0/31.0
+            lhs<rhs       penalty 0 }
+        case otherwise {
+	    condition   always
+	    rhs     99999.
+	    lhs<rhs     penalty 0}
+}
+
+goal(FAMmonths) Export_limit_D_Jones {  ! Prevents Non-Pulse portion of month from being greater than Physical Capacity
+    lhs    D_Jones($m)    /** Need to change to D_Jones_TD for IF implementation **/  
+        case April {
+            condition     mv($m) == APR .or. mv($m) == MAY
+            rhs           AprMayJonesCtrl($m)
+            lhs<rhs       penalty 0 }
+}
+
+goal(FAMmonths) Export_limit_D_Banks {  ! Prevents Non-Pulse portion of month from being greater than Physical Capacity
+    lhs    D_Banks($m)    
+        case April {
+            condition     mv($m) == APR .or. mv($m) == MAY
+            rhs           AprMayBanksCtrl($m)
+            lhs<rhs       penalty 0 }
+}
+

@@ -1,0 +1,45 @@
+/*************************************
+BanksSplit_FAM.wresl
+ 
+Hao Xie and Nazrul Islam DWR (04/27/2010)
+
+Banks Split between SWP and CVP exports thru Bank PP for FAM. 
+CVP exports include Cross valley canal (CVC) and CVP Wheelings
+and CVP dedicated export.
+**************************************/
+
+define(FAMmonths) D_Banks_swp {std KIND 'FLOW-DELIVERY' UNITS 'CFS'} ! SWP Banks
+
+define(FAMmonths) D_Banks_cvp {std kind 'FLOW-DELIVERY' UNITS 'CFS'} ! Total CVP wheeling at Banks
+
+define(FAMmonths) D_Banks_cvc {std kind 'FLOW-DELIVERY' UNITS 'CFS'} ! CVC wheeling at Banks
+define(FAMmonths) D_Banks_cvcrels {std kind 'FLOW-DELIVERY' UNITS 'CFS'} ! CVC - Released Water
+define(FAMmonths) D_Banks_cvcsurp {std kind 'FLOW-DELIVERY' UNITS 'CFS'} ! CVC - Surplus Only
+define(FAMmonths) D_Banks_cvcsurp1 {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define(FAMmonths) D_Banks_cvcsurp2 {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+
+define(FAMmonths) D_Banks_cvpwhl {std kind 'FLOW-DELIVERY' UNITS 'CFS'} ! CVP Wheeling to CVP San Luis
+define(FAMmonths) D_Banks_whlrels {std kind 'FLOW-DELIVERY' UNITS 'CFS'} ! JPOD - Released Water
+define(FAMmonths) D_Banks_whlsurp {std kind 'FLOW-DELIVERY' UNITS 'CFS'} ! JPOD - Surplus Only
+define(FAMmonths) D_Banks_whlsurp1 {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+define(FAMmonths) D_Banks_whlsurp2 {std kind 'FLOW-DELIVERY' UNITS 'CFS'}
+
+define(FAMmonths) Surp1Terms {std kind 'FLOW-CHANNEL' units 'CFS'} ! Used in COA calculations
+define(FAMmonths) Surp2Terms {std kind 'FLOW-CHANNEL' units 'CFS'}
+define(FAMmonths) SurpTerms {std kind 'FLOW-CHANNEL' units 'CFS'}
+
+goal(FAMmonths) totalBanks {D_Banks($m) = D_Banks_swp($m) + D_Banks_cvp($m)} 
+
+goal(FAMmonths) totalcvpWheel {D_Banks_cvp($m) = D_Banks_cvc($m) + D_Banks_cvpwhl($m)} ! Total Wheeling at Banks for CVP.
+
+goal(FAMmonths) totalcvcwhl {D_Banks_cvc($m) = D_Banks_cvcrels($m) + D_Banks_cvcsurp($m)}
+goal(FAMmonths) totalcvcsurp {D_Banks_cvcsurp($m) = D_Banks_cvcsurp1($m) + D_Banks_cvcsurp2($m)}
+
+goal(FAMmonths) totaljpodwhl {D_Banks_cvpwhl($m) = D_Banks_whlrels($m) + D_Banks_whlsurp($m)}
+goal(FAMmonths) totalcvpwhlsurp {D_Banks_whlsurp($m) = D_Banks_whlsurp1($m) + D_Banks_whlsurp2($m)}
+
+goal(FAMmonths) SetSurp1Terms {Surp1Terms($m) = D_Banks_cvcsurp1($m) + D_Banks_whlsurp1($m) }
+goal(FAMmonths) SetSurp2Terms {Surp2Terms($m) = D_Banks_cvcsurp2($m) + D_Banks_whlsurp2($m) }
+goal(FAMmonths) SetSurpTerms {SurpTerms($m) = Surp1Terms($m) + Surp2Terms($m)}
+
+

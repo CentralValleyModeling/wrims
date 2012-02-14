@@ -1,0 +1,26 @@
+/************************************
+main_FAM.wresl
+
+Hao Xie and Nazrul Islam DWR 2/6/2012
+
+Main file for FAM
+
+**************************************/
+
+SEQUENCE CYCLE1 {
+    model   FAM
+    order   1
+    }
+
+
+    
+MODEL FAM {         !CYCLE 1
+	include 'Assumptions\Options_Switches_FAM.wresl'
+	include 'general\General_FAM.wresl'
+	include 'wytypes\wytypes_FAM.wresl'
+	include 'system\system_FAM.wresl'
+	include 'NorthOfDelta\nod_FAM.wresl'
+	include 'Export_Ops\export_ops_FAM.wresl'
+	include 'coa\coa_FAM.wresl'
+}
+

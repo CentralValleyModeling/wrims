@@ -1,0 +1,17 @@
+/*************************************
+clear_ck_min_FAM.wresl
+ 
+Hao Xie and Nazrul Islam  2/6/2012
+
+Sets minimum flow on Clear Creek below Whiskeytown for FAM.
+*************************************/
+
+define(FAMmonths) ClearCrk_min {
+	select flow
+        from   clear_ck_min
+        where  month=mv($m),wytype=wyt_SHASTA_cvp($m)
+}
+                    	
+define(FAMmonths) minflow_C_Wkytn {alias ClearCrk_min($m) kind 'flow-min-required' units 'cfs'}  
+
+goal(FAMmonths) meet_clearmin {C_Wkytn_MIF($m) < ClearCrk_min($m)}  

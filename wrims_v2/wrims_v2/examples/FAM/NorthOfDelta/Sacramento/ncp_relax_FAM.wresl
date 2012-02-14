@@ -1,0 +1,41 @@
+/*************************************
+ncp_relax_FAM.wresl
+ 
+Hao Xie and Nazrul Islam  2/6/2012
+
+Sets Navigation Control Point minimum flow with relaxation for FAM.  Minimum flow is
+met at Wilkins Slough.  NCP minimum flow is 5000, unless percent delivery
+for Ag is 65% or less, in which case it can be 3250-4500 depending on percent 
+delivery.  Minimum flow can change during Jan-May, and then May value is used 
+during June-Dec.
+*************************************/
+
+define ncp_with_relax {
+    select flow
+    from ncp_with_relax
+    given Ag_alloc = perdel_cvpag_sys * 100
+    use maximum
+}
+
+define(FAMmonths) minflow_C_Wilkns {std kind 'flow-min-required' units 'cfs'}
+
+goal(FAMmonths) set_ncp_relax_final {
+     lhs minflow_C_Wilkns
+     case yr1922a {
+          condition mv($m) <= MAR .and. wy($m) == 1922
+          rhs     ncp_with_relax
+          }
+     case JanthruMay {
+          condition mv($m) >= JAN .and. mv($m) <= MAY
+          rhs     ncp_with_relax
+          }
+     case Rest {
+          condition always
+          rhs     min(ncp_with_relax, minflow_C_Wilkns($m-1))
+          }
+     }
+
+goal(FAMmonths) set_NCP {C_Wilkns_MIF($m) < minflow_C_Wilkns($m)}
+
+
+

@@ -1,0 +1,25 @@
+/*************************************
+Banks_Limits_FAM.wresl
+ 
+Hao Xie and Nazrul Islam DWR (02/08/2012)
+
+
+This is the permit export (standard allowable) and physical capacity for Banks in FAM.
+Banks Permitted Pumping Amount with dynamic EWA capacity dedication
+Even though EWA regulation is not modeled, but the EWA capacity is modeled in CalSim
+**************************************/
+
+ 
+define(FAMmonths) BanksCapPermit1 {select PermitCap1 from BanksLimits where month=mv($m)}
+define(FAMmonths) BanksCapPermit2 {select PermitCap2 from BanksLimits where month=mv($m)}
+define(FAMmonths) EWAReservedCap {select EWACap from BanksLimits where month=mv($m)}
+
+! Permitted capacity (Standard Allowable)
+define(FAMmonths) BanksCapPermit {value min(BanksCapPermit1mv($m), BanksCapPermit2mv($m) - EWAReservedCapmv($m)) }
+
+! Banks Physical Capactiy
+define(FAMmonths) BanksCapPhys {select PhysCap from BanksLimits where month=mv($m) }
+
+! CVP dedicated capacity
+define(FAMmonths) BanksMaxAllowCVP {select CVPDedCap from BanksLimits where month=mv($m)}
+define(FAMmonths) BanksMaxCVPdv {alias BanksMaxAllowCVPmv($m) kind 'flow' units 'CFS'}

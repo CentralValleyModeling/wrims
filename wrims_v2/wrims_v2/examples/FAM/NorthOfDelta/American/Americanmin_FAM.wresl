@@ -1,0 +1,21 @@
+/*************************************
+Americanmin_FAM.wresl
+ 
+Hao Xie and Nazrul Islam 2/6/2012
+
+Sets minimum flows for American River below Nimbus and H St for FAM.
+
+Minflow below Nimbus is set according to a CVP Lookup Table that looks at Folsom
+storage (Oct-Feb) or Folsom storage and forecasted inflow (Mar-Sept).  If Folsom
+storage is not > 200, then Nimbus uses H St minflow standard.  
+
+Commented out code for Nimbus standard since we are using FMS for Nimbus standard.
+**************************************/
+       
+define(FAMmonths) minflow_C_HSt {
+        select HStMin
+   	from   HSt_base
+    	where  month=mv($m), AmerD893=wyt_AMERd893_cvp($m)}
+}
+
+goal(FAMmonths) HSt_min {C_HSt_MIF($m) < minflow_C_HSt($m)}

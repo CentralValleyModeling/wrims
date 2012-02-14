@@ -1,0 +1,422 @@
+/*************************************
+AccrDepl-table_FAM.wresl
+ 
+Hao Xie and Nazrul Islam DWR (2/3/2012)
+
+Accretion and Depletion Table for FAM
+***************************************/
+
+!Sacramento River
+define AD_Kswck {timeseries kind 'FLOW-ACCRDEPL' units 'CFS'}
+define(FAMmonths) AD_Kswck_Actual {lower unbounded upper unbounded kind 'FLOW-ACCRDEPL' units 'CFS'}
+goal(FAMmonths) setAD_Kswck_Actual1{
+	lhs AD_Kswck_Actual($m)
+	case positive{
+		condition AD_Kswck($m)>=0
+		rhs AD_Kswck($m)
+		lhs>rhs constrain
+		lhs<rhs penalty 10000
+	}
+	case negative{
+		condition AD_Kswck($m)<0
+		rhs AD_Kswck($m)
+		lhs>rhs penalty 10000
+		lhs<rhs constrain
+	}
+	
+}
+goal(FAMmonths)  setAD_Kswck_Actual2{
+	lhs AD_Kswck_Actual($m)
+	case positive{
+		condition AD_Kswck($m)>=0
+		rhs 0
+		lhs>rhs penalty 0
+		lhs<rhs constrain
+	}
+	case negative{
+		condition AD_Kswck($m)<0
+		rhs 0
+		lhs>rhs constrain
+		lhs<rhs penalty 0
+	}
+	
+}
+define(FAMmonths) short_AD_kswck {lower unbounded upper unbounded kind 'Shortage-Flow' units 'cfs'}
+goal(FAMmonths)  short_ADKswck {short_AD_Kswck($m)=AD_Kswck_Actual($m)-AD_Kswck($m)}
+
+
+define AD_RedBlf {timeseries kind 'FLOW-ACCRDEPL' units 'CFS'}
+define(FAMmonths) AD_RedBlf_Actual {lower unbounded upper unbounded kind 'FLOW-ACCRDEPL' units 'CFS'}
+goal(FAMmonths) setAD_RedBlf_Actual1{
+	lhs AD_RedBlf_Actual($m)
+	case positive{
+		condition AD_RedBlf($m)>=0
+		rhs AD_RedBlf($m)
+		lhs>rhs constrain
+		lhs<rhs penalty 10000
+	}
+	case negative{
+		condition AD_RedBlf($m)<0
+		rhs AD_RedBlf($m)
+		lhs>rhs penalty 10000
+		lhs<rhs constrain
+	}
+	
+}
+goal(FAMmonths) setAD_RedBlf_Actual2{
+	lhs AD_RedBlf_Actual($m)
+	case positive{
+		condition AD_RedBlf($m)>=0
+		rhs 0
+		lhs>rhs penalty 0
+		lhs<rhs constrain
+	}
+	case negative{
+		condition AD_RedBlf($m)<0
+		rhs 0
+		lhs>rhs constrain
+		lhs<rhs penalty 0
+	}
+	
+}
+define(FAMmonths) short_AD_RedBlf {lower unbounded upper unbounded kind 'Shortage-Flow' units 'cfs'}
+goal(FAMmonths) short_ADRedBlf {short_AD_RedBlf($m)=AD_RedBlf_Actual($m)-AD_RedBlf($m)}
+
+define AD_Wilkns {timeseries kind 'FLOW-ACCRDEPL' units 'CFS'}
+define(FAMmonths) AD_Wilkns_Actual {lower unbounded upper unbounded kind 'FLOW-ACCRDEPL' units 'CFS'}
+goal(FAMmonths) setAD_Wilkns_Actual1{
+	lhs AD_Wilkns_Actual($m)
+	case positive{
+		condition AD_Wilkns($m)>=0
+		rhs AD_Wilkns($m)
+		lhs>rhs constrain
+		lhs<rhs penalty 10000
+	}
+	case negative{
+		condition AD_Wilkns($m)<0
+		rhs AD_Wilkns($m)
+		lhs>rhs penalty 10000
+		lhs<rhs constrain
+	}
+	
+}
+goal(FAMmonths) setAD_Wilkns_Actual2{
+	lhs AD_Wilkns_Actual($m)
+	case positive{
+		condition AD_Wilkns($m)>=0
+		rhs 0
+		lhs>rhs penalty 0
+		lhs<rhs constrain
+	}
+	case negative{
+		condition AD_Wilkns($m)<0
+		rhs 0
+		lhs>rhs constrain
+		lhs<rhs penalty 0
+	}
+	
+}
+define(FAMmonths) short_AD_Wilkns {lower unbounded upper unbounded kind 'Shortage-Flow' units 'cfs'}
+goal(FAMmonths) short_ADWilkns {short_AD_Wilkns($m)=AD_Wilkns_Actual($m)-AD_Wilkns($m)}
+
+define AD_SacFea {timeseries kind 'FLOW-ACCRDEPL' units 'CFS'}
+define(FAMmonths) AD_SacFea_Actual {lower unbounded upper unbounded kind 'FLOW-ACCRDEPL' units 'CFS'}
+goal(FAMmonths) setAD_SacFea_Actual1{
+	lhs AD_SacFea_Actual($m)
+	case positive{
+		condition AD_SacFea($m)>=0
+		rhs AD_SacFea($m)
+		lhs>rhs constrain
+		lhs<rhs penalty 10000
+	}
+	case negative{
+		condition AD_SacFea($m)<0
+		rhs AD_SacFea($m)
+		lhs>rhs penalty 10000
+		lhs<rhs constrain
+	}
+	
+}
+goal(FAMmonths) setAD_SacFea_Actual2{
+	lhs AD_SacFea_Actual($m)
+	case positive{
+		condition AD_SacFea($m)>=0
+		rhs 0
+		lhs>rhs penalty 0
+		lhs<rhs constrain
+	}
+	case negative{
+		condition AD_SacFea($m)<0
+		rhs 0
+		lhs>rhs constrain
+		lhs<rhs penalty 0
+	}
+	
+}
+define(FAMmonths) short_AD_SacFea {lower unbounded upper unbounded kind 'Shortage-Flow' units 'cfs'}
+goal(FAMmonths) short_ADSacFea {short_AD_SacFea($m)=AD_SacFea_Actual($m)-AD_SacFea($m)}
+
+define AD_SacAme {timeseries kind 'FLOW-ACCRDEPL' units 'CFS'}
+define(FAMmonths) AD_SacAme_Actual {lower unbounded upper unbounded kind 'FLOW-ACCRDEPL' units 'CFS'}
+goal(FAMmonths) setAD_SacAme_Actual1{
+	lhs AD_SacAme_Actual($m)
+	case positive{
+		condition AD_SacAme($m)>=0
+		rhs AD_SacAme($m)
+		lhs>rhs constrain
+		lhs<rhs penalty 10000
+	}
+	case negative{
+		condition AD_SacAme($m)<0
+		rhs AD_SacAme($m)
+		lhs>rhs penalty 10000
+		lhs<rhs constrain
+	}
+	
+}
+goal(FAMmonths) setAD_SacAme_Actual2{
+	lhs AD_SacAme_Actual($m)
+	case positive{
+		condition AD_SacAme($m)>=0
+		rhs 0
+		lhs>rhs penalty 0
+		lhs<rhs constrain
+	}
+	case negative{
+		condition AD_SacAme($m)<0
+		rhs 0
+		lhs>rhs constrain
+		lhs<rhs penalty 0
+	}
+	
+}
+define(FAMmonths) short_AD_SacAme {lower unbounded upper unbounded kind 'Shortage-Flow' units 'cfs'}
+goal(FAMmonths) short_ADSacAme {short_AD_SacAme($m)=AD_SacAme_Actual($m)-AD_SacAme($m)}
+
+define AD_YoloBP {timeseries kind 'FLOW-ACCRDEPL' units 'CFS'}
+define(FAMmonths) AD_YoloBP_Actual {lower unbounded upper unbounded kind 'FLOW-ACCRDEPL' units 'CFS'}
+goal(FAMmonths) setAD_YoloBP_Actual1{
+	lhs AD_YoloBP_Actual($m)
+	case positive{
+		condition AD_YoloBP($m)>=0
+		rhs AD_YoloBP($m)
+		lhs>rhs constrain
+		lhs<rhs penalty 10000
+	}
+	case negative{
+		condition AD_YoloBP($m)<0
+		rhs AD_YoloBP($m)
+		lhs>rhs penalty 10000
+		lhs<rhs constrain
+	}
+	
+}
+goal(FAMmonths) setAD_YoloBP_Actual2{
+	lhs AD_YoloBP_Actual($m)
+	case positive{
+		condition AD_YoloBP($m)>=0
+		rhs 0
+		lhs>rhs penalty 0
+		lhs<rhs constrain
+	}
+	case negative{
+		condition AD_YoloBP($m)<0
+		rhs 0
+		lhs>rhs constrain
+		lhs<rhs penalty 0
+	}
+	
+}
+define(FAMmonths) short_AD_YoloBP {lower unbounded upper unbounded kind 'Shortage-Flow' units 'cfs'}
+goal(FAMmonths) short_ADYoloBP {short_AD_YoloBP($m)=AD_YoloBP_Actual($m)-AD_YoloBP($m)}
+
+
+!Feather River
+define AD_Therm {timeseries kind 'FLOW-ACCRDEPL' units 'CFS'}
+define(FAMmonths) AD_Therm_Actual {lower unbounded upper unbounded kind 'FLOW-ACCRDEPL' units 'CFS'}
+goal(FAMmonths) setAD_Therm_Actual1{
+	lhs AD_Therm_Actual($m)
+	case positive{
+		condition AD_Therm($m)>=0
+		rhs AD_Therm($m)
+		lhs>rhs constrain
+		lhs<rhs penalty 10000
+	}
+	case negative{
+		condition AD_Therm($m)<0
+		rhs AD_Therm($m)
+		lhs>rhs penalty 10000
+		lhs<rhs constrain
+	}
+	
+}
+goal(FAMmonths) setAD_Therm_Actual2{
+	lhs AD_Therm_Actual($m)
+	case positive{
+		condition AD_Therm($m)>=0
+		rhs 0
+		lhs>rhs penalty 0
+		lhs<rhs constrain
+	}
+	case negative{
+		condition AD_Therm($m)<0
+		rhs 0
+		lhs>rhs constrain
+		lhs<rhs penalty 0
+	}
+	
+}
+define(FAMmonths) short_AD_Therm {lower unbounded upper unbounded kind 'Shortage-Flow' units 'cfs'}
+goal(FAMmonths) short_ADTherm {short_AD_Therm($m)=AD_Therm_Actual($m)-AD_Therm($m)}
+
+define AD_YubFea {timeseries kind 'FLOW-ACCRDEPL' units 'CFS'}
+define(FAMmonths) AD_YubFea_Actual {lower unbounded upper unbounded kind 'FLOW-ACCRDEPL' units 'CFS'}
+goal(FAMmonths) setAD_YubFea_Actual1{
+	lhs AD_YubFea_Actual($m)
+	case positive{
+		condition AD_YubFea($m)>=0
+		rhs AD_YubFea($m)
+		lhs>rhs constrain
+		lhs<rhs penalty 10000
+	}
+	case negative{
+		condition AD_YubFea($m)<0
+		rhs AD_YubFea($m)
+		lhs>rhs penalty 10000
+		lhs<rhs constrain
+	}
+	
+}
+goal(FAMmonths) setAD_YubFea_Actual2{
+	lhs AD_YubFea_Actual($m)
+	case positive{
+		condition AD_YubFea($m)>=0
+		rhs 0
+		lhs>rhs penalty 0
+		lhs<rhs constrain
+	}
+	case negative{
+		condition AD_YubFea($m)<0
+		rhs 0
+		lhs>rhs constrain
+		lhs<rhs penalty 0
+	}
+	
+}
+define(FAMmonths) short_AD_YubFea {lower unbounded upper unbounded kind 'Shortage-Flow' units 'cfs'}
+goal(FAMmonths) short_ADYubFea {short_AD_YubFea($m)=AD_YubFea_Actual($m)-AD_YubFea($m)}
+
+!American River
+define AD_Nimbus {timeseries kind 'FLOW-ACCRDEPL' units 'CFS'}
+define(FAMmonths) AD_Nimbus_Actual {lower unbounded upper unbounded kind 'FLOW-ACCRDEPL' units 'CFS'}
+goal(FAMmonths) setAD_Nimbus_Actual1{
+	lhs AD_Nimbus_Actual($m)
+	case positive{
+		condition AD_Nimbus($m)>=0
+		rhs AD_Nimbus($m)
+		lhs>rhs constrain
+		lhs<rhs penalty 10000
+	}
+	case negative{
+		condition AD_Nimbus($m)<0
+		rhs AD_Nimbus($m)
+		lhs>rhs penalty 10000
+		lhs<rhs constrain
+	}
+	
+}
+goal(FAMmonths) setAD_Nimbus_Actual2{
+	lhs AD_Nimbus_Actual($m)
+	case positive{
+		condition AD_Nimbus($m)>=0
+		rhs 0
+		lhs>rhs penalty 0
+		lhs<rhs constrain
+	}
+	case negative{
+		condition AD_Nimbus($m)<0
+		rhs 0
+		lhs>rhs constrain
+		lhs<rhs penalty 0
+	}
+	
+}
+define(FAMmonths) short_AD_Nimbus {lower unbounded upper unbounded kind 'Shortage-Flow' units 'cfs'}
+goal(FAMmonths) short_ADNimbus {short_AD_Nimbus($m)=AD_Nimbus_Actual($m)-AD_Nimbus($m)}
+
+define AD_HSt {timeseries kind 'FLOW-ACCRDEPL' units 'CFS'}
+define(FAMmonths) AD_HSt_Actual {lower unbounded upper unbounded kind 'FLOW-ACCRDEPL' units 'CFS'}
+goal(FAMmonths) setAD_HSt_Actual1{
+	lhs AD_HSt_Actual($m)
+	case positive{
+		condition AD_HSt($m)>=0
+		rhs AD_HSt($m)
+		lhs>rhs constrain
+		lhs<rhs penalty 10000
+	}
+	case negative{
+		condition AD_HSt($m)<0
+		rhs AD_HSt($m)
+		lhs>rhs penalty 10000
+		lhs<rhs constrain
+	}
+	
+}
+goal(FAMmonths) setAD_HSt_Actual2{
+	lhs AD_HSt_Actual($m)
+	case positive{
+		condition AD_HSt($m)>=0
+		rhs 0
+		lhs>rhs penalty 0
+		lhs<rhs constrain
+	}
+	case negative{
+		condition AD_HSt($m)<0
+		rhs 0
+		lhs>rhs constrain
+		lhs<rhs penalty 0
+	}
+	
+}
+define(FAMmonths) short_AD_Hst {lower unbounded upper unbounded kind 'Shortage-Flow' units 'cfs'}
+goal(FAMmonths) short_ADHst {short_AD_Hst($m)=AD_Hst_Actual($m)-AD_Hst($m)}
+
+!Delta
+define AD_Mokelumne {timeseries kind 'FLOW-ACCRDEPL' units 'CFS'}
+define AD_Calaveras {timeseries kind 'FLOW-ACCRDEPL' units 'CFS'}
+define AD_SJR_vo {timeseries kind 'FLOW-ACCRDEPL' units 'CFS'}
+define AD_SJR_VAMP_vo {timeseries kind 'FLOW-CHANNEL' units 'CFS'}
+define AD_SJR_Pulse_vo {timeseries kind 'FLOW-CHANNEL' units 'CFS'}
+define AD_SJR_v {timeseries kind 'FLOW-ACCRDEPL' units 'CFS'}
+define AD_SJR_VAMP_v {timeseries kind 'FLOW-CHANNEL' units 'CFS'}
+define AD_SJR_Pulse_v {timeseries kind 'FLOW-CHANNEL' units 'CFS'}
+define(FAMmonths) AD_SJR {
+	case VAMPon {
+		condition VAMP_DLTSW == 1
+		value AD_SJR_v($m)}
+	case otherwise {
+		condition always
+		value AD_SJR_vo($m)}
+}
+define(FAMmonths) AD_SJR_VAMP {
+	case VAMPon {
+		condition VAMP_DLTSW == 1
+		value AD_SJR_VAMP_v($m)}
+	case otherwise {
+		condition always
+		value AD_SJR_VAMP_vo($m)}
+}
+define(FAMmonths) AD_SJR_Pulse {
+	case VAMPon {
+		condition VAMP_DLTSW == 1
+		value AD_SJR_Pulse_v($m)}
+	case otherwise {
+		condition always
+		value AD_SJR_Pulse_vo($m)}
+}
+
+
+
+!South of Delta
+define AD_JamesBP {timeseries kind 'FLOW-ACCRDEPL' units 'CFS'}
+!define AD_Castaic {timeseries kind 'FLOW-ACCRDEPL' units 'CFS'}

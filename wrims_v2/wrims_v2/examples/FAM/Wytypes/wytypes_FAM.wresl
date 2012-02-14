@@ -1,0 +1,134 @@
+/************************************
+Wytypes_FAM.wresl
+
+Hao Xie and Nazrul Islam DWR 2/6/2012
+
+WATER YEAR TYPE DEFINITIONS in FAM
+
+**************************************/
+define bgnWY {value 1922} !changing beginning year requires modification of groundwater data file CVprecip(20100923).dat (same initial year of data)
+define EndWY {value 2003}
+
+! ================ INDICES AS DEFINED BY DWR (CHANGE IN FEB) =====================
+! the 40-30-30 index for Sacramento Basin
+define(FAMmonths) wyt_SAC{
+    case OCTtoJAN_CurrentWaterYear {
+         condition  month+$m<=12 .and. month+$m >= OCT .and. month+$m <= JAN
+         select     SACindex
+         from       wytypes
+         where      wateryear=wateryear - 1.}
+    case AfterFeb_NextWaterYear{
+         condition  month+$m>12 .and. month+$m-12 >= Feb
+         select     SACindex
+         from       wytypes
+         where      wateryear=wateryear+1}
+    }
+    case rest {
+         condition  always
+         select     SACindex
+         from       wytypes
+         where      wateryear=wateryear}
+}
+
+
+! the Shasta index as defined by the CVP (changes in March)
+define(FAMmonths) wyt_SHASTA_cvp {
+        case OCTtoFEB_CurrentWaterYear {
+        	condition   month+$m<=12 .and. month+$m >= OCT .and. month+$m <= FEB
+        	select      SHASTAindex
+        	from        wytypes
+        	where       wateryear=wateryear - 1.}
+	case AfterMarch_NextWaterYear{
+         	condition   month+$m>12 .and. month+$m-12 >= Mar
+         	select      SHASTAindex
+		from        wytypes
+        	where       wateryear=wateryear + 1.}
+        case rest {
+        	condition   always
+        	select      SHASTAindex
+        	from        wytypes
+        	where       wateryear=wateryear}
+}
+
+! the American River D893 index as defined by the CVP (changes in March)
+define(FAMmonths) wyt_AMERd893_cvp {
+        case OCTtoFEB_CurrentWaterYear {
+        condition   month+$m<=12 .and. month+$m  >= OCT .and. month+$m <= FEB
+        select      AmerD893
+        from        wytypes
+        where       wateryear=wateryear - 1.}
+	
+	case AfterMarch_NextWaterYear {
+        condition   month+$m>12 .and. month+$m-12  >= Mar
+        select      AmerD893
+	from        wytypes
+        where       wateryear=wateryear + 1.}
+        
+        case rest {
+        condition   always
+        select      AmerD893
+        from        wytypes
+        where       wateryear=wateryear}
+}
+
+! ============================== YEAR TYPES ====================================
+! the following year type names can be used to represent the numbers found in the tables
+define Wet          {value 1}
+define AboveNormal  {value 2}
+define BelowNormal  {value 3}
+define Dry          {value 4}
+define Critical     {value 5}
+
+! the Trinity index   1=Very Wet, 2=Wet, 3=Normal, 4=Dry, 5=Critically Dry: Note: Index changes in Apr.
+define(FAMmonths) wyt_TRIN {
+         case OCTtoMar_CurrentWaterYear {
+                   condition        month+$m<=12 .and. month+$m >= OCT .and. month+$m <= MAR
+                   select           Trinityindex
+                   from               wytypes
+                   where            wateryear=wateryear - 1.}
+                   
+         case AfterApril_NextWaterYear {
+        	   condition   	    month+$m>12 .and. month+$m-12  >= April
+        	   select           Trinityindex
+		   from               wytypes
+                   where            wateryear=wateryear + 1.}
+         case rest {
+                   condition        always
+                   select           Trinityindex
+                   from               wytypes
+                   where            wateryear=wateryear}
+}
+! So first define the calendar year since deliveries are based on Jan-Dec year
+define(FAMmonths) calendaryear {
+    case JantoSep_CurrentWaterYear {
+        condition   month+$m<=12 .and. month+$m >= 4 .and. month+$m <= 15
+        value       wateryear }
+    case JantoSep_NextWaterYear {
+        condition   month+$m>15
+        value       wateryear+1 }
+    case OcttoDec_CurrentWaterYear {
+        condition   always
+        value       wateryear - 1 }
+}
+
+! the Feather Index for the Feather River Basin
+define(FAMmonths) wyt_FEATHER {
+    case OCTtoJAN_CurrentWaterYear {
+         condition  month+$m<=12 .and. month+$m  >= OCT .and. month+$m <= JAN
+         select     FEATHERindex
+         from       wytypes
+         where      wateryear=wateryear - 1.}
+    
+    case AfterFeb_NextWaterYear {
+         condition  month+$m>12 .and. month+$m-12  >= Feb
+         select     FEATHERindex
+         from       wytypes
+         where      wateryear=wateryear + 1.}
+    
+    case rest {
+         condition  always
+         select     FEATHERindex
+         from       wytypes
+         where      wateryear=wateryear}
+}
+

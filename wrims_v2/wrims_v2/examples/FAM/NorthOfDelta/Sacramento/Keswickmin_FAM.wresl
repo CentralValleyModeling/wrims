@@ -1,0 +1,19 @@
+/*************************************
+Keswickmin_FAM.wresl
+ 
+Hao Xie and Nazrul Islam, DWR, 2/6/2012
+
+FAM Keswick minimum flow
+
+Sets minimum flow on Sacramento River below Keswick.  Minimum flow is a maximum of
+timeseries and a temperature surrogate.
+*************************************/
+
+define minflow_C_Kswck {timeseries kind 'flow-min-required' units 'CFS'}
+
+define tempcntrl_surrogate {value 3250.}
+
+define(FAMmonths) effective_C_Keswick_min { value max(minflow_C_Kswck($m),tempcntrl_surrogate) }
+
+goal(FAMmonths) Keswickmin {C_Kswck_MIF($m) < effective_C_Keswick_min($m)}  
+

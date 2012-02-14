@@ -1,0 +1,15 @@
+/*************************************
+System_FAM.wresl
+ 
+Hao Xie and Nazrul Islam  2/14/2012
+
+This is the top level include file for CalLite system definition files for FAM. 
+*************************************/
+
+INCLUDE 'inflow-table_FAM.wresl'
+INCLUDE 'channel-table_FAM.wresl'
+INCLUDE 'reservoir-table_FAM.wresl'
+INCLUDE 'delivery-table_FAM.wresl'
+INCLUDE 'AccrDepl-table_FAM.wresl'
+INCLUDE 'SOD_SWP_Terminal_Res_Ops_FAM.wresl'
+INCLUDE 'connectivity-table_FAM.wresl'

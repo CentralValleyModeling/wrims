@@ -1,0 +1,10 @@
+/*************************************
+JonesSplit_FAM.wresl
+ 
+Hao Xie and Nazrul Islam DWR (02/14/2012)
+
+There is no split in Jones PP capacity for FAM.
+**************************************/
+
+define(FAMmonths) D_Jones_cvp {std kind 'FLOW-DELIVERY' UNITS 'CFS'} ! CVP pumping at Jones PP
+goal(FAMmonths) totalJones {D_Jones($m) = D_Jones_cvp($m) } !Total Jones PP
