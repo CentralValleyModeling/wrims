@@ -2,6 +2,7 @@ package wrims.schematic.jdiagram;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Dialog.ModalityType;
@@ -13,14 +14,18 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Float;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.LineNumberReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.prefs.Preferences;
 
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
@@ -28,6 +33,7 @@ import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -36,10 +42,12 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import javax.swing.filechooser.FileFilter;
 
 import org.w3c.dom.Document;
 
 import wrims.schematic.MainFrame;
+import wrims.schematic.jdiagram.AttributeMapper.Attribute;
 
 import com.mindfusion.diagramming.AutoResize;
 import com.mindfusion.diagramming.Behavior;
@@ -82,6 +90,39 @@ import com.mindfusion.diagramming.XmlException;
  * 
  */
 public class SchematicEditor extends SchematicViewer {
+	private final class CompartorOnNodeId implements Comparator<DiagramNode> {
+		@Override
+		public int compare(DiagramNode o1, DiagramNode o2) {
+			if (o1==null){
+				if (o2==null){
+					return 0;
+				}else {
+					return -1;
+				}
+			}else{
+				if (o2==null){
+					return 1;
+				} else {
+					String id1 = getIdFor(o1);
+					String id2 = getIdFor(o2);
+					if (id1==null){
+						if (id2==null){
+							return 0;
+						} else {
+							return -1;
+						}
+					} else {
+						if (id2==null){
+							return 1;
+						}else{
+							return id1.compareTo(id2);
+						}
+					}
+				}
+			}
+		}
+	}
+
 	JPopupMenu popupMenu;
 	JPopupMenu pastePopupMenu;
 	JMenuItem deleteMenuItem;
@@ -96,8 +137,8 @@ public class SchematicEditor extends SchematicViewer {
 	private JMenuItem shrinkToElementsMenuItem;
 	private JMenuItem changePointsMenuItem;
 	private AbstractAction exportAction;
+	private AbstractAction importAction;
 	private static HashMap<String, String> attributeMap;
-	
 
 	public SchematicEditor() {
 		super();
@@ -106,13 +147,13 @@ public class SchematicEditor extends SchematicViewer {
 
 		attributeMap = new HashMap<String, String>();
 
-		Icon exportIcon = ImageUtil.createImageIcon("images/export_attr.png");
+		Icon exportIcon = ImageUtil
+				.createImageIcon("/wrims/schematic/images/toolbar/export_attr.png");
 		exportAction = new AbstractAction("Export Attributes", exportIcon) {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String fileToSave = MainFrame
-						.chooseFileToSave(SchematicEditor.this);
+				String fileToSave = chooseFileToExport(SchematicEditor.this);
 				try {
 					saveAttributesTo(fileToSave);
 				} catch (Exception ex) {
@@ -121,8 +162,29 @@ public class SchematicEditor extends SchematicViewer {
 							.getMessage());
 				}
 			}
+		};
+		exportAction.putValue(Action.NAME, "Export Attributes...");
+		exportAction.putValue(Action.SHORT_DESCRIPTION, "Export Attributes...");
+
+		Icon importIcon = ImageUtil
+				.createImageIcon("/wrims/schematic/images/toolbar/import_attr.png");
+		importAction = new AbstractAction("Import Attributes", importIcon) {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String fileToImport = chooseFileToImport(SchematicEditor.this);
+				try {
+					loadAttributesFrom(fileToImport);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					JOptionPane.showMessageDialog(SchematicEditor.this, ex
+							.getMessage());
+				}
+			}
 
 		};
+		importAction.putValue(Action.NAME, "Import Attributes...");
+		importAction.putValue(Action.SHORT_DESCRIPTION, "Import Attributes...");
 
 		Icon undoIcon = ImageUtil.createImageIcon("images/undo.png");
 		Icon redoIcon = ImageUtil.createImageIcon("images/redo.png");
@@ -383,13 +445,18 @@ public class SchematicEditor extends SchematicViewer {
 		popupMenu.add(changePointsMenuItem);
 	}
 
-	
-	
 	protected void saveAttributesTo(String fileToSave) throws Exception {
 		AttributeMapper mapper = new AttributeMapper();
 		Diagram d = getDiagram();
 		PrintWriter wr = new PrintWriter(fileToSave);
+		ArrayList<DiagramNode> nodes = new ArrayList<DiagramNode>();
 		for (DiagramNode n : d.items(DiagramNode.class)) {
+			nodes.add(n);
+		}
+		
+		Collections.sort(nodes, new CompartorOnNodeId());
+		
+		for (DiagramNode n : nodes) {
 			Pen pen = n.getPen();
 			Color fillColor = null;
 			Brush brush = n.getBrush();
@@ -399,30 +466,69 @@ public class SchematicEditor extends SchematicViewer {
 				System.err.println("brush type is :" + brush.getClass()
 						+ " for node: " + n.getTextToEdit());
 			}
-			String id = n.getTextToEdit().split("\n")[0].trim();
-			String attributeName = mapper.getAttributeName(pen,brush);
-			wr.println(String.format("%-45s|%s|%s|%3.1f|%s|%s", id,
-					formatColor(pen.getColor()), formatStyle(pen.getDashStyle()), pen.getWidth(), formatColor(fillColor), attributeName));
+			String id = getIdFor(n);
+
+			String attributeName = mapper.getAttributeName(pen, brush);
+			wr.println(String.format("%-45s|%s|%s|%3.1f|%s|%s", id, mapper
+					.formatColor(pen.getColor()), mapper.formatStyle(pen
+					.getDashStyle()), pen.getWidth(), mapper
+					.formatColor(fillColor), attributeName));
 		}
 		wr.close();
+	}
 
-	}
-	
-	protected String formatColor(Color c){
-		if (c==null){
-			return "";
+	protected void loadAttributesFrom(String fileToImport) throws Exception {
+		AttributeMapper mapper = new AttributeMapper();
+		Diagram d = getDiagram();
+		LineNumberReader reader = new LineNumberReader(new FileReader(
+				fileToImport));
+		String line = null;
+		HashMap<String, AttributeMapper.Attribute> idToAttributeMap = new HashMap<String, AttributeMapper.Attribute>();
+		while ((line = reader.readLine()) != null) {
+			String[] fields = line.split("\\|");
+			String id = fields[0].trim();
+			Color outlineColor = mapper.parseColor(fields[1]);
+			DashStyle style = mapper.parseStyle(fields[2]);
+			float width = fields[3] != null && !fields[3].trim().equals("") ? java.lang.Float
+					.parseFloat(fields[3])
+					: 4;
+			Color fillColor = mapper.parseColor(fields[4]);
+			AttributeMapper.Attribute attr = null;
+			if (fields.length > 5) {
+				String attributeName = fields[5];
+				if (attributeName != null && !attributeName.equals("")) {
+					attr = mapper.getAttribute(attributeName);
+				}
+			}
+			if (attr == null) {
+				attr = new AttributeMapper.Attribute();
+				attr.pen = new Pen(width, outlineColor, style);
+				attr.brush = new SolidBrush(fillColor);
+			}
+			idToAttributeMap.put(id, attr);
 		}
-		return String.format("(%03d,%03d,%03d)", c.getRed(), c.getGreen(), c.getBlue());
-	}
-	
-	protected String formatStyle(DashStyle s){
-		if (s==null){
-			return "";
-		}
-		return String.format("(%10.2f,%s)",s.getDashPhase(),Arrays.toString(s.getDashArray()));
-	}
-	
+		reader.close();
 
+		DiagramNodeList nodes = getDiagram().getNodes();
+		getDiagramView().suspendRepaint();
+		for (DiagramNode n : nodes) {
+			String id = getIdFor(n);
+			AttributeMapper.Attribute attribute = idToAttributeMap.get(id);
+			if (attribute == null) {
+				continue;
+			}
+			n.setPen(attribute.pen);
+			n.setBrush(attribute.brush);
+		}
+		getDiagramView().resumeRepaint();
+	}
+
+	public String getIdFor(DiagramNode n){
+		String text = n.getTextToEdit();
+		//return text == null ? null : text.split("\n")[0].trim();
+		return text == null ? null : text.trim().replace("\n", "*#*");
+	}
+	
 	public void onShortenPoints(DiagramLink link) {
 		try {
 			PointList controlPoints = link.getControlPoints();
@@ -996,6 +1102,63 @@ public class SchematicEditor extends SchematicViewer {
 
 	public Action getExportAction() {
 		return exportAction;
+	}
+
+	public Action getImportAction() {
+		return importAction;
+	}
+
+	public static String chooseFileToImport(Component parent) {
+		Preferences p = Preferences.userNodeForPackage(MainFrame.class);
+		String currentDirectory = p.get("SCHEMATICS_DIRECTORY", System
+				.getProperty("user.dir"));
+		JFileChooser chooser = new JFileChooser(currentDirectory);
+		chooser.setFileFilter(new FileFilter() {
+
+			@Override
+			public String getDescription() {
+				return "text";
+			}
+
+			@Override
+			public boolean accept(File f) {
+				return f != null && f.isFile()
+						&& (f.getName().toLowerCase().endsWith(".txt"));
+			}
+		});
+		int rval = chooser.showOpenDialog(parent);
+		if (rval != JFileChooser.APPROVE_OPTION) {
+			return null;
+		}
+		File selectedFile = chooser.getSelectedFile();
+		p.put("SCHEMATICS_DIRECTORY", selectedFile.getParent());
+		return selectedFile.getAbsolutePath();
+	}
+
+	public static String chooseFileToExport(Component parent) {
+		Preferences p = Preferences.userNodeForPackage(MainFrame.class);
+		String currentDirectory = p.get("SCHEMATICS_DIRECTORY", System
+				.getProperty("user.dir"));
+		JFileChooser chooser = new JFileChooser(currentDirectory);
+		chooser.setFileFilter(new FileFilter() {
+
+			@Override
+			public String getDescription() {
+				return "text";
+			}
+
+			@Override
+			public boolean accept(File f) {
+				return f != null && f.isFile();
+			}
+		});
+		int rval = chooser.showSaveDialog(parent);
+		if (rval != JFileChooser.APPROVE_OPTION) {
+			return null;
+		}
+		File selectedFile = chooser.getSelectedFile();
+		p.put("SCHEMATICS_DIRECTORY", selectedFile.getParent());
+		return selectedFile.getAbsolutePath();
 	}
 
 }

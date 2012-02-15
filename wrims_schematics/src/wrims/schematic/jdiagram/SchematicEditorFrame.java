@@ -57,6 +57,8 @@ public class SchematicEditorFrame extends JFrame {
 				}
 			}
 		};
+		fileSaveAsAction.putValue(Action.NAME, "Save Schematic As...");
+		fileSaveAsAction.putValue(Action.SHORT_DESCRIPTION, "Save Schematic As...");
 
 		Action fileOpenAction = new AbstractAction("Open", openIcon) {
 
@@ -72,6 +74,8 @@ public class SchematicEditorFrame extends JFrame {
 				}
 			}
 		};
+		fileOpenAction.putValue(Action.NAME, "Open Schematic...");
+		fileOpenAction.putValue(Action.SHORT_DESCRIPTION,"Open Schematic...");
 
 		Action fileSaveAction = new AbstractAction("Save", saveIcon) {
 
@@ -84,6 +88,8 @@ public class SchematicEditorFrame extends JFrame {
 				}
 			}
 		};
+		fileSaveAction.putValue(Action.NAME, "Save Schematic");
+		fileSaveAction.putValue(Action.SHORT_DESCRIPTION, "Save Schematic");
 
 		JToolBar bar = new JToolBar();
 		bar.add(fileOpenAction);
@@ -91,6 +97,7 @@ public class SchematicEditorFrame extends JFrame {
 		bar.add(fileSaveAsAction);
 		bar.addSeparator();
 		bar.add(editor.getExportAction());
+		bar.add(editor.getImportAction());
 		bar.addSeparator();
 		bar.add(editor.getUndoAction());
 		bar.add(editor.getRedoAction());
