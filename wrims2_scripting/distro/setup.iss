@@ -2,7 +2,8 @@
 
 AppName              =WRIMS2_Scripting 
 DefaultGroupName     =WRIMS2_Scripting 
-AppVerName           =WRIMS2_Scripting 
+;AppVerName           =WRIMS2_Scripting
+AppVersion=1.0 
 UninstallDisplayName =WRIMS2_Scripting 
 AppId                =WRIMS2_Scripting
 OutputBaseFilename   =WRIMS2_Scripting_Install
@@ -57,7 +58,7 @@ Source: "..\lib\jython252\*";  Excludes: ".svn, *.pkc";     DestDir: "{app}\lib\
 Source: "..\lib\wrims2\*";     Excludes: ".svn";   DestDir: "{app}\lib\wrims2";     Flags: ignoreversion recursesubdirs createallsubdirs ; 
 Source: "..\lib\jre6\*";       Excludes: ".svn, ";          DestDir: "{app}\lib\jre6";       Flags: ignoreversion recursesubdirs createallsubdirs ; 
 
-Source: "..\scripts\*";     Excludes: ".svn, *.bak, *.class, *.pyc, scripts\plot\*, scripts\positionAnalysis\*";   DestDir: "{app}\scripts\";   Flags: ignoreversion recursesubdirs createallsubdirs ; 
+Source: "..\scripts\*";     Excludes: ".svn, *.bak, *.class, *.pyc, plot, positionAnalysis";   DestDir: "{app}\scripts\";   Flags: ignoreversion recursesubdirs createallsubdirs ; 
 Source: "..\studies\*";     Excludes: ".svn, *.log, *.out, *.trc";     Destdir: "{app}\studies";    Flags: ignoreversion recursesubdirs createallsubdirs ; 
 Source: "..\bin\*.cmd";     Excludes: ".svn";                          Destdir: "{app}\bin\";       Flags: ignoreversion ; 
 ;Source: "..\*.template.*";      Excludes: ".svn, distro";                    Destdir: "{app}\";              Flags: ignoreversion recursesubdirs createallsubdirs ; 
@@ -73,11 +74,10 @@ Name: "{userdesktop}\WRIMS2_Scripting"; Filename: "{app}" ;
 
 [UninstallDelete]
 
-Type: files; Name: "*.dsc" ;
-Type: files; Name: "*.dsd" ;
-Type: dirifempty; Name: "studies\*\*" ;
-Type: dirifempty; Name: "studies\*" ;
-Type: dirifempty; Name: "studies" ;
+Type: files; Name: "{app}\*\*.dsc" ;
+Type: files; Name: "{app}\*\*.dsd" ;
+;Type: dirifempty; Name: "{app}\studies\*" ;
+;Type: dirifempty; Name: "{app}\studies" ;
 Type: filesandordirs; Name: "{app}\lib\*" ;
 Type: filesandordirs; Name: "{app}\scripts\*" ;
 Type: filesandordirs; Name: "{app}\scripts" ;
