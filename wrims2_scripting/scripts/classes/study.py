@@ -1,7 +1,7 @@
 import os
 import subprocess
 from os.path import dirname
-from misc import Tools, Param
+from scripts.misc import Tools, Param
 from DssTransferProcess import DssTransferProcess
 
 class Study:
@@ -103,7 +103,8 @@ class Study:
 		Tools.generateConfigFile(self.ms_configPath, self.cMap, startYear=startYear, numberOfSteps=numberOfSteps)
 		
 		self._logger.info("Run study config file in dir: "+self.runPath)
-		subprocess.call(['cmd.exe', '/c', 'RunStudy.bat', self.ms_configPath])
+		subprocess.call(['RunStudy.bat', self.ms_configPath])
+		#subprocess.call(['cmd.exe', '/c', 'RunStudy.bat', self.ms_configPath])
 
 
 	def _run_process(self,processName,startYear,numberOfSteps):

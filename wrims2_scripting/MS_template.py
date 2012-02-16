@@ -1,11 +1,11 @@
 # timestep must be monthly 
 # NumberOfSteps ( or "periods" in wrims1 multi-study runner ) must be a multiple of 12
 
-from module.study import *
-from misc import Param, LogUtils
-
+from scripts.classes.study import Study
+from scripts.misc import LogUtils
 
 LogUtils.initLogging(__file__)
+
 
 s1=Study(r"D:\cvwrsm\trunk\wrims2_scripting\studies\callite_svn47\CONV\Run\CONV.config")
 s2=Study(r"D:\cvwrsm\trunk\wrims2_scripting\studies\callite_svn47\TXFR\Run\TXFR.config")
