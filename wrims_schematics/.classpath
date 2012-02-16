@@ -25,7 +25,6 @@
 	<classpathentry kind="src" path="/wrims_v2"/>
 	<classpathentry kind="lib" path="lib/vista.jar"/>
 	<classpathentry kind="lib" path="lib/xml.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/jdiagram"/>
 	<classpathentry kind="lib" path="lib/jnios.jar"/>
 	<classpathentry kind="lib" path="lib/jpy.jar"/>
 	<classpathentry kind="lib" path="lib/misc.jar"/>
@@ -44,5 +43,6 @@
 	<classpathentry kind="lib" path="lib/jxbrowser/jxbrowser-2.9.jar"/>
 	<classpathentry kind="lib" path="lib/commons-io-2.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/JDiagram.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
