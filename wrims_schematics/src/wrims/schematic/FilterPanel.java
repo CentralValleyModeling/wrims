@@ -44,6 +44,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
+import javax.swing.ProgressMonitor;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
@@ -1123,7 +1124,7 @@ public class FilterPanel extends JPanel {
 	 */
 	public boolean loadAllVariableData(Hashtable<String, Object> names,
 			boolean selectedFiles) {
-		return loadAllVariableData(names, -1, selectedFiles);
+		return loadAllVariableData(names, -1, selectedFiles, null);
 	}
 
 	/**
@@ -1132,7 +1133,7 @@ public class FilterPanel extends JPanel {
 	 * @param dssType
 	 */
 	public boolean loadAllVariableData(int dssType, boolean selectedFiles) {
-		return loadAllVariableData(null, dssType, selectedFiles);
+		return loadAllVariableData(null, dssType, selectedFiles, null);
 	}
 
 	/**
@@ -1142,7 +1143,7 @@ public class FilterPanel extends JPanel {
 	 * @param dssType
 	 */
 	public boolean loadAllVariableData(Hashtable<String, Object> names,
-			int dssType, boolean selectedFiles) {
+			int dssType, boolean selectedFiles, ProgressMonitor monitor) {
 		if (names == null) {
 			return false;
 		}
@@ -1223,7 +1224,7 @@ public class FilterPanel extends JPanel {
 			_periodValueViewer.setUncheckedDssFiles(unselectedDssFiles);
 			String units = _mainPanel.getMessagePanel().getUnits();
 			boolean wasSuccessful = _periodValueViewer.loadVariableData(units,
-					dssType, selectedFiles);
+					dssType, selectedFiles, monitor);
 			_mainPanel.setCursor(Cursor
 					.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 			return wasSuccessful;

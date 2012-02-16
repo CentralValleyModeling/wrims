@@ -184,7 +184,7 @@ public class MainPanel extends JPanel {
 				// + System.currentTimeMillis());
 				boolean wasSuccessful = getValueViewer()
 						.calculateLongTermAverages(getSchematicTimeWindows(),
-								_dssType, true);
+								_dssType, true, null);
 				// System.out.println("Finished selected files calculateLongTermAverages call at "
 				// + System.currentTimeMillis());
 			} catch (InterruptedException ie) {
@@ -246,7 +246,7 @@ public class MainPanel extends JPanel {
 				// + System.currentTimeMillis());
 				boolean wasSuccessful = getValueViewer()
 						.calculateLongTermAverages(getSchematicTimeWindows(),
-								_dssType, false);
+								_dssType, false, null);
 			} catch (InterruptedException ie) {
 				if (DssViewer.DSS_DEBUG) {
 					System.out
@@ -301,7 +301,7 @@ public class MainPanel extends JPanel {
 			// System.out.println("Calling selected files loadAllVariableData at "
 			// + System.currentTimeMillis());
 			boolean wasSuccessful = getFilterPanel().loadAllVariableData(
-					MainPanel.this.getAllVariables(), _dssType, true);
+					MainPanel.this.getAllVariables(), _dssType, true, null);
 			_selectedFilesThread = null;
 			// System.out.println("_selectedFilesThread duration = " +
 			// (System.currentTimeMillis() - start));
@@ -356,7 +356,7 @@ public class MainPanel extends JPanel {
 				// System.out.println("Calling unselected files loadAllVariableData at "
 				// + System.currentTimeMillis());
 				getFilterPanel().loadAllVariableData(getAllVariables(),
-						_dssType, false);
+						_dssType, false, null);
 			} catch (InterruptedException ie) {
 				if (DssViewer.DSS_DEBUG) {
 					System.out.println(
@@ -604,7 +604,7 @@ public class MainPanel extends JPanel {
 	// selectedFiles) {
 	boolean loadSelectedVariableData(int dssType) {
 		return getFilterPanel().loadAllVariableData(getAllVariables(), dssType,
-				true);
+				true, null);
 	}
 
 	/**

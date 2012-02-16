@@ -395,5 +395,9 @@ public class PathnameTableModel extends AbstractTableModel {
 		}
 		return paths;
 	}
+	
+	public String getPathForName(String name){
+		return nameToPathMap.get(name);
+	}
 
 }

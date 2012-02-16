@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Properties;
@@ -1392,8 +1393,11 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		try {
 			buildProps.load(getClass().getResourceAsStream(
 					"/wrims/schematic/build.props"));
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			buildProps.put("build", "NOT BUILT EVER - DEV Env");
+			buildProps.put("buildtime", ""+new Date());
+			buildProps.put("system", "OS: "+System.getProperty("os.name"));
+			//e.printStackTrace();
 		}
 		String message = buildProps.getProperty("name") + "\n"
 				+ buildProps.getProperty("version");
@@ -1709,6 +1713,8 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 
 		ProgressMonitor monitor = new ProgressMonitor(this,
 				"Updating values...", "", 0, 10);
+		monitor.setMillisToDecideToPopup(1000);
+		monitor.setMillisToPopup(500);
 		monitor.setProgress(0);
 		long ti = System.currentTimeMillis();
 		Hashtable<String, Object> visibleNodes = getCurrentView()
@@ -1724,14 +1730,14 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 				.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		monitor.setProgress(2);
 		ti = System.currentTimeMillis();
-		_DssFrame.getFP().loadAllVariableData(names, -1, true);
+		_DssFrame.getFP().loadAllVariableData(names, -1, true, monitor);
 		Logger.getLogger(SchematicViewer.WRIMS_SCHEMATIC).fine("Loading all variable date took : "
 				+ (System.currentTimeMillis() - ti));
 		ti = System.currentTimeMillis();
 		monitor.setProgress(5);
 		_DssFrame.getFP().getValueViewer().setVariables(names);
 		_DssFrame.getFP().getValueViewer().calculateLongTermAverages(
-				getTimeWindows(), -1, true);
+				getTimeWindows(), -1, true, monitor);
 		Logger.getLogger(SchematicViewer.WRIMS_SCHEMATIC).fine("Calculating Long Term Averages took : "
 				+ (System.currentTimeMillis() - ti));
 		monitor.setProgress(9);

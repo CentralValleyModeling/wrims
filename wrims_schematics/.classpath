@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jrockit-jre1.6.0_26-R28.1.4"/>
 	<classpathentry kind="lib" path="lib/calsim.jar"/>
 	<classpathentry kind="lib" path="lib/hec.jar" sourcepath="D:/dev/wk-vista/hecdssvue/src"/>
 	<classpathentry kind="lib" path="lib/heclib.jar" sourcepath="D:/dev/wk-vista/hecdssvue/src"/>
@@ -26,7 +25,7 @@
 	<classpathentry kind="src" path="/wrims_v2"/>
 	<classpathentry kind="lib" path="lib/vista.jar"/>
 	<classpathentry kind="lib" path="lib/xml.jar"/>
-	<classpathentry kind="lib" path="lib/JDiagram.jar" sourcepath="lib/JDiagram.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jdiagram"/>
 	<classpathentry kind="lib" path="lib/jnios.jar"/>
 	<classpathentry kind="lib" path="lib/jpy.jar"/>
 	<classpathentry kind="lib" path="lib/misc.jar"/>
@@ -44,5 +43,6 @@
 	<classpathentry kind="lib" path="lib/jxbrowser/development.jar"/>
 	<classpathentry kind="lib" path="lib/jxbrowser/jxbrowser-2.9.jar"/>
 	<classpathentry kind="lib" path="lib/commons-io-2.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -27,6 +27,7 @@ import java.util.prefs.Preferences;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.ProgressMonitor;
 
 import wrims.dss.dts.DTSWrapper;
 import wrims.dss.dts.DerivedTimeSeries;
@@ -400,7 +401,7 @@ public class DssViewer implements Outputer {
 						}
 						if (_mode.equals("Diff")) {
 							if (j > 0) {
-								if (results[0] == null){
+								if (results[0] == null || results[0].get(name) == null){
 									continue;
 								}
 								String[] baseFields = results[0].get(name)
@@ -431,9 +432,10 @@ public class DssViewer implements Outputer {
 	/**
 	 * CB added to load long-term averages in background This should be called
 	 * from within <code>SwingUtilities.invokeLater</code>.
+	 * @param monitor 
 	 */
 	public boolean calculateLongTermAverages(Vector<String> periods,
-			int dssType, boolean isSelectedFiles) {
+			int dssType, boolean isSelectedFiles, ProgressMonitor monitor) {
 		long startTime = System.currentTimeMillis();
 		_initialUnits = _units;
 		_longTermTafToCfsConversionFactors = new Hashtable<String, Double>();
@@ -582,8 +584,11 @@ public class DssViewer implements Outputer {
 				 */
 				// System.out.println(newPercentage);
 			}
+			monitor.setNote("calculating Long Term Averages");
 			for (int j = 0; j < _allVariableData.length; ++j) { // CB TODO use
-
+				if (monitor != null){
+					monitor.setProgress(5+(int) (j*4)/_allVariableData.length); // [5-9)
+				}
 				if (DssFiles.get(j) == null) {
 					continue;
 				}
@@ -778,15 +783,15 @@ public class DssViewer implements Outputer {
 	 * @param studyNumber
 	 */
 	public boolean loadVariableData(String units, int dssType,
-			boolean selectedFiles) {
+			boolean selectedFiles, ProgressMonitor monitor) {
 		_units = units;
-		return generateVariableData(dssType, selectedFiles);
+		return generateVariableData(dssType, selectedFiles, monitor);
 	}
 
 	/**
 	 * CB added.
 	 */
-	private boolean generateVariableData(int dssType, boolean isSelectedFiles) { // CB
+	private boolean generateVariableData(int dssType, boolean isSelectedFiles, ProgressMonitor monitor) { // CB
 		// changed
 		long startTime = System.currentTimeMillis();
 		if (_paths == null) {
@@ -913,7 +918,14 @@ public class DssViewer implements Outputer {
 				keyIterator = keys.iterator(); // CB reset the iterator; added
 				// for updating monthly progress
 				// bar
+				int totalSize = keys.size();
+				int count = 0;
+				monitor.setNote("Loading data...");
 				while (keyIterator.hasNext()) {
+					if (monitor != null){
+						monitor.setProgress(2 + (3*count)/totalSize); // [2,5)
+					}
+					count++;
 					key = keyIterator.next();
 					allDataIndex = key;
 					if ((DssFiles == null)

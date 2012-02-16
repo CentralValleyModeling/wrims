@@ -37,10 +37,10 @@ public class TestDSSViewer {
 		variables.put("S_CLRLK", "S_CLRLK");
 		viewer.setVariables(variables);
 		viewer.setUncheckedDssFiles(new HashMap<Integer, Object>());
-		viewer.loadVariableData("CFS", -1, true);
+		viewer.loadVariableData("CFS", -1, true, null);
 		variables.put("S_SHSTA", "S_SHSTA");
-		viewer.loadVariableData("CFS", -1, true);
-		viewer.calculateLongTermAverages(periods, -1, true);
+		viewer.loadVariableData("CFS", -1, true, null);
+		viewer.calculateLongTermAverages(periods, -1, true, null);
 		Hashtable<String, String>[] values = viewer.show("CFS", "31OCT1921");
 		System.out.println(values[0].get("S_CLRLK"));
 		System.out.println(values[0].get("S_SHSTA"));
