@@ -45,7 +45,7 @@ public class AttributeMapper {
 		if (value == null || value.trim().equals("")) {
 			return null;
 		}
-		String[] fields = value.split("\\|");
+		String[] fields = value.trim().split("\\|");
 		if (fields == null || fields.length != 4) {
 			return null;
 		}
@@ -56,7 +56,7 @@ public class AttributeMapper {
 		if (value == null || value.trim().equals("")) {
 			return null;
 		}
-		String[] fields = value.split("\\|");
+		String[] fields = value.trim().split("\\|");
 		if (fields == null || fields.length != 4) {
 			return null;
 		}

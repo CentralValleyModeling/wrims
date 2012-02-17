@@ -98,6 +98,7 @@ public class SchematicViewer extends JPanel {
 	private AbstractAction markViewAction;
 	private JComboBox markViewComboBox;
 	private AbstractAction deleteViewAction;
+	private AbstractAction zoomMagnifier;
 
 	private static Preferences userPrefs;
 	static {
@@ -322,6 +323,7 @@ public class SchematicViewer extends JPanel {
 			}
 
 		};
+		zoomInAction.putValue(Action.NAME, "Zoom In");
 		zoomInAction.putValue(Action.SHORT_DESCRIPTION, "zoom in");
 		zoomInAction
 				.putValue(
@@ -337,6 +339,7 @@ public class SchematicViewer extends JPanel {
 			}
 
 		};
+		zoomOutAction.putValue(Action.NAME, "Zoom Out");
 		zoomOutAction.putValue(Action.SHORT_DESCRIPTION, "zoom out");
 		zoomOutAction
 				.putValue(
@@ -351,6 +354,7 @@ public class SchematicViewer extends JPanel {
 				zoomNormal();
 			}
 		};
+		zoomNormalAction.putValue(Action.NAME, "Zoom Normal");
 		zoomNormalAction.putValue(Action.SHORT_DESCRIPTION, "zoom normal");
 		zoomNormalAction
 				.putValue(
@@ -365,9 +369,9 @@ public class SchematicViewer extends JPanel {
 				zoomToAll();
 			}
 		};
-		zoomBestFitAction.putValue(Action.NAME, "Zoom to Rectangle");
+		zoomBestFitAction.putValue(Action.NAME, "Zoom Fit");
 		zoomBestFitAction.putValue(Action.SHORT_DESCRIPTION,
-				"Zoom to Rectangle");
+				"Zoom Fit");
 		zoomBestFitAction
 				.putValue(
 						Action.SMALL_ICON,
@@ -393,12 +397,39 @@ public class SchematicViewer extends JPanel {
 				}
 			}
 		};
+		zoomRectAction.putValue(Action.NAME, "Zoom To Rectangle");
 		zoomRectAction.putValue(Action.SHORT_DESCRIPTION, "zoom rectangle");
 		zoomRectAction
 				.putValue(
 						Action.SMALL_ICON,
 						ImageUtil
 								.createImageIcon("/wrims/schematic/images/toolbar/zoom_region.png"));
+		
+		zoomMagnifier = new AbstractAction(){
+			private MagnifierPanel magnifierPanel;
+
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				Object source = evt.getSource();
+				if (!(source instanceof JToggleButton)) {
+					return;
+				}
+				if (magnifierPanel==null){
+					magnifierPanel = new MagnifierPanel(diagramView);
+				}
+				JToggleButton toggleButton = (JToggleButton) source;
+				magnifierPanel.setShowing(toggleButton.isSelected());
+			}
+		};
+		zoomMagnifier.putValue(Action.NAME, "Zoom Magnifier");
+		zoomMagnifier.putValue(Action.SHORT_DESCRIPTION, "Zoom Magnifier");
+		zoomMagnifier
+				.putValue(
+						Action.SMALL_ICON,
+						ImageUtil
+								.createImageIcon("/wrims/schematic/images/toolbar/zoom_magnifier.png"));
+		
+		
 		forwardViewAction = new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -603,6 +634,10 @@ public class SchematicViewer extends JPanel {
 
 	public Action getZoomRectangleAction() {
 		return zoomRectAction;
+	}
+
+	public Action getZoomMagnifierAction() {
+		return zoomMagnifier;
 	}
 
 	private Action getForwardViewAction() {

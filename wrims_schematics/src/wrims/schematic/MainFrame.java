@@ -1191,6 +1191,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		button = toolBar.add(_viewer.getZoomNormalAction());
 		toolBar.addSeparator();
 		toolBar.add(new JToggleButton(_viewer.getZoomRectangleAction()));
+		toolBar.add(new JToggleButton(_viewer.getZoomMagnifierAction()));
 		toolBar.addSeparator();
 		// button = toolBar.add(_viewer.getBackwardViewAction());
 		// button.setToolTipText("Go Backward in View");

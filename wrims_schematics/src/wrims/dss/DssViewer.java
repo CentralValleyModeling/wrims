@@ -568,11 +568,15 @@ public class DssViewer implements Outputer {
 					/ _variables.size();
 		}
 		float startPercentage = oldPercentage;
+		monitor.setNote("calculating Long Term Averages");
 		while (variableEnum.hasMoreElements()) {
 			String name = variableEnum.nextElement();
 			++variableCount;
 			if (dssType > -1) {
 				System.out.print("");
+			}
+			if (monitor != null){
+				monitor.setProgress(5+(int) (variableCount*4)/numberOfVariables); // [5-9)
 			}
 			if ((newPercentage = (int) (variableCount * factor + startPercentage)) > oldPercentage) {
 				oldPercentage = newPercentage;
@@ -584,11 +588,7 @@ public class DssViewer implements Outputer {
 				 */
 				// System.out.println(newPercentage);
 			}
-			monitor.setNote("calculating Long Term Averages");
 			for (int j = 0; j < _allVariableData.length; ++j) { // CB TODO use
-				if (monitor != null){
-					monitor.setProgress(5+(int) (j*4)/_allVariableData.length); // [5-9)
-				}
 				if (DssFiles.get(j) == null) {
 					continue;
 				}
