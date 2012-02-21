@@ -65,7 +65,7 @@ public class TestWreslParser_timeArrayDvar {
 		String s;
 		int n;
 	
-		s =",to(dec)";
+		s =",fammonths";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 2);

@@ -9,11 +9,11 @@ MODEL first {
 
 
 	define (24) dvar_global 		   { lower -99999 upper 999999 kind 'CHANNEL' units 'CFS' }
-	define (To(DEC))[local]  dvar_local { lower -99999 upper 999999 kind 'CHANNEL' units 'CFS' }
+	define (FAMmonths)[local]  dvar_local { lower -99999 upper 999999 kind 'CHANNEL' units 'CFS' }
 	
 	define (31) C_Trnty { lower 0. upper 1845.*taf_cfs($m) kind 'FLOW-CHANNEL' units 'CFS' }	
 	define (12) C_Lwstn_10 { std kind 'FLOW-MIN-INSTREAM' units 'CFS' }
-	define (To(DEC)) C_Lwstn_FW { std kind 'FLOW-MIN-INSTREAM' units 'CFS' }
+	define (FAMmonths) C_Lwstn_FW { std kind 'FLOW-MIN-INSTREAM' units 'CFS' }
 	
 
 }	
