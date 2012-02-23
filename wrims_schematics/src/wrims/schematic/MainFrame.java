@@ -277,7 +277,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	 *
 	 */
 	private void createRecentFilesOpenActions() {
-		createRecentSchematicFilesOpenActions();
+		//createRecentSchematicFilesOpenActions();
 		createRecentProjectFilesOpenActions();
 		createRecentPropertyDirectoriesOpenActions();
 	}
@@ -1758,7 +1758,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		_DssFrame.mainPanel.setCursor(Cursor.getDefaultCursor());
 		if (values != null) {
 			ti = System.currentTimeMillis();
-			getCurrentView().setValues(values);
+			getCurrentView().setValues(values, !_DssFrame.getMP().getMode().equals("Comp"));
 			Logger.getLogger(SchematicViewer.WRIMS_SCHEMATIC).fine("Setting values took : "
 					+ (System.currentTimeMillis() - ti));
 		} else {
@@ -1953,8 +1953,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	}
 
 	private boolean isSchematicFileOpen(String fileToBeOpened) {
-		// FIXME:
-		return false;
+		return isFileOpen(fileToBeOpened, SCHEMATIC_TYPE);
 	}
 
 	public boolean isProjectFileOpen(String fileToBeOpened) { // CB added

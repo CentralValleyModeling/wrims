@@ -594,6 +594,7 @@ public class MessagePanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				_mainPanel.stopMonthlyDataWork();
+				_mode="Comp";
 				_mainPanel.updateSchematicValues();
 			}
 		});
@@ -602,6 +603,7 @@ public class MessagePanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				_mainPanel.stopMonthlyDataWork();
+				_mode="Diff";
 				_mainPanel.updateSchematicValues();
 			}
 		});

@@ -575,7 +575,7 @@ public class DssViewer implements Outputer {
 			if (dssType > -1) {
 				System.out.print("");
 			}
-			if (monitor != null){
+			if (monitor != null && numberOfVariables%variableCount==0){
 				monitor.setProgress(5+(int) (variableCount*4)/numberOfVariables); // [5-9)
 			}
 			if ((newPercentage = (int) (variableCount * factor + startPercentage)) > oldPercentage) {
@@ -922,7 +922,7 @@ public class DssViewer implements Outputer {
 				int count = 0;
 				monitor.setNote("Loading data...");
 				while (keyIterator.hasNext()) {
-					if (monitor != null){
+					if (monitor != null && totalSize%(count+1)==0){
 						monitor.setProgress(2 + (3*count)/totalSize); // [2,5)
 					}
 					count++;
@@ -1046,7 +1046,7 @@ public class DssViewer implements Outputer {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 		/*

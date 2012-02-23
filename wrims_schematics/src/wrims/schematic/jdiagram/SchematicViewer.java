@@ -21,6 +21,7 @@ import java.util.prefs.Preferences;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
@@ -30,6 +31,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
+import javax.swing.border.TitledBorder;
 
 import wrims.schematic.MainFrame;
 import wrims.schematic.element.Element;
@@ -99,6 +101,7 @@ public class SchematicViewer extends JPanel {
 	private JComboBox markViewComboBox;
 	private AbstractAction deleteViewAction;
 	private AbstractAction zoomMagnifier;
+	private TitledBorder titledBorder;
 
 	private static Preferences userPrefs;
 	static {
@@ -127,6 +130,7 @@ public class SchematicViewer extends JPanel {
 		PanelWithCollapsibleInsetPanel panel = new PanelWithCollapsibleInsetPanel(
 				true);
 		panel.collapse();
+		this.setBorder(titledBorder = BorderFactory.createTitledBorder(""));
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.add(panel);
 
@@ -370,8 +374,7 @@ public class SchematicViewer extends JPanel {
 			}
 		};
 		zoomBestFitAction.putValue(Action.NAME, "Zoom Fit");
-		zoomBestFitAction.putValue(Action.SHORT_DESCRIPTION,
-				"Zoom Fit");
+		zoomBestFitAction.putValue(Action.SHORT_DESCRIPTION, "Zoom Fit");
 		zoomBestFitAction
 				.putValue(
 						Action.SMALL_ICON,
@@ -404,8 +407,8 @@ public class SchematicViewer extends JPanel {
 						Action.SMALL_ICON,
 						ImageUtil
 								.createImageIcon("/wrims/schematic/images/toolbar/zoom_region.png"));
-		
-		zoomMagnifier = new AbstractAction(){
+
+		zoomMagnifier = new AbstractAction() {
 			private MagnifierPanel magnifierPanel;
 
 			@Override
@@ -414,7 +417,7 @@ public class SchematicViewer extends JPanel {
 				if (!(source instanceof JToggleButton)) {
 					return;
 				}
-				if (magnifierPanel==null){
+				if (magnifierPanel == null) {
 					magnifierPanel = new MagnifierPanel(diagramView);
 				}
 				JToggleButton toggleButton = (JToggleButton) source;
@@ -428,8 +431,7 @@ public class SchematicViewer extends JPanel {
 						Action.SMALL_ICON,
 						ImageUtil
 								.createImageIcon("/wrims/schematic/images/toolbar/zoom_magnifier.png"));
-		
-		
+
 		forwardViewAction = new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -724,6 +726,7 @@ public class SchematicViewer extends JPanel {
 			diagram.loadFrom(filename);
 		}
 		this.filename = filename;
+		titledBorder.setTitle(this.filename);
 		Logger.getLogger(WRIMS_SCHEMATIC).fine(
 				"Time to load " + filename + ": "
 						+ (System.currentTimeMillis() - ti));
@@ -734,6 +737,14 @@ public class SchematicViewer extends JPanel {
 		 * if (markViewComboBox.getItemCount() > 0) {
 		 * markViewComboBox.setSelectedItem(viewHistory.get(0).name); }
 		 */
+	}
+
+	public static String getTruncatedFilename(String filename) {
+		if (filename == null || filename.length() < 100) {
+			return filename;
+		}
+		return filename.substring(0, 10) + "....."
+				+ filename.substring(Math.min(filename.length() - 85, 85));
 	}
 
 	public static ArrayList<ViewPosition> getHistory() {
@@ -952,8 +963,9 @@ public class SchematicViewer extends JPanel {
 	 * Set values based on the map of values of name and values
 	 * 
 	 * @param values
+	 * @param isCompare
 	 */
-	public void setValues(Hashtable<String, String>[] values) {
+	public void setValues(Hashtable<String, String>[] values, boolean isDiff) {
 		if (!showValueBoxes) {
 			return;
 		}
@@ -975,21 +987,32 @@ public class SchematicViewer extends JPanel {
 							ShapeNode shapeNode = (ShapeNode) object;
 							Group subordinateGroup = shapeNode
 									.getSubordinateGroup();
+							DiagramNode diagramNode = null;
 							if (subordinateGroup != null) {
 								DiagramNodeList attachedNodes = subordinateGroup
 										.getAttachedNodes();
 								if (attachedNodes.size() < studyId + 1) {
-									createTextNodeWithIntermediates(studyId,
-											attachedNodes.size(), value,
+									diagramNode = createTextNodeWithIntermediates(
+											studyId, attachedNodes.size(),
 											shapeNode);
 								} else {
-									DiagramNode diagramNode = attachedNodes
-											.get(studyId);
-									diagramNode.setEditedText(value);
+									diagramNode = attachedNodes.get(studyId);
 								}
 							} else {
-								createTextNodeWithIntermediates(studyId, 0,
-										value, shapeNode);
+								diagramNode = createTextNodeWithIntermediates(
+										studyId, 0, shapeNode);
+							}
+							if (diagramNode != null) {
+								diagramNode.setEditedText(value);
+								if (isDiff && studyId > 0) {
+									((ShapeNode) diagramNode)
+											.setTextColor(Color.red);
+								} else {
+									((ShapeNode) diagramNode)
+									.setTextColor(Color.black);
+								}
+								((ShapeNode) diagramNode)
+										.setToolTip(getToolTip(studyId, isDiff));
 							}
 						}
 					}
@@ -1000,22 +1023,17 @@ public class SchematicViewer extends JPanel {
 		}
 	}
 
-	private void createTextNodeWithIntermediates(int studyId,
-			int startingWithId, String value, ShapeNode shapeNode) {
+	private ShapeNode createTextNodeWithIntermediates(int studyId,
+			int startingWithId, ShapeNode shapeNode) {
 		int id = startingWithId;
-		while (id < studyId + 1) {
-			String str = "";
-			if (id == studyId) {
-				str = value;
-			} else {
-				str = "";
-			}
-			createTextNode(id, str, shapeNode);
-			id++;
+		if (id < studyId + 1) {
+			return createTextNode(id++, shapeNode);
+		} else {
+			return null;
 		}
 	}
 
-	private void createTextNode(int studyId, String value, ShapeNode shapeNode) {
+	private ShapeNode createTextNode(int studyId, ShapeNode shapeNode) {
 		Float r = shapeNode.getBounds();
 		Rectangle2D.Float r2 = null;
 		TextFormat tf = null;
@@ -1051,13 +1069,26 @@ public class SchematicViewer extends JPanel {
 		transparentTextNode.setId(VALUE_TEXT);
 		transparentTextNode.setTransparent(true);
 		transparentTextNode.setLocked(true);
-		transparentTextNode.setText(value);
 		transparentTextNode.setFont(shapeNode.getFont());
 		transparentTextNode.setPen(shapeNode.getPen());
 		transparentTextNode.setBrush(shapeNode.getBrush());
 		transparentTextNode.setTextFormat(tf);
 		transparentTextNode.attachTo(shapeNode, attachPos);
-		// System.out.println("Creating text node: "+attachPos+":"+r2+":"+value+":"+shapeNode+":"+transparentTextNode);
+		return transparentTextNode;
+	}
+
+	public static String getToolTip(int studyId, boolean isDiff) {
+		switch (studyId) {
+		case 0:
+			return "Base";
+		case 1:
+			return isDiff ? "Alt 1 - Base" : "Alt 1";
+		case 2:
+			return isDiff ? "Alt 2 - Base" :"Alt 2";
+		case 3:
+			return isDiff ? "Alt 3 - Base" :"Alt 3";
+		}
+		return "";
 	}
 
 	private String truncateAfterDecimal(String value, int i,
