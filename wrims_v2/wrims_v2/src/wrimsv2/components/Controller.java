@@ -499,7 +499,8 @@ public class Controller {
 			Date endDate=new Date (ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
 			long startTime=startDate.getTime();
 			long endTime=endDate.getTime();
-			return (int)(endTime-startTime)/(24*60*60*1000)+1;
+			double timestep=(endTime-startTime)/(24*60*60*1000)+1;
+			return (int)timestep;
 		}
 	}
 	

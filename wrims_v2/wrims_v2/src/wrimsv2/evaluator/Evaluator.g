@@ -160,7 +160,7 @@ timeseries returns [EvalExpression ee]
 	
 partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
-usedKeywords: YEAR|MONTH|MONTH_CONST|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|REAL|ABS|EXP|LOG|LOG10|POW|MOD|SELECT|FROM|GIVEN|USE|WHERE
+usedKeywords: YEAR|MONTH|MONTH_CONST|DAY|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|REAL|ABS|EXP|LOG|LOG10|POW|MOD|SELECT|FROM|GIVEN|USE|WHERE
 |CONSTRAIN|ALWAYS|NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
 |CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE|UPPERUNBOUNDED|LOWERUNBOUNDED;
 
@@ -205,6 +205,7 @@ term returns [EvalExpression ee]
 	| tafcfs_term{ee=$tafcfs_term.ee;}
 	| YEAR{ee=Evaluation.term_YEAR();}
 	| MONTH{ee=Evaluation.term_MONTH();}
+	| DAY{ee=Evaluation.term_DAY();}
 	| MONTH_CONST{ee=Evaluation.term_MONTH_CONST($MONTH_CONST.text);}
 	| PASTMONTH{ee=Evaluation.term_PASTMONTH($PASTMONTH.text);}
 	| DAYSIN{ee=Evaluation.daysIn();})
@@ -332,6 +333,7 @@ FLOAT : INTEGER? '.' INTEGER
 //I: 'i';
 YEAR: 'wateryear';
 MONTH: 'month';
+DAY: 'day';
 MONTH_CONST: 'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'|'dec';
 PASTMONTH: 'prevjan'|'prevfeb'|'prevmar'|'prevapr'|'prevmay'|'prevjun'|'prevjul'|'prevaug'|'prevsep'|'prevoct'|'prevnov'|'prevdec';
 RANGE: 'range';

@@ -683,6 +683,10 @@ public class ValueEvaluation {
 		return new IntDouble(TimeOperation.waterMonthValue(ControlData.currMonth), true);
 	}
 	
+	public static IntDouble term_DAY(){
+		return new IntDouble(ControlData.currDay, true);
+	}
+	
 	public static IntDouble  term_MONTH_CONST(String month){
 		int monthValue=TimeOperation.monthValue(month);
 		return new IntDouble(TimeOperation.waterMonthValue(monthValue), true);

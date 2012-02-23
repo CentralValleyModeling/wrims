@@ -961,6 +961,11 @@ public class Evaluation {
 		return new EvalExpression(id);
 	}
 	
+	public static EvalExpression term_DAY(){
+		IntDouble id=new IntDouble(ControlData.currDay, true);
+		return new EvalExpression(id);
+	}
+	
 	public static EvalExpression term_MONTH_CONST(String month){
 		int monthValue=TimeOperation.monthValue(month);
 		IntDouble id=new IntDouble(TimeOperation.waterMonthValue(monthValue), true);

@@ -154,7 +154,7 @@ timeseries returns [IntDouble id]
 	
 partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
-usedKeywords: YEAR|MONTH|MONTH_CONST|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|REAL|ABS|EXP|LOG|LOG10|POW|MOD|SELECT|FROM|GIVEN|USE|WHERE
+usedKeywords: YEAR|MONTH|MONTH_CONST|DAY|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|REAL|ABS|EXP|LOG|LOG10|POW|MOD|SELECT|FROM|GIVEN|USE|WHERE
 |CONSTRAIN|ALWAYS|NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
 |CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE|UPPERUNBOUNDED|LOWERUNBOUNDED;
 
@@ -199,6 +199,7 @@ term returns [IntDouble id]
 	| tafcfs_term{id=$tafcfs_term.id;}
 	| YEAR{id=ValueEvaluation.term_YEAR();}
 	| MONTH{id=ValueEvaluation.term_MONTH();}
+	| DAY {id=ValueEvaluation.term_DAY();}
 	| MONTH_CONST{id=ValueEvaluation.term_MONTH_CONST($MONTH_CONST.text);}
 	| PASTMONTH{id=ValueEvaluation.term_PASTMONTH($PASTMONTH.text);}
 	| DAYSIN{id=ValueEvaluation.daysIn();})
@@ -322,6 +323,7 @@ FLOAT : INTEGER? '.' INTEGER
 //I: 'i';
 YEAR: 'wateryear';
 MONTH: 'month';
+DAY: 'day';
 MONTH_CONST: 'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'|'dec';
 PASTMONTH: 'prevjan'|'prevfeb'|'prevmar'|'prevapr'|'prevmay'|'prevjun'|'prevjul'|'prevaug'|'prevsep'|'prevoct'|'prevnov'|'prevdec';
 RANGE: 'range';
