@@ -161,6 +161,7 @@ public class TimeOperation {
 			Date currDate = new Date (ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
 			long dataTime=currDate.getTime()+value*1 * 24 * 60 * 60 * 1000;
 			Date dataDate = new Date (dataTime);
+			ControlData.dataDay=dataDate.getDate();
 			ControlData.dataMonth=dataDate.getMonth()+1;
 			ControlData.dataYear=dataDate.getYear()+1900;
 		}
@@ -189,6 +190,7 @@ public class TimeOperation {
 			Date thisDate = new Date (year-1900, month-1, day);
 			long dataTime=thisDate.getTime()+value*1 * 24 * 60 * 60 * 1000;
 			Date dataDate = new Date (dataTime);
+			ControlData.dataDay=dataDate.getDate();
 			ControlData.dataMonth=dataDate.getMonth()+1;
 			ControlData.dataYear=dataDate.getYear()+1900;
 		}

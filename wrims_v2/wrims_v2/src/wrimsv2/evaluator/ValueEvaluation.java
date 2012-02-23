@@ -492,7 +492,8 @@ public class ValueEvaluation {
 		if (dds.getTimeStep().equals("1MON")){
 			index=ControlData.dataYear*12+ControlData.dataMonth-(sYear*12+sMonth);
 		}else{
-			index=(int)((sTime-dataTime)/(1000*60*60*24));
+			double indexValue=(dataTime-sTime)/(1000*60*60*24);
+			index=(int)indexValue+2;
 		}
 		return index;
 	}
@@ -507,7 +508,8 @@ public class ValueEvaluation {
 		if (dds.getTimeStep().equals("1MON")){
 			index=ControlData.dataYear*12+ControlData.dataMonth-(sYear*12+sMonth);
 		}else{
-			index=(int)((sTime-dataTime)/(1000*60*60*24));
+			double indexValue=(dataTime-sTime)/(1000*60*60*24);
+			index=(int)indexValue+2;
 		}
 		return index;
 	}
