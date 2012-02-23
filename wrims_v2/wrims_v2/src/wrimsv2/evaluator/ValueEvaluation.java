@@ -667,13 +667,29 @@ public class ValueEvaluation {
 		double convert;
 		int days=TimeOperation.numberOfDays(ControlData.dataMonth, ControlData.dataYear);
 		if (ident.equals("taf_cfs")){
-			return 504.1666667 / days;
+			if (ControlData.timeStep.equals("1MON")){
+				return 504.1666667 / days;
+			}else{
+				return 504.1666667;
+			}
 		}else if (ident.equals("cfs_taf")){
-			return days / 504.1666667;
+			if (ControlData.timeStep.equals("1MON")){
+				return days / 504.1666667;
+			}else{
+				return 1 / 504.1666667;
+			}
 		}else if (ident.equals("af_cfs")){
-			return 504.1666667 / days / 1000.;
+			if (ControlData.timeStep.equals("1MON")){
+				return 504.1666667 / days / 1000.;
+			}else{
+				return 504.1666667 / 1000.;
+			}
 		}else{
-			return days / 504.1666667 * 1000.;
+			if (ControlData.timeStep.equals("1MON")){
+				return days / 504.1666667 * 1000.;
+			}else{
+				return 1 / 504.1666667 * 1000.;
+			}
 		}
 	}
 	
