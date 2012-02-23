@@ -378,7 +378,7 @@ public class InputPanel extends JPanel {
 			out.println();
 
 			String executeCommand = javaFullPath
-					+ " -Xmx1600m -Xss1024K -Djava.library.path="
+					+ " -Xmx1600m -Xss1024K -Duser.timezone=UTC -Djava.library.path="
 					+ externalPath + ";" + engineLibPath
 					+ " -cp \"" + externalPath + ";"
 					+ engineLibPath + "\\external" + ";" 
