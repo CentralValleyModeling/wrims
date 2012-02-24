@@ -117,13 +117,13 @@ weight_table
 goal 
 scope { String scop ; Goal gl; String case_condition; int caseNumber; Map<String, String> dvarWeightMap; ArrayList<String> dvarSlackSurplus;} 
 @init { $goal::scop = null; $goal::gl = new Goal(); $goal::caseNumber=0; $goal::case_condition="always";} 
-: goal_simple | goal_nocase | goal_case ;
+: goal_simple | goal_nocase | goal_case | goal_timeArray_simple | goal_timeArray_nocase | goal_timeArray_case;
 
 dvar : dvar_std | dvar_nonStd | dvar_timeArray_std | dvar_timeArray_nonStd   ;
 
 svar : svar_dss | svar_expr | svar_sum | svar_table | svar_case;
 
-svar_timeArray : svar_timeArray_expr | svar_timeArray_case ;
+svar_timeArray : svar_timeArray_expr | svar_timeArray_case |svar_timeArray_table;
 
 svar_timeArray_case
 @init { Svar sv = new Svar(); String dependants=null; String varInCycle=null;}  
@@ -199,16 +199,25 @@ where_items returns[String text]
 	;
 
 
-alias  :
-       ^(Alias sc=Scope i=IDENT e=Expression k=Kind u=Units d=Dependants vc=VarInCycle)
+alias  : (alias_simple|alias_timeArray_simple);
+
+alias_simple: ^(Alias sc=Scope i=IDENT e=Expression k=Kind u=Units d=Dependants vc=VarInCycle)
        { F.alias($i.text, $sc.text, Tools.strip($k.text), Tools.strip($u.text), $e.text, $d.text, $vc.text  ); }
 	;
 
+alias_timeArray_simple: ^(Alias ta=TimeArraySize sc=Scope i=IDENT e=Expression k=Kind u=Units d=Dependants vc=VarInCycle)
+       { F.alias($i.text, $sc.text, Tools.strip($k.text), Tools.strip($u.text), $e.text, $d.text, $vc.text, $ta.text); }
+  ;
 
 goal_simple 
 	:  ^(Goal_simple sc=Scope {$goal::scop = $sc.text;} i=IDENT d=Dependants v=Constraint_content vc=VarInCycle) 
 		{ F.goalSimple($i.text, $sc.text, $v.text, $d.text, $vc.text);} 
 	;
+	
+goal_timeArray_simple 
+  :  ^(Goal_simple ta=TimeArraySize sc=Scope {$goal::scop = $sc.text;} i=IDENT d=Dependants v=Constraint_content vc=VarInCycle) 
+    { F.goalSimple($i.text, $sc.text, $v.text, $d.text, $vc.text, $ta.text);} 
+  ;
 
 goal_nocase
 	@init { $goal::gl = new Goal(); $goal::caseNumber=0; $goal::case_condition="always";} 
@@ -226,6 +235,24 @@ goal_nocase
 		{ 
 			 $goal::gl.caseExpression.set(0, $c.str.toLowerCase()); 	  				
 		} 
+;
+
+goal_timeArray_nocase
+  @init { $goal::gl = new Goal(); $goal::caseNumber=0; $goal::case_condition="always";} 
+  :  ^( Goal_no_case ta=TimeArraySize sc=Scope {$goal::scop = $sc.text;} i=IDENT  d=Dependants vc=VarInCycle 
+      {   
+        $goal::gl = F.goalSimple($i.text, $sc.text, "", $d.text, $vc.text, $ta.text);
+        $goal::gl.dvarWeightMapList.add(null);
+        $goal::gl.dvarSlackSurplusList.add(null);
+        $goal::dvarWeightMap = new HashMap<String, String>(); 
+        $goal::dvarSlackSurplus = new ArrayList<String>();         
+        //$goal::gl.dvarName.add(""); $goal::gl.dvarWeight.add("");
+      }
+      c=goal_contents  )
+        
+    { 
+       $goal::gl.caseExpression.set(0, $c.str.toLowerCase());             
+    } 
 ;
 
 goal_case
@@ -261,6 +288,41 @@ goal_case
 		{ 
 			 F.goalCase($i.text, $sc.text, $goal::gl);	  				
 		} 
+;
+
+goal_timeArray_case
+  @init { $goal::gl = new Goal(); $goal::caseNumber=0; $goal::case_condition=Param.conditional; }   
+  :  ^( Goal_case ta=TimeArraySize sc=Scope {$goal::scop = $sc.text;} i=IDENT  
+    ( 
+      {   $goal::gl.dvarWeightMapList.add(null);  
+        $goal::gl.dvarSlackSurplusList.add(null); 
+        $goal::dvarWeightMap = new HashMap<String, String>();
+        $goal::dvarSlackSurplus = new ArrayList<String>();  
+        //$goal::gl.dvarName.add(""); $goal::gl.dvarWeight.add(""); 
+      }
+      
+      ^( Case n=IDENT c=Condition d=Dependants vc=VarInCycle e=goal_contents 
+      { $goal::caseNumber++;
+        $goal::dvarWeightMap = new HashMap<String, String>(); 
+        $goal::dvarSlackSurplus = new ArrayList<String>();  
+        $goal::gl.caseName.add($n.text.toLowerCase());
+        $goal::gl.caseCondition.add( Tools.add_space_between_logical( $c.text.toLowerCase() ) );
+        $goal::gl.caseExpression.add($e.str.toLowerCase());
+        if (d != null) {
+          String dependants = $d.text.toLowerCase();
+          $goal::gl.expressionDependants.addAll(Tools.convertStrToSet(dependants));
+        }
+        if (vc != null) {
+          String varInCycle = $vc.text.toLowerCase();
+          $goal::gl.neededVarInCycleSet.addAll(Tools.convertStrToSet(varInCycle));
+          $goal::gl.needVarFromEarlierCycle = true;
+        }
+      } 
+    ) )+  
+    )  
+    { 
+       F.goalCase($i.text, $sc.text, $goal::gl, $ta.text);            
+    } 
 ;
 
 goal_contents returns[String str] 
@@ -386,6 +448,11 @@ svar_table :
 	^( Svar_table sc=Scope i=IDENT t=table_content ) 
 	 { F.svarTable($i.text, $sc.text, $t.text, $t.dependants, $t.varInCycle); } 
 	;
+	
+svar_timeArray_table :
+  ^( Svar_table ta=TimeArraySize sc=Scope i=IDENT t=table_content ) 
+   { F.svarTable($i.text, $sc.text, $t.text, $t.dependants, $t.varInCycle, $ta.text); } 
+  ;
 
 svar_sum : 
 		^(Svar_sum sc=Scope i=IDENT sum=sum_content )

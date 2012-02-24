@@ -171,20 +171,31 @@ includeFile
 	->   ^(Include Scope[$sc.text] FILE_PATH)
 	;
 	
-alias : DEFINE ( '[' sc=LOCAL? ']' )? i=IDENT '{' ALIAS e=expression (KIND k=STRING)? (UNITS u=STRING)? '}'
+alias: DEFINE! (alias_simple|alias_timeArray_simple);
+
+alias_simple : ( '[' sc=LOCAL? ']' )? i=IDENT '{' ALIAS e=expression (KIND k=STRING)? (UNITS u=STRING)? '}'
 	->  ^(Alias Scope[$sc.text] $i Expression[$e.text] Kind[$k.text] Units[$u.text] Dependants[$e.dependants] VarInCycle[$e.strVarInCycle])
 	;	
+
+alias_timeArray_simple : ( '[' sc=LOCAL? ']' )? '(' ta=timeArraySize ')' i=IDENT '{' ALIAS e=expression (KIND k=STRING)? (UNITS u=STRING)? '}'
+  ->  ^(Alias TimeArraySize[$ta.text] Scope[$sc.text] $i Expression[$e.text] Kind[$k.text] Units[$u.text] Dependants[$e.dependants] VarInCycle[$e.strVarInCycle])
+  ; 
 
 goal
 scope { String goalName; String caseName; int caseNumber;} 
 @init{ $goal::caseNumber = 0; }
-	: GOAL! (goal_simple | goal_case_or_nocase  )	
+	: GOAL! (goal_simple | goal_case_or_nocase | goal_timeArray_simple | goal_timeArray_case_or_nocase  )	
 	;
 
 goal_simple
 	:  ( '[' sc=LOCAL? ']' )? i=IDENT '{' v=constraint_statement '}'	
 ->  ^(Goal_simple Scope[$sc.text] $i Dependants[$v.dependants] Constraint_content[Tools.replace_ignoreChar($v.text)] VarInCycle[$v.varInCycle])  		
 	;
+	
+goal_timeArray_simple
+  :  ( '[' sc=LOCAL? ']' )? '(' ta=timeArraySize ')' i=IDENT '{' v=constraint_statement '}'  
+->  ^(Goal_simple TimeArraySize[$ta.text] Scope[$sc.text] $i Dependants[$v.dependants+" "+$ta.dependant] Constraint_content[Tools.replace_ignoreChar($v.text)] VarInCycle[$v.varInCycle])     
+  ;
 
 goal_case_or_nocase 
 	:  ( '[' s=LOCAL? ']' )? i=IDENT { $goal::goalName = $i.text;  } 
@@ -194,6 +205,15 @@ goal_case_or_nocase
     | ( goal_case_content[$l.text, $l.dependants, $l.strVarInCycle]+   ->  ^( Goal_case    Scope[$s.text] $i goal_case_content+ )   )
     ) '}' 
 	;
+	
+goal_timeArray_case_or_nocase 
+  :  ( '[' s=LOCAL? ']' )? '(' ta=timeArraySize ')' i=IDENT { $goal::goalName = $i.text;  } 
+  '{' LHS l=expression 
+  ( 
+    ( goal_no_case_content[$l.text, $ta.dependant+" "+$l.dependants, $l.strVarInCycle] ->  ^( Goal_no_case TimeArraySize[$ta.text] Scope[$s.text] $i goal_no_case_content )  )  
+    | ( goal_case_content[$l.text, $ta.dependant+" "+$l.dependants, $l.strVarInCycle]+   ->  ^( Goal_case  TimeArraySize[$ta.text] Scope[$s.text] $i goal_case_content+ )   )
+    ) '}' 
+  ;
 
 goal_case_content[String l, String d, String vc] 
 @init{ String varInCycle_nullsRemoved = null; String dependants_nullsRemoved = null; }
@@ -284,7 +304,7 @@ penalty returns[String w, boolean isZero, boolean isNegative]
 
 svar : DEFINE! (svar_dss | svar_expr | svar_sum | svar_table | svar_case ) ;
 
-svar_timeArray :  DEFINE! ( svar_timeArray_expr | svar_timeArray_case ) ;
+svar_timeArray :  DEFINE! ( svar_timeArray_expr | svar_timeArray_case| svar_timeArray_table ) ;
 		
 dvar : DEFINE! (dvar_std | dvar_nonStd ) ;	
 
@@ -315,9 +335,14 @@ case_content
 value_content : VALUE e=expression -> Value[$e.text] Dependants[$e.dependants]  VarInCycle[$e.strVarInCycle];
 
 svar_table :
-	( '[' sc=LOCAL? ']' )? i=IDENT '{' table_content '}'
+	( '[' sc=LOCAL? ']' )?  i=IDENT '{' table_content '}'
 ->  ^(Svar_table Scope[$sc.text] $i table_content )  	
 	;
+	
+svar_timeArray_table :
+  ( '[' sc=LOCAL? ']' )? '(' ta=timeArraySize ')' i=IDENT '{' table_content '}'
+->  ^(Svar_table TimeArraySize[$ta.text] Scope[$sc.text] $i table_content )   
+  ;
 
 table_content : SELECT s=IDENT FROM f=IDENT 
 				(GIVEN g=assignment USE u=IDENT)? 

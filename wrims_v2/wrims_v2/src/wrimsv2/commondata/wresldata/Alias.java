@@ -21,6 +21,9 @@ public class Alias implements Serializable {
 	public Set<String> dependants;
 	public Set<String> neededVarInCycleSet;
 	public boolean needVarFromEarlierCycle;
+		
+	// default is zero
+	public String timeArraySize;
 
 	public Alias(){
 		scope=Param.undefined;
@@ -33,6 +36,8 @@ public class Alias implements Serializable {
 		data = null;
 		neededVarInCycleSet = new HashSet<String>();
 		needVarFromEarlierCycle = false;
+		
+		timeArraySize = "0"; // default has no future time array		
 	}
 	
 	public void setData(IntDouble data){

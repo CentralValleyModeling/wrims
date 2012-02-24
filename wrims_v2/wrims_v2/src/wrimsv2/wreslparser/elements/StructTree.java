@@ -127,9 +127,14 @@ public class StructTree
     }
   }
 
-  public Goal goalSimple(String name, String scope, String expression, String dependants, String varInCycle)
+  public Goal goalSimple(String name, String scope, String expression, String dependants, String varInCycle){
+	  return goalSimple(name, scope, expression, dependants, varInCycle, "0");
+  }
+  
+  public Goal goalSimple(String name, String scope, String expression, String dependants, String varInCycle, String timeArraySizeStr)
   {
-    name = name.toLowerCase();
+	timeArraySizeStr=timeArraySizeStr.toLowerCase();
+	name = name.toLowerCase();
     expression = expression.toLowerCase();
     if (dependants != null) dependants = dependants.toLowerCase();
     if (varInCycle != null) varInCycle = varInCycle.toLowerCase();
@@ -155,6 +160,7 @@ public class StructTree
     	this.gl.neededVarInCycleSet = Tools.convertStrToSet(varInCycle);
     	this.gl.needVarFromEarlierCycle = true;
     }
+    this.gl.timeArraySize=timeArraySizeStr;
     
     
     this.S.gMap.put(name, this.gl);
@@ -172,10 +178,15 @@ public class StructTree
 	return gl;
   }
 
-  public void goalCase(String name, String scope, Goal gl)
+  public void goalCase(String name, String scope, Goal gl){
+	  goalCase(name, scope, gl, "0");
+  }
+  
+  public void goalCase(String name, String scope, Goal gl, String timeArraySizeStr)
   {
     name = name.toLowerCase();
-
+    timeArraySizeStr=timeArraySizeStr.toLowerCase();
+    
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("Goal redefined: " + name, this.S.currentAbsolutePath);
       this.S.error_var_redefined.put(name, "goal"); 
@@ -194,6 +205,7 @@ public class StructTree
     this.S.gSet.add(name);
 
 
+    gl.timeArraySize=timeArraySizeStr;
     if (scope == null) {
       this.S.gList_global.add(name); this.S.gSet_global.add(name); gl.scope = Param.global;
       this.S.ordered_list_global.add(name);
@@ -204,7 +216,11 @@ public class StructTree
     }
   }
 
-  public void alias(String name, String scope, String kind, String units, String expression, String dependants, String varInCycle)
+  public void alias(String name, String scope, String kind, String units, String expression, String dependants, String varInCycle){
+	  alias(name, scope, kind, units, expression, dependants, varInCycle,  "0");
+  }
+  
+  public void alias(String name, String scope, String kind, String units, String expression, String dependants, String varInCycle,  String timeArraySizeStr)
   {
     name = name.toLowerCase();
     if (kind != null) kind = kind.toLowerCase();
@@ -212,6 +228,7 @@ public class StructTree
     expression = expression.toLowerCase();
     if (dependants != null) dependants = dependants.toLowerCase();
     if (varInCycle != null) varInCycle = varInCycle.toLowerCase();
+    timeArraySizeStr=timeArraySizeStr.toLowerCase();
 
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("Alias redefined: " + name, this.S.currentAbsolutePath);
@@ -230,6 +247,7 @@ public class StructTree
     if (units != null) this.as.units = units;
     this.as.expression = expression;
     this.as.fromWresl = this.S.currentAbsolutePath;
+    this.as.timeArraySize=timeArraySizeStr;
     if (dependants != null) this.as.dependants = Tools.convertStrToSet(dependants);
     if (varInCycle != null) { 
     	this.as.neededVarInCycleSet = Tools.convertStrToSet(varInCycle);
@@ -431,10 +449,16 @@ public class StructTree
     }
   }
 
-  public void svarTable(String name, String scope, String sqlStr, String dependants, String varInCycle)
+  public void svarTable(String name, String scope, String sqlStr, String dependants, String varInCycle){
+	  svarTable(name, scope, sqlStr, dependants, varInCycle, "0");
+  }
+  
+  public void svarTable(String name, String scope, String sqlStr, String dependants, String varInCycle, String timeArraySizeStr)
   {
     name = name.toLowerCase();
     sqlStr = sqlStr.toLowerCase();
+    timeArraySizeStr=timeArraySizeStr.toLowerCase();
+    
     if (dependants != null) dependants = dependants.toLowerCase();
     if (varInCycle != null) varInCycle = varInCycle.toLowerCase();
 
@@ -461,6 +485,7 @@ public class StructTree
     	this.sv.neededVarInCycleSet = Tools.convertStrToSet(varInCycle);
     	this.sv.needVarFromEarlierCycle = true;
     }
+    this.sv.timeArraySize=timeArraySizeStr;
     
     this.S.svMap.put(name, this.sv);
     this.S.svList.add(name);
