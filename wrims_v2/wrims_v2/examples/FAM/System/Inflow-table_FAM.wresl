@@ -30,18 +30,18 @@ define(FAMmonths) I_Trnty_FC {value I_Trnty($m)}
 define(FAMmonths) I_Lewiston_FC {value I_Lewiston($m)}
 define(FAMmonths) I_Wkytn_FC {value I_Wkytn($m)}
 define(FAMmonths) I_Shsta_FC {value I_Shsta($m)}
-define(FAMmonths) I_Orovl_FC {I_Orovl($m)}
-define(FAMmonths) I_Yuba_FC {I_Yuba($m)}
-define(FAMmonths) I_Folsm_FC {I_Folsm($m)}
-define(FAMmonths) I_Hood_FC {I_Hood($m)}
-define(FAMmonths) I_BrananIS_FC {I_BrananIS($m)}
-define(FAMmonths) I_MarshCr_FC {I_MarshCr($m)}
-define(FAMmonths) I_SacSJR_FC {I_SacSJR($m)}
-define(FAMmonths) I_ConeyIS_FC {I_ConeyIS($m)}
-define(FAMmonths) I_MedfordIS_FC {I_MedfordIS($m)}
-define(FAMmonths) I_Terminous_FC {I_Terminous($m)}
-define(FAMmonths) I_Stockton_FC {I_Stockton($m)}
-define(FAMmonths) I_Kern_FC {I_Kern($m)}
-define(FAMmonths) I_Nimbus_FC {I_Nimbus($m)}
-define(FAMmonths) I_KellyRidge_FC {I_KellyRidge($m)}
-define(FAMmonths) I_JamesBP_FC {I_JamesBP($m)}
+define(FAMmonths) I_Orovl_FC {value I_Orovl($m)}
+define(FAMmonths) I_Yuba_FC {value I_Yuba($m)}
+define(FAMmonths) I_Folsm_FC {value I_Folsm($m)}
+define(FAMmonths) I_Hood_FC {value I_Hood($m)}
+define(FAMmonths) I_BrananIS_FC {value I_BrananIS($m)}
+define(FAMmonths) I_MarshCr_FC {value I_MarshCr($m)}
+define(FAMmonths) I_SacSJR_FC {value I_SacSJR($m)}
+define(FAMmonths) I_ConeyIS_FC {value I_ConeyIS($m)}
+define(FAMmonths) I_MedfordIS_FC {value I_MedfordIS($m)}
+define(FAMmonths) I_Terminous_FC {value I_Terminous($m)}
+define(FAMmonths) I_Stockton_FC {value I_Stockton($m)}
+define(FAMmonths) I_Kern_FC {value I_Kern($m)}
+define(FAMmonths) I_Nimbus_FC {value I_Nimbus($m)}
+define(FAMmonths) I_KellyRidge_FC {value I_KellyRidge($m)}
+define(FAMmonths) I_JamesBP_FC {value I_JamesBP($m)}

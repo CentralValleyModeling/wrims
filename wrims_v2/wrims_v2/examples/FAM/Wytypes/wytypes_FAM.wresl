@@ -22,7 +22,6 @@ define(FAMmonths) wyt_SAC{
          select     SACindex
          from       wytypes
          where      wateryear=wateryear+1}
-    }
     case rest {
          condition  always
          select     SACindex
