@@ -55,7 +55,7 @@ pattern
 	;
 
 integer
-	: integer_std | integer_nonStd
+	: integer_std | integer_nonStd | integer_timeArray_std | integer_timeArray_nonStd 
 	; 
 
 integer_std
@@ -67,6 +67,16 @@ integer_nonStd
 	:  ^(Dvar_integer sc=Scope i=IDENT Lower lowerbound=LimitType Upper upperbound=LimitType k=Kind u=Units )
 	    {F.dvarNonStd($i.text, $sc.text, "integer", Tools.strip($k.text), Tools.strip($u.text),  $lowerbound.text, $upperbound.text); }
 	; 	
+
+integer_timeArray_std
+  :  ^(Dvar_integer ta=TimeArraySize sc=Scope i=IDENT k=Kind u=Units )
+      {F.dvarStd($i.text, $sc.text, "integer", Tools.strip($k.text), Tools.strip($u.text)); }
+  ; 
+  
+integer_timeArray_nonStd
+  :  ^(Dvar_integer ta=TimeArraySize sc=Scope i=IDENT Lower lowerbound=LimitType Upper upperbound=LimitType k=Kind u=Units )
+      {F.dvarNonStd($i.text, $sc.text, "integer", Tools.strip($k.text), Tools.strip($u.text),  $lowerbound.text, $upperbound.text, $ta.text); }
+  ; 
 
 external 
 	:  ^(External sc=Scope i=IDENT e=Expression )
@@ -123,7 +133,7 @@ dvar : dvar_std | dvar_nonStd | dvar_timeArray_std | dvar_timeArray_nonStd   ;
 
 svar : svar_dss | svar_expr | svar_sum | svar_table | svar_case;
 
-svar_timeArray : svar_timeArray_expr | svar_timeArray_case |svar_timeArray_table;
+svar_timeArray : svar_timeArray_expr | svar_timeArray_case |svar_timeArray_table | svar_timeArray_sum;
 
 svar_timeArray_case
 @init { Svar sv = new Svar(); String dependants=null; String varInCycle=null;}  
@@ -455,8 +465,13 @@ svar_timeArray_table :
   ;
 
 svar_sum : 
-		^(Svar_sum sc=Scope i=IDENT sum=sum_content )
-	   { F.svarSum($i.text, $sc.text, $sum.hdr, $sum.expr, $sum.dependants, $sum.varInCycle ); }
+    ^(Svar_sum sc=Scope i=IDENT sum=sum_content )
+     { F.svarSum($i.text, $sc.text, $sum.hdr, $sum.expr, $sum.dependants, $sum.varInCycle ); }
+  ;
+  
+svar_timeArray_sum : 
+		^(Svar_sum ta=TimeArraySize sc=Scope i=IDENT sum=sum_content )
+	   { F.svarSum($i.text, $sc.text, $sum.hdr, $sum.expr, $sum.dependants, $sum.varInCycle, $ta.text ); }
 	;
 	
 sum_content returns[String hdr, String expr, String dependants, String varInCycle]: 

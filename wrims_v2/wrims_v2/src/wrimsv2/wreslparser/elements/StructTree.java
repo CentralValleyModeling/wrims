@@ -406,12 +406,18 @@ public class StructTree
 
   public void svarSum(String name, String scope, String hdr, String expression, String dependants, String varInCycle)
   {
+	  svarSum(name, scope, hdr, expression, dependants, varInCycle, "0");
+  }
+  
+  public void svarSum(String name, String scope, String hdr, String expression, String dependants, String varInCycle, String timeArraySizeStr)
+  {
     name = name.toLowerCase();
     hdr = hdr.toLowerCase();
     expression = expression.toLowerCase();
     if (dependants != null) dependants = dependants.toLowerCase();
     if (varInCycle != null) varInCycle = varInCycle.toLowerCase();
-
+    timeArraySizeStr=timeArraySizeStr.toLowerCase();
+    
     if (this.S.var_all.containsKey(name)) {
       LogUtils.errMsg("State variable redefined: " + name, this.S.currentAbsolutePath);
       this.S.error_var_redefined.put(name, "svar"); 
@@ -434,7 +440,8 @@ public class StructTree
     	this.sv.neededVarInCycleSet = Tools.convertStrToSet(varInCycle);
     	this.sv.needVarFromEarlierCycle = true;
     }
-
+    this.sv.timeArraySize=timeArraySizeStr;
+    
     this.S.svMap.put(name, this.sv);
     this.S.svList.add(name);
     this.S.svSet.add(name);

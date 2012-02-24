@@ -114,7 +114,7 @@ pattern
 	;
 
 integer
-	: integer_std | integer_nonStd
+	: integer_std | integer_nonStd | integer_timeArray_std | integer_timeArray_nonStd 
 	;
 
 // this is actually a binary
@@ -127,6 +127,16 @@ integer_nonStd
 	: DEFINE ( '[' sc=LOCAL? ']' )? i=IDENT '{' INTEGER_WORD lower_and_or_upper KIND k=STRING UNITS u=STRING '}'
 		->  ^(Dvar_integer  Scope[$sc.text] $i lower_and_or_upper Kind[$k.text] Units[$u.text]) 
 	;
+	
+integer_timeArray_std
+  : DEFINE '(' ta=timeArraySize ')' ( '[' sc=LOCAL? ']' )? i=IDENT '{' INTEGER_WORD STD KIND k=STRING UNITS u=STRING '}'
+    ->  ^(Dvar_integer TimeArraySize[$ta.text] Scope[$sc.text] $i Kind[$k.text] Units[$u.text]) 
+  ;
+
+integer_timeArray_nonStd
+  : DEFINE '(' ta=timeArraySize ')' ( '[' sc=LOCAL? ']' )? i=IDENT '{' INTEGER_WORD lower_and_or_upper KIND k=STRING UNITS u=STRING '}'
+    ->  ^(Dvar_integer TimeArraySize[$ta.text] Scope[$sc.text] $i lower_and_or_upper Kind[$k.text] Units[$u.text]) 
+  ;
 
 external : DEFINE ( '[' sc=LOCAL? ']' )? i=IDENT '{' EXTERNAL (e=DLL|e=F90) '}'
 -> ^(External Scope[$sc.text] $i Expression[$e.text]   )
@@ -177,7 +187,7 @@ alias_simple : ( '[' sc=LOCAL? ']' )? i=IDENT '{' ALIAS e=expression (KIND k=STR
 	->  ^(Alias Scope[$sc.text] $i Expression[$e.text] Kind[$k.text] Units[$u.text] Dependants[$e.dependants] VarInCycle[$e.strVarInCycle])
 	;	
 
-alias_timeArray_simple : ( '[' sc=LOCAL? ']' )? '(' ta=timeArraySize ')' i=IDENT '{' ALIAS e=expression (KIND k=STRING)? (UNITS u=STRING)? '}'
+alias_timeArray_simple : '(' ta=timeArraySize ')' ( '[' sc=LOCAL? ']' )? i=IDENT '{' ALIAS e=expression (KIND k=STRING)? (UNITS u=STRING)? '}'
   ->  ^(Alias TimeArraySize[$ta.text] Scope[$sc.text] $i Expression[$e.text] Kind[$k.text] Units[$u.text] Dependants[$e.dependants] VarInCycle[$e.strVarInCycle])
   ; 
 
@@ -193,7 +203,7 @@ goal_simple
 	;
 	
 goal_timeArray_simple
-  :  ( '[' sc=LOCAL? ']' )? '(' ta=timeArraySize ')' i=IDENT '{' v=constraint_statement '}'  
+  :  '(' ta=timeArraySize ')' ( '[' sc=LOCAL? ']' )? i=IDENT '{' v=constraint_statement '}'  
 ->  ^(Goal_simple TimeArraySize[$ta.text] Scope[$sc.text] $i Dependants[$v.dependants+" "+$ta.dependant] Constraint_content[Tools.replace_ignoreChar($v.text)] VarInCycle[$v.varInCycle])     
   ;
 
@@ -207,7 +217,7 @@ goal_case_or_nocase
 	;
 	
 goal_timeArray_case_or_nocase 
-  :  ( '[' s=LOCAL? ']' )? '(' ta=timeArraySize ')' i=IDENT { $goal::goalName = $i.text;  } 
+  :  '(' ta=timeArraySize ')' ( '[' s=LOCAL? ']' )? i=IDENT { $goal::goalName = $i.text;  } 
   '{' LHS l=expression 
   ( 
     ( goal_no_case_content[$l.text, $ta.dependant+" "+$l.dependants, $l.strVarInCycle] ->  ^( Goal_no_case TimeArraySize[$ta.text] Scope[$s.text] $i goal_no_case_content )  )  
@@ -304,14 +314,14 @@ penalty returns[String w, boolean isZero, boolean isNegative]
 
 svar : DEFINE! (svar_dss | svar_expr | svar_sum | svar_table | svar_case ) ;
 
-svar_timeArray :  DEFINE! ( svar_timeArray_expr | svar_timeArray_case| svar_timeArray_table ) ;
+svar_timeArray :  DEFINE! ( svar_timeArray_expr | svar_timeArray_case| svar_timeArray_table | svar_timeArray_sum ) ;
 		
 dvar : DEFINE! (dvar_std | dvar_nonStd ) ;	
 
 svar_case : ( '[' sc=LOCAL? ']' )? i=IDENT '{' case_content+ '}'
 ->     ^(Svar_case Scope[$sc.text] $i  case_content+ )  ;
 
-svar_timeArray_case : ( '[' sc=LOCAL? ']' )? '(' ta=timeArraySize ')' i=IDENT '{' case_content+ '}'
+svar_timeArray_case : '(' ta=timeArraySize ')' ( '[' sc=LOCAL? ']' )? i=IDENT '{' case_content+ '}'
 ->     ^(SvarTimeArray_case TimeArraySize[$ta.text] Dependants[$ta.dependant] Scope[$sc.text] $i  case_content+ )  ;
 
 case_content 
@@ -340,7 +350,7 @@ svar_table :
 	;
 	
 svar_timeArray_table :
-  ( '[' sc=LOCAL? ']' )? '(' ta=timeArraySize ')' i=IDENT '{' table_content '}'
+  '(' ta=timeArraySize ')' ( '[' sc=LOCAL? ']' )? i=IDENT '{' table_content '}'
 ->  ^(Svar_table TimeArraySize[$ta.text] Scope[$sc.text] $i table_content )   
   ;
 
@@ -367,7 +377,11 @@ svar_timeArray_expr :
 	;
 
 svar_sum : ( '[' sc=LOCAL ']' )? IDENT '{' sum_content '}' 
-	->  ^(Svar_sum  Scope[$sc.text] IDENT sum_content )  
+  ->  ^(Svar_sum  Scope[$sc.text] IDENT sum_content )  
+  ;
+
+svar_timeArray_sum : '(' ta=timeArraySize ')' ( '[' sc=LOCAL ']' )? IDENT '{' sum_content '}' 
+	->  ^(Svar_sum  TimeArraySize[$ta.text] Scope[$sc.text] IDENT sum_content )  
 	;
 
 sum_content :SUM hdr=sum_header e=expression 
