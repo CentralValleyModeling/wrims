@@ -10,8 +10,8 @@ import org.antlr.runtime.tree.CommonTree;
 //import org.antlr.runtime.tree.CommonTreeNodeStream;
 
 import wrimsv2.wreslparser.elements.LogUtils;
-import wrimsv2.wreslparser.grammar.WreslPlusLexer;
-import wrimsv2.wreslparser.grammar.WreslPlusParser;
+import wrimsv2.wreslplus.grammar.WreslPlusLexer;
+import wrimsv2.wreslplus.grammar.WreslPlusParser;
 
 public class ParserUtils {
 	

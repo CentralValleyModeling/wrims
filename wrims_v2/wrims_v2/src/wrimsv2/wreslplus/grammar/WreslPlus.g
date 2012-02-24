@@ -8,13 +8,13 @@ options {
 }
 
 @header {
-  package wrimsv2.wreslparser.grammar;
+  package wrimsv2.wreslplus.grammar;
   import wrimsv2.wreslparser.elements.LogUtils; 
   import java.util.HashMap;
   import wrimsv2.wreslplus.elements.DvarTemp;
 }
 @lexer::header {
-  package wrimsv2.wreslparser.grammar;
+  package wrimsv2.wreslplus.grammar;
   import wrimsv2.wreslparser.elements.LogUtils; 
 }
 
@@ -97,7 +97,7 @@ scope { ArrayList<String> itemList;
 	   ( include_model
 	   | include_file 
 	   | timeseries 
-	   | svar_group 
+	   | sv=svar_group //{$model::itemList.add($sv.id); $model::itemTypeList.add("svar"); }  
 	   | dv=dvar_group {$model::itemList.add($dv.id); $model::itemTypeList.add("dvar"); } 
 	   | alias 
 	   | goal_group 
@@ -268,14 +268,14 @@ scope { String id_; DvarTemp dvar_;}
 
 dvarID : i=ID { $dvar_group::id_ = $i.text; };
 
-dvar_group_old: DEFINE  ( dvar | dvar_array | dvar_timeArray ) ;
-dvar_group_new: DVAR    ( dvar | dvar_array | dvar_timeArray ) ;
+dvar_group_old: DEFINE  dvar ;
+dvar_group_new: DVAR    dvar ;
 
-dvar:  dvarID '{' dvar_trunk '}'  ;
+dvar: (dimension|dimension_time)? dvarID '{' dvar_trunk '}'  ;
 
-dvar_array : dimension dvarID '{' dvar_trunk '}'  ;
-
-dvar_timeArray:  dimension_time dvarID '{' dvar_trunk  '}'  ;
+//dvar_array : dimension dvarID '{' dvar_trunk '}'  ;
+//
+//dvar_timeArray:  dimension_time dvarID '{' dvar_trunk  '}'  ;
  
 dvar_trunk : ( typeNumber? ( std | ( upper | lower )+ )  ( kind units ) )
 		   | ('<' ID '>') ;
