@@ -40,20 +40,10 @@ goal(FAMmonths) JonesLessThanPhys  { D_Jones($m) < JonesCapPhys($m)}
 ! Output Allowable Pumping Cap for Checking Only
 define(FAMmonths) JonesAllowOut {alias JonesMaxAllow($m) kind 'EXPORT-CTRL-JONES' UNITS 'CFS' }
 
-define int_Shsta1500{INTEGER std kind 'INTEGER' UNITS 'NONE'} 
-goal(FAMmonths) compareShsta1500{(int_Shsta1500($m)-0.5)*(S_Shsta($m-1)-1500)>=0}
-
 ! Jones PP Minimum Cap
 define(FAMmonths) Jonesminpump {
     value 600+int_Shsta1500($m)*200.
 }
-define(FAMmonths) JonesMinPumpDV {alias JonesMinPump($m) kind 'EXPORT-CTRL-JONES' units 'cfs'}
-
-define(FAMmonths) int_Shsta2000{INTEGER std kind 'INTEGER' UNITS 'NONE'} 
-goal(FAMmonths) compareShsta2000{(int_Shsta2000($m)-0.5)*(S_Shsta($m-1)-2000)>=0}
-
-define(FAMmonths) int_Folsm400{INTEGER std kind 'INTEGER' UNITS 'NONE'} 
-goal(FAMmonths) compareFolsm400{(int_Folsm400($m)-0.5)*(S_Folsm($m-1)-400)>=0}
 
 goal(FAMmonths) setJonesminpump {
     lhs D_Jones_cvp($m)

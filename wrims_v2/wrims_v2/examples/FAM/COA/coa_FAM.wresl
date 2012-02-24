@@ -139,7 +139,7 @@ goal(FAMmonths) IBU_force  {IBU < IBU_UWFE_max - int_IBU_UWFE($m) * IBU_UWFE_max
 
 define CVP_UWFE {value 0.55}                                                        ! CVP COA Share of unstored water for export
 define CVP_IBU  {value 0.75}                                                        ! CVP COA Share of storage withdrawals
-goal(FAMmonths) CVP_Split {CVP_share($m) = int_IBU_UWFE * CVP_UWFE($m) + CVP_IBU($m) - CVP_IBU($m) * int_IBU_UWFE($m)}  !CVP Share
+goal(FAMmonths) CVP_Split {CVP_share($m) = int_IBU_UWFE($m) * CVP_UWFE($m) + CVP_IBU($m) - CVP_IBU($m) * int_IBU_UWFE($m)}  !CVP Share
 goal(FAMmonths) SWP_Split {SWP_share($m) = 1.0 - CVP_share($m) }                                       !SWP Share
 
 /*  Restrict exports to satisfy COA:  Exports = storage withdrawal - storage increase -
@@ -171,7 +171,7 @@ goal(FAMmonths) EI_split_cvp {
 goal(FAMmonths) AprMay_split_swp {
     lhs     D_Banks_EXP1($m)
      case AprMay {
-        condition      range(mv($m),apr,may) .and. VAMP_DLTSW == 1
+     condition      mv($m)>=apr .and. mv($m)<=may .and. VAMP_DLTSW == 1
      rhs        0.5*AprMayExpCtrl($m)
      lhs>rhs    penalty 1290
      lhs<rhs    penalty 0
@@ -180,7 +180,7 @@ goal(FAMmonths) AprMay_split_swp {
 goal(FAMmonths) AprMay_split_cvp {
     lhs     D_Jones_EXP1($m) 
      case AprMay {
-        condition      range(mv($m),apr,may) .and. VAMP_DLTSW == 1
+        condition      mv($m)>=apr .and. mv($m)<=may .and. VAMP_DLTSW == 1
      rhs        0.5*AprMayExpCtrl($m)
      lhs>rhs    penalty 1290
      lhs<rhs        penalty 0

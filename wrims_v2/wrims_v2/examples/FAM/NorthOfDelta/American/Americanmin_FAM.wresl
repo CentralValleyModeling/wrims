@@ -15,7 +15,7 @@ Commented out code for Nimbus standard since we are using FMS for Nimbus standar
 define(FAMmonths) minflow_C_HSt {
         select HStMin
    	from   HSt_base
-    	where  month=mv($m), AmerD893=wyt_AMERd893_cvp($m)}
+    	where  month=mv($m), AmerD893=wyt_AMERd893_cvp($m)
 }
 
 goal(FAMmonths) HSt_min {C_HSt_MIF($m) < minflow_C_HSt($m)}

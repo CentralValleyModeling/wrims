@@ -44,7 +44,6 @@ goal(FAMmonths) banksLessThanPhys  { D_Banks($m) < BanksCapPhys($m)}
 ! Limit Pumping with added WTS and EWA pumping
 goal(FAMmonths) banksLessThanResrvd { D_Banks_SWP_TD($m) + D_Banks_CVP_TD($m) + D_Banks_WTS_TD($m) + D_Banks_EWA_TD($m)
                           < BanksMaxAllow($m) + EWAReservedCap($m)}
-**/
 
 ! Output Allowable Pumping Cap for Checking Only
 define(FAMmonths) BanksAllowOut {alias BanksMaxAllow($m) kind 'EXPORT-CTRL-BANKS' UNITS 'CFS' }
