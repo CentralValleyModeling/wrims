@@ -102,20 +102,20 @@ public class Controller {
 	
 	public void setControlData(){
 		FilePaths.groundwaterDir="";
-		FilePaths.setMainFilePaths("D:\\DTS10d\\DTS10d\\run\\main.wresl");
-		FilePaths.setSvarDssPaths("D:\\DTS10d\\DTS10d\\dss\\DailyPA_sv.dss");
-        FilePaths.setInitDssPaths("D:\\DTS10d\\DTS10d\\dss\\DailyPA_init.dss");   
-        FilePaths.setDvarDssPaths("D:\\DTS10d\\DTS10d\\dss\\DailyPA_dv_test.dss");
+		FilePaths.setMainFilePaths("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\FAM\\main_FAM.wresl");
+		FilePaths.setSvarDssPaths("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\FAM\\dss\\FAMSV.dss");
+        FilePaths.setInitDssPaths("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\FAM\\dss\\FAMinit.dss");   
+        FilePaths.setDvarDssPaths("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\FAM\\dss\\FAMdv.dss");
 		ControlData cd=new ControlData();
-		cd.svDvPartF="KBPM";
-		cd.initPartF="KBPM";
+		cd.svDvPartF="2020D09E";
+		cd.initPartF="2020D09E";
 		cd.partA = "CALSIM";
-		cd.partE = "1DAY";
-		cd.timeStep="1DAY";
-		cd.startYear=1980;
+		cd.partE = "1MON";
+		cd.timeStep="1MON";
+		cd.startYear=1921;
 		cd.startMonth=10;
 		cd.startDay=1;
-		cd.endYear=2011;
+		cd.endYear=2003;
 		cd.endMonth=9;
 		cd.endDay=30;
         cd.solverName="XA";

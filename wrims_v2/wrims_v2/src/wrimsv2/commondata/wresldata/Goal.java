@@ -31,6 +31,9 @@ public class Goal implements Serializable {
 	public Set<String> neededVarInCycleSet;
 	public boolean needVarFromEarlierCycle;
 	
+	// default is zero
+	public String timeArraySize;
+	
 	public Goal(){
 		scope=Param.undefined;
 		lhs=Param.undefined;
@@ -45,6 +48,8 @@ public class Goal implements Serializable {
 		fromWresl = Param.undefined;
 		neededVarInCycleSet = new HashSet<String>();
 		needVarFromEarlierCycle = false;
+		
+		timeArraySize = "0"; // default has no future time array
 	}
 }
 	

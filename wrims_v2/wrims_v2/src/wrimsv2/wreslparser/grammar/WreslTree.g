@@ -361,12 +361,9 @@ svar_dss :
 timeArraySize 
 returns[String dependant] 
 @init { String dependant = ""; }
-	: INTEGER | function_to 
-	| ( i=IDENT { $dependant=$i.text; } )  
-	| ( i=IDENT '(' '-'? INTEGER ')' { $dependant=$i.text; } )  
-	;
-	
-function_to : ( 'to' | 'TO' | 'To' ) '(' IDENT  ')';	
+	: INTEGER  
+	| ( i=IDENT { $dependant=$i.text; } )    
+	;	
 	
 dvar_std :
 	( '(' ta=timeArraySize ')')? ( '[' sc=LOCAL ']' )? IDENT '{' STD KIND k=STRING UNITS u=STRING '}' 	
