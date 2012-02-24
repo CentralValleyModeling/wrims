@@ -1,5 +1,5 @@
 /************************************
-main_CAM.wresl
+main_FAM.wresl
 
 Hao Xie and Nazrul Islam DWR 2/6/2012
 
@@ -7,9 +7,9 @@ Included file for North of Delta
 
 **************************************/
  
-Include 'Clear_Creek\clear_ck_min_CAM.wresl'  
-Include 'Trinity\Trinitymin_CAM.wresl' 
-Include 'Sacramento\keswickmin_CAM.wresl'   
-Include 'Aermican\Aermicanmin_CAM.wresl' 
-Include 'Feather\feather_special_CAM.wresl'
+Include 'Clear_Creek\clear_ck_min_FAM.wresl'  
+Include 'Trinity\Trinitymin_FAM.wresl' 
+Include 'Sacramento\keswickmin_FAM.wresl'   
+Include 'American\Americanmin_FAM.wresl' 
+Include 'Feather\feather_special_FAM.wresl'
 

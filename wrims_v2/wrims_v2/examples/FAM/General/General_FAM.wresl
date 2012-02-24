@@ -1,9 +1,9 @@
 /*************************************
-General_CAM.wresl
+General_FAM.wresl
 
 Hao Xie and Nazrul Islam 2/6/2012
 
-General setup for CAM
+General setup for FAM
 *************************************/
 
 define FAMmonths {
