@@ -18,12 +18,13 @@ define FAMmonths {
 }
 
 define(FAMmonths) mv{
-	Case OctToAug{
-		condition mod(month+$m, 12)<>0
-		value mod(month+$m, 12)
 	Case Sep{
-		always
+		condition (month+$m)/12.0==int((month+$m)/12.0)
 		value 12
+	}
+	Case OctToAug{
+		condition always
+		value month-int((month+$m)/12.0)*12
 	}
 }
 
@@ -33,18 +34,22 @@ define(FAMmonths) wy{
 
 
 define(FAMmonths) di{
-      	Case 31days{
-      		condition mv($m)==1 .or. mv($m)==3 .or. mv($m)==4 .or. mv($m)==6 .or. mv($m)==8 .or. mv($m)==10 .or. mv($)==11
+      	Case days31{
+      		condition mv($m)==1 .or. mv($m)==3 .or. mv($m)==4 .or. mv($m)==6 .or. mv($m)==8 .or. mv($m)==10 .or. mv($m)==11
 		value 31
 	}
-	Case 30days{
+	Case days30{
 		condition mv($m)==2 .or. mv(4m)==7 .or. mv($m)==9 .or. mv($m)==12 
 		value 30
-	Case 29days{
-		condition (mod(wy($m),4)==0 .and. mod(wy($m),100)>0) .or. (mod(wy($m),4)==0 .and. mod(wy($m),100)==0 .and. mod(wy($m),400)==0)
+	}
+	Case days29_1{
+		condition wy($m)/4.0==int(wy($m)/4.0) .and. wy($m)/100.0>int(wy($m)/100.0)
+	}	
+	Case days29_2{
+		condition wy($m)/100.0==int(wy($m)/100.0) .and. wy($m)/400.0>int(wy($m)/400.0)
 		value 29
 	}
-	Case 28days{
+	Case days28{
 		condition always
 		value 28
 	}
