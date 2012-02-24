@@ -39,11 +39,12 @@ define(FAMmonths) di{
 		value 31
 	}
 	Case days30{
-		condition mv($m)==2 .or. mv(4m)==7 .or. mv($m)==9 .or. mv($m)==12 
+		condition mv($m)==2 .or. mv($m)==7 .or. mv($m)==9 .or. mv($m)==12 
 		value 30
 	}
 	Case days29_1{
 		condition wy($m)/4.0==int(wy($m)/4.0) .and. wy($m)/100.0>int(wy($m)/100.0)
+		value 29
 	}	
 	Case days29_2{
 		condition wy($m)/100.0==int(wy($m)/100.0) .and. wy($m)/400.0>int(wy($m)/400.0)
