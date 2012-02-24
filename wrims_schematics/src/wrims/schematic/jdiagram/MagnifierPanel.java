@@ -44,8 +44,11 @@ public class MagnifierPanel extends JPanel {
 	public void setPosition(Point point) {
 		Point panePoint = SwingUtilities.convertPoint(diagramView, point,
 				layeredPane);
-		pane.setLocation(Math.max(0, panePoint.x - pane.getWidth()), Math.max(
-				0, panePoint.y - pane.getHeight()));
+		int px = panePoint.x - pane.getWidth() > 0 ? panePoint.x
+				- pane.getWidth() : panePoint.x;
+		int py = panePoint.y - pane.getHeight() > 0 ? panePoint.y
+				- pane.getHeight() : panePoint.y;
+		pane.setLocation(px, py);
 		Float deviceToDoc = diagramView.deviceToDoc(point);
 		magnifiedView.setZoomFactor(zoomLevel);
 		Point point2 = magnifiedView.docToDevice(deviceToDoc);
@@ -64,7 +67,7 @@ public class MagnifierPanel extends JPanel {
 	}
 
 	public void setShowing(boolean showing) {
-		
+
 		if (magnifiedView == null && showing) {
 			Diagram d = diagramView.getDiagram();
 			magnifiedView = new DiagramView(d);
