@@ -144,19 +144,15 @@ external : DEFINE ( '[' sc=LOCAL? ']' )? i=IDENT '{' EXTERNAL (e=DLL|e=F90) '}'
 
 	
 weight_table
-	: OBJECTIVE ( '[' sc=LOCAL? ']' )? IDENT '=' '{'  w+=(weightItem|weightItem_timeArray)+ '}'
+	: OBJECTIVE ( '[' sc=LOCAL? ']' )? IDENT '=' '{'  w+=weightItem+ '}'
 	-> ^(Weight_table Scope[$sc.text] $w+  ) 
 	;	
 
 weightItem
-	: '['  IDENT ',' e=expression ']' (',')? 
-	   -> ^(IDENT Expression[$e.text])
+	: '['  IDENT ('(' ta=timeArraySize ')')? ',' e=expression ']' (',')? 
+	   -> {ta==null}?  ^(IDENT Expression[$e.text])
+	   ->              ^(IDENT TimeArraySize[$ta.text] Expression[$e.text])
 	;
-
-weightItem_timeArray
-  : '['  IDENT '(' ta=timeArraySize ')' ',' e=expression ']' (',')? 
-     -> ^(IDENT TimeArraySize[$ta.text] Expression[$e.text])
-  ;
 		
 model
 @init { String id = null;}
