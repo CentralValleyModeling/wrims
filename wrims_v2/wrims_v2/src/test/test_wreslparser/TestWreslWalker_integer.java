@@ -29,7 +29,7 @@ public class TestWreslWalker_integer {
 	public void std() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_integer_std";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
@@ -52,7 +52,7 @@ public class TestWreslWalker_integer {
 		
 		String modelName = sd.getModelList().get(0);
 		
-		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		WriteCSV.study(sd,csvFolderPath ) ;
 	
 		String logText = Tools.readFileAsString(logFilePath);	
 
@@ -60,7 +60,7 @@ public class TestWreslWalker_integer {
 		Assert.assertEquals(totalErrs, 0);	
 		
 	
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\dvar.csv");	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\dvar.csv");	
 		
 		String s;
 		int n;
@@ -84,7 +84,7 @@ public class TestWreslWalker_integer {
 	public void nonStd() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_integer_nonStd";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
@@ -107,7 +107,7 @@ public class TestWreslWalker_integer {
 		
 		String modelName = sd.getModelList().get(0);
 		
-		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		WriteCSV.study(sd,csvFolderPath ) ;
 	
 		String logText = Tools.readFileAsString(logFilePath);	
 	
@@ -115,7 +115,7 @@ public class TestWreslWalker_integer {
 		Assert.assertEquals(totalErrs, 0);	
 		
 	
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\dvar.csv");	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\dvar.csv");	
 		
 		String s;
 		int n;

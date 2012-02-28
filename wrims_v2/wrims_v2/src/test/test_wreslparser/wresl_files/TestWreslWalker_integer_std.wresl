@@ -5,7 +5,7 @@ SEQUENCE CYCLE1 {
 
 MODEL first { 
 
-	! This will be parsed as a binary variable (0,1) 
+	# This will be parsed as a binary variable (0,1) 
 	define int_global {INTEGER STD KIND 'INTEGER' UNITS 'NONE'}
 	define[local] int_local {INTEGER STD KIND 'INTEGER' UNITS 'NONE'}
 
