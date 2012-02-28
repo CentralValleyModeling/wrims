@@ -685,7 +685,13 @@ public void sequenceOrder(String sequenceName, String order, String modelName, S
 
 public void dvarSlackSurplus(String name, String scope, String kind, String units, String conditionStr)
   {
+	dvarSlackSurplus(name, scope, kind, units, conditionStr, "0");
+  }
+
+public void dvarSlackSurplus(String name, String scope, String kind, String units, String conditionStr,  String timeArraySizeStr)
+  {
     name = name.toLowerCase();
+    timeArraySizeStr=timeArraySizeStr.toLowerCase();
     if (kind.length()>0) kind = kind.toLowerCase();
     if (units.length()>0) units = units.toLowerCase();
 
@@ -707,7 +713,7 @@ public void dvarSlackSurplus(String name, String scope, String kind, String unit
     this.dv.upperBound = Param.dv_std_upperBound;
     this.dv.fromWresl = this.S.currentAbsolutePath;
     this.dv.condition = conditionStr;
-
+    this.dv.timeArraySize=timeArraySizeStr;
 
 
     this.S.dvMap.put(name, this.dv);

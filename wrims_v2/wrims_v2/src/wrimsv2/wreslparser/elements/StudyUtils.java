@@ -162,9 +162,13 @@ public class StudyUtils {
 			// td.model_dataset_map=StudyParser.parseModels(sc,td);
 			td.model_dataset_map = StudyParser.parseModels(sc, td, false, sendAliasToDvar);
 
-			StudyDataSet sd = StudyParser.writeWreslData(sc, td);
-
+			StudyDataSet sd = StudyParser.writeWreslData(sc, td);			
+			
 			StudyParser.analyzeVarNeededFromCycles(sc, sd);
+			
+			//TODO: add timearray logic input: sd
+			
+			
 			
 			total_errors = StudyParser.total_errors;
 

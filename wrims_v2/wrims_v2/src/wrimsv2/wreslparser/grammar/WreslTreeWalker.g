@@ -129,9 +129,9 @@ weight_table
 //			{ variables.put($IDENT.text, e); }
 //	;
 goal 
-scope { String scop ; Goal gl; String case_condition; int caseNumber; Map<String, String> dvarWeightMap; ArrayList<String> dvarSlackSurplus;} 
-@init { $goal::scop = null; $goal::gl = new Goal(); $goal::caseNumber=0; $goal::case_condition="always";} 
-: goal_simple | goal_nocase | goal_case | goal_timeArray_simple | goal_timeArray_nocase | goal_timeArray_case;
+scope { String ta; String scop ; Goal gl; String case_condition; int caseNumber; Map<String, String> dvarWeightMap; ArrayList<String> dvarSlackSurplus;} 
+@init { $goal::ta=null; $goal::scop = null; $goal::gl = new Goal(); $goal::caseNumber=0; $goal::case_condition="always";} 
+: goal_simple | goal_nocase | goal_case ;
 
 dvar : dvar_std | dvar_nonStd | dvar_timeArray_std | dvar_timeArray_nonStd   ;
 
@@ -222,40 +222,27 @@ alias_simple: ^(Alias sc=Scope i=IDENT e=Expression k=Kind u=Units d=Dependants 
 alias_timeArray_simple: ^(Alias ta=TimeArraySize sc=Scope i=IDENT e=Expression k=Kind u=Units d=Dependants vc=VarInCycle)
        { F.alias($i.text, $sc.text, Tools.strip($k.text), Tools.strip($u.text), $e.text, $d.text, $vc.text, $ta.text); }
   ;
-
-goal_simple 
-	:  ^(Goal_simple sc=Scope {$goal::scop = $sc.text;} i=IDENT d=Dependants v=Constraint_content vc=VarInCycle) 
-		{ F.goalSimple($i.text, $sc.text, $v.text, $d.text, $vc.text);} 
-	;
 	
-goal_timeArray_simple 
-  :  ^(Goal_simple ta=TimeArraySize sc=Scope {$goal::scop = $sc.text;} i=IDENT d=Dependants v=Constraint_content vc=VarInCycle) 
-    { F.goalSimple($i.text, $sc.text, $v.text, $d.text, $vc.text, $ta.text);} 
+goal_simple 
+  :  ^(Goal_simple (ta=TimeArraySize{$goal::ta=$ta.text;})? sc=Scope {$goal::scop = $sc.text;} i=IDENT d=Dependants v=Constraint_content vc=VarInCycle) 
+    { 
+      if ($ta==null){
+        F.goalSimple($i.text, $sc.text, $v.text, $d.text, $vc.text);
+      }else{
+        F.goalSimple($i.text, $sc.text, $v.text, $d.text, $vc.text, $ta.text);
+      }
+     } 
   ;
 
 goal_nocase
-	@init { $goal::gl = new Goal(); $goal::caseNumber=0; $goal::case_condition="always";} 
-	:  ^( Goal_no_case sc=Scope {$goal::scop = $sc.text;} i=IDENT  d=Dependants vc=VarInCycle 
-			{ 	
-				$goal::gl = F.goalSimple($i.text, $sc.text, "", $d.text, $vc.text);
-				$goal::gl.dvarWeightMapList.add(null);
-				$goal::gl.dvarSlackSurplusList.add(null);
-				$goal::dvarWeightMap = new HashMap<String, String>();	
-				$goal::dvarSlackSurplus = new ArrayList<String>();				 
-				//$goal::gl.dvarName.add(""); $goal::gl.dvarWeight.add("");
-			}
-		  c=goal_contents  )
-		    
-		{ 
-			 $goal::gl.caseExpression.set(0, $c.str.toLowerCase()); 	  				
-		} 
-;
-
-goal_timeArray_nocase
   @init { $goal::gl = new Goal(); $goal::caseNumber=0; $goal::case_condition="always";} 
-  :  ^( Goal_no_case ta=TimeArraySize sc=Scope {$goal::scop = $sc.text;} i=IDENT  d=Dependants vc=VarInCycle 
+  :  ^( Goal_no_case (ta=TimeArraySize{$goal::ta=$ta.text;})? sc=Scope {$goal::scop = $sc.text;} i=IDENT  d=Dependants vc=VarInCycle 
       {   
-        $goal::gl = F.goalSimple($i.text, $sc.text, "", $d.text, $vc.text, $ta.text);
+        if ($ta==null){
+          $goal::gl = F.goalSimple($i.text, $sc.text, "", $d.text, $vc.text);
+        }else{
+          $goal::gl = F.goalSimple($i.text, $sc.text, "", $d.text, $vc.text, $ta.text);
+        }
         $goal::gl.dvarWeightMapList.add(null);
         $goal::gl.dvarSlackSurplusList.add(null);
         $goal::dvarWeightMap = new HashMap<String, String>(); 
@@ -271,7 +258,7 @@ goal_timeArray_nocase
 
 goal_case
 	@init { $goal::gl = new Goal(); $goal::caseNumber=0; $goal::case_condition=Param.conditional; }   
-	:  ^( Goal_case sc=Scope {$goal::scop = $sc.text;} i=IDENT  
+	:  ^( Goal_case (ta=TimeArraySize{$goal::ta=$ta.text;})? sc=Scope {$goal::scop = $sc.text;} i=IDENT  
 		( 
 			{ 	$goal::gl.dvarWeightMapList.add(null);	
 				$goal::gl.dvarSlackSurplusList.add(null);	
@@ -300,43 +287,12 @@ goal_case
 		) )+  
 		)  
 		{ 
-			 F.goalCase($i.text, $sc.text, $goal::gl);	  				
+			 if ($ta==null){
+			   F.goalCase($i.text, $sc.text, $goal::gl);
+			 }else{
+			   F.goalCase($i.text, $sc.text, $goal::gl, $ta.text);  
+			 }	  				
 		} 
-;
-
-goal_timeArray_case
-  @init { $goal::gl = new Goal(); $goal::caseNumber=0; $goal::case_condition=Param.conditional; }   
-  :  ^( Goal_case ta=TimeArraySize sc=Scope {$goal::scop = $sc.text;} i=IDENT  
-    ( 
-      {   $goal::gl.dvarWeightMapList.add(null);  
-        $goal::gl.dvarSlackSurplusList.add(null); 
-        $goal::dvarWeightMap = new HashMap<String, String>();
-        $goal::dvarSlackSurplus = new ArrayList<String>();  
-        //$goal::gl.dvarName.add(""); $goal::gl.dvarWeight.add(""); 
-      }
-      
-      ^( Case n=IDENT c=Condition d=Dependants vc=VarInCycle e=goal_contents 
-      { $goal::caseNumber++;
-        $goal::dvarWeightMap = new HashMap<String, String>(); 
-        $goal::dvarSlackSurplus = new ArrayList<String>();  
-        $goal::gl.caseName.add($n.text.toLowerCase());
-        $goal::gl.caseCondition.add( Tools.add_space_between_logical( $c.text.toLowerCase() ) );
-        $goal::gl.caseExpression.add($e.str.toLowerCase());
-        if (d != null) {
-          String dependants = $d.text.toLowerCase();
-          $goal::gl.expressionDependants.addAll(Tools.convertStrToSet(dependants));
-        }
-        if (vc != null) {
-          String varInCycle = $vc.text.toLowerCase();
-          $goal::gl.neededVarInCycleSet.addAll(Tools.convertStrToSet(varInCycle));
-          $goal::gl.needVarFromEarlierCycle = true;
-        }
-      } 
-    ) )+  
-    )  
-    { 
-       F.goalCase($i.text, $sc.text, $goal::gl, $ta.text);            
-    } 
 ;
 
 goal_contents returns[String str] 
@@ -442,9 +398,19 @@ goal_content returns[boolean hasDvar, String str, String ss, String weight, Stri
 		    	//$goal::gl.dvarName.set($goal::caseNumber, $s.text.toLowerCase());
 		    	//$goal::gl.dvarWeight.set($goal::caseNumber, $w.text.toLowerCase());
 		    	//F.dvarStd($s.text, $goal::scop, null, $Kind.text, "");  
-		    	F.dvarSlackSurplus($s.text, $goal::scop, $Kind.text, "", $goal::case_condition);  
+		    	if ($goal::ta==null){ 
+            $ss = $Sign.text + $s.text;
+            F.dvarSlackSurplus($s.text, $goal::scop, $Kind.text, "", $goal::case_condition, "0");
+          }else if ($goal::ta.equals("0")){
+            $ss = $Sign.text + $s.text;
+            F.dvarSlackSurplus($s.text, $goal::scop, $Kind.text, "", $goal::case_condition, "0");
+          }else{
+            $ss = $Sign.text + $s.text+"\$m";
+            F.dvarSlackSurplus($s.text, $goal::scop, $Kind.text, "", $goal::case_condition, $goal::ta);
+          } 
 		    	F.mergeSlackSurplusIntoWeightTable($s.text, $w.text, $goal::scop, $goal::case_condition);
-		 		$hasDvar = true; $ss = $Sign.text + $s.text; $weight = $w.text; }
+		 		$hasDvar = true; 
+		 		$weight = $w.text; }
 		 	//} else {
 		 	
 		 	 	$lhs = $l.text; $rhs = $r.text; $op = $o.text;
