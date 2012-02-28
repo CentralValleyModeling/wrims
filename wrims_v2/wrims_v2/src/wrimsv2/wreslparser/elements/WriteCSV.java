@@ -46,14 +46,16 @@ public class WriteCSV {
 			
 			try {
 				PrintWriter out_seq = Tools.openFile(outParent, "SEQUENCE.csv");
-				out_seq.print(WriteCSV.sequence_header + "\n");			
+				out_seq.print(WriteCSV.sequence_header + "\n");	
 				sequence(sd.getModelList(), sd.getModelConditionList(), out_seq);
 				out_seq.close();
 				
-				PrintWriter out_timeseries_wholeStudy = Tools.openFile(outParent, "TIMESERIES.csv");
-				out_timeseries_wholeStudy.print(WriteCSV.timeseries_header + "\n");			
-				timeseries_wholeStudy( sd.getTimeseriesMap(), out_timeseries_wholeStudy);
-				out_timeseries_wholeStudy.close();
+				if (sd.getTimeseriesMap().keySet().size()>0) {
+					PrintWriter out_timeseries_wholeStudy = Tools.openFile(outParent, "TIMESERIES.csv");
+					out_timeseries_wholeStudy.print(WriteCSV.timeseries_header + "\n");			
+					timeseries_wholeStudy( sd.getTimeseriesMap(), out_timeseries_wholeStudy);
+					out_timeseries_wholeStudy.close();
+				}
 				
 			}
 			catch (IOException e1) {
