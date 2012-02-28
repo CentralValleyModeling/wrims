@@ -166,10 +166,6 @@ public class StudyUtils {
 			
 			StudyParser.analyzeVarNeededFromCycles(sc, sd);
 			
-			//TODO: add timearray logic input: sd
-			
-			
-			
 			total_errors = StudyParser.total_errors;
 
 			return sd;
