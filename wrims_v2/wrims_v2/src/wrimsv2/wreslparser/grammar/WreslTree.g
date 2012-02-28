@@ -627,7 +627,7 @@ int_func
 	
 /// End Intrinsic functions ///	
 
-COMMENT : '!' .* ('\n'|'\r') {skip();}; //{$channel = HIDDEN;}; 
+COMMENT : ('!'|'#') .* ('\n'|'\r') {skip();}; //{$channel = HIDDEN;}; 
 MULTILINE_COMMENT : '/*' .* '*/' {skip();}; //{$channel = HIDDEN;};
 
 fragment LETTER : ('a'..'z' | 'A'..'Z') ;
@@ -711,5 +711,5 @@ IDENT : LETTER (LETTER | DIGIT | '_')*;
 
 WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {$channel = HIDDEN;};
 
-COMMENT_LAST_LINE : '!' (~('\n' | '\r'))* {skip();};
+COMMENT_LAST_LINE : ('!'|'#') (~('\n' | '\r'))* {skip();};
 //IGNORE : . {skip();};
