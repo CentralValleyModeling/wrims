@@ -14,10 +14,15 @@ public class WeightElement implements Serializable {
 	public String fromWresl;
 	private double value;
 	
+	// default is zero
+	public String timeArraySize;
+	
 	public WeightElement(){
 		weight = Param.undefined;
 		condition = Param.always;
 		fromWresl = Param.undefined;
+		
+		timeArraySize = "0"; // default has no future time array
 	}
 	
 	public void setValue(double value){

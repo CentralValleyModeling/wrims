@@ -114,8 +114,12 @@ includeFile
 	;
 	
 weight_table
-	:  ^(Weight_table sc=Scope ( ^(i=IDENT e=Expression    
-	{ F.mergeWeightTable($i.text, $e.text, $sc.text); }
+	:  ^(Weight_table sc=Scope ( ^(i=IDENT (ta=TimeArraySize)? e=Expression    
+	{ if ($ta==null){
+	     F.mergeWeightTable($i.text, $e.text, $sc.text);
+	   }else{
+	     F.mergeWeightTable($i.text, $e.text, $sc.text, $ta.text);
+	   } }
 	) )+  ) 
 	;	
 
