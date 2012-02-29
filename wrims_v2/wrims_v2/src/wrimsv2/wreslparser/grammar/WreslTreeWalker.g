@@ -401,14 +401,16 @@ goal_content returns[boolean hasDvar, String str, String ss, String weight, Stri
 		    	if ($goal::ta==null){ 
             $ss = $Sign.text + $s.text;
             F.dvarSlackSurplus($s.text, $goal::scop, $Kind.text, "", $goal::case_condition, "0");
+            F.mergeSlackSurplusIntoWeightTable($s.text, $w.text, $goal::scop, $goal::case_condition, "0");
           }else if ($goal::ta.equals("0")){
             $ss = $Sign.text + $s.text;
             F.dvarSlackSurplus($s.text, $goal::scop, $Kind.text, "", $goal::case_condition, "0");
+            F.mergeSlackSurplusIntoWeightTable($s.text, $w.text, $goal::scop, $goal::case_condition, "0");
           }else{
             $ss = $Sign.text + $s.text+"\$m";
             F.dvarSlackSurplus($s.text, $goal::scop, $Kind.text, "", $goal::case_condition, $goal::ta);
+            F.mergeSlackSurplusIntoWeightTable($s.text, $w.text, $goal::scop, $goal::case_condition, $goal::ta);
           } 
-		    	F.mergeSlackSurplusIntoWeightTable($s.text, $w.text, $goal::scop, $goal::case_condition);
 		 		$hasDvar = true; 
 		 		$weight = $w.text; }
 		 	//} else {

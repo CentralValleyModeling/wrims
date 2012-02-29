@@ -730,12 +730,13 @@ public void dvarSlackSurplus(String name, String scope, String kind, String unit
     }
   }
 
-public void mergeSlackSurplusIntoWeightTable(String name, String value, String scope, String conditionStr){
+public void mergeSlackSurplusIntoWeightTable(String name, String value, String scope, String conditionStr, String timeArraySizeStr){
 	  
 	// TODO: weights redefined in different files are not checked within the same model
 	  
     name = name.toLowerCase();
     value = value.toLowerCase();
+    timeArraySizeStr = timeArraySizeStr.toLowerCase();
 
     if (this.S.wtList.contains(name)) {
       LogUtils.errMsg("Weight redefined: " + name, this.S.currentAbsolutePath);
@@ -747,6 +748,7 @@ public void mergeSlackSurplusIntoWeightTable(String name, String value, String s
     this.wt.weight = value;
     this.wt.fromWresl = this.S.currentAbsolutePath;
     this.wt.condition = conditionStr;
+    this.wt.timeArraySize=timeArraySizeStr;
     this.S.wtMap.put(name, this.wt);
 
     this.S.wtList.add(name);
