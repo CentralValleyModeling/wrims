@@ -66,7 +66,7 @@ define(FAMmonths)  esjrir_m    {
        value 0.0 }
     }
 
-goal export_SJRIR_comply { lhs ExportActual($m) 
+goal(FAMmonths) export_SJRIR_comply { lhs ExportActual($m) 
         case EISJR_UDEF{
              	condition EISJR_DLTSW == 2
              	rhs esjrir_o($m) + esjrir_m($m)*AD_SJR($m) 

@@ -87,7 +87,7 @@ define(FAMmonths) wyt_TRIN {
                    where            wateryear=wateryear - 1.}
                    
          case AfterApril_NextWaterYear {
-        	   condition   	    month+$m>12 .and. month+$m-12  >= April
+        	   condition   	    month+$m>12 .and. month+$m-12  >= Apr
         	   select           Trinityindex
 		   from               wytypes
                    where            wateryear=wateryear + 1.}

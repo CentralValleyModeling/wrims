@@ -75,7 +75,7 @@ define S_Orovllevel5 {timeseries kind 'STORAGE-LEVEL' units 'TAF'}
 define(FAMmonths) S_Orovl_5 {std kind 'STORAGE-ZONE' units 'TAF'}
 define S_Orovllevel6 {value 3558.}
 define(FAMmonths) S_Orovl_6 {std kind 'STORAGE-ZONE' units 'TAF'}
-define S_Orovl {std kind 'STORAGE' units 'TAF'} !OROVILLE LAKE AKA RES_NUM = 6
+define(FAMmonths) S_Orovl {std kind 'STORAGE' units 'TAF'} !OROVILLE LAKE AKA RES_NUM = 6
 goal(FAMmonths) storage_Orovl {S_Orovl($m)=S_Orovl_1($m)+S_Orovl_2($m)+S_Orovl_3($m)+S_Orovl_4($m)+S_Orovl_5($m)+S_Orovl_6($m)}
 define(FAMmonths) F_Orovl {std kind 'FLOW-SPILL-NON-RECOV' units 'CFS'}
 define E_Orovl {timeseries kind 'EVAPORATION' units 'CFS'}
