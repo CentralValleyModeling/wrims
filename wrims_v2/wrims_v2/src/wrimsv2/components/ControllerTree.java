@@ -445,7 +445,7 @@ public class ControllerTree {
 		ModelDataSet mds=ControlData.currModelDataSet;
 		ArrayList<String> wtList = mds.wtList;
 		Map<String, WeightElement> wtMap =mds.wtMap;
-		SolverData.setWeightMap(wtMap);
+		SolverData.clearWeightMap();
 		ControlData.currEvalTypeIndex=5;
 		for (String wtName: wtList){
 			ControlData.currEvalName=wtName;
@@ -464,6 +464,7 @@ public class ControllerTree {
 				Error.addEvaluationError("weight definition has error");
 				wt.setValue(0.0);
 			}
+			SolverData.getWeightMap().put(wtName, wt);
 		}
 	}
 	
@@ -529,7 +530,7 @@ public class ControllerTree {
 		ModelDataSet mds=ControlData.currModelDataSet;
 		ArrayList<String> dvList = mds.dvList;
 		Map<String, Dvar> dvMap =mds.dvMap;
-		SolverData.setDvarMap(dvMap);
+		SolverData.clearDvarMap();
 		ControlData.currDvMap=dvMap;
 		ControlData.currEvalTypeIndex=1;
 		for (String dvName: dvList){
@@ -562,6 +563,7 @@ public class ControllerTree {
 				Error.addEvaluationError("Lowerbound evaluation has error.");
 				dvar.lowerBoundValue=-901.0;
 			}
+			SolverData.getDvarMap().put(dvName, dvar);
 		}
 	}
 	

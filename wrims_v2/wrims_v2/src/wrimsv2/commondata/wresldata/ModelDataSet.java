@@ -119,7 +119,7 @@ public class ModelDataSet implements Serializable {
 		ModelDataSet mds=ControlData.currModelDataSet;
 		ArrayList<String> wtList = mds.wtList;
 		Map<String, WeightElement> wtMap =mds.wtMap;
-		SolverData.setWeightMap(wtMap);
+		SolverData.clearWeightMap();
 		ControlData.currEvalTypeIndex=5;
 		for (String wtName: wtList){
 			ControlData.currEvalName=wtName;
@@ -133,6 +133,7 @@ public class ModelDataSet implements Serializable {
 				Error.addEvaluationError("weight definition has error");
 				wt.setValue(0.0);
 			}
+			SolverData.getWeightMap().put(wtName,wt);
 			evaluator.reset();
 		}
 	}
@@ -141,7 +142,7 @@ public class ModelDataSet implements Serializable {
 		ModelDataSet mds=ControlData.currModelDataSet;
 		ArrayList<String> usedWtSlackSurplusList = mds.usedWtSlackSurplusList;
 		Map<String, WeightElement> wtSlackSurplusMap =mds.wtSlackSurplusMap;
-		SolverData.setWeightSlackSurplusMap(wtSlackSurplusMap);
+		SolverData.clearWeightSlackSurplusMap();
 		ControlData.currEvalTypeIndex=5;
 		for (String wtSlackSurplusName: usedWtSlackSurplusList){
 			ControlData.currEvalName=wtSlackSurplusName;
@@ -155,6 +156,7 @@ public class ModelDataSet implements Serializable {
 				Error.addEvaluationError("weight definition has error");
 				wtSlackSurplus.setValue(0.0);
 			}
+			SolverData.getWeightSlackSurplusMap().put(wtSlackSurplusName, wtSlackSurplus);
 			evaluator.reset();
 		}
 	}
@@ -229,7 +231,7 @@ public class ModelDataSet implements Serializable {
 		ModelDataSet mds=ControlData.currModelDataSet;
 		ArrayList<String> dvList = mds.dvList;
 		Map<String, Dvar> dvMap =mds.dvMap;
-		SolverData.setDvarMap(dvMap);
+		SolverData.clearDvarMap();
 		ControlData.currDvMap=dvMap;
 		ControlData.currEvalTypeIndex=1;
 		for (String dvName: dvList){
@@ -255,6 +257,7 @@ public class ModelDataSet implements Serializable {
 				Error.addEvaluationError("Lowerbound evaluation has error.");
 				dvar.lowerBoundValue=-901.0;
 			}
+			SolverData.getDvarMap().put(dvName, dvar);
 			evaluator.reset();
 		}
 	}
