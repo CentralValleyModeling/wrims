@@ -32,6 +32,7 @@ public class Dvar implements Serializable {
 	
 	// default is zero
 	public String timeArraySize;
+	public ValueEvaluatorParser timeArraySizeParser;
 	
 	
 	public Dvar(){

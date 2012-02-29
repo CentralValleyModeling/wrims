@@ -33,6 +33,7 @@ public class Goal implements Serializable {
 	
 	// default is zero
 	public String timeArraySize;
+	public ValueEvaluatorParser timeArraySizeParser;
 	
 	public Goal(){
 		scope=Param.undefined;

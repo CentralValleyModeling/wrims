@@ -87,19 +87,31 @@ public class PreEvaluator {
 			ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
 			TokenStream tokenStream = new CommonTokenStream(lexer);
 			weight.weightParser = new ValueEvaluatorParser(tokenStream);
+			
+			evalString="v: "+weight.timeArraySize;
+			stream = new ANTLRStringStream(evalString);
+			lexer = new ValueEvaluatorLexer(stream);
+			tokenStream = new CommonTokenStream(lexer);
+			weight.timeArraySizeParser = new ValueEvaluatorParser(tokenStream);
 		}
 	}
 	
 	public void preEvaluateWeightSlackSurplus(){
 		for (String wtSlackSurplusName: wtSlackSurplusList){
 			//System.out.println("PreEvaluate weight slack surplus"+wtName);
-			WeightElement weightSurplusMap=wtSlackSurplusMap.get(wtSlackSurplusName);
+			WeightElement weightSlackSurplus=wtSlackSurplusMap.get(wtSlackSurplusName);
 			
-			String evalString="v: "+weightSurplusMap.weight;
+			String evalString="v: "+weightSlackSurplus.weight;
 			ANTLRStringStream stream = new ANTLRStringStream(evalString);
 			ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
 			TokenStream tokenStream = new CommonTokenStream(lexer);
-			weightSurplusMap.weightParser = new ValueEvaluatorParser(tokenStream);
+			weightSlackSurplus.weightParser = new ValueEvaluatorParser(tokenStream);
+			
+			evalString="v: "+weightSlackSurplus.timeArraySize;
+			stream = new ANTLRStringStream(evalString);
+			lexer = new ValueEvaluatorLexer(stream);
+			tokenStream = new CommonTokenStream(lexer);
+			weightSlackSurplus.timeArraySizeParser = new ValueEvaluatorParser(tokenStream);
 		}
 	}
 	
@@ -113,6 +125,12 @@ public class PreEvaluator {
 			ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
 			TokenStream tokenStream = new CommonTokenStream(lexer);
 			alias.expressionParser = new ValueEvaluatorParser(tokenStream);
+			
+			evalString="v: "+alias.timeArraySize;
+			stream = new ANTLRStringStream(evalString);
+			lexer = new ValueEvaluatorLexer(stream);
+			tokenStream = new CommonTokenStream(lexer);
+			alias.timeArraySizeParser = new ValueEvaluatorParser(tokenStream);
 		}
 	}
 	
@@ -132,6 +150,12 @@ public class PreEvaluator {
 			lexer = new ValueEvaluatorLexer(stream);
 			tokenStream = new CommonTokenStream(lexer);
 			dvar.lowerBoundParser = new ValueEvaluatorParser(tokenStream);
+			
+			evalString="v: "+dvar.timeArraySize;
+			stream = new ANTLRStringStream(evalString);
+			lexer = new ValueEvaluatorLexer(stream);
+			tokenStream = new CommonTokenStream(lexer);
+			dvar.timeArraySizeParser = new ValueEvaluatorParser(tokenStream);
 		}
 	}
 
@@ -159,6 +183,11 @@ public class PreEvaluator {
 				EvaluatorParser evaluator1 = new EvaluatorParser(tokenStream1);
 				goal.caseExpressionParsers.add(evaluator1);
 			}
+			String evalString="v: "+goal.timeArraySize;
+			ANTLRStringStream stream = new ANTLRStringStream(evalString);
+			ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
+			CommonTokenStream tokenStream = new CommonTokenStream(lexer);
+			goal.timeArraySizeParser = new ValueEvaluatorParser(tokenStream);
 		}
 	}
 	
@@ -186,6 +215,11 @@ public class PreEvaluator {
 				evaluator = new ValueEvaluatorParser(tokenStream);
 				svar.caseExpressionParsers.add(evaluator);
 			}
+			String evalString="v: "+svar.timeArraySize;
+			ANTLRStringStream stream = new ANTLRStringStream(evalString);
+			ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
+			CommonTokenStream tokenStream = new CommonTokenStream(lexer);
+			svar.timeArraySizeParser = new ValueEvaluatorParser(tokenStream);
 		}
 	}
 }

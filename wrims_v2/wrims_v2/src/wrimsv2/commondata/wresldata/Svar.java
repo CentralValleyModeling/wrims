@@ -34,6 +34,7 @@ public class Svar implements Serializable {
 	
 	// default is zero
 	public String timeArraySize;
+	public ValueEvaluatorParser timeArraySizeParser;
 	
 	
 	// These are for: 

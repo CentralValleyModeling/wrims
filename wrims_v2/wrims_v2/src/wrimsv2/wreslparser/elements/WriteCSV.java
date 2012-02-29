@@ -28,13 +28,13 @@ public class WriteCSV {
 	  //private static PrintWriter out;
 	
 	  public static String sequence_header ="CYCLE,CONDITION";
-	  public static String weight_header ="DVAR,CONDITION,WEIGHT";
+	  public static String weight_header ="DVAR,TIME_ARRAY_SIZE,CONDITION,WEIGHT";
 	  public static String external_header ="FUNCTION,FILE,FROM_WRESL_FILE";
-	  public static String svar_header   ="NAME,CASE,ORDER,CONDITION,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,USED_IN_LATER_CYCLE,TIME_ARRAY_SIZE";
+	  public static String svar_header   ="NAME,TIME_ARRAY_SIZE,CASE,ORDER,CONDITION,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,USED_IN_LATER_CYCLE";
 	  public static String timeseries_header ="NAME,B_PART,TYPE,UNITS,CONVERT_TO_UNITS,FROM_WRESL_FILE";
-	  public static String dvar_header ="NAME,CONDITION,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE,USED_IN_LATER_CYCLE,TIME_ARRAY_SIZE";	  
-	  public static String alias_header ="NAME,TYPE,UNITS,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,USED_IN_LATER_CYCLE";
-	  public static String goal_header = "NAME,CASE,ORDER,CONDITION,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,";
+	  public static String dvar_header ="NAME,TIME_ARRAY_SIZE,CONDITION,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE,USED_IN_LATER_CYCLE";	  
+	  public static String alias_header ="NAME,TIME_ARRAY_SIZE,TYPE,UNITS,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,USED_IN_LATER_CYCLE";
+	  public static String goal_header = "NAME,TIME_ARRAY_SIZE,CASE,ORDER,CONDITION,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,";
 	  private static ModelDataSet currentModelDataSet;
 	  
 	  
@@ -245,6 +245,7 @@ public class WriteCSV {
 		    	//out.print(Param.csv_seperator+s.units); //for UNITS
 		    	//out.print(Param.csv_seperator+s.convertToUnits); //for CONVERT
 		    	//out.print(",n"); //for OUTPUT
+			    out.print(Param.csv_seperator+s.timeArraySize); //for TIME ARRAY SIZE
 		    	out.print(Param.csv_seperator+s.caseName.get(i)); //for CASE 
 		    	out.print(Param.csv_seperator+caseOrder); //for CASE 
 		    	out.print(Param.csv_seperator+s.caseCondition.get(i)); //for CONDITION
@@ -276,8 +277,6 @@ public class WriteCSV {
 		    	out.print( usedByLaterCycle);
 		    	
 		    	out.print(Param.csv_seperator);
-		    	
-		    	out.print(s.timeArraySize);
 		    	
 				out.print("\n");	
 		    	}
@@ -381,14 +380,16 @@ public class WriteCSV {
 		    for (String k: keys ){
 		    	
 		    	//out.print(k);
-		    	WeightElement s = wtMap.get(k);
+		    	WeightElement w = wtMap.get(k);
 		    	
 
 			    out.print(k); // for DVAR NAME
 
-			    out.print(Param.csv_seperator+s.condition); 
+			    out.print(Param.csv_seperator+w.timeArraySize); //for TIME ARRAY SIZE
 			    
-			    out.print(Param.csv_seperator+s.weight); 
+			    out.print(Param.csv_seperator+w.condition); 
+			    
+			    out.print(Param.csv_seperator+w.weight); 
 
 				out.print("\n");	
 
@@ -405,6 +406,7 @@ public class WriteCSV {
 		    	Dvar d = dMap.get(k);		    	
 
 			    out.print(k); // for DVAR NAME
+			    out.print(Param.csv_seperator+d.timeArraySize); //for TIME ARRAY SIZE
 			    out.print(Param.csv_seperator+d.condition); // for DVAR CONDITION
 		    	out.print(Param.csv_seperator+d.lowerBound); //for UNITS
 		    	out.print(Param.csv_seperator+d.upperBound); //for UNITS
@@ -423,8 +425,6 @@ public class WriteCSV {
 		    	
 		    	out.print(Param.csv_seperator);
 		    	
-		    	out.print(d.timeArraySize);
-		    	
 				out.print("\n");	
 		    	}
 	  };
@@ -441,7 +441,7 @@ public class WriteCSV {
 				Alias a = asMap.get(k);
 
 				out.print(k); // for DVAR NAME
-
+				out.print(Param.csv_seperator + a.timeArraySize); //for TIME ARRAY SIZE
 				out.print(Param.csv_seperator + a.kind); // for KIND
 				out.print(Param.csv_seperator + a.units); // for UNITS
 				out.print(Param.csv_seperator + a.expression); // for expression
@@ -492,7 +492,7 @@ public class WriteCSV {
 		    	Alias a = asMap.get(k);		    	
 
 			    out.print(k); // for DVAR NAME
-
+			    out.print(Param.csv_seperator+a.timeArraySize); //for TIME ARRAY SIZE
 		    	out.print(Param.csv_seperator+a.kind); //for KIND		    	
 		    	out.print(Param.csv_seperator+a.units); //for UNITS
 		    	out.print(Param.csv_seperator+a.expression); //for expression
@@ -549,6 +549,7 @@ public class WriteCSV {
 		    	//out.print(Parameters.csv_seperator+s.kind); //for KIND		    	
 		    	//out.print(Parameters.csv_seperator+s.units); //for UNITS
 		    	//out.print(",Y"); //for OUTPUT
+			    out.print(Param.csv_seperator+g.timeArraySize); //for TIME ARRAY SIZE
 		    	out.print(Param.csv_seperator+g.caseName.get(i)); //for CASE 
 		    	out.print(Param.csv_seperator+caseOrder); //for ORDER 
 		    	out.print(Param.csv_seperator+g.caseCondition.get(i)); //for CONDITION

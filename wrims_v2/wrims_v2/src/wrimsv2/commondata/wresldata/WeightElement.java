@@ -16,6 +16,7 @@ public class WeightElement implements Serializable {
 	
 	// default is zero
 	public String timeArraySize;
+	public ValueEvaluatorParser timeArraySizeParser;
 	
 	public WeightElement(){
 		weight = Param.undefined;

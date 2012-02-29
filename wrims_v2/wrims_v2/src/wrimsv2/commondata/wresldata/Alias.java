@@ -24,6 +24,7 @@ public class Alias implements Serializable {
 		
 	// default is zero
 	public String timeArraySize;
+	public ValueEvaluatorParser timeArraySizeParser;
 
 	public Alias(){
 		scope=Param.undefined;
