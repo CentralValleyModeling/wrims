@@ -860,6 +860,7 @@ private static Map<String, SimulationDataSet> getNewDataSet(Set<String> adhoc_in
 		dv.fromWresl = as.fromWresl;
 		dv.expression = as.expression;
 		dv.dependants = as.dependants;
+		dv.timeArraySize = as.timeArraySize;
 
 		ds.dvMap.put(aliasName, dv);
 		ds.dvList.add(aliasName);
@@ -885,6 +886,7 @@ private static Map<String, SimulationDataSet> getNewDataSet(Set<String> adhoc_in
 		gl.caseExpression.add(aliasName + "=" + as.expression);
 		gl.expressionDependants = as.dependants;
 		gl.fromWresl = as.fromWresl;
+		gl.timeArraySize=as.timeArraySize;
 	    gl.needVarFromEarlierCycle = as.needVarFromEarlierCycle;
 	    gl.neededVarInCycleSet = new HashSet<String>(as.neededVarInCycleSet);
 
