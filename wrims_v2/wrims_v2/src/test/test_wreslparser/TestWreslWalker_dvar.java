@@ -170,5 +170,38 @@ public class TestWreslWalker_dvar {
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void std() throws RecognitionException, IOException {
+		
+		testName = "TestWreslWalker_dvar_std";
+		csvFolderPath = "testResult_v1\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
+		
+				
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+		
+		LogUtils.closeLogFile();
+		
+		WriteCSV.study(sd, csvFolderPath) ;
+		
+		String fileText = Tools.readFileAsString(logFilePath);
+		int redefineErrs = RegUtils.timesOfMatches(fileText, "# Error: Dvar redefined: c_banks");
+		int totalErrs = RegUtils.timesOfMatches(fileText, "# Error:");
+		Assert.assertEquals(redefineErrs, 1);
+		Assert.assertEquals(totalErrs, 2);		
+	}
 	
 }
