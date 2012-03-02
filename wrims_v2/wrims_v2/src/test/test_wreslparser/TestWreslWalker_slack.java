@@ -62,14 +62,14 @@ public class TestWreslWalker_slack {
 		String s;
 		int n;
 	
-		s = "slack__b2action1sha_2_1,always,0,upper_unbounded##slack";
+		s = "slack__b2action1sha_2_1,##always,0,upper_unbounded##slack";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 		
 		csvText = Tools.readFileAsString(csvFolderPath+"\\second\\weight.csv");	
 
-		s = "slack__b2action1sha_2_1,always,-99";
+		s = "slack__b2action1sha_2_1,##always,-99";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);

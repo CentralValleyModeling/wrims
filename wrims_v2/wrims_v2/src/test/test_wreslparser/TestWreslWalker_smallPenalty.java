@@ -69,7 +69,7 @@ public class TestWreslWalker_smallPenalty {
 		String s;
 		int n;
 	
-		s = "surplus__help_integer_1,always,-0.000001";
+		s = "surplus__help_integer_1,##always,-0.000001";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);

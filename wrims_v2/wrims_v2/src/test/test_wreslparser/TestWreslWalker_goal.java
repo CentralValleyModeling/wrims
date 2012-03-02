@@ -70,7 +70,7 @@ public class TestWreslWalker_goal {
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "semicolon,default,1,always,b<max(a;c)+min(d;e)";
+		s = "semicolon,##default,1,always,b<max(a;c)+min(d;e)";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -118,45 +118,45 @@ public class TestWreslWalker_goal {
 		int n;
 	
 		//s = "goal_4,default,1,always,x-surplus_goal_4_default<y+z";
-		s = "goal_4,default,1,always,x-surplus__goal_4_1<y+z";
+		s = "goal_4,##default,1,always,x-surplus__goal_4_1<y+z";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
 		//s = "goal_2,default,1,always,x+slack_goal_2_default=y+z";
-		s = "goal_2,default,1,always,x+slack__goal_2_1=y+z";
+		s = "goal_2,##default,1,always,x+slack__goal_2_1=y+z";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
 		//s = "goal_1,default,1,always,x+slack_goal_1_default=y+z";
-		s = "goal_1,default,1,always,x+slack__goal_1_1=y+z";
+		s = "goal_1,##default,1,always,x+slack__goal_1_1=y+z";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "goal_5,default,1,always,x>y+z";
+		s = "goal_5,##default,1,always,x>y+z";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 		
 		//s = "goal_6,default,1,always,x-surplus_goal_6_default=y+z";
-		s = "goal_6,default,1,always,x-surplus__goal_6_1=y+z";
+		s = "goal_6,##default,1,always,x-surplus__goal_6_1=y+z";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "goal_7,default,1,always,x<y+z";
+		s = "goal_7,##default,1,always,x<y+z";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 		
-		s = "goal_8,default,1,always,x=y+z";
+		s = "goal_8,##default,1,always,x=y+z";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "goal_9,default,1,always,x=y+z";
+		s = "goal_9,##default,1,always,x=y+z";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);		
@@ -164,25 +164,25 @@ public class TestWreslWalker_goal {
 		csvText = Tools.readFileAsString(csvFolderPath+"\\weight.csv");	
 	
 		//s = "slack_goal_1_default,-500.0";
-		s = "slack__goal_1_1,always,-500.0";
+		s = "slack__goal_1_1,##always,-500.0";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
 		//s = "slack_goal_2_default,-600.0";
-		s = "slack__goal_2_1,always,-600.0";
+		s = "slack__goal_2_1,##always,-600.0";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
 		//s = "surplus_goal_4_default,-99";
-		s = "surplus__goal_4_1,always,-99";
+		s = "surplus__goal_4_1,##always,-99";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
 		//s = "slack_goal_4_default,-0";
-		s = "slack__goal_4_1,always,-0";
+		s = "slack__goal_4_1,##always,-0";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 0);
@@ -229,12 +229,12 @@ public class TestWreslWalker_goal {
 		int n;
 	
 		//s = "global_goal,actionon,1,int(b2on)==1,c3_m+slack_global_goal_actionon=minflow_c";
-		s = "global_goal,actionon,1,int(b2on)==1,c3_m+slack__global_goal_1=minflow_c";
+		s = "global_goal,##actionon,1,int(b2on)==1,c3_m+slack__global_goal_1=minflow_c";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 		
-		s = "global_goal,actionoff,2,int(b2on)==0,c3_m<clear_min";
+		s = "global_goal,##actionoff,2,int(b2on)==0,c3_m<clear_min";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -309,13 +309,13 @@ public class TestWreslWalker_goal {
 		int n;
 	
 		//s = "global_goal,actionon,1,.not.(range(month;oct;dec) .and. month>=may),c3_m+slack_global_goal_actionon=minflow_c";
-		s = "global_goal,actionon,1,.not.(range(month;oct;dec) .and. month>=may),c3_m+slack__global_goal_1=minflow_c";
+		s = "global_goal,##actionon,1,.not.(range(month;oct;dec) .and. month>=may),c3_m+slack__global_goal_1=minflow_c";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
 		//s = "local_goal,case1,1,min(200.;qwe_r)>max(x3;y4),x+slack_local_goal_case1=y";
-		s = "local_goal,case1,1,min(200.;qwe_r)>max(x3;y4),x+slack__local_goal_1=y";
+		s = "local_goal,##case1,1,min(200.;qwe_r)>max(x3;y4),x+slack__local_goal_1=y";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -343,13 +343,13 @@ public class TestWreslWalker_goal {
 		csvText = Tools.readFileAsString(csvFolderPath+"\\dvar.csv");	
 
 		//s = "slack_global_goal_actionoff,0,upper_unbounded,n,undefined,slack";
-		s = "slack__global_goal_2,0,upper_unbounded,n,undefined,slack";
+		s = "slack__global_goal_2,##0,upper_unbounded,n,undefined,slack";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 0);
 
 		//s = "slack_local_goal_case2,0,upper_unbounded,n,undefined,slack";
-		s = "slack__local_goal_2,0,upper_unbounded,n,undefined,slack";
+		s = "slack__local_goal_2,##0,upper_unbounded,n,undefined,slack";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 0);
@@ -436,7 +436,7 @@ public class TestWreslWalker_goal {
 		String s;
 		int n;
 	
-		s = "compute_rain_rel,initialize,1,month==sep .and. wateryear==1921,fr_rain_rel=0.0";
+		s = "compute_rain_rel,##initialize,1,month==sep .and. wateryear==1921,fr_rain_rel=0.0";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -483,12 +483,12 @@ public class TestWreslWalker_goal {
 		String s;
 		int n;
 	
-		s = "withcase,actionon,1,int(b2action2on)==1,x=y";
+		s = "withcase,##actionon,1,int(b2action2on)==1,x=y";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
-		s = "nocase,default,1,always,x=y";
+		s = "nocase,##default,1,always,x=y";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -534,12 +534,12 @@ public class TestWreslWalker_goal {
 		String s;
 		int n;
 	
-		s = "withcase,actionon,1,v==1,x<y";
+		s = "withcase,##actionon,1,v==1,x<y";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 	
-		s = "nocase,default,1,always,x>y";
+		s = "nocase,##default,1,always,x>y";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -653,19 +653,19 @@ public class TestWreslWalker_goal {
 		Assert.assertEquals(n, 1);
 
 		//s = "slack_g_cp_default,-11";
-		s = "slack__g_cp_1,always,-11";
+		s = "slack__g_cp_1,##always,-11";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
 		//s = "slack_g_fp_default,-11";
-		s = "slack__g_fp_1,always,-11";
+		s = "slack__g_fp_1,##always,-11";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 
 		//s = "surplus_g_pf_default,-99";
-		s = "surplus__g_pf_1,always,-99";
+		s = "surplus__g_pf_1,##always,-99";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);

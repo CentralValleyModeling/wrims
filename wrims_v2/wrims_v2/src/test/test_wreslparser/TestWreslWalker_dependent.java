@@ -69,7 +69,7 @@ public class TestWreslWalker_dependent {
 		// check if dependents has the item
 		csvText = Tools.readFileAsString(csvFolderPath+"\\first\\svar.csv");
 		
-		s = "sv,default,1,always,dvar1(-2),,";
+		s = "sv,##default,1,always,dvar1(-2),,";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);			

@@ -385,7 +385,7 @@ public class TestWreslWalker_element {
 		String s;
 		int n;
 	
-		s = "alias_global,flow-channel,cfs,c_sacfea+d_sacfea";
+		s = "alias_global,##flow-channel,cfs,c_sacfea+d_sacfea";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
