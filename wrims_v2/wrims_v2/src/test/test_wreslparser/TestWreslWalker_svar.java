@@ -26,6 +26,46 @@ public class TestWreslWalker_svar {
 	public String testName;	
 	
 	@Test(groups = { "WRESL_elements" })
+	public void svar_const() throws RecognitionException, IOException {
+		
+		testName = "TestWreslWalker_svar_const";
+		csvFolderPath = "testResult_v1\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.study(sd, csvFolderPath ) ;
+	
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error: State variable redefined");
+		Assert.assertEquals(totalErrs, 1);	
+		
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\svar.csv");	
+	
+		int r1 = RegUtils.timesOfMatches(csvText, "minflow_c_orovl.+\\.29");
+		Assert.assertEquals(r1, 1);	
+	}
+
+	@Test(groups = { "WRESL_elements" })
 	public void svar_case() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_svar_case";

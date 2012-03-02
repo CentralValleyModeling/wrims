@@ -1,0 +1,24 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+
+	define C_SacDXC {std kind 'FLOW-CHANNEL' units 'CFS'} !Sacramento River Downstream of Delta Cross Channel
+	GOAL HELP_INTEGER {LHS C_SACDXC RHS 0.0 LHS>RHS PENALTY 0.000001}
+	
+	goal test { C_SacDXC < 9 }
+	
+	objective obj ={ [C_SacDXC, 1] }
+
+}	
+
+
+	
+
+	 
+
+
+ 

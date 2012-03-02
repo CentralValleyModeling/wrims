@@ -1,0 +1,20 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+
+define simple {timeseries kind 'EVAPORATION-RATE' units 'IN'}
+define[local] complex { timeseries 'UD_CCWD' kind 'DEMAND-CVP' units 'TAF' convert 'CFS'}
+	
+	}	
+
+
+	
+
+	 
+
+
+ 
