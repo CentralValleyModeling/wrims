@@ -1,0 +1,24 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+
+define daysinprevmo {
+                case Feb29 {
+                                condition month==MAR .and. mod(wateryear,4)==0.
+                                value 29 }
+                case Feb28 {
+                                condition month==MAR
+                                value 28 }
+                case Thirty {
+                                condition month==DEC .or. month==MAY .or. month==JUL .or. month==OCT
+                                value 30 }
+                case otherwise {
+                                condition always 
+                                value 31 }
+	}
+
+}
