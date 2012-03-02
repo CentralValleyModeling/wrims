@@ -58,7 +58,7 @@ public class EvalExpression {
 		
 		while(multIterator.hasNext()){
 			String multName=(String)multIterator.next();
-			newMultiplier.put(multName, multiplier.get(multName));
+			newMultiplier.put(multName, multiplier.get(multName).copyOf());
 		}
 		return newMultiplier;
 	}
