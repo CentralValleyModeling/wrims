@@ -406,8 +406,11 @@ public class ModelDataSet implements Serializable {
 					// add slack or surplus as dvar and weight
 					if (goal.dvarWeightMapList.size()>i && goal.dvarWeightMapList.get(i)!=null ){
 						ArrayList<String> dwl = goal.dvarSlackSurplusList.get(i);
-						//usedWtSlackSurplusList.removeAll(dwl);
-						usedWtSlackSurplusList.addAll(dwl);
+						for (int j=0; j<dwl.size();j++){
+							String dwlItem=dwl.get(j);
+							String usedWtSlackSurplusName=dwlItem+"__fut__"+ControlData.timeArrayIndex;
+							usedWtSlackSurplusList.add(usedWtSlackSurplusName);
+						}
 					}
 				}
 			}
