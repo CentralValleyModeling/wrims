@@ -65,6 +65,7 @@ public class ControlData {
 	public static String svDvPartF;
 	public static String initPartF;
 	public static Stack<LoopIndex> sumIndex= new Stack <LoopIndex>();
+	public static int timeArrayIndex;
 	public static Group groupInit;
 	public static Group groupSvar;
 	public static DSSDataWriter writer;

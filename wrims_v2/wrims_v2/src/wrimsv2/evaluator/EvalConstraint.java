@@ -19,4 +19,11 @@ public class EvalConstraint {
 	public String getSign(){
 		return sign;
 	}
+	
+	public EvalConstraint copyOf(){
+		EvalConstraint evalConstraint= new EvalConstraint();
+		evalConstraint.setEvalExpression(evalExpression.copyOf());
+		evalConstraint.setSign(new String(sign));
+		return evalConstraint;
+	}
 }

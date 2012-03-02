@@ -12,6 +12,7 @@ import wrimsv2.components.ControlData;
 import wrimsv2.components.IntDouble;
 import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssDataSetFixLength;
+import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.evaluator.Evaluation;
 import wrimsv2.evaluator.EvaluatorParser;
 import wrimsv2.evaluator.ValueEvaluatorLexer;
@@ -114,12 +115,30 @@ public class ModelDataSet implements Serializable {
 	public void resetSlackSurplusWeight(){
 		usedWtSlackSurplusList = new ArrayList<String>();
 	}
+
+	public int getTimeArraySize(ValueEvaluatorParser timeArraySizeParser){
+		int timeArraySize;
+		try{
+			timeArraySizeParser.evaluator();
+			IntDouble timeArrayEvalValue=timeArraySizeParser.evalValue;
+			timeArraySizeParser.reset();
+			if (!timeArrayEvalValue.isInt()){
+				Error.addEvaluationError("the time array size is not an integer.");
+			}
+			timeArraySize=timeArrayEvalValue.getData().intValue();
+		}catch(RecognitionException e) {
+			Error.addEvaluationError("weight time array definition has error");
+			timeArraySize=0;
+		}
+		return timeArraySize;
+	}
 	
 	public void processWeight(){
 		ModelDataSet mds=ControlData.currModelDataSet;
 		ArrayList<String> wtList = mds.wtList;
 		Map<String, WeightElement> wtMap =mds.wtMap;
 		SolverData.clearWeightMap();
+		Map<String, WeightElement> solverWtMap=SolverData.getWeightMap();
 		ControlData.currEvalTypeIndex=5;
 		for (String wtName: wtList){
 			ControlData.currEvalName=wtName;
@@ -133,8 +152,27 @@ public class ModelDataSet implements Serializable {
 				Error.addEvaluationError("weight definition has error");
 				wt.setValue(0.0);
 			}
-			SolverData.getWeightMap().put(wtName,wt);
+			solverWtMap.put(wtName,wt);
 			evaluator.reset();
+			
+			int timeArraySize=getTimeArraySize(wt.timeArraySizeParser);
+			for (ControlData.timeArrayIndex=1; ControlData.timeArrayIndex<=timeArraySize; ControlData.timeArrayIndex++){
+				WeightElement newWt=new WeightElement();
+				String newWtName=wtName+"__fut__"+ControlData.timeArrayIndex;
+				try {
+					evaluator.evaluator();
+					newWt.setValue(evaluator.evalValue.getData().doubleValue());
+				} catch (RecognitionException e) {
+					Error.addEvaluationError("time array weight definition "+newWtName+" has error");
+					newWt.setValue(0.0);
+				}
+				if (solverWtMap.containsKey(newWtName)){
+					Error.addEvaluationError(newWtName+" is duplicatedly used in both weight and time array weight");
+				}else{
+					solverWtMap.put(newWtName,newWt);
+				}
+				evaluator.reset();
+			}
 		}
 	}
 	
@@ -143,6 +181,7 @@ public class ModelDataSet implements Serializable {
 		ArrayList<String> usedWtSlackSurplusList = mds.usedWtSlackSurplusList;
 		Map<String, WeightElement> wtSlackSurplusMap =mds.wtSlackSurplusMap;
 		SolverData.clearWeightSlackSurplusMap();
+		Map<String, WeightElement> solverWeightSlackSurplusMap=SolverData.getWeightSlackSurplusMap();
 		ControlData.currEvalTypeIndex=5;
 		for (String wtSlackSurplusName: usedWtSlackSurplusList){
 			ControlData.currEvalName=wtSlackSurplusName;
@@ -153,11 +192,30 @@ public class ModelDataSet implements Serializable {
 				evaluator.evaluator();
 				wtSlackSurplus.setValue(evaluator.evalValue.getData().doubleValue());
 			} catch (RecognitionException e) {
-				Error.addEvaluationError("weight definition has error");
+				Error.addEvaluationError("slack surplus weight definition has error");
 				wtSlackSurplus.setValue(0.0);
 			}
-			SolverData.getWeightSlackSurplusMap().put(wtSlackSurplusName, wtSlackSurplus);
+			solverWeightSlackSurplusMap.put(wtSlackSurplusName, wtSlackSurplus);
 			evaluator.reset();
+			
+			int timeArraySize=getTimeArraySize(wtSlackSurplus.timeArraySizeParser);
+			for (ControlData.timeArrayIndex=1; ControlData.timeArrayIndex<=timeArraySize; ControlData.timeArrayIndex++){
+				WeightElement newWtSlackSurplus=new WeightElement();
+				String newWtSlackSurplusName=wtSlackSurplusName+"__fut__"+ControlData.timeArrayIndex;
+				try {
+					evaluator.evaluator();
+					newWtSlackSurplus.setValue(evaluator.evalValue.getData().doubleValue());
+				} catch (RecognitionException e) {
+					Error.addEvaluationError("time array slack surplus weight definition "+newWtSlackSurplusName+" has error");
+					newWtSlackSurplus.setValue(0.0);
+				}
+				if (solverWeightSlackSurplusMap.containsKey(newWtSlackSurplusName)){
+					Error.addEvaluationError(newWtSlackSurplusName+" is duplicatedly used in both slack surplus weight and time array slack surplus weight");
+				}else{
+					solverWeightSlackSurplusMap.put(newWtSlackSurplusName,newWtSlackSurplus);
+				}
+				evaluator.reset();
+			}
 		}
 	}
 	
@@ -232,6 +290,7 @@ public class ModelDataSet implements Serializable {
 		ArrayList<String> dvList = mds.dvList;
 		Map<String, Dvar> dvMap =mds.dvMap;
 		SolverData.clearDvarMap();
+		Map<String, Dvar> solverDvarMap=SolverData.getDvarMap();
 		ControlData.currDvMap=dvMap;
 		ControlData.currEvalTypeIndex=1;
 		for (String dvName: dvList){
@@ -242,7 +301,7 @@ public class ModelDataSet implements Serializable {
 			ValueEvaluatorParser evaluator=dvar.lowerBoundParser;
 			try {
 				evaluator.evaluator();
-				dvar.lowerBoundValue=evaluator.evalValue.getData();
+				dvar.lowerBoundValue=evaluator.evalValue.getData().doubleValue();
 			} catch (RecognitionException e) {
 				Error.addEvaluationError("Lowerbound evaluation has error.");
 				dvar.lowerBoundValue=-901.0;
@@ -252,13 +311,44 @@ public class ModelDataSet implements Serializable {
 			evaluator =dvar.upperBoundParser;
 			try {
 				evaluator.evaluator();
-				dvar.upperBoundValue=evaluator.evalValue.getData();
+				dvar.upperBoundValue=evaluator.evalValue.getData().doubleValue();
 			} catch (RecognitionException e) {
 				Error.addEvaluationError("Lowerbound evaluation has error.");
 				dvar.lowerBoundValue=-901.0;
 			}
-			SolverData.getDvarMap().put(dvName, dvar);
 			evaluator.reset();
+			solverDvarMap.put(dvName, dvar);
+			
+			int timeArraySize=getTimeArraySize(dvar.timeArraySizeParser);
+			for (ControlData.timeArrayIndex=1; ControlData.timeArrayIndex<=timeArraySize; ControlData.timeArrayIndex++){
+				Dvar newDvar=new Dvar();
+				String newDvarName = dvName+"__fut__"+ControlData.timeArrayIndex;
+				
+				evaluator=dvar.lowerBoundParser;
+				try {
+					evaluator.evaluator();
+					newDvar.lowerBoundValue=evaluator.evalValue.getData().doubleValue();
+				} catch (RecognitionException e) {
+					Error.addEvaluationError("Lowerbound evaluation of time array dvar has error.");
+					newDvar.lowerBoundValue=-901.0;
+				}
+				evaluator.reset();
+				
+				evaluator =dvar.upperBoundParser;
+				try {
+					evaluator.evaluator();
+					newDvar.upperBoundValue=evaluator.evalValue.getData().doubleValue();
+				} catch (RecognitionException e) {
+					Error.addEvaluationError("Lowerbound evaluation of time array dvar has error.");
+					newDvar.lowerBoundValue=-901.0;
+				}
+				evaluator.reset();
+				if (solverDvarMap.containsKey(newDvarName)){
+					Error.addEvaluationError(newDvarName+" is duplicatedly used in both dvar and time array dvar");
+				}else{
+					solverDvarMap.put(newDvarName, newDvar);
+				}
+			}
 		}
 	}
 	
@@ -268,6 +358,7 @@ public class ModelDataSet implements Serializable {
 		Map<String, Goal> gMap =mds.gMap;
 		ControlData.currEvalTypeIndex=3;
 		SolverData.clearConstraintDataMap();
+		Map<String, EvalConstraint> solverGMap=SolverData.getConstraintDataMap();
 		for (String goalName: gList){
 			ControlData.currEvalName=goalName;
 			//System.out.println("Process constraint "+goalName);
@@ -292,7 +383,7 @@ public class ModelDataSet implements Serializable {
 				EvaluatorParser caseExpression=caseExpressions.get(i);				
 				try {
 					caseExpression.evaluator();
-					SolverData.getConstraintDataMap().put(goalName,caseExpression.evalConstraint);
+					solverGMap.put(goalName,caseExpression.evalConstraint);
 				} catch (RecognitionException e) {
 					Error.addEvaluationError("Case expression evaluation has error.");
 				}
@@ -301,9 +392,54 @@ public class ModelDataSet implements Serializable {
 				// add slack or surplus as dvar and weight
 				if (goal.dvarWeightMapList.size()>i && goal.dvarWeightMapList.get(i)!=null ){
 					ArrayList<String> dwl = goal.dvarSlackSurplusList.get(i);
+					//usedWtSlackSurplusList.removeAll(dwl);
 					usedWtSlackSurplusList.addAll(dwl);
 				}
 			}
+			
+			int timeArraySize=getTimeArraySize(goal.timeArraySizeParser);
+			for (ControlData.timeArrayIndex=1; ControlData.timeArrayIndex<=timeArraySize; ControlData.timeArrayIndex++){
+				Goal newGoal=new Goal();
+				String newGoalName=goalName+"__fut__"+ControlData.timeArrayIndex;
+				
+				condition=false;
+				i=-1;
+				while(!condition && i<=caseConditions.size()-2){
+					i=i+1;
+					ValueEvaluatorParser caseCondition=caseConditions.get(i);
+					try{
+						caseCondition.evaluator();
+						condition=caseCondition.evalCondition;
+					}catch (Exception e){
+						Error.addEvaluationError("Case condition evaluation of time array constraint "+newGoalName+" has error.");
+						condition=false;
+					}
+					caseCondition.reset();
+				}
+				if (condition){		
+					ArrayList<EvaluatorParser> caseExpressions=goal.caseExpressionParsers;
+					EvaluatorParser caseExpression=caseExpressions.get(i);				
+					try {
+						caseExpression.evaluator();
+						if (solverGMap.containsKey(newGoalName)){
+							Error.addEvaluationError(newGoalName+" is duplicatedly used in both goal and time array goal");
+						}else{	
+							solverGMap.put(newGoalName,caseExpression.evalConstraint);
+						}
+					} catch (RecognitionException e) {
+						Error.addEvaluationError("Case expression evaluation has error.");
+					}
+					caseExpression.reset();
+					
+					// add slack or surplus as dvar and weight
+					if (goal.dvarWeightMapList.size()>i && goal.dvarWeightMapList.get(i)!=null ){
+						ArrayList<String> dwl = goal.dvarSlackSurplusList.get(i);
+						//usedWtSlackSurplusList.removeAll(dwl);
+						usedWtSlackSurplusList.addAll(dwl);
+					}
+				}
+			}
+			
 		}
 	}
 	

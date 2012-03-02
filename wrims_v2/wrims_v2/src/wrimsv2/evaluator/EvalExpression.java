@@ -1,6 +1,9 @@
 package wrimsv2.evaluator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
+import wrimsv2.components.ControlData;
 import wrimsv2.components.IntDouble;
 
 public class EvalExpression {
@@ -39,5 +42,24 @@ public class EvalExpression {
 		}else{
 			return false;
 		}
+	}
+	
+	public EvalExpression copyOf(){
+		EvalExpression evalExpression = new EvalExpression();
+		evalExpression.setMultiplier(copyOfMultiplier());
+		evalExpression.setValue(intDouble.copyOf());
+		return evalExpression;
+	}
+	
+	public HashMap<String, IntDouble> copyOfMultiplier(){
+		HashMap<String, IntDouble> newMultiplier=new HashMap<String, IntDouble>();
+		Set multCollection = multiplier.keySet();
+		Iterator multIterator = multCollection.iterator();
+		
+		while(multIterator.hasNext()){
+			String multName=(String)multIterator.next();
+			newMultiplier.put(multName, multiplier.get(multName));
+		}
+		return newMultiplier;
 	}
 }
