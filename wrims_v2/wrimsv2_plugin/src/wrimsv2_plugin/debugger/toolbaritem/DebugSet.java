@@ -294,7 +294,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 			Date endDate= new Date(DebugCorePlugin.endYear-1900, DebugCorePlugin.endMonth-1, DebugCorePlugin.endDay);
 			Date debugDate = new Date (DebugCorePlugin.debugYear-1900, DebugCorePlugin.debugMonth-1, DebugCorePlugin.debugDay);
 			if (endDate.after(debugDate)){
-				long newDebugTime=debugDate.getTime()+1 * 24 * 60 * 60 * 1000;
+				long newDebugTime=debugDate.getTime()+1 * 24 * 60 * 60 * 1000l;
 				debugDate = new Date (newDebugTime);
 				comboDay.setText(String.valueOf(debugDate.getDate()));
 				comboMonth.setText(String.valueOf(debugDate.getMonth()+1));
