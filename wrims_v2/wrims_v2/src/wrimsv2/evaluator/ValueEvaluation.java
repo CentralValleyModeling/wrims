@@ -745,7 +745,10 @@ public class ValueEvaluation {
 		ControlData.sumIndex.push(li);
 	}
 	
-	public static IntDouble sumExpression(IntDouble id, String expression){
+	public static IntDouble sumExpression(IntDouble id, String expression){	
+		if (ControlData.currEvalName.equals("lastmonthinf")){
+			System.out.println("found");
+		}
 		if (step>=0){
 			start=start+step;
 			if (start>end) return id;

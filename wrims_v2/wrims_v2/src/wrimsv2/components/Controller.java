@@ -59,7 +59,7 @@ import wrimsv2.wreslparser.elements.StudyUtils;
 import lpsolve.*;
 
 public class Controller {
-	
+
 	public Controller() {
 		long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
 		setControlData();
@@ -79,7 +79,7 @@ public class Controller {
 		int runPeriod=(int) (endTimeInMillis-startTimeInMillis);
 		System.out.println("=================Run Time is "+runPeriod/60000+"min"+Math.round((runPeriod/60000.0-runPeriod/60000)*60)+"sec====");
 	}
-	
+
 	public Controller(String[] args) {
 		long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
 		setControlData(args);
@@ -99,16 +99,16 @@ public class Controller {
 		int runPeriod=(int) (endTimeInMillis-startTimeInMillis);
 		System.out.println("=================Run Time is "+runPeriod/60000+"min"+Math.round((runPeriod/60000.0-runPeriod/60000)*60)+"sec====");
 	}
-	
+
 	public void setControlData(){
-		FilePaths.groundwaterDir="";
-		FilePaths.setMainFilePaths("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\FAM\\main_FAM.wresl");
-		FilePaths.setSvarDssPaths("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\FAM\\dss\\FAMSV.dss");
-        FilePaths.setInitDssPaths("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\FAM\\dss\\FAMinit.dss");   
-        FilePaths.setDvarDssPaths("D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\FAM\\dss\\FAMdv.dss");
+		FilePaths.groundwaterDir="D:\\CS3_Studies\\calsim30_bo_version100\\common\\CVGroundwater\\Data\\";
+		FilePaths.setMainFilePaths("D:\\CS3_Studies\\calsim30_bo_version100\\conv\\Run\\mainCONV_30.wresl");
+		FilePaths.setSvarDssPaths("D:\\CS3_Studies\\calsim30_bo_version100\\common\\DSS\\CalSim30_06_SV.dss");
+        FilePaths.setInitDssPaths("D:\\CS3_Studies\\calsim30_bo_version100\\common\\DSS\\CalSim30_06Init.dss");
+        FilePaths.setDvarDssPaths("D:\\CS3_Studies\\calsim30_bo_version100\\conv\\DSS\\Version100_88yr_021012_WRIMSV2DV.dss");
 		ControlData cd=new ControlData();
-		cd.svDvPartF="2020D09E";
-		cd.initPartF="2020D09E";
+		cd.svDvPartF="CalSim30_06";
+		cd.initPartF="CalSim30_06";
 		cd.partA = "CALSIM";
 		cd.partE = "1MON";
 		cd.timeStep="1MON";
@@ -120,7 +120,7 @@ public class Controller {
 		cd.endDay=30;
         cd.solverName="XA";
         FilePaths.csvFolderName="csv";
-        
+
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
@@ -130,10 +130,10 @@ public class Controller {
         cd.writeDssStartYear=ControlData.startYear;
         cd.writeDssStartMonth=ControlData.startMonth;
         cd.writeDssStartDay=ControlData.startDay;
-        
+
 		cd.totalTimeStep=getTotalTimeStep();
 	}
-	
+
 	public void setControlData(String[] args){
 		FilePaths.groundwaterDir=args[0];
         FilePaths.setMainFilePaths(args[1]);
@@ -160,10 +160,10 @@ public class Controller {
         cd.writeDssStartYear=cd.startYear;
         cd.writeDssStartMonth=cd.startMonth;
         cd.writeDssStartDay=cd.startDay;
-        
+
 		cd.totalTimeStep=getTotalTimeStep();
 	}
-	
+
 	public void generateStudyFile(){
 		String outPath=System.getenv("Java_Bin")+"study.sty";
 		FileWriter outstream;
@@ -209,17 +209,17 @@ public class Controller {
 			out.write("FALSE\n");
 			out.write("SINGLE\n");
 			out.close();
-		
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	public StudyDataSet parse()throws RecognitionException, IOException{		
+
+	public StudyDataSet parse()throws RecognitionException, IOException{
 		return StudyUtils.checkStudy(FilePaths.fullMainPath, ControlData.sendAliasToDvar);
 	}
-	
+
 	public void runModel(StudyDataSet sds){
 		System.out.println("=============Prepare Run Study===========");
 		new PreRunModel(sds);
@@ -239,18 +239,18 @@ public class Controller {
 		}
 		System.out.println("=================Run ends!================");
 	}
-	
+
 	public void runModeLPSolve(StudyDataSet sds) throws LpSolveException{
 		ArrayList<String> modelList=sds.getModelList();
-		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
-		
+		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();
+
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
 			clearValues(modelList, modelDataSetMap);
 			int i=0;
-			while (i<modelList.size()  && noError){   
+			while (i<modelList.size()  && noError){
 				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
 				boolean condition=false;
 				try{
@@ -261,13 +261,13 @@ public class Controller {
 					condition=false;
 				}
 				modelCondition.reset();
-				
+
 				String model=modelList.get(i);
 				ModelDataSet mds=modelDataSetMap.get(model);
 				ControlData.currModelDataSet=mds;
 				ControlData.currCycleName=model;
 				ControlData.currCycleIndex=i;
-				
+
 				if (condition){
 					ControlData.currSvMap=mds.svMap;
 					ControlData.currDvMap=mds.dvMap;
@@ -280,7 +280,7 @@ public class Controller {
 						Error.writeEvaluationErrorFile("evaluation_error.txt");
 						noError=false;
 					}
-				
+
 					new LPSolveSolver();
 
 					if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
@@ -310,11 +310,11 @@ public class Controller {
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 	}
-	
+
 	public void runModelXA(StudyDataSet sds){
 		ArrayList<String> modelList=sds.getModelList();
-		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
-		
+		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();
+
 		new initialXASolver();
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
@@ -323,7 +323,7 @@ public class Controller {
 			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
 			int i=0;
-			while (i<modelList.size()  && noError){  
+			while (i<modelList.size()  && noError){
 				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
 				boolean condition=false;
 				try{
@@ -334,13 +334,13 @@ public class Controller {
 					condition=false;
 				}
 				modelCondition.reset();
-				
+
 				String model=modelList.get(i);
 				ModelDataSet mds=modelDataSetMap.get(model);
 				ControlData.currModelDataSet=mds;
 				ControlData.currCycleName=model;
 				ControlData.currCycleIndex=i;
-				
+
 				if (condition){
 					ControlData.currSvMap=mds.svMap;
 					ControlData.currDvMap=mds.dvMap;
@@ -382,18 +382,18 @@ public class Controller {
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 	}
-	
+
 	public void runModelGurobi(StudyDataSet sds){
 		ArrayList<String> modelList=sds.getModelList();
-		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
-		
+		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();
+
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
 			clearValues(modelList, modelDataSetMap);
 			int i=0;
-			while (i<modelList.size()  && noError){   
+			while (i<modelList.size()  && noError){
 				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
 				boolean condition=false;
 				try{
@@ -404,13 +404,13 @@ public class Controller {
 					condition=false;
 				}
 				modelCondition.reset();
-				
+
 				String model=modelList.get(i);
 				ModelDataSet mds=modelDataSetMap.get(model);
 				ControlData.currModelDataSet=mds;
 				ControlData.currCycleName=model;
 				ControlData.currCycleIndex=i;
-				
+
 				if (condition){
 					ControlData.currSvMap=mds.svMap;
 					ControlData.currDvMap=mds.dvMap;
@@ -455,7 +455,7 @@ public class Controller {
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 	}
-	
+
 	public void writeOutputDssEveryTenYears(){
 		if (ControlData.currMonth==12 && ControlData.currYear%10==0){
 			if (ControlData.timeStep.equals("1MON")){
@@ -465,9 +465,9 @@ public class Controller {
 			}
 		}
 	}
-	
+
 	public void clearValues(ArrayList<String> modelList, Map<String, ModelDataSet> modelDataSetMap){
-		for (int i=0; i<modelList.size(); i++){   
+		for (int i=0; i<modelList.size(); i++){
 			String model=modelList.get(i);
 			ModelDataSet mds=modelDataSetMap.get(model);
 			ArrayList<String> dvList = mds.dvList;
@@ -490,7 +490,7 @@ public class Controller {
 			}
 		}
 	}
-	
+
 	public int getTotalTimeStep(){
 		if (ControlData.timeStep.equals("1MON")){
 			return (ControlData.endYear-ControlData.startYear)*12+(ControlData.endMonth-ControlData.startMonth)+1;
@@ -499,11 +499,11 @@ public class Controller {
 			Date endDate=new Date (ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
 			long startTime=startDate.getTime();
 			long endTime=endDate.getTime();
-			double timestep=(endTime-startTime)/(24*60*60*1000)+1;
+			double timestep=(endTime-startTime)/(24*60*60*1000l)+1;
 			return (int)timestep;
 		}
 	}
-	
+
 	public void currTimeAddOneMonth(){
 		ControlData.currMonth=ControlData.currMonth+1;
 		ControlData.currYear=ControlData.currYear;
@@ -516,21 +516,21 @@ public class Controller {
 
 	public void currTimeAddOneDay(){
 		Date currDate = new Date (ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
-		long currTime=currDate.getTime()+1 * 24 * 60 * 60 * 1000;
+		long currTime=currDate.getTime()+1 * 24 * 60 * 60 * 1000l;
 		currDate = new Date (currTime);
 		ControlData.currMonth=currDate.getMonth()+1;
 		ControlData.currYear=currDate.getYear()+1900;
 		ControlData.currDay=currDate.getDate();
 	}
-	
+
 	public static void main(String[] args){
 		new Controller(args);
 	}
 
 	public void runModelILP(StudyDataSet sds){
 		ArrayList<String> modelList=sds.getModelList();
-		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
-		
+		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();
+
 		new initialXASolver();
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
@@ -539,7 +539,7 @@ public class Controller {
 			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
 			int i=0;
-			while (i<modelList.size()  && noError){  
+			while (i<modelList.size()  && noError){
 				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
 				boolean condition=false;
 				try{
@@ -550,13 +550,13 @@ public class Controller {
 					condition=false;
 				}
 				modelCondition.reset();
-				
+
 				String model=modelList.get(i);
 				ModelDataSet mds=modelDataSetMap.get(model);
 				ControlData.currModelDataSet=mds;
 				ControlData.currCycleName=model;
 				ControlData.currCycleIndex=i;
-				
+
 				if (condition){
 					ControlData.currSvMap=mds.svMap;
 					ControlData.currDvMap=mds.dvMap;
@@ -567,7 +567,7 @@ public class Controller {
 					mds.processModel();
 					IntermediateLP.setIlpFile(FilePaths.ilpFileDirectory);
 					Set<String> usedDvar=IntermediateLP.output();
-				
+
 					if (Error.error_evaluation.size()>=1){
 						Error.writeEvaluationErrorFile("evaluation_error.txt");
 						noError=false;

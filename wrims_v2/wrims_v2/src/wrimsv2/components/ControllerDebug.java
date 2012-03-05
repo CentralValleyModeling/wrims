@@ -519,7 +519,7 @@ public class ControllerDebug extends Thread {
 			Date endDate=new Date (ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
 			long startTime=startDate.getTime();
 			long endTime=endDate.getTime();
-			double timestep=(endTime-startTime)/(24*60*60*1000)+1;
+			double timestep=(endTime-startTime)/(24*60*60*1000l)+1;
 			return (int)timestep;
 		}
 	}
@@ -536,7 +536,7 @@ public class ControllerDebug extends Thread {
 
 	public void currTimeAddOneDay(){
 		Date currDate = new Date (ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
-		long currTime=currDate.getTime()+1 * 24 * 60 * 60 * 1000;
+		long currTime=currDate.getTime()+1 * 24 * 60 * 60 * 1000l;
 		currDate = new Date (currTime);
 		ControlData.currMonth=currDate.getMonth()+1;
 		ControlData.currYear=currDate.getYear()+1900;

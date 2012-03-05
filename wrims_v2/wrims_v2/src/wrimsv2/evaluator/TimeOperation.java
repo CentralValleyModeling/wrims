@@ -159,7 +159,7 @@ public class TimeOperation {
 			}
 		}else if(ControlData.timeStep.equals("1DAY")){
 			Date currDate = new Date (ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
-			long dataTime=currDate.getTime()+value*1 * 24 * 60 * 60 * 1000;
+			long dataTime=currDate.getTime()+value*1*24*60*60*1000l;
 			Date dataDate = new Date (dataTime);
 			ControlData.dataDay=dataDate.getDate();
 			ControlData.dataMonth=dataDate.getMonth()+1;
@@ -188,7 +188,7 @@ public class TimeOperation {
 			}
 		}else if(ControlData.timeStep.equals("1DAY")){
 			Date thisDate = new Date (year-1900, month-1, day);
-			long dataTime=thisDate.getTime()+value*1 * 24 * 60 * 60 * 1000;
+			long dataTime=thisDate.getTime()+value*1 * 24 * 60 * 60 * 1000l;
 			Date dataDate = new Date (dataTime);
 			ControlData.dataDay=dataDate.getDate();
 			ControlData.dataMonth=dataDate.getMonth()+1;
