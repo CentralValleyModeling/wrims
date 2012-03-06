@@ -17,13 +17,14 @@ class Study:
 	
 	
 	
-	def __init__(self, configPath):
+	def __init__(self, configPath, batFileName='RunStudy.bat'):
 
 		
 		self._logger = Param.logger
 		self.configPath = configPath
 		self.runPath = dirname(self.configPath)
 		self.ms_configPath = os.path.join( self.runPath, "__MultiStudyRunner.config")
+		self.batFileName = batFileName
 		
 		#parse config file and put the map to cMap	
 		self.cMap=Tools.getConfigMap(self.configPath)
@@ -103,7 +104,7 @@ class Study:
 		Tools.generateConfigFile(self.ms_configPath, self.cMap, startYear=startYear, numberOfSteps=numberOfSteps)
 		
 		self._logger.info("Run study config file in dir: "+self.runPath)
-		subprocess.call(['RunStudy.bat', self.ms_configPath])
+		subprocess.call([self.batFileName, self.ms_configPath])
 		#subprocess.call(['cmd.exe', '/c', 'RunStudy.bat', self.ms_configPath])
 
 

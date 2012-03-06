@@ -2,13 +2,16 @@
 # NumberOfSteps ( or "periods" in wrims1 multi-study runner ) must be a multiple of 12
 
 from scripts.classes.study import Study
-from scripts.misc import LogUtils
+from scripts.misc import LogUtils, Param
 
 LogUtils.initLogging(__file__)
 
 
+# default batch file to call is 'RunStudy.bat'
 s1=Study(r"D:\cvwrsm\trunk\wrims2_scripting\studies\callite_svn47\CONV\Run\CONV.config")
-s2=Study(r"D:\cvwrsm\trunk\wrims2_scripting\studies\callite_svn47\TXFR\Run\TXFR.config")
+
+# use a different batch file 'RunStudy_CalLiteLicense.bat'
+s2=Study(r"D:\cvwrsm\trunk\wrims2_scripting\studies\callite_svn47\TXFR\Run\TXFR.config", batFileName='RunStudy_CalLiteLicense.bat')
 
 # copy all dvars in s1.DvarFile to destination
 # id must be unique
@@ -22,10 +25,12 @@ s1.add_dss_transfer(id="to_init", destn=s1.InitFile, destn_Fpart=s1.InitFPart, t
 s1.add_dss_transfer(id="to_svar", destn=s1.SvarFile, destn_Fpart=s1.SvarFPart, transferFile="to_common_svar")
 
 
-for year in range(1921, 1925):
+for iYear in range(1921, 1925):
 	
+	Param.logger.info("Start run for year: "+str(iYear))
 	
-	s1.run(startYear=year, numberOfSteps=12)
+	s1.run(startYear=iYear, numberOfSteps=12)
+	s2.run(startYear=iYear, numberOfSteps=12)
 
 
 
