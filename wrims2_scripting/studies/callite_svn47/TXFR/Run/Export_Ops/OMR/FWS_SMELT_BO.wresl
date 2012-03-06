@@ -139,7 +139,7 @@ define Vernalis_Freq {value min(max((Vernalis*0.00901 - 49.)/100.,0.),1.)}
 define Suspen_trig {
     case suspension {
 !                condition Riovista_Freq * Vernalis_Freq >= 0.5
-                condition Riovista_Freq>=0.5.and.Vernalis_Freq >= 0.5
+                condition Riovista_Freq>=0.5 .and. Vernalis_Freq >= 0.5
         value 1.}
     case otherwise {
         condition always
