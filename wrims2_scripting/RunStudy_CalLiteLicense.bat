@@ -51,4 +51,4 @@ REM ----------------------------------------------------------
 
 
 %Java_Bin%java -Xmx1400m -Xss1024K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
-
+exit
