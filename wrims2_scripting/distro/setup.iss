@@ -3,7 +3,7 @@
 AppName              =WRIMS2_Scripting 
 DefaultGroupName     =WRIMS2_Scripting 
 ;AppVerName           =WRIMS2_Scripting
-AppVersion=1.01 
+AppVersion=1.02 
 UninstallDisplayName =WRIMS2_Scripting 
 AppId                =WRIMS2_Scripting
 OutputBaseFilename   =WRIMS2_Scripting_Install
@@ -23,8 +23,8 @@ UninstallLogMode=new
 ;InfoBeforeFile=".\infoFile.rtf"
 OutputDir="."
 AlwaysRestart = no
-PrivilegesRequired = admin 
-
+;PrivilegesRequired = admin 
+PrivilegesRequired = poweruser
 
 [Languages]
 
