@@ -203,7 +203,8 @@ term returns [IntDouble id]
 	| MONTH_CONST{id=ValueEvaluation.term_MONTH_CONST($MONTH_CONST.text);}
 	| PASTMONTH{id=ValueEvaluation.term_PASTMONTH($PASTMONTH.text);}
 	| DAYSIN{id=ValueEvaluation.daysIn();})
-	| (SVAR{id=ValueEvaluation.term_SVAR($SVAR.text.replace("{","").replace("}",""));}) 
+	| (SVAR{id=ValueEvaluation.term_SVAR($SVAR.text.replace("{","").replace("}",""));})
+	| ARRAY_ITERATOR{id=ValueEvaluation.term_ARRAY_ITERATOR();} 
 	;
 	
 tafcfs_term returns [IntDouble id]: TAFCFS ('(' expression ')')? {
@@ -330,6 +331,8 @@ RANGE: 'range';
 
 TAFCFS: 'taf_cfs'|'cfs_taf'|'cfs_af'|'af_cfs';
 DAYSIN: 'daysin'|'daysinmonth';
+
+ARRAY_ITERATOR : '$m' ;
 
 SUM: 'sum';
 MAX : 'max';

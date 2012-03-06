@@ -64,6 +64,7 @@ public class ModelDataSet implements Serializable {
 	public ArrayList<String> svList_global = new ArrayList<String>();
 	public ArrayList<String> svList_local = new ArrayList<String>();
 	public Map<String, Svar> svMap = new HashMap<String, Svar>();
+	public Map<String, Svar> svFutMap = new HashMap<String, Svar>();
 
 	// / dvar data structure
 	public ArrayList<String> dvList = new ArrayList<String>();
@@ -229,6 +230,7 @@ public class ModelDataSet implements Serializable {
 		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
 		Set<String> svarUsedByLaterCycle = mds.svarUsedByLaterCycle;
 		String model=ControlData.currCycleName;
+		clearFutureSvMap();
 		for (String svName: svList){
 			ControlData.currEvalName=svName;
 			//System.out.println("Process svar "+svName);
@@ -498,6 +500,9 @@ public class ModelDataSet implements Serializable {
 			evaluator.reset();
 		}
 	}
-	 
+	
+	public void clearFutureSvMap(){
+		svFutMap = new HashMap<String, Svar>();
+	}
 }
 

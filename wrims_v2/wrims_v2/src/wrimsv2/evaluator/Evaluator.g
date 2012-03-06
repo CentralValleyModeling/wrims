@@ -210,6 +210,7 @@ term returns [EvalExpression ee]
 	| PASTMONTH{ee=Evaluation.term_PASTMONTH($PASTMONTH.text);}
 	| DAYSIN{ee=Evaluation.daysIn();})
 	| (SVAR{ee=Evaluation.term_SVAR($SVAR.text.replace("{","").replace("}",""));}) 
+	| ARRAY_ITERATOR{ee=Evaluation.term_ARRAY_ITERATOR();}
 	;
 	
 tafcfs_term returns [EvalExpression ee]: TAFCFS ('(' expression ')')? {
@@ -340,6 +341,8 @@ RANGE: 'range';
 
 TAFCFS: 'taf_cfs'|'cfs_taf'|'cfs_af'|'af_cfs';
 DAYSIN: 'daysin'|'daysinmonth';
+
+ARRAY_ITERATOR : '$m' ;
 
 SUM: 'sum';
 MAX : 'max';

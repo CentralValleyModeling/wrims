@@ -539,6 +539,20 @@ public class Evaluation {
 		if (ControlData.currDvMap.containsKey(ident)||ControlData.currAliasMap.containsKey(ident)){
 			value=dvarAliasTimeSeries(ident,id.getData().intValue());
 		}else{
+			int idValue=id.getData().intValue();
+			if (ControlData.currSvMap.containsKey(ident)){ 
+				if (idValue==0)	{
+					return ControlData.currSvMap.get(ident).getData();
+				}else if(idValue>0){
+					String futSvName=ident+"__fut__"+idValue;
+					if (ControlData.currSvFutMap.containsKey(futSvName)){
+						return ControlData.currSvFutMap.get(futSvName).getData();
+					}else{
+						Error.addEvaluationError(futSvName+", the future value of "+ident+" is used before defined.");
+						return new IntDouble (1.0,false);
+					}
+				}
+			}
 			value=svarTimeSeries(ident);
 		}
 		
@@ -998,6 +1012,11 @@ public class Evaluation {
 			index=index-12;
 		}
 		IntDouble id=new IntDouble(index,true);
+		return new EvalExpression(id);
+	}
+	
+	public static EvalExpression term_ARRAY_ITERATOR(){
+		IntDouble id=new IntDouble(ControlData.timeArrayIndex, true);
 		return new EvalExpression(id);
 	}
 	

@@ -246,6 +246,7 @@ public class ControllerTree {
 				ModelDataSet mds=modelDataSetMap.get(model);
 				ControlData.currModelDataSet=mds;
 				ControlData.currSvMap=mds.svMap;
+				ControlData.currSvFutMap=mds.svFutMap;
 				ControlData.currDvMap=mds.dvMap;
 				ControlData.currAliasMap=mds.asMap;
 				ControlData.currGoalMap=mds.gMap;
@@ -323,6 +324,7 @@ public class ControllerTree {
 				ModelDataSet mds=modelDataSetMap.get(model);
 				ControlData.currModelDataSet=mds;
 				ControlData.currSvMap=mds.svMap;
+				ControlData.currSvFutMap=mds.svFutMap;
 				ControlData.currDvMap=mds.dvMap;
 				ControlData.currAliasMap=mds.asMap;
 				ControlData.currGoalMap=mds.gMap;

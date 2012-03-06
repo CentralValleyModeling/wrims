@@ -348,6 +348,20 @@ public class ValueEvaluation {
 		if (ControlData.currDvMap.containsKey(ident)||ControlData.currAliasMap.containsKey(ident)){
 			value=dvarAliasTimeSeries(ident,id.getData().intValue());
 		}else{
+			int idValue=id.getData().intValue();
+			if (ControlData.currSvMap.containsKey(ident)){ 
+				if (idValue==0)	{
+					return ControlData.currSvMap.get(ident).getData();
+				}else if(idValue>0){
+					String futSvName=ident+"__fut__"+idValue;
+					if (ControlData.currSvFutMap.containsKey(futSvName)){
+						return ControlData.currSvFutMap.get(futSvName).getData();
+					}else{
+						Error.addEvaluationError(futSvName+", the future value of "+ident+" is used before defined.");
+						return new IntDouble (1.0,false);
+					}
+				}
+			}
 			value=svarTimeSeries(ident);
 		}
 		
@@ -718,6 +732,10 @@ public class ValueEvaluation {
 			index=index-12;
 		}
 		return new IntDouble(index,true);
+	}
+	
+	public static IntDouble term_ARRAY_ITERATOR(){
+		return new IntDouble(ControlData.timeArrayIndex, true);
 	}
 	
 	public static void sumExpression_IDENT(String ident){

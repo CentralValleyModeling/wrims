@@ -263,6 +263,7 @@ public class ControllerSG {
 				
 				if (condition){
 					ControlData.currSvMap=mds.svMap;
+					ControlData.currSvFutMap=mds.svFutMap;
 					ControlData.currDvMap=mds.dvMap;
 					ControlData.currAliasMap=mds.asMap;
 					ControlData.currGoalMap=mds.gMap;
@@ -333,6 +334,7 @@ public class ControllerSG {
 				
 				if (condition){
 					ControlData.currSvMap=mds.svMap;
+					ControlData.currSvFutMap=mds.svFutMap;
 					ControlData.currDvMap=mds.dvMap;
 					ControlData.currAliasMap=mds.asMap;
 					ControlData.currGoalMap=mds.gMap;
@@ -479,6 +481,7 @@ public class ControllerSG {
 				
 				if (condition){
 					ControlData.currSvMap=mds.svMap;
+					ControlData.currSvFutMap=mds.svFutMap;
 					ControlData.currDvMap=mds.dvMap;
 					ControlData.currAliasMap=mds.asMap;
 					ControlData.currGoalMap=mds.gMap;
