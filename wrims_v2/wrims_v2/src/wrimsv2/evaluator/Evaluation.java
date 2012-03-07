@@ -4,6 +4,7 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 
+import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
@@ -404,7 +405,7 @@ public class Evaluation {
 		return id;		
 	}
 	
-	public static IntDouble noArgFunction(String ident){
+	public static EvalExpression noArgFunction(String ident){
 		Class function;
 		IntDouble result;
 		try {
@@ -423,19 +424,21 @@ public class Evaluation {
 			String valueString=stack.pop().toString();
 			
 			if (valueString.contains(".")){       
-				return new IntDouble(Double.parseDouble(valueString), false);
+				result = new IntDouble(Double.parseDouble(valueString), false);
+				return new EvalExpression(result);
 			}else{
-				return new IntDouble(Integer.parseInt(valueString), true);
+				result = new IntDouble(Integer.parseInt(valueString), true);
+				return new EvalExpression(result);
 			}
 			
 		} catch (Exception e) {
 			Error.addEvaluationError("The function " +ident+" is not defined in the WRIMS engine. Re-run preprocessor for dlls.");
 			result=new IntDouble (1.0,false);
-			return result;
+			return new EvalExpression(result);
 		}
 	}
 	
-	public static IntDouble argFunction(String ident, ArrayList<EvalExpression> eeArray){
+	public static EvalExpression argFunction(String ident, ArrayList<EvalExpression> eeArray){
 		IntDouble result;
 		if (eeArray.size()==1){
 			if (ControlData.currSvMap.containsKey(ident)||ControlData.currTsMap.containsKey(ident)||ControlData.currDvMap.containsKey(ident)||ControlData.currAliasMap.containsKey(ident)) return getTimeSeries(ident, eeArray);
@@ -451,7 +454,7 @@ public class Evaluation {
 				if (!ee.isNumeric()){
 					Error.addEvaluationError("The function " +ident+" is not defined in the WRIMS engine. Re-run preprocessor for dlls.");
 					result=new IntDouble (0.0,false);
-					return result;
+					return new EvalExpression(result);
 				}
 			
 				IntDouble id=ee.getValue();
@@ -475,19 +478,21 @@ public class Evaluation {
 			String valueString=stack.pop().toString();
 			
 			if (valueString.contains(".")){       
-				return new IntDouble(Double.parseDouble(valueString), false);
+				result=new IntDouble(Double.parseDouble(valueString), false);
+				return new EvalExpression(result);
 			}else{
-				return new IntDouble(Integer.parseInt(valueString), true);
+				result=new IntDouble(Integer.parseInt(valueString), true);
+				return new EvalExpression(result);
 			}
 			
 		} catch (Exception e) {
 			Error.addEvaluationError("The function " +ident+" is not defined in the WRIMS engine. Re-run preprocessor for dlls.");
 			result=new IntDouble (1.0,false);
-			return result;
+			return new EvalExpression(result);
 		}
 	}
 	
-	public static IntDouble getTimeSeries(String ident, ArrayList<EvalExpression> eeArray){
+	public static EvalExpression getTimeSeries(String ident, ArrayList<EvalExpression> eeArray){
 		IntDouble result;
 		boolean isSumIndex=false;
 		int indexValue=0;
@@ -506,14 +511,14 @@ public class Evaluation {
 				if (!(multiplier.containsKey(indexName) && multiplier.get(indexName).getData().doubleValue()==1.0 && ee.getValue().getData().doubleValue()==0.0)){
 					Error.addEvaluationError("The index of "+ident+" contains decision variable.");
 					result=new IntDouble (0.0,false);
-					return result;
+					return new EvalExpression(result);
 				}else{
 					isSumIndex=true;
 				}
 			}else{
 				Error.addEvaluationError("The index of "+ident+" contains decision variable.");
 				result=new IntDouble (0.0,false);
-				return result;
+				return new EvalExpression(result);
 			}
 		}
 		
@@ -521,7 +526,7 @@ public class Evaluation {
 		if (!id.isInt()){
 			Error.addEvaluationError("The index of "+ident+" should be integer.");
 			result=new IntDouble (0.0,false);
-			return result;
+			return new EvalExpression(result);
 		}
 
 		if (isSumIndex){
@@ -529,34 +534,61 @@ public class Evaluation {
 				TimeOperation.findTime(indexValue);
 			}else{
 				result=new IntDouble (1.0,false);
-				return result;
+				return new EvalExpression(result);
 			}
 		}else{
 			TimeOperation.findTime(id.getData().intValue());
 		}
 		
 		double value;
-		if (ControlData.currDvMap.containsKey(ident)||ControlData.currAliasMap.containsKey(ident)){
-			value=dvarAliasTimeSeries(ident,id.getData().intValue());
+		int idValue=id.getData().intValue();
+		if (ControlData.currDvMap.containsKey(ident)){
+			if (idValue<0){
+				value=dvarAliasTimeSeries(ident,idValue);
+			}else if (idValue==0){
+				HashMap<String, IntDouble> multiplier = new HashMap<String, IntDouble>();
+				multiplier.put(ident, new IntDouble(1, true));
+				EvalExpression eeResult=new EvalExpression();
+				eeResult.setMultiplier(multiplier);
+				return eeResult;
+			}else{
+				String futDvName=ident+"__fut__"+idValue;
+				if (SolverData.getDvarMap().containsKey(futDvName)){
+					HashMap<String, IntDouble> multiplier = new HashMap<String, IntDouble>();
+					multiplier.put(futDvName, new IntDouble(1, true));
+					EvalExpression eeResult=new EvalExpression();
+					eeResult.setMultiplier(multiplier);
+					return eeResult;
+				}else{
+					Error.addEvaluationError("Time Array Dvar "+futDvName+" is used without definition.");
+					result=new IntDouble (1.0, false);
+					return new EvalExpression(result);
+				}
+			}
+		}else if (ControlData.currAliasMap.containsKey(ident)){
+			value=dvarAliasTimeSeries(ident,idValue);
 		}else{
-			int idValue=id.getData().intValue();
 			if (ControlData.currSvMap.containsKey(ident)){ 
 				if (idValue==0)	{
-					return ControlData.currSvMap.get(ident).getData();
+					result = ControlData.currSvMap.get(ident).getData();
+					return new EvalExpression(result);
 				}else if(idValue>0){
 					String futSvName=ident+"__fut__"+idValue;
 					if (ControlData.currSvFutMap.containsKey(futSvName)){
-						return ControlData.currSvFutMap.get(futSvName).getData();
+						result=ControlData.currSvFutMap.get(futSvName).getData();
+						return new EvalExpression(result);
 					}else{
 						Error.addEvaluationError(futSvName+", the future value of "+ident+" is used before defined.");
-						return new IntDouble (1.0,false);
+						result=new IntDouble (1.0,false);
+						return new EvalExpression(result);
 					}
 				}
 			}
 			value=svarTimeSeries(ident);
 		}
 		
-		return new IntDouble (value, false);
+		result=new IntDouble (value, false);
+		return new EvalExpression(result);
 	}
 	
 	public static double svarTimeSeries(String ident){

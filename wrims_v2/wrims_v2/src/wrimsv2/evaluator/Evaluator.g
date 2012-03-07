@@ -199,7 +199,8 @@ term returns [EvalExpression ee]
 	:	(IDENT {ee=Evaluation.term_IDENT($IDENT.text);})
 	| (FLOAT {ee=Evaluation.term_FLOAT($FLOAT.text);}) 
 	| ('(' (e=expression) ')' {ee=$e.ee;})
-	| ((knownTS{ee=Evaluation.term_knownTS($knownTS.result);})
+	| pastCycleDV{ee=Evaluation.term_knownTS($pastCycleDV.result);}
+	| function{ee=$function.ee;}
 	| func{ee=$func.ee;}
 	| (INTEGER {ee=Evaluation.term_INTEGER($INTEGER.text);}) 
 	| tafcfs_term{ee=$tafcfs_term.ee;}
@@ -208,7 +209,7 @@ term returns [EvalExpression ee]
 	| DAY{ee=Evaluation.term_DAY();}
 	| MONTH_CONST{ee=Evaluation.term_MONTH_CONST($MONTH_CONST.text);}
 	| PASTMONTH{ee=Evaluation.term_PASTMONTH($PASTMONTH.text);}
-	| DAYSIN{ee=Evaluation.daysIn();})
+	| DAYSIN{ee=Evaluation.daysIn();}
 	| (SVAR{ee=Evaluation.term_SVAR($SVAR.text.replace("{","").replace("}",""));}) 
 	| ARRAY_ITERATOR{ee=Evaluation.term_ARRAY_ITERATOR();}
 	;
@@ -216,32 +217,20 @@ term returns [EvalExpression ee]
 tafcfs_term returns [EvalExpression ee]: TAFCFS ('(' expression ')')? {
     ee=Evaluation.tafcfs_term($TAFCFS.text, $expression.ee);
 };
-	
-knownTS returns [IntDouble result]  
-  : (f=function{result=$f.result;})|(p=pastCycleDV {result=$p.result;}) 
-  ;
-  
-//pastMonthTS  
-//  : ((i1=IDENT)|TAFCFS) '(' ((p=PASTMONTH)|(i=I)|(pm=(MONTH_CONST '-' MONTH (('+'|'-') INTEGER)? ))|(mp=(MONTH '-' MONTH_CONST (('+'|'-') INTEGER)?))) ')'
-//  ;
-  
-//preMonthTS 
-//  : IDENT '(' (s='-')? INTEGER ')'  
-//  ;
-  
+	  
 pastCycleDV returns [IntDouble result]
   : i1=IDENT '[' i2=IDENT ']'{result=Evaluation.pastCycleDV($i1.text,$i2.text);}
   ; 
 
-function returns [IntDouble result]
-  : (n=noArgFunction{result=$n.result;})|(a=argFunction{result=$a.result;})
+function returns [EvalExpression ee]
+  : (n=noArgFunction{ee=$n.ee;})|(a=argFunction{ee=$a.ee;})
   ;
 
-noArgFunction returns [IntDouble result]
-  : IDENT '(' ')' {result=Evaluation.noArgFunction($IDENT.text);};
+noArgFunction returns [EvalExpression ee]
+  : IDENT '(' ')' {ee=Evaluation.noArgFunction($IDENT.text);};
 
-argFunction returns [IntDouble result] @init{ArrayList<EvalExpression> eeArray = new ArrayList<EvalExpression>();}
-  : IDENT '(' (e1=expression {eeArray.add($e1.ee);}) (';' (e2=expression{eeArray.add($e2.ee);}))* ')'{result=Evaluation.argFunction($IDENT.text,eeArray);};
+argFunction returns [EvalExpression ee] @init{ArrayList<EvalExpression> eeArray = new ArrayList<EvalExpression>();}
+  : IDENT '(' (e1=expression {eeArray.add($e1.ee);}) (';' (e2=expression{eeArray.add($e2.ee);}))* ')'{ee=Evaluation.argFunction($IDENT.text,eeArray);};
   	
 unary returns [EvalExpression ee] 
 	:	(s='-')? term{ee=Evaluation.unary($s.text, $term.ee);
