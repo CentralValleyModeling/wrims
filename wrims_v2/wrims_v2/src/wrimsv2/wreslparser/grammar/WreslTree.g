@@ -386,11 +386,12 @@ svar_timeArray_sum : '(' ta=timeArraySize ')' ( '[' sc=LOCAL ']' )? IDENT '{' su
 	;
 
 sum_content :SUM hdr=sum_header e=expression 
--> ^( Sum_hdr[$hdr.text] Expression[$e.text] Dependants[$e.dependants] VarInCycle[$e.strVarInCycle])
+-> ^( Sum_hdr[$hdr.text] Expression[$e.text] Dependants[$hdr.dependants+" "+$e.dependants] VarInCycle[$e.strVarInCycle])
 ;
 
-sum_header
-	: ( '(' 'i=' expression ',' expression (',' '-'? INTEGER )? ')' ) 
+sum_header returns[String dependants]
+	: ( '(' 'i=' e1=expression ',' e2=expression (',' '-'? INTEGER )? ')' )
+	{$dependants = $e1.dependants + " " +$e2.dependants;} 
 	;
 
 svar_dss : 

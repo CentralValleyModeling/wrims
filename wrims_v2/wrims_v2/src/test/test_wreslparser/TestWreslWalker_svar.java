@@ -217,7 +217,7 @@ public class TestWreslWalker_svar {
 		n = RegUtils.timesOfMatches(csvText, s);
 		Assert.assertEquals(n, 1);
 	
-		s = "s2,##,default,1,always,sum(i=int(-daysinprevmo);-1;1) i1(i)*cfs_taf,i1;,";
+		s = "s2,##,default,1,always,sum(i=int(-daysinprevmo);-1;1) i1(i)*cfs_taf,daysinprevmo;i1;,";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s);
 		Assert.assertEquals(n, 1);		
