@@ -333,22 +333,13 @@ public class ValueEvaluation {
 			return result;
 		}
 
-		if (isSumIndex){
-			if (isIndexStart){
-				TimeOperation.findTime(indexValue);
-			}else{
-				result=new IntDouble (1.0,false);
-				return result;
-			}
-		}else{
-			TimeOperation.findTime(id.getData().intValue());
-		}
+		int idValue=id.getData().intValue();
+		TimeOperation.findTime(idValue);
 		
 		double value;
 		if (ControlData.currDvMap.containsKey(ident)||ControlData.currAliasMap.containsKey(ident)){
 			value=dvarAliasTimeSeries(ident,id.getData().intValue());
 		}else{
-			int idValue=id.getData().intValue();
 			if (ControlData.currSvMap.containsKey(ident)){ 
 				if (idValue==0)	{
 					return ControlData.currSvMap.get(ident).getData();
