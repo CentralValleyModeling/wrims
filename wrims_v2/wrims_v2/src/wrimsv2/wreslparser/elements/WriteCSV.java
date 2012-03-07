@@ -254,7 +254,11 @@ public class WriteCSV {
 		    	out.print(Param.csv_seperator);
 		    	
 		    	if (s.dependants!=null){
-			    	for (String d: s.dependants){
+		    		
+		  		    List<String> dep = new ArrayList<String>(s.dependants);
+					Collections.sort(dep,String.CASE_INSENSITIVE_ORDER);
+					
+			    	for (String d: dep){
 			    		out.print(d+";"); //for dependants		    	
 			    	}
 		    	}
@@ -500,7 +504,11 @@ public class WriteCSV {
 		    	out.print(Param.csv_seperator);
 		    	
 		    	if (a.dependants!=null){
-			    	for (String d: a.dependants){
+		    		
+		  		    List<String> dep = new ArrayList<String>(a.dependants);
+					Collections.sort(dep,String.CASE_INSENSITIVE_ORDER);
+					
+			    	for (String d: dep){
 			    		out.print(d+";"); //for dependants		    	
 			    	}
 		    	}
