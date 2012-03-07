@@ -118,7 +118,7 @@ public class TestWreslWalker_dependent {
 		// check if dependents has the item
 		csvText = Tools.readFileAsString(csvFolderPath+"\\first\\svar.csv");
 		
-		s = "sv##external_var2;external_var1";
+		s = "sv##external_var1;external_var2";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);			

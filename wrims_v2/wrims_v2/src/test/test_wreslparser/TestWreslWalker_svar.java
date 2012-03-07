@@ -138,7 +138,7 @@ public class TestWreslWalker_svar {
 		
 		String modelName = sd.getModelList().get(0);
 		
-		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		WriteCSV.study(sd, csvFolderPath ) ;
 		
 		String logText = Tools.readFileAsString(logFilePath);	
 
@@ -146,7 +146,7 @@ public class TestWreslWalker_svar {
 		Assert.assertEquals(totalErrs, 3);	
 		
 	
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\svar.csv");	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\svar.csv");	
 		
 		String s;
 		int n;
@@ -212,7 +212,7 @@ public class TestWreslWalker_svar {
 		String s;
 		int n;
 		
-		s = "s1,##,default,1,always,sum(i=0;sep-month;1) max(i_orovl(i);dummy)*cfs_taf(i),i_orovl;dummy";
+		s = "s1,##,default,1,always,sum(i=0;sep-month;1) max(i_orovl(i);dummy)*cfs_taf(i),dummy;i_orovl;";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s);
 		Assert.assertEquals(n, 1);
