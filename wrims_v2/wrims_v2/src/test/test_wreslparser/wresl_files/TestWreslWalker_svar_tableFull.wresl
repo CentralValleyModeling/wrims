@@ -1,0 +1,22 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+define S_Orovl_extern {EXTERNAL some.dll}
+
+define full_table { select area from res_info given storage=1000*S_Orovl_extern(-1) use linear 
+                    where res_num=6, somevalue=7 }
+	
+	
+	}	
+
+
+	
+
+	 
+
+
+ 

@@ -222,4 +222,98 @@ public class TestWreslWalker_svar {
 		n = RegUtils.timesOfMatches(csvText, s);
 		Assert.assertEquals(n, 1);		
 	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void svar_table() throws RecognitionException, IOException {
+		
+		testName = "TestWreslWalker_svar_table";
+		csvFolderPath = "testResult_v1\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
+		
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath, true);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.closeLogFile();
+		
+		String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.study(sd,csvFolderPath ) ;
+	
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 2);	
+		
+		
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\svar.csv");	
+		
+		String s;
+		int n;
+	
+		s = "multi_where##select target from res_level where res_num=1;level=4;month=month";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+	
+		s = "simple##select target from feather_fish_203 where month=nov";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void svar_tableFull() throws RecognitionException, IOException {
+		
+		testName = "TestWreslWalker_svar_tableFull";
+		csvFolderPath = "testResult_v1\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.closeLogFile();
+		
+		String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.study(sd,csvFolderPath ) ;
+	
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);	
+	
+	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\svar.csv");	
+		
+		String s;
+		int n;
+	
+		s = "full_table##select area from res_info given storage=1000*s_orovl_extern(-1) use linear where res_num=6;somevalue=7";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+	}
 }
