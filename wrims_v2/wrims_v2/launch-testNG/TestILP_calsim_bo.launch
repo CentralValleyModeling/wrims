@@ -4,9 +4,6 @@
 <mapEntry key="Java_Bin" value="D:\cvwrsm\trunk\3rd_party\jrockit-jre1.6.0_26-R28.1.4\bin\"/>
 <mapEntry key="PATH" value="D:\cvwrsm\trunk\calsim30\calsim30_bo\conv\Run\External;D:\cvwrsm\trunk\wrims_v2\wrims_v2\src\wrimsv2\lib"/>
 </mapAttribute>
-<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
-<listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
-</listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.testng.remote.RemoteTestNG"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="wrims_v2"/>
