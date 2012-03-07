@@ -29,6 +29,27 @@ public class Tools {
 		if (s==null)  return null; 
 		return s.substring(1, s.length() - 1);
 	}
+	//TODO: this can be optimized for memory
+	public static ArrayList<String> allToLowerCase(ArrayList<String> inArrayList){
+		
+		ArrayList<String> out = new ArrayList<String>();
+		
+		for (String s: inArrayList){
+			out.add(s.toLowerCase());
+		}
+		
+		return out;
+	}
+	public static Set<String> allToLowerCase(Set<String> inSet){
+		
+		Set<String> out = new LinkedHashSet<String>();
+		
+		for (String s: inSet){
+			out.add(s.toLowerCase());
+		}
+		
+		return out;
+	}
 	public static String replace_regex(String s) {
 		if (s==null)  return null; 
 		s=s.replaceAll("\\(", "\\\\(").replaceAll("\\)", "\\\\)");
@@ -46,6 +67,29 @@ public class Tools {
 		s=s.replaceAll("\\s+", " ");
 		return s;
 	}
+	public static ArrayList<String> replace_with_space(ArrayList<String> s) {
+		if (s.size()<1)  return null;
+		ArrayList<String> o = new ArrayList<String>();
+		for (String e : s){
+			o.add(replace_with_space(e));
+		}
+		return o;
+	}
+	public static String replace_with_space(String s) {
+		if (s==null)  return null; 
+		s=s.replaceAll("\n+", " ").replaceAll("\r+", " ");
+		s=s.replaceAll("\t+", " ");
+		s=s.replaceAll("\\s+", " ");
+		return s;
+	}
+	public static ArrayList<String> replace_ignoreChar(ArrayList<String> s) {
+		if (s.size()<1)  return null;
+		ArrayList<String> o = new ArrayList<String>();
+		for (String e : s){
+			o.add(replace_ignoreChar(e));
+		}
+		return o;
+	}
 	public static String replace_ignoreChar(String s) {
 		if (s==null)  return null; 
 		s=s.replaceAll("\n+", "").replaceAll("\r+", "");
@@ -53,11 +97,19 @@ public class Tools {
 		s=s.replaceAll("\\s+", "");
 		return s;
 	}
+	public static ArrayList<String> add_space_between_logical(ArrayList<String> s) {
+		if (s.size()<1)  return null;
+		ArrayList<String> o = new ArrayList<String>();
+		for (String e : s){
+			o.add(add_space_between_logical(e));
+		}
+		return o;
+	}
 	public static String add_space_between_logical(String s) {
 		if (s==null)  return null; 
 		
-		s = replace_ignoreChar(s);
-		s = replace_seperator(s);
+		//s = replace_ignoreChar(s);
+		//s = replace_seperator(s);
 		
 		s=s.replaceAll("\\.AND\\.", " \\.and\\. ");
 		s=s.replaceAll("\\.OR\\.",  " \\.or\\. ");
@@ -65,6 +117,14 @@ public class Tools {
 		s=s.replaceAll("\\.or\\.",  " \\.or\\. ");
 		
 		return s;
+	}
+	public static ArrayList<String> replace_seperator(ArrayList<String> s) {
+		if (s.size()<1)  return null;
+		ArrayList<String> o = new ArrayList<String>();
+		for (String e: s){
+			o.add(Tools.replace_seperator(e));
+		}
+		return o;
 	}
 	public static String replace_seperator(String s) {
 		if (s==null)  return null; 

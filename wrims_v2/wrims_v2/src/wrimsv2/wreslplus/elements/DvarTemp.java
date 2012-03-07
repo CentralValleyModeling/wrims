@@ -12,6 +12,8 @@ public class DvarTemp implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	public String fromWresl; // for test only
+	public String id;
 	public boolean isInteger;
 	public String format;
 	public String kind;
@@ -22,23 +24,24 @@ public class DvarTemp implements Serializable {
 	public String expression;
 	public Set<String> dependants;
 	
-	// default is null
+	// default is 0
 	public String timeArraySize;
 	public String arraySize;	
 	
 	public DvarTemp(){
+		
 		isInteger=false;
 		format=Param.undefined;
 		kind=Param.undefined;
 		units=Param.undefined;
-		lowerBound=Param.undefined;
-		upperBound=Param.undefined;
+		lowerBound=Param.dv_std_lowerBound;
+		upperBound=Param.dv_std_upperBound;
 		condition = Param.always;
 		expression=Param.undefined;
 		dependants = new HashSet<String>();	
 		
-		timeArraySize=null;
-		arraySize=null;
+		timeArraySize="0";
+		arraySize="0";
 	}
 	
 }

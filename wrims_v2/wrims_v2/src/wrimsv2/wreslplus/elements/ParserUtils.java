@@ -50,18 +50,6 @@ public class ParserUtils {
 	}
 
 
-	public static void parseWreslMain(String inputFilePath) throws RecognitionException  {
-		
-	
-		WreslPlusParser parser = initParser(inputFilePath);
-		parser.wreslMain();
-		
-		for (String k:parser.modelItemMap.keySet()){
-		System.out.println(k);
-		System.out.println(parser.modelItemMap.get(k));
-			
-		}
-	}	
 
 }
 	
