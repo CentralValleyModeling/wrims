@@ -407,7 +407,7 @@ goal_content returns[boolean hasDvar, String str, String ss, String weight, Stri
             F.dvarSlackSurplus($s.text, $goal::scop, $Kind.text, "", $goal::case_condition, "0");
             F.mergeSlackSurplusIntoWeightTable($s.text, $w.text, $goal::scop, $goal::case_condition, "0");
           }else{
-            $ss = $Sign.text + $s.text+"\$m";
+            $ss = $Sign.text + $s.text+"(\$m)";
             F.dvarSlackSurplus($s.text, $goal::scop, $Kind.text, "", $goal::case_condition, $goal::ta);
             F.mergeSlackSurplusIntoWeightTable($s.text, $w.text, $goal::scop, $goal::case_condition, $goal::ta);
           } 

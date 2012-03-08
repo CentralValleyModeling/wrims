@@ -231,7 +231,6 @@ public class ModelDataSet implements Serializable {
 		Map<String, Map<String, IntDouble>> varTimeArrayCycleValueMap=ControlData.currStudyDataSet.getVarTimeArrayCycleValueMap();
 		Set<String> svarUsedByLaterCycle = mds.svarUsedByLaterCycle;
 		String model=ControlData.currCycleName;
-		clearFutureSvMap();
 		for (String svName: svList){
 			ControlData.currEvalName=svName;
 			//System.out.println("Process svar "+svName);

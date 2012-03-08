@@ -494,6 +494,8 @@ public class Controller {
 				Alias alias=asMap.get(asName);
 				alias.setData(null);
 			}
+			
+			mds.clearFutureSvMap();
 		}
 	}
 

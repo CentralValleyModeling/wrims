@@ -370,6 +370,8 @@ public class ControllerBatch {
 				Alias alias=asMap.get(asName);
 				alias.setData(null);
 			}
+			
+			mds.clearFutureSvMap();
 		}
 	}
 

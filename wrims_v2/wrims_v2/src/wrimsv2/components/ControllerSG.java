@@ -412,6 +412,8 @@ public class ControllerSG {
 				Alias alias=asMap.get(asName);
 				alias.setData(null);
 			}
+			
+			mds.clearFutureSvMap();
 		}
 	}
 	

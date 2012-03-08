@@ -514,6 +514,8 @@ public class ControllerDebug extends Thread {
 				Alias alias=asMap.get(asName);
 				alias.setData(null);
 			}
+			
+			mds.clearFutureSvMap();
 		}
 	}
 	
