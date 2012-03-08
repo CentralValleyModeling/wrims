@@ -567,7 +567,11 @@ public class WriteCSV {
 		    	out.print(Param.csv_seperator);
 		    	
 		    	if (g.expressionDependants!=null){
-			    	for (String d: g.expressionDependants){
+		    		
+		  		    List<String> dep = new ArrayList<String>(g.expressionDependants);
+					Collections.sort(dep,String.CASE_INSENSITIVE_ORDER);
+					
+			    	for (String d: dep){
 			    		out.print(d+";"); //for dependants		    	
 			    	}
 		    	}
