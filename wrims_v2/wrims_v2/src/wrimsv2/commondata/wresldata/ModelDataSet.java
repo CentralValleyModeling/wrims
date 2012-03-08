@@ -32,6 +32,7 @@ public class ModelDataSet implements Serializable {
 	// / weight table   // <objName,  <itemName, value>>
 	public ArrayList<String> wtList = new ArrayList<String>();
 	public ArrayList<String> wtSlackSurplusList = new ArrayList<String>();
+	public ArrayList<String> wtSlackSurplusDvList = new ArrayList<String>();
 	public ArrayList<String> usedWtSlackSurplusList = new ArrayList<String>(); 
 
 //	public ArrayList<String> wtList_global = new ArrayList<String>();

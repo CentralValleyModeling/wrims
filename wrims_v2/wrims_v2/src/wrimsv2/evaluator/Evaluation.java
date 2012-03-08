@@ -147,13 +147,13 @@ public class Evaluation {
 			ee.setValue(id0);
 			Error.addEvaluationError("Alias "+ident+" should not appear in constraint. ");
 			return ee;
-		}/* else if (!ControlData.isPostProcessing && !ControlData.currAliasMap.containsKey(ident) && !ControlData.currDvMap.containsKey(ident) ){
+		} else if (!ControlData.isPostProcessing && !ControlData.currAliasMap.containsKey(ident) && !ControlData.currDvMap.containsKey(ident) && !ControlData.currDvSlackSurplusMap.containsKey(ident)){
 			EvalExpression ee=new EvalExpression();
 			IntDouble id0=new IntDouble(1.0, false);
 			ee.setValue(id0);
 			Error.addEvaluationError(ident+" is not defined before used.");
 			return ee;
-		}*/
+		}
 		
 		EvalExpression ee=new EvalExpression();
 		IntDouble id0 = new IntDouble (0, true);
@@ -441,7 +441,7 @@ public class Evaluation {
 	public static EvalExpression argFunction(String ident, ArrayList<EvalExpression> eeArray){
 		IntDouble result;
 		if (eeArray.size()==1){
-			if (ControlData.currSvMap.containsKey(ident)||ControlData.currTsMap.containsKey(ident)||ControlData.currDvMap.containsKey(ident)||ControlData.currAliasMap.containsKey(ident)) return getTimeSeries(ident, eeArray);
+			if (ControlData.currSvMap.containsKey(ident)||ControlData.currTsMap.containsKey(ident)||ControlData.currDvMap.containsKey(ident)||ControlData.currAliasMap.containsKey(ident)||ControlData.currDvSlackSurplusMap.containsKey(ident)) return getTimeSeries(ident, eeArray);
 		}
 			
 		Class function;
@@ -564,6 +564,25 @@ public class Evaluation {
 					result=new IntDouble (1.0, false);
 					return new EvalExpression(result);
 				}
+			}
+		}else if (ControlData.currDvSlackSurplusMap.containsKey(ident)){
+			if (idValue==0){
+				HashMap<String, IntDouble> multiplier = new HashMap<String, IntDouble>();
+				multiplier.put(ident, new IntDouble(1, true));
+				EvalExpression eeResult=new EvalExpression();
+				eeResult.setMultiplier(multiplier);
+				return eeResult;
+			}else if (idValue>0){
+				String futDvSlackSurplusName=ident+"__fut__"+idValue;
+				HashMap<String, IntDouble> multiplier = new HashMap<String, IntDouble>();
+				multiplier.put(futDvSlackSurplusName, new IntDouble(1, true));
+				EvalExpression eeResult=new EvalExpression();
+				eeResult.setMultiplier(multiplier);
+				return eeResult;
+			}else{
+				Error.addEvaluationError("Slack surplus index of "+ident+", "+idValue+"<0. THe index has to be larger than 0.");
+				result=new IntDouble (1.0,false);
+				return new EvalExpression(result);
 			}
 		}else if (ControlData.currAliasMap.containsKey(ident)){
 			value=dvarAliasTimeSeries(ident,idValue);

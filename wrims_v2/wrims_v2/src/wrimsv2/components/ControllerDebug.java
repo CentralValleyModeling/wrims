@@ -266,6 +266,7 @@ public class ControllerDebug extends Thread {
 					ControlData.currSvMap=mds.svMap;
 					ControlData.currSvFutMap=mds.svFutMap;
 					ControlData.currDvMap=mds.dvMap;
+					ControlData.currDvSlackSurplusMap=mds.dvSlackSurplusMap;
 					ControlData.currAliasMap=mds.asMap;
 					ControlData.currGoalMap=mds.gMap;
 					ControlData.currTsMap=mds.tsMap;
@@ -342,6 +343,7 @@ public class ControllerDebug extends Thread {
 					ControlData.currSvMap=mds.svMap;
 					ControlData.currSvFutMap=mds.svFutMap;
 					ControlData.currDvMap=mds.dvMap;
+					ControlData.currDvSlackSurplusMap=mds.dvSlackSurplusMap;
 					ControlData.currAliasMap=mds.asMap;
 					ControlData.currGoalMap=mds.gMap;
 					ControlData.currTsMap=mds.tsMap;
@@ -415,6 +417,7 @@ public class ControllerDebug extends Thread {
 					ControlData.currSvMap=mds.svMap;
 					ControlData.currSvFutMap=mds.svFutMap;
 					ControlData.currDvMap=mds.dvMap;
+					ControlData.currDvSlackSurplusMap=mds.dvSlackSurplusMap;
 					ControlData.currAliasMap=mds.asMap;
 					ControlData.currGoalMap=mds.gMap;
 					ControlData.currTsMap=mds.tsMap;
@@ -586,6 +589,7 @@ public class ControllerDebug extends Thread {
 					ControlData.currSvMap=mds.svMap;
 					ControlData.currSvFutMap=mds.svFutMap;
 					ControlData.currDvMap=mds.dvMap;
+					ControlData.currDvSlackSurplusMap=mds.dvSlackSurplusMap;
 					ControlData.currAliasMap=mds.asMap;
 					ControlData.currGoalMap=mds.gMap;
 					ControlData.currTsMap=mds.tsMap;

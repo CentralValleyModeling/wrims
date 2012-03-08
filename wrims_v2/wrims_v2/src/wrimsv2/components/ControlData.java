@@ -31,6 +31,7 @@ public class ControlData {
 	public static Map<String, Svar> currSvFutMap=new HashMap<String, Svar>() ;
 	public static Map<String, Timeseries> currTsMap=new HashMap<String, Timeseries>();
 	public static Map<String, Dvar> currDvMap=new HashMap<String, Dvar>();
+	public static Map<String, Dvar> currDvSlackSurplusMap=new HashMap<String, Dvar>();
 	public static Map<String, Alias> currAliasMap=new HashMap<String, Alias>();
 	public static Map<String, Goal> currGoalMap=new HashMap<String, Goal>();
 	public static Map<String, External> currExMap = new HashMap<String, External> ();
@@ -74,7 +75,7 @@ public class ControlData {
 	public static Optimizer xasolver;
 	public static boolean isPostProcessing=false;
 	public static boolean sendAliasToDvar=false;
-	public static boolean outputWreslCSV=false;
+	public static boolean outputWreslCSV=true;
 	public static boolean showRunTimeMessage=false;
 	public static boolean showWreslLog=true;
 
