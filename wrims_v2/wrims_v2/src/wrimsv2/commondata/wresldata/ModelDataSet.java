@@ -228,6 +228,7 @@ public class ModelDataSet implements Serializable {
 		Map<String, Svar> svMap =mds.svMap;
 		ControlData.currEvalTypeIndex=0;
 		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
+		Map<String, Map<String, IntDouble>> varTimeArrayCycleValueMap=ControlData.currStudyDataSet.getVarTimeArrayCycleValueMap();
 		Set<String> svarUsedByLaterCycle = mds.svarUsedByLaterCycle;
 		String model=ControlData.currCycleName;
 		clearFutureSvMap();
@@ -256,7 +257,7 @@ public class ModelDataSet implements Serializable {
 				ValueEvaluatorParser caseExpression=caseExpressions.get(i);
 				try {
 					caseExpression.evaluator();
-					IntDouble evalValue=caseExpression.evalValue;
+					IntDouble evalValue=caseExpression.evalValue.copyOf();
 					svar.setData(evalValue);
 					if (svarUsedByLaterCycle.contains(svName)){
 						varCycleValueMap.get(svName).put(model, evalValue);
@@ -273,6 +274,69 @@ public class ModelDataSet implements Serializable {
 			}else{
 				Error.addEvaluationError("None of the case conditions is satisfied.");
 				svar.setData(new IntDouble(1.0, false));
+			}
+			
+			int timeArraySize=getTimeArraySize(svar.timeArraySizeParser);
+			for (ControlData.timeArrayIndex=1; ControlData.timeArrayIndex<=timeArraySize; ControlData.timeArrayIndex++){
+				condition=false;
+				i=-1;
+				while(!condition && i<=caseConditions.size()-2){
+					i=i+1;
+					ValueEvaluatorParser caseCondition=caseConditions.get(i);
+					try{
+						caseCondition.evaluator();
+						condition=caseCondition.evalCondition;
+					}catch (Exception e){
+						Error.addEvaluationError("Case condition evaluation has error.");
+						condition=false;
+					}
+					caseCondition.reset();
+				}
+				if (condition){
+					ArrayList<ValueEvaluatorParser> caseExpressions=svar.caseExpressionParsers;
+					ValueEvaluatorParser caseExpression=caseExpressions.get(i);
+					try {
+						caseExpression.evaluator();
+						IntDouble evalValue=caseExpression.evalValue.copyOf();
+						Svar newSvar=new Svar();
+						String newSvName=svName+"__fut__"+ControlData.timeArrayIndex;
+						newSvar.setData(evalValue);
+						svFutMap.put(newSvName, newSvar);
+						if (svarUsedByLaterCycle.contains(svName)){
+							if (varTimeArrayCycleValueMap.containsKey(newSvName)){
+								varTimeArrayCycleValueMap.get(newSvName).put(model, evalValue);
+							}else{
+								Map<String, IntDouble> cycleValue = new HashMap<String, IntDouble>();
+								cycleValue.put(model, evalValue);
+								varTimeArrayCycleValueMap.put(newSvName, cycleValue);
+							}
+						}
+					} catch (RecognitionException e) {
+						Error.addEvaluationError("Case expression evaluation has error.");
+						IntDouble evalValue=new IntDouble(1.0, false);
+						Svar newSvar=new Svar();
+						String newSvName=svName+"__fut__"+ControlData.timeArrayIndex;
+						newSvar.setData(evalValue);
+						svFutMap.put(newSvName, newSvar);
+						if (svarUsedByLaterCycle.contains(svName)){
+							if (varTimeArrayCycleValueMap.containsKey(newSvName)){
+								varTimeArrayCycleValueMap.get(newSvName).put(model, evalValue);
+							}else{
+								Map<String, IntDouble> cycleValue = new HashMap<String, IntDouble>();
+								cycleValue.put(model, evalValue);
+								varTimeArrayCycleValueMap.put(newSvName, cycleValue);
+							}
+						}
+					}
+					caseExpression.reset();
+				}else{
+					Error.addEvaluationError("None of the case conditions is satisfied.");
+					IntDouble evalValue=new IntDouble(1.0, false);
+					Svar newSvar=new Svar();
+					String newSvName=svName+"__fut__"+ControlData.timeArrayIndex;
+					newSvar.setData(evalValue);
+					svFutMap.put(newSvName, newSvar);
+				}
 			}
 		}
 	}

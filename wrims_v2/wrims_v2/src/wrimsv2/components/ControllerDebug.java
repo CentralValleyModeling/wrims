@@ -242,6 +242,7 @@ public class ControllerDebug extends Thread {
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
 			clearValues(modelList, modelDataSetMap);
+			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
 			while (i<modelList.size()  && noError){   
 				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
@@ -317,6 +318,7 @@ public class ControllerDebug extends Thread {
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
 			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
+			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
 			while (i<modelList.size()  && noError){  
 				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
@@ -389,6 +391,7 @@ public class ControllerDebug extends Thread {
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
 			clearValues(modelList, modelDataSetMap);
+			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
 			while (i<modelList.size()  && noError){   
 				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
@@ -557,6 +560,7 @@ public class ControllerDebug extends Thread {
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
 			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
+			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
 			while (i<modelList.size()  && noError){  
 				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);

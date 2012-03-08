@@ -28,6 +28,7 @@ public class StudyDataSet implements Serializable {
 	/// this map contains value of vars needed for WRESL syntax: varName[cycleName] 
 	/// < VarName, < CycleName, Value >>		
 	private Map<String, Map<String, IntDouble>> varCycleValueMap = new HashMap<String, Map<String, IntDouble>>();
+	private Map<String, Map<String, IntDouble>> varTimeArrayCycleValueMap = new HashMap<String, Map<String, IntDouble>>();
 
 	
 	public Map<String, Timeseries> getTimeseriesMap() {
@@ -86,4 +87,11 @@ public class StudyDataSet implements Serializable {
 		this.varCycleValueMap = varCycleValueMap;
 	}
 	
+	public Map<String, Map<String, IntDouble>> getVarTimeArrayCycleValueMap() {
+		return this.varTimeArrayCycleValueMap;
+	}
+	
+	public void clearVarTimeArrayCycleValueMap(){
+		varTimeArrayCycleValueMap=new HashMap<String, Map<String, IntDouble>>();
+	}
 }
