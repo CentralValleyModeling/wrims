@@ -70,7 +70,7 @@ integer_nonStd
 
 integer_timeArray_std
   :  ^(Dvar_integer ta=TimeArraySize sc=Scope i=IDENT k=Kind u=Units )
-      {F.dvarStd($i.text, $sc.text, "integer", Tools.strip($k.text), Tools.strip($u.text)); }
+      {F.dvarStd($i.text, $sc.text, "integer", Tools.strip($k.text), Tools.strip($u.text), $ta.text); }
   ; 
   
 integer_timeArray_nonStd
