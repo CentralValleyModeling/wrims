@@ -29,7 +29,7 @@ public class TestWreslWalker_goal {
 	public void simple() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_goal_simple";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
@@ -52,7 +52,7 @@ public class TestWreslWalker_goal {
 		
 		String modelName = sd.getModelList().get(0);
 		
-		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		WriteCSV.study(sd,csvFolderPath ) ;
 	
 		String logText = Tools.readFileAsString(logFilePath);	
 
@@ -60,7 +60,7 @@ public class TestWreslWalker_goal {
 		Assert.assertEquals(totalErrs, 6);	
 		
 	
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\constraint.csv");	
 		
 		String s;
 		int n;
@@ -81,7 +81,7 @@ public class TestWreslWalker_goal {
 	public void noCase() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_goal_noCase";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
@@ -98,21 +98,19 @@ public class TestWreslWalker_goal {
 		
 		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
 
-		LogUtils.studySummary_details(sd);
-
 		LogUtils.closeLogFile();
 		
 		String modelName = sd.getModelList().get(0);
 		
-		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		WriteCSV.study(sd,csvFolderPath ) ;
 		
 		String logText = Tools.readFileAsString(logFilePath);	
 
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 8);	
+		Assert.assertEquals(totalErrs, 9);	
 		
 	
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\constraint.csv");	
 		
 		String s;
 		int n;
@@ -161,7 +159,7 @@ public class TestWreslWalker_goal {
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);		
 		
-		csvText = Tools.readFileAsString(csvFolderPath+"\\weight.csv");	
+		csvText = Tools.readFileAsString(csvFolderPath+"\\first\\weight.csv");	
 	
 		//s = "slack_goal_1_default,-500.0";
 		s = "slack__goal_1_1,##always,-500.0";

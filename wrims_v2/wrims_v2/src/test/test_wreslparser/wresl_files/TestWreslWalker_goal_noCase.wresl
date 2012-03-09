@@ -32,9 +32,16 @@ goal Goal_4 {
     lhs>rhs     penalty 99.0 
 	lhs<rhs     penalty 0 
 }	
-	
 
-goal Goal_5 {  ! x > y+z
+goal Goal_4_2 {
+
+    lhs     x
+    rhs     y + z
+    lhs>rhs     penalty 0 
+	lhs<rhs     penalty 99. 
+}	
+
+goal Goal_5 {  # x > y+z
 
     lhs     x
     rhs     y + z
@@ -50,7 +57,7 @@ goal Goal_6 {
 
 }
 
-goal Goal_7 {  ! x < y+z
+goal Goal_7 {  # x < y+z
 
     lhs     x
     rhs     y + z
@@ -58,14 +65,14 @@ goal Goal_7 {  ! x < y+z
 
 }
 
-goal Goal_8 { ! x = y+z
+goal Goal_8 { # x = y+z
 
     lhs     x
     rhs     y + z
     lhs>rhs     constrain
 }
 
-goal Goal_9 {  ! x = y+z
+goal Goal_9 {  # x = y+z
 
     lhs     x
     rhs     y + z
