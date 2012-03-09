@@ -32,8 +32,8 @@ public class ModelDataSet implements Serializable {
 	// / weight table   // <objName,  <itemName, value>>
 	public ArrayList<String> wtList = new ArrayList<String>();
 	public ArrayList<String> wtSlackSurplusList = new ArrayList<String>();
-	public ArrayList<String> wtSlackSurplusDvList = new ArrayList<String>();
-	public ArrayList<String> usedWtSlackSurplusList = new ArrayList<String>(); 
+	public ArrayList<String> usedWtSlackSurplusList = new ArrayList<String>();
+	public ArrayList<String> usedWtSlackSurplusDvList = new ArrayList<String>();
 
 //	public ArrayList<String> wtList_global = new ArrayList<String>();
 //	public ArrayList<String> wtList_local = new ArrayList<String>();
@@ -186,7 +186,7 @@ public class ModelDataSet implements Serializable {
 		SolverData.clearWeightSlackSurplusMap();
 		Map<String, WeightElement> solverWeightSlackSurplusMap=SolverData.getWeightSlackSurplusMap();
 		ControlData.currEvalTypeIndex=5;
-		for (String wtSlackSurplusName: usedWtSlackSurplusList){
+		for (String wtSlackSurplusName: usedWtSlackSurplusDvList){
 			ControlData.currEvalName=wtSlackSurplusName;
 			//System.out.println("Process weight "+wtName);
 			WeightElement wtSlackSurplus=wtSlackSurplusMap.get(wtSlackSurplusName);
@@ -476,6 +476,9 @@ public class ModelDataSet implements Serializable {
 							String dwlItem=dwl.get(j);
 							String usedWtSlackSurplusName=dwlItem+"__fut__"+ControlData.timeArrayIndex;
 							usedWtSlackSurplusList.add(usedWtSlackSurplusName);
+							if (!usedWtSlackSurplusDvList.contains(dwlItem)){
+								usedWtSlackSurplusDvList.add(dwlItem);
+							}
 						}
 					}
 				}
@@ -510,8 +513,14 @@ public class ModelDataSet implements Serializable {
 				// add slack or surplus as dvar and weight
 				if (goal.dvarWeightMapList.size()>i && goal.dvarWeightMapList.get(i)!=null ){
 					ArrayList<String> dwl = goal.dvarSlackSurplusList.get(i);
-					//usedWtSlackSurplusList.removeAll(dwl);
 					usedWtSlackSurplusList.addAll(dwl);
+					for (int j=0; j<dwl.size();j++){
+						String dwlItem=dwl.get(j);
+						if (!usedWtSlackSurplusDvList.contains(dwlItem)){
+							usedWtSlackSurplusDvList.add(dwlItem);
+						}
+					}
+					
 				}
 			}
 		}
