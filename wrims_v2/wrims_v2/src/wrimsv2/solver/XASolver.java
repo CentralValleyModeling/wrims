@@ -64,72 +64,91 @@ public class XASolver {
 	
 	public void setDVars(){
 		Map<String, Dvar> DvarMap = SolverData.getDvarMap();
-		//Set DvarCollection = DvarMap.keySet();
-		ArrayList<String> DvarCollection = ControlData.currModelDataSet.dvList;
-		Iterator<String> dvarIterator=DvarCollection.iterator();
+		for (int i=0; i<=1; i++){
+			ArrayList<String> DvarCollection;
+			if (i==0){
+				DvarCollection = ControlData.currModelDataSet.dvList;
+			}else{
+				DvarCollection = ControlData.currModelDataSet.dvTimeArrayList;
+			}
+			Iterator<String> dvarIterator=DvarCollection.iterator();
 		
-		while(dvarIterator.hasNext()){                          
-			String dvarName=(String)dvarIterator.next();
-			Dvar dvar=DvarMap.get(dvarName);
+			while(dvarIterator.hasNext()){                          
+				String dvarName=(String)dvarIterator.next();
+				Dvar dvar=DvarMap.get(dvarName);
 
-			double lb = dvar.lowerBoundValue.doubleValue();
-			double ub = dvar.upperBoundValue.doubleValue();
+				double lb = dvar.lowerBoundValue.doubleValue();
+				double ub = dvar.upperBoundValue.doubleValue();
 			
-			if (dvar.integer.equals("y")){
-				ControlData.xasolver.setColumnInteger(dvarName, lb, ub); }
-			else {
-				ControlData.xasolver.setColumnMinMax(dvarName, lb, ub);}
+				if (dvar.integer.equals("y")){
+					ControlData.xasolver.setColumnInteger(dvarName, lb, ub); }
+				else {
+					ControlData.xasolver.setColumnMinMax(dvarName, lb, ub);}
+			}
 		}
 	}
 
 	public void setWeights(){
 		Map<String, WeightElement> weightMap = SolverData.getWeightMap();
-		ArrayList<String> weightCollection = ControlData.currModelDataSet.wtList;
-		Iterator<String> weightIterator = weightCollection.iterator();
+		for (int i=0; i<=1; i++){
+			ArrayList<String> weightCollection;
+			if (i==0){
+				weightCollection = ControlData.currModelDataSet.wtList;
+			}else{
+				weightCollection = ControlData.currModelDataSet.wtTimeArrayList;
+			}
+			Iterator<String> weightIterator = weightCollection.iterator();
 		
-		while(weightIterator.hasNext()){
-			String weightName=(String)weightIterator.next();
-			ControlData.xasolver.setColumnObjective(weightName, weightMap.get(weightName).getValue());
-		}
+			while(weightIterator.hasNext()){
+				String weightName=(String)weightIterator.next();
+				ControlData.xasolver.setColumnObjective(weightName, weightMap.get(weightName).getValue());
+			}
 		
-		Map<String, WeightElement> weightSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
-		ArrayList<String> usedWeightSlackSurplusCollection = ControlData.currModelDataSet.usedWtSlackSurplusList;
-		Iterator<String> usedWeightSlackSurplusIterator = usedWeightSlackSurplusCollection.iterator();
+			Map<String, WeightElement> weightSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
+			ArrayList<String> usedWeightSlackSurplusCollection = ControlData.currModelDataSet.usedWtSlackSurplusList;
+			Iterator<String> usedWeightSlackSurplusIterator = usedWeightSlackSurplusCollection.iterator();
 		
-		while(usedWeightSlackSurplusIterator.hasNext()){
-			String usedWeightSlackSurplusName=(String)usedWeightSlackSurplusIterator.next();
-			ControlData.xasolver.setColumnObjective(usedWeightSlackSurplusName, weightSlackSurplusMap.get(usedWeightSlackSurplusName).getValue());
+			while(usedWeightSlackSurplusIterator.hasNext()){
+				String usedWeightSlackSurplusName=(String)usedWeightSlackSurplusIterator.next();
+				ControlData.xasolver.setColumnObjective(usedWeightSlackSurplusName, weightSlackSurplusMap.get(usedWeightSlackSurplusName).getValue());
+			}
 		}
 	}
 	
 	private void setConstraints() {
 		Map<String, EvalConstraint> constraintMap = SolverData.getConstraintDataMap();
-		//Set constraintCollection = constraintMap.keySet();
-		ArrayList<String> constraintCollection = new ArrayList<String>(ControlData.currModelDataSet.gList);
-		constraintCollection.retainAll(constraintMap.keySet());
-		Iterator<String> constraintIterator = constraintCollection.iterator();
+		for (int i=0; i<=1; i++){
+			ArrayList<String> constraintCollection;
+			if (i==0){
+				constraintCollection = new ArrayList<String>(ControlData.currModelDataSet.gList);
+				constraintCollection.retainAll(constraintMap.keySet());
+			}else{
+				constraintCollection = new ArrayList<String>(ControlData.currModelDataSet.gTimeArrayList);
+			}
+			Iterator<String> constraintIterator = constraintCollection.iterator();
 		
-		while(constraintIterator.hasNext()){                          
-			String constraintName=(String)constraintIterator.next();
-			EvalConstraint ec=constraintMap.get(constraintName);
+			while(constraintIterator.hasNext()){                          
+				String constraintName=(String)constraintIterator.next();
+				EvalConstraint ec=constraintMap.get(constraintName);
 			
-			if (ec.getSign().equals("=")) {
-				ControlData.xasolver.setRowFix(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue()); //string constraint name
-			}
-			else if (ec.getSign().equals("<") || ec.getSign().equals("<=")){
-				ControlData.xasolver.setRowMax(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue()); //string constraint name
-			}
-			else if (ec.getSign().equals(">")){
-				ControlData.xasolver.setRowMin(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue()); //string constraint name
-			}
+				if (ec.getSign().equals("=")) {
+					ControlData.xasolver.setRowFix(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue()); //string constraint name
+				}
+				else if (ec.getSign().equals("<") || ec.getSign().equals("<=")){
+					ControlData.xasolver.setRowMax(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue()); //string constraint name
+				}
+				else if (ec.getSign().equals(">")){
+					ControlData.xasolver.setRowMin(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue()); //string constraint name
+				}
 			
-			HashMap<String, IntDouble> multMap = ec.getEvalExpression().getMultiplier();
-			Set multCollection = multMap.keySet();
-			Iterator multIterator = multCollection.iterator();
+				HashMap<String, IntDouble> multMap = ec.getEvalExpression().getMultiplier();
+				Set multCollection = multMap.keySet();
+				Iterator multIterator = multCollection.iterator();
 			
-			while(multIterator.hasNext()){
-				String multName=(String)multIterator.next();
-				ControlData.xasolver.loadToCurrentRow(multName, multMap.get(multName).getData().doubleValue());
+				while(multIterator.hasNext()){
+					String multName=(String)multIterator.next();
+					ControlData.xasolver.loadToCurrentRow(multName, multMap.get(multName).getData().doubleValue());
+				}
 			}
 		}
 	}

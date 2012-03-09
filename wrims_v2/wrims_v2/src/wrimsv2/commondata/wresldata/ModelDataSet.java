@@ -31,6 +31,7 @@ public class ModelDataSet implements Serializable {
 	private static final long serialVersionUID = 1L;
 	// / weight table   // <objName,  <itemName, value>>
 	public ArrayList<String> wtList = new ArrayList<String>();
+	public ArrayList<String> wtTimeArrayList = new ArrayList<String>();
 	public ArrayList<String> wtSlackSurplusList = new ArrayList<String>();
 	public ArrayList<String> usedWtSlackSurplusList = new ArrayList<String>();
 	public ArrayList<String> usedWtSlackSurplusDvList = new ArrayList<String>();
@@ -69,6 +70,7 @@ public class ModelDataSet implements Serializable {
 
 	// / dvar data structure
 	public ArrayList<String> dvList = new ArrayList<String>();
+	public ArrayList<String> dvTimeArrayList = new ArrayList<String>();
 	public ArrayList<String> dvSlackSurplusList = new ArrayList<String>();
 	public ArrayList<String> dvList_global = new ArrayList<String>();
 	public ArrayList<String> dvList_local = new ArrayList<String>();
@@ -84,6 +86,7 @@ public class ModelDataSet implements Serializable {
 
 	// / goal data structure
 	public ArrayList<String> gList = new ArrayList<String>();
+	public ArrayList<String> gTimeArrayList = new ArrayList<String>();	
 	public ArrayList<String> gList_global = new ArrayList<String>();
 	public ArrayList<String> gList_local = new ArrayList<String>();
 	public Map<String, Goal> gMap = new HashMap<String, Goal>();
@@ -141,7 +144,8 @@ public class ModelDataSet implements Serializable {
 		Map<String, WeightElement> wtMap =mds.wtMap;
 		SolverData.clearWeightMap();
 		Map<String, WeightElement> solverWtMap=SolverData.getWeightMap();
-		ControlData.currEvalTypeIndex=5;
+		ControlData.currEvalTypeIndex=7;
+		wtTimeArrayList = new ArrayList<String>();
 		for (String wtName: wtList){
 			ControlData.currEvalName=wtName;
 			//System.out.println("Process weight "+wtName);
@@ -173,6 +177,7 @@ public class ModelDataSet implements Serializable {
 					Error.addEvaluationError(newWtName+" is duplicatedly used in both weight and time array weight");
 				}else{
 					solverWtMap.put(newWtName,newWt);
+					wtTimeArrayList.add(newWtName);
 				}
 				evaluator.reset();
 			}
@@ -185,7 +190,7 @@ public class ModelDataSet implements Serializable {
 		Map<String, WeightElement> wtSlackSurplusMap =mds.wtSlackSurplusMap;
 		SolverData.clearWeightSlackSurplusMap();
 		Map<String, WeightElement> solverWeightSlackSurplusMap=SolverData.getWeightSlackSurplusMap();
-		ControlData.currEvalTypeIndex=5;
+		ControlData.currEvalTypeIndex=7;
 		for (String wtSlackSurplusName: usedWtSlackSurplusDvList){
 			ControlData.currEvalName=wtSlackSurplusName;
 			//System.out.println("Process weight "+wtName);
@@ -362,6 +367,7 @@ public class ModelDataSet implements Serializable {
 		Map<String, Dvar> solverDvarMap=SolverData.getDvarMap();
 		ControlData.currDvMap=dvMap;
 		ControlData.currEvalTypeIndex=1;
+		dvTimeArrayList = new ArrayList<String>();
 		for (String dvName: dvList){
 			ControlData.currEvalName=dvName;
 			//System.out.println("Process dvar "+dvName);
@@ -417,6 +423,7 @@ public class ModelDataSet implements Serializable {
 					Error.addEvaluationError(newDvarName+" is duplicatedly used in both dvar and time array dvar");
 				}else{
 					solverDvarMap.put(newDvarName, newDvar);
+					dvTimeArrayList.add(newDvarName);
 				}
 			}
 		}
@@ -429,6 +436,7 @@ public class ModelDataSet implements Serializable {
 		ControlData.currEvalTypeIndex=3;
 		SolverData.clearConstraintDataMap();
 		Map<String, EvalConstraint> solverGMap=SolverData.getConstraintDataMap();
+		gTimeArrayList = new ArrayList<String>();
 		for (String goalName: gList){
 			ControlData.currEvalName=goalName;
 			//System.out.println("Process constraint "+goalName);
@@ -463,6 +471,7 @@ public class ModelDataSet implements Serializable {
 							Error.addEvaluationError(newGoalName+" is duplicatedly used in both goal and time array goal");
 						}else{	
 							solverGMap.put(newGoalName,caseExpression.evalConstraint.copyOf());
+							gTimeArrayList.add(newGoalName);
 						}
 					} catch (RecognitionException e) {
 						Error.addEvaluationError("Case expression evaluation has error.");
