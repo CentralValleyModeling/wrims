@@ -14,6 +14,8 @@ public class Workflow {
 		StudyTemp st = parseWreslMain(inputFilePath);
 		
 		ErrorCheck.checkStudy(st);
+		Procedures.processGoalHS(st);
+		//Procedures.processSlackSurplus(st);
 		//st= Procedures.replaceChar(st);
 		
 		return st;

@@ -18,6 +18,9 @@ options {
   import wrimsv2.wreslplus.elements.ExternalTemp;
   import wrimsv2.wreslplus.elements.DvarTemp;
   import wrimsv2.wreslplus.elements.SvarTemp;
+  import wrimsv2.wreslplus.elements.GoalTemp;
+  import wrimsv2.wreslplus.elements.GoalHS;
+  import wrimsv2.wreslplus.elements.GoalCase;
   import wrimsv2.wreslplus.elements.ModelTemp;
   import wrimsv2.wreslplus.elements.SequenceTemp;
   import wrimsv2.wreslplus.elements.StudyTemp;
@@ -118,10 +121,11 @@ scope { ModelTemp model_;}
 	   | include_file 
 	   | ts=timeseries {$model::model_.itemList.add($ts.id); $model::model_.tsList.add($ts.id); $model::model_.tsMap.put($ts.id, $ts.tsObj); }
 	   | sv=svar_g     {$model::model_.itemList.add($sv.id); $model::model_.svList.add($sv.id); $model::model_.svMap.put($sv.id, $sv.svObj); } 
-	   | dv=dvar_group {$model::model_.itemList.add($dv.id); $model::model_.dvList.add($dv.id); $model::model_.dvMap.put($dv.id, $dv.dvarObj); } 
+	   | dv=dvar_g     {$model::model_.itemList.add($dv.id); $model::model_.dvList.add($dv.id); $model::model_.dvMap.put($dv.id, $dv.dvObj); } 
 	   | ex=ex_g       {$model::model_.itemList.add($ex.id); $model::model_.exList.add($ex.id); $model::model_.exMap.put($ex.id, $ex.exObj); }
 	   | alias 
-	   | goal_group 
+	   | gl1=goal_s    {$model::model_.itemList.add($gl1.id); $model::model_.glList.add($gl1.id); $model::model_.glMap.put($gl1.id, $gl1.glObj); }
+	   | gl2=goal_hs   {$model::model_.itemList.add($gl2.id); $model::model_.glList.add($gl2.id); $model::model_.gl2Map.put($gl2.id, $gl2.glObj); }
 	   | network 
 	   | operation )+
 	   '}' 
@@ -132,7 +136,7 @@ modelName: ID;
 
 operation: 'operation' operationName '{' operationCase+ '}'; 
 
-operationCase: CASE logical_main '{' ( include_model | timeseries | svar_g | dvar_group | goal_group )+  '}';
+operationCase: CASE logical_main '{' ( include_model | timeseries | svar_g | dvar_g | goal_s )+  '}';
 
 operationName: ID;
 
@@ -151,31 +155,70 @@ include_file: INCLUDE  string_literal  ('as' includeNameAs )?  ;
 includeNameAs: ID ;
 
 
-/// goal
+/// goal simple
+goal_s returns[String id, GoalTemp glObj]
+scope { GoalTemp gl_;
+        String id_; 
+      } 
+@init{ $goal_s::gl_ = new GoalTemp(); 
+       $goal_s::gl_.fromWresl = this.currentAbsolutePath;
+       $goal_s::gl_.hasCase = false; 
+       dependants = new LinkedHashSet<String>();  
+	 }
+@after{ $id = $goal_s::gl_.id; $glObj=$goal_s::gl_; $glObj.dependants= dependants;}	 
 
-goalLabel : ID ;
+	: GOAL LOCAL? i=ID  '{' ( e=expr_constraint )'}' 
+	{$goal_s::gl_.id=$i.text; 
+	 $goal_s::gl_.caseCondition.add(Param.always);
+	 $goal_s::gl_.caseName.add(Param.defaultCaseName);
+	 $goal_s::gl_.caseExpression.add($e.text);};
 
-goal_group : GOAL goal ;
+/// goal hs
+goal_hs returns[String id, GoalTemp glObj]
+scope { GoalTemp gl_;
+        String id_; 
+      } 
+@init{ $goal_hs::gl_ = new GoalTemp(); 
+       $goal_hs::gl_.fromWresl = this.currentAbsolutePath; 
+       dependants = new LinkedHashSet<String>();  
+	 }
+@after{ $id = $goal_hs::gl_.id; $glObj=$goal_hs::gl_; $glObj.dependants= dependants;}	 
+	: GOAL LOCAL? i=ID  {$goal_hs::gl_.id=$i.text;}
+	  '{' lhs 
+	  ( goal_hs_nocase 		
+	  | goal_hs_cases 
+	  ) '}';
 
-goal : goalLabel '{' ( goal_simple | goal_hs  )'}' ;
+goal_hs_nocase
+@after{ $t.gc.id = Param.defaultCaseName;
+		$goal_hs::gl_.caseName.add($t.gc.id); 
+		$goal_hs::gl_.caseMap.put($t.gc.id, $t.gc);
+		$goal_hs::gl_.hasCase = false;
+		}
+	: t=goal_hs_trunk ;
 
-goal_timeArray : dimension goal ;
+goal_hs_trunk returns[GoalCase gc]
+scope { GoalCase gc_; } 
+@init { $goal_hs_trunk::gc_ = new GoalCase();}
+@after{ $gc=$goal_hs_trunk::gc_;}
+	:  rhs ((lhs_gt_rhs lhs_lt_rhs?) | (lhs_lt_rhs lhs_gt_rhs?)) ;
 
-goal_simple : expr_constraint ;
+goal_hs_cases : goal_hs_case+ ;
 
-goal_hs :         lhs ( goal_hs_nocase | goal_hs_case+ ) ;
+goal_hs_case
+@after{ $t.gc.id = $ci.text;
+		$t.gc.condition = $cc.text;
+		$goal_hs::gl_.caseName.add($t.gc.id); 
+		$goal_hs::gl_.caseMap.put($t.gc.id, $t.gc);
+		$goal_hs::gl_.hasCase = true;}
+	: CASE ci=ID '{' CONDITION cc=logical_main t=goal_hs_trunk  '}';
+	
 
-goal_hs_nocase :  rhs ( lhs_gt_rhs | lhs_lt_rhs )+ ;
+lhs : LHS e=expr_add {$goal_hs::gl_.lhs=$e.text;} ;
+rhs : RHS e=expr_add {$goal_hs_trunk::gc_.rhs=$e.text;} ;
+lhs_gt_rhs : LHS '>' RHS ( 'penalty' p=expr_add {$goal_hs_trunk::gc_.lhs_gt_rhs=$p.text;} | constrain ) ;
+lhs_lt_rhs : LHS '<' RHS ( 'penalty' p=expr_add {$goal_hs_trunk::gc_.lhs_lt_rhs=$p.text;} | constrain ) ;
 
-goal_hs_case : CASE ID '{' CONDITION logical_main rhs ( lhs_gt_rhs | lhs_lt_rhs )+ '}' ;
-
-
-
-lhs : 'lhs' expr_add ;
-rhs : 'rhs' expr_add ;
-lhs_gt_rhs : 'lhs' '>' 'rhs' ( penalty | constrain ) ;
-lhs_lt_rhs : 'lhs' '<' 'rhs' ( penalty | constrain ) ;
-penalty : 'penalty' number ;
 constrain : 'constrain' ;
 
 /// alias
@@ -369,27 +412,26 @@ ex_java : 'language' 'java' ;
 
 
 /// dvar
-
-dvar_group returns[String id, DvarTemp dvarObj]
+dvar_g returns[String id, DvarTemp dvObj]
 scope { DvarTemp dvar_;
         String id_; 
       } 
-@init{ $dvar_group::dvar_ = new DvarTemp(); 
-       $dvar_group::dvar_.fromWresl = this.currentAbsolutePath; 
+@init{ $dvar_g::dvar_ = new DvarTemp(); 
+       $dvar_g::dvar_.fromWresl = this.currentAbsolutePath; 
 	 }
 	: ( dvar_group_new | dvar_group_old ) 
-	  { $id= $dvar_group::id_; $dvarObj= $dvar_group::dvar_; }
+	  { $id= $dvar_g::id_; $dvObj= $dvar_g::dvar_; }
 	;
 
-dvarID : i=ID { $dvar_group::dvar_.id=$i.text; $dvar_group::id_=$i.text; };
+dvarID : i=ID { $dvar_g::dvar_.id=$i.text; $dvar_g::id_=$i.text; };
 
 dvar_group_old: DEFINE LOCAL? dvar ;
 dvar_group_new: DVAR    dvar ;
 
 dvar: (dvarArray|dvarTimeArray)? dvarID '{' dvar_trunk '}'  ;
 
-dvarArray :     '[' d=( INT | ID ) ']'  {$dvar_group::dvar_.arraySize=$d.text; };
-dvarTimeArray : '(' d=( INT | ID ) ')'  {$dvar_group::dvar_.timeArraySize=$d.text; };
+dvarArray :     '[' d=( INT | ID ) ']'  {$dvar_g::dvar_.arraySize=$d.text; };
+dvarTimeArray : '(' d=( INT | ID ) ')'  {$dvar_g::dvar_.timeArraySize=$d.text; };
 
 //dvar_array : dimension dvarID '{' dvar_trunk '}'  ;
 //
@@ -403,21 +445,21 @@ dvar_trunk
 //dvar_array_trunk : ( index_assign? '{' dvar_trunk '}' )+ ;
 //dvar_timeArray_trunk : ( timeIndex_assign? '{' dvar_trunk '}' )+ ;
 
-dvarIsInteger : INTEGER {$dvar_group::dvar_.isInteger=true; $dvar_group::dvar_.upperBound="1";$dvar_group::dvar_.lowerBound="0";} ;
+dvarIsInteger : INTEGER {$dvar_g::dvar_.isInteger=true; $dvar_g::dvar_.upperBound="1";$dvar_g::dvar_.lowerBound="0";} ;
 index_assign : '[' INT (':' INT)? ']' ;
 timeIndex_assign : '(' INT (':' INT)? ')' ;
 
 lower_upper : lower upper? | upper lower? ;
-upper: UPPER ( e=expr_limited {$dvar_group::dvar_.upperBound=$e.text;} | UNBOUNDED {$dvar_group::dvar_.upperBound=Param.upper_unbounded;}) ;
-lower: LOWER ( e=expr_limited {$dvar_group::dvar_.lowerBound=$e.text;} | UNBOUNDED {$dvar_group::dvar_.lowerBound=Param.lower_unbounded;}) ;
+upper: UPPER ( e=expr_limited {$dvar_g::dvar_.upperBound=$e.text;} | UNBOUNDED {$dvar_g::dvar_.upperBound=Param.upper_unbounded;}) ;
+lower: LOWER ( e=expr_limited {$dvar_g::dvar_.lowerBound=$e.text;} | UNBOUNDED {$dvar_g::dvar_.lowerBound=Param.lower_unbounded;}) ;
 
 expr_limited: expr_add ; //number ( ('*' | '/') unitFunc )? ;
 
 std: STD ;
 
 dvKindUnits : dvKind dvUnits | dvUnits dvKind ;
-dvKind:  KIND s=string_literal  {$dvar_group::dvar_.kind=$s.text;};
-dvUnits: UNITS s=string_literal {$dvar_group::dvar_.units=$s.text;};
+dvKind:  KIND s=string_literal  {$dvar_g::dvar_.kind=Tools.strip($s.text);};
+dvUnits: UNITS s=string_literal {$dvar_g::dvar_.units=Tools.strip($s.text);};
 
 
 
@@ -440,14 +482,17 @@ logical_or
     ;
 
 logical_and
-    :   logical_atom       
-        (   AND    logical_atom  )*    
+    :   logical_unary       
+        (   AND    logical_unary  )*    
     ;
 
-logical_atom
+logical_unary : NOT? logical_term;
+
+logical_term
     :    ( logical_relation ) => logical_relation
     |    ( logical_or_p ) => logical_or_p
-    |    logical_relation_p     
+    |    logical_relation_p
+    |    logicalFunc    
     ;
 
 logical_or_p : '(' logical_or ')' ;
@@ -460,18 +505,26 @@ logical_relation
 	:  expr_add  relation_token  expr_add
 	;
 
+logicalFunc 
+	: RANGE '(' expr_add ',' expr_add ',' expr_add ')' ;	
 //================ end logical ==============//
 
-relation_token: '>' | '<' | '>=' | '<=' | '==' | '!=' ;
+
+/// constraint expr
+constraint_token : '>' | '<' | '>=' | '<=' | '=' ;
 
 expr_constraint
-	:  expr_add  ( relation_token | '=' )  expr_add
+	: expr_add constraint_token expr_add
 	;
+
+// comparison expr
+relation_token: '>' | '<' | '>=' | '<=' | '==' | '!=' ;
 
 expr_relation
 	:  expr_add  relation_token  expr_add
 	;
 
+// ignore dependants in the lhs
 expr_assign
 @init{ Set<String> backup = new LinkedHashSet<String>(dependants);}
     :   expr_add {dependants = backup;} '='  expr_add  
@@ -550,6 +603,7 @@ real_n : '-' REAL ;
 
 id_domain : ( ID '.' )?  ID ;
 
+
 	
 mathFunc 
   :  LOG '(' expr_add ')' 
@@ -573,6 +627,7 @@ reservedID :  MONTH | MonthID ;
 
 AND : '&&' | '.and.' ;
 OR  : '||' | '.or.' ;
+NOT : '!' | '.not.' ;
 
 MONTH :   'month' ;
 MonthID : 'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'|'dec';        
@@ -623,21 +678,26 @@ INTEGER : 'integer'|'INTEGER';
 
 EXTERNAL : 'external' | 'EXTERNAL' ;
 
-SELECT : 'select' ;
-FROM   : 'from' ;
-WHERE  : 'where' ;
-GIVEN  : 'given' ;
-USE    : 'use' ;
+SELECT : 'select' | 'SELECT' ;
+FROM   : 'from' | 'FROM' ;
+WHERE  : 'where' | 'WHERE' ;
+GIVEN  : 'given' | 'GIVEN' ;
+USE    : 'use' | 'USE' ;
+
+LHS : 'lhs' | 'LHS' ;
+RHS : 'rhs' | 'RHS' ;
+
+// special function
+RANGE : 'range' | 'RANGE' ;
 
 // intrinsic function
-INT_word : 'int'|'INT';
-LOG : 'log' ;
-MAX : 'max' ;
-MIN : 'min' ;
-MOD : 'mod' ;
-CFS_TAF : 'cfs_taf' ;
-TAF_CFS : 'taf_cfs' ;
-
+INT_word : 'int' | 'INT' ;
+LOG : 'log' | 'LOG' ;
+MAX : 'max' | 'MAX' ;
+MIN : 'min' | 'MIN' ;
+MOD : 'mod' | 'MOD' ;
+CFS_TAF : 'cfs_taf' | 'CFS_TAF' ;
+TAF_CFS : 'taf_cfs' | 'TAF_CFS' ;
 
 //ID  :   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
 ID : Letter ( Letter | Digit | '_' )*;

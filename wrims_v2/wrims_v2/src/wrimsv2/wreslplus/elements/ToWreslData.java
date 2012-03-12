@@ -8,11 +8,13 @@ import java.util.Map;
 
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.External;
+import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
+import wrimsv2.commondata.wresldata.WeightElement;
 
 public class ToWreslData {
 	
@@ -54,6 +56,12 @@ public class ToWreslData {
 		ModelDataSet o = new ModelDataSet();
 		
 		// TODO: give pre-sorted var list
+
+		o.dvSlackSurplusList = Tools.allToLowerCase(m.ssList);
+		Collections.sort(o.dvSlackSurplusList,String.CASE_INSENSITIVE_ORDER);
+
+		o.wtSlackSurplusList = Tools.allToLowerCase(m.ssList);
+		Collections.sort(o.wtSlackSurplusList,String.CASE_INSENSITIVE_ORDER);
 		
 		o.dvList = Tools.allToLowerCase(m.dvList);
 		Collections.sort(o.dvList,String.CASE_INSENSITIVE_ORDER);
@@ -64,9 +72,19 @@ public class ToWreslData {
 		o.svList = Tools.allToLowerCase(m.svList);
 		Collections.sort(o.svList,String.CASE_INSENSITIVE_ORDER);
 
+		o.gList = Tools.allToLowerCase(m.glList);
+		Collections.sort(o.exList,String.CASE_INSENSITIVE_ORDER);
+		
 		o.exList = Tools.allToLowerCase(m.exList);
 		Collections.sort(o.exList,String.CASE_INSENSITIVE_ORDER);
 		
+
+		for (String k: m.ssMap.keySet()){			
+			o.dvSlackSurplusMap.put(k.toLowerCase(), convertDvar(m.ssMap.get(k)));
+		}
+		for (String k: m.ssWeightMap.keySet()){			
+			o.wtSlackSurplusMap.put(k.toLowerCase(), convertWeight(m.ssWeightMap.get(k)));
+		}
 		for (String k: m.dvMap.keySet()){			
 			o.dvMap.put(k.toLowerCase(), convertDvar(m.dvMap.get(k)));
 		}
@@ -75,6 +93,9 @@ public class ToWreslData {
 		}		
 		for (String k: m.svMap.keySet()){			
 			o.svMap.put(k.toLowerCase(), convertSvar(m.svMap.get(k)));
+		}
+		for (String k: m.glMap.keySet()){			
+			o.gMap.put(k.toLowerCase(), convertGoal(m.glMap.get(k)));
 		}
 		for (String k: m.exMap.keySet()){			
 			o.exMap.put(k.toLowerCase(), convertExternal(m.exMap.get(k)));
@@ -131,9 +152,24 @@ public class ToWreslData {
 		o.fromWresl = d.fromWresl.toLowerCase();
 		o.lowerBound = d.lowerBound.toLowerCase();
 		o.upperBound = d.upperBound.toLowerCase();
-		o.kind = Tools.strip(d.kind.toLowerCase());
-		o.units = Tools.strip(d.units.toLowerCase());
+		o.kind = d.kind.toLowerCase();
+		o.units = d.units.toLowerCase();
+		o.condition = d.condition;
 		if (d.isInteger) o.integer=Param.yes;
+		
+		return o;
+		
+	}
+
+
+	public static WeightElement convertWeight (WeightTemp w){
+		
+		WeightElement o = new WeightElement();
+		
+		o.fromWresl = w.fromWresl.toLowerCase();
+		o.condition = w.condition;
+		o.weight = w.weight;
+
 		
 		return o;
 		
@@ -147,6 +183,32 @@ public class ToWreslData {
 		o.fromWresl = e.fromWresl.toLowerCase();
 		o.type = e.fileName.toLowerCase();
 		
+		return o;
+		
+	}
+
+
+	public static Goal convertGoal (GoalTemp g){
+		
+		Goal o = new Goal();
+		
+		o.fromWresl = g.fromWresl.toLowerCase();
+		o.caseName = Tools.allToLowerCase(g.caseName);
+		o.expressionDependants = Tools.allToLowerCase(g.dependants);
+		o.expressionDependants.removeAll(Param.reservedSet);
+		//System.out.println(s.dependants);
+		
+		o.caseCondition = Tools.allToLowerCase(g.caseCondition);
+		o.caseCondition = Tools.replace_with_space(o.caseCondition);
+		o.caseCondition = Tools.replace_seperator(o.caseCondition);
+		o.caseCondition = Tools.add_space_between_logical(o.caseCondition);
+		
+		o.caseExpression = Tools.allToLowerCase(g.caseExpression);
+		o.caseExpression = Tools.replace_with_space(o.caseExpression);
+		o.caseExpression = Tools.replace_seperator(o.caseExpression);
+		o.caseExpression = Tools.add_space_between_logical(o.caseExpression);
+		
+		System.out.println(o.caseExpression);
 		return o;
 		
 	}
