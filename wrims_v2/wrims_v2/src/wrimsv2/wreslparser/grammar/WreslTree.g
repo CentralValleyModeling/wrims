@@ -231,7 +231,7 @@ goal_case_content[String l, String d, String vc]
 	: CASE i=IDENT { $goal::caseName = $i.text;  $goal::caseNumber++; } 
 	'{' c=condition RHS r=expression (s=sub_content[$l,$r.text])? '}'
 	{ varInCycle_nullsRemoved =   Tools.remove_nulls($vc+" "+$r.strVarInCycle+" "+$c.varInCycle);
-	  dependants_nullsRemoved =   Tools.remove_nulls($d+" "+$r.dependants);   
+	  dependants_nullsRemoved =   Tools.remove_nulls($d+" "+$r.dependants+" "+$c.dependants);   
 	}
 	-> {s!=null}? ^( Case $i Condition[$c.text] Dependants[dependants_nullsRemoved] VarInCycle[varInCycle_nullsRemoved] $s )
 	->            ^( Case $i Condition[$c.text] Dependants[dependants_nullsRemoved] VarInCycle[varInCycle_nullsRemoved] Simple Lhs[$l] Op["="] Rhs[$r.text] )
