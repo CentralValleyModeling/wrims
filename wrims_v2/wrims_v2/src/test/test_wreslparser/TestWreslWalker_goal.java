@@ -107,14 +107,19 @@ public class TestWreslWalker_goal {
 		String logText = Tools.readFileAsString(logFilePath);	
 
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 9);	
+		Assert.assertEquals(totalErrs, 10);	
 		
 	
 		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\constraint.csv");	
 		
 		String s;
 		int n;
-	
+
+		s = "goal_3,##default,1,always,x-surplus__goal_3_1+slack__goal_3_1=y+z";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
 		//s = "goal_4,default,1,always,x-surplus_goal_4_default<y+z";
 		s = "goal_4,##default,1,always,x-surplus__goal_4_1<y+z";
 		s = Tools.replace_regex(s);
@@ -190,7 +195,7 @@ public class TestWreslWalker_goal {
 	public void goal_case() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_goal_case";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
@@ -213,7 +218,7 @@ public class TestWreslWalker_goal {
 		
 		String modelName = sd.getModelList().get(0);
 		
-		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		WriteCSV.study(sd, csvFolderPath ) ;
 		
 		String logText = Tools.readFileAsString(logFilePath);	
 
@@ -221,7 +226,7 @@ public class TestWreslWalker_goal {
 		Assert.assertEquals(totalErrs, 2);	
 		
 	
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\constraint.csv");	
 		
 		String s;
 		int n;
@@ -237,7 +242,7 @@ public class TestWreslWalker_goal {
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 		
-		csvText = Tools.readFileAsString(csvFolderPath+"\\weight.csv");	
+		csvText = Tools.readFileAsString(csvFolderPath+"\\first\\weight.csv");	
 	
 		//s = "slack_global_goal_actionon,-700.";
 		s = "slack__global_goal_1,##-700.";
@@ -252,7 +257,7 @@ public class TestWreslWalker_goal {
 		Assert.assertEquals(n, 0);
 
 		//s = "slack_local_goal_case1,-700.";
-		s = "slack__local_goal_1,##-700.";
+		s = "slack__local_goal_1,##-(pp)";
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
@@ -270,7 +275,7 @@ public class TestWreslWalker_goal {
 	public void goal_case2() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_goal_case2";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
@@ -293,7 +298,7 @@ public class TestWreslWalker_goal {
 		
 		String modelName = sd.getModelList().get(0);
 		
-		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		WriteCSV.study(sd, csvFolderPath ) ;
 		
 		String logText = Tools.readFileAsString(logFilePath);	
 
@@ -301,7 +306,7 @@ public class TestWreslWalker_goal {
 		Assert.assertEquals(totalErrs, 3);	
 		
 	
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\constraint.csv");	
 		
 		String s;
 		int n;
@@ -318,7 +323,7 @@ public class TestWreslWalker_goal {
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 		
-		csvText = Tools.readFileAsString(csvFolderPath+"\\weight.csv");	
+		csvText = Tools.readFileAsString(csvFolderPath+"\\first\\weight.csv");	
 
 		//s = "slack_global_goal_actionon,-700.";
 		s = "slack__global_goal_1,##-700.";
@@ -338,7 +343,7 @@ public class TestWreslWalker_goal {
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);
 		
-		csvText = Tools.readFileAsString(csvFolderPath+"\\dvar.csv");	
+		csvText = Tools.readFileAsString(csvFolderPath+"\\first\\dvar.csv");	
 
 		//s = "slack_global_goal_actionoff,0,upper_unbounded,n,undefined,slack";
 		s = "slack__global_goal_2,##0,upper_unbounded,n,undefined,slack";

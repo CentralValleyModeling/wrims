@@ -5,6 +5,8 @@ SEQUENCE CYCLE1 {
 
 MODEL first { 
 
+define pp { value 9 }
+
 goal global_goal {
   lhs C3_M
   case ActionOn {
@@ -25,7 +27,7 @@ goal[local] local_goal {
     condition   int( B2On )==1
     rhs     y
     lhs>rhs     constrain
-    lhs<rhs     penalty 700. }
+    lhs<rhs     penalty pp }
   case case2 {
     condition   int( B2On )==0
     rhs     z

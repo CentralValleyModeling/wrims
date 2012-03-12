@@ -23,7 +23,13 @@ goal Goal_2 {
     lhs>rhs     constrain
 }
 
-	
+goal Goal_3 {
+
+    lhs     x
+    rhs     y + z
+    lhs>rhs     penalty 66.0 
+	lhs<rhs     penalty 55 
+}	
 
 goal Goal_4 {
 
