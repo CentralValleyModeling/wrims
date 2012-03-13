@@ -277,6 +277,7 @@ goal_case
 				if (d != null) {
 					String dependants = $d.text.toLowerCase();
 					$goal::gl.expressionDependants.addAll(Tools.convertStrToSet(dependants));
+					$goal::gl.expressionDependants.removeAll(Param.reservedSet);
 				}
 				if (vc != null) {
 					String varInCycle = $vc.text.toLowerCase();

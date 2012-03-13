@@ -161,7 +161,10 @@ public class StructTree
     this.gl.caseName.add(Param.defaultCaseName);
     this.gl.caseExpression.add(expression);
     this.gl.fromWresl = this.S.currentAbsolutePath;
-    if (dependants != null) this.gl.expressionDependants.addAll(Tools.convertStrToSet(dependants));
+    if (dependants != null) {
+    	this.gl.expressionDependants.addAll(Tools.convertStrToSet(dependants));
+    	this.gl.expressionDependants.removeAll(Param.reservedSet);
+    }
     if (varInCycle != null) { 
     	this.gl.neededVarInCycleSet = Tools.convertStrToSet(varInCycle);
     	this.gl.needVarFromEarlierCycle = true;
