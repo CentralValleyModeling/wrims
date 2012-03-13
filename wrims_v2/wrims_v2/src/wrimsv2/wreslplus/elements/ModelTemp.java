@@ -12,6 +12,10 @@ public class ModelTemp implements Serializable {
 	public String id;
 	
 	public ArrayList<String>  itemList;
+	public ArrayList<String>  asList;
+	public ArrayList<String>  asList_modified;
+	public Map<String,AliasTemp> asMap;	
+	public Map<String,AliasTemp> asMap_modified;	
 	public ArrayList<String>  svList;
 	public Map<String,SvarTemp> svMap;	
 	public ArrayList<String>  dvList;
@@ -34,6 +38,10 @@ public class ModelTemp implements Serializable {
 		itemList = new ArrayList<String>();
 		svList = new ArrayList<String>();
 		svMap = new LinkedHashMap<String, SvarTemp>();	
+		asList = new ArrayList<String>();
+		asMap = new LinkedHashMap<String, AliasTemp>();
+		asList_modified = new ArrayList<String>();
+		asMap_modified = new LinkedHashMap<String, AliasTemp>();
 		dvList = new ArrayList<String>();
 		dvMap = new LinkedHashMap<String, DvarTemp>();	
 		tsList = new ArrayList<String>();

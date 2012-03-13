@@ -11,6 +11,7 @@ import wrimsv2.evaluator.ValueEvaluatorParser;
 public class Alias implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	public String condition;
 	public String scope;
 	public String kind;
 	public String units;
@@ -27,6 +28,7 @@ public class Alias implements Serializable {
 	public ValueEvaluatorParser timeArraySizeParser;
 
 	public Alias(){
+		condition=Param.always;
 		scope=Param.undefined;
 		kind=Param.undefined;
 		units=Param.undefined;

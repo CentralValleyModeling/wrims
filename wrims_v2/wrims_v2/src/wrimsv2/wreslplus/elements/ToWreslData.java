@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.External;
 import wrimsv2.commondata.wresldata.Goal;
@@ -78,7 +79,9 @@ public class ToWreslData {
 		o.exList = m.exList;
 		Collections.sort(o.exList,String.CASE_INSENSITIVE_ORDER);
 		
-
+		o.asList = m.asList_modified;
+		Collections.sort(o.asList,String.CASE_INSENSITIVE_ORDER);
+		
 		for (String k: m.ssMap.keySet()){			
 			o.dvSlackSurplusMap.put(k, convertDvar(m.ssMap.get(k)));
 		}
@@ -99,6 +102,9 @@ public class ToWreslData {
 		}
 		for (String k: m.exMap.keySet()){			
 			o.exMap.put(k, convertExternal(m.exMap.get(k)));
+		}
+		for (String k: m.asMap_modified.keySet()){			
+			o.asMap.put(k, convertAlias(m.asMap_modified.get(k)));
 		}
 		return o;
 		
@@ -211,6 +217,21 @@ public class ToWreslData {
 		//o.caseExpression = Tools.add_space_between_logical(o.caseExpression);
 		
 		System.out.println(o.caseExpression);
+		return o;
+		
+	}
+
+
+	public static Alias convertAlias (AliasTemp d){
+		
+		Alias o = new Alias();
+		
+		o.fromWresl = d.fromWresl;
+		o.expression = Tools.replace_seperator(d.expression);
+		o.kind = d.kind;
+		o.units = d.units;
+		o.condition = d.condition;
+
 		return o;
 		
 	}

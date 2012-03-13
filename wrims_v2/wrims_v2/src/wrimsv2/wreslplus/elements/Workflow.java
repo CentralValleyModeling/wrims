@@ -16,13 +16,15 @@ public class Workflow {
 		ErrorCheck.checkStudy(st);
 		
 		Procedures.processGoalHS(st);
-		//System.out.println(st.modelMap.get("fiRst").svList);
+
 		ToLowerCase.convertStudy(st);
-		//System.out.println(st.modelMap.get("first").svList);
+		
+		
+
 		Procedures.processDependants(st);
 		
-		//Procedures.processSlackSurplus(st);
-		//st= Procedures.replaceChar(st);
+		Procedures.convertAliasToGoal(st);
+
 		
 		return st;
 		

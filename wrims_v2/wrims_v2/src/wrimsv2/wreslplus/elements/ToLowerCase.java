@@ -77,7 +77,11 @@ public class ToLowerCase {
 			j.ssWeightMap.remove(key);
 			j.ssWeightMap.put( key.toLowerCase(), o);
 		}
-		
+		for (String key : j.asList) {
+			AliasTemp o = convertAlias(j.asMap.get(key));
+			j.asMap.remove(key);
+			j.asMap.put( key.toLowerCase(), o);
+		}		
 		j.itemList = Tools.allToLowerCase(j.itemList);
 		j.svList = Tools.allToLowerCase(j.svList);
 		j.dvList = Tools.allToLowerCase(j.dvList);
@@ -86,12 +90,15 @@ public class ToLowerCase {
 		j.tsList = Tools.allToLowerCase(j.tsList);
 		j.ssList = Tools.allToLowerCase(j.ssList);
 		j.exList = Tools.allToLowerCase(j.exList);
+		j.asList = Tools.allToLowerCase(j.asList);
 		
 	}
 
 	public static SvarTemp convertSvar (SvarTemp s){
 		
 		SvarTemp o = new SvarTemp();
+		
+		o.id = s.id;
 		o.fromWresl = s.fromWresl.toLowerCase();
 		o.kind = s.kind.toLowerCase();
 		o.units = s.units.toLowerCase();
@@ -116,6 +123,7 @@ public class ToLowerCase {
 		
 		TimeseriesTemp o = new TimeseriesTemp();
 		
+		o.id = t.id;
 		o.fromWresl = t.fromWresl.toLowerCase();
 		o.dssBPart = t.dssBPart.toLowerCase();
 		o.convertToUnits = t.convertToUnits.toLowerCase();
@@ -130,6 +138,7 @@ public class ToLowerCase {
 		
 		DvarTemp o = new DvarTemp();
 		
+		o.id = d.id;
 		o.fromWresl = d.fromWresl.toLowerCase();
 		o.lowerBound = d.lowerBound.toLowerCase();
 		o.upperBound = d.upperBound.toLowerCase();
@@ -146,6 +155,7 @@ public class ToLowerCase {
 		
 		WeightTemp o = new WeightTemp();
 		
+		o.id = w.id;
 		o.fromWresl = w.fromWresl.toLowerCase();
 		o.condition = w.condition.toLowerCase();
 		o.weight = w.weight.toLowerCase();
@@ -159,6 +169,7 @@ public class ToLowerCase {
 		
 		ExternalTemp o = new ExternalTemp();
 		
+		o.id = e.id;
 		o.fromWresl = e.fromWresl.toLowerCase();
 		o.fileName = e.fileName.toLowerCase();
 		
@@ -171,6 +182,7 @@ public class ToLowerCase {
 
 		GoalTemp o = new GoalTemp();
 		
+		o.id = g.id;
 		o.fromWresl = g.fromWresl.toLowerCase();
 		o.caseName = Tools.allToLowerCase(g.caseName);
 		o.dependants = Tools.allToLowerCase(g.dependants);
@@ -189,6 +201,22 @@ public class ToLowerCase {
 		
 		return o;
 				
+	}
+
+
+	public static AliasTemp convertAlias (AliasTemp d){
+		
+		AliasTemp o = new AliasTemp();
+		
+		o.id = d.id;
+		o.fromWresl = d.fromWresl.toLowerCase();
+		o.expression = d.expression.toLowerCase();
+		o.kind = d.kind.toLowerCase();
+		o.units = d.units.toLowerCase();
+		o.condition = d.condition;
+
+		
+		return o;
 	}
 
 }

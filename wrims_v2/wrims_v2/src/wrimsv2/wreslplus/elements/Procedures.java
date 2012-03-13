@@ -294,12 +294,20 @@ public class Procedures {
 				svObj.dependants.removeAll(Param.reservedSet);	
 			}			
 			
-			//TODO: bugs here
+			
 			for (String key: mObj.glMap.keySet()){			
 				
 				GoalTemp glObj = mObj.glMap.get(key);
 				
 				glObj.dependants.removeAll(Param.reservedSet);
+				
+			}
+			
+			for (String key: mObj.asMap.keySet()){			
+				
+				AliasTemp asObj = mObj.asMap.get(key);
+				
+				asObj.dependants.removeAll(Param.reservedSet);
 				
 			}
 		}
@@ -309,73 +317,85 @@ public class Procedures {
 	}
 
 
-	public static StudyTemp convertToLowerCase(StudyTemp s){
-		
-		s.modelList = Tools.allToLowerCase(s.modelList);
-		for (Map.Entry<String, ModelTemp> entry : s.modelMap.entrySet()) {
-			s.modelMap.remove( entry.getKey());
-			s.modelMap.put( entry.getKey().toLowerCase(), entry.getValue());
-		}
-		
-		for (String m: s.modelList){			
+	public static void convertAliasToGoal(StudyTemp s){
+					
+			for (String m: s.modelList){			
 	
-			ModelTemp j = s.modelMap.get(m);
-			
-			j.itemList = Tools.allToLowerCase(j.itemList);
-			j.svList = Tools.allToLowerCase(j.svList);
-			j.dvList = Tools.allToLowerCase(j.dvList);
-			j.glList = Tools.allToLowerCase(j.glList);
-			j.tsList = Tools.allToLowerCase(j.tsList);
-			j.ssList = Tools.allToLowerCase(j.ssList);
-			j.exList = Tools.allToLowerCase(j.exList);
-			
-			for (Map.Entry<String, SvarTemp> entry : j.svMap.entrySet()) {
-				j.svMap.remove( entry.getKey());
-				j.svMap.put( entry.getKey().toLowerCase(), entry.getValue());
-			}
-			for (Map.Entry<String, DvarTemp> entry : j.dvMap.entrySet()) {
-				j.dvMap.remove( entry.getKey());
-				j.dvMap.put( entry.getKey().toLowerCase(), entry.getValue());
-			}
-			for (Map.Entry<String, TimeseriesTemp> entry : j.tsMap.entrySet()) {
-				j.tsMap.remove( entry.getKey());
-				j.tsMap.put( entry.getKey().toLowerCase(), entry.getValue());
-			}
-			for (Map.Entry<String, ExternalTemp> entry : j.exMap.entrySet()) {
-				j.exMap.remove( entry.getKey());
-				j.exMap.put( entry.getKey().toLowerCase(), entry.getValue());
-			}
-			for (Map.Entry<String, GoalTemp> entry : j.glMap.entrySet()) {
-				j.glMap.remove( entry.getKey());
-				j.glMap.put( entry.getKey().toLowerCase(), entry.getValue());
-			}
-			for (Map.Entry<String, GoalTemp> entry : j.gl2Map.entrySet()) {
-				j.gl2Map.remove( entry.getKey());
-				j.gl2Map.put( entry.getKey().toLowerCase(), entry.getValue());
-			}
-			for (Map.Entry<String, DvarTemp> entry : j.ssMap.entrySet()) {
-				j.ssMap.remove( entry.getKey());
-				j.ssMap.put( entry.getKey().toLowerCase(), entry.getValue());
-			}
-			for (Map.Entry<String, WeightTemp> entry : j.ssWeightMap.entrySet()) {
-				j.ssWeightMap.remove( entry.getKey());
-				j.ssWeightMap.put( entry.getKey().toLowerCase(), entry.getValue());
-			}			
-			
-			for (String svKey: j.svMap.keySet()){			
+				ModelTemp mObj = s.modelMap.get(m);
 				
-				SvarTemp svObj = j.svMap.get(svKey);
+				// backup asList and asMap
 				
-				svObj.dependants = Tools.allToLowerCase(svObj.dependants);
-	
+				mObj.asList_modified.addAll(mObj.asList);
+				mObj.asMap_modified.putAll(mObj.asMap);
 				
-			}			
+				
+				
+				Set<String> allDepInGoals = new HashSet<String>();
+				
+				// find all dep
+				for (String gKey: mObj.glMap.keySet()){			
+					
+					GoalTemp g = mObj.glMap.get(gKey);
+					
+					allDepInGoals.addAll(g.dependants);
+					
+				}			
+				
+				
+				for (String aKey: mObj.asMap.keySet()){			
+					
+					if (allDepInGoals.contains(aKey)){
+							
+						
+						AliasTemp a = mObj.asMap.get(aKey);
+
+						// add to dvar
+						DvarTemp d = new DvarTemp();
+						d.id = a.id;
+						d.upperBound = Param.upper_unbounded;
+						d.lowerBound = Param.lower_unbounded;
+						d.kind = a.kind;
+						d.units = a.units;
+						d.fromWresl = a.fromWresl;
+						d.condition = a.condition;
+						
+						mObj.dvList.add(aKey);
+						mObj.dvMap.put(aKey, d);
+						
+						// add goal
+						GoalTemp g = new GoalTemp();
+						g.fromWresl = a.fromWresl;
+						g.id = a.id+"__alias";
+						//String e = a.id.toLowerCase() + "=" + a.expression;
+						g.caseExpression.add(a.id.toLowerCase() + "=" + a.expression);
+						g.condition = a.condition;
+						g.caseName.add(Param.defaultCaseName);
+						g.caseCondition.add(Param.always);
+					
+						mObj.glList.add(g.id.toLowerCase());
+						mObj.glMap.put(g.id.toLowerCase(), g);	
+						
+						
+						// remove from asList_modified and asMap_modified
+						mObj.asList_modified.remove(aKey);
+						mObj.asMap_modified.remove(aKey);
+						
+					}
+					
+					
+
+					
+				}				
+				
+				
+				
+				
+				
+			}
+			
+			
 	
-		}
-		
-		return s;
-	
-	}	
+		}	
 	
 
 

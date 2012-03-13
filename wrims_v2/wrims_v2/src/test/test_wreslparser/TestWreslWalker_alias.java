@@ -30,7 +30,7 @@ public class TestWreslWalker_alias {
 	public void alias_to_goal() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_alias_to_goal";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
@@ -47,13 +47,13 @@ public class TestWreslWalker_alias {
 		
 		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
 	
-		LogUtils.studySummary_details(sd);
+		//LogUtils.studySummary_details(sd);
 	
 		LogUtils.closeLogFile();
 		
 		String modelName = sd.getModelList().get(0);
 		
-		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		WriteCSV.study(sd, csvFolderPath ) ;
 		
 		String logText = Tools.readFileAsString(logFilePath);	
 	
@@ -61,7 +61,7 @@ public class TestWreslWalker_alias {
 		Assert.assertEquals(totalErrs, 1);	
 		
 	
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\constraint.csv");	
 		
 		String s;
 		int n;
@@ -74,10 +74,10 @@ public class TestWreslWalker_alias {
 		
 		// confirm that the item is removed from alias
 		
-		File as_file = new File(csvFolderPath + "\\alias.csv");
+		File as_file = new File(csvFolderPath + "\\first\\alias.csv");
 
 		if (as_file.exists()) {
-			csvText = Tools.readFileAsString(csvFolderPath + "\\alias.csv");
+			csvText = Tools.readFileAsString(csvFolderPath + "\\first\\alias.csv");
 
 			s = "exportactual";
 			s = Tools.replace_regex(s);
@@ -87,7 +87,7 @@ public class TestWreslWalker_alias {
 		}
 		
 		// check if dv has the item
-		csvText = Tools.readFileAsString(csvFolderPath+"\\dvar.csv");
+		csvText = Tools.readFileAsString(csvFolderPath+"\\first\\dvar.csv");
 		
 		s = "exportactual,##,always,lower_unbounded,upper_unbounded,n,cfs,export-prj";
 		s = Tools.replace_regex(s);
@@ -95,7 +95,7 @@ public class TestWreslWalker_alias {
 		Assert.assertEquals(n, 1);		
 		
 		// weight 
-		csvText = Tools.readFileAsString(csvFolderPath+"\\weight.csv");
+		csvText = Tools.readFileAsString(csvFolderPath+"\\first\\weight.csv");
 		
 		//s = "surplus_export_sjrir_comply_eisjr_udef,-999999";
 		s = "surplus__export_sjrir_comply_1,##-999999";
@@ -111,7 +111,7 @@ public class TestWreslWalker_alias {
 	public void alias_to_goal2() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_alias_to_goal2";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
@@ -128,7 +128,7 @@ public class TestWreslWalker_alias {
 		
 		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
 	
-		LogUtils.studySummary_details(sd);
+		//LogUtils.studySummary_details(sd);
 	
 		LogUtils.closeLogFile();
 		

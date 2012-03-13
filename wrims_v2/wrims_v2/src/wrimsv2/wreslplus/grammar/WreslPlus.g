@@ -18,6 +18,7 @@ options {
   import wrimsv2.wreslplus.elements.ExternalTemp;
   import wrimsv2.wreslplus.elements.DvarTemp;
   import wrimsv2.wreslplus.elements.SvarTemp;
+  import wrimsv2.wreslplus.elements.AliasTemp;
   import wrimsv2.wreslplus.elements.GoalTemp;
   import wrimsv2.wreslplus.elements.GoalHS;
   import wrimsv2.wreslplus.elements.GoalCase;
@@ -123,7 +124,7 @@ scope { ModelTemp model_;}
 	   | sv=svar_g     {$model::model_.itemList.add($sv.id); $model::model_.svList.add($sv.id); $model::model_.svMap.put($sv.id, $sv.svObj); } 
 	   | dv=dvar_g     {$model::model_.itemList.add($dv.id); $model::model_.dvList.add($dv.id); $model::model_.dvMap.put($dv.id, $dv.dvObj); } 
 	   | ex=ex_g       {$model::model_.itemList.add($ex.id); $model::model_.exList.add($ex.id); $model::model_.exMap.put($ex.id, $ex.exObj); }
-	   | alias 
+	   | as=alias      {$model::model_.itemList.add($as.id); $model::model_.asList.add($as.id); $model::model_.asMap.put($as.id, $as.asObj); }
 	   | gl1=goal_s    {$model::model_.itemList.add($gl1.id); $model::model_.glList.add($gl1.id); $model::model_.glMap.put($gl1.id, $gl1.glObj); }
 	   | gl2=goal_hs   {$model::model_.itemList.add($gl2.id); $model::model_.glList.add($gl2.id); $model::model_.gl2Map.put($gl2.id, $gl2.glObj); $model::model_.gl2List.add($gl2.id); }
 	   | network 
@@ -223,13 +224,23 @@ constrain : 'constrain' ;
 
 /// alias
 
-alias : ( ALIAS varID '{' VALUE  expr_add  aliasKind?  aliasUnits? '}' )
- 		|
- 		( DEFINE varID '{' ALIAS  expr_add  aliasKind?  aliasUnits?  '}' )
- 		;
+alias returns[String id, AliasTemp asObj]
+scope { AliasTemp as_;} 
+@init{ $alias::as_ = new AliasTemp(); 
+       $alias::as_.fromWresl = this.currentAbsolutePath; 
+       dependants = new LinkedHashSet<String>();  
+	 }
+@after{ $id = $alias::as_.id; $asObj=$alias::as_; $asObj.dependants= dependants;}	 
+	: alias_new | alias_old
+ 	;
 
-aliasUnits: UNITS string_literal ;
-aliasKind:  KIND string_literal ;
+alias_old : DEFINE LOCAL? aliasID '{' ALIAS  aliasExpresion  aliasKind?  aliasUnits?  '}' ;
+alias_new : ALIAS aliasID '{' VALUE  aliasExpresion  aliasKind?  aliasUnits? '}' ;
+
+aliasExpresion : e=expr_add {$alias::as_.expression=$e.text;}; 
+aliasID : i=ID {$alias::as_.id=$i.text;}; 
+aliasUnits: UNITS s=string_literal {$alias::as_.units=Tools.strip($s.text);};
+aliasKind:  KIND s=string_literal {$alias::as_.kind=Tools.strip($s.text);};
 
 /// svar
 
