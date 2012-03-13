@@ -5,7 +5,7 @@ SEQUENCE CYCLE1 {
 
 MODEL first { 
 
-	goal g_pp {   ! x + slack - surplus = y
+	goal g_pp {   # x + slack - surplus = y
 	
 	  lhs x
 
@@ -14,7 +14,7 @@ MODEL first {
 		lhs<rhs    penalty 11
 	}
 
-	goal g_pc {   ! x - surplus = y
+	goal g_pc {   # x - surplus = y
 	
 	  lhs x
 
@@ -23,7 +23,7 @@ MODEL first {
 		lhs<rhs    constrain
 	}
 
-	goal g_cp {   ! x + slack = y
+	goal g_cp {   # x + slack = y
 	
 	  lhs x
 
@@ -32,7 +32,7 @@ MODEL first {
 		lhs<rhs    penalty 11
 	}	
 
-	goal g_fp {   ! x + slack > y
+	goal g_fp {   # x + slack > y
 	
 	  lhs x
 
@@ -41,7 +41,7 @@ MODEL first {
 		lhs<rhs    penalty 11
 	}	
 
-	goal g_pf {   ! x - surplus < y
+	goal g_pf {   # x - surplus < y
 	
 	  lhs x
 
@@ -50,7 +50,7 @@ MODEL first {
 		lhs<rhs    penalty 0
 	}	
 
-	goal g_fc {   ! x  > y
+	goal g_fc {   # x  > y
 	
 	  lhs x
 
@@ -59,7 +59,7 @@ MODEL first {
 		lhs<rhs    constrain
 	}	
 
-	goal g_cf {   ! x < y
+	goal g_cf {   # x < y
 	
 	  lhs x
 
@@ -68,7 +68,7 @@ MODEL first {
 		lhs<rhs    penalty 0
 	}	
 
-	goal g_cc {   ! x = y
+	goal g_cc {   # x = y
 	
 	  lhs x
 

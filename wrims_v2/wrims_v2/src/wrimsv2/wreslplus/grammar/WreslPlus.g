@@ -201,7 +201,7 @@ goal_hs_trunk returns[GoalCase gc]
 scope { GoalCase gc_; } 
 @init { $goal_hs_trunk::gc_ = new GoalCase();}
 @after{ $gc=$goal_hs_trunk::gc_;}
-	:  rhs ((lhs_gt_rhs lhs_lt_rhs?) | (lhs_lt_rhs lhs_gt_rhs?)) ;
+	:  rhs ((lhs_gt_rhs lhs_lt_rhs?) | (lhs_lt_rhs lhs_gt_rhs?))? ;
 
 goal_hs_cases : goal_hs_case+ ;
 

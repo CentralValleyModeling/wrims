@@ -286,15 +286,22 @@ public class Procedures {
 
 			ModelTemp mObj = s.modelMap.get(m);
 			
-			for (String svKey: mObj.svMap.keySet()){			
+			
+			for (String key: mObj.svMap.keySet()){			
 				
-				SvarTemp svObj = mObj.svMap.get(svKey);
+				SvarTemp svObj = mObj.svMap.get(key);
 				
-				svObj.dependants.removeAll(Param.reservedSet);
-
-				
+				svObj.dependants.removeAll(Param.reservedSet);	
 			}			
-
+			
+			//TODO: bugs here
+			for (String key: mObj.glMap.keySet()){			
+				
+				GoalTemp glObj = mObj.glMap.get(key);
+				
+				glObj.dependants.removeAll(Param.reservedSet);
+				
+			}
 		}
 		
 		return s;

@@ -100,12 +100,12 @@ public class ToLowerCase {
 		
 		o.caseCondition = Tools.allToLowerCase(s.caseCondition);
 		o.caseCondition = Tools.replace_with_space(o.caseCondition);
-		o.caseCondition = Tools.replace_seperator(o.caseCondition);
+		//o.caseCondition = Tools.replace_seperator(o.caseCondition);
 		o.caseCondition = Tools.add_space_between_logical(o.caseCondition);
 		
 		o.caseExpression = Tools.allToLowerCase(s.caseExpression);
 		o.caseExpression = Tools.replace_with_space(o.caseExpression);
-		o.caseExpression = Tools.replace_seperator(o.caseExpression);
+		//o.caseExpression = Tools.replace_seperator(o.caseExpression);
 		o.caseExpression = Tools.add_space_between_logical(o.caseExpression);
 		
 		return o;
@@ -147,8 +147,8 @@ public class ToLowerCase {
 		WeightTemp o = new WeightTemp();
 		
 		o.fromWresl = w.fromWresl.toLowerCase();
-		o.condition = w.condition;
-		o.weight = w.weight;
+		o.condition = w.condition.toLowerCase();
+		o.weight = w.weight.toLowerCase();
 		
 		return o;
 
@@ -179,12 +179,12 @@ public class ToLowerCase {
 		
 		o.caseCondition = Tools.allToLowerCase(g.caseCondition);
 		o.caseCondition = Tools.replace_with_space(o.caseCondition);
-		o.caseCondition = Tools.replace_seperator(o.caseCondition);
+		//o.caseCondition = Tools.replace_seperator(o.caseCondition);
 		o.caseCondition = Tools.add_space_between_logical(o.caseCondition);
 		
 		o.caseExpression = Tools.allToLowerCase(g.caseExpression);
 		o.caseExpression = Tools.replace_with_space(o.caseExpression);
-		o.caseExpression = Tools.replace_seperator(o.caseExpression);
+		//o.caseExpression = Tools.replace_seperator(o.caseExpression);
 		o.caseExpression = Tools.add_space_between_logical(o.caseExpression);
 		
 		return o;

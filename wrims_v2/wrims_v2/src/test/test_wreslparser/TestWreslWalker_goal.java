@@ -364,7 +364,7 @@ public class TestWreslWalker_goal {
 	public void goal_case3() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_goal_case3";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
@@ -387,7 +387,7 @@ public class TestWreslWalker_goal {
 		
 		String modelName = sd.getModelList().get(0);
 		
-		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		WriteCSV.study(sd, csvFolderPath ) ;
 		
 		String logText = Tools.readFileAsString(logFilePath);	
 
@@ -403,7 +403,7 @@ public class TestWreslWalker_goal {
 	public void goal_case4() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_goal_case4";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
@@ -426,7 +426,7 @@ public class TestWreslWalker_goal {
 		
 		String modelName = sd.getModelList().get(0);
 		
-		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		WriteCSV.study(sd, csvFolderPath ) ;
 		
 		String logText = Tools.readFileAsString(logFilePath);	
 
@@ -434,7 +434,7 @@ public class TestWreslWalker_goal {
 		Assert.assertEquals(totalErrs, 1);	
 		
 	
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\constraint.csv");	
 		
 		String s;
 		int n;
@@ -450,7 +450,7 @@ public class TestWreslWalker_goal {
 	public void goal_case5() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_goal_case5";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
@@ -473,7 +473,7 @@ public class TestWreslWalker_goal {
 		
 		String modelName = sd.getModelList().get(0);
 		
-		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		WriteCSV.study(sd, csvFolderPath ) ;
 		
 		String logText = Tools.readFileAsString(logFilePath);	
 	
@@ -481,7 +481,7 @@ public class TestWreslWalker_goal {
 		Assert.assertEquals(totalErrs, 2);	
 		
 	
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\constraint.csv");	
 		
 		String s;
 		int n;
@@ -501,7 +501,7 @@ public class TestWreslWalker_goal {
 	public void goal_case6() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_goal_case6";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
@@ -524,7 +524,7 @@ public class TestWreslWalker_goal {
 		
 		String modelName = sd.getModelList().get(0);
 		
-		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		WriteCSV.study(sd, csvFolderPath ) ;
 		
 		String logText = Tools.readFileAsString(logFilePath);	
 	
@@ -532,7 +532,7 @@ public class TestWreslWalker_goal {
 		Assert.assertEquals(totalErrs, 2);	
 		
 	
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\constraint.csv");	
 		
 		String s;
 		int n;
@@ -552,7 +552,7 @@ public class TestWreslWalker_goal {
 	public void goal_case7() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_goal_case7";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
@@ -575,7 +575,7 @@ public class TestWreslWalker_goal {
 		
 		String modelName = sd.getModelList().get(0);
 		
-		WriteCSV.dataset(sd.getModelDataSetMap().get(modelName),csvFolderPath ) ;
+		WriteCSV.study(sd, csvFolderPath ) ;
 		
 		String logText = Tools.readFileAsString(logFilePath);	
 	
@@ -583,7 +583,7 @@ public class TestWreslWalker_goal {
 		Assert.assertEquals(totalErrs, 8);	
 		
 	
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\constraint.csv");	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\constraint.csv");	
 		
 		String s;
 		int n;
@@ -635,7 +635,7 @@ public class TestWreslWalker_goal {
 		
 		
 		// weight 
-		csvText = Tools.readFileAsString(csvFolderPath+"\\weight.csv");
+		csvText = Tools.readFileAsString(csvFolderPath+"\\first\\weight.csv");
 		
 		//s = "surplus_g_pp_default,-99";
 		s = "surplus__g_pp_1,##-99";

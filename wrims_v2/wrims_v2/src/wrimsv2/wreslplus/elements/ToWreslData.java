@@ -117,14 +117,14 @@ public class ToWreslData {
 		//System.out.println(s.dependants);
 		
 		o.caseCondition = s.caseCondition;
-		o.caseCondition = Tools.replace_with_space(o.caseCondition);
+		//o.caseCondition = Tools.replace_with_space(o.caseCondition);
 		o.caseCondition = Tools.replace_seperator(o.caseCondition);
-		o.caseCondition = Tools.add_space_between_logical(o.caseCondition);
+		//o.caseCondition = Tools.add_space_between_logical(o.caseCondition);
 		
 		o.caseExpression = s.caseExpression;
-		o.caseExpression = Tools.replace_with_space(o.caseExpression);
+		//o.caseExpression = Tools.replace_with_space(o.caseExpression);
 		o.caseExpression = Tools.replace_seperator(o.caseExpression);
-		o.caseExpression = Tools.add_space_between_logical(o.caseExpression);
+		//o.caseExpression = Tools.add_space_between_logical(o.caseExpression);
 		
 		System.out.println(o.caseExpression);
 		return o;
@@ -170,6 +170,8 @@ public class ToWreslData {
 		o.condition = w.condition;
 		o.weight = w.weight;
 
+		o.weight = Tools.replace_with_space(o.weight);
+		o.weight = Tools.replace_seperator(o.weight);
 		
 		return o;
 		
@@ -199,14 +201,14 @@ public class ToWreslData {
 		//System.out.println(s.dependants);
 		
 		o.caseCondition = g.caseCondition;
-		o.caseCondition = Tools.replace_with_space(o.caseCondition);
+		//o.caseCondition = Tools.replace_with_space(o.caseCondition);
 		o.caseCondition = Tools.replace_seperator(o.caseCondition);
-		o.caseCondition = Tools.add_space_between_logical(o.caseCondition);
+		//o.caseCondition = Tools.add_space_between_logical(o.caseCondition);
 		
 		o.caseExpression = g.caseExpression;
-		o.caseExpression = Tools.replace_with_space(o.caseExpression);
+		//o.caseExpression = Tools.replace_with_space(o.caseExpression);
 		o.caseExpression = Tools.replace_seperator(o.caseExpression);
-		o.caseExpression = Tools.add_space_between_logical(o.caseExpression);
+		//o.caseExpression = Tools.add_space_between_logical(o.caseExpression);
 		
 		System.out.println(o.caseExpression);
 		return o;
