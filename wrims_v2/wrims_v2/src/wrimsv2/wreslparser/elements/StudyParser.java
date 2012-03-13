@@ -883,7 +883,11 @@ private static Map<String, SimulationDataSet> getNewDataSet(Set<String> adhoc_in
 		Goal gl = new Goal();
 		gl.caseCondition.add(Param.always);
 		gl.caseName.add(Param.defaultCaseName);
-		gl.caseExpression.add(aliasName + "=" + as.expression);
+		if (as.timeArraySize.equals("0")){
+			gl.caseExpression.add(aliasName + "=" + as.expression);
+		}else{
+			gl.caseExpression.add(aliasName + "($m)=" + as.expression);
+		}
 		gl.expressionDependants = as.dependants;
 		gl.fromWresl = as.fromWresl;
 		gl.timeArraySize=as.timeArraySize;
