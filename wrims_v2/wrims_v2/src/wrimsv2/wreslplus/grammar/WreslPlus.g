@@ -125,7 +125,7 @@ scope { ModelTemp model_;}
 	   | ex=ex_g       {$model::model_.itemList.add($ex.id); $model::model_.exList.add($ex.id); $model::model_.exMap.put($ex.id, $ex.exObj); }
 	   | alias 
 	   | gl1=goal_s    {$model::model_.itemList.add($gl1.id); $model::model_.glList.add($gl1.id); $model::model_.glMap.put($gl1.id, $gl1.glObj); }
-	   | gl2=goal_hs   {$model::model_.itemList.add($gl2.id); $model::model_.glList.add($gl2.id); $model::model_.gl2Map.put($gl2.id, $gl2.glObj); }
+	   | gl2=goal_hs   {$model::model_.itemList.add($gl2.id); $model::model_.glList.add($gl2.id); $model::model_.gl2Map.put($gl2.id, $gl2.glObj); $model::model_.gl2List.add($gl2.id); }
 	   | network 
 	   | operation )+
 	   '}' 

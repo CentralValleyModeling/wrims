@@ -21,6 +21,7 @@ public class ModelTemp implements Serializable {
 	public ArrayList<String>  exList;
 	public Map<String,ExternalTemp> exMap;	
 	public ArrayList<String>  glList;
+	public ArrayList<String>  gl2List;
 	public Map<String,GoalTemp> glMap;
 	public Map<String,GoalTemp> gl2Map;
 	public ArrayList<String>  ssList;
@@ -41,7 +42,7 @@ public class ModelTemp implements Serializable {
 		exMap = new LinkedHashMap<String, ExternalTemp>();		
 		glList = new ArrayList<String>();
 		glMap = new LinkedHashMap<String, GoalTemp>();	
-		//gl2List = new ArrayList<String>();
+		gl2List = new ArrayList<String>();
 		gl2Map = new LinkedHashMap<String, GoalTemp>();	
 		ssList = new ArrayList<String>();
 		ssMap = new LinkedHashMap<String, DvarTemp>();	

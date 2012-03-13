@@ -290,12 +290,8 @@ public class Procedures {
 				
 				SvarTemp svObj = mObj.svMap.get(svKey);
 				
-				//svObj.dependants.removeAll(arg0);
-				//svObj.caseCondition = Tools.replace_ignoreChar(svObj.caseCondition);
-				//svObj.caseExpression = 
-				
-				//o.caseCondition = Tools.allToLowerCase(s.caseCondition);
-				//o.caseExpression = Tools.allToLowerCase(s.caseExpression);
+				svObj.dependants.removeAll(Param.reservedSet);
+
 				
 			}			
 
@@ -303,6 +299,75 @@ public class Procedures {
 		
 		return s;
 
+	}
+
+
+	public static StudyTemp convertToLowerCase(StudyTemp s){
+		
+		s.modelList = Tools.allToLowerCase(s.modelList);
+		for (Map.Entry<String, ModelTemp> entry : s.modelMap.entrySet()) {
+			s.modelMap.remove( entry.getKey());
+			s.modelMap.put( entry.getKey().toLowerCase(), entry.getValue());
+		}
+		
+		for (String m: s.modelList){			
+	
+			ModelTemp j = s.modelMap.get(m);
+			
+			j.itemList = Tools.allToLowerCase(j.itemList);
+			j.svList = Tools.allToLowerCase(j.svList);
+			j.dvList = Tools.allToLowerCase(j.dvList);
+			j.glList = Tools.allToLowerCase(j.glList);
+			j.tsList = Tools.allToLowerCase(j.tsList);
+			j.ssList = Tools.allToLowerCase(j.ssList);
+			j.exList = Tools.allToLowerCase(j.exList);
+			
+			for (Map.Entry<String, SvarTemp> entry : j.svMap.entrySet()) {
+				j.svMap.remove( entry.getKey());
+				j.svMap.put( entry.getKey().toLowerCase(), entry.getValue());
+			}
+			for (Map.Entry<String, DvarTemp> entry : j.dvMap.entrySet()) {
+				j.dvMap.remove( entry.getKey());
+				j.dvMap.put( entry.getKey().toLowerCase(), entry.getValue());
+			}
+			for (Map.Entry<String, TimeseriesTemp> entry : j.tsMap.entrySet()) {
+				j.tsMap.remove( entry.getKey());
+				j.tsMap.put( entry.getKey().toLowerCase(), entry.getValue());
+			}
+			for (Map.Entry<String, ExternalTemp> entry : j.exMap.entrySet()) {
+				j.exMap.remove( entry.getKey());
+				j.exMap.put( entry.getKey().toLowerCase(), entry.getValue());
+			}
+			for (Map.Entry<String, GoalTemp> entry : j.glMap.entrySet()) {
+				j.glMap.remove( entry.getKey());
+				j.glMap.put( entry.getKey().toLowerCase(), entry.getValue());
+			}
+			for (Map.Entry<String, GoalTemp> entry : j.gl2Map.entrySet()) {
+				j.gl2Map.remove( entry.getKey());
+				j.gl2Map.put( entry.getKey().toLowerCase(), entry.getValue());
+			}
+			for (Map.Entry<String, DvarTemp> entry : j.ssMap.entrySet()) {
+				j.ssMap.remove( entry.getKey());
+				j.ssMap.put( entry.getKey().toLowerCase(), entry.getValue());
+			}
+			for (Map.Entry<String, WeightTemp> entry : j.ssWeightMap.entrySet()) {
+				j.ssWeightMap.remove( entry.getKey());
+				j.ssWeightMap.put( entry.getKey().toLowerCase(), entry.getValue());
+			}			
+			
+			for (String svKey: j.svMap.keySet()){			
+				
+				SvarTemp svObj = j.svMap.get(svKey);
+				
+				svObj.dependants = Tools.allToLowerCase(svObj.dependants);
+	
+				
+			}			
+	
+		}
+		
+		return s;
+	
 	}	
 	
 

@@ -27,7 +27,7 @@ public class ToWreslData {
 	public static StudyDataSet convertStudy (StudyTemp s){
 		
 		StudyDataSet o = new StudyDataSet();
-		o.setModelList(Tools.allToLowerCase(s.modelList));
+		o.setModelList(s.modelList);
 				
 		Map<String, ModelDataSet> modelDataSetMap = new HashMap<String, ModelDataSet>();
 		ArrayList<String> modelConditionList   = new ArrayList<String>();
@@ -37,7 +37,7 @@ public class ToWreslData {
 			
 			modelConditionList.add("always");
 			ModelDataSet m = convertModel(s.modelMap.get(k));
-			modelDataSetMap.put(k.toLowerCase(), m );
+			modelDataSetMap.put(k, m );
 		
 			// add ts into all ts map. TODO: check name duplications
 			allTimeseriesMap.putAll(m.tsMap);
@@ -57,48 +57,48 @@ public class ToWreslData {
 		
 		// TODO: give pre-sorted var list
 
-		o.dvSlackSurplusList = Tools.allToLowerCase(m.ssList);
+		o.dvSlackSurplusList = m.ssList;
 		Collections.sort(o.dvSlackSurplusList,String.CASE_INSENSITIVE_ORDER);
 
-		o.wtSlackSurplusList = Tools.allToLowerCase(m.ssList);
+		o.wtSlackSurplusList = m.ssList;
 		Collections.sort(o.wtSlackSurplusList,String.CASE_INSENSITIVE_ORDER);
 		
-		o.dvList = Tools.allToLowerCase(m.dvList);
+		o.dvList = m.dvList;
 		Collections.sort(o.dvList,String.CASE_INSENSITIVE_ORDER);
 		
-		o.tsList = Tools.allToLowerCase(m.tsList);
+		o.tsList = m.tsList;
 		Collections.sort(o.tsList,String.CASE_INSENSITIVE_ORDER);
 		
-		o.svList = Tools.allToLowerCase(m.svList);
-		Collections.sort(o.svList,String.CASE_INSENSITIVE_ORDER);
+		o.svList = m.svList;
+		//Collections.sort(o.svList,String.CASE_INSENSITIVE_ORDER);
 
-		o.gList = Tools.allToLowerCase(m.glList);
+		o.gList = m.glList;
 		Collections.sort(o.exList,String.CASE_INSENSITIVE_ORDER);
 		
-		o.exList = Tools.allToLowerCase(m.exList);
+		o.exList = m.exList;
 		Collections.sort(o.exList,String.CASE_INSENSITIVE_ORDER);
 		
 
 		for (String k: m.ssMap.keySet()){			
-			o.dvSlackSurplusMap.put(k.toLowerCase(), convertDvar(m.ssMap.get(k)));
+			o.dvSlackSurplusMap.put(k, convertDvar(m.ssMap.get(k)));
 		}
 		for (String k: m.ssWeightMap.keySet()){			
-			o.wtSlackSurplusMap.put(k.toLowerCase(), convertWeight(m.ssWeightMap.get(k)));
+			o.wtSlackSurplusMap.put(k, convertWeight(m.ssWeightMap.get(k)));
 		}
 		for (String k: m.dvMap.keySet()){			
-			o.dvMap.put(k.toLowerCase(), convertDvar(m.dvMap.get(k)));
+			o.dvMap.put(k, convertDvar(m.dvMap.get(k)));
 		}
 		for (String k: m.tsMap.keySet()){			
-			o.tsMap.put(k.toLowerCase(), convertTimeseries(m.tsMap.get(k)));
+			o.tsMap.put(k, convertTimeseries(m.tsMap.get(k)));
 		}		
 		for (String k: m.svMap.keySet()){			
-			o.svMap.put(k.toLowerCase(), convertSvar(m.svMap.get(k)));
+			o.svMap.put(k, convertSvar(m.svMap.get(k)));
 		}
 		for (String k: m.glMap.keySet()){			
-			o.gMap.put(k.toLowerCase(), convertGoal(m.glMap.get(k)));
+			o.gMap.put(k, convertGoal(m.glMap.get(k)));
 		}
 		for (String k: m.exMap.keySet()){			
-			o.exMap.put(k.toLowerCase(), convertExternal(m.exMap.get(k)));
+			o.exMap.put(k, convertExternal(m.exMap.get(k)));
 		}
 		return o;
 		
@@ -108,20 +108,20 @@ public class ToWreslData {
 		
 		Svar o = new Svar();
 		
-		o.fromWresl = s.fromWresl.toLowerCase();
-		o.kind = s.kind.toLowerCase();
-		o.units = s.units.toLowerCase();
-		o.caseName = Tools.allToLowerCase(s.caseName);
-		o.dependants = Tools.allToLowerCase(s.dependants);
-		o.dependants.removeAll(Param.reservedSet);
+		o.fromWresl = s.fromWresl;
+		o.kind = s.kind;
+		o.units = s.units;
+		o.caseName = s.caseName;
+		o.dependants = s.dependants;
+		//o.dependants.removeAll(Param.reservedSet);
 		//System.out.println(s.dependants);
 		
-		o.caseCondition = Tools.allToLowerCase(s.caseCondition);
+		o.caseCondition = s.caseCondition;
 		o.caseCondition = Tools.replace_with_space(o.caseCondition);
 		o.caseCondition = Tools.replace_seperator(o.caseCondition);
 		o.caseCondition = Tools.add_space_between_logical(o.caseCondition);
 		
-		o.caseExpression = Tools.allToLowerCase(s.caseExpression);
+		o.caseExpression = s.caseExpression;
 		o.caseExpression = Tools.replace_with_space(o.caseExpression);
 		o.caseExpression = Tools.replace_seperator(o.caseExpression);
 		o.caseExpression = Tools.add_space_between_logical(o.caseExpression);
@@ -135,11 +135,11 @@ public class ToWreslData {
 		
 		Timeseries o = new Timeseries();
 		
-		o.fromWresl = t.fromWresl.toLowerCase();
-		o.dssBPart = t.dssBPart.toLowerCase();
-		o.convertToUnits = t.convertToUnits.toLowerCase();
-		o.kind = t.kind.toLowerCase();
-		o.units = t.units.toLowerCase();
+		o.fromWresl = t.fromWresl;
+		o.dssBPart = t.dssBPart;
+		o.convertToUnits = t.convertToUnits;
+		o.kind = t.kind;
+		o.units = t.units;
 		
 		return o;
 		
@@ -149,11 +149,11 @@ public class ToWreslData {
 		
 		Dvar o = new Dvar();
 		
-		o.fromWresl = d.fromWresl.toLowerCase();
-		o.lowerBound = d.lowerBound.toLowerCase();
-		o.upperBound = d.upperBound.toLowerCase();
-		o.kind = d.kind.toLowerCase();
-		o.units = d.units.toLowerCase();
+		o.fromWresl = d.fromWresl;
+		o.lowerBound = d.lowerBound;
+		o.upperBound = d.upperBound;
+		o.kind = d.kind;
+		o.units = d.units;
 		o.condition = d.condition;
 		if (d.isInteger) o.integer=Param.yes;
 		
@@ -166,7 +166,7 @@ public class ToWreslData {
 		
 		WeightElement o = new WeightElement();
 		
-		o.fromWresl = w.fromWresl.toLowerCase();
+		o.fromWresl = w.fromWresl;
 		o.condition = w.condition;
 		o.weight = w.weight;
 
@@ -180,8 +180,8 @@ public class ToWreslData {
 		
 		External o = new External();
 		
-		o.fromWresl = e.fromWresl.toLowerCase();
-		o.type = e.fileName.toLowerCase();
+		o.fromWresl = e.fromWresl;
+		o.type = e.fileName;
 		
 		return o;
 		
@@ -192,18 +192,18 @@ public class ToWreslData {
 		
 		Goal o = new Goal();
 		
-		o.fromWresl = g.fromWresl.toLowerCase();
-		o.caseName = Tools.allToLowerCase(g.caseName);
-		o.expressionDependants = Tools.allToLowerCase(g.dependants);
+		o.fromWresl = g.fromWresl;
+		o.caseName = g.caseName;
+		o.expressionDependants = g.dependants;
 		o.expressionDependants.removeAll(Param.reservedSet);
 		//System.out.println(s.dependants);
 		
-		o.caseCondition = Tools.allToLowerCase(g.caseCondition);
+		o.caseCondition = g.caseCondition;
 		o.caseCondition = Tools.replace_with_space(o.caseCondition);
 		o.caseCondition = Tools.replace_seperator(o.caseCondition);
 		o.caseCondition = Tools.add_space_between_logical(o.caseCondition);
 		
-		o.caseExpression = Tools.allToLowerCase(g.caseExpression);
+		o.caseExpression = g.caseExpression;
 		o.caseExpression = Tools.replace_with_space(o.caseExpression);
 		o.caseExpression = Tools.replace_seperator(o.caseExpression);
 		o.caseExpression = Tools.add_space_between_logical(o.caseExpression);

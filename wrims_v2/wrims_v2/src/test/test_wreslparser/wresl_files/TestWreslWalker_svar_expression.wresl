@@ -3,9 +3,9 @@ SEQUENCE CYCLE1 {
     order   1
     }
 
-MODEL first { 
+MODEL fiRst { 
 
-define division_test {value (A_Orovl_forward - A_Orovl_back)/(100*max(0.01,S_Orovl(-1)))}
 define min_test {value min(max(a,b),2.5)}
+define diVision_Test {value (A_Orovl_forward - A_Orovl_back)/(100*max(0.01,S_Orovl(-1)))}
 
 }
