@@ -541,6 +541,7 @@ public class ModelDataSet implements Serializable {
 		Map<String, Alias> asMap =mds.asMap;
 		ControlData.currEvalTypeIndex=2;
 		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
+		Map<String, Map<String, IntDouble>> varTimeArrayCycleValueMap=ControlData.currStudyDataSet.getVarTimeArrayCycleValueMap();
 		Set<String> aliasUsedByLaterCycle = mds.aliasUsedByLaterCycle;
 		String model=ControlData.currCycleName;
 		for (String asName: asList){
@@ -553,9 +554,9 @@ public class ModelDataSet implements Serializable {
 			try {
 				evaluator.evaluator();
 				IntDouble id=evaluator.evalValue;
-				alias.data=id;
+				alias.data=id.copyOf();
 				if (aliasUsedByLaterCycle.contains(asName)){
-					varCycleValueMap.get(asName).put(model, id);
+					varCycleValueMap.get(asName).put(model, alias.data);
 				}
 				if (!DataTimeSeries.dvAliasTS.containsKey(asName)){
 					DssDataSetFixLength dds=new DssDataSetFixLength();
@@ -580,6 +581,55 @@ public class ModelDataSet implements Serializable {
 				dataList[ControlData.currTimeStep]=-901.0;
 			}
 			evaluator.reset();
+			
+			int timeArraySize=getTimeArraySize(alias.timeArraySizeParser);
+			for (ControlData.timeArrayIndex=1; ControlData.timeArrayIndex<=timeArraySize; ControlData.timeArrayIndex++){
+				String newAsName=asName+"__fut__"+ControlData.timeArrayIndex;
+				try {
+					evaluator.evaluator();
+					IntDouble id=evaluator.evalValue;
+					Alias newAlias=new Alias();
+					newAlias.data=id.copyOf();
+					if (aliasUsedByLaterCycle.contains(asName)){
+						if (varTimeArrayCycleValueMap.containsKey(newAsName)){
+							varTimeArrayCycleValueMap.get(newAsName).put(model, newAlias.data);
+						}else{
+							Map<String, IntDouble> cycleValue = new HashMap<String, IntDouble>();
+							cycleValue.put(model, newAlias.data);
+							varTimeArrayCycleValueMap.put(newAsName, cycleValue);
+						}
+					}
+					if (!DataTimeSeries.dvAliasTS.containsKey(newAsName)){
+						DssDataSetFixLength dds=new DssDataSetFixLength();
+						double[] data=new double[ControlData.totalTimeStep];
+						dds.setData(data);
+						dds.setTimeStep(ControlData.partE);
+						dds.setStartTime(ControlData.startTime);
+						dds.setUnits(alias.units);
+						dds.setKind(alias.kind);
+						DataTimeSeries.dvAliasTS.put(asName,dds);
+					}
+					double[] dataList=DataTimeSeries.dvAliasTS.get(newAsName).getData();
+					dataList[ControlData.currTimeStep]=id.getData().doubleValue();
+				} catch (RecognitionException e) {
+					Error.addEvaluationError("Alias evaluation has error.");
+					IntDouble id=new IntDouble(-901.0,false);
+					Alias newAlias=new Alias();
+					newAlias.data=id;
+					if (aliasUsedByLaterCycle.contains(asName)){
+						if (varTimeArrayCycleValueMap.containsKey(newAsName)){
+							varTimeArrayCycleValueMap.get(newAsName).put(model, id);
+						}else{
+							Map<String, IntDouble> cycleValue = new HashMap<String, IntDouble>();
+							cycleValue.put(model, id);
+							varTimeArrayCycleValueMap.put(newAsName, cycleValue);
+						}
+					}
+					double[] dataList=DataTimeSeries.dvAliasTS.get(newAsName).getData();
+					dataList[ControlData.currTimeStep]=-901.0;
+				}
+				evaluator.reset();
+			}
 		}
 	}
 	
