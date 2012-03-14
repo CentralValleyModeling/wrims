@@ -65,23 +65,21 @@ public class ToWreslData {
 		Collections.sort(o.wtSlackSurplusList,String.CASE_INSENSITIVE_ORDER);
 		
 		o.dvList = new ArrayList<String>(m.dvList);
-		o.dvList.addAll(m.dvList_fromAlias);
 		Collections.sort(o.dvList,String.CASE_INSENSITIVE_ORDER);
 		
 		o.tsList = new ArrayList<String>(m.tsList);
 		Collections.sort(o.tsList,String.CASE_INSENSITIVE_ORDER);
 		
+		// don't sort svList. order matters in evaluator
 		o.svList = new ArrayList<String>(m.svList);
-		//Collections.sort(o.svList,String.CASE_INSENSITIVE_ORDER);
 
 		o.gList = new ArrayList<String>(m.glList);
-		o.gList.addAll(m.glList_fromAlias);
 		Collections.sort(o.exList,String.CASE_INSENSITIVE_ORDER);
 		
 		o.exList = new ArrayList<String>(m.exList);
 		Collections.sort(o.exList,String.CASE_INSENSITIVE_ORDER);
 		
-		o.asList = new ArrayList<String>(m.asList_modified);
+		o.asList = new ArrayList<String>(m.asList_reduced);
 		Collections.sort(o.asList,String.CASE_INSENSITIVE_ORDER);
 		
 		for (String k: m.ssMap.keySet()){			
@@ -90,14 +88,9 @@ public class ToWreslData {
 		for (String k: m.ssWeightMap.keySet()){			
 			o.wtSlackSurplusMap.put(k, convertWeight(m.ssWeightMap.get(k)));
 		}
-		
 		for (String k: m.dvMap.keySet()){			
 			o.dvMap.put(k, convertDvar(m.dvMap.get(k)));
 		}
-		for (String k: m.dvMap_fromAlias.keySet()){			
-			o.dvMap.put(k, convertDvar(m.dvMap_fromAlias.get(k)));
-		}
-		
 		for (String k: m.tsMap.keySet()){			
 			o.tsMap.put(k, convertTimeseries(m.tsMap.get(k)));
 		}		
@@ -107,14 +100,12 @@ public class ToWreslData {
 		for (String k: m.glMap.keySet()){			
 			o.gMap.put(k, convertGoal(m.glMap.get(k)));
 		}
-		for (String k: m.glMap_fromAlias.keySet()){			
-			o.gMap.put(k, convertGoal(m.glMap_fromAlias.get(k)));
-		}
 		for (String k: m.exMap.keySet()){			
 			o.exMap.put(k, convertExternal(m.exMap.get(k)));
 		}
-		for (String k: m.asMap_modified.keySet()){			
-			o.asMap.put(k, convertAlias(m.asMap_modified.get(k)));
+		// this one is special. don't use copy and paste
+		for (String k: o.asList){			
+			o.asMap.put(k, convertAlias(m.asMap.get(k)));
 		}
 		return o;
 		

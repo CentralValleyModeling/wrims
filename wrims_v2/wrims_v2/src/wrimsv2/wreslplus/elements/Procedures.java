@@ -30,9 +30,9 @@ public class Procedures {
 	
 				ModelTemp mObj = s.modelMap.get(m);
 				
-				for (String gKey: mObj.gl2Map.keySet()){			
+				for (String gKey: mObj.gl2List){			
 					
-					GoalTemp g2 = mObj.gl2Map.get(gKey);
+					GoalTemp g2 = mObj.glMap.get(gKey);
 					
 					for (int i=0; i<g2.caseName.size(); i++){
 						
@@ -62,8 +62,8 @@ public class Procedures {
 							d.kind = "slack";
 							
 							if (g2.hasCase) {
-								d.condition="conditional";
-								w.condition="conditional";
+								d.condition=Param.conditional;
+								w.condition=Param.conditional;
 							}
 							//System.out.println(slackName+":"+g2.ruleType+":"+d.condition);
 							mObj.ssList.add(slackName);
@@ -80,8 +80,8 @@ public class Procedures {
 							
 							
 							if (g2.hasCase) {
-								d.condition="conditional";
-								w.condition="conditional";
+								d.condition=Param.conditional;
+								w.condition=Param.conditional;
 							}
 							//System.out.println(surplusName+":"+g2.ruleType+":"+d.condition);
 							
@@ -323,26 +323,29 @@ public class Procedures {
 	
 				ModelTemp mObj = s.modelMap.get(m);
 				
+				mObj.asList_reduced = new ArrayList<String>(mObj.asList);
 				
 				Set<String> allDepInGoals = new HashSet<String>();
 				
-				// find all dep
-				for (String gKey: mObj.glMap.keySet()){			
+				// add all dep from Goal
+				for (String key: mObj.glMap.keySet()){			
 					
-					GoalTemp g = mObj.glMap.get(gKey);
-					
+					GoalTemp g = mObj.glMap.get(key);			
 					allDepInGoals.addAll(g.dependants);
-					
 				}			
-				
+				// add all dep from Alias
+				for (String key: mObj.asMap.keySet()){			
+					
+					AliasTemp a = mObj.asMap.get(key);			
+					allDepInGoals.addAll(a.dependants);
+				}				
 				
 				for (String aKey: mObj.asMap.keySet()){			
 					
-					if (allDepInGoals.contains(aKey)){
-							
-						
+					if (allDepInGoals.contains(aKey)){						
 						
 						AliasTemp a = mObj.asMap.get(aKey);
+						a.isMovedToDvar = true;
 
 						// add to dvar
 						DvarTemp d = new DvarTemp();
@@ -353,11 +356,12 @@ public class Procedures {
 						d.units = a.units;
 						d.fromWresl = a.fromWresl;
 						d.condition = a.condition;
+						d.isFromAlias = true;
 						
-						//System.out.println(":a:"+ a.dependants);
-						
+						mObj.asList_reduced.remove(aKey);
 						mObj.dvList_fromAlias.add(aKey);
-						mObj.dvMap_fromAlias.put(aKey, d);
+						mObj.dvList.add(aKey);
+						mObj.dvMap.put(aKey, d);
 						
 						// add goal
 						GoalTemp g = new GoalTemp();
@@ -371,17 +375,12 @@ public class Procedures {
 						g.dependants = a.dependants;
 					
 						mObj.glList_fromAlias.add(g.id.toLowerCase());
-						mObj.glMap_fromAlias.put(g.id.toLowerCase(), g);	
-
-						
-//						// remove from asList_modified and asMap_modified
-//						mObj.asList_modified.remove(aKey);
-//						mObj.asMap_modified.remove(aKey);
+						mObj.glList.add(g.id.toLowerCase());
+						mObj.glMap.put(g.id.toLowerCase(), g);	
 						
 					}
 					
 					
-
 					
 				}				
 				

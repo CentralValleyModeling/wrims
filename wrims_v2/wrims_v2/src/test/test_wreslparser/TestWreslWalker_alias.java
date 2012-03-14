@@ -192,7 +192,7 @@ public class TestWreslWalker_alias {
 	public void alias_to_goal3() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_alias_to_goal3";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -220,10 +220,7 @@ public class TestWreslWalker_alias {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 7);	
-		
-		int err = RegUtils.timesOfMatches(logText, "# Error: Variable is redefined as different type: zz");
-		Assert.assertEquals(totalErrs, 7);	
+		Assert.assertEquals(totalErrs, 6);	
 				
 	}
 
@@ -232,7 +229,7 @@ public class TestWreslWalker_alias {
 	// deep embedding of alias
 		
 		testName = "TestWreslWalker_alias_to_goal4";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -249,7 +246,7 @@ public class TestWreslWalker_alias {
 		
 		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
 	
-		LogUtils.studySummary_details(sd);
+		//LogUtils.studySummary_details(sd);
 	
 		LogUtils.closeLogFile();
 		
@@ -342,5 +339,44 @@ public class TestWreslWalker_alias {
 		s = Tools.replace_regex(s);
 		n = RegUtils.timesOfMatches(csvText, s );
 		Assert.assertEquals(n, 1);			
+	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void alias_to_goal5_typeRedefined() throws RecognitionException, IOException {
+		
+		testName = "TestWreslWalker_alias_to_goal5_typeRedefined";
+		csvFolderPath = "testResult\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
+		
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath, true);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		//String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.study(sd, csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 7);	
+		
+		int err = RegUtils.timesOfMatches(logText, "# Error: Variable is redefined as different type: zz");
+		Assert.assertEquals(totalErrs, 7);	
+				
 	}
 }

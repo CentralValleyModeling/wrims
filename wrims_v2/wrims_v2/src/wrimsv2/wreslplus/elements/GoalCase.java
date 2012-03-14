@@ -23,14 +23,12 @@ public class GoalCase implements Serializable {
 	public String rhs;
 	public String lhs_gt_rhs;	
 	public String lhs_lt_rhs;
-//	public String slack;
-//	public String surplus;
-	public Set<String> dependants;	
+	//public Set<String> dependants;	
 	
 	public GoalCase(){
 		
 		condition = Param.always;		
-		dependants = new LinkedHashSet<String>();
+		//dependants = new LinkedHashSet<String>();
 		lhs_gt_rhs = Param.constrain; 
 		lhs_lt_rhs = Param.constrain; 
 

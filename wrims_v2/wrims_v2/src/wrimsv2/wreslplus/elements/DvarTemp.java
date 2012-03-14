@@ -23,6 +23,7 @@ public class DvarTemp implements Serializable {
 	public String condition;
 	public String expression;
 	public Set<String> dependants;
+	public boolean isFromAlias;
 	
 	// default is 0
 	public String timeArraySize;
@@ -31,6 +32,7 @@ public class DvarTemp implements Serializable {
 	public DvarTemp(){
 		
 		isInteger=false;
+		isFromAlias=false;
 		format=Param.undefined;
 		kind=Param.undefined;
 		units=Param.undefined;

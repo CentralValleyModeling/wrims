@@ -62,11 +62,11 @@ public class ToLowerCase {
 			j.glMap.remove(key);
 			j.glMap.put( key.toLowerCase(), o);
 		}
-		for (String key : j.gl2List) {
-			GoalTemp o = convertGoal(j.gl2Map.get(key));
-			j.gl2Map.remove(key);
-			j.gl2Map.put( key.toLowerCase(), o);
-		}
+//		for (String key : j.gl2List) {
+//			GoalTemp o = convertGoal(j.gl2Map.get(key));
+//			j.gl2Map.remove(key);
+//			j.gl2Map.put( key.toLowerCase(), o);
+//		}
 		for (String key : j.ssList) {
 			DvarTemp o = convertDvar(j.ssMap.get(key));
 			j.ssMap.remove(key);
@@ -82,15 +82,19 @@ public class ToLowerCase {
 			j.asMap.remove(key);
 			j.asMap.put( key.toLowerCase(), o);
 		}		
+		
 		j.itemList = Tools.allToLowerCase(j.itemList);
 		j.svList = Tools.allToLowerCase(j.svList);
 		j.dvList = Tools.allToLowerCase(j.dvList);
+		j.dvList_fromAlias = Tools.allToLowerCase(j.dvList_fromAlias);
 		j.glList = Tools.allToLowerCase(j.glList);
 		j.gl2List = Tools.allToLowerCase(j.gl2List);
+		j.glList_fromAlias = Tools.allToLowerCase(j.glList_fromAlias);
 		j.tsList = Tools.allToLowerCase(j.tsList);
 		j.ssList = Tools.allToLowerCase(j.ssList);
 		j.exList = Tools.allToLowerCase(j.exList);
 		j.asList = Tools.allToLowerCase(j.asList);
+		j.asList_reduced = Tools.allToLowerCase(j.asList_reduced);
 		
 		
 	}
@@ -146,7 +150,9 @@ public class ToLowerCase {
 		o.kind = d.kind.toLowerCase();
 		o.units = d.units.toLowerCase();
 		o.condition = d.condition.toLowerCase();
+		
 		o.isInteger = d.isInteger;
+		o.isFromAlias = d.isFromAlias;
 		
 		return o;
 	}
@@ -181,6 +187,8 @@ public class ToLowerCase {
 
 	public static GoalTemp convertGoal (GoalTemp g){
 
+		// TODO: convert fields in class GoalCase to lowercase 
+		
 		GoalTemp o = new GoalTemp();
 		
 		o.id = g.id;
@@ -214,6 +222,7 @@ public class ToLowerCase {
 		o.units = d.units.toLowerCase();
 		o.condition = d.condition.toLowerCase();
 		o.dependants = Tools.allToLowerCase(d.dependants);
+		o.isMovedToDvar = d.isMovedToDvar;
 
 		
 		return o;
