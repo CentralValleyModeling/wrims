@@ -607,7 +607,7 @@ public class ModelDataSet implements Serializable {
 						dds.setStartTime(ControlData.startTime);
 						dds.setUnits(alias.units);
 						dds.setKind(alias.kind);
-						DataTimeSeries.dvAliasTS.put(asName,dds);
+						DataTimeSeries.dvAliasTS.put(newAsName,dds);
 					}
 					double[] dataList=DataTimeSeries.dvAliasTS.get(newAsName).getData();
 					dataList[ControlData.currTimeStep]=id.getData().doubleValue();
