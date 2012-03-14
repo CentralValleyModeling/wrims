@@ -63,19 +63,19 @@ public class XASolver {
 	}
 	
 	public void setDVars(){
-		Map<String, Dvar> DvarMap = SolverData.getDvarMap();
+		Map<String, Dvar> dvarMap = SolverData.getDvarMap();
 		for (int i=0; i<=1; i++){
-			ArrayList<String> DvarCollection;
+			ArrayList<String> dvarCollection;
 			if (i==0){
-				DvarCollection = ControlData.currModelDataSet.dvList;
+				dvarCollection = ControlData.currModelDataSet.dvList;
 			}else{
-				DvarCollection = ControlData.currModelDataSet.dvTimeArrayList;
+				dvarCollection = ControlData.currModelDataSet.dvTimeArrayList;
 			}
-			Iterator<String> dvarIterator=DvarCollection.iterator();
+			Iterator<String> dvarIterator=dvarCollection.iterator();
 		
 			while(dvarIterator.hasNext()){                          
 				String dvarName=(String)dvarIterator.next();
-				Dvar dvar=DvarMap.get(dvarName);
+				Dvar dvar=dvarMap.get(dvarName);
 
 				double lb = dvar.lowerBoundValue.doubleValue();
 				double ub = dvar.upperBoundValue.doubleValue();
@@ -154,50 +154,53 @@ public class XASolver {
 	}
 	
 	public void assignDvar(){
-		Map<String, Dvar> dvarMap = ControlData.currDvMap;
-		Set dvarCollection = dvarMap.keySet();
-		Iterator<String> dvarIterator = dvarCollection.iterator();
 		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
+		Map<String, Map<String, IntDouble>> varTimeArrayCycleValueMap=ControlData.currStudyDataSet.getVarTimeArrayCycleValueMap();
 		Set<String> dvarUsedByLaterCycle = ControlData.currModelDataSet.dvarUsedByLaterCycle;
+		Set<String> dvarTimeArrayUsedByLaterCycle = ControlData.currModelDataSet.dvarTimeArrayUsedByLaterCycle;
 		String model=ControlData.currCycleName;
 		
-		String outPath=FilePaths.mainDirectory+"step"+ControlData.currTimeStep+"_"+ControlData.currCycleIndex+".txt";
-		FileWriter outstream;
-		//try {
-			//outstream = new FileWriter(outPath);
-			//BufferedWriter out = new BufferedWriter(outstream);
-			
-		while(dvarIterator.hasNext()){ 
-			String dvName=(String)dvarIterator.next();
-			Dvar dvar=dvarMap.get(dvName);
-			double value=ControlData.xasolver.getColumnActivity(dvName);
-			IntDouble id=new IntDouble(value,false);
-			dvar.setData(id);
-			if (dvarUsedByLaterCycle.contains(dvName)){
-				varCycleValueMap.get(dvName).put(model, id);
+		Map<String, Dvar> dvarMap = SolverData.getDvarMap();
+		for (int i=0; i<=1; i++){
+			ArrayList<String> dvarCollection;
+			if (i==0){
+				dvarCollection = ControlData.currModelDataSet.dvList;
+			}else{
+				dvarCollection = ControlData.currModelDataSet.dvTimeArrayList;
 			}
-			if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){
-				DssDataSetFixLength dds=new DssDataSetFixLength();
-				double[] data=new double[ControlData.totalTimeStep];
-				dds.setData(data);
-				dds.setTimeStep(ControlData.partE);
-				dds.setStartTime(ControlData.startTime);
-				dds.setUnits(dvar.units);
-				dds.setKind(dvar.kind);
-				DataTimeSeries.dvAliasTS.put(dvName,dds);
-			}
-			double[] dataList=DataTimeSeries.dvAliasTS.get(dvName).getData();
-			dataList[ControlData.currTimeStep]=value;
+			Iterator<String> dvarIterator=dvarCollection.iterator();
 			
-			//out.write(dvName+":"+value+"\n");
+			while(dvarIterator.hasNext()){ 
+				String dvName=(String)dvarIterator.next();
+				Dvar dvar=dvarMap.get(dvName);
+				double value=ControlData.xasolver.getColumnActivity(dvName);
+				IntDouble id=new IntDouble(value,false);
+				dvar.setData(id);
+				if(dvarUsedByLaterCycle.contains(dvName)){
+					varCycleValueMap.get(dvName).put(model, id);
+				}else if (dvarTimeArrayUsedByLaterCycle.contains(dvName)){
+					if (varTimeArrayCycleValueMap.containsKey(dvName)){
+						varTimeArrayCycleValueMap.get(dvName).put(model, dvar.data);
+					}else{
+						Map<String, IntDouble> cycleValue = new HashMap<String, IntDouble>();
+						cycleValue.put(model, dvar.data);
+						varTimeArrayCycleValueMap.put(dvName, cycleValue);
+					}
+				}
+				if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){
+					DssDataSetFixLength dds=new DssDataSetFixLength();
+					double[] data=new double[ControlData.totalTimeStep];
+					dds.setData(data);
+					dds.setTimeStep(ControlData.partE);
+					dds.setStartTime(ControlData.startTime);
+					dds.setUnits(dvar.units);
+					dds.setKind(dvar.kind);
+					DataTimeSeries.dvAliasTS.put(dvName,dds);
+				}
+				double[] dataList=DataTimeSeries.dvAliasTS.get(dvName).getData();
+				dataList[ControlData.currTimeStep]=value;
+			}
 		}
-		
-		//out.close();
-		
-		//} catch (IOException e) {
-			// TODO Auto-generated catch block
-		//	e.printStackTrace();
-		//}
 		
 		if (ControlData.showRunTimeMessage) {
 			System.out.println("Objective Value: "+ControlData.xasolver.getObjective());

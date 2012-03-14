@@ -175,7 +175,9 @@ public class LPSolveSolver {
 		Set dvarCollection = dvarMap.keySet();
 		Iterator dvarIterator = dvarCollection.iterator();
 		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
+		Map<String, Map<String, IntDouble>> varTimeArrayCycleValueMap=ControlData.currStudyDataSet.getVarTimeArrayCycleValueMap();
 		Set<String> dvarUsedByLaterCycle = ControlData.currModelDataSet.dvarUsedByLaterCycle;
+		Set<String> dvarTimeArrayUsedByLaterCycle = ControlData.currModelDataSet.dvarTimeArrayUsedByLaterCycle;
 		String model=ControlData.currCycleName;
 			
 		while(dvarIterator.hasNext()){ 
@@ -185,8 +187,16 @@ public class LPSolveSolver {
 			double value=var[VarMap.get(dvName)-1]; 
 			IntDouble id=new IntDouble(value,false);
 			dvar.setData(id);
-			if (dvarUsedByLaterCycle.contains(dvName)){
+			if(dvarUsedByLaterCycle.contains(dvName)){
 				varCycleValueMap.get(dvName).put(model, id);
+			}else if (dvarTimeArrayUsedByLaterCycle.contains(dvName)){
+				if (varTimeArrayCycleValueMap.containsKey(dvName)){
+					varTimeArrayCycleValueMap.get(dvName).put(model, dvar.data);
+				}else{
+					Map<String, IntDouble> cycleValue = new HashMap<String, IntDouble>();
+					cycleValue.put(model, dvar.data);
+					varTimeArrayCycleValueMap.put(dvName, cycleValue);
+				}
 			}
 			if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){
 				DssDataSetFixLength dds=new DssDataSetFixLength();

@@ -98,6 +98,7 @@ public class ModelDataSet implements Serializable {
 	public Set<String> varUsedByLaterCycle = new HashSet<String>();
 	
 	public Set<String> dvarUsedByLaterCycle = new HashSet<String>();
+	public Set<String> dvarTimeArrayUsedByLaterCycle = new HashSet<String>();
 	public Set<String> svarUsedByLaterCycle = new HashSet<String>();
 	public Set<String> aliasUsedByLaterCycle = new HashSet<String>();
 		
@@ -368,6 +369,7 @@ public class ModelDataSet implements Serializable {
 		ControlData.currDvMap=dvMap;
 		ControlData.currEvalTypeIndex=1;
 		dvTimeArrayList = new ArrayList<String>();
+		dvarTimeArrayUsedByLaterCycle = new HashSet<String>();
 		for (String dvName: dvList){
 			ControlData.currEvalName=dvName;
 			//System.out.println("Process dvar "+dvName);
@@ -424,6 +426,10 @@ public class ModelDataSet implements Serializable {
 				}else{
 					solverDvarMap.put(newDvarName, newDvar);
 					dvTimeArrayList.add(newDvarName);
+				}
+				
+				if (dvarUsedByLaterCycle.contains(dvName)){
+					dvarTimeArrayUsedByLaterCycle.add(newDvarName);
 				}
 			}
 		}
