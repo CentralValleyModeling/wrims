@@ -77,7 +77,7 @@ public class ToLowerCase {
 			j.ssWeightMap.remove(key);
 			j.ssWeightMap.put( key.toLowerCase(), o);
 		}
-		for (String key : j.asList) {
+		for (String key : j.asList) {	
 			AliasTemp o = convertAlias(j.asMap.get(key));
 			j.asMap.remove(key);
 			j.asMap.put( key.toLowerCase(), o);
@@ -91,6 +91,7 @@ public class ToLowerCase {
 		j.ssList = Tools.allToLowerCase(j.ssList);
 		j.exList = Tools.allToLowerCase(j.exList);
 		j.asList = Tools.allToLowerCase(j.asList);
+		
 		
 	}
 
@@ -144,7 +145,7 @@ public class ToLowerCase {
 		o.upperBound = d.upperBound.toLowerCase();
 		o.kind = d.kind.toLowerCase();
 		o.units = d.units.toLowerCase();
-		o.condition = d.condition;
+		o.condition = d.condition.toLowerCase();
 		o.isInteger = d.isInteger;
 		
 		return o;
@@ -186,8 +187,6 @@ public class ToLowerCase {
 		o.fromWresl = g.fromWresl.toLowerCase();
 		o.caseName = Tools.allToLowerCase(g.caseName);
 		o.dependants = Tools.allToLowerCase(g.dependants);
-		o.dependants.removeAll(Param.reservedSet);
-		//System.out.println(s.dependants);
 		
 		o.caseCondition = Tools.allToLowerCase(g.caseCondition);
 		o.caseCondition = Tools.replace_with_space(o.caseCondition);
@@ -213,7 +212,8 @@ public class ToLowerCase {
 		o.expression = d.expression.toLowerCase();
 		o.kind = d.kind.toLowerCase();
 		o.units = d.units.toLowerCase();
-		o.condition = d.condition;
+		o.condition = d.condition.toLowerCase();
+		o.dependants = Tools.allToLowerCase(d.dependants);
 
 		
 		return o;

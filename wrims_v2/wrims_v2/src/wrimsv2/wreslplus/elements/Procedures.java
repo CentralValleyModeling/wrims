@@ -323,12 +323,6 @@ public class Procedures {
 	
 				ModelTemp mObj = s.modelMap.get(m);
 				
-				// backup asList and asMap
-				
-				mObj.asList_modified.addAll(mObj.asList);
-				mObj.asMap_modified.putAll(mObj.asMap);
-				
-				
 				
 				Set<String> allDepInGoals = new HashSet<String>();
 				
@@ -347,6 +341,7 @@ public class Procedures {
 					if (allDepInGoals.contains(aKey)){
 							
 						
+						
 						AliasTemp a = mObj.asMap.get(aKey);
 
 						// add to dvar
@@ -359,8 +354,10 @@ public class Procedures {
 						d.fromWresl = a.fromWresl;
 						d.condition = a.condition;
 						
-						mObj.dvList.add(aKey);
-						mObj.dvMap.put(aKey, d);
+						//System.out.println(":a:"+ a.dependants);
+						
+						mObj.dvList_fromAlias.add(aKey);
+						mObj.dvMap_fromAlias.put(aKey, d);
 						
 						// add goal
 						GoalTemp g = new GoalTemp();
@@ -371,14 +368,15 @@ public class Procedures {
 						g.condition = a.condition;
 						g.caseName.add(Param.defaultCaseName);
 						g.caseCondition.add(Param.always);
+						g.dependants = a.dependants;
 					
-						mObj.glList.add(g.id.toLowerCase());
-						mObj.glMap.put(g.id.toLowerCase(), g);	
+						mObj.glList_fromAlias.add(g.id.toLowerCase());
+						mObj.glMap_fromAlias.put(g.id.toLowerCase(), g);	
+
 						
-						
-						// remove from asList_modified and asMap_modified
-						mObj.asList_modified.remove(aKey);
-						mObj.asMap_modified.remove(aKey);
+//						// remove from asList_modified and asMap_modified
+//						mObj.asList_modified.remove(aKey);
+//						mObj.asMap_modified.remove(aKey);
 						
 					}
 					

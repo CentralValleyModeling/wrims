@@ -58,28 +58,30 @@ public class ToWreslData {
 		
 		// TODO: give pre-sorted var list
 
-		o.dvSlackSurplusList = m.ssList;
+		o.dvSlackSurplusList = new ArrayList<String>(m.ssList);
 		Collections.sort(o.dvSlackSurplusList,String.CASE_INSENSITIVE_ORDER);
 
-		o.wtSlackSurplusList = m.ssList;
+		o.wtSlackSurplusList = new ArrayList<String>(m.ssList);
 		Collections.sort(o.wtSlackSurplusList,String.CASE_INSENSITIVE_ORDER);
 		
-		o.dvList = m.dvList;
+		o.dvList = new ArrayList<String>(m.dvList);
+		o.dvList.addAll(m.dvList_fromAlias);
 		Collections.sort(o.dvList,String.CASE_INSENSITIVE_ORDER);
 		
-		o.tsList = m.tsList;
+		o.tsList = new ArrayList<String>(m.tsList);
 		Collections.sort(o.tsList,String.CASE_INSENSITIVE_ORDER);
 		
-		o.svList = m.svList;
+		o.svList = new ArrayList<String>(m.svList);
 		//Collections.sort(o.svList,String.CASE_INSENSITIVE_ORDER);
 
-		o.gList = m.glList;
+		o.gList = new ArrayList<String>(m.glList);
+		o.gList.addAll(m.glList_fromAlias);
 		Collections.sort(o.exList,String.CASE_INSENSITIVE_ORDER);
 		
-		o.exList = m.exList;
+		o.exList = new ArrayList<String>(m.exList);
 		Collections.sort(o.exList,String.CASE_INSENSITIVE_ORDER);
 		
-		o.asList = m.asList_modified;
+		o.asList = new ArrayList<String>(m.asList_modified);
 		Collections.sort(o.asList,String.CASE_INSENSITIVE_ORDER);
 		
 		for (String k: m.ssMap.keySet()){			
@@ -88,9 +90,14 @@ public class ToWreslData {
 		for (String k: m.ssWeightMap.keySet()){			
 			o.wtSlackSurplusMap.put(k, convertWeight(m.ssWeightMap.get(k)));
 		}
+		
 		for (String k: m.dvMap.keySet()){			
 			o.dvMap.put(k, convertDvar(m.dvMap.get(k)));
 		}
+		for (String k: m.dvMap_fromAlias.keySet()){			
+			o.dvMap.put(k, convertDvar(m.dvMap_fromAlias.get(k)));
+		}
+		
 		for (String k: m.tsMap.keySet()){			
 			o.tsMap.put(k, convertTimeseries(m.tsMap.get(k)));
 		}		
@@ -99,6 +106,9 @@ public class ToWreslData {
 		}
 		for (String k: m.glMap.keySet()){			
 			o.gMap.put(k, convertGoal(m.glMap.get(k)));
+		}
+		for (String k: m.glMap_fromAlias.keySet()){			
+			o.gMap.put(k, convertGoal(m.glMap_fromAlias.get(k)));
 		}
 		for (String k: m.exMap.keySet()){			
 			o.exMap.put(k, convertExternal(m.exMap.get(k)));
@@ -132,7 +142,7 @@ public class ToWreslData {
 		o.caseExpression = Tools.replace_seperator(o.caseExpression);
 		//o.caseExpression = Tools.add_space_between_logical(o.caseExpression);
 		
-		System.out.println(o.caseExpression);
+		//System.out.println(o.caseExpression);
 		return o;
 		
 	}	
@@ -216,7 +226,7 @@ public class ToWreslData {
 		o.caseExpression = Tools.replace_seperator(o.caseExpression);
 		//o.caseExpression = Tools.add_space_between_logical(o.caseExpression);
 		
-		System.out.println(o.caseExpression);
+		//System.out.println(o.caseExpression);
 		return o;
 		
 	}
@@ -231,6 +241,7 @@ public class ToWreslData {
 		o.kind = d.kind;
 		o.units = d.units;
 		o.condition = d.condition;
+		o.dependants = d.dependants;
 
 		return o;
 		
