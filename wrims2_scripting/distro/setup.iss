@@ -48,6 +48,7 @@ Name: "{app}\license"
 
 Source: "..\*.bat";     Excludes: ".svn";     Destdir: "{app}\";     Flags: ignoreversion ;
 Source: "..\*.py";     Excludes: ".svn";     Destdir: "{app}\";     Flags: ignoreversion ;
+Source: "..\*.txt";     Excludes: ".svn";     Destdir: "{app}\";     Flags: ignoreversion ;
 
 Source: "..\license\*.txt";    Excludes: ".svn";     Destdir: "{app}\license";     Flags: ignoreversion ;
 
