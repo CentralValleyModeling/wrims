@@ -82,7 +82,11 @@ public class ToLowerCase {
 			j.asMap.remove(key);
 			j.asMap.put( key.toLowerCase(), o);
 		}		
-		
+		for (int i=0; i<j.wTableObjList.size();i++) {	
+			WeightTable o = convertWeightTable(j.wTableObjList.get(i));
+			j.wTableObjList.remove(i);
+			j.wTableObjList.add(i, o);
+		}		
 		j.itemList = Tools.allToLowerCase(j.itemList);
 		j.svList = Tools.allToLowerCase(j.svList);
 		j.dvList = Tools.allToLowerCase(j.dvList);
@@ -95,7 +99,8 @@ public class ToLowerCase {
 		j.exList = Tools.allToLowerCase(j.exList);
 		j.asList = Tools.allToLowerCase(j.asList);
 		j.asList_reduced = Tools.allToLowerCase(j.asList_reduced);
-		
+		j.wvList_defaultType = Tools.allToLowerCase(j.wvList_defaultType);
+		//j.wTableList = Tools.allToLowerCase(j.wTableList);
 		
 	}
 
@@ -171,6 +176,23 @@ public class ToLowerCase {
 
 	}
 
+	
+	public static WeightTable convertWeightTable (WeightTable w){
+		
+		WeightTable o = new WeightTable();
+		
+		o.id = w.id;
+		o.line = w.line;
+		o.fromWresl = w.fromWresl.toLowerCase();
+		o.condition = w.condition.toLowerCase();
+		o.varList = Tools.allToLowerCase(w.varList);
+		o.varWeightMap = Tools.allToLowerCase(w.varWeightMap);
+		o.dependants = Tools.allToLowerCase(w.dependants);
+		
+		return o;
+
+	}
+	
 
 	public static ExternalTemp convertExternal (ExternalTemp e){
 		

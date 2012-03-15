@@ -1,0 +1,30 @@
+SEQUENCE CYCLE1 {
+    model   First
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   Second
+    order   2
+    }
+	
+MODEL first { 
+
+  include[local] 'moreWreslFiles\weight-table.wresl' 
+  define[local] S_TRNTY_1 { std kind 'FLOW-CHANNEL' units 'CFS'}  
+  define[local] S_TRNTY_2 { std kind 'FLOW-CHANNEL' units 'CFS'}   
+  define[local] errpos_shsta { std kind 'FLOW-CHANNEL' units 'CFS'} 
+  define[local] errneg_wkytn { std kind 'FLOW-CHANNEL' units 'CFS'} 
+
+}
+
+MODEL second { 
+
+  define[local] x { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define[local] y { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define[local] z { std kind 'FLOW-CHANNEL' units 'CFS'}
+  
+  objective[local] obj = {[x, 100] }
+  objective[local] obj = {[y, 100], [z, 100]}
+
+}

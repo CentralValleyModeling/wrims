@@ -18,6 +18,7 @@ options {
   import wrimsv2.wreslplus.elements.ExternalTemp;
   import wrimsv2.wreslplus.elements.DvarTemp;
   import wrimsv2.wreslplus.elements.SvarTemp;
+  import wrimsv2.wreslplus.elements.WeightTable;
   import wrimsv2.wreslplus.elements.AliasTemp;
   import wrimsv2.wreslplus.elements.GoalTemp;
   import wrimsv2.wreslplus.elements.GoalHS;
@@ -36,6 +37,7 @@ options {
 	public CommonTree commonTree;
 	public String currentAbsolutePath;
   	public String currentAbsoluteParent;
+  	//public String runDir;
   	public StudyTemp styObj;
   	public Set<String> dependants;
  	
@@ -69,9 +71,9 @@ wreslMain
 
 study : 'study' ID '{' include_config* include_template* include_sequence+  '}' ;
 
-include_config :   'include' 'config' ( ID | include_file )  ;
-include_template : 'include' 'template' ( ID | include_file )  ;
-include_sequence : 'include' SEQUENCE ID  ;
+include_config :   INCLUDE 'config' ( ID | include_file )  ;
+include_template : INCLUDE 'template' ( ID | include_file )  ;
+include_sequence : INCLUDE SEQUENCE ID  ;
 
 config :  CONFIG ID '{' param* '}' ;
 
@@ -119,21 +121,43 @@ scope { ModelTemp model_;}
 : MODEL i=modelName {$id=$i.text;} 
 	   '{' 
 	   ( include_model
-	   | include_file 
-	   | ts=timeseries {$model::model_.itemList.add($ts.id); $model::model_.tsList.add($ts.id); $model::model_.tsMap.put($ts.id, $ts.tsObj); }
-	   | sv=svar_g     {$model::model_.itemList.add($sv.id); $model::model_.svList.add($sv.id); $model::model_.svMap.put($sv.id, $sv.svObj); } 
-	   | dv=dvar_g     {$model::model_.itemList.add($dv.id); $model::model_.dvList.add($dv.id); $model::model_.dvMap.put($dv.id, $dv.dvObj); } 
-	   | ex=ex_g       {$model::model_.itemList.add($ex.id); $model::model_.exList.add($ex.id); $model::model_.exMap.put($ex.id, $ex.exObj); }
-	   | as=alias      {$model::model_.itemList.add($as.id); $model::model_.asList.add($as.id); $model::model_.asMap.put($as.id, $as.asObj); }
-	   | gl1=goal_s    {$model::model_.itemList.add($gl1.id); $model::model_.glList.add($gl1.id); $model::model_.glMap.put($gl1.id, $gl1.glObj); }
-	   | gl2=goal_hs   {$model::model_.itemList.add($gl2.id); $model::model_.glList.add($gl2.id); $model::model_.glMap.put($gl2.id, $gl2.glObj); $model::model_.gl2List.add($gl2.id); }
+	   | fi=include_file {$model::model_.itemList.add($fi.id); $model::model_.incFileIDList.add($fi.id); $model::model_.incFileMap.put($fi.id, $fi.fp); }
+	   | ts=timeseries   {$model::model_.itemList.add($ts.id); $model::model_.tsList.add($ts.id); $model::model_.tsMap.put($ts.id, $ts.tsObj); }
+	   | sv=svar_g       {$model::model_.itemList.add($sv.id); $model::model_.svList.add($sv.id); $model::model_.svMap.put($sv.id, $sv.svObj); } 
+	   | dv=dvar_g       {$model::model_.itemList.add($dv.id); $model::model_.dvList.add($dv.id); $model::model_.dvMap.put($dv.id, $dv.dvObj); } 
+	   | ex=ex_g         {$model::model_.itemList.add($ex.id); $model::model_.exList.add($ex.id); $model::model_.exMap.put($ex.id, $ex.exObj); }
+	   | as=alias        {$model::model_.itemList.add($as.id); $model::model_.asList.add($as.id); $model::model_.asMap.put($as.id, $as.asObj); }
+	   | gl1=goal_s      {$model::model_.itemList.add($gl1.id); $model::model_.glList.add($gl1.id); $model::model_.glMap.put($gl1.id, $gl1.glObj); }
+	   | gl2=goal_hs     {$model::model_.itemList.add($gl2.id); $model::model_.glList.add($gl2.id); $model::model_.glMap.put($gl2.id, $gl2.glObj); $model::model_.gl2List.add($gl2.id); }
 	   | network 
-	   | operation )+
+	   | operation 
+	   | wt=weight     {$model::model_.wTableObjList.add($wt.wtObj);}
+	   )+
 	   '}' 
 	   {$modelObj =$model::model_;}
 	   ;
 
 modelName: ID;
+
+
+weight returns[String id, WeightTable wtObj]
+scope { WeightTable wt_;
+        String id_; 
+      } 
+@init{ $weight::wt_ = new WeightTable(); 
+       $weight::wt_.fromWresl = this.currentAbsolutePath; 
+       dependants = new LinkedHashSet<String>();
+	 }
+@after{ $id = $weight::wt_.id; $wtObj=$weight::wt_; $wtObj.dependants= dependants;}	 
+	: 'objective' LOCAL? weightTableID '=' '{' weight_item+ '}' ;
+
+weightTableID : i=ID {$weight::wt_.id=$i.text;$weight::wt_.line=$i.getLine();} ;
+
+weight_item 
+	: '[' i=ID ',' e=expr_add ']' ','?
+	{$weight::wt_.varList.add($i.text);$weight::wt_.varWeightMap.put($i.text,$e.text);};
+
+
 
 operation: 'operation' operationName '{' operationCase+ '}'; 
 
@@ -143,15 +167,11 @@ operationName: ID;
 
 include_model returns[String id] : INCLUDE  i=ID  ('as' includeNameAs )? {$id=$i.text;} ;
 
-include_file: INCLUDE  string_literal  ('as' includeNameAs )?  ;
+include_file returns[String id, String fp]
+@init{ $id = "_file_"+Integer.toString($model::model_.incFileIDList.size()); }
+      : INCLUDE LOCAL? f=file_path {$fp=$f.text;} ('as' includeNameAs )?  ;
 
-
-
-//upperDir : '..\\' ;
-//
-//normalDir : ID  '\\' ;
-//
-//wreslFile :  ID ( ID | '-' )* '.' ID ;
+file_path : QUOTE  ;
 
 includeNameAs: ID ;
 
@@ -239,8 +259,8 @@ alias_new : ALIAS aliasID '{' VALUE  aliasExpresion  aliasKind?  aliasUnits? '}'
 
 aliasExpresion : e=expr_add {$alias::as_.expression=$e.text;}; 
 aliasID : i=ID {$alias::as_.id=$i.text;}; 
-aliasUnits: UNITS s=string_literal {$alias::as_.units=Tools.strip($s.text);};
-aliasKind:  KIND s=string_literal {$alias::as_.kind=Tools.strip($s.text);};
+aliasUnits: UNITS s=QUOTE {$alias::as_.units=Tools.strip($s.text);};
+aliasKind:  KIND s=QUOTE {$alias::as_.kind=Tools.strip($s.text);};
 
 /// svar
 
@@ -270,8 +290,8 @@ svar_timeArray: dimension_time svar ;
 svar_trunk 
 	: typeNumber? ( svar_noCase | svar_case+ ) ( svarKind svarUnits )?  ;
 
-svarUnits: UNITS string_literal ;
-svarKind:  KIND string_literal ;
+svarUnits: UNITS QUOTE ;
+svarKind:  KIND QUOTE ;
 
 svar_noCase
 	@after {$svar_g::sv_.caseName.add(Param.defaultCaseName); $svar_g::sv_.caseCondition.add(Param.always);}
@@ -346,10 +366,10 @@ timeseries_new : TIMESERIES tsID      '{' (NAME      bpart_id)? tsKind tsUnits c
 timeseries_old : DEFINE LOCAL? tsID   '{' TIMESERIES bpart_id? tsKind tsUnits convert? '}' ;
 			
 tsID : i=ID {$timeseries::ts_.id=$i.text;} ;			
-tsUnits: UNITS s=string_literal {$timeseries::ts_.units=Tools.strip($s.text);} ;
-tsKind:  KIND s=string_literal {$timeseries::ts_.kind=Tools.strip($s.text);} ;			
-bpart_id : s=string_literal {$timeseries::ts_.dssBPart=Tools.strip($s.text);};
-convert : CONVERT s=string_literal {$timeseries::ts_.convertToUnits=Tools.strip($s.text);};
+tsUnits: UNITS s=QUOTE {$timeseries::ts_.units=Tools.strip($s.text);} ;
+tsKind:  KIND s=QUOTE {$timeseries::ts_.kind=Tools.strip($s.text);} ;			
+bpart_id : s=QUOTE {$timeseries::ts_.dssBPart=Tools.strip($s.text);};
+convert : CONVERT s=QUOTE {$timeseries::ts_.convertToUnits=Tools.strip($s.text);};
 
 /// network
 network : 'network' ID '{' inlet* outlet* connection+ '}';
@@ -430,8 +450,8 @@ scope { DvarTemp dvar_;
 @init{ $dvar_g::dvar_ = new DvarTemp(); 
        $dvar_g::dvar_.fromWresl = this.currentAbsolutePath; 
 	 }
+@after{ $id= $dvar_g::id_; $dvObj= $dvar_g::dvar_; }
 	: ( dvar_group_new | dvar_group_old ) 
-	  { $id= $dvar_g::id_; $dvObj= $dvar_g::dvar_; }
 	;
 
 dvarID : i=ID { $dvar_g::dvar_.id=$i.text; $dvar_g::id_=$i.text; };
@@ -469,16 +489,11 @@ expr_limited: expr_add ; //number ( ('*' | '/') unitFunc )? ;
 std: STD ;
 
 dvKindUnits : dvKind dvUnits | dvUnits dvKind ;
-dvKind:  KIND s=string_literal  {$dvar_g::dvar_.kind=Tools.strip($s.text);};
-dvUnits: UNITS s=string_literal {$dvar_g::dvar_.units=Tools.strip($s.text);};
+dvKind:  KIND s=QUOTE  {$dvar_g::dvar_.kind=Tools.strip($s.text);};
+dvUnits: UNITS s=QUOTE {$dvar_g::dvar_.units=Tools.strip($s.text);};
 
 
 
-
-
-
-string_literal 
-	: '\'' .+ '\''  ;
 
 
 
@@ -635,6 +650,11 @@ multiInputFunc
 
 reservedID :  MONTH | MonthID ;
 
+QUOTE : '\'' .*  '\'' ;
+
+ML_COMMENT : '/*' .* '*/' {$channel = HIDDEN;}; //{skip();}; 
+
+SL_COMMENT : '#' ~('\r'|'\n')*  '\r'? '\n' {$channel=HIDDEN;} ;
 
 AND : '&&' | '.and.' ;
 OR  : '||' | '.or.' ;
@@ -720,6 +740,4 @@ fragment Digit : '0'..'9';
 
 WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {$channel = HIDDEN;};
 
-ML_COMMENT : '/*' .* '*/' {$channel = HIDDEN;}; //{skip();}; 
 
-SL_COMMENT : '#' ~('\r'|'\n')*  '\r'? '\n' {$channel=HIDDEN;} ;

@@ -192,4 +192,79 @@ public class TestWreslWalker_weight {
 
 	
 	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void weightTable1_new() throws RecognitionException, IOException {
+		
+		testName = "TestWreslWalker_weightTable1_new";
+		csvFolderPath = "testResult_v1\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+		//LogUtils.studySummary_details(sd);
+		LogUtils.closeLogFile();
+		
+		WriteCSV.study(sd,csvFolderPath ) ;
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);	
+
+		String s;
+ 	
+		String csvText = Tools.readFileAsString(csvFolderPath+"\\second\\weight.csv");	
+		
+		int n;
+	
+		s = "y,##always,100";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+	
+		s = "z,##always,100";
+		s = Tools.replace_regex(s);
+		n = RegUtils.timesOfMatches(csvText, s );
+		Assert.assertEquals(n, 1);
+		
+		
+	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void weightTable1_include() throws RecognitionException, IOException {
+		
+		testName = "TestWreslWalker_weightTable1_include";
+		csvFolderPath = "testResult_v1\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+		//LogUtils.studySummary_details(sd);
+		LogUtils.closeLogFile();
+		
+		WriteCSV.study(sd,csvFolderPath ) ;
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 0);	
+		
+	}
 }

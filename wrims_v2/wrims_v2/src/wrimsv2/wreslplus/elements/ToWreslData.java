@@ -81,6 +81,9 @@ public class ToWreslData {
 		
 		o.asList = new ArrayList<String>(m.asList_reduced);
 		Collections.sort(o.asList,String.CASE_INSENSITIVE_ORDER);
+
+		o.wtList = new ArrayList<String>(m.wvList_defaultType);
+		Collections.sort(o.wtList,String.CASE_INSENSITIVE_ORDER);
 		
 		for (String k: m.ssMap.keySet()){			
 			o.dvSlackSurplusMap.put(k, convertDvar(m.ssMap.get(k)));
@@ -103,10 +106,23 @@ public class ToWreslData {
 		for (String k: m.exMap.keySet()){			
 			o.exMap.put(k, convertExternal(m.exMap.get(k)));
 		}
-		// this one is special. don't use copy and paste
+		
+		// special case. don't use copy and paste
 		for (String k: o.asList){			
 			o.asMap.put(k, convertAlias(m.asMap.get(k)));
 		}
+		for (WeightTable w : m.wTableObjList_defaultType){	
+			
+			//System.out.println("before: "+w.varWeightMap.keySet());
+			//if (w.id.equalsIgnoreCase("obj")) o.wtMap.putAll(convertWeightTable(w));
+			//Map<String,WeightElement> wem = convertWeightTable(w);
+			o.wtMap.putAll(convertWeightTable(w));
+			//System.out.println("after: "+wem.keySet());
+		}
+		
+		
+		
+		
 		return o;
 		
 	}
@@ -181,6 +197,27 @@ public class ToWreslData {
 		o.weight = Tools.replace_seperator(o.weight);
 		
 		return o;
+		
+	}
+
+
+	public static Map<String,WeightElement> convertWeightTable (WeightTable w){
+		
+		Map<String,WeightElement> om = new LinkedHashMap<String, WeightElement>();
+		
+		for (String s : w.varList) {
+		
+			WeightElement o = new WeightElement();
+		
+			o.fromWresl = w.fromWresl;
+			o.condition = w.condition;
+			o.weight = w.varWeightMap.get(s);
+			
+			om.put(s,o);
+		}
+
+		
+		return om;
 		
 	}
 

@@ -379,23 +379,38 @@ public class Procedures {
 						mObj.glMap.put(g.id.toLowerCase(), g);	
 						
 					}
-					
-					
+				
 					
 				}				
 				
 				
-				
-				
-				
 			}
 			
+	
+		}
+
+
+	public static void collectWeightVar(StudyTemp s){
+		
+		
+		for (String m: s.modelList){			
+	
+			ModelTemp mObj = s.modelMap.get(m);
+						
 			
-	
-		}	
-	
+			for (WeightTable wt: mObj.wTableObjList){			
+			
+				// TODO: can collect different objective type
+				if (wt.id.equalsIgnoreCase(s.objectiveType)){
+					mObj.wvList_defaultType.addAll(wt.varList);
+					mObj.wTableObjList_defaultType.add(wt);
+				}
+				
+			}			
 
-
+		}
+	
+	}	
 	
 
 }

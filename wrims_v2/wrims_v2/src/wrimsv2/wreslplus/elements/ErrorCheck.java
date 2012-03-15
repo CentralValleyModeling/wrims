@@ -50,8 +50,7 @@ public class ErrorCheck {
 			for (String s: dvDup){
 				LogUtils.errMsg("Dvar redefined: "+s+" in file: unknown");
 			}
-		}
-		
+		}		
 	
 		// check svar list duplicates
 		ArrayList<String> svDup = findDuplicates(m.svList);
@@ -64,16 +63,30 @@ public class ErrorCheck {
 			}
 		}
 		
-	
+		// check wTable var duplicates
+		ArrayList<String> wvDup = findDuplicates(m.wvList_defaultType);
+		
+		if (wvDup.size()>0) {
+			m.wvList_defaultType = removeDuplicates(m.wvList_defaultType);
+		
+			for (String s: wvDup){
+				LogUtils.errMsg("Weight redefined: "+s+" in file: unknown");
+			}
+		}	
+
 		
 		return 0;
 	
 	}
 
-
+	
 	public static ArrayList<String> findDuplicates(ArrayList<String> a){
 		
-		ArrayList<String> duplicates = new ArrayList<String>(a);
+		ArrayList<String> duplicates = new ArrayList<String>();
+		
+		if (a.size()<1) return duplicates;
+		
+		duplicates.addAll(a);
 		Set<String> varSet = new LinkedHashSet<String>();
 		
 		varSet.addAll(a);

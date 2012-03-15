@@ -15,6 +15,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -36,6 +37,17 @@ public class Tools {
 		
 		for (String s: inArrayList){
 			out.add(s.toLowerCase());
+		}
+		
+		return out;
+	}
+	//TODO: this can be optimized for memory
+	public static Map<String,String> allToLowerCase(Map<String,String> inMap){
+		
+		Map<String,String> out = new LinkedHashMap<String, String>();
+		
+		for (String s: inMap.keySet()){
+			out.put(s.toLowerCase(),inMap.get(s).toLowerCase());
 		}
 		
 		return out;

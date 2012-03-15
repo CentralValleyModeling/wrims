@@ -13,6 +13,7 @@ public class StudyTemp implements Serializable {
 	public Map<String, SequenceTemp> seqMap;
 	public ArrayList<String> modelList;		
 	public Map<String, ModelTemp> modelMap;
+	public String objectiveType="obj";
 	
 	public StudyTemp(){
 		

@@ -12,6 +12,11 @@ public class ModelTemp implements Serializable {
 	public String id;
 	
 	public ArrayList<String>  itemList;
+	public ArrayList<String> incFileIDList;
+	public Map<String,String> incFileMap;
+	public ArrayList<String>  wvList_defaultType;
+	public ArrayList<WeightTable> wTableObjList_defaultType;
+	public ArrayList<WeightTable> wTableObjList;
 	public ArrayList<String>  asList;
 	public ArrayList<String>  asList_reduced;
 	public Map<String,AliasTemp> asMap;		
@@ -20,7 +25,6 @@ public class ModelTemp implements Serializable {
 	public ArrayList<String>  dvList;
 	public Map<String,DvarTemp> dvMap;	
 	public ArrayList<String>  dvList_fromAlias;
-	//public Map<String,DvarTemp> dvMap_fromAlias;
 	public ArrayList<String>  tsList;
 	public Map<String,TimeseriesTemp> tsMap;
 	public ArrayList<String>  exList;
@@ -28,17 +32,20 @@ public class ModelTemp implements Serializable {
 	public ArrayList<String>  glList;
 	public Map<String,GoalTemp> glMap;
 	public ArrayList<String>  gl2List;
-	public Map<String,GoalTemp> gl2Map;
 	public ArrayList<String>  glList_fromAlias;
-	//public Map<String,GoalTemp> glMap_fromAlias;
 	public ArrayList<String>  ssList;
 	public Map<String,DvarTemp> ssMap;
-	public Map<String,WeightTemp> ssWeightMap;	
+	public Map<String,WeightTemp> ssWeightMap;
 
 	
 	public ModelTemp(){
 		
 		itemList = new ArrayList<String>();
+		incFileIDList = new ArrayList<String>();
+		incFileMap= new LinkedHashMap<String, String>();
+		wvList_defaultType = new ArrayList<String>();
+		wTableObjList_defaultType = new ArrayList<WeightTable>();
+		wTableObjList = new ArrayList<WeightTable>();
 		svList = new ArrayList<String>();
 		svMap = new LinkedHashMap<String, SvarTemp>();	
 		asList = new ArrayList<String>();
@@ -47,7 +54,6 @@ public class ModelTemp implements Serializable {
 		dvList = new ArrayList<String>();
 		dvMap = new LinkedHashMap<String, DvarTemp>();
 		dvList_fromAlias = new ArrayList<String>();
-		//dvMap_fromAlias = new LinkedHashMap<String, DvarTemp>();
 		tsList = new ArrayList<String>();
 		tsMap = new LinkedHashMap<String, TimeseriesTemp>();	
 		exList = new ArrayList<String>();
@@ -55,9 +61,7 @@ public class ModelTemp implements Serializable {
 		glList = new ArrayList<String>();
 		glMap = new LinkedHashMap<String, GoalTemp>();	
 		gl2List = new ArrayList<String>();
-		gl2Map = new LinkedHashMap<String, GoalTemp>();	
 		glList_fromAlias = new ArrayList<String>();
-		//glMap_fromAlias = new LinkedHashMap<String, GoalTemp>();
 		ssList = new ArrayList<String>();
 		ssMap = new LinkedHashMap<String, DvarTemp>();	
 		ssWeightMap = new LinkedHashMap<String, WeightTemp>();	
