@@ -161,45 +161,38 @@ public class XASolver {
 		String model=ControlData.currCycleName;
 		
 		Map<String, Dvar> dvarMap = SolverData.getDvarMap();
-		for (int i=0; i<=1; i++){
-			ArrayList<String> dvarCollection;
-			if (i==0){
-				dvarCollection = ControlData.currModelDataSet.dvList;
-			}else{
-				dvarCollection = ControlData.currModelDataSet.dvTimeArrayList;
-			}
-			Iterator<String> dvarIterator=dvarCollection.iterator();
+		Set dvarCollection = dvarMap.keySet();
+		Iterator dvarIterator = dvarCollection.iterator();
 			
-			while(dvarIterator.hasNext()){ 
-				String dvName=(String)dvarIterator.next();
-				Dvar dvar=dvarMap.get(dvName);
-				double value=ControlData.xasolver.getColumnActivity(dvName);
-				IntDouble id=new IntDouble(value,false);
-				dvar.setData(id);
-				if(dvarUsedByLaterCycle.contains(dvName)){
-					varCycleValueMap.get(dvName).put(model, id);
-				}else if (dvarTimeArrayUsedByLaterCycle.contains(dvName)){
-					if (varTimeArrayCycleValueMap.containsKey(dvName)){
-						varTimeArrayCycleValueMap.get(dvName).put(model, dvar.data);
-					}else{
-						Map<String, IntDouble> cycleValue = new HashMap<String, IntDouble>();
-						cycleValue.put(model, dvar.data);
-						varTimeArrayCycleValueMap.put(dvName, cycleValue);
-					}
+		while(dvarIterator.hasNext()){ 
+			String dvName=(String)dvarIterator.next();
+			Dvar dvar=dvarMap.get(dvName);
+			double value=ControlData.xasolver.getColumnActivity(dvName);
+			IntDouble id=new IntDouble(value,false);
+			dvar.setData(id);
+			if(dvarUsedByLaterCycle.contains(dvName)){
+				varCycleValueMap.get(dvName).put(model, id);
+			}else if (dvarTimeArrayUsedByLaterCycle.contains(dvName)){
+				if (varTimeArrayCycleValueMap.containsKey(dvName)){
+					varTimeArrayCycleValueMap.get(dvName).put(model, dvar.data);
+				}else{
+					Map<String, IntDouble> cycleValue = new HashMap<String, IntDouble>();
+					cycleValue.put(model, dvar.data);
+					varTimeArrayCycleValueMap.put(dvName, cycleValue);
 				}
-				if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){
-					DssDataSetFixLength dds=new DssDataSetFixLength();
-					double[] data=new double[ControlData.totalTimeStep];
-					dds.setData(data);
-					dds.setTimeStep(ControlData.partE);
-					dds.setStartTime(ControlData.startTime);
-					dds.setUnits(dvar.units);
-					dds.setKind(dvar.kind);
-					DataTimeSeries.dvAliasTS.put(dvName,dds);
-				}
-				double[] dataList=DataTimeSeries.dvAliasTS.get(dvName).getData();
-				dataList[ControlData.currTimeStep]=value;
 			}
+			if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){
+				DssDataSetFixLength dds=new DssDataSetFixLength();
+				double[] data=new double[ControlData.totalTimeStep];
+				dds.setData(data);
+				dds.setTimeStep(ControlData.partE);
+				dds.setStartTime(ControlData.startTime);
+				dds.setUnits(dvar.units);
+				dds.setKind(dvar.kind);
+				DataTimeSeries.dvAliasTS.put(dvName,dds);
+			}
+			double[] dataList=DataTimeSeries.dvAliasTS.get(dvName).getData();
+			dataList[ControlData.currTimeStep]=value;
 		}
 		
 		if (ControlData.showRunTimeMessage) {
