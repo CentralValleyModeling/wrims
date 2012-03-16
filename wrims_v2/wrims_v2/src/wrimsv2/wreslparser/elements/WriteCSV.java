@@ -227,7 +227,7 @@ public class WriteCSV {
 	  public static void svar(Map<String,Svar> sMap, ArrayList<String> list ,PrintWriter out) {
 		    
 		  List<String> keys = new ArrayList<String>(list);
-			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
+			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
 			
 		    for (String k: keys ){
 		    	
@@ -341,7 +341,7 @@ public class WriteCSV {
 	  public static void incFile(ArrayList<String> list ,PrintWriter out) {
 		    
 		  List<String> keys = new ArrayList<String>(list);
-			Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
+			//Collections.sort(keys,String.CASE_INSENSITIVE_ORDER);
 			
 		    for (String k: keys ){
 		    	
