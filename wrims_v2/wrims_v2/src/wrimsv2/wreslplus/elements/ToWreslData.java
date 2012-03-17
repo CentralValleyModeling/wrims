@@ -85,6 +85,11 @@ public class ToWreslData {
 		o.wtList = new ArrayList<String>(m.wvList_defaultType);
 		Collections.sort(o.wtList,String.CASE_INSENSITIVE_ORDER);
 		
+		for (String k: m.incFileMap.keySet()){			
+			o.incFileList.add(m.incFileMap.get(k).absPath);
+		}
+		
+		
 		for (String k: m.ssMap.keySet()){			
 			o.dvSlackSurplusMap.put(k, convertDvar(m.ssMap.get(k)));
 		}

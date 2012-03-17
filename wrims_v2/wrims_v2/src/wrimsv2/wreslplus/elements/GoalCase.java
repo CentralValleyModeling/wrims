@@ -27,6 +27,7 @@ public class GoalCase implements Serializable {
 	
 	public GoalCase(){
 		
+		//id=Param.undefined;
 		condition = Param.always;		
 		//dependants = new LinkedHashSet<String>();
 		lhs_gt_rhs = Param.constrain; 

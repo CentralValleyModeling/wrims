@@ -62,11 +62,6 @@ public class ToLowerCase {
 			j.glMap.remove(key);
 			j.glMap.put( key.toLowerCase(), o);
 		}
-//		for (String key : j.gl2List) {
-//			GoalTemp o = convertGoal(j.gl2Map.get(key));
-//			j.gl2Map.remove(key);
-//			j.gl2Map.put( key.toLowerCase(), o);
-//		}
 		for (String key : j.ssList) {
 			DvarTemp o = convertDvar(j.ssMap.get(key));
 			j.ssMap.remove(key);
@@ -86,7 +81,14 @@ public class ToLowerCase {
 			WeightTable o = convertWeightTable(j.wTableObjList.get(i));
 			j.wTableObjList.remove(i);
 			j.wTableObjList.add(i, o);
-		}		
+		}
+		for (String key : j.incFileIDList) {	
+			IncFileTemp o = convertIncFile(j.incFileMap.get(key));
+			j.incFileMap.remove(key);
+			j.incFileMap.put( key.toLowerCase(), o);
+		}	
+		
+		j.incFileIDList=Tools.allToLowerCase(j.incFileIDList);
 		j.itemList = Tools.allToLowerCase(j.itemList);
 		j.svList = Tools.allToLowerCase(j.svList);
 		j.dvList = Tools.allToLowerCase(j.dvList);
@@ -100,7 +102,7 @@ public class ToLowerCase {
 		j.asList = Tools.allToLowerCase(j.asList);
 		j.asList_reduced = Tools.allToLowerCase(j.asList_reduced);
 		j.wvList_defaultType = Tools.allToLowerCase(j.wvList_defaultType);
-		//j.wTableList = Tools.allToLowerCase(j.wTableList);
+
 		
 	}
 
@@ -206,27 +208,45 @@ public class ToLowerCase {
 		
 	}
 
-
+	// GoalCase is not converted to lowercase
 	public static GoalTemp convertGoal (GoalTemp g){
 
 		// TODO: convert fields in class GoalCase to lowercase 
 		
 		GoalTemp o = new GoalTemp();
-		
+
+		ArrayList<String> cn = new ArrayList<String>(g.caseMap.keySet());
+		for (String key: cn){		
+			GoalCase gc = convertGoalCase(g.caseMap.get(key));
+			//g.caseMap.remove(key);
+			o.caseMap.put( key.toLowerCase(), gc);	
+		}
+			
 		o.id = g.id;
 		o.fromWresl = g.fromWresl.toLowerCase();
 		o.caseName = Tools.allToLowerCase(g.caseName);
 		o.dependants = Tools.allToLowerCase(g.dependants);
+
+		o.hasCase = g.hasCase;
+		o.hasLhs = g.hasLhs;
 		
-		o.caseCondition = Tools.allToLowerCase(g.caseCondition);
-		o.caseCondition = Tools.replace_with_space(o.caseCondition);
-		//o.caseCondition = Tools.replace_seperator(o.caseCondition);
-		o.caseCondition = Tools.add_space_between_logical(o.caseCondition);
+		if (g.hasLhs) {
+			
+			o.lhs = g.lhs.toLowerCase();
 		
-		o.caseExpression = Tools.allToLowerCase(g.caseExpression);
-		o.caseExpression = Tools.replace_with_space(o.caseExpression);
-		//o.caseExpression = Tools.replace_seperator(o.caseExpression);
-		o.caseExpression = Tools.add_space_between_logical(o.caseExpression);
+		} else {  // simple goal
+		
+			o.caseCondition = Tools.allToLowerCase(g.caseCondition);
+			o.caseCondition = Tools.replace_with_space(o.caseCondition);
+			//o.caseCondition = Tools.replace_seperator(o.caseCondition);
+			o.caseCondition = Tools.add_space_between_logical(o.caseCondition);
+			
+			o.caseExpression = Tools.allToLowerCase(g.caseExpression);
+			o.caseExpression = Tools.replace_with_space(o.caseExpression);
+			//o.caseExpression = Tools.replace_seperator(o.caseExpression);
+			o.caseExpression = Tools.add_space_between_logical(o.caseExpression);
+		
+		}
 		
 		return o;
 				
@@ -248,6 +268,33 @@ public class ToLowerCase {
 
 		
 		return o;
+	}
+
+
+	public static GoalCase convertGoalCase (GoalCase d){
+		
+		GoalCase o = new GoalCase();
+		
+		o.id = d.id;
+		o.rhs = d.rhs.toLowerCase();
+		o.lhs_gt_rhs = d.lhs_gt_rhs.toLowerCase();
+		o.lhs_lt_rhs = d.lhs_lt_rhs.toLowerCase();
+		o.condition = d.condition.toLowerCase();
+
+		
+		return o;
+	}
+
+
+	public static IncFileTemp convertIncFile (IncFileTemp w){
+		
+		IncFileTemp o = new IncFileTemp();
+		
+		o.id = w.id;
+		o.rawPath = w.rawPath.toLowerCase();
+		
+		return o;
+	
 	}
 
 }

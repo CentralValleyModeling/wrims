@@ -279,4 +279,41 @@ public class TestWreslWalker_study
 
     Assert.assertEquals(s, e);
   }
+
+//@Test(groups={"WRESL_elements"})
+//  public void callite_main_bo()
+//    throws RecognitionException, IOException
+//  {
+//    testName = "TestWreslWalker_callite_main_bo";
+//	csvFolderPath = "testResult_v1\\"+testName;
+//	inputFilePath = projectPath + testName+".wresl";
+//	logFilePath = csvFolderPath+".log";
+//
+//    LogUtils.setLogFile(this.logFilePath);
+//
+//    File absFile = new File(this.inputFilePath).getAbsoluteFile();
+//    String absFilePath = absFile.getCanonicalPath().toLowerCase();
+//
+//    TempData td = new TempData();
+//
+//    StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+//
+//    td.model_dataset_map = StudyParser.parseModels(sc, td);
+//
+//    StudyDataSet sd = StudyParser.writeWreslData(sc, td);
+//
+//    //LogUtils.studySummary_details(sd);
+//
+//    LogUtils.closeLogFile();
+//
+//    String modelName = (String)sd.getModelList().get(0);
+//
+//    WriteCSV.study(sd, this.csvFolderPath);
+//
+//    String logText = Tools.readFileAsString(this.logFilePath);
+//
+//    int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+//    Assert.assertEquals(totalErrs, 0);
+//
+//  }
 }

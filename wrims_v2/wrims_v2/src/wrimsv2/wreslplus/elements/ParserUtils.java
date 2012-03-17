@@ -42,6 +42,7 @@ public class ParserUtils {
 		
 		parser.currentAbsolutePath = new File(inputFilePath).getAbsolutePath(); 
 		parser.currentAbsoluteParent = new File(inputFilePath).getAbsoluteFile().getParent();
+		parser.pathRelativeToRunDir = ResourceUtils.getRelativePath(parser.currentAbsolutePath, GlobalData.runDir, "\\");
 		
 		LogUtils.importantMsg("Parsing file: "+parser.currentAbsolutePath);
 		

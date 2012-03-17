@@ -1,0 +1,18 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+
+define InitGWSystem           {EXTERNAL interfacetogw.dll}  #Construct and initialize the finite element groundwater model 
+define SetGP	              {EXTERNAL interfacetogw.dll}  #Set the groundwater pumping at WBA level
+define GET_REQ_DO {EXTERNAL f90}
+
+# Converts a series of daily MRDO reqmts into a monthly avg Delta Outflow reqmt
+define getFinalMrdo {EXTERNAL f90}                                   
+
+
+
+}

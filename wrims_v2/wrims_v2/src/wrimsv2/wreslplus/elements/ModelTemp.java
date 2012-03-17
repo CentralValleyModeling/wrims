@@ -10,21 +10,24 @@ public class ModelTemp implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public String id;
+	public String absPath;
+	public String parentAbsPath;
+	public String pathRelativeToRunDir; //processed
 	
 	public ArrayList<String>  itemList;
 	public ArrayList<String> incFileIDList;
-	public Map<String,String> incFileMap;
-	public ArrayList<String>  wvList_defaultType;
-	public ArrayList<WeightTable> wTableObjList_defaultType;
-	public ArrayList<WeightTable> wTableObjList;
+	public Map<String,IncFileTemp> incFileMap;
+	public ArrayList<String>  wvList_defaultType; // added after processed
+	public ArrayList<WeightTable> wTableObjList_defaultType; // added after processed
+	public ArrayList<WeightTable> wTableObjList;  // raw data
 	public ArrayList<String>  asList;
-	public ArrayList<String>  asList_reduced;
+	public ArrayList<String>  asList_reduced; // added after processed
 	public Map<String,AliasTemp> asMap;		
 	public ArrayList<String>  svList;
 	public Map<String,SvarTemp> svMap;	
 	public ArrayList<String>  dvList;
 	public Map<String,DvarTemp> dvMap;	
-	public ArrayList<String>  dvList_fromAlias;
+	public ArrayList<String>  dvList_fromAlias;  // processed
 	public ArrayList<String>  tsList;
 	public Map<String,TimeseriesTemp> tsMap;
 	public ArrayList<String>  exList;
@@ -32,8 +35,8 @@ public class ModelTemp implements Serializable {
 	public ArrayList<String>  glList;
 	public Map<String,GoalTemp> glMap;
 	public ArrayList<String>  gl2List;
-	public ArrayList<String>  glList_fromAlias;
-	public ArrayList<String>  ssList;
+	public ArrayList<String>  glList_fromAlias;  // processed
+ 	public ArrayList<String>  ssList;
 	public Map<String,DvarTemp> ssMap;
 	public Map<String,WeightTemp> ssWeightMap;
 
@@ -42,7 +45,7 @@ public class ModelTemp implements Serializable {
 		
 		itemList = new ArrayList<String>();
 		incFileIDList = new ArrayList<String>();
-		incFileMap= new LinkedHashMap<String, String>();
+		incFileMap= new LinkedHashMap<String, IncFileTemp>();
 		wvList_defaultType = new ArrayList<String>();
 		wTableObjList_defaultType = new ArrayList<WeightTable>();
 		wTableObjList = new ArrayList<WeightTable>();

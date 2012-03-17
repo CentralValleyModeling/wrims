@@ -1,5 +1,7 @@
 package wrimsv2.wreslplus.elements;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -41,7 +43,7 @@ public class Procedures {
 						g2.caseCondition.add(gc.condition);
 						
 						// convert penalty into caseExpression
-						Map<String,String> o = convertPenalty(g2.id, i, g2.lhs, gc);
+						Map<String,String> o = convertPenalty(g2.id.toLowerCase(), i, g2.lhs, gc);
 						
 						String slackName = o.get("slackName");
 						String surplusName = o.get("surplusName");
@@ -389,7 +391,7 @@ public class Procedures {
 	
 		}
 
-
+	// processed after lowercase conversion
 	public static void collectWeightVar(StudyTemp s){
 		
 		
@@ -408,6 +410,38 @@ public class Procedures {
 				
 			}			
 
+		}
+	
+	}
+
+
+	// processed after lowercase conversion
+	public static void processIncFilePath(StudyTemp s){
+		
+		
+		for (String m: s.modelList){			
+	
+			ModelTemp mObj = s.modelMap.get(m);
+						
+			mObj.pathRelativeToRunDir = ResourceUtils.getRelativePath(mObj.absPath, GlobalData.runDir, "\\"); 
+			
+			
+			for (String key : mObj.incFileMap.keySet()){
+				 
+				IncFileTemp f = mObj.incFileMap.get(key);
+				
+			    try {
+			    	f.absPath = new File(mObj.parentAbsPath, f.rawPath).getCanonicalPath().toLowerCase();
+			    } catch (IOException e) {
+			        e.printStackTrace();
+			        LogUtils.errMsg("Include file IOException: " + f.rawPath, mObj.absPath);
+			    }
+				
+				f.pathRelativeToRunDir = ResourceUtils.getRelativePath(f.absPath, GlobalData.runDir, "\\");
+	
+			}
+					
+	
 		}
 	
 	}	

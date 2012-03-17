@@ -80,7 +80,7 @@ public class Tools {
 		return s;
 	}
 	public static ArrayList<String> replace_with_space(ArrayList<String> s) {
-		if (s.size()<1)  return null;
+		if (s==null)  return null;
 		ArrayList<String> o = new ArrayList<String>();
 		for (String e : s){
 			o.add(replace_with_space(e));
@@ -95,7 +95,7 @@ public class Tools {
 		return s;
 	}
 	public static ArrayList<String> replace_ignoreChar(ArrayList<String> s) {
-		if (s.size()<1)  return null;
+		if (s==null) return null;
 		ArrayList<String> o = new ArrayList<String>();
 		for (String e : s){
 			o.add(replace_ignoreChar(e));
@@ -110,7 +110,7 @@ public class Tools {
 		return s;
 	}
 	public static ArrayList<String> add_space_between_logical(ArrayList<String> s) {
-		if (s.size()<1)  return null;
+		if (s==null)  return s;
 		ArrayList<String> o = new ArrayList<String>();
 		for (String e : s){
 			o.add(add_space_between_logical(e));

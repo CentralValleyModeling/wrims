@@ -1,0 +1,33 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+SEQUENCE CYCLE2 {
+    model   second
+    order   52
+    }
+
+MODEL first { 
+
+  INCLUDE[local] 'someFolder\svar_sum.wresl'
+  INCLUDE[local] '\..\svar_const.wresl'
+  INCLUDE[local] '..\svar_case.wresl'
+  INCLUDE[local] '\someFolder\svar_table.wresl'
+ 	
+	}	
+
+MODEL second { 
+
+  INCLUDE[local] 'someFolder\svar_sum.wresl'
+  INCLUDE[local] '\..\svar_const.wresl'
+  INCLUDE[local] '..\svar_case.wresl'
+  INCLUDE[local] '\someFolder\svar_table.wresl'
+	 	
+     }	
+	
+
+	 
+
+
+ 

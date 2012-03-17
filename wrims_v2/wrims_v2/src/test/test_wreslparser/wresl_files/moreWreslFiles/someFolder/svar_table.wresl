@@ -1,0 +1,27 @@
+
+
+
+define simple {
+        select    target
+        from      feather_fish_203
+        where   month = NOV }
+		
+define[local] multi_where { select TArget from res_level where res_num=1,level=4,
+		  	
+		month=month }		
+	
+
+
+define DI_CVP_sys {
+           select     di
+           from       wsi_di_cvp_sys
+			given      wsi=wsi_cvp_sys
+           use        linear }      
+                               
+ 
+	
+
+	 
+
+
+ 

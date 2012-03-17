@@ -14,6 +14,7 @@ options {
   import java.util.Set;
   import java.util.LinkedHashSet;
   import wrimsv2.wreslplus.elements.Tools;
+  import wrimsv2.wreslplus.elements.IncFileTemp;
   import wrimsv2.wreslplus.elements.TimeseriesTemp;
   import wrimsv2.wreslplus.elements.ExternalTemp;
   import wrimsv2.wreslplus.elements.DvarTemp;
@@ -37,7 +38,7 @@ options {
 	public CommonTree commonTree;
 	public String currentAbsolutePath;
   	public String currentAbsoluteParent;
-  	//public String runDir;
+  	public String pathRelativeToRunDir;
   	public StudyTemp styObj;
   	public Set<String> dependants;
  	
@@ -116,12 +117,15 @@ model_standalone : model ;
 model returns[String id, ModelTemp modelObj]
 
 scope { ModelTemp model_;} 
-@init{ $model::model_ = new ModelTemp(); }
+@init{ $model::model_ = new ModelTemp(); 
+	   $model::model_.absPath = currentAbsolutePath; 
+	   $model::model_.parentAbsPath = currentAbsoluteParent; 
+}
 	   
 : MODEL i=modelName {$id=$i.text;} 
 	   '{' 
 	   ( include_model
-	   | fi=include_file {$model::model_.itemList.add($fi.id); $model::model_.incFileIDList.add($fi.id); $model::model_.incFileMap.put($fi.id, $fi.fp); }
+	   | fi=include_file {$model::model_.itemList.add($fi.id); $model::model_.incFileIDList.add($fi.id); $model::model_.incFileMap.put($fi.id, $fi.incFileObj); }
 	   | ts=timeseries   {$model::model_.itemList.add($ts.id); $model::model_.tsList.add($ts.id); $model::model_.tsMap.put($ts.id, $ts.tsObj); }
 	   | sv=svar_g       {$model::model_.itemList.add($sv.id); $model::model_.svList.add($sv.id); $model::model_.svMap.put($sv.id, $sv.svObj); } 
 	   | dv=dvar_g       {$model::model_.itemList.add($dv.id); $model::model_.dvList.add($dv.id); $model::model_.dvMap.put($dv.id, $dv.dvObj); } 
@@ -167,9 +171,12 @@ operationName: ID;
 
 include_model returns[String id] : INCLUDE  i=ID  ('as' includeNameAs )? {$id=$i.text;} ;
 
-include_file returns[String id, String fp]
-@init{ $id = "_file_"+Integer.toString($model::model_.incFileIDList.size()); }
-      : INCLUDE LOCAL? f=file_path {$fp=$f.text;} ('as' includeNameAs )?  ;
+include_file returns[String id, IncFileTemp incFileObj]
+@init{ $incFileObj = new IncFileTemp();
+       $incFileObj.id = "_file_"+Integer.toString($model::model_.incFileIDList.size()); 
+       $id = $incFileObj.id;
+       }
+      : INCLUDE LOCAL? fp=file_path {$incFileObj.rawPath=Tools.strip($fp.text);} ('as' includeNameAs )?  ;
 
 file_path : QUOTE  ;
 
@@ -201,7 +208,8 @@ scope { GoalTemp gl_;
       } 
 @init{ $goal_hs::gl_ = new GoalTemp(); 
        $goal_hs::gl_.fromWresl = this.currentAbsolutePath; 
-       dependants = new LinkedHashSet<String>();  
+       dependants = new LinkedHashSet<String>();
+       $goal_hs::gl_.hasLhs=true;
 	 }
 @after{ $id = $goal_hs::gl_.id; $glObj=$goal_hs::gl_; $glObj.dependants= dependants;}	 
 	: GOAL LOCAL? i=ID  {$goal_hs::gl_.id=$i.text;}
@@ -428,9 +436,10 @@ scope { ExternalTemp ex_;
 	 : ex_old | ex_new ;
 
 ex_id : i=ID {$ex_g::ex_.id=$i.text;} ;
-ex_fileName : ID '.' ID ;
 
 ex_old : DEFINE ex_id '{' EXTERNAL f=ex_fileName {$ex_g::ex_.fileName=$f.text;} '}' ;
+
+ex_fileName : ID ('.' ID)? ;
 
 ex_new : EXTERNAL ex_id '{' ( ex_fortran | ex_java ) '}' ;
 

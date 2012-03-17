@@ -19,8 +19,8 @@ public class ExternalTemp implements Serializable {
 	
 	public ExternalTemp(){
 		
-		//fileName=Param.undefined; 
-		//fromWresl=Param.undefined;
+		fileName=Param.undefined; 
+		fromWresl=Param.undefined;
 
 	}
 	

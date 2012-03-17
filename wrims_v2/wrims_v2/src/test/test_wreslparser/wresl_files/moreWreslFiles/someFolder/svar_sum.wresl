@@ -1,0 +1,18 @@
+
+
+
+	define s1 { sum(i=0,SEP-month,1) max(I_Orovl(i),dummy)*cfs_taf(i) }
+	
+	define s2 { sum(i=int(-daysinprevmo), -1, 1) I1(i)*cfs_taf } 
+	
+	define s3 { sum(i=-int(daysinprevmo), -1, 1) I1(i)*cfs_taf } 
+	
+	
+
+
+	
+
+	 
+
+
+ 

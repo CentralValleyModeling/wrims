@@ -1,0 +1,32 @@
+
+
+
+define svar_global {
+       case case1 {
+           condition  month>=JAN.and.month<=FEB.and. sri_ytp == 5 .and. C_Nimbus_fmp_mif(-1) < 800.
+           select     FEB
+           from       sacramento_runoff
+           where      wateryear=wateryear }
+       case case2 {
+           condition  always
+           value      300.0  }
+       }
+	   
+define[local] svar_local {
+	case MAR_SEP {
+                condition       month >= MAR .and. month <= SEP
+                sum(i=-(month-MAY),SEP-month)  I_Folsm(i)*cfs_taf(i) + I300(i)*cfs_taf(i) }  # sum of the may to sep inflow , changed to always be mar to may
+	case other {
+		condition		always
+		value   		min(max( I_Folsm(i),200),I300(i))  }
+}	
+	
+
+
+
+	
+
+	 
+
+
+ 
