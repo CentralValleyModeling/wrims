@@ -22,20 +22,23 @@ public class Workflow {
 		
 		GlobalData.runDir = new File(canonicalMainFilePath).getParent(); 
 		
+		
+		
+		
 		StudyTemp st = parseWreslMain(canonicalMainFilePath);
 
 		
-		ErrorCheck.checkStudy(st);		
+		ErrorCheck.check(st);		
 
-		ToLowerCase.convertStudy(st);		
+		ToLowerCase.convert(st);		
 		
 		Procedures.processIncFilePath(st);
 		
-		ModelTemp fm = st.modelMap.get(st.modelList.get(0));
-		System.out.println(fm.incFileIDList);
-		for (String s:fm.incFileIDList ) System.out.println(fm.incFileMap.get(s).rawPath);
-		for (String s:fm.incFileIDList ) System.out.println(fm.incFileMap.get(s).absPath);
-		for (String s:fm.incFileIDList ) System.out.println(fm.incFileMap.get(s).pathRelativeToRunDir);
+//		ModelTemp fm = st.modelMap.get(st.modelList.get(0));
+//		System.out.println(fm.incFileIDList);
+//		for (String s:fm.incFileIDList ) System.out.println(fm.incFileMap.get(s).rawPath);
+//		for (String s:fm.incFileIDList ) System.out.println(fm.incFileMap.get(s).absPath);
+//		for (String s:fm.incFileIDList ) System.out.println(fm.incFileMap.get(s).pathRelativeToRunDir);
 		
 		Procedures.processGoalHS(st);		
 		
@@ -49,6 +52,37 @@ public class Workflow {
 		
 	}	
 	
+	public static StudyTemp checkWreslFile(String wreslFilePath) throws RecognitionException  {
+			
+			
+			String canonicalMainFilePath = checkPath(wreslFilePath);
+			
+			GlobalData.runDir = new File(canonicalMainFilePath).getParent(); 
+			
+			
+			
+			StudyTemp st = parseWreslMain(canonicalMainFilePath);
+	
+			
+			ErrorCheck.check(st);		
+	
+			ToLowerCase.convert(st);		
+			
+			Procedures.processIncFilePath(st);
+					
+			Procedures.processGoalHS(st);		
+			
+			Procedures.collectWeightVar(st);
+			
+			Procedures.processDependants(st);
+			
+			Procedures.convertAliasToGoal(st);
+			
+			return st;
+			
+		}
+
+
 	private static String checkPath(String filePath) {
 		
 		String canonicalPath=null;
@@ -73,7 +107,18 @@ public class Workflow {
 		
 		WreslPlusParser parser = ParserUtils.initParser(inputFilePath);
 		
-		//parser.runDir = parser.currentAbsolutePath;
+		parser.wreslMain();
+		
+		return parser.styObj;
+		
+	}
+
+
+	public static StudyTemp parseWreslFile(String inputFilePath) throws RecognitionException  {
+		
+		
+		WreslPlusParser parser = ParserUtils.initParser(inputFilePath);
+		
 		parser.wreslMain();
 		
 		return parser.styObj;

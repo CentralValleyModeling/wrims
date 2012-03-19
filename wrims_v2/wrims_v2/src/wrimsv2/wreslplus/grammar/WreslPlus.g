@@ -40,6 +40,7 @@ options {
   	public String currentAbsoluteParent;
   	public String pathRelativeToRunDir;
   	public StudyTemp styObj;
+  	public ModelTemp mObj;
   	public Set<String> dependants;
  	
   		/// error message	
@@ -122,7 +123,7 @@ scope { ModelTemp model_;}
 	   $model::model_.parentAbsPath = currentAbsoluteParent; 
 }
 	   
-: MODEL i=modelName {$id=$i.text;} 
+: MODEL i=modelName {$id=$i.text;$model::model_.id=$i.text;} 
 	   '{' 
 	   ( include_model
 	   | fi=include_file {$model::model_.itemList.add($fi.id); $model::model_.incFileIDList.add($fi.id); $model::model_.incFileMap.put($fi.id, $fi.incFileObj); }

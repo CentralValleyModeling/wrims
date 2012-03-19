@@ -24,66 +24,66 @@ public class ToLowerCase {
 	
 	//TODO: model must be in sequence obj, also condition not linked yet
 	//TODO: remember to lowercase all evaluation strings and var names
-	public static void convertStudy (StudyTemp s){		
+	public static void convert (StudyTemp s){		
 
 		for (String key : s.modelList) {
 			ModelTemp n = s.modelMap.get(key);
 			s.modelMap.remove( key);
-			convertModel(n);
+			convert(n);
 			s.modelMap.put( key.toLowerCase(), n);
 		}
 		s.modelList = Tools.allToLowerCase(s.modelList);
 	}	
 	
-	public static void convertModel (ModelTemp j){
+	public static void convert (ModelTemp j){
 		
 		for (String key : j.svList) {
-			SvarTemp o = convertSvar(j.svMap.get(key));
+			SvarTemp o = svar(j.svMap.get(key));
 			j.svMap.remove(key);
 			j.svMap.put( key.toLowerCase(), o);
 		}
 		for (String key : j.dvList) {
-			DvarTemp o = convertDvar(j.dvMap.get(key));
+			DvarTemp o = dvar(j.dvMap.get(key));
 			j.dvMap.remove(key);
 			j.dvMap.put( key.toLowerCase(), o);
 		}
 		for (String key : j.tsList) {
-			TimeseriesTemp o = convertTimeseries(j.tsMap.get(key));
+			TimeseriesTemp o = timeseries(j.tsMap.get(key));
 			j.tsMap.remove(key);
 			j.tsMap.put( key.toLowerCase(), o);
 		}
 		for (String key : j.exList) {
-			ExternalTemp o = convertExternal(j.exMap.get(key));
+			ExternalTemp o = external(j.exMap.get(key));
 			j.exMap.remove(key);
 			j.exMap.put( key.toLowerCase(), o);
 		}
 		for (String key : j.glList) {
-			GoalTemp o = convertGoal(j.glMap.get(key));
+			GoalTemp o = goal(j.glMap.get(key));
 			j.glMap.remove(key);
 			j.glMap.put( key.toLowerCase(), o);
 		}
 		for (String key : j.ssList) {
-			DvarTemp o = convertDvar(j.ssMap.get(key));
+			DvarTemp o = dvar(j.ssMap.get(key));
 			j.ssMap.remove(key);
 			j.ssMap.put( key.toLowerCase(), o);
 		}
 		for (String key : j.ssList) {
-			WeightTemp o = convertWeight(j.ssWeightMap.get(key));
+			WeightTemp o = weight(j.ssWeightMap.get(key));
 			j.ssWeightMap.remove(key);
 			j.ssWeightMap.put( key.toLowerCase(), o);
 		}
 		for (String key : j.asList) {	
-			AliasTemp o = convertAlias(j.asMap.get(key));
+			AliasTemp o = alias(j.asMap.get(key));
 			j.asMap.remove(key);
 			j.asMap.put( key.toLowerCase(), o);
 		}		
 		for (int i=0; i<j.wTableObjList.size();i++) {	
-			WeightTable o = convertWeightTable(j.wTableObjList.get(i));
+			WeightTable o = weightTable(j.wTableObjList.get(i));
 			j.wTableObjList.remove(i);
 			j.wTableObjList.add(i, o);
 		}
 		for (String key : j.incFileIDList) {	
-			IncFileTemp o = convertIncFile(j.incFileMap.get(key));
+			IncFileTemp o = incFile(j.incFileMap.get(key));
 			j.incFileMap.remove(key);
 			j.incFileMap.put( key.toLowerCase(), o);
 		}	
@@ -106,7 +106,7 @@ public class ToLowerCase {
 		
 	}
 
-	public static SvarTemp convertSvar (SvarTemp s){
+	public static SvarTemp svar (SvarTemp s){
 		
 		SvarTemp o = new SvarTemp();
 		
@@ -131,7 +131,7 @@ public class ToLowerCase {
 		
 	}	
 	
-	public static TimeseriesTemp convertTimeseries (TimeseriesTemp t){
+	public static TimeseriesTemp timeseries (TimeseriesTemp t){
 		
 		TimeseriesTemp o = new TimeseriesTemp();
 		
@@ -146,7 +146,7 @@ public class ToLowerCase {
 		
 	}
 	
-	public static DvarTemp convertDvar (DvarTemp d){
+	public static DvarTemp dvar (DvarTemp d){
 		
 		DvarTemp o = new DvarTemp();
 		
@@ -165,7 +165,7 @@ public class ToLowerCase {
 	}
 
 
-	public static WeightTemp convertWeight (WeightTemp w){
+	public static WeightTemp weight (WeightTemp w){
 		
 		WeightTemp o = new WeightTemp();
 		
@@ -179,7 +179,7 @@ public class ToLowerCase {
 	}
 
 	
-	public static WeightTable convertWeightTable (WeightTable w){
+	public static WeightTable weightTable (WeightTable w){
 		
 		WeightTable o = new WeightTable();
 		
@@ -196,7 +196,7 @@ public class ToLowerCase {
 	}
 	
 
-	public static ExternalTemp convertExternal (ExternalTemp e){
+	public static ExternalTemp external (ExternalTemp e){
 		
 		ExternalTemp o = new ExternalTemp();
 		
@@ -209,7 +209,7 @@ public class ToLowerCase {
 	}
 
 	// GoalCase is not converted to lowercase
-	public static GoalTemp convertGoal (GoalTemp g){
+	public static GoalTemp goal (GoalTemp g){
 
 		// TODO: convert fields in class GoalCase to lowercase 
 		
@@ -217,7 +217,7 @@ public class ToLowerCase {
 
 		ArrayList<String> cn = new ArrayList<String>(g.caseMap.keySet());
 		for (String key: cn){		
-			GoalCase gc = convertGoalCase(g.caseMap.get(key));
+			GoalCase gc = goalCase(g.caseMap.get(key));
 			//g.caseMap.remove(key);
 			o.caseMap.put( key.toLowerCase(), gc);	
 		}
@@ -253,7 +253,7 @@ public class ToLowerCase {
 	}
 
 
-	public static AliasTemp convertAlias (AliasTemp d){
+	public static AliasTemp alias (AliasTemp d){
 		
 		AliasTemp o = new AliasTemp();
 		
@@ -271,7 +271,7 @@ public class ToLowerCase {
 	}
 
 
-	public static GoalCase convertGoalCase (GoalCase d){
+	public static GoalCase goalCase (GoalCase d){
 		
 		GoalCase o = new GoalCase();
 		
@@ -286,7 +286,7 @@ public class ToLowerCase {
 	}
 
 
-	public static IncFileTemp convertIncFile (IncFileTemp w){
+	public static IncFileTemp incFile (IncFileTemp w){
 		
 		IncFileTemp o = new IncFileTemp();
 		
