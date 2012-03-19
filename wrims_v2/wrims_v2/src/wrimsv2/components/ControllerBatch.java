@@ -43,6 +43,7 @@ public class ControllerBatch {
 	
 	
 	public ControllerBatch(String[] args) {
+		ControlData.writeInitToDVOutput=false;
 		long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
 		try {
 			processArgs(args);
@@ -261,7 +262,9 @@ public class ControllerBatch {
 			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
 		ControlData.xasolver.close();
-		DssOperation.writeInitDvarAliasToDSS();
+		if (ControlData.writeInitToDVOutput){
+			DssOperation.writeInitDvarAliasToDSS();
+		}
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 	}
@@ -335,7 +338,9 @@ public class ControllerBatch {
 			}
 			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
-		DssOperation.writeInitDvarAliasToDSS();
+		if (ControlData.writeInitToDVOutput){
+			DssOperation.writeInitDvarAliasToDSS();
+		}
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 	}
@@ -488,7 +493,9 @@ public class ControllerBatch {
 			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
 		ControlData.xasolver.close();
-		DssOperation.writeInitDvarAliasToDSS();
+		if (ControlData.writeInitToDVOutput){
+			DssOperation.writeInitDvarAliasToDSS();
+		}
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 	}

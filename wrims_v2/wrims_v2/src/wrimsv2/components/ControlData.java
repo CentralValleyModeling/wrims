@@ -78,6 +78,7 @@ public class ControlData {
 	public static boolean outputWreslCSV=false;
 	public static boolean showRunTimeMessage=false;
 	public static boolean showWreslLog=true;
+	public static boolean writeInitToDVOutput=true;
 
 
 
