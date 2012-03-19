@@ -14,7 +14,7 @@ s1=Study(r"D:\cvwrsm\trunk\wrims2_scripting\studies\callite_svn47\CONV\Run\CONV.
 s2=Study(r"D:\cvwrsm\trunk\wrims2_scripting\studies\callite_svn47\TXFR\Run\TXFR.config", batFileName='RunStudy_CalLiteLicense.bat')
 
 # copy all dvars in s1.DvarFile to destination
-# id must be unique
+# id must be unique in the study scope
 s1.add_dss_transfer(id="copy_all_1", destn=s1.InitFile, destn_Fpart=s1.InitFPart)
 s1.add_dss_transfer(id="copy_all_2", destn=s1.InitFile, destn_Fpart=s1.InitFPart)
 
