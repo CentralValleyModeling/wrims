@@ -83,7 +83,14 @@ func returns[IntDouble id]:
   (exp_func{id=$exp_func.id;})|
   (log_func{id=$log_func.id;})|
   (log10_func{id=$log10_func.id;})|
-  (pow_func{id=$pow_func.id;});
+  (pow_func{id=$pow_func.id;})|
+  (mod_func{id=$mod_func.id;});
+
+mod_func returns[IntDouble id]
+  : MOD '(' (e1=expression) (';' (e2=expression)) ')'{
+     id=ValueEvaluation.mod($e1.id, $e2.id);
+  }
+  ;
 
 max_func returns[IntDouble id] 
 	: MAX '(' (e1=expression){id=$e1.id;}(';' (e2=expression{
@@ -245,14 +252,12 @@ allnumber
 	:	('-')? number;
 
 mult returns [IntDouble id]  
-	:	(u1=unary {id=$u1.id;}) (s=('*'| '/'| MOD) (u2=unary){
+	:	(u1=unary {id=$u1.id;}) (s=('*'| '/') (u2=unary){
 	   if ($s.text.equals("*")){
 	     id=ValueEvaluation.mult(id, $u2.id);
-	   }else if ($s.text.equals("/")){
-	     id=ValueEvaluation.divide(id, $u2.id);
 	   }else{
-	     id=ValueEvaluation.mod(id, $u2.id);
-	   }   
+	     id=ValueEvaluation.divide(id, $u2.id);
+	   }
   })*
 	;
 	

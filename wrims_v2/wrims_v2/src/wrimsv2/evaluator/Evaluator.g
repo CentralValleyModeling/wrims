@@ -89,7 +89,15 @@ func returns[EvalExpression ee]:
   (exp_func{ee=$exp_func.ee;})|
   (log_func{ee=$log_func.ee;})|
   (log10_func{ee=$log10_func.ee;})|
-  (pow_func{ee=$pow_func.ee;});
+  (pow_func{ee=$pow_func.ee;})|
+  (mod_func{ee=$mod_func.ee;})
+  ;
+
+mod_func returns[EvalExpression ee]
+  : MOD '(' (e1=expression) (';' (e2=expression)) ')'{
+     ee=Evaluation.mod($e1.ee, $e2.ee);
+  }
+  ;
 
 max_func returns[EvalExpression ee] 
 	: MAX '(' (e1=expression){ee=$e1.ee;}(';' (e2=expression{
@@ -240,14 +248,12 @@ allnumber
 	:	('-')? number;
 
 mult returns [EvalExpression ee]  
-	:	(u1=unary {ee=$u1.ee;}) (s=('*'| '/'| MOD) (u2=unary){
+	:	(u1=unary {ee=$u1.ee;}) (s=('*'| '/') (u2=unary){
 	   if ($s.text.equals("*")){
 	     ee=Evaluation.mult(ee, $u2.ee);
-	   }else if ($s.text.equals("/")){
-	     ee=Evaluation.divide(ee, $u2.ee);
 	   }else{
-	     ee=Evaluation.mod(ee, $u2.ee);
-	   }   
+	     ee=Evaluation.divide(ee, $u2.ee);
+	   }
   })*
 	;
 	
