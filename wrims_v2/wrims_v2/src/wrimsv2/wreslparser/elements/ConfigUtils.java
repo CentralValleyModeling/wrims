@@ -114,12 +114,21 @@ public class ConfigUtils {
 		}
 
 		// FilePaths.mainDirectory = configMap.get("maindir");
-		FilePaths.groundwaterDir =  new File(StudyUtils.runDir, configMap.get("groundwaterdir")).getAbsolutePath()+"\\";
-		FilePaths.setSvarDssPaths(new File(StudyUtils.runDir, configMap.get("svarfile")).getAbsolutePath());
-		FilePaths.setInitDssPaths(new File(StudyUtils.runDir, configMap.get("initfile")).getAbsolutePath());
-		FilePaths.setDvarDssPaths(new File(StudyUtils.runDir, configMap.get("dvarfile")).getAbsolutePath());
+		try {
+			FilePaths.groundwaterDir =  new File(StudyUtils.runDir, configMap.get("groundwaterdir")).getCanonicalPath()+"\\";
+			System.out.println("GroundWaterDir: "+FilePaths.groundwaterDir);
+			FilePaths.setSvarDssPaths(new File(StudyUtils.runDir, configMap.get("svarfile")).getCanonicalPath());
+			System.out.println("SvarFile:       "+FilePaths.fullSvarDssPath);
+			FilePaths.setInitDssPaths(new File(StudyUtils.runDir, configMap.get("initfile")).getCanonicalPath());
+			System.out.println("InitFile:       "+FilePaths.fullInitDssPath);
+			FilePaths.setDvarDssPaths(new File(StudyUtils.runDir, configMap.get("dvarfile")).getCanonicalPath());
+			System.out.println("DvarFile:       "+FilePaths.fullDvarDssPath);
+		} catch (IOException e){
+			System.out.println("Invalid file path");
+			e.printStackTrace();
+		}
+		
 		FilePaths.csvFolderName = "";
-
 
 		ControlData.showWreslLog = !(configMap.get("showwresllog").equalsIgnoreCase("no"));
 		
@@ -147,6 +156,16 @@ public class ConfigUtils {
 
 		ControlData.totalTimeStep = ControllerBatch.getTotalTimeStep();
 
+		System.out.println("TimeStep:       "+ControlData.timeStep);
+		System.out.println("SvarAPart:      "+ControlData.partA);
+		System.out.println("SvarFPart:      "+ControlData.svDvPartF);
+		System.out.println("InitFPart:      "+ControlData.initPartF);
+		System.out.println("StartYear:      "+ControlData.startYear);
+		System.out.println("StartMonth:     "+ControlData.startMonth);
+		System.out.println("NumberOfSteps:  "+ControlData.totalTimeStep);
+		System.out.println("Solver:         "+ControlData.solverName);
+		
+		
 		// System.out.println("gw: "+FilePaths.groundwaterDir);
 		// System.out.println("svd: "+FilePaths.svarDssDirectory);
 		// System.out.println("sv: "+FilePaths.svarDssFile);
