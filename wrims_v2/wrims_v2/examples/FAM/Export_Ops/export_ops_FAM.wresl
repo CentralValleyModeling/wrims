@@ -7,13 +7,17 @@ File for including export operations for FAM
 
 **************************************/
 
-include 'exportratio_FAM.wresl'
-include 'april_may_maxexport_FAM.wresl'
-include 'banks_limits_FAM.wresl'
-include 'banks_pump_allow_FAM.wresl'
-include 'Jones_limits_FAM.wresl'
-include 'Jones_pump_allow_FAM.wresl'
 include 'BanksSplit_FAM.wresl'
 include 'JonesSplit_FAM.wresl'
+
+include 'banks_limits_FAM.wresl'
+include 'banks_pump_allow_FAM.wresl'
+
+include 'Jones_limits_FAM.wresl'
+include 'Jones_pump_allow_FAM.wresl'
+
+include 'exportratio_FAM.wresl'
+include 'april_may_maxexport_FAM.wresl'
+
 
 

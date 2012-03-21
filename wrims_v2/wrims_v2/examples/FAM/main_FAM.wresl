@@ -8,13 +8,24 @@ Main file for FAM
 **************************************/
 
 SEQUENCE CYCLE1 {
-    model   FAM
+    model   FAM_Nonlinear
     order   1
     }
 
 
     
-MODEL FAM {         !CYCLE 1
+MODEL FAM_Nonlinear {         !CYCLE 1
+	include 'Assumptions\Options_Switches_FAM.wresl'
+	include 'general\General_FAM.wresl'
+	include 'wytypes\wytypes_FAM.wresl'
+	include 'system\system_FAM.wresl'
+	include 'NorthOfDelta\NOD_FAM_nonlinear.wresl'
+	include 'Export_Ops\export_ops_FAM_nonlinear.wresl'
+	include 'coa\coa_FAM.wresl'
+}
+
+/*
+MODEL FAM {         !CYCLE 2
 	include 'Assumptions\Options_Switches_FAM.wresl'
 	include 'general\General_FAM.wresl'
 	include 'wytypes\wytypes_FAM.wresl'
@@ -23,4 +34,4 @@ MODEL FAM {         !CYCLE 1
 	include 'Export_Ops\export_ops_FAM.wresl'
 	include 'coa\coa_FAM.wresl'
 }
-
+*/

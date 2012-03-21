@@ -29,7 +29,7 @@ goal(FAMmonths) S_WkytnZone1 {S_Wkytn_1($m) < S_Wkytnlevel1}
 define(FAMmonths) S_Wkytnlevel2 {select target from res_level where res_num=3,level=2,month=mv($m)}
 define(FAMmonths) S_Wkytn_2 {std kind 'STORAGE-ZONE' units 'TAF'}
 goal(FAMmonths) S_WkytnZone2 {S_Wkytn_2($m) < S_Wkytnlevel2($m)-S_Wkytnlevel1}
-define(FAMmonths) S_Wkytnlevel3 {select target from res_level where res_num=3,level=3,month=monthvlaue(month+$m)}	
+define(FAMmonths) S_Wkytnlevel3 {select target from res_level where res_num=3,level=3,month=mv($m)}	
 define(FAMmonths) S_Wkytn_3 {std kind 'STORAGE-ZONE' units 'TAF'}
 goal(FAMmonths) S_WkytnZone3 {S_Wkytn_3($m) < S_Wkytnlevel3($m)-S_Wkytnlevel2($m)}
 define(FAMmonths) S_Wkytnlevel4 {select target from res_level where res_num=3,level=4,month=mv($m)}

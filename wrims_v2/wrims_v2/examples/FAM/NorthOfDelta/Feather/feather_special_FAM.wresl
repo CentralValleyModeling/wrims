@@ -28,38 +28,38 @@ define(FAMmonths) minflow_C_Therm {
   }
   case November1 {                     
     condition   mv($m) == NOV .AND.
-        int(C_Therm(prevOCT)) <= oct_trigger_cfs
+        int(C_Therm[FAM_nonlinear](prevOCT)) <= oct_trigger_cfs
     value   0
   }
   case November2 {              
     condition mv($m) == NOV .AND.
-        S_Orovl(prevOCT)+1. >= s_OrovlLevel5(prevOCT)
+        S_Orovl[FAM_nonlinear](prevOCT)+1. >= s_OrovlLevel5[FAM_nonlinear](prevOCT)
     value   0
   }
   case November3 {                         !minflow_C_Therm + 500 = C_Therm(prevOCT) cfs
     condition mv($m) == NOV
-    value   C_Therm(prevOCT) - 500
+    value   C_Therm[FAM_nonlinear](prevOCT) - 500
   }
 
   case DecemberToMarch1 {                  !minflow_C_Therm + 500 = max(C_Therm(prevOCT),C_Therm(prevNOV))
     condition mv($m) >= DEC .AND. mv($m) <= MAR .AND.
-        int(C_Therm(prevOCT)) > oct_trigger_cfs .AND.
-        S_Orovl(prevOCT)+1. < s_OrovlLevel5(prevOCT) .AND.
-        int(C_Therm(prevNOV)) > nov_trigger_cfs .AND.
-        S_Orovl(prevNOV)+1. < s_OrovlLevel5(prevNOV)
-    value   max(C_Therm(prevOCT) - 500, C_Therm(prevNOV) - 500)
+        int(C_Therm[FAM_nonlinear](prevOCT)) > oct_trigger_cfs .AND.
+        S_Orovl[FAM_nonlinear](prevOCT)+1. < s_OrovlLevel5[FAM_nonlinear](prevOCT) .AND.
+        int(C_Therm[FAM_nonlinear](prevNOV)) > nov_trigger_cfs .AND.
+        S_Orovl[FAM_nonlinear](prevNOV)+1. < s_OrovlLevel5[FAM_nonlinear](prevNOV)
+    value   max(C_Therm[FAM_nonlinear](prevOCT) - 500, C_Therm[FAM_nonlinear](prevNOV) - 500)
   }
   case DecemberToMarch2 {                  !minflow_C_Therm + 500 = C_Therm(prevOCT) cfs
     condition mv($m) >= DEC .AND. mv($m) <= MAR .AND.
-        int(C_Therm(prevOCT)) > oct_trigger_cfs .AND.
-        S_Orovl(prevOCT)+1. < s_OrovlLevel5(prevOCT)
-    value   C_Therm(prevOCT) - 500
+        int(C_Therm[FAM_nonlinear](prevOCT)) > oct_trigger_cfs .AND.
+        S_Orovl[FAM_nonlinear](prevOCT)+1. < s_OrovlLevel5[FAM_nonlinear](prevOCT)
+    value   C_Therm[FAM_nonlinear](prevOCT) - 500
   }
   case DecemberToMarch3 {                  !minflow_C_Therm + 500 = C_Therm(prevNOV) cfs
     condition mv($m) >= DEC .AND. mv($m) <= MAR .AND.
-        int(C_Therm(prevNOV)) > nov_trigger_cfs .AND.
-        S_Orovl(prevNOV)+1. < s_OrovlLevel5(prevNOV)
-    value   C_Therm(prevNOV) - 500
+        int(C_Therm[FAM_nonlinear](prevNOV)) > nov_trigger_cfs .AND.
+        S_Orovl[FAM_nonlinear](prevNOV)+1. < s_OrovlLevel5[FAM_nonlinear](prevNOV)
+    value   C_Therm[FAM_nonlinear](prevNOV) - 500
   }
   case otherwise {                         !minflow_C_Therm + 500 = 500 cfs
     condition always
@@ -111,5 +111,5 @@ goal(FAMmonths) meetC_Therm_Minflow {C_Therm_MIF($m) < max(minflow_C_Therm($m), 
 !=========================================================================
 
 define minflowFeaMouth {timeseries kind 'FLOW-MIN-REQUIRED' units 'CFS'} !Mouth of Feather River  (232)
-goal(FAMmonths) MouthMinFlow {C_YubFea_MIFmv($m) < minflowFeaMouthmv($m)}
+goal(FAMmonths) MouthMinFlow {C_YubFea_MIF($m) < minflowFeaMouth($m)}
 

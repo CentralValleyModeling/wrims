@@ -42,8 +42,17 @@ define(FAMmonths) JonesAllowOut {alias JonesMaxAllow($m) kind 'EXPORT-CTRL-JONES
 
 ! Jones PP Minimum Cap
 define(FAMmonths) Jonesminpump {
-    value 600+int_Shsta1500($m)*200.
+    case Joneslowshasta {
+        condition S_Shsta[fam_nonlinear]($m-1) < 1500.
+        value 600. }
+    case Joneslowshastafolsom {
+        condition S_Folsm[fam_nonlinear]($m-1) < 400. .and. S_Shsta[fam_nonlinear]($m-1) < 2000. !Better reflection of actual operations by trying to keep
+        value 800. }                                           !water from being released for SL storage during low storage
+    case Joneshighshasta   {                                   !conditions in the NOD.
+        condition always
+        value 800. }
 }
+define(FAMmonths) JonesMinPumpDV {alias JonesMinPump(FAMmonths) kind 'EXPORT-CTRL-JONES' units 'cfs'}
 
 goal(FAMmonths) setJonesminpump {
     lhs D_Jones_cvp($m)

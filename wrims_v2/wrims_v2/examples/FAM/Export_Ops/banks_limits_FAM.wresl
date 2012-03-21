@@ -15,11 +15,11 @@ define(FAMmonths) BanksCapPermit2 {select PermitCap2 from BanksLimits where mont
 define(FAMmonths) EWAReservedCap {select EWACap from BanksLimits where month=mv($m)}
 
 ! Permitted capacity (Standard Allowable)
-define(FAMmonths) BanksCapPermit {value min(BanksCapPermit1mv($m), BanksCapPermit2mv($m) - EWAReservedCapmv($m)) }
+define(FAMmonths) BanksCapPermit {value min(BanksCapPermit1($m), BanksCapPermit2($m) - EWAReservedCap($m)) }
 
 ! Banks Physical Capactiy
 define(FAMmonths) BanksCapPhys {select PhysCap from BanksLimits where month=mv($m) }
 
 ! CVP dedicated capacity
 define(FAMmonths) BanksMaxAllowCVP {select CVPDedCap from BanksLimits where month=mv($m)}
-define(FAMmonths) BanksMaxCVPdv {alias BanksMaxAllowCVPmv($m) kind 'flow' units 'CFS'}
+define(FAMmonths) BanksMaxCVPdv {alias BanksMaxAllowCVP($m) kind 'flow' units 'CFS'}
