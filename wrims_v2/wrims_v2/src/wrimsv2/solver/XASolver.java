@@ -46,19 +46,29 @@ public class XASolver {
 		
 		modelStatus=ControlData.xasolver.getModelStatus();
 		if (ControlData.showRunTimeMessage) System.out.println("Model status: "+modelStatus);
-		if (modelStatus>2)	getSolverInformation();
+		if (modelStatus>=2)	getSolverInformation();
 		if (Error.error_solving.size()<1) assignDvar(); 
 	}
 	
 	public void getSolverInformation(){
 		System.out.println("Solver status: "+ControlData.xasolver.getSolverStatus());
-		System.out.println("Exception: "+ControlData.xasolver.getExceptionCode());
-		System.out.println("Message: "+ControlData.xasolver.getMessage());
-		System.out.println("Return code: "+ControlData.xasolver.getRc());
+		//System.out.println("Exception: "+ControlData.xasolver.getExceptionCode());
+		//System.out.println("Message: "+ControlData.xasolver.getMessage());
+		//System.out.println("Return code: "+ControlData.xasolver.getRc());
+		
 		switch (modelStatus){
+		    case 2: Error.addSolvingError("Integer Solution (not proven the optimal integer solution)."); 
 			case 3: Error.addSolvingError("Unbounded solution."); break;
 			case 4: Error.addSolvingError("Infeasible solution."); break;
+			case 5: Error.addSolvingError("Callback function indicates Infeasible solution."); break;
 			case 6: Error.addSolvingError("Intermediate infeasible solution."); break;
+			case 7: Error.addSolvingError("Intermediate nonoptimal solution."); break;
+			case 9: Error.addSolvingError("Intermediate Non-integer solution."); break;
+			case 10: Error.addSolvingError("Integer Infeasible."); break;
+			case 13: Error.addSolvingError("More memory required to load/solve model. Increase memory request in XAINIT call."); break;
+			case 32: Error.addSolvingError("Integer branch and bound process currently active, model has not completed solving."); break;
+			case 99: Error.addSolvingError("Currently solving model, model has not completed solving."); break;
+			default: Error.addSolvingError("Solving failed"); break;
 		}
 	}
 	
