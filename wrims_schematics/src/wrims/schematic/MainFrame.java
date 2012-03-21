@@ -2472,7 +2472,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	private static Preferences _userPrefs = Preferences // CB added
 			.userNodeForPackage(MainFrame.class);
 
-	private Study sty;
+	private Study sty=new Study();
 
 	@Override
 	public Vector<String> getSelectedNames() {
