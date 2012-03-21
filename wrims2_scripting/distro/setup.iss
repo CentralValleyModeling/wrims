@@ -3,7 +3,7 @@
 AppName              =WRIMS2_Scripting 
 DefaultGroupName     =WRIMS2_Scripting 
 ;AppVerName           =WRIMS2_Scripting
-AppVersion=1.05 
+AppVersion=1.06 
 UninstallDisplayName =WRIMS2_Scripting 
 AppId                =WRIMS2_Scripting
 OutputBaseFilename   =WRIMS2_Scripting_Install
