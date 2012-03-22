@@ -1,0 +1,17 @@
+0. remove order keyword in sequence
+
+
+
+1. if a dvar named X is not in some constraint involving other dvar(s), and is not weighted, 
+   then this dvar X has no effect on the computed LP objective value.
+
+2. if the above mentioned dvar X is used in the later cycle, then this model result can be unstable and misleading.
+ 
+ 
+3. if a dvar's lower or upper bound is defined by state variables other than system variable ( e.g., taf_cfs ), 
+   then this is equivelent to a dvar with const lower or upper bound and a constraint with single dvar. 
+
+
+4. improve current wresl to LP programming standard:
+	4.1 integer standard variable means an integer value ( 0, 1, 2, ... )
+	4.2 binary  standard variable means a binary value ( 0, 1 ) 

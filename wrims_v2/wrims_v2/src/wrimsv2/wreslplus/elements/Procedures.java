@@ -30,9 +30,7 @@ public class Procedures {
 			ModelTemp mObj = s.modelMap.get(m);
 
 			processGoalHS(mObj);
-
 		}
-
 	}
 
 	public static void processGoalHS(ModelTemp mObj) {
@@ -426,6 +424,7 @@ public class Procedures {
 
 			try {
 				f.absPath = new File(m.parentAbsPath, f.rawPath).getCanonicalPath().toLowerCase();
+				m.incFileAbsPathList.add(f.absPath);
 			}
 			catch (IOException e) {
 				e.printStackTrace();
@@ -433,9 +432,39 @@ public class Procedures {
 			}
 
 			f.pathRelativeToRunDir = ResourceUtils.getRelativePath(f.absPath, GlobalData.runDir, "\\");
+			m.incFileRelativePathList.add(f.pathRelativeToRunDir);
 
 		}
 
 	}
 
+	public static void findEffectiveModelinMain(StudyTemp st) {
+		
+		for (String s: st.seqList){
+			String modelName = st.seqMap.get(s).model;
+			
+			if (!st.modelList.contains(modelName)){
+				LogUtils.errMsg("model name not found in sequence: " + modelName);
+			}
+			
+			st.modelList_effective.add(modelName);
+		}
+	}
+
+	public static void processSvIncFileList(StudyTemp st) {
+		for (String m : st.modelList_effective){
+			processSvIncFileList(st.modelMap.get(m));
+		}
+		
+	}
+	public static void processSvIncFileList(ModelTemp mt) {
+		
+		mt.svIncFileList = new ArrayList<String>(mt.itemList);
+		mt.svIncFileList.removeAll(mt.tsList);
+		mt.svIncFileList.removeAll(mt.asList);
+		mt.svIncFileList.removeAll(mt.dvList);
+		mt.svIncFileList.removeAll(mt.glList);
+		mt.svIncFileList.removeAll(mt.gl2List);
+		
+	}
 }

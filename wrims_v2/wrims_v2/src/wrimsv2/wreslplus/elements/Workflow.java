@@ -2,6 +2,12 @@ package wrimsv2.wreslplus.elements;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
 import org.antlr.runtime.RecognitionException;
 
@@ -15,72 +21,127 @@ public class Workflow {
 	private Workflow(){}
 
 
-	public static StudyTemp checkWreslMain(String mainFilePath) throws RecognitionException  {
+	public static void setRunDir(String runDir){
+		
+		GlobalData.runDir = checkPath(runDir);;
+	}
+
+
+
+	public static StudyTemp checkStudy(String mainFilePath) {
 		
 		
 		String canonicalMainFilePath = checkPath(mainFilePath);
 		
-		GlobalData.runDir = new File(canonicalMainFilePath).getParent(); 
-		
-		
-		
+		setRunDir(new File(canonicalMainFilePath).getParent()); 
 		
 		StudyTemp st = parseWreslMain(canonicalMainFilePath);
-
+		// TODO: need to check sequence error here
+		// check study
+		ErrorCheck.checkVarRedefined(st);		
+		ToLowerCase.convert(st);	
+		Procedures.findEffectiveModelinMain(st); // main file only
+		Procedures.processSvIncFileList(st);
 		
-		ErrorCheck.check(st);		
-
-		ToLowerCase.convert(st);		
+		
 		
 		Procedures.processIncFilePath(st);
-		
-//		ModelTemp fm = st.modelMap.get(st.modelList.get(0));
-//		System.out.println(fm.incFileIDList);
-//		for (String s:fm.incFileIDList ) System.out.println(fm.incFileMap.get(s).rawPath);
-//		for (String s:fm.incFileIDList ) System.out.println(fm.incFileMap.get(s).absPath);
-//		for (String s:fm.incFileIDList ) System.out.println(fm.incFileMap.get(s).pathRelativeToRunDir);
-		
-		Procedures.processGoalHS(st);		
-		
-		Procedures.collectWeightVar(st);
-		
 		Procedures.processDependants(st);
+
 		
+		
+		
+		// parse included files		
+		// store results to a map using relativePath as key
+		
+		for (String modelName: st.modelList_effective){
+
+			System.out.println("[M]"+modelName);
+
+			//ModelTemp mo = st.modelMap.get(m);
+			Map<String,IncFileTemp> incfmap = st.modelMap.get(modelName).incFileMap;
+			
+			
+			parseAllIncFile(incfmap, st);					
+			
+		}
+		
+	    
+		// TODO: need to check parsed wresl file
+		
+		System.out.println("fileModelMap: ");
+		System.out.println(st.fileModelMap);
+		
+		// append data to the main model as defined in sequence
+		//TODO: check svar orders. need to be done from bottom up
+		for (String s: st.seqList){
+			String modelName = st.seqMap.get(s).model;
+
+			ModelTemp mo = st.modelMap.get(modelName);
+			
+			//======================================
+			for (String f: mo.incFileRelativePathList){
+				
+				
+				ModelTemp incm =  st.fileModelMap.get(f);
+				
+				
+				mo.svList.addAll(incm.svList);
+				mo.svMap.putAll(incm.svMap);
+				
+				mo.dvList.addAll(incm.dvList);
+				mo.dvMap.putAll(incm.dvMap);
+				
+			}
+			//======================================
+			
+		}	
+	
+		
+		
+//		// check full study
+//		ErrorCheck.checkVarRedefined(st);		
+//		ToLowerCase.convert(st);		
+//		Procedures.processIncFilePath(st);		
+//		Procedures.processDependants(st);
+		
+		
+		// can be processed after error check 
+		Procedures.processGoalHS(st);
 		Procedures.convertAliasToGoal(st);
+		Procedures.collectWeightVar(st);
 		
 		return st;
 		
 	}	
 	
-	public static StudyTemp checkWreslFile(String wreslFilePath) throws RecognitionException  {
-			
-			
-			String canonicalMainFilePath = checkPath(wreslFilePath);
-			
-			GlobalData.runDir = new File(canonicalMainFilePath).getParent(); 
-			
-			
-			
-			StudyTemp st = parseWreslMain(canonicalMainFilePath);
-	
-			
-			ErrorCheck.check(st);		
-	
-			ToLowerCase.convert(st);		
-			
-			Procedures.processIncFilePath(st);
-					
-			Procedures.processGoalHS(st);		
-			
-			Procedures.collectWeightVar(st);
-			
-			Procedures.processDependants(st);
-			
-			Procedures.convertAliasToGoal(st);
-			
-			return st;
-			
-		}
+//	public static ModelTemp checkWreslFile(String wreslFilePath) throws RecognitionException  {
+//			
+//			
+//			String canonicalWreslFilePath = checkPath(wreslFilePath);
+//			
+//			
+//			
+//			ModelTemp m = parseWreslFile(canonicalWreslFilePath);
+//	
+//			
+//			ErrorCheck.checkVarRedefined(m);		
+//	
+//			ToLowerCase.convert(m);		
+//			
+//			Procedures.processIncFilePath(m);
+//					
+//			Procedures.processGoalHS(m);		
+//			
+//			Procedures.collectWeightVar(m);
+//			
+//			Procedures.processDependants(m);
+//			
+//
+//			
+//			return m;
+//			
+//		}
 
 
 	private static String checkPath(String filePath) {
@@ -102,30 +163,99 @@ public class Workflow {
 	}
 
 
-	public static StudyTemp parseWreslMain(String inputFilePath) throws RecognitionException  {
+	public static StudyTemp parseWreslMain(String inputFilePath) {
 		
 		
-		WreslPlusParser parser = ParserUtils.initParser(inputFilePath);
+		WreslPlusParser parser = null;
 		
-		parser.wreslMain();
+		try {
+			parser = ParserUtils.initParser(inputFilePath);
+			parser.wreslMain();
+		}
+		catch (RecognitionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		parser.styObj.absPath = parser.currentAbsolutePath;
+		parser.styObj.relativePath = parser.pathRelativeToRunDir;
+		parser.styObj.runDir = parser.currentAbsoluteParent;
 		
 		return parser.styObj;
 		
 	}
 
 
-	public static StudyTemp parseWreslFile(String inputFilePath) throws RecognitionException  {
+	public static ModelTemp parseWreslFile(String inputFilePath) {
 		
 		
-		WreslPlusParser parser = ParserUtils.initParser(inputFilePath);
+		WreslPlusParser parser = null;
 		
-		parser.wreslMain();
+		try {
+			parser = ParserUtils.initParser(inputFilePath);
+			parser.wreslFile();
+		}
+		catch (RecognitionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		return parser.styObj;
+		return parser.mObj;
 		
 	}
+
+
+	public static void parseAllIncFile(ArrayList<String> relativePathList , StudyTemp st) {
+
+		for (String relativePath: relativePathList){
+			
+			
+			if (!st.fileModelMap.keySet().contains(relativePath)){
+
+				String absPath = checkPath(new File(st.runDir, relativePath).getAbsolutePath());
+				ModelTemp fm = parseWreslFile(absPath);
+				
+				ErrorCheck.checkVarRedefined(fm);	
+				Procedures.processSvIncFileList(st);
+				ToLowerCase.convert(fm);		
+				Procedures.processIncFilePath(fm);	
+				Procedures.processDependants(fm);
+				
+				st.fileModelMap.put(relativePath, fm);
+				
+				// parse all included files within files
+				parseAllIncFile(fm.incFileMap, st);
+				
+			}
+		}
+		
+	}		
 	
-	
+	public static void parseAllIncFile(Map<String,IncFileTemp> incfmap , StudyTemp st) {
+
+		for (String f: incfmap.keySet()){
+			
+			String relativePath = incfmap.get(f).pathRelativeToRunDir;
+			
+			if (!st.fileModelMap.keySet().contains(relativePath)){
+
+				ModelTemp fm = parseWreslFile(incfmap.get(f).absPath);
+				
+				ErrorCheck.checkVarRedefined(fm);	
+				Procedures.processSvIncFileList(st);
+				ToLowerCase.convert(fm);		
+				Procedures.processIncFilePath(fm);	
+				Procedures.processDependants(fm);
+				
+				st.fileModelMap.put(relativePath, fm);
+				
+				// parse all included files within files
+				parseAllIncFile(fm.incFileMap, st);
+				
+			}
+		}
+		
+	}	
 
 
 

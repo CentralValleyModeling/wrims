@@ -30,6 +30,23 @@ public class Tools {
 		if (s==null)  return null; 
 		return s.substring(1, s.length() - 1);
 	}
+	
+	public static Set<String> findAllOffspring (String x, final Map<String,HashSet<String>> kidMap){
+		
+		Set<String> out = new HashSet<String>();
+		
+		if (!kidMap.keySet().contains(x)) return out;
+		
+		out.addAll(kidMap.get(x));
+		
+		for (String kid : kidMap.get(x)) {
+			//System.out.println(kid);
+			out.addAll(findAllOffspring(kid,kidMap));
+			
+		}
+		return out;
+	}
+	
 	//TODO: this can be optimized for memory
 	public static ArrayList<String> allToLowerCase(ArrayList<String> inArrayList){
 		

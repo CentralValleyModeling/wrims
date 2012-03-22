@@ -22,16 +22,8 @@ public class ErrorCheck {
 	
 	private ErrorCheck(){}
 
-
-	public static int check (ModelTemp m){
-
-		checkVarRedefined(m);
-		
-		return 0;
-
-	}
 	
-	public static int check (StudyTemp s){
+	public static int checkVarRedefined (StudyTemp s){
 		
 		// check modelList itself
 		

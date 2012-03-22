@@ -40,7 +40,7 @@ public class TestWreslPlus_goal {
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
 		
-		StudyTemp styTemp=Workflow.checkWreslMain(absFilePath);
+		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
 		
 		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
 		
@@ -71,7 +71,7 @@ public class TestWreslPlus_goal {
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
 		
-		StudyTemp styTemp=Workflow.checkWreslMain(absFilePath);
+		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
 		
 		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
 		
@@ -102,7 +102,7 @@ public class TestWreslPlus_goal {
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
 		
-		StudyTemp styTemp=Workflow.checkWreslMain(absFilePath);
+		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
 		
 		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
 		
@@ -143,7 +143,7 @@ public class TestWreslPlus_goal {
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
 		
-		StudyTemp styTemp=Workflow.checkWreslMain(absFilePath);
+		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
 		
 		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
 		
@@ -182,7 +182,7 @@ public class TestWreslPlus_goal {
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
 		
-		StudyTemp styTemp=Workflow.checkWreslMain(absFilePath);
+		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
 		
 		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
 		
@@ -212,7 +212,7 @@ public class TestWreslPlus_goal {
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
 		
-		StudyTemp styTemp=Workflow.checkWreslMain(absFilePath);
+		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
 		
 		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
 		
@@ -242,7 +242,7 @@ public class TestWreslPlus_goal {
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
 		
-		StudyTemp styTemp=Workflow.checkWreslMain(absFilePath);
+		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
 		
 		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
 		
@@ -272,7 +272,7 @@ public class TestWreslPlus_goal {
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
 		
-		StudyTemp styTemp=Workflow.checkWreslMain(absFilePath);
+		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
 		
 		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
 		
@@ -302,7 +302,7 @@ public class TestWreslPlus_goal {
 		File absFile = new File(inputFilePath).getAbsoluteFile();
 		String absFilePath = absFile.getCanonicalPath().toLowerCase();
 		
-		StudyTemp styTemp=Workflow.checkWreslMain(absFilePath);
+		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
 		
 		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
 		

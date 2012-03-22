@@ -1,0 +1,25 @@
+Wresl+ programming rules
+
+1.	Dvars will not be sent to LP solvers unless they are 
+ 	(1) constrained or penalized in goals; or 
+ 	(2) referred in the model's main network
+   
+	Networks will not be converted to connectivity ( or constraints) unless they are
+	referred in the model's main network
+
+1.1     only one main network is allowed in a model
+
+
+2.	Svars can use 'output' label to write to DSS file. 
+	This reduces the need for alias or dvar.   
+
+
+
+
+3.      All reserved IDs should be in lower case. For example, month, jan, feb, etc,..
+
+3.1     all wresl keyword should be in lower case. e.g., svar, dvar, goal, network, etc,..
+
+
+4  unit conversion function for current month should be consistent with other month. 
+   For example, cfs_taf(0) is for current month, cfs_taf(1) is for next month 

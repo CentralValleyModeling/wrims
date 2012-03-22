@@ -23,9 +23,16 @@ public class ToLowerCase {
 
 	
 	//TODO: model must be in sequence obj, also condition not linked yet
-	//TODO: remember to lowercase all evaluation strings and var names
 	public static void convert (StudyTemp s){		
 
+		// sequence
+		for (String key : s.seqList) {
+			SequenceTemp n = s.seqMap.get(key);
+			s.seqMap.remove(key);
+			s.seqMap.put( key.toLowerCase(), sequence(n));
+		}
+		s.seqList = Tools.allToLowerCase(s.seqList);
+		// model
 		for (String key : s.modelList) {
 			ModelTemp n = s.modelMap.get(key);
 			s.modelMap.remove( key);
@@ -35,6 +42,20 @@ public class ToLowerCase {
 		s.modelList = Tools.allToLowerCase(s.modelList);
 	}	
 	
+	public static SequenceTemp sequence (SequenceTemp w){
+		
+		SequenceTemp o = new SequenceTemp();
+		
+		o.id = w.id;
+		o.model = w.model.toLowerCase();
+		o.condition = w.condition.toLowerCase();
+		o.order = w.order.toLowerCase();
+		
+		return o;
+	
+	}
+
+
 	public static void convert (ModelTemp j){
 		
 		for (String key : j.svList) {
@@ -88,6 +109,7 @@ public class ToLowerCase {
 			j.incFileMap.put( key.toLowerCase(), o);
 		}	
 		
+		j.svIncFileList = Tools.allToLowerCase(j.svIncFileList);
 		j.incFileIDList=Tools.allToLowerCase(j.incFileIDList);
 		j.itemList = Tools.allToLowerCase(j.itemList);
 		j.svList = Tools.allToLowerCase(j.svList);
@@ -102,7 +124,7 @@ public class ToLowerCase {
 		j.asList = Tools.allToLowerCase(j.asList);
 		j.asList_reduced = Tools.allToLowerCase(j.asList_reduced);
 		j.wvList_defaultType = Tools.allToLowerCase(j.wvList_defaultType);
-
+		
 		
 	}
 

@@ -22,6 +22,8 @@ public class ParserUtils {
 
 	public static WreslPlusParser initParser(String inputFilePath) throws RecognitionException  {		
 
+		// inputFilePath should be checked and converted to CanonicalPath before this method
+		
 		CharStream stream;
 		
 		try {
