@@ -50,11 +50,7 @@ public class Workflow {
 			parseAllIncFile(mt.incFileRelativePathList, st);					
 			
 		}
-		
-	    		
-		System.out.println("fileModelMap: ");
-		System.out.println(st.fileModelMap);
-		
+	
 		
 		
 		// find all offspring
@@ -67,7 +63,7 @@ public class Workflow {
 		
 		//TODO: here
 		Procedures.postProcessSvIncFileList(st);
-		//Procedures.postProcessincFileRelativePathList(st);
+		Procedures.postProcessIncFileList(st);
 		
 		System.out.println("fileDataMap_keyset: "+st.fileModelMap.keySet());
 		
