@@ -63,6 +63,9 @@ public class ErrorCheck {
 			}
 		}
 		
+		// TODO: check incFile list duplicates
+
+		
 		// check wTable var duplicates
 		ArrayList<String> wvDup = findDuplicates(m.wvList_defaultType);
 		
@@ -74,6 +77,16 @@ public class ErrorCheck {
 			}
 		}	
 
+		// check item list duplicates
+		ArrayList<String> itemDup = findDuplicates(m.itemList);
+		
+		if (itemDup.size()>0) {
+			m.itemList = removeDuplicates(m.itemList);
+		
+			for (String s: itemDup){
+				LogUtils.errMsg("Item redefined: "+s+" in file: "+m.absPath);
+			}
+		}
 		
 		return 0;
 	

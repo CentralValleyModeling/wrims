@@ -1,0 +1,5 @@
+
+define s2_f2 {value 600}  # test comment
+define s3_f2 {value .29}
+
+

@@ -16,10 +16,13 @@ public class ModelTemp implements Serializable {
 	public String pathRelativeToRunDir; //processed
 	
 	public ArrayList<String>  itemList;
-	public ArrayList<String>  svIncFileList;   // processed twice
+	public ArrayList<String>  svIncFileList;   // processed 
+	public ArrayList<String>  svIncFileList_post;   // post processed 
 	public ArrayList<String> incFileIDList;
 	public ArrayList<String> incFileRelativePathList; // processed
+	public ArrayList<String> incFileRelativePathList_post; // post processed
 	public ArrayList<String> incFileAbsPathList;      // processed 
+	public ArrayList<String> incFileAbsPathList_post;      // post processed 
 	public Map<String,IncFileTemp> incFileMap;
 	
 	public ArrayList<String>  wvList_defaultType; // added after processed
@@ -50,9 +53,12 @@ public class ModelTemp implements Serializable {
 		
 		itemList = new ArrayList<String>();
 		svIncFileList = new ArrayList<String>();
+		svIncFileList_post = new ArrayList<String>();
 		incFileIDList = new ArrayList<String>();
 		incFileRelativePathList = new ArrayList<String>();
+		incFileRelativePathList_post = new ArrayList<String>();
 		incFileAbsPathList = new ArrayList<String>();
+		incFileAbsPathList_post = new ArrayList<String>();
 		incFileMap= new LinkedHashMap<String, IncFileTemp>();
 		wvList_defaultType = new ArrayList<String>();
 		wTableObjList_defaultType = new ArrayList<WeightTable>();

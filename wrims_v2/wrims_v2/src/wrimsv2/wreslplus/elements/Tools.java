@@ -31,9 +31,27 @@ public class Tools {
 		return s.substring(1, s.length() - 1);
 	}
 	
-	public static Set<String> findAllOffspring (String x, final Map<String,HashSet<String>> kidMap){
+	public static String checkPath(String filePath) {
 		
-		Set<String> out = new HashSet<String>();
+		String canonicalPath=null;
+		
+		try {
+			
+			canonicalPath = new File(filePath).getCanonicalPath().toLowerCase(); 
+		
+		} catch (IOException e) {
+			
+	        e.printStackTrace();
+	        LogUtils.errMsg("IOException: " + filePath);
+	    }
+		
+		return canonicalPath;
+		
+	}
+	
+	public static HashSet<String> findAllOffspring (String x, final Map<String,HashSet<String>> kidMap){
+		
+		HashSet<String> out = new HashSet<String>();
 		
 		if (!kidMap.keySet().contains(x)) return out;
 		
@@ -47,6 +65,29 @@ public class Tools {
 		return out;
 	}
 	
+	// TODO: move to Tools
+	// be careful, the map is modified in this function
+	public static void findFileHierarchy(ArrayList<HashSet<String>> hierarchySetList, Map<String,HashSet<String>> toBeSorted) {
+		
+		System.out.println("hierarchySetList"+hierarchySetList);
+		
+		if (!toBeSorted.isEmpty()) {
+					
+			HashSet<String> c = new HashSet<String>();
+			Set<String> toBeSorted_keySet = new HashSet<String>(toBeSorted.keySet());
+			for (String s : toBeSorted_keySet){
+				if ( hierarchySetList.get(hierarchySetList.size()-1).containsAll(toBeSorted.get(s))) {
+					c.add(s);
+					toBeSorted.remove(s);
+				}
+			}
+			hierarchySetList.add(c);
+			findFileHierarchy(hierarchySetList, toBeSorted);
+		
+		}
+		
+	}
+
 	//TODO: this can be optimized for memory
 	public static ArrayList<String> allToLowerCase(ArrayList<String> inArrayList){
 		
@@ -423,4 +464,6 @@ public class Tools {
 
 	    return out;
 	  }
+
+
 }

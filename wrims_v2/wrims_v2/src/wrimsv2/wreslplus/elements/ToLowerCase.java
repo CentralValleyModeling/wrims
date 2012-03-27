@@ -109,7 +109,7 @@ public class ToLowerCase {
 			j.incFileMap.put( key.toLowerCase(), o);
 		}	
 		
-		j.svIncFileList = Tools.allToLowerCase(j.svIncFileList);
+		//j.svIncFileList = Tools.allToLowerCase(j.svIncFileList);
 		j.incFileIDList=Tools.allToLowerCase(j.incFileIDList);
 		j.itemList = Tools.allToLowerCase(j.itemList);
 		j.svList = Tools.allToLowerCase(j.svList);

@@ -142,7 +142,7 @@ scope { ModelTemp model_;}
 @init{ $model_trunk::model_ = new ModelTemp(); 
 	   $model_trunk::model_.absPath = currentAbsolutePath; 
 	   $model_trunk::model_.parentAbsPath = currentAbsoluteParent; }
-@after{$modelObj =$model_trunk::model_;}	    
+@after{$modelObj =$model_trunk::model_; $modelObj.id="legacyWresl";}	    
 :      
 	   ( fi=include_file {$model_trunk::model_.itemList.add($fi.id); $model_trunk::model_.incFileIDList.add($fi.id); $model_trunk::model_.incFileMap.put($fi.id, $fi.incFileObj); }
 	   | ts=timeseries   {$model_trunk::model_.itemList.add($ts.id); $model_trunk::model_.tsList.add($ts.id); $model_trunk::model_.tsMap.put($ts.id, $ts.tsObj); }

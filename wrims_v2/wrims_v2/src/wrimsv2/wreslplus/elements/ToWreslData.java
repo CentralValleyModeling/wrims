@@ -28,15 +28,15 @@ public class ToWreslData {
 	public static StudyDataSet convertStudy (StudyTemp s){
 		
 		StudyDataSet o = new StudyDataSet();
-		o.setModelList(s.modelList);
+		o.setModelList(s.modelList_effective);
 				
 		Map<String, ModelDataSet> modelDataSetMap = new HashMap<String, ModelDataSet>();
 		ArrayList<String> modelConditionList   = new ArrayList<String>();
 		Map<String, Timeseries> allTimeseriesMap = new LinkedHashMap<String, Timeseries>();
 		
-		for (String k: s.modelList){
+		for (String k: s.modelList_effective){
 			
-			modelConditionList.add("always");
+			modelConditionList.add("always"); //TODO: need condition
 			ModelDataSet m = convertModel(s.modelMap.get(k));
 			modelDataSetMap.put(k, m );
 		
@@ -71,7 +71,10 @@ public class ToWreslData {
 		Collections.sort(o.tsList,String.CASE_INSENSITIVE_ORDER);
 		
 		// don't sort svList. order matters in evaluator
-		o.svList = new ArrayList<String>(m.svList);
+		o.svList = new ArrayList<String>(m.svIncFileList_post);
+		System.out.println("ToWreslData => m.svIncFileList_post"+m.svIncFileList_post);
+		System.out.println("ToWreslData => m.svList"+m.svList);
+		//o.svList = new ArrayList<String>(m.svList);
 
 		o.gList = new ArrayList<String>(m.glList);
 		Collections.sort(o.exList,String.CASE_INSENSITIVE_ORDER);
@@ -85,9 +88,12 @@ public class ToWreslData {
 		o.wtList = new ArrayList<String>(m.wvList_defaultType);
 		Collections.sort(o.wtList,String.CASE_INSENSITIVE_ORDER);
 		
-		for (String k: m.incFileMap.keySet()){			
-			o.incFileList.add(m.incFileMap.get(k).absPath);
-		}
+		o.incFileList = new ArrayList<String>(m.incFileAbsPathList_post);
+	
+		
+//		for (String k: m.incFileMap.keySet()){			
+//			o.incFileList.add(m.incFileMap.get(k).absPath);
+//		}
 		
 		
 		for (String k: m.ssMap.keySet()){			

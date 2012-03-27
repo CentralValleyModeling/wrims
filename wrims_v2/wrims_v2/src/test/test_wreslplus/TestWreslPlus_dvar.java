@@ -115,7 +115,7 @@ public class TestWreslPlus_dvar {
 		String logText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 1);
+		Assert.assertEquals(totalErrs, 2);
 		
 		//StudyDataSet s = ToWreslData.convertStudy(s)
 		

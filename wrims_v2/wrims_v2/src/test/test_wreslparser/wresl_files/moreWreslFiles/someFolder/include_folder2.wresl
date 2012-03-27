@@ -1,0 +1,13 @@
+
+  define s1_someFolder {value 100}
+  INCLUDE 'folder2\svar_const_folder2.wresl'
+  define s4_someFolder {value 400}
+
+
+	 	
+	
+
+	 
+
+
+ 

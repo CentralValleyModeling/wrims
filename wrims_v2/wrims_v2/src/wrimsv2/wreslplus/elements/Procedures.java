@@ -451,13 +451,63 @@ public class Procedures {
 		}
 	}
 
-	public static void processSvIncFileList(StudyTemp st) {
-		for (String m : st.modelList_effective){
-			processSvIncFileList(st.modelMap.get(m));
+
+	public static void findKidMap(StudyTemp st) {
+		
+		for (String m: st.fileModelMap.keySet()){
+			
+			ArrayList<String> kids = st.fileModelMap.get(m).incFileRelativePathList;
+			
+			System.out.println("file:"+m);
+			System.out.println("kids:"+kids);
+			
+			if (kids==null){
+				st.noKid.add(m);			
+			} else if (kids.isEmpty()){
+				st.noKid.add(m);
+			} else {
+				st.kidMap.put(m, new HashSet<String>(kids));
+			}
+			
+		}
+		
+		System.out.println("st.kidMap"+st.kidMap);
+		
+	}
+	
+	public static void findAOM(StudyTemp st) {
+
+		for (String s: st.kidMap.keySet()) { 
+			HashSet<String> a = Tools.findAllOffspring(s, st.kidMap);
+			st.AOMap.put(s, a);
 		}
 		
 	}
-	public static void processSvIncFileList(ModelTemp mt) {
+
+	public static void findFileGroupOrder(StudyTemp st) {
+		
+		Map<String,HashSet<String>> toBeSorted = new HashMap<String, HashSet<String>>(st.AOMap);
+		
+		System.out.println(st.AOMap);
+		
+		System.out.println("st.noKid"+st.noKid);
+		st.fileGroupOrder.add(st.noKid);
+		Tools.findFileHierarchy(st.fileGroupOrder, toBeSorted);
+		
+	}
+	
+
+	public static void processSvIncFileList( StudyTemp st) {
+		
+		
+		for (String m : st.modelList_effective){
+
+			processSvIncFileList(st.modelMap.get(m));
+		
+		}		
+	}
+
+	public static void processSvIncFileList( ModelTemp mt) {
 		
 		mt.svIncFileList = new ArrayList<String>(mt.itemList);
 		mt.svIncFileList.removeAll(mt.tsList);
@@ -465,6 +515,92 @@ public class Procedures {
 		mt.svIncFileList.removeAll(mt.dvList);
 		mt.svIncFileList.removeAll(mt.glList);
 		mt.svIncFileList.removeAll(mt.gl2List);
+		mt.svIncFileList.removeAll(mt.exList);
+		
+		for (String f : mt.incFileMap.keySet()){
+			
+			int index = mt.svIncFileList.indexOf(f);
+			mt.svIncFileList.set(index, mt.incFileMap.get(f).pathRelativeToRunDir);
+			
+		}
+		
+		mt.svIncFileList_post = new ArrayList<String>(mt.svIncFileList);
+//		
+//		// TODO: check
+//		mt.incFileAbsPathList_post = new ArrayList<String>(mt.incFileAbsPathList);
+//		mt.incFileRelativePathList_post = new ArrayList<String>(mt.incFileRelativePathList);
 		
 	}
+	
+
+	public static void postProcessSvIncFileList(StudyTemp st) {
+		
+		// use the fileGroupOrder
+		for (HashSet<String> fgroup: st.fileGroupOrder){
+			
+			for ( String f : fgroup){
+				
+				if (!st.AOMap.keySet().contains(f)) continue; // TODO: the whole first round can be skipped
+				
+				//System.out.println("testsvIncFileList: "+f);
+						
+				ModelTemp m = st.fileModelMap.get(f);
+				ArrayList<String> list = m.svIncFileList;
+				ArrayList<String> list_post = m.svIncFileList_post;
+				
+//				// post process incFileRelativePathList TODO: move to earlier process
+//				m.incFileRelativePathList_post = new ArrayList<String>(m.incFileRelativePathList);
+//				m.incFileAbsPathList_post = new ArrayList<String>(m.incFileAbsPathList);
+				
+				for( String includedFile: st.AOMap.get(f)){
+					int index =list_post.indexOf(includedFile);
+					
+					if (index>-1){
+						list_post.remove(index);
+					
+						ModelTemp includedModel = st.fileModelMap.get(includedFile);
+						list_post.addAll(index, includedModel.svIncFileList_post); 
+					
+						// TODO: move to later process
+						m.svMap.putAll(includedModel.svMap);
+					}
+//					// post process incFileRelativePathList
+//					m.incFileRelativePathList_post.addAll(index+1, includedModel.incFileRelativePathList_post);
+//					m.incFileAbsPathList_post.addAll(index+1, includedModel.incFileAbsPathList_post);
+				}
+			}
+		}
+		
+		// process the main file includes
+		for (String fi : st.modelList_effective){
+			
+			ModelTemp m = st.modelMap.get(fi);
+			
+			// post process incFileRelativePathList TODO: move to earlier process
+			m.incFileRelativePathList_post = new ArrayList<String>(m.incFileRelativePathList);
+			m.incFileAbsPathList_post = new ArrayList<String>(m.incFileAbsPathList);
+			
+			for (String includedFile: m.incFileRelativePathList ){
+				int index = m.svIncFileList_post.indexOf(includedFile);
+				ModelTemp includedModel = st.fileModelMap.get(includedFile);
+				if (index>-1) {
+					m.svIncFileList_post.remove(index);
+				
+					m.svIncFileList_post.addAll(index, includedModel.svIncFileList_post);
+					// TODO: move to later process
+					m.svMap.putAll(includedModel.svMap);
+				}
+
+				
+				// post process incFileRelativePathList
+				m.incFileRelativePathList_post.addAll(index+1, includedModel.incFileRelativePathList_post);
+				m.incFileAbsPathList_post.addAll(index+1, includedModel.incFileAbsPathList_post);
+				
+			}		
+		}
+	}
+
+
+
+	
 }

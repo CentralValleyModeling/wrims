@@ -1,0 +1,32 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1  # this keyword will be deprecated
+    }
+
+SEQUENCE CYCLE2 {
+    model   second
+    order   52  # this keyword will be deprecated
+    }
+
+MODEL first { 
+
+  INCLUDE[local] '\..\svar_const.wresl'
+  INCLUDE[local] '..\svar_case.wresl'
+  INCLUDE[local] '\someFolder\svar_table.wresl'
+  INCLUDE[local] '\someFolder\include_folder2.wresl' # over here
+	}	
+
+MODEL second { 
+
+  INCLUDE[local] '\..\svar_const.wresl'
+  INCLUDE[local] '\someFolder\include_folder2.wresl'  # over here
+  INCLUDE[local] '..\svar_case.wresl'
+  INCLUDE[local] '\someFolder\svar_table.wresl'
+	 	
+     }	
+	
+
+	 
+
+
+ 
