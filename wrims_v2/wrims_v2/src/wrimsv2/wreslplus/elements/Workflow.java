@@ -31,6 +31,7 @@ public class Workflow {
 		// check study
 		ErrorCheck.checkVarRedefined(st);		
 		ToLowerCase.convert(st);	
+		// TODO: make backup of original var list
 		Procedures.findEffectiveModelinMain(st); // main file only
 
 		Procedures.processIncFilePath(st);
@@ -65,33 +66,13 @@ public class Workflow {
 		System.out.println("hierarchy"+st.fileGroupOrder);
 		
 		//TODO: here
-		Procedures.postProcessSvIncFileList(st);
+		Procedures.postProcessVarListinIncFile(st);
 		Procedures.postProcessIncFileList(st);
 		
 		
 		
 		
-		// append data to the main model as defined in sequence.
-		//TODO: check svar orders. need to be done from bottom up
-		for (String modelName: st.modelList_effective){
 
-			ModelTemp mo = st.modelMap.get(modelName);
-			
-			//======================================
-			for (String f: mo.incFileRelativePathList){				
-				
-				ModelTemp incm =  st.fileModelMap.get(f);
-				
-				//mo.svList.addAll(incm.svList);
-				//mo.svMap.putAll(incm.svMap);
-				
-				mo.dvList.addAll(incm.dvList);
-				mo.dvMap.putAll(incm.dvMap);
-				
-			}
-			//======================================
-			
-		}	
 		
 		
 		// can be processed after error check 
@@ -103,7 +84,7 @@ public class Workflow {
 		
 		// can be processed at final stage
 		
-		Procedures.copyModelSvMapToSequenceSvMap(st);
+		Procedures.copyModelVarMapToSequenceVarMap(st);
 		Procedures.collectWeightVar(st);
 		
 		return st;

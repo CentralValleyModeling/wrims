@@ -310,7 +310,7 @@ public class Procedures {
 
 	}
 
-	public static void copyModelSvMapToSequenceSvMap(StudyTemp st) {
+	public static void copyModelVarMapToSequenceVarMap(StudyTemp st) {
 		
 		for (String seqName : st.seqList) {
 
@@ -320,18 +320,23 @@ public class Procedures {
 			for (String f: seqModelObj.incFileRelativePathList_post){
 			
 				ModelTemp incModel = st.fileModelMap.get(f);
-				copyModelSvMapToSequenceSvMap(incModel, seqObj);
+				copyModelVarMapToSequenceVarMap(incModel, seqObj);
 			
 			}
 			
-			copyModelSvMapToSequenceSvMap(seqModelObj, seqObj);
+			copyModelVarMapToSequenceVarMap(seqModelObj, seqObj);
 		}
 		
 	}
 
-	public static void copyModelSvMapToSequenceSvMap(ModelTemp mt, SequenceTemp seq) {
+	public static void copyModelVarMapToSequenceVarMap(ModelTemp mt, SequenceTemp seq) {
 		
 		seq.svMap.putAll(mt.svMap);
+		seq.dvMap.putAll(mt.dvMap);
+		seq.ssMap_hasCase.putAll(mt.ssMap_hasCase);
+		seq.ssWeightMap_hasCase.putAll(mt.ssWeightMap_hasCase);
+		seq.ssMap_noCase.putAll(mt.ssMap_noCase);
+		seq.ssWeightMap_noCase.putAll(mt.ssWeightMap_noCase);		
 		
 	}
 	
@@ -480,6 +485,53 @@ public class Procedures {
 
 	}
 
+	public static void postProcessIncFileList(StudyTemp st) {
+		
+		// use the fileGroupOrder
+		for (HashSet<String> fgroup: st.fileGroupOrder){
+			
+			for ( String f : fgroup){
+				
+				if (!st.AOMap.keySet().contains(f)) continue; // TODO: the whole first round can be skipped
+				
+						
+				ModelTemp m = st.fileModelMap.get(f);
+	
+				ArrayList<String> list_post1 = m.incFileAbsPathList_post;
+				ArrayList<String> list_post2 = m.incFileRelativePathList_post;
+				
+				
+				for( String includedFile: st.AOMap.get(f)){
+					int index =list_post1.indexOf(includedFile);
+					
+					
+					ModelTemp includedModel = st.fileModelMap.get(includedFile);
+					list_post1.addAll(index+1, includedModel.incFileAbsPathList_post); 
+					list_post2.addAll(index+1, includedModel.incFileRelativePathList_post); 
+					
+				}
+			}
+		}
+		
+		// process the main file includes
+		for (String fi : st.modelList_effective){
+			
+			ModelTemp m = st.modelMap.get(fi);
+			
+			for (String includedFile: m.incFileRelativePathList ){
+				
+				int index = m.incFileRelativePathList.indexOf(includedFile);
+	
+				ModelTemp includedModel = st.fileModelMap.get(includedFile);
+				
+				m.incFileRelativePathList_post.addAll(index+1, includedModel.incFileRelativePathList_post);
+				m.incFileAbsPathList_post.addAll(index+1, includedModel.incFileAbsPathList_post);
+	
+				
+			}		
+		}
+	}
+
 	public static void findEffectiveModelinMain(StudyTemp st) {
 		
 		for (String s: st.seqList){
@@ -575,7 +627,7 @@ public class Procedures {
 	}
 	
 
-	public static void postProcessSvIncFileList(StudyTemp st) {
+	public static void postProcessVarListinIncFile(StudyTemp st) {
 		
 		// use the fileGroupOrder
 		for (HashSet<String> fgroup: st.fileGroupOrder){
@@ -586,21 +638,18 @@ public class Procedures {
 				
 						
 				ModelTemp m = st.fileModelMap.get(f);
-				ArrayList<String> list = m.svIncFileList;
-				ArrayList<String> list_post = m.svIncFileList_post;
-				
 				
 				for( String includedFile: st.AOMap.get(f)){
-					int index =list_post.indexOf(includedFile);
 					
-					//if (index>-1){
-					list_post.remove(index);
+					int index =m.svIncFileList_post.indexOf(includedFile);
+					
+					m.svIncFileList_post.remove(index);
 					
 					ModelTemp includedModel = st.fileModelMap.get(includedFile);
-					list_post.addAll(index, includedModel.svIncFileList_post); 
-					
-					// TODO: move to later process
-					m.svMap.putAll(includedModel.svMap);
+					m.svIncFileList_post.addAll(index, includedModel.svIncFileList_post); 
+					m.dvList.addAll(includedModel.dvList);
+					m.ssList_noCase.addAll(includedModel.ssList_noCase);
+					m.ssList_hasCase.addAll(includedModel.ssList_hasCase);
 
 				}
 			}
@@ -613,67 +662,20 @@ public class Procedures {
 			
 			
 			for (String includedFile: m.incFileRelativePathList ){
+				
 				int index = m.svIncFileList_post.indexOf(includedFile);
 				ModelTemp includedModel = st.fileModelMap.get(includedFile);
 
 				m.svIncFileList_post.remove(index);
 				
 				m.svIncFileList_post.addAll(index, includedModel.svIncFileList_post);
-				// TODO: move to later process
-				m.svMap.putAll(includedModel.svMap);
-
-
+				m.dvList.addAll(includedModel.dvList);
+				m.ssList_noCase.addAll(includedModel.ssList_noCase);
+				m.ssList_hasCase.addAll(includedModel.ssList_hasCase);
 				
 			}		
 		}
 	}
-
-	public static void postProcessIncFileList(StudyTemp st) {
-			
-			// use the fileGroupOrder
-			for (HashSet<String> fgroup: st.fileGroupOrder){
-				
-				for ( String f : fgroup){
-					
-					if (!st.AOMap.keySet().contains(f)) continue; // TODO: the whole first round can be skipped
-					
-							
-					ModelTemp m = st.fileModelMap.get(f);
-
-					ArrayList<String> list_post1 = m.incFileAbsPathList_post;
-					ArrayList<String> list_post2 = m.incFileRelativePathList_post;
-					
-					
-					for( String includedFile: st.AOMap.get(f)){
-						int index =list_post1.indexOf(includedFile);
-						
-						
-						ModelTemp includedModel = st.fileModelMap.get(includedFile);
-						list_post1.addAll(index+1, includedModel.incFileAbsPathList_post); 
-						list_post2.addAll(index+1, includedModel.incFileRelativePathList_post); 
-						
-					}
-				}
-			}
-			
-			// process the main file includes
-			for (String fi : st.modelList_effective){
-				
-				ModelTemp m = st.modelMap.get(fi);
-				
-				for (String includedFile: m.incFileRelativePathList ){
-					
-					int index = m.incFileRelativePathList.indexOf(includedFile);
-	
-					ModelTemp includedModel = st.fileModelMap.get(includedFile);
-					
-					m.incFileRelativePathList_post.addAll(index+1, includedModel.incFileRelativePathList_post);
-					m.incFileAbsPathList_post.addAll(index+1, includedModel.incFileAbsPathList_post);
-
-					
-				}		
-			}
-		}
 
 
 

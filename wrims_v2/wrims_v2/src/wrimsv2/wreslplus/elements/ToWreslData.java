@@ -104,19 +104,13 @@ public class ToWreslData {
 //		}
 		
 		
-		for (String k: m.ssMap_hasCase.keySet()){			
-			o.dvSlackSurplusMap.put(k, convertDvar(m.ssMap_hasCase.get(k)));
+		for (String k: o.dvSlackSurplusList){			
+			o.dvSlackSurplusMap.put(k, convertDvar(seq.ssMap_hasCase.get(k)));
 		}
-		for (String k: m.ssWeightMap_hasCase.keySet()){			
-			o.wtSlackSurplusMap.put(k, convertWeight(m.ssWeightMap_hasCase.get(k)));
+		for (String k: o.wtSlackSurplusList){			
+			o.wtSlackSurplusMap.put(k, convertWeight(seq.ssWeightMap_hasCase.get(k)));
 		}
 		
-		for (String k: m.dvMap.keySet()){			
-			o.dvMap.put(k, convertDvar(m.dvMap.get(k)));
-		}
-		for (String k: m.ssMap_noCase.keySet()){			
-			o.dvMap.put(k, convertDvar(m.ssMap_noCase.get(k)));
-		}
 		
 		for (String k: m.tsMap.keySet()){			
 			o.tsMap.put(k, convertTimeseries(m.tsMap.get(k)));
@@ -133,6 +127,15 @@ public class ToWreslData {
 		for (String k: o.svList){			
 			o.svMap.put(k, convertSvar(seq.svMap.get(k)));
 		}
+		
+		//dv
+		for (String k: m.dvList){			
+			o.dvMap.put(k, convertDvar(seq.dvMap.get(k)));
+		}
+		for (String k: m.ssList_noCase){			
+			o.dvMap.put(k, convertDvar(seq.ssMap_noCase.get(k)));
+		}
+		
 		
 		for (String k: o.asList){			
 			o.asMap.put(k, convertAlias(m.asMap.get(k)));
