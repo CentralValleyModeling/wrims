@@ -39,6 +39,7 @@ public class StudyTemp implements Serializable {
 		noKid = new HashSet<String>();
 		AOMap = new HashMap<String, HashSet<String>>();
 		fileGroupOrder = new ArrayList<HashSet<String>>();
+
 	}
 	
 }

@@ -1,6 +1,8 @@
 package wrimsv2.wreslplus.elements;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SequenceTemp implements Serializable {
 	
@@ -13,7 +15,12 @@ public class SequenceTemp implements Serializable {
 	public String order;	
 	//public Map<String,SvarTemp> svMap;	
 	
+	
+	public Map<String,SvarTemp> svMap;
+	
 	public SequenceTemp(){
+		
+		svMap = new HashMap<String, SvarTemp>();
 
 	}
 	

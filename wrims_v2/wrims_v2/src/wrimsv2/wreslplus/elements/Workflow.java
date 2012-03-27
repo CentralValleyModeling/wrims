@@ -37,12 +37,15 @@ public class Workflow {
 		Procedures.processSvIncFileList(st);
 		Procedures.processDependants(st);
 
-		
+		//Procedures.copyModelSvMapToSequenceSvMap(st);
 		
 		// parse all included files		
 		// store results to a map using relativePath as key
-		for (String m: st.modelList_effective){
-
+		for (String se : st.seqList){
+			
+			SequenceTemp seqObj = st.seqMap.get(se); 
+			String m = seqObj.model;
+			
 			System.out.println("[M]"+m);
 
 			ModelTemp mt = st.modelMap.get(m);
@@ -65,13 +68,6 @@ public class Workflow {
 		Procedures.postProcessSvIncFileList(st);
 		Procedures.postProcessIncFileList(st);
 		
-		System.out.println("fileDataMap_keyset: "+st.fileModelMap.keySet());
-		
-		for (String k: st.fileModelMap.keySet()){
-			
-			System.out.println("file: "+k);
-			System.out.println("svIncFileList_post: "+st.fileModelMap.get(k).svIncFileList_post);
-		}
 		
 		
 		
@@ -87,7 +83,7 @@ public class Workflow {
 				ModelTemp incm =  st.fileModelMap.get(f);
 				
 				//mo.svList.addAll(incm.svList);
-				mo.svMap.putAll(incm.svMap);
+				//mo.svMap.putAll(incm.svMap);
 				
 				mo.dvList.addAll(incm.dvList);
 				mo.dvMap.putAll(incm.dvMap);
@@ -102,7 +98,12 @@ public class Workflow {
 		Procedures.processGoalHS(st);
 		Procedures.convertAliasToGoal(st);
 		
+
 		
+		
+		// can be processed at final stage
+		
+		Procedures.copyModelSvMapToSequenceSvMap(st);
 		Procedures.collectWeightVar(st);
 		
 		return st;
@@ -160,6 +161,8 @@ public class Workflow {
 
 		for (String relativePath: relativePathList){
 			
+			//ModelTemp fm = null;
+			
 			if (!st.fileModelMap.keySet().contains(relativePath)){
 
 				String absPath = Tools.checkPath(new File(st.runDir, relativePath).getAbsolutePath());
@@ -172,12 +175,25 @@ public class Workflow {
 				Procedures.processSvIncFileList(fm);
 				Procedures.processDependants(fm);
 				
+				
 				st.fileModelMap.put(relativePath, fm);
 				
 				// parse all included files within files
 				parseAllIncFile(fm.incFileRelativePathList, st);
 				
-			}
+			} 
+			
+//			else {
+//				
+//				
+//				fm = st.fileModelMap.get(relativePath);
+//				
+//			}
+//			
+//			Procedures.copyModelSvMapToSequenceSvMap(fm,seq);
+			
+			
+			
 		}
 		
 	}		

@@ -68,11 +68,19 @@ public class Procedures {
 					if (g2.hasCase) {
 						d.condition = Param.conditional;
 						w.condition = Param.conditional;
+						
+						mObj.ssList_hasCase.add(slackName);
+						mObj.ssMap_hasCase.put(slackName, d);
+						mObj.ssWeightMap_hasCase.put(slackName, w);
+						
+					} else {
+
+						mObj.ssList_noCase.add(slackName);
+						mObj.ssMap_noCase.put(slackName, d);
+						mObj.ssWeightMap_noCase.put(slackName, w);
+					
 					}
 					// System.out.println(slackName+":"+g2.ruleType+":"+d.condition);
-					mObj.ssList.add(slackName);
-					mObj.ssMap.put(slackName, d);
-					mObj.ssWeightMap.put(slackName, w);
 				}
 				if (surplusName != null) {
 					WeightTemp w = new WeightTemp();
@@ -85,12 +93,18 @@ public class Procedures {
 					if (g2.hasCase) {
 						d.condition = Param.conditional;
 						w.condition = Param.conditional;
+						mObj.ssList_hasCase.add(surplusName);
+						mObj.ssMap_hasCase.put(surplusName, d);
+						mObj.ssWeightMap_hasCase.put(surplusName, w);
+					} else {
+					
+						mObj.ssList_noCase.add(surplusName);
+						mObj.ssMap_noCase.put(surplusName, d);
+						mObj.ssWeightMap_noCase.put(surplusName, w);
+						
 					}
+					
 					// System.out.println(surplusName+":"+g2.ruleType+":"+d.condition);
-
-					mObj.ssList.add(surplusName);
-					mObj.ssMap.put(surplusName, d);
-					mObj.ssWeightMap.put(surplusName, w);
 				}
 
 			}
@@ -296,6 +310,31 @@ public class Procedures {
 
 	}
 
+	public static void copyModelSvMapToSequenceSvMap(StudyTemp st) {
+		
+		for (String seqName : st.seqList) {
+
+			SequenceTemp seqObj = st.seqMap.get(seqName);
+			ModelTemp seqModelObj = st.modelMap.get(seqObj.model);
+
+			for (String f: seqModelObj.incFileRelativePathList_post){
+			
+				ModelTemp incModel = st.fileModelMap.get(f);
+				copyModelSvMapToSequenceSvMap(incModel, seqObj);
+			
+			}
+			
+			copyModelSvMapToSequenceSvMap(seqModelObj, seqObj);
+		}
+		
+	}
+
+	public static void copyModelSvMapToSequenceSvMap(ModelTemp mt, SequenceTemp seq) {
+		
+		seq.svMap.putAll(mt.svMap);
+		
+	}
+	
 	public static void convertAliasToGoal(StudyTemp s) {
 
 		for (String m : s.modelList) {

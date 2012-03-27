@@ -83,16 +83,16 @@ public class ToLowerCase {
 			j.glMap.remove(key);
 			j.glMap.put( key.toLowerCase(), o);
 		}
-		for (String key : j.ssList) {
-			DvarTemp o = dvar(j.ssMap.get(key));
-			j.ssMap.remove(key);
-			j.ssMap.put( key.toLowerCase(), o);
-		}
-		for (String key : j.ssList) {
-			WeightTemp o = weight(j.ssWeightMap.get(key));
-			j.ssWeightMap.remove(key);
-			j.ssWeightMap.put( key.toLowerCase(), o);
-		}
+//		for (String key : j.ssList) {
+//			DvarTemp o = dvar(j.ssMap.get(key));
+//			j.ssMap.remove(key);
+//			j.ssMap.put( key.toLowerCase(), o);
+//		}
+//		for (String key : j.ssList) {
+//			WeightTemp o = weight(j.ssWeightMap_hasCase.get(key));
+//			j.ssWeightMap_hasCase.remove(key);
+//			j.ssWeightMap_hasCase.put( key.toLowerCase(), o);
+//		}
 		for (String key : j.asList) {	
 			AliasTemp o = alias(j.asMap.get(key));
 			j.asMap.remove(key);
@@ -119,7 +119,7 @@ public class ToLowerCase {
 		j.gl2List = Tools.allToLowerCase(j.gl2List);
 		j.glList_fromAlias = Tools.allToLowerCase(j.glList_fromAlias);
 		j.tsList = Tools.allToLowerCase(j.tsList);
-		j.ssList = Tools.allToLowerCase(j.ssList);
+		//j.ssList = Tools.allToLowerCase(j.ssList);
 		j.exList = Tools.allToLowerCase(j.exList);
 		j.asList = Tools.allToLowerCase(j.asList);
 		j.asList_reduced = Tools.allToLowerCase(j.asList_reduced);

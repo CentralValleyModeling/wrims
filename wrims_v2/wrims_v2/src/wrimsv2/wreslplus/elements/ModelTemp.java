@@ -18,6 +18,10 @@ public class ModelTemp implements Serializable {
 	public ArrayList<String>  itemList;
 	public ArrayList<String>  svIncFileList;   // processed 
 	public ArrayList<String>  svIncFileList_post;   // post processed 
+	
+	//TODO: use more compact storage. i.e., Map<String fileID, Pair ( relativePath, absPath)>
+	// then converts to Map<String relativePath, String absPath>
+	
 	public ArrayList<String> incFileIDList;
 	public ArrayList<String> incFileRelativePathList; // processed
 	public ArrayList<String> incFileRelativePathList_post; // post processed
@@ -28,11 +32,12 @@ public class ModelTemp implements Serializable {
 	public ArrayList<String>  wvList_defaultType; // added after processed
 	public ArrayList<WeightTable> wTableObjList_defaultType; // added after processed
 	public ArrayList<WeightTable> wTableObjList;  // raw data
+	public ArrayList<String>  asList_backup;  // backup raw lowercased
 	public ArrayList<String>  asList;
 	public ArrayList<String>  asList_reduced; // added after processed
 	public Map<String,AliasTemp> asMap;		
 	public ArrayList<String>  svList;
-	public Map<String,SvarTemp> svMap;	
+	public Map<String,SvarTemp> svMap;
 	public ArrayList<String>  dvList;
 	public Map<String,DvarTemp> dvMap;	
 	public ArrayList<String>  dvList_fromAlias;  // processed
@@ -40,14 +45,17 @@ public class ModelTemp implements Serializable {
 	public Map<String,TimeseriesTemp> tsMap;
 	public ArrayList<String>  exList;
 	public Map<String,ExternalTemp> exMap;	
+	public ArrayList<String>  glList_backup;
 	public ArrayList<String>  glList;
 	public Map<String,GoalTemp> glMap;
 	public ArrayList<String>  gl2List;
 	public ArrayList<String>  glList_fromAlias;  // processed
- 	public ArrayList<String>  ssList;
-	public Map<String,DvarTemp> ssMap;
-	public Map<String,WeightTemp> ssWeightMap;
-
+ 	public ArrayList<String>  ssList_hasCase;    // processed
+	public Map<String,DvarTemp> ssMap_hasCase;   // processed
+	public Map<String,WeightTemp> ssWeightMap_hasCase;  // processed
+ 	public ArrayList<String>  ssList_noCase;            // processed
+	public Map<String,DvarTemp> ssMap_noCase;           // processed
+	public Map<String,WeightTemp> ssWeightMap_noCase;   // processed
 	
 	public ModelTemp(){
 		
@@ -59,9 +67,10 @@ public class ModelTemp implements Serializable {
 		incFileRelativePathList_post = new ArrayList<String>();
 		incFileAbsPathList = new ArrayList<String>();
 		incFileAbsPathList_post = new ArrayList<String>();
+		
 		incFileMap= new LinkedHashMap<String, IncFileTemp>();
-		wvList_defaultType = new ArrayList<String>();
-		wTableObjList_defaultType = new ArrayList<WeightTable>();
+		wvList_defaultType = new ArrayList<String>();   // type obj
+		wTableObjList_defaultType = new ArrayList<WeightTable>();   // type obj
 		wTableObjList = new ArrayList<WeightTable>();
 		svList = new ArrayList<String>();  //raw data
 		svMap = new HashMap<String, SvarTemp>();  // includes processed data	
@@ -79,9 +88,12 @@ public class ModelTemp implements Serializable {
 		glMap = new HashMap<String, GoalTemp>();	
 		gl2List = new ArrayList<String>();
 		glList_fromAlias = new ArrayList<String>();
-		ssList = new ArrayList<String>();
-		ssMap = new LinkedHashMap<String, DvarTemp>();	
-		ssWeightMap = new LinkedHashMap<String, WeightTemp>();	
+		ssList_hasCase = new ArrayList<String>();
+		ssMap_hasCase = new LinkedHashMap<String, DvarTemp>();	
+		ssWeightMap_hasCase = new LinkedHashMap<String, WeightTemp>();	
+		ssList_noCase = new ArrayList<String>();
+		ssMap_noCase = new LinkedHashMap<String, DvarTemp>();	
+		ssWeightMap_noCase = new LinkedHashMap<String, WeightTemp>();	
 	}
 	
 }

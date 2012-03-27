@@ -34,14 +34,20 @@ public class ToWreslData {
 		ArrayList<String> modelConditionList   = new ArrayList<String>();
 		Map<String, Timeseries> allTimeseriesMap = new LinkedHashMap<String, Timeseries>();
 		
-		for (String k: s.modelList_effective){
+		//for (String k: s.modelList_effective){
+		for (String se : s.seqList){
+			
+			SequenceTemp seqObj = s.seqMap.get(se); 
+			String modelName = seqObj.model;
+
+			ModelTemp mt = s.modelMap.get(modelName);	
 			
 			modelConditionList.add("always"); //TODO: need condition
-			ModelDataSet m = convertModel(s.modelMap.get(k));
-			modelDataSetMap.put(k, m );
+			ModelDataSet md = convertModel(mt, seqObj);
+			modelDataSetMap.put(modelName, md);
 		
 			// add ts into all ts map. TODO: check name duplications
-			allTimeseriesMap.putAll(m.tsMap);
+			allTimeseriesMap.putAll(md.tsMap);
 		}
 		
 		o.setModelDataSetMap(modelDataSetMap);
@@ -52,19 +58,20 @@ public class ToWreslData {
 
 	}	
 	
-	public static ModelDataSet convertModel (ModelTemp m){
+	public static ModelDataSet convertModel (ModelTemp m, SequenceTemp seq){
 		
 		ModelDataSet o = new ModelDataSet();
 		
 		// TODO: give pre-sorted var list
 
-		o.dvSlackSurplusList = new ArrayList<String>(m.ssList);
+		o.dvSlackSurplusList = new ArrayList<String>(m.ssList_hasCase);
 		Collections.sort(o.dvSlackSurplusList,String.CASE_INSENSITIVE_ORDER);
 
-		o.wtSlackSurplusList = new ArrayList<String>(m.ssList);
+		o.wtSlackSurplusList = new ArrayList<String>(m.ssList_hasCase);
 		Collections.sort(o.wtSlackSurplusList,String.CASE_INSENSITIVE_ORDER);
 		
 		o.dvList = new ArrayList<String>(m.dvList);
+		o.dvList.addAll(m.ssList_noCase);
 		Collections.sort(o.dvList,String.CASE_INSENSITIVE_ORDER);
 		
 		o.tsList = new ArrayList<String>(m.tsList);
@@ -72,8 +79,8 @@ public class ToWreslData {
 		
 		// don't sort svList. order matters in evaluator
 		o.svList = new ArrayList<String>(m.svIncFileList_post);
-		System.out.println("ToWreslData => m.svIncFileList_post"+m.svIncFileList_post);
-		System.out.println("ToWreslData => m.svList"+m.svList);
+		//System.out.println("ToWreslData => m.svIncFileList_post"+m.svIncFileList_post);
+		//System.out.println("ToWreslData => m.svList"+m.svList);
 		//o.svList = new ArrayList<String>(m.svList);
 
 		o.gList = new ArrayList<String>(m.glList);
@@ -86,6 +93,7 @@ public class ToWreslData {
 		Collections.sort(o.asList,String.CASE_INSENSITIVE_ORDER);
 
 		o.wtList = new ArrayList<String>(m.wvList_defaultType);
+		o.wtList.addAll(m.ssList_noCase);
 		Collections.sort(o.wtList,String.CASE_INSENSITIVE_ORDER);
 		
 		o.incFileList = new ArrayList<String>(m.incFileAbsPathList_post);
@@ -96,21 +104,24 @@ public class ToWreslData {
 //		}
 		
 		
-		for (String k: m.ssMap.keySet()){			
-			o.dvSlackSurplusMap.put(k, convertDvar(m.ssMap.get(k)));
+		for (String k: m.ssMap_hasCase.keySet()){			
+			o.dvSlackSurplusMap.put(k, convertDvar(m.ssMap_hasCase.get(k)));
 		}
-		for (String k: m.ssWeightMap.keySet()){			
-			o.wtSlackSurplusMap.put(k, convertWeight(m.ssWeightMap.get(k)));
+		for (String k: m.ssWeightMap_hasCase.keySet()){			
+			o.wtSlackSurplusMap.put(k, convertWeight(m.ssWeightMap_hasCase.get(k)));
 		}
+		
 		for (String k: m.dvMap.keySet()){			
 			o.dvMap.put(k, convertDvar(m.dvMap.get(k)));
 		}
+		for (String k: m.ssMap_noCase.keySet()){			
+			o.dvMap.put(k, convertDvar(m.ssMap_noCase.get(k)));
+		}
+		
 		for (String k: m.tsMap.keySet()){			
 			o.tsMap.put(k, convertTimeseries(m.tsMap.get(k)));
 		}		
-		for (String k: m.svMap.keySet()){			
-			o.svMap.put(k, convertSvar(m.svMap.get(k)));
-		}
+
 		for (String k: m.glMap.keySet()){			
 			o.gMap.put(k, convertGoal(m.glMap.get(k)));
 		}
@@ -119,6 +130,10 @@ public class ToWreslData {
 		}
 		
 		// special case. don't use copy and paste
+		for (String k: o.svList){			
+			o.svMap.put(k, convertSvar(seq.svMap.get(k)));
+		}
+		
 		for (String k: o.asList){			
 			o.asMap.put(k, convertAlias(m.asMap.get(k)));
 		}
@@ -130,8 +145,9 @@ public class ToWreslData {
 			o.wtMap.putAll(convertWeightTable(w));
 			//System.out.println("after: "+wem.keySet());
 		}
-		
-		
+		for (String k: m.ssWeightMap_noCase.keySet()){			
+			o.wtMap.put(k, convertWeight(m.ssWeightMap_noCase.get(k)));
+		}		
 		
 		
 		return o;
@@ -141,7 +157,6 @@ public class ToWreslData {
 	public static Svar convertSvar (SvarTemp s){
 		
 		Svar o = new Svar();
-		
 		o.fromWresl = s.fromWresl;
 		o.kind = s.kind;
 		o.units = s.units;
