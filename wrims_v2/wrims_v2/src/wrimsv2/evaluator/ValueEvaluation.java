@@ -382,7 +382,7 @@ public class ValueEvaluation {
 			ArrayList<Double> data=dds.getData();
 			if (index>=0 && index<data.size()){
 				double value=data.get(index);
-				if (value !=901.0){
+				if (value !=-901.0){
 					return value;
 				}
 			}
@@ -394,7 +394,7 @@ public class ValueEvaluation {
 				ArrayList<Double> data=dds.getData();
 				if (index>=0 && index<data.size()){
 					double value=data.get(index);
-					if (value !=901.0){
+					if (value !=-901.0){
 						return value;
 					}
 				}
