@@ -25,8 +25,18 @@ public class Param {
 	  public static final String csv_seperator = ",";
 	  public static final String wreslChekerName = "Wresl Checker ";
 	  public static final String conditional = "conditional";
+	  
+	  
+	  public static final Integer incFileType = 1;
+	  public static final Integer tsType = 2;
+	  public static final Integer svType = 3;
+	  public static final Integer dvType = 4;
+	  public static final Integer asType = 5;
+	  public static final Integer exType = 6;
+	  public static final Integer gl1Type = 7;
+	  public static final Integer gl2Type = 8;
 
-
+	  
 	  public static int printLevel = 1;
 	  
 	  

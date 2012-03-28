@@ -89,7 +89,7 @@ public class ToWreslData {
 		o.exList = new ArrayList<String>(m.exList);
 		Collections.sort(o.exList,String.CASE_INSENSITIVE_ORDER);
 		
-		o.asList = new ArrayList<String>(m.asList_reduced);
+		o.asList = new ArrayList<String>(m.asList);
 		Collections.sort(o.asList,String.CASE_INSENSITIVE_ORDER);
 
 		o.wtList = new ArrayList<String>(m.wvList_defaultType);

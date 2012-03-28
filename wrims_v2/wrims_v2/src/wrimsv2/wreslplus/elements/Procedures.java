@@ -10,6 +10,9 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.javatuples.Pair;
+import org.javatuples.Triplet;
+
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.Param;
@@ -319,7 +322,9 @@ public class Procedures {
 
 			for (String f: seqModelObj.incFileRelativePathList_post){
 			
-				ModelTemp incModel = st.fileModelMap.get(f);
+				// TODO: allow multiple models in a file
+				Pair<String,String> p = new Pair<String, String>(f, st.fileModelNameMap.get(f).get(0));
+				ModelTemp incModel = st.fileModelDataMap.get(p);
 				copyModelVarMapToSequenceVarMap(incModel, seqObj);
 			
 			}
@@ -355,7 +360,7 @@ public class Procedures {
 
 	public static void convertAliasToGoal(ModelTemp mObj) {
 
-		mObj.asList_reduced = new ArrayList<String>(mObj.asList);
+		//mObj.asList_reduced = new ArrayList<String>(mObj.asList);
 
 		Set<String> allDepInGoals = new HashSet<String>();
 
@@ -390,13 +395,14 @@ public class Procedures {
 				d.condition = a.condition;
 				d.isFromAlias = true;
 
-				mObj.asList_reduced.remove(aKey);
+				mObj.asList.remove(aKey);
 				mObj.dvList_fromAlias.add(aKey);
 				mObj.dvList.add(aKey);
 				mObj.dvMap.put(aKey, d);
 
 				// add goal
 				GoalTemp g = new GoalTemp();
+				g.isFromAlias=true;
 				g.fromWresl = a.fromWresl;
 				g.id = a.id + "__alias";
 				// String e = a.id.toLowerCase() + "=" + a.expression;
@@ -419,7 +425,9 @@ public class Procedures {
 	// processed after lowercase conversion
 	public static void collectWeightVar(StudyTemp s) {
 
-		for (String m : s.modelList) {
+		for (String seq : s.seqList) {
+			
+			String m = s.seqMap.get(seq).model;
 
 			ModelTemp mObj = s.modelMap.get(m);
 
@@ -495,7 +503,9 @@ public class Procedures {
 				if (!st.AOMap.keySet().contains(f)) continue; // TODO: the whole first round can be skipped
 				
 						
-				ModelTemp m = st.fileModelMap.get(f);
+				Pair<String,String> p = new Pair<String, String>(f, st.fileModelNameMap.get(f).get(0));
+				
+				ModelTemp m = st.fileModelDataMap.get(p);
 	
 				ArrayList<String> list_post1 = m.incFileAbsPathList_post;
 				ArrayList<String> list_post2 = m.incFileRelativePathList_post;
@@ -505,7 +515,9 @@ public class Procedures {
 					int index =list_post1.indexOf(includedFile);
 					
 					
-					ModelTemp includedModel = st.fileModelMap.get(includedFile);
+					Pair<String,String> p2 = new Pair<String, String>(includedFile, st.fileModelNameMap.get(includedFile).get(0));
+					
+					ModelTemp includedModel = st.fileModelDataMap.get(p2);
 					list_post1.addAll(index+1, includedModel.incFileAbsPathList_post); 
 					list_post2.addAll(index+1, includedModel.incFileRelativePathList_post); 
 					
@@ -522,7 +534,9 @@ public class Procedures {
 				
 				int index = m.incFileRelativePathList.indexOf(includedFile);
 	
-				ModelTemp includedModel = st.fileModelMap.get(includedFile);
+				Pair<String,String> p2 = new Pair<String, String>(includedFile, st.fileModelNameMap.get(includedFile).get(0));
+				
+				ModelTemp includedModel = st.fileModelDataMap.get(p2);
 				
 				m.incFileRelativePathList_post.addAll(index+1, includedModel.incFileRelativePathList_post);
 				m.incFileAbsPathList_post.addAll(index+1, includedModel.incFileAbsPathList_post);
@@ -548,9 +562,13 @@ public class Procedures {
 
 	public static void findKidMap(StudyTemp st) {
 		
-		for (String m: st.fileModelMap.keySet()){
+		for (String m: st.fileModelNameMap.keySet()){
 			
-			ArrayList<String> kids = st.fileModelMap.get(m).incFileRelativePathList;
+			String modelName = st.fileModelNameMap.get(m).get(0);
+			
+			Pair<String,String> p =new Pair<String, String>(m, modelName);
+			
+			ArrayList<String> kids = st.fileModelDataMap.get(p).incFileRelativePathList;
 			
 			System.out.println("file:"+m);
 			System.out.println("kids:"+kids);
@@ -593,7 +611,7 @@ public class Procedures {
 
 	public static void processSvIncFileList( StudyTemp st) {
 		
-		
+		// TODO: use sequence instead of effective list
 		for (String m : st.modelList_effective){
 
 			processSvIncFileList(st.modelMap.get(m));
@@ -601,6 +619,16 @@ public class Procedures {
 		}		
 	}
 
+	public static void processT_svList( StudyTemp st) {
+		
+		// TODO: use sequence instead of effective list
+		for (String m : st.modelList_effective){
+
+			processT_svList(st.modelMap.get(m));
+		
+		}		
+	}
+	
 	public static void processSvIncFileList( ModelTemp mt) {
 		
 		mt.svIncFileList = new ArrayList<String>(mt.itemList);
@@ -608,7 +636,6 @@ public class Procedures {
 		mt.svIncFileList.removeAll(mt.asList);
 		mt.svIncFileList.removeAll(mt.dvList);
 		mt.svIncFileList.removeAll(mt.glList);
-		mt.svIncFileList.removeAll(mt.gl2List);
 		mt.svIncFileList.removeAll(mt.exList);
 		
 		for (String f : mt.incFileMap.keySet()){
@@ -625,7 +652,41 @@ public class Procedures {
 //		mt.incFileRelativePathList_post = new ArrayList<String>(mt.incFileRelativePathList);
 		
 	}
+
+	public static void processT_svList( ModelTemp mt) {
+		
+		// don't use svIncFileList because this is supposed to replace that
+		
+		ArrayList<Triplet<String, String, String>> t =  new ArrayList<Triplet<String,String,String>>();
 	
+
+		
+		
+		for (int i=0;i<mt.itemList.size();i++){
+			
+			if (mt.itemTypeList.get(i)==Param.svType) {
+				
+				String svName = mt.itemList.get(i);
+				
+				//TODO: might need to fill in operation name
+				mt.t_svList.add(new Triplet<String, String, String>(mt.pathRelativeToRunDir, "", svName));
+				
+			} else if (mt.itemTypeList.get(i)==Param.incFileType) {
+				
+				String incFileID = mt.itemList.get(i);
+				String incFileRelativePath = mt.incFileMap.get(incFileID).pathRelativeToRunDir;
+				
+				// null means processed later
+				mt.t_svList.add(new Triplet<String, String, String>(incFileRelativePath, "", null));
+				
+			}	
+			
+		}
+		
+		mt.t_svList_post = new ArrayList<Triplet<String,String,String>>(mt.t_svList);
+
+		System.out.println("t_svList: "+mt.t_svList);
+	}
 
 	public static void postProcessVarListinIncFile(StudyTemp st) {
 		
@@ -636,8 +697,12 @@ public class Procedures {
 				
 				if (!st.AOMap.keySet().contains(f)) continue; // TODO: the whole first round can be skipped
 				
-						
-				ModelTemp m = st.fileModelMap.get(f);
+				String modelName = st.fileModelNameMap.get(f).get(0);		
+				
+				Pair<String,String> p = new Pair<String, String>(f, modelName);
+				
+				
+				ModelTemp m = st.fileModelDataMap.get(p);
 				
 				for( String includedFile: st.AOMap.get(f)){
 					
@@ -645,7 +710,9 @@ public class Procedures {
 					
 					m.svIncFileList_post.remove(index);
 					
-					ModelTemp includedModel = st.fileModelMap.get(includedFile);
+					Pair<String,String> p2 = new Pair<String, String>(includedFile, st.fileModelNameMap.get(includedFile).get(0));
+					
+					ModelTemp includedModel = st.fileModelDataMap.get(p2);
 					m.svIncFileList_post.addAll(index, includedModel.svIncFileList_post); 
 					m.dvList.addAll(includedModel.dvList);
 					m.ssList_noCase.addAll(includedModel.ssList_noCase);
@@ -664,8 +731,15 @@ public class Procedures {
 			for (String includedFile: m.incFileRelativePathList ){
 				
 				int index = m.svIncFileList_post.indexOf(includedFile);
-				ModelTemp includedModel = st.fileModelMap.get(includedFile);
+				
+				String modelName = st.fileModelNameMap.get(includedFile).get(0);
+				
+				Pair<String,String> p = new Pair<String, String>(includedFile, modelName);
+				
+				ModelTemp includedModel = st.fileModelDataMap.get(p);
 
+				
+				
 				m.svIncFileList_post.remove(index);
 				
 				m.svIncFileList_post.addAll(index, includedModel.svIncFileList_post);

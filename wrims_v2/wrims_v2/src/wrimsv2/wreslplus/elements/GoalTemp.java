@@ -28,6 +28,7 @@ public class GoalTemp implements Serializable {
 
 	public boolean hasCase;
 	public boolean hasLhs;
+	public boolean isFromAlias;
 	public ArrayList<String> caseName;
 	public Map<String, GoalCase> caseMap;
 	public ArrayList<String> caseCondition;
@@ -38,6 +39,9 @@ public class GoalTemp implements Serializable {
 	public GoalTemp(){
 		
 		lhs=null;
+		hasCase=false;
+		hasLhs=false;
+		isFromAlias=false;
 		condition = Param.always;
 		dependants = new LinkedHashSet<String>();
 		caseName=new ArrayList<String>();

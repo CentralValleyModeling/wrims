@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.javatuples.KeyValue;
+import org.javatuples.Pair;
+
 public class StudyTemp implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -20,7 +23,8 @@ public class StudyTemp implements Serializable {
 	public ArrayList<String> modelList_effective;  //processed		
 	public ArrayList<String> modelList;		
 	public Map<String, ModelTemp> modelMap;
-	public Map<String, ModelTemp> fileModelMap;
+	public Map<String, ArrayList<String>> fileModelNameMap;
+	public Map<Pair<String,String>, ModelTemp> fileModelDataMap;
 	public Map<String, HashSet<String>>kidMap; // processed
 	public HashSet<String> noKid; // processed
 	public Map<String, HashSet<String>>AOMap; // all offspring map. processed
@@ -34,7 +38,8 @@ public class StudyTemp implements Serializable {
 		modelMap = new HashMap<String, ModelTemp>();	
 		seqList = new ArrayList<String>();
 		seqMap = new HashMap<String, SequenceTemp>();	
-		fileModelMap = new LinkedHashMap<String, ModelTemp>();
+		fileModelNameMap = new LinkedHashMap<String, ArrayList<String>>();
+		fileModelDataMap = new HashMap<Pair<String,String>, ModelTemp>();
 		kidMap = new HashMap<String, HashSet<String>>();
 		noKid = new HashSet<String>();
 		AOMap = new HashMap<String, HashSet<String>>();

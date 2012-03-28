@@ -66,7 +66,7 @@ wreslPlusMain : study config* template* sequence+ model+;
 
 wreslFile
 @after{ mObj = $t.modelObj;}
-	: t=model_trunk ; 
+	: t=mt ; 
 
 wreslMain
 @init{ styObj = new StudyTemp(); }
@@ -128,33 +128,33 @@ model returns[String id, ModelTemp modelObj]
 //} 
 : MODEL i=modelName {$id=$i.text;} 
 	   '{' 
-	   		t=model_trunk
+	   		t=mt
 	   '}' 
 	   {$modelObj =$t.modelObj; $modelObj.id=$id;}
 	   ;
 
 modelName: ID;
 
+//model trunk
+mt returns[ModelTemp modelObj]
 
-model_trunk returns[ModelTemp modelObj]
-
-scope { ModelTemp model_;} 
-@init{ $model_trunk::model_ = new ModelTemp(); 
-	   $model_trunk::model_.absPath = currentAbsolutePath; 
-	   $model_trunk::model_.parentAbsPath = currentAbsoluteParent; }
-@after{$modelObj =$model_trunk::model_; $modelObj.id="legacyWresl";}	    
+scope { ModelTemp m_;} 
+@init{ $mt::m_ = new ModelTemp(); 
+	   $mt::m_.absPath = currentAbsolutePath; 
+	   $mt::m_.parentAbsPath = currentAbsoluteParent; }
+@after{$modelObj =$mt::m_; $modelObj.id="legacyWresl";}	    
 :      
-	   ( fi=include_file {$model_trunk::model_.itemList.add($fi.id); $model_trunk::model_.incFileIDList.add($fi.id); $model_trunk::model_.incFileMap.put($fi.id, $fi.incFileObj); }
-	   | ts=timeseries   {$model_trunk::model_.itemList.add($ts.id); $model_trunk::model_.tsList.add($ts.id); $model_trunk::model_.tsMap.put($ts.id, $ts.tsObj); }
-	   | sv=svar_g       {$model_trunk::model_.itemList.add($sv.id); $model_trunk::model_.svList.add($sv.id); $model_trunk::model_.svMap.put($sv.id, $sv.svObj); } 
-	   | dv=dvar_g       {$model_trunk::model_.itemList.add($dv.id); $model_trunk::model_.dvList.add($dv.id); $model_trunk::model_.dvMap.put($dv.id, $dv.dvObj); } 
-	   | ex=ex_g         {$model_trunk::model_.itemList.add($ex.id); $model_trunk::model_.exList.add($ex.id); $model_trunk::model_.exMap.put($ex.id, $ex.exObj); }
-	   | as=alias        {$model_trunk::model_.itemList.add($as.id); $model_trunk::model_.asList.add($as.id); $model_trunk::model_.asMap.put($as.id, $as.asObj); }
-	   | gl1=goal_s      {$model_trunk::model_.itemList.add($gl1.id); $model_trunk::model_.glList.add($gl1.id); $model_trunk::model_.glMap.put($gl1.id, $gl1.glObj); }
-	   | gl2=goal_hs     {$model_trunk::model_.itemList.add($gl2.id); $model_trunk::model_.glList.add($gl2.id); $model_trunk::model_.glMap.put($gl2.id, $gl2.glObj); $model_trunk::model_.gl2List.add($gl2.id); }
+	   ( fi=include_file {$mt::m_.itemTypeList.add(Param.incFileType); $mt::m_.itemList.add($fi.id); $mt::m_.incFileIDList.add($fi.id); $mt::m_.incFileMap.put($fi.id, $fi.incFileObj); }
+	   | ts=timeseries   {$mt::m_.itemTypeList.add(Param.tsType);$mt::m_.itemList.add($ts.id); $mt::m_.tsList.add($ts.id); $mt::m_.tsMap.put($ts.id, $ts.tsObj); }
+	   | sv=svar_g       {$mt::m_.itemTypeList.add(Param.svType);$mt::m_.itemList.add($sv.id); $mt::m_.svList.add($sv.id); $mt::m_.svMap.put($sv.id, $sv.svObj); } 
+	   | dv=dvar_g       {$mt::m_.itemTypeList.add(Param.dvType);$mt::m_.itemList.add($dv.id); $mt::m_.dvList.add($dv.id); $mt::m_.dvMap.put($dv.id, $dv.dvObj); } 
+	   | ex=ex_g         {$mt::m_.itemTypeList.add(Param.exType);$mt::m_.itemList.add($ex.id); $mt::m_.exList.add($ex.id); $mt::m_.exMap.put($ex.id, $ex.exObj); }
+	   | as=alias        {$mt::m_.itemTypeList.add(Param.asType);$mt::m_.itemList.add($as.id); $mt::m_.asList.add($as.id); $mt::m_.asMap.put($as.id, $as.asObj); }
+	   | gl1=goal_s      {$mt::m_.itemTypeList.add(Param.gl1Type);$mt::m_.itemList.add($gl1.id);$mt::m_.glList.add($gl1.id);$mt::m_.glMap.put($gl1.id, $gl1.glObj); }
+	   | gl2=goal_hs     {$mt::m_.itemTypeList.add(Param.gl2Type);$mt::m_.itemList.add($gl2.id);$mt::m_.glList.add($gl2.id);$mt::m_.glMap.put($gl2.id, $gl2.glObj); $mt::m_.gl2List.add($gl2.id); }
 	   | network 
 	   | operation 
-	   | wt=weight       {$model_trunk::model_.wTableObjList.add($wt.wtObj);}
+	   | wt=weight       {$mt::m_.wTableObjList.add($wt.wtObj);}
 	   )+
 	   ;
 
@@ -188,7 +188,7 @@ include_model returns[String id] : INCLUDE  i=ID  ('as' includeNameAs )? {$id=$i
 
 include_file returns[String id, IncFileTemp incFileObj]
 @init{ $incFileObj = new IncFileTemp();
-       $incFileObj.id = "_file_"+Integer.toString($model_trunk::model_.incFileIDList.size()); 
+       $incFileObj.id = "_file_"+Integer.toString($mt::m_.incFileIDList.size()); 
        $id = $incFileObj.id;
        }
       : INCLUDE LOCAL? fp=file_path {$incFileObj.rawPath=Tools.strip($fp.text);} ('as' includeNameAs )?  ;

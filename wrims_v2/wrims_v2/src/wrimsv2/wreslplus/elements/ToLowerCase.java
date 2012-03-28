@@ -122,7 +122,7 @@ public class ToLowerCase {
 		//j.ssList = Tools.allToLowerCase(j.ssList);
 		j.exList = Tools.allToLowerCase(j.exList);
 		j.asList = Tools.allToLowerCase(j.asList);
-		j.asList_reduced = Tools.allToLowerCase(j.asList_reduced);
+		//j.asList_reduced = Tools.allToLowerCase(j.asList_reduced);
 		j.wvList_defaultType = Tools.allToLowerCase(j.wvList_defaultType);
 		
 		

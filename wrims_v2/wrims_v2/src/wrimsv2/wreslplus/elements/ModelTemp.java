@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.javatuples.Triplet;
+
 public class ModelTemp implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -16,8 +18,13 @@ public class ModelTemp implements Serializable {
 	public String pathRelativeToRunDir; //processed
 	
 	public ArrayList<String>  itemList;
+	public ArrayList<Integer>  itemTypeList;
 	public ArrayList<String>  svIncFileList;   // processed 
 	public ArrayList<String>  svIncFileList_post;   // post processed 
+
+	//<svName, relativePath, operationName>
+	public ArrayList<Triplet<String,String,String>>  t_svList;   // processed 
+	public ArrayList<Triplet<String,String,String>>  t_svList_post;   // post processed 
 	
 	//TODO: use more compact storage. i.e., Map<String fileID, Pair ( relativePath, absPath)>
 	// then converts to Map<String relativePath, String absPath>
@@ -34,7 +41,7 @@ public class ModelTemp implements Serializable {
 	public ArrayList<WeightTable> wTableObjList;  // raw data
 	public ArrayList<String>  asList_backup;  // backup raw lowercased
 	public ArrayList<String>  asList;
-	public ArrayList<String>  asList_reduced; // added after processed
+	//public ArrayList<String>  asList_reduced; // added after processed
 	public Map<String,AliasTemp> asMap;		
 	public ArrayList<String>  svList;
 	public Map<String,SvarTemp> svMap;
@@ -59,7 +66,10 @@ public class ModelTemp implements Serializable {
 	
 	public ModelTemp(){
 		
+		t_svList = new ArrayList<Triplet<String,String,String>>();
+		t_svList_post = new ArrayList<Triplet<String,String,String>>();
 		itemList = new ArrayList<String>();
+		itemTypeList = new ArrayList<Integer>();
 		svIncFileList = new ArrayList<String>();
 		svIncFileList_post = new ArrayList<String>();
 		incFileIDList = new ArrayList<String>();
@@ -75,7 +85,7 @@ public class ModelTemp implements Serializable {
 		svList = new ArrayList<String>();  //raw data
 		svMap = new HashMap<String, SvarTemp>();  // includes processed data	
 		asList = new ArrayList<String>();
-		asList_reduced = new ArrayList<String>();
+		//asList_reduced = new ArrayList<String>();
 		asMap = new LinkedHashMap<String, AliasTemp>();
 		dvList = new ArrayList<String>();
 		dvMap = new HashMap<String, DvarTemp>();

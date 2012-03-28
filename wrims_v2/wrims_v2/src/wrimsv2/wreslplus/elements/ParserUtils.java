@@ -1,12 +1,16 @@
 package wrimsv2.wreslplus.elements;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Map;
+
 import org.antlr.runtime.ANTLRFileStream;
 import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 import org.antlr.runtime.tree.CommonTree;
+import org.javatuples.Pair;
 //import org.antlr.runtime.tree.CommonTreeNodeStream;
 
 import wrimsv2.wreslparser.elements.LogUtils;
@@ -50,6 +54,140 @@ public class ParserUtils {
 		
 		return parser;
 		
+	}
+
+
+	public static StudyTemp parseWreslMain(String inputFilePath) {
+		
+		
+		WreslPlusParser parser = null;
+		
+		try {
+			parser = initParser(inputFilePath);
+			parser.wreslMain();
+		}
+		catch (RecognitionException e) {
+	
+			e.printStackTrace();
+		}
+		
+		parser.styObj.absPath = parser.currentAbsolutePath;
+		parser.styObj.relativePath = parser.pathRelativeToRunDir;
+		parser.styObj.runDir = parser.currentAbsoluteParent;
+		
+		return parser.styObj;
+		
+	}
+
+
+	public static ModelTemp parseWreslFile(String inputFilePath) {
+		
+		
+		WreslPlusParser parser = null;
+		
+		try {
+			parser = initParser(inputFilePath);
+			parser.wreslFile();
+		}
+		catch (RecognitionException e) {
+	
+			e.printStackTrace();
+		}
+		
+		return parser.mObj;
+		
+	}
+
+
+	public static void parseAllIncFile(ArrayList<String> relativePathList , StudyTemp st) {
+	
+			for (String relativePath: relativePathList){
+				
+				//ModelTemp fm = null;
+				
+				if (!st.fileModelNameMap.keySet().contains(relativePath)){
+	
+					String absPath = Tools.checkPath(new File(st.runDir, relativePath).getAbsolutePath());
+					ModelTemp fm = parseWreslFile(absPath);
+					
+					ErrorCheck.checkVarRedefined(fm);	
+	
+					ToLowerCase.convert(fm);		
+					Procedures.processIncFilePath(fm);
+					Procedures.processSvIncFileList(fm);
+					Procedures.processT_svList(fm);
+					Procedures.processDependants(fm);
+					
+					// TODO: allow multiple models in a file
+					String modelName = fm.id.toLowerCase();
+					ArrayList<String> modelNameList = new ArrayList<String>();
+					modelNameList.add(modelName);
+					
+					st.fileModelNameMap.put(relativePath, modelNameList);
+					
+					Pair<String,String> p = new Pair<String, String>(relativePath, modelName);
+					st.fileModelDataMap.put(p, fm);
+					
+					// parse all included files within files
+					parseAllIncFile(fm.incFileRelativePathList, st);
+					
+				} 
+				
+	//			else {
+	//				
+	//				
+	//				fm = st.fileModelMap.get(relativePath);
+	//				
+	//			}
+	//			
+	//			Procedures.copyModelSvMapToSequenceSvMap(fm,seq);
+				
+				
+				
+			}
+			
+		}
+
+
+	public static void parseAllIncFile(Map<String,IncFileTemp> incfmap , StudyTemp st) {
+	
+		for (String f: incfmap.keySet()){
+			
+			String relativePath = incfmap.get(f).pathRelativeToRunDir;
+			
+			if (!st.fileModelNameMap.keySet().contains(relativePath)){
+	
+				ModelTemp fm = parseWreslFile(incfmap.get(f).absPath);
+				
+				ErrorCheck.checkVarRedefined(fm);	
+				ToLowerCase.convert(fm);		
+				
+				Procedures.processIncFilePath(fm);	
+				Procedures.processDependants(fm);
+				
+				
+				// TODO: allow multiple models in a file
+				String modelName = fm.id.toLowerCase();
+				ArrayList<String> modelNameList = new ArrayList<String>();
+				modelNameList.add(modelName);
+				
+				st.fileModelNameMap.put(relativePath, modelNameList);
+				
+				Pair<String,String> p = new Pair<String, String>(relativePath, modelName);
+				st.fileModelDataMap.put(p, fm);
+				
+				// parse all included files within files
+				parseAllIncFile(fm.incFileMap, st);
+				
+			}
+		}
+		
+	}
+
+
+	public static void setRunDir(String runDir){
+		
+		GlobalData.runDir = Tools.checkPath(runDir);;
 	}
 
 
