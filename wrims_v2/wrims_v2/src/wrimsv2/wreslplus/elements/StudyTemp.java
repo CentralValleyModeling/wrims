@@ -7,8 +7,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.javatuples.KeyValue;
-import org.javatuples.Pair;
+import com.google.common.collect.HashBasedTable;
 
 public class StudyTemp implements Serializable {
 	
@@ -24,7 +23,8 @@ public class StudyTemp implements Serializable {
 	public ArrayList<String> modelList;		
 	public Map<String, ModelTemp> modelMap;
 	public Map<String, ArrayList<String>> fileModelNameMap;
-	public Map<Pair<String,String>, ModelTemp> fileModelDataMap;
+	//public Map<Pair<String,String>, ModelTemp> fileModelDataMap;
+	public HashBasedTable<String,String,ModelTemp> fileModelDataTable; // <file,modelName,model>
 	public Map<String, HashSet<String>>kidMap; // processed
 	public HashSet<String> noKid; // processed
 	public Map<String, HashSet<String>>AOMap; // all offspring map. processed
@@ -39,7 +39,8 @@ public class StudyTemp implements Serializable {
 		seqList = new ArrayList<String>();
 		seqMap = new HashMap<String, SequenceTemp>();	
 		fileModelNameMap = new LinkedHashMap<String, ArrayList<String>>();
-		fileModelDataMap = new HashMap<Pair<String,String>, ModelTemp>();
+		fileModelDataTable = HashBasedTable.create();
+
 		kidMap = new HashMap<String, HashSet<String>>();
 		noKid = new HashSet<String>();
 		AOMap = new HashMap<String, HashSet<String>>();

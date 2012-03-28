@@ -9,10 +9,6 @@ import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
-import org.antlr.runtime.tree.CommonTree;
-import org.javatuples.Pair;
-//import org.antlr.runtime.tree.CommonTreeNodeStream;
-
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslplus.grammar.WreslPlusLexer;
 import wrimsv2.wreslplus.grammar.WreslPlusParser;
@@ -125,8 +121,9 @@ public class ParserUtils {
 					
 					st.fileModelNameMap.put(relativePath, modelNameList);
 					
-					Pair<String,String> p = new Pair<String, String>(relativePath, modelName);
-					st.fileModelDataMap.put(p, fm);
+//					Pair<String,String> p = new Pair<String, String>(relativePath, modelName);
+//					st.fileModelDataMap.put(p, fm);
+					st.fileModelDataTable.put(relativePath, modelName, fm);
 					
 					// parse all included files within files
 					parseAllIncFile(fm.incFileRelativePathList, st);
@@ -173,8 +170,10 @@ public class ParserUtils {
 				
 				st.fileModelNameMap.put(relativePath, modelNameList);
 				
-				Pair<String,String> p = new Pair<String, String>(relativePath, modelName);
-				st.fileModelDataMap.put(p, fm);
+//				Pair<String,String> p = new Pair<String, String>(relativePath, modelName);
+//				st.fileModelDataMap.put(p, fm);
+				
+				st.fileModelDataTable.put(relativePath, modelName, fm);
 				
 				// parse all included files within files
 				parseAllIncFile(fm.incFileMap, st);

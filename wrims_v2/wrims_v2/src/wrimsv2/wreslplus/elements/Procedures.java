@@ -5,20 +5,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.javatuples.Pair;
 import org.javatuples.Triplet;
 
-import wrimsv2.commondata.wresldata.Dvar;
-import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.Param;
-import wrimsv2.commondata.wresldata.StudyDataSet;
-import wrimsv2.commondata.wresldata.Svar;
-import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.wreslparser.elements.LogUtils;
 
 public class Procedures {
@@ -323,8 +315,10 @@ public class Procedures {
 			for (String f: seqModelObj.incFileRelativePathList_post){
 			
 				// TODO: allow multiple models in a file
-				Pair<String,String> p = new Pair<String, String>(f, st.fileModelNameMap.get(f).get(0));
-				ModelTemp incModel = st.fileModelDataMap.get(p);
+				//Pair<String,String> p = new Pair<String, String>(f, st.fileModelNameMap.get(f).get(0));
+				//ModelTemp incModel = st.fileModelDataMap.get(p);
+				ModelTemp incModel = st.fileModelDataTable.get(f, st.fileModelNameMap.get(f).get(0));
+				
 				copyModelVarMapToSequenceVarMap(incModel, seqObj);
 			
 			}
@@ -503,10 +497,10 @@ public class Procedures {
 				if (!st.AOMap.keySet().contains(f)) continue; // TODO: the whole first round can be skipped
 				
 						
-				Pair<String,String> p = new Pair<String, String>(f, st.fileModelNameMap.get(f).get(0));
+				//Pair<String,String> p = new Pair<String, String>(f, st.fileModelNameMap.get(f).get(0));
 				
-				ModelTemp m = st.fileModelDataMap.get(p);
-	
+				//ModelTemp m = st.fileModelDataMap.get(p);
+				ModelTemp m = st.fileModelDataTable.get(f,st.fileModelNameMap.get(f).get(0));
 				ArrayList<String> list_post1 = m.incFileAbsPathList_post;
 				ArrayList<String> list_post2 = m.incFileRelativePathList_post;
 				
@@ -515,9 +509,11 @@ public class Procedures {
 					int index =list_post1.indexOf(includedFile);
 					
 					
-					Pair<String,String> p2 = new Pair<String, String>(includedFile, st.fileModelNameMap.get(includedFile).get(0));
+					//Pair<String,String> p2 = new Pair<String, String>(includedFile, st.fileModelNameMap.get(includedFile).get(0));
 					
-					ModelTemp includedModel = st.fileModelDataMap.get(p2);
+					//ModelTemp includedModel = st.fileModelDataMap.get(p2);
+					
+					ModelTemp includedModel = st.fileModelDataTable.get(includedFile, st.fileModelNameMap.get(includedFile).get(0));
 					list_post1.addAll(index+1, includedModel.incFileAbsPathList_post); 
 					list_post2.addAll(index+1, includedModel.incFileRelativePathList_post); 
 					
@@ -534,9 +530,11 @@ public class Procedures {
 				
 				int index = m.incFileRelativePathList.indexOf(includedFile);
 	
-				Pair<String,String> p2 = new Pair<String, String>(includedFile, st.fileModelNameMap.get(includedFile).get(0));
+				//Pair<String,String> p2 = new Pair<String, String>(includedFile, st.fileModelNameMap.get(includedFile).get(0));
 				
-				ModelTemp includedModel = st.fileModelDataMap.get(p2);
+				//ModelTemp includedModel = st.fileModelDataMap.get(p2);
+				
+				ModelTemp includedModel = st.fileModelDataTable.get(includedFile, st.fileModelNameMap.get(includedFile).get(0));
 				
 				m.incFileRelativePathList_post.addAll(index+1, includedModel.incFileRelativePathList_post);
 				m.incFileAbsPathList_post.addAll(index+1, includedModel.incFileAbsPathList_post);
@@ -562,23 +560,23 @@ public class Procedures {
 
 	public static void findKidMap(StudyTemp st) {
 		
-		for (String m: st.fileModelNameMap.keySet()){
+		for (String f: st.fileModelNameMap.keySet()){
 			
-			String modelName = st.fileModelNameMap.get(m).get(0);
+			String modelName = st.fileModelNameMap.get(f).get(0);
 			
-			Pair<String,String> p =new Pair<String, String>(m, modelName);
+			//Pair<String,String> p =new Pair<String, String>(m, modelName);
 			
-			ArrayList<String> kids = st.fileModelDataMap.get(p).incFileRelativePathList;
+			ArrayList<String> kids = st.fileModelDataTable.get(f,modelName).incFileRelativePathList;
 			
-			System.out.println("file:"+m);
+			System.out.println("file:"+f);
 			System.out.println("kids:"+kids);
 			
 			if (kids==null){
-				st.noKid.add(m);			
+				st.noKid.add(f);			
 			} else if (kids.isEmpty()){
-				st.noKid.add(m);
+				st.noKid.add(f);
 			} else {
-				st.kidMap.put(m, new HashSet<String>(kids));
+				st.kidMap.put(f, new HashSet<String>(kids));
 			}
 			
 		}
@@ -699,10 +697,10 @@ public class Procedures {
 				
 				String modelName = st.fileModelNameMap.get(f).get(0);		
 				
-				Pair<String,String> p = new Pair<String, String>(f, modelName);
+				//Pair<String,String> p = new Pair<String, String>(f, modelName);
 				
 				
-				ModelTemp m = st.fileModelDataMap.get(p);
+				ModelTemp m = st.fileModelDataTable.get(f,modelName);
 				
 				for( String includedFile: st.AOMap.get(f)){
 					
@@ -710,9 +708,9 @@ public class Procedures {
 					
 					m.svIncFileList_post.remove(index);
 					
-					Pair<String,String> p2 = new Pair<String, String>(includedFile, st.fileModelNameMap.get(includedFile).get(0));
+					//Pair<String,String> p2 = new Pair<String, String>(includedFile, st.fileModelNameMap.get(includedFile).get(0));
 					
-					ModelTemp includedModel = st.fileModelDataMap.get(p2);
+					ModelTemp includedModel = st.fileModelDataTable.get(includedFile,st.fileModelNameMap.get(includedFile).get(0));
 					m.svIncFileList_post.addAll(index, includedModel.svIncFileList_post); 
 					m.dvList.addAll(includedModel.dvList);
 					m.ssList_noCase.addAll(includedModel.ssList_noCase);
@@ -734,9 +732,9 @@ public class Procedures {
 				
 				String modelName = st.fileModelNameMap.get(includedFile).get(0);
 				
-				Pair<String,String> p = new Pair<String, String>(includedFile, modelName);
+				//Pair<String,String> p = new Pair<String, String>(includedFile, modelName);
 				
-				ModelTemp includedModel = st.fileModelDataMap.get(p);
+				ModelTemp includedModel = st.fileModelDataTable.get(includedFile,modelName);
 
 				
 				
