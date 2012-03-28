@@ -319,7 +319,7 @@ public class ValueEvaluation {
 		}
 	}
 	
-	public static IntDouble getTimeSeries(String ident, ArrayList<IntDouble> idArray){
+	public static IntDouble getTimeSeries(String ident, ArrayList<IntDouble> idArray){		
 		IntDouble result;
 		boolean isSumIndex=false;
 		int indexValue=0;
@@ -368,7 +368,7 @@ public class ValueEvaluation {
 			if (index>=0 && index<data.size()){
 				double value=data.get(index);
 				if (dds.fromDssFile()){
-					if (value != -901.0 && value !=902.0){
+					if (value != -901.0 && value != -902.0){
 						return value;
 					}
 				}else{

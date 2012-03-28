@@ -619,7 +619,7 @@ public class Evaluation {
 			if (index>=0 && index<data.size()){
 				double value=data.get(index);
 				if (dds.fromDssFile()){
-					if (value != -901.0 && value != 902.0){
+					if (value != -901.0 && value != -902.0){
 						return value;
 					}
 				}else{
