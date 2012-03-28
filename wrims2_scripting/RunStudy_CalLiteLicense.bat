@@ -29,12 +29,17 @@ set AppJars=%AppJars%;%JarDir%\pd.jar
 set AppJars=%AppJars%;%JarDir%\vista.jar
 set AppJars=%AppJars%;%JarDir%\lpsolve55j.jar
 set AppJars=%AppJars%;%JarDir%\commons-io-2.1.jar
+set AppJars=%AppJars%;%JarDir%\javatuples-1.2.jar
 set AppJars=%AppJars%;%JarDir%\CalLiteV16.jar
+
+:---------------------------------:
+: user defined java class and dll :
+:---------------------------------:
+set ExternalDir=%RunDir%External
 
 :------------:
 : class path :
 :------------:
-set ExternalDir=%RunDir%External
 set CLASSPATH=-classpath "%ExternalDir%;%AppJars%"
 
 :------------:
