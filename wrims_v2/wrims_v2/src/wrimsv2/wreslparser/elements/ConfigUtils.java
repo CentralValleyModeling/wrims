@@ -165,6 +165,12 @@ public class ConfigUtils {
 		System.out.println("NumberOfSteps:  "+ControlData.totalTimeStep);
 		System.out.println("Solver:         "+ControlData.solverName);
 		
+		if (configMap.keySet().contains("sendaliastodvar")){
+			ControlData.sendAliasToDvar = !(configMap.get("sendaliastodvar").equalsIgnoreCase("yes"));
+			System.out.println("SendAliasToDvar:"+ControlData.sendAliasToDvar);
+		}
+		
+		
 		
 		// System.out.println("gw: "+FilePaths.groundwaterDir);
 		// System.out.println("svd: "+FilePaths.svarDssDirectory);
