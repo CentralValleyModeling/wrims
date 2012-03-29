@@ -1,6 +1,7 @@
 package wrimsv2.wreslplus.elements;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class Workflow {
 	
@@ -28,6 +29,27 @@ public class Workflow {
 		Procedures.processT_svList(st);
 		Procedures.processDependants(st);
 
+		/// store main file models in fileModelDataTable
+		for (String se : st.seqList){
+			
+			String modelName = st.seqMap.get(se).model;
+			ModelTemp mt = st.modelMap.get(modelName);
+				
+			
+			if (st.fileModelNameMap.keySet().contains(mt.pathRelativeToRunDir)) {
+				
+				st.fileModelNameMap.get(mt.pathRelativeToRunDir).add(modelName);
+				
+			} else {
+				ArrayList<String> modelNameList = new ArrayList<String>();
+				modelNameList.add(modelName);
+				st.fileModelNameMap.put(mt.pathRelativeToRunDir, modelNameList);
+			}
+			
+			st.fileModelDataTable.put(mt.pathRelativeToRunDir, modelName, mt);			
+			
+		}
+
 
 		
 		// parse all included files		
@@ -52,10 +74,12 @@ public class Workflow {
 		// find all offspring
 		// store results to kidMap and AOMap, fileGroupOrder
 		Procedures.findKidMap(st);
-		Procedures.findAOM(st);
-		Procedures.findFileGroupOrder(st);
 		
-		System.out.println("hierarchy"+st.fileGroupOrder);
+		
+		Procedures.findAOM(st);
+		
+		
+		Procedures.findFileGroupOrder(st);
 		
 
 		Procedures.postProcessVarListinIncFile(st);

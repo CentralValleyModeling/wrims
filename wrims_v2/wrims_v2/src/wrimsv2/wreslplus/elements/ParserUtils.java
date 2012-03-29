@@ -116,72 +116,57 @@ public class ParserUtils {
 					
 					// TODO: allow multiple models in a file
 					String modelName = fm.id.toLowerCase();
+					System.out.println("err: modelName: "+fm.id);
 					ArrayList<String> modelNameList = new ArrayList<String>();
 					modelNameList.add(modelName);
 					
 					st.fileModelNameMap.put(relativePath, modelNameList);
 					
-//					Pair<String,String> p = new Pair<String, String>(relativePath, modelName);
-//					st.fileModelDataMap.put(p, fm);
 					st.fileModelDataTable.put(relativePath, modelName, fm);
 					
 					// parse all included files within files
 					parseAllIncFile(fm.incFileRelativePathList, st);
 					
-				} 
-				
-	//			else {
-	//				
-	//				
-	//				fm = st.fileModelMap.get(relativePath);
-	//				
-	//			}
-	//			
-	//			Procedures.copyModelSvMapToSequenceSvMap(fm,seq);
-				
-				
+				} 				
 				
 			}
 			
 		}
 
 
-	public static void parseAllIncFile(Map<String,IncFileTemp> incfmap , StudyTemp st) {
-	
-		for (String f: incfmap.keySet()){
-			
-			String relativePath = incfmap.get(f).pathRelativeToRunDir;
-			
-			if (!st.fileModelNameMap.keySet().contains(relativePath)){
-	
-				ModelTemp fm = parseWreslFile(incfmap.get(f).absPath);
-				
-				ErrorCheck.checkVarRedefined(fm);	
-				ToLowerCase.convert(fm);		
-				
-				Procedures.processIncFilePath(fm);	
-				Procedures.processDependants(fm);
-				
-				
-				// TODO: allow multiple models in a file
-				String modelName = fm.id.toLowerCase();
-				ArrayList<String> modelNameList = new ArrayList<String>();
-				modelNameList.add(modelName);
-				
-				st.fileModelNameMap.put(relativePath, modelNameList);
-				
-//				Pair<String,String> p = new Pair<String, String>(relativePath, modelName);
-//				st.fileModelDataMap.put(p, fm);
-				
-				st.fileModelDataTable.put(relativePath, modelName, fm);
-				
-				// parse all included files within files
-				parseAllIncFile(fm.incFileMap, st);
-				
-			}
-		}
-		
-	}
+//	public static void parseAllIncFile(Map<String,IncFileTemp> incfmap , StudyTemp st) {
+//	
+//		for (String f: incfmap.keySet()){
+//			
+//			String relativePath = incfmap.get(f).pathRelativeToRunDir;
+//			
+//			if (!st.fileModelNameMap.keySet().contains(relativePath)){
+//	
+//				ModelTemp fm = parseWreslFile(incfmap.get(f).absPath);
+//				
+//				ErrorCheck.checkVarRedefined(fm);	
+//				ToLowerCase.convert(fm);		
+//				
+//				Procedures.processIncFilePath(fm);	
+//				Procedures.processDependants(fm);
+//				
+//				
+//				// TODO: allow multiple models in a file
+//				String modelName = fm.id.toLowerCase();
+//				ArrayList<String> modelNameList = new ArrayList<String>();
+//				modelNameList.add(modelName);
+//				
+//				st.fileModelNameMap.put(relativePath, modelNameList);
+//				
+//				st.fileModelDataTable.put(relativePath, modelName, fm);
+//				
+//				// parse all included files within files
+//				parseAllIncFile(fm.incFileMap, st);
+//				
+//			}
+//		}
+//		
+//	}
 
 
 	public static void setRunDir(String runDir){

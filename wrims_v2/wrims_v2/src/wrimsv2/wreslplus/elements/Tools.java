@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import com.google.common.collect.HashBasedTable;
+
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.wreslparser.elements.LogUtils;
 
@@ -49,17 +51,17 @@ public class Tools {
 		
 	}
 	
-	public static HashSet<String> findAllOffspring (String x, final Map<String,HashSet<String>> kidMap){
+	public static HashSet<String> findAllOffspring (String fileName, final Map<String,HashSet<String>> kidMap){
 		
 		HashSet<String> out = new HashSet<String>();
 		
-		if (!kidMap.keySet().contains(x)) return out;
+		if (!kidMap.keySet().contains(fileName)) return out;
 		
-		out.addAll(kidMap.get(x));
+		out.addAll(kidMap.get(fileName));
 		
-		for (String kid : kidMap.get(x)) {
-			//System.out.println(kid);
-			out.addAll(findAllOffspring(kid,kidMap));
+		for (String kid : kidMap.get(fileName)) {
+
+			out.addAll(findAllOffspring(kid, kidMap));
 			
 		}
 		return out;
@@ -76,7 +78,13 @@ public class Tools {
 			HashSet<String> c = new HashSet<String>();
 			Set<String> toBeSorted_keySet = new HashSet<String>(toBeSorted.keySet());
 			for (String s : toBeSorted_keySet){
-				if ( hierarchySetList.get(hierarchySetList.size()-1).containsAll(toBeSorted.get(s))) {
+				
+				//System.out.println("%%% s: "+s);
+				
+				// TODO: inefficient. needs rewrite
+				HashSet<String> ttt = new HashSet<String>();
+				for (HashSet<String> ss : hierarchySetList){ ttt.addAll(ss); }
+				if ( ttt.containsAll(toBeSorted.get(s))) {
 					c.add(s);
 					toBeSorted.remove(s);
 				}

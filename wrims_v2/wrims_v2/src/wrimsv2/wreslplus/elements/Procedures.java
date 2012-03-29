@@ -564,8 +564,6 @@ public class Procedures {
 			
 			String modelName = st.fileModelNameMap.get(f).get(0);
 			
-			//Pair<String,String> p =new Pair<String, String>(m, modelName);
-			
 			ArrayList<String> kids = st.fileModelDataTable.get(f,modelName).incFileRelativePathList;
 			
 			System.out.println("file:"+f);
@@ -576,20 +574,38 @@ public class Procedures {
 			} else if (kids.isEmpty()){
 				st.noKid.add(f);
 			} else {
+				//st.kidssMap.put(f, modelName, new HashSet<String>(kids));
 				st.kidMap.put(f, new HashSet<String>(kids));
 			}
 			
 		}
 		
-		System.out.println("st.kidMap"+st.kidMap);
+		//System.out.println("st.kidsMap"+st.kidsMap);
 		
 	}
 	
 	public static void findAOM(StudyTemp st) {
 
-		for (String s: st.kidMap.keySet()) { 
-			HashSet<String> a = Tools.findAllOffspring(s, st.kidMap);
-			st.AOMap.put(s, a);
+//		for (String f: st.kidsMap.rowKeySet()) { 
+//			
+//			for (String m : st.kidsMap.row(f).keySet()){
+//				
+//				HashSet<String> a = Tools.findAllOffspring(f, m, st.kidsMap);
+//				if (!st.AOMap.keySet().contains(f)) {
+//					st.AOMap.put(f, a);
+//				} else {
+//					st.AOMap.get(f).addAll(a);
+//				}
+//			
+//			}
+//		}
+
+		for (String f: st.kidMap.keySet()) { 
+				
+			HashSet<String> a = Tools.findAllOffspring(f, st.kidMap);
+			
+			st.AOMap.put(f, a);			
+			
 		}
 		
 	}
@@ -598,10 +614,13 @@ public class Procedures {
 		
 		Map<String,HashSet<String>> toBeSorted = new HashMap<String, HashSet<String>>(st.AOMap);
 		
-		System.out.println(st.AOMap);
+		///// skip mainFile
+		toBeSorted.remove(st.relativePath);
 		
 		System.out.println("st.noKid"+st.noKid);
 		st.fileGroupOrder.add(st.noKid);
+		
+		
 		Tools.findFileHierarchy(st.fileGroupOrder, toBeSorted);
 		
 	}
@@ -697,14 +716,14 @@ public class Procedures {
 				
 				String modelName = st.fileModelNameMap.get(f).get(0);		
 				
-				//Pair<String,String> p = new Pair<String, String>(f, modelName);
-				
-				
 				ModelTemp m = st.fileModelDataTable.get(f,modelName);
 				
 				for( String includedFile: st.AOMap.get(f)){
 					
 					int index =m.svIncFileList_post.indexOf(includedFile);
+					
+					System.out.println("f: "+f);
+					System.out.println("includedFile: "+includedFile);
 					
 					m.svIncFileList_post.remove(index);
 					
@@ -720,10 +739,12 @@ public class Procedures {
 			}
 		}
 		
-		// process the main file includes
-		for (String fi : st.modelList_effective){
+		// process the main file except the first model includes
+		ArrayList<String> ttt = new ArrayList<String>(st.modelList_effective);
+
+		for (String modelNameOfMain : ttt){
 			
-			ModelTemp m = st.modelMap.get(fi);
+			ModelTemp m = st.modelMap.get(modelNameOfMain);
 			
 			
 			for (String includedFile: m.incFileRelativePathList ){
@@ -737,7 +758,10 @@ public class Procedures {
 				ModelTemp includedModel = st.fileModelDataTable.get(includedFile,modelName);
 
 				
-				
+				System.out.println("err: this model:   "+modelNameOfMain);
+				System.out.println("err: m.svIncFileList_post: "+m.svIncFileList_post);
+				System.out.println("err: includedFile: "+includedFile);
+				System.out.println("err: index:        "+index);
 				m.svIncFileList_post.remove(index);
 				
 				m.svIncFileList_post.addAll(index, includedModel.svIncFileList_post);

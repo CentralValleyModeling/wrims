@@ -22,10 +22,10 @@ public class StudyTemp implements Serializable {
 	public ArrayList<String> modelList_effective;  //processed		
 	public ArrayList<String> modelList;		
 	public Map<String, ModelTemp> modelMap;
-	public Map<String, ArrayList<String>> fileModelNameMap;
-	//public Map<Pair<String,String>, ModelTemp> fileModelDataMap;
+	public Map<String, ArrayList<String>> fileModelNameMap;  
 	public HashBasedTable<String,String,ModelTemp> fileModelDataTable; // <file,modelName,model>
 	public Map<String, HashSet<String>>kidMap; // processed
+	//public HashBasedTable<String,String,HashSet<String>>kidssMap; // processed <file,modelName,model>
 	public HashSet<String> noKid; // processed
 	public Map<String, HashSet<String>>AOMap; // all offspring map. processed
 	public ArrayList<HashSet<String>>fileGroupOrder; // processed after kidMap and AOMap
@@ -42,6 +42,7 @@ public class StudyTemp implements Serializable {
 		fileModelDataTable = HashBasedTable.create();
 
 		kidMap = new HashMap<String, HashSet<String>>();
+		//kidssMap = HashBasedTable.create();
 		noKid = new HashSet<String>();
 		AOMap = new HashMap<String, HashSet<String>>();
 		fileGroupOrder = new ArrayList<HashSet<String>>();

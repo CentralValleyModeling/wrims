@@ -26,6 +26,7 @@ public class Param {
 	  public static final String wreslChekerName = "Wresl Checker ";
 	  public static final String conditional = "conditional";
 	  
+	  public static final String legacywresl = "_legacywresl";
 	  
 	  public static final Integer incFileType = 1;
 	  public static final Integer tsType = 2;

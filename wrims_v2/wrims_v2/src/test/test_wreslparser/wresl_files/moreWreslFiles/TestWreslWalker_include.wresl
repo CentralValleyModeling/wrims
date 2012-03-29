@@ -12,7 +12,7 @@ MODEL first {
 
   INCLUDE[local] 'someFolder\svar_sum.wresl'
   INCLUDE[local] '\..\svar_const.wresl'
-  INCLUDE[local] '..\svar_case.wresl'
+  #INCLUDE[local] '..\svar_case.wresl'
   INCLUDE[local] '\someFolder\svar_table.wresl'
  	
 	}	
