@@ -3,6 +3,7 @@
 
 from scripts.classes.study import Study
 from scripts.misc import LogUtils, Param
+#import shutil
 
 LogUtils.initLogging(__file__)
 
@@ -25,13 +26,18 @@ s1.add_dss_transfer(id="to_init", destn=s1.InitFile, destn_Fpart=s1.InitFPart, t
 s1.add_dss_transfer(id="to_svar", destn=s1.SvarFile, destn_Fpart=s1.SvarFPart, transferFile="to_common_svar")
 
 
+#srcPath = r"c:\s1\gwdir\restart.dat";
+#dstPath = r"c:\s2\gwdir\init.dat";
+
 for iYear in range(1921, 1925):
 	
 	Param.logger.info("Start run for year: "+str(iYear))
 	
 	s1.run(startYear=iYear, numberOfSteps=12)
+	
 	s2.run(startYear=iYear, numberOfSteps=12)
 
+	#shutil.copy2(srcPath, dstPath)
 
 
 	
