@@ -166,7 +166,7 @@ public class ConfigUtils {
 		System.out.println("Solver:         "+ControlData.solverName);
 		
 		if (configMap.keySet().contains("sendaliastodvar")){
-			ControlData.sendAliasToDvar = !(configMap.get("sendaliastodvar").equalsIgnoreCase("yes"));
+			ControlData.sendAliasToDvar = configMap.get("sendaliastodvar").equalsIgnoreCase("yes");
 			System.out.println("SendAliasToDvar:"+ControlData.sendAliasToDvar);
 		}
 		
