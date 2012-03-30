@@ -46,7 +46,8 @@ public class IntermediateLP {
 		if (dirPath.length() > 1) {
 			ilpParentDir = new File(dirPath);
 		} else {
-			ilpParentDir = new File(FilePaths.mainDirectory, "=ILP="); 
+			File ilpGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=");  
+			ilpParentDir = new File(ilpGrandParentDir.getAbsolutePath(), FilePaths.ilpFileDirectory_append); 
 		}
 		
 		if (FilePaths.ilpFile.length() > 4) {

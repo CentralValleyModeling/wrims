@@ -427,7 +427,7 @@ public class ControllerBatch {
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
-			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
+			//if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
 			int i=0;
 			while (i<modelList.size()  && noError){  

@@ -128,6 +128,8 @@ public class ConfigUtils {
 			e.printStackTrace();
 		}
 		
+		FilePaths.ilpFileDirectory_append = new File(configFile).getName();
+		
 		FilePaths.csvFolderName = "";
 
 		ControlData.showWreslLog = !(configMap.get("showwresllog").equalsIgnoreCase("no"));
