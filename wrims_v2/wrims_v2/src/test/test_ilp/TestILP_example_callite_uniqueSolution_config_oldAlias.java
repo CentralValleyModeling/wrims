@@ -17,7 +17,7 @@ public class TestILP_example_callite_uniqueSolution_config_oldAlias {
 	private double expected;
 	
 	@Test(groups = { "ilp_config_example_callite" })
-	public void callite_oldAlias_unique_6steps() throws RecognitionException, IOException{
+	public void callite_oldAlias_unique_36steps() throws RecognitionException, IOException{
 		
 		studyPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\callite_uniqueSolution\\";
 		/// set control data		
@@ -32,7 +32,7 @@ public class TestILP_example_callite_uniqueSolution_config_oldAlias {
 		Error.clear();
         new ControllerBatch(controlDataString);
         
-        expected = 9.486252763315352E8; 
+        expected = 9.290264177187278E8; 
 		
 		double obj_value =  ControlData.xasolver.getObjective();		
 		Assert.assertEquals(Error.getTotalError(), 0);	
