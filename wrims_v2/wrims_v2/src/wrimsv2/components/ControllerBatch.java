@@ -180,7 +180,7 @@ public class ControllerBatch {
 		System.out.println("==============Run Study Start============");
 		if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG") ){
 			runModelXA(sds);
-		}else if (ControlData.solverName.equalsIgnoreCase("ILP")){
+		}else if (ControlData.solverName.toLowerCase().contains("ilp")){
 			runModelILP(sds);
 		}else if (ControlData.solverName.equalsIgnoreCase("LPSolve")){
 			try {
@@ -427,7 +427,7 @@ public class ControllerBatch {
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
-			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
+			if (ControlData.solverName.toLowerCase().contains("xalog")) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
 			int i=0;
 			while (i<modelList.size()  && noError){  
