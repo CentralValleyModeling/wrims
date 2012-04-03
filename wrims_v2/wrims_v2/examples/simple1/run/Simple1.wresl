@@ -4,12 +4,14 @@ SEQUENCE One {
 }
 
 MODEL Mod1 {
-	define X {lower 0 upper 1 kind 'Dvar' units 'num'} 
-	define Y {lower 0 upper 1 kind 'Dvar' units 'num'} 
+	define X {integer lower 0 upper 3 kind 'Dvar' units 'num'} 
+	define Y {integer std kind 'Dvar' units 'num'} 
 	define Z {lower 0 upper 1 kind 'Dvar' units 'num'} 
+	define BB {lower unbounded upper unbounded kind 'Dvar' units 'num'} 
 	
 	goal C1 {X + 2*Y +3*z < 4}
 	goal C2 {X+Y>1}
+	goal C3 {BB=1}
 	
 		
 	Objective obj = {
