@@ -108,6 +108,7 @@ configKey
 |'StopMonth' 
 |'GroundwaterDir'
 |'ShowWreslLog'
+|'SendAliasToDvar'
 ;
 
 SL_COMMENT : '#' ~('\r'|'\n')*  {$channel=HIDDEN;} ;
