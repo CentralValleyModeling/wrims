@@ -190,6 +190,10 @@ public class ValueEvaluation {
 	
 	public static IntDouble divide(IntDouble id1, IntDouble id2){
 		IntDouble id;
+		if (id2.getData().doubleValue()==0){
+			Error.addEvaluationError("divided by 0.");
+			return new IntDouble(1.0, false);
+		}
 		if (!id1.isInt() && !id2.isInt()){
 			id=new IntDouble(id1.getData().doubleValue()/id2.getData().doubleValue(), false);
 		}else if (id1.isInt() && !id2.isInt()){
