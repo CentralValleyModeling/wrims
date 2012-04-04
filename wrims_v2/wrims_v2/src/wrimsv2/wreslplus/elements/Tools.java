@@ -97,6 +97,17 @@ public class Tools {
 	}
 
 	//TODO: this can be optimized for memory
+	public static ArrayList<String> allToUpperCase(ArrayList<String> inArrayList){
+		
+		ArrayList<String> out = new ArrayList<String>();
+		
+		for (String s: inArrayList){
+			out.add(s.toUpperCase());
+		}
+		
+		return out;
+	}
+	//TODO: this can be optimized for memory
 	public static ArrayList<String> allToLowerCase(ArrayList<String> inArrayList){
 		
 		ArrayList<String> out = new ArrayList<String>();

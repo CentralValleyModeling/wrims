@@ -29,7 +29,7 @@ import wrimsv2.evaluator.PreEvaluator;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.external.LoadAllDll;
-import wrimsv2.ilp.IntermediateLP;
+import wrimsv2.ilp.ILP;
 import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.solver.XASolver;
 import wrimsv2.solver.initialXALog;
@@ -458,17 +458,21 @@ public class ControllerBatch {
 					ControlData.currTsMap=mds.tsMap;
 					ControlData.isPostProcessing=false;
 					mds.processModel();
-					IntermediateLP.setIlpFile(FilePaths.ilpFileDirectory);
-					Set<String> usedDvar=IntermediateLP.output();
+					
+					ILP.setIlpFile();
+					ILP.writeIlp();
 				
 					if (Error.error_evaluation.size()>=1){
 						Error.writeEvaluationErrorFile("evaluation_error.txt");
 						noError=false;
 					}
 					new XASolver();
-					IntermediateLP.writeObjValue();
-					IntermediateLP.writeDvarValue(usedDvar);
-					IntermediateLP.closeIlpFile();
+
+					ILP.writeObjValue_XA();
+					ILP.writeDvarValue();
+					ILP.writeSvarValue();
+					ILP.closeIlpFile();
+
 					if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
 					if (Error.error_solving.size()<1){
 						ControlData.isPostProcessing=true;

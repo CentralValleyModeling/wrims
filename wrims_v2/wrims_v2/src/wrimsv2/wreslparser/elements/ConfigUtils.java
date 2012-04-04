@@ -128,7 +128,7 @@ public class ConfigUtils {
 			e.printStackTrace();
 		}
 		
-		FilePaths.ilpFileDirectory_append = new File(configFile).getName();
+		FilePaths.configFileName = new File(configFile).getName();
 		
 		FilePaths.csvFolderName = "";
 
@@ -177,6 +177,9 @@ public class ConfigUtils {
 			}
 		}
 		System.out.println("SendAliasToDvar:"+ControlData.sendAliasToDvar);
+		
+		System.out.println("Ignored... SetAmplOption:   option presolve_eps 1e-13;");
+		
 		
 		
 		// System.out.println("gw: "+FilePaths.groundwaterDir);

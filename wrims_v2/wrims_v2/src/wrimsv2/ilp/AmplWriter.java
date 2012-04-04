@@ -23,78 +23,86 @@ import wrimsv2.evaluator.EvalConstraint;
 
 // for LpSolve select 1.Rows 2.Cols 3.Elimeq2 in Presolve
 
-public class IntermediateLP {
+public class AmplWriter {
 
-	private static PrintWriter _ilpFile;
+	private static PrintWriter _amplFile;
 	private static PrintWriter _svarFile;
 	private static PrintWriter _dvarFile;
-	private static File ilpParentDir;
+	private static File amplParentDir;
 
-	public IntermediateLP() {
-
-	}
-
-	public static void setIlpFile(String dirPath) {
-
-		String ilpFileName;
-		String svarFileName;
-		String dvarFileName;
-		String twoDigitMonth = String.format("%02d", ControlData.currMonth);
-		String twoDigitCycle = String.format("%02d", ControlData.currCycleIndex+1);
-
-		
-		if (dirPath.length() > 1) {
-			ilpParentDir = new File(dirPath);
-		} else {
-			File ilpGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=");  
-			ilpParentDir = new File(ilpGrandParentDir.getAbsolutePath(), FilePaths.ilpFileDirectory_append); 
-		}
-		
-		if (FilePaths.ilpFile.length() > 4) {
-			ilpFileName = FilePaths.ilpFile;
-		} else {
-			ilpFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".ilp";
-		}
-		
-		svarFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".svar";
-		dvarFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".dvar";
-		// System.out.println("################# "+fileName);
-		// System.out.println("################# "+System.getProperty("user.dir")+"\\"+dirPath);
-		try {
-			//_ilpFile = Tools.openFile(System.getProperty("user.dir") + "\\" + dirPath, fileName);
-			
-			String ilpDir = new File(ilpParentDir, "ilp").getAbsolutePath();
-			String varDir = new File(ilpParentDir, "var").getAbsolutePath();
-			//private static File ilpDir = new File(ilpParentDir, "ilp");
-			
-			_ilpFile = Tools.openFile(ilpDir, ilpFileName);
-			_svarFile = Tools.openFile(varDir, svarFileName);
-			_dvarFile = Tools.openFile(varDir, dvarFileName);
-
-		}
-		catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+	private AmplWriter() {
 
 	}
 
-	public static void closeIlpFile() {
+//	public static void setAmplFile(String dirPath) {
+//
+//		String amplFileName;
+//		String svarFileName;
+//		String dvarFileName;
+//		String twoDigitMonth = String.format("%02d", ControlData.currMonth);
+//		String twoDigitCycle = String.format("%02d", ControlData.currCycleIndex+1);
+//
+//		
+//		if (dirPath.length() > 1) {
+//			amplParentDir = new File(dirPath);
+//		} else {
+//			File ilpGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=\\=AMPL=");  
+//			amplParentDir = new File(ilpGrandParentDir.getAbsolutePath(), FilePaths.configFileName); 
+//		}
+//		
+//		if (FilePaths.amplFile.length() > 4) {
+//			amplFileName = FilePaths.amplFile;
+//		} else {
+//			amplFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".mod";
+//		}
+//		
+//		svarFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".svar";
+//		dvarFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".dvar";
+//		// System.out.println("################# "+fileName);
+//		// System.out.println("################# "+System.getProperty("user.dir")+"\\"+dirPath);
+//		try {
+//			//_ilpFile = Tools.openFile(System.getProperty("user.dir") + "\\" + dirPath, fileName);
+//			
+//			String amplDir = new File(amplParentDir, "ampl").getAbsolutePath();
+//			String varDir = new File(amplParentDir, "var").getAbsolutePath();
+//			//private static File ilpDir = new File(ilpParentDir, "ilp");
+//			
+//			_amplFile = Tools.openFile(amplDir, amplFileName);
+//			_svarFile = Tools.openFile(varDir, svarFileName);
+//			_dvarFile = Tools.openFile(varDir, dvarFileName);
+//
+//		}
+//		catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//
+//	}
 
-		_ilpFile.close();
+	public static void closeAmplFile() {
+
+		_amplFile.close();
 		_svarFile.close();
 		_dvarFile.close();
 	}
 
 	public static Set<String> output() {
+
+		Set<String> usedDvar = new HashSet<String>();
 		
 		writeInfo();
-		writeObj();
-		_ilpFile.print("\n");
-		Set<String> usedDvar=writeConstraint();
-		_ilpFile.print("\n");
+		_amplFile.print("\n");
+
+		String cs=writeConstraintToString(usedDvar);
+		Set<String> usedDvarInWeight = new HashSet<String>();
+		String objS = writeObjToString(usedDvarInWeight);
+		usedDvar.addAll(usedDvarInWeight);
 		writeDvar(usedDvar);
-		_ilpFile.flush();
+		_amplFile.print("\n");
+		_amplFile.print(cs);
+		_amplFile.print("\n");
+		_amplFile.print(objS);
+		_amplFile.flush();
 		
 		// write to _svarFile
 		writeSvarValue();
@@ -154,30 +162,35 @@ public class IntermediateLP {
 		String CurrDate = Integer.toString(ControlData.currYear)+"."
 		                 + twoDigitMonth;
 		
-		_ilpFile.println("/* Date: "+CurrDate+"    */");
-		_ilpFile.println("/* Cycle: "+twoDigitCycle+"    */");
-		_ilpFile.println("/* Solver: "+ControlData.solverName+"    */");
-		_ilpFile.flush();
+		_amplFile.println("# /* Date: "+CurrDate+"    */");
+		_amplFile.println("# /* Cycle: "+twoDigitCycle+"    */");
+		_amplFile.println("# /* Solver: "+ControlData.solverName+"    */");
+		_amplFile.flush();
 		
 	}
 	
 	public static void writeObjValue() {
 		
 		double objValue = ControlData.xasolver.getObjective();
-		_ilpFile.println("\n");
-		_ilpFile.println("\n");
+		_amplFile.println("\n");
+		_amplFile.println("\n");
 		if (Error.getTotalError()==0) {
-		_ilpFile.println("/* objective value:   "+objValue+"    */");
+		_amplFile.println("# /* objective value:   "+objValue+"    */");
 		} else {
-		_ilpFile.println("/* objective value:   Error!   */");	
+		_amplFile.println("# /* objective value:   Error!   */");	
 		}
-		_ilpFile.flush();
+		_amplFile.flush();
 	}
 	
-	private static void writeObj() {
-
-		_ilpFile.println("/* objective function */");
-		_ilpFile.println("max: ");
+	// return dvarInWeight
+	private static String writeObjToString(Set<String> usedDvarInWeight) {
+		
+		String ObjString = "";
+		
+		ObjString = "# objective function \n";
+		ObjString = ObjString + "maximize Obj:  \n";
+		//_amplFile.println("# /* objective function */");
+		//_amplFile.println("maximize Obj: ");
 
 		//Map<String, WeightElement> weightMap = SolverData.getWeightMap();
 		Map<String, WeightElement> allWeightMap = new HashMap<String, WeightElement>();
@@ -195,27 +208,36 @@ public class IntermediateLP {
 
 			if (weight > 0) {
 
-				toPrint = toPrint + "+ " + weight + " " + dvar + " ";
-				_ilpFile.println("+ " + weight + " " + dvar);
+				toPrint = toPrint + "+ " + weight + " * " + dvar.toUpperCase() + " ";
+				ObjString = ObjString + "+ " + weight + " * " + dvar.toUpperCase() + "\n";
+				//_amplFile.println("+ " + weight + " * " + dvar.toUpperCase());
 
 			}
 			else {
-				toPrint = toPrint + weight + " " + dvar + " ";
-				_ilpFile.println(weight + " " + dvar);
+				toPrint = toPrint + weight + " * " + dvar.toUpperCase() + " ";
+				ObjString = ObjString + weight + " * " + dvar.toUpperCase() + "\n";
+				//_amplFile.println(weight + " * " + dvar.toUpperCase());
 			}
 
 		}
 
 		// _ilpFile.println(toPrint);
-		_ilpFile.println(";");
+		ObjString = ObjString + ";";
+		usedDvarInWeight.addAll(sortedTerm);
+		
+		return ObjString;
 
 	}
 
-	private static Set<String> writeConstraint() {
+	// output usedDvar Set
+	private static String writeConstraintToString(Set<String> usedDvar) {
 
-		Set<String> usedDvar = new HashSet<String>();
-		_ilpFile.println("/* constraint */");
-
+		String constraintString = "";
+		
+		//usedDvar = new HashSet<String>();
+		//_amplFile.println("# /* constraint */");
+		constraintString = "# /* constraint */" + "\n";
+		
 		Map<String, EvalConstraint> constraintMap = SolverData.getConstraintDataMap();
 
 		ArrayList<String> sortedConstraint = new ArrayList<String>(constraintMap.keySet());
@@ -240,16 +262,16 @@ public class IntermediateLP {
 					String term;
 
 					if (coefDouble == 1.0) {
-						term = " + " + var;
+						term = " + " + var.toUpperCase();
 					}
 					else if (coefDouble == -1.0) {
-						term = " - " + var;
+						term = " - " + var.toUpperCase();
 					}
 					else if (coefDouble < 0) {
-						term = " " + coefStr + " " + var;
+						term = " " + coefStr + " * " + var.toUpperCase();
 					}
 					else { // coefDouble >= 0
-						term = " + " + coefStr + " " + var;
+						term = " + " + coefStr + " * " + var.toUpperCase();
 					}
 					lhs = lhs + term;
 				}
@@ -260,25 +282,28 @@ public class IntermediateLP {
 				lhs = "0";
 			}
 
-			String sign = constraintMap.get(constraintName).getSign();
+			// TODO: improve this
+			String sign = constraintMap.get(constraintName).getSign()+"=";
+			sign= sign.replace("==", "=");
 			double val = constraintMap.get(constraintName).getEvalExpression().getValue().getData().doubleValue();
 
 			if (val == 0) {
-				lhs = constraintName + ": " + lhs + " " + sign + " " + "0";
+				lhs = constraintName.toUpperCase() + ": " + lhs + " " + sign + " " + "0";
 			}
 			else {
-				lhs = constraintName + ": " + lhs + " " + sign + " " + val * -1;
+				lhs = constraintName.toUpperCase() + ": " + lhs + " " + sign + " " + val * -1;
 			}
 
-			_ilpFile.println(lhs + " ;");
+			//_amplFile.println("subject to "+lhs + " ;");
+			constraintString = constraintString + "subject to "+lhs + " ;\n";
 
 		}
-		return usedDvar;
+		return constraintString;
 	}
 
 	private static void writeDvar(Set<String> usedDvar) {
 
-		_ilpFile.println("/* dvar */");
+		_amplFile.println("# /* dvar */");
 
 		Map<String, Dvar> dvarMap = SolverData.getDvarMap();
 		ArrayList<String> sortedDvar = new ArrayList<String>(dvarMap.keySet());
@@ -296,64 +321,63 @@ public class IntermediateLP {
 			String upperStr = dvarMap.get(key).upperBound;
 			String toPrint = null;
 
-			if (dvarMap.get(key).integer.equalsIgnoreCase(Param.yes)) {
-				intList.add(key);
-			}
+
 
 			if (lowerStr.equalsIgnoreCase(Param.lower_unbounded) && upperStr.equalsIgnoreCase(Param.upper_unbounded)) {
 				freeList.add(key);
 				continue;
 			}
 			else if (lowerStr.equalsIgnoreCase(Param.lower_unbounded)) {
-				toPrint = key + " < " + upper;
-				_ilpFile.print(toPrint + " ;\n");
+				toPrint = key.toUpperCase() + " <= " + upper;
+				_amplFile.print("var "+toPrint );
 			}
 			else if (upperStr.equalsIgnoreCase(Param.upper_unbounded)) {
 
-				if (lower != 0) _ilpFile.print(key + " > " + lower + " ;\n");
+				_amplFile.print("var "+key.toUpperCase() + " >= " + lower );
 
 			}
 			else {
 
-				if (lower != 0) _ilpFile.print(key + " > " + lower + " ;\n");
+				_amplFile.print("var "+key.toUpperCase() + " >= " + lower + " <= " + upper );
 
-				_ilpFile.print(key + " < " + upper + " ;\n");
+				//_amplFile.print("var "+key.toUpperCase() + " <= " + upper );
 			}
 
-		}
-
-		if (intList.size() > 0) {
-			_ilpFile.print("int ");
-
-			for (int i = 0; i < intList.size(); i++) {
-				String term = intList.get(i);
-
-				if (i == 0) {
-					_ilpFile.print(term);
-				}
-				else {
-					_ilpFile.print(", " + term);
-				}
+			if (dvarMap.get(key).integer.equalsIgnoreCase(Param.yes)) {
+				//intList.add(key);
+				_amplFile.print(" integer ;\n");
+			} else {
+				_amplFile.print(" ;\n");
 			}
-
-			_ilpFile.print(" ;\n");
+			
 		}
+
+//		if (intList.size() > 0) {
+//			_amplFile.print("int ");
+//
+//			for (int i = 0; i < intList.size(); i++) {
+//				String term = intList.get(i);
+//
+//				if (i == 0) {
+//					_amplFile.print(term);
+//				}
+//				else {
+//					_amplFile.print(", " + term);
+//				}
+//			}
+//
+//			_amplFile.print(" ;\n");
+//		}
 
 		if (freeList.size() > 0) {
-			_ilpFile.print("free ");
 
 			for (int i = 0; i < freeList.size(); i++) {
 				String term = freeList.get(i);
 
-				if (i == 0) {
-					_ilpFile.print(term);
-				}
-				else {
-					_ilpFile.print(", " + term);
-				}
+				_amplFile.print("var "+term.toUpperCase()+" ;\n");
+
 			}
 
-			_ilpFile.print(" ;\n");
 		}
 	}
 
