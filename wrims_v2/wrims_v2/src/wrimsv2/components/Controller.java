@@ -101,11 +101,11 @@ public class Controller {
 	}
 
 	public void setControlData(){
-		FilePaths.groundwaterDir="D:\\CS3_Studies\\calsim30_bo_version120\\common\\CVGroundwater\\Data\\";
-		FilePaths.setMainFilePaths("D:\\CS3_Studies\\calsim30_bo_version120\\conv\\Run\\mainCONV_30.wresl");
-		FilePaths.setSvarDssPaths("D:\\CS3_Studies\\calsim30_bo_version120\\common\\DSS\\CalSim30_06_SV.dss");
-        FilePaths.setInitDssPaths("D:\\CS3_Studies\\calsim30_bo_version120\\common\\DSS\\CalSim30_06Init.dss");
-        FilePaths.setDvarDssPaths("D:\\CS3_Studies\\calsim30_bo_version120\\conv\\DSS\\Version100_88yr_021012_WRIMSV2DV.dss");
+		FilePaths.groundwaterDir="D:\\CS3_Studies\\cs3_bo_version120\\common\\CVGroundwater\\Data\\";
+		FilePaths.setMainFilePaths("D:\\CS3_Studies\\cs3_bo_version120\\conv\\Run\\mainCONV_30.wresl");
+		FilePaths.setSvarDssPaths("D:\\CS3_Studies\\cs3_bo_version120\\common\\DSS\\CalSim30_06_SV.dss");
+        FilePaths.setInitDssPaths("D:\\CS3_Studies\\cs3_bo_version120\\common\\DSS\\CalSim30_06Init.dss");
+        FilePaths.setDvarDssPaths("D:\\CS3_Studies\\cs3_bo_version120\\conv\\DSS\\Version100_88yr_021012_WRIMSV2DV.dss");
 		ControlData cd=new ControlData();
 		cd.svDvPartF="CalSim30_06";
 		cd.initPartF="CalSim30_06";
