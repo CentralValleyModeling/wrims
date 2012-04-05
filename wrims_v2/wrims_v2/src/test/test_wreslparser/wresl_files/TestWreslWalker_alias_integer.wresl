@@ -1,0 +1,20 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+
+define int_SAC_below { INTEGER std kind 'INTEGER' units 'NONE' }                  ! 0: high flow; 1:  low flow
+define int_SAC_above { alias 1. - int_SAC_below kind 'INTEGER' units 'NONE' }     ! 1: high flow; 0:  low flow
+define SAC_above     { std kind 'FLOW-SAC-ABV' units 'CFS' }      ! zero if C_SAC041 < threshold
+define SAC_below     { std kind 'FLOW-SAC-BEL' units 'CFS' }      ! zero if C_SAC041 > threshold
+define SAC_max       { value 99999.*taf_cfs } ! over 1,600,000 cfs (plenty big)
+
+goal SAC_abv_force   { SAC_above < int_SAC_above * SAC_max }
+
+goal SAC_bel_force   { SAC_below < int_SAC_below * SAC_max }
+
+
+}

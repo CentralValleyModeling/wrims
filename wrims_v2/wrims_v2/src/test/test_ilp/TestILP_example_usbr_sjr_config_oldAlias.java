@@ -32,7 +32,7 @@ public class TestILP_example_usbr_sjr_config_oldAlias {
 		Error.clear();
         new ControllerBatch(controlDataString);
         
-        expected = 1.40024607177482E10; 
+        expected = 1.399972188356232E10; 
 		
 		double obj_value =  ControlData.xasolver.getObjective();		
 		Assert.assertEquals(Error.getTotalError(), 0);	
