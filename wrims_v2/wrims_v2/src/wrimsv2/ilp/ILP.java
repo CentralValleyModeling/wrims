@@ -23,25 +23,51 @@ import wrimsv2.wreslparser.elements.Tools;
 
 public class ILP {
 
+	private static File _lpSolveParentDir;
+	private static File _amplParentDir;
 	private static PrintWriter _lpSolveFile;
 	private static PrintWriter _amplFile;
 	private static PrintWriter _svarFile;
 	private static PrintWriter _dvarFile;
 	private static Set<String> dvar_effective;
 	private static final String lpSolve_comment_Symbol = "//";
+	private static final String ampl_comment_Symbol = "#";
 
 	private ILP() {
 
+	}
+
+	public static void initializeIlp() {
+		
+		setLpSolveParentDir();
+		setAmplParentDir();
+		// TODO: write ampl command file "option presolve_eps 1e-13;"
 	}
 	
 	public static void setIlpFile() {
 		
 		setLpSolveFile();
-		//setAmplFile();
-		
+		setAmplFile();		
 	}
 
 	public static void writeIlp() {
+		
+		writeLpSolveFile();
+		writeAmplFile();
+		
+		_lpSolveFile.flush();
+		_amplFile.flush();
+	}
+
+	public static void writeObjValue_XA() {
+		
+
+		writeObjValue_XA(_lpSolveFile, lpSolve_comment_Symbol);
+		writeObjValue_XA(_amplFile, ampl_comment_Symbol);
+	
+	}
+	
+	private static void writeLpSolveFile() {
 		
 		_lpSolveFile.print(findHeaderStr(lpSolve_comment_Symbol));
 		
@@ -59,10 +85,29 @@ public class ILP {
 		dvar_effective.addAll(dvar_inConstraint);
 		
 		//LpSolveWriter.writeDvar(_lpSolveFile, dvar_weighted, dvar_unWeighted);
-		LpSolveWriter.writeDvar(_lpSolveFile, dvar_effective);
-		
+		LpSolveWriter.writeDvar(_lpSolveFile, dvar_effective);	
 	}
 
+	private static void writeAmplFile() {
+		
+		_amplFile.print(findHeaderStr(ampl_comment_Symbol));
+		
+		Map<String, WeightElement> activeWeightMap = findActiveWeightMap();
+		
+		Set<String> dvar_inConstraint = findDvarInConstraint();
+		Set<String> dvar_weighted = findWeightedDvar();
+		//Set<String> dvar_unWeighted = findUnWeightedDvarInConstraint(dvar_inConstraint, dvar_weighted);
+		
+		dvar_effective = new HashSet<String>();
+		dvar_effective.addAll(dvar_weighted);
+		dvar_effective.addAll(dvar_inConstraint);
+		
+		AmplWriter.writeDvar(_amplFile, dvar_effective);	
+		AmplWriter.writeConstraint(_amplFile);
+		AmplWriter.writeObj(_amplFile, activeWeightMap);
+
+	}
+	
 	public static void writeDvarValue() {
 		
 		LpSolveWriter.writeDvarValue(_dvarFile, dvar_effective);
@@ -78,11 +123,16 @@ public class ILP {
 	public static void closeIlpFile() {
 	
 		_lpSolveFile.close();
-		//_amplFile.close();
+	    _amplFile.close();
 		_svarFile.close();
 		_dvarFile.close();
 	}
-
+	private static void setLpSolveParentDir() {
+	
+		File lpSolveGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=\\=LpSolve=");  
+		_lpSolveParentDir = new File(lpSolveGrandParentDir.getAbsolutePath(), FilePaths.configFileName); 		
+	
+	}
 	private static void setLpSolveFile() {
 	
 		String lpSolveFileName;
@@ -91,8 +141,8 @@ public class ILP {
 		String twoDigitMonth = String.format("%02d", ControlData.currMonth);
 		String twoDigitCycle = String.format("%02d", ControlData.currCycleIndex+1);
 	
-		File lpSolveGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=\\=LpSolve=");  
-		File lpSolveParentDir = new File(lpSolveGrandParentDir.getAbsolutePath(), FilePaths.configFileName); 
+		//File lpSolveGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=\\=LpSolve=");  
+		//File lpSolveParentDir = new File(lpSolveGrandParentDir.getAbsolutePath(), FilePaths.configFileName); 
 		
 		lpSolveFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".lps";		
 		
@@ -100,14 +150,12 @@ public class ILP {
 		dvarFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".dvar";
 
 		try {
-
-			String ilpDir = new File(lpSolveParentDir, "lpsolve").getAbsolutePath();
-			String varDir = new File(lpSolveParentDir, "var").getAbsolutePath();
+			String ilpDir = new File(_lpSolveParentDir, "lpsolve").getAbsolutePath();
+			String varDir = new File(_lpSolveParentDir, "var").getAbsolutePath();
 			
 			_lpSolveFile = Tools.openFile(ilpDir, lpSolveFileName);
 			_svarFile = Tools.openFile(varDir, svarFileName);
 			_dvarFile = Tools.openFile(varDir, dvarFileName);
-	
 		}
 		catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -115,24 +163,27 @@ public class ILP {
 		}
 	
 	}
-
+	private static void setAmplParentDir() {
+		
+		File amplGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=\\=AMPL=");  
+		_amplParentDir = new File(amplGrandParentDir.getAbsolutePath(), FilePaths.configFileName); 		
+	
+	}
 	private static void setAmplFile() {
 		
 		String amplFileName;
 		String twoDigitMonth = String.format("%02d", ControlData.currMonth);
 		String twoDigitCycle = String.format("%02d", ControlData.currCycleIndex+1);
 	
-		File ilpGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=\\=AMPL=");  
-		File lpSolveParentDir = new File(ilpGrandParentDir.getAbsolutePath(), FilePaths.configFileName); 
+		//File ilpGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=\\=AMPL=");  
+		//File lpSolveParentDir = new File(ilpGrandParentDir.getAbsolutePath(), FilePaths.configFileName); 
 		
 		amplFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".mod";				
 
 		try {
-
-			String ilpDir = new File(lpSolveParentDir, "ampl").getAbsolutePath();
+			String ilpDir = new File(_amplParentDir, "ampl").getAbsolutePath();
 			
-			_amplFile = Tools.openFile(ilpDir, amplFileName);
-	
+			_amplFile = Tools.openFile(ilpDir, amplFileName);	
 		}
 		catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -154,7 +205,7 @@ public class ILP {
 		
 		headerStr = headerStr + commentSymbol + " Date: "+CurrDate + "\n";
 		headerStr = headerStr + commentSymbol + " Cycle: "+twoDigitCycle + "\n";;
-		headerStr = headerStr + commentSymbol + " Solver: "+ControlData.solverName + "\n";
+		headerStr = headerStr + commentSymbol + " Solver: "+ControlData.solverName + "\n\n";
 		
 		return headerStr;
 	}
@@ -244,19 +295,18 @@ public class ILP {
 		return dvarValueStr;
 	}
 
-	public static void writeObjValue_XA() {
-		
+
+	
+	private static void writeObjValue_XA(PrintWriter outFile, String commentSym) {		
 
 		double objValue = ControlData.xasolver.getObjective();
 		
-		_lpSolveFile.print("\n\n\n\n");
-		
+		outFile.print("\n\n\n\n");		
 		if (Error.getTotalError()==0) {
-			_lpSolveFile.println(lpSolve_comment_Symbol+" objective value:   "+objValue);
+			outFile.println(commentSym+" objective value:   "+objValue);
 		} else {
-			_lpSolveFile.println(lpSolve_comment_Symbol+" objective value:   Error! ");	
+			outFile.println(commentSym+" objective value:   Error! ");	
 		}
-		_lpSolveFile.flush();
-	
+		outFile.flush();
 	}
 }

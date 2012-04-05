@@ -555,6 +555,9 @@ public class ControllerDebug extends Thread {
 	}
 	
 	public void runModelILP(StudyDataSet sds){
+		
+		ILP.initializeIlp();
+		
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
 		
@@ -598,6 +601,7 @@ public class ControllerDebug extends Thread {
 					
 					ILP.setIlpFile();
 					ILP.writeIlp();
+					ILP.writeSvarValue();
 				
 					if (Error.error_evaluation.size()>=1){
 						Error.writeEvaluationErrorFile("evaluation_error.txt");
@@ -607,7 +611,6 @@ public class ControllerDebug extends Thread {
 
 					ILP.writeObjValue_XA();
 					ILP.writeDvarValue();
-					ILP.writeSvarValue();
 					ILP.closeIlpFile();
 					
 					if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");

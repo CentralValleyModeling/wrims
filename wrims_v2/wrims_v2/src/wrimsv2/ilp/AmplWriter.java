@@ -1,12 +1,9 @@
 package wrimsv2.ilp;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,9 +12,6 @@ import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.components.ControlData;
-import wrimsv2.components.FilePaths;
-import wrimsv2.components.Error;
-import wrimsv2.wreslparser.elements.Tools;
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.evaluator.EvalConstraint;
 
@@ -25,91 +19,30 @@ import wrimsv2.evaluator.EvalConstraint;
 
 public class AmplWriter {
 
-	private static PrintWriter _amplFile;
-	private static PrintWriter _svarFile;
-	private static PrintWriter _dvarFile;
-	private static File amplParentDir;
-
 	private AmplWriter() {
 
 	}
 
-//	public static void setAmplFile(String dirPath) {
-//
-//		String amplFileName;
-//		String svarFileName;
-//		String dvarFileName;
-//		String twoDigitMonth = String.format("%02d", ControlData.currMonth);
-//		String twoDigitCycle = String.format("%02d", ControlData.currCycleIndex+1);
-//
+//	public static Set<String> output() {
 //		
-//		if (dirPath.length() > 1) {
-//			amplParentDir = new File(dirPath);
-//		} else {
-//			File ilpGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=\\=AMPL=");  
-//			amplParentDir = new File(ilpGrandParentDir.getAbsolutePath(), FilePaths.configFileName); 
-//		}
+//		Set<String> usedDvar = new HashSet<String>();
 //		
-//		if (FilePaths.amplFile.length() > 4) {
-//			amplFileName = FilePaths.amplFile;
-//		} else {
-//			amplFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".mod";
-//		}
+//		writeInfo();
+//		Set<String> usedDvarInWeight = writeObj();
+//		_ilpFile.print("\n");
+//		Set<String> usedDvarInConstraint = writeConstraint();
+//		_ilpFile.print("\n");
+//		usedDvar.addAll(usedDvarInWeight);
+//		usedDvar.addAll(usedDvarInConstraint);
+//		writeDvar(usedDvar);
+//		_ilpFile.flush();
 //		
-//		svarFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".svar";
-//		dvarFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".dvar";
-//		// System.out.println("################# "+fileName);
-//		// System.out.println("################# "+System.getProperty("user.dir")+"\\"+dirPath);
-//		try {
-//			//_ilpFile = Tools.openFile(System.getProperty("user.dir") + "\\" + dirPath, fileName);
-//			
-//			String amplDir = new File(amplParentDir, "ampl").getAbsolutePath();
-//			String varDir = new File(amplParentDir, "var").getAbsolutePath();
-//			//private static File ilpDir = new File(ilpParentDir, "ilp");
-//			
-//			_amplFile = Tools.openFile(amplDir, amplFileName);
-//			_svarFile = Tools.openFile(varDir, svarFileName);
-//			_dvarFile = Tools.openFile(varDir, dvarFileName);
-//
-//		}
-//		catch (IOException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//
+//		// write to _svarFile
+//		writeSvarValue();
+//		return usedDvar;
 //	}
 
-	public static void closeAmplFile() {
-
-		_amplFile.close();
-		_svarFile.close();
-		_dvarFile.close();
-	}
-
-	public static Set<String> output() {
-
-		Set<String> usedDvar = new HashSet<String>();
-		
-		writeInfo();
-		_amplFile.print("\n");
-
-		String cs=writeConstraintToString(usedDvar);
-		Set<String> usedDvarInWeight = new HashSet<String>();
-		String objS = writeObjToString(usedDvarInWeight);
-		usedDvar.addAll(usedDvarInWeight);
-		writeDvar(usedDvar);
-		_amplFile.print("\n");
-		_amplFile.print(cs);
-		_amplFile.print("\n");
-		_amplFile.print(objS);
-		_amplFile.flush();
-		
-		// write to _svarFile
-		writeSvarValue();
-		return usedDvar;
-	}
-
-	public static void writeDvarValue(Set<String> usedDvar) {
+	protected static void writeDvarValue(PrintWriter dvarFile, Set<String> dvar_effective) {
 		
 		Map<String, Dvar> dvMap = SolverData.getDvarMap();
 		Map<String, WeightElement> wtMap = SolverData.getWeightMap();
@@ -122,25 +55,25 @@ public class AmplWriter {
 		dvar_unweighted.removeAll(wtMap.keySet());
 		dvar_unweighted.removeAll(ControlData.currModelDataSet.usedWtSlackSurplusList);
 		
-		dvar_unweighted.retainAll(usedDvar);
+		dvar_unweighted.retainAll(dvar_effective);
 		Collections.sort(dvar_weighted);
 		Collections.sort(dvar_unweighted);
 		
 		
-		_dvarFile.println("/* Weighted Dvar    */");
+		dvarFile.println("/* Weighted Dvar    */");
 		for (String s : dvar_weighted){
 			String dvName = String.format("%-35s", s);
-			_dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
+			dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
 		}
-		_dvarFile.println();
-		_dvarFile.println("/* Unweighted Dvar    */");	
+		dvarFile.println();
+		dvarFile.println("/* Unweighted Dvar    */");	
 		for (String s : dvar_unweighted){
 			String dvName = String.format("%-35s", s);
-			_dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
+			dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
 		}
 	}	
 	
-	private static void writeSvarValue() {
+	protected static void writeSvarValue(PrintWriter svarFile) {
 		
 		Map<String, Svar> svMap = ControlData.currSvMap;
 		
@@ -149,53 +82,33 @@ public class AmplWriter {
 		
 		for (String s : sortedTerm){
 			String svName = String.format("%-35s", s);
-			_svarFile.print(svName + ":  " + svMap.get(s).getData().getData() +"\n"  );
+			svarFile.print(svName + ":  " + svMap.get(s).getData().getData() +"\n"  );
 			
 		}
 	}
 	
-	private static void writeInfo() {
+	public static void writeComment(PrintWriter outFile, String msg) {
 		
-		String twoDigitMonth = String.format("%02d", ControlData.currMonth);
-		String twoDigitCycle = String.format("%02d", ControlData.currCycleIndex+1);
-		
-		String CurrDate = Integer.toString(ControlData.currYear)+"."
-		                 + twoDigitMonth;
-		
-		_amplFile.println("# /* Date: "+CurrDate+"    */");
-		_amplFile.println("# /* Cycle: "+twoDigitCycle+"    */");
-		_amplFile.println("# /* Solver: "+ControlData.solverName+"    */");
-		_amplFile.flush();
-		
-	}
+
+		outFile.println("// " + msg );
+
+	}	
 	
 	public static void writeObjValue() {
 		
-		double objValue = ControlData.xasolver.getObjective();
-		_amplFile.println("\n");
-		_amplFile.println("\n");
-		if (Error.getTotalError()==0) {
-		_amplFile.println("# /* objective value:   "+objValue+"    */");
-		} else {
-		_amplFile.println("# /* objective value:   Error!   */");	
-		}
-		_amplFile.flush();
+
 	}
 	
-	// return dvarInWeight
-	private static String writeObjToString(Set<String> usedDvarInWeight) {
+
+	protected static void writeObj(PrintWriter outFile, Map<String, WeightElement> activeWeightMap) {
 		
+
 		String ObjString = "";
 		
 		ObjString = "# objective function \n";
 		ObjString = ObjString + "maximize Obj:  \n";
-		//_amplFile.println("# /* objective function */");
-		//_amplFile.println("maximize Obj: ");
 
-		//Map<String, WeightElement> weightMap = SolverData.getWeightMap();
-		Map<String, WeightElement> allWeightMap = new HashMap<String, WeightElement>();
-		allWeightMap.putAll(SolverData.getWeightMap());
-		allWeightMap.putAll(SolverData.getWeightSlackSurplusMap());
+
 		String toPrint = "";
 
 		ArrayList<String> sortedTerm = new ArrayList<String>(SolverData.getWeightMap().keySet());
@@ -204,7 +117,7 @@ public class AmplWriter {
 
 		for (String dvar : sortedTerm) {
 
-			double weight = allWeightMap.get(dvar).getValue();
+			double weight = activeWeightMap.get(dvar).getValue();
 
 			if (weight > 0) {
 
@@ -223,20 +136,18 @@ public class AmplWriter {
 
 		// _ilpFile.println(toPrint);
 		ObjString = ObjString + ";";
-		usedDvarInWeight.addAll(sortedTerm);
 		
-		return ObjString;
+		outFile.print(ObjString);
 
 	}
 
-	// output usedDvar Set
-	private static String writeConstraintToString(Set<String> usedDvar) {
+	protected static void writeConstraint(PrintWriter outFile) {
+
+		//outFile.println("/* constraint */");
 
 		String constraintString = "";
 		
-		//usedDvar = new HashSet<String>();
-		//_amplFile.println("# /* constraint */");
-		constraintString = "# /* constraint */" + "\n";
+		constraintString = "# constraint \n";
 		
 		Map<String, EvalConstraint> constraintMap = SolverData.getConstraintDataMap();
 
@@ -252,7 +163,7 @@ public class AmplWriter {
 				ArrayList<String> sortedTerm = new ArrayList<String>(constraintMap.get(constraintName)
 						.getEvalExpression().getMultiplier().keySet());
 				Collections.sort(sortedTerm);
-				usedDvar.addAll(sortedTerm);
+
 				for (String var : sortedTerm) {
 
 					Number coef = constraintMap.get(constraintName).getEvalExpression().getMultiplier().get(var)
@@ -298,20 +209,134 @@ public class AmplWriter {
 			constraintString = constraintString + "subject to "+lhs + " ;\n";
 
 		}
-		return constraintString;
+		
+		outFile.print(constraintString);
+
 	}
 
-	private static void writeDvar(Set<String> usedDvar) {
+	protected static void writeDvar(PrintWriter outFile, Set<String> dvar_weighted, Set<String> dvar_unWeighted) {
+		
+		
+		Map<String, Dvar> dvarMap = SolverData.getDvarMap();
+		
+		ArrayList<String> sortedDvar_weighted = new ArrayList<String>(dvarMap.keySet());
+		sortedDvar_weighted.retainAll(dvar_weighted);
+		Collections.sort(sortedDvar_weighted);
+		
+		ArrayList<String> sortedDvar_unWeighted = new ArrayList<String>(dvarMap.keySet());
+		sortedDvar_unWeighted.retainAll(dvar_unWeighted);
+		Collections.sort(sortedDvar_unWeighted);
 
-		_amplFile.println("# /* dvar */");
+		// TODO: separate integer list in the parsing stage for efficiency
+		ArrayList<String> intList = new ArrayList<String>();
+		ArrayList<String> freeList = new ArrayList<String>();
+
+		
+	    /////// weighted
+		outFile.println("/* dvar weighted */");
+		
+		for (String key : sortedDvar_weighted) {
+			double lower = dvarMap.get(key).lowerBoundValue.doubleValue();
+			double upper = dvarMap.get(key).upperBoundValue.doubleValue();
+			String lowerStr = dvarMap.get(key).lowerBound;
+			String upperStr = dvarMap.get(key).upperBound;
+
+			if (dvarMap.get(key).integer.equalsIgnoreCase(Param.yes)) intList.add(key);
+			
+			if (lowerStr.equalsIgnoreCase(Param.lower_unbounded) && upperStr.equalsIgnoreCase(Param.upper_unbounded)) {
+				freeList.add(key);  //TODO: test what happen if it's a free integer ???
+				continue;  
+			}
+			else if (lowerStr.equalsIgnoreCase(Param.lower_unbounded)) {
+				outFile.print(key + " < " + upper + " ;\n");
+			}
+			else if (upperStr.equalsIgnoreCase(Param.upper_unbounded)) {
+				// TODO: be careful, by default LpSolve treat this as standard so we don't write to ilp file
+				if (lower != 0) outFile.print(key + " > " + lower + " ;\n");
+			}
+			else {
+				if (lower != 0) outFile.print(key + " > " + lower + " ;\n");
+				outFile.print(key + " < " + upper + " ;\n");
+			}
+		}
+
+		/////// unweighted
+		outFile.println("/* dvar unweighted in constraint*/");
+		
+		for (String key : sortedDvar_unWeighted) {
+			double lower = dvarMap.get(key).lowerBoundValue.doubleValue();
+			double upper = dvarMap.get(key).upperBoundValue.doubleValue();
+			String lowerStr = dvarMap.get(key).lowerBound;
+			String upperStr = dvarMap.get(key).upperBound;
+
+			if (dvarMap.get(key).integer.equalsIgnoreCase(Param.yes)) intList.add(key);
+			
+			if (lowerStr.equalsIgnoreCase(Param.lower_unbounded) && upperStr.equalsIgnoreCase(Param.upper_unbounded)) {
+				freeList.add(key);  //TODO: test what happen if it's a free integer ???
+				continue;  
+			}
+			else if (lowerStr.equalsIgnoreCase(Param.lower_unbounded)) {
+				outFile.print(key + " < " + upper + " ;\n");
+			}
+			else if (upperStr.equalsIgnoreCase(Param.upper_unbounded)) {
+				// TODO: be careful, by default LpSolve treat this as standard so we don't write to ilp file
+				if (lower != 0) outFile.print(key + " > " + lower + " ;\n");
+			}
+			else {
+				if (lower != 0) outFile.print(key + " > " + lower + " ;\n");
+				outFile.print(key + " < " + upper + " ;\n");
+			}
+		}		
+		
+			
+		
+		
+		if (intList.size() > 0) {
+			outFile.print("int ");
+
+			for (int i = 0; i < intList.size(); i++) {
+				String term = intList.get(i);
+
+				if (i == 0) {
+					outFile.print(term);
+				}
+				else {
+					outFile.print(", " + term);
+				}
+			}
+
+			outFile.print(" ;\n");
+		}
+
+		if (freeList.size() > 0) {
+			outFile.print("free ");
+
+			for (int i = 0; i < freeList.size(); i++) {
+				String term = freeList.get(i);
+
+				if (i == 0) {
+					outFile.print(term);
+				}
+				else {
+					outFile.print(", " + term);
+				}
+			}
+
+			outFile.print(" ;\n");
+		}
+	}
+
+	protected static void writeDvar(PrintWriter outFile, Set<String> dvar_effective) {
+
+		outFile.println("# dvar ");
 
 		Map<String, Dvar> dvarMap = SolverData.getDvarMap();
 		ArrayList<String> sortedDvar = new ArrayList<String>(dvarMap.keySet());
-		sortedDvar.retainAll(usedDvar);
+		sortedDvar.retainAll(dvar_effective);
 		Collections.sort(sortedDvar);
 
-		ArrayList<String> intList = new ArrayList<String>();
-		ArrayList<String> freeList = new ArrayList<String>();
+//		ArrayList<String> intList = new ArrayList<String>();
+//		ArrayList<String> freeList = new ArrayList<String>();
 
 		for (String key : sortedDvar) {
 
@@ -320,65 +345,36 @@ public class AmplWriter {
 			String lowerStr = dvarMap.get(key).lowerBound;
 			String upperStr = dvarMap.get(key).upperBound;
 			String toPrint = null;
-
-
+			String freeTag = "";
 
 			if (lowerStr.equalsIgnoreCase(Param.lower_unbounded) && upperStr.equalsIgnoreCase(Param.upper_unbounded)) {
-				freeList.add(key);
-				continue;
+				// free
+				outFile.print("var "+key.toUpperCase());
+				freeTag = "  # free";
 			}
 			else if (lowerStr.equalsIgnoreCase(Param.lower_unbounded)) {
 				toPrint = key.toUpperCase() + " <= " + upper;
-				_amplFile.print("var "+toPrint );
+				outFile.print("var "+toPrint );
 			}
 			else if (upperStr.equalsIgnoreCase(Param.upper_unbounded)) {
 
-				_amplFile.print("var "+key.toUpperCase() + " >= " + lower );
-
+				outFile.print("var "+key.toUpperCase() + " >= " + lower );
 			}
 			else {
 
-				_amplFile.print("var "+key.toUpperCase() + " >= " + lower + " <= " + upper );
-
-				//_amplFile.print("var "+key.toUpperCase() + " <= " + upper );
+				outFile.print("var "+key.toUpperCase() + " >= " + lower + " <= " + upper );
 			}
+			
 
 			if (dvarMap.get(key).integer.equalsIgnoreCase(Param.yes)) {
 				//intList.add(key);
-				_amplFile.print(" integer ;\n");
-			} else {
-				_amplFile.print(" ;\n");
-			}
+				outFile.print(" integer ");
+			} 
+			
+			outFile.print(" ; "+freeTag+"\n");
 			
 		}
 
-//		if (intList.size() > 0) {
-//			_amplFile.print("int ");
-//
-//			for (int i = 0; i < intList.size(); i++) {
-//				String term = intList.get(i);
-//
-//				if (i == 0) {
-//					_amplFile.print(term);
-//				}
-//				else {
-//					_amplFile.print(", " + term);
-//				}
-//			}
-//
-//			_amplFile.print(" ;\n");
-//		}
-
-		if (freeList.size() > 0) {
-
-			for (int i = 0; i < freeList.size(); i++) {
-				String term = freeList.get(i);
-
-				_amplFile.print("var "+term.toUpperCase()+" ;\n");
-
-			}
-
-		}
 	}
 
 }

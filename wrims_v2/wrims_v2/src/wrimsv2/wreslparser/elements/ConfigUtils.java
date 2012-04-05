@@ -178,7 +178,7 @@ public class ConfigUtils {
 		}
 		System.out.println("SendAliasToDvar:"+ControlData.sendAliasToDvar);
 		
-		System.out.println("Ignored... SetAmplOption:   option presolve_eps 1e-13;");
+		//System.out.println("Ignored... SetAmplOption:   option presolve_eps 1e-13;");
 		
 		
 		
