@@ -208,6 +208,10 @@ public class ValueEvaluation {
 		
 	public static IntDouble mod(IntDouble id1, IntDouble id2){
 		IntDouble id;
+		if (id2.getData().doubleValue()==0.0){
+			Error.addEvaluationError("Mod function uses 0 as divider.");
+			return new IntDouble(1.0, false);
+		}
 		if (!id1.isInt() && !id2.isInt()){
 			id=new IntDouble(id1.getData().doubleValue()%id2.getData().doubleValue(), false);
 		}else if (id1.isInt() && !id2.isInt()){

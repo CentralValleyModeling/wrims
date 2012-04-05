@@ -322,6 +322,10 @@ public class Evaluation {
 	
 	public static IntDouble modOperation(IntDouble id1, IntDouble id2){
 		IntDouble id;
+		if (id2.getData().doubleValue()==0.0){
+			Error.addEvaluationError("Mod function uses 0 as divider.");
+			return new IntDouble(1.0, false);
+		}
 		if (id1.isInt() && id2.isInt()){
 			id=new IntDouble(id1.getData().intValue()%id2.getData().intValue(), true);
 		}else if (id1.isInt() && !id2.isInt()){
