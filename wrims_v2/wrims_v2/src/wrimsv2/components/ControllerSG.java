@@ -467,7 +467,7 @@ public class ControllerSG {
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
-			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
+			if (ControlData.solverName.toLowerCase().contains("xalog")) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
@@ -501,7 +501,7 @@ public class ControllerSG {
 					mds.processModel();
 					
 					ILP.setIlpFile();
-					ILP.writeIlp();			
+					ILP.writeIlp();
 					ILP.writeSvarValue();
 					
 					if (Error.error_evaluation.size()>=1){
@@ -538,7 +538,9 @@ public class ControllerSG {
 			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
 		ControlData.xasolver.close();
+		if (ControlData.writeInitToDVOutput){
 		DssOperation.writeInitDvarAliasToDSS();
+		}
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 	}

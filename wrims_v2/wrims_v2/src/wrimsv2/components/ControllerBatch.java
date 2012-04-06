@@ -432,6 +432,7 @@ public class ControllerBatch {
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
 			if (ControlData.solverName.toLowerCase().contains("xalog")) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
+			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
 			while (i<modelList.size()  && noError){  
 				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
@@ -501,7 +502,7 @@ public class ControllerBatch {
 		}
 		ControlData.xasolver.close();
 		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
+		DssOperation.writeInitDvarAliasToDSS();
 		}
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
