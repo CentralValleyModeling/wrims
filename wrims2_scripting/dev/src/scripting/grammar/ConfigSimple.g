@@ -109,6 +109,7 @@ configKey
 |'GroundwaterDir'
 |'ShowWreslLog'
 |'SendAliasToDvar'
+|'PrefixInitToDvarFile'
 ;
 
 SL_COMMENT : '#' ~('\r'|'\n')*  {$channel=HIDDEN;} ;
