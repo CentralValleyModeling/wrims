@@ -22,9 +22,12 @@ public class StudyUtils {
 	public static int total_errors = 0;
 	public static boolean loadParserData=false;
 	public static boolean compileOnly=false;
-	public static String runDir = "";
+
 	public static String parserDataPath = "";
 	public static String configFilePath = "";
+	public static String configFileCanonicalPath = "";
+	public static String configDir = "";
+	public static String configFileName = "default";
 	
 	private StudyUtils() {
 

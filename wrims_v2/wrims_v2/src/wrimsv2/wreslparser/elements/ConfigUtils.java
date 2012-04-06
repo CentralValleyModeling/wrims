@@ -97,7 +97,7 @@ public class ConfigUtils {
 
 
 		String mainfile = configMap.get("mainfile").toLowerCase();
-		String mainFilePath = new File(StudyUtils.runDir, mainfile).getAbsolutePath();
+		String mainFilePath = new File(StudyUtils.configDir, mainfile).getAbsolutePath();
 		
 		if (mainfile.endsWith(".par")) {
 			StudyUtils.loadParserData = true;
@@ -115,20 +115,20 @@ public class ConfigUtils {
 
 		// FilePaths.mainDirectory = configMap.get("maindir");
 		try {
-			FilePaths.groundwaterDir =  new File(StudyUtils.runDir, configMap.get("groundwaterdir")).getCanonicalPath()+"\\";
+			FilePaths.groundwaterDir =  new File(StudyUtils.configDir, configMap.get("groundwaterdir")).getCanonicalPath()+"\\";
 			System.out.println("GroundWaterDir: "+FilePaths.groundwaterDir);
-			FilePaths.setSvarDssPaths(new File(StudyUtils.runDir, configMap.get("svarfile")).getCanonicalPath());
+			FilePaths.setSvarDssPaths(new File(StudyUtils.configDir, configMap.get("svarfile")).getCanonicalPath());
 			System.out.println("SvarFile:       "+FilePaths.fullSvarDssPath);
-			FilePaths.setInitDssPaths(new File(StudyUtils.runDir, configMap.get("initfile")).getCanonicalPath());
+			FilePaths.setInitDssPaths(new File(StudyUtils.configDir, configMap.get("initfile")).getCanonicalPath());
 			System.out.println("InitFile:       "+FilePaths.fullInitDssPath);
-			FilePaths.setDvarDssPaths(new File(StudyUtils.runDir, configMap.get("dvarfile")).getCanonicalPath());
+			FilePaths.setDvarDssPaths(new File(StudyUtils.configDir, configMap.get("dvarfile")).getCanonicalPath());
 			System.out.println("DvarFile:       "+FilePaths.fullDvarDssPath);
 		} catch (IOException e){
 			System.out.println("Invalid file path");
 			e.printStackTrace();
 		}
 		
-		FilePaths.configFileName = new File(configFile).getName();
+		StudyUtils.configFileName = new File(configFile).getName();
 		
 		FilePaths.csvFolderName = "";
 
@@ -246,10 +246,19 @@ public class ConfigUtils {
 		final File configFile = new File(configFilePath);
 
 		
-		if (!configFile.exists()) {
+		try {
+			StudyUtils.configFileCanonicalPath = configFile.getCanonicalPath();
+			StudyUtils.configDir = configFile.getParentFile().getCanonicalPath();
+		} catch (Exception e) {
 			System.out.println("Config file not found: " + configFilePath);
 			System.exit(1);
-		}
+		} finally {
+			if (!configFile.exists()){
+				System.out.println("Config file not found: " + configFilePath);
+				System.exit(1);					
+			}			
+		}		
+
 
 		Map<String, String> configMap = setDefaultConfig();
 
@@ -377,8 +386,9 @@ public class ConfigUtils {
 			
 	
 		// check run dir and mainfile
-		StudyUtils.runDir = configFile.getParent();	
-		File mf = new File(StudyUtils.runDir, configMap.get("mainfile"));
+		// don't limit config file to run folder
+		//StudyUtils.runDir = configFile.getParent();	
+		File mf = new File(StudyUtils.configDir, configMap.get("mainfile"));
 		
 		try {
 			mf.getCanonicalPath();

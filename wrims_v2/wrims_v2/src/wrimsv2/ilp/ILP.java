@@ -17,6 +17,7 @@ import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 import wrimsv2.components.FilePaths;
 import wrimsv2.evaluator.EvalConstraint;
+import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.elements.Tools;
 
 // for LpSolve select 1.Rows 2.Cols 3.Elimeq2 in Presolve
@@ -130,7 +131,7 @@ public class ILP {
 	private static void setLpSolveParentDir() {
 	
 		File lpSolveGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=\\=LpSolve=");  
-		_lpSolveParentDir = new File(lpSolveGrandParentDir.getAbsolutePath(), FilePaths.configFileName); 		
+		_lpSolveParentDir = new File(lpSolveGrandParentDir.getAbsolutePath(), StudyUtils.configFileName); 		
 	
 	}
 	private static void setLpSolveFile() {
@@ -166,7 +167,7 @@ public class ILP {
 	private static void setAmplParentDir() {
 		
 		File amplGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=\\=AMPL=");  
-		_amplParentDir = new File(amplGrandParentDir.getAbsolutePath(), FilePaths.configFileName); 		
+		_amplParentDir = new File(amplGrandParentDir.getAbsolutePath(), StudyUtils.configFileName); 		
 	
 	}
 	private static void setAmplFile() {
