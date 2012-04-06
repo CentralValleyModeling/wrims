@@ -167,16 +167,37 @@ public class ConfigUtils {
 		System.out.println("NumberOfSteps:  "+ControlData.totalTimeStep);
 		System.out.println("Solver:         "+ControlData.solverName);
 		
-		// default is true
+		// default is false
 		if (configMap.keySet().contains("sendaliastodvar")){
 			
-			if (configMap.get("sendaliastodvar").equalsIgnoreCase("no")){
+			String s = configMap.get("sendaliastodvar");
+			
+			if (s.equalsIgnoreCase("yes")){
+				ControlData.sendAliasToDvar = true;	
+			} else if (s.equalsIgnoreCase("no")){
 				ControlData.sendAliasToDvar = false;	
 			} else {
-				ControlData.sendAliasToDvar = true;	
+				ControlData.sendAliasToDvar  = false;	
+			}
+			
+		}
+		System.out.println("SendAliasToDvar: "+ControlData.sendAliasToDvar);
+		
+		// PrefixInitToDvarFile
+		// default is false in controllerBatch but true in other controller
+		if (configMap.keySet().contains("prefixinittodvarfile")){
+			
+			String s = configMap.get("prefixinittodvarfile");
+			
+			if (s.equalsIgnoreCase("yes")){
+				ControlData.writeInitToDVOutput = true;	
+			} else if (s.equalsIgnoreCase("no")){
+				ControlData.writeInitToDVOutput = false;	
+			} else {
+				ControlData.writeInitToDVOutput = false;	
 			}
 		}
-		System.out.println("SendAliasToDvar:"+ControlData.sendAliasToDvar);
+		System.out.println("PrefixInitToDvarFile: "+ControlData.writeInitToDVOutput);
 		
 		//System.out.println("Ignored... SetAmplOption:   option presolve_eps 1e-13;");
 		
