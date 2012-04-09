@@ -228,7 +228,7 @@ public class Controller {
 			runModelXA(sds);
 		}else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
 			runModelGurobi(sds);
-		}else if (ControlData.solverName.equalsIgnoreCase("ILP")){
+		}else if (ControlData.solverName.toLowerCase().contains("ilp")){
 			runModelILP(sds);
 		}else if (ControlData.solverName.equalsIgnoreCase("LPSolve")){
 			try {

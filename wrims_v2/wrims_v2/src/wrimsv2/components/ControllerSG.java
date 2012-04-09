@@ -225,7 +225,7 @@ public class ControllerSG {
 			runModelXA(sds);
 		}else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
 			runModelGurobi(sds);
-		}else if (ControlData.solverName.equalsIgnoreCase("ILP")){
+		}else if (ControlData.solverName.toLowerCase().contains("ilp")){
 			runModelILP(sds);
 		}
 		System.out.println("=================Run ends!================");
