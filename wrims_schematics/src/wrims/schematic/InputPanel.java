@@ -323,7 +323,9 @@ public class InputPanel extends JPanel {
 		});
 		
 		xalog=new JCheckBox("xa log");
+		ilplog = new JCheckBox("ilp log");
 		panel.add(xalog);
+		panel.add(ilplog);
 		return panel;
 	}
 
@@ -353,7 +355,11 @@ public class InputPanel extends JPanel {
 			args[13] = String.valueOf(TimeOperation.monthValue(endMonth
 					.toLowerCase()));
 			args[14] = (String) _day[1].getSelectedItem();
-			if (xalog.isSelected()) {
+			if (ilplog.isSelected() && xalog.isSelected()) {
+				args[15] = "ILP_XALOG";
+			}else if (ilplog.isSelected()) {
+				args[15] = "ILP";
+			}else if (xalog.isSelected()) {
 				args[15] = "XALOG";
 			}else{
 				args[15] = "XA";
@@ -753,5 +759,6 @@ public class InputPanel extends JPanel {
 	private JTextArea _desc;
 	private JTabbedPane tabbedPane;
 	private JCheckBox xalog;
+	private JCheckBox ilplog;
 	public static int _numYearsMax = 201;
 }
