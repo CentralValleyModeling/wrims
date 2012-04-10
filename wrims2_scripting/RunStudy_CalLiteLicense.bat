@@ -1,17 +1,9 @@
 
-
 set ConfigFilePath=%1
 
 echo off
 for %%F in (%ConfigFilePath%) do set dirname=%%~dpF
 set RunDir=%dirname%
-
-rem echo %RunDir%
-
-rem pause
-
-rem set RunDir=%~dp0%studies\callite_svn47\CONV\run
-rem set ConfigFilePath=%RunDir%\CONV.config
 
 
 echo off
@@ -49,12 +41,14 @@ set CLASSPATH=-classpath "%ExternalDir%;%AppJars%"
 set PATH=%ExternalDir%;%JarDir%
 
 :-------------------------------------------------------:
-: dir for sty file generation (read by groundwater.dll  :
+: dir for sty file generation (read by groundwater.dll) :
 :-------------------------------------------------------:
 set Java_Bin=%~dp0%\lib\jre6\bin\
 
-REM ----------------------------------------------------------
+:-------------------------------------------------------:
+: call java to run ControllerBatch class                :
+:-------------------------------------------------------:
 
+%Java_Bin%java -Xmx1472m -Xss1280K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
 
-%Java_Bin%java -Xmx1400m -Xss1024K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
 exit

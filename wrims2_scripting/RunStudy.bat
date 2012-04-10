@@ -51,7 +51,4 @@ set Java_Bin=%~dp0%\lib\jre6\bin\
 
 %Java_Bin%java -Xmx1472m -Xss1280K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
 
-
-rem Remove this following "exit" if you want to pause 
-
 exit
