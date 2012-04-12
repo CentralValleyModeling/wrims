@@ -87,11 +87,11 @@ template : TEMPLATE ID '{' ( template_svar | template_dvar | template_dvar_array
 
 //label : LABEL ID ;
 
-template_dvar : '*dvar' varID '{' dvar_trunk '}' ;
+template_dvar : '%dvar' varID '{' dvar_trunk '}' ;
 
-template_dvar_array : '*dvar' dimension varID '{' dvar_trunk '}' ;
+template_dvar_array : '%dvar' dimension varID '{' dvar_trunk '}' ;
 
-template_svar : '*svar' varID  svar_trunk ;
+template_svar : '%svar' varID  svar_trunk ;
 
 sequence returns[String id, SequenceTemp seqObj]
 @init{ $seqObj = new SequenceTemp(); }
@@ -630,7 +630,7 @@ columnNumber : INT ;
 rowNumber : INT ;
 	
 varFunc
-	: v=varID '(' ( expr_add ) ')' 
+	: v=varID '(' ( expr_add  (',' expr_add )*   ) ')' 
 	{dependants.add($v.text);
 	 //System.out.println(dependants);
 	 }
@@ -678,11 +678,12 @@ QUOTE : '\'' .*  '\'' ;
 
 ML_COMMENT : '/*' .* '*/' {$channel = HIDDEN;}; //{skip();}; 
 
-SL_COMMENT : '#' ~('\r'|'\n')*  '\r'? '\n' {$channel=HIDDEN;} ;
+SL_COMMENT : ('#'|'!') ~('\r'|'\n')*  '\r'? '\n' {$channel=HIDDEN;} ;
 
-AND : '&&' | '.and.' ;
-OR  : '||' | '.or.' ;
-NOT : '!' | '.not.' ;
+AND : '&&' | '.and.' | '.AND.' ;
+OR  : '||' | '.or.' | '.OR.' ;
+NOT : '!' | '.not.' | '.NOT.' ;
+NOT_EQUAL :  '.ne.' | '.NE.' ;
 
 MONTH :   'month' ;
 MonthID : 'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'|'dec';        
@@ -695,7 +696,7 @@ MODEL :     'model' | 'MODEL' ;
 SEQUENCE :  'sequence' | 'SEQUENCE' ;
 
 ORDER :     'order' | 'ORDER' ;
-INCLUDE :   'include' | 'INCLUDE' ;
+INCLUDE :   'include' | 'INCLUDE' | 'Include' ;
 CASE :      'case' | 'CASE' ;
 CONDITION : 'condition' | 'CONDITION' ;
 GOAL :      'goal' | 'GOAL' ;

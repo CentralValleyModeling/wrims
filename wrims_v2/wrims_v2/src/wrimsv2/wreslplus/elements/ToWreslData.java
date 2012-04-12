@@ -92,7 +92,7 @@ public class ToWreslData {
 		o.asList = new ArrayList<String>(m.asList);
 		Collections.sort(o.asList,String.CASE_INSENSITIVE_ORDER);
 
-		o.wtList = new ArrayList<String>(m.wvList_defaultType);
+		o.wtList = new ArrayList<String>(seq.wvList_defaultType);
 		o.wtList.addAll(m.ssList_noCase);
 		Collections.sort(o.wtList,String.CASE_INSENSITIVE_ORDER);
 		
@@ -123,7 +123,7 @@ public class ToWreslData {
 			o.exMap.put(k, convertExternal(m.exMap.get(k)));
 		}
 		
-		// special case. don't use copy and paste
+		// special case. don't copy and paste
 		for (String k: o.svList){			
 			o.svMap.put(k, convertSvar(seq.svMap.get(k)));
 		}
@@ -140,7 +140,7 @@ public class ToWreslData {
 		for (String k: o.asList){			
 			o.asMap.put(k, convertAlias(m.asMap.get(k)));
 		}
-		for (WeightTable w : m.wTableObjList_defaultType){	
+		for (WeightTable w : seq.wTableObjList_defaultType){	
 			
 			//System.out.println("before: "+w.varWeightMap.keySet());
 			//if (w.id.equalsIgnoreCase("obj")) o.wtMap.putAll(convertWeightTable(w));

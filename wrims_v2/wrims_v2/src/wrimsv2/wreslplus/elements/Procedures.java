@@ -421,25 +421,44 @@ public class Procedures {
 
 		for (String seq : s.seqList) {
 			
-			String m = s.seqMap.get(seq).model;
+			SequenceTemp seqObj = s.seqMap.get(seq);
+			
+			String m = seqObj.model;
 
 			ModelTemp mObj = s.modelMap.get(m);
 
-			collectWeightVar(mObj);
+			collectWeightVar(mObj, seqObj, s);
 
 		}
 
 	}
 
 	// processed after lowercase conversion
-	public static void collectWeightVar(ModelTemp mObj) {
+	public static void collectWeightVar(ModelTemp mObj, SequenceTemp seqObj, StudyTemp st) {
 
+		
+		for (String f: mObj.incFileRelativePathList_post){
+		
+			// TODO: enable for multiple model per file
+			String mn = st.fileModelNameMap.get(f).get(0);
+			ArrayList<WeightTable> wl = st.fileModelDataTable.get(f, mn).wTableObjList;
+			
+			for (WeightTable wt : wl) {
+
+				// TODO: can collect different objective type
+				// if (wt.id.equalsIgnoreCase(s.objectiveType)){
+				seqObj.wvList_defaultType.addAll(wt.varList);
+				seqObj.wTableObjList_defaultType.add(wt);
+				// }
+			}			
+		}
+			
 		for (WeightTable wt : mObj.wTableObjList) {
 
 			// TODO: can collect different objective type
 			// if (wt.id.equalsIgnoreCase(s.objectiveType)){
-			mObj.wvList_defaultType.addAll(wt.varList);
-			mObj.wTableObjList_defaultType.add(wt);
+			seqObj.wvList_defaultType.addAll(wt.varList);
+			seqObj.wTableObjList_defaultType.add(wt);
 			// }
 
 		}

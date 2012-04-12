@@ -95,6 +95,13 @@ public class Workflow {
 		Procedures.copyModelVarMapToSequenceVarMap(st);
 		Procedures.collectWeightVar(st);
 		
+		
+//		//test
+//		String mn = st.modelList_effective.get(0);
+//		ModelTemp mmm = st.modelMap.get(mn);
+//		
+//		System.out.println("!!! wv: "+mmm.wvList_defaultType);
+		
 		return st;
 		
 	}	
