@@ -50,7 +50,7 @@ class StudyTabCl:
 
       print "Set parameters"
 
-      newPath = os.path.join('..','')
+      newPath = os.path.join('../bin/','')
       os.chdir(newPath)
 
       # number of Calsim runs needed (convergence)

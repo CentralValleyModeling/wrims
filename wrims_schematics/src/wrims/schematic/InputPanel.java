@@ -317,7 +317,7 @@ public class InputPanel extends JPanel {
 				"Done"){
 			public void doWork(){
 				String wrimsv2EnginePath = System.getenv("WRIMSv2_Engine_Home");
-				String runFileFullPath = wrimsv2EnginePath + "WRIMSv2_Engine.bat";
+				String runFileFullPath = wrimsv2EnginePath + "bin\\WRIMSv2_Engine.bat";
 				generateBatchFile(runFileFullPath, wrimsv2EnginePath);
 			}
 		});
@@ -415,7 +415,7 @@ public class InputPanel extends JPanel {
 	
 	void runStudy() {
 		String wrimsv2EnginePath = System.getenv("WRIMSv2_Engine_Home");
-		String runFileFullPath = wrimsv2EnginePath + "WRIMSv2_Engine.bat";
+		String runFileFullPath = wrimsv2EnginePath + "bin\\WRIMSv2_Engine.bat";
 		generateBatchFile(runFileFullPath, wrimsv2EnginePath);
 		
 		tabbedPane.setSelectedIndex(1);
