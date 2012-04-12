@@ -23,7 +23,7 @@ public class TestILP_example_callite_uniqueSolution_config_newAlias {
 		/// set control data		
 		String[] controlDataString = {
 
-		"-config=\"D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\callite_uniqueSolution\\callite_newAlias.config\"" 
+		"-config=\"D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\callite_uniqueSolution\\run\\callite_newAlias.config\"" 
 
 		};
 
