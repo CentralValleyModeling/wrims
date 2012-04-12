@@ -9,6 +9,35 @@
     </description>
 	<!-- software revision number -->
 	<property name="version" value="1.0"/>
+	<property name="recipients" value="Andy.J.Draper@us.mwhglobal.com,
+		aolson@water.ca.gov,
+		cquan@water.ca.gov,
+		Derek_Hilts@fws.gov,
+		dogrul@water.ca.gov,
+		easton@mbkengineers.com,
+		ereyes@water.ca.gov,
+		hcanada@water.ca.gov,
+		hxie@water.ca.gov,
+		iferguson@usbr.gov,
+		JAsSalek@usbr.gov,
+		jlu@usbr.gov,
+		KENelson@usbr.gov,
+		kfung@water.ca.gov,
+		kkao@water.ca.gov,
+		knwhite@usbr.gov,
+		KOchenduszko@waterboards.ca.gov,
+		MGowdy@waterboards.ca.gov,
+		miller@water.ca.gov,
+		Nadira_Kabir@URSCorp.com,
+		nislam@water.ca.gov,
+		NParker@usbr.gov,
+		psandhu@water.ca.gov,
+		rfield@usbr.gov,
+		sanjaya@water.ca.gov,
+		sushil@water.ca.gov,
+		swu@water.ca.gov,
+		TFitzhugh@usbr.gov,
+		zchen@water.ca.gov"/>
 	<property name="dist.dir" location="build/dist/wrimsv2_SG"/>
 	<property name="wrimsv2_SG.lib" location="lib" />
 	<property name="jre6.installdir" location="..\3rd_party\jrockit-jre1.6.0_26-R28.1.4"/>
@@ -92,7 +121,7 @@
 	</target>
 	<target name="notify" depends="deploy" description="notify team"> 
 		   <mail
-		      tolist="hxie@water.ca.gov"
+		      tolist="${recipients}"
 		      from="wrims2.group.developers@gmail.com"
 		      subject="WRIMS 2 with latest updates is available for download"
 		      mailhost="smtp.gmail.com"
@@ -100,7 +129,7 @@
 		      ssl="true"
 		      user="wrims2.group.developers@gmail.com"
 		      password="BDOisNo1">
-		      <message>WRIMS 2 with latest updates is avaialbe for download at &#10; http://baydeltaoffice.water.ca.gov/modeling/hydrology/WRIMS2/download/wrimsv2_SG-${DSTAMP}.zip</message>
+		      <message>WRIMS 2 with latest updates is available for download at &#10; &#10; http://baydeltaoffice.water.ca.gov/modeling/hydrology/WRIMS2/download/wrimsv2_SG-${DSTAMP}.zip</message>
 		   </mail>
 	</target> 
 	<target name="clean">
