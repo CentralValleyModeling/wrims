@@ -170,7 +170,7 @@ partC: 	(IDENT|IDENT1|usedKeywords) ('-' (IDENT|IDENT1|usedKeywords))*;
   
 usedKeywords: YEAR|MONTH|MONTH_CONST|DAY|PASTMONTH|RANGE|TAFCFS|DAYSIN|SUM|MAX|MIN|INT|REAL|ABS|EXP|LOG|LOG10|POW|MOD|SELECT|FROM|GIVEN|USE|WHERE
 |CONSTRAIN|ALWAYS|NAME|DVAR|CYCLE|FILE|CONDITION|INCLUDE|LOWERBOUND|UPPERBOUND|INTEGERTYPE|UNITS|CONVERTUNITS|TYPE|OUTPUT
-|CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE|UPPERUNBOUNDED|LOWERUNBOUNDED;
+|CASE|ORDER|EXPRESSION|LHSGTRHS|LHSLTRHS|WEIGHT|FUNCTION|FROM_WRESL_FILE|UPPERUNBOUNDED|LOWERUNBOUNDED|AND|OR|NOT;
 
 tableSQL returns [EvalExpression ee] @init{String table=null; String select=null; String use=null; HashMap<String, Number> given=null; HashMap<String, Number> where=null;}
 	: SELECT ((i1=IDENT{select=$i1.text;})|(u1=usedKeywords{select=$u1.text;})) FROM i2=IDENT{table=$i2.text;} 
@@ -279,17 +279,31 @@ relation
 	| '<='
 	;	
 
-conditionStatement returns [boolean result]
-	:	((r=relationStatementSeries{result=$r.result;})|ALWAYS{result=true;})
-	;
-
 whereStatement returns [String whereIdent, Number value]
   : ((i=IDENT{$whereIdent=$i.text;})|(u=usedKeywords{$whereIdent=$u.text;})) '=' expression{$value=Evaluation.assignWhereStatement($expression.ee);} 
   ;
+
+conditionStatement returns [boolean result]
+	:	((r=relationUnary{result=$r.result;})|ALWAYS{result=true;})
+	;
+
+relationUnary returns [boolean result]
+  : (n=NOT)? r=relationStatementSeries{
+      if ($n==null){
+        return $r.result;
+      }else{
+        if ($r.result){
+          return false;
+        }else{
+          return true;
+        }
+      }
+  }
+  ; 
 	
 relationStatementSeries returns [boolean result] 
   : r1=relationRangeStatement {result=$r1.result;} 
-    (((s='.and.')|(s='.or.')) r2=relationRangeStatement {result=Evaluation.relationStatementSeries(result, $r2.result, $s.text);})* ;
+    (((s=AND)|(s=OR)) r2=relationRangeStatement {result=Evaluation.relationStatementSeries(result, $r2.result, $s.text);})* ;
 
 relationRangeStatement returns [boolean result]
   : (r1=relationStatement{result=$r1.result;})|(r2=range_func{result=$r2.result;})
@@ -297,7 +311,7 @@ relationRangeStatement returns [boolean result]
 
 relationStatement returns [boolean result] 
 	: (	( expression relation expression ) => (e1=expression) relation (e2=expression) {result=Evaluation.relationStatement($e1.ee, $e2.ee, $relation.text);} )
-	| ( ( '('relationStatementSeries')'  ) => '('r2=relationStatementSeries')' {result=$r2.result;} )
+	| ( ( '('relationUnary')'  ) => '('r2=relationUnary')' {result=$r2.result;} )
 	;
 
 constraintStatement returns [EvalConstraint ec]
@@ -338,6 +352,10 @@ TAFCFS: 'taf_cfs'|'cfs_taf'|'cfs_af'|'af_cfs';
 DAYSIN: 'daysin'|'daysinmonth';
 
 ARRAY_ITERATOR : '$m' ;
+
+AND: '.and.';
+OR: '.or.';
+NOT: '.not.';
 
 SUM: 'sum';
 MAX : 'max';
