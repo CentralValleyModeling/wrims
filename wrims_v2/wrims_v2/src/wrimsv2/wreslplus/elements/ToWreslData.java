@@ -124,7 +124,15 @@ public class ToWreslData {
 		}
 		
 		// special case. don't copy and paste
-		for (String k: o.svList){			
+		for (String k: o.svList){		
+//			System.out.println("svarName: "+k );
+//			System.out.println("modelName: "+m.id );
+//			System.out.println("this file: "+m.absPath );
+//			System.out.println("incFileList_post: ");
+//			System.out.println(m.incFileRelativePathList_post );
+//			System.out.println("svincFileList_post: ");
+//			System.out.println(m.svIncFileList_post);
+
 			o.svMap.put(k, convertSvar(seq.svMap.get(k)));
 		}
 		
@@ -160,7 +168,12 @@ public class ToWreslData {
 	public static Svar convertSvar (SvarTemp s){
 		
 		Svar o = new Svar();
-		o.fromWresl = s.fromWresl;
+		try {
+			o.fromWresl = s.fromWresl;
+		} catch (Exception e) {
+			System.out.println("#### error");
+			System.out.println("svarName: "+s.id);
+		}
 		o.kind = s.kind;
 		o.units = s.units;
 		o.caseName = s.caseName;

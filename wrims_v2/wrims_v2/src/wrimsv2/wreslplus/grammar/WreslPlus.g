@@ -158,6 +158,26 @@ scope { ModelTemp m_;}
 	   )+
 	   ;
 
+///// external
+//
+//external returns[String id, ExternalTemp exObj]
+//scope { ExternalTemp ex_;} 
+//@init{ $external::ex_ = new ExternalTemp(); 
+//       $external::ex_.fromWresl = this.currentAbsolutePath; 
+//       dependants = new LinkedHashSet<String>();  
+//	 }
+//@after{ $id = $external::ex_.id; $exObj=$external::ex_;}	 
+//	: external_old
+// 	;
+//
+//external_old : DEFINE LOCAL? externalID '{' EXTERNAL external_fileName '}' ;
+//
+//
+//external_fileName : f=fileName {$external::ex_.fileName=$f.text;} ;
+//fileName : ID ('.' ID)? ;
+//externalID : i=ID {$external::ex_.id=$i.text;} ; 
+
+
 
 weight returns[String id, WeightTable wtObj]
 scope { WeightTable wt_;
@@ -168,7 +188,7 @@ scope { WeightTable wt_;
        dependants = new LinkedHashSet<String>();
 	 }
 @after{ $id = $weight::wt_.id; $wtObj=$weight::wt_; $wtObj.dependants= dependants;}	 
-	: 'objective' LOCAL? weightTableID '=' '{' weight_item+ '}' ;
+	: OBJECTIVE LOCAL? weightTableID '=' '{' weight_item+ '}' ;
 
 weightTableID : i=ID {$weight::wt_.id=$i.text;$weight::wt_.line=$i.getLine();} ;
 
@@ -260,8 +280,8 @@ goal_hs_case
 
 lhs : LHS e=expr_add {$goal_hs::gl_.lhs=$e.text;} ;
 rhs : RHS e=expr_add {$goal_hs_trunk::gc_.rhs=$e.text;} ;
-lhs_gt_rhs : LHS '>' RHS ( 'penalty' p=expr_add {$goal_hs_trunk::gc_.lhs_gt_rhs=$p.text;} | constrain ) ;
-lhs_lt_rhs : LHS '<' RHS ( 'penalty' p=expr_add {$goal_hs_trunk::gc_.lhs_lt_rhs=$p.text;} | constrain ) ;
+lhs_gt_rhs : LHS '>' RHS ( PENALTY p=expr_add {$goal_hs_trunk::gc_.lhs_gt_rhs=$p.text;} | constrain ) ;
+lhs_lt_rhs : LHS '<' RHS ( PENALTY p=expr_add {$goal_hs_trunk::gc_.lhs_lt_rhs=$p.text;} | constrain ) ;
 
 constrain : 'constrain' ;
 
@@ -452,7 +472,7 @@ scope { ExternalTemp ex_;
 
 ex_id : i=ID {$ex_g::ex_.id=$i.text;} ;
 
-ex_old : DEFINE ex_id '{' EXTERNAL f=ex_fileName {$ex_g::ex_.fileName=$f.text;} '}' ;
+ex_old : DEFINE LOCAL? ex_id '{' EXTERNAL f=ex_fileName {$ex_g::ex_.fileName=$f.text;} '}' ;
 
 ex_fileName : ID ('.' ID)? ;
 
@@ -610,8 +630,11 @@ atom
     ;
 
 preCycleVar
-	:  ID '@[' ID ']'  
+	:  preCycleVar_new | preCycleVar_old
 	;
+
+preCycleVar_new :  ID '@[' ID ']'  ;
+preCycleVar_old :  ID '[' ID ']' ;  
 
 externalFunc
 	:  'extern:(' ID '(' expr_add ')' ')'
@@ -672,7 +695,8 @@ multiInputFunc
 //Int: 'int';
 //Real: 'real';
 
-reservedID :  MONTH | MonthID ;
+
+reservedID :  MONTH ; //| MonthID ;
 
 QUOTE : '\'' .*  '\'' ;
 
@@ -686,12 +710,13 @@ NOT : '!' | '.not.' | '.NOT.' ;
 NOT_EQUAL :  '.ne.' | '.NE.' ;
 
 MONTH :   'month' ;
-MonthID : 'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'|'dec';        
+//MonthID : 'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'|'dec';        
 
 
 REAL :   ( Digit+ '.' Digit* ) | ( '.' Digit+ )  ;
 INT :   Digit+ ;
 
+OBJECTIVE : 'objective' | 'OBJECTIVE' | 'Objective' ;
 MODEL :     'model' | 'MODEL' ;
 SEQUENCE :  'sequence' | 'SEQUENCE' ;
 
@@ -701,6 +726,7 @@ CASE :      'case' | 'CASE' ;
 CONDITION : 'condition' | 'CONDITION' ;
 GOAL :      'goal' | 'GOAL' ;
 VALUE :     'value' | 'VALUE' ;
+PENALTY : 'penalty' | 'PENALTY' ;
 
 CONFIG : 'config' ;
 LABEL : 'label' ;
@@ -708,7 +734,7 @@ NAME : 'name' ;
 PARAM : 'param' ;
 
 // deprecated keyword
-DEFINE : 'define' | 'DEFINE' ;
+DEFINE : 'define' | 'DEFINE' | 'Define' ;
 LOCAL : '[local]' | '[LOCAL]' ; 
 /////////////////////////////// 
 
@@ -717,28 +743,28 @@ DVAR : 'dvar' ;
 SVAR : 'svar' ;
 ALIAS : 'alias' | 'ALIAS' ;
 TIMESERIES : 'timeseries' ;
+EXTERNAL : 'external' | 'EXTERNAL' ;
 TEMPLATE : 'template' ;
 
 
 SUM : 'sum' | 'SUM' ;
-KIND : 'kind' | 'KIND' ;
-UNITS : 'units' | 'UNITS' ;
-CONVERT : 'convert' | 'CONVERT' ;
-UPPER : 'upper' | 'UPPER' ;
-LOWER : 'lower' | 'LOWER' ;
+KIND : 'kind' | 'KIND' | 'Kind';
+UNITS : 'units' | 'UNITS' | 'Units' ;
+CONVERT : 'convert' | 'CONVERT' |'Convert' ;
+UPPER : 'upper' | 'UPPER' | 'Upper';
+LOWER : 'lower' | 'LOWER' | 'Lower';
 
 UNBOUNDED : 'unbounded'|'UNBOUNDED' ;
 
-ALWAYS: 'always'|'ALWAYS' ;
+ALWAYS: 'always'|'ALWAYS'|'Always' ;
 INTEGER : 'integer'|'INTEGER';
 
-EXTERNAL : 'external' | 'EXTERNAL' ;
 
-SELECT : 'select' | 'SELECT' ;
-FROM   : 'from' | 'FROM' ;
-WHERE  : 'where' | 'WHERE' ;
-GIVEN  : 'given' | 'GIVEN' ;
-USE    : 'use' | 'USE' ;
+SELECT : 'select' | 'SELECT'|'Select' ;
+FROM   : 'from' | 'FROM'|'From' ;
+WHERE  : 'where' | 'WHERE'|'Where' ;
+GIVEN  : 'given' | 'GIVEN'|'Given' ;
+USE    : 'use' | 'USE'|'Use' ;
 
 LHS : 'lhs' | 'LHS' ;
 RHS : 'rhs' | 'RHS' ;

@@ -81,10 +81,25 @@ public class Workflow {
 		
 		Procedures.findFileGroupOrder(st);
 		
+		System.out.println("@@@0 fileGroupOrder: "+st.fileGroupOrder);
 
+		Procedures.postProcessIncFileList(st);
+		
+		// prerequisite: postProcessIncFileList
+		
+		//System.out.println("@@@1 svIncFileList_post");
+		//System.out.println(st.modelMap.get("base").svIncFileList_post);
+		
+		//Procedures.postProcessVarListinIncFile_step1(st);
+		
+		System.out.println("@@@2 svIncFileList_post: "+st.modelMap.get("base").svIncFileList_post);
+		//System.out.println(st.modelMap.get("base").svIncFileList_post);
+		
 		Procedures.postProcessVarListinIncFile(st);
-		Procedures.postProcessIncFileList(st);		
-
+		
+		System.out.println("@@@3 svIncFileList_post: "+st.modelMap.get("base").svIncFileList_post);
+		//System.out.println(st.modelMap.get("base").svIncFileList_post);
+		
 		
 		// can be processed after error check 
 		Procedures.processGoalHS(st);  // changes dvList and ssList
