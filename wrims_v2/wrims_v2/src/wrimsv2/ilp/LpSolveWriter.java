@@ -8,9 +8,7 @@ import java.util.Set;
 
 import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.Dvar;
-import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.WeightElement;
-import wrimsv2.components.ControlData;
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.evaluator.EvalConstraint;
 
@@ -41,51 +39,6 @@ public class LpSolveWriter {
 //		return usedDvar;
 //	}
 
-	protected static void writeDvarValue(PrintWriter dvarFile, Set<String> dvar_effective) {
-		
-		Map<String, Dvar> dvMap = SolverData.getDvarMap();
-		Map<String, WeightElement> wtMap = SolverData.getWeightMap();
-		//Map<String, WeightElement> wtSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
-		
-		ArrayList<String> dvar_weighted = new ArrayList<String>(wtMap.keySet());
-		dvar_weighted.addAll(ControlData.currModelDataSet.usedWtSlackSurplusList);
-		
-		ArrayList<String> dvar_unweighted = new ArrayList<String>(dvMap.keySet());
-		dvar_unweighted.removeAll(wtMap.keySet());
-		dvar_unweighted.removeAll(ControlData.currModelDataSet.usedWtSlackSurplusList);
-		
-		dvar_unweighted.retainAll(dvar_effective);
-		Collections.sort(dvar_weighted);
-		Collections.sort(dvar_unweighted);
-		
-		
-		dvarFile.println("/* Weighted Dvar    */");
-		for (String s : dvar_weighted){
-			String dvName = String.format("%-35s", s);
-			dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
-		}
-		dvarFile.println();
-		dvarFile.println("/* Unweighted Dvar    */");	
-		for (String s : dvar_unweighted){
-			String dvName = String.format("%-35s", s);
-			dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
-		}
-	}	
-	
-	protected static void writeSvarValue(PrintWriter svarFile) {
-		
-		Map<String, Svar> svMap = ControlData.currSvMap;
-		
-		ArrayList<String> sortedTerm = new ArrayList<String>(svMap.keySet());
-		Collections.sort(sortedTerm);
-		
-		for (String s : sortedTerm){
-			String svName = String.format("%-35s", s);
-			svarFile.print(svName + ":  " + svMap.get(s).getData().getData() +"\n"  );
-			
-		}
-	}
-	
 	public static void writeComment(PrintWriter outFile, String msg) {
 		
 

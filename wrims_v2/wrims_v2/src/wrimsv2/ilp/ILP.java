@@ -10,7 +10,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import lpsolve.LpSolveException;
+
 import wrimsv2.commondata.solverdata.SolverData;
+import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.components.ControlData;
@@ -26,6 +29,8 @@ public class ILP {
 
 	private static File _lpSolveParentDir;
 	private static File _amplParentDir;
+	private static String _lpSolveDir;
+	public static String lpSolveFilePath;
 	private static PrintWriter _lpSolveFile;
 	private static PrintWriter _amplFile;
 	private static PrintWriter _svarFile;
@@ -35,7 +40,7 @@ public class ILP {
 	private static final String ampl_comment_Symbol = "#";
 
 	private ILP() {
-
+		
 	}
 
 	public static void initializeIlp() {
@@ -62,9 +67,27 @@ public class ILP {
 
 	public static void writeObjValue_XA() {
 		
+		double objValue = ControlData.xasolver.getObjective();
+		writeObjValue(Double.toString(objValue), _lpSolveFile, lpSolve_comment_Symbol);
+		writeObjValue(Double.toString(objValue), _amplFile, ampl_comment_Symbol);
+	
+	}
+	
+	public static void writeObjValue_LPSOLVE() {
+		
+		double objValue;
+		try {
+			objValue = ControlData.lpssolver.getObjective();
+			writeObjValue(Double.toString(objValue), _lpSolveFile, lpSolve_comment_Symbol);
+			writeObjValue(Double.toString(objValue), _amplFile, ampl_comment_Symbol);
+		}
+		catch (LpSolveException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			writeObjValue(" LpSolveException Error! ", _lpSolveFile, lpSolve_comment_Symbol);
+			writeObjValue(" LpSolveException Error! ", _amplFile, ampl_comment_Symbol);
+		}
 
-		writeObjValue_XA(_lpSolveFile, lpSolve_comment_Symbol);
-		writeObjValue_XA(_amplFile, ampl_comment_Symbol);
 	
 	}
 	
@@ -109,15 +132,15 @@ public class ILP {
 
 	}
 	
-	public static void writeDvarValue() {
+	public static void writeDvarValue_XA() {
 		
-		LpSolveWriter.writeDvarValue(_dvarFile, dvar_effective);
+		writeDvarValue_XA(_dvarFile, dvar_effective);
 		
 	}
 
 	public static void writeSvarValue() {
 		
-		LpSolveWriter.writeSvarValue(_svarFile);
+		writeSvarValue(_svarFile);
 		
 	}
 	
@@ -131,7 +154,8 @@ public class ILP {
 	private static void setLpSolveParentDir() {
 	
 		File lpSolveGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=\\=LpSolve=");  
-		_lpSolveParentDir = new File(lpSolveGrandParentDir.getAbsolutePath(), StudyUtils.configFileName); 		
+		_lpSolveParentDir = new File(lpSolveGrandParentDir.getAbsolutePath(), StudyUtils.configFileName); 
+		_lpSolveDir = new File(_lpSolveParentDir, "lpsolve").getAbsolutePath();
 	
 	}
 	private static void setLpSolveFile() {
@@ -151,10 +175,11 @@ public class ILP {
 		dvarFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".dvar";
 
 		try {
-			String ilpDir = new File(_lpSolveParentDir, "lpsolve").getAbsolutePath();
+			//lpSolveDir = new File(_lpSolveParentDir, "lpsolve").getAbsolutePath();
 			String varDir = new File(_lpSolveParentDir, "var").getAbsolutePath();
 			
-			_lpSolveFile = Tools.openFile(ilpDir, lpSolveFileName);
+			_lpSolveFile = Tools.openFile(_lpSolveDir, lpSolveFileName);
+			lpSolveFilePath = new File(_lpSolveDir, lpSolveFileName).getAbsolutePath(); // for public access
 			_svarFile = Tools.openFile(varDir, svarFileName);
 			_dvarFile = Tools.openFile(varDir, dvarFileName);
 		}
@@ -298,16 +323,61 @@ public class ILP {
 
 
 	
-	private static void writeObjValue_XA(PrintWriter outFile, String commentSym) {		
+	private static void writeObjValue(String objValueStr, PrintWriter outFile, String commentSym) {		
 
-		double objValue = ControlData.xasolver.getObjective();
+		//double objValue = ControlData.xasolver.getObjective();
 		
 		outFile.print("\n\n\n\n");		
 		if (Error.getTotalError()==0) {
-			outFile.println(commentSym+" objective value:   "+objValue);
+			outFile.println(commentSym+" objective value:   "+objValueStr);
 		} else {
 			outFile.println(commentSym+" objective value:   Error! ");	
 		}
 		outFile.flush();
+	}
+
+	private static void writeDvarValue_XA(PrintWriter dvarFile, Set<String> dvar_effective) {
+		
+		Map<String, Dvar> dvMap = SolverData.getDvarMap();
+		Map<String, WeightElement> wtMap = SolverData.getWeightMap();
+		//Map<String, WeightElement> wtSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
+		
+		ArrayList<String> dvar_weighted = new ArrayList<String>(wtMap.keySet());
+		dvar_weighted.addAll(ControlData.currModelDataSet.usedWtSlackSurplusList);
+		
+		ArrayList<String> dvar_unweighted = new ArrayList<String>(dvMap.keySet());
+		dvar_unweighted.removeAll(wtMap.keySet());
+		dvar_unweighted.removeAll(ControlData.currModelDataSet.usedWtSlackSurplusList);
+		
+		dvar_unweighted.retainAll(dvar_effective);
+		Collections.sort(dvar_weighted);
+		Collections.sort(dvar_unweighted);
+		
+		
+		dvarFile.println("/* Weighted Dvar    */");
+		for (String s : dvar_weighted){
+			String dvName = String.format("%-35s", s);
+			dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
+		}
+		dvarFile.println();
+		dvarFile.println("/* Unweighted Dvar    */");	
+		for (String s : dvar_unweighted){
+			String dvName = String.format("%-35s", s);
+			dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
+		}
+	}
+
+	private static void writeSvarValue(PrintWriter svarFile) {
+		
+		Map<String, Svar> svMap = ControlData.currSvMap;
+		
+		ArrayList<String> sortedTerm = new ArrayList<String>(svMap.keySet());
+		Collections.sort(sortedTerm);
+		
+		for (String s : sortedTerm){
+			String svName = String.format("%-35s", s);
+			svarFile.print(svName + ":  " + svMap.get(s).getData().getData() +"\n"  );
+			
+		}
 	}
 }

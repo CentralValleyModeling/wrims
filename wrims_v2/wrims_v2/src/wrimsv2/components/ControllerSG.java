@@ -511,7 +511,7 @@ public class ControllerSG {
 					new XASolver();
 
 					ILP.writeObjValue_XA();
-					ILP.writeDvarValue();
+					ILP.writeDvarValue_XA();
 					ILP.closeIlpFile();
 
 					if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");

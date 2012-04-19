@@ -8,16 +8,17 @@ MODEL Mod1 {
 	define Y {integer std kind 'Dvar' units 'num'} 
 	define Z {lower 0 upper 1 kind 'Dvar' units 'num'} 
 	define BB {lower unbounded upper unbounded kind 'Dvar' units 'num'} 
+	define three { value 3. }
 	
-	goal C1 {X + 2*Y +3*z < 4}
-	goal C2 {X+Y>1}
+	goal C1 {X + 2*Y + three*z < 4}
+	goal C2 {X >1}
 	goal C3 {BB=1}
 	
 		
 	Objective obj = {
 		[x, 1]
 		[y, 1]
-		[z, 2]
+		[z, 3]
 	}	
 		
 }

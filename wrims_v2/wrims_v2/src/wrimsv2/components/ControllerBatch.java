@@ -18,6 +18,7 @@ import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.External;
 import wrimsv2.commondata.wresldata.ModelDataSet;
+import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
@@ -425,12 +426,19 @@ public class ControllerBatch {
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
 		
-		new initialXASolver();
+		if (ControlData.solverName.toLowerCase().contains("lpsolve")) {
+			ControlData.solverType = Param.SOLVER_LPSOLVE;
+			// initiate lpsolve
+		} else {
+			ControlData.solverType = Param.SOLVER_XA; //default
+			new initialXASolver();
+		}
+		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		ControlData.currTimeStep=0;
 		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
-			if (ControlData.solverName.toLowerCase().contains("xalog")) new initialXALog();
+			if (ControlData.solverType == Param.SOLVER_XA && ControlData.solverName.toLowerCase().contains("xalog")) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
@@ -471,10 +479,19 @@ public class ControllerBatch {
 						Error.writeEvaluationErrorFile("evaluation_error.txt");
 						noError=false;
 					}
-					new XASolver();
+					
+					// choose solver to solve. TODO: this is not efficient. need to be done outside ILP
+					if (ControlData.solverType == Param.SOLVER_LPSOLVE) {
+						new LPSolveSolver(ILP.lpSolveFilePath);
+						ILP.writeObjValue_LPSOLVE();
+					} else {
+						new XASolver(); // default
+						ILP.writeObjValue_XA();
+						ILP.writeDvarValue_XA();
+					}
 
-					ILP.writeObjValue_XA();
-					ILP.writeDvarValue();
+
+
 					ILP.closeIlpFile();
 
 					if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
@@ -500,7 +517,11 @@ public class ControllerBatch {
 			}
 			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
-		ControlData.xasolver.close();
+		if (ControlData.solverType == Param.SOLVER_LPSOLVE) {
+			//ControlData.lpssolver.deleteLp();
+		} else {
+			ControlData.xasolver.close();
+		}
 		if (ControlData.writeInitToDVOutput){
 		DssOperation.writeInitDvarAliasToDSS();
 		}

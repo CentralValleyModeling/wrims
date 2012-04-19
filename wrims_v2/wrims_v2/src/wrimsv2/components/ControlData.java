@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import lpsolve.LpSolve;
+
 import com.sunsetsoft.xa.Optimizer;
 
 public class ControlData {
@@ -73,12 +75,14 @@ public class ControlData {
 	public static DSSDataWriter writer;
 	public static String solverName;
 	public static Optimizer xasolver;
+	public static LpSolve lpssolver;
 	public static boolean isPostProcessing=false;
 	public static boolean sendAliasToDvar=false;
 	public static boolean outputWreslCSV=false;
 	public static boolean showRunTimeMessage=false;
 	public static boolean showWreslLog=true;
 	public static boolean writeInitToDVOutput=true;
+	public static int solverType;
 
 
 

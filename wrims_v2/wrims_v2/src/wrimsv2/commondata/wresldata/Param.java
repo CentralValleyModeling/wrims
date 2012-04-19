@@ -6,6 +6,13 @@ import java.util.Set;
 
 // global parameters
 public class Param {
+	
+	// solver selection
+	  public static final Integer SOLVER_XA = 10;
+	  public static final Integer SOLVER_LPSOLVE = 20;
+	  public static final Integer SOLVER_CBC = 30;
+	  public static final Integer SOLVER_GUROBI = 40;
+	
 	  public static boolean debug= false; 
 	  public static final String dv_std_lowerBound= "0"; 
 	  public static final String dv_std_upperBound= "upper_unbounded"; 

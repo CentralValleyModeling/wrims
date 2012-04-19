@@ -1,6 +1,9 @@
 package test.test_ilp;
 
 import java.io.IOException;
+
+import lpsolve.LpSolveException;
+
 import org.antlr.runtime.RecognitionException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -15,23 +18,20 @@ public class TestILP_simple {
 	private double expected;
 	
 	@Test(groups = { "ilp_simple" })
-	public void simple1() throws RecognitionException, IOException{
+	public void simple1_xa() throws RecognitionException, IOException{
 		
 		studyPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\simple1\\";
 		dssPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\simple1\\dss\\";
 		
 		/// set control data		
 		String[] controlDataString = {
-				"-config=\"D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\simple1\\Run\\simple1.config\"" 
+				"-config=\"D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\simple1\\Run\\simple1_xa.config\"" 
 				};
-
-//		FilePaths.ilpFileDirectory = "ilp_TestIlp_Simple1";
-//		FilePaths.ilpFile = "test.ilp";
 		
         new ControllerBatch(controlDataString);
 
         
-        expected = 3.0;
+        expected = 4.0;
 
 		double obj_value =  ControlData.xasolver.getObjective();
 		
@@ -39,5 +39,34 @@ public class TestILP_simple {
 
 	}
 	
-
+//	@Test(groups = { "ilp_simple" })
+//	public void simple1_lpsolve() throws RecognitionException, IOException{
+//		
+//		studyPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\simple1\\";
+//		dssPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\simple1\\dss\\";
+//		
+//		/// set control data		
+//		String[] controlDataString = {
+//				"-config=\"D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\simple1\\Run\\simple1_lpsolve.config\"" 
+//				};
+//		
+//        new ControllerBatch(controlDataString);
+//
+//        
+//        expected = 3.0;
+//
+//		//double obj_value =  ControlData.xasolver.getObjective();
+//        //solver.getObjective()
+//		double obj_value = -99;
+////		try {
+////			obj_value = ControlData.lpssolver.getObjective();
+////		}
+////		catch (LpSolveException e) {
+////			// TODO Auto-generated catch block
+////			e.printStackTrace();
+////		}
+//		
+//		Assert.assertEquals(obj_value, expected, expected*tolerance_perc);	
+//
+//	}
 }

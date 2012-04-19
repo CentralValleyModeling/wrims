@@ -1,51 +1,71 @@
 package wrimsv2.solver;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.antlr.runtime.ANTLRStringStream;
-import org.antlr.runtime.CommonTokenStream;
-import org.antlr.runtime.RecognitionException;
-import org.antlr.runtime.TokenStream;
-
-import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
-import wrimsv2.commondata.wresldata.ModelDataSet;
-import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.commondata.solverdata.*;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
 import wrimsv2.components.IntDouble;
-import wrimsv2.components.Error;
 import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.EvalConstraint;
-import wrimsv2.evaluator.EvaluatorLexer;
-import wrimsv2.evaluator.EvaluatorParser;
 import wrimsv2.wreslparser.elements.Tools;
 import lpsolve.*;
 
 public class LPSolveSolver {
-	LpSolve Model = LpSolve.makeLp(SolverData.getConstraintDataMap().size(), SolverData.getDvarMap().size()+SolverData.getWeightSlackSurplusMap().size());
+	LpSolve Model =null;
 	Map <String, Integer> VarMap = new HashMap <String, Integer>();
     double [] addConstraint;
     int [] constraintNum;
     private static PrintWriter _lpsolveFile;
     private static File lpsolveParentDir;
-    
+
+	public LPSolveSolver(String filePath){
+
+		  try {
+			  
+			  LpSolve solver = LpSolve.readLp("test2.lps", LpSolve.IMPORTANT, "test_prob");
+		      //solver.setVerbose(LpSolve.IMPORTANT);
+
+		      int ret = solver.solve();
+		      
+		      if (ret != LpSolve.OPTIMAL){
+		    	  
+		    	  System.out.println(ret);
+		    	  System.out.println(solver.getStatustext(ret));
+		      }
+		      
+		      solver.printSolution(1);
+		      
+		      System.out.println("loops:"+solver.getPresolveloops());
+
+		      int rn = solver.getNorigRows();
+		      for (int i = 1; i < solver.getNcolumns()+1; i++) {
+		          System.out.println(solver.getOrigcolName(i)+" : "+solver.getVarPrimalresult(i+rn));
+		      }
+		      // delete the problem and free memory
+		      //solver.deleteLp(); // move to later
+		      
+		      ControlData.lpssolver = solver; // for other processes
+		    }
+		    catch (LpSolveException e) {
+		       e.printStackTrace();
+		    }
+	}
+	
 	public LPSolveSolver() throws LpSolveException{
+		
+		Model = LpSolve.makeLp(SolverData.getConstraintDataMap().size(), SolverData.getDvarMap().size()+SolverData.getWeightSlackSurplusMap().size());
+
+		
 		lpsolveParentDir = new File(FilePaths.mainDirectory, "=LPSolve=");
 		try {
 			_lpsolveFile = Tools.openFile(lpsolveParentDir.getAbsolutePath(), "LPSolveOutputTest.txt");} 
