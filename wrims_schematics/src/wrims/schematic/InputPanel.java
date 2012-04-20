@@ -324,8 +324,10 @@ public class InputPanel extends JPanel {
 		
 		xalog=new JCheckBox("xa log");
 		ilplog = new JCheckBox("ilp log");
+		useCalLiteLicenseForXA = new JCheckBox("use CalLite License for XA");
 		panel.add(xalog);
 		panel.add(ilplog);
+		panel.add(useCalLiteLicenseForXA);
 		return panel;
 	}
 
@@ -382,14 +384,18 @@ public class InputPanel extends JPanel {
 			out.println("set path=" + externalPath + ";" //+ vistaLibPath + ";"
 					+ engineLibPath + ";%path%");
 			out.println();
-
+			
+			String jarForXA = "XAOptimizer.jar";
+			
+			if (useCalLiteLicenseForXA.isSelected()) jarForXA="CalLiteV16.jar";
+			
 			String executeCommand = javaFullPath
 					+ " -Xmx1600m -Xss1024K -Duser.timezone=UTC -Djava.library.path="
 					+ externalPath + ";" + engineLibPath
 					+ " -cp \"" + externalPath + ";"
 					+ engineLibPath + "\\external" + ";" 
 					+ engineLibPath + "\\WRIMSv2.jar" + ";"
-					+ engineLibPath + "\\XAOptimizer.jar" + ";" 
+					+ engineLibPath + "\\" + jarForXA + ";" 
 					+ engineLibPath + "\\gurobi.jar" + ";"
 					+ engineLibPath + "\\heclib.jar" + ";"
 					+ engineLibPath + "\\jnios.jar" + ";"
@@ -760,5 +766,6 @@ public class InputPanel extends JPanel {
 	private JTabbedPane tabbedPane;
 	private JCheckBox xalog;
 	private JCheckBox ilplog;
+	private JCheckBox useCalLiteLicenseForXA;
 	public static int _numYearsMax = 201;
 }
