@@ -787,11 +787,53 @@ public class Evaluation {
 		return svarTimeSeries(tsName);
 	}
 	
-	public static IntDouble pastCycleDV(String ident, String cycle){
+	public static IntDouble pastCycleNoTimeArray(String ident, String cycle){
 		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
 		IntDouble data=new IntDouble(1.0,false);
 		if (varCycleValueMap.containsKey(ident)){
 			Map<String, IntDouble> var= varCycleValueMap.get(ident);
+			if (var.containsKey(cycle)){
+				data=var.get(cycle);
+			}else{
+				Error.addEvaluationError("The variable "+ident+" is not defined in the past cycle of "+cycle+".");
+				return data;
+			}
+		}else{
+			Error.addEvaluationError("The variable "+ident+" is not defined in the past cycle of "+cycle+".");
+			return data;
+		}
+		return new IntDouble(data.getData(),data.isInt());
+	}
+	
+	public static IntDouble pastCycleTimeArray(String ident, String cycle, EvalExpression ee){
+		IntDouble data=new IntDouble(1.0,false);
+		if (!ee.isNumeric()){
+			Error.addEvaluationError("Time array index of "+ident+" contains decision variable.");
+			return data;
+		}
+		IntDouble id=ee.getValue();
+		if (!id.isInt()){
+			Error.addEvaluationError("Time array index of "+ident+" is not an integer.");
+			return data;
+		}
+		int index=id.getData().intValue();
+		if (index<0){
+			ArrayList<EvalExpression> eeArray=new ArrayList<EvalExpression>();
+			eeArray.add(ee);
+			EvalExpression ee1=getTimeSeries(ident, eeArray);
+			if (!ee1.isNumeric()){
+				Error.addEvaluationError("Time array value of "+ident+" contains decision variable.");
+				return data;
+			}else{
+				return ee1.getValue();
+			}
+		}else if(index==0){
+			return pastCycleNoTimeArray(ident, cycle);
+		}
+		Map<String, Map<String, IntDouble>> varTimeArrayCycleValueMap=ControlData.currStudyDataSet.getVarTimeArrayCycleValueMap();
+	    String varTimeArrayName=ident+"__fut__"+index;
+		if (varTimeArrayCycleValueMap.containsKey(varTimeArrayName)){
+			Map<String, IntDouble> var= varTimeArrayCycleValueMap.get(varTimeArrayName);
 			if (var.containsKey(cycle)){
 				data=var.get(cycle);
 			}else{

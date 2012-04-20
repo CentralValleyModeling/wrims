@@ -539,11 +539,42 @@ public class ValueEvaluation {
 		return svarTimeSeries(tsName);
 	}
 	
-	public static IntDouble pastCycleDV(String ident, String cycle){
+	public static IntDouble pastCycleNoTimeArray(String ident, String cycle){
 		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
 		IntDouble data=new IntDouble(1.0,false);
 		if (varCycleValueMap.containsKey(ident)){
 			Map<String, IntDouble> var= varCycleValueMap.get(ident);
+			if (var.containsKey(cycle)){
+				data=var.get(cycle);
+			}else{
+				Error.addEvaluationError("The variable "+ident+" is not defined in the past cycle of "+cycle+".");
+				return data;
+			}
+		}else{
+			Error.addEvaluationError("The variable "+ident+" is not defined in the past cycle of "+cycle+".");
+			return data;
+		}
+		return new IntDouble(data.getData(),data.isInt());
+	}
+	
+	public static IntDouble pastCycleTimeArray(String ident, String cycle, IntDouble id){
+		IntDouble data=new IntDouble(1.0,false);
+		if (!id.isInt()){
+			Error.addEvaluationError("Time array index of "+ident+" is not an integer.");
+			return data;
+		}
+		int index=id.getData().intValue();
+		if (index<0){
+			ArrayList<IntDouble> idArray=new ArrayList<IntDouble>();
+			idArray.add(id);
+			return getTimeSeries(ident, idArray);
+		}else if(index==0){
+			return pastCycleNoTimeArray(ident, cycle);
+		}
+		Map<String, Map<String, IntDouble>> varTimeArrayCycleValueMap=ControlData.currStudyDataSet.getVarTimeArrayCycleValueMap();
+	    String varTimeArrayName=ident+"__fut__"+index;
+		if (varTimeArrayCycleValueMap.containsKey(varTimeArrayName)){
+			Map<String, IntDouble> var= varTimeArrayCycleValueMap.get(varTimeArrayName);
 			if (var.containsKey(cycle)){
 				data=var.get(cycle);
 			}else{

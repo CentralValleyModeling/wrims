@@ -243,7 +243,7 @@ knownTS returns [IntDouble result]
 //  ;
   
 pastCycleDV returns [IntDouble result]
-  : ^(i1=IDENT '[' i2=IDENT ']'{result=ValueEvaluation.pastCycleDV($i1.text,$i2.text);})
+  : ^(i1=IDENT '[' i2=IDENT ']'{result=ValueEvaluation.pastCycleNoTimeArray($i1.text,$i2.text);})
   ; 
 
 function returns [IntDouble result]

@@ -207,7 +207,7 @@ term returns [EvalExpression ee]
 	:	(IDENT {ee=Evaluation.term_IDENT($IDENT.text);})
 	| (FLOAT {ee=Evaluation.term_FLOAT($FLOAT.text);}) 
 	| ('(' (e=expression) ')' {ee=$e.ee;})
-	| pastCycleDV{ee=Evaluation.term_knownTS($pastCycleDV.result);}
+	| pastCycleValue{ee=Evaluation.term_knownTS($pastCycleValue.result);}
 	| function{ee=$function.ee;}
 	| func{ee=$func.ee;}
 	| (INTEGER {ee=Evaluation.term_INTEGER($INTEGER.text);}) 
@@ -226,8 +226,16 @@ tafcfs_term returns [EvalExpression ee]: TAFCFS ('(' expression ')')? {
     ee=Evaluation.tafcfs_term($TAFCFS.text, $expression.ee);
 };
 	  
-pastCycleDV returns [IntDouble result]
-  : i1=IDENT '[' i2=IDENT ']'{result=Evaluation.pastCycleDV($i1.text,$i2.text);}
+pastCycleValue returns[IntDouble result]
+  : (p1=pastCycleNoTimeArray{return $p1.result;})|(p2=pastCycleTimeArray{return $p2.result;})
+  ;
+
+pastCycleNoTimeArray returns [IntDouble result]
+  : i1=IDENT '[' i2=IDENT ']'{result=Evaluation.pastCycleNoTimeArray($i1.text,$i2.text);}
+  ; 
+  
+pastCycleTimeArray returns [IntDouble result]
+  : i1=IDENT '[' i2=IDENT ']' '(' e1=expression ')' {result=Evaluation.pastCycleTimeArray($i1.text,$i2.text, $e1.ee);}
   ; 
 
 function returns [EvalExpression ee]

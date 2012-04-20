@@ -219,19 +219,19 @@ tafcfs_term returns [IntDouble id]: TAFCFS ('(' expression ')')? {
 };
 	
 knownTS returns [IntDouble result]  
-  : (f=function{result=$f.result;})|(p=pastCycleDV {result=$p.result;}) 
+  : (f=function{result=$f.result;})|(p=pastCycleValue {result=$p.result;}) 
   ;
   
-//pastMonthTS  
-//  : ((i1=IDENT)|TAFCFS) '(' ((p=PASTMONTH)|(i=I)|(pm=(MONTH_CONST '-' MONTH (('+'|'-') INTEGER)? ))|(mp=(MONTH '-' MONTH_CONST (('+'|'-') INTEGER)?))) ')'
-//  ;
+pastCycleValue returns [IntDouble result]
+  : (p1=pastCycleNoTimeArray{return $p1.result;})|(p2=pastCycleTimeArray{return $p2.result;})
+  ;
+
+pastCycleNoTimeArray returns [IntDouble result]
+  : i1=IDENT '[' i2=IDENT ']'{result=ValueEvaluation.pastCycleNoTimeArray($i1.text,$i2.text);}
+  ; 
   
-//preMonthTS 
-//  : IDENT '(' (s='-')? INTEGER ')'  
-//  ;
-  
-pastCycleDV returns [IntDouble result]
-  : i1=IDENT '[' i2=IDENT ']'{result=ValueEvaluation.pastCycleDV($i1.text,$i2.text);}
+pastCycleTimeArray returns [IntDouble result]
+  : i1=IDENT '[' i2=IDENT ']' '(' e1=expression ')' {result=ValueEvaluation.pastCycleTimeArray($i1.text,$i2.text, $e1.id);}
   ; 
 
 function returns [IntDouble result]

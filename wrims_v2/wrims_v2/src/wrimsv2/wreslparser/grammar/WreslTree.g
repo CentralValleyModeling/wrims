@@ -575,9 +575,15 @@ function : external_func | max_func | min_func | int_func | var_model ;
 
 function_logical : range_func ;
 
-var_model 
+var_model: var_model_noTimeArray|var_model_timeArray;
+
+var_model_noTimeArray 
 	: varName=IDENT '[' cycleName = IDENT ']' 
 	  {  $expression::varInCycle.add($varName.text+'['+$cycleName.text+']' );} ; //{ $expression::DV.add($i.text.toLowerCase());} ;	
+
+var_model_timeArray 
+  : varName=IDENT '[' cycleName = IDENT ']' '(' e=expression ')'
+    {  $expression::varInCycle.add($varName.text+'['+$cycleName.text+']'+'(' + $e.text +')' );} ; //{ $expression::DV.add($i.text.toLowerCase());} ; 
 
 external_func // this could be timeseries function
 	: i=IDENT {$expression::SV.add($i.text);} '('  ie=expression (',' e=expression  {$expression::SV.addAll($e.members);$expression::varInCycle.addAll($e.setVarInCycle);}  )*  ')' 
