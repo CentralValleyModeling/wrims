@@ -324,7 +324,7 @@ public class InputPanel extends JPanel {
 		
 		xalog=new JCheckBox("xa log");
 		ilplog = new JCheckBox("ilp log");
-		useCalLiteLicenseForXA = new JCheckBox("use CalLite License for XA");
+		useCalLiteLicenseForXA = new JCheckBox("use XA free limited License");
 		panel.add(xalog);
 		panel.add(ilplog);
 		panel.add(useCalLiteLicenseForXA);
