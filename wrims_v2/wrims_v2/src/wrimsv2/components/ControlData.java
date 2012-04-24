@@ -26,7 +26,7 @@ import lpsolve.LpSolve;
 import com.sunsetsoft.xa.Optimizer;
 
 public class ControlData {
-	public static int currTimeStep;
+	public static ArrayList<Integer> currTimeStep;
 	public static StudyDataSet currStudyDataSet=new StudyDataSet();
 	public static ModelDataSet currModelDataSet=new ModelDataSet();
 	public static Map<String, Svar> currSvMap=new HashMap<String, Svar>() ;

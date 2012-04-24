@@ -575,7 +575,7 @@ public class ModelDataSet implements Serializable {
 					DataTimeSeries.dvAliasTS.put(asName,dds);
 				}
 				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
-				dataList[ControlData.currTimeStep]=id.getData().doubleValue();
+				dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=id.getData().doubleValue();
 			} catch (RecognitionException e) {
 				Error.addEvaluationError("Alias evaluation has error.");
 				IntDouble id=new IntDouble(-901.0,false);
@@ -584,7 +584,7 @@ public class ModelDataSet implements Serializable {
 					varCycleValueMap.get(asName).put(model, id);
 				}
 				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
-				dataList[ControlData.currTimeStep]=-901.0;
+				dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=-901.0;
 			}
 			evaluator.reset();
 			
@@ -616,7 +616,7 @@ public class ModelDataSet implements Serializable {
 						DataTimeSeries.dvAliasTS.put(newAsName,dds);
 					}
 					double[] dataList=DataTimeSeries.dvAliasTS.get(newAsName).getData();
-					dataList[ControlData.currTimeStep]=id.getData().doubleValue();
+					dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=id.getData().doubleValue();
 				} catch (RecognitionException e) {
 					Error.addEvaluationError("Alias evaluation has error.");
 					IntDouble id=new IntDouble(-901.0,false);
@@ -632,7 +632,7 @@ public class ModelDataSet implements Serializable {
 						}
 					}
 					double[] dataList=DataTimeSeries.dvAliasTS.get(newAsName).getData();
-					dataList[ControlData.currTimeStep]=-901.0;
+					dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=-901.0;
 				}
 				evaluator.reset();
 			}

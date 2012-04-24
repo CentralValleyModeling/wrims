@@ -234,8 +234,8 @@ public class ControllerTree {
 		
 		new initialXASolver();
 		boolean noError=true;
-		ControlData.currTimeStep=0;
-		while (ControlData.currTimeStep<ControlData.totalTimeStep.get(0) && noError){
+		VariableTimeStep.initialCurrTimeStep(modelList);
+		while (ControlData.currTimeStep.get(0)<ControlData.totalTimeStep.get(0) && noError){
 			clearDvarValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
@@ -277,6 +277,7 @@ public class ControllerTree {
 				cal = Calendar.getInstance();
 				System.out.println("      After alias: "+cal.getTimeInMillis());
 				//new RCCComparison();
+				ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 				i=i+1;
 			}
 			if (ControlData.timeStep.equals("1MON")){
@@ -285,7 +286,6 @@ public class ControllerTree {
 				currTimeAddOneDay();
 			}
 			System.out.println(ControlData.currYear+"/"+ControlData.currMonth);
-			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
 		DssOperation.writeInitDvarAliasToDSS();
 		DssOperation.writeDVAliasToDSS();
@@ -315,8 +315,8 @@ public class ControllerTree {
 		}
 
 		boolean noError=true;
-		ControlData.currTimeStep=0;
-		while (ControlData.currTimeStep<ControlData.totalTimeStep.get(0) && noError){
+		VariableTimeStep.initialCurrTimeStep(modelList);
+		while (ControlData.currTimeStep.get(0)<ControlData.totalTimeStep.get(0) && noError){
 			clearDvarValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
@@ -362,6 +362,7 @@ public class ControllerTree {
 				cal = Calendar.getInstance();
 				System.out.println("      After alias: "+cal.getTimeInMillis());
 				//new RCCComparison();
+				ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 				i=i+1;
 			}
 			if (ControlData.timeStep.equals("1MON")){
@@ -372,7 +373,6 @@ public class ControllerTree {
 			System.out.println(ControlData.currYear+"/"+ControlData.currMonth);
 			DssOperation.writeInitDvarAliasToDSS();
 			DssOperation.writeDVAliasToDSS();
-			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
 	}
 	
@@ -645,12 +645,12 @@ public class ControllerTree {
 					DataTimeSeries.dvAliasTS.put(asName,dds);
 				}
 				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
-				dataList[ControlData.currTimeStep]=id.getData().doubleValue();
+				dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=id.getData().doubleValue();
 			} catch (RecognitionException e) {
 				Error.addEvaluationError("Alias evaluation has error.");
 				alias.data=new IntDouble(-901.0,false);
 				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
-				dataList[ControlData.currTimeStep]=-901.0;
+				dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=-901.0;
 			}
 		}
 	}
@@ -681,12 +681,12 @@ public class ControllerTree {
 					DataTimeSeries.dvAliasTS.put(asName,dds);
 				}
 				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
-				dataList[ControlData.currTimeStep]=id.getData().doubleValue();
+				dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=id.getData().doubleValue();
 			} catch (RecognitionException e) {
 				Error.addEvaluationError("Alias evaluation has error.");
 				alias.data=new IntDouble(-901.0,false);
 				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
-				dataList[ControlData.currTimeStep]=-901.0;
+				dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=-901.0;
 			}
 			evaluator.reset();
 		}

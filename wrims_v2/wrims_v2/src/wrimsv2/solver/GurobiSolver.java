@@ -175,7 +175,7 @@ public class GurobiSolver {
 				DataTimeSeries.dvAliasTS.put(dvName,dds);
 			}
 			double[] dataList=DataTimeSeries.dvAliasTS.get(dvName).getData();
-			dataList[ControlData.currTimeStep]=value;
+			dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=value;
 			
 			out.write(dvName+":"+value+"\n");
 		}

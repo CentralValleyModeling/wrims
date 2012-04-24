@@ -96,4 +96,11 @@ public class VariableTimeStep {
 			}
 		}
 	}
+	
+	public static void initialCurrTimeStep(ArrayList<String> modelList){
+		ControlData.currTimeStep=new ArrayList<Integer>();
+		for (int i=0; i<modelList.size(); i++){
+			ControlData.currTimeStep.add(0);
+		}
+	}
 }

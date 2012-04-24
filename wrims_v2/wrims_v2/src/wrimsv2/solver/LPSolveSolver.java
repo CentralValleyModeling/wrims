@@ -229,7 +229,7 @@ public class LPSolveSolver {
 				DataTimeSeries.dvAliasTS.put(dvName,dds);
 			}
 			double[] dataList=DataTimeSeries.dvAliasTS.get(dvName).getData();
-			dataList[ControlData.currTimeStep]=value;
+			dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=value;
 		}
 		
 		if (ControlData.showRunTimeMessage) System.out.println("Assign Dvar Done.");

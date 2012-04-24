@@ -465,7 +465,7 @@ public class ValueEvaluation {
 			Error.addEvaluationError("Can't access decision variable after the current time step.");
 		}
 		
-		int index=indexValue+ControlData.currTimeStep;
+		int index=indexValue+ControlData.currTimeStep.get(ControlData.currCycleIndex);
 		if (index>=0){
 			DssDataSetFixLength dds=DataTimeSeries.dvAliasTS.get(ident);
 			double[] data=dds.getData();

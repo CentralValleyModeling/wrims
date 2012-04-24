@@ -234,8 +234,8 @@ public class ControllerSG {
 		new initialXASolver();
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
-		ControlData.currTimeStep=0;
-		while (ControlData.currTimeStep<ControlData.totalTimeStep.get(0) && noError){
+		VariableTimeStep.initialCurrTimeStep(modelList);
+		while (ControlData.currTimeStep.get(0)<ControlData.totalTimeStep.get(0) && noError){
 			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
@@ -289,6 +289,7 @@ public class ControllerSG {
 				}else{
 					new AssignPastCycleVariable();
 				}
+				ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 				i=i+1;
 			}
 			if (ControlData.timeStep.equals("1MON")){
@@ -296,7 +297,6 @@ public class ControllerSG {
 			}else{
 				currTimeAddOneDay();
 			}
-			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
 		ControlData.xasolver.close();
 		DssOperation.writeInitDvarAliasToDSS();
@@ -310,8 +310,8 @@ public class ControllerSG {
 		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
-		ControlData.currTimeStep=0;
-		while (ControlData.currTimeStep<ControlData.totalTimeStep.get(0) && noError){
+		VariableTimeStep.initialCurrTimeStep(modelList);
+		while (ControlData.currTimeStep.get(0)<ControlData.totalTimeStep.get(0) && noError){
 			clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
@@ -368,6 +368,7 @@ public class ControllerSG {
 				}else{
 					new AssignPastCycleVariable();
 				}
+				ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 				i=i+1;
 			}
 			if (ControlData.timeStep.equals("1MON")){
@@ -375,7 +376,6 @@ public class ControllerSG {
 			}else{
 				currTimeAddOneDay();
 			}
-			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
 		DssOperation.writeInitDvarAliasToDSS();
 		DssOperation.writeDVAliasToDSS();
@@ -452,8 +452,8 @@ public class ControllerSG {
 		new initialXASolver();
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
-		ControlData.currTimeStep=0;
-		while (ControlData.currTimeStep<ControlData.totalTimeStep.get(0) && noError){
+		VariableTimeStep.initialCurrTimeStep(modelList);
+		while (ControlData.currTimeStep.get(0)<ControlData.totalTimeStep.get(0) && noError){
 			if (ControlData.solverName.toLowerCase().contains("xalog")) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
@@ -517,6 +517,7 @@ public class ControllerSG {
 				}else{
 					new AssignPastCycleVariable();
 				}
+				ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 				i=i+1;
 			}
 			if (ControlData.timeStep.equals("1MON")){
@@ -524,7 +525,6 @@ public class ControllerSG {
 			}else{
 				currTimeAddOneDay();
 			}
-			ControlData.currTimeStep=ControlData.currTimeStep+1;
 		}
 		ControlData.xasolver.close();
 		if (ControlData.writeInitToDVOutput){
