@@ -3,7 +3,7 @@ set ConfigFilePath=%1
 
 echo off
 for %%F in (%ConfigFilePath%) do set dirname=%%~dpF
-set RunDir=%dirname%
+set RunDir=%dirname%\run\
 
 
 echo off

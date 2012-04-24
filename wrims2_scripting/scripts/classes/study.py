@@ -22,8 +22,8 @@ class Study:
 		
 		self._logger = Param.logger
 		self.configPath = configPath
-		self.runPath = dirname(self.configPath)
-		self.ms_configPath = os.path.join( self.runPath, "__MultiStudyRunner.config")
+		self.configDir = dirname(self.configPath)
+		self.ms_configPath = os.path.join( self.configDir, "__MultiStudyRunner.config")
 		self.batFileName = batFileName
 		
 		#parse config file and put the map to cMap	
@@ -41,9 +41,9 @@ class Study:
 		svarFile=svarFile.replace('\"','').replace('\'','')
 		dvarFile=dvarFile.replace('\"','').replace('\'','')
 		
-		self.InitFile = os.path.join( self.runPath, initFile )
-		self.SvarFile = os.path.join( self.runPath, svarFile )
-		self.DvarFile = os.path.join( self.runPath, dvarFile )	
+		self.InitFile = os.path.join( self.configDir, initFile )
+		self.SvarFile = os.path.join( self.configDir, svarFile )
+		self.DvarFile = os.path.join( self.configDir, dvarFile )	
 
 		self.InitFPart = self.cMap.get("InitFPart")	
 		self.SvarFPart = self.cMap.get("SvarFPart")	
@@ -64,7 +64,7 @@ class Study:
 			if "." not in transferFile:
 				transferFile = transferFile+".transfer"
 		
-			dssTransferFile = os.path.join( self.runPath, transferFile )
+			dssTransferFile = os.path.join( self.configDir, transferFile )
 		
 		else:
 			
@@ -99,11 +99,11 @@ class Study:
 		# call cmd to run config path
 
 	
-		self._logger.info("Write study config file in dir: "+self.runPath)
+		self._logger.info("Write study config file in dir: "+self.configDir)
 		# write config file
 		Tools.generateConfigFile(self.ms_configPath, self.cMap, startYear=startYear, numberOfSteps=numberOfSteps)
 		
-		self._logger.info("Run study config file in dir: "+self.runPath)
+		self._logger.info("Run study config file in dir: "+self.configDir)
 		subprocess.call([self.batFileName, self.ms_configPath])
 		#subprocess.call(['cmd.exe', '/c', 'RunStudy.bat', self.ms_configPath])
 

@@ -9,10 +9,10 @@ LogUtils.initLogging(__file__)
 
 
 # default batch file to call is 'RunStudy.bat'
-s1=Study(r"D:\cvwrsm\trunk\wrims2_scripting\studies\callite_svn47\CONV\Run\CONV.config")
+s1=Study(r"D:\cvwrsm\trunk\wrims2_scripting\studies\callite_svn47\CONV\CONV.config")
 
 # use a different batch file 'RunStudy_CalLiteLicense.bat'
-s2=Study(r"D:\cvwrsm\trunk\wrims2_scripting\studies\callite_svn47\TXFR\Run\TXFR.config", batFileName='RunStudy_CalLiteLicense.bat')
+s2=Study(r"D:\cvwrsm\trunk\wrims2_scripting\studies\callite_svn47\TXFR\TXFR.config", batFileName='RunStudy_CalLiteLicense.bat')
 
 # copy all dvars in s1.DvarFile to destination
 # id must be unique in the study scope
