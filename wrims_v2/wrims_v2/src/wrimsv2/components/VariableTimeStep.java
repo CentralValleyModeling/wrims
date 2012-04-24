@@ -25,14 +25,9 @@ public class VariableTimeStep {
 		String definedTimeStep;
 		double priority=0.0;
 		for (String timeStep: timeStepList){
-			if (timeStep.equals(Param.undefined)){
-				definedTimeStep=ControlData.defaultTimeStep;
-			}else{
-				definedTimeStep=timeStep;
-			}
-			if (definedTimeStep.equals("1MON") && priority<2.0){
+			if (timeStep.equals("1MON") && priority<2.0){
 				priority=2.0;
-			}else if (definedTimeStep.equals("1DAY") && priority<1.0){
+			}else if (timeStep.equals("1DAY") && priority<1.0){
 				priority=1.0;
 			}
 		}
@@ -78,5 +73,27 @@ public class VariableTimeStep {
 			}
 		}
 		return ControlData.totalTimeStep;
+	}
+	
+	public static int getTotalTimeStep(String timeStep){
+		if (timeStep.equals("1MON")){
+			return (ControlData.endYear-ControlData.startYear)*12+(ControlData.endMonth-ControlData.startMonth)+1;
+		}else{
+			Date startDate = new Date (ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
+			Date endDate=new Date (ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
+			long startTime=startDate.getTime();
+			long endTime=endDate.getTime();
+			double timestep=(endTime-startTime)/(24*60*60*1000l)+1;
+			return (int)timestep;
+		}
+	}
+	
+	public static void procUndefinedTimeStep(StudyDataSet sds){
+		ArrayList<String> timeStepList=sds.getModelTimeStepList();
+		for (int i=0; i<timeStepList.size(); i++){
+			if (timeStepList.get(i).equals("undefined")){
+				timeStepList.set(i, ControlData.defaultTimeStep);
+			}
+		}
 	}
 }

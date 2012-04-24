@@ -176,8 +176,8 @@ public class Controller {
 			out.write(FilePaths.fullSvarDssPath+"\n");
 			out.write(FilePaths.fullDvarDssPath+"\n");
 			out.write(FilePaths.fullInitDssPath+"\n");
-			out.write(ControlData.timeStep+"\n");
-			out.write(ControlData.totalTimeStep+"\n");
+			out.write(ControlData.defaultTimeStep+"\n");
+			out.write(VariableTimeStep.getTotalTimeStep(ControlData.defaultTimeStep)+"\n");
 			out.write(ControlData.startDay+"\n");
 			out.write(ControlData.startMonth+"\n");
 			out.write(ControlData.startYear+"\n");

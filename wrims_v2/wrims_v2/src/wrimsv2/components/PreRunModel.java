@@ -22,6 +22,7 @@ import wrimsv2.external.LoadAllDll;
 public class PreRunModel {
 	public PreRunModel(StudyDataSet sds){
 		ControlData.currStudyDataSet=sds;
+		VariableTimeStep.procUndefinedTimeStep(sds);
 		ControlData.totalTimeStep=VariableTimeStep.getTotalTimeStep(sds);
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		

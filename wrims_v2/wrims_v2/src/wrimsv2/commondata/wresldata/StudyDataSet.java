@@ -70,7 +70,7 @@ public class StudyDataSet implements Serializable {
 	}
 
 	public ArrayList<String> getModelTimeStepList() {
-		return new ArrayList<String>(modelTimeStepList);
+		return modelTimeStepList;
 	}
 	
 	public void setModelConditionList(ArrayList<String> modelConditionList) {
