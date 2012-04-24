@@ -11,6 +11,7 @@ public class StudyConfig {
 	public ArrayList<String> sequenceList;
 	public ArrayList<String> modelList; // sorted model list based on sequence order
 	public ArrayList<String> modelConditionList; // sorted condition for model on sequence order
+	public ArrayList<String> modelTimeStepList;
 	
 	public Map<String, SimulationDataSet> modelDataMap;
 
@@ -24,6 +25,7 @@ public class StudyConfig {
     	sequenceList = new ArrayList<String>();
     	modelList = new ArrayList<String>();
     	modelConditionList = new ArrayList<String>();
+    	modelTimeStepList = new ArrayList<String>();
     	modelDataMap = new HashMap<String, SimulationDataSet>();
 
 

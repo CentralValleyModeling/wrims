@@ -163,11 +163,11 @@ model
 	->   // ignore
 	;
 sequence
-@init { String id = null;} 
-	: SEQUENCE s=IDENT '{' MODEL m=IDENT ( c=condition)? ORDER INTEGER '}' 
+@init { String id = null;String timeStep=Param.undefined;} 
+	: SEQUENCE s=IDENT '{' MODEL m=IDENT ( c=condition)? ORDER INTEGER (TIMESTEP t=TIMESTEPVALUE{timeStep=$t.text.toUpperCase();})? '}' 
 	  {id = $m.text.toLowerCase();
 	  	model_in_sequence.add(id);}
-	->  ^(Sequence $s Model IDENT[id] Order INTEGER Condition[$c.text] )	 
+	->  ^(Sequence $s Model IDENT[id] Order INTEGER Condition[$c.text] TIMESTEP[timeStep])	 
 	;
 	
 condition returns[String text, String dependants, String varInCycle]
@@ -684,6 +684,8 @@ CONDITION : 'condition' | 'CONDITION' | 'Condition' ;
 SEQUENCE  : 'sequence' | 'SEQUENCE';
 MODEL     : 'model' | 'MODEL' | 'Model';
 ORDER     : 'order' | 'ORDER';
+TIMESTEP  : 'timestep'|'TIMESTEP'|'TimeStep';
+TIMESTEPVALUE: '1mon'|'1day';
 INCLUDE   : 'include' | 'INCLUDE' | 'Include';
 LOWER     : 'lower' | 'LOWER' | 'Lower' ;
 UPPER     : 'upper' | 'UPPER' | 'Upper' ;

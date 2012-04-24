@@ -27,7 +27,7 @@ public class WriteCSV {
 	  //static Map<String, List<String>> mapStringList = new HashMap<String, List<String>>();
 	  //private static PrintWriter out;
 	
-	  public static String sequence_header ="CYCLE,CONDITION";
+	  public static String sequence_header ="CYCLE,CONDITION,TIMESTEP";
 	  public static String weight_header ="DVAR,TIME_ARRAY_SIZE,CONDITION,WEIGHT";
 	  public static String external_header ="FUNCTION,FILE,FROM_WRESL_FILE";
 	  public static String svar_header   ="NAME,TIME_ARRAY_SIZE,CASE,ORDER,CONDITION,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,USED_IN_LATER_CYCLE";
@@ -306,7 +306,7 @@ public class WriteCSV {
 		    for (Integer k: keys ){
 		    			    	
 		    	out.print(seqMap.get(k).modelName);
-		    	out.print(Param.csv_seperator+seqMap.get(k).condition);
+		    	out.print(Param.csv_seperator+seqMap.get(k).condition+Param.csv_seperator+seqMap.get(k).timeStep);
 				out.print("\n");	
 		    	
 			}

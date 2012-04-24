@@ -104,8 +104,7 @@ public class ControllerDebug extends Thread {
 		cd.svDvPartF="CALSIM30_06";
 		cd.initPartF="CALSIM30_06";
 		cd.partA = "CALSIM";
-		cd.partE = "1MON";
-		cd.timeStep="1MON";
+		cd.defaultTimeStep="1MON";
 		cd.startYear=1921;
 		cd.startMonth=10;
 		cd.startDay=31;
@@ -137,8 +136,7 @@ public class ControllerDebug extends Thread {
 		cd.svDvPartF=args[5];
 		cd.initPartF=args[6];
 		cd.partA = args[7];
-		cd.partE = args[8];
-		cd.timeStep = args[8];
+		cd.defaultTimeStep = args[8];
 		cd.startYear=Integer.parseInt(args[9]);
 		cd.startMonth=Integer.parseInt(args[10]);
 		cd.startDay=Integer.parseInt(args[11]);
@@ -245,6 +243,14 @@ public class ControllerDebug extends Thread {
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
 			while (i<modelList.size()  && noError){   
+				
+				String model=modelList.get(i);
+				ModelDataSet mds=modelDataSetMap.get(model);
+				ControlData.currModelDataSet=mds;
+				ControlData.currCycleName=model;
+				ControlData.currCycleIndex=i;
+				VariableTimeStep.setCycleTimeStep(sds);
+				
 				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
 				boolean condition=false;
 				try{
@@ -255,12 +261,6 @@ public class ControllerDebug extends Thread {
 					condition=false;
 				}
 				modelCondition.reset();
-				
-				String model=modelList.get(i);
-				ModelDataSet mds=modelDataSetMap.get(model);
-				ControlData.currModelDataSet=mds;
-				ControlData.currCycleName=model;
-				ControlData.currCycleIndex=i;
 				
 				if (condition){
 					ControlData.currSvMap=mds.svMap;
@@ -322,6 +322,14 @@ public class ControllerDebug extends Thread {
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
 			while (i<modelList.size()  && noError){  
+				
+				String model=modelList.get(i);
+				ModelDataSet mds=modelDataSetMap.get(model);
+				ControlData.currModelDataSet=mds;
+				ControlData.currCycleName=model;
+				ControlData.currCycleIndex=i;
+				VariableTimeStep.setCycleTimeStep(sds);
+
 				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
 				boolean condition=false;
 				try{
@@ -332,12 +340,6 @@ public class ControllerDebug extends Thread {
 					condition=false;
 				}
 				modelCondition.reset();
-				
-				String model=modelList.get(i);
-				ModelDataSet mds=modelDataSetMap.get(model);
-				ControlData.currModelDataSet=mds;
-				ControlData.currCycleName=model;
-				ControlData.currCycleIndex=i;
 				
 				if (condition){
 					ControlData.currSvMap=mds.svMap;
@@ -396,6 +398,14 @@ public class ControllerDebug extends Thread {
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
 			while (i<modelList.size()  && noError){   
+				
+				String model=modelList.get(i);
+				ModelDataSet mds=modelDataSetMap.get(model);
+				ControlData.currModelDataSet=mds;
+				ControlData.currCycleName=model;
+				ControlData.currCycleIndex=i;
+				VariableTimeStep.setCycleTimeStep(sds);
+				
 				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
 				boolean condition=false;
 				try{
@@ -406,12 +416,6 @@ public class ControllerDebug extends Thread {
 					condition=false;
 				}
 				modelCondition.reset();
-				
-				String model=modelList.get(i);
-				ModelDataSet mds=modelDataSetMap.get(model);
-				ControlData.currModelDataSet=mds;
-				ControlData.currCycleName=model;
-				ControlData.currCycleIndex=i;
 				
 				if (condition){
 					ControlData.currSvMap=mds.svMap;
@@ -523,7 +527,7 @@ public class ControllerDebug extends Thread {
 	}
 	
 	public int getTotalTimeStep(){
-		if (ControlData.timeStep.equals("1MON")){
+		if (ControlData.defaultTimeStep.equals("1MON")){
 			return (ControlData.endYear-ControlData.startYear)*12+(ControlData.endMonth-ControlData.startMonth)+1;
 		}else{
 			Date startDate = new Date (ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
@@ -571,6 +575,14 @@ public class ControllerDebug extends Thread {
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
 			while (i<modelList.size()  && noError){  
+				
+				String model=modelList.get(i);
+				ModelDataSet mds=modelDataSetMap.get(model);
+				ControlData.currModelDataSet=mds;
+				ControlData.currCycleName=model;
+				ControlData.currCycleIndex=i;
+				VariableTimeStep.setCycleTimeStep(sds);
+
 				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
 				boolean condition=false;
 				try{
@@ -581,12 +593,6 @@ public class ControllerDebug extends Thread {
 					condition=false;
 				}
 				modelCondition.reset();
-				
-				String model=modelList.get(i);
-				ModelDataSet mds=modelDataSetMap.get(model);
-				ControlData.currModelDataSet=mds;
-				ControlData.currCycleName=model;
-				ControlData.currCycleIndex=i;
 				
 				if (condition){
 					ControlData.currSvMap=mds.svMap;

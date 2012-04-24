@@ -3,6 +3,7 @@ package wrimsv2.wreslparser.elements;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,6 +20,7 @@ import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
+import wrimsv2.components.ControlData;
 import wrimsv2.components.IntDouble;
 import wrimsv2.wreslparser.grammar.WreslTreeWalker;
 
@@ -29,6 +31,7 @@ public class StudyParser{
   private static Map<String, Map<String, String>> cycleVarTypeMap;
   private static Set<String> allValidCycleNames;
   private static Map<String, String> cycleNameConditionMap;
+  private static Map<String, String> cycleNameTimeStepMap;
   private static int n_buffer = 3;
 
 
@@ -38,6 +41,7 @@ public class StudyParser{
 	  cycleVarTypeMap = null;
 	  allValidCycleNames = null; 
 	  cycleNameConditionMap = null;
+	  cycleNameTimeStepMap = null;
   }
   
   public static StudyDataSet writeWreslData(StudyConfig sc, TempData td){
@@ -45,9 +49,11 @@ public class StudyParser{
 
     studyDataSet.setModelList(sc.modelList);
     studyDataSet.setModelConditionList(sc.modelConditionList);
+    studyDataSet.setModelTimeStepList(sc.modelTimeStepList);
 
     Map<String, ModelDataSet> modelDataSetMap = new HashMap<String, ModelDataSet>();
     Map<String, Timeseries> timeseriesMap = new HashMap<String, Timeseries>();
+    Map<String, ArrayList<String>> timeseriesTimeStepMap = new HashMap<String, ArrayList<String>>();
 
     for (String modelName : studyDataSet.getModelList())
     {
@@ -125,14 +131,33 @@ public class StudyParser{
       
       modelDataSetMap.put(modelName, thisModelDataSet);
       timeseriesMap.putAll(ds.tsMap);
+      int modelIndex=studyDataSet.getModelList().indexOf(modelName);
+      String timeStep=sc.modelTimeStepList.get(modelIndex);
+      String definedTimeStep;
+      if (timeStep.equals(Param.undefined)){
+    	  definedTimeStep=ControlData.defaultTimeStep;
+      }else{
+    	  definedTimeStep=timeStep;
+      }
+      for (String timeseriesName:ds.tsMap.keySet()){
+    	  if (timeseriesTimeStepMap.containsKey(timeseriesName)){
+    		  ArrayList<String> timeStepList=timeseriesTimeStepMap.get(timeseriesName);
+    		  if (!timeStepList.contains(definedTimeStep)){
+    			  timeStepList.add(definedTimeStep);
+    		  }
+    	  }else{
+    		  timeseriesTimeStepMap.put(timeseriesName, new ArrayList<String>(Arrays.asList(definedTimeStep)));
+    	  }
+      }
     }
 
     studyDataSet.setModelDataSetMap(modelDataSetMap);
     studyDataSet.setTimeseriesMap(timeseriesMap);
+    studyDataSet.setTimeseriesTimeStepMap(timeseriesTimeStepMap);
 
     return studyDataSet;
   }
-
+  
   public static StudyConfig processMainFileIntoStudyConfig(String relativeMainFilePath) throws RecognitionException, IOException {
 	    /// reset total errors
 	    total_errors = 0;
@@ -158,13 +183,16 @@ public class StudyParser{
 	Collections.sort(sc.sequenceOrder);
 
 	cycleNameConditionMap = new HashMap<String, String>();
+	cycleNameTimeStepMap = new HashMap<String, String>();
 	
     for (Integer i : sc.sequenceOrder) {
       sc.sequenceList.add(sc.sequenceMap.get(i).sequenceName);
       sc.modelList.add(sc.sequenceMap.get(i).modelName);
 
       sc.modelConditionList.add(sc.sequenceMap.get(i).condition);
+      sc.modelTimeStepList.add(sc.sequenceMap.get(i).timeStep);
       cycleNameConditionMap.put(sc.sequenceMap.get(i).modelName, sc.sequenceMap.get(i).condition );
+      cycleNameTimeStepMap.put(sc.sequenceMap.get(i).modelName, sc.sequenceMap.get(i).timeStep );
     }
 
     sc.absMainFilePath = absMainFilePath;

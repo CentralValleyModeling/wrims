@@ -17,10 +17,12 @@ public class StudyDataSet implements Serializable {
 	
 	private ArrayList<String> modelList = new ArrayList<String>();
 	private ArrayList<String> modelConditionList = new ArrayList<String>();
+	private ArrayList<String> modelTimeStepList = new ArrayList<String>();
 	private ArrayList<ValueEvaluatorParser> modelConditionParsers=new ArrayList<ValueEvaluatorParser>();
 	
 	///  < timeseries name, timeseries object > 
 	private Map<String, Timeseries> timeseriesMap = new HashMap<String, Timeseries>();
+	private Map<String, ArrayList<String>> timeseriesTimeStepMap = new HashMap<String, ArrayList<String>>();
 	
 	///  < modelName, modelDataSet > 		
 	private Map<String, ModelDataSet> modelDataSetMap = new HashMap<String, ModelDataSet>();
@@ -37,6 +39,14 @@ public class StudyDataSet implements Serializable {
 
 	public void setTimeseriesMap(Map<String, Timeseries> timeseriesMap) {
 		this.timeseriesMap = timeseriesMap;
+	}
+	
+	public Map<String, ArrayList<String>> getTimeseriesTimeStepMap() {
+		return new HashMap<String, ArrayList<String>>(timeseriesTimeStepMap);
+	}
+	
+	public void setTimeseriesTimeStepMap(Map<String, ArrayList<String>> timeseriesTimeStepMap) {
+		this.timeseriesTimeStepMap = timeseriesTimeStepMap;
 	}
 	
 	public String getAbsMainFilePath() {
@@ -59,8 +69,16 @@ public class StudyDataSet implements Serializable {
 		return new ArrayList<String>(modelConditionList);
 	}
 
+	public ArrayList<String> getModelTimeStepList() {
+		return new ArrayList<String>(modelTimeStepList);
+	}
+	
 	public void setModelConditionList(ArrayList<String> modelConditionList) {
 		this.modelConditionList = modelConditionList;
+	}
+	
+	public void setModelTimeStepList(ArrayList<String> modelTimeStepList) {
+		this.modelTimeStepList = modelTimeStepList;
 	}
 	
 	public ArrayList<ValueEvaluatorParser> getModelConditionParsers() {

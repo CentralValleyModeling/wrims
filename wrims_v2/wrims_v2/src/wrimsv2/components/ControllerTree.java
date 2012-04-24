@@ -92,9 +92,8 @@ public class ControllerTree {
 		ControlData cd=new ControlData();
         cd.svDvPartF="2020D09E";
         cd.initPartF="2020D09E";
-		cd.partA = "CALSIM";
-		cd.partE = "1MON";
-		cd.timeStep="1MON";
+        cd.partA="CalSim";
+		cd.defaultTimeStep="1DAY";
         cd.startYear=1921;
         cd.startMonth=10;
         cd.startDay=31;
@@ -125,7 +124,7 @@ public class ControllerTree {
 		cd.initPartF=args[6];
 		cd.partA = args[7];
 		cd.partE = args[8];
-		cd.timeStep = args[8];
+		cd.defaultTimeStep = args[8];
 		cd.startYear=Integer.parseInt(args[9]);
 		cd.startMonth=Integer.parseInt(args[10]);
 		cd.startDay=Integer.parseInt(args[11]);
@@ -254,6 +253,7 @@ public class ControllerTree {
 				ControlData.currGoalMap=mds.gMap;
 				ControlData.currTsMap=mds.tsMap;
 				ControlData.currCycleIndex=i;
+				VariableTimeStep.setCycleTimeStep(sds);
 				ControlData.isPostProcessing=false;
 				cal = Calendar.getInstance();
 				System.out.println("Before Evaluation: "+cal.getTimeInMillis());
@@ -334,6 +334,7 @@ public class ControllerTree {
 				ControlData.currGoalMap=mds.gMap;
 				ControlData.currTsMap=mds.tsMap;
 				ControlData.currCycleIndex=i;
+				VariableTimeStep.setCycleTimeStep(sds);
 				ControlData.isPostProcessing=false;
 				cal = Calendar.getInstance();
 				System.out.println("Before Evaluation: "+cal.getTimeInMillis());
@@ -418,7 +419,7 @@ public class ControllerTree {
 			//System.out.println("Reading svar timeseries "+tsName);
 			//To Do: in the svar class, add flag to see if svTS has been loaded
 			if (!DataTimeSeries.lookSvDss.contains(tsName)){ 
-				DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarDssPath);
+				DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarDssPath, ControlData.partE);
 				DataTimeSeries.lookSvDss.add(tsName);
 			}
 		}
@@ -694,7 +695,7 @@ public class ControllerTree {
 	}
 	
 	public int getTotalTimeStep(){
-		if (ControlData.timeStep.equals("1MON")){
+		if (ControlData.defaultTimeStep.equals("1MON")){
 			return (ControlData.endYear-ControlData.startYear)*12+(ControlData.endMonth-ControlData.startMonth)+1;
 		}else{
 			Date startDate = new Date (ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);

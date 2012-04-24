@@ -51,9 +51,10 @@ public class ControlData {
 	public static int dataDay;
 	public static int dataMonth;
 	public static int dataYear;
-	public static String timeStep ="1MON"; //TO DO: allow input;
+	public static String defaultTimeStep="1MON";
+	public static String timeStep ="1MON"; 
 	public static String partE="1MON";
-	public static int startYear;       //TO DO: allow input
+	public static int startYear;       
 	public static int startMonth;
 	public static int startDay;
 	public static int writeDssStartYear;

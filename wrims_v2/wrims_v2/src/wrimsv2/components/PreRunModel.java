@@ -62,6 +62,7 @@ public class PreRunModel {
 	
 	public void readTimeseries(){
 		Map<String, Timeseries> tsMap=ControlData.currStudyDataSet.getTimeseriesMap();
+		Map<String, ArrayList<String>> tsTimeStepMap=ControlData.currStudyDataSet.getTimeseriesTimeStepMap(); 
 		ControlData.currEvalTypeIndex=6;
 		Set tsKeySet=tsMap.keySet();
 		Iterator iterator=tsKeySet.iterator();
@@ -70,7 +71,10 @@ public class PreRunModel {
 			//System.out.println("Reading svar timeseries "+tsName);
 			//To Do: in the svar class, add flag to see if svTS has been loaded
 			if (!DataTimeSeries.lookSvDss.contains(tsName)){ 
-				DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarDssPath);
+				ArrayList<String> timeStepList=tsTimeStepMap.get(tsName);
+				for (String timeStep:timeStepList){
+					DssOperation.getSVTimeseries(tsName, FilePaths.fullSvarDssPath, timeStep);
+				}
 				DataTimeSeries.lookSvDss.add(tsName);
 			}
 		}

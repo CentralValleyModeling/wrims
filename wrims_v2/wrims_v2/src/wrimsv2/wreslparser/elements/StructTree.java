@@ -660,7 +660,7 @@ public class StructTree
     }
   }
 
-public void sequenceOrder(String sequenceName, String order, String modelName, String condition)
+public void sequenceOrder(String sequenceName, String order, String modelName, String condition, String timeStep)
   {
     sequenceName = sequenceName.toLowerCase();
     order = order.toLowerCase();
@@ -681,6 +681,7 @@ public void sequenceOrder(String sequenceName, String order, String modelName, S
       if (condition != null) this.seq.condition = condition;
       this.seq.modelName = modelName;
       this.seq.fromWresl = this.S.currentAbsolutePath;
+      this.seq.timeStep=timeStep;
       this.S.seqMap.put(i, this.seq);
       this.S.seqList.add(sequenceName);
     }

@@ -86,8 +86,7 @@ public class ControllerBatch {
 		ControlData.svDvPartF=args[5];
 		ControlData.initPartF=args[6];
 		ControlData.partA = args[7];
-		ControlData.partE = args[8];
-		ControlData.timeStep = args[8];
+		ControlData.defaultTimeStep = args[8];
 		ControlData.startYear=Integer.parseInt(args[9]);
 		ControlData.startMonth=Integer.parseInt(args[10]);
 		ControlData.startDay=Integer.parseInt(args[11]);
@@ -207,6 +206,14 @@ public class ControllerBatch {
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
 			while (i<modelList.size()  && noError){  
+				
+				String model=modelList.get(i);
+				ModelDataSet mds=modelDataSetMap.get(model);
+				ControlData.currModelDataSet=mds;
+				ControlData.currCycleName=model;
+				ControlData.currCycleIndex=i;
+				VariableTimeStep.setCycleTimeStep(sds);
+				
 				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
 				boolean condition=false;
 				try{
@@ -217,12 +224,6 @@ public class ControllerBatch {
 					condition=false;
 				}
 				modelCondition.reset();
-				
-				String model=modelList.get(i);
-				ModelDataSet mds=modelDataSetMap.get(model);
-				ControlData.currModelDataSet=mds;
-				ControlData.currCycleName=model;
-				ControlData.currCycleIndex=i;
 				
 				if (condition){
 					ControlData.currSvMap=mds.svMap;
@@ -282,6 +283,14 @@ public class ControllerBatch {
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
 			while (i<modelList.size()  && noError){   
+				
+				String model=modelList.get(i);
+				ModelDataSet mds=modelDataSetMap.get(model);
+				ControlData.currModelDataSet=mds;
+				ControlData.currCycleName=model;
+				ControlData.currCycleIndex=i;
+				VariableTimeStep.setCycleTimeStep(sds);
+				
 				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
 				boolean condition=false;
 				try{
@@ -292,12 +301,6 @@ public class ControllerBatch {
 					condition=false;
 				}
 				modelCondition.reset();
-				
-				String model=modelList.get(i);
-				ModelDataSet mds=modelDataSetMap.get(model);
-				ControlData.currModelDataSet=mds;
-				ControlData.currCycleName=model;
-				ControlData.currCycleIndex=i;
 				
 				if (condition){
 					ControlData.currSvMap=mds.svMap;
@@ -384,7 +387,7 @@ public class ControllerBatch {
 	}
 
 	public static int getTotalTimeStep(){
-		if (ControlData.timeStep.equals("1MON")){
+		if (ControlData.defaultTimeStep.equals("1MON")){
 			return (ControlData.endYear-ControlData.startYear)*12+(ControlData.endMonth-ControlData.startMonth)+1;
 		}else{
 			Date startDate = new Date (ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
@@ -443,6 +446,14 @@ public class ControllerBatch {
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
 			while (i<modelList.size()  && noError){  
+				
+				String model=modelList.get(i);
+				ModelDataSet mds=modelDataSetMap.get(model);
+				ControlData.currModelDataSet=mds;
+				ControlData.currCycleName=model;
+				ControlData.currCycleIndex=i;
+				VariableTimeStep.setCycleTimeStep(sds);
+				
 				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
 				boolean condition=false;
 				try{
@@ -453,12 +464,6 @@ public class ControllerBatch {
 					condition=false;
 				}
 				modelCondition.reset();
-				
-				String model=modelList.get(i);
-				ModelDataSet mds=modelDataSetMap.get(model);
-				ControlData.currModelDataSet=mds;
-				ControlData.currCycleName=model;
-				ControlData.currCycleIndex=i;
 				
 				if (condition){
 					ControlData.currSvMap=mds.svMap;

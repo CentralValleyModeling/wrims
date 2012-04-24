@@ -8,12 +8,14 @@ public class Sequence {
 	public String modelName;
 	public String condition;
 	public String fromWresl;
+	public String timeStep;
 	
 	public Sequence(){
 		sequenceName=Param.undefined;
 		modelName=Param.undefined;
 		condition=Param.always;
 		fromWresl = Param.undefined;
+		timeStep = Param.undefined;
 	}
 	
 	public String equalEva(){
@@ -21,7 +23,7 @@ public class Sequence {
 		String s = "|";
 		
 		
-		String temp = sequenceName+s+modelName+s+condition;
+		String temp = sequenceName+s+modelName+s+condition+s+timeStep;
 		
 		return temp;
 	}

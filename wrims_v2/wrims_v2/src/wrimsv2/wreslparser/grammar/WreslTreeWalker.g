@@ -84,9 +84,9 @@ external
 	;
 
 sequence 
-	:  ^(Sequence s=IDENT Model m=IDENT Order i=INTEGER c=Condition ) 
+	:  ^(Sequence s=IDENT Model m=IDENT Order i=INTEGER c=Condition t=TIMESTEP) 
 		{
-			F.sequenceOrder($s.text, $i.text, $m.text, $c.text);
+			F.sequenceOrder($s.text, $i.text, $m.text, $c.text, $t.text);
 			
 			SimulationDataSet M = new SimulationDataSet();
 			M.currentAbsolutePath=currentAbsolutePath;

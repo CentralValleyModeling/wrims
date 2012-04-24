@@ -21,10 +21,12 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class DssOperation {
-	public static boolean getSVTimeseries(String name, String file){
+	public static boolean getSVTimeseries(String name, String file, String timeStep){
+		ControlData.timeStep=timeStep;
+		ControlData.partE=timeStep;
 		Timeseries ts=ControlData.allTsMap.get(name);
 		String partC=ts.kind;
-		DataSet ds=getDataForSvar(regularExp(ControlData.partA),regularExp(name),regularExp(partC),"",regularExp(ControlData.partE), regularExp(ControlData.svDvPartF));
+		DataSet ds=getDataForSvar(regularExp(ControlData.partA),regularExp(name),regularExp(partC),"",regularExp(timeStep), regularExp(ControlData.svDvPartF));
 		
 		if (ds==null){
 			return false;
