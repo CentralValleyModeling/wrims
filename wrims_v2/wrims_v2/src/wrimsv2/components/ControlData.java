@@ -63,6 +63,9 @@ public class ControlData {
 	public static int endYear ;
 	public static int endMonth;
 	public static int endDay;
+	public static int cycleTargetDay;
+	public static int cycleTargetMonth;
+	public static int cycleTargetYear;
 	public static int totalTimeStep;
 	public static Date startTime;
 	public static String simulationTimeFrame;
