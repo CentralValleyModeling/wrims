@@ -566,7 +566,7 @@ public class ModelDataSet implements Serializable {
 				}
 				if (!DataTimeSeries.dvAliasTS.containsKey(asName)){
 					DssDataSetFixLength dds=new DssDataSetFixLength();
-					double[] data=new double[ControlData.totalTimeStep];
+					double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
 					dds.setData(data);
 					dds.setTimeStep(ControlData.partE);
 					dds.setStartTime(ControlData.startTime);
@@ -607,7 +607,7 @@ public class ModelDataSet implements Serializable {
 					}
 					if (!DataTimeSeries.dvAliasTS.containsKey(newAsName)){
 						DssDataSetFixLength dds=new DssDataSetFixLength();
-						double[] data=new double[ControlData.totalTimeStep];
+						double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
 						dds.setData(data);
 						dds.setTimeStep(ControlData.partE);
 						dds.setStartTime(ControlData.startTime);

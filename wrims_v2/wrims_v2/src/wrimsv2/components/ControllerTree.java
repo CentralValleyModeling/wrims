@@ -110,7 +110,6 @@ public class ControllerTree {
         cd.solverName="XA";
         FilePaths.csvFolderName="csv";
         
-		cd.totalTimeStep=getTotalTimeStep();
 	}
 	
 	public void setControlData(String[] args){
@@ -141,7 +140,6 @@ public class ControllerTree {
         cd.writeDssStartMonth=cd.startMonth;
         cd.writeDssStartDay=cd.startDay;
         
-		cd.totalTimeStep=getTotalTimeStep();
 	}
 	
 	public void generateStudyFile(){
@@ -225,7 +223,7 @@ public class ControllerTree {
 		Calendar cal = Calendar.getInstance();
 		System.out.println("After Parsser: "+cal.getTimeInMillis());
 		readTimeseries();
-		initialDvarAliasTS(ControlData.totalTimeStep);
+		initialDvarAliasTS();
 		for (int i=0; i<modelList.size(); i++){
 			String model=modelList.get(i);
 			ModelDataSet mds=modelDataSetMap.get(model);
@@ -237,7 +235,7 @@ public class ControllerTree {
 		new initialXASolver();
 		boolean noError=true;
 		ControlData.currTimeStep=0;
-		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
+		while (ControlData.currTimeStep<ControlData.totalTimeStep.get(0) && noError){
 			clearDvarValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
@@ -307,7 +305,7 @@ public class ControllerTree {
 		Calendar cal = Calendar.getInstance();
 		System.out.println("After Parsser: "+cal.getTimeInMillis());
 		readTimeseries();
-		initialDvarAliasTS(ControlData.totalTimeStep);
+		initialDvarAliasTS();
 		for (int i=0; i<modelList.size(); i++){
 			String model=modelList.get(i);
 			ModelDataSet mds=modelDataSetMap.get(model);
@@ -318,7 +316,7 @@ public class ControllerTree {
 
 		boolean noError=true;
 		ControlData.currTimeStep=0;
-		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
+		while (ControlData.currTimeStep<ControlData.totalTimeStep.get(0) && noError){
 			clearDvarValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
@@ -425,7 +423,7 @@ public class ControllerTree {
 		}
 	}
 	
-	public void	initialDvarAliasTS(long totalTimeStep){
+	public void	initialDvarAliasTS(){
 		
 	}
 	
@@ -638,7 +636,7 @@ public class ControllerTree {
 				alias.data=id;
 				if (!DataTimeSeries.dvAliasTS.containsKey(asName)){
 					DssDataSetFixLength dds=new DssDataSetFixLength();
-					double[] data=new double[ControlData.totalTimeStep];
+					double[] data=new double[ControlData.totalTimeStep.get(0)];
 					dds.setData(data);
 					dds.setTimeStep(ControlData.partE);
 					dds.setStartTime(ControlData.startTime);
@@ -674,7 +672,7 @@ public class ControllerTree {
 				alias.data=id;
 				if (!DataTimeSeries.dvAliasTS.containsKey(asName)){
 					DssDataSetFixLength dds=new DssDataSetFixLength();
-					double[] data=new double[ControlData.totalTimeStep];
+					double[] data=new double[ControlData.totalTimeStep.get(0)];
 					dds.setData(data);
 					dds.setTimeStep(ControlData.partE);
 					dds.setStartTime(ControlData.startTime);
@@ -691,19 +689,6 @@ public class ControllerTree {
 				dataList[ControlData.currTimeStep]=-901.0;
 			}
 			evaluator.reset();
-		}
-	}
-	
-	public int getTotalTimeStep(){
-		if (ControlData.defaultTimeStep.equals("1MON")){
-			return (ControlData.endYear-ControlData.startYear)*12+(ControlData.endMonth-ControlData.startMonth)+1;
-		}else{
-			Date startDate = new Date (ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
-			Date endDate=new Date (ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
-			long startTime=startDate.getTime();
-			long endTime=endDate.getTime();
-			double timestep=(endTime-startTime)/(24*60*60*1000l)+1;
-			return (int)timestep;
 		}
 	}
 	

@@ -123,7 +123,6 @@ public class ControllerDebug extends Thread {
         cd.writeDssStartMonth=ControlData.startMonth;
         cd.writeDssStartDay=ControlData.startDay;
         
-		cd.totalTimeStep=getTotalTimeStep();
 	}
 	
 	public void setControlData(String[] args){
@@ -152,7 +151,6 @@ public class ControllerDebug extends Thread {
         cd.writeDssStartMonth=cd.startMonth;
         cd.writeDssStartDay=cd.startDay;
         
-		cd.totalTimeStep=getTotalTimeStep();
 	}
 	
 	public void generateStudyFile(){
@@ -238,7 +236,7 @@ public class ControllerDebug extends Thread {
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		ControlData.currTimeStep=0;
-		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
+		while (ControlData.currTimeStep<ControlData.totalTimeStep.get(0) && noError){
 			clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
@@ -316,7 +314,7 @@ public class ControllerDebug extends Thread {
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		ControlData.currTimeStep=0;
-		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
+		while (ControlData.currTimeStep<ControlData.totalTimeStep.get(0) && noError){
 			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
@@ -393,7 +391,7 @@ public class ControllerDebug extends Thread {
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		ControlData.currTimeStep=0;
-		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
+		while (ControlData.currTimeStep<ControlData.totalTimeStep.get(0) && noError){
 			clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
@@ -526,19 +524,6 @@ public class ControllerDebug extends Thread {
 		}
 	}
 	
-	public int getTotalTimeStep(){
-		if (ControlData.defaultTimeStep.equals("1MON")){
-			return (ControlData.endYear-ControlData.startYear)*12+(ControlData.endMonth-ControlData.startMonth)+1;
-		}else{
-			Date startDate = new Date (ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
-			Date endDate=new Date (ControlData.endYear-1900, ControlData.endMonth-1, ControlData.endDay);
-			long startTime=startDate.getTime();
-			long endTime=endDate.getTime();
-			double timestep=(endTime-startTime)/(24*60*60*1000l)+1;
-			return (int)timestep;
-		}
-	}
-	
 	public void currTimeAddOneMonth(){
 		ControlData.currMonth=ControlData.currMonth+1;
 		ControlData.currYear=ControlData.currYear;
@@ -569,7 +554,7 @@ public class ControllerDebug extends Thread {
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		ControlData.currTimeStep=0;
-		while (ControlData.currTimeStep<ControlData.totalTimeStep && noError){
+		while (ControlData.currTimeStep<ControlData.totalTimeStep.get(0) && noError){
 			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();

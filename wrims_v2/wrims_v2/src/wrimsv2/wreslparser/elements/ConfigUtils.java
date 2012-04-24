@@ -156,15 +156,12 @@ public class ConfigUtils {
 		ControlData.writeDssStartMonth = ControlData.startMonth;
 		ControlData.writeDssStartDay = ControlData.startDay;
 
-		ControlData.totalTimeStep = ControllerBatch.getTotalTimeStep();
-
 		System.out.println("TimeStep:       "+ControlData.timeStep);
 		System.out.println("SvarAPart:      "+ControlData.partA);
 		System.out.println("SvarFPart:      "+ControlData.svDvPartF);
 		System.out.println("InitFPart:      "+ControlData.initPartF);
 		System.out.println("StartYear:      "+ControlData.startYear);
 		System.out.println("StartMonth:     "+ControlData.startMonth);
-		System.out.println("NumberOfSteps:  "+ControlData.totalTimeStep);
 		System.out.println("Solver:         "+ControlData.solverName);
 		
 		// default is false

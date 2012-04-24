@@ -66,7 +66,7 @@ public class ControlData {
 	public static int cycleTargetDay;
 	public static int cycleTargetMonth;
 	public static int cycleTargetYear;
-	public static int totalTimeStep;
+	public static ArrayList<Integer> totalTimeStep;
 	public static Date startTime;
 	public static String simulationTimeFrame;
 	public static String partA;

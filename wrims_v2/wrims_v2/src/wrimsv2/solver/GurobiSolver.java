@@ -166,7 +166,7 @@ public class GurobiSolver {
 			}
 			if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){
 				DssDataSetFixLength dds=new DssDataSetFixLength();
-				double[] data=new double[ControlData.totalTimeStep];
+				double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
 				dds.setData(data);
 				dds.setTimeStep(ControlData.partE);
 				dds.setStartTime(ControlData.startTime);

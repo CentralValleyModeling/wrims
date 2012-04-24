@@ -22,6 +22,7 @@ import wrimsv2.external.LoadAllDll;
 public class PreRunModel {
 	public PreRunModel(StudyDataSet sds){
 		ControlData.currStudyDataSet=sds;
+		ControlData.totalTimeStep=VariableTimeStep.getTotalTimeStep(sds);
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
 		ControlData.startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
@@ -50,7 +51,7 @@ public class PreRunModel {
 		ControlData.allTsMap=sds.getTimeseriesMap();
 		
 		readTimeseries();
-		initialDvarAliasTS(ControlData.totalTimeStep);
+		initialDvarAliasTS();
 		for (int i=0; i<modelList.size(); i++){
 			String model=modelList.get(i);
 			ModelDataSet mds=modelDataSetMap.get(model);
@@ -81,7 +82,7 @@ public class PreRunModel {
 		System.out.println("Timeseries Reading Done.");
 	}
 	
-	public void	initialDvarAliasTS(long totalTimeStep){
+	public void	initialDvarAliasTS(){
 		DataTimeSeries.dvAliasTS=new HashMap<String, DssDataSetFixLength>();
 	}
 	
