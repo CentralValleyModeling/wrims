@@ -20,7 +20,7 @@ public class VariableTimeStep {
 		}
 	}
 	
-	public static void setCycleTargetDate(StudyDataSet sds){
+	public static void setCycleEndDate(StudyDataSet sds){
 		ArrayList<String> timeStepList=sds.getModelTimeStepList();
 		String definedTimeStep;
 		double priority=0.0;
@@ -32,29 +32,35 @@ public class VariableTimeStep {
 			}
 		}
 		if (priority==2.0){
-			addOneMonthToTargetDate();
+			addOneMonthToCycleEndDate();
 		}else if (priority==1.0){
-			addOneDayToTargetDate();
+			addOneDayToCycleEndDate();
 		}
 	}
 	
-	private static void addOneMonthToTargetDate(){
-		ControlData.cycleTargetMonth=ControlData.currMonth+1;
-		ControlData.cycleTargetYear=ControlData.currYear;
-		if (ControlData.cycleTargetMonth>12){
-			ControlData.cycleTargetMonth=ControlData.cycleTargetMonth-12;
-			ControlData.cycleTargetYear=ControlData.cycleTargetYear+1;
-		}
-		ControlData.cycleTargetDay=TimeOperation.numberOfDays(ControlData.cycleTargetMonth, ControlData.cycleTargetYear);
+	public static void setCycleStartDate(int day, int month, int year){
+		ControlData.cycleStartDay=day;
+		ControlData.cycleStartMonth=month;
+		ControlData.cycleStartYear=year;
 	}
 	
-	private static void addOneDayToTargetDate(){
-		Date currDate = new Date (ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
-		long cycleTargetTime=currDate.getTime()+1 * 24 * 60 * 60 * 1000l;
-		Date cycleTargetDate = new Date (cycleTargetTime);
-		ControlData.cycleTargetMonth=cycleTargetDate.getMonth()+1;
-		ControlData.cycleTargetYear=cycleTargetDate.getYear()+1900;
-		ControlData.cycleTargetDay=cycleTargetDate.getDate();
+	private static void addOneMonthToCycleEndDate(){
+		ControlData.cycleEndMonth=ControlData.cycleStartMonth+1;
+		ControlData.cycleEndYear=ControlData.cycleStartYear;
+		if (ControlData.cycleEndMonth>12){
+			ControlData.cycleEndMonth=ControlData.cycleEndMonth-12;
+			ControlData.cycleEndYear=ControlData.cycleEndYear+1;
+		}
+		ControlData.cycleEndDay=1;
+	}
+	
+	private static void addOneDayToCycleEndDate(){
+		Date startDate = new Date (ControlData.cycleStartYear-1900, ControlData.cycleStartMonth-1, ControlData.cycleStartDay);
+		long cycleEndTime=startDate.getTime()+1 * 24 * 60 * 60 * 1000l;
+		Date cycleEndDate = new Date (cycleEndTime);
+		ControlData.cycleEndMonth=cycleEndDate.getMonth()+1;
+		ControlData.cycleEndYear=cycleEndDate.getYear()+1900;
+		ControlData.cycleEndDay=cycleEndDate.getDate();
 	}
 	
 	public static ArrayList<Integer> getTotalTimeStep(StudyDataSet sds){
@@ -101,6 +107,39 @@ public class VariableTimeStep {
 		ControlData.currTimeStep=new ArrayList<Integer>();
 		for (int i=0; i<modelList.size(); i++){
 			ControlData.currTimeStep.add(0);
+		}
+	}
+	
+	public static void initialCycleStartDate(){
+		ControlData.cycleStartDay=ControlData.startDay;
+		ControlData.cycleStartMonth=ControlData.startMonth;
+		ControlData.cycleStartYear=ControlData.startYear;
+	}
+	
+	public static int checkEndDate(int day1, int month1, int year1, int day2, int month2, int year2){
+		Date date1=new Date(year1-1900, month1-1, day1);
+		Date date2=new Date(year2-1900, month2-1, day2);
+		long time1=date1.getTime();
+		long time2=date2.getTime();
+		if (time1<time2){
+			return -1;
+		}else if (time1==time2){
+			return 0;
+		}else{
+			return 1;
+		}
+	}
+	
+	public static void setCurrentDate(StudyDataSet sds, int day, int month, int year){
+		String timeStep=sds.getModelTimeStepList().get(ControlData.currCycleIndex);
+		if (timeStep.equals("1MON")){
+			ControlData.currDay=TimeOperation.numberOfDays(month, year);
+			ControlData.currMonth=month;
+			ControlData.currYear=year;
+		}else{
+			ControlData.currDay=day;
+			ControlData.currMonth=month;
+			ControlData.currYear=year;	
 		}
 	}
 }

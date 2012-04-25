@@ -235,6 +235,8 @@ public class ControllerSG {
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		VariableTimeStep.initialCurrTimeStep(modelList);
+		VariableTimeStep.initialCycleStartDate();
+		VariableTimeStep.setCycleEndDate(sds);
 		while (ControlData.currTimeStep.get(0)<ControlData.totalTimeStep.get(0) && noError){
 			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
@@ -311,6 +313,8 @@ public class ControllerSG {
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		VariableTimeStep.initialCurrTimeStep(modelList);
+		VariableTimeStep.initialCycleStartDate();
+		VariableTimeStep.setCycleEndDate(sds);
 		while (ControlData.currTimeStep.get(0)<ControlData.totalTimeStep.get(0) && noError){
 			clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
@@ -453,6 +457,8 @@ public class ControllerSG {
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		VariableTimeStep.initialCurrTimeStep(modelList);
+		VariableTimeStep.initialCycleStartDate();
+		VariableTimeStep.setCycleEndDate(sds);
 		while (ControlData.currTimeStep.get(0)<ControlData.totalTimeStep.get(0) && noError){
 			if (ControlData.solverName.toLowerCase().contains("xalog")) new initialXALog();
 			clearValues(modelList, modelDataSetMap);

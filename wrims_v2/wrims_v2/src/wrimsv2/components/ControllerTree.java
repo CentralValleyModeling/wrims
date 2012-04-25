@@ -235,6 +235,8 @@ public class ControllerTree {
 		new initialXASolver();
 		boolean noError=true;
 		VariableTimeStep.initialCurrTimeStep(modelList);
+		VariableTimeStep.initialCycleStartDate();
+		VariableTimeStep.setCycleEndDate(sds);
 		while (ControlData.currTimeStep.get(0)<ControlData.totalTimeStep.get(0) && noError){
 			clearDvarValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
@@ -316,6 +318,8 @@ public class ControllerTree {
 
 		boolean noError=true;
 		VariableTimeStep.initialCurrTimeStep(modelList);
+		VariableTimeStep.initialCycleStartDate();
+		VariableTimeStep.setCycleEndDate(sds);
 		while (ControlData.currTimeStep.get(0)<ControlData.totalTimeStep.get(0) && noError){
 			clearDvarValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
