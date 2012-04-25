@@ -382,7 +382,7 @@ public class DssViewer implements Outputer {
 													.indexOf(" "));
 									double val = Double.parseDouble(tValue)
 											/ _longTermTafToCfsConversionFactors
-													.get(periodDate);
+													.get(periodDate) * 12;
 									value = val + " taf";
 								} else if (!isTAFSelected
 										&& _initialUnits.equals("TAF")
@@ -395,7 +395,12 @@ public class DssViewer implements Outputer {
 													.get(periodDate);
 									value = val + " cfs";
 								} else {
-									value = twData.get(name)[j];
+									String tValue = twData.get(name)[j]
+											.substring(0, twData.get(name)[j]
+													.indexOf(" "));
+									double val = Double.parseDouble(tValue) * 12;
+									value = val + " taf";
+									//value = twData.get(name)[j];
 								}
 							}
 						}

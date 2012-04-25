@@ -119,7 +119,7 @@ public class LegendPanel extends JPanel {
 
 				Graphics2D g = e.getGraphics();
 				Pen pen = (Pen) e.getNode().getPen().clone();
-				pen.setWidth(1);
+				pen.setWidth(5);
 				pen.applyTo(g);
 				g.draw(rect);
 			}

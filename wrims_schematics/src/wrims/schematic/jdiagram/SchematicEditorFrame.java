@@ -229,7 +229,8 @@ public class SchematicEditorFrame extends JFrame {
 				return f != null
 						&& f.isFile()
 						&& (f.getName().toLowerCase().endsWith(".xml") || f
-								.getName().toLowerCase().endsWith(".sch"));
+								.getName().toLowerCase().endsWith(".sch"))
+						||f.isDirectory();
 			}
 		});
 		int rval = chooser.showOpenDialog(this);

@@ -194,11 +194,11 @@ public class SchematicViewer extends JPanel {
 			public void drawNode(DrawNodeEvent e) {
 				Rectangle2D rect = e.getBounds();
 				rect.setFrame(rect.getMinX() + 9, rect.getMinY() + 9, rect
-						.getWidth() - 18, rect.getHeight() - 18);
+						.getWidth() - 16, rect.getHeight() - 16);
 
 				Graphics2D g = e.getGraphics();
 				Pen pen = (Pen) e.getNode().getPen().clone();
-				pen.setWidth(1);
+				pen.setWidth(5);
 				pen.applyTo(g);
 				g.draw(rect);
 			}
