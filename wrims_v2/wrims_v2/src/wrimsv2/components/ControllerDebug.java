@@ -238,7 +238,7 @@ public class ControllerDebug extends Thread {
 		VariableTimeStep.initialCurrTimeStep(modelList);
 		VariableTimeStep.initialCycleStartDate();
 		VariableTimeStep.setCycleEndDate(sds);
-		while (ControlData.currTimeStep.get(0)<ControlData.totalTimeStep.get(0) && noError){
+		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 			clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
@@ -250,58 +250,70 @@ public class ControllerDebug extends Thread {
 				ControlData.currCycleName=model;
 				ControlData.currCycleIndex=i;
 				VariableTimeStep.setCycleTimeStep(sds);
+				VariableTimeStep.setCurrentDate(sds, ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear);
 				
-				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
-				boolean condition=false;
-				try{
-					modelCondition.evaluator();
-					condition=modelCondition.evalCondition;
-				}catch (Exception e){
-					Error.addEvaluationError("Model condition evaluation has error.");
-					condition=false;
-				}
-				modelCondition.reset();
-				
-				if (condition){
-					ControlData.currSvMap=mds.svMap;
-					ControlData.currSvFutMap=mds.svFutMap;
-					ControlData.currDvMap=mds.dvMap;
-					ControlData.currDvSlackSurplusMap=mds.dvSlackSurplusMap;
-					ControlData.currAliasMap=mds.asMap;
-					ControlData.currGoalMap=mds.gMap;
-					ControlData.currTsMap=mds.tsMap;
-					ControlData.isPostProcessing=false;
-					mds.processModel();
-					if (Error.error_evaluation.size()>=1){
-						Error.writeEvaluationErrorFile("evaluation_error.txt");
-						noError=false;
+				while(VariableTimeStep.checkEndDate(ControlData.currDay, ControlData.currMonth, ControlData.currYear, ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear)<0){
+					ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
+					boolean condition=false;
+					try{
+						modelCondition.evaluator();
+						condition=modelCondition.evalCondition;
+					}catch (Exception e){
+						Error.addEvaluationError("Model condition evaluation has error.");
+						condition=false;
 					}
+					modelCondition.reset();
 				
-					new LPSolveSolver();
+					if (condition){
+						ClearValue.clearCycleLoopValue(modelList, modelDataSetMap);
+						ControlData.currSvMap=mds.svMap;
+						ControlData.currSvFutMap=mds.svFutMap;
+						ControlData.currDvMap=mds.dvMap;
+						ControlData.currDvSlackSurplusMap=mds.dvSlackSurplusMap;
+						ControlData.currAliasMap=mds.asMap;
+						ControlData.currGoalMap=mds.gMap;
+						ControlData.currTsMap=mds.tsMap;
+						ControlData.isPostProcessing=false;
+						mds.processModel();
+						if (Error.error_evaluation.size()>=1){
+							Error.writeEvaluationErrorFile("evaluation_error.txt");
+							noError=false;
+						}
+				
+						new LPSolveSolver();
 
-					if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
-					if (Error.error_solving.size()<1){
-						ControlData.isPostProcessing=true;
-						mds.processAlias();
-						if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
+						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
+						if (Error.error_solving.size()<1){
+							ControlData.isPostProcessing=true;
+							mds.processAlias();
+							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
+						}else{
+							Error.writeSolvingErrorFile("solving_error.txt");
+							noError=false;
+						}
+						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
+						pauseForDebug(i);
+						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();
+						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
+						if (ControlData.timeStep.equals("1MON")){
+							currTimeAddOneMonth();
+						}else{
+							currTimeAddOneDay();
+						}
 					}else{
-						Error.writeSolvingErrorFile("solving_error.txt");
-						noError=false;
+						new AssignPastCycleVariable();
+						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
+						if (ControlData.timeStep.equals("1MON")){
+							currTimeAddOneMonth();
+						}else{
+							currTimeAddOneDay();
+						}	
 					}
-					System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
-					pauseForDebug(i);
-					//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();
-				}else{
-					new AssignPastCycleVariable();
 				}
-				ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 				i=i+1;
 			}
-			if (ControlData.timeStep.equals("1MON")){
-				currTimeAddOneMonth();
-			}else{
-				currTimeAddOneDay();
-			}
+			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
+			VariableTimeStep.setCycleEndDate(sds);
 		}
 		DssOperation.writeInitDvarAliasToDSS();
 		DssOperation.writeDVAliasToDSS();
@@ -318,7 +330,7 @@ public class ControllerDebug extends Thread {
 		VariableTimeStep.initialCurrTimeStep(modelList);
 		VariableTimeStep.initialCycleStartDate();
 		VariableTimeStep.setCycleEndDate(sds);
-		while (ControlData.currTimeStep.get(0)<ControlData.totalTimeStep.get(0) && noError){
+		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
@@ -331,56 +343,68 @@ public class ControllerDebug extends Thread {
 				ControlData.currCycleName=model;
 				ControlData.currCycleIndex=i;
 				VariableTimeStep.setCycleTimeStep(sds);
+				VariableTimeStep.setCurrentDate(sds, ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear);
 
-				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
-				boolean condition=false;
-				try{
-					modelCondition.evaluator();
-					condition=modelCondition.evalCondition;
-				}catch (Exception e){
-					Error.addEvaluationError("Model condition evaluation has error.");
-					condition=false;
-				}
-				modelCondition.reset();
+				while(VariableTimeStep.checkEndDate(ControlData.currDay, ControlData.currMonth, ControlData.currYear, ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear)<0){
+					ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
+					boolean condition=false;
+					try{
+						modelCondition.evaluator();
+						condition=modelCondition.evalCondition;
+					}catch (Exception e){
+						Error.addEvaluationError("Model condition evaluation has error.");
+						condition=false;
+					}
+					modelCondition.reset();
 				
-				if (condition){
-					ControlData.currSvMap=mds.svMap;
-					ControlData.currSvFutMap=mds.svFutMap;
-					ControlData.currDvMap=mds.dvMap;
-					ControlData.currDvSlackSurplusMap=mds.dvSlackSurplusMap;
-					ControlData.currAliasMap=mds.asMap;
-					ControlData.currGoalMap=mds.gMap;
-					ControlData.currTsMap=mds.tsMap;
-					ControlData.isPostProcessing=false;
-					mds.processModel();
-					if (Error.error_evaluation.size()>=1){
-						Error.writeEvaluationErrorFile("evaluation_error.txt");
-						noError=false;
-					}
-					new XASolver();
-					if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
-					if (Error.error_solving.size()<1){
-						ControlData.isPostProcessing=true;
-						mds.processAlias();
-						if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
+					if (condition){
+						ClearValue.clearCycleLoopValue(modelList, modelDataSetMap);
+						ControlData.currSvMap=mds.svMap;
+						ControlData.currSvFutMap=mds.svFutMap;
+						ControlData.currDvMap=mds.dvMap;
+						ControlData.currDvSlackSurplusMap=mds.dvSlackSurplusMap;
+						ControlData.currAliasMap=mds.asMap;
+						ControlData.currGoalMap=mds.gMap;
+						ControlData.currTsMap=mds.tsMap;
+						ControlData.isPostProcessing=false;
+						mds.processModel();
+						if (Error.error_evaluation.size()>=1){
+							Error.writeEvaluationErrorFile("evaluation_error.txt");
+							noError=false;
+						}
+						new XASolver();
+						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
+						if (Error.error_solving.size()<1){
+							ControlData.isPostProcessing=true;
+							mds.processAlias();
+							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
+						}else{
+							Error.writeSolvingErrorFile("solving_error.txt");
+							noError=false;
+						}
+						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
+						pauseForDebug(i);
+						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
+						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
+						if (ControlData.timeStep.equals("1MON")){
+							currTimeAddOneMonth();
+						}else{
+							currTimeAddOneDay();
+						}
 					}else{
-						Error.writeSolvingErrorFile("solving_error.txt");
-						noError=false;
+						new AssignPastCycleVariable();
+						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
+						if (ControlData.timeStep.equals("1MON")){
+							currTimeAddOneMonth();
+						}else{
+							currTimeAddOneDay();
+						}	
 					}
-					System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
-					pauseForDebug(i);
-					//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
-				}else{
-					new AssignPastCycleVariable();
 				}
-				ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 				i=i+1;
 			}
-			if (ControlData.timeStep.equals("1MON")){
-				currTimeAddOneMonth();
-			}else{
-				currTimeAddOneDay();
-			}
+			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
+			VariableTimeStep.setCycleEndDate(sds);
 		}
 		ControlData.xasolver.close();
 		DssOperation.writeInitDvarAliasToDSS();
@@ -397,7 +421,7 @@ public class ControllerDebug extends Thread {
 		VariableTimeStep.initialCurrTimeStep(modelList);
 		VariableTimeStep.initialCycleStartDate();
 		VariableTimeStep.setCycleEndDate(sds);
-		while (ControlData.currTimeStep.get(0)<ControlData.totalTimeStep.get(0) && noError){
+		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 			clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
@@ -409,60 +433,72 @@ public class ControllerDebug extends Thread {
 				ControlData.currCycleName=model;
 				ControlData.currCycleIndex=i;
 				VariableTimeStep.setCycleTimeStep(sds);
+				VariableTimeStep.setCurrentDate(sds, ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear);
 				
-				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
-				boolean condition=false;
-				try{
-					modelCondition.evaluator();
-					condition=modelCondition.evalCondition;
-				}catch (Exception e){
-					Error.addEvaluationError("Model condition evaluation has error.");
-					condition=false;
-				}
-				modelCondition.reset();
-				
-				if (condition){
-					ControlData.currSvMap=mds.svMap;
-					ControlData.currSvFutMap=mds.svFutMap;
-					ControlData.currDvMap=mds.dvMap;
-					ControlData.currDvSlackSurplusMap=mds.dvSlackSurplusMap;
-					ControlData.currAliasMap=mds.asMap;
-					ControlData.currGoalMap=mds.gMap;
-					ControlData.currTsMap=mds.tsMap;
-					ControlData.isPostProcessing=false;
-					mds.processModel();
-					if (Error.error_evaluation.size()>=1){
-						Error.writeEvaluationErrorFile("evaluation_error.txt");
-						noError=false;
-					}
+				while(VariableTimeStep.checkEndDate(ControlData.currDay, ControlData.currMonth, ControlData.currYear, ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear)<0){
+					ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
+					boolean condition=false;
 					try{
-						new GurobiSolver();
-					}catch (GRBException e){
-						Error.addSolvingError("Gurobi solving error: "+e.getMessage());
+						modelCondition.evaluator();
+						condition=modelCondition.evalCondition;
+					}catch (Exception e){
+						Error.addEvaluationError("Model condition evaluation has error.");
+						condition=false;
 					}
-					if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
-					if (Error.error_solving.size()<1){
-						ControlData.isPostProcessing=true;
-						mds.processAlias();
-						if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
+					modelCondition.reset();
+				
+					if (condition){
+						ClearValue.clearCycleLoopValue(modelList, modelDataSetMap);
+						ControlData.currSvMap=mds.svMap;
+						ControlData.currSvFutMap=mds.svFutMap;
+						ControlData.currDvMap=mds.dvMap;
+						ControlData.currDvSlackSurplusMap=mds.dvSlackSurplusMap;
+						ControlData.currAliasMap=mds.asMap;
+						ControlData.currGoalMap=mds.gMap;
+						ControlData.currTsMap=mds.tsMap;
+						ControlData.isPostProcessing=false;
+						mds.processModel();
+						if (Error.error_evaluation.size()>=1){
+							Error.writeEvaluationErrorFile("evaluation_error.txt");
+							noError=false;
+						}
+						try{
+							new GurobiSolver();
+						}catch (GRBException e){
+							Error.addSolvingError("Gurobi solving error: "+e.getMessage());
+						}
+						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
+						if (Error.error_solving.size()<1){
+							ControlData.isPostProcessing=true;
+							mds.processAlias();
+							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
+						}else{
+							Error.writeSolvingErrorFile("solving_error.txt");
+							noError=false;
+						}
+						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
+						pauseForDebug(i);
+						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();
+						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
+						if (ControlData.timeStep.equals("1MON")){
+							currTimeAddOneMonth();
+						}else{
+							currTimeAddOneDay();
+						}
 					}else{
-						Error.writeSolvingErrorFile("solving_error.txt");
-						noError=false;
+						new AssignPastCycleVariable();
+						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
+						if (ControlData.timeStep.equals("1MON")){
+							currTimeAddOneMonth();
+						}else{
+							currTimeAddOneDay();
+						}	
 					}
-					System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
-					pauseForDebug(i);
-					//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();
-				}else{
-					new AssignPastCycleVariable();
 				}
-				ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 				i=i+1;
 			}
-			if (ControlData.timeStep.equals("1MON")){
-				currTimeAddOneMonth();
-			}else{
-				currTimeAddOneDay();
-			}
+			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
+			VariableTimeStep.setCycleEndDate(sds);
 		}
 		DssOperation.writeInitDvarAliasToDSS();
 		DssOperation.writeDVAliasToDSS();
@@ -562,7 +598,7 @@ public class ControllerDebug extends Thread {
 		VariableTimeStep.initialCurrTimeStep(modelList);
 		VariableTimeStep.initialCycleStartDate();
 		VariableTimeStep.setCycleEndDate(sds);
-		while (ControlData.currTimeStep.get(0)<ControlData.totalTimeStep.get(0) && noError){
+		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
 			clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
@@ -575,65 +611,77 @@ public class ControllerDebug extends Thread {
 				ControlData.currCycleName=model;
 				ControlData.currCycleIndex=i;
 				VariableTimeStep.setCycleTimeStep(sds);
+				VariableTimeStep.setCurrentDate(sds, ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear);
 
-				ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
-				boolean condition=false;
-				try{
-					modelCondition.evaluator();
-					condition=modelCondition.evalCondition;
-				}catch (Exception e){
-					Error.addEvaluationError("Model condition evaluation has error.");
-					condition=false;
-				}
-				modelCondition.reset();
-				
-				if (condition){
-					ControlData.currSvMap=mds.svMap;
-					ControlData.currSvFutMap=mds.svFutMap;
-					ControlData.currDvMap=mds.dvMap;
-					ControlData.currDvSlackSurplusMap=mds.dvSlackSurplusMap;
-					ControlData.currAliasMap=mds.asMap;
-					ControlData.currGoalMap=mds.gMap;
-					ControlData.currTsMap=mds.tsMap;
-					ControlData.isPostProcessing=false;
-					mds.processModel();
-					
-					ILP.setIlpFile();
-					ILP.writeIlp();
-					ILP.writeSvarValue();
-				
-					if (Error.error_evaluation.size()>=1){
-						Error.writeEvaluationErrorFile("evaluation_error.txt");
-						noError=false;
+				while(VariableTimeStep.checkEndDate(ControlData.currDay, ControlData.currMonth, ControlData.currYear, ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear)<0){
+					ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
+					boolean condition=false;
+					try{
+						modelCondition.evaluator();
+						condition=modelCondition.evalCondition;
+					}catch (Exception e){
+						Error.addEvaluationError("Model condition evaluation has error.");
+						condition=false;
 					}
-					new XASolver();
-
-					ILP.writeObjValue_XA();
-					ILP.writeDvarValue_XA();
-					ILP.closeIlpFile();
+					modelCondition.reset();
+				
+					if (condition){
+						ClearValue.clearCycleLoopValue(modelList, modelDataSetMap);
+						ControlData.currSvMap=mds.svMap;
+						ControlData.currSvFutMap=mds.svFutMap;
+						ControlData.currDvMap=mds.dvMap;
+						ControlData.currDvSlackSurplusMap=mds.dvSlackSurplusMap;
+						ControlData.currAliasMap=mds.asMap;
+						ControlData.currGoalMap=mds.gMap;
+						ControlData.currTsMap=mds.tsMap;
+						ControlData.isPostProcessing=false;
+						mds.processModel();
 					
-					if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
-					if (Error.error_solving.size()<1){
-						ControlData.isPostProcessing=true;
-						mds.processAlias();
-						if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
+						ILP.setIlpFile();
+						ILP.writeIlp();
+						ILP.writeSvarValue();
+				
+						if (Error.error_evaluation.size()>=1){
+							Error.writeEvaluationErrorFile("evaluation_error.txt");
+							noError=false;
+						}
+						new XASolver();
+
+						ILP.writeObjValue_XA();
+						ILP.writeDvarValue_XA();
+						ILP.closeIlpFile();
+					
+						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
+						if (Error.error_solving.size()<1){
+							ControlData.isPostProcessing=true;
+							mds.processAlias();
+							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
+						}else{
+							Error.writeSolvingErrorFile("solving_error.txt");
+							noError=false;
+						}
+						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
+						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
+						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
+						if (ControlData.timeStep.equals("1MON")){
+							currTimeAddOneMonth();
+						}else{
+							currTimeAddOneDay();
+						}
 					}else{
-						Error.writeSolvingErrorFile("solving_error.txt");
-						noError=false;
+						new AssignPastCycleVariable();
+						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
+						if (ControlData.timeStep.equals("1MON")){
+							currTimeAddOneMonth();
+						}else{
+							currTimeAddOneDay();
+						}	
 					}
-					System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
-					//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
-				}else{
-					new AssignPastCycleVariable();
 				}
-				ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 				i=i+1;
 			}
-			if (ControlData.timeStep.equals("1MON")){
-				currTimeAddOneMonth();
-			}else{
-				currTimeAddOneDay();
-			}
+			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
+			VariableTimeStep.setCycleEndDate(sds);
 		}
 		ControlData.xasolver.close();
 		DssOperation.writeInitDvarAliasToDSS();
