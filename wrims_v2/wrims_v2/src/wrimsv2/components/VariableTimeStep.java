@@ -23,17 +23,9 @@ public class VariableTimeStep {
 	public static void setCycleEndDate(StudyDataSet sds){
 		ArrayList<String> timeStepList=sds.getModelTimeStepList();
 		String definedTimeStep;
-		double priority=0.0;
-		for (String timeStep: timeStepList){
-			if (timeStep.equals("1MON") && priority<2.0){
-				priority=2.0;
-			}else if (timeStep.equals("1DAY") && priority<1.0){
-				priority=1.0;
-			}
-		}
-		if (priority==2.0){
+		if (ControlData.cycleTimeStepPriority==2.0){
 			addOneMonthToCycleEndDate();
-		}else if (priority==1.0){
+		}else if (ControlData.cycleTimeStepPriority==1.0){
 			addOneDayToCycleEndDate();
 		}
 	}
@@ -52,6 +44,25 @@ public class VariableTimeStep {
 			ControlData.cycleEndYear=ControlData.cycleEndYear+1;
 		}
 		ControlData.cycleEndDay=1;
+	}
+	
+	public static void currTimeAddOneMonth(){
+		ControlData.currMonth=ControlData.currMonth+1;
+		ControlData.currYear=ControlData.currYear;
+		if (ControlData.currMonth>12){
+			ControlData.currMonth=ControlData.currMonth-12;
+			ControlData.currYear=ControlData.currYear+1;
+		}
+		ControlData.currDay=TimeOperation.numberOfDays(ControlData.currMonth, ControlData.currYear);
+	}
+
+	public static void currTimeAddOneDay(){
+		Date currDate = new Date (ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
+		long currTime=currDate.getTime()+1 * 24 * 60 * 60 * 1000l;
+		currDate = new Date (currTime);
+		ControlData.currMonth=currDate.getMonth()+1;
+		ControlData.currYear=currDate.getYear()+1900;
+		ControlData.currDay=currDate.getDate();
 	}
 	
 	private static void addOneDayToCycleEndDate(){
@@ -94,11 +105,18 @@ public class VariableTimeStep {
 		}
 	}
 	
-	public static void procUndefinedTimeStep(StudyDataSet sds){
+	public static void procCycleTimeStep(StudyDataSet sds){
 		ArrayList<String> timeStepList=sds.getModelTimeStepList();
+		ControlData.cycleTimeStepPriority=0;
 		for (int i=0; i<timeStepList.size(); i++){
 			if (timeStepList.get(i).equals("undefined")){
 				timeStepList.set(i, ControlData.defaultTimeStep);
+			}
+			String timeStep=timeStepList.get(i);
+			if (timeStep.equals("1MON") && ControlData.cycleTimeStepPriority<2.0){
+				ControlData.cycleTimeStepPriority=2.0;
+			}else if (timeStep.equals("1DAY") && ControlData.cycleTimeStepPriority<1.0){
+				ControlData.cycleTimeStepPriority=1.0;
 			}
 		}
 	}

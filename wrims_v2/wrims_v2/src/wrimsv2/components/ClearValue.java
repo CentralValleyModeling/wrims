@@ -32,4 +32,31 @@ public class ClearValue {
 				alias.setData(null);
 			}
 	}
+	
+	public static void 	clearValues(ArrayList<String> modelList, Map<String, ModelDataSet> modelDataSetMap){
+		for (int i=0; i<modelList.size(); i++){
+			String model=modelList.get(i);
+			ModelDataSet mds=modelDataSetMap.get(model);
+			ArrayList<String> dvList = mds.dvList;
+			Map<String, Dvar> dvMap =mds.dvMap;
+			for (String dvName: dvList){
+				Dvar dvar=dvMap.get(dvName);
+				dvar.setData(null);
+			}
+			ArrayList<String> svList = mds.svList;
+			Map<String, Svar> svMap =mds.svMap;
+			for (String svName: svList){
+				Svar svar=svMap.get(svName);
+				svar.setData(null);
+			}
+			ArrayList<String> asList = mds.asList;
+			Map<String, Alias> asMap =mds.asMap;
+			for (String asName: asList){
+				Alias alias=asMap.get(asName);
+				alias.setData(null);
+			}
+			
+			mds.clearFutureSvMap();
+		}
+	}
 }

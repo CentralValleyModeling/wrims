@@ -239,7 +239,7 @@ public class ControllerDebug extends Thread {
 		VariableTimeStep.initialCycleStartDate();
 		VariableTimeStep.setCycleEndDate(sds);
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
-			clearValues(modelList, modelDataSetMap);
+			ClearValue.clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
 			while (i<modelList.size()  && noError){   
@@ -296,17 +296,17 @@ public class ControllerDebug extends Thread {
 						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
-							currTimeAddOneMonth();
+							VariableTimeStep.currTimeAddOneMonth();
 						}else{
-							currTimeAddOneDay();
+							VariableTimeStep.currTimeAddOneDay();
 						}
 					}else{
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
-							currTimeAddOneMonth();
+							VariableTimeStep.currTimeAddOneMonth();
 						}else{
-							currTimeAddOneDay();
+							VariableTimeStep.currTimeAddOneDay();
 						}	
 					}
 				}
@@ -332,7 +332,7 @@ public class ControllerDebug extends Thread {
 		VariableTimeStep.setCycleEndDate(sds);
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
-			clearValues(modelList, modelDataSetMap);
+			ClearValue.clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
 			while (i<modelList.size()  && noError){  
@@ -387,17 +387,17 @@ public class ControllerDebug extends Thread {
 						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
-							currTimeAddOneMonth();
+							VariableTimeStep.currTimeAddOneMonth();
 						}else{
-							currTimeAddOneDay();
+							VariableTimeStep.currTimeAddOneDay();
 						}
 					}else{
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
-							currTimeAddOneMonth();
+							VariableTimeStep.currTimeAddOneMonth();
 						}else{
-							currTimeAddOneDay();
+							VariableTimeStep.currTimeAddOneDay();
 						}	
 					}
 				}
@@ -422,7 +422,7 @@ public class ControllerDebug extends Thread {
 		VariableTimeStep.initialCycleStartDate();
 		VariableTimeStep.setCycleEndDate(sds);
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
-			clearValues(modelList, modelDataSetMap);
+			ClearValue.clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
 			while (i<modelList.size()  && noError){   
@@ -481,17 +481,17 @@ public class ControllerDebug extends Thread {
 						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
-							currTimeAddOneMonth();
+							VariableTimeStep.currTimeAddOneMonth();
 						}else{
-							currTimeAddOneDay();
+							VariableTimeStep.currTimeAddOneDay();
 						}
 					}else{
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
-							currTimeAddOneMonth();
+							VariableTimeStep.currTimeAddOneMonth();
 						}else{
-							currTimeAddOneDay();
+							VariableTimeStep.currTimeAddOneDay();
 						}	
 					}
 				}
@@ -539,52 +539,6 @@ public class ControllerDebug extends Thread {
 		}
 	}
 	
-	public void clearValues(ArrayList<String> modelList, Map<String, ModelDataSet> modelDataSetMap){
-		for (int i=0; i<modelList.size(); i++){   
-			String model=modelList.get(i);
-			ModelDataSet mds=modelDataSetMap.get(model);
-			ArrayList<String> dvList = mds.dvList;
-			Map<String, Dvar> dvMap =mds.dvMap;
-			for (String dvName: dvList){
-				Dvar dvar=dvMap.get(dvName);
-				dvar.setData(null);
-			}
-			ArrayList<String> svList = mds.svList;
-			Map<String, Svar> svMap =mds.svMap;
-			for (String svName: svList){
-				Svar svar=svMap.get(svName);
-				svar.setData(null);
-			}
-			ArrayList<String> asList = mds.asList;
-			Map<String, Alias> asMap =mds.asMap;
-			for (String asName: asList){
-				Alias alias=asMap.get(asName);
-				alias.setData(null);
-			}
-			
-			mds.clearFutureSvMap();
-		}
-	}
-	
-	public void currTimeAddOneMonth(){
-		ControlData.currMonth=ControlData.currMonth+1;
-		ControlData.currYear=ControlData.currYear;
-		if (ControlData.currMonth>12){
-			ControlData.currMonth=ControlData.currMonth-12;
-			ControlData.currYear=ControlData.currYear+1;
-		}
-		ControlData.currDay=TimeOperation.numberOfDays(ControlData.currMonth, ControlData.currYear);
-	}
-
-	public void currTimeAddOneDay(){
-		Date currDate = new Date (ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
-		long currTime=currDate.getTime()+1 * 24 * 60 * 60 * 1000l;
-		currDate = new Date (currTime);
-		ControlData.currMonth=currDate.getMonth()+1;
-		ControlData.currYear=currDate.getYear()+1900;
-		ControlData.currDay=currDate.getDate();
-	}
-	
 	public void runModelILP(StudyDataSet sds){
 		
 		ILP.initializeIlp();
@@ -600,7 +554,7 @@ public class ControllerDebug extends Thread {
 		VariableTimeStep.setCycleEndDate(sds);
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
-			clearValues(modelList, modelDataSetMap);
+			ClearValue.clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
 			while (i<modelList.size()  && noError){  
@@ -664,17 +618,17 @@ public class ControllerDebug extends Thread {
 						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
-							currTimeAddOneMonth();
+							VariableTimeStep.currTimeAddOneMonth();
 						}else{
-							currTimeAddOneDay();
+							VariableTimeStep.currTimeAddOneDay();
 						}
 					}else{
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
-							currTimeAddOneMonth();
+							VariableTimeStep.currTimeAddOneMonth();
 						}else{
-							currTimeAddOneDay();
+							VariableTimeStep.currTimeAddOneDay();
 						}	
 					}
 				}

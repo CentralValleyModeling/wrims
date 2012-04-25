@@ -66,6 +66,7 @@ public class ControlData {
 	public static int cycleEndDay;
 	public static int cycleEndMonth;
 	public static int cycleEndYear;
+	public static double cycleTimeStepPriority=0;
 	public static int writeDssStartYear;
 	public static int writeDssStartMonth;
 	public static int writeDssStartDay;
