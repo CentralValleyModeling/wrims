@@ -94,7 +94,7 @@ public class AttributeMapper {
 		}
 		String[] fields = value.substring(1, value.length() - 1).split(",\\[");
 		float dashPhase = Float.parseFloat(fields[0]);
-		float[] dashArray = parseFloatArray(fields[1].substring(0,fields[1].length()-1));
+		float[] dashArray = parseFloatArray(fields[1].substring(1,fields[1].length()-1));
 		return new DashStyle(dashArray, dashPhase);
 	}
 
