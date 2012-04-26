@@ -2,6 +2,7 @@ package wrimsv2.wreslparser.elements;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,6 +18,7 @@ import wrimsv2.components.ControllerBatch;
 import wrimsv2.components.FilePaths;
 import wrimsv2.components.Versions;
 import wrimsv2.evaluator.TimeOperation;
+import wrimsv2.solver.LPSolveSolver;
 
 public class ConfigUtils {
 
@@ -66,6 +68,7 @@ public class ConfigUtils {
 			String configFilePath = FilenameUtils.removeExtension(argsMap.get("-config"))+".config";
 			argsMap.put("-config", configFilePath);
 			
+			System.out.println("\nWARNING!! Config file and RUN directory must be placed in the same folder! \n");
 			System.out.println("Loading config file: "+argsMap.get("-config"));
 			StudyUtils.configFilePath = argsMap.get("-config");
 			loadConfig(StudyUtils.configFilePath);
@@ -132,7 +135,10 @@ public class ConfigUtils {
 		
 		FilePaths.csvFolderName = "";
 
-		ControlData.showWreslLog = !(configMap.get("showwresllog").equalsIgnoreCase("no"));
+		if (configMap.get("showwresllog").equalsIgnoreCase("no") || configMap.get("showwresllog").equalsIgnoreCase("false")){
+			ControlData.showWreslLog = false;
+		}
+		//ControlData.showWreslLog = !(configMap.get("showwresllog").equalsIgnoreCase("no"));
 		
 		ControlData.svDvPartF = configMap.get("svarfpart");
 		ControlData.initPartF = configMap.get("initfpart");
@@ -162,6 +168,8 @@ public class ConfigUtils {
 		System.out.println("InitFPart:      "+ControlData.initPartF);
 		System.out.println("StartYear:      "+ControlData.startYear);
 		System.out.println("StartMonth:     "+ControlData.startMonth);
+		System.out.println("StopYear:       "+ControlData.endYear);
+		System.out.println("StopMonth:      "+ControlData.endMonth);
 		System.out.println("Solver:         "+ControlData.solverName);
 		
 		// default is false
@@ -169,9 +177,9 @@ public class ConfigUtils {
 			
 			String s = configMap.get("sendaliastodvar");
 			
-			if (s.equalsIgnoreCase("yes")){
+			if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")){
 				ControlData.sendAliasToDvar = true;	
-			} else if (s.equalsIgnoreCase("no")){
+			} else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")){
 				ControlData.sendAliasToDvar = false;	
 			} else {
 				ControlData.sendAliasToDvar  = false;	
@@ -186,16 +194,106 @@ public class ConfigUtils {
 			
 			String s = configMap.get("prefixinittodvarfile");
 			
-			if (s.equalsIgnoreCase("yes")){
+			if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")){
 				ControlData.writeInitToDVOutput = true;	
-			} else if (s.equalsIgnoreCase("no")){
+			} else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")){
 				ControlData.writeInitToDVOutput = false;	
 			} else {
 				ControlData.writeInitToDVOutput = false;	
 			}
 		}
 		System.out.println("PrefixInitToDvarFile: "+ControlData.writeInitToDVOutput);
+
+		if (configMap.keySet().contains("lpsolvesettingfile")) {
+
+			String f = configMap.get("lpsolvesettingfile");
+
+			try {
+
+				File sf = new File(StudyUtils.configDir, f);
+				
+				if (sf.exists()) {
+					
+					LPSolveSolver.settingFile = sf.getCanonicalPath();
+					
+				} else {
+					System.out.println("#Error: LpSolveSettingFile not found: " + f);
+					
+				}
+
+			}
+			catch (Exception e) {
+
+				System.out.println("#Error: LpSolveSettingFile not found: " + f);
+				e.printStackTrace();
+			}
+		}
+		System.out.println("LpSolveSettingFile:   "+LPSolveSolver.settingFile);
 		
+		// default is 0 retry
+		if (configMap.keySet().contains("lpsolvenumberofretries")){
+			
+			String s = configMap.get("lpsolvenumberofretries");
+			
+			try {
+				LPSolveSolver.numberOfRetries = Integer.parseInt(s);
+				
+			} catch (Exception e) {
+				System.out.println("#Error: LpSolveNumberOfRetries not recognized: " + s);
+				
+			}				
+		}
+		System.out.println("LpSolveNumberOfRetries: "+LPSolveSolver.numberOfRetries);
+		
+		// default is false
+		if (configMap.keySet().contains("lpsolveoverwritedefaultsetting")){
+			
+			String s = configMap.get("lpsolveoverwritedefaultsetting");
+			
+			if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")){
+				LPSolveSolver.overwriteDefaultSetting = true;	
+			} else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")){
+				LPSolveSolver.overwriteDefaultSetting = false;	
+			} else {
+				LPSolveSolver.overwriteDefaultSetting = false;	
+			}
+			
+		}
+		System.out.println("LpSolveOverwriteDefaultSetting: "+LPSolveSolver.overwriteDefaultSetting);
+		
+//		if (configMap.keySet().contains("lpsolveparamheader")){
+//			
+//			String s = configMap.get("lpsolveparamheader");
+//			
+//			String delimiter = "[\\+]";  
+//			String [] pheaders =  s.split(delimiter);
+//			
+//			//LPSolveSolver.paramHeader = new ArrayList<String>();
+//			
+//			System.out.println( "s:"+s);
+//			
+//			for (int i=1;i<=pheaders.length;i++){
+//				System.out.println( pheaders[i-1]);
+//			}
+//			
+//			for (int i=1;i<=pheaders.length;i++){
+//				
+//				String h = pheaders[i-1];		
+//				
+//				LPSolveSolver.paramHeader.add(h);
+//				
+//				//System.out.println("LpSolveParamFile: "+pf);
+//				switch (i){
+//					case 1 : System.out.println("default LpSolveParamHeader: "+h); break;
+//					case 2 : System.out.println("2nd try LpSolveParamHeader: "+h); break;
+//					case 3 : System.out.println("3rd try LpSolveParamHeader: "+h); break;
+//					default : System.out.println( i+"th try LpSolveParamHeader: "+h); break;
+//				}
+//				
+//			}
+//			
+//
+//		}
 		//System.out.println("Ignored... SetAmplOption:   option presolve_eps 1e-13;");
 		
 		
@@ -286,9 +384,11 @@ public class ConfigUtils {
 				value = value + " ";
 				if (value.startsWith("\"")) {
 					value = value.substring(1, value.lastIndexOf("\""));
+					value = value.replace("\"", "");
 				}
 				else {
 					value = value.substring(0, value.indexOf(" "));
+					value = value.replace("\"", "");
 				}
 				
 				// break at the line "End Config"
