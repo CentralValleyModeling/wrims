@@ -129,7 +129,7 @@ public class Controller {
 	    cd.writeDssStartYear=ControlData.startYear;
 	    cd.writeDssStartMonth=ControlData.startMonth;
 	    cd.writeDssStartDay=ControlData.startDay;
-	}
+    }
 
 	public void setControlData(String[] args){
 		FilePaths.groundwaterDir=args[0];

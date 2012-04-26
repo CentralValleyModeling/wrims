@@ -16,6 +16,7 @@ import wrimsv2.components.FilePaths;
 import wrimsv2.components.IntDouble;
 import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssDataSetFixLength;
+import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.wreslparser.elements.Tools;
 import lpsolve.*;
@@ -218,7 +219,8 @@ public class LPSolveSolver {
 					varTimeArrayCycleValueMap.put(dvName, cycleValue);
 				}
 			}
-			if (!DataTimeSeries.dvAliasTS.containsKey(dvName)){
+			String entryNameTS=DssOperation.entryNameTS(dvName, ControlData.timeStep);
+			if (!DataTimeSeries.dvAliasTS.containsKey(entryNameTS)){
 				DssDataSetFixLength dds=new DssDataSetFixLength();
 				double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
 				dds.setData(data);
@@ -226,9 +228,9 @@ public class LPSolveSolver {
 				dds.setStartTime(ControlData.startTime);
 				dds.setUnits(dvar.units);
 				dds.setKind(dvar.kind);
-				DataTimeSeries.dvAliasTS.put(dvName,dds);
+				DataTimeSeries.dvAliasTS.put(entryNameTS,dds);
 			}
-			double[] dataList=DataTimeSeries.dvAliasTS.get(dvName).getData();
+			double[] dataList=DataTimeSeries.dvAliasTS.get(entryNameTS).getData();
 			dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=value;
 		}
 		

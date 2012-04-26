@@ -67,7 +67,8 @@ public class DssOperation {
         dds.setTimeStep(rts.getTimeInterval().toString());
         dds.setStartTime(startDate);
         dds.setFromDssFile(true);
-        DataTimeSeries.svTS.put(name, dds);
+        String entryNameTS=DssOperation.entryNameTS(name, timeStep);
+        DataTimeSeries.svTS.put(entryNameTS, dds);
 		return true;
 	}
 	
@@ -113,7 +114,8 @@ public class DssOperation {
         dds.setData(dataArray);
         dds.setTimeStep(rts.getTimeInterval().toString());
         dds.setStartTime(startDate);
-        DataTimeSeries.svInit.put(name, dds);
+        String entryNameTS=DssOperation.entryNameTS(name, ControlData.timeStep);
+        DataTimeSeries.svInit.put(entryNameTS, dds);
 		return true;
 	}
 	
@@ -155,9 +157,11 @@ public class DssOperation {
         dds.setData(dataArray);
         dds.setUnits(units);
         dds.setKind(partC);
-        dds.setTimeStep(rts.getTimeInterval().toString());
+        String timeStep=rts.getTimeInterval().toString();
+        dds.setTimeStep(timeStep);
         dds.setStartTime(rts.getStartTime().getDate());
-        DataTimeSeries.dvAliasInit.put(name, dds);
+        String entryNameTS=DssOperation.entryNameTS(name, timeStep);
+        DataTimeSeries.dvAliasInit.put(entryNameTS, dds);
 		return true;
 	}
 	
@@ -224,7 +228,8 @@ public class DssOperation {
                 dds.setUnits(data._yUnits);
                 dds.setTimeStep(timeStep);
                 dds.setStartTime(tw.getStartTime().getDate());
-                DataTimeSeries.dvAliasInit.put(rName, dds);
+                String entryNameTS=DssOperation.entryNameTS(rName, timeStep);
+                DataTimeSeries.dvAliasInit.put(entryNameTS, dds);
 			}
 		}
 	}
@@ -251,7 +256,7 @@ public class DssOperation {
 			Date startDate=dds.getStartTime();
 			long startJulmin = TimeFactory.getInstance().createTime(startDate).getTimeInMinutes();
 			boolean storeFlags = false;
-			String pathName="/"+ControlData.partA+"/"+initName+"/"+dds.getKind()+"//"+ControlData.partE+"/"+ControlData.svDvPartF+"/";
+			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(initName)+"/"+dds.getKind()+"//"+ControlData.partE+"/"+ControlData.svDvPartF+"/";
 			ControlData.writer.storeTimeSeriesData(pathName, startJulmin, ds,
 				storeFlags);
 		}
@@ -274,9 +279,18 @@ public class DssOperation {
 			dd._yUnits=ddsfl.getUnits().toUpperCase();
 			dd._yValues = values;
 			boolean storeFlags = false;
-			String pathName="/"+ControlData.partA+"/"+dvAliasName+"/"+ddsfl.getKind()+"//"+ControlData.partE+"/"+ControlData.svDvPartF+"/";
+			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+ControlData.partE+"/"+ControlData.svDvPartF+"/";
 			ControlData.writer.storeTimeSeriesData(pathName, startJulmin, dd,
 						storeFlags);
 		}
+	}
+	
+	public static String entryNameTS(String name, String timeStep){
+		return name+"@"+timeStep;
+	}
+	
+	public static String getTSName(String entryNameTS){
+		String[] entry=entryNameTS.split("@");
+		return entry[0];
 	}
 }

@@ -12,6 +12,7 @@ import wrimsv2.components.ControlData;
 import wrimsv2.components.IntDouble;
 import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssDataSetFixLength;
+import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.evaluator.Evaluation;
 import wrimsv2.evaluator.EvaluatorParser;
@@ -564,7 +565,8 @@ public class ModelDataSet implements Serializable {
 				if (aliasUsedByLaterCycle.contains(asName)){
 					varCycleValueMap.get(asName).put(model, alias.data);
 				}
-				if (!DataTimeSeries.dvAliasTS.containsKey(asName)){
+				String entryNameTS=DssOperation.entryNameTS(asName, ControlData.timeStep);
+				if (!DataTimeSeries.dvAliasTS.containsKey(entryNameTS)){
 					DssDataSetFixLength dds=new DssDataSetFixLength();
 					double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
 					dds.setData(data);
@@ -572,9 +574,9 @@ public class ModelDataSet implements Serializable {
 					dds.setStartTime(ControlData.startTime);
 					dds.setUnits(alias.units);
 					dds.setKind(alias.kind);
-					DataTimeSeries.dvAliasTS.put(asName,dds);
+					DataTimeSeries.dvAliasTS.put(entryNameTS,dds);
 				}
-				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
+				double[] dataList=DataTimeSeries.dvAliasTS.get(entryNameTS).getData();
 				dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=id.getData().doubleValue();
 			} catch (RecognitionException e) {
 				Error.addEvaluationError("Alias evaluation has error.");
@@ -583,7 +585,8 @@ public class ModelDataSet implements Serializable {
 				if (aliasUsedByLaterCycle.contains(asName)){
 					varCycleValueMap.get(asName).put(model, id);
 				}
-				double[] dataList=DataTimeSeries.dvAliasTS.get(asName).getData();
+				String entryNameTS=DssOperation.entryNameTS(asName, ControlData.timeStep);
+				double[] dataList=DataTimeSeries.dvAliasTS.get(entryNameTS).getData();
 				dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=-901.0;
 			}
 			evaluator.reset();
@@ -605,7 +608,8 @@ public class ModelDataSet implements Serializable {
 							varTimeArrayCycleValueMap.put(newAsName, cycleValue);
 						}
 					}
-					if (!DataTimeSeries.dvAliasTS.containsKey(newAsName)){
+					String entryNameTS=DssOperation.entryNameTS(newAsName, ControlData.timeStep);
+					if (!DataTimeSeries.dvAliasTS.containsKey(entryNameTS)){
 						DssDataSetFixLength dds=new DssDataSetFixLength();
 						double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
 						dds.setData(data);
@@ -613,9 +617,9 @@ public class ModelDataSet implements Serializable {
 						dds.setStartTime(ControlData.startTime);
 						dds.setUnits(alias.units);
 						dds.setKind(alias.kind);
-						DataTimeSeries.dvAliasTS.put(newAsName,dds);
+						DataTimeSeries.dvAliasTS.put(entryNameTS,dds);
 					}
-					double[] dataList=DataTimeSeries.dvAliasTS.get(newAsName).getData();
+					double[] dataList=DataTimeSeries.dvAliasTS.get(entryNameTS).getData();
 					dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=id.getData().doubleValue();
 				} catch (RecognitionException e) {
 					Error.addEvaluationError("Alias evaluation has error.");
@@ -631,7 +635,8 @@ public class ModelDataSet implements Serializable {
 							varTimeArrayCycleValueMap.put(newAsName, cycleValue);
 						}
 					}
-					double[] dataList=DataTimeSeries.dvAliasTS.get(newAsName).getData();
+					String entryNameTS=DssOperation.entryNameTS(newAsName, ControlData.timeStep);
+					double[] dataList=DataTimeSeries.dvAliasTS.get(entryNameTS).getData();
 					dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=-901.0;
 				}
 				evaluator.reset();

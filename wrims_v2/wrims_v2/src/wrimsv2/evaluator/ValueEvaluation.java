@@ -369,8 +369,9 @@ public class ValueEvaluation {
 	
 	public static double svarTimeSeries(String ident){
 		int index;
-		if (DataTimeSeries.svTS.containsKey(ident)){
-			DssDataSet dds=DataTimeSeries.svTS.get(ident);
+		String entryNameTS=DssOperation.entryNameTS(ident, ControlData.timeStep);
+		if (DataTimeSeries.svTS.containsKey(entryNameTS)){
+			DssDataSet dds=DataTimeSeries.svTS.get(entryNameTS);
 			index =timeSeriesIndex(dds);
 			ArrayList<Double> data=dds.getData();
 			if (index>=0 && index<data.size()){
@@ -384,8 +385,8 @@ public class ValueEvaluation {
 				}
 			}
 		}
-		if (DataTimeSeries.svInit.containsKey(ident)){
-			DssDataSet dds=DataTimeSeries.svInit.get(ident);
+		if (DataTimeSeries.svInit.containsKey(entryNameTS)){
+			DssDataSet dds=DataTimeSeries.svInit.get(entryNameTS);
 			index =timeSeriesIndex(dds);
 			ArrayList<Double> data=dds.getData();
 			if (index>=0 && index<data.size()){
@@ -395,9 +396,9 @@ public class ValueEvaluation {
 				}
 			}
 		}else{
-			DataTimeSeries.lookInitDss.add(ident);
+			DataTimeSeries.lookInitDss.add(entryNameTS);
 			if (DssOperation.getSVInitTimeseries(ident)){
-				DssDataSet dds=DataTimeSeries.svInit.get(ident);
+				DssDataSet dds=DataTimeSeries.svInit.get(entryNameTS);
 				index =timeSeriesIndex(dds);
 				ArrayList<Double> data=dds.getData();
 				if (index>=0 && index<data.size()){
@@ -413,6 +414,7 @@ public class ValueEvaluation {
 	}
 	
 	public static double dvarAliasTimeSeries(String ident){
+		String entryNameTS=DssOperation.entryNameTS(ident, ControlData.timeStep);
 		int index;
 		long dataTime;
 		long startTime;
@@ -431,20 +433,20 @@ public class ValueEvaluation {
 			Error.addEvaluationError("The timeseries data for decision variable/alias "+ident+" is not available at or after current simulation period.");
 			return 1.0;
 		}else if(dataTime>=startTime && dataTime<currTime){
-			DssDataSetFixLength dds=DataTimeSeries.dvAliasTS.get(ident);
+			DssDataSetFixLength dds=DataTimeSeries.dvAliasTS.get(entryNameTS);
 			index=timeSeriesIndex(dds);
 			double[] data=dds.getData();
 			return data[index];
 		}
 		
-		if (!DataTimeSeries.dvAliasInit.containsKey(ident)){
+		if (!DataTimeSeries.dvAliasInit.containsKey(entryNameTS)){
 			if (!DssOperation.getDVAliasInitTimeseries(ident)){
 				Error.addEvaluationError("Initial file doesn't have data for decision vairiable/alias " +ident);
 				return 1.0;
 			}
 		}
 		
-		DssDataSet dds=DataTimeSeries.dvAliasInit.get(ident);
+		DssDataSet dds=DataTimeSeries.dvAliasInit.get(entryNameTS);
 		index=timeSeriesIndex(dds);
 		ArrayList<Double> data=dds.getData();
 		if (index>=0 && index<data.size()){
@@ -461,25 +463,26 @@ public class ValueEvaluation {
 	}
 	
 	public static double dvarAliasTimeSeries(String ident, int indexValue){
+		String entryNameTS=DssOperation.entryNameTS(ident, ControlData.timeStep);
 		if (indexValue>0){
 			Error.addEvaluationError("Can't access decision variable after the current time step.");
 		}
 		
 		int index=indexValue+ControlData.currTimeStep.get(ControlData.currCycleIndex);
 		if (index>=0){
-			DssDataSetFixLength dds=DataTimeSeries.dvAliasTS.get(ident);
+			DssDataSetFixLength dds=DataTimeSeries.dvAliasTS.get(entryNameTS);
 			double[] data=dds.getData();
 			return data[index];
 		}
 		
-		if (!DataTimeSeries.dvAliasInit.containsKey(ident)){
+		if (!DataTimeSeries.dvAliasInit.containsKey(entryNameTS)){
 			if (!DssOperation.getDVAliasInitTimeseries(ident)){
 				Error.addEvaluationError("Initial file doesn't have data for decision vairiable/alias " +ident);
 				return 1.0;
 			}
 		}
 		
-		DssDataSet dds=DataTimeSeries.dvAliasInit.get(ident);
+		DssDataSet dds=DataTimeSeries.dvAliasInit.get(entryNameTS);
 		index=timeSeriesIndex(dds);
 		ArrayList<Double> data=dds.getData();
 		if (index>=0 && index<data.size()){
