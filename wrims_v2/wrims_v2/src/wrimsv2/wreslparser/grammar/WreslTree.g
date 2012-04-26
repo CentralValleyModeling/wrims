@@ -149,9 +149,9 @@ weight_table
 	;	
 
 weightItem
-	: '['  IDENT ('(' ta=timeArraySize ')')? ',' e=expression ']' (',')? 
-	   -> {ta==null}?  ^(IDENT Expression[$e.text])
-	   ->              ^(IDENT TimeArraySize[$ta.text] Expression[$e.text])
+@init{String r="0";}
+	: '['  IDENT ('(' ta=timeArraySize ')' { r = $ta.text;} )? ',' e=expression ']' (',')? 
+	   ->  ^(IDENT TimeArraySize[r] Expression[$e.text])
 	;
 		
 model
