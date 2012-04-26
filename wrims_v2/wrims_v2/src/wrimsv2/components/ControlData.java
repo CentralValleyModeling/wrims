@@ -86,7 +86,7 @@ public class ControlData {
 	public static LpSolve lpssolver;
 	public static boolean isPostProcessing=false;
 	public static boolean sendAliasToDvar=false;
-	public static boolean outputWreslCSV=true;
+	public static boolean outputWreslCSV=false;
 	public static boolean showRunTimeMessage=false;
 	public static boolean showWreslLog=true;
 	public static boolean writeInitToDVOutput=true;
