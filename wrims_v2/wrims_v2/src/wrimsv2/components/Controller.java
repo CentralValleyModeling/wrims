@@ -101,34 +101,34 @@ public class Controller {
 	}
 
 	public void setControlData(){
-		FilePaths.groundwaterDir="";
-		FilePaths.setMainFilePaths("D:\\FAM\\main_FAM.wresl");
-		FilePaths.setSvarDssPaths("D:\\FAM\\dss\\CL_FUTURE_BO_011012_SV.dss");
-        FilePaths.setInitDssPaths("D:\\FAM\\dss\\CalLite2020D09EINIT.dss");
-        FilePaths.setDvarDssPaths("D:\\FAM\\dss\\FAMdv.dss");
+		FilePaths.groundwaterDir="D:\\CS3_Studies\\cs3_bo_version120\\common\\CVGroundwater\\Data\\";
+		FilePaths.setMainFilePaths("D:\\CS3_Studies\\cs3_bo_version120\\conv\\Run\\mainCONV_30.wresl");
+		FilePaths.setSvarDssPaths("D:\\CS3_Studies\\cs3_bo_version120\\common\\DSS\\CalSim30_06_SV.dss");
+	    FilePaths.setInitDssPaths("D:\\CS3_Studies\\cs3_bo_version120\\common\\DSS\\CalSim30_06Init.dss");
+	    FilePaths.setDvarDssPaths("D:\\CS3_Studies\\cs3_bo_version120\\conv\\DSS\\Version120_88yr_021012_WRIMSV2DV.dss");
 		ControlData cd=new ControlData();
-		cd.svDvPartF="2020D09E";
-		cd.initPartF="2020D09E";
+		cd.svDvPartF="CalSim30_06";
+		cd.initPartF="CalSim30_06";
 		cd.partA = "CALSIM";
 		cd.defaultTimeStep="1MON";
 		cd.startYear=1921;
 		cd.startMonth=10;
-		cd.startDay=1;
-		cd.endYear=2002;
+		cd.startDay=31;
+		cd.endYear=2009;
 		cd.endMonth=9;
 		cd.endDay=30;
-        cd.solverName="XALOG";
-        FilePaths.csvFolderName="csv";
+	    cd.solverName="XA";
+	    FilePaths.csvFolderName="csv";
 
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
-        cd.writeDssStartYear=ControlData.startYear;
-        cd.writeDssStartMonth=ControlData.startMonth;
-        cd.writeDssStartDay=ControlData.startDay;
-        cd.writeDssStartYear=ControlData.startYear;
-        cd.writeDssStartMonth=ControlData.startMonth;
-        cd.writeDssStartDay=ControlData.startDay;
+	    cd.writeDssStartYear=ControlData.startYear;
+	    cd.writeDssStartMonth=ControlData.startMonth;
+	    cd.writeDssStartDay=ControlData.startDay;
+	    cd.writeDssStartYear=ControlData.startYear;
+	    cd.writeDssStartMonth=ControlData.startMonth;
+	    cd.writeDssStartDay=ControlData.startDay;
     }
 
 	public void setControlData(String[] args){
