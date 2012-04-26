@@ -23,7 +23,7 @@ public class TestILP_example_callite_uniqueSolution_config_newAlias {
 		/// set control data		
 		String[] controlDataString = {
 
-		"-config=\"D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\callite_uniqueSolution\\run\\callite_newAlias.config\"" 
+		"-config=\"D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\callite_uniqueSolution\\callite_newAlias.config\"" 
 
 		};
 
@@ -32,7 +32,7 @@ public class TestILP_example_callite_uniqueSolution_config_newAlias {
 		Error.clear();
         new ControllerBatch(controlDataString);
         
-        expected = 9.290264177187278E8; 
+        expected = 9.290264401055747E8; 
 		
 		double obj_value =  ControlData.xasolver.getObjective();		
 		Assert.assertEquals(Error.getTotalError(), 0);	

@@ -23,11 +23,11 @@ public class TestILP_example_callite_config {
 		/// set control data		
 		String[] controlDataString = {
 
-		"-config=\"D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\callite_svn47\\Run\\test1.config\"" 
+		"-config=\"D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\callite_svn47\\test1.config\"" 
 
 		};
 
-		FilePaths.ilpFileDirectory = studyPath + "ilp_TestILP_example_callite_config";
+		//FilePaths.ilpFileDirectory = studyPath + "ilp_TestILP_example_callite_config";
 		//FilePaths.ilpFile = "test.ilp";		
 		Error.clear();
         new ControllerBatch(controlDataString);
