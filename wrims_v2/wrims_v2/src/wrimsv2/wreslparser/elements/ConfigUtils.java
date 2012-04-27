@@ -172,7 +172,7 @@ public class ConfigUtils {
 		System.out.println("StopMonth:      "+ControlData.endMonth);
 		System.out.println("Solver:         "+ControlData.solverName);
 		
-		// default is false
+		// SendAliasToDvar default is false
 		if (configMap.keySet().contains("sendaliastodvar")){
 			
 			String s = configMap.get("sendaliastodvar");
@@ -204,46 +204,56 @@ public class ConfigUtils {
 		}
 		System.out.println("PrefixInitToDvarFile: "+ControlData.writeInitToDVOutput);
 
-		if (configMap.keySet().contains("lpsolvesettingfile")) {
-
-			String f = configMap.get("lpsolvesettingfile");
-
-			try {
-
-				File sf = new File(StudyUtils.configDir, f);
-				
-				if (sf.exists()) {
-					
-					LPSolveSolver.settingFile = sf.getCanonicalPath();
-					
-				} else {
-					System.out.println("#Error: LpSolveSettingFile not found: " + f);
-					
-				}
-
-			}
-			catch (Exception e) {
-
-				System.out.println("#Error: LpSolveSettingFile not found: " + f);
-				e.printStackTrace();
-			}
-		}
-		System.out.println("LpSolveSettingFile:   "+LPSolveSolver.settingFile);
 		
-		// default is 0 retry
-		if (configMap.keySet().contains("lpsolvenumberofretries")){
+		
+		if (ControlData.solverName.toLowerCase().contains("lpsolve")) {
 			
-			String s = configMap.get("lpsolvenumberofretries");
+			// LpSolveSettingFile
+			if (configMap.keySet().contains("lpsolvesettingfile")) {
+
+				String f = configMap.get("lpsolvesettingfile");
+
+				try {
+
+					File sf = new File(StudyUtils.configDir, f);
+					if (sf.exists()) {					
+						LPSolveSolver.settingFile = sf.getCanonicalPath();
+					} else {
+						System.out.println("#Error: LpSolveSettingFile not found: " + f);					
+					}
+
+				} catch (Exception e) {
+
+					System.out.println("#Error: LpSolveSettingFile not found: " + f);
+					e.printStackTrace();
+				}
+			} else {
+				System.out.println("#Error: LpSolveSettingFile not defined. ");
+			}
+		
+			System.out.println("LpSolveSettingFile:   "+LPSolveSolver.settingFile);
 			
-			try {
-				LPSolveSolver.numberOfRetries = Integer.parseInt(s);
+			
+			// LpSolveNumberOfRetries default is 0 retry
+			if (configMap.keySet().contains("lpsolvenumberofretries")){
 				
-			} catch (Exception e) {
-				System.out.println("#Error: LpSolveNumberOfRetries not recognized: " + s);
+				String s = configMap.get("lpsolvenumberofretries");
 				
-			}				
+				try {
+					LPSolveSolver.numberOfRetries = Integer.parseInt(s);
+					
+				} catch (Exception e) {
+					System.out.println("#Error: LpSolveNumberOfRetries not recognized: " + s);
+					
+				}				
+			}
+			System.out.println("LpSolveNumberOfRetries: "+LPSolveSolver.numberOfRetries);
+			
+			
 		}
-		System.out.println("LpSolveNumberOfRetries: "+LPSolveSolver.numberOfRetries);
+		
+		
+
 		
 
 //		if (configMap.keySet().contains("lpsolveoverwritedefaultsetting")){

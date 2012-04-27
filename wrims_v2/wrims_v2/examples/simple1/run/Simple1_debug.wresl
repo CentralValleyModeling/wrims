@@ -1,0 +1,22 @@
+SEQUENCE One {
+    MODEL   Mod1
+    ORDER   1
+}
+
+MODEL Mod1 {
+
+	define XX { std kind 'Dvar' units 'num' } 
+	define YY { std kind 'Dvar' units 'num' } 
+	define ZZ { std kind 'Dvar' units 'num' } 
+	
+	goal GOAL_1 { XX < 4 }
+	goal GOAL_2 { YY = 88.5 }
+	goal GOAL_3 { ZZ = 33.2 }
+
+	
+		
+	Objective obj = {
+		[XX, 1]
+	}	
+		
+}

@@ -34,7 +34,7 @@ public class TestILP_example_callite_config_XA {
         
         expected = 9.651283097922951E8; 
 		
-		double obj_value =  ControlData.lpsolve_objective;		
+		double obj_value =  ControlData.xasolver.getObjective();		
 		Assert.assertEquals(Error.getTotalError(), 0);	
 		Assert.assertEquals(obj_value, expected, expected*tolerance_perc);	
 	}

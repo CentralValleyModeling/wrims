@@ -25,7 +25,7 @@ public class TestILP_simple {
 		
 		/// set control data		
 		String[] controlDataString = {
-				"-config=\"D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\simple1\\Run\\simple1_xa.config\"" 
+				"-config=\"D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\simple1\\simple1_xa.config\"" 
 				};
 		
         new ControllerBatch(controlDataString);
