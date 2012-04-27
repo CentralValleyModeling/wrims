@@ -1,211 +1,201 @@
 package wrimsv2.solver;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Iterator;
 import java.util.Set;
 
 import wrimsv2.commondata.wresldata.Dvar;
-import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.commondata.solverdata.*;
 import wrimsv2.components.ControlData;
-import wrimsv2.components.FilePaths;
+import wrimsv2.components.Error;
 import wrimsv2.components.IntDouble;
 import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssDataSetFixLength;
+<<<<<<< .mine
+=======
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.wreslparser.elements.Tools;
+>>>>>>> .r1938
 import lpsolve.*;
 
 public class LPSolveSolver {
-	LpSolve Model =null;
-	Map <String, Integer> VarMap = new HashMap <String, Integer>();
-    double [] addConstraint;
-    int [] constraintNum;
-    private static PrintWriter _lpsolveFile;
-    private static File lpsolveParentDir;
-
-	public LPSolveSolver(String filePath){
+	
+	public static Map <String, Double> varDoubleMap;
+	private static LpSolve solver;
+	private static String lpFilePath;
+	private static ArrayList<String> origcolName;
+	//public static ArrayList<String> paramFiles;
+	public static String settingFile = null;
+	//public static ArrayList<String> paramHeader;
+	public static int numberOfRetries = 0;  // default is zero
+	//public static boolean overwriteDefaultSetting = false; // default is false
+	
+    public static void setLP(String filePath){
 
 		  try {
+			  // TODO: remove this test
+			  //filePath = "D:\\cvwrsm\\trunk\\callite\\CalLite\\run\\=ILP=\\=LpSolve=\\demo.config\\lpsolve\\1933_06_c01.lps";
 			  
-			  LpSolve solver = LpSolve.readLp("test2.lps", LpSolve.IMPORTANT, "test_prob");
-		      //solver.setVerbose(LpSolve.IMPORTANT);
+			  solver = LpSolve.readLp(filePath, LpSolve.IMPORTANT, "test_prob");  
+			  
+			  
+			  //if ( overwriteDefaultSetting ) {
+				  try {
+					  solver.readParams(settingFile, "-h Default");
 
-		      int ret = solver.solve();
+				  } catch (Exception e) {				  
+					  Error.addSolvingError("Default header not found in LpSolve param file");
+				  }
+			  //} else {
+			  //	 setDefaultOption();
+			  //}
+			  
+		      lpFilePath = filePath;
 		      
-		      if (ret != LpSolve.OPTIMAL){
-		    	  
-		    	  System.out.println(ret);
-		    	  System.out.println(solver.getStatustext(ret));
-		      }
 		      
-		      solver.printSolution(1);
+				//int rn = solver.getNorigRows();
+				//int cn = solver.getNorigColumns();
+				
+		      origcolName = new ArrayList<String>();
+				for (int i = 1; i <= solver.getNorigColumns(); i++) {
+					
+					//System.out.println(i + ":"+solver.getOrigcolName(i));
+					//varDoubleMap.put(solver.getOrigcolName(i), solver.getVarPrimalresult(i+rn));
+					
+					origcolName.add(solver.getOrigcolName(i));
+					//System.out.println(solver.getOrigcolName(i)+" : "+solver.getVarPrimalresult(i+rn));
+			    }
 		      
-		      System.out.println("loops:"+solver.getPresolveloops());
-
-		      int rn = solver.getNorigRows();
-		      for (int i = 1; i < solver.getNcolumns()+1; i++) {
-		          System.out.println(solver.getOrigcolName(i)+" : "+solver.getVarPrimalresult(i+rn));
-		      }
-		      // delete the problem and free memory
-		      //solver.deleteLp(); // move to later
-		      
-		      ControlData.lpssolver = solver; // for other processes
 		    }
 		    catch (LpSolveException e) {
 		       e.printStackTrace();
 		    }
+ 
 	}
 	
-	public LPSolveSolver() throws LpSolveException{
-		
-		Model = LpSolve.makeLp(SolverData.getConstraintDataMap().size(), SolverData.getDvarMap().size()+SolverData.getWeightSlackSurplusMap().size());
+	public static void solve(){
+	    	
+			  try {
+				  
+			      int modelStatus = solver.solve();		      
+			      
+				  if (modelStatus!= LpSolve.OPTIMAL)	{
+					  
+					  for (int i=1;i<=numberOfRetries; i++) {  
+					  
+						  solver.deleteLp();
+						  solver = LpSolve.readLp(lpFilePath, LpSolve.IMPORTANT, "test_prob");
+						  //setDefaultOption();
+						  //if (overwriteDefaultSetting) solver.readParams(settingFile, "-h Default");
+						  
+						  try {
+							  solver.readParams(settingFile, "-h Retry"+i);
+							  System.out.println("!! Retry with LpSolve setting: Retry"+ i);
+							  modelStatus = solver.solve();
+						  } catch (Exception e) {
+							  Error.addSolvingError("Header Retry" + i + " not found in LpSolve setting file");
+							  break;
+						  }  
+					  }
+				  }
+				  
+				  if (modelStatus!= LpSolve.OPTIMAL)	{
+					  getSolverInformation(modelStatus);
+				  }
+				  
+				  if (Error.error_solving.size()<1) {
+				      collectDvar();
+				      assignDvar();				  
+				  }
+	
+				  ControlData.lpsolve_objective = solver.getObjective(); // for other processes
+			      // delete the problem and free memory
+			      solver.deleteLp(); 
+			      		      
+			    }
+			    catch (LpSolveException e) {
+			       e.printStackTrace();
+			    }
+	    	
+	    }
 
+	public static void setDefaultOption() {
 		
-		lpsolveParentDir = new File(FilePaths.mainDirectory, "=LPSolve=");
-		try {
-			_lpsolveFile = Tools.openFile(lpsolveParentDir.getAbsolutePath(), "LPSolveOutputTest.txt");} 
-		catch (IOException e) {
-			e.printStackTrace();}
-		setDVars();
-		setObjective();
-		setConstraints();
-		Model.setMaxim();
-		Model.solve();
-		assignDvar();
-		Output();
+		  solver.setSimplextype(LpSolve.SIMPLEX_DUAL_PRIMAL);
+		  solver.setImprove(LpSolve.IMPROVE_DUALFEAS | LpSolve.IMPROVE_THETAGAP );
+		  solver.setAntiDegen(LpSolve.ANTIDEGEN_FIXEDVARS | LpSolve.ANTIDEGEN_STALLING);
+	      solver.setPivoting(LpSolve.PRICER_DEVEX | LpSolve.PRICE_ADAPTIVE);
+	      solver.setScaling(LpSolve.SCALE_GEOMETRIC | LpSolve.SCALE_EQUILIBRATE | LpSolve.SCALE_INTEGERS);
+		  solver.setBbFloorfirst(LpSolve.BRANCH_AUTOMATIC);
+		  solver.setBbRule(LpSolve.NODE_GREEDYMODE | LpSolve.NODE_DYNAMICMODE | LpSolve.NODE_RCOSTFIXING | LpSolve.NODE_PSEUDONONINTSELECT);
+		  solver.setTimeout(5);
+		  solver.setEpsint(2E-7);
+		  solver.setEpsel(1E-11);
+		  
+	      //solver.setVerbose(LpSolve.IMPORTANT);
+		  //solver.setPresolve(LpSolve.PRESOLVE_ROWS , 200);
+		  //solver.setPresolve(LpSolve.PRESOLVE_ROWS|LpSolve.PRESOLVE_COLS|LpSolve.PRESOLVE_PROBEFIX|LpSolve.PRESOLVE_PROBEREDUCE , solver.getPresolveloops());
+		  solver.setPresolve(LpSolve.PRESOLVE_ROWS|LpSolve.PRESOLVE_COLS , solver.getPresolveloops());
 	}
-		
-	public void setDVars() throws LpSolveException{
-		Map<String, Dvar> DvarMap = SolverData.getDvarMap();
-		Set DvarCollection = DvarMap.keySet();
-		Iterator dvarIterator=DvarCollection.iterator();
-		int ColNum = 1;
 
-		while(dvarIterator.hasNext()){                          
-			String dvarName=(String)dvarIterator.next();
-			Dvar dvar=DvarMap.get(dvarName);
-			
-			double lb = dvar.lowerBoundValue.doubleValue();
-			double ub = dvar.upperBoundValue.doubleValue();
-			
-			Model.setBounds(ColNum, lb, ub);
-			if (dvar.integer.equals("y")){
-				Model.setInt(ColNum, true); 
-			}
+	public static void getSolverInformation(int modelStatus){
 
-			VarMap.put(dvarName, ColNum);
-			ColNum++;
-		}
-		
-
-	}
-
-	public void setObjective() throws LpSolveException{
-		Map<String, WeightElement> weightMap = SolverData.getWeightMap();
-		Set weightCollection = weightMap.keySet();
-		Iterator weightIterator = weightCollection.iterator();
-		double[] weightArray = new double[weightCollection.size()];
-		int[] colArray = new int[weightCollection.size()];		
-		
-		Map<String, WeightElement> weightSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
-		Set weightSlackSurplusCollection = weightSlackSurplusMap.keySet();
-		Iterator weightSlackSurplusIterator = weightSlackSurplusCollection.iterator();
-		double[] weightSlackSurplusArray = new double[weightSlackSurplusCollection.size()];
-		int[] colArray2 = new int[weightSlackSurplusCollection.size()];
-		
-		double[] weightArrayCombined = new double[weightCollection.size()+weightSlackSurplusCollection.size()];
-		int[] colArrayCombined = new int[weightCollection.size()+weightSlackSurplusCollection.size()];
-		
-		int counter = 0;
-		int counter2 = 0;
-		
-		while(weightIterator.hasNext()){
-			String weightName=(String)weightIterator.next();
-			weightArray[counter]=weightMap.get(weightName).getValue();
-			colArray[counter]=VarMap.get(weightName);
-			counter++;
-		}
-		while(weightSlackSurplusIterator.hasNext()){
-			String weightSlackSurplusName=(String)weightSlackSurplusIterator.next();
-			weightSlackSurplusArray[counter2]=weightSlackSurplusMap.get(weightSlackSurplusName).getValue();
-			colArray2[counter2]=counter+1;
-			VarMap.put(weightSlackSurplusName, counter+1);
-			counter++;
-			counter2++;
-		}
-		
-		Model.setObjFnex(weightArrayCombined.length, weightArrayCombined, colArrayCombined);
+		Error.addSolvingError(solver.getStatustext(modelStatus)); 
+		Error.addSolvingError(lpFilePath); 		
 	}
 	
-	private void setConstraints() throws LpSolveException {
-		Map<String, EvalConstraint> constraintMap = SolverData.getConstraintDataMap();
-		Set constraintCollection = constraintMap.keySet();
-		Iterator constraintIterator = constraintCollection.iterator();
-		int [] constraintNum2;
-		String outConstraint = null;
-		while(constraintIterator.hasNext()){
-			String constraintName=(String)constraintIterator.next();
-			EvalConstraint ec=constraintMap.get(constraintName);
-			HashMap<String, IntDouble> multMap = ec.getEvalExpression().getMultiplier();
-			Set multCollection = multMap.keySet();
-			Iterator multIterator = multCollection.iterator();
-			int colNum = 0;
-		    addConstraint = new double[multCollection.size()];
-		    int slackNum = 0;
-		    constraintNum = new int[multCollection.size()];
-		    outConstraint = (String) constraintIterator.next() + ": ";
-		    	
-			while(multIterator.hasNext()){
-				String multName=(String)multIterator.next();
-				double coef=multMap.get(multName).getData().doubleValue();
-				addConstraint[colNum]= coef;
-				if (VarMap.keySet().contains(multName)){
-					constraintNum[colNum]=VarMap.get(multName);
-					outConstraint = outConstraint + " ";
-				}
-				
-				colNum++;
-				
-			}
-			_lpsolveFile.println(outConstraint);
+	private static void collectDvar() throws LpSolveException{
+		
+		varDoubleMap = new HashMap<String, Double>();
+		
+		int rn = solver.getNorigRows();
+		int cn = solver.getNorigColumns();
+		
+		//System.out.println("solver.getNorigColumns():" + cn);
+		//System.out.println("solver.getNorigRows():" + rn);
+		
+		for (int i = 1; i <= cn; i++) {
 			
-			Map<String, Dvar> DvarMap = SolverData.getDvarMap();
-			Set DvarCollection = DvarMap.keySet();
-			Iterator dvarIterator=DvarCollection.iterator();
-			
-			if (ec.getSign().equals("=")) {		
-				Model.addConstraintex(addConstraint.length,addConstraint,constraintNum,Model.EQ,-ec.getEvalExpression().getValue().getData().doubleValue()); //LE(1); GE(2): EQ(3)
-			}
-			else if (ec.getSign().equals("<") || ec.getSign().equals("<=")){
-				Model.addConstraintex(addConstraint.length,addConstraint,constraintNum,Model.LE,-ec.getEvalExpression().getValue().getData().doubleValue());
-			}
-			else if (ec.getSign().equals(">") || ec.getSign().equals(">=")){
-				Model.addConstraintex(addConstraint.length,addConstraint,constraintNum,Model.GE,-ec.getEvalExpression().getValue().getData().doubleValue());
-			}
-		}
+			//System.out.println(i + ":"+solver.getOrigcolName(i));
+			//varDoubleMap.put(solver.getOrigcolName(i), solver.getVarPrimalresult(i+rn));
+			varDoubleMap.put(origcolName.get(i-1), solver.getVarPrimalresult(i+rn));
+			//System.out.println(solver.getOrigcolName(i)+" : "+solver.getVarPrimalresult(i+rn));
+	    }		
+	
 	}
 	
-	public void assignDvar() throws LpSolveException{
-		Map<String, Dvar> dvarMap = ControlData.currDvMap;
-		Set dvarCollection = dvarMap.keySet();
-		Iterator dvarIterator = dvarCollection.iterator();
+	private static void assignDvar() throws LpSolveException{
 		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
 		Map<String, Map<String, IntDouble>> varTimeArrayCycleValueMap=ControlData.currStudyDataSet.getVarTimeArrayCycleValueMap();
 		Set<String> dvarUsedByLaterCycle = ControlData.currModelDataSet.dvarUsedByLaterCycle;
 		Set<String> dvarTimeArrayUsedByLaterCycle = ControlData.currModelDataSet.dvarTimeArrayUsedByLaterCycle;
 		String model=ControlData.currCycleName;
+		
+		Map<String, Dvar> dvarMap = SolverData.getDvarMap();
+		Set dvarCollection = dvarMap.keySet();
+		Iterator dvarIterator = dvarCollection.iterator();
 			
 		while(dvarIterator.hasNext()){ 
 			String dvName=(String)dvarIterator.next();
 			Dvar dvar=dvarMap.get(dvName);
-			double[] var = Model.getPtrVariables();
-			double value=var[VarMap.get(dvName)-1]; 
+			
+			double value = -9999999;
+			try {
+				value=varDoubleMap.get(dvName);
+			} catch (Exception e) {
+				//value = 0;  // TODO: warning!! needs work here!!
+				
+				//System.out.println(" This dvName not found: "+ dvName);
+				//continue;
+				try {
+					value = (Double) dvar.getData().getData(); // use whatever is in the container.
+				} catch (Exception e2) {
+					value=-99999999.; // TODO: if this value is used, then this is probably an error in the wresl code. need to give warning.
+				}
+			}
 			IntDouble id=new IntDouble(value,false);
 			dvar.setData(id);
 			if(dvarUsedByLaterCycle.contains(dvName)){
@@ -234,30 +224,9 @@ public class LPSolveSolver {
 			dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=value;
 		}
 		
-		if (ControlData.showRunTimeMessage) System.out.println("Assign Dvar Done.");
-	}
-	
-	private void Output() throws  LpSolveException{
-		Map<String, Dvar> dvarMap = ControlData.currDvMap;
-		Set dvarCollection = dvarMap.keySet();
-		Iterator dvarIterator = dvarCollection.iterator();
-		
-		Map<String, WeightElement> weightSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
-		Set weightSlackSurplusCollection = weightSlackSurplusMap.keySet();
-		Iterator weightSlackSurplusIterator = weightSlackSurplusCollection.iterator();
-		
-		double[] var = Model.getPtrVariables();
-				
-		while(dvarIterator.hasNext()){ 
-			String dvName=(String)dvarIterator.next();
-			Dvar dvar=dvarMap.get(dvName);
-		}
-
-		while(weightSlackSurplusIterator.hasNext()){
-			String weightSlackSurplusName=(String)weightSlackSurplusIterator.next();
-			double value=var[VarMap.get(weightSlackSurplusName)]; 
-			
-			System.out.print("The Answer " + weightSlackSurplusName + ": " + VarMap.get(weightSlackSurplusName) + " " + value +"\n");
+		if (ControlData.showRunTimeMessage) {
+			System.out.println("Objective Value: "+ControlData.lpsolve_objective);
+			System.out.println("Assign Dvar Done.");
 		}
 	}
 }
