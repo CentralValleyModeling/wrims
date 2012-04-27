@@ -83,7 +83,7 @@ public class ControlData {
 	public static DSSDataWriter writer;
 	public static String solverName;
 	public static Optimizer xasolver;
-	public static LpSolve lpssolver;
+	public static double lpsolve_objective;
 	public static boolean isPostProcessing=false;
 	public static boolean sendAliasToDvar=false;
 	public static boolean outputWreslCSV=false;
