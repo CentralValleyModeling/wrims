@@ -132,7 +132,7 @@ Objective obj = {[S_Trnty_1,40000*taf_cfs],
 [D122A,5000], ! next 10 weights for D_Wilkns_P
 [D122B,5000],
 [D143A,5000.1],
-[D143B,5000],
+[D143B,5000.2],
 [D145A,5000.1],
 [D145B,5000],
 [D128,5000],
