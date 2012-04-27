@@ -245,21 +245,21 @@ public class ConfigUtils {
 		}
 		System.out.println("LpSolveNumberOfRetries: "+LPSolveSolver.numberOfRetries);
 		
-		// default is false
-		if (configMap.keySet().contains("lpsolveoverwritedefaultsetting")){
-			
-			String s = configMap.get("lpsolveoverwritedefaultsetting");
-			
-			if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")){
-				LPSolveSolver.overwriteDefaultSetting = true;	
-			} else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")){
-				LPSolveSolver.overwriteDefaultSetting = false;	
-			} else {
-				LPSolveSolver.overwriteDefaultSetting = false;	
-			}
-			
-		}
-		System.out.println("LpSolveOverwriteDefaultSetting: "+LPSolveSolver.overwriteDefaultSetting);
+
+//		if (configMap.keySet().contains("lpsolveoverwritedefaultsetting")){
+//			
+//			String s = configMap.get("lpsolveoverwritedefaultsetting");
+//			
+//			if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")){
+//				LPSolveSolver.overwriteDefaultSetting = true;	
+//			} else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")){
+//				LPSolveSolver.overwriteDefaultSetting = false;	
+//			} else {
+//				LPSolveSolver.overwriteDefaultSetting = false;	
+//			}
+//			
+//		}
+//		System.out.println("LpSolveOverwriteDefaultSetting: "+LPSolveSolver.overwriteDefaultSetting);
 		
 //		if (configMap.keySet().contains("lpsolveparamheader")){
 //			
