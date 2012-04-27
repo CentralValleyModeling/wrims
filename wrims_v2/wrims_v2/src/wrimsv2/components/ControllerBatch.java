@@ -336,7 +336,7 @@ public class ControllerBatch {
 							noError=false;
 						}
 				
-						new LPSolveSolver();
+						//new LPSolveSolver();
 
 						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
 						if (Error.error_solving.size()<1){
@@ -461,14 +461,16 @@ public class ControllerBatch {
 						}
 					
 						// choose solver to solve. TODO: this is not efficient. need to be done outside ILP
-						if (ControlData.solverType == Param.SOLVER_LPSOLVE) {
-							new LPSolveSolver(ILP.lpSolveFilePath);
-							ILP.writeObjValue_LPSOLVE();
-						} else {
+				        if (ControlData.solverType == Param.SOLVER_LPSOLVE.intValue()) {
+				            LPSolveSolver.setLP(ILP.lpSolveFilePath);
+				            LPSolveSolver.solve();
+				            ILP.writeObjValue_LPSOLVE();
+				            ILP.writeDvarValue_LPSOLVE();
+				        } else {
 							new XASolver(); // default
-							ILP.writeObjValue_XA();
-							ILP.writeDvarValue_XA();
-						}
+				            ILP.writeObjValue_XA();
+				            ILP.writeDvarValue_XA();
+				        }
 
 
 

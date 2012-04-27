@@ -280,7 +280,7 @@ public class ControllerDebug extends Thread {
 							noError=false;
 						}
 				
-						new LPSolveSolver();
+						//new LPSolveSolver();
 
 						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
 						if (Error.error_solving.size()<1){
