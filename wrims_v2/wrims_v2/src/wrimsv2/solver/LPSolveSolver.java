@@ -13,12 +13,9 @@ import wrimsv2.components.Error;
 import wrimsv2.components.IntDouble;
 import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssDataSetFixLength;
-<<<<<<< .mine
-=======
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.wreslparser.elements.Tools;
->>>>>>> .r1938
 import lpsolve.*;
 
 public class LPSolveSolver {
