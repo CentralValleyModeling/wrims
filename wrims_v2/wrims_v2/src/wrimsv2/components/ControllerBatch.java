@@ -22,6 +22,7 @@ import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
+import wrimsv2.config.ConfigUtils;
 import wrimsv2.evaluator.AssignPastCycleVariable;
 import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssDataSetFixLength;
@@ -36,7 +37,6 @@ import wrimsv2.solver.XASolver;
 import wrimsv2.solver.initialXALog;
 import wrimsv2.solver.initialXASolver;
 import wrimsv2.wreslparser.elements.StudyUtils;
-import wrimsv2.wreslparser.elements.ConfigUtils;
 
 import lpsolve.*;
 

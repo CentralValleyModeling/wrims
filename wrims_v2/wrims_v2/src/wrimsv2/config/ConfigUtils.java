@@ -1,4 +1,4 @@
-package wrimsv2.wreslparser.elements;
+package wrimsv2.config;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +19,7 @@ import wrimsv2.components.FilePaths;
 import wrimsv2.components.Versions;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.solver.LPSolveSolver;
+import wrimsv2.wreslparser.elements.StudyUtils;
 
 public class ConfigUtils {
 
