@@ -94,4 +94,39 @@ public class TestWreslWalker_include {
 	
 	
 	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void include_ex() throws RecognitionException, IOException {
+		
+		testName = "TestWreslWalker_include_ex";
+		csvFolderPath = "testResult_v1\\"+testName;
+		inputFilePath = projectPath + "\\moreWreslFiles\\"+testName+".wresl";
+		logFilePath = csvFolderPath+".log";
+	
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		LogUtils.closeLogFile();
+		
+		String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.study(sd,csvFolderPath ) ;
+	
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 8);	
+	
+	
+	}
 }

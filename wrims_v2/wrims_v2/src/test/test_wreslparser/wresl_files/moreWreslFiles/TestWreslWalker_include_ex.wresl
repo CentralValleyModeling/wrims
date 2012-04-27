@@ -1,0 +1,18 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+  INCLUDE[local] 'someFolder\external.wresl'
+ 	
+  define in_main_file {EXTERNAL f90}	
+	}	
+
+	
+
+	 
+
+
+ 
