@@ -207,7 +207,7 @@ public class StudyParser{
 
   public static Map<String, SimulationDataSet> parseModels(StudyConfig sc, TempData td) throws RecognitionException, IOException
   {
-    return parseModels(sc, td, false, true);
+    return parseModels(sc, td, false, false);
   }
 
   public static Map<String, SimulationDataSet> parseModels(StudyConfig sc, TempData td, boolean rewrite_list_based_on_dependency, boolean send_all_alias_to_dvar) throws RecognitionException, IOException
