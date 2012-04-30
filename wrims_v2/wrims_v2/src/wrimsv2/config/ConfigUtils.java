@@ -209,10 +209,10 @@ public class ConfigUtils {
 		
 		if (ControlData.solverName.toLowerCase().contains("lpsolve")) {
 			
-			// LpSolveSettingFile
-			if (configMap.keySet().contains("lpsolvesettingfile")) {
+			// LpSolveConfigFile
+			if (configMap.keySet().contains("lpsolveconfigfile")) {
 
-				String f = configMap.get("lpsolvesettingfile");
+				String f = configMap.get("lpsolveconfigfile");
 
 				try {
 
@@ -220,19 +220,19 @@ public class ConfigUtils {
 					if (sf.exists()) {					
 						LPSolveSolver.settingFile = sf.getCanonicalPath();
 					} else {
-						System.out.println("#Error: LpSolveSettingFile not found: " + f);					
+						System.out.println("#Error: LpSolveConfigFile not found: " + f);					
 					}
 
 				} catch (Exception e) {
 
-					System.out.println("#Error: LpSolveSettingFile not found: " + f);
+					System.out.println("#Error: LpSolveConfigFile not found: " + f);
 					e.printStackTrace();
 				}
 			} else {
-				System.out.println("#Error: LpSolveSettingFile not defined. ");
+				System.out.println("#Error: LpSolveConfigFile not defined. ");
 			}
 		
-			System.out.println("LpSolveSettingFile:   "+LPSolveSolver.settingFile);
+			System.out.println("LpSolveConfigFile:   "+LPSolveSolver.settingFile);
 			
 			
 			// LpSolveNumberOfRetries default is 0 retry
