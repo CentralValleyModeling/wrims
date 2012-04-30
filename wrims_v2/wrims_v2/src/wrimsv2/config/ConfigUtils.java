@@ -18,6 +18,7 @@ import wrimsv2.components.ControllerBatch;
 import wrimsv2.components.FilePaths;
 import wrimsv2.components.Versions;
 import wrimsv2.evaluator.TimeOperation;
+import wrimsv2.ilp.ILP;
 import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.wreslparser.elements.StudyUtils;
 
@@ -254,7 +255,25 @@ public class ConfigUtils {
 		}
 		
 		
-
+		// IlpMaximumFractionDigits
+		// default is 8
+		if (configMap.keySet().contains("ilpmaximumfractiondigits")){
+			
+			String s = configMap.get("ilpmaximumfractiondigits");
+			int d;
+			
+			try {
+				d = Integer.parseInt(s);
+				ILP.maximumFractionDigits = d;
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("#Error: IlpMaximumFractionDigits not recognized: "+s);
+			}
+				
+			
+		}
+		System.out.println("IlpMaximumFractionDigits: "+ILP.maximumFractionDigits);
 		
 
 //		if (configMap.keySet().contains("lpsolveoverwritedefaultsetting")){

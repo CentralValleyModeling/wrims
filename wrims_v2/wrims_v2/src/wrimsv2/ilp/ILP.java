@@ -41,6 +41,7 @@ public class ILP {
 	private static final String lpSolve_comment_Symbol = "//";
 	private static final String ampl_comment_Symbol = "#";
 	private static DecimalFormat df;
+	public static int maximumFractionDigits = 8;
 	
 	private ILP() {
 		
@@ -56,7 +57,7 @@ public class ILP {
 		//TODO: move to somewhere else
 		df = new DecimalFormat();
 		//df.setMinimumFractionDigits(2);
-		df.setMaximumFractionDigits(8);
+		df.setMaximumFractionDigits(maximumFractionDigits);
 	}
 	
 	public static void setIlpFile() {
