@@ -64,17 +64,17 @@ public class ToWreslData {
 		
 		// TODO: give pre-sorted var list
 
-		o.dvSlackSurplusList = new ArrayList<String>(m.ssList_hasCase);
+		o.dvSlackSurplusList = new ArrayList<String>(seq.ssList_hasCase);
 		Collections.sort(o.dvSlackSurplusList,String.CASE_INSENSITIVE_ORDER);
 
-		o.wtSlackSurplusList = new ArrayList<String>(m.ssList_hasCase);
+		o.wtSlackSurplusList = new ArrayList<String>(seq.ssList_hasCase);
 		Collections.sort(o.wtSlackSurplusList,String.CASE_INSENSITIVE_ORDER);
 		
-		o.dvList = new ArrayList<String>(m.dvList);
-		o.dvList.addAll(m.ssList_noCase);
+		o.dvList = new ArrayList<String>(seq.dvList);
+		o.dvList.addAll(seq.ssList_noCase);
 		Collections.sort(o.dvList,String.CASE_INSENSITIVE_ORDER);
 		
-		o.tsList = new ArrayList<String>(m.tsList);
+		o.tsList = new ArrayList<String>(seq.tsList);
 		Collections.sort(o.tsList,String.CASE_INSENSITIVE_ORDER);
 		
 		// don't sort svList. order matters in evaluator
@@ -86,7 +86,9 @@ public class ToWreslData {
 		o.gList = new ArrayList<String>(m.glList);
 		Collections.sort(o.exList,String.CASE_INSENSITIVE_ORDER);
 		
-		o.exList = new ArrayList<String>(m.exList);
+
+		
+		o.exList = new ArrayList<String>(seq.exList);
 		Collections.sort(o.exList,String.CASE_INSENSITIVE_ORDER);
 		
 		o.asList = new ArrayList<String>(m.asList);
@@ -112,16 +114,18 @@ public class ToWreslData {
 		}
 		
 		
-		for (String k: m.tsMap.keySet()){			
-			o.tsMap.put(k, convertTimeseries(m.tsMap.get(k)));
+		for (String k: seq.tsMap.keySet()){			
+			o.tsMap.put(k, convertTimeseries(seq.tsMap.get(k)));
 		}		
 
 		for (String k: m.glMap.keySet()){			
 			o.gMap.put(k, convertGoal(m.glMap.get(k)));
 		}
-		for (String k: m.exMap.keySet()){			
-			o.exMap.put(k, convertExternal(m.exMap.get(k)));
+		for (String k: o.exList){			
+			o.exMap.put(k, convertExternal(seq.exMap.get(k)));
 		}
+		
+		
 		
 		// special case. don't copy and paste
 		for (String k: o.svList){		
@@ -137,10 +141,10 @@ public class ToWreslData {
 		}
 		
 		//dv
-		for (String k: m.dvList){			
+		for (String k: seq.dvList){			
 			o.dvMap.put(k, convertDvar(seq.dvMap.get(k)));
 		}
-		for (String k: m.ssList_noCase){			
+		for (String k: seq.ssList_noCase){			
 			o.dvMap.put(k, convertDvar(seq.ssMap_noCase.get(k)));
 		}
 		

@@ -19,7 +19,8 @@ public class Procedures {
 	}
 
 	public static void processGoalHS(StudyTemp s) {
-
+		
+		//TODO: use seq list
 		for (String m : s.modelList) {
 
 			ModelTemp mObj = s.modelMap.get(m);
@@ -330,8 +331,22 @@ public class Procedures {
 
 	public static void copyModelVarMapToSequenceVarMap(ModelTemp mt, SequenceTemp seq) {
 		
+		System.out.println("0427: "+mt.pathRelativeToRunDir+" : "+mt.dvList);
+		
+		seq.exList.addAll(mt.exList);
+		seq.dvList.addAll(mt.dvList);
+		seq.tsList.addAll(mt.tsList);
+		
+		seq.ssList_hasCase.addAll(mt.ssList_hasCase);
+		seq.ssList_noCase.addAll(mt.ssList_noCase);
+		
+		
 		seq.svMap.putAll(mt.svMap);
 		seq.dvMap.putAll(mt.dvMap);
+		seq.exMap.putAll(mt.exMap);
+		seq.tsMap.putAll(mt.tsMap);
+		
+		
 		seq.ssMap_hasCase.putAll(mt.ssMap_hasCase);
 		seq.ssWeightMap_hasCase.putAll(mt.ssWeightMap_hasCase);
 		seq.ssMap_noCase.putAll(mt.ssMap_noCase);
@@ -839,7 +854,7 @@ public class Procedures {
 					
 					ModelTemp includedModel = st.fileModelDataTable.get(includedFile,st.fileModelNameMap.get(includedFile).get(0));
 					m.svIncFileList_post.addAll(index, includedModel.svIncFileList_post); 
-					m.dvList.addAll(includedModel.dvList);
+					//m.dvList.addAll(includedModel.dvList);
 					m.ssList_noCase.addAll(includedModel.ssList_noCase);
 					m.ssList_hasCase.addAll(includedModel.ssList_hasCase);
 					
@@ -880,7 +895,7 @@ public class Procedures {
 				m.svIncFileList_post.remove(index);
 				
 				m.svIncFileList_post.addAll(index, includedModel.svIncFileList_post);
-				m.dvList.addAll(includedModel.dvList);
+				//m.dvList.addAll(includedModel.dvList);
 				m.ssList_noCase.addAll(includedModel.ssList_noCase);
 				m.ssList_hasCase.addAll(includedModel.ssList_hasCase);
 				}

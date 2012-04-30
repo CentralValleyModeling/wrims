@@ -15,9 +15,18 @@ public class SequenceTemp implements Serializable {
 	public String condition;
 	public String order;	
 
+	// does not reflect user's input order
+	public ArrayList<String> exList; 
+	public ArrayList<String> dvList;
+	public ArrayList<String> ssList_hasCase;
+	public ArrayList<String> ssList_noCase;
+	
+	public ArrayList<String>  tsList;
+	public Map<String,TimeseriesTemp> tsMap;
 	
 	public Map<String,SvarTemp> svMap;
 	public Map<String,DvarTemp> dvMap;
+	public Map<String,ExternalTemp> exMap;	
 	
 	public Map<String,DvarTemp> ssMap_hasCase;   // processed
 	public Map<String,WeightTemp> ssWeightMap_hasCase;  // processed
@@ -30,8 +39,16 @@ public class SequenceTemp implements Serializable {
 	
 	public SequenceTemp(){
 		
+		exList = new ArrayList<String>();
+		dvList = new ArrayList<String>();
+		tsList = new ArrayList<String>();
+		ssList_hasCase = new ArrayList<String>();
+		ssList_noCase = new ArrayList<String>();
+		
+		tsMap = new HashMap<String, TimeseriesTemp>();
 		svMap = new HashMap<String, SvarTemp>();
 		dvMap = new HashMap<String, DvarTemp>();
+		exMap = new HashMap<String, ExternalTemp>();
 		
 		ssMap_hasCase = new HashMap<String, DvarTemp>();
 		ssWeightMap_hasCase = new HashMap<String, WeightTemp>();
