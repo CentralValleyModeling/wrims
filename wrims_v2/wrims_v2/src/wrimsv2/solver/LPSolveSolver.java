@@ -36,7 +36,7 @@ public class LPSolveSolver {
 			  // TODO: remove this test
 			  //filePath = "D:\\cvwrsm\\trunk\\callite\\CalLite\\run\\=ILP=\\=LpSolve=\\demo.config\\lpsolve\\1933_06_c01.lps";
 			  
-			  solver = LpSolve.readLp(filePath, LpSolve.IMPORTANT, "test_prob");  
+			  solver = LpSolve.readLp(filePath, LpSolve.CRITICAL, "test_prob");  
 			  
 			  
 			  //if ( overwriteDefaultSetting ) {
@@ -44,7 +44,7 @@ public class LPSolveSolver {
 					  solver.readParams(settingFile, "-h Default");
 
 				  } catch (Exception e) {				  
-					  Error.addSolvingError("Default header not found in LpSolve param file");
+					  Error.addSolvingError("Header \"Default\"not found in LpSolve config file");
 				  }
 			  //} else {
 			  //	 setDefaultOption();
@@ -81,19 +81,21 @@ public class LPSolveSolver {
 			      
 				  if (modelStatus!= LpSolve.OPTIMAL)	{
 					  
+					  System.out.println("LpSolve Error: "+solver.getStatustext(modelStatus));
+					  
 					  for (int i=1;i<=numberOfRetries; i++) {  
 					  
 						  solver.deleteLp();
-						  solver = LpSolve.readLp(lpFilePath, LpSolve.IMPORTANT, "test_prob");
+						  solver = LpSolve.readLp(lpFilePath, LpSolve.CRITICAL, "test_prob");
 						  //setDefaultOption();
 						  //if (overwriteDefaultSetting) solver.readParams(settingFile, "-h Default");
 						  
 						  try {
 							  solver.readParams(settingFile, "-h Retry"+i);
-							  System.out.println("!! Retry with LpSolve setting: Retry"+ i);
+							  System.out.println("! Retry with LpSolve config named: Retry"+ i);
 							  modelStatus = solver.solve();
 						  } catch (Exception e) {
-							  Error.addSolvingError("Header Retry" + i + " not found in LpSolve setting file");
+							  Error.addSolvingError("Header \"Retry" + i + "\" not found in LpSolve config file");
 							  break;
 						  }  
 					  }
