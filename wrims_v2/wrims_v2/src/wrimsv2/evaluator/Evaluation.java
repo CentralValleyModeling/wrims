@@ -728,7 +728,7 @@ public class Evaluation {
 				return 1.0;
 			}
 		}
-		
+
 		DssDataSet dds=DataTimeSeries.dvAliasInit.get(entryNameTS);
 		index=timeSeriesIndex(dds);
 		ArrayList<Double> data=dds.getData();
@@ -826,6 +826,7 @@ public class Evaluation {
 			ModelDataSet mds=ControlData.currStudyDataSet.getModelDataSetMap().get(cycle);
 			EvalExpression ee1;
 			if (mds.dvMap.containsKey(ident) || mds.asMap.containsKey(ident)){
+				TimeOperation.findTime(index);
 				return new IntDouble(dvarAliasTimeSeries(ident, index), false);
 			}else{
 				ee1=getTimeSeries(ident, eeArray);

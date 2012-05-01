@@ -561,6 +561,7 @@ public class ValueEvaluation {
 	}
 	
 	public static IntDouble pastCycleTimeArray(String ident, String cycle, IntDouble id){
+				
 		IntDouble data=new IntDouble(1.0,false);
 		if (!id.isInt()){
 			Error.addEvaluationError("Time array index of "+ident+" is not an integer.");
@@ -572,6 +573,7 @@ public class ValueEvaluation {
 			idArray.add(id);
 			ModelDataSet mds=ControlData.currStudyDataSet.getModelDataSetMap().get(cycle);
 			if (mds.dvMap.containsKey(ident) || mds.asMap.containsKey(ident)){
+				TimeOperation.findTime(index);
 				return new IntDouble(dvarAliasTimeSeries(ident, index), false);
 			}else{
 				return getTimeSeries(ident, idArray);
