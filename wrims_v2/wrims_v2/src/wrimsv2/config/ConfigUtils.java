@@ -17,6 +17,7 @@ import wrimsv2.components.ControlData;
 import wrimsv2.components.ControllerBatch;
 import wrimsv2.components.FilePaths;
 import wrimsv2.components.Versions;
+import wrimsv2.components.Error;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.ilp.ILP;
 import wrimsv2.solver.LPSolveSolver;
@@ -113,9 +114,10 @@ public class ConfigUtils {
 			FilePaths.setMainFilePaths(mainFilePath);
 		}
 		else {
-			System.out.println("Invalid main file extension: " + configMap.get("mainfile"));
-			System.out.println("Specify either *.wresl or *.par");
-			System.exit(1);
+			Error.addConfigError("Invalid main file extension: " + configMap.get("mainfile"));
+			//System.out.println("Invalid main file extension: " + configMap.get("mainfile"));
+			//System.out.println("Specify either *.wresl or *.par");
+			//System.exit(1);
 		}
 
 		// FilePaths.mainDirectory = configMap.get("maindir");
@@ -129,7 +131,8 @@ public class ConfigUtils {
 			FilePaths.setDvarDssPaths(new File(StudyUtils.configDir, configMap.get("dvarfile")).getCanonicalPath());
 			System.out.println("DvarFile:       "+FilePaths.fullDvarDssPath);
 		} catch (IOException e){
-			System.out.println("Invalid file path");
+			Error.addConfigError("Invalid file path in config file");
+			//System.out.println("Invalid file path");
 			e.printStackTrace();
 		}
 		
@@ -219,21 +222,23 @@ public class ConfigUtils {
 
 					File sf = new File(StudyUtils.configDir, f);
 					if (sf.exists()) {					
-						LPSolveSolver.settingFile = sf.getCanonicalPath();
+						LPSolveSolver.configFile = sf.getCanonicalPath();
 					} else {
-						System.out.println("#Error: LpSolveConfigFile not found: " + f);					
+						//System.out.println("#Error: LpSolveConfigFile not found: " + f);
+						Error.addConfigError("LpSolveConfigFile not found: " + f);
 					}
 
 				} catch (Exception e) {
-
-					System.out.println("#Error: LpSolveConfigFile not found: " + f);
+					Error.addConfigError("LpSolveConfigFile not found: " + f);
+					//System.out.println("#Error: LpSolveConfigFile not found: " + f);
 					e.printStackTrace();
 				}
 			} else {
-				System.out.println("#Error: LpSolveConfigFile not defined. ");
+				Error.addConfigError("#Error: LpSolveConfigFile not defined. ");
+				//System.out.println("#Error: LpSolveConfigFile not defined. ");
 			}
 		
-			System.out.println("LpSolveConfigFile:   "+LPSolveSolver.settingFile);
+			System.out.println("LpSolveConfigFile:   "+LPSolveSolver.configFile);
 			
 			
 			// LpSolveNumberOfRetries default is 0 retry
@@ -245,7 +250,8 @@ public class ConfigUtils {
 					LPSolveSolver.numberOfRetries = Integer.parseInt(s);
 					
 				} catch (Exception e) {
-					System.out.println("#Error: LpSolveNumberOfRetries not recognized: " + s);
+					//System.out.println("#Error: LpSolveNumberOfRetries not recognized: " + s);
+					Error.addConfigError("LpSolveNumberOfRetries not recognized: " + s);
 					
 				}				
 			}
@@ -268,7 +274,8 @@ public class ConfigUtils {
 				
 			} catch (Exception e) {
 				// TODO: handle exception
-				System.out.println("#Error: IlpMaximumFractionDigits not recognized: "+s);
+				//System.out.println("#Error: IlpMaximumFractionDigits not recognized: "+s);
+				Error.addConfigError("IlpMaximumFractionDigits not recognized: "+s);
 			}
 				
 			
@@ -375,12 +382,14 @@ public class ConfigUtils {
 			StudyUtils.configFileCanonicalPath = configFile.getCanonicalPath();
 			StudyUtils.configDir = configFile.getParentFile().getCanonicalPath();
 		} catch (Exception e) {
-			System.out.println("Config file not found: " + configFilePath);
-			System.exit(1);
+			//System.out.println("Config file not found: " + configFilePath);
+			Error.addConfigError("Config file not found: " + configFilePath);
+			//System.exit(1);
 		} finally {
 			if (!configFile.exists()){
-				System.out.println("Config file not found: " + configFilePath);
-				System.exit(1);					
+				//System.out.println("Config file not found: " + configFilePath);
+				Error.addConfigError("Config file not found: " + configFilePath);
+				//System.exit(1);					
 			}			
 		}		
 
@@ -434,8 +443,9 @@ public class ConfigUtils {
 
 		}
 		catch (Exception e) {
-			System.out.println("Invalid Config File: " + configFilePath);
-			System.exit(1);
+			//System.out.println("Invalid Config File: " + configFilePath);
+			Error.addConfigError("Invalid Config File: " + configFilePath);
+			//System.exit(1);
 			// e.printStackTrace();
 		}
 
@@ -447,9 +457,10 @@ public class ConfigUtils {
 
 		for (String k : requiredFields) {
 			if (!configMap.keySet().contains(k.toLowerCase())) {
-				System.out.println("Config file missing field: " + k);
+				//System.out.println("Config file missing field: " + k);
+				Error.addConfigError("Config file missing field: " + k);
 				StudyUtils.config_errors++;
-				System.exit(1);
+				//System.exit(1);
 			}
 		}	
 		
@@ -476,9 +487,10 @@ public class ConfigUtils {
 
 			for (String k : endDateFields) {
 				if (!configMap.keySet().contains(k.toLowerCase())) {
-					System.out.println("Config file missing field: " + k);
+					//System.out.println("Config file missing field: " + k);
+					Error.addConfigError("Config file missing field: " + k);
 					StudyUtils.config_errors++;
-					System.exit(1);
+					//System.exit(1);
 				}
 			}			
 		}
@@ -500,16 +512,17 @@ public class ConfigUtils {
 		// support only monthly time step
 		if (!configMap.get("timestep").equalsIgnoreCase("1mon")){
 			
-			System.out.println("Only monthly timestep supported, i.e., \"TimeStep  1MON\" ");
+			//System.out.println("Only monthly timestep supported, i.e., \"TimeStep  1MON\" ");
+			Error.addConfigError("Only monthly timestep supported, i.e., \"TimeStep  1MON\" ");
 			StudyUtils.config_errors++;
-			System.exit(1);
+			//System.exit(1);
 		}
 		
 		
 
 		
 		// exit for above checks
-		if (StudyUtils.config_errors>0) System.exit(1);
+		//if (StudyUtils.config_errors>0) System.exit(1);
 			
 	
 		// check run dir and mainfile
@@ -521,8 +534,9 @@ public class ConfigUtils {
 			mf.getCanonicalPath();
 		}
 		catch (IOException e) {
-			System.out.println("Main file not found: "+mf.getAbsolutePath());
-			System.exit(1);
+			//System.out.println("Main file not found: "+mf.getAbsolutePath());
+			Error.addConfigError("Main file not found: "+mf.getAbsolutePath());
+			//System.exit(1);
 		}
 		
 		return configMap;

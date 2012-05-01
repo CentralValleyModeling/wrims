@@ -48,9 +48,15 @@ public class ControllerBatch {
 		long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
 		try {
 			processArgs(args);
-			StudyDataSet sds = parse(); 
 			
-			if (StudyUtils.total_errors==0 && !StudyUtils.compileOnly){
+			StudyDataSet sds= null;
+			if (Error.error_config.size()>0){
+				Error.writeConfigErrorFile("config_error.txt");
+			} else {
+				sds = parse(); 
+			}
+			
+			if (StudyUtils.total_errors+Error.getTotalError()==0 && !StudyUtils.compileOnly){
 				new PreEvaluator(sds);
 				new PreRunModel(sds);
 				generateStudyFile();
@@ -188,7 +194,11 @@ public class ControllerBatch {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("=================Run ends!================");
+		if (Error.getTotalError()>0){
+			System.out.println("=================Run ends with errors====");
+		} else {
+			System.out.println("=================Run ends!================");
+		}
 	}
 	
 	public void runModelXA(StudyDataSet sds){
@@ -464,8 +474,10 @@ public class ControllerBatch {
 				        if (ControlData.solverType == Param.SOLVER_LPSOLVE.intValue()) {
 				            LPSolveSolver.setLP(ILP.lpSolveFilePath);
 				            LPSolveSolver.solve();
-				            ILP.writeObjValue_LPSOLVE();
-				            ILP.writeDvarValue_LPSOLVE();
+				            if (Error.error_solving.size()<1) {
+				            	ILP.writeObjValue_LPSOLVE();
+				            	ILP.writeDvarValue_LPSOLVE();
+				            }
 				        } else {
 							new XASolver(); // default
 				            ILP.writeObjValue_XA();

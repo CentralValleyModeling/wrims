@@ -25,7 +25,7 @@ public class LPSolveSolver {
 	private static String lpFilePath;
 	private static ArrayList<String> origcolName;
 	//public static ArrayList<String> paramFiles;
-	public static String settingFile = null;
+	public static String configFile = null;
 	//public static ArrayList<String> paramHeader;
 	public static int numberOfRetries = 0;  // default is zero
 	//public static boolean overwriteDefaultSetting = false; // default is false
@@ -36,25 +36,19 @@ public class LPSolveSolver {
 			  // TODO: remove this test
 			  //filePath = "D:\\cvwrsm\\trunk\\callite\\CalLite\\run\\=ILP=\\=LpSolve=\\demo.config\\lpsolve\\1933_06_c01.lps";
 			  
-			  solver = LpSolve.readLp(filePath, LpSolve.CRITICAL, "test_prob");  
-			  
-			  
-			  //if ( overwriteDefaultSetting ) {
-				  try {
-					  solver.readParams(settingFile, "-h Default");
+			  solver = LpSolve.readLp(filePath, LpSolve.IMPORTANT, "test_prob");  
+	  
+     
+			  try {
+				  solver.readParams(configFile, "-h Default");
+     
+			  } catch (Exception e) {				  
+				  Error.addSolvingError("Header \"Default\" not found in LpSolve config file");
+			  }
 
-				  } catch (Exception e) {				  
-					  Error.addSolvingError("Header \"Default\"not found in LpSolve config file");
-				  }
-			  //} else {
-			  //	 setDefaultOption();
-			  //}
 			  
 		      lpFilePath = filePath;
 		      
-		      
-				//int rn = solver.getNorigRows();
-				//int cn = solver.getNorigColumns();
 				
 		      origcolName = new ArrayList<String>();
 				for (int i = 1; i <= solver.getNorigColumns(); i++) {
@@ -70,6 +64,8 @@ public class LPSolveSolver {
 		    catch (LpSolveException e) {
 		       e.printStackTrace();
 		    }
+		  
+
  
 	}
 	
@@ -86,13 +82,13 @@ public class LPSolveSolver {
 					  for (int i=1;i<=numberOfRetries; i++) {  
 					  
 						  solver.deleteLp();
-						  solver = LpSolve.readLp(lpFilePath, LpSolve.CRITICAL, "test_prob");
+						  solver = LpSolve.readLp(lpFilePath, LpSolve.IMPORTANT, "test_prob");
 						  //setDefaultOption();
 						  //if (overwriteDefaultSetting) solver.readParams(settingFile, "-h Default");
 						  
 						  try {
-							  solver.readParams(settingFile, "-h Retry"+i);
 							  System.out.println("! Retry with LpSolve config named: Retry"+ i);
+							  solver.readParams(configFile, "-h Retry"+i);
 							  modelStatus = solver.solve();
 						  } catch (Exception e) {
 							  Error.addSolvingError("Header \"Retry" + i + "\" not found in LpSolve config file");
