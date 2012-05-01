@@ -823,7 +823,13 @@ public class Evaluation {
 		if (index<0){
 			ArrayList<EvalExpression> eeArray=new ArrayList<EvalExpression>();
 			eeArray.add(ee);
-			EvalExpression ee1=getTimeSeries(ident, eeArray);
+			ModelDataSet mds=ControlData.currStudyDataSet.getModelDataSetMap().get(cycle);
+			EvalExpression ee1;
+			if (mds.dvMap.containsKey(ident) || mds.asMap.containsKey(ident)){
+				return new IntDouble(dvarAliasTimeSeries(ident, index), false);
+			}else{
+				ee1=getTimeSeries(ident, eeArray);
+			}
 			if (!ee1.isNumeric()){
 				Error.addEvaluationError("Time array value of "+ident+" contains decision variable.");
 				return data;

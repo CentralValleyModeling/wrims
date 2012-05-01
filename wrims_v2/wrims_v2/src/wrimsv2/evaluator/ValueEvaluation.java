@@ -570,7 +570,12 @@ public class ValueEvaluation {
 		if (index<0){
 			ArrayList<IntDouble> idArray=new ArrayList<IntDouble>();
 			idArray.add(id);
-			return getTimeSeries(ident, idArray);
+			ModelDataSet mds=ControlData.currStudyDataSet.getModelDataSetMap().get(cycle);
+			if (mds.dvMap.containsKey(ident) || mds.asMap.containsKey(ident)){
+				return new IntDouble(dvarAliasTimeSeries(ident, index), false);
+			}else{
+				return getTimeSeries(ident, idArray);
+			}
 		}else if(index==0){
 			return pastCycleNoTimeArray(ident, cycle);
 		}
