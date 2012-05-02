@@ -576,7 +576,8 @@ public class ValueEvaluation {
 				TimeOperation.findTime(index);
 				return new IntDouble(dvarAliasTimeSeries(ident, index), false);
 			}else{
-				return getTimeSeries(ident, idArray);
+				Error.addEvaluationError(ident+" is not a dvar/alias in the cycle of "+cycle+". Only dvar/alias in the past time step of "+index+" and past cycle of "+cycle+" can be used from previous cycles");
+				return new IntDouble(1.0, false);
 			}
 		}else if(index==0){
 			return pastCycleNoTimeArray(ident, cycle);
