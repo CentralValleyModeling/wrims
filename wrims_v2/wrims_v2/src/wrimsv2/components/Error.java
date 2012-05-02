@@ -109,7 +109,7 @@ public class Error {
 	
 	public static void addConfigError(String error){
 		error_config.add(error);
-		System.out.println("Error-"+error);
+		System.out.println("# Error: "+error);
 	}
 	
 	public static int getTotalError(){

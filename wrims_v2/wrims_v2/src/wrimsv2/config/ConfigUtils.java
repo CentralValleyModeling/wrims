@@ -95,7 +95,7 @@ public class ConfigUtils {
 
 	private static void loadConfig(String configFile) {
 
-		StudyUtils.config_errors = 0; // reset
+		//StudyUtils.config_errors = 0; // reset
 
 		Map<String, String> configMap = new HashMap<String, String>();
 
@@ -459,7 +459,7 @@ public class ConfigUtils {
 			if (!configMap.keySet().contains(k.toLowerCase())) {
 				//System.out.println("Config file missing field: " + k);
 				Error.addConfigError("Config file missing field: " + k);
-				StudyUtils.config_errors++;
+				//StudyUtils.config_errors++;
 				//System.exit(1);
 			}
 		}	
@@ -489,7 +489,7 @@ public class ConfigUtils {
 				if (!configMap.keySet().contains(k.toLowerCase())) {
 					//System.out.println("Config file missing field: " + k);
 					Error.addConfigError("Config file missing field: " + k);
-					StudyUtils.config_errors++;
+					//StudyUtils.config_errors++;
 					//System.exit(1);
 				}
 			}			
@@ -514,7 +514,7 @@ public class ConfigUtils {
 			
 			//System.out.println("Only monthly timestep supported, i.e., \"TimeStep  1MON\" ");
 			Error.addConfigError("Only monthly timestep supported, i.e., \"TimeStep  1MON\" ");
-			StudyUtils.config_errors++;
+			//StudyUtils.config_errors++;
 			//System.exit(1);
 		}
 		

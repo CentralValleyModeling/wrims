@@ -48,13 +48,7 @@ public class ControllerBatch {
 		long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
 		try {
 			processArgs(args);
-			
-			StudyDataSet sds= null;
-			if (Error.error_config.size()>0){
-				Error.writeConfigErrorFile("config_error.txt");
-			} else {
-				sds = parse(); 
-			}
+			StudyDataSet sds = parse(); 
 			
 			if (StudyUtils.total_errors+Error.getTotalError()==0 && !StudyUtils.compileOnly){
 				new PreEvaluator(sds);
@@ -165,7 +159,15 @@ public class ControllerBatch {
 	
 	public StudyDataSet parse()throws RecognitionException, IOException{		
 		
-		if(StudyUtils.loadParserData) {
+		if (Error.error_config.size()>0){
+			
+			System.out.println("============================================");
+			System.out.println("Total errors in the config file: "+Error.error_config.size());
+			System.out.println("============================================");
+
+			return null;
+			
+		} else if(StudyUtils.loadParserData) {
 
 			return StudyUtils.loadObject(StudyUtils.parserDataPath);
 		
