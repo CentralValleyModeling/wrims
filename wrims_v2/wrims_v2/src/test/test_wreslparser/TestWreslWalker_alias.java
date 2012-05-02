@@ -379,4 +379,156 @@ public class TestWreslWalker_alias {
 		Assert.assertEquals(totalErrs, 7);	
 				
 	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void alias_to_goal6() throws RecognitionException, IOException {
+	// deep embedding of alias
+		
+		testName = "TestWreslWalker_alias_to_goal6";
+		csvFolderPath = "testResult_v1\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
+		
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath, true);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		//LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		//String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.study(sd, csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 7);		
+	
+		
+	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void alias_to_goal7() throws RecognitionException, IOException {
+	// deep embedding of alias
+		
+		testName = "TestWreslWalker_alias_to_goal7";
+		csvFolderPath = "testResult_v1\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
+		
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath, true);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		//LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		//String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.study(sd, csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 7);		
+	
+		
+	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void alias() throws RecognitionException, IOException {
+	// deep embedding of alias
+		
+		testName = "TestWreslWalker_alias";
+		csvFolderPath = "testResult_v1\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
+		
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath, true);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		//LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		//String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.study(sd, csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 7);		
+	
+		
+	}
+
+	@Test(groups = { "WRESL_elements" })
+	public void alias2() throws RecognitionException, IOException {
+	// deep embedding of alias
+		
+		testName = "TestWreslWalker_alias2";
+		csvFolderPath = "testResult_v1\\"+testName;
+		inputFilePath = projectPath + testName+".wresl";
+		logFilePath = csvFolderPath+".log";
+		
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		TempData td = new TempData();
+	
+		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath, true);
+		
+		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		
+		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+	
+		//LogUtils.studySummary_details(sd);
+	
+		LogUtils.closeLogFile();
+		
+		//String modelName = sd.getModelList().get(0);
+		
+		WriteCSV.study(sd, csvFolderPath ) ;
+		
+		String logText = Tools.readFileAsString(logFilePath);	
+	
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 7);		
+	
+		
+	}
 }

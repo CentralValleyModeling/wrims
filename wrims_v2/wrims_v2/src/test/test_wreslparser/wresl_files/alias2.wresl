@@ -1,0 +1,3 @@
+
+define dv_int { INTEGER std kind 'INTEGER' units 'NONE' }                  ! 0: high flow; 1:  low flow
+define alias_int { alias dv_int kind 'INTEGER' units 'NONE' }     ! 1: high flow; 0:  low flow

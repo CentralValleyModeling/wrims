@@ -1,0 +1,13 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+
+define int_SAC_below { INTEGER std kind 'INTEGER' units 'NONE' }                  ! 0: high flow; 1:  low flow
+define int_SAC_above { alias 1. - int_SAC_below kind 'INTEGER' units 'NONE' }     ! 1: high flow; 0:  low flow
+
+
+}

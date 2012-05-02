@@ -1,0 +1,16 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+	define x { std kind 'test' units 'test' }
+	define y { std kind 'test' units 'test' }
+	define ExpRatio { value 3 }
+	define PulseExpCtrl { value 6 }
+	define Dinflow {alias x+y }
+	goal compare_ratio {PulseExpCtrl < Dinflow*ExpRatio}
+
+	
+}
