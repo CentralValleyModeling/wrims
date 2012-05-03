@@ -1,12 +1,39 @@
+echo off
 
+IF [%1]==[] (
+	echo ==================================
+	echo # Error: Config file path Missing
+	echo ==================================
+	pause
+	exit
+	)
+	
 set ConfigFilePath=%1
 
-echo off
 for %%F in (%ConfigFilePath%) do set dirname=%%~dpF
 set RunDir=%dirname%run\
 
 
 echo off
+
+:-------------------------------------------------------:
+: dir for sty file generation (read by groundwater.dll) :
+:-------------------------------------------------------:
+
+set t=%ConfigFilePath%
+set t=%t::=@%
+set t=%t:\=$%
+
+set Java_Bin=%~dp0_temp\%t%
+
+IF EXIST %Java_Bin% (
+	rmdir /s /q %Java_Bin%
+)
+ 
+mkdir %Java_Bin%
+
+set Java_Bin=%~dp0_temp\%t%\
+
 :------------------:
 : wrims2 lib jars  :
 :------------------:
@@ -40,23 +67,6 @@ set CLASSPATH=-classpath "%ExternalDir%;%AppJars%"
 :------------:
 set PATH=%ExternalDir%;%JarDir%
 
-:-------------------------------------------------------:
-: dir for sty file generation (read by groundwater.dll) :
-:-------------------------------------------------------:
-
-set t=%ConfigFilePath%
-set t=%t::=@%
-set t=%t:\=$%
-
-set Java_Bin=%~dp0_temp\%t%
-
-IF EXIST %Java_Bin% (
-	rmdir /s /q %Java_Bin%
-)
- 
-mkdir %Java_Bin%
-
-set Java_Bin=%~dp0_temp\%t%\
 
 :-------------------------------------------------------:
 : call java to run ControllerBatch class                :
