@@ -414,7 +414,14 @@ public class ILP {
 			String dvName = String.format("%-35s", s);
 			//dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
 			try{
-				dvarFile.print(dvName + ":  " + df.format(LPSolveSolver.varDoubleMap.get(s)) +"\n"  );
+				double v = LPSolveSolver.varDoubleMap.get(s);
+				// TODO: improve speed
+				if (!df.format(v).equals("-0")) {
+					dvarFile.print(dvName + ":  " + df.format(v) +"\n"  );					
+				} else {
+					dvarFile.print(dvName + ":  0" +"\n"  );				
+				}
+
 			} catch (Exception e) {
 				dvarFile.print(dvName + ":  " + LPSolveSolver.varDoubleMap.get(s) +"\n"  );
 			}
@@ -424,7 +431,14 @@ public class ILP {
 		for (String s : dvar_unweighted){
 			String dvName = String.format("%-35s", s);
 			try{
-				dvarFile.print(dvName + ":  " + df.format(LPSolveSolver.varDoubleMap.get(s)) +"\n"  );
+				double v = LPSolveSolver.varDoubleMap.get(s);
+				// TODO: improve speed
+				if (!df.format(v).equals("-0")) {
+					dvarFile.print(dvName + ":  " + df.format(v) +"\n"  );					
+				} else {
+					dvarFile.print(dvName + ":  0" +"\n"  );				
+				}
+				
 			} catch (Exception e) {
 				dvarFile.print(dvName + ":  " + LPSolveSolver.varDoubleMap.get(s) +"\n"  );
 			}
@@ -443,7 +457,14 @@ public class ILP {
 		
 		for (String s : sortedTerm){
 			String svName = String.format("%-35s", s);
-			svarFile.print(svName + ":  " + df.format(svMap.get(s).getData().getData()) +"\n"  );
+			// TODO: improve speed
+			if (!df.format(svMap.get(s).getData().getData()).equals("-0")) {
+				svarFile.print(svName + ":  " + df.format(svMap.get(s).getData().getData()) +"\n"  );
+			} else {
+				svarFile.print(svName + ":   0" +"\n"  );
+			}
+			
+			
 //			svarFile.print(svName + ":  ");
 //			svarFile.print(df.format(svMap.get(s).getData().getData()));
 //			svarFile.print("\n"  );

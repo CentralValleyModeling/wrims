@@ -101,7 +101,7 @@ public class LPSolveSolver {
 					  getSolverInformation(modelStatus);
 				  }
 				  
-				  if (Error.error_solving.size()<1) {
+				  if (Error.error_solving.size()==0) {
 				      collectDvar();
 				      assignDvar();				  
 				  }
@@ -177,7 +177,7 @@ public class LPSolveSolver {
 			String dvName=(String)dvarIterator.next();
 			Dvar dvar=dvarMap.get(dvName);
 			
-			double value = -9999999;
+			double value = -77777777;
 			try {
 				value=varDoubleMap.get(dvName);
 			} catch (Exception e) {
@@ -188,7 +188,7 @@ public class LPSolveSolver {
 				try {
 					value = (Double) dvar.getData().getData(); // use whatever is in the container.
 				} catch (Exception e2) {
-					value=-99999999.; // TODO: if this value is used, then this is probably an error in the wresl code. need to give warning.
+					value=-77777777; // TODO: if this value is used, then this is probably an error in the wresl code. need to give warning.
 				}
 			}
 			IntDouble id=new IntDouble(value,false);
