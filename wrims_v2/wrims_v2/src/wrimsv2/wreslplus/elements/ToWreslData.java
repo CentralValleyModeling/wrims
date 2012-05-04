@@ -71,7 +71,8 @@ public class ToWreslData {
 		Collections.sort(o.wtSlackSurplusList,String.CASE_INSENSITIVE_ORDER);
 		
 		o.dvList = new ArrayList<String>(seq.dvList);
-		o.dvList.addAll(seq.ssList_noCase);
+		o.dvList.addAll(seq.dvList_fromAlias);
+		//o.dvList.addAll(seq.ssList_noCase);
 		Collections.sort(o.dvList,String.CASE_INSENSITIVE_ORDER);
 		
 		o.tsList = new ArrayList<String>(seq.tsList);
@@ -83,15 +84,16 @@ public class ToWreslData {
 		//System.out.println("ToWreslData => m.svList"+m.svList);
 		//o.svList = new ArrayList<String>(m.svList);
 
-		o.gList = new ArrayList<String>(m.glList);
-		Collections.sort(o.exList,String.CASE_INSENSITIVE_ORDER);
+		o.gList = new ArrayList<String>(seq.glList);
+		o.gList.addAll(seq.glList_fromAlias);
+		Collections.sort(o.gList,String.CASE_INSENSITIVE_ORDER);
 		
 
 		
 		o.exList = new ArrayList<String>(seq.exList);
 		Collections.sort(o.exList,String.CASE_INSENSITIVE_ORDER);
 		
-		o.asList = new ArrayList<String>(m.asList);
+		o.asList = new ArrayList<String>(seq.asList);
 		Collections.sort(o.asList,String.CASE_INSENSITIVE_ORDER);
 
 		o.wtList = new ArrayList<String>(seq.wvList_defaultType);
@@ -118,8 +120,8 @@ public class ToWreslData {
 			o.tsMap.put(k, convertTimeseries(seq.tsMap.get(k)));
 		}		
 
-		for (String k: m.glMap.keySet()){			
-			o.gMap.put(k, convertGoal(m.glMap.get(k)));
+		for (String k: seq.glMap.keySet()){			
+			o.gMap.put(k, convertGoal(seq.glMap.get(k)));
 		}
 		for (String k: o.exList){			
 			o.exMap.put(k, convertExternal(seq.exMap.get(k)));
@@ -141,16 +143,21 @@ public class ToWreslData {
 		}
 		
 		//dv
-		for (String k: seq.dvList){			
+		
+		System.out.println("0503 dvList: "+o.dvList);
+		
+		
+		for (String k: o.dvList){			
 			o.dvMap.put(k, convertDvar(seq.dvMap.get(k)));
 		}
 		for (String k: seq.ssList_noCase){			
 			o.dvMap.put(k, convertDvar(seq.ssMap_noCase.get(k)));
 		}
+		o.dvList.addAll(seq.ssList_noCase);
 		
 		
 		for (String k: o.asList){			
-			o.asMap.put(k, convertAlias(m.asMap.get(k)));
+			o.asMap.put(k, convertAlias(seq.asMap.get(k)));
 		}
 		for (WeightTable w : seq.wTableObjList_defaultType){	
 			

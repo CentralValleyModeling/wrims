@@ -81,7 +81,7 @@ public class Workflow {
 		
 		Procedures.findFileGroupOrder(st);
 		
-		System.out.println("@@@0 fileGroupOrder: "+st.fileGroupOrder);
+		//System.out.println("@@@0 fileGroupOrder: "+st.fileGroupOrder);
 
 		Procedures.postProcessIncFileList(st);
 		
@@ -102,12 +102,27 @@ public class Workflow {
 		
 		
 		// can be processed after error check 
-		Procedures.processGoalHS(st);  // changes dvList and ssList
-		Procedures.convertAliasToGoal(st);  // changes
+		//Procedures.processGoalHS(st);  // changes dvList and ssList
+		//Procedures.convertAliasToGoal(st);  // TODO: move to after copyModelVar
 		
 		
 		// can be processed at final stage
 		Procedures.copyModelVarMapToSequenceVarMap(st);
+		
+		Procedures.processGoalHS2(st); 
+		
+//		System.out.println("0503 dvList: "+st.seqMap.get("cycle1").dvList);
+//		System.out.println("0503 dvList_fromAlias: "+st.seqMap.get("cycle1").dvList_fromAlias);
+		
+		
+		// TODO: test only. remove this after testing
+		// TODO: seperate dv dep from others
+		// remove dv from alias's dependants
+		Procedures.classifyDependants(st);
+		
+		
+		Procedures.convertAliasToGoal(st); 
+		
 		Procedures.collectWeightVar(st);
 		
 		

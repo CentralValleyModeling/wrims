@@ -1,0 +1,11 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+include 'goal_case8.wresl'
+
+
+}

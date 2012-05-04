@@ -1,0 +1,6 @@
+
+	define Dinflow {alias x+y }
+	goal compare_ratio {PulseExpCtrl < Dinflow*ExpRatio}
+
+	
+

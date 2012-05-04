@@ -9,5 +9,7 @@ MODEL first {
 define minflow_C_Orovl {value 600}  # test comment
 define minflow_C_Orovl {value .29}
 
+define x {value 1 + 2  /* hidden */ + 3}
+
 
 }

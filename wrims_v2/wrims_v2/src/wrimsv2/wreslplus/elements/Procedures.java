@@ -111,6 +111,99 @@ public class Procedures {
 
 	}
 
+	public static void processGoalHS2(StudyTemp s) {
+
+		for (String seqName : s.seqList) {
+
+			SequenceTemp seqObj = s.seqMap.get(seqName);
+
+			processGoalHS2(seqObj);
+		}
+		
+	}
+
+	public static void processGoalHS2(SequenceTemp seqObj) {
+	
+		for (String gKey : seqObj.gl2List) {
+	
+			GoalTemp g2 = seqObj.glMap.get(gKey);
+	
+			for (int i = 0; i < g2.caseName.size(); i++) {
+	
+				String cn = g2.caseName.get(i);
+				GoalCase gc = g2.caseMap.get(cn);
+				g2.caseCondition.add(gc.condition);
+	
+				// convert penalty into caseExpression
+				Map<String, String> o = convertPenalty(g2.id.toLowerCase(), i, g2.lhs, gc);
+	
+				String slackName = o.get("slackName");
+				String surplusName = o.get("surplusName");
+				// System.out.println(slackName);
+				// System.out.println(surplusName);
+	
+				g2.slackList.add(slackName);
+				g2.surplusList.add(surplusName);
+				g2.caseExpression.add(o.get("caseExpression"));
+	
+				if (slackName != null) {
+					WeightTemp w = new WeightTemp();
+					w.weight = o.get("slackWeight");
+	
+					DvarTemp d = new DvarTemp();
+					d.fromWresl = g2.fromWresl;
+					d.kind = "slack";
+	
+					if (g2.hasCase) {
+						d.condition = Param.conditional;
+						w.condition = Param.conditional;
+						
+						seqObj.ssList_hasCase.add(slackName);
+						seqObj.ssMap_hasCase.put(slackName, d);
+						seqObj.ssWeightMap_hasCase.put(slackName, w);
+						
+					} else {
+	
+						seqObj.ssList_noCase.add(slackName);
+						seqObj.ssMap_noCase.put(slackName, d);
+						seqObj.ssWeightMap_noCase.put(slackName, w);
+					
+					}
+					// System.out.println(slackName+":"+g2.ruleType+":"+d.condition);
+				}
+				if (surplusName != null) {
+					WeightTemp w = new WeightTemp();
+					w.weight = o.get("surplusWeight");
+	
+					DvarTemp d = new DvarTemp();
+					d.fromWresl = g2.fromWresl;
+					d.kind = "surplus";
+	
+					if (g2.hasCase) {
+						d.condition = Param.conditional;
+						w.condition = Param.conditional;
+						seqObj.ssList_hasCase.add(surplusName);
+						seqObj.ssMap_hasCase.put(surplusName, d);
+						seqObj.ssWeightMap_hasCase.put(surplusName, w);
+					} else {
+					
+						seqObj.ssList_noCase.add(surplusName);
+						seqObj.ssMap_noCase.put(surplusName, d);
+						seqObj.ssWeightMap_noCase.put(surplusName, w);
+						
+					}
+					
+					// System.out.println(surplusName+":"+g2.ruleType+":"+d.condition);
+				}
+	
+			}
+	
+			seqObj.glMap.put(gKey, g2);
+	
+		}
+	
+	}
+
 	private static Map<String, String> convertPenalty(String goalName, int caseIndex, String lhs, GoalCase cm) {
 
 		String caseNumber = Integer.toString(caseIndex + 1);
@@ -331,10 +424,13 @@ public class Procedures {
 
 	public static void copyModelVarMapToSequenceVarMap(ModelTemp mt, SequenceTemp seq) {
 		
-		System.out.println("0427: "+mt.pathRelativeToRunDir+" : "+mt.dvList);
+		//System.out.println("0427: "+mt.pathRelativeToRunDir+" : "+mt.dvList);
 		
 		seq.exList.addAll(mt.exList);
 		seq.dvList.addAll(mt.dvList);
+		seq.asList.addAll(mt.asList);
+		seq.glList.addAll(mt.glList);
+		seq.gl2List.addAll(mt.gl2List);
 		seq.tsList.addAll(mt.tsList);
 		
 		seq.ssList_hasCase.addAll(mt.ssList_hasCase);
@@ -343,6 +439,8 @@ public class Procedures {
 		
 		seq.svMap.putAll(mt.svMap);
 		seq.dvMap.putAll(mt.dvMap);
+		seq.asMap.putAll(mt.asMap);
+		seq.glMap.putAll(mt.glMap);
 		seq.exMap.putAll(mt.exMap);
 		seq.tsMap.putAll(mt.tsMap);
 		
@@ -356,41 +454,51 @@ public class Procedures {
 	
 	public static void convertAliasToGoal(StudyTemp s) {
 
-		for (String m : s.modelList) {
-
-			ModelTemp mObj = s.modelMap.get(m);
-
-			convertAliasToGoal(mObj);
+//		for (String m : s.modelList) {
+//
+//			ModelTemp mObj = s.modelMap.get(m);
+//
+//			convertAliasToGoal(mObj);
+//			
+//		}
+		
+		for (String se : s.seqList){
 			
+			SequenceTemp seqObj = s.seqMap.get(se); 
+			String m = seqObj.model;
 
+			//ModelTemp mObj = s.modelMap.get(m);
+
+			convertAliasToGoal(seqObj);				
+			
 		}
 
 	}
 
-	public static void convertAliasToGoal(ModelTemp mObj) {
+	public static void convertAliasToGoal(SequenceTemp seqObj) {
 
 		//mObj.asList_reduced = new ArrayList<String>(mObj.asList);
 
 		Set<String> allDepInGoals = new HashSet<String>();
 
 		// add all dep from Goal
-		for (String key : mObj.glMap.keySet()) {
+		for (String key : seqObj.glMap.keySet()) {
 
-			GoalTemp g = mObj.glMap.get(key);
+			GoalTemp g = seqObj.glMap.get(key);
 			allDepInGoals.addAll(g.dependants);
 		}
 		// add all dep from Alias
-		for (String key : mObj.asMap.keySet()) {
+		for (String key : seqObj.asMap.keySet()) {
 
-			AliasTemp a = mObj.asMap.get(key);
+			AliasTemp a = seqObj.asMap.get(key);
 			allDepInGoals.addAll(a.dependants);
 		}
 
-		for (String aKey : mObj.asMap.keySet()) {
+		for (String aKey : seqObj.asMap.keySet()) {
 
 			if (allDepInGoals.contains(aKey)) {
 
-				AliasTemp a = mObj.asMap.get(aKey);
+				AliasTemp a = seqObj.asMap.get(aKey);
 				a.isMovedToDvar = true;
 
 				// add to dvar
@@ -404,10 +512,10 @@ public class Procedures {
 				d.condition = a.condition;
 				d.isFromAlias = true;
 
-				mObj.asList.remove(aKey);
-				mObj.dvList_fromAlias.add(aKey);
-				mObj.dvList.add(aKey);
-				mObj.dvMap.put(aKey, d);
+				seqObj.asList.remove(aKey);
+				seqObj.dvList_fromAlias.add(aKey);
+				//seqObj.dvList.add(aKey);
+				seqObj.dvMap.put(aKey, d);
 
 				// add goal
 				GoalTemp g = new GoalTemp();
@@ -421,9 +529,9 @@ public class Procedures {
 				g.caseCondition.add(Param.always);
 				g.dependants = a.dependants;
 
-				mObj.glList_fromAlias.add(g.id.toLowerCase());
-				mObj.glList.add(g.id.toLowerCase());
-				mObj.glMap.put(g.id.toLowerCase(), g);
+				seqObj.glList_fromAlias.add(g.id.toLowerCase());
+				//seqObj.glList.add(g.id.toLowerCase());
+				seqObj.glMap.put(g.id.toLowerCase(), g);
 
 			}
 
@@ -902,6 +1010,38 @@ public class Procedures {
 				
 			}		
 		}
+	}
+
+	// TODO: this process alias only. need to expand to other types
+	public static void classifyDependants(StudyTemp s) {
+		
+		for (String se : s.seqList){
+			
+			SequenceTemp seqObj = s.seqMap.get(se); 
+
+			//ModelTemp mObj = s.modelMap.get(m);
+
+			classifyDependants(seqObj);						
+		}
+	}
+	public static void classifyDependants(SequenceTemp seqObj) {
+		
+		for (String key : seqObj.asMap.keySet()) {
+
+			AliasTemp asObj = seqObj.asMap.get(key);
+
+			asObj.dependants.removeAll(seqObj.tsList);
+			asObj.dependants.removeAll(seqObj.dvList);
+		}	
+		
+		for (String key : seqObj.svMap.keySet()) {
+
+			SvarTemp svObj = seqObj.svMap.get(key);
+
+			svObj.dependants.removeAll(seqObj.tsList);
+			svObj.dependants.removeAll(seqObj.dvList);
+		}	
+		
 	}
 
 

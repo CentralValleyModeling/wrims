@@ -1,0 +1,13 @@
+
+
+goal AprMay_split_cvp {
+    lhs     D_Jones_EXP1 
+     case AprMay {
+        condition      range(month,apr,may) .and. VAMP_DLTSW == 1
+     rhs        0.5*AprMayExpCtrl
+     lhs>rhs    penalty 1290
+     lhs<rhs        penalty 0
+     }
+}
+
+

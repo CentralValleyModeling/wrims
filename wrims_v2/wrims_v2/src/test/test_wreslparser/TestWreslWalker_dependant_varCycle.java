@@ -170,7 +170,8 @@ public class TestWreslWalker_dependant_varCycle {
 		
 		StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(absFilePath, true);
 		
-		td.model_dataset_map=StudyParser.parseModels(sc,td);
+		//td.model_dataset_map=StudyParser.parseModels(sc,td);
+		td.model_dataset_map=StudyParser.parseModels(sc,td,false,true);
 		
 		StudyDataSet sd = StudyParser.writeWreslData(sc, td);
 		

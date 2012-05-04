@@ -700,9 +700,9 @@ reservedID :  MONTH ; //| MonthID ;
 
 QUOTE : '\'' .*  '\'' ;
 
-ML_COMMENT : '/*' .* '*/' {$channel = HIDDEN;}; //{skip();}; 
+ML_COMMENT : '/*' .* '*/' {skip();}; 
 
-SL_COMMENT : ('#'|'!') ~('\r'|'\n')*  '\r'? '\n' {$channel=HIDDEN;} ;
+SL_COMMENT : ('#'|'!') ~('\r'|'\n')*  '\r'? '\n' {skip();};  //{$channel=HIDDEN;} ;
 
 AND : '&&' | '.and.' | '.AND.' ;
 OR  : '||' | '.or.' | '.OR.' ;
@@ -789,6 +789,6 @@ fragment Letter : 'a'..'z' | 'A'..'Z';
 
 fragment Digit : '0'..'9';
 
-WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {$channel = HIDDEN;};
+WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {skip();}; //{$channel = HIDDEN;};
 
 

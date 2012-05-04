@@ -18,6 +18,11 @@ public class SequenceTemp implements Serializable {
 	// does not reflect user's input order
 	public ArrayList<String> exList; 
 	public ArrayList<String> dvList;
+	public ArrayList<String> dvList_fromAlias; 
+	public ArrayList<String> asList;
+	public ArrayList<String> glList;
+	public ArrayList<String> gl2List;
+	public ArrayList<String> glList_fromAlias;
 	public ArrayList<String> ssList_hasCase;
 	public ArrayList<String> ssList_noCase;
 	
@@ -26,7 +31,10 @@ public class SequenceTemp implements Serializable {
 	
 	public Map<String,SvarTemp> svMap;
 	public Map<String,DvarTemp> dvMap;
+	public Map<String,AliasTemp> asMap;		
+	public Map<String,GoalTemp> glMap;		
 	public Map<String,ExternalTemp> exMap;	
+	
 	
 	public Map<String,DvarTemp> ssMap_hasCase;   // processed
 	public Map<String,WeightTemp> ssWeightMap_hasCase;  // processed
@@ -35,12 +43,19 @@ public class SequenceTemp implements Serializable {
 	public Map<String,WeightTemp> ssWeightMap_noCase;   // processed
 	
 	public ArrayList<String> wvList_defaultType;
-	public ArrayList<WeightTable> wTableObjList_defaultType; 
+	public ArrayList<WeightTable> wTableObjList_defaultType;
+
+
 	
 	public SequenceTemp(){
 		
 		exList = new ArrayList<String>();
 		dvList = new ArrayList<String>();
+		dvList_fromAlias = new ArrayList<String>();
+		asList = new ArrayList<String>();
+		glList = new ArrayList<String>();
+		gl2List = new ArrayList<String>();
+		glList_fromAlias = new ArrayList<String>();
 		tsList = new ArrayList<String>();
 		ssList_hasCase = new ArrayList<String>();
 		ssList_noCase = new ArrayList<String>();
@@ -48,6 +63,8 @@ public class SequenceTemp implements Serializable {
 		tsMap = new HashMap<String, TimeseriesTemp>();
 		svMap = new HashMap<String, SvarTemp>();
 		dvMap = new HashMap<String, DvarTemp>();
+		asMap = new HashMap<String, AliasTemp>();
+		glMap = new HashMap<String, GoalTemp>();
 		exMap = new HashMap<String, ExternalTemp>();
 		
 		ssMap_hasCase = new HashMap<String, DvarTemp>();
