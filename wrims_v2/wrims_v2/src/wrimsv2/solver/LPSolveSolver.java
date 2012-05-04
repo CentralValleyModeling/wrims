@@ -105,11 +105,11 @@ public class LPSolveSolver {
 				  }
 				  
 				  if (Error.error_solving.size()==0) {
-				      collectDvar();
+					  ControlData.lpsolve_objective = solver.getObjective(); // for other processes
+					  collectDvar();
 				      assignDvar();				  
-				  }
-	
-				  ControlData.lpsolve_objective = solver.getObjective(); // for other processes
+				  }	
+				  
 			      // delete the problem and free memory
 			      solver.deleteLp(); 
 			      		      
