@@ -234,7 +234,7 @@ public class ConfigUtils {
 					e.printStackTrace();
 				}
 			} else {
-				Error.addConfigError("#Error: LpSolveConfigFile not defined. ");
+				Error.addConfigError("LpSolveConfigFile not defined. ");
 				//System.out.println("#Error: LpSolveConfigFile not defined. ");
 			}
 		
