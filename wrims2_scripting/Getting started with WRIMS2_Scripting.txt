@@ -3,9 +3,9 @@ Getting started with WRIMS2_Scripting
 
 Simple batch example:
 
-(1) Open the file "BatchExmple.bat" with an editor, correct the paths of the config file "CONV_test1.conifg" and "CONV_test2.conifg"
+(1) Open the file "exmple1.bat" with an editor, correct the paths of the config file "CONV_test1.conifg" and "CONV_test2.conifg"
 
-(2) Double-click BatchExample.bat to run the example
+(2) Double-click the file "exmple1.bat" to run the example
 
 
 

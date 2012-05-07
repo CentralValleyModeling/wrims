@@ -1,13 +1,13 @@
 [Setup] 
 
-AppName              =WRIMS2_Scripting 
-DefaultGroupName     =WRIMS2_Scripting 
+AppName              =WRIMS2_Scripting_v1.10 
+DefaultGroupName     =WRIMS2_Scripting_v1.10 
 ;AppVerName           =WRIMS2_Scripting
-AppVersion=1.09 
-UninstallDisplayName =WRIMS2_Scripting 
-AppId                =WRIMS2_Scripting
-OutputBaseFilename   =WRIMS2_Scripting_Install
-DefaultDirName       =c:\WRIMS2_Scripting 
+AppVersion=1.10 
+UninstallDisplayName =WRIMS2_Scripting_v1.10 
+AppId                =WRIMS2_Scripting_v1.10
+OutputBaseFilename   =WRIMS2_Scripting_v1.10_Install
+DefaultDirName       =c:\WRIMS2_Scripting_v1.10 
 LicenseFile="..\license\COPYRIGHT.txt"
 
 AppPublisher=CA_DWR
@@ -70,7 +70,7 @@ Source: "..\bin\*.cmd";     Excludes: ".svn";                          Destdir: 
 [Icons]
 
 Name: "{app}\WRIM2_Scripting";          Filename: "{app}\bin\WRIMS2_Scripting.cmd"; WorkingDir: "{app}\bin" ;
-Name: "{userdesktop}\WRIMS2_Scripting"; Filename: "{app}" ; 
+Name: "{userdesktop}\WRIMS2_Scripting_v1.10"; Filename: "{app}" ; 
 
 
 [UninstallDelete]
