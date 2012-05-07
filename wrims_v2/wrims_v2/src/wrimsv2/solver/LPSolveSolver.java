@@ -80,7 +80,7 @@ public class LPSolveSolver {
 			      
 				  while ( (modelStatus!=LpSolve.OPTIMAL) && (i<=numberOfRetries) )	{
 					  
-					  System.out.println("LpSolve Error: "+solver.getStatustext(modelStatus));
+					  //System.out.println("LpSolve Error: "+solver.getStatustext(modelStatus));
 					  
 					  
 					  //for (int i=1;i<=numberOfRetries; i++) {  
