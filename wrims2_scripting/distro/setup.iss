@@ -51,7 +51,7 @@ Source: "..\*.py";     Excludes: ".svn";     Destdir: "{app}\";     Flags: ignor
 Source: "..\*.txt";     Excludes: ".svn";     Destdir: "{app}\";     Flags: ignoreversion ;
 
 Source: "..\license\*.txt";    Excludes: ".svn";     Destdir: "{app}\license";     Flags: ignoreversion ;
-
+Source: "..\template\*";     Excludes: ".svn";            DestDir: "{app}\template";     Flags: ignoreversion recursesubdirs createallsubdirs ; 
 Source: "..\lib\misc\*";     Excludes: ".svn";            DestDir: "{app}\lib\misc";     Flags: ignoreversion recursesubdirs createallsubdirs ; 
 Source: "..\lib\hecdss\*";     Excludes: ".svn";            DestDir: "{app}\lib\hecdss";     Flags: ignoreversion recursesubdirs createallsubdirs ; 
 Source: "..\lib\jython252\*";  Excludes: ".svn, *.pkc";     DestDir: "{app}\lib\jython252";  Flags: ignoreversion recursesubdirs createallsubdirs ; 
