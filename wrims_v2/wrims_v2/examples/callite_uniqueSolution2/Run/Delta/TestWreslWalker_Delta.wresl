@@ -1,0 +1,19 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first {
+Include 'SpecProjects.wresl'
+Include 'vallejo.wresl'  
+define nmfs_days_open {value daysin}
+Include 'xc-gates.wresl'                 
+Include 'delta-outflow.wresl' 
+! MRDO
+include 'Delta_ANN.wresl'
+!Include 'final-mrdo.wresl'        
+Include 'riovista.wresl'                 
+Include 'SoDeltaChannels.wresl' 
+Include 'Qwest_constraint.wresl'
+
+}
