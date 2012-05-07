@@ -402,6 +402,8 @@ public class ModelDataSet implements Serializable {
 			for (ControlData.timeArrayIndex=1; ControlData.timeArrayIndex<=timeArraySize; ControlData.timeArrayIndex++){
 				Dvar newDvar=new Dvar();
 				String newDvarName = dvName+"__fut__"+ControlData.timeArrayIndex;
+				newDvar.kind=dvar.kind;
+				newDvar.units=dvar.units;
 				
 				evaluator=dvar.lowerBoundParser;
 				try {
