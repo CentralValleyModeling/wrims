@@ -12,7 +12,7 @@ LogUtils.initLogging(__file__)
 s1=Study(r"D:\cvwrsm\trunk\wrims2_scripting\studies\callite_svn47\CONV\CONV.config")
 
 # use a different batch file 'RunStudy_CalLiteLicense.bat'
-s2=Study(r"D:\cvwrsm\trunk\wrims2_scripting\studies\callite_svn47\TXFR\TXFR.config", batFileName='RunStudy_CalLiteLicense.bat')
+s2=Study(r"D:\cvwrsm\trunk\wrims2_scripting\studies\callite_svn47\TXFR\TXFR.config", batFileName='runConfig_limitedLicense.bat')
 
 # copy all dvars in s1.DvarFile to destination
 # id must be unique in the study scope

@@ -17,7 +17,7 @@ class Study:
 	
 	
 	
-	def __init__(self, configPath, batFileName='RunStudy.bat'):
+	def __init__(self, configPath, batFileName='runConfig.bat'):
 
 		
 		self._logger = Param.logger

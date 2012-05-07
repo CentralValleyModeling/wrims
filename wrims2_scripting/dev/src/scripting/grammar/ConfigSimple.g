@@ -110,6 +110,9 @@ configKey
 |'ShowWreslLog'
 |'SendAliasToDvar'
 |'PrefixInitToDvarFile'
+|'LpSolveConfigFile'
+|'LpSolveNumberOfRetries'
+|'IlpMaximumFractionDigits'
 ;
 
 SL_COMMENT : '#' ~('\r'|'\n')*  {$channel=HIDDEN;} ;
