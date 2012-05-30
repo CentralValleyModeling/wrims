@@ -6,9 +6,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Properties;
 
+import sun.java2d.pipe.ShapeSpanIterator;
+
 import com.mindfusion.diagramming.Brush;
+import com.mindfusion.diagramming.CustomDraw;
 import com.mindfusion.diagramming.DashStyle;
 import com.mindfusion.diagramming.Pen;
+import com.mindfusion.diagramming.Shape;
 import com.mindfusion.diagramming.SolidBrush;
 
 public class AttributeMapper {
@@ -17,6 +21,8 @@ public class AttributeMapper {
 		public String name;
 		public Pen pen;
 		public Brush brush;
+		public Shape shape;
+		public int customdraw;
 	}
 
 	// pen attribute consists of color, dashstyle, width
@@ -37,6 +43,8 @@ public class AttributeMapper {
 			attr.name = name;
 			attr.pen = parsePen(value);
 			attr.brush = parseBrush(value);
+			attr.shape = parseShape(value);
+			attr.customdraw = parseCustomDraw(value);
 			nameToAttributeMap.put(name, attr);
 		}
 	}
@@ -46,7 +54,7 @@ public class AttributeMapper {
 			return null;
 		}
 		String[] fields = value.trim().split("\\|");
-		if (fields == null || fields.length != 4) {
+		if (fields == null) {
 			return null;
 		}
 		return new SolidBrush(parseColor(fields[3]));
@@ -57,7 +65,7 @@ public class AttributeMapper {
 			return null;
 		}
 		String[] fields = value.trim().split("\\|");
-		if (fields == null || fields.length != 4) {
+		if (fields == null) {
 			return null;
 		}
 		Color c = parseColor(fields[0]);
@@ -84,7 +92,7 @@ public class AttributeMapper {
 		if (s == null) {
 			return "";
 		}
-		return String.format("(%10.2f,%s)", s.getDashPhase(), Arrays.toString(s
+		return String.format("(%.2f,%s)", s.getDashPhase(), Arrays.toString(s
 				.getDashArray()));
 	}
 
@@ -94,7 +102,7 @@ public class AttributeMapper {
 		}
 		String[] fields = value.substring(1, value.length() - 1).split(",\\[");
 		float dashPhase = Float.parseFloat(fields[0]);
-		float[] dashArray = parseFloatArray(fields[1].substring(1,fields[1].length()-1));
+		float[] dashArray = parseFloatArray(fields[1].substring(0,fields[1].length()-1));
 		return new DashStyle(dashArray, dashPhase);
 	}
 
@@ -109,11 +117,46 @@ public class AttributeMapper {
 		}
 		return array;
 	}
+	
+	public Shape parseShape(String value){
+		if (value == null || value.trim().equals("")) {
+			return null;
+		}
+		String[] fields = value.trim().split("\\|");
+		if (fields == null) {
+			return null;
+		}
+		return Shape.fromId(fields[4]);
+	}
+	
+	public String formatShape(Shape s){
+		return s.getId();
+	}
+	
+	public int parseCustomDraw(String value){
+		if (value == null || value.trim().equals("")) {
+			return CustomDraw.None;
+		}
+		String[] fields = value.trim().split("\\|");
+		if (fields == null) {
+			return CustomDraw.None;
+		}
+		int d=Integer.parseInt(fields[5]);
+		
+		if(d == CustomDraw.Additional){
+			return d;
+		}
+		return CustomDraw.None;
+	}
+	
+	public String formatCustomDraw(int c){
+		return String.format("%d", c);
+	}
 
-	public String getAttributeName(Pen p, Brush b) {
+	public String getAttributeName(Pen p, Brush b, Shape s, int customdraw) {
 		for (String name : nameToAttributeMap.keySet()) {
 			Attribute attr = nameToAttributeMap.get(name);
-			if (isSame(attr.pen, p) && isSame(attr.brush, b)) {
+			if (isSame(attr.pen, p) && isSame(attr.brush, b) && isSame(attr.shape,s) && attr.customdraw == customdraw) {
 				return name;
 			}
 		}
@@ -137,7 +180,7 @@ public class AttributeMapper {
 		} else {
 			return pen2 != null
 					&& (isSame(pen1.getColor(), pen2.getColor()) && isSame(pen1
-							.getDashStyle(), pen2.getDashStyle()));
+							.getDashStyle(), pen2.getDashStyle()) && pen1.getWidth() == pen2.getWidth());
 		}
 
 	}
@@ -162,6 +205,7 @@ public class AttributeMapper {
 							.getDashArray(), s2.getDashArray()));
 		}
 	}
+	
 
 	public boolean isSame(float[] a1, float[] a2) {
 		if (a1 == null) {
@@ -182,6 +226,16 @@ public class AttributeMapper {
 			}
 			return isSame;
 		}
+	}
+	
+	public boolean isSame(Shape shape1, Shape shape2) {
+		if (shape1 == null) {
+			return shape2 == null;
+		} else {
+			return shape2 != null
+					&& (formatShape(shape1).compareTo(formatShape(shape2)) == 0);
+		}
+
 	}
 
 	public Attribute getAttribute(String attributeName) {

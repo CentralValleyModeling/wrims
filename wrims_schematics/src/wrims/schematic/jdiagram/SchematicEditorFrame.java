@@ -23,6 +23,8 @@ import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.filechooser.FileFilter;
 
+import wrims.schematic.MainFrame;
+
 @SuppressWarnings("serial")
 public class SchematicEditorFrame extends JFrame {
 
@@ -34,7 +36,7 @@ public class SchematicEditorFrame extends JFrame {
 		editor = new SchematicEditor();
 
 		String filename = Preferences.userNodeForPackage(
-				SchematicEditorFrame.class).get("last.schematic",
+				MainFrame.class).get("last.schematic",
 				"resources/wrims/schematic/CS3_NetworkSchematic.xml");
 		loadSchematic(filename);
 
@@ -47,10 +49,13 @@ public class SchematicEditorFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String filename = chooseFileToSave();
+				if (filename == null)
+					return;
 				try {
 					editor.save(filename);
 					currentFilenameOpen = filename;
 					SchematicEditorFrame.this.setTitle(currentFilenameOpen);
+					editor.setTitle(currentFilenameOpen);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -68,6 +73,9 @@ public class SchematicEditorFrame extends JFrame {
 					SchematicEditorFrame.this.setCursor(Cursor
 							.getPredefinedCursor(Cursor.WAIT_CURSOR));
 					String filename = chooseFileToOpen();
+					if (filename == null) {
+						return;
+					}
 					loadSchematic(filename);
 				} finally {
 					SchematicEditorFrame.this.setCursor(Cursor.getDefaultCursor());
@@ -175,7 +183,7 @@ public class SchematicEditorFrame extends JFrame {
 			editor.load(filename);
 			currentFilenameOpen = filename;
 			setTitle(currentFilenameOpen);
-			Preferences.userNodeForPackage(SchematicEditorFrame.class).put(
+			Preferences.userNodeForPackage(MainFrame.class).put(
 					"last.schematic", currentFilenameOpen);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -185,7 +193,7 @@ public class SchematicEditorFrame extends JFrame {
 
 	public String chooseFileToSave() {
 		Preferences p = Preferences
-				.userNodeForPackage(SchematicEditorFrame.class);
+				.userNodeForPackage(MainFrame.class);
 		String currentDirectory = p.get("SCHEMATICS_DIRECTORY", System
 				.getProperty("user.dir"));
 		JFileChooser chooser = new JFileChooser(currentDirectory);
@@ -198,8 +206,7 @@ public class SchematicEditorFrame extends JFrame {
 
 			@Override
 			public boolean accept(File f) {
-				return f != null && f.isFile();
-
+				return f != null && f.isFile() || f.isDirectory();
 			}
 		});
 		int rval = chooser.showSaveDialog(this);
@@ -213,7 +220,7 @@ public class SchematicEditorFrame extends JFrame {
 
 	private String chooseFileToOpen() {
 		Preferences p = Preferences
-				.userNodeForPackage(SchematicEditorFrame.class);
+				.userNodeForPackage(MainFrame.class);
 		String currentDirectory = p.get("SCHEMATICS_DIRECTORY", System
 				.getProperty("user.dir"));
 		JFileChooser chooser = new JFileChooser(currentDirectory);

@@ -376,7 +376,7 @@ public class SchematicEditor extends SchematicViewer {
 
 				Graphics2D g = e.getGraphics();
 				Pen pen = (Pen) e.getNode().getPen().clone();
-				pen.setWidth(5);
+				pen.setWidth(4);
 				pen.applyTo(g);
 				g.draw(rect);
 			}
@@ -457,22 +457,30 @@ public class SchematicEditor extends SchematicViewer {
 		Collections.sort(nodes, new CompartorOnNodeId());
 		
 		for (DiagramNode n : nodes) {
-			Pen pen = n.getPen();
-			Color fillColor = null;
-			Brush brush = n.getBrush();
-			if (brush instanceof SolidBrush) {
-				fillColor = ((SolidBrush) brush).getColor();
-			} else {
-				System.err.println("brush type is :" + brush.getClass()
-						+ " for node: " + n.getTextToEdit());
+			if (n instanceof ShapeNode){
+				ShapeNode s=(ShapeNode)n;
+				Pen pen = s.getPen();
+				Color fillColor = null;
+				Brush brush = s.getBrush();
+				Shape shape=s.getShape();
+				int customdraw=s.getCustomDraw();
+				if (brush instanceof SolidBrush) {
+					fillColor = ((SolidBrush) brush).getColor();
+				} else {
+					System.err.println("brush type is :" + brush.getClass()
+							+ " for node: " + n.getTextToEdit());
+				}
+				String id = getIdFor(n);
+				if (id.length() > 40){
+					id=id.substring(0, 39);
+				}
+	
+				String attributeName = mapper.getAttributeName(pen, brush, shape, customdraw);
+				wr.println(String.format("%-45s|%s|%s|%3.1f|%s|%s|%s|%s", id, mapper
+						.formatColor(pen.getColor()), mapper.formatStyle(pen
+						.getDashStyle()), pen.getWidth(), mapper
+						.formatColor(fillColor), mapper.formatShape(shape), mapper.formatCustomDraw(customdraw), attributeName));
 			}
-			String id = getIdFor(n);
-
-			String attributeName = mapper.getAttributeName(pen, brush);
-			wr.println(String.format("%-45s|%s|%s|%3.1f|%s|%s", id, mapper
-					.formatColor(pen.getColor()), mapper.formatStyle(pen
-					.getDashStyle()), pen.getWidth(), mapper
-					.formatColor(fillColor), attributeName));
 		}
 		wr.close();
 	}
@@ -487,38 +495,56 @@ public class SchematicEditor extends SchematicViewer {
 		while ((line = reader.readLine()) != null) {
 			String[] fields = line.split("\\|");
 			String id = fields[0].trim();
-			Color outlineColor = mapper.parseColor(fields[1]);
-			DashStyle style = mapper.parseStyle(fields[2]);
-			float width = fields[3] != null && !fields[3].trim().equals("") ? java.lang.Float
-					.parseFloat(fields[3])
-					: 4;
-			Color fillColor = mapper.parseColor(fields[4]);
 			AttributeMapper.Attribute attr = null;
-			if (fields.length > 5) {
-				String attributeName = fields[5];
+			if (fields.length > 7) {
+				String attributeName = fields[7];
 				if (attributeName != null && !attributeName.equals("")) {
 					attr = mapper.getAttribute(attributeName);
 				}
-			}
+			} 
 			if (attr == null) {
+				String line_attr=line.substring(line.indexOf("|")+1);
+/*				Color outlineColor = mapper.parseColor(fields[1]);
+				DashStyle style = mapper.parseStyle(fields[2]);
+				float width = fields[3] != null && !fields[3].trim().equals("") ? java.lang.Float
+						.parseFloat(fields[3])
+						: 4;
+				Color fillColor = mapper.parseColor(fields[4]);*/
+				
+				Pen pen = mapper.parsePen(line_attr);
+				Brush brush = mapper.parseBrush(line_attr);
+				Shape shape = mapper.parseShape(line_attr);
+				int customdraw = mapper.parseCustomDraw(line_attr);
+				
 				attr = new AttributeMapper.Attribute();
-				attr.pen = new Pen(width, outlineColor, style);
-				attr.brush = new SolidBrush(fillColor);
+				attr.pen = pen;
+				attr.brush = brush;
+				attr.shape = shape;
+				attr.customdraw = customdraw;
 			}
+
 			idToAttributeMap.put(id, attr);
 		}
 		reader.close();
 
-		DiagramNodeList nodes = getDiagram().getNodes();
+		DiagramNodeList nodes = d.getNodes();
 		getDiagramView().suspendRepaint();
 		for (DiagramNode n : nodes) {
 			String id = getIdFor(n);
+			if (id.length() > 40){
+				id=id.substring(0, 39);
+			}
 			AttributeMapper.Attribute attribute = idToAttributeMap.get(id);
 			if (attribute == null) {
 				continue;
 			}
-			n.setPen(attribute.pen);
-			n.setBrush(attribute.brush);
+			if (n instanceof ShapeNode){
+				ShapeNode s=(ShapeNode)n;
+				s.setPen(attribute.pen);
+				s.setBrush(attribute.brush);
+				s.setShape(attribute.shape);
+				s.setCustomDraw(attribute.customdraw);
+			}
 		}
 		getDiagramView().resumeRepaint();
 	}
@@ -543,27 +569,36 @@ public class SchematicEditor extends SchematicViewer {
 
 	}
 
-	public void onChangePoints(DiagramLink link) {
+	public void onChangePoints(DiagramLink link) {//Corrected by Liheng Zhong, 05/23/2012 
 		try {
 			PointList controlPoints = link.getControlPoints();
 			String result = JOptionPane.showInputDialog(
-					"Set points in link to: ", controlPoints.size() - 1);
+					"Set points in link to: ", controlPoints.size() - 2);
+			if (result == null){
+				return;
+			}
 			int npoints = Integer.parseInt(result);
-			if (npoints <= 3)
+			if (npoints < 0 || npoints == controlPoints.size() - 2)
 				return;
 			// link.setSegmentCount(npoints);
-			if (npoints < controlPoints.size()) {
-				controlPoints.removeRange(1, Math.max(controlPoints.size() - 1,
-						npoints));
+			if (npoints < controlPoints.size() - 2) {
+				int n_point_delete = controlPoints.size() - 2 - npoints;
+				for (int i = 1; i <= n_point_delete; i++){
+					controlPoints.remove(1);
+				}
 			} else {
-				java.awt.geom.Point2D.Float float1 = controlPoints
-						.get(controlPoints.size() - 1);
-				for (int i = controlPoints.size(); i < npoints; i++) {
-					controlPoints.add(float1);
+				java.awt.geom.Point2D.Float float0 = controlPoints.get(0);
+				java.awt.geom.Point2D.Float float1 = controlPoints.get(1);
+				int n_point_add = npoints - controlPoints.size() + 2;
+				for (int i = 1; i <= n_point_add; i++) {
+					java.awt.geom.Point2D.Float float2 = (java.awt.geom.Point2D.Float) float0.clone();
+					float2.setLocation((float0.getX()+float1.getX())/2, (float0.getY()+float1.getY())/2);
+					controlPoints.add(1,float2);
+					float1 = float2;
 				}
 			}
-			// link.updateFromPoints(false, true);
-			link.updateFromPoints();
+			link.updateFromPoints(true, true);
+			//link.updateFromPoints();
 			// link.route();
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -1123,7 +1158,8 @@ public class SchematicEditor extends SchematicViewer {
 			@Override
 			public boolean accept(File f) {
 				return f != null && f.isFile()
-						&& (f.getName().toLowerCase().endsWith(".txt"));
+						&& (f.getName().toLowerCase().endsWith(".txt"))
+						|| f.isDirectory();
 			}
 		});
 		int rval = chooser.showOpenDialog(parent);
@@ -1149,7 +1185,7 @@ public class SchematicEditor extends SchematicViewer {
 
 			@Override
 			public boolean accept(File f) {
-				return f != null && f.isFile();
+				return f != null && f.isFile() || f.isDirectory();
 			}
 		});
 		int rval = chooser.showSaveDialog(parent);

@@ -102,6 +102,7 @@ public class SchematicViewer extends JPanel {
 	private AbstractAction deleteViewAction;
 	private AbstractAction zoomMagnifier;
 	private TitledBorder titledBorder;
+	private int index_lastnode = 0;
 
 	private static Preferences userPrefs;
 	static {
@@ -130,7 +131,7 @@ public class SchematicViewer extends JPanel {
 		PanelWithCollapsibleInsetPanel panel = new PanelWithCollapsibleInsetPanel(
 				true);
 		panel.collapse();
-		this.setBorder(titledBorder = BorderFactory.createTitledBorder(""));
+		this.setBorder(titledBorder = BorderFactory.createTitledBorder(" "));
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.add(panel);
 
@@ -198,7 +199,7 @@ public class SchematicViewer extends JPanel {
 
 				Graphics2D g = e.getGraphics();
 				Pen pen = (Pen) e.getNode().getPen().clone();
-				pen.setWidth(5);
+				pen.setWidth(4);
 				pen.applyTo(g);
 				g.draw(rect);
 			}
@@ -733,10 +734,15 @@ public class SchematicViewer extends JPanel {
 		Rectangle2D rect = diagram.getBounds();
 		diagramView.zoomToFit(rect);
 		diagramView.resumeRepaint();
+		this.repaint();//repaint to show the change to the border title
 		/*
 		 * if (markViewComboBox.getItemCount() > 0) {
 		 * markViewComboBox.setSelectedItem(viewHistory.get(0).name); }
 		 */
+	}
+	public void setTitle(String title){
+		titledBorder.setTitle(title);
+		this.repaint();
 	}
 
 	public static String getTruncatedFilename(String filename) {
@@ -1114,10 +1120,16 @@ public class SchematicViewer extends JPanel {
 		}
 		text = text.toLowerCase();
 		DiagramNodeList nodes = diagram.getNodes();
-		for (DiagramNode n : nodes) {
+		int n_node=nodes.size();
+//		for (DiagramNode n : nodes) {	
+//			String nodeText = n.getTextToEdit();
+		for (int i_node = 1; i_node <= n_node; i_node++){
+			int index_currentnode = (i_node + index_lastnode) % n_node;
+			DiagramNode n = nodes.get(index_currentnode);
 			String nodeText = n.getTextToEdit();
 			if (nodeText != null && nodeText.toLowerCase().contains(text)) {
 				diagramView.bringIntoView(n);
+				index_lastnode = index_currentnode;
 				return true;
 			}
 		}
