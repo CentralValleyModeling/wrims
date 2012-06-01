@@ -72,12 +72,12 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            filenames="*.wpp, *.wresl"
+            filenames="*.wpp"
             class="wrimsv2_plugin.editor.WPPEditor"
             default="true"
             name="WPP Editor"
             id="wpp.editor"
-            extensions="wpp, wresl"/>
+            extensions="wpp"/>
    </extension>
       <extension
          point="org.eclipse.ui.editorActions">
