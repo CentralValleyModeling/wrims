@@ -1282,7 +1282,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getGoal_GoalName()
+  public EAttribute getGoal_Name()
   {
     return (EAttribute)goalEClass.getEStructuralFeatures().get(0);
   }
@@ -1841,7 +1841,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     createEAttribute(lowerEClass, LOWER__EXPRESSION);
 
     goalEClass = createEClass(GOAL);
-    createEAttribute(goalEClass, GOAL__GOAL_NAME);
+    createEAttribute(goalEClass, GOAL__NAME);
     createEReference(goalEClass, GOAL__DEFINITION);
 
     goalCaseEClass = createEClass(GOAL_CASE);
@@ -2059,7 +2059,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     initEAttribute(getLower_Expression(), ecorePackage.getEString(), "expression", null, 0, 1, Lower.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(goalEClass, Goal.class, "Goal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getGoal_GoalName(), ecorePackage.getEString(), "goalName", null, 0, 1, Goal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getGoal_Name(), ecorePackage.getEString(), "name", null, 0, 1, Goal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getGoal_Definition(), ecorePackage.getEObject(), null, "definition", null, 0, 1, Goal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(goalCaseEClass, GoalCase.class, "GoalCase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

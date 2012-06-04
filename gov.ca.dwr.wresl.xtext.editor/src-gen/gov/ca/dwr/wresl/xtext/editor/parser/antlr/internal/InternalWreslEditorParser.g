@@ -2798,9 +2798,9 @@ ruleGoal returns [EObject current=null]
     }
 )?(
 (
-		lv_goalName_5_0=RULE_ID
+		lv_name_5_0=RULE_ID
 		{
-			newLeafNode(lv_goalName_5_0, grammarAccess.getGoalAccess().getGoalNameIDTerminalRuleCall_2_0()); 
+			newLeafNode(lv_name_5_0, grammarAccess.getGoalAccess().getNameIDTerminalRuleCall_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -2808,8 +2808,8 @@ ruleGoal returns [EObject current=null]
 	        }
        		setWithLastConsumed(
        			$current, 
-       			"goalName",
-        		lv_goalName_5_0, 
+       			"name",
+        		lv_name_5_0, 
         		"ID");
 	    }
 

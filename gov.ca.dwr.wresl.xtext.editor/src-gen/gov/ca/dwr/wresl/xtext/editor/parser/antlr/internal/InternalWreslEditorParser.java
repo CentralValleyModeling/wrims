@@ -8844,7 +8844,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleGoal"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2742:1: ruleGoal returns [EObject current=null] : ( (otherlv_0= KEYWORD_29 | otherlv_1= KEYWORD_29 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_33 | lv_local_3_2= KEYWORD_33 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_goalName_5_0= RULE_ID ) ) otherlv_6= KEYWORD_13 ( ( (lv_definition_7_1= ruleGoalSimple | lv_definition_7_2= ruleGoalCase ) ) ) otherlv_8= KEYWORD_14 ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2742:1: ruleGoal returns [EObject current=null] : ( (otherlv_0= KEYWORD_29 | otherlv_1= KEYWORD_29 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_33 | lv_local_3_2= KEYWORD_33 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_name_5_0= RULE_ID ) ) otherlv_6= KEYWORD_13 ( ( (lv_definition_7_1= ruleGoalSimple | lv_definition_7_2= ruleGoalCase ) ) ) otherlv_8= KEYWORD_14 ) ;
     public final EObject ruleGoal() throws RecognitionException {
         EObject current = null;
 
@@ -8854,7 +8854,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
         Token lv_local_3_1=null;
         Token lv_local_3_2=null;
         Token otherlv_4=null;
-        Token lv_goalName_5_0=null;
+        Token lv_name_5_0=null;
         Token otherlv_6=null;
         Token otherlv_8=null;
         EObject lv_definition_7_1 = null;
@@ -8865,11 +8865,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2745:28: ( ( (otherlv_0= KEYWORD_29 | otherlv_1= KEYWORD_29 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_33 | lv_local_3_2= KEYWORD_33 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_goalName_5_0= RULE_ID ) ) otherlv_6= KEYWORD_13 ( ( (lv_definition_7_1= ruleGoalSimple | lv_definition_7_2= ruleGoalCase ) ) ) otherlv_8= KEYWORD_14 ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2746:1: ( (otherlv_0= KEYWORD_29 | otherlv_1= KEYWORD_29 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_33 | lv_local_3_2= KEYWORD_33 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_goalName_5_0= RULE_ID ) ) otherlv_6= KEYWORD_13 ( ( (lv_definition_7_1= ruleGoalSimple | lv_definition_7_2= ruleGoalCase ) ) ) otherlv_8= KEYWORD_14 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2745:28: ( ( (otherlv_0= KEYWORD_29 | otherlv_1= KEYWORD_29 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_33 | lv_local_3_2= KEYWORD_33 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_name_5_0= RULE_ID ) ) otherlv_6= KEYWORD_13 ( ( (lv_definition_7_1= ruleGoalSimple | lv_definition_7_2= ruleGoalCase ) ) ) otherlv_8= KEYWORD_14 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2746:1: ( (otherlv_0= KEYWORD_29 | otherlv_1= KEYWORD_29 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_33 | lv_local_3_2= KEYWORD_33 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_name_5_0= RULE_ID ) ) otherlv_6= KEYWORD_13 ( ( (lv_definition_7_1= ruleGoalSimple | lv_definition_7_2= ruleGoalCase ) ) ) otherlv_8= KEYWORD_14 )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2746:1: ( (otherlv_0= KEYWORD_29 | otherlv_1= KEYWORD_29 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_33 | lv_local_3_2= KEYWORD_33 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_goalName_5_0= RULE_ID ) ) otherlv_6= KEYWORD_13 ( ( (lv_definition_7_1= ruleGoalSimple | lv_definition_7_2= ruleGoalCase ) ) ) otherlv_8= KEYWORD_14 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2746:2: (otherlv_0= KEYWORD_29 | otherlv_1= KEYWORD_29 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_33 | lv_local_3_2= KEYWORD_33 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_goalName_5_0= RULE_ID ) ) otherlv_6= KEYWORD_13 ( ( (lv_definition_7_1= ruleGoalSimple | lv_definition_7_2= ruleGoalCase ) ) ) otherlv_8= KEYWORD_14
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2746:1: ( (otherlv_0= KEYWORD_29 | otherlv_1= KEYWORD_29 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_33 | lv_local_3_2= KEYWORD_33 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_name_5_0= RULE_ID ) ) otherlv_6= KEYWORD_13 ( ( (lv_definition_7_1= ruleGoalSimple | lv_definition_7_2= ruleGoalCase ) ) ) otherlv_8= KEYWORD_14 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2746:2: (otherlv_0= KEYWORD_29 | otherlv_1= KEYWORD_29 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_33 | lv_local_3_2= KEYWORD_33 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_name_5_0= RULE_ID ) ) otherlv_6= KEYWORD_13 ( ( (lv_definition_7_1= ruleGoalSimple | lv_definition_7_2= ruleGoalCase ) ) ) otherlv_8= KEYWORD_14
             {
             // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2746:2: (otherlv_0= KEYWORD_29 | otherlv_1= KEYWORD_29 )
             int alt75=2;
@@ -9040,16 +9040,16 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2799:3: ( (lv_goalName_5_0= RULE_ID ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2800:1: (lv_goalName_5_0= RULE_ID )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2799:3: ( (lv_name_5_0= RULE_ID ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2800:1: (lv_name_5_0= RULE_ID )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2800:1: (lv_goalName_5_0= RULE_ID )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2801:3: lv_goalName_5_0= RULE_ID
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2800:1: (lv_name_5_0= RULE_ID )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2801:3: lv_name_5_0= RULE_ID
             {
-            lv_goalName_5_0=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleGoal6175); if (state.failed) return current;
+            lv_name_5_0=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleGoal6175); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(lv_goalName_5_0, grammarAccess.getGoalAccess().getGoalNameIDTerminalRuleCall_2_0()); 
+              			newLeafNode(lv_name_5_0, grammarAccess.getGoalAccess().getNameIDTerminalRuleCall_2_0()); 
               		
             }
             if ( state.backtracking==0 ) {
@@ -9059,8 +9059,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
               	        }
                      		setWithLastConsumed(
                      			current, 
-                     			"goalName",
-                      		lv_goalName_5_0, 
+                     			"name",
+                      		lv_name_5_0, 
                       		"ID");
               	    
             }

@@ -85,259 +85,259 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 		if(semanticObject.eClass().getEPackage() == WreslEditorPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
 			case WreslEditorPackage.ALIAS:
 				if(context == grammarAccess.getAliasRule()) {
-					sequence_Alias_Alias(context, (Alias) semanticObject); 
+					sequence_Alias(context, (Alias) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.ASSIGNMENT:
 				if(context == grammarAccess.getAssignmentRule()) {
-					sequence_Assignment_Assignment(context, (Assignment) semanticObject); 
+					sequence_Assignment(context, (Assignment) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.CASE_CONTENT:
 				if(context == grammarAccess.getCaseContentRule()) {
-					sequence_CaseContent_CaseContent(context, (CaseContent) semanticObject); 
+					sequence_CaseContent(context, (CaseContent) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.CONDITION:
 				if(context == grammarAccess.getConditionRule()) {
-					sequence_Condition_Condition(context, (Condition) semanticObject); 
+					sequence_Condition(context, (Condition) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.CONSTRAINT:
 				if(context == grammarAccess.getConstraintRule()) {
-					sequence_Constraint_Constraint(context, (Constraint) semanticObject); 
+					sequence_Constraint(context, (Constraint) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.DVAR_INTEGER_STD:
 				if(context == grammarAccess.getDVarIntegerRule() ||
 				   context == grammarAccess.getDVarIntegerStdRule()) {
-					sequence_DVarIntegerStd_DVarIntegerStd(context, (DVarIntegerStd) semanticObject); 
+					sequence_DVarIntegerStd(context, (DVarIntegerStd) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.DVAR_NON_STD:
 				if(context == grammarAccess.getDVarRule() ||
 				   context == grammarAccess.getDVarNonStdRule()) {
-					sequence_DVarNonStd_DVarNonStd(context, (DVarNonStd) semanticObject); 
+					sequence_DVarNonStd(context, (DVarNonStd) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.DVAR_STD:
 				if(context == grammarAccess.getDVarRule() ||
 				   context == grammarAccess.getDVarStdRule()) {
-					sequence_DVarStd_DVarStd(context, (DVarStd) semanticObject); 
+					sequence_DVarStd(context, (DVarStd) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.DEFINE:
-				if(context == grammarAccess.getPatternRule() ||
-				   context == grammarAccess.getDefineRule()) {
-					sequence_Define_Define(context, (Define) semanticObject); 
+				if(context == grammarAccess.getDefineRule() ||
+				   context == grammarAccess.getPatternRule()) {
+					sequence_Define(context, (Define) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.EXTERNAL:
 				if(context == grammarAccess.getExternalRule()) {
-					sequence_External_External(context, (External) semanticObject); 
+					sequence_External(context, (External) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.GOAL:
-				if(context == grammarAccess.getPatternRule() ||
-				   context == grammarAccess.getGoalRule()) {
-					sequence_Goal_Goal(context, (Goal) semanticObject); 
+				if(context == grammarAccess.getGoalRule() ||
+				   context == grammarAccess.getPatternRule()) {
+					sequence_Goal(context, (Goal) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.GOAL_CASE:
 				if(context == grammarAccess.getGoalCaseRule()) {
-					sequence_GoalCase_GoalCase(context, (GoalCase) semanticObject); 
+					sequence_GoalCase(context, (GoalCase) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.GOAL_CASE_CONTENT:
 				if(context == grammarAccess.getGoalCaseContentRule()) {
-					sequence_GoalCaseContent_GoalCaseContent(context, (GoalCaseContent) semanticObject); 
+					sequence_GoalCaseContent(context, (GoalCaseContent) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.GOAL_NO_CASE_CONTENT:
 				if(context == grammarAccess.getGoalNoCaseContentRule()) {
-					sequence_GoalNoCaseContent_GoalNoCaseContent(context, (GoalNoCaseContent) semanticObject); 
+					sequence_GoalNoCaseContent(context, (GoalNoCaseContent) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.GOAL_SIMPLE:
 				if(context == grammarAccess.getGoalSimpleRule()) {
-					sequence_GoalSimple_GoalSimple(context, (GoalSimple) semanticObject); 
+					sequence_GoalSimple(context, (GoalSimple) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.INCLUDE_FILE:
-				if(context == grammarAccess.getPatternRule() ||
-				   context == grammarAccess.getIncludeFileRule()) {
-					sequence_IncludeFile_IncludeFile(context, (IncludeFile) semanticObject); 
+				if(context == grammarAccess.getIncludeFileRule() ||
+				   context == grammarAccess.getPatternRule()) {
+					sequence_IncludeFile(context, (IncludeFile) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.LHS_GT_RHS:
 				if(context == grammarAccess.getLhsGtRhsRule()) {
-					sequence_LhsGtRhs_LhsGtRhs(context, (LhsGtRhs) semanticObject); 
+					sequence_LhsGtRhs(context, (LhsGtRhs) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.LHS_LT_RHS:
 				if(context == grammarAccess.getLhsLtRhsRule()) {
-					sequence_LhsLtRhs_LhsLtRhs(context, (LhsLtRhs) semanticObject); 
+					sequence_LhsLtRhs(context, (LhsLtRhs) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.LOWER:
 				if(context == grammarAccess.getLowerRule()) {
-					sequence_Lower_Lower(context, (Lower) semanticObject); 
+					sequence_Lower(context, (Lower) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.MODEL:
 				if(context == grammarAccess.getModelRule()) {
-					sequence_Model_Model(context, (Model) semanticObject); 
+					sequence_Model(context, (Model) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.OBJECTIVE:
-				if(context == grammarAccess.getPatternRule() ||
-				   context == grammarAccess.getObjectiveRule()) {
-					sequence_Objective_Objective(context, (Objective) semanticObject); 
+				if(context == grammarAccess.getObjectiveRule() ||
+				   context == grammarAccess.getPatternRule()) {
+					sequence_Objective(context, (Objective) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.PENALTY:
 				if(context == grammarAccess.getPenaltyRule()) {
-					sequence_Penalty_Penalty(context, (Penalty) semanticObject); 
+					sequence_Penalty(context, (Penalty) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.SVAR_CASE:
 				if(context == grammarAccess.getSVarRule() ||
 				   context == grammarAccess.getSVarCaseRule()) {
-					sequence_SVarCase_SVarCase(context, (SVarCase) semanticObject); 
+					sequence_SVarCase(context, (SVarCase) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.SVAR_DSS:
 				if(context == grammarAccess.getSVarRule() ||
 				   context == grammarAccess.getSVarDSSRule()) {
-					sequence_SVarDSS_SVarDSS(context, (SVarDSS) semanticObject); 
+					sequence_SVarDSS(context, (SVarDSS) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.SVAR_EXPRESSION:
 				if(context == grammarAccess.getSVarRule() ||
 				   context == grammarAccess.getSVarExpressionRule()) {
-					sequence_SVarExpression_SVarExpression(context, (SVarExpression) semanticObject); 
+					sequence_SVarExpression(context, (SVarExpression) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.SVAR_SUM:
 				if(context == grammarAccess.getSVarRule() ||
 				   context == grammarAccess.getSVarSumRule()) {
-					sequence_SVarSum_SVarSum(context, (SVarSum) semanticObject); 
+					sequence_SVarSum(context, (SVarSum) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.SVAR_TABLE:
 				if(context == grammarAccess.getSVarRule() ||
 				   context == grammarAccess.getSVarTableRule()) {
-					sequence_SVarTable_SVarTable(context, (SVarTable) semanticObject); 
+					sequence_SVarTable(context, (SVarTable) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.SEQUENCE:
 				if(context == grammarAccess.getSequenceRule()) {
-					sequence_Sequence_Sequence(context, (Sequence) semanticObject); 
+					sequence_Sequence(context, (Sequence) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.SUB_CONTENT:
 				if(context == grammarAccess.getSubContentRule()) {
-					sequence_SubContent_SubContent(context, (SubContent) semanticObject); 
+					sequence_SubContent(context, (SubContent) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.SUM_CONTENT:
 				if(context == grammarAccess.getSumContentRule()) {
-					sequence_SumContent_SumContent(context, (SumContent) semanticObject); 
+					sequence_SumContent(context, (SumContent) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.SUM_HEADER:
 				if(context == grammarAccess.getSumHeaderRule()) {
-					sequence_SumHeader_SumHeader(context, (SumHeader) semanticObject); 
+					sequence_SumHeader(context, (SumHeader) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.TABLE_CONTENT:
 				if(context == grammarAccess.getTableContentRule()) {
-					sequence_TableContent_TableContent(context, (TableContent) semanticObject); 
+					sequence_TableContent(context, (TableContent) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.UPPER:
 				if(context == grammarAccess.getUpperRule()) {
-					sequence_Upper_Upper(context, (Upper) semanticObject); 
+					sequence_Upper(context, (Upper) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.VALUE_CONTENT:
 				if(context == grammarAccess.getValueContentRule()) {
-					sequence_ValueContent_ValueContent(context, (ValueContent) semanticObject); 
+					sequence_ValueContent(context, (ValueContent) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.WEIGHT_ITEM:
 				if(context == grammarAccess.getWeightItemRule()) {
-					sequence_WeightItem_WeightItem(context, (WeightItem) semanticObject); 
+					sequence_WeightItem(context, (WeightItem) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.WHERE_ITEMS:
 				if(context == grammarAccess.getWhereItemsRule()) {
-					sequence_WhereItems_WhereItems(context, (WhereItems) semanticObject); 
+					sequence_WhereItems(context, (WhereItems) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.WRESL_EVALUATOR:
 				if(context == grammarAccess.getWreslEvaluatorRule()) {
-					sequence_WreslEvaluator_WreslEvaluator(context, (WreslEvaluator) semanticObject); 
+					sequence_WreslEvaluator(context, (WreslEvaluator) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.LOWER_UPPER:
 				if(context == grammarAccess.getDVarIntegerRule() ||
 				   context == grammarAccess.getDVarIntegerNonStdRule()) {
-					sequence_DVarIntegerNonStd_lowerUpper(context, (lowerUpper) semanticObject); 
+					sequence_DVarIntegerNonStd(context, (lowerUpper) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getLowerAndOrUpperRule() ||
 				   context == grammarAccess.getLowerUpperRule()) {
-					sequence_lowerUpper_lowerUpper(context, (lowerUpper) semanticObject); 
+					sequence_lowerUpper(context, (lowerUpper) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.UPPER_LOWER:
 				if(context == grammarAccess.getDVarIntegerRule() ||
 				   context == grammarAccess.getDVarIntegerNonStdRule()) {
-					sequence_DVarIntegerNonStd_upperLower(context, (upperLower) semanticObject); 
+					sequence_DVarIntegerNonStd(context, (upperLower) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getLowerAndOrUpperRule() ||
 				   context == grammarAccess.getUpperLowerRule()) {
-					sequence_upperLower_upperLower(context, (upperLower) semanticObject); 
+					sequence_upperLower(context, (upperLower) semanticObject); 
 					return; 
 				}
 				else break;
@@ -356,7 +356,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    kind[0, 1]
 	 *    units[0, 1]
 	 */
-	protected void sequence_Alias_Alias(EObject context, Alias semanticObject) {
+	protected void sequence_Alias(EObject context, Alias semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -369,7 +369,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    term[1, 1]
 	 *    expression[1, 1]
 	 */
-	protected void sequence_Assignment_Assignment(EObject context, Assignment semanticObject) {
+	protected void sequence_Assignment(EObject context, Assignment semanticObject) {
 		if(errorAcceptor != null) {
 			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.ASSIGNMENT__TERM) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.ASSIGNMENT__TERM));
@@ -393,7 +393,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    condition[1, 1]
 	 *    content[0, 3]
 	 */
-	protected void sequence_CaseContent_CaseContent(EObject context, CaseContent semanticObject) {
+	protected void sequence_CaseContent(EObject context, CaseContent semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -404,7 +404,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *
 	 * Features:
 	 */
-	protected void sequence_Condition_Condition(EObject context, Condition semanticObject) {
+	protected void sequence_Condition(EObject context, Condition semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -418,7 +418,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    operator[0, 3]
 	 *    rhs[1, 1]
 	 */
-	protected void sequence_Constraint_Constraint(EObject context, Constraint semanticObject) {
+	protected void sequence_Constraint(EObject context, Constraint semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -433,7 +433,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    upper[0, 1]
 	 *    lower[1, 1]
 	 */
-	protected void sequence_DVarIntegerNonStd_lowerUpper(EObject context, lowerUpper semanticObject) {
+	protected void sequence_DVarIntegerNonStd(EObject context, lowerUpper semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -448,7 +448,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    upper[1, 1]
 	 *    lower[0, 1]
 	 */
-	protected void sequence_DVarIntegerNonStd_upperLower(EObject context, upperLower semanticObject) {
+	protected void sequence_DVarIntegerNonStd(EObject context, upperLower semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -461,7 +461,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    kind[1, 1]
 	 *    units[1, 1]
 	 */
-	protected void sequence_DVarIntegerStd_DVarIntegerStd(EObject context, DVarIntegerStd semanticObject) {
+	protected void sequence_DVarIntegerStd(EObject context, DVarIntegerStd semanticObject) {
 		if(errorAcceptor != null) {
 			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.DVAR_INTEGER_STD__KIND) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.DVAR_INTEGER_STD__KIND));
@@ -485,7 +485,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    units[1, 1]
 	 *    lowerUpper[1, 1]
 	 */
-	protected void sequence_DVarNonStd_DVarNonStd(EObject context, DVarNonStd semanticObject) {
+	protected void sequence_DVarNonStd(EObject context, DVarNonStd semanticObject) {
 		if(errorAcceptor != null) {
 			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.DVAR__KIND) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.DVAR__KIND));
@@ -511,7 +511,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    kind[1, 1]
 	 *    units[1, 1]
 	 */
-	protected void sequence_DVarStd_DVarStd(EObject context, DVarStd semanticObject) {
+	protected void sequence_DVarStd(EObject context, DVarStd semanticObject) {
 		if(errorAcceptor != null) {
 			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.DVAR__KIND) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.DVAR__KIND));
@@ -535,7 +535,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    name[1, 1]
 	 *    definition[0, 4]
 	 */
-	protected void sequence_Define_Define(EObject context, Define semanticObject) {
+	protected void sequence_Define(EObject context, Define semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -546,7 +546,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *
 	 * Features:
 	 */
-	protected void sequence_External_External(EObject context, External semanticObject) {
+	protected void sequence_External(EObject context, External semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -561,7 +561,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    rhs[1, 1]
 	 *    subContent[0, 1]
 	 */
-	protected void sequence_GoalCaseContent_GoalCaseContent(EObject context, GoalCaseContent semanticObject) {
+	protected void sequence_GoalCaseContent(EObject context, GoalCaseContent semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -577,7 +577,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    caseContent[0, *]
 	 *         EXCLUDE_IF_SET content
 	 */
-	protected void sequence_GoalCase_GoalCase(EObject context, GoalCase semanticObject) {
+	protected void sequence_GoalCase(EObject context, GoalCase semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -590,7 +590,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    rhs[1, 1]
 	 *    subContent[0, 1]
 	 */
-	protected void sequence_GoalNoCaseContent_GoalNoCaseContent(EObject context, GoalNoCaseContent semanticObject) {
+	protected void sequence_GoalNoCaseContent(EObject context, GoalNoCaseContent semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -602,7 +602,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 * Features:
 	 *    constraint[1, 1]
 	 */
-	protected void sequence_GoalSimple_GoalSimple(EObject context, GoalSimple semanticObject) {
+	protected void sequence_GoalSimple(EObject context, GoalSimple semanticObject) {
 		if(errorAcceptor != null) {
 			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.GOAL_SIMPLE__CONSTRAINT) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.GOAL_SIMPLE__CONSTRAINT));
@@ -616,14 +616,14 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     ((local?='local' | local?='LOCAL')? goalName=ID (definition=GoalSimple | definition=GoalCase))
+	 *     ((local?='local' | local?='LOCAL')? name=ID (definition=GoalSimple | definition=GoalCase))
 	 *
 	 * Features:
 	 *    local[0, 2]
-	 *    goalName[1, 1]
+	 *    name[1, 1]
 	 *    definition[0, 2]
 	 */
-	protected void sequence_Goal_Goal(EObject context, Goal semanticObject) {
+	protected void sequence_Goal(EObject context, Goal semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -636,7 +636,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    local[0, 2]
 	 *    file[1, 1]
 	 */
-	protected void sequence_IncludeFile_IncludeFile(EObject context, IncludeFile semanticObject) {
+	protected void sequence_IncludeFile(EObject context, IncludeFile semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -647,7 +647,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *
 	 * Features:
 	 */
-	protected void sequence_LhsGtRhs_LhsGtRhs(EObject context, LhsGtRhs semanticObject) {
+	protected void sequence_LhsGtRhs(EObject context, LhsGtRhs semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -658,7 +658,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *
 	 * Features:
 	 */
-	protected void sequence_LhsLtRhs_LhsLtRhs(EObject context, LhsLtRhs semanticObject) {
+	protected void sequence_LhsLtRhs(EObject context, LhsLtRhs semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -669,7 +669,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *
 	 * Features:
 	 */
-	protected void sequence_Lower_Lower(EObject context, Lower semanticObject) {
+	protected void sequence_Lower(EObject context, Lower semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -683,7 +683,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    pattern[0, *]
 	 *    alias[0, *]
 	 */
-	protected void sequence_Model_Model(EObject context, Model semanticObject) {
+	protected void sequence_Model(EObject context, Model semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -697,7 +697,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    name[1, 1]
 	 *    weights[1, *]
 	 */
-	protected void sequence_Objective_Objective(EObject context, Objective semanticObject) {
+	protected void sequence_Objective(EObject context, Objective semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -709,7 +709,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 * Features:
 	 *    expression[1, 1]
 	 */
-	protected void sequence_Penalty_Penalty(EObject context, Penalty semanticObject) {
+	protected void sequence_Penalty(EObject context, Penalty semanticObject) {
 		if(errorAcceptor != null) {
 			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.PENALTY__EXPRESSION) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.PENALTY__EXPRESSION));
@@ -728,7 +728,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 * Features:
 	 *    caseContent[1, *]
 	 */
-	protected void sequence_SVarCase_SVarCase(EObject context, SVarCase semanticObject) {
+	protected void sequence_SVarCase(EObject context, SVarCase semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -743,7 +743,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    units[1, 1]
 	 *    convert[0, 1]
 	 */
-	protected void sequence_SVarDSS_SVarDSS(EObject context, SVarDSS semanticObject) {
+	protected void sequence_SVarDSS(EObject context, SVarDSS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -755,7 +755,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 * Features:
 	 *    expression[1, 1]
 	 */
-	protected void sequence_SVarExpression_SVarExpression(EObject context, SVarExpression semanticObject) {
+	protected void sequence_SVarExpression(EObject context, SVarExpression semanticObject) {
 		if(errorAcceptor != null) {
 			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.SVAR_EXPRESSION__EXPRESSION) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.SVAR_EXPRESSION__EXPRESSION));
@@ -774,7 +774,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 * Features:
 	 *    sumContent[1, 1]
 	 */
-	protected void sequence_SVarSum_SVarSum(EObject context, SVarSum semanticObject) {
+	protected void sequence_SVarSum(EObject context, SVarSum semanticObject) {
 		if(errorAcceptor != null) {
 			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.SVAR_SUM__SUM_CONTENT) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.SVAR_SUM__SUM_CONTENT));
@@ -793,7 +793,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 * Features:
 	 *    tableContent[1, 1]
 	 */
-	protected void sequence_SVarTable_SVarTable(EObject context, SVarTable semanticObject) {
+	protected void sequence_SVarTable(EObject context, SVarTable semanticObject) {
 		if(errorAcceptor != null) {
 			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.SVAR_TABLE__TABLE_CONTENT) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.SVAR_TABLE__TABLE_CONTENT));
@@ -815,7 +815,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    condition[0, 1]
 	 *    order[0, 1]
 	 */
-	protected void sequence_Sequence_Sequence(EObject context, Sequence semanticObject) {
+	protected void sequence_Sequence(EObject context, Sequence semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -825,10 +825,10 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *     ((gt=LhsGtRhs lt=LhsLtRhs?) | (lt=LhsLtRhs gt=LhsGtRhs?))
 	 *
 	 * Features:
-	 *    gt[1, 2]
-	 *    lt[1, 2]
+	 *    gt[0, 2]
+	 *    lt[0, 2]
 	 */
-	protected void sequence_SubContent_SubContent(EObject context, SubContent semanticObject) {
+	protected void sequence_SubContent(EObject context, SubContent semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -841,7 +841,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    header[1, 1]
 	 *    expression[1, 1]
 	 */
-	protected void sequence_SumContent_SumContent(EObject context, SumContent semanticObject) {
+	protected void sequence_SumContent(EObject context, SumContent semanticObject) {
 		if(errorAcceptor != null) {
 			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.SUM_CONTENT__HEADER) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.SUM_CONTENT__HEADER));
@@ -864,7 +864,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    expression1[1, 1]
 	 *    expression2[1, 1]
 	 */
-	protected void sequence_SumHeader_SumHeader(EObject context, SumHeader semanticObject) {
+	protected void sequence_SumHeader(EObject context, SumHeader semanticObject) {
 		if(errorAcceptor != null) {
 			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.SUM_HEADER__EXPRESSION1) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.SUM_HEADER__EXPRESSION1));
@@ -894,7 +894,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *         MANDATORY_IF_SET given
 	 *    where[0, 1]
 	 */
-	protected void sequence_TableContent_TableContent(EObject context, TableContent semanticObject) {
+	protected void sequence_TableContent(EObject context, TableContent semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -905,7 +905,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *
 	 * Features:
 	 */
-	protected void sequence_Upper_Upper(EObject context, Upper semanticObject) {
+	protected void sequence_Upper(EObject context, Upper semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -917,7 +917,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 * Features:
 	 *    expression[1, 1]
 	 */
-	protected void sequence_ValueContent_ValueContent(EObject context, ValueContent semanticObject) {
+	protected void sequence_ValueContent(EObject context, ValueContent semanticObject) {
 		if(errorAcceptor != null) {
 			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.VALUE_CONTENT__EXPRESSION) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.VALUE_CONTENT__EXPRESSION));
@@ -937,7 +937,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    name[1, 1]
 	 *    expression[1, 1]
 	 */
-	protected void sequence_WeightItem_WeightItem(EObject context, WeightItem semanticObject) {
+	protected void sequence_WeightItem(EObject context, WeightItem semanticObject) {
 		if(errorAcceptor != null) {
 			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.WEIGHT_ITEM__NAME) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.WEIGHT_ITEM__NAME));
@@ -959,7 +959,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 * Features:
 	 *    assignment[1, *]
 	 */
-	protected void sequence_WhereItems_WhereItems(EObject context, WhereItems semanticObject) {
+	protected void sequence_WhereItems(EObject context, WhereItems semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -972,18 +972,18 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    pattern[0, *]
 	 *         EXCLUDE_IF_SET sequence
 	 *         EXCLUDE_IF_SET model
-	 *    sequence[1, *]
+	 *    sequence[0, *]
 	 *         EXCLUDE_IF_UNSET model
 	 *         MANDATORY_IF_SET model
 	 *         EXCLUDE_IF_SET pattern
 	 *         EXCLUDE_IF_SET pattern
-	 *    model[1, *]
+	 *    model[0, *]
 	 *         EXCLUDE_IF_UNSET sequence
 	 *         MANDATORY_IF_SET sequence
 	 *         EXCLUDE_IF_SET pattern
 	 *         EXCLUDE_IF_SET pattern
 	 */
-	protected void sequence_WreslEvaluator_WreslEvaluator(EObject context, WreslEvaluator semanticObject) {
+	protected void sequence_WreslEvaluator(EObject context, WreslEvaluator semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -996,7 +996,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    upper[0, 1]
 	 *    lower[1, 1]
 	 */
-	protected void sequence_lowerUpper_lowerUpper(EObject context, lowerUpper semanticObject) {
+	protected void sequence_lowerUpper(EObject context, lowerUpper semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1009,7 +1009,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    upper[1, 1]
 	 *    lower[0, 1]
 	 */
-	protected void sequence_upperLower_upperLower(EObject context, upperLower semanticObject) {
+	protected void sequence_upperLower(EObject context, upperLower semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 }

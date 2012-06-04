@@ -117,7 +117,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Lower/expression"/>
     </genClasses>
     <genClasses ecoreClass="platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Goal">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Goal/goalName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Goal/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Goal/definition"/>
     </genClasses>
     <genClasses ecoreClass="platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//GoalCase">

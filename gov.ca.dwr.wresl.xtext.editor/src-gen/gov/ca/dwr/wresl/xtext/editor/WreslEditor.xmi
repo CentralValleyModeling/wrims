@@ -687,7 +687,7 @@
           </elements>
           <elements xsi:type="xtext:Keyword" value="]"/>
         </elements>
-        <elements xsi:type="xtext:Assignment" feature="goalName" operator="=">
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>

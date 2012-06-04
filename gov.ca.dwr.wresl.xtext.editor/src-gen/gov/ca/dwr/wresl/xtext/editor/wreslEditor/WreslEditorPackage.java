@@ -1254,13 +1254,13 @@ public interface WreslEditorPackage extends EPackage
   int GOAL__LOCAL = PATTERN__LOCAL;
 
   /**
-   * The feature id for the '<em><b>Goal Name</b></em>' attribute.
+   * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GOAL__GOAL_NAME = PATTERN_FEATURE_COUNT + 0;
+  int GOAL__NAME = PATTERN_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Definition</b></em>' containment reference.
@@ -2662,15 +2662,15 @@ public interface WreslEditorPackage extends EPackage
   EClass getGoal();
 
   /**
-   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal#getGoalName <em>Goal Name</em>}'.
+   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Goal Name</em>'.
-   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal#getGoalName()
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal#getName()
    * @see #getGoal()
    * @generated
    */
-  EAttribute getGoal_GoalName();
+  EAttribute getGoal_Name();
 
   /**
    * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal#getDefinition <em>Definition</em>}'.
@@ -3862,12 +3862,12 @@ public interface WreslEditorPackage extends EPackage
     EClass GOAL = eINSTANCE.getGoal();
 
     /**
-     * The meta object literal for the '<em><b>Goal Name</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute GOAL__GOAL_NAME = eINSTANCE.getGoal_GoalName();
+    EAttribute GOAL__NAME = eINSTANCE.getGoal_Name();
 
     /**
      * The meta object literal for the '<em><b>Definition</b></em>' containment reference feature.

@@ -1665,8 +1665,8 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLocalLocalKeyword_1_1_0_0 = (Keyword)cLocalAlternatives_1_1_0.eContents().get(0);
 		private final Keyword cLocalLOCALKeyword_1_1_0_1 = (Keyword)cLocalAlternatives_1_1_0.eContents().get(1);
 		private final Keyword cRightSquareBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		private final Assignment cGoalNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cGoalNameIDTerminalRuleCall_2_0 = (RuleCall)cGoalNameAssignment_2.eContents().get(0);
+		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cDefinitionAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final Alternatives cDefinitionAlternatives_4_0 = (Alternatives)cDefinitionAssignment_4.eContents().get(0);
@@ -1675,10 +1675,10 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//Goal:
-		//	("goal" | "GOAL") ("[" local?=("local" | "LOCAL") "]")? goalName=ID "{" definition=(GoalSimple | GoalCase) "}";
+		//	("goal" | "GOAL") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(GoalSimple | GoalCase) "}";
 		public ParserRule getRule() { return rule; }
 
-		//("goal" | "GOAL") ("[" local?=("local" | "LOCAL") "]")? goalName=ID "{" definition=(GoalSimple | GoalCase) "}"
+		//("goal" | "GOAL") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(GoalSimple | GoalCase) "}"
 		public Group getGroup() { return cGroup; }
 
 		//"goal" | "GOAL"
@@ -1711,11 +1711,11 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"]"
 		public Keyword getRightSquareBracketKeyword_1_2() { return cRightSquareBracketKeyword_1_2; }
 
-		//goalName=ID
-		public Assignment getGoalNameAssignment_2() { return cGoalNameAssignment_2; }
+		//name=ID
+		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
 
 		//ID
-		public RuleCall getGoalNameIDTerminalRuleCall_2_0() { return cGoalNameIDTerminalRuleCall_2_0; }
+		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
@@ -3493,7 +3493,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Goal:
-	//	("goal" | "GOAL") ("[" local?=("local" | "LOCAL") "]")? goalName=ID "{" definition=(GoalSimple | GoalCase) "}";
+	//	("goal" | "GOAL") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(GoalSimple | GoalCase) "}";
 	public GoalElements getGoalAccess() {
 		return (pGoal != null) ? pGoal : (pGoal = new GoalElements());
 	}

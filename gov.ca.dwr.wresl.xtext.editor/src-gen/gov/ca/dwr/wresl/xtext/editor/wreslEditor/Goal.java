@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal#getGoalName <em>Goal Name</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal#getName <em>Name</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal#getDefinition <em>Definition</em>}</li>
  * </ul>
  * </p>
@@ -28,30 +28,30 @@ import org.eclipse.emf.ecore.EObject;
 public interface Goal extends Pattern
 {
   /**
-   * Returns the value of the '<em><b>Goal Name</b></em>' attribute.
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Goal Name</em>' attribute isn't clear,
+   * If the meaning of the '<em>Name</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Goal Name</em>' attribute.
-   * @see #setGoalName(String)
-   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getGoal_GoalName()
+   * @return the value of the '<em>Name</em>' attribute.
+   * @see #setName(String)
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getGoal_Name()
    * @model
    * @generated
    */
-  String getGoalName();
+  String getName();
 
   /**
-   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal#getGoalName <em>Goal Name</em>}' attribute.
+   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal#getName <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Goal Name</em>' attribute.
-   * @see #getGoalName()
+   * @param value the new value of the '<em>Name</em>' attribute.
+   * @see #getName()
    * @generated
    */
-  void setGoalName(String value);
+  void setName(String value);
 
   /**
    * Returns the value of the '<em><b>Definition</b></em>' containment reference.

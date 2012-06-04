@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GoalImpl#getGoalName <em>Goal Name</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GoalImpl#getName <em>Name</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GoalImpl#getDefinition <em>Definition</em>}</li>
  * </ul>
  * </p>
@@ -35,24 +35,24 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class GoalImpl extends PatternImpl implements Goal
 {
   /**
-   * The default value of the '{@link #getGoalName() <em>Goal Name</em>}' attribute.
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getGoalName()
+   * @see #getName()
    * @generated
    * @ordered
    */
-  protected static final String GOAL_NAME_EDEFAULT = null;
+  protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getGoalName() <em>Goal Name</em>}' attribute.
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getGoalName()
+   * @see #getName()
    * @generated
    * @ordered
    */
-  protected String goalName = GOAL_NAME_EDEFAULT;
+  protected String name = NAME_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getDefinition() <em>Definition</em>}' containment reference.
@@ -90,9 +90,9 @@ public class GoalImpl extends PatternImpl implements Goal
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getGoalName()
+  public String getName()
   {
-    return goalName;
+    return name;
   }
 
   /**
@@ -100,12 +100,12 @@ public class GoalImpl extends PatternImpl implements Goal
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setGoalName(String newGoalName)
+  public void setName(String newName)
   {
-    String oldGoalName = goalName;
-    goalName = newGoalName;
+    String oldName = name;
+    name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.GOAL__GOAL_NAME, oldGoalName, goalName));
+      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.GOAL__NAME, oldName, name));
   }
 
   /**
@@ -182,8 +182,8 @@ public class GoalImpl extends PatternImpl implements Goal
   {
     switch (featureID)
     {
-      case WreslEditorPackage.GOAL__GOAL_NAME:
-        return getGoalName();
+      case WreslEditorPackage.GOAL__NAME:
+        return getName();
       case WreslEditorPackage.GOAL__DEFINITION:
         return getDefinition();
     }
@@ -200,8 +200,8 @@ public class GoalImpl extends PatternImpl implements Goal
   {
     switch (featureID)
     {
-      case WreslEditorPackage.GOAL__GOAL_NAME:
-        setGoalName((String)newValue);
+      case WreslEditorPackage.GOAL__NAME:
+        setName((String)newValue);
         return;
       case WreslEditorPackage.GOAL__DEFINITION:
         setDefinition((EObject)newValue);
@@ -220,8 +220,8 @@ public class GoalImpl extends PatternImpl implements Goal
   {
     switch (featureID)
     {
-      case WreslEditorPackage.GOAL__GOAL_NAME:
-        setGoalName(GOAL_NAME_EDEFAULT);
+      case WreslEditorPackage.GOAL__NAME:
+        setName(NAME_EDEFAULT);
         return;
       case WreslEditorPackage.GOAL__DEFINITION:
         setDefinition((EObject)null);
@@ -240,8 +240,8 @@ public class GoalImpl extends PatternImpl implements Goal
   {
     switch (featureID)
     {
-      case WreslEditorPackage.GOAL__GOAL_NAME:
-        return GOAL_NAME_EDEFAULT == null ? goalName != null : !GOAL_NAME_EDEFAULT.equals(goalName);
+      case WreslEditorPackage.GOAL__NAME:
+        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case WreslEditorPackage.GOAL__DEFINITION:
         return definition != null;
     }
@@ -259,8 +259,8 @@ public class GoalImpl extends PatternImpl implements Goal
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (goalName: ");
-    result.append(goalName);
+    result.append(" (name: ");
+    result.append(name);
     result.append(')');
     return result.toString();
   }

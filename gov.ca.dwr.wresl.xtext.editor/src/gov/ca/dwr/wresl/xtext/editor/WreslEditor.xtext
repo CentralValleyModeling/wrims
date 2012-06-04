@@ -109,7 +109,7 @@ Lower:
 	("lower" | "LOWER") ({Lower} ("unbounded" | "UNBOUNDED") | expression=Expression);
 
 Goal:
-	("goal" | "GOAL") ('[' local?=('local' | 'LOCAL') ']')? goalName=ID '{' definition=(GoalSimple | GoalCase) '}';
+	("goal" | "GOAL") ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=(GoalSimple | GoalCase) '}';
 
 GoalCase:
 	('lhs' | 'LHS') lhs=Expression (content=GoalNoCaseContent | caseContent+=GoalCaseContent+);
