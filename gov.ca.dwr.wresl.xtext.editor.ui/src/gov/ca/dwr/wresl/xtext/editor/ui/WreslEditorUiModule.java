@@ -3,7 +3,12 @@
  */
 package gov.ca.dwr.wresl.xtext.editor.ui;
 
+import gov.ca.dwr.wresl.xtext.editor.ui.texthover.WreslEObjectDocumentationProvider;
+import gov.ca.dwr.wresl.xtext.editor.ui.texthover.WreslEObjectHoverProvider;
+
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.xtext.documentation.IEObjectDocumentationProvider;
+import org.eclipse.xtext.ui.editor.hover.IEObjectHoverProvider;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -11,6 +16,15 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 public class WreslEditorUiModule extends gov.ca.dwr.wresl.xtext.editor.ui.AbstractWreslEditorUiModule {
 	public WreslEditorUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
+	}
+
+
+	public Class<? extends IEObjectHoverProvider> bindIEObjectHoverProvider() {
+		return WreslEObjectHoverProvider.class;
+	}
+	
+	public Class<? extends IEObjectDocumentationProvider> bindIEObjectDocumentationProviderr() {
+		return WreslEObjectDocumentationProvider.class;
 	}
 
 }

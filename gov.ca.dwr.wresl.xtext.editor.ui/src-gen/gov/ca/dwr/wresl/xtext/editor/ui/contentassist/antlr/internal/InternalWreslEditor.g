@@ -23,7 +23,6 @@ import java.io.InputStream;
 import org.eclipse.xtext.*;
 import org.eclipse.xtext.parser.*;
 import org.eclipse.xtext.parser.impl.*;
-import org.eclipse.xtext.parsetree.*;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream;
@@ -8623,9 +8622,9 @@ rule__Goal__Group__2__Impl
     }
 :
 (
-{ before(grammarAccess.getGoalAccess().getGoalNameAssignment_2()); }
-(rule__Goal__GoalNameAssignment_2)
-{ after(grammarAccess.getGoalAccess().getGoalNameAssignment_2()); }
+{ before(grammarAccess.getGoalAccess().getNameAssignment_2()); }
+(rule__Goal__NameAssignment_2)
+{ after(grammarAccess.getGoalAccess().getNameAssignment_2()); }
 )
 
 ;
@@ -13462,14 +13461,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Goal__GoalNameAssignment_2
+rule__Goal__NameAssignment_2
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getGoalAccess().getGoalNameIDTerminalRuleCall_2_0()); }
-	RULE_ID{ after(grammarAccess.getGoalAccess().getGoalNameIDTerminalRuleCall_2_0()); }
+{ before(grammarAccess.getGoalAccess().getNameIDTerminalRuleCall_2_0()); }
+	RULE_ID{ after(grammarAccess.getGoalAccess().getNameIDTerminalRuleCall_2_0()); }
 )
 
 ;
