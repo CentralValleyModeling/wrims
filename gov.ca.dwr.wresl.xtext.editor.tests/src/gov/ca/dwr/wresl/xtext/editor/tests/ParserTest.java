@@ -76,7 +76,7 @@ public class ParserTest {
 		Pattern p = (Pattern) pattern.get(0);
 		Assert.assertTrue(p instanceof Goal);
 		Goal g = (Goal) p;
-		Assert.assertEquals("setWTS_SWPAlloc",g.getGoalName());
+		Assert.assertEquals("setWTS_SWPAlloc",g.getName());
 		Assert.assertNotNull(g.getDefinition());
 		EObject gobj = g.getDefinition();
 		Assert.assertTrue(gobj instanceof GoalSimple);
