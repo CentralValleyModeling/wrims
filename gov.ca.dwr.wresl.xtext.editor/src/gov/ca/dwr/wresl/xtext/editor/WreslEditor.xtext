@@ -249,3 +249,5 @@ terminal STRING:
 
 terminal SL_COMMENT:
 	'!' !('\n' | '\r')* ('\r'? '\n')?;
+	
+terminal ID: ('a'..'z'|'A'..'Z') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
