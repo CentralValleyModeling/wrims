@@ -293,6 +293,26 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSequenceAccess().getConditionAssignment_5(), "rule__Sequence__ConditionAssignment_5");
 					put(grammarAccess.getSequenceAccess().getOrderAssignment_6_1(), "rule__Sequence__OrderAssignment_6_1");
 					put(grammarAccess.getConditionAccess().getLogicalAssignment_1_0(), "rule__Condition__LogicalAssignment_1_0");
+					put(grammarAccess.getLogicalExpressionAccess().getC1Assignment_0(), "rule__LogicalExpression__C1Assignment_0");
+					put(grammarAccess.getLogicalExpressionAccess().getC2Assignment_1_1(), "rule__LogicalExpression__C2Assignment_1_1");
+					put(grammarAccess.getConditionalTermAccess().getE1Assignment_0_0(), "rule__ConditionalTerm__E1Assignment_0_0");
+					put(grammarAccess.getConditionalTermAccess().getE2Assignment_0_2(), "rule__ConditionalTerm__E2Assignment_0_2");
+					put(grammarAccess.getAddAccess().getM1Assignment_0(), "rule__Add__M1Assignment_0");
+					put(grammarAccess.getAddAccess().getM2Assignment_1_1(), "rule__Add__M2Assignment_1_1");
+					put(grammarAccess.getMultiplyAccess().getU1Assignment_0(), "rule__Multiply__U1Assignment_0");
+					put(grammarAccess.getMultiplyAccess().getU2Assignment_1_1(), "rule__Multiply__U2Assignment_1_1");
+					put(grammarAccess.getTermAccess().getIAssignment_0(), "rule__Term__IAssignment_0");
+					put(grammarAccess.getTermAccess().getNAssignment_1(), "rule__Term__NAssignment_1");
+					put(grammarAccess.getTermAccess().getFAssignment_2(), "rule__Term__FAssignment_2");
+					put(grammarAccess.getTermAccess().getEAssignment_3_1(), "rule__Term__EAssignment_3_1");
+					put(grammarAccess.getExternalFunctionAccess().getE1Assignment_2(), "rule__ExternalFunction__E1Assignment_2");
+					put(grammarAccess.getExternalFunctionAccess().getE2Assignment_3_1(), "rule__ExternalFunction__E2Assignment_3_1");
+					put(grammarAccess.getMaxFunctionAccess().getE1Assignment_2(), "rule__MaxFunction__E1Assignment_2");
+					put(grammarAccess.getMaxFunctionAccess().getE2Assignment_3_1(), "rule__MaxFunction__E2Assignment_3_1");
+					put(grammarAccess.getMinFunctionAccess().getE1Assignment_2(), "rule__MinFunction__E1Assignment_2");
+					put(grammarAccess.getMinFunctionAccess().getE2Assignment_3_1(), "rule__MinFunction__E2Assignment_3_1");
+					put(grammarAccess.getIntFunctionAccess().getEAssignment_2(), "rule__IntFunction__EAssignment_2");
+					put(grammarAccess.getIdentAccess().getNameAssignment(), "rule__Ident__NameAssignment");
 					put(grammarAccess.getIncludeFileAccess().getLocalAssignment_1_1(), "rule__IncludeFile__LocalAssignment_1_1");
 					put(grammarAccess.getIncludeFileAccess().getFileAssignment_2(), "rule__IncludeFile__FileAssignment_2");
 				}

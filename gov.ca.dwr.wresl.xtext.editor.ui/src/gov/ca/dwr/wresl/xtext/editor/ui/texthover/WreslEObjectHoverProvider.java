@@ -4,6 +4,7 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVar;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DVarIntegerImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DefineImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GoalImpl;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IdentImpl;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.ui.editor.hover.html.DefaultEObjectHoverProvider;
@@ -15,8 +16,10 @@ public class WreslEObjectHoverProvider extends DefaultEObjectHoverProvider {
 			return ((DefineImpl) o).getName();
 		}else if (o instanceof GoalImpl){
 			return ((GoalImpl) o).getName();
+		}else if (o instanceof IdentImpl){
+			return ((IdentImpl) o).getName();
 		}else{
-			return super.getFirstLine(o);
+			return o.toString();
 		}
 	}
 
