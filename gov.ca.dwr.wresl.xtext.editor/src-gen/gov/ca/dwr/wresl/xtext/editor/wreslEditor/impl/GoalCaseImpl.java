@@ -6,6 +6,7 @@
  */
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Expression;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCase;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCaseContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalNoCaseContent;
@@ -45,24 +46,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class GoalCaseImpl extends MinimalEObjectImpl.Container implements GoalCase
 {
   /**
-   * The default value of the '{@link #getLhs() <em>Lhs</em>}' attribute.
+   * The cached value of the '{@link #getLhs() <em>Lhs</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getLhs()
    * @generated
    * @ordered
    */
-  protected static final String LHS_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getLhs() <em>Lhs</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getLhs()
-   * @generated
-   * @ordered
-   */
-  protected String lhs = LHS_EDEFAULT;
+  protected Expression lhs;
 
   /**
    * The cached value of the '{@link #getContent() <em>Content</em>}' containment reference.
@@ -110,7 +101,7 @@ public class GoalCaseImpl extends MinimalEObjectImpl.Container implements GoalCa
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getLhs()
+  public Expression getLhs()
   {
     return lhs;
   }
@@ -120,12 +111,37 @@ public class GoalCaseImpl extends MinimalEObjectImpl.Container implements GoalCa
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setLhs(String newLhs)
+  public NotificationChain basicSetLhs(Expression newLhs, NotificationChain msgs)
   {
-    String oldLhs = lhs;
+    Expression oldLhs = lhs;
     lhs = newLhs;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.GOAL_CASE__LHS, oldLhs, lhs));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, WreslEditorPackage.GOAL_CASE__LHS, oldLhs, newLhs);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setLhs(Expression newLhs)
+  {
+    if (newLhs != lhs)
+    {
+      NotificationChain msgs = null;
+      if (lhs != null)
+        msgs = ((InternalEObject)lhs).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.GOAL_CASE__LHS, null, msgs);
+      if (newLhs != null)
+        msgs = ((InternalEObject)newLhs).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.GOAL_CASE__LHS, null, msgs);
+      msgs = basicSetLhs(newLhs, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.GOAL_CASE__LHS, newLhs, newLhs));
   }
 
   /**
@@ -200,6 +216,8 @@ public class GoalCaseImpl extends MinimalEObjectImpl.Container implements GoalCa
   {
     switch (featureID)
     {
+      case WreslEditorPackage.GOAL_CASE__LHS:
+        return basicSetLhs(null, msgs);
       case WreslEditorPackage.GOAL_CASE__CONTENT:
         return basicSetContent(null, msgs);
       case WreslEditorPackage.GOAL_CASE__CASE_CONTENT:
@@ -240,7 +258,7 @@ public class GoalCaseImpl extends MinimalEObjectImpl.Container implements GoalCa
     switch (featureID)
     {
       case WreslEditorPackage.GOAL_CASE__LHS:
-        setLhs((String)newValue);
+        setLhs((Expression)newValue);
         return;
       case WreslEditorPackage.GOAL_CASE__CONTENT:
         setContent((GoalNoCaseContent)newValue);
@@ -264,7 +282,7 @@ public class GoalCaseImpl extends MinimalEObjectImpl.Container implements GoalCa
     switch (featureID)
     {
       case WreslEditorPackage.GOAL_CASE__LHS:
-        setLhs(LHS_EDEFAULT);
+        setLhs((Expression)null);
         return;
       case WreslEditorPackage.GOAL_CASE__CONTENT:
         setContent((GoalNoCaseContent)null);
@@ -287,30 +305,13 @@ public class GoalCaseImpl extends MinimalEObjectImpl.Container implements GoalCa
     switch (featureID)
     {
       case WreslEditorPackage.GOAL_CASE__LHS:
-        return LHS_EDEFAULT == null ? lhs != null : !LHS_EDEFAULT.equals(lhs);
+        return lhs != null;
       case WreslEditorPackage.GOAL_CASE__CONTENT:
         return content != null;
       case WreslEditorPackage.GOAL_CASE__CASE_CONTENT:
         return caseContent != null && !caseContent.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (lhs: ");
-    result.append(lhs);
-    result.append(')');
-    return result.toString();
   }
 
 } //GoalCaseImpl

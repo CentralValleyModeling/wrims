@@ -261,6 +261,15 @@ public interface WreslEditorFactory extends EFactory
   Assignment createAssignment();
 
   /**
+   * Returns a new object of class '<em>Term Simple</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Term Simple</em>'.
+   * @generated
+   */
+  TermSimple createTermSimple();
+
+  /**
    * Returns a new object of class '<em>Lower And Or Upper</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -421,6 +430,132 @@ public interface WreslEditorFactory extends EFactory
    * @generated
    */
   Condition createCondition();
+
+  /**
+   * Returns a new object of class '<em>Logical Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Logical Expression</em>'.
+   * @generated
+   */
+  LogicalExpression createLogicalExpression();
+
+  /**
+   * Returns a new object of class '<em>Conditional Unary</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Conditional Unary</em>'.
+   * @generated
+   */
+  ConditionalUnary createConditionalUnary();
+
+  /**
+   * Returns a new object of class '<em>Conditional Term</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Conditional Term</em>'.
+   * @generated
+   */
+  ConditionalTerm createConditionalTerm();
+
+  /**
+   * Returns a new object of class '<em>Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Expression</em>'.
+   * @generated
+   */
+  Expression createExpression();
+
+  /**
+   * Returns a new object of class '<em>Add</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Add</em>'.
+   * @generated
+   */
+  Add createAdd();
+
+  /**
+   * Returns a new object of class '<em>Multiply</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Multiply</em>'.
+   * @generated
+   */
+  Multiply createMultiply();
+
+  /**
+   * Returns a new object of class '<em>Unary</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Unary</em>'.
+   * @generated
+   */
+  Unary createUnary();
+
+  /**
+   * Returns a new object of class '<em>Term</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Term</em>'.
+   * @generated
+   */
+  Term createTerm();
+
+  /**
+   * Returns a new object of class '<em>Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Function</em>'.
+   * @generated
+   */
+  Function createFunction();
+
+  /**
+   * Returns a new object of class '<em>External Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>External Function</em>'.
+   * @generated
+   */
+  ExternalFunction createExternalFunction();
+
+  /**
+   * Returns a new object of class '<em>Max Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Max Function</em>'.
+   * @generated
+   */
+  MaxFunction createMaxFunction();
+
+  /**
+   * Returns a new object of class '<em>Min Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Min Function</em>'.
+   * @generated
+   */
+  MinFunction createMinFunction();
+
+  /**
+   * Returns a new object of class '<em>Int Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Int Function</em>'.
+   * @generated
+   */
+  IntFunction createIntFunction();
+
+  /**
+   * Returns a new object of class '<em>Ident</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Ident</em>'.
+   * @generated
+   */
+  Ident createIdent();
 
   /**
    * Returns a new object of class '<em>Include File</em>'.

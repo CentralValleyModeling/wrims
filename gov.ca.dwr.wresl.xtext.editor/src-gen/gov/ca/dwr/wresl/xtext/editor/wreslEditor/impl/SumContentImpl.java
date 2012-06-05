@@ -6,6 +6,7 @@
  */
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Expression;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumHeader;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage;
@@ -46,24 +47,14 @@ public class SumContentImpl extends MinimalEObjectImpl.Container implements SumC
   protected SumHeader header;
 
   /**
-   * The default value of the '{@link #getExpression() <em>Expression</em>}' attribute.
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getExpression()
    * @generated
    * @ordered
    */
-  protected static final String EXPRESSION_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getExpression() <em>Expression</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getExpression()
-   * @generated
-   * @ordered
-   */
-  protected String expression = EXPRESSION_EDEFAULT;
+  protected Expression expression;
 
   /**
    * <!-- begin-user-doc -->
@@ -139,7 +130,7 @@ public class SumContentImpl extends MinimalEObjectImpl.Container implements SumC
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getExpression()
+  public Expression getExpression()
   {
     return expression;
   }
@@ -149,12 +140,37 @@ public class SumContentImpl extends MinimalEObjectImpl.Container implements SumC
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExpression(String newExpression)
+  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
   {
-    String oldExpression = expression;
+    Expression oldExpression = expression;
     expression = newExpression;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.SUM_CONTENT__EXPRESSION, oldExpression, expression));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, WreslEditorPackage.SUM_CONTENT__EXPRESSION, oldExpression, newExpression);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setExpression(Expression newExpression)
+  {
+    if (newExpression != expression)
+    {
+      NotificationChain msgs = null;
+      if (expression != null)
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.SUM_CONTENT__EXPRESSION, null, msgs);
+      if (newExpression != null)
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.SUM_CONTENT__EXPRESSION, null, msgs);
+      msgs = basicSetExpression(newExpression, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.SUM_CONTENT__EXPRESSION, newExpression, newExpression));
   }
 
   /**
@@ -169,6 +185,8 @@ public class SumContentImpl extends MinimalEObjectImpl.Container implements SumC
     {
       case WreslEditorPackage.SUM_CONTENT__HEADER:
         return basicSetHeader(null, msgs);
+      case WreslEditorPackage.SUM_CONTENT__EXPRESSION:
+        return basicSetExpression(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -205,7 +223,7 @@ public class SumContentImpl extends MinimalEObjectImpl.Container implements SumC
         setHeader((SumHeader)newValue);
         return;
       case WreslEditorPackage.SUM_CONTENT__EXPRESSION:
-        setExpression((String)newValue);
+        setExpression((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -225,7 +243,7 @@ public class SumContentImpl extends MinimalEObjectImpl.Container implements SumC
         setHeader((SumHeader)null);
         return;
       case WreslEditorPackage.SUM_CONTENT__EXPRESSION:
-        setExpression(EXPRESSION_EDEFAULT);
+        setExpression((Expression)null);
         return;
     }
     super.eUnset(featureID);
@@ -244,26 +262,9 @@ public class SumContentImpl extends MinimalEObjectImpl.Container implements SumC
       case WreslEditorPackage.SUM_CONTENT__HEADER:
         return header != null;
       case WreslEditorPackage.SUM_CONTENT__EXPRESSION:
-        return EXPRESSION_EDEFAULT == null ? expression != null : !EXPRESSION_EDEFAULT.equals(expression);
+        return expression != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (expression: ");
-    result.append(expression);
-    result.append(')');
-    return result.toString();
   }
 
 } //SumContentImpl

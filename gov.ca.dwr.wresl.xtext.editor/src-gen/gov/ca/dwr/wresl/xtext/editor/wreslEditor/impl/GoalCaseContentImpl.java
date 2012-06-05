@@ -7,6 +7,7 @@
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Condition;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Expression;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCaseContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SubContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage;
@@ -69,24 +70,14 @@ public class GoalCaseContentImpl extends MinimalEObjectImpl.Container implements
   protected Condition condition;
 
   /**
-   * The default value of the '{@link #getRhs() <em>Rhs</em>}' attribute.
+   * The cached value of the '{@link #getRhs() <em>Rhs</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getRhs()
    * @generated
    * @ordered
    */
-  protected static final String RHS_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getRhs() <em>Rhs</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getRhs()
-   * @generated
-   * @ordered
-   */
-  protected String rhs = RHS_EDEFAULT;
+  protected Expression rhs;
 
   /**
    * The cached value of the '{@link #getSubContent() <em>Sub Content</em>}' containment reference.
@@ -195,7 +186,7 @@ public class GoalCaseContentImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getRhs()
+  public Expression getRhs()
   {
     return rhs;
   }
@@ -205,12 +196,37 @@ public class GoalCaseContentImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setRhs(String newRhs)
+  public NotificationChain basicSetRhs(Expression newRhs, NotificationChain msgs)
   {
-    String oldRhs = rhs;
+    Expression oldRhs = rhs;
     rhs = newRhs;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.GOAL_CASE_CONTENT__RHS, oldRhs, rhs));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, WreslEditorPackage.GOAL_CASE_CONTENT__RHS, oldRhs, newRhs);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setRhs(Expression newRhs)
+  {
+    if (newRhs != rhs)
+    {
+      NotificationChain msgs = null;
+      if (rhs != null)
+        msgs = ((InternalEObject)rhs).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.GOAL_CASE_CONTENT__RHS, null, msgs);
+      if (newRhs != null)
+        msgs = ((InternalEObject)newRhs).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.GOAL_CASE_CONTENT__RHS, null, msgs);
+      msgs = basicSetRhs(newRhs, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.GOAL_CASE_CONTENT__RHS, newRhs, newRhs));
   }
 
   /**
@@ -273,6 +289,8 @@ public class GoalCaseContentImpl extends MinimalEObjectImpl.Container implements
     {
       case WreslEditorPackage.GOAL_CASE_CONTENT__CONDITION:
         return basicSetCondition(null, msgs);
+      case WreslEditorPackage.GOAL_CASE_CONTENT__RHS:
+        return basicSetRhs(null, msgs);
       case WreslEditorPackage.GOAL_CASE_CONTENT__SUB_CONTENT:
         return basicSetSubContent(null, msgs);
     }
@@ -318,7 +336,7 @@ public class GoalCaseContentImpl extends MinimalEObjectImpl.Container implements
         setCondition((Condition)newValue);
         return;
       case WreslEditorPackage.GOAL_CASE_CONTENT__RHS:
-        setRhs((String)newValue);
+        setRhs((Expression)newValue);
         return;
       case WreslEditorPackage.GOAL_CASE_CONTENT__SUB_CONTENT:
         setSubContent((SubContent)newValue);
@@ -344,7 +362,7 @@ public class GoalCaseContentImpl extends MinimalEObjectImpl.Container implements
         setCondition((Condition)null);
         return;
       case WreslEditorPackage.GOAL_CASE_CONTENT__RHS:
-        setRhs(RHS_EDEFAULT);
+        setRhs((Expression)null);
         return;
       case WreslEditorPackage.GOAL_CASE_CONTENT__SUB_CONTENT:
         setSubContent((SubContent)null);
@@ -368,7 +386,7 @@ public class GoalCaseContentImpl extends MinimalEObjectImpl.Container implements
       case WreslEditorPackage.GOAL_CASE_CONTENT__CONDITION:
         return condition != null;
       case WreslEditorPackage.GOAL_CASE_CONTENT__RHS:
-        return RHS_EDEFAULT == null ? rhs != null : !RHS_EDEFAULT.equals(rhs);
+        return rhs != null;
       case WreslEditorPackage.GOAL_CASE_CONTENT__SUB_CONTENT:
         return subContent != null;
     }
@@ -388,8 +406,6 @@ public class GoalCaseContentImpl extends MinimalEObjectImpl.Container implements
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (caseName: ");
     result.append(caseName);
-    result.append(", rhs: ");
-    result.append(rhs);
     result.append(')');
     return result.toString();
   }

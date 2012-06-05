@@ -570,8 +570,8 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="TermSimple">
-      <type metamodel="/1/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//TermSimple"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
@@ -983,14 +983,18 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="LogicalExpression">
-      <type metamodel="/1/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//LogicalExpression"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.47"/>
+        <elements xsi:type="xtext:Assignment" feature="c1" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.47"/>
+        </elements>
         <elements xsi:type="xtext:Group" cardinality="*">
           <elements xsi:type="xtext:RuleCall" rule="/0/@rules.46"/>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.47"/>
+          <elements xsi:type="xtext:Assignment" feature="c2" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.47"/>
+          </elements>
         </elements>
       </alternatives>
     </rules>
@@ -1004,8 +1008,8 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="ConditionalUnary">
-      <type metamodel="/1/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//ConditionalUnary"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:RuleCall" cardinality="?" rule="/0/@rules.48"/>
@@ -1019,14 +1023,18 @@
       <alternatives xsi:type="xtext:RuleCall" rule="/0/@rules.74"/>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="ConditionalTerm">
-      <type metamodel="/1/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//ConditionalTerm"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:Group">
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+          <elements xsi:type="xtext:Assignment" feature="e1" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+          </elements>
           <elements xsi:type="xtext:RuleCall" rule="/0/@rules.50"/>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+          <elements xsi:type="xtext:Assignment" feature="e2" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+          </elements>
         </elements>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.62"/>
       </alternatives>
@@ -1045,44 +1053,52 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Expression">
-      <type metamodel="/1/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Expression"/>
       </type>
       <alternatives xsi:type="xtext:RuleCall" rule="/0/@rules.52"/>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Add">
-      <type metamodel="/1/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Add"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.53"/>
+        <elements xsi:type="xtext:Assignment" feature="m1" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.53"/>
+        </elements>
         <elements xsi:type="xtext:Group" cardinality="*">
           <elements xsi:type="xtext:Alternatives">
             <elements xsi:type="xtext:Keyword" value="+"/>
             <elements xsi:type="xtext:Keyword" value="-"/>
           </elements>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.53"/>
+          <elements xsi:type="xtext:Assignment" feature="m2" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.53"/>
+          </elements>
         </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Multiply">
-      <type metamodel="/1/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Multiply"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.54"/>
+        <elements xsi:type="xtext:Assignment" feature="u1" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.54"/>
+        </elements>
         <elements xsi:type="xtext:Group" cardinality="*">
           <elements xsi:type="xtext:Alternatives">
             <elements xsi:type="xtext:Keyword" value="*"/>
             <elements xsi:type="xtext:Keyword" value="/"/>
           </elements>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.54"/>
+          <elements xsi:type="xtext:Assignment" feature="u2" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.54"/>
+          </elements>
         </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Unary">
-      <type metamodel="/1/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Unary"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Alternatives" cardinality="?">
@@ -1099,23 +1115,31 @@
       <alternatives xsi:type="xtext:Keyword" value="-"/>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Term">
-      <type metamodel="/1/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Term"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.65"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.66"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.57"/>
+        <elements xsi:type="xtext:Assignment" feature="i" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.65"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="n" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.66"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="f" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.57"/>
+        </elements>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Keyword" value="("/>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+          <elements xsi:type="xtext:Assignment" feature="e" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+          </elements>
           <elements xsi:type="xtext:Keyword" value=")"/>
         </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Function">
-      <type metamodel="/1/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Function"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.58"/>
@@ -1126,58 +1150,72 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="ExternalFunction">
-      <type metamodel="/1/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//ExternalFunction"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
         <elements xsi:type="xtext:Keyword" value="("/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+        <elements xsi:type="xtext:Assignment" feature="e1" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+        </elements>
         <elements xsi:type="xtext:Group" cardinality="*">
           <elements xsi:type="xtext:Keyword" value=","/>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+          <elements xsi:type="xtext:Assignment" feature="e2" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+          </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value=")"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="MaxFunction">
-      <type metamodel="/1/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//MaxFunction"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.70"/>
         <elements xsi:type="xtext:Keyword" value="("/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+        <elements xsi:type="xtext:Assignment" feature="e1" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+        </elements>
         <elements xsi:type="xtext:Group" cardinality="*">
           <elements xsi:type="xtext:Keyword" value=","/>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+          <elements xsi:type="xtext:Assignment" feature="e2" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+          </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value=")"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="MinFunction">
-      <type metamodel="/1/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//MinFunction"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.69"/>
         <elements xsi:type="xtext:Keyword" value="("/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+        <elements xsi:type="xtext:Assignment" feature="e1" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+        </elements>
         <elements xsi:type="xtext:Group" cardinality="*">
           <elements xsi:type="xtext:Keyword" value=","/>
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+          <elements xsi:type="xtext:Assignment" feature="e2" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+          </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value=")"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="IntFunction">
-      <type metamodel="/1/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//IntFunction"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
         <elements xsi:type="xtext:Keyword" value="("/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+        <elements xsi:type="xtext:Assignment" feature="e" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+        </elements>
         <elements xsi:type="xtext:Keyword" value=")"/>
       </alternatives>
     </rules>
@@ -1214,10 +1252,12 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Ident">
-      <type metamodel="/1/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//Ident"/>
       </type>
-      <alternatives xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
+      <alternatives xsi:type="xtext:Assignment" feature="name" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
+      </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Number">
       <type metamodel="/1/@metamodelDeclarations.0">

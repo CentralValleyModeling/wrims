@@ -7,11 +7,14 @@
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Constraint;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Expression;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -34,24 +37,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class ConstraintImpl extends MinimalEObjectImpl.Container implements Constraint
 {
   /**
-   * The default value of the '{@link #getLhs() <em>Lhs</em>}' attribute.
+   * The cached value of the '{@link #getLhs() <em>Lhs</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getLhs()
    * @generated
    * @ordered
    */
-  protected static final String LHS_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getLhs() <em>Lhs</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getLhs()
-   * @generated
-   * @ordered
-   */
-  protected String lhs = LHS_EDEFAULT;
+  protected Expression lhs;
 
   /**
    * The default value of the '{@link #getOperator() <em>Operator</em>}' attribute.
@@ -74,24 +67,14 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
   protected String operator = OPERATOR_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getRhs() <em>Rhs</em>}' attribute.
+   * The cached value of the '{@link #getRhs() <em>Rhs</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getRhs()
    * @generated
    * @ordered
    */
-  protected static final String RHS_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getRhs() <em>Rhs</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getRhs()
-   * @generated
-   * @ordered
-   */
-  protected String rhs = RHS_EDEFAULT;
+  protected Expression rhs;
 
   /**
    * <!-- begin-user-doc -->
@@ -119,7 +102,7 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getLhs()
+  public Expression getLhs()
   {
     return lhs;
   }
@@ -129,12 +112,37 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setLhs(String newLhs)
+  public NotificationChain basicSetLhs(Expression newLhs, NotificationChain msgs)
   {
-    String oldLhs = lhs;
+    Expression oldLhs = lhs;
     lhs = newLhs;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.CONSTRAINT__LHS, oldLhs, lhs));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, WreslEditorPackage.CONSTRAINT__LHS, oldLhs, newLhs);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setLhs(Expression newLhs)
+  {
+    if (newLhs != lhs)
+    {
+      NotificationChain msgs = null;
+      if (lhs != null)
+        msgs = ((InternalEObject)lhs).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.CONSTRAINT__LHS, null, msgs);
+      if (newLhs != null)
+        msgs = ((InternalEObject)newLhs).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.CONSTRAINT__LHS, null, msgs);
+      msgs = basicSetLhs(newLhs, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.CONSTRAINT__LHS, newLhs, newLhs));
   }
 
   /**
@@ -165,7 +173,7 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getRhs()
+  public Expression getRhs()
   {
     return rhs;
   }
@@ -175,12 +183,55 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setRhs(String newRhs)
+  public NotificationChain basicSetRhs(Expression newRhs, NotificationChain msgs)
   {
-    String oldRhs = rhs;
+    Expression oldRhs = rhs;
     rhs = newRhs;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.CONSTRAINT__RHS, oldRhs, rhs));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, WreslEditorPackage.CONSTRAINT__RHS, oldRhs, newRhs);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setRhs(Expression newRhs)
+  {
+    if (newRhs != rhs)
+    {
+      NotificationChain msgs = null;
+      if (rhs != null)
+        msgs = ((InternalEObject)rhs).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.CONSTRAINT__RHS, null, msgs);
+      if (newRhs != null)
+        msgs = ((InternalEObject)newRhs).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.CONSTRAINT__RHS, null, msgs);
+      msgs = basicSetRhs(newRhs, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.CONSTRAINT__RHS, newRhs, newRhs));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case WreslEditorPackage.CONSTRAINT__LHS:
+        return basicSetLhs(null, msgs);
+      case WreslEditorPackage.CONSTRAINT__RHS:
+        return basicSetRhs(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -214,13 +265,13 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
     switch (featureID)
     {
       case WreslEditorPackage.CONSTRAINT__LHS:
-        setLhs((String)newValue);
+        setLhs((Expression)newValue);
         return;
       case WreslEditorPackage.CONSTRAINT__OPERATOR:
         setOperator((String)newValue);
         return;
       case WreslEditorPackage.CONSTRAINT__RHS:
-        setRhs((String)newValue);
+        setRhs((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -237,13 +288,13 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
     switch (featureID)
     {
       case WreslEditorPackage.CONSTRAINT__LHS:
-        setLhs(LHS_EDEFAULT);
+        setLhs((Expression)null);
         return;
       case WreslEditorPackage.CONSTRAINT__OPERATOR:
         setOperator(OPERATOR_EDEFAULT);
         return;
       case WreslEditorPackage.CONSTRAINT__RHS:
-        setRhs(RHS_EDEFAULT);
+        setRhs((Expression)null);
         return;
     }
     super.eUnset(featureID);
@@ -260,11 +311,11 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
     switch (featureID)
     {
       case WreslEditorPackage.CONSTRAINT__LHS:
-        return LHS_EDEFAULT == null ? lhs != null : !LHS_EDEFAULT.equals(lhs);
+        return lhs != null;
       case WreslEditorPackage.CONSTRAINT__OPERATOR:
         return OPERATOR_EDEFAULT == null ? operator != null : !OPERATOR_EDEFAULT.equals(operator);
       case WreslEditorPackage.CONSTRAINT__RHS:
-        return RHS_EDEFAULT == null ? rhs != null : !RHS_EDEFAULT.equals(rhs);
+        return rhs != null;
     }
     return super.eIsSet(featureID);
   }
@@ -280,12 +331,8 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (lhs: ");
-    result.append(lhs);
-    result.append(", operator: ");
+    result.append(" (operator: ");
     result.append(operator);
-    result.append(", rhs: ");
-    result.append(rhs);
     result.append(')');
     return result.toString();
   }

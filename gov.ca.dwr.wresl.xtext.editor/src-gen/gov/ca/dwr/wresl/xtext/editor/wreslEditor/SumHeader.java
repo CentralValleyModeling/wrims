@@ -28,55 +28,55 @@ import org.eclipse.emf.ecore.EObject;
 public interface SumHeader extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Expression1</b></em>' attribute.
+   * Returns the value of the '<em><b>Expression1</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Expression1</em>' attribute isn't clear,
+   * If the meaning of the '<em>Expression1</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Expression1</em>' attribute.
-   * @see #setExpression1(String)
+   * @return the value of the '<em>Expression1</em>' containment reference.
+   * @see #setExpression1(Expression)
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getSumHeader_Expression1()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  String getExpression1();
+  Expression getExpression1();
 
   /**
-   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumHeader#getExpression1 <em>Expression1</em>}' attribute.
+   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumHeader#getExpression1 <em>Expression1</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Expression1</em>' attribute.
+   * @param value the new value of the '<em>Expression1</em>' containment reference.
    * @see #getExpression1()
    * @generated
    */
-  void setExpression1(String value);
+  void setExpression1(Expression value);
 
   /**
-   * Returns the value of the '<em><b>Expression2</b></em>' attribute.
+   * Returns the value of the '<em><b>Expression2</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Expression2</em>' attribute isn't clear,
+   * If the meaning of the '<em>Expression2</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Expression2</em>' attribute.
-   * @see #setExpression2(String)
+   * @return the value of the '<em>Expression2</em>' containment reference.
+   * @see #setExpression2(Expression)
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getSumHeader_Expression2()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  String getExpression2();
+  Expression getExpression2();
 
   /**
-   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumHeader#getExpression2 <em>Expression2</em>}' attribute.
+   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumHeader#getExpression2 <em>Expression2</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Expression2</em>' attribute.
+   * @param value the new value of the '<em>Expression2</em>' containment reference.
    * @see #getExpression2()
    * @generated
    */
-  void setExpression2(String value);
+  void setExpression2(Expression value);
 
 } // SumHeader

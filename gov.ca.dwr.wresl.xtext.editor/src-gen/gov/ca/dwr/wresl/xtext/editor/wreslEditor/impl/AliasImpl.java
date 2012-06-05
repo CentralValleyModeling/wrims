@@ -7,11 +7,14 @@
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Expression;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -76,24 +79,14 @@ public class AliasImpl extends MinimalEObjectImpl.Container implements Alias
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getExpression() <em>Expression</em>}' attribute.
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getExpression()
    * @generated
    * @ordered
    */
-  protected static final String EXPRESSION_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getExpression() <em>Expression</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getExpression()
-   * @generated
-   * @ordered
-   */
-  protected String expression = EXPRESSION_EDEFAULT;
+  protected Expression expression;
 
   /**
    * The default value of the '{@link #getKind() <em>Kind</em>}' attribute.
@@ -207,7 +200,7 @@ public class AliasImpl extends MinimalEObjectImpl.Container implements Alias
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getExpression()
+  public Expression getExpression()
   {
     return expression;
   }
@@ -217,12 +210,37 @@ public class AliasImpl extends MinimalEObjectImpl.Container implements Alias
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExpression(String newExpression)
+  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
   {
-    String oldExpression = expression;
+    Expression oldExpression = expression;
     expression = newExpression;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.ALIAS__EXPRESSION, oldExpression, expression));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, WreslEditorPackage.ALIAS__EXPRESSION, oldExpression, newExpression);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setExpression(Expression newExpression)
+  {
+    if (newExpression != expression)
+    {
+      NotificationChain msgs = null;
+      if (expression != null)
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.ALIAS__EXPRESSION, null, msgs);
+      if (newExpression != null)
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.ALIAS__EXPRESSION, null, msgs);
+      msgs = basicSetExpression(newExpression, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.ALIAS__EXPRESSION, newExpression, newExpression));
   }
 
   /**
@@ -277,6 +295,22 @@ public class AliasImpl extends MinimalEObjectImpl.Container implements Alias
    * @generated
    */
   @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case WreslEditorPackage.ALIAS__EXPRESSION:
+        return basicSetExpression(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
@@ -312,7 +346,7 @@ public class AliasImpl extends MinimalEObjectImpl.Container implements Alias
         setName((String)newValue);
         return;
       case WreslEditorPackage.ALIAS__EXPRESSION:
-        setExpression((String)newValue);
+        setExpression((Expression)newValue);
         return;
       case WreslEditorPackage.ALIAS__KIND:
         setKind((String)newValue);
@@ -341,7 +375,7 @@ public class AliasImpl extends MinimalEObjectImpl.Container implements Alias
         setName(NAME_EDEFAULT);
         return;
       case WreslEditorPackage.ALIAS__EXPRESSION:
-        setExpression(EXPRESSION_EDEFAULT);
+        setExpression((Expression)null);
         return;
       case WreslEditorPackage.ALIAS__KIND:
         setKind(KIND_EDEFAULT);
@@ -368,7 +402,7 @@ public class AliasImpl extends MinimalEObjectImpl.Container implements Alias
       case WreslEditorPackage.ALIAS__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case WreslEditorPackage.ALIAS__EXPRESSION:
-        return EXPRESSION_EDEFAULT == null ? expression != null : !EXPRESSION_EDEFAULT.equals(expression);
+        return expression != null;
       case WreslEditorPackage.ALIAS__KIND:
         return KIND_EDEFAULT == null ? kind != null : !KIND_EDEFAULT.equals(kind);
       case WreslEditorPackage.ALIAS__UNITS:
@@ -392,8 +426,6 @@ public class AliasImpl extends MinimalEObjectImpl.Container implements Alias
     result.append(local);
     result.append(", name: ");
     result.append(name);
-    result.append(", expression: ");
-    result.append(expression);
     result.append(", kind: ");
     result.append(kind);
     result.append(", units: ");

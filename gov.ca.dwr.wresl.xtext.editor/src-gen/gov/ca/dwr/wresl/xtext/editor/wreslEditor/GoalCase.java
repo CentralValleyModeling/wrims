@@ -31,30 +31,30 @@ import org.eclipse.emf.ecore.EObject;
 public interface GoalCase extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Lhs</b></em>' attribute.
+   * Returns the value of the '<em><b>Lhs</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Lhs</em>' attribute isn't clear,
+   * If the meaning of the '<em>Lhs</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Lhs</em>' attribute.
-   * @see #setLhs(String)
+   * @return the value of the '<em>Lhs</em>' containment reference.
+   * @see #setLhs(Expression)
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getGoalCase_Lhs()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  String getLhs();
+  Expression getLhs();
 
   /**
-   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCase#getLhs <em>Lhs</em>}' attribute.
+   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCase#getLhs <em>Lhs</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Lhs</em>' attribute.
+   * @param value the new value of the '<em>Lhs</em>' containment reference.
    * @see #getLhs()
    * @generated
    */
-  void setLhs(String value);
+  void setLhs(Expression value);
 
   /**
    * Returns the value of the '<em><b>Content</b></em>' containment reference.

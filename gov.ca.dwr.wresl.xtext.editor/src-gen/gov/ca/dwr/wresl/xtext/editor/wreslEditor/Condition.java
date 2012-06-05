@@ -27,29 +27,29 @@ import org.eclipse.emf.ecore.EObject;
 public interface Condition extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Logical</b></em>' attribute.
+   * Returns the value of the '<em><b>Logical</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Logical</em>' attribute isn't clear,
+   * If the meaning of the '<em>Logical</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Logical</em>' attribute.
-   * @see #setLogical(String)
+   * @return the value of the '<em>Logical</em>' containment reference.
+   * @see #setLogical(LogicalExpression)
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getCondition_Logical()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  String getLogical();
+  LogicalExpression getLogical();
 
   /**
-   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Condition#getLogical <em>Logical</em>}' attribute.
+   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Condition#getLogical <em>Logical</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Logical</em>' attribute.
+   * @param value the new value of the '<em>Logical</em>' containment reference.
    * @see #getLogical()
    * @generated
    */
-  void setLogical(String value);
+  void setLogical(LogicalExpression value);
 
 } // Condition

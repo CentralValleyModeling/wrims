@@ -7,11 +7,14 @@
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Condition;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.LogicalExpression;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -32,24 +35,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class ConditionImpl extends MinimalEObjectImpl.Container implements Condition
 {
   /**
-   * The default value of the '{@link #getLogical() <em>Logical</em>}' attribute.
+   * The cached value of the '{@link #getLogical() <em>Logical</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getLogical()
    * @generated
    * @ordered
    */
-  protected static final String LOGICAL_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getLogical() <em>Logical</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getLogical()
-   * @generated
-   * @ordered
-   */
-  protected String logical = LOGICAL_EDEFAULT;
+  protected LogicalExpression logical;
 
   /**
    * <!-- begin-user-doc -->
@@ -77,7 +70,7 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getLogical()
+  public LogicalExpression getLogical()
   {
     return logical;
   }
@@ -87,12 +80,53 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setLogical(String newLogical)
+  public NotificationChain basicSetLogical(LogicalExpression newLogical, NotificationChain msgs)
   {
-    String oldLogical = logical;
+    LogicalExpression oldLogical = logical;
     logical = newLogical;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.CONDITION__LOGICAL, oldLogical, logical));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, WreslEditorPackage.CONDITION__LOGICAL, oldLogical, newLogical);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setLogical(LogicalExpression newLogical)
+  {
+    if (newLogical != logical)
+    {
+      NotificationChain msgs = null;
+      if (logical != null)
+        msgs = ((InternalEObject)logical).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.CONDITION__LOGICAL, null, msgs);
+      if (newLogical != null)
+        msgs = ((InternalEObject)newLogical).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.CONDITION__LOGICAL, null, msgs);
+      msgs = basicSetLogical(newLogical, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.CONDITION__LOGICAL, newLogical, newLogical));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case WreslEditorPackage.CONDITION__LOGICAL:
+        return basicSetLogical(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -122,7 +156,7 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
     switch (featureID)
     {
       case WreslEditorPackage.CONDITION__LOGICAL:
-        setLogical((String)newValue);
+        setLogical((LogicalExpression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -139,7 +173,7 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
     switch (featureID)
     {
       case WreslEditorPackage.CONDITION__LOGICAL:
-        setLogical(LOGICAL_EDEFAULT);
+        setLogical((LogicalExpression)null);
         return;
     }
     super.eUnset(featureID);
@@ -156,26 +190,9 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
     switch (featureID)
     {
       case WreslEditorPackage.CONDITION__LOGICAL:
-        return LOGICAL_EDEFAULT == null ? logical != null : !LOGICAL_EDEFAULT.equals(logical);
+        return logical != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (logical: ");
-    result.append(logical);
-    result.append(')');
-    return result.toString();
   }
 
 } //ConditionImpl

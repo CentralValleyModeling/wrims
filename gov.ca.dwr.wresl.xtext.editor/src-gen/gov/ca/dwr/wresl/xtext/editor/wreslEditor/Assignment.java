@@ -28,55 +28,55 @@ import org.eclipse.emf.ecore.EObject;
 public interface Assignment extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Term</b></em>' attribute.
+   * Returns the value of the '<em><b>Term</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Term</em>' attribute isn't clear,
+   * If the meaning of the '<em>Term</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Term</em>' attribute.
-   * @see #setTerm(String)
+   * @return the value of the '<em>Term</em>' containment reference.
+   * @see #setTerm(TermSimple)
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getAssignment_Term()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  String getTerm();
+  TermSimple getTerm();
 
   /**
-   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Assignment#getTerm <em>Term</em>}' attribute.
+   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Assignment#getTerm <em>Term</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Term</em>' attribute.
+   * @param value the new value of the '<em>Term</em>' containment reference.
    * @see #getTerm()
    * @generated
    */
-  void setTerm(String value);
+  void setTerm(TermSimple value);
 
   /**
-   * Returns the value of the '<em><b>Expression</b></em>' attribute.
+   * Returns the value of the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Expression</em>' attribute isn't clear,
+   * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Expression</em>' attribute.
-   * @see #setExpression(String)
+   * @return the value of the '<em>Expression</em>' containment reference.
+   * @see #setExpression(Expression)
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getAssignment_Expression()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  String getExpression();
+  Expression getExpression();
 
   /**
-   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Assignment#getExpression <em>Expression</em>}' attribute.
+   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Assignment#getExpression <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Expression</em>' attribute.
+   * @param value the new value of the '<em>Expression</em>' containment reference.
    * @see #getExpression()
    * @generated
    */
-  void setExpression(String value);
+  void setExpression(Expression value);
 
 } // Assignment

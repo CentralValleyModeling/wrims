@@ -200,7 +200,7 @@ public interface WreslEditorPackage extends EPackage
   int WEIGHT_ITEM__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Expression</b></em>' attribute.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -320,7 +320,7 @@ public interface WreslEditorPackage extends EPackage
   int ALIAS__NAME = 1;
 
   /**
-   * The feature id for the '<em><b>Expression</b></em>' attribute.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -635,7 +635,7 @@ public interface WreslEditorPackage extends EPackage
   int SVAR_EXPRESSION = 15;
 
   /**
-   * The feature id for the '<em><b>Expression</b></em>' attribute.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -802,7 +802,7 @@ public interface WreslEditorPackage extends EPackage
   int SUM_CONTENT__HEADER = 0;
 
   /**
-   * The feature id for the '<em><b>Expression</b></em>' attribute.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -830,7 +830,7 @@ public interface WreslEditorPackage extends EPackage
   int SUM_HEADER = 21;
 
   /**
-   * The feature id for the '<em><b>Expression1</b></em>' attribute.
+   * The feature id for the '<em><b>Expression1</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -839,7 +839,7 @@ public interface WreslEditorPackage extends EPackage
   int SUM_HEADER__EXPRESSION1 = 0;
 
   /**
-   * The feature id for the '<em><b>Expression2</b></em>' attribute.
+   * The feature id for the '<em><b>Expression2</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -867,7 +867,7 @@ public interface WreslEditorPackage extends EPackage
   int VALUE_CONTENT = 22;
 
   /**
-   * The feature id for the '<em><b>Expression</b></em>' attribute.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -987,7 +987,7 @@ public interface WreslEditorPackage extends EPackage
   int ASSIGNMENT = 25;
 
   /**
-   * The feature id for the '<em><b>Term</b></em>' attribute.
+   * The feature id for the '<em><b>Term</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -996,7 +996,7 @@ public interface WreslEditorPackage extends EPackage
   int ASSIGNMENT__TERM = 0;
 
   /**
-   * The feature id for the '<em><b>Expression</b></em>' attribute.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1014,6 +1014,25 @@ public interface WreslEditorPackage extends EPackage
   int ASSIGNMENT_FEATURE_COUNT = 2;
 
   /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TermSimpleImpl <em>Term Simple</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TermSimpleImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getTermSimple()
+   * @generated
+   */
+  int TERM_SIMPLE = 26;
+
+  /**
+   * The number of structural features of the '<em>Term Simple</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TERM_SIMPLE_FEATURE_COUNT = 0;
+
+  /**
    * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.LowerAndOrUpperImpl <em>Lower And Or Upper</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1021,7 +1040,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getLowerAndOrUpper()
    * @generated
    */
-  int LOWER_AND_OR_UPPER = 26;
+  int LOWER_AND_OR_UPPER = 27;
 
   /**
    * The feature id for the '<em><b>Kind</b></em>' attribute.
@@ -1076,7 +1095,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getupperLower()
    * @generated
    */
-  int UPPER_LOWER = 27;
+  int UPPER_LOWER = 28;
 
   /**
    * The feature id for the '<em><b>Kind</b></em>' attribute.
@@ -1131,7 +1150,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getlowerUpper()
    * @generated
    */
-  int LOWER_UPPER = 28;
+  int LOWER_UPPER = 29;
 
   /**
    * The feature id for the '<em><b>Kind</b></em>' attribute.
@@ -1186,10 +1205,10 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getUpper()
    * @generated
    */
-  int UPPER = 29;
+  int UPPER = 30;
 
   /**
-   * The feature id for the '<em><b>Expression</b></em>' attribute.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1214,10 +1233,10 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getLower()
    * @generated
    */
-  int LOWER = 30;
+  int LOWER = 31;
 
   /**
-   * The feature id for the '<em><b>Expression</b></em>' attribute.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1242,7 +1261,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getGoal()
    * @generated
    */
-  int GOAL = 31;
+  int GOAL = 32;
 
   /**
    * The feature id for the '<em><b>Local</b></em>' attribute.
@@ -1288,10 +1307,10 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getGoalCase()
    * @generated
    */
-  int GOAL_CASE = 32;
+  int GOAL_CASE = 33;
 
   /**
-   * The feature id for the '<em><b>Lhs</b></em>' attribute.
+   * The feature id for the '<em><b>Lhs</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1334,7 +1353,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getGoalCaseContent()
    * @generated
    */
-  int GOAL_CASE_CONTENT = 33;
+  int GOAL_CASE_CONTENT = 34;
 
   /**
    * The feature id for the '<em><b>Case Name</b></em>' attribute.
@@ -1355,7 +1374,7 @@ public interface WreslEditorPackage extends EPackage
   int GOAL_CASE_CONTENT__CONDITION = 1;
 
   /**
-   * The feature id for the '<em><b>Rhs</b></em>' attribute.
+   * The feature id for the '<em><b>Rhs</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1389,10 +1408,10 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getGoalNoCaseContent()
    * @generated
    */
-  int GOAL_NO_CASE_CONTENT = 34;
+  int GOAL_NO_CASE_CONTENT = 35;
 
   /**
-   * The feature id for the '<em><b>Rhs</b></em>' attribute.
+   * The feature id for the '<em><b>Rhs</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1426,7 +1445,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getSubContent()
    * @generated
    */
-  int SUB_CONTENT = 35;
+  int SUB_CONTENT = 36;
 
   /**
    * The feature id for the '<em><b>Gt</b></em>' containment reference.
@@ -1463,7 +1482,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getLhsGtRhs()
    * @generated
    */
-  int LHS_GT_RHS = 36;
+  int LHS_GT_RHS = 37;
 
   /**
    * The feature id for the '<em><b>Penalty</b></em>' containment reference.
@@ -1491,7 +1510,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getLhsLtRhs()
    * @generated
    */
-  int LHS_LT_RHS = 37;
+  int LHS_LT_RHS = 38;
 
   /**
    * The feature id for the '<em><b>Penalty</b></em>' containment reference.
@@ -1519,10 +1538,10 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getPenalty()
    * @generated
    */
-  int PENALTY = 38;
+  int PENALTY = 39;
 
   /**
-   * The feature id for the '<em><b>Expression</b></em>' attribute.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1547,7 +1566,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getGoalSimple()
    * @generated
    */
-  int GOAL_SIMPLE = 39;
+  int GOAL_SIMPLE = 40;
 
   /**
    * The feature id for the '<em><b>Constraint</b></em>' containment reference.
@@ -1575,10 +1594,10 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getConstraint()
    * @generated
    */
-  int CONSTRAINT = 40;
+  int CONSTRAINT = 41;
 
   /**
-   * The feature id for the '<em><b>Lhs</b></em>' attribute.
+   * The feature id for the '<em><b>Lhs</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1596,7 +1615,7 @@ public interface WreslEditorPackage extends EPackage
   int CONSTRAINT__OPERATOR = 1;
 
   /**
-   * The feature id for the '<em><b>Rhs</b></em>' attribute.
+   * The feature id for the '<em><b>Rhs</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1621,7 +1640,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getModel()
    * @generated
    */
-  int MODEL = 41;
+  int MODEL = 42;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1667,7 +1686,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getSequence()
    * @generated
    */
-  int SEQUENCE = 42;
+  int SEQUENCE = 43;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1722,10 +1741,10 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getCondition()
    * @generated
    */
-  int CONDITION = 43;
+  int CONDITION = 44;
 
   /**
-   * The feature id for the '<em><b>Logical</b></em>' attribute.
+   * The feature id for the '<em><b>Logical</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1743,6 +1762,452 @@ public interface WreslEditorPackage extends EPackage
   int CONDITION_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.LogicalExpressionImpl <em>Logical Expression</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.LogicalExpressionImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getLogicalExpression()
+   * @generated
+   */
+  int LOGICAL_EXPRESSION = 45;
+
+  /**
+   * The feature id for the '<em><b>C1</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOGICAL_EXPRESSION__C1 = 0;
+
+  /**
+   * The feature id for the '<em><b>C2</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOGICAL_EXPRESSION__C2 = 1;
+
+  /**
+   * The number of structural features of the '<em>Logical Expression</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOGICAL_EXPRESSION_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ConditionalUnaryImpl <em>Conditional Unary</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ConditionalUnaryImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getConditionalUnary()
+   * @generated
+   */
+  int CONDITIONAL_UNARY = 46;
+
+  /**
+   * The number of structural features of the '<em>Conditional Unary</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITIONAL_UNARY_FEATURE_COUNT = 0;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ConditionalTermImpl <em>Conditional Term</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ConditionalTermImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getConditionalTerm()
+   * @generated
+   */
+  int CONDITIONAL_TERM = 47;
+
+  /**
+   * The feature id for the '<em><b>E1</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITIONAL_TERM__E1 = CONDITIONAL_UNARY_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>E2</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITIONAL_TERM__E2 = CONDITIONAL_UNARY_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Conditional Term</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITIONAL_TERM_FEATURE_COUNT = CONDITIONAL_UNARY_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ExpressionImpl <em>Expression</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ExpressionImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getExpression()
+   * @generated
+   */
+  int EXPRESSION = 48;
+
+  /**
+   * The number of structural features of the '<em>Expression</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPRESSION_FEATURE_COUNT = 0;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AddImpl <em>Add</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AddImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getAdd()
+   * @generated
+   */
+  int ADD = 49;
+
+  /**
+   * The feature id for the '<em><b>M1</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD__M1 = EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>M2</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD__M2 = EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Add</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ADD_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.MultiplyImpl <em>Multiply</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.MultiplyImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getMultiply()
+   * @generated
+   */
+  int MULTIPLY = 50;
+
+  /**
+   * The feature id for the '<em><b>U1</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MULTIPLY__U1 = 0;
+
+  /**
+   * The feature id for the '<em><b>U2</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MULTIPLY__U2 = 1;
+
+  /**
+   * The number of structural features of the '<em>Multiply</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MULTIPLY_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.UnaryImpl <em>Unary</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.UnaryImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getUnary()
+   * @generated
+   */
+  int UNARY = 51;
+
+  /**
+   * The number of structural features of the '<em>Unary</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNARY_FEATURE_COUNT = 0;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TermImpl <em>Term</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TermImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getTerm()
+   * @generated
+   */
+  int TERM = 52;
+
+  /**
+   * The feature id for the '<em><b>I</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TERM__I = UNARY_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>N</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TERM__N = UNARY_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>F</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TERM__F = UNARY_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>E</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TERM__E = UNARY_FEATURE_COUNT + 3;
+
+  /**
+   * The number of structural features of the '<em>Term</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TERM_FEATURE_COUNT = UNARY_FEATURE_COUNT + 4;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.FunctionImpl <em>Function</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.FunctionImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getFunction()
+   * @generated
+   */
+  int FUNCTION = 53;
+
+  /**
+   * The number of structural features of the '<em>Function</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNCTION_FEATURE_COUNT = TERM_SIMPLE_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ExternalFunctionImpl <em>External Function</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ExternalFunctionImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getExternalFunction()
+   * @generated
+   */
+  int EXTERNAL_FUNCTION = 54;
+
+  /**
+   * The feature id for the '<em><b>E1</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_FUNCTION__E1 = FUNCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>E2</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_FUNCTION__E2 = FUNCTION_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>External Function</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_FUNCTION_FEATURE_COUNT = FUNCTION_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.MaxFunctionImpl <em>Max Function</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.MaxFunctionImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getMaxFunction()
+   * @generated
+   */
+  int MAX_FUNCTION = 55;
+
+  /**
+   * The feature id for the '<em><b>E1</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MAX_FUNCTION__E1 = FUNCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>E2</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MAX_FUNCTION__E2 = FUNCTION_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Max Function</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MAX_FUNCTION_FEATURE_COUNT = FUNCTION_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.MinFunctionImpl <em>Min Function</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.MinFunctionImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getMinFunction()
+   * @generated
+   */
+  int MIN_FUNCTION = 56;
+
+  /**
+   * The feature id for the '<em><b>E1</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MIN_FUNCTION__E1 = FUNCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>E2</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MIN_FUNCTION__E2 = FUNCTION_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Min Function</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MIN_FUNCTION_FEATURE_COUNT = FUNCTION_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IntFunctionImpl <em>Int Function</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IntFunctionImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getIntFunction()
+   * @generated
+   */
+  int INT_FUNCTION = 57;
+
+  /**
+   * The feature id for the '<em><b>E</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INT_FUNCTION__E = FUNCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Int Function</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INT_FUNCTION_FEATURE_COUNT = FUNCTION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IdentImpl <em>Ident</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IdentImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getIdent()
+   * @generated
+   */
+  int IDENT = 58;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IDENT__NAME = 0;
+
+  /**
+   * The number of structural features of the '<em>Ident</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IDENT_FEATURE_COUNT = 1;
+
+  /**
    * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IncludeFileImpl <em>Include File</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1750,7 +2215,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getIncludeFile()
    * @generated
    */
-  int INCLUDE_FILE = 44;
+  int INCLUDE_FILE = 59;
 
   /**
    * The feature id for the '<em><b>Local</b></em>' attribute.
@@ -1898,15 +2363,15 @@ public interface WreslEditorPackage extends EPackage
   EAttribute getWeightItem_Name();
 
   /**
-   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WeightItem#getExpression <em>Expression</em>}'.
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WeightItem#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Expression</em>'.
+   * @return the meta object for the containment reference '<em>Expression</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WeightItem#getExpression()
    * @see #getWeightItem()
    * @generated
    */
-  EAttribute getWeightItem_Expression();
+  EReference getWeightItem_Expression();
 
   /**
    * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Define <em>Define</em>}'.
@@ -1994,15 +2459,15 @@ public interface WreslEditorPackage extends EPackage
   EAttribute getAlias_Name();
 
   /**
-   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias#getExpression <em>Expression</em>}'.
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Expression</em>'.
+   * @return the meta object for the containment reference '<em>Expression</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias#getExpression()
    * @see #getAlias()
    * @generated
    */
-  EAttribute getAlias_Expression();
+  EReference getAlias_Expression();
 
   /**
    * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias#getKind <em>Kind</em>}'.
@@ -2216,15 +2681,15 @@ public interface WreslEditorPackage extends EPackage
   EClass getSVarExpression();
 
   /**
-   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.SVarExpression#getExpression <em>Expression</em>}'.
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.SVarExpression#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Expression</em>'.
+   * @return the meta object for the containment reference '<em>Expression</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.SVarExpression#getExpression()
    * @see #getSVarExpression()
    * @generated
    */
-  EAttribute getSVarExpression_Expression();
+  EReference getSVarExpression_Expression();
 
   /**
    * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.SVarSum <em>SVar Sum</em>}'.
@@ -2354,15 +2819,15 @@ public interface WreslEditorPackage extends EPackage
   EReference getSumContent_Header();
 
   /**
-   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumContent#getExpression <em>Expression</em>}'.
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumContent#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Expression</em>'.
+   * @return the meta object for the containment reference '<em>Expression</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumContent#getExpression()
    * @see #getSumContent()
    * @generated
    */
-  EAttribute getSumContent_Expression();
+  EReference getSumContent_Expression();
 
   /**
    * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumHeader <em>Sum Header</em>}'.
@@ -2375,26 +2840,26 @@ public interface WreslEditorPackage extends EPackage
   EClass getSumHeader();
 
   /**
-   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumHeader#getExpression1 <em>Expression1</em>}'.
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumHeader#getExpression1 <em>Expression1</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Expression1</em>'.
+   * @return the meta object for the containment reference '<em>Expression1</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumHeader#getExpression1()
    * @see #getSumHeader()
    * @generated
    */
-  EAttribute getSumHeader_Expression1();
+  EReference getSumHeader_Expression1();
 
   /**
-   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumHeader#getExpression2 <em>Expression2</em>}'.
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumHeader#getExpression2 <em>Expression2</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Expression2</em>'.
+   * @return the meta object for the containment reference '<em>Expression2</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumHeader#getExpression2()
    * @see #getSumHeader()
    * @generated
    */
-  EAttribute getSumHeader_Expression2();
+  EReference getSumHeader_Expression2();
 
   /**
    * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ValueContent <em>Value Content</em>}'.
@@ -2407,15 +2872,15 @@ public interface WreslEditorPackage extends EPackage
   EClass getValueContent();
 
   /**
-   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ValueContent#getExpression <em>Expression</em>}'.
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ValueContent#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Expression</em>'.
+   * @return the meta object for the containment reference '<em>Expression</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.ValueContent#getExpression()
    * @see #getValueContent()
    * @generated
    */
-  EAttribute getValueContent_Expression();
+  EReference getValueContent_Expression();
 
   /**
    * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.TableContent <em>Table Content</em>}'.
@@ -2514,26 +2979,36 @@ public interface WreslEditorPackage extends EPackage
   EClass getAssignment();
 
   /**
-   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Assignment#getTerm <em>Term</em>}'.
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Assignment#getTerm <em>Term</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Term</em>'.
+   * @return the meta object for the containment reference '<em>Term</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Assignment#getTerm()
    * @see #getAssignment()
    * @generated
    */
-  EAttribute getAssignment_Term();
+  EReference getAssignment_Term();
 
   /**
-   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Assignment#getExpression <em>Expression</em>}'.
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Assignment#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Expression</em>'.
+   * @return the meta object for the containment reference '<em>Expression</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Assignment#getExpression()
    * @see #getAssignment()
    * @generated
    */
-  EAttribute getAssignment_Expression();
+  EReference getAssignment_Expression();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.TermSimple <em>Term Simple</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Term Simple</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.TermSimple
+   * @generated
+   */
+  EClass getTermSimple();
 
   /**
    * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.LowerAndOrUpper <em>Lower And Or Upper</em>}'.
@@ -2620,15 +3095,15 @@ public interface WreslEditorPackage extends EPackage
   EClass getUpper();
 
   /**
-   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Upper#getExpression <em>Expression</em>}'.
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Upper#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Expression</em>'.
+   * @return the meta object for the containment reference '<em>Expression</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Upper#getExpression()
    * @see #getUpper()
    * @generated
    */
-  EAttribute getUpper_Expression();
+  EReference getUpper_Expression();
 
   /**
    * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Lower <em>Lower</em>}'.
@@ -2641,15 +3116,15 @@ public interface WreslEditorPackage extends EPackage
   EClass getLower();
 
   /**
-   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Lower#getExpression <em>Expression</em>}'.
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Lower#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Expression</em>'.
+   * @return the meta object for the containment reference '<em>Expression</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Lower#getExpression()
    * @see #getLower()
    * @generated
    */
-  EAttribute getLower_Expression();
+  EReference getLower_Expression();
 
   /**
    * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal <em>Goal</em>}'.
@@ -2694,15 +3169,15 @@ public interface WreslEditorPackage extends EPackage
   EClass getGoalCase();
 
   /**
-   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCase#getLhs <em>Lhs</em>}'.
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCase#getLhs <em>Lhs</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Lhs</em>'.
+   * @return the meta object for the containment reference '<em>Lhs</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCase#getLhs()
    * @see #getGoalCase()
    * @generated
    */
-  EAttribute getGoalCase_Lhs();
+  EReference getGoalCase_Lhs();
 
   /**
    * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCase#getContent <em>Content</em>}'.
@@ -2759,15 +3234,15 @@ public interface WreslEditorPackage extends EPackage
   EReference getGoalCaseContent_Condition();
 
   /**
-   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCaseContent#getRhs <em>Rhs</em>}'.
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCaseContent#getRhs <em>Rhs</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Rhs</em>'.
+   * @return the meta object for the containment reference '<em>Rhs</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCaseContent#getRhs()
    * @see #getGoalCaseContent()
    * @generated
    */
-  EAttribute getGoalCaseContent_Rhs();
+  EReference getGoalCaseContent_Rhs();
 
   /**
    * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCaseContent#getSubContent <em>Sub Content</em>}'.
@@ -2791,15 +3266,15 @@ public interface WreslEditorPackage extends EPackage
   EClass getGoalNoCaseContent();
 
   /**
-   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalNoCaseContent#getRhs <em>Rhs</em>}'.
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalNoCaseContent#getRhs <em>Rhs</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Rhs</em>'.
+   * @return the meta object for the containment reference '<em>Rhs</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalNoCaseContent#getRhs()
    * @see #getGoalNoCaseContent()
    * @generated
    */
-  EAttribute getGoalNoCaseContent_Rhs();
+  EReference getGoalNoCaseContent_Rhs();
 
   /**
    * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalNoCaseContent#getSubContent <em>Sub Content</em>}'.
@@ -2897,15 +3372,15 @@ public interface WreslEditorPackage extends EPackage
   EClass getPenalty();
 
   /**
-   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Penalty#getExpression <em>Expression</em>}'.
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Penalty#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Expression</em>'.
+   * @return the meta object for the containment reference '<em>Expression</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Penalty#getExpression()
    * @see #getPenalty()
    * @generated
    */
-  EAttribute getPenalty_Expression();
+  EReference getPenalty_Expression();
 
   /**
    * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalSimple <em>Goal Simple</em>}'.
@@ -2939,15 +3414,15 @@ public interface WreslEditorPackage extends EPackage
   EClass getConstraint();
 
   /**
-   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Constraint#getLhs <em>Lhs</em>}'.
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Constraint#getLhs <em>Lhs</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Lhs</em>'.
+   * @return the meta object for the containment reference '<em>Lhs</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Constraint#getLhs()
    * @see #getConstraint()
    * @generated
    */
-  EAttribute getConstraint_Lhs();
+  EReference getConstraint_Lhs();
 
   /**
    * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Constraint#getOperator <em>Operator</em>}'.
@@ -2961,15 +3436,15 @@ public interface WreslEditorPackage extends EPackage
   EAttribute getConstraint_Operator();
 
   /**
-   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Constraint#getRhs <em>Rhs</em>}'.
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Constraint#getRhs <em>Rhs</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Rhs</em>'.
+   * @return the meta object for the containment reference '<em>Rhs</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Constraint#getRhs()
    * @see #getConstraint()
    * @generated
    */
-  EAttribute getConstraint_Rhs();
+  EReference getConstraint_Rhs();
 
   /**
    * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Model <em>Model</em>}'.
@@ -3079,15 +3554,375 @@ public interface WreslEditorPackage extends EPackage
   EClass getCondition();
 
   /**
-   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Condition#getLogical <em>Logical</em>}'.
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Condition#getLogical <em>Logical</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Logical</em>'.
+   * @return the meta object for the containment reference '<em>Logical</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Condition#getLogical()
    * @see #getCondition()
    * @generated
    */
-  EAttribute getCondition_Logical();
+  EReference getCondition_Logical();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.LogicalExpression <em>Logical Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Logical Expression</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.LogicalExpression
+   * @generated
+   */
+  EClass getLogicalExpression();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.LogicalExpression#getC1 <em>C1</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>C1</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.LogicalExpression#getC1()
+   * @see #getLogicalExpression()
+   * @generated
+   */
+  EReference getLogicalExpression_C1();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.LogicalExpression#getC2 <em>C2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>C2</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.LogicalExpression#getC2()
+   * @see #getLogicalExpression()
+   * @generated
+   */
+  EReference getLogicalExpression_C2();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConditionalUnary <em>Conditional Unary</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Conditional Unary</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConditionalUnary
+   * @generated
+   */
+  EClass getConditionalUnary();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConditionalTerm <em>Conditional Term</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Conditional Term</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConditionalTerm
+   * @generated
+   */
+  EClass getConditionalTerm();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConditionalTerm#getE1 <em>E1</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>E1</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConditionalTerm#getE1()
+   * @see #getConditionalTerm()
+   * @generated
+   */
+  EReference getConditionalTerm_E1();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConditionalTerm#getE2 <em>E2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>E2</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConditionalTerm#getE2()
+   * @see #getConditionalTerm()
+   * @generated
+   */
+  EReference getConditionalTerm_E2();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Expression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Expression</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Expression
+   * @generated
+   */
+  EClass getExpression();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Add <em>Add</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Add</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Add
+   * @generated
+   */
+  EClass getAdd();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Add#getM1 <em>M1</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>M1</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Add#getM1()
+   * @see #getAdd()
+   * @generated
+   */
+  EReference getAdd_M1();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Add#getM2 <em>M2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>M2</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Add#getM2()
+   * @see #getAdd()
+   * @generated
+   */
+  EReference getAdd_M2();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Multiply <em>Multiply</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Multiply</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Multiply
+   * @generated
+   */
+  EClass getMultiply();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Multiply#getU1 <em>U1</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>U1</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Multiply#getU1()
+   * @see #getMultiply()
+   * @generated
+   */
+  EReference getMultiply_U1();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Multiply#getU2 <em>U2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>U2</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Multiply#getU2()
+   * @see #getMultiply()
+   * @generated
+   */
+  EReference getMultiply_U2();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Unary <em>Unary</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Unary</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Unary
+   * @generated
+   */
+  EClass getUnary();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term <em>Term</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Term</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term
+   * @generated
+   */
+  EClass getTerm();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term#getI <em>I</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>I</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term#getI()
+   * @see #getTerm()
+   * @generated
+   */
+  EReference getTerm_I();
+
+  /**
+   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term#getN <em>N</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>N</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term#getN()
+   * @see #getTerm()
+   * @generated
+   */
+  EAttribute getTerm_N();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term#getF <em>F</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>F</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term#getF()
+   * @see #getTerm()
+   * @generated
+   */
+  EReference getTerm_F();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term#getE <em>E</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>E</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term#getE()
+   * @see #getTerm()
+   * @generated
+   */
+  EReference getTerm_E();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Function <em>Function</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Function</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Function
+   * @generated
+   */
+  EClass getFunction();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction <em>External Function</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>External Function</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction
+   * @generated
+   */
+  EClass getExternalFunction();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction#getE1 <em>E1</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>E1</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction#getE1()
+   * @see #getExternalFunction()
+   * @generated
+   */
+  EReference getExternalFunction_E1();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction#getE2 <em>E2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>E2</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction#getE2()
+   * @see #getExternalFunction()
+   * @generated
+   */
+  EReference getExternalFunction_E2();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.MaxFunction <em>Max Function</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Max Function</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.MaxFunction
+   * @generated
+   */
+  EClass getMaxFunction();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.MaxFunction#getE1 <em>E1</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>E1</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.MaxFunction#getE1()
+   * @see #getMaxFunction()
+   * @generated
+   */
+  EReference getMaxFunction_E1();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.MaxFunction#getE2 <em>E2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>E2</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.MaxFunction#getE2()
+   * @see #getMaxFunction()
+   * @generated
+   */
+  EReference getMaxFunction_E2();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.MinFunction <em>Min Function</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Min Function</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.MinFunction
+   * @generated
+   */
+  EClass getMinFunction();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.MinFunction#getE1 <em>E1</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>E1</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.MinFunction#getE1()
+   * @see #getMinFunction()
+   * @generated
+   */
+  EReference getMinFunction_E1();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.MinFunction#getE2 <em>E2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>E2</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.MinFunction#getE2()
+   * @see #getMinFunction()
+   * @generated
+   */
+  EReference getMinFunction_E2();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IntFunction <em>Int Function</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Int Function</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.IntFunction
+   * @generated
+   */
+  EClass getIntFunction();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IntFunction#getE <em>E</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>E</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.IntFunction#getE()
+   * @see #getIntFunction()
+   * @generated
+   */
+  EReference getIntFunction_E();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Ident <em>Ident</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Ident</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Ident
+   * @generated
+   */
+  EClass getIdent();
+
+  /**
+   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Ident#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Ident#getName()
+   * @see #getIdent()
+   * @generated
+   */
+  EAttribute getIdent_Name();
 
   /**
    * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IncludeFile <em>Include File</em>}'.
@@ -3230,12 +4065,12 @@ public interface WreslEditorPackage extends EPackage
     EAttribute WEIGHT_ITEM__NAME = eINSTANCE.getWeightItem_Name();
 
     /**
-     * The meta object literal for the '<em><b>Expression</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute WEIGHT_ITEM__EXPRESSION = eINSTANCE.getWeightItem_Expression();
+    EReference WEIGHT_ITEM__EXPRESSION = eINSTANCE.getWeightItem_Expression();
 
     /**
      * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DefineImpl <em>Define</em>}' class.
@@ -3308,12 +4143,12 @@ public interface WreslEditorPackage extends EPackage
     EAttribute ALIAS__NAME = eINSTANCE.getAlias_Name();
 
     /**
-     * The meta object literal for the '<em><b>Expression</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ALIAS__EXPRESSION = eINSTANCE.getAlias_Expression();
+    EReference ALIAS__EXPRESSION = eINSTANCE.getAlias_Expression();
 
     /**
      * The meta object literal for the '<em><b>Kind</b></em>' attribute feature.
@@ -3494,12 +4329,12 @@ public interface WreslEditorPackage extends EPackage
     EClass SVAR_EXPRESSION = eINSTANCE.getSVarExpression();
 
     /**
-     * The meta object literal for the '<em><b>Expression</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SVAR_EXPRESSION__EXPRESSION = eINSTANCE.getSVarExpression_Expression();
+    EReference SVAR_EXPRESSION__EXPRESSION = eINSTANCE.getSVarExpression_Expression();
 
     /**
      * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.SVarSumImpl <em>SVar Sum</em>}' class.
@@ -3608,12 +4443,12 @@ public interface WreslEditorPackage extends EPackage
     EReference SUM_CONTENT__HEADER = eINSTANCE.getSumContent_Header();
 
     /**
-     * The meta object literal for the '<em><b>Expression</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SUM_CONTENT__EXPRESSION = eINSTANCE.getSumContent_Expression();
+    EReference SUM_CONTENT__EXPRESSION = eINSTANCE.getSumContent_Expression();
 
     /**
      * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.SumHeaderImpl <em>Sum Header</em>}' class.
@@ -3626,20 +4461,20 @@ public interface WreslEditorPackage extends EPackage
     EClass SUM_HEADER = eINSTANCE.getSumHeader();
 
     /**
-     * The meta object literal for the '<em><b>Expression1</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Expression1</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SUM_HEADER__EXPRESSION1 = eINSTANCE.getSumHeader_Expression1();
+    EReference SUM_HEADER__EXPRESSION1 = eINSTANCE.getSumHeader_Expression1();
 
     /**
-     * The meta object literal for the '<em><b>Expression2</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Expression2</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SUM_HEADER__EXPRESSION2 = eINSTANCE.getSumHeader_Expression2();
+    EReference SUM_HEADER__EXPRESSION2 = eINSTANCE.getSumHeader_Expression2();
 
     /**
      * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ValueContentImpl <em>Value Content</em>}' class.
@@ -3652,12 +4487,12 @@ public interface WreslEditorPackage extends EPackage
     EClass VALUE_CONTENT = eINSTANCE.getValueContent();
 
     /**
-     * The meta object literal for the '<em><b>Expression</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute VALUE_CONTENT__EXPRESSION = eINSTANCE.getValueContent_Expression();
+    EReference VALUE_CONTENT__EXPRESSION = eINSTANCE.getValueContent_Expression();
 
     /**
      * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TableContentImpl <em>Table Content</em>}' class.
@@ -3738,20 +4573,30 @@ public interface WreslEditorPackage extends EPackage
     EClass ASSIGNMENT = eINSTANCE.getAssignment();
 
     /**
-     * The meta object literal for the '<em><b>Term</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Term</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ASSIGNMENT__TERM = eINSTANCE.getAssignment_Term();
+    EReference ASSIGNMENT__TERM = eINSTANCE.getAssignment_Term();
 
     /**
-     * The meta object literal for the '<em><b>Expression</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ASSIGNMENT__EXPRESSION = eINSTANCE.getAssignment_Expression();
+    EReference ASSIGNMENT__EXPRESSION = eINSTANCE.getAssignment_Expression();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TermSimpleImpl <em>Term Simple</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TermSimpleImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getTermSimple()
+     * @generated
+     */
+    EClass TERM_SIMPLE = eINSTANCE.getTermSimple();
 
     /**
      * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.LowerAndOrUpperImpl <em>Lower And Or Upper</em>}' class.
@@ -3826,12 +4671,12 @@ public interface WreslEditorPackage extends EPackage
     EClass UPPER = eINSTANCE.getUpper();
 
     /**
-     * The meta object literal for the '<em><b>Expression</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute UPPER__EXPRESSION = eINSTANCE.getUpper_Expression();
+    EReference UPPER__EXPRESSION = eINSTANCE.getUpper_Expression();
 
     /**
      * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.LowerImpl <em>Lower</em>}' class.
@@ -3844,12 +4689,12 @@ public interface WreslEditorPackage extends EPackage
     EClass LOWER = eINSTANCE.getLower();
 
     /**
-     * The meta object literal for the '<em><b>Expression</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute LOWER__EXPRESSION = eINSTANCE.getLower_Expression();
+    EReference LOWER__EXPRESSION = eINSTANCE.getLower_Expression();
 
     /**
      * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GoalImpl <em>Goal</em>}' class.
@@ -3888,12 +4733,12 @@ public interface WreslEditorPackage extends EPackage
     EClass GOAL_CASE = eINSTANCE.getGoalCase();
 
     /**
-     * The meta object literal for the '<em><b>Lhs</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Lhs</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute GOAL_CASE__LHS = eINSTANCE.getGoalCase_Lhs();
+    EReference GOAL_CASE__LHS = eINSTANCE.getGoalCase_Lhs();
 
     /**
      * The meta object literal for the '<em><b>Content</b></em>' containment reference feature.
@@ -3938,12 +4783,12 @@ public interface WreslEditorPackage extends EPackage
     EReference GOAL_CASE_CONTENT__CONDITION = eINSTANCE.getGoalCaseContent_Condition();
 
     /**
-     * The meta object literal for the '<em><b>Rhs</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Rhs</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute GOAL_CASE_CONTENT__RHS = eINSTANCE.getGoalCaseContent_Rhs();
+    EReference GOAL_CASE_CONTENT__RHS = eINSTANCE.getGoalCaseContent_Rhs();
 
     /**
      * The meta object literal for the '<em><b>Sub Content</b></em>' containment reference feature.
@@ -3964,12 +4809,12 @@ public interface WreslEditorPackage extends EPackage
     EClass GOAL_NO_CASE_CONTENT = eINSTANCE.getGoalNoCaseContent();
 
     /**
-     * The meta object literal for the '<em><b>Rhs</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Rhs</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute GOAL_NO_CASE_CONTENT__RHS = eINSTANCE.getGoalNoCaseContent_Rhs();
+    EReference GOAL_NO_CASE_CONTENT__RHS = eINSTANCE.getGoalNoCaseContent_Rhs();
 
     /**
      * The meta object literal for the '<em><b>Sub Content</b></em>' containment reference feature.
@@ -4052,12 +4897,12 @@ public interface WreslEditorPackage extends EPackage
     EClass PENALTY = eINSTANCE.getPenalty();
 
     /**
-     * The meta object literal for the '<em><b>Expression</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute PENALTY__EXPRESSION = eINSTANCE.getPenalty_Expression();
+    EReference PENALTY__EXPRESSION = eINSTANCE.getPenalty_Expression();
 
     /**
      * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GoalSimpleImpl <em>Goal Simple</em>}' class.
@@ -4088,12 +4933,12 @@ public interface WreslEditorPackage extends EPackage
     EClass CONSTRAINT = eINSTANCE.getConstraint();
 
     /**
-     * The meta object literal for the '<em><b>Lhs</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Lhs</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CONSTRAINT__LHS = eINSTANCE.getConstraint_Lhs();
+    EReference CONSTRAINT__LHS = eINSTANCE.getConstraint_Lhs();
 
     /**
      * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.
@@ -4104,12 +4949,12 @@ public interface WreslEditorPackage extends EPackage
     EAttribute CONSTRAINT__OPERATOR = eINSTANCE.getConstraint_Operator();
 
     /**
-     * The meta object literal for the '<em><b>Rhs</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Rhs</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CONSTRAINT__RHS = eINSTANCE.getConstraint_Rhs();
+    EReference CONSTRAINT__RHS = eINSTANCE.getConstraint_Rhs();
 
     /**
      * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ModelImpl <em>Model</em>}' class.
@@ -4198,12 +5043,312 @@ public interface WreslEditorPackage extends EPackage
     EClass CONDITION = eINSTANCE.getCondition();
 
     /**
-     * The meta object literal for the '<em><b>Logical</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Logical</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CONDITION__LOGICAL = eINSTANCE.getCondition_Logical();
+    EReference CONDITION__LOGICAL = eINSTANCE.getCondition_Logical();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.LogicalExpressionImpl <em>Logical Expression</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.LogicalExpressionImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getLogicalExpression()
+     * @generated
+     */
+    EClass LOGICAL_EXPRESSION = eINSTANCE.getLogicalExpression();
+
+    /**
+     * The meta object literal for the '<em><b>C1</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LOGICAL_EXPRESSION__C1 = eINSTANCE.getLogicalExpression_C1();
+
+    /**
+     * The meta object literal for the '<em><b>C2</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LOGICAL_EXPRESSION__C2 = eINSTANCE.getLogicalExpression_C2();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ConditionalUnaryImpl <em>Conditional Unary</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ConditionalUnaryImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getConditionalUnary()
+     * @generated
+     */
+    EClass CONDITIONAL_UNARY = eINSTANCE.getConditionalUnary();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ConditionalTermImpl <em>Conditional Term</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ConditionalTermImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getConditionalTerm()
+     * @generated
+     */
+    EClass CONDITIONAL_TERM = eINSTANCE.getConditionalTerm();
+
+    /**
+     * The meta object literal for the '<em><b>E1</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONDITIONAL_TERM__E1 = eINSTANCE.getConditionalTerm_E1();
+
+    /**
+     * The meta object literal for the '<em><b>E2</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONDITIONAL_TERM__E2 = eINSTANCE.getConditionalTerm_E2();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ExpressionImpl <em>Expression</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ExpressionImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getExpression()
+     * @generated
+     */
+    EClass EXPRESSION = eINSTANCE.getExpression();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AddImpl <em>Add</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AddImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getAdd()
+     * @generated
+     */
+    EClass ADD = eINSTANCE.getAdd();
+
+    /**
+     * The meta object literal for the '<em><b>M1</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ADD__M1 = eINSTANCE.getAdd_M1();
+
+    /**
+     * The meta object literal for the '<em><b>M2</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ADD__M2 = eINSTANCE.getAdd_M2();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.MultiplyImpl <em>Multiply</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.MultiplyImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getMultiply()
+     * @generated
+     */
+    EClass MULTIPLY = eINSTANCE.getMultiply();
+
+    /**
+     * The meta object literal for the '<em><b>U1</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MULTIPLY__U1 = eINSTANCE.getMultiply_U1();
+
+    /**
+     * The meta object literal for the '<em><b>U2</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MULTIPLY__U2 = eINSTANCE.getMultiply_U2();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.UnaryImpl <em>Unary</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.UnaryImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getUnary()
+     * @generated
+     */
+    EClass UNARY = eINSTANCE.getUnary();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TermImpl <em>Term</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TermImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getTerm()
+     * @generated
+     */
+    EClass TERM = eINSTANCE.getTerm();
+
+    /**
+     * The meta object literal for the '<em><b>I</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TERM__I = eINSTANCE.getTerm_I();
+
+    /**
+     * The meta object literal for the '<em><b>N</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TERM__N = eINSTANCE.getTerm_N();
+
+    /**
+     * The meta object literal for the '<em><b>F</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TERM__F = eINSTANCE.getTerm_F();
+
+    /**
+     * The meta object literal for the '<em><b>E</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TERM__E = eINSTANCE.getTerm_E();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.FunctionImpl <em>Function</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.FunctionImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getFunction()
+     * @generated
+     */
+    EClass FUNCTION = eINSTANCE.getFunction();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ExternalFunctionImpl <em>External Function</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ExternalFunctionImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getExternalFunction()
+     * @generated
+     */
+    EClass EXTERNAL_FUNCTION = eINSTANCE.getExternalFunction();
+
+    /**
+     * The meta object literal for the '<em><b>E1</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EXTERNAL_FUNCTION__E1 = eINSTANCE.getExternalFunction_E1();
+
+    /**
+     * The meta object literal for the '<em><b>E2</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EXTERNAL_FUNCTION__E2 = eINSTANCE.getExternalFunction_E2();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.MaxFunctionImpl <em>Max Function</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.MaxFunctionImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getMaxFunction()
+     * @generated
+     */
+    EClass MAX_FUNCTION = eINSTANCE.getMaxFunction();
+
+    /**
+     * The meta object literal for the '<em><b>E1</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MAX_FUNCTION__E1 = eINSTANCE.getMaxFunction_E1();
+
+    /**
+     * The meta object literal for the '<em><b>E2</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MAX_FUNCTION__E2 = eINSTANCE.getMaxFunction_E2();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.MinFunctionImpl <em>Min Function</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.MinFunctionImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getMinFunction()
+     * @generated
+     */
+    EClass MIN_FUNCTION = eINSTANCE.getMinFunction();
+
+    /**
+     * The meta object literal for the '<em><b>E1</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MIN_FUNCTION__E1 = eINSTANCE.getMinFunction_E1();
+
+    /**
+     * The meta object literal for the '<em><b>E2</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MIN_FUNCTION__E2 = eINSTANCE.getMinFunction_E2();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IntFunctionImpl <em>Int Function</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IntFunctionImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getIntFunction()
+     * @generated
+     */
+    EClass INT_FUNCTION = eINSTANCE.getIntFunction();
+
+    /**
+     * The meta object literal for the '<em><b>E</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference INT_FUNCTION__E = eINSTANCE.getIntFunction_E();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IdentImpl <em>Ident</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IdentImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getIdent()
+     * @generated
+     */
+    EClass IDENT = eINSTANCE.getIdent();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute IDENT__NAME = eINSTANCE.getIdent_Name();
 
     /**
      * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IncludeFileImpl <em>Include File</em>}' class.

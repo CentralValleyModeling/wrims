@@ -82,30 +82,30 @@ public interface GoalCaseContent extends EObject
   void setCondition(Condition value);
 
   /**
-   * Returns the value of the '<em><b>Rhs</b></em>' attribute.
+   * Returns the value of the '<em><b>Rhs</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Rhs</em>' attribute isn't clear,
+   * If the meaning of the '<em>Rhs</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Rhs</em>' attribute.
-   * @see #setRhs(String)
+   * @return the value of the '<em>Rhs</em>' containment reference.
+   * @see #setRhs(Expression)
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getGoalCaseContent_Rhs()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  String getRhs();
+  Expression getRhs();
 
   /**
-   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCaseContent#getRhs <em>Rhs</em>}' attribute.
+   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCaseContent#getRhs <em>Rhs</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Rhs</em>' attribute.
+   * @param value the new value of the '<em>Rhs</em>' containment reference.
    * @see #getRhs()
    * @generated
    */
-  void setRhs(String value);
+  void setRhs(Expression value);
 
   /**
    * Returns the value of the '<em><b>Sub Content</b></em>' containment reference.

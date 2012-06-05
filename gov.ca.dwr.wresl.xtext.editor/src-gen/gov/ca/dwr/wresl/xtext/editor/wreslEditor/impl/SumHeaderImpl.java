@@ -6,12 +6,15 @@
  */
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Expression;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumHeader;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -33,44 +36,24 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class SumHeaderImpl extends MinimalEObjectImpl.Container implements SumHeader
 {
   /**
-   * The default value of the '{@link #getExpression1() <em>Expression1</em>}' attribute.
+   * The cached value of the '{@link #getExpression1() <em>Expression1</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getExpression1()
    * @generated
    * @ordered
    */
-  protected static final String EXPRESSION1_EDEFAULT = null;
+  protected Expression expression1;
 
   /**
-   * The cached value of the '{@link #getExpression1() <em>Expression1</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getExpression1()
-   * @generated
-   * @ordered
-   */
-  protected String expression1 = EXPRESSION1_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getExpression2() <em>Expression2</em>}' attribute.
+   * The cached value of the '{@link #getExpression2() <em>Expression2</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getExpression2()
    * @generated
    * @ordered
    */
-  protected static final String EXPRESSION2_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getExpression2() <em>Expression2</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getExpression2()
-   * @generated
-   * @ordered
-   */
-  protected String expression2 = EXPRESSION2_EDEFAULT;
+  protected Expression expression2;
 
   /**
    * <!-- begin-user-doc -->
@@ -98,7 +81,7 @@ public class SumHeaderImpl extends MinimalEObjectImpl.Container implements SumHe
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getExpression1()
+  public Expression getExpression1()
   {
     return expression1;
   }
@@ -108,12 +91,16 @@ public class SumHeaderImpl extends MinimalEObjectImpl.Container implements SumHe
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExpression1(String newExpression1)
+  public NotificationChain basicSetExpression1(Expression newExpression1, NotificationChain msgs)
   {
-    String oldExpression1 = expression1;
+    Expression oldExpression1 = expression1;
     expression1 = newExpression1;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.SUM_HEADER__EXPRESSION1, oldExpression1, expression1));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, WreslEditorPackage.SUM_HEADER__EXPRESSION1, oldExpression1, newExpression1);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
   }
 
   /**
@@ -121,7 +108,28 @@ public class SumHeaderImpl extends MinimalEObjectImpl.Container implements SumHe
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getExpression2()
+  public void setExpression1(Expression newExpression1)
+  {
+    if (newExpression1 != expression1)
+    {
+      NotificationChain msgs = null;
+      if (expression1 != null)
+        msgs = ((InternalEObject)expression1).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.SUM_HEADER__EXPRESSION1, null, msgs);
+      if (newExpression1 != null)
+        msgs = ((InternalEObject)newExpression1).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.SUM_HEADER__EXPRESSION1, null, msgs);
+      msgs = basicSetExpression1(newExpression1, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.SUM_HEADER__EXPRESSION1, newExpression1, newExpression1));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Expression getExpression2()
   {
     return expression2;
   }
@@ -131,12 +139,55 @@ public class SumHeaderImpl extends MinimalEObjectImpl.Container implements SumHe
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExpression2(String newExpression2)
+  public NotificationChain basicSetExpression2(Expression newExpression2, NotificationChain msgs)
   {
-    String oldExpression2 = expression2;
+    Expression oldExpression2 = expression2;
     expression2 = newExpression2;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.SUM_HEADER__EXPRESSION2, oldExpression2, expression2));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, WreslEditorPackage.SUM_HEADER__EXPRESSION2, oldExpression2, newExpression2);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setExpression2(Expression newExpression2)
+  {
+    if (newExpression2 != expression2)
+    {
+      NotificationChain msgs = null;
+      if (expression2 != null)
+        msgs = ((InternalEObject)expression2).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.SUM_HEADER__EXPRESSION2, null, msgs);
+      if (newExpression2 != null)
+        msgs = ((InternalEObject)newExpression2).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.SUM_HEADER__EXPRESSION2, null, msgs);
+      msgs = basicSetExpression2(newExpression2, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.SUM_HEADER__EXPRESSION2, newExpression2, newExpression2));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case WreslEditorPackage.SUM_HEADER__EXPRESSION1:
+        return basicSetExpression1(null, msgs);
+      case WreslEditorPackage.SUM_HEADER__EXPRESSION2:
+        return basicSetExpression2(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -168,10 +219,10 @@ public class SumHeaderImpl extends MinimalEObjectImpl.Container implements SumHe
     switch (featureID)
     {
       case WreslEditorPackage.SUM_HEADER__EXPRESSION1:
-        setExpression1((String)newValue);
+        setExpression1((Expression)newValue);
         return;
       case WreslEditorPackage.SUM_HEADER__EXPRESSION2:
-        setExpression2((String)newValue);
+        setExpression2((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -188,10 +239,10 @@ public class SumHeaderImpl extends MinimalEObjectImpl.Container implements SumHe
     switch (featureID)
     {
       case WreslEditorPackage.SUM_HEADER__EXPRESSION1:
-        setExpression1(EXPRESSION1_EDEFAULT);
+        setExpression1((Expression)null);
         return;
       case WreslEditorPackage.SUM_HEADER__EXPRESSION2:
-        setExpression2(EXPRESSION2_EDEFAULT);
+        setExpression2((Expression)null);
         return;
     }
     super.eUnset(featureID);
@@ -208,30 +259,11 @@ public class SumHeaderImpl extends MinimalEObjectImpl.Container implements SumHe
     switch (featureID)
     {
       case WreslEditorPackage.SUM_HEADER__EXPRESSION1:
-        return EXPRESSION1_EDEFAULT == null ? expression1 != null : !EXPRESSION1_EDEFAULT.equals(expression1);
+        return expression1 != null;
       case WreslEditorPackage.SUM_HEADER__EXPRESSION2:
-        return EXPRESSION2_EDEFAULT == null ? expression2 != null : !EXPRESSION2_EDEFAULT.equals(expression2);
+        return expression2 != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (expression1: ");
-    result.append(expression1);
-    result.append(", expression2: ");
-    result.append(expression2);
-    result.append(')');
-    return result.toString();
   }
 
 } //SumHeaderImpl

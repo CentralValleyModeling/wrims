@@ -94,6 +94,7 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
       case WreslEditorPackage.TABLE_CONTENT: return createTableContent();
       case WreslEditorPackage.WHERE_ITEMS: return createWhereItems();
       case WreslEditorPackage.ASSIGNMENT: return createAssignment();
+      case WreslEditorPackage.TERM_SIMPLE: return createTermSimple();
       case WreslEditorPackage.LOWER_AND_OR_UPPER: return createLowerAndOrUpper();
       case WreslEditorPackage.UPPER_LOWER: return createupperLower();
       case WreslEditorPackage.LOWER_UPPER: return createlowerUpper();
@@ -112,6 +113,20 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
       case WreslEditorPackage.MODEL: return createModel();
       case WreslEditorPackage.SEQUENCE: return createSequence();
       case WreslEditorPackage.CONDITION: return createCondition();
+      case WreslEditorPackage.LOGICAL_EXPRESSION: return createLogicalExpression();
+      case WreslEditorPackage.CONDITIONAL_UNARY: return createConditionalUnary();
+      case WreslEditorPackage.CONDITIONAL_TERM: return createConditionalTerm();
+      case WreslEditorPackage.EXPRESSION: return createExpression();
+      case WreslEditorPackage.ADD: return createAdd();
+      case WreslEditorPackage.MULTIPLY: return createMultiply();
+      case WreslEditorPackage.UNARY: return createUnary();
+      case WreslEditorPackage.TERM: return createTerm();
+      case WreslEditorPackage.FUNCTION: return createFunction();
+      case WreslEditorPackage.EXTERNAL_FUNCTION: return createExternalFunction();
+      case WreslEditorPackage.MAX_FUNCTION: return createMaxFunction();
+      case WreslEditorPackage.MIN_FUNCTION: return createMinFunction();
+      case WreslEditorPackage.INT_FUNCTION: return createIntFunction();
+      case WreslEditorPackage.IDENT: return createIdent();
       case WreslEditorPackage.INCLUDE_FILE: return createIncludeFile();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -409,6 +424,17 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
    * <!-- end-user-doc -->
    * @generated
    */
+  public TermSimple createTermSimple()
+  {
+    TermSimpleImpl termSimple = new TermSimpleImpl();
+    return termSimple;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public LowerAndOrUpper createLowerAndOrUpper()
   {
     LowerAndOrUpperImpl lowerAndOrUpper = new LowerAndOrUpperImpl();
@@ -600,6 +626,160 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
   {
     ConditionImpl condition = new ConditionImpl();
     return condition;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LogicalExpression createLogicalExpression()
+  {
+    LogicalExpressionImpl logicalExpression = new LogicalExpressionImpl();
+    return logicalExpression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ConditionalUnary createConditionalUnary()
+  {
+    ConditionalUnaryImpl conditionalUnary = new ConditionalUnaryImpl();
+    return conditionalUnary;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ConditionalTerm createConditionalTerm()
+  {
+    ConditionalTermImpl conditionalTerm = new ConditionalTermImpl();
+    return conditionalTerm;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Expression createExpression()
+  {
+    ExpressionImpl expression = new ExpressionImpl();
+    return expression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Add createAdd()
+  {
+    AddImpl add = new AddImpl();
+    return add;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Multiply createMultiply()
+  {
+    MultiplyImpl multiply = new MultiplyImpl();
+    return multiply;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Unary createUnary()
+  {
+    UnaryImpl unary = new UnaryImpl();
+    return unary;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Term createTerm()
+  {
+    TermImpl term = new TermImpl();
+    return term;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Function createFunction()
+  {
+    FunctionImpl function = new FunctionImpl();
+    return function;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ExternalFunction createExternalFunction()
+  {
+    ExternalFunctionImpl externalFunction = new ExternalFunctionImpl();
+    return externalFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MaxFunction createMaxFunction()
+  {
+    MaxFunctionImpl maxFunction = new MaxFunctionImpl();
+    return maxFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MinFunction createMinFunction()
+  {
+    MinFunctionImpl minFunction = new MinFunctionImpl();
+    return minFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public IntFunction createIntFunction()
+  {
+    IntFunctionImpl intFunction = new IntFunctionImpl();
+    return intFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Ident createIdent()
+  {
+    IdentImpl ident = new IdentImpl();
+    return ident;
   }
 
   /**
