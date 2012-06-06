@@ -13,13 +13,18 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.TableTreeViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -32,7 +37,7 @@ import wrimsv2_plugin.debugger.model.WPPValue;
 public class WPPVariableView extends AbstractDebugView implements ISelectionListener { 
 	private IValue[] dataStack=null;
 	
-	public class ViewLabelProvider implements ILabelProvider {
+	public class ViewLabelProvider implements ITableLabelProvider {
 
 		@Override
 		public void addListener(ILabelProviderListener listener) {
@@ -59,21 +64,28 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 		}
 
 		@Override
-		public Image getImage(Object element) {
+		public Image getColumnImage(Object element, int index) {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
-		@Override
-		public String getText(Object element) {
+		public String getColumnText(Object element, int index) {
 			if (element instanceof WPPDebugTarget){
 				return null;
 			}else if (element instanceof WPPValue){
 				try {
 					if (((WPPValue) element).hasVariables()){
-						return ((WPPValue) element).getVariableString();
+						if (index==0){
+							return ((WPPValue) element).getVariableString();
+						}else{
+							return ((WPPValue) element).getValueString();
+						}
 					}else{
-						return ((WPPValue) element).getVariableString()+":"+((WPPValue) element).getValueString();
+						if (index==0){
+							return ((WPPValue) element).getVariableString();
+						}else{	
+							return ((WPPValue) element).getValueString();
+						}
 					}
 				} catch (DebugException e) {
 					WPPException.handleException(e);
@@ -155,11 +167,27 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 	
 	@Override
 	protected Viewer createViewer(Composite parent) {
-		TreeViewer viewer = new TreeViewer(parent);
+		TableTreeViewer viewer = new TableTreeViewer(parent);
 		viewer.setLabelProvider(new ViewLabelProvider());
 		viewer.setContentProvider(new ViewContentProvider());
 		getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(IDebugUIConstants.ID_DEBUG_VIEW, this);
 		getSite().setSelectionProvider(viewer);
+		Table table = viewer.getTableTree().getTable();
+	    new TableColumn(table, SWT.LEFT).setText("Variable");
+	    new TableColumn(table, SWT.LEFT).setText("Value");
+	    
+	    // Pack the columns
+	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
+	    	table.getColumn(i).pack();
+	    }
+
+	    // Turn on the header and the lines
+	    table.setHeaderVisible(true);
+	    table.setLinesVisible(true);
+
+	    // Pack the window
+	    parent.pack();
+	    
 		return viewer;
 	}
 
@@ -199,8 +227,13 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 	
 	public void updateView(){
 		dataStack=DebugCorePlugin.dataStack;
-		Viewer viewer=getViewer();
+		TableTreeViewer viewer=(TableTreeViewer) getViewer();
 		viewer.setInput(DebugCorePlugin.target);
+		Table table=viewer.getTableTree().getTable();
+	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
+	    	table.getColumn(i).pack();
+	    }
+	    viewer.reveal(viewer.getElementAt(0));
 		viewer.refresh();
 	}
 	
