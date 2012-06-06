@@ -34,8 +34,8 @@ public class WreslEObjectDocumentationProvider implements
 	}
 
 	private String getValue(String varName){  
-		if (!DebugCorePlugin.isDebugging) return "Debugging is not start";
-        if (DebugCorePlugin.dataStack==null) return "This variable is not in the cycle.";
+		if (!DebugCorePlugin.isDebugging) return "Debugging is not started yet";
+        if (DebugCorePlugin.dataStack==null) return "This variable is not in this cycle.";
         WPPValue[] dataStack=(WPPValue[]) DebugCorePlugin.dataStack;
         
         for (int i = 0; i < dataStack.length; i++) {
@@ -56,6 +56,6 @@ public class WreslEObjectDocumentationProvider implements
 				}
             }
         }
-        return "This variable is not in the cycle.";
+        return "This variable is not in this cycle.";
 	}
 }
