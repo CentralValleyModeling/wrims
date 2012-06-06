@@ -39,7 +39,7 @@ public class WreslEObjectDocumentationProvider implements
         WPPValue[] dataStack=(WPPValue[]) DebugCorePlugin.dataStack;
         
         for (int i = 0; i < dataStack.length; i++) {
-            if (varName.equals(dataStack[i].getVariableString())){
+            if (varName.equalsIgnoreCase(dataStack[i].getVariableString())){
             	try {
 					if (dataStack[i].hasVariables()){
 						String hoverInfo="";
