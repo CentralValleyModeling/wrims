@@ -1781,7 +1781,7 @@ public interface WreslEditorPackage extends EPackage
   int LOGICAL_EXPRESSION__C1 = 0;
 
   /**
-   * The feature id for the '<em><b>C2</b></em>' containment reference.
+   * The feature id for the '<em><b>C2</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1893,7 +1893,7 @@ public interface WreslEditorPackage extends EPackage
   int ADD__M1 = EXPRESSION_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>M2</b></em>' containment reference.
+   * The feature id for the '<em><b>M2</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1930,7 +1930,7 @@ public interface WreslEditorPackage extends EPackage
   int MULTIPLY__U1 = 0;
 
   /**
-   * The feature id for the '<em><b>U2</b></em>' containment reference.
+   * The feature id for the '<em><b>U2</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -2004,13 +2004,13 @@ public interface WreslEditorPackage extends EPackage
   int TERM__F = UNARY_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>E</b></em>' containment reference.
+   * The feature id for the '<em><b>E2</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TERM__E = UNARY_FEATURE_COUNT + 3;
+  int TERM__E2 = UNARY_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Term</em>' class.
@@ -2060,7 +2060,7 @@ public interface WreslEditorPackage extends EPackage
   int EXTERNAL_FUNCTION__E1 = FUNCTION_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>E2</b></em>' containment reference.
+   * The feature id for the '<em><b>E2</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -2097,7 +2097,7 @@ public interface WreslEditorPackage extends EPackage
   int MAX_FUNCTION__E1 = FUNCTION_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>E2</b></em>' containment reference.
+   * The feature id for the '<em><b>E2</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -2134,7 +2134,7 @@ public interface WreslEditorPackage extends EPackage
   int MIN_FUNCTION__E1 = FUNCTION_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>E2</b></em>' containment reference.
+   * The feature id for the '<em><b>E2</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -3586,10 +3586,10 @@ public interface WreslEditorPackage extends EPackage
   EReference getLogicalExpression_C1();
 
   /**
-   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.LogicalExpression#getC2 <em>C2</em>}'.
+   * Returns the meta object for the containment reference list '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.LogicalExpression#getC2 <em>C2</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>C2</em>'.
+   * @return the meta object for the containment reference list '<em>C2</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.LogicalExpression#getC2()
    * @see #getLogicalExpression()
    * @generated
@@ -3670,10 +3670,10 @@ public interface WreslEditorPackage extends EPackage
   EReference getAdd_M1();
 
   /**
-   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Add#getM2 <em>M2</em>}'.
+   * Returns the meta object for the containment reference list '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Add#getM2 <em>M2</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>M2</em>'.
+   * @return the meta object for the containment reference list '<em>M2</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Add#getM2()
    * @see #getAdd()
    * @generated
@@ -3702,10 +3702,10 @@ public interface WreslEditorPackage extends EPackage
   EReference getMultiply_U1();
 
   /**
-   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Multiply#getU2 <em>U2</em>}'.
+   * Returns the meta object for the containment reference list '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Multiply#getU2 <em>U2</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>U2</em>'.
+   * @return the meta object for the containment reference list '<em>U2</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Multiply#getU2()
    * @see #getMultiply()
    * @generated
@@ -3766,15 +3766,15 @@ public interface WreslEditorPackage extends EPackage
   EReference getTerm_F();
 
   /**
-   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term#getE <em>E</em>}'.
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term#getE2 <em>E2</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>E</em>'.
-   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term#getE()
+   * @return the meta object for the containment reference '<em>E2</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term#getE2()
    * @see #getTerm()
    * @generated
    */
-  EReference getTerm_E();
+  EReference getTerm_E2();
 
   /**
    * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Function <em>Function</em>}'.
@@ -3808,10 +3808,10 @@ public interface WreslEditorPackage extends EPackage
   EReference getExternalFunction_E1();
 
   /**
-   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction#getE2 <em>E2</em>}'.
+   * Returns the meta object for the containment reference list '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction#getE2 <em>E2</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>E2</em>'.
+   * @return the meta object for the containment reference list '<em>E2</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction#getE2()
    * @see #getExternalFunction()
    * @generated
@@ -3840,10 +3840,10 @@ public interface WreslEditorPackage extends EPackage
   EReference getMaxFunction_E1();
 
   /**
-   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.MaxFunction#getE2 <em>E2</em>}'.
+   * Returns the meta object for the containment reference list '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.MaxFunction#getE2 <em>E2</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>E2</em>'.
+   * @return the meta object for the containment reference list '<em>E2</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.MaxFunction#getE2()
    * @see #getMaxFunction()
    * @generated
@@ -3872,10 +3872,10 @@ public interface WreslEditorPackage extends EPackage
   EReference getMinFunction_E1();
 
   /**
-   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.MinFunction#getE2 <em>E2</em>}'.
+   * Returns the meta object for the containment reference list '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.MinFunction#getE2 <em>E2</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>E2</em>'.
+   * @return the meta object for the containment reference list '<em>E2</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.MinFunction#getE2()
    * @see #getMinFunction()
    * @generated
@@ -5069,7 +5069,7 @@ public interface WreslEditorPackage extends EPackage
     EReference LOGICAL_EXPRESSION__C1 = eINSTANCE.getLogicalExpression_C1();
 
     /**
-     * The meta object literal for the '<em><b>C2</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>C2</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -5141,7 +5141,7 @@ public interface WreslEditorPackage extends EPackage
     EReference ADD__M1 = eINSTANCE.getAdd_M1();
 
     /**
-     * The meta object literal for the '<em><b>M2</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>M2</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -5167,7 +5167,7 @@ public interface WreslEditorPackage extends EPackage
     EReference MULTIPLY__U1 = eINSTANCE.getMultiply_U1();
 
     /**
-     * The meta object literal for the '<em><b>U2</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>U2</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -5219,12 +5219,12 @@ public interface WreslEditorPackage extends EPackage
     EReference TERM__F = eINSTANCE.getTerm_F();
 
     /**
-     * The meta object literal for the '<em><b>E</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>E2</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference TERM__E = eINSTANCE.getTerm_E();
+    EReference TERM__E2 = eINSTANCE.getTerm_E2();
 
     /**
      * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.FunctionImpl <em>Function</em>}' class.
@@ -5255,7 +5255,7 @@ public interface WreslEditorPackage extends EPackage
     EReference EXTERNAL_FUNCTION__E1 = eINSTANCE.getExternalFunction_E1();
 
     /**
-     * The meta object literal for the '<em><b>E2</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>E2</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -5281,7 +5281,7 @@ public interface WreslEditorPackage extends EPackage
     EReference MAX_FUNCTION__E1 = eINSTANCE.getMaxFunction_E1();
 
     /**
-     * The meta object literal for the '<em><b>E2</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>E2</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -5307,7 +5307,7 @@ public interface WreslEditorPackage extends EPackage
     EReference MIN_FUNCTION__E1 = eINSTANCE.getMinFunction_E1();
 
     /**
-     * The meta object literal for the '<em><b>E2</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>E2</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

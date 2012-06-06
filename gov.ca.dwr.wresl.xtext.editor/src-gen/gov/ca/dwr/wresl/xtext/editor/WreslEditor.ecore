@@ -225,7 +225,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="LogicalExpression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="c1" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//ConditionalUnary"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="c2" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//ConditionalUnary"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="c2" upperBound="-1" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//ConditionalUnary"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConditionalUnary"/>
@@ -239,13 +239,13 @@
   <eClassifiers xsi:type="ecore:EClass" name="Add" eSuperTypes="platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="m1" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Multiply"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="m2" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Multiply"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="m2" upperBound="-1" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Multiply"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Multiply">
     <eStructuralFeatures xsi:type="ecore:EReference" name="u1" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Unary"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="u2" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Unary"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="u2" upperBound="-1" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Unary"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Unary"/>
@@ -255,26 +255,26 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="n" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="f" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Function"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="e" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Expression"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e2" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Function" eSuperTypes="platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//TermSimple"/>
   <eClassifiers xsi:type="ecore:EClass" name="ExternalFunction" eSuperTypes="platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Function">
     <eStructuralFeatures xsi:type="ecore:EReference" name="e1" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Expression"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="e2" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Expression"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e2" upperBound="-1" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MaxFunction" eSuperTypes="platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Function">
     <eStructuralFeatures xsi:type="ecore:EReference" name="e1" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Expression"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="e2" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Expression"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e2" upperBound="-1" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MinFunction" eSuperTypes="platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Function">
     <eStructuralFeatures xsi:type="ecore:EReference" name="e1" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Expression"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="e2" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Expression"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e2" upperBound="-1" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IntFunction" eSuperTypes="platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Function">

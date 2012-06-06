@@ -3943,7 +3943,7 @@ ruleBinaryOp
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getLogicalExpressionRule());
 	        }
-       		set(
+       		add(
        			$current, 
        			"c2",
         		lv_c2_2_0, 
@@ -4297,7 +4297,7 @@ ruleAdd returns [EObject current=null]
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getAddRule());
 	        }
-       		set(
+       		add(
        			$current, 
        			"m2",
         		lv_m2_3_0, 
@@ -4365,7 +4365,7 @@ ruleMultiply returns [EObject current=null]
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getMultiplyRule());
 	        }
-       		set(
+       		add(
        			$current, 
        			"u2",
         		lv_u2_3_0, 
@@ -4538,16 +4538,16 @@ ruleTerm returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTermAccess().getEExpressionParserRuleCall_3_1_0()); 
+	        newCompositeNode(grammarAccess.getTermAccess().getE2ExpressionParserRuleCall_3_1_0()); 
 	    }
-		lv_e_4_0=ruleExpression		{
+		lv_e2_4_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTermRule());
 	        }
        		set(
        			$current, 
-       			"e",
-        		lv_e_4_0, 
+       			"e2",
+        		lv_e2_4_0, 
         		"Expression");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -4704,7 +4704,7 @@ ruleExternalFunction returns [EObject current=null]
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getExternalFunctionRule());
 	        }
-       		set(
+       		add(
        			$current, 
        			"e2",
         		lv_e2_4_0, 
@@ -4780,7 +4780,7 @@ ruleMaxFunction returns [EObject current=null]
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getMaxFunctionRule());
 	        }
-       		set(
+       		add(
        			$current, 
        			"e2",
         		lv_e2_4_0, 
@@ -4856,7 +4856,7 @@ ruleMinFunction returns [EObject current=null]
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getMinFunctionRule());
 	        }
-       		set(
+       		add(
        			$current, 
        			"e2",
         		lv_e2_4_0, 

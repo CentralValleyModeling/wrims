@@ -12650,7 +12650,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	      	        if (current==null) {
             	      	            current = createModelElementForParent(grammarAccess.getLogicalExpressionRule());
             	      	        }
-            	             		set(
+            	             		add(
             	             			current, 
             	             			"c2",
             	              		lv_c2_2_0, 
@@ -13736,7 +13736,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	      	        if (current==null) {
             	      	            current = createModelElementForParent(grammarAccess.getAddRule());
             	      	        }
-            	             		set(
+            	             		add(
             	             			current, 
             	             			"m2",
             	              		lv_m2_3_0, 
@@ -13958,7 +13958,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	      	        if (current==null) {
             	      	            current = createModelElementForParent(grammarAccess.getMultiplyRule());
             	      	        }
-            	             		set(
+            	             		add(
             	             			current, 
             	             			"u2",
             	              		lv_u2_3_0, 
@@ -14277,7 +14277,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTerm"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4472:1: ruleTerm returns [EObject current=null] : ( ( (lv_i_0_0= ruleIdent ) ) | ( (lv_n_1_0= ruleNumber ) ) | ( (lv_f_2_0= ruleFunction ) ) | (otherlv_3= KEYWORD_1 ( (lv_e_4_0= ruleExpression ) ) otherlv_5= KEYWORD_2 ) ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4472:1: ruleTerm returns [EObject current=null] : ( ( (lv_i_0_0= ruleIdent ) ) | ( (lv_n_1_0= ruleNumber ) ) | ( (lv_f_2_0= ruleFunction ) ) | (otherlv_3= KEYWORD_1 ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= KEYWORD_2 ) ) ;
     public final EObject ruleTerm() throws RecognitionException {
         EObject current = null;
 
@@ -14289,16 +14289,16 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
         EObject lv_f_2_0 = null;
 
-        EObject lv_e_4_0 = null;
+        EObject lv_e2_4_0 = null;
 
 
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4475:28: ( ( ( (lv_i_0_0= ruleIdent ) ) | ( (lv_n_1_0= ruleNumber ) ) | ( (lv_f_2_0= ruleFunction ) ) | (otherlv_3= KEYWORD_1 ( (lv_e_4_0= ruleExpression ) ) otherlv_5= KEYWORD_2 ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4476:1: ( ( (lv_i_0_0= ruleIdent ) ) | ( (lv_n_1_0= ruleNumber ) ) | ( (lv_f_2_0= ruleFunction ) ) | (otherlv_3= KEYWORD_1 ( (lv_e_4_0= ruleExpression ) ) otherlv_5= KEYWORD_2 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4475:28: ( ( ( (lv_i_0_0= ruleIdent ) ) | ( (lv_n_1_0= ruleNumber ) ) | ( (lv_f_2_0= ruleFunction ) ) | (otherlv_3= KEYWORD_1 ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= KEYWORD_2 ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4476:1: ( ( (lv_i_0_0= ruleIdent ) ) | ( (lv_n_1_0= ruleNumber ) ) | ( (lv_f_2_0= ruleFunction ) ) | (otherlv_3= KEYWORD_1 ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= KEYWORD_2 ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4476:1: ( ( (lv_i_0_0= ruleIdent ) ) | ( (lv_n_1_0= ruleNumber ) ) | ( (lv_f_2_0= ruleFunction ) ) | (otherlv_3= KEYWORD_1 ( (lv_e_4_0= ruleExpression ) ) otherlv_5= KEYWORD_2 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4476:1: ( ( (lv_i_0_0= ruleIdent ) ) | ( (lv_n_1_0= ruleNumber ) ) | ( (lv_f_2_0= ruleFunction ) ) | (otherlv_3= KEYWORD_1 ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= KEYWORD_2 ) )
             int alt118=4;
             switch ( input.LA(1) ) {
             case RULE_ID:
@@ -14488,10 +14488,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4533:6: (otherlv_3= KEYWORD_1 ( (lv_e_4_0= ruleExpression ) ) otherlv_5= KEYWORD_2 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4533:6: (otherlv_3= KEYWORD_1 ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= KEYWORD_2 )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4533:6: (otherlv_3= KEYWORD_1 ( (lv_e_4_0= ruleExpression ) ) otherlv_5= KEYWORD_2 )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4534:2: otherlv_3= KEYWORD_1 ( (lv_e_4_0= ruleExpression ) ) otherlv_5= KEYWORD_2
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4533:6: (otherlv_3= KEYWORD_1 ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= KEYWORD_2 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4534:2: otherlv_3= KEYWORD_1 ( (lv_e2_4_0= ruleExpression ) ) otherlv_5= KEYWORD_2
                     {
                     otherlv_3=(Token)match(input,KEYWORD_1,FOLLOW_KEYWORD_1_in_ruleTerm9997); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -14499,19 +14499,19 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_3, grammarAccess.getTermAccess().getLeftParenthesisKeyword_3_0());
                           
                     }
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4538:1: ( (lv_e_4_0= ruleExpression ) )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4539:1: (lv_e_4_0= ruleExpression )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4538:1: ( (lv_e2_4_0= ruleExpression ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4539:1: (lv_e2_4_0= ruleExpression )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4539:1: (lv_e_4_0= ruleExpression )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4540:3: lv_e_4_0= ruleExpression
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4539:1: (lv_e2_4_0= ruleExpression )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4540:3: lv_e2_4_0= ruleExpression
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getTermAccess().getEExpressionParserRuleCall_3_1_0()); 
+                      	        newCompositeNode(grammarAccess.getTermAccess().getE2ExpressionParserRuleCall_3_1_0()); 
                       	    
                     }
                     pushFollow(FOLLOW_ruleExpression_in_ruleTerm10017);
-                    lv_e_4_0=ruleExpression();
+                    lv_e2_4_0=ruleExpression();
 
                     state._fsp--;
                     if (state.failed) return current;
@@ -14522,8 +14522,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                       	        }
                              		set(
                              			current, 
-                             			"e",
-                              		lv_e_4_0, 
+                             			"e2",
+                              		lv_e2_4_0, 
                               		"Expression");
                       	        afterParserOrEnumRuleCall();
                       	    
@@ -14982,7 +14982,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	      	        if (current==null) {
             	      	            current = createModelElementForParent(grammarAccess.getExternalFunctionRule());
             	      	        }
-            	             		set(
+            	             		add(
             	             			current, 
             	             			"e2",
             	              		lv_e2_4_0, 
@@ -15185,7 +15185,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	      	        if (current==null) {
             	      	            current = createModelElementForParent(grammarAccess.getMaxFunctionRule());
             	      	        }
-            	             		set(
+            	             		add(
             	             			current, 
             	             			"e2",
             	              		lv_e2_4_0, 
@@ -15388,7 +15388,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	      	        if (current==null) {
             	      	            current = createModelElementForParent(grammarAccess.getMinFunctionRule());
             	      	        }
-            	             		set(
+            	             		add(
             	             			current, 
             	             			"e2",
             	              		lv_e2_4_0, 

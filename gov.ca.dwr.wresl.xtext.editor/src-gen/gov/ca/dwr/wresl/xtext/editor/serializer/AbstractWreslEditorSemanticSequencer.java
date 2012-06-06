@@ -428,7 +428,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (m1=Multiply m2=Multiply*)
+	 *     (m1=Multiply m2+=Multiply*)
 	 *
 	 * Features:
 	 *    m1[1, 1]
@@ -659,7 +659,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (e1=Expression e2=Expression*)
+	 *     (e1=Expression e2+=Expression*)
 	 *
 	 * Features:
 	 *    e1[1, 1]
@@ -833,7 +833,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (c1=ConditionalUnary c2=ConditionalUnary*)
+	 *     (c1=ConditionalUnary c2+=ConditionalUnary*)
 	 *
 	 * Features:
 	 *    c1[1, 1]
@@ -857,7 +857,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (e1=Expression e2=Expression*)
+	 *     (e1=Expression e2+=Expression*)
 	 *
 	 * Features:
 	 *    e1[1, 1]
@@ -870,7 +870,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (e1=Expression e2=Expression*)
+	 *     (e1=Expression e2+=Expression*)
 	 *
 	 * Features:
 	 *    e1[1, 1]
@@ -897,7 +897,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (u1=Unary u2=Unary*)
+	 *     (u1=Unary u2+=Unary*)
 	 *
 	 * Features:
 	 *    u1[1, 1]
@@ -1121,22 +1121,22 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (i=Ident | n=Number | f=Function | e=Expression)
+	 *     (i=Ident | n=Number | f=Function | e2=Expression)
 	 *
 	 * Features:
 	 *    i[0, 1]
 	 *         EXCLUDE_IF_SET n
 	 *         EXCLUDE_IF_SET f
-	 *         EXCLUDE_IF_SET e
+	 *         EXCLUDE_IF_SET e2
 	 *    n[0, 1]
 	 *         EXCLUDE_IF_SET i
 	 *         EXCLUDE_IF_SET f
-	 *         EXCLUDE_IF_SET e
+	 *         EXCLUDE_IF_SET e2
 	 *    f[0, 1]
 	 *         EXCLUDE_IF_SET i
 	 *         EXCLUDE_IF_SET n
-	 *         EXCLUDE_IF_SET e
-	 *    e[0, 1]
+	 *         EXCLUDE_IF_SET e2
+	 *    e2[0, 1]
 	 *         EXCLUDE_IF_SET i
 	 *         EXCLUDE_IF_SET n
 	 *         EXCLUDE_IF_SET f

@@ -194,7 +194,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Term/i"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Term/n"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Term/f"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Term/e"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Term/e2"/>
     </genClasses>
     <genClasses ecoreClass="platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Function"/>
     <genClasses ecoreClass="platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//ExternalFunction">

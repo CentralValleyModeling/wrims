@@ -148,7 +148,7 @@ Condition:
 	("condition" | "CONDITION") (logical=LogicalExpression | {Condition} ALWAYS);
 
 LogicalExpression:
-	c1=ConditionalUnary (BinaryOp c2=ConditionalUnary)*;
+	c1=ConditionalUnary (BinaryOp c2+=ConditionalUnary)*;
 
 BinaryOp:
 	OR | AND;
@@ -170,10 +170,10 @@ Expression:
 	Add;
 
 Add:
-	m1=Multiply (('+' | '-') m2=Multiply)*;
+	m1=Multiply (('+' | '-') m2+=Multiply)*;
 
 Multiply:
-	u1=Unary (('*' | '/') u2=Unary)*;
+	u1=Unary (('*' | '/') u2+=Unary)*;
 
 Unary:
 	('+' | Negation)? Term;
@@ -182,19 +182,19 @@ Negation:
 	'-';
 
 Term:
-	i=Ident | n=Number | f=Function | '(' e=Expression ')';
+	i=Ident | n=Number | f=Function | '(' e2=Expression ')';
 
 Function:
 	ExternalFunction | MaxFunction | MinFunction | IntFunction | VarModel;
 
 ExternalFunction:
-	ID '(' e1=Expression (',' e2=Expression)* ')';
+	ID '(' e1=Expression (',' e2+=Expression)* ')';
 
 MaxFunction:
-	MAX '(' e1=Expression (',' e2=Expression)* ')';
+	MAX '(' e1=Expression (',' e2+=Expression)* ')';
 
 MinFunction:
-	MIN '(' e1=Expression (',' e2=Expression)* ')';
+	MIN '(' e1=Expression (',' e2+=Expression)* ')';
 
 IntFunction:
 	INT '(' e=Expression ')';
