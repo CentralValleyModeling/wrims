@@ -93,6 +93,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	private WPPThread fThread;
 	
 	private IValue[] fDataStack=new IValue[0];
+	private IValue[] fGoalStack=new IValue[0];
 	private String fCurrFileName;
 	private ISourceLookupResult result;
 	private int currLine;
@@ -570,6 +571,15 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		return fDataStack;
 	}
 	
+	/**
+	 * Returns the values on the goal stack (top down)
+	 * 
+	 * @return the values on the goal stack (top down)
+	 */
+	public IValue[] getGoalStack() throws DebugException {
+		return fGoalStack;
+	}
+	
 	/* (non-Javadoc)
 	 * @see example.debug.core.model.WPPDebugElement#sendRequest(java.lang.String)
 	 */
@@ -658,6 +668,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	@Override
 	public void handleEvent(String event) {
 		String data="";
+		String goal="";
 		if (event.startsWith("suspended")) {
 			try {
 				data=sendRequest("data");
@@ -675,6 +686,12 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 				setSourceName(eventPart[2]);
 				openSourceHighlight();
 			}
+			
+			
+			//TO DO: Add goals
+			fGoalStack=generateTree(goal);
+			DebugCorePlugin.goalStack=fGoalStack;
+			
 		}else if(event.startsWith("totalcycle#")){
 			DebugCorePlugin.totalNoOfCycle=Integer.parseInt(event.replace("totalcycle#", ""));
 		}

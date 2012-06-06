@@ -37,6 +37,5 @@ Export-Package: wrimsv2_plugin.debugger,
  wrimsv2_plugin.debugger.toolbaritem,
  wrimsv2_plugin.debugger.ui,
  wrimsv2_plugin.debugger.view,
- wrimsv2_plugin.editor,
  wrimsv2_plugin.presentation,
  wrimsv2_plugin.tools

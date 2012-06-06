@@ -45,6 +45,8 @@ public class DebugCorePlugin extends Plugin {
 	
 	public static IValue[] dataStack;
 	
+	public static IValue[] goalStack;
+	
 	public static int totalNoOfCycle=1;
 	
 	public static String timeStep="1DAY";
