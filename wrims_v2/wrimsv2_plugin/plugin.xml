@@ -3,7 +3,7 @@
 <plugin>
 <extension point="org.eclipse.ui.views">
         <view id="wpp.variableview"
-             name="All Variables"
+             name="Variables"
           class="wrimsv2_plugin.debugger.view.WPPVariableView"/>
 </extension>
 <extension point="org.eclipse.ui.views">
