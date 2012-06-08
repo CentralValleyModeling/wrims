@@ -69,7 +69,7 @@ public class ToWreslData {
 
 		o.wtSlackSurplusList = new ArrayList<String>(seq.ssList_hasCase);
 		Collections.sort(o.wtSlackSurplusList,String.CASE_INSENSITIVE_ORDER);
-		
+	
 		o.dvList = new ArrayList<String>(seq.dvList);
 		o.dvList.addAll(seq.dvList_fromAlias);
 		//o.dvList.addAll(seq.ssList_noCase);
@@ -97,7 +97,7 @@ public class ToWreslData {
 		Collections.sort(o.asList,String.CASE_INSENSITIVE_ORDER);
 
 		o.wtList = new ArrayList<String>(seq.wvList_defaultType);
-		o.wtList.addAll(m.ssList_noCase);
+		o.wtList.addAll(seq.ssList_noCase);
 		Collections.sort(o.wtList,String.CASE_INSENSITIVE_ORDER);
 		
 		o.incFileList = new ArrayList<String>(m.incFileAbsPathList_post);
@@ -167,8 +167,8 @@ public class ToWreslData {
 			o.wtMap.putAll(convertWeightTable(w));
 			//System.out.println("after: "+wem.keySet());
 		}
-		for (String k: m.ssWeightMap_noCase.keySet()){			
-			o.wtMap.put(k, convertWeight(m.ssWeightMap_noCase.get(k)));
+		for (String k: seq.ssList_noCase){				
+			o.wtMap.put(k, convertWeight(seq.ssWeightMap_noCase.get(k)));
 		}		
 		
 		
