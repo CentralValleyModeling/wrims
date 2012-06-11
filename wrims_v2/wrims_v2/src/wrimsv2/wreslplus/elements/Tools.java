@@ -71,7 +71,7 @@ public class Tools {
 	// be careful, the map is modified in this function
 	public static void findFileHierarchy(ArrayList<HashSet<String>> hierarchySetList, Map<String,HashSet<String>> toBeSorted) {
 		
-		System.out.println("hierarchySetList"+hierarchySetList);
+		//System.out.println("hierarchySetList"+hierarchySetList);
 		
 		if (!toBeSorted.isEmpty()) {
 					

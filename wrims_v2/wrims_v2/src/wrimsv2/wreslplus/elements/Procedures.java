@@ -486,13 +486,39 @@ public class Procedures {
 
 			GoalTemp g = seqObj.glMap.get(key);
 			allDepInGoals.addAll(g.dependants);
+			allDepInGoals.retainAll(seqObj.asList);
 		}
-		// add all dep from Alias
-		for (String key : seqObj.asMap.keySet()) {
 
-			AliasTemp a = seqObj.asMap.get(key);
-			allDepInGoals.addAll(a.dependants);
+		// TODO: slow algorithm. need to improve.
+
+		boolean hasNewItem = true;
+		HashSet<String> t;
+		
+		while (hasNewItem) {
+			
+			t = new HashSet<String>();
+			
+			for (String key : allDepInGoals) {
+
+				AliasTemp a = seqObj.asMap.get(key);
+			
+				t.addAll(a.dependants);
+			}
+			
+			t.removeAll(allDepInGoals);
+			t.retainAll(seqObj.asList);
+			allDepInGoals.addAll(t);
+			
+			hasNewItem = t.size()>0 ;
 		}
+		
+		
+//		// add all dep from Alias
+//		for (String key : seqObj.asMap.keySet()) {
+//
+//			AliasTemp a = seqObj.asMap.get(key);
+//			allDepInGoals.addAll(a.dependants);
+//		}
 
 		for (String aKey : seqObj.asMap.keySet()) {
 
@@ -784,8 +810,8 @@ public class Procedures {
 			
 			ArrayList<String> kids = st.fileModelDataTable.get(f,modelName).incFileRelativePathList;
 			
-			System.out.println("file:"+f);
-			System.out.println("kids:"+kids);
+			//System.out.println("file:"+f);
+			//System.out.println("kids:"+kids);
 			
 			if (kids==null){
 				st.noKid.add(f);			
@@ -835,7 +861,7 @@ public class Procedures {
 		///// skip mainFile
 		toBeSorted.remove(st.relativePath);
 		
-		System.out.println("st.noKid"+st.noKid);
+		//System.out.println("st.noKid"+st.noKid);
 		st.fileGroupOrder.add(st.noKid);
 		
 		
@@ -920,7 +946,7 @@ public class Procedures {
 		
 		mt.t_svList_post = new ArrayList<Triplet<String,String,String>>(mt.t_svList);
 
-		System.out.println("t_svList: "+mt.t_svList);
+		//System.out.println("t_svList: "+mt.t_svList);
 	}
 
 	// replace file with vars
@@ -941,9 +967,9 @@ public class Procedures {
 					
 					int index =m.svIncFileList_post.indexOf(includedFile);
 					
-					System.out.println("fgroup: "+fgroup);
-					System.out.println("f: "+f);
-					System.out.println("includedFile: "+includedFile);
+					//System.out.println("fgroup: "+fgroup);
+					//System.out.println("f: "+f);
+					//System.out.println("includedFile: "+includedFile);
 					
 //					if (index<0) {
 //						System.out.println("## problem::");

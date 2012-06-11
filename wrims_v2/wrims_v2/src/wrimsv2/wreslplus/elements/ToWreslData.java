@@ -144,7 +144,7 @@ public class ToWreslData {
 		
 		//dv
 		
-		System.out.println("0503 dvList: "+o.dvList);
+		//System.out.println("0503 dvList: "+o.dvList);
 		
 		
 		for (String k: o.dvList){			
