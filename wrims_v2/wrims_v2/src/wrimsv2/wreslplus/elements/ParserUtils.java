@@ -116,7 +116,7 @@ public class ParserUtils {
 					
 					// TODO: allow multiple models in a file
 					String modelName = fm.id.toLowerCase();
-					System.out.println("err: modelName: "+fm.id);
+					//System.out.println("err: modelName: "+fm.id);
 					ArrayList<String> modelNameList = new ArrayList<String>();
 					modelNameList.add(modelName);
 					
