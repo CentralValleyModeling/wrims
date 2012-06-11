@@ -284,7 +284,7 @@ public class TableOperation {
 			}
 		}
 		
-		if ((givenValue.doubleValue()>pastValues[givenIndex].doubleValue()) && (givenValue.doubleValue()>values[givenIndex].doubleValue())){
+		if ((givenValue.doubleValue()>pastValues[givenIndex].doubleValue()) && (givenValue.doubleValue()>values[givenIndex].doubleValue()) && use.equals("linear")){
 			if (pastValues[givenIndex].doubleValue()<values[givenIndex].doubleValue()){
 				value=(givenValue.doubleValue()-values[givenIndex].doubleValue())/(values[givenIndex].doubleValue()-pastValues[givenIndex].doubleValue())
 				*(values[selectIndex].doubleValue()-pastValues[selectIndex].doubleValue())+values[selectIndex].doubleValue();
@@ -294,7 +294,7 @@ public class TableOperation {
 				*(pastValues[selectIndex].doubleValue()-values[selectIndex].doubleValue())+values[selectIndex].doubleValue();
 				return new IntDouble(value,false);
 			}
-		}else if((givenValue.doubleValue()<pastValues[givenIndex].doubleValue()) && (givenValue.doubleValue()<values[givenIndex].doubleValue())){
+		}else if((givenValue.doubleValue()<pastValues[givenIndex].doubleValue()) && (givenValue.doubleValue()<values[givenIndex].doubleValue()) && use.equals("linear")){
 			if (pastValues[givenIndex].doubleValue()>values[givenIndex].doubleValue()){
 				value=(givenValue.doubleValue()-values[givenIndex].doubleValue())/(values[givenIndex].doubleValue()-pastValues[givenIndex].doubleValue())
 				*(values[selectIndex].doubleValue()-pastValues[selectIndex].doubleValue())+values[selectIndex].doubleValue();
