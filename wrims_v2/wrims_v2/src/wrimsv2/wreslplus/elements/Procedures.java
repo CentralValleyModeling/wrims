@@ -334,7 +334,7 @@ public class Procedures {
 
 		try {
 
-			int p = Integer.parseInt(v);
+			float p = Float.parseFloat(v);
 			if (p == 0) return true;
 
 		}

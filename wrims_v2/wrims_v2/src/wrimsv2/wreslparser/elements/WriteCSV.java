@@ -88,6 +88,8 @@ public class WriteCSV {
 
 			String outFolder = outParent + "\\" + model;
 			
+			System.out.println("0608: modelName: "+model);
+			
 			try {
 				dataset(modelDataMap.get(model), outFolder);
 			}
@@ -558,6 +560,10 @@ public class WriteCSV {
 		    	//out.print(Parameters.csv_seperator+s.units); //for UNITS
 		    	//out.print(",Y"); //for OUTPUT
 			    out.print(Param.csv_seperator+g.timeArraySize); //for TIME ARRAY SIZE
+			    System.out.println("0608: "+g.fromWresl);
+			    System.out.println("0608: "+k);
+			    System.out.println("0608: "+g.caseCondition.size());
+			    System.out.println("0608: "+g.caseName);
 		    	out.print(Param.csv_seperator+g.caseName.get(i)); //for CASE 
 		    	out.print(Param.csv_seperator+caseOrder); //for ORDER 
 		    	out.print(Param.csv_seperator+g.caseCondition.get(i)); //for CONDITION
