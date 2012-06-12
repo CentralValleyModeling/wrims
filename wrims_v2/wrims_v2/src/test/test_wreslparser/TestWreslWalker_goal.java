@@ -793,7 +793,7 @@ public class TestWreslWalker_goal {
 		String logText = Tools.readFileAsString(logFilePath);	
 	
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 1);	
+		Assert.assertEquals(totalErrs, 0);	
 	
 		
 	}

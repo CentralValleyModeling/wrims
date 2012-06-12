@@ -1,0 +1,17 @@
+    
+	define x { STD KIND 'test' UNITS 'NONE' }
+	define a { value 1 }
+
+	goal same {
+		 lhs     x 
+		 case Case1 {
+			condition      a == 1
+			rhs        7
+			lhs>rhs    penalty 1290
+		 }
+		 case Case2 {
+			condition      a > 1
+			rhs        8
+			lhs>rhs    penalty 1290
+		 }
+	}

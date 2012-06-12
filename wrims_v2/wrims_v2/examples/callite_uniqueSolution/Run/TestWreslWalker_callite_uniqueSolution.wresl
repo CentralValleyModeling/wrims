@@ -50,7 +50,7 @@ INCLUDE [LOCAL] 'Delta\X2_BO_WQ.wresl'
 INCLUDE[LOCAL] 'B2Actions\BaseStudyResults.wresl' 
 INCLUDE[LOCAL] 'B2Actions\B2Action1Repeat.wresl'
 
-INCLUDE 'system\weight-table.wresl'
+INCLUDE[LOCAL]  'system\weight-table.wresl'
 }
 
 MODEL B2_BO_DailyWeir {         !CYCLE 2
@@ -107,6 +107,7 @@ INCLUDE[LOCAL] 'output\cycle_output.wresl'
 !INCLUDE[LOCAL] 'Shortage\ShortWarning.wresl'
 INCLUDE[LOCAL] 'FlowCriteria\FlowCriteria.wresl'
 
-INCLUDE 'output\DV_ouput.wresl'
+INCLUDE[LOCAL]  'output\DV_ouput.wresl'
+INCLUDE[LOCAL]  'system\weight-table.wresl'
 }
 

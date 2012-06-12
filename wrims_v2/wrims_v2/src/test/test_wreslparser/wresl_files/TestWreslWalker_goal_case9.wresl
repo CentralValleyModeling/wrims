@@ -1,0 +1,19 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }
+MODEL first { 
+    
+	include[local] 'goal_case9.wresl'
+
+}
+
+MODEL second { 
+    
+	include[local] 'goal_case9.wresl'
+
+}
