@@ -128,6 +128,11 @@ public class Procedures {
 	
 			GoalTemp g2 = seqObj.glMap.get(gKey);
 	
+			// added to prevent re-assignment in the later sequence 
+			// if this goal obj is copied to different seqObj from the same included file.
+			// This approach is to reduce data size by not using different goal obj.
+			g2.caseCondition = new ArrayList<String>();
+			
 			for (int i = 0; i < g2.caseName.size(); i++) {
 	
 				String cn = g2.caseName.get(i);
