@@ -54,6 +54,7 @@ import wrimsv2.solver.XASolver;
 import wrimsv2.solver.initialXALog;
 import wrimsv2.solver.initialXASolver;
 import wrimsv2.tools.RCCComparison;
+import wrimsv2.tools.MultiStepAnalyzer;
 import wrimsv2.wreslparser.elements.StudyUtils;
 
 import lpsolve.*;
