@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -42,6 +43,7 @@ public class DebugInterface {
 	private String[] debugDvar;
 	private String[] debugAlias;
 	private String[] allDebugVariables;
+	private DecimalFormat df = new DecimalFormat("#.###"); 
 	
 	public DebugInterface(int requestPort, int eventPort, String args[]){
 		try{	
@@ -292,7 +294,7 @@ public class DebugInterface {
 		
 		Collections.sort(allDataNames);
 		for (String variable: allDataNames){
-			dataString=dataString+variable+":"+allData.get(variable)+"#";
+			dataString=dataString+variable+":"+df.format(allData.get(variable))+"#";
 		}
 		
 		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-2);
