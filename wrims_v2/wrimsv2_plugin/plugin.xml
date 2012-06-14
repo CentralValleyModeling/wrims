@@ -7,6 +7,11 @@
           class="wrimsv2_plugin.debugger.view.WPPVariableView"/>
 </extension>
 <extension point="org.eclipse.ui.views">
+        <view id="wpp.allvariableview"
+             name="All Variables"
+          class="wrimsv2_plugin.debugger.view.WPPAllVariableView"/>
+</extension>
+<extension point="org.eclipse.ui.views">
         <view id="wpp.goalview"
              name="Goals"
           class="wrimsv2_plugin.debugger.view.WPPGoalView"/>

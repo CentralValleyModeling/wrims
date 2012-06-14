@@ -47,6 +47,10 @@ public class DebugCorePlugin extends Plugin {
 	
 	public static IValue[] goalStack;
 	
+	public static IValue[] allDataStack;
+	
+	public static IValue[] allGoalStack;
+	
 	public static int totalNoOfCycle=1;
 	
 	public static String timeStep="1DAY";
@@ -78,6 +82,8 @@ public class DebugCorePlugin extends Plugin {
 	public static final String ID_WPP_DEBUG_MODEL = "wpp.debugModel";
 	
 	public static final String ID_WPP_VARIABLE_VIEW="wpp.variableview";
+	
+	public static final String ID_WPP_ALLVARIABLE_VIEW="wpp.allvariableview";
 	
 	public static final String ID_WPP_EDITOR="wpp.editor";
 	/**

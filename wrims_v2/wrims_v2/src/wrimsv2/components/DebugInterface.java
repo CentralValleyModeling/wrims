@@ -8,6 +8,18 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+import wrimsv2.commondata.solverdata.SolverData;
+import wrimsv2.commondata.wresldata.Alias;
+import wrimsv2.commondata.wresldata.Dvar;
+import wrimsv2.commondata.wresldata.ModelDataSet;
+import wrimsv2.commondata.wresldata.Svar;
+import wrimsv2.commondata.wresldata.Timeseries;
 
 public class DebugInterface {
 	private ServerSocket requestSocket;
@@ -106,7 +118,16 @@ public class DebugInterface {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}else if (request.startsWith("time")){
+		}else if (request.equals("alldata")){
+			try{
+				dataString=getAllDataString();
+				sendRequest(dataString);
+			}catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if (request.startsWith("time")){
 			requestParts=request.split(":");
 			String[] yearMonthDayCycle=requestParts[1].split("/");
 			controllerDebug.debugYear=Integer.parseInt(yearMonthDayCycle[0]);
@@ -192,6 +213,88 @@ public class DebugInterface {
 				dataString=dataString+variable+":"+value+"#";
 			}
 		}
+		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-2);
+		return dataString;
+	}
+	
+	public String getAllDataString(){
+		String dataString="";
+		ArrayList<String> allDataNames=new ArrayList<String>();
+		ArrayList<String> allTsNames=new ArrayList<String>();
+		ArrayList<String> allDvNames=new ArrayList<String>();
+		ArrayList<String> allSvNames=new ArrayList<String>();
+		ArrayList<String> allAsNames=new ArrayList<String>();
+		Map<String, Number> allData=new HashMap<String, Number>();
+		String modelName=ControlData.currStudyDataSet.getModelList().get(ControlData.currCycleIndex);
+		ModelDataSet mds=ControlData.currStudyDataSet.getModelDataSetMap().get(modelName);
+		Map<String, Timeseries> tsMap = mds.tsMap;
+		Map<String, Dvar> dvMap = SolverData.getDvarMap();
+		Map<String, Svar> svMap = mds.svMap;
+		Map<String, Svar> svFutMap = mds.svFutMap;
+		Map<String, Alias> asMap = mds.asMap;
+
+		Set<String> tsKeySet = tsMap.keySet();
+		Iterator<String> tsIterator = tsKeySet.iterator();
+		while (tsIterator.hasNext()){
+			String tsName=tsIterator.next();
+			if (!allDataNames.contains(tsName)){
+				allDataNames.add(tsName);
+				allTsNames.add(tsName);
+				allData.put(tsName, tsMap.get(tsName).getData().getData());
+			}
+		}
+		
+		Set<String> dvKeySet = dvMap.keySet();
+		Iterator<String> dvIterator = dvKeySet.iterator();
+		while (dvIterator.hasNext()){
+			String dvName=dvIterator.next();
+			if (!allDataNames.contains(dvName)){
+				allDataNames.add(dvName);
+				allDvNames.add(dvName);
+				allData.put(dvName, dvMap.get(dvName).getData().getData());
+			}
+		}
+		
+		Set<String> svKeySet = svMap.keySet();
+		Iterator<String> svIterator = svKeySet.iterator();
+		while (svIterator.hasNext()){
+			String svName=svIterator.next();
+			if (!allDataNames.contains(svName)){
+				allDataNames.add(svName);
+				allSvNames.add(svName);
+				allData.put(svName, svMap.get(svName).getData().getData());
+			}
+		}
+		
+		Set<String> svFutKeySet = svFutMap.keySet();
+		Iterator<String> svFutIterator = svFutKeySet.iterator();
+		while (svFutIterator.hasNext()){
+			String svFutName=svFutIterator.next();
+			if (!allDataNames.contains(svFutName)){
+				allDataNames.add(svFutName);
+				allSvNames.add(svFutName);
+				allData.put(svFutName, svMap.get(svFutName).getData().getData());
+			}
+		}
+		
+		Set<String> asKeySet = asMap.keySet();
+		Iterator<String> asIterator = asKeySet.iterator();
+		while (asIterator.hasNext()){
+			String asName=asIterator.next();
+			if (!allDataNames.contains(asName)){
+				allDataNames.add(asName);
+				allData.put(asName, asMap.get(asName).getData().getData());
+			}
+			if (!allAsNames.contains(asName)){
+				allAsNames.add(asName);
+			}
+		}
+		
+		Collections.sort(allDataNames);
+		for (String variable: allDataNames){
+			dataString=dataString+variable+":"+allData.get(variable)+"#";
+		}
+		
 		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-2);
 		return dataString;
 	}

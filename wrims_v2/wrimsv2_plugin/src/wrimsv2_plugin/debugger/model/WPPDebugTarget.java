@@ -64,6 +64,7 @@ import wrimsv2_plugin.debugger.breakpoint.WPPLineBreakpoint;
 import wrimsv2_plugin.debugger.breakpoint.WPPRunToLineBreakpoint;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.debugger.view.WPPAllVariableView;
 import wrimsv2_plugin.debugger.view.WPPExceptionView;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
 
@@ -94,6 +95,8 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	
 	private IValue[] fDataStack=new IValue[0];
 	private IValue[] fGoalStack=new IValue[0];
+	private IValue[] fAllDataStack=new IValue[0];
+	private IValue[] fAllGoalStack=new IValue[0];
 	private String fCurrFileName;
 	private ISourceLookupResult result;
 	private int currLine;
@@ -562,20 +565,14 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		removeEventListener(this);
 	}
 	
-	/**
-	 * Returns the values on the data stack (top down)
-	 * 
-	 * @return the values on the data stack (top down)
-	 */
 	public IValue[] getDataStack() throws DebugException {
 		return fDataStack;
 	}
 	
-	/**
-	 * Returns the values on the goal stack (top down)
-	 * 
-	 * @return the values on the goal stack (top down)
-	 */
+	public IValue[] getAllDataStack() throws DebugException {
+		return fAllDataStack;
+	}
+	
 	public IValue[] getGoalStack() throws DebugException {
 		return fGoalStack;
 	}
@@ -670,6 +667,16 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		String data="";
 		String goal="";
 		if (event.startsWith("suspended")) {
+			try{
+				data=sendRequest("alldata");
+			}catch (DebugException e) {
+				WPPException.handleException(e);
+			}
+			
+			fAllDataStack=generateTree(data);
+			DebugCorePlugin.allDataStack=fAllDataStack;
+			updateAllDataView();
+			
 			try {
 				data=sendRequest("data");
 				System.out.println(data);
@@ -689,8 +696,8 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			
 			
 			//TO DO: Add goals
-			fGoalStack=generateTree(goal);
-			DebugCorePlugin.goalStack=fGoalStack;
+			//fGoalStack=generateTree(goal);
+			//DebugCorePlugin.goalStack=fGoalStack;
 			
 		}else if(event.startsWith("totalcycle#")){
 			DebugCorePlugin.totalNoOfCycle=Integer.parseInt(event.replace("totalcycle#", ""));
@@ -704,6 +711,20 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 				try {
 					WPPVariableView variableView = (WPPVariableView) workbench.getActiveWorkbenchWindow().getActivePage().showView(DebugCorePlugin.ID_WPP_VARIABLE_VIEW);
 					variableView.updateView();
+				} catch (PartInitException e) {
+					WPPException.handleException(e);
+				}
+			}
+		});
+	}
+	
+	public void updateAllDataView(){
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				try {
+					WPPAllVariableView allVariableView = (WPPAllVariableView) workbench.getActiveWorkbenchWindow().getActivePage().showView(DebugCorePlugin.ID_WPP_ALLVARIABLE_VIEW);
+					allVariableView.updateView();
 				} catch (PartInitException e) {
 					WPPException.handleException(e);
 				}
