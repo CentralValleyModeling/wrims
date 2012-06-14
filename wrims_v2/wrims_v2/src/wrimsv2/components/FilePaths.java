@@ -18,6 +18,7 @@ public class FilePaths {
 	public static String ilpFile="";
 	public static String ilpFileDirectory="";
 	public static String csvFolderName="";
+	public static String lookupSubDirectory="";
 
 
 	public static void setMainFilePaths(String fullPath){

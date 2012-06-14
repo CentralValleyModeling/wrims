@@ -143,6 +143,10 @@ public class ConfigUtils {
 		if (configMap.get("showwresllog").equalsIgnoreCase("no") || configMap.get("showwresllog").equalsIgnoreCase("false")){
 			ControlData.showWreslLog = false;
 		}
+		if (configMap.get("lookupsubdir").length()>0 ){
+			FilePaths.lookupSubDirectory = configMap.get("lookupsubdir");
+			System.out.println("LookupSubDir:   "+FilePaths.lookupSubDirectory);
+		}
 		//ControlData.showWreslLog = !(configMap.get("showwresllog").equalsIgnoreCase("no"));
 		
 		ControlData.svDvPartF = configMap.get("svarfpart");
@@ -166,7 +170,7 @@ public class ConfigUtils {
 		ControlData.writeDssStartYear = ControlData.startYear;
 		ControlData.writeDssStartMonth = ControlData.startMonth;
 		ControlData.writeDssStartDay = ControlData.startDay;
-
+		
 		System.out.println("TimeStep:       "+ControlData.timeStep);
 		System.out.println("SvarAPart:      "+ControlData.partA);
 		System.out.println("SvarFPart:      "+ControlData.svDvPartF);
@@ -552,6 +556,7 @@ public class ConfigUtils {
 		configMap.put("timestep".toLowerCase(), "1MON");
 		configMap.put("groundwaterdir".toLowerCase(), "\\");
 		configMap.put("showwresllog".toLowerCase(), "yes");
+		configMap.put("lookupsubdir".toLowerCase(), "");
 
 
 		return configMap;

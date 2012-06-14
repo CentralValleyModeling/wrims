@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 
 public class TableOperation {
 	public static boolean retrieveLookUpData (String name){
-		String tableFullPath=FilePaths.mainDirectory+"lookup\\"+name+".table";
+		String tableFullPath=FilePaths.mainDirectory+"lookup\\"+FilePaths.lookupSubDirectory+"\\"+name+".table";
 		try{
 			    FileInputStream fstream = new FileInputStream(tableFullPath);
 			    DataInputStream in = new DataInputStream(fstream);
