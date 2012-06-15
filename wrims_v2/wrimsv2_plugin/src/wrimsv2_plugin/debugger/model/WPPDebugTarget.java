@@ -222,6 +222,101 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
         breakpointManager.addBreakpointListener(this);
 		breakpointManager.addBreakpointManagerListener(this);
 		
+		//installDeferredBreakpoints();
+		installPartListener();
+		checkVisiblePart();
+		
+		String data;
+		
+		data=sendRequest("start");
+		DebugCorePlugin.isDebugging=true;
+		
+		data=sendRequest("time:"+DebugCorePlugin.debugYear+"/"+DebugCorePlugin.debugMonth+"/"+DebugCorePlugin.debugDay+"/"+DebugCorePlugin.debugCycle);
+		System.out.println(data);
+		
+		data=sendRequest("variables:s_shsta#s_folsm");
+		System.out.println(data);
+		
+		
+		/*
+		if (fTextEditor!=null) ((ITextEditor)fTextEditor).resetHighlightRange();
+		data=sendRequest("resume");
+		System.out.println(data);
+		
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			WPPException.handleException(e);
+		}
+		
+		data=sendRequest("step");
+		System.out.println(data);
+		
+		if (fTextEditor!=null) ((ITextEditor)fTextEditor).resetHighlightRange();
+		data=sendRequest("resume");
+		System.out.println(data);
+		
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			WPPException.handleException(e);
+		}
+		
+		data=sendRequest("year:10001");
+		System.out.println(data);
+		
+		if (fTextEditor!=null) ((ITextEditor)fTextEditor).resetHighlightRange();
+		data=sendRequest("resume");
+		System.out.println(data);
+		
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			WPPException.handleException(e);
+		}
+		
+		
+		fProcess.terminate();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				IWorkbenchWindow window=workbench.getActiveWorkbenchWindow();
+				if (window !=null){
+					window.getActivePage().removePartListener(fPartListener);
+				}
+			}
+		});
+		*/
+	}
+	
+	public void checkVisiblePart(){
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
+				
+				WPPAllVariableView allVariableView = (WPPAllVariableView) workBenchPage.findView(DebugCorePlugin.ID_WPP_ALLVARIABLE_VIEW);
+				if (workBenchPage.isPartVisible(allVariableView)){
+					if (!visibleViewNames.contains(DebugCorePlugin.TITLE_ALLVARIABLES_VIEW)){
+						visibleViewNames.add(DebugCorePlugin.TITLE_ALLVARIABLES_VIEW);
+					}
+					if (!dataLoadedViewNames.contains(DebugCorePlugin.TITLE_ALLVARIABLES_VIEW)){
+						dataLoadedViewNames.add(DebugCorePlugin.TITLE_ALLVARIABLES_VIEW);
+					}
+				}
+				WPPVariableView variableView = (WPPVariableView) workBenchPage.findView(DebugCorePlugin.ID_WPP_VARIABLE_VIEW);
+				if (workBenchPage.isPartVisible(variableView)){
+					if (!visibleViewNames.contains(DebugCorePlugin.TITLE_VARIABLES_VIEW)){
+						visibleViewNames.add(DebugCorePlugin.TITLE_VARIABLES_VIEW);
+					}
+					if (!dataLoadedViewNames.contains(DebugCorePlugin.TITLE_VARIABLES_VIEW)){
+						dataLoadedViewNames.add(DebugCorePlugin.TITLE_VARIABLES_VIEW);
+					}
+				}
+			}
+		});
+	}
+	
+	public void installPartListener(){
 		final IWorkbench workbench=PlatformUI.getWorkbench();
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
@@ -302,69 +397,6 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 				}
 			}
 		});
-		
-		//installDeferredBreakpoints();
-		
-		String data;
-		
-		data=sendRequest("start");
-		DebugCorePlugin.isDebugging=true;
-		
-		data=sendRequest("time:"+DebugCorePlugin.debugYear+"/"+DebugCorePlugin.debugMonth+"/"+DebugCorePlugin.debugDay+"/"+DebugCorePlugin.debugCycle);
-		System.out.println(data);
-		
-		data=sendRequest("variables:s_shsta#s_folsm");
-		System.out.println(data);
-		
-		
-		/*
-		if (fTextEditor!=null) ((ITextEditor)fTextEditor).resetHighlightRange();
-		data=sendRequest("resume");
-		System.out.println(data);
-		
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			WPPException.handleException(e);
-		}
-		
-		data=sendRequest("step");
-		System.out.println(data);
-		
-		if (fTextEditor!=null) ((ITextEditor)fTextEditor).resetHighlightRange();
-		data=sendRequest("resume");
-		System.out.println(data);
-		
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			WPPException.handleException(e);
-		}
-		
-		data=sendRequest("year:10001");
-		System.out.println(data);
-		
-		if (fTextEditor!=null) ((ITextEditor)fTextEditor).resetHighlightRange();
-		data=sendRequest("resume");
-		System.out.println(data);
-		
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			WPPException.handleException(e);
-		}
-		
-		
-		fProcess.terminate();
-		workbench.getDisplay().asyncExec(new Runnable(){
-			public void run(){
-				IWorkbenchWindow window=workbench.getActiveWorkbenchWindow();
-				if (window !=null){
-					window.getActivePage().removePartListener(fPartListener);
-				}
-			}
-		});
-		*/
 	}
 	
 	public void setSourceName(String fileName){
@@ -733,7 +765,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	}
 	
 	private void handleSuspended(final String event){
-		for (String viewName: dataLoadedViewNames){
+		for (String viewName: visibleViewNames){
 			processView(viewName);
 		}
 		
@@ -746,13 +778,13 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	}
 	
 	private void processView(String viewName){
-		if (viewName.equals("All Variables")){
+		if (viewName.equals(DebugCorePlugin.TITLE_ALLVARIABLES_VIEW)){
 			updateAllDataView();
-		}else if (viewName.equals("Variables")){
+		}else if (viewName.equals(DebugCorePlugin.TITLE_VARIABLES_VIEW)){
 			updateDataView();
-		}else if (viewName.equals("All Goals")){
+		}else if (viewName.equals(DebugCorePlugin.TITLE_ALLGOALS_VIEW)){
 			
-		}else if (viewName.equals("Goals")){
+		}else if (viewName.equals(DebugCorePlugin.TITLE_GOALS_VIEW)){
 			
 		}
 	}
@@ -795,7 +827,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 						public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 							String data="";
 							String goal="";
-							monitor.beginTask("Update variables and goals", 100);
+							monitor.beginTask("Update all variables", 100);
 							try{
 								data=sendRequest("alldata");
 							}catch (DebugException e) {
@@ -804,7 +836,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 							monitor.worked(33);
 							
 							fAllDataStack=generateTree(data);
-							monitor.worked(66);
+							monitor.worked(33);
 							
 							DebugCorePlugin.allDataStack=fAllDataStack;
 							final IWorkbench workbench=PlatformUI.getWorkbench();

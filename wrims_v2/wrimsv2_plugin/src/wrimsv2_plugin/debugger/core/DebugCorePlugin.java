@@ -86,6 +86,14 @@ public class DebugCorePlugin extends Plugin {
 	public static final String ID_WPP_ALLVARIABLE_VIEW="wpp.allvariableview";
 	
 	public static final String ID_WPP_EDITOR="wpp.editor";
+	
+	public static final String TITLE_ALLVARIABLES_VIEW="All Variables";
+	
+	public static final String TITLE_VARIABLES_VIEW="Variables";
+	
+	public static final String TITLE_ALLGOALS_VIEW="All Goals";
+	
+	public static final String TITLE_GOALS_VIEW="Goals";
 	/**
 	 * Launch configuration attribute key. Value is a path to a perl
 	 * program. The path is a string representing a full path
