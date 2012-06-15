@@ -163,6 +163,7 @@ public class WPPThread extends WPPDebugElement implements IThread, IWPPEventList
 	 */
 	@Override
 	public void resume() throws DebugException {
+		setSuspended(false);
 		sendRequest("resume");
 	}
 	/* (non-Javadoc)
