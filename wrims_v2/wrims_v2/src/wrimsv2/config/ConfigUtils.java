@@ -264,43 +264,50 @@ public class ConfigUtils {
 			
 		}
 		
-		
-		// IlpMaximumFractionDigits
-		// default is 8
-		if (configMap.keySet().contains("ilpmaximumfractiondigits")){
-			
-			String s = configMap.get("ilpmaximumfractiondigits");
-			int d;
-			
-			try {
-				d = Integer.parseInt(s);
-				ILP.maximumFractionDigits = d;
-				
-			} catch (Exception e) {
-				// TODO: handle exception
-				//System.out.println("#Error: IlpMaximumFractionDigits not recognized: "+s);
-				Error.addConfigError("IlpMaximumFractionDigits not recognized: "+s);
-			}
-				
-			
-		}
-		System.out.println("IlpMaximumFractionDigits: "+ILP.maximumFractionDigits);
-		
+		// processed only for ILP
+		if (ControlData.solverName.toLowerCase().contains("ilp")) {
 
-//		if (configMap.keySet().contains("lpsolveoverwritedefaultsetting")){
-//			
-//			String s = configMap.get("lpsolveoverwritedefaultsetting");
-//			
-//			if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")){
-//				LPSolveSolver.overwriteDefaultSetting = true;	
-//			} else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")){
-//				LPSolveSolver.overwriteDefaultSetting = false;	
-//			} else {
-//				LPSolveSolver.overwriteDefaultSetting = false;	
-//			}
-//			
-//		}
-//		System.out.println("LpSolveOverwriteDefaultSetting: "+LPSolveSolver.overwriteDefaultSetting);
+			// IlpWriteVarValue
+			// default is true
+			if (configMap.keySet().contains("ilpwritevarvalue")) {
+
+				String s = configMap.get("ilpwritevarvalue");
+
+				if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")) {
+					ILP.writeOutVariableValue = true;
+				}
+				else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")) {
+					ILP.writeOutVariableValue = false;
+				}
+				else {
+					ILP.writeOutVariableValue = true;
+				}
+			}
+
+			// IlpMaximumFractionDigits
+			// default is 8
+			if (configMap.keySet().contains("ilpmaximumfractiondigits")) {
+
+				String s = configMap.get("ilpmaximumfractiondigits");
+				int d;
+
+				try {
+					d = Integer.parseInt(s);
+					ILP.maximumFractionDigits = d;
+
+				}
+				catch (Exception e) {
+					// TODO: handle exception
+					// System.out.println("#Error: IlpMaximumFractionDigits not recognized: "+s);
+					Error.addConfigError("IlpMaximumFractionDigits not recognized: " + s);
+				}
+			}
+
+			System.out.println("IlpWriteVarValue:         " + ILP.writeOutVariableValue);
+			System.out.println("IlpMaximumFractionDigits: " + ILP.maximumFractionDigits);
+
+		}
+		
 		
 //		if (configMap.keySet().contains("lpsolveparamheader")){
 //			
@@ -557,6 +564,7 @@ public class ConfigUtils {
 		configMap.put("groundwaterdir".toLowerCase(), "\\");
 		configMap.put("showwresllog".toLowerCase(), "yes");
 		configMap.put("lookupsubdir".toLowerCase(), "");
+		configMap.put("IlpWriteVarValue".toLowerCase(), "yes");
 
 
 		return configMap;

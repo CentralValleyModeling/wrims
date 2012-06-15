@@ -373,7 +373,7 @@ public class ControllerBatch {
 					
 						ILP.setIlpFile();
 						ILP.writeIlp();
-						ILP.writeSvarValue();
+						if (ILP.writeOutVariableValue) ILP.writeSvarValue();
 					
 						if (Error.error_evaluation.size()>=1){
 							Error.writeEvaluationErrorFile("evaluation_error.txt");
@@ -386,12 +386,12 @@ public class ControllerBatch {
 				            LPSolveSolver.solve();
 				            if (Error.error_solving.size()<1) {
 				            	ILP.writeObjValue_LPSOLVE();
-				            	ILP.writeDvarValue_LPSOLVE();
+				            	if (ILP.writeOutVariableValue) ILP.writeDvarValue_LPSOLVE();
 				            }
 				        } else {
 							new XASolver(); // default
 				            ILP.writeObjValue_XA();
-				            ILP.writeDvarValue_XA();
+				            if (ILP.writeOutVariableValue) ILP.writeDvarValue_XA();
 				        }
 
 

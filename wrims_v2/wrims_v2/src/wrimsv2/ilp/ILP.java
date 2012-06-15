@@ -42,6 +42,7 @@ public class ILP {
 	private static final String ampl_comment_Symbol = "#";
 	private static DecimalFormat df;
 	public static int maximumFractionDigits = 8;
+	public static boolean writeOutVariableValue = true;
 	
 	private ILP() {
 		
@@ -162,10 +163,15 @@ public class ILP {
 	
 	public static void closeIlpFile() {
 	
-		_lpSolveFile.close();
-	    //_amplFile.close();
-		_svarFile.close();
-		_dvarFile.close();
+		try {
+			_lpSolveFile.close();
+			//_amplFile.close();
+			_svarFile.close();
+			_dvarFile.close();
+		} catch (Exception e) {
+
+			// ignore
+		}
 	}
 	private static void setLpSolveParentDir() {
 	
@@ -196,8 +202,8 @@ public class ILP {
 			
 			_lpSolveFile = Tools.openFile(_lpSolveDir, lpSolveFileName);
 			lpSolveFilePath = new File(_lpSolveDir, lpSolveFileName).getAbsolutePath(); // for public access
-			_svarFile = Tools.openFile(varDir, svarFileName);
-			_dvarFile = Tools.openFile(varDir, dvarFileName);
+			if (ILP.writeOutVariableValue) _svarFile = Tools.openFile(varDir, svarFileName);
+			if (ILP.writeOutVariableValue) _dvarFile = Tools.openFile(varDir, dvarFileName);
 		}
 		catch (IOException e1) {
 			// TODO Auto-generated catch block
