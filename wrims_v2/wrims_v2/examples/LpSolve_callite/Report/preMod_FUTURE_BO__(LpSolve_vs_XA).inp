@@ -3,13 +3,13 @@
 SCALAR
 NAME		VALUE
 TABLE_FONT_SIZE   8
-FILE_BASE	D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\LpSolve_callite\DSS\DVAR\DV_EXISTING_BO_XA.DSS
-NAME_BASE	afterMod
-FILE_ALT	D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\LpSolve_callite\DSS\DVAR\DV_beforeMod_EXISTING_BO_XA.DSS 
-NAME_ALT	beforeMod
-OUTFILE		D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\LpSolve_callite\Report\XA_EXISTING_BO__(beforeMod_vs_afterMod).pdf
+FILE_BASE	D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\LpSolve_callite\DSS\DVAR\DV_preMod_FUTURE_BO_XA.DSS
+NAME_BASE	XA
+FILE_ALT	D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\LpSolve_callite\DSS\DVAR\DV_preMod_FUTURE_BO_LpSolve.DSS 
+NAME_ALT	LpSolve
+OUTFILE		D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\LpSolve_callite\Report\preMod_FUTURE_BO__(LpSolve_vs_XA).pdf
 NOTE		""
-ASSUMPTIONS "XA_EXISTING_BO"	
+ASSUMPTIONS "preMod_FUTURE_BO"	
 MODELER 	"Kevin"
 END
 
