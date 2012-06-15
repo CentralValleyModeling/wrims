@@ -15,10 +15,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Vector;
+
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
@@ -44,11 +48,19 @@ import org.eclipse.debug.core.model.ISourceLocator;
 import org.eclipse.debug.core.model.IThread;
 import org.eclipse.debug.core.model.IValue;
 import org.eclipse.debug.core.sourcelookup.AbstractSourceLookupDirector;
+import org.eclipse.debug.ui.AbstractDebugView;
 import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.debug.ui.sourcelookup.ISourceLookupResult;
+import org.eclipse.jface.dialogs.PopupDialog;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Dialog;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbench;
@@ -220,6 +232,8 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 								fPart=part;
 								System.out.println("changes");
 								//To Do: parse file, send request, regenerate dataStack (viewer show automatically)
+							}else if (part instanceof AbstractDebugView){
+								System.out.println(part.getTitle());
 							}
 						}
 
@@ -236,7 +250,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 						}
 
 						@Override
-						public void partOpened(IWorkbenchPart part) {	
+						public void partOpened(IWorkbenchPart part) {
 						}                                                                                                                                                                               
 					};
 					window.getActivePage().addPartListener(fPartListener);
@@ -249,8 +263,6 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		String data;
 		
 		data=sendRequest("start");
-		System.out.println(data);
-		
 		DebugCorePlugin.isDebugging=true;
 		
 		data=sendRequest("time:"+DebugCorePlugin.debugYear+"/"+DebugCorePlugin.debugMonth+"/"+DebugCorePlugin.debugDay+"/"+DebugCorePlugin.debugCycle);
@@ -664,44 +676,70 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	 */
 	@Override
 	public void handleEvent(String event) {
-		String data="";
-		String goal="";
-		if (event.startsWith("suspended")) {
-			try{
-				data=sendRequest("alldata");
-			}catch (DebugException e) {
-				WPPException.handleException(e);
-			}
-			
-			fAllDataStack=generateTree(data);
-			DebugCorePlugin.allDataStack=fAllDataStack;
-			updateAllDataView();
-			
-			try {
-				data=sendRequest("data");
-				System.out.println(data);
-			} catch (DebugException e) {
-				WPPException.handleException(e);
-			}
-			//data="i:4456#a(-1):123.0#reservoir:reservorlevel1%56:reservorlevel2%1234";
-			fDataStack=generateTree(data);
-			DebugCorePlugin.dataStack=fDataStack;
-			updateDataView();
-			if (event.contains(":")) {
-				String[] eventPart=event.split(":");
-				setCurrLine(Integer.parseInt(eventPart[1]));
-				setSourceName(eventPart[2]);
-				openSourceHighlight();
-			}
-			
-			
-			//TO DO: Add goals
-			//fGoalStack=generateTree(goal);
-			//DebugCorePlugin.goalStack=fGoalStack;
-			
+		if (event.startsWith("suspended")) {		
+			handleSuspended(event);
 		}else if(event.startsWith("totalcycle#")){
 			DebugCorePlugin.totalNoOfCycle=Integer.parseInt(event.replace("totalcycle#", ""));
 		}
+	}
+	
+	private void handleSuspended(final String event){
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+				ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);  
+				try {
+					dialog.run(true,false, new IRunnableWithProgress() {
+						@Override
+						public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+							String data="";
+							String goal="";
+							monitor.beginTask("Update variables and goals", 100);
+							try{
+								data=sendRequest("alldata");
+							}catch (DebugException e) {
+								WPPException.handleException(e);
+							}
+					
+							fAllDataStack=generateTree(data);
+							DebugCorePlugin.allDataStack=fAllDataStack;
+							updateAllDataView();
+							monitor.worked(50);
+					
+							try {
+								data=sendRequest("data");
+								System.out.println(data);
+							} catch (DebugException e) {
+								WPPException.handleException(e);
+							}
+							//data="i:4456#a(-1):123.0#reservoir:reservorlevel1%56:reservorlevel2%1234";
+							fDataStack=generateTree(data);
+							DebugCorePlugin.dataStack=fDataStack;
+							updateDataView();
+							if (event.contains(":")) {
+								String[] eventPart=event.split(":");
+								setCurrLine(Integer.parseInt(eventPart[1]));
+								setSourceName(eventPart[2]);
+								openSourceHighlight();
+							}
+							monitor.worked(60);
+					
+							//TO DO: Add goals
+							//fGoalStack=generateTree(goal);
+							//DebugCorePlugin.goalStack=fGoalStack;
+							monitor.done();
+						}
+					});
+				} catch (InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	public void updateDataView(){
