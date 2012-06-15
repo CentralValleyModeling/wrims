@@ -15,12 +15,17 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import com.sun.java.util.collections.Arrays;
+
 import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
+import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
+import wrimsv2.evaluator.EvalConstraint;
+import wrimsv2.evaluator.EvalExpression;
 
 public class DebugInterface {
 	private ServerSocket requestSocket;
@@ -39,6 +44,7 @@ public class DebugInterface {
 	public PrintWriter fileOut;
 	private boolean isStart=false;
 	private String dataString;
+	private String goalString;
 	private String[] debugSvar;
 	private String[] debugDvar;
 	private String[] debugAlias;
@@ -128,8 +134,15 @@ public class DebugInterface {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		else if (request.startsWith("time")){
+		}else if (request.equals("allgoals")){
+			try{
+				goalString=getAllGoalString();
+				sendRequest(goalString);
+			}catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if (request.startsWith("time")){
 			requestParts=request.split(":");
 			String[] yearMonthDayCycle=requestParts[1].split("/");
 			controllerDebug.debugYear=Integer.parseInt(yearMonthDayCycle[0]);
@@ -299,6 +312,62 @@ public class DebugInterface {
 		
 		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-2);
 		return dataString;
+	}
+	
+	public String getAllGoalString(){
+		String goalString="";
+		Map<String, EvalConstraint> gMap = SolverData.getConstraintDataMap();
+		Set<String> goalKeySet=gMap.keySet();
+		ArrayList<String> gKeyArrayList=new ArrayList<String>();
+		Iterator ki=goalKeySet.iterator();
+		while (ki.hasNext()){
+			gKeyArrayList.add((String) ki.next());
+		}
+		Collections.sort(gKeyArrayList);
+		for (int i=0; i<gKeyArrayList.size(); i++){
+			String goalName=gKeyArrayList.get(i);
+			goalString=goalString+goalName+":";
+			EvalConstraint ec=gMap.get(goalName);
+			EvalExpression ee=ec.getEvalExpression();
+			Map<String, IntDouble> multiplier = ee.getMultiplier();
+			Set<String> mKeySet = multiplier.keySet();
+			Iterator<String> mi = mKeySet.iterator();
+			while (mi.hasNext()){
+				String variable=mi.next();
+				Number value=multiplier.get(variable).getData();
+				double value1=value.doubleValue();
+				if (goalString.endsWith(":")){
+					if (value1==1.0){
+						goalString=goalString+variable;
+					}else if (value1==-1.0){
+						goalString=goalString+"-"+variable;
+					}else{
+						goalString=goalString+value+variable;
+					}
+				}else{
+					if (value1==1.0){
+						goalString=goalString+"+"+variable;
+					}else if (value1 == -1.0){
+						goalString=goalString+"-"+variable;
+					}else if(value1>=0){
+						goalString=goalString+"+"+value+variable;
+					}else{
+						goalString=goalString+value+variable;
+					}
+				}
+			}
+			Number value=ee.getValue().getData();
+			double value1=value.doubleValue();
+			if (value1>0){
+				goalString=goalString+"+"+value+ec.getSign()+"0#";
+			}else if(value1<0){
+				goalString=goalString+value+ec.getSign()+"0#";
+			}else{
+				goalString=goalString+ec.getSign()+"0#";
+			}
+		}
+		if (goalString.endsWith("#")) goalString=goalString.substring(0, goalString.length()-2);
+		return goalString;
 	}
 	
 	public static void main(String[] args){
