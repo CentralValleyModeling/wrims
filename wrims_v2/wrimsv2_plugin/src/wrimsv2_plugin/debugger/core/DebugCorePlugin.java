@@ -85,6 +85,10 @@ public class DebugCorePlugin extends Plugin {
 	
 	public static final String ID_WPP_ALLVARIABLE_VIEW="wpp.allvariableview";
 	
+	public static final String ID_WPP_GOAL_VIEW="wpp.goalview";
+	
+	public static final String ID_WPP_ALLGOAL_VIEW="wpp.allgoalview";
+	
 	public static final String ID_WPP_EDITOR="wpp.editor";
 	
 	public static final String TITLE_ALLVARIABLES_VIEW="All Variables";

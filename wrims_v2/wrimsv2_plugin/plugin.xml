@@ -17,6 +17,11 @@
           class="wrimsv2_plugin.debugger.view.WPPGoalView"/>
 </extension>
 <extension point="org.eclipse.ui.views">
+        <view id="wpp.allgoalview"
+             name="All Goals"
+          class="wrimsv2_plugin.debugger.view.WPPAllGoalView"/>
+</extension>
+<extension point="org.eclipse.ui.views">
         <view id="wpp.exceptionview"
              name="Exception"
           class="wrimsv2_plugin.debugger.view.WPPExceptionView"/>
