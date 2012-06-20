@@ -61,6 +61,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPartListener2;
@@ -71,6 +72,7 @@ import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.ide.ResourceUtil;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 
@@ -371,7 +373,6 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 							IWorkbenchPart part = partRef.getPart(false);
 							if ((part instanceof ITextEditor) && (!part.equals(fPart))){
 								fPart=part;
-								System.out.println("changes");
 								//To Do: parse file, send request, regenerate dataStack (viewer show automatically)
 							}else if (part instanceof AbstractDebugView){
 								String viewName=part.getTitle();
@@ -841,22 +842,26 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	}
 	
 	public void updateDataView(){
-		String data="";
-		try {
-			data=sendRequest("data");
-			System.out.println(data);
-		} catch (DebugException e) {
-			WPPException.handleException(e);
-		}
-		//data="i:4456#a(-1):123.0#reservoir:reservorlevel1%56:reservorlevel2%1234";
-		fDataStack=generateTree(data);
-		DebugCorePlugin.dataStack=fDataStack;
 		
 		final IWorkbench workbench=PlatformUI.getWorkbench();
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
 				try {
-					WPPVariableView variableView = (WPPVariableView) workbench.getActiveWorkbenchWindow().getActivePage().showView(DebugCorePlugin.ID_WPP_VARIABLE_VIEW);
+					IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
+					
+					String filePath=findFilePathActiveEditor(workBenchPage);
+					
+					String data="";
+					try {
+						data=sendRequest("data:"+filePath);
+					} catch (DebugException e) {
+						WPPException.handleException(e);
+					}
+					//data="i:4456#a(-1):123.0#reservoir:reservorlevel1%56:reservorlevel2%1234";
+					fDataStack=generateTree(data);
+					DebugCorePlugin.dataStack=fDataStack;
+					
+					WPPVariableView variableView = (WPPVariableView) workBenchPage.showView(DebugCorePlugin.ID_WPP_VARIABLE_VIEW);
 					variableView.updateView();
 				} catch (PartInitException e) {
 					WPPException.handleException(e);
@@ -1009,6 +1014,17 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		});
 	}
 	
+	private String findFilePathActiveEditor(IWorkbenchPage workBenchPage){
+		String path="";
+		IEditorPart editorPart=workBenchPage.getActiveEditor() ;
+		if (editorPart != null){
+			IEditorInput input = editorPart.getEditorInput();
+			IFile file = ResourceUtil.getFile(input);
+			path = file.getRawLocation().toString();
+		}
+		return path;
+	}
+	
 	public void openSourceHighlight(){
 		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() { 
 			public void run() { 
@@ -1029,13 +1045,6 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		}); 
 	}
 	
-	/**
-	 * Returns this debug target's single thread, or <code>null</code>
-	 * if terminated.
-	 * 
-	 * @return this debug target's single thread, or <code>null</code>
-	 * if terminated
-	 */
 	protected synchronized WPPThread getThread() {
 		return fThread;
 	}

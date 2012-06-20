@@ -18,6 +18,7 @@ Import-Package: org.eclipse.core.runtime;version="3.4.0",
  org.eclipse.jface.text,
  org.eclipse.ui,
  org.eclipse.ui.dialogs,
+ org.eclipse.ui.ide,
  org.eclipse.ui.part,
  org.eclipse.ui.texteditor,
  org.osgi.framework

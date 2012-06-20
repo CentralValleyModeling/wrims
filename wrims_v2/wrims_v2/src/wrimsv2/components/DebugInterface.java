@@ -15,6 +15,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.antlr.runtime.RecognitionException;
+
 import com.sun.java.util.collections.Arrays;
 
 import wrimsv2.commondata.solverdata.SolverData;
@@ -26,6 +28,9 @@ import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.evaluator.EvalExpression;
+import wrimsv2.wreslparser.elements.FileParser;
+import wrimsv2.wreslparser.elements.SimulationDataSet;
+import wrimsv2.wreslparser.grammar.WreslTreeWalker;
 
 public class DebugInterface {
 	private ServerSocket requestSocket;
@@ -126,6 +131,20 @@ public class DebugInterface {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}else if (request.startsWith("data:")){
+			int index=request.indexOf(":");
+			try {
+				if (request.equals("data:")){
+					sendRequest("");
+				}else{
+					String fileName=request.substring(index+1);
+					dataString=getDataInOneFile(fileName);
+					sendRequest(dataString);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}else if (request.equals("alldata")){
 			try{
 				dataString=getAllDataString();
@@ -211,24 +230,59 @@ public class DebugInterface {
 		}
 	}
 	
-	public String getDataString(){
+	public String getDataInOneFile(String fileFullPath){
 		String dataString="";
-		for (int i=0; i<allDebugVariables.length; i++){
-			String variable=allDebugVariables[i];
-			if (ControlData.currSvMap.containsKey(variable)){
-				Number value=ControlData.currSvMap.get(variable).getData().getData();
-				dataString=dataString+variable+":"+value+"#";
+		String modelName=ControlData.currStudyDataSet.getModelList().get(ControlData.currCycleIndex);
+		ModelDataSet mds=ControlData.currStudyDataSet.getModelDataSetMap().get(modelName);
+		Map<String, Timeseries> tsMap = mds.tsMap;
+		Map<String, Dvar> dvMap = SolverData.getDvarMap();
+		Map<String, Svar> svMap = mds.svMap;
+		Map<String, Svar> svFutMap = mds.svFutMap;
+		Map<String, Alias> asMap = mds.asMap;
+		try {
+			WreslTreeWalker walker = FileParser.parseOneFileForDebug(fileFullPath);
+			if (walker==null) return dataString;
+			SimulationDataSet fileDataSet = walker.thisFileDataSet;
+			ArrayList<String> dvList = fileDataSet.dvList;
+			ArrayList<String> svList = fileDataSet.svList;
+			ArrayList<String> asList = fileDataSet.asList;
+			ArrayList<String> tsList = fileDataSet.tsList;
+			ArrayList<String> sortedList=fileDataSet.asList;
+			asList.removeAll(dvList);
+			sortedList.addAll(dvList);
+			sortedList.addAll(svList);
+			sortedList.addAll(tsList);
+			
+			ArrayList<String> gList = fileDataSet.gList;
+			for (String gName:gList){
+				Set<String> dependants = fileDataSet.gMap.get(gName).expressionDependants;
+				Iterator<String> iterator = dependants.iterator();
+				while (iterator.hasNext()){
+					String varName=iterator.next();
+					if (!sortedList.contains(varName)){
+						sortedList.add(varName);
+					}
+				}
 			}
-			if (ControlData.currDvMap.containsKey(variable)){
-				Number value=ControlData.currDvMap.get(variable).getData().getData();
-				dataString=dataString+variable+":"+value+"#";
+			
+			Collections.sort(sortedList);
+			for (String variable: sortedList){
+				if (svMap.containsKey(variable)){
+					dataString=dataString+variable+":"+df.format(svMap.get(variable).getData().getData())+"#";
+				}else if (dvMap.containsKey(variable)){
+					dataString=dataString+variable+":"+df.format(dvMap.get(variable).getData().getData())+"#";
+				}else if (tsMap.containsKey(variable)){
+					dataString=dataString+variable+":"+df.format(tsMap.get(variable).getData().getData())+"#";
+				}else if (asMap.containsKey(variable)){
+					dataString=dataString+variable+":"+df.format(asMap.get(variable).getData().getData())+"#";
+				}
 			}
-			if (ControlData.currAliasMap.containsKey(variable)){
-				Number value=ControlData.currAliasMap.get(variable).getData().getData();
-				dataString=dataString+variable+":"+value+"#";
-			}
+			if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
+		} catch (RecognitionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-2);
+		
 		return dataString;
 	}
 	
@@ -310,7 +364,7 @@ public class DebugInterface {
 			dataString=dataString+variable+":"+df.format(allData.get(variable))+"#";
 		}
 		
-		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-2);
+		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
 		return dataString;
 	}
 	
@@ -366,8 +420,29 @@ public class DebugInterface {
 				goalString=goalString+ec.getSign()+"0#";
 			}
 		}
-		if (goalString.endsWith("#")) goalString=goalString.substring(0, goalString.length()-2);
+		if (goalString.endsWith("#")) goalString=goalString.substring(0, goalString.length()-1);
 		return goalString;
+	}
+	
+	public String getDataString(){
+		String dataString="";
+		for (int i=0; i<allDebugVariables.length; i++){
+			String variable=allDebugVariables[i];
+			if (ControlData.currSvMap.containsKey(variable)){
+				Number value=ControlData.currSvMap.get(variable).getData().getData();
+				dataString=dataString+variable+":"+value+"#";
+			}
+			if (ControlData.currDvMap.containsKey(variable)){
+				Number value=ControlData.currDvMap.get(variable).getData().getData();
+				dataString=dataString+variable+":"+value+"#";
+			}
+			if (ControlData.currAliasMap.containsKey(variable)){
+				Number value=ControlData.currAliasMap.get(variable).getData().getData();
+				dataString=dataString+variable+":"+value+"#";
+			}
+		}
+		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-2);
+		return dataString;
 	}
 	
 	public static void main(String[] args){

@@ -257,6 +257,59 @@ public class FileParser {
 		
 	}	
 
+	public static WreslTreeWalker parseOneFileForDebug(String inputFilePath) throws RecognitionException  {		
 
+		
+		try {
+			stream = new ANTLRFileStream(inputFilePath, "UTF8");
+			}
+	    catch(Exception e) {
+	         //e.printStackTrace();
+	         
+	         System.out.println("File not found: "+ inputFilePath);
+	         return null;
+	         //System.exit(1);
+	         
+	        }
+		    
+		WreslTreeLexer lexer = new WreslTreeLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);		
+
+		WreslTreeParser parser = new WreslTreeParser(tokenStream);
+		
+		parser.currentAbsolutePath = new File(inputFilePath).getAbsolutePath(); 
+		parser.currentAbsoluteParent = new File(inputFilePath).getAbsoluteFile().getParent();
+		
+		//LogUtils.importantMsg("Parsing file: "+parser.currentAbsolutePath);
+		
+		WreslTreeParser.evaluator_return parser_evaluator = parser.evaluator();
+		
+//		// / check if sequence contains models not defined
+//		ArrayList<String> undefined_models = parser.model_in_sequence;
+//		parser.model_in_sequence.removeAll(parser.model_list);
+//		if (undefined_models.size()>0 ){
+//			LogUtils.errMsg("Sequence has undefined models: ", undefined_models);
+//		}
+		
+		// / for debug info
+		parser.commonTree = (CommonTree) parser_evaluator.getTree();
+		//if (showTree) LogUtils.importantMsg("tree = " + parser.commonTree.toStringTree());
+		
+		// / feed walker with parser's tree output
+		CommonTreeNodeStream nodeStream = new CommonTreeNodeStream(parser_evaluator.getTree());
+		nodeStream.setTokenStream(tokenStream); // important trick to avoid null exception in tree walker
+		WreslTreeWalker walker = new WreslTreeWalker(nodeStream);
+		
+		walker.commonTree = parser.commonTree;
+		walker.currentAbsolutePath = parser.currentAbsolutePath; 
+		walker.currentAbsoluteParent = parser.currentAbsoluteParent;
+
+		//if (showTree) LogUtils.importantMsg("Walking tree: "+parser.currentAbsolutePath);
+		
+		walker.evaluator();
+		
+		return walker;
+		
+	}
 }
 	
