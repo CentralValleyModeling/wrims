@@ -1039,7 +1039,30 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	}
 	
 	public void updateGoalView(){
-		
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				try {
+					IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
+					
+					String filePath=findFilePathActiveEditor(workBenchPage);
+					
+					String data="";
+					try {
+						data=sendRequest("goal:"+filePath);
+					} catch (DebugException e) {
+						WPPException.handleException(e);
+					}
+					fGoalStack=generateTree(data);
+					DebugCorePlugin.goalStack=fGoalStack;
+					
+					WPPGoalView goalView = (WPPGoalView) workBenchPage.showView(DebugCorePlugin.ID_WPP_GOAL_VIEW);
+					goalView.updateView();
+				} catch (PartInitException e) {
+					WPPException.handleException(e);
+				}
+			}
+		});
 	}
 	
 	private String findFilePathActiveEditor(IWorkbenchPage workBenchPage){

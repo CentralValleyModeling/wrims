@@ -153,6 +153,20 @@ public class DebugInterface {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}else if (request.startsWith("goal:")){
+			int index=request.indexOf(":");
+			try {
+				if (request.equals("goal:")){
+					sendRequest("");
+				}else{
+					String fileName=request.substring(index+1);
+					goalString=getGoalInOneFile(fileName);
+					sendRequest(goalString);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}else if (request.equals("allgoals")){
 			try{
 				goalString=getAllGoalString();
@@ -284,6 +298,68 @@ public class DebugInterface {
 		}
 		
 		return dataString;
+	}
+	
+	public String getGoalInOneFile(String fileFullPath){
+		String goalString="";
+		Map<String, EvalConstraint> gMap = SolverData.getConstraintDataMap();
+		
+		try {
+			WreslTreeWalker walker = FileParser.parseOneFileForDebug(fileFullPath);
+			if (walker==null) return goalString;
+			SimulationDataSet fileDataSet = walker.thisFileDataSet;	
+			ArrayList<String> sortedGoalList = fileDataSet.gList;
+			
+			Collections.sort(sortedGoalList);
+			for (int i=0; i<sortedGoalList.size(); i++){
+				String goalName=sortedGoalList.get(i);
+				goalString=goalString+goalName+":";
+				EvalConstraint ec=gMap.get(goalName);
+				EvalExpression ee=ec.getEvalExpression();
+				Map<String, IntDouble> multiplier = ee.getMultiplier();
+				Set<String> mKeySet = multiplier.keySet();
+				Iterator<String> mi = mKeySet.iterator();
+				while (mi.hasNext()){
+					String variable=mi.next();
+					Number value=multiplier.get(variable).getData();
+					double value1=value.doubleValue();
+					if (goalString.endsWith(":")){
+						if (value1==1.0){
+							goalString=goalString+variable;
+						}else if (value1==-1.0){
+							goalString=goalString+"-"+variable;
+						}else{
+							goalString=goalString+value+variable;
+						}
+					}else{
+						if (value1==1.0){
+							goalString=goalString+"+"+variable;
+						}else if (value1 == -1.0){
+							goalString=goalString+"-"+variable;
+						}else if(value1>=0){
+							goalString=goalString+"+"+value+variable;
+						}else{
+							goalString=goalString+value+variable;
+						}
+					}
+				}
+				Number value=ee.getValue().getData();
+				double value1=value.doubleValue();
+				if (value1>0){
+					goalString=goalString+"+"+value+ec.getSign()+"0#";
+				}else if(value1<0){
+					goalString=goalString+value+ec.getSign()+"0#";
+				}else{
+					goalString=goalString+ec.getSign()+"0#";
+				}
+			}
+			if (goalString.endsWith("#")) goalString=goalString.substring(0, goalString.length()-1);
+		} catch (RecognitionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return goalString;
 	}
 	
 	public String getAllDataString(){
