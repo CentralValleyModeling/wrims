@@ -103,7 +103,14 @@ public class ConfigUtils {
 
 
 		String mainfile = configMap.get("mainfile").toLowerCase();
-		String mainFilePath = new File(StudyUtils.configDir, mainfile).getAbsolutePath();
+		
+		String mainFilePath = "";
+		
+		if (mainfile.contains(":")){
+			mainFilePath =  new File(mainfile).getAbsolutePath();
+		} else { 
+			mainFilePath =  new File(StudyUtils.configDir, mainfile).getAbsolutePath();
+		}
 		
 		if (mainfile.endsWith(".par")) {
 			StudyUtils.loadParserData = true;
@@ -121,15 +128,41 @@ public class ConfigUtils {
 		}
 
 		// FilePaths.mainDirectory = configMap.get("maindir");
+		
 		try {
-			FilePaths.groundwaterDir =  new File(StudyUtils.configDir, configMap.get("groundwaterdir")).getCanonicalPath()+"\\";
-			System.out.println("GroundWaterDir: "+FilePaths.groundwaterDir);
-			FilePaths.setSvarDssPaths(new File(StudyUtils.configDir, configMap.get("svarfile")).getCanonicalPath());
+			
+			if (configMap.get("groundwaterdir").length()>0) {
+				if (configMap.get("groundwaterdir").contains(":")){
+					FilePaths.groundwaterDir =  new File(configMap.get("groundwaterdir")).getCanonicalPath()+"\\";
+				} else { 
+					FilePaths.groundwaterDir =  new File(StudyUtils.configDir, configMap.get("groundwaterdir")).getCanonicalPath()+"\\";
+				}
+				System.out.println("GroundWaterDir: "+FilePaths.groundwaterDir);
+			} else {
+				FilePaths.groundwaterDir = "None";
+			}
+			
+			if (configMap.get("svarfile").contains(":")){
+				FilePaths.setSvarDssPaths(new File(configMap.get("svarfile")).getCanonicalPath());
+			} else {
+				FilePaths.setSvarDssPaths(new File(StudyUtils.configDir, configMap.get("svarfile")).getCanonicalPath());
+			}
 			System.out.println("SvarFile:       "+FilePaths.fullSvarDssPath);
-			FilePaths.setInitDssPaths(new File(StudyUtils.configDir, configMap.get("initfile")).getCanonicalPath());
+			
+			if (configMap.get("initfile").contains(":")){
+				FilePaths.setInitDssPaths(new File(configMap.get("initfile")).getCanonicalPath());
+			} else {
+				FilePaths.setInitDssPaths(new File(StudyUtils.configDir, configMap.get("initfile")).getCanonicalPath());
+			}
 			System.out.println("InitFile:       "+FilePaths.fullInitDssPath);
-			FilePaths.setDvarDssPaths(new File(StudyUtils.configDir, configMap.get("dvarfile")).getCanonicalPath());
+			
+			if (configMap.get("dvarfile").contains(":")) {
+				FilePaths.setDvarDssPaths(new File(configMap.get("dvarfile")).getCanonicalPath());
+			} else {
+				FilePaths.setDvarDssPaths(new File(StudyUtils.configDir, configMap.get("dvarfile")).getCanonicalPath());
+			}
 			System.out.println("DvarFile:       "+FilePaths.fullDvarDssPath);
+		
 		} catch (IOException e){
 			Error.addConfigError("Invalid file path in config file");
 			//System.out.println("Invalid file path");
@@ -164,6 +197,7 @@ public class ConfigUtils {
 		ControlData.endDay = TimeOperation.numberOfDays(ControlData.endMonth, ControlData.endYear);
 
 		ControlData.solverName = configMap.get("solver");
+		
 		ControlData.currYear = ControlData.startYear;
 		ControlData.currMonth = ControlData.startMonth;
 		ControlData.currDay = ControlData.startDay;
@@ -180,6 +214,12 @@ public class ConfigUtils {
 		System.out.println("StopYear:       "+ControlData.endYear);
 		System.out.println("StopMonth:      "+ControlData.endMonth);
 		System.out.println("Solver:         "+ControlData.solverName);
+		
+		final String[] solvers = {"xa","xalog","lpsolve"};
+
+		if (!Arrays.asList(solvers).contains(ControlData.solverName.toLowerCase())){
+			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);	
+		 }
 		
 		// SendAliasToDvar default is false
 		if (configMap.keySet().contains("sendaliastodvar")){
@@ -215,7 +255,7 @@ public class ConfigUtils {
 
 		
 		
-		if (ControlData.solverName.toLowerCase().contains("lpsolve")) {
+		if (ControlData.solverName.equalsIgnoreCase("lpsolve")) {
 			
 			// LpSolveConfigFile
 			if (configMap.keySet().contains("lpsolveconfigfile")) {
@@ -265,30 +305,37 @@ public class ConfigUtils {
 		}
 		
 		// processed only for ILP
-		if (ControlData.solverName.toLowerCase().contains("ilp")) {
+		
+		// TODO: lpsolve and ilp log is binded. need to enable passing string instead of file
+		if (ControlData.solverName.equalsIgnoreCase("lpsolve")) configMap.put("ilplog","yes");
+		
+		
+		String strIlpLog = configMap.get("ilplog");
+		if (strIlpLog.equalsIgnoreCase("yes") || strIlpLog.equalsIgnoreCase("true")) {
 
-			// IlpWriteVarValue
+			ILP.logging = true;
+			// IlpLogVarValue
 			// default is true
-			if (configMap.keySet().contains("ilpwritevarvalue")) {
+			if (configMap.keySet().contains("ilplogvarvalue")) {
 
-				String s = configMap.get("ilpwritevarvalue");
+				String s = configMap.get("ilplogvarvalue");
 
 				if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")) {
-					ILP.writeOutVariableValue = true;
+					ILP.loggingVariableValue = true;
 				}
 				else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")) {
-					ILP.writeOutVariableValue = false;
+					ILP.loggingVariableValue = false;
 				}
 				else {
-					ILP.writeOutVariableValue = true;
+					ILP.loggingVariableValue = false;
 				}
 			}
 
-			// IlpMaximumFractionDigits
+			// IlpLogMaximumFractionDigits
 			// default is 8
-			if (configMap.keySet().contains("ilpmaximumfractiondigits")) {
+			if (configMap.keySet().contains("ilplogmaximumfractiondigits")) {
 
-				String s = configMap.get("ilpmaximumfractiondigits");
+				String s = configMap.get("ilplogmaximumfractiondigits");
 				int d;
 
 				try {
@@ -297,14 +344,14 @@ public class ConfigUtils {
 
 				}
 				catch (Exception e) {
-					// TODO: handle exception
-					// System.out.println("#Error: IlpMaximumFractionDigits not recognized: "+s);
-					Error.addConfigError("IlpMaximumFractionDigits not recognized: " + s);
+
+					Error.addConfigError("IlpLogMaximumFractionDigits not recognized: " + s);
 				}
 			}
 
-			System.out.println("IlpWriteVarValue:         " + ILP.writeOutVariableValue);
-			System.out.println("IlpMaximumFractionDigits: " + ILP.maximumFractionDigits);
+			System.out.println("IlpLog:                 " + ILP.logging);
+			System.out.println("IlpLogVarValue:         " + ILP.loggingVariableValue);
+			System.out.println("IlpLogMaximumFractionDigits: " + ILP.maximumFractionDigits);
 
 		}
 		
@@ -463,8 +510,7 @@ public class ConfigUtils {
 		
 		// check missing fields
 		String[] requiredFields = { "MainFile", "Solver", "DvarFile", "SvarFile", "SvarAPart",
-				"SvarFPart", "InitFile", "InitFPart", "TimeStep", "StartYear", "StartMonth",
-				"GroundwaterDir" };
+				"SvarFPart", "InitFile", "InitFPart", "TimeStep", "StartYear", "StartMonth" };
 
 		for (String k : requiredFields) {
 			if (!configMap.keySet().contains(k.toLowerCase())) {
@@ -537,9 +583,18 @@ public class ConfigUtils {
 			
 	
 		// check run dir and mainfile
-		// don't limit config file to run folder
 		//StudyUtils.runDir = configFile.getParent();	
-		File mf = new File(StudyUtils.configDir, configMap.get("mainfile"));
+		// TODO: duplcate codes. clean it up!
+		
+		File mf = null;
+		String mainfile = configMap.get("mainfile");
+		
+		if (mainfile.contains(":")){
+			mf = new File(mainfile);
+		} else { 
+			mf = new File(StudyUtils.configDir, mainfile);
+		}
+		
 		
 		try {
 			mf.getCanonicalPath();
@@ -561,10 +616,11 @@ public class ConfigUtils {
 		configMap.put("saveparserdata".toLowerCase(), "No");
 		configMap.put("solver".toLowerCase(), "XA");
 		configMap.put("timestep".toLowerCase(), "1MON");
-		configMap.put("groundwaterdir".toLowerCase(), "\\");
 		configMap.put("showwresllog".toLowerCase(), "yes");
+		configMap.put("groundwaterdir".toLowerCase(), "");
 		configMap.put("lookupsubdir".toLowerCase(), "");
-		configMap.put("IlpWriteVarValue".toLowerCase(), "yes");
+		configMap.put("IlpLog".toLowerCase(), "no");
+		configMap.put("IlpLogVarValue".toLowerCase(), "no");
 
 
 		return configMap;

@@ -185,10 +185,12 @@ public class ControllerBatch {
 	
 	public void runModel(StudyDataSet sds){
 		System.out.println("==============Run Study Start============");
-		if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG") ){
-			runModelXA(sds);
-		}else if (ControlData.solverName.toLowerCase().contains("ilp")){
+		if (ILP.logging){
 			runModelILP(sds);
+	    } else if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG") ){
+			runModelXA(sds);
+		} else {
+			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);
 		}
 //		}else if (ControlData.solverName.equalsIgnoreCase("LPSolve")){
 //			try {
@@ -319,12 +321,14 @@ public class ControllerBatch {
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
 		
-		if (ControlData.solverName.toLowerCase().contains("lpsolve")) {
+		if (ControlData.solverName.equalsIgnoreCase("lpsolve")) {
 			ControlData.solverType = Param.SOLVER_LPSOLVE;
 			// initiate lpsolve
-		} else {
+		} else if (ControlData.solverName.toLowerCase().contains("xa")) {
 			ControlData.solverType = Param.SOLVER_XA; //default
 			new initialXASolver();
+		} else {
+			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);
 		}
 		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
@@ -371,9 +375,11 @@ public class ControllerBatch {
 						ControlData.isPostProcessing=false;
 						mds.processModel();
 					
-						ILP.setIlpFile();
-						ILP.writeIlp();
-						if (ILP.writeOutVariableValue) ILP.writeSvarValue();
+						if (ILP.logging) {
+							ILP.setIlpFile();
+							ILP.writeIlp();
+							if (ILP.loggingVariableValue) ILP.writeSvarValue();
+						}
 					
 						if (Error.error_evaluation.size()>=1){
 							Error.writeEvaluationErrorFile("evaluation_error.txt");
@@ -385,13 +391,17 @@ public class ControllerBatch {
 				            LPSolveSolver.setLP(ILP.lpSolveFilePath);
 				            LPSolveSolver.solve();
 				            if (Error.error_solving.size()<1) {
-				            	ILP.writeObjValue_LPSOLVE();
-				            	if (ILP.writeOutVariableValue) ILP.writeDvarValue_LPSOLVE();
+				            	if (ILP.logging) {
+				            		ILP.writeObjValue_LPSOLVE();
+				            		if (ILP.loggingVariableValue) ILP.writeDvarValue_LPSOLVE();
+				            	}
 				            }
 				        } else {
 							new XASolver(); // default
-				            ILP.writeObjValue_XA();
-				            if (ILP.writeOutVariableValue) ILP.writeDvarValue_XA();
+							if (ILP.logging) {
+								ILP.writeObjValue_XA();
+								if (ILP.loggingVariableValue) ILP.writeDvarValue_XA();
+							}
 				        }
 
 
