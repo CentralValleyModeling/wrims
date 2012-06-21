@@ -122,7 +122,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	private IWorkbenchPart fPart;
 	private IPartListener fPartListener;
 	private IPartListener2 fPartListener2;
-	private ArrayList<String> dataLoadedViewNames=new ArrayList<String>(); 
+	private ArrayList<String> allVGLoadedViewNames=new ArrayList<String>(); 
 	private ArrayList<String> visibleViewNames = new ArrayList<String>();
 	
 	// event dispatch job
@@ -301,15 +301,15 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 				IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
 				
 				visibleViewNames=new ArrayList<String>();
-				dataLoadedViewNames=new ArrayList<String>();
+				allVGLoadedViewNames=new ArrayList<String>();
 				
 				WPPAllVariableView allVariableView = (WPPAllVariableView) workBenchPage.findView(DebugCorePlugin.ID_WPP_ALLVARIABLE_VIEW);
 				if (workBenchPage.isPartVisible(allVariableView)){
 					if (!visibleViewNames.contains(DebugCorePlugin.TITLE_ALLVARIABLES_VIEW)){
 						visibleViewNames.add(DebugCorePlugin.TITLE_ALLVARIABLES_VIEW);
 					}
-					if (!dataLoadedViewNames.contains(DebugCorePlugin.TITLE_ALLVARIABLES_VIEW)){
-						dataLoadedViewNames.add(DebugCorePlugin.TITLE_ALLVARIABLES_VIEW);
+					if (!allVGLoadedViewNames.contains(DebugCorePlugin.TITLE_ALLVARIABLES_VIEW)){
+						allVGLoadedViewNames.add(DebugCorePlugin.TITLE_ALLVARIABLES_VIEW);
 					}
 				}
 				WPPVariableView variableView = (WPPVariableView) workBenchPage.findView(DebugCorePlugin.ID_WPP_VARIABLE_VIEW);
@@ -317,26 +317,20 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 					if (!visibleViewNames.contains(DebugCorePlugin.TITLE_VARIABLES_VIEW)){
 						visibleViewNames.add(DebugCorePlugin.TITLE_VARIABLES_VIEW);
 					}
-					if (!dataLoadedViewNames.contains(DebugCorePlugin.TITLE_VARIABLES_VIEW)){
-						dataLoadedViewNames.add(DebugCorePlugin.TITLE_VARIABLES_VIEW);
-					}
 				}
 				WPPAllGoalView allGoalView = (WPPAllGoalView) workBenchPage.findView(DebugCorePlugin.ID_WPP_ALLGOAL_VIEW);
 				if (workBenchPage.isPartVisible(allGoalView)){
 					if (!visibleViewNames.contains(DebugCorePlugin.TITLE_ALLGOALS_VIEW)){
 						visibleViewNames.add(DebugCorePlugin.TITLE_ALLGOALS_VIEW);
 					}
-					if (!dataLoadedViewNames.contains(DebugCorePlugin.TITLE_ALLGOALS_VIEW)){
-						dataLoadedViewNames.add(DebugCorePlugin.TITLE_ALLGOALS_VIEW);
+					if (!allVGLoadedViewNames.contains(DebugCorePlugin.TITLE_ALLGOALS_VIEW)){
+						allVGLoadedViewNames.add(DebugCorePlugin.TITLE_ALLGOALS_VIEW);
 					}
 				}
 				WPPGoalView goalView = (WPPGoalView) workBenchPage.findView(DebugCorePlugin.ID_WPP_GOAL_VIEW);
 				if (workBenchPage.isPartVisible(goalView)){
 					if (!visibleViewNames.contains(DebugCorePlugin.TITLE_GOALS_VIEW)){
 						visibleViewNames.add(DebugCorePlugin.TITLE_GOALS_VIEW);
-					}
-					if (!dataLoadedViewNames.contains(DebugCorePlugin.TITLE_GOALS_VIEW)){
-						dataLoadedViewNames.add(DebugCorePlugin.TITLE_GOALS_VIEW);
 					}
 				}
 				final IWorkbench workbench=PlatformUI.getWorkbench();
@@ -411,8 +405,14 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 							IWorkbenchPart part = partRef.getPart(false);
 							if (part instanceof AbstractDebugView){
 								String viewName=part.getTitle();
-								if (!dataLoadedViewNames.contains(viewName)){
-									dataLoadedViewNames.add(viewName);
+								if (viewName.equals(DebugCorePlugin.TITLE_ALLVARIABLES_VIEW) || viewName.equals(DebugCorePlugin.TITLE_ALLGOALS_VIEW)){
+									if (!allVGLoadedViewNames.contains(viewName)){
+										allVGLoadedViewNames.add(viewName);
+										if (isSuspended()){
+											processView(viewName);
+										}
+									}
+								}else{
 									if (isSuspended()){
 										processView(viewName);
 									}
@@ -438,8 +438,8 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 							IWorkbenchPart part = partRef.getPart(false);
 							if (part instanceof AbstractDebugView){
 								String viewName=part.getTitle();
-								if (dataLoadedViewNames.contains(viewName)){
-									dataLoadedViewNames.remove(viewName);
+								if (allVGLoadedViewNames.contains(viewName)){
+									allVGLoadedViewNames.remove(viewName);
 								}
 							}
 						}
