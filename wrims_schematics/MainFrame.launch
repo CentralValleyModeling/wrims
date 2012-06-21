@@ -15,5 +15,5 @@
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="."/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="wrims_schematics"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx256M -Xss32M -Djava.library.path=../lib"/>
-<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:wrims_schematics/resources}"/>
+<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:wrims_schematics/bin}"/>
 </launchConfiguration>
