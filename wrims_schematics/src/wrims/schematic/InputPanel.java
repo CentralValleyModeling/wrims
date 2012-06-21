@@ -46,11 +46,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -63,8 +66,11 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import org.apache.commons.io.FilenameUtils;
+
 import vista.gui.VistaUtils;
 import wrimsv2.evaluator.TimeOperation;
+import wrimsv2.wreslplus.elements.Tools;
 
 /**
  * The panel for the general tab.
@@ -94,6 +100,8 @@ public class InputPanel extends JPanel {
 	// DJE**************************************
 	public static String[] timeSteps = { "1DAY", "1MON" };
 
+	public static String[] runtimeLogOptionList = { "None", "XA log", "ILP log", "ILP & Variable log"};
+	public static String[] solverOptionList = { "XA", "LpSolve"};
 	// *********************************************************************
 
 	/**
@@ -134,7 +142,7 @@ public class InputPanel extends JPanel {
 	 */
 	JPanel createLabelPanel() {
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(17, 1));
+		panel.setLayout(new GridLayout(18, 1));
 		panel.add(createLabel("Study Name:"));
 		panel.add(createLabel("Author:"));
 		panel.add(createLabel("Date:"));
@@ -154,7 +162,8 @@ public class InputPanel extends JPanel {
 		// ****************************************
 		panel.add(createLabel("Start Date:"));
 		panel.add(createLabel("Stop Date:"));
-		panel.add(createLabel("Sim Option:"));
+		panel.add(createLabel("Solver Option:"));
+		panel.add(createLabel("Log Option:"));
 		panel.add(createLabel(""));
 		return panel;
 	}
@@ -178,7 +187,7 @@ public class InputPanel extends JPanel {
 	 */
 	JPanel createAttribPanel() {
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(17, 1));
+		panel.setLayout(new GridLayout(18, 1));
 		panel.add(createTextPanel(0));// name
 		panel.add(createTextPanel(1));// author
 		panel.add(createTextPanel(2));// date
@@ -198,7 +207,8 @@ public class InputPanel extends JPanel {
 		// ************************************************
 		panel.add(createDatePanel(0));// start date
 		panel.add(createDatePanel(1));// end date
-		panel.add(createSimOptionPanel());// sim options
+		panel.add(createSolverOptionPanel());// run options
+		panel.add(createRuntimeLogOptionPanel());// run options
 		panel.add(createRunPanel());
 		return panel;
 	}
@@ -287,47 +297,84 @@ public class InputPanel extends JPanel {
 		return panel;
 	}
 
-	JPanel createSimOptionPanel() {
+	JPanel createSolverOptionPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		_simOption = new JComboBox(optionList);
-		_simOption.setSelectedItem("SLP");
-		_numSeq = new JComboBox(seqList);
-		panel.add(_simOption);
-		panel.add(new JLabel("     # Sequences  "));
-		panel.add(_numSeq);
+		_solverOption = new JComboBox(solverOptionList);
+		_solverOption.setSelectedItem("XA");
+		_lpsolveOption = new JComboBox(runtimeLogOptionList);
+
+		_lpsolveParamFile = new JTextField(20);
+		_lpsolveParamFile.setEnabled(false);
+		_lpsolveParamFile.setVisible(false);
+		//panel.add(_lpsolveParamFile);
+		_betaFeatureLabel = new JLabel();
+		_betaFeatureLabel.setText(" Beta Feature! ");
+		_betaFeatureLabel.setVisible(false);
+		
+		_lpsolveParamFileLabel = new JLabel();
+		_lpsolveParamFileLabel.setText("    Solver Param File:  ");
+		_lpsolveParamFileLabel.setForeground(Color.gray);
+		_lpsolveParamFileLabel.setVisible(false);
+		
+		_solverOption.addItemListener(new SolverOptionItemListener());
+		panel.add(_solverOption);
+		panel.add(_betaFeatureLabel);
+		panel.add(_lpsolveParamFileLabel);
+		//panel.add(new JLabel("    Solver Param File:  "));
+		panel.add(_lpsolveParamFile);
+
 		return panel;
 	}
 
+	JPanel createRuntimeLogOptionPanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		_runtimeLogOption = new JComboBox(runtimeLogOptionList);
+		_runtimeLogOption.setSelectedItem("None");
+
+		//panel.add(new JLabel("     Log Option:  "));
+		panel.add(_runtimeLogOption);
+
+		return panel;
+	}
+	
 	JPanel createRunPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JButton runButton = new JButton("Run");
 		panel.add(runButton);
-		runButton.addActionListener(new GuiTaskListener("Running Study ... ",
-				"Done") {
+		runButton.addActionListener(new GuiTaskListener("Running Study ... ", "Done") {
 			public void doWork() {
-				runStudy();
+				if (_runtimeLogOption.getSelectedItem().toString().toLowerCase().contains("ilp")){
+				    runConfig();
+				} else {
+					runStudy();	
+				}
 			}
 		});
-		
+
 		JButton batchFileButton = new JButton("Generate File");
 		panel.add(batchFileButton);
-		batchFileButton.addActionListener(new GuiTaskListener("Generating Batch File ... ", 
-				"Done"){
-			public void doWork(){
+		batchFileButton.addActionListener(new GuiTaskListener("Generating Batch File or Config File ... ", "Done") {
+			public void doWork() {
 				String wrimsv2EnginePath = System.getenv("WRIMSv2_Engine_Home");
 				String runFileFullPath = wrimsv2EnginePath + "bin\\WRIMSv2_Engine.bat";
-				generateBatchFile(runFileFullPath, wrimsv2EnginePath);
+				if (_runtimeLogOption.getSelectedItem().toString().toLowerCase().contains("ilp")){
+					// 
+				} else {
+					generateBatchFile(runFileFullPath, wrimsv2EnginePath);
+				}
+				generateConfigFile(); // always generated
 			}
 		});
-		
-		xalog=new JCheckBox("xa log");
-		ilplog = new JCheckBox("ilp log");
-		useXAFreeLimitedLicense = new JCheckBox("use XA free limited License");
-		panel.add(xalog);
-		panel.add(ilplog);
-		panel.add(useXAFreeLimitedLicense);
+
+		//xalog = new JCheckBox("xa log");
+		//ilplog = new JCheckBox("ilp log");
+		_useXAFreeLimitedLicense = new JCheckBox("use XA free limited License");
+		//panel.add(xalog);
+		//panel.add(ilplog);
+		panel.add(_useXAFreeLimitedLicense);
 		return panel;
 	}
 
@@ -357,13 +404,10 @@ public class InputPanel extends JPanel {
 			args[13] = String.valueOf(TimeOperation.monthValue(endMonth
 					.toLowerCase()));
 			args[14] = (String) _day[1].getSelectedItem();
-			if (ilplog.isSelected() && xalog.isSelected()) {
-				args[15] = "ILP_XALOG";
-			}else if (ilplog.isSelected()) {
-				args[15] = "ILP";
-			}else if (xalog.isSelected()) {
+
+			if (_runtimeLogOption.getSelectedItem().toString().equalsIgnoreCase("XA log")) {
 				args[15] = "XALOG";
-			}else{
+			} else {
 				args[15] = "XA";
 			}
 			args[16] = "csv";
@@ -387,7 +431,7 @@ public class InputPanel extends JPanel {
 			
 			String jarForXA = "XAOptimizer.jar";
 			
-			if (useXAFreeLimitedLicense.isSelected()) jarForXA="CalLiteV16.jar";
+			if (_useXAFreeLimitedLicense.isSelected()) jarForXA="CalLiteV16.jar";
 			
 			String executeCommand = javaFullPath
 					+ " -Xmx1600m -Xss1024K -Duser.timezone=UTC -Djava.library.path="
@@ -419,10 +463,124 @@ public class InputPanel extends JPanel {
 		}
 	}
 	
+	String generateConfigFile(){
+		
+		Map<String, String> configMap = new HashMap<String, String>();
+		String configFilePath = null;
+		
+		try {				
+			
+			configMap.put("MainFile".toLowerCase(), _fileText[0].getText().toString());
+			configMap.put("DvarFile".toLowerCase(),   _fileText[2].getText().toString());
+			configMap.put("SvarFile".toLowerCase(),   _fileText[1].getText().toString());
+			configMap.put("SvarAPart".toLowerCase(),  _entryText[5].getText().toString());
+			configMap.put("SvarFPart".toLowerCase(),  _entryText[3].getText().toString());
+			configMap.put("InitFile".toLowerCase(),   _fileText[3].getText().toString());
+			configMap.put("InitFPart".toLowerCase(),  _entryText[4].getText().toString());
+			configMap.put("TimeStep".toLowerCase(),   _timeStep.getSelectedItem().toString());
+			configMap.put("StartYear".toLowerCase(),  _year[0].getSelectedItem().toString());
+			configMap.put("StopYear".toLowerCase(),   _year[1].getSelectedItem().toString());
+			
+			String startMonth = _month[0].getSelectedItem().toString();
+			String stopMonth  = _month[1].getSelectedItem().toString();
+			
+			configMap.put("StartMonth".toLowerCase(), String.valueOf(TimeOperation.monthValue(startMonth
+					.toLowerCase())));
+			configMap.put("StopMonth".toLowerCase(),  String.valueOf(TimeOperation.monthValue(stopMonth
+					.toLowerCase())));
+			
+			String strGWD = _fileText[4].getText().toString();
+			if (strGWD.length()>0) {
+				configMap.put("groundwaterdir".toLowerCase(), strGWD);
+			} else {
+				configMap.put("groundwaterdir".toLowerCase(), ".");
+			}
+			
+			configMap.put("ShowWreslLog".toLowerCase(), "No");			
+			
+			
+			String strSolver = _solverOption.getSelectedItem().toString();			
+			String strRuntimeLog = _runtimeLogOption.getSelectedItem().toString();
+			
+			// solver
+			if (strSolver.equalsIgnoreCase("XA")) {
+				if (strRuntimeLog.toLowerCase().contains("xa")) {
+					configMap.put("Solver".toLowerCase(), "XALOG");
+				} else {
+					configMap.put("Solver".toLowerCase(), "XA");
+				}
+			} else if (strSolver.equalsIgnoreCase("LpSolve")) {
+				configMap.put("Solver".toLowerCase(), "LpSolve");
+			} else {
+				// TODO: error!
+			}			
+			
+			// IlpLog
+			if (strRuntimeLog.toLowerCase().contains("ilp")){
+				configMap.put("IlpLog".toLowerCase(), "Yes");
+			} else {
+				configMap.put("IlpLog".toLowerCase(), "No");
+			}
+			
+			//IlpLogVarValue
+			if (strRuntimeLog.equalsIgnoreCase("ILP & Variable log")){
+				configMap.put("IlpLogVarValue".toLowerCase(), "Yes");
+			} else {
+				configMap.put("IlpLogVarValue".toLowerCase(), "No");
+			}			
+			
+
+			
+			String mainFileAbsPath = configMap.get("MainFile".toLowerCase());
+			
+			String studyDir = new File(mainFileAbsPath).getParentFile().getParentFile().getAbsolutePath();
+
+			//String wreslName = new File(mainFileAbsPath).getName();
+			//String configName = FilenameUtils.removeExtension(wreslName)+".config";
+			String configName = "__study.config";
+			PrintWriter out = Tools.openFile(studyDir, configName);
+			
+			
+			out.println("MainFile           "+configMap.get("MainFile".toLowerCase()));
+			out.println("Solver             "+configMap.get("solver".toLowerCase()));
+			out.println("DvarFile           "+configMap.get("DvarFile".toLowerCase()));
+			out.println("SvarFile           "+configMap.get("SvarFile".toLowerCase()));
+			out.println("SvarAPart          "+configMap.get("SvarAPart".toLowerCase()));
+			out.println("SvarFPart          "+configMap.get("SvarFPart".toLowerCase()));
+			out.println("InitFile           "+configMap.get("InitFile".toLowerCase()));
+			out.println("InitFPart          "+configMap.get("InitFPart".toLowerCase()));
+			out.println("TimeStep           "+configMap.get("TimeStep".toLowerCase()));
+			out.println("StartYear          "+configMap.get("StartYear".toLowerCase()));
+			out.println("StartMonth         "+configMap.get("StartMonth".toLowerCase()));
+			out.println("StopYear           "+configMap.get("StopYear".toLowerCase()));
+			out.println("StopMonth          "+configMap.get("StopMonth".toLowerCase()));
+			out.println("IlpLog             "+configMap.get("IlpLog".toLowerCase()));
+			out.println("IlpLogVarValue     "+configMap.get("IlpLogVarValue".toLowerCase()));
+			
+			if (strSolver.equalsIgnoreCase("LpSolve")) {
+				
+				out.println("LpSolveConfigFile         callite.lpsolve");
+				out.println("LpSolveNumberOfRetries    2");				
+				
+			}
+			
+			out.close();
+		
+			configFilePath= new File(studyDir, configName).getAbsolutePath();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return configFilePath;
+			
+	}
+
 	void runStudy() {
 		String wrimsv2EnginePath = System.getenv("WRIMSv2_Engine_Home");
 		String runFileFullPath = wrimsv2EnginePath + "bin\\WRIMSv2_Engine.bat";
 		generateBatchFile(runFileFullPath, wrimsv2EnginePath);
+		generateConfigFile();
 		
 		tabbedPane.setSelectedIndex(1);
 		ConsolePanel consolePane = (ConsolePanel) tabbedPane
@@ -450,6 +608,29 @@ public class InputPanel extends JPanel {
 				System.out.println(s);
 			}
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	void runConfig() {
+		String wrimsv2EnginePath = System.getenv("WRIMSv2_Engine_Home");
+		String runFileFullPath = wrimsv2EnginePath + "bin\\runConfig_limitedXA.bat";
+		
+		if (_useXAFreeLimitedLicense.isSelected()) {
+			runFileFullPath = wrimsv2EnginePath + "bin\\runConfig_limitedXA.bat";
+		} else {
+			runFileFullPath = wrimsv2EnginePath + "bin\\runConfig.bat";
+		}
+		
+		String configFilePath = generateConfigFile();
+		
+		Process p;
+		try {
+
+			p = Runtime.getRuntime().exec(new String[]{"cmd.exe", "/c", "start", runFileFullPath, configFilePath});
+
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -534,6 +715,43 @@ public class InputPanel extends JPanel {
 		}
 	}
 
+	private class SolverOptionItemListener implements ItemListener {
+		public void itemStateChanged(ItemEvent e) {
+			if (e.getStateChange() == ItemEvent.SELECTED) {
+				_strSolverOption = e.getItem().toString();
+				if (_strSolverOption.equalsIgnoreCase("LpSolve")) {
+					_runtimeLogOption.removeItem("XA log");
+					_runtimeLogOption.removeItem("None");
+					_runtimeLogOption.setSelectedItem("ILP log");
+					
+					_betaFeatureLabel.setForeground(Color.red);
+					_betaFeatureLabel.setVisible(true);
+					
+					_lpsolveParamFileLabel.setForeground(Color.black);
+					_lpsolveParamFileLabel.setVisible(true);
+					_lpsolveParamFile.setText("callite.lpsolve");
+					_lpsolveParamFile.setVisible(true);
+					
+					_useXAFreeLimitedLicense.setEnabled(false);
+					_useXAFreeLimitedLicense.setSelected(false);
+					
+				} else {
+					_betaFeatureLabel.setVisible(false);
+					_lpsolveParamFile.setText("");
+					_lpsolveParamFile.setVisible(false);
+					_lpsolveParamFileLabel.setVisible(false);
+					
+					_useXAFreeLimitedLicense.setEnabled(true);
+					
+					if (_runtimeLogOption.getItemCount()< 3){
+						_runtimeLogOption.insertItemAt("None", 0);
+						_runtimeLogOption.insertItemAt("XA log", 1);
+					}
+				}
+			}
+		}
+	}
+	
 	private int getDaysInMonth(int month, int year) {
 		int daysInMonth;
 		int daysArray[] = { 31, 30, 31, 31, 28, 31, 30, 31, 30, 31, 31, 30 };
@@ -675,8 +893,8 @@ public class InputPanel extends JPanel {
 		_month[0].setSelectedItem(study.getStartMonth());
 		_year[1].setSelectedItem(study.getStopYear().toString());
 		_month[1].setSelectedItem(study.getStopMonth());
-		_simOption.setSelectedItem(study.getSimOption());
-		_numSeq.setSelectedItem(study.getNumberSequences().toString());
+		//_simOption.setSelectedItem(study.getSimOption());
+		//_numSeq.setSelectedItem(study.getNumberSequences().toString());
 		// DJE***********************************************************
 		if (study.isUpdatedStudyObject()) {
 			_timeStep.setSelectedItem(study.getTimeStep());// DJE
@@ -718,9 +936,9 @@ public class InputPanel extends JPanel {
 		study.setStartYear(new Integer(_year[0].getSelectedItem().toString()));
 		study.setStopMonth(_month[1].getSelectedItem().toString());
 		study.setStopYear(new Integer(_year[1].getSelectedItem().toString()));
-		study.setSimOption(_simOption.getSelectedItem().toString());
-		study.setNumberSequences(new Integer(_numSeq.getSelectedItem()
-				.toString()));
+		//study.setSimOption(_simOption.getSelectedItem().toString());
+		//study.setNumberSequences(new Integer(_numSeq.getSelectedItem()
+		//		.toString()));
 		study.updateStudyObject();// DJE************************
 	}
 
@@ -744,10 +962,12 @@ public class InputPanel extends JPanel {
    *
    */
 	private JTextField[] _fileText, _entryText;
+	private JTextField   _lpsolveParamFile;	
 	// DJE***************************************************
-	public static JLabel _numberSteps;
-	private JComboBox _simOption, _numSeq;
+	public static JLabel _numberSteps, _lpsolveParamFileLabel, _betaFeatureLabel;
+	//private JComboBox _simOption, _numSeq;
 	private String _strTimeStep = new String("1MON");
+	private String _strSolverOption = new String("XA");
 	// private TSItemListener tsl;
 	// private JComboBox[] _month,_year,_day;
 	private int[] _intMonth = { 1, 12 };
@@ -759,13 +979,15 @@ public class InputPanel extends JPanel {
 	// Replaces commented line above for use in Joel's OptionPanel. **********
 	public static JComboBox[] _month, _year;
 	public static JComboBox _timeStep;
+	public static JComboBox _runtimeLogOption, _solverOption, _lpsolveOption;
 	private JComboBox[] _day;
+	
 	// *********************************************************
 
 	private JTextArea _desc;
 	private JTabbedPane tabbedPane;
 	private JCheckBox xalog;
 	private JCheckBox ilplog;
-	private JCheckBox useXAFreeLimitedLicense;
+	private JCheckBox _useXAFreeLimitedLicense;
 	public static int _numYearsMax = 201;
 }
