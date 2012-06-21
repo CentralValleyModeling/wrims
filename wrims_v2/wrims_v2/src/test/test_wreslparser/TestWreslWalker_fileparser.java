@@ -63,6 +63,7 @@ public class TestWreslWalker_fileparser {
 			}
 			Collections.sort(sortedList);
 			System.out.println(sortedList);
+			System.out.println(gList);
 		}catch (RecognitionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

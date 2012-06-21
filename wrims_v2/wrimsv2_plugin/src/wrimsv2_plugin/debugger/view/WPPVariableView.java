@@ -233,7 +233,7 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
 	    	table.getColumn(i).pack();
 	    }
-	    viewer.reveal(viewer.getElementAt(0));
+	    if (dataStack.length>0) viewer.reveal(viewer.getElementAt(0));
 		viewer.refresh();
 	}
 	

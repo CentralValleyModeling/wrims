@@ -294,7 +294,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		*/
 	}
 	
-	public void checkVisibleView(){
+	public void checkVisibleViews(){
 		final IWorkbench workbench=PlatformUI.getWorkbench();
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
@@ -328,6 +328,15 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 					}
 					if (!dataLoadedViewNames.contains(DebugCorePlugin.TITLE_ALLGOALS_VIEW)){
 						dataLoadedViewNames.add(DebugCorePlugin.TITLE_ALLGOALS_VIEW);
+					}
+				}
+				WPPGoalView goalView = (WPPGoalView) workBenchPage.findView(DebugCorePlugin.ID_WPP_GOAL_VIEW);
+				if (workBenchPage.isPartVisible(goalView)){
+					if (!visibleViewNames.contains(DebugCorePlugin.TITLE_GOALS_VIEW)){
+						visibleViewNames.add(DebugCorePlugin.TITLE_GOALS_VIEW);
+					}
+					if (!dataLoadedViewNames.contains(DebugCorePlugin.TITLE_GOALS_VIEW)){
+						dataLoadedViewNames.add(DebugCorePlugin.TITLE_GOALS_VIEW);
 					}
 				}
 				final IWorkbench workbench=PlatformUI.getWorkbench();
@@ -400,13 +409,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 						public void partActivated(
 								IWorkbenchPartReference partRef) {
 							IWorkbenchPart part = partRef.getPart(false);
-							if ((part instanceof ITextEditor) && (!part.equals(fPart))){
-								fPart=part;
-								if (isSuspended()){
-									checkVisibleVariableView();
-									checkVisibleGoalView();
-								}
-							}else if (part instanceof AbstractDebugView){
+							if (part instanceof AbstractDebugView){
 								String viewName=part.getTitle();
 								if (!dataLoadedViewNames.contains(viewName)){
 									dataLoadedViewNames.add(viewName);
@@ -420,6 +423,14 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 						@Override
 						public void partBroughtToTop(
 								IWorkbenchPartReference partRef) {
+							IWorkbenchPart part = partRef.getPart(false);
+							if ((part instanceof ITextEditor) && (!part.equals(fPart))){
+								fPart=part;
+								if (isSuspended()){
+									checkVisibleVariableView();
+									checkVisibleGoalView();
+								}
+							}
 						}
 
 						@Override
@@ -475,15 +486,20 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	}
 	
 	public IValue[] generateTree(String data){
-		String[] dataStrings=data.split("#");
-		int size=dataStrings.length;
-		WPPValue[] values=new WPPValue[size];  
-		for (int i=0; i<size; i++){
-			String[] dataSubStrings=dataStrings[i].split(":",2);
-			WPPValue value=new WPPValue(this,dataSubStrings[1], dataSubStrings[0]); 
-			values[i]=value;
+		if (data.equals("")){
+			return new WPPValue[0];
+		}else{
+			String[] dataStrings=data.split("#");
+			int size=dataStrings.length;
+		
+			WPPValue[] values=new WPPValue[size];  
+			for (int i=0; i<size; i++){
+				String[] dataSubStrings=dataStrings[i].split(":",2);
+				WPPValue value=new WPPValue(this,dataSubStrings[1], dataSubStrings[0]); 
+				values[i]=value;
+			}
+			return values;
 		}
-		return values;
 	}
 
     /* (non-Javadoc)
@@ -828,7 +844,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	}
 	
 	private void handleSuspended(final String event){
-		checkVisibleView();
+		checkVisibleViews();
 		
 		if (event.contains(":")) {
 			String[] eventPart=event.split(":");
@@ -850,6 +866,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			updateAllGoalView();
 		}else if (viewName.equals(DebugCorePlugin.TITLE_GOALS_VIEW)){
 			monitor.subTask("Update goals in current file");
+			updateGoalView();
 		}
 	}
 	
@@ -861,7 +878,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		}else if (viewName.equals(DebugCorePlugin.TITLE_ALLGOALS_VIEW)){
 			updateAllGoalViewWithMonitor();
 		}else if (viewName.equals(DebugCorePlugin.TITLE_GOALS_VIEW)){
-			
+			updateGoalView();
 		}
 	}
 	

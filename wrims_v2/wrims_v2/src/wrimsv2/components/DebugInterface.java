@@ -54,7 +54,7 @@ public class DebugInterface {
 	private String[] debugDvar;
 	private String[] debugAlias;
 	private String[] allDebugVariables;
-	private DecimalFormat df = new DecimalFormat("#.###"); 
+	private DecimalFormat df = new DecimalFormat("#.####"); 
 	
 	public DebugInterface(int requestPort, int eventPort, String args[]){
 		try{	
@@ -313,44 +313,46 @@ public class DebugInterface {
 			Collections.sort(sortedGoalList);
 			for (int i=0; i<sortedGoalList.size(); i++){
 				String goalName=sortedGoalList.get(i);
-				goalString=goalString+goalName+":";
-				EvalConstraint ec=gMap.get(goalName);
-				EvalExpression ee=ec.getEvalExpression();
-				Map<String, IntDouble> multiplier = ee.getMultiplier();
-				Set<String> mKeySet = multiplier.keySet();
-				Iterator<String> mi = mKeySet.iterator();
-				while (mi.hasNext()){
-					String variable=mi.next();
-					Number value=multiplier.get(variable).getData();
-					double value1=value.doubleValue();
-					if (goalString.endsWith(":")){
-						if (value1==1.0){
-							goalString=goalString+variable;
-						}else if (value1==-1.0){
-							goalString=goalString+"-"+variable;
+				if (gMap.containsKey(goalName)){
+					goalString=goalString+goalName+":";
+					EvalConstraint ec=gMap.get(goalName);
+					EvalExpression ee=ec.getEvalExpression();
+					Map<String, IntDouble> multiplier = ee.getMultiplier();
+					Set<String> mKeySet = multiplier.keySet();
+					Iterator<String> mi = mKeySet.iterator();
+					while (mi.hasNext()){
+						String variable=mi.next();
+						Number value=multiplier.get(variable).getData();
+						double value1=value.doubleValue();
+						if (goalString.endsWith(":")){
+							if (value1==1.0){
+								goalString=goalString+variable;
+							}else if (value1==-1.0){
+								goalString=goalString+"-"+variable;
+							}else{
+								goalString=goalString+df.format(value)+variable;
+							}
 						}else{
-							goalString=goalString+value+variable;
-						}
-					}else{
-						if (value1==1.0){
-							goalString=goalString+"+"+variable;
-						}else if (value1 == -1.0){
-							goalString=goalString+"-"+variable;
-						}else if(value1>=0){
-							goalString=goalString+"+"+value+variable;
-						}else{
-							goalString=goalString+value+variable;
+							if (value1==1.0){
+								goalString=goalString+"+"+variable;
+							}else if (value1 == -1.0){
+								goalString=goalString+"-"+variable;
+							}else if(value1>=0){
+								goalString=goalString+"+"+df.format(value)+variable;
+							}else{
+								goalString=goalString+df.format(value)+variable;
+							}
 						}
 					}
-				}
-				Number value=ee.getValue().getData();
-				double value1=value.doubleValue();
-				if (value1>0){
-					goalString=goalString+"+"+value+ec.getSign()+"0#";
-				}else if(value1<0){
-					goalString=goalString+value+ec.getSign()+"0#";
-				}else{
-					goalString=goalString+ec.getSign()+"0#";
+					Number value=ee.getValue().getData();
+					double value1=value.doubleValue();
+					if (value1>0){
+						goalString=goalString+"+"+df.format(value)+ec.getSign()+"0#";
+					}else if(value1<0){
+						goalString=goalString+df.format(value)+ec.getSign()+"0#";
+					}else{
+						goalString=goalString+ec.getSign()+"0#";
+					}
 				}
 			}
 			if (goalString.endsWith("#")) goalString=goalString.substring(0, goalString.length()-1);
@@ -472,7 +474,7 @@ public class DebugInterface {
 					}else if (value1==-1.0){
 						goalString=goalString+"-"+variable;
 					}else{
-						goalString=goalString+value+variable;
+						goalString=goalString+df.format(value)+variable;
 					}
 				}else{
 					if (value1==1.0){
@@ -480,18 +482,18 @@ public class DebugInterface {
 					}else if (value1 == -1.0){
 						goalString=goalString+"-"+variable;
 					}else if(value1>=0){
-						goalString=goalString+"+"+value+variable;
+						goalString=goalString+"+"+df.format(value)+variable;
 					}else{
-						goalString=goalString+value+variable;
+						goalString=goalString+df.format(value)+variable;
 					}
 				}
 			}
 			Number value=ee.getValue().getData();
 			double value1=value.doubleValue();
 			if (value1>0){
-				goalString=goalString+"+"+value+ec.getSign()+"0#";
+				goalString=goalString+"+"+df.format(value)+ec.getSign()+"0#";
 			}else if(value1<0){
-				goalString=goalString+value+ec.getSign()+"0#";
+				goalString=goalString+df.format(value)+ec.getSign()+"0#";
 			}else{
 				goalString=goalString+ec.getSign()+"0#";
 			}

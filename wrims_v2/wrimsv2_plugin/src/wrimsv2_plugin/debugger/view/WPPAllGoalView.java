@@ -34,7 +34,7 @@ import wrimsv2_plugin.debugger.model.IWPPEventListener;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.model.WPPValue;
 
-public class WPPGoalView extends AbstractDebugView implements ISelectionListener { 
+public class WPPAllGoalView extends AbstractDebugView implements ISelectionListener { 
 	private IValue[] goalStack=null;
 	
 	public class ViewLabelProvider implements ITableLabelProvider {
@@ -104,7 +104,7 @@ public class WPPGoalView extends AbstractDebugView implements ISelectionListener
 		public Object[] getChildren(Object parentElement) {
 			if (parentElement instanceof WPPDebugTarget) {
 				try {
-					return ((WPPDebugTarget)parentElement).getGoalStack();
+					return ((WPPDebugTarget)parentElement).getAllGoalStack();
 				} catch (DebugException e) {
 					WPPException.handleException(e);
 				}
@@ -226,7 +226,7 @@ public class WPPGoalView extends AbstractDebugView implements ISelectionListener
 	}
 	
 	public void updateView(){
-		goalStack=DebugCorePlugin.goalStack;
+		goalStack=DebugCorePlugin.allGoalStack;
 		TableTreeViewer viewer=(TableTreeViewer) getViewer();
 		viewer.setInput(DebugCorePlugin.target);
 		Table table=viewer.getTableTree().getTable();
