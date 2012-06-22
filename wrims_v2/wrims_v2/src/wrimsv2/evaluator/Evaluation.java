@@ -13,8 +13,10 @@ import wrimsv2.components.IntDouble;
 import wrimsv2.external.*;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.Stack;
 import java.util.Date;
 
@@ -225,10 +227,13 @@ public class Evaluation {
 			IntDouble id2=ee2.getValue();
 			ee2.setValue(multiplyOperation(id1,id2));
 			Map<String, IntDouble> multiplier=ee2.getMultiplier();
-			for (String dvar : multiplier.keySet()) {
+			Set<String> keySet=multiplier.keySet();
+			Iterator iterator=(Iterator) keySet.iterator();
+			while (iterator.hasNext()) {
+				String dvar=(String) iterator.next();
 				IntDouble id3=multiplyOperation(id1,multiplier.get(dvar));
 				if (id3.getData().doubleValue()==0.0){
-					multiplier.remove(dvar);
+					iterator.remove();
 				}else{
 					multiplier.put(dvar, id3);
 				}
@@ -240,10 +245,13 @@ public class Evaluation {
 				IntDouble id1=ee1.getValue();
 				ee1.setValue(multiplyOperation(id2,id1));
 				Map<String, IntDouble> multiplier=ee1.getMultiplier();
-				for (String dvar : multiplier.keySet()) {
+				Set<String> keySet=multiplier.keySet();
+				Iterator iterator=(Iterator) keySet.iterator();
+				while (iterator.hasNext()) {
+					String dvar=(String) iterator.next();
 					IntDouble id3=multiplyOperation(id2,multiplier.get(dvar));
 					if (id3.getData().doubleValue()==0.0){
-						multiplier.remove(dvar);
+						iterator.remove();
 					}else{
 						multiplier.put(dvar, id3);
 					}			
