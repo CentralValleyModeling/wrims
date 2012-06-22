@@ -539,7 +539,18 @@ public class InputPanel extends JPanel {
 			//String configName = FilenameUtils.removeExtension(wreslName)+".config";
 			String configName = "__study.config";
 			PrintWriter out = Tools.openFile(studyDir, configName);
-			
+
+			out.println("##################################################################################");
+			out.println("# Command line Example:");
+			out.println("# C:\\wrimsv2_SG\\bin\\runConfig_limitedXA.bat D:\\example\\EXISTING_BO.config");
+			out.println("# ");	
+			out.println("# Note:");			
+			out.println("# 1. This config file and the RUN directory must be placed in the same directory.");
+			out.println("# 2. Use relative path to increase the portability.");
+			out.println("#    For example, use RUN\\main.wresl for MainFile and DSS\\INIT.dss for InitFile");
+			out.println("##################################################################################");	
+			out.println("");
+			out.println("");
 			
 			out.println("MainFile           "+configMap.get("MainFile".toLowerCase()));
 			out.println("Solver             "+configMap.get("solver".toLowerCase()));
@@ -735,6 +746,10 @@ public class InputPanel extends JPanel {
 					_useXAFreeLimitedLicense.setEnabled(false);
 					_useXAFreeLimitedLicense.setSelected(false);
 					
+					// TODO: daily step not ready in the lpsolve ILP
+					_timeStep.removeItem("1DAY");
+					_timeStep.setSelectedItem("1MON");
+					
 				} else {
 					_betaFeatureLabel.setVisible(false);
 					_lpsolveParamFile.setText("");
@@ -747,6 +762,11 @@ public class InputPanel extends JPanel {
 						_runtimeLogOption.insertItemAt("None", 0);
 						_runtimeLogOption.insertItemAt("XA log", 1);
 					}
+
+					// TODO: daily step not ready in the lpsolve ILP
+					if (_timeStep.getItemCount()< 2){
+						_timeStep.insertItemAt("1DAY", 1);
+					}					
 				}
 			}
 		}
