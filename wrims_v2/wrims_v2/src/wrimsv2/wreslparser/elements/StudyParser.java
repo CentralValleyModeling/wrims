@@ -573,6 +573,7 @@ public class StudyParser{
 				if (!validVarNames.contains(neededVar)) {
 
 					LogUtils.errMsg( fromWresl + " variable named [" + varName + "] has an item with undefined variable: "+ neededVar + "[" + neededCycle + "]");
+					LogUtils.errMsg( fromWresl + " "+neededVar + "[" + neededCycle + "] can be a Dvar, Svar, or Alias, except for timeseries" );
 					continue;
 				}
 
