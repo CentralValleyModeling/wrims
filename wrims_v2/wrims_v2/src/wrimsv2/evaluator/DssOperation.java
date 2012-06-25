@@ -26,7 +26,7 @@ public class DssOperation {
 		ControlData.partE=timeStep;
 		Timeseries ts=ControlData.allTsMap.get(name);
 		String partC=ts.kind;
-		DataSet ds=getDataForSvar(regularExp(ControlData.partA),regularExp(name),regularExp(partC),"",regularExp(timeStep), regularExp(ControlData.svDvPartF));
+		DataSet ds=getDataForSvar(regularExp(ControlData.partA),regularExp(ts.dssBPart),regularExp(partC),"",regularExp(timeStep), regularExp(ControlData.svDvPartF));
 		
 		if (ds==null){
 			return false;
@@ -75,7 +75,7 @@ public class DssOperation {
 	public static boolean getSVInitTimeseries(String name){
 		Timeseries ts=ControlData.currTsMap.get(name);
 		String partC=ts.kind;
-		DataSet ds=getDataForInitial(regularExp(ControlData.partA),regularExp(name),regularExp(partC),"",regularExp(ControlData.partE), regularExp(ControlData.initPartF));
+		DataSet ds=getDataForInitial(regularExp(ControlData.partA),regularExp(ts.dssBPart),regularExp(partC),"",regularExp(ControlData.partE), regularExp(ControlData.initPartF));
 		
 		if (ds==null){
 			return false;
