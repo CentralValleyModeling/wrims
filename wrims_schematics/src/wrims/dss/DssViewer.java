@@ -374,33 +374,61 @@ public class DssViewer implements Outputer {
 						} else { // multiple-month time window LONG-TERM
 							// AVERAGES
 							if (twData.get(name) != null) {
-								if (isTAFSelected
-										&& _initialUnits.equals("CFS")
-										&& (tsc.fullName.indexOf("STORAGE/") == -1)) {
-									String tValue = twData.get(name)[j]
-											.substring(0, twData.get(name)[j]
-													.indexOf(" "));
-									double val = Double.parseDouble(tValue)
-											/ _longTermTafToCfsConversionFactors
-													.get(periodDate) * 12;
-									value = val + " taf";
-								} else if (!isTAFSelected
-										&& _initialUnits.equals("TAF")
-										&& (tsc.fullName.indexOf("STORAGE/") == -1)) {
-									String tValue = twData.get(name)[j]
-											.substring(0, twData.get(name)[j]
-													.indexOf(" "));
-									double val = Double.parseDouble(tValue)
-											* _longTermTafToCfsConversionFactors
-													.get(periodDate);
-									value = val + " cfs";
-								} else {
-									String tValue = twData.get(name)[j]
-											.substring(0, twData.get(name)[j]
-													.indexOf(" "));
-									double val = Double.parseDouble(tValue) * 12;
-									value = val + " taf";
-									//value = twData.get(name)[j];
+//								if (isTAFSelected
+//										&& _initialUnits.equals("CFS")
+//										&& (tsc.fullName.indexOf("STORAGE/") == -1)) {
+//									String tValue = twData.get(name)[j]
+//											.substring(0, twData.get(name)[j]
+//													.indexOf(" "));
+//									double val = Double.parseDouble(tValue)
+//											/ _longTermTafToCfsConversionFactors
+//													.get(periodDate) * 12;
+//									value = val + " taf";
+//								} else if (!isTAFSelected
+//										&& _initialUnits.equals("TAF")
+//										&& (tsc.fullName.indexOf("STORAGE/") == -1)) {
+//									String tValue = twData.get(name)[j]
+//											.substring(0, twData.get(name)[j]
+//													.indexOf(" "));
+//									double val = Double.parseDouble(tValue)
+//											* _longTermTafToCfsConversionFactors
+//													.get(periodDate);
+//									value = val + " cfs";
+//								} else {
+//									String tValue = twData.get(name)[j]
+//											.substring(0, twData.get(name)[j]
+//													.indexOf(" "));
+//									double val = Double.parseDouble(tValue) * 12;
+//									value = val + " taf";
+//									//value = twData.get(name)[j];
+//								}
+								
+								String sData = twData.get(name)[j];
+								String sValue = sData.substring(0, sData.indexOf(" "));
+								String sUnit = sData.substring(sData.indexOf(" ") + 1, sData.indexOf(" ") + 4);
+								if (isTAFSelected) {
+									if (sUnit.equalsIgnoreCase("CFS")) {
+										double val = Double.parseDouble(sValue) / _longTermTafToCfsConversionFactors.get(periodDate) * 12;
+										value = val + " taf";
+									} else if (sUnit.equalsIgnoreCase("TAF")) {							
+										if (tsc.fullName.indexOf("STORAGE/") == -1) {
+											double val = Double.parseDouble(sValue) * 12;
+											value = val + " taf";
+										} else {
+											value = sData;
+										}
+									}									
+								} else if (!isTAFSelected) {
+									if (sUnit.equalsIgnoreCase("CFS")) {
+										value = sData;
+									} else if (sUnit.equalsIgnoreCase("TAF")) {
+										if (tsc.fullName.indexOf("STORAGE/") == -1) {
+											double val = Double.parseDouble(sValue) * _longTermTafToCfsConversionFactors.get(periodDate);
+											value = val + " cfs";
+										} else {
+											value = sData;
+										}
+									}
 								}
 							}
 						}
@@ -601,7 +629,7 @@ public class DssViewer implements Outputer {
 					boolean allCalculated = true;
 					String[] values = results[j].get(name);
 					for (Integer k : keys) {
-						if (values[k.intValue()] == null) {
+						if (values[k.intValue()] == null || values[k.intValue()].endsWith(_initialUnits) == false) {
 							allCalculated = false;
 							break;
 						}
