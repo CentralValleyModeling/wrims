@@ -535,6 +535,7 @@ public class StructTree
 
     Timeseries ts = new Timeseries();
 
+    ts.dssBPart = name;
     if (b_part != null) ts.dssBPart = b_part;
     ts.kind = kind;
     ts.units = units;
