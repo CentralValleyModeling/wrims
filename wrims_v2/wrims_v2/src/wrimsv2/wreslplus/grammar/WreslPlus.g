@@ -408,7 +408,7 @@ scope { TimeseriesTemp ts_;
 timeseries_new : TIMESERIES tsID      '{' (NAME      bpart_id)? tsKind tsUnits convert? '}' ;
 timeseries_old : DEFINE LOCAL? tsID   '{' TIMESERIES bpart_id? tsKind tsUnits convert? '}' ;
 			
-tsID : i=ID {$timeseries::ts_.id=$i.text;} ;			
+tsID : i=ID {$timeseries::ts_.id=$i.text;$timeseries::ts_.dssBPart=$i.text;} ;			
 tsUnits: UNITS s=QUOTE {$timeseries::ts_.units=Tools.strip($s.text);} ;
 tsKind:  KIND s=QUOTE {$timeseries::ts_.kind=Tools.strip($s.text);} ;			
 bpart_id : s=QUOTE {$timeseries::ts_.dssBPart=Tools.strip($s.text);};
