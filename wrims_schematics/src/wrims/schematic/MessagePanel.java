@@ -50,7 +50,7 @@ public class MessagePanel {
 	public static final int FEDERAL_CONTRACT_YEAR = 2; // CB added
 
 	/** CB added */
-	public static String[] _twSelections = { "OCT1921 - SEP2003",
+	public static String[] _twSelections = { "OCT1921 - SEP2009",
 			"OCT1921 - SEP1994", "MAY1928 - OCT1934", "JUN1986 - SEP1992",
 			"OCT1975 - SEP1977", "OCT1983 - SEP1993", };
 	private int _annualType; // CB added
@@ -58,7 +58,7 @@ public class MessagePanel {
 	private static Preferences _userPrefs; // CB added
 	static {
 		_userPrefs = Preferences.userNodeForPackage(MessagePanel.class);
-		String tws = _userPrefs.get("timewindows", "OCT1921 - SEP2003,OCT1921 - SEP1994,MAY1928 - OCT1934,JUN1986 - SEP1992,OCT1975 - SEP1977,OCT1983 - SEP1993");
+		String tws = _userPrefs.get("timewindows", "OCT1921 - SEP2009,OCT1921 - SEP1994,MAY1928 - OCT1934,JUN1986 - SEP1992,OCT1975 - SEP1977,OCT1983 - SEP1993");
 		_twSelections = tws.split(",");
 	}
 	public static String CHECKED = "checked";
@@ -120,6 +120,7 @@ public class MessagePanel {
 			// CB always checked now _userPrefs.putBoolean(getProjectName() +
 			// CHECKED + "0", _basebox.isSelected()); //CB TO DO: use array of
 			// checkboxes and index for String creation
+				_mainPanel.stopMonthlyDataWork();
 				_mainPanel.updateSchematicValues(); // _basebox is always
 													// selected
 			} else if (e.getSource() == _comp1box) {
@@ -127,6 +128,7 @@ public class MessagePanel {
 						_comp1box.isSelected()); // CB TO DO: use array of
 													// checkboxes and index for
 													// String creation
+				_mainPanel.stopMonthlyDataWork();
 				_mainPanel.updateSchematicValues(); // if selected or
 													// unselected, need to
 													// update alt. 2 values
@@ -142,6 +144,7 @@ public class MessagePanel {
 												// _comp1box is NOT selected
 												// (TODO - if files both blank,
 												// maybe not)
+					_mainPanel.stopMonthlyDataWork();
 					_mainPanel.updateSchematicValues();
 			} else if (e.getSource() == _comp3box) {
 				_userPrefs.putBoolean(getProjectName() + CHECKED + "3",
@@ -172,6 +175,7 @@ public class MessagePanel {
 																		// blank,
 																		// maybe
 																		// not)
+					_mainPanel.stopMonthlyDataWork();
 					_mainPanel.updateSchematicValues();
 			}
 		}
@@ -554,10 +558,14 @@ public class MessagePanel {
 	public JPanel createUnitsPanel(int schematicUnits) {
 		JPanel panel = new JPanel();
 		ButtonGroup g = new ButtonGroup();
-		if (schematicUnits == ISchematic.TAF)
-			taf.setSelected(true);
-		else if (schematicUnits == ISchematic.CFS)
+//		if (schematicUnits == ISchematic.TAF)
+//			taf.setSelected(true);
+//		else if (schematicUnits == ISchematic.CFS)
+//			cfs.setSelected(true);
+		if (schematicUnits == ISchematic.CFS)
 			cfs.setSelected(true);
+		else 
+			taf.setSelected(true);
 		g.add(taf);
 		g.add(cfs);
 		taf.addActionListener(new ActionListener() {
@@ -566,6 +574,8 @@ public class MessagePanel {
 					System.out.println("TAF");
 				// ctp if (taf.isSelected()) AppUtils.useUnits(AppUtils.TAF);
 				_mainPanel.updateSchematicUnitsButtons(ISchematic.TAF);
+				_mainPanel.stopMonthlyDataWork();
+				_mainPanel.updateSchematicValues();
 			}
 		});
 		cfs.addActionListener(new ActionListener() {
@@ -574,6 +584,8 @@ public class MessagePanel {
 					System.out.println("CFS");
 				// ctp if (cfs.isSelected()) AppUtils.useUnits(AppUtils.CFS);
 				_mainPanel.updateSchematicUnitsButtons(ISchematic.CFS);
+				_mainPanel.stopMonthlyDataWork();
+				_mainPanel.updateSchematicValues();
 			}
 		});
 		taf.setFont(new Font(f.getName(), f.getStyle(), 10));
@@ -1305,10 +1317,10 @@ public class MessagePanel {
 	private void readDssFileCheckedPreferences() {
 		_comp1box.setSelected(_userPrefs.getBoolean(getProjectName() + CHECKED
 				+ "1", true));
-		_comp1box.addItemListener(al1);
+//		_comp1box.addItemListener(al1);
 		_comp2box.setSelected(_userPrefs.getBoolean(getProjectName() + CHECKED
 				+ "2", true));
-		_comp2box.addItemListener(al1);
+//		_comp2box.addItemListener(al1);
 		_comp3box.setSelected(_userPrefs.getBoolean(getProjectName() + CHECKED
 				+ "3", true));
 	}

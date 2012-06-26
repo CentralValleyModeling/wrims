@@ -991,7 +991,7 @@ public class InputPanel extends JPanel {
 	// private TSItemListener tsl;
 	// private JComboBox[] _month,_year,_day;
 	private int[] _intMonth = { 1, 12 };
-	private int[] _intYear = { 1922, 2003 };
+	private int[] _intYear = { 1922, 2009 };
 	private int[] _intDay = { 31, 30 };
 	private DayItemListener[] dl;
 	private MYItemListener[] ml, yl;

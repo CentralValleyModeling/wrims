@@ -96,7 +96,7 @@ public class FilterPanel extends JPanel {
 	public static final String DVAR_STRING = "Dvar";
 	public static final String SVAR_STRING = "Svar";
 	public static boolean DEBUG = false;
-	public final String DEFAULT_TIME_WINDOW = "31Oct1921 2400 30Sep2003 2400"; // CB
+	public final String DEFAULT_TIME_WINDOW = "31Oct1921 2400 30Sep2009 2400"; // CB
 	// added
 	String _timeWindow = DEFAULT_TIME_WINDOW;
 	String[][] _SVpathnameParts;
@@ -1387,7 +1387,7 @@ public class FilterPanel extends JPanel {
 					+ DssViewer.months[endMonthIndex] + endYear + " 2400";
 			return true;
 		} catch (NumberFormatException nfe) {
-			_timeWindow = "31Oct1921 2400 30Sep2003 2400"; // defualt full time
+			_timeWindow = "31Oct1921 2400 30Sep2009 2400"; // defualt full time
 			// window
 			return false;
 		}

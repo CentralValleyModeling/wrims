@@ -1301,7 +1301,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		dssPeriodControlPanel.add(_back1PeriodButton, gc);
 		dssPeriodControlPanel.add(_forward1BlockButton, gc);
 		dssPeriodControlPanel.add(_back1BlockButton, gc);
-		dssPeriodControlPanel.add(new Label("  "), gc);
+		dssPeriodControlPanel.add(new JLabel("  "), gc);
 
 		dssPeriodControlPanel.add(new JLabel("Date: "), gc);
 		// No toolBar.add(dateLabel, gc);

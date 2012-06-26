@@ -676,6 +676,11 @@ public class DssAppAction {
 		 * long-term averages need time for recalculation (see below)
 		 * _mp.updateSchematicValues(); } calculateLongTermAverages();
 		 */
+		
+		//added by Liheng Zhong to refresh displayed values after a new DSS file is opened. 
+		_mp.stopMonthlyDataWork();
+		_mp.updateSchematicValues();
+		
 		doMonthlyDataWork(dssType);
 
 		_mp.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
