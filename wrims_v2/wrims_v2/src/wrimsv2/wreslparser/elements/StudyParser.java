@@ -571,9 +571,16 @@ public class StudyParser{
 				Set<String> validVarNames = cycleVarTypeMap.get(neededCycle).keySet();
 
 				if (!validVarNames.contains(neededVar)) {
+					
+					if (sd.getModelDataSetMap().get(neededCycle.toLowerCase()).tsList.contains(neededVar.toLowerCase())){
+					
+						LogUtils.errMsg( fromWresl + " "+neededVar + "[" + neededCycle + "] cannot be of Timeseries type." );
+						
+					} else {
 
-					LogUtils.errMsg( fromWresl + " variable named [" + varName + "] has an item with undefined variable: "+ neededVar + "[" + neededCycle + "]");
-					LogUtils.errMsg( fromWresl + " "+neededVar + "[" + neededCycle + "] can be a Dvar, Svar, or Alias, except for timeseries" );
+						LogUtils.errMsg( fromWresl + " variable named [" + varName + "] has an undefined variable: "+ neededVar + "[" + neededCycle + "]");						
+					}
+
 					continue;
 				}
 
