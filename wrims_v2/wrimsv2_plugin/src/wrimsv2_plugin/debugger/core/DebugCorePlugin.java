@@ -51,6 +51,12 @@ public class DebugCorePlugin extends Plugin {
 	
 	public static IValue[] allGoalStack;
 	
+	public static ArrayList<String[]> varDetailTimeseries= new ArrayList<String[]>();
+	
+	public static ArrayList<String[]> varDetailFuture= new ArrayList<String[]>();
+	
+	public static ArrayList<String[]> varDetailCycle= new ArrayList<String[]>();
+	
 	public static int totalNoOfCycle=1;
 	
 	public static String timeStep="1DAY";
@@ -85,6 +91,8 @@ public class DebugCorePlugin extends Plugin {
 	
 	public static final String ID_WPP_ALLVARIABLE_VIEW="wpp.allvariableview";
 	
+	public static final String ID_WPP_VARIABLEDETAIL_VIEW="wpp.vardetailview";
+	
 	public static final String ID_WPP_GOAL_VIEW="wpp.goalview";
 	
 	public static final String ID_WPP_ALLGOAL_VIEW="wpp.allgoalview";
@@ -98,6 +106,8 @@ public class DebugCorePlugin extends Plugin {
 	public static final String TITLE_ALLGOALS_VIEW="All Goals";
 	
 	public static final String TITLE_GOALS_VIEW="Goals";
+	
+	public static int varDetailChoice=0;
 	/**
 	 * Launch configuration attribute key. Value is a path to a perl
 	 * program. The path is a string representing a full path

@@ -1,5 +1,7 @@
 package wrimsv2_plugin.debugger.view;
 
+import java.util.ArrayList;
+
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.model.IDebugElement;
 import org.eclipse.debug.core.model.IDebugTarget;
@@ -184,7 +186,21 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 				if (part instanceof WPPVariableView){
 					Object item=((StructuredSelection)selection).getFirstElement();
 					if (item !=null){
-						System.out.println(((WPPValue)item).getVariableString());
+						String variableName=((WPPValue)item).getVariableString();
+						try {
+							WPPDebugTarget target = DebugCorePlugin.target;
+							if (target !=null && target.isSuspended()){
+								String data="";
+								data= target.sendRequest("timeseries_detail:"+variableName);
+								DebugCorePlugin.varDetailTimeseries=generateVarDetailData(data);
+								data= target.sendRequest("future_detail:"+variableName);
+								DebugCorePlugin.varDetailFuture=generateVarDetailData(data);
+								data= target.sendRequest("cycle_detail:"+variableName);
+								DebugCorePlugin.varDetailCycle=generateVarDetailData(data);
+							}
+						} catch (DebugException e) {
+							WPPException.handleException(e);
+						}
 					}
 				}
 			}
@@ -256,4 +272,13 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 		viewer.refresh();
 	}
 	
+	private ArrayList<String[]> generateVarDetailData(String data){
+		ArrayList<String[]> varDetail = new ArrayList<String[]>();
+		String[] dataStrings = data.split("#");
+		for (int i=0; i<dataStrings.length; i++){
+			String[] entry=dataStrings[i].split(":");
+			varDetail.add(entry);
+		}
+		return varDetail;
+	}
 }
