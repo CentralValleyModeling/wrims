@@ -42,6 +42,7 @@ options {
   	public StudyTemp styObj;
   	public ModelTemp mObj;
   	public Set<String> dependants;
+  	boolean addDep = true;
  	
   		/// error message	
     public void displayRecognitionError(String[] tokenNames,
@@ -514,7 +515,8 @@ dvarTimeArray : '(' d=( INT | ID ) ')'  {$dvar_g::dvar_.timeArraySize=$d.text; }
  
 dvar_trunk 
 	: 
-	( dvarIsInteger? ( std | lower_upper ) dvKindUnits )
+	// TODO: remove addDep. this is to match wreslparser result.
+	( dvarIsInteger? ( std | ( {addDep = false;} lower_upper {addDep = true;} ) ) dvKindUnits )
 	| ('<' ID '>') ;
 
 //dvar_array_trunk : ( index_assign? '{' dvar_trunk '}' )+ ;
@@ -620,7 +622,7 @@ expr_term
 atom
     :  number_p
     |  reservedID
-    |  v=varID {dependants.add($v.text);} 
+    |  v=varID {if (addDep) dependants.add($v.text);} 
     | 'i' 
     | '$m'
     |  externalFunc
