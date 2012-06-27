@@ -26,6 +26,12 @@
              name="Exception"
           class="wrimsv2_plugin.debugger.view.WPPExceptionView"/>
 </extension>
+<extension point="org.eclipse.ui.views">
+	<view name="Detail"
+          class="wrimsv2_plugin.debugger.view.WPPVarDetailView"
+          id="wpp.detailview">
+    </view>
+</extension>
 <extension
          point="org.eclipse.debug.ui.launchConfigurationTabGroups">
       <launchConfigurationTabGroup

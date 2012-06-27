@@ -16,6 +16,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableTreeViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -26,6 +27,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchPart;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
@@ -172,6 +174,23 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 		viewer.setContentProvider(new ViewContentProvider());
 		getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(IDebugUIConstants.ID_DEBUG_VIEW, this);
 		getSite().setSelectionProvider(viewer);
+        ISelectionService s = getSite().getWorkbenchWindow().getSelectionService();
+
+        ISelectionListener listener=new ISelectionListener(){
+
+			@Override
+			public void selectionChanged(IWorkbenchPart part,
+					ISelection selection) {
+				if (part instanceof WPPVariableView){
+					Object item=((StructuredSelection)selection).getFirstElement();
+					if (item !=null){
+						System.out.println(((WPPValue)item).getVariableString());
+					}
+				}
+			}
+        };
+        s.addSelectionListener(listener);
+
 		Table table = viewer.getTableTree().getTable();
 	    new TableColumn(table, SWT.LEFT).setText("Variable");
 	    new TableColumn(table, SWT.LEFT).setText("Value");
