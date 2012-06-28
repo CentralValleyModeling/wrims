@@ -217,9 +217,15 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 	    tc2.setText("Date");
 	    tc3.setText("Value");
 	    int width=(int) Math.rint(table.getClientArea().width/3.0);
-	    tc1.setWidth(width);
-	    tc2.setWidth(width);
-	    tc3.setWidth(width);
+	    if (width>10){
+	    	tc1.setWidth(width);
+	    	tc2.setWidth(width);
+	    	tc3.setWidth(width);
+	    }else{
+		    tc1.setWidth(150);
+		    tc2.setWidth(150);
+		    tc3.setWidth(150);
+	    }
 	    table.setHeaderVisible(true);
 	    ArrayList<String[]> timeseries=DebugCorePlugin.varDetailTimeseries;
 	    for (String[] itemStrings: timeseries){

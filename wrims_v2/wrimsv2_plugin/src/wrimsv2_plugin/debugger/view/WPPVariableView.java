@@ -175,6 +175,13 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 	
 	@Override
 	protected Viewer createViewer(Composite parent) {
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				WPPVarDetailView varDetailView = (WPPVarDetailView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_VARIABLEDETAIL_VIEW);
+			}
+		});
+		
 		TableTreeViewer viewer = new TableTreeViewer(parent);
 		viewer.setLabelProvider(new ViewLabelProvider());
 		viewer.setContentProvider(new ViewContentProvider());
