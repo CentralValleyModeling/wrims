@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -290,8 +291,9 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 			data= DebugCorePlugin.target.sendRequest("cycledetail:"+variableName);
 			DebugCorePlugin.varDetailCycle=DataProcess.generateVarDetailData(data);
 			updateDetail(variableName);
-		} catch (DebugException e) {
+			getSite().getPage().showView(DebugCorePlugin.ID_WPP_VARIABLEDETAIL_VIEW, null, IWorkbenchPage.VIEW_VISIBLE);
+		} catch (Exception e) {
 			WPPException.handleException(e);
-		}
+		} 
 	}
 }
