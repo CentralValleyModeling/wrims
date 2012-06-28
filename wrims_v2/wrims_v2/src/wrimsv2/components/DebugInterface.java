@@ -644,21 +644,25 @@ public class DebugInterface {
 		Map<String, Map<String, IntDouble>> varCycleValue = sds.getVarCycleValueMap();
 		if (varCycleValue.containsKey(variableName)){
 			Map<String, IntDouble> cycleValue = varCycleValue.get(variableName);
+			int cycleIndex=1;
 			for (String cycle: ml){
 				if (cycleValue.containsKey(cycle)){
 					IntDouble id=cycleValue.get(cycle);
-					if (id!=null) dataString=dataString+cycle+":"+df.format(id.getData())+"#";
+					if (id!=null) dataString=dataString+cycleIndex+":"+cycle+":"+df.format(id.getData())+"#";
 				}
+				cycleIndex=cycleIndex+1;
 			}
 		}else{
 			Map<String, Map<String, IntDouble>> varTimeArrayCycleValue = sds.getVarTimeArrayCycleValueMap();
 			if (varTimeArrayCycleValue.containsKey(variableName)){
 				Map<String, IntDouble> cycleValue = varTimeArrayCycleValue.get(variableName);
+				int cycleIndex=1;
 				for (String cycle: ml){
 					if (cycleValue.containsKey(cycle)){
 						IntDouble id=cycleValue.get(cycle);
-						if (id!=null) dataString=dataString+cycle+":"+df.format(id.getData())+"#";
+						if (id!=null) dataString=dataString+cycleIndex+":"+cycle+":"+df.format(id.getData())+"#";
 					}
+					cycleIndex=cycleIndex+1;
 				}
 			}
 		}

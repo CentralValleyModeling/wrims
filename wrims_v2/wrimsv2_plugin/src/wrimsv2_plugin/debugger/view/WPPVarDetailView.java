@@ -255,11 +255,14 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 		removeAllTableColumns();
 		TableColumn tc1 = new TableColumn(table, SWT.CENTER);
 	    TableColumn tc2 = new TableColumn(table, SWT.CENTER);
-	    tc1.setText("Cycle");
-	    tc2.setText("Value");
-	    int width=(int) Math.rint(table.getClientArea().width/2.0);
+	    TableColumn tc3 = new TableColumn(table, SWT.CENTER);
+	    tc1.setText("Index");
+	    tc2.setText("Cycle");
+	    tc3.setText("Value");
+	    int width=(int) Math.rint(table.getClientArea().width/3.0);
 	    tc1.setWidth(width);
 	    tc2.setWidth(width);
+	    tc3.setWidth(width);
 	    table.setHeaderVisible(true);
 	    ArrayList<String[]> cycle=DebugCorePlugin.varDetailCycle;
 	    for (String[] itemStrings: cycle){
