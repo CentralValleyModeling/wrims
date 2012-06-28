@@ -2,9 +2,11 @@ package wrimsv2_plugin.debugger.view;
 
 import java.util.ArrayList;
 
+import org.eclipse.debug.core.DebugException;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ListViewer;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableTreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
@@ -23,7 +25,10 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.widgets.ColumnLayout;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 import org.eclipse.ui.part.ViewPart;
@@ -31,6 +36,9 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.debugger.model.WPPValue;
+import wrimsv2_plugin.tools.DataProcess;
 
 public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 
@@ -44,9 +52,29 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 	private Text name;
 	private Table table;
 	
+	private ISelectionListener listener=new ISelectionListener(){
+		@Override
+		public void selectionChanged(IWorkbenchPart part,
+				ISelection selection) {
+			if (part instanceof WPPVariableView){
+				Object item=((StructuredSelection)selection).getFirstElement();
+				if (item !=null){
+					final String variableName=((WPPValue)item).getVariableString();
+					if (!DebugCorePlugin.selectedVariable.equals(variableName)){
+						DebugCorePlugin.selectedVariable=variableName;
+						if (DebugCorePlugin.target !=null && DebugCorePlugin.target.isSuspended()){
+							updateDetailVariableView(variableName);
+						}
+					}
+				}
+			}
+		}
+    };
+	
 	
 	@Override
 	public void createPartControl(Composite parent) {
+		getSite().getPage().addSelectionListener(listener);
 		
 		GridLayout gLayoutMain = new GridLayout();
 		gLayoutMain.numColumns=2;
@@ -247,5 +275,20 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 		    table.getColumns()[ 0 ].dispose();
 		}
 		table.setRedraw(true);
+	}
+	
+	public void updateDetailVariableView(final String variableName){
+		try{
+			String data="";
+			data= DebugCorePlugin.target.sendRequest("tsdetail:"+variableName);
+			DebugCorePlugin.varDetailTimeseries=DataProcess.generateVarDetailData(data);
+			data= DebugCorePlugin.target.sendRequest("futdetail:"+variableName);
+			DebugCorePlugin.varDetailFuture=DataProcess.generateVarDetailData(data);
+			data= DebugCorePlugin.target.sendRequest("cycledetail:"+variableName);
+			DebugCorePlugin.varDetailCycle=DataProcess.generateVarDetailData(data);
+			updateDetail(variableName);
+		} catch (DebugException e) {
+			WPPException.handleException(e);
+		}
 	}
 }

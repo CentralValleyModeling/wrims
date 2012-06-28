@@ -178,30 +178,7 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 		TableTreeViewer viewer = new TableTreeViewer(parent);
 		viewer.setLabelProvider(new ViewLabelProvider());
 		viewer.setContentProvider(new ViewContentProvider());
-		getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(IDebugUIConstants.ID_DEBUG_VIEW, this);
 		getSite().setSelectionProvider(viewer);
-        ISelectionService s = getSite().getWorkbenchWindow().getSelectionService();
-
-        ISelectionListener listener=new ISelectionListener(){
-
-			@Override
-			public void selectionChanged(IWorkbenchPart part,
-					ISelection selection) {
-				if (part instanceof WPPVariableView){
-					Object item=((StructuredSelection)selection).getFirstElement();
-					if (item !=null){
-						final String variableName=((WPPValue)item).getVariableString();
-						if (!DebugCorePlugin.selectedVariable.equals(variableName)){
-							DebugCorePlugin.selectedVariable=variableName;
-							if (DebugCorePlugin.target !=null && DebugCorePlugin.target.isSuspended()){
-								updateDetailVariableView(variableName);
-							}
-						}
-					}
-				}
-			}
-        };
-        s.addSelectionListener(listener);
 
 		Table table = viewer.getTableTree().getTable();
 	    new TableColumn(table, SWT.LEFT).setText("Variable");
@@ -267,30 +244,5 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 	    }
 	    if (dataStack.length>0) viewer.reveal(viewer.getElementAt(0));
 		viewer.refresh();
-	}
-	
-	public void updateDetailVariableView(final String variableName){
-		try{
-			String data="";
-			data= DebugCorePlugin.target.sendRequest("tsdetail:"+variableName);
-			DebugCorePlugin.varDetailTimeseries=DataProcess.generateVarDetailData(data);
-			data= DebugCorePlugin.target.sendRequest("futdetail:"+variableName);
-			DebugCorePlugin.varDetailFuture=DataProcess.generateVarDetailData(data);
-			data= DebugCorePlugin.target.sendRequest("cycledetail:"+variableName);
-			DebugCorePlugin.varDetailCycle=DataProcess.generateVarDetailData(data);
-			final IWorkbench workbench=PlatformUI.getWorkbench();
-			workbench.getDisplay().asyncExec(new Runnable(){
-				public void run(){
-					try {
-						WPPVarDetailView varDetailView = (WPPVarDetailView) workbench.getActiveWorkbenchWindow().getActivePage().showView(DebugCorePlugin.ID_WPP_VARIABLEDETAIL_VIEW);
-						varDetailView.updateDetail(variableName);
-					} catch (PartInitException e) {
-						WPPException.handleException(e);
-					}
-				}
-			});
-		} catch (DebugException e) {
-			WPPException.handleException(e);
-		}
 	}
 }
