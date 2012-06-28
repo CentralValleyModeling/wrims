@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -24,10 +25,17 @@ import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.ModelDataSet;
+import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
+import wrimsv2.evaluator.DataTimeSeries;
+import wrimsv2.evaluator.DssDataSet;
+import wrimsv2.evaluator.DssDataSetFixLength;
+import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.evaluator.EvalExpression;
+import wrimsv2.evaluator.TimeOperation;
+import wrimsv2.evaluator.ValueEvaluation;
 import wrimsv2.wreslparser.elements.FileParser;
 import wrimsv2.wreslparser.elements.SimulationDataSet;
 import wrimsv2.wreslparser.grammar.WreslTreeWalker;
@@ -48,8 +56,6 @@ public class DebugInterface {
 	private FileWriter statusFile;
 	public PrintWriter fileOut;
 	private boolean isStart=false;
-	private String dataString;
-	private String goalString;
 	private String[] debugSvar;
 	private String[] debugDvar;
 	private String[] debugAlias;
@@ -105,6 +111,8 @@ public class DebugInterface {
 	}
 		
 	public void handleRequest(String request) {
+		String dataString="";
+		String goalString="";
 		String [] requestParts;
 		if (request.equals("start")) {
 			controllerDebug.start();
@@ -139,6 +147,48 @@ public class DebugInterface {
 				}else{
 					String fileName=request.substring(index+1);
 					dataString=getDataInOneFile(fileName);
+					sendRequest(dataString);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if (request.startsWith("tsdetail:")){
+			int index=request.indexOf(":");
+			try {
+				if (request.equals("tsdetail:")){
+					sendRequest("");
+				}else{
+					String variableName=request.substring(index+1);
+					dataString=getTimeseriesDetail(variableName);
+					sendRequest(dataString);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if (request.startsWith("futdetail:")){
+			int index=request.indexOf(":");
+			try {
+				if (request.equals("futdetail:")){
+					sendRequest("");
+				}else{
+					String variableName=request.substring(index+1);
+					dataString=getFutureValueDetail(variableName);
+					sendRequest(dataString);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if (request.startsWith("cycledetail:")){
+			int index=request.indexOf(":");
+			try {
+				if (request.equals("cycledetail:")){
+					sendRequest("");
+				}else{
+					String variableName=request.substring(index+1);
+					dataString=getCycleValueDetail(variableName);
 					sendRequest(dataString);
 				}
 			} catch (IOException e) {
@@ -502,6 +552,123 @@ public class DebugInterface {
 		return goalString;
 	}
 	
+	public String getTimeseriesDetail(String variableName){
+		String dataString="";
+		String entryName=DssOperation.entryNameTS(variableName, ControlData.timeStep);
+		HashMap<String, DssDataSetFixLength> dvAliasTSMap = DataTimeSeries.dvAliasTS;
+
+		if (dvAliasTSMap.containsKey(entryName)){
+			DssDataSetFixLength ddsf = dvAliasTSMap.get(entryName);
+			double[] dataArray = ddsf.getData();
+			TimeOperation.findTime(0);
+			int currIndex=ValueEvaluation.timeSeriesIndex(ddsf)-1;
+			for (int i=0; i<=currIndex; i++){
+				double value=dataArray[i];
+				if (!(value==-901.0 || value==902.0)){
+					int timestepListed=i-currIndex;
+					TimeOperation.findTime(timestepListed);
+					dataString=dataString+timestepListed+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+value+"#";
+				}
+			}
+		}else{
+			HashMap<String, DssDataSet> svTSMap = DataTimeSeries.svTS;
+			if (svTSMap.containsKey(entryName)){
+				DssDataSet dds = svTSMap.get(entryName);
+				ArrayList<Double> dataArrayList = dds.getData();
+				TimeOperation.findTime(0);
+				int currIndex=ValueEvaluation.timeSeriesIndex(dds);
+				for (int i=0; i<=currIndex; i++){
+					double value=dataArrayList.get(i);
+					if (!(value==-901.0 || value==902.0)){
+						int timestepListed=i-currIndex;
+						TimeOperation.findTime(timestepListed);
+						dataString=dataString+timestepListed+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+value+"#";
+					}
+				}
+			}
+		}
+		
+		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
+		return dataString;
+	}
+	
+	public String getFutureValueDetail(String variableName){
+		String dataString="";
+		StudyDataSet sds = ControlData.currStudyDataSet;
+		String cycleName = sds.getModelList().get(ControlData.currCycleIndex);
+		ModelDataSet mds = sds.getModelDataSetMap().get(cycleName);
+		ArrayList<Integer> indexList=new ArrayList<Integer>();
+		Map<Integer, Number> futureArray= new HashMap<Integer, Number>();
+		if (mds.svList.contains(variableName)){
+			Map<String, Svar> svFutMap = mds.svFutMap;
+			Set<String> keySet=svFutMap.keySet();
+			for (String key:keySet){
+				if (key.startsWith(variableName+"__fut__")){
+					String[] splittedKey=key.split("__fut__");
+					if (splittedKey.length>1){
+						int index = Integer.parseInt(splittedKey[1]);
+						indexList.add(index);
+						futureArray.put(index, svFutMap.get(key).getData().getData());
+					}
+				}
+			}
+		}else if (mds.dvList.contains(variableName)){
+			Map<String, Dvar> dvMap = SolverData.getDvarMap();
+			Set<String> keySet=dvMap.keySet();
+			for (String key:keySet){
+				if (key.startsWith(variableName+"__fut__")){
+					String[] splittedKey=key.split("__fut__");
+					if (splittedKey.length>1){
+						int index = Integer.parseInt(splittedKey[1]);
+						indexList.add(index);
+						futureArray.put(index, dvMap.get(key).getData().getData());
+					}
+				}
+			}
+		}
+		Collections.sort(indexList);
+		for (int i=0; i<indexList.size(); i++){
+			Integer index=indexList.get(i);
+			TimeOperation.findTime(i);
+			dataString=dataString+index+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+futureArray.get(index)+"#";
+		}
+		
+		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
+		return dataString;
+	}
+	
+	public String getCycleValueDetail(String variableName){
+		String dataString="";
+		StudyDataSet sds = ControlData.currStudyDataSet;
+		ArrayList<String> ml = sds.getModelList();
+		Map<String, ModelDataSet> mdsm = sds.getModelDataSetMap();
+		for (int i=0; i<ControlData.currCycleIndex-1; i++){
+			String cycleName=ml.get(i);
+			ModelDataSet mds = mdsm.get(cycleName);
+			Map<String, Svar> svMap = mds.svMap;
+			if (svMap.containsKey(variableName)){
+				dataString=dataString+cycleName+":"+svMap.get(variableName).getData().getData()+"#";
+			}else{
+				Map<String, Dvar> dvMap = mds.dvMap;
+				if (dvMap.containsKey(variableName)){
+					dataString=dataString+cycleName+":"+dvMap.get(variableName).getData().getData()+"#";
+				}else{
+					Map<String, Alias> asMap = mds.asMap;
+					if (asMap.containsKey(variableName)){
+						dataString=dataString+cycleName+":"+asMap.get(variableName).getData().getData()+"#";
+					}else{
+						Map<String, Svar> svFutMap = mds.svFutMap;
+						if (svFutMap.containsKey(variableName)){
+							dataString=dataString+cycleName+":"+svFutMap.get(variableName).getData().getData()+"#";
+						}
+					}
+				}
+			}
+		}
+		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
+		return dataString;
+	}
+	
 	public String getDataString(){
 		String dataString="";
 		for (int i=0; i<allDebugVariables.length; i++){
@@ -519,7 +686,7 @@ public class DebugInterface {
 				dataString=dataString+variable+":"+value+"#";
 			}
 		}
-		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-2);
+		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
 		return dataString;
 	}
 	

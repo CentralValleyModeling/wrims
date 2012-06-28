@@ -10,6 +10,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
@@ -47,14 +48,17 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 	@Override
 	public void createPartControl(Composite parent) {
 		
-		RowLayout rLayout = new RowLayout(SWT.HORIZONTAL);
-		parent.setLayout(rLayout);
+		GridLayout gLayoutMain = new GridLayout();
+		gLayoutMain.numColumns=2;
+		parent.setLayout(gLayoutMain);
 		choice = new Group(parent, SWT.NONE);
+		choice.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
         detail = new Group(parent, SWT.NONE);
+        detail.setLayoutData(new GridData(GridData.FILL_BOTH));
         
-        GridLayout gLayout = new GridLayout();
-        gLayout.numColumns=1;
-        choice.setLayout(gLayout);
+        GridLayout gLayoutChoice = new GridLayout();
+        gLayoutChoice.numColumns=1;
+        choice.setLayout(gLayoutChoice);
         tsButton = new Button(choice, SWT.RADIO);
         tsButton.setText("Timeseries");
         MouseListener tsListener= new MouseListener(){
@@ -124,12 +128,24 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
         };
         cycleButton.addMouseListener(cycleListener);
       
-        FillLayout fLayout = new FillLayout(SWT.VERTICAL);
-        detail.setLayout(fLayout);
+        GridLayout gLayoutDetail = new GridLayout();
+        gLayoutDetail.numColumns=1;
+        detail.setLayout(gLayoutDetail);
         detail.setText("Detail");
         name=new Text(detail, 0);
         name.setText("X");
         table=new Table (detail, SWT.MULTI|SWT.FULL_SELECTION);
+		TableColumn tc1 = new TableColumn(table, SWT.CENTER);
+	    TableColumn tc2 = new TableColumn(table, SWT.CENTER);
+	    TableColumn tc3 = new TableColumn(table, SWT.CENTER);
+        tc1.setText("Time Step");
+	    tc2.setText("Date");
+	    tc3.setText("Value");
+	    tc1.setWidth(150);
+	    tc2.setWidth(150);
+	    tc3.setWidth(150);
+	    table.setHeaderVisible(true);
+	    table.setLayoutData(new GridData(GridData.FILL_BOTH));
 	}
 
 	@Override
@@ -153,47 +169,72 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 	
 	public void displayTimeseries(){
 		table.removeAll();
+		removeAllTableColumns();
 		TableColumn tc1 = new TableColumn(table, SWT.CENTER);
 	    TableColumn tc2 = new TableColumn(table, SWT.CENTER);
 	    TableColumn tc3 = new TableColumn(table, SWT.CENTER);
 	    tc1.setText("Time Step");
 	    tc2.setText("Date");
 	    tc3.setText("Value");
+	    int width=(int) Math.rint(table.getClientArea().width/3.0);
+	    tc1.setWidth(width);
+	    tc2.setWidth(width);
+	    tc3.setWidth(width);
 	    table.setHeaderVisible(true);
 	    ArrayList<String[]> timeseries=DebugCorePlugin.varDetailTimeseries;
 	    for (String[] itemStrings: timeseries){
 	    	TableItem item = new TableItem(table, SWT.NONE);
 	    	item.setText(itemStrings);
+	    	table.redraw();
 	    }
 	}
 	
 	public void displayFutureValues(){
 		table.removeAll();
+		removeAllTableColumns();
 		TableColumn tc1 = new TableColumn(table, SWT.CENTER);
 	    TableColumn tc2 = new TableColumn(table, SWT.CENTER);
 	    TableColumn tc3 = new TableColumn(table, SWT.CENTER);
 	    tc1.setText("Time Step");
 	    tc2.setText("Date");
 	    tc3.setText("Value");
+	    int width=(int) Math.rint(table.getClientArea().width/3.0);
+	    tc1.setWidth(width);
+	    tc2.setWidth(width);
+	    tc3.setWidth(width);
 	    table.setHeaderVisible(true);
 	    ArrayList<String[]> future=DebugCorePlugin.varDetailFuture;
 	    for (String[] itemStrings: future){
 	    	TableItem item = new TableItem(table, SWT.NONE);
 	    	item.setText(itemStrings);
 	    }
+	    table.redraw();
 	}
 	
 	public void displayCycleValues(){
 		table.removeAll();
+		removeAllTableColumns();
 		TableColumn tc1 = new TableColumn(table, SWT.CENTER);
 	    TableColumn tc2 = new TableColumn(table, SWT.CENTER);
 	    tc1.setText("Cycle");
 	    tc2.setText("Value");
+	    int width=(int) Math.rint(table.getClientArea().width/2.0);
+	    tc1.setWidth(width);
+	    tc2.setWidth(width);
 	    table.setHeaderVisible(true);
 	    ArrayList<String[]> cycle=DebugCorePlugin.varDetailCycle;
 	    for (String[] itemStrings: cycle){
 	    	TableItem item = new TableItem(table, SWT.NONE);
 	    	item.setText(itemStrings);
 	    }
+	    table.redraw();
+	}
+	
+	public void removeAllTableColumns(){
+		table.setRedraw(false);
+		while ( table.getColumnCount() > 0 ) {
+		    table.getColumns()[ 0 ].dispose();
+		}
+		table.setRedraw(true);
 	}
 }

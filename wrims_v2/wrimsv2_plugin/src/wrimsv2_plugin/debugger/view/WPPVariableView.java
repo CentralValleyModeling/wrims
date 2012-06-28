@@ -40,6 +40,7 @@ import wrimsv2_plugin.debugger.model.WPPValue;
 
 public class WPPVariableView extends AbstractDebugView implements ISelectionListener { 
 	private IValue[] dataStack=null;
+	private String selectedVariable="";
 	
 	public class ViewLabelProvider implements ITableLabelProvider {
 
@@ -188,14 +189,14 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 					if (item !=null){
 						String variableName=((WPPValue)item).getVariableString();
 						try {
-							WPPDebugTarget target = DebugCorePlugin.target;
-							if (target !=null && target.isSuspended()){
+							if (DebugCorePlugin.target !=null && DebugCorePlugin.target.isSuspended() && !selectedVariable.equals(variableName)){
+								selectedVariable=variableName;
 								String data="";
-								data= target.sendRequest("timeseries_detail:"+variableName);
+								data= DebugCorePlugin.target.sendRequest("tsdetail:"+variableName);
 								DebugCorePlugin.varDetailTimeseries=generateVarDetailData(data);
-								data= target.sendRequest("future_detail:"+variableName);
+								data= DebugCorePlugin.target.sendRequest("futdetail:"+variableName);
 								DebugCorePlugin.varDetailFuture=generateVarDetailData(data);
-								data= target.sendRequest("cycle_detail:"+variableName);
+								data= DebugCorePlugin.target.sendRequest("cycledetail:"+variableName);
 								DebugCorePlugin.varDetailCycle=generateVarDetailData(data);
 							}
 						} catch (DebugException e) {
