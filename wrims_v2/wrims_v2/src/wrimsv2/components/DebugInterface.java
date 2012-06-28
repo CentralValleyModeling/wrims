@@ -641,26 +641,21 @@ public class DebugInterface {
 		String dataString="";
 		StudyDataSet sds = ControlData.currStudyDataSet;
 		ArrayList<String> ml = sds.getModelList();
-		Map<String, ModelDataSet> mdsm = sds.getModelDataSetMap();
-		for (int i=0; i<ControlData.currCycleIndex-1; i++){
-			String cycleName=ml.get(i);
-			ModelDataSet mds = mdsm.get(cycleName);
-			Map<String, Svar> svMap = mds.svMap;
-			if (svMap.containsKey(variableName)){
-				dataString=dataString+cycleName+":"+df.format(svMap.get(variableName).getData().getData())+"#";
-			}else{
-				Map<String, Dvar> dvMap = mds.dvMap;
-				if (dvMap.containsKey(variableName)){
-					dataString=dataString+cycleName+":"+df.format(dvMap.get(variableName).getData().getData())+"#";
-				}else{
-					Map<String, Alias> asMap = mds.asMap;
-					if (asMap.containsKey(variableName)){
-						dataString=dataString+cycleName+":"+df.format(asMap.get(variableName).getData().getData())+"#";
-					}else{
-						Map<String, Svar> svFutMap = mds.svFutMap;
-						if (svFutMap.containsKey(variableName)){
-							dataString=dataString+cycleName+":"+df.format(svFutMap.get(variableName).getData().getData())+"#";
-						}
+		Map<String, Map<String, IntDouble>> varCycleValue = sds.getVarCycleValueMap();
+		if (varCycleValue.containsKey(variableName)){
+			Map<String, IntDouble> cycleValue = varCycleValue.get(variableName);
+			for (String cycle: ml){
+				if (cycleValue.containsKey(cycle)){
+					dataString=dataString+cycle+":"+df.format(cycleValue.get(cycle).getData())+"#";
+				}
+			}
+		}else{
+			Map<String, Map<String, IntDouble>> varTimeArrayCycleValue = sds.getVarTimeArrayCycleValueMap();
+			if (varTimeArrayCycleValue.containsKey(variableName)){
+				Map<String, IntDouble> cycleValue = varTimeArrayCycleValue.get(variableName);
+				for (String cycle: ml){
+					if (cycleValue.containsKey(cycle)){
+						dataString=dataString+cycle+":"+df.format(cycleValue.get(cycle).getData())+"#";
 					}
 				}
 			}
