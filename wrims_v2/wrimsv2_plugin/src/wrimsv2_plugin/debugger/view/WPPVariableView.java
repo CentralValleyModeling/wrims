@@ -30,17 +30,20 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.IWPPEventListener;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.model.WPPValue;
+import wrimsv2_plugin.tools.DataProcess;
 
 public class WPPVariableView extends AbstractDebugView implements ISelectionListener { 
 	private IValue[] dataStack=null;
-	private String selectedVariable="";
 	
 	public class ViewLabelProvider implements ITableLabelProvider {
 
@@ -187,20 +190,10 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 				if (part instanceof WPPVariableView){
 					Object item=((StructuredSelection)selection).getFirstElement();
 					if (item !=null){
-						String variableName=((WPPValue)item).getVariableString();
-						try {
-							if (DebugCorePlugin.target !=null && DebugCorePlugin.target.isSuspended() && !selectedVariable.equals(variableName)){
-								selectedVariable=variableName;
-								String data="";
-								data= DebugCorePlugin.target.sendRequest("tsdetail:"+variableName);
-								DebugCorePlugin.varDetailTimeseries=generateVarDetailData(data);
-								data= DebugCorePlugin.target.sendRequest("futdetail:"+variableName);
-								DebugCorePlugin.varDetailFuture=generateVarDetailData(data);
-								data= DebugCorePlugin.target.sendRequest("cycledetail:"+variableName);
-								DebugCorePlugin.varDetailCycle=generateVarDetailData(data);
-							}
-						} catch (DebugException e) {
-							WPPException.handleException(e);
+						final String variableName=((WPPValue)item).getVariableString();
+						if (DebugCorePlugin.target !=null && DebugCorePlugin.target.isSuspended() && !DebugCorePlugin.selectedVariable.equals(variableName)){
+							DebugCorePlugin.selectedVariable=variableName;
+							updateDetailVariableView(variableName);
 						}
 					}
 				}
@@ -273,13 +266,28 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 		viewer.refresh();
 	}
 	
-	private ArrayList<String[]> generateVarDetailData(String data){
-		ArrayList<String[]> varDetail = new ArrayList<String[]>();
-		String[] dataStrings = data.split("#");
-		for (int i=0; i<dataStrings.length; i++){
-			String[] entry=dataStrings[i].split(":");
-			varDetail.add(entry);
+	public void updateDetailVariableView(final String variableName){
+		try{
+			String data="";
+			data= DebugCorePlugin.target.sendRequest("tsdetail:"+variableName);
+			DebugCorePlugin.varDetailTimeseries=DataProcess.generateVarDetailData(data);
+			data= DebugCorePlugin.target.sendRequest("futdetail:"+variableName);
+			DebugCorePlugin.varDetailFuture=DataProcess.generateVarDetailData(data);
+			data= DebugCorePlugin.target.sendRequest("cycledetail:"+variableName);
+			DebugCorePlugin.varDetailCycle=DataProcess.generateVarDetailData(data);
+			final IWorkbench workbench=PlatformUI.getWorkbench();
+			workbench.getDisplay().asyncExec(new Runnable(){
+				public void run(){
+					try {
+						WPPVarDetailView varDetailView = (WPPVarDetailView) workbench.getActiveWorkbenchWindow().getActivePage().showView(DebugCorePlugin.ID_WPP_VARIABLEDETAIL_VIEW);
+						varDetailView.updateDetail(variableName);
+					} catch (PartInitException e) {
+						WPPException.handleException(e);
+					}
+				}
+			});
+		} catch (DebugException e) {
+			WPPException.handleException(e);
 		}
-		return varDetail;
 	}
 }

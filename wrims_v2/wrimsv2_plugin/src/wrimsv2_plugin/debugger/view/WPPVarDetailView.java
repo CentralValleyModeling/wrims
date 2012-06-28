@@ -61,6 +61,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
         choice.setLayout(gLayoutChoice);
         tsButton = new Button(choice, SWT.RADIO);
         tsButton.setText("Timeseries");
+        tsButton.setSelection(true);
         MouseListener tsListener= new MouseListener(){
 
 			@Override
@@ -71,7 +72,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 			@Override
 			public void mouseDown(MouseEvent e) {
 				DebugCorePlugin.varDetailChoice=0;	
-				updateDetailTable();
+				updateDetail();
 			}
 
 			@Override
@@ -94,7 +95,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 			@Override
 			public void mouseDown(MouseEvent e) {
 				DebugCorePlugin.varDetailChoice=1;	
-				updateDetailTable();
+				updateDetail();
 			}
 
 			@Override
@@ -117,7 +118,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 			@Override
 			public void mouseDown(MouseEvent e) {
 				DebugCorePlugin.varDetailChoice=2;	
-				updateDetailTable();
+				updateDetail();
 			}
 
 			@Override
@@ -131,9 +132,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
         GridLayout gLayoutDetail = new GridLayout();
         gLayoutDetail.numColumns=1;
         detail.setLayout(gLayoutDetail);
-        detail.setText("Detail");
-        name=new Text(detail, 0);
-        name.setText("X");
+        detail.setText("Detail:");
         table=new Table (detail, SWT.MULTI|SWT.FULL_SELECTION);
 		TableColumn tc1 = new TableColumn(table, SWT.CENTER);
 	    TableColumn tc2 = new TableColumn(table, SWT.CENTER);
@@ -157,7 +156,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 		
 	}
 
-	public void updateDetailTable(){
+	public void updateDetail(){
 		if (DebugCorePlugin.varDetailChoice==0){
 			displayTimeseries();
 		}else if (DebugCorePlugin.varDetailChoice==1){
@@ -165,6 +164,18 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 		}else{
 			displayCycleValues();
 		}
+	}
+	
+	public void updateDetail(String variableName){
+		if (DebugCorePlugin.varDetailChoice==0){
+			displayTimeseries();
+		}else if (DebugCorePlugin.varDetailChoice==1){
+			displayFutureValues();
+		}else{
+			displayCycleValues();
+		}
+		detail.setText("Detail: "+variableName);
+		detail.redraw();
 	}
 	
 	public void displayTimeseries(){

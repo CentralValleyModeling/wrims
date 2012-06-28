@@ -108,6 +108,8 @@ public class DebugCorePlugin extends Plugin {
 	public static final String TITLE_GOALS_VIEW="Goals";
 	
 	public static int varDetailChoice=0;
+	
+	public static String selectedVariable="";
 	/**
 	 * Launch configuration attribute key. Value is a path to a perl
 	 * program. The path is a string representing a full path

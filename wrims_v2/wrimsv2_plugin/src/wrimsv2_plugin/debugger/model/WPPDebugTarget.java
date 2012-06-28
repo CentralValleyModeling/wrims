@@ -84,7 +84,9 @@ import wrimsv2_plugin.debugger.view.WPPAllGoalView;
 import wrimsv2_plugin.debugger.view.WPPAllVariableView;
 import wrimsv2_plugin.debugger.view.WPPExceptionView;
 import wrimsv2_plugin.debugger.view.WPPGoalView;
+import wrimsv2_plugin.debugger.view.WPPVarDetailView;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
+import wrimsv2_plugin.tools.DataProcess;
 
 /**
  * WPP Debug Target
@@ -845,6 +847,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	
 	private void handleSuspended(final String event){
 		checkVisibleViews();
+		updateVarDetailView(DebugCorePlugin.selectedVariable);
 		
 		if (event.contains(":")) {
 			String[] eventPart=event.split(":");
@@ -1080,6 +1083,29 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 				}
 			}
 		});
+	}
+	
+	public void updateVarDetailView(final String variableName){
+		if (!variableName.equals("")){
+			try{
+				String data="";
+				data= DebugCorePlugin.target.sendRequest("tsdetail:"+variableName);
+				DebugCorePlugin.varDetailTimeseries=DataProcess.generateVarDetailData(data);
+				data= DebugCorePlugin.target.sendRequest("futdetail:"+variableName);
+				DebugCorePlugin.varDetailFuture=DataProcess.generateVarDetailData(data);
+				data= DebugCorePlugin.target.sendRequest("cycledetail:"+variableName);
+				DebugCorePlugin.varDetailCycle=DataProcess.generateVarDetailData(data);
+				final IWorkbench workbench=PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+					public void run(){
+						WPPVarDetailView varDetailView = (WPPVarDetailView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_VARIABLEDETAIL_VIEW);
+						varDetailView.updateDetail(variableName);
+					}
+				});
+			} catch (DebugException e) {
+				WPPException.handleException(e);
+			}
+		}
 	}
 	
 	private String findFilePathActiveEditor(IWorkbenchPage workBenchPage){
