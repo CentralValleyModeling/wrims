@@ -191,9 +191,11 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 					Object item=((StructuredSelection)selection).getFirstElement();
 					if (item !=null){
 						final String variableName=((WPPValue)item).getVariableString();
-						if (DebugCorePlugin.target !=null && DebugCorePlugin.target.isSuspended() && !DebugCorePlugin.selectedVariable.equals(variableName)){
+						if (!DebugCorePlugin.selectedVariable.equals(variableName)){
 							DebugCorePlugin.selectedVariable=variableName;
-							updateDetailVariableView(variableName);
+							if (DebugCorePlugin.target !=null && DebugCorePlugin.target.isSuspended()){
+								updateDetailVariableView(variableName);
+							}
 						}
 					}
 				}
@@ -252,6 +254,7 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 	 * @see org.eclipse.ui.ISelectionListener#selectionChanged(org.eclipse.ui.IWorkbenchPart, org.eclipse.jface.viewers.ISelection)
 	 */
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
+		System.out.println("change");
 	}
 	
 	public void updateView(){

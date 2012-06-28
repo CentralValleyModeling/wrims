@@ -646,7 +646,8 @@ public class DebugInterface {
 			Map<String, IntDouble> cycleValue = varCycleValue.get(variableName);
 			for (String cycle: ml){
 				if (cycleValue.containsKey(cycle)){
-					dataString=dataString+cycle+":"+df.format(cycleValue.get(cycle).getData())+"#";
+					IntDouble id=cycleValue.get(cycle);
+					if (id!=null) dataString=dataString+cycle+":"+df.format(id.getData())+"#";
 				}
 			}
 		}else{
@@ -655,7 +656,8 @@ public class DebugInterface {
 				Map<String, IntDouble> cycleValue = varTimeArrayCycleValue.get(variableName);
 				for (String cycle: ml){
 					if (cycleValue.containsKey(cycle)){
-						dataString=dataString+cycle+":"+df.format(cycleValue.get(cycle).getData())+"#";
+						IntDouble id=cycleValue.get(cycle);
+						if (id!=null) dataString=dataString+cycle+":"+df.format(id.getData())+"#";
 					}
 				}
 			}
