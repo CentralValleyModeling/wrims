@@ -567,7 +567,7 @@ public class DebugInterface {
 				if (!(value==-901.0 || value==902.0)){
 					int timestepListed=i-currIndex;
 					TimeOperation.findTime(timestepListed);
-					dataString=dataString+timestepListed+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+value+"#";
+					dataString=dataString+timestepListed+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+df.format(value)+"#";
 				}
 			}
 		}else{
@@ -582,7 +582,7 @@ public class DebugInterface {
 					if (!(value==-901.0 || value==902.0)){
 						int timestepListed=i-currIndex;
 						TimeOperation.findTime(timestepListed);
-						dataString=dataString+timestepListed+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+value+"#";
+						dataString=dataString+timestepListed+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+df.format(value)+"#";
 					}
 				}
 			}
@@ -630,7 +630,7 @@ public class DebugInterface {
 		for (int i=0; i<indexList.size(); i++){
 			Integer index=indexList.get(i);
 			TimeOperation.findTime(i);
-			dataString=dataString+index+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+futureArray.get(index)+"#";
+			dataString=dataString+index+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+df.format(futureArray.get(index))+"#";
 		}
 		
 		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
@@ -647,19 +647,19 @@ public class DebugInterface {
 			ModelDataSet mds = mdsm.get(cycleName);
 			Map<String, Svar> svMap = mds.svMap;
 			if (svMap.containsKey(variableName)){
-				dataString=dataString+cycleName+":"+svMap.get(variableName).getData().getData()+"#";
+				dataString=dataString+cycleName+":"+df.format(svMap.get(variableName).getData().getData())+"#";
 			}else{
 				Map<String, Dvar> dvMap = mds.dvMap;
 				if (dvMap.containsKey(variableName)){
-					dataString=dataString+cycleName+":"+dvMap.get(variableName).getData().getData()+"#";
+					dataString=dataString+cycleName+":"+df.format(dvMap.get(variableName).getData().getData())+"#";
 				}else{
 					Map<String, Alias> asMap = mds.asMap;
 					if (asMap.containsKey(variableName)){
-						dataString=dataString+cycleName+":"+asMap.get(variableName).getData().getData()+"#";
+						dataString=dataString+cycleName+":"+df.format(asMap.get(variableName).getData().getData())+"#";
 					}else{
 						Map<String, Svar> svFutMap = mds.svFutMap;
 						if (svFutMap.containsKey(variableName)){
-							dataString=dataString+cycleName+":"+svFutMap.get(variableName).getData().getData()+"#";
+							dataString=dataString+cycleName+":"+df.format(svFutMap.get(variableName).getData().getData())+"#";
 						}
 					}
 				}
