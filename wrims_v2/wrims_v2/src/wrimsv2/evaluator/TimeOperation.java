@@ -152,11 +152,14 @@ public class TimeOperation {
 				ControlData.dataYear=ControlData.dataYear+1;
 			}
 			int days=numberOfDays(ControlData.dataMonth, ControlData.dataYear);
+			ControlData.dataDay=days;
+			/*
 			if (ControlData.currDay<=days){
 				ControlData.dataDay=ControlData.currDay;
 			}else{
 				ControlData.dataDay=days-numberOfDays(ControlData.currMonth, ControlData.currYear)+ControlData.currDay;
 			}
+			*/
 		}else if(ControlData.timeStep.equals("1DAY")){
 			Date currDate = new Date (ControlData.currYear-1900, ControlData.currMonth-1, ControlData.currDay);
 			long dataTime=currDate.getTime()+value*1*24*60*60*1000l;
