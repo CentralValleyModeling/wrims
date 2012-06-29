@@ -238,7 +238,6 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 	 * @see org.eclipse.ui.ISelectionListener#selectionChanged(org.eclipse.ui.IWorkbenchPart, org.eclipse.jface.viewers.ISelection)
 	 */
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-		System.out.println("change");
 	}
 	
 	public void updateView(){

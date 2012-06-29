@@ -57,7 +57,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 		@Override
 		public void selectionChanged(IWorkbenchPart part,
 				ISelection selection) {
-			if (part instanceof WPPVariableView){
+			if (part instanceof WPPVariableView || part instanceof WPPAllVariableView){
 				Object item=((StructuredSelection)selection).getFirstElement();
 				if (item !=null){
 					final String variableName=((WPPValue)item).getVariableString();
