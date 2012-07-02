@@ -270,7 +270,11 @@ public class WriteCSV {
 		    	out.print(Param.csv_seperator);
 		    	
 		    	if (s.neededVarInCycleSet!=null){
-			    	for (String d: s.neededVarInCycleSet){
+		    		
+		  		    List<String> varInCycle = new ArrayList<String>(s.neededVarInCycleSet);
+					Collections.sort(varInCycle,String.CASE_INSENSITIVE_ORDER);
+		    		
+			    	for (String d: varInCycle){
 			    		out.print(d+";"); //for dependantName[cycleName]		    	
 			    	}
 		    	}
@@ -520,7 +524,11 @@ public class WriteCSV {
 		    	out.print(Param.csv_seperator);
 		    	
 		    	if (a.neededVarInCycleSet!=null){
-			    	for (String d: a.neededVarInCycleSet){
+		    		
+		  		    List<String> varInCycle = new ArrayList<String>(a.neededVarInCycleSet);
+					Collections.sort(varInCycle,String.CASE_INSENSITIVE_ORDER);
+					
+			    	for (String d: varInCycle){
 			    		out.print(d+";"); //for dependantName[cycleName]		    	
 			    	}
 		    	}
@@ -590,7 +598,11 @@ public class WriteCSV {
 		    	out.print(Param.csv_seperator);
 		    	
 		    	if (g.neededVarInCycleSet!=null){
-			    	for (String d: g.neededVarInCycleSet){
+		    		
+		  		    List<String> varInCycle = new ArrayList<String>(g.neededVarInCycleSet);
+					Collections.sort(varInCycle,String.CASE_INSENSITIVE_ORDER);
+					
+			    	for (String d: varInCycle){
 			    		out.print(d+";"); //for dependantName[cycleName]		    	
 			    	}
 		    	}
