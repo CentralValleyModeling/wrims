@@ -34,7 +34,7 @@ public class TestWreslWalker_fileparser {
 	public String csvFolderPath;
 	public String testName;	
 	
-	@Test(groups = { "WRESL_elements" })
+	//@Test(groups = { "WRESL_elements" })
 	public void simple() throws RecognitionException, IOException {
 		String fileFullPath="D:/CS3_Studies/CS3_BO_version120A/common/System/SystemTables_Sac/constraints-Connectivity.wresl";
 		try {
