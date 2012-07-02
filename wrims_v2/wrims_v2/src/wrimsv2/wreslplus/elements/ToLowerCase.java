@@ -138,6 +138,8 @@ public class ToLowerCase {
 		o.units = s.units.toLowerCase();
 		o.caseName = Tools.allToLowerCase(s.caseName);
 		o.dependants = Tools.allToLowerCase(s.dependants);
+		o.neededVarInCycleSet = Tools.allToLowerCase(s.neededVarInCycleSet);
+		o.needVarFromEarlierCycle = s.needVarFromEarlierCycle;
 		
 		o.caseCondition = Tools.allToLowerCase(s.caseCondition);
 		o.caseCondition = Tools.replace_with_space(o.caseCondition);
@@ -248,6 +250,8 @@ public class ToLowerCase {
 		o.fromWresl = g.fromWresl.toLowerCase();
 		o.caseName = Tools.allToLowerCase(g.caseName);
 		o.dependants = Tools.allToLowerCase(g.dependants);
+		o.neededVarInCycleSet = Tools.allToLowerCase(g.neededVarInCycleSet);
+		o.needVarFromEarlierCycle = g.needVarFromEarlierCycle;
 
 		o.hasCase = g.hasCase;
 		o.hasLhs = g.hasLhs;
@@ -286,6 +290,8 @@ public class ToLowerCase {
 		o.units = d.units.toLowerCase();
 		o.condition = d.condition.toLowerCase();
 		o.dependants = Tools.allToLowerCase(d.dependants);
+		o.neededVarInCycleSet = Tools.allToLowerCase(d.neededVarInCycleSet);
+		o.needVarFromEarlierCycle = d.needVarFromEarlierCycle;
 		o.isMovedToDvar = d.isMovedToDvar;
 
 		

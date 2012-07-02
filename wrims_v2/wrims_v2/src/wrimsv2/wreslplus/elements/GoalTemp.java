@@ -25,6 +25,8 @@ public class GoalTemp implements Serializable {
 	public String lhs;
 	
 	public Set<String> dependants;
+	public Set<String> neededVarInCycleSet;
+	public boolean needVarFromEarlierCycle;
 
 	public boolean hasCase;
 	public boolean hasLhs;
@@ -44,6 +46,8 @@ public class GoalTemp implements Serializable {
 		isFromAlias=false;
 		condition = Param.always;
 		dependants = new LinkedHashSet<String>();
+		neededVarInCycleSet = new LinkedHashSet<String>();
+		needVarFromEarlierCycle = false;
 		caseName=new ArrayList<String>();
 		caseMap=new LinkedHashMap<String, GoalCase>();
 		caseCondition=new ArrayList<String>();

@@ -42,6 +42,7 @@ options {
   	public StudyTemp styObj;
   	public ModelTemp mObj;
   	public Set<String> dependants;
+  	public Set<String> varInCycle;
   	boolean addDep = true;
  	
   		/// error message	
@@ -227,9 +228,14 @@ scope { GoalTemp gl_;
 @init{ $goal_s::gl_ = new GoalTemp(); 
        $goal_s::gl_.fromWresl = this.currentAbsolutePath;
        $goal_s::gl_.hasCase = false; 
-       dependants = new LinkedHashSet<String>();  
+       dependants = new LinkedHashSet<String>();
+       varInCycle = new LinkedHashSet<String>();    
 	 }
-@after{ $id = $goal_s::gl_.id; $glObj=$goal_s::gl_; $glObj.dependants= dependants;}	 
+@after{ $id = $goal_s::gl_.id; 
+        $glObj=$goal_s::gl_; 
+        $glObj.dependants= dependants;
+        $glObj.neededVarInCycleSet= varInCycle;
+        $glObj.needVarFromEarlierCycle = (varInCycle!=null);}	 
 
 	: GOAL LOCAL? i=ID  '{' ( e=expr_constraint )'}' 
 	{$goal_s::gl_.id=$i.text; 
@@ -245,9 +251,14 @@ scope { GoalTemp gl_;
 @init{ $goal_hs::gl_ = new GoalTemp(); 
        $goal_hs::gl_.fromWresl = this.currentAbsolutePath; 
        dependants = new LinkedHashSet<String>();
+       varInCycle = new LinkedHashSet<String>();  
        $goal_hs::gl_.hasLhs=true;
 	 }
-@after{ $id = $goal_hs::gl_.id; $glObj=$goal_hs::gl_; $glObj.dependants= dependants;}	 
+@after{ $id = $goal_hs::gl_.id; 
+        $glObj=$goal_hs::gl_; 
+        $glObj.dependants= dependants;
+        $glObj.neededVarInCycleSet= varInCycle;
+        $glObj.needVarFromEarlierCycle = (varInCycle!=null);}	 
 	: GOAL LOCAL? i=ID  {$goal_hs::gl_.id=$i.text;}
 	  '{' lhs 
 	  ( goal_hs_nocase 		
@@ -292,9 +303,14 @@ alias returns[String id, AliasTemp asObj]
 scope { AliasTemp as_;} 
 @init{ $alias::as_ = new AliasTemp(); 
        $alias::as_.fromWresl = this.currentAbsolutePath; 
-       dependants = new LinkedHashSet<String>();  
+       dependants = new LinkedHashSet<String>();
+       varInCycle = new LinkedHashSet<String>();  
 	 }
-@after{ $id = $alias::as_.id; $asObj=$alias::as_; $asObj.dependants= dependants;}	 
+@after{ $id = $alias::as_.id; 
+        $asObj=$alias::as_; 
+        $asObj.dependants= dependants;
+        $asObj.neededVarInCycleSet= varInCycle;
+        $asObj.needVarFromEarlierCycle = (varInCycle!=null);}	 
 	: alias_new | alias_old
  	;
 
@@ -315,9 +331,15 @@ scope { SvarTemp sv_;
 @init{ $svar_g::sv_ = new SvarTemp(); 
        $svar_g::sv_.fromWresl = this.currentAbsolutePath; 
        dependants = new LinkedHashSet<String>();
+       varInCycle = new LinkedHashSet<String>();
        
 	 }
-@after{ $id = $svar_g::sv_.id; $svObj=$svar_g::sv_; $svObj.dependants= dependants;}	 
+@after{ $id = $svar_g::sv_.id; 
+        $svObj=$svar_g::sv_; 
+        $svObj.dependants= dependants;
+        $svObj.neededVarInCycleSet= varInCycle;
+        $svObj.needVarFromEarlierCycle = (varInCycle!=null);
+        }	 
 	: ( SVAR | DEFINE LOCAL? ) ( svar | svar_array | svar_timeArray ) ;
 
 
@@ -632,10 +654,10 @@ atom
     ;
 
 preCycleVar
-	:  preCycleVar_new | preCycleVar_old
+	:  p=preCycleVar_old {varInCycle.add($p.text);}
 	;
 
-preCycleVar_new :  ID '@[' ID ']'  ;
+//preCycleVar_new :  ID '@[' ID ']'  ;
 preCycleVar_old :  ID '[' ID ']' ;  
 
 externalFunc

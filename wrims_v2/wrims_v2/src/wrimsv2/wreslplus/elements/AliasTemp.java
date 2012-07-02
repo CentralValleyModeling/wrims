@@ -24,6 +24,8 @@ public class AliasTemp implements Serializable {
 	public String condition;
 	public String expression;
 	public Set<String> dependants;
+	public Set<String> neededVarInCycleSet;
+	public boolean needVarFromEarlierCycle;
 	public boolean isMovedToDvar;
 			
 	
@@ -33,7 +35,9 @@ public class AliasTemp implements Serializable {
 		units=Param.undefined;
 		condition = Param.always;
 		expression=Param.undefined;
-		dependants = new LinkedHashSet<String>();	
+		dependants = new LinkedHashSet<String>();
+		neededVarInCycleSet = new LinkedHashSet<String>();
+		needVarFromEarlierCycle = false;
 		isMovedToDvar = false;
 
 	}

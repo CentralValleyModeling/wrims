@@ -25,6 +25,8 @@ public class GoalHS implements Serializable {
 	public String lhs;
 	
 	public Set<String> dependants;
+	public Set<String> neededVarInCycleSet;
+	public boolean needVarFromEarlierCycle;
 	
 	public ArrayList<String> caseName;
 	public Map<String,GoalCase> caseMap;
@@ -33,6 +35,8 @@ public class GoalHS implements Serializable {
 		
 		condition = Param.always;
 		dependants = new LinkedHashSet<String>();
+		neededVarInCycleSet = new LinkedHashSet<String>();
+		needVarFromEarlierCycle = false;
 		caseName=new ArrayList<String>();
 		caseMap=new LinkedHashMap<String, GoalCase>();
 	}

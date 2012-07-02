@@ -24,9 +24,9 @@ public class SvarTemp implements Serializable {
 	public String condition;
 	//public String expression;
 	public Set<String> dependants;
-	
-	//public Set<String> neededVarInCycleSet;
-	//public boolean needVarFromEarlierCycle;
+	public Set<String> neededVarInCycleSet;
+	public boolean needVarFromEarlierCycle;
+
 
 	
 	public ArrayList<String> caseName;
@@ -45,7 +45,9 @@ public class SvarTemp implements Serializable {
 		units=Param.undefined;
 		condition = Param.always;
 		//expression=Param.undefined;
-		dependants = new LinkedHashSet<String>();	
+		dependants = new LinkedHashSet<String>();
+		neededVarInCycleSet = new LinkedHashSet<String>();
+		needVarFromEarlierCycle = false;
 		
 		timeArraySize="0";
 		arraySize="0";

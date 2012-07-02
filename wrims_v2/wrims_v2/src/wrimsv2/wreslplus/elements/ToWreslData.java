@@ -189,6 +189,8 @@ public class ToWreslData {
 		o.units = s.units;
 		o.caseName = s.caseName;
 		o.dependants = s.dependants;
+		o.neededVarInCycleSet = s.neededVarInCycleSet;
+		o.needVarFromEarlierCycle = s.needVarFromEarlierCycle;
 		//o.dependants.removeAll(Param.reservedSet);
 		//System.out.println(s.dependants);
 		
@@ -294,6 +296,8 @@ public class ToWreslData {
 		o.fromWresl = g.fromWresl;
 		o.caseName = g.caseName;
 		o.expressionDependants = g.dependants;
+		o.neededVarInCycleSet = g.neededVarInCycleSet;
+		o.needVarFromEarlierCycle = g.needVarFromEarlierCycle;
 		o.expressionDependants.removeAll(Param.reservedSet);
 		//System.out.println(s.dependants);
 		
@@ -323,6 +327,8 @@ public class ToWreslData {
 		o.units = d.units;
 		o.condition = d.condition;
 		o.dependants = d.dependants;
+		o.neededVarInCycleSet = d.neededVarInCycleSet;
+		o.needVarFromEarlierCycle = d.needVarFromEarlierCycle;
 
 		return o;
 		
