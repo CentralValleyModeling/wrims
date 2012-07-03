@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import wrimsv2.components.IntDouble;
+
 import com.google.common.collect.HashBasedTable;
 
 public class StudyTemp implements Serializable {
@@ -31,6 +33,10 @@ public class StudyTemp implements Serializable {
 	public ArrayList<HashSet<String>>fileGroupOrder; // processed after kidMap and AOMap
 	public String objectiveType="obj";
 	
+	/// this map contains value of vars needed for WRESL syntax: varName[cycleName] 
+	/// < VarName, < CycleName, Value >>		
+	public Map<String, Map<String, IntDouble>> varCycleValueMap;
+	
 	public StudyTemp(){
 		
 		modelList = new ArrayList<String>();
@@ -46,6 +52,8 @@ public class StudyTemp implements Serializable {
 		noKid = new HashSet<String>();
 		AOMap = new HashMap<String, HashSet<String>>();
 		fileGroupOrder = new ArrayList<HashSet<String>>();
+		
+		varCycleValueMap = new HashMap<String, Map<String,IntDouble>>();
 
 	}
 	

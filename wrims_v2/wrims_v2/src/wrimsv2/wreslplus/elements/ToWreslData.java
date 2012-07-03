@@ -29,6 +29,8 @@ public class ToWreslData {
 		
 		StudyDataSet o = new StudyDataSet();
 		o.setModelList(s.modelList_effective);
+		
+		o.setVarCycleValueMap(s.varCycleValueMap);
 				
 		Map<String, ModelDataSet> modelDataSetMap = new HashMap<String, ModelDataSet>();
 		ArrayList<String> modelConditionList   = new ArrayList<String>();
@@ -61,6 +63,11 @@ public class ToWreslData {
 	public static ModelDataSet convertModel (ModelTemp m, SequenceTemp seq){
 		
 		ModelDataSet o = new ModelDataSet();
+		
+		o.varUsedByLaterCycle = m.varUsedByLaterCycle;
+		o.dvarUsedByLaterCycle = m.dvarUsedByLaterCycle;
+		o.svarUsedByLaterCycle = m.svarUsedByLaterCycle;
+		o.aliasUsedByLaterCycle = m.aliasUsedByLaterCycle;
 		
 		// TODO: give pre-sorted var list
 

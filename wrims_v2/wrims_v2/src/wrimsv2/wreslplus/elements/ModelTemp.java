@@ -3,8 +3,10 @@ package wrimsv2.wreslplus.elements;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.javatuples.Triplet;
 
@@ -64,6 +66,16 @@ public class ModelTemp implements Serializable {
 	public Map<String,DvarTemp> ssMap_noCase;           // processed
 	public Map<String,WeightTemp> ssWeightMap_noCase;   // processed
 	
+	public Map<String, HashSet<String>> neededCycleVarMap;
+//	public Map<String, HashSet<String>> neededCycleDvarMap;  // processed
+//	public Map<String, HashSet<String>> neededCycleSvarMap;  // processed
+//	public Map<String, HashSet<String>> neededCycleAliasMap; // processed
+	
+	public Set<String> varUsedByLaterCycle; 
+	public Set<String> dvarUsedByLaterCycle;
+	public Set<String> svarUsedByLaterCycle;
+	public Set<String> aliasUsedByLaterCycle; 
+	
 	public ModelTemp(){
 		
 		t_svList = new ArrayList<Triplet<String,String,String>>();
@@ -103,7 +115,17 @@ public class ModelTemp implements Serializable {
 		ssWeightMap_hasCase = new LinkedHashMap<String, WeightTemp>();	
 		ssList_noCase = new ArrayList<String>();
 		ssMap_noCase = new LinkedHashMap<String, DvarTemp>();	
-		ssWeightMap_noCase = new LinkedHashMap<String, WeightTemp>();	
+		ssWeightMap_noCase = new LinkedHashMap<String, WeightTemp>();		
+		
+		neededCycleVarMap = new HashMap<String, HashSet<String>>();
+//		neededCycleDvarMap = new HashMap<String, HashSet<String>>();
+//		neededCycleSvarMap = new HashMap<String, HashSet<String>>();
+//		neededCycleAliasMap = new HashMap<String, HashSet<String>>();
+		
+		varUsedByLaterCycle = new HashSet<String>();	
+		dvarUsedByLaterCycle = new HashSet<String>();
+		svarUsedByLaterCycle = new HashSet<String>();
+		aliasUsedByLaterCycle = new HashSet<String>();
 	}
 	
 }

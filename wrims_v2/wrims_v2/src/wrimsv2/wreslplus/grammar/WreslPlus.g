@@ -12,6 +12,7 @@ options {
   import wrimsv2.wreslparser.elements.LogUtils; 
   import java.util.HashMap;
   import java.util.Set;
+  import java.util.HashSet;
   import java.util.LinkedHashSet;
   import wrimsv2.wreslplus.elements.Tools;
   import wrimsv2.wreslplus.elements.IncFileTemp;
@@ -43,6 +44,7 @@ options {
   	public ModelTemp mObj;
   	public Set<String> dependants;
   	public Set<String> varInCycle;
+  	public Map<String, HashSet<String>> neededCycleVarMap;
   	boolean addDep = true;
  	
   		/// error message	
@@ -141,10 +143,13 @@ modelName: ID;
 mt returns[ModelTemp modelObj]
 
 scope { ModelTemp m_;} 
-@init{ $mt::m_ = new ModelTemp(); 
+@init{ neededCycleVarMap = new HashMap<String, HashSet<String>>();
+       $mt::m_ = new ModelTemp(); 
 	   $mt::m_.absPath = currentAbsolutePath; 
 	   $mt::m_.parentAbsPath = currentAbsoluteParent; }
-@after{$modelObj =$mt::m_; $modelObj.id=Param.legacywresl;}	    
+@after{$modelObj =$mt::m_; 
+       $modelObj.neededCycleVarMap = neededCycleVarMap;
+       $modelObj.id=Param.legacywresl;}	    
 :      
 	   ( fi=include_file {$mt::m_.itemTypeList.add(Param.incFileType); $mt::m_.itemList.add($fi.id); $mt::m_.incFileIDList.add($fi.id); $mt::m_.incFileMap.put($fi.id, $fi.incFileObj); }
 	   | ts=timeseries   {$mt::m_.itemTypeList.add(Param.tsType);$mt::m_.itemList.add($ts.id); $mt::m_.tsList.add($ts.id); $mt::m_.tsMap.put($ts.id, $ts.tsObj); }
@@ -658,7 +663,19 @@ preCycleVar
 	;
 
 //preCycleVar_new :  ID '@[' ID ']'  ;
-preCycleVar_old :  ID '[' ID ']' ;  
+preCycleVar_old :  var=ID '[' cycle=ID ']' 
+{ 
+  // TODO: don't convert to lower case here!
+  String cnl = $cycle.text.toLowerCase();
+  String vl = $var.text.toLowerCase();
+  if (neededCycleVarMap.keySet().contains(cnl)) {
+    neededCycleVarMap.get(cnl).add(vl);
+  } else {
+    HashSet<String> t = new HashSet<String>();
+    t.add(vl);
+    neededCycleVarMap.put(cnl, t);
+  }
+} ;  
 
 externalFunc
 	:  'extern:(' ID '(' expr_add ')' ')'

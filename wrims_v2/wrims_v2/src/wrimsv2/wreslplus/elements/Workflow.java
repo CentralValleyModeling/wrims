@@ -123,6 +123,8 @@ public class Workflow {
 		
 		Procedures.convertAliasToGoal(st); 
 		
+		Procedures.analyzeVarNeededFromCycle(st);
+		
 		Procedures.collectWeightVar(st);
 		
 		

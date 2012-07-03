@@ -11,6 +11,7 @@ import java.util.Set;
 import org.javatuples.Triplet;
 
 import wrimsv2.commondata.wresldata.Param;
+import wrimsv2.components.IntDouble;
 import wrimsv2.wreslparser.elements.LogUtils;
 
 public class Procedures {
@@ -1076,6 +1077,70 @@ public class Procedures {
 	}
 
 
+	public static void analyzeVarNeededFromCycle(StudyTemp s){
+		
+		for (String mn : s.modelList_effective){
+			
+			ModelTemp m = s.modelMap.get(mn);
+		
+			ArrayList<String> others = new ArrayList<String>(s.modelList_effective);
+			others.remove(mn);
+			
+			for (String o : others){
+				
+				ModelTemp otherModel = s.modelMap.get(o);
+				
+				Set<String> varSet = otherModel.neededCycleVarMap.get(mn);
+				
+				if (varSet != null) {
 
+					m.varUsedByLaterCycle.addAll(varSet);
+
+					for (String e : varSet) {
+
+						if (otherModel.asList.contains(e)) {
+							m.aliasUsedByLaterCycle.add(e);
+						}
+						else if (otherModel.dvList.contains(e)) {
+							m.dvarUsedByLaterCycle.add(e);
+						}
+						else if (otherModel.svList.contains(e)) {
+							m.svarUsedByLaterCycle.add(e);
+						}
+						else {
+							System.out.println("Error in analyzeVarNeededFromCycles");
+						}
+					}
+				}
+				
+				
+			}
+		}
+	}
+
+	public static void createSpaceInVarCycleValueMap(StudyTemp s){
+		
+		Map<String, Map<String, IntDouble>> vcv = s.varCycleValueMap;
+		
+		for (String modelName : s.modelList_effective){
+			
+			ModelTemp m = s.modelMap.get(modelName);
+						
+			for (String e : m.varUsedByLaterCycle) {
+
+				// / create space in varCycleValue map
+				if (vcv.keySet().contains(e)) {
+					vcv.get(e).put(modelName, null);
+				} else {
+					Map<String, IntDouble> t = new HashMap<String, IntDouble>();
+					t.put(modelName, null);
+					vcv.put(e, t);
+				}
+			}
+				
+				
+			
+		}
+	}
 	
 }
