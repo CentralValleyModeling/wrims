@@ -206,7 +206,7 @@ public class ControllerDebug extends Thread {
 	}
 	
 	public StudyDataSet parse()throws RecognitionException, IOException{	
-		return StudyUtils.checkStudy(FilePaths.fullMainPath, true);	
+		return StudyUtils.checkStudy(FilePaths.fullMainPath);	
 	}
 	
 	public void runModel(StudyDataSet sds){

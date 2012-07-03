@@ -210,7 +210,7 @@ public class ControllerSG {
 	}
 	
 	public StudyDataSet parse()throws RecognitionException, IOException{		
-		return StudyUtils.checkStudy(FilePaths.fullMainPath, ControlData.sendAliasToDvar);
+		return StudyUtils.checkStudy(FilePaths.fullMainPath);
 	}
 	
 	public void runModel(StudyDataSet sds){

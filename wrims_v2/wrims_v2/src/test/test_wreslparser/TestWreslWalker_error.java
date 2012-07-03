@@ -62,7 +62,7 @@ public class TestWreslWalker_error {
 		
 		Assert.assertEquals(StudyParser.total_errors, 16);
 		
-		StudyUtils.checkStudy(absFilePath, false);
+		StudyUtils.checkStudy(absFilePath);
 		Assert.assertEquals(StudyUtils.total_errors, 16);	
 		
 		Assert.assertEquals(sd.getModelDataSetMap().get("second").tsMap.get("ts").kind,"second-model-only" );
@@ -112,7 +112,7 @@ public class TestWreslWalker_error {
 		Assert.assertEquals(totalErrs, 15);	
 		Assert.assertEquals(StudyParser.total_errors, 15);
 		
-		StudyUtils.checkStudy(absFilePath, false);
+		StudyUtils.checkStudy(absFilePath);
 		Assert.assertEquals(StudyUtils.total_errors, 15);
 
 
@@ -155,7 +155,7 @@ public class TestWreslWalker_error {
 		
 		Assert.assertEquals(StudyParser.total_errors, 24);
 		
-		StudyUtils.checkStudy(absFilePath, false);
+		StudyUtils.checkStudy(absFilePath);
 		Assert.assertEquals(StudyUtils.total_errors, 24);
 		
 		Assert.assertEquals(sd.getModelDataSetMap().get("second").tsMap.get("ts").kind,"second-model-only" );

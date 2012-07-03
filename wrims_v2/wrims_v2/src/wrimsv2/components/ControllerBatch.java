@@ -177,7 +177,7 @@ public class ControllerBatch {
 		
 		} else {
 			
-			return StudyUtils.checkStudy(FilePaths.fullMainPath, ControlData.sendAliasToDvar);
+			return StudyUtils.checkStudy(FilePaths.fullMainPath);
 		
 		}
 	}

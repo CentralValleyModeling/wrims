@@ -198,7 +198,7 @@ public class ControllerTree {
 		Calendar cal = Calendar.getInstance();
 		System.out.println("Before Parsser: "+cal.getTimeInMillis());
 		
-		return StudyUtils.checkStudy(FilePaths.fullMainPath, true);
+		return StudyUtils.checkStudy(FilePaths.fullMainPath);
 		
 	}
 	

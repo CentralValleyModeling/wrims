@@ -28,6 +28,7 @@ public class StudyUtils {
 	public static String configFileCanonicalPath = "";
 	public static String configDir = "";
 	public static String configFileName = "default";
+	public static boolean useWreslPlus = false;
 	
 	private StudyUtils() {
 
@@ -36,11 +37,11 @@ public class StudyUtils {
 	public static StudyDataSet compileStudy(String inMainWreslPath) throws IOException {
 		
 		StudyUtils.compileOnly = true;
-		return checkStudy(inMainWreslPath, false);
+		return checkStudy(inMainWreslPath);
 
 	}	
 	
-	public static StudyDataSet checkStudy(String inMainWreslPath, boolean sendAliasToDvar) throws IOException {
+	public static StudyDataSet checkStudy(String inMainWreslPath) throws IOException {
 		
 		String mainFileName = FilenameUtils.removeExtension(FilePaths.mainFile);
 		
@@ -51,7 +52,7 @@ public class StudyUtils {
 			csvFolderName = "";  // disable csv output
 		}
 
-		return checkStudy(inMainWreslPath, logFileName, csvFolderName, sendAliasToDvar);
+		return checkStudy(inMainWreslPath, logFileName, csvFolderName, ControlData.sendAliasToDvar);
 
 	}
 

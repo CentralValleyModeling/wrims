@@ -63,7 +63,7 @@ public class TestWreslWalker_dependantOfGoalInCycles {
 		Assert.assertEquals(totalErrs, 2);		
 		Assert.assertEquals(StudyParser.total_errors, 2);
 		
-		StudyUtils.checkStudy(absFilePath, false);
+		StudyUtils.checkStudy(absFilePath);
 		
 		Assert.assertEquals(StudyUtils.total_errors, 2);
 		

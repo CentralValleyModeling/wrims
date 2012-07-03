@@ -9,7 +9,7 @@ public class WreslCheck {
 
 	public static void main(String[] args) throws RecognitionException, IOException {
 
-		StudyUtils.checkStudy(args[0], false);
+		StudyUtils.checkStudy(args[0]);
 
 	}
 
