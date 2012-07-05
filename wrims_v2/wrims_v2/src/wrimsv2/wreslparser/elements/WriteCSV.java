@@ -32,6 +32,7 @@ public class WriteCSV {
 	  public static String external_header ="FUNCTION,FILE,FROM_WRESL_FILE";
 	  public static String svar_header   ="NAME,TIME_ARRAY_SIZE,CASE,ORDER,CONDITION,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,USED_IN_LATER_CYCLE";
 	  public static String timeseries_header ="NAME,B_PART,TYPE,UNITS,CONVERT_TO_UNITS,FROM_WRESL_FILE";
+	  public static String timeseries_timestep_header ="NAME,B_PART,TIMESTEP";
 	  public static String dvar_header ="NAME,TIME_ARRAY_SIZE,CONDITION,LOWER_BOUND,UPPER_BOUND,INTEGER,UNITS,TYPE,FROM_WRESL_FILE,USED_IN_LATER_CYCLE";	  
 	  public static String alias_header ="NAME,TIME_ARRAY_SIZE,TYPE,UNITS,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,USED_IN_LATER_CYCLE";
 	  public static String goal_header = "NAME,TIME_ARRAY_SIZE,CASE,ORDER,CONDITION,EXPRESSION,DEPENDANT,FROM_WRESL_FILE,NEED_VAR_FROM_CYCLE,";
@@ -55,6 +56,12 @@ public class WriteCSV {
 					out_timeseries_wholeStudy.print(WriteCSV.timeseries_header + "\n");			
 					timeseries_wholeStudy( sd.getTimeseriesMap(), out_timeseries_wholeStudy);
 					out_timeseries_wholeStudy.close();
+					
+					
+					PrintWriter out_timeseriesTimeStep = Tools.openFile(outParent, "TIMESERIES_TIMESTEP.csv");
+					out_timeseriesTimeStep.print(WriteCSV.timeseries_timestep_header + "\n");						
+					timeseriesTimeStep( sd, out_timeseriesTimeStep);
+					out_timeseriesTimeStep.close();
 				}
 				
 			}
@@ -344,6 +351,36 @@ public class WriteCSV {
 			}
 	  };
 
+	  public static void timeseriesTimeStep(StudyDataSet sd, PrintWriter out) {
+		    
+		    Map<String,Timeseries> tsMap = sd.getTimeseriesMap();
+		  
+			Set<String> kSet = tsMap.keySet();
+			
+			List<String> keys = new ArrayList<String>(kSet);
+			
+			Collections.sort(keys);
+			
+		    for (String k: keys ){
+		    	
+		    	Timeseries s = tsMap.get(k);
+		    	
+			    out.print(k); // for TIMESERIES NAME
+			    out.print(Param.csv_seperator+s.dssBPart); //for DSS B Part	
+			    out.print(Param.csv_seperator); 		    	
+
+			    System.out.println("0705: "+k+":"+sd.getTimeseriesTimeStepMap().get(k));
+			    for (String step:sd.getTimeseriesTimeStepMap().get(k)){
+			    	
+			    	out.print(step+";");
+			    	
+			    }
+
+				out.print("\n");	
+		    	
+			}
+	  };
+	  
 	  public static void incFile(ArrayList<String> list ,PrintWriter out) {
 		    
 		  List<String> keys = new ArrayList<String>(list);
