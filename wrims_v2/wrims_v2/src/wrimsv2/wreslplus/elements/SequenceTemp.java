@@ -21,6 +21,7 @@ public class SequenceTemp implements Serializable {
 	public String timeStep;
 
 	public ArrayList<String>  svIncFileList_post;   // copied from included model 
+	public ArrayList<String>  asIncFileList_post;   // copied from included model 
 	// does not reflect user's input order
 	public ArrayList<String> exList; 
 	public ArrayList<String> dvList;

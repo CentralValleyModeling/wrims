@@ -25,7 +25,7 @@ public class Workflow {
 		Procedures.findEffectiveModelinMain(st); // main file only
 
 		Procedures.processIncFilePath(st);
-		Procedures.processSvIncFileList(st);
+		Procedures.processVarIncFileList(st);
 		Procedures.processT_svList(st);
 		Procedures.processDependants(st);
 

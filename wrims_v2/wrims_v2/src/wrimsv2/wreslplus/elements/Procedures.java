@@ -415,6 +415,7 @@ public class Procedures {
 			ModelTemp seqModelObj = st.modelMap.get(seqObj.model);
 
 			seqObj.svIncFileList_post = seqModelObj.svIncFileList_post;
+			seqObj.asIncFileList_post = seqModelObj.asIncFileList_post;
 			
 			for (String f: seqModelObj.incFileRelativePathList_post){
 			
@@ -891,12 +892,12 @@ public class Procedures {
 	}
 	
 
-	public static void processSvIncFileList( StudyTemp st) {
+	public static void processVarIncFileList( StudyTemp st) {
 		
 		// TODO: use sequence instead of effective list
 		for (String m : st.modelList_effective){
 
-			processSvIncFileList(st.modelMap.get(m));
+			processVarIncFileList(st.modelMap.get(m));
 		
 		}		
 	}
@@ -911,23 +912,35 @@ public class Procedures {
 		}		
 	}
 	
-	public static void processSvIncFileList( ModelTemp mt) {
+	public static void processVarIncFileList( ModelTemp mt) {
 		
+		// TODO: use retain Set to simplify codes
 		mt.svIncFileList = new ArrayList<String>(mt.itemList);
 		mt.svIncFileList.removeAll(mt.tsList);
 		mt.svIncFileList.removeAll(mt.asList);
 		mt.svIncFileList.removeAll(mt.dvList);
 		mt.svIncFileList.removeAll(mt.glList);
 		mt.svIncFileList.removeAll(mt.exList);
+
+		mt.asIncFileList = new ArrayList<String>(mt.itemList);
+		mt.asIncFileList.removeAll(mt.tsList);
+		mt.asIncFileList.removeAll(mt.svList);
+		mt.asIncFileList.removeAll(mt.dvList);
+		mt.asIncFileList.removeAll(mt.glList);
+		mt.asIncFileList.removeAll(mt.exList);
 		
 		for (String f : mt.incFileMap.keySet()){
 			
 			int index = mt.svIncFileList.indexOf(f);
 			mt.svIncFileList.set(index, mt.incFileMap.get(f).pathRelativeToRunDir);
 			
+			index = mt.asIncFileList.indexOf(f);
+			mt.asIncFileList.set(index, mt.incFileMap.get(f).pathRelativeToRunDir);
 		}
 		
 		mt.svIncFileList_post = new ArrayList<String>(mt.svIncFileList);
+		
+		mt.asIncFileList_post = new ArrayList<String>(mt.asIncFileList);
 //		
 //		// TODO: check
 //		mt.incFileAbsPathList_post = new ArrayList<String>(mt.incFileAbsPathList);
@@ -988,20 +1001,6 @@ public class Procedures {
 					
 					int index =m.svIncFileList_post.indexOf(includedFile);
 					
-					//System.out.println("fgroup: "+fgroup);
-					//System.out.println("f: "+f);
-					//System.out.println("includedFile: "+includedFile);
-					
-//					if (index<0) {
-//						System.out.println("## problem::");
-//						System.out.println("model: "+modelName);
-//						System.out.println("this file1: "+m.absPath);
-//						System.out.println("this file2: "+f);
-//						System.out.println("includedFile: "+includedFile);
-//						System.out.println("m.svIncFileList_post: ");
-//						System.out.println(m.svIncFileList_post);
-//					}
-					
 					if (index>-1) {
 					m.svIncFileList_post.remove(index);
 					
@@ -1013,6 +1012,18 @@ public class Procedures {
 					m.ssList_noCase.addAll(includedModel.ssList_noCase);
 					m.ssList_hasCase.addAll(includedModel.ssList_hasCase);
 					
+					}
+					
+					// process alias
+					index =m.asIncFileList_post.indexOf(includedFile);
+					
+					if (index > -1) {
+						
+						m.asIncFileList_post.remove(index);
+						ModelTemp includedModel = st.fileModelDataTable.get(includedFile,
+								st.fileModelNameMap.get(includedFile).get(0));
+						m.asIncFileList_post.addAll(index, includedModel.asIncFileList_post);
+
 					}
 	
 				}
@@ -1031,11 +1042,6 @@ public class Procedures {
 				
 				int index = m.svIncFileList_post.indexOf(includedFile);
 				
-//				System.out.println("err: this model:   "+modelNameOfMain);
-//				System.out.println("err: m.svIncFileList_post: "+m.svIncFileList_post);
-//				System.out.println("err: includedFile: "+includedFile);
-//				System.out.println("err: index:        "+index);
-				
 				
 				if (index>-1) {
 				
@@ -1053,6 +1059,18 @@ public class Procedures {
 				//m.dvList.addAll(includedModel.dvList);
 				m.ssList_noCase.addAll(includedModel.ssList_noCase);
 				m.ssList_hasCase.addAll(includedModel.ssList_hasCase);
+				}
+				
+				// process alias
+				index = m.asIncFileList_post.indexOf(includedFile);
+				
+				if (index > -1) {
+
+					String modelName = st.fileModelNameMap.get(includedFile).get(0);
+
+					ModelTemp includedModel = st.fileModelDataTable.get(includedFile, modelName);
+					m.asIncFileList_post.remove(index);
+					m.asIncFileList_post.addAll(index, includedModel.asIncFileList_post);
 				}
 				
 			}		

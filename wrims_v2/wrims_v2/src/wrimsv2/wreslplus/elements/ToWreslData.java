@@ -102,8 +102,8 @@ public class ToWreslData {
 		o.exList = new ArrayList<String>(seq.exList);
 		Collections.sort(o.exList,String.CASE_INSENSITIVE_ORDER);
 		
-		o.asList = new ArrayList<String>(seq.asList);
-		Collections.sort(o.asList,String.CASE_INSENSITIVE_ORDER);
+		// don't sort asList. order matters in evaluator
+		o.asList = new ArrayList<String>(seq.asIncFileList_post);
 
 		o.wtList = new ArrayList<String>(seq.wvList_defaultType);
 		o.wtList.addAll(seq.ssList_noCase);

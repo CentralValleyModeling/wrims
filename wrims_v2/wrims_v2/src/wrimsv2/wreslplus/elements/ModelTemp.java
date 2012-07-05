@@ -24,6 +24,9 @@ public class ModelTemp implements Serializable {
 	public ArrayList<String>  svIncFileList;   // processed 
 	public ArrayList<String>  svIncFileList_post;   // post processed 
 
+	public ArrayList<String>  asIncFileList;   // processed 
+	public ArrayList<String>  asIncFileList_post;   // post processed 
+	
 	//<svName, relativePath, operationName>
 	public ArrayList<Triplet<String,String,String>>  t_svList;   // processed 
 	public ArrayList<Triplet<String,String,String>>  t_svList_post;   // post processed 
