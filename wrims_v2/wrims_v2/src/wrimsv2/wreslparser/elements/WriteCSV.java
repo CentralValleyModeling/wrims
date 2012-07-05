@@ -369,7 +369,6 @@ public class WriteCSV {
 			    out.print(Param.csv_seperator+s.dssBPart); //for DSS B Part	
 			    out.print(Param.csv_seperator); 		    	
 
-			    System.out.println("0705: "+k+":"+sd.getTimeseriesTimeStepMap().get(k));
 			    for (String step:sd.getTimeseriesTimeStepMap().get(k)){
 			    	
 			    	out.print(step+";");
