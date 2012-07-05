@@ -390,13 +390,19 @@ sum_content
 
 svar_table 
 	: t1=svar_table_1 { $svar_g::sv_.caseExpression.add($t1.text); 
-	  //System.out.println($svar_g::sv_.caseExpression);
+	  //System.out.println($t1.text);
 	  } 
 	| svar_table_2 ;
 
 svar_table_1 
-	: SELECT ID FROM ID (GIVEN expr_assign USE ID)? (WHERE expr_assign (',' expr_assign)* )?
+	: s=SELECT { $s.setText("select ");} ID 
+	  f=FROM   { $f.setText(" from ");} ID 
+	  (g=GIVEN { $g.setText(" given ");} expr_assign 
+	   u=USE   { $u.setText(" use ");}  ID)? 
+	  (w=WHERE { $w.setText(" where ");} where)?
     ;
+
+where: expr_assign (',' expr_assign)* ;
 
 svar_table_2
 	: 'table' '(' ')' ;
@@ -831,5 +837,5 @@ fragment Letter : 'a'..'z' | 'A'..'Z';
 fragment Digit : '0'..'9';
 
 WS : (' ' | '\t' | '\n' | '\r' | '\f')+ {skip();}; //{$channel = HIDDEN;};
-
-
+//WS : ( '\t' | '\n' | '\r' | '\f')+ {skip();}; //{$channel = HIDDEN;};
+//WS2 : ( ' ' )+ {$channel = HIDDEN;};
