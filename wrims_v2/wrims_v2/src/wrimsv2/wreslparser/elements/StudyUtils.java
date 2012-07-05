@@ -15,6 +15,9 @@ import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
 import wrimsv2.components.Versions;
+import wrimsv2.wreslplus.elements.StudyTemp;
+import wrimsv2.wreslplus.elements.ToWreslData;
+import wrimsv2.wreslplus.elements.Workflow;
 
 public class StudyUtils {
 
@@ -77,8 +80,12 @@ public class StudyUtils {
 		LogUtils.titleMsg(Param.wreslChekerName + new Versions().getComplete());
 			
 		try {
-			sds = parseWresl(mainWreslFile, sendAliasToDvar);
 			
+			if (useWreslPlus) {
+				sds = parseWreslPlus(mainWreslFile);
+			} else {
+				sds = parseWresl(mainWreslFile, sendAliasToDvar);
+			}
 			
 		}
 		catch (RecognitionException e) {
@@ -179,6 +186,28 @@ public class StudyUtils {
 			e.printStackTrace();
 		}
 
+		return null;
+	}
+
+	private static StudyDataSet parseWreslPlus(File validatedMainWreslFile)
+			throws RecognitionException, IOException {
+	
+		try {
+	
+			
+			//total_errors = StudyParser.total_errors;
+	
+			StudyTemp st = Workflow.checkStudy(validatedMainWreslFile.getCanonicalPath());
+			
+			StudyDataSet sd = ToWreslData.convertStudy(st);
+			
+			return sd;
+	
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	
 		return null;
 	}
 

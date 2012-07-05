@@ -355,6 +355,16 @@ public class ConfigUtils {
 
 		}
 		
+		String s = configMap.get("wreslplus");
+		
+		if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")){
+			StudyUtils.useWreslPlus = true;	
+		} else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")){
+			StudyUtils.useWreslPlus = false;	
+		} else {
+			StudyUtils.useWreslPlus  = false;	
+		}
+		System.out.println("WreslPlus:         " + StudyUtils.useWreslPlus);
 		
 //		if (configMap.keySet().contains("lpsolveparamheader")){
 //			
@@ -621,6 +631,7 @@ public class ConfigUtils {
 		configMap.put("lookupsubdir".toLowerCase(), "");
 		configMap.put("IlpLog".toLowerCase(), "no");
 		configMap.put("IlpLogVarValue".toLowerCase(), "no");
+		configMap.put("WreslPlus".toLowerCase(), "no");
 
 
 		return configMap;
