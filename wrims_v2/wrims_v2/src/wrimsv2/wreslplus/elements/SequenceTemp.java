@@ -3,7 +3,11 @@ package wrimsv2.wreslplus.elements;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+
+import wrimsv2.commondata.wresldata.Param;
 
 public class SequenceTemp implements Serializable {
 	
@@ -14,7 +18,9 @@ public class SequenceTemp implements Serializable {
 	public String model;
 	public String condition;
 	public String order;	
+	public String timeStep;
 
+	public ArrayList<String>  svIncFileList_post;   // copied from included model 
 	// does not reflect user's input order
 	public ArrayList<String> exList; 
 	public ArrayList<String> dvList;
@@ -44,11 +50,19 @@ public class SequenceTemp implements Serializable {
 	
 	public ArrayList<String> wvList_defaultType;
 	public ArrayList<WeightTable> wTableObjList_defaultType;
-
-
+	
+	public Map<String, HashSet<String>> neededCycleVarMap;
+	
+	public Set<String> varUsedByLaterCycle; 
+	public Set<String> dvarUsedByLaterCycle;
+	public Set<String> svarUsedByLaterCycle;
+	public Set<String> aliasUsedByLaterCycle; 
+	
 	
 	public SequenceTemp(){
 		
+		timeStep = Param.undefined;
+		svIncFileList_post = new ArrayList<String>();
 		exList = new ArrayList<String>();
 		dvList = new ArrayList<String>();
 		dvList_fromAlias = new ArrayList<String>();
@@ -75,6 +89,13 @@ public class SequenceTemp implements Serializable {
 		
 		wvList_defaultType = new ArrayList<String>();
 		wTableObjList_defaultType = new ArrayList<WeightTable>();
+		
+		neededCycleVarMap = new HashMap<String, HashSet<String>>();
+		
+		varUsedByLaterCycle = new HashSet<String>();	
+		dvarUsedByLaterCycle = new HashSet<String>();
+		svarUsedByLaterCycle = new HashSet<String>();
+		aliasUsedByLaterCycle = new HashSet<String>();
 		
 	}
 	

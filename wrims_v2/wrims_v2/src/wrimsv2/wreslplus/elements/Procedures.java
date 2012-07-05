@@ -3,6 +3,7 @@ package wrimsv2.wreslplus.elements;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Set;
 import org.javatuples.Triplet;
 
 import wrimsv2.commondata.wresldata.Param;
+import wrimsv2.components.ControlData;
 import wrimsv2.components.IntDouble;
 import wrimsv2.wreslparser.elements.LogUtils;
 
@@ -408,10 +410,12 @@ public class Procedures {
 	public static void copyModelVarMapToSequenceVarMap(StudyTemp st) {
 		
 		for (String seqName : st.seqList) {
-
+			
 			SequenceTemp seqObj = st.seqMap.get(seqName);
 			ModelTemp seqModelObj = st.modelMap.get(seqObj.model);
 
+			seqObj.svIncFileList_post = seqModelObj.svIncFileList_post;
+			
 			for (String f: seqModelObj.incFileRelativePathList_post){
 			
 				// TODO: allow multiple models in a file
@@ -431,6 +435,17 @@ public class Procedures {
 	public static void copyModelVarMapToSequenceVarMap(ModelTemp mt, SequenceTemp seq) {
 		
 		//System.out.println("0427: "+mt.pathRelativeToRunDir+" : "+mt.dvList);
+		
+		for (String cycleName: mt.neededCycleVarMap.keySet()){
+		
+			if (seq.neededCycleVarMap.containsKey(cycleName)){
+				
+				seq.neededCycleVarMap.get(cycleName).addAll(mt.neededCycleVarMap.get(cycleName));
+			}
+			else {
+				seq.neededCycleVarMap.put(cycleName, mt.neededCycleVarMap.get(cycleName));
+			}
+		}
 		
 		seq.exList.addAll(mt.exList);
 		seq.dvList.addAll(mt.dvList);
@@ -1079,33 +1094,32 @@ public class Procedures {
 
 	public static void analyzeVarNeededFromCycle(StudyTemp s){
 		
-		for (String mn : s.modelList_effective){
+		for (String se : s.seqList){
 			
-			ModelTemp m = s.modelMap.get(mn);
-		
-			ArrayList<String> others = new ArrayList<String>(s.modelList_effective);
-			others.remove(mn);
+			SequenceTemp q = s.seqMap.get(se); 
+			ArrayList<String> others = new ArrayList<String>(s.seqList);
+			others.remove(se);
 			
 			for (String o : others){
 				
-				ModelTemp otherModel = s.modelMap.get(o);
+				SequenceTemp otherSeq = s.seqMap.get(o);
 				
-				Set<String> varSet = otherModel.neededCycleVarMap.get(mn);
+				Set<String> varSet = otherSeq.neededCycleVarMap.get(se);
 				
 				if (varSet != null) {
 
-					m.varUsedByLaterCycle.addAll(varSet);
+					q.varUsedByLaterCycle.addAll(varSet);
 
 					for (String e : varSet) {
 
-						if (otherModel.asList.contains(e)) {
-							m.aliasUsedByLaterCycle.add(e);
+						if (otherSeq.asList.contains(e)) {
+							q.aliasUsedByLaterCycle.add(e);
 						}
-						else if (otherModel.dvList.contains(e)) {
-							m.dvarUsedByLaterCycle.add(e);
+						else if (otherSeq.dvList.contains(e)) {
+							q.dvarUsedByLaterCycle.add(e);
 						}
-						else if (otherModel.svList.contains(e)) {
-							m.svarUsedByLaterCycle.add(e);
+						else if (otherSeq.svIncFileList_post.contains(e)) {
+							q.svarUsedByLaterCycle.add(e);
 						}
 						else {
 							System.out.println("Error in analyzeVarNeededFromCycles");
@@ -1115,25 +1129,27 @@ public class Procedures {
 				
 				
 			}
+						
 		}
+		
 	}
 
 	public static void createSpaceInVarCycleValueMap(StudyTemp s){
 		
 		Map<String, Map<String, IntDouble>> vcv = s.varCycleValueMap;
 		
-		for (String modelName : s.modelList_effective){
+		for (String seqName : s.seqList){
 			
-			ModelTemp m = s.modelMap.get(modelName);
+			SequenceTemp q = s.seqMap.get(seqName); 
 						
-			for (String e : m.varUsedByLaterCycle) {
+			for (String e : q.varUsedByLaterCycle) {
 
 				// / create space in varCycleValue map
 				if (vcv.keySet().contains(e)) {
-					vcv.get(e).put(modelName, null);
+					vcv.get(e).put(seqName, null);
 				} else {
 					Map<String, IntDouble> t = new HashMap<String, IntDouble>();
-					t.put(modelName, null);
+					t.put(seqName, null);
 					vcv.put(e, t);
 				}
 			}
@@ -1142,5 +1158,66 @@ public class Procedures {
 			
 		}
 	}
+
+	public static void collectTimeStep(StudyTemp st) {
+
+		// TODO: need to create model time step list in sequence.
+		// TODO: currently only allows monthly time step for testing in wreslplus
+		// TODO: check with Hao
+
+
+
+		for (String se : st.seqList){
+			
+			SequenceTemp q = st.seqMap.get(se);
+			
+			// TODO: warning!!! test only. need to parse time step from wreslplus
+			st.seqTimeStepList.add("1MON");		
+		}
+
+		String definedTimeStep = "1MON";
+		
+		for (String se : st.seqList){
+			
+			SequenceTemp q = st.seqMap.get(se); 
+
+			for (String timeseriesName : q.tsList) {
+
+				if (st.timeseriesTimeStepMap.containsKey(timeseriesName)) {
+
+					ArrayList<String> timeStepList = st.timeseriesTimeStepMap.get(timeseriesName);
+					if (!timeStepList.contains(definedTimeStep)) {
+						timeStepList.add(definedTimeStep);
+					}
+				}
+				else {
+					st.timeseriesTimeStepMap.put(timeseriesName, new ArrayList<String>(Arrays.asList(definedTimeStep)));
+				}
+			}
+
+		}
+		
+		
+//	      String timeStep=sc.modelTimeStepList.get(modelIndex);
+//	      String definedTimeStep;
+//	      if (timeStep.equals(Param.undefined)){
+//	    	  definedTimeStep=ControlData.defaultTimeStep;
+//	      }else{
+//	    	  definedTimeStep=timeStep;
+//	      }
+//	      for (String timeseriesName:ds.tsMap.keySet()){
+//	    	  if (timeseriesTimeStepMap.containsKey(timeseriesName)){
+//	    		  ArrayList<String> timeStepList=timeseriesTimeStepMap.get(timeseriesName);
+//	    		  if (!timeStepList.contains(definedTimeStep)){
+//	    			  timeStepList.add(definedTimeStep);
+//	    		  }
+//	    	  }else{
+//	    		  timeseriesTimeStepMap.put(timeseriesName, new ArrayList<String>(Arrays.asList(definedTimeStep)));
+//	    	  }
+//	      }
+		
+	}
+
+
 	
 }

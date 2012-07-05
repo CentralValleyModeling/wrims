@@ -31,7 +31,9 @@ public class ToWreslData {
 		o.setModelList(s.modelList_effective);
 		
 		o.setVarCycleValueMap(s.varCycleValueMap);
-				
+		o.setTimeseriesTimeStepMap(s.timeseriesTimeStepMap);
+		o.setModelTimeStepList(s.seqTimeStepList);		
+		
 		Map<String, ModelDataSet> modelDataSetMap = new HashMap<String, ModelDataSet>();
 		ArrayList<String> modelConditionList   = new ArrayList<String>();
 		Map<String, Timeseries> allTimeseriesMap = new LinkedHashMap<String, Timeseries>();
@@ -55,7 +57,7 @@ public class ToWreslData {
 		o.setModelDataSetMap(modelDataSetMap);
 		o.setModelConditionList(modelConditionList);
 		o.setTimeseriesMap(allTimeseriesMap);
-		
+
 		return o;
 
 	}	
@@ -64,10 +66,10 @@ public class ToWreslData {
 		
 		ModelDataSet o = new ModelDataSet();
 		
-		o.varUsedByLaterCycle = m.varUsedByLaterCycle;
-		o.dvarUsedByLaterCycle = m.dvarUsedByLaterCycle;
-		o.svarUsedByLaterCycle = m.svarUsedByLaterCycle;
-		o.aliasUsedByLaterCycle = m.aliasUsedByLaterCycle;
+		o.varUsedByLaterCycle = seq.varUsedByLaterCycle;
+		o.dvarUsedByLaterCycle = seq.dvarUsedByLaterCycle;
+		o.svarUsedByLaterCycle = seq.svarUsedByLaterCycle;
+		o.aliasUsedByLaterCycle = seq.aliasUsedByLaterCycle;
 		
 		// TODO: give pre-sorted var list
 

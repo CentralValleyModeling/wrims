@@ -67,14 +67,11 @@ public class ModelTemp implements Serializable {
 	public Map<String,WeightTemp> ssWeightMap_noCase;   // processed
 	
 	public Map<String, HashSet<String>> neededCycleVarMap;
-//	public Map<String, HashSet<String>> neededCycleDvarMap;  // processed
-//	public Map<String, HashSet<String>> neededCycleSvarMap;  // processed
-//	public Map<String, HashSet<String>> neededCycleAliasMap; // processed
 	
-	public Set<String> varUsedByLaterCycle; 
-	public Set<String> dvarUsedByLaterCycle;
-	public Set<String> svarUsedByLaterCycle;
-	public Set<String> aliasUsedByLaterCycle; 
+//	public Set<String> varUsedByLaterCycle; 
+//	public Set<String> dvarUsedByLaterCycle;
+//	public Set<String> svarUsedByLaterCycle;
+//	public Set<String> aliasUsedByLaterCycle; 
 	
 	public ModelTemp(){
 		
@@ -118,14 +115,11 @@ public class ModelTemp implements Serializable {
 		ssWeightMap_noCase = new LinkedHashMap<String, WeightTemp>();		
 		
 		neededCycleVarMap = new HashMap<String, HashSet<String>>();
-//		neededCycleDvarMap = new HashMap<String, HashSet<String>>();
-//		neededCycleSvarMap = new HashMap<String, HashSet<String>>();
-//		neededCycleAliasMap = new HashMap<String, HashSet<String>>();
 		
-		varUsedByLaterCycle = new HashSet<String>();	
-		dvarUsedByLaterCycle = new HashSet<String>();
-		svarUsedByLaterCycle = new HashSet<String>();
-		aliasUsedByLaterCycle = new HashSet<String>();
+//		varUsedByLaterCycle = new HashSet<String>();	
+//		dvarUsedByLaterCycle = new HashSet<String>();
+//		svarUsedByLaterCycle = new HashSet<String>();
+//		aliasUsedByLaterCycle = new HashSet<String>();
 	}
 	
 }

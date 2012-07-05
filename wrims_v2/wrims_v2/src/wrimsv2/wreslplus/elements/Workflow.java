@@ -127,6 +127,8 @@ public class Workflow {
 		
 		Procedures.collectWeightVar(st);
 		
+		Procedures.collectTimeStep(st);
+		
 		
 //		//test
 //		String mn = st.modelList_effective.get(0);

@@ -20,8 +20,9 @@ public class StudyTemp implements Serializable {
 	public String relativePath = null;
 	
 	public ArrayList<String> seqList;
+	public ArrayList<String> seqTimeStepList;
 	public Map<String, SequenceTemp> seqMap;
-	public ArrayList<String> modelList_effective;  //processed		
+	public ArrayList<String> modelList_effective;  //processed	
 	public ArrayList<String> modelList;		
 	public Map<String, ModelTemp> modelMap;
 	public Map<String, ArrayList<String>> fileModelNameMap;  
@@ -37,8 +38,13 @@ public class StudyTemp implements Serializable {
 	/// < VarName, < CycleName, Value >>		
 	public Map<String, Map<String, IntDouble>> varCycleValueMap;
 	
+	///  < timeseries name, time steps > 
+	public Map<String, ArrayList<String>> timeseriesTimeStepMap;
+
+	
 	public StudyTemp(){
 		
+		seqTimeStepList = new ArrayList<String>();
 		modelList = new ArrayList<String>();
 		modelList_effective = new ArrayList<String>();
 		modelMap = new HashMap<String, ModelTemp>();	
@@ -54,6 +60,9 @@ public class StudyTemp implements Serializable {
 		fileGroupOrder = new ArrayList<HashSet<String>>();
 		
 		varCycleValueMap = new HashMap<String, Map<String,IntDouble>>();
+		
+		timeseriesTimeStepMap = new HashMap<String, ArrayList<String>>();
+
 
 	}
 	
