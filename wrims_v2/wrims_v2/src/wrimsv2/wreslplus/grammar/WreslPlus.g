@@ -583,12 +583,12 @@ logical_main: logical_or | ALWAYS ;
 
 logical_or
     :   logical_and       
-        (   OR   logical_and  )*    
+        (   o=OR  {$o.setText(" .or. ");} logical_and  )*    
     ;
 
 logical_and
     :   logical_unary       
-        (   AND    logical_unary  )*    
+        (   a=AND  {$a.setText(" .and. ");}  logical_unary  )*    
     ;
 
 logical_unary : NOT? logical_term;
