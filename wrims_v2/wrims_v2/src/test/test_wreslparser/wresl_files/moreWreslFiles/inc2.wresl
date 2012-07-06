@@ -1,0 +1,7 @@
+
+ define[local] x { std kind 'test' units 'test' }
+ 
+ goal[local] g { x = x[base] + 1 }
+
+ Objective[local] obj = { [x, 1] }
+ 

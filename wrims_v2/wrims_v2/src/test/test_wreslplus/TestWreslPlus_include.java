@@ -115,4 +115,34 @@ public class TestWreslPlus_include {
 		Assert.assertEquals(totalErrs, 0);		
 	
 	}
+
+	@Test(groups = { "WRESLPLUS_elements" })
+	public void include_usedByCycle() throws RecognitionException, IOException {
+		
+	
+		testName = TestParam.testNamePrepend + "_include_usedByCycle";
+		csvFolderPath = "testResult_wreslplus\\"+testName;
+		
+		inputFilePath = projectPath + "\\moreWreslFiles\\" + testName + TestParam.fileExt;
+		logFilePath = csvFolderPath + ".log";
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
+		
+		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
+		
+		WriteCSV.study(sd, this.csvFolderPath);
+		
+		LogUtils.closeLogFile();
+	
+		String logText = Tools.readFileAsString(logFilePath);	
+		
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		
+		Assert.assertEquals(totalErrs, 100);		
+	
+	}
 }

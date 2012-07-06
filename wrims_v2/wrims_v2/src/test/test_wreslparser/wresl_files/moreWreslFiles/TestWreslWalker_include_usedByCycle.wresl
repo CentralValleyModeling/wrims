@@ -1,0 +1,36 @@
+! Main WRESL Files containes the paths to run the model.
+!Date Modified: 04/23/2010; By: Hao Xie
+! 5/18/10 Added logic for two cycles to accomodate daily weir flows Tom FitzHugh BOR
+! comment out daily weir flows for corroboration study; Richard Chen DWR
+! 4/25/11 Cleanup Codes to remove CS2CL,CL, and change Ave to AVG. Richard Chen, DWR
+
+SEQUENCE CYCLE1 {
+    model   BASE
+    order   1
+    }
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }
+    
+MODEL BASE {         !CYCLE 1
+ include[local] 'inc1.wresl'
+ ! define[local] x1 { std kind 'test' units 'test' }
+ 
+ ! goal[local] g1 { x1 = 5 }
+
+ ! Objective[local] obj = { [x1, 1] }
+ 
+ 
+}
+
+MODEL second {        
+ include[local] 'inc2.wresl'
+ ! define[local] x2 { std kind 'test' units 'test' }
+ 
+ ! goal[local] g1 { x2 = x1[base] }
+
+ ! Objective[local] obj = { [x2, 1] }
+ 
+ 
+}

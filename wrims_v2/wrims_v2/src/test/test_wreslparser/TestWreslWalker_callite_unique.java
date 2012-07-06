@@ -45,6 +45,8 @@ public class TestWreslWalker_callite_unique {
 		td.model_dataset_map=StudyParser.parseModels(sc,td);
 		
 		StudyDataSet sd = StudyParser.writeWreslData(sc, td); 
+		
+		StudyParser.analyzeVarNeededFromCycles(sc, sd);
 	
 		LogUtils.closeLogFile();
 		

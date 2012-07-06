@@ -1,0 +1,10 @@
+! Main WRESL Files containes the paths to run the model.
+!Date Modified: 04/23/2010; By: Hao Xie
+! 5/18/10 Added logic for two cycles to accomodate daily weir flows Tom FitzHugh BOR
+
+ define[local] x { std kind 'test' units 'test' }
+ 
+ goal[local] g1 { x = 5 }
+
+ Objective[local] obj = { [x, 1] }
+ 
