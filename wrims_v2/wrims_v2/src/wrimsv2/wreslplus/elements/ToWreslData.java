@@ -98,9 +98,9 @@ public class ToWreslData {
 		Collections.sort(o.gList,String.CASE_INSENSITIVE_ORDER);
 		
 
-		
-		o.exList = new ArrayList<String>(seq.exList);
-		Collections.sort(o.exList,String.CASE_INSENSITIVE_ORDER);
+		// don't sort exList. order matters in evaluator		
+		o.exList = new ArrayList<String>(seq.exIncFileList_post);
+		//Collections.sort(o.exList,String.CASE_INSENSITIVE_ORDER);
 		
 		// don't sort asList. order matters in evaluator
 		o.asList = new ArrayList<String>(seq.asIncFileList_post);

@@ -26,6 +26,9 @@ public class ModelTemp implements Serializable {
 
 	public ArrayList<String>  asIncFileList;   // processed 
 	public ArrayList<String>  asIncFileList_post;   // post processed 
+
+	public ArrayList<String>  exIncFileList;   // processed 
+	public ArrayList<String>  exIncFileList_post;   // post processed 
 	
 	//<svName, relativePath, operationName>
 	public ArrayList<Triplet<String,String,String>>  t_svList;   // processed 
@@ -82,8 +85,10 @@ public class ModelTemp implements Serializable {
 		t_svList_post = new ArrayList<Triplet<String,String,String>>();
 		itemList = new ArrayList<String>();
 		itemTypeList = new ArrayList<Integer>();
-		svIncFileList = new ArrayList<String>();
+		//svIncFileList = new ArrayList<String>();
 		svIncFileList_post = new ArrayList<String>();
+		asIncFileList_post = new ArrayList<String>();
+		exIncFileList_post = new ArrayList<String>();
 		incFileIDList = new ArrayList<String>();
 		incFileRelativePathList = new ArrayList<String>();
 		incFileRelativePathList_post = new ArrayList<String>();

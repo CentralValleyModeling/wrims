@@ -416,6 +416,7 @@ public class Procedures {
 
 			seqObj.svIncFileList_post = seqModelObj.svIncFileList_post;
 			seqObj.asIncFileList_post = seqModelObj.asIncFileList_post;
+			seqObj.exIncFileList_post = seqModelObj.exIncFileList_post;
 			
 			for (String f: seqModelObj.incFileRelativePathList_post){
 			
@@ -450,7 +451,7 @@ public class Procedures {
 		
 		seq.exList.addAll(mt.exList);
 		seq.dvList.addAll(mt.dvList);
-		seq.asList.addAll(mt.asList);
+		seq.asList.addAll(mt.asList); 
 		seq.glList.addAll(mt.glList);
 		seq.gl2List.addAll(mt.gl2List);
 		seq.tsList.addAll(mt.tsList);
@@ -561,6 +562,7 @@ public class Procedures {
 				d.isFromAlias = true;
 
 				seqObj.asList.remove(aKey);
+				seqObj.asIncFileList_post.remove(aKey);
 				seqObj.dvList_fromAlias.add(aKey);
 				//seqObj.dvList.add(aKey);
 				seqObj.dvMap.put(aKey, d);
@@ -929,6 +931,13 @@ public class Procedures {
 		mt.asIncFileList.removeAll(mt.glList);
 		mt.asIncFileList.removeAll(mt.exList);
 		
+		mt.exIncFileList = new ArrayList<String>(mt.itemList);
+		mt.exIncFileList.removeAll(mt.tsList);
+		mt.exIncFileList.removeAll(mt.svList);
+		mt.exIncFileList.removeAll(mt.dvList);
+		mt.exIncFileList.removeAll(mt.glList);
+		mt.exIncFileList.removeAll(mt.asList);
+		
 		for (String f : mt.incFileMap.keySet()){
 			
 			int index = mt.svIncFileList.indexOf(f);
@@ -936,11 +945,16 @@ public class Procedures {
 			
 			index = mt.asIncFileList.indexOf(f);
 			mt.asIncFileList.set(index, mt.incFileMap.get(f).pathRelativeToRunDir);
+			
+			index = mt.exIncFileList.indexOf(f);
+			mt.exIncFileList.set(index, mt.incFileMap.get(f).pathRelativeToRunDir);
 		}
 		
 		mt.svIncFileList_post = new ArrayList<String>(mt.svIncFileList);
 		
 		mt.asIncFileList_post = new ArrayList<String>(mt.asIncFileList);
+		
+		mt.exIncFileList_post = new ArrayList<String>(mt.exIncFileList);
 //		
 //		// TODO: check
 //		mt.incFileAbsPathList_post = new ArrayList<String>(mt.incFileAbsPathList);
@@ -1025,6 +1039,18 @@ public class Procedures {
 						m.asIncFileList_post.addAll(index, includedModel.asIncFileList_post);
 
 					}
+					
+					// process external
+					index =m.exIncFileList_post.indexOf(includedFile);
+					
+					if (index > -1) {
+						
+						m.exIncFileList_post.remove(index);
+						ModelTemp includedModel = st.fileModelDataTable.get(includedFile,
+								st.fileModelNameMap.get(includedFile).get(0));
+						m.exIncFileList_post.addAll(index, includedModel.exIncFileList_post);
+
+					}
 	
 				}
 			}
@@ -1071,6 +1097,18 @@ public class Procedures {
 					ModelTemp includedModel = st.fileModelDataTable.get(includedFile, modelName);
 					m.asIncFileList_post.remove(index);
 					m.asIncFileList_post.addAll(index, includedModel.asIncFileList_post);
+				}
+				
+				// process external
+				index = m.exIncFileList_post.indexOf(includedFile);
+				
+				if (index > -1) {
+
+					String modelName = st.fileModelNameMap.get(includedFile).get(0);
+
+					ModelTemp includedModel = st.fileModelDataTable.get(includedFile, modelName);
+					m.exIncFileList_post.remove(index);
+					m.exIncFileList_post.addAll(index, includedModel.exIncFileList_post);
 				}
 				
 			}		
@@ -1122,21 +1160,21 @@ public class Procedures {
 				
 				SequenceTemp otherSeq = s.seqMap.get(o);
 				
-				Set<String> varSet = otherSeq.neededCycleVarMap.get(se);
+				Set<String> varSet = otherSeq.neededCycleVarMap.get(q.model);
 				
 				if (varSet != null) {
 
 					q.varUsedByLaterCycle.addAll(varSet);
-
+					
 					for (String e : varSet) {
 
-						if (otherSeq.asList.contains(e)) {
+						if (q.asList.contains(e)) {
 							q.aliasUsedByLaterCycle.add(e);
 						}
-						else if (otherSeq.dvList.contains(e)) {
+						else if (q.dvList.contains(e)) {
 							q.dvarUsedByLaterCycle.add(e);
 						}
-						else if (otherSeq.svIncFileList_post.contains(e)) {
+						else if (q.svIncFileList_post.contains(e)) {
 							q.svarUsedByLaterCycle.add(e);
 						}
 						else {
@@ -1159,15 +1197,17 @@ public class Procedures {
 		for (String seqName : s.seqList){
 			
 			SequenceTemp q = s.seqMap.get(seqName); 
+			
+			String modelName = q.model;
 						
 			for (String e : q.varUsedByLaterCycle) {
 
 				// / create space in varCycleValue map
 				if (vcv.keySet().contains(e)) {
-					vcv.get(e).put(seqName, null);
+					vcv.get(e).put(modelName, null);
 				} else {
 					Map<String, IntDouble> t = new HashMap<String, IntDouble>();
-					t.put(seqName, null);
+					t.put(modelName, null);
 					vcv.put(e, t);
 				}
 			}

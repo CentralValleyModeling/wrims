@@ -22,6 +22,7 @@ public class SequenceTemp implements Serializable {
 
 	public ArrayList<String>  svIncFileList_post;   // copied from included model 
 	public ArrayList<String>  asIncFileList_post;   // copied from included model 
+	public ArrayList<String>  exIncFileList_post;   // copied from included model 
 	// does not reflect user's input order
 	public ArrayList<String> exList; 
 	public ArrayList<String> dvList;
@@ -63,7 +64,7 @@ public class SequenceTemp implements Serializable {
 	public SequenceTemp(){
 		
 		timeStep = Param.undefined;
-		svIncFileList_post = new ArrayList<String>();
+		//svIncFileList_post = new ArrayList<String>();
 		exList = new ArrayList<String>();
 		dvList = new ArrayList<String>();
 		dvList_fromAlias = new ArrayList<String>();

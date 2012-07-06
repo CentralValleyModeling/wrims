@@ -124,6 +124,7 @@ public class Workflow {
 		Procedures.convertAliasToGoal(st); 
 		
 		Procedures.analyzeVarNeededFromCycle(st);
+		Procedures.createSpaceInVarCycleValueMap(st);
 		
 		Procedures.collectWeightVar(st);
 		
