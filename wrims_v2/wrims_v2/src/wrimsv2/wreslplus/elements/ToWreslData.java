@@ -320,6 +320,8 @@ public class ToWreslData {
 		o.caseExpression = Tools.replace_seperator(o.caseExpression);
 		//o.caseExpression = Tools.add_space_between_logical(o.caseExpression);
 		
+		o.dvarWeightMapList = g.dvarWeightMapList;
+		o.dvarSlackSurplusList = g.dvarSlackSurplusList;
 		//System.out.println(o.caseExpression);
 		return o;
 		

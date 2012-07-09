@@ -136,14 +136,14 @@ public class Procedures {
 			// This approach is to reduce data size by not using different goal obj.
 			g2.caseCondition = new ArrayList<String>();
 			
-			for (int i = 0; i < g2.caseName.size(); i++) {
+			for (int caseNumber = 0; caseNumber < g2.caseName.size(); caseNumber++) {
 	
-				String cn = g2.caseName.get(i);
+				String cn = g2.caseName.get(caseNumber);
 				GoalCase gc = g2.caseMap.get(cn);
 				g2.caseCondition.add(gc.condition);
 	
 				// convert penalty into caseExpression
-				Map<String, String> o = convertPenalty(g2.id.toLowerCase(), i, g2.lhs, gc);
+				Map<String, String> o = convertPenalty(g2.id.toLowerCase(), caseNumber, g2.lhs, gc);
 	
 				String slackName = o.get("slackName");
 				String surplusName = o.get("surplusName");
@@ -154,6 +154,9 @@ public class Procedures {
 				g2.surplusList.add(surplusName);
 				g2.caseExpression.add(o.get("caseExpression"));
 	
+				Map<String,String> weightMap = new HashMap<String, String>();
+				ArrayList<String> dvarSlackSurplus = new ArrayList<String>();
+				
 				if (slackName != null) {
 					WeightTemp w = new WeightTemp();
 					w.weight = o.get("slackWeight");
@@ -169,6 +172,9 @@ public class Procedures {
 						seqObj.ssList_hasCase.add(slackName);
 						seqObj.ssMap_hasCase.put(slackName, d);
 						seqObj.ssWeightMap_hasCase.put(slackName, w);
+						
+						weightMap.put(slackName, w.weight);
+						dvarSlackSurplus.add(slackName);
 						
 					} else {
 	
@@ -193,6 +199,10 @@ public class Procedures {
 						seqObj.ssList_hasCase.add(surplusName);
 						seqObj.ssMap_hasCase.put(surplusName, d);
 						seqObj.ssWeightMap_hasCase.put(surplusName, w);
+						
+						weightMap.put(surplusName, w.weight);
+						dvarSlackSurplus.add(surplusName);
+						
 					} else {
 					
 						seqObj.ssList_noCase.add(surplusName);
@@ -203,6 +213,9 @@ public class Procedures {
 					
 					// System.out.println(surplusName+":"+g2.ruleType+":"+d.condition);
 				}
+
+				g2.dvarWeightMapList.add(weightMap);
+				g2.dvarSlackSurplusList.add(dvarSlackSurplus);
 	
 			}
 	

@@ -35,9 +35,12 @@ public class GoalTemp implements Serializable {
 	public Map<String, GoalCase> caseMap;
 	public ArrayList<String> caseCondition;
 	public ArrayList<String> caseExpression;
+	//     ArrayList< Map< dvarName, Weight > > index is case number
+	public ArrayList<Map<String, String>> dvarWeightMapList;
+	public ArrayList<ArrayList<String>> dvarSlackSurplusList;	
 	public ArrayList<String> slackList;
 	public ArrayList<String> surplusList;
-	
+
 	public GoalTemp(){
 		
 		lhs=null;
@@ -52,6 +55,8 @@ public class GoalTemp implements Serializable {
 		caseMap=new LinkedHashMap<String, GoalCase>();
 		caseCondition=new ArrayList<String>();
 		caseExpression=new ArrayList<String>();
+		dvarWeightMapList = new ArrayList<Map<String,String>>();
+		dvarSlackSurplusList = new ArrayList<ArrayList<String>>();
 		slackList=new ArrayList<String>();
 		surplusList=new ArrayList<String>();
 	}
