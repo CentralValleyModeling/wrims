@@ -117,8 +117,18 @@ public class WPPVarMonitorView extends ViewPart{
 	}
 	
 	public void updatePlot(String dataString){
+		boolean correctVarNames=true;
 		String[] nameData=dataString.split("!");
-		if (nameData[0].equals(DebugCorePlugin.selectedVariable)){
+		ArrayList<String> varNames=DebugCorePlugin.selectedVariableNames;
+		int size=varNames.size();
+		if (size==nameData.length-1){
+			for (int i=0; i<size; i++){
+				if (!varNames.contains(nameData[i])) correctVarNames=false;
+			}
+		}else{
+			correctVarNames=false;
+		}
+		if (correctVarNames){
 		
 			Vector<TimeSeriesContainer> dataVector=convertDataVector(nameData[nameData.length-1]);
 		
@@ -160,27 +170,29 @@ public class WPPVarMonitorView extends ViewPart{
 	protected Vector<TimeSeriesContainer> convertDataVector(
 			ArrayList<String[]> varDetailTimeseries) {
 		Vector<TimeSeriesContainer> vdc=new Vector<TimeSeriesContainer> ();		
-		TimeSeriesContainer dc=new TimeSeriesContainer();
-		Date startDate=new Date(DebugCorePlugin.startYear-1900, DebugCorePlugin.startMonth-1, DebugCorePlugin.startDay);
-		Date endDate=new Date(DebugCorePlugin.endYear-1900, DebugCorePlugin.endMonth-1, DebugCorePlugin.endDay);
-		dc.startTime=(int)(startDate.getTime()/60000)+25568*1440;
-		dc.endTime=(int)(endDate.getTime()/60000)+25568*1440;
-		dc.units="undefined";
-		dc.location=DebugCorePlugin.selectedVariable;
-		int size = varDetailTimeseries.size();
-		dc.numberValues=size;
-		dc.times=new int[size];
-		dc.values=new double[size];
-		for (int i=0; i<size-1; i++){
-			String[] varItem=varDetailTimeseries.get(i);
-			String[] time=varItem[1].split("-");
-			Date date=new Date(Integer.parseInt(time[2])-1900, Integer.parseInt(time[0])-1, Integer.parseInt(time[1]));
-			dc.times[i]=(int)(date.getTime()/60000)+25568*1440;
-			dc.values[i]=Double.parseDouble(varItem[2]);
+		for (String varName:DebugCorePlugin.selectedVariableNames){
+			TimeSeriesContainer dc=new TimeSeriesContainer();
+			Date startDate=new Date(DebugCorePlugin.startYear-1900, DebugCorePlugin.startMonth-1, DebugCorePlugin.startDay);
+			Date endDate=new Date(DebugCorePlugin.endYear-1900, DebugCorePlugin.endMonth-1, DebugCorePlugin.endDay);
+			dc.startTime=(int)(startDate.getTime()/60000)+25568*1440;
+			dc.endTime=(int)(endDate.getTime()/60000)+25568*1440;
+			dc.units="undefined";
+			dc.location=varName;
+			int size = varDetailTimeseries.size();
+			dc.numberValues=size;
+			dc.times=new int[size];
+			dc.values=new double[size];
+			for (int i=0; i<size-1; i++){
+				String[] varItem=varDetailTimeseries.get(i);
+				String[] time=varItem[1].split("-");
+				Date date=new Date(Integer.parseInt(time[2])-1900, Integer.parseInt(time[0])-1, Integer.parseInt(time[1]));
+				dc.times[i]=(int)(date.getTime()/60000)+25568*1440;
+				dc.values[i]=Double.parseDouble(varItem[2]);
+			}
+			dc.times[size-1]=dc.endTime;
+			dc.values[size-1]=-901.0;
+			vdc.add(dc);
 		}
-		dc.times[size-1]=dc.endTime;
-		dc.values[size-1]=-901.0;
-		vdc.add(dc);
 		return vdc;
 	}
 	
@@ -188,32 +200,34 @@ public class WPPVarMonitorView extends ViewPart{
 			String dataString) {
 		ArrayList<String[]> varDetailTimeseries=DataProcess.generateVarDetailData(dataString);
 		Vector<TimeSeriesContainer> vdc=new Vector<TimeSeriesContainer> ();		
-		TimeSeriesContainer dc=new TimeSeriesContainer();
-		Date startDate=new Date(DebugCorePlugin.startYear-1900, DebugCorePlugin.startMonth-1, DebugCorePlugin.startDay);
-		Date endDate=new Date(DebugCorePlugin.endYear-1900, DebugCorePlugin.endMonth-1, DebugCorePlugin.endDay);
-		dc.startTime=(int)(startDate.getTime()/60000)+25568*1440;
-		dc.endTime=(int)(endDate.getTime()/60000)+25568*1440;
-		dc.units="undefined";
-		dc.location=DebugCorePlugin.selectedVariable;
-		int size = varDetailTimeseries.size();
-		dc.numberValues=size+1;
-		dc.times=new int[size+1];
-		dc.values=new double[size+1];
-		for (int i=0; i<size; i++){
-			String[] varItem=varDetailTimeseries.get(i);
-			String[] time=varItem[1].split("-");
-			Date date=new Date(Integer.parseInt(time[2])-1900, Integer.parseInt(time[0])-1, Integer.parseInt(time[1]));
-			dc.times[i]=(int)(date.getTime()/60000)+25568*1440;
-			dc.values[i]=Double.parseDouble(varItem[2]);
+		for (String varName:DebugCorePlugin.selectedVariableNames){
+			TimeSeriesContainer dc=new TimeSeriesContainer();
+			Date startDate=new Date(DebugCorePlugin.startYear-1900, DebugCorePlugin.startMonth-1, DebugCorePlugin.startDay);
+			Date endDate=new Date(DebugCorePlugin.endYear-1900, DebugCorePlugin.endMonth-1, DebugCorePlugin.endDay);
+			dc.startTime=(int)(startDate.getTime()/60000)+25568*1440;
+			dc.endTime=(int)(endDate.getTime()/60000)+25568*1440;
+			dc.units="undefined";
+			dc.location=varName;
+			int size = varDetailTimeseries.size();
+			dc.numberValues=size+1;
+			dc.times=new int[size+1];
+			dc.values=new double[size+1];
+			for (int i=0; i<size; i++){
+				String[] varItem=varDetailTimeseries.get(i);
+				String[] time=varItem[1].split("-");
+				Date date=new Date(Integer.parseInt(time[2])-1900, Integer.parseInt(time[0])-1, Integer.parseInt(time[1]));
+				dc.times[i]=(int)(date.getTime()/60000)+25568*1440;
+				dc.values[i]=Double.parseDouble(varItem[2]);
+			}
+			if (dc.times[size-1]<dc.endTime){
+				dc.times[size]=dc.endTime;
+				dc.values[size]=-901.0;
+			}else{
+				dc.times[size]=dc.endTime+1;
+				dc.values[size]=-901.0;
+			}
+			vdc.add(dc);
 		}
-		if (dc.times[size-1]<dc.endTime){
-			dc.times[size]=dc.endTime;
-			dc.values[size]=-901.0;
-		}else{
-			dc.times[size]=dc.endTime+1;
-			dc.values[size]=-901.0;
-		}
-		vdc.add(dc);
 		return vdc;
 	}
 	

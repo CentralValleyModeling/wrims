@@ -850,7 +850,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	
 	private void handleSuspended(final String event){
 		checkVisibleViews();
-		updateVarDetailView(DebugCorePlugin.selectedVariable);
+		updateVarDetailView(DebugCorePlugin.selectedVariableNames);
 		
 		if (event.contains(":")) {
 			String[] eventPart=event.split(":");
@@ -1100,21 +1100,26 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		});
 	}
 	
-	public void updateVarDetailView(final String variableName){
-		if (!variableName.equals("")){
+	public void updateVarDetailView(final ArrayList<String> variableNames){
+		if (variableNames.size()>0){
 			try{
 				String data="";
-				data= DebugCorePlugin.target.sendRequest("tsdetail:"+variableName);
+				String linkVarNames="";
+				for (String varName:variableNames){
+					linkVarNames=linkVarNames+varName+"#";
+				}
+				if (linkVarNames.endsWith("#")) linkVarNames=linkVarNames.substring(0, linkVarNames.length()-1);
+				data= DebugCorePlugin.target.sendRequest("tsdetail:"+variableNames.get(0));
 				DebugCorePlugin.varDetailTimeseries=DataProcess.generateVarDetailData(data);
-				data= DebugCorePlugin.target.sendRequest("futdetail:"+variableName);
+				data= DebugCorePlugin.target.sendRequest("futdetail:"+variableNames.get(0));
 				DebugCorePlugin.varDetailFuture=DataProcess.generateVarDetailData(data);
-				data= DebugCorePlugin.target.sendRequest("cycledetail:"+variableName);
+				data= DebugCorePlugin.target.sendRequest("cycledetail:"+variableNames.get(0));
 				DebugCorePlugin.varDetailCycle=DataProcess.generateVarDetailData(data);
 				final IWorkbench workbench=PlatformUI.getWorkbench();
 				workbench.getDisplay().asyncExec(new Runnable(){
 					public void run(){
 						WPPVarDetailView varDetailView = (WPPVarDetailView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_VARIABLEDETAIL_VIEW);
-						varDetailView.updateDetail(variableName);
+						varDetailView.updateDetail(variableNames);
 					}
 				});
 			} catch (DebugException e) {

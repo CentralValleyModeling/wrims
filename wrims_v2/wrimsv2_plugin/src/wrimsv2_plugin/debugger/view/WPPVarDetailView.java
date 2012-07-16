@@ -1,6 +1,7 @@
 package wrimsv2_plugin.debugger.view;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -58,13 +59,18 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 		public void selectionChanged(IWorkbenchPart part,
 				ISelection selection) {
 			if (part instanceof WPPVariableView || part instanceof WPPAllVariableView){
-				Object item=((StructuredSelection)selection).getFirstElement();
-				if (item !=null){
-					final String variableName=((WPPValue)item).getVariableString();
-					if (!DebugCorePlugin.selectedVariable.equals(variableName)){
-						DebugCorePlugin.selectedVariable=variableName;
+				ArrayList<String> selectedVariableNames = new ArrayList<String>();
+				Iterator iterator = ((StructuredSelection)selection).iterator();
+				while (iterator.hasNext()){
+					Object item=iterator.next();
+					String variableName=((WPPValue)item).getVariableString();
+					selectedVariableNames.add(variableName);
+				}
+				if (selectedVariableNames.size()>0){
+					if (!DebugCorePlugin.selectedVariableNames.equals(selectedVariableNames)){
+						DebugCorePlugin.selectedVariableNames=selectedVariableNames;
 						if (DebugCorePlugin.target !=null && DebugCorePlugin.target.isSuspended()){
-							updateDetailVariableView(variableName);
+							updateDetailVariableView(selectedVariableNames);
 						}
 					}
 				}
@@ -195,7 +201,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 		}
 	}
 	
-	public void updateDetail(String variableName){
+	public void updateDetail(ArrayList<String> variableNames){
 		if (DebugCorePlugin.varDetailChoice==0){
 			displayTimeseries();
 		}else if (DebugCorePlugin.varDetailChoice==1){
@@ -203,29 +209,38 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 		}else{
 			displayCycleValues();
 		}
-		detail.setText("Detail: "+variableName);
+		detail.setText("Detail:");
 		detail.redraw();
 	}
 	
 	public void displayTimeseries(){
 		table.removeAll();
 		removeAllTableColumns();
-		TableColumn tc1 = new TableColumn(table, SWT.CENTER);
-	    TableColumn tc2 = new TableColumn(table, SWT.CENTER);
-	    TableColumn tc3 = new TableColumn(table, SWT.CENTER);
-	    tc1.setText("Time Step");
-	    tc2.setText("Date");
-	    tc3.setText("Value");
-	    int width=(int) Math.rint(table.getClientArea().width/3.0);
+		ArrayList<String> variableNames=DebugCorePlugin.selectedVariableNames;
+		int sizeTc=variableNames.size()+2;
+		int width=(int) Math.rint(table.getClientArea().width/(sizeTc*1.0));
+		TableColumn[] tc = new TableColumn[sizeTc];
+		tc[0] = new TableColumn(table, SWT.CENTER);
+	    tc[0].setText("Time Step");
+	    tc[1] = new TableColumn(table, SWT.CENTER);
+	    tc[1].setText("Date");
 	    if (width>10){
-	    	tc1.setWidth(width);
-	    	tc2.setWidth(width);
-	    	tc3.setWidth(width);
+	    	tc[0].setWidth(width);
+	    	tc[1].setWidth(width);
 	    }else{
-		    tc1.setWidth(150);
-		    tc2.setWidth(150);
-		    tc3.setWidth(150);
+		    tc[0].setWidth(150);
+		    tc[1].setWidth(150);
 	    }
+	    for (int i=2; i<sizeTc; i++){
+	    	tc[i] = new TableColumn(table, SWT.CENTER);
+	    	tc[i].setText(variableNames.get(i-2));
+	    	if (width>10){
+		    	tc[i].setWidth(width);
+		    }else{
+			    tc[i].setWidth(150);
+		    }
+	    }
+
 	    table.setHeaderVisible(true);
 	    ArrayList<String[]> timeseries=DebugCorePlugin.varDetailTimeseries;
 	    for (String[] itemStrings: timeseries){
@@ -243,7 +258,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 	    TableColumn tc3 = new TableColumn(table, SWT.CENTER);
 	    tc1.setText("Time Step");
 	    tc2.setText("Date");
-	    tc3.setText("Value");
+	    tc3.setText(DebugCorePlugin.selectedVariableNames.get(0));
 	    int width=(int) Math.rint(table.getClientArea().width/3.0);
 	    tc1.setWidth(width);
 	    tc2.setWidth(width);
@@ -265,7 +280,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 	    TableColumn tc3 = new TableColumn(table, SWT.CENTER);
 	    tc1.setText("Index");
 	    tc2.setText("Cycle");
-	    tc3.setText("Value");
+	    tc3.setText("DebugCorePlugin.selectedVariableNames.get(0)");
 	    int width=(int) Math.rint(table.getClientArea().width/3.0);
 	    tc1.setWidth(width);
 	    tc2.setWidth(width);
@@ -287,10 +302,15 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 		table.setRedraw(true);
 	}
 	
-	public void updateDetailVariableView(final String variableName){
+	public void updateDetailVariableView(final ArrayList<String> variableNames){
 		try{
 			String data="";
-			data= DebugCorePlugin.target.sendRequest("tsdetail:"+variableName);
+			String linkVarNames="";
+			for (String varName:variableNames){
+				linkVarNames=linkVarNames+varName+"#";
+			}
+			if (linkVarNames.endsWith("#")) linkVarNames=linkVarNames.substring(0, linkVarNames.length()-1);
+			data= DebugCorePlugin.target.sendRequest("tsdetail:"+variableNames.get(0));
 			DebugCorePlugin.varDetailTimeseries=DataProcess.generateVarDetailData(data);
 			final IWorkbench workbench=PlatformUI.getWorkbench();
 				workbench.getDisplay().asyncExec(new Runnable(){
@@ -299,11 +319,11 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 						varMonitorView.initialPlot();
 					}
 			});
-			data= DebugCorePlugin.target.sendRequest("futdetail:"+variableName);
+			data= DebugCorePlugin.target.sendRequest("futdetail:"+variableNames.get(0));
 			DebugCorePlugin.varDetailFuture=DataProcess.generateVarDetailData(data);
-			data= DebugCorePlugin.target.sendRequest("cycledetail:"+variableName);
+			data= DebugCorePlugin.target.sendRequest("cycledetail:"+variableNames.get(0));
 			DebugCorePlugin.varDetailCycle=DataProcess.generateVarDetailData(data);
-			updateDetail(variableName);
+			updateDetail(variableNames);
 			getSite().getPage().showView(DebugCorePlugin.ID_WPP_VARIABLEDETAIL_VIEW, null, IWorkbenchPage.VIEW_VISIBLE);
 		} catch (Exception e) {
 			WPPException.handleException(e);

@@ -111,7 +111,7 @@ public class DebugCorePlugin extends Plugin {
 	
 	public static int varDetailChoice=0;
 	
-	public static String selectedVariable="";
+	public static ArrayList<String> selectedVariableNames=new ArrayList<String>();
 	/**
 	 * Launch configuration attribute key. Value is a path to a perl
 	 * program. The path is a string representing a full path
