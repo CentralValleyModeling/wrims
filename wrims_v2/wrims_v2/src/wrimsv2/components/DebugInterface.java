@@ -60,7 +60,9 @@ public class DebugInterface {
 	private String[] debugDvar;
 	private String[] debugAlias;
 	private String[] allDebugVariables;
-	private DecimalFormat df = new DecimalFormat("#.####"); 
+	public DecimalFormat df = new DecimalFormat("#.####");
+	public static String monitorVarName="";
+	public static String monitorVarTimeStep="";
 	
 	public DebugInterface(int requestPort, int eventPort, String args[]){
 		try{	
@@ -554,6 +556,8 @@ public class DebugInterface {
 	
 	public String getTimeseriesDetail(String variableName){
 		String dataString="";
+		monitorVarName=variableName;
+		monitorVarTimeStep=ControlData.timeStep;
 		String entryName=DssOperation.entryNameTS(variableName, ControlData.timeStep);
 		HashMap<String, DssDataSetFixLength> dvAliasTSMap = DataTimeSeries.dvAliasTS;
 

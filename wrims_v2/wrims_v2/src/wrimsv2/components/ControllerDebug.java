@@ -35,6 +35,7 @@ import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.evaluator.AssignPastCycleVariable;
 import wrimsv2.evaluator.DataTimeSeries;
+import wrimsv2.evaluator.DssDataSet;
 import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.EvalConstraint;
@@ -44,6 +45,7 @@ import wrimsv2.evaluator.EvaluatorLexer;
 import wrimsv2.evaluator.EvaluatorParser;
 import wrimsv2.evaluator.PreEvaluator;
 import wrimsv2.evaluator.TimeOperation;
+import wrimsv2.evaluator.ValueEvaluation;
 import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.external.LoadAllDll;
@@ -308,6 +310,7 @@ public class ControllerDebug extends Thread {
 				}
 				i=i+1;
 			}
+			updateVarMonitor();
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
 		}
@@ -403,6 +406,7 @@ public class ControllerDebug extends Thread {
 				}
 				i=i+1;
 			}
+			updateVarMonitor();
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
 		}
@@ -432,6 +436,52 @@ public class ControllerDebug extends Thread {
 				}
 				this.suspend();
 			}
+		}
+	}
+	
+	public void updateVarMonitor(){
+		String dataString="updateVarMonitor!"+di.monitorVarName+"!";
+		String monitorVarName=di.monitorVarName;
+		String monitorVarTimeStep=di.monitorVarTimeStep;
+		String entryName=DssOperation.entryNameTS(monitorVarName, monitorVarTimeStep);
+		HashMap<String, DssDataSetFixLength> dvAliasTSMap = DataTimeSeries.dvAliasTS;
+		
+		if (dvAliasTSMap.containsKey(entryName)){
+			DssDataSetFixLength ddsf = dvAliasTSMap.get(entryName);
+			double[] dataArray = ddsf.getData();
+			TimeOperation.findTime(-1);
+			int currIndex=ValueEvaluation.timeSeriesIndex(ddsf)-1;
+			for (int i=0; i<=currIndex; i++){
+				double value=dataArray[i];
+				if (!(value==-901.0 || value==902.0)){
+					int timestepListed=i-currIndex;
+					TimeOperation.findTime(timestepListed);
+					dataString=dataString+timestepListed+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+di.df.format(value)+"#";
+				}
+			}
+		}else{
+			HashMap<String, DssDataSet> svTSMap = DataTimeSeries.svTS;
+			if (svTSMap.containsKey(entryName)){
+				DssDataSet dds = svTSMap.get(entryName);
+				ArrayList<Double> dataArrayList = dds.getData();
+				TimeOperation.findTime(-1);
+				int currIndex=ValueEvaluation.timeSeriesIndex(dds);
+				for (int i=0; i<=currIndex; i++){
+					double value=dataArrayList.get(i);
+					if (!(value==-901.0 || value==902.0)){
+						int timestepListed=i-currIndex;
+						TimeOperation.findTime(timestepListed);
+						dataString=dataString+timestepListed+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+di.df.format(value)+"#";
+					}
+				}
+			}
+		}
+		
+		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
+		try {
+			di.sendEvent(dataString);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -542,6 +592,7 @@ public class ControllerDebug extends Thread {
 				}
 				i=i+1;
 			}
+			updateVarMonitor();
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
 		}
