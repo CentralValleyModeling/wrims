@@ -1,8 +1,5 @@
 package wrimsv2_plugin.debugger.view;
 
-import gov.ca.dwr.hecdssvue.views.AbstractDSSView;
-import gov.ca.dwr.hecdssvue.views.DSSCatalogView;
-
 import hec.gfx2d.G2dObject;
 import hec.gfx2d.G2dPanel;
 import hec.gfx2d.PairedDataSet;
