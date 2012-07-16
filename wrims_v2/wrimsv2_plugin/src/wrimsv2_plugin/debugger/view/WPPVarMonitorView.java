@@ -54,6 +54,7 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
 import org.eclipse.ui.part.ViewPart;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.tools.DataProcess;
 
 public class WPPVarMonitorView extends ViewPart{
 
@@ -114,8 +115,49 @@ public class WPPVarMonitorView extends ViewPart{
 		}
 		plot.buildComponents(g2dataVector, true, true);
 	}
+	
+	public void updatePlot(String dataString){
+		String[] nameData=dataString.split("!");
+		if (nameData[0].equals(DebugCorePlugin.selectedVariable)){
+		
+			Vector<TimeSeriesContainer> dataVector=convertDataVector(nameData[nameData.length-1]);
+		
+			if (plot != null) {
+				//plot.clearPanel();
+			}
+			if (plot == null) {
+				plot = new G2dPanel();
+				//plot.setPaintEnabled(false);
+				//plot.setDebugGraphicsOptions(DebugGraphics.FLASH_OPTION);
+				contentPane.add(plot);
+			}
+			G2dObject g2dObj = null;
+			Vector g2dataVector = new Vector();
+			for (Iterator iterator = dataVector.iterator(); iterator.hasNext();) {
+				DataContainer data = (DataContainer) iterator.next();
+				if (data instanceof TimeSeriesContainer) {
+					TimeSeriesDataSet ts = new TimeSeriesDataSet(
+						(TimeSeriesContainer) data);
+					if (((TimeSeriesContainer) data).timeZoneID != null) {
+						ts.setGmtOffset(((TimeSeriesContainer) data).timeZoneRawOffset
+							/ (1000 * 60 * 60));
+					}
+					g2dObj = ts;
+				} else if (data instanceof PairedDataContainer) {
+					PairedDataSet pd = new PairedDataSet((PairedDataContainer) data);
+					g2dObj = pd;
+				}
+				if (g2dObj == null) {
+					return;
+				}
+				g2dataVector.add(g2dObj);
 
-	private Vector<TimeSeriesContainer> convertDataVector(
+			}
+			plot.buildComponents(g2dataVector, true, true);	
+		}
+	}
+
+	protected Vector<TimeSeriesContainer> convertDataVector(
 			ArrayList<String[]> varDetailTimeseries) {
 		Vector<TimeSeriesContainer> vdc=new Vector<TimeSeriesContainer> ();		
 		TimeSeriesContainer dc=new TimeSeriesContainer();
@@ -138,6 +180,39 @@ public class WPPVarMonitorView extends ViewPart{
 		}
 		dc.times[size-1]=dc.endTime;
 		dc.values[size-1]=-901.0;
+		vdc.add(dc);
+		return vdc;
+	}
+	
+	protected Vector<TimeSeriesContainer> convertDataVector(
+			String dataString) {
+		ArrayList<String[]> varDetailTimeseries=DataProcess.generateVarDetailData(dataString);
+		Vector<TimeSeriesContainer> vdc=new Vector<TimeSeriesContainer> ();		
+		TimeSeriesContainer dc=new TimeSeriesContainer();
+		Date startDate=new Date(DebugCorePlugin.startYear-1900, DebugCorePlugin.startMonth-1, DebugCorePlugin.startDay);
+		Date endDate=new Date(DebugCorePlugin.endYear-1900, DebugCorePlugin.endMonth-1, DebugCorePlugin.endDay);
+		dc.startTime=(int)(startDate.getTime()/60000)+25568*1440;
+		dc.endTime=(int)(endDate.getTime()/60000)+25568*1440;
+		dc.units="undefined";
+		dc.location=DebugCorePlugin.selectedVariable;
+		int size = varDetailTimeseries.size();
+		dc.numberValues=size+1;
+		dc.times=new int[size+1];
+		dc.values=new double[size+1];
+		for (int i=0; i<size; i++){
+			String[] varItem=varDetailTimeseries.get(i);
+			String[] time=varItem[1].split("-");
+			Date date=new Date(Integer.parseInt(time[2])-1900, Integer.parseInt(time[0])-1, Integer.parseInt(time[1]));
+			dc.times[i]=(int)(date.getTime()/60000)+25568*1440;
+			dc.values[i]=Double.parseDouble(varItem[2]);
+		}
+		if (dc.times[size-1]<dc.endTime){
+			dc.times[size]=dc.endTime;
+			dc.values[size]=-901.0;
+		}else{
+			dc.times[size]=dc.endTime+1;
+			dc.values[size]=-901.0;
+		}
 		vdc.add(dc);
 		return vdc;
 	}

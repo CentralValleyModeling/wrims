@@ -85,6 +85,7 @@ import wrimsv2_plugin.debugger.view.WPPAllVariableView;
 import wrimsv2_plugin.debugger.view.WPPExceptionView;
 import wrimsv2_plugin.debugger.view.WPPGoalView;
 import wrimsv2_plugin.debugger.view.WPPVarDetailView;
+import wrimsv2_plugin.debugger.view.WPPVarMonitorView;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
 import wrimsv2_plugin.tools.DataProcess;
 
@@ -840,6 +841,8 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	public void handleEvent(String event) {
 		if (event.startsWith("suspended")) {		
 			handleSuspended(event);
+		}else if (event.startsWith("updateVarMonitor!")){
+			updateVarMonitor(event);
 		}else if(event.startsWith("totalcycle#")){
 			DebugCorePlugin.totalNoOfCycle=Integer.parseInt(event.replace("totalcycle#", ""));
 		}
@@ -855,6 +858,18 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			setSourceName(eventPart[2]);
 			openSourceHighlight();
 		}
+	}
+	
+	private void updateVarMonitor(String event){
+		final String dataString=event.replaceFirst("updateVarMonitor!","");
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
+				WPPVarMonitorView varMonitorView=(WPPVarMonitorView) workBenchPage.findView(DebugCorePlugin.ID_WPP_VARIABLEMONITOR_VIEW);
+				varMonitorView.updatePlot(dataString);
+			}
+		});
 	}
 	
 	private void processView(String viewName, IProgressMonitor monitor, ProgressMonitorDialog dialog){
