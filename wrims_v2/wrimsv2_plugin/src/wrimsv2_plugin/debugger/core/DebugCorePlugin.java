@@ -93,6 +93,8 @@ public class DebugCorePlugin extends Plugin {
 	
 	public static final String ID_WPP_VARIABLEDETAIL_VIEW="wpp.vardetailview";
 	
+	public static final String ID_WPP_VARIABLEMONITOR_VIEW="wpp.varmonitorview";
+	
 	public static final String ID_WPP_GOAL_VIEW="wpp.goalview";
 	
 	public static final String ID_WPP_ALLGOAL_VIEW="wpp.allgoalview";

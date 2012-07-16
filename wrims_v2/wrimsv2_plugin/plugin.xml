@@ -32,6 +32,12 @@
           id="wpp.vardetailview">
     </view>
 </extension>
+<extension point="org.eclipse.ui.views">
+	<view name="Variable Monitor"
+          class="wrimsv2_plugin.debugger.view.WPPVarMonitorView"
+          id="wpp.varmonitorview">
+    </view>
+</extension>
 <extension
          point="org.eclipse.debug.ui.launchConfigurationTabGroups">
       <launchConfigurationTabGroup

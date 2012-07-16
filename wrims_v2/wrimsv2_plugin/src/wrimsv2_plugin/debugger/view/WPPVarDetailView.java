@@ -292,6 +292,13 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 			String data="";
 			data= DebugCorePlugin.target.sendRequest("tsdetail:"+variableName);
 			DebugCorePlugin.varDetailTimeseries=DataProcess.generateVarDetailData(data);
+			final IWorkbench workbench=PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+					public void run(){
+						WPPVarMonitorView varMonitorView = (WPPVarMonitorView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_VARIABLEMONITOR_VIEW);
+						varMonitorView.initialPlot();
+					}
+			});
 			data= DebugCorePlugin.target.sendRequest("futdetail:"+variableName);
 			DebugCorePlugin.varDetailFuture=DataProcess.generateVarDetailData(data);
 			data= DebugCorePlugin.target.sendRequest("cycledetail:"+variableName);
