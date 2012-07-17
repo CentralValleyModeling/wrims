@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.debug.core.model.IValue;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.osgi.framework.BundleContext;
 
 import wrimsv2_plugin.debugger.menuitem.NextTimeStepMenu;
@@ -43,75 +44,58 @@ public class DebugCorePlugin extends Plugin {
 	 */
 	public static WPPDebugTarget target;
 	
-	public static IValue[] dataStack;
-	
+	public static IValue[] dataStack;	
 	public static IValue[] goalStack;
-	
 	public static IValue[] allDataStack;
-	
 	public static IValue[] allGoalStack;
 	
 	public static ArrayList<String[]> varDetailTimeseries= new ArrayList<String[]>();
-	
 	public static ArrayList<String[]> varDetailFuture= new ArrayList<String[]>();
-	
 	public static ArrayList<String[]> varDetailCycle= new ArrayList<String[]>();
+	public static int varDetailChoice=0;
+	public static ArrayList<String> selectedVariableNames=new ArrayList<String>();
 	
 	public static int totalNoOfCycle=1;
-	
 	public static String timeStep="1DAY";
-	
 	public static int startYear=1921;
-	
 	public static int startMonth=10;
-	
 	public static int startDay=31;
-	
 	public static int endYear=2003;
-	
 	public static int endMonth=9;
-	
 	public static int endDay=30;
-	
 	public static int debugYear=2003;
-	
 	public static int debugMonth=9;
-	
 	public static int debugDay=30;
-	
 	public static int debugCycle=1;
 	
 	public static DebugSet debugSet;
+	public static IWorkbenchWindowActionDelegate nextCycleMenu;
+	public static IWorkbenchWindowActionDelegate nextTimeStepMenu;
+	public static IWorkbenchWindowActionDelegate resumeMenu;
+	public static IWorkbenchWindowActionDelegate suspendMenu;
+	public static IWorkbenchWindowActionDelegate terminateMenu;
 	
 	public static boolean isDebugging=false;
 	
 	public static final String ID_WPP_DEBUG_MODEL = "wpp.debugModel";
-	
 	public static final String ID_WPP_VARIABLE_VIEW="wpp.variableview";
-	
 	public static final String ID_WPP_ALLVARIABLE_VIEW="wpp.allvariableview";
-	
 	public static final String ID_WPP_VARIABLEDETAIL_VIEW="wpp.vardetailview";
-	
 	public static final String ID_WPP_VARIABLEMONITOR_VIEW="wpp.varmonitorview";
-	
 	public static final String ID_WPP_GOAL_VIEW="wpp.goalview";
-	
 	public static final String ID_WPP_ALLGOAL_VIEW="wpp.allgoalview";
-	
 	public static final String ID_WPP_EDITOR="wpp.editor";
+	public static final String ID_WPP_RESUMEMENU="wpp.resume";
+	public static final String ID_WPP_TERMINATEMENU="wpp.terminate";
+	public static final String ID_WPP_SUSPENDMENU="wpp.suspend";
+	public static final String ID_WPP_NEXTTIMESTEP="wpp.nexttimestep";
+	public static final String ID_WPP_NEXTCYCLE="wpp.nextcycle";
 	
 	public static final String TITLE_ALLVARIABLES_VIEW="All Variables";
-	
 	public static final String TITLE_VARIABLES_VIEW="Variables";
-	
 	public static final String TITLE_ALLGOALS_VIEW="All Goals";
-	
 	public static final String TITLE_GOALS_VIEW="Goals";
 	
-	public static int varDetailChoice=0;
-	
-	public static ArrayList<String> selectedVariableNames=new ArrayList<String>();
 	/**
 	 * Launch configuration attribute key. Value is a path to a perl
 	 * program. The path is a string representing a full path
