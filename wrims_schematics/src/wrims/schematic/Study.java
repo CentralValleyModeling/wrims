@@ -288,6 +288,14 @@ public class Study {
 		return _posstartyear;
 	}
 
+	public String getSolverOption(){
+		return _solverOption;
+	}
+
+	public String getRuntimeLogOption(){
+		return _runtimeLogOption;
+	}
+	
 	/**
 	 * Set methods for each property
 	 */
@@ -468,6 +476,14 @@ public class Study {
 		_posstartyear = b;
 	}
 
+	public void setSolverOption(String s){
+		_solverOption = s;
+	}
+
+	public void setRuntimeLogOption(String s){
+		_runtimeLogOption = s;
+	}
+	
 	public Vector getAllProperties() {
 		Vector v = new Vector();
 		v.addElement(_name);
@@ -594,6 +610,24 @@ public class Study {
 		setSimOption(se.getAttribute("simopt"));
 		setNumberSequences(new Integer(se.getAttribute("numseq")));
 		setCommonPath(se.getAttribute("common"));
+		
+		String so = se.getAttribute("solveroption");
+		if (so.length()>0){
+			setSolverOption(so);
+		} else {
+			setSolverOption("XA");
+		}
+	
+		String rlo = se.getAttribute("runtimelogoption");
+		if (rlo.length()>0){
+			setRuntimeLogOption(rlo);
+		} else {
+			if (getSolverOption().equalsIgnoreCase("XA")){
+				setRuntimeLogOption("None");
+			} else {
+				setRuntimeLogOption("ILP Log");
+			}
+		}
 	}
 
 	/**
@@ -629,6 +663,8 @@ public class Study {
 		styElement.setAttribute("simopt", getSimOption());
 		styElement.setAttribute("numseq", getNumberSequences().toString());
 		styElement.setAttribute("common", getCommonPath());
+		styElement.setAttribute("solveroption", getSolverOption());
+		styElement.setAttribute("runtimelogoption", getRuntimeLogOption());
 		doc.appendChild(styElement);
 	}
 
@@ -676,5 +712,7 @@ public class Study {
 	private Boolean _posstartyear;
 	private String _commonPath;
 	private boolean _modified;
+	private String _solverOption;
+	private String _runtimeLogOption;
 
 }

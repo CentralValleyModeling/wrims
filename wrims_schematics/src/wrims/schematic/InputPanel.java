@@ -915,6 +915,9 @@ public class InputPanel extends JPanel {
 		_month[1].setSelectedItem(study.getStopMonth());
 		//_simOption.setSelectedItem(study.getSimOption());
 		//_numSeq.setSelectedItem(study.getNumberSequences().toString());
+		_solverOption.setSelectedItem(study.getSolverOption());
+		_runtimeLogOption.setSelectedItem(study.getRuntimeLogOption());
+
 		// DJE***********************************************************
 		if (study.isUpdatedStudyObject()) {
 			_timeStep.setSelectedItem(study.getTimeStep());// DJE
@@ -956,6 +959,8 @@ public class InputPanel extends JPanel {
 		study.setStartYear(new Integer(_year[0].getSelectedItem().toString()));
 		study.setStopMonth(_month[1].getSelectedItem().toString());
 		study.setStopYear(new Integer(_year[1].getSelectedItem().toString()));
+		study.setSolverOption(_solverOption.getSelectedItem().toString());
+		study.setRuntimeLogOption(_runtimeLogOption.getSelectedItem().toString());
 		//study.setSimOption(_simOption.getSelectedItem().toString());
 		//study.setNumberSequences(new Integer(_numSeq.getSelectedItem()
 		//		.toString()));
