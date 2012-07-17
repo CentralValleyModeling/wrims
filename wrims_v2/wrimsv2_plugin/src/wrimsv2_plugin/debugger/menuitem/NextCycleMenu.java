@@ -20,6 +20,7 @@ public class NextCycleMenu implements IWorkbenchWindowActionDelegate {
 		// TODO Auto-generated method stub
 		if (DebugCorePlugin.debugCycle<DebugCorePlugin.totalNoOfCycle){
 			DebugCorePlugin.debugSet.getComboCycle().setText(String.valueOf(DebugCorePlugin.debugCycle+1));
+			DebugCorePlugin.debugSet.updateDebugTimeSet();
 		}else{
 			Date endDate= new Date(DebugCorePlugin.endYear-1900, DebugCorePlugin.endMonth-1, DebugCorePlugin.endDay);
 			Date debugDate = new Date (DebugCorePlugin.debugYear-1900, DebugCorePlugin.debugMonth-1, DebugCorePlugin.debugDay);

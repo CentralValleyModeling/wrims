@@ -125,12 +125,12 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 			public void mouseUp(MouseEvent e) {
 				int selection = timeSlider.getSelection();
 				int[] yearMonth=TimeOperation.searchYearMonth(selection,startDebugYear, startDebugMonth);
-				_year.removeModifyListener(yl);
-				_month.removeModifyListener(ml);
+				_year.removeSelectionListener(yl);
+				_month.removeSelectionListener(ml);
 				_year.setText(String.valueOf(yearMonth[0]));
 				_month.setText(String.valueOf(yearMonth[1]));
-				_year.addModifyListener(yl);
-				_month.addModifyListener(ml);
+				_year.addSelectionListener(yl);
+				_month.addSelectionListener(ml);
 				adjustDayCombo();
 				updateDebugTimeSet();
 			}
@@ -175,7 +175,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
         _year.select(88);
         _year.setToolTipText("Go To Year:");
         
-        _year.addModifyListener(yl);
+        _year.addSelectionListener(yl);
 	}
 	
 	public void createComboMonth(Composite parent){
@@ -187,7 +187,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
         _month.select(8);
         _month.setToolTipText("Go To Month:");
         
-		_month.addModifyListener(ml);
+		_month.addSelectionListener(ml);
 
 	}
 	
@@ -200,14 +200,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
         _day.select(29);
         _day.setToolTipText("Go To Day:");
         
-		_day.addModifyListener(dl);
-	}
-	
-	public void moveSliderBar(){
-		int debugYear=Integer.valueOf(_year.getText());
-		int debugMonth=Integer.valueOf(_month.getText());
-		int selection=TimeOperation.findMonthInBetween(startDebugYear, startDebugMonth, debugYear, debugMonth)-1;
-		timeSlider.setSelection(selection);
+		_day.addSelectionListener(dl);
 	}
 	
 	public void updateDebugTimeSet(){
@@ -223,27 +216,6 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 			}
 		}
 	}
-
-	public void nextTimeStep(){
-		if (DebugCorePlugin.timeStep.equals("1MON")){
-			timeSlider.setSelection(timeSlider.getSelection()+1);
-			int selection = timeSlider.getSelection();
-			int[] yearMonth=TimeOperation.searchYearMonth(selection,startDebugYear, startDebugMonth);
-			_month.setText(String.valueOf(yearMonth[1]));
-			_year.setText(String.valueOf(yearMonth[0]));
-			updateDebugTimeSet();
-		}else{
-			Date endDate= new Date(DebugCorePlugin.endYear-1900, DebugCorePlugin.endMonth-1, DebugCorePlugin.endDay);
-			Date debugDate = new Date (DebugCorePlugin.debugYear-1900, DebugCorePlugin.debugMonth-1, DebugCorePlugin.debugDay);
-			if (endDate.after(debugDate)){
-				long newDebugTime=debugDate.getTime()+1 * 24 * 60 * 60 * 1000l;
-				debugDate = new Date (newDebugTime);
-				_day.setText(String.valueOf(debugDate.getDate()));
-				_month.setText(String.valueOf(debugDate.getMonth()+1));
-				_year.setText(String.valueOf(debugDate.getYear()+1900));
-			}
-		}
-	}
 	
 	public void reset(){
 		
@@ -256,17 +228,20 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 				timeSlider.setSelection(totalMonth+8);
 				timeSlider.addMouseListener(tl);
 				
-				//_year.removeMouseListener(yl);
+				//_year.removeSelectionListener(yl);
 				_year.removeAll();
 				for (int i=DebugCorePlugin.startYear; i<=DebugCorePlugin.endYear; i++){
 					_year.add(String.valueOf(i));
 				}		
-				//_year.addMouseListener(yl);
+				//_year.addSelectionListener(yl);
 				
 				Date startDate = new Date(DebugCorePlugin.startYear-1900, DebugCorePlugin.startMonth-1, DebugCorePlugin.startDay);
 				Date endDate = new Date(DebugCorePlugin.endYear-1900, DebugCorePlugin.endMonth-1, DebugCorePlugin.endDay);
 				Date debugDate = new Date (DebugCorePlugin.debugYear-1900, DebugCorePlugin.debugMonth-1, DebugCorePlugin.debugDay);
 				
+				_year.removeSelectionListener(yl);
+				_month.removeSelectionListener(ml);
+				_day.removeSelectionListener(dl);
 				if (debugDate.after(endDate) || debugDate.before(startDate)){
 					_year.setText(String.valueOf(DebugCorePlugin.endYear));
 					_month.setText(String.valueOf(DebugCorePlugin.endMonth));
@@ -276,31 +251,45 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 					_year.setText(String.valueOf(DebugCorePlugin.debugYear));
 					_day.setText(String.valueOf(DebugCorePlugin.debugDay));
 				}
+				adjustDayCombo();
+				moveSliderBar();
+				_year.addSelectionListener(yl);
+				_month.addSelectionListener(ml);
+				_day.addSelectionListener(dl);
 			}
 		});
 	}
 	
-	private class DayItemListener implements ModifyListener {
-
-		@Override
-		public void modifyText(ModifyEvent e) {
-			_intDay = new Integer(_day.getText()).intValue();
-			updateDebugTimeSet();
+	public void nextTimeStep(){
+		if (DebugCorePlugin.timeStep.equals("1MON")){
+			timeSlider.setSelection(timeSlider.getSelection()+1);
+			int selection = timeSlider.getSelection();
+			int[] yearMonth=TimeOperation.searchYearMonth(selection,startDebugYear, startDebugMonth);
+			_month.setText(String.valueOf(yearMonth[1]));
+			_year.setText(String.valueOf(yearMonth[0]));
+		}else{
+			Date endDate= new Date(DebugCorePlugin.endYear-1900, DebugCorePlugin.endMonth-1, DebugCorePlugin.endDay);
+			Date debugDate = new Date (DebugCorePlugin.debugYear-1900, DebugCorePlugin.debugMonth-1, DebugCorePlugin.debugDay);
+			if (endDate.after(debugDate)){
+				long newDebugTime=debugDate.getTime()+1 * 24 * 60 * 60 * 1000l;
+				debugDate = new Date (newDebugTime);
+				_day.setText(String.valueOf(debugDate.getDate()));
+				_month.setText(String.valueOf(debugDate.getMonth()+1));
+				_year.setText(String.valueOf(debugDate.getYear()+1900));
+			}
 		}
+		updateDebugTimeSet();
 	}
-
-	private class MYItemListener implements ModifyListener {
-
-		@Override
-		public void modifyText(ModifyEvent e) {
-			adjustDayCombo();
-			moveSliderBar();
-			updateDebugTimeSet();
-		}
+	
+	public void moveSliderBar(){
+		int debugYear=Integer.valueOf(_year.getText());
+		int debugMonth=Integer.valueOf(_month.getText());
+		int selection=TimeOperation.findMonthInBetween(startDebugYear, startDebugMonth, debugYear, debugMonth)-1;
+		timeSlider.setSelection(selection);
 	}
 	
 	private void adjustDayCombo(){
-		_day.removeModifyListener(dl);
+		_day.removeSelectionListener(dl);
 		_intMonth = new Integer(_month.getText());
 		_intYear = new Integer(_year.getText());
 		int day=_intDay;
@@ -316,6 +305,38 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 			_day.select(maxDay-1);
 			_intDay = maxDay;
 		}	
-		_day.addModifyListener(dl);
+		_day.addSelectionListener(dl);
 	}
+	
+	private class DayItemListener implements SelectionListener {
+
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			_intDay = new Integer(_day.getText()).intValue();
+			updateDebugTimeSet();
+		}
+
+		@Override
+		public void widgetDefaultSelected(SelectionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+
+	private class MYItemListener implements SelectionListener {
+
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			adjustDayCombo();
+			moveSliderBar();
+			updateDebugTimeSet();
+		}
+
+		@Override
+		public void widgetDefaultSelected(SelectionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+
 }
