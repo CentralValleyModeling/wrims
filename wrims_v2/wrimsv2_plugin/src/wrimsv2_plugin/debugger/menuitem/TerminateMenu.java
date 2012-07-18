@@ -1,23 +1,39 @@
 package wrimsv2_plugin.debugger.menuitem;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.debug.core.DebugException;
+import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.action.ICoolBarManager;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.SubContributionItem;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.eclipse.ui.commands.AbstractHandler;
+import org.eclipse.ui.commands.ExecutionException;
+import org.eclipse.ui.internal.ActionSetMenuManager;
+import org.eclipse.ui.internal.Workbench;
+import org.eclipse.ui.internal.WorkbenchWindow;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 
 public class TerminateMenu implements IWorkbenchWindowActionDelegate{
 	public TerminateMenu(){
-		
+		DebugCorePlugin.terminateMenu=this;
 	}
 
 	@Override
 	public void run(IAction action) {
 		try {
-			DebugCorePlugin.target.terminate();
+			if (DebugCorePlugin.isDebugging) DebugCorePlugin.target.terminate();
+			enableRunMenu();
 		} catch (DebugException e) {
 			WPPException.handleException(e);
 		}
@@ -37,7 +53,16 @@ public class TerminateMenu implements IWorkbenchWindowActionDelegate{
 
 	@Override
 	public void init(IWorkbenchWindow window) {
-		// TODO Auto-generated method stub
-		
+
+	}
+	
+	public void enableRunMenu(){
+		HashMap<String, Boolean> enableMap=new HashMap<String, Boolean>();
+		enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, false);
+		new EnableRunMenu(enableMap);
 	}
 }

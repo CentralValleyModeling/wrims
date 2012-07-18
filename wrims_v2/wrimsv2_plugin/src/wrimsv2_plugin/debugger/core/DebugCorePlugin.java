@@ -16,9 +16,12 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.debug.core.model.IValue;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.BundleContext;
 
+import wrimsv2_plugin.debugger.menuitem.EnableRunMenu;
 import wrimsv2_plugin.debugger.menuitem.NextTimeStepMenu;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.toolbaritem.DebugSet;
@@ -60,10 +63,10 @@ public class DebugCorePlugin extends Plugin {
 	public static int startYear=1921;
 	public static int startMonth=10;
 	public static int startDay=31;
-	public static int endYear=2003;
+	public static int endYear=2009;
 	public static int endMonth=9;
 	public static int endDay=30;
-	public static int debugYear=2003;
+	public static int debugYear=2009;
 	public static int debugMonth=9;
 	public static int debugDay=30;
 	public static int debugCycle=1;
@@ -134,7 +137,7 @@ public class DebugCorePlugin extends Plugin {
 	 */
 	public DebugCorePlugin() {
 		super();
-		plugin = this;
+		plugin = this; 
 	}
 
 	/**

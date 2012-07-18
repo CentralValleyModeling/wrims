@@ -19,6 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Vector;
 
 import javax.swing.JDialog;
@@ -80,6 +81,7 @@ import wrimsv2_plugin.debugger.breakpoint.WPPLineBreakpoint;
 import wrimsv2_plugin.debugger.breakpoint.WPPRunToLineBreakpoint;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.debugger.menuitem.EnableRunMenu;
 import wrimsv2_plugin.debugger.view.WPPAllGoalView;
 import wrimsv2_plugin.debugger.view.WPPAllVariableView;
 import wrimsv2_plugin.debugger.view.WPPExceptionView;
@@ -241,10 +243,10 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		DebugCorePlugin.isDebugging=true;
 		
 		data=sendRequest("time:"+DebugCorePlugin.debugYear+"/"+DebugCorePlugin.debugMonth+"/"+DebugCorePlugin.debugDay+"/"+DebugCorePlugin.debugCycle);
-		System.out.println(data);
-		
-		data=sendRequest("variables:s_shsta#s_folsm");
-		System.out.println(data);
+		enableRunMenuWithStart();
+		//System.out.println(data);
+		//data=sendRequest("variables:s_shsta#s_folsm");
+		//System.out.println(data);
 		
 		
 		/*
@@ -579,6 +581,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	@Override
 	public void terminate() throws DebugException {
 		getThread().terminate();
+		DebugCorePlugin.isDebugging=false;
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ISuspendResume#canResume()
@@ -849,6 +852,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	}
 	
 	private void handleSuspended(final String event){
+		enableRunMenuWithSuspended();
 		checkVisibleViews();
 		updateVarDetailView(DebugCorePlugin.selectedVariableNames);
 		
@@ -1161,5 +1165,25 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	
 	protected synchronized WPPThread getThread() {
 		return fThread;
+	}
+	
+	public void enableRunMenuWithStart(){
+		HashMap<String, Boolean> enableMap=new HashMap<String, Boolean>();
+		enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
+		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, true);
+		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
+		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
+		new EnableRunMenu(enableMap);
+	}
+	
+	public void enableRunMenuWithSuspended(){
+		HashMap<String, Boolean> enableMap=new HashMap<String, Boolean>();
+		enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
+		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, true);
+		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
+		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
+		new EnableRunMenu(enableMap);
 	}
 }

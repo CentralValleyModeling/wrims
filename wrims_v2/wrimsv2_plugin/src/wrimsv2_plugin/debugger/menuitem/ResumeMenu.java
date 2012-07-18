@@ -1,5 +1,7 @@
 package wrimsv2_plugin.debugger.menuitem;
 
+import java.util.HashMap;
+
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
@@ -11,13 +13,16 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 
 public class ResumeMenu implements IWorkbenchWindowActionDelegate{
 	public ResumeMenu(){
-
+		DebugCorePlugin.resumeMenu=this;
 	}
 
 	@Override
 	public void run(IAction action) {
 		try {
-			DebugCorePlugin.target.resume();
+			if (DebugCorePlugin.isDebugging && DebugCorePlugin.target.isSuspended()) {
+				DebugCorePlugin.target.resume();
+				enableRunMenu();
+			}
 		} catch (DebugException e) {
 			WPPException.handleException(e);
 		}
@@ -39,5 +44,15 @@ public class ResumeMenu implements IWorkbenchWindowActionDelegate{
 	public void init(IWorkbenchWindow window) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void enableRunMenu(){
+		HashMap<String, Boolean> enableMap=new HashMap<String, Boolean>();
+		enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
+		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, true);
+		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
+		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
+		new EnableRunMenu(enableMap);
 	}
 }
