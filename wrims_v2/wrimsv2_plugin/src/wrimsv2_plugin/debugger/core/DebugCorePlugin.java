@@ -72,11 +72,6 @@ public class DebugCorePlugin extends Plugin {
 	public static int debugCycle=1;
 	
 	public static DebugSet debugSet;
-	public static IWorkbenchWindowActionDelegate nextCycleMenu;
-	public static IWorkbenchWindowActionDelegate nextTimeStepMenu;
-	public static IWorkbenchWindowActionDelegate resumeMenu;
-	public static IWorkbenchWindowActionDelegate suspendMenu;
-	public static IWorkbenchWindowActionDelegate terminateMenu;
 	
 	public static boolean isDebugging=false;
 	

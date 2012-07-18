@@ -15,7 +15,7 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 
 public class NextCycleMenu implements IWorkbenchWindowActionDelegate {
 	public NextCycleMenu(){
-		DebugCorePlugin.nextCycleMenu=this;
+
 	}
 
 	@Override

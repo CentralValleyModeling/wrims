@@ -13,7 +13,7 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 
 public class NextTimeStepMenu implements IWorkbenchWindowActionDelegate{
 	public NextTimeStepMenu(){
-		DebugCorePlugin.nextTimeStepMenu=this;
+
 	}
 
 	@Override

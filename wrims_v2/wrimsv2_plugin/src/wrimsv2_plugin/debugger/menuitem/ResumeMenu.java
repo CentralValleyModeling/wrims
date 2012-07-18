@@ -13,7 +13,7 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 
 public class ResumeMenu implements IWorkbenchWindowActionDelegate{
 	public ResumeMenu(){
-		DebugCorePlugin.resumeMenu=this;
+
 	}
 
 	@Override

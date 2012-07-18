@@ -26,7 +26,7 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 
 public class TerminateMenu implements IWorkbenchWindowActionDelegate{
 	public TerminateMenu(){
-		DebugCorePlugin.terminateMenu=this;
+
 	}
 
 	@Override

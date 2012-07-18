@@ -15,7 +15,7 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 
 public class SuspendMenu implements IWorkbenchWindowActionDelegate {
 	public SuspendMenu(){
-		DebugCorePlugin.suspendMenu=this;
+
 	}
 
 	@Override
