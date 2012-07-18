@@ -173,6 +173,10 @@ public class WPPThread extends WPPDebugElement implements IThread, IWPPEventList
 	public void suspend() throws DebugException {
 	    sendRequest("suspend");
 	}
+	
+	public void pause() throws DebugException {
+	    sendRequest("pause");
+	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IStep#canStepInto()
 	 */

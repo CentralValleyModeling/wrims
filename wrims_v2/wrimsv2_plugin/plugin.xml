@@ -172,6 +172,12 @@
 			id="wpp.suspend">
 		</action>
 		<action
+			label="Pause"
+			class="wrimsv2_plugin.debugger.menuitem.PauseMenu"
+			menubarPath="org.eclipse.ui.run/debug"
+			id="wpp.pause">
+		</action>
+		<action
 			label="Terminate"
 			class="wrimsv2_plugin.debugger.menuitem.TerminateMenu"
 			menubarPath="org.eclipse.ui.run/debug"

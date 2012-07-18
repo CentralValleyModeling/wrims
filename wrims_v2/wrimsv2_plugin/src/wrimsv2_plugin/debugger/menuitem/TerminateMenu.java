@@ -59,6 +59,7 @@ public class TerminateMenu implements IWorkbenchWindowActionDelegate{
 	public void enableRunMenu(){
 		HashMap<String, Boolean> enableMap=new HashMap<String, Boolean>();
 		enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, false);

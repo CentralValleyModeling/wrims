@@ -267,6 +267,18 @@ public class DebugInterface {
 			System.out.println("suspended");
 			try {
 				sendRequest("suspended");
+				sendEvent("suspended");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if (request.equals("pause")) {
+			controllerDebug.debugYear=ControlData.currYear;
+			controllerDebug.debugMonth=ControlData.currMonth;
+			controllerDebug.debugDay=ControlData.currDay;
+			controllerDebug.debugCycle=ControlData.currCycleIndex+1;
+			try {
+				sendRequest("paused");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

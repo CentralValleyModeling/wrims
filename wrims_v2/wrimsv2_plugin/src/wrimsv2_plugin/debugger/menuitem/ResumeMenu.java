@@ -20,6 +20,7 @@ public class ResumeMenu implements IWorkbenchWindowActionDelegate{
 	public void run(IAction action) {
 		try {
 			if (DebugCorePlugin.isDebugging && DebugCorePlugin.target.isSuspended()) {
+				DebugCorePlugin.debugSet.updateDebugTimeSet();
 				DebugCorePlugin.target.resume();
 				enableRunMenu();
 			}
@@ -49,6 +50,7 @@ public class ResumeMenu implements IWorkbenchWindowActionDelegate{
 	public void enableRunMenu(){
 		HashMap<String, Boolean> enableMap=new HashMap<String, Boolean>();
 		enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
+		enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, true);
 		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, true);
 		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);

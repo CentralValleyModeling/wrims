@@ -55,6 +55,7 @@ public class NextTimeStepMenu implements IWorkbenchWindowActionDelegate{
 	public void enableRunMenuWithResume(){
 		HashMap<String, Boolean> enableMap=new HashMap<String, Boolean>();
 		enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
+		enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, true);
 		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, true);
 		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
@@ -65,6 +66,7 @@ public class NextTimeStepMenu implements IWorkbenchWindowActionDelegate{
 	public void enableRunMenuNoDebugging(){
 		HashMap<String, Boolean> enableMap=new HashMap<String, Boolean>();
 		enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, false);
@@ -75,6 +77,7 @@ public class NextTimeStepMenu implements IWorkbenchWindowActionDelegate{
 	public void enableRunMenuNoResume(){
 		HashMap<String, Boolean> enableMap=new HashMap<String, Boolean>();
 		enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);

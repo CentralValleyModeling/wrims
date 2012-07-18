@@ -50,6 +50,7 @@ public class SuspendMenu implements IWorkbenchWindowActionDelegate {
 	public void enableRunMenu(){
 		HashMap<String, Boolean> enableMap=new HashMap<String, Boolean>();
 		enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
+		enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, true);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);

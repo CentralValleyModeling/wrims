@@ -420,7 +420,7 @@ public class ControllerDebug extends Thread {
 			if (ControlData.currYear==debugYear && ControlData.currMonth==debugMonth && i==debugCycle-1){
 				try {
 					di.sendEvent("suspended");
-					System.out.println("pause");
+					System.out.println("paused");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -430,7 +430,7 @@ public class ControllerDebug extends Thread {
 			if (ControlData.currYear==debugYear && ControlData.currMonth==debugMonth && ControlData.currDay==debugDay && i==debugCycle-1){
 				try {
 					di.sendEvent("suspended");
-					System.out.println("pause");
+					System.out.println("paused");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
