@@ -343,16 +343,21 @@ public class DebugInterface {
 				}
 			}
 			
+			IntDouble intDouble;
 			Collections.sort(sortedList);
 			for (String variable: sortedList){
 				if (svMap.containsKey(variable)){
-					dataString=dataString+variable+":"+df.format(svMap.get(variable).getData().getData())+"#";
+					intDouble=svMap.get(variable).getData();
+					if (intDouble != null) dataString=dataString+variable+":"+df.format(intDouble.getData())+"#";
 				}else if (dvMap.containsKey(variable)){
-					dataString=dataString+variable+":"+df.format(dvMap.get(variable).getData().getData())+"#";
+					intDouble=dvMap.get(variable).getData();
+					if (intDouble != null) dataString=dataString+variable+":"+df.format(intDouble.getData())+"#";
 				}else if (tsMap.containsKey(variable)){
-					dataString=dataString+variable+":"+df.format(tsMap.get(variable).getData().getData())+"#";
+					intDouble=tsMap.get(variable).getData();
+					if (intDouble != null) dataString=dataString+variable+":"+df.format(intDouble.getData())+"#";
 				}else if (asMap.containsKey(variable)){
-					dataString=dataString+variable+":"+df.format(asMap.get(variable).getData().getData())+"#";
+					intDouble=asMap.get(variable).getData();
+					if (intDouble != null) dataString=dataString+variable+":"+df.format(intDouble.getData())+"#";
 				}
 			}
 			if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
@@ -380,42 +385,44 @@ public class DebugInterface {
 				if (gMap.containsKey(goalName)){
 					goalString=goalString+goalName+":";
 					EvalConstraint ec=gMap.get(goalName);
-					EvalExpression ee=ec.getEvalExpression();
-					Map<String, IntDouble> multiplier = ee.getMultiplier();
-					Set<String> mKeySet = multiplier.keySet();
-					Iterator<String> mi = mKeySet.iterator();
-					while (mi.hasNext()){
-						String variable=mi.next();
-						Number value=multiplier.get(variable).getData();
-						double value1=value.doubleValue();
-						if (goalString.endsWith(":")){
-							if (value1==1.0){
-								goalString=goalString+variable;
-							}else if (value1==-1.0){
-								goalString=goalString+"-"+variable;
+					if (ec!=null){
+						EvalExpression ee=ec.getEvalExpression();
+						Map<String, IntDouble> multiplier = ee.getMultiplier();
+						Set<String> mKeySet = multiplier.keySet();
+						Iterator<String> mi = mKeySet.iterator();
+						while (mi.hasNext()){
+							String variable=mi.next();
+							Number value=multiplier.get(variable).getData();
+							double value1=value.doubleValue();
+							if (goalString.endsWith(":")){
+								if (value1==1.0){
+									goalString=goalString+variable;
+								}else if (value1==-1.0){
+									goalString=goalString+"-"+variable;
+								}else{
+									goalString=goalString+df.format(value)+variable;
+								}
 							}else{
-								goalString=goalString+df.format(value)+variable;
-							}
-						}else{
-							if (value1==1.0){
-								goalString=goalString+"+"+variable;
-							}else if (value1 == -1.0){
-								goalString=goalString+"-"+variable;
-							}else if(value1>=0){
-								goalString=goalString+"+"+df.format(value)+variable;
-							}else{
-								goalString=goalString+df.format(value)+variable;
+								if (value1==1.0){
+									goalString=goalString+"+"+variable;
+								}else if (value1 == -1.0){
+									goalString=goalString+"-"+variable;
+								}else if(value1>=0){
+									goalString=goalString+"+"+df.format(value)+variable;
+								}else{
+									goalString=goalString+df.format(value)+variable;
+								}
 							}
 						}
-					}
-					Number value=ee.getValue().getData();
-					double value1=value.doubleValue();
-					if (value1>0){
-						goalString=goalString+"+"+df.format(value)+ec.getSign()+"0#";
-					}else if(value1<0){
-						goalString=goalString+df.format(value)+ec.getSign()+"0#";
-					}else{
-						goalString=goalString+ec.getSign()+"0#";
+						Number value=ee.getValue().getData();
+						double value1=value.doubleValue();
+						if (value1>0){
+							goalString=goalString+"+"+df.format(value)+ec.getSign()+"0#";
+						}else if(value1<0){
+							goalString=goalString+df.format(value)+ec.getSign()+"0#";
+						}else{
+							goalString=goalString+ec.getSign()+"0#";
+						}
 					}
 				}
 			}
@@ -444,14 +451,19 @@ public class DebugInterface {
 		Map<String, Svar> svFutMap = mds.svFutMap;
 		Map<String, Alias> asMap = mds.asMap;
 
+		IntDouble intDouble;
+		
 		Set<String> tsKeySet = tsMap.keySet();
 		Iterator<String> tsIterator = tsKeySet.iterator();
 		while (tsIterator.hasNext()){
 			String tsName=tsIterator.next();
 			if (!allDataNames.contains(tsName)){
-				allDataNames.add(tsName);
-				allTsNames.add(tsName);
-				allData.put(tsName, tsMap.get(tsName).getData().getData());
+				intDouble=tsMap.get(tsName).getData();
+				if (intDouble != null){
+					allDataNames.add(tsName);
+					allTsNames.add(tsName);
+					allData.put(tsName, intDouble.getData());
+				}
 			}
 		}
 		
@@ -460,9 +472,12 @@ public class DebugInterface {
 		while (dvIterator.hasNext()){
 			String dvName=dvIterator.next();
 			if (!allDataNames.contains(dvName)){
-				allDataNames.add(dvName);
-				allDvNames.add(dvName);
-				allData.put(dvName, dvMap.get(dvName).getData().getData());
+				intDouble=dvMap.get(dvName).getData();
+				if (intDouble !=null){
+					allDataNames.add(dvName);
+					allDvNames.add(dvName);
+					allData.put(dvName, intDouble.getData());
+				}
 			}
 		}
 		
@@ -471,9 +486,12 @@ public class DebugInterface {
 		while (svIterator.hasNext()){
 			String svName=svIterator.next();
 			if (!allDataNames.contains(svName)){
-				allDataNames.add(svName);
-				allSvNames.add(svName);
-				allData.put(svName, svMap.get(svName).getData().getData());
+				intDouble=svMap.get(svName).getData();
+				if (intDouble!=null){
+					allDataNames.add(svName);
+					allSvNames.add(svName);
+					allData.put(svName, intDouble.getData());
+				}
 			}
 		}
 		
@@ -482,9 +500,12 @@ public class DebugInterface {
 		while (svFutIterator.hasNext()){
 			String svFutName=svFutIterator.next();
 			if (!allDataNames.contains(svFutName)){
-				allDataNames.add(svFutName);
-				allSvNames.add(svFutName);
-				allData.put(svFutName, svMap.get(svFutName).getData().getData());
+				intDouble=svFutMap.get(svFutName).getData();
+				if (intDouble!=null){
+					allDataNames.add(svFutName);
+					allSvNames.add(svFutName);
+					allData.put(svFutName, intDouble.getData());
+				}
 			}
 		}
 		
@@ -493,8 +514,11 @@ public class DebugInterface {
 		while (asIterator.hasNext()){
 			String asName=asIterator.next();
 			if (!allDataNames.contains(asName)){
-				allDataNames.add(asName);
-				allData.put(asName, asMap.get(asName).getData().getData());
+				intDouble=asMap.get(asName).getData();
+				if (intDouble!=null){
+					allDataNames.add(asName);
+					allData.put(asName, intDouble.getData());
+				}
 			}
 			if (!allAsNames.contains(asName)){
 				allAsNames.add(asName);
@@ -524,42 +548,44 @@ public class DebugInterface {
 			String goalName=gKeyArrayList.get(i);
 			goalString=goalString+goalName+":";
 			EvalConstraint ec=gMap.get(goalName);
-			EvalExpression ee=ec.getEvalExpression();
-			Map<String, IntDouble> multiplier = ee.getMultiplier();
-			Set<String> mKeySet = multiplier.keySet();
-			Iterator<String> mi = mKeySet.iterator();
-			while (mi.hasNext()){
-				String variable=mi.next();
-				Number value=multiplier.get(variable).getData();
-				double value1=value.doubleValue();
-				if (goalString.endsWith(":")){
-					if (value1==1.0){
-						goalString=goalString+variable;
-					}else if (value1==-1.0){
-						goalString=goalString+"-"+variable;
+			if (ec!=null){
+				EvalExpression ee=ec.getEvalExpression();
+				Map<String, IntDouble> multiplier = ee.getMultiplier();
+				Set<String> mKeySet = multiplier.keySet();
+				Iterator<String> mi = mKeySet.iterator();
+				while (mi.hasNext()){
+					String variable=mi.next();
+					Number value=multiplier.get(variable).getData();
+					double value1=value.doubleValue();
+					if (goalString.endsWith(":")){
+						if (value1==1.0){
+							goalString=goalString+variable;
+						}else if (value1==-1.0){
+							goalString=goalString+"-"+variable;
+						}else{
+							goalString=goalString+df.format(value)+variable;
+						}
 					}else{
-						goalString=goalString+df.format(value)+variable;
-					}
-				}else{
-					if (value1==1.0){
-						goalString=goalString+"+"+variable;
-					}else if (value1 == -1.0){
-						goalString=goalString+"-"+variable;
-					}else if(value1>=0){
-						goalString=goalString+"+"+df.format(value)+variable;
-					}else{
-						goalString=goalString+df.format(value)+variable;
+						if (value1==1.0){
+							goalString=goalString+"+"+variable;
+						}else if (value1 == -1.0){
+							goalString=goalString+"-"+variable;
+						}else if(value1>=0){
+							goalString=goalString+"+"+df.format(value)+variable;
+						}else{
+							goalString=goalString+df.format(value)+variable;
+						}
 					}
 				}
-			}
-			Number value=ee.getValue().getData();
-			double value1=value.doubleValue();
-			if (value1>0){
-				goalString=goalString+"+"+df.format(value)+ec.getSign()+"0#";
-			}else if(value1<0){
-				goalString=goalString+df.format(value)+ec.getSign()+"0#";
-			}else{
-				goalString=goalString+ec.getSign()+"0#";
+				Number value=ee.getValue().getData();
+				double value1=value.doubleValue();
+				if (value1>0){
+					goalString=goalString+"+"+df.format(value)+ec.getSign()+"0#";
+				}else if(value1<0){
+					goalString=goalString+df.format(value)+ec.getSign()+"0#";
+				}else{
+					goalString=goalString+ec.getSign()+"0#";
+				}
 			}
 		}
 		if (goalString.endsWith("#")) goalString=goalString.substring(0, goalString.length()-1);
@@ -623,8 +649,11 @@ public class DebugInterface {
 					String[] splittedKey=key.split("__fut__");
 					if (splittedKey.length>1){
 						int index = Integer.parseInt(splittedKey[1]);
-						indexList.add(index);
-						futureArray.put(index, svFutMap.get(key).getData().getData());
+						IntDouble intDouble=svFutMap.get(key).getData();
+						if (intDouble != null) {
+							indexList.add(index);
+							futureArray.put(index, intDouble.getData());
+						}
 					}
 				}
 			}
@@ -636,8 +665,11 @@ public class DebugInterface {
 					String[] splittedKey=key.split("__fut__");
 					if (splittedKey.length>1){
 						int index = Integer.parseInt(splittedKey[1]);
-						indexList.add(index);
-						futureArray.put(index, dvMap.get(key).getData().getData());
+						IntDouble intDouble=dvMap.get(key).getData();
+						if (intDouble != null){
+							indexList.add(index);
+							futureArray.put(index, intDouble.getData());
+						}
 					}
 				}
 			}
