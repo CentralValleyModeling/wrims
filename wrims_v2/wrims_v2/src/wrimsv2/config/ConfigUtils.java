@@ -128,6 +128,7 @@ public class ConfigUtils {
 		}
 
 		// FilePaths.mainDirectory = configMap.get("maindir");
+		System.out.println("MainFile:       "+FilePaths.fullMainPath);
 		
 		try {
 			
