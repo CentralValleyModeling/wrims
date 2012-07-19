@@ -17,14 +17,14 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
-public class WPPTimeSeriesDialog extends PopupDialog {
+public class WPPCycleDialog extends PopupDialog {
 
 	private TableItem item;
 	private Table table;
 	private String varName;
 	private String input;
 	
-	public WPPTimeSeriesDialog(Shell parent, int shellStyle,
+	public WPPCycleDialog(Shell parent, int shellStyle,
 			boolean takeFocusOnOpen, boolean persistSize,
 			boolean persistLocation, boolean showDialogMenu,
 			boolean showPersistActions, String titleText, String infoText) {
@@ -67,7 +67,7 @@ public class WPPTimeSeriesDialog extends PopupDialog {
 		label0_1.setLayoutData(data);
 		
 		Label label1_0 = new Label(dialogArea, SWT.NONE);
-		label1_0.setText("Time Step:");
+		label1_0.setText("Cycle Index:");
 		label1_0.setLayoutData(data);
 		
 		Label label1_1 = new Label(dialogArea, SWT.NONE);
@@ -76,7 +76,7 @@ public class WPPTimeSeriesDialog extends PopupDialog {
 		label1_1.setLayoutData(data);
 		
 		Label label2_0 = new Label(dialogArea, SWT.NONE);
-		label2_0.setText("Date:");
+		label2_0.setText("Cycle Name:");
 		label2_0.setLayoutData(data);
 		
 		Label label2_1 = new Label(dialogArea, SWT.NONE);

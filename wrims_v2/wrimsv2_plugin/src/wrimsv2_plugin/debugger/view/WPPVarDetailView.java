@@ -323,6 +323,35 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 	    	item.setText(itemStrings);
 	    }
 	    table.redraw();
+	    final TableCursor cursor = new TableCursor(table, SWT.NONE);
+	    cursor.addSelectionListener(new SelectionAdapter(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (DebugCorePlugin.isDebugging && DebugCorePlugin.target.isSuspended()){
+					int col=cursor.getColumn();
+					if (col>=2){
+						final String varName=table.getColumn(col).getText();
+						final TableItem ti=cursor.getRow();
+						final IWorkbench workbench=PlatformUI.getWorkbench();
+						workbench.getDisplay().asyncExec(new Runnable(){
+							public void run(){
+								Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+								WPPCycleDialog dialog= new WPPCycleDialog(shell, SWT.BORDER|SWT.APPLICATION_MODAL, true, false, false, false, false, "Modify Value", varName);
+								dialog.open(ti, table, varName);
+							}
+						});
+					}
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+	    	
+	    });
 	}
 	
 	public void removeAllTableColumns(){
