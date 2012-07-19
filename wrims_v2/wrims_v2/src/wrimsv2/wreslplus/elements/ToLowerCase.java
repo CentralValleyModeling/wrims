@@ -214,6 +214,9 @@ public class ToLowerCase {
 		o.varList = Tools.allToLowerCase(w.varList);
 		o.varWeightMap = Tools.allToLowerCase(w.varWeightMap);
 		o.dependants = Tools.allToLowerCase(w.dependants);
+		o.commonWeight = w.commonWeight.toLowerCase();
+		o.commonPenalty = w.commonPenalty.toLowerCase();
+		o.isWeightGroup = w.isWeightGroup;
 		
 		return o;
 

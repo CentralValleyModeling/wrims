@@ -21,6 +21,7 @@ options {
   import wrimsv2.wreslplus.elements.DvarTemp;
   import wrimsv2.wreslplus.elements.SvarTemp;
   import wrimsv2.wreslplus.elements.WeightTable;
+  import wrimsv2.wreslplus.elements.WeightGroup;
   import wrimsv2.wreslplus.elements.AliasTemp;
   import wrimsv2.wreslplus.elements.GoalTemp;
   import wrimsv2.wreslplus.elements.GoalHS;
@@ -185,7 +186,6 @@ scope { ModelTemp m_;}
 //externalID : i=ID {$external::ex_.id=$i.text;} ; 
 
 
-
 weight returns[String id, WeightTable wtObj]
 scope { WeightTable wt_;
         String id_; 
@@ -195,15 +195,26 @@ scope { WeightTable wt_;
        dependants = new LinkedHashSet<String>();
 	 }
 @after{ $id = $weight::wt_.id; $wtObj=$weight::wt_; $wtObj.dependants= dependants;}	 
-	: OBJECTIVE LOCAL? weightTableID '=' '{' weight_item+ '}' ;
+	: weight_legacy | weight_new ;
 
-weightTableID : i=ID {$weight::wt_.id=$i.text;$weight::wt_.line=$i.getLine();} ;
+weight_legacy : OBJECTIVE LOCAL? OBJ {$weight::wt_.id="obj";} '='? '{' weight_unit+ '}'  ;
 
-weight_item 
+weight_unit 
 	: '[' i=ID ',' e=expr_add ']' ','?
 	{$weight::wt_.varList.add($i.text);$weight::wt_.varWeightMap.put($i.text,$e.text);};
 
+weight_new : OBJECTIVE weightTableID '{' weight_group '}'  ;
 
+weightTableID : i=ID {$weight::wt_.id=$i.text;$weight::wt_.line=$i.getLine();} ;
+	
+weight_group
+@init{ $weight::wt_.isWeightGroup=true; }
+	:  WEIGHT w=expr_add  {$weight::wt_.commonWeight=$w.text;} 
+	   ( PENALTY p=expr_add {$weight::wt_.commonPenalty=$p.text;} )? 
+	   VAR (  i=ID  {$weight::wt_.varList.add($i.text);} )+
+
+	//TODO: need to process these weights
+	;	
 
 operation: 'operation' operationName '{' operationCase+ '}'; 
 
@@ -514,7 +525,7 @@ ex_new : EXTERNAL ex_id '{' ( ex_fortran | ex_java ) '}' ;
 
 ex_fortran : 'language' 'fortran' '{' fortran_var+  fortran_return '}' ;
 
-fortran_var : 'var' ID '{' 'type' 'intent' '}' ;
+fortran_var : VAR ID '{' 'type' 'intent' '}' ;
 fortran_return : 'return' ;
 
 ex_java : 'language' 'java' ;
@@ -764,16 +775,19 @@ REAL :   ( Digit+ '.' Digit* ) | ( '.' Digit+ )  ;
 INT :   Digit+ ;
 
 OBJECTIVE : 'objective' | 'OBJECTIVE' | 'Objective' ;
+OBJ : 'obj' | 'Obj' | 'OBJ' ;
 MODEL :     'model' | 'MODEL' ;
 SEQUENCE :  'sequence' | 'SEQUENCE' ;
 
-ORDER :     'order' | 'ORDER' ;
+ORDER :     'order' | 'ORDER' | 'Order' ;
 INCLUDE :   'include' | 'INCLUDE' | 'Include' ;
-CASE :      'case' | 'CASE' ;
-CONDITION : 'condition' | 'CONDITION' ;
-GOAL :      'goal' | 'GOAL' ;
-VALUE :     'value' | 'VALUE' ;
-PENALTY : 'penalty' | 'PENALTY' ;
+CASE :      'case' | 'CASE' | 'Case' ;
+CONDITION : 'condition' | 'CONDITION' | 'Condition' ;
+GOAL :      'goal' | 'GOAL' | 'Goal' ;
+VALUE :     'value' | 'VALUE' | 'Value';
+PENALTY : 'penalty' | 'PENALTY' | 'Penalty' ;
+WEIGHT : 'weight' | 'WEIGHT' | 'Weight' ;
+ITEM    : 'item' | 'ITEM' | 'Item' ;
 
 CONFIG : 'config' ;
 LABEL : 'label' ;
@@ -785,11 +799,12 @@ DEFINE : 'define' | 'DEFINE' | 'Define' ;
 LOCAL : '[local]' | '[LOCAL]' ; 
 /////////////////////////////// 
 
-STD : 'std' | 'STD';
-DVAR : 'dvar' ;
-SVAR : 'svar' ;
-ALIAS : 'alias' | 'ALIAS' ;
-TIMESERIES : 'timeseries' ;
+STD : 'std' | 'STD' | 'Std' ;
+DVAR : 'dvar' | 'DVAR' | 'Dvar' ;
+SVAR : 'svar' | 'SVAR' | 'Svar' ; 
+VAR  : 'var' | 'VAR' | 'Var' ;
+ALIAS : 'alias' | 'ALIAS' | 'Alias';
+TIMESERIES : 'timeseries' | 'TIMESERIES' | 'Timeseries' ;
 EXTERNAL : 'external' | 'EXTERNAL' ;
 TEMPLATE : 'template' ;
 

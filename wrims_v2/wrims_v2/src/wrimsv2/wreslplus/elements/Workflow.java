@@ -128,6 +128,9 @@ public class Workflow {
 		
 		Procedures.collectWeightVar(st);
 		
+		Procedures.processWeightGroup(st);
+		
+
 		Procedures.collectTimeStep(st);
 		
 		

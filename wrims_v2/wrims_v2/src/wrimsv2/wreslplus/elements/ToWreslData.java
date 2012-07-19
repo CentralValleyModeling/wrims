@@ -42,6 +42,7 @@ public class ToWreslData {
 		for (String se : s.seqList){
 			
 			SequenceTemp seqObj = s.seqMap.get(se); 
+			
 			String modelName = seqObj.model;
 
 			ModelTemp mt = s.modelMap.get(modelName);	
@@ -173,14 +174,27 @@ public class ToWreslData {
 			//System.out.println("before: "+w.varWeightMap.keySet());
 			//if (w.id.equalsIgnoreCase("obj")) o.wtMap.putAll(convertWeightTable(w));
 			//Map<String,WeightElement> wem = convertWeightTable(w);
-			o.wtMap.putAll(convertWeightTable(w));
+			if (w.isWeightGroup){
+				o.wtMap.putAll(convertWeightTableGroup(w));
+			} else {
+				o.wtMap.putAll(convertWeightTable(w));
+			}
 			//System.out.println("after: "+wem.keySet());
 		}
 		for (String k: seq.ssList_noCase){				
 			o.wtMap.put(k, convertWeight(seq.ssWeightMap_noCase.get(k)));
-		}		
+		}				
 		
+		for (String k: seq.groupWeightMap.keySet()){				
+			o.wtMap.put(k, convertWeight(seq.groupWeightMap.get(k)));
+		}
 		
+		//for (String sq: st.seqList){
+			
+		//	 SequenceTemp seqObj = st.seqMap.get(sq);
+			 System.out.println("0718: seq.groupWeightMap:"+seq.groupWeightMap);
+		//	}
+			 
 		return o;
 		
 	}
@@ -285,7 +299,26 @@ public class ToWreslData {
 		
 	}
 
+	public static Map<String,WeightElement> convertWeightTableGroup (WeightTable w){
+		
+		Map<String,WeightElement> om = new LinkedHashMap<String, WeightElement>();
+		
+		for (String s : w.varList) {
+		
+			WeightElement o = new WeightElement();
+		
+			o.fromWresl = w.fromWresl;
+			o.condition = w.condition;
+			o.weight = w.commonWeight;
+			
+			om.put(s,o);
+		}
 
+		
+		return om;
+		
+	}
+	
 	public static External convertExternal (ExternalTemp e){
 		
 		External o = new External();

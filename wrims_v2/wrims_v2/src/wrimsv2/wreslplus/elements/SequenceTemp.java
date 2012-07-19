@@ -50,6 +50,8 @@ public class SequenceTemp implements Serializable {
 	public Map<String,DvarTemp> ssMap_noCase;           // processed
 	public Map<String,WeightTemp> ssWeightMap_noCase;   // processed
 	
+	public Map<String,WeightTemp> groupWeightMap;   // processed
+	
 	public ArrayList<String> wvList_defaultType;
 	public ArrayList<WeightTable> wTableObjList_defaultType;
 	
@@ -88,6 +90,8 @@ public class SequenceTemp implements Serializable {
 
 		ssMap_noCase = new HashMap<String, DvarTemp>();
 		ssWeightMap_noCase = new HashMap<String, WeightTemp>();
+		
+		groupWeightMap = new HashMap<String, WeightTemp>();
 		
 		wvList_defaultType = new ArrayList<String>();
 		wTableObjList_defaultType = new ArrayList<WeightTable>();
