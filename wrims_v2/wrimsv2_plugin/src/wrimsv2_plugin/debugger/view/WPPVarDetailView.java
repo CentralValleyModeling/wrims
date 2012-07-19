@@ -10,8 +10,12 @@ import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableTreeViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -67,11 +71,9 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 					selectedVariableNames.add(variableName);
 				}
 				if (selectedVariableNames.size()>0){
-					if (!DebugCorePlugin.selectedVariableNames.equals(selectedVariableNames)){
-						DebugCorePlugin.selectedVariableNames=selectedVariableNames;
-						if (DebugCorePlugin.target !=null && DebugCorePlugin.target.isSuspended()){
-							updateDetailVariableView(selectedVariableNames);
-						}
+					DebugCorePlugin.selectedVariableNames=selectedVariableNames;
+					if (DebugCorePlugin.target !=null && DebugCorePlugin.target.isSuspended()){
+						updateDetailVariableView(selectedVariableNames);
 					}
 				}
 			}
@@ -246,8 +248,37 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 	    for (String[] itemStrings: timeseries){
 	    	TableItem item = new TableItem(table, SWT.NONE);
 	    	item.setText(itemStrings);
-	    	table.redraw();
 	    }
+	    table.redraw();
+	    final TableCursor cursor = new TableCursor(table, SWT.NONE);
+	    cursor.addSelectionListener(new SelectionAdapter(){
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (DebugCorePlugin.isDebugging && DebugCorePlugin.target.isSuspended()){
+					int col=cursor.getColumn();
+					if (col>=2){
+						final String varName=table.getColumn(col).getText();
+						final TableItem ti=cursor.getRow();
+						final IWorkbench workbench=PlatformUI.getWorkbench();
+						workbench.getDisplay().asyncExec(new Runnable(){
+							public void run(){
+								Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+								WPPTimeSeriesDialog dialog= new WPPTimeSeriesDialog(shell, SWT.BORDER|SWT.APPLICATION_MODAL, true, false, false, false, false, "Modify Value", varName);
+								dialog.open(ti, table, varName);
+							}
+						});
+					}
+				}
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+	    	
+	    });
 	}
 	
 	public void displayFutureValues(){
@@ -280,7 +311,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 	    TableColumn tc3 = new TableColumn(table, SWT.CENTER);
 	    tc1.setText("Index");
 	    tc2.setText("Cycle");
-	    tc3.setText("DebugCorePlugin.selectedVariableNames.get(0)");
+	    tc3.setText(DebugCorePlugin.selectedVariableNames.get(0));
 	    int width=(int) Math.rint(table.getClientArea().width/3.0);
 	    tc1.setWidth(width);
 	    tc2.setWidth(width);
