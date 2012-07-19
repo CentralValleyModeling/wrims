@@ -3,13 +3,13 @@
 SCALAR
 NAME		VALUE
 TABLE_FONT_SIZE   8
-FILE_BASE	D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\LpSolve_callite\DSS\DVAR\DV_FUTURE_PREBO_XA.DSS
+FILE_BASE	D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\callite_3cycle\DSS\DVAR\DV_FUTURE_BO_XA.DSS
 NAME_BASE	XA
-FILE_ALT	D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\LpSolve_callite\DSS\DVAR\DV_FUTURE_PREBO_LpSolve.DSS 
+FILE_ALT	D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\callite_3cycle\DSS\DVAR\DV_FUTURE_BO_LpSolve.DSS 
 NAME_ALT	LpSolve
-OUTFILE		D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\LpSolve_callite\Report\FUTURE_PREBO__(LpSolve_vs_XA).pdf
+OUTFILE		D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\callite_3cycle\Report\FUTURE_BO__(LpSolve_vs_XA).pdf
 NOTE		""
-ASSUMPTIONS "FUTURE_PREBO"	
+ASSUMPTIONS "FUTURE_BO"	
 MODELER 	"Kevin"
 END
 
