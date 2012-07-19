@@ -440,43 +440,47 @@ public class ControllerDebug extends Thread {
 	}
 	
 	public void updateVarMonitor(){
-		String dataString="updateVarMonitor!"+di.monitorVarName+"!";
-		String monitorVarName=di.monitorVarName;
-		String monitorVarTimeStep=di.monitorVarTimeStep;
-		String entryName=DssOperation.entryNameTS(monitorVarName, monitorVarTimeStep);
-		HashMap<String, DssDataSetFixLength> dvAliasTSMap = DataTimeSeries.dvAliasTS;
+		String dataString="updateVarMonitor!";
+		for (int k=0; k<di.monitorVarNames.length; k++){
+			String monitorVarName=di.monitorVarNames[k];
+			dataString=dataString+monitorVarName+"$";
+			String monitorVarTimeStep=di.monitorVarTimeStep;
+			String entryName=DssOperation.entryNameTS(monitorVarName, monitorVarTimeStep);
+			HashMap<String, DssDataSetFixLength> dvAliasTSMap = DataTimeSeries.dvAliasTS;
 		
-		if (dvAliasTSMap.containsKey(entryName)){
-			DssDataSetFixLength ddsf = dvAliasTSMap.get(entryName);
-			double[] dataArray = ddsf.getData();
-			TimeOperation.findTime(-1);
-			int currIndex=ValueEvaluation.timeSeriesIndex(ddsf)-1;
-			for (int i=0; i<=currIndex; i++){
-				double value=dataArray[i];
-				if (!(value==-901.0 || value==902.0)){
-					int timestepListed=i-currIndex;
-					TimeOperation.findTime(timestepListed);
-					dataString=dataString+timestepListed+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+di.df.format(value)+"#";
-				}
-			}
-		}else{
-			HashMap<String, DssDataSet> svTSMap = DataTimeSeries.svTS;
-			if (svTSMap.containsKey(entryName)){
-				DssDataSet dds = svTSMap.get(entryName);
-				ArrayList<Double> dataArrayList = dds.getData();
+			if (dvAliasTSMap.containsKey(entryName)){
+				DssDataSetFixLength ddsf = dvAliasTSMap.get(entryName);
+				double[] dataArray = ddsf.getData();
 				TimeOperation.findTime(-1);
-				int currIndex=ValueEvaluation.timeSeriesIndex(dds);
+				int currIndex=ValueEvaluation.timeSeriesIndex(ddsf)-1;
 				for (int i=0; i<=currIndex; i++){
-					double value=dataArrayList.get(i);
+					double value=dataArray[i];
 					if (!(value==-901.0 || value==902.0)){
 						int timestepListed=i-currIndex;
 						TimeOperation.findTime(timestepListed);
 						dataString=dataString+timestepListed+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+di.df.format(value)+"#";
 					}
 				}
+			}else{
+				HashMap<String, DssDataSet> svTSMap = DataTimeSeries.svTS;
+				if (svTSMap.containsKey(entryName)){
+					DssDataSet dds = svTSMap.get(entryName);
+					ArrayList<Double> dataArrayList = dds.getData();
+					TimeOperation.findTime(-1);
+					int currIndex=ValueEvaluation.timeSeriesIndex(dds);
+					for (int i=0; i<=currIndex; i++){
+						double value=dataArrayList.get(i);
+						if (!(value==-901.0 || value==902.0)){
+							int timestepListed=i-currIndex;
+							TimeOperation.findTime(timestepListed);
+							dataString=dataString+timestepListed+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+di.df.format(value)+"#";
+						}
+					}
+				}
 			}
+			dataString=dataString+"!";
 		}
-		
+		if (dataString.endsWith("!")) dataString=dataString.substring(0, dataString.length()-1);
 		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
 		try {
 			di.sendEvent(dataString);

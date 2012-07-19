@@ -61,7 +61,7 @@ public class DebugInterface {
 	private String[] debugAlias;
 	private String[] allDebugVariables;
 	public DecimalFormat df = new DecimalFormat("#.####");
-	public static String monitorVarName="";
+	public static String[] monitorVarNames=new String[0];
 	public static String monitorVarTimeStep="";
 	
 	public DebugInterface(int requestPort, int eventPort, String args[]){
@@ -160,8 +160,8 @@ public class DebugInterface {
 				if (request.equals("tsdetail:")){
 					sendRequest("");
 				}else{
-					String variableName=request.substring(index+1);
-					dataString=getTimeseriesDetail(variableName);
+					String variableNames=request.substring(index+1);
+					dataString=getTimeseriesDetail(variableNames);
 					sendRequest(dataString);
 				}
 			} catch (IOException e) {
@@ -617,9 +617,10 @@ public class DebugInterface {
 		return goalString;
 	}
 	
-	public String getTimeseriesDetail(String variableName){
+	public String getTimeseriesDetail(String variableNames){
 		String dataString="";
-		monitorVarName=variableName;
+		monitorVarNames=variableNames.split("#");
+		String variableName=monitorVarNames[0];
 		monitorVarTimeStep=ControlData.timeStep;
 		String entryName=DssOperation.entryNameTS(variableName, ControlData.timeStep);
 		HashMap<String, DssDataSetFixLength> dvAliasTSMap = DataTimeSeries.dvAliasTS;
@@ -749,26 +750,24 @@ public class DebugInterface {
 		String varName=varStrings[0];
 		int index=Integer.parseInt(varStrings[1]);
 		double value=Double.parseDouble(varStrings[2]);
-		if (varName.equals(monitorVarName)){
-			String entryName=DssOperation.entryNameTS(varName, monitorVarTimeStep);
-			HashMap<String, DssDataSetFixLength> dvAliasTSMap = DataTimeSeries.dvAliasTS;
-			if (dvAliasTSMap.containsKey(entryName)){
-				DssDataSetFixLength ddsf = dvAliasTSMap.get(entryName);
-				double[] dataArray = ddsf.getData();
+		String entryName=DssOperation.entryNameTS(varName, monitorVarTimeStep);
+		HashMap<String, DssDataSetFixLength> dvAliasTSMap = DataTimeSeries.dvAliasTS;
+		if (dvAliasTSMap.containsKey(entryName)){
+			DssDataSetFixLength ddsf = dvAliasTSMap.get(entryName);
+			double[] dataArray = ddsf.getData();
+			TimeOperation.findTime(index);
+			int tsIndex=ValueEvaluation.timeSeriesIndex(ddsf)-1;
+			dataArray[tsIndex]=value;
+			isModified=true;
+		}else{
+			HashMap<String, DssDataSet> svTSMap = DataTimeSeries.svTS;
+			if (svTSMap.containsKey(entryName)){
+				DssDataSet dds = svTSMap.get(entryName);
+				ArrayList<Double> dataArrayList = dds.getData();
 				TimeOperation.findTime(index);
-				int tsIndex=ValueEvaluation.timeSeriesIndex(ddsf)-1;
-				dataArray[tsIndex]=value;
+				int tsIndex=ValueEvaluation.timeSeriesIndex(dds);
+				dataArrayList.set(tsIndex, value);
 				isModified=true;
-			}else{
-				HashMap<String, DssDataSet> svTSMap = DataTimeSeries.svTS;
-				if (svTSMap.containsKey(entryName)){
-					DssDataSet dds = svTSMap.get(entryName);
-					ArrayList<Double> dataArrayList = dds.getData();
-					TimeOperation.findTime(index);
-					int tsIndex=ValueEvaluation.timeSeriesIndex(dds);
-					dataArrayList.set(tsIndex, value);
-					isModified=true;
-				}
 			}
 		}
 		return isModified;
@@ -782,20 +781,18 @@ public class DebugInterface {
 		double value=Double.parseDouble(varStrings[2]);
 		StudyDataSet sds = ControlData.currStudyDataSet;
 		Map<String, Map<String, IntDouble>> varCycleValue = sds.getVarCycleValueMap();
-		if (varName.equals(monitorVarName)){
-			if (varCycleValue.containsKey(varName)){
-				Map<String, IntDouble> cycleValue = varCycleValue.get(varName);
-				if (cycleValue.containsKey(cycle)){
-					cycleValue.put(cycle, new IntDouble(value, false));
-					isModified=true;
-				}
-			}else{
-				Map<String, Map<String, IntDouble>> varTimeArrayCycleValue = sds.getVarTimeArrayCycleValueMap();
-				if (varTimeArrayCycleValue.containsKey(varName)){
-					Map<String, IntDouble> cycleValue = varTimeArrayCycleValue.get(varName);
-					cycleValue.put(cycle, new IntDouble(value, false));
-					isModified=true;
-				}
+		if (varCycleValue.containsKey(varName)){
+			Map<String, IntDouble> cycleValue = varCycleValue.get(varName);
+			if (cycleValue.containsKey(cycle)){
+				cycleValue.put(cycle, new IntDouble(value, false));
+				isModified=true;
+			}
+		}else{
+			Map<String, Map<String, IntDouble>> varTimeArrayCycleValue = sds.getVarTimeArrayCycleValueMap();
+			if (varTimeArrayCycleValue.containsKey(varName)){
+				Map<String, IntDouble> cycleValue = varTimeArrayCycleValue.get(varName);
+				cycleValue.put(cycle, new IntDouble(value, false));
+				isModified=true;
 			}
 		}
 		return isModified;

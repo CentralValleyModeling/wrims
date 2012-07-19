@@ -219,7 +219,8 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 		table.removeAll();
 		removeAllTableColumns();
 		ArrayList<String> variableNames=DebugCorePlugin.selectedVariableNames;
-		int sizeTc=variableNames.size()+2;
+		//int sizeTc=variableNames.size()+2;
+		int sizeTc=3;
 		int width=(int) Math.rint(table.getClientArea().width/(sizeTc+1.0));
 		TableColumn[] tc = new TableColumn[sizeTc];
 		tc[0] = new TableColumn(table, SWT.CENTER);
@@ -367,12 +368,12 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 	public void updateDetailVariableView(final ArrayList<String> variableNames){
 		try{
 			String data="";
-			String linkVarNames="";
+			String linkedVarNames="";
 			for (String varName:variableNames){
-				linkVarNames=linkVarNames+varName+"#";
+				linkedVarNames=linkedVarNames+varName+"#";
 			}
-			if (linkVarNames.endsWith("#")) linkVarNames=linkVarNames.substring(0, linkVarNames.length()-1);
-			data= DebugCorePlugin.target.sendRequest("tsdetail:"+variableNames.get(0));
+			if (linkedVarNames.endsWith("#")) linkedVarNames=linkedVarNames.substring(0, linkedVarNames.length()-1);
+			data= DebugCorePlugin.target.sendRequest("tsdetail:"+linkedVarNames);
 			DebugCorePlugin.varDetailTimeseries=DataProcess.generateVarDetailData(data);
 			final IWorkbench workbench=PlatformUI.getWorkbench();
 				workbench.getDisplay().asyncExec(new Runnable(){
