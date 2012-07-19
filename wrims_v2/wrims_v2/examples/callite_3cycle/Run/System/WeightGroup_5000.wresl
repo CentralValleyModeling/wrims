@@ -1,0 +1,31 @@
+  
+objective W5000 {
+	weight 5000
+	penalty 0.1
+	var
+	D_RedBlf_P
+	D_SacAme_P
+	D_Orovl
+	D_Folsm_P
+	D_Nimbus_P
+	D_Vallejo
+	D_CCWDVCOR
+	D_CCWDINTK
+	D_DeltaReqd
+	D122A ! next 10 weights for D_Wilkns_P
+	D122B
+	D143A
+	D143B
+	D145A
+	D145B
+	D128
+	D129A
+	D202
+	D206A
+	D206B
+	D206C
+	D6
+	D7A
+	D7B
+  }
+  
