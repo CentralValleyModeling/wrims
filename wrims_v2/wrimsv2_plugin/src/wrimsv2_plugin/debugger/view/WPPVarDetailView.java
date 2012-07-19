@@ -220,7 +220,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 		removeAllTableColumns();
 		ArrayList<String> variableNames=DebugCorePlugin.selectedVariableNames;
 		int sizeTc=variableNames.size()+2;
-		int width=(int) Math.rint(table.getClientArea().width/(sizeTc*1.0));
+		int width=(int) Math.rint(table.getClientArea().width/(sizeTc+1.0));
 		TableColumn[] tc = new TableColumn[sizeTc];
 		tc[0] = new TableColumn(table, SWT.CENTER);
 	    tc[0].setText("Time Step");
@@ -256,16 +256,17 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (DebugCorePlugin.isDebugging && DebugCorePlugin.target.isSuspended()){
-					int col=cursor.getColumn();
+					final int col=cursor.getColumn();
 					if (col>=2){
 						final String varName=table.getColumn(col).getText();
 						final TableItem ti=cursor.getRow();
+						final int row = table.getSelectionIndex();
 						final IWorkbench workbench=PlatformUI.getWorkbench();
 						workbench.getDisplay().asyncExec(new Runnable(){
 							public void run(){
 								Shell shell=workbench.getActiveWorkbenchWindow().getShell();
 								WPPTimeSeriesDialog dialog= new WPPTimeSeriesDialog(shell, SWT.BORDER|SWT.APPLICATION_MODAL, true, false, false, false, false, "Modify Value", varName);
-								dialog.open(ti, table, varName);
+								dialog.open(row, col, ti, table, varName);
 							}
 						});
 					}
@@ -290,7 +291,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 	    tc1.setText("Time Step");
 	    tc2.setText("Date");
 	    tc3.setText(DebugCorePlugin.selectedVariableNames.get(0));
-	    int width=(int) Math.rint(table.getClientArea().width/3.0);
+	    int width=(int) Math.rint(table.getClientArea().width/4.0);
 	    tc1.setWidth(width);
 	    tc2.setWidth(width);
 	    tc3.setWidth(width);
@@ -312,7 +313,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 	    tc1.setText("Index");
 	    tc2.setText("Cycle");
 	    tc3.setText(DebugCorePlugin.selectedVariableNames.get(0));
-	    int width=(int) Math.rint(table.getClientArea().width/3.0);
+	    int width=(int) Math.rint(table.getClientArea().width/4.0);
 	    tc1.setWidth(width);
 	    tc2.setWidth(width);
 	    tc3.setWidth(width);
@@ -329,16 +330,17 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if (DebugCorePlugin.isDebugging && DebugCorePlugin.target.isSuspended()){
-					int col=cursor.getColumn();
+					final int col=cursor.getColumn();
 					if (col>=2){
 						final String varName=table.getColumn(col).getText();
-						final TableItem ti=cursor.getRow();
+						final TableItem item=cursor.getRow();
+						final int row=table.getSelectionIndex();
 						final IWorkbench workbench=PlatformUI.getWorkbench();
 						workbench.getDisplay().asyncExec(new Runnable(){
 							public void run(){
 								Shell shell=workbench.getActiveWorkbenchWindow().getShell();
 								WPPCycleDialog dialog= new WPPCycleDialog(shell, SWT.BORDER|SWT.APPLICATION_MODAL, true, false, false, false, false, "Modify Value", varName);
-								dialog.open(ti, table, varName);
+								dialog.open(row, col, item, table, varName);
 							}
 						});
 					}

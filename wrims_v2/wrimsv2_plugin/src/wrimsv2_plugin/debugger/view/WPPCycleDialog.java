@@ -1,5 +1,7 @@
 package wrimsv2_plugin.debugger.view;
 
+import java.util.ArrayList;
+
 import org.eclipse.jface.dialogs.PopupDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -16,9 +18,15 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
+
+import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 
 public class WPPCycleDialog extends PopupDialog {
 
+	private int row;
+	private int col;
 	private TableItem item;
 	private Table table;
 	private String varName;
@@ -33,7 +41,9 @@ public class WPPCycleDialog extends PopupDialog {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void open(TableItem item, Table table, String varName){
+	public void open(int row, int col, TableItem item, Table table, String varName){
+		this.row=row;
+		this.col=col;
 		this.item=item;
 		this.table=table;
 		this.varName=varName;
@@ -98,12 +108,16 @@ public class WPPCycleDialog extends PopupDialog {
 		ok.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
 				input=text.getText();
-				String[] itemStrings=new String[3];
-				itemStrings[0]=itemText0;
-				itemStrings[1]=itemText1;
-				itemStrings[2]=input;
-				item.setText(itemStrings);
-				table.update();
+				ArrayList<String[]> cycle=DebugCorePlugin.varDetailCycle;
+				String[] rowItem=cycle.get(row);
+				rowItem[col]=input;
+				final IWorkbench workbench=PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+					public void run(){
+						WPPVarDetailView varDetailView = (WPPVarDetailView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_VARIABLEDETAIL_VIEW);
+						varDetailView.displayCycleValues();
+					}
+				});
 				close();
 			}
 		});
