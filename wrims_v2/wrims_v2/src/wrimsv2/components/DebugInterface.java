@@ -115,7 +115,6 @@ public class DebugInterface {
 	public void handleRequest(String request) {
 		String dataString="";
 		String goalString="";
-		String [] requestParts;
 		if (request.equals("start")) {
 			controllerDebug.start();
 			isStart=true;
@@ -228,7 +227,7 @@ public class DebugInterface {
 				e.printStackTrace();
 			}
 		}else if (request.startsWith("time")){
-			requestParts=request.split(":");
+			String [] requestParts=request.split(":");
 			String[] yearMonthDayCycle=requestParts[1].split("/");
 			controllerDebug.debugYear=Integer.parseInt(yearMonthDayCycle[0]);
 			controllerDebug.debugMonth=Integer.parseInt(yearMonthDayCycle[1]);
@@ -241,7 +240,7 @@ public class DebugInterface {
 				e.printStackTrace();
 			}
 		}else if (request.startsWith("variables:")){
-			requestParts=request.split(":");
+			String [] requestParts=request.split(":");
 			allDebugVariables=requestParts[1].split("#");
 			try {
 				sendRequest("variables defined");
@@ -279,6 +278,32 @@ public class DebugInterface {
 			controllerDebug.debugCycle=ControlData.currCycleIndex+1;
 			try {
 				sendRequest("paused");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if (request.startsWith("modify_timeseries:")){
+			String[] requestParts=request.split(":");
+			boolean isModified=modifyTimeSeries(requestParts);
+			try {
+				if (isModified){
+					sendRequest("modified");
+				}else{
+					sendRequest("not_modified");
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if (request.startsWith("modify_cycle:")){
+			String[] requestParts=request.split(":");
+			boolean isModified=modifyCycle(requestParts);
+			try {
+				if (isModified){
+					sendRequest("modified");
+				}else{
+					sendRequest("not_modified");
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -694,7 +719,7 @@ public class DebugInterface {
 			Map<String, IntDouble> cycleValue = varCycleValue.get(variableName);
 			int cycleIndex=1;
 			for (String cycle: ml){
-				if (cycleValue.containsKey(cycle)){
+				if (cycleValue.containsKey(cycle) && cycleIndex<ControlData.currCycleIndex+1){
 					IntDouble id=cycleValue.get(cycle);
 					if (id!=null) dataString=dataString+cycleIndex+":"+cycle+":"+df.format(id.getData())+"#";
 				}
@@ -706,7 +731,7 @@ public class DebugInterface {
 				Map<String, IntDouble> cycleValue = varTimeArrayCycleValue.get(variableName);
 				int cycleIndex=1;
 				for (String cycle: ml){
-					if (cycleValue.containsKey(cycle)){
+					if (cycleValue.containsKey(cycle) && cycleIndex<ControlData.currCycleIndex+1){
 						IntDouble id=cycleValue.get(cycle);
 						if (id!=null) dataString=dataString+cycleIndex+":"+cycle+":"+df.format(id.getData())+"#";
 					}
@@ -716,6 +741,64 @@ public class DebugInterface {
 		}
 		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
 		return dataString;
+	}
+	
+	public boolean modifyTimeSeries(String[] requestParts){
+		boolean isModified=false;
+		String[] varStrings=requestParts[1].split("#");
+		String varName=varStrings[0];
+		int index=Integer.parseInt(varStrings[1]);
+		double value=Double.parseDouble(varStrings[2]);
+		if (varName.equals(monitorVarName)){
+			String entryName=DssOperation.entryNameTS(varName, monitorVarTimeStep);
+			HashMap<String, DssDataSetFixLength> dvAliasTSMap = DataTimeSeries.dvAliasTS;
+			if (dvAliasTSMap.containsKey(entryName)){
+				DssDataSetFixLength ddsf = dvAliasTSMap.get(entryName);
+				double[] dataArray = ddsf.getData();
+				TimeOperation.findTime(index);
+				int tsIndex=ValueEvaluation.timeSeriesIndex(ddsf)-1;
+				dataArray[tsIndex]=value;
+				isModified=true;
+			}else{
+				HashMap<String, DssDataSet> svTSMap = DataTimeSeries.svTS;
+				if (svTSMap.containsKey(entryName)){
+					DssDataSet dds = svTSMap.get(entryName);
+					ArrayList<Double> dataArrayList = dds.getData();
+					TimeOperation.findTime(index);
+					int tsIndex=ValueEvaluation.timeSeriesIndex(dds);
+					dataArrayList.set(tsIndex, value);
+					isModified=true;
+				}
+			}
+		}
+		return isModified;
+	}
+	
+	public boolean modifyCycle(String[] requestParts){
+		boolean isModified=false;
+		String[] varStrings=requestParts[1].split("#");
+		String varName=varStrings[0];
+		String cycle=varStrings[1];
+		double value=Double.parseDouble(varStrings[2]);
+		StudyDataSet sds = ControlData.currStudyDataSet;
+		Map<String, Map<String, IntDouble>> varCycleValue = sds.getVarCycleValueMap();
+		if (varName.equals(monitorVarName)){
+			if (varCycleValue.containsKey(varName)){
+				Map<String, IntDouble> cycleValue = varCycleValue.get(varName);
+				if (cycleValue.containsKey(cycle)){
+					cycleValue.put(cycle, new IntDouble(value, false));
+					isModified=true;
+				}
+			}else{
+				Map<String, Map<String, IntDouble>> varTimeArrayCycleValue = sds.getVarTimeArrayCycleValueMap();
+				if (varTimeArrayCycleValue.containsKey(varName)){
+					Map<String, IntDouble> cycleValue = varTimeArrayCycleValue.get(varName);
+					cycleValue.put(cycle, new IntDouble(value, false));
+					isModified=true;
+				}
+			}
+		}
+		return isModified;
 	}
 	
 	public String getDataString(){

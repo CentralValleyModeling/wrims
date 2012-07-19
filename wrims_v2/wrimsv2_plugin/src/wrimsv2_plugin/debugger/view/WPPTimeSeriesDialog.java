@@ -2,6 +2,7 @@ package wrimsv2_plugin.debugger.view;
 
 import java.util.ArrayList;
 
+import org.eclipse.debug.core.DebugException;
 import org.eclipse.jface.dialogs.PopupDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -22,6 +23,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.exception.WPPException;
 
 public class WPPTimeSeriesDialog extends PopupDialog {
 
@@ -110,14 +112,21 @@ public class WPPTimeSeriesDialog extends PopupDialog {
 				input=text.getText();
 				ArrayList<String[]> timeSeries=DebugCorePlugin.varDetailTimeseries;
 				String[] rowItem=timeSeries.get(row);
-				rowItem[col]=input;
-				final IWorkbench workbench=PlatformUI.getWorkbench();
-				workbench.getDisplay().asyncExec(new Runnable(){
-					public void run(){
-						WPPVarDetailView varDetailView = (WPPVarDetailView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_VARIABLEDETAIL_VIEW);
-						varDetailView.displayTimeseries();
+				try {
+					String data=DebugCorePlugin.target.sendRequest("modify_timeseries:"+varName+"#"+rowItem[0]+"#"+input);
+					if (data.equals("modified")){
+						rowItem[col]=input;
+						final IWorkbench workbench=PlatformUI.getWorkbench();
+						workbench.getDisplay().asyncExec(new Runnable(){
+							public void run(){
+								WPPVarDetailView varDetailView = (WPPVarDetailView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_VARIABLEDETAIL_VIEW);
+								varDetailView.displayTimeseries();
+							}
+						});
 					}
-				});
+				} catch (DebugException e) {
+					WPPException.handleException(e);
+				}
 				close();
 			}
 		});
