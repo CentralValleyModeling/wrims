@@ -618,10 +618,12 @@ public class DebugInterface {
 	}
 	
 	public String getTimeseriesDetail(String variableNames){
-		String dataString="";
 		monitorVarNames=variableNames.split("#");
-		String variableName=monitorVarNames[0];
 		monitorVarTimeStep=ControlData.timeStep;
+		controllerDebug.updateVarMonitor();
+		
+		String dataString="";
+		String variableName=monitorVarNames[0];
 		String entryName=DssOperation.entryNameTS(variableName, ControlData.timeStep);
 		HashMap<String, DssDataSetFixLength> dvAliasTSMap = DataTimeSeries.dvAliasTS;
 

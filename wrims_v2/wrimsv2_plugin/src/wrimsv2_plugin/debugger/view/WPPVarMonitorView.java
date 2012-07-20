@@ -79,43 +79,6 @@ public class WPPVarMonitorView extends ViewPart{
 		contentPane = root.getContentPane();
 	}
 	
-	protected void initialPlot() {
-		Vector<TimeSeriesContainer> dataVector=convertDataVector(DebugCorePlugin.varDetailTimeseries);
-		
-		if (plot != null) {
-			//plot.clearPanel();
-		}
-		if (plot == null) {
-			plot = new G2dPanel();
-			//plot.setPaintEnabled(false);
-			//plot.setDebugGraphicsOptions(DebugGraphics.FLASH_OPTION);
-			contentPane.add(plot);
-		}
-		G2dObject g2dObj = null;
-		Vector g2dataVector = new Vector();
-		for (Iterator iterator = dataVector.iterator(); iterator.hasNext();) {
-			DataContainer data = (DataContainer) iterator.next();
-			if (data instanceof TimeSeriesContainer) {
-				TimeSeriesDataSet ts = new TimeSeriesDataSet(
-						(TimeSeriesContainer) data);
-				if (((TimeSeriesContainer) data).timeZoneID != null) {
-					ts.setGmtOffset(((TimeSeriesContainer) data).timeZoneRawOffset
-							/ (1000 * 60 * 60));
-				}
-				g2dObj = ts;
-			} else if (data instanceof PairedDataContainer) {
-				PairedDataSet pd = new PairedDataSet((PairedDataContainer) data);
-				g2dObj = pd;
-			}
-			if (g2dObj == null) {
-				return;
-			}
-			g2dataVector.add(g2dObj);
-
-		}
-		plot.buildComponents(g2dataVector, true, true);
-	}
-	
 	public void updatePlot(String dataString){
 		Vector<TimeSeriesContainer> dataVector=new Vector<TimeSeriesContainer>();
 		boolean correctVarNames=true;
@@ -155,36 +118,6 @@ public class WPPVarMonitorView extends ViewPart{
 			g2dataVector.add(g2dObj);
 		}
 		plot.buildComponents(g2dataVector, true, true);	
-	}
-
-	protected Vector<TimeSeriesContainer> convertDataVector(
-			ArrayList<String[]> varDetailTimeseries) {
-		Vector<TimeSeriesContainer> vdc=new Vector<TimeSeriesContainer> ();		
-		//for (String varName:DebugCorePlugin.selectedVariableNames){
-			String varName=DebugCorePlugin.selectedVariableNames.get(0);
-			TimeSeriesContainer dc=new TimeSeriesContainer();
-			Date startDate=new Date(DebugCorePlugin.startYear-1900, DebugCorePlugin.startMonth-1, DebugCorePlugin.startDay);
-			Date endDate=new Date(DebugCorePlugin.endYear-1900, DebugCorePlugin.endMonth-1, DebugCorePlugin.endDay);
-			dc.startTime=(int)(startDate.getTime()/60000)+25568*1440;
-			dc.endTime=(int)(endDate.getTime()/60000)+25568*1440;
-			dc.units="undefined";
-			dc.location=varName;
-			int size = varDetailTimeseries.size();
-			dc.numberValues=size;
-			dc.times=new int[size];
-			dc.values=new double[size];
-			for (int i=0; i<size-1; i++){
-				String[] varItem=varDetailTimeseries.get(i);
-				String[] time=varItem[1].split("-");
-				Date date=new Date(Integer.parseInt(time[2])-1900, Integer.parseInt(time[0])-1, Integer.parseInt(time[1]));
-				dc.times[i]=(int)(date.getTime()/60000)+25568*1440;
-				dc.values[i]=Double.parseDouble(varItem[2]);
-			}
-			dc.times[size-1]=dc.endTime;
-			dc.values[size-1]=-901.0;
-			vdc.add(dc);
-		//}
-		return vdc;
 	}
 	
 	protected TimeSeriesContainer convertDataVector(

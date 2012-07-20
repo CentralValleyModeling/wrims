@@ -860,6 +860,17 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		checkVisibleViews();
 		updateVarDetailView(DebugCorePlugin.selectedVariableNames);
 		
+		if (event.contains("!")){
+			final String[] dateStrings=event.replaceFirst("suspended!", "").split("#");
+			final IWorkbench workbench=PlatformUI.getWorkbench();
+			workbench.getDisplay().asyncExec(new Runnable(){
+				public void run(){
+					DebugCorePlugin.debugSet.setDebugDate(dateStrings[0],dateStrings[1], dateStrings[2]);
+					DebugCorePlugin.debugSet.getComboCycle().setText(dateStrings[3]);
+				}
+			});
+		}
+		
 		if (event.contains(":")) {
 			String[] eventPart=event.split(":");
 			setCurrLine(Integer.parseInt(eventPart[1]));
@@ -1112,12 +1123,12 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		if (variableNames.size()>0){
 			try{
 				String data="";
-				String linkVarNames="";
+				String linkedVarNames="";
 				for (String varName:variableNames){
-					linkVarNames=linkVarNames+varName+"#";
+					linkedVarNames=linkedVarNames+varName+"#";
 				}
-				if (linkVarNames.endsWith("#")) linkVarNames=linkVarNames.substring(0, linkVarNames.length()-1);
-				data= DebugCorePlugin.target.sendRequest("tsdetail:"+variableNames.get(0));
+				if (linkedVarNames.endsWith("#")) linkedVarNames=linkedVarNames.substring(0, linkedVarNames.length()-1);
+				data= DebugCorePlugin.target.sendRequest("tsdetail:"+linkedVarNames);
 				DebugCorePlugin.varDetailTimeseries=DataProcess.generateVarDetailData(data);
 				data= DebugCorePlugin.target.sendRequest("futdetail:"+variableNames.get(0));
 				DebugCorePlugin.varDetailFuture=DataProcess.generateVarDetailData(data);

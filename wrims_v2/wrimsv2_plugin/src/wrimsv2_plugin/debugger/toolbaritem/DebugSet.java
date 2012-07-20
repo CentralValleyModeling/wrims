@@ -279,6 +279,14 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 		updateDebugTimeSet();
 	}
 	
+	public void setDebugDate(String year, String month, String day){
+		_year.setText(year);
+		_month.setText(month);
+		_day.setText(day);
+		moveSliderBar();
+		updateDebugTimeSet();
+	}
+	
 	public void moveSliderBar(){
 		int debugYear=Integer.valueOf(_year.getText());
 		int debugMonth=Integer.valueOf(_month.getText());

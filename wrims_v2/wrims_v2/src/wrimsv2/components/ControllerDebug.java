@@ -419,7 +419,7 @@ public class ControllerDebug extends Thread {
 		if (ControlData.timeStep.equals("1MON")){
 			if (ControlData.currYear==debugYear && ControlData.currMonth==debugMonth && i==debugCycle-1){
 				try {
-					di.sendEvent("suspended");
+					di.sendEvent("suspended!"+debugYear+"#"+debugMonth+"#"+debugDay+"#"+debugCycle);
 					System.out.println("paused");
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -429,7 +429,7 @@ public class ControllerDebug extends Thread {
 		}else{
 			if (ControlData.currYear==debugYear && ControlData.currMonth==debugMonth && ControlData.currDay==debugDay && i==debugCycle-1){
 				try {
-					di.sendEvent("suspended");
+					di.sendEvent("suspended!"+debugYear+"#"+debugMonth+"#"+debugDay+"#"+debugCycle);
 					System.out.println("paused");
 				} catch (IOException e) {
 					e.printStackTrace();
