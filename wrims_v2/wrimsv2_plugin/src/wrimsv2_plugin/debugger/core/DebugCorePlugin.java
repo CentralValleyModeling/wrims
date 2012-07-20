@@ -89,6 +89,7 @@ public class DebugCorePlugin extends Plugin {
 	public static final String ID_WPP_SUSPENDMENU="wpp.suspend";
 	public static final String ID_WPP_NEXTTIMESTEP="wpp.nexttimestep";
 	public static final String ID_WPP_NEXTCYCLE="wpp.nextcycle";
+	public static final String ID_WPP_RESIMMENU="wpp.resim";
 	
 	public static final String TITLE_ALLVARIABLES_VIEW="All Variables";
 	public static final String TITLE_VARIABLES_VIEW="Variables";

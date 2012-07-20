@@ -70,6 +70,7 @@ public class NextCycleMenu implements IWorkbenchWindowActionDelegate {
 		enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, true);
 		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, true);
 		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
 		new EnableRunMenu(enableMap);
@@ -81,6 +82,7 @@ public class NextCycleMenu implements IWorkbenchWindowActionDelegate {
 		enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, false);
 		new EnableRunMenu(enableMap);
@@ -92,6 +94,7 @@ public class NextCycleMenu implements IWorkbenchWindowActionDelegate {
 		enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
 		new EnableRunMenu(enableMap);

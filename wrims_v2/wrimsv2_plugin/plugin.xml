@@ -166,6 +166,12 @@
 		visible="true"
 		id="wpp.debugcontrol">
 		<action
+			label="Re-Simulate"
+			class="wrimsv2_plugin.debugger.menuitem.ReSimMenu"
+			menubarPath="org.eclipse.ui.run/debug"
+			id="wpp.resim">
+		</action>
+		<action
 			label="Suspend"
 			class="wrimsv2_plugin.debugger.menuitem.SuspendMenu"
 			menubarPath="org.eclipse.ui.run/debug"

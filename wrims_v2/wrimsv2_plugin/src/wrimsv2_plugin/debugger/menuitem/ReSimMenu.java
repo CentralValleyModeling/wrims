@@ -13,21 +13,14 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 
-public class SuspendMenu implements IWorkbenchWindowActionDelegate {
-	public SuspendMenu(){
+public class ReSimMenu implements IWorkbenchWindowActionDelegate {
+	public ReSimMenu(){
 
 	}
 
 	@Override
 	public void run(IAction action) {
-		try {
-			if (DebugCorePlugin.isDebugging){
-				DebugCorePlugin.target.suspend();
-				enableRunMenu();
-			}
-		} catch (DebugException e) {
-			WPPException.handleException(e);
-		}
+
 	}
 
 	@Override
@@ -45,17 +38,5 @@ public class SuspendMenu implements IWorkbenchWindowActionDelegate {
 	public void init(IWorkbenchWindow window) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	public void enableRunMenu(){
-		HashMap<String, Boolean> enableMap=new HashMap<String, Boolean>();
-		enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
-		enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, true);
-		enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, true);
-		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
-		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
-		new EnableRunMenu(enableMap);
 	}
 }

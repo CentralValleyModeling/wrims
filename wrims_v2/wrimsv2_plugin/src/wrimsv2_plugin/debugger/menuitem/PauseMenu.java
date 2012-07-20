@@ -13,8 +13,8 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 
-public class SuspendMenu implements IWorkbenchWindowActionDelegate {
-	public SuspendMenu(){
+public class PauseMenu implements IWorkbenchWindowActionDelegate {
+	public PauseMenu(){
 
 	}
 
@@ -22,7 +22,7 @@ public class SuspendMenu implements IWorkbenchWindowActionDelegate {
 	public void run(IAction action) {
 		try {
 			if (DebugCorePlugin.isDebugging){
-				DebugCorePlugin.target.suspend();
+				DebugCorePlugin.target.pause();
 				enableRunMenu();
 			}
 		} catch (DebugException e) {
