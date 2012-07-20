@@ -67,9 +67,7 @@ public class Workflow {
 			
 		}
 	
-		
-		
-		
+
 		
 		// find all offspring
 		// store results to kidMap and AOMap, fileGroupOrder
@@ -81,39 +79,18 @@ public class Workflow {
 		
 		Procedures.findFileGroupOrder(st);
 		
-		//System.out.println("@@@0 fileGroupOrder: "+st.fileGroupOrder);
 
 		Procedures.postProcessIncFileList(st);
 		
-		// prerequisite: postProcessIncFileList
-		
-		//System.out.println("@@@1 svIncFileList_post");
-		//System.out.println(st.modelMap.get("base").svIncFileList_post);
-		
-		//Procedures.postProcessVarListinIncFile_step1(st);
-		
-		//System.out.println("@@@2 svIncFileList_post: "+st.modelMap.get("base").svIncFileList_post);
-		//System.out.println(st.modelMap.get("base").svIncFileList_post);
 		
 		Procedures.postProcessVarListinIncFile(st);
-		
-		//System.out.println("@@@3 svIncFileList_post: "+st.modelMap.get("base").svIncFileList_post);
-		//System.out.println(st.modelMap.get("base").svIncFileList_post);
-		
-		
-		// can be processed after error check 
-		//Procedures.processGoalHS(st);  // changes dvList and ssList
-		//Procedures.convertAliasToGoal(st);  // TODO: move to after copyModelVar
-		
+				
 		
 		// can be processed at final stage
 		Procedures.copyModelVarMapToSequenceVarMap(st);
 		
 		Procedures.processGoalHS2(st); 
-		
-//		System.out.println("0503 dvList: "+st.seqMap.get("cycle1").dvList);
-//		System.out.println("0503 dvList_fromAlias: "+st.seqMap.get("cycle1").dvList_fromAlias);
-		
+				
 		
 		// TODO: test only. remove this after testing
 		// TODO: seperate dv dep from others
@@ -133,13 +110,7 @@ public class Workflow {
 
 		Procedures.collectTimeStep(st);
 		
-		
-//		//test
-//		String mn = st.modelList_effective.get(0);
-//		ModelTemp mmm = st.modelMap.get(mn);
-//		
-//		System.out.println("!!! wv: "+mmm.wvList_defaultType);
-		
+				
 		return st;
 		
 	}	
