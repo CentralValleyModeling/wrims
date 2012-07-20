@@ -42,6 +42,8 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.dialog.WPPCycleDialog;
+import wrimsv2_plugin.debugger.dialog.WPPTimeSeriesDialog;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.WPPValue;
 import wrimsv2_plugin.tools.DataProcess;

@@ -437,6 +437,15 @@ public class ControllerDebug extends Thread {
 				this.suspend();
 			}
 		}
+		if (Error.getTotalError()>0){
+			try {
+				di.sendEvent("error!"+debugYear+"#"+debugMonth+"#"+debugDay+"#"+debugCycle);
+				System.out.println("paused");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			this.suspend();
+		}
 	}
 	
 	public void updateVarMonitor(){

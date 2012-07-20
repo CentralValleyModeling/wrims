@@ -1,4 +1,4 @@
-package wrimsv2_plugin.debugger.view;
+package wrimsv2_plugin.debugger.dialog;
 
 import java.util.ArrayList;
 
@@ -24,6 +24,7 @@ import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.debugger.view.WPPVarDetailView;
 
 public class WPPTimeSeriesDialog extends PopupDialog {
 

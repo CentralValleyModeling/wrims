@@ -64,7 +64,7 @@ public class WPPVarMonitorView extends ViewPart{
 	public void createPartControl(Composite parent) {
 		System.setProperty("sun.awt.noerasebackground", "true");
 		Composite swingContainer = new Composite(parent, SWT.BACKGROUND
-				| SWT.EMBEDDED);
+				| SWT.EMBEDDED | SWT.NONE);
 		final Frame frame = SWT_AWT.new_Frame(swingContainer);
 		@SuppressWarnings("serial")
 		Panel panel = new Panel(new BorderLayout()) {
@@ -90,12 +90,6 @@ public class WPPVarMonitorView extends ViewPart{
 			}
 		}
 		
-		if (plot == null) {
-			plot = new G2dPanel();
-			//plot.setPaintEnabled(false);
-			//plot.setDebugGraphicsOptions(DebugGraphics.FLASH_OPTION);
-			contentPane.add(plot);
-		}
 		G2dObject g2dObj = null;
 		Vector g2dataVector = new Vector();
 		for (Iterator iterator = dataVector.iterator(); iterator.hasNext();) {
@@ -117,7 +111,16 @@ public class WPPVarMonitorView extends ViewPart{
 			}
 			g2dataVector.add(g2dObj);
 		}
-		plot.buildComponents(g2dataVector, true, true);	
+		
+		if (plot == null) {
+			plot = new G2dPanel();
+			contentPane.add(plot);
+			plot.buildComponents(g2dataVector);
+		}else{
+			plot.setPlotObjects(g2dataVector);
+		}
+		plot.repaint();
+		
 	}
 	
 	protected TimeSeriesContainer convertDataVector(
