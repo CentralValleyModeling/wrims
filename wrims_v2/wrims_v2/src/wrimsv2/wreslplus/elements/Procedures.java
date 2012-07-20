@@ -673,7 +673,7 @@ public class Procedures {
 
 					// add new dvar
 					DvarTemp d = new DvarTemp();
-					d.id = "weightgroup__" + wt.id +"__average";
+					d.id = "wg__" + wt.id +"__ave";
 					d.upperBound = Param.upper_unbounded;
 					d.lowerBound = Param.lower_unbounded;
 					d.kind = "weightgroup_average";
@@ -687,7 +687,7 @@ public class Procedures {
 					// add goal
 					GoalTemp g = new GoalTemp();
 					g.fromWresl = wt.fromWresl;
-					g.id = "weightgroup__" + wt.id+"__average_goal";
+					g.id = "wg__" + wt.id+"__ave_goal";
 					
 					String lhs = wt.varList.size() + "*" + d.id.toLowerCase();
 					
@@ -702,8 +702,8 @@ public class Procedures {
 					
 					for (String var : wt.varList) {
 						
-						String slack   = "weightgroup__"+wt.id.toLowerCase()+"__"+var+"__slack";
-						String surplus = "weightgroup__"+wt.id.toLowerCase()+"__"+var+"__surplus";
+						String slack   = "wg__"+wt.id.toLowerCase()+"__"+var+"__slack";
+						String surplus = "wg__"+wt.id.toLowerCase()+"__"+var+"__surplus";
 						
 						// add slack
 						// TODO: add weight for this slack and surplus
@@ -751,7 +751,7 @@ public class Procedures {
 						// add goal
 						GoalTemp g_ss = new GoalTemp();
 						g_ss.fromWresl = wt.fromWresl;
-						g_ss.id = "weightgroup__" + wt.id+"__"+var + "__goal";
+						g_ss.id = "wg__" + wt.id+"__"+var + "__goal";
 						
 						String lhs_ss =  var + "+" + slack + "-" + surplus ;
 						
