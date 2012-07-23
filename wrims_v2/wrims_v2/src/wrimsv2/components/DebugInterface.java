@@ -634,7 +634,7 @@ public class DebugInterface {
 			int currIndex=ValueEvaluation.timeSeriesIndex(ddsf)-1;
 			for (int i=0; i<=currIndex; i++){
 				double value=dataArray[i];
-				if (!(value==-901.0 || value==902.0)){
+				if (!(value==-901.0 || value==-902.0)){
 					int timestepListed=i-currIndex;
 					TimeOperation.findTime(timestepListed);
 					dataString=dataString+timestepListed+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+df.format(value)+"#";
@@ -649,7 +649,7 @@ public class DebugInterface {
 				int currIndex=ValueEvaluation.timeSeriesIndex(dds);
 				for (int i=0; i<=currIndex; i++){
 					double value=dataArrayList.get(i);
-					if (!(value==-901.0 || value==902.0)){
+					if (!(value==-901.0 || value==-902.0)){
 						int timestepListed=i-currIndex;
 						TimeOperation.findTime(timestepListed);
 						dataString=dataString+timestepListed+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+df.format(value)+"#";

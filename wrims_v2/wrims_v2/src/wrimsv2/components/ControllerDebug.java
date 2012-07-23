@@ -439,8 +439,8 @@ public class ControllerDebug extends Thread {
 		}
 		if (Error.getTotalError()>0){
 			try {
-				di.sendEvent("error!"+debugYear+"#"+debugMonth+"#"+debugDay+"#"+debugCycle);
-				System.out.println("paused");
+				di.sendEvent("suspended!"+ControlData.currYear+"#"+ControlData.currMonth+"#"+ControlData.currDay+"#"+ControlData.currCycleIndex+1);
+				System.out.println("error! paused");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -464,7 +464,7 @@ public class ControllerDebug extends Thread {
 				int currIndex=ValueEvaluation.timeSeriesIndex(ddsf)-1;
 				for (int i=0; i<=currIndex; i++){
 					double value=dataArray[i];
-					if (!(value==-901.0 || value==902.0)){
+					if (!(value==-901.0 || value==-902.0)){
 						int timestepListed=i-currIndex;
 						TimeOperation.findTime(timestepListed);
 						dataString=dataString+timestepListed+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+di.df.format(value)+"#";
@@ -479,7 +479,7 @@ public class ControllerDebug extends Thread {
 					int currIndex=ValueEvaluation.timeSeriesIndex(dds);
 					for (int i=0; i<=currIndex; i++){
 						double value=dataArrayList.get(i);
-						if (!(value==-901.0 || value==902.0)){
+						if (!(value==-901.0 || value==-902.0)){
 							int timestepListed=i-currIndex;
 							TimeOperation.findTime(timestepListed);
 							dataString=dataString+timestepListed+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+di.df.format(value)+"#";

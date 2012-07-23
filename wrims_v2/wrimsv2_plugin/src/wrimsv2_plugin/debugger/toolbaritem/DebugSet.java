@@ -244,6 +244,9 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 					_year.setText(String.valueOf(DebugCorePlugin.endYear));
 					_month.setText(String.valueOf(DebugCorePlugin.endMonth));
 					_day.setText(String.valueOf(DebugCorePlugin.endDay));
+					DebugCorePlugin.debugYear=DebugCorePlugin.endYear;
+					DebugCorePlugin.debugMonth=DebugCorePlugin.endMonth;
+					DebugCorePlugin.debugDay=DebugCorePlugin.endDay;
 				}else{
 					_month.setText(String.valueOf(DebugCorePlugin.debugMonth));
 					_year.setText(String.valueOf(DebugCorePlugin.debugYear));
