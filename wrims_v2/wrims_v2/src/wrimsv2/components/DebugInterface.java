@@ -311,6 +311,9 @@ public class DebugInterface {
 		}else if (request.startsWith("resim_cycle:")){
 			String[] requestParts=request.split(":");
 			Error.clear();
+			if (requestParts[1].equals("loadsv")){
+				new ReLoadSVDss(ControlData.currStudyDataSet);
+			}
 			controllerDebug.modelIndex=Integer.parseInt(requestParts[2])-2;
 			controllerDebug.resume();
 			try {
