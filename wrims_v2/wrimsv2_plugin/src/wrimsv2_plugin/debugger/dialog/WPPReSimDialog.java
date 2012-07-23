@@ -69,39 +69,39 @@ public class WPPReSimDialog extends PopupDialog {
 		Composite line2=new Composite(dialogArea, SWT.NONE);
 		line2.setLayout(layout);
 		final Button but1=new Button(line2, SWT.RADIO);
-		but1.setText("Cycle");
-		cycle=new Combo(line2, SWT.BORDER);
-		String currCycle=DebugCorePlugin.debugSet.getComboCycle().getText();
-		fillCombo(cycle, 1, Integer.parseInt(currCycle));
-		cycle.setText(currCycle);
-		Label label2=new Label(line2, SWT.NONE);
-		label2.setText("of current step");
-		
-		Composite line3=new Composite(dialogArea, SWT.NONE);
-		line3.setLayout(layout);
-		final Button but2=new Button(line3, SWT.RADIO);
-		but2.setText("1st cycle of year");
-		year=new Combo(line3, SWT.BORDER);
+		but1.setText("1st cycle of year");
+		year=new Combo(line2, SWT.BORDER);
 		String currYear=DebugCorePlugin.debugSet.getComboYear().getText();
 		fillCombo(year, DebugCorePlugin.startYear, Integer.parseInt(currYear));
 		year.setText(currYear);
-		Label label3=new Label(line3, SWT.NONE);
+		Label label3=new Label(line2, SWT.NONE);
 		label3.setText("month");
-		month=new Combo(line3, SWT.BORDER);
+		month=new Combo(line2, SWT.BORDER);
 		String currMonth=DebugCorePlugin.debugSet.getComboMonth().getText();
 		fillCombo(month, 1, 12);
 		month.setText(currMonth);
-		Label label4=new Label(line3, SWT.NONE);
+		Label label4=new Label(line2, SWT.NONE);
 		label4.setText("day");
-		day=new Combo(line3,SWT.BORDER);
+		day=new Combo(line2,SWT.BORDER);
 		String currDay=DebugCorePlugin.debugSet.getComboDay().getText();
 		fillCombo(day, 1, 31);
 		day.setText(currDay);
 		
-		Button but3=new Button(dialogArea, SWT.CHECK);
+		Composite line3=new Composite(dialogArea, SWT.NONE);
+		line3.setLayout(layout);
+		final Button but2=new Button(line3, SWT.RADIO);
+		but2.setText("Cycle");
+		cycle=new Combo(line3, SWT.BORDER);
+		String currCycle=DebugCorePlugin.debugSet.getComboCycle().getText();
+		fillCombo(cycle, 1, Integer.parseInt(currCycle));
+		cycle.setText(currCycle);
+		Label label2=new Label(line3, SWT.NONE);
+		label2.setText("of current step");
+		
+		final Button but3=new Button(dialogArea, SWT.CHECK);
 		but3.setText("Re-compile wresl code");
 		
-		Button but4=new Button(dialogArea, SWT.CHECK);
+		final Button but4=new Button(dialogArea, SWT.CHECK);
 		but4.setText("Re-read data from SV file");
 		
 		Composite line6=new Composite(dialogArea, SWT.NONE);
@@ -140,6 +140,8 @@ public class WPPReSimDialog extends PopupDialog {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				but2.setSelection(false);
+				but3.setEnabled(true);
+				but4.setEnabled(true);
 			}
 			
 		});
@@ -161,6 +163,10 @@ public class WPPReSimDialog extends PopupDialog {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				but1.setSelection(false);
+				but3.setSelection(false);
+				but3.setEnabled(false);
+				but4.setSelection(false);
+				but4.setEnabled(false);
 			}
 			
 		});
