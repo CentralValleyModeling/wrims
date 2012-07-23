@@ -308,6 +308,17 @@ public class DebugInterface {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}else if (request.startsWith("resim_cycle:")){
+			String[] requestParts=request.split(":");
+			Error.clear();
+			controllerDebug.modelIndex=Integer.parseInt(requestParts[2])-2;
+			controllerDebug.resume();
+			try {
+				sendRequest("resumed");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	

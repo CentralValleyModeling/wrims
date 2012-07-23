@@ -166,6 +166,12 @@ public class WPPThread extends WPPDebugElement implements IThread, IWPPEventList
 		setSuspended(false);
 		sendRequest("resume");
 	}
+	
+	public void resimCycle(String parameters) throws DebugException {
+		setSuspended(false);
+		sendRequest("resim_cycle:"+parameters);
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ISuspendResume#suspend()
 	 */

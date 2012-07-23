@@ -71,6 +71,8 @@ public class ControllerDebug extends Thread {
 	public int debugDay;
 	public int debugCycle;
 	public String[] args;
+	public int modelIndex;
+	public static ArrayList<Integer> initialTimeStep;
 		
 	public ControllerDebug(String[] args, DebugInterface di) {
 		this.di=di;
@@ -240,19 +242,21 @@ public class ControllerDebug extends Thread {
 			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
 			ClearValue.clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
-			int i=0;
-			while (i<modelList.size()  && noError){  
+			modelIndex=0;
+			prepareInitialTimeStep();
+			while (modelIndex<modelList.size()  && noError){  
 				
-				String model=modelList.get(i);
+				String model=modelList.get(modelIndex);
 				ModelDataSet mds=modelDataSetMap.get(model);
 				ControlData.currModelDataSet=mds;
 				ControlData.currCycleName=model;
-				ControlData.currCycleIndex=i;
+				ControlData.currCycleIndex=modelIndex;
+				ControlData.currTimeStep.set(modelIndex, initialTimeStep.get(modelIndex));
 				VariableTimeStep.setCycleTimeStep(sds);
 				VariableTimeStep.setCurrentDate(sds, ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear);
 
 				while(VariableTimeStep.checkEndDate(ControlData.currDay, ControlData.currMonth, ControlData.currYear, ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear)<0 && noError){
-					ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
+					ValueEvaluatorParser modelCondition=modelConditionParsers.get(modelIndex);
 					boolean condition=false;
 					try{
 						modelCondition.evaluator();
@@ -288,8 +292,8 @@ public class ControllerDebug extends Thread {
 							Error.writeSolvingErrorFile("solving_error.txt");
 							noError=false;
 						}
-						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
-						pauseForDebug(i);
+						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
+						pauseForDebug(modelIndex);
 						if (Error.error_evaluation.size()>=1) noError=false;
 						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
@@ -308,7 +312,7 @@ public class ControllerDebug extends Thread {
 						}	
 					}
 				}
-				i=i+1;
+				modelIndex=modelIndex+1;
 			}
 			updateVarMonitor();
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
@@ -332,19 +336,21 @@ public class ControllerDebug extends Thread {
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 			ClearValue.clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
-			int i=0;
-			while (i<modelList.size()  && noError){   
+			modelIndex=0;
+			prepareInitialTimeStep();
+			while (modelIndex<modelList.size()  && noError){   
 				
-				String model=modelList.get(i);
+				String model=modelList.get(modelIndex);
 				ModelDataSet mds=modelDataSetMap.get(model);
 				ControlData.currModelDataSet=mds;
 				ControlData.currCycleName=model;
-				ControlData.currCycleIndex=i;
+				ControlData.currCycleIndex=modelIndex;
+				ControlData.currTimeStep.set(modelIndex, initialTimeStep.get(modelIndex));
 				VariableTimeStep.setCycleTimeStep(sds);
 				VariableTimeStep.setCurrentDate(sds, ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear);
 				
 				while(VariableTimeStep.checkEndDate(ControlData.currDay, ControlData.currMonth, ControlData.currYear, ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear)<0 && noError){
-					ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
+					ValueEvaluatorParser modelCondition=modelConditionParsers.get(modelIndex);
 					boolean condition=false;
 					try{
 						modelCondition.evaluator();
@@ -384,8 +390,8 @@ public class ControllerDebug extends Thread {
 							Error.writeSolvingErrorFile("solving_error.txt");
 							noError=false;
 						}
-						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
-						pauseForDebug(i);
+						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
+						pauseForDebug(modelIndex);
 						if (Error.error_evaluation.size()>=1) noError=false;
 						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==1) new RCCComparison();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
@@ -404,7 +410,7 @@ public class ControllerDebug extends Thread {
 						}	
 					}
 				}
-				i=i+1;
+				modelIndex=modelIndex+1;
 			}
 			updateVarMonitor();
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
@@ -413,6 +419,13 @@ public class ControllerDebug extends Thread {
 		DssOperation.writeInitDvarAliasToDSS();
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
+	}
+	
+	public void prepareInitialTimeStep(){
+		initialTimeStep=new ArrayList<Integer>();
+		for (Integer timeStep: ControlData.currTimeStep){
+			initialTimeStep.add(timeStep.intValue());
+		}
 	}
 	
 	public void pauseForDebug(int i){
@@ -525,19 +538,21 @@ public class ControllerDebug extends Thread {
 			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
 			ClearValue.clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
-			int i=0;
-			while (i<modelList.size()  && noError){  
+			modelIndex=0;
+			prepareInitialTimeStep();
+			while (modelIndex<modelList.size()  && noError){  
 				
-				String model=modelList.get(i);
+				String model=modelList.get(modelIndex);
 				ModelDataSet mds=modelDataSetMap.get(model);
 				ControlData.currModelDataSet=mds;
 				ControlData.currCycleName=model;
-				ControlData.currCycleIndex=i;
+				ControlData.currCycleIndex=modelIndex;
+				ControlData.currTimeStep.set(modelIndex, initialTimeStep.get(modelIndex));
 				VariableTimeStep.setCycleTimeStep(sds);
 				VariableTimeStep.setCurrentDate(sds, ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear);
 
 				while(VariableTimeStep.checkEndDate(ControlData.currDay, ControlData.currMonth, ControlData.currYear, ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear)<0 && noError){
-					ValueEvaluatorParser modelCondition=modelConditionParsers.get(i);
+					ValueEvaluatorParser modelCondition=modelConditionParsers.get(modelIndex);
 					boolean condition=false;
 					try{
 						modelCondition.evaluator();
@@ -583,8 +598,8 @@ public class ControllerDebug extends Thread {
 							Error.writeSolvingErrorFile("solving_error.txt");
 							noError=false;
 						}
-						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
-						pauseForDebug(i);
+						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
+						pauseForDebug(modelIndex);
 						if (Error.error_evaluation.size()>=1) noError=false;
 						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
@@ -603,7 +618,7 @@ public class ControllerDebug extends Thread {
 						}	
 					}
 				}
-				i=i+1;
+				modelIndex=modelIndex+1;
 			}
 			updateVarMonitor();
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);

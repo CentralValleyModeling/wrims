@@ -1,6 +1,7 @@
 package wrimsv2_plugin.debugger.dialog;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.jface.dialogs.PopupDialog;
@@ -28,6 +29,7 @@ import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.debugger.menuitem.EnableRunMenu;
 import wrimsv2_plugin.debugger.view.WPPVarDetailView;
 
 public class WPPReSimDialog extends PopupDialog {
@@ -110,7 +112,22 @@ public class WPPReSimDialog extends PopupDialog {
 		ok.setText("OK");
 		ok.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
-				
+				if (but1.getSelection()){
+					
+				}else if (but2.getSelection()){
+					try {
+						String loadSV;
+						if (but4.getSelection()){
+							loadSV="loadsv";
+						}else{
+							loadSV="notloadsv";
+						}
+						DebugCorePlugin.target.resimCycle(loadSV+":"+cycle.getText());
+						enableRunMenu();
+					} catch (DebugException e) {
+						WPPException.handleException(e);
+					}
+				}
 				close();
 			}
 		});
@@ -141,7 +158,6 @@ public class WPPReSimDialog extends PopupDialog {
 			public void mouseUp(MouseEvent e) {
 				but2.setSelection(false);
 				but3.setEnabled(true);
-				but4.setEnabled(true);
 			}
 			
 		});
@@ -165,8 +181,6 @@ public class WPPReSimDialog extends PopupDialog {
 				but1.setSelection(false);
 				but3.setSelection(false);
 				but3.setEnabled(false);
-				but4.setSelection(false);
-				but4.setEnabled(false);
 			}
 			
 		});
@@ -179,5 +193,18 @@ public class WPPReSimDialog extends PopupDialog {
 		for (int i=start; i<=end; i++){
 			combo.add(String.valueOf(i));
 		}
+	}
+	
+	
+	public void enableRunMenu(){
+		HashMap<String, Boolean> enableMap=new HashMap<String, Boolean>();
+		enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
+		enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, true);
+		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, true);
+		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
+		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
+		new EnableRunMenu(enableMap);
 	}
 }
