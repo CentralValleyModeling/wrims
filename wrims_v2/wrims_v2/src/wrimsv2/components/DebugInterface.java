@@ -63,6 +63,10 @@ public class DebugInterface {
 	public DecimalFormat df = new DecimalFormat("#.####");
 	public static String[] monitorVarNames=new String[0];
 	public static String monitorVarTimeStep="";
+	public boolean resimDate=false;
+	public int resimYear;
+	public int resimMonth;
+	public int resimDay;
 	
 	public DebugInterface(int requestPort, int eventPort, String args[]){
 		try{	
@@ -315,6 +319,30 @@ public class DebugInterface {
 				new ReLoadSVDss(ControlData.currStudyDataSet);
 			}
 			controllerDebug.modelIndex=Integer.parseInt(requestParts[2])-2;
+			controllerDebug.resume();
+			try {
+				sendRequest("resumed");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if (request.startsWith("resim_date:")){
+			String[] requestParts=request.split(":");
+			Error.clear();
+			resimDate=true;
+			if (requestParts[1].equals("recompile")){
+				
+			}
+			if (requestParts[2].equals("loadsv")){
+				new ReLoadSVDss(ControlData.currStudyDataSet);
+			}
+			controllerDebug.modelIndex=ControlData.currStudyDataSet.getModelList().size()-1;
+			resimYear=Integer.parseInt(requestParts[3]);
+			resimMonth=Integer.parseInt(requestParts[4]);
+			resimDay=Integer.parseInt(requestParts[5]);
+			ControlData.currYear=ControlData.cycleEndYear;
+			ControlData.currMonth=ControlData.cycleEndMonth;
+			ControlData.currDay=ControlData.cycleEndDay;
 			controllerDebug.resume();
 			try {
 				sendRequest("resumed");

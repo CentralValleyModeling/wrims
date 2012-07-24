@@ -616,6 +616,10 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		getThread().resimCycle(parameters);
 	}
 	
+	public void resimDate(String parameters) throws DebugException{
+		getThread().resimDate(parameters);
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ISuspendResume#suspend()
 	 */

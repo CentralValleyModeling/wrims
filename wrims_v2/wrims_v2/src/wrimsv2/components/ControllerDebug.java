@@ -315,6 +315,10 @@ public class ControllerDebug extends Thread {
 				modelIndex=modelIndex+1;
 			}
 			updateVarMonitor();
+			if (di.resimDate){
+				di.resimDate=false;
+				resetStartDate();
+			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
 		}
@@ -413,6 +417,10 @@ public class ControllerDebug extends Thread {
 				modelIndex=modelIndex+1;
 			}
 			updateVarMonitor();
+			if (di.resimDate){
+				di.resimDate=false;
+				resetStartDate();
+			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
 		}
@@ -426,6 +434,26 @@ public class ControllerDebug extends Thread {
 		for (Integer timeStep: ControlData.currTimeStep){
 			initialTimeStep.add(timeStep.intValue());
 		}
+	}
+	
+	public void resetStartDate(){
+		int diffTimeStep;
+		for(int i=0; i<initialTimeStep.size(); i++){
+			String timeStep=ControlData.currStudyDataSet.getModelTimeStepList().get(i);
+			if (timeStep.equals("1MON")){
+				diffTimeStep=(ControlData.cycleStartYear-di.resimYear)*12+(ControlData.cycleStartMonth-di.resimMonth);
+			}else{
+				Date startDate = new Date (di.resimYear-1900, di.resimMonth-1, di.resimDay);
+				Date endDate=new Date (ControlData.cycleStartYear-1900, ControlData.cycleStartMonth-1, ControlData.cycleStartDay);
+				long startTime=startDate.getTime();
+				long endTime=endDate.getTime();
+				diffTimeStep=(int)((endTime-startTime)/(24*60*60*1000l));
+			}
+			ControlData.currTimeStep.set(i, initialTimeStep.get(i)-diffTimeStep);
+		}
+		ControlData.cycleEndYear=di.resimYear;
+		ControlData.cycleEndMonth=di.resimMonth;
+		ControlData.cycleEndDay=di.resimDay;
 	}
 	
 	public void pauseForDebug(int i){
@@ -621,6 +649,10 @@ public class ControllerDebug extends Thread {
 				modelIndex=modelIndex+1;
 			}
 			updateVarMonitor();
+			if (di.resimDate){
+				di.resimDate=false;
+				resetStartDate();
+			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
 		}

@@ -113,7 +113,24 @@ public class WPPReSimDialog extends PopupDialog {
 		ok.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
 				if (but1.getSelection()){
-					
+					try {
+						String compile;
+						if (but4.getSelection()){
+							compile="recompile";
+						}else{
+							compile="notrecompile";
+						}
+						String loadSV;
+						if (but4.getSelection()){
+							loadSV="loadsv";
+						}else{
+							loadSV="notloadsv";
+						}
+						DebugCorePlugin.target.resimDate(compile+":"+loadSV+":"+year.getText()+":"+month.getText()+":"+day.getText());
+						enableRunMenu();
+					} catch (DebugException e) {
+						WPPException.handleException(e);
+					}
 				}else if (but2.getSelection()){
 					try {
 						String loadSV;
