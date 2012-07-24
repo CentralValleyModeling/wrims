@@ -317,7 +317,13 @@ public class ControllerDebug extends Thread {
 			updateVarMonitor();
 			if (di.resimDate){
 				di.resimDate=false;
-				resetStartDate();
+				noError=true;
+				sds=ControlData.currStudyDataSet;
+				modelList=sds.getModelList();
+				modelDataSetMap=sds.getModelDataSetMap();		
+				modelConditionParsers=sds.getModelConditionParsers();
+				new ReProcessExternal(sds);
+				resetStartDate(sds);
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
@@ -419,7 +425,13 @@ public class ControllerDebug extends Thread {
 			updateVarMonitor();
 			if (di.resimDate){
 				di.resimDate=false;
-				resetStartDate();
+				noError=true;
+				sds=ControlData.currStudyDataSet;
+				modelList=sds.getModelList();
+				modelDataSetMap=sds.getModelDataSetMap();		
+				modelConditionParsers=sds.getModelConditionParsers();
+				new ReProcessExternal(sds);
+				resetStartDate(sds);
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
@@ -436,10 +448,11 @@ public class ControllerDebug extends Thread {
 		}
 	}
 	
-	public void resetStartDate(){
+	public void resetStartDate(StudyDataSet sds){
 		int diffTimeStep;
+		VariableTimeStep.procCycleTimeStep(sds);
 		for(int i=0; i<initialTimeStep.size(); i++){
-			String timeStep=ControlData.currStudyDataSet.getModelTimeStepList().get(i);
+			String timeStep=sds.getModelTimeStepList().get(i);
 			if (timeStep.equals("1MON")){
 				diffTimeStep=(ControlData.cycleStartYear-di.resimYear)*12+(ControlData.cycleStartMonth-di.resimMonth);
 			}else{
@@ -651,7 +664,13 @@ public class ControllerDebug extends Thread {
 			updateVarMonitor();
 			if (di.resimDate){
 				di.resimDate=false;
-				resetStartDate();
+				noError=true;
+				sds=ControlData.currStudyDataSet;
+				modelList=sds.getModelList();
+				modelDataSetMap=sds.getModelDataSetMap();		
+				modelConditionParsers=sds.getModelConditionParsers();
+				new ReProcessExternal(sds);
+				resetStartDate(sds);
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);

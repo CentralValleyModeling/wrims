@@ -115,7 +115,7 @@ public class WPPReSimDialog extends PopupDialog {
 				if (but1.getSelection()){
 					try {
 						String compile;
-						if (but4.getSelection()){
+						if (but3.getSelection()){
 							compile="recompile";
 						}else{
 							compile="notrecompile";

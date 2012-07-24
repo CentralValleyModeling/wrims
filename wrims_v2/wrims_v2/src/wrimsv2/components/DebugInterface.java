@@ -34,10 +34,12 @@ import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.evaluator.EvalExpression;
+import wrimsv2.evaluator.PreEvaluator;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.ValueEvaluation;
 import wrimsv2.wreslparser.elements.FileParser;
 import wrimsv2.wreslparser.elements.SimulationDataSet;
+import wrimsv2.wreslparser.elements.StudyParser;
 import wrimsv2.wreslparser.grammar.WreslTreeWalker;
 
 public class DebugInterface {
@@ -331,7 +333,21 @@ public class DebugInterface {
 			Error.clear();
 			resimDate=true;
 			if (requestParts[1].equals("recompile")){
-				
+				StudyDataSet sds;
+				try {
+					sds = controllerDebug.parse();
+					ControlData.currStudyDataSet=sds;
+					sendEvent("totalcycle#"+sds.getModelList().size());
+					if (StudyParser.total_errors==0){
+						new PreEvaluator(sds);
+					}
+				} catch (RecognitionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			if (requestParts[2].equals("loadsv")){
 				new ReLoadSVDss(ControlData.currStudyDataSet);
