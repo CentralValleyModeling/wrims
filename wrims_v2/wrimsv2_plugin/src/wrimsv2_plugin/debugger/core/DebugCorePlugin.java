@@ -70,6 +70,10 @@ public class DebugCorePlugin extends Plugin {
 	public static int debugMonth=9;
 	public static int debugDay=30;
 	public static int debugCycle=1;
+	public static int suspendedYear=2009;
+	public static int suspendedMonth=9;
+	public static int suspendedDay=30;
+	public static int suspendedCycle=99;
 	
 	public static DebugSet debugSet;
 	

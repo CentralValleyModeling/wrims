@@ -875,6 +875,10 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 				public void run(){
 					DebugCorePlugin.debugSet.setDebugDate(dateStrings[0],dateStrings[1], dateStrings[2]);
 					DebugCorePlugin.debugSet.getComboCycle().setText(dateStrings[3]);
+					DebugCorePlugin.suspendedYear=Integer.parseInt(dateStrings[0]);
+					DebugCorePlugin.suspendedMonth=Integer.parseInt(dateStrings[1]);
+					DebugCorePlugin.suspendedDay=Integer.parseInt(dateStrings[2]);
+					DebugCorePlugin.suspendedCycle=Integer.parseInt(dateStrings[3]);
 				}
 			});
 		}
