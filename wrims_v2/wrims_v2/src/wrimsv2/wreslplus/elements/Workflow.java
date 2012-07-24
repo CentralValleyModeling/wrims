@@ -29,7 +29,7 @@ public class Workflow {
 		Procedures.processT_svList(st);
 		Procedures.processDependants(st);
 
-		/// store main file models in fileModelDataTable
+		/// store main file included models into fileModelDataTable
 		for (String se : st.seqList){
 			
 			String modelName = st.seqMap.get(se).model;
@@ -99,6 +99,8 @@ public class Workflow {
 		
 		
 		Procedures.convertAliasToGoal(st); 
+		
+		ErrorCheck.checkVarRedefined(st);	
 		
 		Procedures.analyzeVarNeededFromCycle(st);
 		Procedures.createSpaceInVarCycleValueMap(st);

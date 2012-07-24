@@ -48,7 +48,7 @@ public class ErrorCheck {
 			m.dvList = removeDuplicates(m.dvList);
 		
 			for (String s: dvDup){
-				LogUtils.errMsg("Dvar redefined: "+s+" in file: unknown");
+				LogUtils.errMsg("Dvar redefined: "+s+" in file: "+m.dvMap.get(s).fromWresl);
 			}
 		}		
 	

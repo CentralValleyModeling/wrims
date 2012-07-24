@@ -83,6 +83,7 @@ public class StudyUtils {
 			
 			if (useWreslPlus) {
 				sds = parseWreslPlus(mainWreslFile);
+				total_errors = StudyParser.total_errors;
 			} else {
 				sds = parseWresl(mainWreslFile, sendAliasToDvar);
 			}
