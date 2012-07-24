@@ -663,110 +663,115 @@ public class Procedures {
 
 				if (wt.isWeightGroup) {
 
-					// find expression
-					String rhs = "";
+					// TODO: process subgroup here
+					//processSubgroup(wt);
 
-					for (String v : wt.varList) {
-						rhs = rhs + v + "+";
+					if (!wt.commonPenalty.equals(Param.zero)) {
+						// find expression
+						String rhs = "";
+						for (String v : wt.varList) {
+							rhs = rhs + v + "+";
+						}
+						rhs = rhs.substring(0, rhs.length() - 1);
+
+						// add new dvar for average
+						DvarTemp d = new DvarTemp();
+						d.id = "wg__" + wt.id + "__ave";
+						d.upperBound = Param.upper_unbounded;
+						d.lowerBound = Param.lower_unbounded;
+						d.kind = "weightgroup_average";
+						d.units = "na";
+						d.fromWresl = wt.fromWresl;
+						d.condition = wt.condition;
+
+						seqObj.dvList.add(d.id.toLowerCase());
+						seqObj.dvMap.put(d.id.toLowerCase(), d);
+
+						// add goal for average
+						GoalTemp g = new GoalTemp();
+						g.fromWresl = wt.fromWresl;
+						g.id = "wg__" + wt.id + "__ave_goal";
+
+						String lhs = wt.varList.size() + "*" + d.id.toLowerCase();
+
+						g.caseExpression.add(lhs + "=" + rhs);
+						g.condition = wt.condition;
+						g.caseName.add(Param.defaultCaseName);
+						g.caseCondition.add(Param.always);
+						g.dependants = wt.dependants;
+
+						seqObj.glList.add(g.id.toLowerCase());
+						seqObj.glMap.put(g.id.toLowerCase(), g);
+
+						// create slack and surplus for var in varList
+
+						for (String var : wt.varList) {
+
+							String slack = "wg__" + wt.id.toLowerCase() + "__" + var + "__slack";
+							String surplus = "wg__" + wt.id.toLowerCase() + "__" + var + "__surplus";
+
+							// add slack
+							// TODO: add weight for this slack and surplus
+							DvarTemp sl = new DvarTemp();
+							sl.id = slack;
+							sl.upperBound = Param.upper_unbounded;
+							sl.lowerBound = Param.zero;
+							sl.kind = "weightgroup_slack";
+							sl.units = "na";
+							sl.fromWresl = wt.fromWresl;
+							sl.condition = wt.condition;
+
+							seqObj.dvList.add(sl.id.toLowerCase());
+							seqObj.dvMap.put(sl.id.toLowerCase(), sl);
+
+							WeightTemp w1 = new WeightTemp();
+							w1.id = sl.id;
+							w1.fromWresl = sl.fromWresl;
+							w1.weight = "-(" + wt.commonPenalty + ")";
+
+							seqObj.groupWeightMap.put(sl.id.toLowerCase(), w1);
+							seqObj.wvList_defaultType.add(sl.id.toLowerCase());
+
+							// add surplus
+							DvarTemp ss = new DvarTemp();
+							ss.id = surplus;
+							ss.upperBound = Param.upper_unbounded;
+							ss.lowerBound = Param.zero;
+							ss.kind = "weightgroup_surplus";
+							ss.units = "na";
+							ss.fromWresl = wt.fromWresl;
+							ss.condition = wt.condition;
+
+							seqObj.dvList.add(ss.id.toLowerCase());
+							seqObj.dvMap.put(ss.id.toLowerCase(), ss);
+
+							WeightTemp w2 = new WeightTemp();
+							w2.id = ss.id;
+							w2.fromWresl = ss.fromWresl;
+							w2.weight = "-(" + wt.commonPenalty + ")";
+
+							seqObj.groupWeightMap.put(ss.id.toLowerCase(), w2);
+							seqObj.wvList_defaultType.add(ss.id.toLowerCase());
+
+							// add goal for slack surplus
+							GoalTemp g_ss = new GoalTemp();
+							g_ss.fromWresl = wt.fromWresl;
+							g_ss.id = "wg__" + wt.id + "__" + var + "__goal";
+
+							String lhs_ss = var + "+" + slack + "-" + surplus;
+
+							g_ss.caseExpression.add(lhs_ss + "=" + d.id.toLowerCase());
+							g_ss.condition = wt.condition;
+							g_ss.caseName.add(Param.defaultCaseName);
+							g_ss.caseCondition.add(Param.always);
+							g_ss.dependants = wt.dependants;
+
+							seqObj.glList.add(g_ss.id.toLowerCase());
+							seqObj.glMap.put(g_ss.id.toLowerCase(), g_ss);
+
+						}
+
 					}
-					rhs = rhs.substring(0, rhs.length() - 1);
-
-					// add new dvar
-					DvarTemp d = new DvarTemp();
-					d.id = "wg__" + wt.id +"__ave";
-					d.upperBound = Param.upper_unbounded;
-					d.lowerBound = Param.lower_unbounded;
-					d.kind = "weightgroup_average";
-					d.units = "na";
-					d.fromWresl = wt.fromWresl;
-					d.condition = wt.condition;
-
-					seqObj.dvList.add(d.id.toLowerCase());
-					seqObj.dvMap.put(d.id.toLowerCase(), d);
-
-					// add goal
-					GoalTemp g = new GoalTemp();
-					g.fromWresl = wt.fromWresl;
-					g.id = "wg__" + wt.id+"__ave_goal";
-					
-					String lhs = wt.varList.size() + "*" + d.id.toLowerCase();
-					
-					g.caseExpression.add(lhs + "=" + rhs);
-					g.condition = wt.condition;
-					g.caseName.add(Param.defaultCaseName);
-					g.caseCondition.add(Param.always);
-					g.dependants = wt.dependants;
-
-					seqObj.glList.add(g.id.toLowerCase());
-					seqObj.glMap.put(g.id.toLowerCase(), g);
-					
-					for (String var : wt.varList) {
-						
-						String slack   = "wg__"+wt.id.toLowerCase()+"__"+var+"__slack";
-						String surplus = "wg__"+wt.id.toLowerCase()+"__"+var+"__surplus";
-						
-						// add slack
-						// TODO: add weight for this slack and surplus
-						DvarTemp sl = new DvarTemp();
-						sl.id = slack;
-						sl.upperBound = Param.upper_unbounded;
-						sl.lowerBound = "0";
-						sl.kind = "weightgroup_slack";
-						sl.units = "na";
-						sl.fromWresl = wt.fromWresl;
-						sl.condition = wt.condition;
-
-						seqObj.dvList.add(sl.id.toLowerCase());
-						seqObj.dvMap.put(sl.id.toLowerCase(), sl);
-
-						WeightTemp w1 = new WeightTemp();
-						w1.id = sl.id;
-						w1.fromWresl = sl.fromWresl;
-						w1.weight = "-(" + wt.commonPenalty + ")";
-
-						seqObj.groupWeightMap.put(sl.id.toLowerCase(), w1);
-						seqObj.wvList_defaultType.add(sl.id.toLowerCase());
-
-						// add surplus
-						DvarTemp ss = new DvarTemp();
-						ss.id = surplus;
-						ss.upperBound = Param.upper_unbounded;
-						ss.lowerBound = "0";
-						ss.kind = "weightgroup_surplus";
-						ss.units = "na";
-						ss.fromWresl = wt.fromWresl;
-						ss.condition = wt.condition;
-
-						seqObj.dvList.add(ss.id.toLowerCase());
-						seqObj.dvMap.put(ss.id.toLowerCase(), ss);
-
-						WeightTemp w2 = new WeightTemp();
-						w2.id = ss.id;
-						w2.fromWresl = ss.fromWresl;
-						w2.weight = "-(" + wt.commonPenalty + ")";
-
-						seqObj.groupWeightMap.put(ss.id.toLowerCase(), w2);
-						seqObj.wvList_defaultType.add(ss.id.toLowerCase());
-						
-						// add goal
-						GoalTemp g_ss = new GoalTemp();
-						g_ss.fromWresl = wt.fromWresl;
-						g_ss.id = "wg__" + wt.id+"__"+var + "__goal";
-						
-						String lhs_ss =  var + "+" + slack + "-" + surplus ;
-						
-						g_ss.caseExpression.add(lhs_ss + "=" + d.id.toLowerCase());
-						g_ss.condition = wt.condition;
-						g_ss.caseName.add(Param.defaultCaseName);
-						g_ss.caseCondition.add(Param.always);
-						g_ss.dependants = wt.dependants;
-
-						seqObj.glList.add(g_ss.id.toLowerCase());
-						seqObj.glMap.put(g_ss.id.toLowerCase(), g_ss);
-
-					}
-
-					
 
 				}
 

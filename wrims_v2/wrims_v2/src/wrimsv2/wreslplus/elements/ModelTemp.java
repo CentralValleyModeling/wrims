@@ -44,6 +44,8 @@ public class ModelTemp implements Serializable {
 	public ArrayList<String> incFileAbsPathList_post;      // post processed 
 	public Map<String,IncFileTemp> incFileMap;
 	
+	public ArrayList<String> incModelList;
+	
 	public ArrayList<String>  wvList_defaultType; // added after processed
 	public ArrayList<WeightTable> wTableObjList_defaultType; // added after processed
 	public ArrayList<WeightTable> wTableObjList;  // raw data
@@ -96,6 +98,9 @@ public class ModelTemp implements Serializable {
 		incFileAbsPathList_post = new ArrayList<String>();
 		
 		incFileMap= new LinkedHashMap<String, IncFileTemp>();
+		
+		incModelList = new ArrayList<String>();
+		
 		wvList_defaultType = new ArrayList<String>();   // type obj
 		wTableObjList_defaultType = new ArrayList<WeightTable>();   // type obj
 		wTableObjList = new ArrayList<WeightTable>();

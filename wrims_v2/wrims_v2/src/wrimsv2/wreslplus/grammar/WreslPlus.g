@@ -21,7 +21,7 @@ options {
   import wrimsv2.wreslplus.elements.DvarTemp;
   import wrimsv2.wreslplus.elements.SvarTemp;
   import wrimsv2.wreslplus.elements.WeightTable;
-  import wrimsv2.wreslplus.elements.WeightGroup;
+  import wrimsv2.wreslplus.elements.WeightSubgroup;
   import wrimsv2.wreslplus.elements.AliasTemp;
   import wrimsv2.wreslplus.elements.GoalTemp;
   import wrimsv2.wreslplus.elements.GoalHS;
@@ -163,8 +163,11 @@ scope { ModelTemp m_;}
 	   | network 
 	   | operation 
 	   | wt=weight       {$mt::m_.wTableObjList.add($wt.wtObj);}
+	   | im=include_model {$mt::m_.itemTypeList.add(Param.incModelType);$mt::m_.itemList.add($im.id); $mt::m_.incModelList.add($im.id);
+	                       }
 	   )+
 	   ;
+
 
 ///// external
 //
@@ -197,9 +200,9 @@ scope { WeightTable wt_;
 @after{ $id = $weight::wt_.id; $wtObj=$weight::wt_; $wtObj.dependants= dependants;}	 
 	: weight_legacy | weight_new ;
 
-weight_legacy : OBJECTIVE LOCAL? OBJ {$weight::wt_.id="obj";} '='? '{' weight_unit+ '}'  ;
+weight_legacy : OBJECTIVE LOCAL? OBJ {$weight::wt_.id="obj";} '='? '{' weight_legacy_unit+ '}'  ;
 
-weight_unit 
+weight_legacy_unit 
 	: '[' i=ID ',' e=expr_add ']' ','?
 	{$weight::wt_.varList.add($i.text);$weight::wt_.varWeightMap.put($i.text,$e.text);};
 
@@ -210,11 +213,28 @@ weightTableID : i=ID {$weight::wt_.id=$i.text;$weight::wt_.line=$i.getLine();} ;
 weight_group
 @init{ $weight::wt_.isWeightGroup=true; }
 	:  WEIGHT w=expr_add  {$weight::wt_.commonWeight=$w.text;} 
-	   ( PENALTY p=expr_add {$weight::wt_.commonPenalty=$p.text;} )? 
-	   VAR (  i=ID  {$weight::wt_.varList.add($i.text);} )+
-
-	//TODO: need to process these weights
+	   weight_trunk
 	;	
+
+weight_trunk 
+	:  ( PENALTY p=expr_add {$weight::wt_.commonPenalty=$p.text;} )? 
+	   VARIABLE ( weight_group_unit | weight_subgroup )+
+	  ;
+	    
+weight_group_unit : i=ID  {$weight::wt_.varList.add($i.text);} ;
+
+weight_subgroup 
+scope { WeightSubgroup sub_;} 
+@init{ $weight_subgroup::sub_ = new WeightSubgroup(); }
+	:  i=ID  {$weight_subgroup::sub_.id=$i.text;} '{' weight_subgroup_trunk '}'
+	;
+
+weight_subgroup_trunk 
+	:  ( PENALTY p=expr_add {$weight_subgroup::sub_.commonPenalty=$p.text;} )? 
+	   VARIABLE ( weight_subgroup_unit | weight_subgroup )+
+	  ;
+
+weight_subgroup_unit : i=ID  {$weight_subgroup::sub_.varList.add($i.text);} ;
 
 operation: 'operation' operationName '{' operationCase+ '}'; 
 
@@ -525,7 +545,7 @@ ex_new : EXTERNAL ex_id '{' ( ex_fortran | ex_java ) '}' ;
 
 ex_fortran : 'language' 'fortran' '{' fortran_var+  fortran_return '}' ;
 
-fortran_var : VAR ID '{' 'type' 'intent' '}' ;
+fortran_var : VARIABLE ID '{' 'type' 'intent' '}' ;
 fortran_return : 'return' ;
 
 ex_java : 'language' 'java' ;
@@ -760,7 +780,7 @@ QUOTE : '\'' .*  '\'' ;
 
 ML_COMMENT : '/*' .* '*/' {skip();}; 
 
-SL_COMMENT : ('#'|'!') ~('\r'|'\n')*  '\r'? '\n' {skip();};  //{$channel=HIDDEN;} ;
+SL_COMMENT : ('#'|'!') ~('\r'|'\n')*  '\r'? ( '\n' | EOF ) {skip();};  //{$channel=HIDDEN;} ;
 
 AND : '&&' | '.and.' | '.AND.' ;
 OR  : '||' | '.or.' | '.OR.' ;
@@ -802,7 +822,7 @@ LOCAL : '[local]' | '[LOCAL]' ;
 STD : 'std' | 'STD' | 'Std' ;
 DVAR : 'dvar' | 'DVAR' | 'Dvar' ;
 SVAR : 'svar' | 'SVAR' | 'Svar' ; 
-VAR  : 'var' | 'VAR' | 'Var' ;
+VARIABLE  : 'variable' | 'VARIABLE' | 'Variable' ;
 ALIAS : 'alias' | 'ALIAS' | 'Alias';
 TIMESERIES : 'timeseries' | 'TIMESERIES' | 'Timeseries' ;
 EXTERNAL : 'external' | 'EXTERNAL' ;
