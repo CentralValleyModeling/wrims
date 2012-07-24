@@ -55,15 +55,18 @@ public class ControllerBatch {
 				new PreRunModel(sds);
 				generateStudyFile();
 				runModel(sds);
-			} 
+				long endTimeInMillis = Calendar.getInstance().getTimeInMillis();
+				int runPeriod=(int) (endTimeInMillis-startTimeInMillis);
+				System.out.println("=================Run Time is "+runPeriod/60000+"min"+Math.round((runPeriod/60000.0-runPeriod/60000)*60)+"sec====");
+
+			} else {
+				System.out.println("=================Run ends with errors=================");
+			}
 		} catch (RecognitionException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		long endTimeInMillis = Calendar.getInstance().getTimeInMillis();
-		int runPeriod=(int) (endTimeInMillis-startTimeInMillis);
-		System.out.println("=================Run Time is "+runPeriod/60000+"min"+Math.round((runPeriod/60000.0-runPeriod/60000)*60)+"sec====");
 		if (!System.getenv().containsKey("WRIMS_DEBUG")) System.exit(0);
 	}
 
