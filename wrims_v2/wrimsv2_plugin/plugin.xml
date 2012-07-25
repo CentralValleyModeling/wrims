@@ -24,6 +24,62 @@
              name="All Goals"
           class="wrimsv2_plugin.debugger.view.WPPAllGoalView"/>
 </extension>
+<extension point="org.eclipse.ui.viewActions"> 
+  <viewContribution 
+      id="org.eclipse.ui.articles.action.contribution.view" 
+   targetID="wpp.variableview">
+   <action
+         id="wpp.varsearch" 
+         label="Search" 
+         tooltip="search"
+         toolbarPath="group1"
+         class="wrimsv2_plugin.debugger.toolbaritem.VarGoalSearch"
+         enablesFor="*">
+      </action>  
+   </viewContribution> 
+</extension>
+<extension point="org.eclipse.ui.viewActions"> 
+  <viewContribution 
+      id="org.eclipse.ui.articles.action.contribution.view" 
+   targetID="wpp.allvariableview">
+   <action
+         id="wpp.varsearch" 
+         label="Search" 
+         tooltip="search"
+         toolbarPath="group1"
+         class="wrimsv2_plugin.debugger.toolbaritem.VarGoalSearch"
+         enablesFor="*">
+      </action>  
+   </viewContribution> 
+</extension>
+<extension point="org.eclipse.ui.viewActions"> 
+  <viewContribution 
+      id="org.eclipse.ui.articles.action.contribution.view" 
+   targetID="wpp.goalview">
+   <action
+         id="wpp.varsearch" 
+         label="Search" 
+         tooltip="search"
+         toolbarPath="group1"
+         class="wrimsv2_plugin.debugger.toolbaritem.VarGoalSearch"
+         enablesFor="*">
+      </action>  
+   </viewContribution> 
+</extension>
+<extension point="org.eclipse.ui.viewActions"> 
+  <viewContribution 
+      id="org.eclipse.ui.articles.action.contribution.view" 
+   targetID="wpp.allgoalview">
+   <action
+         id="wpp.varsearch" 
+         label="Search" 
+         tooltip="search"
+         toolbarPath="group1"
+         class="wrimsv2_plugin.debugger.toolbaritem.VarGoalSearch"
+         enablesFor="*">
+      </action>  
+   </viewContribution> 
+</extension>
 <extension point="org.eclipse.ui.views">
         <view id="wpp.exceptionview"
              name="Exception"
