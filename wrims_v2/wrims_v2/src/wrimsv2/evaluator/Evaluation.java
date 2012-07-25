@@ -813,6 +813,10 @@ public class Evaluation {
 			Error.addEvaluationError("The variable "+ident+" is not defined in the past cycle of "+cycle+".");
 			return data;
 		}
+		if (data==null){
+			Error.addEvaluationError("The variable "+ident+" is not defined in the past cycle of "+cycle+".");
+			return new IntDouble(1.0,false);
+		}
 		return new IntDouble(data.getData(),data.isInt());
 	}
 	
@@ -856,6 +860,10 @@ public class Evaluation {
 		}else{
 			Error.addEvaluationError("The variable "+ident+" is not defined in the past cycle of "+cycle+".");
 			return data;
+		}
+		if (data==null){
+			Error.addEvaluationError("The variable "+ident+" is not defined in the past cycle of "+cycle+".");
+			return new IntDouble(1.0,false);
 		}
 		return new IntDouble(data.getData(),data.isInt());
 	}
