@@ -1,4 +1,4 @@
-package wrimsv2.components;
+package wrimsv2.debug;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -6,6 +6,7 @@ import java.util.Map;
 import wrimsv2.commondata.wresldata.External;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
+import wrimsv2.components.ControlData;
 import wrimsv2.external.LoadAllDll;
 
 public class ReProcessExternal {

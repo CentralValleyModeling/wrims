@@ -1,4 +1,4 @@
-package wrimsv2.components;
+package wrimsv2.debug;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,6 +14,8 @@ import wrimsv2.commondata.wresldata.External;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Timeseries;
+import wrimsv2.components.ControlData;
+import wrimsv2.components.FilePaths;
 import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.DssOperation;
