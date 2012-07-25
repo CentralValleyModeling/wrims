@@ -20,6 +20,8 @@ import org.eclipse.jface.viewers.TableTreeViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.TableTree;
+import org.eclipse.swt.custom.TableTreeItem;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -33,6 +35,7 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.IWPPEventListener;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.model.WPPValue;
+import wrimsv2_plugin.tools.SearchTableTree;
 
 public class WPPAllGoalView extends AbstractDebugView implements ISelectionListener { 
 	private IValue[] goalStack=null;
@@ -237,4 +240,39 @@ public class WPPAllGoalView extends AbstractDebugView implements ISelectionListe
 		viewer.refresh();
 	}
 	
+	public void search(String text){
+		TableTreeViewer viewer=(TableTreeViewer) getViewer();
+		TableTree tableTree = viewer.getTableTree();
+		TableTreeItem[] tableTreeItems = tableTree.getItems();
+		int length=tableTree.getItemCount();
+		if (length>0){
+			int currIndex;
+			if (DebugCorePlugin.selectedVariableNames.size()>0){			
+				currIndex=SearchTableTree.search(tableTreeItems, 0, length, DebugCorePlugin.selectedVariableNames.get(0), true);
+			}else{
+				currIndex=length;
+			}
+			int foundIndex=SearchTableTree.search(tableTreeItems, currIndex, length, text, false);
+			if (foundIndex==-1){
+				foundIndex=SearchTableTree.search(tableTreeItems, 0, currIndex, text, false);
+				if (foundIndex==-1){
+					showNotFound();
+				}else{
+					TableTreeItem[] items=new TableTreeItem[1];
+					items[0]=tableTreeItems[foundIndex];
+					tableTree.setSelection(items);
+				}
+			}else{
+				TableTreeItem[] items=new TableTreeItem[1];
+				items[0]=tableTreeItems[foundIndex];
+				tableTree.setSelection(items);
+			}
+		}else{
+			showNotFound();
+		}
+	}
+	
+	public void showNotFound(){
+		
+	}
 }

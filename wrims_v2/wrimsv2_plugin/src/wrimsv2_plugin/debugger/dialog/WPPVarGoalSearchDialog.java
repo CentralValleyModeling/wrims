@@ -33,7 +33,11 @@ import org.eclipse.ui.PlatformUI;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.menuitem.EnableRunMenu;
+import wrimsv2_plugin.debugger.view.WPPAllGoalView;
+import wrimsv2_plugin.debugger.view.WPPAllVariableView;
+import wrimsv2_plugin.debugger.view.WPPGoalView;
 import wrimsv2_plugin.debugger.view.WPPVarDetailView;
+import wrimsv2_plugin.debugger.view.WPPVariableView;
 
 public class WPPVarGoalSearchDialog extends PopupDialog {
 	
@@ -65,7 +69,7 @@ public class WPPVarGoalSearchDialog extends PopupDialog {
 		Label label1=new Label(dialogArea, SWT.NONE);
 		label1.setText("Search:");
 		
-		Text text1=new Text(dialogArea, SWT.BORDER);
+		final Text text1=new Text(dialogArea, SWT.BORDER);
 				
 		RowLayout layout1=new RowLayout(SWT.HORIZONTAL);
 		layout1.fill=true;
@@ -76,7 +80,15 @@ public class WPPVarGoalSearchDialog extends PopupDialog {
 		ok.setText("OK");
 		ok.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
-				
+				if (view instanceof WPPVariableView){
+					((WPPVariableView)view).search(text1.getText());
+				}else if (view instanceof WPPAllVariableView){
+					((WPPAllVariableView)view).search(text1.getText());
+				}else if (view instanceof WPPGoalView){
+					((WPPGoalView)view).search(text1.getText());
+				}else if (view instanceof WPPAllGoalView){
+					((WPPAllGoalView)view).search(text1.getText());
+				}
 				close();
 			}
 		});
