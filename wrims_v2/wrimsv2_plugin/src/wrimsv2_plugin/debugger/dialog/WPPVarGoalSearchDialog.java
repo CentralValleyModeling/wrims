@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
@@ -137,7 +138,7 @@ public class WPPVarGoalSearchDialog extends PopupDialog {
 			if (foundIndex==-1){
 				foundIndex=SearchTableTree.search(tableTreeItems, 0, currIndex, text, false, true);
 				if (foundIndex==-1){
-					showNotFound();
+					showNotFound(text);
 				}else{
 					TableTreeItem[] items=new TableTreeItem[1];
 					items[0]=tableTreeItems[foundIndex];
@@ -149,11 +150,20 @@ public class WPPVarGoalSearchDialog extends PopupDialog {
 				tableTree.setSelection(items);
 			}
 		}else{
-			showNotFound();
+			showNotFound(text);
 		}
 	}
 	
-	public void showNotFound(){
-		
+	public void showNotFound(final String text){
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+				MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING);
+				messageBox.setText("Warning");
+				messageBox.setMessage("\""+text+"\""+" is not found in variable/goal view");
+				messageBox.open();
+			}
+		});
 	}
 }

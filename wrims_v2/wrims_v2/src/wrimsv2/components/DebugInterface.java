@@ -260,6 +260,9 @@ public class DebugInterface {
 			if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG")) {
 				ControlData.xasolver.close();
 			}
+			DssOperation.writeInitDvarAliasToDSS();
+			DssOperation.writeDVAliasToDSS();
+			ControlData.writer.closeDSSFile();
 			System.out.println("terminated");
 			try {
 				sendRequest("terminated");
