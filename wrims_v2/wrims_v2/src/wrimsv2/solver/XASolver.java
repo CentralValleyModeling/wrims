@@ -58,7 +58,7 @@ public class XASolver {
 		//System.out.println("Return code: "+ControlData.xasolver.getRc());
 		
 		switch (modelStatus){
-		    case 2: Error.addSolvingError("Integer Solution (not proven the optimal integer solution)."); 
+		    case 2: Error.addSolvingError("Integer Solution (not proven the optimal integer solution).");break; 
 			case 3: Error.addSolvingError("Unbounded solution."); break;
 			case 4: Error.addSolvingError("Infeasible solution."); break;
 			case 5: Error.addSolvingError("Callback function indicates Infeasible solution."); break;
