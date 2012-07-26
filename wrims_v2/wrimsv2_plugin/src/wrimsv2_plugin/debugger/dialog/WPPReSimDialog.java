@@ -50,7 +50,7 @@ public class WPPReSimDialog extends PopupDialog {
 
 	public void open(int i){
 		create();
-		getShell().setSize(450, 250);
+		getShell().setSize(450, 280);
 		open();
 	}
 
@@ -106,9 +106,12 @@ public class WPPReSimDialog extends PopupDialog {
 		final Button but4=new Button(dialogArea, SWT.CHECK);
 		but4.setText("Re-read data from SV file");
 		
-		Composite line6=new Composite(dialogArea, SWT.NONE);
-		line6.setLayout(layout);
-		Button ok = new Button(line6, SWT.PUSH);
+		final Button but5=new Button(dialogArea, SWT.CHECK);
+		but5.setText("Re-load lookup table");
+		
+		Composite line7=new Composite(dialogArea, SWT.NONE);
+		line7.setLayout(layout);
+		Button ok = new Button(line7, SWT.PUSH);
 		ok.setText("OK");
 		ok.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
@@ -126,7 +129,13 @@ public class WPPReSimDialog extends PopupDialog {
 						}else{
 							loadSV="notloadsv";
 						}
-						DebugCorePlugin.target.resimDate(compile+":"+loadSV+":"+year.getText()+":"+month.getText()+":"+day.getText());
+						String loadTable;
+						if (but5.getSelection()){
+							loadTable="loadtable";
+						}else{
+							loadTable="notloadtable";
+						}
+						DebugCorePlugin.target.resimDate(compile+":"+loadSV+":"+year.getText()+":"+month.getText()+":"+day.getText()+":"+loadTable);
 						enableRunMenu();
 					} catch (DebugException e) {
 						WPPException.handleException(e);
@@ -139,7 +148,13 @@ public class WPPReSimDialog extends PopupDialog {
 						}else{
 							loadSV="notloadsv";
 						}
-						DebugCorePlugin.target.resimCycle(loadSV+":"+cycle.getText());
+						String loadTable;
+						if (but5.getSelection()){
+							loadTable="loadtable";
+						}else{
+							loadTable="notloadtable";
+						}
+						DebugCorePlugin.target.resimCycle(loadSV+":"+cycle.getText()+":"+loadTable);
 						enableRunMenu();
 					} catch (DebugException e) {
 						WPPException.handleException(e);
@@ -149,7 +164,7 @@ public class WPPReSimDialog extends PopupDialog {
 			}
 		});
 		
-		Button cancel = new Button(line6, SWT.PUSH);
+		Button cancel = new Button(line7, SWT.PUSH);
 		cancel.setText("Cancel");
 		cancel.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){

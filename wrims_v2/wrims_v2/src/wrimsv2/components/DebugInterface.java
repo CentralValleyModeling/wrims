@@ -35,7 +35,9 @@ import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.evaluator.EvalExpression;
+import wrimsv2.evaluator.LookUpTable;
 import wrimsv2.evaluator.PreEvaluator;
+import wrimsv2.evaluator.TableSeries;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.ValueEvaluation;
 import wrimsv2.wreslparser.elements.FileParser;
@@ -324,6 +326,9 @@ public class DebugInterface {
 			if (requestParts[1].equals("loadsv")){
 				new ReLoadSVDss(ControlData.currStudyDataSet);
 			}
+			if (requestParts[3].equals("loadtable")){
+				TableSeries.tableSeries=new HashMap<String, LookUpTable> ();
+			}
 			controllerDebug.modelIndex=Integer.parseInt(requestParts[2])-2;
 			controllerDebug.resume();
 			try {
@@ -355,6 +360,9 @@ public class DebugInterface {
 			}
 			if (requestParts[2].equals("loadsv")){
 				new ReLoadSVDss(ControlData.currStudyDataSet);
+			}
+			if (requestParts[6].equals("loadtable")){
+				TableSeries.tableSeries=new HashMap<String, LookUpTable> ();
 			}
 			controllerDebug.modelIndex=ControlData.currStudyDataSet.getModelList().size()-1;
 			resimYear=Integer.parseInt(requestParts[3]);
