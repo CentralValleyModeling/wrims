@@ -5,8 +5,11 @@ import java.util.HashMap;
 
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.jface.dialogs.PopupDialog;
+import org.eclipse.jface.viewers.TableTreeViewer;
 import org.eclipse.jface.viewers.CellEditor.LayoutData;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.TableTree;
+import org.eclipse.swt.custom.TableTreeItem;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -38,6 +41,7 @@ import wrimsv2_plugin.debugger.view.WPPAllVariableView;
 import wrimsv2_plugin.debugger.view.WPPGoalView;
 import wrimsv2_plugin.debugger.view.WPPVarDetailView;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
+import wrimsv2_plugin.tools.SearchTableTree;
 
 public class WPPVarGoalSearchDialog extends PopupDialog {
 	
@@ -81,13 +85,13 @@ public class WPPVarGoalSearchDialog extends PopupDialog {
 		ok.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
 				if (view instanceof WPPVariableView){
-					((WPPVariableView)view).search(text1.getText());
+					search(text1.getText());
 				}else if (view instanceof WPPAllVariableView){
-					((WPPAllVariableView)view).search(text1.getText());
+					search(text1.getText());
 				}else if (view instanceof WPPGoalView){
-					((WPPGoalView)view).search(text1.getText());
+					search(text1.getText());
 				}else if (view instanceof WPPAllGoalView){
-					((WPPAllGoalView)view).search(text1.getText());
+					search(text1.getText());
 				}
 				close();
 			}
@@ -101,6 +105,55 @@ public class WPPVarGoalSearchDialog extends PopupDialog {
 			}
 		});
 		
+		dialogArea.getShell().setDefaultButton(ok);
 		return dialogArea;
 	 }
+	
+	public void search(String text){
+		TableTreeViewer viewer;
+	
+		if (view instanceof WPPVariableView){
+			viewer=(TableTreeViewer) ((WPPVariableView)view).getViewer();
+		}else if (view instanceof WPPAllVariableView){
+			viewer=(TableTreeViewer) ((WPPAllVariableView)view).getViewer();
+		}else if (view instanceof WPPGoalView){
+			viewer=(TableTreeViewer) ((WPPGoalView)view).getViewer();
+		}else{ 
+			viewer=(TableTreeViewer) ((WPPAllGoalView)view).getViewer();
+		}
+	
+		TableTree tableTree = viewer.getTableTree();
+		TableTreeItem[] tableTreeItems = tableTree.getItems();
+		int length=tableTree.getItemCount();
+		if (length>0){
+			int currIndex;
+			TableTreeItem[] selections = tableTree.getSelection();
+			if (selections.length>0){			
+				currIndex=SearchTableTree.search(tableTreeItems, 0, length, selections[0].getText(), true, false);
+			}else{
+				currIndex=length;
+			}
+			int foundIndex=SearchTableTree.search(tableTreeItems, currIndex+1, length, text, false, true);
+			if (foundIndex==-1){
+				foundIndex=SearchTableTree.search(tableTreeItems, 0, currIndex, text, false, true);
+				if (foundIndex==-1){
+					showNotFound();
+				}else{
+					TableTreeItem[] items=new TableTreeItem[1];
+					items[0]=tableTreeItems[foundIndex];
+					tableTree.setSelection(items);
+				}
+			}else{
+				TableTreeItem[] items=new TableTreeItem[1];
+				items[0]=tableTreeItems[foundIndex];
+				tableTree.setSelection(items);
+			}
+		}else{
+			showNotFound();
+		}
+	}
+	
+	public void showNotFound(){
+		
+	}
 }

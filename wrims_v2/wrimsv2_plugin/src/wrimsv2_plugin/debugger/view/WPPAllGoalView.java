@@ -239,40 +239,4 @@ public class WPPAllGoalView extends AbstractDebugView implements ISelectionListe
 	    if (goalStack.length>0) viewer.reveal(viewer.getElementAt(0));
 		viewer.refresh();
 	}
-	
-	public void search(String text){
-		TableTreeViewer viewer=(TableTreeViewer) getViewer();
-		TableTree tableTree = viewer.getTableTree();
-		TableTreeItem[] tableTreeItems = tableTree.getItems();
-		int length=tableTree.getItemCount();
-		if (length>0){
-			int currIndex;
-			if (DebugCorePlugin.selectedVariableNames.size()>0){			
-				currIndex=SearchTableTree.search(tableTreeItems, 0, length, DebugCorePlugin.selectedVariableNames.get(0), true);
-			}else{
-				currIndex=length;
-			}
-			int foundIndex=SearchTableTree.search(tableTreeItems, currIndex, length, text, false);
-			if (foundIndex==-1){
-				foundIndex=SearchTableTree.search(tableTreeItems, 0, currIndex, text, false);
-				if (foundIndex==-1){
-					showNotFound();
-				}else{
-					TableTreeItem[] items=new TableTreeItem[1];
-					items[0]=tableTreeItems[foundIndex];
-					tableTree.setSelection(items);
-				}
-			}else{
-				TableTreeItem[] items=new TableTreeItem[1];
-				items[0]=tableTreeItems[foundIndex];
-				tableTree.setSelection(items);
-			}
-		}else{
-			showNotFound();
-		}
-	}
-	
-	public void showNotFound(){
-		
-	}
 }
