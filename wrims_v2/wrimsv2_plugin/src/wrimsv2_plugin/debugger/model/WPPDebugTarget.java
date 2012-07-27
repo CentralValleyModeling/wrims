@@ -581,6 +581,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	@Override
 	public void terminate() throws DebugException {
 		getThread().terminate();
+		enableRunMenuWithTerminate();
 		DebugCorePlugin.isDebugging=false;
 	}
 	/* (non-Javadoc)
@@ -1207,6 +1208,18 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, true);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
+		new EnableRunMenu(enableMap);
+	}
+	
+	public void enableRunMenuWithTerminate(){
+		HashMap<String, Boolean> enableMap=new HashMap<String, Boolean>();
+		enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, false);
 		new EnableRunMenu(enableMap);
 	}
 }

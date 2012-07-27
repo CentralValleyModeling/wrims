@@ -33,7 +33,6 @@ public class TerminateMenu implements IWorkbenchWindowActionDelegate{
 	public void run(IAction action) {
 		try {
 			if (DebugCorePlugin.isDebugging) DebugCorePlugin.target.terminate();
-			enableRunMenu();
 		} catch (DebugException e) {
 			WPPException.handleException(e);
 		}
@@ -54,17 +53,5 @@ public class TerminateMenu implements IWorkbenchWindowActionDelegate{
 	@Override
 	public void init(IWorkbenchWindow window) {
 
-	}
-	
-	public void enableRunMenu(){
-		HashMap<String, Boolean> enableMap=new HashMap<String, Boolean>();
-		enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, false);
-		new EnableRunMenu(enableMap);
 	}
 }
