@@ -13,4 +13,4 @@ HYDRO8.0B6,  RSAN007, stage    ,1MON,  HISTORICAL2
 #begin_date     begin_time
 31JAN2010,  2400
 # outfile
-test.txt
+test0727.txt
