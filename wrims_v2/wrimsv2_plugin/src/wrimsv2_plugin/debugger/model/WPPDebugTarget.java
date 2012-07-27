@@ -235,15 +235,10 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		breakpointManager.addBreakpointManagerListener(this);
 		
 		//installDeferredBreakpoints();
+		
 		installPartListener();
 		
-		String data;
-		
-		data=sendRequest("start");
-		DebugCorePlugin.isDebugging=true;
-		
-		data=sendRequest("time:"+DebugCorePlugin.debugYear+"/"+DebugCorePlugin.debugMonth+"/"+DebugCorePlugin.debugDay+"/"+DebugCorePlugin.debugCycle);
-		enableRunMenuWithStart();
+		getStart();
 		//System.out.println(data);
 		//data=sendRequest("variables:s_shsta#s_folsm");
 		//System.out.println(data);
@@ -297,6 +292,19 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			}
 		});
 		*/
+	}
+	
+	public void getStart() {
+		String data;
+		try {
+			data=sendRequest("start");
+			DebugCorePlugin.isDebugging=true;
+			
+			data=sendRequest("time:"+DebugCorePlugin.debugYear+"/"+DebugCorePlugin.debugMonth+"/"+DebugCorePlugin.debugDay+"/"+DebugCorePlugin.debugCycle);
+			enableRunMenuWithStart();
+		} catch (DebugException e) {
+			WPPException.handleException(e);
+		}
 	}
 	
 	public void checkVisibleViews(){
@@ -431,7 +439,9 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 							IWorkbenchPart part = partRef.getPart(false);
 							if ((part instanceof ITextEditor) && (!part.equals(fPart))){
 								fPart=part;
-								if (isSuspended()){
+								IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
+								String filePath=findFilePathActiveEditor(workBenchPage);						
+								if (isSuspended() && filePath.endsWith(".wresl")){
 									processVariableView();
 									processGoalView();
 								}

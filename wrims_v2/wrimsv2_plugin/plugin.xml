@@ -265,4 +265,18 @@
 		</action>
 	</actionSet>
 </extension>
+ <extension
+	point="org.eclipse.ui.actionSets">
+	<actionSet
+		label="other"
+		visible="true"
+		id="wpp.other">
+		<action
+			label="Option"
+			class="wrimsv2_plugin.debugger.menuitem.SolverOptionMenu"
+			menubarPath="org.eclipse.ui.run/other"
+			id="wpp.solveroption">
+		</action>
+	</actionSet>
+</extension>
 </plugin>

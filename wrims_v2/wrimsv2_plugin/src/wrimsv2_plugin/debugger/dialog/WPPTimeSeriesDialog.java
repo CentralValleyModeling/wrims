@@ -141,6 +141,7 @@ public class WPPTimeSeriesDialog extends PopupDialog {
 			}
 		});
 		
+		dialogArea.getShell().setDefaultButton(ok);
 		return dialogArea;
 	 }
 }

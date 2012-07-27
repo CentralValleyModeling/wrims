@@ -48,7 +48,7 @@ import wrimsv2.evaluator.ValueEvaluatorTreeWalker;
 import wrimsv2.external.LoadAllDll;
 import wrimsv2.solver.GurobiSolver;
 import wrimsv2.solver.XASolver;
-import wrimsv2.solver.initialXASolver;
+import wrimsv2.solver.InitialXASolver;
 import wrimsv2.tools.RCCComparison;
 import wrimsv2.wreslparser.elements.StudyUtils;
 
@@ -232,7 +232,7 @@ public class ControllerTree {
 			processExternal();
 		}
 		
-		new initialXASolver();
+		new InitialXASolver();
 		boolean noError=true;
 		VariableTimeStep.initialCurrTimeStep(modelList);
 		VariableTimeStep.initialCycleStartDate();

@@ -40,6 +40,7 @@ import wrimsv2.evaluator.PreEvaluator;
 import wrimsv2.evaluator.TableSeries;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.ValueEvaluation;
+import wrimsv2.solver.SetXALog;
 import wrimsv2.wreslparser.elements.FileParser;
 import wrimsv2.wreslparser.elements.SimulationDataSet;
 import wrimsv2.wreslparser.elements.StudyParser;
@@ -374,6 +375,15 @@ public class DebugInterface {
 			controllerDebug.resume();
 			try {
 				sendRequest("resumed");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if (request.startsWith("solveroption:")){
+			String[] requestParts=request.split(":");
+			setSolverOptions(requestParts);
+			try {
+				sendRequest("solveroptionset");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -889,6 +899,18 @@ public class DebugInterface {
 		}
 		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
 		return dataString;
+	}
+	
+	public void setSolverOptions(String[] requestParts){
+		if (requestParts[1].equals("XA")){
+			if (requestParts[2].equals("None")){
+				SetXALog.disableXALog();
+				ControlData.solverName="XA";
+			}else if (requestParts[2].equals("Log")){
+				SetXALog.enableXALog();
+				ControlData.solverName="XALOG";
+			}
+		}
 	}
 	
 	public static void main(String[] args){

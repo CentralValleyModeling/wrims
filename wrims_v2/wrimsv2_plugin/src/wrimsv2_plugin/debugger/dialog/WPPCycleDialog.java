@@ -141,6 +141,7 @@ public class WPPCycleDialog extends PopupDialog {
 			}
 		});
 		
+		dialogArea.getShell().setDefaultButton(ok);
 		return dialogArea;
 	 }
 }

@@ -144,6 +144,14 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			String externalPath = mainDirectory + "External";
 			
 			String engineFileFullPath = "WRIMSv2_Engine.bat";
+			String solverName="XA";
+			if (DebugCorePlugin.solver.equals("XA")){
+				if (DebugCorePlugin.log.equals("None")){
+					solverName="XA";
+				}else if (DebugCorePlugin.log.equals("Log")){
+					solverName="XALOG";
+				}
+			}
 			try {
 				FileWriter debugFile = new FileWriter(engineFileFullPath);
 				PrintWriter out = new PrintWriter(debugFile);
@@ -169,7 +177,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 						+ endYear + " "
 						+ endMonth + " " 
 						+ endDay + " "
-						+ "XALOG csv");
+						+ solverName+" csv");
 				}else{
 					out.println("jre6\\bin\\java -Xmx1600m -Xss1024K -Duser.timezone=UTC -Djava.library.path=\"" + externalPath + ";lib\" -cp \""+externalPath+";"+"lib\\external;lib\\WRIMSv2.jar;lib\\commons-io-2.1.jar;lib\\XAOptimizer.jar;lib\\lpsolve55j.jar;lib\\gurobi.jar;lib\\heclib.jar;lib\\jnios.jar;lib\\jpy.jar;lib\\misc.jar;lib\\pd.jar;lib\\vista.jar;\" wrimsv2.components.ControllerSG "
 							+ gwDataFolder+" "
@@ -187,7 +195,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 							+ endYear + " "
 							+ endMonth + " " 
 							+ endDay + " "
-							+ "XALOG csv");
+							+ solverName+" csv");
 				}
 				out.close();
 			}catch (IOException e) {

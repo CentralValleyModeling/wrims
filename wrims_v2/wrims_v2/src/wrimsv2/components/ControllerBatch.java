@@ -34,8 +34,8 @@ import wrimsv2.external.LoadAllDll;
 import wrimsv2.ilp.ILP;
 import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.solver.XASolver;
-import wrimsv2.solver.initialXALog;
-import wrimsv2.solver.initialXASolver;
+import wrimsv2.solver.SetXALog;
+import wrimsv2.solver.InitialXASolver;
 import wrimsv2.wreslparser.elements.StudyUtils;
 
 import lpsolve.*;
@@ -213,14 +213,14 @@ public class ControllerBatch {
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
 		
-		new initialXASolver();
+		new InitialXASolver();
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		VariableTimeStep.initialCurrTimeStep(modelList);
 		VariableTimeStep.initialCycleStartDate();
 		VariableTimeStep.setCycleEndDate(sds);
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
-			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
+			if (ControlData.solverName.equalsIgnoreCase("XALOG")) SetXALog.enableXALog();
 			ClearValue.clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
@@ -329,7 +329,7 @@ public class ControllerBatch {
 			// initiate lpsolve
 		} else if (ControlData.solverName.toLowerCase().contains("xa")) {
 			ControlData.solverType = Param.SOLVER_XA; //default
-			new initialXASolver();
+			new InitialXASolver();
 		} else {
 			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);
 		}
@@ -340,7 +340,7 @@ public class ControllerBatch {
 		VariableTimeStep.initialCycleStartDate();
 		VariableTimeStep.setCycleEndDate(sds);
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
-			if (ControlData.solverType == Param.SOLVER_XA && ControlData.solverName.toLowerCase().contains("xalog")) new initialXALog();
+			if (ControlData.solverType == Param.SOLVER_XA && ControlData.solverName.toLowerCase().contains("xalog")) SetXALog.enableXALog();
 			ClearValue.clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;

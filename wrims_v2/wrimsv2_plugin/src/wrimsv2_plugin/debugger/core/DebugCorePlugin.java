@@ -79,6 +79,9 @@ public class DebugCorePlugin extends Plugin {
 	
 	public static boolean isDebugging=false;
 	
+	public static String solver="XA";
+	public static String log="None";
+	
 	public static final String ID_WPP_DEBUG_MODEL = "wpp.debugModel";
 	public static final String ID_WPP_VARIABLE_VIEW="wpp.variableview";
 	public static final String ID_WPP_ALLVARIABLE_VIEW="wpp.allvariableview";
@@ -94,6 +97,7 @@ public class DebugCorePlugin extends Plugin {
 	public static final String ID_WPP_NEXTTIMESTEP="wpp.nexttimestep";
 	public static final String ID_WPP_NEXTCYCLE="wpp.nextcycle";
 	public static final String ID_WPP_RESIMMENU="wpp.resim";
+	public static final String ID_WPP_SOLVEROPTIONMENU="wpp.solveroption";
 	
 	public static final String TITLE_ALLVARIABLES_VIEW="All Variables";
 	public static final String TITLE_VARIABLES_VIEW="Variables";
@@ -124,7 +128,6 @@ public class DebugCorePlugin extends Plugin {
 	public static final String ATTR_WPP_ENDYEAR=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_ENDYEAR";
 	public static final String ATTR_WPP_ENDMONTH=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_ENDMONTH";
 	public static final String ATTR_WPP_ENDDAY=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_ENDDAY";
-	
 	
 	
 	/**

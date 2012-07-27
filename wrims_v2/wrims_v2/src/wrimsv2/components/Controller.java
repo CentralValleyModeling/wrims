@@ -51,8 +51,8 @@ import wrimsv2.ilp.ILP;
 import wrimsv2.solver.GurobiSolver;
 import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.solver.XASolver;
-import wrimsv2.solver.initialXALog;
-import wrimsv2.solver.initialXASolver;
+import wrimsv2.solver.SetXALog;
+import wrimsv2.solver.InitialXASolver;
 import wrimsv2.tools.RCCComparison;
 import wrimsv2.tools.MultiStepAnalyzer;
 import wrimsv2.wreslparser.elements.StudyUtils;
@@ -234,14 +234,14 @@ public class Controller {
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();
 
-		new initialXASolver();
+		new InitialXASolver();
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		VariableTimeStep.initialCurrTimeStep(modelList);
 		VariableTimeStep.initialCycleStartDate();
 		VariableTimeStep.setCycleEndDate(sds);
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
-			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
+			if (ControlData.solverName.equalsIgnoreCase("XALOG")) SetXALog.enableXALog();
 			ClearValue.clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
@@ -435,14 +435,14 @@ public class Controller {
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();
 
-		new initialXASolver();
+		new InitialXASolver();
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		VariableTimeStep.initialCurrTimeStep(modelList);
 		VariableTimeStep.initialCycleStartDate();
 		VariableTimeStep.setCycleEndDate(sds);
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
-			if (ControlData.solverName.equalsIgnoreCase("XALOG")) new initialXALog();
+			if (ControlData.solverName.equalsIgnoreCase("XALOG")) SetXALog.enableXALog();
 			ClearValue.clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
