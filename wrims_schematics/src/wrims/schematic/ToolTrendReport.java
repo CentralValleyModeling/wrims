@@ -1,5 +1,6 @@
 package wrims.schematic;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
@@ -167,6 +168,7 @@ public class ToolTrendReport extends javax.swing.JPanel {
 		panel.add(new JLabel(""));
 		JLabel label0 = new JLabel(
 				"<html> Step 1. Edit the DSS paths in this Excel file: <u><font color=green>Trend_Reporting_Ver3.0.xlsb</font></u> (located in \"tools\\trend_report\") </html>");
+		label0.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		panel.add(label0);
 		panel.add(new JLabel(""));
 		JLabel label1 = new JLabel("<html> Step 2. Save the Excel file.");
