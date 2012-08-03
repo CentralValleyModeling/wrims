@@ -190,7 +190,7 @@ public class ToolTrendReport extends javax.swing.JPanel {
 		panel.add(new JLabel(""));
 
 		JLabel label2 = new JLabel(
-				"<html> Step 3. Change the data below and click the \"Run Excel Macro\" button.</html>");
+				"<html> Step 3. Edit the data below and click the \"Run Excel Macro\" button.</html>");
 		panel.add(label2);
 
 		return panel;
