@@ -8,8 +8,8 @@ Sub RunExcelMacro()
 	
 	Dim n
 	Dim dir
-	Dim filePath 
-	Dim filePathCopy
+	Dim excelFilePath 
+	'Dim filePathCopy
 	Dim macroName
 	Dim reportSheetName
 	Dim inputSheetName
@@ -27,24 +27,33 @@ Sub RunExcelMacro()
 	Dim active2
 	Dim active3
 	Dim active4
+	Dim startDate
+	Dim stopDate
+	Dim dssApart
+	Dim dssFpart
 	
 	'n = CInt(Wscript.Arguments.Item(0)) 
 	
-	filePath    = Wscript.Arguments.Item(0)   
+	excelFilePath    = Wscript.Arguments.Item(0)   
 	
-	active1 = Wscript.Arguments.Item(1)
-	active2 = Wscript.Arguments.Item(2)
-	active3 = Wscript.Arguments.Item(3)
-	active4 = Wscript.Arguments.Item(4)
+	startDate  = Wscript.Arguments.Item(1) 
+	stopDate = Wscript.Arguments.Item(2)
+	dssApart   = Wscript.Arguments.Item(3)
+	dssFpart  = Wscript.Arguments.Item(4)
+	
+	active1 = Wscript.Arguments.Item(5)
+	active2 = Wscript.Arguments.Item(6)
+	active3 = Wscript.Arguments.Item(7)
+	active4 = Wscript.Arguments.Item(8)
 		
-	study1 = Wscript.Arguments.Item(5)
-	dss1   = Wscript.Arguments.Item(6) 
-	study2 = Wscript.Arguments.Item(7)
-    dss2   = Wscript.Arguments.Item(8)
-	study3 = Wscript.Arguments.Item(9)
-	dss3   = Wscript.Arguments.Item(10)
-	study4 = Wscript.Arguments.Item(11)
-	dss4   = Wscript.Arguments.Item(12)		
+	study1 = Wscript.Arguments.Item(9)
+	dss1   = Wscript.Arguments.Item(10) 
+	study2 = Wscript.Arguments.Item(11)
+    dss2   = Wscript.Arguments.Item(12)
+	study3 = Wscript.Arguments.Item(13)
+	dss3   = Wscript.Arguments.Item(14)
+	study4 = Wscript.Arguments.Item(15)
+	dss4   = Wscript.Arguments.Item(16)		
 REM ==================================================
 	'filePath = dir & "\Trend_Reporting_Ver3.0.xlsb"
 	'filePathCopy = dir & "\report\TrendReport.xlsb"
@@ -56,8 +65,13 @@ REM ==================================================
 	Set xlApp = CreateObject("Excel.Application") 
 	xlApp.Visible = False
 	xlApp.DisplayAlerts = False
-	Set xlBook = xlApp.Workbooks.Open(filePath, 0, False) 
+	Set xlBook = xlApp.Workbooks.Open(excelFilePath, 0, False) 
 	xlBook.Sheets(inputSheetName).Activate
+	
+	xlApp.Cells( 2, 7).Value = dssApart
+	xlApp.Cells( 4, 7).Value = dssFpart
+	xlApp.Cells(20, 7).Value = startDate
+	xlApp.Cells(22, 7).Value = stopDate
 	
 	xlBook.Sheets("Control").OLEObjects("chkImportA").Object.Value = False
 	xlBook.Sheets("Control").OLEObjects("chkImportB").Object.Value = False
@@ -139,6 +153,6 @@ REM ==================================================
 	Set xlBook = Nothing 
 	Set xlApp = Nothing 
 	
-	CreateObject("WScript.Shell").Run "excel.exe " & filePath
+	CreateObject("WScript.Shell").Run "excel.exe " & excelFilePath
 	
 End Sub 

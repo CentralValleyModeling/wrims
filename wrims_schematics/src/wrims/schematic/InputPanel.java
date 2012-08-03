@@ -772,7 +772,7 @@ public class InputPanel extends JPanel {
 		}
 	}
 	
-	private int getDaysInMonth(int month, int year) {
+	public static int getDaysInMonth(int month, int year) {
 		int daysInMonth;
 		int daysArray[] = { 31, 30, 31, 31, 28, 31, 30, 31, 30, 31, 31, 30 };
 		daysInMonth = daysArray[month - 1];
@@ -781,7 +781,7 @@ public class InputPanel extends JPanel {
 		return daysInMonth;
 	}
 
-	private boolean leapYear(int year) {
+	public static boolean leapYear(int year) {
 		if (Math.IEEEremainder(year, 4) == 0
 				&& (Math.IEEEremainder(year, 100) != 0 || Math.IEEEremainder(
 						year, 400) == 0)) {

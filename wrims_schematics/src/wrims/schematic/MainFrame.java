@@ -176,6 +176,8 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 			consolePane = new ConsolePanel(new JTextArea());
 			tabbedPane.add(consolePane, "Console");
 
+			toolsPane = new ToolPanel();
+			tabbedPane.add(toolsPane, "Tools");
 			// batchPane = new BatchPanel(tabbedPane);
 			// tabbedPane.add(batchPane, "Batch");
 
@@ -2392,6 +2394,8 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 
 	protected ConsolePanel consolePane;
 
+	protected ToolPanel toolsPane;
+	
 	protected JPanel outputPane;
 
 	protected HashMap myMap = new HashMap();
