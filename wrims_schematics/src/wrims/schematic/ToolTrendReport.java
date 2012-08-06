@@ -162,17 +162,25 @@ public class ToolTrendReport extends javax.swing.JPanel {
 
 	JPanel createIntroPanel() {
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(6, 1));
-		// panel.setLayout(new GridBagLayout());
-		// GridBagConstraints c = new GridBagConstraints();
-		panel.add(new JLabel(""));
+		panel.setLayout(new GridLayout(3, 1));
+
+		//panel.add(new JLabel(""));
+
 		JLabel label0 = new JLabel(
-				"<html> Step 1. Edit the DSS paths in this Excel file: <u><font color=green>Trend_Reporting_Ver3.0.xlsb</font></u> (located in \"tools\\trend_report\") </html>");
-		label0.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				"<html> Instruction: Edit the data below and click the \"Run Excel Macro\" button.</html>");
 		panel.add(label0);
-		panel.add(new JLabel(""));
-		JLabel label1 = new JLabel("<html> Step 2. Save the Excel file.");
-		label0.addMouseListener(new java.awt.event.MouseAdapter() {
+
+		//panel.add(new JLabel(""));
+		
+		JLabel label1 = new JLabel(
+				"<html>  If you get an error message says \"DSS Paths with No Data Found...\", please edit <br>" + 
+		                "the DSS paths to match your study output. They are specified in this Excel file <br>" +
+				        "named <u><font color=green>Trend_Reporting_Ver3.0.xlsb</font></u> in the folder \"tools\\trend_report\" </html>");
+		label1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		panel.add(label1);
+
+
+		label1.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				if (evt.getClickCount() > 0) {
 					try {
@@ -186,12 +194,8 @@ public class ToolTrendReport extends javax.swing.JPanel {
 			}
 		});
 
-		panel.add(label1);
-		panel.add(new JLabel(""));
+		//panel.add(new JLabel(""));
 
-		JLabel label2 = new JLabel(
-				"<html> Step 3. Edit the data below and click the \"Run Excel Macro\" button.</html>");
-		panel.add(label2);
 
 		return panel;
 	}
