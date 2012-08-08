@@ -181,7 +181,9 @@ public class PathnameTable extends JScrollPane {
 		int[] rows = _jTable.getSelectedRows(); // checked if count > 0 above
 		for (int row : rows) {
 			// System.out.println("path:" + _tableModel.getPlotPath(rows[i]));
-			paths.addElement(_tableModel.getPlotPath(row));
+			int index = (Integer)_jTable.getValueAt(row, 0);//LZ added
+			paths.addElement(_tableModel.getPath(index - 1));//LZ added
+//			paths.addElement(_tableModel.getPlotPath(row));
 		}
 		return paths;
 	}

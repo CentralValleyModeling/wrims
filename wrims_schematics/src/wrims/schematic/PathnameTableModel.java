@@ -364,6 +364,22 @@ public class PathnameTableModel extends AbstractTableModel {
 		// CB to speed up return path;
 		return path.toString();
 	}
+	
+	public String getPath(int index) { // Added by Liheng Zhong to fix the problem of retrieving after sorting
+		StringBuffer path = new StringBuffer();
+		path.append("/");
+		path.append(_pathnameParts[index][0]);
+		path.append("/");
+		path.append(_pathnameParts[index][1]);
+		path.append("/");
+		path.append(_pathnameParts[index][2]);
+		path.append("//");
+		path.append(_pathnameParts[index][4]);
+		path.append("/");
+		path.append(_pathnameParts[index][5]);
+		path.append("/");
+		return path.toString();
+	}
 
 	/**
 	 * CB added.

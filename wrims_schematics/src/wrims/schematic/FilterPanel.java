@@ -177,6 +177,7 @@ public class FilterPanel extends JPanel {
 	// added
 
 	private JTable _dashboard;
+	private int _iCurrentRow = -1;//added by Liheng Zhong to clear selection
 
 	private Preferences _userPrefs; // CB added
 
@@ -1743,7 +1744,7 @@ public class FilterPanel extends JPanel {
 					// } else if (e.getClickCount() == 1 && e.isPopupTrigger())
 					// { //CB e.isPopupTrigger() DOES NOT WORK!!!
 				} else if (e.getClickCount() == 1
-						&& (e.getModifiers() & InputEvent.BUTTON3_MASK) != 0) {
+						&& (e.getModifiers() & InputEvent.BUTTON3_MASK) != 0) {//single click, not left button
 					JPopupMenu menu = new JPopupMenu("DTS Menu");
 					JMenuItem delete = new JMenuItem("Delete DTS");
 					delete.setAction(DeleteDTSAction);
@@ -1757,6 +1758,14 @@ public class FilterPanel extends JPanel {
 			}
 
 			public void mouseReleased(MouseEvent e) {
+				if (e.getClickCount() == 1 && (e.getModifiers() & InputEvent.BUTTON1_MASK) != 0){//single click, left button, added by Liheng Zhong to clear selection
+					if (_iCurrentRow >= 0 && _dashboard.getSelectedRowCount() == 1 && _dashboard.getSelectedRow() == _iCurrentRow){
+						_iCurrentRow = -1;
+						_dashboard.clearSelection();
+					} else{
+						_iCurrentRow = _dashboard.getSelectedRow();
+					}
+				}
 			}
 
 			public void mouseEntered(MouseEvent e) {

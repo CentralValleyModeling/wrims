@@ -122,7 +122,8 @@ public class DssViewer implements Outputer {
 
 	ArrayList _months = null;
 
-	private HecMath _baseSet = null; // CB added
+	//private HecMath _baseSet = null; // CB added
+	HashMap<String, HecMath> _baseSet = null; //modified by Liheng Zhong
 
 	private boolean _keepVariableData = true; // CB added for updating variable
 	// period value boxes
@@ -1420,6 +1421,9 @@ public class DssViewer implements Outputer {
 					continue; // CB _DssFiles contains the number of files that
 					// are checked!
 				}
+				if (j == 0){
+					this._baseSet = new HashMap<String,HecMath>();
+				}
 				Vector<String> files = null;
 				// CB added check for multiple files (Vector) option
 				if (_DssFiles.get(_keys[j]) instanceof String) {
@@ -1659,11 +1663,13 @@ public class DssViewer implements Outputer {
 			Vector<DSSFile> files, int key) {
 		// HecMath baseSet = null;
 		HecMath dataSet = null;
+		String pathKey = null;
 		if (pathOrDTS instanceof String) {
 			Enumeration<DSSFile> filesEnum = files.elements();
 			while (filesEnum.hasMoreElements()) {
 				DSSFile file = filesEnum.nextElement();
 				String path = ((String) pathOrDTS).replace(baseF, F);
+				pathKey = path;
 				try { // CB added to prevent exit after one bad path. Then moved
 					// to here from below
 					dataSet = file.read(path); // CB moved to here from below
@@ -1688,16 +1694,17 @@ public class DssViewer implements Outputer {
 		} else if (pathOrDTS instanceof DTSWrapper) {
 			// dataSet = calculateDTSDataset((DTSWrapper)pathOrDTS, file, baseF,
 			// F);
+			pathKey = ((DTSWrapper)pathOrDTS).getDTSName();
 			dataSet = calculateDTSDataset((DTSWrapper) pathOrDTS, files, baseF,
 					F);
 		}
 		if (dataSet != null) {
 			if (_mode.equals("Diff")) {
 				if (key == _keys[0]) {
-					_baseSet = dataSet;
+					_baseSet.put(pathKey, dataSet);
 				} else {
 					try {
-						dataSet = dataSet.subtract(_baseSet);
+						dataSet = dataSet.subtract(_baseSet.get(pathKey));
 					} catch (HecMathException hme) {
 						hme.printStackTrace();
 					}
