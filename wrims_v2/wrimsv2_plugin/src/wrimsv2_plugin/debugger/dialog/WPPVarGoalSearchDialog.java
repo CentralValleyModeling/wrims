@@ -75,6 +75,7 @@ public class WPPVarGoalSearchDialog extends PopupDialog {
 		label1.setText("Search:");
 		
 		final Text text1=new Text(dialogArea, SWT.BORDER);
+		text1.setText(DebugCorePlugin.textVarGoalSearch);
 				
 		RowLayout layout1=new RowLayout(SWT.HORIZONTAL);
 		layout1.fill=true;
@@ -85,14 +86,16 @@ public class WPPVarGoalSearchDialog extends PopupDialog {
 		ok.setText("OK");
 		ok.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
+				String textString=text1.getText();
+				DebugCorePlugin.textVarGoalSearch=textString;
 				if (view instanceof WPPVariableView){
-					search(text1.getText());
+					search(textString);
 				}else if (view instanceof WPPAllVariableView){
-					search(text1.getText());
+					search(textString);
 				}else if (view instanceof WPPGoalView){
-					search(text1.getText());
+					search(textString);
 				}else if (view instanceof WPPAllGoalView){
-					search(text1.getText());
+					search(textString);
 				}
 				close();
 			}

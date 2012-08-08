@@ -35,6 +35,15 @@
          toolbarPath="group1"
          class="wrimsv2_plugin.debugger.toolbaritem.VarGoalSearch"
          enablesFor="*">
+      </action> 
+      <action
+         id="wpp.allcontrolgoals" 
+         label="Control"
+         icon="icons\control_icon.png" 
+         tooltip="control goals"
+         toolbarPath="group1"
+         class="wrimsv2_plugin.debugger.toolbaritem.AllControlGoals"
+         enablesFor="*">
       </action>  
    </viewContribution> 
 </extension>
@@ -49,7 +58,16 @@
          toolbarPath="group1"
          class="wrimsv2_plugin.debugger.toolbaritem.VarGoalSearch"
          enablesFor="*">
-      </action>  
+      </action>
+      <action
+         id="wpp.allcontrolgoals" 
+         label="Control"
+         icon="icons\control_icon.png" 
+         tooltip="control goals"
+         toolbarPath="group1"
+         class="wrimsv2_plugin.debugger.toolbaritem.AllControlGoals"
+         enablesFor="*">
+      </action>   
    </viewContribution> 
 </extension>
 <extension point="org.eclipse.ui.viewActions"> 
@@ -64,6 +82,15 @@
          class="wrimsv2_plugin.debugger.toolbaritem.VarGoalSearch"
          enablesFor="*">
       </action>  
+      <action
+         id="wpp.allcontrolgoals" 
+         label="Control"
+         icon="icons\control_icon.png" 
+         tooltip="control goals"
+         toolbarPath="group1"
+         class="wrimsv2_plugin.debugger.toolbaritem.AllControlGoals"
+         enablesFor="*">
+      </action> 
    </viewContribution> 
 </extension>
 <extension point="org.eclipse.ui.viewActions"> 
@@ -76,6 +103,15 @@
          tooltip="search"
          toolbarPath="group1"
          class="wrimsv2_plugin.debugger.toolbaritem.VarGoalSearch"
+         enablesFor="*">
+      </action>
+      <action
+         id="wpp.allcontrolgoals" 
+         label="Control"
+         icon="icons\control_icon.png" 
+         tooltip="control goals"
+         toolbarPath="group1"
+         class="wrimsv2_plugin.debugger.toolbaritem.AllControlGoals"
          enablesFor="*">
       </action>  
    </viewContribution> 

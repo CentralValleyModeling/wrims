@@ -56,6 +56,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static IValue[] allDataStack;
 	public static IValue[] allGoalStack;
 	public static ArrayList<String> controlGoals;
+	public static ArrayList<String> allControlGoals;
 	
 	public static ArrayList<String[]> varDetailTimeseries= new ArrayList<String[]>();
 	public static ArrayList<String[]> varDetailFuture= new ArrayList<String[]>();
@@ -104,6 +105,12 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ID_WPP_NEXTCYCLE="wpp.nextcycle";
 	public static final String ID_WPP_RESIMMENU="wpp.resim";
 	public static final String ID_WPP_SOLVEROPTIONMENU="wpp.solveroption";
+	/**
+	 * Identifier for the WPP launch configuration type
+	 * (value <code>wpp.launchType</code>)
+	 */
+	public static final String ID_WPP_LAUNCH_CONFIGURATION_TYPE = "wpp.launchType";	
+	
 	
 	public static final String TITLE_ALLVARIABLES_VIEW="All Variables";
 	public static final String TITLE_VARIABLES_VIEW="Variables";
@@ -135,12 +142,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ATTR_WPP_ENDMONTH=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_ENDMONTH";
 	public static final String ATTR_WPP_ENDDAY=ID_WPP_DEBUG_MODEL + ".ATTR_WPP_ENDDAY";
 	
-	
-	/**
-	 * Identifier for the WPP launch configuration type
-	 * (value <code>wpp.launchType</code>)
-	 */
-	public static final String ID_WPP_LAUNCH_CONFIGURATION_TYPE = "wpp.launchType";	
+	public static String textVarGoalSearch="";
 	
 	/**
 	 * The constructor.

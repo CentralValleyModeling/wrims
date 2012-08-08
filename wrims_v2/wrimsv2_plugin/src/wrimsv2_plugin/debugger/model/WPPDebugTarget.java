@@ -500,29 +500,6 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	public String getSourceName(){
 		return fCurrFileName;
 	}
-	
-	public IValue[] generateTree(String data){
-		if (data.equals("")){
-			return new WPPValue[0];
-		}else{
-			String[] dataStrings=data.split("#");
-			int size=dataStrings.length;
-		
-			WPPValue[] values=new WPPValue[size];  
-			for (int i=0; i<size; i++){
-				String[] dataSubStrings=dataStrings[i].split(":",2);
-				WPPValue value=new WPPValue(this,dataSubStrings[1], dataSubStrings[0]); 
-				values[i]=value;
-			}
-			return values;
-		}
-	}
-	
-	public ArrayList<String> generateArrayList(String data){
-		if (data.equals("")) return new ArrayList<String>();
-		String[] dataParts=data.split(":");
-		return new ArrayList<String>(Arrays.asList(dataParts));  
-	}
 
     /* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.IDebugTarget#getProcess()
@@ -965,7 +942,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 					WPPException.handleException(e);
 				}
 				//data="i:4456#a(-1):123.0#reservoir:reservorlevel1%56:reservorlevel2%1234";
-				fDataStack=generateTree(data);
+				fDataStack=DataProcess.generateTree(data);
 				DebugCorePlugin.dataStack=fDataStack;
 				
 				WPPVariableView variableView = (WPPVariableView) workBenchPage.findView(DebugCorePlugin.ID_WPP_VARIABLE_VIEW);
@@ -982,7 +959,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			WPPException.handleException(e);
 		}
 						
-		fAllDataStack=generateTree(data);
+		fAllDataStack=DataProcess.generateTree(data);
 							
 		DebugCorePlugin.allDataStack=fAllDataStack;
 		final IWorkbench workbench=PlatformUI.getWorkbench();
@@ -1013,7 +990,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 							}
 							monitor.worked(33);
 							
-							fAllDataStack=generateTree(data);
+							fAllDataStack=DataProcess.generateTree(data);
 							monitor.worked(33);
 							
 							DebugCorePlugin.allDataStack=fAllDataStack;
@@ -1046,9 +1023,10 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			WPPException.handleException(e);
 		}
 									
-		fAllGoalStack=generateTree(goal);
+		fAllGoalStack=DataProcess.generateTree(goal);
 							
 		DebugCorePlugin.allGoalStack=fAllGoalStack;
+		DebugCorePlugin.allControlGoals=new ArrayList<String>();
 		final IWorkbench workbench=PlatformUI.getWorkbench();
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
@@ -1077,10 +1055,11 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 							}
 							monitor.worked(33);
 							
-							fAllGoalStack=generateTree(goal);
+							fAllGoalStack=DataProcess.generateTree(goal);
 							monitor.worked(33);
 							
 							DebugCorePlugin.allGoalStack=fAllGoalStack;
+							DebugCorePlugin.allControlGoals=new ArrayList<String>();
 							final IWorkbench workbench=PlatformUI.getWorkbench();
 							workbench.getDisplay().asyncExec(new Runnable(){
 								public void run(){
@@ -1120,11 +1099,11 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 				String[] dataParts=data.split("!");
 				
 				if (dataParts.length==2){
-					fGoalStack=generateTree(dataParts[0]);
+					fGoalStack=DataProcess.generateTree(dataParts[0]);
 					DebugCorePlugin.goalStack=fGoalStack;
-					DebugCorePlugin.controlGoals=generateArrayList(dataParts[1]);
+					DebugCorePlugin.controlGoals=DataProcess.generateArrayList(dataParts[1]);
 				}else if (dataParts.length==1){
-					fGoalStack=generateTree(dataParts[0]);
+					fGoalStack=DataProcess.generateTree(dataParts[0]);
 					DebugCorePlugin.goalStack=fGoalStack;
 					DebugCorePlugin.controlGoals=new ArrayList<String>();
 				}else{
