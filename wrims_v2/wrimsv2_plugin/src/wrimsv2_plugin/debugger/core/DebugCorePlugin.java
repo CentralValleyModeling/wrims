@@ -55,6 +55,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static IValue[] goalStack;
 	public static IValue[] allDataStack;
 	public static IValue[] allGoalStack;
+	public static ArrayList<String> controlGoals;
 	
 	public static ArrayList<String[]> varDetailTimeseries= new ArrayList<String[]>();
 	public static ArrayList<String[]> varDetailFuture= new ArrayList<String[]>();

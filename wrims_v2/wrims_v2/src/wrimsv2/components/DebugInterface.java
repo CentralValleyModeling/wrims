@@ -477,6 +477,8 @@ public class DebugInterface {
 	public String getGoalInOneFile(String fileFullPath){
 		String goalString="";
 		Map<String, EvalConstraint> gMap = SolverData.getConstraintDataMap();
+		Map<String, Dvar> dvMap = SolverData.getDvarMap();
+		ArrayList<String> controlGoals=new ArrayList<String>();
 		
 		try {
 			WreslTreeWalker walker = FileParser.parseOneFileForDebug(fileFullPath);
@@ -486,6 +488,7 @@ public class DebugInterface {
 			
 			Collections.sort(sortedGoalList);
 			for (int i=0; i<sortedGoalList.size(); i++){
+				double lhs=0;
 				String goalName=sortedGoalList.get(i);
 				if (gMap.containsKey(goalName)){
 					goalString=goalString+goalName+":";
@@ -518,6 +521,7 @@ public class DebugInterface {
 									goalString=goalString+df.format(value)+variable;
 								}
 							}
+							lhs=lhs+value1*dvMap.get(variable).getData().getData().doubleValue();
 						}
 						Number value=ee.getValue().getData();
 						double value1=value.doubleValue();
@@ -528,6 +532,10 @@ public class DebugInterface {
 						}else{
 							goalString=goalString+ec.getSign()+"0#";
 						}
+						lhs=lhs+value1;
+						if (Math.abs(lhs)<=0.00001){
+							controlGoals.add(goalName);
+						}
 					}
 				}
 			}
@@ -536,7 +544,11 @@ public class DebugInterface {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		goalString=goalString+"!";
+		for (String controlGoal:controlGoals){
+			goalString=goalString+controlGoal+":";
+		}
+		if (goalString.endsWith(":")) goalString=goalString.substring(0, goalString.length()-1);
 		return goalString;
 	}
 	

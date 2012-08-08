@@ -77,7 +77,7 @@ public class WPPGoalView extends AbstractDebugView implements ISelectionListener
 		
 		@Override
 		public Image getColumnImage(Object element, int index) {
-			if (index==0){
+			if (index==0 && DebugCorePlugin.controlGoals.contains(((WPPValue)element).getVariableString())){
 				return getControlImage();
 			}else{
 				return null;

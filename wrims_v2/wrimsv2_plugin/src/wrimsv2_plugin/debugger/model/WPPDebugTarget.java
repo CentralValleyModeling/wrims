@@ -19,6 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -515,6 +516,12 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			}
 			return values;
 		}
+	}
+	
+	public ArrayList<String> generateArrayList(String data){
+		if (data.equals("")) return new ArrayList<String>();
+		String[] dataParts=data.split(":");
+		return new ArrayList<String>(Arrays.asList(dataParts));  
 	}
 
     /* (non-Javadoc)
@@ -1045,12 +1052,8 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		final IWorkbench workbench=PlatformUI.getWorkbench();
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
-				try {
-					WPPAllGoalView allGoalView = (WPPAllGoalView) workbench.getActiveWorkbenchWindow().getActivePage().showView(DebugCorePlugin.ID_WPP_ALLGOAL_VIEW);
-					allGoalView.updateView();
-				} catch (PartInitException e) {
-					WPPException.handleException(e);
-				}
+				WPPAllGoalView allGoalView = (WPPAllGoalView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_ALLGOAL_VIEW);
+				allGoalView.updateView();
 			}
 		});
 	}
@@ -1081,12 +1084,8 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 							final IWorkbench workbench=PlatformUI.getWorkbench();
 							workbench.getDisplay().asyncExec(new Runnable(){
 								public void run(){
-									try {
-										WPPAllGoalView allGoalView = (WPPAllGoalView) workbench.getActiveWorkbenchWindow().getActivePage().showView(DebugCorePlugin.ID_WPP_ALLGOAL_VIEW);
-										allGoalView.updateView();
-									} catch (PartInitException e) {
-										WPPException.handleException(e);
-									}
+									WPPAllGoalView allGoalView = (WPPAllGoalView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_ALLGOAL_VIEW);
+									allGoalView.updateView();
 								}
 							});
 							monitor.done();
@@ -1117,8 +1116,22 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 				} catch (DebugException e) {
 					WPPException.handleException(e);
 				}
-				fGoalStack=generateTree(data);
-				DebugCorePlugin.goalStack=fGoalStack;
+
+				String[] dataParts=data.split("!");
+				
+				if (dataParts.length==2){
+					fGoalStack=generateTree(dataParts[0]);
+					DebugCorePlugin.goalStack=fGoalStack;
+					DebugCorePlugin.controlGoals=generateArrayList(dataParts[1]);
+				}else if (dataParts.length==1){
+					fGoalStack=generateTree(dataParts[0]);
+					DebugCorePlugin.goalStack=fGoalStack;
+					DebugCorePlugin.controlGoals=new ArrayList<String>();
+				}else{
+					fGoalStack=new WPPValue[0];
+				    DebugCorePlugin.goalStack=fGoalStack;
+				    DebugCorePlugin.controlGoals=new ArrayList<String>();
+				}
 				
 				WPPGoalView goalView = (WPPGoalView) workBenchPage.findView(DebugCorePlugin.ID_WPP_GOAL_VIEW);
 				goalView.updateView();
