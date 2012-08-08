@@ -981,12 +981,8 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		final IWorkbench workbench=PlatformUI.getWorkbench();
 			workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
-				try {
-					WPPAllVariableView allVariableView = (WPPAllVariableView) workbench.getActiveWorkbenchWindow().getActivePage().showView(DebugCorePlugin.ID_WPP_ALLVARIABLE_VIEW);
-					allVariableView.updateView();
-				} catch (PartInitException e) {
-					WPPException.handleException(e);
-				}
+				WPPAllVariableView allVariableView = (WPPAllVariableView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_ALLVARIABLE_VIEW);
+				allVariableView.updateView();
 			}
 		});
 	}
@@ -1017,12 +1013,8 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 							final IWorkbench workbench=PlatformUI.getWorkbench();
 							workbench.getDisplay().asyncExec(new Runnable(){
 								public void run(){
-									try {
-										WPPAllVariableView allVariableView = (WPPAllVariableView) workbench.getActiveWorkbenchWindow().getActivePage().showView(DebugCorePlugin.ID_WPP_ALLVARIABLE_VIEW);
-										allVariableView.updateView();
-									} catch (PartInitException e) {
-										WPPException.handleException(e);
-									}
+									WPPAllVariableView allVariableView = (WPPAllVariableView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_ALLVARIABLE_VIEW);
+									allVariableView.updateView();	
 								}
 							});
 							monitor.done();

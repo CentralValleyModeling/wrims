@@ -15,12 +15,15 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.debug.core.model.IValue;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.menuitem.EnableRunMenu;
 import wrimsv2_plugin.debugger.menuitem.NextTimeStepMenu;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
@@ -29,13 +32,14 @@ import wrimsv2_plugin.debugger.view.WPPVariableView;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
 /**
  * The main plugin class to be used in the desktop.
  */
-public class DebugCorePlugin extends Plugin {
+public class DebugCorePlugin extends AbstractUIPlugin {
 	//The shared instance.
 	private static DebugCorePlugin plugin;
 	//Resource bundle.
@@ -82,6 +86,7 @@ public class DebugCorePlugin extends Plugin {
 	public static String solver="XA";
 	public static String log="None";
 	
+	public static final String ID_WPP_PLUGIN="wrimsv2_plugin";
 	public static final String ID_WPP_DEBUG_MODEL = "wpp.debugModel";
 	public static final String ID_WPP_VARIABLE_VIEW="wpp.variableview";
 	public static final String ID_WPP_ALLVARIABLE_VIEW="wpp.allvariableview";
@@ -209,4 +214,19 @@ public class DebugCorePlugin extends Plugin {
 			return null;
 		}
 	}	
+	
+	public static ImageDescriptor getImageDescriptor(String name) {
+		/*
+		String iconPath = "icons/";
+		try {
+		   URL installURL = getDefault().getDescriptor().getInstallURL();
+		   URL url = new URL(installURL, iconPath + name);
+		   return ImageDescriptor.createFromURL(url);
+		} catch (MalformedURLException e) {
+		   WPPException.handleException(e);
+		   return ImageDescriptor.getMissingImageDescriptor();
+		}
+		*/
+		return imageDescriptorFromPlugin(ID_WPP_PLUGIN, "icons\\"+name);
+	}
 }

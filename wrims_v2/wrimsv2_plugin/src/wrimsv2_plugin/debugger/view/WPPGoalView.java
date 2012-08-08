@@ -1,5 +1,8 @@
 package wrimsv2_plugin.debugger.view;
 
+import java.util.HashMap;
+import java.util.Iterator;
+
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.model.IDebugElement;
 import org.eclipse.debug.core.model.IDebugTarget;
@@ -10,6 +13,7 @@ import org.eclipse.debug.ui.IDebugModelPresentation;
 import org.eclipse.debug.ui.IDebugUIConstants;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -17,11 +21,13 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableTreeViewer;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableTree;
 import org.eclipse.swt.custom.TableTreeItem;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -39,6 +45,7 @@ import wrimsv2_plugin.tools.SearchTableTree;
 
 public class WPPGoalView extends AbstractDebugView implements ISelectionListener { 
 	private IValue[] goalStack=null;
+	HashMap<ImageDescriptor, Image> imageCache=new HashMap<ImageDescriptor, Image>();
 	
 	public class ViewLabelProvider implements ITableLabelProvider {
 
@@ -50,8 +57,10 @@ public class WPPGoalView extends AbstractDebugView implements ISelectionListener
 
 		@Override
 		public void dispose() {
-			// TODO Auto-generated method stub
-			
+			for (Iterator i = imageCache.values().iterator(); i.hasNext();) {
+				((Image) i.next()).dispose();
+			}
+			imageCache.clear();
 		}
 
 		@Override
@@ -65,11 +74,27 @@ public class WPPGoalView extends AbstractDebugView implements ISelectionListener
 			// TODO Auto-generated method stub
 			
 		}
-
+		
 		@Override
 		public Image getColumnImage(Object element, int index) {
-			// TODO Auto-generated method stub
-			return null;
+			if (index==0){
+				return getControlImage();
+			}else{
+				return null;
+			}
+		}
+		
+		public Image getControlImage(){
+			ImageDescriptor descriptor = null;
+			descriptor = DebugCorePlugin.getImageDescriptor("control_icon.png");
+
+			//obtain the cached image corresponding to the descriptor
+			Image image = (Image)imageCache.get(descriptor);
+			if (image == null) {
+				image = descriptor.createImage();
+				imageCache.put(descriptor, image);
+			}
+			return image;
 		}
 
 		public String getColumnText(Object element, int index) {
@@ -170,12 +195,12 @@ public class WPPGoalView extends AbstractDebugView implements ISelectionListener
 	
 	@Override
 	protected Viewer createViewer(Composite parent) {
-		TableTreeViewer viewer = new TableTreeViewer(parent);
+		TableViewer viewer = new TableViewer(parent);
 		viewer.setLabelProvider(new ViewLabelProvider());
 		viewer.setContentProvider(new ViewContentProvider());
 		getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(IDebugUIConstants.ID_DEBUG_VIEW, this);
 		getSite().setSelectionProvider(viewer);
-		Table table = viewer.getTableTree().getTable();
+		Table table = viewer.getTable();
 	    new TableColumn(table, SWT.LEFT).setText("Goal");
 	    new TableColumn(table, SWT.LEFT).setText("Constarint");
 	    
@@ -230,9 +255,9 @@ public class WPPGoalView extends AbstractDebugView implements ISelectionListener
 	
 	public void updateView(){
 		goalStack=DebugCorePlugin.goalStack;
-		TableTreeViewer viewer=(TableTreeViewer) getViewer();
+		TableViewer viewer=(TableViewer) getViewer();
 		viewer.setInput(DebugCorePlugin.target);
-		Table table=viewer.getTableTree().getTable();
+		Table table=viewer.getTable();
 	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
 	    	table.getColumn(i).pack();
 	    }
