@@ -8,5 +8,12 @@
 	<classpathentry kind="lib" path="lib/poi-ooxml-schemas-3.8-20120326.jar"/>
 	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/stax-api-1.0.1.jar"/>
+	<classpathentry kind="lib" path="D:/cvwrsm/trunk/3rd_party/vista/lib/jpy.jar"/>
+	<classpathentry kind="lib" path="D:/cvwrsm/trunk/3rd_party/vista/lib/misc.jar"/>
+	<classpathentry kind="lib" path="D:/cvwrsm/trunk/3rd_party/vista/lib/pd.jar"/>
+	<classpathentry kind="lib" path="D:/cvwrsm/trunk/3rd_party/vista/lib/jnios.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.1.jar"/>
+	<classpathentry kind="lib" path="D:/cvwrsm/trunk/wrims_schematics/lib/heclib.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/vista"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
