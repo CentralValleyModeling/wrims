@@ -36,15 +36,6 @@
          class="wrimsv2_plugin.debugger.toolbaritem.VarGoalSearch"
          enablesFor="*">
       </action> 
-      <action
-         id="wpp.allcontrolgoals" 
-         label="Control"
-         icon="icons\control_icon.png" 
-         tooltip="control goals"
-         toolbarPath="group1"
-         class="wrimsv2_plugin.debugger.toolbaritem.AllControlGoals"
-         enablesFor="*">
-      </action>  
    </viewContribution> 
 </extension>
 <extension point="org.eclipse.ui.viewActions"> 
@@ -58,16 +49,7 @@
          toolbarPath="group1"
          class="wrimsv2_plugin.debugger.toolbaritem.VarGoalSearch"
          enablesFor="*">
-      </action>
-      <action
-         id="wpp.allcontrolgoals" 
-         label="Control"
-         icon="icons\control_icon.png" 
-         tooltip="control goals"
-         toolbarPath="group1"
-         class="wrimsv2_plugin.debugger.toolbaritem.AllControlGoals"
-         enablesFor="*">
-      </action>   
+      </action>  
    </viewContribution> 
 </extension>
 <extension point="org.eclipse.ui.viewActions"> 
@@ -82,15 +64,6 @@
          class="wrimsv2_plugin.debugger.toolbaritem.VarGoalSearch"
          enablesFor="*">
       </action>  
-      <action
-         id="wpp.allcontrolgoals" 
-         label="Control"
-         icon="icons\control_icon.png" 
-         tooltip="control goals"
-         toolbarPath="group1"
-         class="wrimsv2_plugin.debugger.toolbaritem.AllControlGoals"
-         enablesFor="*">
-      </action> 
    </viewContribution> 
 </extension>
 <extension point="org.eclipse.ui.viewActions"> 

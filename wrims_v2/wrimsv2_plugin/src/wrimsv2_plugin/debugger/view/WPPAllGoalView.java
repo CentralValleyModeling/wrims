@@ -17,6 +17,7 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableTreeViewer;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
@@ -35,6 +36,7 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.IWPPEventListener;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.model.WPPValue;
+import wrimsv2_plugin.tools.ProcImage;
 import wrimsv2_plugin.tools.SearchTableTree;
 
 public class WPPAllGoalView extends AbstractDebugView implements ISelectionListener { 
@@ -50,8 +52,7 @@ public class WPPAllGoalView extends AbstractDebugView implements ISelectionListe
 
 		@Override
 		public void dispose() {
-			// TODO Auto-generated method stub
-			
+			ProcImage.disposeImages();
 		}
 
 		@Override
@@ -68,8 +69,11 @@ public class WPPAllGoalView extends AbstractDebugView implements ISelectionListe
 
 		@Override
 		public Image getColumnImage(Object element, int index) {
-			// TODO Auto-generated method stub
-			return null;
+			if (index==0 && DebugCorePlugin.allControlGoals.contains(((WPPValue)element).getVariableString())){
+				return ProcImage.getControlImage();
+			}else{
+				return null;
+			}
 		}
 
 		public String getColumnText(Object element, int index) {
@@ -170,12 +174,12 @@ public class WPPAllGoalView extends AbstractDebugView implements ISelectionListe
 	
 	@Override
 	protected Viewer createViewer(Composite parent) {
-		TableTreeViewer viewer = new TableTreeViewer(parent);
+		TableViewer viewer = new TableViewer(parent);
 		viewer.setLabelProvider(new ViewLabelProvider());
 		viewer.setContentProvider(new ViewContentProvider());
 		getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(IDebugUIConstants.ID_DEBUG_VIEW, this);
 		getSite().setSelectionProvider(viewer);
-		Table table = viewer.getTableTree().getTable();
+		Table table = viewer.getTable();
 	    new TableColumn(table, SWT.LEFT).setText("Goal");
 	    new TableColumn(table, SWT.LEFT).setText("Constarint");
 	    
@@ -230,9 +234,9 @@ public class WPPAllGoalView extends AbstractDebugView implements ISelectionListe
 	
 	public void updateView(){
 		goalStack=DebugCorePlugin.allGoalStack;
-		TableTreeViewer viewer=(TableTreeViewer) getViewer();
+		TableViewer viewer=(TableViewer) getViewer();
 		viewer.setInput(DebugCorePlugin.target);
-		Table table=viewer.getTableTree().getTable();
+		Table table=viewer.getTable();
 	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
 	    	table.getColumn(i).pack();
 	    }

@@ -41,11 +41,11 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.IWPPEventListener;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.model.WPPValue;
+import wrimsv2_plugin.tools.ProcImage;
 import wrimsv2_plugin.tools.SearchTableTree;
 
 public class WPPGoalView extends AbstractDebugView implements ISelectionListener { 
 	private IValue[] goalStack=null;
-	HashMap<ImageDescriptor, Image> imageCache=new HashMap<ImageDescriptor, Image>();
 	
 	public class ViewLabelProvider implements ITableLabelProvider {
 
@@ -57,10 +57,7 @@ public class WPPGoalView extends AbstractDebugView implements ISelectionListener
 
 		@Override
 		public void dispose() {
-			for (Iterator i = imageCache.values().iterator(); i.hasNext();) {
-				((Image) i.next()).dispose();
-			}
-			imageCache.clear();
+			ProcImage.disposeImages();
 		}
 
 		@Override
@@ -78,23 +75,10 @@ public class WPPGoalView extends AbstractDebugView implements ISelectionListener
 		@Override
 		public Image getColumnImage(Object element, int index) {
 			if (index==0 && DebugCorePlugin.controlGoals.contains(((WPPValue)element).getVariableString())){
-				return getControlImage();
+				return ProcImage.getControlImage();
 			}else{
 				return null;
 			}
-		}
-		
-		public Image getControlImage(){
-			ImageDescriptor descriptor = null;
-			descriptor = DebugCorePlugin.getImageDescriptor("control_icon.png");
-
-			//obtain the cached image corresponding to the descriptor
-			Image image = (Image)imageCache.get(descriptor);
-			if (image == null) {
-				image = descriptor.createImage();
-				imageCache.put(descriptor, image);
-			}
-			return image;
 		}
 
 		public String getColumnText(Object element, int index) {

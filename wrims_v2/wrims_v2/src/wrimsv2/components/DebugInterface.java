@@ -236,6 +236,14 @@ public class DebugInterface {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}else if (request.equals("allcontrolgoals")){
+			try{
+				String goalName=getAllControlGoalName();
+				sendRequest(goalName);
+			}catch (IOException e){
+				e.printStackTrace();
+			}
+			
 		}else if (request.startsWith("time")){
 			String [] requestParts=request.split(":");
 			String[] yearMonthDayCycle=requestParts[1].split("/");
@@ -707,6 +715,35 @@ public class DebugInterface {
 		}
 		if (goalString.endsWith("#")) goalString=goalString.substring(0, goalString.length()-1);
 		return goalString;
+	}
+	
+	public String getAllControlGoalName(){
+		String goalNames="";
+		Map<String, EvalConstraint> gMap = SolverData.getConstraintDataMap();
+		Map<String, Dvar> dvMap = SolverData.getDvarMap();
+		Set<String> goalKeySet=gMap.keySet();
+		Iterator ki=goalKeySet.iterator();
+		while (ki.hasNext()){
+			double lhs=0.0;
+			String goalName=(String)ki.next();
+			EvalConstraint ec=gMap.get(goalName);
+			if (ec!=null){
+				EvalExpression ee=ec.getEvalExpression();
+				Map<String, IntDouble> multiplier = ee.getMultiplier();
+				Set<String> mKeySet = multiplier.keySet();
+				Iterator<String> mi = mKeySet.iterator();
+				while (mi.hasNext()){
+					String variable=mi.next();
+					double value1=multiplier.get(variable).getData().doubleValue();
+					lhs=lhs+dvMap.get(variable).getData().getData().doubleValue()*value1;
+				}
+				double value1=ee.getValue().getData().doubleValue();
+				lhs=lhs+value1;
+				if (Math.abs(lhs)<=0.00001) goalNames=goalNames+goalName+":";
+			}
+		}
+		if (goalNames.endsWith(":")) goalNames=goalNames.substring(0, goalNames.length()-1);
+		return goalNames;
 	}
 	
 	public String getTimeseriesDetail(String variableNames){
