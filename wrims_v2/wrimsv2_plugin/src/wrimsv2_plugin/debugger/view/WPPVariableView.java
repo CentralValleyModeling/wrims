@@ -247,6 +247,7 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 	}
 	
 	public void updateView(){
+	    getSite().setSelectionProvider(null);
 		dataStack=DebugCorePlugin.dataStack;
 		TableTreeViewer viewer=(TableTreeViewer) getViewer();
 		viewer.setInput(DebugCorePlugin.target);
@@ -254,8 +255,9 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
 	    	table.getColumn(i).pack();
 	    }
-	    if (dataStack.length>0) viewer.reveal(viewer.getElementAt(0));
+	    //if (dataStack.length>0) viewer.reveal(viewer.getElementAt(0));
 		viewer.refresh();
+		getSite().setSelectionProvider(viewer);
 	}
 	
 }

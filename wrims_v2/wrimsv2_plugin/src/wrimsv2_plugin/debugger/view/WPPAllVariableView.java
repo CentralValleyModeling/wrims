@@ -237,6 +237,7 @@ public class WPPAllVariableView extends AbstractDebugView implements ISelectionL
 	}
 	
 	public void updateView(){
+		getSite().setSelectionProvider(null);
 		dataStack=DebugCorePlugin.allDataStack;
 		TableTreeViewer viewer=(TableTreeViewer) getViewer();
 		viewer.setInput(DebugCorePlugin.target);
@@ -244,7 +245,8 @@ public class WPPAllVariableView extends AbstractDebugView implements ISelectionL
 	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
 	    	table.getColumn(i).pack();
 	    }
-	    if (dataStack.length>0) viewer.reveal(viewer.getElementAt(0));
+	    //if (dataStack.length>0) viewer.reveal(viewer.getElementAt(0));
 		viewer.refresh();
+		getSite().setSelectionProvider(viewer);
 	}
 }

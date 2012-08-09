@@ -83,12 +83,16 @@ public class WPPVarMonitorView extends ViewPart{
 		Vector<TimeSeriesContainer> dataVector=new Vector<TimeSeriesContainer>();
 		boolean correctVarNames=true;
 		String[] variables=dataString.split("!");
+		boolean hasData=false;
 		for (int k=0; k<variables.length; k++){
 			String[] nameData=variables[k].split("\\$");
 			if (nameData.length==2){
 				dataVector.add(convertDataVector(nameData[1], nameData[0]));
+				hasData=true;
 			}
 		}
+		
+		if (!hasData) return;
 		
 		G2dObject g2dObj = null;
 		Vector g2dataVector = new Vector();
@@ -153,7 +157,7 @@ public class WPPVarMonitorView extends ViewPart{
 			dc.times[size]=dc.endTime+1;
 			dc.values[size]=-901.0;
 		}
-
+		
 		return dc;
 	}
 	

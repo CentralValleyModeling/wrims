@@ -42,7 +42,7 @@ public class AllControlGoals extends ActionDelegate implements IViewActionDelega
 	}
 
 	public void run(IAction action) {
-		getAllControlGoals();
+		if (DebugCorePlugin.target.isSuspended()) getAllControlGoals();
 	}
 	
 	public void getAllControlGoals(){
