@@ -35,12 +35,27 @@ public class ExcelUtil {
 		Workbook wb = getWorkbook(filePath);
 
 
-		String[] s = readColumn(wb, readSheetName, 4, 20, 5);
-		
-		for (String e: s){
-			System.out.println(e);
-		}
 
+		
+		//DV file
+		String[] dvPartB = readColumn(wb, readSheetName, 3, 18);
+		String[] dvPartC = readColumn(wb, readSheetName, 4, 18);
+
+		//SV file
+		int svSize =3;
+		int svRow = 6;
+		String[] svPartB = readColumn(wb, readSheetName, 3, svRow, svSize);
+		String[] svPartC = readColumn(wb, readSheetName, 4, svRow, svSize);
+		
+		System.out.println("SV");
+		for (int i=0; i<svPartB.length; i++){
+			System.out.println(svPartB[i]+":"+svPartC[i]);
+		}
+		System.out.println("DV");
+		for (int i=0; i<dvPartB.length; i++){
+			System.out.println(dvPartB[i]+":"+dvPartC[i]);
+		}
+		
 		try {
 			wb.createSheet("test");
 		} catch (Exception e) {
@@ -95,13 +110,31 @@ public class ExcelUtil {
 
 	}
 
+	public static String[] readColumn(Workbook wb, String sheetName, int colIndex, int rowIndex) {
+		
+		Sheet sh = wb.getSheet(sheetName);
+
+		ArrayList<Cell> ca = getColumnCells(sh, colIndex, rowIndex);
+
+		String[] s = new String[ca.size()];
+		
+		for (int i = 0; i < ca.size(); i++) {
+
+			s[i] = ca.get(i).getStringCellValue();
+
+		}
+
+		return s;
+
+	}
+	
 	public static String[] readColumn(Workbook wb, String sheetName, int colIndex, int rowIndex, int size) {
 
 		String[] s = new String[size];
 		
 		Sheet sh = wb.getSheet(sheetName);
 
-		Cell[] cell = getColumnCells(sh, size, colIndex, rowIndex);
+		Cell[] cell = getColumnCells(sh, colIndex, rowIndex, size);
 
 		for (int i = 0; i < size; i++) {
 
@@ -117,7 +150,7 @@ public class ExcelUtil {
 
 		Sheet sh = wb.getSheet(sheetName);
 
-		Cell[] cell = getColumnCells(sh, d.length, colIndex, rowIndex);
+		Cell[] cell = getColumnCells(sh, colIndex, rowIndex, d.length);
 
 		for (int i = 0; i < d.length; i++) {
 
@@ -129,8 +162,41 @@ public class ExcelUtil {
 
 	}
 
+	public static ArrayList<Cell> getColumnCells(Sheet sh, int colIndex, int rowIndex) {
 
-	public static Cell[] getColumnCells(Sheet sh, int size, int colIndex, int rowIndex) {
+		Cell c;
+		ArrayList<Cell> ca = new ArrayList<Cell>();
+		int i=0;
+
+		boolean notEmpty = true;
+		
+		while ( notEmpty) {
+			
+			try {
+
+				Row r = sh.getRow(i + rowIndex);
+				c = r.getCell(colIndex);
+				
+				if(c.getCellType() != Cell.CELL_TYPE_BLANK){
+					ca.add(c);
+				} else {
+					notEmpty = false;
+				}
+
+			}
+			catch (Exception e) {
+
+				notEmpty = false;
+
+			}
+			i++;
+		}
+
+		return ca;
+
+	}
+	
+	public static Cell[] getColumnCells(Sheet sh, int colIndex, int rowIndex, int size) {
 
 		Cell[] c = new Cell[size];
 

@@ -24,14 +24,12 @@ public class testDSSread2 {
 		String filePath = "workbook.xlsm";
 		String sheetName = "Control";
 		
-		
 		Group g = DSSUtil.createGroup("local", dssFilePath);
 		double[] d = ReadDSS.readDSS(g, startTime, endTime, partA, partB, partC, partE, partF);
 		
 		int ci = 4;
 		int ri = 9;
 		Workbook wb = ExcelUtil.getWorkbook(filePath);
-		
 		
 		
 		wb = ExcelUtil.modifyWorkBook(wb, sheetName, ci, ri, d);
