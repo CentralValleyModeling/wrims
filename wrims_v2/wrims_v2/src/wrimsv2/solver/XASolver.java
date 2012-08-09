@@ -128,7 +128,7 @@ public class XASolver {
 	
 	private void setConstraints() {
 		Map<String, EvalConstraint> constraintMap = SolverData.getConstraintDataMap();
-		Map<String, Dvar> solverMap=SolverData.getDvarMap();
+		Map<String, Dvar> dvarMap=SolverData.getDvarMap();
 		for (int i=0; i<=1; i++){
 			ArrayList<String> constraintCollection;
 			if (i==0){
@@ -159,7 +159,7 @@ public class XASolver {
 			
 				while(multIterator.hasNext()){
 					String multName=(String)multIterator.next();
-					if (!solverMap.containsKey(multName)) addConditionalSlackSurplusToDvarMap(solverMap, multName);
+					if (!dvarMap.containsKey(multName)) addConditionalSlackSurplusToDvarMap(dvarMap, multName);
 					ControlData.xasolver.loadToCurrentRow(multName, multMap.get(multName).getData().doubleValue());
 				}
 			}
@@ -215,10 +215,10 @@ public class XASolver {
 		}
 	}
 	
-	public void addConditionalSlackSurplusToDvarMap(Map<String, Dvar> solverMap, String multName){
+	public void addConditionalSlackSurplusToDvarMap(Map<String, Dvar> dvarMap, String multName){
 		Dvar dvar=new Dvar();
 		dvar.upperBoundValue=1.0e23;
 		dvar.lowerBoundValue=0.0;
-		solverMap.put(multName, dvar);
+		dvarMap.put(multName, dvar);
 	}
 }
