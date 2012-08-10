@@ -249,7 +249,7 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 	}
 	
 	public void updateView(){
-	    DebugCorePlugin.updateSelection=false;
+	    DebugCorePlugin.updateSelectedVariable=false;
 		dataStack=DebugCorePlugin.dataStack;
 		TableViewer viewer=(TableViewer) getViewer();
 		IStructuredSelection oldSelection = ((IStructuredSelection)viewer.getSelection());
@@ -259,27 +259,7 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 	    	table.getColumn(i).pack();
 	    }
 		viewer.refresh();
-		if (dataStack.length>0) setSelection(oldSelection, viewer, table);
-	    DebugCorePlugin.updateSelection=true;
-	}
-	
-	public void setSelection(IStructuredSelection oldSelection, TableViewer viewer, Table table){
-		boolean hasOldSelection=false;
-    	int i=0;
-    	if (oldSelection.isEmpty()){
-    		table.setTopIndex(0);
-    	}else{
-    		String oldVarString = ((WPPValue)(oldSelection.getFirstElement())).getVariableString();
-    		Object element;
-    		while (!hasOldSelection && (element=viewer.getElementAt(i))!=null ){
-    			if (oldVarString.equals(((WPPValue)element).getVariableString())) hasOldSelection=true;
-    			i=i+1;
-    		}
-    		if (hasOldSelection){
-    			table.setTopIndex(i-1);
-    		}else{
-    			table.setTopIndex(0);
-    		}
-    	}
+		if (dataStack.length>0) new SetSelection(oldSelection, viewer, table);
+	    DebugCorePlugin.updateSelectedVariable=true;
 	}
 }

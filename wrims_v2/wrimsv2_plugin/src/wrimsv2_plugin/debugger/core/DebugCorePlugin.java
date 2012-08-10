@@ -63,7 +63,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static ArrayList<String[]> varDetailCycle= new ArrayList<String[]>();
 	public static int varDetailChoice=0;
 	public static ArrayList<String> selectedVariableNames=new ArrayList<String>();
-	
+		
 	public static int totalNoOfCycle=1;
 	public static String timeStep="1DAY";
 	public static int startYear=1921;
@@ -84,7 +84,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static DebugSet debugSet;
 	
 	public static boolean isDebugging=false;
-	public static boolean updateSelection=true;
+	public static boolean updateSelectedVariable=true;
 	
 	public static String solver="XA";
 	public static String log="None";

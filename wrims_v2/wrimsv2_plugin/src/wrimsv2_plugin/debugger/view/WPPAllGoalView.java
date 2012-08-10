@@ -13,6 +13,7 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -235,12 +236,13 @@ public class WPPAllGoalView extends AbstractDebugView implements ISelectionListe
 	public void updateView(){
 		goalStack=DebugCorePlugin.allGoalStack;
 		TableViewer viewer=(TableViewer) getViewer();
+		IStructuredSelection oldSelection = ((IStructuredSelection)viewer.getSelection());
 		viewer.setInput(DebugCorePlugin.target);
 		Table table=viewer.getTable();
 	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
 	    	table.getColumn(i).pack();
 	    }
-	    if (goalStack.length>0) viewer.reveal(viewer.getElementAt(0));
 		viewer.refresh();
+	    if (goalStack.length>0) new SetSelection(oldSelection, viewer, table);
 	}
 }
