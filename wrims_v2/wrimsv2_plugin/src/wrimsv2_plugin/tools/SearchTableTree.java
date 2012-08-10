@@ -11,6 +11,7 @@ import wrimsv2_plugin.debugger.model.WPPValue;
 
 public class SearchTableTree {
 	public static int search(TableTreeItem[] tableTreeItems, int bi, int ei, String text, boolean exact, boolean includeValue){
+		text=text.toLowerCase();
 		int foundIndex=-1;
 		Stack indexStack=new Stack();
 		int i=bi;

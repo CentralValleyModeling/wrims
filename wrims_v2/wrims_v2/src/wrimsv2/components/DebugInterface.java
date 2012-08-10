@@ -776,7 +776,7 @@ public class DebugInterface {
 				ArrayList<Double> dataArrayList = dds.getData();
 				TimeOperation.findTime(0);
 				int currIndex=ValueEvaluation.timeSeriesIndex(dds);
-				for (int i=0; i<=currIndex; i++){
+				for (int i=0; i<dataArrayList.size(); i++){
 					double value=dataArrayList.get(i);
 					if (!(value==-901.0 || value==-902.0)){
 						int timestepListed=i-currIndex;

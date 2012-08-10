@@ -387,4 +387,8 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 			WPPException.handleException(e);
 		} 
 	}
+	
+	public Table getTable(){
+		return table;
+	}
 }

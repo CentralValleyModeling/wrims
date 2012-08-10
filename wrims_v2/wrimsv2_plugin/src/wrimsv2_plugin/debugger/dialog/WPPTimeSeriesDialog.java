@@ -121,7 +121,11 @@ public class WPPTimeSeriesDialog extends PopupDialog {
 						workbench.getDisplay().asyncExec(new Runnable(){
 							public void run(){
 								WPPVarDetailView varDetailView = (WPPVarDetailView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_VARIABLEDETAIL_VIEW);
+								Table table=varDetailView.getTable();
+								int topIndex=table.getTopIndex();
 								varDetailView.displayTimeseries();
+								table.setSelection(row);
+								table.setTopIndex(topIndex);
 							}
 						});
 					}
