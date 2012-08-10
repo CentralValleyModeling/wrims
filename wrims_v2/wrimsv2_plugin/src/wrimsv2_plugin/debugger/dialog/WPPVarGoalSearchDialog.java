@@ -7,6 +7,7 @@ import org.eclipse.debug.core.DebugException;
 import org.eclipse.jface.dialogs.PopupDialog;
 import org.eclipse.jface.viewers.TableTreeViewer;
 import org.eclipse.jface.viewers.CellEditor.LayoutData;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableTree;
 import org.eclipse.swt.custom.TableTreeItem;
@@ -42,7 +43,7 @@ import wrimsv2_plugin.debugger.view.WPPAllVariableView;
 import wrimsv2_plugin.debugger.view.WPPGoalView;
 import wrimsv2_plugin.debugger.view.WPPVarDetailView;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
-import wrimsv2_plugin.tools.SearchTableTree;
+import wrimsv2_plugin.tools.SearchTable;
 
 public class WPPVarGoalSearchDialog extends PopupDialog {
 	
@@ -114,43 +115,43 @@ public class WPPVarGoalSearchDialog extends PopupDialog {
 	 }
 	
 	public void search(String text){
-		TableTreeViewer viewer;
+		TableViewer viewer;
 	
 		if (view instanceof WPPVariableView){
-			viewer=(TableTreeViewer) ((WPPVariableView)view).getViewer();
+			viewer=(TableViewer) ((WPPVariableView)view).getViewer();
 		}else if (view instanceof WPPAllVariableView){
-			viewer=(TableTreeViewer) ((WPPAllVariableView)view).getViewer();
+			viewer=(TableViewer) ((WPPAllVariableView)view).getViewer();
 		}else if (view instanceof WPPGoalView){
-			viewer=(TableTreeViewer) ((WPPGoalView)view).getViewer();
+			viewer=(TableViewer) ((WPPGoalView)view).getViewer();
 		}else{ 
-			viewer=(TableTreeViewer) ((WPPAllGoalView)view).getViewer();
+			viewer=(TableViewer) ((WPPAllGoalView)view).getViewer();
 		}
 	
-		TableTree tableTree = viewer.getTableTree();
-		TableTreeItem[] tableTreeItems = tableTree.getItems();
-		int length=tableTree.getItemCount();
+		Table table = viewer.getTable();
+		TableItem[] tableItems = table.getItems();
+		int length=table.getItemCount();
 		if (length>0){
 			int currIndex;
-			TableTreeItem[] selections = tableTree.getSelection();
+			TableItem[] selections = table.getSelection();
 			if (selections.length>0){			
-				currIndex=SearchTableTree.search(tableTreeItems, 0, length, selections[0].getText(), true, false);
+				currIndex=SearchTable.search(tableItems, 0, length, selections[0].getText(), true, false);
 			}else{
 				currIndex=length;
 			}
-			int foundIndex=SearchTableTree.search(tableTreeItems, currIndex+1, length, text, false, true);
+			int foundIndex=SearchTable.search(tableItems, currIndex+1, length, text, false, true);
 			if (foundIndex==-1){
-				foundIndex=SearchTableTree.search(tableTreeItems, 0, currIndex, text, false, true);
+				foundIndex=SearchTable.search(tableItems, 0, currIndex, text, false, true);
 				if (foundIndex==-1){
 					showNotFound(text);
 				}else{
-					TableTreeItem[] items=new TableTreeItem[1];
-					items[0]=tableTreeItems[foundIndex];
-					tableTree.setSelection(items);
+					TableItem[] items=new TableItem[1];
+					items[0]=tableItems[foundIndex];
+					table.setSelection(items);
 				}
 			}else{
-				TableTreeItem[] items=new TableTreeItem[1];
-				items[0]=tableTreeItems[foundIndex];
-				tableTree.setSelection(items);
+				TableItem[] items=new TableItem[1];
+				items[0]=tableItems[foundIndex];
+				table.setSelection(items);
 			}
 		}else{
 			showNotFound(text);

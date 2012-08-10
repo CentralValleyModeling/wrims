@@ -19,6 +19,7 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TableTreeViewer;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
@@ -39,7 +40,7 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.IWPPEventListener;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.model.WPPValue;
-import wrimsv2_plugin.tools.SearchTableTree;
+import wrimsv2_plugin.tools.SearchTable;
 
 public class WPPAllVariableView extends AbstractDebugView implements ISelectionListener { 
 	private IValue[] dataStack=null;
@@ -181,11 +182,11 @@ public class WPPAllVariableView extends AbstractDebugView implements ISelectionL
 			}
 		});
 		
-		TableTreeViewer viewer = new TableTreeViewer(parent);
+		TableViewer viewer = new TableViewer(parent);
 		viewer.setLabelProvider(new ViewLabelProvider());
 		viewer.setContentProvider(new ViewContentProvider());
 		getSite().setSelectionProvider(viewer);
-		Table table = viewer.getTableTree().getTable();
+		Table table = viewer.getTable();
 	    new TableColumn(table, SWT.LEFT).setText("Variable");
 	    new TableColumn(table, SWT.LEFT).setText("Value");
 	    
@@ -239,23 +240,21 @@ public class WPPAllVariableView extends AbstractDebugView implements ISelectionL
 	}
 	
 	public void updateView(){
-		getSite().setSelectionProvider(null);
 		DebugCorePlugin.updateSelection=false;
 		dataStack=DebugCorePlugin.allDataStack;
-		TableTreeViewer viewer=(TableTreeViewer) getViewer();
+		TableViewer viewer=(TableViewer) getViewer();
 		IStructuredSelection oldSelection = ((IStructuredSelection)viewer.getSelection());
 		viewer.setInput(DebugCorePlugin.target);
-		Table table=viewer.getTableTree().getTable();
+		Table table=viewer.getTable();
 	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
 	    	table.getColumn(i).pack();
 	    }
 		viewer.refresh();
 		if (dataStack.length>0) setSelection(oldSelection, viewer, table);
 		DebugCorePlugin.updateSelection=true;
-		getSite().setSelectionProvider(viewer);
 	}
 	
-	public void setSelection(IStructuredSelection oldSelection, TableTreeViewer viewer, Table table){
+	public void setSelection(IStructuredSelection oldSelection, TableViewer viewer, Table table){
 		boolean hasOldSelection=false;
     	int i=0;
     	if (oldSelection.isEmpty()){

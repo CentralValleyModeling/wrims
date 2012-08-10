@@ -48,7 +48,7 @@ import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.model.WPPValue;
 import wrimsv2_plugin.debugger.model.WPPVariable;
 import wrimsv2_plugin.tools.DataProcess;
-import wrimsv2_plugin.tools.SearchTableTree;
+import wrimsv2_plugin.tools.SearchTable;
 
 public class WPPVariableView extends AbstractDebugView implements ISelectionListener { 
 	private IValue[] dataStack=null;
@@ -190,12 +190,12 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 			}
 		});
 		
-		TableTreeViewer viewer = new TableTreeViewer(parent);
+		TableViewer viewer = new TableViewer(parent);
 		viewer.setLabelProvider(new ViewLabelProvider());
 		viewer.setContentProvider(new ViewContentProvider());
 		getSite().setSelectionProvider(viewer);
 
-		Table table = viewer.getTableTree().getTable();
+		Table table = viewer.getTable();
 	    new TableColumn(table, SWT.LEFT).setText("Variable");
 	    new TableColumn(table, SWT.LEFT).setText("Value");
 	    
@@ -249,23 +249,21 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 	}
 	
 	public void updateView(){
-	    getSite().setSelectionProvider(null);
 	    DebugCorePlugin.updateSelection=false;
 		dataStack=DebugCorePlugin.dataStack;
-		TableTreeViewer viewer=(TableTreeViewer) getViewer();
+		TableViewer viewer=(TableViewer) getViewer();
 		IStructuredSelection oldSelection = ((IStructuredSelection)viewer.getSelection());
 		viewer.setInput(DebugCorePlugin.target);
-		Table table=viewer.getTableTree().getTable();
+		Table table=viewer.getTable();
 	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
 	    	table.getColumn(i).pack();
 	    }
 		viewer.refresh();
 		if (dataStack.length>0) setSelection(oldSelection, viewer, table);
 	    DebugCorePlugin.updateSelection=true;
-		getSite().setSelectionProvider(viewer);
 	}
 	
-	public void setSelection(IStructuredSelection oldSelection, TableTreeViewer viewer, Table table){
+	public void setSelection(IStructuredSelection oldSelection, TableViewer viewer, Table table){
 		boolean hasOldSelection=false;
     	int i=0;
     	if (oldSelection.isEmpty()){

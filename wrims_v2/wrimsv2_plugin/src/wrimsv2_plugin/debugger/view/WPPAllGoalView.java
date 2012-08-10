@@ -37,7 +37,7 @@ import wrimsv2_plugin.debugger.model.IWPPEventListener;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.model.WPPValue;
 import wrimsv2_plugin.tools.ProcImage;
-import wrimsv2_plugin.tools.SearchTableTree;
+import wrimsv2_plugin.tools.SearchTable;
 
 public class WPPAllGoalView extends AbstractDebugView implements ISelectionListener { 
 	private IValue[] goalStack=null;
