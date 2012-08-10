@@ -84,6 +84,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static DebugSet debugSet;
 	
 	public static boolean isDebugging=false;
+	public static boolean updateSelection=true;
 	
 	public static String solver="XA";
 	public static String log="None";
