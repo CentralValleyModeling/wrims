@@ -41,6 +41,7 @@ import wrimsv2_plugin.debugger.model.IWPPEventListener;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.model.WPPValue;
 import wrimsv2_plugin.tools.SearchTable;
+import wrimsv2_plugin.tools.SetSelectionInTable;
 
 public class WPPAllVariableView extends AbstractDebugView implements ISelectionListener { 
 	private IValue[] dataStack=null;
@@ -250,7 +251,7 @@ public class WPPAllVariableView extends AbstractDebugView implements ISelectionL
 	    	table.getColumn(i).pack();
 	    }
 		viewer.refresh();
-		if (dataStack.length>0) new SetSelection(oldSelection, viewer, table);
+		if (dataStack.length>0) new SetSelectionInTable(oldSelection, viewer, table);
 		DebugCorePlugin.updateSelectedVariable=true;
 	}
 }

@@ -44,6 +44,7 @@ import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.model.WPPValue;
 import wrimsv2_plugin.tools.ProcImage;
 import wrimsv2_plugin.tools.SearchTable;
+import wrimsv2_plugin.tools.SetSelectionInTable;
 
 public class WPPGoalView extends AbstractDebugView implements ISelectionListener { 
 	private IValue[] goalStack=null;
@@ -248,6 +249,6 @@ public class WPPGoalView extends AbstractDebugView implements ISelectionListener
 	    	table.getColumn(i).pack();
 	    }
 		viewer.refresh();
-	    if (goalStack.length>0) new SetSelection(oldSelection, viewer, table);
+	    if (goalStack.length>0) new SetSelectionInTable(oldSelection, viewer, table);
 	}
 }

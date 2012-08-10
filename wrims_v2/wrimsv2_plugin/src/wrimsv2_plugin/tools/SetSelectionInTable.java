@@ -1,4 +1,4 @@
-package wrimsv2_plugin.debugger.view;
+package wrimsv2_plugin.tools;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
@@ -6,8 +6,8 @@ import org.eclipse.swt.widgets.Table;
 
 import wrimsv2_plugin.debugger.model.WPPValue;
 
-public class SetSelection {
-	public SetSelection(IStructuredSelection oldSelection, TableViewer viewer, Table table){
+public class SetSelectionInTable {
+	public SetSelectionInTable(IStructuredSelection oldSelection, TableViewer viewer, Table table){
 		boolean hasOldSelection=false;
     	int i=0;
     	if (oldSelection.isEmpty()){
