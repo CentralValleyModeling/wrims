@@ -38,8 +38,9 @@ import wrimsv2_plugin.debugger.menuitem.EnableMenus;
 import wrimsv2_plugin.debugger.view.WPPVarDetailView;
 
 public class WPPSaveFileDialog extends Dialog {
-	int flag=1;
-	String fileName;
+	private int flag=1;
+	private Text fileText;
+	private	String fileName="";
 	
 	public WPPSaveFileDialog(Shell parentShell) {
 		super(parentShell);
@@ -55,7 +56,7 @@ public class WPPSaveFileDialog extends Dialog {
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		final Composite dialogArea = (Composite) super.createDialogArea(parent);
+		Composite dialogArea = (Composite) super.createDialogArea(parent);
 		FillLayout fl = new FillLayout(SWT.VERTICAL);
 		dialogArea.setLayout(fl);
 		fl.marginWidth=10;
@@ -73,7 +74,7 @@ public class WPPSaveFileDialog extends Dialog {
 		Composite fileSelection = new Composite(dialogArea, SWT.NONE);
 		GridLayout layout = new GridLayout(15, true);
 		fileSelection.setLayout(layout);
-		final Text fileText = new Text(fileSelection, SWT.SINGLE | SWT.BORDER);
+		fileText = new Text(fileSelection, SWT.SINGLE | SWT.BORDER);
 		GridData gd1 = new GridData(GridData.FILL_HORIZONTAL);
 		gd1.horizontalSpan = 12;
 		fileText.setLayoutData(gd1);
@@ -94,14 +95,10 @@ public class WPPSaveFileDialog extends Dialog {
 						FileDialog dlg=new FileDialog(shell, SWT.SAVE);
 						dlg.setFilterNames(new String[]{"DSS Files (*.dss)", "All Files (*.*)"});
 						dlg.setFilterExtensions(new String[]{"*.dss", "*.*"});
-						dlg.setFileName(fileName);
+						dlg.setFileName(fileText.getText());
 						String file=dlg.open();
-						if (file ==null){
-							fileText.setText("");
-							fileName="";
-						}else{
+						if (file !=null){
 							fileText.setText(file);
-							fileName=file;
 						}
 					}
 				});
@@ -113,6 +110,7 @@ public class WPPSaveFileDialog extends Dialog {
 	
 	@Override
 	public void okPressed(){
+		fileName=fileText.getText();
 		boolean exists = (new File(fileName)).exists();
 		if (exists) {
 			final IWorkbench workbench=PlatformUI.getWorkbench();
@@ -121,13 +119,17 @@ public class WPPSaveFileDialog extends Dialog {
 					Shell shell=workbench.getActiveWorkbenchWindow().getShell();
 					boolean overwrite = MessageDialog.openConfirm(shell, "Overwrite Confirm", "Do you want to overwrite the file of "+fileName);
 					if (overwrite){
-						
+						saveDssFile();
 					}
 				}
 			}); 
 		} else {
-
+			saveDssFile();
 		}
 		close();
+	}
+	
+	public void saveDssFile(){
+		
 	}
 }
