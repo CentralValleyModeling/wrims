@@ -130,6 +130,19 @@ public class WPPSaveFileDialog extends Dialog {
 	}
 	
 	public void saveDssFile(){
-		
+		String request;
+		if (flag==1){
+			request="savesvdss:"+fileName;
+		}else{
+			request="savedvdss:"+fileName;
+		}
+		try {
+			if (!fileName.equals("")){
+				String status=DebugCorePlugin.target.sendRequest(request);
+				if (status.equals("dsssavefailed")) System.out.println("Failed in saving dss data to "+fileName);
+			}
+		} catch (DebugException e) {
+			WPPException.handleException(e);
+		}
 	}
 }

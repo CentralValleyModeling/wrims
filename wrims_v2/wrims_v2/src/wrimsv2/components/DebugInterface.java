@@ -20,6 +20,10 @@ import org.antlr.runtime.RecognitionException;
 
 import com.sun.java.util.collections.Arrays;
 
+import vista.db.dss.DSSData;
+import vista.db.dss.DSSDataWriter;
+import vista.db.dss.DSSUtil;
+import vista.time.TimeFactory;
 import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
@@ -392,6 +396,34 @@ public class DebugInterface {
 			setSolverOptions(requestParts);
 			try {
 				sendRequest("solveroptionset");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if (request.startsWith("savesvdss:")){
+			int index=request.indexOf(":");
+			String fileName=request.substring(index+1);
+			boolean saveSucceed=saveSvDss(fileName);
+			try {
+				if (saveSucceed) {
+					sendRequest("svardsssaved");
+				}else{
+					sendRequest("dsssavefailed");
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if (request.startsWith("savedvdss:")){
+			int index=request.indexOf(":");
+			String fileName=request.substring(index+1);
+			boolean saveSucceed=saveDvDss(fileName);
+			try {
+				if (saveSucceed) {
+					sendRequest("dvardsssaved");
+				}else{
+					sendRequest("dsssavefailed");
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -959,6 +991,39 @@ public class DebugInterface {
 				SetXALog.enableXALog();
 				ControlData.solverName="XALOG";
 			}
+		}
+	}
+	
+	public boolean saveSvDss(String fileName){
+		DSSDataWriter writer = new DSSDataWriter(fileName);
+		try {
+			writer.openDSSFile();
+		} catch (Exception e) {
+			writer.closeDSSFile();
+			return false;
+		}
+		DssOperation.saveSvarTSData(writer, fileName);
+		writer.closeDSSFile();
+		return true;
+	}
+	
+	public boolean saveDvDss(String fileName){
+		if (fileName.equalsIgnoreCase(FilePaths.fullDvarDssPath)){
+			DssOperation.writeInitDvarAliasToDSS();
+			DssOperation.writeDVAliasToDSS();
+			return true;
+		}else{
+			DSSDataWriter writer = new DSSDataWriter(fileName);
+			try {
+				writer.openDSSFile();
+			} catch (Exception e) {
+				writer.closeDSSFile();
+				return false;
+			}
+			DssOperation.saveInitialData(writer, fileName);
+			DssOperation.saveDvarData(writer, fileName);
+			writer.closeDSSFile();
+			return true;
 		}
 	}
 	

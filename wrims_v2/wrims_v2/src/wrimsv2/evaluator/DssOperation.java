@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
+import com.google.common.primitives.Doubles;
+
 public class DssOperation {
 	public static boolean getSVTimeseries(String name, String file, String timeStep){
 		ControlData.timeStep=timeStep;
@@ -63,6 +65,7 @@ public class DssOperation {
 				dataArray.add(dataEntry);
 			}
 		}
+		dds.setUnits(ts.units);
         dds.setData(dataArray);
         dds.setTimeStep(rts.getTimeInterval().toString());
         dds.setStartTime(startDate);
@@ -292,5 +295,79 @@ public class DssOperation {
 	public static String getTSName(String entryNameTS){
 		String[] entry=entryNameTS.split("@");
 		return entry[0];
+	}
+	
+	public static void saveInitialData(DSSDataWriter writer, String fileName){
+		System.out.println("write initial data for dvar and alias to "+fileName);
+		Set initSet=DataTimeSeries.dvAliasInit.keySet();
+		Iterator iterator = initSet.iterator();
+		while(iterator.hasNext()){
+			String initName=(String)iterator.next();
+			DssDataSet dds=DataTimeSeries.dvAliasInit.get(initName);
+			ArrayList<Double> data=dds.getData();
+			int size=data.size();
+			double[] values=new double[size];
+			for (int i=0; i<size; i++){
+				values[i]=data.get(i);
+			}
+			DSSData ds = new DSSData();
+			ds._dataType=DSSUtil.REGULAR_TIME_SERIES;
+			ds._yType="PER-AVER";
+			ds._numberRead=values.length;
+			ds._yUnits=dds.getUnits().toUpperCase();
+			ds._yValues = values;
+			Date startDate=dds.getStartTime();
+			long startJulmin = TimeFactory.getInstance().createTime(startDate).getTimeInMinutes();
+			boolean storeFlags = false;
+			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(initName)+"/"+dds.getKind()+"//"+ControlData.partE+"/"+ControlData.svDvPartF+"/";
+			writer.storeTimeSeriesData(pathName, startJulmin, ds,
+				storeFlags);
+		}
+	}
+	
+	public static void saveDvarData(DSSDataWriter writer, String fileName){
+		System.out.println("write dvar and alias to "+fileName);
+		String startDateStr=TimeOperation.dssTimeEndDay(ControlData.startYear, ControlData.startMonth, ControlData.startDay);
+		long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
+		Set dvAliasSet=DataTimeSeries.dvAliasTS.keySet();
+		Iterator iterator = dvAliasSet.iterator();
+		while(iterator.hasNext()){
+			String dvAliasName=(String)iterator.next();
+			DssDataSetFixLength ddsfl=DataTimeSeries.dvAliasTS.get(dvAliasName);
+			double[] values=ddsfl.getData();
+			DSSData dd = new DSSData();
+			dd._dataType=DSSUtil.REGULAR_TIME_SERIES;
+			dd._yType="PER-AVER";
+			dd._numberRead=values.length;
+			dd._yUnits=ddsfl.getUnits().toUpperCase();
+			dd._yValues = values;
+			boolean storeFlags = false;
+			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+ControlData.partE+"/"+ControlData.svDvPartF+"/";
+			writer.storeTimeSeriesData(pathName, startJulmin, dd,
+						storeFlags);
+		}
+	}
+	
+	public static void saveSvarTSData(DSSDataWriter writer, String fileName){
+		System.out.println("write svar timeseries to "+fileName);
+		String startDateStr=TimeOperation.dssTimeEndDay(ControlData.startYear, ControlData.startMonth, ControlData.startDay);
+		long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
+		Set svTsSet=DataTimeSeries.svTS.keySet();
+		Iterator iterator = svTsSet.iterator();
+		while(iterator.hasNext()){
+			String svTsName=(String)iterator.next();
+			DssDataSet dds=DataTimeSeries.svTS.get(svTsName);
+			ArrayList<Double> values=dds.getData();
+			DSSData dd = new DSSData();
+			dd._dataType=DSSUtil.REGULAR_TIME_SERIES;
+			dd._yType="PER-AVER";
+			dd._numberRead=values.size();
+			dd._yUnits=dds.getUnits().toUpperCase();
+			dd._yValues = Doubles.toArray(values);
+			boolean storeFlags = false;
+			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(svTsName)+"/"+dds.getKind()+"//"+ControlData.partE+"/"+ControlData.svDvPartF+"/";
+			writer.storeTimeSeriesData(pathName, startJulmin, dd,
+						storeFlags);
+		}
 	}
 }
