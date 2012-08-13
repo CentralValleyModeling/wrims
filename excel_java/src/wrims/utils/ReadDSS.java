@@ -118,6 +118,8 @@ public class ReadDSS {
 
 		DataReference[] refs = group.find(new String[] { "", partB, partC, "", "", "" });
 
+		System.out.println(partB+":"+partC);
+		System.out.println("refs.length:"+refs.length);
 		DataSet ds = refs[0].getData();
 		RegularTimeSeries rts = (RegularTimeSeries) ds;
 
