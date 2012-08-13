@@ -73,7 +73,9 @@ public class NextCycleMenu implements IWorkbenchWindowActionDelegate {
 		enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
-		new EnableRunMenu(enableMap);
+		enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, false);
+		new EnableMenus(enableMap);
 	}
 	
 	public void enableRunMenuNoDebugging(){
@@ -85,7 +87,9 @@ public class NextCycleMenu implements IWorkbenchWindowActionDelegate {
 		enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, false);
-		new EnableRunMenu(enableMap);
+		enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, false);
+		new EnableMenus(enableMap);
 	}
 	
 	public void enableRunMenuNoResume(){
@@ -97,6 +101,8 @@ public class NextCycleMenu implements IWorkbenchWindowActionDelegate {
 		enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
-		new EnableRunMenu(enableMap);
+		enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, false);
+		new EnableMenus(enableMap);
 	}
 }

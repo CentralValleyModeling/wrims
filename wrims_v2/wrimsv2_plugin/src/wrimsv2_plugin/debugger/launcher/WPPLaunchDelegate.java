@@ -94,9 +94,11 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			
 			String dvarFile = null;
 			dvarFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE, (String)null);
+			DebugCorePlugin.dvFileName=dvarFile;
 			
 			String svarFile = null;
 			svarFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVARFILE, (String)null);
+			DebugCorePlugin.svFileName=svarFile;
 			
 			String initFile = null;
 			initFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFILE, (String)null);

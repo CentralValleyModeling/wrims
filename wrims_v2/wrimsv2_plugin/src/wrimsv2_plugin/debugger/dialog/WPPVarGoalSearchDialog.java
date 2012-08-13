@@ -37,7 +37,7 @@ import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
-import wrimsv2_plugin.debugger.menuitem.EnableRunMenu;
+import wrimsv2_plugin.debugger.menuitem.EnableMenus;
 import wrimsv2_plugin.debugger.view.WPPAllGoalView;
 import wrimsv2_plugin.debugger.view.WPPAllVariableView;
 import wrimsv2_plugin.debugger.view.WPPGoalView;

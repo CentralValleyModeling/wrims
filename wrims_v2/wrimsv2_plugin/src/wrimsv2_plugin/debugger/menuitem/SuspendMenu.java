@@ -56,6 +56,8 @@ public class SuspendMenu implements IWorkbenchWindowActionDelegate {
 		enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, true);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
-		new EnableRunMenu(enableMap);
+		enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, false);
+		new EnableMenus(enableMap);
 	}
 }

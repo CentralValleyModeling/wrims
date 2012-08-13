@@ -139,7 +139,7 @@
 <extension
          point="org.eclipse.debug.ui.launchShortcuts">
       <shortcut
-            label="WPP Application"
+            label="WRESL/WRIMS Application"
             class="wrimsv2_plugin.debugger.launcher.WPPLaunchShortcut"
             modes="run, debug"
             id="WPP.launchShortcut">
@@ -174,7 +174,7 @@
             id="wpp.editor"
             extensions="wpp"/>
    </extension>
-      <extension
+   <extension
          point="org.eclipse.ui.editorActions">
       <editorContribution
             targetID="wpp.editor"
@@ -288,4 +288,37 @@
 		</action>
 	</actionSet>
 </extension>
+ <extension
+       point="org.eclipse.ui.actionSets">
+    <actionSet
+          id="wpp.dss"
+          label="DSS"
+          visible="true">
+       <menu
+             id="wpp.dss"
+             label="DSS"
+             path="additions">
+          <groupMarker
+                name="operation">
+          </groupMarker>
+          <separator
+                name="additions">
+          </separator>
+       </menu>
+       <action
+             class="wrimsv2_plugin.debugger.menuitem.SaveDVFileMenu"
+             id="wpp.savedvfile"
+             label="Save To DV File"
+             menubarPath="wpp.dss/operation"
+             style="push">
+       </action>
+       <action
+             class="wrimsv2_plugin.debugger.menuitem.SaveSVFileMenu"
+             id="wpp.savesvfile"
+             label="Save To SV File"
+             menubarPath="wpp.dss/operation"
+             style="push">
+       </action>
+    </actionSet>
+ </extension>
 </plugin>

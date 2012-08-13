@@ -24,7 +24,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import wrimsv2_plugin.debugger.exception.WPPException;
-import wrimsv2_plugin.debugger.menuitem.EnableRunMenu;
+import wrimsv2_plugin.debugger.menuitem.EnableMenus;
 import wrimsv2_plugin.debugger.menuitem.NextTimeStepMenu;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.toolbaritem.DebugSet;
@@ -89,6 +89,9 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static String solver="XA";
 	public static String log="None";
 	
+	public static String svFileName="";
+	public static String dvFileName="";
+	
 	public static final String ID_WPP_PLUGIN="wrimsv2_plugin";
 	public static final String ID_WPP_DEBUG_MODEL = "wpp.debugModel";
 	public static final String ID_WPP_VARIABLE_VIEW="wpp.variableview";
@@ -105,6 +108,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ID_WPP_NEXTTIMESTEP="wpp.nexttimestep";
 	public static final String ID_WPP_NEXTCYCLE="wpp.nextcycle";
 	public static final String ID_WPP_RESIMMENU="wpp.resim";
+	public static final String ID_WPP_SAVETODVFILE="wpp.savedvfile";
+	public static final String ID_WPP_SAVETOSVFILE="wpp.savesvfile";
 	public static final String ID_WPP_SOLVEROPTIONMENU="wpp.solveroption";
 	/**
 	 * Identifier for the WPP launch configuration type
