@@ -66,6 +66,7 @@ public class DssOperation {
 			}
 		}
 		dds.setUnits(ts.units);
+		dds.setKind(partC);
         dds.setData(dataArray);
         dds.setTimeStep(rts.getTimeInterval().toString());
         dds.setStartTime(startDate);
@@ -350,8 +351,6 @@ public class DssOperation {
 	
 	public static void saveSvarTSData(DSSDataWriter writer, String fileName){
 		System.out.println("write svar timeseries to "+fileName);
-		String startDateStr=TimeOperation.dssTimeEndDay(ControlData.startYear, ControlData.startMonth, ControlData.startDay);
-		long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
 		Set svTsSet=DataTimeSeries.svTS.keySet();
 		Iterator iterator = svTsSet.iterator();
 		while(iterator.hasNext()){
@@ -361,13 +360,25 @@ public class DssOperation {
 			DSSData dd = new DSSData();
 			dd._dataType=DSSUtil.REGULAR_TIME_SERIES;
 			dd._yType="PER-AVER";
-			dd._numberRead=values.size();
+			int size=values.size();
+			dd._numberRead=size;
 			dd._yUnits=dds.getUnits().toUpperCase();
-			dd._yValues = Doubles.toArray(values);
+			dd._yValues=new double[size];
+			for (int i=0; i<size; i++){
+				Double value=values.get(i);
+				if (value != null){
+					dd._yValues[i]=value;
+				}else{
+					dd._yValues[i]=-901.0;
+				}
+			}
 			boolean storeFlags = false;
-			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(svTsName)+"/"+dds.getKind()+"//"+ControlData.partE+"/"+ControlData.svDvPartF+"/";
-			writer.storeTimeSeriesData(pathName, startJulmin, dd,
-						storeFlags);
+			Date startDate=dds.getStartTime();
+			startDate.setTime(startDate.getTime()-1*24*60*60);
+			String startDateStr=TimeOperation.dssTimeEndDay(startDate.getYear()+1900, startDate.getMonth()+1, startDate.getDate());
+			long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
+			String pathName="/"+ControlData.partA+"/"+getTSName(svTsName)+"/"+dds.getKind()+"//"+ControlData.partE+"/"+ControlData.svDvPartF+"/";
+			writer.storeTimeSeriesData(pathName, startJulmin, dd, storeFlags);
 		}
 	}
 }

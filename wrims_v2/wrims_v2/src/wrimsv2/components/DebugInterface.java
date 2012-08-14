@@ -18,6 +18,7 @@ import java.util.Set;
 
 import org.antlr.runtime.RecognitionException;
 
+import com.google.common.primitives.Doubles;
 import com.sun.java.util.collections.Arrays;
 
 import vista.db.dss.DSSData;
@@ -998,15 +999,15 @@ public class DebugInterface {
 		DSSDataWriter writer = new DSSDataWriter(fileName);
 		try {
 			writer.openDSSFile();
+			DssOperation.saveSvarTSData(writer, fileName);
+			writer.closeDSSFile();
+			return true;
 		} catch (Exception e) {
 			writer.closeDSSFile();
 			return false;
 		}
-		DssOperation.saveSvarTSData(writer, fileName);
-		writer.closeDSSFile();
-		return true;
 	}
-	
+		
 	public boolean saveDvDss(String fileName){
 		if (fileName.equalsIgnoreCase(FilePaths.fullDvarDssPath)){
 			DssOperation.writeInitDvarAliasToDSS();

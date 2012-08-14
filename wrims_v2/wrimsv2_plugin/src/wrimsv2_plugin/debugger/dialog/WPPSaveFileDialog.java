@@ -139,7 +139,9 @@ public class WPPSaveFileDialog extends Dialog {
 		try {
 			if (!fileName.equals("")){
 				String status=DebugCorePlugin.target.sendRequest(request);
-				if (status.equals("dsssavefailed")) System.out.println("Failed in saving dss data to "+fileName);
+				if (status.equals("dsssavefailed")){
+					System.out.println("Failed in saving dss data to "+fileName);
+				}
 			}
 		} catch (DebugException e) {
 			WPPException.handleException(e);
