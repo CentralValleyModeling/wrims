@@ -18,7 +18,7 @@ import org.eclipse.debug.ui.ILaunchConfigurationTab;
 import org.eclipse.debug.ui.sourcelookup.SourceLookupTab;
 
 /**
- * Tab group for a WPP application
+ * Tab group for a WRESL/WRIMS application
  */
 public class WPPTabGroup extends AbstractLaunchConfigurationTabGroup {
 	/* (non-Javadoc)
