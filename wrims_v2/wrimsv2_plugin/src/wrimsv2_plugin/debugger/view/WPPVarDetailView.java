@@ -72,7 +72,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 					String variableName=((WPPValue)item).getVariableString();
 					selectedVariableNames.add(variableName);
 				}
-				if (selectedVariableNames.size()>0){
+				if (selectedVariableNames.size()>0 && !selectedVariableNames.equals(DebugCorePlugin.selectedVariableNames)){
 					DebugCorePlugin.selectedVariableNames=selectedVariableNames;
 					if (DebugCorePlugin.target !=null && DebugCorePlugin.target.isSuspended()){
 						updateDetailVariableView(selectedVariableNames);
