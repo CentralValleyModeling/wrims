@@ -539,6 +539,7 @@ public class DebugInterface {
 						Map<String, IntDouble> multiplier = ee.getMultiplier();
 						Set<String> mKeySet = multiplier.keySet();
 						Iterator<String> mi = mKeySet.iterator();
+						boolean hasData = true;
 						while (mi.hasNext()){
 							String variable=mi.next();
 							Number value=multiplier.get(variable).getData();
@@ -562,7 +563,12 @@ public class DebugInterface {
 									goalString=goalString+df.format(value)+variable;
 								}
 							}
-							lhs=lhs+value1*dvMap.get(variable).getData().getData().doubleValue();
+							IntDouble id = dvMap.get(variable).getData();
+							if (id==null){
+								hasData=false;
+							}else{
+								lhs=lhs+value1*id.getData().doubleValue();
+							}
 						}
 						Number value=ee.getValue().getData();
 						double value1=value.doubleValue();
@@ -574,7 +580,7 @@ public class DebugInterface {
 							goalString=goalString+ec.getSign()+"0#";
 						}
 						lhs=lhs+value1;
-						if (Math.abs(lhs)<=0.00001){
+						if (Math.abs(lhs)<=0.00001 && hasData){
 							controlGoals.add(goalName);
 						}
 					}
@@ -765,14 +771,20 @@ public class DebugInterface {
 				Map<String, IntDouble> multiplier = ee.getMultiplier();
 				Set<String> mKeySet = multiplier.keySet();
 				Iterator<String> mi = mKeySet.iterator();
+				boolean hasData = true;
 				while (mi.hasNext()){
 					String variable=mi.next();
 					double value1=multiplier.get(variable).getData().doubleValue();
-					lhs=lhs+dvMap.get(variable).getData().getData().doubleValue()*value1;
+					IntDouble id = dvMap.get(variable).getData();
+					if (id ==null){
+						hasData=false;
+					}else{
+						lhs=lhs+id.getData().doubleValue()*value1;
+					}
 				}
 				double value1=ee.getValue().getData().doubleValue();
 				lhs=lhs+value1;
-				if (Math.abs(lhs)<=0.00001) goalNames=goalNames+goalName+":";
+				if (Math.abs(lhs)<=0.00001 && hasData) goalNames=goalNames+goalName+":";
 			}
 		}
 		if (goalNames.endsWith(":")) goalNames=goalNames.substring(0, goalNames.length()-1);
