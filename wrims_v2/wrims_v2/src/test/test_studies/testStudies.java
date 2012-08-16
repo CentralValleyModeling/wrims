@@ -58,9 +58,6 @@ public class testStudies {
         cd.currYear=ControlData.startYear;
         cd.currMonth=ControlData.startMonth;
         cd.currDay=ControlData.startDay;
-        cd.writeDssStartYear=ControlData.startYear;
-        cd.writeDssStartMonth=ControlData.startMonth;
-        cd.writeDssStartDay=ControlData.startDay;
         cd.solverName="XA";
         FilePaths.csvFolderName="csv";
 		
@@ -119,12 +116,6 @@ public class testStudies {
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
-        cd.writeDssStartYear=ControlData.startYear;
-        cd.writeDssStartMonth=ControlData.startMonth;
-        cd.writeDssStartDay=ControlData.startDay;
-        cd.writeDssStartYear=ControlData.startYear;
-        cd.writeDssStartMonth=ControlData.startMonth;
-        cd.writeDssStartDay=ControlData.startDay;
         
 		StudyDataSet sds=parseCalsim3();
 		
@@ -154,12 +145,6 @@ public class testStudies {
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
-        cd.writeDssStartYear=ControlData.startYear;
-        cd.writeDssStartMonth=ControlData.startMonth;
-        cd.writeDssStartDay=ControlData.startDay;
-        cd.writeDssStartYear=ControlData.startYear;
-        cd.writeDssStartMonth=ControlData.startMonth;
-        cd.writeDssStartDay=ControlData.startDay;
         
 		StudyDataSet sds=parseCalsim3();
 		
@@ -215,9 +200,6 @@ public class testStudies {
         cd.currYear=ControlData.startYear;
         cd.currMonth=ControlData.startMonth;
         cd.currDay=ControlData.startDay;
-        cd.writeDssStartYear=ControlData.startYear;
-        cd.writeDssStartMonth=ControlData.startMonth;
-        cd.writeDssStartDay=ControlData.startDay;
         cd.solverName="XA";
         FilePaths.csvFolderName="csv";
         
