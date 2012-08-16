@@ -11,7 +11,8 @@ import wrimsv2_plugin.debugger.model.WPPValue;
 
 public class SetSelectionInTable {
 	public SetSelectionInTable(IStructuredSelection oldSelection, TableViewer viewer, Table table){
-		boolean hasOldSelection=false;
+		int[] indices=new int[0];
+		table.select(indices);
 		ArrayList<String> oldSelections = new ArrayList<String>();
 		ArrayList<Integer> oldSelectionIndices=new ArrayList<Integer>();
     	int i=0;
@@ -25,14 +26,13 @@ public class SetSelectionInTable {
     		Object element;
     		while ((element=viewer.getElementAt(i))!=null ){
     			if (oldSelections.contains(((WPPValue)element).getVariableString())){
-    				hasOldSelection=true;
         			oldSelectionIndices.add(i);
     			}
     			i=i+1;
     		}
-    		if (hasOldSelection){
-    			int size = oldSelectionIndices.size();
-    			int[] indices=new int[size];
+    		int size = oldSelectionIndices.size();
+    		if (size>0){
+    			indices=new int[size];
     			for (int j=0; j<size; j++){
     				indices[j]=oldSelectionIndices.get(j);
     			}
