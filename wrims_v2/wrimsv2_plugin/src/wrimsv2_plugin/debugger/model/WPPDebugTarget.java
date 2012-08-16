@@ -364,6 +364,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 										monitor.worked(25);
 									}
 									monitor.done();	
+									updateVarDetailView(DebugCorePlugin.selectedVariableNames);
 								}
 							});
 						} catch (InvocationTargetException e) {
@@ -848,7 +849,6 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	private void handleSuspended(final String event){
 		enableRunMenuWithSuspended();
 		checkVisibleViews();
-		updateVarDetailView(DebugCorePlugin.selectedVariableNames);
 		
 		if (event.contains("!")){
 			final String[] dateStrings=event.replaceFirst("suspended!", "").split("#");
