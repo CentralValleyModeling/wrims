@@ -104,9 +104,6 @@ public class ControllerTree {
         cd.currYear=ControlData.startYear;
         cd.currMonth=ControlData.startMonth;
         cd.currDay=ControlData.startDay;
-        cd.writeDssStartYear=ControlData.startYear;
-        cd.writeDssStartMonth=ControlData.startMonth;
-        cd.writeDssStartDay=ControlData.startDay;
         cd.solverName="XA";
         FilePaths.csvFolderName="csv";
         
@@ -136,10 +133,6 @@ public class ControllerTree {
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
-        cd.writeDssStartYear=cd.startYear;
-        cd.writeDssStartMonth=cd.startMonth;
-        cd.writeDssStartDay=cd.startDay;
-        
 	}
 	
 	public void generateStudyFile(){

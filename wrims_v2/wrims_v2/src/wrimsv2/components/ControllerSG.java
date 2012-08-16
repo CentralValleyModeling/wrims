@@ -119,14 +119,7 @@ public class ControllerSG {
         FilePaths.csvFolderName="csv";
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
-		cd.currDay=cd.startDay;
-        cd.writeDssStartYear=ControlData.startYear;
-        cd.writeDssStartMonth=ControlData.startMonth;
-        cd.writeDssStartDay=ControlData.startDay;
-        cd.writeDssStartYear=ControlData.startYear;
-        cd.writeDssStartMonth=ControlData.startMonth;
-        cd.writeDssStartDay=ControlData.startDay;
-        
+		cd.currDay=cd.startDay;        
 	}
 	
 	public void setControlData(String[] args){
@@ -151,10 +144,6 @@ public class ControllerSG {
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
-        cd.writeDssStartYear=cd.startYear;
-        cd.writeDssStartMonth=cd.startMonth;
-        cd.writeDssStartDay=cd.startDay;
-
 	}
 	
 	public void generateStudyFile(){

@@ -101,10 +101,6 @@ public class ControllerBatch {
 		ControlData.currYear=ControlData.startYear;
 		ControlData.currMonth=ControlData.startMonth;
 		ControlData.currDay=ControlData.startDay;
-        ControlData.writeDssStartYear=ControlData.startYear;
-        ControlData.writeDssStartMonth=ControlData.startMonth;
-        ControlData.writeDssStartDay=ControlData.startDay;
-
 	}
 	
 	public void generateStudyFile(){

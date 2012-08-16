@@ -67,9 +67,6 @@ public class ControlData {
 	public static int cycleEndMonth;
 	public static int cycleEndYear;
 	public static double cycleTimeStepPriority=0;
-	public static int writeDssStartYear;
-	public static int writeDssStartMonth;
-	public static int writeDssStartDay;
 	public static ArrayList<Integer> totalTimeStep;
 	public static Date monthlyStartTime;
 	public static Date dailyStartTime;

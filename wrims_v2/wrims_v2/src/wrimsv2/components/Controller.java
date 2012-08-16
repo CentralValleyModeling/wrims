@@ -120,16 +120,9 @@ public class Controller {
 		cd.endDay=30;
 	    cd.solverName="XA";
 	    FilePaths.csvFolderName="csv";
-
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
-	    cd.writeDssStartYear=ControlData.startYear;
-	    cd.writeDssStartMonth=ControlData.startMonth;
-	    cd.writeDssStartDay=ControlData.startDay;
-	    cd.writeDssStartYear=ControlData.startYear;
-	    cd.writeDssStartMonth=ControlData.startMonth;
-	    cd.writeDssStartDay=ControlData.startDay;
     }
 
 	public void setControlData(String[] args){
@@ -154,9 +147,6 @@ public class Controller {
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
 		cd.currDay=cd.startDay;
-        cd.writeDssStartYear=cd.startYear;
-        cd.writeDssStartMonth=cd.startMonth;
-        cd.writeDssStartDay=cd.startDay;
 	}
 
 	public void generateStudyFile(){

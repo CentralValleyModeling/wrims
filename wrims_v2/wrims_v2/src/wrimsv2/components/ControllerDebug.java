@@ -120,14 +120,7 @@ public class ControllerDebug extends Thread {
         FilePaths.csvFolderName="csv";
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
-		cd.currDay=cd.startDay;
-        cd.writeDssStartYear=ControlData.startYear;
-        cd.writeDssStartMonth=ControlData.startMonth;
-        cd.writeDssStartDay=ControlData.startDay;
-        cd.writeDssStartYear=ControlData.startYear;
-        cd.writeDssStartMonth=ControlData.startMonth;
-        cd.writeDssStartDay=ControlData.startDay;
-        
+		cd.currDay=cd.startDay;    
 	}
 	
 	public void setControlData(String[] args){
@@ -151,11 +144,7 @@ public class ControllerDebug extends Thread {
 		FilePaths.csvFolderName = args[16];
 		cd.currYear=cd.startYear;
 		cd.currMonth=cd.startMonth;
-		cd.currDay=cd.startDay;
-        cd.writeDssStartYear=cd.startYear;
-        cd.writeDssStartMonth=cd.startMonth;
-        cd.writeDssStartDay=cd.startDay;
-        
+		cd.currDay=cd.startDay;       
 	}
 	
 	public void generateStudyFile(){

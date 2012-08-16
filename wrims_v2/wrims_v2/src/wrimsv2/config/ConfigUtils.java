@@ -202,9 +202,6 @@ public class ConfigUtils {
 		ControlData.currYear = ControlData.startYear;
 		ControlData.currMonth = ControlData.startMonth;
 		ControlData.currDay = ControlData.startDay;
-		ControlData.writeDssStartYear = ControlData.startYear;
-		ControlData.writeDssStartMonth = ControlData.startMonth;
-		ControlData.writeDssStartDay = ControlData.startDay;
 		
 		System.out.println("TimeStep:       "+ControlData.timeStep);
 		System.out.println("SvarAPart:      "+ControlData.partA);
