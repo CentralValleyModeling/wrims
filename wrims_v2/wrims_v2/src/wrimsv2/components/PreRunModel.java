@@ -17,6 +17,7 @@ import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.DssOperation;
+import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.external.LoadAllDll;
 
 public class PreRunModel {
@@ -26,7 +27,8 @@ public class PreRunModel {
 		ControlData.totalTimeStep=VariableTimeStep.getTotalTimeStep(sds);
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
-		ControlData.startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
+		ControlData.monthlyStartTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, TimeOperation.numberOfDays(ControlData.startMonth, ControlData.startYear));
+		ControlData.dailyStartTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 				
 		ControlData.writer = new DSSDataWriter(FilePaths.fullDvarDssPath);
 		try {

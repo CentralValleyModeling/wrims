@@ -214,7 +214,7 @@ public class ControllerTree {
 		ControlData.currStudyDataSet=sds;
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
-		ControlData.startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
+		ControlData.monthlyStartTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 				
 		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
 		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
@@ -298,7 +298,7 @@ public class ControllerTree {
 		ControlData.currStudyDataSet=sds;
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
-		ControlData.startTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
+		ControlData.monthlyStartTime=new Date(ControlData.startYear-1900, ControlData.startMonth-1, ControlData.startDay);
 				
 		ControlData.groupInit= DSSUtil.createGroup("local", FilePaths.fullInitDssPath);
 		ControlData.groupSvar= DSSUtil.createGroup("local", FilePaths.fullSvarDssPath);
@@ -643,7 +643,7 @@ public class ControllerTree {
 					double[] data=new double[ControlData.totalTimeStep.get(0)];
 					dds.setData(data);
 					dds.setTimeStep(ControlData.partE);
-					dds.setStartTime(ControlData.startTime);
+					dds.setStartTime(ControlData.monthlyStartTime);
 					dds.setUnits(alias.units);
 					dds.setKind(alias.kind);
 					DataTimeSeries.dvAliasTS.put(asName,dds);
@@ -679,7 +679,7 @@ public class ControllerTree {
 					double[] data=new double[ControlData.totalTimeStep.get(0)];
 					dds.setData(data);
 					dds.setTimeStep(ControlData.partE);
-					dds.setStartTime(ControlData.startTime);
+					dds.setStartTime(ControlData.monthlyStartTime);
 					dds.setUnits(alias.units);
 					dds.setKind(alias.kind);
 					DataTimeSeries.dvAliasTS.put(asName,dds);

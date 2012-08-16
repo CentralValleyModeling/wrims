@@ -214,7 +214,11 @@ public class LPSolveSolver {
 				double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
 				dds.setData(data);
 				dds.setTimeStep(ControlData.partE);
-				dds.setStartTime(ControlData.startTime);
+				if (dds.getTimeStep().equals("1MON")){
+					dds.setStartTime(ControlData.monthlyStartTime);
+				}else{
+					dds.setStartTime(ControlData.dailyStartTime);
+				}
 				dds.setUnits(dvar.units);
 				dds.setKind(dvar.kind);
 				DataTimeSeries.dvAliasTS.put(entryNameTS,dds);

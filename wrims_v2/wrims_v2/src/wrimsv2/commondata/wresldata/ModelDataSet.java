@@ -574,7 +574,11 @@ public class ModelDataSet implements Serializable {
 					double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
 					dds.setData(data);
 					dds.setTimeStep(ControlData.partE);
-					dds.setStartTime(ControlData.startTime);
+					if (dds.getTimeStep().equals("1MON")){
+						dds.setStartTime(ControlData.monthlyStartTime);
+					}else{
+						dds.setStartTime(ControlData.dailyStartTime);
+					}
 					dds.setUnits(alias.units);
 					dds.setKind(alias.kind);
 					DataTimeSeries.dvAliasTS.put(entryNameTS,dds);
@@ -617,7 +621,11 @@ public class ModelDataSet implements Serializable {
 						double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
 						dds.setData(data);
 						dds.setTimeStep(ControlData.partE);
-						dds.setStartTime(ControlData.startTime);
+						if (dds.getTimeStep().equals("1MON")){
+							dds.setStartTime(ControlData.monthlyStartTime);
+						}else{
+							dds.setStartTime(ControlData.dailyStartTime);
+						}
 						dds.setUnits(alias.units);
 						dds.setKind(alias.kind);
 						DataTimeSeries.dvAliasTS.put(entryNameTS,dds);

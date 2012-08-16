@@ -71,7 +71,8 @@ public class ControlData {
 	public static int writeDssStartMonth;
 	public static int writeDssStartDay;
 	public static ArrayList<Integer> totalTimeStep;
-	public static Date startTime;
+	public static Date monthlyStartTime;
+	public static Date dailyStartTime;
 	public static String simulationTimeFrame;
 	public static String partA;
 	public static String svDvPartF;

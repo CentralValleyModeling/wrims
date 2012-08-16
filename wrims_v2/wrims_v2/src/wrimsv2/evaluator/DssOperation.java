@@ -260,7 +260,7 @@ public class DssOperation {
 			Date startDate=dds.getStartTime();
 			long startJulmin = TimeFactory.getInstance().createTime(startDate).getTimeInMinutes();
 			boolean storeFlags = false;
-			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(initName)+"/"+dds.getKind()+"//"+ControlData.partE+"/"+ControlData.svDvPartF+"/";
+			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(initName)+"/"+dds.getKind()+"//"+dds.getTimeStep()+"/"+ControlData.svDvPartF+"/";
 			ControlData.writer.storeTimeSeriesData(pathName, startJulmin, ds,
 				storeFlags);
 		}
@@ -268,8 +268,6 @@ public class DssOperation {
 	
 	public static void writeDVAliasToDSS() {
 		System.out.println("write dvar and alias to dv dss");
-		String startDateStr=TimeOperation.dssTimeEndDay(ControlData.writeDssStartYear, ControlData.writeDssStartMonth, ControlData.writeDssStartDay);
-		long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
 		Set dvAliasSet=DataTimeSeries.dvAliasTS.keySet();
 		Iterator iterator = dvAliasSet.iterator();
 		while(iterator.hasNext()){
@@ -283,7 +281,10 @@ public class DssOperation {
 			dd._yUnits=ddsfl.getUnits().toUpperCase();
 			dd._yValues = values;
 			boolean storeFlags = false;
-			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+ControlData.partE+"/"+ControlData.svDvPartF+"/";
+			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+ddsfl.getTimeStep()+"/"+ControlData.svDvPartF+"/";
+			Date startDate=ddsfl.getStartTime();
+			String startDateStr=TimeOperation.dssTimeEndDay(startDate.getYear()+1900, startDate.getMonth()+1, startDate.getDate());
+			long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
 			ControlData.writer.storeTimeSeriesData(pathName, startJulmin, dd,
 						storeFlags);
 		}
@@ -320,7 +321,7 @@ public class DssOperation {
 			Date startDate=dds.getStartTime();
 			long startJulmin = TimeFactory.getInstance().createTime(startDate).getTimeInMinutes();
 			boolean storeFlags = false;
-			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(initName)+"/"+dds.getKind()+"//"+ControlData.partE+"/"+ControlData.svDvPartF+"/";
+			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(initName)+"/"+dds.getKind()+"//"+dds.getTimeStep()+"/"+ControlData.svDvPartF+"/";
 			writer.storeTimeSeriesData(pathName, startJulmin, ds,
 				storeFlags);
 		}
@@ -328,8 +329,6 @@ public class DssOperation {
 	
 	public static void saveDvarData(DSSDataWriter writer, String fileName){
 		System.out.println("write dvar and alias to "+fileName);
-		String startDateStr=TimeOperation.dssTimeEndDay(ControlData.startYear, ControlData.startMonth, ControlData.startDay);
-		long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
 		Set dvAliasSet=DataTimeSeries.dvAliasTS.keySet();
 		Iterator iterator = dvAliasSet.iterator();
 		while(iterator.hasNext()){
@@ -343,7 +342,10 @@ public class DssOperation {
 			dd._yUnits=ddsfl.getUnits().toUpperCase();
 			dd._yValues = values;
 			boolean storeFlags = false;
-			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+ControlData.partE+"/"+ControlData.svDvPartF+"/";
+			String pathName="/"+ControlData.partA+"/"+DssOperation.getTSName(dvAliasName)+"/"+ddsfl.getKind()+"//"+ddsfl.getTimeStep()+"/"+ControlData.svDvPartF+"/";
+			Date startDate=ddsfl.getStartTime();
+			String startDateStr=TimeOperation.dssTimeEndDay(startDate.getYear()+1900, startDate.getMonth()+1, startDate.getDate());
+			long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
 			writer.storeTimeSeriesData(pathName, startJulmin, dd,
 						storeFlags);
 		}
@@ -377,7 +379,7 @@ public class DssOperation {
 			startDate.setTime(startDate.getTime()-1*24*60*60);
 			String startDateStr=TimeOperation.dssTimeEndDay(startDate.getYear()+1900, startDate.getMonth()+1, startDate.getDate());
 			long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
-			String pathName="/"+ControlData.partA+"/"+getTSName(svTsName)+"/"+dds.getKind()+"//"+ControlData.partE+"/"+ControlData.svDvPartF+"/";
+			String pathName="/"+ControlData.partA+"/"+getTSName(svTsName)+"/"+dds.getKind()+"//"+dds.getTimeStep()+"/"+ControlData.svDvPartF+"/";
 			writer.storeTimeSeriesData(pathName, startJulmin, dd, storeFlags);
 		}
 	}
