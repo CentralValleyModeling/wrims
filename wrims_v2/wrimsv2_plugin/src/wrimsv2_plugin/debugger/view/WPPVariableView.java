@@ -120,11 +120,7 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 		 */
 		public Object[] getChildren(Object parentElement) {
 			if (parentElement instanceof WPPDebugTarget) {
-				try {
-					return ((WPPDebugTarget)parentElement).getDataStack();
-				} catch (DebugException e) {
-					WPPException.handleException(e);
-				}
+				return DebugCorePlugin.dataStack;
 			} else if (parentElement instanceof WPPValue){
 				try{
 					if (((WPPValue)parentElement).hasVariables()){

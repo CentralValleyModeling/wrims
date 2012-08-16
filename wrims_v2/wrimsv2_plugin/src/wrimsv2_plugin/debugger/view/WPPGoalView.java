@@ -117,11 +117,7 @@ public class WPPGoalView extends AbstractDebugView implements ISelectionListener
 		 */
 		public Object[] getChildren(Object parentElement) {
 			if (parentElement instanceof WPPDebugTarget) {
-				try {
-					return ((WPPDebugTarget)parentElement).getGoalStack();
-				} catch (DebugException e) {
-					WPPException.handleException(e);
-				}
+				return DebugCorePlugin.goalStack;
 			} else if (parentElement instanceof WPPValue){
 				try{
 					if (((WPPValue)parentElement).hasVariables()){

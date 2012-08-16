@@ -112,11 +112,7 @@ public class WPPAllVariableView extends AbstractDebugView implements ISelectionL
 		 */
 		public Object[] getChildren(Object parentElement) {
 			if (parentElement instanceof WPPDebugTarget) {
-				try {
-					return ((WPPDebugTarget)parentElement).getAllDataStack();
-				} catch (DebugException e) {
-					WPPException.handleException(e);
-				}
+				return DebugCorePlugin.allDataStack;
 			} else if (parentElement instanceof WPPValue){
 				try{
 					if (((WPPValue)parentElement).hasVariables()){

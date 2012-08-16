@@ -83,6 +83,7 @@ import wrimsv2_plugin.debugger.breakpoint.WPPRunToLineBreakpoint;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.menuitem.EnableMenus;
+import wrimsv2_plugin.debugger.view.UpdateView;
 import wrimsv2_plugin.debugger.view.WPPAllGoalView;
 import wrimsv2_plugin.debugger.view.WPPAllVariableView;
 import wrimsv2_plugin.debugger.view.WPPExceptionView;
@@ -116,11 +117,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	// threads
 	private IThread[] fThreads;
 	private WPPThread fThread;
-	
-	private IValue[] fDataStack=new IValue[0];
-	private IValue[] fGoalStack=new IValue[0];
-	private IValue[] fAllDataStack=new IValue[0];
-	private IValue[] fAllGoalStack=new IValue[0];
+
 	private String fCurrFileName;
 	private ISourceLookupResult result;
 	private int currLine;
@@ -308,7 +305,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		}
 	}
 	
-	public void checkVisibleViews(){
+	public void processViews(){
 		final IWorkbench workbench=PlatformUI.getWorkbench();
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
@@ -348,7 +345,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 					}
 				//}
 				final IWorkbench workbench=PlatformUI.getWorkbench();
-				final String filePath=findFilePathActiveEditor(workBenchPage);
+				final String filePath=UpdateView.findFilePathActiveEditor(workBenchPage);
 				
 				workbench.getDisplay().asyncExec(new Runnable(){
 					public void run(){
@@ -360,11 +357,11 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 								public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 									monitor.beginTask("Update views", 100);
 									for (String viewName: dataAvaialbeViewNames){
-										processView(viewName, monitor, dialog, filePath);
+										UpdateView.processView(viewName, monitor, dialog, filePath, DebugCorePlugin.target);
 										monitor.worked(25);
 									}
 									monitor.done();	
-									updateVarDetailView(DebugCorePlugin.selectedVariableNames);
+									UpdateView.updateVarDetailView(DebugCorePlugin.selectedVariableNames);
 								}
 							});
 						} catch (InvocationTargetException e) {
@@ -380,25 +377,13 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		});
 	}
 	
-	public void processVariableGoalView(){
-		final IWorkbench workbench=PlatformUI.getWorkbench();
-		workbench.getDisplay().asyncExec(new Runnable(){
-			public void run(){
-				IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
-				String filePath=findFilePathActiveEditor(workBenchPage);
-				updateVariableView(filePath);
-				updateGoalView(filePath);
-			}
-		});
-	}
-	
 	public void installPartListener(){
 		final IWorkbench workbench=PlatformUI.getWorkbench();
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
 				IWorkbenchWindow window=workbench.getActiveWorkbenchWindow();
 				IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
-				final String filePath=findFilePathActiveEditor(workBenchPage);
+				final String filePath=UpdateView.findFilePathActiveEditor(workBenchPage);
 				if (window !=null){				
 					fPartListener2=new IPartListener2(){
 
@@ -412,12 +397,12 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 									if (!allVGLoadedViewNames.contains(viewName)){
 										allVGLoadedViewNames.add(viewName);
 										if (isSuspended()){
-											processView(viewName, filePath);
+											UpdateView.processView(viewName, filePath, DebugCorePlugin.target);
 										}
 									}
 								}else{
 									if (isSuspended()){
-										processView(viewName, filePath);
+										UpdateView.processView(viewName, filePath, DebugCorePlugin.target);
 									}
 								}
 							}
@@ -430,9 +415,9 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 							if ((part instanceof ITextEditor) && (!part.equals(fPart))){
 								fPart=part;
 								IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
-								String filePath=findFilePathActiveEditor(workBenchPage);						
+								String filePath=UpdateView.findFilePathActiveEditor(workBenchPage);						
 								if (isSuspended() && filePath.endsWith(".wresl")){
-									processVariableGoalView();
+									UpdateView.processVariableGoalView(DebugCorePlugin.target);
 								}
 							}
 						}
@@ -734,22 +719,6 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		removeEventListener(this);
 	}
 	
-	public IValue[] getDataStack() throws DebugException {
-		return fDataStack;
-	}
-	
-	public IValue[] getAllDataStack() throws DebugException {
-		return fAllDataStack;
-	}
-	
-	public IValue[] getGoalStack() throws DebugException {
-		return fGoalStack;
-	}
-	
-	public IValue[] getAllGoalStack() throws DebugException {
-		return fAllGoalStack;
-	}
-	
 	/* (non-Javadoc)
 	 * @see example.debug.core.model.WPPDebugElement#sendRequest(java.lang.String)
 	 */
@@ -789,12 +758,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	 * @return whether popping the data stack is currently permitted
 	 */
 	public boolean canPop() {
-	    try {
-            return !isTerminated() && isSuspended() && getDataStack().length > 0;
-        } catch (DebugException e) {
-        	WPPException.handleException(e);
-        }
-        return false;
+	    return !isTerminated() && isSuspended() && DebugCorePlugin.dataStack.length > 0;
 	}
 	
 	/**
@@ -804,7 +768,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	 * @throws DebugException if the stack is empty or the request fails
 	 */
 	public IValue pop() throws DebugException {
-	    IValue[] dataStack = getDataStack();
+	    IValue[] dataStack = DebugCorePlugin.dataStack;
 	    if (dataStack.length > 0) {
 	        sendRequest("popdata");
 	        return dataStack[0];
@@ -840,7 +804,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		if (event.startsWith("suspended")) {		
 			handleSuspended(event);
 		}else if (event.startsWith("updateVarMonitor!")){
-			updateVarMonitor(event);
+			UpdateView.updateVarMonitor(event);
 		}else if(event.startsWith("totalcycle#")){
 			DebugCorePlugin.totalNoOfCycle=Integer.parseInt(event.replace("totalcycle#", ""));
 		}
@@ -848,7 +812,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	
 	private void handleSuspended(final String event){
 		enableRunMenuWithSuspended();
-		checkVisibleViews();
+		processViews();
 		
 		if (event.contains("!")){
 			final String[] dateStrings=event.replaceFirst("suspended!", "").split("#");
@@ -871,275 +835,6 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			setSourceName(eventPart[2]);
 			openSourceHighlight();
 		}
-	}
-	
-	private void updateVarMonitor(String event){
-		final String dataString=event.replaceFirst("updateVarMonitor!","");
-		final IWorkbench workbench=PlatformUI.getWorkbench();
-		workbench.getDisplay().asyncExec(new Runnable(){
-			public void run(){
-				IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
-				WPPVarMonitorView varMonitorView=(WPPVarMonitorView) workBenchPage.findView(DebugCorePlugin.ID_WPP_VARIABLEMONITOR_VIEW);
-				varMonitorView.updatePlot(dataString);
-			}
-		});
-	}
-	
-	private void processView(String viewName, IProgressMonitor monitor, ProgressMonitorDialog dialog, String filePath){
-		if (viewName.equals(DebugCorePlugin.TITLE_ALLVARIABLES_VIEW)){
-			monitor.subTask("Update all variables");
-			updateAllVariableView();
-		}else if (viewName.equals(DebugCorePlugin.TITLE_VARIABLES_VIEW)){
-			monitor.subTask("Update variables in current file");
-			updateVariableView(filePath);
-		}else if (viewName.equals(DebugCorePlugin.TITLE_ALLGOALS_VIEW)){
-			monitor.subTask("Update all goals");
-			updateAllGoalView();
-		}else if (viewName.equals(DebugCorePlugin.TITLE_GOALS_VIEW)){
-			monitor.subTask("Update goals in current file");
-			updateGoalView(filePath);
-		}
-	}
-	
-	private void processView(String viewName, String filePath){
-		if (viewName.equals(DebugCorePlugin.TITLE_ALLVARIABLES_VIEW)){
-			updateAllVariableViewWithMonitor();
-		}else if (viewName.equals(DebugCorePlugin.TITLE_VARIABLES_VIEW)){
-			updateVariableView(filePath);
-		}else if (viewName.equals(DebugCorePlugin.TITLE_ALLGOALS_VIEW)){
-			updateAllGoalViewWithMonitor();
-		}else if (viewName.equals(DebugCorePlugin.TITLE_GOALS_VIEW)){
-			updateGoalView(filePath);
-		}
-	}
-	
-	public void updateVariableView(String filePath){
-		
-		final String data;
-		try {
-			data=sendRequest("data:"+filePath);
-		
-			final IWorkbench workbench=PlatformUI.getWorkbench();
-			workbench.getDisplay().asyncExec(new Runnable(){
-				public void run(){
-					IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
-				
-					//data="i:4456#a(-1):123.0#reservoir:reservorlevel1%56:reservorlevel2%1234";
-					fDataStack=DataProcess.generateTree(data);
-					DebugCorePlugin.dataStack=fDataStack;
-				
-					WPPVariableView variableView = (WPPVariableView) workBenchPage.findView(DebugCorePlugin.ID_WPP_VARIABLE_VIEW);
-					variableView.updateView();
-				}
-			});
-		
-		} catch (DebugException e) {
-			WPPException.handleException(e);
-		}
-	}
-	
-	public void updateAllVariableView(){
-		String data="";
-		try{
-			data=sendRequest("alldata");
-		}catch (DebugException e) {
-			WPPException.handleException(e);
-		}
-						
-		fAllDataStack=DataProcess.generateTree(data);
-							
-		DebugCorePlugin.allDataStack=fAllDataStack;
-		final IWorkbench workbench=PlatformUI.getWorkbench();
-			workbench.getDisplay().asyncExec(new Runnable(){
-			public void run(){
-				WPPAllVariableView allVariableView = (WPPAllVariableView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_ALLVARIABLE_VIEW);
-				allVariableView.updateView();
-			}
-		});
-	}
-	
-	public void updateAllVariableViewWithMonitor(){
-		final IWorkbench workbench=PlatformUI.getWorkbench();
-		workbench.getDisplay().asyncExec(new Runnable(){
-			public void run(){
-				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-				ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);  
-				try {
-					dialog.run(true,false, new IRunnableWithProgress() {
-						@Override
-						public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-							String data="";
-							monitor.beginTask("Update all variables", 100);
-							try{
-								data=sendRequest("alldata");
-							}catch (DebugException e) {
-								WPPException.handleException(e);
-							}
-							monitor.worked(33);
-							
-							fAllDataStack=DataProcess.generateTree(data);
-							monitor.worked(33);
-							
-							DebugCorePlugin.allDataStack=fAllDataStack;
-							final IWorkbench workbench=PlatformUI.getWorkbench();
-							workbench.getDisplay().asyncExec(new Runnable(){
-								public void run(){
-									WPPAllVariableView allVariableView = (WPPAllVariableView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_ALLVARIABLE_VIEW);
-									allVariableView.updateView();	
-								}
-							});
-							monitor.done();
-						}
-					});
-				} catch (InvocationTargetException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
-	public void updateAllGoalView(){
-		String goal="";
-		try{
-			goal=sendRequest("allgoals");
-		}catch (DebugException e) {
-			WPPException.handleException(e);
-		}
-									
-		fAllGoalStack=DataProcess.generateTree(goal);
-							
-		DebugCorePlugin.allGoalStack=fAllGoalStack;
-		DebugCorePlugin.allControlGoals=new ArrayList<String>();
-		final IWorkbench workbench=PlatformUI.getWorkbench();
-		workbench.getDisplay().asyncExec(new Runnable(){
-			public void run(){
-				WPPAllGoalView allGoalView = (WPPAllGoalView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_ALLGOAL_VIEW);
-				allGoalView.updateView();
-			}
-		});
-	}
-	
-	public void updateAllGoalViewWithMonitor(){
-		final IWorkbench workbench=PlatformUI.getWorkbench();
-		workbench.getDisplay().asyncExec(new Runnable(){
-			public void run(){
-				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-				ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);  
-				try {
-					dialog.run(true,false, new IRunnableWithProgress() {
-						@Override
-						public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-							String goal="";
-							monitor.beginTask("Update all goals", 100);
-							try{
-								goal=sendRequest("allgoals");
-							}catch (DebugException e) {
-								WPPException.handleException(e);
-							}
-							monitor.worked(33);
-							
-							fAllGoalStack=DataProcess.generateTree(goal);
-							monitor.worked(33);
-							
-							DebugCorePlugin.allGoalStack=fAllGoalStack;
-							DebugCorePlugin.allControlGoals=new ArrayList<String>();
-							final IWorkbench workbench=PlatformUI.getWorkbench();
-							workbench.getDisplay().asyncExec(new Runnable(){
-								public void run(){
-									WPPAllGoalView allGoalView = (WPPAllGoalView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_ALLGOAL_VIEW);
-									allGoalView.updateView();
-								}
-							});
-							monitor.done();
-						}
-					});
-				} catch (InvocationTargetException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
-	public void updateGoalView(String filePath){
-		final String data;
-		try {
-			data=sendRequest("goal:"+filePath);
-		
-			final IWorkbench workbench=PlatformUI.getWorkbench();
-			workbench.getDisplay().asyncExec(new Runnable(){
-				public void run(){
-					IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
-				
-					String[] dataParts=data.split("!");
-				
-					if (dataParts.length==2){
-						fGoalStack=DataProcess.generateTree(dataParts[0]);
-						DebugCorePlugin.goalStack=fGoalStack;
-						DebugCorePlugin.controlGoals=DataProcess.generateArrayList(dataParts[1]);
-					}else if (dataParts.length==1){
-						fGoalStack=DataProcess.generateTree(dataParts[0]);
-						DebugCorePlugin.goalStack=fGoalStack;
-						DebugCorePlugin.controlGoals=new ArrayList<String>();
-					}else{
-						fGoalStack=new WPPValue[0];
-				    	DebugCorePlugin.goalStack=fGoalStack;
-				    	DebugCorePlugin.controlGoals=new ArrayList<String>();
-					}
-				
-					WPPGoalView goalView = (WPPGoalView) workBenchPage.findView(DebugCorePlugin.ID_WPP_GOAL_VIEW);
-					goalView.updateView();
-				}
-			});
-		} catch (DebugException e) {
-			WPPException.handleException(e);
-		}
-	}
-	
-	public void updateVarDetailView(final ArrayList<String> variableNames){
-		if (variableNames.size()>0){
-			try{
-				String data="";
-				String linkedVarNames="";
-				for (String varName:variableNames){
-					linkedVarNames=linkedVarNames+varName+"#";
-				}
-				if (linkedVarNames.endsWith("#")) linkedVarNames=linkedVarNames.substring(0, linkedVarNames.length()-1);
-				data= DebugCorePlugin.target.sendRequest("tsdetail:"+linkedVarNames);
-				DebugCorePlugin.varDetailTimeseries=DataProcess.generateVarDetailData(data);
-				data= DebugCorePlugin.target.sendRequest("futdetail:"+variableNames.get(0));
-				DebugCorePlugin.varDetailFuture=DataProcess.generateVarDetailData(data);
-				data= DebugCorePlugin.target.sendRequest("cycledetail:"+variableNames.get(0));
-				DebugCorePlugin.varDetailCycle=DataProcess.generateVarDetailData(data);
-				final IWorkbench workbench=PlatformUI.getWorkbench();
-				workbench.getDisplay().asyncExec(new Runnable(){
-					public void run(){
-						WPPVarDetailView varDetailView = (WPPVarDetailView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_VARIABLEDETAIL_VIEW);
-						varDetailView.updateDetail(variableNames);
-					}
-				});
-			} catch (DebugException e) {
-				WPPException.handleException(e);
-			}
-		}
-	}
-	
-	private String findFilePathActiveEditor(IWorkbenchPage workBenchPage){
-		String path="";
-		IEditorPart editorPart=workBenchPage.getActiveEditor() ;
-		if (editorPart != null){
-			IEditorInput input = editorPart.getEditorInput();
-			IFile file = ResourceUtil.getFile(input);
-			path = file.getRawLocation().toString();
-		}
-		return path;
 	}
 	
 	public void openSourceHighlight(){

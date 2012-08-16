@@ -112,11 +112,7 @@ public class WPPAllGoalView extends AbstractDebugView implements ISelectionListe
 		 */
 		public Object[] getChildren(Object parentElement) {
 			if (parentElement instanceof WPPDebugTarget) {
-				try {
-					return ((WPPDebugTarget)parentElement).getAllGoalStack();
-				} catch (DebugException e) {
-					WPPException.handleException(e);
-				}
+				return DebugCorePlugin.allGoalStack;
 			} else if (parentElement instanceof WPPValue){
 				try{
 					if (((WPPValue)parentElement).hasVariables()){
