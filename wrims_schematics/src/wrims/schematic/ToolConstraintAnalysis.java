@@ -418,7 +418,7 @@ public class ToolConstraintAnalysis extends javax.swing.JPanel {
 			w.dvDssFilePath = _filePath[2].getText(); // "D:\\cvwrsm\\trunk\\excel_java\\Version134_052312_WRIMS050912DV.DSS";
 			w.excelFilePath = _filePath[0].getText();	
 						
-			task.setComponents(this.com, this.button, excelFilePath_default);
+			task.setComponents(this.button, excelFilePath_default);
 			task.addPropertyChangeListener(new TaskListener(this.bar, this.button));
 
 			task.execute();
@@ -451,12 +451,11 @@ public class ToolConstraintAnalysis extends javax.swing.JPanel {
 	class Task extends SwingWorker<Void, Void> {
 
 		
-		Component com;
+		//Component com;
 		JButton button;
 		
-		public void setComponents(Component com, JButton button){
+		public void setComponents(JButton button){
 			
-			this.com = com;
 			this.button= button;
 		}
 		
@@ -479,7 +478,7 @@ public class ToolConstraintAnalysis extends javax.swing.JPanel {
 			WriteDssToExcel.dvDssFilePath = _filePath[2].getText(); // "D:\\cvwrsm\\trunk\\excel_java\\Version134_052312_WRIMS050912DV.DSS";
 			WriteDssToExcel.excelFilePath = _filePath[0].getText();
 
-			JOptionPane.showMessageDialog(this.com, "before writing");
+			JOptionPane.showMessageDialog(null,"before writing");
 
 			setProgress(10);
 			
@@ -512,7 +511,7 @@ public class ToolConstraintAnalysis extends javax.swing.JPanel {
 			catch (Exception e) {
 				
 
-				JOptionPane.showMessageDialog(this.com, e.getMessage());
+				JOptionPane.showMessageDialog(null, e.getMessage());
 
 				
 				// StringWriter errors = new StringWriter();

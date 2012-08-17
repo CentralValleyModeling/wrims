@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -198,13 +199,13 @@ public class WriteDssToExcel {
 	public class Task extends SwingWorker<Void, Void> {
 
 		
-		Component com;
+		//Component com;
 		JButton button;
 		String excelFilePath_default;
 		
-		public void setComponents(Component com, JButton button, String excelFilePath_default){
+		public void setComponents(JButton button, String excelFilePath_default){
 			
-			this.com = com;
+			//this.com = com;
 			this.button= button;
 			this.excelFilePath_default = excelFilePath_default;
 		}
@@ -219,7 +220,7 @@ public class WriteDssToExcel {
 			
 			try {
 				
-				JOptionPane.showMessageDialog(this.com, "Writing DSS data to Excel file...");	
+				JOptionPane.showMessageDialog(null, "Writing DSS data to Excel file...");	
 
 				setProgress(5);
 				
@@ -247,7 +248,11 @@ public class WriteDssToExcel {
 
 			}
 			catch (Exception e) {
-				JOptionPane.showMessageDialog(this.com, e.getMessage());
+				
+				JTextArea text = new JTextArea(e.getMessage());
+				JOptionPane.showMessageDialog(null,text);
+				
+				//JOptionPane.showMessageDialog(this.com, e.getMessage());
 				
 				setProgress(0);
 				this.button.setEnabled(true);

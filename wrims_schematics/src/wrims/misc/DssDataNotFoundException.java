@@ -36,7 +36,7 @@ public class DssDataNotFoundException extends Exception {
 		String out = "";
 		
 		for ( String m: array){
-			out = out + "\n" + m ; 
+			out = out + m +"\n"; 
 		}
 		return out;	
 	}
