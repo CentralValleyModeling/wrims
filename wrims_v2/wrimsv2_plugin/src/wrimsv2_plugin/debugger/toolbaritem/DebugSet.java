@@ -301,7 +301,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 		////_day.removeSelectionListener(dl);
 		_intMonth = new Integer(_month.getText());
 		_intYear = new Integer(_year.getText());
-		int day=_intDay;
+		int day=new Integer(_day.getText());
 		int maxDay=TimeOperation.numberOfDays(
 				_intMonth, _intYear);
 		for (int d = _day.getItemCount(); d >maxDay ; d--) {
