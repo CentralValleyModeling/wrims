@@ -171,7 +171,7 @@ public class ToolConstraintAnalysis extends javax.swing.JPanel {
 		JLabel label1 = new JLabel(
 				"<html>  If you get an error message says \"DSS Paths with No Data Found...\", please edit <br>"
 						+ "the DSS paths to match your study output. They are specified in this Excel file <br>"
-						+ "named <u><font color=green>OperationsControl_CS3_version134.xlsm</font></u> in the folder \"tools\\cs3_constraint_report\" </html>");
+						+ "named <u><font color=green>OperationsControl_CS3_version134.xlsm</font></u> in the folder \"tools\\cs3_operation_control\" </html>");
 		label1.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		panel.add(label1);
 
