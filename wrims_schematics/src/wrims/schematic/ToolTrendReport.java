@@ -37,7 +37,7 @@ public class ToolTrendReport extends javax.swing.JPanel {
 	private JTextField _startYr = new JTextField(4), _stopYr = new JTextField(4), _startMon = new JTextField(2),
 			_stopMon = new JTextField(2);
 	private JCheckBox[] _isActive = new JCheckBox[4];
-	private JTextField _dssApart = new JTextField(10), _dssFpart = new JTextField(10);
+	private JTextField _dssPartA = new JTextField(10), _dssPartF = new JTextField(10);
 
 	private String wrimsv2EnginePath;
 	private String batFilePath;
@@ -49,7 +49,7 @@ public class ToolTrendReport extends javax.swing.JPanel {
 
 		wrimsv2EnginePath = System.getenv("WRIMSv2_Engine_Home");
 		
-		File excelFileDirF = new File(wrimsv2EnginePath, "tools\\trend_report\\");
+		File excelFileDirF = new File(wrimsv2EnginePath, "tools\\cs3_trend_report\\");
 		excelFileDir = excelFileDirF.getAbsolutePath(); 
 		excelFilePath = new File(excelFileDirF, "Trend_Reporting_Ver3.0.xlsb").getAbsolutePath(); // excelFileDir + "Trend_Reporting_Ver3.0.xlsb";
 		batFilePath   = new File(excelFileDirF, "callTrendReportMacro.bat").getAbsolutePath();
@@ -67,8 +67,8 @@ public class ToolTrendReport extends javax.swing.JPanel {
 		_startMon.setText("10");
 		_stopMon.setText("9");
 
-		_dssApart.setText("CALSIM");
-		_dssFpart.setText("CALSIM30_10");
+		_dssPartA.setText("CALSIM");
+		_dssPartF.setText("CALSIM30_10");
 
 		_studyLabel[0] = new JTextField("study1", 10);
 		_studyLabel[1] = new JTextField("study2", 10);
@@ -175,7 +175,7 @@ public class ToolTrendReport extends javax.swing.JPanel {
 		JLabel label1 = new JLabel(
 				"<html>  If you get an error message says \"DSS Paths with No Data Found...\", please edit <br>" + 
 		                "the DSS paths to match your study output. They are specified in this Excel file <br>" +
-				        "named <u><font color=green>Trend_Reporting_Ver3.0.xlsb</font></u> in the folder \"tools\\trend_report\" </html>");
+				        "named <u><font color=green>Trend_Reporting_Ver3.0.xlsb</font></u> in the folder \"tools\\cs3_trend_report\" </html>");
 		label1.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		panel.add(label1);
 
@@ -213,7 +213,7 @@ public class ToolTrendReport extends javax.swing.JPanel {
 
 		c.gridx = 1;
 		c.gridy = 0;
-		panel.add(_dssApart, c);
+		panel.add(_dssPartA, c);
 
 		c.gridx = 0;
 		c.gridy = 1;
@@ -226,7 +226,7 @@ public class ToolTrendReport extends javax.swing.JPanel {
 
 		c.gridx = 1;
 		c.gridy = 2;
-		panel.add(_dssFpart, c);
+		panel.add(_dssPartF, c);
 
 		return panel;
 	}
@@ -426,7 +426,7 @@ public class ToolTrendReport extends javax.swing.JPanel {
 			String executeCommand =
 
 			"cscript.exe " + vbsFilePath + " " + excelFilePath + " " + startDate + " " + stopDate + " "
-					+ _dssApart.getText() + " " + _dssFpart.getText() + " " + _isActive[0].isSelected() + " "
+					+ _dssPartA.getText() + " " + _dssPartF.getText() + " " + _isActive[0].isSelected() + " "
 					+ _isActive[1].isSelected() + " " + _isActive[2].isSelected() + " " + _isActive[3].isSelected()
 					+ " "
 
@@ -457,24 +457,3 @@ public class ToolTrendReport extends javax.swing.JPanel {
 	}
 }
 
-class JTextFieldLimit extends PlainDocument {
-	private int limit;
-
-	JTextFieldLimit(int limit) {
-		super();
-		this.limit = limit;
-	}
-
-	JTextFieldLimit(int limit, boolean upper) {
-		super();
-		this.limit = limit;
-	}
-
-	public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
-		if (str == null) return;
-
-		if ((getLength() + str.length()) <= limit) {
-			super.insertString(offset, str, attr);
-		}
-	}
-}
