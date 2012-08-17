@@ -47,7 +47,14 @@ public class ToolConstraintAnalysis extends javax.swing.JPanel {
 
 		File excelFileDirF = new File(wrimsv2EnginePath, "tools\\cs3_operation_control\\");
 		excelFileDir = excelFileDirF.getAbsolutePath();
-		excelFilePath_default = new File(excelFileDirF, "OperationsControl_CS3_version134.xlsm").getAbsolutePath(); 
+		try {
+			excelFilePath_default = new File(excelFileDirF, "OperationsControl_CS3_version134.xlsm").getCanonicalPath();
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			String msg = new File(excelFileDirF, "OperationsControl_CS3_version134.xlsm").getAbsolutePath();
+			JOptionPane.showMessageDialog(null, "File not found: "+msg);
+		} 
 																										
 
 		_startYr.setDocument(new JTextFieldLimit(4));
@@ -448,94 +455,94 @@ public class ToolConstraintAnalysis extends javax.swing.JPanel {
 
 	}
 
-	class Task extends SwingWorker<Void, Void> {
-
-		
-		//Component com;
-		JButton button;
-		
-		public void setComponents(JButton button){
-			
-			this.button= button;
-		}
-		
-		
-		@Override
-		public Void doInBackground() {
-
-			setProgress(0);
-			this.button.setEnabled(false);
-			
-			Process p;
-
-			WriteDssToExcel.beginYear = Integer.parseInt(_startYr.getText());
-			WriteDssToExcel.beginMonth = Integer.parseInt(_startMon.getText());
-			WriteDssToExcel.endYear = Integer.parseInt(_stopYr.getText());
-			WriteDssToExcel.endMonth = Integer.parseInt(_stopMon.getText());
-			WriteDssToExcel.dssPartA = _dssPartA.getText();
-			WriteDssToExcel.dssPartF = _dssPartF.getText();
-			WriteDssToExcel.svDssFilePath = _filePath[1].getText(); // "D:\\cvwrsm\\trunk\\excel_java\\CalSim30_10_SV.dss";
-			WriteDssToExcel.dvDssFilePath = _filePath[2].getText(); // "D:\\cvwrsm\\trunk\\excel_java\\Version134_052312_WRIMS050912DV.DSS";
-			WriteDssToExcel.excelFilePath = _filePath[0].getText();
-
-			JOptionPane.showMessageDialog(null,"before writing");
-
-			setProgress(10);
-			
-			try {
-
-				//WriteDssToExcel.writeDssToConstraintReport();
-				
-				
-				Workbook wb = ExcelTool.getWorkbook(WriteDssToExcel.excelFilePath);
-				
-				//setProgress(10);
-				
-				WriteDssToExcel.findTimeWindow();
-				
-				wb = WriteDssToExcel.writeDssToExcelWorkBook(wb,WriteDssToExcel.svDssFilePath, WriteDssToExcel.svColIndex_partB, WriteDssToExcel.svColIndex_partC, WriteDssToExcel.svRowIndex_partBC, WriteDssToExcel.svTimeColIndex);
-				
-				setProgress(40);
-				
-				wb = WriteDssToExcel.writeDssToExcelWorkBook(wb,WriteDssToExcel.dvDssFilePath, WriteDssToExcel.dvColIndex_partB, WriteDssToExcel.dvColIndex_partC, WriteDssToExcel.dvRowIndex_partBC, WriteDssToExcel.dvTimeColIndex);
-
-				//setProgress(90);
-				
-				ExcelTool.writeWorkbookToFile(wb, WriteDssToExcel.excelFilePath);
-				
-				//setProgress(95);
-				
-				p = Runtime.getRuntime().exec(new String[] { "cmd.exe", "/c", "start", "excel", excelFilePath_default });
-
-			}
-			catch (Exception e) {
-				
-
-				JOptionPane.showMessageDialog(null, e.getMessage());
-
-				
-				// StringWriter errors = new StringWriter();
-				// e.printStackTrace(new PrintWriter(errors));
-				// JOptionPane.showMessageDialog(this,errors.toString());
-				// e.printStackTrace();
-
-			} 
-			finally {
-				
-				setProgress(0);
-				this.button.setEnabled(true);
-			}
-			
-			return null;
-		}
-
-		@Override
-		public void done() {
-			// Toolkit.getDefaultToolkit().beep();
-			// startButton.setEnabled(true);
-			// setCursor(null); //turn off the wait cursor
-			// taskOutput.append("Done!\n");
-		}
-	}
+//	class Task extends SwingWorker<Void, Void> {
+//
+//		
+//		//Component com;
+//		JButton button;
+//		
+//		public void setComponents(JButton button){
+//			
+//			this.button= button;
+//		}
+//		
+//		
+//		@Override
+//		public Void doInBackground() {
+//
+//			setProgress(0);
+//			this.button.setEnabled(false);
+//			
+//			Process p;
+//
+//			WriteDssToExcel.beginYear = Integer.parseInt(_startYr.getText());
+//			WriteDssToExcel.beginMonth = Integer.parseInt(_startMon.getText());
+//			WriteDssToExcel.endYear = Integer.parseInt(_stopYr.getText());
+//			WriteDssToExcel.endMonth = Integer.parseInt(_stopMon.getText());
+//			WriteDssToExcel.dssPartA = _dssPartA.getText();
+//			WriteDssToExcel.dssPartF = _dssPartF.getText();
+//			WriteDssToExcel.svDssFilePath = _filePath[1].getText(); // "D:\\cvwrsm\\trunk\\excel_java\\CalSim30_10_SV.dss";
+//			WriteDssToExcel.dvDssFilePath = _filePath[2].getText(); // "D:\\cvwrsm\\trunk\\excel_java\\Version134_052312_WRIMS050912DV.DSS";
+//			WriteDssToExcel.excelFilePath = _filePath[0].getText();
+//
+//			JOptionPane.showMessageDialog(null,"before writing");
+//
+//			setProgress(10);
+//			
+//			try {
+//
+//				//WriteDssToExcel.writeDssToConstraintReport();
+//				
+//				
+//				Workbook wb = ExcelTool.getWorkbook(WriteDssToExcel.excelFilePath);
+//				
+//				//setProgress(10);
+//				
+//				WriteDssToExcel.findTimeWindow();
+//				
+//				wb = WriteDssToExcel.writeDssToExcelWorkBook(wb,WriteDssToExcel.svDssFilePath, WriteDssToExcel.svColIndex_partB, WriteDssToExcel.svColIndex_partC, WriteDssToExcel.svRowIndex_partBC, WriteDssToExcel.svTimeColIndex);
+//				
+//				setProgress(40);
+//				
+//				wb = WriteDssToExcel.writeDssToExcelWorkBook(wb,WriteDssToExcel.dvDssFilePath, WriteDssToExcel.dvColIndex_partB, WriteDssToExcel.dvColIndex_partC, WriteDssToExcel.dvRowIndex_partBC, WriteDssToExcel.dvTimeColIndex);
+//
+//				//setProgress(90);
+//				
+//				ExcelTool.writeWorkbookToFile(wb, WriteDssToExcel.excelFilePath);
+//				
+//				//setProgress(95);
+//				
+//				p = Runtime.getRuntime().exec(new String[] { "cmd.exe", "/c", "start", "excel", excelFilePath_default });
+//
+//			}
+//			catch (Exception e) {
+//				
+//
+//				JOptionPane.showMessageDialog(null, e.getMessage());
+//
+//				
+//				// StringWriter errors = new StringWriter();
+//				// e.printStackTrace(new PrintWriter(errors));
+//				// JOptionPane.showMessageDialog(this,errors.toString());
+//				// e.printStackTrace();
+//
+//			} 
+//			finally {
+//				
+//				setProgress(0);
+//				this.button.setEnabled(true);
+//			}
+//			
+//			return null;
+//		}
+//
+//		@Override
+//		public void done() {
+//			// Toolkit.getDefaultToolkit().beep();
+//			// startButton.setEnabled(true);
+//			// setCursor(null); //turn off the wait cursor
+//			// taskOutput.append("Done!\n");
+//		}
+//	}
 
 }

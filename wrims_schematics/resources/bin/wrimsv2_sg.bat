@@ -61,6 +61,12 @@ set APPJARS=%JARDIR%\xml.jar;%APPJARS%
 set APPJARS=%JARDIR%\wrimsv2.jar;%APPJARS%
 set APPJARS=%JARDIR%\vista.jar;%APPJARS%
 set APPJARS=%JARDIR%\commons-io-2.1.jar;%APPJARS%
+set APPJARS=%JARDIR%\poi-3.8-20120326.jar;%APPJARS%
+set APPJARS=%JARDIR%\poi-ooxml-3.8-20120326.jar;%APPJARS%
+set APPJARS=%JARDIR%\xmlbeans-2.3.0.jar;%APPJARS%
+set APPJARS=%JARDIR%\poi-ooxml-schemas-3.8-20120326.jar;%APPJARS%
+set APPJARS=%JARDIR%\dom4j-1.6.1.jar;%APPJARS%
+set APPJARS=%JARDIR%\stax-api-1.0.1.jar;%APPJARS%
 :-----------------:
 : schematic jars  :
 :-----------------:
@@ -74,7 +80,7 @@ rem ###############
 rem starting wrims schematic
 rem ###############
 :start
-"%wrims_home%/jre6/bin/java" -mx512m  -Djava.library.path="%JNILIB%" %CLASSPATH%  wrims.schematic.MainFrame "%wrims_home%"
+"%wrims_home%/jre6/bin/java" -Xmx256M -Xss32M -Djava.library.path="%JNILIB%" %CLASSPATH%  wrims.schematic.MainFrame "%wrims_home%"
 :end
 endlocal 
 rem 
