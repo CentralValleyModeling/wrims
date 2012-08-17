@@ -711,10 +711,12 @@ public class InputPanel extends JPanel {
 				_strTimeStep = e.getItem().toString();
 				if (_strTimeStep.equalsIgnoreCase("1MON")) {
 					for (int i = 0; i < 2; i++) {
+						/*
 						_intDay[i] = getDaysInMonth(_intMonth[i], _intYear[i]);
 						_day[i].removeItemListener(dl[i]);
 						_day[i].setSelectedIndex(_intDay[i] - 1);
 						_day[i].addItemListener(dl[i]);
+						*/
 						_day[i].setEnabled(false);
 					}
 				} else {
