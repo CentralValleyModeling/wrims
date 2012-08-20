@@ -256,49 +256,51 @@ public class ToolConstraintAnalysis extends javax.swing.JPanel {
 
 		c.gridx = 2;
 		c.gridy = 1;
-		panel.add(createFilePanel(0, excelFilePath_default, false), c);
-		_filePath[0].setEditable(false);
+		panel.add(createFilePanel(0, excelFilePath_default, "xlsm", true), c);
+		//_filePath[0].setEditable(false);
 		c.gridx = 2;
 		c.gridy = 2;
-		panel.add(createFilePanel(1, "D:\\cvwrsm\\trunk\\excel_java\\CalSim30_10_SV.dss", true), c);
+		panel.add(createFilePanel(1, "D:\\cvwrsm\\trunk\\excel_java\\CalSim30_10_SV.dss", "dss", true), c);
 		c.gridx = 2;
 		c.gridy = 3;
-		panel.add(createFilePanel(2, "D:\\cvwrsm\\trunk\\excel_java\\Version137_062512_WRIMS061212DV.dss", true), c);
+		panel.add(createFilePanel(2, "D:\\cvwrsm\\trunk\\excel_java\\Version137_062512_WRIMS061212DV.dss", "dss", true), c);
 
 		return panel;
 	}
 
-	JPanel createFilePanel(int type, String text, boolean isEditable) {
+	JPanel createFilePanel(int type, String text, String extensionName, boolean isEditable) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		_filePath[type] = new JTextField(50);
 		_filePath[type].setText(text);
 		_filePath[type].setEditable(isEditable);
 		panel.add(_filePath[type]);
-		JButton button = createFileChooser(type);
+		JButton button = createFileChooser(type, extensionName);
 		button.setEnabled(isEditable);
 		panel.add(button);
 		return panel;
 	}
 
-	JButton createFileChooser(final int n) {
+	JButton createFileChooser(final int n, final String extensionName) {
 		JButton chooser = new JButton("Choose");
 		chooser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				chooseFile(n);
+				chooseFile(n, extensionName);
 			}
 		});
 		return chooser;
 	}
 
-	void chooseFile(int type) {
+	void chooseFile(int type, String extensionName) {
 
 		JFileChooser c = new JFileChooser();
 		c.setPreferredSize(new Dimension(650, 450));
 		int rVal = c.showOpenDialog(ToolConstraintAnalysis.this);
 		if (rVal == JFileChooser.APPROVE_OPTION) {
 			String filePath = c.getSelectedFile().getAbsolutePath();
-			if (FilenameUtils.getExtension(filePath).equalsIgnoreCase("dss")) {
+			
+			String ext = FilenameUtils.getExtension(filePath);
+			if (ext.equalsIgnoreCase(extensionName) || ext.equals("")) {
 				_filePath[type].setText(filePath);
 			}
 		}
@@ -425,7 +427,7 @@ public class ToolConstraintAnalysis extends javax.swing.JPanel {
 			w.dvDssFilePath = _filePath[2].getText(); // "D:\\cvwrsm\\trunk\\excel_java\\Version134_052312_WRIMS050912DV.DSS";
 			w.excelFilePath = _filePath[0].getText();	
 						
-			task.setComponents(this.button, excelFilePath_default);
+			task.setComponents(this.button);
 			task.addPropertyChangeListener(new TaskListener(this.bar, this.button));
 
 			task.execute();
@@ -454,95 +456,5 @@ public class ToolConstraintAnalysis extends javax.swing.JPanel {
 		}
 
 	}
-
-//	class Task extends SwingWorker<Void, Void> {
-//
-//		
-//		//Component com;
-//		JButton button;
-//		
-//		public void setComponents(JButton button){
-//			
-//			this.button= button;
-//		}
-//		
-//		
-//		@Override
-//		public Void doInBackground() {
-//
-//			setProgress(0);
-//			this.button.setEnabled(false);
-//			
-//			Process p;
-//
-//			WriteDssToExcel.beginYear = Integer.parseInt(_startYr.getText());
-//			WriteDssToExcel.beginMonth = Integer.parseInt(_startMon.getText());
-//			WriteDssToExcel.endYear = Integer.parseInt(_stopYr.getText());
-//			WriteDssToExcel.endMonth = Integer.parseInt(_stopMon.getText());
-//			WriteDssToExcel.dssPartA = _dssPartA.getText();
-//			WriteDssToExcel.dssPartF = _dssPartF.getText();
-//			WriteDssToExcel.svDssFilePath = _filePath[1].getText(); // "D:\\cvwrsm\\trunk\\excel_java\\CalSim30_10_SV.dss";
-//			WriteDssToExcel.dvDssFilePath = _filePath[2].getText(); // "D:\\cvwrsm\\trunk\\excel_java\\Version134_052312_WRIMS050912DV.DSS";
-//			WriteDssToExcel.excelFilePath = _filePath[0].getText();
-//
-//			JOptionPane.showMessageDialog(null,"before writing");
-//
-//			setProgress(10);
-//			
-//			try {
-//
-//				//WriteDssToExcel.writeDssToConstraintReport();
-//				
-//				
-//				Workbook wb = ExcelTool.getWorkbook(WriteDssToExcel.excelFilePath);
-//				
-//				//setProgress(10);
-//				
-//				WriteDssToExcel.findTimeWindow();
-//				
-//				wb = WriteDssToExcel.writeDssToExcelWorkBook(wb,WriteDssToExcel.svDssFilePath, WriteDssToExcel.svColIndex_partB, WriteDssToExcel.svColIndex_partC, WriteDssToExcel.svRowIndex_partBC, WriteDssToExcel.svTimeColIndex);
-//				
-//				setProgress(40);
-//				
-//				wb = WriteDssToExcel.writeDssToExcelWorkBook(wb,WriteDssToExcel.dvDssFilePath, WriteDssToExcel.dvColIndex_partB, WriteDssToExcel.dvColIndex_partC, WriteDssToExcel.dvRowIndex_partBC, WriteDssToExcel.dvTimeColIndex);
-//
-//				//setProgress(90);
-//				
-//				ExcelTool.writeWorkbookToFile(wb, WriteDssToExcel.excelFilePath);
-//				
-//				//setProgress(95);
-//				
-//				p = Runtime.getRuntime().exec(new String[] { "cmd.exe", "/c", "start", "excel", excelFilePath_default });
-//
-//			}
-//			catch (Exception e) {
-//				
-//
-//				JOptionPane.showMessageDialog(null, e.getMessage());
-//
-//				
-//				// StringWriter errors = new StringWriter();
-//				// e.printStackTrace(new PrintWriter(errors));
-//				// JOptionPane.showMessageDialog(this,errors.toString());
-//				// e.printStackTrace();
-//
-//			} 
-//			finally {
-//				
-//				setProgress(0);
-//				this.button.setEnabled(true);
-//			}
-//			
-//			return null;
-//		}
-//
-//		@Override
-//		public void done() {
-//			// Toolkit.getDefaultToolkit().beep();
-//			// startButton.setEnabled(true);
-//			// setCursor(null); //turn off the wait cursor
-//			// taskOutput.append("Done!\n");
-//		}
-//	}
 
 }

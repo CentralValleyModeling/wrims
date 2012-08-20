@@ -28,11 +28,11 @@ public class WriteDssToExcel {
 	public static int beginMonth = 10;
 	public static int endYear = 2003;
 	public static int endMonth = 9;
-	public static String dssPartA = "CALSIM";
-	public static String dssPartF = "CALSIM30_10";
-	public static String svDssFilePath = "D:\\cvwrsm\\trunk\\excel_java\\CalSim30_10_SV.dss";
-	public static String dvDssFilePath = "D:\\cvwrsm\\trunk\\excel_java\\Version134_052312_WRIMS050912DV.DSS";
-	public static String excelFilePath = "OperationsControl_CS3_version134.xlsm";
+	public static String dssPartA = "";
+	public static String dssPartF = "";
+	public static String svDssFilePath = "";
+	public static String dvDssFilePath = "";
+	public static String excelFilePath = "";
 	//======================================	
 
 	
@@ -201,13 +201,13 @@ public class WriteDssToExcel {
 		
 		//Component com;
 		JButton button;
-		String excelFilePath_default;
+		//String excelFilePath_default;
 		
-		public void setComponents(JButton button, String excelFilePath_default){
+		public void setComponents(JButton button){
 			
 			//this.com = com;
 			this.button= button;
-			this.excelFilePath_default = excelFilePath_default;
+			//this.excelFilePath_default = excelFilePath_default;
 		}
 		
 		
@@ -244,12 +244,15 @@ public class WriteDssToExcel {
 			
 				System.out.println("finish");
 				
-				Process p = Runtime.getRuntime().exec(new String[] { "cmd.exe", "/c", "start", "excel", excelFilePath_default });
+				Process p = Runtime.getRuntime().exec(new String[] { "cmd.exe", "/c", "start", "excel", excelFilePath });
 
+				setProgress(0);
 			}
 			catch (Exception e) {
 				
-				JTextArea text = new JTextArea(e.getMessage());
+				String msg = "CalSim3 version might not match the Excel file version.\n";
+				
+				JTextArea text = new JTextArea(msg+e.getMessage());
 				JOptionPane.showMessageDialog(null,text);
 				
 				//JOptionPane.showMessageDialog(this.com, e.getMessage());
