@@ -25,6 +25,12 @@ public class GoalTemp implements Serializable {
 	public String lhs;
 	
 	public Set<String> dependants;
+	public Set<String> dependants_timeseries;
+	public Set<String> dependants_svar;
+	public Set<String> dependants_dvar;
+	public Set<String> dependants_alias;
+	public Set<String> dependants_external;
+	public Set<String> dependants_unknown;
 	public Set<String> neededVarInCycleSet;
 	public boolean needVarFromEarlierCycle;
 
@@ -49,6 +55,12 @@ public class GoalTemp implements Serializable {
 		isFromAlias=false;
 		condition = Param.always;
 		dependants = new LinkedHashSet<String>();
+//		dependants_timeseries = new LinkedHashSet<String>();
+//		dependants_svar = new LinkedHashSet<String>();
+//		dependants_dvar = new LinkedHashSet<String>();
+//		dependants_alias = new LinkedHashSet<String>();
+//		dependants_external = new LinkedHashSet<String>();
+//		dependants_unknown = new LinkedHashSet<String>();
 		neededVarInCycleSet = new LinkedHashSet<String>();
 		needVarFromEarlierCycle = false;
 		caseName=new ArrayList<String>();

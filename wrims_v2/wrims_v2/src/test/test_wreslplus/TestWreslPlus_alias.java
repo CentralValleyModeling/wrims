@@ -60,7 +60,7 @@ public class TestWreslPlus_alias {
 		csvFile.print(csvText_modified);
 		csvFile.close();
 		
-		Assert.assertEquals(totalErrs, 0);		
+		Assert.assertEquals(totalErrs, 1);		
 
 	}
 

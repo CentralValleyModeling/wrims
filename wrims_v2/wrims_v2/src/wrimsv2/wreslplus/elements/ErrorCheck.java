@@ -23,6 +23,49 @@ public class ErrorCheck {
 	private ErrorCheck(){}
 
 	
+	
+	// TODO: this process alias only. need to expand to other types
+	public static void checkVarUsedBeforeDefine(StudyTemp s) {
+		
+		for (String se : s.seqList){
+			
+			SequenceTemp seqObj = s.seqMap.get(se); 
+
+			checkVarUsedBeforeDefine(seqObj);						
+		}
+	}
+	
+	public static void checkVarUsedBeforeDefine(SequenceTemp seqObj) {
+		
+		for (String key : seqObj.asMap.keySet()) {
+
+			AliasTemp asObj = seqObj.asMap.get(key);
+				
+			if (asObj.dependants_unknown.size()>0){
+				LogUtils.errMsg(asObj.fromWresl+
+						"\n  Variable(s) unknown: "+asObj.dependants_unknown+" in Alias \""+asObj.id+"\"");
+			}
+	
+		}	
+		
+		
+		for (String key : seqObj.glMap.keySet()) {
+
+			GoalTemp glObj = seqObj.glMap.get(key);
+				
+			if (glObj.dependants_unknown.size()>0){
+				LogUtils.errMsg(glObj.fromWresl+
+						"\n  Variable(s) unknown: "+glObj.dependants_unknown+" in Goal \""+glObj.id+"\"");
+			}
+	
+		}
+		
+		
+
+		
+	}
+	
+	
 	public static int checkVarRedefined (StudyTemp s){
 		
 		// check modelList itself

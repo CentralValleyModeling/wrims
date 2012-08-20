@@ -91,16 +91,21 @@ public class Workflow {
 		
 		Procedures.processGoalHS2(st); 
 				
+
+		ErrorCheck.checkVarRedefined(st);	
 		
 		// TODO: test only. remove this after testing
 		// TODO: seperate dv dep from others
 		// remove dv from alias's dependants
 		Procedures.classifyDependants(st);
 		
+
+		// check variable used before definition
+		ErrorCheck.checkVarUsedBeforeDefine(st);
 		
 		Procedures.convertAliasToGoal(st); 
 		
-		ErrorCheck.checkVarRedefined(st);	
+
 		
 		Procedures.analyzeVarNeededFromCycle(st);
 		Procedures.createSpaceInVarCycleValueMap(st);

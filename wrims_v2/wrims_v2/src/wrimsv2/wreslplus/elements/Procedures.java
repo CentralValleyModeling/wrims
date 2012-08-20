@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -1277,18 +1278,75 @@ public class Procedures {
 
 			AliasTemp asObj = seqObj.asMap.get(key);
 
-			asObj.dependants.removeAll(seqObj.tsList);
-			asObj.dependants.removeAll(seqObj.dvList);
+			asObj.dependants_timeseries = new LinkedHashSet<String>(asObj.dependants);
+			asObj.dependants_timeseries.retainAll(seqObj.tsList);
+
+			asObj.dependants_dvar = new LinkedHashSet<String>(asObj.dependants);
+			asObj.dependants_dvar.retainAll(seqObj.dvList);
+
+			asObj.dependants_svar = new LinkedHashSet<String>(asObj.dependants);
+			asObj.dependants_svar.retainAll(seqObj.svMap.keySet());
+
+			asObj.dependants_alias = new LinkedHashSet<String>(asObj.dependants);
+			asObj.dependants_alias.retainAll(seqObj.asMap.keySet());
+			
+			asObj.dependants_unknown = new LinkedHashSet<String>(asObj.dependants);
+			asObj.dependants_unknown.removeAll(asObj.dependants_timeseries);
+			asObj.dependants_unknown.removeAll(asObj.dependants_dvar);
+			asObj.dependants_unknown.removeAll(asObj.dependants_svar);
+			asObj.dependants_unknown.removeAll(asObj.dependants_alias);
+			
+			
+			// TODO: this is to match legacy wresl parser
+			asObj.dependants.removeAll(asObj.dependants_timeseries);
+			asObj.dependants.removeAll(asObj.dependants_dvar);
 		}	
 		
 		for (String key : seqObj.svMap.keySet()) {
 
 			SvarTemp svObj = seqObj.svMap.get(key);
+			
+			svObj.dependants_timeseries = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_timeseries.retainAll(seqObj.tsList);
 
-			svObj.dependants.removeAll(seqObj.tsList);
+			svObj.dependants_external = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_external.retainAll(seqObj.exList);
+
+			// TODO: this is to match legacy wresl parser
+			svObj.dependants.removeAll(svObj.dependants_timeseries);
 			svObj.dependants.removeAll(seqObj.dvList);
 		}	
 		
+		for (String key : seqObj.glMap.keySet()) {
+
+			GoalTemp glObj = seqObj.glMap.get(key);
+
+			//svObj.dependants.removeAll(seqObj.tsList);
+			//svObj.dependants.removeAll(seqObj.dvList);
+			
+			glObj.dependants_timeseries = new LinkedHashSet<String>(glObj.dependants);
+			glObj.dependants_timeseries.retainAll(seqObj.tsList);
+
+			glObj.dependants_svar = new LinkedHashSet<String>(glObj.dependants);
+			glObj.dependants_svar.retainAll(seqObj.svMap.keySet());
+			
+			glObj.dependants_dvar = new LinkedHashSet<String>(glObj.dependants);
+			glObj.dependants_dvar.retainAll(seqObj.dvList);
+
+			glObj.dependants_alias = new LinkedHashSet<String>(glObj.dependants);
+			glObj.dependants_alias.retainAll(seqObj.asMap.keySet());
+
+			glObj.dependants_external = new LinkedHashSet<String>(glObj.dependants);
+			glObj.dependants_external.retainAll(seqObj.exMap.keySet());
+			
+			glObj.dependants_unknown = new LinkedHashSet<String>(glObj.dependants);
+			glObj.dependants_unknown.removeAll(glObj.dependants_timeseries);
+			glObj.dependants_unknown.removeAll(glObj.dependants_svar);
+			glObj.dependants_unknown.removeAll(glObj.dependants_dvar);
+			glObj.dependants_unknown.removeAll(glObj.dependants_alias);
+			glObj.dependants_unknown.removeAll(glObj.dependants_external);
+			
+		}	
 	}
 
 
