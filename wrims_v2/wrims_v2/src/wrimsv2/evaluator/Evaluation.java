@@ -21,7 +21,10 @@ import java.util.Stack;
 import java.util.Date;
 
 public class Evaluation {
-
+	private static int start;
+	private static int end;
+	private static int step;
+	
 	public static double convertStringToDouble(String text){
 		return Double.valueOf(text);
 	}
@@ -119,6 +122,17 @@ public class Evaluation {
 	}
 	
 	public static EvalExpression term_IDENT (String ident){
+		if (ControlData.sumIndex.size()>0){
+			LoopIndex li=ControlData.sumIndex.pop();
+			if (li.getName().equals(ident) && li.getIndexStart()){
+				ControlData.sumIndex.push(li);
+				EvalExpression ee = new EvalExpression();
+				IntDouble id = new IntDouble(li.getValue(),true);
+				ee.setValue(id);
+				return ee;
+			}
+			ControlData.sumIndex.push(li);
+		}
 		if (ControlData.currSvMap.containsKey(ident)){
 			EvalExpression ee=new EvalExpression();
 			IntDouble id0 = ControlData.currSvMap.get(ident).getData();
@@ -1144,44 +1158,35 @@ public class Evaluation {
 		ControlData.sumIndex.push(li);
 	}
 	
-	public static EvalExpression sumExpression(EvalExpression ee1, EvalExpression ee2, String s, String expression){
-		int step=1;
+	public static void initSumExpression(EvalExpression ee1, EvalExpression ee2, String s){
+		step=1;
 		if (!s.equals("")){
 			step=convertStringToInt(s);
 		}
-		if (!ee1.isNumeric()){
-			Error.addEvaluationError("the starting index can't contains decision variable");
-			IntDouble id=new IntDouble(1.0, false);
-			return new EvalExpression(id);
-		}
-		if (!ee2.isNumeric()){
-			Error.addEvaluationError("the ending index can't contains decision variable");
-			IntDouble id=new IntDouble(1.0, false);
-			return new EvalExpression(id);
-		}
-		IntDouble id1=ee1.getValue();
-		IntDouble id2=ee2.getValue();
-		if (!id1.isInt()){
+		if (!ee1.isNumeric() || !ee1.getValue().isInt()){
 			Error.addEvaluationError("the starting index should be integer");
-			IntDouble id=new IntDouble(1.0, false);
-			return new EvalExpression(id);
 		}
-		if (!id2.isInt()){
+		if (!ee2.isNumeric() || !ee2.getValue().isInt()){
 			Error.addEvaluationError("the ending index should be integer");
-			IntDouble id=new IntDouble(1.0, false);
-			return new EvalExpression(id);
 		}
-		int start=id1.getData().intValue();
-		int end=id2.getData().intValue();
-		IntDouble id=new IntDouble(0, true);
-		
+		start=ee1.getValue().getData().intValue();
+		end=ee2.getValue().getData().intValue();
+		LoopIndex li=ControlData.sumIndex.pop();
+		li.setValue(start);
+		li.setIndexStart(true);
+		ControlData.sumIndex.push(li);
+	}
+	
+	public static EvalExpression sumExpression(EvalExpression ee, String expression){	
 		if (step>=0){
+			start=start+step;
+			if (start>end) return ee;
 			for (int i=start; i<=end; i=i+step){
 				LoopIndex li=ControlData.sumIndex.pop();
 				li.setValue(i);
 				li.setIndexStart(true);
 				ControlData.sumIndex.push(li);
-				ANTLRStringStream stream = new ANTLRStringStream("v: "+expression); 
+				ANTLRStringStream stream = new ANTLRStringStream("s: "+expression); 
 				EvaluatorLexer lexer = new EvaluatorLexer(stream);
 				TokenStream tokenStream = new CommonTokenStream(lexer);
 				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
@@ -1191,16 +1196,18 @@ public class Evaluation {
 					Error.addEvaluationError(e.toString());
 				}
 			
-				IntDouble id0=evaluator.evalValue;
-				id=addOperation(id, id0);
+				EvalExpression ee0=evaluator.evalExpression;
+				ee=add(ee, ee0);
 			}
 		}else{
+			start=start+step;
+			if (start<end) return ee;
 			for (int i=start; i>=end; i=i+step){
 				LoopIndex li=ControlData.sumIndex.pop();
 				li.setValue(i);
 				li.setIndexStart(true);
 				ControlData.sumIndex.push(li);
-				ANTLRStringStream stream = new ANTLRStringStream("v: "+expression); 
+				ANTLRStringStream stream = new ANTLRStringStream("s: "+expression); 
 				EvaluatorLexer lexer = new EvaluatorLexer(stream);
 				TokenStream tokenStream = new CommonTokenStream(lexer);
 				EvaluatorParser evaluator = new EvaluatorParser(tokenStream);
@@ -1210,13 +1217,13 @@ public class Evaluation {
 					Error.addEvaluationError(e.toString());
 				}
 			
-				IntDouble id0=evaluator.evalValue;
-				id=addOperation(id, id0);
+				EvalExpression ee0=evaluator.evalExpression;
+				ee=add(ee, ee0);
 			}
 		}
 		
 		ControlData.sumIndex.pop();
-		return new EvalExpression(id);
+		return ee;
 	}
 	
 	public static Number assignWhereStatement(EvalExpression ee){

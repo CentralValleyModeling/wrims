@@ -65,11 +65,11 @@ externalFile
 text	:	LETTER (LETTER | DIGIT )*;
 	
 expressionCollection returns [IntDouble id]
-	:((expression{id=$expression.id;})
+	:(expression{id=$expression.id;})
 	|(tableSQL){id=$tableSQL.id;}
 	|(timeseriesWithUnits)
 	|((timeseries){id=$timeseries.id;})
-	|(sumExpression{id=$sumExpression.id;}))
+	| sumExpression {id=$sumExpression.id;}
 	|(UPPERUNBOUNDED{id=new IntDouble(1e38,true);})
 	|(LOWERUNBOUNDED{id=new IntDouble(-1e38,true);})
 	;
@@ -212,6 +212,7 @@ term returns [IntDouble id]
 	| DAYSIN{id=ValueEvaluation.daysIn();})
 	| (SVAR{id=ValueEvaluation.term_SVAR($SVAR.text.replace("{","").replace("}",""));})
 	| ARRAY_ITERATOR{id=ValueEvaluation.term_ARRAY_ITERATOR();} 
+	| '(' sumExpression ')' {id=$sumExpression.id;}
 	;
 	
 tafcfs_term returns [IntDouble id]: TAFCFS ('(' expression ')')? {

@@ -71,11 +71,11 @@ externalFile
 text	:	LETTER (LETTER | DIGIT )*;
 	
 expressionCollection returns [EvalExpression ee]
-	:	((expression{ee=$expression.ee;})
+	:	(expression{ee=$expression.ee;})
 	|(tableSQL){ee=$tableSQL.ee;}
 	|(timeseriesWithUnits)
 	|((timeseries){ee=$timeseries.ee;})
-	|(sumExpression{ee=$sumExpression.ee;}))
+	| sumExpression {ee=$sumExpression.ee;}
 	|(UPPERUNBOUNDED{ee=new EvalExpression(new IntDouble(1e38,true));})
 	|(LOWERUNBOUNDED{ee=new EvalExpression(new IntDouble(-1e38,true));})
 	;
@@ -200,7 +200,7 @@ lowerbound:	IDENT|allnumber|(allnumber '*' TAFCFS);
 //sumExpression was redesign. If not work, switch back to the original design above
 
 sumExpression returns [EvalExpression ee] @init{String s="";}
-  : SUM '(' IDENT{Evaluation.sumExpression_IDENT($IDENT.text);} '=' e1=expression ';' e2=expression (';' (('-'{s=s+"-";})? INTEGER {s=s+$INTEGER.text;}))? ')' e3=expression{ee=Evaluation.sumExpression($e1.ee,$e2.ee,s, $e3.text);}
+  : SUM '(' IDENT{Evaluation.sumExpression_IDENT($IDENT.text);} '=' e1=expression ';' e2=expression (';' (('-'{s=s+"-";})? INTEGER {s=s+$INTEGER.text;}))? ')' {Evaluation.initSumExpression($e1.ee, $e2.ee, s);} e3=expression{ee=Evaluation.sumExpression($e3.ee, $e3.text);}
   ;
 
 term returns [EvalExpression ee]
@@ -220,6 +220,7 @@ term returns [EvalExpression ee]
 	| DAYSIN{ee=Evaluation.daysIn();}
 	| (SVAR{ee=Evaluation.term_SVAR($SVAR.text.replace("{","").replace("}",""));}) 
 	| ARRAY_ITERATOR{ee=Evaluation.term_ARRAY_ITERATOR();}
+	| '(' sumExpression ')'{ee=$sumExpression.ee;}
 	;
 	
 tafcfs_term returns [EvalExpression ee]: TAFCFS ('(' expression ')')? {

@@ -479,7 +479,8 @@ term :	      i=ident {$expression::SV.add($i.text.toLowerCase());}
 	 |        array_iterator
 	 |         number 
 	 |        function 
-	 |       '(' e=expression ')' {$expression::SV.addAll($e.members);$expression::varInCycle.addAll($e.setVarInCycle);} 
+	 |       '(' e=expression ')' {$expression::SV.addAll($e.members);$expression::varInCycle.addAll($e.setVarInCycle);}
+	 |       '(' sum_content ')' 
 	 ;
 	
 unary :	('+'! | negation)? term 	;
