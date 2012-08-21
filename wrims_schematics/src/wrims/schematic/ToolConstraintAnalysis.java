@@ -260,10 +260,10 @@ public class ToolConstraintAnalysis extends javax.swing.JPanel {
 		//_filePath[0].setEditable(false);
 		c.gridx = 2;
 		c.gridy = 2;
-		panel.add(createFilePanel(1, "D:\\cvwrsm\\trunk\\excel_java\\CalSim30_10_SV.dss", "dss", true), c);
+		panel.add(createFilePanel(1, "", "dss", true), c);
 		c.gridx = 2;
 		c.gridy = 3;
-		panel.add(createFilePanel(2, "D:\\cvwrsm\\trunk\\excel_java\\Version137_062512_WRIMS061212DV.dss", "dss", true), c);
+		panel.add(createFilePanel(2, "", "dss", true), c);
 
 		return panel;
 	}
