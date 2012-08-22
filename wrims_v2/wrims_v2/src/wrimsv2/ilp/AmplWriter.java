@@ -287,8 +287,8 @@ public class AmplWriter {
 				outFile.print(key + " < " + upper + " ;\n");
 			}
 		}		
-		
 			
+		
 		
 		
 		if (intList.size() > 0) {
@@ -372,6 +372,16 @@ public class AmplWriter {
 			} 
 			
 			outFile.print(" ; "+freeTag+"\n");
+			
+		}
+		
+		outFile.println("# dynamic slack and surplus ");
+		
+		// for dynamic slack surplus vars
+		for (String ss :ControlData.currModelDataSet.usedWtSlackSurplusList) {			
+			
+			//System.out.println("ss:"+ss);
+			outFile.print("var "+ss.toUpperCase() + " >= 0 ; \n");
 			
 		}
 

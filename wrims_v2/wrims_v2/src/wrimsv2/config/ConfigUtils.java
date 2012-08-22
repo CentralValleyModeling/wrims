@@ -346,6 +346,20 @@ public class ConfigUtils {
 					Error.addConfigError("IlpLogMaximumFractionDigits not recognized: " + s);
 				}
 			}
+			
+			if (configMap.keySet().contains("ilplogformat")) {
+
+				String s = configMap.get("ilplogformat");
+
+				if (s.equalsIgnoreCase("cplexlp")) {
+					ILP.loggingCplexLp = true;
+					System.out.println("IlpLogFormat:           " + "CplexLp + LpSolve");
+				} else if (s.equalsIgnoreCase("ampl")) {
+					ILP.loggingAmpl = true;
+					System.out.println("IlpLogFormat:           " + "Ampl + LpSolve");
+				} 
+
+			}
 
 			System.out.println("IlpLog:                 " + ILP.logging);
 			System.out.println("IlpLogVarValue:         " + ILP.loggingVariableValue);
