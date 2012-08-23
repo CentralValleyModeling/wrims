@@ -351,12 +351,13 @@ public class ConfigUtils {
 
 				String s = configMap.get("ilplogformat");
 
-				if (s.equalsIgnoreCase("cplexlp")) {
+				if (s.toLowerCase().contains("cplexlp")) {
 					ILP.loggingCplexLp = true;
-					System.out.println("IlpLogFormat:           " + "CplexLp + LpSolve");
-				} else if (s.equalsIgnoreCase("ampl")) {
+					System.out.println("IlpLogFormat:           " + "CplexLp");
+				} 
+				if (s.toLowerCase().contains("ampl")) {
 					ILP.loggingAmpl = true;
-					System.out.println("IlpLogFormat:           " + "Ampl + LpSolve");
+					System.out.println("IlpLogFormat:           " + "Ampl");
 				} 
 
 			}

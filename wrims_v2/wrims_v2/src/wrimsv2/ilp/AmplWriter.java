@@ -126,7 +126,7 @@ public class AmplWriter {
 				//_amplFile.println("+ " + weight + " * " + dvar.toUpperCase());
 
 			}
-			else {
+			else if (weight < 0) {
 				toPrint = toPrint + weight + " * " + dvar.toUpperCase() + " ";
 				ObjString = ObjString + weight + " * " + dvar.toUpperCase() + "\n";
 				//_amplFile.println(weight + " * " + dvar.toUpperCase());

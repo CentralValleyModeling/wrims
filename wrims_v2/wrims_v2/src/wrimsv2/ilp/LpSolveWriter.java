@@ -74,7 +74,7 @@ public class LpSolveWriter {
 				outFile.println("+ " + weight + " " + dvar);
 
 			}
-			else {
+			else if (weight < 0) {
 				toPrint = toPrint + weight + " " + dvar + " ";
 				outFile.println(weight + " " + dvar);
 			}

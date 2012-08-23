@@ -154,6 +154,8 @@ public class ILP {
 		dvar_effective.addAll(dvar_inConstraint);
 		
 		CplexLpWriter.writeDvar(_cplexLpFile, dvar_effective);	
+		_cplexLpFile.println("\nEnd");
+		
 	}
 	private static void writeAmplFile() {
 		
@@ -265,7 +267,7 @@ public class ILP {
 		String twoDigitMonth = String.format("%02d", ControlData.currMonth);
 		String twoDigitCycle = String.format("%02d", ControlData.currCycleIndex+1); 
 		
-		cplexLpFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".lpt";		
+		cplexLpFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".lp";		
 
 		try {
 
