@@ -182,22 +182,17 @@ public class CplexLpWriter {
 			}
 		}
 		
-		if (freeList.size() > 0) {
-			//outFile.print("free ");
-	
-			for (int i = 0; i < freeList.size(); i++) {
-				String term = freeList.get(i);
-	
-				//if (i == 0) {
-					outFile.print(term + "free\n");
-				//}
-				//else {
-				//	outFile.print(", " + term);
-				//}
-			}
-	
-			//outFile.print(" ;\n");
-		}
+//		if (freeList.size() > 0) {
+//			//outFile.print("free ");
+//	
+//			for (int i = 0; i < freeList.size(); i++) {
+//				String term = freeList.get(i);
+//	
+//					outFile.print(term + " free\n");
+//
+//			}
+//	
+//		}
 		
 		if (intList.size() > 0) {
 			outFile.println("");
