@@ -33,6 +33,8 @@ public class Param {
 	  public static final String arg_seperator = ",";
 	  public static final String new_seperator = ";";
 	  public static final String csv_seperator = ",";
+	  public static final String windows_pathseperator = "\\";
+	  public static final String linux_pathseperator = "/";
 	  public static final String wreslChekerName = "Wresl Checker ";
 	  public static final String conditional = "conditional";
 	  

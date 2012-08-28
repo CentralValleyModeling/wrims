@@ -86,6 +86,7 @@ public class StructTree
   public void includeFile(String fileRelativePath, String scope)
   {
     fileRelativePath = fileRelativePath.toLowerCase();
+    fileRelativePath = Tools.replace_pathseperator(fileRelativePath);
 
     File absIncludeFile = new File(this.S.currentAbsoluteParent, fileRelativePath).getAbsoluteFile();
     String absIncludeFilePath = "Error with include file: " + fileRelativePath;

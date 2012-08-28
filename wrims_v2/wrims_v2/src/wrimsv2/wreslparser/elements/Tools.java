@@ -69,6 +69,12 @@ public class Tools {
 		s=s.replaceAll(Param.arg_seperator,Param.new_seperator);
 		return s;
 	}
+	public static String replace_pathseperator(String s) {
+		if (s==null)  return null; 
+		s=s.replace(Param.windows_pathseperator,File.separator);
+		s=s.replace(Param.linux_pathseperator,File.separator);
+		return s;
+	}
 	public static Map<String, String> readFilesFromDirAsMap(String dir)
 			throws IOException {
 		File folder = new File(dir);
