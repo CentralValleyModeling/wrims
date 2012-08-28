@@ -1,5 +1,7 @@
 package wrimsv2.components;
 
+import java.io.File;
+
 public class FilePaths {
 	public static String groundwaterDir="";  //for groundwater use.
 	public static String fullMainPath="";
@@ -23,28 +25,28 @@ public class FilePaths {
 
 	public static void setMainFilePaths(String fullPath){
 		fullMainPath=fullPath;
-		int index=fullPath.lastIndexOf("\\");
+		int index=fullPath.lastIndexOf(File.separator);
 		mainDirectory=fullPath.substring(0,index+1);
 		mainFile=fullPath.substring(index+1);
 	}
 	
 	public static void setSvarDssPaths(String fullPath){
 		fullSvarDssPath=fullPath;
-		int index=fullPath.lastIndexOf("\\");
+		int index=fullPath.lastIndexOf(File.separator);
 		svarDssDirectory=fullPath.substring(0,index+1);
 		svarDssFile=fullPath.substring(index+1);
 	}
 	
 	public static void setDvarDssPaths(String fullPath){
 		fullDvarDssPath=fullPath;
-		int index=fullPath.lastIndexOf("\\");
+		int index=fullPath.lastIndexOf(File.separator);
 		dvarDssDirectory=fullPath.substring(0,index+1);
 		dvarDssFile=fullPath.substring(index+1);
 	}
 	
 	public static void setInitDssPaths(String fullPath){
 		fullInitDssPath=fullPath;
-		int index=fullPath.lastIndexOf("\\");
+		int index=fullPath.lastIndexOf(File.separator);
 		initDssDirectory=fullPath.substring(0,index+1);
 		initDssFile=fullPath.substring(index+1);
 	}

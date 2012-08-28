@@ -104,7 +104,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			initFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFILE, (String)null);
 			
 			String gwDataFolder = null;
-			gwDataFolder = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_GWDATAFOLDER, (String)null)+"\\";
+			gwDataFolder = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_GWDATAFOLDER, (String)null)+File.separator;
 			
 			String aPart = null;
 			aPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_APART, (String)null);
@@ -141,7 +141,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			DebugCorePlugin.startDay=startDay;
 			DebugCorePlugin.endDay=endDay;
 					
-			int index = mainFile.lastIndexOf("\\");
+			int index = mainFile.lastIndexOf(File.separator);
 			String mainDirectory = mainFile.substring(0, index + 1);
 			String externalPath = mainDirectory + "External";
 			

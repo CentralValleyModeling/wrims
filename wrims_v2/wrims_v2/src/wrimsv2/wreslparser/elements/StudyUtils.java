@@ -95,7 +95,7 @@ public class StudyUtils {
 		}
 
 		if (csvFolderName != null && csvFolderName.length() > 0) {
-			String csvFolderPath = mainWreslFile.getParentFile() + "\\" + csvFolderName;
+			String csvFolderPath = mainWreslFile.getParentFile() + File.separator + csvFolderName;
 			WriteCSV.study(sds, csvFolderPath);
 		}
 		

@@ -380,7 +380,7 @@ public class GenerateCompileFiles {
 	}
 	
 	public static void setWorkingDirectory(String fileFullPath){
-		int index=fileFullPath.lastIndexOf("\\");
+		int index=fileFullPath.lastIndexOf(File.separator);
 		workingDir= fileFullPath.substring(0,index+1);
 	}
 	

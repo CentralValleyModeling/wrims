@@ -102,20 +102,20 @@ public class Controller {
 	}
 
 	public void setControlData(){
-		FilePaths.groundwaterDir="D:\\CS3_Studies\\cs3_bo_version120\\common\\CVGroundwater\\Data\\";
-		FilePaths.setMainFilePaths("D:\\CS3_Studies\\cs3_bo_version120\\conv\\Run\\mainCONV_30.wresl");
-		FilePaths.setSvarDssPaths("D:\\CS3_Studies\\cs3_bo_version120\\common\\DSS\\CalSim30_06_SV.dss");
-	    FilePaths.setInitDssPaths("D:\\CS3_Studies\\cs3_bo_version120\\common\\DSS\\CalSim30_06Init.dss");
-	    FilePaths.setDvarDssPaths("D:\\CS3_Studies\\cs3_bo_version120\\conv\\DSS\\Version120_88yr_021012_WRIMSV2DV.dss");
+		FilePaths.groundwaterDir="";
+		FilePaths.setMainFilePaths("D:\\callite_v47\\CalLite\\Run\\main_BO.wresl");
+		FilePaths.setSvarDssPaths("D:\\CalLite_v47\\callite\\DSS\\CL_FUTURE_BO_011012_SV.DSS");
+	    FilePaths.setInitDssPaths("D:\\CalLite_v47\\callite\\DSS\\CalLite2020D09EINIT.dss");
+	    FilePaths.setDvarDssPaths("D:\\CalLite_v47\\callite\\DSS\\testdv.DSS");
 		ControlData cd=new ControlData();
-		cd.svDvPartF="CalSim30_06";
-		cd.initPartF="CalSim30_06";
+		cd.svDvPartF="2020D09E";
+		cd.initPartF="2020D09E";
 		cd.partA = "CALSIM";
 		cd.defaultTimeStep="1MON";
 		cd.startYear=1921;
 		cd.startMonth=10;
 		cd.startDay=31;
-		cd.endYear=2009;
+		cd.endYear=2003;
 		cd.endMonth=9;
 		cd.endDay=30;
 	    cd.solverName="XA";

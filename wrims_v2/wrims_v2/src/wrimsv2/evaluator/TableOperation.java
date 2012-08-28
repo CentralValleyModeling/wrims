@@ -5,6 +5,7 @@ import wrimsv2.components.FilePaths;
 import wrimsv2.components.Error;
 import wrimsv2.components.IntDouble;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.DataInputStream;
 import java.io.BufferedReader;
@@ -21,7 +22,7 @@ import java.util.regex.Pattern;
 
 public class TableOperation {
 	public static boolean retrieveLookUpData (String name){
-		String tableFullPath=FilePaths.mainDirectory+"lookup\\"+FilePaths.lookupSubDirectory+"\\"+name+".table";
+		String tableFullPath=FilePaths.mainDirectory+"lookup"+File.separator+FilePaths.lookupSubDirectory+File.separator+name+".table";
 		try{
 			    FileInputStream fstream = new FileInputStream(tableFullPath);
 			    DataInputStream in = new DataInputStream(fstream);

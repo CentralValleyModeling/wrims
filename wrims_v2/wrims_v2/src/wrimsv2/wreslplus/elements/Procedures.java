@@ -799,7 +799,7 @@ public class Procedures {
 	// processed after lowercase conversion
 	public static void processIncFilePath(ModelTemp m) {
 
-		m.pathRelativeToRunDir = ResourceUtils.getRelativePath(m.absPath, GlobalData.runDir, "\\");
+		m.pathRelativeToRunDir = ResourceUtils.getRelativePath(m.absPath, GlobalData.runDir, File.separator);
 
 		for (String key : m.incFileMap.keySet()) {
 
@@ -814,7 +814,7 @@ public class Procedures {
 				LogUtils.errMsg("Include file IOException: " + f.rawPath, m.absPath);
 			}
 
-			f.pathRelativeToRunDir = ResourceUtils.getRelativePath(f.absPath, GlobalData.runDir, "\\");
+			f.pathRelativeToRunDir = ResourceUtils.getRelativePath(f.absPath, GlobalData.runDir, File.separator);
 			m.incFileRelativePathList.add(f.pathRelativeToRunDir);
 
 		}

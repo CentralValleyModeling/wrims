@@ -1,5 +1,6 @@
 package wrimsv2.wreslparser.elements;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -93,7 +94,7 @@ public class WriteCSV {
 
 		for (String model : modelDataMap.keySet()) {
 
-			String outFolder = outParent + "\\" + model;
+			String outFolder = outParent + File.separator + model;
 			
 			try {
 				dataset(modelDataMap.get(model), outFolder);

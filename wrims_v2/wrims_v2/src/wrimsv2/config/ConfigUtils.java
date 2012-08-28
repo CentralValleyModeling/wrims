@@ -134,9 +134,9 @@ public class ConfigUtils {
 			
 			if (configMap.get("groundwaterdir").length()>0) {
 				if (configMap.get("groundwaterdir").contains(":")){
-					FilePaths.groundwaterDir =  new File(configMap.get("groundwaterdir")).getCanonicalPath()+"\\";
+					FilePaths.groundwaterDir =  new File(configMap.get("groundwaterdir")).getCanonicalPath()+File.separator;
 				} else { 
-					FilePaths.groundwaterDir =  new File(StudyUtils.configDir, configMap.get("groundwaterdir")).getCanonicalPath()+"\\";
+					FilePaths.groundwaterDir =  new File(StudyUtils.configDir, configMap.get("groundwaterdir")).getCanonicalPath()+File.separator;
 				}
 				System.out.println("GroundWaterDir: "+FilePaths.groundwaterDir);
 			} else {
