@@ -19,7 +19,7 @@ public class Param {
 	  public static final String dv_std_upperBound= "upper_unbounded"; 
 	  public static final String lower_unbounded= "lower_unbounded"; 
 	  public static final String upper_unbounded= "upper_unbounded"; 
-	  public static final double lower_unbounded_double= 1e-23; 
+	  public static final double lower_unbounded_double= -1e23; 
 	  public static final double upper_unbounded_double= 1e23; 
 	  public static final String dv_std_integer_lowerBound= "0"; 
 	  public static final String dv_std_integer_upperBound= "1"; 

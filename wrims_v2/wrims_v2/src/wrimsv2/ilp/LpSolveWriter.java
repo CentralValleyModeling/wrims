@@ -315,7 +315,7 @@ public class LpSolveWriter {
 					outFile.print(term);
 				}
 				else {
-					outFile.print(", " + term);
+					outFile.print(", \n" + term);
 				}
 			}
 	
@@ -332,7 +332,7 @@ public class LpSolveWriter {
 					outFile.print(term);
 				}
 				else {
-					outFile.print(", " + term);
+					outFile.print(", \n" + term);
 				}
 			}
 	

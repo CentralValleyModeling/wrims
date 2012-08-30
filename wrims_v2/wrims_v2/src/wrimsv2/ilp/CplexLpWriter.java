@@ -119,6 +119,9 @@ public class CplexLpWriter {
 			String sign = constraintMap.get(constraintName).getSign();
 			double val = constraintMap.get(constraintName).getEvalExpression().getValue().getData().doubleValue();
 
+			if (sign.equals(">")) sign = ">=";
+			if (sign.equals("<")) sign = "<=";
+			
 			if (val == 0) {
 				lhs = constraintName + ": " + lhs + " " + sign + " " + "0";
 			}
@@ -167,32 +170,32 @@ public class CplexLpWriter {
 				continue;  
 			}
 			else if (lowerStr.equalsIgnoreCase(Param.lower_unbounded) || lower<Param.lower_unbounded_double) {
-				outFile.print(key + " < " + upper + " \n");
+				outFile.print(" -inf <= " + key + " <= " + upper + " \n");
 			}
 			else if (upperStr.equalsIgnoreCase(Param.upper_unbounded) || upper>Param.upper_unbounded_double){
 
-				if (lower != 0) outFile.print(key + " > " + lower + " \n");
+				if (lower != 0) outFile.print(key + " >= " + lower + " \n");
 			}
 			else {
 				if (lower != 0) {	
-					outFile.print(lower + " < " + key + " < " + upper + " \n");
+					outFile.print(lower + " <= " + key + " <= " + upper + " \n");
 				} else {
-					outFile.print(key + " < " + upper + " \n");
+					outFile.print(key + " <= " + upper + " \n");
 				}
 			}
 		}
 		
-//		if (freeList.size() > 0) {
-//			//outFile.print("free ");
-//	
-//			for (int i = 0; i < freeList.size(); i++) {
-//				String term = freeList.get(i);
-//	
-//					outFile.print(term + " free\n");
-//
-//			}
-//	
-//		}
+		if (freeList.size() > 0) {
+			//outFile.print("free ");
+	
+			for (int i = 0; i < freeList.size(); i++) {
+				String term = freeList.get(i);
+	
+				outFile.print(" -inf <= " + term + " \n");
+
+			}
+	
+		}
 		
 		if (intList.size() > 0) {
 			outFile.println("");
