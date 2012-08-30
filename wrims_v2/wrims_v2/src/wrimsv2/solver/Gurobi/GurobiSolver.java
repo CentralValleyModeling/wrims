@@ -1,4 +1,4 @@
-package wrimsv2.solver;
+package wrimsv2.solver.Gurobi;
 
 import gurobi.*;
 
