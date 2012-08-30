@@ -48,10 +48,10 @@ import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.external.LoadAllDll;
 import wrimsv2.ilp.ILP;
-import wrimsv2.solver.GurobiSolver;
 import wrimsv2.solver.XASolver;
 import wrimsv2.solver.SetXALog;
 import wrimsv2.solver.InitialXASolver;
+import wrimsv2.solver.Gurobi.GurobiSolver;
 import wrimsv2.tools.RCCComparison;
 import wrimsv2.wreslparser.elements.StudyUtils;
 
