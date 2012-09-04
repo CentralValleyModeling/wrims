@@ -208,10 +208,10 @@ public class ControllerSG {
 		System.out.println("==============Run Study Start============");
 		if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG") ){
 			runModelXA(sds);
-		}else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
-			runModelGurobi(sds);
-		}else if (ControlData.solverName.toLowerCase().contains("ilp")){
-			runModelILP(sds);
+//		}else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
+//			runModelGurobi(sds);
+//		}else if (ControlData.solverName.toLowerCase().contains("ilp")){
+//			runModelILP(sds);
 		}
 		System.out.println("=================Run ends!================");
 	}
