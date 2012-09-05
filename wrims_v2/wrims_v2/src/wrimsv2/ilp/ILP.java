@@ -11,8 +11,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import lpsolve.LpSolveException;
-
 import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.Svar;
@@ -30,9 +28,6 @@ import wrimsv2.wreslparser.elements.Tools;
 
 public class ILP {
 
-//	private static File _lpSolveParentDir;
-//	private static File _cplexLpParentDir;
-//	private static File _amplParentDir;
 	private static String _lpSolveDir;
 	private static String _cplexLpDir;
 	private static String _amplDir;
@@ -56,11 +51,10 @@ public class ILP {
 	public static boolean loggingCplexLp = false; // special LP problem file format designed by Cplex
 	public static boolean loggingLpSolve = false; // special LP problem file format designed by LpSolve
 	
-	
-	// new field. TODO: use this instead.
 	private static File _ilpRootDir;  
 	private static File _ilpDir; 
-	private static File _varDir;
+	private static File _svarDir;
+	private static File _dvarDir;
 	
 	private ILP() {
 		
@@ -98,11 +92,8 @@ public class ILP {
 		
 		if (ILP.loggingLpSolve) writeLpSolveFile();
 		if (ILP.loggingCplexLp) writeCplexLpFile();
-		if (ILP.loggingAmpl) writeAmplFile();
+		if (ILP.loggingAmpl)    writeAmplFile();
 		
-		// _lpSolveFile.flush();
-		//if (ILP.loggingCplexLp) _cplexLpFile.flush();
-		//if (ILP.loggingAmpl) _amplFile.flush();
 	}
 
 	public static void writeObjValue_XA() {
@@ -246,63 +237,19 @@ public class ILP {
 			// ignore
 		}
 	}
-//	public static void closeGurobiIlpFiles() {
-//		
-//		try {
-//			_cplexLpFile.close();
-//			_svarFile.close();
-//			_dvarFile.close();
-//		} catch (Exception e) {
-//
-//			// ignore
-//		}
-//	}
-//	private static void setLpSolveParentDir() {
-//	
-//		//File lpSolveGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=");  
-//		//_lpSolveParentDir = new File(lpSolveGrandParentDir.getAbsolutePath(), StudyUtils.configFileName); 
-//		_lpSolveDir = new File(_ilpDir, "lpsolve").getAbsolutePath();
-//	
-//	}
-//	private static void setCplexLpParentDir() {
-//		
-//		//File cplexLpGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=");  
-//		//_cplexLpParentDir = new File(cplexLpGrandParentDir.getAbsolutePath(), StudyUtils.configFileName); 
-//		_cplexLpDir = new File(_ilpDir, "cplexlp").getAbsolutePath();
-//	
-//	}
-//	private static void setAmplParentDir() {
-//		
-//		
-//		//File amplGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=");  
-//		//_amplParentDir = new File(amplGrandParentDir.getAbsolutePath(), StudyUtils.configFileName); 		
-//		_amplDir = new File(_ilpDir, "ampl").getAbsolutePath();
-//		
-//	}
+
 	private static void setLpSolveFile() {
 	
 		String lpSolveFileName;
-		String svarFileName;
-		String dvarFileName;
 		String twoDigitMonth = String.format("%02d", ControlData.currMonth);
 		String twoDigitCycle = String.format("%02d", ControlData.currCycleIndex+1);
-	
-		//File lpSolveGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=\\=LpSolve=");  
-		//File lpSolveParentDir = new File(lpSolveGrandParentDir.getAbsolutePath(), FilePaths.configFileName); 
 		
 		lpSolveFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".lps";		
-		
-		svarFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".svar";
-		dvarFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".dvar";
 
 		try {
-			//lpSolveDir = new File(_lpSolveParentDir, "lpsolve").getAbsolutePath();
-			//String varDir = new File(_lpSolveParentDir, "var").getAbsolutePath();
 			
 			_lpSolveFile = Tools.openFile(_lpSolveDir, lpSolveFileName);
 			lpSolveFilePath = new File(_lpSolveDir, lpSolveFileName).getAbsolutePath(); // for public access
-			//if (ILP.loggingVariableValue) _svarFile = Tools.openFile(varDir, svarFileName);
-			//if (ILP.loggingVariableValue) _dvarFile = Tools.openFile(varDir, dvarFileName);
 		}
 		catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -313,10 +260,8 @@ public class ILP {
 	
 	public static void setVarDir(){
 				
-		// move these two lines to initialization
-		//_ilpRootDir = new File(FilePaths.mainDirectory, "=ILP=");  
-	    //_ilpDir = new File(_ilpRootDir.getAbsolutePath(), StudyUtils.configFileName); 
-		_varDir = new File(_ilpDir, "var");
+		_svarDir = new File(_ilpDir, "svar");
+		_dvarDir = new File(_ilpDir, "dvar");
 		
 	}
 
@@ -329,11 +274,9 @@ public class ILP {
 		
 		
 		try {
-
-			String varDirStr = _varDir.getAbsolutePath();
 			
-			_svarFile = Tools.openFile(varDirStr, svarFileName);
-			_dvarFile = Tools.openFile(varDirStr, dvarFileName);
+			_svarFile = Tools.openFile(_svarDir.getAbsolutePath(), svarFileName);
+			_dvarFile = Tools.openFile(_dvarDir.getAbsolutePath(), dvarFileName);
 		}
 		catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -367,15 +310,11 @@ public class ILP {
 		String amplFileName;
 		String twoDigitMonth = String.format("%02d", ControlData.currMonth);
 		String twoDigitCycle = String.format("%02d", ControlData.currCycleIndex+1);
-	
-		//File ilpGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=\\=AMPL=");  
-		//File lpSolveParentDir = new File(ilpGrandParentDir.getAbsolutePath(), FilePaths.configFileName); 
 		
 		amplFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".mod";				
 
 		try {
-			//String ilpDir = new File(_amplParentDir, "ampl").getAbsolutePath();
-			
+		
 			_amplFile = Tools.openFile(_amplDir, amplFileName);	
 			amplFilePath = new File(_amplDir, amplFileName).getAbsolutePath(); // for public access
 		}
