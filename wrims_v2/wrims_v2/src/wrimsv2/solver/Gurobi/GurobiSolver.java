@@ -23,6 +23,8 @@ import java.util.Map;
 import java.util.Iterator;
 import java.util.Set;
 
+import lpsolve.LpSolveException;
+
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
@@ -51,10 +53,49 @@ import gurobi.*;
 public class GurobiSolver {
 	
 	int modelStatus;
-	GRBEnv    env   = new GRBEnv("TestGurobi.log");
-	GRBModel  model = new GRBModel(env);
+	static GRBEnv    env;
+	static GRBModel  model;
+	public static Map <String, Double> varDoubleMap;
 	
 	Map<String, GRBVar> varMap = new HashMap <String, GRBVar> ();
+	
+	public static void initialize(){
+		
+//		try {
+//			//env   = new GRBEnv("TestGurobi.log");
+//		}
+//		catch (GRBException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+	}
+	
+	public static void setLp(String CplexLpFilePath) {
+		
+	    try {
+	    	env   = new GRBEnv("TestGurobi.log");
+		    model = new GRBModel(env, CplexLpFilePath);
+		}
+		catch (GRBException e) {
+			Error.addSolvingError("File not found: "+CplexLpFilePath);
+			//e.printStackTrace();
+		}
+		
+	}
+	
+	public static void dispose(){
+		
+	    try {
+			env.dispose();
+			model.dispose();
+		}
+		catch (GRBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 	public GurobiSolver() throws GRBException{	
 		
@@ -65,6 +106,70 @@ public class GurobiSolver {
 		Output();
 	
 	}
+	
+	public static void solve() {
+
+		LpResult result = new LpResult();
+		
+	    try {
+
+	      //GRBModel model = new GRBModel(env, LpFilePath);
+
+	      model.optimize();
+
+	      int optimstatus = model.get(GRB.IntAttr.Status);
+	      result.status = model.get(GRB.IntAttr.Status);
+	      
+	      if (optimstatus == GRB.Status.INF_OR_UNBD) {
+	        model.getEnv().set(GRB.IntParam.Presolve, 0);
+	        model.optimize();
+	        optimstatus = model.get(GRB.IntAttr.Status);
+	        result.status = model.get(GRB.IntAttr.Status);
+	      }
+
+	      if (optimstatus == GRB.Status.OPTIMAL) {
+	    	  
+	        double objval = model.get(GRB.DoubleAttr.ObjVal);
+	        System.out.println("Optimal objective: " + objval);
+	        
+	        
+	        GRBVar[] allVars = model.getVars();
+	      //  String[] allVarNames = model.get(GRB.StringAttr.VarName,allVars);
+	      //  double[] allValues = model.get(GRB.DoubleAttr.X,allVars);
+
+	        result.varNames = model.get(GRB.StringAttr.VarName,allVars);
+	        result.varValues = model.get(GRB.DoubleAttr.X,allVars);
+
+			ControlData.gurobi_objective = objval;
+	        collectDvar(result);
+	        assignDvar();
+	              
+	      } else if (optimstatus == GRB.Status.INFEASIBLE) {
+	    	  
+	    	  Error.addSolvingError("Model is infeasible"); 
+	          //System.out.println("Model is infeasible");
+
+	        // Compute and write out IIS
+	    	  model.computeIIS();
+	    	  model.write("GurobiModel.ilp");
+	      } else if (optimstatus == GRB.Status.UNBOUNDED) {
+	    	  Error.addSolvingError("Model is unbounded"); 
+	          //System.out.println("Model is unbounded");
+	      } else {
+	    	  Error.addSolvingError("Optimization was stopped with status = "
+                    + optimstatus);
+	      }
+
+	      // Dispose of model 
+	      model.dispose();
+
+	    } catch (GRBException e) {
+
+	      	Error.addSolvingError("Error code: " + e.getErrorCode() + ". " +
+		          e.getMessage());
+	    }
+		//return result;
+	  }
 	
 	public void setDVars() throws GRBException{
 		Map<String, Dvar> DvarMap = SolverData.getDvarMap();
@@ -86,8 +191,8 @@ public class GurobiSolver {
 			
 			if (weightMap.containsKey(dvarName)) {
 				double weight=-weightMap.get(dvarName).getValue();
-				GRBVar VarName = model.addVar(lb, ub, weight, GRB.CONTINUOUS, dvarName);
-				varMap.put(dvarName, VarName);
+				GRBVar gv = model.addVar(lb, ub, weight, GRB.CONTINUOUS, dvarName);
+				varMap.put(dvarName, gv);
 				
 				testWeight = weight;
 			}else{
@@ -132,26 +237,35 @@ public class GurobiSolver {
 		}
 	}
 	
-	public void assignDvar() throws GRBException{
-		Map<String, Dvar> dvarMap = ControlData.currDvMap;
-		Set dvarCollection = dvarMap.keySet();
-		Iterator dvarIterator = dvarCollection.iterator();
+	public static void assignDvar() {
 		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
 		Map<String, Map<String, IntDouble>> varTimeArrayCycleValueMap=ControlData.currStudyDataSet.getVarTimeArrayCycleValueMap();
 		Set<String> dvarUsedByLaterCycle = ControlData.currModelDataSet.dvarUsedByLaterCycle;
 		Set<String> dvarTimeArrayUsedByLaterCycle = ControlData.currModelDataSet.dvarTimeArrayUsedByLaterCycle;
 		String model=ControlData.currCycleName;
 		
-		String outPath=FilePaths.mainDirectory+"step"+ControlData.currTimeStep+"_"+ControlData.currCycleIndex+".txt";
-		FileWriter outstream;
-		try {
-			outstream = new FileWriter(outPath);
-			BufferedWriter out = new BufferedWriter(outstream);
+		Map<String, Dvar> dvarMap = SolverData.getDvarMap();
+		Set dvarCollection = dvarMap.keySet();
+		Iterator dvarIterator = dvarCollection.iterator();
 			
 		while(dvarIterator.hasNext()){ 
 			String dvName=(String)dvarIterator.next();
 			Dvar dvar=dvarMap.get(dvName);
-			double value=varMap.get(dvName).get(GRB.DoubleAttr.X); 
+			
+			double value = -77777777;
+			try {
+				value=varDoubleMap.get(dvName);
+			} catch (Exception e) {
+				//value = 0;  // TODO: warning!! needs work here!!
+				
+				//System.out.println(" This dvName not found: "+ dvName);
+				//continue;
+				try {
+					value = (Double) dvar.getData().getData(); // use whatever is in the container.
+				} catch (Exception e2) {
+					value=-77777777; // TODO: if this value is used, then this is probably an error in the wresl code. need to give warning.
+				}
+			}
 			IntDouble id=new IntDouble(value,false);
 			dvar.setData(id);
 			if(dvarUsedByLaterCycle.contains(dvName)){
@@ -182,17 +296,24 @@ public class GurobiSolver {
 			}
 			double[] dataList=DataTimeSeries.dvAliasTS.get(entryNameTS).getData();
 			dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=value;
+		}
+		
+		if (ControlData.showRunTimeMessage) {
+			System.out.println("Objective Value: "+ControlData.lpsolve_objective);
+			System.out.println("Assign Dvar Done.");
+		}
+	}
+
+	private static void collectDvar(LpResult lpResult){
+		
+		varDoubleMap = new HashMap<String, Double>();
+		
+		for (int i = 0; i < lpResult.varValues.length; i++) {
 			
-			out.write(dvName+":"+value+"\n");
-		}
-		
-		out.close();
-		
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if (ControlData.showRunTimeMessage) System.out.println("Assign Dvar Done.");
+			//System.out.println(lpResult.varNames[i]+":"+lpResult.varValues[i]);
+			varDoubleMap.put(lpResult.varNames[i], lpResult.varValues[i]);
+	    }		
+	
 	}
 
 	private void checkStatus() throws GRBException {

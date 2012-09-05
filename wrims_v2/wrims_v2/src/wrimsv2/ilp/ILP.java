@@ -22,6 +22,7 @@ import wrimsv2.components.Error;
 import wrimsv2.components.FilePaths;
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.solver.LPSolveSolver;
+import wrimsv2.solver.Gurobi.GurobiSolver;
 import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.elements.Tools;
 
@@ -29,13 +30,15 @@ import wrimsv2.wreslparser.elements.Tools;
 
 public class ILP {
 
-	private static File _lpSolveParentDir;
-	private static File _cplexLpParentDir;
-	private static File _amplParentDir;
+//	private static File _lpSolveParentDir;
+//	private static File _cplexLpParentDir;
+//	private static File _amplParentDir;
 	private static String _lpSolveDir;
 	private static String _cplexLpDir;
+	private static String _amplDir;
 	public static String lpSolveFilePath;
 	public static String cplexLpFilePath;
+	public static String amplFilePath;
 	private static PrintWriter _lpSolveFile;
 	private static PrintWriter _cplexLpFile;
 	private static PrintWriter _amplFile;
@@ -50,7 +53,14 @@ public class ILP {
 	public static boolean loggingVariableValue = false;
 	public static boolean logging = false;
 	public static boolean loggingAmpl = false;
-	public static boolean loggingCplexLp = false;
+	public static boolean loggingCplexLp = false; // special LP problem file format designed by Cplex
+	public static boolean loggingLpSolve = false; // special LP problem file format designed by LpSolve
+	
+	
+	// new field. TODO: use this instead.
+	private static File _ilpRootDir;  
+	private static File _ilpDir; 
+	private static File _varDir;
 	
 	private ILP() {
 		
@@ -58,13 +68,20 @@ public class ILP {
 
 	public static void initializeIlp() {
 		
-		setLpSolveParentDir();
-		if(ILP.loggingCplexLp) setCplexLpParentDir();
-		if(ILP.loggingAmpl) setAmplParentDir();
+		_ilpRootDir = new File(FilePaths.mainDirectory, "=ILP=");  
+	    _ilpDir = new File(_ilpRootDir.getAbsolutePath(), StudyUtils.configFileName); 
+	    
+		if (ILP.loggingLpSolve)  _lpSolveDir = new File(_ilpDir, "lpsolve").getAbsolutePath();
+		if (ILP.loggingCplexLp)  _cplexLpDir = new File(_ilpDir, "cplexlp").getAbsolutePath();
+		if (ILP.loggingAmpl)     _amplDir = new File(_ilpDir, "ampl").getAbsolutePath();
 		// TODO: write ampl command file "option presolve_eps 1e-13;"
+
+		if (ILP.loggingVariableValue) setVarDir();
+		setMaximumFractionDigits();
+	}
+
+	public static void setMaximumFractionDigits() {
 		
-		
-		//TODO: move to somewhere else
 		df = new DecimalFormat();
 		//df.setMinimumFractionDigits(2);
 		df.setMaximumFractionDigits(maximumFractionDigits);
@@ -72,28 +89,28 @@ public class ILP {
 	
 	public static void setIlpFile() {
 		
-		setLpSolveFile();
+		if (ILP.loggingLpSolve) setLpSolveFile();
 		if (ILP.loggingCplexLp) setCplexLpFile();		
-		if (ILP.loggingAmpl) setAmplFile();		
+		if (ILP.loggingAmpl)    setAmplFile();		
 	}
 
 	public static void writeIlp() {
 		
-		writeLpSolveFile();
+		if (ILP.loggingLpSolve) writeLpSolveFile();
 		if (ILP.loggingCplexLp) writeCplexLpFile();
 		if (ILP.loggingAmpl) writeAmplFile();
 		
-		_lpSolveFile.flush();
-		if (ILP.loggingCplexLp) _cplexLpFile.flush();
-		if (ILP.loggingAmpl) _amplFile.flush();
+		// _lpSolveFile.flush();
+		//if (ILP.loggingCplexLp) _cplexLpFile.flush();
+		//if (ILP.loggingAmpl) _amplFile.flush();
 	}
 
 	public static void writeObjValue_XA() {
 		
 		double objValue = ControlData.xasolver.getObjective();
-		writeObjValue(Double.toString(objValue), _lpSolveFile, lpSolve_comment_Symbol);
+		if (ILP.loggingLpSolve) writeObjValue(Double.toString(objValue), _lpSolveFile, lpSolve_comment_Symbol);
 		if (ILP.loggingCplexLp) writeObjValue(Double.toString(objValue), _cplexLpFile, cplexLp_comment_Symbol);
-		if (ILP.loggingAmpl) writeObjValue(Double.toString(objValue), _amplFile, ampl_comment_Symbol);
+		if (ILP.loggingAmpl)    writeObjValue(Double.toString(objValue), _amplFile, ampl_comment_Symbol);
 	
 	}
 	
@@ -104,7 +121,7 @@ public class ILP {
 			objValue = ControlData.lpsolve_objective;
 			writeObjValue(Double.toString(objValue), _lpSolveFile, lpSolve_comment_Symbol);
 			if (ILP.loggingCplexLp) writeObjValue(Double.toString(objValue), _cplexLpFile, cplexLp_comment_Symbol);
-			if (ILP.loggingAmpl) writeObjValue(Double.toString(objValue), _amplFile, ampl_comment_Symbol);
+			if (ILP.loggingAmpl)    writeObjValue(Double.toString(objValue), _amplFile, ampl_comment_Symbol);
 		//}
 //		catch (LpSolveException e) {
 //			// TODO Auto-generated catch block
@@ -114,6 +131,17 @@ public class ILP {
 //		}
 
 	
+	}
+
+	public static void writeObjValue_Gurobi() {
+
+		double objValue;
+
+		objValue = ControlData.gurobi_objective;
+		writeObjValue(Double.toString(objValue), _cplexLpFile, cplexLp_comment_Symbol);
+		if (ILP.loggingLpSolve) writeObjValue(Double.toString(objValue), _lpSolveFile, lpSolve_comment_Symbol);
+		if (ILP.loggingAmpl)    writeObjValue(Double.toString(objValue), _amplFile, ampl_comment_Symbol);
+
 	}
 	
 	private static void writeLpSolveFile() {
@@ -135,8 +163,9 @@ public class ILP {
 		
 		//LpSolveWriter.writeDvar(_lpSolveFile, dvar_weighted, dvar_unWeighted);
 		LpSolveWriter.writeDvar(_lpSolveFile, dvar_effective);	
+		_lpSolveFile.flush();
 	}
-	private static void writeCplexLpFile() {
+	public static void writeCplexLpFile() {
 		
 		_cplexLpFile.print(findHeaderStr(cplexLp_comment_Symbol));
 		
@@ -155,6 +184,7 @@ public class ILP {
 		
 		CplexLpWriter.writeDvar(_cplexLpFile, dvar_effective);	
 		_cplexLpFile.println("\nEnd");
+		_cplexLpFile.flush();
 		
 	}
 	private static void writeAmplFile() {
@@ -174,7 +204,7 @@ public class ILP {
 		AmplWriter.writeDvar(_amplFile, dvar_effective);	
 		AmplWriter.writeConstraint(_amplFile);
 		AmplWriter.writeObj(_amplFile, activeWeightMap);
-
+		_amplFile.flush();
 	}
 	
 	public static void writeDvarValue_XA() {
@@ -189,6 +219,12 @@ public class ILP {
 		_dvarFile.flush();
 		
 	}
+	public static void writeDvarValue_Gurobi() {
+		
+		writeDvarValue_Gurobi(_dvarFile, dvar_effective);
+		_dvarFile.flush();
+		
+	}
 	public static void writeSvarValue() {
 		
 		writeSvarValue(_svarFile);
@@ -198,38 +234,51 @@ public class ILP {
 	public static void closeIlpFile() {
 	
 		try {
-			_lpSolveFile.close();
+			if (ILP.loggingLpSolve) _lpSolveFile.close();
 			if (ILP.loggingCplexLp) _cplexLpFile.close();
-			if (ILP.loggingAmpl) _amplFile.close();
-			_svarFile.close();
-			_dvarFile.close();
+			if (ILP.loggingAmpl)    _amplFile.close();
+			if (ILP.loggingVariableValue) {
+				_svarFile.close();
+				_dvarFile.close();
+			}
 		} catch (Exception e) {
 
 			// ignore
 		}
 	}
-	private static void setLpSolveParentDir() {
-	
-		File lpSolveGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=\\=LpSolve=");  
-		_lpSolveParentDir = new File(lpSolveGrandParentDir.getAbsolutePath(), StudyUtils.configFileName); 
-		_lpSolveDir = new File(_lpSolveParentDir, "lpsolve").getAbsolutePath();
-	
-	}
-	private static void setCplexLpParentDir() {
-		
-		File cplexLpGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=\\=CplexLp=");  
-		_cplexLpParentDir = new File(cplexLpGrandParentDir.getAbsolutePath(), StudyUtils.configFileName); 
-		_cplexLpDir = new File(_cplexLpParentDir, "cplexlp").getAbsolutePath();
-	
-	}
-	private static void setAmplParentDir() {
-		
-		
-		File amplGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=\\=AMPL=");  
-		_amplParentDir = new File(amplGrandParentDir.getAbsolutePath(), StudyUtils.configFileName); 		
-		//_amplDir = new File(_amplParentDir, "ampl").getAbsolutePath();
-		
-	}
+//	public static void closeGurobiIlpFiles() {
+//		
+//		try {
+//			_cplexLpFile.close();
+//			_svarFile.close();
+//			_dvarFile.close();
+//		} catch (Exception e) {
+//
+//			// ignore
+//		}
+//	}
+//	private static void setLpSolveParentDir() {
+//	
+//		//File lpSolveGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=");  
+//		//_lpSolveParentDir = new File(lpSolveGrandParentDir.getAbsolutePath(), StudyUtils.configFileName); 
+//		_lpSolveDir = new File(_ilpDir, "lpsolve").getAbsolutePath();
+//	
+//	}
+//	private static void setCplexLpParentDir() {
+//		
+//		//File cplexLpGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=");  
+//		//_cplexLpParentDir = new File(cplexLpGrandParentDir.getAbsolutePath(), StudyUtils.configFileName); 
+//		_cplexLpDir = new File(_ilpDir, "cplexlp").getAbsolutePath();
+//	
+//	}
+//	private static void setAmplParentDir() {
+//		
+//		
+//		//File amplGrandParentDir = new File(FilePaths.mainDirectory, "=ILP=");  
+//		//_amplParentDir = new File(amplGrandParentDir.getAbsolutePath(), StudyUtils.configFileName); 		
+//		_amplDir = new File(_ilpDir, "ampl").getAbsolutePath();
+//		
+//	}
 	private static void setLpSolveFile() {
 	
 		String lpSolveFileName;
@@ -248,12 +297,12 @@ public class ILP {
 
 		try {
 			//lpSolveDir = new File(_lpSolveParentDir, "lpsolve").getAbsolutePath();
-			String varDir = new File(_lpSolveParentDir, "var").getAbsolutePath();
+			//String varDir = new File(_lpSolveParentDir, "var").getAbsolutePath();
 			
 			_lpSolveFile = Tools.openFile(_lpSolveDir, lpSolveFileName);
 			lpSolveFilePath = new File(_lpSolveDir, lpSolveFileName).getAbsolutePath(); // for public access
-			if (ILP.loggingVariableValue) _svarFile = Tools.openFile(varDir, svarFileName);
-			if (ILP.loggingVariableValue) _dvarFile = Tools.openFile(varDir, dvarFileName);
+			//if (ILP.loggingVariableValue) _svarFile = Tools.openFile(varDir, svarFileName);
+			//if (ILP.loggingVariableValue) _dvarFile = Tools.openFile(varDir, dvarFileName);
 		}
 		catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -261,7 +310,38 @@ public class ILP {
 		}
 	
 	}
-	private static void setCplexLpFile() {
+	
+	public static void setVarDir(){
+				
+		// move these two lines to initialization
+		//_ilpRootDir = new File(FilePaths.mainDirectory, "=ILP=");  
+	    //_ilpDir = new File(_ilpRootDir.getAbsolutePath(), StudyUtils.configFileName); 
+		_varDir = new File(_ilpDir, "var");
+		
+	}
+
+	public static void setVarFile(){
+		
+		String twoDigitMonth = String.format("%02d", ControlData.currMonth);
+		String twoDigitCycle = String.format("%02d", ControlData.currCycleIndex+1);
+		String svarFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".svar";
+		String dvarFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".dvar";
+		
+		
+		try {
+
+			String varDirStr = _varDir.getAbsolutePath();
+			
+			_svarFile = Tools.openFile(varDirStr, svarFileName);
+			_dvarFile = Tools.openFile(varDirStr, dvarFileName);
+		}
+		catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	public static void setCplexLpFile() {
 		
 		String cplexLpFileName;
 		String twoDigitMonth = String.format("%02d", ControlData.currMonth);
@@ -294,9 +374,10 @@ public class ILP {
 		amplFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".mod";				
 
 		try {
-			String ilpDir = new File(_amplParentDir, "ampl").getAbsolutePath();
+			//String ilpDir = new File(_amplParentDir, "ampl").getAbsolutePath();
 			
-			_amplFile = Tools.openFile(ilpDir, amplFileName);	
+			_amplFile = Tools.openFile(_amplDir, amplFileName);	
+			amplFilePath = new File(_amplDir, amplFileName).getAbsolutePath(); // for public access
 		}
 		catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -512,6 +593,60 @@ public class ILP {
 				
 			} catch (Exception e) {
 				dvarFile.print(dvName + ":  " + LPSolveSolver.varDoubleMap.get(s) +"\n"  );
+			}
+		}
+	}
+
+	private static void writeDvarValue_Gurobi(PrintWriter dvarFile, Set<String> dvar_effective) {
+		
+		Map<String, Dvar> dvMap = SolverData.getDvarMap();
+		Map<String, WeightElement> wtMap = SolverData.getWeightMap();
+		//Map<String, WeightElement> wtSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
+		
+		ArrayList<String> dvar_weighted = new ArrayList<String>(wtMap.keySet());
+		dvar_weighted.addAll(ControlData.currModelDataSet.usedWtSlackSurplusList);
+		
+		ArrayList<String> dvar_unweighted = new ArrayList<String>(dvMap.keySet());
+		dvar_unweighted.removeAll(wtMap.keySet());
+		dvar_unweighted.removeAll(ControlData.currModelDataSet.usedWtSlackSurplusList);
+		
+		dvar_unweighted.retainAll(dvar_effective);
+		Collections.sort(dvar_weighted);
+		Collections.sort(dvar_unweighted);
+		
+		
+		dvarFile.println("/* Weighted Dvar    */");
+		for (String s : dvar_weighted){
+			String dvName = String.format("%-35s", s);
+			//dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
+			try{
+				double v = GurobiSolver.varDoubleMap.get(s);
+				// TODO: improve speed
+				if (!df.format(v).equals("-0")) {
+					dvarFile.print(dvName + ":  " + df.format(v) +"\n"  );					
+				} else {
+					dvarFile.print(dvName + ":  0" +"\n"  );				
+				}
+	
+			} catch (Exception e) {
+				dvarFile.print(dvName + ":  " + GurobiSolver.varDoubleMap.get(s) +"\n"  );
+			}
+		}
+		dvarFile.println();
+		dvarFile.println("/* Unweighted Dvar    */");	
+		for (String s : dvar_unweighted){
+			String dvName = String.format("%-35s", s);
+			try{
+				double v = GurobiSolver.varDoubleMap.get(s);
+				// TODO: improve speed
+				if (!df.format(v).equals("-0")) {
+					dvarFile.print(dvName + ":  " + df.format(v) +"\n"  );					
+				} else {
+					dvarFile.print(dvName + ":  0" +"\n"  );				
+				}
+				
+			} catch (Exception e) {
+				dvarFile.print(dvName + ":  " + GurobiSolver.varDoubleMap.get(s) +"\n"  );
 			}
 		}
 	}

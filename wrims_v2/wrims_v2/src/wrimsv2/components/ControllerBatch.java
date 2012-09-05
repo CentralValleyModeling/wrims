@@ -23,7 +23,7 @@ import wrimsv2.solver.XASolver;
 import wrimsv2.solver.SetXALog;
 import wrimsv2.solver.InitialXASolver;
 import wrimsv2.solver.Gurobi.GurobiSolver;
-import wrimsv2.solver.Gurobi.InitialGurobiSolver;
+import wrimsv2.solver.Gurobi.LpResult;
 import wrimsv2.wreslparser.elements.StudyUtils;
 
 public class ControllerBatch {
@@ -172,8 +172,9 @@ public class ControllerBatch {
 		System.out.println("==============Run Study Start============");
 		
 		//if (ControlData.solverName.equalsIgnoreCase("GUROBI") ) 
-		
-		if (ILP.logging){
+		if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
+			runModelGurobi(sds);		
+		} else if (ILP.logging){
 			runModelILP(sds);
 	    } else if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG") ){
 			runModelXA(sds);
@@ -366,7 +367,10 @@ public class ControllerBatch {
 						if (ILP.logging) {
 							ILP.setIlpFile();
 							ILP.writeIlp();
-							if (ILP.loggingVariableValue) ILP.writeSvarValue();
+							if (ILP.loggingVariableValue) {
+								ILP.setVarFile();
+								ILP.writeSvarValue();
+							}
 						}
 					
 						if (Error.error_evaluation.size()>=1){
@@ -451,12 +455,17 @@ public class ControllerBatch {
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
 		
-		new InitialGurobiSolver();
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		VariableTimeStep.initialCurrTimeStep(modelList);
 		VariableTimeStep.initialCycleStartDate();
 		VariableTimeStep.setCycleEndDate(sds);
+		
+		ILP.initializeIlp();
+		//ILP.setCplexLpParentDir();
+		//ILP.setVarDir();
+		//ILP.setMaximumFractionDigits();
+		
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 			//if (ControlData.solverName.equalsIgnoreCase("XALOG")) SetXALog.enableXALog();
 			ClearValue.clearValues(modelList, modelDataSetMap);
@@ -495,19 +504,32 @@ public class ControllerBatch {
 						ControlData.currTsMap=mds.tsMap;
 						ControlData.isPostProcessing=false;
 						mds.processModel();
+						
 						if (Error.error_evaluation.size()>=1){
 							Error.writeEvaluationErrorFile("evaluation_error.txt");
+							Error.addSolvingError("evaluation error(s)");
 							noError=false;
+						} else {	
+							ILP.setIlpFile();
+							//ILP.setCplexLpFile();
+							ILP.writeIlp();
+							if (ILP.loggingVariableValue) {
+								ILP.setVarFile();
+								ILP.writeSvarValue();
+							}
+							GurobiSolver.setLp(ILP.cplexLpFilePath);
+							GurobiSolver.solve();
 						}
-						try {
-							new GurobiSolver();
-						}
-						catch (GRBException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+
 						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
 						if (Error.error_solving.size()<1){
+							
+		            		ILP.writeObjValue_Gurobi();
+		            		//ILP.writeDvarValue_Gurobi();
+		            		if (ILP.loggingVariableValue) ILP.writeDvarValue_Gurobi();
+		            		
+		            		ILP.closeIlpFile();
+		            		
 							ControlData.isPostProcessing=true;
 							mds.processAlias();
 							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
@@ -517,7 +539,7 @@ public class ControllerBatch {
 						}
 						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
 						if (Error.error_evaluation.size()>=1) noError=false;
-						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
+
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
 							VariableTimeStep.currTimeAddOneMonth();
@@ -540,6 +562,7 @@ public class ControllerBatch {
 			VariableTimeStep.setCycleEndDate(sds);
 		}
 		//ControlData.xasolver.close();
+		GurobiSolver.dispose();
 		if (ControlData.writeInitToDVOutput){
 			DssOperation.writeInitDvarAliasToDSS();
 		}

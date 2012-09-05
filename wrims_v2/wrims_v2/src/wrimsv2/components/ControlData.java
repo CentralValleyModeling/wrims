@@ -82,6 +82,7 @@ public class ControlData {
 	public static String solverName;
 	public static Optimizer xasolver;
 	public static double lpsolve_objective;
+	public static double gurobi_objective;
 	public static boolean isPostProcessing=false;
 	public static boolean sendAliasToDvar=false;
 	public static boolean outputWreslCSV=false;

@@ -213,7 +213,7 @@ public class ConfigUtils {
 		System.out.println("StopMonth:      "+ControlData.endMonth);
 		System.out.println("Solver:         "+ControlData.solverName);
 		
-		final String[] solvers = {"xa","xalog","lpsolve"};
+		final String[] solvers = {"xa","xalog","lpsolve","gurobi"};
 
 		if (!Arrays.asList(solvers).contains(ControlData.solverName.toLowerCase())){
 			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);	
@@ -304,9 +304,15 @@ public class ConfigUtils {
 		
 		// processed only for ILP
 		
-		// TODO: lpsolve and ilp log is binded. need to enable passing string instead of file
-		if (ControlData.solverName.equalsIgnoreCase("lpsolve")) configMap.put("ilplog","yes");
-		
+		// TODO: lpsolve and ilp log is binded. need to enable direct linking instead of reading file
+		if (ControlData.solverName.equalsIgnoreCase("lpsolve")) {
+			configMap.put("ilplog","yes");
+			ILP.loggingLpSolve = true;
+		}
+		if (ControlData.solverName.equalsIgnoreCase("Gurobi")) {
+			configMap.put("ilplog","yes");
+			ILP.loggingCplexLp = true;
+		}		
 		
 		String strIlpLog = configMap.get("ilplog");
 		if (strIlpLog.equalsIgnoreCase("yes") || strIlpLog.equalsIgnoreCase("true")) {
@@ -359,7 +365,10 @@ public class ConfigUtils {
 					ILP.loggingAmpl = true;
 					System.out.println("IlpLogFormat:           " + "Ampl");
 				} 
-
+				if (s.toLowerCase().contains("lpsolve")) {
+					ILP.loggingLpSolve = true;
+					System.out.println("IlpLogFormat:           " + "LpSolve");
+				} 
 			}
 
 			System.out.println("IlpLog:                 " + ILP.logging);
