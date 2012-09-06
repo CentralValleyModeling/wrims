@@ -147,6 +147,7 @@ public class LPSolveSolver {
 	}
 	
 	private static void collectDvar() throws LpSolveException{
+		//Map<String, Dvar> dvarMap=SolverData.getDvarMap();
 		
 		varDoubleMap = new HashMap<String, Double>();
 		
@@ -162,6 +163,10 @@ public class LPSolveSolver {
 			//varDoubleMap.put(solver.getOrigcolName(i), solver.getVarPrimalresult(i+rn));
 			varDoubleMap.put(origcolName.get(i-1), solver.getVarPrimalresult(i+rn));
 			//System.out.println(solver.getOrigcolName(i)+" : "+solver.getVarPrimalresult(i+rn));
+			
+			// TODO: add the following line before sending the problem to the solver using direct link. 
+			// it's too late here. need to assign value.
+			// if (!dvarMap.containsKey(origcolName.get(i-1))) addConditionalSlackSurplusToDvarMap(dvarMap, origcolName.get(i-1));
 	    }		
 	
 	}
@@ -231,5 +236,11 @@ public class LPSolveSolver {
 			System.out.println("Objective Value: "+ControlData.lpsolve_objective);
 			System.out.println("Assign Dvar Done.");
 		}
+	}
+	public static void addConditionalSlackSurplusToDvarMap(Map<String, Dvar> dvarMap, String multName){
+		Dvar dvar=new Dvar();
+		dvar.upperBoundValue=1.0e23;
+		dvar.lowerBoundValue=0.0;
+		dvarMap.put(multName, dvar);
 	}
 }

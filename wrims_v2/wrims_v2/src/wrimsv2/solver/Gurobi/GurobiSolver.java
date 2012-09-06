@@ -306,12 +306,18 @@ public class GurobiSolver {
 
 	private static void collectDvar(LpResult lpResult){
 		
+		//Map<String, Dvar> dvarMap=SolverData.getDvarMap();
 		varDoubleMap = new HashMap<String, Double>();
 		
 		for (int i = 0; i < lpResult.varValues.length; i++) {
 			
 			//System.out.println(lpResult.varNames[i]+":"+lpResult.varValues[i]);
 			varDoubleMap.put(lpResult.varNames[i], lpResult.varValues[i]);
+			
+			// TODO: add the following line before sending the problem to the solver using direct link. 
+			// it's too late here. need to assign value.
+			//if (!dvarMap.containsKey(lpResult.varNames[i])) addConditionalSlackSurplusToDvarMap(dvarMap, lpResult.varNames[i]);
+			
 	    }		
 	
 	}
@@ -392,5 +398,11 @@ public class GurobiSolver {
 		}
 		
 		System.out.println("Obj: " + model.get(GRB.DoubleAttr.ObjVal));
+	}
+	public static void addConditionalSlackSurplusToDvarMap(Map<String, Dvar> dvarMap, String multName){
+		Dvar dvar=new Dvar();
+		dvar.upperBoundValue=1.0e23;
+		dvar.lowerBoundValue=0.0;
+		dvarMap.put(multName, dvar);
 	}
 }
