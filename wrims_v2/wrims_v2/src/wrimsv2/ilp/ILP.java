@@ -74,7 +74,7 @@ public class ILP {
 		setMaximumFractionDigits();
 	}
 
-	public static void setMaximumFractionDigits() {
+	private static void setMaximumFractionDigits() {
 		
 		df = new DecimalFormat();
 		//df.setMinimumFractionDigits(2);
@@ -156,7 +156,7 @@ public class ILP {
 		LpSolveWriter.writeDvar(_lpSolveFile, dvar_effective);	
 		_lpSolveFile.flush();
 	}
-	public static void writeCplexLpFile() {
+	private static void writeCplexLpFile() {
 		
 		_cplexLpFile.print(findHeaderStr(cplexLp_comment_Symbol));
 		
@@ -284,7 +284,7 @@ public class ILP {
 		}
 	}
 	
-	public static void setCplexLpFile() {
+	private static void setCplexLpFile() {
 		
 		String cplexLpFileName;
 		String twoDigitMonth = String.format("%02d", ControlData.currMonth);
@@ -443,7 +443,10 @@ public class ILP {
 		outFile.flush();
 	}
 
-	private static void writeDvarValue_XA(PrintWriter dvarFile, Set<String> dvar_effective) {
+	// returns <dvar_weighted, dvar_unweighted>
+	private static ArrayList<ArrayList<String>> prepareDvarToWrite(Set<String> dvar_effective){
+		
+		ArrayList<ArrayList<String>> ret = new ArrayList<ArrayList<String>>();
 		
 		Map<String, Dvar> dvMap = SolverData.getDvarMap();
 		Map<String, WeightElement> wtMap = SolverData.getWeightMap();
@@ -452,14 +455,29 @@ public class ILP {
 		ArrayList<String> dvar_weighted = new ArrayList<String>(wtMap.keySet());
 		dvar_weighted.addAll(ControlData.currModelDataSet.usedWtSlackSurplusList);
 		
+		//TODO: remove weight of 0 from dvar_weighted.
+		
+		
 		ArrayList<String> dvar_unweighted = new ArrayList<String>(dvMap.keySet());
-		dvar_unweighted.removeAll(wtMap.keySet());
-		dvar_unweighted.removeAll(ControlData.currModelDataSet.usedWtSlackSurplusList);
+		//dvar_unweighted.removeAll(wtMap.keySet());
+		//dvar_unweighted.removeAll(ControlData.currModelDataSet.usedWtSlackSurplusList);
+		dvar_unweighted.removeAll(dvar_weighted);
 		
 		dvar_unweighted.retainAll(dvar_effective);
 		Collections.sort(dvar_weighted);
 		Collections.sort(dvar_unweighted);
 		
+		ret.add(dvar_weighted);
+		ret.add(dvar_unweighted);
+		
+		return ret;
+		
+	}
+	private static void writeDvarValue_XA(PrintWriter dvarFile, Set<String> dvar_effective) {
+		
+		ArrayList<ArrayList<String>> sortedDvar = prepareDvarToWrite(dvar_effective);
+		ArrayList<String> dvar_weighted = sortedDvar.get(0);
+		ArrayList<String> dvar_unweighted = sortedDvar.get(1);
 		
 		dvarFile.println("/* Weighted Dvar    */");
 		for (String s : dvar_weighted){
@@ -482,23 +500,11 @@ public class ILP {
 		}
 	}
 
-	private static void writeDvarValue_LPSOLVE(PrintWriter dvarFile, Set<String> dvar_effective) {
+	private static void writeDvarValue_LPSOLVE(PrintWriter dvarFile, Set<String> dvar_effective) {		
 		
-		Map<String, Dvar> dvMap = SolverData.getDvarMap();
-		Map<String, WeightElement> wtMap = SolverData.getWeightMap();
-		//Map<String, WeightElement> wtSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
-		
-		ArrayList<String> dvar_weighted = new ArrayList<String>(wtMap.keySet());
-		dvar_weighted.addAll(ControlData.currModelDataSet.usedWtSlackSurplusList);
-		
-		ArrayList<String> dvar_unweighted = new ArrayList<String>(dvMap.keySet());
-		dvar_unweighted.removeAll(wtMap.keySet());
-		dvar_unweighted.removeAll(ControlData.currModelDataSet.usedWtSlackSurplusList);
-		
-		dvar_unweighted.retainAll(dvar_effective);
-		Collections.sort(dvar_weighted);
-		Collections.sort(dvar_unweighted);
-		
+		ArrayList<ArrayList<String>> sortedDvar = prepareDvarToWrite(dvar_effective);	
+		ArrayList<String> dvar_weighted = sortedDvar.get(0);
+		ArrayList<String> dvar_unweighted = sortedDvar.get(1);
 		
 		dvarFile.println("/* Weighted Dvar    */");
 		for (String s : dvar_weighted){
@@ -537,22 +543,11 @@ public class ILP {
 	}
 
 	private static void writeDvarValue_Gurobi(PrintWriter dvarFile, Set<String> dvar_effective) {
+
 		
-		Map<String, Dvar> dvMap = SolverData.getDvarMap();
-		Map<String, WeightElement> wtMap = SolverData.getWeightMap();
-		//Map<String, WeightElement> wtSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
-		
-		ArrayList<String> dvar_weighted = new ArrayList<String>(wtMap.keySet());
-		dvar_weighted.addAll(ControlData.currModelDataSet.usedWtSlackSurplusList);
-		
-		ArrayList<String> dvar_unweighted = new ArrayList<String>(dvMap.keySet());
-		dvar_unweighted.removeAll(wtMap.keySet());
-		dvar_unweighted.removeAll(ControlData.currModelDataSet.usedWtSlackSurplusList);
-		
-		dvar_unweighted.retainAll(dvar_effective);
-		Collections.sort(dvar_weighted);
-		Collections.sort(dvar_unweighted);
-		
+		ArrayList<ArrayList<String>> sortedDvar = prepareDvarToWrite(dvar_effective);		
+		ArrayList<String> dvar_weighted = sortedDvar.get(0);
+		ArrayList<String> dvar_unweighted = sortedDvar.get(1);
 		
 		dvarFile.println("/* Weighted Dvar    */");
 		for (String s : dvar_weighted){
