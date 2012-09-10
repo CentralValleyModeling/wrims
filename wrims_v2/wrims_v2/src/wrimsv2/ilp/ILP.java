@@ -39,6 +39,7 @@ public class ILP {
 	private static PrintWriter _amplFile;
 	private static PrintWriter _svarFile;
 	private static PrintWriter _dvarFile;
+	private static PrintWriter _objValueFile;
 	private static Set<String> dvar_effective;
 	private static final String lpSolve_comment_Symbol = "//";
 	private static final String ampl_comment_Symbol = "#";
@@ -72,6 +73,14 @@ public class ILP {
 
 		if (ILP.loggingVariableValue) setVarDir();
 		setMaximumFractionDigits();
+		
+	    try {
+			_objValueFile = Tools.openFile(_ilpDir.getAbsolutePath(), "ObjValues.log");
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private static void setMaximumFractionDigits() {
@@ -99,39 +108,39 @@ public class ILP {
 	public static void writeObjValue_XA() {
 		
 		double objValue = ControlData.xasolver.getObjective();
-		if (ILP.loggingLpSolve) writeObjValue(Double.toString(objValue), _lpSolveFile, lpSolve_comment_Symbol);
-		if (ILP.loggingCplexLp) writeObjValue(Double.toString(objValue), _cplexLpFile, cplexLp_comment_Symbol);
-		if (ILP.loggingAmpl)    writeObjValue(Double.toString(objValue), _amplFile, ampl_comment_Symbol);
-	
+		String objValueStr = Double.toString(objValue);
+		
+		if (ILP.loggingLpSolve) writeObjValue(objValueStr, _lpSolveFile, lpSolve_comment_Symbol);
+		if (ILP.loggingCplexLp) writeObjValue(objValueStr, _cplexLpFile, cplexLp_comment_Symbol);
+		if (ILP.loggingAmpl)    writeObjValue(objValueStr, _amplFile, ampl_comment_Symbol);
+	    
+		writeObjValue(getYearMonthCycle(), objValueStr, _objValueFile);
+		
 	}
 	
 	public static void writeObjValue_LPSOLVE() {
-		
-		double objValue;
-		//try {
-			objValue = ControlData.lpsolve_objective;
-			writeObjValue(Double.toString(objValue), _lpSolveFile, lpSolve_comment_Symbol);
-			if (ILP.loggingCplexLp) writeObjValue(Double.toString(objValue), _cplexLpFile, cplexLp_comment_Symbol);
-			if (ILP.loggingAmpl)    writeObjValue(Double.toString(objValue), _amplFile, ampl_comment_Symbol);
-		//}
-//		catch (LpSolveException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			writeObjValue(" LpSolveException Error! ", _lpSolveFile, lpSolve_comment_Symbol);
-//			writeObjValue(" LpSolveException Error! ", _amplFile, ampl_comment_Symbol);
-//		}
 
-	
+		double objValue = ControlData.lpsolve_objective;
+		String objValueStr = Double.toString(objValue);
+
+		writeObjValue(objValueStr, _lpSolveFile, lpSolve_comment_Symbol);
+		if (ILP.loggingCplexLp) writeObjValue(objValueStr, _cplexLpFile, cplexLp_comment_Symbol);
+		if (ILP.loggingAmpl) writeObjValue(objValueStr, _amplFile, ampl_comment_Symbol);
+		
+		writeObjValue(getYearMonthCycle(), objValueStr, _objValueFile);
+
 	}
 
 	public static void writeObjValue_Gurobi() {
 
-		double objValue;
+		double objValue = ControlData.gurobi_objective;
+		String objValueStr = Double.toString(objValue);
+		
+		writeObjValue(objValueStr, _cplexLpFile, cplexLp_comment_Symbol);
+		if (ILP.loggingLpSolve) writeObjValue(objValueStr, _lpSolveFile, lpSolve_comment_Symbol);
+		if (ILP.loggingAmpl)    writeObjValue(objValueStr, _amplFile, ampl_comment_Symbol);
 
-		objValue = ControlData.gurobi_objective;
-		writeObjValue(Double.toString(objValue), _cplexLpFile, cplexLp_comment_Symbol);
-		if (ILP.loggingLpSolve) writeObjValue(Double.toString(objValue), _lpSolveFile, lpSolve_comment_Symbol);
-		if (ILP.loggingAmpl)    writeObjValue(Double.toString(objValue), _amplFile, ampl_comment_Symbol);
+		writeObjValue(getYearMonthCycle(), objValueStr, _objValueFile);
 
 	}
 	
@@ -264,13 +273,34 @@ public class ILP {
 		_dvarDir = new File(_ilpDir, "dvar");
 		
 	}
-
-	public static void setVarFile(){
+	
+	private static String getYearMonthCycle(){
 		
 		String twoDigitMonth = String.format("%02d", ControlData.currMonth);
 		String twoDigitCycle = String.format("%02d", ControlData.currCycleIndex+1);
-		String svarFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".svar";
-		String dvarFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".dvar";
+		String ret = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle;
+		
+		return ret;
+		
+	}
+	
+	public static void setObjValueFile(){
+				
+		
+		try {
+			
+			_objValueFile = Tools.openFile(_ilpDir.getAbsolutePath(), "objectiveValues.log");
+
+		}
+		catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	public static void setVarFile(){
+		
+		String svarFileName = getYearMonthCycle()+ ".svar";
+		String dvarFileName = getYearMonthCycle()+ ".dvar";
 		
 		
 		try {
@@ -286,11 +316,7 @@ public class ILP {
 	
 	private static void setCplexLpFile() {
 		
-		String cplexLpFileName;
-		String twoDigitMonth = String.format("%02d", ControlData.currMonth);
-		String twoDigitCycle = String.format("%02d", ControlData.currCycleIndex+1); 
-		
-		cplexLpFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".lp";		
+		String cplexLpFileName = getYearMonthCycle()+".lp";		
 
 		try {
 
@@ -307,11 +333,7 @@ public class ILP {
 	}
 	private static void setAmplFile() {
 		
-		String amplFileName;
-		String twoDigitMonth = String.format("%02d", ControlData.currMonth);
-		String twoDigitCycle = String.format("%02d", ControlData.currCycleIndex+1);
-		
-		amplFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".mod";				
+		String amplFileName = getYearMonthCycle()+ ".mod";				
 
 		try {
 		
@@ -428,7 +450,15 @@ public class ILP {
 		return dvarValueStr;
 	}
 
-
+	private static void writeObjValue(String msg, String objValueStr, PrintWriter outFile) {		
+			
+		if (Error.getTotalError()==0) {
+			outFile.println(msg+": "+objValueStr);
+		} else {
+			outFile.println(msg+": "+"Error! ");	
+		}
+		outFile.flush();
+	}
 	
 	private static void writeObjValue(String objValueStr, PrintWriter outFile, String commentSym) {		
 
