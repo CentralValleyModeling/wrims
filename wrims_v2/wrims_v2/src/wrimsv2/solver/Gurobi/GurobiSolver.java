@@ -11,6 +11,7 @@ import gurobi.GRBModel;
 import gurobi.GRBVar;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,20 +62,23 @@ public class GurobiSolver {
 	
 	public static void initialize(){
 		
-//		try {
-//			//env   = new GRBEnv("TestGurobi.log");
-//		}
-//		catch (GRBException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+	    try {
+	    	//env   = new GRBEnv("TestGurobi.log");
+	    	env   = new GRBEnv();
+	    	env.set(GRB.IntParam.LogToConsole, 0);
+		}
+		catch (GRBException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
 	public static void setLp(String CplexLpFilePath) {
 		
 	    try {
-	    	env   = new GRBEnv("TestGurobi.log");
+	    	//env   = new GRBEnv("TestGurobi.log");
+	    	//env   = new GRBEnv();
+	    	//env.set(GRB.IntParam.LogToConsole, 0);
 		    model = new GRBModel(env, CplexLpFilePath);
 		}
 		catch (GRBException e) {
@@ -87,8 +91,9 @@ public class GurobiSolver {
 	public static void dispose(){
 		
 	    try {
-			env.dispose();
 			model.dispose();
+			//env.release(); // release license
+			env.dispose();
 		}
 		catch (GRBException e) {
 			// TODO Auto-generated catch block
@@ -113,8 +118,6 @@ public class GurobiSolver {
 		
 	    try {
 
-	      //GRBModel model = new GRBModel(env, LpFilePath);
-
 	      model.optimize();
 
 	      int optimstatus = model.get(GRB.IntAttr.Status);
@@ -125,12 +128,15 @@ public class GurobiSolver {
 	        model.optimize();
 	        optimstatus = model.get(GRB.IntAttr.Status);
 	        result.status = model.get(GRB.IntAttr.Status);
+	        //reset env
+	    	env   = new GRBEnv();
+	    	env.set(GRB.IntParam.LogToConsole, 0);
 	      }
 
 	      if (optimstatus == GRB.Status.OPTIMAL) {
 	    	  
 	        double objval = model.get(GRB.DoubleAttr.ObjVal);
-	        System.out.println("Optimal objective: " + objval);
+	        //System.out.println("Optimal objective: " + objval);
 	        
 	        
 	        GRBVar[] allVars = model.getVars();
@@ -150,8 +156,9 @@ public class GurobiSolver {
 	          //System.out.println("Model is infeasible");
 
 	        // Compute and write out IIS
+	    	  String IISFilePath = new File(FilePaths.mainDirectory, "Gurobi_infeasible.ilp").getAbsolutePath();
 	    	  model.computeIIS();
-	    	  model.write("GurobiModel.ilp");
+	    	  model.write(IISFilePath);
 	      } else if (optimstatus == GRB.Status.UNBOUNDED) {
 	    	  Error.addSolvingError("Model is unbounded"); 
 	          //System.out.println("Model is unbounded");
