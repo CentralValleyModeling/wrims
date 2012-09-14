@@ -5,23 +5,43 @@
    <startup class="wrimsv2_plugin.debugger.core.DebuggerStartUp"/>
 </extension>
 <extension point="org.eclipse.ui.views">
+        <category 
+           id="wpp.category.wrims2"
+           name="WRIMS2">
+        </category>
         <view id="wpp.variableview"
              name="Variables"
+             category="wpp.category.wrims2"
           class="wrimsv2_plugin.debugger.view.WPPVariableView"/>
 </extension>
 <extension point="org.eclipse.ui.views">
+        <category 
+           id="wpp.category.wrims2"
+           name="WRIMS2">
+        </category>
         <view id="wpp.allvariableview"
              name="All Variables"
+             category="wpp.category.wrims2"
           class="wrimsv2_plugin.debugger.view.WPPAllVariableView"/>
 </extension>
 <extension point="org.eclipse.ui.views">
+        <category 
+           id="wpp.category.wrims2"
+           name="WRIMS2">
+        </category>
         <view id="wpp.goalview"
              name="Goals"
+             category="wpp.category.wrims2"
           class="wrimsv2_plugin.debugger.view.WPPGoalView"/>
 </extension>
 <extension point="org.eclipse.ui.views">
+        <category 
+           id="wpp.category.wrims2"
+           name="WRIMS2">
+        </category>
         <view id="wpp.allgoalview"
              name="All Goals"
+             category="wpp.category.wrims2"
           class="wrimsv2_plugin.debugger.view.WPPAllGoalView"/>
 </extension>
 <extension point="org.eclipse.ui.viewActions"> 
@@ -90,19 +110,34 @@
    </viewContribution> 
 </extension>
 <extension point="org.eclipse.ui.views">
+        <category 
+           id="wpp.category.wrims2"
+           name="WRIMS2">
+        </category>
         <view id="wpp.exceptionview"
              name="Exception"
+             category="wpp.category.wrims2"
           class="wrimsv2_plugin.debugger.view.WPPExceptionView"/>
 </extension>
 <extension point="org.eclipse.ui.views">
+	<category 
+         id="wpp.category.wrims2"
+         name="WRIMS2">
+    </category>
 	<view name="Variable Detail"
+	      category="wpp.category.wrims2"
           class="wrimsv2_plugin.debugger.view.WPPVarDetailView"
           id="wpp.vardetailview">
     </view>
 </extension>
 <extension point="org.eclipse.ui.views">
+    <category 
+          id="wpp.category.wrims2"
+          name="WRIMS2">
+    </category>	
 	<view name="Variable Monitor"
           class="wrimsv2_plugin.debugger.view.WPPVarMonitorView"
+          category="wpp.category.wrims2"
           id="wpp.varmonitorview">
     </view>
 </extension>
