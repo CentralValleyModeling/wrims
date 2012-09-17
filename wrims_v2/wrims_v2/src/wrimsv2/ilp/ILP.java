@@ -114,7 +114,7 @@ public class ILP {
 		if (ILP.loggingCplexLp) writeObjValue(objValueStr, _cplexLpFile, cplexLp_comment_Symbol);
 		if (ILP.loggingAmpl)    writeObjValue(objValueStr, _amplFile, ampl_comment_Symbol);
 	    
-		writeObjValue(getYearMonthCycle(), objValueStr, _objValueFile);
+		writeObjValueLog(getYearMonthCycle(), objValueStr, _objValueFile);
 		
 	}
 	
@@ -127,7 +127,7 @@ public class ILP {
 		if (ILP.loggingCplexLp) writeObjValue(objValueStr, _cplexLpFile, cplexLp_comment_Symbol);
 		if (ILP.loggingAmpl) writeObjValue(objValueStr, _amplFile, ampl_comment_Symbol);
 		
-		writeObjValue(getYearMonthCycle(), objValueStr, _objValueFile);
+		writeObjValueLog(getYearMonthCycle(), objValueStr, _objValueFile);
 
 	}
 
@@ -140,7 +140,7 @@ public class ILP {
 		if (ILP.loggingLpSolve) writeObjValue(objValueStr, _lpSolveFile, lpSolve_comment_Symbol);
 		if (ILP.loggingAmpl)    writeObjValue(objValueStr, _amplFile, ampl_comment_Symbol);
 
-		writeObjValue(getYearMonthCycle(), objValueStr, _objValueFile);
+		writeObjValueLog(getYearMonthCycle(), objValueStr, _objValueFile);
 
 	}
 	
@@ -450,7 +450,7 @@ public class ILP {
 		return dvarValueStr;
 	}
 
-	private static void writeObjValue(String msg, String objValueStr, PrintWriter outFile) {		
+	public static void writeObjValueLog(String msg, String objValueStr, PrintWriter outFile) {		
 			
 		if (Error.getTotalError()==0) {
 			outFile.println(msg+": "+objValueStr);

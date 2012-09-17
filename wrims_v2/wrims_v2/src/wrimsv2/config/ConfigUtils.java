@@ -213,7 +213,7 @@ public class ConfigUtils {
 		System.out.println("StopMonth:      "+ControlData.endMonth);
 		System.out.println("Solver:         "+ControlData.solverName);
 		
-		final String[] solvers = {"xa","xalog","lpsolve","gurobi"};
+		final String[] solvers = {"xa","xalog","lpsolve","gurobi","gurobitest"};
 
 		if (!Arrays.asList(solvers).contains(ControlData.solverName.toLowerCase())){
 			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);	

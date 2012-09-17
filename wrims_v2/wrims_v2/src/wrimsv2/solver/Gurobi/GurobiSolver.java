@@ -66,6 +66,7 @@ public class GurobiSolver {
 	    	//env   = new GRBEnv("TestGurobi.log");
 	    	env   = new GRBEnv();
 	    	env.set(GRB.IntParam.LogToConsole, 0);
+	    	//env.set(GRB.IntParam.Presolve, 0);
 		}
 		catch (GRBException e) {
 			e.printStackTrace();

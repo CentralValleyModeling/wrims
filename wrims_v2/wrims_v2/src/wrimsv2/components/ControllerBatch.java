@@ -3,8 +3,10 @@ package wrimsv2.components;
 import gurobi.GRBException;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
@@ -25,6 +27,7 @@ import wrimsv2.solver.InitialXASolver;
 import wrimsv2.solver.Gurobi.GurobiSolver;
 import wrimsv2.solver.Gurobi.LpResult;
 import wrimsv2.wreslparser.elements.StudyUtils;
+import wrimsv2.wreslparser.elements.Tools;
 
 public class ControllerBatch {
 	
@@ -173,7 +176,9 @@ public class ControllerBatch {
 		
 		//if (ControlData.solverName.equalsIgnoreCase("GUROBI") ) 
 		if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
-			runModelGurobi(sds);		
+			runModelGurobi(sds);
+		} else if (ControlData.solverName.equalsIgnoreCase("GurobiTest")){
+			runModelGurobiTest(sds);		
 		} else if (ILP.logging){
 			runModelILP(sds);
 	    } else if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG") ){
@@ -181,13 +186,7 @@ public class ControllerBatch {
 		} else {
 			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);
 		}
-//		}else if (ControlData.solverName.equalsIgnoreCase("LPSolve")){
-//			try {
-//				runModeLPSolve(sds);
-//			} catch (LpSolveException e) {
-//				e.printStackTrace();
-//			}
-//		}
+
 		if (Error.getTotalError()>0){
 			System.out.println("=================Run ends with errors====");
 		} else {
@@ -462,9 +461,7 @@ public class ControllerBatch {
 		VariableTimeStep.setCycleEndDate(sds);
 		
 		ILP.initializeIlp();
-		//ILP.setCplexLpParentDir();
-		//ILP.setVarDir();
-		//ILP.setMaximumFractionDigits();
+		GurobiSolver.initialize();
 		
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 			//if (ControlData.solverName.equalsIgnoreCase("XALOG")) SetXALog.enableXALog();
@@ -525,7 +522,6 @@ public class ControllerBatch {
 						if (Error.error_solving.size()<1){
 							
 		            		ILP.writeObjValue_Gurobi();
-		            		//ILP.writeDvarValue_Gurobi();
 		            		if (ILP.loggingVariableValue) ILP.writeDvarValue_Gurobi();
 		            		
 		            		ILP.closeIlpFile();
@@ -568,5 +564,57 @@ public class ControllerBatch {
 		}
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
+	}
+
+	public void runModelGurobiTest(StudyDataSet sds){
+
+
+		File ilpRootDir = new File(FilePaths.mainDirectory, "=ILP=");  
+	    File ilpDir = new File(ilpRootDir, StudyUtils.configFileName); 
+	    File cplexLpDir = new File(ilpDir,"cplexlp_input");
+	    PrintWriter objValueFile = null;
+	    try {
+			objValueFile = Tools.openFile(ilpDir.getAbsolutePath(), "ObjValues.log");
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		GurobiSolver.initialize();
+		
+		//while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
+		for (int year = ControlData.startYear; year <= ControlData.endYear; year++) {
+
+			for (int month = 1; month <= 12; month++) {
+
+				for (int cycle = 1; cycle <= sds.getModelList().size(); cycle++) {
+					
+					String twoDigitMonth = String.format("%02d", month);
+					String twoDigitCycle = String.format("%02d", cycle);
+					String lpFileName = year + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".lp";
+					
+					String msg = year + "_" + twoDigitMonth + "_c" + twoDigitCycle;
+
+					File lpFile = new File(cplexLpDir, lpFileName);
+					
+					if (lpFile.exists()){
+					
+						GurobiSolver.setLp(lpFile.getAbsolutePath());
+						GurobiSolver.solve();
+						
+						double objValue = ControlData.gurobi_objective;
+						String objValueStr = Double.toString(objValue);
+						
+						ILP.writeObjValueLog(msg, objValueStr, objValueFile);
+				    
+					}
+
+				}
+			}
+		}
+
+		GurobiSolver.dispose();
+
 	}
 }
