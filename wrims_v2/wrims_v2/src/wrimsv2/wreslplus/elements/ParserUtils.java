@@ -111,7 +111,7 @@ public class ParserUtils {
 					ToLowerCase.convert(fm);		
 					Procedures.processIncFilePath(fm);
 					Procedures.processVarIncFileList(fm);
-					Procedures.processT_svList(fm);
+					//Procedures.processT_svList(fm);
 					Procedures.processDependants(fm);
 					
 					// TODO: allow multiple models in a file

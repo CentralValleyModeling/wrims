@@ -25,17 +25,17 @@ public class ErrorCheck {
 	
 	
 	// TODO: this process alias only. need to expand to other types
-	public static void checkVarUsedBeforeDefine(StudyTemp s) {
+	public static void checkVarUsedBeforeDefined(StudyTemp s) {
 		
 		for (String se : s.seqList){
 			
 			SequenceTemp seqObj = s.seqMap.get(se); 
 
-			checkVarUsedBeforeDefine(seqObj);						
+			checkVarUsedBeforeDefined(seqObj);						
 		}
 	}
 	
-	public static void checkVarUsedBeforeDefine(SequenceTemp seqObj) {
+	public static void checkVarUsedBeforeDefined(SequenceTemp seqObj) {
 		
 		for (String key : seqObj.asMap.keySet()) {
 
@@ -60,7 +60,16 @@ public class ErrorCheck {
 	
 		}
 		
-		
+		for (String key : seqObj.svMap.keySet()) {
+
+			SvarTemp svObj = seqObj.svMap.get(key);
+				
+			if (svObj.dependants_unknown.size()>0){
+				LogUtils.errMsg(svObj.fromWresl+
+						"\n  Variable(s) unknown: "+svObj.dependants_unknown+" in Svar \""+svObj.id+"\"");
+			}
+	
+		}		
 
 		
 	}

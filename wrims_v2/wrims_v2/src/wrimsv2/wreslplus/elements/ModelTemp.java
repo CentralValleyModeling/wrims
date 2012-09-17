@@ -31,8 +31,8 @@ public class ModelTemp implements Serializable {
 	public ArrayList<String>  exIncFileList_post;   // post processed 
 	
 	//<svName, relativePath, operationName>
-	public ArrayList<Triplet<String,String,String>>  t_svList;   // processed 
-	public ArrayList<Triplet<String,String,String>>  t_svList_post;   // post processed 
+	//public ArrayList<Triplet<String,String,String>>  t_svList;   // processed 
+	//public ArrayList<Triplet<String,String,String>>  t_svList_post;   // post processed 
 	
 	//TODO: use more compact storage. i.e., Map<String fileID, Pair ( relativePath, absPath)>
 	// then converts to Map<String relativePath, String absPath>
@@ -83,8 +83,8 @@ public class ModelTemp implements Serializable {
 	
 	public ModelTemp(){
 		
-		t_svList = new ArrayList<Triplet<String,String,String>>();
-		t_svList_post = new ArrayList<Triplet<String,String,String>>();
+		//t_svList = new ArrayList<Triplet<String,String,String>>();
+		//t_svList_post = new ArrayList<Triplet<String,String,String>>();
 		itemList = new ArrayList<String>();
 		itemTypeList = new ArrayList<Integer>();
 		//svIncFileList = new ArrayList<String>();

@@ -405,9 +405,9 @@ public class Procedures {
 
 		for (String key : mObj.glMap.keySet()) {
 
-			GoalTemp glObj = mObj.glMap.get(key);
+			GoalTemp svObj = mObj.glMap.get(key);
 
-			glObj.dependants.removeAll(Param.reservedSet);
+			svObj.dependants.removeAll(Param.reservedSet);
 
 		}
 
@@ -831,7 +831,7 @@ public class Procedures {
 			
 			for ( String f : fgroup){
 				
-				if (!st.AOMap.keySet().contains(f)) continue; // TODO: the whole first round can be skipped
+				if (!st.allOffspringMap.keySet().contains(f)) continue; // TODO: the whole first round can be skipped
 				
 						
 				//Pair<String,String> p = new Pair<String, String>(f, st.fileModelNameMap.get(f).get(0));
@@ -842,7 +842,7 @@ public class Procedures {
 				ArrayList<String> list_post2 = m.incFileRelativePathList_post;
 				
 				
-				for( String includedFile: st.AOMap.get(f)){
+				for( String includedFile: st.allOffspringMap.get(f)){
 					int index =list_post1.indexOf(includedFile);
 					
 					
@@ -890,13 +890,13 @@ public class Procedures {
 			
 			for ( String f : fgroup){
 				
-				if (!st.AOMap.keySet().contains(f)) continue; // TODO: the whole first round can be skipped
+				if (!st.allOffspringMap.keySet().contains(f)) continue; // TODO: the whole first round can be skipped
 				
 				String modelName = st.fileModelNameMap.get(f).get(0);		
 				
 				ModelTemp m = st.fileModelDataTable.get(f,modelName);
 				
-				for( String includedFile: st.AOMap.get(f)){
+				for( String includedFile: st.allOffspringMap.get(f)){
 					
 					int index =m.svIncFileList_post.indexOf(includedFile);
 					
@@ -997,7 +997,7 @@ public class Procedures {
 		
 	}
 	
-	public static void findAOM(StudyTemp st) {
+	public static void findAllOffSpring(StudyTemp st) {
 
 //		for (String f: st.kidsMap.rowKeySet()) { 
 //			
@@ -1017,7 +1017,7 @@ public class Procedures {
 				
 			HashSet<String> a = Tools.findAllOffspring(f, st.kidMap);
 			
-			st.AOMap.put(f, a);			
+			st.allOffspringMap.put(f, a);			
 			
 		}
 		
@@ -1025,7 +1025,7 @@ public class Procedures {
 
 	public static void findFileGroupOrder(StudyTemp st) {
 		
-		Map<String,HashSet<String>> toBeSorted = new HashMap<String, HashSet<String>>(st.AOMap);
+		Map<String,HashSet<String>> toBeSorted = new HashMap<String, HashSet<String>>(st.allOffspringMap);
 		
 		///// skip mainFile
 		toBeSorted.remove(st.relativePath);
@@ -1049,15 +1049,15 @@ public class Procedures {
 		}		
 	}
 
-	public static void processT_svList( StudyTemp st) {
-		
-		// TODO: use sequence instead of effective list
-		for (String m : st.modelList_effective){
-
-			processT_svList(st.modelMap.get(m));
-		
-		}		
-	}
+//	public static void processT_svList( StudyTemp st) {
+//		
+//		// TODO: use sequence instead of effective list
+//		for (String m : st.modelList_effective){
+//
+//			processT_svList(st.modelMap.get(m));
+//		
+//		}		
+//	}
 	
 	public static void processVarIncFileList( ModelTemp mt) {
 		
@@ -1107,40 +1107,40 @@ public class Procedures {
 		
 	}
 
-	public static void processT_svList( ModelTemp mt) {
-		
-		// don't use svIncFileList because this is supposed to replace that
-		
-		ArrayList<Triplet<String, String, String>> t =  new ArrayList<Triplet<String,String,String>>();
-	
-
-		
-		
-		for (int i=0;i<mt.itemList.size();i++){
-			
-			if (mt.itemTypeList.get(i)==Param.svType) {
-				
-				String svName = mt.itemList.get(i);
-				
-				//TODO: might need to fill in operation name
-				mt.t_svList.add(new Triplet<String, String, String>(mt.pathRelativeToRunDir, "", svName));
-				
-			} else if (mt.itemTypeList.get(i)==Param.incFileType) {
-				
-				String incFileID = mt.itemList.get(i);
-				String incFileRelativePath = mt.incFileMap.get(incFileID).pathRelativeToRunDir;
-				
-				// null means processed later
-				mt.t_svList.add(new Triplet<String, String, String>(incFileRelativePath, "", null));
-				
-			}	
-			
-		}
-		
-		mt.t_svList_post = new ArrayList<Triplet<String,String,String>>(mt.t_svList);
-
-		//System.out.println("t_svList: "+mt.t_svList);
-	}
+//	public static void processT_svList( ModelTemp mt) {
+//		
+//		// don't use svIncFileList because this is supposed to replace that
+//		
+//		ArrayList<Triplet<String, String, String>> t =  new ArrayList<Triplet<String,String,String>>();
+//	
+//
+//		
+//		
+//		for (int i=0;i<mt.itemList.size();i++){
+//			
+//			if (mt.itemTypeList.get(i)==Param.svType) {
+//				
+//				String svName = mt.itemList.get(i);
+//				
+//				//TODO: might need to fill in operation name
+//				mt.t_svList.add(new Triplet<String, String, String>(mt.pathRelativeToRunDir, "", svName));
+//				
+//			} else if (mt.itemTypeList.get(i)==Param.incFileType) {
+//				
+//				String incFileID = mt.itemList.get(i);
+//				String incFileRelativePath = mt.incFileMap.get(incFileID).pathRelativeToRunDir;
+//				
+//				// null means processed later
+//				mt.t_svList.add(new Triplet<String, String, String>(incFileRelativePath, "", null));
+//				
+//			}	
+//			
+//		}
+//		
+//		mt.t_svList_post = new ArrayList<Triplet<String,String,String>>(mt.t_svList);
+//
+//		//System.out.println("t_svList: "+mt.t_svList);
+//	}
 
 	// replace file with vars
 	public static void postProcessVarListinIncFile(StudyTemp st) {
@@ -1150,13 +1150,13 @@ public class Procedures {
 			
 			for ( String f : fgroup){
 				
-				if (!st.AOMap.keySet().contains(f)) continue; // TODO: the whole first round can be skipped
+				if (!st.allOffspringMap.keySet().contains(f)) continue; // TODO: the whole first round can be skipped
 				
 				String modelName = st.fileModelNameMap.get(f).get(0);		
 				
 				ModelTemp m = st.fileModelDataTable.get(f,modelName);
 				
-				for( String includedFile: st.AOMap.get(f)){
+				for( String includedFile: st.allOffspringMap.get(f)){
 					
 					int index =m.svIncFileList_post.indexOf(includedFile);
 					
@@ -1309,8 +1309,24 @@ public class Procedures {
 			svObj.dependants_timeseries = new LinkedHashSet<String>(svObj.dependants);
 			svObj.dependants_timeseries.retainAll(seqObj.tsList);
 
+			svObj.dependants_alias = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_alias.retainAll(seqObj.asMap.keySet());
+			
+			svObj.dependants_dvar = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_dvar.retainAll(seqObj.dvList);
+			
+			svObj.dependants_svar = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_svar.retainAll(seqObj.svMap.keySet());
+			
 			svObj.dependants_external = new LinkedHashSet<String>(svObj.dependants);
 			svObj.dependants_external.retainAll(seqObj.exList);
+			
+			svObj.dependants_unknown = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_unknown.removeAll(svObj.dependants_timeseries);
+			svObj.dependants_unknown.removeAll(svObj.dependants_alias);
+			svObj.dependants_unknown.removeAll(svObj.dependants_dvar);
+			svObj.dependants_unknown.removeAll(svObj.dependants_svar);
+			svObj.dependants_unknown.removeAll(svObj.dependants_external);
 
 			// TODO: this is to match legacy wresl parser
 			svObj.dependants.removeAll(svObj.dependants_timeseries);
@@ -1319,32 +1335,32 @@ public class Procedures {
 		
 		for (String key : seqObj.glMap.keySet()) {
 
-			GoalTemp glObj = seqObj.glMap.get(key);
+			GoalTemp svObj = seqObj.glMap.get(key);
 
 			//svObj.dependants.removeAll(seqObj.tsList);
 			//svObj.dependants.removeAll(seqObj.dvList);
 			
-			glObj.dependants_timeseries = new LinkedHashSet<String>(glObj.dependants);
-			glObj.dependants_timeseries.retainAll(seqObj.tsList);
+			svObj.dependants_timeseries = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_timeseries.retainAll(seqObj.tsList);
 
-			glObj.dependants_svar = new LinkedHashSet<String>(glObj.dependants);
-			glObj.dependants_svar.retainAll(seqObj.svMap.keySet());
+			svObj.dependants_svar = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_svar.retainAll(seqObj.svMap.keySet());
 			
-			glObj.dependants_dvar = new LinkedHashSet<String>(glObj.dependants);
-			glObj.dependants_dvar.retainAll(seqObj.dvList);
+			svObj.dependants_dvar = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_dvar.retainAll(seqObj.dvList);
 
-			glObj.dependants_alias = new LinkedHashSet<String>(glObj.dependants);
-			glObj.dependants_alias.retainAll(seqObj.asMap.keySet());
+			svObj.dependants_alias = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_alias.retainAll(seqObj.asMap.keySet());
 
-			glObj.dependants_external = new LinkedHashSet<String>(glObj.dependants);
-			glObj.dependants_external.retainAll(seqObj.exMap.keySet());
+			svObj.dependants_external = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_external.retainAll(seqObj.exMap.keySet());
 			
-			glObj.dependants_unknown = new LinkedHashSet<String>(glObj.dependants);
-			glObj.dependants_unknown.removeAll(glObj.dependants_timeseries);
-			glObj.dependants_unknown.removeAll(glObj.dependants_svar);
-			glObj.dependants_unknown.removeAll(glObj.dependants_dvar);
-			glObj.dependants_unknown.removeAll(glObj.dependants_alias);
-			glObj.dependants_unknown.removeAll(glObj.dependants_external);
+			svObj.dependants_unknown = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_unknown.removeAll(svObj.dependants_timeseries);
+			svObj.dependants_unknown.removeAll(svObj.dependants_svar);
+			svObj.dependants_unknown.removeAll(svObj.dependants_dvar);
+			svObj.dependants_unknown.removeAll(svObj.dependants_alias);
+			svObj.dependants_unknown.removeAll(svObj.dependants_external);
 			
 		}	
 	}

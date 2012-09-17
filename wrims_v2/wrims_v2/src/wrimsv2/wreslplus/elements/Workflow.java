@@ -26,7 +26,7 @@ public class Workflow {
 
 		Procedures.processIncFilePath(st);
 		Procedures.processVarIncFileList(st);
-		Procedures.processT_svList(st);
+		//Procedures.processT_svList(st);
 		Procedures.processDependants(st);
 
 		/// store main file included models into fileModelDataTable
@@ -74,7 +74,7 @@ public class Workflow {
 		Procedures.findKidMap(st);
 		
 		
-		Procedures.findAOM(st);
+		Procedures.findAllOffSpring(st);
 		
 		
 		Procedures.findFileGroupOrder(st);
@@ -101,7 +101,7 @@ public class Workflow {
 		
 
 		// check variable used before definition
-		ErrorCheck.checkVarUsedBeforeDefine(st);
+		ErrorCheck.checkVarUsedBeforeDefined(st);
 		
 		Procedures.convertAliasToGoal(st); 
 		

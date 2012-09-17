@@ -30,7 +30,7 @@ public class StudyTemp implements Serializable {
 	public Map<String, HashSet<String>>kidMap; // processed
 	//public HashBasedTable<String,String,HashSet<String>>kidssMap; // processed <file,modelName,model>
 	public HashSet<String> noKid; // processed
-	public Map<String, HashSet<String>>AOMap; // all offspring map. processed
+	public Map<String, HashSet<String>>allOffspringMap; // all offspring map. processed
 	public ArrayList<HashSet<String>>fileGroupOrder; // processed after kidMap and AOMap
 	public String objectiveType="obj";
 	
@@ -56,7 +56,7 @@ public class StudyTemp implements Serializable {
 		kidMap = new HashMap<String, HashSet<String>>();
 		//kidssMap = HashBasedTable.create();
 		noKid = new HashSet<String>();
-		AOMap = new HashMap<String, HashSet<String>>();
+		allOffspringMap = new HashMap<String, HashSet<String>>();
 		fileGroupOrder = new ArrayList<HashSet<String>>();
 		
 		varCycleValueMap = new HashMap<String, Map<String,IntDouble>>();
