@@ -51,7 +51,7 @@ public class TestWreslPlus_goal {
 		String logText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);
+		Assert.assertEquals(totalErrs, 6);
 		
 		//StudyDataSet s = ToWreslData.convertStudy(s)
 
@@ -82,7 +82,7 @@ public class TestWreslPlus_goal {
 		String logText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);
+		Assert.assertEquals(totalErrs, 10);
 		
 		//StudyDataSet s = ToWreslData.convertStudy(s)
 	
@@ -123,7 +123,7 @@ public class TestWreslPlus_goal {
 		csvFile.print(csvText_modified);
 		csvFile.close();
 		
-		Assert.assertEquals(totalErrs, 0);		
+		Assert.assertEquals(totalErrs, 2);		
 		
 		//StudyDataSet s = ToWreslData.convertStudy(s)
 	
@@ -164,7 +164,7 @@ public class TestWreslPlus_goal {
 		csvFile.print(csvText_modified);
 		csvFile.close();
 		
-		Assert.assertEquals(totalErrs, 0);		
+		Assert.assertEquals(totalErrs, 3);		
 	
 	}
 
@@ -194,7 +194,7 @@ public class TestWreslPlus_goal {
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 	
-		Assert.assertEquals(totalErrs, 0);		
+		Assert.assertEquals(totalErrs, 3);		
 	
 	}
 
@@ -224,7 +224,7 @@ public class TestWreslPlus_goal {
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 
-		Assert.assertEquals(totalErrs, 0);			
+		Assert.assertEquals(totalErrs, 1);			
 	
 	}
 
@@ -254,7 +254,7 @@ public class TestWreslPlus_goal {
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 		
-		Assert.assertEquals(totalErrs, 0);		
+		Assert.assertEquals(totalErrs, 2);		
 		
 	}
 
@@ -284,7 +284,7 @@ public class TestWreslPlus_goal {
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 		
-		Assert.assertEquals(totalErrs, 0);		
+		Assert.assertEquals(totalErrs, 2);		
 		
 	}
 
@@ -314,7 +314,7 @@ public class TestWreslPlus_goal {
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 		
-		Assert.assertEquals(totalErrs, 0);		
+		Assert.assertEquals(totalErrs, 8);		
 		
 	}
 
@@ -344,7 +344,7 @@ public class TestWreslPlus_goal {
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 		
-		Assert.assertEquals(totalErrs, 0);		
+		Assert.assertEquals(totalErrs, 1);		
 		
 	}
 

@@ -52,7 +52,7 @@ public class TestWreslPlus_include {
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 		
-		Assert.assertEquals(totalErrs, 0);		
+		Assert.assertEquals(totalErrs, 10);		
 
 	}
 
@@ -82,7 +82,7 @@ public class TestWreslPlus_include {
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 		
-		Assert.assertEquals(totalErrs, 0);		
+		Assert.assertEquals(totalErrs, 6);		
 	
 	}
 

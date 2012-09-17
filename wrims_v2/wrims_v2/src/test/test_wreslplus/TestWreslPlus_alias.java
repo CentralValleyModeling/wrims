@@ -89,7 +89,7 @@ public class TestWreslPlus_alias {
 		String logText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);		
+		Assert.assertEquals(totalErrs, 4);		
 	
 	}
 
@@ -118,7 +118,7 @@ public class TestWreslPlus_alias {
 		String logText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);		
+		Assert.assertEquals(totalErrs, 4);		
 	
 	}
 

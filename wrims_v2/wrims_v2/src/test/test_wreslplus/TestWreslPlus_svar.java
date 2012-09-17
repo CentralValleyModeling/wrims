@@ -82,7 +82,7 @@ public class TestWreslPlus_svar {
 		String logText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);	
+		Assert.assertEquals(totalErrs, 2);	
 	}
 
 	@Test(groups = { "WRESLPLUS_elements" })
@@ -110,7 +110,7 @@ public class TestWreslPlus_svar {
 		String logText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);
+		Assert.assertEquals(totalErrs, 3);
 		
 	
 		
@@ -143,7 +143,7 @@ public class TestWreslPlus_svar {
 		String logText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);
+		Assert.assertEquals(totalErrs, 2);
 		
 	
 		
@@ -176,7 +176,7 @@ public class TestWreslPlus_svar {
 		String logText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);
+		Assert.assertEquals(totalErrs, 1);
 		
 	}
 
