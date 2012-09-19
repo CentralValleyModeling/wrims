@@ -11,10 +11,13 @@
  *******************************************************************************/
 package wrimsv2_plugin.debugger.core;
 
+import org.eclipse.core.internal.resources.PreferenceInitializer;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.debug.core.model.IValue;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -31,6 +34,8 @@ import wrimsv2_plugin.debugger.toolbaritem.DebugSet;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -49,6 +54,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	 * Unique identifier for the WPP debug model (value 
 	 * <code>wpp.debugModel</code>).
 	 */
+	public static String preferenceFile = "WRIMS2_IDEGUI.epf";
+	
 	public static WPPDebugTarget target;
 	
 	public static IValue[] dataStack;	
@@ -164,6 +171,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		//new DebuggerPreferenceInitializer().initializeDefaultPreferences();
 	}
 
 	/**

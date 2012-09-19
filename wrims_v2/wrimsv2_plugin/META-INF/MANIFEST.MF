@@ -6,6 +6,7 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.core.runtime;version="3.4.0",
  org.eclipse.core.runtime.jobs,
+ org.eclipse.core.runtime.preferences;version="3.3.0",
  org.eclipse.debug.core,
  org.eclipse.debug.core.model,
  org.eclipse.debug.core.sourcelookup,
@@ -50,3 +51,5 @@ Bundle-ClassPath: lib/gridUtil.jar,
  lib/rma.jar,
  lib/dssvueHelp.jar,
  .
+Bundle-Activator: wrimsv2_plugin.debugger.core.DebugCorePlugin
+Bundle-ActivationPolicy: lazy
