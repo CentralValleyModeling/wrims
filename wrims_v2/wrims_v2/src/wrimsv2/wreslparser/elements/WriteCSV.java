@@ -42,6 +42,8 @@ public class WriteCSV {
 	  
 	public static void study(StudyDataSet sd, String outParent) {
 			
+			if (sd==null) return;
+		
 			Map<String,ModelDataSet> modelDataSetMap = sd.getModelDataSetMap();
 		
 			output(modelDataSetMap,outParent);

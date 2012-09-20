@@ -27,6 +27,8 @@ public class ToWreslData {
 	//TODO: remember to lowercase all evaluation strings and var names
 	public static StudyDataSet convertStudy (StudyTemp s){
 		
+		if (s==null) return null;
+		
 		StudyDataSet o = new StudyDataSet();
 		o.setModelList(s.modelList_effective);
 		
