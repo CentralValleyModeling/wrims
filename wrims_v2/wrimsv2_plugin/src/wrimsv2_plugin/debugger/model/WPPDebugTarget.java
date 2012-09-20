@@ -210,7 +210,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		try {
 			// give interpreter a chance to start
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(10000);
 			} catch (InterruptedException e) {
 			}
 			fRequestSocket = new Socket("localhost", requestPort);
