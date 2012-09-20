@@ -143,14 +143,14 @@ function ANN_X2_Month(Qsac,Qexp,currSFtide,location,days,ave_type,BeginDay, EndD
       j = j + 1
       num = calcx2daily(Qsac(i:i+base-offset),Qexp(i:i+base-offset),currSFtide(i:i+base-offset),location)!shengjun 12/16/2004
       
-      print *, "day#,x2:", j, num !4/27/08
+      !print *, "day#,x2:", j, num !4/27/08
       sum = sum + num
       !WRITE(*,*) 'j=',j,' day=',num
     end do
     
     sum = sum/(EndDay-BeginDay+1)
     !WRITE(*,*) 'sum=',sum
-    print *, "average x2 between defined period:", sum !4/27/08
+    !print *, "average x2 between defined period:", sum !4/27/08
   
   end if
   
