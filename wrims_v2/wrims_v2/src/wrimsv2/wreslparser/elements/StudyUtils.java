@@ -36,6 +36,13 @@ public class StudyUtils {
 	private StudyUtils() {
 
 	}
+	
+	public static void reset() {
+
+		StudyParser.reset();
+		total_errors = 0;
+		config_errors = 0;
+	}
 
 	public static StudyDataSet compileStudy(String inMainWreslPath) throws IOException {
 		
@@ -45,6 +52,9 @@ public class StudyUtils {
 	}	
 	
 	public static StudyDataSet checkStudy(String inMainWreslPath) throws IOException {
+		
+		// TODO: clean up this mess. simplify these checkStudy methods.
+		if (FilePaths.mainFile.length()<1) FilePaths.mainFile = FilenameUtils.getName(inMainWreslPath);
 		
 		String mainFileName = FilenameUtils.removeExtension(FilePaths.mainFile);
 		
@@ -98,7 +108,7 @@ public class StudyUtils {
 			String csvFolderPath = mainWreslFile.getParentFile() + File.separator + csvFolderName;
 			WriteCSV.study(sds, csvFolderPath);
 		}
-		
+
 		if (StudyUtils.compileOnly) {
 			
 			if (StudyUtils.total_errors ==0) {
@@ -193,6 +203,8 @@ public class StudyUtils {
 	private static StudyDataSet parseWreslPlus(File validatedMainWreslFile)
 			throws RecognitionException, IOException {
 	
+		StudyUtils.reset();
+		
 		try {
 	
 			

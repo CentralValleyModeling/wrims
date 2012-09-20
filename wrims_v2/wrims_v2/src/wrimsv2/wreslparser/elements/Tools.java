@@ -105,7 +105,7 @@ public class Tools {
 			
 	         LogUtils.errMsg("File not found: "+ filePath);
 
-	         System.exit(1);
+	         //System.exit(1);
 			
 		} finally {
 			if (f != null)

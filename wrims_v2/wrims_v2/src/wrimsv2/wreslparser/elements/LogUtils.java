@@ -193,6 +193,21 @@ public class LogUtils {
 		_logFile.flush();
 	}	
 
+	public static void parsingSummaryMsg(String msg, int errors){
+
+		System.out.println("============================================");
+		System.out.println(msg);
+		System.out.println("Total errors: "+errors);
+		System.out.println("============================================");
+		
+		_logFile.println("============================================");
+		_logFile.println(msg);
+		_logFile.println("Total errors: "+errors);
+		_logFile.println("============================================");
+		
+		_logFile.flush();
+	}
+	
 	public static void criticalMsg(String msg){
 
 		System.out.println(msg);
