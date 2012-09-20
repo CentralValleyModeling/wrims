@@ -3,6 +3,9 @@ package wrimsv2.wreslplus.elements;
 import java.io.File;
 import java.util.ArrayList;
 
+import wrimsv2.wreslparser.elements.LogUtils;
+import wrimsv2.wreslparser.elements.StudyParser;
+
 public class Workflow {
 	
 	
@@ -11,15 +14,26 @@ public class Workflow {
 
 	public static StudyTemp checkStudy(String mainFilePath) {
 		
+		StudyParser.reset();
 		
-		String canonicalMainFilePath = Tools.checkPath(mainFilePath);
+		String canonicalMainFilePath = Tools.getCanonicalLowCasePath(mainFilePath);
 		
 		ParserUtils.setRunDir(new File(canonicalMainFilePath).getParent()); 
 		
 		StudyTemp st = ParserUtils.parseWreslMain(canonicalMainFilePath);
 		// TODO: need to check sequence error here
 		// check study
-		ErrorCheck.checkVarRedefined(st);		
+		
+		if (StudyParser.total_errors>0) {
+			
+			LogUtils.parsingSummaryMsg("Wresl+ parsing aborted", StudyParser.total_errors);
+			
+			return null;
+		}
+		
+		ErrorCheck.checkVarRedefined(st);	
+				
+		
 		ToLowerCase.convert(st);	
 		// TODO: make backup of original var list
 		Procedures.findEffectiveModelinMain(st); // main file only
@@ -68,6 +82,12 @@ public class Workflow {
 		}
 	
 
+		if (StudyParser.total_errors>0) {
+			
+			LogUtils.parsingSummaryMsg("Wresl+ parsing completed", StudyParser.total_errors);
+			
+			return null;
+		}
 		
 		// find all offspring
 		// store results to kidMap and AOMap, fileGroupOrder
@@ -118,6 +138,8 @@ public class Workflow {
 		Procedures.collectTimeStep(st);
 		
 				
+		LogUtils.parsingSummaryMsg("Wresl+ parsing completed",StudyParser.total_errors);
+		
 		return st;
 		
 	}	
