@@ -33,13 +33,13 @@ public class Tools {
 		return s.substring(1, s.length() - 1);
 	}
 	
-	public static String checkPath(String filePath) {
+	public static String getCanonicalLowCasePath(String filePath) {
 		
-		String canonicalPath=null;
+		String canonicalPath_lowercase=null;
 		
 		try {
 			
-			canonicalPath = new File(filePath).getCanonicalPath().toLowerCase(); 
+			canonicalPath_lowercase = new File(filePath).getCanonicalPath().toLowerCase(); 
 		
 		} catch (IOException e) {
 			
@@ -47,7 +47,7 @@ public class Tools {
 	        LogUtils.errMsg("IOException: " + filePath);
 	    }
 		
-		return canonicalPath;
+		return canonicalPath_lowercase;
 		
 	}
 	
