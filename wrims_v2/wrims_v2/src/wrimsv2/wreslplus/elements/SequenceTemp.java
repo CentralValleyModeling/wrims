@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,6 +21,8 @@ public class SequenceTemp implements Serializable {
 	public String order;	
 	public String timeStep;
 
+	public Set<String> dependants;
+	
 	public ArrayList<String>  svIncFileList_post;   // copied from included model 
 	public ArrayList<String>  asIncFileList_post;   // copied from included model 
 	public ArrayList<String>  exIncFileList_post;   // copied from included model 
@@ -65,6 +68,9 @@ public class SequenceTemp implements Serializable {
 	
 	public SequenceTemp(){
 		
+		dependants = new LinkedHashSet<String>();
+		
+		condition = Param.always;
 		timeStep = Param.undefined;
 		//svIncFileList_post = new ArrayList<String>();
 		exList = new ArrayList<String>();

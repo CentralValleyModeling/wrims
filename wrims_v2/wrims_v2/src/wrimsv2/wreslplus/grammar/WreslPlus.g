@@ -47,6 +47,7 @@ options {
   	public Set<String> varInCycle;
   	public Map<String, HashSet<String>> neededCycleVarMap;
   	boolean addDep = true;
+  	public int number_of_errors = 0;
  	
   		/// error message	
     public void displayRecognitionError(String[] tokenNames,
@@ -54,17 +55,20 @@ options {
         String hdr = getErrorHeader(e);
         String msg = getErrorMessage(e, tokenNames);
         LogUtils.errMsg("[parser] "+ hdr + " " + msg);
+        number_of_errors++;
     }
 }
 
 @lexer::members {
 	
+	public int number_of_errors = 0;
 	/// error message	
     public void displayRecognitionError(String[] tokenNames,
                                         RecognitionException e) {
         String hdr = getErrorHeader(e);
         String msg = getErrorMessage(e, tokenNames);
         LogUtils.errMsg("[lexer] "+ hdr + " " + msg);
+        number_of_errors++;
     }
 }
 wreslPlusMain : study config* template* sequence+ model+;
@@ -99,10 +103,15 @@ template_dvar_array : '%dvar' dimension varID '{' dvar_trunk '}' ;
 template_svar : '%svar' varID  svar_trunk ;
 
 sequence returns[String id, SequenceTemp seqObj]
-@init{ $seqObj = new SequenceTemp(); }
+@init {$seqObj = new SequenceTemp();
+       dependants = new LinkedHashSet<String>();}
+@after{$seqObj.model=$m.text; $seqObj.order=$o.text;
+       $seqObj.dependants= dependants;}  
+       
 	: SEQUENCE i=ID {$id=$i.text; $seqObj.id=$i.text;} 
-		'{' MODEL m=ID ORDER o=INT '}' 
-		{$seqObj.model=$m.text; $seqObj.order=$o.text; $seqObj.condition="always";} 
+		'{' MODEL m=ID 
+		   ( CONDITION cc=logical_main {$seqObj.condition=$cc.text;} )? 
+		    ORDER o=INT '}' 
 	;
 
 
