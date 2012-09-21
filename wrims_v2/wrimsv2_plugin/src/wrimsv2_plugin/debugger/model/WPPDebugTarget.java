@@ -382,8 +382,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
 				IWorkbenchWindow window=workbench.getActiveWorkbenchWindow();
-				IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
-				final String filePath=UpdateView.findFilePathActiveEditor(workBenchPage);
+				final IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
 				if (window !=null){				
 					fPartListener2=new IPartListener2(){
 
@@ -391,6 +390,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 						public void partActivated(
 								IWorkbenchPartReference partRef) {
 							IWorkbenchPart part = partRef.getPart(false);
+							String filePath=UpdateView.findFilePathActiveEditor(workBenchPage);
 							if (part instanceof AbstractDebugView){
 								String viewName=part.getTitle();
 								if (viewName.equals(DebugCorePlugin.TITLE_ALLVARIABLES_VIEW) || viewName.equals(DebugCorePlugin.TITLE_ALLGOALS_VIEW)){
