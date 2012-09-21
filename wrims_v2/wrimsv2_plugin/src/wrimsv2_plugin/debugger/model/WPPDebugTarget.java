@@ -400,11 +400,12 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 											UpdateView.processView(viewName, filePath, DebugCorePlugin.target);
 										}
 									}
-								}else{
+								}
+								/*else{
 									if (isSuspended()){
 										UpdateView.processView(viewName, filePath, DebugCorePlugin.target);
 									}
-								}
+								}*/
 							}
 						}
 
