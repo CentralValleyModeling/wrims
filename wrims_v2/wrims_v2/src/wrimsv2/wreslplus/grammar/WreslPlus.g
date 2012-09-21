@@ -117,9 +117,9 @@ sequence returns[String id, SequenceTemp seqObj]
 
 param : PARAM ID '{' ( param_simple | param_case+ )  '}' ;
 
-param_simple : typeNumber? param_number ;
+param_simple : param_number ;
 
-param_case: CASE logical_main '{'  typeNumber?  param_number    '}' ;
+param_case: CASE logical_main '{'  param_number    '}' ;
 
 param_number : VALUE number;
 
@@ -190,7 +190,7 @@ scope { ModelTemp m_;}
 //	: external_old
 // 	;
 //
-//external_old : DEFINE LOCAL? externalID '{' EXTERNAL external_fileName '}' ;
+//external_old : DEFINE ('[' LOCAL ']')? externalID '{' EXTERNAL external_fileName '}' ;
 //
 //
 //external_fileName : f=fileName {$external::ex_.fileName=$f.text;} ;
@@ -209,7 +209,7 @@ scope { WeightTable wt_;
 @after{ $id = $weight::wt_.id; $wtObj=$weight::wt_; $wtObj.dependants= dependants;}	 
 	: weight_legacy | weight_new ;
 
-weight_legacy : OBJECTIVE LOCAL? OBJ {$weight::wt_.id="obj";} '='? '{' weight_legacy_unit+ '}'  ;
+weight_legacy : OBJECTIVE ('[' LOCAL ']')? OBJ {$weight::wt_.id="obj";} '='? '{' weight_legacy_unit+ '}'  ;
 
 weight_legacy_unit 
 	: '[' i=ID ',' e=expr_add ']' ','?
@@ -258,7 +258,7 @@ include_file returns[String id, IncFileTemp incFileObj]
        $incFileObj.id = "_file_"+Integer.toString($mt::m_.incFileIDList.size()); 
        $id = $incFileObj.id;
        }
-      : INCLUDE LOCAL? fp=file_path {$incFileObj.rawPath=Tools.strip($fp.text);} ('as' includeNameAs )?  ;
+      : INCLUDE ('[' LOCAL ']')? fp=file_path {$incFileObj.rawPath=Tools.strip($fp.text);} ('as' includeNameAs )?  ;
 
 file_path : QUOTE  ;
 
@@ -282,7 +282,7 @@ scope { GoalTemp gl_;
         $glObj.neededVarInCycleSet= varInCycle;
         $glObj.needVarFromEarlierCycle = (varInCycle!=null);}	 
 
-	: GOAL LOCAL? i=ID  '{' ( e=expr_constraint )'}' 
+	: GOAL ('[' LOCAL ']')? i=ID  '{' ( e=expr_constraint )'}' 
 	{$goal_s::gl_.id=$i.text; 
 	 $goal_s::gl_.caseCondition.add(Param.always);
 	 $goal_s::gl_.caseName.add(Param.defaultCaseName);
@@ -304,7 +304,7 @@ scope { GoalTemp gl_;
         $glObj.dependants= dependants;
         $glObj.neededVarInCycleSet= varInCycle;
         $glObj.needVarFromEarlierCycle = (varInCycle!=null);}	 
-	: GOAL LOCAL? i=ID  {$goal_hs::gl_.id=$i.text;}
+	: GOAL ('[' LOCAL ']')? i=ID  {$goal_hs::gl_.id=$i.text;}
 	  '{' lhs 
 	  ( goal_hs_nocase 		
 	  | goal_hs_cases 
@@ -359,7 +359,7 @@ scope { AliasTemp as_;}
 	: alias_new | alias_old
  	;
 
-alias_old : DEFINE LOCAL? aliasID '{' ALIAS  aliasExpresion  aliasKind?  aliasUnits?  '}' ;
+alias_old : DEFINE ('[' LOCAL ']')? aliasID '{' ALIAS  aliasExpresion  aliasKind?  aliasUnits?  '}' ;
 alias_new : ALIAS aliasID '{' VALUE  aliasExpresion  aliasKind?  aliasUnits? '}' ;
 
 aliasExpresion : e=expr_add {$alias::as_.expression=$e.text;}; 
@@ -385,7 +385,7 @@ scope { SvarTemp sv_;
         $svObj.neededVarInCycleSet= varInCycle;
         $svObj.needVarFromEarlierCycle = (varInCycle!=null);
         }	 
-	: ( SVAR | DEFINE LOCAL? ) ( svar | svar_array | svar_timeArray ) ;
+	: ( SVAR | DEFINE ('[' LOCAL ']')? ) ( svar | svar_array | svar_timeArray ) ;
 
 
 svarID : i=ID  {$svar_g::sv_.id =$i.text;} ;
@@ -399,7 +399,7 @@ svar_timeArray: dimension_time svar ;
 /// svar trunk
 
 svar_trunk 
-	: typeNumber? ( svar_noCase | svar_case+ ) ( svarKind svarUnits )?  ;
+	: ( svar_noCase | svar_case+ ) ( svarKind svarUnits )?  ;
 
 svarUnits: UNITS QUOTE ;
 svarKind:  KIND QUOTE ;
@@ -454,7 +454,7 @@ dimension : '[' ( INT | ID ) ']' ;
 
 dimension_time : '(' ( INT | ID ) ')' ;
 
-typeNumber: 'integer' | 'real' | 'binary' ;
+//typeNumber: 'integer' | 'real' | 'binary' ;
 
 //value : 'value' expr_add;
 
@@ -480,7 +480,7 @@ scope { TimeseriesTemp ts_;
 	: timeseries_new | timeseries_old ;
 
 timeseries_new : TIMESERIES tsID      '{' (NAME      bpart_id)? tsKind tsUnits convert? '}' ;
-timeseries_old : DEFINE LOCAL? tsID   '{' TIMESERIES bpart_id? tsKind tsUnits convert? '}' ;
+timeseries_old : DEFINE ('[' LOCAL ']')? tsID   '{' TIMESERIES bpart_id? tsKind tsUnits convert? '}' ;
 			
 tsID : i=ID {$timeseries::ts_.id=$i.text;$timeseries::ts_.dssBPart=$i.text;} ;			
 tsUnits: UNITS s=QUOTE {$timeseries::ts_.units=Tools.strip($s.text);} ;
@@ -546,7 +546,7 @@ scope { ExternalTemp ex_;
 
 ex_id : i=ID {$ex_g::ex_.id=$i.text;} ;
 
-ex_old : DEFINE LOCAL? ex_id '{' EXTERNAL f=ex_fileName {$ex_g::ex_.fileName=$f.text;} '}' ;
+ex_old : DEFINE ('[' LOCAL ']')? ex_id '{' EXTERNAL f=ex_fileName {$ex_g::ex_.fileName=$f.text;} '}' ;
 
 ex_fileName : ID ('.' ID)? ;
 
@@ -574,7 +574,7 @@ scope { DvarTemp dvar_;
 
 dvarID : i=ID { $dvar_g::dvar_.id=$i.text; $dvar_g::id_=$i.text; };
 
-dvar_group_old: DEFINE LOCAL? dvar ;
+dvar_group_old: DEFINE ('[' LOCAL ']')? dvar ;
 dvar_group_new: DVAR    dvar ;
 
 dvar: (dvarArray|dvarTimeArray)? dvarID '{' dvar_trunk '}'  ;
@@ -783,7 +783,7 @@ multiInputFunc
 //Real: 'real';
 
 
-reservedID :  MONTH ; //| MonthID ;
+reservedID :  MONTH | WATERYEAR ; //| MonthID ;
 
 QUOTE : '\'' .*  '\'' ;
 
@@ -796,7 +796,8 @@ OR  : '||' | '.or.' | '.OR.' ;
 NOT : '!' | '.not.' | '.NOT.' ;
 NOT_EQUAL :  '.ne.' | '.NE.' ;
 
-MONTH :   'month' ;
+MONTH :   'month' | 'Month' | 'MONTH' ;
+WATERYEAR : 'wateryear' | 'Wateryear' | 'WaterYear' | 'WATERYEAR'  ; 
 //MonthID : 'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'|'dec';        
 
 
@@ -816,7 +817,7 @@ GOAL :      'goal' | 'GOAL' | 'Goal' ;
 VALUE :     'value' | 'VALUE' | 'Value';
 PENALTY : 'penalty' | 'PENALTY' | 'Penalty' ;
 WEIGHT : 'weight' | 'WEIGHT' | 'Weight' ;
-ITEM    : 'item' | 'ITEM' | 'Item' ;
+//ITEM    : 'item' | 'ITEM' | 'Item' ;
 
 CONFIG : 'config' ;
 LABEL : 'label' ;
@@ -825,7 +826,7 @@ PARAM : 'param' ;
 
 // deprecated keyword
 DEFINE : 'define' | 'DEFINE' | 'Define' ;
-LOCAL : '[local]' | '[LOCAL]' ; 
+LOCAL : 'local' | 'LOCAL' | 'Local' ; 
 /////////////////////////////// 
 
 STD : 'std' | 'STD' | 'Std' ;
@@ -848,7 +849,7 @@ LOWER : 'lower' | 'LOWER' | 'Lower';
 UNBOUNDED : 'unbounded'|'UNBOUNDED' ;
 
 ALWAYS: 'always'|'ALWAYS'|'Always' ;
-INTEGER : 'integer'|'INTEGER';
+INTEGER : 'integer'|'INTEGER'|'Integer';
 
 
 SELECT : 'select' | 'SELECT'|'Select' ;
