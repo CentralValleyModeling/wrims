@@ -12,9 +12,11 @@ MODEL first {
 	define[local] D4 { std kind 'FLOW-CHANNEL' units 'CFS'}
 	define[local] M5 { std kind 'FLOW-CHANNEL' units 'CFS'}
 	define[local] M6 { std kind 'FLOW-CHANNEL' units 'CFS'}
+	define[local] M7 { std kind 'FLOW-CHANNEL' units 'CFS'}
+	define[local] M8 { std kind 'FLOW-CHANNEL' units 'CFS'}
   
-  ! only cares about D3 D4
-	goal[local] g1 { A1 + A2 + D3 + D4 + M5 + M6 + M7 + M8 + M9 = 13 }
+
+	goal[local] g1 { A1 + A2 + D3 + D4 + M5 + M6 + M7 + M8 = 12 }
 	goal[local] g2 { A1 + A2 = 6 }
   
 	Objective wg1 {
