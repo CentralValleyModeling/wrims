@@ -1,6 +1,7 @@
 package wrimsv2.wreslplus.elements;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -9,6 +10,8 @@ import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
+
+import serial.SerialXml;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslplus.grammar.WreslPlusLexer;
 import wrimsv2.wreslplus.grammar.WreslPlusParser;
@@ -42,8 +45,20 @@ public class ParserUtils {
 		
 		WreslPlusParser parser = new WreslPlusParser(tokenStream);
 		
-		parser.currentAbsolutePath = new File(inputFilePath).getAbsolutePath(); 
-		parser.currentAbsoluteParent = new File(inputFilePath).getAbsoluteFile().getParent();
+		//parser.currentAbsolutePath = new File(inputFilePath).getAbsolutePath(); 
+		//parser.currentAbsoluteParent = new File(inputFilePath).getAbsoluteFile().getParent();
+		
+		// TODO: lowercase conversion is used to ignore the mismatched include wresl file path and the actual path of the study.
+		
+		try {
+			parser.currentAbsolutePath = new File(inputFilePath).getCanonicalPath().toLowerCase();
+			parser.currentAbsoluteParent = new File(inputFilePath).getCanonicalFile().getParent().toLowerCase();
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+
 		parser.pathRelativeToRunDir = ResourceUtils.getRelativePath(parser.currentAbsolutePath, GlobalData.runDir, File.separator);
 		
 		LogUtils.importantMsg("Parsing file: "+parser.currentAbsolutePath);
@@ -84,6 +99,7 @@ public class ParserUtils {
 		try {
 			parser = initParser(inputFilePath);
 			parser.wreslFile();
+			if (parser.number_of_errors>0) return null;
 		}
 		catch (RecognitionException e) {
 	
@@ -103,8 +119,10 @@ public class ParserUtils {
 				
 				if (!st.fileModelNameMap.keySet().contains(relativePath)){
 	
-					String absPath = Tools.checkPath(new File(st.runDir, relativePath).getAbsolutePath());
+					String absPath = Tools.getCanonicalLowCasePath(new File(st.runDir, relativePath).getAbsolutePath());
 					ModelTemp fm = parseWreslFile(absPath);
+					
+					if (fm==null) continue;
 					
 					ErrorCheck.checkVarRedefined(fm);	
 	
@@ -113,6 +131,9 @@ public class ParserUtils {
 					Procedures.processVarIncFileList(fm);
 					//Procedures.processT_svList(fm);
 					Procedures.processDependants(fm);
+					
+//					SerialXml.writeModelTemp(fm, absPath+".x");
+//					ModelTemp fm = SerialXml.readModelTemp(absPath+".x");
 					
 					// TODO: allow multiple models in a file
 					String modelName = fm.id.toLowerCase();
@@ -134,44 +155,9 @@ public class ParserUtils {
 		}
 
 
-//	public static void parseAllIncFile(Map<String,IncFileTemp> incfmap , StudyTemp st) {
-//	
-//		for (String f: incfmap.keySet()){
-//			
-//			String relativePath = incfmap.get(f).pathRelativeToRunDir;
-//			
-//			if (!st.fileModelNameMap.keySet().contains(relativePath)){
-//	
-//				ModelTemp fm = parseWreslFile(incfmap.get(f).absPath);
-//				
-//				ErrorCheck.checkVarRedefined(fm);	
-//				ToLowerCase.convert(fm);		
-//				
-//				Procedures.processIncFilePath(fm);	
-//				Procedures.processDependants(fm);
-//				
-//				
-//				// TODO: allow multiple models in a file
-//				String modelName = fm.id.toLowerCase();
-//				ArrayList<String> modelNameList = new ArrayList<String>();
-//				modelNameList.add(modelName);
-//				
-//				st.fileModelNameMap.put(relativePath, modelNameList);
-//				
-//				st.fileModelDataTable.put(relativePath, modelName, fm);
-//				
-//				// parse all included files within files
-//				parseAllIncFile(fm.incFileMap, st);
-//				
-//			}
-//		}
-//		
-//	}
-
-
 	public static void setRunDir(String runDir){
 		
-		GlobalData.runDir = Tools.checkPath(runDir);;
+		GlobalData.runDir = Tools.getCanonicalLowCasePath(runDir);;
 	}
 
 
