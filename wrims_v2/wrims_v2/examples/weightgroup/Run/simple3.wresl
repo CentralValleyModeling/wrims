@@ -1,0 +1,41 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+	
+MODEL first { 
+
+	define[local] A1 { std kind 'FLOW-CHANNEL' units 'CFS'}
+	define[local] A2 { std kind 'FLOW-CHANNEL' units 'CFS'}
+	define[local] D3 { std kind 'FLOW-CHANNEL' units 'CFS'}
+	define[local] D4 { std kind 'FLOW-CHANNEL' units 'CFS'}
+	define[local] M5 { std kind 'FLOW-CHANNEL' units 'CFS'}
+	define[local] M6 { std kind 'FLOW-CHANNEL' units 'CFS'}
+  
+  ! only cares about D3 D4
+	goal[local] g1 { A1 + A2 + D3 + D4 + M5 + M6 + M7 + M8 + M9 = 13 }
+	goal[local] g2 { A1 + A2 = 6 }
+  
+	Objective wg1 {
+		weight 1
+		variable A1 A2
+	}
+
+	Objective wg2 {
+		weight 1
+		penalty 0.01
+		variable 
+			D_Group { 
+				penalty 0.01
+				variable D3 D4 
+			}
+			
+			M_Group { 
+				variable M5 M6 M7 M8 
+			}
+	}
+  
+}
+
+
