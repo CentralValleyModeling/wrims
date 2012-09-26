@@ -235,12 +235,13 @@ weight_group_unit : i=ID  {$weight::wt_.varList.add($i.text);} ;
 weight_subgroup 
 scope { WeightSubgroup sub_;} 
 @init{ $weight_subgroup::sub_ = new WeightSubgroup(); }
+@after{ $weight::wt_.subgroup.add($weight_subgroup::sub_); }
 	:  i=ID  {$weight_subgroup::sub_.id=$i.text;} '{' weight_subgroup_trunk '}'
 	;
 
 weight_subgroup_trunk 
 	:  ( PENALTY p=expr_add {$weight_subgroup::sub_.commonPenalty=$p.text;} )? 
-	   VARIABLE ( weight_subgroup_unit | weight_subgroup )+
+	   VARIABLE ( weight_subgroup_unit ) // | weight_subgroup )+
 	  ;
 
 weight_subgroup_unit : i=ID  {$weight_subgroup::sub_.varList.add($i.text);} ;
@@ -542,7 +543,7 @@ scope { ExternalTemp ex_;
 @after{ $id = $ex_g::ex_.id; 
         $exObj = $ex_g::ex_; 
 	 }
-	 : ex_old | ex_new ;
+	 : ex_old ; //| ex_new ;
 
 ex_id : i=ID {$ex_g::ex_.id=$i.text;} ;
 
@@ -550,14 +551,14 @@ ex_old : DEFINE ('[' LOCAL ']')? ex_id '{' EXTERNAL f=ex_fileName {$ex_g::ex_.fi
 
 ex_fileName : ID ('.' ID)? ;
 
-ex_new : EXTERNAL ex_id '{' ( ex_fortran | ex_java ) '}' ;
+//ex_new : EXTERNAL ex_id '{' ( ex_fortran | ex_java ) '}' ;
 
-ex_fortran : 'language' 'fortran' '{' fortran_var+  fortran_return '}' ;
+//ex_fortran : 'language' 'fortran' '{' fortran_var+  fortran_return '}' ;
 
-fortran_var : VARIABLE ID '{' 'type' 'intent' '}' ;
-fortran_return : 'return' ;
+//fortran_var : VARIABLE ID '{' 'type' 'intent' '}' ;
+//fortran_return : 'return' ;
 
-ex_java : 'language' 'java' ;
+//ex_java : 'language' 'java' ;
 
 
 /// dvar
@@ -839,7 +840,7 @@ EXTERNAL : 'external' | 'EXTERNAL' ;
 TEMPLATE : 'template' ;
 
 
-SUM : 'sum' | 'SUM' ;
+SUM : 'sum' | 'SUM' | 'Sum';
 KIND : 'kind' | 'KIND' | 'Kind';
 UNITS : 'units' | 'UNITS' | 'Units' ;
 CONVERT : 'convert' | 'CONVERT' |'Convert' ;
