@@ -516,6 +516,8 @@ public class InputPanel extends JPanel {
 			}			
 			
 			// IlpLog
+			configMap.put("IlpLogFormat".toLowerCase(), "LpSolve");
+			
 			if (strRuntimeLog.toLowerCase().contains("ilp")){
 				configMap.put("IlpLog".toLowerCase(), "Yes");
 			} else {
@@ -566,6 +568,7 @@ public class InputPanel extends JPanel {
 			out.println("StopYear           "+configMap.get("StopYear".toLowerCase()));
 			out.println("StopMonth          "+configMap.get("StopMonth".toLowerCase()));
 			out.println("IlpLog             "+configMap.get("IlpLog".toLowerCase()));
+			out.println("IlpLogFormat       "+configMap.get("IlpLogFormat".toLowerCase()));
 			out.println("IlpLogVarValue     "+configMap.get("IlpLogVarValue".toLowerCase()));
 			
 			if (strSolver.equalsIgnoreCase("LpSolve")) {
