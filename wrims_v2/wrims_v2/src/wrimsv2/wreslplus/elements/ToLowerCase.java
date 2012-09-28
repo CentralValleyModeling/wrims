@@ -213,6 +213,7 @@ public class ToLowerCase {
 		o.condition = w.condition.toLowerCase();
 		o.varList = Tools.allToLowerCase(w.varList);
 		o.varWeightMap = Tools.allToLowerCase(w.varWeightMap);
+		o.subgroupMap = Tools.allToLowerCase(w.subgroupMap);
 		o.dependants = Tools.allToLowerCase(w.dependants);
 		o.commonWeight = w.commonWeight.toLowerCase();
 		o.commonPenalty = w.commonPenalty.toLowerCase();

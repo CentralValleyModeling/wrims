@@ -635,6 +635,10 @@ public class Procedures {
 				// TODO: can collect different objective type
 				// if (wt.id.equalsIgnoreCase(s.objectiveType)){
 				seqObj.wvList_defaultType.addAll(wt.varList);
+				for (WeightSubgroup wsg: wt.subgroupMap.values() ){
+					seqObj.wvList_defaultType.addAll(wsg.varList);
+				}
+				//seqObj.wvList_defaultType.addAll(wt.subgroupMap.keySet());
 				seqObj.wTableObjList_defaultType.add(wt);
 				// }
 			}			
@@ -645,6 +649,10 @@ public class Procedures {
 			// TODO: can collect different objective type
 			// if (wt.id.equalsIgnoreCase(s.objectiveType)){
 			seqObj.wvList_defaultType.addAll(wt.varList);
+			for (WeightSubgroup wsg: wt.subgroupMap.values() ){
+				seqObj.wvList_defaultType.addAll(wsg.varList);
+			}
+			//seqObj.wvList_defaultType.addAll(wt.subgroupMap.keySet());
 			seqObj.wTableObjList_defaultType.add(wt);
 			// }
 
@@ -666,74 +674,121 @@ public class Procedures {
 
 					// TODO: process subgroup here
 					//processSubgroup(wt);
+					
+					boolean mainCommonPenaltyIsZero = false;
+					try { mainCommonPenaltyIsZero = Float.parseFloat(wt.commonPenalty)==0;} catch (Exception e) {}
+										
+					
+					for (WeightSubgroup wsg : wt.subgroupMap.values()){
 
-					if (!wt.commonPenalty.equals(Param.zero)) {
-						// find expression
+						boolean subCommonPenaltyIsZero = false;
+						try { subCommonPenaltyIsZero = Float.parseFloat(wsg.commonPenalty)==0;} catch (Exception e) {}
+/// process subgroup
+						if (!mainCommonPenaltyIsZero || !subCommonPenaltyIsZero) {
+							/// process subgroup
+							// create new dvar for subgroup id. this is the
+							// average for the subgroup
+							Misc.createDvarInSeqObj(wsg.id, Param.upper_unbounded, Param.lower_unbounded,
+									"weightgroup_mean", "na", wt.fromWresl, wt.condition, seqObj);
+
+							// create new goal for subgroup average
+							String goal_id = "wg__" + wt.id + "__" + wsg.id + "__mean";
+							String lhs = wsg.varList.size() + "*" + wsg.id.toLowerCase();
+							String rhs = "";
+							for (String v : wsg.varList) {
+								rhs = rhs + v + "+";
+							}
+							rhs = rhs.substring(0, rhs.length() - 1);
+							// TODO: dependants check
+							Misc.createGoalInSeqObj(goal_id, lhs, "=", rhs, wt.dependants, wt.fromWresl, wt.condition,
+									seqObj);
+						}
+						
+						if (!subCommonPenaltyIsZero) {
+							
+							
+							// create slack and surplus for var in varList
+							String weight = "-(" + wsg.commonPenalty + ")";
+							
+							for (String var : wsg.varList) {
+
+								String slack_id =   "wg__" + wt.id.toLowerCase() + "__" + wsg.id.toLowerCase() + "__" + var + "__slack";
+								String surplus_id = "wg__" + wt.id.toLowerCase() + "__" + wsg.id.toLowerCase() + "__" + var + "__surplus";
+
+								// add slack						
+								Misc.createDvarInSeqObj(slack_id, Param.upper_unbounded, Param.zero, "weightgroup_slack", "na", wt.fromWresl, wt.condition, seqObj);
+								
+								Misc.addWeightInGroupWeightMap(slack_id, wt.fromWresl, weight, seqObj);
+
+								// add surplus
+								Misc.createDvarInSeqObj(surplus_id, Param.upper_unbounded, Param.zero, "weightgroup_surplus", "na", wt.fromWresl, wt.condition, seqObj);
+
+								Misc.addWeightInGroupWeightMap(surplus_id, wt.fromWresl, weight, seqObj);
+
+								// add goal for slack surplus
+								String goal_ss_id = "wg__" + wt.id + "__" + wsg.id + "__" + var + "__ss";
+								String lhs_ss = var + "+" + slack_id + "-" + surplus_id;
+								String rhs_ss = wsg.id.toLowerCase();
+
+								Misc.createGoalInSeqObj(goal_ss_id, lhs_ss, "=", rhs_ss, wt.dependants, wt.fromWresl, wt.condition, seqObj);
+
+							}
+							
+							
+						}
+					} // end for loop subgroup
+					
+					
+/// process main group					
+					if (!mainCommonPenaltyIsZero) {
+						
+						/// process main group
+						// create new dvar for average
+						String average_id = "mean__" + wt.id;
+						String kind = "weightgroup_mean";
+						String units = "na";
+
+						Misc.createDvarInSeqObj(average_id, Param.upper_unbounded, Param.lower_unbounded, kind, units, wt.fromWresl, wt.condition, seqObj);
+						
+						// create new goal for group average						
+						ArrayList<String> varList_and_subGroupId = new ArrayList<String>();
+						varList_and_subGroupId.addAll(wt.varList);
+						varList_and_subGroupId.addAll(wt.subgroupMap.keySet());
+						String goal_id = "wg__" + wt.id + "__mean";
+						int mult =wt.varList.size()+wt.subgroupMap.keySet().size();
+						String lhs = mult + "*" + average_id.toLowerCase();
 						String rhs = "";
-						for (String v : wt.varList) {
+						for (String v : varList_and_subGroupId) {
 							rhs = rhs + v + "+";
 						}
 						rhs = rhs.substring(0, rhs.length() - 1);
-
-						// add new dvar for average
-						String dvar_id = "wg__" + wt.id + "__ave";
-						String kind = "weightgroup_average";
-						String units = "na";
-
-						Misc.createDvarInSeqObj(dvar_id, Param.upper_unbounded, Param.lower_unbounded, kind, units, wt.fromWresl, wt.condition, seqObj);
-						
-						
-						// add goal for average
-						String goal_id = "wg__" + wt.id + "__ave_goal";
-						String lhs = wt.varList.size() + "*" + dvar_id.toLowerCase();
-						
 						Misc.createGoalInSeqObj(goal_id, lhs, "=", rhs, wt.dependants, wt.fromWresl, wt.condition, seqObj);
 						
 
 						// create slack and surplus for var in varList
-
-						for (String var : wt.varList) {
+						String weight = "-(" + wt.commonPenalty + ")";
+						
+						for (String var : varList_and_subGroupId) {
 
 							String slack_id = "wg__" + wt.id.toLowerCase() + "__" + var + "__slack";
 							String surplus_id = "wg__" + wt.id.toLowerCase() + "__" + var + "__surplus";
 
 							// add slack						
 							Misc.createDvarInSeqObj(slack_id, Param.upper_unbounded, Param.zero, "weightgroup_slack", "na", wt.fromWresl, wt.condition, seqObj);
-
-							WeightTemp w1 = new WeightTemp();
-							w1.id = slack_id;
-							w1.fromWresl = wt.fromWresl;
-							w1.weight = "-(" + wt.commonPenalty + ")";
-
-							seqObj.groupWeightMap.put(slack_id.toLowerCase(), w1);
-							seqObj.wvList_defaultType.add(slack_id.toLowerCase());
+							
+							Misc.addWeightInGroupWeightMap(slack_id, wt.fromWresl, weight, seqObj);
 
 							// add surplus
 							Misc.createDvarInSeqObj(surplus_id, Param.upper_unbounded, Param.zero, "weightgroup_surplus", "na", wt.fromWresl, wt.condition, seqObj);
 
-							WeightTemp w2 = new WeightTemp();
-							w2.id = surplus_id;
-							w2.fromWresl = wt.fromWresl;
-							w2.weight = "-(" + wt.commonPenalty + ")";
-
-							seqObj.groupWeightMap.put(surplus_id.toLowerCase(), w2);
-							seqObj.wvList_defaultType.add(surplus_id.toLowerCase());
+							Misc.addWeightInGroupWeightMap(surplus_id, wt.fromWresl, weight, seqObj);
 
 							// add goal for slack surplus
-							GoalTemp g_ss = new GoalTemp();
-							g_ss.fromWresl = wt.fromWresl;
-							g_ss.id = "wg__" + wt.id + "__" + var + "__goal";
-
+							String goal_ss_id = "wg__" + wt.id + "__" + var + "__ss";
 							String lhs_ss = var + "+" + slack_id + "-" + surplus_id;
+							String rhs_ss = average_id.toLowerCase();
 
-							g_ss.caseExpression.add(lhs_ss + "=" + dvar_id.toLowerCase());
-							g_ss.condition = wt.condition;
-							g_ss.caseName.add(Param.defaultCaseName);
-							g_ss.caseCondition.add(Param.always);
-							g_ss.dependants = wt.dependants;
-
-							seqObj.glList.add(g_ss.id.toLowerCase());
-							seqObj.glMap.put(g_ss.id.toLowerCase(), g_ss);
+							Misc.createGoalInSeqObj(goal_ss_id, lhs_ss, "=", rhs_ss, wt.dependants, wt.fromWresl, wt.condition, seqObj);
 
 						}
 

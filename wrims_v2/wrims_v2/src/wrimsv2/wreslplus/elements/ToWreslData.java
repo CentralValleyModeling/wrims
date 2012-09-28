@@ -316,7 +316,23 @@ public class ToWreslData {
 			om.put(s,o);
 		}
 
-		
+		//System.out.println("ToWreslData: w.subgroupMap.keySet(): "+w.subgroupMap.keySet());
+		for (String k : w.subgroupMap.keySet()) {
+			
+			for (String s: w.subgroupMap.get(k).varList) {
+				
+				System.out.println("ToWreslData: w.subgroupMap.varList: "+w.subgroupMap.get(k).varList);
+				
+				WeightElement o = new WeightElement();
+			
+				o.fromWresl = w.fromWresl;
+				o.condition = w.condition;
+				o.weight = w.commonWeight;
+				
+				om.put(s,o);
+			}
+		}
+		System.out.println("ToWreslData: om.keySet(): "+om.keySet());
 		return om;
 		
 	}

@@ -129,6 +129,26 @@ public class Tools {
 		
 		return out;
 	}
+	public static LinkedHashMap<String,WeightSubgroup> allToLowerCase(Map<String,WeightSubgroup> inMap){
+		
+		LinkedHashMap<String,WeightSubgroup> out = new LinkedHashMap<String, WeightSubgroup>();
+		
+		for (String s: inMap.keySet()){
+			out.put(s.toLowerCase(),allToLowerCase(inMap.get(s)));
+		}
+		
+		return out;
+	}
+	public static WeightSubgroup allToLowerCase(WeightSubgroup wsg){
+		
+		WeightSubgroup out = new WeightSubgroup();
+		
+		out.commonPenalty = wsg.commonPenalty.toLowerCase();
+		out.id = wsg.id;
+		out.varList = allToLowerCase(wsg.varList);
+		
+		return out;
+	}
 	public static Set<String> allToLowerCase(Set<String> inSet){
 		
 		Set<String> out = new LinkedHashSet<String>();

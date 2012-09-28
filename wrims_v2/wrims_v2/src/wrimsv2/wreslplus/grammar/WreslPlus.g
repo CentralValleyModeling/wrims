@@ -222,7 +222,7 @@ weightTableID : i=ID {$weight::wt_.id=$i.text;$weight::wt_.line=$i.getLine();} ;
 weight_group
 @init{ $weight::wt_.isWeightGroup=true; }
 	:  WEIGHT w=expr_add  {$weight::wt_.commonWeight=$w.text;} 
-	   weight_trunk
+	   weight_trunk {System.out.println("subgroup: "+$weight::wt_.subgroupMap.keySet());}
 	;	
 
 weight_trunk 
@@ -235,13 +235,18 @@ weight_group_unit : i=ID  {$weight::wt_.varList.add($i.text);} ;
 weight_subgroup 
 scope { WeightSubgroup sub_;} 
 @init{ $weight_subgroup::sub_ = new WeightSubgroup(); }
-@after{ $weight::wt_.subgroup.add($weight_subgroup::sub_); }
-	:  i=ID  {$weight_subgroup::sub_.id=$i.text;} '{' weight_subgroup_trunk '}'
+@after{ $weight_subgroup::sub_.id=$i.text;
+        $weight::wt_.subgroupMap.put($i.text,$weight_subgroup::sub_); 
+        //$weight::wt_.varList.add($i.text);
+        //System.out.println("subgroup: "+$weight::wt_.subgroupMap.keySet());
+      }
+	:  i=ID //{$weight::wt_.subgroupMap.put($i.text.toLowerCase(),$weight_subgroup::sub_);} 
+	   '{' weight_subgroup_trunk '}'
 	;
 
 weight_subgroup_trunk 
 	:  ( PENALTY p=expr_add {$weight_subgroup::sub_.commonPenalty=$p.text;} )? 
-	   VARIABLE ( weight_subgroup_unit ) // | weight_subgroup )+
+	   VARIABLE ( weight_subgroup_unit+ ) // | weight_subgroup )+
 	  ;
 
 weight_subgroup_unit : i=ID  {$weight_subgroup::sub_.varList.add($i.text);} ;
