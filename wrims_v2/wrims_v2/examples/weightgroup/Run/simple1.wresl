@@ -19,7 +19,7 @@ MODEL first {
   
   
   Objective[local] obj = {[x, 5] [y, 5] }
-  Objective wg1 {
+  Objective TTT {
 	weight 6
 	penalty 0.1
 	variable a b c
