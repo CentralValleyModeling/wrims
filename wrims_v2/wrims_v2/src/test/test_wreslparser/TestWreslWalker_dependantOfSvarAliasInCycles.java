@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
+import test.test_wreslplus.TestParam;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.RegUtils;
@@ -30,7 +31,7 @@ public class TestWreslWalker_dependantOfSvarAliasInCycles {
 	// deep embedding of alias
 		
 		testName = "TestWreslWalker_dependantOfSvarAliasInCycles_svarExpr";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -137,7 +138,7 @@ public class TestWreslWalker_dependantOfSvarAliasInCycles {
 	// deep embedding of alias
 		
 		testName = "TestWreslWalker_dependantOfSvarAliasInCycles_svarSum";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -244,7 +245,7 @@ public class TestWreslWalker_dependantOfSvarAliasInCycles {
 	// deep embedding of alias
 		
 		testName = "TestWreslWalker_dependantOfSvarAliasInCycles_svarTable";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -351,7 +352,7 @@ public class TestWreslWalker_dependantOfSvarAliasInCycles {
 	// deep embedding of alias
 		
 		testName = "TestWreslWalker_dependantOfSvarAliasInCycles_svarCase";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -458,7 +459,7 @@ public class TestWreslWalker_dependantOfSvarAliasInCycles {
 	// deep embedding of alias
 		
 		testName = "TestWreslWalker_dependantOfSvarAliasInCycles_svarCase_conditions";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -565,7 +566,7 @@ public class TestWreslWalker_dependantOfSvarAliasInCycles {
 	// deep embedding of alias
 		
 		testName = "TestWreslWalker_dependantOfSvarAliasInCycles_alias";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		

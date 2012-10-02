@@ -29,7 +29,7 @@ public class TestWreslPlus_weight {
 		
 
 		testName = TestParam.testNamePrepend + "_weightTable1_new";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -58,36 +58,7 @@ public class TestWreslPlus_weight {
 		
 	
 		testName = TestParam.testNamePrepend + "_weightTable1_include";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
-		
-		inputFilePath = projectPath + testName + TestParam.fileExt;
-		logFilePath = csvFolderPath + ".log";
-		LogUtils.setLogFile(logFilePath);
-		
-		File absFile = new File(inputFilePath).getAbsoluteFile();
-		String absFilePath = absFile.getCanonicalPath().toLowerCase();
-		
-		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
-		
-		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
-		
-		WriteCSV.study(sd, this.csvFolderPath);
-		
-		LogUtils.closeLogFile();
-	
-		String logText = Tools.readFileAsString(logFilePath);	
-		
-		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 99);		
-	
-	}
-	
-	@Test(groups = { "WRESLPLUS_elements" })
-	public void weightGroup1() throws RecognitionException, IOException {
-		
-	
-		testName = TestParam.testNamePrepend + "_weightGroup1";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";

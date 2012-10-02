@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
+import test.test_wreslplus.TestParam;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.RegUtils;
@@ -29,7 +30,7 @@ public class TestWreslWalker_external {
 	public void dll_f90() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_external_dll_f90";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
@@ -84,7 +85,7 @@ public class TestWreslWalker_external {
 	public void external() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_external";
-		csvFolderPath = "testResult_v1\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	

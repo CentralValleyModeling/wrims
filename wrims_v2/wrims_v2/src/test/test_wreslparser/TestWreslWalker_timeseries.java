@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
+import test.test_wreslplus.TestParam;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.RegUtils;
@@ -29,7 +30,7 @@ public class TestWreslWalker_timeseries {
 		public void dss() throws RecognitionException, IOException {
 			
 			testName = "TestWreslWalker_timeseries_dss";
-			csvFolderPath = "testResult_v1\\"+testName;
+			csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 			inputFilePath = projectPath + testName + ".wresl";
 			logFilePath = csvFolderPath+".log";
 	
@@ -72,7 +73,7 @@ public class TestWreslWalker_timeseries {
 	public void dss2() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_timeseries_dss2";
-		csvFolderPath = "testResult_v1\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName + ".wresl";
 		logFilePath = csvFolderPath+".log";
 	

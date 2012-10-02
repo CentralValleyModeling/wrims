@@ -149,6 +149,16 @@ public class Tools {
 		return in.readLine();
 	}
 
+	public static PrintWriter openFile(String filePath) throws IOException {
+
+		File f = new File(filePath);
+		File dir = new File(f.getParent());
+		dir.mkdirs();
+		f.createNewFile();
+
+		return new PrintWriter(new BufferedWriter(new FileWriter(f)));
+	}
+	
 	public static PrintWriter openFile(String dirPath, String fileName) throws IOException {
 
 		File f = new File(dirPath, fileName);

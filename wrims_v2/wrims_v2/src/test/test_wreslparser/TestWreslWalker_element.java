@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
+import test.test_wreslplus.TestParam;
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.wreslparser.elements.FileParser;
@@ -32,7 +33,7 @@ public class TestWreslWalker_element {
 	public void dvarNonStd() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_element_dvarNonStd";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -55,7 +56,7 @@ public class TestWreslWalker_element {
 	public void dvarStd() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_element_dvarStd";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -81,7 +82,7 @@ public class TestWreslWalker_element {
 	public void svarDSS() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_element_svarDSS";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName + ".wresl";
 		logFilePath = csvFolderPath+".log";
 
@@ -127,7 +128,7 @@ public class TestWreslWalker_element {
 	public void svarConst() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_element_svarConst";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
@@ -166,7 +167,7 @@ public class TestWreslWalker_element {
 	public void svarExpression1() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_element_svarExpression1";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
@@ -215,7 +216,7 @@ public class TestWreslWalker_element {
 	public void svarSum() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_element_svarSum";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
@@ -259,7 +260,7 @@ public class TestWreslWalker_element {
 	public void svarTable() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_element_svarTable";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -311,7 +312,7 @@ public class TestWreslWalker_element {
 	public void svarTableFull() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_element_svarTableFull";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
@@ -356,7 +357,7 @@ public class TestWreslWalker_element {
 	public void alias() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_element_alias";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 

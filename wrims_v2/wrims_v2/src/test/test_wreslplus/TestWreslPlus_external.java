@@ -29,7 +29,7 @@ public class TestWreslPlus_external {
 		
 
 		testName = TestParam.testNamePrepend + "_external";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";

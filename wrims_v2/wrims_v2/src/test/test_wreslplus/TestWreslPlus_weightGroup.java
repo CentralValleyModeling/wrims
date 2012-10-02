@@ -16,53 +16,20 @@ import wrimsv2.wreslplus.elements.Workflow;
 import wrimsv2.wreslplus.elements.procedures.ToWreslData;
 
 
-public class TestWreslPlus_timeseries {
+public class TestWreslPlus_weightGroup {
 	
-	public String projectPath = TestParam.projectPath;	
+	public String projectPath = TestParam.projectPath_wp;	
 	public String inputFilePath;
 	public String logFilePath;	
 	public String csvFolderPath;
 	public String testName;	
 	
 	@Test(groups = { "WRESLPLUS_elements" })
-	public void dss() throws RecognitionException, IOException {
-		
-
-		testName = TestParam.testNamePrepend + "_timeseries_dss";
-		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
-		
-		inputFilePath = projectPath + testName + TestParam.fileExt;
-		logFilePath = csvFolderPath + ".log";
-		LogUtils.setLogFile(logFilePath);
-		
-		File absFile = new File(inputFilePath).getAbsoluteFile();
-		String absFilePath = absFile.getCanonicalPath().toLowerCase();
-		
-		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
-		
-		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
-		
-		WriteCSV.study(sd, this.csvFolderPath);
-		
-		LogUtils.closeLogFile();
-
-		String logText = Tools.readFileAsString(logFilePath);	
-		
-		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);
-		
-		//StudyDataSet s = ToWreslData.convertStudy(s)
-		
-		
-
-	}
-
-	@Test(groups = { "WRESLPLUS_elements" })
-	public void dss2() throws RecognitionException, IOException {
+	public void weightGroup1() throws RecognitionException, IOException {
 		
 	
-		testName = TestParam.testNamePrepend + "_timeseries_dss2";
-		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
+		testName = "TestWreslPlus_weightGroup1";
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_wreslplus2\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -82,11 +49,7 @@ public class TestWreslPlus_timeseries {
 		String logText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 0);
-		
-		//StudyDataSet s = ToWreslData.convertStudy(s)
-		
-		
+		Assert.assertEquals(totalErrs, 99);		
 	
 	}
 }

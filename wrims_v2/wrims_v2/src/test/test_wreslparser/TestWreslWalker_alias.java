@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
+import test.test_wreslplus.TestParam;
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.wreslparser.elements.LogUtils;
@@ -30,7 +31,7 @@ public class TestWreslWalker_alias {
 	public void alias_to_goal() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_alias_to_goal";
-		csvFolderPath = "testResult_v1\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
@@ -111,7 +112,7 @@ public class TestWreslWalker_alias {
 	public void alias_to_goal2() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_alias_to_goal2";
-		csvFolderPath = "testResult_v1\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
@@ -192,7 +193,7 @@ public class TestWreslWalker_alias {
 	public void alias_to_goal3() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_alias_to_goal3";
-		csvFolderPath = "testResult_v1\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -229,7 +230,7 @@ public class TestWreslWalker_alias {
 	// deep embedding of alias
 		
 		testName = "TestWreslWalker_alias_to_goal4";
-		csvFolderPath = "testResult_v1\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -297,7 +298,7 @@ public class TestWreslWalker_alias {
 	// deep embedding of alias
 		
 		testName = "TestWreslWalker_alias_unknown";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -345,7 +346,7 @@ public class TestWreslWalker_alias {
 	public void alias_to_goal5_typeRedefined() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_alias_to_goal5_typeRedefined";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -385,7 +386,7 @@ public class TestWreslWalker_alias {
 	// deep embedding of alias
 		
 		testName = "TestWreslWalker_alias_to_goal6";
-		csvFolderPath = "testResult_v1\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -423,7 +424,7 @@ public class TestWreslWalker_alias {
 	// deep embedding of alias
 		
 		testName = "TestWreslWalker_alias_to_goal7";
-		csvFolderPath = "testResult_v1\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -461,7 +462,7 @@ public class TestWreslWalker_alias {
 	// deep embedding of alias
 		
 		testName = "TestWreslWalker_alias";
-		csvFolderPath = "testResult_v1\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -499,7 +500,7 @@ public class TestWreslWalker_alias {
 	// deep embedding of alias
 		
 		testName = "TestWreslWalker_alias2";
-		csvFolderPath = "testResult_v1\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		

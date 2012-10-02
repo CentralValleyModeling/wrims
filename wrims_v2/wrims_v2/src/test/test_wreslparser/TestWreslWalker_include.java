@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
+import test.test_wreslplus.TestParam;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.RegUtils;
@@ -29,7 +30,7 @@ public class TestWreslWalker_include {
 	public void include() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_include";
-		csvFolderPath = "testResult_v1\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 		inputFilePath = projectPath + "\\moreWreslFiles\\"+testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
@@ -64,7 +65,7 @@ public class TestWreslWalker_include {
 	public void include2() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_include2";
-		csvFolderPath = "testResult_v1\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 		inputFilePath = projectPath + "\\moreWreslFiles\\"+testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
@@ -99,7 +100,7 @@ public class TestWreslWalker_include {
 	public void include_ex() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_include_ex";
-		csvFolderPath = "testResult_v1\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 		inputFilePath = projectPath + "\\moreWreslFiles\\"+testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
@@ -134,7 +135,7 @@ public class TestWreslWalker_include {
 	public void include_usedByCycle() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_include_usedByCycle";
-		csvFolderPath = "testResult_v1\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 		inputFilePath = projectPath + "\\moreWreslFiles\\"+testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	

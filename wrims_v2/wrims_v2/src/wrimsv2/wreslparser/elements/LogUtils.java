@@ -38,8 +38,11 @@ public class LogUtils {
 	public static void setLogFile(String logFileName){
 				
 		try {
-			_logFile = Tools.openFile(System.getProperty("user.dir"), logFileName);
-			
+			if (logFileName.contains(":")) {
+				_logFile = Tools.openFile(logFileName);
+			} else {
+				_logFile = Tools.openFile(System.getProperty("user.dir"), logFileName);
+			}
 		}
 		catch (IOException e1) {
 			// TODO Auto-generated catch block

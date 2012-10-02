@@ -8,6 +8,8 @@ import java.util.Set;
 import org.antlr.runtime.RecognitionException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import test.test_wreslplus.TestParam;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.wreslparser.elements.LogUtils;
@@ -31,7 +33,7 @@ public class TestWreslWalker_study
     throws RecognitionException, IOException
   {
     testName = "TestWreslWalker_study_timeseries";
-	csvFolderPath = "testResult\\"+testName;
+	csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 	inputFilePath = projectPath + testName+".wresl";
 	logFilePath = csvFolderPath+".log";
 
@@ -70,7 +72,7 @@ public class TestWreslWalker_study
   @Test(groups={"WRESL_elements"})
   public void order() throws RecognitionException, IOException {
 	  testName = "TestWreslWalker_study_order";
-	  csvFolderPath = "testResult\\"+testName;
+	  csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 	  inputFilePath = projectPath + testName + ".wresl";
 	  logFilePath = csvFolderPath + ".log";
 
@@ -127,7 +129,7 @@ public class TestWreslWalker_study
     throws RecognitionException, IOException
   {
     testName = "TestWreslWalker_study_order_simple";
-	csvFolderPath = "testResult\\"+testName;
+	csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 	inputFilePath = projectPath + testName+".wresl";
 	logFilePath = csvFolderPath+".log";
 
@@ -177,7 +179,7 @@ public class TestWreslWalker_study
     throws RecognitionException, IOException
   {
     testName = "TestWreslWalker_study_order_case1";
-	csvFolderPath = "testResult\\"+testName;
+	csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 	inputFilePath = projectPath + testName+".wresl";
 	logFilePath = csvFolderPath+".log";
 
@@ -228,7 +230,7 @@ public class TestWreslWalker_study
   @Test(groups={"WRESL_elements"})
   public void order_case1_globals() throws RecognitionException, IOException {
     testName = "TestWreslWalker_study_order_case1";
-	csvFolderPath = "testResult\\"+testName;
+	csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
     inputFilePath = projectPath + testName + ".wresl";
     logFilePath = csvFolderPath + ".log";
 
@@ -285,7 +287,7 @@ public class TestWreslWalker_study
 //    throws RecognitionException, IOException
 //  {
 //    testName = "TestWreslWalker_callite_main_bo";
-//	csvFolderPath = "testResult_v1\\"+testName;
+//	csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 //	inputFilePath = projectPath + testName+".wresl";
 //	logFilePath = csvFolderPath+".log";
 //

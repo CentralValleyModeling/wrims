@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
+import test.test_wreslplus.TestParam;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.RegUtils;
@@ -29,7 +30,7 @@ public class TestWreslWalker_dvar {
 	public void negation() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_dvar_negation";
-		csvFolderPath = "testResult_v1\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
@@ -79,7 +80,7 @@ public class TestWreslWalker_dvar {
 	public void globalShare() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_dvar_globalShare";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
@@ -114,7 +115,7 @@ public class TestWreslWalker_dvar {
 	public void nonStd() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_dvar_nonStd";
-		csvFolderPath = "testResult_v1\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
@@ -175,7 +176,7 @@ public class TestWreslWalker_dvar {
 	public void std() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_dvar_std";
-		csvFolderPath = "testResult_v1\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		

@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
+import test.test_wreslplus.TestParam;
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.wreslparser.elements.FileParser;
@@ -32,7 +33,7 @@ public class TestWreslWalker_weight {
 	public void weightTable1() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_weightTable1";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 
@@ -91,7 +92,7 @@ public class TestWreslWalker_weight {
 	public void weightTable2() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_weightTable2";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
@@ -147,7 +148,7 @@ public class TestWreslWalker_weight {
 	public void weightTable3() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_weightTable3";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
@@ -197,7 +198,7 @@ public class TestWreslWalker_weight {
 	public void weightTable1_new() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_weightTable1_new";
-		csvFolderPath = "testResult_v1\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
@@ -243,7 +244,7 @@ public class TestWreslWalker_weight {
 	public void weightTable1_include() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_weightTable1_include";
-		csvFolderPath = "testResult_v1\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_v1\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	

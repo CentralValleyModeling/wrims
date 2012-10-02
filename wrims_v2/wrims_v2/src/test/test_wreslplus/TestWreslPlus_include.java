@@ -31,7 +31,7 @@ public class TestWreslPlus_include {
 		
 
 		testName = TestParam.testNamePrepend + "_include";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + "\\moreWreslFiles\\" + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -61,7 +61,7 @@ public class TestWreslPlus_include {
 		
 	
 		testName = TestParam.testNamePrepend + "_include2";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + "\\moreWreslFiles\\" + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -91,7 +91,7 @@ public class TestWreslPlus_include {
 		
 	
 		testName = TestParam.testNamePrepend + "_include_ex";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + "\\moreWreslFiles\\" + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -121,7 +121,7 @@ public class TestWreslPlus_include {
 		
 	
 		testName = TestParam.testNamePrepend + "_include_usedByCycle";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + "\\moreWreslFiles\\" + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";

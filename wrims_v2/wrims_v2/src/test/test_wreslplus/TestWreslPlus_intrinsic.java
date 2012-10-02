@@ -29,7 +29,7 @@ public class TestWreslPlus_intrinsic {
 		
 	
 		testName = TestParam.testNamePrepend + "_intrinsic_mod";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";

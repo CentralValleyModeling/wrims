@@ -29,7 +29,7 @@ public class TestWreslPlus_svar {
 		
 
 		testName = TestParam.testNamePrepend + "_svar_const";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -62,7 +62,7 @@ public class TestWreslPlus_svar {
 		
 	
 		testName = TestParam.testNamePrepend + "_svar_expression";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -90,7 +90,7 @@ public class TestWreslPlus_svar {
 		
 	
 		testName = TestParam.testNamePrepend + "_svar_sum";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -123,7 +123,7 @@ public class TestWreslPlus_svar {
 		
 	
 		testName = TestParam.testNamePrepend + "_svar_case";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -156,7 +156,7 @@ public class TestWreslPlus_svar {
 		
 	
 		testName = TestParam.testNamePrepend + "_svar_table";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -185,7 +185,7 @@ public class TestWreslPlus_svar {
 		
 	
 		testName = TestParam.testNamePrepend + "_svar_tableFull";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";

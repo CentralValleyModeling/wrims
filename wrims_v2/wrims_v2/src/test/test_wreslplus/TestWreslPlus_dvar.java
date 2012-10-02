@@ -29,7 +29,7 @@ public class TestWreslPlus_dvar {
 		
 
 		testName = TestParam.testNamePrepend + "_dvar_negation";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -62,7 +62,7 @@ public class TestWreslPlus_dvar {
 		
 	
 		testName = TestParam.testNamePrepend + "_dvar_nonStd";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -95,7 +95,7 @@ public class TestWreslPlus_dvar {
 		
 	
 		testName = TestParam.testNamePrepend + "_dvar_std";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";

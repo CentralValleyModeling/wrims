@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
+import test.test_wreslplus.TestParam;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.RegUtils;
@@ -30,7 +31,7 @@ public class TestWreslWalker_dependant_varCycle {
 	// deep embedding of alias
 		
 		testName = "TestWreslWalker_dependant_varCycle_missingCycle";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -71,7 +72,7 @@ public class TestWreslWalker_dependant_varCycle {
 	// deep embedding of alias
 		
 		testName = "TestWreslWalker_dependant_varCycle_usePrevCycle";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -155,7 +156,7 @@ public class TestWreslWalker_dependant_varCycle {
 	// deep embedding of alias
 		
 		testName = "TestWreslWalker_dependant_varCycle_alias";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		

@@ -31,7 +31,7 @@ public class TestWreslPlus_goal {
 		
 
 		testName = TestParam.testNamePrepend + "_goal_simple";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -62,7 +62,7 @@ public class TestWreslPlus_goal {
 		
 	
 		testName = TestParam.testNamePrepend + "_goal_noCase";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -93,7 +93,7 @@ public class TestWreslPlus_goal {
 		
 	
 		testName = TestParam.testNamePrepend + "_goal_case";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -134,7 +134,7 @@ public class TestWreslPlus_goal {
 		
 	
 		testName = TestParam.testNamePrepend + "_goal_case2";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -173,7 +173,7 @@ public class TestWreslPlus_goal {
 		
 	
 		testName = TestParam.testNamePrepend + "_goal_case3";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -203,7 +203,7 @@ public class TestWreslPlus_goal {
 		
 	
 		testName = TestParam.testNamePrepend + "_goal_case4";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -233,7 +233,7 @@ public class TestWreslPlus_goal {
 		
 	
 		testName = TestParam.testNamePrepend + "_goal_case5";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -263,7 +263,7 @@ public class TestWreslPlus_goal {
 		
 	
 		testName = TestParam.testNamePrepend + "_goal_case6";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -293,7 +293,7 @@ public class TestWreslPlus_goal {
 		
 	
 		testName = TestParam.testNamePrepend + "_goal_case7";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -323,7 +323,7 @@ public class TestWreslPlus_goal {
 		
 	
 		testName = TestParam.testNamePrepend + "_goal_case8";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -353,7 +353,7 @@ public class TestWreslPlus_goal {
 		
 	
 		testName = TestParam.testNamePrepend + "_goal_case9";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";

@@ -29,7 +29,7 @@ public class TestWreslPlus_integer {
 		
 	
 		testName = TestParam.testNamePrepend + "_integer_std";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";
@@ -62,7 +62,7 @@ public class TestWreslPlus_integer {
 		
 	
 		testName = TestParam.testNamePrepend + "_integer_nonStd";
-		csvFolderPath = "testResult_wreslplus\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend +"testResult_wreslplus\\"+testName;
 		
 		inputFilePath = projectPath + testName + TestParam.fileExt;
 		logFilePath = csvFolderPath + ".log";

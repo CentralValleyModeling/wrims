@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
+import test.test_wreslplus.TestParam;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.RegUtils;
@@ -31,7 +32,7 @@ public class TestWreslWalker_dependantOfGoalInCycles {
 	// deep embedding of alias
 		
 		testName = "TestWreslWalker_dependantOfGoalInCycles_simple";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -146,7 +147,7 @@ public class TestWreslWalker_dependantOfGoalInCycles {
 	// deep embedding of alias
 		
 		testName = "TestWreslWalker_dependantOfGoalInCycles_noCase";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -257,7 +258,7 @@ public class TestWreslWalker_dependantOfGoalInCycles {
 	// deep embedding of alias
 		
 		testName = "TestWreslWalker_dependantOfGoalInCycles_case_constraints";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		
@@ -368,7 +369,7 @@ public class TestWreslWalker_dependantOfGoalInCycles {
 	// deep embedding of alias
 		
 		testName = "TestWreslWalker_dependantOfGoalInCycles_case_conditions";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 		

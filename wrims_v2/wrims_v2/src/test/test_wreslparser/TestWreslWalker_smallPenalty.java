@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
+import test.test_wreslplus.TestParam;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Controller;
@@ -33,7 +34,7 @@ public class TestWreslWalker_smallPenalty {
 	public void smallPenalty_parser() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_smallPenalty";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 

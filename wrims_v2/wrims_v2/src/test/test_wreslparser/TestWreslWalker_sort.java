@@ -12,6 +12,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
+import test.test_wreslplus.TestParam;
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.wreslparser.elements.LogUtils;
@@ -34,7 +35,7 @@ public class TestWreslWalker_sort {
 	public void simple() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_sort_simple";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
@@ -91,7 +92,7 @@ public class TestWreslWalker_sort {
 	public void case2() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_sort_case2";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
@@ -140,7 +141,7 @@ public class TestWreslWalker_sort {
 	public void case1() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_sort_case1";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
@@ -187,7 +188,7 @@ public class TestWreslWalker_sort {
 	public void global_redefine() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_sort_global_redefine";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
@@ -234,7 +235,7 @@ public class TestWreslWalker_sort {
 	public void alias() throws RecognitionException, IOException {
 		
 		testName = "TestWreslWalker_sort_alias";
-		csvFolderPath = "testResult\\"+testName;
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult\\"+testName;
 		inputFilePath = projectPath + testName+".wresl";
 		logFilePath = csvFolderPath+".log";
 	
