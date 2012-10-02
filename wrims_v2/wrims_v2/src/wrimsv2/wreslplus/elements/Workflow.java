@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyParser;
+import wrimsv2.wreslplus.elements.procedures.ProcWeight;
 
 public class Workflow {
 	
@@ -132,7 +133,7 @@ public class Workflow {
 		
 		Procedures.collectWeightVar(st);
 		
-		Procedures.processWeightGroup(st);
+		ProcWeight.processWeightGroup(st);
 		
 
 		Procedures.collectTimeStep(st);
