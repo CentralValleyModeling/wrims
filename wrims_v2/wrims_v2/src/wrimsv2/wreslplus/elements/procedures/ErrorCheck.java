@@ -1,4 +1,4 @@
-package wrimsv2.wreslplus.elements;
+package wrimsv2.wreslplus.elements.procedures;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +16,12 @@ import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.wreslparser.elements.LogUtils;
+import wrimsv2.wreslplus.elements.AliasTemp;
+import wrimsv2.wreslplus.elements.GoalTemp;
+import wrimsv2.wreslplus.elements.ModelTemp;
+import wrimsv2.wreslplus.elements.SequenceTemp;
+import wrimsv2.wreslplus.elements.StudyTemp;
+import wrimsv2.wreslplus.elements.SvarTemp;
 
 public class ErrorCheck {
 	

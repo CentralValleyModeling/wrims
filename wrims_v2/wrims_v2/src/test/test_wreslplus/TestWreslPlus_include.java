@@ -14,8 +14,8 @@ import wrimsv2.wreslparser.elements.RegUtils;
 import wrimsv2.wreslparser.elements.Tools;
 import wrimsv2.wreslparser.elements.WriteCSV;
 import wrimsv2.wreslplus.elements.StudyTemp;
-import wrimsv2.wreslplus.elements.ToWreslData;
 import wrimsv2.wreslplus.elements.Workflow;
+import wrimsv2.wreslplus.elements.procedures.ToWreslData;
 
 
 public class TestWreslPlus_include {

@@ -1,4 +1,4 @@
-package wrimsv2.wreslplus.elements;
+package wrimsv2.wreslplus.elements.procedures;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +15,20 @@ import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.commondata.wresldata.WeightElement;
+import wrimsv2.wreslplus.elements.AliasTemp;
+import wrimsv2.wreslplus.elements.DvarTemp;
+import wrimsv2.wreslplus.elements.ExternalTemp;
+import wrimsv2.wreslplus.elements.GoalCase;
+import wrimsv2.wreslplus.elements.GoalTemp;
+import wrimsv2.wreslplus.elements.IncFileTemp;
+import wrimsv2.wreslplus.elements.ModelTemp;
+import wrimsv2.wreslplus.elements.SequenceTemp;
+import wrimsv2.wreslplus.elements.StudyTemp;
+import wrimsv2.wreslplus.elements.SvarTemp;
+import wrimsv2.wreslplus.elements.TimeseriesTemp;
+import wrimsv2.wreslplus.elements.Tools;
+import wrimsv2.wreslplus.elements.WeightTable;
+import wrimsv2.wreslplus.elements.WeightTemp;
 
 public class ToLowerCase {
 	

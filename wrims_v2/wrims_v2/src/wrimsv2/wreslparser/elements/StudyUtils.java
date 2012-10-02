@@ -16,8 +16,8 @@ import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
 import wrimsv2.components.Versions;
 import wrimsv2.wreslplus.elements.StudyTemp;
-import wrimsv2.wreslplus.elements.ToWreslData;
 import wrimsv2.wreslplus.elements.Workflow;
+import wrimsv2.wreslplus.elements.procedures.ToWreslData;
 
 public class StudyUtils {
 

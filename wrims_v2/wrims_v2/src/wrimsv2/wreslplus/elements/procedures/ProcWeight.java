@@ -2,6 +2,7 @@ package wrimsv2.wreslplus.elements.procedures;
 
 import java.util.ArrayList;
 import wrimsv2.commondata.wresldata.Param;
+import wrimsv2.wreslplus.elements.ModelTemp;
 import wrimsv2.wreslplus.elements.SequenceTemp;
 import wrimsv2.wreslplus.elements.StudyTemp;
 import wrimsv2.wreslplus.elements.WeightSubgroup;
@@ -152,6 +153,63 @@ public class ProcWeight {
 
 		}
 
+	}
+
+	// processed after lowercase conversion
+	public static void collectWeightVar(StudyTemp s) {
+	
+		for (String seq : s.seqList) {
+			
+			SequenceTemp seqObj = s.seqMap.get(seq);
+			
+			String m = seqObj.model;
+	
+			ModelTemp mObj = s.modelMap.get(m);
+	
+			collectWeightVar(mObj, seqObj, s);
+	
+		}
+	
+	}
+
+	// processed after lowercase conversion
+	public static void collectWeightVar(ModelTemp mObj, SequenceTemp seqObj, StudyTemp st) {
+	
+		
+		for (String f: mObj.incFileRelativePathList_post){
+		
+			// TODO: enable for multiple model per file
+			String mn = st.fileModelNameMap.get(f).get(0);
+			ArrayList<WeightTable> wl = st.fileModelDataTable.get(f, mn).wTableObjList;
+			
+			for (WeightTable wt : wl) {
+	
+				// TODO: can collect different objective type
+				// if (wt.id.equalsIgnoreCase(s.objectiveType)){
+				seqObj.wvList_defaultType.addAll(wt.varList);
+				for (WeightSubgroup wsg: wt.subgroupMap.values() ){
+					seqObj.wvList_defaultType.addAll(wsg.varList);
+				}
+				//seqObj.wvList_defaultType.addAll(wt.subgroupMap.keySet());
+				seqObj.wTableObjList_defaultType.add(wt);
+				// }
+			}			
+		}
+	
+		for (WeightTable wt : mObj.wTableObjList) {
+	
+			// TODO: can collect different objective type
+			// if (wt.id.equalsIgnoreCase(s.objectiveType)){
+			seqObj.wvList_defaultType.addAll(wt.varList);
+			for (WeightSubgroup wsg: wt.subgroupMap.values() ){
+				seqObj.wvList_defaultType.addAll(wsg.varList);
+			}
+			//seqObj.wvList_defaultType.addAll(wt.subgroupMap.keySet());
+			seqObj.wTableObjList_defaultType.add(wt);
+			// }
+	
+		}
+	
 	}
 
 

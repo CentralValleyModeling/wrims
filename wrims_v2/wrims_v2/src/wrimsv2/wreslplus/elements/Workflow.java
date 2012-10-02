@@ -5,7 +5,9 @@ import java.util.ArrayList;
 
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyParser;
+import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
 import wrimsv2.wreslplus.elements.procedures.ProcWeight;
+import wrimsv2.wreslplus.elements.procedures.ToLowerCase;
 
 public class Workflow {
 	
@@ -131,7 +133,7 @@ public class Workflow {
 		Procedures.analyzeVarNeededFromCycle(st);
 		Procedures.createSpaceInVarCycleValueMap(st);
 		
-		Procedures.collectWeightVar(st);
+		ProcWeight.collectWeightVar(st);
 		
 		ProcWeight.processWeightGroup(st);
 		

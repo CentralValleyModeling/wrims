@@ -13,6 +13,8 @@ import org.antlr.runtime.TokenStream;
 
 import serial.SerialXml;
 import wrimsv2.wreslparser.elements.LogUtils;
+import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
+import wrimsv2.wreslplus.elements.procedures.ToLowerCase;
 import wrimsv2.wreslplus.grammar.WreslPlusLexer;
 import wrimsv2.wreslplus.grammar.WreslPlusParser;
 
