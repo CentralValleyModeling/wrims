@@ -14,15 +14,15 @@ MODEL first {
 	define[local] M7 { std kind 'FLOW-CHANNEL' units 'CFS'}
   
 
-	goal[local] g1 { D3 + D4 + M5 + M6 + M7  = 5 }
-
+	goal[local] g1 { D3 + D4 + M5 + M6 + M7  = 7 }
+	goal[local] g2 { D3 + D4 = 4 }
 
 	Objective TTT {
 		weight 1
-		penalty 0.1
+		!penalty 0.1
 		variable 
 			D_Group { 
-				penalty 0.1
+				!penalty 0.1
 				variable D3 D4 
 			}
 
@@ -30,6 +30,7 @@ MODEL first {
             ! M_group dvar is needed if main group has penalty
 			! M_group dvar is needed if sub group has penalty
 			M_Group { 
+			    penalty 0.1
 				variable M5 M6 M7
 			}
 	}
