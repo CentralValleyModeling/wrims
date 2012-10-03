@@ -6,7 +6,7 @@ public class TestParam {
 	  //public static final String projectPath = "src\\test\\test_wreslplus\\wreslplus_files\\";
 	  public static final String projectPath = "src\\test\\test_wreslparser\\wresl_files\\";	
 	  public static final String projectPath_wp = "src\\test\\test_wreslplus\\wreslplus_files\\";	
-	  public static final String csvFolderPrepend = "I:\\log\\";	
+	  public static final String csvFolderPrepend = "J:\\log\\";	
 	  public static final String testNamePrepend = "TestWreslWalker"; 	
 	  public static final String fileExt = ".wresl"; 	
 }
