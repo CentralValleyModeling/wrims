@@ -131,7 +131,6 @@ public class ParserUtils {
 					ToLowerCase.convert(fm);		
 					Procedures.processIncFilePath(fm);
 					Procedures.processVarIncFileList(fm);
-					//Procedures.processT_svList(fm);
 					Procedures.processDependants(fm);
 					
 //					SerialXml.writeModelTemp(fm, absPath+".x");

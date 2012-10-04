@@ -23,6 +23,7 @@ public class StudyTemp implements Serializable {
 	public ArrayList<String> seqTimeStepList;
 	public Map<String, SequenceTemp> seqMap;
 	public ArrayList<String> modelList_effective;  //processed	
+	public ArrayList<String> incModelList_effective;  //processed // models included in models	
 	public ArrayList<String> modelList;		
 	public Map<String, ModelTemp> modelMap;
 	public Map<String, ArrayList<String>> fileModelNameMap;  
@@ -47,6 +48,7 @@ public class StudyTemp implements Serializable {
 		seqTimeStepList = new ArrayList<String>();
 		modelList = new ArrayList<String>();
 		modelList_effective = new ArrayList<String>();
+		incModelList_effective = new ArrayList<String>();
 		modelMap = new HashMap<String, ModelTemp>();	
 		seqList = new ArrayList<String>();
 		seqMap = new HashMap<String, SequenceTemp>();	

@@ -124,6 +124,7 @@ public class ToLowerCase {
 		}	
 		
 		//j.svIncFileList = Tools.allToLowerCase(j.svIncFileList);
+		j.incModelList = Tools.allToLowerCase(j.incModelList);
 		j.incFileIDList=Tools.allToLowerCase(j.incFileIDList);
 		j.itemList = Tools.allToLowerCase(j.itemList);
 		j.svList = Tools.allToLowerCase(j.svList);

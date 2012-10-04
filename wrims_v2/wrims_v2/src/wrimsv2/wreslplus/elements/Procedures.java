@@ -384,7 +384,15 @@ public class Procedures {
 
 	public static void processDependants(StudyTemp s) {
 
-		for (String m : s.modelList) {
+		for (String m : s.modelList_effective) {
+
+			ModelTemp mObj = s.modelMap.get(m);
+
+			processDependants(mObj);
+
+		}
+		
+		for (String m : s.incModelList_effective) {
 
 			ModelTemp mObj = s.modelMap.get(m);
 
@@ -759,6 +767,13 @@ public class Procedures {
 
 		}
 
+		for (String m : s.incModelList_effective) {
+
+			ModelTemp mObj = s.modelMap.get(m);
+
+			processIncFilePath(mObj);
+
+		}
 	}
 
 	// processed after lowercase conversion
@@ -928,10 +943,35 @@ public class Procedures {
 			String modelName = st.seqMap.get(s).model;
 			
 			if (!st.modelList.contains(modelName)){
+			
 				LogUtils.errMsg("model name not found in sequence: " + modelName);
+			
+			} else {
+
+				st.modelList_effective.add(modelName);
 			}
 			
-			st.modelList_effective.add(modelName);
+			// add included model list
+			for (String incM: st.modelMap.get(modelName).incModelList) {
+				
+				incM = incM.toLowerCase();
+				
+				System.out.println("inc models: "+incM);
+				
+				if (!st.modelList.contains(incM)){
+					
+					LogUtils.errMsg("included model named \""+ incM +"\" not found in model: " + modelName);
+				
+				} else {
+					
+					st.incModelList_effective.add(incM);
+					
+				}
+				
+				
+				
+			}
+			
 		}
 	}
 
@@ -1006,12 +1046,17 @@ public class Procedures {
 
 	public static void processVarIncFileList( StudyTemp st) {
 		
-		// TODO: use sequence instead of effective list
 		for (String m : st.modelList_effective){
 
 			processVarIncFileList(st.modelMap.get(m));
 		
-		}		
+		}
+		
+		for (String m : st.incModelList_effective){
+
+			processVarIncFileList(st.modelMap.get(m));
+		
+		}
 	}
 
 //	public static void processT_svList( StudyTemp st) {

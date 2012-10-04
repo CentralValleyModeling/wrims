@@ -46,12 +46,11 @@ public class Workflow {
 		//Procedures.processT_svList(st);
 		Procedures.processDependants(st);
 
-		/// store main file included models into fileModelDataTable
+		/// put sequence included models into fileModelDataTable
 		for (String se : st.seqList){
 			
 			String modelName = st.seqMap.get(se).model;
-			ModelTemp mt = st.modelMap.get(modelName);
-				
+			ModelTemp mt = st.modelMap.get(modelName);  // this is model in main file
 			
 			if (st.fileModelNameMap.keySet().contains(mt.pathRelativeToRunDir)) {
 				
@@ -67,9 +66,26 @@ public class Workflow {
 			
 		}
 
-
+		/// put model included models into fileModelDataTable
+		for (String incM: st.incModelList_effective){
+			
+			ModelTemp incMt = st.modelMap.get(incM);  // this is model in main file
+				
+			if (st.fileModelNameMap.keySet().contains(incMt.pathRelativeToRunDir)) {
+				
+				st.fileModelNameMap.get(incMt.pathRelativeToRunDir).add(incM);
+				
+			} else {
+				ArrayList<String> modelNameList = new ArrayList<String>();
+				modelNameList.add(incM);
+				st.fileModelNameMap.put(incMt.pathRelativeToRunDir, modelNameList);
+			}
+			
+			st.fileModelDataTable.put(incMt.pathRelativeToRunDir, incM, incMt);			
+			
+		}
 		
-		// parse all included files		
+		// parse modelList_effective all included files		
 		// store results to a map using relativePath as key
 		for (String se : st.seqList){
 			
@@ -83,11 +99,23 @@ public class Workflow {
 			ParserUtils.parseAllIncFile(mt.incFileRelativePathList, st);					
 			
 		}
+		
+		// parse incModelList_effective all included files		
+		// store results to a map using relativePath as key
+		for (String incM : st.incModelList_effective){
+			
+			System.out.println("[incM]"+incM);
+
+			ModelTemp mt = st.modelMap.get(incM);
+
+			ParserUtils.parseAllIncFile(mt.incFileRelativePathList, st);					
+			
+		}
 	
 
 		if (StudyParser.total_errors>0) {
 			
-			LogUtils.parsingSummaryMsg("Wresl+ parsing completed", StudyParser.total_errors);
+			LogUtils.parsingSummaryMsg("Wresl+ parsing stopped", StudyParser.total_errors);
 			
 			return null;
 		}
@@ -142,6 +170,8 @@ public class Workflow {
 		
 				
 		LogUtils.parsingSummaryMsg("Wresl+ parsing completed",StudyParser.total_errors);
+		
+		if (StudyParser.total_errors>0) return null;
 		
 		return st;
 		

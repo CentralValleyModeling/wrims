@@ -257,7 +257,7 @@ operationCase: CASE logical_main '{' ( include_model | timeseries | svar_g | dva
 
 operationName: ID;
 
-include_model returns[String id] : INCLUDE  i=ID  ('as' includeNameAs )? {$id=$i.text;} ;
+include_model returns[String id] : INCLUDE MODEL i=ID   {$id=$i.text;} ;
 
 include_file returns[String id, IncFileTemp incFileObj]
 @init{ $incFileObj = new IncFileTemp();
