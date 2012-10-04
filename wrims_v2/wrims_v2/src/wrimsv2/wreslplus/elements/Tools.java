@@ -119,7 +119,7 @@ public class Tools {
 		return out;
 	}
 	//TODO: this can be optimized for memory
-	public static Map<String,String> allToLowerCase(Map<String,String> inMap){
+	public static Map<String,String> allToLowerCase_string(Map<String,String> inMap){
 		
 		Map<String,String> out = new LinkedHashMap<String, String>();
 		
@@ -129,7 +129,7 @@ public class Tools {
 		
 		return out;
 	}
-	public static LinkedHashMap<String,WeightSubgroup> allToLowerCase(Map<String,WeightSubgroup> inMap){
+	public static LinkedHashMap<String,WeightSubgroup> allToLowerCase_weightSubgroup(Map<String,WeightSubgroup> inMap){
 		
 		LinkedHashMap<String,WeightSubgroup> out = new LinkedHashMap<String, WeightSubgroup>();
 		
