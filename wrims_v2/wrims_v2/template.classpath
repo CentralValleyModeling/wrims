@@ -10,9 +10,9 @@
 	<classpathentry kind="lib" path="D:/cvwrsm/trunk/3rd_party/vista/lib/vista.jar"/>
 	<classpathentry kind="lib" path="D:/cvwrsm/trunk/3rd_party/vista/lib/pd.jar"/>
 	<classpathentry kind="lib" path="D:/cvwrsm/trunk/3rd_party/vista/lib/jnios.jar"/>
-	<classpathentry kind="lib" path="D:/cvwrsm/trunk/wrims_v2/wrims_v2/src/wrimsv2/lib/gurobi.jar"/>
-	<classpathentry kind="lib" path="D:/cvwrsm/trunk/wrims_v2/wrims_v2/src/wrimsv2/lib/lpsolve55j.jar"/>
-	<classpathentry kind="lib" path="D:/cvwrsm/trunk/wrims_v2/wrims_v2/src/wrimsv2/lib/XAOptimizer.jar"/>
+	<classpathentry kind="lib" path="src/wrimsv2/lib/gurobi.jar"/>
+	<classpathentry kind="lib" path="src/wrimsv2/lib/lpsolve55j.jar"/>
+	<classpathentry kind="lib" path="src/wrimsv2/lib/XAOptimizer.jar"/>
 	<classpathentry kind="lib" path="src/wrimsv2/lib/commons-io-2.1.jar"/>
 	<classpathentry kind="lib" path="src/wrimsv2/lib/javatuples-1.2.jar"/>
 	<classpathentry kind="lib" path="src/wrimsv2/lib/guava-11.0.2.jar"/>
