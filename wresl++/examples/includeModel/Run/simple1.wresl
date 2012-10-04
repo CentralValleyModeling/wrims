@@ -5,7 +5,7 @@ SEQUENCE CYCLE1 {
 
 MODEL iNc { 
 
-  define x { std kind 'FLOW-CHANNEL' units 'CFS'}
+  include 'x.wresl'
   define y { std kind 'FLOW-CHANNEL' units 'CFS'}
   define S2 {value 9}
   
@@ -15,8 +15,8 @@ MODEL first {
 
   define S1 {value 8}
   include model iNc
-  define A { std kind 'FLOW-CHANNEL' units 'CFS'}
   define b { std kind 'FLOW-CHANNEL' units 'CFS'}
+  include 'a.wresl'
   define c { std kind 'FLOW-CHANNEL' units 'CFS'}
 
   
