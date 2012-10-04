@@ -862,81 +862,6 @@ public class Procedures {
 		}
 	}
 
-	// TODO: delete this. this has errors
-	public static void postProcessVarListinIncFile_step1(StudyTemp st) {
-		
-		// use the fileGroupOrder
-		for (HashSet<String> fgroup: st.fileGroupOrder){
-			
-			for ( String f : fgroup){
-				
-				if (!st.allOffspringMap.keySet().contains(f)) continue; // TODO: the whole first round can be skipped
-				
-				String modelName = st.fileModelNameMap.get(f).get(0);		
-				
-				ModelTemp m = st.fileModelDataTable.get(f,modelName);
-				
-				for( String includedFile: st.allOffspringMap.get(f)){
-					
-					int index =m.svIncFileList_post.indexOf(includedFile);
-					
-					System.out.println("f: "+f);
-					System.out.println("includedFile: "+includedFile);
-					
-					if (index<0) {
-						System.out.println("## problem::");
-						System.out.println("model: "+modelName);
-						System.out.println("this file1: "+m.absPath);
-						System.out.println("this file2: "+f);
-						System.out.println("includedFile: "+includedFile);
-						System.out.println("m.svIncFileList_post: ");
-						System.out.println(m.svIncFileList_post);
-					}
-					
-					//m.svIncFileList_post.remove(index);
-					
-					//Pair<String,String> p2 = new Pair<String, String>(includedFile, st.fileModelNameMap.get(includedFile).get(0));
-					
-					ModelTemp includedModel = st.fileModelDataTable.get(includedFile,st.fileModelNameMap.get(includedFile).get(0));
-					m.svIncFileList_post.addAll(index+1, includedModel.incFileRelativePathList_post); 
-					
-
-	
-				}
-			}
-		}
-		
-		// process the main file except the first model includes
-		ArrayList<String> ttt = new ArrayList<String>(st.modelList_effective);
-	
-		for (String modelNameOfMain : ttt){
-			
-			ModelTemp m = st.modelMap.get(modelNameOfMain);
-			
-			
-			for (String includedFile: m.incFileRelativePathList ){
-				
-				int index = m.svIncFileList_post.indexOf(includedFile);
-				
-				String modelName = st.fileModelNameMap.get(includedFile).get(0);
-				
-				//Pair<String,String> p = new Pair<String, String>(includedFile, modelName);
-				
-				ModelTemp includedModel = st.fileModelDataTable.get(includedFile,modelName);
-	
-				
-//				System.out.println("err: this model:   "+modelNameOfMain);
-//				System.out.println("err: m.svIncFileList_post: "+m.svIncFileList_post);
-//				System.out.println("err: includedFile: "+includedFile);
-//				System.out.println("err: index:        "+index);
-				//m.svIncFileList_post.remove(index);
-				
-				m.svIncFileList_post.addAll(index+1, includedModel.incFileRelativePathList_post);
-				
-			}		
-		}
-	}
-
 	public static void findEffectiveModelinMain(StudyTemp st) {
 		
 		for (String s: st.seqList){
@@ -998,7 +923,7 @@ public class Procedures {
 			
 		}
 		
-		//System.out.println("st.kidsMap"+st.kidsMap);
+		//System.out.println("st.kidMap"+st.kidMap);
 		
 	}
 	
@@ -1058,16 +983,7 @@ public class Procedures {
 		
 		}
 	}
-
-//	public static void processT_svList( StudyTemp st) {
-//		
-//		// TODO: use sequence instead of effective list
-//		for (String m : st.modelList_effective){
-//
-//			processT_svList(st.modelMap.get(m));
-//		
-//		}		
-//	}
+	
 	
 	public static void processVarIncFileList( ModelTemp mt) {
 		
@@ -1110,47 +1026,9 @@ public class Procedures {
 		mt.asIncFileList_post = new ArrayList<String>(mt.asIncFileList);
 		
 		mt.exIncFileList_post = new ArrayList<String>(mt.exIncFileList);
-//		
-//		// TODO: check
-//		mt.incFileAbsPathList_post = new ArrayList<String>(mt.incFileAbsPathList);
-//		mt.incFileRelativePathList_post = new ArrayList<String>(mt.incFileRelativePathList);
 		
 	}
 
-//	public static void processT_svList( ModelTemp mt) {
-//		
-//		// don't use svIncFileList because this is supposed to replace that
-//		
-//		ArrayList<Triplet<String, String, String>> t =  new ArrayList<Triplet<String,String,String>>();
-//	
-//
-//		
-//		
-//		for (int i=0;i<mt.itemList.size();i++){
-//			
-//			if (mt.itemTypeList.get(i)==Param.svType) {
-//				
-//				String svName = mt.itemList.get(i);
-//				
-//				//TODO: might need to fill in operation name
-//				mt.t_svList.add(new Triplet<String, String, String>(mt.pathRelativeToRunDir, "", svName));
-//				
-//			} else if (mt.itemTypeList.get(i)==Param.incFileType) {
-//				
-//				String incFileID = mt.itemList.get(i);
-//				String incFileRelativePath = mt.incFileMap.get(incFileID).pathRelativeToRunDir;
-//				
-//				// null means processed later
-//				mt.t_svList.add(new Triplet<String, String, String>(incFileRelativePath, "", null));
-//				
-//			}	
-//			
-//		}
-//		
-//		mt.t_svList_post = new ArrayList<Triplet<String,String,String>>(mt.t_svList);
-//
-//		//System.out.println("t_svList: "+mt.t_svList);
-//	}
 
 	// replace file with vars
 	public static void postProcessVarListinIncFile(StudyTemp st) {

@@ -43,7 +43,6 @@ public class Workflow {
 
 		Procedures.processIncFilePath(st);
 		Procedures.processVarIncFileList(st);
-		//Procedures.processT_svList(st);
 		Procedures.processDependants(st);
 
 		/// put sequence included models into fileModelDataTable
