@@ -52,15 +52,22 @@ public class TestWreslPlus_alias {
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 		
-		// to match the missing dependants in wreslparser
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\constraint.csv");	
-		String csvText_modified = csvText.replaceAll("d_banks;d_jones;", "");
+		Assert.assertEquals(totalErrs, 1);	
 		
-		PrintWriter csvFile = Tools.openFile(System.getProperty("user.dir"), csvFolderPath+"\\first\\constraint.csv");
-		csvFile.print(csvText_modified);
-		csvFile.close();
+		if (totalErrs < 1) {
+			// to match the missing dependants in wreslparser
+			String csvText = Tools.readFileAsString(csvFolderPath
+					+ "\\first\\constraint.csv");
+			String csvText_modified = csvText
+					.replaceAll("d_banks;d_jones;", "");
+
+			PrintWriter csvFile = Tools.openFile(csvFolderPath
+							+ "\\first\\constraint.csv");
+			csvFile.print(csvText_modified);
+			csvFile.close();
+		}
 		
-		Assert.assertEquals(totalErrs, 1);		
+			
 
 	}
 
@@ -147,16 +154,21 @@ public class TestWreslPlus_alias {
 		String logText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+
+		Assert.assertEquals(totalErrs, 0);
 		
-		// to match the missing dependants in wreslparser
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\constraint.csv");	
-		String csvText_modified = csvText.replaceAll("dv;", "");
+		if (totalErrs < 1) {
+			// to match the missing dependants in wreslparser
+			String csvText = Tools.readFileAsString(csvFolderPath
+					+ "\\first\\constraint.csv");
+			String csvText_modified = csvText.replaceAll("dv;", "");
+
+			PrintWriter csvFile = Tools.openFile(csvFolderPath
+							+ "\\first\\constraint.csv");
+			csvFile.print(csvText_modified);
+			csvFile.close();
+		}
 		
-		PrintWriter csvFile = Tools.openFile(System.getProperty("user.dir"), csvFolderPath+"\\first\\constraint.csv");
-		csvFile.print(csvText_modified);
-		csvFile.close();
-		
-		Assert.assertEquals(totalErrs, 0);		
 	
 	}
 

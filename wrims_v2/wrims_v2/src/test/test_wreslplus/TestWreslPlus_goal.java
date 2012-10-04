@@ -114,16 +114,21 @@ public class TestWreslPlus_goal {
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 
+		Assert.assertEquals(totalErrs, 2);	
 		
-		// to match the missing dependants in penalty term parsed by wreslparser
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\constraint.csv");	
-		String csvText_modified = csvText.replaceAll(";pp", "");
-		
-		PrintWriter csvFile = Tools.openFile(System.getProperty("user.dir"), csvFolderPath+"\\first\\constraint.csv");
-		csvFile.print(csvText_modified);
-		csvFile.close();
-		
-		Assert.assertEquals(totalErrs, 2);		
+		if (totalErrs < 1) {
+			// to match the missing dependants in penalty term parsed by
+			// wreslparser
+			String csvText = Tools.readFileAsString(csvFolderPath
+					+ "\\first\\constraint.csv");
+			String csvText_modified = csvText.replaceAll(";pp", "");
+
+			PrintWriter csvFile = Tools.openFile(csvFolderPath
+							+ "\\first\\constraint.csv");
+			csvFile.print(csvText_modified);
+			csvFile.close();
+		}
+			
 		
 		//StudyDataSet s = ToWreslData.convertStudy(s)
 	
@@ -155,16 +160,21 @@ public class TestWreslPlus_goal {
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 	
+		Assert.assertEquals(totalErrs, 3);	
 		
-		// to match the missing dependants in penalty term parsed by wreslparser
-		String csvText = Tools.readFileAsString(csvFolderPath+"\\first\\constraint.csv");	
-		String csvText_modified = csvText.replaceAll("a;b;", "");
-		
-		PrintWriter csvFile = Tools.openFile(System.getProperty("user.dir"), csvFolderPath+"\\first\\constraint.csv");
-		csvFile.print(csvText_modified);
-		csvFile.close();
-		
-		Assert.assertEquals(totalErrs, 3);		
+		if (totalErrs < 1) {
+			// to match the missing dependants in penalty term parsed by
+			// wreslparser
+			String csvText = Tools.readFileAsString(csvFolderPath
+					+ "\\first\\constraint.csv");
+			String csvText_modified = csvText.replaceAll("a;b;", "");
+
+			PrintWriter csvFile = Tools.openFile(csvFolderPath
+							+ "\\first\\constraint.csv");
+			csvFile.print(csvText_modified);
+			csvFile.close();
+		}
+			
 	
 	}
 
