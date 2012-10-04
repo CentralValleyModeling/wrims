@@ -3,22 +3,27 @@ SEQUENCE CYCLE1 {
     order   1
     }
 
+MODEL iNc { 
+
+  define x { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define y { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define S2 {value 9}
+  
+}
 	
 MODEL first { 
 
-  !include 'moreWreslFiles\weight-table.wresl' 
-  define[local] x { std kind 'FLOW-CHANNEL' units 'CFS'}
-  define[local] y { std kind 'FLOW-CHANNEL' units 'CFS'}
-  define[local] z { std kind 'FLOW-CHANNEL' units 'CFS'}
-  define[local] a { std kind 'FLOW-CHANNEL' units 'CFS'}
-  define[local] b { std kind 'FLOW-CHANNEL' units 'CFS'}
-  define[local] c { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define S1 {value 8}
+  include model iNc
+  define A { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define b { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define c { std kind 'FLOW-CHANNEL' units 'CFS'}
 
   
-  goal[local] g1 { x+y+z+a+b+c < 100 }
+  goal g1 { x+y+a+b+c < 100 }
   
   
-  Objective[local] obj = {[x, 5] [y, 5] }
+  Objective obj = {[x, 5] [y, 5] }
   Objective TTT {
 	weight 6
 	penalty 0.1

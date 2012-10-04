@@ -39,7 +39,7 @@ set Java_Bin=%~dp0_temp\%t%\
 :------------------:
 set JarDir=D:\cvwrsm\trunk\wrims_schematics\lib
 
-set AppJars=D:\cvwrsm\trunk\wrims_v2\wrims_v2\bin
+set AppJars=..\..\bin
 set AppJars=%AppJars%;D:\cvwrsm\trunk\wrims_v2\wrims_v2\src\wrimsv2\lib\antlr-runtime-3.2.jar
 set AppJars=%AppJars%;%JarDir%\gurobi.jar
 set AppJars=%AppJars%;%JarDir%\heclib.jar
