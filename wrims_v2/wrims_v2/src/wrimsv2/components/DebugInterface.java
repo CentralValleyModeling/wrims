@@ -530,6 +530,7 @@ public class DebugInterface {
 			Collections.sort(sortedGoalList);
 			for (int i=0; i<sortedGoalList.size(); i++){
 				double lhs=0;
+				boolean noSlackSurplus=true;
 				String goalName=sortedGoalList.get(i);
 				if (gMap.containsKey(goalName)){
 					goalString=goalString+goalName+":";
@@ -567,7 +568,11 @@ public class DebugInterface {
 							if (id==null){
 								hasData=false;
 							}else{
-								lhs=lhs+value1*id.getData().doubleValue();
+								double variableValue=id.getData().doubleValue();
+								if (variableValue != 0.0 && (variable.startsWith("surplus__") || variable.startsWith("slack__"))){
+									noSlackSurplus=false;
+								}
+								lhs=lhs+value1*variableValue;
 							}
 						}
 						Number value=ee.getValue().getData();
@@ -580,7 +585,7 @@ public class DebugInterface {
 							goalString=goalString+ec.getSign()+"0#";
 						}
 						lhs=lhs+value1;
-						if (Math.abs(lhs)<=0.00001 && hasData){
+						if (Math.abs(lhs)<=0.00001 && hasData && noSlackSurplus){
 							controlGoals.add(goalName);
 						}
 					}
@@ -764,6 +769,7 @@ public class DebugInterface {
 		Iterator ki=goalKeySet.iterator();
 		while (ki.hasNext()){
 			double lhs=0.0;
+			boolean noSlackSurplus=true;
 			String goalName=(String)ki.next();
 			EvalConstraint ec=gMap.get(goalName);
 			if (ec!=null){
@@ -779,12 +785,16 @@ public class DebugInterface {
 					if (id ==null){
 						hasData=false;
 					}else{
-						lhs=lhs+id.getData().doubleValue()*value1;
+						double variableValue=id.getData().doubleValue();
+						if (variableValue != 0.0 && (variable.startsWith("surplus__") || variable.startsWith("slack__"))){
+							noSlackSurplus=false;
+						}
+						lhs=lhs+variableValue*value1;
 					}
 				}
 				double value1=ee.getValue().getData().doubleValue();
 				lhs=lhs+value1;
-				if (Math.abs(lhs)<=0.00001 && hasData) goalNames=goalNames+goalName+":";
+				if (Math.abs(lhs)<=0.00001 && hasData && noSlackSurplus) goalNames=goalNames+goalName+":";
 			}
 		}
 		if (goalNames.endsWith(":")) goalNames=goalNames.substring(0, goalNames.length()-1);
