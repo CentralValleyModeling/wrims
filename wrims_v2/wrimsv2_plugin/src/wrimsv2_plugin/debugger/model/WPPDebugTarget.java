@@ -441,6 +441,15 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 
 						@Override
 						public void partOpened(IWorkbenchPartReference partRef) {
+							IWorkbenchPart part = partRef.getPart(false);
+							if ((part instanceof ITextEditor) && (!part.equals(fPart))){
+								fPart=part;
+								IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
+								String filePath=UpdateView.findFilePathActiveEditor(workBenchPage);						
+								if (isSuspended() && filePath.endsWith(".wresl")){
+									UpdateView.processVariableGoalView(DebugCorePlugin.target);
+								}
+							}
 						}
 
 						@Override
