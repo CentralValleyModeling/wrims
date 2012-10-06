@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyParser;
 import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
+import wrimsv2.wreslplus.elements.procedures.ProcIncModel;
+import wrimsv2.wreslplus.elements.procedures.ProcVarIncFileList;
 import wrimsv2.wreslplus.elements.procedures.ProcWeight;
 import wrimsv2.wreslplus.elements.procedures.ToLowerCase;
 
@@ -41,14 +43,40 @@ public class Workflow {
 		// TODO: make backup of original var list
 		Procedures.findEffectiveModelinMain(st); // main file only
 
+		ProcIncModel.findKidMap(st);
+		ProcIncModel.findAllOffSpring(st);
+		ProcIncModel.findFileGroupOrder(st);
+		
+		
+		ProcIncModel.findEffectiveIncludeModel(st); // main file only
+		
+		System.out.println("st.incModelList_effective: "+st.incModelList_effective);
+		
 		Procedures.processIncFilePath(st);
-		Procedures.processVarIncFileList(st);
-		Procedures.processDependants(st);
+		
+		
 
-		/// put sequence included models into fileModelDataTable
-		for (String se : st.seqList){
-			
-			String modelName = st.seqMap.get(se).model;
+		ProcVarIncFileList.replaceIncFile(st);
+		//TODO: also need to replace incModel with its var and incFile
+		
+		
+		
+//		mt.svIncFileList_post = new ArrayList<String>(mt.svIncFileList);
+//		
+//		mt.asIncFileList_post = new ArrayList<String>(mt.asIncFileList);
+//		
+//		mt.exIncFileList_post = new ArrayList<String>(mt.exIncFileList);
+		
+		
+		Procedures.processDependants(st);
+		
+
+		
+		
+		/// put effective models into fileModelDataTable
+
+		for (String modelName: st.modelList_effective){
+				
 			ModelTemp mt = st.modelMap.get(modelName);  // this is model in main file
 			
 			if (st.fileModelNameMap.keySet().contains(mt.pathRelativeToRunDir)) {
@@ -65,7 +93,7 @@ public class Workflow {
 			
 		}
 
-		/// put model included models into fileModelDataTable
+		/// put effective include models into fileModelDataTable
 		for (String incM: st.incModelList_effective){
 			
 			ModelTemp incMt = st.modelMap.get(incM);  // this is model in main file
