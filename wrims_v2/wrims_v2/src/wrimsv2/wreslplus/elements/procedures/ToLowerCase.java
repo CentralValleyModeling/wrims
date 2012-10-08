@@ -335,6 +335,8 @@ public class ToLowerCase {
 
 	public static IncFileTemp incFile (IncFileTemp w){
 		
+		if (w==null) return null;
+		
 		IncFileTemp o = new IncFileTemp();
 		
 		o.id = w.id;

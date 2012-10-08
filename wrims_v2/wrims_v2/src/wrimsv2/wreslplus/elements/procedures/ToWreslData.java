@@ -155,21 +155,9 @@ public class ToWreslData {
 		
 		// special case. don't copy and paste
 		for (String k: o.svList){		
-//			System.out.println("svarName: "+k );
-//			System.out.println("modelName: "+m.id );
-//			System.out.println("this file: "+m.absPath );
-//			System.out.println("incFileList_post: ");
-//			System.out.println(m.incFileRelativePathList_post );
-//			System.out.println("svincFileList_post: ");
-//			System.out.println(m.svIncFileList_post);
-
 			o.svMap.put(k, convertSvar(seq.svMap.get(k)));
 		}
-		
-		//dv
-		
-		//System.out.println("0503 dvList: "+o.dvList);
-		
+				
 		
 		for (String k: o.dvList){			
 			o.dvMap.put(k, convertDvar(seq.dvMap.get(k)));
@@ -209,6 +197,7 @@ public class ToWreslData {
 			 System.out.println("0718: seq.groupWeightMap:"+seq.groupWeightMap);
 		//	}
 			 
+ 
 		return o;
 		
 	}

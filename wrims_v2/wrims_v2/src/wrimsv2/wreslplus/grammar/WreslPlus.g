@@ -173,6 +173,7 @@ scope { ModelTemp m_;}
 	   | operation 
 	   | wt=weight       {$mt::m_.wTableObjList.add($wt.wtObj);}
 	   | im=include_model {$mt::m_.itemTypeList.add(Param.incModelType);$mt::m_.itemList.add($im.id); $mt::m_.incModelList.add($im.id);
+	                       $mt::m_.incFileIDList.add($im.id); $mt::m_.incFileMap.put($im.id, null);
 	                       }
 	   )+
 	   ;

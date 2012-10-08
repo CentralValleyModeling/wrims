@@ -2,11 +2,13 @@ package wrimsv2.wreslplus.elements;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyParser;
 import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
-import wrimsv2.wreslplus.elements.procedures.ProcIncModel;
+import wrimsv2.wreslplus.elements.procedures.ProcMainFile;
+import wrimsv2.wreslplus.elements.procedures.ProcIncFile;
 import wrimsv2.wreslplus.elements.procedures.ProcVarIncFileList;
 import wrimsv2.wreslplus.elements.procedures.ProcWeight;
 import wrimsv2.wreslplus.elements.procedures.ToLowerCase;
@@ -41,31 +43,20 @@ public class Workflow {
 		
 		ToLowerCase.convert(st);	
 		// TODO: make backup of original var list
-		Procedures.findEffectiveModelinMain(st); // main file only
+		ProcMainFile.findEffectiveModel(st); 
 
-		ProcIncModel.findKidMap(st);
-		ProcIncModel.findAllOffSpring(st);
-		ProcIncModel.findFileGroupOrder(st);
+		ProcMainFile.findKidMap_incModel(st);
+		ProcMainFile.findAllOffSpring_incModel(st);
+		ProcMainFile.findGroupOrder_incModel(st);
 		
 		
-		ProcIncModel.findEffectiveIncludeModel(st); // main file only
-		
-		System.out.println("st.incModelList_effective: "+st.incModelList_effective);
-		
-		Procedures.processIncFilePath(st);
+		ProcMainFile.findEffectiveIncludeModel(st); 
 		
 		
+		ProcIncFile.processPath(st);
+			
 
 		ProcVarIncFileList.replaceIncFile(st);
-		//TODO: also need to replace incModel with its var and incFile
-		
-		
-		
-//		mt.svIncFileList_post = new ArrayList<String>(mt.svIncFileList);
-//		
-//		mt.asIncFileList_post = new ArrayList<String>(mt.asIncFileList);
-//		
-//		mt.exIncFileList_post = new ArrayList<String>(mt.exIncFileList);
 		
 		
 		Procedures.processDependants(st);

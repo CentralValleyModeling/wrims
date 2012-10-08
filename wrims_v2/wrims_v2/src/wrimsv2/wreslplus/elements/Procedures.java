@@ -440,8 +440,21 @@ public class Procedures {
 			seqObj.asIncFileList_post = seqModelObj.asIncFileList_post;
 			seqObj.exIncFileList_post = seqModelObj.exIncFileList_post;
 			
-			for (String f: seqModelObj.incFileRelativePathList_post){
+			for (String e: st.modelList_effective){
+				
+				if (st.allOffspringMap_incModel.keySet().contains(e)) {
+					for (String f: st.allOffspringMap_incModel.get(e)) {
+					
+						ModelTemp incModel = st.modelMap.get(f);
+					
+						copyModelVarMapToSequenceVarMap(incModel, seqObj);
+						
+					}
+				}
 			
+			}
+			for (String f: seqModelObj.incFileRelativePathList_post){
+				
 				// TODO: allow multiple models in a file
 				//Pair<String,String> p = new Pair<String, String>(f, st.fileModelNameMap.get(f).get(0));
 				//ModelTemp incModel = st.fileModelDataMap.get(p);
@@ -756,53 +769,9 @@ public class Procedures {
 //	}
 
 	
-	// processed after lowercase conversion
-	public static void processIncFilePath(StudyTemp s) {
 
-		for (String m : s.modelList_effective) {
 
-			ModelTemp mObj = s.modelMap.get(m);
 
-			processIncFilePath(mObj);
-
-		}
-
-		for (String m : s.incModelList_effective) {
-
-			ModelTemp mObj = s.modelMap.get(m);
-
-			processIncFilePath(mObj);
-
-		}
-	}
-
-	// processed after lowercase conversion
-	public static void processIncFilePath(ModelTemp m) {
-
-		m.pathRelativeToRunDir = ResourceUtils.getRelativePath(m.absPath, GlobalData.runDir, File.separator);
-
-		for (String key : m.incFileMap.keySet()) {
-
-			IncFileTemp f = m.incFileMap.get(key);
-
-			try {
-				f.absPath = new File(m.parentAbsPath, f.rawPath).getCanonicalPath().toLowerCase();
-				m.incFileAbsPathList.add(f.absPath);
-			}
-			catch (IOException e) {
-				e.printStackTrace();
-				LogUtils.errMsg("Include file IOException: " + f.rawPath, m.absPath);
-			}
-
-			f.pathRelativeToRunDir = ResourceUtils.getRelativePath(f.absPath, GlobalData.runDir, File.separator);
-			m.incFileRelativePathList.add(f.pathRelativeToRunDir);
-
-		}
-		
-		m.incFileAbsPathList_post = new ArrayList<String>(m.incFileAbsPathList);
-		m.incFileRelativePathList_post = new ArrayList<String>(m.incFileRelativePathList);
-
-	}
 
 	public static void postProcessIncFileList(StudyTemp st) {
 		
@@ -862,43 +831,6 @@ public class Procedures {
 		}
 	}
 
-	public static void findEffectiveModelinMain(StudyTemp st) {
-		
-		for (String s: st.seqList){
-			String modelName = st.seqMap.get(s).model;
-			
-			if (!st.modelList.contains(modelName)){
-			
-				LogUtils.errMsg("model name not found in sequence: " + modelName);
-			
-			} else {
-
-				st.modelList_effective.add(modelName);
-			}
-			
-			// add included model list
-			for (String incM: st.modelMap.get(modelName).incModelList) {
-				
-				incM = incM.toLowerCase();
-				
-				System.out.println("inc models: "+incM);
-				
-				if (!st.modelList.contains(incM)){
-					
-					LogUtils.errMsg("included model named \""+ incM +"\" not found in model: " + modelName);
-				
-				} else {
-					
-					st.incModelList_effective.add(incM);
-					
-				}
-				
-			}
-			
-		}
-	}
-
-
 	public static void findKidMap(StudyTemp st) {
 		
 		for (String f: st.fileModelNameMap.keySet()){
@@ -906,9 +838,6 @@ public class Procedures {
 			String modelName = st.fileModelNameMap.get(f).get(0);
 			
 			ArrayList<String> kids = st.fileModelDataTable.get(f,modelName).incFileRelativePathList;
-			
-			//System.out.println("file:"+f);
-			//System.out.println("kids:"+kids);
 			
 			if (kids==null){
 				st.noKid.add(f);			
@@ -921,25 +850,10 @@ public class Procedures {
 			
 		}
 		
-		//System.out.println("st.kidMap"+st.kidMap);
-		
 	}
 	
 	public static void findAllOffSpring(StudyTemp st) {
 
-//		for (String f: st.kidsMap.rowKeySet()) { 
-//			
-//			for (String m : st.kidsMap.row(f).keySet()){
-//				
-//				HashSet<String> a = Tools.findAllOffspring(f, m, st.kidsMap);
-//				if (!st.AOMap.keySet().contains(f)) {
-//					st.AOMap.put(f, a);
-//				} else {
-//					st.AOMap.get(f).addAll(a);
-//				}
-//			
-//			}
-//		}
 
 		for (String f: st.kidMap.keySet()) { 
 				

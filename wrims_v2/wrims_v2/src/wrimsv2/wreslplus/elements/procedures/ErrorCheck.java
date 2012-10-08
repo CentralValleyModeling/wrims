@@ -84,6 +84,7 @@ public class ErrorCheck {
 	public static int checkVarRedefined (StudyTemp s){
 		
 		// check modelList itself
+		// check item duplicates with model names
 		
 		for (String k: s.modelList){
 			
@@ -98,6 +99,7 @@ public class ErrorCheck {
 	}	
 
 	public static int checkVarRedefined (ModelTemp m){
+				
 		
 		// check dvar list duplicates
 		ArrayList<String> dvDup = findDuplicates(m.dvList);

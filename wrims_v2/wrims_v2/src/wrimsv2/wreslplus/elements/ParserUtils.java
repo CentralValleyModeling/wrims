@@ -14,6 +14,7 @@ import org.antlr.runtime.TokenStream;
 import serial.SerialXml;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
+import wrimsv2.wreslplus.elements.procedures.ProcIncFile;
 import wrimsv2.wreslplus.elements.procedures.ProcVarIncFileList;
 import wrimsv2.wreslplus.elements.procedures.ToLowerCase;
 import wrimsv2.wreslplus.grammar.WreslPlusLexer;
@@ -130,7 +131,7 @@ public class ParserUtils {
 					ErrorCheck.checkVarRedefined(fm);	
 	
 					ToLowerCase.convert(fm);		
-					Procedures.processIncFilePath(fm);
+					ProcIncFile.processPath(fm);
 					ProcVarIncFileList.replaceIncFile(fm);
 					Procedures.processDependants(fm);
 					
