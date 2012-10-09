@@ -172,7 +172,7 @@ scope { ModelTemp m_;}
 	   | network 
 	   | operation 
 	   | wt=weight       {$mt::m_.wTableObjList.add($wt.wtObj);}
-	   | im=include_model {$mt::m_.itemTypeList.add(Param.incModelType);$mt::m_.itemList.add($im.id); $mt::m_.incModelList.add($im.id);
+	   | im=include_model {$mt::m_.itemTypeList.add(Param.incModelType);$mt::m_.itemList.add(Param.model_label+$im.id); $mt::m_.incModelList.add($im.id);
 	                       $mt::m_.incFileIDList.add($im.id); $mt::m_.incFileMap.put($im.id, null);
 	                       }
 	   )+
@@ -262,7 +262,7 @@ include_model returns[String id] : INCLUDE MODEL i=ID   {$id=$i.text;} ;
 
 include_file returns[String id, IncFileTemp incFileObj]
 @init{ $incFileObj = new IncFileTemp();
-       $incFileObj.id = "_file_"+Integer.toString($mt::m_.incFileIDList.size()); 
+       $incFileObj.id = "__file__"+Integer.toString($mt::m_.incFileIDList.size()); 
        $id = $incFileObj.id;
        }
       : INCLUDE ('[' LOCAL ']')? fp=file_path {$incFileObj.rawPath=Tools.strip($fp.text);} ('as' includeNameAs )?  ;

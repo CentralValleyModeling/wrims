@@ -38,10 +38,15 @@ public class Workflow {
 			return null;
 		}
 		
-		ErrorCheck.checkVarRedefined(st);	
-				
 		
-		ToLowerCase.convert(st);	
+		if (ErrorCheck.checkIncModelNotExistIgnoreCase(st)) return null;	
+		if (ErrorCheck.checkModelRedefinedIgnoreCase(st)>0) return null;		
+		if (ErrorCheck.checkVarRedefined(st)>0) return null;		
+		
+		ToLowerCase.convert(st);
+		
+		if (ErrorCheck.checkVarRedefined(st)>0) return null;
+		
 		// TODO: make backup of original var list
 		ProcMainFile.findEffectiveModel(st); 
 

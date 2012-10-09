@@ -14,7 +14,7 @@ public class ProcMainFile {
 	private ProcMainFile() {
 	}
 
-	// processed after collecting weights
+
 	public static void findKidMap_incModel(StudyTemp st) {
 		
 		for (String f: st.modelMap.keySet()){
@@ -68,7 +68,7 @@ public class ProcMainFile {
 
 		
 		HashSet<String> t = new HashSet<String>();
-		for (HashSet<String> e : st.fileGroupOrder_incModel) {
+		for (HashSet<String> e : st.kidMap_incModel.values()) {
 			t.addAll(e);
 		}
 		

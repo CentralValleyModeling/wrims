@@ -17,11 +17,13 @@ import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslplus.elements.AliasTemp;
+import wrimsv2.wreslplus.elements.DvarTemp;
 import wrimsv2.wreslplus.elements.GoalTemp;
 import wrimsv2.wreslplus.elements.ModelTemp;
 import wrimsv2.wreslplus.elements.SequenceTemp;
 import wrimsv2.wreslplus.elements.StudyTemp;
 import wrimsv2.wreslplus.elements.SvarTemp;
+import wrimsv2.wreslplus.elements.Tools;
 
 public class ErrorCheck {
 	
@@ -79,22 +81,77 @@ public class ErrorCheck {
 
 		
 	}
+
+	public static boolean checkIncModelNotExistIgnoreCase (StudyTemp s){
+		
+		ArrayList<String> modelList_lowercase = new ArrayList<String>();
+		
+		modelList_lowercase.addAll(Tools.allToLowerCase(s.modelList));
+		
+		System.out.println("modelList_lowercase:"+modelList_lowercase);
+		
+		for (ModelTemp mt: s.modelMap.values()){
+			
+			for ( String incM: mt.incModelList) {
+				
+				if ( !modelList_lowercase.contains(incM.toLowerCase())) {
+					
+					LogUtils.errMsg("Include model not exist: "+incM+" in model: "+mt.id);
+					
+					return true;
+				}
+						
+			}
+			
+		}
+		
+		return false;
+		
+	}
 	
+	public static int checkModelRedefinedIgnoreCase (StudyTemp s){
+		
+		ArrayList<String> modelDup = findDuplicatesIgnoreCase(s.modelList);
+		
+		System.out.println("modelDup:"+modelDup);
+		
+		for (String m:modelDup){
+			LogUtils.errMsg("Model redefined: "+m+" in main file.");
+		}
+		return modelDup.size();
+		
+	}
+	
+	public static int checkModelRedefined (StudyTemp s){
+		
+		ArrayList<String> modelDup = findDuplicates(s.modelList);
+		
+		System.out.println("modelDup:"+modelDup);
+		
+		for (String m:modelDup){
+			LogUtils.errMsg("Model redefined: "+s.modelMap.get(m).id+" in main file.");
+		}
+		return modelDup.size();
+		
+	}
 	
 	public static int checkVarRedefined (StudyTemp s){
 		
 		// check modelList itself
 		// check item duplicates with model names
 		
+		
+		// 
+		int totalDup=0;
 		for (String k: s.modelList){
 			
 			ModelTemp m = s.modelMap.get(k);
 			
-			checkVarRedefined(m);
+			totalDup += checkVarRedefined(m);
 			
 		}
 		
-		return 0;
+		return totalDup;
 
 	}	
 
@@ -108,7 +165,8 @@ public class ErrorCheck {
 			m.dvList = removeDuplicates(m.dvList);
 		
 			for (String s: dvDup){
-				LogUtils.errMsg("Dvar redefined: "+s+" in file: "+m.dvMap.get(s).fromWresl);
+				DvarTemp dvO = m.dvMap.get(s);
+				LogUtils.errMsg("Dvar redefined: "+dvO.id+" in file: "+dvO.fromWresl);
 			}
 		}		
 	
@@ -119,7 +177,8 @@ public class ErrorCheck {
 			m.svList = removeDuplicates(m.svList);
 		
 			for (String s: svDup){
-				LogUtils.errMsg("Svar redefined: "+s+" in file: unknown");
+				SvarTemp svO = m.svMap.get(s);
+				LogUtils.errMsg("Svar redefined: "+svO.id+" in file:"+svO.fromWresl);
 			}
 		}
 		
@@ -148,10 +207,29 @@ public class ErrorCheck {
 			}
 		}
 		
-		return 0;
+		return dvDup.size()+svDup.size()+wvDup.size()+itemDup.size();
 	
 	}
 
+	public static ArrayList<String> findDuplicatesIgnoreCase(ArrayList<String> a){
+		
+		ArrayList<String> duplicates = new ArrayList<String>();
+		
+		if (a.size()<1) return duplicates;
+		
+		ArrayList<String> a_lowercase = Tools.allToLowerCase(a);
+		
+		duplicates.addAll(a_lowercase);
+		Set<String> varSet = new LinkedHashSet<String>();
+		
+		varSet.addAll(a_lowercase);
+		
+		for (String s: varSet) {
+			duplicates.remove(s);
+		}
+		
+		return duplicates;
+	}
 	
 	public static ArrayList<String> findDuplicates(ArrayList<String> a){
 		

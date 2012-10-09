@@ -37,6 +37,7 @@ public class Param {
 	  public static final String linux_pathseperator = "/";
 	  public static final String wreslChekerName = "Wresl Checker ";
 	  public static final String conditional = "conditional";
+	  public static final String model_label = "__model__";
 	  
 	  public static final String legacywresl = "_legacywresl";
 	  

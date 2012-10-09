@@ -15,3 +15,15 @@
 4. improve current wresl to LP programming standard:
 	4.1 integer standard variable means an integer value ( 0, 1, 2, ... )
 	4.2 binary  standard variable means a binary value ( 0, 1 ) 
+
+
+
+5. global parameter syntax:
+
+	parameter {
+
+		const  A  { 8.9 }
+		const  B  { 6   }
+		svar   C  { value A+B+K }
+		svar   D  { value B*2   }
+	}
