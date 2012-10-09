@@ -15,6 +15,9 @@ public class StudyDataSet implements Serializable {
 
 	private String absMainFilePath;
 	
+	private ArrayList<String> parameterList = new ArrayList<String>();
+	private Map<String, Svar> parameterMap = new HashMap<String, Svar>(); 
+	
 	private ArrayList<String> modelList = new ArrayList<String>();
 	private ArrayList<String> modelConditionList = new ArrayList<String>();
 	private ArrayList<String> modelTimeStepList = new ArrayList<String>();
@@ -32,6 +35,22 @@ public class StudyDataSet implements Serializable {
 	private Map<String, Map<String, IntDouble>> varCycleValueMap = new HashMap<String, Map<String, IntDouble>>();
 	private Map<String, Map<String, IntDouble>> varTimeArrayCycleValueMap = new HashMap<String, Map<String, IntDouble>>();
 
+
+	public ArrayList<String> getParameterList() {
+		return new ArrayList<String>(parameterList);
+	}
+
+	public void setParameterList(ArrayList<String> parameterList) {
+		this.parameterList = parameterList;
+	}
+	
+	public Map<String, Svar> getParameterMap() {
+		return new HashMap<String, Svar>(parameterMap);
+	}
+	
+	public void setParameterMap(Map<String, Svar> parameterMap) {
+		this.parameterMap = parameterMap;
+	}
 	
 	public Map<String, Timeseries> getTimeseriesMap() {
 		return new HashMap<String, Timeseries>(timeseriesMap);
