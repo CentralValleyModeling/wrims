@@ -19,7 +19,7 @@
 <mapEntry key="test.test_ilp.Example_CL_SharingFix_092812" value=""/>
 </mapAttribute>
 <listAttribute key="org.testng.eclipse.CLASS_TEST_LIST">
-<listEntry value="test.test_ilp.Example_CL_SharingFix_092812_postMod_wreslplus"/>
+<listEntry value="test.test_ilp.Example_CL_SharingFix_092812_postMod_wreslplus_svn2344"/>
 </listAttribute>
 <listAttribute key="org.testng.eclipse.GROUP_LIST"/>
 <listAttribute key="org.testng.eclipse.GROUP_LIST_CLASS"/>

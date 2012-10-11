@@ -13,7 +13,7 @@ import wrimsv2.components.ControllerBatch;
 import wrimsv2.components.Error;
 import wrimsv2.components.FilePaths;
 
-public class Example_CL_SharingFix_092812_postMod_wreslplus {
+public class Example_CL_SharingFix_092812_postMod_wreslplus_svn2344 {
 	
 	private double tolerance_perc = 0.0001/1000000; // 0.1 ppb
 	private String studyPath;	
@@ -28,7 +28,7 @@ public class Example_CL_SharingFix_092812_postMod_wreslplus {
 		String[] controlDataString = {
 
 				
-	    "-config=\"J:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CL_SharingFix_092812\\Future_BO_36steps_postMod_wreslplus.config\"" 
+	    "-config=\"J:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CL_SharingFix_092812\\Future_BO_36steps_postMod_wreslplus_svn2344.config\"" 
 				
 		};
 
