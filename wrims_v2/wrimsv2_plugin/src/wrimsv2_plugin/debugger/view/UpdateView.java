@@ -13,6 +13,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.ResourceUtil;
 
@@ -294,6 +295,19 @@ public class UpdateView {
 			IEditorInput input = editorPart.getEditorInput();
 			IFile file = ResourceUtil.getFile(input);
 			path = file.getRawLocation().toString();
+		}
+		return path;
+	}
+	
+	public static String findFilePathEditorPart(IWorkbenchPart part){
+		String path="";
+		if (part instanceof IEditorPart){
+			IEditorPart editorPart=(IEditorPart)part ;
+			if (editorPart != null){
+				IEditorInput input = editorPart.getEditorInput();
+				IFile file = ResourceUtil.getFile(input);
+				path = file.getRawLocation().toString();
+			}
 		}
 		return path;
 	}
