@@ -1125,17 +1125,26 @@ public class Procedures {
 					
 					for (String e : varSet) {
 
-						if (q.asList.contains(e)) {
+						if (q.asIncFileList_post.contains(e)) {
+							
 							q.aliasUsedByLaterCycle.add(e);
 						}
 						else if (q.dvList.contains(e)) {
+							
+							q.dvarUsedByLaterCycle.add(e);
+						}
+						else if (q.dvList_fromAlias.contains(e)) {
+							
 							q.dvarUsedByLaterCycle.add(e);
 						}
 						else if (q.svIncFileList_post.contains(e)) {
+							
 							q.svarUsedByLaterCycle.add(e);
 						}
 						else {
-							System.out.println("Error in analyzeVarNeededFromCycles");
+
+							LogUtils.errMsg(" Unknown type of variable ["+ e +"] in ["+ se+": "+q.model +"] is used in ["+o+": "+otherSeq.model+"]");
+
 						}
 					}
 				}
