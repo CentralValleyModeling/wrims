@@ -21,7 +21,7 @@ public class ProcMainFile {
 			
 			ArrayList<String> kids = st.modelMap.get(f).incModelList;
 			
-			System.out.println("st.modelMap.get(f).incModelList: "+st.modelMap.get(f).incModelList);
+			//System.out.println("st.modelMap.get(f).incModelList: "+st.modelMap.get(f).incModelList);
 			
 			if (kids==null){
 				st.noKid_incModel.add(f);			
@@ -84,7 +84,7 @@ public class ProcMainFile {
 			
 			if (!st.modelList.contains(modelName)){
 			
-				LogUtils.errMsg("model name not found in sequence: " + modelName);
+				LogUtils.errMsg("model name ["+ modelName +"] not found in sequence ["+ s +"].");
 			
 			} else {
 	
@@ -96,11 +96,11 @@ public class ProcMainFile {
 				
 				incM = incM.toLowerCase();
 				
-				System.out.println("inc models: "+incM);
+				//System.out.println("inc models: "+incM);
 				
 				if (!st.modelList.contains(incM)){
 					
-					LogUtils.errMsg("included model named \""+ incM +"\" not found in model: " + modelName);
+					LogUtils.errMsg("included model ["+ incM +"] not found in model ["+ modelName +"].");
 				
 				} else {
 					

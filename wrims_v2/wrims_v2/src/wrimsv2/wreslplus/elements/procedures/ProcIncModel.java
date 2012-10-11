@@ -19,15 +19,13 @@ public class ProcIncModel {
 	private ProcIncModel() {
 	}
 
-	// processed after collecting weights
+
 	public static void findKidMap(StudyTemp st) {
 		
 		for (String f: st.modelMap.keySet()){
 			
 			ArrayList<String> kids = st.modelMap.get(f).incModelList;
 			
-			//System.out.println("file:"+f);
-			System.out.println("st.modelMap.get(f).incModelList: "+st.modelMap.get(f).incModelList);
 			
 			if (kids==null){
 				st.noKid_incModel.add(f);			

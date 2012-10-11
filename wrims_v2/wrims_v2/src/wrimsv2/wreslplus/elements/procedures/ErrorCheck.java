@@ -88,7 +88,7 @@ public class ErrorCheck {
 		
 		modelList_lowercase.addAll(Tools.allToLowerCase(s.modelList));
 		
-		System.out.println("modelList_lowercase:"+modelList_lowercase);
+		//System.out.println("modelList_lowercase:"+modelList_lowercase);
 		
 		for (ModelTemp mt: s.modelMap.values()){
 			
@@ -113,7 +113,7 @@ public class ErrorCheck {
 		
 		ArrayList<String> modelDup = findDuplicatesIgnoreCase(s.modelList);
 		
-		System.out.println("modelDup:"+modelDup);
+		//System.out.println("modelDup:"+modelDup);
 		
 		for (String m:modelDup){
 			LogUtils.errMsg("Model ["+ m +"] redefined in main file.");
@@ -126,7 +126,7 @@ public class ErrorCheck {
 		
 		ArrayList<String> modelDup = findDuplicates(s.modelList);
 		
-		System.out.println("modelDup:"+modelDup);
+		//System.out.println("modelDup:"+modelDup);
 		
 		for (String m:modelDup){
 			LogUtils.errMsg("Model ["+ s.modelMap.get(m).id +"] redefined in main file.");

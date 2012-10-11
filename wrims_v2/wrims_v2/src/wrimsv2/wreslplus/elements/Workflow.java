@@ -114,8 +114,6 @@ public class Workflow {
 			
 			SequenceTemp seqObj = st.seqMap.get(se); 
 			String m = seqObj.model;
-			
-			System.out.println("[M]"+m);
 
 			ModelTemp mt = st.modelMap.get(m);
 
@@ -126,8 +124,6 @@ public class Workflow {
 		// parse incModelList_effective all included files		
 		// store results to a map using relativePath as key
 		for (String incM : st.incModelList_effective){
-			
-			System.out.println("[incM]"+incM);
 
 			ModelTemp mt = st.modelMap.get(incM);
 

@@ -70,7 +70,7 @@ public class ProcVarIncFileList {
 			// f is a include model
 			if (st!=null && st.incModelList_effective.contains(f)) {
 			
-				System.out.println("# before:"+mt.svIncFileList);
+				//System.out.println("# before:"+mt.svIncFileList);
 				
 				String model_label = Param.model_label+f;
 				
@@ -87,7 +87,7 @@ public class ProcVarIncFileList {
 				mt.exIncFileList.remove(index_3);
 				mt.exIncFileList.addAll(index_3, st.modelMap.get(f).exIncFileList_post);	
 				
-				System.out.println("# after:"+mt.svIncFileList);
+				//System.out.println("# after:"+mt.svIncFileList);
 				
 			} 
 			
