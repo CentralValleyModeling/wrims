@@ -51,7 +51,7 @@ public class ErrorCheck {
 				
 			if (asObj.dependants_unknown.size()>0){
 				LogUtils.errMsg(asObj.fromWresl+
-						"\n  Variable(s) unknown: "+asObj.dependants_unknown+" in Alias \""+asObj.id+"\"");
+						"\n  Variable(s) unknown "+asObj.dependants_unknown+" in Alias ["+asObj.id+"]");
 			}
 	
 		}	
@@ -63,7 +63,7 @@ public class ErrorCheck {
 				
 			if (glObj.dependants_unknown.size()>0){
 				LogUtils.errMsg(glObj.fromWresl+
-						"\n  Variable(s) unknown: "+glObj.dependants_unknown+" in Goal \""+glObj.id+"\"");
+						"\n  Variable(s) unknown "+glObj.dependants_unknown+" in Goal ["+glObj.id+"]");
 			}
 	
 		}
@@ -74,7 +74,7 @@ public class ErrorCheck {
 				
 			if (svObj.dependants_unknown.size()>0){
 				LogUtils.errMsg(svObj.fromWresl+
-						"\n  Variable(s) unknown: "+svObj.dependants_unknown+" in Svar \""+svObj.id+"\"");
+						"\n  Variable(s) unknown "+svObj.dependants_unknown+" in Svar ["+svObj.id+"]");
 			}
 	
 		}		
@@ -96,7 +96,7 @@ public class ErrorCheck {
 				
 				if ( !modelList_lowercase.contains(incM.toLowerCase())) {
 					
-					LogUtils.errMsg("Include model not exist: "+incM+" in model: "+mt.id);
+					LogUtils.errMsg("Include model ["+ incM +"] not exist in model ["+mt.id+"].");
 					
 					return true;
 				}
@@ -116,7 +116,7 @@ public class ErrorCheck {
 		System.out.println("modelDup:"+modelDup);
 		
 		for (String m:modelDup){
-			LogUtils.errMsg("Model redefined: "+m+" in main file.");
+			LogUtils.errMsg("Model ["+ m +"] redefined in main file.");
 		}
 		return modelDup.size();
 		
@@ -129,7 +129,7 @@ public class ErrorCheck {
 		System.out.println("modelDup:"+modelDup);
 		
 		for (String m:modelDup){
-			LogUtils.errMsg("Model redefined: "+s.modelMap.get(m).id+" in main file.");
+			LogUtils.errMsg("Model ["+ s.modelMap.get(m).id +"] redefined in main file.");
 		}
 		return modelDup.size();
 		
@@ -166,7 +166,7 @@ public class ErrorCheck {
 		
 			for (String s: dvDup){
 				DvarTemp dvO = m.dvMap.get(s);
-				LogUtils.errMsg("Dvar redefined: "+dvO.id+" in file: "+dvO.fromWresl);
+				LogUtils.errMsg("Dvar ["+dvO.id+"] redefined in file ["+ dvO.fromWresl +"].");
 			}
 		}		
 	
@@ -178,7 +178,7 @@ public class ErrorCheck {
 		
 			for (String s: svDup){
 				SvarTemp svO = m.svMap.get(s);
-				LogUtils.errMsg("Svar redefined: "+svO.id+" in file:"+svO.fromWresl);
+				LogUtils.errMsg("Svar ["+svO.id+"] redefined in file ["+ svO.fromWresl +"].");
 			}
 		}
 		
@@ -192,7 +192,7 @@ public class ErrorCheck {
 			m.wvList_defaultType = removeDuplicates(m.wvList_defaultType);
 		
 			for (String s: wvDup){
-				LogUtils.errMsg("Weight redefined: "+s+" in file: unknown");
+				LogUtils.errMsg("Weight redefined: "+s+" in file: unknown.");
 			}
 		}	
 
@@ -203,7 +203,7 @@ public class ErrorCheck {
 			m.itemList = removeDuplicates(m.itemList);
 		
 			for (String s: itemDup){
-				LogUtils.errMsg("Item redefined: "+s+" in file: "+m.absPath);
+				LogUtils.errMsg("Item ["+s+"] redefined in file ["+ m.absPath +"].");
 			}
 		}
 		

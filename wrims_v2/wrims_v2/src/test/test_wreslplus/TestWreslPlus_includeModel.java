@@ -51,7 +51,7 @@ public class TestWreslPlus_includeModel {
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 		Assert.assertEquals(totalErrs, 1);		
 
-		int Err = RegUtils.timesOfMatches(logText, "# Error: Include model not exist: Inc2_typo in model: iNc");
+		int Err = RegUtils.timesOfMatches(logText, "Error: Include model \\[Inc2_typo\\] not exist in model \\[iNc\\]");
 		Assert.assertEquals(Err, 1);	
 	}
 
@@ -82,7 +82,7 @@ public class TestWreslPlus_includeModel {
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
 		Assert.assertEquals(totalErrs, 1);		
 	
-		int Err = RegUtils.timesOfMatches(logText, "# Error: Model redefined: inc2 in main file.");
+		int Err = RegUtils.timesOfMatches(logText, "# Error: Model \\[inc2\\] redefined in main file.");
 		Assert.assertEquals(Err, 1);	
 	}
 
