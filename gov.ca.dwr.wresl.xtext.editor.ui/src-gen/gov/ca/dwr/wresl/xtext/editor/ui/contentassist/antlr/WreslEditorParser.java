@@ -304,7 +304,7 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTermAccess().getIAssignment_0(), "rule__Term__IAssignment_0");
 					put(grammarAccess.getTermAccess().getNAssignment_1(), "rule__Term__NAssignment_1");
 					put(grammarAccess.getTermAccess().getFAssignment_2(), "rule__Term__FAssignment_2");
-					put(grammarAccess.getTermAccess().getEAssignment_3_1(), "rule__Term__EAssignment_3_1");
+					put(grammarAccess.getTermAccess().getE2Assignment_3_1(), "rule__Term__E2Assignment_3_1");
 					put(grammarAccess.getExternalFunctionAccess().getE1Assignment_2(), "rule__ExternalFunction__E1Assignment_2");
 					put(grammarAccess.getExternalFunctionAccess().getE2Assignment_3_1(), "rule__ExternalFunction__E2Assignment_3_1");
 					put(grammarAccess.getMaxFunctionAccess().getE1Assignment_2(), "rule__MaxFunction__E1Assignment_2");

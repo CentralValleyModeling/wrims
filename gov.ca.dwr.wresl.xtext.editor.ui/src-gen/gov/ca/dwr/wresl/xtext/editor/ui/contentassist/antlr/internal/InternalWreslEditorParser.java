@@ -30990,31 +30990,31 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Term__Group_3__1__Impl"
-    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:11144:1: rule__Term__Group_3__1__Impl : ( ( rule__Term__EAssignment_3_1 ) ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:11144:1: rule__Term__Group_3__1__Impl : ( ( rule__Term__E2Assignment_3_1 ) ) ;
     public final void rule__Term__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:11148:1: ( ( ( rule__Term__EAssignment_3_1 ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:11149:1: ( ( rule__Term__EAssignment_3_1 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:11148:1: ( ( ( rule__Term__E2Assignment_3_1 ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:11149:1: ( ( rule__Term__E2Assignment_3_1 ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:11149:1: ( ( rule__Term__EAssignment_3_1 ) )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:11150:1: ( rule__Term__EAssignment_3_1 )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:11149:1: ( ( rule__Term__E2Assignment_3_1 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:11150:1: ( rule__Term__E2Assignment_3_1 )
             {
-             before(grammarAccess.getTermAccess().getEAssignment_3_1()); 
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:11151:1: ( rule__Term__EAssignment_3_1 )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:11151:2: rule__Term__EAssignment_3_1
+             before(grammarAccess.getTermAccess().getE2Assignment_3_1()); 
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:11151:1: ( rule__Term__E2Assignment_3_1 )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:11151:2: rule__Term__E2Assignment_3_1
             {
-            pushFollow(FOLLOW_rule__Term__EAssignment_3_1_in_rule__Term__Group_3__1__Impl22829);
-            rule__Term__EAssignment_3_1();
+            pushFollow(FOLLOW_rule__Term__E2Assignment_3_1_in_rule__Term__Group_3__1__Impl22829);
+            rule__Term__E2Assignment_3_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getTermAccess().getEAssignment_3_1()); 
+             after(grammarAccess.getTermAccess().getE2Assignment_3_1()); 
 
             }
 
@@ -38562,9 +38562,9 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
     // $ANTLR end "rule__Term__FAssignment_2"
 
 
-    // $ANTLR start "rule__Term__EAssignment_3_1"
-    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14085:1: rule__Term__EAssignment_3_1 : ( ruleExpression ) ;
-    public final void rule__Term__EAssignment_3_1() throws RecognitionException {
+    // $ANTLR start "rule__Term__E2Assignment_3_1"
+    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14085:1: rule__Term__E2Assignment_3_1 : ( ruleExpression ) ;
+    public final void rule__Term__E2Assignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -38575,13 +38575,13 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
             // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14090:1: ( ruleExpression )
             // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14091:1: ruleExpression
             {
-             before(grammarAccess.getTermAccess().getEExpressionParserRuleCall_3_1_0()); 
-            pushFollow(FOLLOW_ruleExpression_in_rule__Term__EAssignment_3_128749);
+             before(grammarAccess.getTermAccess().getE2ExpressionParserRuleCall_3_1_0()); 
+            pushFollow(FOLLOW_ruleExpression_in_rule__Term__E2Assignment_3_128749);
             ruleExpression();
 
             state._fsp--;
 
-             after(grammarAccess.getTermAccess().getEExpressionParserRuleCall_3_1_0()); 
+             after(grammarAccess.getTermAccess().getE2ExpressionParserRuleCall_3_1_0()); 
 
             }
 
@@ -38600,7 +38600,7 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end "rule__Term__EAssignment_3_1"
+    // $ANTLR end "rule__Term__E2Assignment_3_1"
 
 
     // $ANTLR start "rule__ExternalFunction__E1Assignment_2"
@@ -40130,7 +40130,7 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
     public static final BitSet FOLLOW_102_in_rule__Term__Group_3__0__Impl22768 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Term__Group_3__1__Impl_in_rule__Term__Group_3__122799 = new BitSet(new long[]{0x0000000000000000L,0x0000010000000000L});
     public static final BitSet FOLLOW_rule__Term__Group_3__2_in_rule__Term__Group_3__122802 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Term__EAssignment_3_1_in_rule__Term__Group_3__1__Impl22829 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Term__E2Assignment_3_1_in_rule__Term__Group_3__1__Impl22829 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Term__Group_3__2__Impl_in_rule__Term__Group_3__222859 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_104_in_rule__Term__Group_3__2__Impl22887 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__ExternalFunction__Group__0__Impl_in_rule__ExternalFunction__Group__022924 = new BitSet(new long[]{0x0000000000000000L,0x0000004000000000L});
@@ -40352,7 +40352,7 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
     public static final BitSet FOLLOW_ruleIdent_in_rule__Term__IAssignment_028656 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleNumber_in_rule__Term__NAssignment_128687 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleFunction_in_rule__Term__FAssignment_228718 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExpression_in_rule__Term__EAssignment_3_128749 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleExpression_in_rule__Term__E2Assignment_3_128749 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_rule__ExternalFunction__E1Assignment_228780 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_rule__ExternalFunction__E2Assignment_3_128811 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_rule__MaxFunction__E1Assignment_228842 = new BitSet(new long[]{0x0000000000000002L});

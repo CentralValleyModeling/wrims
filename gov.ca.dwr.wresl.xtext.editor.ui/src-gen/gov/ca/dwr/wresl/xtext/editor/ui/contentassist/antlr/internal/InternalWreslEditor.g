@@ -11147,9 +11147,9 @@ rule__Term__Group_3__1__Impl
     }
 :
 (
-{ before(grammarAccess.getTermAccess().getEAssignment_3_1()); }
-(rule__Term__EAssignment_3_1)
-{ after(grammarAccess.getTermAccess().getEAssignment_3_1()); }
+{ before(grammarAccess.getTermAccess().getE2Assignment_3_1()); }
+(rule__Term__E2Assignment_3_1)
+{ after(grammarAccess.getTermAccess().getE2Assignment_3_1()); }
 )
 
 ;
@@ -14082,14 +14082,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Term__EAssignment_3_1
+rule__Term__E2Assignment_3_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getTermAccess().getEExpressionParserRuleCall_3_1_0()); }
-	ruleExpression{ after(grammarAccess.getTermAccess().getEExpressionParserRuleCall_3_1_0()); }
+{ before(grammarAccess.getTermAccess().getE2ExpressionParserRuleCall_3_1_0()); }
+	ruleExpression{ after(grammarAccess.getTermAccess().getE2ExpressionParserRuleCall_3_1_0()); }
 )
 
 ;
