@@ -108,6 +108,30 @@ public class ErrorCheck {
 		return false;
 		
 	}
+
+	public static int checkSequenceHasUniqueModel (StudyTemp s){
+		
+		ArrayList<String> modelList = new ArrayList<String>();
+		
+		//modelList_lowercase.addAll(Tools.allToLowerCase(s.modelList));
+		
+		
+		for (SequenceTemp seq: s.seqMap.values()){
+			
+			modelList.add(seq.model.toLowerCase());
+			
+		}
+		
+		ArrayList<String> modelDup = findDuplicatesIgnoreCase(modelList);
+		
+		for (String m:modelDup){
+			LogUtils.errMsg("Each sequence must define unique model. ["+ m +"] is used in multiple sequences.");
+		}
+		return modelDup.size();
+		
+
+		
+	}
 	
 	public static int checkModelRedefinedIgnoreCase (StudyTemp s){
 		

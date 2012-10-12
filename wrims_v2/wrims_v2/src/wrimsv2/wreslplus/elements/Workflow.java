@@ -40,7 +40,8 @@ public class Workflow {
 		
 		
 		if (ErrorCheck.checkIncModelNotExistIgnoreCase(st)) return null;	
-		if (ErrorCheck.checkModelRedefinedIgnoreCase(st)>0) return null;		
+		if (ErrorCheck.checkModelRedefinedIgnoreCase(st)>0) return null;
+		if (ErrorCheck.checkSequenceHasUniqueModel(st)>0) return null;
 		if (ErrorCheck.checkVarRedefined(st)>0) return null;		
 		
 		ToLowerCase.convert(st);
