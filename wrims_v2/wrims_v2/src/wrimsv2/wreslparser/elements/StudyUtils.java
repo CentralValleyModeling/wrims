@@ -214,6 +214,9 @@ public class StudyUtils {
 			
 			StudyDataSet sd = ToWreslData.convertStudy(st);
 			
+			st = null;
+			System.gc();
+			
 			return sd;
 	
 		}

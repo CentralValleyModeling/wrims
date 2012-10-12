@@ -26,7 +26,8 @@ public class SequenceTemp implements Serializable {
 	public ArrayList<String>  svIncFileList_post;   // copied from included model 
 	public ArrayList<String>  asIncFileList_post;   // copied from included model 
 	public ArrayList<String>  exIncFileList_post;   // copied from included model 
-	public ArrayList<String> incFileAbsPathList_post;  // copied from included model    
+	public ArrayList<String> incFileAbsPathList_post;  // copied from included model  
+	public ArrayList<String> incFileRelativePathList_post; // copied from included model  
 	// does not reflect user's input order
 	public ArrayList<String> exList; 
 	public ArrayList<String> dvList;

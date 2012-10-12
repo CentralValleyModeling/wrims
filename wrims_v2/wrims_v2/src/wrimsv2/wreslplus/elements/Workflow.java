@@ -156,18 +156,17 @@ public class Workflow {
 		Procedures.postProcessVarListinIncFile(st);
 				
 		
-		try{
-			
-			System.out.println("## st.fileModelDataTable.columnKeySet()"+st.fileModelDataTable.columnKeySet());
-			System.out.println("## st.fileModelDataTable.rowKeySet()"+st.fileModelDataTable.rowKeySet());
-			
-		} catch (Exception e) {
-			
-		}
+//		try{
+//			
+//			System.out.println("## st.fileModelDataTable.columnKeySet()"+st.fileModelDataTable.columnKeySet());
+//			System.out.println("## st.fileModelDataTable.rowKeySet()"+st.fileModelDataTable.rowKeySet());
+//			
+//		} catch (Exception e) {
+//			
+//		}
 		
 
 		Procedures.copyModelVarMapToSequenceVarMap(st);
-		
 		
 	
 		Procedures.processGoalHS2(st); 

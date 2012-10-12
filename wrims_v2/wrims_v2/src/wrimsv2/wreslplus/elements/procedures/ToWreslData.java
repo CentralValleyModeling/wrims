@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.google.common.collect.HashBasedTable;
+
 import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.External;
@@ -31,6 +33,15 @@ import wrimsv2.wreslplus.elements.WeightTemp;
 
 public class ToWreslData {
 	
+	// < relative file path, svar name, svar object >
+	private static HashBasedTable<String,String,Svar> fileSvMap = HashBasedTable.create(); 
+	private static HashBasedTable<String,String,Dvar> fileDvMap = HashBasedTable.create(); 
+	private static HashBasedTable<String,String,Timeseries> fileTsMap = HashBasedTable.create(); 
+	private static HashBasedTable<String,String,Alias> fileAsMap = HashBasedTable.create(); 
+	private static HashBasedTable<String,String,Goal> fileGlMap = HashBasedTable.create();
+	private static HashBasedTable<String,String,Dvar> fileSlackSurplusNoCaseMap = HashBasedTable.create(); 
+	
+	private static HashBasedTable<String,Integer,Svar> StringIntegerSvarMap = HashBasedTable.create(); 
 	
 	private ToWreslData(){}
 
@@ -62,7 +73,7 @@ public class ToWreslData {
 			ModelTemp mt = s.modelMap.get(modelName);	
 			
 			modelConditionList.add("always"); //TODO: need condition
-			ModelDataSet md = convertModel(seqObj);
+			ModelDataSet md = convertModel(seqObj, s);
 			modelDataSetMap.put(modelName, md);
 		
 			// add ts into all ts map. TODO: check name duplications
@@ -77,7 +88,7 @@ public class ToWreslData {
 
 	}	
 	
-	public static ModelDataSet convertModel (SequenceTemp seq){
+	public static ModelDataSet convertModel (SequenceTemp seq, StudyTemp st){
 		
 		ModelDataSet o = new ModelDataSet();
 		
@@ -132,6 +143,8 @@ public class ToWreslData {
 //		}
 		
 		
+		
+		
 		for (String k: o.dvSlackSurplusList){			
 			o.dvSlackSurplusMap.put(k, convertDvar(seq.ssMap_hasCase.get(k)));
 		}
@@ -140,49 +153,59 @@ public class ToWreslData {
 		}
 		
 		
-		for (String k: seq.tsMap.keySet()){			
-			o.tsMap.put(k, convertTimeseries(seq.tsMap.get(k)));
-		}		
+//		for (String k: seq.tsMap.keySet()){			
+//			o.tsMap.put(k, convertTimeseries(seq.tsMap.get(k)));
+//		}	
+		processTimeseries(seq, st, o); 
+	
+		
 
-		for (String k: seq.glMap.keySet()){			
-			o.gMap.put(k, convertGoal(seq.glMap.get(k)));
-		}
+//		for (String k: seq.glMap.keySet()){			
+//			o.gMap.put(k, convertGoal(seq.glMap.get(k)));
+//		}
+		processGoal(seq, st, o); 
+
+		
+		
 		for (String k: o.exList){			
 			o.exMap.put(k, convertExternal(seq.exMap.get(k)));
 		}
 		
 		
+		processSvar(seq, st, o); 
 		
-		// special case. don't copy and paste
-		for (String k: o.svList){		
-			o.svMap.put(k, convertSvar(seq.svMap.get(k)));
-		}
-				
 		
-		for (String k: o.dvList){			
-			o.dvMap.put(k, convertDvar(seq.dvMap.get(k)));
-		}
-		for (String k: seq.ssList_noCase){			
-			o.dvMap.put(k, convertDvar(seq.ssMap_noCase.get(k)));
-		}
+//		for (String k: o.dvList){			
+//			o.dvMap.put(k, convertDvar(seq.dvMap.get(k)));
+//		}
+		processDvar(seq, st, o); 
+		
+		
+		
+//		for (String k: seq.ssList_noCase){			
+//			o.dvMap.put(k, convertDvar(seq.ssMap_noCase.get(k)));
+//		}
 		o.dvList.addAll(seq.ssList_noCase);
+		processSsList_noCase(seq, st, o); 
+	
 		
 		
-		for (String k: o.asList){			
-			o.asMap.put(k, convertAlias(seq.asMap.get(k)));
-		}
-		for (WeightTable w : seq.wTableObjList_defaultType){	
-			
-			//System.out.println("before: "+w.varWeightMap.keySet());
-			//if (w.id.equalsIgnoreCase("obj")) o.wtMap.putAll(convertWeightTable(w));
-			//Map<String,WeightElement> wem = convertWeightTable(w);
+//		for (String k: o.asList){			
+//			o.asMap.put(k, convertAlias(seq.asMap.get(k)));
+//		}
+		processAlias(seq, st, o); 
+
+		
+		
+		
+		for (WeightTable w : seq.wTableObjList_defaultType){				
 			if (w.isWeightGroup){
 				o.wtMap.putAll(convertWeightTableGroup(w));
 			} else {
 				o.wtMap.putAll(convertWeightTable(w));
 			}
-			//System.out.println("after: "+wem.keySet());
-		}
+		}	
+		
 		for (String k: seq.ssList_noCase){				
 			o.wtMap.put(k, convertWeight(seq.ssWeightMap_noCase.get(k)));
 		}				
@@ -191,17 +214,209 @@ public class ToWreslData {
 			o.wtMap.put(k, convertWeight(seq.groupWeightMap.get(k)));
 		}
 		
-		//for (String sq: st.seqList){
-			
-		//	 SequenceTemp seqObj = st.seqMap.get(sq);
-			 System.out.println("0718: seq.groupWeightMap:"+seq.groupWeightMap);
-		//	}
-			 
- 
+
 		return o;
 		
 	}
+	
+	
+	
 
+	private static void processTimeseries(SequenceTemp seq, StudyTemp st,
+			ModelDataSet out) {
+		for (String f: seq.incFileRelativePathList_post){
+			
+			for (String k: st.fileModelDataTable.get(f, st.fileModelNameMap.get(f).get(0)).tsList) {
+				
+				if (fileTsMap.contains(f, k)){
+
+					out.tsMap.put(k, fileTsMap.get(f, k));
+				
+				} else {
+				
+					Timeseries v = convertTimeseries(seq.tsMap.get(k));
+					fileTsMap.put(f,k,v);
+					out.tsMap.put(k, v);
+					
+				}			
+			}
+		}
+		// TODO: can be improved...
+		for (String k: seq.tsMap.keySet()){		
+			if (!out.tsMap.containsKey(k)) { out.tsMap.put(k, convertTimeseries(seq.tsMap.get(k)));
+			System.out.println("##### ts:"+k); }
+		}
+		
+	}
+
+
+	private static void processGoal(SequenceTemp seq, StudyTemp st,
+			ModelDataSet out) {
+		for (String f: seq.incFileRelativePathList_post){
+			
+			for (String k: st.fileModelDataTable.get(f, st.fileModelNameMap.get(f).get(0)).glList) {
+				
+				if (fileGlMap.contains(f, k)){
+
+					out.gMap.put(k, fileGlMap.get(f, k));
+				
+				} else {
+				
+					Goal v = convertGoal(seq.glMap.get(k));
+					fileGlMap.put(f,k,v);
+					out.gMap.put(k, v);
+					
+				}			
+			}
+		}
+		// TODO: can be improved...
+		for (String k: seq.glMap.keySet()){		
+			if (!out.gMap.containsKey(k)) out.gMap.put(k, convertGoal(seq.glMap.get(k)));
+		}
+		
+	}
+
+
+	private static void processSvar(SequenceTemp seq, StudyTemp st,
+			ModelDataSet out) {
+		for (String f: seq.incFileRelativePathList_post){
+			
+			for (String k: st.fileModelDataTable.get(f, st.fileModelNameMap.get(f).get(0)).svList) {
+				
+				if (fileSvMap.contains(f, k)){
+
+					out.svMap.put(k, fileSvMap.get(f, k));
+				
+				} else {
+				
+					Svar v = convertSvar(seq.svMap.get(k));
+					fileSvMap.put(f,k,v);
+					out.svMap.put(k, v);
+					
+				}			
+			}
+		}
+		// TODO: can be improved...
+		for (String k: out.svList){		
+			if (!out.svMap.containsKey(k)) out.svMap.put(k, convertSvar(seq.svMap.get(k)));
+		}
+		
+	}
+
+
+	private static void processDvar(SequenceTemp seq, StudyTemp st,
+			ModelDataSet out) {
+		for (String f: seq.incFileRelativePathList_post){
+			
+			for (String k: st.fileModelDataTable.get(f, st.fileModelNameMap.get(f).get(0)).dvList) {
+				
+				if (fileDvMap.contains(f, k)){
+
+					out.dvMap.put(k, fileDvMap.get(f, k));
+				
+				} else {
+				
+					Dvar v = convertDvar(seq.dvMap.get(k));
+					fileDvMap.put(f,k,v);
+					out.dvMap.put(k, v);
+					
+				}			
+			}
+		}
+		// TODO: can be improved...
+		for (String k: out.dvList){		
+			if (!out.dvMap.containsKey(k)) out.dvMap.put(k, convertDvar(seq.dvMap.get(k)));
+		}	
+		
+	}
+
+
+	private static void processSsList_noCase(SequenceTemp seq, StudyTemp st,
+			ModelDataSet out) {
+		for (String f: seq.incFileRelativePathList_post){
+			
+			for (String k: st.fileModelDataTable.get(f, st.fileModelNameMap.get(f).get(0)).ssList_noCase) {
+				
+				if (fileSlackSurplusNoCaseMap.contains(f, k)){
+
+					out.dvMap.put(k, fileSlackSurplusNoCaseMap.get(f, k));
+				
+				} else {
+				
+					Dvar v = convertDvar(seq.ssMap_noCase.get(k));
+					fileSlackSurplusNoCaseMap.put(f,k,v);
+					out.dvMap.put(k, v);
+					
+				}			
+			}
+		}
+		// TODO: can be improved...
+		for (String k: seq.ssList_noCase){		
+			if (!out.dvMap.containsKey(k)) out.dvMap.put(k, convertDvar(seq.ssMap_noCase.get(k)));
+		}	
+		
+	}
+
+
+	private static void processAlias(SequenceTemp seq, StudyTemp st, ModelDataSet out) {
+		for (String f: seq.incFileRelativePathList_post){
+			
+			for (String k: st.fileModelDataTable.get(f, st.fileModelNameMap.get(f).get(0)).asList) {
+				
+				if (fileAsMap.contains(f, k)){
+
+					out.asMap.put(k, fileAsMap.get(f, k));
+				
+				} else {
+				
+					Alias v = convertAlias(seq.asMap.get(k));
+					fileAsMap.put(f,k,v);
+					out.asMap.put(k, v);
+					
+				}			
+			}
+		}
+		// TODO: can be improved...
+		for (String k: out.asList){	
+			if (!out.asMap.containsKey(k)) out.asMap.put(k, convertAlias(seq.asMap.get(k)));
+		}
+		
+	}
+
+
+	public static Svar processVar (SvarTemp s){
+		
+		Svar o = new Svar();
+		try {
+			o.fromWresl = s.fromWresl;
+		} catch (Exception e) {
+			System.out.println("#### error");
+			System.out.println("svarName: "+s.id);
+		}
+		o.kind = s.kind;
+		o.units = s.units;
+		o.caseName = s.caseName;
+		o.dependants = s.dependants;
+		o.neededVarInCycleSet = s.neededVarInCycleSet;
+		o.needVarFromEarlierCycle = s.needVarFromEarlierCycle;
+		//o.dependants.removeAll(Param.reservedSet);
+		//System.out.println(s.dependants);
+		
+		o.caseCondition = s.caseCondition;
+		//o.caseCondition = Tools.replace_with_space(o.caseCondition);
+		o.caseCondition = Tools.replace_seperator(o.caseCondition);
+		//o.caseCondition = Tools.add_space_between_logical(o.caseCondition);
+		
+		o.caseExpression = s.caseExpression;
+		//o.caseExpression = Tools.replace_with_space(o.caseExpression);
+		o.caseExpression = Tools.replace_seperator(o.caseExpression);
+		//o.caseExpression = Tools.add_space_between_logical(o.caseExpression);
+		
+		//System.out.println(o.caseExpression);
+		return o;
+		
+	}	
+	
 	public static Svar convertSvar (SvarTemp s){
 		
 		Svar o = new Svar();

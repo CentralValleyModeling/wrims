@@ -14,6 +14,7 @@ public class ProcWeight {
 	}
 
 	// processed after collecting weights
+	// TODO: improve memory efficiency by adding the slack and surplus weight element into fileModelDataMap 
 	public static void processWeightGroup(StudyTemp s) {
 
 		for (String seq : s.seqList) {
@@ -175,6 +176,7 @@ public class ProcWeight {
 	// processed after lowercase conversion
 	public static void collectWeightVar(ModelTemp mObj, SequenceTemp seqObj, StudyTemp st) {
 	
+		System.out.println(" ##### mObj.wvList_defaultType:"+mObj.wvList_defaultType);
 		
 		for (String f: mObj.incFileRelativePathList_post){
 		
@@ -193,8 +195,9 @@ public class ProcWeight {
 				//seqObj.wvList_defaultType.addAll(wt.subgroupMap.keySet());
 				seqObj.wTableObjList_defaultType.add(wt);
 				// }
-			}			
+			}
 		}
+		mObj.wvList_defaultType = seqObj.wvList_defaultType;
 	
 		for (WeightTable wt : mObj.wTableObjList) {
 	

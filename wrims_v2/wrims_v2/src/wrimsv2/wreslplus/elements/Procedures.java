@@ -440,6 +440,7 @@ public class Procedures {
 			seqObj.asIncFileList_post = seqModelObj.asIncFileList_post;
 			seqObj.exIncFileList_post = seqModelObj.exIncFileList_post;
 			seqObj.incFileAbsPathList_post = seqModelObj.incFileAbsPathList_post;
+			seqObj.incFileRelativePathList_post = seqModelObj.incFileRelativePathList_post;
 			
 			for (String e: st.modelList_effective){
 				
