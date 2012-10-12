@@ -156,21 +156,26 @@ public class Workflow {
 		Procedures.postProcessVarListinIncFile(st);
 				
 		
-		// can be processed at final stage
+		try{
+			
+			System.out.println("## st.fileModelDataTable.columnKeySet()"+st.fileModelDataTable.columnKeySet());
+			System.out.println("## st.fileModelDataTable.rowKeySet()"+st.fileModelDataTable.rowKeySet());
+			
+		} catch (Exception e) {
+			
+		}
+		
+
 		Procedures.copyModelVarMapToSequenceVarMap(st);
 		
+		
+	
 		Procedures.processGoalHS2(st); 
 				
-
 		ErrorCheck.checkVarRedefined(st);	
 		
-		// TODO: test only. remove this after testing
-		// TODO: seperate dv dep from others
-		// remove dv from alias's dependants
 		Procedures.classifyDependants(st);
 		
-
-		// check variable used before definition
 		ErrorCheck.checkVarUsedBeforeDefined(st);
 		
 		Procedures.convertAliasToGoal(st); 

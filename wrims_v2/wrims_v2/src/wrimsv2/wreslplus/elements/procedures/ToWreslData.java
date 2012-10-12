@@ -62,7 +62,7 @@ public class ToWreslData {
 			ModelTemp mt = s.modelMap.get(modelName);	
 			
 			modelConditionList.add("always"); //TODO: need condition
-			ModelDataSet md = convertModel(mt, seqObj);
+			ModelDataSet md = convertModel(seqObj);
 			modelDataSetMap.put(modelName, md);
 		
 			// add ts into all ts map. TODO: check name duplications
@@ -77,7 +77,7 @@ public class ToWreslData {
 
 	}	
 	
-	public static ModelDataSet convertModel (ModelTemp m, SequenceTemp seq){
+	public static ModelDataSet convertModel (SequenceTemp seq){
 		
 		ModelDataSet o = new ModelDataSet();
 		
@@ -103,7 +103,7 @@ public class ToWreslData {
 		Collections.sort(o.tsList,String.CASE_INSENSITIVE_ORDER);
 		
 		// don't sort svList. order matters in evaluator
-		o.svList = new ArrayList<String>(m.svIncFileList_post);
+		o.svList = new ArrayList<String>(seq.svIncFileList_post);
 		//System.out.println("ToWreslData => m.svIncFileList_post"+m.svIncFileList_post);
 		//System.out.println("ToWreslData => m.svList"+m.svList);
 		//o.svList = new ArrayList<String>(m.svList);
@@ -124,7 +124,7 @@ public class ToWreslData {
 		o.wtList.addAll(seq.ssList_noCase);
 		Collections.sort(o.wtList,String.CASE_INSENSITIVE_ORDER);
 		
-		o.incFileList = new ArrayList<String>(m.incFileAbsPathList_post);
+		o.incFileList = new ArrayList<String>(seq.incFileAbsPathList_post);
 	
 		
 //		for (String k: m.incFileMap.keySet()){			
