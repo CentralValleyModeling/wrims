@@ -131,7 +131,7 @@ public class ToWreslData {
 		// don't sort asList. order matters in evaluator
 		o.asList = new ArrayList<String>(seq.asIncFileList_post);
 
-		o.wtList = new ArrayList<String>(seq.wvList_defaultType);
+		o.wtList = new ArrayList<String>(seq.wvList);
 		o.wtList.addAll(seq.ssList_noCase);
 		Collections.sort(o.wtList,String.CASE_INSENSITIVE_ORDER);
 		
@@ -198,7 +198,7 @@ public class ToWreslData {
 		
 		
 		
-		for (WeightTable w : seq.wTableObjList_defaultType){				
+		for (WeightTable w : seq.wTableObjList){				
 			if (w.isWeightGroup){
 				o.wtMap.putAll(convertWeightTableGroup(w));
 			} else {

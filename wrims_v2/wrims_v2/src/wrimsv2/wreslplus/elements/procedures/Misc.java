@@ -34,7 +34,7 @@ public class Misc {
 		w1.weight = weight;
 
 		seqObj.groupWeightMap.put(id.toLowerCase(), w1);
-		seqObj.wvList_defaultType.add(id.toLowerCase());
+		seqObj.wvList.add(id.toLowerCase());
 		
 	}	
 	

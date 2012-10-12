@@ -41,7 +41,7 @@ public class StudyTemp implements Serializable {
 	public Map<String, HashSet<String>>allOffspringMap; // all offspring map. processed
 	public ArrayList<HashSet<String>>fileGroupOrder; // processed after kidMap and AOMap
 	
-	public String objectiveType="obj";
+	//public String objectiveType="obj";
 	
 	/// this map contains value of vars needed for WRESL syntax: varName[cycleName] 
 	/// < VarName, < CycleName, Value >>		

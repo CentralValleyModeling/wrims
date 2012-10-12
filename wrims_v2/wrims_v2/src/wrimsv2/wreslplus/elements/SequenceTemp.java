@@ -57,8 +57,8 @@ public class SequenceTemp implements Serializable {
 	
 	public Map<String,WeightTemp> groupWeightMap;   // processed
 	
-	public ArrayList<String> wvList_defaultType;
-	public ArrayList<WeightTable> wTableObjList_defaultType;
+	public ArrayList<String> wvList;
+	public ArrayList<WeightTable> wTableObjList;
 	
 	public Map<String, HashSet<String>> neededCycleVarMap;
 	
@@ -101,8 +101,8 @@ public class SequenceTemp implements Serializable {
 		
 		groupWeightMap = new HashMap<String, WeightTemp>();
 		
-		wvList_defaultType = new ArrayList<String>();
-		wTableObjList_defaultType = new ArrayList<WeightTable>();
+		wvList = new ArrayList<String>();
+		wTableObjList = new ArrayList<WeightTable>();
 		
 		neededCycleVarMap = new HashMap<String, HashSet<String>>();
 		
