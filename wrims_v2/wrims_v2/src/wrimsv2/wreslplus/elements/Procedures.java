@@ -146,7 +146,9 @@ public class Procedures {
 		seq.ssMap_hasCase.putAll(mt.ssMap_hasCase);
 		seq.ssWeightMap_hasCase.putAll(mt.ssWeightMap_hasCase);
 		seq.ssMap_noCase.putAll(mt.ssMap_noCase);
-		seq.ssWeightMap_noCase.putAll(mt.ssWeightMap_noCase);		
+		seq.ssWeightMap_noCase.putAll(mt.ssWeightMap_noCase);	
+		
+		seq.groupWeightMap.putAll(mt.groupWeightMap);
 		
 	}
 	

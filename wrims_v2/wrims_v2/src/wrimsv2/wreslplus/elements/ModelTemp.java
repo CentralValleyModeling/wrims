@@ -73,6 +73,8 @@ public class ModelTemp implements Serializable {
 	public Map<String,DvarTemp> ssMap_noCase;           // processed
 	public Map<String,WeightTemp> ssWeightMap_noCase;   // processed
 	
+	public Map<String,WeightTemp> groupWeightMap;   // processed
+	
 	public Map<String, HashSet<String>> neededCycleVarMap;
 	
 //	public Set<String> varUsedByLaterCycle; 
@@ -124,6 +126,8 @@ public class ModelTemp implements Serializable {
 		ssList_noCase = new ArrayList<String>();
 		ssMap_noCase = new LinkedHashMap<String, DvarTemp>();	
 		ssWeightMap_noCase = new LinkedHashMap<String, WeightTemp>();		
+		
+		groupWeightMap = new HashMap<String, WeightTemp>();
 		
 		neededCycleVarMap = new HashMap<String, HashSet<String>>();
 		

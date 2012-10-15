@@ -172,6 +172,8 @@ public class Workflow {
 		
 		ProcWeight.collectWeightVar(st);
 		
+		ProcWeight.processWeightGroup(st);
+		
 		Procedures.copyModelVarMapToSequenceVarMap(st);
 				
 		ErrorCheck.checkVarRedefined(st);	
@@ -185,9 +187,6 @@ public class Workflow {
 		
 		Procedures.analyzeVarNeededFromCycle(st);
 		Procedures.createSpaceInVarCycleValueMap(st);
-		
-		
-		ProcWeight.processWeightGroup(st);
 		
 
 		Procedures.collectTimeStep(st);

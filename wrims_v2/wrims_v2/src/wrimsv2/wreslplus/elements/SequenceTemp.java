@@ -55,7 +55,7 @@ public class SequenceTemp implements Serializable {
 	public Map<String,DvarTemp> ssMap_noCase;           // processed
 	public Map<String,WeightTemp> ssWeightMap_noCase;   // processed
 	
-	public Map<String,WeightTemp> groupWeightMap;   // processed
+	public Map<String,WeightTemp> groupWeightMap;   // copid from model
 	
 	public ArrayList<String> wvList;
 	public ArrayList<WeightTable> wTableObjList;

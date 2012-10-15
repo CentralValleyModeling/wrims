@@ -15,14 +15,43 @@ public class ProcWeight {
 
 	// processed after collecting weights
 	// TODO: improve memory efficiency by adding the slack and surplus weight element into fileModelDataMap 
-	public static void processWeightGroup(StudyTemp s) {
+	public static void processWeightGroup(StudyTemp st) {
+		
+		for (String seqName : st.seqList) {
+			
+			SequenceTemp seqObj = st.seqMap.get(seqName);
+			ModelTemp seqModelObj = st.modelMap.get(seqObj.model);
+			
+			for (String e: st.modelList_effective){
+				
+				if (st.allOffspringMap_incModel.keySet().contains(e)) {
+					for (String f: st.allOffspringMap_incModel.get(e)) {
+					
+						ModelTemp incModel = st.modelMap.get(f);
+					
+						processWeightGroup(incModel);
+						
+					}
+				}
+			
+			}
+			for (String f: seqModelObj.incFileRelativePathList_post){
+				
+				ModelTemp incModel = st.fileModelDataTable.get(f, st.fileModelNameMap.get(f).get(0));
+				
+				processWeightGroup(incModel);
+			
+			}
+			
+			processWeightGroup(seqModelObj);
+		}
+		
+	}
 
-		for (String seq : s.seqList) {
+	public static void processWeightGroup(ModelTemp mObj) {
+		
 
-			SequenceTemp seqObj = s.seqMap.get(seq);
-
-			// TODO: process weight group in seqObj's wt list
-			for (WeightTable wt : seqObj.wTableObjList) {
+			for (WeightTable wt : mObj.wTableObjList) {
 
 				if (wt.isWeightGroup) {
 
@@ -42,8 +71,8 @@ public class ProcWeight {
 							/// process subgroup
 							// create new dvar for subgroup id. this is the
 							// average for the subgroup
-							Misc.createDvarInSeqObj(wsg.id, Param.upper_unbounded, Param.lower_unbounded,
-									"weightgroup_mean", "na", wt.fromWresl, wt.condition, seqObj);
+							Misc.createDvarInModelObj(wsg.id, Param.upper_unbounded, Param.lower_unbounded,
+									"weightgroup_mean", "na", wt.fromWresl, wt.condition, mObj);
 
 							// create new goal for subgroup average
 							String goal_id = "wg__" + wt.id + "__" + wsg.id + "__mean";
@@ -54,8 +83,8 @@ public class ProcWeight {
 							}
 							rhs = rhs.substring(0, rhs.length() - 1);
 							// TODO: dependants check
-							Misc.createGoalInSeqObj(goal_id, lhs, "=", rhs, wt.dependants, wt.fromWresl, wt.condition,
-									seqObj);
+							Misc.createGoalInModelObj(goal_id, lhs, "=", rhs, wt.dependants, wt.fromWresl, wt.condition,
+									mObj);
 						}
 						
 						if (!subCommonPenaltyIsZero) {
@@ -70,21 +99,21 @@ public class ProcWeight {
 								String surplus_id = "wg__" + wt.id.toLowerCase() + "__" + wsg.id.toLowerCase() + "__" + var + "__surplus";
 
 								// add slack						
-								Misc.createDvarInSeqObj(slack_id, Param.upper_unbounded, Param.zero, "weightgroup_slack", "na", wt.fromWresl, wt.condition, seqObj);
+								Misc.createDvarInModelObj(slack_id, Param.upper_unbounded, Param.zero, "weightgroup_slack", "na", wt.fromWresl, wt.condition, mObj);
 								
-								Misc.addWeightInGroupWeightMap(slack_id, wt.fromWresl, weight, seqObj);
+								Misc.addWeightInGroupWeightMap(slack_id, wt.fromWresl, weight, mObj);
 
 								// add surplus
-								Misc.createDvarInSeqObj(surplus_id, Param.upper_unbounded, Param.zero, "weightgroup_surplus", "na", wt.fromWresl, wt.condition, seqObj);
+								Misc.createDvarInModelObj(surplus_id, Param.upper_unbounded, Param.zero, "weightgroup_surplus", "na", wt.fromWresl, wt.condition, mObj);
 
-								Misc.addWeightInGroupWeightMap(surplus_id, wt.fromWresl, weight, seqObj);
+								Misc.addWeightInGroupWeightMap(surplus_id, wt.fromWresl, weight, mObj);
 
 								// add goal for slack surplus
 								String goal_ss_id = "wg__" + wt.id + "__" + wsg.id + "__" + var + "__ss";
 								String lhs_ss = var + "+" + slack_id + "-" + surplus_id;
 								String rhs_ss = wsg.id.toLowerCase();
 
-								Misc.createGoalInSeqObj(goal_ss_id, lhs_ss, "=", rhs_ss, wt.dependants, wt.fromWresl, wt.condition, seqObj);
+								Misc.createGoalInModelObj(goal_ss_id, lhs_ss, "=", rhs_ss, wt.dependants, wt.fromWresl, wt.condition, mObj);
 
 							}
 							
@@ -102,7 +131,7 @@ public class ProcWeight {
 						String kind = "weightgroup_mean";
 						String units = "na";
 
-						Misc.createDvarInSeqObj(average_id, Param.upper_unbounded, Param.lower_unbounded, kind, units, wt.fromWresl, wt.condition, seqObj);
+						Misc.createDvarInModelObj(average_id, Param.upper_unbounded, Param.lower_unbounded, kind, units, wt.fromWresl, wt.condition, mObj);
 						
 						// create new goal for group average						
 						ArrayList<String> varList_and_subGroupId = new ArrayList<String>();
@@ -116,7 +145,7 @@ public class ProcWeight {
 							rhs = rhs + v + "+";
 						}
 						rhs = rhs.substring(0, rhs.length() - 1);
-						Misc.createGoalInSeqObj(goal_id, lhs, "=", rhs, wt.dependants, wt.fromWresl, wt.condition, seqObj);
+						Misc.createGoalInModelObj(goal_id, lhs, "=", rhs, wt.dependants, wt.fromWresl, wt.condition, mObj);
 						
 
 						// create slack and surplus for var in varList
@@ -128,21 +157,21 @@ public class ProcWeight {
 							String surplus_id = "wg__" + wt.id.toLowerCase() + "__" + var + "__surplus";
 
 							// add slack						
-							Misc.createDvarInSeqObj(slack_id, Param.upper_unbounded, Param.zero, "weightgroup_slack", "na", wt.fromWresl, wt.condition, seqObj);
+							Misc.createDvarInModelObj(slack_id, Param.upper_unbounded, Param.zero, "weightgroup_slack", "na", wt.fromWresl, wt.condition, mObj);
 							
-							Misc.addWeightInGroupWeightMap(slack_id, wt.fromWresl, weight, seqObj);
+							Misc.addWeightInGroupWeightMap(slack_id, wt.fromWresl, weight, mObj);
 
 							// add surplus
-							Misc.createDvarInSeqObj(surplus_id, Param.upper_unbounded, Param.zero, "weightgroup_surplus", "na", wt.fromWresl, wt.condition, seqObj);
+							Misc.createDvarInModelObj(surplus_id, Param.upper_unbounded, Param.zero, "weightgroup_surplus", "na", wt.fromWresl, wt.condition, mObj);
 
-							Misc.addWeightInGroupWeightMap(surplus_id, wt.fromWresl, weight, seqObj);
+							Misc.addWeightInGroupWeightMap(surplus_id, wt.fromWresl, weight, mObj);
 
 							// add goal for slack surplus
 							String goal_ss_id = "wg__" + wt.id + "__" + var + "__ss";
 							String lhs_ss = var + "+" + slack_id + "-" + surplus_id;
 							String rhs_ss = average_id.toLowerCase();
 
-							Misc.createGoalInSeqObj(goal_ss_id, lhs_ss, "=", rhs_ss, wt.dependants, wt.fromWresl, wt.condition, seqObj);
+							Misc.createGoalInModelObj(goal_ss_id, lhs_ss, "=", rhs_ss, wt.dependants, wt.fromWresl, wt.condition, mObj);
 
 						}
 
@@ -152,7 +181,7 @@ public class ProcWeight {
 
 			}
 
-		}
+
 
 	}
 
