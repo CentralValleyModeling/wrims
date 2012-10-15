@@ -7,6 +7,7 @@ import java.util.HashSet;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyParser;
 import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
+import wrimsv2.wreslplus.elements.procedures.ProcGoal;
 import wrimsv2.wreslplus.elements.procedures.ProcMainFile;
 import wrimsv2.wreslplus.elements.procedures.ProcIncFile;
 import wrimsv2.wreslplus.elements.procedures.ProcVarIncFileList;
@@ -167,10 +168,9 @@ public class Workflow {
 //		}
 		
 
-		Procedures.copyModelVarMapToSequenceVarMap(st);
+		ProcGoal.processGoalHS2(st); 
 		
-	
-		Procedures.processGoalHS2(st); 
+		Procedures.copyModelVarMapToSequenceVarMap(st);
 				
 		ErrorCheck.checkVarRedefined(st);	
 		

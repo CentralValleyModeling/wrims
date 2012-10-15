@@ -66,7 +66,6 @@ public class ProcIncFile {
 
 	}
 	
-	// processed after lowercase conversion
 	public static void processPath(StudyTemp s) {
 
 		
