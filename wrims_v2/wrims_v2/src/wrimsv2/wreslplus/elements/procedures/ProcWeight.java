@@ -156,7 +156,6 @@ public class ProcWeight {
 
 	}
 
-	// processed after lowercase conversion
 	public static void collectWeightVar(StudyTemp s) {
 	
 		for (String seq : s.seqList) {
@@ -173,10 +172,7 @@ public class ProcWeight {
 	
 	}
 
-	// processed after lowercase conversion
 	public static void collectWeightVar(ModelTemp mObj, SequenceTemp seqObj, StudyTemp st) {
-	
-		System.out.println(" ##### mObj.wvList:"+mObj.wvList);
 		
 		for (String f: mObj.incFileRelativePathList_post){
 		
@@ -188,12 +184,12 @@ public class ProcWeight {
 	
 				// TODO: can collect different objective type
 				// if (wt.id.equalsIgnoreCase(s.objectiveType)){
-				seqObj.wvList.addAll(wt.varList);
+				mObj.wvList_post.addAll(wt.varList);
 				for (WeightSubgroup wsg: wt.subgroupMap.values() ){
-					seqObj.wvList.addAll(wsg.varList);
+					mObj.wvList_post.addAll(wsg.varList);
 				}
 				//seqObj.wvList_defaultType.addAll(wt.subgroupMap.keySet());
-				seqObj.wTableObjList.add(wt);
+				//seqObj.wTableObjList.add(wt);
 				// }
 			}
 		}
@@ -202,12 +198,12 @@ public class ProcWeight {
 	
 			// TODO: can collect different objective type
 			// if (wt.id.equalsIgnoreCase(s.objectiveType)){
-			seqObj.wvList.addAll(wt.varList);
+			mObj.wvList_post.addAll(wt.varList);
 			for (WeightSubgroup wsg: wt.subgroupMap.values() ){
-				seqObj.wvList.addAll(wsg.varList);
+				mObj.wvList_post.addAll(wsg.varList);
 			}
 			//seqObj.wvList_defaultType.addAll(wt.subgroupMap.keySet());
-			seqObj.wTableObjList.add(wt);
+			//seqObj.wTableObjList.add(wt);
 			// }
 	
 		}

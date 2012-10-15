@@ -46,7 +46,7 @@ public class ModelTemp implements Serializable {
 	
 	public ArrayList<String> incModelList;
 	
-	public ArrayList<String>  wvList; // added after processed
+	public ArrayList<String>  wvList_post; // added after processed
 	public ArrayList<WeightTable> wTableObjList;  // raw data
 	public ArrayList<String>  asList_backup;  // backup raw lowercased
 	public ArrayList<String>  asList;
@@ -100,7 +100,7 @@ public class ModelTemp implements Serializable {
 		
 		incModelList = new ArrayList<String>();
 		
-		wvList = new ArrayList<String>();   // type obj
+		wvList_post = new ArrayList<String>();   // type obj
 		wTableObjList = new ArrayList<WeightTable>();
 		svList = new ArrayList<String>();  //raw data
 		svMap = new HashMap<String, SvarTemp>();  // includes processed data	

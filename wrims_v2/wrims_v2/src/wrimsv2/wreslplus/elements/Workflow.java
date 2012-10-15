@@ -170,6 +170,8 @@ public class Workflow {
 
 		ProcGoal.processGoalHS2(st); 
 		
+		ProcWeight.collectWeightVar(st);
+		
 		Procedures.copyModelVarMapToSequenceVarMap(st);
 				
 		ErrorCheck.checkVarRedefined(st);	
@@ -180,12 +182,10 @@ public class Workflow {
 		
 		Procedures.convertAliasToGoal(st); 
 		
-
 		
 		Procedures.analyzeVarNeededFromCycle(st);
 		Procedures.createSpaceInVarCycleValueMap(st);
 		
-		ProcWeight.collectWeightVar(st);
 		
 		ProcWeight.processWeightGroup(st);
 		

@@ -210,10 +210,10 @@ public class ErrorCheck {
 
 		
 		// check wTable var duplicates
-		ArrayList<String> wvDup = findDuplicates(m.wvList);
+		ArrayList<String> wvDup = findDuplicates(m.wvList_post);
 		
 		if (wvDup.size()>0) {
-			m.wvList = removeDuplicates(m.wvList);
+			m.wvList_post = removeDuplicates(m.wvList_post);
 		
 			for (String s: wvDup){
 				LogUtils.errMsg("Weight redefined: "+s+" in file: unknown.");

@@ -15,6 +15,7 @@ import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.commondata.wresldata.WeightElement;
+import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslplus.elements.AliasTemp;
 import wrimsv2.wreslplus.elements.DvarTemp;
 import wrimsv2.wreslplus.elements.ExternalTemp;
@@ -138,8 +139,9 @@ public class ToLowerCase {
 		j.exList = Tools.allToLowerCase(j.exList);
 		j.asList = Tools.allToLowerCase(j.asList);
 		//j.asList_reduced = Tools.allToLowerCase(j.asList_reduced);
-		j.wvList = Tools.allToLowerCase(j.wvList);
-		
+//		j.wvList_post = Tools.allToLowerCase(j.wvList_post); 
+//		// there should be nothing here
+//		if (j.wvList_post.size()>0) LogUtils.errMsg(" j.wvList.size()>0 ");
 		
 	}
 
