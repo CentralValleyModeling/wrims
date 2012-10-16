@@ -39,8 +39,13 @@ public class ToWreslData {
 	private static HashBasedTable<String,String,Timeseries> fileTsMap = HashBasedTable.create(); 
 	private static HashBasedTable<String,String,Alias> fileAsMap = HashBasedTable.create(); 
 	private static HashBasedTable<String,String,Goal> fileGlMap = HashBasedTable.create();
-	private static HashBasedTable<String,String,Dvar> fileSlackSurplusNoCaseMap = HashBasedTable.create(); 
-	
+	private static HashBasedTable<String,String,Dvar> fileSlackSurplusNoCaseMap = HashBasedTable.create();
+	private static HashBasedTable<String,String,WeightElement> fileGroupWeightMap = HashBasedTable.create(); 
+	private static HashBasedTable<String,String,WeightElement> fileSsWeightMap_noCase = HashBasedTable.create(); 
+	private static HashBasedTable<String,String,WeightElement> fileWeightMap = HashBasedTable.create(); 
+	private static HashBasedTable<String,String,HashMap<String,WeightElement>> fileWTableObjMap = HashBasedTable.create(); 
+	private static HashBasedTable<String,String,HashMap<String,WeightElement>> mainfileModelWTableObjMap = HashBasedTable.create();
+		
 	private static HashBasedTable<String,Integer,Svar> StringIntegerSvarMap = HashBasedTable.create(); 
 	
 	private ToWreslData(){}
@@ -198,29 +203,124 @@ public class ToWreslData {
 		
 		
 		
+//// TODO: be careful. this one is special		
 		for (WeightTable w : seq.wTableObjList){				
 			if (w.isWeightGroup){
 				o.wtMap.putAll(convertWeightTableGroup(w));
 			} else {
 				o.wtMap.putAll(convertWeightTable(w));
 			}
-		}	
-		
-		for (String k: seq.ssList_noCase){				
-			o.wtMap.put(k, convertWeight(seq.ssWeightMap_noCase.get(k)));
-		}				
-		
-		for (String k: seq.groupWeightMap.keySet()){				
-			o.wtMap.put(k, convertWeight(seq.groupWeightMap.get(k)));
 		}
+		//processWeightTableObjList(seq, st, o);
+
 		
+//		for (String k: seq.ssList_noCase){				
+//			o.wtMap.put(k, convertWeight(seq.ssWeightMap_noCase.get(k)));
+//		}				
+		processSsWeight_noCase(seq, st, o);
+		
+////    slack and surplus from group weight		
+//		for (String k: seq.groupWeightMap.keySet()){				
+//			o.wtMap.put(k, convertWeight(seq.groupWeightMap.get(k)));
+//		}
+		processGroupWeight(seq, st, o);
 
 		return o;
 		
 	}
 	
 	
-	
+	private static void processWeightTableObjList(SequenceTemp seq, StudyTemp st, ModelDataSet out) {
+		for (String f: seq.incFileRelativePathList_post){
+			
+			for (WeightTable w: st.fileModelDataTable.get(f, st.fileModelNameMap.get(f).get(0)).wTableObjList) {
+				
+				String objGroupName = w.id;
+				
+				
+				//TODO: rewrite this based on f check. no need to check each obj group.
+				if (fileWeightMap.contains(f, objGroupName)){
+					
+					out.wtMap.putAll(fileWTableObjMap.get(f, objGroupName));
+				
+				} else {
+				
+					Map<String,WeightElement> v = null;
+					
+					if (w.isWeightGroup) {
+						v= convertWeightTableGroup(w);
+					} else {
+						v= convertWeightTable(w);
+					}
+					
+					fileWTableObjMap.put(f, objGroupName,(HashMap<String, WeightElement>)v);
+					
+					out.wtMap.putAll(v);
+					
+				}	
+				
+			}
+		}
+		
+		ArrayList<String> allUsedModels = new ArrayList<String>();
+		allUsedModels.add(seq.model);
+		if (st.allOffspringMap_incModel.keySet().contains(seq.model)) allUsedModels.addAll(st.allOffspringMap_incModel.get(seq.model));
+
+		
+		for (String e: allUsedModels){
+			
+
+				
+					ModelTemp incModel = st.modelMap.get(e);
+				
+					for (WeightTable w: incModel.wTableObjList) {
+						
+						String objGroupName = w.id;
+						
+						if (mainfileModelWTableObjMap.contains(e, objGroupName)){
+							
+							out.wtMap.putAll(mainfileModelWTableObjMap.get(e, objGroupName));
+						
+						} else {
+						
+							Map<String,WeightElement> v = null;
+							
+							if (w.isWeightGroup) {
+								v= convertWeightTableGroup(w);
+							} else {
+								v= convertWeightTable(w);
+							}
+							
+							mainfileModelWTableObjMap.put(e, objGroupName,(HashMap<String, WeightElement>)v);
+							
+							out.wtMap.putAll(v);
+							
+						}	
+						
+					}
+					
+
+		
+		}
+//		
+//		for (WeightTable w: seq.wTableObjList){	
+//			
+//			if (! fileWTableObjMap.columnKeySet().contains(w.id.toLowerCase())) {
+//				
+//				Map<String,WeightElement> v = null;
+//				
+//				if (w.isWeightGroup) {
+//					v= convertWeightTableGroup(w);
+//				} else {
+//					v= convertWeightTable(w);
+//				}
+//				
+//				out.wtMap.putAll(v);
+//			
+//			}	
+//		}
+		
+	}	
 
 	private static void processTimeseries(SequenceTemp seq, StudyTemp st,
 			ModelDataSet out) {
@@ -244,7 +344,7 @@ public class ToWreslData {
 		// TODO: can be improved...
 		for (String k: seq.tsMap.keySet()){		
 			if (!out.tsMap.containsKey(k)) { out.tsMap.put(k, convertTimeseries(seq.tsMap.get(k)));
-			System.out.println("##### ts:"+k); }
+			}
 		}
 		
 	}
@@ -357,6 +457,57 @@ public class ToWreslData {
 		
 	}
 
+	private static void processSsWeight_noCase(SequenceTemp seq, StudyTemp st, ModelDataSet out) {
+		for (String f: seq.incFileRelativePathList_post){
+			
+			for (String k: st.fileModelDataTable.get(f, st.fileModelNameMap.get(f).get(0)).ssWeightMap_noCase.keySet()) {
+				
+				if (fileSsWeightMap_noCase.contains(f, k)){
+
+					out.wtMap.put(k, fileSsWeightMap_noCase.get(f, k));
+				
+				} else {
+				
+					WeightElement v = convertWeight(seq.ssWeightMap_noCase.get(k));
+					fileSsWeightMap_noCase.put(f,k,v);
+					out.wtMap.put(k, v);
+					
+				}			
+			}
+		}
+		// TODO: can be improved...
+		for (String k: seq.ssWeightMap_noCase.keySet()){	
+			if (!out.wtMap.containsKey(k)) out.wtMap.put(k, convertWeight(seq.ssWeightMap_noCase.get(k)));
+		}
+		
+		
+	}
+	
+	private static void processGroupWeight(SequenceTemp seq, StudyTemp st, ModelDataSet out) {
+		for (String f: seq.incFileRelativePathList_post){
+			
+			for (String k: st.fileModelDataTable.get(f, st.fileModelNameMap.get(f).get(0)).groupWeightMap.keySet()) {
+				
+				if (fileGroupWeightMap.contains(f, k)){
+
+					out.wtMap.put(k, fileGroupWeightMap.get(f, k));
+				
+				} else {
+				
+					WeightElement v = convertWeight(seq.groupWeightMap.get(k));
+					fileGroupWeightMap.put(f,k,v);
+					out.wtMap.put(k, v);
+					
+				}			
+			}
+		}
+		// TODO: can be improved...
+		for (String k: seq.groupWeightMap.keySet()){	
+			if (!out.wtMap.containsKey(k)) out.wtMap.put(k, convertWeight(seq.groupWeightMap.get(k)));
+		}
+		
+		
+	}
 
 	private static void processAlias(SequenceTemp seq, StudyTemp st, ModelDataSet out) {
 		for (String f: seq.incFileRelativePathList_post){

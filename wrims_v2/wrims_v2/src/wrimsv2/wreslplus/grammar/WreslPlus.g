@@ -210,7 +210,11 @@ scope { WeightTable wt_;
 @after{ $id = $weight::wt_.id; $wtObj=$weight::wt_; $wtObj.dependants= dependants;}	 
 	: weight_legacy | weight_new ;
 
-weight_legacy : OBJECTIVE ('[' LOCAL ']')? OBJ {$weight::wt_.id="obj";} '='? '{' weight_legacy_unit+ '}'  ;
+weight_legacy : OBJECTIVE ('[' LOCAL ']')? objGroupName '='? '{' weight_legacy_unit+ '}'  ;
+
+//obj : 'obj' | 'Obj' | 'OBJ' ;
+objGroupName : i=ID {$weight::wt_.id=$i.text.toLowerCase();
+                     $weight::wt_.id_raw=$i.text;} ;
 
 weight_legacy_unit 
 	: '[' i=ID ',' e=expr_add ']' ','?
@@ -218,7 +222,9 @@ weight_legacy_unit
 
 weight_new : OBJECTIVE weightTableID '{' weight_group '}'  ;
 
-weightTableID : i=ID {$weight::wt_.id=$i.text;$weight::wt_.line=$i.getLine();} ;
+weightTableID : i=ID {$weight::wt_.id=$i.text.toLowerCase();
+                      $weight::wt_.id_raw=$i.text;
+                      $weight::wt_.line=$i.getLine();} ;
 	
 weight_group
 @init{ $weight::wt_.isWeightGroup=true; }
@@ -812,7 +818,7 @@ REAL :   ( Digit+ '.' Digit* ) | ( '.' Digit+ )  ;
 INT :   Digit+ ;
 
 OBJECTIVE : 'objective' | 'OBJECTIVE' | 'Objective' ;
-OBJ : 'obj' | 'Obj' | 'OBJ' ;
+//OBJ : 'obj' | 'Obj' | 'OBJ' ;
 MODEL :     'model' | 'MODEL' ;
 SEQUENCE :  'sequence' | 'SEQUENCE' ;
 

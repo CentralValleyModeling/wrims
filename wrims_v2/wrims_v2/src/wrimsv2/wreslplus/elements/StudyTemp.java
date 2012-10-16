@@ -22,7 +22,7 @@ public class StudyTemp implements Serializable {
 	public ArrayList<String> seqList;
 	public ArrayList<String> seqTimeStepList;
 	public Map<String, SequenceTemp> seqMap;
-	public ArrayList<String> modelList_effective;  //processed	
+	public ArrayList<String> modelList_effective;  //processed	// defined in sequence 
 	public ArrayList<String> incModelList_effective;  //processed // models included in models	
 	public ArrayList<String> modelList;		
 	public Map<String, ModelTemp> modelMap;
