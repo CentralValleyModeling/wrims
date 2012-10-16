@@ -38,7 +38,7 @@ MODEL second {
   define[local] y { std kind 'FLOW-CHANNEL' units 'CFS'}
   define[local] z { std kind 'FLOW-CHANNEL' units 'CFS'}
   
-  objective[local] obj = {[x, 100] }
-  objective[local] obj = {[y, 100], [z, 100]}
+  objective[local] obj1 = {[x, 100] }
+  objective[local] obj2 = {[y, 100], [z, 100]}
 
 }
