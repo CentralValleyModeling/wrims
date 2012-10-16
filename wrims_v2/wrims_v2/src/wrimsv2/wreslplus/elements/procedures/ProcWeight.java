@@ -1,6 +1,9 @@
 package wrimsv2.wreslplus.elements.procedures;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.wreslplus.elements.ModelTemp;
 import wrimsv2.wreslplus.elements.SequenceTemp;
@@ -17,6 +20,8 @@ public class ProcWeight {
 	// TODO: improve memory efficiency by adding the slack and surplus weight element into fileModelDataMap 
 	public static void processWeightGroup(StudyTemp st) {
 		
+		Set<String> filesProcessed = new HashSet<String>();
+		
 		for (String seqName : st.seqList) {
 			
 			SequenceTemp seqObj = st.seqMap.get(seqName);
@@ -27,9 +32,13 @@ public class ProcWeight {
 				if (st.allOffspringMap_incModel.keySet().contains(e)) {
 					for (String f: st.allOffspringMap_incModel.get(e)) {
 					
-						ModelTemp incModel = st.modelMap.get(f);
-					
-						processWeightGroup(incModel);
+						if (!filesProcessed.contains(f)) {
+							
+							ModelTemp incModel = st.modelMap.get(f);
+							processWeightGroup(incModel);
+							filesProcessed.add(f);
+							
+						}
 						
 					}
 				}
@@ -37,9 +46,14 @@ public class ProcWeight {
 			}
 			for (String f: seqModelObj.incFileRelativePathList_post){
 				
-				ModelTemp incModel = st.fileModelDataTable.get(f, st.fileModelNameMap.get(f).get(0));
-				
-				processWeightGroup(incModel);
+				if (!filesProcessed.contains(f)) {
+					
+					ModelTemp incModel = st.fileModelDataTable.get(f, st.fileModelNameMap.get(f).get(0));				
+					processWeightGroup(incModel);
+					filesProcessed.add(f);
+					
+				}
+
 			
 			}
 			

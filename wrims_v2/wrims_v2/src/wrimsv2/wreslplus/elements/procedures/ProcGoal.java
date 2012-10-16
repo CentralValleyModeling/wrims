@@ -2,7 +2,9 @@ package wrimsv2.wreslplus.elements.procedures;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.wreslplus.elements.DvarTemp;
@@ -20,6 +22,8 @@ public class ProcGoal {
 
 	public static void processGoalHS2(StudyTemp st) {
 		
+		Set<String> filesProcessed = new HashSet<String>();
+		
 		for (String seqName : st.seqList) {
 			
 			SequenceTemp seqObj = st.seqMap.get(seqName);
@@ -30,23 +34,35 @@ public class ProcGoal {
 				if (st.allOffspringMap_incModel.keySet().contains(e)) {
 					for (String f: st.allOffspringMap_incModel.get(e)) {
 					
-						ModelTemp incModel = st.modelMap.get(f);
-					
-						processGoalHS2(incModel, seqObj);
-						
+						if (!filesProcessed.contains(f)) {
+							
+							ModelTemp incModel = st.modelMap.get(f);
+							processGoalHS2(incModel, seqObj);
+							filesProcessed.add(f);
+							
+						}
 					}
 				}
 			
 			}
+			
 			for (String f: mObj.incFileRelativePathList_post){
 				
-				ModelTemp incModel = st.fileModelDataTable.get(f, st.fileModelNameMap.get(f).get(0));
+				if (!filesProcessed.contains(f)) {
+					
+					ModelTemp incModel = st.fileModelDataTable.get(f, st.fileModelNameMap.get(f).get(0));
+					processGoalHS2(incModel, seqObj);
+					filesProcessed.add(f);
+					System.out.println("##### mObj.ssList_hasCase:"+incModel.ssList_hasCase);
+				}
 				
-				processGoalHS2(incModel, seqObj);
 			
 			}
 			
+			
 			processGoalHS2(mObj, seqObj);
+			
+			
 		}
 		
 	}
@@ -148,12 +164,15 @@ public class ProcGoal {
 	
 				g2.dvarWeightMapList.add(weightMap);
 				g2.dvarSlackSurplusList.add(dvarSlackSurplus);
+				
 	
 			}
 	
+
 			mObj.glMap.put(gKey, g2);
 	
 		}
+		
 	
 	}
 

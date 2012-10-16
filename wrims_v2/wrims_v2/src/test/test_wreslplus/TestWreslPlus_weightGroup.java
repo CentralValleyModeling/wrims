@@ -52,4 +52,91 @@ public class TestWreslPlus_weightGroup {
 		Assert.assertEquals(totalErrs, 99);		
 	
 	}
+	
+	@Test(groups = { "WRESLPLUS_elements" })
+	public void weightGroup2() throws RecognitionException, IOException {
+		
+	
+		testName = "TestWreslPlus_weightGroup2";
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_wreslplus2\\"+testName;
+		
+		inputFilePath = projectPath + testName + TestParam.fileExt;
+		logFilePath = csvFolderPath + ".log";
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
+		
+		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
+		
+		WriteCSV.study(sd, this.csvFolderPath);
+		
+		LogUtils.closeLogFile();
+	
+		String logText = Tools.readFileAsString(logFilePath);	
+		
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 99);		
+	
+	}
+	
+	@Test(groups = { "WRESLPLUS_elements" })
+	public void weightGroup3() throws RecognitionException, IOException {
+		
+	
+		testName = "TestWreslPlus_weightGroup3";
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_wreslplus2\\"+testName;
+		
+		inputFilePath = projectPath + testName + TestParam.fileExt;
+		logFilePath = csvFolderPath + ".log";
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
+		
+		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
+		
+		WriteCSV.study(sd, this.csvFolderPath);
+		
+		LogUtils.closeLogFile();
+	
+		String logText = Tools.readFileAsString(logFilePath);	
+		
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 99);		
+	
+	}
+	
+	@Test(groups = { "WRESLPLUS_elements" })
+	public void weightGroup4() throws RecognitionException, IOException {
+		
+	
+		testName = "TestWreslPlus_weightGroup4";
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_wreslplus2\\"+testName;
+		
+		inputFilePath = projectPath + testName + TestParam.fileExt;
+		logFilePath = csvFolderPath + ".log";
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
+		
+		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
+		
+		WriteCSV.study(sd, this.csvFolderPath);
+		
+		LogUtils.closeLogFile();
+	
+		String logText = Tools.readFileAsString(logFilePath);	
+		
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 99);		
+	
+	}
 }
