@@ -71,6 +71,8 @@ public class Procedures {
 
 	public static void copyModelVarMapToSequenceVarMap(StudyTemp st) {
 		
+		
+		
 		for (String seqName : st.seqList) {
 			
 			SequenceTemp seqObj = st.seqMap.get(seqName);
@@ -82,29 +84,29 @@ public class Procedures {
 			seqObj.incFileAbsPathList_post = seqModelObj.incFileAbsPathList_post;
 			seqObj.incFileRelativePathList_post = seqModelObj.incFileRelativePathList_post;
 			
-			for (String e: st.modelList_effective){
+			if (st.allOffspringMap_incModel.keySet().contains(seqObj.model)) {
+				for (String f: st.allOffspringMap_incModel.get(seqObj.model)) {
 				
-				if (st.allOffspringMap_incModel.keySet().contains(e)) {
-					for (String f: st.allOffspringMap_incModel.get(e)) {
+					ModelTemp incModel = st.modelMap.get(f);
+				
+
+					copyModelVarMapToSequenceVarMap(incModel, seqObj);
+
 					
-						ModelTemp incModel = st.modelMap.get(f);
-					
-						copyModelVarMapToSequenceVarMap(incModel, seqObj);
-						
-					}
 				}
-			
 			}
+			
+
 			for (String f: seqModelObj.incFileRelativePathList_post){
 				
-				// TODO: allow multiple models in a file
 				ModelTemp incModel = st.fileModelDataTable.get(f, st.fileModelNameMap.get(f).get(0));
 				
 				copyModelVarMapToSequenceVarMap(incModel, seqObj);
 			
 			}
-			
+
 			copyModelVarMapToSequenceVarMap(seqModelObj, seqObj);
+
 		}
 		
 	}

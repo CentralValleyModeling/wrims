@@ -53,7 +53,7 @@ public class ProcGoal {
 					ModelTemp incModel = st.fileModelDataTable.get(f, st.fileModelNameMap.get(f).get(0));
 					processGoalHS2(incModel, seqObj);
 					filesProcessed.add(f);
-					System.out.println("##### mObj.ssList_hasCase:"+incModel.ssList_hasCase);
+					
 				}
 				
 			

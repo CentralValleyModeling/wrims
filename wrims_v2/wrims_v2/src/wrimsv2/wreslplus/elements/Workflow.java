@@ -156,24 +156,26 @@ public class Workflow {
 		
 		
 		Procedures.postProcessVarListinIncFile(st);
-				
-		
-//		try{
-//			
-//			System.out.println("## st.fileModelDataTable.columnKeySet()"+st.fileModelDataTable.columnKeySet());
-//			System.out.println("## st.fileModelDataTable.rowKeySet()"+st.fileModelDataTable.rowKeySet());
-//			
-//		} catch (Exception e) {
-//			
-//		}
-		
 
 		ProcGoal.processGoalHS2(st); 
 		
 		ProcWeight.collectWeightVar(st);
+
+//		for(ModelTemp mmm : st.modelMap.values()){
+//			
+//			for (String f :mmm.incFileRelativePathList_post){
+//				
+//				String mn = st.fileModelNameMap.get(f).get(0);
+//				
+//				ModelTemp incModel = st.fileModelDataTable.get(f, mn);
+//				
+//				System.out.println("%%%% incModel.wvList_post:"+f+"="+incModel.wvList_post);
+//			}
+//		
+//		}
 		
 		ProcWeight.processWeightGroup(st);
-		
+				
 		Procedures.copyModelVarMapToSequenceVarMap(st);
 				
 		ErrorCheck.checkVarRedefined(st);	

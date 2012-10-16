@@ -204,14 +204,14 @@ public class ToWreslData {
 		
 		
 //// TODO: be careful. this one is special		
-		for (WeightTable w : seq.wTableObjList){				
-			if (w.isWeightGroup){
-				o.wtMap.putAll(convertWeightTableGroup(w));
-			} else {
-				o.wtMap.putAll(convertWeightTable(w));
-			}
-		}
-		//processWeightTableObjList(seq, st, o);
+//		for (WeightTable w : seq.wTableObjList){				
+//			if (w.isWeightGroup){
+//				o.wtMap.putAll(convertWeightTableGroup(w));
+//			} else {
+//				o.wtMap.putAll(convertWeightTable(w));
+//			}
+//		}
+		processWeightTableObjList(seq, st, o);
 
 		
 //		for (String k: seq.ssList_noCase){				

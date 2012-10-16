@@ -426,12 +426,16 @@ public class WriteCSV {
 			
 		    for (String k: keys ){
 		    	
+			    
+			    if (! wtMap.containsKey(k)) System.out.println("##### not exist in wtMap:"+k);
+			    
+			    
 		    	//out.print(k);
 		    	WeightElement w = wtMap.get(k);
-		    	
+
 
 			    out.print(k); // for DVAR NAME
-
+			    
 			    out.print(Param.csv_seperator+w.timeArraySize); //for TIME ARRAY SIZE
 			    
 			    out.print(Param.csv_seperator+w.condition); 

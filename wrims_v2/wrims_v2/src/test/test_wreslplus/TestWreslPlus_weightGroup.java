@@ -11,6 +11,7 @@ import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.RegUtils;
 import wrimsv2.wreslparser.elements.Tools;
 import wrimsv2.wreslparser.elements.WriteCSV;
+import wrimsv2.wreslplus.elements.SequenceTemp;
 import wrimsv2.wreslplus.elements.StudyTemp;
 import wrimsv2.wreslplus.elements.Workflow;
 import wrimsv2.wreslplus.elements.procedures.ToWreslData;
@@ -40,6 +41,22 @@ public class TestWreslPlus_weightGroup {
 		
 		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
 		
+		for (String sss: styTemp.seqList){
+			
+			SequenceTemp se = styTemp.seqMap.get(sss);
+			
+			int ndv = se.dvList.size();
+			
+			System.out.println("se.dvList:"+se.dvList);
+			Assert.assertEquals(ndv, 13);	
+			
+			int nwv = se.wvList.size();
+			
+			System.out.println("se.wvList:"+se.wvList);
+			Assert.assertEquals(nwv, 11);	
+			
+		}
+		
 		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
 		
 		WriteCSV.study(sd, this.csvFolderPath);
@@ -49,7 +66,9 @@ public class TestWreslPlus_weightGroup {
 		String logText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 99);		
+		Assert.assertEquals(totalErrs, 0);	
+		
+		System.out.println("done!");
 	
 	}
 	
@@ -69,6 +88,22 @@ public class TestWreslPlus_weightGroup {
 		
 		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
 		
+		for (String sss: styTemp.seqList){
+			
+			SequenceTemp se = styTemp.seqMap.get(sss);
+			
+			int ndv = se.dvList.size();
+			
+			System.out.println("se.dvList:"+se.dvList);
+			Assert.assertEquals(ndv, 13);	
+			
+			int nwv = se.wvList.size();
+			
+			System.out.println("se.wvList:"+se.wvList);
+			Assert.assertEquals(nwv, 11);	
+			
+		}
+		
 		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
 		
 		WriteCSV.study(sd, this.csvFolderPath);
@@ -78,7 +113,7 @@ public class TestWreslPlus_weightGroup {
 		String logText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 99);		
+		Assert.assertEquals(totalErrs, 0);		
 	
 	}
 	
@@ -98,6 +133,22 @@ public class TestWreslPlus_weightGroup {
 		
 		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
 		
+		for (String sss: styTemp.seqList){
+			
+			SequenceTemp se = styTemp.seqMap.get(sss);
+			
+			int ndv = se.dvList.size();
+			
+			System.out.println("se.dvList:"+se.dvList);
+			Assert.assertEquals(ndv, 13);	
+			
+			int nwv = se.wvList.size();
+			
+			System.out.println("se.wvList:"+se.wvList);
+			Assert.assertEquals(nwv, 11);	
+			
+		}
+		
 		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
 		
 		WriteCSV.study(sd, this.csvFolderPath);
@@ -107,7 +158,7 @@ public class TestWreslPlus_weightGroup {
 		String logText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 99);		
+		Assert.assertEquals(totalErrs, 0);		
 	
 	}
 	
@@ -127,6 +178,22 @@ public class TestWreslPlus_weightGroup {
 		
 		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
 		
+		for (String sss: styTemp.seqList){
+			
+			SequenceTemp se = styTemp.seqMap.get(sss);
+			
+			int ndv = se.dvList.size();
+			
+			System.out.println("se.dvList:"+se.dvList);
+			Assert.assertEquals(ndv, 13);	
+			
+			int nwv = se.wvList.size();
+			
+			System.out.println("se.wvList:"+se.wvList);
+			Assert.assertEquals(nwv, 11);	
+			
+		}
+		
 		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
 		
 		WriteCSV.study(sd, this.csvFolderPath);
@@ -136,7 +203,7 @@ public class TestWreslPlus_weightGroup {
 		String logText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 99);		
+		Assert.assertEquals(totalErrs, 0);		
 	
 	}
 }

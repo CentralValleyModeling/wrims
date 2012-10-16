@@ -81,6 +81,12 @@ public class ProcWeight {
 						boolean subCommonPenaltyIsZero = false;
 						try { subCommonPenaltyIsZero = Float.parseFloat(wsg.commonPenalty)==0;} catch (Exception e) {}
 /// process subgroup
+						
+						// add all var in wvList
+						for (String var : wsg.varList) {
+							Misc.addWeightInGroupWeightMap(var, wt.fromWresl, wt.commonWeight, mObj);
+						}
+						
 						if (!mainCommonPenaltyIsZero || !subCommonPenaltyIsZero) {
 							/// process subgroup
 							// create new dvar for subgroup id. this is the
@@ -136,7 +142,11 @@ public class ProcWeight {
 					} // end for loop subgroup
 					
 					
-/// process main group					
+/// process main group
+					// add all var in wvList
+					for (String var : wt.varList) {
+						Misc.addWeightInGroupWeightMap(var, wt.fromWresl, wt.commonWeight, mObj);
+					}
 					if (!mainCommonPenaltyIsZero) {
 						
 						/// process main group
@@ -201,6 +211,8 @@ public class ProcWeight {
 
 	public static void collectWeightVar(StudyTemp s) {
 	
+		Set<String> filesProcessed = new HashSet<String>();
+		
 		for (String seq : s.seqList) {
 			
 			SequenceTemp seqObj = s.seqMap.get(seq);
@@ -209,47 +221,75 @@ public class ProcWeight {
 	
 			ModelTemp mObj = s.modelMap.get(m);
 	
-			collectWeightVar(mObj, seqObj, s);
+			
+			for (String e: s.modelList_effective){
+				
+				if (s.allOffspringMap_incModel.keySet().contains(e)) {
+					for (String f: s.allOffspringMap_incModel.get(e)) {
+					
+						if (!filesProcessed.contains(f)) {
+							
+							ModelTemp incModel = s.modelMap.get(f);
+							collectWeightVar(incModel);
+							filesProcessed.add(f);
+							
+						}
+						
+					}
+				}
+			
+			}
+
+			for (String f: mObj.incFileRelativePathList_post){
+				
+				if (!filesProcessed.contains(f)) {
+
+					String mn = s.fileModelNameMap.get(f).get(0);
+
+					ModelTemp incModel = s.fileModelDataTable.get(f, mn);
+
+					collectWeightVar(incModel);
+					filesProcessed.add(f);
+
+				}
+
+			}
+		
+			collectWeightVar(mObj);			
 	
 		}
 	
 	}
 
-	public static void collectWeightVar(ModelTemp mObj, SequenceTemp seqObj, StudyTemp st) {
+	public static void collectWeightVar(ModelTemp mObj){
+		
+		for (WeightTable wt : mObj.wTableObjList) {
+			
+			if (!wt.isWeightGroup) {
+				mObj.wvList_post.addAll(wt.varList);
+//				for (WeightSubgroup wsg : wt.subgroupMap.values()) {
+//					mObj.wvList_post.addAll(wsg.varList);
+//					//seqObj.wvList.addAll(wsg.varList);
+//				}
+
+			}
+		}
+		
+	}
+	public static void collectWeightVar(ModelTemp mObj, StudyTemp st) {
 		
 		for (String f: mObj.incFileRelativePathList_post){
 		
-			// TODO: enable for multiple model per file
 			String mn = st.fileModelNameMap.get(f).get(0);
-			ArrayList<WeightTable> wl = st.fileModelDataTable.get(f, mn).wTableObjList;
 			
-			for (WeightTable wt : wl) {
-	
-				// TODO: can collect different objective type
-				// if (wt.id.equalsIgnoreCase(s.objectiveType)){
-				mObj.wvList_post.addAll(wt.varList);
-				for (WeightSubgroup wsg: wt.subgroupMap.values() ){
-					mObj.wvList_post.addAll(wsg.varList);
-				}
-				//seqObj.wvList_defaultType.addAll(wt.subgroupMap.keySet());
-				//seqObj.wTableObjList.add(wt);
-				// }
-			}
+			ModelTemp incModel = st.fileModelDataTable.get(f, mn);
+			
+			collectWeightVar(incModel);
+
 		}
 	
-		for (WeightTable wt : mObj.wTableObjList) {
-	
-			// TODO: can collect different objective type
-			// if (wt.id.equalsIgnoreCase(s.objectiveType)){
-			mObj.wvList_post.addAll(wt.varList);
-			for (WeightSubgroup wsg: wt.subgroupMap.values() ){
-				mObj.wvList_post.addAll(wsg.varList);
-			}
-			//seqObj.wvList_defaultType.addAll(wt.subgroupMap.keySet());
-			//seqObj.wTableObjList.add(wt);
-			// }
-	
-		}
+		collectWeightVar(mObj);
+
 	
 	}
 

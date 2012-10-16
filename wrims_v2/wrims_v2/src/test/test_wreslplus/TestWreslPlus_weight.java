@@ -78,7 +78,7 @@ public class TestWreslPlus_weight {
 		String logText = Tools.readFileAsString(logFilePath);	
 		
 		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
-		Assert.assertEquals(totalErrs, 99);		
+		Assert.assertEquals(totalErrs, 0);		
 	
 	}
 }
