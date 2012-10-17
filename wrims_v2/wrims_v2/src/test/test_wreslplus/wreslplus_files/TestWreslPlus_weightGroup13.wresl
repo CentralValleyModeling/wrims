@@ -1,0 +1,61 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }
+
+model inc { 
+  define[local] a { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define[local] b { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define[local] c { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define[local] w { value 9 }
+  
+  goal[local] g1 { x+y+z+a+b+c < 100 }
+
+  Objective obj {
+	weight 6
+	penalty w
+	variable a 
+			 b { 
+				penalty -5
+				variable c d
+			 }
+  }
+}
+	
+MODEL first { 
+
+  !include 'moreWreslFiles\weight-table.wresl' 
+  define[local] x { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define[local] y { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define[local] z { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define[local] z1 { std kind 'FLOW-CHANNEL' units 'CFS'}
+  
+  include model inc
+  
+  Objective obj2 {
+	weight 6
+	penalty (5.0)
+	variable x 
+			 y { 
+				variable z z1
+			 }
+  }
+  
+}
+
+MODEL second { 
+
+  !include 'moreWreslFiles\weight-table.wresl' 
+  define[local] x { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define[local] y { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define[local] z { std kind 'FLOW-CHANNEL' units 'CFS'}
+
+  
+  
+  include model inc
+  
+}

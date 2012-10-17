@@ -1,0 +1,34 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }
+	
+MODEL first { 
+
+  !include 'moreWreslFiles\weight-table.wresl' 
+  define[local] x { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define[local] y { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define[local] z { std kind 'FLOW-CHANNEL' units 'CFS'}
+
+  
+
+  include 'weightGroup12.wresl'
+  
+}
+
+MODEL second { 
+
+  !include 'moreWreslFiles\weight-table.wresl' 
+  define[local] x { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define[local] y { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define[local] z { std kind 'FLOW-CHANNEL' units 'CFS'}
+
+  
+
+  include 'weightGroup12.wresl'
+  
+}

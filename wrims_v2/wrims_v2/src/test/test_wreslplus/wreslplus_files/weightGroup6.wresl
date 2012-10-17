@@ -1,0 +1,20 @@
+  define[local] a { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define[local] b { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define[local] c { std kind 'FLOW-CHANNEL' units 'CFS'}
+  
+  goal[local] g1 { x+y+z+a+b+c < 100 }
+
+  Objective[local] obj1 = {[x, 5]  }
+  Objective[local] obj2 = {[y, 5] }
+  
+  Objective wg1 {
+	weight 6
+	penalty 0.1
+	variable a b 
+  }
+  
+  Objective obj2 {
+	weight 6
+	penalty 0.1
+	variable x c
+  }

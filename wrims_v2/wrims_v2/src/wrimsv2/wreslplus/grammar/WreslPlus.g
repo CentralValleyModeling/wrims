@@ -207,13 +207,13 @@ scope { WeightTable wt_;
        $weight::wt_.fromWresl = this.currentAbsolutePath; 
        dependants = new LinkedHashSet<String>();
 	 }
-@after{ $id = $weight::wt_.id; $wtObj=$weight::wt_; $wtObj.dependants= dependants;}	 
+@after{ $id = $weight::wt_.id_lowcase; $wtObj=$weight::wt_; $wtObj.dependants= dependants;}	 
 	: weight_legacy | weight_new ;
 
 weight_legacy : OBJECTIVE ('[' LOCAL ']')? objGroupName '='? '{' weight_legacy_unit+ '}'  ;
 
 //obj : 'obj' | 'Obj' | 'OBJ' ;
-objGroupName : i=ID {$weight::wt_.id=$i.text.toLowerCase();
+objGroupName : i=ID {$weight::wt_.id_lowcase=$i.text.toLowerCase();
                      $weight::wt_.id_raw=$i.text;} ;
 
 weight_legacy_unit 
@@ -222,7 +222,7 @@ weight_legacy_unit
 
 weight_new : OBJECTIVE weightTableID '{' weight_group '}'  ;
 
-weightTableID : i=ID {$weight::wt_.id=$i.text.toLowerCase();
+weightTableID : i=ID {$weight::wt_.id_lowcase=$i.text.toLowerCase();
                       $weight::wt_.id_raw=$i.text;
                       $weight::wt_.line=$i.getLine();} ;
 	

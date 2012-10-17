@@ -12,7 +12,7 @@ import wrimsv2.commondata.wresldata.Param;
 public class WeightTable implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	public String id;
+	public String id_lowcase;
 	public String id_raw;
 	public boolean isWeightGroup;
 	public String condition;

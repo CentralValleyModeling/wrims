@@ -203,15 +203,18 @@ public class ToWreslData {
 		
 		
 		
-//// TODO: be careful. this one is special		
-//		for (WeightTable w : seq.wTableObjList){				
-//			if (w.isWeightGroup){
-//				o.wtMap.putAll(convertWeightTableGroup(w));
-//			} else {
-//				o.wtMap.putAll(convertWeightTable(w));
-//			}
-//		}
-		processWeightTableObjList(seq, st, o);
+//// TODO: be careful. this one is special. need to revisit after
+//// using Map<String,WeightTable> instead of ArrayList<WeightTable>	
+		for (WeightTable w : seq.wTableObjList){				
+			if (w.isWeightGroup){
+				o.wtMap.putAll(convertWeightTableGroup(w));
+			} else {
+				o.wtMap.putAll(convertWeightTable(w));
+			}
+		}
+		//processWeightTableObjList(seq, st, o); // need to revive this one.
+		
+		
 
 		
 //		for (String k: seq.ssList_noCase){				
@@ -235,7 +238,7 @@ public class ToWreslData {
 			
 			for (WeightTable w: st.fileModelDataTable.get(f, st.fileModelNameMap.get(f).get(0)).wTableObjList) {
 				
-				String objGroupName = w.id;
+				String objGroupName = w.id_lowcase;
 				
 				
 				//TODO: rewrite this based on f check. no need to check each obj group.
@@ -275,7 +278,7 @@ public class ToWreslData {
 				
 					for (WeightTable w: incModel.wTableObjList) {
 						
-						String objGroupName = w.id;
+						String objGroupName = w.id_lowcase;
 						
 						if (mainfileModelWTableObjMap.contains(e, objGroupName)){
 							

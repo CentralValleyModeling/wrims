@@ -224,7 +224,7 @@ public class ToLowerCase {
 		
 		WeightTable o = new WeightTable();
 		
-		o.id = w.id.toLowerCase();
+		o.id_lowcase = w.id_lowcase.toLowerCase();
 		o.id_raw = w.id_raw;
 		o.line = w.line;
 		o.fromWresl = w.fromWresl.toLowerCase();

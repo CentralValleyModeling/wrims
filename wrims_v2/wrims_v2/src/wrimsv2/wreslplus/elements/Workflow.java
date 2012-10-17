@@ -174,10 +174,17 @@ public class Workflow {
 //		
 //		}
 		
+		
+		// filter weight groups from the weight Object list and then process them
+		// TODO: need to rewrite
+
+
 		ProcWeight.processWeightGroup(st);
-				
+						
 		Procedures.copyModelVarMapToSequenceVarMap(st);
 				
+		if (ErrorCheck.checkWeightObjList(st)) return null;
+		
 		ErrorCheck.checkVarRedefined(st);	
 		
 		Procedures.classifyDependants(st);
@@ -191,6 +198,12 @@ public class Workflow {
 		Procedures.createSpaceInVarCycleValueMap(st);
 		
 
+//		for (String sss : st.seqList){
+//			
+//			System.out.println("#### varUsedByLaterCycle: "+sss+"="+ st.seqMap.get(sss).varUsedByLaterCycle);
+//			
+//		}
+		
 		Procedures.collectTimeStep(st);
 		
 				

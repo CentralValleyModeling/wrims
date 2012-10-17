@@ -24,6 +24,8 @@ import wrimsv2.wreslplus.elements.SequenceTemp;
 import wrimsv2.wreslplus.elements.StudyTemp;
 import wrimsv2.wreslplus.elements.SvarTemp;
 import wrimsv2.wreslplus.elements.Tools;
+import wrimsv2.wreslplus.elements.WeightSubgroup;
+import wrimsv2.wreslplus.elements.WeightTable;
 
 public class ErrorCheck {
 	
@@ -282,6 +284,165 @@ public class ErrorCheck {
 		return new ArrayList<String>(varSet);
 
 	}
+
+
+
+	public static boolean checkWeightObjList(StudyTemp st) {
+
+		boolean ret = false;
+		
+		for (String seqName : st.seqList) {
+			
+			SequenceTemp seqObj = st.seqMap.get(seqName);
+
+			
+		//// check duplicate weight group (objective) names
+			ArrayList<String> WeightObjIdList = new ArrayList<String>();
+			
+			for (WeightTable wt: seqObj.wTableObjList){
+				
+				WeightObjIdList.add(wt.id_lowcase);
+				
+			}
+			if (findDuplicates(WeightObjIdList).size()>0) {
+				
+				for (String id : findDuplicates(WeightObjIdList)) {
+					LogUtils.errMsg(" Objective ["+id+"] is redefined in Sequence ["+ seqName +"]");
+				
+				}
+				
+				return true;
+				
+			}
+			
+		//// check common penalty not a number in weight group	
+
+			for (WeightTable wt: seqObj.wTableObjList){
+				
+				if (wt.isWeightGroup) {
+					
+					try {
+						
+						double p = Double.parseDouble(wt.commonPenalty);
+						
+						if (p<0) {
+							LogUtils.errMsg(" Penalty ["+ wt.commonPenalty +"] in Objective ["+ wt.id_raw +"] must be a nonnegative number." );	
+							ret = true;
+						}
+						
+					} catch (Exception e) {
+						
+						LogUtils.errMsg(" Penalty ["+ wt.commonPenalty +"] in Objective ["+ wt.id_raw +"] must be a pure number." );	
+						
+						ret = true;
+					}
+					
+					for (WeightSubgroup ws: wt.subgroupMap.values()){
+						
+						
+						try {
+							
+							double p = Double.parseDouble(ws.commonPenalty);
+							
+							if (p<0) {
+								LogUtils.errMsg(" Penalty ["+ ws.commonPenalty +"] in Objective ["+ wt.id_raw +"] must be a nonnegative number." );	
+								ret = true;
+							}
+							
+						} catch (Exception e) {
+							
+							LogUtils.errMsg(" Penalty ["+ ws.commonPenalty +"] in Objective ["+ wt.id_raw +"] must be a pure number." );	
+							
+							ret = true;
+						}
+						
+					}
+
+				}				
+
+			}
+			
+			if (ret) return true;
+			
+			
+		//// check duplicate variables inside the same weight group (objective)
+			
+			for (WeightTable wt: seqObj.wTableObjList){
+				
+				ArrayList<String> varList = new ArrayList<String>();
+				
+				if (wt.isWeightGroup) {
+					varList.addAll(wt.varList);
+					varList.addAll(wt.subgroupMap.keySet());
+					
+					for (WeightSubgroup ws: wt.subgroupMap.values()){
+						
+						varList.addAll(ws.varList);
+					
+					}
+					
+				}
+				else {
+					varList.addAll(wt.varList);
+
+				}
+				
+				if (findDuplicates(varList).size()>0) {
+					
+					for (String var : findDuplicates(varList)) {
+						LogUtils.errMsg(" Weight variable ["+var+"] in Objective ["+ wt.id_raw +"] is redefined in Sequence ["+ seqName +"]");	
+					}
+										
+					ret = true;
+				}
+			}
+			
+			if (ret) return true;
+			
+	//// check duplicates variables inside the sequence
+		
+			ArrayList<String> varList = new ArrayList<String>();
+			
+			for (WeightTable wt: seqObj.wTableObjList){
+				
+				if (wt.isWeightGroup) {
+					varList.addAll(wt.varList);
+					varList.addAll(wt.subgroupMap.keySet());
+					
+					for (WeightSubgroup ws: wt.subgroupMap.values()){
+						
+						varList.addAll(ws.varList);
+					
+					}
+					
+				}
+				else {
+					varList.addAll(wt.varList);
+
+				}
+				
+			}
+			
+			if (findDuplicates(varList).size()>0) {
+				
+				for (String var : findDuplicates(varList)) {
+					LogUtils.errMsg(" Weight variable ["+var+"] is redefined in Sequence ["+ seqName +"]");	
+				}
+									
+				ret = true;
+			}
+			
+			if (ret) return true;
+			
+			
+		}
+		
+		return false;
+		
+	}
+
+
+
 
 }
 	

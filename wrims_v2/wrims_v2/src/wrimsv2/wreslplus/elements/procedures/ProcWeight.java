@@ -95,7 +95,7 @@ public class ProcWeight {
 									"weightgroup_mean", "na", wt.fromWresl, wt.condition, mObj);
 
 							// create new goal for subgroup average
-							String goal_id = "wg__" + wt.id + "__" + wsg.id + "__mean";
+							String goal_id = "wg__" + wt.id_lowcase + "__" + wsg.id + "__mean";
 							String lhs = wsg.varList.size() + "*" + wsg.id.toLowerCase();
 							String rhs = "";
 							for (String v : wsg.varList) {
@@ -115,8 +115,8 @@ public class ProcWeight {
 							
 							for (String var : wsg.varList) {
 
-								String slack_id =   "wg__" + wt.id.toLowerCase() + "__" + wsg.id.toLowerCase() + "__" + var + "__slack";
-								String surplus_id = "wg__" + wt.id.toLowerCase() + "__" + wsg.id.toLowerCase() + "__" + var + "__surplus";
+								String slack_id =   "wg__" + wt.id_lowcase.toLowerCase() + "__" + wsg.id.toLowerCase() + "__" + var + "__slack";
+								String surplus_id = "wg__" + wt.id_lowcase.toLowerCase() + "__" + wsg.id.toLowerCase() + "__" + var + "__surplus";
 
 								// add slack						
 								Misc.createDvarInModelObj(slack_id, Param.upper_unbounded, Param.zero, "weightgroup_slack", "na", wt.fromWresl, wt.condition, mObj);
@@ -129,7 +129,7 @@ public class ProcWeight {
 								Misc.addWeightInGroupWeightMap(surplus_id, wt.fromWresl, weight, mObj);
 
 								// add goal for slack surplus
-								String goal_ss_id = "wg__" + wt.id + "__" + wsg.id + "__" + var + "__ss";
+								String goal_ss_id = "wg__" + wt.id_lowcase + "__" + wsg.id + "__" + var + "__ss";
 								String lhs_ss = var + "+" + slack_id + "-" + surplus_id;
 								String rhs_ss = wsg.id.toLowerCase();
 
@@ -151,7 +151,7 @@ public class ProcWeight {
 						
 						/// process main group
 						// create new dvar for average
-						String average_id = "mean__" + wt.id;
+						String average_id = "mean__" + wt.id_lowcase;
 						String kind = "weightgroup_mean";
 						String units = "na";
 
@@ -161,7 +161,7 @@ public class ProcWeight {
 						ArrayList<String> varList_and_subGroupId = new ArrayList<String>();
 						varList_and_subGroupId.addAll(wt.varList);
 						varList_and_subGroupId.addAll(wt.subgroupMap.keySet());
-						String goal_id = "wg__" + wt.id + "__mean";
+						String goal_id = "wg__" + wt.id_lowcase + "__mean";
 						int mult =wt.varList.size()+wt.subgroupMap.keySet().size();
 						String lhs = mult + "*" + average_id.toLowerCase();
 						String rhs = "";
@@ -177,8 +177,8 @@ public class ProcWeight {
 						
 						for (String var : varList_and_subGroupId) {
 
-							String slack_id = "wg__" + wt.id.toLowerCase() + "__" + var + "__slack";
-							String surplus_id = "wg__" + wt.id.toLowerCase() + "__" + var + "__surplus";
+							String slack_id = "wg__" + wt.id_lowcase.toLowerCase() + "__" + var + "__slack";
+							String surplus_id = "wg__" + wt.id_lowcase.toLowerCase() + "__" + var + "__surplus";
 
 							// add slack						
 							Misc.createDvarInModelObj(slack_id, Param.upper_unbounded, Param.zero, "weightgroup_slack", "na", wt.fromWresl, wt.condition, mObj);
@@ -191,7 +191,7 @@ public class ProcWeight {
 							Misc.addWeightInGroupWeightMap(surplus_id, wt.fromWresl, weight, mObj);
 
 							// add goal for slack surplus
-							String goal_ss_id = "wg__" + wt.id + "__" + var + "__ss";
+							String goal_ss_id = "wg__" + wt.id_lowcase + "__" + var + "__ss";
 							String lhs_ss = var + "+" + slack_id + "-" + surplus_id;
 							String rhs_ss = average_id.toLowerCase();
 
