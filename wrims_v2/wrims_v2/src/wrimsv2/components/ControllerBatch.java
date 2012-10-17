@@ -388,12 +388,12 @@ public class ControllerBatch {
 				            	}
 				            }
 				        } else {
-							long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
+							//long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
 							new XASolver(); // default
 							//System.exit(9);
-							long endTimeInMillis = Calendar.getInstance().getTimeInMillis();
-							long runPeriod=(long) (endTimeInMillis-startTimeInMillis);
-							System.out.println(" XA runtime: "+runPeriod/60000+"min"+Math.round((runPeriod/60000.0-runPeriod/60000)*60)+"sec");
+							//long endTimeInMillis = Calendar.getInstance().getTimeInMillis();
+							//long runPeriod=(long) (endTimeInMillis-startTimeInMillis);
+							//System.out.println(" XA runtime: "+runPeriod/60000+"min"+Math.round((runPeriod/60000.0-runPeriod/60000)*60)+"sec");
 							
 							if (ILP.logging) {
 								ILP.writeObjValue_XA();
