@@ -205,14 +205,14 @@ public class ToWreslData {
 		
 //// TODO: be careful. this one is special. need to revisit after
 //// using Map<String,WeightTable> instead of ArrayList<WeightTable>	
-		for (WeightTable w : seq.wTableObjList){				
-			if (w.isWeightGroup){
-				o.wtMap.putAll(convertWeightTableGroup(w));
-			} else {
-				o.wtMap.putAll(convertWeightTable(w));
-			}
-		}
-		//processWeightTableObjList(seq, st, o); // need to revive this one.
+//		for (WeightTable w : seq.wTableObjList){				
+//			if (w.isWeightGroup){
+//				o.wtMap.putAll(convertWeightTableGroup(w));
+//			} else {
+//				o.wtMap.putAll(convertWeightTable(w));
+//			}
+//		}
+		processWeightTableObjList(seq, st, o); // need to revive this one.
 		
 		
 
