@@ -233,7 +233,7 @@ weight_group
 	;	
 
 weight_trunk 
-	:  ( PENALTY p=expr_add {$weight::wt_.commonPenalty=$p.text;} )? 
+	:  ( DEVIATION_PENALTY p=expr_add {$weight::wt_.commonPenalty=$p.text;} )? 
 	   VARIABLE ( weight_group_unit | weight_subgroup )+
 	  ;
 	    
@@ -252,7 +252,7 @@ scope { WeightSubgroup sub_;}
 	;
 
 weight_subgroup_trunk 
-	:  ( PENALTY p=expr_add {$weight_subgroup::sub_.commonPenalty=$p.text;} )? 
+	:  ( DEVIATION_PENALTY p=expr_add {$weight_subgroup::sub_.commonPenalty=$p.text;} )? 
 	   VARIABLE ( weight_subgroup_unit+ ) // | weight_subgroup )+
 	  ;
 
@@ -829,6 +829,7 @@ CONDITION : 'condition' | 'CONDITION' | 'Condition' ;
 GOAL :      'goal' | 'GOAL' | 'Goal' ;
 VALUE :     'value' | 'VALUE' | 'Value';
 PENALTY : 'penalty' | 'PENALTY' | 'Penalty' ;
+DEVIATION_PENALTY : 'deviation_penalty' | 'DEVIATION_PENALTY' | 'Deviation_Penalty' ;
 WEIGHT : 'weight' | 'WEIGHT' | 'Weight' ;
 //ITEM    : 'item' | 'ITEM' | 'Item' ;
 
