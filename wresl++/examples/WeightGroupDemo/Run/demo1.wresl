@@ -20,7 +20,7 @@ model First {
   
   objective NewObj {
 	weight 5
-	penalty 1
+	deviation_deviation_deviation_penalty 1
 	variable X Y Z A B C D E
   }
   

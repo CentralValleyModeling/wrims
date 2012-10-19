@@ -17,13 +17,13 @@ MODEL first {
   
   Objective wg1 {
 	weight 1
-	penalty 0.1
+	deviation_penalty 0.1
 	variable A1 A2
   }
 
   Objective wg2 {
 	weight 1
-	penalty 0.1
+	deviation_penalty 0.1
 	variable D3 D4
   }
   
