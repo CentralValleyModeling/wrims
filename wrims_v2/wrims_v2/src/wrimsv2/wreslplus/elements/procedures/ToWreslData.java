@@ -112,6 +112,7 @@ public class ToWreslData {
 	
 		o.dvList = new ArrayList<String>(seq.dvList);
 		o.dvList.addAll(seq.dvList_fromAlias);
+		o.dvList_deviationSlackSurplus.addAll(seq.dvList_deviationSlackSurplus);
 		//o.dvList.addAll(seq.ssList_noCase);
 		Collections.sort(o.dvList,String.CASE_INSENSITIVE_ORDER);
 		

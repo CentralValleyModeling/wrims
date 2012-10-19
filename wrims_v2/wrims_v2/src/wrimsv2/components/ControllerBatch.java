@@ -252,7 +252,7 @@ public class ControllerBatch {
 						// check monitored dvar list. they are slack and surplus generated automatically 
 						// from the weight group deviation penalty
 						// give error if they are not zero or greater than a small tolerance.
-						noError = !ErrorCheck.checkDeviationPenaltySlackSurplus(mds.dvList_monitored, mds.dvMap);
+						noError = !ErrorCheck.checkDeviationSlackSurplus(mds.dvList_deviationSlackSurplus, mds.dvMap);
 						
 						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
 						if (Error.error_solving.size()<1){
@@ -415,7 +415,7 @@ public class ControllerBatch {
 						// check monitored dvar list. they are slack and surplus generated automatically 
 						// from the weight group deviation penalty
 						// give error if they are not zero or greater than a small tolerance.
-						noError = !ErrorCheck.checkDeviationPenaltySlackSurplus(mds.dvList_monitored, mds.dvMap);
+						noError = !ErrorCheck.checkDeviationSlackSurplus(mds.dvList_deviationSlackSurplus, mds.dvMap);
 						
 						
 						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
@@ -534,7 +534,7 @@ public class ControllerBatch {
 						// check monitored dvar list. they are slack and surplus generated automatically 
 						// from the weight group deviation penalty
 						// give error if they are not zero or greater than a small tolerance.
-						noError = !ErrorCheck.checkDeviationPenaltySlackSurplus(mds.dvList_monitored, mds.dvMap);
+						noError = !ErrorCheck.checkDeviationSlackSurplus(mds.dvList_deviationSlackSurplus, mds.dvMap);
 						
 						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
 						if (Error.error_solving.size()<1){

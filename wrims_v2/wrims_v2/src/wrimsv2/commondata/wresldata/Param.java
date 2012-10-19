@@ -58,6 +58,8 @@ public class Param {
 	  public static final String global="global";
 	  public static final String local="local";
 	  
+	  public static final double deviationSlackSurplusTolerance = 1E-5;
+	  
 	  public static Set<String> reservedSet = new HashSet<String>(Arrays.asList
 				("month", "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec",
 				 "prevjan", "prevfeb", "prevmar", "prevapr", "prevmay", "prevjun", 

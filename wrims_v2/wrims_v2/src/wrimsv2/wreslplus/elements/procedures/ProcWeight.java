@@ -92,7 +92,7 @@ public class ProcWeight {
 							// create new dvar for subgroup id. this is the
 							// average for the subgroup
 							Misc.createDvarInModelObj(wsg.id, Param.upper_unbounded, Param.lower_unbounded,
-									"weightgroup_mean", "na", wt.fromWresl, wt.condition, mObj);
+									"weightgroup_mean", "na", wt.fromWresl, mObj, false);
 
 							// create new goal for subgroup average
 							String goal_id = "wg__" + wt.id_lowcase + "__" + wsg.id + "__mean";
@@ -119,12 +119,12 @@ public class ProcWeight {
 								String surplus_id = "wg__" + wt.id_lowcase.toLowerCase() + "__" + wsg.id.toLowerCase() + "__" + var + "__surplus";
 
 								// add slack						
-								Misc.createDvarInModelObj(slack_id, Param.upper_unbounded, Param.zero, "weightgroup_slack", "na", wt.fromWresl, wt.condition, mObj);
+								Misc.createDvarInModelObj(slack_id, Param.upper_unbounded, Param.zero, "weightgroup_slack", "na", wt.fromWresl, mObj, true);
 								
 								Misc.addWeightInGroupWeightMap(slack_id, wt.fromWresl, weight, mObj);
 
 								// add surplus
-								Misc.createDvarInModelObj(surplus_id, Param.upper_unbounded, Param.zero, "weightgroup_surplus", "na", wt.fromWresl, wt.condition, mObj);
+								Misc.createDvarInModelObj(surplus_id, Param.upper_unbounded, Param.zero, "weightgroup_surplus", "na", wt.fromWresl, mObj, true);
 
 								Misc.addWeightInGroupWeightMap(surplus_id, wt.fromWresl, weight, mObj);
 
@@ -155,7 +155,7 @@ public class ProcWeight {
 						String kind = "weightgroup_mean";
 						String units = "na";
 
-						Misc.createDvarInModelObj(average_id, Param.upper_unbounded, Param.lower_unbounded, kind, units, wt.fromWresl, wt.condition, mObj);
+						Misc.createDvarInModelObj(average_id, Param.upper_unbounded, Param.lower_unbounded, kind, units, wt.fromWresl, mObj, false);
 						
 						// create new goal for group average						
 						ArrayList<String> varList_and_subGroupId = new ArrayList<String>();
@@ -181,12 +181,12 @@ public class ProcWeight {
 							String surplus_id = "wg__" + wt.id_lowcase.toLowerCase() + "__" + var + "__surplus";
 
 							// add slack						
-							Misc.createDvarInModelObj(slack_id, Param.upper_unbounded, Param.zero, "weightgroup_slack", "na", wt.fromWresl, wt.condition, mObj);
+							Misc.createDvarInModelObj(slack_id, Param.upper_unbounded, Param.zero, "weightgroup_slack", "na", wt.fromWresl, mObj, true);
 							
 							Misc.addWeightInGroupWeightMap(slack_id, wt.fromWresl, weight, mObj);
 
 							// add surplus
-							Misc.createDvarInModelObj(surplus_id, Param.upper_unbounded, Param.zero, "weightgroup_surplus", "na", wt.fromWresl, wt.condition, mObj);
+							Misc.createDvarInModelObj(surplus_id, Param.upper_unbounded, Param.zero, "weightgroup_surplus", "na", wt.fromWresl, mObj, true);
 
 							Misc.addWeightInGroupWeightMap(surplus_id, wt.fromWresl, weight, mObj);
 

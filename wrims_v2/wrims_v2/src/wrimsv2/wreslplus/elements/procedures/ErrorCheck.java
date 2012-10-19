@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 
-
+import wrimsv2.components.Error;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.Param;
@@ -32,6 +32,34 @@ public class ErrorCheck {
 	
 	private ErrorCheck(){}
 
+	// these dvars are from slack and surplus of weight group deviation penalty
+	public static boolean checkDeviationSlackSurplus(ArrayList<String> dvList_monitored, Map<String, Dvar> dvMap) {
+		
+		ArrayList<String> errorList = new ArrayList<String>();
+		
+		for (String x : dvList_monitored){
+			
+			double v = (Double) dvMap.get(x).getData().getData();
+			
+			if (v > Param.deviationSlackSurplusTolerance) {
+				
+				errorList.add(x);
+				
+			}			
+			
+		}
+		
+		if (errorList.size()>0) {
+			
+			Error.addDeviationError( " Deviation slack and surplus are not zero: "+errorList); 
+			Error.writeDeviationErrorFile("Error_deviation.txt");
+			return true;
+			
+		}
+		
+		return false;
+			
+	}	
 	
 	
 	// TODO: this process alias only. need to expand to other types

@@ -11,6 +11,7 @@ public class Error {
 	public static ArrayList<String>   error_solving=new ArrayList<String>();
 	public static ArrayList<String>   error_engine=new ArrayList<String>();
 	public static ArrayList<String>   error_config=new ArrayList<String>();
+	public static ArrayList<String>   error_deviation=new ArrayList<String>();
 	
 	public static void writeGrammerErrorFile(String fileName){
 		
@@ -76,6 +77,22 @@ public class Error {
 		}
 	}
 	
+	public static void writeDeviationErrorFile(String fileName){
+		
+		String errorFileFullPath=FilePaths.mainDirectory+fileName;
+		try{
+			FileWriter errorFile = new FileWriter(errorFileFullPath);
+			PrintWriter out = new PrintWriter(errorFile);
+
+			for (int i=0; i<error_deviation.size(); i++){
+				out.println(error_deviation.get(i));
+			}
+			out.close();
+		} catch (IOException e){
+			e.printStackTrace();
+		}
+	}
+	
 	public static void addEvaluationError(String error){
 		if (ControlData.currEvalTypeIndex == 0){
 			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in svar definition of Cycle "+ControlData.currCycleIndex+": "+error);
@@ -111,13 +128,19 @@ public class Error {
 		error_config.add(error);
 		System.out.println("# Error: "+error);
 	}
+
+	public static void addDeviationError(String error){
+		error_deviation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+" of Cycle "+ControlData.currCycleIndex+": "+error);
+		System.out.println("# Error: "+error);
+	}
 	
 	public static int getTotalError(){
 		return Error.error_engine.size()+
 				 Error.error_evaluation.size()+
 				 Error.error_grammer.size()+
 				 Error.error_solving.size()+
-				 Error.error_config.size();
+				 Error.error_config.size()+
+				 Error.error_deviation.size();
 	}
 	
 	public static void clear(){
@@ -126,6 +149,7 @@ public class Error {
 		Error.error_grammer = new ArrayList<String>();
 		Error.error_solving = new ArrayList<String>();
 		Error.error_config = new ArrayList<String>();
+		Error.error_deviation = new ArrayList<String>();
 	}
 }
 

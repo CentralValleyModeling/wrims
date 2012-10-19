@@ -57,6 +57,7 @@ public class ModelTemp implements Serializable {
 	public ArrayList<String>  dvList;
 	public Map<String,DvarTemp> dvMap;	
 	public ArrayList<String>  dvList_fromAlias;  // processed
+	public ArrayList<String>  dvList_deviationSlackSurplus;  // give warning or error if greater than a tolerance
 	public ArrayList<String>  tsList;
 	public Map<String,TimeseriesTemp> tsMap;
 	public ArrayList<String>  exList;
@@ -112,6 +113,7 @@ public class ModelTemp implements Serializable {
 		dvList = new ArrayList<String>();
 		dvMap = new HashMap<String, DvarTemp>();
 		dvList_fromAlias = new ArrayList<String>();
+		dvList_deviationSlackSurplus = new ArrayList<String>();
 		tsList = new ArrayList<String>();
 		tsMap = new HashMap<String, TimeseriesTemp>();	
 		exList = new ArrayList<String>();

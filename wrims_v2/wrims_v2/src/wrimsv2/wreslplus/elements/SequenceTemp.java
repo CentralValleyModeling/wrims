@@ -32,6 +32,7 @@ public class SequenceTemp implements Serializable {
 	public ArrayList<String> exList; 
 	public ArrayList<String> dvList;
 	public ArrayList<String> dvList_fromAlias; 
+	public ArrayList<String> dvList_deviationSlackSurplus; 
 	public ArrayList<String> asList;
 	public ArrayList<String> glList;
 	public ArrayList<String> gl2List;
@@ -78,6 +79,7 @@ public class SequenceTemp implements Serializable {
 		exList = new ArrayList<String>();
 		dvList = new ArrayList<String>();
 		dvList_fromAlias = new ArrayList<String>();
+		dvList_deviationSlackSurplus = new ArrayList<String>();
 		asList = new ArrayList<String>();
 		glList = new ArrayList<String>();
 		gl2List = new ArrayList<String>();
