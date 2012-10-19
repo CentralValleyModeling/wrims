@@ -18,12 +18,17 @@ model First {
   
   goal G1 {  ( X+Y+Z ) + ( A+B+C+D+E ) < 80 }
   
-  objective NewObj {
+  goal G2 {              ( A+B+C+D+E ) = 20 }
+  
+  ! XYZ and ABCDE cannot be assigned equally because
+  ! they are subject to different constraints, 
+
+  objective xyzObj {
 	weight 5
 	deviation_penalty 1
 	variable X Y Z A B C D E
   }
-  
+ 
 }
 
 
