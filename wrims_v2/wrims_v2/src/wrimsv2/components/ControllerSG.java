@@ -265,7 +265,7 @@ public class ControllerSG {
 						ControlData.isPostProcessing=false;
 						mds.processModel();
 						if (Error.error_evaluation.size()>=1){
-							Error.writeEvaluationErrorFile("evaluation_error.txt");
+							Error.writeEvaluationErrorFile("Error_evaluation.txt");
 							noError=false;
 						}
 						new XASolver();
@@ -275,7 +275,7 @@ public class ControllerSG {
 							mds.processAlias();
 							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
 						}else{
-							Error.writeSolvingErrorFile("solving_error.txt");
+							Error.writeSolvingErrorFile("Error_solving.txt");
 							noError=false;
 						}
 						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
@@ -355,7 +355,7 @@ public class ControllerSG {
 						ControlData.isPostProcessing=false;
 						mds.processModel();
 						if (Error.error_evaluation.size()>=1){
-							Error.writeEvaluationErrorFile("evaluation_error.txt");
+							Error.writeEvaluationErrorFile("Error_evaluation.txt");
 							noError=false;
 						}
 						try{
@@ -369,7 +369,7 @@ public class ControllerSG {
 							mds.processAlias();
 							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
 						}else{
-							Error.writeSolvingErrorFile("solving_error.txt");
+							Error.writeSolvingErrorFile("Error_solving.txt");
 							noError=false;
 						}
 						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
@@ -472,7 +472,7 @@ public class ControllerSG {
 						ILP.writeSvarValue();
 					
 						if (Error.error_evaluation.size()>=1){
-							Error.writeEvaluationErrorFile("evaluation_error.txt");
+							Error.writeEvaluationErrorFile("Error_evaluation.txt");
 							noError=false;
 						}
 						new XASolver();
@@ -487,7 +487,7 @@ public class ControllerSG {
 							mds.processAlias();
 							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
 						}else{
-							Error.writeSolvingErrorFile("solving_error.txt");
+							Error.writeSolvingErrorFile("Error_solving.txt");
 							noError=false;
 						}
 						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");

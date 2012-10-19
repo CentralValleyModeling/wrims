@@ -28,6 +28,7 @@ import wrimsv2.solver.Gurobi.GurobiSolver;
 import wrimsv2.solver.Gurobi.LpResult;
 import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.elements.Tools;
+import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
 
 public class ControllerBatch {
 	
@@ -243,17 +244,23 @@ public class ControllerBatch {
 						ControlData.isPostProcessing=false;
 						mds.processModel();
 						if (Error.error_evaluation.size()>=1){
-							Error.writeEvaluationErrorFile("evaluation_error.txt");
+							Error.writeEvaluationErrorFile("Error_evaluation.txt");
 							noError=false;
 						}
 						new XASolver();
+						
+						// check monitored dvar list. they are slack and surplus generated automatically 
+						// from the weight group deviation penalty
+						// give error if they are not zero or greater than a small tolerance.
+						noError = !ErrorCheck.checkDeviationPenaltySlackSurplus(mds.dvList_monitored, mds.dvMap);
+						
 						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
 						if (Error.error_solving.size()<1){
 							ControlData.isPostProcessing=true;
 							mds.processAlias();
 							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
 						}else{
-							Error.writeSolvingErrorFile("solving_error.txt");
+							Error.writeSolvingErrorFile("Error_solving.txt");
 							noError=false;
 						}
 						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
@@ -373,7 +380,7 @@ public class ControllerBatch {
 						}
 					
 						if (Error.error_evaluation.size()>=1){
-							Error.writeEvaluationErrorFile("evaluation_error.txt");
+							Error.writeEvaluationErrorFile("Error_evaluation.txt");
 							noError=false;
 						}
 					
@@ -405,13 +412,19 @@ public class ControllerBatch {
 
 						ILP.closeIlpFile();
 
+						// check monitored dvar list. they are slack and surplus generated automatically 
+						// from the weight group deviation penalty
+						// give error if they are not zero or greater than a small tolerance.
+						noError = !ErrorCheck.checkDeviationPenaltySlackSurplus(mds.dvList_monitored, mds.dvMap);
+						
+						
 						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
 						if (Error.error_solving.size()<1){
 							ControlData.isPostProcessing=true;
 							mds.processAlias();
 							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
 						}else{
-							Error.writeSolvingErrorFile("solving_error.txt");
+							Error.writeSolvingErrorFile("Error_solving.txt");
 							noError=false;
 						}
 						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
@@ -503,7 +516,7 @@ public class ControllerBatch {
 						mds.processModel();
 						
 						if (Error.error_evaluation.size()>=1){
-							Error.writeEvaluationErrorFile("evaluation_error.txt");
+							Error.writeEvaluationErrorFile("Error_evaluation.txt");
 							Error.addSolvingError("evaluation error(s)");
 							noError=false;
 						} else {	
@@ -518,6 +531,11 @@ public class ControllerBatch {
 							GurobiSolver.solve();
 						}
 
+						// check monitored dvar list. they are slack and surplus generated automatically 
+						// from the weight group deviation penalty
+						// give error if they are not zero or greater than a small tolerance.
+						noError = !ErrorCheck.checkDeviationPenaltySlackSurplus(mds.dvList_monitored, mds.dvMap);
+						
 						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
 						if (Error.error_solving.size()<1){
 							
@@ -530,7 +548,7 @@ public class ControllerBatch {
 							mds.processAlias();
 							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
 						}else{
-							Error.writeSolvingErrorFile("solving_error.txt");
+							Error.writeSolvingErrorFile("Error_solving.txt");
 							noError=false;
 						}
 						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");

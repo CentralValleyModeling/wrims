@@ -252,7 +252,7 @@ public class ControllerTree {
 				System.out.println("Before Evaluation: "+cal.getTimeInMillis());
 				processModel();
 				if (Error.error_evaluation.size()>=1){
-					Error.writeEvaluationErrorFile("evaluation_error.txt");
+					Error.writeEvaluationErrorFile("Error_evaluation.txt");
 					noError=false;
 				}
 				cal = Calendar.getInstance();
@@ -266,7 +266,7 @@ public class ControllerTree {
 					ControlData.isPostProcessing=true;
 					processAliasTimeseries();
 				}else{
-					Error.writeSolvingErrorFile("solving_error.txt");
+					Error.writeSolvingErrorFile("Error_solving.txt");
 					noError=false;
 				}
 				cal = Calendar.getInstance();
@@ -335,7 +335,7 @@ public class ControllerTree {
 				System.out.println("Before Evaluation: "+cal.getTimeInMillis());
 				processModel();
 				if (Error.error_evaluation.size()>=1){
-					Error.writeEvaluationErrorFile("evaluation_error.txt");
+					Error.writeEvaluationErrorFile("Error_evaluation.txt");
 					noError=false;
 				}
 				cal = Calendar.getInstance();
@@ -353,7 +353,7 @@ public class ControllerTree {
 					ControlData.isPostProcessing=true;
 					processAliasTimeseries();
 				}else{
-					Error.writeSolvingErrorFile("solving_error.txt");
+					Error.writeSolvingErrorFile("Error_solving.txt");
 					noError=false;
 				}
 				cal = Calendar.getInstance();

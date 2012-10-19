@@ -152,7 +152,7 @@ public class testController {
 		StudyDataSet sds=parseCalsim3();
 		
 		new Controller();
-		Error.writeEvaluationErrorFile("evaluation_error.txt");
+		Error.writeEvaluationErrorFile("Error_evaluation.txt");
 	}
 	
 	public StudyDataSet parseCalsim3() throws RecognitionException, IOException{
@@ -203,7 +203,7 @@ public class testController {
 		StudyDataSet sds=parseCalLite();
 		
 		new Controller();
-		Error.writeEvaluationErrorFile("evaluation_error.txt");
+		Error.writeEvaluationErrorFile("Error_evaluation.txt");
 	}
 	
 	public StudyDataSet parseCalLite() throws RecognitionException, IOException{
