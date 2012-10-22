@@ -16,7 +16,7 @@ model inc {
   Objective[local] obj = {[x, 5] [y, 5] }
   Objective wg1 {
 	weight 6
-	deviation_penalty 0.1
+	DeviationPenalty 0.1
 	variable a b c
   }
 }

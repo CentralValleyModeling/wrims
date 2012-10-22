@@ -17,10 +17,10 @@ model inc {
 
   Objective obj {
 	weight 6
-	deviation_penalty w
+	DeviationPenalty w
 	variable a 
 			 b { 
-				deviation_penalty -5
+				DeviationPenalty -5
 				variable c d
 			 }
   }
@@ -38,7 +38,7 @@ MODEL first {
   
   Objective obj2 {
 	weight 6
-	deviation_penalty (5.0)
+	DeviationPenalty (5.0)
 	variable x 
 			 y { 
 				variable z z1
