@@ -112,6 +112,11 @@ public class ConfigUtils {
 			mainFilePath =  new File(StudyUtils.configDir, mainfile).getAbsolutePath();
 		}
 		
+		File validatedAbsFile = new File(mainFilePath).getAbsoluteFile();
+		if (!validatedAbsFile.exists()) { 
+			Error.addConfigError("File not found: " + mainFilePath); 
+		}
+		
 		if (mainfile.endsWith(".par")) {
 			StudyUtils.loadParserData = true;
 			StudyUtils.parserDataPath = mainFilePath;		
