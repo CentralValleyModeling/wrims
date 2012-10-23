@@ -1,0 +1,39 @@
+sequence CYCLE1 {
+    model   First
+    order   1
+    }
+
+	
+model First { 
+
+  define X_perc { upper 100. kind 'DEMAND-PERCENTAGE' units 'PERCENTAGE' }
+  define Y_perc { upper 100. kind 'DEMAND-PERCENTAGE' units 'PERCENTAGE' }
+  define Z_perc { upper 100. kind 'DEMAND-PERCENTAGE' units 'PERCENTAGE' }  
+
+  define X { alias X_perc *  40  kind 'DELIVERY' units 'CFS' }
+  define Y { alias Y_perc * 160  kind 'DELIVERY' units 'CFS' }
+  define Z { alias Z_perc *   0  kind 'DELIVERY' units 'CFS' }  
+  
+  goal G_All {  X+Y+Z  < 30 }  
+  
+  objective Obj1 {
+	weight 5
+	variable X Y Z
+  }
+
+  objective Obj2 {
+	weight 0
+	deviationPenalty 2
+	variable X_perc Y_perc Z_perc
+  }  
+}
+
+! result
+!
+! x                                  :  6
+! x_perc                             :  0.15
+! y                                  :  24
+! y_perc                             :  0.15
+! z                                  :  0
+! z_perc                             :  0.15
+
