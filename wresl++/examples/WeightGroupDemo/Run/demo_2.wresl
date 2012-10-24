@@ -25,7 +25,7 @@ model First {
 }
 
 
-! objective 150
+! objective 150.
 !
 ! x           0
 ! y          30
