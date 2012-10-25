@@ -29,7 +29,7 @@ model First {
   }  
 }
 
-! objective 110.
+! objective 150.
 !
 ! x_perc       0.15
 ! y_perc       0.15
