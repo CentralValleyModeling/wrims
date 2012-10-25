@@ -115,6 +115,7 @@ public class ConfigUtils {
 		File validatedAbsFile = new File(mainFilePath).getAbsoluteFile();
 		if (!validatedAbsFile.exists()) { 
 			Error.addConfigError("File not found: " + mainFilePath); 
+			Error.writeErrorLog();
 		}
 		
 		if (mainfile.endsWith(".par")) {
@@ -127,6 +128,7 @@ public class ConfigUtils {
 		}
 		else {
 			Error.addConfigError("Invalid main file extension: " + configMap.get("mainfile"));
+			Error.writeErrorLog();
 			//System.out.println("Invalid main file extension: " + configMap.get("mainfile"));
 			//System.out.println("Specify either *.wresl or *.par");
 			//System.exit(1);
@@ -171,6 +173,7 @@ public class ConfigUtils {
 		
 		} catch (IOException e){
 			Error.addConfigError("Invalid file path in config file");
+			Error.writeErrorLog();
 			//System.out.println("Invalid file path");
 			e.printStackTrace();
 		}
@@ -221,7 +224,8 @@ public class ConfigUtils {
 		final String[] solvers = {"xa","xalog","lpsolve","gurobi","gurobitest"};
 
 		if (!Arrays.asList(solvers).contains(ControlData.solverName.toLowerCase())){
-			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);	
+			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);
+			Error.writeErrorLog();
 		 }
 		
 		// SendAliasToDvar default is false
@@ -273,15 +277,18 @@ public class ConfigUtils {
 					} else {
 						//System.out.println("#Error: LpSolveConfigFile not found: " + f);
 						Error.addConfigError("LpSolveConfigFile not found: " + f);
+						Error.writeErrorLog();
 					}
 
 				} catch (Exception e) {
 					Error.addConfigError("LpSolveConfigFile not found: " + f);
+					Error.writeErrorLog();
 					//System.out.println("#Error: LpSolveConfigFile not found: " + f);
 					e.printStackTrace();
 				}
 			} else {
 				Error.addConfigError("LpSolveConfigFile not defined. ");
+				Error.writeErrorLog();
 				//System.out.println("#Error: LpSolveConfigFile not defined. ");
 			}
 		
@@ -299,6 +306,7 @@ public class ConfigUtils {
 				} catch (Exception e) {
 					//System.out.println("#Error: LpSolveNumberOfRetries not recognized: " + s);
 					Error.addConfigError("LpSolveNumberOfRetries not recognized: " + s);
+					Error.writeErrorLog();
 					
 				}				
 			}
@@ -355,6 +363,7 @@ public class ConfigUtils {
 				catch (Exception e) {
 
 					Error.addConfigError("IlpLogMaximumFractionDigits not recognized: " + s);
+					Error.writeErrorLog();
 				}
 			}
 			
@@ -553,6 +562,7 @@ public class ConfigUtils {
 			if (!configMap.keySet().contains(k.toLowerCase())) {
 				//System.out.println("Config file missing field: " + k);
 				Error.addConfigError("Config file missing field: " + k);
+				Error.writeErrorLog();
 				//StudyUtils.config_errors++;
 				//System.exit(1);
 			}
@@ -583,6 +593,7 @@ public class ConfigUtils {
 				if (!configMap.keySet().contains(k.toLowerCase())) {
 					//System.out.println("Config file missing field: " + k);
 					Error.addConfigError("Config file missing field: " + k);
+					Error.writeErrorLog();
 					//StudyUtils.config_errors++;
 					//System.exit(1);
 				}
@@ -608,6 +619,7 @@ public class ConfigUtils {
 			
 			//System.out.println("Only monthly timestep supported, i.e., \"TimeStep  1MON\" ");
 			Error.addConfigError("Only monthly timestep supported, i.e., \"TimeStep  1MON\" ");
+			Error.writeErrorLog();
 			//StudyUtils.config_errors++;
 			//System.exit(1);
 		}
@@ -639,6 +651,7 @@ public class ConfigUtils {
 		catch (IOException e) {
 			//System.out.println("Main file not found: "+mf.getAbsolutePath());
 			Error.addConfigError("Main file not found: "+mf.getAbsolutePath());
+			Error.writeErrorLog();
 			//System.exit(1);
 		}
 		

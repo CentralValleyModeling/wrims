@@ -186,6 +186,7 @@ public class ControllerBatch {
 			runModelXA(sds);
 		} else {
 			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);
+			Error.writeErrorLog();
 		}
 
 		if (Error.getTotalError()>0){
@@ -245,6 +246,7 @@ public class ControllerBatch {
 						mds.processModel();
 						if (Error.error_evaluation.size()>=1){
 							Error.writeEvaluationErrorFile("Error_evaluation.txt");
+							Error.writeErrorLog();
 							noError=false;
 						}
 						new XASolver();
@@ -252,7 +254,7 @@ public class ControllerBatch {
 						// check monitored dvar list. they are slack and surplus generated automatically 
 						// from the weight group deviation penalty
 						// give error if they are not zero or greater than a small tolerance.
-						noError = !ErrorCheck.checkDeviationSlackSurplus(mds.dvList_deviationSlackSurplus, mds.dvMap);
+						noError = !ErrorCheck.checkDeviationSlackSurplus(mds.deviationSlackSurplus_toleranceMap, mds.dvMap);
 						
 						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
 						if (Error.error_solving.size()<1){
@@ -324,6 +326,7 @@ public class ControllerBatch {
 			new InitialXASolver();
 		} else {
 			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);
+			Error.writeErrorLog();
 		}
 		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
@@ -381,6 +384,7 @@ public class ControllerBatch {
 					
 						if (Error.error_evaluation.size()>=1){
 							Error.writeEvaluationErrorFile("Error_evaluation.txt");
+							Error.writeErrorLog();
 							noError=false;
 						}
 					
@@ -415,7 +419,7 @@ public class ControllerBatch {
 						// check monitored dvar list. they are slack and surplus generated automatically 
 						// from the weight group deviation penalty
 						// give error if they are not zero or greater than a small tolerance.
-						noError = !ErrorCheck.checkDeviationSlackSurplus(mds.dvList_deviationSlackSurplus, mds.dvMap);
+						noError = !ErrorCheck.checkDeviationSlackSurplus(mds.deviationSlackSurplus_toleranceMap, mds.dvMap);
 						
 						
 						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
@@ -518,6 +522,7 @@ public class ControllerBatch {
 						if (Error.error_evaluation.size()>=1){
 							Error.writeEvaluationErrorFile("Error_evaluation.txt");
 							Error.addSolvingError("evaluation error(s)");
+							Error.writeErrorLog();
 							noError=false;
 						} else {	
 							ILP.setIlpFile();
@@ -534,7 +539,7 @@ public class ControllerBatch {
 						// check monitored dvar list. they are slack and surplus generated automatically 
 						// from the weight group deviation penalty
 						// give error if they are not zero or greater than a small tolerance.
-						noError = !ErrorCheck.checkDeviationSlackSurplus(mds.dvList_deviationSlackSurplus, mds.dvMap);
+						noError = !ErrorCheck.checkDeviationSlackSurplus(mds.deviationSlackSurplus_toleranceMap, mds.dvMap);
 						
 						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
 						if (Error.error_solving.size()<1){

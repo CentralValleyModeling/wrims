@@ -129,6 +129,8 @@ public class Procedures {
 		seq.exList.addAll(mt.exList);
 		seq.dvList.addAll(mt.dvList);
 		seq.dvList_deviationSlackSurplus.addAll(mt.dvList_deviationSlackSurplus);
+		seq.deviationSlackSurplus_toleranceMap.putAll(mt.deviationSlackSurplus_toleranceMap);
+		
 		seq.asList.addAll(mt.asList); 
 		seq.glList.addAll(mt.glList);
 		seq.gl2List.addAll(mt.gl2List);

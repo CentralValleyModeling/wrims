@@ -1,9 +1,14 @@
 package wrimsv2.components;
 
 import java.util.ArrayList;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.IOException;
+
+import wrimsv2.ilp.ILP;
+import wrimsv2.wreslparser.elements.StudyUtils;
+import wrimsv2.wreslparser.elements.Tools;
 
 public class Error {
 	public static ArrayList<String>   error_grammer = new ArrayList<String> ();
@@ -89,6 +94,39 @@ public class Error {
 			}
 			out.close();
 		} catch (IOException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public static void writeErrorLog(){
+		
+	    File ilpRootDir = new File(FilePaths.mainDirectory, "=ILP=");  
+	    File ilpDir = new File(ilpRootDir, StudyUtils.configFileName); 
+	    PrintWriter errorLogFile;
+	    try {
+			errorLogFile = Tools.openFile(ilpDir.getAbsolutePath(), "Error.log");
+			
+			errorLogFile.println("===========");
+			errorLogFile.println(ILP.getYearMonthCycle());
+			errorLogFile.println("===========");
+			
+			for (int i=0; i<error_config.size(); i++){
+				errorLogFile.println(error_config.get(i));
+			}
+			for (int i=0; i<error_evaluation.size(); i++){
+				errorLogFile.println(error_evaluation.get(i));
+			}
+			for (int i=0; i<error_solving.size(); i++){
+				errorLogFile.println(error_solving.get(i));
+			}
+			for (int i=0; i<error_deviation.size(); i++){
+				errorLogFile.println(error_deviation.get(i));
+			}
+
+			errorLogFile.close();
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -72,6 +72,7 @@ public class ModelDataSet implements Serializable {
 	// / dvar data structure
 	public ArrayList<String> dvList = new ArrayList<String>();
 	public ArrayList<String> dvList_deviationSlackSurplus = new ArrayList<String>();
+	public Map<String,Double> deviationSlackSurplus_toleranceMap = new HashMap<String, Double>();
 	public ArrayList<String> dvTimeArrayList = new ArrayList<String>();
 	public ArrayList<String> dvSlackSurplusList = new ArrayList<String>();
 	public ArrayList<String> dvList_global = new ArrayList<String>();

@@ -33,6 +33,7 @@ public class SequenceTemp implements Serializable {
 	public ArrayList<String> dvList;
 	public ArrayList<String> dvList_fromAlias; 
 	public ArrayList<String> dvList_deviationSlackSurplus; 
+	public Map<String,Double> deviationSlackSurplus_toleranceMap; // < deviationSS, tolerance>
 	public ArrayList<String> asList;
 	public ArrayList<String> glList;
 	public ArrayList<String> gl2List;
@@ -80,6 +81,7 @@ public class SequenceTemp implements Serializable {
 		dvList = new ArrayList<String>();
 		dvList_fromAlias = new ArrayList<String>();
 		dvList_deviationSlackSurplus = new ArrayList<String>();
+		deviationSlackSurplus_toleranceMap = new HashMap<String, Double>();
 		asList = new ArrayList<String>();
 		glList = new ArrayList<String>();
 		gl2List = new ArrayList<String>();

@@ -92,7 +92,7 @@ public class ProcWeight {
 							// create new dvar for subgroup id. this is the
 							// average for the subgroup
 							Misc.createDvarInModelObj(wsg.id, Param.upper_unbounded, Param.lower_unbounded,
-									"weightgroup_mean", "na", wt.fromWresl, mObj, false);
+									"weightgroup_mean", "na", wt.fromWresl, mObj);
 
 							// create new goal for subgroup average
 							String goal_id = "wg__" + wt.id_lowcase + "__" + wsg.id + "__mean";
@@ -120,13 +120,17 @@ public class ProcWeight {
 								String surplus_id = "wg__" + wt.id_lowcase.toLowerCase() + "__" + wsg.id.toLowerCase() + "__" + var + "__surplus";
 
 								// add slack						
-								Misc.createDvarInModelObj(slack_id, Param.upper_unbounded, Param.zero, "weightgroup_slack", "na", wt.fromWresl, mObj, true);
+								Misc.createDvarInModelObj(slack_id, Param.upper_unbounded, Param.zero, "weightgroup_slack", "na", wt.fromWresl, mObj);
+								mObj.dvList_deviationSlackSurplus.add(slack_id.toLowerCase());
+								mObj.deviationSlackSurplus_toleranceMap.put(slack_id.toLowerCase(), deviationTolerance);
 								
 								Misc.addWeightInGroupWeightMap(slack_id, wt.fromWresl, weight, mObj);
 
 								// add surplus
-								Misc.createDvarInModelObj(surplus_id, Param.upper_unbounded, Param.zero, "weightgroup_surplus", "na", wt.fromWresl, mObj, true);
-
+								Misc.createDvarInModelObj(surplus_id, Param.upper_unbounded, Param.zero, "weightgroup_surplus", "na", wt.fromWresl, mObj);
+								mObj.dvList_deviationSlackSurplus.add(surplus_id.toLowerCase());
+								mObj.deviationSlackSurplus_toleranceMap.put(surplus_id.toLowerCase(), deviationTolerance);
+								
 								Misc.addWeightInGroupWeightMap(surplus_id, wt.fromWresl, weight, mObj);
 
 								// add goal for slack surplus
@@ -156,7 +160,7 @@ public class ProcWeight {
 						String kind = "weightgroup_mean";
 						String units = "na";
 
-						Misc.createDvarInModelObj(average_id, Param.upper_unbounded, Param.lower_unbounded, kind, units, wt.fromWresl, mObj, false);
+						Misc.createDvarInModelObj(average_id, Param.upper_unbounded, Param.lower_unbounded, kind, units, wt.fromWresl, mObj);
 						
 						// create new goal for group average						
 						ArrayList<String> varList_and_subGroupId = new ArrayList<String>();
@@ -175,6 +179,7 @@ public class ProcWeight {
 
 						// create slack and surplus for var in varList
 						String weight = "-(" + wt.deviationPenalty + ")";
+						Double deviationTolerance = Double.parseDouble(wt.deviationTolerance);
 						
 						for (String var : varList_and_subGroupId) {
 
@@ -182,13 +187,17 @@ public class ProcWeight {
 							String surplus_id = "wg__" + wt.id_lowcase.toLowerCase() + "__" + var + "__surplus";
 
 							// add slack						
-							Misc.createDvarInModelObj(slack_id, Param.upper_unbounded, Param.zero, "weightgroup_slack", "na", wt.fromWresl, mObj, true);
+							Misc.createDvarInModelObj(slack_id, Param.upper_unbounded, Param.zero, "weightgroup_slack", "na", wt.fromWresl, mObj);
+							mObj.dvList_deviationSlackSurplus.add(slack_id.toLowerCase());
+							mObj.deviationSlackSurplus_toleranceMap.put(slack_id.toLowerCase(), deviationTolerance);
 							
 							Misc.addWeightInGroupWeightMap(slack_id, wt.fromWresl, weight, mObj);
 
 							// add surplus
-							Misc.createDvarInModelObj(surplus_id, Param.upper_unbounded, Param.zero, "weightgroup_surplus", "na", wt.fromWresl, mObj, true);
-
+							Misc.createDvarInModelObj(surplus_id, Param.upper_unbounded, Param.zero, "weightgroup_surplus", "na", wt.fromWresl, mObj);
+							mObj.dvList_deviationSlackSurplus.add(surplus_id.toLowerCase());
+							mObj.deviationSlackSurplus_toleranceMap.put(surplus_id.toLowerCase(), deviationTolerance);
+							
 							Misc.addWeightInGroupWeightMap(surplus_id, wt.fromWresl, weight, mObj);
 
 							// add goal for slack surplus

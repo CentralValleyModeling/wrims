@@ -26,7 +26,7 @@ public class Misc {
 	}
 	
 	public static void createDvarInModelObj(String id, String ub, String lb, String kind, String units, 
-			String fromWresl, ModelTemp mObj, boolean isDeviationSlackSurplus) {
+			String fromWresl, ModelTemp mObj) {
 		
 		DvarTemp d = new DvarTemp();
 		d.id = id;
@@ -39,7 +39,6 @@ public class Misc {
 
 		mObj.dvList.add(d.id.toLowerCase());
 		mObj.dvMap.put(d.id.toLowerCase(), d);
-		if (isDeviationSlackSurplus) mObj.dvList_deviationSlackSurplus.add(d.id.toLowerCase());
 		
 	}
 	

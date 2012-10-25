@@ -274,7 +274,7 @@ public class ILP {
 		
 	}
 	
-	private static String getYearMonthCycle(){
+	public static String getYearMonthCycle(){
 		
 		String twoDigitMonth = String.format("%02d", ControlData.currMonth);
 		String twoDigitCycle = String.format("%02d", ControlData.currCycleIndex+1);
