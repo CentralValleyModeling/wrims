@@ -1,3 +1,4 @@
+
 sequence CYCLE1 {
     model   First
     order   1
@@ -19,5 +20,14 @@ model First {
   }
  
 }
+
+! objective 150.
+!
+! x           0
+! y           0
+! z          30
+
+
+
 
 
