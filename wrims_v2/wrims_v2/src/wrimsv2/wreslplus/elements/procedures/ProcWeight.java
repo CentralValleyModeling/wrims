@@ -73,13 +73,13 @@ public class ProcWeight {
 					//processSubgroup(wt);
 					
 					boolean mainCommonPenaltyIsZero = false;
-					try { mainCommonPenaltyIsZero = Float.parseFloat(wt.commonPenalty)==0;} catch (Exception e) {}
+					try { mainCommonPenaltyIsZero = Float.parseFloat(wt.deviationPenalty)==0;} catch (Exception e) {}
 										
 					
 					for (WeightSubgroup wsg : wt.subgroupMap.values()){
 
 						boolean subCommonPenaltyIsZero = false;
-						try { subCommonPenaltyIsZero = Float.parseFloat(wsg.commonPenalty)==0;} catch (Exception e) {}
+						try { subCommonPenaltyIsZero = Float.parseFloat(wsg.deviationPenalty)==0;} catch (Exception e) {}
 /// process subgroup
 						
 						// add all var in wvList
@@ -111,7 +111,8 @@ public class ProcWeight {
 							
 							
 							// create slack and surplus for var in varList
-							String weight = "-(" + wsg.commonPenalty + ")";
+							String weight = "-(" + wsg.deviationPenalty + ")";
+							Double deviationTolerance = Double.parseDouble(wsg.deviationTolerance);
 							
 							for (String var : wsg.varList) {
 
@@ -173,7 +174,7 @@ public class ProcWeight {
 						
 
 						// create slack and surplus for var in varList
-						String weight = "-(" + wt.commonPenalty + ")";
+						String weight = "-(" + wt.deviationPenalty + ")";
 						
 						for (String var : varList_and_subGroupId) {
 

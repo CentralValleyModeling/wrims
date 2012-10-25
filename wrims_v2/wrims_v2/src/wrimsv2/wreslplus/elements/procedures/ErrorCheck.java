@@ -343,7 +343,7 @@ public class ErrorCheck {
 				
 			}
 			
-		//// check common penalty not a number in weight group	
+		//// check deviation penalty and tolerance "Not a number" in weight group	
 
 			for (WeightTable wt: seqObj.wTableObjList){
 				
@@ -351,16 +351,32 @@ public class ErrorCheck {
 					
 					try {
 						
-						double p = Double.parseDouble(wt.commonPenalty);
+						double p = Double.parseDouble(wt.deviationPenalty);
 						
 						if (p<0) {
-							LogUtils.errMsg(" Penalty ["+ wt.commonPenalty +"] in Objective ["+ wt.id_raw +"] must be a nonnegative number." );	
+							LogUtils.errMsg(" Deviation Penalty ["+ wt.deviationPenalty +"] in Objective ["+ wt.id_raw +"] must be a nonnegative number." );	
 							ret = true;
 						}
 						
 					} catch (Exception e) {
 						
-						LogUtils.errMsg(" Penalty ["+ wt.commonPenalty +"] in Objective ["+ wt.id_raw +"] must be a pure number." );	
+						LogUtils.errMsg(" Deviation Penalty ["+ wt.deviationPenalty +"] in Objective ["+ wt.id_raw +"] must be a pure number." );	
+						
+						ret = true;
+					}
+
+					try {
+						
+						double p = Double.parseDouble(wt.deviationTolerance);
+						
+						if (p<0) {
+							LogUtils.errMsg(" Deviation Tolerance ["+ wt.deviationTolerance +"] in Objective ["+ wt.id_raw +"] must be a nonnegative number." );	
+							ret = true;
+						}
+						
+					} catch (Exception e) {
+						
+						LogUtils.errMsg(" Deviation Tolerance ["+ wt.deviationTolerance +"] in Objective ["+ wt.id_raw +"] must be a pure number." );	
 						
 						ret = true;
 					}
@@ -370,16 +386,32 @@ public class ErrorCheck {
 						
 						try {
 							
-							double p = Double.parseDouble(ws.commonPenalty);
+							double p = Double.parseDouble(ws.deviationPenalty);
 							
 							if (p<0) {
-								LogUtils.errMsg(" Penalty ["+ ws.commonPenalty +"] in Objective ["+ wt.id_raw +"] must be a nonnegative number." );	
+								LogUtils.errMsg(" Deviation Penalty ["+ ws.deviationPenalty +"] in Objective ["+ wt.id_raw +"] must be a nonnegative number." );	
 								ret = true;
 							}
 							
 						} catch (Exception e) {
 							
-							LogUtils.errMsg(" Penalty ["+ ws.commonPenalty +"] in Objective ["+ wt.id_raw +"] must be a pure number." );	
+							LogUtils.errMsg(" Deviation Penalty ["+ ws.deviationPenalty +"] in Objective ["+ wt.id_raw +"] must be a pure number." );	
+							
+							ret = true;
+						}
+						
+						try {
+							
+							double p = Double.parseDouble(ws.deviationTolerance);
+							
+							if (p<0) {
+								LogUtils.errMsg(" Deviation Tolerance ["+ ws.deviationTolerance +"] in Objective ["+ wt.id_raw +"] must be a nonnegative number." );	
+								ret = true;
+							}
+							
+						} catch (Exception e) {
+							
+							LogUtils.errMsg(" Deviation Tolerance ["+ ws.deviationTolerance +"] in Objective ["+ wt.id_raw +"] must be a pure number." );	
 							
 							ret = true;
 						}

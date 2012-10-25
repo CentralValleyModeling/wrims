@@ -229,11 +229,12 @@ weightTableID : i=ID {$weight::wt_.id_lowcase=$i.text.toLowerCase();
 weight_group
 @init{ $weight::wt_.isWeightGroup=true; }
 	:  WEIGHT w=expr_add  {$weight::wt_.commonWeight=$w.text;} 
-	   weight_trunk {System.out.println("subgroup: "+$weight::wt_.subgroupMap.keySet());}
+	   weight_trunk //{System.out.println("subgroup: "+$weight::wt_.subgroupMap.keySet());}
 	;	
 
 weight_trunk 
-	:  ( DeviationPenalty p=expr_add {$weight::wt_.commonPenalty=$p.text;} )? 
+	:  ( DeviationPenalty   p=expr_add {$weight::wt_.deviationPenalty=$p.text;} )? 
+	   ( DeviationTolerance t=expr_add {$weight::wt_.deviationTolerance=$t.text;} )? 
 	   VARIABLE ( weight_group_unit | weight_subgroup )+
 	  ;
 	    
@@ -252,7 +253,8 @@ scope { WeightSubgroup sub_;}
 	;
 
 weight_subgroup_trunk 
-	:  ( DeviationPenalty p=expr_add {$weight_subgroup::sub_.commonPenalty=$p.text;} )? 
+	:  ( DeviationPenalty   p=expr_add {$weight_subgroup::sub_.deviationPenalty=$p.text;} )? 
+	   ( DeviationTolerance t=expr_add {$weight_subgroup::sub_.deviationTolerance=$t.text;} )? 
 	   VARIABLE ( weight_subgroup_unit+ ) // | weight_subgroup )+
 	  ;
 
@@ -830,6 +832,7 @@ GOAL :      'goal' | 'GOAL' | 'Goal' ;
 VALUE :     'value' | 'VALUE' | 'Value';
 PENALTY : 'penalty' | 'PENALTY' | 'Penalty' ;
 DeviationPenalty : 'deviationpenalty' | 'DEVIATIONPENALTY' | 'DeviationPenalty' | 'deviationPenalty' | 'Deviationpenalty' ;
+DeviationTolerance : 'deviationtolerance' | 'DEVIATIONTOLERANCE' | 'DeviationTolerance' | 'deviationTolerance' | 'Deviationtolerance' ;
 WEIGHT : 'weight' | 'WEIGHT' | 'Weight' ;
 //ITEM    : 'item' | 'ITEM' | 'Item' ;
 

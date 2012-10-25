@@ -234,7 +234,8 @@ public class ToLowerCase {
 		o.subgroupMap = Tools.allToLowerCase_weightSubgroup(w.subgroupMap);
 		o.dependants = Tools.allToLowerCase(w.dependants);
 		o.commonWeight = w.commonWeight.toLowerCase();
-		o.commonPenalty = w.commonPenalty.toLowerCase();
+		o.deviationPenalty = w.deviationPenalty.toLowerCase();
+		o.deviationTolerance = w.deviationTolerance.toLowerCase();
 		o.isWeightGroup = w.isWeightGroup;
 		
 		return o;

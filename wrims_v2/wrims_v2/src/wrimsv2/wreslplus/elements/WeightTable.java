@@ -22,7 +22,8 @@ public class WeightTable implements Serializable {
 	public ArrayList<String> varList;
 	public Map<String,String> varWeightMap;
 	public String commonWeight;
-	public String commonPenalty;
+	public String deviationPenalty;
+	public String deviationTolerance;
 	//public ArrayList<WeightSubgroup> subgroup;
 	public Map<String,WeightSubgroup> subgroupMap;
 	//public ArrayList<WeightGroup> weightGroupList;
@@ -37,7 +38,8 @@ public class WeightTable implements Serializable {
 		varList = new ArrayList<String>();
 		varWeightMap = new LinkedHashMap<String, String>();
 		commonWeight = Param.undefined;
-		commonPenalty = Param.zero;
+		deviationPenalty = Param.zero;
+		deviationTolerance = Param.zero;
 		//subgroup = new ArrayList<WeightSubgroup>();
 		subgroupMap = new LinkedHashMap<String,WeightSubgroup>();
 		//weightGroupList = new ArrayList<WeightGroup>();

@@ -143,7 +143,8 @@ public class Tools {
 		
 		WeightSubgroup out = new WeightSubgroup();
 		
-		out.commonPenalty = wsg.commonPenalty.toLowerCase();
+		out.deviationPenalty = wsg.deviationPenalty.toLowerCase();
+		out.deviationTolerance = wsg.deviationTolerance.toLowerCase();
 		out.id = wsg.id;
 		out.varList = allToLowerCase(wsg.varList);
 		
