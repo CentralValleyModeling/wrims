@@ -5,3 +5,4 @@ start ..\runConfigDev_limitedXA.bat J:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\w
 start ..\runConfigDev_limitedXA.bat J:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\weightgroup\simple5.config
 start ..\runConfigDev_limitedXA.bat J:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\weightgroup\simple7.config
 start ..\runConfigDev_limitedXA.bat J:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\weightgroup\simple8.config
+start ..\runConfigDev_limitedXA.bat J:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\weightgroup\simple9.config
