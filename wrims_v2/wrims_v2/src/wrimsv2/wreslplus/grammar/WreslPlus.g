@@ -71,7 +71,8 @@ options {
         number_of_errors++;
     }
 }
-wreslPlusMain : study config* template* sequence+ model+;
+wreslPlusMain : study  template* sequence+ model+;
+
 
 wreslFile
 @after{ mObj = $t.modelObj;}
@@ -80,6 +81,7 @@ wreslFile
 wreslMain
 @init{ styObj = new StudyTemp(); }
 	: 
+  ( par=parameter     ) 
 	( seq=sequence { styObj.seqList.add($seq.id); styObj.seqMap.put($seq.id,$seq.seqObj);  }    )+ 
 	( m=model      { styObj.modelList.add($m.id); styObj.modelMap.put($m.id, $m.modelObj);  }    )+ 
 	;
@@ -90,7 +92,7 @@ include_config :   INCLUDE 'config' ( ID | include_file )  ;
 include_template : INCLUDE 'template' ( ID | include_file )  ;
 include_sequence : INCLUDE SEQUENCE ID  ;
 
-config :  CONFIG ID '{' param* '}' ;
+//config :  CONFIG ID '{' param* '}' ;
 
 template : TEMPLATE ID '{' ( template_svar | template_dvar | template_dvar_array )*  '}' ;
 
@@ -115,13 +117,16 @@ sequence returns[String id, SequenceTemp seqObj]
 	;
 
 
-param : PARAM ID '{' ( param_simple | param_case+ )  '}' ;
+parameter : Parameter '{' constant+ '}';
+constant : Const ID '{' number '}';
 
-param_simple : param_number ;
-
-param_case: CASE logical_main '{'  param_number    '}' ;
-
-param_number : VALUE number;
+//param : PARAM ID '{' ( param_simple | param_case+ )  '}' ;
+//
+//param_simple : param_number ;
+//
+//param_case: CASE logical_main '{'  param_number    '}' ;
+//
+//param_number : VALUE number;
 
 //param_table : table ;
 
@@ -839,7 +844,9 @@ WEIGHT : 'weight' | 'WEIGHT' | 'Weight' ;
 CONFIG : 'config' ;
 LABEL : 'label' ;
 NAME : 'name' ;
-PARAM : 'param' ;
+//PARAM : 'param' ;
+Parameter : 'parameter' | 'Parameter' | 'PARAMETER' ;
+Const : 'const' | 'Const' | 'CONST' ;
 
 // deprecated keyword
 DEFINE : 'define' | 'DEFINE' | 'Define' ;
