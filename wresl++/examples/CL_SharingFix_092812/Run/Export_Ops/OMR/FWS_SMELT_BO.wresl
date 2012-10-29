@@ -181,8 +181,8 @@ define temp_trig_da    {select Day from FWS_BO_A3_Temp where  YEAR= wateryear}
 
 !Action 3 biological trigger:
 !Reads the month and the day that it is most likely to observe a spent female smelt in SKT or at pumping facilities.
-define bio_trig_mo    {select Values from FWS_BO_A3_Bio where  Parameter=1}
-define bio_trig_da    {select Values from FWS_BO_A3_Bio where  Parameter=2}
+define bio_trig_mo    {select Values from FWS_BO_A3_Bio where  Param=1}
+define bio_trig_da    {select Values from FWS_BO_A3_Bio where  Param=2}
 
 !define bio_trig_modv {alias bio_trig_mo kind 'TRIGGER' units 'NONE'}
 !define bio_trig_dadv {alias bio_trig_da kind 'TRIGGER' units 'NONE'}
