@@ -193,6 +193,7 @@ public class Workflow {
 		
 		Procedures.convertAliasToGoal(st); 
 		
+		ErrorCheck.checkWeightVarNotInDvar(st);
 		
 		Procedures.analyzeVarNeededFromCycle(st);
 		Procedures.createSpaceInVarCycleValueMap(st);
