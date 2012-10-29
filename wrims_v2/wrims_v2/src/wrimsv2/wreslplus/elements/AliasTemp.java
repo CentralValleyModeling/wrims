@@ -28,6 +28,7 @@ public class AliasTemp implements Serializable {
 	public Set<String> dependants_dvar;
 	public Set<String> dependants_svar;
 	public Set<String> dependants_alias;
+	public Set<String> dependants_parameter;
 	public Set<String> dependants_unknown;
 	public Set<String> neededVarInCycleSet;
 	public boolean needVarFromEarlierCycle;

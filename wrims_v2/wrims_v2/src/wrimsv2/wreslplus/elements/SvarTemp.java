@@ -26,6 +26,7 @@ public class SvarTemp implements Serializable {
 	public Set<String> dependants;
 	public Set<String> dependants_timeseries;
 	public Set<String> dependants_external;
+	public Set<String> dependants_parameter;
 	public Set<String> dependants_alias;
 	public Set<String> dependants_dvar;
 	public Set<String> dependants_svar;

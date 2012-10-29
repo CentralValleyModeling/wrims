@@ -79,12 +79,24 @@ wreslFile
 	: t=mt ; 
 
 wreslMain
-@init{ styObj = new StudyTemp(); }
+scope { StudyTemp sty;} 
+@init {  $wreslMain::sty = new StudyTemp();}
+@after{ styObj = $wreslMain::sty; }
+
 	: 
-  ( par=parameter     ) 
-	( seq=sequence { styObj.seqList.add($seq.id); styObj.seqMap.put($seq.id,$seq.seqObj);  }    )+ 
-	( m=model      { styObj.modelList.add($m.id); styObj.modelMap.put($m.id, $m.modelObj);  }    )+ 
+   parameter?
+	( seq=sequence { $wreslMain::sty.seqList.add($seq.id); $wreslMain::sty.seqMap.put($seq.id,$seq.seqObj);  }    )+ 
+	( m=model      { $wreslMain::sty.modelList.add($m.id); $wreslMain::sty.modelMap.put($m.id, $m.modelObj);  }    )+ 
 	;
+
+
+parameter : Parameter '{' constant+ '}';
+constant 
+  : Const i=ID '{' n=number '}' 
+          { 
+            $wreslMain::sty.parameterList.add($i.text); 
+            $wreslMain::sty.parameterMap.put($i.text, $n.text); 
+          };
 
 study : 'study' ID '{' include_config* include_template* include_sequence+  '}' ;
 
@@ -117,8 +129,6 @@ sequence returns[String id, SequenceTemp seqObj]
 	;
 
 
-parameter : Parameter '{' constant+ '}';
-constant : Const ID '{' number '}';
 
 //param : PARAM ID '{' ( param_simple | param_case+ )  '}' ;
 //

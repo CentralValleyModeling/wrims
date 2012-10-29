@@ -68,6 +68,10 @@ public class ToWreslData {
 		ArrayList<String> modelConditionList   = new ArrayList<String>();
 		Map<String, Timeseries> allTimeseriesMap = new LinkedHashMap<String, Timeseries>();
 		
+		o.setParameterList(s.parameterList);
+		o.setParameterMap(convertParameterMap(s.parameterMap));
+		
+		
 		//for (String k: s.modelList_effective){
 		for (String se : s.seqList){
 			
@@ -79,6 +83,11 @@ public class ToWreslData {
 			
 			modelConditionList.add("always"); //TODO: need condition
 			ModelDataSet md = convertModel(seqObj, s);
+			
+			// insert parameters into svar list and svar map
+			md.svList.addAll(0, o.getParameterList());
+			md.svMap.putAll(o.getParameterMap());
+			
 			modelDataSetMap.put(modelName, md);
 		
 			// add ts into all ts map. TODO: check name duplications
@@ -93,6 +102,29 @@ public class ToWreslData {
 
 	}	
 	
+	private static Map<String, Svar> convertParameterMap(
+			Map<String, String> simpleMap) {
+		
+		Map<String, Svar> pm = new HashMap<String, Svar>();
+		
+		for (String key: simpleMap.keySet()){
+			
+			Svar svObj = new Svar();
+			
+			svObj.caseName.add(Param.defaultCaseName);
+			svObj.caseCondition.add(Param.always);
+			svObj.caseExpression.add(simpleMap.get(key));
+		    
+			pm.put(key, svObj);
+			
+		}
+		
+		
+		// TODO Auto-generated method stub
+		return pm;
+	}
+
+
 	public static ModelDataSet convertModel (SequenceTemp seq, StudyTemp st){
 		
 		ModelDataSet o = new ModelDataSet();

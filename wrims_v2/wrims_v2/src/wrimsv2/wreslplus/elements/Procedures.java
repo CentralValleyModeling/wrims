@@ -495,10 +495,10 @@ public class Procedures {
 
 			//ModelTemp mObj = s.modelMap.get(m);
 
-			classifyDependants(seqObj);						
+			classifyDependants(seqObj, s.parameterList);						
 		}
 	}
-	public static void classifyDependants(SequenceTemp seqObj) {
+	public static void classifyDependants(SequenceTemp seqObj, ArrayList<String> parameterList) {
 		
 		for (String key : seqObj.asMap.keySet()) {
 
@@ -515,12 +515,16 @@ public class Procedures {
 
 			asObj.dependants_alias = new LinkedHashSet<String>(asObj.dependants);
 			asObj.dependants_alias.retainAll(seqObj.asMap.keySet());
+
+			asObj.dependants_parameter = new LinkedHashSet<String>(asObj.dependants);
+			asObj.dependants_parameter.retainAll(parameterList);
 			
 			asObj.dependants_unknown = new LinkedHashSet<String>(asObj.dependants);
 			asObj.dependants_unknown.removeAll(asObj.dependants_timeseries);
 			asObj.dependants_unknown.removeAll(asObj.dependants_dvar);
 			asObj.dependants_unknown.removeAll(asObj.dependants_svar);
 			asObj.dependants_unknown.removeAll(asObj.dependants_alias);
+			asObj.dependants_unknown.removeAll(asObj.dependants_parameter);
 			
 			
 			// TODO: this is to match legacy wresl parser
@@ -546,6 +550,9 @@ public class Procedures {
 			
 			svObj.dependants_external = new LinkedHashSet<String>(svObj.dependants);
 			svObj.dependants_external.retainAll(seqObj.exList);
+
+			svObj.dependants_parameter = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_parameter.retainAll(parameterList);
 			
 			svObj.dependants_unknown = new LinkedHashSet<String>(svObj.dependants);
 			svObj.dependants_unknown.removeAll(svObj.dependants_timeseries);
@@ -553,6 +560,7 @@ public class Procedures {
 			svObj.dependants_unknown.removeAll(svObj.dependants_dvar);
 			svObj.dependants_unknown.removeAll(svObj.dependants_svar);
 			svObj.dependants_unknown.removeAll(svObj.dependants_external);
+			svObj.dependants_unknown.removeAll(svObj.dependants_parameter);
 
 			// TODO: this is to match legacy wresl parser
 			svObj.dependants.removeAll(svObj.dependants_timeseries);
@@ -580,6 +588,9 @@ public class Procedures {
 
 			svObj.dependants_external = new LinkedHashSet<String>(svObj.dependants);
 			svObj.dependants_external.retainAll(seqObj.exMap.keySet());
+
+			svObj.dependants_parameter = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_parameter.retainAll(parameterList);
 			
 			svObj.dependants_unknown = new LinkedHashSet<String>(svObj.dependants);
 			svObj.dependants_unknown.removeAll(svObj.dependants_timeseries);
@@ -587,6 +598,7 @@ public class Procedures {
 			svObj.dependants_unknown.removeAll(svObj.dependants_dvar);
 			svObj.dependants_unknown.removeAll(svObj.dependants_alias);
 			svObj.dependants_unknown.removeAll(svObj.dependants_external);
+			svObj.dependants_unknown.removeAll(svObj.dependants_parameter);
 			
 		}	
 	}

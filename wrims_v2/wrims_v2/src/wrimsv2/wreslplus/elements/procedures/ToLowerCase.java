@@ -40,6 +40,14 @@ public class ToLowerCase {
 	//TODO: model must be in sequence obj, also condition not linked yet
 	public static void convert (StudyTemp s){		
 
+		// study
+		for (String key : s.parameterList) {
+			String expression = s.parameterMap.get(key);
+			s.parameterMap.remove(key);
+			s.parameterMap.put( key.toLowerCase(), expression.toLowerCase());
+		}
+		s.parameterList = Tools.allToLowerCase(s.parameterList);
+		
 		// sequence
 		for (String key : s.seqList) {
 			SequenceTemp n = s.seqMap.get(key);

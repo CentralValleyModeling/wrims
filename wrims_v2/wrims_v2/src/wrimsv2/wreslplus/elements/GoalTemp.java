@@ -30,6 +30,7 @@ public class GoalTemp implements Serializable {
 	public Set<String> dependants_dvar;
 	public Set<String> dependants_alias;
 	public Set<String> dependants_external;
+	public Set<String> dependants_parameter;
 	public Set<String> dependants_unknown;
 	public Set<String> neededVarInCycleSet;
 	public boolean needVarFromEarlierCycle;
