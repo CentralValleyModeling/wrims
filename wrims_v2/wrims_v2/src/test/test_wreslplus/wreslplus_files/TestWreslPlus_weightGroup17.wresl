@@ -1,0 +1,28 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+	
+MODEL first { 
+
+  define x { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define y { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define z { std kind 'FLOW-CHANNEL' units 'CFS'}
+
+  define S1 { value 33 }
+  define A1 { alias z }
+	
+  goal g1 { x + y + z < 100  }
+  goal g2 { A1 < 5  }
+  
+  Objective obj {
+	[x, 6] 
+	[y, 6] 
+	[z, 6] 
+	[S1, 6] 
+	[A1, 6]
+  }
+  
+}
+

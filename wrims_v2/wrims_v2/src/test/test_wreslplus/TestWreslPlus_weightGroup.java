@@ -497,4 +497,104 @@ public class TestWreslPlus_weightGroup {
 		Assert.assertEquals(totalErrs, 0);		
 	
 	}
+	
+	@Test(groups = { "WRESLPLUS_elements" })
+	public void weightGroup15() throws RecognitionException, IOException {
+		
+	
+		testName = "TestWreslPlus_weightGroup15";
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_wreslplus2\\"+testName;
+		
+		inputFilePath = projectPath + testName + TestParam.fileExt;
+		logFilePath = csvFolderPath + ".log";
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
+		
+		LogUtils.closeLogFile();
+	
+		String logText = Tools.readFileAsString(logFilePath);	
+		
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 1);		
+	
+	}
+	
+	@Test(groups = { "WRESLPLUS_elements" })
+	public void weightGroup16() throws RecognitionException, IOException {
+		
+	
+		testName = "TestWreslPlus_weightGroup16";
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_wreslplus2\\"+testName;
+		
+		inputFilePath = projectPath + testName + TestParam.fileExt;
+		logFilePath = csvFolderPath + ".log";
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
+		
+		LogUtils.closeLogFile();
+	
+		String logText = Tools.readFileAsString(logFilePath);	
+		
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 1);		
+	
+	}
+
+	@Test(groups = { "WRESLPLUS_elements" })
+	public void weightGroup17() throws RecognitionException, IOException {
+		
+	
+		testName = "TestWreslPlus_weightGroup17";
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_wreslplus2\\"+testName;
+		
+		inputFilePath = projectPath + testName + TestParam.fileExt;
+		logFilePath = csvFolderPath + ".log";
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
+		
+		LogUtils.closeLogFile();
+	
+		String logText = Tools.readFileAsString(logFilePath);	
+		
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 1);		
+	
+	}
+	
+	@Test(groups = { "WRESLPLUS_elements" })
+	public void weightGroup18() throws RecognitionException, IOException {
+		
+	
+		testName = "TestWreslPlus_weightGroup18";
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_wreslplus2\\"+testName;
+		
+		inputFilePath = projectPath + testName + TestParam.fileExt;
+		logFilePath = csvFolderPath + ".log";
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
+		
+		LogUtils.closeLogFile();
+	
+		String logText = Tools.readFileAsString(logFilePath);	
+		
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 1);		
+	
+	}
 }

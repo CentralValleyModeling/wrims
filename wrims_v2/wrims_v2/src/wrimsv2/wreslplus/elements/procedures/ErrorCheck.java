@@ -530,7 +530,35 @@ public class ErrorCheck {
 		
 	}
 
+	public static void checkWeightVarNotInDvar(StudyTemp s) {
+		
+		for (String se : s.seqList){
+			
+			SequenceTemp seqObj = s.seqMap.get(se); 
 
+			checkWeightVarNotInDvar(seqObj);						
+		}
+	}
+	
+	public static void checkWeightVarNotInDvar(SequenceTemp seqObj) {
+		
+		Set<String> unknowns = new HashSet<String>();
+		unknowns.addAll(seqObj.wvList);
+		unknowns.removeAll(seqObj.dvList);
+		unknowns.removeAll(seqObj.dvList_fromAlias);
+		
+//		System.out.println("###  seqObj.wvList:"+seqObj.wvList);
+//		System.out.println("###  seqObj.dvList:"+seqObj.dvList);
+//		System.out.println("###  seqObj.dvList_fromAlias:"+seqObj.dvList_fromAlias);
+		
+		if (unknowns.size()>0) {
+			
+			LogUtils.errMsg(" Weight variables "+unknowns+" are not defined as Dvar; or are not defined as Alias and show up as terms in Goal.");	
+			
+			
+		}
+		
+	}
 
 
 }
