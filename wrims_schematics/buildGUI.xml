@@ -67,7 +67,9 @@
 		<tstamp/>
 		<mkdir dir="${dist.dir}"/>
 		<copy todir="${dist.dir}">
-			<fileset dir="resources"/>
+			<fileset dir="resources">
+				<exclude name="**/sample/*.dss"/>
+			</fileset>			
 		</copy>
 		<copy todir="${dist.dir}/lib">
 			<fileset dir="lib"/>
