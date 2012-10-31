@@ -49,7 +49,10 @@ public class Workflow {
 		
 		if (ErrorCheck.checkVarRedefined(st)>0) return null;
 		
-		// TODO: make backup of original var list
+		
+		// process "if include file group"
+		
+		
 		ProcMainFile.findEffectiveModel(st); 
 
 		ProcMainFile.findKidMap_incModel(st);

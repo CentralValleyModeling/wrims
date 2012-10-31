@@ -50,7 +50,8 @@ public class Param {
 	  public static final Integer gl1Type = 7;
 	  public static final Integer gl2Type = 8;
 	  public static final Integer incModelType = 9;
-
+	  public static final Integer ifIncFileGroupType = 10;
+	  
 	  
 	  public static int printLevel = 1;
 	  

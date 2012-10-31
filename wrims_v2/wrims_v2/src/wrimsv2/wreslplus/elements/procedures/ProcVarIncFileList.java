@@ -35,7 +35,7 @@ public class ProcVarIncFileList {
 		}	
 	}
 
-	// for main file only
+	// for main file (st!=null), for included file (st==null)
 	public static void replaceIncFile( ModelTemp mt, StudyTemp st) {
 		
 		// TODO: use retain Set to simplify codes

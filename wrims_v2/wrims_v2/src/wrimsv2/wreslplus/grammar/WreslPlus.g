@@ -16,6 +16,7 @@ options {
   import java.util.LinkedHashSet;
   import wrimsv2.wreslplus.elements.Tools;
   import wrimsv2.wreslplus.elements.IncFileTemp;
+  import wrimsv2.wreslplus.elements.IfIncFileGroup;
   import wrimsv2.wreslplus.elements.TimeseriesTemp;
   import wrimsv2.wreslplus.elements.ExternalTemp;
   import wrimsv2.wreslplus.elements.DvarTemp;
@@ -71,7 +72,7 @@ options {
         number_of_errors++;
     }
 }
-wreslPlusMain : study  template* sequence+ model+;
+//wreslPlusMain : study  template* sequence+ model+;
 
 
 wreslFile
@@ -98,13 +99,13 @@ constant
             $wreslMain::sty.parameterMap.put($i.text, $n.text); 
           };
 
-study : 'study' ID '{' include_config* include_template* include_sequence+  '}' ;
+//study : 'study' ID '{' include_template* include_sequence+  '}' ;
+//
+//
+//include_template : INCLUDE 'template' ( ID | include_file )  ;
+//include_sequence : INCLUDE SEQUENCE ID  ;
 
-include_config :   INCLUDE 'config' ( ID | include_file )  ;
-include_template : INCLUDE 'template' ( ID | include_file )  ;
-include_sequence : INCLUDE SEQUENCE ID  ;
 
-//config :  CONFIG ID '{' param* '}' ;
 
 template : TEMPLATE ID '{' ( template_svar | template_dvar | template_dvar_array )*  '}' ;
 
@@ -130,21 +131,10 @@ sequence returns[String id, SequenceTemp seqObj]
 
 
 
-//param : PARAM ID '{' ( param_simple | param_case+ )  '}' ;
-//
-//param_simple : param_number ;
-//
-//param_case: CASE logical_main '{'  param_number    '}' ;
-//
-//param_number : VALUE number;
-
-//param_table : table ;
-
 
 //package_: 'package'  packageName;
 //packageName: ( ID '.' )*  ID ;
 
-//wreslplus : model ;
 
 model_standalone : model ;
 
@@ -190,9 +180,23 @@ scope { ModelTemp m_;}
 	   | im=include_model {$mt::m_.itemTypeList.add(Param.incModelType);$mt::m_.itemList.add(Param.model_label+$im.id); $mt::m_.incModelList.add($im.id);
 	                       $mt::m_.incFileIDList.add($im.id); $mt::m_.incFileMap.put($im.id, null);
 	                       }
+	   | ifig=if_include_file_group  {$mt::m_.itemTypeList.add(Param.ifIncFileGroupType);  }                  
 	   )+
 	   ;
 
+if_include_file_group 
+scope { IfIncFileGroup incg_;} 
+@init{ $if_include_file_group::incg_ = new IfIncFileGroup();
+      // $incg_.id = "__incfilegroup__"+Integer.toString($mt::m_.incFileGroupIDList.size()); 
+
+       }
+: if_  elseif_* else_?  ;
+
+if_ : If logical_main '{' include_file_group '}' ;
+elseif_ : Elseif logical_main '{' include_file_group '}' ;
+else_  : Else '{' include_file_group '}' ;
+
+include_file_group: include_file+ ;
 
 ///// external
 //
@@ -288,11 +292,11 @@ include_file returns[String id, IncFileTemp incFileObj]
        $incFileObj.id = "__file__"+Integer.toString($mt::m_.incFileIDList.size()); 
        $id = $incFileObj.id;
        }
-      : INCLUDE ('[' LOCAL ']')? fp=file_path {$incFileObj.rawPath=Tools.strip($fp.text);} ('as' includeNameAs )?  ;
+      : INCLUDE ('[' LOCAL ']')? fp=file_path {$incFileObj.rawPath=Tools.strip($fp.text);}   ;
 
 file_path : QUOTE  ;
 
-includeNameAs: ID ;
+//includeNameAs: ID ;
 
 
 /// goal simple
@@ -857,6 +861,10 @@ NAME : 'name' ;
 //PARAM : 'param' ;
 Parameter : 'parameter' | 'Parameter' | 'PARAMETER' ;
 Const : 'const' | 'Const' | 'CONST' ;
+
+If : 'If' | 'IF' | 'if' ;
+Elseif : 'Elseif' | 'ELSEIF' | 'elseif' | 'ElseIf' ;
+Else : 'Else' | 'ELSE' | 'else' ;
 
 // deprecated keyword
 DEFINE : 'define' | 'DEFINE' | 'Define' ;
