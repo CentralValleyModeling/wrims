@@ -1,48 +1,51 @@
 parameter {
 
-	const A { 100 }
-	const B { 5 }
+	const option_A { 2 }
+	const totalflow { 100 }
 
 }
 
-SEQUENCE CYCLE1 {
-    model   first
+sequence CYCLE1 {
+    model   fiRst
     order   1
     }
-
-SEQUENCE CYCLE2 {
-    model   second
-    order   2
-    }
 	
-MODEL first { 
+model first { 
 
-  define x { std kind 'FLOW-CHANNEL' units 'CFS'}
-  define y { std kind 'FLOW-CHANNEL' units 'CFS'}
-  define z { std kind 'FLOW-CHANNEL' units 'CFS'}
+	define X { std kind 'FLOW-CHANNEL' units 'CFS'}
+	define Y { std kind 'FLOW-CHANNEL' units 'CFS'}
 
-  goal g1 { x + y + z < A  }
-  goal g2 { x = B  }
+	goal g0 { x + y < totalflow }
   
-  Objective obj2 {
-	weight 6
-	variable x y z 
-  }
+	if int(option_A)==1 {
+		
+		include 'goalX1.wresl' 
+		include 'goalY1.wresl' 
+	
+	} 
+	elseif int(option_A)==2 {
+	
+		include 'goalX2.wresl'
+		include 'goalY2.wresl' 
+	
+	}
+	elseif int(option_A)==3 {
+	
+		include 'goalX3.wresl'
+		include 'goalY3.wresl' 
+	
+	}
+	else {	
+		include 'goalX4.wresl'
+		include 'goalY4.wresl'  
+	
+	}
+  
+	objective obj {
+		[x, 5] 
+		[y, 5] 
+	}
   
 }
 
-MODEL second { 
 
-  define x { std kind 'FLOW-CHANNEL' units 'CFS'}
-  define y { std kind 'FLOW-CHANNEL' units 'CFS'}
-  define z { std kind 'FLOW-CHANNEL' units 'CFS'}
-
-  goal g1 { x + y + z < A*2  }
-  goal g2 { x = B*2  }
-  
-  Objective obj2 {
-	weight 6
-	variable x y z 
-  }
-  
-}
