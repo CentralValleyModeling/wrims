@@ -180,23 +180,58 @@ scope { ModelTemp m_;}
 	   | im=include_model {$mt::m_.itemTypeList.add(Param.incModelType);$mt::m_.itemList.add(Param.model_label+$im.id); $mt::m_.incModelList.add($im.id);
 	                       $mt::m_.incFileIDList.add($im.id); $mt::m_.incFileMap.put($im.id, null);
 	                       }
-	   | ifig=if_include_file_group  {$mt::m_.itemTypeList.add(Param.ifIncFileGroupType);  }                  
+	   | ifig=if_inc_files  {$mt::m_.itemTypeList.add(Param.ifIncFileGroupType); $mt::m_.itemList.add($ifig.id); $mt::m_.ifIncFileGroupIDList.add($ifig.id); $mt::m_.ifIncFileGroupMap.put($ifig.id, $ifig.ifIncFileGroupObj); }                  
 	   )+
 	   ;
 
-if_include_file_group 
-scope { IfIncFileGroup incg_;} 
-@init{ $if_include_file_group::incg_ = new IfIncFileGroup();
+if_inc_files returns[String id, IfIncFileGroup ifIncFileGroupObj]
+scope { IfIncFileGroup incg_; ArrayList<String> _arr; HashMap<String, IncFileTemp> _incfmap;} 
+@init{ $if_inc_files::incg_ = new IfIncFileGroup();
+       $if_inc_files::incg_.id = "__file_group__"+Integer.toString($mt::m_.ifIncFileGroupIDList.size());
+       $id = $if_inc_files::incg_.id;
+       $ifIncFileGroupObj = $if_inc_files::incg_;
       // $incg_.id = "__incfilegroup__"+Integer.toString($mt::m_.incFileGroupIDList.size()); 
 
        }
-: if_  elseif_* else_?  ;
+@after{ 
+}
+: if_  elseif_* else_?  
+//{ //System.out.println("$if_inc_files::incg_.if_list: "+$if_inc_files::incg_.if_list); 
+//  System.out.println("$if_inc_files::incg_.inc_files_list: "+$if_inc_files::incg_.inc_files_list); 
+//  //System.out.println("$if_inc_files::incg_.inc_files_map_list: "+$if_inc_files::incg_.inc_files_map_list); 
+//  System.out.println("$if_inc_files::incg_.conditionList: "+$if_inc_files::incg_.conditionList); 
+//  //System.out.println("$if_inc_files::incg_.else_list: "+$if_inc_files::incg_.else_list); 
+//} 
+;
 
-if_ : If logical_main '{' include_file_group '}' ;
-elseif_ : Elseif logical_main '{' include_file_group '}' ;
-else_  : Else '{' include_file_group '}' ;
+if_ :
+  If e=logical_main '{' include_file_group '}' 
+  {$if_inc_files::incg_.conditionList.add($e.text);};
+  
+elseif_  
+  :
+  Elseif e=logical_main '{' include_file_group '}'
+  {$if_inc_files::incg_.conditionList.add($e.text);};
+  
+else_  : 
+  Else '{' include_file_group '}'
+  {$if_inc_files::incg_.conditionList.add(Param.always);};
 
-include_file_group: include_file+ ;
+include_file_group
+@init{ $if_inc_files::_arr = new ArrayList<String>(); 
+       $if_inc_files::_incfmap = new HashMap<String, IncFileTemp>();
+}
+@after {
+        $if_inc_files::incg_.inc_files_list.add($if_inc_files::_arr); 
+        $if_inc_files::incg_.inc_files_map_list.add($if_inc_files::_incfmap);
+}
+: 
+    ( fi=include_file { 
+        $if_inc_files::_arr.add($fi.id);  
+        $if_inc_files::_incfmap.put($fi.id, $fi.incFileObj);
+        $mt::m_.incFileIDList.add($fi.id); 
+        } 
+  )+ ;
 
 ///// external
 //

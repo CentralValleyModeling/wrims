@@ -43,6 +43,9 @@ public class ModelTemp implements Serializable {
 	public ArrayList<String> incFileAbsPathList;      // processed 
 	public ArrayList<String> incFileAbsPathList_post;      // post processed 
 	public Map<String,IncFileTemp> incFileMap;
+
+	public ArrayList<String> ifIncFileGroupIDList;
+	public Map<String,IfIncFileGroup> ifIncFileGroupMap;
 	
 	public ArrayList<String> incModelList;
 	
@@ -101,6 +104,10 @@ public class ModelTemp implements Serializable {
 		incFileAbsPathList_post = new ArrayList<String>();
 		
 		incFileMap= new LinkedHashMap<String, IncFileTemp>();
+		
+		
+		ifIncFileGroupIDList = new ArrayList<String>();
+		ifIncFileGroupMap = new HashMap<String, IfIncFileGroup>();
 		
 		incModelList = new ArrayList<String>();
 		

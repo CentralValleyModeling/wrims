@@ -21,6 +21,7 @@ import wrimsv2.wreslplus.elements.DvarTemp;
 import wrimsv2.wreslplus.elements.ExternalTemp;
 import wrimsv2.wreslplus.elements.GoalCase;
 import wrimsv2.wreslplus.elements.GoalTemp;
+import wrimsv2.wreslplus.elements.IfIncFileGroup;
 import wrimsv2.wreslplus.elements.IncFileTemp;
 import wrimsv2.wreslplus.elements.ModelTemp;
 import wrimsv2.wreslplus.elements.SequenceTemp;
@@ -131,10 +132,17 @@ public class ToLowerCase {
 			j.incFileMap.remove(key);
 			j.incFileMap.put( key.toLowerCase(), o);
 		}	
+
+		for (String key : j.ifIncFileGroupIDList) {	
+			IfIncFileGroup o = ifIncFileGroup(j.ifIncFileGroupMap.get(key));
+			j.ifIncFileGroupMap.remove(key);
+			j.ifIncFileGroupMap.put( key.toLowerCase(), o);
+		}
 		
 		//j.svIncFileList = Tools.allToLowerCase(j.svIncFileList);
 		j.incModelList = Tools.allToLowerCase(j.incModelList);
 		j.incFileIDList=Tools.allToLowerCase(j.incFileIDList);
+		j.ifIncFileGroupIDList=Tools.allToLowerCase(j.ifIncFileGroupIDList);
 		j.itemList = Tools.allToLowerCase(j.itemList);
 		j.svList = Tools.allToLowerCase(j.svList);
 		j.dvList = Tools.allToLowerCase(j.dvList);
@@ -358,5 +366,33 @@ public class ToLowerCase {
 	
 	}
 
+	public static IfIncFileGroup ifIncFileGroup (IfIncFileGroup w){
+		
+		if (w==null) return null;
+		
+		IfIncFileGroup o = new IfIncFileGroup();
+		
+		o.id = w.id;
+		
+		o.conditionList =  Tools.allToLowerCase(w.conditionList);
+		
+		// no need to convert. already in lower case.
+		o.inc_files_list = w.inc_files_list;
+		
+		for ( Map<String,IncFileTemp> mi : w.inc_files_map_list){
+			
+			for (String key: mi.keySet()){
+				
+				mi.put(key, incFile(mi.get(key)));				
+				
+			}
+			
+		}
+		
+		o.inc_files_map_list = w.inc_files_map_list;
+		
+		return o;
+	
+	}
 }
 	
