@@ -98,29 +98,24 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 			mainFrame = new JFrame();
 			_viewer = new SchematicViewer();
 			_viewer.setSchematic(this);
-			new Thread(new Runnable() {
+			Cursor mainCursor = mainFrame.getCursor();
+			mainFrame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+			try {
+				long ti = System.currentTimeMillis();
 
-				@Override
-				public void run() {
-					try {
-						long ti = System.currentTimeMillis();
+				// check previously loaded schematics
 
-						// check previously loaded schematics
+				String filename = Preferences.userNodeForPackage(
+						MainFrame.class).get("last.schematic",
+						mainDir + "/wrims/schematic/CS3_NetworkSchematic.xml");
 
-						String filename = Preferences
-								.userNodeForPackage(MainFrame.class)
-								.get(
-										"last.schematic",
-										mainDir
-												+ "/wrims/schematic/CS3_NetworkSchematic.xml");
-
-						_viewer.load(filename);
-					} catch (Exception e) {
-						e.printStackTrace();
-
-					}
-				}
-			}, "Schematic Loader").start();
+				_viewer.load(filename);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				mainFrame.setCursor(mainCursor);
+			}
+			
 			_viewer.setClickTask(new ElementTask() {
 
 				@Override
@@ -279,7 +274,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	 *
 	 */
 	private void createRecentFilesOpenActions() {
-		//createRecentSchematicFilesOpenActions();
+		// createRecentSchematicFilesOpenActions();
 		createRecentProjectFilesOpenActions();
 		createRecentPropertyDirectoriesOpenActions();
 	}
@@ -1398,9 +1393,9 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 					"/wrims/schematic/build.props"));
 		} catch (Exception e) {
 			buildProps.put("build", "NOT BUILT EVER - DEV Env");
-			buildProps.put("buildtime", ""+new Date());
-			buildProps.put("system", "OS: "+System.getProperty("os.name"));
-			//e.printStackTrace();
+			buildProps.put("buildtime", "" + new Date());
+			buildProps.put("system", "OS: " + System.getProperty("os.name"));
+			// e.printStackTrace();
 		}
 		String message = buildProps.getProperty("name") + "\n"
 				+ buildProps.getProperty("version");
@@ -1723,8 +1718,9 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		Hashtable<String, Object> visibleNodes = getCurrentView()
 				.getVisibleNodes();
 		monitor.setProgress(1);
-		Logger.getLogger(SchematicViewer.WRIMS_SCHEMATIC).fine("Visible nodes calculated in : "
-				+ (System.currentTimeMillis() - ti));
+		Logger.getLogger(SchematicViewer.WRIMS_SCHEMATIC).fine(
+				"Visible nodes calculated in : "
+						+ (System.currentTimeMillis() - ti));
 		final Hashtable<String, Object> names = new Hashtable<String, Object>();
 		for (String v : visibleNodes.keySet()) {
 			names.put(v, v);
@@ -1734,15 +1730,17 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		monitor.setProgress(2);
 		ti = System.currentTimeMillis();
 		_DssFrame.getFP().loadAllVariableData(names, -1, true, monitor);
-		Logger.getLogger(SchematicViewer.WRIMS_SCHEMATIC).fine("Loading all variable date took : "
-				+ (System.currentTimeMillis() - ti));
+		Logger.getLogger(SchematicViewer.WRIMS_SCHEMATIC).fine(
+				"Loading all variable date took : "
+						+ (System.currentTimeMillis() - ti));
 		ti = System.currentTimeMillis();
 		monitor.setProgress(5);
 		_DssFrame.getFP().getValueViewer().setVariables(names);
 		_DssFrame.getFP().getValueViewer().calculateLongTermAverages(
 				getTimeWindows(), -1, true, monitor);
-		Logger.getLogger(SchematicViewer.WRIMS_SCHEMATIC).fine("Calculating Long Term Averages took : "
-				+ (System.currentTimeMillis() - ti));
+		Logger.getLogger(SchematicViewer.WRIMS_SCHEMATIC).fine(
+				"Calculating Long Term Averages took : "
+						+ (System.currentTimeMillis() - ti));
 		monitor.setProgress(9);
 		if (_DssFrame.getFP().getValueViewer() == null) {
 			values = _DssFrame.getFP().retrieve(
@@ -1760,9 +1758,11 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 		_DssFrame.mainPanel.setCursor(Cursor.getDefaultCursor());
 		if (values != null) {
 			ti = System.currentTimeMillis();
-			getCurrentView().setValues(values, !_DssFrame.getMP().getMode().equals("Comp"));
-			Logger.getLogger(SchematicViewer.WRIMS_SCHEMATIC).fine("Setting values took : "
-					+ (System.currentTimeMillis() - ti));
+			getCurrentView().setValues(values,
+					!_DssFrame.getMP().getMode().equals("Comp"));
+			Logger.getLogger(SchematicViewer.WRIMS_SCHEMATIC).fine(
+					"Setting values took : "
+							+ (System.currentTimeMillis() - ti));
 		} else {
 			System.out
 					.println("No values yet for method updateValues(String date)");
@@ -2395,7 +2395,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	protected ConsolePanel consolePane;
 
 	protected ToolPanel toolsPane;
-	
+
 	protected JPanel outputPane;
 
 	protected HashMap myMap = new HashMap();
@@ -2476,7 +2476,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 	private static Preferences _userPrefs = Preferences // CB added
 			.userNodeForPackage(MainFrame.class);
 
-	private Study sty=new Study();
+	private Study sty = new Study();
 
 	@Override
 	public Vector<String> getSelectedNames() {
@@ -2508,7 +2508,7 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 						&& f.isFile()
 						&& (f.getName().toLowerCase().endsWith(".xml") || f
 								.getName().toLowerCase().endsWith(".sch"))
-						||f.isDirectory();
+						|| f.isDirectory();
 			}
 		});
 		int rval = chooser.showOpenDialog(this);
