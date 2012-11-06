@@ -267,7 +267,7 @@ public class ControllerBatch {
 						}
 						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
 						if (Error.error_evaluation.size()>=1) noError=false;
-						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
+
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
 							VariableTimeStep.currTimeAddOneMonth();
@@ -306,7 +306,7 @@ public class ControllerBatch {
 			}
 		}
 	}
-	
+
 	public static void main(String[] args){
 		new ControllerBatch(args);
 	}
@@ -433,7 +433,7 @@ public class ControllerBatch {
 						}
 						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
 						if (Error.error_evaluation.size()>=1) noError=false;
-						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
+
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
 							VariableTimeStep.currTimeAddOneMonth();
@@ -481,7 +481,7 @@ public class ControllerBatch {
 		GurobiSolver.initialize();
 		
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
-			//if (ControlData.solverName.equalsIgnoreCase("XALOG")) SetXALog.enableXALog();
+
 			ClearValue.clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
@@ -526,7 +526,6 @@ public class ControllerBatch {
 							noError=false;
 						} else {	
 							ILP.setIlpFile();
-							//ILP.setCplexLpFile();
 							ILP.writeIlp();
 							if (ILP.loggingVariableValue) {
 								ILP.setVarFile();
@@ -580,7 +579,6 @@ public class ControllerBatch {
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
 		}
-		//ControlData.xasolver.close();
 		GurobiSolver.dispose();
 		if (ControlData.writeInitToDVOutput){
 			DssOperation.writeInitDvarAliasToDSS();
