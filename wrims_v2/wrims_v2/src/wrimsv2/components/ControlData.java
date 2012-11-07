@@ -29,6 +29,7 @@ public class ControlData {
 	public static ArrayList<Integer> currTimeStep;
 	public static StudyDataSet currStudyDataSet=new StudyDataSet();
 	public static ModelDataSet currModelDataSet=new ModelDataSet();
+	public static Map<String, Svar> parameterMap=new HashMap<String, Svar>();
 	public static Map<String, Svar> currSvMap=new HashMap<String, Svar>() ;
 	public static Map<String, Svar> currSvFutMap=new HashMap<String, Svar>() ;
 	public static Map<String, Timeseries> currTsMap=new HashMap<String, Timeseries>();

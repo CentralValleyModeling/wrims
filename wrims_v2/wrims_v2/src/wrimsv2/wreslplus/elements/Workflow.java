@@ -3,13 +3,16 @@ package wrimsv2.wreslplus.elements;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyParser;
 import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
 import wrimsv2.wreslplus.elements.procedures.ProcGoal;
+import wrimsv2.wreslplus.elements.procedures.ProcIfIncFileGroup;
 import wrimsv2.wreslplus.elements.procedures.ProcMainFile;
 import wrimsv2.wreslplus.elements.procedures.ProcIncFile;
+import wrimsv2.wreslplus.elements.procedures.ProcParameter;
 import wrimsv2.wreslplus.elements.procedures.ProcVarIncFileList;
 import wrimsv2.wreslplus.elements.procedures.ProcWeight;
 import wrimsv2.wreslplus.elements.procedures.ToLowerCase;
@@ -50,8 +53,54 @@ public class Workflow {
 		if (ErrorCheck.checkVarRedefined(st)>0) return null;
 		
 		
-		// process "if include file group"
+		// process parameters
+		ProcParameter.process(st);
 		
+		
+		// process "if include file group"
+		ProcIfIncFileGroup.doSomething(st);
+		
+		
+		
+		for (String q: st.modelList){
+		
+			System.out.println("model: "+ q);
+			ModelTemp m =  st.modelMap.get(q);
+			
+			System.out.println(" --> m.incFileIDList: " + m.incFileIDList);
+			System.out.println(" --> m.incFileMap: " + m.incFileMap);
+			
+			System.out.println("# m.ifIncFileGroupIDList:"+m.ifIncFileGroupIDList);
+			System.out.println("# m.ifIncFileGroupMap:"+m.ifIncFileGroupMap);
+			
+			for (String g: m.ifIncFileGroupIDList){
+				
+				IfIncFileGroup ig = m.ifIncFileGroupMap.get(g);
+				
+				System.out.println("# ig.id"+ig.id);
+				System.out.println("# ig.conditionList"+ig.conditionList);
+				System.out.println("# ig.inc_files_list"+ig.inc_files_list);
+				System.out.println("# ig.inc_files_map_list"+ig.inc_files_map_list);
+				System.out.println("#--> ig.conditionValueList"+ig.conditionValueList);
+				
+				int i=1;
+				for ( Map<String, IncFileTemp> em: ig.inc_files_map_list ){
+					
+					System.out.println("=========== Map of "+i+" =============");
+					i++;
+					for (String fileId: em.keySet()){
+						
+						IncFileTemp v = em.get(fileId);
+						
+						System.out.println(" ->  "+ v.rawPath);
+						
+					}
+					
+				}
+
+			}
+			
+		}
 		
 		ProcMainFile.findEffectiveModel(st); 
 

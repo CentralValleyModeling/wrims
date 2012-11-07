@@ -3,21 +3,13 @@ package wrimsv2.wreslplus.elements.procedures;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
-
-import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslplus.elements.GlobalData;
 import wrimsv2.wreslplus.elements.IncFileTemp;
 import wrimsv2.wreslplus.elements.ModelTemp;
 import wrimsv2.wreslplus.elements.ResourceUtils;
-import wrimsv2.wreslplus.elements.SequenceTemp;
 import wrimsv2.wreslplus.elements.StudyTemp;
-import wrimsv2.wreslplus.elements.Tools;
-import wrimsv2.wreslplus.elements.WeightSubgroup;
-import wrimsv2.wreslplus.elements.WeightTable;
 
 public class ProcIncFile {
 

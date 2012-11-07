@@ -129,7 +129,11 @@ public class ValueEvaluation {
 			}
 			ControlData.sumIndex.push(li);
 		}
-		Error.addEvaluationError(ident+" is not in svar, dvar, alias list.");
+		if (ControlData.parameterMap.containsKey(ident)){
+			IntDouble id0=ControlData.parameterMap.get(ident).getData();
+			return new IntDouble(id0.getData(),id0.isInt());					
+		}
+		Error.addEvaluationError(ident+" is not in svar, dvar, alias, or parameter list.");
 		return new IntDouble (1.0, false);
 	}
 	

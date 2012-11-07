@@ -18,6 +18,7 @@ import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.commondata.wresldata.WeightElement;
+import wrimsv2.components.ControlData;
 import wrimsv2.wreslplus.elements.AliasTemp;
 import wrimsv2.wreslplus.elements.DvarTemp;
 import wrimsv2.wreslplus.elements.ExternalTemp;
@@ -69,7 +70,8 @@ public class ToWreslData {
 		Map<String, Timeseries> allTimeseriesMap = new LinkedHashMap<String, Timeseries>();
 		
 		o.setParameterList(s.parameterList);
-		o.setParameterMap(convertParameterMap(s.parameterMap));
+		//o.setParameterMap(convertParameterMap(s.parameterMap));
+		o.setParameterMap(ControlData.parameterMap);
 		
 		
 		//for (String k: s.modelList_effective){
@@ -84,8 +86,8 @@ public class ToWreslData {
 			modelConditionList.add("always"); //TODO: need condition
 			ModelDataSet md = convertModel(seqObj, s);
 			
-			// insert parameters into svar list and svar map
-			md.svList.addAll(0, o.getParameterList());
+			// insert parameters into svar map
+			//md.svList.addAll(0, o.getParameterList());
 			md.svMap.putAll(o.getParameterMap());
 			
 			modelDataSetMap.put(modelName, md);
@@ -119,8 +121,6 @@ public class ToWreslData {
 			
 		}
 		
-		
-		// TODO Auto-generated method stub
 		return pm;
 	}
 
