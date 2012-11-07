@@ -1,6 +1,6 @@
 parameter {
 
-	const option_A { 3 }
+	const option_A { 2 }
 	const totalflow { 100 }
 
 }
@@ -11,10 +11,14 @@ sequence CYCLE1 {
 
 }
 
+model firsT { 
 
+	include model why
+
+}
 
 	
-model first { 
+model why { 
 
 	include 'dummy.wresl'
 
