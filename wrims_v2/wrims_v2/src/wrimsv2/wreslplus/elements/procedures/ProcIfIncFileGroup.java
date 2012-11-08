@@ -46,20 +46,20 @@ public class ProcIfIncFileGroup {
 				System.out.println("~~ This condition index is true: "+indexOfFirstTrue);
 				
 				
-				if (indexOfFirstTrue>-1) {
-				
-					int indexOfItem = m.itemList.indexOf(gObj.id);
-				
-					m.itemList.remove(indexOfItem);
-					m.itemTypeList.remove(indexOfItem);
-				
-					m.itemList.addAll(indexOfItem, gObj.inc_files_list.get(indexOfFirstTrue));
-				
-					
-
-					m.incFileIDList.removeAll(gObj.inc_files_list.get(i));
-
-				}
+//				if (indexOfFirstTrue>-1) {
+//				
+//					int indexOfItem = m.itemList.indexOf(gObj.id);
+//				
+//					m.itemList.remove(indexOfItem);
+//					m.itemTypeList.remove(indexOfItem);
+//				
+//					m.itemList.addAll(indexOfItem, gObj.inc_files_list.get(indexOfFirstTrue));
+//				
+//					
+//					for (ArrayList<String> l : )
+//					m.incFileIDList.removeAll(gObj.inc_files_list.get(i));
+//
+//				}
 			}
 			
 		}
