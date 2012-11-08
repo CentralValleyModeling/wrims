@@ -1,0 +1,15 @@
+<patch_information version="1.0">
+  <primary_bug_id>14146812</primary_bug_id>
+  <patch_id>14146812</patch_id>
+  <aru_platform>Microsoft Windows x64 (64-bit)</aru_platform>
+  <product_version>6u33 R28.2.4</product_version>
+  <product_name>Oracle JRockit</product_name>
+  <aru_product_version></aru_product_version>
+  <aru_product_name>Oracle JRockit</aru_product_name>
+  <primary_bug_description>jdk160 oracle jrockit r28.2.4</primary_bug_description>
+  <bug_ids>
+    <bug>14096119</bug>
+    <bug>14118537</bug>
+    <bug>14075332</bug>
+  </bug_ids>
+</patch_information>
