@@ -24,6 +24,7 @@ import wrimsv2.wreslplus.elements.GoalTemp;
 import wrimsv2.wreslplus.elements.IfIncFileGroup;
 import wrimsv2.wreslplus.elements.IncFileTemp;
 import wrimsv2.wreslplus.elements.ModelTemp;
+import wrimsv2.wreslplus.elements.ParamTemp;
 import wrimsv2.wreslplus.elements.SequenceTemp;
 import wrimsv2.wreslplus.elements.StudyTemp;
 import wrimsv2.wreslplus.elements.SvarTemp;
@@ -43,9 +44,13 @@ public class ToLowerCase {
 
 		// study
 		for (String key : s.parameterList) {
-			String expression = s.parameterMap.get(key);
+
+			ParamTemp pt = new ParamTemp();
+			pt.expression = s.parameterMap.get(key).expression.toLowerCase();
+			pt.dependants = Tools.allToLowerCase(s.parameterMap.get(key).dependants);
+			
 			s.parameterMap.remove(key);
-			s.parameterMap.put( key.toLowerCase(), expression.toLowerCase());
+			s.parameterMap.put( key.toLowerCase(), pt);
 		}
 		s.parameterList = Tools.allToLowerCase(s.parameterList);
 		

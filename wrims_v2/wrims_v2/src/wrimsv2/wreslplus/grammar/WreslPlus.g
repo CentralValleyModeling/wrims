@@ -21,6 +21,7 @@ options {
   import wrimsv2.wreslplus.elements.ExternalTemp;
   import wrimsv2.wreslplus.elements.DvarTemp;
   import wrimsv2.wreslplus.elements.SvarTemp;
+  import wrimsv2.wreslplus.elements.ParamTemp;
   import wrimsv2.wreslplus.elements.WeightTable;
   import wrimsv2.wreslplus.elements.WeightSubgroup;
   import wrimsv2.wreslplus.elements.AliasTemp;
@@ -48,6 +49,7 @@ options {
   	public Set<String> varInCycle;
   	public Map<String, HashSet<String>> neededCycleVarMap;
   	boolean addDep = true;
+  	boolean isParameter = false;
   	public int number_of_errors = 0;
  	
   		/// error message	
@@ -55,7 +57,7 @@ options {
                                         RecognitionException e) {
         String hdr = getErrorHeader(e);
         String msg = getErrorMessage(e, tokenNames);
-        LogUtils.errMsg("[parser] "+ hdr + " " + msg);
+        LogUtils.errMsg("@parser "+ hdr + " " + msg);
         number_of_errors++;
     }
 }
@@ -68,7 +70,7 @@ options {
                                         RecognitionException e) {
         String hdr = getErrorHeader(e);
         String msg = getErrorMessage(e, tokenNames);
-        LogUtils.errMsg("[lexer] "+ hdr + " " + msg);
+        LogUtils.errMsg("@lexer "+ hdr + " " + msg);
         number_of_errors++;
     }
 }
@@ -91,13 +93,36 @@ scope { StudyTemp sty;}
 	;
 
 
-parameter : Parameter '{' constant+ '}';
+parameter 
+@init {  isParameter=true; }
+@after{  isParameter=false; }
+  : 
+  Parameter '{' constant+ '}';
+
 constant 
-  : Const i=ID '{' n=number '}' 
+@init{ //$svar_g::sv_ = new SvarTemp(); 
+       dependants = new LinkedHashSet<String>();
+   }
+//@after{ $id = $svar_g::sv_.id; 
+//        $svObj=$svar_g::sv_; 
+//        $svObj.dependants= dependants;
+//        }  
+  : Const i=ID '{' n=expr_add_simple '}'   //n=expr_add_simple
+//{$svar_g::sv_.caseName.add(Param.defaultCaseName); $svar_g::sv_.caseCondition.add(Param.always);}
+//{ $svar_g::sv_.caseExpression.add($e.text); };
           { 
             $wreslMain::sty.parameterList.add($i.text); 
-            $wreslMain::sty.parameterMap.put($i.text, $n.text); 
+            
+            ParamTemp pt = new ParamTemp();
+            pt.expression = $n.text;
+            pt.dependants = dependants;
+            $wreslMain::sty.parameterMap.put($i.text, pt); 
+            
           };
+          
+          
+          
+          
 
 //study : 'study' ID '{' include_template* include_sequence+  '}' ;
 //
@@ -743,6 +768,47 @@ expr_assign
 @init{ Set<String> backup = new LinkedHashSet<String>(dependants);}
     :   expr_add {dependants = backup;} '='  expr_add  
     ;
+//================ begin simple expr_add ==============//
+expr_add_simple
+    :   expr_mult_simple  ( ( '+' | '-' )  expr_mult_simple   )*
+    ;
+
+expr_mult_simple 
+    :    expr_unary_simple  ( ( '*' | '/' )  expr_unary_simple   )*
+    ; 
+
+expr_unary_simple: '-'? expr_term_simple ;
+
+expr_term_simple 
+    :   atom_simple
+    |   '(' expr_add_simple ')'    
+    ;
+
+atom_simple
+    :  number_p
+    |  v=varID {dependants.add($v.text);} 
+    |  intrinsicFunc_simple
+    ;
+    
+intrinsicFunc_simple
+  : mathFunc_simple 
+  | multiInputFunc_simple
+  | unitFunc_simple
+  ;
+
+mathFunc_simple 
+  :  LOG '(' expr_add_simple ')' 
+  |  INT_word '(' expr_add_simple ')' 
+  |  MOD '(' expr_add_simple ',' expr_add_simple ')' 
+  ;
+  
+unitFunc_simple
+  : ( CFS_TAF | TAF_CFS ) ('(' expr_add_simple ')')? ;  
+  
+multiInputFunc_simple
+  : ( MIN | MAX ) '(' expr_add_simple ( ',' expr_add_simple )* ')' ; 
+       
+//================ end simple expr_add ==============//
 
 //================ begin expr_add ==============//
 expr_add
@@ -763,15 +829,16 @@ expr_term
 
 atom
     :  number_p
-    |  reservedID
     |  v=varID {if (addDep) dependants.add($v.text);} 
-    | 'i' 
-    | '$m'
-    |  externalFunc
     |  intrinsicFunc
+    |  reservedID 
+    |  specialVar
+    |  externalFunc
     |  varFunc
     |  preCycleVar
     ;
+
+specialVar : 'i' | '$m' ;
 
 preCycleVar
 	:  p=preCycleVar_old {varInCycle.add($p.text);}

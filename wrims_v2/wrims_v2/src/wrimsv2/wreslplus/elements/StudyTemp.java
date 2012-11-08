@@ -20,7 +20,8 @@ public class StudyTemp implements Serializable {
 	public String relativePath = null;
 	
 	public ArrayList<String> parameterList;
-	public Map<String, String> parameterMap; 
+	//public Map<String, String> parameterMap; 
+	public Map<String, ParamTemp> parameterMap; 
 	
 	public ArrayList<String> seqList;
 	public ArrayList<String> seqTimeStepList;
@@ -57,7 +58,7 @@ public class StudyTemp implements Serializable {
 	public StudyTemp(){
 		
 		parameterList = new ArrayList<String>();
-		parameterMap = new HashMap<String, String>();
+		parameterMap = new HashMap<String, ParamTemp>();
 		
 		seqTimeStepList = new ArrayList<String>();
 		modelList = new ArrayList<String>();
