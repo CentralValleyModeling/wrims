@@ -169,6 +169,11 @@ public class Evaluation {
 			ee.setValue(id0);
 			Error.addEvaluationError(ident+" is not defined before used.");
 			return ee;
+		} if (ControlData.parameterMap.containsKey(ident)){
+			EvalExpression ee=new EvalExpression();
+			IntDouble id0=ControlData.parameterMap.get(ident).getData();
+			ee.setValue(id0);
+			return ee;					
 		}
 		
 		EvalExpression ee=new EvalExpression();
