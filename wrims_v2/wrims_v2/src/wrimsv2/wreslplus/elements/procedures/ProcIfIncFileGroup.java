@@ -3,12 +3,14 @@ package wrimsv2.wreslplus.elements.procedures;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.TokenStream;
 
+import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.wreslparser.elements.LogUtils;
@@ -43,23 +45,39 @@ public class ProcIfIncFileGroup {
 				// find index
 				int indexOfFirstTrue = gObj.conditionValueList.indexOf(true);
 				
-				System.out.println("~~ This condition index is true: "+indexOfFirstTrue);
 				
+				if (indexOfFirstTrue>-1) {
 				
-//				if (indexOfFirstTrue>-1) {
-//				
-//					int indexOfItem = m.itemList.indexOf(gObj.id);
-//				
-//					m.itemList.remove(indexOfItem);
-//					m.itemTypeList.remove(indexOfItem);
-//				
-//					m.itemList.addAll(indexOfItem, gObj.inc_files_list.get(indexOfFirstTrue));
-//				
-//					
-//					for (ArrayList<String> l : )
-//					m.incFileIDList.removeAll(gObj.inc_files_list.get(i));
-//
-//				}
+					System.out.println("~~ This condition index is true: "+indexOfFirstTrue);
+					
+					int index_ItemList = m.itemList.indexOf(gObj.id);
+				
+					m.itemList.remove(index_ItemList);
+					m.itemTypeList.remove(index_ItemList);
+
+				
+					m.itemList.addAll(index_ItemList, gObj.inc_files_list.get(indexOfFirstTrue));
+
+					// TODO: improve this
+					for (String dummy: gObj.inc_files_list.get(indexOfFirstTrue)) {
+					
+						m.itemTypeList.add(index_ItemList, Param.incFileType);
+
+					}
+					
+					
+					int index_IncFileIDList = m.incFileIDList.indexOf(gObj.id);
+					
+					m.incFileIDList.removeAll(Collections.singleton(gObj.id));
+					m.incFileIDList.addAll(index_IncFileIDList, gObj.inc_files_list.get(indexOfFirstTrue));
+					
+					m.incFileMap.remove(gObj.id);
+					m.incFileMap.putAll(gObj.inc_files_map_list.get(indexOfFirstTrue));
+
+					
+
+
+				}
 			}
 			
 		}

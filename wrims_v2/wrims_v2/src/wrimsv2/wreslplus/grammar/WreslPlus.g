@@ -254,7 +254,8 @@ include_file_group
     ( fi=include_file { 
         $if_inc_files::_arr.add($fi.id);  
         $if_inc_files::_incfmap.put($fi.id, $fi.incFileObj);
-        $mt::m_.incFileIDList.add($fi.id); 
+        $mt::m_.incFileIDList.add($if_inc_files::incg_.id); 
+        //$mt::m_.incFileIDList.add($fi.id); 
         } 
   )+ ;
 

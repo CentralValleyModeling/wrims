@@ -19,7 +19,6 @@ public class IfIncFileGroup implements Serializable {
 		inc_files_list = new ArrayList<ArrayList<String>>();
 		inc_files_map_list = new ArrayList<HashMap<String,IncFileTemp>>();
 		conditionList = new ArrayList<String>();
-		//conditionValueList = new ArrayList<Boolean>();
 
 	}
 	
