@@ -44,7 +44,7 @@
 		sanjaya@water.ca.gov,
 		sushil@water.ca.gov,
 		swu@water.ca.gov,
-		Terry_Fisk@fws.gov
+		Terry_Fisk@fws.gov,
 		TFitzhugh@usbr.gov,
 		zchen@water.ca.gov"/>
 	<property name="dist.dir" location="build/dist/wrimsv2_SG"/>
