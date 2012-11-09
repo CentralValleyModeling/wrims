@@ -486,17 +486,16 @@ public class ConfigUtils {
 			StudyUtils.configFileCanonicalPath = configFile.getCanonicalPath();
 			StudyUtils.configDir = configFile.getParentFile().getCanonicalPath();
 		} catch (Exception e) {
-			//System.out.println("Config file not found: " + configFilePath);
+
 			Error.addConfigError("Config file not found: " + configFilePath);
-			//System.exit(1);
+
 		} finally {
 			if (!configFile.exists()){
-				//System.out.println("Config file not found: " + configFilePath);
+
 				Error.addConfigError("Config file not found: " + configFilePath);
-				//System.exit(1);					
+				
 			}			
 		}		
-
 
 		Map<String, String> configMap = setDefaultConfig();
 
@@ -537,20 +536,14 @@ public class ConfigUtils {
 				// break at the line "End Config"
 				if (key.equalsIgnoreCase("end") & value.equalsIgnoreCase("config") ) break;
 			
-				//System.out.println(key+ " & "+value);
 				configMap.put(key.toLowerCase(), value);
 			}
 
-//			for (String k : configMap.keySet()) {
-//				System.out.println(k + ": " + configMap.get(k));
-//			}
-
 		}
 		catch (Exception e) {
-			//System.out.println("Invalid Config File: " + configFilePath);
+
 			Error.addConfigError("Invalid Config File: " + configFilePath);
-			//System.exit(1);
-			// e.printStackTrace();
+
 		}
 
 		
@@ -560,11 +553,10 @@ public class ConfigUtils {
 
 		for (String k : requiredFields) {
 			if (!configMap.keySet().contains(k.toLowerCase())) {
-				//System.out.println("Config file missing field: " + k);
+
 				Error.addConfigError("Config file missing field: " + k);
 				Error.writeErrorLog();
-				//StudyUtils.config_errors++;
-				//System.exit(1);
+
 			}
 		}	
 		
@@ -591,11 +583,10 @@ public class ConfigUtils {
 
 			for (String k : endDateFields) {
 				if (!configMap.keySet().contains(k.toLowerCase())) {
-					//System.out.println("Config file missing field: " + k);
+
 					Error.addConfigError("Config file missing field: " + k);
 					Error.writeErrorLog();
-					//StudyUtils.config_errors++;
-					//System.exit(1);
+
 				}
 			}			
 		}
@@ -608,31 +599,19 @@ public class ConfigUtils {
 		int endYr= Integer.parseInt(configMap.get("stopyear"));
 		int endMon= Integer.parseInt(configMap.get("stopmonth"));
 		int endday= TimeOperation.numberOfDays(endMon, endYr);
-		configMap.put("stopday", Integer.toString(endday));
-
-
-		
+		configMap.put("stopday", Integer.toString(endday));		
 		
 		
 		// support only monthly time step
 		if (!configMap.get("timestep").equalsIgnoreCase("1mon")){
-			
-			//System.out.println("Only monthly timestep supported, i.e., \"TimeStep  1MON\" ");
+
 			Error.addConfigError("Only monthly timestep supported, i.e., \"TimeStep  1MON\" ");
 			Error.writeErrorLog();
-			//StudyUtils.config_errors++;
-			//System.exit(1);
+
 		}
 		
 		
 
-		
-		// exit for above checks
-		//if (StudyUtils.config_errors>0) System.exit(1);
-			
-	
-		// check run dir and mainfile
-		//StudyUtils.runDir = configFile.getParent();	
 		// TODO: duplcate codes. clean it up!
 		
 		File mf = null;
@@ -649,10 +628,10 @@ public class ConfigUtils {
 			mf.getCanonicalPath();
 		}
 		catch (IOException e) {
-			//System.out.println("Main file not found: "+mf.getAbsolutePath());
+
 			Error.addConfigError("Main file not found: "+mf.getAbsolutePath());
 			Error.writeErrorLog();
-			//System.exit(1);
+	
 		}
 		
 		return configMap;
