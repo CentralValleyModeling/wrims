@@ -88,7 +88,7 @@ public class ToWreslData {
 			
 			// insert parameters into svar map
 			//md.svList.addAll(0, o.getParameterList());
-			md.svMap.putAll(o.getParameterMap());
+			//md.svMap.putAll(o.getParameterMap());
 			
 			modelDataSetMap.put(modelName, md);
 		
