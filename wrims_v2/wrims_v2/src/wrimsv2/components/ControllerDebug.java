@@ -150,7 +150,7 @@ public class ControllerDebug extends Thread {
 	}
 	
 	public void generateStudyFile(){
-		String outPath=new File(".").getAbsolutePath()+"\\jre6\\bin\\study.sty";
+		String outPath=new File(".").getAbsolutePath()+"\\jre\\bin\\study.sty";
 		FileWriter outstream;
 		try {
 			outstream = new FileWriter(outPath);
