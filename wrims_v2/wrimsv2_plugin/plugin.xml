@@ -262,7 +262,7 @@
  <extension
 	point="org.eclipse.ui.actionSets">
 	<actionSet
-		label="debug"
+		label="WRIMS2Debug"
 		visible="true"
 		id="wpp.debugcontrol">
 		<action
