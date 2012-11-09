@@ -162,7 +162,7 @@ public class DebugInterface {
 					sendRequest("");
 				}else{
 					String fileName=request.substring(index+1);
-					dataString=getDataInOneFile(fileName);
+					dataString=getVariableInOneFile(fileName);
 					sendRequest(dataString);
 				}
 			} catch (IOException e) {
@@ -211,9 +211,23 @@ public class DebugInterface {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}else if (request.startsWith("watch:")){
+			int index=request.indexOf(":");
+			try{
+				if (request.equals("watch:")){
+					sendRequest("");
+				}else{
+					String vGNameString=request.substring(index+1);
+					dataString=getWatchString(vGNameString);
+					sendRequest(dataString);
+				}
+			}catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}else if (request.equals("alldata")){
 			try{
-				dataString=getAllDataString();
+				dataString=getAllVariableString();
 				sendRequest(dataString);
 			}catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -454,7 +468,7 @@ public class DebugInterface {
 		}
 	}
 	
-	public String getDataInOneFile(String fileFullPath){
+	public String getVariableInOneFile(String fileFullPath){
 		String dataString="";
 		String modelName=ControlData.currStudyDataSet.getModelList().get(ControlData.currCycleIndex);
 		ModelDataSet mds=ControlData.currStudyDataSet.getModelDataSetMap().get(modelName);
@@ -604,7 +618,7 @@ public class DebugInterface {
 		return goalString;
 	}
 	
-	public String getAllDataString(){
+	public String getAllVariableString(){
 		String dataString="";
 		ArrayList<String> allDataNames=new ArrayList<String>();
 		ArrayList<String> allTsNames=new ArrayList<String>();
@@ -759,6 +773,112 @@ public class DebugInterface {
 		}
 		if (goalString.endsWith("#")) goalString=goalString.substring(0, goalString.length()-1);
 		return goalString;
+	}
+	
+	public String getWatchString(String vGNameString){
+		String dataString="";
+		String modelName=ControlData.currStudyDataSet.getModelList().get(ControlData.currCycleIndex);
+		ModelDataSet mds=ControlData.currStudyDataSet.getModelDataSetMap().get(modelName);
+		Map<String, Timeseries> tsMap = mds.tsMap;
+		Map<String, Dvar> dvMap = SolverData.getDvarMap();
+		Map<String, Svar> svMap = mds.svMap;
+		Map<String, Svar> svFutMap = mds.svFutMap;
+		Map<String, Alias> asMap = mds.asMap;
+		Map<String, EvalConstraint> gMap = SolverData.getConstraintDataMap();
+		
+		String[] vGNames;
+		if (vGNameString.contains("#")){
+			vGNames=vGNameString.split("#");
+		}else{
+			vGNames=new String[1];
+			vGNames[0]=vGNameString;
+		}
+		ArrayList<String> controlGoals=new ArrayList<String>();
+		IntDouble intDouble;
+		for (int i=0; i<vGNames.length; i++){
+			String vGName=vGNames[i];
+			if (svMap.containsKey(vGName)){
+				intDouble=svMap.get(vGName).getData();
+				if (intDouble != null) dataString=dataString+vGName+":"+df.format(intDouble.getData())+"#";
+			}else if (dvMap.containsKey(vGName)){
+				intDouble=dvMap.get(vGName).getData();
+				if (intDouble != null) dataString=dataString+vGName+":"+df.format(intDouble.getData())+"#";
+			}else if (tsMap.containsKey(vGName)){
+				intDouble=tsMap.get(vGName).getData();
+				if (intDouble != null) dataString=dataString+vGName+":"+df.format(intDouble.getData())+"#";
+			}else if (asMap.containsKey(vGName)){
+				intDouble=asMap.get(vGName).getData();
+				if (intDouble != null) dataString=dataString+vGName+":"+df.format(intDouble.getData())+"#";
+			}else if (gMap.containsKey(vGName)){
+				double lhs=0;
+				boolean noSlackSurplus=true;
+				dataString=dataString+vGName+":";
+				EvalConstraint ec=gMap.get(vGName);
+				if (ec!=null){
+					EvalExpression ee=ec.getEvalExpression();
+					Map<String, IntDouble> multiplier = ee.getMultiplier();
+					Set<String> mKeySet = multiplier.keySet();
+					Iterator<String> mi = mKeySet.iterator();
+					boolean hasData = true;
+					while (mi.hasNext()){
+						String variable=mi.next();
+						Number value=multiplier.get(variable).getData();
+						double value1=value.doubleValue();
+						if (dataString.endsWith(":")){
+							if (value1==1.0){
+								dataString=dataString+variable;
+							}else if (value1==-1.0){
+								dataString=dataString+"-"+variable;
+							}else{
+								dataString=dataString+df.format(value)+variable;
+							}
+						}else{
+							if (value1==1.0){
+								dataString=dataString+"+"+variable;
+							}else if (value1 == -1.0){
+								dataString=dataString+"-"+variable;
+							}else if(value1>=0){
+								dataString=dataString+"+"+df.format(value)+variable;
+							}else{
+								dataString=dataString+df.format(value)+variable;
+							}
+						}
+						IntDouble id = dvMap.get(variable).getData();
+						if (id==null){
+							hasData=false;
+						}else{
+							double variableValue=id.getData().doubleValue();
+							if (variableValue != 0.0 && (variable.startsWith("surplus__") || variable.startsWith("slack__"))){
+								noSlackSurplus=false;
+							}
+							lhs=lhs+value1*variableValue;
+						}
+					}
+					Number value=ee.getValue().getData();
+					double value1=value.doubleValue();
+					if (value1>0){
+						dataString=dataString+"+"+df.format(value)+ec.getSign()+"0#";
+					}else if(value1<0){
+						dataString=dataString+df.format(value)+ec.getSign()+"0#";
+					}else{
+						dataString=dataString+ec.getSign()+"0#";
+					}
+					lhs=lhs+value1;
+					if (Math.abs(lhs)<=0.00001 && hasData && noSlackSurplus){
+						controlGoals.add(vGName);
+					}
+				}
+			}else{
+				dataString=dataString+vGName+":"+"N/A#";
+			}
+		}
+		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
+		dataString=dataString+"!";
+		for (String controlGoal:controlGoals){
+			dataString=dataString+controlGoal+":";
+		}
+		if (dataString.endsWith(":")) dataString=dataString.substring(0, dataString.length()-1);
+		return dataString;
 	}
 	
 	public String getAllControlGoalName(){
