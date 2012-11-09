@@ -1,59 +1,23 @@
 package wrimsv2.components;
 
-import gurobi.GRBException;
-
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Date;
-import java.util.Set;
-
-import org.antlr.runtime.ANTLRStringStream;
-import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
-import org.antlr.runtime.TokenStream;
-
-import com.sunsetsoft.xa.Optimizer;
-
-import vista.db.dss.DSSDataWriter;
-import vista.db.dss.DSSUtil;
-import wrimsv2.commondata.solverdata.SolverData;
-import wrimsv2.commondata.wresldata.Alias;
-import wrimsv2.commondata.wresldata.Dvar;
-import wrimsv2.commondata.wresldata.External;
-import wrimsv2.commondata.wresldata.Goal;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
-import wrimsv2.commondata.wresldata.Svar;
-import wrimsv2.commondata.wresldata.Timeseries;
-import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.evaluator.AssignPastCycleVariable;
-import wrimsv2.evaluator.DataTimeSeries;
-import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.DssOperation;
-import wrimsv2.evaluator.EvalConstraint;
-import wrimsv2.evaluator.EvalExpression;
-import wrimsv2.evaluator.Evaluation;
-import wrimsv2.evaluator.EvaluatorLexer;
-import wrimsv2.evaluator.EvaluatorParser;
 import wrimsv2.evaluator.PreEvaluator;
-import wrimsv2.evaluator.TimeOperation;
-import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
-import wrimsv2.external.LoadAllDll;
-import wrimsv2.ilp.ILP;
 import wrimsv2.solver.XASolver;
 import wrimsv2.solver.SetXALog;
 import wrimsv2.solver.InitialXASolver;
-import wrimsv2.solver.Gurobi.GurobiSolver;
-import wrimsv2.tools.RCCComparison;
 import wrimsv2.wreslparser.elements.StudyUtils;
+import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
 
 public class ControllerSG {
 	
@@ -262,9 +226,16 @@ public class ControllerSG {
 						mds.processModel();
 						if (Error.error_evaluation.size()>=1){
 							Error.writeEvaluationErrorFile("Error_evaluation.txt");
+							Error.writeErrorLog();
 							noError=false;
 						}
 						new XASolver();
+						
+						// check monitored dvar list. they are slack and surplus generated automatically 
+						// from the weight group deviation penalty
+						// give error if they are not zero or greater than a small tolerance.
+						noError = !ErrorCheck.checkDeviationSlackSurplus(mds.deviationSlackSurplus_toleranceMap, mds.dvMap);
+						
 						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
 						if (Error.error_solving.size()<1){
 							ControlData.isPostProcessing=true;
@@ -272,6 +243,7 @@ public class ControllerSG {
 							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
 						}else{
 							Error.writeSolvingErrorFile("Error_solving.txt");
+							Error.writeErrorLog();
 							noError=false;
 						}
 						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
@@ -299,7 +271,9 @@ public class ControllerSG {
 			VariableTimeStep.setCycleEndDate(sds);
 		}
 		ControlData.xasolver.close();
+		if (ControlData.writeInitToDVOutput){
 		DssOperation.writeInitDvarAliasToDSS();
+		}
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
 	}
