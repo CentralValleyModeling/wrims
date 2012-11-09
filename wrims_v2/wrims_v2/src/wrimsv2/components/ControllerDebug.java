@@ -288,6 +288,7 @@ public class ControllerDebug extends Thread {
 							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
 						}else{
 							Error.writeSolvingErrorFile("Error_solving.txt");
+							Error.writeErrorLog();
 							noError=false;
 						}
 						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
@@ -420,6 +421,7 @@ public class ControllerDebug extends Thread {
 							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
 						}else{
 							Error.writeSolvingErrorFile("Error_solving.txt");
+							Error.writeErrorLog();
 							noError=false;
 						}
 						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
@@ -703,6 +705,7 @@ public class ControllerDebug extends Thread {
 							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
 						}else{
 							Error.writeSolvingErrorFile("Error_solving.txt");
+							Error.writeErrorLog();
 							noError=false;
 						}
 						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");

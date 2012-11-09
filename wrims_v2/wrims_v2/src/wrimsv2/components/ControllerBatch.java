@@ -263,6 +263,7 @@ public class ControllerBatch {
 							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
 						}else{
 							Error.writeSolvingErrorFile("Error_solving.txt");
+							Error.writeErrorLog();
 							noError=false;
 						}
 						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
@@ -429,6 +430,7 @@ public class ControllerBatch {
 							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
 						}else{
 							Error.writeSolvingErrorFile("Error_solving.txt");
+							Error.writeErrorLog();
 							noError=false;
 						}
 						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
@@ -553,6 +555,7 @@ public class ControllerBatch {
 							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
 						}else{
 							Error.writeSolvingErrorFile("Error_solving.txt");
+							Error.writeErrorLog();
 							noError=false;
 						}
 						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
