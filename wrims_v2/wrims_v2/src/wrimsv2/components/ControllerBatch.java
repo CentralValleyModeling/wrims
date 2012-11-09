@@ -1,7 +1,5 @@
 package wrimsv2.components;
 
-import gurobi.GRBException;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -25,7 +23,6 @@ import wrimsv2.solver.XASolver;
 import wrimsv2.solver.SetXALog;
 import wrimsv2.solver.InitialXASolver;
 import wrimsv2.solver.Gurobi.GurobiSolver;
-import wrimsv2.solver.Gurobi.LpResult;
 import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.elements.Tools;
 import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
