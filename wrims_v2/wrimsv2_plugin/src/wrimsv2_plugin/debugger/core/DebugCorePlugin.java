@@ -62,8 +62,11 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static IValue[] goalStack;
 	public static IValue[] allDataStack;
 	public static IValue[] allGoalStack;
-	public static ArrayList<String> controlGoals;
+	public static IValue[] watchStack;
+	public static ArrayList<String> fileControlGoals;
 	public static ArrayList<String> allControlGoals;
+	public static ArrayList<String> watchControlGoals;
+	public static ArrayList<String> watchItems=new ArrayList<String>();
 	
 	public static ArrayList<String[]> varDetailTimeseries= new ArrayList<String[]>();
 	public static ArrayList<String[]> varDetailFuture= new ArrayList<String[]>();
@@ -103,6 +106,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ID_WPP_DEBUG_MODEL = "wpp.debugModel";
 	public static final String ID_WPP_VARIABLE_VIEW="wpp.variableview";
 	public static final String ID_WPP_ALLVARIABLE_VIEW="wpp.allvariableview";
+	public static final String ID_WPP_WATCH_VIEW="wpp.watchview";
 	public static final String ID_WPP_VARIABLEDETAIL_VIEW="wpp.vardetailview";
 	public static final String ID_WPP_VARIABLEMONITOR_VIEW="wpp.varmonitorview";
 	public static final String ID_WPP_GOAL_VIEW="wpp.goalview";
@@ -129,6 +133,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String TITLE_VARIABLES_VIEW="Variables";
 	public static final String TITLE_ALLGOALS_VIEW="All Goals";
 	public static final String TITLE_GOALS_VIEW="Goals";
+	public static final String TITLE_WATCH_VIEW="Watch";
 	
 	/**
 	 * Launch configuration attribute key. Value is a path to a perl

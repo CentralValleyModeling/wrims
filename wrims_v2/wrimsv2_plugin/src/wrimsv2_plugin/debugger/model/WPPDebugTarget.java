@@ -91,6 +91,7 @@ import wrimsv2_plugin.debugger.view.WPPGoalView;
 import wrimsv2_plugin.debugger.view.WPPVarDetailView;
 import wrimsv2_plugin.debugger.view.WPPVarMonitorView;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
+import wrimsv2_plugin.debugger.view.WPPWatchView;
 import wrimsv2_plugin.tools.DataProcess;
 
 /**
@@ -324,11 +325,9 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 					}
 				}
 				WPPVariableView variableView = (WPPVariableView) workBenchPage.findView(DebugCorePlugin.ID_WPP_VARIABLE_VIEW);
-				//if (workBenchPage.isPartVisible(variableView)){
-					if (!dataAvaialbeViewNames.contains(DebugCorePlugin.TITLE_VARIABLES_VIEW)){
-						dataAvaialbeViewNames.add(DebugCorePlugin.TITLE_VARIABLES_VIEW);
-					}
-				//}
+				if (!dataAvaialbeViewNames.contains(DebugCorePlugin.TITLE_VARIABLES_VIEW)){
+					dataAvaialbeViewNames.add(DebugCorePlugin.TITLE_VARIABLES_VIEW);
+				}
 				WPPAllGoalView allGoalView = (WPPAllGoalView) workBenchPage.findView(DebugCorePlugin.ID_WPP_ALLGOAL_VIEW);
 				if (workBenchPage.isPartVisible(allGoalView)){
 					if (!dataAvaialbeViewNames.contains(DebugCorePlugin.TITLE_ALLGOALS_VIEW)){
@@ -339,11 +338,18 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 					}
 				}
 				WPPGoalView goalView = (WPPGoalView) workBenchPage.findView(DebugCorePlugin.ID_WPP_GOAL_VIEW);
-				//if (workBenchPage.isPartVisible(goalView)){
-					if (!dataAvaialbeViewNames.contains(DebugCorePlugin.TITLE_GOALS_VIEW)){
-						dataAvaialbeViewNames.add(DebugCorePlugin.TITLE_GOALS_VIEW);
+				if (!dataAvaialbeViewNames.contains(DebugCorePlugin.TITLE_GOALS_VIEW)){
+					dataAvaialbeViewNames.add(DebugCorePlugin.TITLE_GOALS_VIEW);
+				}
+				WPPWatchView watchView = (WPPWatchView) workBenchPage.findView(DebugCorePlugin.ID_WPP_WATCH_VIEW);
+				if (workBenchPage.isPartVisible(watchView)){
+					if (!dataAvaialbeViewNames.contains(DebugCorePlugin.TITLE_WATCH_VIEW)){
+						dataAvaialbeViewNames.add(DebugCorePlugin.TITLE_WATCH_VIEW);
 					}
-				//}
+					if (!allVGLoadedViewNames.contains(DebugCorePlugin.TITLE_WATCH_VIEW)){
+						allVGLoadedViewNames.add(DebugCorePlugin.TITLE_WATCH_VIEW);
+					}
+				}
 				final IWorkbench workbench=PlatformUI.getWorkbench();
 				final String filePath=UpdateView.findFilePathActiveEditor(workBenchPage);
 				
@@ -393,7 +399,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 							String filePath=UpdateView.findFilePathActiveEditor(workBenchPage);
 							if (part instanceof AbstractDebugView){
 								String viewName=part.getTitle();
-								if (viewName.equals(DebugCorePlugin.TITLE_ALLVARIABLES_VIEW) || viewName.equals(DebugCorePlugin.TITLE_ALLGOALS_VIEW)){
+								if (viewName.equals(DebugCorePlugin.TITLE_ALLVARIABLES_VIEW) || viewName.equals(DebugCorePlugin.TITLE_ALLGOALS_VIEW) || viewName.equals(DebugCorePlugin.TITLE_WATCH_VIEW)){
 									if (!allVGLoadedViewNames.contains(viewName)){
 										allVGLoadedViewNames.add(viewName);
 										if (isSuspended()){

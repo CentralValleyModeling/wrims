@@ -1,8 +1,5 @@
 package wrimsv2_plugin.debugger.view;
 
-import java.util.HashMap;
-import java.util.Iterator;
-
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.model.IDebugElement;
 import org.eclipse.debug.core.model.IDebugTarget;
@@ -13,7 +10,6 @@ import org.eclipse.debug.ui.IDebugModelPresentation;
 import org.eclipse.debug.ui.IDebugUIConstants;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -21,6 +17,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TableTreeViewer;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -28,14 +25,15 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableTree;
 import org.eclipse.swt.custom.TableTreeItem;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
@@ -46,8 +44,8 @@ import wrimsv2_plugin.tools.ProcImage;
 import wrimsv2_plugin.tools.SearchTable;
 import wrimsv2_plugin.tools.SetSelectionInTable;
 
-public class WPPGoalView extends AbstractDebugView implements ISelectionListener { 
-	private IValue[] goalStack=null;
+public class WPPWatchView extends AbstractDebugView implements ISelectionListener { 
+	private IValue[] dataStack=null;
 	
 	public class ViewLabelProvider implements ITableLabelProvider {
 
@@ -59,7 +57,8 @@ public class WPPGoalView extends AbstractDebugView implements ISelectionListener
 
 		@Override
 		public void dispose() {
-			ProcImage.disposeImages();
+			// TODO Auto-generated method stub
+			
 		}
 
 		@Override
@@ -73,10 +72,10 @@ public class WPPGoalView extends AbstractDebugView implements ISelectionListener
 			// TODO Auto-generated method stub
 			
 		}
-		
+
 		@Override
 		public Image getColumnImage(Object element, int index) {
-			if (index==0 && DebugCorePlugin.fileControlGoals.contains(((WPPValue)element).getVariableString())){
+			if (index==0 && DebugCorePlugin.watchControlGoals.contains(((WPPValue)element).getVariableString())){
 				return ProcImage.getControlImage();
 			}else{
 				return null;
@@ -117,7 +116,7 @@ public class WPPGoalView extends AbstractDebugView implements ISelectionListener
 		 */
 		public Object[] getChildren(Object parentElement) {
 			if (parentElement instanceof WPPDebugTarget) {
-				return DebugCorePlugin.goalStack;
+				return DebugCorePlugin.watchStack;
 			} else if (parentElement instanceof WPPValue){
 				try{
 					if (((WPPValue)parentElement).hasVariables()){
@@ -177,14 +176,20 @@ public class WPPGoalView extends AbstractDebugView implements ISelectionListener
 	
 	@Override
 	protected Viewer createViewer(Composite parent) {
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				WPPVarDetailView varDetailView = (WPPVarDetailView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_VARIABLEDETAIL_VIEW);
+			}
+		});
+		
 		TableViewer viewer = new TableViewer(parent);
 		viewer.setLabelProvider(new ViewLabelProvider());
 		viewer.setContentProvider(new ViewContentProvider());
-		getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(IDebugUIConstants.ID_DEBUG_VIEW, this);
 		getSite().setSelectionProvider(viewer);
 		Table table = viewer.getTable();
-	    new TableColumn(table, SWT.LEFT).setText("Goal");
-	    new TableColumn(table, SWT.LEFT).setText("Constarint");
+	    new TableColumn(table, SWT.LEFT).setText("Variable");
+	    new TableColumn(table, SWT.LEFT).setText("Value");
 	    
 	    // Pack the columns
 	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
@@ -236,7 +241,8 @@ public class WPPGoalView extends AbstractDebugView implements ISelectionListener
 	}
 	
 	public void updateView(){
-		goalStack=DebugCorePlugin.goalStack;
+		DebugCorePlugin.updateSelectedVariable=false;
+		dataStack=DebugCorePlugin.watchStack;
 		TableViewer viewer=(TableViewer) getViewer();
 		IStructuredSelection oldSelection = ((IStructuredSelection)viewer.getSelection());
 		viewer.setInput(DebugCorePlugin.target);
@@ -245,6 +251,7 @@ public class WPPGoalView extends AbstractDebugView implements ISelectionListener
 	    	table.getColumn(i).pack();
 	    }
 		viewer.refresh();
-	    if (goalStack.length>0) new SetSelectionInTable(oldSelection, viewer, table);
+		if (dataStack.length>0) new SetSelectionInTable(oldSelection, viewer, table);
+		DebugCorePlugin.updateSelectedVariable=true;
 	}
 }

@@ -62,6 +62,9 @@ public class UpdateView {
 		}else if (viewName.equals(DebugCorePlugin.TITLE_GOALS_VIEW)){
 			monitor.subTask("Update goals in current file");
 			updateGoalView(target, filePath);
+		}else if (viewName.equals(DebugCorePlugin.TITLE_WATCH_VIEW)){
+			monitor.subTask("Update watched data");
+			updateWatchView(target);
 		}
 	}
 	
@@ -74,6 +77,8 @@ public class UpdateView {
 			updateAllGoalViewWithMonitor(target);
 		}else if (viewName.equals(DebugCorePlugin.TITLE_GOALS_VIEW)){
 			updateGoalView(target, filePath);
+		}else if (viewName.equals(DebugCorePlugin.TITLE_WATCH_VIEW)){
+			updateWatchViewWithMonitor(target);
 		}
 	}
 	
@@ -241,13 +246,13 @@ public class UpdateView {
 				
 					if (dataParts.length==2){
 						DebugCorePlugin.goalStack=DataProcess.generateTree(dataParts[0]);
-						DebugCorePlugin.controlGoals=DataProcess.generateArrayList(dataParts[1]);
+						DebugCorePlugin.fileControlGoals=DataProcess.generateArrayList(dataParts[1]);
 					}else if (dataParts.length==1){
 						DebugCorePlugin.goalStack=DataProcess.generateTree(dataParts[0]);
-						DebugCorePlugin.controlGoals=new ArrayList<String>();
+						DebugCorePlugin.fileControlGoals=new ArrayList<String>();
 					}else{
 						DebugCorePlugin.goalStack=new WPPValue[0];
-				    	DebugCorePlugin.controlGoals=new ArrayList<String>();
+				    	DebugCorePlugin.fileControlGoals=new ArrayList<String>();
 					}
 				
 					WPPGoalView goalView = (WPPGoalView) workBenchPage.findView(DebugCorePlugin.ID_WPP_GOAL_VIEW);
@@ -287,6 +292,91 @@ public class UpdateView {
 		}
 	}
 	
+	public static void updateWatchView(WPPDebugTarget target){
+		String data="";
+		try{
+			String watchItemsString=formWatchItemsString(DebugCorePlugin.watchItems);
+			data=target.sendRequest("watch:"+watchItemsString);
+		}catch (DebugException e) {
+			WPPException.handleException(e);
+		}
+						
+		String[] dataParts=data.split("!");
+		
+		if (dataParts.length==2){
+			DebugCorePlugin.watchStack=DataProcess.generateTree(dataParts[0]);
+			DebugCorePlugin.watchControlGoals=DataProcess.generateArrayList(dataParts[1]);
+		}else if (dataParts.length==1){
+			DebugCorePlugin.watchStack=DataProcess.generateTree(dataParts[0]);
+			DebugCorePlugin.watchControlGoals=new ArrayList<String>();
+		}else{
+			DebugCorePlugin.watchStack=new WPPValue[0];
+	    	DebugCorePlugin.watchControlGoals=new ArrayList<String>();
+		}
+							
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+			workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				WPPWatchView watchView = (WPPWatchView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_WATCH_VIEW);
+				watchView.updateView();
+			}
+		});
+	}
+	
+	public static void updateWatchViewWithMonitor(final WPPDebugTarget target){
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+				ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell);  
+				try {
+					dialog.run(true,false, new IRunnableWithProgress() {
+						@Override
+						public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+							String data="";
+							monitor.beginTask("Update watched data", 100);
+							try{
+								String watchItemsString=formWatchItemsString(DebugCorePlugin.watchItems);
+								data=target.sendRequest("watch:"+watchItemsString);
+							}catch (DebugException e) {
+								WPPException.handleException(e);
+							}
+							monitor.worked(33);
+							
+							String[] dataParts=data.split("!");
+							
+							if (dataParts.length==2){
+								DebugCorePlugin.watchStack=DataProcess.generateTree(dataParts[0]);
+								DebugCorePlugin.watchControlGoals=DataProcess.generateArrayList(dataParts[1]);
+							}else if (dataParts.length==1){
+								DebugCorePlugin.watchStack=DataProcess.generateTree(dataParts[0]);
+								DebugCorePlugin.watchControlGoals=new ArrayList<String>();
+							}else{
+								DebugCorePlugin.watchStack=new WPPValue[0];
+						    	DebugCorePlugin.watchControlGoals=new ArrayList<String>();
+							}
+							monitor.worked(33);
+							
+							final IWorkbench workbench=PlatformUI.getWorkbench();
+							workbench.getDisplay().asyncExec(new Runnable(){
+								public void run(){
+									WPPWatchView watchView = (WPPWatchView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_WATCH_VIEW);
+									watchView.updateView();	
+								}
+							});
+							monitor.done();
+						}
+					});
+				} catch (InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 	
 	public static String findFilePathActiveEditor(IWorkbenchPage workBenchPage){
 		String path="";
@@ -310,5 +400,15 @@ public class UpdateView {
 			}
 		}
 		return path;
+	}
+	
+	public static String formWatchItemsString(ArrayList<String> watchItems){
+		String watchItemsString="";
+		int size = watchItems.size();
+		for (int i=0; i<size; i++){
+			watchItemsString=watchItemsString+watchItems.get(i)+"#";
+		}
+		if (watchItemsString.endsWith("#")) watchItemsString.substring(0, watchItemsString.length()-1);
+		return watchItemsString;
 	}
 }
