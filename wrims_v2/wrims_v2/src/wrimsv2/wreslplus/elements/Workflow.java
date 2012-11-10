@@ -2,9 +2,9 @@ package wrimsv2.wreslplus.elements;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Map;
 
+import wrimsv2.config.ConfigUtils;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyParser;
 import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
@@ -53,12 +53,23 @@ public class Workflow {
 		if (ErrorCheck.checkVarRedefined(st)>0) return null;
 		
 		
-		// process parameters
+		// check config param not declared in wresl main file
+		if (ErrorCheck.checkParamNotDeclared(st)) return null;		
+		
+		// overwrite main wresl parameter with config file parameter
+		if (ConfigUtils.paramMap.size()>0){
+			LogUtils.importantMsg("Overwrite parameters in main wresl file with parameters in config file...");
+			st.parameterMap.putAll(ConfigUtils.paramMap);
+		}
+		
+		// check param dependents unknown
+		if (ErrorCheck.checkUnknownDepedants(st)) return null;
+		
 		ProcParameter.process(st);
 		
 		
 		// process "if include file group"
-		ProcIfIncFileGroup.doSomething(st);
+		ProcIfIncFileGroup.process(st);
 		
 		
 		

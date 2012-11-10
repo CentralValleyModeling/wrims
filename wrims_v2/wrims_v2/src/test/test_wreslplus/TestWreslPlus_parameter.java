@@ -54,4 +54,33 @@ public class TestWreslPlus_parameter {
 		
 	
 	}
+
+	@Test(groups = { "WRESLPLUS_elements" })
+	public void parameter2() throws RecognitionException, IOException {
+		
+	
+		testName = "TestWreslPlus_parameter2";
+		csvFolderPath = TestParam.csvFolderPrepend + "testResult_wreslplus2\\"+testName;
+		
+		inputFilePath = projectPath + testName + TestParam.fileExt;
+		logFilePath = csvFolderPath + ".log";
+		LogUtils.setLogFile(logFilePath);
+		
+		File absFile = new File(inputFilePath).getAbsoluteFile();
+		String absFilePath = absFile.getCanonicalPath().toLowerCase();
+		
+		StudyTemp styTemp=Workflow.checkStudy(absFilePath);
+		
+		
+		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
+		
+		LogUtils.closeLogFile();
+	
+		String logText = Tools.readFileAsString(logFilePath);	
+		
+		int totalErrs = RegUtils.timesOfMatches(logText, "# Error");
+		Assert.assertEquals(totalErrs, 2);	
+		
+	
+	}
 }

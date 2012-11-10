@@ -1,21 +1,8 @@
 package wrimsv2.wreslplus.elements.procedures;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
-import wrimsv2.commondata.wresldata.Dvar;
-import wrimsv2.commondata.wresldata.External;
-import wrimsv2.commondata.wresldata.Goal;
-import wrimsv2.commondata.wresldata.ModelDataSet;
-import wrimsv2.commondata.wresldata.Param;
-import wrimsv2.commondata.wresldata.StudyDataSet;
-import wrimsv2.commondata.wresldata.Svar;
-import wrimsv2.commondata.wresldata.Timeseries;
-import wrimsv2.commondata.wresldata.WeightElement;
-import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslplus.elements.AliasTemp;
 import wrimsv2.wreslplus.elements.DvarTemp;
 import wrimsv2.wreslplus.elements.ExternalTemp;
@@ -46,6 +33,7 @@ public class ToLowerCase {
 		for (String key : s.parameterList) {
 
 			ParamTemp pt = new ParamTemp();
+			pt.id = s.parameterMap.get(key).id;
 			pt.expression = s.parameterMap.get(key).expression.toLowerCase();
 			pt.dependants = Tools.allToLowerCase(s.parameterMap.get(key).dependants);
 			

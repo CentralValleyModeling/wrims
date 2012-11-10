@@ -2,19 +2,17 @@ package wrimsv2.config;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import org.antlr.runtime.RecognitionException;
 import org.apache.commons.io.FilenameUtils;
 
 import wrimsv2.components.ControlData;
-import wrimsv2.components.ControllerBatch;
 import wrimsv2.components.FilePaths;
 import wrimsv2.components.Versions;
 import wrimsv2.components.Error;
@@ -22,11 +20,16 @@ import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.ilp.ILP;
 import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.wreslparser.elements.StudyUtils;
+import wrimsv2.wreslplus.elements.ParamTemp;
+import wrimsv2.wreslplus.elements.ParserUtils;
+import wrimsv2.wreslplus.grammar.WreslPlusParser;
 
 public class ConfigUtils {
 
 	private static Map<String, String> argsMap;
 
+	public static LinkedHashMap<String, ParamTemp> paramMap = new LinkedHashMap<String, ParamTemp>();
+	
 	public static void loadArgs(String[] args) {
 
 
@@ -100,8 +103,7 @@ public class ConfigUtils {
 		Map<String, String> configMap = new HashMap<String, String>();
 
 		configMap = checkConfigFile(configFile);
-
-
+		
 		String mainfile = configMap.get("mainfile").toLowerCase();
 		
 		String mainFilePath = "";
@@ -402,6 +404,23 @@ public class ConfigUtils {
 		}
 		System.out.println("WreslPlus:         " + StudyUtils.useWreslPlus);
 		
+		
+		
+		
+		if (Error.getTotalError()<1) readParameter(configFile);
+		
+		if (Error.getTotalError()<1 && paramMap.size()>0) { 
+			//System.out.println("============================================");
+			System.out.println("--------------------------------------------");
+			for (String k: paramMap.keySet()){	
+				ParamTemp pt = paramMap.get(k);
+				System.out.println("Parameter::   "+k+": "+pt.expression );
+			}
+		}
+		
+		
+		
+		
 //		if (configMap.keySet().contains("lpsolveparamheader")){
 //			
 //			String s = configMap.get("lpsolveparamheader");
@@ -655,6 +674,100 @@ public class ConfigUtils {
 
 		return configMap;
 
+	}
+
+	private static void readParameter(String configFilePath) {
+	
+		final File configFile = new File(configFilePath);	
+	
+		boolean isParameter = false;
+		
+		paramMap = new LinkedHashMap<String, ParamTemp>();
+	
+		try {
+	
+			Scanner scanner = new Scanner(configFile);
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+	
+				line = line.trim();
+				line = line.replace('\t', ' ');
+				//System.out.println(line);
+				if (line.indexOf("#") > -1) {
+					line = line.substring(0, line.indexOf("#"));
+					line = line.trim();
+				}
+				if (line.indexOf(" ") < 0) continue;
+				if (line.lastIndexOf(" ") + 1 >= line.length()) continue;
+				if (line.length() < 5) continue;
+				
+				//System.out.println(line);
+	
+				String key = line.substring(0, line.indexOf(" "));
+	
+				String value = line.substring(key.length(), line.length());
+	
+				value = value.trim();
+				value = value + " ";
+				if (value.startsWith("\"")) {
+					value = value.substring(1, value.lastIndexOf("\""));
+					value = value.replace("\"", "");
+				}
+				else {
+					value = value.substring(0, value.indexOf(" "));
+					value = value.replace("\"", "");
+				}
+				
+				// break at the line "End Parameter"
+				if (key.equalsIgnoreCase("end") & value.equalsIgnoreCase("parameter") ) break;
+			
+				if (key.equalsIgnoreCase("begin") & value.equalsIgnoreCase("parameter") ) {
+					isParameter = true;
+					continue;
+				}
+				
+				if (isParameter) {
+					
+					if (paramMap.keySet().contains(key.toLowerCase())) {
+						
+						Error.addConfigError("Parameter ["+key+"] is redefined");
+						
+					}
+					
+					ParamTemp pt = new ParamTemp();
+					pt.id = key;
+					pt.expression = value.toLowerCase();
+					
+					try {
+						pt.dependants = checkExpression(pt.expression);
+					} catch (Exception e) {
+						Error.addConfigError("Parameter ["+key+"] has error(s) in expression");
+					}
+					
+					System.out.println("^^^^^^^^^: "+pt.expression);
+					paramMap.put(key.toLowerCase(), pt);
+				}
+			}
+	
+		}
+		catch (Exception e) {
+	
+			Error.addConfigError("Invalid parameter section: " + configFilePath);
+	
+		}
+	
+		//return paramMap;
+	
+	}
+
+	private static Set<String> checkExpression(String text) throws RecognitionException {
+			
+			WreslPlusParser parser = ParserUtils.initParserSimple(text);
+			
+			parser.expression_simple();
+			
+			return parser.dependants;
+		
 	}
 
 	// private static void loadConfig2(String loadFile) throws IOException {

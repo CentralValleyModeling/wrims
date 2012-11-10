@@ -24,15 +24,14 @@ public class ProcParameter {
 	}
 
 	public static void process(StudyTemp st){
-		
+
+
 		ControlData.parameterMap = convertParamMapToSvarMap(st.parameterMap);
 		callEvaluator(st.parameterList, ControlData.parameterMap);	
 		
-	}
-	
+	}	
 
 
-	
 	private static void callEvaluator(ArrayList<String> keyList, Map<String, Svar> map) {
 		
 		for (String key: keyList) {
@@ -65,12 +64,9 @@ public class ProcParameter {
 				Error.addEvaluationError("Parameter evaluation has error.");
 
 			}			
-			
-			
 						
 		}
 		
-
 	}
 	
 	

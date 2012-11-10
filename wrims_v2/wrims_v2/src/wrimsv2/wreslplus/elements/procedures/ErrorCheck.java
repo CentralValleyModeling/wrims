@@ -1,25 +1,20 @@
 package wrimsv2.wreslplus.elements.procedures;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-
 import wrimsv2.components.Error;
 import wrimsv2.commondata.wresldata.Dvar;
-import wrimsv2.commondata.wresldata.ModelDataSet;
-import wrimsv2.commondata.wresldata.Param;
-import wrimsv2.commondata.wresldata.StudyDataSet;
-import wrimsv2.commondata.wresldata.Timeseries;
+import wrimsv2.config.ConfigUtils;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslplus.elements.AliasTemp;
 import wrimsv2.wreslplus.elements.DvarTemp;
 import wrimsv2.wreslplus.elements.GoalTemp;
 import wrimsv2.wreslplus.elements.ModelTemp;
+import wrimsv2.wreslplus.elements.ParamTemp;
 import wrimsv2.wreslplus.elements.SequenceTemp;
 import wrimsv2.wreslplus.elements.StudyTemp;
 import wrimsv2.wreslplus.elements.SvarTemp;
@@ -557,6 +552,56 @@ public class ErrorCheck {
 			
 			
 		}
+		
+	}
+
+	public static boolean checkParamNotDeclared(StudyTemp st) {
+		
+		Set<String> undeclared = new HashSet<String>();
+		
+		undeclared.addAll(ConfigUtils.paramMap.keySet());
+		
+		undeclared.removeAll(st.parameterList);
+		
+		if (undeclared.size()>0) {
+			
+			LogUtils.errMsg(" Parameters in config files not declared in main wresl file:  "+undeclared);
+		
+			return true;
+		}
+		
+		return false;
+	}
+
+	public static boolean checkUnknownDepedants(StudyTemp st) {
+		
+		boolean hasError = false;
+		
+		//for (String k : Lists.reverse(parameterList))
+			
+		for (int i=st.parameterList.size()-1; i>=0; i-- ){
+			
+			String k = st.parameterList.get(i);
+			
+			ParamTemp pt = st.parameterMap.get(k);
+			
+			pt.dependants_unknown = new HashSet<String>();
+			pt.dependants_unknown.addAll(pt.dependants);
+			
+			pt.dependants_unknown.removeAll(st.parameterList.subList(0, i));
+			
+			
+			if (pt.dependants_unknown.size()>0){
+				
+				LogUtils.errMsg(" Parameter ["+ pt.id +"] has unknown dependent(s): "+pt.dependants_unknown);
+				
+				hasError = true;
+						
+			}
+			
+		}
+
+		return hasError;
 		
 	}
 

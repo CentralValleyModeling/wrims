@@ -103,17 +103,13 @@ constant
 @init{ //$svar_g::sv_ = new SvarTemp(); 
        dependants = new LinkedHashSet<String>();
    }
-//@after{ $id = $svar_g::sv_.id; 
-//        $svObj=$svar_g::sv_; 
-//        $svObj.dependants= dependants;
-//        }  
   : Const i=ID '{' n=expr_add_simple '}'   //n=expr_add_simple
-//{$svar_g::sv_.caseName.add(Param.defaultCaseName); $svar_g::sv_.caseCondition.add(Param.always);}
-//{ $svar_g::sv_.caseExpression.add($e.text); };
+
           { 
             $wreslMain::sty.parameterList.add($i.text); 
             
             ParamTemp pt = new ParamTemp();
+            pt.id = $i.text;
             pt.expression = $n.text;
             pt.dependants = dependants;
             $wreslMain::sty.parameterMap.put($i.text, pt); 
@@ -121,6 +117,9 @@ constant
           };
           
           
+expression_simple
+@init{ dependants = new LinkedHashSet<String>(); }
+  : expr_add_simple ;
           
           
 
@@ -220,14 +219,7 @@ scope { IfIncFileGroup incg_; ArrayList<String> _arr; HashMap<String, IncFileTem
        }
 @after{ 
 }
-: if_  elseif_* else_?  
-//{ //System.out.println("$if_inc_files::incg_.if_list: "+$if_inc_files::incg_.if_list); 
-//  System.out.println("$if_inc_files::incg_.inc_files_list: "+$if_inc_files::incg_.inc_files_list); 
-//  //System.out.println("$if_inc_files::incg_.inc_files_map_list: "+$if_inc_files::incg_.inc_files_map_list); 
-//  System.out.println("$if_inc_files::incg_.conditionList: "+$if_inc_files::incg_.conditionList); 
-//  //System.out.println("$if_inc_files::incg_.else_list: "+$if_inc_files::incg_.else_list); 
-//} 
-;
+  : if_  elseif_* else_?  ;
 
 if_ :
   If e=logical_main '{' include_file_group '}' 
@@ -255,7 +247,6 @@ include_file_group
         $if_inc_files::_arr.add($fi.id);  
         $if_inc_files::_incfmap.put($fi.id, $fi.incFileObj);
         $mt::m_.incFileIDList.add($if_inc_files::incg_.id); 
-        //$mt::m_.incFileIDList.add($fi.id); 
         } 
   )+ ;
 

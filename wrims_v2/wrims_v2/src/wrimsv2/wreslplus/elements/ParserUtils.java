@@ -3,17 +3,16 @@ package wrimsv2.wreslplus.elements;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
-
 import org.antlr.runtime.ANTLRFileStream;
+import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 
-import serial.SerialXml;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
+import wrimsv2.wreslplus.elements.procedures.ProcIfIncFileGroup;
 import wrimsv2.wreslplus.elements.procedures.ProcIncFile;
 import wrimsv2.wreslplus.elements.procedures.ProcVarIncFileList;
 import wrimsv2.wreslplus.elements.procedures.ToLowerCase;
@@ -130,7 +129,12 @@ public class ParserUtils {
 					
 					ErrorCheck.checkVarRedefined(fm);	
 	
-					ToLowerCase.convert(fm);		
+					ToLowerCase.convert(fm);
+					
+					// process "if include file group"
+					ProcIfIncFileGroup.process(fm);
+					
+					
 					ProcIncFile.processPath(fm);
 					ProcVarIncFileList.replaceIncFile(fm,null);
 					Procedures.processDependants(fm);
@@ -161,6 +165,18 @@ public class ParserUtils {
 	public static void setRunDir(String runDir){
 		
 		GlobalData.runDir = Tools.getCanonicalLowCasePath(runDir);;
+	}
+
+
+	public static WreslPlusParser initParserSimple(String text) throws RecognitionException  {		
+	    
+		ANTLRStringStream stream = new ANTLRStringStream(text);		
+		WreslPlusLexer lexer = new WreslPlusLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);		
+		WreslPlusParser parser = new WreslPlusParser(tokenStream);
+		
+		return parser;
+		
 	}
 
 
