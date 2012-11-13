@@ -265,4 +265,16 @@ public class WPPWatchView extends AbstractDebugView implements ISelectionListene
 		data[1]="";
 		item.setText(data);
 	}
+	
+	public void deleteWatched(){
+		TableViewer viewer=(TableViewer) getViewer();
+		Table table=viewer.getTable();
+		TableItem[] tis=table.getSelection();
+		for (int i=0; i<tis.length; i++){
+			TableItem ti=tis[i];
+			String varGoalNameLowerCase=ti.getText(0).toLowerCase();
+			DebugCorePlugin.watchItems.remove(varGoalNameLowerCase);
+		}
+		table.remove(table.getSelectionIndices());
+	}
 }

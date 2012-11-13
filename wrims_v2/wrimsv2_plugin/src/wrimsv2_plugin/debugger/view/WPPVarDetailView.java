@@ -64,7 +64,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 		@Override
 		public void selectionChanged(IWorkbenchPart part,
 				ISelection selection) {
-			if ((part instanceof WPPVariableView || part instanceof WPPAllVariableView) && DebugCorePlugin.updateSelectedVariable){
+			if ((part instanceof WPPVariableView || part instanceof WPPAllVariableView || part instanceof WPPWatchView) && DebugCorePlugin.updateSelectedVariable){
 				ArrayList<String> selectedVariableNames = new ArrayList<String>();
 				Iterator iterator = ((StructuredSelection)selection).iterator();
 				while (iterator.hasNext()){

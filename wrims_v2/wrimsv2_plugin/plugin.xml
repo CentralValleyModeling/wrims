@@ -132,6 +132,15 @@
          class="wrimsv2_plugin.debugger.toolbaritem.AddWatch"
          enablesFor="*">
       </action> 
+      <action
+         id="wpp.deletewatch" 
+         label="Delete Watch"
+         icon="icons\delete_icon.png" 
+         tooltip="delete watch"
+         toolbarPath="group1"
+         class="wrimsv2_plugin.debugger.toolbaritem.DeleteWatch"
+         enablesFor="*">
+      </action> 
    </viewContribution> 
 </extension>
 <extension point="org.eclipse.ui.views">
