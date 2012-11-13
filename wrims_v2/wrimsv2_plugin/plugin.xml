@@ -119,6 +119,21 @@
       </action>  
    </viewContribution> 
 </extension>
+<extension point="org.eclipse.ui.viewActions"> 
+  <viewContribution 
+      id="org.eclipse.ui.articles.action.contribution.view" 
+   targetID="wpp.watchview">
+	<action
+         id="wpp.addwatch" 
+         label="Add Watch"
+         icon="icons\add_icon.png" 
+         tooltip="add watch"
+         toolbarPath="group1"
+         class="wrimsv2_plugin.debugger.toolbaritem.AddWatch"
+         enablesFor="*">
+      </action> 
+   </viewContribution> 
+</extension>
 <extension point="org.eclipse.ui.views">
         <category 
            id="wpp.category.wrims2"
