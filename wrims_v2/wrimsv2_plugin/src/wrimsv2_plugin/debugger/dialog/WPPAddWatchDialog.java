@@ -38,11 +38,13 @@ import org.eclipse.ui.PlatformUI;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.menuitem.EnableMenus;
+import wrimsv2_plugin.debugger.view.UpdateView;
 import wrimsv2_plugin.debugger.view.WPPAllGoalView;
 import wrimsv2_plugin.debugger.view.WPPAllVariableView;
 import wrimsv2_plugin.debugger.view.WPPGoalView;
 import wrimsv2_plugin.debugger.view.WPPVarDetailView;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
+import wrimsv2_plugin.debugger.view.WPPWatchView;
 import wrimsv2_plugin.tools.SearchTable;
 
 public class WPPAddWatchDialog extends PopupDialog {
@@ -86,7 +88,27 @@ public class WPPAddWatchDialog extends PopupDialog {
 		ok.setText("OK");
 		ok.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
-				
+				ArrayList<String> watchItems=DebugCorePlugin.watchItems;
+				final String varGoalName=text1.getText();
+				String varGoalNameLowerCase=varGoalName.toLowerCase();
+				if (watchItems.contains(varGoalNameLowerCase)) {
+					showDuplicatedWatch(varGoalName);
+					text1.setText("");
+				}else{
+					watchItems.add(varGoalNameLowerCase);
+					if (DebugCorePlugin.target!=null && DebugCorePlugin.target.isSuspended()){
+						UpdateView.updateWatchView(DebugCorePlugin.target);
+					}else{
+						final IWorkbench workbench=PlatformUI.getWorkbench();
+						workbench.getDisplay().asyncExec(new Runnable(){
+						public void run(){
+							WPPWatchView watchView = (WPPWatchView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_WATCH_VIEW);
+							watchView.addWatched(varGoalName);
+						}
+					});
+					}
+					close();
+				}
 			}
 		});
 		
@@ -100,5 +122,18 @@ public class WPPAddWatchDialog extends PopupDialog {
 		
 		dialogArea.getShell().setDefaultButton(ok);
 		return dialogArea;
-	 }
+	}
+	
+	public void showDuplicatedWatch(final String text){
+		final IWorkbench workbench=PlatformUI.getWorkbench();
+		workbench.getDisplay().asyncExec(new Runnable(){
+			public void run(){
+				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
+				MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING);
+				messageBox.setText("Warning");
+				messageBox.setMessage("\""+text+"\""+" was already watched");
+				messageBox.open();
+			}
+		});
+	}
 }

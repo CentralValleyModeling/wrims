@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPart;
@@ -57,8 +58,7 @@ public class WPPWatchView extends AbstractDebugView implements ISelectionListene
 
 		@Override
 		public void dispose() {
-			// TODO Auto-generated method stub
-			
+			ProcImage.disposeImages();
 		}
 
 		@Override
@@ -188,7 +188,7 @@ public class WPPWatchView extends AbstractDebugView implements ISelectionListene
 		viewer.setContentProvider(new ViewContentProvider());
 		getSite().setSelectionProvider(viewer);
 		Table table = viewer.getTable();
-	    new TableColumn(table, SWT.LEFT).setText("Variable");
+	    new TableColumn(table, SWT.LEFT).setText("Variable/Goal");
 	    new TableColumn(table, SWT.LEFT).setText("Value");
 	    
 	    // Pack the columns
@@ -245,13 +245,24 @@ public class WPPWatchView extends AbstractDebugView implements ISelectionListene
 		dataStack=DebugCorePlugin.watchStack;
 		TableViewer viewer=(TableViewer) getViewer();
 		IStructuredSelection oldSelection = ((IStructuredSelection)viewer.getSelection());
-		viewer.setInput(DebugCorePlugin.target);
 		Table table=viewer.getTable();
+		table.removeAll();
+		viewer.setInput(DebugCorePlugin.target);
 	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
 	    	table.getColumn(i).pack();
 	    }
 		viewer.refresh();
 		if (dataStack.length>0) new SetSelectionInTable(oldSelection, viewer, table);
 		DebugCorePlugin.updateSelectedVariable=true;
+	}
+	
+	public void addWatched(String varGoalName){
+		TableViewer viewer=(TableViewer) getViewer();
+		Table table=viewer.getTable();
+		TableItem item = new TableItem(table, SWT.NONE);
+		String[] data=new String[2];
+		data[0]=varGoalName;
+		data[1]="";
+		item.setText(data);
 	}
 }
