@@ -87,35 +87,48 @@ scope { StudyTemp sty;}
 @after{ styObj = $wreslMain::sty; }
 
 	: 
-   parameter?
+   initial?
 	( seq=sequence { $wreslMain::sty.seqList.add($seq.id); $wreslMain::sty.seqMap.put($seq.id,$seq.seqObj);  }    )+ 
 	( m=model      { $wreslMain::sty.modelList.add($m.id); $wreslMain::sty.modelMap.put($m.id, $m.modelObj);  }    )+ 
 	;
 
 
-parameter 
+initial 
 @init {  isParameter=true; }
 @after{  isParameter=false; }
   : 
-  Parameter '{' constant+ '}';
+  Initial '{' 
+    (
+        ( c=constant  {$wreslMain::sty.parameterList.add($c.id); $wreslMain::sty.parameterMap.put($c.id, $c.ptObj);} ) 
+      | ( s=svar_init {$wreslMain::sty.parameterList.add($s.id); $wreslMain::sty.parameterMap.put($s.id, $s.ptObj);} )
+    )+ 
+  '}';
 
-constant 
-@init{ //$svar_g::sv_ = new SvarTemp(); 
-       dependants = new LinkedHashSet<String>();
-   }
-  : Const i=ID '{' n=expr_add_simple '}'   //n=expr_add_simple
+constant returns[String id, ParamTemp ptObj]
+@init{  $ptObj = new ParamTemp();
+        dependants = new LinkedHashSet<String>(); }
+  : Const i=ID '{' n=number '}'   //n=expr_add_simple
 
           { 
-            $wreslMain::sty.parameterList.add($i.text); 
-            
-            ParamTemp pt = new ParamTemp();
-            pt.id = $i.text;
-            pt.expression = $n.text;
-            pt.dependants = dependants;
-            $wreslMain::sty.parameterMap.put($i.text, pt); 
-            
+            $id = $i.text;
+            $ptObj.id = $i.text;
+            $ptObj.expression = $n.text;
+            $ptObj.dependants = dependants;
           };
           
+ 
+svar_init returns[String id, ParamTemp ptObj]
+@init{  $ptObj = new ParamTemp();
+        dependants = new LinkedHashSet<String>(); }
+  : SVAR i=ID '{' n=expr_add_simple '}'   
+
+          { 
+            $id = $i.text;
+            $ptObj.id = $i.text;
+            $ptObj.expression = $n.text;
+            $ptObj.dependants = dependants;
+          };
+
           
 expression_simple
 @init{ dependants = new LinkedHashSet<String>(); }
@@ -952,8 +965,9 @@ WEIGHT : 'weight' | 'WEIGHT' | 'Weight' ;
 CONFIG : 'config' ;
 LABEL : 'label' ;
 NAME : 'name' ;
-//PARAM : 'param' ;
-Parameter : 'parameter' | 'Parameter' | 'PARAMETER' ;
+
+Initial : 'initial' | 'Initial' | 'INITIAL' ;
+//Parameter : 'parameter' | 'Parameter' | 'PARAMETER' ;
 Const : 'const' | 'Const' | 'CONST' ;
 
 If : 'If' | 'IF' | 'if' ;

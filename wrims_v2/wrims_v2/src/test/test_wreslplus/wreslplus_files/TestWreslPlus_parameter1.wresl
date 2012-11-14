@@ -1,4 +1,4 @@
-parameter {
+initial {
 
 	const A { 100 }
 	const B { 5 }

@@ -1,9 +1,10 @@
-parameter {
+initial {
 
 	const A { 100 }
-	const B { a - 95}
-    const C1 { Alpha + Beta + b }
-	const C2 { Alpha + Beta + Gamma + c1 + c2 }
+	svar B { a - 95}
+    svar C1 { Alpha + Beta + b }
+	svar C2 { Alpha + Beta + Gamma + c1 + c2 }
+	const D { 3.0 }
 }
 
 SEQUENCE CYCLE1 {
