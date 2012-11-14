@@ -1,55 +1,48 @@
 parameter {
 
-	const option_A { 1 }
-	const totalflow { 100 }
+	const A { 100 }
+	const B { 5 }
 
 }
 
-sequence CYCLE1 {
-    model   fiRst
+SEQUENCE CYCLE1 {
+    model   first
     order   1
+    }
 
+SEQUENCE CYCLE2 {
+    model   second
+    order   2
+    }
+	
+MODEL first { 
+
+  define x { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define y { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define z { std kind 'FLOW-CHANNEL' units 'CFS'}
+
+  goal g1 { x + y + z < A  }
+  goal g2 { x = B  }
+  
+  Objective obj2 {
+	weight 6
+	variable x y z 
+  }
+  
 }
 
+MODEL second { 
 
+  define x { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define y { std kind 'FLOW-CHANNEL' units 'CFS'}
+  define z { std kind 'FLOW-CHANNEL' units 'CFS'}
 
-	
-model first { 
-
-	include 'dummy.wresl'
-
-	define X { std kind 'FLOW-CHANNEL' units 'CFS'}
-	define Y { std kind 'FLOW-CHANNEL' units 'CFS'}
-
-	goal g0 { x + y < totalflow }
+  goal g1 { x + y + z < A*2  }
+  goal g2 { x = B*2  }
   
-	if int(option_A)==1 {
-		
-		include 'goalX1.wresl' 
-		include 'goalY1.wresl' 
-	
-	} 
-	elseif int(option_A)==2 {
-	
-		include 'goalX2.wresl'
-		include 'goalY2.wresl' 
-	
-	}
-	elseif int(option_A)==3 {
-	
-		include 'goalX3.wresl'
-		include 'goalY3.wresl' 
-	
-	}
-	else {	
-		include 'goalX4.wresl'
-		include 'goalY4.wresl'  
-	
-	}
-  
-	objective obj {
-		[x, 5] 
-		[y, 5] 
-	}
+  Objective obj2 {
+	weight 6
+	variable x y z 
+  }
   
 }
