@@ -1,5 +1,7 @@
 package wrimsv2_plugin.debugger.view;
 
+import java.util.ArrayList;
+
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.model.IDebugElement;
 import org.eclipse.debug.core.model.IDebugTarget;
@@ -276,5 +278,12 @@ public class WPPWatchView extends AbstractDebugView implements ISelectionListene
 			DebugCorePlugin.watchItems.remove(varGoalNameLowerCase);
 		}
 		table.remove(table.getSelectionIndices());
+	}
+	
+	public void deleteAllWatched(){
+		TableViewer viewer=(TableViewer) getViewer();
+		Table table=viewer.getTable();
+		DebugCorePlugin.watchItems=new ArrayList<String>();
+		table.removeAll();
 	}
 }
