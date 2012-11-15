@@ -53,7 +53,7 @@ public class TableOperation {
 			    if (strLine.contains("!")) strLine=removeComment(strLine);
 			    strLine=removeLeadingTailingSpace(strLine);
 			    if (!(strLine.toLowerCase().equals(name))){
-			    	Error.addEvaluationError("The first line after comments in the table "+name+" should be table file name "+name+".table");
+			    	Error.addEvaluationError("The first line after comments in the table "+name+".table should be the file name without extension: "+name);
 			    }
 			    
 			    if ((strLine=br.readLine())==null){
