@@ -1,9 +1,9 @@
 initial {
 
 	const A { 100 }
-	svar B { a - 95}
-    svar C1 { Alpha + Beta + b }
-	svar C2 { Alpha + Beta + Gamma + c1 + c2 }
+	svar B { value a - 95}
+    svar C1 { value Alpha + Beta + b }
+	svar C2 { value Alpha + Beta + Gamma + c1 + c2 }
 	const D { 3.0 }
 }
 

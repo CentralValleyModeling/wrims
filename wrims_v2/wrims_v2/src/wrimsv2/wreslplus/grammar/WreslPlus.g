@@ -46,6 +46,7 @@ options {
   	public StudyTemp styObj;
   	public ModelTemp mObj;
   	public Set<String> dependants;
+  	public Set<Integer> dependantTypes; 
   	public Set<String> varInCycle;
   	public Map<String, HashSet<String>> neededCycleVarMap;
   	boolean addDep = true;
@@ -115,11 +116,15 @@ constant returns[String id, ParamTemp ptObj]
             $ptObj.expression = $n.text;
             $ptObj.dependants = dependants;
           };
-          
- 
+
+svar_initial returns[String id, SvarTemp svObj]
+  :  SVAR  svar_g { $id=$svar_g.id;  $svObj=$svar_g.svObj;  } ;           
+
+   
 svar_init returns[String id, ParamTemp ptObj]
 @init{  $ptObj = new ParamTemp();
-        dependants = new LinkedHashSet<String>(); }
+        dependants = new LinkedHashSet<String>(); 
+        dependantTypes = new LinkedHashSet<Integer>(); }
   : SVAR i=ID '{' n=expr_add_simple '}'   
 
           { 
@@ -128,6 +133,9 @@ svar_init returns[String id, ParamTemp ptObj]
             $ptObj.expression = $n.text;
             $ptObj.dependants = dependants;
           };
+
+svar_init_value : ;
+svar_init_lookup : ;
 
           
 expression_simple
@@ -205,7 +213,7 @@ scope { ModelTemp m_;}
 :      
 	   ( fi=include_file {$mt::m_.itemTypeList.add(Param.incFileType); $mt::m_.itemList.add($fi.id); $mt::m_.incFileIDList.add($fi.id); $mt::m_.incFileMap.put($fi.id, $fi.incFileObj); }
 	   | ts=timeseries   {$mt::m_.itemTypeList.add(Param.tsType);$mt::m_.itemList.add($ts.id); $mt::m_.tsList.add($ts.id); $mt::m_.tsMap.put($ts.id, $ts.tsObj); }
-	   | sv=svar_g       {$mt::m_.itemTypeList.add(Param.svType);$mt::m_.itemList.add($sv.id); $mt::m_.svList.add($sv.id); $mt::m_.svMap.put($sv.id, $sv.svObj); } 
+	   | sv=svar_group   {$mt::m_.itemTypeList.add(Param.svType);$mt::m_.itemList.add($sv.id); $mt::m_.svList.add($sv.id); $mt::m_.svMap.put($sv.id, $sv.svObj); } 
 	   | dv=dvar_g       {$mt::m_.itemTypeList.add(Param.dvType);$mt::m_.itemList.add($dv.id); $mt::m_.dvList.add($dv.id); $mt::m_.dvMap.put($dv.id, $dv.dvObj); } 
 	   | ex=ex_g         {$mt::m_.itemTypeList.add(Param.exType);$mt::m_.itemList.add($ex.id); $mt::m_.exList.add($ex.id); $mt::m_.exMap.put($ex.id, $ex.exObj); }
 	   | as=alias        {$mt::m_.itemTypeList.add(Param.asType);$mt::m_.itemList.add($as.id); $mt::m_.asList.add($as.id); $mt::m_.asMap.put($as.id, $as.asObj); }
@@ -468,6 +476,9 @@ aliasKind:  KIND s=QUOTE {$alias::as_.kind=Tools.strip($s.text);};
 
 /// svar
 
+svar_group returns[String id, SvarTemp svObj]
+  : ( SVAR | DEFINE ('[' LOCAL ']')? ) svar_g { $id=$svar_g.id;  $svObj=$svar_g.svObj;  } ;
+
 svar_g returns[String id, SvarTemp svObj]
 scope { SvarTemp sv_;
         String id_; 
@@ -484,7 +495,7 @@ scope { SvarTemp sv_;
         $svObj.neededVarInCycleSet= varInCycle;
         $svObj.needVarFromEarlierCycle = (varInCycle!=null);
         }	 
-	: ( SVAR | DEFINE ('[' LOCAL ']')? ) ( svar | svar_array | svar_timeArray ) ;
+	:  ( svar | svar_array | svar_timeArray ) ;
 
 
 svarID : i=ID  {$svar_g::sv_.id =$i.text;} ;
@@ -836,11 +847,11 @@ atom
     :  number_p
     |  v=varID {if (addDep) dependants.add($v.text);} 
     |  intrinsicFunc
-    |  reservedID 
-    |  specialVar
+    |  reservedID   {if (isParameter) dependantTypes.add(Param.dependant_reserved);}  
+    |  specialVar   {if (isParameter) dependantTypes.add(Param.dependant_special);}  
     |  externalFunc
-    |  varFunc
-    |  preCycleVar
+    |  varFunc      {if (isParameter) dependantTypes.add(Param.dependant_varFunc);}   
+    |  preCycleVar  {if (isParameter) dependantTypes.add(Param.dependant_preCycleVar);}   
     ;
 
 specialVar : 'i' | '$m' ;
