@@ -1,4 +1,4 @@
-parameter {
+initial {
 
 	const option_A { 2 }
 	const totalflow { 100 }
