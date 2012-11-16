@@ -1,6 +1,7 @@
 package wrimsv2_plugin.debugger.view;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.model.IDebugElement;
@@ -19,6 +20,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TableTreeViewer;
 import org.eclipse.jface.viewers.TableViewer;
@@ -35,6 +37,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 
@@ -280,10 +283,29 @@ public class WPPWatchView extends AbstractDebugView implements ISelectionListene
 		int[] indices = table.getSelectionIndices();
 		table.remove(indices);
 		if (table.getItemCount()>0){
+			int selIndex;
 			if (indices[0]==0){
-				table.select(0);
+				selIndex=0;
 			}else{
-				table.select(indices[0]-1);
+				selIndex=indices[0]-1;
+			}
+			table.select(selIndex);
+			TableItem ti = table.getItem(selIndex);
+			String selVarGoalName=ti.getText(0);
+			final ArrayList<String> selectedVariableNames=new ArrayList<String>();
+			selectedVariableNames.add(selVarGoalName);
+			if(!selectedVariableNames.equals(DebugCorePlugin.selectedVariableNames)){
+				DebugCorePlugin.selectedVariableNames=selectedVariableNames;
+				if (DebugCorePlugin.target !=null && DebugCorePlugin.target.isSuspended()){
+					final IWorkbench workbench=PlatformUI.getWorkbench();
+					workbench.getDisplay().asyncExec(new Runnable(){
+						public void run(){
+							IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
+							WPPVarDetailView varDetailView=(WPPVarDetailView) workBenchPage.findView(DebugCorePlugin.ID_WPP_VARIABLEDETAIL_VIEW);
+							varDetailView.updateDetailVariableView(selectedVariableNames);
+						}
+					});
+				}
 			}
 		}
 	}

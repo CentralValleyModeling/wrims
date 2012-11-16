@@ -14,6 +14,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.ResourceUtil;
 
@@ -317,8 +318,13 @@ public class UpdateView {
 		final IWorkbench workbench=PlatformUI.getWorkbench();
 			workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){
-				WPPWatchView watchView = (WPPWatchView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_WATCH_VIEW);
-				watchView.updateView();
+				WPPWatchView watchView;
+				try {
+					watchView = (WPPWatchView) workbench.getActiveWorkbenchWindow().getActivePage().showView(DebugCorePlugin.ID_WPP_WATCH_VIEW);
+					watchView.updateView();
+				} catch (PartInitException e) {
+					WPPException.handleException(e);
+				}
 			}
 		});
 	}
