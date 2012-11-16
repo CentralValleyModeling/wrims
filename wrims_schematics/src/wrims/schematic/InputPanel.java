@@ -553,7 +553,7 @@ public class InputPanel extends JPanel {
 			out.println("##################################################################################");	
 			out.println("");
 			out.println("");
-			
+			out.println("Begin Config");
 			out.println("MainFile           "+configMap.get("MainFile".toLowerCase()));
 			out.println("Solver             "+configMap.get("solver".toLowerCase()));
 			out.println("DvarFile           "+configMap.get("DvarFile".toLowerCase()));
@@ -578,6 +578,7 @@ public class InputPanel extends JPanel {
 				
 			}
 			
+			out.println("End Config");
 			out.close();
 		
 			configFilePath= new File(studyDir, configName).getAbsolutePath();
