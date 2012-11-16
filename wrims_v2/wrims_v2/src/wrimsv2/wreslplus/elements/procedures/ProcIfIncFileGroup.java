@@ -45,7 +45,7 @@ public class ProcIfIncFileGroup {
 			
 			if (indexOfFirstTrue>-1) {
 			
-				System.out.println("~~ This condition index is true: "+indexOfFirstTrue);
+				//System.out.println("~~ This condition index is true: "+indexOfFirstTrue);
 				
 				int index_ItemList = m.itemList.indexOf(gObj.id);
 			

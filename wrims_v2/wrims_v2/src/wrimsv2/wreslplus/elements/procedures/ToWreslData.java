@@ -83,7 +83,7 @@ public class ToWreslData {
 
 			ModelTemp mt = s.modelMap.get(modelName);	
 			
-			modelConditionList.add("always"); //TODO: need condition
+			modelConditionList.add(seqObj.condition); 
 			ModelDataSet md = convertModel(seqObj, s);
 			
 			// insert parameters into svar map
