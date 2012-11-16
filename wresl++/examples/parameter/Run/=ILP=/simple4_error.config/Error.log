@@ -1,4 +1,4 @@
 ==================
-1921_10_c01
+Initial processing
 ==================
- Variable [b] declared as Const type must be a number, but it's defined as [a-30]
+Initial variable [B] in Config file must be assigned with a number, but it's [a-30]
