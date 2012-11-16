@@ -212,7 +212,29 @@
          </command>
       </menuContribution>
    </extension>
-
+   	<extension
+		point="org.eclipse.ui.commands">
+		<command
+			description="Add watch."
+			id="gov.ca.dwr.wresl.xtext.editor.AddWatch"
+			defaultHandler="gov.ca.dwr.wresl.xtext.editor.ui.watch.AddWatch"
+			name="Watch">
+		</command>
+	</extension>
+    <extension point="org.eclipse.ui.menus">
+         <menuContribution
+            locationURI="popup:#TextEditorContext?after=group.edit">
+         	<command 
+         	commandId="gov.ca.dwr.wresl.xtext.editor.AddWatch"
+            style="push">
+            <visibleWhen checkEnabled="false">
+               <reference
+                     definitionId="gov.ca.dwr.wresl.xtext.editor.WreslEditor.Editor.opened">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
   <extension point="org.eclipse.compare.contentViewers">
     <viewer id="gov.ca.dwr.wresl.xtext.editor.WreslEditor.compare.contentViewers"
             class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
