@@ -105,7 +105,7 @@ public class ErrorCheck {
 				
 			if (asObj.dependants_unknown.size()>0){
 				LogUtils.errMsg(asObj.fromWresl+
-						"\n  Variable(s) unknown "+asObj.dependants_unknown+" in Alias ["+asObj.id+"]");
+						"\n  In model ["+seqObj.model+"] variable(s) not defined before use: "+asObj.dependants_unknown+" in Alias ["+asObj.id+"]");
 			}
 	
 		}	
@@ -117,7 +117,7 @@ public class ErrorCheck {
 				
 			if (glObj.dependants_unknown.size()>0){
 				LogUtils.errMsg(glObj.fromWresl+
-						"\n  Variable(s) unknown "+glObj.dependants_unknown+" in Goal ["+glObj.id+"]");
+						"\n  In model ["+seqObj.model+"] variable(s) not defined before use: "+glObj.dependants_unknown+" in Goal ["+glObj.id+"]");
 			}
 	
 		}
@@ -128,7 +128,7 @@ public class ErrorCheck {
 				
 			if (svObj.dependants_unknown.size()>0){
 				LogUtils.errMsg(svObj.fromWresl+
-						"\n  Variable(s) unknown "+svObj.dependants_unknown+" in Svar ["+svObj.id+"]");
+						"\n  In model ["+seqObj.model+"] variable(s) not defined before use: "+svObj.dependants_unknown+" in Svar ["+svObj.id+"]");
 			}
 	
 		}		
@@ -555,7 +555,7 @@ public class ErrorCheck {
 		
 	}
 
-	public static boolean checkParamNotDeclared(StudyTemp st) {
+	public static boolean checkInitialVarInConfigNotDeclaredInWresl(StudyTemp st) {
 		
 		Set<String> undeclared = new HashSet<String>();
 		
@@ -565,8 +565,9 @@ public class ErrorCheck {
 		
 		if (undeclared.size()>0) {
 			
-			LogUtils.errMsg(" Parameters in config files not declared in main wresl file:  "+undeclared);
+			Error.addInitialError("Initial variable(s) in Config file not declared in main wresl file:  "+undeclared);
 		
+			Error.writeErrorLog();
 			return true;
 		}
 		
@@ -587,7 +588,7 @@ public class ErrorCheck {
 				
 			} catch (Exception e) {
 				
-				String msg = " Variable ["+ k +"] declared as Const type must be a number, but it's defined as ["+expression+"]";
+				String msg = "Variable ["+ k +"] declared as Const type must be a number, but it's either defined or overwritten by Config file as ["+expression+"]";
 				
 				Error.addInitialError(msg);
 				LogUtils.errMsg(msg);
@@ -622,7 +623,7 @@ public class ErrorCheck {
 			
 			if(pt.dependants_notAllowed.size()>0){
 				
-				String msg = " Initial svar ["+ pt.id +"] has dependent(s) not allowed: "+pt.dependants_notAllowed;
+				String msg = "Initial svar ["+ pt.id +"] has dependent(s) not allowed: "+pt.dependants_notAllowed;
 				
 				Error.addInitialError(msg);
 				LogUtils.errMsg(msg);
@@ -632,7 +633,7 @@ public class ErrorCheck {
 			}
 			if (pt.dependants_unknown.size()>0){
 				
-				String msg = " Initial svar ["+ pt.id +"] has unknown dependent(s): "+pt.dependants_unknown;
+				String msg = "Initial svar ["+ pt.id +"] has unknown dependent(s): "+pt.dependants_unknown;
 				
 				Error.addInitialError(msg);
 				LogUtils.errMsg(msg);

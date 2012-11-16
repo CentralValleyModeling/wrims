@@ -145,10 +145,10 @@ public class ControllerBatch {
 	
 	public StudyDataSet parse()throws RecognitionException, IOException{		
 		
-		if (Error.error_config.size()>0){
+		if (Error.getTotalError()>0){
 			
 			System.out.println("============================================");
-			System.out.println("Total errors in the config file: "+Error.error_config.size());
+			System.out.println("Total errors in the config file: "+Error.getTotalError());
 			System.out.println("============================================");
 
 			return null;

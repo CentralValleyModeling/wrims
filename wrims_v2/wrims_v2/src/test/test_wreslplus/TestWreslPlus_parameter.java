@@ -136,12 +136,15 @@ public class TestWreslPlus_parameter {
 	
 		StudyParser.reset();
 		Error.clear();
-        
-        ConfigUtils.loadArgs(controlDataString);
-        StudyUtils.checkStudy(FilePaths.fullMainPath);
+		ControlData.currEvalTypeIndex=8;
 		
+        ConfigUtils.loadArgs(controlDataString);
+        
         Assert.assertEquals(Error.getTotalError(),1);
-		Assert.assertEquals(StudyParser.total_errors, 1);	
+        
+        if (Error.getTotalError()==0) StudyUtils.checkStudy(FilePaths.fullMainPath);
+        		
+		//Assert.assertEquals(StudyParser.total_errors, 100);	
 
 		
 	

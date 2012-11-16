@@ -28,12 +28,12 @@ public class ProcParameter {
 
 
 		ControlData.parameterMap = convertParamMapToSvarMap(st.parameterMap);
-		callEvaluator(st.parameterList, ControlData.parameterMap);	
+		evaluateAllParams(st.parameterList, ControlData.parameterMap);	
 		
 	}	
 
 
-	private static void callEvaluator(ArrayList<String> keyList, Map<String, Svar> map) {
+	private static void evaluateAllParams(ArrayList<String> keyList, Map<String, Svar> map) {
 		
 		for (String key: keyList) {
 			
@@ -41,43 +41,83 @@ public class ProcParameter {
 			ControlData.currEvalName=key;
 			ControlData.currEvalTypeIndex=8;
 			
-			// no condition allowed for parameters at testing stage
-			// the condition is always TRUE
-			String evalString="c: "+svar.caseCondition.get(0);
-			ANTLRStringStream stream = new ANTLRStringStream(evalString);
-			ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
-			TokenStream tokenStream = new CommonTokenStream(lexer);
-			ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
-			svar.caseConditionParsers.add(evaluator);
 			
-			
-			evalString="v: "+svar.caseExpression.get(0);
-			stream = new ANTLRStringStream(evalString);
-			lexer = new ValueEvaluatorLexer(stream);
-			tokenStream = new CommonTokenStream(lexer);
-			evaluator = new ValueEvaluatorParser(tokenStream);
-			svar.caseExpressionParsers.add(evaluator);
-			
-			
-			try {
-				evaluator.evaluator();
+			for (int i=0; i<svar.caseCondition.size(); i++) {
 				
-				if (Error.getTotalError()>0) {
-					//Error.addEvaluationError("Initial variable evaluation has error.");
-					Error.writeErrorLog();
+				String conditionStr = svar.caseCondition.get(i);
+				boolean condition = callBooleanEvaluator(conditionStr);
+				
+				if (condition) {
+					
+					String evalStr = svar.caseExpression.get(i);
+					IntDouble evalValue = callNumberEvaluator(evalStr);
+					svar.setData(evalValue);
+					
 				}
-				
-				IntDouble evalValue=evaluator.evalValue.copyOf();
-				svar.setData(evalValue);
-			} catch (RecognitionException e) {
-				//Error.addEvaluationError("Initial variable evaluation has error.");
-				Error.writeErrorLog();
-
-			}			
+			
+			}
 						
 		}
 		
 	}
+	private static boolean callBooleanEvaluator(String evalString) {
+
+		boolean evalBoolean = false;
+		
+		evalString="c: "+evalString;
+		ANTLRStringStream stream = new ANTLRStringStream(evalString);
+		ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
+		
+		
+		try {
+			evaluator.evaluator();
+
+			if (Error.getTotalError() > 0) {
+				Error.writeErrorLog();
+			}
+
+			evalBoolean = evaluator.evalCondition;
+			
+		} catch (RecognitionException e) {
+			
+				Error.writeErrorLog();
+		}
+		
+		return evalBoolean;
+
+	}
+	
+	private static IntDouble callNumberEvaluator(String evalString) {
+
+		IntDouble evalValue=null;
+		
+		evalString="v: "+evalString;
+		ANTLRStringStream stream = new ANTLRStringStream(evalString);
+		ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		ValueEvaluatorParser evaluator = new ValueEvaluatorParser(tokenStream);
+		
+		
+		try {
+			evaluator.evaluator();
+
+			if (Error.getTotalError() > 0) {
+				Error.writeErrorLog();
+			}
+
+			evalValue = evaluator.evalValue.copyOf();
+			
+		} catch (RecognitionException e) {
+			
+				Error.writeErrorLog();
+		}
+		
+		return evalValue;
+
+	}
+	
 	
 	
 	private static Map<String, Svar> convertParamMapToSvarMap(

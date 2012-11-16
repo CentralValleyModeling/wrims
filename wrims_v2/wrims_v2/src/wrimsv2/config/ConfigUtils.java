@@ -32,7 +32,9 @@ public class ConfigUtils {
 	
 	public static void loadArgs(String[] args) {
 
-
+		// for Error.log header
+		ControlData.currEvalTypeIndex=8;
+		
 		// print version number then exit
 		if (args.length==1 && args[0].equalsIgnoreCase("-version") ) {
 		
@@ -78,7 +80,10 @@ public class ConfigUtils {
 			System.out.println("Loading config file: "+argsMap.get("-config"));
 			StudyUtils.configFilePath = argsMap.get("-config");
 			loadConfig(StudyUtils.configFilePath);
-
+			if (Error.getTotalError()>0) {
+				Error.writeErrorLog();
+			}
+			
 		// compile to serial object named *.par
 		} else if (argsMap.keySet().contains("-mainwresl")) {
 
@@ -409,14 +414,13 @@ public class ConfigUtils {
 		
 		if (Error.getTotalError()<1) readParameter(configFile);
 		
-		if (Error.getTotalError()<1 && paramMap.size()>0) { 
-			//System.out.println("============================================");
-			System.out.println("--------------------------------------------");
-			for (String k: paramMap.keySet()){	
-				ParamTemp pt = paramMap.get(k);
-				System.out.println("Parameter::   "+k+": "+pt.expression );
-			}
-		}
+//		if (Error.getTotalError()<1 && paramMap.size()>0) { 
+//			System.out.println("--------------------------------------------");
+//			for (String k: paramMap.keySet()){	
+//				ParamTemp pt = paramMap.get(k);
+//				System.out.println("Parameter::   "+k+": "+pt.expression );
+//			}
+//		}
 		
 		
 		
@@ -723,6 +727,7 @@ public class ConfigUtils {
 			
 				if (key.equalsIgnoreCase("begin") & value.equalsIgnoreCase("initial") ) {
 					isParameter = true;
+					System.out.println("--------------------------------------------");
 					continue;
 				}
 				
@@ -738,13 +743,15 @@ public class ConfigUtils {
 					pt.id = key;
 					pt.expression = value.toLowerCase();
 					
+					System.out.println("Initial variable::  "+pt.id.toLowerCase()+": "+pt.expression );
+					
 					try {
-						pt.dependants = checkExpression(pt.expression);
+						//pt.dependants = checkExpression(pt.expression);
+						Float.parseFloat(pt.expression);
 					} catch (Exception e) {
-						Error.addConfigError("Initial variable ["+key+"] has error(s) in expression");
+						Error.addConfigError("Initial variable ["+key+"] in Config file must be assigned with a number, but it's ["+pt.expression+"]");
 					}
 					
-					System.out.println("^^^^^^^^^: "+pt.expression);
 					paramMap.put(key.toLowerCase(), pt);
 				}
 			}

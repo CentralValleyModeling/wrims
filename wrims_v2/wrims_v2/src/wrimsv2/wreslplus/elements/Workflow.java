@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import wrimsv2.commondata.wresldata.Param;
+import wrimsv2.components.ControlData;
 import wrimsv2.config.ConfigUtils;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyParser;
@@ -53,9 +54,11 @@ public class Workflow {
 		
 		if (ErrorCheck.checkVarRedefined(st)>0) return null;
 		
+		// for Error.log header
+		ControlData.currEvalTypeIndex=8;
 		
 		// check config param not declared in wresl main file
-		if (ErrorCheck.checkParamNotDeclared(st)) return null;		
+		if (ErrorCheck.checkInitialVarInConfigNotDeclaredInWresl(st)) return null;		
 		
 		// overwrite main wresl parameter with config file parameter
 		if (ConfigUtils.paramMap.size()>0){
