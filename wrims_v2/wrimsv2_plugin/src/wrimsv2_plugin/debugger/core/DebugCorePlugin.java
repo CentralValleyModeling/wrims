@@ -162,6 +162,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	
 	public static String textVarGoalSearch="";
 	
+	public static String hoverText="";
+	
 	/**
 	 * The constructor.
 	 */

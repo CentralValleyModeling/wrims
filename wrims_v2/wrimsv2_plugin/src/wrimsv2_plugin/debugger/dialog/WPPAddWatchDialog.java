@@ -46,6 +46,7 @@ import wrimsv2_plugin.debugger.view.WPPVarDetailView;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
 import wrimsv2_plugin.debugger.view.WPPWatchView;
 import wrimsv2_plugin.tools.SearchTable;
+import wrimsv2_plugin.tools.ShowDuplicatedWatch;
 
 public class WPPAddWatchDialog extends PopupDialog {
 	
@@ -92,7 +93,7 @@ public class WPPAddWatchDialog extends PopupDialog {
 				final String varGoalName=text1.getText();
 				String varGoalNameLowerCase=varGoalName.toLowerCase();
 				if (watchItems.contains(varGoalNameLowerCase)) {
-					showDuplicatedWatch(varGoalName);
+					new ShowDuplicatedWatch(varGoalName);
 					text1.setText("");
 				}else{
 					watchItems.add(varGoalNameLowerCase);
@@ -122,18 +123,5 @@ public class WPPAddWatchDialog extends PopupDialog {
 		
 		dialogArea.getShell().setDefaultButton(ok);
 		return dialogArea;
-	}
-	
-	public void showDuplicatedWatch(final String text){
-		final IWorkbench workbench=PlatformUI.getWorkbench();
-		workbench.getDisplay().asyncExec(new Runnable(){
-			public void run(){
-				Shell shell=workbench.getActiveWorkbenchWindow().getShell();
-				MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING);
-				messageBox.setText("Warning");
-				messageBox.setMessage("\""+text+"\""+" was already watched");
-				messageBox.open();
-			}
-		});
 	}
 }
