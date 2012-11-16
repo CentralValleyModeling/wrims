@@ -47,6 +47,7 @@ options {
   	public ModelTemp mObj;
   	public Set<String> dependants;
   	public Set<Integer> dependantTypes; 
+  	public Set<String> dependants_notAllowed;
   	public Set<String> varInCycle;
   	public Map<String, HashSet<String>> neededCycleVarMap;
   	boolean addDep = true;
@@ -100,42 +101,48 @@ initial
   : 
   Initial '{' 
     (
-        ( c=constant  {$wreslMain::sty.parameterList.add($c.id); $wreslMain::sty.parameterMap.put($c.id, $c.ptObj);} ) 
-      | ( s=svar_init {$wreslMain::sty.parameterList.add($s.id); $wreslMain::sty.parameterMap.put($s.id, $s.ptObj);} )
+        ( c=constant  {$wreslMain::sty.parameterList.add($c.id); $wreslMain::sty.parameterConstList.add($c.id); $wreslMain::sty.parameterMap.put($c.id, $c.ptObj);} ) 
+      | ( s=svar_initial {$wreslMain::sty.parameterList.add($s.id); $wreslMain::sty.parameterMap.put($s.id, $s.svObj);} )
     )+ 
   '}';
 
-constant returns[String id, ParamTemp ptObj]
-@init{  $ptObj = new ParamTemp();
+constant returns[String id, SvarTemp ptObj]
+@init{  $ptObj = new SvarTemp();
         dependants = new LinkedHashSet<String>(); }
   : Const i=ID '{' n=number '}'   //n=expr_add_simple
 
           { 
             $id = $i.text;
             $ptObj.id = $i.text;
-            $ptObj.expression = $n.text;
+            $ptObj.caseName.add(Param.defaultCaseName);
+            $ptObj.caseCondition.add(Param.always);
+            $ptObj.caseExpression.add($n.text);
             $ptObj.dependants = dependants;
+
           };
 
 svar_initial returns[String id, SvarTemp svObj]
-  :  SVAR  svar_g { $id=$svar_g.id;  $svObj=$svar_g.svObj;  } ;           
+@init{  dependants = new LinkedHashSet<String>(); 
+        dependantTypes = new LinkedHashSet<Integer>();
+        dependants_notAllowed = new LinkedHashSet<String>(); }
+  :  SVAR  svar_g { $id=$svar_g.id;  $svObj=$svar_g.svObj; $svObj.dependants_notAllowed=dependants_notAllowed;  } ;           
 
    
-svar_init returns[String id, ParamTemp ptObj]
-@init{  $ptObj = new ParamTemp();
-        dependants = new LinkedHashSet<String>(); 
-        dependantTypes = new LinkedHashSet<Integer>(); }
-  : SVAR i=ID '{' n=expr_add_simple '}'   
-
-          { 
-            $id = $i.text;
-            $ptObj.id = $i.text;
-            $ptObj.expression = $n.text;
-            $ptObj.dependants = dependants;
-          };
-
-svar_init_value : ;
-svar_init_lookup : ;
+//svar_init returns[String id, ParamTemp ptObj]
+//@init{  $ptObj = new ParamTemp();
+//        dependants = new LinkedHashSet<String>(); 
+//        dependantTypes = new LinkedHashSet<Integer>(); }
+//  : SVAR i=ID '{' VALUE n=expr_add_simple '}'   
+//
+//          { 
+//            $id = $i.text;
+//            $ptObj.id = $i.text;
+//            $ptObj.expression = $n.text;
+//            $ptObj.dependants = dependants;
+//          };
+//
+//svar_init_value : ;
+//svar_init_lookup : ;
 
           
 expression_simple
@@ -847,11 +854,11 @@ atom
     :  number_p
     |  v=varID {if (addDep) dependants.add($v.text);} 
     |  intrinsicFunc
-    |  reservedID   {if (isParameter) dependantTypes.add(Param.dependant_reserved);}  
-    |  specialVar   {if (isParameter) dependantTypes.add(Param.dependant_special);}  
+    |  r=reservedID   {if (isParameter) dependants_notAllowed.add($r.text);}  
+    |  s=specialVar   {if (isParameter) dependants_notAllowed.add($s.text);}  
     |  externalFunc
-    |  varFunc      {if (isParameter) dependantTypes.add(Param.dependant_varFunc);}   
-    |  preCycleVar  {if (isParameter) dependantTypes.add(Param.dependant_preCycleVar);}   
+    |  vf=varFunc     {if (isParameter) dependants_notAllowed.add($vf.text);}    
+    |  p=preCycleVar  {if (isParameter) dependants_notAllowed.add($p.text);}   
     ;
 
 specialVar : 'i' | '$m' ;
@@ -864,14 +871,16 @@ preCycleVar
 preCycleVar_old :  var=ID '[' cycle=ID ']' 
 { 
   // TODO: don't convert to lower case here!
-  String cnl = $cycle.text.toLowerCase();
-  String vl = $var.text.toLowerCase();
-  if (neededCycleVarMap.keySet().contains(cnl)) {
-    neededCycleVarMap.get(cnl).add(vl);
-  } else {
-    HashSet<String> t = new HashSet<String>();
-    t.add(vl);
-    neededCycleVarMap.put(cnl, t);
+  if (!isParameter){
+    String cnl = $cycle.text.toLowerCase();
+    String vl = $var.text.toLowerCase();
+    if (neededCycleVarMap.keySet().contains(cnl)) {
+      neededCycleVarMap.get(cnl).add(vl);
+    } else {
+      HashSet<String> t = new HashSet<String>();
+      t.add(vl);
+      neededCycleVarMap.put(cnl, t);
+    }
   }
 } ;  
 

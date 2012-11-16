@@ -31,6 +31,7 @@ public class SvarTemp implements Serializable {
 	public Set<String> dependants_dvar;
 	public Set<String> dependants_svar;
 	public Set<String> dependants_unknown;
+	public Set<String> dependants_notAllowed;
 	public Set<String> neededVarInCycleSet;
 	public boolean needVarFromEarlierCycle;
 
@@ -47,12 +48,13 @@ public class SvarTemp implements Serializable {
 	
 	public SvarTemp(){
 		
-
+		fromWresl ="";
 		kind=Param.undefined;
 		units=Param.undefined;
 		condition = Param.always;
 		//expression=Param.undefined;
 		dependants = new LinkedHashSet<String>();
+		dependants_notAllowed = new LinkedHashSet<String>();
 //		dependants_timeseries = new LinkedHashSet<String>();
 //		dependants_external = new LinkedHashSet<String>();
 		//dependants_svar = new LinkedHashSet<String>();

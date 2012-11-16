@@ -719,9 +719,9 @@ public class ConfigUtils {
 				}
 				
 				// break at the line "End Parameter"
-				if (key.equalsIgnoreCase("end") & value.equalsIgnoreCase("parameter") ) break;
+				if (key.equalsIgnoreCase("end") & value.equalsIgnoreCase("initial") ) break;
 			
-				if (key.equalsIgnoreCase("begin") & value.equalsIgnoreCase("parameter") ) {
+				if (key.equalsIgnoreCase("begin") & value.equalsIgnoreCase("initial") ) {
 					isParameter = true;
 					continue;
 				}
@@ -730,7 +730,7 @@ public class ConfigUtils {
 					
 					if (paramMap.keySet().contains(key.toLowerCase())) {
 						
-						Error.addConfigError("Parameter ["+key+"] is redefined");
+						Error.addConfigError("Initial variable ["+key+"] is redefined");
 						
 					}
 					
@@ -741,7 +741,7 @@ public class ConfigUtils {
 					try {
 						pt.dependants = checkExpression(pt.expression);
 					} catch (Exception e) {
-						Error.addConfigError("Parameter ["+key+"] has error(s) in expression");
+						Error.addConfigError("Initial variable ["+key+"] has error(s) in expression");
 					}
 					
 					System.out.println("^^^^^^^^^: "+pt.expression);
@@ -752,7 +752,7 @@ public class ConfigUtils {
 		}
 		catch (Exception e) {
 	
-			Error.addConfigError("Invalid parameter section: " + configFilePath);
+			Error.addConfigError("Exception in parsing [Initial] section: " + configFilePath);
 	
 		}
 	

@@ -16,6 +16,7 @@ public class Error {
 	public static ArrayList<String>   error_solving=new ArrayList<String>();
 	public static ArrayList<String>   error_engine=new ArrayList<String>();
 	public static ArrayList<String>   error_config=new ArrayList<String>();
+	public static ArrayList<String>   error_initial=new ArrayList<String>();
 	public static ArrayList<String>   error_deviation=new ArrayList<String>();
 	
 	public static void writeGrammerErrorFile(String fileName){
@@ -106,12 +107,18 @@ public class Error {
 	    try {
 			errorLogFile = Tools.openFile(ilpDir.getAbsolutePath(), "Error.log");
 			
-			errorLogFile.println("===========");
-			errorLogFile.println(ILP.getYearMonthCycle());
-			errorLogFile.println("===========");
-			
+			errorLogFile.println("==================");
+			if (ControlData.currEvalTypeIndex!=8){
+				errorLogFile.println(ILP.getYearMonthCycle());
+			} else {
+				errorLogFile.println("Initial processing");
+			}
+			errorLogFile.println("==================");
 			for (int i=0; i<error_config.size(); i++){
 				errorLogFile.println(error_config.get(i));
+			}
+			for (int i=0; i<error_initial.size(); i++){
+				errorLogFile.println(error_initial.get(i));
 			}
 			for (int i=0; i<error_evaluation.size(); i++){
 				errorLogFile.println(error_evaluation.get(i));
@@ -148,6 +155,8 @@ public class Error {
 			error_evaluation.add(ControlData.currEvalName+" in timeseries reading: "+error);
 		}else if (ControlData.currEvalTypeIndex==7){
 			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in weight definition of Cycle "+ControlData.currCycleIndex+": "+error);
+		}else if (ControlData.currEvalTypeIndex==8){
+			error_evaluation.add("Initial variable "+ControlData.currEvalName+": "+error);
 		}
 		System.out.println("Error-"+ControlData.currEvalName+":"+error);
 	}
@@ -166,7 +175,10 @@ public class Error {
 		error_config.add(error);
 		System.out.println("# Error: "+error);
 	}
-
+	public static void addInitialError(String error){
+		error_initial.add(error);
+		System.out.println("# Error: "+error);
+	}
 	public static void addDeviationError(String error){
 		error_deviation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+" of Cycle "+ControlData.currCycleIndex+": "+error);
 		System.out.println("# Error: "+error);
@@ -178,6 +190,7 @@ public class Error {
 				 Error.error_grammer.size()+
 				 Error.error_solving.size()+
 				 Error.error_config.size()+
+				 Error.error_initial.size()+
 				 Error.error_deviation.size();
 	}
 	
@@ -187,6 +200,7 @@ public class Error {
 		Error.error_grammer = new ArrayList<String>();
 		Error.error_solving = new ArrayList<String>();
 		Error.error_config = new ArrayList<String>();
+		Error.error_initial = new ArrayList<String>();
 		Error.error_deviation = new ArrayList<String>();
 	}
 }

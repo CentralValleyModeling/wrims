@@ -573,34 +573,77 @@ public class ErrorCheck {
 		return false;
 	}
 
-	public static boolean checkUnknownDepedants(StudyTemp st) {
+	public static boolean checkInitialConst(StudyTemp st) {
+		
+		boolean hasError = false;
+		
+		for (String k: st.parameterConstList){
+			
+			SvarTemp pt = st.parameterMap.get(k);
+			String expression = pt.caseExpression.get(0);
+			try {
+				
+				Float.parseFloat(expression);
+				
+			} catch (Exception e) {
+				
+				String msg = " Variable ["+ k +"] declared as Const type must be a number, but it's defined as ["+expression+"]";
+				
+				Error.addInitialError(msg);
+				LogUtils.errMsg(msg);
+				
+				hasError = true;
+			}	
+			
+		}
+
+		if (hasError) Error.writeErrorLog();
+		return hasError;
+		
+	}
+	
+	public static boolean checkParameterHasUnknownDepedants(StudyTemp st) {
 		
 		boolean hasError = false;
 		
 		//for (String k : Lists.reverse(parameterList))
-			
+		
+		
 		for (int i=st.parameterList.size()-1; i>=0; i-- ){
 			
 			String k = st.parameterList.get(i);
 			
-			ParamTemp pt = st.parameterMap.get(k);
+			SvarTemp pt = st.parameterMap.get(k);
 			
 			pt.dependants_unknown = new HashSet<String>();
 			pt.dependants_unknown.addAll(pt.dependants);
 			
 			pt.dependants_unknown.removeAll(st.parameterList.subList(0, i));
 			
-			
+			if(pt.dependants_notAllowed.size()>0){
+				
+				String msg = " Initial svar ["+ pt.id +"] has dependent(s) not allowed: "+pt.dependants_notAllowed;
+				
+				Error.addInitialError(msg);
+				LogUtils.errMsg(msg);
+				
+				hasError = true;				
+				
+			}
 			if (pt.dependants_unknown.size()>0){
 				
-				LogUtils.errMsg(" Parameter ["+ pt.id +"] has unknown dependent(s): "+pt.dependants_unknown);
+				String msg = " Initial svar ["+ pt.id +"] has unknown dependent(s): "+pt.dependants_unknown;
+				
+				Error.addInitialError(msg);
+				LogUtils.errMsg(msg);
 				
 				hasError = true;
 						
 			}
 			
 		}
-
+		
+		if (hasError) Error.writeErrorLog();
 		return hasError;
 		
 	}

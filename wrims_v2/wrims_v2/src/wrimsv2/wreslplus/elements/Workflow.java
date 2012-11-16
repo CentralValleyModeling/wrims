@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
+import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.config.ConfigUtils;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyParser;
@@ -58,12 +59,25 @@ public class Workflow {
 		
 		// overwrite main wresl parameter with config file parameter
 		if (ConfigUtils.paramMap.size()>0){
-			LogUtils.importantMsg("Overwrite parameters in main wresl file with parameters in config file...");
-			st.parameterMap.putAll(ConfigUtils.paramMap);
+			
+			for (String k: ConfigUtils.paramMap.keySet()){
+				ParamTemp pt = ConfigUtils.paramMap.get(k);
+				SvarTemp svObj = new SvarTemp();
+	            svObj.id = pt.id;
+	            svObj.caseName.add(Param.defaultCaseName);
+	            svObj.caseCondition.add(Param.always);
+	            svObj.caseExpression.add(pt.expression);
+	            svObj.dependants = pt.dependants;
+	            
+	            LogUtils.importantMsg("Overwrite initial variable ["+ k +"] in main wresl file.");
+				st.parameterMap.put(k,svObj);
+			}
+			// TODO: ConfigUtils.paramMap overwrite st.parameterMap
 		}
 		
 		// check param dependents unknown
-		if (ErrorCheck.checkUnknownDepedants(st)) return null;
+		if (ErrorCheck.checkInitialConst(st)) return null;
+		if (ErrorCheck.checkParameterHasUnknownDepedants(st)) return null;
 		
 		ProcParameter.process(st);
 		

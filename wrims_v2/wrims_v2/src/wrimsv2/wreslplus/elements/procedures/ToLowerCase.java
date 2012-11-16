@@ -32,15 +32,20 @@ public class ToLowerCase {
 		// study
 		for (String key : s.parameterList) {
 
-			ParamTemp pt = new ParamTemp();
-			pt.id = s.parameterMap.get(key).id;
-			pt.expression = s.parameterMap.get(key).expression.toLowerCase();
-			pt.dependants = Tools.allToLowerCase(s.parameterMap.get(key).dependants);
-			
+			SvarTemp o = svar(s.parameterMap.get(key));
 			s.parameterMap.remove(key);
-			s.parameterMap.put( key.toLowerCase(), pt);
+			s.parameterMap.put( key.toLowerCase(), o);
+			
+//			ParamTemp pt = new ParamTemp();
+//			pt.id = s.parameterMap.get(key).id;
+//			pt.expression = s.parameterMap.get(key).expression.toLowerCase();
+//			pt.dependants = Tools.allToLowerCase(s.parameterMap.get(key).dependants);
+			
+//			s.parameterMap.remove(key);
+//			s.parameterMap.put( key.toLowerCase(), o);
 		}
 		s.parameterList = Tools.allToLowerCase(s.parameterList);
+		s.parameterConstList = Tools.allToLowerCase(s.parameterConstList);
 		
 		// sequence
 		for (String key : s.seqList) {
@@ -164,6 +169,7 @@ public class ToLowerCase {
 		o.units = s.units.toLowerCase();
 		o.caseName = Tools.allToLowerCase(s.caseName);
 		o.dependants = Tools.allToLowerCase(s.dependants);
+		o.dependants_notAllowed = s.dependants_notAllowed; // not converted to lowercase
 		o.neededVarInCycleSet = Tools.allToLowerCase(s.neededVarInCycleSet);
 		o.needVarFromEarlierCycle = s.needVarFromEarlierCycle;
 		

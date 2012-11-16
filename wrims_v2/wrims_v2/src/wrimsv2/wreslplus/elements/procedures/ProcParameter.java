@@ -17,6 +17,7 @@ import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.wreslplus.elements.ParamTemp;
 import wrimsv2.wreslplus.elements.StudyTemp;
+import wrimsv2.wreslplus.elements.SvarTemp;
 
 public class ProcParameter {
 
@@ -37,6 +38,8 @@ public class ProcParameter {
 		for (String key: keyList) {
 			
 			Svar svar = map.get(key);
+			ControlData.currEvalName=key;
+			ControlData.currEvalTypeIndex=8;
 			
 			// no condition allowed for parameters at testing stage
 			// the condition is always TRUE
@@ -58,10 +61,17 @@ public class ProcParameter {
 			
 			try {
 				evaluator.evaluator();
+				
+				if (Error.getTotalError()>0) {
+					//Error.addEvaluationError("Initial variable evaluation has error.");
+					Error.writeErrorLog();
+				}
+				
 				IntDouble evalValue=evaluator.evalValue.copyOf();
 				svar.setData(evalValue);
 			} catch (RecognitionException e) {
-				Error.addEvaluationError("Parameter evaluation has error.");
+				//Error.addEvaluationError("Initial variable evaluation has error.");
+				Error.writeErrorLog();
 
 			}			
 						
@@ -71,18 +81,24 @@ public class ProcParameter {
 	
 	
 	private static Map<String, Svar> convertParamMapToSvarMap(
-			Map<String, ParamTemp> simpleMap) {
+			Map<String, SvarTemp> simpleMap) {
 		
 		Map<String, Svar> pm = new HashMap<String, Svar>();
 		
 		for (String key: simpleMap.keySet()){
 			
+			SvarTemp jObj = simpleMap.get(key);
+			
 			Svar svObj = new Svar();
 			
-			svObj.caseName.add(Param.defaultCaseName);
-			svObj.caseCondition.add(Param.always);
-			svObj.caseExpression.add(simpleMap.get(key).expression);
-		    
+//			svObj.caseName.add(Param.defaultCaseName);
+//			svObj.caseCondition.add(Param.always);
+//			svObj.caseExpression.add(simpleMap.get(key).expression);
+
+			svObj.caseName = jObj.caseName;
+			svObj.caseCondition = jObj.caseCondition;
+			svObj.caseExpression = jObj.caseExpression;
+			
 			pm.put(key, svObj);
 			
 		}
