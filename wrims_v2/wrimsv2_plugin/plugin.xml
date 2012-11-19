@@ -397,6 +397,13 @@
              menubarPath="wpp.dss/operation"
              style="push">
        </action>
+       <action
+             class="wrimsv2_plugin.debugger.menuitem.LoadStudiesDSS"
+             id="wpp.loadstudiesdss"
+             label="Load Studies DSS"
+             menubarPath="wpp.dss/operation"
+             style="push">
+       </action>
     </actionSet>
  </extension>
 </plugin>

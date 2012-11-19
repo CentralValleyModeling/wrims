@@ -102,6 +102,9 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static String svFileName="";
 	public static String dvFileName="";
 	
+	public static String[] studyDvFileNames={"","","",""};
+	public static String[] studySvFileNames={"","","",""};
+	
 	public static final String ID_WPP_PLUGIN="wrimsv2_plugin";
 	public static final String ID_WPP_DEBUG_MODEL = "wpp.debugModel";
 	public static final String ID_WPP_VARIABLE_VIEW="wpp.variableview";

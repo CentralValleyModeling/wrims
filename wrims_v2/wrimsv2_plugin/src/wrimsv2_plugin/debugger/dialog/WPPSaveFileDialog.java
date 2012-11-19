@@ -51,6 +51,7 @@ public class WPPSaveFileDialog extends Dialog {
 		this.flag=flag;
 		create();
 		getShell().setSize(600, 200);
+		getShell().setText("Save To DSS");
 		open();
 	}
 
