@@ -107,5 +107,6 @@ public class PreRunModel {
 			}
 		}
 		new LoadAllDll(ControlData.allDll);
+		System.out.println("Load dlls for Cycle "+(ControlData.currCycleIndex+1)+" done");
 	}
 }
