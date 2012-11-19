@@ -291,7 +291,7 @@ public class ControllerDebug extends Thread {
 							Error.writeErrorLog();
 							noError=false;
 						}
-						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
+						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						pauseForDebug(modelIndex);
 						if (Error.error_evaluation.size()>=1) noError=false;
 						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
@@ -302,6 +302,7 @@ public class ControllerDebug extends Thread {
 							VariableTimeStep.currTimeAddOneDay();
 						}
 					}else{
+						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" skipped. ("+model+")");
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
@@ -424,7 +425,7 @@ public class ControllerDebug extends Thread {
 							Error.writeErrorLog();
 							noError=false;
 						}
-						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
+						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						pauseForDebug(modelIndex);
 						if (Error.error_evaluation.size()>=1) noError=false;
 
@@ -435,6 +436,7 @@ public class ControllerDebug extends Thread {
 							VariableTimeStep.currTimeAddOneDay();
 						}
 					}else{
+						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" skipped. ("+model+")");
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
@@ -708,7 +710,7 @@ public class ControllerDebug extends Thread {
 							Error.writeErrorLog();
 							noError=false;
 						}
-						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
+						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						pauseForDebug(modelIndex);
 						if (Error.error_evaluation.size()>=1) noError=false;
 						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
@@ -719,6 +721,7 @@ public class ControllerDebug extends Thread {
 							VariableTimeStep.currTimeAddOneDay();
 						}
 					}else{
+						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" skipped. ("+model+")");
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){

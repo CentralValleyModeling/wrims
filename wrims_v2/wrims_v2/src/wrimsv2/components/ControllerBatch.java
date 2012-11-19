@@ -263,7 +263,7 @@ public class ControllerBatch {
 							Error.writeErrorLog();
 							noError=false;
 						}
-						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
+						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
@@ -273,6 +273,7 @@ public class ControllerBatch {
 							VariableTimeStep.currTimeAddOneDay();
 						}
 					}else{
+						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Skipped. ("+model+")");
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
@@ -430,7 +431,7 @@ public class ControllerBatch {
 							Error.writeErrorLog();
 							noError=false;
 						}
-						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
+						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
@@ -440,6 +441,7 @@ public class ControllerBatch {
 							VariableTimeStep.currTimeAddOneDay();
 						}
 					}else{
+						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Skipped. ("+model+")");
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
@@ -555,7 +557,7 @@ public class ControllerBatch {
 							Error.writeErrorLog();
 							noError=false;
 						}
-						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done.");
+						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
 
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
@@ -565,6 +567,7 @@ public class ControllerBatch {
 							VariableTimeStep.currTimeAddOneDay();
 						}
 					}else{
+						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Skipped. ("+model+")");
 						new AssignPastCycleVariable();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
