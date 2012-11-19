@@ -74,6 +74,6 @@ set PATH=%ExternalDir%;%JarDir%
 
 
 
-%Java_Bin%\..\..\..\jre6\bin\java -Xmx1472m -Xss1280K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
+%Java_Bin%/../../../jre6/bin/java -Xmx1472m -Xss1280K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
 
 pause
