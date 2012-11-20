@@ -316,4 +316,8 @@ public class WPPWatchView extends AbstractDebugView implements ISelectionListene
 		DebugCorePlugin.watchItems=new ArrayList<String>();
 		table.removeAll();
 	}
+	
+	public void adjustAltColumnNames(){
+		
+	}
 }

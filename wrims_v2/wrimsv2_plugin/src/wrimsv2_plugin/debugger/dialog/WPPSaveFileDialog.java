@@ -66,10 +66,10 @@ public class WPPSaveFileDialog extends Dialog {
 		Label label1=new Label(dialogArea, SWT.NONE);
 		if (flag==1){
 			label1.setText("Please select a SV file to save the data in memory:");
-			fileName=DebugCorePlugin.svFileName;
+			fileName=DebugCorePlugin.savedSvFileName;
 		}else{
 			label1.setText("Please select a DV file to save the data in memory:");
-			fileName=DebugCorePlugin.dvFileName;
+			fileName=DebugCorePlugin.savedDvFileName;
 		}
 		
 		Composite fileSelection = new Composite(dialogArea, SWT.NONE);

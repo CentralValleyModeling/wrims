@@ -33,6 +33,8 @@ import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.toolbaritem.DebugSet;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
 
+import hec.heclib.dss.HecDss;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -99,12 +101,14 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static String solver="XA";
 	public static String log="None";
 	
-	public static String svFileName="";
-	public static String dvFileName="";
+	public static String savedSvFileName="";
+	public static String savedDvFileName="";
 	
 	public static String[] studyDvFileNames={"","","",""};
 	public static String[] studySvFileNames={"","","",""};
 	public static boolean[] selectedStudies={true, false, false, false};
+	public static HecDss[] dvDss=new HecDss[4];
+	public static HecDss[] svDss=new HecDss[4];
 	
 	public static final String ID_WPP_PLUGIN="wrimsv2_plugin";
 	public static final String ID_WPP_DEBUG_MODEL = "wpp.debugModel";

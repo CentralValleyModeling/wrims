@@ -259,4 +259,8 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 		if (dataStack.length>0) new SetSelectionInTable(oldSelection, viewer, table);
 	    DebugCorePlugin.updateSelectedVariable=true;
 	}
+	
+	public void adjustAltColumnNames(){
+		
+	}
 }
