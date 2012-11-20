@@ -16,7 +16,7 @@ options {
   import java.util.LinkedHashSet;
   import wrimsv2.wreslplus.elements.Tools;
   import wrimsv2.wreslplus.elements.IncFileTemp;
-  import wrimsv2.wreslplus.elements.IfIncFileGroup;
+  import wrimsv2.wreslplus.elements.IfIncItemGroup;
   import wrimsv2.wreslplus.elements.TimeseriesTemp;
   import wrimsv2.wreslplus.elements.ExternalTemp;
   import wrimsv2.wreslplus.elements.DvarTemp;
@@ -232,16 +232,16 @@ scope { ModelTemp m_;}
 	   | im=include_model {$mt::m_.itemTypeList.add(Param.incModelType);$mt::m_.itemList.add(Param.model_label+$im.id); $mt::m_.incModelList.add($im.id);
 	                       $mt::m_.incFileIDList.add($im.id); $mt::m_.incFileMap.put($im.id, null);
 	                       }
-	   | ifig=if_inc_files  {$mt::m_.itemTypeList.add(Param.ifIncFileGroupType); $mt::m_.itemList.add($ifig.id); $mt::m_.ifIncFileGroupIDList.add($ifig.id); $mt::m_.ifIncFileGroupMap.put($ifig.id, $ifig.ifIncFileGroupObj); }                  
+	   | ifig=if_inc_items  {$mt::m_.itemTypeList.add(Param.ifIncItemGroupType); $mt::m_.itemList.add($ifig.id); $mt::m_.ifIncItemGroupIDList.add($ifig.id); $mt::m_.ifIncItemGroupMap.put($ifig.id, $ifig.ifIncItemGroupObj); }                  
 	   )+
 	   ;
 
-if_inc_files returns[String id, IfIncFileGroup ifIncFileGroupObj]
-scope { IfIncFileGroup incg_; ArrayList<String> _arr; HashMap<String, IncFileTemp> _incfmap;} 
-@init{ $if_inc_files::incg_ = new IfIncFileGroup();
-       $if_inc_files::incg_.id = "__file_group__"+Integer.toString($mt::m_.ifIncFileGroupIDList.size());
-       $id = $if_inc_files::incg_.id;
-       $ifIncFileGroupObj = $if_inc_files::incg_;
+if_inc_items returns[String id, IfIncItemGroup ifIncItemGroupObj]
+scope { IfIncItemGroup incg_; ArrayList<String> _arr; HashMap<String, IncFileTemp> _incfmap;} 
+@init{ $if_inc_items::incg_ = new IfIncItemGroup();
+       $if_inc_items::incg_.id = "__file_group__"+Integer.toString($mt::m_.ifIncItemGroupIDList.size());
+       $id = $if_inc_items::incg_.id;
+       $ifIncItemGroupObj = $if_inc_items::incg_;
       // $incg_.id = "__incfilegroup__"+Integer.toString($mt::m_.incFileGroupIDList.size()); 
 
        }
@@ -251,30 +251,30 @@ scope { IfIncFileGroup incg_; ArrayList<String> _arr; HashMap<String, IncFileTem
 
 if_ :
   If e=logical_main '{' include_file_group '}' 
-  {$if_inc_files::incg_.conditionList.add($e.text);};
+  {$if_inc_items::incg_.conditionList.add($e.text);};
   
 elseif_  
   :
   Elseif e=logical_main '{' include_file_group '}'
-  {$if_inc_files::incg_.conditionList.add($e.text);};
+  {$if_inc_items::incg_.conditionList.add($e.text);};
   
 else_  : 
   Else '{' include_file_group '}'
-  {$if_inc_files::incg_.conditionList.add(Param.always);};
+  {$if_inc_items::incg_.conditionList.add(Param.always);};
 
 include_file_group
-@init{ $if_inc_files::_arr = new ArrayList<String>(); 
-       $if_inc_files::_incfmap = new HashMap<String, IncFileTemp>();
+@init{ $if_inc_items::_arr = new ArrayList<String>(); 
+       $if_inc_items::_incfmap = new HashMap<String, IncFileTemp>();
 }
 @after {
-        $if_inc_files::incg_.inc_files_list.add($if_inc_files::_arr); 
-        $if_inc_files::incg_.inc_files_map_list.add($if_inc_files::_incfmap);
+        $if_inc_items::incg_.inc_files_list.add($if_inc_items::_arr); 
+        $if_inc_items::incg_.inc_files_map_list.add($if_inc_items::_incfmap);
 }
 : 
     ( fi=include_file { 
-        $if_inc_files::_arr.add($fi.id);  
-        $if_inc_files::_incfmap.put($fi.id, $fi.incFileObj);
-        $mt::m_.incFileIDList.add($if_inc_files::incg_.id); 
+        $if_inc_items::_arr.add($fi.id);  
+        $if_inc_items::_incfmap.put($fi.id, $fi.incFileObj);
+        $mt::m_.incFileIDList.add($if_inc_items::incg_.id); 
         } 
   )+ ;
 

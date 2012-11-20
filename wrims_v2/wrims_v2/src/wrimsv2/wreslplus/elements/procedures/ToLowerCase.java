@@ -8,7 +8,7 @@ import wrimsv2.wreslplus.elements.DvarTemp;
 import wrimsv2.wreslplus.elements.ExternalTemp;
 import wrimsv2.wreslplus.elements.GoalCase;
 import wrimsv2.wreslplus.elements.GoalTemp;
-import wrimsv2.wreslplus.elements.IfIncFileGroup;
+import wrimsv2.wreslplus.elements.IfIncItemGroup;
 import wrimsv2.wreslplus.elements.IncFileTemp;
 import wrimsv2.wreslplus.elements.ModelTemp;
 import wrimsv2.wreslplus.elements.ParamTemp;
@@ -131,16 +131,16 @@ public class ToLowerCase {
 			j.incFileMap.put( key.toLowerCase(), o);
 		}	
 
-		for (String key : j.ifIncFileGroupIDList) {	
-			IfIncFileGroup o = ifIncFileGroup(j.ifIncFileGroupMap.get(key));
-			j.ifIncFileGroupMap.remove(key);
-			j.ifIncFileGroupMap.put( key.toLowerCase(), o);
+		for (String key : j.ifIncItemGroupIDList) {	
+			IfIncItemGroup o = ifIncFileGroup(j.ifIncItemGroupMap.get(key));
+			j.ifIncItemGroupMap.remove(key);
+			j.ifIncItemGroupMap.put( key.toLowerCase(), o);
 		}
 		
 		//j.svIncFileList = Tools.allToLowerCase(j.svIncFileList);
 		j.incModelList = Tools.allToLowerCase(j.incModelList);
 		j.incFileIDList=Tools.allToLowerCase(j.incFileIDList);
-		j.ifIncFileGroupIDList=Tools.allToLowerCase(j.ifIncFileGroupIDList);
+		j.ifIncItemGroupIDList=Tools.allToLowerCase(j.ifIncItemGroupIDList);
 		j.itemList = Tools.allToLowerCase(j.itemList);
 		j.svList = Tools.allToLowerCase(j.svList);
 		j.dvList = Tools.allToLowerCase(j.dvList);
@@ -365,11 +365,11 @@ public class ToLowerCase {
 	
 	}
 
-	public static IfIncFileGroup ifIncFileGroup (IfIncFileGroup w){
+	public static IfIncItemGroup ifIncFileGroup (IfIncItemGroup w){
 		
 		if (w==null) return null;
 		
-		IfIncFileGroup o = new IfIncFileGroup();
+		IfIncItemGroup o = new IfIncItemGroup();
 		
 		o.id = w.id;
 		

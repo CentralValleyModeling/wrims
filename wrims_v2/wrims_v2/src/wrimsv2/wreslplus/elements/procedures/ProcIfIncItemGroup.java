@@ -9,13 +9,13 @@ import org.antlr.runtime.TokenStream;
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
-import wrimsv2.wreslplus.elements.IfIncFileGroup;
+import wrimsv2.wreslplus.elements.IfIncItemGroup;
 import wrimsv2.wreslplus.elements.ModelTemp;
 import wrimsv2.wreslplus.elements.StudyTemp;
 
-public class ProcIfIncFileGroup {
+public class ProcIfIncItemGroup {
 
-	private ProcIfIncFileGroup() {
+	private ProcIfIncItemGroup() {
 	}
 
 	public static void process(StudyTemp st){
@@ -32,9 +32,9 @@ public class ProcIfIncFileGroup {
 
 	public static void process(ModelTemp m){
 		
-		for ( String k : m.ifIncFileGroupIDList){
+		for ( String k : m.ifIncItemGroupIDList){
 			
-			IfIncFileGroup gObj = m.ifIncFileGroupMap.get(k);
+			IfIncItemGroup gObj = m.ifIncItemGroupMap.get(k);
 			
 			
 			// good for debug

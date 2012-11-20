@@ -11,7 +11,7 @@ import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyParser;
 import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
 import wrimsv2.wreslplus.elements.procedures.ProcGoal;
-import wrimsv2.wreslplus.elements.procedures.ProcIfIncFileGroup;
+import wrimsv2.wreslplus.elements.procedures.ProcIfIncItemGroup;
 import wrimsv2.wreslplus.elements.procedures.ProcMainFile;
 import wrimsv2.wreslplus.elements.procedures.ProcIncFile;
 import wrimsv2.wreslplus.elements.procedures.ProcParameter;
@@ -86,7 +86,7 @@ public class Workflow {
 		
 		
 		// process "if include file group"
-		ProcIfIncFileGroup.process(st);
+		ProcIfIncItemGroup.process(st);
 		
 		
 		
