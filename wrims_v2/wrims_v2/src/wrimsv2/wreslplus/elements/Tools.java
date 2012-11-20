@@ -118,6 +118,16 @@ public class Tools {
 		
 		return out;
 	}
+	public static ArrayList<ArrayList<String>> allToLowerCase2(ArrayList<ArrayList<String>> inArrayList){
+		
+		ArrayList<ArrayList<String>> out = new ArrayList<ArrayList<String>>();
+		
+		for (ArrayList<String> s: inArrayList){
+			out.add(allToLowerCase(s));
+		}
+		
+		return out;
+	}
 	//TODO: this can be optimized for memory
 	public static Map<String,String> allToLowerCase_string(Map<String,String> inMap){
 		
