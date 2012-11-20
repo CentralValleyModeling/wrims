@@ -21,7 +21,6 @@ model firsT {
 	
 model why { 
 
-	include 'dummy.wresl'
 
 	define X { std kind 'FLOW-CHANNEL' units 'CFS'}
 	define Y { std kind 'FLOW-CHANNEL' units 'CFS'}
@@ -51,7 +50,14 @@ model why {
 		include 'goAlY4.wresl'  
 	
 	}
+	
+	include 'dummy.wresl'
   
+	if 1<0 {
+	
+		include 'dummy2.wresl'
+	}
+	
 	objective obj {
 		[x, 5] 
 		[y, 5] 
