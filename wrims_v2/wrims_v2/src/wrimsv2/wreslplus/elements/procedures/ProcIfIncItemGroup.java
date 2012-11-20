@@ -41,13 +41,14 @@ public class ProcIfIncItemGroup {
 			gObj.conditionValueList = evaluateConditions(gObj.conditionList);			
 			
 			// find index
-			int indexOfFirstTrue = gObj.conditionValueList.indexOf(true);
+			int indexOfFirstTrue = gObj.conditionValueList.indexOf(true);			
+			int index_ItemList = m.itemList.indexOf(gObj.id);
+			int index_IncFileIDList = m.incFileIDList.indexOf(gObj.id);
 			
+			// when at least one condition is true
 			if (indexOfFirstTrue>-1) {
 			
 				//System.out.println("~~ This condition index is true: "+indexOfFirstTrue);
-				
-				int index_ItemList = m.itemList.indexOf(gObj.id);
 			
 				m.itemList.remove(index_ItemList);
 				m.itemTypeList.remove(index_ItemList);
@@ -63,8 +64,6 @@ public class ProcIfIncItemGroup {
 				}
 				
 				
-				int index_IncFileIDList = m.incFileIDList.indexOf(gObj.id);
-				
 				m.incFileIDList.removeAll(Collections.singleton(gObj.id));
 				m.incFileIDList.addAll(index_IncFileIDList, gObj.inc_files_list.get(indexOfFirstTrue));
 				
@@ -72,6 +71,14 @@ public class ProcIfIncItemGroup {
 				m.incFileMap.putAll(gObj.inc_files_map_list.get(indexOfFirstTrue));
 
 
+			}
+			// no condition is true
+			else { 
+				
+				m.itemList.remove(index_ItemList);
+				m.itemTypeList.remove(index_ItemList);
+				m.incFileIDList.removeAll(Collections.singleton(gObj.id));
+				m.incFileMap.remove(gObj.id);
 			}
 
 		}
