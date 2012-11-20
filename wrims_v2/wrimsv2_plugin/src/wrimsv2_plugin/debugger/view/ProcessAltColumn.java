@@ -17,12 +17,6 @@ import wrimsv2_plugin.tools.VariableProperty;
 
 public class ProcessAltColumn {
 	
-	public static void AddAltColumns(Table table, int flag){
-		addAltColumnNames(table, flag);
-		addAltColumnData(table, flag);
-		table.setRedraw(true);
-	}
-	
 	public static void AdjustAltColumnNames(TableViewer viewer, int flag){
 		Table table=viewer.getTable();
 		removeAltColumns(table);
@@ -54,7 +48,7 @@ public class ProcessAltColumn {
 		
 		for (int i=0; i<4; i++){
 			if (DebugCorePlugin.selectedStudies[i]){
-				altColumnIndex.put(i, table.getColumnCount());
+				altColumnIndex.put(table.getColumnCount(), i);
 				TableColumn tc=new TableColumn(table, SWT.NORMAL);
 				tc.setText("Alt"+(i+1));
 				tc.pack();
@@ -62,7 +56,7 @@ public class ProcessAltColumn {
 		}
 	}
 	
-	public static void addAltColumnData(Table table, int flag){
+	public static String addAltColumnData(String vn, int flag, int index){
 		Map<String, VariableProperty> vp=new HashMap<String, VariableProperty>();
 		Map<Integer, Integer> altColIndex=new HashMap<Integer, Integer>();
 		switch (flag){
@@ -81,18 +75,12 @@ public class ProcessAltColumn {
 		HecDss[] dvDss = DebugCorePlugin.dvDss;
 		HecDss[] svDss = DebugCorePlugin.svDss;
 		
-		for (int i=0; i<table.getItemCount(); i++){
-			TableItem ti = table.getItem(i);
-			String vn=ti.getText(0);
-			if (vp.containsKey(vn)){
-				VariableProperty property=vp.get(vn);
-				String varDssString="/"+aPart+"/"+vn+"/"+property.getPartC()+"//"+property.getPartE()+"/"+svFPart+"/";
-				for (int j=0; j<4; j++){
-					if (selectedStudies[j]){
-						
-					}
-				}
-			}
+		if (vp.containsKey(vn)){
+			VariableProperty property=vp.get(vn);
+			String varDssString="/"+aPart+"/"+vn+"/"+property.getPartC()+"//"+property.getPartE()+"/"+svFPart+"/";
+			return "found";
+		}else{
+			return "";
 		}
 	}
 }

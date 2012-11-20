@@ -97,7 +97,7 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 						}else if (index==1){
 							return ((WPPValue) element).getValueString();
 						}else{
-							return "";
+							return ProcessAltColumn.addAltColumnData(((WPPValue) element).getVariableString(), 0, index);
 						}
 					}else{
 						if (index==0){
@@ -105,7 +105,7 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 						}else if (index==1){	
 							return ((WPPValue) element).getValueString();
 						}else{
-							return "";
+							return ProcessAltColumn.addAltColumnData(((WPPValue) element).getVariableString(), 0, index);
 						}
 					}
 				} catch (DebugException e) {
@@ -256,9 +256,8 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 		IStructuredSelection oldSelection = ((IStructuredSelection)viewer.getSelection());
 		Table table=viewer.getTable();
 		table.removeAll();
-		ProcessAltColumn.removeAltColumns(table);
+		ProcessAltColumn.AdjustAltColumnNames(viewer, 0);
 		viewer.setInput(DebugCorePlugin.target);
-		ProcessAltColumn.AddAltColumns(table, 0);
 	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
 	    	table.getColumn(i).pack();
 	    }
