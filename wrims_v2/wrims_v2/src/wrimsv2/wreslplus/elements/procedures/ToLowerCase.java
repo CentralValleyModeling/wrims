@@ -193,6 +193,8 @@ public class ToLowerCase {
 	}	
 	
 	public static TimeseriesTemp timeseries (TimeseriesTemp t){
+
+		if (t==null) return null;
 		
 		TimeseriesTemp o = new TimeseriesTemp();
 		
@@ -433,8 +435,22 @@ public class ToLowerCase {
 			}
 		}
 		o.inc_alias_map_list = w.inc_alias_map_list;		
+
+		for ( HashMap<String,TimeseriesTemp> mi : w.inc_timeseries_map_list){
+			
+			Set<String> ks = new HashSet<String>(mi.keySet());
+			
+			for (String key: ks){
+				
+				TimeseriesTemp tsObj = timeseries(mi.get(key));			
+				mi.remove(key);
+				mi.put(key.toLowerCase(), tsObj);				
+			}
+		}
+		o.inc_timeseries_map_list = w.inc_timeseries_map_list;
+		
+		
 		return o;
-	
 	}
 }
 	

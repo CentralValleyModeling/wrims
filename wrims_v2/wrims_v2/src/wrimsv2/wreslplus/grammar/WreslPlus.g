@@ -127,22 +127,6 @@ svar_initial returns[String id, SvarTemp svObj]
         dependants_notAllowed = new LinkedHashSet<String>(); }
   :  SVAR  svar_g { $id=$svar_g.id;  $svObj=$svar_g.svObj; $svObj.dependants_notAllowed=dependants_notAllowed;  } ;           
 
-   
-//svar_init returns[String id, ParamTemp ptObj]
-//@init{  $ptObj = new ParamTemp();
-//        dependants = new LinkedHashSet<String>(); 
-//        dependantTypes = new LinkedHashSet<Integer>(); }
-//  : SVAR i=ID '{' VALUE n=expr_add_simple '}'   
-//
-//          { 
-//            $id = $i.text;
-//            $ptObj.id = $i.text;
-//            $ptObj.expression = $n.text;
-//            $ptObj.dependants = dependants;
-//          };
-//
-//svar_init_value : ;
-//svar_init_lookup : ;
 
           
 expression_simple
@@ -242,6 +226,7 @@ scope { IfIncItemGroup incg_;
         HashMap<String, SvarTemp> _incSvarMap;
         HashMap<String, DvarTemp> _incDvarMap;
         HashMap<String, AliasTemp> _incAliasMap;
+        HashMap<String, TimeseriesTemp> _incTimeseriesMap;
         } 
 @init{ $if_inc_items::incg_ = new IfIncItemGroup();
        $if_inc_items::incg_.id = "__item__"+Integer.toString($mt::m_.ifIncItemGroupIDList.size());
@@ -255,6 +240,7 @@ scope { IfIncItemGroup incg_;
         $mt::m_.svList.add($if_inc_items::incg_.id); 
         $mt::m_.dvList.add($if_inc_items::incg_.id);
         $mt::m_.asList.add($if_inc_items::incg_.id); 
+        $mt::m_.tsList.add($if_inc_items::incg_.id); 
 
 }
   : if_  elseif_* else_?  ;
@@ -278,6 +264,7 @@ include_item_group
        $if_inc_items::_incSvarMap = new HashMap<String, SvarTemp>();
        $if_inc_items::_incDvarMap = new HashMap<String, DvarTemp>();
        $if_inc_items::_incAliasMap = new HashMap<String, AliasTemp>();
+       $if_inc_items::_incTimeseriesMap = new HashMap<String, TimeseriesTemp>();       
 }
 @after {
         $if_inc_items::incg_.inc_item_list.add($if_inc_items::_arr); 
@@ -285,6 +272,7 @@ include_item_group
         $if_inc_items::incg_.inc_svar_map_list.add($if_inc_items::_incSvarMap);
         $if_inc_items::incg_.inc_dvar_map_list.add($if_inc_items::_incDvarMap);
         $if_inc_items::incg_.inc_alias_map_list.add($if_inc_items::_incAliasMap);
+        $if_inc_items::incg_.inc_timeseries_map_list.add($if_inc_items::_incTimeseriesMap);
 }
 : 
    (
@@ -304,7 +292,11 @@ include_item_group
    |  ( ai=alias { 
         $if_inc_items::_arr.add($ai.id);  
         $if_inc_items::_incAliasMap.put($ai.id, $ai.asObj);
-        })                
+        }) 
+   |  ( ti=timeseries { 
+        $if_inc_items::_arr.add($ti.id);  
+        $if_inc_items::_incTimeseriesMap.put($ti.id, $ti.tsObj);
+        })               
   )+ ;
 
 ///// external

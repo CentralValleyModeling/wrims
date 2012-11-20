@@ -18,6 +18,7 @@ import wrimsv2.wreslplus.elements.IncFileTemp;
 import wrimsv2.wreslplus.elements.ModelTemp;
 import wrimsv2.wreslplus.elements.StudyTemp;
 import wrimsv2.wreslplus.elements.SvarTemp;
+import wrimsv2.wreslplus.elements.TimeseriesTemp;
 
 public class ProcIfIncItemGroup {
 
@@ -53,6 +54,7 @@ public class ProcIfIncItemGroup {
 			int index_svList = m.svList.indexOf(gObj.id);
 			int index_dvList = m.dvList.indexOf(gObj.id);
 			int index_asList = m.asList.indexOf(gObj.id);
+			int index_tsList = m.tsList.indexOf(gObj.id);
 			
 			// when at least one condition is true
 			if (indexOfFirstTrue>-1) {
@@ -61,7 +63,8 @@ public class ProcIfIncItemGroup {
 				HashMap<String, IncFileTemp> incFMap = gObj.inc_files_map_list.get(indexOfFirstTrue);
 				HashMap<String, SvarTemp> svarMap = gObj.inc_svar_map_list.get(indexOfFirstTrue);
 				HashMap<String, DvarTemp> dvarMap = gObj.inc_dvar_map_list.get(indexOfFirstTrue);
-				HashMap<String, AliasTemp> aliasMap = gObj.inc_alias_map_list.get(indexOfFirstTrue);				
+				HashMap<String, AliasTemp> aliasMap = gObj.inc_alias_map_list.get(indexOfFirstTrue);	
+				HashMap<String, TimeseriesTemp> timeseriesMap = gObj.inc_timeseries_map_list.get(indexOfFirstTrue);	
 				
 				// svar replace 
 				m.svList.remove(index_svList);
@@ -91,7 +94,17 @@ public class ProcIfIncItemGroup {
 				if (asList.size()>0){
 					m.asList.addAll(index_asList,asList);
 					m.asMap.putAll(aliasMap);
-				}				
+				}	
+				
+				// timeseries replace 
+				m.tsList.remove(index_tsList);
+				m.tsMap.remove(gObj.id);
+				ArrayList<String> tsList = new ArrayList<String>(inc_item_list);
+				tsList.retainAll(timeseriesMap.keySet());
+				if (tsList.size()>0){
+					m.tsList.addAll(index_tsList,tsList);
+					m.tsMap.putAll(timeseriesMap);
+				}
 
 			
 				m.itemList.remove(index_ItemList);
