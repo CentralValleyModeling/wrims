@@ -1,7 +1,10 @@
 package wrimsv2.wreslplus.elements.procedures;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import wrimsv2.wreslplus.elements.AliasTemp;
 import wrimsv2.wreslplus.elements.DvarTemp;
@@ -161,6 +164,8 @@ public class ToLowerCase {
 
 	public static SvarTemp svar (SvarTemp s){
 		
+		if (s==null) return null;
+		
 		SvarTemp o = new SvarTemp();
 		
 		o.id = s.id;
@@ -203,6 +208,8 @@ public class ToLowerCase {
 	}
 	
 	public static DvarTemp dvar (DvarTemp d){
+		
+		if (d==null) return null;
 		
 		DvarTemp o = new DvarTemp();
 		
@@ -319,6 +326,8 @@ public class ToLowerCase {
 
 	public static AliasTemp alias (AliasTemp d){
 		
+		if (d==null) return null;
+		
 		AliasTemp o = new AliasTemp();
 		
 		o.id = d.id;
@@ -374,22 +383,56 @@ public class ToLowerCase {
 		o.id = w.id;
 		
 		o.conditionList =  Tools.allToLowerCase(w.conditionList);
-		
-		// no need to convert. already in lower case.
-		o.inc_files_list = w.inc_files_list;
+
+		o.inc_item_list = Tools.allToLowerCase2(w.inc_item_list);
 		
 		for ( Map<String,IncFileTemp> mi : w.inc_files_map_list){
 			
 			for (String key: mi.keySet()){
 				
-				mi.put(key, incFile(mi.get(key)));				
-				
+				mi.put(key, incFile(mi.get(key)));							
 			}
-			
 		}
+		o.inc_files_map_list = w.inc_files_map_list;		
+
+		for ( HashMap<String,SvarTemp> mi : w.inc_svar_map_list){
+			
+			Set<String> ks = new HashSet<String>(mi.keySet());
+			
+			for (String key: ks){
+				
+				SvarTemp svObj = svar(mi.get(key));			
+				mi.remove(key);
+				mi.put(key.toLowerCase(), svObj);				
+			}
+		}
+		o.inc_svar_map_list = w.inc_svar_map_list;		
+
+		for ( HashMap<String,DvarTemp> mi : w.inc_dvar_map_list){
+			
+			Set<String> ks = new HashSet<String>(mi.keySet());
+			
+			for (String key: ks){
+				
+				DvarTemp dvObj = dvar(mi.get(key));			
+				mi.remove(key);
+				mi.put(key.toLowerCase(), dvObj);				
+			}
+		}
+		o.inc_dvar_map_list = w.inc_dvar_map_list;		
 		
-		o.inc_files_map_list = w.inc_files_map_list;
-		
+		for ( HashMap<String,AliasTemp> mi : w.inc_alias_map_list){
+			
+			Set<String> ks = new HashSet<String>(mi.keySet());
+			
+			for (String key: ks){
+				
+				AliasTemp asObj = alias(mi.get(key));			
+				mi.remove(key);
+				mi.put(key.toLowerCase(), asObj);				
+			}
+		}
+		o.inc_alias_map_list = w.inc_alias_map_list;		
 		return o;
 	
 	}

@@ -226,8 +226,7 @@ scope { ModelTemp m_;}
 	   | as=alias        {$mt::m_.itemTypeList.add(Param.asType);$mt::m_.itemList.add($as.id); $mt::m_.asList.add($as.id); $mt::m_.asMap.put($as.id, $as.asObj); }
 	   | gl1=goal_s      {$mt::m_.itemTypeList.add(Param.gl1Type);$mt::m_.itemList.add($gl1.id);$mt::m_.glList.add($gl1.id);$mt::m_.glMap.put($gl1.id, $gl1.glObj); }
 	   | gl2=goal_hs     {$mt::m_.itemTypeList.add(Param.gl2Type);$mt::m_.itemList.add($gl2.id);$mt::m_.glList.add($gl2.id);$mt::m_.glMap.put($gl2.id, $gl2.glObj); $mt::m_.gl2List.add($gl2.id); }
-	   | network 
-	   | operation 
+	   | network  
 	   | wt=weight       {$mt::m_.wTableObjList.add($wt.wtObj);}
 	   | im=include_model {$mt::m_.itemTypeList.add(Param.incModelType);$mt::m_.itemList.add(Param.model_label+$im.id); $mt::m_.incModelList.add($im.id);
 	                       $mt::m_.incFileIDList.add($im.id); $mt::m_.incFileMap.put($im.id, null);
@@ -237,45 +236,75 @@ scope { ModelTemp m_;}
 	   ;
 
 if_inc_items returns[String id, IfIncItemGroup ifIncItemGroupObj]
-scope { IfIncItemGroup incg_; ArrayList<String> _arr; HashMap<String, IncFileTemp> _incfmap;} 
+scope { IfIncItemGroup incg_; 
+        ArrayList<String> _arr; 
+        HashMap<String, IncFileTemp> _incfmap;
+        HashMap<String, SvarTemp> _incSvarMap;
+        HashMap<String, DvarTemp> _incDvarMap;
+        HashMap<String, AliasTemp> _incAliasMap;
+        } 
 @init{ $if_inc_items::incg_ = new IfIncItemGroup();
-       $if_inc_items::incg_.id = "__file_group__"+Integer.toString($mt::m_.ifIncItemGroupIDList.size());
+       $if_inc_items::incg_.id = "__item__"+Integer.toString($mt::m_.ifIncItemGroupIDList.size());
        $id = $if_inc_items::incg_.id;
        $ifIncItemGroupObj = $if_inc_items::incg_;
       // $incg_.id = "__incfilegroup__"+Integer.toString($mt::m_.incFileGroupIDList.size()); 
 
        }
 @after{ 
+        // reserve space
+        $mt::m_.svList.add($if_inc_items::incg_.id); 
+        $mt::m_.dvList.add($if_inc_items::incg_.id);
+        $mt::m_.asList.add($if_inc_items::incg_.id); 
+
 }
   : if_  elseif_* else_?  ;
 
 if_ :
-  If e=logical_main '{' include_file_group '}' 
+  If e=logical_main '{' include_item_group '}' 
   {$if_inc_items::incg_.conditionList.add($e.text);};
   
 elseif_  
   :
-  Elseif e=logical_main '{' include_file_group '}'
+  Elseif e=logical_main '{' include_item_group '}'
   {$if_inc_items::incg_.conditionList.add($e.text);};
   
 else_  : 
-  Else '{' include_file_group '}'
+  Else '{' include_item_group '}'
   {$if_inc_items::incg_.conditionList.add(Param.always);};
 
-include_file_group
+include_item_group
 @init{ $if_inc_items::_arr = new ArrayList<String>(); 
        $if_inc_items::_incfmap = new HashMap<String, IncFileTemp>();
+       $if_inc_items::_incSvarMap = new HashMap<String, SvarTemp>();
+       $if_inc_items::_incDvarMap = new HashMap<String, DvarTemp>();
+       $if_inc_items::_incAliasMap = new HashMap<String, AliasTemp>();
 }
 @after {
-        $if_inc_items::incg_.inc_files_list.add($if_inc_items::_arr); 
+        $if_inc_items::incg_.inc_item_list.add($if_inc_items::_arr); 
         $if_inc_items::incg_.inc_files_map_list.add($if_inc_items::_incfmap);
+        $if_inc_items::incg_.inc_svar_map_list.add($if_inc_items::_incSvarMap);
+        $if_inc_items::incg_.inc_dvar_map_list.add($if_inc_items::_incDvarMap);
+        $if_inc_items::incg_.inc_alias_map_list.add($if_inc_items::_incAliasMap);
 }
 : 
-    ( fi=include_file { 
+   (
+      ( fi=include_file { 
         $if_inc_items::_arr.add($fi.id);  
         $if_inc_items::_incfmap.put($fi.id, $fi.incFileObj);
         $mt::m_.incFileIDList.add($if_inc_items::incg_.id); 
-        } 
+        })
+   |  ( si=svar_group { 
+        $if_inc_items::_arr.add($si.id);  
+        $if_inc_items::_incSvarMap.put($si.id, $si.svObj);
+        })
+   |  ( di=dvar_g { 
+        $if_inc_items::_arr.add($di.id);  
+        $if_inc_items::_incDvarMap.put($di.id, $di.dvObj);
+        })
+   |  ( ai=alias { 
+        $if_inc_items::_arr.add($ai.id);  
+        $if_inc_items::_incAliasMap.put($ai.id, $ai.asObj);
+        })                
   )+ ;
 
 ///// external
@@ -474,7 +503,7 @@ scope { AliasTemp as_;}
  	;
 
 alias_old : DEFINE ('[' LOCAL ']')? aliasID '{' ALIAS  aliasExpresion  aliasKind?  aliasUnits?  '}' ;
-alias_new : ALIAS aliasID '{' VALUE  aliasExpresion  aliasKind?  aliasUnits? '}' ;
+alias_new : ALIAS aliasID '{' aliasExpresion  aliasKind?  aliasUnits? '}' ;
 
 aliasExpresion : e=expr_add {$alias::as_.expression=$e.text;}; 
 aliasID : i=ID {$alias::as_.id=$i.text;}; 
