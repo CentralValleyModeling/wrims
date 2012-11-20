@@ -112,7 +112,7 @@ public class WPPAllVariableView extends AbstractDebugView implements ISelectionL
 		 */
 		public Object[] getChildren(Object parentElement) {
 			if (parentElement instanceof WPPDebugTarget) {
-				return DebugCorePlugin.allDataStack;
+				return DebugCorePlugin.allVariableStack;
 			} else if (parentElement instanceof WPPValue){
 				try{
 					if (((WPPValue)parentElement).hasVariables()){
@@ -238,7 +238,7 @@ public class WPPAllVariableView extends AbstractDebugView implements ISelectionL
 	
 	public void updateView(){
 		DebugCorePlugin.updateSelectedVariable=false;
-		dataStack=DebugCorePlugin.allDataStack;
+		dataStack=DebugCorePlugin.allVariableStack;
 		TableViewer viewer=(TableViewer) getViewer();
 		IStructuredSelection oldSelection = ((IStructuredSelection)viewer.getSelection());
 		viewer.setInput(DebugCorePlugin.target);

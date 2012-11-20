@@ -764,7 +764,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	 * @return whether popping the data stack is currently permitted
 	 */
 	public boolean canPop() {
-	    return !isTerminated() && isSuspended() && DebugCorePlugin.dataStack.length > 0;
+	    return !isTerminated() && isSuspended() && DebugCorePlugin.variableStack.length > 0;
 	}
 	
 	/**
@@ -774,7 +774,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	 * @throws DebugException if the stack is empty or the request fails
 	 */
 	public IValue pop() throws DebugException {
-	    IValue[] dataStack = DebugCorePlugin.dataStack;
+	    IValue[] dataStack = DebugCorePlugin.variableStack;
 	    if (dataStack.length > 0) {
 	        sendRequest("popdata");
 	        return dataStack[0];

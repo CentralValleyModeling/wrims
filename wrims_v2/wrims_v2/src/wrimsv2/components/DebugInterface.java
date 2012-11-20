@@ -477,6 +477,7 @@ public class DebugInterface {
 		Map<String, Svar> svMap = mds.svMap;
 		Map<String, Svar> svFutMap = mds.svFutMap;
 		Map<String, Alias> asMap = mds.asMap;
+		Map<String, String> partsMap=new HashMap<String, String>(); 
 		try {
 			WreslTreeWalker walker = FileParser.parseOneFileForDebug(fileFullPath);
 			if (walker==null) return dataString;
@@ -507,18 +508,39 @@ public class DebugInterface {
 			Collections.sort(sortedList);
 			for (String variable: sortedList){
 				if (svMap.containsKey(variable)){
-					intDouble=svMap.get(variable).getData();
-					if (intDouble != null) dataString=dataString+variable+":"+df.format(intDouble.getData())+"#";
+					Svar sv = svMap.get(variable);
+					intDouble=sv.getData();
+					if (intDouble != null) {
+						dataString=dataString+variable+":"+df.format(intDouble.getData())+"#";
+						partsMap.put(variable, sv.kind+":"+ControlData.timeStep);
+					}
 				}else if (dvMap.containsKey(variable)){
-					intDouble=dvMap.get(variable).getData();
-					if (intDouble != null) dataString=dataString+variable+":"+df.format(intDouble.getData())+"#";
+					Dvar dv = dvMap.get(variable);
+					intDouble=dv.getData();
+					if (intDouble != null) {
+						dataString=dataString+variable+":"+df.format(intDouble.getData())+"#";
+						partsMap.put(variable, dv.kind+":"+ControlData.timeStep);
+					}
 				}else if (tsMap.containsKey(variable)){
-					intDouble=tsMap.get(variable).getData();
-					if (intDouble != null) dataString=dataString+variable+":"+df.format(intDouble.getData())+"#";
+					Timeseries ts = tsMap.get(variable);
+					intDouble=ts.getData();
+					if (intDouble != null) {
+						dataString=dataString+variable+":"+df.format(intDouble.getData())+"#";
+						partsMap.put(variable, ts.kind+":"+ControlData.timeStep);
+					}
 				}else if (asMap.containsKey(variable)){
-					intDouble=asMap.get(variable).getData();
-					if (intDouble != null) dataString=dataString+variable+":"+df.format(intDouble.getData())+"#";
+					Alias as = asMap.get(variable);
+					intDouble=as.getData();
+					if (intDouble != null) {
+						dataString=dataString+variable+":"+df.format(intDouble.getData())+"#";
+						partsMap.put(variable, as.kind+":"+ControlData.timeStep);
+					}
 				}
+			}
+			if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
+			dataString=dataString+"!";
+			for (String variable: partsMap.keySet()){
+				dataString=dataString+variable+":"+partsMap.get(variable)+"#";
 			}
 			if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
 		} catch (RecognitionException e) {

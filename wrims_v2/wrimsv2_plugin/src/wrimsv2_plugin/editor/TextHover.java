@@ -46,7 +46,7 @@ public class TextHover implements ITextHover {
            return null;
         }
    
-        WPPValue[] dataStack=(WPPValue[]) DebugCorePlugin.dataStack;
+        WPPValue[] dataStack=(WPPValue[]) DebugCorePlugin.variableStack;
         if (dataStack==null) return null;
         
         for (int i = 0; i < dataStack.length; i++) {

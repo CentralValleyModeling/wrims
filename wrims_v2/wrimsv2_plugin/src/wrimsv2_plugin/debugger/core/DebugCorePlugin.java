@@ -32,6 +32,7 @@ import wrimsv2_plugin.debugger.menuitem.NextTimeStepMenu;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.toolbaritem.DebugSet;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
+import wrimsv2_plugin.tools.VariableProperty;
 
 import hec.heclib.dss.HecDss;
 
@@ -60,15 +61,17 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	
 	public static WPPDebugTarget target;
 	
-	public static IValue[] dataStack;	
+	public static IValue[] variableStack;	
 	public static IValue[] goalStack;
-	public static IValue[] allDataStack;
+	public static IValue[] allVariableStack;
 	public static IValue[] allGoalStack;
 	public static IValue[] watchStack;
 	public static ArrayList<String> fileControlGoals;
 	public static ArrayList<String> allControlGoals;
 	public static ArrayList<String> watchControlGoals;
 	public static ArrayList<String> watchItems=new ArrayList<String>();
+	public static Map<String, VariableProperty> variableProperty;
+	public static Map<String, VariableProperty> watchProperty;
 	
 	public static ArrayList<String[]> varDetailTimeseries= new ArrayList<String[]>();
 	public static ArrayList<String[]> varDetailFuture= new ArrayList<String[]>();

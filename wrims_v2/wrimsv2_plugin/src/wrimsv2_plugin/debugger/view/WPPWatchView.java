@@ -252,7 +252,9 @@ public class WPPWatchView extends AbstractDebugView implements ISelectionListene
 		IStructuredSelection oldSelection = ((IStructuredSelection)viewer.getSelection());
 		Table table=viewer.getTable();
 		table.removeAll();
+		ProcessAltColumn.removeAltColumns(table);
 		viewer.setInput(DebugCorePlugin.target);
+		ProcessAltColumn.AddAltColumns(table);
 	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
 	    	table.getColumn(i).pack();
 	    }
@@ -318,6 +320,7 @@ public class WPPWatchView extends AbstractDebugView implements ISelectionListene
 	}
 	
 	public void adjustAltColumnNames(){
-		
+		TableViewer viewer=(TableViewer) getViewer();
+		ProcessAltColumn.AdjustAltColumnNames(viewer);
 	}
 }

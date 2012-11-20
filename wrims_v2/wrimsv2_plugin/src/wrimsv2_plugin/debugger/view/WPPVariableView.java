@@ -120,7 +120,7 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 		 */
 		public Object[] getChildren(Object parentElement) {
 			if (parentElement instanceof WPPDebugTarget) {
-				return DebugCorePlugin.dataStack;
+				return DebugCorePlugin.variableStack;
 			} else if (parentElement instanceof WPPValue){
 				try{
 					if (((WPPValue)parentElement).hasVariables()){
@@ -247,11 +247,14 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 	
 	public void updateView(){
 	    DebugCorePlugin.updateSelectedVariable=false;
-		dataStack=DebugCorePlugin.dataStack;
+		dataStack=DebugCorePlugin.variableStack;
 		TableViewer viewer=(TableViewer) getViewer();
 		IStructuredSelection oldSelection = ((IStructuredSelection)viewer.getSelection());
-		viewer.setInput(DebugCorePlugin.target);
 		Table table=viewer.getTable();
+		table.removeAll();
+		ProcessAltColumn.removeAltColumns(table);
+		viewer.setInput(DebugCorePlugin.target);
+		ProcessAltColumn.AddAltColumns(table);
 	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
 	    	table.getColumn(i).pack();
 	    }
@@ -261,6 +264,7 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 	}
 	
 	public void adjustAltColumnNames(){
-		
+		TableViewer viewer=(TableViewer) getViewer();
+		ProcessAltColumn.AdjustAltColumnNames(viewer);
 	}
 }

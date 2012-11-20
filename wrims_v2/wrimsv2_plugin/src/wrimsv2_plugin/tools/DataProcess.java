@@ -2,6 +2,8 @@ package wrimsv2_plugin.tools;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.debug.core.model.IValue;
 
@@ -41,5 +43,18 @@ public class DataProcess {
 		if (data.equals("")) return new ArrayList<String>();
 		String[] dataParts=data.split(":");
 		return new ArrayList<String>(Arrays.asList(dataParts));  
+	}
+	
+	public static Map<String, VariableProperty> generateProperty(String data){
+		Map<String, VariableProperty> vp=new HashMap<String, VariableProperty>();
+		if (!data.equals("")){
+			String[] dataStrings = data.split("#");
+			for (int i=0; i<dataStrings.length; i++){
+				String[] dataParts = dataStrings[i].split(":");
+				VariableProperty property = new VariableProperty(dataParts[1], dataParts[2]);
+				vp.put(dataParts[0], property);
+			}
+		}
+		return vp;
 	}
 }
