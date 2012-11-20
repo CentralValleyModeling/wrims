@@ -22,13 +22,13 @@ public class Example_CL_SharingFix_092812_wreslplus {
 	@Test(groups = { "ilp_config_example_callite" })
 	public void Future_BO_36steps_wreslplus() throws RecognitionException, IOException{
 		
-		studyPath = "J:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CL_SharingFix_092812\\";
+		studyPath = "D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CL_SharingFix_092812\\";
 
 		/// set control data		
 		String[] controlDataString = {
 
 				
-	    "-config=\"J:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CL_SharingFix_092812\\Future_BO_36steps_wreslplus.config\"" 
+	    "-config=\"D:\\cvwrsm\\trunk\\wrims_v2\\wrims_v2\\examples\\CL_SharingFix_092812\\Future_BO_36steps_wreslplus.config\"" 
 				
 		};
 
