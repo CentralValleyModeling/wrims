@@ -70,8 +70,10 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static ArrayList<String> allControlGoals;
 	public static ArrayList<String> watchControlGoals;
 	public static ArrayList<String> watchItems=new ArrayList<String>();
-	public static Map<String, VariableProperty> variableProperty;
-	public static Map<String, VariableProperty> watchProperty;
+	public static Map<String, VariableProperty> variableProperty=new HashMap<String, VariableProperty>();
+	public static Map<String, VariableProperty> watchProperty=new HashMap<String, VariableProperty>();
+	public static Map<Integer, Integer> variableAltColIndex=new HashMap<Integer, Integer>();;
+	public static Map<Integer, Integer> watchAltColIndex=new HashMap<Integer, Integer>();;
 	
 	public static ArrayList<String[]> varDetailTimeseries= new ArrayList<String[]>();
 	public static ArrayList<String[]> varDetailFuture= new ArrayList<String[]>();
@@ -112,6 +114,10 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static boolean[] selectedStudies={true, false, false, false};
 	public static HecDss[] dvDss=new HecDss[4];
 	public static HecDss[] svDss=new HecDss[4];
+	
+	public static String aPart="";
+	public static String initFPart="";
+	public static String svFPart="";
 	
 	public static final String ID_WPP_PLUGIN="wrimsv2_plugin";
 	public static final String ID_WPP_DEBUG_MODEL = "wpp.debugModel";

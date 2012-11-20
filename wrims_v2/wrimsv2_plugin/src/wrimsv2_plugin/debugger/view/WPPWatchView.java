@@ -95,14 +95,18 @@ public class WPPWatchView extends AbstractDebugView implements ISelectionListene
 					if (((WPPValue) element).hasVariables()){
 						if (index==0){
 							return ((WPPValue) element).getVariableString();
-						}else{
+						}else if (index==1){
 							return ((WPPValue) element).getValueString();
+						}else{
+							return "";
 						}
 					}else{
 						if (index==0){
 							return ((WPPValue) element).getVariableString();
-						}else{	
+						}else if (index==1){	
 							return ((WPPValue) element).getValueString();
+						}else{
+							return "";
 						}
 					}
 				} catch (DebugException e) {
@@ -254,7 +258,7 @@ public class WPPWatchView extends AbstractDebugView implements ISelectionListene
 		table.removeAll();
 		ProcessAltColumn.removeAltColumns(table);
 		viewer.setInput(DebugCorePlugin.target);
-		ProcessAltColumn.AddAltColumns(table);
+		ProcessAltColumn.AddAltColumns(table, 1);
 	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
 	    	table.getColumn(i).pack();
 	    }
@@ -321,6 +325,6 @@ public class WPPWatchView extends AbstractDebugView implements ISelectionListene
 	
 	public void adjustAltColumnNames(){
 		TableViewer viewer=(TableViewer) getViewer();
-		ProcessAltColumn.AdjustAltColumnNames(viewer);
+		ProcessAltColumn.AdjustAltColumnNames(viewer, 1);
 	}
 }

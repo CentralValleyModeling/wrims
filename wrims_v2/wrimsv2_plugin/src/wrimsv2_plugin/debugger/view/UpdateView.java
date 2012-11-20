@@ -97,7 +97,7 @@ public class UpdateView {
 					//data="i:4456#a(-1):123.0#reservoir:reservorlevel1%56:reservorlevel2%1234";
 					String[] dataParts = data.split("!");
 					DebugCorePlugin.variableStack=DataProcess.generateTree(dataParts[0]);
-					DebugCorePlugin.variableProperty=DataProcess.generateProperty(dataParts[1]);
+					DebugCorePlugin.variableProperty=DataProcess.generateVariableProperty(dataParts[1]);
 				
 					WPPVariableView variableView = (WPPVariableView) workBenchPage.findView(DebugCorePlugin.ID_WPP_VARIABLE_VIEW);
 					variableView.updateView();
@@ -303,9 +303,10 @@ public class UpdateView {
 		}catch (DebugException e) {
 			WPPException.handleException(e);
 		}
-						
-		String[] dataParts=data.split("!");
 		
+		String[] dataStrings=data.split("&");
+		if (dataStrings.length>1) DebugCorePlugin.watchProperty=DataProcess.generateVariableProperty(dataStrings[1]);
+		String[] dataParts=dataStrings[0].split("!");
 		if (dataParts.length==2){
 			DebugCorePlugin.watchStack=DataProcess.generateTree(dataParts[0]);
 			DebugCorePlugin.watchControlGoals=DataProcess.generateArrayList(dataParts[1]);
@@ -316,7 +317,7 @@ public class UpdateView {
 			DebugCorePlugin.watchStack=new WPPValue[0];
 	    	DebugCorePlugin.watchControlGoals=new ArrayList<String>();
 		}
-							
+									
 		final IWorkbench workbench=PlatformUI.getWorkbench();
 			workbench.getDisplay().asyncExec(new Runnable(){
 			public void run(){

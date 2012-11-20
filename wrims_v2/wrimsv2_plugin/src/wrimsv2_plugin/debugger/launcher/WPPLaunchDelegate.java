@@ -108,12 +108,15 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			
 			String aPart = null;
 			aPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_APART, (String)null);
+			DebugCorePlugin.aPart=aPart;
 			
 			String svFPart = null;
 			svFPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVFPART, (String)null);
+			DebugCorePlugin.svFPart=svFPart;
 			
 			String initFPart = null;
 			initFPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFPART, (String)null);
+			DebugCorePlugin.initFPart=initFPart;
 			
 			String timeStep = null;
 			timeStep = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_TIMESTEP, (String)null);

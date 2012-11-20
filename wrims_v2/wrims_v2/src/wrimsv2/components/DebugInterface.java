@@ -807,6 +807,7 @@ public class DebugInterface {
 		Map<String, Svar> svFutMap = mds.svFutMap;
 		Map<String, Alias> asMap = mds.asMap;
 		Map<String, EvalConstraint> gMap = SolverData.getConstraintDataMap();
+		Map<String, String> partsMap=new HashMap<String, String>();
 		
 		String[] vGNames;
 		if (vGNameString.contains("#")){
@@ -820,17 +821,33 @@ public class DebugInterface {
 		for (int i=0; i<vGNames.length; i++){
 			String vGName=vGNames[i];
 			if (svMap.containsKey(vGName)){
-				intDouble=svMap.get(vGName).getData();
-				if (intDouble != null) dataString=dataString+vGName+":"+df.format(intDouble.getData())+"#";
+				Svar sv = svMap.get(vGName);
+				intDouble=sv.getData();
+				if (intDouble != null) {
+					dataString=dataString+vGName+":"+df.format(intDouble.getData())+"#";
+					partsMap.put(vGName, sv.kind+":"+ControlData.timeStep);
+				}
 			}else if (dvMap.containsKey(vGName)){
-				intDouble=dvMap.get(vGName).getData();
-				if (intDouble != null) dataString=dataString+vGName+":"+df.format(intDouble.getData())+"#";
+				Dvar dv = dvMap.get(vGName);
+				intDouble=dv.getData();
+				if (intDouble != null) {
+					dataString=dataString+vGName+":"+df.format(intDouble.getData())+"#";
+					partsMap.put(vGName, dv.kind+":"+ControlData.timeStep);
+				}
 			}else if (tsMap.containsKey(vGName)){
-				intDouble=tsMap.get(vGName).getData();
-				if (intDouble != null) dataString=dataString+vGName+":"+df.format(intDouble.getData())+"#";
+				Timeseries ts = tsMap.get(vGName);
+				intDouble=ts.getData();
+				if (intDouble != null) {
+					dataString=dataString+vGName+":"+df.format(intDouble.getData())+"#";
+					partsMap.put(vGName, ts.kind+":"+ControlData.timeStep);
+				}
 			}else if (asMap.containsKey(vGName)){
-				intDouble=asMap.get(vGName).getData();
-				if (intDouble != null) dataString=dataString+vGName+":"+df.format(intDouble.getData())+"#";
+				Alias as = asMap.get(vGName);
+				intDouble=as.getData();
+				if (intDouble != null) {
+					dataString=dataString+vGName+":"+df.format(intDouble.getData())+"#";
+					partsMap.put(vGName, as.kind+":"+ControlData.timeStep);
+				}
 			}else if (gMap.containsKey(vGName)){
 				double lhs=0;
 				boolean noSlackSurplus=true;
@@ -895,11 +912,19 @@ public class DebugInterface {
 			}
 		}
 		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
+		
 		dataString=dataString+"!";
 		for (String controlGoal:controlGoals){
 			dataString=dataString+controlGoal+":";
 		}
 		if (dataString.endsWith(":")) dataString=dataString.substring(0, dataString.length()-1);
+		
+		dataString=dataString+"&";
+		for (String variable: partsMap.keySet()){
+			dataString=dataString+variable+":"+partsMap.get(variable)+"#";
+		}
+		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
+		
 		return dataString;
 	}
 	

@@ -45,7 +45,7 @@ public class DataProcess {
 		return new ArrayList<String>(Arrays.asList(dataParts));  
 	}
 	
-	public static Map<String, VariableProperty> generateProperty(String data){
+	public static Map<String, VariableProperty> generateVariableProperty(String data){
 		Map<String, VariableProperty> vp=new HashMap<String, VariableProperty>();
 		if (!data.equals("")){
 			String[] dataStrings = data.split("#");

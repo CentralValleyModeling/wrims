@@ -94,14 +94,18 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 					if (((WPPValue) element).hasVariables()){
 						if (index==0){
 							return ((WPPValue) element).getVariableString();
-						}else{
+						}else if (index==1){
 							return ((WPPValue) element).getValueString();
+						}else{
+							return "";
 						}
 					}else{
 						if (index==0){
 							return ((WPPValue) element).getVariableString();
-						}else{	
+						}else if (index==1){	
 							return ((WPPValue) element).getValueString();
+						}else{
+							return "";
 						}
 					}
 				} catch (DebugException e) {
@@ -254,7 +258,7 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 		table.removeAll();
 		ProcessAltColumn.removeAltColumns(table);
 		viewer.setInput(DebugCorePlugin.target);
-		ProcessAltColumn.AddAltColumns(table);
+		ProcessAltColumn.AddAltColumns(table, 0);
 	    for (int i = 0, n = table.getColumnCount(); i < n; i++) {
 	    	table.getColumn(i).pack();
 	    }
@@ -265,6 +269,6 @@ public class WPPVariableView extends AbstractDebugView implements ISelectionList
 	
 	public void adjustAltColumnNames(){
 		TableViewer viewer=(TableViewer) getViewer();
-		ProcessAltColumn.AdjustAltColumnNames(viewer);
+		ProcessAltColumn.AdjustAltColumnNames(viewer, 0);
 	}
 }
