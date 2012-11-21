@@ -4,7 +4,8 @@ Bundle-Name: Wrimsv2_plugin
 Bundle-SymbolicName: wrimsv2_plugin;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.eclipse.core.runtime;version="3.4.0",
+Import-Package: gov.ca.dwr.hecdssvue,
+ org.eclipse.core.runtime;version="3.4.0",
  org.eclipse.core.runtime.jobs,
  org.eclipse.core.runtime.preferences;version="3.3.0",
  org.eclipse.debug.core,
@@ -29,7 +30,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jface.text,
  org.eclipse.ui.editors,
  org.eclipse.ui.views.properties.tabbed,
- org.eclipse.draw2d
+ org.eclipse.draw2d,
+ gov.ca.dwr.hecdssvue;bundle-version="1.0.0"
 Export-Package: wrimsv2_plugin.debugger,
  wrimsv2_plugin.debugger.breakpoint,
  wrimsv2_plugin.debugger.core,
