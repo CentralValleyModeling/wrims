@@ -1,6 +1,9 @@
 package wrimsv2_plugin.debugger.view;
 
 import hec.heclib.dss.HecDss;
+import hec.hecmath.HecMath;
+import hec.hecmath.HecMathException;
+import hec.io.DataContainer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +16,8 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.tools.TimeOperation;
 import wrimsv2_plugin.tools.VariableProperty;
 
 public class ProcessAltColumn {
@@ -69,7 +74,6 @@ public class ProcessAltColumn {
 				altColIndex=DebugCorePlugin.watchAltColIndex;
 				break;
 		}
-		boolean[] selectedStudies = DebugCorePlugin.selectedStudies;
 		String aPart = DebugCorePlugin.aPart;
 		String svFPart = DebugCorePlugin.svFPart;
 		HecDss[] dvDss = DebugCorePlugin.dvDss;
@@ -77,8 +81,32 @@ public class ProcessAltColumn {
 		
 		if (vp.containsKey(vn)){
 			VariableProperty property=vp.get(vn);
-			String varDssString="/"+aPart+"/"+vn+"/"+property.getPartC()+"//"+property.getPartE()+"/"+svFPart+"/";
-			return "found";
+			String timestep=property.getPartE();
+			String pn="/"+aPart.toUpperCase()+"/"+vn.toUpperCase()+"/"+property.getPartC().toUpperCase()+"/*/"+timestep+"/"+svFPart.toUpperCase()+"/";
+			String tw=TimeOperation.createTimewindow(DebugCorePlugin.suspendedYear, DebugCorePlugin.suspendedMonth, DebugCorePlugin.suspendedDay, timestep);
+			int i=altColIndex.get(index);
+			try {
+				HecDss dss = dvDss[i];
+				if (dss.recordExists(pn)){
+					HecMath hm = dss.read(pn, tw);
+					DataContainer dc = hm.getData();
+					double value = dc.yOrdinate;
+					return String.valueOf(value);
+				}else{
+					dss=svDss[i];
+					if (dss.recordExists(pn)){	
+						HecMath hm = dss.read(pn, tw);
+						DataContainer dc = hm.getData();
+						double value = dc.yOrdinate;
+						return String.valueOf(value);
+					}else{
+						return "";
+					}
+				}
+			} catch (HecMathException e) {
+				WPPException.handleException(e);
+				return "";
+			}
 		}else{
 			return "";
 		}

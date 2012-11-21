@@ -1,5 +1,7 @@
 package wrimsv2_plugin.tools;
 
+import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+
 public class TimeOperation {
 	public static boolean isLeapYear(int year){
 		if (year % 4 == 0) {
@@ -78,5 +80,48 @@ public class TimeOperation {
 		}else{
 			return 12;
 		}
+	}
+	
+	public static String createTimewindow (int year, int month, int day, String timestep){
+		String monthStr=getMonthText(month);
+		if (timestep.equals("1MON")){
+			int lastDay=numberOfDays(month, year);
+			return lastDay+monthStr+year+" 2300 "+lastDay+monthStr+year+" 2400";
+		}else{
+			if (day<10){
+				String dayStr="0"+day;
+				return dayStr+monthStr+year+" 2300 "+dayStr+monthStr+year+" 2400";
+			}else{
+				return day+monthStr+year+" 2300 "+day+monthStr+year+" 2400"; 
+			}
+		}
+	}
+	
+	public static String getMonthText(int month){
+		switch (month){
+		case 1:
+			return "JAN";
+		case 2:
+			return "FEB";
+		case 3:
+			return "MAR";
+		case 4:
+			return "APR";
+		case 5:
+			return "MAY";
+		case 6:
+			return "JUN";
+		case 7:
+			return "JUL";
+		case 8:
+			return "AUG";
+		case 9:
+			return "SEP";
+		case 10:
+			return "OCT";
+		case 11:
+			return "NOV";
+		}
+		return "DEC";
 	}
 }
