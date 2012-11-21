@@ -1,8 +1,9 @@
 
 initial {
-	const A { 100 }
-	svar  B { value A - 5 }
-	svar C { select Option from options where Index=2 }
+	const A { 100 }           ! overwritten by config
+	svar  B { value A - 5 }   ! overwritten by config
+	svar  C { select Option from options where Index=2 }  ! overwritten by config
+	const D { 60 }
 }
 
 sequence CYCLE1 {
