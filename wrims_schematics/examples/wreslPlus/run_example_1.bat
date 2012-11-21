@@ -1,0 +1,1 @@
+start %~dp0\..\..\bin\runConfig_limitedXA %~dp0\example_1_initial_vars.config
