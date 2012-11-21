@@ -85,98 +85,9 @@ public class Workflow {
 		ProcParameter.process(st);
 		
 		
-		for (String q: st.modelList){
-			
-			System.out.println("model: "+ q);
-			ModelTemp m =  st.modelMap.get(q);
-			
-			System.out.println(" --> m.itemList: " + m.itemList);
-			System.out.println(" --> m.svList: " + m.svList);
-			System.out.println(" --> m.svMap.keySet(): " + m.svMap.keySet());
-			System.out.println(" --> m.incFileIDList: " + m.incFileIDList);
-			System.out.println(" --> m.incFileMap: " + m.incFileMap);
-			
-			System.out.println("# m.ifIncFileGroupIDList:"+m.ifIncItemGroupIDList);
-			System.out.println("# m.ifIncFileGroupMap:"+m.ifIncItemGroupMap);
-			
-			for (String g: m.ifIncItemGroupIDList){
-				
-				IfIncItemGroup ig = m.ifIncItemGroupMap.get(g);
-				
-				System.out.println("# ig.id"+ig.id);
-				System.out.println("# ig.conditionList"+ig.conditionList);
-				System.out.println("# ig.inc_item_list"+ig.inc_item_list);
-				System.out.println("# ig.inc_files_map_list"+ig.inc_files_map_list);
-				System.out.println("#--> ig.conditionValueList"+ig.conditionValueList);
-				System.out.println("#--> ig.inc_svar_map_list"+ig.inc_svar_map_list);
-				
-				int i=1;
-				for ( Map<String, IncFileTemp> em: ig.inc_files_map_list ){
-					
-					System.out.println("=========== Map of "+i+" =============");
-					i++;
-					for (String fileId: em.keySet()){
-						
-						IncFileTemp v = em.get(fileId);
-						
-						System.out.println(" ->  "+ v.rawPath);
-						
-					}
-					
-				}
-
-			}
-			
-		}
-		
 		// process "if include file group"
 		ProcIfIncItemGroup.process(st);
 		
-		
-		
-		for (String q: st.modelList){
-		
-			System.out.println("model: "+ q);
-			ModelTemp m =  st.modelMap.get(q);
-			
-			System.out.println(" --> m.itemList: " + m.itemList);
-			System.out.println(" --> m.svList: " + m.svList);
-			System.out.println(" --> m.svMap.keySet(): " + m.svMap.keySet());
-			System.out.println(" --> m.incFileIDList: " + m.incFileIDList);
-			System.out.println(" --> m.incFileMap: " + m.incFileMap);
-			
-			System.out.println("# m.ifIncFileGroupIDList:"+m.ifIncItemGroupIDList);
-			System.out.println("# m.ifIncFileGroupMap:"+m.ifIncItemGroupMap);
-			
-			for (String g: m.ifIncItemGroupIDList){
-				
-				IfIncItemGroup ig = m.ifIncItemGroupMap.get(g);
-				
-				System.out.println("# ig.id"+ig.id);
-				System.out.println("# ig.conditionList"+ig.conditionList);
-				System.out.println("# ig.inc_item_list"+ig.inc_item_list);
-				System.out.println("# ig.inc_files_map_list"+ig.inc_files_map_list);
-				System.out.println("#--> ig.conditionValueList"+ig.conditionValueList);
-				System.out.println("#--> ig.inc_svar_map_list"+ig.inc_svar_map_list);
-				
-				int i=1;
-				for ( Map<String, IncFileTemp> em: ig.inc_files_map_list ){
-					
-					System.out.println("=========== Map of "+i+" =============");
-					i++;
-					for (String fileId: em.keySet()){
-						
-						IncFileTemp v = em.get(fileId);
-						
-						System.out.println(" ->  "+ v.rawPath);
-						
-					}
-					
-				}
-
-			}
-			
-		}
 		
 		ProcMainFile.findEffectiveModel(st); 
 
@@ -289,23 +200,11 @@ public class Workflow {
 		
 		ProcWeight.collectWeightVar(st);
 
-//		for(ModelTemp mmm : st.modelMap.values()){
-//			
-//			for (String f :mmm.incFileRelativePathList_post){
-//				
-//				String mn = st.fileModelNameMap.get(f).get(0);
-//				
-//				ModelTemp incModel = st.fileModelDataTable.get(f, mn);
-//				
-//				System.out.println("%%%% incModel.wvList_post:"+f+"="+incModel.wvList_post);
-//			}
-//		
-//		}
+
 		
 		
 		// filter weight groups from the weight Object list and then process them
 		// TODO: need to rewrite
-
 
 		ProcWeight.processWeightGroup(st);
 						
@@ -326,12 +225,6 @@ public class Workflow {
 		Procedures.analyzeVarNeededFromCycle(st);
 		Procedures.createSpaceInVarCycleValueMap(st);
 		
-
-//		for (String sss : st.seqList){
-//			
-//			System.out.println("#### varUsedByLaterCycle: "+sss+"="+ st.seqMap.get(sss).varUsedByLaterCycle);
-//			
-//		}
 		
 		Procedures.collectTimeStep(st);
 		
