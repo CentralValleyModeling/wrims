@@ -34,7 +34,7 @@ MODEL first {
   Objective obj = {[x, 5] [y, 5] }
   Objective TTT {
 	weight 6
-	penalty 0.1
+	deviationPenalty 0.1
 	variable a b c
   }
   
