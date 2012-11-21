@@ -227,6 +227,9 @@ scope { IfIncItemGroup incg_;
         HashMap<String, DvarTemp> _incDvarMap;
         HashMap<String, AliasTemp> _incAliasMap;
         HashMap<String, TimeseriesTemp> _incTimeseriesMap;
+        HashMap<String, GoalTemp> _incGoalSimpleMap;
+        HashMap<String, GoalTemp> _incGoalComplexMap;
+        HashMap<String, WeightTable> _incWeightTableMap;
         } 
 @init{ $if_inc_items::incg_ = new IfIncItemGroup();
        $if_inc_items::incg_.id = "__item__"+Integer.toString($mt::m_.ifIncItemGroupIDList.size());
@@ -241,6 +244,9 @@ scope { IfIncItemGroup incg_;
         $mt::m_.dvList.add($if_inc_items::incg_.id);
         $mt::m_.asList.add($if_inc_items::incg_.id); 
         $mt::m_.tsList.add($if_inc_items::incg_.id); 
+        $mt::m_.glList.add($if_inc_items::incg_.id); 
+        $mt::m_.gl2List.add($if_inc_items::incg_.id); 
+       // $mt::m_.wTableObjList.add($if_inc_items::incg_.id);         
 
 }
   : if_  elseif_* else_?  ;
@@ -264,7 +270,10 @@ include_item_group
        $if_inc_items::_incSvarMap = new HashMap<String, SvarTemp>();
        $if_inc_items::_incDvarMap = new HashMap<String, DvarTemp>();
        $if_inc_items::_incAliasMap = new HashMap<String, AliasTemp>();
-       $if_inc_items::_incTimeseriesMap = new HashMap<String, TimeseriesTemp>();       
+       $if_inc_items::_incTimeseriesMap = new HashMap<String, TimeseriesTemp>(); 
+       $if_inc_items::_incGoalSimpleMap = new HashMap<String, GoalTemp>();              
+       $if_inc_items::_incGoalComplexMap = new HashMap<String, GoalTemp>(); 
+       $if_inc_items::_incWeightTableMap = new HashMap<String, WeightTable>(); 
 }
 @after {
         $if_inc_items::incg_.inc_item_list.add($if_inc_items::_arr); 
@@ -273,6 +282,9 @@ include_item_group
         $if_inc_items::incg_.inc_dvar_map_list.add($if_inc_items::_incDvarMap);
         $if_inc_items::incg_.inc_alias_map_list.add($if_inc_items::_incAliasMap);
         $if_inc_items::incg_.inc_timeseries_map_list.add($if_inc_items::_incTimeseriesMap);
+        $if_inc_items::incg_.inc_goalSimple_map_list.add($if_inc_items::_incGoalSimpleMap);
+        $if_inc_items::incg_.inc_goalComplex_map_list.add($if_inc_items::_incGoalComplexMap);        
+        $if_inc_items::incg_.inc_weightTable_map_list.add($if_inc_items::_incWeightTableMap); 
 }
 : 
    (
@@ -296,8 +308,20 @@ include_item_group
    |  ( ti=timeseries { 
         $if_inc_items::_arr.add($ti.id);  
         $if_inc_items::_incTimeseriesMap.put($ti.id, $ti.tsObj);
-        })               
+        })
+   |  ( gsi=goal_s { 
+        $if_inc_items::_arr.add($gsi.id);  
+        $if_inc_items::_incGoalSimpleMap.put($gsi.id, $gsi.glObj);
+        })  
+   |  ( ghi=goal_hs { 
+        $if_inc_items::_arr.add($ghi.id);  
+        $if_inc_items::_incGoalComplexMap.put($ghi.id, $ghi.glObj);
+        })                              
+   |  ( wti=weight {   
+        $if_inc_items::_incWeightTableMap.put($wti.id, $wti.wtObj);
+        }) 
   )+ ;
+
 
 ///// external
 //

@@ -281,6 +281,8 @@ public class ToLowerCase {
 
 	// GoalCase is not converted to lowercase
 	public static GoalTemp goal (GoalTemp g){
+		
+		if (g==null) return null;
 
 		// TODO: convert fields in class GoalCase to lowercase 
 		
@@ -448,6 +450,46 @@ public class ToLowerCase {
 			}
 		}
 		o.inc_timeseries_map_list = w.inc_timeseries_map_list;
+		
+		for ( HashMap<String,GoalTemp> mi : w.inc_goalSimple_map_list){
+			
+			Set<String> ks = new HashSet<String>(mi.keySet());
+			
+			for (String key: ks){
+				
+				GoalTemp glObj = goal(mi.get(key));			
+				mi.remove(key);
+				mi.put(key.toLowerCase(), glObj);				
+			}
+		}
+		o.inc_goalSimple_map_list = w.inc_goalSimple_map_list;
+		
+		for ( HashMap<String,GoalTemp> mi : w.inc_goalComplex_map_list){
+			
+			Set<String> ks = new HashSet<String>(mi.keySet());
+			
+			for (String key: ks){
+				
+				GoalTemp glObj = goal(mi.get(key));			
+				mi.remove(key);
+				mi.put(key.toLowerCase(), glObj);				
+			}
+		}
+		o.inc_goalComplex_map_list = w.inc_goalComplex_map_list;
+		
+		for ( HashMap<String,WeightTable> mi : w.inc_weightTable_map_list){
+			
+			Set<String> ks = new HashSet<String>(mi.keySet());
+			
+			for (String key: ks){
+				
+				WeightTable wtObj = weightTable(mi.get(key));			
+				mi.remove(key);
+				mi.put(key.toLowerCase(), wtObj);				
+			}
+		}
+		o.inc_weightTable_map_list = w.inc_weightTable_map_list;
+		
 		
 		
 		return o;
