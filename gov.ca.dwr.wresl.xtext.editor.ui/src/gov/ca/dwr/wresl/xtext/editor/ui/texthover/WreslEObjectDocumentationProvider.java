@@ -37,8 +37,8 @@ public class WreslEObjectDocumentationProvider implements
 
 	private String getValue(String varName){  
 		if (!DebugCorePlugin.isDebugging) return "Debugging is not started yet";
-        if (DebugCorePlugin.dataStack==null) return "This variable is not in this cycle.";
-        WPPValue[] dataStack=(WPPValue[]) DebugCorePlugin.dataStack;
+        if (DebugCorePlugin.variableStack==null) return "This variable is not in this cycle.";
+        WPPValue[] dataStack=(WPPValue[]) DebugCorePlugin.variableStack;
         
         for (int i = 0; i < dataStack.length; i++) {
             if (varName.equalsIgnoreCase(dataStack[i].getVariableString())){
