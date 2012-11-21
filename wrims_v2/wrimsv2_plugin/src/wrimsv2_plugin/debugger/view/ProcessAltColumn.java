@@ -4,6 +4,7 @@ import hec.heclib.dss.HecDss;
 import hec.hecmath.HecMath;
 import hec.hecmath.HecMathException;
 import hec.io.DataContainer;
+import hec.io.TimeSeriesContainer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,28 +83,28 @@ public class ProcessAltColumn {
 		if (vp.containsKey(vn)){
 			VariableProperty property=vp.get(vn);
 			String timestep=property.getPartE();
-			String pn="/"+aPart.toUpperCase()+"/"+vn.toUpperCase()+"/"+property.getPartC().toUpperCase()+"/*/"+timestep+"/"+svFPart.toUpperCase()+"/";
-			String tw=TimeOperation.createTimewindow(DebugCorePlugin.suspendedYear, DebugCorePlugin.suspendedMonth, DebugCorePlugin.suspendedDay, timestep);
+			String pn="/"+aPart+"/"+vn+"/"+property.getPartC()+"//"+timestep+"/"+svFPart+"/";
+			String startTime=TimeOperation.createStartTime(DebugCorePlugin.suspendedYear, DebugCorePlugin.suspendedMonth, DebugCorePlugin.suspendedDay, timestep);
+			String endTime=TimeOperation.createEndTime(DebugCorePlugin.suspendedYear, DebugCorePlugin.suspendedMonth, DebugCorePlugin.suspendedDay, timestep);
 			int i=altColIndex.get(index);
 			try {
 				HecDss dss = dvDss[i];
-				if (dss.recordExists(pn)){
-					HecMath hm = dss.read(pn, tw);
-					DataContainer dc = hm.getData();
-					double value = dc.yOrdinate;
-					return String.valueOf(value);
-				}else{
+				DataContainer dc;
+				dc = dss.get(pn, startTime, endTime);
+				double[] values=((TimeSeriesContainer)dc).values;
+				if (values.length==0){
 					dss=svDss[i];
-					if (dss.recordExists(pn)){	
-						HecMath hm = dss.read(pn, tw);
-						DataContainer dc = hm.getData();
-						double value = dc.yOrdinate;
-						return String.valueOf(value);
-					}else{
+					dc = dss.get(pn, startTime, endTime);
+					values=((TimeSeriesContainer)dc).values;
+					if (values.length==0){
 						return "";
+					}else{
+						return DebugCorePlugin.df.format(values[0]);
 					}
+				}else{
+					return DebugCorePlugin.df.format(values[0]);
 				}
-			} catch (HecMathException e) {
+			} catch (Exception e) {
 				WPPException.handleException(e);
 				return "";
 			}

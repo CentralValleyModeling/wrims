@@ -42,6 +42,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.*;
 
 /**
@@ -118,6 +119,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static String aPart="";
 	public static String initFPart="";
 	public static String svFPart="";
+	
+	public static DecimalFormat df = new DecimalFormat("#.####");
 	
 	public static final String ID_WPP_PLUGIN="wrimsv2_plugin";
 	public static final String ID_WPP_DEBUG_MODEL = "wpp.debugModel";

@@ -88,7 +88,7 @@ public class WPPLoadStudyDssDialog extends Dialog {
 			fileSelection[i].setLayout(layout);
 			
 			checkBox[i]=new Button(fileSelection[i], SWT.CHECK);
-			checkBox[i].setText("Alt "+i+":");
+			checkBox[i].setText("Alt "+(i+1)+":");
 			checkBox[i].setSelection(DebugCorePlugin.selectedStudies[i]);
 			GridData gd0 = new GridData(GridData.FILL_HORIZONTAL);
 			gd0.horizontalSpan = 3;
