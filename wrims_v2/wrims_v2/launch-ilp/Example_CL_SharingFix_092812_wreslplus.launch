@@ -16,7 +16,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="wrims_v2"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx1200m -Xss1024K -Djava.library.path=&quot;D:\cvwrsm\trunk\3rd_party\vista\lib;D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\CL_SharingFix_092812\Run\External;D:\cvwrsm\trunk\wrims_v2\wrims_v2\src\wrimsv2\lib&quot;"/>
 <mapAttribute key="org.testng.eclipse.ALL_CLASS_METHODS">
-<mapEntry key="test.test_ilp.Example_CL_SharingFix_092812" value=""/>
+<mapEntry key="test.test_ilp.Example_CL_SharingFix_092812_wreslplus" value=""/>
 </mapAttribute>
 <listAttribute key="org.testng.eclipse.CLASS_TEST_LIST">
 <listEntry value="test.test_ilp.Example_CL_SharingFix_092812_wreslplus"/>
