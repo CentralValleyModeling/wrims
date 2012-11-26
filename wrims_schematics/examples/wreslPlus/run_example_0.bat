@@ -1,0 +1,1 @@
+start %~dp0\..\..\bin\runConfig_limitedXA %~dp0\example_0_global_vars.config
