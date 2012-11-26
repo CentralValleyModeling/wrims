@@ -221,8 +221,16 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 		table.removeAll();
 		removeAllTableColumns();
 		ArrayList<String> variableNames=DebugCorePlugin.selectedVariableNames;
-		//int sizeTc=variableNames.size()+2;
-		int sizeTc=3;
+		
+		boolean[] selectedStudies=DebugCorePlugin.selectedStudies;
+		int nAlt=0;
+		for (int i=0; i<4; i++){
+			if (DebugCorePlugin.selectedStudies[i]){
+				nAlt=nAlt+1;
+			}
+		}
+		
+		int sizeTc=3+nAlt;
 		int width=(int) Math.rint(table.getClientArea().width/(sizeTc+1.0));
 		TableColumn[] tc = new TableColumn[sizeTc];
 		tc[0] = new TableColumn(table, SWT.CENTER);
@@ -236,16 +244,29 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 		    tc[0].setWidth(150);
 		    tc[1].setWidth(150);
 	    }
-	    for (int i=2; i<sizeTc; i++){
-	    	tc[i] = new TableColumn(table, SWT.CENTER);
-	    	tc[i].setText(variableNames.get(i-2));
-	    	if (width>10){
-		    	tc[i].setWidth(width);
-		    }else{
-			    tc[i].setWidth(150);
-		    }
-	    }
+	    tc[2] = new TableColumn(table, SWT.CENTER);
+	    tc[2].setText(variableNames.get(0));
+	    if (width>10){
+		   	tc[2].setWidth(width);
+		}else{
+		    tc[2].setWidth(150);
+		}
 
+	    int iAlt=0;
+	    for (int i=0; i<4; i++){
+	    	if (selectedStudies[i]){
+	    		int colIndex=3+iAlt;
+	    		tc[colIndex] = new TableColumn(table, SWT.CENTER);
+	    		tc[colIndex].setText("Alt"+(i+1));
+	    		if (width>10){
+	    			tc[colIndex].setWidth(width);
+	    		}else{
+	    			tc[colIndex].setWidth(150);
+	    		}
+		    	iAlt=iAlt+1;
+	    	}
+	    }
+	    
 	    table.setHeaderVisible(true);
 	    ArrayList<String[]> timeseries=DebugCorePlugin.varDetailTimeseries;
 	    for (String[] itemStrings: timeseries){
@@ -260,7 +281,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 			public void widgetSelected(SelectionEvent e) {
 				if (DebugCorePlugin.isDebugging && DebugCorePlugin.target.isSuspended()){
 					final int col=cursor.getColumn();
-					if (col>=2){
+					if (col==2){
 						final String varName=table.getColumn(col).getText();
 						final TableItem ti=cursor.getRow();
 						final int row = table.getSelectionIndex();
