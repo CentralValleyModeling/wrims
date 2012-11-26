@@ -1,1 +1,1 @@
-start %~dp0\..\..\bin\runConfig_limitedXA %~dp0\example_3_conditional_includes.config
+start %~dp0\..\..\bin\runConfig_limitedXA %~dp0\example_3_conditional_file_includes.config

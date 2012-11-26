@@ -6,7 +6,7 @@ initial {
 }
 
 sequence CYCLE1 {
-    model   fiRst
+    model   first
     order   1
 }
 	
