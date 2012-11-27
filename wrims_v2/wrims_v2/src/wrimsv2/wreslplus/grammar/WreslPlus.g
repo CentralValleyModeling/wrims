@@ -94,6 +94,9 @@ scope { StudyTemp sty;}
 	( m=model      { $wreslMain::sty.modelList.add($m.id); $wreslMain::sty.modelMap.put($m.id, $m.modelObj);  }    )+ 
 	;
 
+local_deprecated
+  : '[' LOCAL ']' 
+    {LogUtils.warningMsg("\"[local]\" is deprecated. All variables are by default local.");};
 
 initial 
 @init {  isParameter=true; }
@@ -354,7 +357,7 @@ scope { WeightTable wt_;
 @after{ $id = $weight::wt_.id_lowcase; $wtObj=$weight::wt_; $wtObj.dependants= dependants;}	 
 	: weight_legacy | weight_new ;
 
-weight_legacy : OBJECTIVE ('[' LOCAL ']')? objGroupName '='? '{' weight_legacy_unit+ '}'  ;
+weight_legacy : OBJECTIVE (local_deprecated)? objGroupName '='? '{' weight_legacy_unit+ '}'  ;
 
 //obj : 'obj' | 'Obj' | 'OBJ' ;
 objGroupName : i=ID {$weight::wt_.id_lowcase=$i.text.toLowerCase();
@@ -417,7 +420,7 @@ include_file returns[String id, IncFileTemp incFileObj]
        $incFileObj.id = "__file__"+Integer.toString($mt::m_.incFileIDList.size()); 
        $id = $incFileObj.id;
        }
-      : INCLUDE ('[' LOCAL ']')? fp=file_path {$incFileObj.rawPath=Tools.strip($fp.text);}   ;
+      : INCLUDE (local_deprecated)? fp=file_path {$incFileObj.rawPath=Tools.strip($fp.text);}   ;
 
 file_path : QUOTE  ;
 
@@ -441,7 +444,7 @@ scope { GoalTemp gl_;
         $glObj.neededVarInCycleSet= varInCycle;
         $glObj.needVarFromEarlierCycle = (varInCycle!=null);}	 
 
-	: GOAL ('[' LOCAL ']')? i=ID  '{' ( e=expr_constraint )'}' 
+	: GOAL (local_deprecated)? i=ID  '{' ( e=expr_constraint )'}' 
 	{$goal_s::gl_.id=$i.text; 
 	 $goal_s::gl_.caseCondition.add(Param.always);
 	 $goal_s::gl_.caseName.add(Param.defaultCaseName);
@@ -463,7 +466,7 @@ scope { GoalTemp gl_;
         $glObj.dependants= dependants;
         $glObj.neededVarInCycleSet= varInCycle;
         $glObj.needVarFromEarlierCycle = (varInCycle!=null);}	 
-	: GOAL ('[' LOCAL ']')? i=ID  {$goal_hs::gl_.id=$i.text;}
+	: GOAL (local_deprecated)? i=ID  {$goal_hs::gl_.id=$i.text;}
 	  '{' lhs 
 	  ( goal_hs_nocase 		
 	  | goal_hs_cases 
@@ -518,7 +521,7 @@ scope { AliasTemp as_;}
 	: alias_new | alias_old
  	;
 
-alias_old : DEFINE ('[' LOCAL ']')? aliasID '{' ALIAS  aliasExpresion  aliasKind?  aliasUnits?  '}' ;
+alias_old : DEFINE (local_deprecated)? aliasID '{' ALIAS  aliasExpresion  aliasKind?  aliasUnits?  '}' ;
 alias_new : ALIAS aliasID '{' aliasExpresion  aliasKind?  aliasUnits? '}' ;
 
 aliasExpresion : e=expr_add {$alias::as_.expression=$e.text;}; 
@@ -529,7 +532,7 @@ aliasKind:  KIND s=QUOTE {$alias::as_.kind=Tools.strip($s.text);};
 /// svar
 
 svar_group returns[String id, SvarTemp svObj]
-  : ( SVAR | DEFINE ('[' LOCAL ']')? ) svar_g { $id=$svar_g.id;  $svObj=$svar_g.svObj;  } ;
+  : ( SVAR | DEFINE (local_deprecated)? ) svar_g { $id=$svar_g.id;  $svObj=$svar_g.svObj;  } ;
 
 svar_g returns[String id, SvarTemp svObj]
 scope { SvarTemp sv_;
@@ -642,7 +645,7 @@ scope { TimeseriesTemp ts_;
 	: timeseries_new | timeseries_old ;
 
 timeseries_new : TIMESERIES tsID      '{' (NAME      bpart_id)? tsKind tsUnits convert? '}' ;
-timeseries_old : DEFINE ('[' LOCAL ']')? tsID   '{' TIMESERIES bpart_id? tsKind tsUnits convert? '}' ;
+timeseries_old : DEFINE (local_deprecated)? tsID   '{' TIMESERIES bpart_id? tsKind tsUnits convert? '}' ;
 			
 tsID : i=ID {$timeseries::ts_.id=$i.text;$timeseries::ts_.dssBPart=$i.text;} ;			
 tsUnits: UNITS s=QUOTE {$timeseries::ts_.units=Tools.strip($s.text);} ;
@@ -708,7 +711,7 @@ scope { ExternalTemp ex_;
 
 ex_id : i=ID {$ex_g::ex_.id=$i.text;} ;
 
-ex_old : DEFINE ('[' LOCAL ']')? ex_id '{' EXTERNAL f=ex_fileName {$ex_g::ex_.fileName=$f.text;} '}' ;
+ex_old : DEFINE (local_deprecated)? ex_id '{' EXTERNAL f=ex_fileName {$ex_g::ex_.fileName=$f.text;} '}' ;
 
 ex_fileName : ID ('.' ID)? ;
 
@@ -736,7 +739,7 @@ scope { DvarTemp dvar_;
 
 dvarID : i=ID { $dvar_g::dvar_.id=$i.text; $dvar_g::id_=$i.text; };
 
-dvar_group_old: DEFINE ('[' LOCAL ']')? dvar ;
+dvar_group_old: DEFINE (local_deprecated)? dvar ;
 dvar_group_new: DVAR    dvar ;
 
 dvar: (dvarArray|dvarTimeArray)? dvarID '{' dvar_trunk '}'  ;
