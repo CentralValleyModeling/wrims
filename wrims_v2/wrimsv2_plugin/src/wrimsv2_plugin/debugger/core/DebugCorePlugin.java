@@ -112,7 +112,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	
 	public static String[] studyDvFileNames={"","","",""};
 	public static String[] studySvFileNames={"","","",""};
-	public static boolean[] selectedStudies={true, false, false, false};
+	public static boolean[] selectedStudies={false, false, false, false};
 	public static HecDss[] dvDss=new HecDss[4];
 	public static HecDss[] svDss=new HecDss[4];
 	
