@@ -97,6 +97,16 @@ public class TimeOperation {
 		}
 	}
 	
+	public static String createStartTime (String detailDate, String timestep){
+		String[] date=detailDate.split("-");
+		return createStartTime(Integer.parseInt(date[2]), Integer.parseInt(date[0]), Integer.parseInt(date[1]), timestep);
+	}
+	
+	public static String createEndTime (String detailDate, String timestep){
+		String[] date=detailDate.split("-");
+		return createEndTime(Integer.parseInt(date[2]), Integer.parseInt(date[0]), Integer.parseInt(date[1]), timestep);
+	}
+	
 	public static String createStartTime (int year, int month, int day, String timestep){
 		String monthStr=getMonthText(month);
 		if (timestep.equals("1MON")){

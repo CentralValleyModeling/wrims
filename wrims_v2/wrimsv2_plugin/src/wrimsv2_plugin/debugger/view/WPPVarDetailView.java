@@ -1,7 +1,13 @@
 package wrimsv2_plugin.debugger.view;
 
+import hec.heclib.dss.HecDss;
+import hec.io.DataContainer;
+import hec.io.TimeSeriesContainer;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -47,6 +53,8 @@ import wrimsv2_plugin.debugger.dialog.WPPTimeSeriesDialog;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.WPPValue;
 import wrimsv2_plugin.tools.DataProcess;
+import wrimsv2_plugin.tools.TimeOperation;
+import wrimsv2_plugin.tools.VariableProperty;
 
 public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 
@@ -59,6 +67,8 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 	
 	private Text name;
 	private Table table;
+	
+	private Map<Integer, Integer> altMap=new HashMap<Integer, Integer>();
 	
 	private ISelectionListener listener=new ISelectionListener(){
 		@Override
@@ -252,10 +262,11 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 		    tc[2].setWidth(150);
 		}
 
-	    int iAlt=0;
+	    altMap=new HashMap<Integer, Integer>();
+	    int colIndex=3;
 	    for (int i=0; i<4; i++){
 	    	if (selectedStudies[i]){
-	    		int colIndex=3+iAlt;
+	    		altMap.put(colIndex, i);
 	    		tc[colIndex] = new TableColumn(table, SWT.CENTER);
 	    		tc[colIndex].setText("Alt"+(i+1));
 	    		if (width>10){
@@ -263,7 +274,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 	    		}else{
 	    			tc[colIndex].setWidth(150);
 	    		}
-		    	iAlt=iAlt+1;
+		    	colIndex=colIndex+1;
 	    	}
 	    }
 	    
@@ -273,6 +284,7 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 	    	TableItem item = new TableItem(table, SWT.NONE);
 	    	item.setText(itemStrings);
 	    }
+	    fillAltTimeseries(table, variableNames.get(0), timeseries);
 	    table.redraw();
 	    final TableCursor cursor = new TableCursor(table, SWT.NONE);
 	    cursor.addSelectionListener(new SelectionAdapter(){
@@ -304,6 +316,64 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 			}
 	    	
 	    });
+	}
+	
+	public void fillAltTimeseries(Table table, String vn, ArrayList<String[]> timeseries){
+		String partE;
+		String partC;
+		VariableProperty property;
+		if (DebugCorePlugin.variableProperty.containsKey(vn)){
+			property=DebugCorePlugin.variableProperty.get(vn);
+			partC=property.getPartC();
+			partE=property.getPartE();
+		}else if (DebugCorePlugin.watchProperty.containsKey(vn)){
+			property=DebugCorePlugin.watchProperty.get(vn);
+			partC=property.getPartC();
+			partE=property.getPartE();
+		}else{
+			return;
+		}
+		
+		String aPart = DebugCorePlugin.aPart;
+		String svFPart = DebugCorePlugin.svFPart;
+		
+		String[] startEntry=timeseries.get(0);
+		String[] endEntry=timeseries.get(timeseries.size()-1);
+		if (startEntry.length>=2){
+			String startTime=TimeOperation.createStartTime(startEntry[1], partE);
+			String endTime=TimeOperation.createEndTime(endEntry[1], partE);
+		
+			String pn="/"+aPart+"/"+vn+"/"+partC+"//"+partE+"/"+svFPart+"/";
+			HecDss[] dvDss = DebugCorePlugin.dvDss;
+			HecDss[] svDss = DebugCorePlugin.svDss;
+			for (int colIndex=3; colIndex<table.getColumnCount(); colIndex++){
+				int studyIndex=altMap.get(colIndex);
+				try {
+					HecDss dss = dvDss[studyIndex];
+					DataContainer dc;
+					dc = dss.get(pn, startTime, endTime);
+					double[] values=((TimeSeriesContainer)dc).values;
+					if (values.length==0){
+						dss=svDss[studyIndex];
+						dc = dss.get(pn, startTime, endTime);
+						values=((TimeSeriesContainer)dc).values;
+						if (values.length>0){
+							fillAltValues(table, values, colIndex);
+						}
+					}else{
+						fillAltValues(table, values, colIndex);
+					}
+				} catch (Exception e) {
+					WPPException.handleException(e);
+				}
+			}
+		}
+	}
+	
+	public void fillAltValues(Table table, double[] values, int colIndex){
+		for (int i=0; i<values.length; i++){
+			table.getItem(i).setText(colIndex, DebugCorePlugin.df.format(values[i]));
+		}
 	}
 	
 	public void displayFutureValues(){
