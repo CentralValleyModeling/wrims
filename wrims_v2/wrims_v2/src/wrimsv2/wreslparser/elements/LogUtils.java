@@ -259,8 +259,8 @@ public class LogUtils {
 		
 		 StudyParser.total_warnings++;
 
-		if (ControlData.showWreslLog) System.out.println("Warning: "+msg);
-		 _logFile.println("Warning: "+msg);
+		if (ControlData.showWreslLog) System.out.println("# Warning: "+msg);
+		 _logFile.println("# Warning: "+msg);
 		 _logFile.flush();
 		
 	}
