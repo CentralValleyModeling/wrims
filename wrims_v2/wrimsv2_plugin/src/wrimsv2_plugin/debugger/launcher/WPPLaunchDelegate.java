@@ -11,13 +11,16 @@
  *******************************************************************************/
 package wrimsv2_plugin.debugger.launcher;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -41,6 +44,24 @@ import javax.jws.WebParam.Mode;
 
 
 public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
+	private String solverName;
+	private String externalPath;
+	private String gwDataFolder;
+	private String mainFile;
+	private String svarFile;
+	private String initFile;
+	private String dvarFile;
+	private String svFPart;
+	private String initFPart;
+	private String aPart;
+	private String timeStep;
+	private int startYear;
+	private int startMonth;
+	private int startDay;
+	private int endYear;
+	private int endMonth;
+	private int endDay;
+
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ILaunchConfigurationDelegate#launch(org.eclipse.debug.core.ILaunchConfiguration, java.lang.String, org.eclipse.debug.core.ILaunch, org.eclipse.core.runtime.IProgressMonitor)
 	 */
@@ -89,51 +110,49 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			String description=null;
 			description = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DESCRIPTION, (String)null);
 				
-			String mainFile = null;
+			mainFile = null;
 			mainFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM, (String)null);
 			
-			String dvarFile = null;
+			dvarFile = null;
 			dvarFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE, (String)null);
 			DebugCorePlugin.savedDvFileName=dvarFile;
 			
-			String svarFile = null;
+			svarFile = null;
 			svarFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVARFILE, (String)null);
 			DebugCorePlugin.savedSvFileName=svarFile;
 			
-			String initFile = null;
+			initFile = null;
 			initFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFILE, (String)null);
 			
-			String gwDataFolder = null;
+			gwDataFolder = null;
 			gwDataFolder = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_GWDATAFOLDER, (String)null)+File.separator;
 			
-			String aPart = null;
+			aPart = null;
 			aPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_APART, (String)null);
 			DebugCorePlugin.aPart=aPart;
 			
-			String svFPart = null;
+			svFPart = null;
 			svFPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVFPART, (String)null);
 			DebugCorePlugin.svFPart=svFPart;
 			
-			String initFPart = null;
+			initFPart = null;
 			initFPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFPART, (String)null);
 			DebugCorePlugin.initFPart=initFPart;
 			
-			String timeStep = null;
+			timeStep = null;
 			timeStep = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_TIMESTEP, (String)null);
 			DebugCorePlugin.timeStep=timeStep;
 			
-			int startYear = Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTYEAR, (String)null));
-			int startMonth = TimeOperation.monthValue(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTMONTH, (String)null));
+			startYear = Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTYEAR, (String)null));
+			startMonth = TimeOperation.monthValue(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTMONTH, (String)null));
 			DebugCorePlugin.startYear=startYear;
 			DebugCorePlugin.startMonth=startMonth;
 			
-			int endYear = Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDYEAR, (String)null));
-			int endMonth = TimeOperation.monthValue(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDMONTH, (String)null));
+			endYear = Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDYEAR, (String)null));
+			endMonth = TimeOperation.monthValue(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDMONTH, (String)null));
 			DebugCorePlugin.endYear=endYear;
 			DebugCorePlugin.endMonth=endMonth;
 			
-			int startDay;
-			int endDay;
 			if (timeStep.equals("1MON")){
 				startDay=TimeOperation.numberOfDays(startMonth, startYear);
 				endDay=TimeOperation.numberOfDays(endMonth, endYear);
@@ -146,63 +165,19 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 					
 			int index = mainFile.lastIndexOf(File.separator);
 			String mainDirectory = mainFile.substring(0, index + 1);
-			String externalPath = mainDirectory + "External";
+			externalPath = mainDirectory + "External";
 			
 			String engineFileFullPath = "WRIMSv2_Engine.bat";
-			String solverName="XA";
-			if (DebugCorePlugin.solver.equals("XA")){
-				if (DebugCorePlugin.log.equals("None")){
-					solverName="XA";
-				}else if (DebugCorePlugin.log.equals("Log")){
-					solverName="XALOG";
-				}
-			}
+			solverName="XA";
 			try {
 				FileWriter debugFile = new FileWriter(engineFileFullPath);
 				PrintWriter out = new PrintWriter(debugFile);
-				out.println("@echo off");
-				out.println();
-				//out.println("set Java_Bin=D:\\cvwrsm\\trunk\\3rd_party\\jrockit-jre1.6.0_26-R28.1.4\\bin\\");
-				out.println("set path=" + externalPath + ";"+"lib;%path%");
-				out.println();
-				if (mode.equals("debug")){
-					out.println("jre\\bin\\java -Xmx1600m -Xss1024K -Duser.timezone=UTC -Djava.library.path=\"" + externalPath + ";lib\" -cp \""+externalPath+";"+"lib\\external"+";lib\\WRIMSv2.jar;lib\\commons-io-2.1.jar;lib\\XAOptimizer.jar;lib\\lpsolve55j.jar;lib\\gurobi.jar;lib\\heclib.jar;lib\\jnios.jar;lib\\jpy.jar;lib\\misc.jar;lib\\pd.jar;lib\\vista.jar;\" wrimsv2.components.DebugInterface "+requestPort+" "+eventPort+" "
-						+ gwDataFolder+" "
-						+ mainFile + " "
-						+ svarFile + " "
-						+ initFile + " " 
-						+ dvarFile + " " 
-						+ svFPart + " "
-						+ initFPart + " "
-						+ aPart + " "
-						+ timeStep + " " 
-						+ startYear + " " 
-						+ startMonth + " "
-						+ startDay + " " 
-						+ endYear + " "
-						+ endMonth + " " 
-						+ endDay + " "
-						+ solverName+" csv");
-				}else{
-					out.println("jre\\bin\\java -Xmx1600m -Xss1024K -Duser.timezone=UTC -Djava.library.path=\"" + externalPath + ";lib\" -cp \""+externalPath+";"+"lib\\external;lib\\WRIMSv2.jar;lib\\commons-io-2.1.jar;lib\\XAOptimizer.jar;lib\\lpsolve55j.jar;lib\\gurobi.jar;lib\\heclib.jar;lib\\jnios.jar;lib\\jpy.jar;lib\\misc.jar;lib\\pd.jar;lib\\vista.jar;\" wrimsv2.components.ControllerSG "
-							+ gwDataFolder+" "
-							+ mainFile + " "
-							+ svarFile + " "
-							+ initFile + " " 
-							+ dvarFile + " " 
-							+ svFPart + " "
-							+ initFPart + " "
-							+ aPart + " "
-							+ timeStep + " " 
-							+ startYear + " " 
-							+ startMonth + " "
-							+ startDay + " " 
-							+ endYear + " "
-							+ endMonth + " " 
-							+ endDay + " "
-							+ solverName+" csv");
+				if (DebugCorePlugin.solver.equals("XA")){
+					generateXABatch(out, mode, requestPort, eventPort);
+				}else if (DebugCorePlugin.solver.equals("LPSolve")){
+					String configFilePath = generateConfigFile();
+					generateLPSolveBatch(out, mode, requestPort, eventPort, configFilePath);
 				}
-				out.close();
 			}catch (IOException e) {
 				WPPException.handleException(e);
 			}
@@ -210,7 +185,168 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			WPPException.handleException(e);
 		}
 	}
+	
+	public void generateXABatch(PrintWriter out, String mode, int requestPort, int eventPort){
+		if (DebugCorePlugin.log.equals("None")){
+			solverName="XA";
+		}else if (DebugCorePlugin.log.equals("Log")){
+			solverName="XALOG";
+		}
+		out.println("@echo off");
+		out.println();
+		out.println("set path=" + externalPath + ";"+"lib;%path%");
+		out.println();
+		if (mode.equals("debug")){
+			out.println("jre\\bin\\java -Xmx1600m -Xss1024K -Duser.timezone=UTC -Djava.library.path=\"" + externalPath + ";lib\" -cp \""+externalPath+";"+"lib\\external"+";lib\\WRIMSv2.jar;lib\\commons-io-2.1.jar;lib\\XAOptimizer.jar;lib\\lpsolve55j.jar;lib\\gurobi.jar;lib\\heclib.jar;lib\\jnios.jar;lib\\jpy.jar;lib\\misc.jar;lib\\pd.jar;lib\\vista.jar;\" wrimsv2.components.DebugInterface "+requestPort+" "+eventPort+" "
+				+ gwDataFolder+" "
+				+ mainFile + " "
+				+ svarFile + " "
+				+ initFile + " " 
+				+ dvarFile + " " 
+				+ svFPart + " "
+				+ initFPart + " "
+				+ aPart + " "
+				+ timeStep + " " 
+				+ startYear + " " 
+				+ startMonth + " "
+				+ startDay + " " 
+				+ endYear + " "
+				+ endMonth + " " 
+				+ endDay + " "
+				+ solverName+" csv");
+		}else{
+			out.println("jre\\bin\\java -Xmx1600m -Xss1024K -Duser.timezone=UTC -Djava.library.path=\"" + externalPath + ";lib\" -cp \""+externalPath+";"+"lib\\external;lib\\WRIMSv2.jar;lib\\commons-io-2.1.jar;lib\\XAOptimizer.jar;lib\\lpsolve55j.jar;lib\\gurobi.jar;lib\\heclib.jar;lib\\jnios.jar;lib\\jpy.jar;lib\\misc.jar;lib\\pd.jar;lib\\vista.jar;\" wrimsv2.components.ControllerSG "
+					+ gwDataFolder+" "
+					+ mainFile + " "
+					+ svarFile + " "
+					+ initFile + " " 
+					+ dvarFile + " " 
+					+ svFPart + " "
+					+ initFPart + " "
+					+ aPart + " "
+					+ timeStep + " " 
+					+ startYear + " " 
+					+ startMonth + " "
+					+ startDay + " " 
+					+ endYear + " "
+					+ endMonth + " " 
+					+ endDay + " "
+					+ solverName+" csv");
+		}
+		out.close();
+	}
+	
+	public void generateLPSolveBatch(PrintWriter out, String mode, int requestPort, int eventPort, String configFilePath){
+		out.println("@echo off");
+		out.println();
+		out.println("set path=" + externalPath + ";"+"lib;%path%");
+		out.println();
+		if (mode.equals("debug")){
+			out.println("jre\\bin\\java -Xmx1600m -Xss1024K -Duser.timezone=UTC -Djava.library.path=\"" + externalPath + ";lib\" -cp \""+externalPath+";"+"lib\\external"+";lib\\WRIMSv2.jar;lib\\commons-io-2.1.jar;lib\\XAOptimizer.jar;lib\\lpsolve55j.jar;lib\\gurobi.jar;lib\\heclib.jar;lib\\jnios.jar;lib\\jpy.jar;lib\\misc.jar;lib\\pd.jar;lib\\vista.jar;\" wrimsv2.components.DebugInterface "+requestPort+" "+eventPort+" "+"-config="+configFilePath);
+		}else{
+			out.println("jre\\bin\\java -Xmx1600m -Xss1024K -Duser.timezone=UTC -Djava.library.path=\"" + externalPath + ";lib\" -cp \""+externalPath+";"+"lib\\external;lib\\WRIMSv2.jar;lib\\commons-io-2.1.jar;lib\\XAOptimizer.jar;lib\\lpsolve55j.jar;lib\\gurobi.jar;lib\\heclib.jar;lib\\jnios.jar;lib\\jpy.jar;lib\\misc.jar;lib\\pd.jar;lib\\vista.jar;\" wrimsv2.components.ControllerBatch "+"-config="+configFilePath);
+		}
+		out.close();
+	}
+	
+	String generateConfigFile(){
 		
+		Map<String, String> configMap = new HashMap<String, String>();
+		String configFilePath = null;
+		
+		try {				
+			
+			configMap.put("MainFile".toLowerCase(), mainFile);
+			configMap.put("DvarFile".toLowerCase(),   dvarFile);
+			configMap.put("SvarFile".toLowerCase(),   svarFile);
+			configMap.put("SvarAPart".toLowerCase(),  aPart);
+			configMap.put("SvarFPart".toLowerCase(),  svFPart);
+			configMap.put("InitFile".toLowerCase(),   initFile);
+			configMap.put("InitFPart".toLowerCase(),  initFPart);
+			configMap.put("TimeStep".toLowerCase(),   timeStep);
+			configMap.put("StartYear".toLowerCase(),  String.valueOf(startYear));
+			configMap.put("StopYear".toLowerCase(),   String.valueOf(endYear));
+			configMap.put("StartMonth".toLowerCase(), String.valueOf(startMonth));
+			configMap.put("StopMonth".toLowerCase(),  String.valueOf(endMonth));
+			
+			if (gwDataFolder.length()>0) {
+				configMap.put("groundwaterdir".toLowerCase(), gwDataFolder);
+			} else {
+				configMap.put("groundwaterdir".toLowerCase(), ".");
+			}
+			
+			configMap.put("ShowWreslLog".toLowerCase(), "No");			
+			configMap.put("Solver".toLowerCase(), "LpSolve");			
+			
+			if (DebugCorePlugin.solver.equals("LPSolve")){
+				configMap.put("IlpLogFormat".toLowerCase(), "LpSolve");
+			}
+				
+			if (DebugCorePlugin.log.equals("Log")){
+				configMap.put("IlpLog".toLowerCase(), "Yes");
+			} else {
+				configMap.put("IlpLog".toLowerCase(), "No");
+			}
+			configMap.put("IlpLogVarValue".toLowerCase(), "Yes");
+	
+			String mainFileAbsPath = configMap.get("MainFile".toLowerCase());
+			
+			String studyDir = new File(mainFileAbsPath).getParentFile().getParentFile().getAbsolutePath();
+			String configName = "__study.config";
+			File f = new File(studyDir, configName);
+			File dir = new File(f.getParent());
+			dir.mkdirs();
+			f.createNewFile();
+			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f)));
+			 
+			out.println("##################################################################################");
+			out.println("# Command line Example:");
+			out.println("# C:\\wrimsv2_SG\\bin\\runConfig_limitedXA.bat D:\\example\\EXISTING_BO.config");
+			out.println("# ");	
+			out.println("# Note:");			
+			out.println("# 1. This config file and the RUN directory must be placed in the same directory.");
+			out.println("# 2. Use relative path to increase the portability.");
+			out.println("#    For example, use RUN\\main.wresl for MainFile and DSS\\INIT.dss for InitFile");
+			out.println("##################################################################################");	
+			out.println("");
+			out.println("");
+			
+			out.println("MainFile           "+configMap.get("MainFile".toLowerCase()));
+			out.println("Solver             "+configMap.get("solver".toLowerCase()));
+			out.println("DvarFile           "+configMap.get("DvarFile".toLowerCase()));
+			out.println("SvarFile           "+configMap.get("SvarFile".toLowerCase()));
+			out.println("SvarAPart          "+configMap.get("SvarAPart".toLowerCase()));
+			out.println("SvarFPart          "+configMap.get("SvarFPart".toLowerCase()));
+			out.println("InitFile           "+configMap.get("InitFile".toLowerCase()));
+			out.println("InitFPart          "+configMap.get("InitFPart".toLowerCase()));
+			out.println("TimeStep           "+configMap.get("TimeStep".toLowerCase()));
+			out.println("StartYear          "+configMap.get("StartYear".toLowerCase()));
+			out.println("StartMonth         "+configMap.get("StartMonth".toLowerCase()));
+			out.println("StopYear           "+configMap.get("StopYear".toLowerCase()));
+			out.println("StopMonth          "+configMap.get("StopMonth".toLowerCase()));
+			out.println("IlpLog             "+configMap.get("IlpLog".toLowerCase()));
+			out.println("IlpLogFormat       "+configMap.get("IlpLogFormat".toLowerCase()));
+			out.println("IlpLogVarValue     "+configMap.get("IlpLogVarValue".toLowerCase()));
+			
+			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
+				
+				out.println("LpSolveConfigFile         callite.lpsolve");
+				out.println("LpSolveNumberOfRetries    2");				
+				
+			}
+			
+			out.close();
+		
+			configFilePath= new File(studyDir, configName).getAbsolutePath();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return configFilePath;
+			
+	}
+	
 	/**
 	 * Throws an exception with a new status containing the given
 	 * message and optional exception.

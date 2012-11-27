@@ -63,9 +63,12 @@ public class WPPSolverOptionDialog extends PopupDialog {
 		
 		final Combo solverCombo = new Combo(dialogArea, SWT.BORDER);
 		solverCombo.add("XA");
+		solverCombo.add("LPSolve");
 		if (DebugCorePlugin.solver.equals("XA")){
 			solverCombo.select(0);
-		}	
+		}else if (DebugCorePlugin.solver.equals("LPSolve")){
+			solverCombo.select(1);
+		}
 		if (DebugCorePlugin.isDebugging){
 			label1.setEnabled(false);
 			solverCombo.setEnabled(false);
