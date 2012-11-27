@@ -34,6 +34,7 @@ import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.commondata.wresldata.WeightElement;
+import wrimsv2.config.ConfigUtils;
 import wrimsv2.debug.ReProcessExternal;
 import wrimsv2.evaluator.AssignPastCycleVariable;
 import wrimsv2.evaluator.DataTimeSeries;
@@ -84,7 +85,7 @@ public class ControllerDebug extends Thread {
 	
 	@Override
 	public void run() {
-		setControlData(args);
+		processArgs(args);
 		generateStudyFile();
 		try {
 			StudyDataSet sds = parse();
@@ -101,28 +102,14 @@ public class ControllerDebug extends Thread {
 		di.isDebugging=false;
 	}
 	
-	public void setControlData(){
-		FilePaths.groundwaterDir="D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\CVGroundwater\\Data\\";
-		FilePaths.setMainFilePaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\CONV\\Run\\mainCONV_30.wresl");
-		FilePaths.setSvarDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06_SV.dss");
-        FilePaths.setInitDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\common\\DSS\\CalSim30_06Init.dss");   
-        FilePaths.setDvarDssPaths("D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\CONV\\DSS\\TestWRIMSV2DV.dss");
-		ControlData cd=new ControlData();
-		cd.svDvPartF="CALSIM30_06";
-		cd.initPartF="CALSIM30_06";
-		cd.partA = "CALSIM";
-		cd.defaultTimeStep="1MON";
-		cd.startYear=1921;
-		cd.startMonth=10;
-		cd.startDay=31;
-		cd.endYear=2003;
-		cd.endMonth=9;
-		cd.endDay=30;
-        cd.solverName="XA";
-        FilePaths.csvFolderName="csv";
-		cd.currYear=cd.startYear;
-		cd.currMonth=cd.startMonth;
-		cd.currDay=cd.startDay;    
+	public void processArgs(String[] args){
+		
+		if(args[0].startsWith("-")) {
+			ConfigUtils.loadArgs(args);
+		} else {		
+			setControlData(args);
+		}	
+		
 	}
 	
 	public void setControlData(String[] args){
@@ -213,7 +200,7 @@ public class ControllerDebug extends Thread {
 			runModelXA(sds);
 		}else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
 			runModelGurobi(sds);
-		}else if (ControlData.solverName.toLowerCase().contains("ilp")){
+		}else if (ControlData.solverName.equalsIgnoreCase("LPSolve")){
 			runModelILP(sds);
 		}
 		
