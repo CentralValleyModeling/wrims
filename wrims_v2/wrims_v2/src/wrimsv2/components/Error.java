@@ -210,7 +210,7 @@ public class Error {
 		String modelName = modelList.get(ControlData.currCycleIndex);
 		int cycleIndex = ControlData.currCycleIndex + 1 ;
 		
-		return ControlData.currYear+"-"+ControlData.currMonth+"-"+ControlData.currDay+ " cycle "+cycleIndex+ " ("+modelName +")";
+		return ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+ " cycle "+cycleIndex+ " ("+modelName +")";
 
 	}
 }
