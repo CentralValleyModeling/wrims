@@ -140,21 +140,21 @@ public class Error {
 	
 	public static void addEvaluationError(String error){
 		if (ControlData.currEvalTypeIndex == 0){
-			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in svar definition of Cycle "+ControlData.currCycleIndex+": "+error);
+			error_evaluation.add(getCurrentDateCycleModel()+", "+ControlData.currEvalName+" in svar definition: "+error);
 		}else if (ControlData.currEvalTypeIndex == 1){
-			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in dvar definition of Cycle "+ControlData.currCycleIndex+": "+error);
+			error_evaluation.add(getCurrentDateCycleModel()+", "+ControlData.currEvalName+" in dvar definition: "+error);
 		}else if (ControlData.currEvalTypeIndex == 2){
-			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in alias definition of Cycle "+ControlData.currCycleIndex+": "+error);
+			error_evaluation.add(getCurrentDateCycleModel()+", "+ControlData.currEvalName+" in alias definition: "+error);
 		}else if (ControlData.currEvalTypeIndex == 3){
-			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in constraint definition of Cycle "+ControlData.currCycleIndex+": "+error);
+			error_evaluation.add(getCurrentDateCycleModel()+", "+ControlData.currEvalName+" in constraint definition: "+error);
 		}else if (ControlData.currEvalTypeIndex == 4){
-			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in external function definition of Cycle "+ControlData.currCycleIndex+": "+error);
+			error_evaluation.add(getCurrentDateCycleModel()+", "+ControlData.currEvalName+" in external function definition: "+error);
 		}else if (ControlData.currEvalTypeIndex == 5){
-			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in timeseries definition of Cycle "+ControlData.currCycleIndex+": "+error);
+			error_evaluation.add(getCurrentDateCycleModel()+", "+ControlData.currEvalName+" in timeseries definition: "+error);
 		}else if (ControlData.currEvalTypeIndex==6){
 			error_evaluation.add(ControlData.currEvalName+" in timeseries reading: "+error);
 		}else if (ControlData.currEvalTypeIndex==7){
-			error_evaluation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+", "+ControlData.currEvalName+" in weight definition of Cycle "+ControlData.currCycleIndex+": "+error);
+			error_evaluation.add(getCurrentDateCycleModel()+", "+ControlData.currEvalName+" in weight definition: "+error);
 		}else if (ControlData.currEvalTypeIndex==8){
 			error_evaluation.add("Initial variable "+ControlData.currEvalName+": "+error);
 		}
@@ -162,7 +162,7 @@ public class Error {
 	}
 	
 	public static void addSolvingError(String error){
-		error_solving.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+" of Cycle "+ControlData.currCycleIndex+": "+error);
+		error_solving.add(getCurrentDateCycleModel()+": "+error);
 		System.out.println("Error-"+error);
 	}
 	
@@ -180,7 +180,7 @@ public class Error {
 		System.out.println("# Error: "+error);
 	}
 	public static void addDeviationError(String error){
-		error_deviation.add("On "+ControlData.currMonth+"/"+ControlData.currDay+"/"+ControlData.currYear+" of Cycle "+ControlData.currCycleIndex+": "+error);
+		error_deviation.add(getCurrentDateCycleModel()+": "+error);
 		System.out.println("# Error: "+error);
 	}
 	
@@ -202,6 +202,16 @@ public class Error {
 		Error.error_config = new ArrayList<String>();
 		Error.error_initial = new ArrayList<String>();
 		Error.error_deviation = new ArrayList<String>();
+	}
+
+	public static String getCurrentDateCycleModel(){
+		
+		ArrayList<String> modelList=ControlData.currStudyDataSet.getModelList();		
+		String modelName = modelList.get(ControlData.currCycleIndex);
+		int cycleIndex = ControlData.currCycleIndex + 1 ;
+		
+		return ControlData.currYear+"-"+ControlData.currMonth+"-"+ControlData.currDay+ " cycle "+cycleIndex+ " ("+modelName +")";
+
 	}
 }
 
