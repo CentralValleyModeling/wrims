@@ -47,12 +47,12 @@
 				<attribute name="Main-Class" value="wrimsv2.components.Controller"/>
 				<attribute name="Class-Path" value="."/>
 			</manifest>
-			<fileset dir="D:/cvwrsm/trunk/wrims_v2/wrims_v2/bin">
+			<fileset dir="bin">
 				<include name="wrimsv2/**/*.class"/>
 				<include name="version.xml"/>
 				<exclude name="**/*.g"/>
 			</fileset>
-			<zipfileset excludes="META-INF/*.SF" src="D:/cvwrsm/trunk/wrims_v2/wrims_v2/src/wrimsv2/lib/antlr-runtime-3.2.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="src/wrimsv2/lib/antlr-runtime-3.2.jar"/>
 		</jar>
 
 		<zip destfile="zip_out/WRIMSv2.zip"  basedir="jar_out" />
