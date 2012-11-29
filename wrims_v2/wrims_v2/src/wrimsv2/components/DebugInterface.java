@@ -218,7 +218,7 @@ public class DebugInterface {
 					sendRequest("");
 				}else{
 					String vGNameString=request.substring(index+1);
-					dataString=getWatchString(vGNameString);
+					dataString=getWatch(vGNameString);
 					sendRequest(dataString);
 				}
 			}catch (IOException e) {
@@ -566,7 +566,6 @@ public class DebugInterface {
 			Collections.sort(sortedGoalList);
 			for (int i=0; i<sortedGoalList.size(); i++){
 				double lhs=0;
-				boolean noSlackSurplus=true;
 				String goalName=sortedGoalList.get(i);
 				if (gMap.containsKey(goalName)){
 					goalString=goalString+goalName+":";
@@ -600,15 +599,14 @@ public class DebugInterface {
 									goalString=goalString+df.format(value)+variable;
 								}
 							}
-							IntDouble id = dvMap.get(variable).getData();
-							if (id==null){
-								hasData=false;
-							}else{
-								double variableValue=id.getData().doubleValue();
-								if (variableValue != 0.0 && (variable.startsWith("surplus__") || variable.startsWith("slack__"))){
-									noSlackSurplus=false;
+							if (!(variable.startsWith("surplus__") || variable.startsWith("slack__"))){
+								IntDouble id = dvMap.get(variable).getData();
+								if (id==null){
+									hasData=false;
+								}else{
+									double variableValue=id.getData().doubleValue();
+									lhs=lhs+value1*variableValue;
 								}
-								lhs=lhs+value1*variableValue;
 							}
 						}
 						Number value=ee.getValue().getData();
@@ -621,7 +619,7 @@ public class DebugInterface {
 							goalString=goalString+ec.getSign()+"0#";
 						}
 						lhs=lhs+value1;
-						if (Math.abs(lhs)<=0.00001 && hasData && noSlackSurplus){
+						if (Math.abs(lhs)<=0.00001 && hasData){
 							controlGoals.add(goalName);
 						}
 					}
@@ -797,7 +795,7 @@ public class DebugInterface {
 		return goalString;
 	}
 	
-	public String getWatchString(String vGNameString){
+	public String getWatch(String vGNameString){
 		String dataString="";
 		String modelName=ControlData.currStudyDataSet.getModelList().get(ControlData.currCycleIndex);
 		ModelDataSet mds=ControlData.currStudyDataSet.getModelDataSetMap().get(modelName);
@@ -850,7 +848,6 @@ public class DebugInterface {
 				}
 			}else if (gMap.containsKey(vGName)){
 				double lhs=0;
-				boolean noSlackSurplus=true;
 				dataString=dataString+vGName+":";
 				EvalConstraint ec=gMap.get(vGName);
 				if (ec!=null){
@@ -882,15 +879,14 @@ public class DebugInterface {
 								dataString=dataString+df.format(value)+variable;
 							}
 						}
-						IntDouble id = dvMap.get(variable).getData();
-						if (id==null){
-							hasData=false;
-						}else{
-							double variableValue=id.getData().doubleValue();
-							if (variableValue != 0.0 && (variable.startsWith("surplus__") || variable.startsWith("slack__"))){
-								noSlackSurplus=false;
+						if (!(variable.startsWith("surplus__") || variable.startsWith("slack__"))){
+							IntDouble id = dvMap.get(variable).getData();
+							if (id==null){
+								hasData=false;
+							}else{
+								double variableValue=id.getData().doubleValue();
+								lhs=lhs+value1*variableValue;
 							}
-							lhs=lhs+value1*variableValue;
 						}
 					}
 					Number value=ee.getValue().getData();
@@ -903,7 +899,7 @@ public class DebugInterface {
 						dataString=dataString+ec.getSign()+"0#";
 					}
 					lhs=lhs+value1;
-					if (Math.abs(lhs)<=0.00001 && hasData && noSlackSurplus){
+					if (Math.abs(lhs)<=0.00001 && hasData){
 						controlGoals.add(vGName);
 					}
 				}
@@ -936,7 +932,6 @@ public class DebugInterface {
 		Iterator ki=goalKeySet.iterator();
 		while (ki.hasNext()){
 			double lhs=0.0;
-			boolean noSlackSurplus=true;
 			String goalName=(String)ki.next();
 			EvalConstraint ec=gMap.get(goalName);
 			if (ec!=null){
@@ -948,20 +943,19 @@ public class DebugInterface {
 				while (mi.hasNext()){
 					String variable=mi.next();
 					double value1=multiplier.get(variable).getData().doubleValue();
-					IntDouble id = dvMap.get(variable).getData();
-					if (id ==null){
-						hasData=false;
-					}else{
-						double variableValue=id.getData().doubleValue();
-						if (variableValue != 0.0 && (variable.startsWith("surplus__") || variable.startsWith("slack__"))){
-							noSlackSurplus=false;
+					if (!(variable.startsWith("surplus__") || variable.startsWith("slack__"))){
+						IntDouble id = dvMap.get(variable).getData();
+						if (id ==null){
+							hasData=false;
+						}else{
+							double variableValue=id.getData().doubleValue();
+							lhs=lhs+variableValue*value1;
 						}
-						lhs=lhs+variableValue*value1;
 					}
 				}
 				double value1=ee.getValue().getData().doubleValue();
 				lhs=lhs+value1;
-				if (Math.abs(lhs)<=0.00001 && hasData && noSlackSurplus) goalNames=goalNames+goalName+":";
+				if (Math.abs(lhs)<=0.00001 && hasData) goalNames=goalNames+goalName+":";
 			}
 		}
 		if (goalNames.endsWith(":")) goalNames=goalNames.substring(0, goalNames.length()-1);
