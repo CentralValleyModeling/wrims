@@ -85,7 +85,7 @@ public class ControllerDebug extends Thread {
 	
 	@Override
 	public void run() {
-		processArgs(args);
+		ConfigUtils.loadArgs(args);
 		generateStudyFile();
 		try {
 			StudyDataSet sds = parse();
@@ -100,16 +100,6 @@ public class ControllerDebug extends Thread {
 			e.printStackTrace();
 		}
 		di.isDebugging=false;
-	}
-	
-	public void processArgs(String[] args){
-		
-		if(args[0].startsWith("-")) {
-			ConfigUtils.loadArgs(args);
-		} else {		
-			setControlData(args);
-		}	
-		
 	}
 	
 	public void setControlData(String[] args){

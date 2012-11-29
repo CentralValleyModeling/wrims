@@ -69,7 +69,16 @@ public class WPPSolverOptionDialog extends PopupDialog {
 		}else if (DebugCorePlugin.solver.equals("LPSolve")){
 			solverCombo.select(1);
 		}
-		if (DebugCorePlugin.isDebugging){
+		if (DebugCorePlugin.target==null){
+			label1.setEnabled(true);
+			solverCombo.setEnabled(true);
+		}else if (DebugCorePlugin.target.isTerminated()){
+			label1.setEnabled(true);
+			solverCombo.setEnabled(true);
+		}else if (DebugCorePlugin.target.isSuspended()){
+			label1.setEnabled(true);
+			solverCombo.setEnabled(true);
+		}else{
 			label1.setEnabled(false);
 			solverCombo.setEnabled(false);
 		}

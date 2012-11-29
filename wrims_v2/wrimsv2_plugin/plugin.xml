@@ -294,7 +294,9 @@
    </extension>
 <extension point="org.eclipse.ui.menus">
    <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar">
-     <toolbar id="wpp.toolbar">
+     <toolbar
+           id="wpp.toolbar"
+           label="WRIMS2Debug">
        <control
             class="wrimsv2_plugin.debugger.toolbaritem.DebugSet"
             id="wpp.debugset">

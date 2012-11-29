@@ -45,6 +45,7 @@ import wrimsv2.evaluator.PreEvaluator;
 import wrimsv2.evaluator.TableSeries;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.ValueEvaluation;
+import wrimsv2.ilp.ILP;
 import wrimsv2.solver.SetXALog;
 import wrimsv2.wreslparser.elements.FileParser;
 import wrimsv2.wreslparser.elements.SimulationDataSet;
@@ -1174,6 +1175,15 @@ public class DebugInterface {
 			}else if (requestParts[2].equals("Log")){
 				SetXALog.enableXALog();
 				ControlData.solverName="XALOG";
+			}
+		}else if(requestParts[1].equals("LPSolve")){
+			ControlData.solverName="LPSolve";
+			if (requestParts[2].equals("None")){
+				ILP.loggingLpSolve=false;
+				ILP.loggingVariableValue=false;
+			}else if (requestParts[2].equals("Log")){
+				ILP.loggingLpSolve=true;
+				ILP.loggingVariableValue=true;
 			}
 		}
 	}

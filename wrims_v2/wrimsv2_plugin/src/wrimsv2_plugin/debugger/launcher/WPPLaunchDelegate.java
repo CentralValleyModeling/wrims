@@ -44,7 +44,6 @@ import javax.jws.WebParam.Mode;
 
 
 public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
-	private String solverName;
 	private String externalPath;
 	private String gwDataFolder;
 	private String mainFile;
@@ -168,16 +167,11 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			externalPath = mainDirectory + "External";
 			
 			String engineFileFullPath = "WRIMSv2_Engine.bat";
-			solverName="XA";
 			try {
+				String configFilePath = generateConfigFile();
 				FileWriter debugFile = new FileWriter(engineFileFullPath);
 				PrintWriter out = new PrintWriter(debugFile);
-				if (DebugCorePlugin.solver.equals("XA")){
-					generateXABatch(out, mode, requestPort, eventPort);
-				}else if (DebugCorePlugin.solver.equals("LPSolve")){
-					String configFilePath = generateConfigFile();
-					generateLPSolveBatch(out, mode, requestPort, eventPort, configFilePath);
-				}
+				generateBatch(out, mode, requestPort, eventPort, configFilePath);
 			}catch (IOException e) {
 				WPPException.handleException(e);
 			}
@@ -187,6 +181,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	}
 	
 	public void generateXABatch(PrintWriter out, String mode, int requestPort, int eventPort){
+		String solverName="XA";
 		if (DebugCorePlugin.log.equals("None")){
 			solverName="XA";
 		}else if (DebugCorePlugin.log.equals("Log")){
@@ -236,7 +231,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 		out.close();
 	}
 	
-	public void generateLPSolveBatch(PrintWriter out, String mode, int requestPort, int eventPort, String configFilePath){
+	public void generateBatch(PrintWriter out, String mode, int requestPort, int eventPort, String configFilePath){
 		out.println("@echo off");
 		out.println();
 		out.println("set path=" + externalPath + ";"+"lib;%path%");
@@ -276,7 +271,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			}
 			
 			configMap.put("ShowWreslLog".toLowerCase(), "No");			
-			configMap.put("Solver".toLowerCase(), "LpSolve");			
+			configMap.put("Solver".toLowerCase(), DebugCorePlugin.solver);			
 			
 			if (DebugCorePlugin.solver.equals("LPSolve")){
 				configMap.put("IlpLogFormat".toLowerCase(), "LpSolve");
