@@ -238,6 +238,7 @@ scope { IfIncItemGroup incg_;
        $if_inc_items::incg_.id = "__item__"+Integer.toString($mt::m_.ifIncItemGroupIDList.size());
        $id = $if_inc_items::incg_.id;
        $ifIncItemGroupObj = $if_inc_items::incg_;
+       dependants = new LinkedHashSet<String>();
       // $incg_.id = "__incfilegroup__"+Integer.toString($mt::m_.incFileGroupIDList.size()); 
 
        }
