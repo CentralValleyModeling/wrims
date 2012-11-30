@@ -1,4 +1,5 @@
 
+! initial block can only be defined at the begining of the main wresl file.
 initial {
 	const A { 100 }
 	svar  B { value A - 5 }
