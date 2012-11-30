@@ -31,7 +31,8 @@ model first {
 
 model second { 
 
-  define x { std kind 'FLOW-CHANNEL' units 'CFS'}
+  ! you can use dvar instead of define
+  dvar x { std kind 'FLOW-CHANNEL' units 'CFS'}
   define y { std kind 'FLOW-CHANNEL' units 'CFS'}
   include model globalModel
   

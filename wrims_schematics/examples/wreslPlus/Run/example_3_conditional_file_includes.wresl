@@ -12,7 +12,8 @@ sequence CYCLE1 {
 	
 model first { 
 
-	define X { std kind 'FLOW-CHANNEL' units 'CFS'}
+    ! you can use dvar instead of define
+	dvar X { std kind 'FLOW-CHANNEL' units 'CFS'}
 	define Y { std kind 'FLOW-CHANNEL' units 'CFS'}
 	define A { std kind 'FLOW-CHANNEL' units 'CFS'}
 	define B { std kind 'FLOW-CHANNEL' units 'CFS'}
