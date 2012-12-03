@@ -33,12 +33,4 @@ public class ChangeSolver {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void closeCurrentSolver(String currentSolver){
-		if (currentSolver.equalsIgnoreCase("XA") || currentSolver.equalsIgnoreCase("XALOG")){
-			
-		}else if (currentSolver.equalsIgnoreCase("Gurobi")){
-			
-		}
-	}
 }

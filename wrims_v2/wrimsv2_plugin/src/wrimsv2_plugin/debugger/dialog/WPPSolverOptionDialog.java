@@ -64,24 +64,6 @@ public class WPPSolverOptionDialog extends PopupDialog {
 		final Combo solverCombo = new Combo(dialogArea, SWT.BORDER);
 		solverCombo.add("XA");
 		solverCombo.add("LPSolve");
-		if (DebugCorePlugin.solver.equals("XA")){
-			solverCombo.select(0);
-		}else if (DebugCorePlugin.solver.equals("LPSolve")){
-			solverCombo.select(1);
-		}
-		if (DebugCorePlugin.target==null){
-			label1.setEnabled(true);
-			solverCombo.setEnabled(true);
-		}else if (DebugCorePlugin.target.isTerminated()){
-			label1.setEnabled(true);
-			solverCombo.setEnabled(true);
-		}else if (DebugCorePlugin.target.isSuspended()){
-			label1.setEnabled(true);
-			solverCombo.setEnabled(true);
-		}else{
-			label1.setEnabled(false);
-			solverCombo.setEnabled(false);
-		}
 		
 		Label label2 =  new Label(dialogArea, SWT.NONE);
 		label2.setText("Log:");
@@ -89,6 +71,25 @@ public class WPPSolverOptionDialog extends PopupDialog {
 		final Combo logCombo = new Combo(dialogArea, SWT.BORDER);
 		logCombo.add("None");
 		logCombo.add("Log");
+		
+		if (DebugCorePlugin.solver.equals("XA")){
+			solverCombo.select(0);
+		}else if (DebugCorePlugin.solver.equals("LPSolve")){
+			solverCombo.select(1);
+		}
+		if (DebugCorePlugin.target==null){
+			solverCombo.setEnabled(true);
+			logCombo.setEnabled(true);
+		}else if (DebugCorePlugin.target.isTerminated()){
+			solverCombo.setEnabled(true);
+			logCombo.setEnabled(true);
+		}else if (DebugCorePlugin.target.isSuspended()){
+			solverCombo.setEnabled(true);
+			logCombo.setEnabled(true);
+		}else{
+			solverCombo.setEnabled(false);
+			logCombo.setEnabled(false);
+		}
 		
 		if (DebugCorePlugin.log.equals("None")){
 			logCombo.select(0);

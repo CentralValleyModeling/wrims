@@ -1182,10 +1182,20 @@ public class DebugInterface {
 			new InitialXASolver();
 			if (log.equals("None")){
 				SetXALog.disableXALog();
+				ILP.logging=false;
+				ILP.loggingLpSolve=false;
+				ILP.loggingCplexLp=false;
+				ILP.loggingVariableValue=false;
 				ControlData.solverName="XA";
 				System.out.println("Log file turn off");
 			}else if (log.equals("Log")){
 				SetXALog.enableXALog();
+				File ilpDir = ChangeSolver.createILPFolder();
+				ILP.setCplxLpDir(new File(ilpDir, "cplexlp").getAbsolutePath());
+				ILP.logging=true;
+				ILP.loggingLpSolve=false;
+				ILP.loggingCplexLp=true;
+				ILP.loggingVariableValue=true;
 				ControlData.solverName="XALOG";
 				System.out.println("Log file turn on");
 			}
