@@ -1,6 +1,6 @@
 
 initial {
-	const option_A { -999 }  ! config file overwrite
+	const option_A { 1 }  
 }
 
 sequence CYCLE1 {

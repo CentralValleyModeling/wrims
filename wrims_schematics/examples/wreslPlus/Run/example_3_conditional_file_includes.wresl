@@ -1,7 +1,7 @@
 
 initial {
-	const option_A { -999 }  ! the value is overwritten by config
-	const totalflow { -333 } ! the value is overwritten by config
+	const option_A { 3 }  
+	const totalflow { 75 } 
 	const option_weightTable { 2 }
 }
 
