@@ -31,7 +31,6 @@ public class ControllerBatch {
 	
 	
 	public ControllerBatch(String[] args) {
-		ControlData.writeInitToDVOutput=false;
 		long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
 		try {
 			processArgs(args);

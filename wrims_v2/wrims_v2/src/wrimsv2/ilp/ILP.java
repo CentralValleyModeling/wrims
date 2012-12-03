@@ -642,4 +642,12 @@ public class ILP {
 		}
 
 	}
+	
+	public static void setLPSolveDir(String dir){
+		_lpSolveDir=dir;
+	}
+	
+	public static void setCplxLpDir(String dir){
+		_cplexLpDir=dir;
+	}
 }

@@ -53,6 +53,7 @@ import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.external.LoadAllDll;
 import wrimsv2.ilp.ILP;
+import wrimsv2.solver.CloseCurrentSolver;
 import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.solver.XASolver;
 import wrimsv2.solver.SetXALog;
@@ -173,7 +174,6 @@ public class ControllerDebug extends Thread {
 			out.close();
 		
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -186,22 +186,30 @@ public class ControllerDebug extends Thread {
 		System.out.println("=============Prepare Run Study===========");
 		new PreRunModel(sds);
 		System.out.println("==============Run Study Start============");
-		if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG") ){
-			runModelXA(sds);
-		}else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
-			runModelGurobi(sds);
-		}else if (ControlData.solverName.equalsIgnoreCase("LPSolve")){
-			runModelILP(sds);
+		if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG") || ControlData.solverName.equalsIgnoreCase("LpSolve") || ControlData.solverName.equalsIgnoreCase("Gurobi")){
+			runModelSolvers(sds);
+		}else{
+			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);
+			Error.writeErrorLog();
+			ControlData.writer.closeDSSFile();
+			return;
 		}
-		
 		System.out.println("=================Run ends!================");
 	}
 	
-	public void runModelXA(StudyDataSet sds){
+	public void runModelSolvers(StudyDataSet sds){
+		
+		ILP.initializeIlp();
+		
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
 		
-		new InitialXASolver();
+		if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG")) {
+			new InitialXASolver();
+		}else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
+			GurobiSolver.initialize();
+		}
+		
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		VariableTimeStep.initialCurrTimeStep(modelList);
@@ -247,17 +255,57 @@ public class ControllerDebug extends Thread {
 						ControlData.currTsMap=mds.tsMap;
 						ControlData.isPostProcessing=false;
 						mds.processModel();
+					
 						if (Error.error_evaluation.size()>=1){
 							Error.writeEvaluationErrorFile("Error_evaluation.txt");
+							Error.writeErrorLog();
 							noError=false;
 						}
-						new XASolver();
-						
-						// check monitored dvar list. they are slack and surplus generated automatically 
-						// from the weight group deviation penalty
-						// give error if they are not zero or greater than a small tolerance.
+					
+						if (ControlData.solverName.equalsIgnoreCase("XA")) {
+							new XASolver(); 						
+				        }else if (ControlData.solverName.equalsIgnoreCase("XALOG")){
+				        	ILP.setIlpFile();
+							ILP.writeIlp();
+							ILP.setVarFile();
+							ILP.writeSvarValue();
+							new XASolver(); 
+							ILP.writeObjValue_XA();
+							ILP.writeDvarValue_XA();
+						}else if (ControlData.solverName.equalsIgnoreCase("LPSolve")) {
+							ILP.setIlpFile();
+							ILP.writeIlp();
+							if (ILP.loggingVariableValue) {
+								ILP.setVarFile();
+								ILP.writeSvarValue();
+							}
+				        	LPSolveSolver.setLP(ILP.lpSolveFilePath);
+				            LPSolveSolver.solve();
+				            if (Error.error_solving.size()<1) {
+				            	if (ILP.logging) {
+				            		ILP.writeObjValue_LPSOLVE();
+				            		if (ILP.loggingVariableValue) ILP.writeDvarValue_LPSOLVE();
+				            	}
+				            }
+				        }else if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
+				        	ILP.setIlpFile();
+							ILP.writeIlp();
+							if (ILP.loggingVariableValue) {
+								ILP.setVarFile();
+								ILP.writeSvarValue();
+							}
+							GurobiSolver.setLp(ILP.cplexLpFilePath);
+							GurobiSolver.solve();
+							if (Error.error_solving.size()<1) {
+				            	if (ILP.logging) {
+				            		ILP.writeObjValue_LPSOLVE();
+				            		if (ILP.loggingVariableValue) ILP.writeDvarValue_Gurobi();
+				            	}
+				            }
+				        }
+						ILP.closeIlpFile();
 						noError = !ErrorCheck.checkDeviationSlackSurplus(mds.deviationSlackSurplus_toleranceMap, mds.dvMap);
-						
+								
 						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
 						if (Error.error_solving.size()<1){
 							ControlData.isPostProcessing=true;
@@ -305,143 +353,9 @@ public class ControllerDebug extends Thread {
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
 		}
-		ControlData.xasolver.close();
+		new CloseCurrentSolver(ControlData.solverName);
 		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
-		}
-		DssOperation.writeDVAliasToDSS();
-		ControlData.writer.closeDSSFile();
-	}
-	
-	public void runModelGurobi(StudyDataSet sds){
-		ArrayList<String> modelList=sds.getModelList();
-		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
-		
-		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
-		boolean noError=true;
-		VariableTimeStep.initialCurrTimeStep(modelList);
-		VariableTimeStep.initialCycleStartDate();
-		VariableTimeStep.setCycleEndDate(sds);
-		
-		ILP.initializeIlp();
-		GurobiSolver.initialize();
-		
-		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
-			ClearValue.clearValues(modelList, modelDataSetMap);
-			sds.clearVarTimeArrayCycleValueMap();
-			modelIndex=0;
-			prepareInitialTimeStep();
-			while (modelIndex<modelList.size()  && noError){   
-				
-				String model=modelList.get(modelIndex);
-				ModelDataSet mds=modelDataSetMap.get(model);
-				ControlData.currModelDataSet=mds;
-				ControlData.currCycleName=model;
-				ControlData.currCycleIndex=modelIndex;
-				ControlData.currTimeStep.set(modelIndex, initialTimeStep.get(modelIndex));
-				VariableTimeStep.setCycleTimeStep(sds);
-				VariableTimeStep.setCurrentDate(sds, ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear);
-				
-				while(VariableTimeStep.checkEndDate(ControlData.currDay, ControlData.currMonth, ControlData.currYear, ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear)<0 && noError){
-					ValueEvaluatorParser modelCondition=modelConditionParsers.get(modelIndex);
-					boolean condition=false;
-					try{
-						modelCondition.evaluator();
-						condition=modelCondition.evalCondition;
-					}catch (Exception e){
-						Error.addEvaluationError("Model condition evaluation has error.");
-						condition=false;
-					}
-					modelCondition.reset();
-				
-					if (condition){
-						ClearValue.clearCycleLoopValue(modelList, modelDataSetMap);
-						ControlData.currSvMap=mds.svMap;
-						ControlData.currSvFutMap=mds.svFutMap;
-						ControlData.currDvMap=mds.dvMap;
-						ControlData.currDvSlackSurplusMap=mds.dvSlackSurplusMap;
-						ControlData.currAliasMap=mds.asMap;
-						ControlData.currGoalMap=mds.gMap;
-						ControlData.currTsMap=mds.tsMap;
-						ControlData.isPostProcessing=false;
-						mds.processModel();
-						if (Error.error_evaluation.size()>=1){
-							Error.writeEvaluationErrorFile("Error_evaluation.txt");
-							Error.addSolvingError("evaluation error(s)");
-							Error.writeErrorLog();
-							noError=false;
-						} else {	
-							ILP.setIlpFile();
-							ILP.writeIlp();
-							if (ILP.loggingVariableValue) {
-								ILP.setVarFile();
-								ILP.writeSvarValue();
-							}
-							GurobiSolver.setLp(ILP.cplexLpFilePath);
-							GurobiSolver.solve();
-						}
-
-						// check monitored dvar list. they are slack and surplus generated automatically 
-						// from the weight group deviation penalty
-						// give error if they are not zero or greater than a small tolerance.
-						noError = !ErrorCheck.checkDeviationSlackSurplus(mds.deviationSlackSurplus_toleranceMap, mds.dvMap);
-						
-						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
-						if (Error.error_solving.size()<1){
-							
-		            		ILP.writeObjValue_Gurobi();
-		            		if (ILP.loggingVariableValue) ILP.writeDvarValue_Gurobi();
-		            		
-		            		ILP.closeIlpFile();
-		            		
-							ControlData.isPostProcessing=true;
-							mds.processAlias();
-							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
-						}else{
-							Error.writeSolvingErrorFile("Error_solving.txt");
-							Error.writeErrorLog();
-							noError=false;
-						}
-						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
-						pauseForDebug(modelIndex);
-						if (Error.error_evaluation.size()>=1) noError=false;
-
-						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
-						if (ControlData.timeStep.equals("1MON")){
-							VariableTimeStep.currTimeAddOneMonth();
-						}else{
-							VariableTimeStep.currTimeAddOneDay();
-						}
-					}else{
-						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" skipped. ("+model+")");
-						new AssignPastCycleVariable();
-						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
-						if (ControlData.timeStep.equals("1MON")){
-							VariableTimeStep.currTimeAddOneMonth();
-						}else{
-							VariableTimeStep.currTimeAddOneDay();
-						}	
-					}
-				}
-				modelIndex=modelIndex+1;
-			}
-			updateVarMonitor();
-			if (di.resimDate){
-				di.resimDate=false;
-				noError=true;
-				sds=ControlData.currStudyDataSet;
-				modelList=sds.getModelList();
-				modelDataSetMap=sds.getModelDataSetMap();		
-				modelConditionParsers=sds.getModelConditionParsers();
-				new ReProcessExternal(sds);
-				resetStartDate(sds);
-			}
-			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
-			VariableTimeStep.setCycleEndDate(sds);
-		}
-		GurobiSolver.dispose();
-		if (ControlData.writeInitToDVOutput){
-			DssOperation.writeInitDvarAliasToDSS();
+		DssOperation.writeInitDvarAliasToDSS();
 		}
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
@@ -566,173 +480,5 @@ public class ControllerDebug extends Thread {
 				DssOperation.writeDVAliasToDSS();
 			}
 		}
-	}
-	
-	public void runModelILP(StudyDataSet sds){
-		
-		ILP.initializeIlp();
-		
-		ArrayList<String> modelList=sds.getModelList();
-		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
-		
-		if (ControlData.solverName.equalsIgnoreCase("lpsolve")) {
-			ControlData.solverType = Param.SOLVER_LPSOLVE;
-			// initiate lpsolve
-		} else if (ControlData.solverName.toLowerCase().contains("xa")) {
-			ControlData.solverType = Param.SOLVER_XA; //default
-			new InitialXASolver();
-		} else {
-			Error.addConfigError("Solver name not recognized: "+ControlData.solverName);
-			Error.writeErrorLog();
-		}
-		
-		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
-		boolean noError=true;
-		VariableTimeStep.initialCurrTimeStep(modelList);
-		VariableTimeStep.initialCycleStartDate();
-		VariableTimeStep.setCycleEndDate(sds);
-		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
-			if (ControlData.solverType == Param.SOLVER_XA && ControlData.solverName.toLowerCase().contains("xalog")) SetXALog.enableXALog();
-			ClearValue.clearValues(modelList, modelDataSetMap);
-			sds.clearVarTimeArrayCycleValueMap();
-			modelIndex=0;
-			prepareInitialTimeStep();
-			while (modelIndex<modelList.size()  && noError){  
-				
-				String model=modelList.get(modelIndex);
-				ModelDataSet mds=modelDataSetMap.get(model);
-				ControlData.currModelDataSet=mds;
-				ControlData.currCycleName=model;
-				ControlData.currCycleIndex=modelIndex;
-				ControlData.currTimeStep.set(modelIndex, initialTimeStep.get(modelIndex));
-				VariableTimeStep.setCycleTimeStep(sds);
-				VariableTimeStep.setCurrentDate(sds, ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear);
-				
-				while(VariableTimeStep.checkEndDate(ControlData.currDay, ControlData.currMonth, ControlData.currYear, ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear)<0 && noError){
-					ValueEvaluatorParser modelCondition=modelConditionParsers.get(modelIndex);
-					boolean condition=false;
-					try{
-						modelCondition.evaluator();
-						condition=modelCondition.evalCondition;
-					}catch (Exception e){
-						Error.addEvaluationError("Model condition evaluation has error.");
-						condition=false;
-					}
-					modelCondition.reset();
-				
-					if (condition){
-						ClearValue.clearCycleLoopValue(modelList, modelDataSetMap);
-						ControlData.currSvMap=mds.svMap;
-						ControlData.currSvFutMap=mds.svFutMap;
-						ControlData.currDvMap=mds.dvMap;
-						ControlData.currDvSlackSurplusMap=mds.dvSlackSurplusMap;
-						ControlData.currAliasMap=mds.asMap;
-						ControlData.currGoalMap=mds.gMap;
-						ControlData.currTsMap=mds.tsMap;
-						ControlData.isPostProcessing=false;
-						mds.processModel();
-					
-						if (ILP.logging) {
-							ILP.setIlpFile();
-							ILP.writeIlp();
-							if (ILP.loggingVariableValue) {
-								ILP.setVarFile();
-								ILP.writeSvarValue();
-							}
-						}
-					
-						if (Error.error_evaluation.size()>=1){
-							Error.writeEvaluationErrorFile("Error_evaluation.txt");
-							Error.writeErrorLog();
-							noError=false;
-						}
-					
-						// choose solver to solve. TODO: this is not efficient. need to be done outside ILP
-				        if (ControlData.solverType == Param.SOLVER_LPSOLVE.intValue()) {
-				            LPSolveSolver.setLP(ILP.lpSolveFilePath);
-				            LPSolveSolver.solve();
-				            if (Error.error_solving.size()<1) {
-				            	if (ILP.logging) {
-				            		ILP.writeObjValue_LPSOLVE();
-				            		if (ILP.loggingVariableValue) ILP.writeDvarValue_LPSOLVE();
-				            	}
-				            }
-				        } else {
-
-							new XASolver(); 						
-
-							if (ILP.logging) {
-								ILP.writeObjValue_XA();
-								if (ILP.loggingVariableValue) ILP.writeDvarValue_XA();
-							}
-				        }
-
-
-
-						ILP.closeIlpFile();
-
-						// check monitored dvar list. they are slack and surplus generated automatically 
-						// from the weight group deviation penalty
-						// give error if they are not zero or greater than a small tolerance.
-						noError = !ErrorCheck.checkDeviationSlackSurplus(mds.deviationSlackSurplus_toleranceMap, mds.dvMap);
-						
-						
-						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
-						if (Error.error_solving.size()<1){
-							ControlData.isPostProcessing=true;
-							mds.processAlias();
-							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
-						}else{
-							Error.writeSolvingErrorFile("Error_solving.txt");
-							Error.writeErrorLog();
-							noError=false;
-						}
-						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
-						pauseForDebug(modelIndex);
-						if (Error.error_evaluation.size()>=1) noError=false;
-						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
-						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
-						if (ControlData.timeStep.equals("1MON")){
-							VariableTimeStep.currTimeAddOneMonth();
-						}else{
-							VariableTimeStep.currTimeAddOneDay();
-						}
-					}else{
-						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" skipped. ("+model+")");
-						new AssignPastCycleVariable();
-						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
-						if (ControlData.timeStep.equals("1MON")){
-							VariableTimeStep.currTimeAddOneMonth();
-						}else{
-							VariableTimeStep.currTimeAddOneDay();
-						}	
-					}
-				}
-				modelIndex=modelIndex+1;
-			}
-			updateVarMonitor();
-			if (di.resimDate){
-				di.resimDate=false;
-				noError=true;
-				sds=ControlData.currStudyDataSet;
-				modelList=sds.getModelList();
-				modelDataSetMap=sds.getModelDataSetMap();		
-				modelConditionParsers=sds.getModelConditionParsers();
-				new ReProcessExternal(sds);
-				resetStartDate(sds);
-			}
-			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
-			VariableTimeStep.setCycleEndDate(sds);
-		}
-		if (ControlData.solverType == Param.SOLVER_LPSOLVE) {
-			//ControlData.lpssolver.deleteLp();
-		} else {
-			ControlData.xasolver.close();
-		}
-		if (ControlData.writeInitToDVOutput){
-		DssOperation.writeInitDvarAliasToDSS();
-		}
-		DssOperation.writeDVAliasToDSS();
-		ControlData.writer.closeDSSFile();
 	}
 }

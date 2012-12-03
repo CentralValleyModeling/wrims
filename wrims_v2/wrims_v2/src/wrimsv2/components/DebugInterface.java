@@ -1,6 +1,7 @@
 package wrimsv2.components;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -33,6 +34,7 @@ import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
+import wrimsv2.debug.ChangeSolver;
 import wrimsv2.debug.ReLoadSVDss;
 import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssDataSet;
@@ -46,10 +48,14 @@ import wrimsv2.evaluator.TableSeries;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.ValueEvaluation;
 import wrimsv2.ilp.ILP;
+import wrimsv2.solver.CloseCurrentSolver;
+import wrimsv2.solver.InitialXASolver;
+import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.solver.SetXALog;
 import wrimsv2.wreslparser.elements.FileParser;
 import wrimsv2.wreslparser.elements.SimulationDataSet;
 import wrimsv2.wreslparser.elements.StudyParser;
+import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.grammar.WreslTreeWalker;
 
 public class DebugInterface {
@@ -1168,22 +1174,51 @@ public class DebugInterface {
 	}
 	
 	public void setSolverOptions(String[] requestParts){
-		if (requestParts[1].equals("XA")){
-			if (requestParts[2].equals("None")){
+		String solverName=requestParts[1];
+		String log=requestParts[2];
+		new CloseCurrentSolver(ControlData.solverName);
+		System.out.println("Change solver to "+solverName);
+		if (solverName.equals("XA")){
+			new InitialXASolver();
+			if (log.equals("None")){
 				SetXALog.disableXALog();
 				ControlData.solverName="XA";
-			}else if (requestParts[2].equals("Log")){
+				System.out.println("Log file turn off");
+			}else if (log.equals("Log")){
 				SetXALog.enableXALog();
 				ControlData.solverName="XALOG";
+				System.out.println("Log file turn on");
 			}
-		}else if(requestParts[1].equals("LPSolve")){
+		}else if(solverName.equals("LPSolve")){
 			ControlData.solverName="LPSolve";
-			if (requestParts[2].equals("None")){
-				ILP.loggingLpSolve=false;
+			File ilpDir = ChangeSolver.createILPFolder();
+			ILP.setLPSolveDir(new File(ilpDir, "lpsolve").getAbsolutePath());
+			ChangeSolver.loadLPSolveConfigFile();
+			ILP.loggingLpSolve=true;
+			ILP.loggingCplexLp=false;
+			if (log.equals("None")){
+				ILP.logging=false;
 				ILP.loggingVariableValue=false;
-			}else if (requestParts[2].equals("Log")){
-				ILP.loggingLpSolve=true;
+				System.out.println("Log file turn off");
+			}else if (log.equals("Log")){
+				ILP.logging=true;
 				ILP.loggingVariableValue=true;
+				System.out.println("Log file turn on");
+			}
+		}else if(solverName.equals("Gurobi")){
+			ControlData.solverName="Gurobi";
+			File ilpDir = ChangeSolver.createILPFolder();
+			ILP.setCplxLpDir(new File(ilpDir, "cplexlp").getAbsolutePath());
+			ILP.loggingCplexLp=true;
+			ILP.loggingLpSolve=false;
+			if (log.equals("None")){
+				ILP.logging=false;
+				ILP.loggingVariableValue=false;
+				System.out.println("Log file turn off");
+			}else if (log.equals("Log")){
+				ILP.logging=true;
+				ILP.loggingVariableValue=true;
+				System.out.println("Log file turn on");
 			}
 		}
 	}
