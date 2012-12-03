@@ -412,7 +412,7 @@ public class ConfigUtils {
 		
 		
 		
-		if (Error.getTotalError()<1) readParameter(configFile);
+		//if (Error.getTotalError()<1) readParameter(configFile);
 		
 //		if (Error.getTotalError()<1 && paramMap.size()>0) { 
 //			System.out.println("--------------------------------------------");
