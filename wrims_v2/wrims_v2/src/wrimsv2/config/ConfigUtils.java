@@ -325,11 +325,13 @@ public class ConfigUtils {
 		// processed only for ILP
 		
 		// TODO: lpsolve and ilp log is binded. need to enable direct linking instead of reading file
-		if (ControlData.solverName.equalsIgnoreCase("lpsolve")) {
+		if(ControlData.solverName.equalsIgnoreCase("XALOG")){
+			configMap.put("ilplog","yes");
+			ILP.loggingCplexLp = true;
+		}else if (ControlData.solverName.equalsIgnoreCase("lpsolve")) {
 			configMap.put("ilplog","yes");
 			ILP.loggingLpSolve = true;
-		}
-		if (ControlData.solverName.equalsIgnoreCase("Gurobi")) {
+		}else if (ControlData.solverName.equalsIgnoreCase("Gurobi")) {
 			configMap.put("ilplog","yes");
 			ILP.loggingCplexLp = true;
 		}		

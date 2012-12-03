@@ -271,18 +271,25 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			}
 			
 			configMap.put("ShowWreslLog".toLowerCase(), "No");			
-			configMap.put("Solver".toLowerCase(), DebugCorePlugin.solver);			
-			
-			if (DebugCorePlugin.solver.equals("LPSolve")){
-				configMap.put("IlpLogFormat".toLowerCase(), "LpSolve");
+			if (DebugCorePlugin.solver.equals("XA") && DebugCorePlugin.log.equals("Log")){
+				configMap.put("Solver".toLowerCase(), DebugCorePlugin.solver+"LOG");
+			}else{
+				configMap.put("Solver".toLowerCase(), DebugCorePlugin.solver);
 			}
 				
 			if (DebugCorePlugin.log.equals("Log")){
 				configMap.put("IlpLog".toLowerCase(), "Yes");
+				if (DebugCorePlugin.solver.equals("XA")){
+					configMap.put("IlpLogFormat".toLowerCase(), "CplexLp");
+				}else if (DebugCorePlugin.solver.equals("LPSolve")){
+					configMap.put("IlpLogFormat".toLowerCase(), "LpSolve");
+				}
+				configMap.put("IlpLogVarValue".toLowerCase(), "Yes");
 			} else {
 				configMap.put("IlpLog".toLowerCase(), "No");
+				configMap.put("IlpLogFormat".toLowerCase(), "None");
+				configMap.put("IlpLogVarValue".toLowerCase(), "No");
 			}
-			configMap.put("IlpLogVarValue".toLowerCase(), "Yes");
 	
 			String mainFileAbsPath = configMap.get("MainFile".toLowerCase());
 			
