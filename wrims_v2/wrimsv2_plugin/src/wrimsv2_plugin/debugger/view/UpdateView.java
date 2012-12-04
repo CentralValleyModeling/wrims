@@ -97,7 +97,7 @@ public class UpdateView {
 					//data="i:4456#a(-1):123.0#reservoir:reservorlevel1%56:reservorlevel2%1234";
 					String[] dataParts = data.split("!");
 					DebugCorePlugin.variableStack=DataProcess.generateTree(dataParts[0]);
-					DebugCorePlugin.variableProperty=DataProcess.generateVariableProperty(dataParts[1]);
+					if (dataParts.length>1) DebugCorePlugin.variableProperty=DataProcess.generateVariableProperty(dataParts[1]);
 				
 					WPPVariableView variableView = (WPPVariableView) workBenchPage.findView(DebugCorePlugin.ID_WPP_VARIABLE_VIEW);
 					variableView.updateView();
