@@ -1190,20 +1190,16 @@ public class DebugInterface {
 				System.out.println("Log file turn off");
 			}else if (log.equals("Log")){
 				SetXALog.enableXALog();
-				File ilpDir = ChangeSolver.createILPFolder();
-				ILP.setCplxLpDir(new File(ilpDir, "cplexlp").getAbsolutePath());
 				ILP.logging=true;
 				ILP.loggingLpSolve=false;
 				ILP.loggingCplexLp=true;
 				ILP.loggingVariableValue=true;
 				ControlData.solverName="XALOG";
+				ILP.initializeIlp();
 				System.out.println("Log file turn on");
 			}
 		}else if(solverName.equals("LPSolve")){
 			ControlData.solverName="LPSolve";
-			File ilpDir = ChangeSolver.createILPFolder();
-			ILP.setLPSolveDir(new File(ilpDir, "lpsolve").getAbsolutePath());
-			ChangeSolver.loadLPSolveConfigFile();
 			ILP.loggingLpSolve=true;
 			ILP.loggingCplexLp=false;
 			if (log.equals("None")){
@@ -1215,10 +1211,10 @@ public class DebugInterface {
 				ILP.loggingVariableValue=true;
 				System.out.println("Log file turn on");
 			}
+			ILP.initializeIlp();
+			ChangeSolver.loadLPSolveConfigFile();
 		}else if(solverName.equals("Gurobi")){
 			ControlData.solverName="Gurobi";
-			File ilpDir = ChangeSolver.createILPFolder();
-			ILP.setCplxLpDir(new File(ilpDir, "cplexlp").getAbsolutePath());
 			ILP.loggingCplexLp=true;
 			ILP.loggingLpSolve=false;
 			if (log.equals("None")){
@@ -1230,6 +1226,7 @@ public class DebugInterface {
 				ILP.loggingVariableValue=true;
 				System.out.println("Log file turn on");
 			}
+			ILP.initializeIlp();
 		}
 	}
 	

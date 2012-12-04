@@ -9,6 +9,7 @@ public class InitialXASolver {
 	public InitialXASolver(){
 		ControlData.xasolver=new Optimizer(25000);
 		ControlData.xasolver.setActivationCodes( 234416483 , 19834525 ) ;
+		ControlData.xasolver.setXAMessageWindowOff();
 		ControlData.xasolver.openConnection();
 		ControlData.xasolver.setModelSize(100, 100);
 		ControlData.xasolver.setCommand("MAXIMIZE Yes MUTE yes FORCE No wait no matlist v set visible no");

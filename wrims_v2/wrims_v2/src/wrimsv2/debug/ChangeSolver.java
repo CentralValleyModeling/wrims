@@ -8,10 +8,6 @@ import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.wreslparser.elements.StudyUtils;
 
 public class ChangeSolver {
-	public static File createILPFolder(){
-		File ilpRootDir = new File(FilePaths.mainDirectory, "=ILP=");  
-	    return new File(ilpRootDir.getAbsolutePath(), StudyUtils.configFileName);   
-	}
 	
 	public static void loadLPSolveConfigFile(){
 		//To Do: temporary set up
