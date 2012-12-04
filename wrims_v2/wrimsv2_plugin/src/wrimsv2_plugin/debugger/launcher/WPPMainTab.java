@@ -713,7 +713,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	 */
 	@Override
 	public String getName() {
-		return "Study1";
+		return "Main";
 	}
 	
 	/* (non-Javadoc)

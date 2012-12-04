@@ -28,6 +28,7 @@ public class WPPTabGroup extends AbstractLaunchConfigurationTabGroup {
 	public void createTabs(ILaunchConfigurationDialog dialog, String mode) {
 		setTabs(new ILaunchConfigurationTab[] {
 				new WPPMainTab(),
+				new WPPConfigTab(),
 				new SourceLookupTab(),
 				new CommonTab()
 		});

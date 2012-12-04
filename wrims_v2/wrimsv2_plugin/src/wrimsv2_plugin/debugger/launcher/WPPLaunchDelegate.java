@@ -60,6 +60,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 	private int endYear;
 	private int endMonth;
 	private int endDay;
+	private String wreslPlus;
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.core.model.ILaunchConfigurationDelegate#launch(org.eclipse.debug.core.ILaunchConfiguration, java.lang.String, org.eclipse.debug.core.ILaunch, org.eclipse.core.runtime.IProgressMonitor)
@@ -161,6 +162,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			}
 			DebugCorePlugin.startDay=startDay;
 			DebugCorePlugin.endDay=endDay;
+			
+			wreslPlus=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_WRESLPLUS, "no");
 					
 			int index = mainFile.lastIndexOf(File.separator);
 			String mainDirectory = mainFile.substring(0, index + 1);
@@ -244,7 +247,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 		out.close();
 	}
 	
-	String generateConfigFile(){
+	public String generateConfigFile(){
 		
 		Map<String, String> configMap = new HashMap<String, String>();
 		String configFilePath = null;
@@ -290,6 +293,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 				configMap.put("IlpLogFormat".toLowerCase(), "None");
 				configMap.put("IlpLogVarValue".toLowerCase(), "No");
 			}
+			
+			configMap.put("WreslPlus".toLowerCase(), wreslPlus);
 	
 			String mainFileAbsPath = configMap.get("MainFile".toLowerCase());
 			
@@ -329,6 +334,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			out.println("IlpLog             "+configMap.get("IlpLog".toLowerCase()));
 			out.println("IlpLogFormat       "+configMap.get("IlpLogFormat".toLowerCase()));
 			out.println("IlpLogVarValue     "+configMap.get("IlpLogVarValue".toLowerCase()));
+			out.println("WreslPlus          "+configMap.get("WreslPlus".toLowerCase()));
 			
 			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
 				

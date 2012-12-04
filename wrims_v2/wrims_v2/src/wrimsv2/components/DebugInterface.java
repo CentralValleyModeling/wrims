@@ -57,6 +57,10 @@ import wrimsv2.wreslparser.elements.SimulationDataSet;
 import wrimsv2.wreslparser.elements.StudyParser;
 import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.grammar.WreslTreeWalker;
+import wrimsv2.wreslplus.elements.GoalTemp;
+import wrimsv2.wreslplus.elements.ModelTemp;
+import wrimsv2.wreslplus.elements.ParserUtils;
+import wrimsv2.wreslplus.elements.StudyTemp;
 
 public class DebugInterface {
 	private ServerSocket requestSocket;
@@ -169,7 +173,11 @@ public class DebugInterface {
 					sendRequest("");
 				}else{
 					String fileName=request.substring(index+1);
-					dataString=getVariableInOneFile(fileName);
+					if (StudyUtils.useWreslPlus){
+						dataString=getVariableInOneFileWP(fileName);
+					}else{
+						dataString=getVariableInOneFile(fileName);
+					}
 					sendRequest(dataString);
 				}
 			} catch (IOException e) {
@@ -247,7 +255,11 @@ public class DebugInterface {
 					sendRequest("");
 				}else{
 					String fileName=request.substring(index+1);
-					goalString=getGoalInOneFile(fileName);
+					if (StudyUtils.useWreslPlus){
+						goalString=getGoalInOneFileWP(fileName);
+					}else{
+						goalString=getGoalInOneFile(fileName);
+					}
 					sendRequest(goalString);
 				}
 			} catch (IOException e) {
@@ -558,6 +570,100 @@ public class DebugInterface {
 		return dataString;
 	}
 	
+	public String getVariableInOneFileWP(String fileFullPath){
+		String dataString="";
+		StudyDataSet sds = ControlData.currStudyDataSet;
+		String modelName=sds.getModelList().get(ControlData.currCycleIndex);
+		ModelDataSet mds=sds.getModelDataSetMap().get(modelName);
+		Map<String, Svar> parameterMap = sds.getParameterMap();
+		Map<String, Timeseries> tsMap = mds.tsMap;
+		Map<String, Dvar> dvMap = SolverData.getDvarMap();
+		Map<String, Svar> svMap = mds.svMap;
+		Map<String, Svar> svFutMap = mds.svFutMap;
+		Map<String, Alias> asMap = mds.asMap;
+		Map<String, String> partsMap=new HashMap<String, String>();
+		ArrayList<String> parameterList = new ArrayList<String>();
+		if (fileFullPath.equalsIgnoreCase(FilePaths.fullMainPath)){
+			StudyTemp studyTemp = ParserUtils.parseWreslMain(fileFullPath);
+			if (studyTemp==null) return dataString;
+			parameterList = studyTemp.parameterList;
+		}
+		ModelTemp modelTemp = ParserUtils.parseWreslFile(fileFullPath);
+		if (modelTemp==null) return dataString;
+		ArrayList<String> dvList = modelTemp.dvList;
+		ArrayList<String> svList = modelTemp.svList;
+		ArrayList<String> asList = modelTemp.asList;
+		ArrayList<String> tsList = modelTemp.tsList;
+		ArrayList<String> gList = modelTemp.glList;
+		Map<String, GoalTemp> glMap = modelTemp.glMap;
+		ArrayList<String> sortedList = modelTemp.asList;
+		
+		asList.removeAll(dvList);
+		sortedList.addAll(dvList);
+		sortedList.addAll(parameterList);
+		sortedList.addAll(svList);
+		sortedList.addAll(tsList);
+
+		for (String gName:gList){
+			Set<String> dependants = glMap.get(gName).dependants;
+			Iterator<String> iterator = dependants.iterator();
+			while (iterator.hasNext()){
+				String varName=iterator.next();
+				if (!sortedList.contains(varName)){
+					sortedList.add(varName);
+				}
+			}
+		}
+		IntDouble intDouble;
+		Collections.sort(sortedList);
+		for (String variable: sortedList){
+			if (svMap.containsKey(variable)){
+				Svar sv = svMap.get(variable);
+				intDouble=sv.getData();
+				if (intDouble != null) {
+					dataString=dataString+variable+":"+df.format(intDouble.getData())+"#";
+					partsMap.put(variable, sv.kind+":"+ControlData.timeStep);
+				}
+			}else if (dvMap.containsKey(variable)){
+				Dvar dv = dvMap.get(variable);
+				intDouble=dv.getData();
+				if (intDouble != null) {
+					dataString=dataString+variable+":"+df.format(intDouble.getData())+"#";
+					partsMap.put(variable, dv.kind+":"+ControlData.timeStep);
+				}
+			}else if (tsMap.containsKey(variable)){
+				Timeseries ts = tsMap.get(variable);
+				intDouble=ts.getData();
+				if (intDouble != null) {
+					dataString=dataString+variable+":"+df.format(intDouble.getData())+"#";
+					partsMap.put(variable, ts.kind+":"+ControlData.timeStep);
+				}
+			}else if (asMap.containsKey(variable)){
+				Alias as = asMap.get(variable);
+				intDouble=as.getData();
+				if (intDouble != null) {
+					dataString=dataString+variable+":"+df.format(intDouble.getData())+"#";
+					partsMap.put(variable, as.kind+":"+ControlData.timeStep);
+				}
+			}else if (parameterMap.containsKey(variable)){
+				Svar sv = parameterMap.get(variable);
+				intDouble=sv.getData();
+				if (intDouble != null){
+					dataString=dataString+variable+":"+df.format(intDouble.getData())+"#";
+					//partsMap.put(variable, sv.kind+":"+ControlData.timeStep);
+				}
+			}
+		}
+		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
+		dataString=dataString+"!";
+		for (String variable: partsMap.keySet()){
+			dataString=dataString+variable+":"+partsMap.get(variable)+"#";
+		}
+		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
+		
+		return dataString;
+	}
+	
 	public String getGoalInOneFile(String fileFullPath){
 		String goalString="";
 		Map<String, EvalConstraint> gMap = SolverData.getConstraintDataMap();
@@ -637,6 +743,87 @@ public class DebugInterface {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		goalString=goalString+"!";
+		for (String controlGoal:controlGoals){
+			goalString=goalString+controlGoal+":";
+		}
+		if (goalString.endsWith(":")) goalString=goalString.substring(0, goalString.length()-1);
+		return goalString;
+	}
+	
+	public String getGoalInOneFileWP(String fileFullPath){
+		String goalString="";
+		Map<String, EvalConstraint> gMap = SolverData.getConstraintDataMap();
+		Map<String, Dvar> dvMap = SolverData.getDvarMap();
+		ArrayList<String> controlGoals=new ArrayList<String>();
+		
+		ModelTemp modelTemp = ParserUtils.parseWreslFile(fileFullPath);
+		if (modelTemp==null) return goalString;	
+		ArrayList<String> sortedGoalList = modelTemp.glList;
+		
+		Collections.sort(sortedGoalList);
+		for (int i=0; i<sortedGoalList.size(); i++){
+			double lhs=0;
+			String goalName=sortedGoalList.get(i);
+			if (gMap.containsKey(goalName)){
+				goalString=goalString+goalName+":";
+				EvalConstraint ec=gMap.get(goalName);
+				if (ec!=null){
+					EvalExpression ee=ec.getEvalExpression();
+					Map<String, IntDouble> multiplier = ee.getMultiplier();
+					Set<String> mKeySet = multiplier.keySet();
+					Iterator<String> mi = mKeySet.iterator();
+					boolean hasData = true;
+					while (mi.hasNext()){
+						String variable=mi.next();
+						Number value=multiplier.get(variable).getData();
+						double value1=value.doubleValue();
+						if (goalString.endsWith(":")){
+							if (value1==1.0){
+								goalString=goalString+variable;
+							}else if (value1==-1.0){
+								goalString=goalString+"-"+variable;
+							}else{
+								goalString=goalString+df.format(value)+variable;
+							}
+						}else{
+							if (value1==1.0){
+								goalString=goalString+"+"+variable;
+							}else if (value1 == -1.0){
+								goalString=goalString+"-"+variable;
+							}else if(value1>=0){
+								goalString=goalString+"+"+df.format(value)+variable;
+							}else{
+								goalString=goalString+df.format(value)+variable;
+							}
+						}
+						if (!(variable.startsWith("surplus__") || variable.startsWith("slack__"))){
+							IntDouble id = dvMap.get(variable).getData();
+							if (id==null){
+								hasData=false;
+							}else{
+								double variableValue=id.getData().doubleValue();
+								lhs=lhs+value1*variableValue;
+							}
+						}
+					}
+					Number value=ee.getValue().getData();
+					double value1=value.doubleValue();
+					if (value1>0){
+						goalString=goalString+"+"+df.format(value)+ec.getSign()+"0#";
+					}else if(value1<0){
+						goalString=goalString+df.format(value)+ec.getSign()+"0#";
+					}else{
+						goalString=goalString+ec.getSign()+"0#";
+					}
+					lhs=lhs+value1;
+					if (Math.abs(lhs)<=0.00001 && hasData){
+						controlGoals.add(goalName);
+					}
+				}
+			}
+		}
+		if (goalString.endsWith("#")) goalString=goalString.substring(0, goalString.length()-1);
 		goalString=goalString+"!";
 		for (String controlGoal:controlGoals){
 			goalString=goalString+controlGoal+":";
