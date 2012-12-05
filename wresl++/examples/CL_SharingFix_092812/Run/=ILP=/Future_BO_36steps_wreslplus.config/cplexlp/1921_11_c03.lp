@@ -385,10 +385,10 @@ aemz:  + d_deltareqd - em_mrdo + em_z = 0
 ajpz:  + d_deltareqd - jp_mrdo + jp_z = 0
 area_folsm:  + a_folsm -9.213146556894946 s_folsm = 3160.9146721415445
 area_orovl:  + a_orovl -3.4839441540195923 s_orovl = 3652.238806745301
-area_shsta:  + a_shsta -5.3422370617696116 s_shsta = 6564.273789649429
+area_shsta:  + a_shsta -5.342237061769612 s_shsta = 6564.273789649429
 area_slcvp:  + a_slcvp -3.68842105263157 s_slcvp = 2993.0000000000036
 area_slswp:  + a_slswp -6.7878787878787845 s_slswp = 2299.9090909090914
-area_trnty:  + a_trnty -4.499999999999997 s_trnty = 5300.000000000005
+area_trnty:  + a_trnty -4.499999999999996 s_trnty = 5300.000000000008
 area_wkytn:  + a_wkytn -10.256410256410255 s_wkytn = 810.2564102564106
 arsz1:  + d_deltareqd - rs_mrdo_1 + rs_z_1 = 0
 arsz2:  + d_deltareqd - rs_mrdo_2 + rs_z_2 = 0
@@ -495,7 +495,7 @@ continuitysacfea:  + ad_sacfea_actual - c_sacfea + c_wilkns + c_yubfea - d_frewe
 continuitysacrv:  + c_sacbi - c_sacrv = 0
 continuitysacsjr:  + c_sacrv - c_sacsjr + c_sjrvi - d_antioch - d_sacsjr = -50.416664123535156
 continuitysbay:  + c_intrti - c_sbay + d_banks - d_delvalle - d_sbay + i_delvalle = 0
-continuityshsta:  - c_shsta - e_shsta - f_shsta -16.80555555666667 s_shsta = -50536.45275209008
+continuityshsta:  - c_shsta - e_shsta - f_shsta -16.80555555666667 s_shsta = -50536.452752090074
 continuitysjrcal:  - c_sjrcal + c_sjrver = -64.84416198730469
 continuitysjrcd:  - c_sjrcd + c_sjrsto + c_trmns = 0
 continuitysjrmi:  + c_sjrcd - c_sjrmi - d_medfordis = 0
@@ -507,7 +507,7 @@ continuityslswp:  - c_slswp + d_ofbswp - e_slswp - f_slswp -16.80555555666667 s_
 continuityswpju:  + c_ofbswp + c_slswp - c_swpju - d_swpjucvp = 0
 continuitytherm:  + ad_therm_actual + c_orovl - c_therm - d_therm = 0
 continuitytrmns:  + c_moklmn - c_trmns - d_terminous = 0
-continuitytrnty:  - c_trnty - e_trnty - f_trnty -16.80555555666667 s_trnty = -30285.312034396477
+continuitytrnty:  - c_trnty - e_trnty - f_trnty -16.80555555666667 s_trnty = -30285.312034396484
 continuityupdmc:  - c_intrti - c_updmc + d_jones - d_updmc = 0
 continuitywarnepp:  + c_oso - c_warnepp - d_oso = 0
 continuitywestbr:  + c_warnepp - d_castaic - d_pyramid - d_warnepp - d_warnepp_spill + i_castaic + i_pyramid = 0
@@ -573,7 +573,7 @@ evap_orovl:  + 0.09083333611488342 a_orovl + 59.5041322274708 e_orovl = -1085.52
 evap_shsta:  -0.08916667103767395 a_shsta + 59.5041322274708 e_shsta = 1899.2364882773684
 evap_slcvp:  -0.07208333412806193 a_slcvp + 59.5041322274708 e_slcvp = 317.0256986375085
 evap_slswp:  -0.07208333412806193 a_slswp + 59.5041322274708 e_slswp = 249.58069829965137
-evap_trnty:  -0.03499999890724818 a_trnty + 59.5041322274708 e_trnty = 466.05125782113004
+evap_trnty:  -0.03499999890724818 a_trnty + 59.5041322274708 e_trnty = 466.0512578211301
 evap_wkytn:  -0.044583335518836975 a_wkytn + 59.5041322274708 e_wkytn = 135.35043398539227
 export_comply:  - eiexpctrl + exportactual <= 0
 export_limit_banks_pulse_mon:  + aprmaybanksctrl <= 99999.0
@@ -600,12 +600,12 @@ fixsouthbay:  + d_sbay + slack__fixsouthbay_1 - surplus__fixsouthbay_1 = 381.927
 fixsurplus:  + c_delta_cvp + c_delta_swp + slack__fixsurplus_1 + surp1terms + surp2terms - surplus__fixsurplus_1 = 0
 fixswpds:  + slack__fixswpds_1 - surplus__fixswpds_1 + swpds = -111.21249247021206
 fixswppumping1:  + d_banks_swp + slack__fixswppumping1_1 - surplus__fixswppumping1_1 = 3301.73676931871
-fixswppumping2:  + d_banks_exp1 + slack__fixswppumping2_1 - surplus__fixswppumping2_1 = 2798.791314472225
-fixswppumping3:  + d_banks_exp2 + slack__fixswppumping3_1 - surplus__fixswppumping3_1 = 502.9454548464846
+fixswppumping2:  + d_banks_exp1 + slack__fixswppumping2_1 - surplus__fixswppumping2_1 = 2798.7913144722265
+fixswppumping3:  + d_banks_exp2 + slack__fixswppumping3_1 - surplus__fixswppumping3_1 = 502.9454548464834
 fixterminals:  + c_cvc + slack__fixterminals_1 - surplus__fixterminals_1 = 3652.9256844183683
-fixunusedfs:  + slack__fixunusedfs_1 - surplus__fixunusedfs_1 + unused_fs = 502.9454548464846
+fixunusedfs:  + slack__fixunusedfs_1 - surplus__fixunusedfs_1 + unused_fs = 502.9454548464834
 fixunusedss:  + slack__fixunusedss_1 - surplus__fixunusedss_1 + unused_ss = 0
-fixuwfe:  + slack__fixuwfe_1 - surplus__fixuwfe_1 + uwfe = 6587.536131064054
+fixuwfe:  + slack__fixuwfe_1 - surplus__fixuwfe_1 + uwfe = 6587.536131064053
 fixwhssw:  + slack__fixwhssw_1 - surplus__fixwhssw_1 + whssw = 680.3963631596347
 folsom_storage_change:  - c_nimbus_m - d_folsm - d_nimbus + folds = -1470.7667236328125
 folsomwhl:  + c_nimbus - c_nimbus_m - c_nimbus_whlcv - c_nimbus_whljp = 0
@@ -1313,7 +1313,7 @@ swp_in_yuba__alias:  + swp_in_yuba = 0
 swp_split:  + cvp_share + swp_share = 1.0
 swp_storage_change:  - c_therm - d_orovl - d_therm + swpds = -2683.8474082946777
 swparcsplit:  - d_banks_exp1 - d_banks_exp2 + d_banks_swp = 0
-target_sac: 0 >= -1.0
+target_sac:  + c_hood_ann + slack__target_sac_2 - surplus__target_sac_2 = 0
 totalbanks:  + d_banks - d_banks_cvp - d_banks_swp = 0
 totalcvcsurp:  + d_banks_cvcsurp - d_banks_cvcsurp1 - d_banks_cvcsurp2 = 0
 totalcvcwhl:  + d_banks_cvc - d_banks_cvcrels - d_banks_cvcsurp = 0
@@ -1708,4 +1708,4 @@ End
 
 
 
-\ objective value:   9.684134364954908E8
+\ objective value:   9.68413436495491E8

@@ -7,10 +7,10 @@ c209_prj_exc                       :  0
 c_conyis                           :  -6,646.58440382
 c_delta_ann                        :  0
 c_delta_cvp                        :  20,957.84640083
-c_delta_swp                        :  20,303.72092704
+c_delta_swp                        :  20,303.72092703
 c_delta_whlcv                      :  0
 c_delta_whljp                      :  0
-c_hood_mif                         :  3,004.45871086
+c_hood_mif                         :  2,935.95770378
 c_hst_exc                          :  8,651.33505142
 c_hst_mif                          :  250
 c_intrti                           :  0
@@ -40,7 +40,7 @@ c_wilkns_mif                       :  5,000
 c_wilkns_mif_daily                 :  537.5927124
 c_wkytn_exc                        :  0
 c_wkytn_mif                        :  277.41935484
-c_yolobp_mif                       :  0
+c_yolobp_mif                       :  68.50100708
 c_yubfea_exc                       :  27,731.98961504
 c_yubfea_mif                       :  2,800
 d122a                              :  383.5178833
@@ -390,7 +390,7 @@ c_dxc_geo                          :  7,532.08012403
 c_folsm                            :  9,180.78720102
 c_hood                             :  48,789.40290714
 c_hood_ann                         :  48,789.40290714
-c_hood_exc                         :  45,784.94419628
+c_hood_exc                         :  45,853.44520336
 c_hst                              :  8,901.33505142
 c_indnsl                           :  946.94926765
 c_jtuterm                          :  4,310.10048669
@@ -463,7 +463,7 @@ c_wkytn_m                          :  277.41935484
 c_wkytn_whlcv                      :  0
 c_wkytn_whljp                      :  0
 c_yolobp                           :  68.50100708
-c_yolobp_exc                       :  68.50100708
+c_yolobp_exc                       :  0
 c_yubfea                           :  30,531.98961504
 ch_ec_month                        :  273.99484
 ci_ec_month                        :  361.4848

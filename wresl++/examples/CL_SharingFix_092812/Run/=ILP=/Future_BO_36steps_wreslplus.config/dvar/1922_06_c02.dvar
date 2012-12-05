@@ -317,6 +317,7 @@ slack__setad_yolobp_actual1_1      :  0
 slack__setad_yubfea_actual1_1      :  0
 slack__setbanksminpump_1           :  0
 slack__setjonesminpump_3           :  0
+slack__target_sac_2                :  0
 surplus__balancekcwamwdpin_1       :  0
 surplus__bals_shstafolsm_zone3_1   :  0
 surplus__bals_shstafolsm_zone4_1   :  0
@@ -332,6 +333,7 @@ surplus__set_c_kswck_exc2_penalty_4:  0
 surplus__setad_hst_actual1_2       :  0
 surplus__setad_kswck_actual1_2     :  0
 surplus__setad_nimbus_actual1_2    :  0
+surplus__target_sac_2              :  34,987.63219074
 unused_fs                          :  0
 unused_ss                          :  0
 

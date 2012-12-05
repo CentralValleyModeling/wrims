@@ -47,9 +47,9 @@ d122a                              :  124.36322784
 d122b                              :  127.68907166
 d128                               :  3.1947732
 d129a                              :  117.4661026
-d143a                              :  218.9946807
+d143a                              :  297.03710938
 d143b                              :  177.27149918
-d145a                              :  218.45135498
+d145a                              :  140.40892631
 d145b                              :  126.36734487
 d201                               :  17.61299318
 d202                               :  3.25268822
@@ -66,7 +66,7 @@ d27_pmi                            :  850.25268823
 d28_pco                            :  0
 d28_pmi                            :  0
 d29_pco                            :  0
-d29_pmi                            :  0
+d29_pmi                            :  18.70295699
 d403b_pco                          :  0
 d403b_pin                          :  0
 d403b_pls                          :  1.14868307
@@ -168,14 +168,14 @@ d883_pin                           :  0
 d883_pmi                           :  0
 d884_pco                           :  0
 d884_pin                           :  0
-d884_pmi                           :  199.55241937
+d884_pmi                           :  0
 d885_pco                           :  0
 d885_pin                           :  0
-d885_pmi                           :  0
+d885_pmi                           :  339.27029496
 d886_pco                           :  0
-d886_pmi                           :  196.13709679
+d886_pmi                           :  0
 d887_pco                           :  0
-d887_pmi                           :  71.55913979
+d887_pmi                           :  0
 d888_pco                           :  0
 d888_pmi                           :  28.13575269
 d889_pls                           :  1.78684032
@@ -184,7 +184,7 @@ d893_pls                           :  3.95657492
 d894_pls                           :  3.0631547
 d895_pco                           :  0
 d895_pin                           :  0
-d895_pmi                           :  1,212.92517803
+d895_pmi                           :  1,322.20058202
 d896_pco                           :  0
 d896_pmi                           :  95.79166667
 d899_pco                           :  0
@@ -313,6 +313,7 @@ slack__setad_yolobp_actual1_1      :  0
 slack__setad_yubfea_actual1_1      :  0
 slack__setbanksminpump_1           :  0
 slack__setjonesminpump_3           :  0
+slack__target_sac_2                :  0
 surplus__avoidtrigger_1            :  0
 surplus__balancekcwamwdpin_1       :  0
 surplus__bals_shstafolsm_zone3_1   :  0
@@ -330,6 +331,7 @@ surplus__setad_kswck_actual1_2     :  0
 surplus__setad_nimbus_actual1_2    :  0
 surplus__setad_therm_actual1_2     :  0
 surplus__setad_wilkns_actual1_2    :  0
+surplus__target_sac_2              :  9,862.00768065
 surplus__temp_c209_np_exc_penalty_1:  123.12064493
 surplus__temp_c209_prj_exc_penalty_1:  0
 surplus__temp_do_penalty_1         :  0
@@ -373,7 +375,7 @@ c209_prj                           :  578.32794834
 c209_prj_dr                        :  578.32794834
 c209_pwr                           :  76.2755393
 c209_rg                            :  0
-c_alamo                            :  2,065.87631922
+c_alamo                            :  1,937.89795823
 c_bnkexp                           :  2,624.64636087
 c_chrispp                          :  3,505.32295556
 c_coastaqdct                       :  132.54704302
@@ -421,8 +423,8 @@ c_onlfb                            :  212.92405996
 c_orovl                            :  2,773.30462388
 c_orovl_exp                        :  2,773.30462388
 c_orovl_rem                        :  0
-c_oso                              :  1,439.44663634
-c_pearblpp                         :  1,807.28378196
+c_oso                              :  1,567.42499733
+c_pearblpp                         :  1,679.30542097
 c_redblf                           :  7,368.81566719
 c_sacame                           :  9,945.1276834
 c_sacame_0                         :  9,945.1276834
@@ -456,7 +458,7 @@ c_trnty                            :  3,672.06498146
 c_trnty_pow                        :  3,672.06498146
 c_updmc                            :  4,200
 c_vrnlis                           :  556.98314404
-c_warnepp                          :  1,437.02163901
+c_warnepp                          :  1,565
 c_wilkns                           :  5,022.04216576
 c_wkytn                            :  200
 c_wkytn_m                          :  200
@@ -524,9 +526,9 @@ d122a_psc                          :  124.36322784
 d122b_psc                          :  127.68907166
 d128_psc                           :  3.1947732
 d129a_psc                          :  117.4661026
-d143a_psc                          :  218.9946807
+d143a_psc                          :  297.03710938
 d143b_prf                          :  177.27149918
-d145a_psc                          :  218.45135498
+d145a_psc                          :  140.40892631
 d145b_prf                          :  126.36734487
 d162_pmi                           :  0
 d162_prj                           :  69.83939648
@@ -572,7 +574,7 @@ d206c_pwr                          :  2.60215048
 d25_prj                            :  0
 d27_prj                            :  850.25268823
 d28_prj                            :  0
-d29_prj                            :  0
+d29_prj                            :  18.70295699
 d403b_prj                          :  84.7427691
 d403c_prj                          :  37.40591398
 d607a_pag                          :  36.0905273
@@ -682,16 +684,16 @@ d880_prj                           :  6.50920391
 d881_prj                           :  95.46639786
 d882_prj                           :  5.10525799
 d883_prj                           :  0
-d884_prj                           :  199.55241937
-d885_prj                           :  0
-d886_prj                           :  196.13709679
-d887_prj                           :  71.55913979
+d884_prj                           :  0
+d885_prj                           :  339.27029496
+d886_prj                           :  0
+d887_prj                           :  0
 d888_prj                           :  28.13575269
 d889_prj                           :  1.78684032
 d891_prj                           :  2.42499733
 d893_prj                           :  3.95657492
 d894_prj                           :  3.0631547
-d895_prj                           :  1,212.92517803
+d895_prj                           :  1,322.20058202
 d896_prj                           :  95.79166667
 d899_prj                           :  0
 d8_pmi                             :  129.15409935
@@ -776,8 +778,8 @@ d_oneillfbswp_p                    :  16.3329978
 d_orovl_p                          :  7.15591394
 d_oso                              :  2.42499733
 d_oso_p                            :  2.42499733
-d_pearblpp                         :  1,447.99559303
-d_pearblpp_p                       :  1,447.99559303
+d_pearblpp                         :  1,320.01723204
+d_pearblpp_p                       :  1,320.01723204
 d_redblf                           :  286.00124096
 d_redblf_pag                       :  80.11058986
 d_redblf_pmi                       :  9.43279543
@@ -801,8 +803,8 @@ d_updmc                            :  187.07594004
 d_updmc_p                          :  187.07594004
 d_updmc_pag                        :  175.64274096
 d_updmc_pls                        :  11.43319907
-d_warnepp                          :  1,315.73657431
-d_warnepp_p                        :  1,315.73657431
+d_warnepp                          :  1,443.7149353
+d_warnepp_p                        :  1,443.7149353
 d_wilkns                           :  1,189.49298386
 d_wilkns_gcid                      :  437.44603568
 d_wilkns_p                         :  1,162.8459597

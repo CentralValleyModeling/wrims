@@ -316,6 +316,7 @@ slack__setad_yolobp_actual1_1      :  0
 slack__setad_yubfea_actual1_1      :  0
 slack__setbanksminpump_1           :  0
 slack__setjonesminpump_3           :  0
+slack__target_sac_2                :  0
 surplus__balancekcwamwdpin_1       :  0
 surplus__bals_shstafolsm_zone3_1   :  0
 surplus__bals_shstafolsm_zone4_1   :  0
@@ -333,6 +334,7 @@ surplus__set_c_kswck_exc2_penalty_4:  0
 surplus__setad_hst_actual1_2       :  0
 surplus__setad_kswck_actual1_2     :  0
 surplus__setad_nimbus_actual1_2    :  0
+surplus__target_sac_2              :  34,987.63219074
 unused_fs                          :  0
 unused_ss                          :  0
 
@@ -519,9 +521,9 @@ cv_ec_month                        :  412.6298
 cvp_share                          :  0.55
 cvprulecv                          :  491.77900336
 d104_pag                           :  122.34444798
-d104_pmi                           :  38.31666619
+d104_pmi                           :  38.31665417
 d104_prj                           :  640.12361372
-d104_psc                           :  479.46249955
+d104_psc                           :  479.46251157
 d112                               :  1,170.86003266
 d114                               :  2,999.999936
 d122a_psc                          :  537.79260254
@@ -784,8 +786,8 @@ d_pearblpp                         :  1,391.0196999
 d_pearblpp_p                       :  1,391.0196999
 d_redblf                           :  1,900.23796462
 d_redblf_pag                       :  1,220.62277835
-d_redblf_pmi                       :  38.31666619
-d_redblf_psc                       :  479.46249955
+d_redblf_pmi                       :  38.31665417
+d_redblf_psc                       :  479.46251157
 d_sacame                           :  1,180.28841733
 d_sacame_pmi                       :  17.25757931
 d_sacame_psc                       :  782.18241882

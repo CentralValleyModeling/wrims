@@ -597,10 +597,10 @@ fixsouthbay:  + d_sbay + slack__fixsouthbay_1 - surplus__fixsouthbay_1 = 584.623
 fixsurplus:  + c_delta_cvp + c_delta_swp + slack__fixsurplus_1 + surp1terms + surp2terms - surplus__fixsurplus_1 = 0
 fixswpds:  + slack__fixswpds_1 - surplus__fixswpds_1 + swpds = 2064.3033646625327
 fixswppumping1:  + d_banks_swp + slack__fixswppumping1_1 - surplus__fixswppumping1_1 = 4944.970796069729
-fixswppumping2:  + d_banks_exp1 + slack__fixswppumping2_1 - surplus__fixswppumping2_1 = 3680.360115626373
-fixswppumping3:  + d_banks_exp2 + slack__fixswppumping3_1 - surplus__fixswppumping3_1 = 1264.6106804433557
+fixswppumping2:  + d_banks_exp1 + slack__fixswppumping2_1 - surplus__fixswppumping2_1 = 3680.360115626375
+fixswppumping3:  + d_banks_exp2 + slack__fixswppumping3_1 - surplus__fixswppumping3_1 = 1264.610680443354
 fixterminals:  + c_cvc + slack__fixterminals_1 - surplus__fixterminals_1 = 4121.849149158552
-fixunusedfs:  + slack__fixunusedfs_1 - surplus__fixunusedfs_1 + unused_fs = 1264.6106804433557
+fixunusedfs:  + slack__fixunusedfs_1 - surplus__fixunusedfs_1 + unused_fs = 1264.610680443354
 fixunusedss:  + slack__fixunusedss_1 - surplus__fixunusedss_1 + unused_ss = 0
 fixuwfe:  + slack__fixuwfe_1 - surplus__fixuwfe_1 + uwfe = 3772.1982363331817
 fixwhssw:  + slack__fixwhssw_1 - surplus__fixwhssw_1 + whssw = 3673.923038782545
@@ -1307,7 +1307,7 @@ swp_in_yuba__alias:  + swp_in_yuba = 0
 swp_split:  + cvp_share + swp_share = 1.0
 swp_storage_change:  - c_therm - d_orovl - d_therm + swpds = -2397.231269836426
 swparcsplit:  - d_banks_exp1 - d_banks_exp2 + d_banks_swp = 0
-target_sac: 0 >= -1.0
+target_sac:  + c_hood_ann + slack__target_sac_2 - surplus__target_sac_2 = 0
 totalbanks:  + d_banks - d_banks_cvp - d_banks_swp = 0
 totalcvcsurp:  + d_banks_cvcsurp - d_banks_cvcsurp1 - d_banks_cvcsurp2 = 0
 totalcvcwhl:  + d_banks_cvc - d_banks_cvcrels - d_banks_cvcsurp = 0
@@ -1702,4 +1702,4 @@ End
 
 
 
-\ objective value:   9.524078033129215E8
+\ objective value:   9.524078033129219E8

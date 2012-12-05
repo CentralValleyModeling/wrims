@@ -48,9 +48,9 @@ d122b                              :  0
 d128                               :  0
 d129a                              :  0
 d143a                              :  0
-d143b                              :  25.20833291
+d143b                              :  25.20833101
 d145a                              :  0
-d145b                              :  34.31934492
+d145b                              :  34.31934682
 d201                               :  11.82511
 d202                               :  0
 d204                               :  0
@@ -316,6 +316,7 @@ slack__setad_wilkns_actual1_1      :  0
 slack__setad_yolobp_actual1_1      :  0
 slack__setbanksminpump_1           :  0
 slack__setjonesminpump_3           :  0
+slack__target_sac_2                :  0
 surplus__balancekcwamwdpin_1       :  0
 surplus__bals_shstafolsm_zone3_1   :  0
 surplus__bals_shstafolsm_zone4_1   :  85.53764864
@@ -329,6 +330,7 @@ surplus__lim_c_orovl_pp135_1       :  0
 surplus__set_c_kswck_exc2_penalty_4:  0
 surplus__setad_kswck_actual1_2     :  0
 surplus__setad_yubfea_actual1_2    :  0
+surplus__target_sac_2              :  30,242.94216177
 surplus__temp_c209_np_exc_penalty_1:  7.20002385
 surplus__temp_c209_prj_exc_penalty_1:  0
 surplus__temp_do_penalty_1         :  21,696.97857074
@@ -524,9 +526,9 @@ d122b_psc                          :  0
 d128_psc                           :  0
 d129a_psc                          :  0
 d143a_psc                          :  0
-d143b_prf                          :  25.20833291
+d143b_prf                          :  25.20833101
 d145a_psc                          :  0
-d145b_prf                          :  34.31934492
+d145b_prf                          :  34.31934682
 d162_pmi                           :  0
 d162_prj                           :  0
 d162_psc                           :  0

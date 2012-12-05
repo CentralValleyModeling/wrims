@@ -168,10 +168,10 @@ d883_pin                           :  0
 d883_pmi                           :  0
 d884_pco                           :  0
 d884_pin                           :  0
-d884_pmi                           :  199.55241937
+d884_pmi                           :  72.33185457
 d885_pco                           :  0
 d885_pin                           :  0
-d885_pmi                           :  1,030.73642453
+d885_pmi                           :  1,157.95698932
 d886_pco                           :  0
 d886_pmi                           :  195.48655915
 d887_pco                           :  0
@@ -318,6 +318,7 @@ slack__setad_wilkns_actual1_1      :  0
 slack__setad_yolobp_actual1_1      :  0
 slack__setbanksminpump_1           :  0
 slack__setjonesminpump_3           :  0
+slack__target_sac_2                :  0
 surplus__balancekcwamwdpin_1       :  0
 surplus__bals_shstafolsm_zone3_1   :  0
 surplus__bals_shstafolsm_zone4_1   :  30.74814334
@@ -333,6 +334,7 @@ surplus__no_ei_split_swp2_1        :  0
 surplus__set_c_kswck_exc2_penalty_4:  0
 surplus__setad_kswck_actual1_2     :  0
 surplus__setad_yubfea_actual1_2    :  0
+surplus__target_sac_2              :  17,367.5497499
 unused_fs                          :  0
 unused_ss                          :  0
 
@@ -680,8 +682,8 @@ d880_prj                           :  3.68860888
 d881_prj                           :  32.0389785
 d882_prj                           :  2.89302659
 d883_prj                           :  0
-d884_prj                           :  199.55241937
-d885_prj                           :  1,030.73642453
+d884_prj                           :  72.33185457
+d885_prj                           :  1,157.95698932
 d886_prj                           :  195.48655915
 d887_prj                           :  0
 d888_prj                           :  30.25

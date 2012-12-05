@@ -7,7 +7,7 @@ a_orovllast                        :  13,587.18995623
 a_shstaback                        :  23,317.16074475
 a_shstaforward                     :  25,080.6225295
 a_shstalast                        :  24,198.89163713
-a_slcvpback                        :  2,692.13082289
+a_slcvpback                        :  2,692.13082288
 a_slcvpforward                     :  2,850.17414233
 a_slcvplast                        :  2,771.15248261
 a_slswpback                        :  4,526.16496783
@@ -1160,7 +1160,7 @@ percut4_s                          :  0
 percut4_sys                        :  0
 perdel_1                           :  0.75250621
 perdel_10                          :  0.72997129
-perdel_11                          :  0.99269173
+perdel_11                          :  0.75997279
 perdel_12                          :  0.73033729
 perdel_13                          :  0.7422967
 perdel_14                          :  0.74122257
@@ -1171,11 +1171,11 @@ perdel_18                          :  0.7303506
 perdel_19                          :  0.75590838
 perdel_2                           :  0.73048687
 perdel_20                          :  0.76239
-perdel_21                          :  0.85367834
+perdel_21                          :  0.85633561
 perdel_22                          :  0
-perdel_23                          :  0.80920891
-perdel_24                          :  0.75857108
-perdel_25                          :  0.98655576
+perdel_23                          :  0.81172776
+perdel_24                          :  0.76093231
+perdel_25                          :  0.98962664
 perdel_26                          :  0.78703219
 perdel_27                          :  0.73103379
 perdel_28                          :  0.77161989
@@ -1183,7 +1183,7 @@ perdel_29                          :  0.7660709
 perdel_3                           :  0.80457828
 perdel_30                          :  0.76602662
 perdel_31                          :  0.7497323
-perdel_32                          :  0.92698197
+perdel_32                          :  0.75379384
 perdel_33                          :  0.75754265
 perdel_34                          :  0.7440758
 perdel_35                          :  0.76553849
@@ -1221,7 +1221,7 @@ perdel_sys                         :  1
 perdel_sys_dr                      :  1
 prj_dr69                           :  171.01000214
 prvactdel_co                       :  0
-prvactdel_oth                      :  486.30895033
+prvactdel_oth                      :  487.9193239
 pulse_cap                          :  1,100
 pulseexpres1                       :  0
 qomr_dltsw                         :  0
@@ -1237,7 +1237,7 @@ relcap_trnty                       :  9,018.50828267
 relcap_wkytn                       :  12,282.35294118
 remaindemand_1                     :  5.43309486
 remaindemand_10                    :  3.40166622
-remaindemand_11                    :  2.07472572
+remaindemand_11                    :  1.58834313
 remaindemand_12                    :  13.78876811
 remaindemand_13                    :  13.42814732
 remaindemand_14                    :  0.29648903
@@ -1248,11 +1248,11 @@ remaindemand_18                    :  11.84628673
 remaindemand_19                    :  9.97043159
 remaindemand_2                     :  14.09109181
 remaindemand_20                    :  0.5641686
-remaindemand_21                    :  84.65928061
+remaindemand_21                    :  84.92280227
 remaindemand_22                    :  0
-remaindemand_23                    :  172.10255085
-remaindemand_24                    :  219.43944285
-remaindemand_25                    :  41.1492408
+remaindemand_23                    :  172.63825999
+remaindemand_24                    :  220.12249906
+remaindemand_25                    :  41.27732736
 remaindemand_26                    :  12.8207543
 remaindemand_27                    :  8.21681979
 remaindemand_28                    :  0.80248468
@@ -1260,7 +1260,7 @@ remaindemand_29                    :  4.99478228
 remaindemand_3                     :  12.20545254
 remaindemand_30                    :  25.31717991
 remaindemand_31                    :  8.87683049
-remaindemand_32                    :  6.01611302
+remaindemand_32                    :  4.89212203
 remaindemand_33                    :  6.3633583
 remaindemand_34                    :  14.56156346
 remaindemand_35                    :  35.05400733
@@ -1272,7 +1272,7 @@ remaindemand_4                     :  49.44280945
 remaindemand_5                     :  3.22105083
 remaindemand_6                     :  17.86400467
 remaindemand_8                     :  49.40098135
-remaindemand_mwd                   :  517.35051511
+remaindemand_mwd                   :  518.96088868
 remainta_1                         :  7.22
 remainta_10                        :  4.66
 remainta_10_orig                   :  4.66
@@ -1448,8 +1448,8 @@ swp_allocation_3                   :  0
 swp_allocation_final               :  3,111.97032743
 swp_demand_ag                      :  1,278.58599022
 swp_demand_co                      :  0
-swp_demand_mi                      :  1,694.49463476
-swp_demand_mwd                     :  2,179.52148451
+swp_demand_mi                      :  1,687.27656633
+swp_demand_mwd                     :  2,186.30575106
 swp_demand_pls                     :  124.43841684
 swp_demprofile                     :  100
 swp_mwd_ratio                      :  1
@@ -1463,7 +1463,7 @@ swp_rule_cap_oroville              :  549.17835109
 swp_rule_deltar                    :  859.79215485
 swp_tablea                         :  4,168.8
 swp_tot_ratio                      :  1
-swp_total_demand                   :  5,277.04052632
+swp_total_demand                   :  5,276.60672445
 swpdel_pag802a                     :  3.36432132
 swpdel_pag846                      :  1.16554817
 swpdel_pag847                      :  3.40411692
@@ -1509,8 +1509,8 @@ swpdel_pco888                      :  0
 swpdel_pco895                      :  0
 swpdel_pco896                      :  0
 swpdel_pco899                      :  0
-swpdel_pmi25                       :  2.16518214
-swpdel_pmi27                       :  127.89879586
+swpdel_pmi25                       :  2.65156473
+swpdel_pmi27                       :  126.28842228
 swpdel_pmi28                       :  0
 swpdel_pmi29                       :  8.68768422
 swpdel_pmi403b                     :  13.00465008
@@ -1532,7 +1532,7 @@ swpdel_pmi884                      :  18.26639737
 swpdel_pmi885                      :  246.46762558
 swpdel_pmi886                      :  41.35171614
 swpdel_pmi887                      :  12.17650511
-swpdel_pmi888                      :  6.63050871
+swpdel_pmi888                      :  7.7544997
 swpdel_pmi895                      :  292.91000033
 swpdel_pmi896                      :  42.44502958
 swpdel_pmi899                      :  66.51139201

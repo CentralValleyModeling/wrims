@@ -10,7 +10,7 @@ c_delta_cvp                        :  0
 c_delta_swp                        :  0
 c_delta_whlcv                      :  0
 c_delta_whljp                      :  0
-c_hood_mif                         :  6,555.33695001
+c_hood_mif                         :  6,507.18266458
 c_hst_exc                          :  1,852.24871887
 c_hst_mif                          :  250
 c_intrti                           :  2.27193564
@@ -40,7 +40,7 @@ c_wilkns_mif                       :  5,000
 c_wilkns_mif_daily                 :  89.44701385
 c_wkytn_exc                        :  0
 c_wkytn_mif                        :  85
-c_yolobp_mif                       :  0
+c_yolobp_mif                       :  48.15428543
 c_yubfea_exc                       :  7,075.54520933
 c_yubfea_mif                       :  2,800
 d122a                              :  476.73117065
@@ -340,6 +340,7 @@ slack__setad_yubfea_actual1_1      :  0
 slack__setbanksminpump_1           :  0
 slack__setjonesminpump_3           :  0
 slack__setsurpluscont_1            :  0
+slack__target_sac_2                :  0
 surplus__balancekcwamwdpin_1       :  0
 surplus__bals_shstafolsm_zone3_1   :  0
 surplus__bals_shstafolsm_zone4_1   :  0
@@ -380,6 +381,7 @@ surplus__setad_kswck_actual1_2     :  0
 surplus__setad_nimbus_actual1_2    :  0
 surplus__setad_wilkns_actual1_2    :  0
 surplus__setsurpluscont_1          :  0
+surplus__target_sac_2              :  18,041.53703694
 unused_fs                          :  1,087.17951742
 unused_ss                          :  0
 
@@ -445,7 +447,7 @@ c_dxc_geo                          :  3,470.28704258
 c_folsm                            :  2,567.14227183
 c_hood                             :  18,041.53703694
 c_hood_ann                         :  18,041.53703694
-c_hood_exc                         :  11,486.20008693
+c_hood_exc                         :  11,534.35437236
 c_hst                              :  2,102.24871887
 c_indnsl                           :  960.57692334
 c_jtuterm                          :  5,484.16125475
@@ -514,7 +516,7 @@ c_wkytn_m                          :  85
 c_wkytn_whlcv                      :  0
 c_wkytn_whljp                      :  0
 c_yolobp                           :  48.15428543
-c_yolobp_exc                       :  48.15428543
+c_yolobp_exc                       :  0
 c_yubfea                           :  9,875.54520933
 ch_ec_month                        :  228.67474
 ci_ec_month                        :  291.87155
@@ -565,8 +567,8 @@ co_z                               :  -8,000
 cv_ec_month                        :  290.60516
 cvp_share                          :  0.75
 cvprulecv                          :  418.20086705
-d104_pag                           :  140.84139538
-d104_pmi                           :  44.07397188
+d104_pag                           :  140.67880765
+d104_pmi                           :  44.23655961
 d104_prj                           :  736.89652776
 d104_psc                           :  551.9811605
 d112                               :  1,209.72612237
@@ -830,8 +832,8 @@ d_oso_p                            :  4.46266031
 d_pearblpp                         :  1,684.86717948
 d_pearblpp_p                       :  1,684.86717948
 d_redblf                           :  2,049.37511443
-d_redblf_pag                       :  1,339.61042826
-d_redblf_pmi                       :  44.07397188
+d_redblf_pag                       :  1,339.44784054
+d_redblf_pmi                       :  44.23655961
 d_redblf_psc                       :  551.9811605
 d_sacame                           :  1,110.45256234
 d_sacame_pmi                       :  15.39993859

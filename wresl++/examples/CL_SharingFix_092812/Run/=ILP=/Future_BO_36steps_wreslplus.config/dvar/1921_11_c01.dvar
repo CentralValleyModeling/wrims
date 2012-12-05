@@ -47,9 +47,9 @@ d122a                              :  60.13782501
 d122b                              :  57.61236954
 d128                               :  0
 d129a                              :  54.24186707
-d143a                              :  136.12499202
+d143a                              :  136.125
 d143b                              :  164.69444766
-d145a                              :  102.5138855
+d145a                              :  102.51387752
 d145b                              :  37.63839972
 d201                               :  11.4164219
 d202                               :  0
@@ -64,7 +64,7 @@ d27_pco                            :  0
 d27_pin                            :  0
 d27_pmi                            :  235.78194446
 d28_pco                            :  0
-d28_pmi                            :  52.9375
+d28_pmi                            :  0
 d29_pco                            :  0
 d29_pmi                            :  52.9375
 d403b_pco                          :  0
@@ -168,10 +168,10 @@ d883_pin                           :  0
 d883_pmi                           :  0
 d884_pco                           :  0
 d884_pin                           :  0
-d884_pmi                           :  206.20416668
+d884_pmi                           :  0
 d885_pco                           :  0
 d885_pin                           :  0
-d885_pmi                           :  750.65503165
+d885_pmi                           :  1,009.79669834
 d886_pco                           :  0
 d886_pmi                           :  202.3388889
 d887_pco                           :  0
@@ -313,6 +313,7 @@ slack__setad_therm_actual1_1       :  0
 slack__setad_yolobp_actual1_1      :  0
 slack__setbanksminpump_1           :  0
 slack__setjonesminpump_3           :  0
+slack__target_sac_2                :  0
 surplus__avoidtrigger_2            :  0
 surplus__balancekcwamwdpin_1       :  0
 surplus__bals_shstafolsm_zone3_1   :  0
@@ -330,6 +331,7 @@ surplus__setad_kswck_actual1_2     :  0
 surplus__setad_nimbus_actual1_2    :  0
 surplus__setad_wilkns_actual1_2    :  0
 surplus__setad_yubfea_actual1_2    :  0
+surplus__target_sac_2              :  10,182.25844234
 surplus__temp_c209_np_exc_penalty_1:  180.11000061
 surplus__temp_c209_prj_exc_penalty_1:  2.31637543
 surplus__temp_do_penalty_1         :  0
@@ -373,7 +375,7 @@ c209_prj                           :  2.31637543
 c209_prj_dr                        :  0
 c209_pwr                           :  0
 c209_rg                            :  0
-c_alamo                            :  2,019.35928934
+c_alamo                            :  2,072.29678934
 c_bnkexp                           :  2,441.92905849
 c_chrispp                          :  3,158.24206278
 c_coastaqdct                       :  127.05000001
@@ -421,8 +423,8 @@ c_onlfb                            :  336.21159479
 c_orovl                            :  1,707.43885564
 c_orovl_exp                        :  1,707.43885564
 c_orovl_rem                        :  0
-c_oso                              :  1,138.88277344
-c_pearblpp                         :  1,738.56594678
+c_oso                              :  1,085.94527344
+c_pearblpp                         :  1,791.50344678
 c_redblf                           :  5,953.90398004
 c_sacame                           :  10,248.69843715
 c_sacame_0                         :  10,248.69843715
@@ -456,7 +458,7 @@ c_trnty                            :  798.14698803
 c_trnty_pow                        :  798.14698803
 c_updmc                            :  4,200
 c_vrnlis                           :  419.72756787
-c_warnepp                          :  1,136.95213834
+c_warnepp                          :  1,084.01463834
 c_wilkns                           :  5,104.3971405
 c_wkytn                            :  200
 c_wkytn_m                          :  200
@@ -524,9 +526,9 @@ d122a_psc                          :  60.13782501
 d122b_psc                          :  57.61236954
 d128_psc                           :  0
 d129a_psc                          :  54.24186707
-d143a_psc                          :  136.12499202
+d143a_psc                          :  136.125
 d143b_prf                          :  164.69444766
-d145a_psc                          :  102.5138855
+d145a_psc                          :  102.51387752
 d145b_prf                          :  37.63839972
 d162_pmi                           :  0
 d162_prj                           :  0
@@ -571,7 +573,7 @@ d206c_prj                          :  0
 d206c_pwr                          :  0
 d25_prj                            :  7.22638889
 d27_prj                            :  235.78194446
-d28_prj                            :  52.9375
+d28_prj                            :  0
 d29_prj                            :  52.9375
 d403b_prj                          :  97.10624999
 d403c_prj                          :  0
@@ -682,8 +684,8 @@ d880_prj                           :  5.18223143
 d881_prj                           :  65.37361112
 d882_prj                           :  4.06449509
 d883_prj                           :  0
-d884_prj                           :  206.20416668
-d885_prj                           :  750.65503165
+d884_prj                           :  0
+d885_prj                           :  1,009.79669834
 d886_prj                           :  202.3388889
 d887_prj                           :  0
 d888_prj                           :  29.07361111
@@ -776,8 +778,8 @@ d_oneillfbswp_p                    :  7.82415342
 d_orovl_p                          :  0
 d_oso                              :  1.93063509
 d_oso_p                            :  1.93063509
-d_pearblpp                         :  1,750.02265569
-d_pearblpp_p                       :  1,750.02265569
+d_pearblpp                         :  1,802.96015569
+d_pearblpp_p                       :  1,802.96015569
 d_redblf                           :  0
 d_redblf_pag                       :  0
 d_redblf_pmi                       :  0
@@ -801,8 +803,8 @@ d_updmc                            :  63.78840521
 d_updmc_p                          :  63.78840521
 d_updmc_pag                        :  55.3940301
 d_updmc_pls                        :  8.39437511
-d_warnepp                          :  1,295.58312551
-d_warnepp_p                        :  1,295.58312551
+d_warnepp                          :  1,242.64562551
+d_warnepp_p                        :  1,242.64562551
 d_wilkns                           :  678.85611322
 d_wilkns_gcid                      :  238.63887752
 d_wilkns_p                         :  678.85611322

@@ -66,7 +66,7 @@ d27_pmi                            :  287.70457138
 d28_pco                            :  0
 d28_pmi                            :  0
 d29_pco                            :  0
-d29_pmi                            :  0
+d29_pmi                            :  21.44413104
 d403b_pco                          :  0
 d403b_pin                          :  32.52688217
 d403b_pls                          :  2.11389184
@@ -129,9 +129,9 @@ d848_pin                           :  0
 d849_pag                           :  109.31459623
 d849_pco                           :  0
 d849_pin                           :  0
-d851_pag                           :  897.71999497
+d851_pag                           :  1,062.7832768
 d851_pco                           :  0
-d851a_pmi                          :  186.50741287
+d851a_pmi                          :  0
 d851b_pmi                          :  0
 d854_pls                           :  27.9503479
 d856                               :  0
@@ -314,6 +314,7 @@ slack__setad_yolobp_actual1_1      :  0
 slack__setad_yubfea_actual1_1      :  0
 slack__setbanksminpump_1           :  0
 slack__setjonesminpump_3           :  0
+slack__target_sac_2                :  0
 surplus__balancekcwamwdpin_1       :  0
 surplus__bals_shstafolsm_zone3_1   :  0
 surplus__bals_shstafolsm_zone4_1   :  0
@@ -330,6 +331,7 @@ surplus__setad_hst_actual1_2       :  0
 surplus__setad_kswck_actual1_2     :  0
 surplus__setad_nimbus_actual1_2    :  0
 surplus__setad_wilkns_actual1_2    :  0
+surplus__target_sac_2              :  12,448.71655437
 surplus__temp_c209_np_exc_penalty_1:  0
 surplus__temp_c209_prj_exc_penalty_1:  0
 surplus__temp_do_penalty_1         :  0
@@ -375,9 +377,9 @@ c209_pwr                           :  577.35216318
 c209_rg                            :  140.31481144
 c_alamo                            :  1,959.25990751
 c_bnkexp                           :  1,087.17951742
-c_chrispp                          :  2,988.78827702
+c_chrispp                          :  3,010.23240806
 c_coastaqdct                       :  292.6841476
-c_cvc                              :  3,369.57889411
+c_cvc                              :  3,391.02302515
 c_cvpdmc                           :  2,531.92400672
 c_cvpju                            :  4,220.92765953
 c_daguer                           :  2,301.2598877
@@ -394,7 +396,7 @@ c_hood_exc                         :  12,448.71655437
 c_hst                              :  2,102.24871887
 c_indnsl                           :  535.52256666
 c_jtuterm                          :  5,093.36410511
-c_kcwa                             :  3,397.52924201
+c_kcwa                             :  3,418.97337305
 c_kswck                            :  13,194.58638893
 c_kswck_exc1                       :  9,944.58638893
 c_kswck_exc2                       :  0
@@ -421,7 +423,7 @@ c_onlfb                            :  2.27193564
 c_orovl                            :  4,754.82550988
 c_orovl_exp                        :  4,754.82550988
 c_orovl_rem                        :  0
-c_oso                              :  1,029.52836951
+c_oso                              :  1,050.97250055
 c_pearblpp                         :  1,720.53312644
 c_redblf                           :  11,618.06887948
 c_sacame                           :  12,662.21655437
@@ -456,7 +458,7 @@ c_trnty                            :  1,948.26911974
 c_trnty_pow                        :  1,948.26911974
 c_updmc                            :  3,597.30436603
 c_vrnlis                           :  2,180.2645498
-c_warnepp                          :  1,025.0657092
+c_warnepp                          :  1,046.50984023
 c_wilkns                           :  5,089.44701385
 c_wkytn                            :  85
 c_wkytn_m                          :  85
@@ -572,7 +574,7 @@ d206c_pwr                          :  19.19085936
 d25_prj                            :  7.91025444
 d27_prj                            :  287.70457138
 d28_prj                            :  0
-d29_prj                            :  0
+d29_prj                            :  21.44413104
 d403b_prj                          :  79.55176495
 d403c_prj                          :  70.02665574
 d607a_pag                          :  138.40012179
@@ -660,7 +662,7 @@ d846_prj                           :  3.92433569
 d847_prj                           :  13.77134014
 d848_prj                           :  191.9130356
 d849_prj                           :  109.31459623
-d851_prj                           :  1,084.22740784
+d851_prj                           :  1,062.7832768
 d854_prj                           :  27.9503479
 d855                               :  0
 d855_pag                           :  0
@@ -761,8 +763,8 @@ d_jones                            :  4,600
 d_jones_cvp                        :  4,600
 d_jones_exp1                       :  4,600
 d_jones_exp2                       :  0
-d_kcwa                             :  1,084.22740784
-d_kcwa_p                           :  1,084.22740784
+d_kcwa                             :  1,062.7832768
+d_kcwa_p                           :  1,062.7832768
 d_medfordis                        :  795.09002686
 d_mendotapl                        :  2,555.45236709
 d_mendotapl_pag                    :  138.40012179
@@ -801,8 +803,8 @@ d_updmc                            :  1,000.42369833
 d_updmc_p                          :  1,000.42369833
 d_updmc_pag                        :  943.257702
 d_updmc_pls                        :  57.16599633
-d_warnepp                          :  984.10277852
-d_warnepp_p                        :  984.10277852
+d_warnepp                          :  1,005.54690955
+d_warnepp_p                        :  1,005.54690955
 d_wilkns                           :  5,909.7402128
 d_wilkns_gcid                      :  2,361.69450531
 d_wilkns_p                         :  5,883.09318864

@@ -47,9 +47,9 @@ d122a                              :  60.13782501
 d122b                              :  57.61236954
 d128                               :  0
 d129a                              :  54.24186707
-d143a                              :  136.12499202
+d143a                              :  136.125
 d143b                              :  164.69444766
-d145a                              :  102.5138855
+d145a                              :  102.51387752
 d145b                              :  37.63839972
 d201                               :  11.4164219
 d202                               :  0
@@ -168,10 +168,10 @@ d883_pin                           :  0
 d883_pmi                           :  0
 d884_pco                           :  0
 d884_pin                           :  0
-d884_pmi                           :  206.20416668
+d884_pmi                           :  120.93769592
 d885_pco                           :  0
 d885_pin                           :  0
-d885_pmi                           :  1,111.28908487
+d885_pmi                           :  1,196.55555563
 d886_pco                           :  0
 d886_pmi                           :  202.3388889
 d887_pco                           :  0
@@ -315,6 +315,7 @@ slack__setad_therm_actual1_1       :  0
 slack__setad_yolobp_actual1_1      :  0
 slack__setbanksminpump_1           :  0
 slack__setjonesminpump_3           :  0
+slack__target_sac_2                :  0
 surplus__avoidtrigger_2            :  0
 surplus__balancekcwamwdpin_1       :  0
 surplus__bals_shstafolsm_zone3_1   :  0
@@ -333,6 +334,7 @@ surplus__setad_kswck_actual1_2     :  0
 surplus__setad_nimbus_actual1_2    :  0
 surplus__setad_wilkns_actual1_2    :  0
 surplus__setad_yubfea_actual1_2    :  0
+surplus__target_sac_2              :  10,982.25844234
 unused_fs                          :  502.94545485
 unused_ss                          :  0
 
@@ -522,9 +524,9 @@ d122a_psc                          :  60.13782501
 d122b_psc                          :  57.61236954
 d128_psc                           :  0
 d129a_psc                          :  54.24186707
-d143a_psc                          :  136.12499202
+d143a_psc                          :  136.125
 d143b_prf                          :  164.69444766
-d145a_psc                          :  102.5138855
+d145a_psc                          :  102.51387752
 d145b_prf                          :  37.63839972
 d162_pmi                           :  0
 d162_prj                           :  0
@@ -680,8 +682,8 @@ d880_prj                           :  5.18223143
 d881_prj                           :  65.37361112
 d882_prj                           :  4.06449509
 d883_prj                           :  0
-d884_prj                           :  206.20416668
-d885_prj                           :  1,111.28908487
+d884_prj                           :  120.93769592
+d885_prj                           :  1,196.55555563
 d886_prj                           :  202.3388889
 d887_prj                           :  0
 d888_prj                           :  29.07361111
