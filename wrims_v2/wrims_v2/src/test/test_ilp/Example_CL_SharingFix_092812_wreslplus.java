@@ -36,7 +36,7 @@ public class Example_CL_SharingFix_092812_wreslplus {
 		Error.clear();
         new ControllerBatch(controlDataString);
         
-        expected = 9.322149549230603E8; 
+        expected = 9.322147817217461E8; 
 		
 		double obj_value=-99;
 
