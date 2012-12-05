@@ -241,7 +241,18 @@ public class ProcGoal {
 		}
 		else if (ProcGoal.isFree(gt) && ProcGoal.isFree(lt)) {
 	
-			caseExpression = " 1 > 0 ";
+			//caseExpression = " 1 > 0 ";
+		
+			// default to general treatment, that is, 
+			// lhs + slack - surplus = rhs with zero weight on lhs and rhs 
+			surplusName = "surplus__" + goalName + "_" + caseNumber;
+			surplusWeight = gt;
+			lhs_m = lhs + "-" + surplusName;
+			slackName = "slack__" + goalName + "_" + caseNumber;
+			slackWeight = lt;
+			lhs_m = lhs_m + "+" + slackName;
+			relation = "=";
+			caseExpression = lhs_m + " = " + cm.rhs;
 	
 		}
 		else if (ProcGoal.isFree(lt)) {
