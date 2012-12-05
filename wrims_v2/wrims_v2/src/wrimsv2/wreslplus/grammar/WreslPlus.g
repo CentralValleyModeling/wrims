@@ -95,8 +95,8 @@ scope { StudyTemp sty;}
 	;
 
 local_deprecated
-  : '[' LOCAL ']' 
-    {LogUtils.warningMsg("\"[local]\" is deprecated. All variables are by default local.");};
+  : '[' LOCAL ']' ;
+    //{LogUtils.warningMsg("\"[local]\" is deprecated. All variables are by default local.");};
 
 initial 
 @init {  isParameter=true; }
@@ -250,6 +250,8 @@ scope { IfIncItemGroup incg_;
         $mt::m_.tsList.add($if_inc_items::incg_.id); 
         $mt::m_.glList.add($if_inc_items::incg_.id); 
         $mt::m_.gl2List.add($if_inc_items::incg_.id); 
+        $if_inc_items::incg_.dependants = dependants;
+        $if_inc_items::incg_.fromWresl = this.currentAbsolutePath; 
        // $mt::m_.wTableObjList.add($if_inc_items::incg_.id);         
 
 }

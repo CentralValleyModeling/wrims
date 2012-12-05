@@ -11,6 +11,7 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.TokenStream;
 
 import wrimsv2.commondata.wresldata.Param;
+import wrimsv2.components.ControlData;
 import wrimsv2.evaluator.ValueEvaluatorLexer;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.wreslplus.elements.AliasTemp;
@@ -23,6 +24,7 @@ import wrimsv2.wreslplus.elements.StudyTemp;
 import wrimsv2.wreslplus.elements.SvarTemp;
 import wrimsv2.wreslplus.elements.TimeseriesTemp;
 import wrimsv2.wreslplus.elements.WeightTable;
+import wrimsv2.components.Error;
 
 public class ProcIfIncItemGroup {
 
@@ -47,9 +49,13 @@ public class ProcIfIncItemGroup {
 			
 			IfIncItemGroup gObj = m.ifIncItemGroupMap.get(k);
 			
+			//check dependants of the condition expression
+			
 			
 			// good for debug
-			gObj.conditionValueList = evaluateConditions(gObj.conditionList);			
+			ControlData.currEvalName=gObj.fromWresl;
+			ControlData.currEvalTypeIndex=9;
+			gObj.conditionValueList = evaluateConditions(gObj.conditionList);	
 			
 			// find index
 			int indexOfFirstTrue = gObj.conditionValueList.indexOf(true);			
@@ -247,13 +253,17 @@ public class ProcIfIncItemGroup {
 				
 				vep.evaluator();
 				ret.add(vep.evalCondition);
-				
 				//if (vep.evalCondition) return ret;
 				
 			} catch (Exception e) {
 				// TODO: handle exception
-				System.out.println(" Error in ProcIfIncFileGroup ...");
-				return null;
+				System.out.println(" Error in processing conditional include ...");
+				
+				ret.add(false);
+				
+			} finally {
+				
+				if (Error.getTotalError()>0) Error.writeErrorLog();
 			}
 						
 		}

@@ -157,6 +157,10 @@ public class Error {
 			error_evaluation.add(getCurrentDateCycleModel()+", "+ControlData.currEvalName+" in weight definition: "+error);
 		}else if (ControlData.currEvalTypeIndex==8){
 			error_evaluation.add("Initial variable "+ControlData.currEvalName+": "+error);
+		}else if (ControlData.currEvalTypeIndex==9){
+			String msg = "Conditional include (if, elseif) in file: "+ControlData.currEvalName+": "+error;
+			error_evaluation.add(msg);
+			System.out.println("# Error :"+msg);
 		}
 		System.out.println("Error-"+ControlData.currEvalName+":"+error);
 	}

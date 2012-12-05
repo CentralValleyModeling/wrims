@@ -385,7 +385,8 @@ public class ToLowerCase {
 		IfIncItemGroup o = new IfIncItemGroup();
 		
 		o.id = w.id;
-		
+		o.fromWresl = w.fromWresl.toLowerCase();
+		o.dependants = Tools.allToLowerCase(w.dependants);
 		o.conditionList =  Tools.allToLowerCase(w.conditionList);
 
 		o.inc_item_list = Tools.allToLowerCase2(w.inc_item_list);
