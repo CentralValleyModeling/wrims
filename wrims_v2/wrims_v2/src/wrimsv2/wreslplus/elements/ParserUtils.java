@@ -10,6 +10,7 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 
+import wrimsv2.components.ControlData;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
 import wrimsv2.wreslplus.elements.procedures.ProcIfIncItemGroup;
@@ -64,7 +65,7 @@ public class ParserUtils {
 
 		parser.pathRelativeToRunDir = ResourceUtils.getRelativePath(parser.currentAbsolutePath, GlobalData.runDir, File.separator);
 		
-		LogUtils.importantMsg("Parsing file: "+parser.currentAbsolutePath);
+		if (ControlData.isParseStudy) LogUtils.importantMsg("Parsing file: "+parser.currentAbsolutePath);
 		
 		return parser;
 		

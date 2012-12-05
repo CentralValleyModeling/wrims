@@ -91,8 +91,7 @@ public class ControlData {
 	public static boolean showWreslLog=true;
 	public static boolean writeInitToDVOutput=true;
 	public static int solverType;
-
-
+	public static boolean isParseStudy=true;
 
 	
 	public ControlData(){

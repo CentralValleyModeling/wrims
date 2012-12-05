@@ -167,6 +167,7 @@ public class DebugInterface {
 				e.printStackTrace();
 			}
 		}else if (request.startsWith("data:")){
+			ControlData.isParseStudy=false;
 			int index=request.indexOf(":");
 			try {
 				if (request.equals("data:")){
@@ -184,6 +185,7 @@ public class DebugInterface {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			ControlData.isParseStudy=true;
 		}else if (request.startsWith("tsdetail:")){
 			int index=request.indexOf(":");
 			try {
@@ -249,6 +251,7 @@ public class DebugInterface {
 				e.printStackTrace();
 			}
 		}else if (request.startsWith("goal:")){
+			ControlData.isParseStudy=false;
 			int index=request.indexOf(":");
 			try {
 				if (request.equals("goal:")){
@@ -266,6 +269,7 @@ public class DebugInterface {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			ControlData.isParseStudy=true;
 		}else if (request.equals("allgoals")){
 			try{
 				goalString=getAllGoalString();
@@ -583,40 +587,78 @@ public class DebugInterface {
 		Map<String, Alias> asMap = mds.asMap;
 		Map<String, String> partsMap=new HashMap<String, String>();
 		ArrayList<String> parameterList = new ArrayList<String>();
+		ArrayList<String> dvList = new ArrayList<String>();
+		ArrayList<String> svList = new ArrayList<String>();
+		ArrayList<String> asList = new ArrayList<String>();
+		ArrayList<String> tsList = new ArrayList<String>();
+		ArrayList<String> gList = new ArrayList<String>();
+		ArrayList<String> sortedList = new ArrayList<String>();
+		ModelTemp modelTemp;
+		Map<String, GoalTemp> gMap = new HashMap <String, GoalTemp>();
+		fileFullPath=fileFullPath.replace("/", "\\");
 		if (fileFullPath.equalsIgnoreCase(FilePaths.fullMainPath)){
 			StudyTemp studyTemp = ParserUtils.parseWreslMain(fileFullPath);
 			if (studyTemp==null) return dataString;
 			parameterList = studyTemp.parameterList;
-		}
-		ModelTemp modelTemp = ParserUtils.parseWreslFile(fileFullPath);
-		if (modelTemp==null) return dataString;
-		ArrayList<String> dvList = modelTemp.dvList;
-		ArrayList<String> svList = modelTemp.svList;
-		ArrayList<String> asList = modelTemp.asList;
-		ArrayList<String> tsList = modelTemp.tsList;
-		ArrayList<String> gList = modelTemp.glList;
-		Map<String, GoalTemp> glMap = modelTemp.glMap;
-		ArrayList<String> sortedList = modelTemp.asList;
-		
-		asList.removeAll(dvList);
-		sortedList.addAll(dvList);
-		sortedList.addAll(parameterList);
-		sortedList.addAll(svList);
-		sortedList.addAll(tsList);
-
-		for (String gName:gList){
-			Set<String> dependants = glMap.get(gName).dependants;
-			Iterator<String> iterator = dependants.iterator();
-			while (iterator.hasNext()){
-				String varName=iterator.next();
-				if (!sortedList.contains(varName)){
-					sortedList.add(varName);
+			sortedList.addAll(parameterList);
+			Map<String, ModelTemp> modelMap = studyTemp.modelMap;
+			ArrayList<String> modelList = studyTemp.modelList;
+			for (String model: modelList){
+				modelTemp=modelMap.get(model);
+				dvList = modelTemp.dvList;
+				svList = modelTemp.svList;
+				asList = modelTemp.asList;
+				tsList = modelTemp.tsList;
+				gList = modelTemp.glList;
+				gMap = modelTemp.glMap;
+				asList.removeAll(dvList);
+				sortedList.addAll(asList);
+				sortedList.addAll(dvList);
+				sortedList.addAll(svList);
+				sortedList.addAll(tsList);
+				for (String gName:gList){
+					if (gMap.containsKey(gName)){
+						Set<String> dependants = gMap.get(gName).dependants;
+						Iterator<String> iterator = dependants.iterator();
+						while (iterator.hasNext()){
+							String varName=iterator.next();
+							if (!sortedList.contains(varName)){
+								sortedList.add(varName);
+							}
+						}
+					}
+				}
+			}
+		}else{
+			modelTemp = ParserUtils.parseWreslFile(fileFullPath);
+			if (modelTemp==null) return dataString;
+			dvList = modelTemp.dvList;
+			svList = modelTemp.svList;
+			asList = modelTemp.asList;
+			tsList = modelTemp.tsList;
+			gList = modelTemp.glList;
+			gMap = modelTemp.glMap;
+			sortedList = asList;
+			asList.removeAll(dvList);
+			sortedList.addAll(dvList);
+			sortedList.addAll(parameterList);
+			sortedList.addAll(svList);
+			sortedList.addAll(tsList);
+			for (String gName:gList){
+				Set<String> dependants = gMap.get(gName).dependants;
+				Iterator<String> iterator = dependants.iterator();
+				while (iterator.hasNext()){
+					String varName=iterator.next();
+					if (!sortedList.contains(varName)){
+						sortedList.add(varName);
+					}
 				}
 			}
 		}
 		IntDouble intDouble;
 		Collections.sort(sortedList);
 		for (String variable: sortedList){
+			variable=variable.toLowerCase();
 			if (svMap.containsKey(variable)){
 				Svar sv = svMap.get(variable);
 				intDouble=sv.getData();
@@ -650,7 +692,7 @@ public class DebugInterface {
 				intDouble=sv.getData();
 				if (intDouble != null){
 					dataString=dataString+variable+":"+df.format(intDouble.getData())+"#";
-					//partsMap.put(variable, sv.kind+":"+ControlData.timeStep);
+					partsMap.put(variable, sv.kind+":"+ControlData.timeStep);
 				}
 			}
 		}
@@ -756,15 +798,28 @@ public class DebugInterface {
 		Map<String, EvalConstraint> gMap = SolverData.getConstraintDataMap();
 		Map<String, Dvar> dvMap = SolverData.getDvarMap();
 		ArrayList<String> controlGoals=new ArrayList<String>();
+		ArrayList<String> sortedGoalList=new ArrayList<String>();
 		
-		ModelTemp modelTemp = ParserUtils.parseWreslFile(fileFullPath);
-		if (modelTemp==null) return goalString;	
-		ArrayList<String> sortedGoalList = modelTemp.glList;
+		if (fileFullPath.equalsIgnoreCase(FilePaths.fullMainPath)){
+			StudyTemp studyTemp = ParserUtils.parseWreslMain(fileFullPath);
+			if (studyTemp==null) return goalString;
+			Map<String, ModelTemp> modelMap = studyTemp.modelMap;
+			ArrayList<String> modelList = studyTemp.modelList;
+			for (String model: modelList){
+				ModelTemp modelTemp = modelMap.get(model);
+				sortedGoalList.addAll(modelTemp.glList);
+			}
+		}else{
+			ModelTemp modelTemp = ParserUtils.parseWreslFile(fileFullPath);
+			if (modelTemp==null) return goalString;	
+			sortedGoalList = modelTemp.glList;
+		}
 		
 		Collections.sort(sortedGoalList);
 		for (int i=0; i<sortedGoalList.size(); i++){
 			double lhs=0;
 			String goalName=sortedGoalList.get(i);
+			goalName=goalName.toLowerCase();
 			if (gMap.containsKey(goalName)){
 				goalString=goalString+goalName+":";
 				EvalConstraint ec=gMap.get(goalName);
