@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -186,12 +187,10 @@ public class TableOperation {
 		}
 		
 		Number[] values=new Number[fieldSize];
-		Number[] pastValues=new Number[fieldSize];
 		int i=-1;
 		while (i<data.size()-1 && !whereTrue){
 			i++;
 			values=data.get(i);
-			pastValues=values;
 			boolean eachWhereTrue=true;
 			k=-1;
 			while (k<whereSize-1 && eachWhereTrue){
@@ -218,7 +217,6 @@ public class TableOperation {
 			return generateIntDouble(valueString);
 		}
 		
-
 		int givenIndex;
 		Set givenSet=given.keySet();
 		iterator=givenSet.iterator();
@@ -232,95 +230,41 @@ public class TableOperation {
 		}
 		Number givenValue=(Number)given.get(givenName);
 		
-		if (givenValue.doubleValue()==values[givenIndex].doubleValue()){
-			valueString=value.toString();
-			return generateIntDouble(valueString);
-		}
-		
-		boolean givenTrue=false;
-		while (i<data.size()-1 && !givenTrue){
+		ArrayList<Number> gVList=new ArrayList<Number>();
+		Map<Number, Number> gVMap=new HashMap<Number, Number>();
+		gVList.add(values[givenIndex]);
+		gVMap.put(values[givenIndex], values[selectIndex]);
+			
+		while (i<data.size()-1){
 			i++;
-			Number[] newValues=data.get(i);
+			values=data.get(i);
 			boolean eachWhereTrue=true;
 			k=-1;
 			while (k<whereSize-1 && eachWhereTrue){
 				k++;
-				if (newValues[whereIndex[k]].doubleValue()!=whereValue[k].doubleValue()){
+				if (values[whereIndex[k]].doubleValue()!=whereValue[k].doubleValue()){
 					eachWhereTrue=false;
 				}
 			}
-			if (!eachWhereTrue) {
-				whereTrue=false;
-			}else{	
-				if (givenValue.doubleValue()==newValues[givenIndex].doubleValue()){
-					Number newValue=newValues[selectIndex];
-					valueString=newValue.toString();
-					return generateIntDouble(valueString);
+			if (eachWhereTrue) {
+				if (gVList.contains(values[givenIndex])){
+					Error.addEvaluationError("Given value "+values[givenIndex]+" in the given statement is duplicated in Table "+table);
+					return new IntDouble(1.0,false);
+				}else{
+					gVList.add(values[givenIndex]);
+					gVMap.put(values[givenIndex], values[selectIndex]);
 				}
-				if ((givenValue.doubleValue()-newValues[givenIndex].doubleValue())*(givenValue.doubleValue()-values[givenIndex].doubleValue())<0){  
-					if (use.equals("maximum")){
-						if (newValues[givenIndex].doubleValue()>values[givenIndex].doubleValue()){
-							valueString=newValues[selectIndex].toString();
-						}else{
-							valueString=values[selectIndex].toString();
-						}
-					}else if (use.equals("minimum")){
-						if (newValues[givenIndex].doubleValue()<values[givenIndex].doubleValue()){
-							valueString=newValues[selectIndex].toString();
-						}else{
-							valueString=values[selectIndex].toString();
-						}
-					}else if (use.equals("linear")){
-						value=((givenValue.doubleValue()-values[givenIndex].doubleValue())/(newValues[givenIndex].doubleValue()-values[givenIndex].doubleValue())
-							*(newValues[selectIndex].doubleValue()-values[selectIndex].doubleValue())+values[selectIndex].doubleValue());
-						return new IntDouble(value, false);
-					}else{
-						Error.addEvaluationError("Use statement can only be maximum, minimum, or linear in Table"+table);
-						return new IntDouble(1.0,false);
-					}
-					return generateIntDouble(valueString);
-				}
-				pastValues=values;
-				values=newValues;
+			}else{
+				eachWhereTrue=true;
 			}
-		}
-		
-		if ((givenValue.doubleValue()>pastValues[givenIndex].doubleValue()) && (givenValue.doubleValue()>values[givenIndex].doubleValue()) && use.equals("linear")){
-			if (pastValues[givenIndex].doubleValue()<values[givenIndex].doubleValue()){
-				value=(givenValue.doubleValue()-values[givenIndex].doubleValue())/(values[givenIndex].doubleValue()-pastValues[givenIndex].doubleValue())
-				*(values[selectIndex].doubleValue()-pastValues[selectIndex].doubleValue())+values[selectIndex].doubleValue();
-				return new IntDouble(value,false);
-			}else if (pastValues[givenIndex].doubleValue()>values[givenIndex].doubleValue()){
-				value=(givenValue.doubleValue()-pastValues[givenIndex].doubleValue())/(pastValues[givenIndex].doubleValue()-values[givenIndex].doubleValue())
-				*(pastValues[selectIndex].doubleValue()-values[selectIndex].doubleValue())+values[selectIndex].doubleValue();
-				return new IntDouble(value,false);
-			}
-		}else if((givenValue.doubleValue()<pastValues[givenIndex].doubleValue()) && (givenValue.doubleValue()<values[givenIndex].doubleValue()) && use.equals("linear")){
-			if (pastValues[givenIndex].doubleValue()>values[givenIndex].doubleValue()){
-				value=(givenValue.doubleValue()-values[givenIndex].doubleValue())/(values[givenIndex].doubleValue()-pastValues[givenIndex].doubleValue())
-				*(values[selectIndex].doubleValue()-pastValues[selectIndex].doubleValue())+values[selectIndex].doubleValue();
-				return new IntDouble(value,false);
-			}else if (pastValues[givenIndex].doubleValue()<values[givenIndex].doubleValue()){
-				value=(givenValue.doubleValue()-pastValues[givenIndex].doubleValue())/(pastValues[givenIndex].doubleValue()-values[givenIndex].doubleValue())
-				*(pastValues[selectIndex].doubleValue()-values[selectIndex].doubleValue())+values[selectIndex].doubleValue();
-				return new IntDouble(value,false);
-			}
-		}
-		
-		if (values[givenIndex].doubleValue()>=pastValues[givenIndex].doubleValue() && givenValue.doubleValue()>values[givenIndex].doubleValue() && use.equals("minimum")){
-			return new IntDouble(values[selectIndex],false);
-		}
-		
-		if (values[givenIndex].doubleValue()<=pastValues[givenIndex].doubleValue() && givenValue.doubleValue()<values[givenIndex].doubleValue() && use.equals("maximum")){
-			return new IntDouble(values[selectIndex],false);
 		}
 		
 		String givenError="";
 		for (String key: given.keySet()){
 			givenError=givenError+"("+key+": "+given.get(key)+")";
 		}
-		Error.addEvaluationError("Under the given conditon of "+givenError+" Data not found in Table "+table);
-		return new IntDouble(1.0,false);
+		
+		return calculateValue(givenValue, gVList, gVMap, use, table, givenError);
 	}
 	
 	public static IntDouble findData(String table, String select, HashMap<String, Number> given, String use){
@@ -349,7 +293,6 @@ public class TableOperation {
 		}
 		
 		Number[] values=new Number[fieldSize];
-		Number[] pastValues=new Number[fieldSize];
 
 		int givenIndex;
 		Set givenSet=given.keySet();
@@ -365,90 +308,127 @@ public class TableOperation {
 		}
 		Number givenValue=(Number)given.get(givenName);
 		
-		values=data.get(0);	
-		pastValues=values;
-		if (givenValue.doubleValue()==values[givenIndex].doubleValue()){
-			valueString=values[selectIndex].toString();
-			return generateIntDouble(valueString);
-		}
+		ArrayList<Number> gVList=new ArrayList<Number>();
+		Map<Number, Number> gVMap=new HashMap<Number, Number>();
 		
-		int i=-1;
-		boolean givenTrue=false;
-		while (i<data.size()-1 && !givenTrue){
-			i++;
-			Number[] newValues=data.get(i);	
-			if (givenValue.doubleValue()==newValues[givenIndex].doubleValue()){
-				Number newValue=newValues[selectIndex];
-				valueString=newValue.toString();
-				return generateIntDouble(valueString);
+		for (int i=0; i<data.size(); i++){
+			values=data.get(i);
+			if (gVList.contains(values[givenIndex])){
+				Error.addEvaluationError("Given value "+values[givenIndex]+" in the given statement is duplicated in Table "+table);
+				return new IntDouble(1.0,false);
+			}else{
+				gVList.add(values[givenIndex]);
+				gVMap.put(values[givenIndex], values[selectIndex]);
 			}
-			if ((givenValue.doubleValue()-newValues[givenIndex].doubleValue())*(givenValue.doubleValue()-values[givenIndex].doubleValue())<0){  
-				if (use.equals("maximum")){
-					if (newValues[givenIndex].doubleValue()>values[givenIndex].doubleValue()){
-						valueString=newValues[selectIndex].toString();
-					}else{
-						valueString=values[selectIndex].toString();
-					}
-				}else if (use.equals("minimum")){
-					if (newValues[givenIndex].doubleValue()<values[givenIndex].doubleValue()){
-						valueString=newValues[selectIndex].toString();
-					}else{
-						valueString=values[selectIndex].toString();
-					}
-				}else if (use.equals("linear")){
-					double value=((givenValue.doubleValue()-values[givenIndex].doubleValue())/(newValues[givenIndex].doubleValue()-values[givenIndex].doubleValue())
-							*(newValues[selectIndex].doubleValue()-values[selectIndex].doubleValue())+values[selectIndex].doubleValue());
-					return new IntDouble(value, false);
-				}else{
-					Error.addEvaluationError("Use statement can only be maximum, minimum, or linear in Table"+table);
-					return new IntDouble(1.0,false);
-				}
-				return generateIntDouble(valueString);
-			}
-			pastValues=values;
-			values=newValues;
-		}
-		
-		if (givenValue.doubleValue()>pastValues[givenIndex].doubleValue() && givenValue.doubleValue()>values[givenIndex].doubleValue() && use.equals("linear")){
-			if (pastValues[givenIndex].doubleValue()<values[givenIndex].doubleValue()){
-				double value=(givenValue.doubleValue()-values[givenIndex].doubleValue())/(values[givenIndex].doubleValue()-pastValues[givenIndex].doubleValue())
-				*(values[selectIndex].doubleValue()-pastValues[selectIndex].doubleValue())+values[selectIndex].doubleValue();
-				return new IntDouble(value,false);
-			}else if (pastValues[givenIndex].doubleValue()>values[givenIndex].doubleValue()){
-				double value=(givenValue.doubleValue()-pastValues[givenIndex].doubleValue())/(pastValues[givenIndex].doubleValue()-values[givenIndex].doubleValue())
-				*(pastValues[selectIndex].doubleValue()-values[selectIndex].doubleValue())+values[selectIndex].doubleValue();
-				return new IntDouble(value,false);
-			}
-		}else if(givenValue.doubleValue()<pastValues[givenIndex].doubleValue() && givenValue.doubleValue()<values[givenIndex].doubleValue() && use.equals("linear")){
-			if (pastValues[givenIndex].doubleValue()>values[givenIndex].doubleValue()){
-				double value=(givenValue.doubleValue()-values[givenIndex].doubleValue())/(values[givenIndex].doubleValue()-pastValues[givenIndex].doubleValue())
-				*(values[selectIndex].doubleValue()-pastValues[selectIndex].doubleValue())+values[selectIndex].doubleValue();
-				return new IntDouble(value,false);
-			}else if (pastValues[givenIndex].doubleValue()<values[givenIndex].doubleValue()){
-				double value=(givenValue.doubleValue()-pastValues[givenIndex].doubleValue())/(pastValues[givenIndex].doubleValue()-values[givenIndex].doubleValue())
-				*(pastValues[selectIndex].doubleValue()-values[selectIndex].doubleValue())+values[selectIndex].doubleValue();
-				return new IntDouble(value,false);
-			}
-		}
-		
-		if (values[givenIndex].doubleValue()>=pastValues[givenIndex].doubleValue() && givenValue.doubleValue()>values[givenIndex].doubleValue() && use.equals("minimum")){
-			return new IntDouble(values[selectIndex],false);
-		}
-		
-		if (values[givenIndex].doubleValue()<=pastValues[givenIndex].doubleValue() && givenValue.doubleValue()<values[givenIndex].doubleValue() && use.equals("maximum")){
-			return new IntDouble(values[selectIndex],false);
 		}
 		
 		String givenError="";
 		for (String key: given.keySet()){
 			givenError=givenError+"("+key+": "+given.get(key)+")";
 		}
-		Error.addEvaluationError("Under the given conditon of "+givenError+" Data not found in Table "+table);
+		return calculateValue(givenValue, gVList, gVMap, use, table, givenError);
+	}	
+		
+	public static IntDouble calculateValue(Number given, ArrayList<Number> gVList, Map<Number, Number> gVMap, String use, String table, String givenError){
+		double givenValue=given.doubleValue();
+		if (gVList.size()==0){
+			Error.addEvaluationError("Under the given conditon of "+givenError+" Data not found in Table "+table);
+			return new IntDouble(1.0,false);
+		}else if (gVList.size()==1 && use.equals("linear")){
+			Number gV=gVList.get(0);
+			if (givenValue==gV.doubleValue()){
+				return new IntDouble(gVMap.get(gV).doubleValue(),false);
+			}else{
+				Error.addEvaluationError("Under the given conditon of "+givenError+" only one value for interpolation in Table "+table);
+				return new IntDouble(1.0,false);
+			}
+		}
+		
+		gVList=sortNumberArray(gVList, givenError, table);
+		
+		for (int i=0; i<gVList.size()-1; i++){
+			int j=i+1;
+			Number first=gVList.get(i);
+			Number second=gVList.get(j);
+			double firstValue=first.doubleValue();
+			double secondValue=second.doubleValue();
+			if (firstValue<=givenValue && secondValue>=givenValue){
+				if (use.equals("minimum")){
+					return new IntDouble(gVMap.get(gVList.get(i)).doubleValue(), false);
+				}else if (use.equals("maximum")){
+					return new IntDouble(gVMap.get(gVList.get(j)).doubleValue(), false);
+				}else if (use.equals("linear")){
+					double value=(givenValue-firstValue)/(secondValue-firstValue)
+					*(gVMap.get(second).doubleValue()-gVMap.get(first).doubleValue())+gVMap.get(first).doubleValue();
+					return new IntDouble(value,false);
+				}else{
+					Error.addEvaluationError("Use statement can only be maximum, minimum, or linear in Table"+table);
+					return new IntDouble(1.0,false);
+				}
+			}
+		}
+
+		if (givenValue<gVList.get(0).doubleValue()){ 
+			if (use.equals("minimum")){
+				Error.addEvaluationError("Under the given conditon of "+givenError+" Data not found in Table "+table);
+				return new IntDouble(1.0,false);
+			}else if (use.equals("linear")){
+				Number first=gVList.get(0);
+				Number second=gVList.get(1);
+				double firstValue=first.doubleValue();
+				double secondValue=second.doubleValue();
+				double value=(givenValue-firstValue)/(secondValue-firstValue)
+				*(gVMap.get(second).doubleValue()-gVMap.get(first).doubleValue())+gVMap.get(first).doubleValue();
+				return new IntDouble(value,false);	
+			}else if (use.equals("maximum")){
+				return new IntDouble(gVMap.get(gVList.get(0)).doubleValue(),false);
+			}else{
+				Error.addEvaluationError("Use statement can only be maximum, minimum, or linear in Table"+table);
+				return new IntDouble(1.0,false);
+			}
+		}else if (givenValue>gVList.get(gVList.size()-1).doubleValue()){
+			if (use.equals("maximum")){
+				Error.addEvaluationError("Under the given conditon of "+givenError+" Data not found in Table "+table);
+				return new IntDouble(1.0,false);
+			}else if (use.equals("linear")){
+				int size=gVList.size();
+				Number first=gVList.get(size-2);
+				Number second=gVList.get(size-1);
+				double firstValue=first.doubleValue();
+				double secondValue=second.doubleValue();
+				double value=(givenValue-firstValue)/(secondValue-firstValue)
+				*(gVMap.get(second).doubleValue()-gVMap.get(first).doubleValue())+gVMap.get(first).doubleValue();
+				return new IntDouble(value,false);	
+			}else if (use.equals("minimum")){
+				return new IntDouble(gVMap.get(gVList.get(gVList.size()-1)).doubleValue(),false);
+			}else{
+				Error.addEvaluationError("Use statement can only be maximum, minimum, or linear in Table"+table);
+				return new IntDouble(1.0,false);
+			}
+		}
+		
+		Error.addEvaluationError("Under the given conditon of "+givenError+" only one value for interpolation in Table "+table);
 		return new IntDouble(1.0,false);
 	}
 	
 	public static IntDouble generateIntDouble(String valueString){    
 		double doubleValue=Double.parseDouble(valueString);
 		return new IntDouble(doubleValue, false);
+	}
+	
+	public static ArrayList<Number> sortNumberArray(ArrayList<Number> al, String givenError, String table){
+		for (int i=0; i<al.size(); i++){
+			for (int j=i+1; j<al.size(); j++){
+				Number first=al.get(i);
+				Number second=al.get(j);
+				if (first.doubleValue()>second.doubleValue()){
+					al.set(i, second);
+					al.set(j, first);
+				}else if (first.doubleValue()==second.doubleValue()){
+					Error.addEvaluationError("Under the given conditon of "+givenError+" two data in given column "+first+" , "+second+" has the same value in Table "+table);
+				}
+			}
+		}
+		return al;
 	}
 }

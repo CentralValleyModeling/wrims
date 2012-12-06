@@ -5,7 +5,9 @@ import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 
 import wrimsv2.commondata.solverdata.SolverData;
+import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.ModelDataSet;
+import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 import wrimsv2.components.FilePaths;
@@ -180,7 +182,17 @@ public class Evaluation {
 		IntDouble id0 = new IntDouble (0, true);
 		ee.setValue(id0);
 		HashMap<String, IntDouble> multiplier=ee.getMultiplier();
-		IntDouble id= new IntDouble(1,true); 
+		IntDouble id;
+		if (ControlData.currDvMap.containsKey(ident)){
+			Dvar dv = ControlData.currDvMap.get(ident);
+			if (dv.integer.equals(Param.yes)){
+				id= new IntDouble(1,true);
+			}else{
+				id= new IntDouble(1.0,false);
+			}
+		}else{
+			id= new IntDouble(1.0,false);
+		}
 		multiplier.put(ident, id);
 		return ee;
 	}

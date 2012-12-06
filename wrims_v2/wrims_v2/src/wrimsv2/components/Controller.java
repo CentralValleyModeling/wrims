@@ -67,19 +67,19 @@ public class Controller {
 
 	public void setControlData(){
 		FilePaths.groundwaterDir="";
-		FilePaths.setMainFilePaths("D:\\callite_v47\\CalLite\\Run\\main_BO.wresl");
-		FilePaths.setSvarDssPaths("D:\\CalLite_v47\\callite\\DSS\\CL_FUTURE_BO_011012_SV.DSS");
-	    FilePaths.setInitDssPaths("D:\\CalLite_v47\\callite\\DSS\\CalLite2020D09EINIT.dss");
-	    FilePaths.setDvarDssPaths("D:\\CalLite_v47\\callite\\DSS\\testdv.DSS");
-		ControlData cd=new ControlData();
-		cd.svDvPartF="2020D09E";
-		cd.initPartF="2020D09E";
+		FilePaths.setMainFilePaths("d:\\2L_MW_7_O_120512\\run\\main.wresl");
+		FilePaths.setSvarDssPaths("d:\\2L_MW_7_O_120512\\dss\\DailyPA_SV.dss");
+	    FilePaths.setInitDssPaths("d:\\2L_MW_7_O_120512\\dss\\DailyPA_init.dss");
+	    FilePaths.setDvarDssPaths("d:\\2L_MW_7_O_120512\\dss\\testDV.DSS");		
+	    ControlData cd=new ControlData();
+		cd.svDvPartF="KBPM";
+		cd.initPartF="KBPM";
 		cd.partA = "CALSIM";
-		cd.defaultTimeStep="1MON";
-		cd.startYear=1921;
+		cd.defaultTimeStep="1DAY";
+		cd.startYear=1980;
 		cd.startMonth=10;
-		cd.startDay=31;
-		cd.endYear=2003;
+		cd.startDay=1;
+		cd.endYear=2011;
 		cd.endMonth=9;
 		cd.endDay=30;
 	    cd.solverName="XA";
@@ -172,8 +172,7 @@ public class Controller {
 
 	public void runModel(StudyDataSet sds){
 		System.out.println("==============Run Study Start============");
-		
-
+		new PreRunModel(sds);
 		if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
 			runModelGurobi(sds);		
 		} else if (ILP.logging){

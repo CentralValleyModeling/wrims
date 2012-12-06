@@ -645,12 +645,14 @@ public class DebugInterface {
 			sortedList.addAll(svList);
 			sortedList.addAll(tsList);
 			for (String gName:gList){
-				Set<String> dependants = gMap.get(gName).dependants;
-				Iterator<String> iterator = dependants.iterator();
-				while (iterator.hasNext()){
-					String varName=iterator.next();
-					if (!sortedList.contains(varName)){
-						sortedList.add(varName);
+				if (gMap.containsKey(gName)){
+					Set<String> dependants = gMap.get(gName).dependants;
+					Iterator<String> iterator = dependants.iterator();
+					while (iterator.hasNext()){
+						String varName=iterator.next();
+						if (!sortedList.contains(varName)){
+							sortedList.add(varName);
+						}
 					}
 				}
 			}
