@@ -701,7 +701,7 @@ SUBROUTINE WRAPPER (date, code, dss_init, reportsv, runDirectory)
      call cpu_time(ExeFinishTime)
      write(msg,747) 'Computation Time: ', ExeFinishTime-ExeStartTime, ' Seconds'
      if (showDialogWindow) then
-         IF (chareq(TRIM(genWsiDi),"FALSE").and.chareq(TRIM(posAnalysis),"FALSE"))  CALL StopWithFinal(msg)
+         IF (chareq(TRIM(genWsiDi),"FALSE").and.chareq(TRIM(posAnalysis),"FALSE"))  CALL StopWithFinal(msg)  !call dialogUpdate( 6000, msg)
      end if    
   ELSE
      CALL XA_ERRORHANDLER(stats(1),stats(2),date,icycle,Number_of_cycles,studyType,errorLog)
