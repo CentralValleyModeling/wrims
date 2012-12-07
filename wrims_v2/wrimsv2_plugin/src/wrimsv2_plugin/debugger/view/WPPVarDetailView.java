@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Vector;
 
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -53,6 +54,7 @@ import wrimsv2_plugin.debugger.dialog.WPPTimeSeriesDialog;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.WPPValue;
 import wrimsv2_plugin.tools.DataProcess;
+import wrimsv2_plugin.tools.DssOperations;
 import wrimsv2_plugin.tools.TimeOperation;
 import wrimsv2_plugin.tools.VariableProperty;
 
@@ -343,25 +345,33 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 			String startTime=TimeOperation.createStartTime(startEntry[1], partE);
 			String endTime=TimeOperation.createEndTime(endEntry[1], partE);
 		
-			String pn="/"+aPart+"/"+vn+"/"+partC+"//"+partE+"/"+svFPart+"/";
+			//String pn="/"+aPart+"/"+vn+"/"+partC+"//"+partE+"/"+svFPart+"/";
 			HecDss[] dvDss = DebugCorePlugin.dvDss;
 			HecDss[] svDss = DebugCorePlugin.svDss;
 			for (int colIndex=3; colIndex<table.getColumnCount(); colIndex++){
 				int studyIndex=altMap.get(colIndex);
 				try {
-					HecDss dss = dvDss[studyIndex];
 					DataContainer dc;
-					dc = dss.get(pn, startTime, endTime);
-					double[] values=((TimeSeriesContainer)dc).values;
-					if (values.length==0){
-						dss=svDss[studyIndex];
+					double[] values;
+					HecDss dss = dvDss[studyIndex];
+					Vector v=DebugCorePlugin.dvVector[studyIndex];
+					String pn=DssOperations.matchPathName(v, vn, partC, partE);
+					if (pn!=null){
 						dc = dss.get(pn, startTime, endTime);
 						values=((TimeSeriesContainer)dc).values;
 						if (values.length>0){
 							fillAltValues(table, values, colIndex);
 						}
-					}else{
-						fillAltValues(table, values, colIndex);
+					}
+					dss=svDss[studyIndex];
+					v=DebugCorePlugin.svVector[studyIndex];
+					pn=DssOperations.matchPathName(v, vn, partC, partE);
+					if (pn !=null){
+						dc = dss.get(pn, startTime, endTime);
+						values=((TimeSeriesContainer)dc).values;
+						if (values.length>0){
+							fillAltValues(table, values, colIndex);
+						}
 					}
 				} catch (Exception e) {
 					WPPException.handleException(e);

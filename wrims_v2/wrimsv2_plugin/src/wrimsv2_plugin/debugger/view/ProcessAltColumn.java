@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.TableItem;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.tools.DssOperations;
 import wrimsv2_plugin.tools.TimeOperation;
 import wrimsv2_plugin.tools.VariableProperty;
 
@@ -95,7 +96,7 @@ public class ProcessAltColumn {
 				double[] values;
 				HecDss dss = dvDss[i];
 				Vector v=DebugCorePlugin.dvVector[i];
-				String pn=matchPathName(v, vn, property.getPartC(), timestep);
+				String pn=DssOperations.matchPathName(v, vn, property.getPartC(), timestep);
 				if (pn!=null){
 					dc = dss.get(pn, startTime, endTime);
 					values=((TimeSeriesContainer)dc).values;
@@ -105,7 +106,7 @@ public class ProcessAltColumn {
 				}
 				dss=svDss[i];
 				v=DebugCorePlugin.svVector[i];
-				pn=matchPathName(v, vn, property.getPartC(), timestep);
+				pn=DssOperations.matchPathName(v, vn, property.getPartC(), timestep);
 				if (pn !=null){
 					dc = dss.get(pn, startTime, endTime);
 					values=((TimeSeriesContainer)dc).values;
@@ -121,22 +122,5 @@ public class ProcessAltColumn {
 		}else{
 			return "";
 		}
-	}
-	
-	public static String matchPathName(Vector v, String partB, String partC, String partE){
-		String pn=null;
-		int i=0;
-		int size=v.size();
-		String partBString="/"+partB.toUpperCase()+"/";
-		String partCString="/"+partC.toUpperCase()+"/";
-		String partEString="/"+partE+"/";
-		while (pn == null && i<size){
-			String pnv=v.get(i).toString();
-			if (pnv.contains(partBString) && pnv.contains(partCString) && pnv.contains(partEString) ){
-				pn=pnv;
-			}
-			i++;
-		}
-		return pn;
 	}
 }
