@@ -21,7 +21,7 @@ g1:  + a + b + c + x + y + z < 100.0 ;
 wg__ttt__a__ss:  + a - mean__ttt + wg__ttt__a__slack - wg__ttt__a__surplus = 0 ;
 wg__ttt__b__ss:  + b - mean__ttt + wg__ttt__b__slack - wg__ttt__b__surplus = 0 ;
 wg__ttt__c__ss:  + c - mean__ttt + wg__ttt__c__slack - wg__ttt__c__surplus = 0 ;
-wg__ttt__mean:  - a - b - c + 3 mean__ttt = 0 ;
+wg__ttt__mean:  - a - b - c + 3.0 mean__ttt = 0 ;
 /* dvar */
 free mean__ttt ;
 

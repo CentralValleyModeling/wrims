@@ -23,7 +23,7 @@ g2:  + d3 + d4 = 4.0
 wg__ttt__m_group__m5__ss:  + m5 - m_group + wg__ttt__m_group__m5__slack - wg__ttt__m_group__m5__surplus = 0
 wg__ttt__m_group__m6__ss:  + m6 - m_group + wg__ttt__m_group__m6__slack - wg__ttt__m_group__m6__surplus = 0
 wg__ttt__m_group__m7__ss:  + m7 - m_group + wg__ttt__m_group__m7__slack - wg__ttt__m_group__m7__surplus = 0
-wg__ttt__m_group__mean:  - m5 - m6 - m7 + 3 m_group = 0
+wg__ttt__m_group__mean:  - m5 - m6 - m7 + 3.0 m_group = 0
 
 \ dvar
 Bounds

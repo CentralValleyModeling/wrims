@@ -23,11 +23,11 @@ Subject To
 g1:  + d3 + d4 + m5 + m6 + m7 = 5.0
 wg__ttt__d_group__d3__ss:  + d3 - d_group + wg__ttt__d_group__d3__slack - wg__ttt__d_group__d3__surplus = 0
 wg__ttt__d_group__d4__ss:  + d4 - d_group + wg__ttt__d_group__d4__slack - wg__ttt__d_group__d4__surplus = 0
-wg__ttt__d_group__mean:  - d3 - d4 + 2 d_group = 0
+wg__ttt__d_group__mean:  - d3 - d4 + 2.0 d_group = 0
 wg__ttt__d_group__ss:  + d_group - mean__ttt + wg__ttt__d_group__slack - wg__ttt__d_group__surplus = 0
-wg__ttt__m_group__mean:  - m5 - m6 - m7 + 3 m_group = 0
+wg__ttt__m_group__mean:  - m5 - m6 - m7 + 3.0 m_group = 0
 wg__ttt__m_group__ss:  + m_group - mean__ttt + wg__ttt__m_group__slack - wg__ttt__m_group__surplus = 0
-wg__ttt__mean:  - d_group - m_group + 2 mean__ttt = 0
+wg__ttt__mean:  - d_group - m_group + 2.0 mean__ttt = 0
 
 \ dvar
 Bounds

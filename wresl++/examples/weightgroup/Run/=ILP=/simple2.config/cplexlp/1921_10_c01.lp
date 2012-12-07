@@ -23,10 +23,10 @@ g1:  + a1 + a2 + d3 + d4 = 8.0
 g2:  + a1 + a2 = 6.0
 wg__wg1__a1__ss:  + a1 - mean__wg1 + wg__wg1__a1__slack - wg__wg1__a1__surplus = 0
 wg__wg1__a2__ss:  + a2 - mean__wg1 + wg__wg1__a2__slack - wg__wg1__a2__surplus = 0
-wg__wg1__mean:  - a1 - a2 + 2 mean__wg1 = 0
+wg__wg1__mean:  - a1 - a2 + 2.0 mean__wg1 = 0
 wg__wg2__d3__ss:  + d3 - mean__wg2 + wg__wg2__d3__slack - wg__wg2__d3__surplus = 0
 wg__wg2__d4__ss:  + d4 - mean__wg2 + wg__wg2__d4__slack - wg__wg2__d4__surplus = 0
-wg__wg2__mean:  - d3 - d4 + 2 mean__wg2 = 0
+wg__wg2__mean:  - d3 - d4 + 2.0 mean__wg2 = 0
 
 \ dvar
 Bounds

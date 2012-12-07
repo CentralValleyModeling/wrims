@@ -21,7 +21,7 @@ g2:  + x <= 3.0
 g3:  + b <= 4.0
 wg__ttt__group2__a__ss:  + a - group2 + wg__ttt__group2__a__slack - wg__ttt__group2__a__surplus = 0
 wg__ttt__group2__b__ss:  + b - group2 + wg__ttt__group2__b__slack - wg__ttt__group2__b__surplus = 0
-wg__ttt__group2__mean:  - a - b + 2 group2 = 0
+wg__ttt__group2__mean:  - a - b + 2.0 group2 = 0
 
 \ dvar
 Bounds
