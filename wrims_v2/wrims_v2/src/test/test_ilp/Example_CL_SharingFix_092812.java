@@ -36,7 +36,7 @@ public class Example_CL_SharingFix_092812 {
 		Error.clear();
         new ControllerBatch(controlDataString);
         
-        expected = 9.322149549230603E8; 
+        expected = 9.322147817706344E8; 
 		
 		double obj_value=-99;
 
