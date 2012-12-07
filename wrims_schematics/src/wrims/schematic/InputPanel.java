@@ -562,6 +562,7 @@ public class InputPanel extends JPanel {
 			out.println("SvarFPart          "+configMap.get("SvarFPart".toLowerCase()));
 			out.println("InitFile           "+configMap.get("InitFile".toLowerCase()));
 			out.println("InitFPart          "+configMap.get("InitFPart".toLowerCase()));
+			out.println("GroundwaterDir     "+configMap.get("GroundwaterDir".toLowerCase()));
 			out.println("TimeStep           "+configMap.get("TimeStep".toLowerCase()));
 			out.println("StartYear          "+configMap.get("StartYear".toLowerCase()));
 			out.println("StartMonth         "+configMap.get("StartMonth".toLowerCase()));
