@@ -103,15 +103,16 @@ public class ProcessAltColumn {
 					if (values.length>0){
 						return DebugCorePlugin.df.format(values[0]);
 					}
-				}
-				dss=svDss[i];
-				v=DebugCorePlugin.svVector[i];
-				pn=DssOperations.matchPathName(v, vn, property.getPartC(), timestep);
-				if (pn !=null){
-					dc = dss.get(pn, startTime, endTime);
-					values=((TimeSeriesContainer)dc).values;
-					if (values.length>0){
-						return DebugCorePlugin.df.format(values[0]);
+				}else{
+					dss=svDss[i];
+					v=DebugCorePlugin.svVector[i];
+					pn=DssOperations.matchPathName(v, vn, property.getPartC(), timestep);
+					if (pn !=null){
+						dc = dss.get(pn, startTime, endTime);
+						values=((TimeSeriesContainer)dc).values;
+						if (values.length>0){
+							return DebugCorePlugin.df.format(values[0]);
+						}
 					}
 				}
 				return "";

@@ -183,57 +183,6 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 		}
 	}
 	
-	public void generateXABatch(PrintWriter out, String mode, int requestPort, int eventPort){
-		String solverName="XA";
-		if (DebugCorePlugin.log.equals("None")){
-			solverName="XA";
-		}else if (DebugCorePlugin.log.equals("Log")){
-			solverName="XALOG";
-		}
-		out.println("@echo off");
-		out.println();
-		out.println("set path=" + externalPath + ";"+"lib;%path%");
-		out.println();
-		if (mode.equals("debug")){
-			out.println("jre\\bin\\java -Xmx1600m -Xss1024K -Duser.timezone=UTC -Djava.library.path=\"" + externalPath + ";lib\" -cp \""+externalPath+";"+"lib\\external"+";lib\\WRIMSv2.jar;lib\\commons-io-2.1.jar;lib\\XAOptimizer.jar;lib\\lpsolve55j.jar;lib\\gurobi.jar;lib\\heclib.jar;lib\\jnios.jar;lib\\jpy.jar;lib\\misc.jar;lib\\pd.jar;lib\\vista.jar;lib\\guava-11.0.2.jar;lib\\javatuples-1.2.jar;\" wrimsv2.components.DebugInterface "+requestPort+" "+eventPort+" "
-				+ gwDataFolder+" "
-				+ mainFile + " "
-				+ svarFile + " "
-				+ initFile + " " 
-				+ dvarFile + " " 
-				+ svFPart + " "
-				+ initFPart + " "
-				+ aPart + " "
-				+ timeStep + " " 
-				+ startYear + " " 
-				+ startMonth + " "
-				+ startDay + " " 
-				+ endYear + " "
-				+ endMonth + " " 
-				+ endDay + " "
-				+ solverName+" csv");
-		}else{
-			out.println("jre\\bin\\java -Xmx1600m -Xss1024K -Duser.timezone=UTC -Djava.library.path=\"" + externalPath + ";lib\" -cp \""+externalPath+";"+"lib\\external;lib\\WRIMSv2.jar;lib\\commons-io-2.1.jar;lib\\XAOptimizer.jar;lib\\lpsolve55j.jar;lib\\gurobi.jar;lib\\heclib.jar;lib\\jnios.jar;lib\\jpy.jar;lib\\misc.jar;lib\\pd.jar;lib\\vista.jar;lib\\guava-11.0.2.jar;lib\\javatuples-1.2.jar;\" wrimsv2.components.ControllerSG "
-					+ gwDataFolder+" "
-					+ mainFile + " "
-					+ svarFile + " "
-					+ initFile + " " 
-					+ dvarFile + " " 
-					+ svFPart + " "
-					+ initFPart + " "
-					+ aPart + " "
-					+ timeStep + " " 
-					+ startYear + " " 
-					+ startMonth + " "
-					+ startDay + " " 
-					+ endYear + " "
-					+ endMonth + " " 
-					+ endDay + " "
-					+ solverName+" csv");
-		}
-		out.close();
-	}
-	
 	public void generateBatch(PrintWriter out, String mode, int requestPort, int eventPort, String configFilePath){
 		out.println("@echo off");
 		out.println();
@@ -322,6 +271,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			out.println("Solver             "+configMap.get("solver".toLowerCase()));
 			out.println("DvarFile           "+configMap.get("DvarFile".toLowerCase()));
 			out.println("SvarFile           "+configMap.get("SvarFile".toLowerCase()));
+			out.println("GroundwaterDir     "+configMap.get("groundwaterdir".toLowerCase()));
 			out.println("SvarAPart          "+configMap.get("SvarAPart".toLowerCase()));
 			out.println("SvarFPart          "+configMap.get("SvarFPart".toLowerCase()));
 			out.println("InitFile           "+configMap.get("InitFile".toLowerCase()));

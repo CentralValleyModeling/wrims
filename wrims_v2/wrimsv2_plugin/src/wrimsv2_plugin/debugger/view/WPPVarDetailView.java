@@ -362,15 +362,16 @@ public class WPPVarDetailView extends ViewPart implements ISelectionListener{
 						if (values.length>0){
 							fillAltValues(table, values, colIndex);
 						}
-					}
-					dss=svDss[studyIndex];
-					v=DebugCorePlugin.svVector[studyIndex];
-					pn=DssOperations.matchPathName(v, vn, partC, partE);
-					if (pn !=null){
-						dc = dss.get(pn, startTime, endTime);
-						values=((TimeSeriesContainer)dc).values;
-						if (values.length>0){
-							fillAltValues(table, values, colIndex);
+					}else{
+						dss=svDss[studyIndex];
+						v=DebugCorePlugin.svVector[studyIndex];
+						pn=DssOperations.matchPathName(v, vn, partC, partE);
+						if (pn !=null){
+							dc = dss.get(pn, startTime, endTime);
+							values=((TimeSeriesContainer)dc).values;
+							if (values.length>0){
+								fillAltValues(table, values, colIndex);
+							}
 						}
 					}
 				} catch (Exception e) {
