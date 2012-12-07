@@ -938,7 +938,7 @@ estcvpexp_wetjun                   :  4,600
 estcvpexp_wetmay                   :  2,000
 estcvpsoddem                       :  3,620.74304048
 estcvpsodexp                       :  3,620.74304048
-estcvpsodrc                        :  0
+estcvpsodrc                        :   0
 estswpexp_apr                      :  1,000
 estswpexp_feb                      :  4,250
 estswpexp_fldapr                   :  6,000
