@@ -83,7 +83,9 @@ public class Workflow {
 		if (ErrorCheck.checkParameterHasUnknownDepedants(st)) return null;
 		
 		ProcParameter.process(st);
-		
+
+		// check unknown dependants in if statement
+		ErrorCheck.checkIfStatementHasUnknownDependants(st);
 		
 		// process "if include file group"
 		ProcIfIncItemGroup.process(st);

@@ -49,9 +49,6 @@ public class ProcIfIncItemGroup {
 			
 			IfIncItemGroup gObj = m.ifIncItemGroupMap.get(k);
 			
-			//check dependants of the condition expression
-			
-			
 			// good for debug
 			ControlData.currEvalName=gObj.fromWresl;
 			ControlData.currEvalTypeIndex=9;

@@ -238,7 +238,8 @@ scope { IfIncItemGroup incg_;
        $if_inc_items::incg_.id = "__item__"+Integer.toString($mt::m_.ifIncItemGroupIDList.size());
        $id = $if_inc_items::incg_.id;
        $ifIncItemGroupObj = $if_inc_items::incg_;
-       dependants = new LinkedHashSet<String>();
+       //dependants = new LinkedHashSet<String>();
+       $if_inc_items::incg_.dependants = new HashSet<String>();
       // $incg_.id = "__incfilegroup__"+Integer.toString($mt::m_.incFileGroupIDList.size()); 
 
        }
@@ -250,20 +251,25 @@ scope { IfIncItemGroup incg_;
         $mt::m_.tsList.add($if_inc_items::incg_.id); 
         $mt::m_.glList.add($if_inc_items::incg_.id); 
         $mt::m_.gl2List.add($if_inc_items::incg_.id); 
-        $if_inc_items::incg_.dependants = dependants;
+        //$if_inc_items::incg_.dependants = dependants;
         $if_inc_items::incg_.fromWresl = this.currentAbsolutePath; 
        // $mt::m_.wTableObjList.add($if_inc_items::incg_.id);         
 
 }
   : if_  elseif_* else_?  ;
 
-if_ :
-  If e=logical_main '{' include_item_group '}' 
+if_ 
+@init{ dependants = new LinkedHashSet<String>(); }
+  :
+  If e=logical_main {$if_inc_items::incg_.dependants.addAll(dependants);}
+  '{' include_item_group '}' 
   {$if_inc_items::incg_.conditionList.add($e.text);};
   
-elseif_  
+elseif_ 
+@init{ dependants = new LinkedHashSet<String>(); } 
   :
-  Elseif e=logical_main '{' include_item_group '}'
+  Elseif e=logical_main {$if_inc_items::incg_.dependants.addAll(dependants);}
+  '{' include_item_group '}'
   {$if_inc_items::incg_.conditionList.add($e.text);};
   
 else_  : 

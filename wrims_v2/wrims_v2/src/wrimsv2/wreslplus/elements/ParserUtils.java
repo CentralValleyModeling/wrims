@@ -132,6 +132,9 @@ public class ParserUtils {
 	
 					ToLowerCase.convert(fm);
 					
+					// check unknown dependants in if statement
+					ErrorCheck.checkIfStatementHasUnknownDependants(fm, st.parameterMap.keySet());
+					
 					// process "if include file group"
 					ProcIfIncItemGroup.process(fm);
 					

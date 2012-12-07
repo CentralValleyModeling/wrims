@@ -13,6 +13,7 @@ import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslplus.elements.AliasTemp;
 import wrimsv2.wreslplus.elements.DvarTemp;
 import wrimsv2.wreslplus.elements.GoalTemp;
+import wrimsv2.wreslplus.elements.IfIncItemGroup;
 import wrimsv2.wreslplus.elements.ModelTemp;
 import wrimsv2.wreslplus.elements.ParamTemp;
 import wrimsv2.wreslplus.elements.SequenceTemp;
@@ -646,6 +647,46 @@ public class ErrorCheck {
 		
 		if (hasError) Error.writeErrorLog();
 		return hasError;
+		
+	}
+
+	public static void checkIfStatementHasUnknownDependants(StudyTemp st) {
+
+		for (String q: st.modelList){
+			
+			ModelTemp m =  st.modelMap.get(q);
+			
+			checkIfStatementHasUnknownDependants(m, st.parameterMap.keySet());
+			
+			
+		}
+		
+	}	
+	
+	public static boolean checkIfStatementHasUnknownDependants(ModelTemp m, Set<String> parameters) {
+
+			
+			for ( String k : m.ifIncItemGroupIDList){
+				
+				IfIncItemGroup iObj = m.ifIncItemGroupMap.get(k);
+				
+				Set<String> dependants_unknown = iObj.dependants;
+				
+				dependants_unknown.removeAll(parameters);
+				
+				if (dependants_unknown.size()>0) {
+					
+					String msg = "Conditional include (if, elseif) has dependant(s) not defined in the initial block "+dependants_unknown + " in file: "+iObj.fromWresl;
+					//LogUtils.errMsg(msg);
+					Error.addInitialError(msg);
+					Error.writeErrorLog();
+					return true;
+					
+				}
+				
+			}
+			
+		return false;
 		
 	}
 
