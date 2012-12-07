@@ -115,6 +115,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static boolean[] selectedStudies={false, false, false, false};
 	public static HecDss[] dvDss=new HecDss[4];
 	public static HecDss[] svDss=new HecDss[4];
+	public static Vector[] dvVector=new Vector[4]; 
+	public static Vector[] svVector=new Vector[4]; 
 	
 	public static String aPart="";
 	public static String initFPart="";

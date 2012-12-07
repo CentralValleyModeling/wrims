@@ -9,6 +9,7 @@ import hec.io.TimeSeriesContainer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
@@ -79,31 +80,40 @@ public class ProcessAltColumn {
 		String svFPart = DebugCorePlugin.svFPart;
 		HecDss[] dvDss = DebugCorePlugin.dvDss;
 		HecDss[] svDss = DebugCorePlugin.svDss;
+		Vector[] dvVector=DebugCorePlugin.dvVector;
+		Vector[] svVector=DebugCorePlugin.svVector;
 		
 		if (vp.containsKey(vn)){
 			VariableProperty property=vp.get(vn);
 			String timestep=property.getPartE();
-			String pn="/"+aPart+"/"+vn+"/"+property.getPartC()+"//"+timestep+"/"+svFPart+"/";
+			String ss="B="+vn+", C="+property.getPartC()+", E="+timestep;
 			String startTime=TimeOperation.createStartTime(DebugCorePlugin.suspendedYear, DebugCorePlugin.suspendedMonth, DebugCorePlugin.suspendedDay, timestep);
 			String endTime=TimeOperation.createEndTime(DebugCorePlugin.suspendedYear, DebugCorePlugin.suspendedMonth, DebugCorePlugin.suspendedDay, timestep);
 			int i=altColIndex.get(index);
 			try {
-				HecDss dss = dvDss[i];
 				DataContainer dc;
-				dc = dss.get(pn, startTime, endTime);
-				double[] values=((TimeSeriesContainer)dc).values;
-				if (values.length==0){
-					dss=svDss[i];
+				double[] values;
+				HecDss dss = dvDss[i];
+				Vector v=DebugCorePlugin.dvVector[i];
+				String pn=matchPathName(v, vn, property.getPartC(), timestep);
+				if (pn!=null){
 					dc = dss.get(pn, startTime, endTime);
 					values=((TimeSeriesContainer)dc).values;
-					if (values.length==0){
-						return "";
-					}else{
+					if (values.length>0){
 						return DebugCorePlugin.df.format(values[0]);
 					}
-				}else{
-					return DebugCorePlugin.df.format(values[0]);
 				}
+				dss=svDss[i];
+				v=DebugCorePlugin.svVector[i];
+				pn=matchPathName(v, vn, property.getPartC(), timestep);
+				if (pn !=null){
+					dc = dss.get(pn, startTime, endTime);
+					values=((TimeSeriesContainer)dc).values;
+					if (values.length>0){
+						return DebugCorePlugin.df.format(values[0]);
+					}
+				}
+				return "";
 			} catch (Exception e) {
 				WPPException.handleException(e);
 				return "";
@@ -111,5 +121,22 @@ public class ProcessAltColumn {
 		}else{
 			return "";
 		}
+	}
+	
+	public static String matchPathName(Vector v, String partB, String partC, String partE){
+		String pn=null;
+		int i=0;
+		int size=v.size();
+		String partBString="/"+partB.toUpperCase()+"/";
+		String partCString="/"+partC.toUpperCase()+"/";
+		String partEString="/"+partE+"/";
+		while (pn == null && i<size){
+			String pnv=v.get(i).toString();
+			if (pnv.contains(partBString) && pnv.contains(partCString) && pnv.contains(partEString) ){
+				pn=pnv;
+			}
+			i++;
+		}
+		return pn;
 	}
 }

@@ -237,6 +237,7 @@ public class WPPLoadStudyDssDialog extends Dialog {
 			if (DebugCorePlugin.selectedStudies[i]){
 				try {
 					DebugCorePlugin.dvDss[i]=HecDss.open(DebugCorePlugin.studyDvFileNames[i]);
+					DebugCorePlugin.dvVector[i]=DebugCorePlugin.dvDss[i].getCatalogedPathnames();
 				} catch (Exception e) {
 					WPPException.handleException(e);
 					errorFiles=errorFiles+DebugCorePlugin.studyDvFileNames[i]+",";
@@ -244,6 +245,7 @@ public class WPPLoadStudyDssDialog extends Dialog {
 				}
 				try {
 					DebugCorePlugin.svDss[i]=HecDss.open(DebugCorePlugin.studySvFileNames[i]);
+					DebugCorePlugin.svVector[i]=DebugCorePlugin.svDss[i].getCatalogedPathnames();
 				} catch (Exception e) {
 					WPPException.handleException(e);
 					errorFiles=errorFiles+DebugCorePlugin.studySvFileNames[i]+",";
