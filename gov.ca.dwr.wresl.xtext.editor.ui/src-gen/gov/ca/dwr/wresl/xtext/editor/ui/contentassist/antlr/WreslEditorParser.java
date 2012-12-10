@@ -112,6 +112,7 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getConstraintAccess().getOperatorAlternatives_1_0(), "rule__Constraint__OperatorAlternatives_1_0");
 					put(grammarAccess.getModelAccess().getAlternatives_0(), "rule__Model__Alternatives_0");
 					put(grammarAccess.getModelAccess().getAlternatives_3(), "rule__Model__Alternatives_3");
+					put(grammarAccess.getInitialAccess().getAlternatives_0(), "rule__Initial__Alternatives_0");
 					put(grammarAccess.getSequenceAccess().getAlternatives_0(), "rule__Sequence__Alternatives_0");
 					put(grammarAccess.getSequenceAccess().getAlternatives_3(), "rule__Sequence__Alternatives_3");
 					put(grammarAccess.getConditionAccess().getAlternatives_0(), "rule__Condition__Alternatives_0");
@@ -127,6 +128,8 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getNumberAccess().getAlternatives(), "rule__Number__Alternatives");
 					put(grammarAccess.getIncludeFileAccess().getAlternatives_0(), "rule__IncludeFile__Alternatives_0");
 					put(grammarAccess.getIncludeFileAccess().getLocalAlternatives_1_1_0(), "rule__IncludeFile__LocalAlternatives_1_1_0");
+					put(grammarAccess.getIncludeModelAccess().getAlternatives_0(), "rule__IncludeModel__Alternatives_0");
+					put(grammarAccess.getIncludeModelAccess().getAlternatives_1(), "rule__IncludeModel__Alternatives_1");
 					put(grammarAccess.getWreslEvaluatorAccess().getGroup_1(), "rule__WreslEvaluator__Group_1__0");
 					put(grammarAccess.getObjectiveAccess().getGroup(), "rule__Objective__Group__0");
 					put(grammarAccess.getObjectiveAccess().getGroup_1(), "rule__Objective__Group_1__0");
@@ -178,6 +181,7 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPenaltyAccess().getGroup(), "rule__Penalty__Group__0");
 					put(grammarAccess.getConstraintAccess().getGroup(), "rule__Constraint__Group__0");
 					put(grammarAccess.getModelAccess().getGroup(), "rule__Model__Group__0");
+					put(grammarAccess.getInitialAccess().getGroup(), "rule__Initial__Group__0");
 					put(grammarAccess.getSequenceAccess().getGroup(), "rule__Sequence__Group__0");
 					put(grammarAccess.getSequenceAccess().getGroup_6(), "rule__Sequence__Group_6__0");
 					put(grammarAccess.getConditionAccess().getGroup(), "rule__Condition__Group__0");
@@ -203,9 +207,11 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRangeFunctionAccess().getGroup(), "rule__RangeFunction__Group__0");
 					put(grammarAccess.getIncludeFileAccess().getGroup(), "rule__IncludeFile__Group__0");
 					put(grammarAccess.getIncludeFileAccess().getGroup_1(), "rule__IncludeFile__Group_1__0");
+					put(grammarAccess.getIncludeModelAccess().getGroup(), "rule__IncludeModel__Group__0");
 					put(grammarAccess.getWreslEvaluatorAccess().getPatternAssignment_0(), "rule__WreslEvaluator__PatternAssignment_0");
-					put(grammarAccess.getWreslEvaluatorAccess().getSequenceAssignment_1_0(), "rule__WreslEvaluator__SequenceAssignment_1_0");
-					put(grammarAccess.getWreslEvaluatorAccess().getModelAssignment_1_1(), "rule__WreslEvaluator__ModelAssignment_1_1");
+					put(grammarAccess.getWreslEvaluatorAccess().getInitialAssignment_1_0(), "rule__WreslEvaluator__InitialAssignment_1_0");
+					put(grammarAccess.getWreslEvaluatorAccess().getSequenceAssignment_1_1(), "rule__WreslEvaluator__SequenceAssignment_1_1");
+					put(grammarAccess.getWreslEvaluatorAccess().getModelAssignment_1_2(), "rule__WreslEvaluator__ModelAssignment_1_2");
 					put(grammarAccess.getObjectiveAccess().getLocalAssignment_1_1(), "rule__Objective__LocalAssignment_1_1");
 					put(grammarAccess.getObjectiveAccess().getNameAssignment_2(), "rule__Objective__NameAssignment_2");
 					put(grammarAccess.getObjectiveAccess().getWeightsAssignment_5(), "rule__Objective__WeightsAssignment_5");
@@ -288,6 +294,7 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getModelAccess().getNameAssignment_1(), "rule__Model__NameAssignment_1");
 					put(grammarAccess.getModelAccess().getPatternAssignment_3_0(), "rule__Model__PatternAssignment_3_0");
 					put(grammarAccess.getModelAccess().getAliasAssignment_3_1(), "rule__Model__AliasAssignment_3_1");
+					put(grammarAccess.getInitialAccess().getPatternAssignment_2(), "rule__Initial__PatternAssignment_2");
 					put(grammarAccess.getSequenceAccess().getNameAssignment_1(), "rule__Sequence__NameAssignment_1");
 					put(grammarAccess.getSequenceAccess().getModelAssignment_4(), "rule__Sequence__ModelAssignment_4");
 					put(grammarAccess.getSequenceAccess().getConditionAssignment_5(), "rule__Sequence__ConditionAssignment_5");

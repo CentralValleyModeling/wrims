@@ -81,9 +81,12 @@ public class InternalWreslEditorLexer extends Lexer {
     public static final int T__52=52;
     public static final int T__53=53;
     public static final int T__54=54;
+    public static final int T__107=107;
     public static final int T__59=59;
     public static final int T__103=103;
     public static final int T__104=104;
+    public static final int T__105=105;
+    public static final int T__106=106;
     public static final int RULE_INT=8;
     public static final int T__50=50;
     public static final int RULE_ORDER=10;
@@ -1473,10 +1476,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__84;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:75:7: ( 'sequence' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:75:9: 'sequence'
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:75:7: ( 'initial' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:75:9: 'initial'
             {
-            match("sequence"); 
+            match("initial"); 
 
 
             }
@@ -1494,10 +1497,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__85;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:76:7: ( 'SEQUENCE' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:76:9: 'SEQUENCE'
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:76:7: ( 'Initial' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:76:9: 'Initial'
             {
-            match("SEQUENCE"); 
+            match("Initial"); 
 
 
             }
@@ -1515,10 +1518,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__86;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:77:7: ( 'condition' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:77:9: 'condition'
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:77:7: ( 'INITIAL' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:77:9: 'INITIAL'
             {
-            match("condition"); 
+            match("INITIAL"); 
 
 
             }
@@ -1536,10 +1539,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__87;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:78:7: ( 'CONDITION' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:78:9: 'CONDITION'
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:78:7: ( 'sequence' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:78:9: 'sequence'
             {
-            match("CONDITION"); 
+            match("sequence"); 
 
 
             }
@@ -1557,10 +1560,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__88;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:79:7: ( '>=' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:79:9: '>='
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:79:7: ( 'SEQUENCE' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:79:9: 'SEQUENCE'
             {
-            match(">="); 
+            match("SEQUENCE"); 
 
 
             }
@@ -1578,10 +1581,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__89;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:80:7: ( '<=' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:80:9: '<='
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:80:7: ( 'condition' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:80:9: 'condition'
             {
-            match("<="); 
+            match("condition"); 
 
 
             }
@@ -1599,10 +1602,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__90;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:81:7: ( '==' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:81:9: '=='
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:81:7: ( 'CONDITION' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:81:9: 'CONDITION'
             {
-            match("=="); 
+            match("CONDITION"); 
 
 
             }
@@ -1620,10 +1623,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__91;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:82:7: ( '/=' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:82:9: '/='
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:82:7: ( '>=' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:82:9: '>='
             {
-            match("/="); 
+            match(">="); 
 
 
             }
@@ -1641,10 +1644,11 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__92;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:83:7: ( '+' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:83:9: '+'
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:83:7: ( '<=' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:83:9: '<='
             {
-            match('+'); 
+            match("<="); 
+
 
             }
 
@@ -1661,10 +1665,11 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__93;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:84:7: ( '*' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:84:9: '*'
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:84:7: ( '==' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:84:9: '=='
             {
-            match('*'); 
+            match("=="); 
+
 
             }
 
@@ -1681,10 +1686,11 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__94;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:85:7: ( '/' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:85:9: '/'
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:85:7: ( '/=' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:85:9: '/='
             {
-            match('/'); 
+            match("/="); 
+
 
             }
 
@@ -1701,11 +1707,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__95;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:86:7: ( 'include' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:86:9: 'include'
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:86:7: ( '+' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:86:9: '+'
             {
-            match("include"); 
-
+            match('+'); 
 
             }
 
@@ -1722,11 +1727,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__96;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:87:7: ( 'INCLUDE' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:87:9: 'INCLUDE'
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:87:7: ( '*' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:87:9: '*'
             {
-            match("INCLUDE"); 
-
+            match('*'); 
 
             }
 
@@ -1743,10 +1747,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__97;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:88:7: ( '{' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:88:9: '{'
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:88:7: ( '/' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:88:9: '/'
             {
-            match('{'); 
+            match('/'); 
 
             }
 
@@ -1763,10 +1767,11 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__98;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:89:7: ( '}' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:89:9: '}'
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:89:7: ( 'include' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:89:9: 'include'
             {
-            match('}'); 
+            match("include"); 
+
 
             }
 
@@ -1783,10 +1788,11 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__99;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:90:7: ( '[' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:90:9: '['
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:90:7: ( 'INCLUDE' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:90:9: 'INCLUDE'
             {
-            match('['); 
+            match("INCLUDE"); 
+
 
             }
 
@@ -1803,10 +1809,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__100;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:91:8: ( ']' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:91:10: ']'
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:91:8: ( '{' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:91:10: '{'
             {
-            match(']'); 
+            match('{'); 
 
             }
 
@@ -1823,10 +1829,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__101;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:92:8: ( ',' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:92:10: ','
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:92:8: ( '}' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:92:10: '}'
             {
-            match(','); 
+            match('}'); 
 
             }
 
@@ -1843,10 +1849,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__102;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:93:8: ( '(' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:93:10: '('
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:93:8: ( '[' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:93:10: '['
             {
-            match('('); 
+            match('['); 
 
             }
 
@@ -1863,11 +1869,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__103;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:94:8: ( 'i=' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:94:10: 'i='
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:94:8: ( ']' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:94:10: ']'
             {
-            match("i="); 
-
+            match(']'); 
 
             }
 
@@ -1884,10 +1889,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = T__104;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:95:8: ( ')' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:95:10: ')'
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:95:8: ( ',' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:95:10: ','
             {
-            match(')'); 
+            match(','); 
 
             }
 
@@ -1899,15 +1904,76 @@ public class InternalWreslEditorLexer extends Lexer {
     }
     // $ANTLR end "T__104"
 
+    // $ANTLR start "T__105"
+    public final void mT__105() throws RecognitionException {
+        try {
+            int _type = T__105;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:96:8: ( '(' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:96:10: '('
+            {
+            match('('); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__105"
+
+    // $ANTLR start "T__106"
+    public final void mT__106() throws RecognitionException {
+        try {
+            int _type = T__106;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:97:8: ( 'i=' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:97:10: 'i='
+            {
+            match("i="); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__106"
+
+    // $ANTLR start "T__107"
+    public final void mT__107() throws RecognitionException {
+        try {
+            int _type = T__107;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:98:8: ( ')' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:98:10: ')'
+            {
+            match(')'); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__107"
+
     // $ANTLR start "RULE_RANGE"
     public final void mRULE_RANGE() throws RecognitionException {
         try {
             int _type = RULE_RANGE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14252:12: ( ( 'range' | 'RANGE' | 'Range' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14252:14: ( 'range' | 'RANGE' | 'Range' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14687:12: ( ( 'range' | 'RANGE' | 'Range' ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14687:14: ( 'range' | 'RANGE' | 'Range' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14252:14: ( 'range' | 'RANGE' | 'Range' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14687:14: ( 'range' | 'RANGE' | 'Range' )
             int alt1=3;
             int LA1_0 = input.LA(1);
 
@@ -1938,7 +2004,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14252:15: 'range'
+                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14687:15: 'range'
                     {
                     match("range"); 
 
@@ -1946,7 +2012,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14252:23: 'RANGE'
+                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14687:23: 'RANGE'
                     {
                     match("RANGE"); 
 
@@ -1954,7 +2020,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14252:31: 'Range'
+                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14687:31: 'Range'
                     {
                     match("Range"); 
 
@@ -1980,10 +2046,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_MIN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14254:10: ( ( 'min' | 'MIN' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14254:12: ( 'min' | 'MIN' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14689:10: ( ( 'min' | 'MIN' ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14689:12: ( 'min' | 'MIN' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14254:12: ( 'min' | 'MIN' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14689:12: ( 'min' | 'MIN' )
             int alt2=2;
             int LA2_0 = input.LA(1);
 
@@ -2001,7 +2067,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt2) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14254:13: 'min'
+                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14689:13: 'min'
                     {
                     match("min"); 
 
@@ -2009,7 +2075,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14254:19: 'MIN'
+                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14689:19: 'MIN'
                     {
                     match("MIN"); 
 
@@ -2035,10 +2101,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_MAX;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14256:10: ( ( 'max' | 'MAX' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14256:12: ( 'max' | 'MAX' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14691:10: ( ( 'max' | 'MAX' ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14691:12: ( 'max' | 'MAX' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14256:12: ( 'max' | 'MAX' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14691:12: ( 'max' | 'MAX' )
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -2056,7 +2122,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14256:13: 'max'
+                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14691:13: 'max'
                     {
                     match("max"); 
 
@@ -2064,7 +2130,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14256:19: 'MAX'
+                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14691:19: 'MAX'
                     {
                     match("MAX"); 
 
@@ -2090,10 +2156,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14258:12: ( ( RULE_INT '.' ( RULE_INT )* | '.' ( RULE_INT )+ ) )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14258:14: ( RULE_INT '.' ( RULE_INT )* | '.' ( RULE_INT )+ )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14693:12: ( ( RULE_INT '.' ( RULE_INT )* | '.' ( RULE_INT )+ ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14693:14: ( RULE_INT '.' ( RULE_INT )* | '.' ( RULE_INT )+ )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14258:14: ( RULE_INT '.' ( RULE_INT )* | '.' ( RULE_INT )+ )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14693:14: ( RULE_INT '.' ( RULE_INT )* | '.' ( RULE_INT )+ )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -2111,11 +2177,11 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14258:15: RULE_INT '.' ( RULE_INT )*
+                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14693:15: RULE_INT '.' ( RULE_INT )*
                     {
                     mRULE_INT(); 
                     match('.'); 
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14258:28: ( RULE_INT )*
+                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14693:28: ( RULE_INT )*
                     loop4:
                     do {
                         int alt4=2;
@@ -2128,7 +2194,7 @@ public class InternalWreslEditorLexer extends Lexer {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14258:28: RULE_INT
+                    	    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14693:28: RULE_INT
                     	    {
                     	    mRULE_INT(); 
 
@@ -2144,10 +2210,10 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14258:38: '.' ( RULE_INT )+
+                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14693:38: '.' ( RULE_INT )+
                     {
                     match('.'); 
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14258:42: ( RULE_INT )+
+                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14693:42: ( RULE_INT )+
                     int cnt5=0;
                     loop5:
                     do {
@@ -2161,7 +2227,7 @@ public class InternalWreslEditorLexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14258:42: RULE_INT
+                    	    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14693:42: RULE_INT
                     	    {
                     	    mRULE_INT(); 
 
@@ -2199,10 +2265,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_AND;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14260:10: ( ( '.and.' | '.AND.' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14260:12: ( '.and.' | '.AND.' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14695:10: ( ( '.and.' | '.AND.' ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14695:12: ( '.and.' | '.AND.' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14260:12: ( '.and.' | '.AND.' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14695:12: ( '.and.' | '.AND.' )
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -2230,7 +2296,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt7) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14260:13: '.and.'
+                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14695:13: '.and.'
                     {
                     match(".and."); 
 
@@ -2238,7 +2304,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14260:21: '.AND.'
+                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14695:21: '.AND.'
                     {
                     match(".AND."); 
 
@@ -2264,10 +2330,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_OR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14262:9: ( ( '.or.' | '.OR.' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14262:11: ( '.or.' | '.OR.' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14697:9: ( ( '.or.' | '.OR.' ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14697:11: ( '.or.' | '.OR.' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14262:11: ( '.or.' | '.OR.' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14697:11: ( '.or.' | '.OR.' )
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -2295,7 +2361,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt8) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14262:12: '.or.'
+                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14697:12: '.or.'
                     {
                     match(".or."); 
 
@@ -2303,7 +2369,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14262:19: '.OR.'
+                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14697:19: '.OR.'
                     {
                     match(".OR."); 
 
@@ -2329,10 +2395,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_NOT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14264:10: ( ( '.not.' | '.NOT.' ) )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14264:12: ( '.not.' | '.NOT.' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14699:10: ( ( '.not.' | '.NOT.' ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14699:12: ( '.not.' | '.NOT.' )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14264:12: ( '.not.' | '.NOT.' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14699:12: ( '.not.' | '.NOT.' )
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -2360,7 +2426,7 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt9) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14264:13: '.not.'
+                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14699:13: '.not.'
                     {
                     match(".not."); 
 
@@ -2368,7 +2434,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14264:21: '.NOT.'
+                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14699:21: '.NOT.'
                     {
                     match(".NOT."); 
 
@@ -2394,8 +2460,8 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ALWAYS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14266:13: ( 'always' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14266:15: 'always'
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14701:13: ( 'always' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14701:15: 'always'
             {
             match("always"); 
 
@@ -2415,8 +2481,8 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ORDER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14268:12: ( 'order' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14268:14: 'order'
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14703:12: ( 'order' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14703:14: 'order'
             {
             match("order"); 
 
@@ -2436,11 +2502,11 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14270:13: ( '\\'' (~ ( ( '\\'' | '\\n' | '\\r' ) ) )* '\\'' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14270:15: '\\'' (~ ( ( '\\'' | '\\n' | '\\r' ) ) )* '\\''
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14705:13: ( '\\'' (~ ( ( '\\'' | '\\n' | '\\r' ) ) )* '\\'' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14705:15: '\\'' (~ ( ( '\\'' | '\\n' | '\\r' ) ) )* '\\''
             {
             match('\''); 
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14270:20: (~ ( ( '\\'' | '\\n' | '\\r' ) ) )*
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14705:20: (~ ( ( '\\'' | '\\n' | '\\r' ) ) )*
             loop10:
             do {
                 int alt10=2;
@@ -2453,7 +2519,7 @@ public class InternalWreslEditorLexer extends Lexer {
 
                 switch (alt10) {
             	case 1 :
-            	    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14270:20: ~ ( ( '\\'' | '\\n' | '\\r' ) )
+            	    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14705:20: ~ ( ( '\\'' | '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2490,11 +2556,11 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14272:17: ( '!' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14272:19: '!' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14707:17: ( '!' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14707:19: '!' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match('!'); 
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14272:23: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14707:23: (~ ( ( '\\n' | '\\r' ) ) )*
             loop11:
             do {
                 int alt11=2;
@@ -2507,7 +2573,7 @@ public class InternalWreslEditorLexer extends Lexer {
 
                 switch (alt11) {
             	case 1 :
-            	    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14272:23: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14707:23: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2527,7 +2593,7 @@ public class InternalWreslEditorLexer extends Lexer {
                 }
             } while (true);
 
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14272:39: ( ( '\\r' )? '\\n' )?
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14707:39: ( ( '\\r' )? '\\n' )?
             int alt13=2;
             int LA13_0 = input.LA(1);
 
@@ -2536,9 +2602,9 @@ public class InternalWreslEditorLexer extends Lexer {
             }
             switch (alt13) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14272:40: ( '\\r' )? '\\n'
+                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14707:40: ( '\\r' )? '\\n'
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14272:40: ( '\\r' )?
+                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14707:40: ( '\\r' )?
                     int alt12=2;
                     int LA12_0 = input.LA(1);
 
@@ -2547,7 +2613,7 @@ public class InternalWreslEditorLexer extends Lexer {
                     }
                     switch (alt12) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14272:40: '\\r'
+                            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14707:40: '\\r'
                             {
                             match('\r'); 
 
@@ -2579,8 +2645,8 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14274:9: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14274:11: ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14709:9: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14709:11: ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -2591,7 +2657,7 @@ public class InternalWreslEditorLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14274:31: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14709:31: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop14:
             do {
                 int alt14=2;
@@ -2640,10 +2706,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14276:10: ( ( '0' .. '9' )+ )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14276:12: ( '0' .. '9' )+
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14711:10: ( ( '0' .. '9' )+ )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14711:12: ( '0' .. '9' )+
             {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14276:12: ( '0' .. '9' )+
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14711:12: ( '0' .. '9' )+
             int cnt15=0;
             loop15:
             do {
@@ -2657,7 +2723,7 @@ public class InternalWreslEditorLexer extends Lexer {
 
                 switch (alt15) {
             	case 1 :
-            	    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14276:13: '0' .. '9'
+            	    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14711:13: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -2689,12 +2755,12 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14278:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14278:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14713:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14713:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14278:24: ( options {greedy=false; } : . )*
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14713:24: ( options {greedy=false; } : . )*
             loop16:
             do {
                 int alt16=2;
@@ -2719,7 +2785,7 @@ public class InternalWreslEditorLexer extends Lexer {
 
                 switch (alt16) {
             	case 1 :
-            	    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14278:52: .
+            	    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14713:52: .
             	    {
             	    matchAny(); 
 
@@ -2749,10 +2815,10 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14280:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14280:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14715:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14715:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14280:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14715:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt17=0;
             loop17:
             do {
@@ -2806,8 +2872,8 @@ public class InternalWreslEditorLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14282:16: ( . )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14282:18: .
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14717:16: ( . )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14717:18: .
             {
             matchAny(); 
 
@@ -2822,8 +2888,8 @@ public class InternalWreslEditorLexer extends Lexer {
     // $ANTLR end "RULE_ANY_OTHER"
 
     public void mTokens() throws RecognitionException {
-        // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:8: ( T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | T__85 | T__86 | T__87 | T__88 | T__89 | T__90 | T__91 | T__92 | T__93 | T__94 | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | RULE_RANGE | RULE_MIN | RULE_MAX | RULE_FLOAT | RULE_AND | RULE_OR | RULE_NOT | RULE_ALWAYS | RULE_ORDER | RULE_STRING | RULE_SL_COMMENT | RULE_ID | RULE_INT | RULE_ML_COMMENT | RULE_WS | RULE_ANY_OTHER )
-        int alt18=101;
+        // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:8: ( T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | T__85 | T__86 | T__87 | T__88 | T__89 | T__90 | T__91 | T__92 | T__93 | T__94 | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | T__105 | T__106 | T__107 | RULE_RANGE | RULE_MIN | RULE_MAX | RULE_FLOAT | RULE_AND | RULE_OR | RULE_NOT | RULE_ALWAYS | RULE_ORDER | RULE_STRING | RULE_SL_COMMENT | RULE_ID | RULE_INT | RULE_ML_COMMENT | RULE_WS | RULE_ANY_OTHER )
+        int alt18=104;
         alt18 = dfa18.predict(input);
         switch (alt18) {
             case 1 :
@@ -3422,112 +3488,133 @@ public class InternalWreslEditorLexer extends Lexer {
                 }
                 break;
             case 86 :
-                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:525: RULE_RANGE
+                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:525: T__105
+                {
+                mT__105(); 
+
+                }
+                break;
+            case 87 :
+                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:532: T__106
+                {
+                mT__106(); 
+
+                }
+                break;
+            case 88 :
+                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:539: T__107
+                {
+                mT__107(); 
+
+                }
+                break;
+            case 89 :
+                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:546: RULE_RANGE
                 {
                 mRULE_RANGE(); 
 
                 }
                 break;
-            case 87 :
-                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:536: RULE_MIN
+            case 90 :
+                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:557: RULE_MIN
                 {
                 mRULE_MIN(); 
 
                 }
                 break;
-            case 88 :
-                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:545: RULE_MAX
+            case 91 :
+                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:566: RULE_MAX
                 {
                 mRULE_MAX(); 
 
                 }
                 break;
-            case 89 :
-                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:554: RULE_FLOAT
+            case 92 :
+                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:575: RULE_FLOAT
                 {
                 mRULE_FLOAT(); 
 
                 }
                 break;
-            case 90 :
-                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:565: RULE_AND
+            case 93 :
+                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:586: RULE_AND
                 {
                 mRULE_AND(); 
 
                 }
                 break;
-            case 91 :
-                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:574: RULE_OR
+            case 94 :
+                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:595: RULE_OR
                 {
                 mRULE_OR(); 
 
                 }
                 break;
-            case 92 :
-                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:582: RULE_NOT
+            case 95 :
+                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:603: RULE_NOT
                 {
                 mRULE_NOT(); 
 
                 }
                 break;
-            case 93 :
-                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:591: RULE_ALWAYS
+            case 96 :
+                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:612: RULE_ALWAYS
                 {
                 mRULE_ALWAYS(); 
 
                 }
                 break;
-            case 94 :
-                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:603: RULE_ORDER
+            case 97 :
+                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:624: RULE_ORDER
                 {
                 mRULE_ORDER(); 
 
                 }
                 break;
-            case 95 :
-                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:614: RULE_STRING
+            case 98 :
+                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:635: RULE_STRING
                 {
                 mRULE_STRING(); 
 
                 }
                 break;
-            case 96 :
-                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:626: RULE_SL_COMMENT
+            case 99 :
+                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:647: RULE_SL_COMMENT
                 {
                 mRULE_SL_COMMENT(); 
 
                 }
                 break;
-            case 97 :
-                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:642: RULE_ID
+            case 100 :
+                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:663: RULE_ID
                 {
                 mRULE_ID(); 
 
                 }
                 break;
-            case 98 :
-                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:650: RULE_INT
+            case 101 :
+                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:671: RULE_INT
                 {
                 mRULE_INT(); 
 
                 }
                 break;
-            case 99 :
-                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:659: RULE_ML_COMMENT
+            case 102 :
+                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:680: RULE_ML_COMMENT
                 {
                 mRULE_ML_COMMENT(); 
 
                 }
                 break;
-            case 100 :
-                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:675: RULE_WS
+            case 103 :
+                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:696: RULE_WS
                 {
                 mRULE_WS(); 
 
                 }
                 break;
-            case 101 :
-                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:683: RULE_ANY_OTHER
+            case 104 :
+                // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:1:704: RULE_ANY_OTHER
                 {
                 mRULE_ANY_OTHER(); 
 
@@ -3541,29 +3628,29 @@ public class InternalWreslEditorLexer extends Lexer {
 
     protected DFA18 dfa18 = new DFA18(this);
     static final String DFA18_eotS =
-        "\2\uffff\10\75\1\71\32\75\1\172\1\174\1\176\2\75\1\u0087\11\uffff"+
-        "\1\u0091\1\71\5\uffff\2\75\1\uffff\11\75\6\uffff\25\75\1\uffff\26"+
-        "\75\6\uffff\6\75\15\uffff\1\u0091\3\uffff\5\75\1\u00e0\2\75\1\u00e3"+
-        "\4\75\1\u00e8\1\75\1\u00ea\10\75\1\u00f3\3\75\1\u00f7\1\75\1\u00f9"+
-        "\1\u00fa\2\75\1\u00fd\1\u00fe\24\75\1\u0117\1\75\1\u0119\5\75\1"+
-        "\u011f\1\u0120\1\75\1\u011f\1\u0120\5\75\1\uffff\2\75\1\uffff\4"+
-        "\75\1\uffff\1\u012d\1\uffff\1\u012e\3\75\1\u0132\1\u0133\2\75\1"+
-        "\uffff\3\75\1\uffff\1\75\2\uffff\2\75\2\uffff\13\75\1\u0147\3\75"+
-        "\1\u014b\3\75\1\u014f\1\75\1\u0151\2\75\1\uffff\1\75\1\uffff\5\75"+
-        "\2\uffff\2\75\1\u015c\1\75\1\u015e\1\u015f\1\u0160\1\u0161\4\75"+
-        "\2\uffff\1\u0166\1\75\1\u0168\2\uffff\1\u0169\1\75\1\u016b\1\u016c"+
-        "\1\75\1\u016e\15\75\1\uffff\3\75\1\uffff\1\u017f\1\u0180\1\u0181"+
-        "\1\uffff\1\u0182\1\uffff\1\u0183\1\u0184\3\u0185\2\75\1\u0188\1"+
-        "\u0189\1\75\1\uffff\1\75\4\uffff\1\u018c\1\u018d\2\75\1\uffff\1"+
-        "\u0190\2\uffff\1\75\2\uffff\1\75\1\uffff\1\u0193\1\75\1\u0195\15"+
+        "\2\uffff\10\75\1\71\32\75\1\173\1\175\1\177\2\75\1\u0088\11\uffff"+
+        "\1\u0092\1\71\5\uffff\2\75\1\uffff\11\75\6\uffff\25\75\1\uffff\27"+
+        "\75\6\uffff\6\75\15\uffff\1\u0092\3\uffff\5\75\1\u00e4\2\75\1\u00e7"+
+        "\4\75\1\u00ec\1\75\1\u00ee\10\75\1\u00f7\3\75\1\u00fb\1\75\1\u00fd"+
+        "\1\u00fe\2\75\1\u0101\1\u0102\27\75\1\u011e\1\75\1\u0120\5\75\1"+
+        "\u0126\1\u0127\1\75\1\u0126\1\u0127\5\75\1\uffff\2\75\1\uffff\4"+
+        "\75\1\uffff\1\u0134\1\uffff\1\u0135\3\75\1\u0139\1\u013a\2\75\1"+
+        "\uffff\3\75\1\uffff\1\75\2\uffff\2\75\2\uffff\16\75\1\u0151\3\75"+
+        "\1\u0155\3\75\1\u0159\1\75\1\u015b\2\75\1\uffff\1\75\1\uffff\5\75"+
+        "\2\uffff\2\75\1\u0166\1\75\1\u0168\1\u0169\1\u016a\1\u016b\4\75"+
+        "\2\uffff\1\u0170\1\75\1\u0172\2\uffff\1\u0173\1\75\1\u0175\1\u0176"+
+        "\1\75\1\u0178\20\75\1\uffff\3\75\1\uffff\1\u018c\1\u018d\1\u018e"+
+        "\1\uffff\1\u018f\1\uffff\1\u0190\1\u0191\3\u0192\2\75\1\u0195\1"+
+        "\u0196\1\75\1\uffff\1\75\4\uffff\1\u0199\1\u019a\2\75\1\uffff\1"+
+        "\u019d\2\uffff\1\75\2\uffff\1\75\1\uffff\1\u01a0\1\75\1\u01a2\20"+
         "\75\7\uffff\2\75\2\uffff\2\75\2\uffff\2\75\1\uffff\2\75\1\uffff"+
-        "\1\75\1\uffff\1\75\1\u01ad\1\u01ae\1\u01af\1\u01b0\2\75\1\u01b3"+
-        "\2\75\1\u01b6\2\75\1\u01b9\1\u01ba\2\75\1\u01bd\1\u01be\2\75\1\u01c1"+
-        "\1\u01c2\4\uffff\2\75\1\uffff\2\75\1\uffff\2\75\2\uffff\1\u01c9"+
-        "\1\u01ca\2\uffff\1\u01cb\1\u01cc\2\uffff\2\75\1\u01cf\1\u01d0\1"+
-        "\u01d1\1\u01d2\4\uffff\1\u01d3\1\u01d4\6\uffff";
+        "\1\75\1\uffff\1\75\1\u01bd\1\u01be\1\u01bf\1\u01c0\1\u01c1\1\u01c2"+
+        "\1\u01c3\2\75\1\u01c6\2\75\1\u01c9\2\75\1\u01cc\1\u01cd\2\75\1\u01d0"+
+        "\1\u01d1\2\75\1\u01d4\1\u01d5\7\uffff\2\75\1\uffff\2\75\1\uffff"+
+        "\2\75\2\uffff\1\u01dc\1\u01dd\2\uffff\1\u01de\1\u01df\2\uffff\2"+
+        "\75\1\u01e2\1\u01e3\1\u01e4\1\u01e5\4\uffff\1\u01e6\1\u01e7\6\uffff";
     static final String DFA18_eofS =
-        "\u01d5\uffff";
+        "\u01e8\uffff";
     static final String DFA18_minS =
         "\1\0\1\uffff\1\142\1\102\1\150\1\110\1\145\1\105\1\170\1\130\1"+
         "\60\2\71\1\154\1\114\1\151\1\111\1\156\1\116\1\145\1\105\1\75\1"+
@@ -3572,89 +3659,91 @@ public class InternalWreslEditorLexer extends Lexer {
         "\5\uffff\1\152\1\144\1\uffff\1\112\1\143\1\163\1\103\1\123\1\146"+
         "\1\106\1\164\1\124\6\uffff\1\60\1\157\1\60\1\117\1\151\1\111\1\156"+
         "\1\116\1\142\1\145\1\160\1\102\1\105\1\120\1\144\1\155\1\154\1\104"+
-        "\1\115\1\114\1\143\1\uffff\1\103\1\155\1\115\1\156\1\163\1\116\1"+
-        "\123\1\154\1\114\1\166\1\141\1\126\1\101\1\145\1\105\1\163\1\156"+
-        "\1\123\1\116\2\156\1\116\6\uffff\1\144\1\156\1\170\1\104\1\116\1"+
-        "\130\15\uffff\1\56\3\uffff\2\145\1\105\1\141\1\145\1\60\1\101\1"+
-        "\105\1\60\1\151\1\111\1\145\1\105\1\60\1\155\1\60\1\115\2\141\1"+
-        "\101\1\144\1\104\1\164\1\157\1\60\1\145\1\124\1\117\1\60\1\105\2"+
-        "\60\1\145\1\165\2\60\1\105\1\125\1\145\1\154\1\105\1\114\1\145\1"+
-        "\105\1\144\1\145\1\104\1\105\1\165\1\125\1\145\1\154\1\105\1\114"+
-        "\1\162\1\122\1\60\1\147\1\60\1\107\1\147\1\141\1\101\1\145\2\60"+
-        "\1\105\2\60\1\143\1\162\1\103\1\154\1\162\1\uffff\1\114\1\122\1"+
-        "\uffff\1\156\1\116\1\162\1\122\1\uffff\1\60\1\uffff\1\60\1\163\1"+
-        "\171\1\123\2\60\1\163\1\165\1\uffff\1\162\1\123\1\125\1\uffff\1"+
-        "\122\2\uffff\1\143\1\145\2\uffff\1\103\1\105\1\147\1\165\1\107\1"+
-        "\125\1\163\1\123\1\145\1\164\1\151\1\60\1\105\1\124\1\111\1\60\1"+
-        "\145\1\105\1\156\1\60\1\116\1\60\1\145\1\105\1\uffff\1\145\1\uffff"+
-        "\1\105\1\145\1\154\1\114\1\154\2\uffff\1\114\1\164\1\60\1\124\4"+
-        "\60\1\145\1\105\1\156\1\116\2\uffff\1\60\1\163\1\60\2\uffff\1\60"+
-        "\1\156\2\60\1\116\1\60\1\164\1\156\1\124\1\116\1\145\1\144\1\105"+
-        "\1\104\1\145\1\105\2\162\1\164\1\uffff\2\122\1\124\1\uffff\3\60"+
-        "\1\uffff\1\60\1\uffff\5\60\1\164\1\124\2\60\1\151\1\uffff\1\111"+
-        "\4\uffff\2\60\1\141\1\101\1\uffff\1\60\2\uffff\1\144\2\uffff\1\104"+
-        "\1\uffff\1\60\1\143\1\60\1\103\1\162\1\145\1\122\1\105\1\162\1\122"+
-        "\1\164\1\141\1\151\1\124\1\101\1\111\7\uffff\1\171\1\131\2\uffff"+
-        "\1\166\1\126\2\uffff\1\154\1\114\1\uffff\1\145\1\105\1\uffff\1\145"+
-        "\1\uffff\1\105\4\60\1\151\1\111\1\60\1\151\1\157\1\60\1\111\1\117"+
-        "\2\60\1\145\1\105\2\60\1\144\1\104\2\60\4\uffff\1\145\1\105\1\uffff"+
-        "\2\156\1\uffff\2\116\2\uffff\2\60\2\uffff\2\60\2\uffff\1\163\1\123"+
-        "\4\60\4\uffff\2\60\6\uffff";
+        "\1\115\1\114\1\143\1\uffff\1\103\1\151\1\155\1\115\1\156\1\163\1"+
+        "\116\1\123\1\154\1\114\1\166\1\141\1\126\1\101\1\145\1\105\1\163"+
+        "\1\156\1\123\1\116\2\156\1\116\6\uffff\1\144\1\156\1\170\1\104\1"+
+        "\116\1\130\15\uffff\1\56\3\uffff\2\145\1\105\1\141\1\145\1\60\1"+
+        "\101\1\105\1\60\1\151\1\111\1\145\1\105\1\60\1\155\1\60\1\115\2"+
+        "\141\1\101\1\144\1\104\1\164\1\157\1\60\1\145\1\124\1\117\1\60\1"+
+        "\105\2\60\1\145\1\165\2\60\1\105\1\125\1\145\1\164\1\154\1\105\1"+
+        "\124\1\114\1\164\1\145\1\105\1\144\1\145\1\104\1\105\1\165\1\125"+
+        "\1\145\1\154\1\105\1\114\1\162\1\122\1\60\1\147\1\60\1\107\1\147"+
+        "\1\141\1\101\1\145\2\60\1\105\2\60\1\143\1\162\1\103\1\154\1\162"+
+        "\1\uffff\1\114\1\122\1\uffff\1\156\1\116\1\162\1\122\1\uffff\1\60"+
+        "\1\uffff\1\60\1\163\1\171\1\123\2\60\1\163\1\165\1\uffff\1\162\1"+
+        "\123\1\125\1\uffff\1\122\2\uffff\1\143\1\145\2\uffff\1\103\1\105"+
+        "\1\147\1\151\1\165\1\107\1\111\1\125\1\151\1\163\1\123\1\145\1\164"+
+        "\1\151\1\60\1\105\1\124\1\111\1\60\1\145\1\105\1\156\1\60\1\116"+
+        "\1\60\1\145\1\105\1\uffff\1\145\1\uffff\1\105\1\145\1\154\1\114"+
+        "\1\154\2\uffff\1\114\1\164\1\60\1\124\4\60\1\145\1\105\1\156\1\116"+
+        "\2\uffff\1\60\1\163\1\60\2\uffff\1\60\1\156\2\60\1\116\1\60\1\164"+
+        "\1\156\1\124\1\116\1\145\1\141\1\144\1\105\1\101\1\104\1\141\1\145"+
+        "\1\105\2\162\1\164\1\uffff\2\122\1\124\1\uffff\3\60\1\uffff\1\60"+
+        "\1\uffff\5\60\1\164\1\124\2\60\1\151\1\uffff\1\111\4\uffff\2\60"+
+        "\1\141\1\101\1\uffff\1\60\2\uffff\1\144\2\uffff\1\104\1\uffff\1"+
+        "\60\1\143\1\60\1\103\1\162\1\154\1\145\1\122\1\114\1\105\1\154\1"+
+        "\162\1\122\1\164\1\141\1\151\1\124\1\101\1\111\7\uffff\1\171\1\131"+
+        "\2\uffff\1\166\1\126\2\uffff\1\154\1\114\1\uffff\1\145\1\105\1\uffff"+
+        "\1\145\1\uffff\1\105\7\60\1\151\1\111\1\60\1\151\1\157\1\60\1\111"+
+        "\1\117\2\60\1\145\1\105\2\60\1\144\1\104\2\60\7\uffff\1\145\1\105"+
+        "\1\uffff\2\156\1\uffff\2\116\2\uffff\2\60\2\uffff\2\60\2\uffff\1"+
+        "\163\1\123\4\60\4\uffff\2\60\6\uffff";
     static final String DFA18_maxS =
         "\1\uffff\1\uffff\1\162\1\102\1\157\1\117\1\145\1\105\1\170\1\130"+
         "\1\157\1\162\1\122\1\154\1\114\1\151\1\111\1\163\1\123\1\165\1\125"+
-        "\1\156\1\116\1\151\1\111\1\157\1\117\1\141\1\101\1\157\1\117\1\150"+
-        "\1\110\1\150\1\141\1\145\1\105\3\75\1\157\1\117\1\75\11\uffff\1"+
-        "\71\1\uffff\5\uffff\1\152\1\144\1\uffff\1\112\1\167\1\163\1\127"+
-        "\1\123\1\146\1\106\1\164\1\124\6\uffff\1\60\1\157\1\60\1\117\1\167"+
-        "\1\111\1\156\1\116\1\151\1\145\1\160\1\111\1\105\1\120\1\144\1\155"+
-        "\1\161\1\104\1\115\1\121\1\164\1\uffff\1\124\1\155\1\115\1\156\1"+
-        "\163\1\116\1\123\1\154\1\114\1\166\1\141\1\126\1\101\1\145\1\105"+
-        "\1\163\1\156\1\123\1\116\2\156\1\116\6\uffff\1\144\1\156\1\170\1"+
-        "\104\1\116\1\130\15\uffff\1\71\3\uffff\2\145\1\105\1\141\1\145\1"+
-        "\172\1\101\1\105\1\172\1\151\1\111\1\145\1\105\1\172\1\155\1\172"+
-        "\1\115\2\141\1\101\1\144\1\104\1\164\1\157\1\172\1\145\1\124\1\117"+
-        "\1\172\1\105\2\172\1\145\1\165\2\172\1\105\1\125\1\145\1\154\1\105"+
-        "\1\114\1\145\1\105\1\166\1\145\1\126\1\105\1\165\1\125\1\145\1\154"+
-        "\1\105\1\114\1\162\1\122\1\172\1\147\1\172\1\107\1\147\1\141\1\101"+
-        "\1\145\2\172\1\105\2\172\1\143\1\162\1\103\1\154\1\162\1\uffff\1"+
-        "\114\1\122\1\uffff\1\156\1\116\1\162\1\122\1\uffff\1\172\1\uffff"+
-        "\1\172\1\163\1\171\1\123\2\172\1\163\1\165\1\uffff\1\162\1\123\1"+
-        "\125\1\uffff\1\122\2\uffff\1\143\1\145\2\uffff\1\103\1\105\1\147"+
-        "\1\165\1\107\1\125\1\163\1\123\1\145\1\164\1\151\1\172\1\105\1\124"+
-        "\1\111\1\172\1\145\1\105\1\156\1\172\1\116\1\172\1\145\1\105\1\uffff"+
-        "\1\145\1\uffff\1\105\1\145\1\154\1\114\1\154\2\uffff\1\114\1\164"+
-        "\1\172\1\124\4\172\1\145\1\105\1\156\1\116\2\uffff\1\172\1\163\1"+
-        "\172\2\uffff\1\172\1\156\2\172\1\116\1\172\1\164\1\156\1\124\1\116"+
-        "\1\145\1\144\1\105\1\104\1\145\1\105\2\162\1\164\1\uffff\2\122\1"+
-        "\124\1\uffff\3\172\1\uffff\1\172\1\uffff\5\172\1\164\1\124\2\172"+
-        "\1\151\1\uffff\1\111\4\uffff\2\172\1\141\1\101\1\uffff\1\172\2\uffff"+
-        "\1\144\2\uffff\1\104\1\uffff\1\172\1\143\1\172\1\103\1\162\1\145"+
-        "\1\122\1\105\1\162\1\122\1\164\1\141\1\151\1\124\1\101\1\111\7\uffff"+
+        "\2\156\1\151\1\111\1\157\1\117\1\141\1\101\1\157\1\117\1\150\1\110"+
+        "\1\150\1\141\1\145\1\105\3\75\1\157\1\117\1\75\11\uffff\1\71\1\uffff"+
+        "\5\uffff\1\152\1\144\1\uffff\1\112\1\167\1\163\1\127\1\123\1\146"+
+        "\1\106\1\164\1\124\6\uffff\1\60\1\157\1\60\1\117\1\167\1\111\1\156"+
+        "\1\116\1\151\1\145\1\160\1\111\1\105\1\120\1\144\1\155\1\161\1\104"+
+        "\1\115\1\121\1\164\1\uffff\1\124\1\151\1\155\1\115\1\156\1\163\1"+
+        "\116\1\123\1\154\1\114\1\166\1\141\1\126\1\101\1\145\1\105\1\163"+
+        "\1\156\1\123\1\116\2\156\1\116\6\uffff\1\144\1\156\1\170\1\104\1"+
+        "\116\1\130\15\uffff\1\71\3\uffff\2\145\1\105\1\141\1\145\1\172\1"+
+        "\101\1\105\1\172\1\151\1\111\1\145\1\105\1\172\1\155\1\172\1\115"+
+        "\2\141\1\101\1\144\1\104\1\164\1\157\1\172\1\145\1\124\1\117\1\172"+
+        "\1\105\2\172\1\145\1\165\2\172\1\105\1\125\1\145\1\164\1\154\1\105"+
+        "\1\124\1\114\1\164\1\145\1\105\1\166\1\145\1\126\1\105\1\165\1\125"+
+        "\1\145\1\154\1\105\1\114\1\162\1\122\1\172\1\147\1\172\1\107\1\147"+
+        "\1\141\1\101\1\145\2\172\1\105\2\172\1\143\1\162\1\103\1\154\1\162"+
+        "\1\uffff\1\114\1\122\1\uffff\1\156\1\116\1\162\1\122\1\uffff\1\172"+
+        "\1\uffff\1\172\1\163\1\171\1\123\2\172\1\163\1\165\1\uffff\1\162"+
+        "\1\123\1\125\1\uffff\1\122\2\uffff\1\143\1\145\2\uffff\1\103\1\105"+
+        "\1\147\1\151\1\165\1\107\1\111\1\125\1\151\1\163\1\123\1\145\1\164"+
+        "\1\151\1\172\1\105\1\124\1\111\1\172\1\145\1\105\1\156\1\172\1\116"+
+        "\1\172\1\145\1\105\1\uffff\1\145\1\uffff\1\105\1\145\1\154\1\114"+
+        "\1\154\2\uffff\1\114\1\164\1\172\1\124\4\172\1\145\1\105\1\156\1"+
+        "\116\2\uffff\1\172\1\163\1\172\2\uffff\1\172\1\156\2\172\1\116\1"+
+        "\172\1\164\1\156\1\124\1\116\1\145\1\141\1\144\1\105\1\101\1\104"+
+        "\1\141\1\145\1\105\2\162\1\164\1\uffff\2\122\1\124\1\uffff\3\172"+
+        "\1\uffff\1\172\1\uffff\5\172\1\164\1\124\2\172\1\151\1\uffff\1\111"+
+        "\4\uffff\2\172\1\141\1\101\1\uffff\1\172\2\uffff\1\144\2\uffff\1"+
+        "\104\1\uffff\1\172\1\143\1\172\1\103\1\162\1\154\1\145\1\122\1\114"+
+        "\1\105\1\154\1\162\1\122\1\164\1\141\1\151\1\124\1\101\1\111\7\uffff"+
         "\1\171\1\131\2\uffff\1\166\1\126\2\uffff\1\154\1\114\1\uffff\1\145"+
-        "\1\105\1\uffff\1\145\1\uffff\1\105\4\172\1\151\1\111\1\172\1\151"+
+        "\1\105\1\uffff\1\145\1\uffff\1\105\7\172\1\151\1\111\1\172\1\151"+
         "\1\157\1\172\1\111\1\117\2\172\1\145\1\105\2\172\1\144\1\104\2\172"+
-        "\4\uffff\1\145\1\105\1\uffff\2\156\1\uffff\2\116\2\uffff\2\172\2"+
+        "\7\uffff\1\145\1\105\1\uffff\2\156\1\uffff\2\116\2\uffff\2\172\2"+
         "\uffff\2\172\2\uffff\1\163\1\123\4\172\4\uffff\2\172\6\uffff";
     static final String DFA18_acceptS =
-        "\1\uffff\1\1\51\uffff\1\111\1\112\1\116\1\117\1\120\1\121\1\122"+
-        "\1\123\1\125\2\uffff\1\140\1\141\1\144\1\145\1\1\2\uffff\1\141\11"+
-        "\uffff\1\12\1\13\1\132\1\133\1\134\1\131\25\uffff\1\124\26\uffff"+
-        "\1\106\1\74\1\105\1\75\1\107\1\76\6\uffff\1\110\1\143\1\113\1\111"+
-        "\1\112\1\116\1\117\1\120\1\121\1\122\1\123\1\125\1\142\1\uffff\1"+
-        "\137\1\140\1\144\112\uffff\1\64\2\uffff\1\65\4\uffff\1\14\1\uffff"+
+        "\1\uffff\1\1\51\uffff\1\114\1\115\1\121\1\122\1\123\1\124\1\125"+
+        "\1\126\1\130\2\uffff\1\143\1\144\1\147\1\150\1\1\2\uffff\1\144\11"+
+        "\uffff\1\12\1\13\1\135\1\136\1\137\1\134\25\uffff\1\127\27\uffff"+
+        "\1\111\1\74\1\110\1\75\1\112\1\76\6\uffff\1\113\1\146\1\116\1\114"+
+        "\1\115\1\121\1\122\1\123\1\124\1\125\1\126\1\130\1\145\1\uffff\1"+
+        "\142\1\143\1\147\115\uffff\1\64\2\uffff\1\65\4\uffff\1\14\1\uffff"+
         "\1\15\10\uffff\1\50\3\uffff\1\51\1\uffff\1\24\1\40\2\uffff\1\25"+
-        "\1\41\30\uffff\1\66\1\uffff\1\67\5\uffff\1\127\1\130\14\uffff\1"+
-        "\44\1\45\3\uffff\1\20\1\21\23\uffff\1\36\3\uffff\1\37\3\uffff\1"+
-        "\62\1\uffff\1\63\12\uffff\1\136\1\uffff\1\4\1\60\1\5\1\61\4\uffff"+
-        "\1\16\1\uffff\1\17\1\22\1\uffff\1\54\1\23\1\uffff\1\55\20\uffff"+
-        "\1\34\1\35\1\46\1\47\1\52\1\53\1\126\2\uffff\1\77\1\100\2\uffff"+
-        "\1\6\1\7\2\uffff\1\135\2\uffff\1\42\1\uffff\1\43\27\uffff\1\26\1"+
-        "\114\1\27\1\115\2\uffff\1\32\2\uffff\1\33\2\uffff\1\72\1\73\2\uffff"+
-        "\1\10\1\11\2\uffff\1\101\1\102\6\uffff\1\2\1\3\1\56\1\57\2\uffff"+
-        "\1\70\1\103\1\71\1\104\1\30\1\31";
+        "\1\41\33\uffff\1\66\1\uffff\1\67\5\uffff\1\132\1\133\14\uffff\1"+
+        "\44\1\45\3\uffff\1\20\1\21\26\uffff\1\36\3\uffff\1\37\3\uffff\1"+
+        "\62\1\uffff\1\63\12\uffff\1\141\1\uffff\1\4\1\60\1\5\1\61\4\uffff"+
+        "\1\16\1\uffff\1\17\1\22\1\uffff\1\54\1\23\1\uffff\1\55\23\uffff"+
+        "\1\34\1\35\1\46\1\47\1\52\1\53\1\131\2\uffff\1\77\1\100\2\uffff"+
+        "\1\6\1\7\2\uffff\1\140\2\uffff\1\42\1\uffff\1\43\32\uffff\1\26\1"+
+        "\101\1\117\1\27\1\103\1\120\1\102\2\uffff\1\32\2\uffff\1\33\2\uffff"+
+        "\1\72\1\73\2\uffff\1\10\1\11\2\uffff\1\104\1\105\6\uffff\1\2\1\3"+
+        "\1\56\1\57\2\uffff\1\70\1\106\1\71\1\107\1\30\1\31";
     static final String DFA18_specialS =
-        "\1\1\64\uffff\1\0\u019f\uffff}>";
+        "\1\0\64\uffff\1\1\u01b2\uffff}>";
     static final String[] DFA18_transitionS = {
             "\11\71\2\70\2\71\1\70\22\71\1\70\1\66\5\71\1\65\1\62\1\63\1"+
             "\54\1\53\1\61\1\1\1\12\1\52\12\64\2\71\1\45\1\47\1\46\2\71\1"+
@@ -3685,27 +3774,27 @@ public class InternalWreslEditorLexer extends Lexer {
             "\1\135\16\uffff\1\133\1\134",
             "\1\140\16\uffff\1\136\1\137",
             "\1\142\60\uffff\1\141",
-            "\1\143",
-            "\1\144",
+            "\1\143\37\uffff\1\144",
             "\1\145",
-            "\1\147\15\uffff\1\146",
-            "\1\151\15\uffff\1\150",
-            "\1\152",
+            "\1\146",
+            "\1\150\15\uffff\1\147",
+            "\1\152\15\uffff\1\151",
             "\1\153",
-            "\1\154\5\uffff\1\155",
-            "\1\156\5\uffff\1\157",
-            "\1\160",
+            "\1\154",
+            "\1\155\5\uffff\1\156",
+            "\1\157\5\uffff\1\160",
             "\1\161",
-            "\1\163\6\uffff\1\162",
-            "\1\165\6\uffff\1\164\30\uffff\1\166",
-            "\1\167",
+            "\1\162",
+            "\1\164\6\uffff\1\163",
+            "\1\166\6\uffff\1\165\30\uffff\1\167",
             "\1\170",
             "\1\171",
-            "\1\173",
-            "\1\175",
-            "\1\u0081\7\uffff\1\u0080\5\uffff\1\177",
-            "\1\u0084\7\uffff\1\u0083\5\uffff\1\u0082",
-            "\1\u0086\22\uffff\1\u0085",
+            "\1\172",
+            "\1\174",
+            "\1\176",
+            "\1\u0082\7\uffff\1\u0081\5\uffff\1\u0080",
+            "\1\u0085\7\uffff\1\u0084\5\uffff\1\u0083",
+            "\1\u0087\22\uffff\1\u0086",
             "",
             "",
             "",
@@ -3715,57 +3804,54 @@ public class InternalWreslEditorLexer extends Lexer {
             "",
             "",
             "",
-            "\1\114\1\uffff\12\u0092",
-            "\12\u0093\1\uffff\2\u0093\1\uffff\ufff2\u0093",
+            "\1\114\1\uffff\12\u0093",
+            "\12\u0094\1\uffff\2\u0094\1\uffff\ufff2\u0094",
             "",
             "",
             "",
             "",
             "",
-            "\1\u0096",
             "\1\u0097",
-            "",
             "\1\u0098",
-            "\1\u0099\23\uffff\1\u009a",
-            "\1\u009b",
-            "\1\u009c\23\uffff\1\u009d",
-            "\1\u009e",
+            "",
+            "\1\u0099",
+            "\1\u009a\23\uffff\1\u009b",
+            "\1\u009c",
+            "\1\u009d\23\uffff\1\u009e",
             "\1\u009f",
             "\1\u00a0",
             "\1\u00a1",
             "\1\u00a2",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
             "\1\u00a3",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "\1\u00a4",
             "\1\u00a5",
             "\1\u00a6",
-            "\1\u00a7\15\uffff\1\u00a8",
-            "\1\u00a9",
+            "\1\u00a7",
+            "\1\u00a8\15\uffff\1\u00a9",
             "\1\u00aa",
             "\1\u00ab",
-            "\1\u00ad\6\uffff\1\u00ac",
-            "\1\u00ae",
+            "\1\u00ac",
+            "\1\u00ae\6\uffff\1\u00ad",
             "\1\u00af",
-            "\1\u00b1\6\uffff\1\u00b0",
-            "\1\u00b2",
+            "\1\u00b0",
+            "\1\u00b2\6\uffff\1\u00b1",
             "\1\u00b3",
             "\1\u00b4",
             "\1\u00b5",
-            "\1\u00b6\4\uffff\1\u00b7",
-            "\1\u00b8",
+            "\1\u00b6",
+            "\1\u00b7\4\uffff\1\u00b8",
             "\1\u00b9",
-            "\1\u00ba\4\uffff\1\u00bb",
-            "\1\u00bd\20\uffff\1\u00bc",
+            "\1\u00ba",
+            "\1\u00bb\4\uffff\1\u00bc",
+            "\1\u00bf\5\uffff\1\u00be\12\uffff\1\u00bd",
             "",
-            "\1\u00bf\20\uffff\1\u00be",
-            "\1\u00c0",
-            "\1\u00c1",
-            "\1\u00c2",
+            "\1\u00c2\5\uffff\1\u00c1\12\uffff\1\u00c0",
             "\1\u00c3",
             "\1\u00c4",
             "\1\u00c5",
@@ -3784,338 +3870,360 @@ public class InternalWreslEditorLexer extends Lexer {
             "\1\u00d2",
             "\1\u00d3",
             "\1\u00d4",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
             "\1\u00d5",
             "\1\u00d6",
             "\1\u00d7",
             "\1\u00d8",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "\1\u00d9",
             "\1\u00da",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\1\114\1\uffff\12\u0092",
-            "",
-            "",
-            "",
             "\1\u00db",
             "\1\u00dc",
             "\1\u00dd",
             "\1\u00de",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\1\114\1\uffff\12\u0093",
+            "",
+            "",
+            "",
             "\1\u00df",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u00e0",
             "\1\u00e1",
             "\1\u00e2",
+            "\1\u00e3",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u00e4",
             "\1\u00e5",
             "\1\u00e6",
-            "\1\u00e7",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u00e8",
             "\1\u00e9",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u00ea",
             "\1\u00eb",
-            "\1\u00ec",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u00ed",
-            "\1\u00ee",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u00ef",
             "\1\u00f0",
             "\1\u00f1",
             "\1\u00f2",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u00f3",
             "\1\u00f4",
             "\1\u00f5",
             "\1\u00f6",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u00f8",
+            "\1\u00f9",
+            "\1\u00fa",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u00fb",
             "\1\u00fc",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u00ff",
             "\1\u0100",
-            "\1\u0101",
-            "\1\u0102",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0103",
             "\1\u0104",
             "\1\u0105",
             "\1\u0106",
-            "\1\u0109\16\uffff\1\u0108\2\uffff\1\u0107",
+            "\1\u0107",
+            "\1\u0108",
+            "\1\u0109",
             "\1\u010a",
-            "\1\u010d\16\uffff\1\u010c\2\uffff\1\u010b",
-            "\1\u010e",
-            "\1\u010f",
-            "\1\u0110",
+            "\1\u010b",
+            "\1\u010c",
+            "\1\u010d",
+            "\1\u0110\16\uffff\1\u010f\2\uffff\1\u010e",
             "\1\u0111",
-            "\1\u0112",
-            "\1\u0113",
-            "\1\u0114",
+            "\1\u0114\16\uffff\1\u0113\2\uffff\1\u0112",
             "\1\u0115",
             "\1\u0116",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u0117",
             "\1\u0118",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u0119",
             "\1\u011a",
             "\1\u011b",
             "\1\u011c",
             "\1\u011d",
-            "\1\u011e",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u011f",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0121",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0122",
             "\1\u0123",
             "\1\u0124",
             "\1\u0125",
-            "\1\u0126",
-            "",
-            "\1\u0127",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0128",
-            "",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0129",
             "\1\u012a",
             "\1\u012b",
             "\1\u012c",
+            "\1\u012d",
             "",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u012e",
             "\1\u012f",
+            "",
             "\1\u0130",
             "\1\u0131",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u0134",
-            "\1\u0135",
+            "\1\u0132",
+            "\1\u0133",
             "",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0136",
             "\1\u0137",
             "\1\u0138",
-            "",
-            "\1\u0139",
-            "",
-            "",
-            "\1\u013a",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u013b",
-            "",
-            "",
             "\1\u013c",
+            "",
             "\1\u013d",
             "\1\u013e",
             "\1\u013f",
+            "",
             "\1\u0140",
+            "",
+            "",
             "\1\u0141",
             "\1\u0142",
+            "",
+            "",
             "\1\u0143",
             "\1\u0144",
             "\1\u0145",
             "\1\u0146",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u0147",
             "\1\u0148",
             "\1\u0149",
             "\1\u014a",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u014b",
             "\1\u014c",
             "\1\u014d",
             "\1\u014e",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u014f",
             "\1\u0150",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0152",
             "\1\u0153",
-            "",
             "\1\u0154",
-            "",
-            "\1\u0155",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0156",
             "\1\u0157",
             "\1\u0158",
-            "\1\u0159",
-            "",
-            "",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u015a",
-            "\1\u015b",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u015c",
             "\1\u015d",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "",
+            "\1\u015e",
+            "",
+            "\1\u015f",
+            "\1\u0160",
+            "\1\u0161",
             "\1\u0162",
             "\1\u0163",
+            "",
+            "",
             "\1\u0164",
             "\1\u0165",
-            "",
-            "",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0167",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "",
-            "",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u016a",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u016c",
             "\1\u016d",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u016e",
             "\1\u016f",
-            "\1\u0170",
+            "",
+            "",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0171",
-            "\1\u0172",
-            "\1\u0173",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "",
+            "",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0174",
-            "\1\u0175",
-            "\1\u0176",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0177",
-            "\1\u0178",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0179",
             "\1\u017a",
             "\1\u017b",
-            "",
             "\1\u017c",
             "\1\u017d",
             "\1\u017e",
-            "",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u017f",
+            "\1\u0180",
+            "\1\u0181",
+            "\1\u0182",
+            "\1\u0183",
+            "\1\u0184",
+            "\1\u0185",
             "\1\u0186",
             "\1\u0187",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u018a",
+            "\1\u0188",
             "",
+            "\1\u0189",
+            "\1\u018a",
             "\1\u018b",
             "",
-            "",
-            "",
-            "",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u018e",
-            "\1\u018f",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "",
-            "",
-            "\1\u0191",
-            "",
-            "",
-            "\1\u0192",
-            "",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u0193",
             "\1\u0194",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u0196",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u0197",
+            "",
             "\1\u0198",
-            "\1\u0199",
-            "\1\u019a",
+            "",
+            "",
+            "",
+            "",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u019b",
             "\1\u019c",
-            "\1\u019d",
+            "",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "",
+            "",
             "\1\u019e",
+            "",
+            "",
             "\1\u019f",
-            "\1\u01a0",
+            "",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u01a1",
-            "\1\u01a2",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u01a3",
             "\1\u01a4",
-            "",
-            "",
             "\1\u01a5",
             "\1\u01a6",
-            "",
-            "",
             "\1\u01a7",
             "\1\u01a8",
-            "",
             "\1\u01a9",
             "\1\u01aa",
-            "",
             "\1\u01ab",
-            "",
             "\1\u01ac",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u01ad",
+            "\1\u01ae",
+            "\1\u01af",
+            "\1\u01b0",
             "\1\u01b1",
             "\1\u01b2",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\1\u01b3",
             "\1\u01b4",
+            "",
+            "",
             "\1\u01b5",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u01b6",
+            "",
+            "",
             "\1\u01b7",
             "\1\u01b8",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "",
+            "\1\u01b9",
+            "\1\u01ba",
+            "",
             "\1\u01bb",
+            "",
             "\1\u01bc",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\1\u01bf",
-            "\1\u01c0",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "",
-            "",
-            "",
-            "",
-            "\1\u01c3",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u01c4",
-            "",
             "\1\u01c5",
-            "\1\u01c6",
-            "",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\1\u01c7",
             "\1\u01c8",
-            "",
-            "",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u01ca",
+            "\1\u01cb",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "",
-            "",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
-            "",
-            "",
-            "\1\u01cd",
             "\1\u01ce",
+            "\1\u01cf",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\1\u01d2",
+            "\1\u01d3",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\1\u01d6",
+            "\1\u01d7",
+            "",
+            "\1\u01d8",
+            "\1\u01d9",
+            "",
+            "\1\u01da",
+            "\1\u01db",
+            "",
+            "",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "",
+            "",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
+            "",
+            "",
+            "\1\u01e0",
+            "\1\u01e1",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
             "\12\75\7\uffff\32\75\4\uffff\1\75\1\uffff\32\75",
@@ -4164,23 +4272,13 @@ public class InternalWreslEditorLexer extends Lexer {
             this.transition = DFA18_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | T__85 | T__86 | T__87 | T__88 | T__89 | T__90 | T__91 | T__92 | T__93 | T__94 | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | RULE_RANGE | RULE_MIN | RULE_MAX | RULE_FLOAT | RULE_AND | RULE_OR | RULE_NOT | RULE_ALWAYS | RULE_ORDER | RULE_STRING | RULE_SL_COMMENT | RULE_ID | RULE_INT | RULE_ML_COMMENT | RULE_WS | RULE_ANY_OTHER );";
+            return "1:1: Tokens : ( T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | T__85 | T__86 | T__87 | T__88 | T__89 | T__90 | T__91 | T__92 | T__93 | T__94 | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | T__105 | T__106 | T__107 | RULE_RANGE | RULE_MIN | RULE_MAX | RULE_FLOAT | RULE_AND | RULE_OR | RULE_NOT | RULE_ALWAYS | RULE_ORDER | RULE_STRING | RULE_SL_COMMENT | RULE_ID | RULE_INT | RULE_ML_COMMENT | RULE_WS | RULE_ANY_OTHER );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             IntStream input = _input;
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA18_53 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA18_53>='\u0000' && LA18_53<='\t')||(LA18_53>='\u000B' && LA18_53<='\f')||(LA18_53>='\u000E' && LA18_53<='\uFFFF')) ) {s = 147;}
-
-                        else s = 57;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
                         int LA18_0 = input.LA(1);
 
                         s = -1;
@@ -4297,6 +4395,16 @@ public class InternalWreslEditorLexer extends Lexer {
                         else if ( ((LA18_0>='\t' && LA18_0<='\n')||LA18_0=='\r'||LA18_0==' ') ) {s = 56;}
 
                         else if ( ((LA18_0>='\u0000' && LA18_0<='\b')||(LA18_0>='\u000B' && LA18_0<='\f')||(LA18_0>='\u000E' && LA18_0<='\u001F')||(LA18_0>='\"' && LA18_0<='&')||(LA18_0>=':' && LA18_0<=';')||(LA18_0>='?' && LA18_0<='@')||LA18_0=='\\'||(LA18_0>='^' && LA18_0<='`')||LA18_0=='|'||(LA18_0>='~' && LA18_0<='\uFFFF')) ) {s = 57;}
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 1 : 
+                        int LA18_53 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA18_53>='\u0000' && LA18_53<='\t')||(LA18_53>='\u000B' && LA18_53<='\f')||(LA18_53>='\u000E' && LA18_53<='\uFFFF')) ) {s = 148;}
+
+                        else s = 57;
 
                         if ( s>=0 ) return s;
                         break;
