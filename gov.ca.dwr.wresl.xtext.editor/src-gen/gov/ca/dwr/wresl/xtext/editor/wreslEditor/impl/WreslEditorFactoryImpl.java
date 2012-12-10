@@ -111,6 +111,7 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
       case WreslEditorPackage.GOAL_SIMPLE: return createGoalSimple();
       case WreslEditorPackage.CONSTRAINT: return createConstraint();
       case WreslEditorPackage.MODEL: return createModel();
+      case WreslEditorPackage.INITIAL: return createInitial();
       case WreslEditorPackage.SEQUENCE: return createSequence();
       case WreslEditorPackage.CONDITION: return createCondition();
       case WreslEditorPackage.LOGICAL_EXPRESSION: return createLogicalExpression();
@@ -604,6 +605,17 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
   {
     ModelImpl model = new ModelImpl();
     return model;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Initial createInitial()
+  {
+    InitialImpl initial = new InitialImpl();
+    return initial;
   }
 
   /**

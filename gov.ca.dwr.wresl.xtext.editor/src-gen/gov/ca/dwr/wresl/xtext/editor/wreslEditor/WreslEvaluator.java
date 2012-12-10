@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getPattern <em>Pattern</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#isInitial <em>Initial</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getSequence <em>Sequence</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getModel <em>Model</em>}</li>
  * </ul>
@@ -45,6 +46,32 @@ public interface WreslEvaluator extends EObject
    * @generated
    */
   EList<EObject> getPattern();
+
+  /**
+   * Returns the value of the '<em><b>Initial</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Initial</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Initial</em>' attribute.
+   * @see #setInitial(boolean)
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getWreslEvaluator_Initial()
+   * @model
+   * @generated
+   */
+  boolean isInitial();
+
+  /**
+   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#isInitial <em>Initial</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Initial</em>' attribute.
+   * @see #isInitial()
+   * @generated
+   */
+  void setInitial(boolean value);
 
   /**
    * Returns the value of the '<em><b>Sequence</b></em>' containment reference list.

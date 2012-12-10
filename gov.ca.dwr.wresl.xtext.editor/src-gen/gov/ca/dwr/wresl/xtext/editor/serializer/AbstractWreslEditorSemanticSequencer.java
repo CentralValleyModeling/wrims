@@ -23,6 +23,7 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalNoCaseContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalSimple;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Ident;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IncludeFile;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Initial;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IntFunction;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.LhsGtRhs;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.LhsLtRhs;
@@ -220,6 +221,12 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 				if(context == grammarAccess.getIncludeFileRule() ||
 				   context == grammarAccess.getPatternRule()) {
 					sequence_IncludeFile(context, (IncludeFile) semanticObject); 
+					return; 
+				}
+				else break;
+			case WreslEditorPackage.INITIAL:
+				if(context == grammarAccess.getInitialRule()) {
+					sequence_Initial(context, (Initial) semanticObject); 
 					return; 
 				}
 				else break;
@@ -792,6 +799,18 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
+	 *     pattern+=Pattern+
+	 *
+	 * Features:
+	 *    pattern[1, *]
+	 */
+	protected void sequence_Initial(EObject context, Initial semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     e=Expression
 	 *
 	 * Features:
@@ -1213,18 +1232,26 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     ((pattern+=Alias | pattern+=Pattern)+ | (sequence+=Sequence+ model+=Model+))
+	 *     ((pattern+=Alias | pattern+=Pattern)+ | (initial?=Initial? sequence+=Sequence+ model+=Model+))
 	 *
 	 * Features:
 	 *    pattern[0, *]
+	 *         EXCLUDE_IF_SET initial
 	 *         EXCLUDE_IF_SET sequence
 	 *         EXCLUDE_IF_SET model
+	 *    initial[0, 1]
+	 *         EXCLUDE_IF_UNSET sequence
+	 *         EXCLUDE_IF_UNSET model
+	 *         EXCLUDE_IF_SET pattern
+	 *         EXCLUDE_IF_SET pattern
 	 *    sequence[0, *]
+	 *         MANDATORY_IF_SET initial
 	 *         EXCLUDE_IF_UNSET model
 	 *         MANDATORY_IF_SET model
 	 *         EXCLUDE_IF_SET pattern
 	 *         EXCLUDE_IF_SET pattern
 	 *    model[0, *]
+	 *         MANDATORY_IF_SET initial
 	 *         EXCLUDE_IF_UNSET sequence
 	 *         MANDATORY_IF_SET sequence
 	 *         EXCLUDE_IF_SET pattern

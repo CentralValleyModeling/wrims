@@ -25,16 +25,18 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cPatternAliasParserRuleCall_0_0_0 = (RuleCall)cPatternAlternatives_0_0.eContents().get(0);
 		private final RuleCall cPatternPatternParserRuleCall_0_0_1 = (RuleCall)cPatternAlternatives_0_0.eContents().get(1);
 		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Assignment cSequenceAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
-		private final RuleCall cSequenceSequenceParserRuleCall_1_0_0 = (RuleCall)cSequenceAssignment_1_0.eContents().get(0);
-		private final Assignment cModelAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cModelModelParserRuleCall_1_1_0 = (RuleCall)cModelAssignment_1_1.eContents().get(0);
+		private final Assignment cInitialAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
+		private final RuleCall cInitialInitialParserRuleCall_1_0_0 = (RuleCall)cInitialAssignment_1_0.eContents().get(0);
+		private final Assignment cSequenceAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cSequenceSequenceParserRuleCall_1_1_0 = (RuleCall)cSequenceAssignment_1_1.eContents().get(0);
+		private final Assignment cModelAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cModelModelParserRuleCall_1_2_0 = (RuleCall)cModelAssignment_1_2.eContents().get(0);
 		
 		//WreslEvaluator:
-		//	pattern+=(Alias | Pattern)+ | sequence+=Sequence+ model+=Model+;
+		//	pattern+=(Alias | Pattern)+ | initial?=Initial? sequence+=Sequence+ model+=Model+;
 		public ParserRule getRule() { return rule; }
 
-		//pattern+=(Alias | Pattern)+ | sequence+=Sequence+ model+=Model+
+		//pattern+=(Alias | Pattern)+ | initial?=Initial? sequence+=Sequence+ model+=Model+
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//pattern+=(Alias | Pattern)+
@@ -49,20 +51,26 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//Pattern
 		public RuleCall getPatternPatternParserRuleCall_0_0_1() { return cPatternPatternParserRuleCall_0_0_1; }
 
-		//sequence+=Sequence+ model+=Model+
+		//initial?=Initial? sequence+=Sequence+ model+=Model+
 		public Group getGroup_1() { return cGroup_1; }
 
+		//initial?=Initial?
+		public Assignment getInitialAssignment_1_0() { return cInitialAssignment_1_0; }
+
+		//Initial
+		public RuleCall getInitialInitialParserRuleCall_1_0_0() { return cInitialInitialParserRuleCall_1_0_0; }
+
 		//sequence+=Sequence+
-		public Assignment getSequenceAssignment_1_0() { return cSequenceAssignment_1_0; }
+		public Assignment getSequenceAssignment_1_1() { return cSequenceAssignment_1_1; }
 
 		//Sequence
-		public RuleCall getSequenceSequenceParserRuleCall_1_0_0() { return cSequenceSequenceParserRuleCall_1_0_0; }
+		public RuleCall getSequenceSequenceParserRuleCall_1_1_0() { return cSequenceSequenceParserRuleCall_1_1_0; }
 
 		//model+=Model+
-		public Assignment getModelAssignment_1_1() { return cModelAssignment_1_1; }
+		public Assignment getModelAssignment_1_2() { return cModelAssignment_1_2; }
 
 		//Model
-		public RuleCall getModelModelParserRuleCall_1_1_0() { return cModelModelParserRuleCall_1_1_0; }
+		public RuleCall getModelModelParserRuleCall_1_2_0() { return cModelModelParserRuleCall_1_2_0; }
 	}
 
 	public class PatternElements extends AbstractParserRuleElementFinder {
@@ -70,14 +78,15 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cDefineParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cIncludeFileParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cGoalParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cObjectiveParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cIncludeModelParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cGoalParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cObjectiveParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//Pattern:
-		//	Define | IncludeFile | Goal | Objective;
+		//	Define | IncludeFile | IncludeModel | Goal | Objective;
 		public ParserRule getRule() { return rule; }
 
-		//Define | IncludeFile | Goal | Objective
+		//Define | IncludeFile | IncludeModel | Goal | Objective
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Define
@@ -86,11 +95,14 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//IncludeFile
 		public RuleCall getIncludeFileParserRuleCall_1() { return cIncludeFileParserRuleCall_1; }
 
+		//IncludeModel
+		public RuleCall getIncludeModelParserRuleCall_2() { return cIncludeModelParserRuleCall_2; }
+
 		//Goal
-		public RuleCall getGoalParserRuleCall_2() { return cGoalParserRuleCall_2; }
+		public RuleCall getGoalParserRuleCall_3() { return cGoalParserRuleCall_3; }
 
 		//Objective
-		public RuleCall getObjectiveParserRuleCall_3() { return cObjectiveParserRuleCall_3; }
+		public RuleCall getObjectiveParserRuleCall_4() { return cObjectiveParserRuleCall_4; }
 	}
 
 	public class ObjectiveElements extends AbstractParserRuleElementFinder {
@@ -2257,6 +2269,50 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
 	}
 
+	public class InitialElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Initial");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cInitialKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cInitialKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
+		private final Keyword cINITIALKeyword_0_2 = (Keyword)cAlternatives_0.eContents().get(2);
+		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cPatternAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cPatternPatternParserRuleCall_2_0 = (RuleCall)cPatternAssignment_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//Initial:
+		//	("initial" | "Initial" | "INITIAL") "{" pattern+=Pattern+ "}";
+		public ParserRule getRule() { return rule; }
+
+		//("initial" | "Initial" | "INITIAL") "{" pattern+=Pattern+ "}"
+		public Group getGroup() { return cGroup; }
+
+		//"initial" | "Initial" | "INITIAL"
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
+		//"initial"
+		public Keyword getInitialKeyword_0_0() { return cInitialKeyword_0_0; }
+
+		//"Initial"
+		public Keyword getInitialKeyword_0_1() { return cInitialKeyword_0_1; }
+
+		//"INITIAL"
+		public Keyword getINITIALKeyword_0_2() { return cINITIALKeyword_0_2; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
+
+		//pattern+=Pattern+
+		public Assignment getPatternAssignment_2() { return cPatternAssignment_2; }
+
+		//Pattern
+		public RuleCall getPatternPatternParserRuleCall_2_0() { return cPatternPatternParserRuleCall_2_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
+	}
+
 	public class SequenceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Sequence");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -3143,6 +3199,46 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getFileSTRINGTerminalRuleCall_2_0() { return cFileSTRINGTerminalRuleCall_2_0; }
 	}
+
+	public class IncludeModelElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "IncludeModel");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cIncludeKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cINCLUDEKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Keyword cModelKeyword_1_0 = (Keyword)cAlternatives_1.eContents().get(0);
+		private final Keyword cMODELKeyword_1_1 = (Keyword)cAlternatives_1.eContents().get(1);
+		private final RuleCall cIDTerminalRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
+		
+		//IncludeModel:
+		//	("include" | "INCLUDE") ("model" | "MODEL") ID;
+		public ParserRule getRule() { return rule; }
+
+		//("include" | "INCLUDE") ("model" | "MODEL") ID
+		public Group getGroup() { return cGroup; }
+
+		//"include" | "INCLUDE"
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
+		//"include"
+		public Keyword getIncludeKeyword_0_0() { return cIncludeKeyword_0_0; }
+
+		//"INCLUDE"
+		public Keyword getINCLUDEKeyword_0_1() { return cINCLUDEKeyword_0_1; }
+
+		//"model" | "MODEL"
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+
+		//"model"
+		public Keyword getModelKeyword_1_0() { return cModelKeyword_1_0; }
+
+		//"MODEL"
+		public Keyword getMODELKeyword_1_1() { return cMODELKeyword_1_1; }
+
+		//ID
+		public RuleCall getIDTerminalRuleCall_2() { return cIDTerminalRuleCall_2; }
+	}
 	
 	
 	private WreslEvaluatorElements pWreslEvaluator;
@@ -3188,6 +3284,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	private GoalSimpleElements pGoalSimple;
 	private ConstraintElements pConstraint;
 	private ModelElements pModel;
+	private InitialElements pInitial;
 	private SequenceElements pSequence;
 	private ConditionElements pCondition;
 	private LogicalExpressionElements pLogicalExpression;
@@ -3213,6 +3310,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	private IdentElements pIdent;
 	private NumberElements pNumber;
 	private IncludeFileElements pIncludeFile;
+	private IncludeModelElements pIncludeModel;
 	private TerminalRule tRANGE;
 	private TerminalRule tMIN;
 	private TerminalRule tMAX;
@@ -3248,7 +3346,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//WreslEvaluator:
-	//	pattern+=(Alias | Pattern)+ | sequence+=Sequence+ model+=Model+;
+	//	pattern+=(Alias | Pattern)+ | initial?=Initial? sequence+=Sequence+ model+=Model+;
 	public WreslEvaluatorElements getWreslEvaluatorAccess() {
 		return (pWreslEvaluator != null) ? pWreslEvaluator : (pWreslEvaluator = new WreslEvaluatorElements());
 	}
@@ -3258,7 +3356,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Pattern:
-	//	Define | IncludeFile | Goal | Objective;
+	//	Define | IncludeFile | IncludeModel | Goal | Objective;
 	public PatternElements getPatternAccess() {
 		return (pPattern != null) ? pPattern : (pPattern = new PatternElements());
 	}
@@ -3684,6 +3782,16 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		return getModelAccess().getRule();
 	}
 
+	//Initial:
+	//	("initial" | "Initial" | "INITIAL") "{" pattern+=Pattern+ "}";
+	public InitialElements getInitialAccess() {
+		return (pInitial != null) ? pInitial : (pInitial = new InitialElements());
+	}
+	
+	public ParserRule getInitialRule() {
+		return getInitialAccess().getRule();
+	}
+
 	//Sequence:
 	//	("sequence" | "SEQUENCE") name=ID "{" ("model" | "MODEL") model=[Model] condition=Condition? (ORDER order=INT)? "}";
 	public SequenceElements getSequenceAccess() {
@@ -3933,6 +4041,16 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getIncludeFileRule() {
 		return getIncludeFileAccess().getRule();
+	}
+
+	//IncludeModel:
+	//	("include" | "INCLUDE") ("model" | "MODEL") ID;
+	public IncludeModelElements getIncludeModelAccess() {
+		return (pIncludeModel != null) ? pIncludeModel : (pIncludeModel = new IncludeModelElements());
+	}
+	
+	public ParserRule getIncludeModelRule() {
+		return getIncludeModelAccess().getRule();
 	}
 
 	//terminal RANGE:

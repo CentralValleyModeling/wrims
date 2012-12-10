@@ -414,6 +414,15 @@ public interface WreslEditorFactory extends EFactory
   Model createModel();
 
   /**
+   * Returns a new object of class '<em>Initial</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Initial</em>'.
+   * @generated
+   */
+  Initial createInitial();
+
+  /**
    * Returns a new object of class '<em>Sequence</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

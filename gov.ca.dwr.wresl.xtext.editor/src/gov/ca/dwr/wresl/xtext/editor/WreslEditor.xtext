@@ -4,10 +4,10 @@ generate wreslEditor "http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor"
 
 WreslEvaluator:
 	pattern+=(Alias | Pattern)+
-	| (sequence+=Sequence+ model+=Model+);
+	| (initial?=Initial? sequence+=Sequence+ model+=Model+);
 
 Pattern:
-	Define | IncludeFile | Goal | Objective;
+	Define | IncludeFile | IncludeModel | Goal | Objective;
 
 Objective:
 	('objective' | 'OBJECTIVE') ('[' local?=('local' | 'LOCAL') ']')? name=ID '=' '{' weights+=WeightItem+ '}';
@@ -140,6 +140,8 @@ Constraint:
 Model:
 	("model" | "MODEL") name=ID '{' (pattern+=Pattern|alias+=Alias)+ '}';
 
+Initial: ("initial"|'Initial'|"INITIAL") '{' pattern+=Pattern+ '}';
+
 Sequence:
 	("sequence" | "SEQUENCE") name=ID '{' ("model" | "MODEL") model=[Model|ID] (condition=Condition)? (ORDER order=INT)?
 	'}';
@@ -216,6 +218,9 @@ Number:
 
 IncludeFile:
 	("include" | "INCLUDE") ('[' local?=("local" | "LOCAL") ']')? file=STRING;
+
+IncludeModel:
+	("include" | "INCLUDE") ('model' | 'MODEL') ID;
 
 terminal RANGE:
 	'range' | 'RANGE' | 'Range';
