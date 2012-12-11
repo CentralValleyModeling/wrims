@@ -47,7 +47,7 @@ public class ParserTest {
 
 		WreslEvaluator evaluator = this.parser
 				.parse("include '../test.xyz'");
-		EList<EObject> pattern = evaluator.getPattern();
+		EList<Pattern> pattern = evaluator.getPattern();
 		Assert.assertNotNull(pattern);
 		EObject eObject = pattern.get(0);
 		Assert.assertTrue(eObject instanceof IncludeFile);
@@ -59,7 +59,7 @@ public class ParserTest {
 
 		WreslEvaluator evaluator = this.parser
 				.parse("define WTS_D815_Targ {alias D815_Targ kind 'WTS-Transfer-Target' units 'taf'}");
-		EList<EObject> pattern = evaluator.getPattern();
+		EList<Pattern> pattern = evaluator.getPattern();
 		Assert.assertNotNull(pattern);
 		Alias p = (Alias) pattern.get(0);
 		Assert.assertEquals("D815_Targ", p.getExpression());
@@ -71,7 +71,7 @@ public class ParserTest {
 
 		WreslEvaluator evaluator = this.parser
 				.parse("goal[local] setWTS_SWPAlloc {WTS_SWPAlloc = perdel_swp_mwd1}");
-		EList<EObject> pattern = evaluator.getPattern();
+		EList<Pattern> pattern = evaluator.getPattern();
 		Assert.assertNotNull(pattern);
 		Pattern p = (Pattern) pattern.get(0);
 		Assert.assertTrue(p instanceof Goal);
@@ -91,7 +91,7 @@ public class ParserTest {
 	public void testAliasGoalCombo() throws Exception{
 		WreslEvaluator evaluator = this.parser.parse("define[local] cvpdeadstor {alias S1_1 + S4_1 + S8_1 units 'taf'}" +
 				"goal[local] setWTS_SWPAlloc {WTS_SWPAlloc = perdel_swp_mwd1}");
-		EList<EObject> pattern = evaluator.getPattern();
+		EList<Pattern> pattern = evaluator.getPattern();
 		Assert.assertEquals(2, pattern.size());
 		
 	}
@@ -99,7 +99,7 @@ public class ParserTest {
 	@Test
 	public void testDefineSvarValue() throws Exception{
 		WreslEvaluator evaluator = this.parser.parse("    define CVP_Targ {value 0.}");
-		EList<EObject> pattern = evaluator.getPattern();
+		EList<Pattern> pattern = evaluator.getPattern();
 		Assert.assertEquals(1, pattern.size());
 		Pattern p = (Pattern) pattern.get(0);
 	}
@@ -114,7 +114,7 @@ public class ParserTest {
 				"    condition   always\n" +
 				"    value       S4(-1) + S44(-1) + S4mod }\n" +
 				"}");
-		EList<EObject> pattern = evaluator.getPattern();
+		EList<Pattern> pattern = evaluator.getPattern();
 		Assert.assertNotNull(pattern);
 	}
 }
