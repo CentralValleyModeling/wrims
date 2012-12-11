@@ -104,6 +104,21 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
         return createDefineAdapter();
       }
       @Override
+      public Adapter caseSvarDef(SvarDef object)
+      {
+        return createSvarDefAdapter();
+      }
+      @Override
+      public Adapter caseDvarDef(DvarDef object)
+      {
+        return createDvarDefAdapter();
+      }
+      @Override
+      public Adapter caseConstDef(ConstDef object)
+      {
+        return createConstDefAdapter();
+      }
+      @Override
       public Adapter caseExternal(External object)
       {
         return createExternalAdapter();
@@ -476,6 +491,51 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createDefineAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.SvarDef <em>Svar Def</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.SvarDef
+   * @generated
+   */
+  public Adapter createSvarDefAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.DvarDef <em>Dvar Def</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.DvarDef
+   * @generated
+   */
+  public Adapter createDvarDefAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConstDef <em>Const Def</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConstDef
+   * @generated
+   */
+  public Adapter createConstDefAdapter()
   {
     return null;
   }

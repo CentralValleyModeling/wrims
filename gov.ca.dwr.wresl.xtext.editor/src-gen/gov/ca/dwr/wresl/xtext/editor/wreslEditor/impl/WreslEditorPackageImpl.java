@@ -13,6 +13,7 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.CaseContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Condition;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConditionalTerm;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConditionalUnary;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConstDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Constraint;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVar;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVarInteger;
@@ -21,6 +22,7 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVarIntegerStd;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVarNonStd;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVarStd;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Define;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DvarDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Expression;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.External;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction;
@@ -56,6 +58,7 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Sequence;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SubContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumHeader;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SvarDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TableContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TermSimple;
@@ -119,6 +122,27 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * @generated
    */
   private EClass defineEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass svarDefEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass dvarDefEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass constDefEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -600,9 +624,9 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getWreslEvaluator_Initial()
+  public EReference getWreslEvaluator_Initial()
   {
-    return (EAttribute)wreslEvaluatorEClass.getEStructuralFeatures().get(1);
+    return (EReference)wreslEvaluatorEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -733,6 +757,96 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
   public EReference getDefine_Definition()
   {
     return (EReference)defineEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSvarDef()
+  {
+    return svarDefEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSvarDef_Name()
+  {
+    return (EAttribute)svarDefEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSvarDef_Definition()
+  {
+    return (EReference)svarDefEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getDvarDef()
+  {
+    return dvarDefEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getDvarDef_Name()
+  {
+    return (EAttribute)dvarDefEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getDvarDef_Definition()
+  {
+    return (EReference)dvarDefEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getConstDef()
+  {
+    return constDefEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getConstDef_Name()
+  {
+    return (EAttribute)constDefEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getConstDef_Definition()
+  {
+    return (EAttribute)constDefEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -2237,7 +2351,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     // Create classes and their features
     wreslEvaluatorEClass = createEClass(WRESL_EVALUATOR);
     createEReference(wreslEvaluatorEClass, WRESL_EVALUATOR__PATTERN);
-    createEAttribute(wreslEvaluatorEClass, WRESL_EVALUATOR__INITIAL);
+    createEReference(wreslEvaluatorEClass, WRESL_EVALUATOR__INITIAL);
     createEReference(wreslEvaluatorEClass, WRESL_EVALUATOR__SEQUENCE);
     createEReference(wreslEvaluatorEClass, WRESL_EVALUATOR__MODEL);
 
@@ -2255,6 +2369,18 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     defineEClass = createEClass(DEFINE);
     createEAttribute(defineEClass, DEFINE__NAME);
     createEReference(defineEClass, DEFINE__DEFINITION);
+
+    svarDefEClass = createEClass(SVAR_DEF);
+    createEAttribute(svarDefEClass, SVAR_DEF__NAME);
+    createEReference(svarDefEClass, SVAR_DEF__DEFINITION);
+
+    dvarDefEClass = createEClass(DVAR_DEF);
+    createEAttribute(dvarDefEClass, DVAR_DEF__NAME);
+    createEReference(dvarDefEClass, DVAR_DEF__DEFINITION);
+
+    constDefEClass = createEClass(CONST_DEF);
+    createEAttribute(constDefEClass, CONST_DEF__NAME);
+    createEAttribute(constDefEClass, CONST_DEF__DEFINITION);
 
     externalEClass = createEClass(EXTERNAL);
     createEAttribute(externalEClass, EXTERNAL__NAME);
@@ -2491,6 +2617,9 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     // Add supertypes to classes
     objectiveEClass.getESuperTypes().add(this.getPattern());
     defineEClass.getESuperTypes().add(this.getPattern());
+    svarDefEClass.getESuperTypes().add(this.getPattern());
+    dvarDefEClass.getESuperTypes().add(this.getPattern());
+    constDefEClass.getESuperTypes().add(this.getPattern());
     dVarNonStdEClass.getESuperTypes().add(this.getDVar());
     dVarStdEClass.getESuperTypes().add(this.getDVar());
     dVarIntegerStdEClass.getESuperTypes().add(this.getDVarInteger());
@@ -2517,7 +2646,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     // Initialize classes and features; add operations and parameters
     initEClass(wreslEvaluatorEClass, WreslEvaluator.class, "WreslEvaluator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getWreslEvaluator_Pattern(), ecorePackage.getEObject(), null, "pattern", null, 0, -1, WreslEvaluator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getWreslEvaluator_Initial(), ecorePackage.getEBoolean(), "initial", null, 0, 1, WreslEvaluator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getWreslEvaluator_Initial(), this.getInitial(), null, "initial", null, 0, 1, WreslEvaluator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getWreslEvaluator_Sequence(), this.getSequence(), null, "sequence", null, 0, -1, WreslEvaluator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getWreslEvaluator_Model(), this.getModel(), null, "model", null, 0, -1, WreslEvaluator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -2535,6 +2664,18 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     initEClass(defineEClass, Define.class, "Define", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getDefine_Name(), ecorePackage.getEString(), "name", null, 0, 1, Define.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDefine_Definition(), ecorePackage.getEObject(), null, "definition", null, 0, 1, Define.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(svarDefEClass, SvarDef.class, "SvarDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getSvarDef_Name(), ecorePackage.getEString(), "name", null, 0, 1, SvarDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSvarDef_Definition(), this.getSVar(), null, "definition", null, 0, 1, SvarDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(dvarDefEClass, DvarDef.class, "DvarDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getDvarDef_Name(), ecorePackage.getEString(), "name", null, 0, 1, DvarDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDvarDef_Definition(), ecorePackage.getEObject(), null, "definition", null, 0, 1, DvarDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(constDefEClass, ConstDef.class, "ConstDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getConstDef_Name(), ecorePackage.getEString(), "name", null, 0, 1, ConstDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getConstDef_Definition(), ecorePackage.getEString(), "definition", null, 0, 1, ConstDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(externalEClass, External.class, "External", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getExternal_Name(), ecorePackage.getEString(), "name", null, 0, 1, External.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

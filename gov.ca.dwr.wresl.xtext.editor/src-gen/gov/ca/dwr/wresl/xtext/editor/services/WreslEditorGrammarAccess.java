@@ -33,10 +33,10 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cModelModelParserRuleCall_1_2_0 = (RuleCall)cModelAssignment_1_2.eContents().get(0);
 		
 		//WreslEvaluator:
-		//	pattern+=(Alias | Pattern)+ | initial?=Initial? sequence+=Sequence+ model+=Model+;
+		//	pattern+=(Alias | Pattern)+ | initial=Initial? sequence+=Sequence+ model+=Model+;
 		public ParserRule getRule() { return rule; }
 
-		//pattern+=(Alias | Pattern)+ | initial?=Initial? sequence+=Sequence+ model+=Model+
+		//pattern+=(Alias | Pattern)+ | initial=Initial? sequence+=Sequence+ model+=Model+
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//pattern+=(Alias | Pattern)+
@@ -51,10 +51,10 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//Pattern
 		public RuleCall getPatternPatternParserRuleCall_0_0_1() { return cPatternPatternParserRuleCall_0_0_1; }
 
-		//initial?=Initial? sequence+=Sequence+ model+=Model+
+		//initial=Initial? sequence+=Sequence+ model+=Model+
 		public Group getGroup_1() { return cGroup_1; }
 
-		//initial?=Initial?
+		//initial=Initial?
 		public Assignment getInitialAssignment_1_0() { return cInitialAssignment_1_0; }
 
 		//Initial
@@ -77,32 +77,44 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Pattern");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cDefineParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cIncludeFileParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cIncludeModelParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cGoalParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cObjectiveParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cSvarDefParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cDvarDefParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cConstDefParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cIncludeFileParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cIncludeModelParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cGoalParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cObjectiveParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		
 		//Pattern:
-		//	Define | IncludeFile | IncludeModel | Goal | Objective;
+		//	Define | SvarDef | DvarDef | ConstDef | IncludeFile | IncludeModel | Goal | Objective;
 		public ParserRule getRule() { return rule; }
 
-		//Define | IncludeFile | IncludeModel | Goal | Objective
+		//Define | SvarDef | DvarDef | ConstDef | IncludeFile | IncludeModel | Goal | Objective
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Define
 		public RuleCall getDefineParserRuleCall_0() { return cDefineParserRuleCall_0; }
 
+		//SvarDef
+		public RuleCall getSvarDefParserRuleCall_1() { return cSvarDefParserRuleCall_1; }
+
+		//DvarDef
+		public RuleCall getDvarDefParserRuleCall_2() { return cDvarDefParserRuleCall_2; }
+
+		//ConstDef
+		public RuleCall getConstDefParserRuleCall_3() { return cConstDefParserRuleCall_3; }
+
 		//IncludeFile
-		public RuleCall getIncludeFileParserRuleCall_1() { return cIncludeFileParserRuleCall_1; }
+		public RuleCall getIncludeFileParserRuleCall_4() { return cIncludeFileParserRuleCall_4; }
 
 		//IncludeModel
-		public RuleCall getIncludeModelParserRuleCall_2() { return cIncludeModelParserRuleCall_2; }
+		public RuleCall getIncludeModelParserRuleCall_5() { return cIncludeModelParserRuleCall_5; }
 
 		//Goal
-		public RuleCall getGoalParserRuleCall_3() { return cGoalParserRuleCall_3; }
+		public RuleCall getGoalParserRuleCall_6() { return cGoalParserRuleCall_6; }
 
 		//Objective
-		public RuleCall getObjectiveParserRuleCall_4() { return cObjectiveParserRuleCall_4; }
+		public RuleCall getObjectiveParserRuleCall_7() { return cObjectiveParserRuleCall_7; }
 	}
 
 	public class ObjectiveElements extends AbstractParserRuleElementFinder {
@@ -318,6 +330,254 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 		//External
 		public RuleCall getDefinitionExternalParserRuleCall_4_0_3() { return cDefinitionExternalParserRuleCall_4_0_3; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+	}
+
+	public class SvarDefElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SvarDef");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cSvarKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cSVARKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
+		private final Keyword cSvarKeyword_0_2 = (Keyword)cAlternatives_0.eContents().get(2);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cLeftSquareBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cLocalAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final Alternatives cLocalAlternatives_1_1_0 = (Alternatives)cLocalAssignment_1_1.eContents().get(0);
+		private final Keyword cLocalLocalKeyword_1_1_0_0 = (Keyword)cLocalAlternatives_1_1_0.eContents().get(0);
+		private final Keyword cLocalLOCALKeyword_1_1_0_1 = (Keyword)cLocalAlternatives_1_1_0.eContents().get(1);
+		private final Keyword cRightSquareBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cDefinitionAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cDefinitionSVarParserRuleCall_4_0 = (RuleCall)cDefinitionAssignment_4.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//SvarDef:
+		//	("svar" | "SVAR" | "Svar") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}";
+		public ParserRule getRule() { return rule; }
+
+		//("svar" | "SVAR" | "Svar") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}"
+		public Group getGroup() { return cGroup; }
+
+		//"svar" | "SVAR" | "Svar"
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
+		//"svar"
+		public Keyword getSvarKeyword_0_0() { return cSvarKeyword_0_0; }
+
+		//"SVAR"
+		public Keyword getSVARKeyword_0_1() { return cSVARKeyword_0_1; }
+
+		//"Svar"
+		public Keyword getSvarKeyword_0_2() { return cSvarKeyword_0_2; }
+
+		//("[" local?=("local" | "LOCAL") "]")?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"["
+		public Keyword getLeftSquareBracketKeyword_1_0() { return cLeftSquareBracketKeyword_1_0; }
+
+		//local?=("local" | "LOCAL")
+		public Assignment getLocalAssignment_1_1() { return cLocalAssignment_1_1; }
+
+		//"local" | "LOCAL"
+		public Alternatives getLocalAlternatives_1_1_0() { return cLocalAlternatives_1_1_0; }
+
+		//"local"
+		public Keyword getLocalLocalKeyword_1_1_0_0() { return cLocalLocalKeyword_1_1_0_0; }
+
+		//"LOCAL"
+		public Keyword getLocalLOCALKeyword_1_1_0_1() { return cLocalLOCALKeyword_1_1_0_1; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_1_2() { return cRightSquareBracketKeyword_1_2; }
+
+		//name=ID
+		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
+
+		//definition=SVar
+		public Assignment getDefinitionAssignment_4() { return cDefinitionAssignment_4; }
+
+		//SVar
+		public RuleCall getDefinitionSVarParserRuleCall_4_0() { return cDefinitionSVarParserRuleCall_4_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+	}
+
+	public class DvarDefElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DvarDef");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cDvarKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cDVARKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
+		private final Keyword cDvarKeyword_0_2 = (Keyword)cAlternatives_0.eContents().get(2);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cLeftSquareBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cLocalAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final Alternatives cLocalAlternatives_1_1_0 = (Alternatives)cLocalAssignment_1_1.eContents().get(0);
+		private final Keyword cLocalLocalKeyword_1_1_0_0 = (Keyword)cLocalAlternatives_1_1_0.eContents().get(0);
+		private final Keyword cLocalLOCALKeyword_1_1_0_1 = (Keyword)cLocalAlternatives_1_1_0.eContents().get(1);
+		private final Keyword cRightSquareBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cDefinitionAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Alternatives cDefinitionAlternatives_4_0 = (Alternatives)cDefinitionAssignment_4.eContents().get(0);
+		private final RuleCall cDefinitionDVarParserRuleCall_4_0_0 = (RuleCall)cDefinitionAlternatives_4_0.eContents().get(0);
+		private final RuleCall cDefinitionDVarIntegerParserRuleCall_4_0_1 = (RuleCall)cDefinitionAlternatives_4_0.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//DvarDef:
+		//	("dvar" | "DVAR" | "Dvar") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(DVar | DVarInteger) "}";
+		public ParserRule getRule() { return rule; }
+
+		//("dvar" | "DVAR" | "Dvar") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(DVar | DVarInteger) "}"
+		public Group getGroup() { return cGroup; }
+
+		//"dvar" | "DVAR" | "Dvar"
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
+		//"dvar"
+		public Keyword getDvarKeyword_0_0() { return cDvarKeyword_0_0; }
+
+		//"DVAR"
+		public Keyword getDVARKeyword_0_1() { return cDVARKeyword_0_1; }
+
+		//"Dvar"
+		public Keyword getDvarKeyword_0_2() { return cDvarKeyword_0_2; }
+
+		//("[" local?=("local" | "LOCAL") "]")?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"["
+		public Keyword getLeftSquareBracketKeyword_1_0() { return cLeftSquareBracketKeyword_1_0; }
+
+		//local?=("local" | "LOCAL")
+		public Assignment getLocalAssignment_1_1() { return cLocalAssignment_1_1; }
+
+		//"local" | "LOCAL"
+		public Alternatives getLocalAlternatives_1_1_0() { return cLocalAlternatives_1_1_0; }
+
+		//"local"
+		public Keyword getLocalLocalKeyword_1_1_0_0() { return cLocalLocalKeyword_1_1_0_0; }
+
+		//"LOCAL"
+		public Keyword getLocalLOCALKeyword_1_1_0_1() { return cLocalLOCALKeyword_1_1_0_1; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_1_2() { return cRightSquareBracketKeyword_1_2; }
+
+		//name=ID
+		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
+
+		//definition=(DVar | DVarInteger)
+		public Assignment getDefinitionAssignment_4() { return cDefinitionAssignment_4; }
+
+		//DVar | DVarInteger
+		public Alternatives getDefinitionAlternatives_4_0() { return cDefinitionAlternatives_4_0; }
+
+		//DVar
+		public RuleCall getDefinitionDVarParserRuleCall_4_0_0() { return cDefinitionDVarParserRuleCall_4_0_0; }
+
+		//DVarInteger
+		public RuleCall getDefinitionDVarIntegerParserRuleCall_4_0_1() { return cDefinitionDVarIntegerParserRuleCall_4_0_1; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+	}
+
+	public class ConstDefElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ConstDef");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cConstKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cCONSTKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
+		private final Keyword cConstKeyword_0_2 = (Keyword)cAlternatives_0.eContents().get(2);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cLeftSquareBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cLocalAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final Alternatives cLocalAlternatives_1_1_0 = (Alternatives)cLocalAssignment_1_1.eContents().get(0);
+		private final Keyword cLocalLocalKeyword_1_1_0_0 = (Keyword)cLocalAlternatives_1_1_0.eContents().get(0);
+		private final Keyword cLocalLOCALKeyword_1_1_0_1 = (Keyword)cLocalAlternatives_1_1_0.eContents().get(1);
+		private final Keyword cRightSquareBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cDefinitionAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cDefinitionNumberParserRuleCall_4_0 = (RuleCall)cDefinitionAssignment_4.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//ConstDef:
+		//	("const" | "CONST" | "Const") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=Number "}";
+		public ParserRule getRule() { return rule; }
+
+		//("const" | "CONST" | "Const") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=Number "}"
+		public Group getGroup() { return cGroup; }
+
+		//"const" | "CONST" | "Const"
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
+		//"const"
+		public Keyword getConstKeyword_0_0() { return cConstKeyword_0_0; }
+
+		//"CONST"
+		public Keyword getCONSTKeyword_0_1() { return cCONSTKeyword_0_1; }
+
+		//"Const"
+		public Keyword getConstKeyword_0_2() { return cConstKeyword_0_2; }
+
+		//("[" local?=("local" | "LOCAL") "]")?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"["
+		public Keyword getLeftSquareBracketKeyword_1_0() { return cLeftSquareBracketKeyword_1_0; }
+
+		//local?=("local" | "LOCAL")
+		public Assignment getLocalAssignment_1_1() { return cLocalAssignment_1_1; }
+
+		//"local" | "LOCAL"
+		public Alternatives getLocalAlternatives_1_1_0() { return cLocalAlternatives_1_1_0; }
+
+		//"local"
+		public Keyword getLocalLocalKeyword_1_1_0_0() { return cLocalLocalKeyword_1_1_0_0; }
+
+		//"LOCAL"
+		public Keyword getLocalLOCALKeyword_1_1_0_1() { return cLocalLOCALKeyword_1_1_0_1; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_1_2() { return cRightSquareBracketKeyword_1_2; }
+
+		//name=ID
+		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
+
+		//definition=Number
+		public Assignment getDefinitionAssignment_4() { return cDefinitionAssignment_4; }
+
+		//Number
+		public RuleCall getDefinitionNumberParserRuleCall_4_0() { return cDefinitionNumberParserRuleCall_4_0; }
 
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
@@ -3246,6 +3506,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	private ObjectiveElements pObjective;
 	private WeightItemElements pWeightItem;
 	private DefineElements pDefine;
+	private SvarDefElements pSvarDef;
+	private DvarDefElements pDvarDef;
+	private ConstDefElements pConstDef;
 	private ExternalElements pExternal;
 	private AliasElements pAlias;
 	private DVarElements pDVar;
@@ -3346,7 +3609,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//WreslEvaluator:
-	//	pattern+=(Alias | Pattern)+ | initial?=Initial? sequence+=Sequence+ model+=Model+;
+	//	pattern+=(Alias | Pattern)+ | initial=Initial? sequence+=Sequence+ model+=Model+;
 	public WreslEvaluatorElements getWreslEvaluatorAccess() {
 		return (pWreslEvaluator != null) ? pWreslEvaluator : (pWreslEvaluator = new WreslEvaluatorElements());
 	}
@@ -3356,7 +3619,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Pattern:
-	//	Define | IncludeFile | IncludeModel | Goal | Objective;
+	//	Define | SvarDef | DvarDef | ConstDef | IncludeFile | IncludeModel | Goal | Objective;
 	public PatternElements getPatternAccess() {
 		return (pPattern != null) ? pPattern : (pPattern = new PatternElements());
 	}
@@ -3394,6 +3657,36 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getDefineRule() {
 		return getDefineAccess().getRule();
+	}
+
+	//SvarDef:
+	//	("svar" | "SVAR" | "Svar") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}";
+	public SvarDefElements getSvarDefAccess() {
+		return (pSvarDef != null) ? pSvarDef : (pSvarDef = new SvarDefElements());
+	}
+	
+	public ParserRule getSvarDefRule() {
+		return getSvarDefAccess().getRule();
+	}
+
+	//DvarDef:
+	//	("dvar" | "DVAR" | "Dvar") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(DVar | DVarInteger) "}";
+	public DvarDefElements getDvarDefAccess() {
+		return (pDvarDef != null) ? pDvarDef : (pDvarDef = new DvarDefElements());
+	}
+	
+	public ParserRule getDvarDefRule() {
+		return getDvarDefAccess().getRule();
+	}
+
+	//ConstDef:
+	//	("const" | "CONST" | "Const") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=Number "}";
+	public ConstDefElements getConstDefAccess() {
+		return (pConstDef != null) ? pConstDef : (pConstDef = new ConstDefElements());
+	}
+	
+	public ParserRule getConstDefRule() {
+		return getConstDefAccess().getRule();
 	}
 
 	//External:

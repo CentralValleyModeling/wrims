@@ -73,6 +73,9 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
       case WreslEditorPackage.OBJECTIVE: return createObjective();
       case WreslEditorPackage.WEIGHT_ITEM: return createWeightItem();
       case WreslEditorPackage.DEFINE: return createDefine();
+      case WreslEditorPackage.SVAR_DEF: return createSvarDef();
+      case WreslEditorPackage.DVAR_DEF: return createDvarDef();
+      case WreslEditorPackage.CONST_DEF: return createConstDef();
       case WreslEditorPackage.EXTERNAL: return createExternal();
       case WreslEditorPackage.ALIAS: return createAlias();
       case WreslEditorPackage.DVAR: return createDVar();
@@ -187,6 +190,39 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
   {
     DefineImpl define = new DefineImpl();
     return define;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SvarDef createSvarDef()
+  {
+    SvarDefImpl svarDef = new SvarDefImpl();
+    return svarDef;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DvarDef createDvarDef()
+  {
+    DvarDefImpl dvarDef = new DvarDefImpl();
+    return dvarDef;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ConstDef createConstDef()
+  {
+    ConstDefImpl constDef = new ConstDefImpl();
+    return constDef;
   }
 
   /**

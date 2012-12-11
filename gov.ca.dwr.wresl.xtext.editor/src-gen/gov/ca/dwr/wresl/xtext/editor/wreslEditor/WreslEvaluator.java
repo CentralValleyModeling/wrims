@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getPattern <em>Pattern</em>}</li>
- *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#isInitial <em>Initial</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getInitial <em>Initial</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getSequence <em>Sequence</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getModel <em>Model</em>}</li>
  * </ul>
@@ -48,30 +48,30 @@ public interface WreslEvaluator extends EObject
   EList<EObject> getPattern();
 
   /**
-   * Returns the value of the '<em><b>Initial</b></em>' attribute.
+   * Returns the value of the '<em><b>Initial</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Initial</em>' attribute isn't clear,
+   * If the meaning of the '<em>Initial</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Initial</em>' attribute.
-   * @see #setInitial(boolean)
+   * @return the value of the '<em>Initial</em>' containment reference.
+   * @see #setInitial(Initial)
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getWreslEvaluator_Initial()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  boolean isInitial();
+  Initial getInitial();
 
   /**
-   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#isInitial <em>Initial</em>}' attribute.
+   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getInitial <em>Initial</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Initial</em>' attribute.
-   * @see #isInitial()
+   * @param value the new value of the '<em>Initial</em>' containment reference.
+   * @see #getInitial()
    * @generated
    */
-  void setInitial(boolean value);
+  void setInitial(Initial value);
 
   /**
    * Returns the value of the '<em><b>Sequence</b></em>' containment reference list.

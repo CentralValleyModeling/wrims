@@ -4,10 +4,10 @@ generate wreslEditor "http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor"
 
 WreslEvaluator:
 	pattern+=(Alias | Pattern)+
-	| (initial?=Initial? sequence+=Sequence+ model+=Model+);
+	| ((initial=Initial)? sequence+=Sequence+ model+=Model+);
 
 Pattern:
-	Define | IncludeFile | IncludeModel | Goal | Objective;
+	Define| SvarDef | DvarDef | ConstDef | IncludeFile | IncludeModel | Goal | Objective;
 
 Objective:
 	('objective' | 'OBJECTIVE') ('[' local?=('local' | 'LOCAL') ']')? name=ID '=' '{' weights+=WeightItem+ '}';
@@ -19,6 +19,15 @@ Define:
 	('define' | 'DEFINE') ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=(DVar | SVar | DVarInteger |
 	External)
 	'}';
+	
+SvarDef:
+	('svar' | 'SVAR' | 'Svar') ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=SVar '}';
+
+DvarDef:
+	('dvar' | 'DVAR' | 'Dvar') ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=(DVar|DVarInteger) '}';
+
+ConstDef:
+	('const' | 'CONST' | 'Const') ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=Number '}';
 
 External:
 	('external' | 'EXTERNAL') ((name=ID ('.dll' | '.DLL')) | {External} ('f90' | 'F90'));

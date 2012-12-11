@@ -72,6 +72,33 @@ public interface WreslEditorFactory extends EFactory
   Define createDefine();
 
   /**
+   * Returns a new object of class '<em>Svar Def</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Svar Def</em>'.
+   * @generated
+   */
+  SvarDef createSvarDef();
+
+  /**
+   * Returns a new object of class '<em>Dvar Def</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Dvar Def</em>'.
+   * @generated
+   */
+  DvarDef createDvarDef();
+
+  /**
+   * Returns a new object of class '<em>Const Def</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Const Def</em>'.
+   * @generated
+   */
+  ConstDef createConstDef();
+
+  /**
    * Returns a new object of class '<em>External</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

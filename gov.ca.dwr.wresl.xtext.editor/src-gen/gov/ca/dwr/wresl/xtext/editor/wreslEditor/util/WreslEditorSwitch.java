@@ -113,6 +113,30 @@ public class WreslEditorSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case WreslEditorPackage.SVAR_DEF:
+      {
+        SvarDef svarDef = (SvarDef)theEObject;
+        T result = caseSvarDef(svarDef);
+        if (result == null) result = casePattern(svarDef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case WreslEditorPackage.DVAR_DEF:
+      {
+        DvarDef dvarDef = (DvarDef)theEObject;
+        T result = caseDvarDef(dvarDef);
+        if (result == null) result = casePattern(dvarDef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case WreslEditorPackage.CONST_DEF:
+      {
+        ConstDef constDef = (ConstDef)theEObject;
+        T result = caseConstDef(constDef);
+        if (result == null) result = casePattern(constDef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case WreslEditorPackage.EXTERNAL:
       {
         External external = (External)theEObject;
@@ -616,6 +640,54 @@ public class WreslEditorSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseDefine(Define object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Svar Def</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Svar Def</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSvarDef(SvarDef object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Dvar Def</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Dvar Def</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDvarDef(DvarDef object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Const Def</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Const Def</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseConstDef(ConstDef object)
   {
     return null;
   }

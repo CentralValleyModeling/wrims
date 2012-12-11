@@ -9,11 +9,13 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Assignment;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.CaseContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Condition;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConditionalTerm;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConstDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Constraint;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVarIntegerStd;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVarNonStd;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVarStd;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Define;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DvarDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.External;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal;
@@ -44,6 +46,7 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Sequence;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SubContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SumHeader;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SvarDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TableContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Upper;
@@ -132,6 +135,13 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 					return; 
 				}
 				else break;
+			case WreslEditorPackage.CONST_DEF:
+				if(context == grammarAccess.getConstDefRule() ||
+				   context == grammarAccess.getPatternRule()) {
+					sequence_ConstDef(context, (ConstDef) semanticObject); 
+					return; 
+				}
+				else break;
 			case WreslEditorPackage.CONSTRAINT:
 				if(context == grammarAccess.getConstraintRule()) {
 					sequence_Constraint(context, (Constraint) semanticObject); 
@@ -163,6 +173,13 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 				if(context == grammarAccess.getDefineRule() ||
 				   context == grammarAccess.getPatternRule()) {
 					sequence_Define(context, (Define) semanticObject); 
+					return; 
+				}
+				else break;
+			case WreslEditorPackage.DVAR_DEF:
+				if(context == grammarAccess.getDvarDefRule() ||
+				   context == grammarAccess.getPatternRule()) {
+					sequence_DvarDef(context, (DvarDef) semanticObject); 
 					return; 
 				}
 				else break;
@@ -362,6 +379,13 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 					return; 
 				}
 				else break;
+			case WreslEditorPackage.SVAR_DEF:
+				if(context == grammarAccess.getPatternRule() ||
+				   context == grammarAccess.getSvarDefRule()) {
+					sequence_SvarDef(context, (SvarDef) semanticObject); 
+					return; 
+				}
+				else break;
 			case WreslEditorPackage.TABLE_CONTENT:
 				if(context == grammarAccess.getTableContentRule()) {
 					sequence_TableContent(context, (TableContent) semanticObject); 
@@ -535,6 +559,20 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
+	 *     ((local?='local' | local?='LOCAL')? name=ID definition=Number)
+	 *
+	 * Features:
+	 *    local[0, 2]
+	 *    name[1, 1]
+	 *    definition[1, 1]
+	 */
+	protected void sequence_ConstDef(EObject context, ConstDef semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (lhs=Expression (operator='<' | operator='>' | operator='=') rhs=Expression)
 	 *
 	 * Features:
@@ -660,6 +698,20 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *    definition[0, 4]
 	 */
 	protected void sequence_Define(EObject context, Define semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     ((local?='local' | local?='LOCAL')? name=ID (definition=DVar | definition=DVarInteger))
+	 *
+	 * Features:
+	 *    local[0, 2]
+	 *    name[1, 1]
+	 *    definition[0, 2]
+	 */
+	protected void sequence_DvarDef(EObject context, DvarDef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1120,6 +1172,20 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
+	 *     ((local?='local' | local?='LOCAL')? name=ID definition=SVar)
+	 *
+	 * Features:
+	 *    local[0, 2]
+	 *    name[1, 1]
+	 *    definition[1, 1]
+	 */
+	protected void sequence_SvarDef(EObject context, SvarDef semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (tableName=ID from=ID (given=Assignment use=ID)? where=WhereItems?)
 	 *
 	 * Features:
@@ -1232,7 +1298,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     ((pattern+=Alias | pattern+=Pattern)+ | (initial?=Initial? sequence+=Sequence+ model+=Model+))
+	 *     ((pattern+=Alias | pattern+=Pattern)+ | (initial=Initial? sequence+=Sequence+ model+=Model+))
 	 *
 	 * Features:
 	 *    pattern[0, *]

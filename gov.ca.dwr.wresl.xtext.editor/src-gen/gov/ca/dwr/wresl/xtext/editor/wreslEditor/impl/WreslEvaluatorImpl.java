@@ -6,6 +6,7 @@
  */
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Initial;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Model;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Sequence;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage;
@@ -36,7 +37,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEvaluatorImpl#getPattern <em>Pattern</em>}</li>
- *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEvaluatorImpl#isInitial <em>Initial</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEvaluatorImpl#getInitial <em>Initial</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEvaluatorImpl#getSequence <em>Sequence</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEvaluatorImpl#getModel <em>Model</em>}</li>
  * </ul>
@@ -57,24 +58,14 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
   protected EList<EObject> pattern;
 
   /**
-   * The default value of the '{@link #isInitial() <em>Initial</em>}' attribute.
+   * The cached value of the '{@link #getInitial() <em>Initial</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isInitial()
+   * @see #getInitial()
    * @generated
    * @ordered
    */
-  protected static final boolean INITIAL_EDEFAULT = false;
-
-  /**
-   * The cached value of the '{@link #isInitial() <em>Initial</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isInitial()
-   * @generated
-   * @ordered
-   */
-  protected boolean initial = INITIAL_EDEFAULT;
+  protected Initial initial;
 
   /**
    * The cached value of the '{@link #getSequence() <em>Sequence</em>}' containment reference list.
@@ -136,7 +127,7 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean isInitial()
+  public Initial getInitial()
   {
     return initial;
   }
@@ -146,12 +137,37 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setInitial(boolean newInitial)
+  public NotificationChain basicSetInitial(Initial newInitial, NotificationChain msgs)
   {
-    boolean oldInitial = initial;
+    Initial oldInitial = initial;
     initial = newInitial;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.WRESL_EVALUATOR__INITIAL, oldInitial, initial));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, WreslEditorPackage.WRESL_EVALUATOR__INITIAL, oldInitial, newInitial);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setInitial(Initial newInitial)
+  {
+    if (newInitial != initial)
+    {
+      NotificationChain msgs = null;
+      if (initial != null)
+        msgs = ((InternalEObject)initial).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.WRESL_EVALUATOR__INITIAL, null, msgs);
+      if (newInitial != null)
+        msgs = ((InternalEObject)newInitial).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.WRESL_EVALUATOR__INITIAL, null, msgs);
+      msgs = basicSetInitial(newInitial, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.WRESL_EVALUATOR__INITIAL, newInitial, newInitial));
   }
 
   /**
@@ -194,6 +210,8 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
     {
       case WreslEditorPackage.WRESL_EVALUATOR__PATTERN:
         return ((InternalEList<?>)getPattern()).basicRemove(otherEnd, msgs);
+      case WreslEditorPackage.WRESL_EVALUATOR__INITIAL:
+        return basicSetInitial(null, msgs);
       case WreslEditorPackage.WRESL_EVALUATOR__SEQUENCE:
         return ((InternalEList<?>)getSequence()).basicRemove(otherEnd, msgs);
       case WreslEditorPackage.WRESL_EVALUATOR__MODEL:
@@ -215,7 +233,7 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
       case WreslEditorPackage.WRESL_EVALUATOR__PATTERN:
         return getPattern();
       case WreslEditorPackage.WRESL_EVALUATOR__INITIAL:
-        return isInitial();
+        return getInitial();
       case WreslEditorPackage.WRESL_EVALUATOR__SEQUENCE:
         return getSequence();
       case WreslEditorPackage.WRESL_EVALUATOR__MODEL:
@@ -240,7 +258,7 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
         getPattern().addAll((Collection<? extends EObject>)newValue);
         return;
       case WreslEditorPackage.WRESL_EVALUATOR__INITIAL:
-        setInitial((Boolean)newValue);
+        setInitial((Initial)newValue);
         return;
       case WreslEditorPackage.WRESL_EVALUATOR__SEQUENCE:
         getSequence().clear();
@@ -268,7 +286,7 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
         getPattern().clear();
         return;
       case WreslEditorPackage.WRESL_EVALUATOR__INITIAL:
-        setInitial(INITIAL_EDEFAULT);
+        setInitial((Initial)null);
         return;
       case WreslEditorPackage.WRESL_EVALUATOR__SEQUENCE:
         getSequence().clear();
@@ -293,30 +311,13 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
       case WreslEditorPackage.WRESL_EVALUATOR__PATTERN:
         return pattern != null && !pattern.isEmpty();
       case WreslEditorPackage.WRESL_EVALUATOR__INITIAL:
-        return initial != INITIAL_EDEFAULT;
+        return initial != null;
       case WreslEditorPackage.WRESL_EVALUATOR__SEQUENCE:
         return sequence != null && !sequence.isEmpty();
       case WreslEditorPackage.WRESL_EVALUATOR__MODEL:
         return model != null && !model.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (initial: ");
-    result.append(initial);
-    result.append(')');
-    return result.toString();
   }
 
 } //WreslEvaluatorImpl
