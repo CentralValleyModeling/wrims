@@ -130,6 +130,12 @@ KEYWORD_14 : '}';
 
 
 
+RULE_IF : ('If'|'IF'|'if');
+
+RULE_ELSEIF : ('Elseif'|'ELSEIF'|'elseif'|'ElseIf');
+
+RULE_ELSE : ('Else'|'ELSE'|'else');
+
 RULE_RANGE : ('range'|'RANGE'|'Range');
 
 RULE_MIN : ('min'|'MIN');

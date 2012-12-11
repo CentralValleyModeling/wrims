@@ -20,10 +20,11 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	public class WreslEvaluatorElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "WreslEvaluator");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Assignment cPatternAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
-		private final Alternatives cPatternAlternatives_0_0 = (Alternatives)cPatternAssignment_0.eContents().get(0);
-		private final RuleCall cPatternAliasParserRuleCall_0_0_0 = (RuleCall)cPatternAlternatives_0_0.eContents().get(0);
-		private final RuleCall cPatternPatternParserRuleCall_0_0_1 = (RuleCall)cPatternAlternatives_0_0.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cAlternatives.eContents().get(0);
+		private final Assignment cPatternAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
+		private final RuleCall cPatternPatternParserRuleCall_0_0_0 = (RuleCall)cPatternAssignment_0_0.eContents().get(0);
+		private final Assignment cIfincitemAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
+		private final RuleCall cIfincitemIfIncIitemsParserRuleCall_0_1_0 = (RuleCall)cIfincitemAssignment_0_1.eContents().get(0);
 		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
 		private final Assignment cInitialAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
 		private final RuleCall cInitialInitialParserRuleCall_1_0_0 = (RuleCall)cInitialAssignment_1_0.eContents().get(0);
@@ -33,23 +34,26 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cModelModelParserRuleCall_1_2_0 = (RuleCall)cModelAssignment_1_2.eContents().get(0);
 		
 		//WreslEvaluator:
-		//	pattern+=(Alias | Pattern)+ | initial=Initial? sequence+=Sequence+ model+=Model+;
+		//	(pattern+=Pattern | ifincitem+=IfIncIitems)+ | initial=Initial? sequence+=Sequence+ model+=Model+;
 		public ParserRule getRule() { return rule; }
 
-		//pattern+=(Alias | Pattern)+ | initial=Initial? sequence+=Sequence+ model+=Model+
+		//(pattern+=Pattern | ifincitem+=IfIncIitems)+ | initial=Initial? sequence+=Sequence+ model+=Model+
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//pattern+=(Alias | Pattern)+
-		public Assignment getPatternAssignment_0() { return cPatternAssignment_0; }
+		//(pattern+=Pattern | ifincitem+=IfIncIitems)+
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
-		//Alias | Pattern
-		public Alternatives getPatternAlternatives_0_0() { return cPatternAlternatives_0_0; }
-
-		//Alias
-		public RuleCall getPatternAliasParserRuleCall_0_0_0() { return cPatternAliasParserRuleCall_0_0_0; }
+		//pattern+=Pattern
+		public Assignment getPatternAssignment_0_0() { return cPatternAssignment_0_0; }
 
 		//Pattern
-		public RuleCall getPatternPatternParserRuleCall_0_0_1() { return cPatternPatternParserRuleCall_0_0_1; }
+		public RuleCall getPatternPatternParserRuleCall_0_0_0() { return cPatternPatternParserRuleCall_0_0_0; }
+
+		//ifincitem+=IfIncIitems
+		public Assignment getIfincitemAssignment_0_1() { return cIfincitemAssignment_0_1; }
+
+		//IfIncIitems
+		public RuleCall getIfincitemIfIncIitemsParserRuleCall_0_1_0() { return cIfincitemIfIncIitemsParserRuleCall_0_1_0; }
 
 		//initial=Initial? sequence+=Sequence+ model+=Model+
 		public Group getGroup_1() { return cGroup_1; }
@@ -77,44 +81,196 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Pattern");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cDefineParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cSvarDefParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cDvarDefParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cConstDefParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cIncludeFileParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final RuleCall cIncludeModelParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
-		private final RuleCall cGoalParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
-		private final RuleCall cObjectiveParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cAliasParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cSvarDefParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cDvarDefParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cConstDefParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cIncludeFileParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cIncludeModelParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cGoalParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cObjectiveParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
 		
 		//Pattern:
-		//	Define | SvarDef | DvarDef | ConstDef | IncludeFile | IncludeModel | Goal | Objective;
+		//	Define | Alias | SvarDef | DvarDef | ConstDef | IncludeFile | IncludeModel | Goal | Objective;
 		public ParserRule getRule() { return rule; }
 
-		//Define | SvarDef | DvarDef | ConstDef | IncludeFile | IncludeModel | Goal | Objective
+		//Define | Alias | SvarDef | DvarDef | ConstDef | IncludeFile | IncludeModel | Goal | Objective
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Define
 		public RuleCall getDefineParserRuleCall_0() { return cDefineParserRuleCall_0; }
 
+		//Alias
+		public RuleCall getAliasParserRuleCall_1() { return cAliasParserRuleCall_1; }
+
 		//SvarDef
-		public RuleCall getSvarDefParserRuleCall_1() { return cSvarDefParserRuleCall_1; }
+		public RuleCall getSvarDefParserRuleCall_2() { return cSvarDefParserRuleCall_2; }
 
 		//DvarDef
-		public RuleCall getDvarDefParserRuleCall_2() { return cDvarDefParserRuleCall_2; }
+		public RuleCall getDvarDefParserRuleCall_3() { return cDvarDefParserRuleCall_3; }
 
 		//ConstDef
-		public RuleCall getConstDefParserRuleCall_3() { return cConstDefParserRuleCall_3; }
+		public RuleCall getConstDefParserRuleCall_4() { return cConstDefParserRuleCall_4; }
 
 		//IncludeFile
-		public RuleCall getIncludeFileParserRuleCall_4() { return cIncludeFileParserRuleCall_4; }
+		public RuleCall getIncludeFileParserRuleCall_5() { return cIncludeFileParserRuleCall_5; }
 
 		//IncludeModel
-		public RuleCall getIncludeModelParserRuleCall_5() { return cIncludeModelParserRuleCall_5; }
+		public RuleCall getIncludeModelParserRuleCall_6() { return cIncludeModelParserRuleCall_6; }
 
 		//Goal
-		public RuleCall getGoalParserRuleCall_6() { return cGoalParserRuleCall_6; }
+		public RuleCall getGoalParserRuleCall_7() { return cGoalParserRuleCall_7; }
 
 		//Objective
-		public RuleCall getObjectiveParserRuleCall_7() { return cObjectiveParserRuleCall_7; }
+		public RuleCall getObjectiveParserRuleCall_8() { return cObjectiveParserRuleCall_8; }
+	}
+
+	public class IfIncIitemsElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "IfIncIitems");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cIftermAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cIftermIfTermParserRuleCall_0_0 = (RuleCall)cIftermAssignment_0.eContents().get(0);
+		private final Assignment cElseiftermAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cElseiftermElseIfTermParserRuleCall_1_0 = (RuleCall)cElseiftermAssignment_1.eContents().get(0);
+		private final Assignment cElsetermAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cElsetermElseTermParserRuleCall_2_0 = (RuleCall)cElsetermAssignment_2.eContents().get(0);
+		
+		//IfIncIitems:
+		//	ifterm=IfTerm elseifterm=ElseIfTerm* elseterm=ElseTerm?;
+		public ParserRule getRule() { return rule; }
+
+		//ifterm=IfTerm elseifterm=ElseIfTerm* elseterm=ElseTerm?
+		public Group getGroup() { return cGroup; }
+
+		//ifterm=IfTerm
+		public Assignment getIftermAssignment_0() { return cIftermAssignment_0; }
+
+		//IfTerm
+		public RuleCall getIftermIfTermParserRuleCall_0_0() { return cIftermIfTermParserRuleCall_0_0; }
+
+		//elseifterm=ElseIfTerm*
+		public Assignment getElseiftermAssignment_1() { return cElseiftermAssignment_1; }
+
+		//ElseIfTerm
+		public RuleCall getElseiftermElseIfTermParserRuleCall_1_0() { return cElseiftermElseIfTermParserRuleCall_1_0; }
+
+		//elseterm=ElseTerm?
+		public Assignment getElsetermAssignment_2() { return cElsetermAssignment_2; }
+
+		//ElseTerm
+		public RuleCall getElsetermElseTermParserRuleCall_2_0() { return cElsetermElseTermParserRuleCall_2_0; }
+	}
+
+	public class IfTermElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "IfTerm");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cIfTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Assignment cLogicalAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cLogicalLogicalExpressionParserRuleCall_1_0 = (RuleCall)cLogicalAssignment_1.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cPatternAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cPatternPatternParserRuleCall_3_0 = (RuleCall)cPatternAssignment_3.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//IfTerm:
+		//	If logical=LogicalExpression "{" pattern+=Pattern+ "}";
+		public ParserRule getRule() { return rule; }
+
+		//If logical=LogicalExpression "{" pattern+=Pattern+ "}"
+		public Group getGroup() { return cGroup; }
+
+		//If
+		public RuleCall getIfTerminalRuleCall_0() { return cIfTerminalRuleCall_0; }
+
+		//logical=LogicalExpression
+		public Assignment getLogicalAssignment_1() { return cLogicalAssignment_1; }
+
+		//LogicalExpression
+		public RuleCall getLogicalLogicalExpressionParserRuleCall_1_0() { return cLogicalLogicalExpressionParserRuleCall_1_0; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
+
+		//pattern+=Pattern+
+		public Assignment getPatternAssignment_3() { return cPatternAssignment_3; }
+
+		//Pattern
+		public RuleCall getPatternPatternParserRuleCall_3_0() { return cPatternPatternParserRuleCall_3_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
+	}
+
+	public class ElseIfTermElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ElseIfTerm");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cElseIfTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Assignment cLogicalAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cLogicalLogicalExpressionParserRuleCall_1_0 = (RuleCall)cLogicalAssignment_1.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cPatternAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cPatternPatternParserRuleCall_3_0 = (RuleCall)cPatternAssignment_3.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//ElseIfTerm:
+		//	ElseIf logical=LogicalExpression "{" pattern+=Pattern+ "}";
+		public ParserRule getRule() { return rule; }
+
+		//ElseIf logical=LogicalExpression "{" pattern+=Pattern+ "}"
+		public Group getGroup() { return cGroup; }
+
+		//ElseIf
+		public RuleCall getElseIfTerminalRuleCall_0() { return cElseIfTerminalRuleCall_0; }
+
+		//logical=LogicalExpression
+		public Assignment getLogicalAssignment_1() { return cLogicalAssignment_1; }
+
+		//LogicalExpression
+		public RuleCall getLogicalLogicalExpressionParserRuleCall_1_0() { return cLogicalLogicalExpressionParserRuleCall_1_0; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
+
+		//pattern+=Pattern+
+		public Assignment getPatternAssignment_3() { return cPatternAssignment_3; }
+
+		//Pattern
+		public RuleCall getPatternPatternParserRuleCall_3_0() { return cPatternPatternParserRuleCall_3_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
+	}
+
+	public class ElseTermElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ElseTerm");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cElseTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cPatternAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cPatternPatternParserRuleCall_2_0 = (RuleCall)cPatternAssignment_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//ElseTerm:
+		//	Else "{" pattern+=Pattern+ "}";
+		public ParserRule getRule() { return rule; }
+
+		//Else "{" pattern+=Pattern+ "}"
+		public Group getGroup() { return cGroup; }
+
+		//Else
+		public RuleCall getElseTerminalRuleCall_0() { return cElseTerminalRuleCall_0; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
+
+		//pattern+=Pattern+
+		public Assignment getPatternAssignment_2() { return cPatternAssignment_2; }
+
+		//Pattern
+		public RuleCall getPatternPatternParserRuleCall_2_0() { return cPatternPatternParserRuleCall_2_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
 	}
 
 	public class ObjectiveElements extends AbstractParserRuleElementFinder {
@@ -139,10 +295,10 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//Objective:
-		//	("objective" | "OBJECTIVE") ("[" local?=("local" | "LOCAL") "]")? name=ID "=" "{" weights+=WeightItem+ "}";
+		//	("objective" | "OBJECTIVE") ("[" local?=("local" | "LOCAL") "]")? name=ID "="? "{" weights+=WeightItem+ "}";
 		public ParserRule getRule() { return rule; }
 
-		//("objective" | "OBJECTIVE") ("[" local?=("local" | "LOCAL") "]")? name=ID "=" "{" weights+=WeightItem+ "}"
+		//("objective" | "OBJECTIVE") ("[" local?=("local" | "LOCAL") "]")? name=ID "="? "{" weights+=WeightItem+ "}"
 		public Group getGroup() { return cGroup; }
 
 		//"objective" | "OBJECTIVE"
@@ -181,7 +337,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
 
-		//"="
+		//"="?
 		public Keyword getEqualsSignKeyword_3() { return cEqualsSignKeyword_3; }
 
 		//"{"
@@ -2481,15 +2637,15 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
 		private final Assignment cPatternAssignment_3_0 = (Assignment)cAlternatives_3.eContents().get(0);
 		private final RuleCall cPatternPatternParserRuleCall_3_0_0 = (RuleCall)cPatternAssignment_3_0.eContents().get(0);
-		private final Assignment cAliasAssignment_3_1 = (Assignment)cAlternatives_3.eContents().get(1);
-		private final RuleCall cAliasAliasParserRuleCall_3_1_0 = (RuleCall)cAliasAssignment_3_1.eContents().get(0);
+		private final Assignment cIfincitemsAssignment_3_1 = (Assignment)cAlternatives_3.eContents().get(1);
+		private final RuleCall cIfincitemsIfIncIitemsParserRuleCall_3_1_0 = (RuleCall)cIfincitemsAssignment_3_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//Model:
-		//	("model" | "MODEL") name=ID "{" (pattern+=Pattern | alias+=Alias)+ "}";
+		//	("model" | "MODEL") name=ID "{" (pattern+=Pattern | ifincitems+=IfIncIitems)+ "}";
 		public ParserRule getRule() { return rule; }
 
-		//("model" | "MODEL") name=ID "{" (pattern+=Pattern | alias+=Alias)+ "}"
+		//("model" | "MODEL") name=ID "{" (pattern+=Pattern | ifincitems+=IfIncIitems)+ "}"
 		public Group getGroup() { return cGroup; }
 
 		//"model" | "MODEL"
@@ -2510,7 +2666,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
 
-		//(pattern+=Pattern | alias+=Alias)+
+		//(pattern+=Pattern | ifincitems+=IfIncIitems)+
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 
 		//pattern+=Pattern
@@ -2519,11 +2675,11 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//Pattern
 		public RuleCall getPatternPatternParserRuleCall_3_0_0() { return cPatternPatternParserRuleCall_3_0_0; }
 
-		//alias+=Alias
-		public Assignment getAliasAssignment_3_1() { return cAliasAssignment_3_1; }
+		//ifincitems+=IfIncIitems
+		public Assignment getIfincitemsAssignment_3_1() { return cIfincitemsAssignment_3_1; }
 
-		//Alias
-		public RuleCall getAliasAliasParserRuleCall_3_1_0() { return cAliasAliasParserRuleCall_3_1_0; }
+		//IfIncIitems
+		public RuleCall getIfincitemsIfIncIitemsParserRuleCall_3_1_0() { return cIfincitemsIfIncIitemsParserRuleCall_3_1_0; }
 
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
@@ -3503,6 +3659,10 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	
 	private WreslEvaluatorElements pWreslEvaluator;
 	private PatternElements pPattern;
+	private IfIncIitemsElements pIfIncIitems;
+	private IfTermElements pIfTerm;
+	private ElseIfTermElements pElseIfTerm;
+	private ElseTermElements pElseTerm;
 	private ObjectiveElements pObjective;
 	private WeightItemElements pWeightItem;
 	private DefineElements pDefine;
@@ -3574,6 +3734,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	private NumberElements pNumber;
 	private IncludeFileElements pIncludeFile;
 	private IncludeModelElements pIncludeModel;
+	private TerminalRule tIf;
+	private TerminalRule tElseIf;
+	private TerminalRule tElse;
 	private TerminalRule tRANGE;
 	private TerminalRule tMIN;
 	private TerminalRule tMAX;
@@ -3609,7 +3772,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//WreslEvaluator:
-	//	pattern+=(Alias | Pattern)+ | initial=Initial? sequence+=Sequence+ model+=Model+;
+	//	(pattern+=Pattern | ifincitem+=IfIncIitems)+ | initial=Initial? sequence+=Sequence+ model+=Model+;
 	public WreslEvaluatorElements getWreslEvaluatorAccess() {
 		return (pWreslEvaluator != null) ? pWreslEvaluator : (pWreslEvaluator = new WreslEvaluatorElements());
 	}
@@ -3619,7 +3782,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Pattern:
-	//	Define | SvarDef | DvarDef | ConstDef | IncludeFile | IncludeModel | Goal | Objective;
+	//	Define | Alias | SvarDef | DvarDef | ConstDef | IncludeFile | IncludeModel | Goal | Objective;
 	public PatternElements getPatternAccess() {
 		return (pPattern != null) ? pPattern : (pPattern = new PatternElements());
 	}
@@ -3628,8 +3791,48 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		return getPatternAccess().getRule();
 	}
 
+	//IfIncIitems:
+	//	ifterm=IfTerm elseifterm=ElseIfTerm* elseterm=ElseTerm?;
+	public IfIncIitemsElements getIfIncIitemsAccess() {
+		return (pIfIncIitems != null) ? pIfIncIitems : (pIfIncIitems = new IfIncIitemsElements());
+	}
+	
+	public ParserRule getIfIncIitemsRule() {
+		return getIfIncIitemsAccess().getRule();
+	}
+
+	//IfTerm:
+	//	If logical=LogicalExpression "{" pattern+=Pattern+ "}";
+	public IfTermElements getIfTermAccess() {
+		return (pIfTerm != null) ? pIfTerm : (pIfTerm = new IfTermElements());
+	}
+	
+	public ParserRule getIfTermRule() {
+		return getIfTermAccess().getRule();
+	}
+
+	//ElseIfTerm:
+	//	ElseIf logical=LogicalExpression "{" pattern+=Pattern+ "}";
+	public ElseIfTermElements getElseIfTermAccess() {
+		return (pElseIfTerm != null) ? pElseIfTerm : (pElseIfTerm = new ElseIfTermElements());
+	}
+	
+	public ParserRule getElseIfTermRule() {
+		return getElseIfTermAccess().getRule();
+	}
+
+	//ElseTerm:
+	//	Else "{" pattern+=Pattern+ "}";
+	public ElseTermElements getElseTermAccess() {
+		return (pElseTerm != null) ? pElseTerm : (pElseTerm = new ElseTermElements());
+	}
+	
+	public ParserRule getElseTermRule() {
+		return getElseTermAccess().getRule();
+	}
+
 	//Objective:
-	//	("objective" | "OBJECTIVE") ("[" local?=("local" | "LOCAL") "]")? name=ID "=" "{" weights+=WeightItem+ "}";
+	//	("objective" | "OBJECTIVE") ("[" local?=("local" | "LOCAL") "]")? name=ID "="? "{" weights+=WeightItem+ "}";
 	public ObjectiveElements getObjectiveAccess() {
 		return (pObjective != null) ? pObjective : (pObjective = new ObjectiveElements());
 	}
@@ -4066,7 +4269,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Model:
-	//	("model" | "MODEL") name=ID "{" (pattern+=Pattern | alias+=Alias)+ "}";
+	//	("model" | "MODEL") name=ID "{" (pattern+=Pattern | ifincitems+=IfIncIitems)+ "}";
 	public ModelElements getModelAccess() {
 		return (pModel != null) ? pModel : (pModel = new ModelElements());
 	}
@@ -4345,6 +4548,24 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	public ParserRule getIncludeModelRule() {
 		return getIncludeModelAccess().getRule();
 	}
+
+	//terminal If:
+	//	"If" | "IF" | "if";
+	public TerminalRule getIfRule() {
+		return (tIf != null) ? tIf : (tIf = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "If"));
+	} 
+
+	//terminal ElseIf:
+	//	"Elseif" | "ELSEIF" | "elseif" | "ElseIf";
+	public TerminalRule getElseIfRule() {
+		return (tElseIf != null) ? tElseIf : (tElseIf = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ElseIf"));
+	} 
+
+	//terminal Else:
+	//	"Else" | "ELSE" | "else";
+	public TerminalRule getElseRule() {
+		return (tElse != null) ? tElse : (tElse = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Else"));
+	} 
 
 	//terminal RANGE:
 	//	"range" | "RANGE" | "Range";

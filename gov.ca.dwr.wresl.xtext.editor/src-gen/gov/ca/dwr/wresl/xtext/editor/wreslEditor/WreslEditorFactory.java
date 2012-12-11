@@ -45,6 +45,42 @@ public interface WreslEditorFactory extends EFactory
   Pattern createPattern();
 
   /**
+   * Returns a new object of class '<em>If Inc Iitems</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>If Inc Iitems</em>'.
+   * @generated
+   */
+  IfIncIitems createIfIncIitems();
+
+  /**
+   * Returns a new object of class '<em>If Term</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>If Term</em>'.
+   * @generated
+   */
+  IfTerm createIfTerm();
+
+  /**
+   * Returns a new object of class '<em>Else If Term</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Else If Term</em>'.
+   * @generated
+   */
+  ElseIfTerm createElseIfTerm();
+
+  /**
+   * Returns a new object of class '<em>Else Term</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Else Term</em>'.
+   * @generated
+   */
+  ElseTerm createElseTerm();
+
+  /**
    * Returns a new object of class '<em>Objective</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

@@ -16,6 +16,8 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVarNonStd;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVarStd;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Define;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DvarDef;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseIfTerm;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseTerm;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.External;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal;
@@ -24,6 +26,8 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCaseContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalNoCaseContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalSimple;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Ident;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfTerm;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IncludeFile;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Initial;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IntFunction;
@@ -105,7 +109,8 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 				}
 				else break;
 			case WreslEditorPackage.ALIAS:
-				if(context == grammarAccess.getAliasRule()) {
+				if(context == grammarAccess.getAliasRule() ||
+				   context == grammarAccess.getPatternRule()) {
 					sequence_Alias(context, (Alias) semanticObject); 
 					return; 
 				}
@@ -183,6 +188,18 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 					return; 
 				}
 				else break;
+			case WreslEditorPackage.ELSE_IF_TERM:
+				if(context == grammarAccess.getElseIfTermRule()) {
+					sequence_ElseIfTerm(context, (ElseIfTerm) semanticObject); 
+					return; 
+				}
+				else break;
+			case WreslEditorPackage.ELSE_TERM:
+				if(context == grammarAccess.getElseTermRule()) {
+					sequence_ElseTerm(context, (ElseTerm) semanticObject); 
+					return; 
+				}
+				else break;
 			case WreslEditorPackage.EXTERNAL:
 				if(context == grammarAccess.getExternalRule()) {
 					sequence_External(context, (External) semanticObject); 
@@ -231,6 +248,18 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 			case WreslEditorPackage.IDENT:
 				if(context == grammarAccess.getIdentRule()) {
 					sequence_Ident(context, (Ident) semanticObject); 
+					return; 
+				}
+				else break;
+			case WreslEditorPackage.IF_INC_IITEMS:
+				if(context == grammarAccess.getIfIncIitemsRule()) {
+					sequence_IfIncIitems(context, (IfIncIitems) semanticObject); 
+					return; 
+				}
+				else break;
+			case WreslEditorPackage.IF_TERM:
+				if(context == grammarAccess.getIfTermRule()) {
+					sequence_IfTerm(context, (IfTerm) semanticObject); 
 					return; 
 				}
 				else break;
@@ -718,6 +747,31 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
+	 *     (logical=LogicalExpression pattern+=Pattern+)
+	 *
+	 * Features:
+	 *    logical[1, 1]
+	 *    pattern[1, *]
+	 */
+	protected void sequence_ElseIfTerm(EObject context, ElseIfTerm semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     pattern+=Pattern+
+	 *
+	 * Features:
+	 *    pattern[1, *]
+	 */
+	protected void sequence_ElseTerm(EObject context, ElseTerm semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (e1=Expression e2+=Expression*)
 	 *
 	 * Features:
@@ -833,6 +887,33 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
 		feeder.accept(grammarAccess.getIdentAccess().getNameIDTerminalRuleCall_0(), semanticObject.getName());
 		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (ifterm=IfTerm elseifterm=ElseIfTerm* elseterm=ElseTerm?)
+	 *
+	 * Features:
+	 *    ifterm[1, 1]
+	 *    elseifterm[0, *]
+	 *    elseterm[0, 1]
+	 */
+	protected void sequence_IfIncIitems(EObject context, IfIncIitems semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (logical=LogicalExpression pattern+=Pattern+)
+	 *
+	 * Features:
+	 *    logical[1, 1]
+	 *    pattern[1, *]
+	 */
+	protected void sequence_IfTerm(EObject context, IfTerm semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -954,12 +1035,12 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (name=ID (pattern+=Pattern | alias+=Alias)+)
+	 *     (name=ID (pattern+=Pattern | ifincitems+=IfIncIitems)+)
 	 *
 	 * Features:
 	 *    name[1, 1]
 	 *    pattern[0, *]
-	 *    alias[0, *]
+	 *    ifincitems[0, *]
 	 */
 	protected void sequence_Model(EObject context, Model semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1298,10 +1379,14 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     ((pattern+=Alias | pattern+=Pattern)+ | (initial=Initial? sequence+=Sequence+ model+=Model+))
+	 *     ((pattern+=Pattern | ifincitem+=IfIncIitems)+ | (initial=Initial? sequence+=Sequence+ model+=Model+))
 	 *
 	 * Features:
 	 *    pattern[0, *]
+	 *         EXCLUDE_IF_SET initial
+	 *         EXCLUDE_IF_SET sequence
+	 *         EXCLUDE_IF_SET model
+	 *    ifincitem[0, *]
 	 *         EXCLUDE_IF_SET initial
 	 *         EXCLUDE_IF_SET sequence
 	 *         EXCLUDE_IF_SET model
@@ -1309,19 +1394,19 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	 *         EXCLUDE_IF_UNSET sequence
 	 *         EXCLUDE_IF_UNSET model
 	 *         EXCLUDE_IF_SET pattern
-	 *         EXCLUDE_IF_SET pattern
+	 *         EXCLUDE_IF_SET ifincitem
 	 *    sequence[0, *]
 	 *         MANDATORY_IF_SET initial
 	 *         EXCLUDE_IF_UNSET model
 	 *         MANDATORY_IF_SET model
 	 *         EXCLUDE_IF_SET pattern
-	 *         EXCLUDE_IF_SET pattern
+	 *         EXCLUDE_IF_SET ifincitem
 	 *    model[0, *]
 	 *         MANDATORY_IF_SET initial
 	 *         EXCLUDE_IF_UNSET sequence
 	 *         MANDATORY_IF_SET sequence
 	 *         EXCLUDE_IF_SET pattern
-	 *         EXCLUDE_IF_SET pattern
+	 *         EXCLUDE_IF_SET ifincitem
 	 */
 	protected void sequence_WreslEvaluator(EObject context, WreslEvaluator semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

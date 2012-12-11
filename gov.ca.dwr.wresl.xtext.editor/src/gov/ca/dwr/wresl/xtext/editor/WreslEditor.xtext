@@ -3,14 +3,23 @@ grammar gov.ca.dwr.wresl.xtext.editor.WreslEditor with org.eclipse.xtext.common.
 generate wreslEditor "http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor"
 
 WreslEvaluator:
-	pattern+=(Alias | Pattern)+
+	(pattern+=Pattern | ifincitem+=IfIncIitems)+
 	| ((initial=Initial)? sequence+=Sequence+ model+=Model+);
 
 Pattern:
-	Define| SvarDef | DvarDef | ConstDef | IncludeFile | IncludeModel | Goal | Objective;
+	Define| Alias | SvarDef | DvarDef | ConstDef | IncludeFile | IncludeModel | Goal | Objective;
+
+IfIncIitems:
+	ifterm=IfTerm  (elseifterm=ElseIfTerm)* (elseterm=ElseTerm)?  ;
+	
+IfTerm: If logical=LogicalExpression '{' pattern+=Pattern+ '}';
+
+ElseIfTerm: ElseIf logical=LogicalExpression '{' pattern+=Pattern+ '}';
+
+ElseTerm: Else '{' pattern+=Pattern+ '}';
 
 Objective:
-	('objective' | 'OBJECTIVE') ('[' local?=('local' | 'LOCAL') ']')? name=ID '=' '{' weights+=WeightItem+ '}';
+	('objective' | 'OBJECTIVE') ('[' local?=('local' | 'LOCAL') ']')? name=ID '='? '{' weights+=WeightItem+ '}';
 
 WeightItem:
 	'[' name=ID ',' expression=Expression ']' (',')?;
@@ -147,7 +156,7 @@ Constraint:
 	lhs=Expression operator=('<' | '>' | '=') rhs=Expression;
 
 Model:
-	("model" | "MODEL") name=ID '{' (pattern+=Pattern|alias+=Alias)+ '}';
+	("model" | "MODEL") name=ID '{' (pattern+=Pattern|ifincitems+=IfIncIitems)+ '}';
 
 Initial: ("initial"|'Initial'|"INITIAL") '{' pattern+=Pattern+ '}';
 
@@ -230,6 +239,12 @@ IncludeFile:
 
 IncludeModel:
 	("include" | "INCLUDE") ('model' | 'MODEL') ID;
+
+terminal If : 'If' | 'IF' | 'if' ;
+
+terminal ElseIf : 'Elseif' | 'ELSEIF' | 'elseif' | 'ElseIf' ;
+
+terminal Else : 'Else' | 'ELSE' | 'else' ;
 
 terminal RANGE:
 	'range' | 'RANGE' | 'Range';

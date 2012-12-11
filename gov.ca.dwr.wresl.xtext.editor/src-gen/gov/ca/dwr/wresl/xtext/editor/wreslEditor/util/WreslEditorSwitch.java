@@ -90,6 +90,34 @@ public class WreslEditorSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case WreslEditorPackage.IF_INC_IITEMS:
+      {
+        IfIncIitems ifIncIitems = (IfIncIitems)theEObject;
+        T result = caseIfIncIitems(ifIncIitems);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case WreslEditorPackage.IF_TERM:
+      {
+        IfTerm ifTerm = (IfTerm)theEObject;
+        T result = caseIfTerm(ifTerm);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case WreslEditorPackage.ELSE_IF_TERM:
+      {
+        ElseIfTerm elseIfTerm = (ElseIfTerm)theEObject;
+        T result = caseElseIfTerm(elseIfTerm);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case WreslEditorPackage.ELSE_TERM:
+      {
+        ElseTerm elseTerm = (ElseTerm)theEObject;
+        T result = caseElseTerm(elseTerm);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case WreslEditorPackage.OBJECTIVE:
       {
         Objective objective = (Objective)theEObject;
@@ -148,6 +176,7 @@ public class WreslEditorSwitch<T> extends Switch<T>
       {
         Alias alias = (Alias)theEObject;
         T result = caseAlias(alias);
+        if (result == null) result = casePattern(alias);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -592,6 +621,70 @@ public class WreslEditorSwitch<T> extends Switch<T>
    * @generated
    */
   public T casePattern(Pattern object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>If Inc Iitems</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>If Inc Iitems</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseIfIncIitems(IfIncIitems object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>If Term</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>If Term</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseIfTerm(IfTerm object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Else If Term</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Else If Term</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseElseIfTerm(ElseIfTerm object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Else Term</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Else Term</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseElseTerm(ElseTerm object)
   {
     return null;
   }

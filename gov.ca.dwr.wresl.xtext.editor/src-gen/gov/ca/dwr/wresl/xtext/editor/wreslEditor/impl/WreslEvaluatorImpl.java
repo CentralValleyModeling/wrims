@@ -6,8 +6,10 @@
  */
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Initial;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Model;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Pattern;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Sequence;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator;
@@ -20,7 +22,6 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -37,6 +38,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEvaluatorImpl#getPattern <em>Pattern</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEvaluatorImpl#getIfincitem <em>Ifincitem</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEvaluatorImpl#getInitial <em>Initial</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEvaluatorImpl#getSequence <em>Sequence</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEvaluatorImpl#getModel <em>Model</em>}</li>
@@ -55,7 +57,17 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    * @ordered
    */
-  protected EList<EObject> pattern;
+  protected EList<Pattern> pattern;
+
+  /**
+   * The cached value of the '{@link #getIfincitem() <em>Ifincitem</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getIfincitem()
+   * @generated
+   * @ordered
+   */
+  protected EList<IfIncIitems> ifincitem;
 
   /**
    * The cached value of the '{@link #getInitial() <em>Initial</em>}' containment reference.
@@ -113,13 +125,27 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<EObject> getPattern()
+  public EList<Pattern> getPattern()
   {
     if (pattern == null)
     {
-      pattern = new EObjectContainmentEList<EObject>(EObject.class, this, WreslEditorPackage.WRESL_EVALUATOR__PATTERN);
+      pattern = new EObjectContainmentEList<Pattern>(Pattern.class, this, WreslEditorPackage.WRESL_EVALUATOR__PATTERN);
     }
     return pattern;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<IfIncIitems> getIfincitem()
+  {
+    if (ifincitem == null)
+    {
+      ifincitem = new EObjectContainmentEList<IfIncIitems>(IfIncIitems.class, this, WreslEditorPackage.WRESL_EVALUATOR__IFINCITEM);
+    }
+    return ifincitem;
   }
 
   /**
@@ -210,6 +236,8 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
     {
       case WreslEditorPackage.WRESL_EVALUATOR__PATTERN:
         return ((InternalEList<?>)getPattern()).basicRemove(otherEnd, msgs);
+      case WreslEditorPackage.WRESL_EVALUATOR__IFINCITEM:
+        return ((InternalEList<?>)getIfincitem()).basicRemove(otherEnd, msgs);
       case WreslEditorPackage.WRESL_EVALUATOR__INITIAL:
         return basicSetInitial(null, msgs);
       case WreslEditorPackage.WRESL_EVALUATOR__SEQUENCE:
@@ -232,6 +260,8 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
     {
       case WreslEditorPackage.WRESL_EVALUATOR__PATTERN:
         return getPattern();
+      case WreslEditorPackage.WRESL_EVALUATOR__IFINCITEM:
+        return getIfincitem();
       case WreslEditorPackage.WRESL_EVALUATOR__INITIAL:
         return getInitial();
       case WreslEditorPackage.WRESL_EVALUATOR__SEQUENCE:
@@ -255,7 +285,11 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
     {
       case WreslEditorPackage.WRESL_EVALUATOR__PATTERN:
         getPattern().clear();
-        getPattern().addAll((Collection<? extends EObject>)newValue);
+        getPattern().addAll((Collection<? extends Pattern>)newValue);
+        return;
+      case WreslEditorPackage.WRESL_EVALUATOR__IFINCITEM:
+        getIfincitem().clear();
+        getIfincitem().addAll((Collection<? extends IfIncIitems>)newValue);
         return;
       case WreslEditorPackage.WRESL_EVALUATOR__INITIAL:
         setInitial((Initial)newValue);
@@ -285,6 +319,9 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
       case WreslEditorPackage.WRESL_EVALUATOR__PATTERN:
         getPattern().clear();
         return;
+      case WreslEditorPackage.WRESL_EVALUATOR__IFINCITEM:
+        getIfincitem().clear();
+        return;
       case WreslEditorPackage.WRESL_EVALUATOR__INITIAL:
         setInitial((Initial)null);
         return;
@@ -310,6 +347,8 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
     {
       case WreslEditorPackage.WRESL_EVALUATOR__PATTERN:
         return pattern != null && !pattern.isEmpty();
+      case WreslEditorPackage.WRESL_EVALUATOR__IFINCITEM:
+        return ifincitem != null && !ifincitem.isEmpty();
       case WreslEditorPackage.WRESL_EVALUATOR__INITIAL:
         return initial != null;
       case WreslEditorPackage.WRESL_EVALUATOR__SEQUENCE:

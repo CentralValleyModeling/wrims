@@ -89,6 +89,26 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
         return createPatternAdapter();
       }
       @Override
+      public Adapter caseIfIncIitems(IfIncIitems object)
+      {
+        return createIfIncIitemsAdapter();
+      }
+      @Override
+      public Adapter caseIfTerm(IfTerm object)
+      {
+        return createIfTermAdapter();
+      }
+      @Override
+      public Adapter caseElseIfTerm(ElseIfTerm object)
+      {
+        return createElseIfTermAdapter();
+      }
+      @Override
+      public Adapter caseElseTerm(ElseTerm object)
+      {
+        return createElseTermAdapter();
+      }
+      @Override
       public Adapter caseObjective(Objective object)
       {
         return createObjectiveAdapter();
@@ -446,6 +466,66 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createPatternAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems <em>If Inc Iitems</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems
+   * @generated
+   */
+  public Adapter createIfIncIitemsAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfTerm <em>If Term</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfTerm
+   * @generated
+   */
+  public Adapter createIfTermAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseIfTerm <em>Else If Term</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseIfTerm
+   * @generated
+   */
+  public Adapter createElseIfTermAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseTerm <em>Else Term</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseTerm
+   * @generated
+   */
+  public Adapter createElseTermAdapter()
   {
     return null;
   }

@@ -23,6 +23,8 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVarNonStd;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVarStd;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Define;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DvarDef;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseIfTerm;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseTerm;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Expression;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.External;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction;
@@ -33,6 +35,8 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCaseContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalNoCaseContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalSimple;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Ident;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfTerm;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IncludeFile;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Initial;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IntFunction;
@@ -101,6 +105,34 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * @generated
    */
   private EClass patternEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass ifIncIitemsEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass ifTermEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass elseIfTermEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass elseTermEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -624,7 +656,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getWreslEvaluator_Initial()
+  public EReference getWreslEvaluator_Ifincitem()
   {
     return (EReference)wreslEvaluatorEClass.getEStructuralFeatures().get(1);
   }
@@ -634,7 +666,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getWreslEvaluator_Sequence()
+  public EReference getWreslEvaluator_Initial()
   {
     return (EReference)wreslEvaluatorEClass.getEStructuralFeatures().get(2);
   }
@@ -644,9 +676,19 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getWreslEvaluator_Model()
+  public EReference getWreslEvaluator_Sequence()
   {
     return (EReference)wreslEvaluatorEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getWreslEvaluator_Model()
+  {
+    return (EReference)wreslEvaluatorEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -667,6 +709,126 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
   public EAttribute getPattern_Local()
   {
     return (EAttribute)patternEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getIfIncIitems()
+  {
+    return ifIncIitemsEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIfIncIitems_Ifterm()
+  {
+    return (EReference)ifIncIitemsEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIfIncIitems_Elseifterm()
+  {
+    return (EReference)ifIncIitemsEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIfIncIitems_Elseterm()
+  {
+    return (EReference)ifIncIitemsEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getIfTerm()
+  {
+    return ifTermEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIfTerm_Logical()
+  {
+    return (EReference)ifTermEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIfTerm_Pattern()
+  {
+    return (EReference)ifTermEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getElseIfTerm()
+  {
+    return elseIfTermEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getElseIfTerm_Logical()
+  {
+    return (EReference)elseIfTermEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getElseIfTerm_Pattern()
+  {
+    return (EReference)elseIfTermEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getElseTerm()
+  {
+    return elseTermEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getElseTerm_Pattern()
+  {
+    return (EReference)elseTermEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -884,7 +1046,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getAlias_Local()
+  public EAttribute getAlias_Name()
   {
     return (EAttribute)aliasEClass.getEStructuralFeatures().get(0);
   }
@@ -894,19 +1056,9 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getAlias_Name()
-  {
-    return (EAttribute)aliasEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getAlias_Expression()
   {
-    return (EReference)aliasEClass.getEStructuralFeatures().get(2);
+    return (EReference)aliasEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -916,7 +1068,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    */
   public EAttribute getAlias_Kind()
   {
-    return (EAttribute)aliasEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)aliasEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -926,7 +1078,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    */
   public EAttribute getAlias_Units()
   {
-    return (EAttribute)aliasEClass.getEStructuralFeatures().get(4);
+    return (EAttribute)aliasEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -1864,7 +2016,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getModel_Alias()
+  public EReference getModel_Ifincitems()
   {
     return (EReference)modelEClass.getEStructuralFeatures().get(2);
   }
@@ -2351,12 +2503,29 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     // Create classes and their features
     wreslEvaluatorEClass = createEClass(WRESL_EVALUATOR);
     createEReference(wreslEvaluatorEClass, WRESL_EVALUATOR__PATTERN);
+    createEReference(wreslEvaluatorEClass, WRESL_EVALUATOR__IFINCITEM);
     createEReference(wreslEvaluatorEClass, WRESL_EVALUATOR__INITIAL);
     createEReference(wreslEvaluatorEClass, WRESL_EVALUATOR__SEQUENCE);
     createEReference(wreslEvaluatorEClass, WRESL_EVALUATOR__MODEL);
 
     patternEClass = createEClass(PATTERN);
     createEAttribute(patternEClass, PATTERN__LOCAL);
+
+    ifIncIitemsEClass = createEClass(IF_INC_IITEMS);
+    createEReference(ifIncIitemsEClass, IF_INC_IITEMS__IFTERM);
+    createEReference(ifIncIitemsEClass, IF_INC_IITEMS__ELSEIFTERM);
+    createEReference(ifIncIitemsEClass, IF_INC_IITEMS__ELSETERM);
+
+    ifTermEClass = createEClass(IF_TERM);
+    createEReference(ifTermEClass, IF_TERM__LOGICAL);
+    createEReference(ifTermEClass, IF_TERM__PATTERN);
+
+    elseIfTermEClass = createEClass(ELSE_IF_TERM);
+    createEReference(elseIfTermEClass, ELSE_IF_TERM__LOGICAL);
+    createEReference(elseIfTermEClass, ELSE_IF_TERM__PATTERN);
+
+    elseTermEClass = createEClass(ELSE_TERM);
+    createEReference(elseTermEClass, ELSE_TERM__PATTERN);
 
     objectiveEClass = createEClass(OBJECTIVE);
     createEAttribute(objectiveEClass, OBJECTIVE__NAME);
@@ -2386,7 +2555,6 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     createEAttribute(externalEClass, EXTERNAL__NAME);
 
     aliasEClass = createEClass(ALIAS);
-    createEAttribute(aliasEClass, ALIAS__LOCAL);
     createEAttribute(aliasEClass, ALIAS__NAME);
     createEReference(aliasEClass, ALIAS__EXPRESSION);
     createEAttribute(aliasEClass, ALIAS__KIND);
@@ -2520,7 +2688,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     modelEClass = createEClass(MODEL);
     createEAttribute(modelEClass, MODEL__NAME);
     createEReference(modelEClass, MODEL__PATTERN);
-    createEReference(modelEClass, MODEL__ALIAS);
+    createEReference(modelEClass, MODEL__IFINCITEMS);
 
     initialEClass = createEClass(INITIAL);
     createEReference(initialEClass, INITIAL__PATTERN);
@@ -2620,6 +2788,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     svarDefEClass.getESuperTypes().add(this.getPattern());
     dvarDefEClass.getESuperTypes().add(this.getPattern());
     constDefEClass.getESuperTypes().add(this.getPattern());
+    aliasEClass.getESuperTypes().add(this.getPattern());
     dVarNonStdEClass.getESuperTypes().add(this.getDVar());
     dVarStdEClass.getESuperTypes().add(this.getDVar());
     dVarIntegerStdEClass.getESuperTypes().add(this.getDVarInteger());
@@ -2645,13 +2814,30 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
 
     // Initialize classes and features; add operations and parameters
     initEClass(wreslEvaluatorEClass, WreslEvaluator.class, "WreslEvaluator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getWreslEvaluator_Pattern(), ecorePackage.getEObject(), null, "pattern", null, 0, -1, WreslEvaluator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getWreslEvaluator_Pattern(), this.getPattern(), null, "pattern", null, 0, -1, WreslEvaluator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getWreslEvaluator_Ifincitem(), this.getIfIncIitems(), null, "ifincitem", null, 0, -1, WreslEvaluator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getWreslEvaluator_Initial(), this.getInitial(), null, "initial", null, 0, 1, WreslEvaluator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getWreslEvaluator_Sequence(), this.getSequence(), null, "sequence", null, 0, -1, WreslEvaluator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getWreslEvaluator_Model(), this.getModel(), null, "model", null, 0, -1, WreslEvaluator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(patternEClass, Pattern.class, "Pattern", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPattern_Local(), ecorePackage.getEBoolean(), "local", null, 0, 1, Pattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(ifIncIitemsEClass, IfIncIitems.class, "IfIncIitems", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getIfIncIitems_Ifterm(), this.getIfTerm(), null, "ifterm", null, 0, 1, IfIncIitems.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIfIncIitems_Elseifterm(), this.getElseIfTerm(), null, "elseifterm", null, 0, 1, IfIncIitems.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIfIncIitems_Elseterm(), this.getElseTerm(), null, "elseterm", null, 0, 1, IfIncIitems.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(ifTermEClass, IfTerm.class, "IfTerm", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getIfTerm_Logical(), this.getLogicalExpression(), null, "logical", null, 0, 1, IfTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIfTerm_Pattern(), this.getPattern(), null, "pattern", null, 0, -1, IfTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(elseIfTermEClass, ElseIfTerm.class, "ElseIfTerm", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getElseIfTerm_Logical(), this.getLogicalExpression(), null, "logical", null, 0, 1, ElseIfTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getElseIfTerm_Pattern(), this.getPattern(), null, "pattern", null, 0, -1, ElseIfTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(elseTermEClass, ElseTerm.class, "ElseTerm", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getElseTerm_Pattern(), this.getPattern(), null, "pattern", null, 0, -1, ElseTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(objectiveEClass, Objective.class, "Objective", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getObjective_Name(), ecorePackage.getEString(), "name", null, 0, 1, Objective.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2681,7 +2867,6 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     initEAttribute(getExternal_Name(), ecorePackage.getEString(), "name", null, 0, 1, External.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(aliasEClass, Alias.class, "Alias", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getAlias_Local(), ecorePackage.getEBoolean(), "local", null, 0, 1, Alias.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAlias_Name(), ecorePackage.getEString(), "name", null, 0, 1, Alias.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAlias_Expression(), this.getExpression(), null, "expression", null, 0, 1, Alias.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAlias_Kind(), ecorePackage.getEString(), "kind", null, 0, 1, Alias.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2815,7 +3000,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getModel_Name(), ecorePackage.getEString(), "name", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getModel_Pattern(), this.getPattern(), null, "pattern", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getModel_Alias(), this.getAlias(), null, "alias", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getModel_Ifincitems(), this.getIfIncIitems(), null, "ifincitems", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(initialEClass, Initial.class, "Initial", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getInitial_Pattern(), this.getPattern(), null, "pattern", null, 0, -1, Initial.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

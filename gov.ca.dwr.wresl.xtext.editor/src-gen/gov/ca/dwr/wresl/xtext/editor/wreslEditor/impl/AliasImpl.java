@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,7 +25,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AliasImpl#isLocal <em>Local</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AliasImpl#getName <em>Name</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AliasImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AliasImpl#getKind <em>Kind</em>}</li>
@@ -36,28 +34,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class AliasImpl extends MinimalEObjectImpl.Container implements Alias
+public class AliasImpl extends PatternImpl implements Alias
 {
-  /**
-   * The default value of the '{@link #isLocal() <em>Local</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isLocal()
-   * @generated
-   * @ordered
-   */
-  protected static final boolean LOCAL_EDEFAULT = false;
-
-  /**
-   * The cached value of the '{@link #isLocal() <em>Local</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isLocal()
-   * @generated
-   * @ordered
-   */
-  protected boolean local = LOCAL_EDEFAULT;
-
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -147,29 +125,6 @@ public class AliasImpl extends MinimalEObjectImpl.Container implements Alias
   protected EClass eStaticClass()
   {
     return WreslEditorPackage.Literals.ALIAS;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public boolean isLocal()
-  {
-    return local;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setLocal(boolean newLocal)
-  {
-    boolean oldLocal = local;
-    local = newLocal;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.ALIAS__LOCAL, oldLocal, local));
   }
 
   /**
@@ -315,8 +270,6 @@ public class AliasImpl extends MinimalEObjectImpl.Container implements Alias
   {
     switch (featureID)
     {
-      case WreslEditorPackage.ALIAS__LOCAL:
-        return isLocal();
       case WreslEditorPackage.ALIAS__NAME:
         return getName();
       case WreslEditorPackage.ALIAS__EXPRESSION:
@@ -339,9 +292,6 @@ public class AliasImpl extends MinimalEObjectImpl.Container implements Alias
   {
     switch (featureID)
     {
-      case WreslEditorPackage.ALIAS__LOCAL:
-        setLocal((Boolean)newValue);
-        return;
       case WreslEditorPackage.ALIAS__NAME:
         setName((String)newValue);
         return;
@@ -368,9 +318,6 @@ public class AliasImpl extends MinimalEObjectImpl.Container implements Alias
   {
     switch (featureID)
     {
-      case WreslEditorPackage.ALIAS__LOCAL:
-        setLocal(LOCAL_EDEFAULT);
-        return;
       case WreslEditorPackage.ALIAS__NAME:
         setName(NAME_EDEFAULT);
         return;
@@ -397,8 +344,6 @@ public class AliasImpl extends MinimalEObjectImpl.Container implements Alias
   {
     switch (featureID)
     {
-      case WreslEditorPackage.ALIAS__LOCAL:
-        return local != LOCAL_EDEFAULT;
       case WreslEditorPackage.ALIAS__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case WreslEditorPackage.ALIAS__EXPRESSION:
@@ -422,9 +367,7 @@ public class AliasImpl extends MinimalEObjectImpl.Container implements Alias
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (local: ");
-    result.append(local);
-    result.append(", name: ");
+    result.append(" (name: ");
     result.append(name);
     result.append(", kind: ");
     result.append(kind);

@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getPattern <em>Pattern</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getIfincitem <em>Ifincitem</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getInitial <em>Initial</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getSequence <em>Sequence</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getModel <em>Model</em>}</li>
@@ -33,7 +34,7 @@ public interface WreslEvaluator extends EObject
 {
   /**
    * Returns the value of the '<em><b>Pattern</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
+   * The list contents are of type {@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Pattern}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Pattern</em>' containment reference list isn't clear,
@@ -45,7 +46,23 @@ public interface WreslEvaluator extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<EObject> getPattern();
+  EList<Pattern> getPattern();
+
+  /**
+   * Returns the value of the '<em><b>Ifincitem</b></em>' containment reference list.
+   * The list contents are of type {@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Ifincitem</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Ifincitem</em>' containment reference list.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getWreslEvaluator_Ifincitem()
+   * @model containment="true"
+   * @generated
+   */
+  EList<IfIncIitems> getIfincitem();
 
   /**
    * Returns the value of the '<em><b>Initial</b></em>' containment reference.

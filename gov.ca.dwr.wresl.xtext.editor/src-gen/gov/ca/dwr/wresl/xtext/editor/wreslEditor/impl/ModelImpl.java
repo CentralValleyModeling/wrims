@@ -6,7 +6,7 @@
  */
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Model;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Pattern;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage;
@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ModelImpl#getName <em>Name</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ModelImpl#getPattern <em>Pattern</em>}</li>
- *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ModelImpl#getAlias <em>Alias</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ModelImpl#getIfincitems <em>Ifincitems</em>}</li>
  * </ul>
  * </p>
  *
@@ -75,14 +75,14 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   protected EList<Pattern> pattern;
 
   /**
-   * The cached value of the '{@link #getAlias() <em>Alias</em>}' containment reference list.
+   * The cached value of the '{@link #getIfincitems() <em>Ifincitems</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getAlias()
+   * @see #getIfincitems()
    * @generated
    * @ordered
    */
-  protected EList<Alias> alias;
+  protected EList<IfIncIitems> ifincitems;
 
   /**
    * <!-- begin-user-doc -->
@@ -147,13 +147,13 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Alias> getAlias()
+  public EList<IfIncIitems> getIfincitems()
   {
-    if (alias == null)
+    if (ifincitems == null)
     {
-      alias = new EObjectContainmentEList<Alias>(Alias.class, this, WreslEditorPackage.MODEL__ALIAS);
+      ifincitems = new EObjectContainmentEList<IfIncIitems>(IfIncIitems.class, this, WreslEditorPackage.MODEL__IFINCITEMS);
     }
-    return alias;
+    return ifincitems;
   }
 
   /**
@@ -168,8 +168,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
     {
       case WreslEditorPackage.MODEL__PATTERN:
         return ((InternalEList<?>)getPattern()).basicRemove(otherEnd, msgs);
-      case WreslEditorPackage.MODEL__ALIAS:
-        return ((InternalEList<?>)getAlias()).basicRemove(otherEnd, msgs);
+      case WreslEditorPackage.MODEL__IFINCITEMS:
+        return ((InternalEList<?>)getIfincitems()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -188,8 +188,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
         return getName();
       case WreslEditorPackage.MODEL__PATTERN:
         return getPattern();
-      case WreslEditorPackage.MODEL__ALIAS:
-        return getAlias();
+      case WreslEditorPackage.MODEL__IFINCITEMS:
+        return getIfincitems();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -212,9 +212,9 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
         getPattern().clear();
         getPattern().addAll((Collection<? extends Pattern>)newValue);
         return;
-      case WreslEditorPackage.MODEL__ALIAS:
-        getAlias().clear();
-        getAlias().addAll((Collection<? extends Alias>)newValue);
+      case WreslEditorPackage.MODEL__IFINCITEMS:
+        getIfincitems().clear();
+        getIfincitems().addAll((Collection<? extends IfIncIitems>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -236,8 +236,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
       case WreslEditorPackage.MODEL__PATTERN:
         getPattern().clear();
         return;
-      case WreslEditorPackage.MODEL__ALIAS:
-        getAlias().clear();
+      case WreslEditorPackage.MODEL__IFINCITEMS:
+        getIfincitems().clear();
         return;
     }
     super.eUnset(featureID);
@@ -257,8 +257,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case WreslEditorPackage.MODEL__PATTERN:
         return pattern != null && !pattern.isEmpty();
-      case WreslEditorPackage.MODEL__ALIAS:
-        return alias != null && !alias.isEmpty();
+      case WreslEditorPackage.MODEL__IFINCITEMS:
+        return ifincitems != null && !ifincitems.isEmpty();
     }
     return super.eIsSet(featureID);
   }

@@ -70,6 +70,10 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
     {
       case WreslEditorPackage.WRESL_EVALUATOR: return createWreslEvaluator();
       case WreslEditorPackage.PATTERN: return createPattern();
+      case WreslEditorPackage.IF_INC_IITEMS: return createIfIncIitems();
+      case WreslEditorPackage.IF_TERM: return createIfTerm();
+      case WreslEditorPackage.ELSE_IF_TERM: return createElseIfTerm();
+      case WreslEditorPackage.ELSE_TERM: return createElseTerm();
       case WreslEditorPackage.OBJECTIVE: return createObjective();
       case WreslEditorPackage.WEIGHT_ITEM: return createWeightItem();
       case WreslEditorPackage.DEFINE: return createDefine();
@@ -157,6 +161,50 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
   {
     PatternImpl pattern = new PatternImpl();
     return pattern;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public IfIncIitems createIfIncIitems()
+  {
+    IfIncIitemsImpl ifIncIitems = new IfIncIitemsImpl();
+    return ifIncIitems;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public IfTerm createIfTerm()
+  {
+    IfTermImpl ifTerm = new IfTermImpl();
+    return ifTerm;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ElseIfTerm createElseIfTerm()
+  {
+    ElseIfTermImpl elseIfTerm = new ElseIfTermImpl();
+    return elseIfTerm;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ElseTerm createElseTerm()
+  {
+    ElseTermImpl elseTerm = new ElseTermImpl();
+    return elseTerm;
   }
 
   /**

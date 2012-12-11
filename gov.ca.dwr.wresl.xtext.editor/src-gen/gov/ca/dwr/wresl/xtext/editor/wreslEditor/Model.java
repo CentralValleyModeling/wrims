@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Model#getName <em>Name</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Model#getPattern <em>Pattern</em>}</li>
- *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Model#getAlias <em>Alias</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Model#getIfincitems <em>Ifincitems</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,19 +73,19 @@ public interface Model extends EObject
   EList<Pattern> getPattern();
 
   /**
-   * Returns the value of the '<em><b>Alias</b></em>' containment reference list.
-   * The list contents are of type {@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias}.
+   * Returns the value of the '<em><b>Ifincitems</b></em>' containment reference list.
+   * The list contents are of type {@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Alias</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Ifincitems</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Alias</em>' containment reference list.
-   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getModel_Alias()
+   * @return the value of the '<em>Ifincitems</em>' containment reference list.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getModel_Ifincitems()
    * @model containment="true"
    * @generated
    */
-  EList<Alias> getAlias();
+  EList<IfIncIitems> getIfincitems();
 
 } // Model
