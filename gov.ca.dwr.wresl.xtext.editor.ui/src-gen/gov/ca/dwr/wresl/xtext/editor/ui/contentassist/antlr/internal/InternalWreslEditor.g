@@ -184,9 +184,16 @@ ruleElseIfTerm
     }
 	:
 (
+(
 { before(grammarAccess.getElseIfTermAccess().getGroup()); }
 (rule__ElseIfTerm__Group__0)
 { after(grammarAccess.getElseIfTermAccess().getGroup()); }
+)
+(
+{ before(grammarAccess.getElseIfTermAccess().getGroup()); }
+(rule__ElseIfTerm__Group__0)*
+{ after(grammarAccess.getElseIfTermAccess().getGroup()); }
+)
 )
 
 ;
@@ -5042,9 +5049,9 @@ rule__IfIncItems__Group__0__Impl
     }
 :
 (
-{ before(grammarAccess.getIfIncItemsAccess().getPatternAssignment_0()); }
-(rule__IfIncItems__PatternAssignment_0)
-{ after(grammarAccess.getIfIncItemsAccess().getPatternAssignment_0()); }
+{ before(grammarAccess.getIfIncItemsAccess().getIfTermParserRuleCall_0()); }
+	ruleIfTerm
+{ after(grammarAccess.getIfIncItemsAccess().getIfTermParserRuleCall_0()); }
 )
 
 ;
@@ -5071,9 +5078,9 @@ rule__IfIncItems__Group__1__Impl
     }
 :
 (
-{ before(grammarAccess.getIfIncItemsAccess().getPatternAssignment_1()); }
-(rule__IfIncItems__PatternAssignment_1)*
-{ after(grammarAccess.getIfIncItemsAccess().getPatternAssignment_1()); }
+{ before(grammarAccess.getIfIncItemsAccess().getElseiftermAssignment_1()); }
+(rule__IfIncItems__ElseiftermAssignment_1)?
+{ after(grammarAccess.getIfIncItemsAccess().getElseiftermAssignment_1()); }
 )
 
 ;
@@ -5099,9 +5106,9 @@ rule__IfIncItems__Group__2__Impl
     }
 :
 (
-{ before(grammarAccess.getIfIncItemsAccess().getPatternAssignment_2()); }
-(rule__IfIncItems__PatternAssignment_2)?
-{ after(grammarAccess.getIfIncItemsAccess().getPatternAssignment_2()); }
+{ before(grammarAccess.getIfIncItemsAccess().getElsetermAssignment_2()); }
+(rule__IfIncItems__ElsetermAssignment_2)?
+{ after(grammarAccess.getIfIncItemsAccess().getElsetermAssignment_2()); }
 )
 
 ;
@@ -14868,14 +14875,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__IfIncItems__PatternAssignment_0
+rule__IfIncItems__ElseiftermAssignment_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getIfIncItemsAccess().getPatternIfTermParserRuleCall_0_0()); }
-	ruleIfTerm{ after(grammarAccess.getIfIncItemsAccess().getPatternIfTermParserRuleCall_0_0()); }
+{ before(grammarAccess.getIfIncItemsAccess().getElseiftermElseIfTermParserRuleCall_1_0()); }
+	ruleElseIfTerm{ after(grammarAccess.getIfIncItemsAccess().getElseiftermElseIfTermParserRuleCall_1_0()); }
 )
 
 ;
@@ -14883,29 +14890,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__IfIncItems__PatternAssignment_1
+rule__IfIncItems__ElsetermAssignment_2
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getIfIncItemsAccess().getPatternElseIfTermParserRuleCall_1_0()); }
-	ruleElseIfTerm{ after(grammarAccess.getIfIncItemsAccess().getPatternElseIfTermParserRuleCall_1_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__IfIncItems__PatternAssignment_2
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getIfIncItemsAccess().getPatternElseTermParserRuleCall_2_0()); }
-	ruleElseTerm{ after(grammarAccess.getIfIncItemsAccess().getPatternElseTermParserRuleCall_2_0()); }
+{ before(grammarAccess.getIfIncItemsAccess().getElsetermElseTermParserRuleCall_2_0()); }
+	ruleElseTerm{ after(grammarAccess.getIfIncItemsAccess().getElsetermElseTermParserRuleCall_2_0()); }
 )
 
 ;

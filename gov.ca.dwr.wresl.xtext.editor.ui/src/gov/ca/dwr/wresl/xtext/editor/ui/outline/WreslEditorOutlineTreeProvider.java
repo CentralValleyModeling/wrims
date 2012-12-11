@@ -7,8 +7,11 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConstDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Define;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DvarDef;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseIfTerm;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseTerm;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfTerm;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IncludeFile;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Initial;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Model;
@@ -42,6 +45,11 @@ public class WreslEditorOutlineTreeProvider extends DefaultOutlineTreeProvider {
 				|| modelElement instanceof Goal
 				|| modelElement instanceof Objective) {
 			super._createNode(parentNode, modelElement);
+		} else if (modelElement instanceof IfIncItems
+				|| modelElement instanceof IfTerm
+				|| modelElement instanceof ElseIfTerm
+				|| modelElement instanceof ElseTerm){
+			super._createChildren(parentNode, modelElement);
 		}
 	}
 
