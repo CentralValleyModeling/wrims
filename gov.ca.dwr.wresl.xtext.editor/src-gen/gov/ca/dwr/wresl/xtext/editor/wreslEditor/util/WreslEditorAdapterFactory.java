@@ -89,9 +89,9 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
         return createPatternAdapter();
       }
       @Override
-      public Adapter caseIfIncIitems(IfIncIitems object)
+      public Adapter caseIfIncItems(IfIncItems object)
       {
-        return createIfIncIitemsAdapter();
+        return createIfIncItemsAdapter();
       }
       @Override
       public Adapter caseIfTerm(IfTerm object)
@@ -471,16 +471,16 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems <em>If Inc Iitems</em>}'.
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems <em>If Inc Items</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems
    * @generated
    */
-  public Adapter createIfIncIitemsAdapter()
+  public Adapter createIfIncItemsAdapter()
   {
     return null;
   }

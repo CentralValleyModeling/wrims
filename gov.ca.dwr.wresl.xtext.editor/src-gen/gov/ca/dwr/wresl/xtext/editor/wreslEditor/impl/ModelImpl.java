@@ -6,7 +6,7 @@
  */
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Model;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Pattern;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage;
@@ -82,7 +82,7 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * @generated
    * @ordered
    */
-  protected EList<IfIncIitems> ifincitems;
+  protected EList<IfIncItems> ifincitems;
 
   /**
    * <!-- begin-user-doc -->
@@ -147,11 +147,11 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<IfIncIitems> getIfincitems()
+  public EList<IfIncItems> getIfincitems()
   {
     if (ifincitems == null)
     {
-      ifincitems = new EObjectContainmentEList<IfIncIitems>(IfIncIitems.class, this, WreslEditorPackage.MODEL__IFINCITEMS);
+      ifincitems = new EObjectContainmentEList<IfIncItems>(IfIncItems.class, this, WreslEditorPackage.MODEL__IFINCITEMS);
     }
     return ifincitems;
   }
@@ -214,7 +214,7 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
         return;
       case WreslEditorPackage.MODEL__IFINCITEMS:
         getIfincitems().clear();
-        getIfincitems().addAll((Collection<? extends IfIncIitems>)newValue);
+        getIfincitems().addAll((Collection<? extends IfIncItems>)newValue);
         return;
     }
     super.eSet(featureID, newValue);

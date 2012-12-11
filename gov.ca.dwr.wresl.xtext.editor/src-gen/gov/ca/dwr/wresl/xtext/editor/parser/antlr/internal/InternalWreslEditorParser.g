@@ -99,9 +99,9 @@ ruleWreslEvaluator returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getWreslEvaluatorAccess().getIfincitemIfIncIitemsParserRuleCall_0_1_0()); 
+	        newCompositeNode(grammarAccess.getWreslEvaluatorAccess().getIfincitemIfIncItemsParserRuleCall_0_1_0()); 
 	    }
-		lv_ifincitem_1_0=ruleIfIncIitems		{
+		lv_ifincitem_1_0=ruleIfIncItems		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getWreslEvaluatorRule());
 	        }
@@ -109,7 +109,7 @@ ruleWreslEvaluator returns [EObject current=null]
        			$current, 
        			"ifincitem",
         		lv_ifincitem_1_0, 
-        		"IfIncIitems");
+        		"IfIncItems");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -312,33 +312,33 @@ ruleIncludeModel
 
 
 
-// Entry rule entryRuleIfIncIitems
-entryRuleIfIncIitems returns [EObject current=null]
+// Entry rule entryRuleIfIncItems
+entryRuleIfIncItems returns [EObject current=null]
 	:
-	{ newCompositeNode(grammarAccess.getIfIncIitemsRule()); }
-	 iv_ruleIfIncIitems=ruleIfIncIitems 
-	 { $current=$iv_ruleIfIncIitems.current; } 
+	{ newCompositeNode(grammarAccess.getIfIncItemsRule()); }
+	 iv_ruleIfIncItems=ruleIfIncItems 
+	 { $current=$iv_ruleIfIncItems.current; } 
 	 EOF 
 ;
 
-// Rule IfIncIitems
-ruleIfIncIitems returns [EObject current=null] 
+// Rule IfIncItems
+ruleIfIncItems returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
 ((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getIfIncIitemsAccess().getIftermIfTermParserRuleCall_0_0()); 
+	        newCompositeNode(grammarAccess.getIfIncItemsAccess().getPatternIfTermParserRuleCall_0_0()); 
 	    }
-		lv_ifterm_0_0=ruleIfTerm		{
+		lv_pattern_0_0=ruleIfTerm		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getIfIncIitemsRule());
+	            $current = createModelElementForParent(grammarAccess.getIfIncItemsRule());
 	        }
        		set(
        			$current, 
-       			"ifterm",
-        		lv_ifterm_0_0, 
+       			"pattern",
+        		lv_pattern_0_0, 
         		"IfTerm");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -347,16 +347,16 @@ ruleIfIncIitems returns [EObject current=null]
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getIfIncIitemsAccess().getElseiftermElseIfTermParserRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getIfIncItemsAccess().getPatternElseIfTermParserRuleCall_1_0()); 
 	    }
-		lv_elseifterm_1_0=ruleElseIfTerm		{
+		lv_pattern_1_0=ruleElseIfTerm		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getIfIncIitemsRule());
+	            $current = createModelElementForParent(grammarAccess.getIfIncItemsRule());
 	        }
        		set(
        			$current, 
-       			"elseifterm",
-        		lv_elseifterm_1_0, 
+       			"pattern",
+        		lv_pattern_1_0, 
         		"ElseIfTerm");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -365,16 +365,16 @@ ruleIfIncIitems returns [EObject current=null]
 )*(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getIfIncIitemsAccess().getElsetermElseTermParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getIfIncItemsAccess().getPatternElseTermParserRuleCall_2_0()); 
 	    }
-		lv_elseterm_2_0=ruleElseTerm		{
+		lv_pattern_2_0=ruleElseTerm		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getIfIncIitemsRule());
+	            $current = createModelElementForParent(grammarAccess.getIfIncItemsRule());
 	        }
        		set(
        			$current, 
-       			"elseterm",
-        		lv_elseterm_2_0, 
+       			"pattern",
+        		lv_pattern_2_0, 
         		"ElseTerm");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -4422,9 +4422,9 @@ ruleModel returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getModelAccess().getIfincitemsIfIncIitemsParserRuleCall_3_1_0()); 
+	        newCompositeNode(grammarAccess.getModelAccess().getIfincitemsIfIncItemsParserRuleCall_3_1_0()); 
 	    }
-		lv_ifincitems_5_0=ruleIfIncIitems		{
+		lv_ifincitems_5_0=ruleIfIncItems		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getModelRule());
 	        }
@@ -4432,7 +4432,7 @@ ruleModel returns [EObject current=null]
        			$current, 
        			"ifincitems",
         		lv_ifincitems_5_0, 
-        		"IfIncIitems");
+        		"IfIncItems");
 	        afterParserOrEnumRuleCall();
 	    }
 

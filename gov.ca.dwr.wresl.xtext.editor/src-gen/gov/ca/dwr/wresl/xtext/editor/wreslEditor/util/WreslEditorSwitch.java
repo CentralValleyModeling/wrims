@@ -90,10 +90,10 @@ public class WreslEditorSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case WreslEditorPackage.IF_INC_IITEMS:
+      case WreslEditorPackage.IF_INC_ITEMS:
       {
-        IfIncIitems ifIncIitems = (IfIncIitems)theEObject;
-        T result = caseIfIncIitems(ifIncIitems);
+        IfIncItems ifIncItems = (IfIncItems)theEObject;
+        T result = caseIfIncItems(ifIncItems);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -626,17 +626,17 @@ public class WreslEditorSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>If Inc Iitems</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>If Inc Items</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>If Inc Iitems</em>'.
+   * @return the result of interpreting the object as an instance of '<em>If Inc Items</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseIfIncIitems(IfIncIitems object)
+  public T caseIfIncItems(IfIncItems object)
   {
     return null;
   }

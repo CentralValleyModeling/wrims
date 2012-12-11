@@ -26,7 +26,7 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCaseContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalNoCaseContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalSimple;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Ident;
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfTerm;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IncludeFile;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Initial;
@@ -251,9 +251,9 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 					return; 
 				}
 				else break;
-			case WreslEditorPackage.IF_INC_IITEMS:
-				if(context == grammarAccess.getIfIncIitemsRule()) {
-					sequence_IfIncIitems(context, (IfIncIitems) semanticObject); 
+			case WreslEditorPackage.IF_INC_ITEMS:
+				if(context == grammarAccess.getIfIncItemsRule()) {
+					sequence_IfIncItems(context, (IfIncItems) semanticObject); 
 					return; 
 				}
 				else break;
@@ -892,14 +892,12 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (ifterm=IfTerm elseifterm=ElseIfTerm* elseterm=ElseTerm?)
+	 *     (pattern=IfTerm pattern=ElseIfTerm* pattern=ElseTerm?)
 	 *
 	 * Features:
-	 *    ifterm[1, 1]
-	 *    elseifterm[0, *]
-	 *    elseterm[0, 1]
+	 *    pattern[1, *]
 	 */
-	protected void sequence_IfIncIitems(EObject context, IfIncIitems semanticObject) {
+	protected void sequence_IfIncItems(EObject context, IfIncItems semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1035,7 +1033,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (name=ID (pattern+=Pattern | ifincitems+=IfIncIitems)+)
+	 *     (name=ID (pattern+=Pattern | ifincitems+=IfIncItems)+)
 	 *
 	 * Features:
 	 *    name[1, 1]
@@ -1379,7 +1377,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     ((pattern+=Pattern | ifincitem+=IfIncIitems)+ | (initial=Initial? sequence+=Sequence+ model+=Model+))
+	 *     ((pattern+=Pattern | ifincitem+=IfIncItems)+ | (initial=Initial? sequence+=Sequence+ model+=Model+))
 	 *
 	 * Features:
 	 *    pattern[0, *]

@@ -24,7 +24,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cPatternAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
 		private final RuleCall cPatternPatternParserRuleCall_0_0_0 = (RuleCall)cPatternAssignment_0_0.eContents().get(0);
 		private final Assignment cIfincitemAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
-		private final RuleCall cIfincitemIfIncIitemsParserRuleCall_0_1_0 = (RuleCall)cIfincitemAssignment_0_1.eContents().get(0);
+		private final RuleCall cIfincitemIfIncItemsParserRuleCall_0_1_0 = (RuleCall)cIfincitemAssignment_0_1.eContents().get(0);
 		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
 		private final Assignment cInitialAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
 		private final RuleCall cInitialInitialParserRuleCall_1_0_0 = (RuleCall)cInitialAssignment_1_0.eContents().get(0);
@@ -34,13 +34,13 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cModelModelParserRuleCall_1_2_0 = (RuleCall)cModelAssignment_1_2.eContents().get(0);
 		
 		//WreslEvaluator:
-		//	(pattern+=Pattern | ifincitem+=IfIncIitems)+ | initial=Initial? sequence+=Sequence+ model+=Model+;
+		//	(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ model+=Model+;
 		public ParserRule getRule() { return rule; }
 
-		//(pattern+=Pattern | ifincitem+=IfIncIitems)+ | initial=Initial? sequence+=Sequence+ model+=Model+
+		//(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ model+=Model+
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//(pattern+=Pattern | ifincitem+=IfIncIitems)+
+		//(pattern+=Pattern | ifincitem+=IfIncItems)+
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
 		//pattern+=Pattern
@@ -49,11 +49,11 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//Pattern
 		public RuleCall getPatternPatternParserRuleCall_0_0_0() { return cPatternPatternParserRuleCall_0_0_0; }
 
-		//ifincitem+=IfIncIitems
+		//ifincitem+=IfIncItems
 		public Assignment getIfincitemAssignment_0_1() { return cIfincitemAssignment_0_1; }
 
-		//IfIncIitems
-		public RuleCall getIfincitemIfIncIitemsParserRuleCall_0_1_0() { return cIfincitemIfIncIitemsParserRuleCall_0_1_0; }
+		//IfIncItems
+		public RuleCall getIfincitemIfIncItemsParserRuleCall_0_1_0() { return cIfincitemIfIncItemsParserRuleCall_0_1_0; }
 
 		//initial=Initial? sequence+=Sequence+ model+=Model+
 		public Group getGroup_1() { return cGroup_1; }
@@ -125,40 +125,40 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getObjectiveParserRuleCall_8() { return cObjectiveParserRuleCall_8; }
 	}
 
-	public class IfIncIitemsElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "IfIncIitems");
+	public class IfIncItemsElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "IfIncItems");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cIftermAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cIftermIfTermParserRuleCall_0_0 = (RuleCall)cIftermAssignment_0.eContents().get(0);
-		private final Assignment cElseiftermAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cElseiftermElseIfTermParserRuleCall_1_0 = (RuleCall)cElseiftermAssignment_1.eContents().get(0);
-		private final Assignment cElsetermAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cElsetermElseTermParserRuleCall_2_0 = (RuleCall)cElsetermAssignment_2.eContents().get(0);
+		private final Assignment cPatternAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cPatternIfTermParserRuleCall_0_0 = (RuleCall)cPatternAssignment_0.eContents().get(0);
+		private final Assignment cPatternAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cPatternElseIfTermParserRuleCall_1_0 = (RuleCall)cPatternAssignment_1.eContents().get(0);
+		private final Assignment cPatternAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cPatternElseTermParserRuleCall_2_0 = (RuleCall)cPatternAssignment_2.eContents().get(0);
 		
-		//IfIncIitems:
-		//	ifterm=IfTerm elseifterm=ElseIfTerm* elseterm=ElseTerm?;
+		//IfIncItems:
+		//	pattern=IfTerm pattern=ElseIfTerm* pattern=ElseTerm?;
 		public ParserRule getRule() { return rule; }
 
-		//ifterm=IfTerm elseifterm=ElseIfTerm* elseterm=ElseTerm?
+		//pattern=IfTerm pattern=ElseIfTerm* pattern=ElseTerm?
 		public Group getGroup() { return cGroup; }
 
-		//ifterm=IfTerm
-		public Assignment getIftermAssignment_0() { return cIftermAssignment_0; }
+		//pattern=IfTerm
+		public Assignment getPatternAssignment_0() { return cPatternAssignment_0; }
 
 		//IfTerm
-		public RuleCall getIftermIfTermParserRuleCall_0_0() { return cIftermIfTermParserRuleCall_0_0; }
+		public RuleCall getPatternIfTermParserRuleCall_0_0() { return cPatternIfTermParserRuleCall_0_0; }
 
-		//elseifterm=ElseIfTerm*
-		public Assignment getElseiftermAssignment_1() { return cElseiftermAssignment_1; }
+		//pattern=ElseIfTerm*
+		public Assignment getPatternAssignment_1() { return cPatternAssignment_1; }
 
 		//ElseIfTerm
-		public RuleCall getElseiftermElseIfTermParserRuleCall_1_0() { return cElseiftermElseIfTermParserRuleCall_1_0; }
+		public RuleCall getPatternElseIfTermParserRuleCall_1_0() { return cPatternElseIfTermParserRuleCall_1_0; }
 
-		//elseterm=ElseTerm?
-		public Assignment getElsetermAssignment_2() { return cElsetermAssignment_2; }
+		//pattern=ElseTerm?
+		public Assignment getPatternAssignment_2() { return cPatternAssignment_2; }
 
 		//ElseTerm
-		public RuleCall getElsetermElseTermParserRuleCall_2_0() { return cElsetermElseTermParserRuleCall_2_0; }
+		public RuleCall getPatternElseTermParserRuleCall_2_0() { return cPatternElseTermParserRuleCall_2_0; }
 	}
 
 	public class IfTermElements extends AbstractParserRuleElementFinder {
@@ -2638,14 +2638,14 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cPatternAssignment_3_0 = (Assignment)cAlternatives_3.eContents().get(0);
 		private final RuleCall cPatternPatternParserRuleCall_3_0_0 = (RuleCall)cPatternAssignment_3_0.eContents().get(0);
 		private final Assignment cIfincitemsAssignment_3_1 = (Assignment)cAlternatives_3.eContents().get(1);
-		private final RuleCall cIfincitemsIfIncIitemsParserRuleCall_3_1_0 = (RuleCall)cIfincitemsAssignment_3_1.eContents().get(0);
+		private final RuleCall cIfincitemsIfIncItemsParserRuleCall_3_1_0 = (RuleCall)cIfincitemsAssignment_3_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//Model:
-		//	("model" | "MODEL") name=ID "{" (pattern+=Pattern | ifincitems+=IfIncIitems)+ "}";
+		//	("model" | "MODEL") name=ID "{" (pattern+=Pattern | ifincitems+=IfIncItems)+ "}";
 		public ParserRule getRule() { return rule; }
 
-		//("model" | "MODEL") name=ID "{" (pattern+=Pattern | ifincitems+=IfIncIitems)+ "}"
+		//("model" | "MODEL") name=ID "{" (pattern+=Pattern | ifincitems+=IfIncItems)+ "}"
 		public Group getGroup() { return cGroup; }
 
 		//"model" | "MODEL"
@@ -2666,7 +2666,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
 
-		//(pattern+=Pattern | ifincitems+=IfIncIitems)+
+		//(pattern+=Pattern | ifincitems+=IfIncItems)+
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 
 		//pattern+=Pattern
@@ -2675,11 +2675,11 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//Pattern
 		public RuleCall getPatternPatternParserRuleCall_3_0_0() { return cPatternPatternParserRuleCall_3_0_0; }
 
-		//ifincitems+=IfIncIitems
+		//ifincitems+=IfIncItems
 		public Assignment getIfincitemsAssignment_3_1() { return cIfincitemsAssignment_3_1; }
 
-		//IfIncIitems
-		public RuleCall getIfincitemsIfIncIitemsParserRuleCall_3_1_0() { return cIfincitemsIfIncIitemsParserRuleCall_3_1_0; }
+		//IfIncItems
+		public RuleCall getIfincitemsIfIncItemsParserRuleCall_3_1_0() { return cIfincitemsIfIncItemsParserRuleCall_3_1_0; }
 
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
@@ -3659,7 +3659,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	
 	private WreslEvaluatorElements pWreslEvaluator;
 	private PatternElements pPattern;
-	private IfIncIitemsElements pIfIncIitems;
+	private IfIncItemsElements pIfIncItems;
 	private IfTermElements pIfTerm;
 	private ElseIfTermElements pElseIfTerm;
 	private ElseTermElements pElseTerm;
@@ -3772,7 +3772,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//WreslEvaluator:
-	//	(pattern+=Pattern | ifincitem+=IfIncIitems)+ | initial=Initial? sequence+=Sequence+ model+=Model+;
+	//	(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ model+=Model+;
 	public WreslEvaluatorElements getWreslEvaluatorAccess() {
 		return (pWreslEvaluator != null) ? pWreslEvaluator : (pWreslEvaluator = new WreslEvaluatorElements());
 	}
@@ -3791,14 +3791,14 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		return getPatternAccess().getRule();
 	}
 
-	//IfIncIitems:
-	//	ifterm=IfTerm elseifterm=ElseIfTerm* elseterm=ElseTerm?;
-	public IfIncIitemsElements getIfIncIitemsAccess() {
-		return (pIfIncIitems != null) ? pIfIncIitems : (pIfIncIitems = new IfIncIitemsElements());
+	//IfIncItems:
+	//	pattern=IfTerm pattern=ElseIfTerm* pattern=ElseTerm?;
+	public IfIncItemsElements getIfIncItemsAccess() {
+		return (pIfIncItems != null) ? pIfIncItems : (pIfIncItems = new IfIncItemsElements());
 	}
 	
-	public ParserRule getIfIncIitemsRule() {
-		return getIfIncIitemsAccess().getRule();
+	public ParserRule getIfIncItemsRule() {
+		return getIfIncItemsAccess().getRule();
 	}
 
 	//IfTerm:
@@ -4269,7 +4269,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Model:
-	//	("model" | "MODEL") name=ID "{" (pattern+=Pattern | ifincitems+=IfIncIitems)+ "}";
+	//	("model" | "MODEL") name=ID "{" (pattern+=Pattern | ifincitems+=IfIncItems)+ "}";
 	public ModelElements getModelAccess() {
 		return (pModel != null) ? pModel : (pModel = new ModelElements());
 	}

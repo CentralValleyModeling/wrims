@@ -74,7 +74,7 @@ public interface Model extends EObject
 
   /**
    * Returns the value of the '<em><b>Ifincitems</b></em>' containment reference list.
-   * The list contents are of type {@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems}.
+   * The list contents are of type {@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Ifincitems</em>' containment reference list isn't clear,
@@ -86,6 +86,6 @@ public interface Model extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<IfIncIitems> getIfincitems();
+  EList<IfIncItems> getIfincitems();
 
 } // Model

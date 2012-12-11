@@ -50,7 +50,7 @@ public interface WreslEvaluator extends EObject
 
   /**
    * Returns the value of the '<em><b>Ifincitem</b></em>' containment reference list.
-   * The list contents are of type {@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems}.
+   * The list contents are of type {@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Ifincitem</em>' containment reference list isn't clear,
@@ -62,7 +62,7 @@ public interface WreslEvaluator extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<IfIncIitems> getIfincitem();
+  EList<IfIncItems> getIfincitem();
 
   /**
    * Returns the value of the '<em><b>Initial</b></em>' containment reference.

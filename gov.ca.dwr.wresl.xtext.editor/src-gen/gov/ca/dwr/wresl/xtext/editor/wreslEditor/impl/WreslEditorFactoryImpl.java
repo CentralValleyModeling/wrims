@@ -70,7 +70,7 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
     {
       case WreslEditorPackage.WRESL_EVALUATOR: return createWreslEvaluator();
       case WreslEditorPackage.PATTERN: return createPattern();
-      case WreslEditorPackage.IF_INC_IITEMS: return createIfIncIitems();
+      case WreslEditorPackage.IF_INC_ITEMS: return createIfIncItems();
       case WreslEditorPackage.IF_TERM: return createIfTerm();
       case WreslEditorPackage.ELSE_IF_TERM: return createElseIfTerm();
       case WreslEditorPackage.ELSE_TERM: return createElseTerm();
@@ -168,10 +168,10 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
    * <!-- end-user-doc -->
    * @generated
    */
-  public IfIncIitems createIfIncIitems()
+  public IfIncItems createIfIncItems()
   {
-    IfIncIitemsImpl ifIncIitems = new IfIncIitemsImpl();
-    return ifIncIitems;
+    IfIncItemsImpl ifIncItems = new IfIncItemsImpl();
+    return ifIncItems;
   }
 
   /**

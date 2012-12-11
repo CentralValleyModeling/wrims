@@ -153,50 +153,32 @@ public interface WreslEditorPackage extends EPackage
   int PATTERN_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IfIncIitemsImpl <em>If Inc Iitems</em>}' class.
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IfIncItemsImpl <em>If Inc Items</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IfIncIitemsImpl
-   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getIfIncIitems()
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IfIncItemsImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getIfIncItems()
    * @generated
    */
-  int IF_INC_IITEMS = 2;
+  int IF_INC_ITEMS = 2;
 
   /**
-   * The feature id for the '<em><b>Ifterm</b></em>' containment reference.
+   * The feature id for the '<em><b>Pattern</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int IF_INC_IITEMS__IFTERM = 0;
+  int IF_INC_ITEMS__PATTERN = 0;
 
   /**
-   * The feature id for the '<em><b>Elseifterm</b></em>' containment reference.
+   * The number of structural features of the '<em>If Inc Items</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int IF_INC_IITEMS__ELSEIFTERM = 1;
-
-  /**
-   * The feature id for the '<em><b>Elseterm</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int IF_INC_IITEMS__ELSETERM = 2;
-
-  /**
-   * The number of structural features of the '<em>If Inc Iitems</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int IF_INC_IITEMS_FEATURE_COUNT = 3;
+  int IF_INC_ITEMS_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IfTermImpl <em>If Term</em>}' class.
@@ -2664,47 +2646,25 @@ public interface WreslEditorPackage extends EPackage
   EAttribute getPattern_Local();
 
   /**
-   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems <em>If Inc Iitems</em>}'.
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems <em>If Inc Items</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>If Inc Iitems</em>'.
-   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems
+   * @return the meta object for class '<em>If Inc Items</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems
    * @generated
    */
-  EClass getIfIncIitems();
+  EClass getIfIncItems();
 
   /**
-   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems#getIfterm <em>Ifterm</em>}'.
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems#getPattern <em>Pattern</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Ifterm</em>'.
-   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems#getIfterm()
-   * @see #getIfIncIitems()
+   * @return the meta object for the containment reference '<em>Pattern</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems#getPattern()
+   * @see #getIfIncItems()
    * @generated
    */
-  EReference getIfIncIitems_Ifterm();
-
-  /**
-   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems#getElseifterm <em>Elseifterm</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Elseifterm</em>'.
-   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems#getElseifterm()
-   * @see #getIfIncIitems()
-   * @generated
-   */
-  EReference getIfIncIitems_Elseifterm();
-
-  /**
-   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems#getElseterm <em>Elseterm</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Elseterm</em>'.
-   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems#getElseterm()
-   * @see #getIfIncIitems()
-   * @generated
-   */
-  EReference getIfIncIitems_Elseterm();
+  EReference getIfIncItems_Pattern();
 
   /**
    * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfTerm <em>If Term</em>}'.
@@ -4625,38 +4585,22 @@ public interface WreslEditorPackage extends EPackage
     EAttribute PATTERN__LOCAL = eINSTANCE.getPattern_Local();
 
     /**
-     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IfIncIitemsImpl <em>If Inc Iitems</em>}' class.
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IfIncItemsImpl <em>If Inc Items</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IfIncIitemsImpl
-     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getIfIncIitems()
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IfIncItemsImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getIfIncItems()
      * @generated
      */
-    EClass IF_INC_IITEMS = eINSTANCE.getIfIncIitems();
+    EClass IF_INC_ITEMS = eINSTANCE.getIfIncItems();
 
     /**
-     * The meta object literal for the '<em><b>Ifterm</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Pattern</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference IF_INC_IITEMS__IFTERM = eINSTANCE.getIfIncIitems_Ifterm();
-
-    /**
-     * The meta object literal for the '<em><b>Elseifterm</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference IF_INC_IITEMS__ELSEIFTERM = eINSTANCE.getIfIncIitems_Elseifterm();
-
-    /**
-     * The meta object literal for the '<em><b>Elseterm</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference IF_INC_IITEMS__ELSETERM = eINSTANCE.getIfIncIitems_Elseterm();
+    EReference IF_INC_ITEMS__PATTERN = eINSTANCE.getIfIncItems_Pattern();
 
     /**
      * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IfTermImpl <em>If Term</em>}' class.

@@ -8,7 +8,7 @@
         eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Pattern"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ifincitem" upperBound="-1"
-        eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//IfIncIitems"
+        eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//IfIncItems"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="initial" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Initial"
         containment="true"/>
@@ -22,12 +22,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Pattern">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="local" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IfIncIitems">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ifterm" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//IfTerm"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="elseifterm" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//ElseIfTerm"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="elseterm" eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//ElseTerm"
+  <eClassifiers xsi:type="ecore:EClass" name="IfIncItems">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IfTerm">
@@ -254,7 +250,7 @@
         eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//Pattern"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ifincitems" upperBound="-1"
-        eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//IfIncIitems"
+        eType="ecore:EClass platform:/resource/gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/WreslEditor.ecore#//IfIncItems"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Initial">

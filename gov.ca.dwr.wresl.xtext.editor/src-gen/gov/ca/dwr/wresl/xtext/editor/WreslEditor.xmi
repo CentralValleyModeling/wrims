@@ -46,18 +46,18 @@
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="IfIncIitems">
+    <rules xsi:type="xtext:ParserRule" name="IfIncItems">
       <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//IfIncIitems"/>
+        <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//IfIncItems"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Assignment" feature="ifterm" operator="=">
+        <elements xsi:type="xtext:Assignment" feature="pattern" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
         </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="*" feature="elseifterm" operator="=">
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="pattern" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
         </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="elseterm" operator="=">
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="pattern" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
         </elements>
       </alternatives>

@@ -6,7 +6,7 @@
  */
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Initial;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Model;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Pattern;
@@ -67,7 +67,7 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    * @ordered
    */
-  protected EList<IfIncIitems> ifincitem;
+  protected EList<IfIncItems> ifincitem;
 
   /**
    * The cached value of the '{@link #getInitial() <em>Initial</em>}' containment reference.
@@ -139,11 +139,11 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<IfIncIitems> getIfincitem()
+  public EList<IfIncItems> getIfincitem()
   {
     if (ifincitem == null)
     {
-      ifincitem = new EObjectContainmentEList<IfIncIitems>(IfIncIitems.class, this, WreslEditorPackage.WRESL_EVALUATOR__IFINCITEM);
+      ifincitem = new EObjectContainmentEList<IfIncItems>(IfIncItems.class, this, WreslEditorPackage.WRESL_EVALUATOR__IFINCITEM);
     }
     return ifincitem;
   }
@@ -289,7 +289,7 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
         return;
       case WreslEditorPackage.WRESL_EVALUATOR__IFINCITEM:
         getIfincitem().clear();
-        getIfincitem().addAll((Collection<? extends IfIncIitems>)newValue);
+        getIfincitem().addAll((Collection<? extends IfIncItems>)newValue);
         return;
       case WreslEditorPackage.WRESL_EVALUATOR__INITIAL:
         setInitial((Initial)newValue);

@@ -3,13 +3,13 @@ grammar gov.ca.dwr.wresl.xtext.editor.WreslEditor with org.eclipse.xtext.common.
 generate wreslEditor "http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor"
 
 WreslEvaluator:
-	(pattern+=Pattern | ifincitem+=IfIncIitems)+
+	(pattern+=Pattern | ifincitem+=IfIncItems)+
 	| ((initial=Initial)? sequence+=Sequence+ model+=Model+);
 
 Pattern:
-	Define| Alias | SvarDef | DvarDef | ConstDef | IncludeFile | IncludeModel | Goal | Objective;
+	Define | Alias | SvarDef | DvarDef | ConstDef | IncludeFile | IncludeModel | Goal | Objective;
 
-IfIncIitems:
+IfIncItems:
 	ifterm=IfTerm  (elseifterm=ElseIfTerm)* (elseterm=ElseTerm)?  ;
 	
 IfTerm: If logical=LogicalExpression '{' pattern+=Pattern+ '}';
@@ -156,7 +156,7 @@ Constraint:
 	lhs=Expression operator=('<' | '>' | '=') rhs=Expression;
 
 Model:
-	("model" | "MODEL") name=ID '{' (pattern+=Pattern|ifincitems+=IfIncIitems)+ '}';
+	("model" | "MODEL") name=ID '{' (pattern+=Pattern|ifincitems+=IfIncItems)+ '}';
 
 Initial: ("initial"|'Initial'|"INITIAL") '{' pattern+=Pattern+ '}';
 
