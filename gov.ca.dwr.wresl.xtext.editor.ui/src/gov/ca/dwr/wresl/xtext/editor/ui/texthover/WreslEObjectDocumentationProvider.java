@@ -1,6 +1,7 @@
 package gov.ca.dwr.wresl.xtext.editor.ui.texthover;
 
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVar;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AliasImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ConstDefImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DefineImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DvarDefImpl;
@@ -26,6 +27,9 @@ public class WreslEObjectDocumentationProvider implements
 	public String getDocumentation(EObject o) {
 		if (o instanceof DefineImpl){
 			String name=((DefineImpl) o).getName();
+			return "value : "+getValue(name);
+		}else if (o instanceof AliasImpl){
+			String name=((AliasImpl) o).getName();
 			return "value : "+getValue(name);
 		}else if (o instanceof GoalImpl){
 			String name=((GoalImpl) o).getName();

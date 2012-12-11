@@ -4,6 +4,7 @@ import org.eclipse.swt.events.FocusListener;
 
 import gov.ca.dwr.wresl.xtext.editor.ui.watch.AddWatch;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVar;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AliasImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ConstDefImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DVarIntegerImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DefineImpl;
@@ -36,6 +37,10 @@ public class WreslEObjectHoverProvider extends DefaultEObjectHoverProvider {
 		String hoverText;
 		if (o instanceof DefineImpl){
 			hoverText=((DefineImpl) o).getName();
+			DebugCorePlugin.hoverText=hoverText;
+			return hoverText;
+		}else if (o instanceof AliasImpl){
+			hoverText=((AliasImpl) o).getName();
 			DebugCorePlugin.hoverText=hoverText;
 			return hoverText;
 		}else if (o instanceof GoalImpl){

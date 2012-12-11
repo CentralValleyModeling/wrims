@@ -138,7 +138,7 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIncludeModelAccess().getAlternatives_0(), "rule__IncludeModel__Alternatives_0");
 					put(grammarAccess.getIncludeModelAccess().getAlternatives_1(), "rule__IncludeModel__Alternatives_1");
 					put(grammarAccess.getWreslEvaluatorAccess().getGroup_1(), "rule__WreslEvaluator__Group_1__0");
-					put(grammarAccess.getIfIncIitemsAccess().getGroup(), "rule__IfIncIitems__Group__0");
+					put(grammarAccess.getIfIncItemsAccess().getGroup(), "rule__IfIncItems__Group__0");
 					put(grammarAccess.getIfTermAccess().getGroup(), "rule__IfTerm__Group__0");
 					put(grammarAccess.getElseIfTermAccess().getGroup(), "rule__ElseIfTerm__Group__0");
 					put(grammarAccess.getElseTermAccess().getGroup(), "rule__ElseTerm__Group__0");
@@ -230,9 +230,9 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getWreslEvaluatorAccess().getInitialAssignment_1_0(), "rule__WreslEvaluator__InitialAssignment_1_0");
 					put(grammarAccess.getWreslEvaluatorAccess().getSequenceAssignment_1_1(), "rule__WreslEvaluator__SequenceAssignment_1_1");
 					put(grammarAccess.getWreslEvaluatorAccess().getModelAssignment_1_2(), "rule__WreslEvaluator__ModelAssignment_1_2");
-					put(grammarAccess.getIfIncIitemsAccess().getIftermAssignment_0(), "rule__IfIncIitems__IftermAssignment_0");
-					put(grammarAccess.getIfIncIitemsAccess().getElseiftermAssignment_1(), "rule__IfIncIitems__ElseiftermAssignment_1");
-					put(grammarAccess.getIfIncIitemsAccess().getElsetermAssignment_2(), "rule__IfIncIitems__ElsetermAssignment_2");
+					put(grammarAccess.getIfIncItemsAccess().getPatternAssignment_0(), "rule__IfIncItems__PatternAssignment_0");
+					put(grammarAccess.getIfIncItemsAccess().getPatternAssignment_1(), "rule__IfIncItems__PatternAssignment_1");
+					put(grammarAccess.getIfIncItemsAccess().getPatternAssignment_2(), "rule__IfIncItems__PatternAssignment_2");
 					put(grammarAccess.getIfTermAccess().getLogicalAssignment_1(), "rule__IfTerm__LogicalAssignment_1");
 					put(grammarAccess.getIfTermAccess().getPatternAssignment_3(), "rule__IfTerm__PatternAssignment_3");
 					put(grammarAccess.getElseIfTermAccess().getLogicalAssignment_1(), "rule__ElseIfTerm__LogicalAssignment_1");

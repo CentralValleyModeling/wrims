@@ -112,25 +112,25 @@ finally {
 
 
 
-// Entry rule entryRuleIfIncIitems
-entryRuleIfIncIitems 
+// Entry rule entryRuleIfIncItems
+entryRuleIfIncItems 
 :
-{ before(grammarAccess.getIfIncIitemsRule()); }
-	 ruleIfIncIitems
-{ after(grammarAccess.getIfIncIitemsRule()); } 
+{ before(grammarAccess.getIfIncItemsRule()); }
+	 ruleIfIncItems
+{ after(grammarAccess.getIfIncItemsRule()); } 
 	 EOF 
 ;
 
-// Rule IfIncIitems
-ruleIfIncIitems
+// Rule IfIncItems
+ruleIfIncItems
     @init {
 		int stackSize = keepStackSize();
     }
 	:
 (
-{ before(grammarAccess.getIfIncIitemsAccess().getGroup()); }
-(rule__IfIncIitems__Group__0)
-{ after(grammarAccess.getIfIncIitemsAccess().getGroup()); }
+{ before(grammarAccess.getIfIncItemsAccess().getGroup()); }
+(rule__IfIncItems__Group__0)
+{ after(grammarAccess.getIfIncItemsAccess().getGroup()); }
 )
 
 ;
@@ -5024,27 +5024,27 @@ finally {
 
 
 
-rule__IfIncIitems__Group__0
+rule__IfIncItems__Group__0
     @init {
 		int stackSize = keepStackSize();
     }
 :
-	rule__IfIncIitems__Group__0__Impl
-	rule__IfIncIitems__Group__1
+	rule__IfIncItems__Group__0__Impl
+	rule__IfIncItems__Group__1
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__IfIncIitems__Group__0__Impl
+rule__IfIncItems__Group__0__Impl
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getIfIncIitemsAccess().getIftermAssignment_0()); }
-(rule__IfIncIitems__IftermAssignment_0)
-{ after(grammarAccess.getIfIncIitemsAccess().getIftermAssignment_0()); }
+{ before(grammarAccess.getIfIncItemsAccess().getPatternAssignment_0()); }
+(rule__IfIncItems__PatternAssignment_0)
+{ after(grammarAccess.getIfIncItemsAccess().getPatternAssignment_0()); }
 )
 
 ;
@@ -5053,27 +5053,27 @@ finally {
 }
 
 
-rule__IfIncIitems__Group__1
+rule__IfIncItems__Group__1
     @init {
 		int stackSize = keepStackSize();
     }
 :
-	rule__IfIncIitems__Group__1__Impl
-	rule__IfIncIitems__Group__2
+	rule__IfIncItems__Group__1__Impl
+	rule__IfIncItems__Group__2
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__IfIncIitems__Group__1__Impl
+rule__IfIncItems__Group__1__Impl
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getIfIncIitemsAccess().getElseiftermAssignment_1()); }
-(rule__IfIncIitems__ElseiftermAssignment_1)*
-{ after(grammarAccess.getIfIncIitemsAccess().getElseiftermAssignment_1()); }
+{ before(grammarAccess.getIfIncItemsAccess().getPatternAssignment_1()); }
+(rule__IfIncItems__PatternAssignment_1)*
+{ after(grammarAccess.getIfIncItemsAccess().getPatternAssignment_1()); }
 )
 
 ;
@@ -5082,26 +5082,26 @@ finally {
 }
 
 
-rule__IfIncIitems__Group__2
+rule__IfIncItems__Group__2
     @init {
 		int stackSize = keepStackSize();
     }
 :
-	rule__IfIncIitems__Group__2__Impl
+	rule__IfIncItems__Group__2__Impl
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__IfIncIitems__Group__2__Impl
+rule__IfIncItems__Group__2__Impl
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getIfIncIitemsAccess().getElsetermAssignment_2()); }
-(rule__IfIncIitems__ElsetermAssignment_2)?
-{ after(grammarAccess.getIfIncIitemsAccess().getElsetermAssignment_2()); }
+{ before(grammarAccess.getIfIncItemsAccess().getPatternAssignment_2()); }
+(rule__IfIncItems__PatternAssignment_2)?
+{ after(grammarAccess.getIfIncItemsAccess().getPatternAssignment_2()); }
 )
 
 ;
@@ -14814,8 +14814,8 @@ rule__WreslEvaluator__IfincitemAssignment_0_1
     }
 :
 (
-{ before(grammarAccess.getWreslEvaluatorAccess().getIfincitemIfIncIitemsParserRuleCall_0_1_0()); }
-	ruleIfIncIitems{ after(grammarAccess.getWreslEvaluatorAccess().getIfincitemIfIncIitemsParserRuleCall_0_1_0()); }
+{ before(grammarAccess.getWreslEvaluatorAccess().getIfincitemIfIncItemsParserRuleCall_0_1_0()); }
+	ruleIfIncItems{ after(grammarAccess.getWreslEvaluatorAccess().getIfincitemIfIncItemsParserRuleCall_0_1_0()); }
 )
 
 ;
@@ -14868,14 +14868,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__IfIncIitems__IftermAssignment_0
+rule__IfIncItems__PatternAssignment_0
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getIfIncIitemsAccess().getIftermIfTermParserRuleCall_0_0()); }
-	ruleIfTerm{ after(grammarAccess.getIfIncIitemsAccess().getIftermIfTermParserRuleCall_0_0()); }
+{ before(grammarAccess.getIfIncItemsAccess().getPatternIfTermParserRuleCall_0_0()); }
+	ruleIfTerm{ after(grammarAccess.getIfIncItemsAccess().getPatternIfTermParserRuleCall_0_0()); }
 )
 
 ;
@@ -14883,14 +14883,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__IfIncIitems__ElseiftermAssignment_1
+rule__IfIncItems__PatternAssignment_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getIfIncIitemsAccess().getElseiftermElseIfTermParserRuleCall_1_0()); }
-	ruleElseIfTerm{ after(grammarAccess.getIfIncIitemsAccess().getElseiftermElseIfTermParserRuleCall_1_0()); }
+{ before(grammarAccess.getIfIncItemsAccess().getPatternElseIfTermParserRuleCall_1_0()); }
+	ruleElseIfTerm{ after(grammarAccess.getIfIncItemsAccess().getPatternElseIfTermParserRuleCall_1_0()); }
 )
 
 ;
@@ -14898,14 +14898,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__IfIncIitems__ElsetermAssignment_2
+rule__IfIncItems__PatternAssignment_2
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getIfIncIitemsAccess().getElsetermElseTermParserRuleCall_2_0()); }
-	ruleElseTerm{ after(grammarAccess.getIfIncIitemsAccess().getElsetermElseTermParserRuleCall_2_0()); }
+{ before(grammarAccess.getIfIncItemsAccess().getPatternElseTermParserRuleCall_2_0()); }
+	ruleElseTerm{ after(grammarAccess.getIfIncItemsAccess().getPatternElseTermParserRuleCall_2_0()); }
 )
 
 ;
@@ -16355,8 +16355,8 @@ rule__Model__IfincitemsAssignment_3_1
     }
 :
 (
-{ before(grammarAccess.getModelAccess().getIfincitemsIfIncIitemsParserRuleCall_3_1_0()); }
-	ruleIfIncIitems{ after(grammarAccess.getModelAccess().getIfincitemsIfIncIitemsParserRuleCall_3_1_0()); }
+{ before(grammarAccess.getModelAccess().getIfincitemsIfIncItemsParserRuleCall_3_1_0()); }
+	ruleIfIncItems{ after(grammarAccess.getModelAccess().getIfincitemsIfIncItemsParserRuleCall_3_1_0()); }
 )
 
 ;

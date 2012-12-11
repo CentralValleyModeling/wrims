@@ -333,21 +333,21 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
     // $ANTLR end "rulePattern"
 
 
-    // $ANTLR start "entryRuleIfIncIitems"
-    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:116:1: entryRuleIfIncIitems : ruleIfIncIitems EOF ;
-    public final void entryRuleIfIncIitems() throws RecognitionException {
+    // $ANTLR start "entryRuleIfIncItems"
+    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:116:1: entryRuleIfIncItems : ruleIfIncItems EOF ;
+    public final void entryRuleIfIncItems() throws RecognitionException {
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:117:1: ( ruleIfIncIitems EOF )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:118:1: ruleIfIncIitems EOF
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:117:1: ( ruleIfIncItems EOF )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:118:1: ruleIfIncItems EOF
             {
-             before(grammarAccess.getIfIncIitemsRule()); 
-            pushFollow(FOLLOW_ruleIfIncIitems_in_entryRuleIfIncIitems181);
-            ruleIfIncIitems();
+             before(grammarAccess.getIfIncItemsRule()); 
+            pushFollow(FOLLOW_ruleIfIncItems_in_entryRuleIfIncItems181);
+            ruleIfIncItems();
 
             state._fsp--;
 
-             after(grammarAccess.getIfIncIitemsRule()); 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleIfIncIitems188); 
+             after(grammarAccess.getIfIncItemsRule()); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleIfIncItems188); 
 
             }
 
@@ -360,35 +360,35 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end "entryRuleIfIncIitems"
+    // $ANTLR end "entryRuleIfIncItems"
 
 
-    // $ANTLR start "ruleIfIncIitems"
-    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:125:1: ruleIfIncIitems : ( ( rule__IfIncIitems__Group__0 ) ) ;
-    public final void ruleIfIncIitems() throws RecognitionException {
+    // $ANTLR start "ruleIfIncItems"
+    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:125:1: ruleIfIncItems : ( ( rule__IfIncItems__Group__0 ) ) ;
+    public final void ruleIfIncItems() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:129:2: ( ( ( rule__IfIncIitems__Group__0 ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:130:1: ( ( rule__IfIncIitems__Group__0 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:129:2: ( ( ( rule__IfIncItems__Group__0 ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:130:1: ( ( rule__IfIncItems__Group__0 ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:130:1: ( ( rule__IfIncIitems__Group__0 ) )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:131:1: ( rule__IfIncIitems__Group__0 )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:130:1: ( ( rule__IfIncItems__Group__0 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:131:1: ( rule__IfIncItems__Group__0 )
             {
-             before(grammarAccess.getIfIncIitemsAccess().getGroup()); 
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:132:1: ( rule__IfIncIitems__Group__0 )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:132:2: rule__IfIncIitems__Group__0
+             before(grammarAccess.getIfIncItemsAccess().getGroup()); 
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:132:1: ( rule__IfIncItems__Group__0 )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:132:2: rule__IfIncItems__Group__0
             {
-            pushFollow(FOLLOW_rule__IfIncIitems__Group__0_in_ruleIfIncIitems214);
-            rule__IfIncIitems__Group__0();
+            pushFollow(FOLLOW_rule__IfIncItems__Group__0_in_ruleIfIncItems214);
+            rule__IfIncItems__Group__0();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getIfIncIitemsAccess().getGroup()); 
+             after(grammarAccess.getIfIncItemsAccess().getGroup()); 
 
             }
 
@@ -407,7 +407,7 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end "ruleIfIncIitems"
+    // $ANTLR end "ruleIfIncItems"
 
 
     // $ANTLR start "entryRuleIfTerm"
@@ -14808,23 +14808,23 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
     // $ANTLR end "rule__WreslEvaluator__Group_1__2__Impl"
 
 
-    // $ANTLR start "rule__IfIncIitems__Group__0"
-    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5027:1: rule__IfIncIitems__Group__0 : rule__IfIncIitems__Group__0__Impl rule__IfIncIitems__Group__1 ;
-    public final void rule__IfIncIitems__Group__0() throws RecognitionException {
+    // $ANTLR start "rule__IfIncItems__Group__0"
+    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5027:1: rule__IfIncItems__Group__0 : rule__IfIncItems__Group__0__Impl rule__IfIncItems__Group__1 ;
+    public final void rule__IfIncItems__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5031:1: ( rule__IfIncIitems__Group__0__Impl rule__IfIncIitems__Group__1 )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5032:2: rule__IfIncIitems__Group__0__Impl rule__IfIncIitems__Group__1
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5031:1: ( rule__IfIncItems__Group__0__Impl rule__IfIncItems__Group__1 )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5032:2: rule__IfIncItems__Group__0__Impl rule__IfIncItems__Group__1
             {
-            pushFollow(FOLLOW_rule__IfIncIitems__Group__0__Impl_in_rule__IfIncIitems__Group__010830);
-            rule__IfIncIitems__Group__0__Impl();
+            pushFollow(FOLLOW_rule__IfIncItems__Group__0__Impl_in_rule__IfIncItems__Group__010830);
+            rule__IfIncItems__Group__0__Impl();
 
             state._fsp--;
 
-            pushFollow(FOLLOW_rule__IfIncIitems__Group__1_in_rule__IfIncIitems__Group__010833);
-            rule__IfIncIitems__Group__1();
+            pushFollow(FOLLOW_rule__IfIncItems__Group__1_in_rule__IfIncItems__Group__010833);
+            rule__IfIncItems__Group__1();
 
             state._fsp--;
 
@@ -14843,35 +14843,35 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end "rule__IfIncIitems__Group__0"
+    // $ANTLR end "rule__IfIncItems__Group__0"
 
 
-    // $ANTLR start "rule__IfIncIitems__Group__0__Impl"
-    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5039:1: rule__IfIncIitems__Group__0__Impl : ( ( rule__IfIncIitems__IftermAssignment_0 ) ) ;
-    public final void rule__IfIncIitems__Group__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__IfIncItems__Group__0__Impl"
+    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5039:1: rule__IfIncItems__Group__0__Impl : ( ( rule__IfIncItems__PatternAssignment_0 ) ) ;
+    public final void rule__IfIncItems__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5043:1: ( ( ( rule__IfIncIitems__IftermAssignment_0 ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5044:1: ( ( rule__IfIncIitems__IftermAssignment_0 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5043:1: ( ( ( rule__IfIncItems__PatternAssignment_0 ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5044:1: ( ( rule__IfIncItems__PatternAssignment_0 ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5044:1: ( ( rule__IfIncIitems__IftermAssignment_0 ) )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5045:1: ( rule__IfIncIitems__IftermAssignment_0 )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5044:1: ( ( rule__IfIncItems__PatternAssignment_0 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5045:1: ( rule__IfIncItems__PatternAssignment_0 )
             {
-             before(grammarAccess.getIfIncIitemsAccess().getIftermAssignment_0()); 
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5046:1: ( rule__IfIncIitems__IftermAssignment_0 )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5046:2: rule__IfIncIitems__IftermAssignment_0
+             before(grammarAccess.getIfIncItemsAccess().getPatternAssignment_0()); 
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5046:1: ( rule__IfIncItems__PatternAssignment_0 )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5046:2: rule__IfIncItems__PatternAssignment_0
             {
-            pushFollow(FOLLOW_rule__IfIncIitems__IftermAssignment_0_in_rule__IfIncIitems__Group__0__Impl10860);
-            rule__IfIncIitems__IftermAssignment_0();
+            pushFollow(FOLLOW_rule__IfIncItems__PatternAssignment_0_in_rule__IfIncItems__Group__0__Impl10860);
+            rule__IfIncItems__PatternAssignment_0();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getIfIncIitemsAccess().getIftermAssignment_0()); 
+             after(grammarAccess.getIfIncItemsAccess().getPatternAssignment_0()); 
 
             }
 
@@ -14890,26 +14890,26 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end "rule__IfIncIitems__Group__0__Impl"
+    // $ANTLR end "rule__IfIncItems__Group__0__Impl"
 
 
-    // $ANTLR start "rule__IfIncIitems__Group__1"
-    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5056:1: rule__IfIncIitems__Group__1 : rule__IfIncIitems__Group__1__Impl rule__IfIncIitems__Group__2 ;
-    public final void rule__IfIncIitems__Group__1() throws RecognitionException {
+    // $ANTLR start "rule__IfIncItems__Group__1"
+    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5056:1: rule__IfIncItems__Group__1 : rule__IfIncItems__Group__1__Impl rule__IfIncItems__Group__2 ;
+    public final void rule__IfIncItems__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5060:1: ( rule__IfIncIitems__Group__1__Impl rule__IfIncIitems__Group__2 )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5061:2: rule__IfIncIitems__Group__1__Impl rule__IfIncIitems__Group__2
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5060:1: ( rule__IfIncItems__Group__1__Impl rule__IfIncItems__Group__2 )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5061:2: rule__IfIncItems__Group__1__Impl rule__IfIncItems__Group__2
             {
-            pushFollow(FOLLOW_rule__IfIncIitems__Group__1__Impl_in_rule__IfIncIitems__Group__110890);
-            rule__IfIncIitems__Group__1__Impl();
+            pushFollow(FOLLOW_rule__IfIncItems__Group__1__Impl_in_rule__IfIncItems__Group__110890);
+            rule__IfIncItems__Group__1__Impl();
 
             state._fsp--;
 
-            pushFollow(FOLLOW_rule__IfIncIitems__Group__2_in_rule__IfIncIitems__Group__110893);
-            rule__IfIncIitems__Group__2();
+            pushFollow(FOLLOW_rule__IfIncItems__Group__2_in_rule__IfIncItems__Group__110893);
+            rule__IfIncItems__Group__2();
 
             state._fsp--;
 
@@ -14928,24 +14928,24 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end "rule__IfIncIitems__Group__1"
+    // $ANTLR end "rule__IfIncItems__Group__1"
 
 
-    // $ANTLR start "rule__IfIncIitems__Group__1__Impl"
-    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5068:1: rule__IfIncIitems__Group__1__Impl : ( ( rule__IfIncIitems__ElseiftermAssignment_1 )* ) ;
-    public final void rule__IfIncIitems__Group__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__IfIncItems__Group__1__Impl"
+    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5068:1: rule__IfIncItems__Group__1__Impl : ( ( rule__IfIncItems__PatternAssignment_1 )* ) ;
+    public final void rule__IfIncItems__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5072:1: ( ( ( rule__IfIncIitems__ElseiftermAssignment_1 )* ) )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5073:1: ( ( rule__IfIncIitems__ElseiftermAssignment_1 )* )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5072:1: ( ( ( rule__IfIncItems__PatternAssignment_1 )* ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5073:1: ( ( rule__IfIncItems__PatternAssignment_1 )* )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5073:1: ( ( rule__IfIncIitems__ElseiftermAssignment_1 )* )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5074:1: ( rule__IfIncIitems__ElseiftermAssignment_1 )*
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5073:1: ( ( rule__IfIncItems__PatternAssignment_1 )* )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5074:1: ( rule__IfIncItems__PatternAssignment_1 )*
             {
-             before(grammarAccess.getIfIncIitemsAccess().getElseiftermAssignment_1()); 
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5075:1: ( rule__IfIncIitems__ElseiftermAssignment_1 )*
+             before(grammarAccess.getIfIncItemsAccess().getPatternAssignment_1()); 
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5075:1: ( rule__IfIncItems__PatternAssignment_1 )*
             loop107:
             do {
                 int alt107=2;
@@ -14958,10 +14958,10 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
                 switch (alt107) {
             	case 1 :
-            	    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5075:2: rule__IfIncIitems__ElseiftermAssignment_1
+            	    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5075:2: rule__IfIncItems__PatternAssignment_1
             	    {
-            	    pushFollow(FOLLOW_rule__IfIncIitems__ElseiftermAssignment_1_in_rule__IfIncIitems__Group__1__Impl10920);
-            	    rule__IfIncIitems__ElseiftermAssignment_1();
+            	    pushFollow(FOLLOW_rule__IfIncItems__PatternAssignment_1_in_rule__IfIncItems__Group__1__Impl10920);
+            	    rule__IfIncItems__PatternAssignment_1();
 
             	    state._fsp--;
 
@@ -14974,7 +14974,7 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
                 }
             } while (true);
 
-             after(grammarAccess.getIfIncIitemsAccess().getElseiftermAssignment_1()); 
+             after(grammarAccess.getIfIncItemsAccess().getPatternAssignment_1()); 
 
             }
 
@@ -14993,21 +14993,21 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end "rule__IfIncIitems__Group__1__Impl"
+    // $ANTLR end "rule__IfIncItems__Group__1__Impl"
 
 
-    // $ANTLR start "rule__IfIncIitems__Group__2"
-    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5085:1: rule__IfIncIitems__Group__2 : rule__IfIncIitems__Group__2__Impl ;
-    public final void rule__IfIncIitems__Group__2() throws RecognitionException {
+    // $ANTLR start "rule__IfIncItems__Group__2"
+    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5085:1: rule__IfIncItems__Group__2 : rule__IfIncItems__Group__2__Impl ;
+    public final void rule__IfIncItems__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5089:1: ( rule__IfIncIitems__Group__2__Impl )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5090:2: rule__IfIncIitems__Group__2__Impl
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5089:1: ( rule__IfIncItems__Group__2__Impl )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5090:2: rule__IfIncItems__Group__2__Impl
             {
-            pushFollow(FOLLOW_rule__IfIncIitems__Group__2__Impl_in_rule__IfIncIitems__Group__210951);
-            rule__IfIncIitems__Group__2__Impl();
+            pushFollow(FOLLOW_rule__IfIncItems__Group__2__Impl_in_rule__IfIncItems__Group__210951);
+            rule__IfIncItems__Group__2__Impl();
 
             state._fsp--;
 
@@ -15026,24 +15026,24 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end "rule__IfIncIitems__Group__2"
+    // $ANTLR end "rule__IfIncItems__Group__2"
 
 
-    // $ANTLR start "rule__IfIncIitems__Group__2__Impl"
-    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5096:1: rule__IfIncIitems__Group__2__Impl : ( ( rule__IfIncIitems__ElsetermAssignment_2 )? ) ;
-    public final void rule__IfIncIitems__Group__2__Impl() throws RecognitionException {
+    // $ANTLR start "rule__IfIncItems__Group__2__Impl"
+    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5096:1: rule__IfIncItems__Group__2__Impl : ( ( rule__IfIncItems__PatternAssignment_2 )? ) ;
+    public final void rule__IfIncItems__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5100:1: ( ( ( rule__IfIncIitems__ElsetermAssignment_2 )? ) )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5101:1: ( ( rule__IfIncIitems__ElsetermAssignment_2 )? )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5100:1: ( ( ( rule__IfIncItems__PatternAssignment_2 )? ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5101:1: ( ( rule__IfIncItems__PatternAssignment_2 )? )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5101:1: ( ( rule__IfIncIitems__ElsetermAssignment_2 )? )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5102:1: ( rule__IfIncIitems__ElsetermAssignment_2 )?
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5101:1: ( ( rule__IfIncItems__PatternAssignment_2 )? )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5102:1: ( rule__IfIncItems__PatternAssignment_2 )?
             {
-             before(grammarAccess.getIfIncIitemsAccess().getElsetermAssignment_2()); 
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5103:1: ( rule__IfIncIitems__ElsetermAssignment_2 )?
+             before(grammarAccess.getIfIncItemsAccess().getPatternAssignment_2()); 
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5103:1: ( rule__IfIncItems__PatternAssignment_2 )?
             int alt108=2;
             int LA108_0 = input.LA(1);
 
@@ -15052,10 +15052,10 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
             }
             switch (alt108) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5103:2: rule__IfIncIitems__ElsetermAssignment_2
+                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:5103:2: rule__IfIncItems__PatternAssignment_2
                     {
-                    pushFollow(FOLLOW_rule__IfIncIitems__ElsetermAssignment_2_in_rule__IfIncIitems__Group__2__Impl10978);
-                    rule__IfIncIitems__ElsetermAssignment_2();
+                    pushFollow(FOLLOW_rule__IfIncItems__PatternAssignment_2_in_rule__IfIncItems__Group__2__Impl10978);
+                    rule__IfIncItems__PatternAssignment_2();
 
                     state._fsp--;
 
@@ -15065,7 +15065,7 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
             }
 
-             after(grammarAccess.getIfIncIitemsAccess().getElsetermAssignment_2()); 
+             after(grammarAccess.getIfIncItemsAccess().getPatternAssignment_2()); 
 
             }
 
@@ -15084,7 +15084,7 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end "rule__IfIncIitems__Group__2__Impl"
+    // $ANTLR end "rule__IfIncItems__Group__2__Impl"
 
 
     // $ANTLR start "rule__IfTerm__Group__0"
@@ -40529,25 +40529,25 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__WreslEvaluator__IfincitemAssignment_0_1"
-    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14811:1: rule__WreslEvaluator__IfincitemAssignment_0_1 : ( ruleIfIncIitems ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14811:1: rule__WreslEvaluator__IfincitemAssignment_0_1 : ( ruleIfIncItems ) ;
     public final void rule__WreslEvaluator__IfincitemAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14815:1: ( ( ruleIfIncIitems ) )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14816:1: ( ruleIfIncIitems )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14815:1: ( ( ruleIfIncItems ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14816:1: ( ruleIfIncItems )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14816:1: ( ruleIfIncIitems )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14817:1: ruleIfIncIitems
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14816:1: ( ruleIfIncItems )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14817:1: ruleIfIncItems
             {
-             before(grammarAccess.getWreslEvaluatorAccess().getIfincitemIfIncIitemsParserRuleCall_0_1_0()); 
-            pushFollow(FOLLOW_ruleIfIncIitems_in_rule__WreslEvaluator__IfincitemAssignment_0_130177);
-            ruleIfIncIitems();
+             before(grammarAccess.getWreslEvaluatorAccess().getIfincitemIfIncItemsParserRuleCall_0_1_0()); 
+            pushFollow(FOLLOW_ruleIfIncItems_in_rule__WreslEvaluator__IfincitemAssignment_0_130177);
+            ruleIfIncItems();
 
             state._fsp--;
 
-             after(grammarAccess.getWreslEvaluatorAccess().getIfincitemIfIncIitemsParserRuleCall_0_1_0()); 
+             after(grammarAccess.getWreslEvaluatorAccess().getIfincitemIfIncItemsParserRuleCall_0_1_0()); 
 
             }
 
@@ -40692,9 +40692,9 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
     // $ANTLR end "rule__WreslEvaluator__ModelAssignment_1_2"
 
 
-    // $ANTLR start "rule__IfIncIitems__IftermAssignment_0"
-    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14871:1: rule__IfIncIitems__IftermAssignment_0 : ( ruleIfTerm ) ;
-    public final void rule__IfIncIitems__IftermAssignment_0() throws RecognitionException {
+    // $ANTLR start "rule__IfIncItems__PatternAssignment_0"
+    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14871:1: rule__IfIncItems__PatternAssignment_0 : ( ruleIfTerm ) ;
+    public final void rule__IfIncItems__PatternAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -40705,13 +40705,13 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
             // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14876:1: ( ruleIfTerm )
             // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14877:1: ruleIfTerm
             {
-             before(grammarAccess.getIfIncIitemsAccess().getIftermIfTermParserRuleCall_0_0()); 
-            pushFollow(FOLLOW_ruleIfTerm_in_rule__IfIncIitems__IftermAssignment_030301);
+             before(grammarAccess.getIfIncItemsAccess().getPatternIfTermParserRuleCall_0_0()); 
+            pushFollow(FOLLOW_ruleIfTerm_in_rule__IfIncItems__PatternAssignment_030301);
             ruleIfTerm();
 
             state._fsp--;
 
-             after(grammarAccess.getIfIncIitemsAccess().getIftermIfTermParserRuleCall_0_0()); 
+             after(grammarAccess.getIfIncItemsAccess().getPatternIfTermParserRuleCall_0_0()); 
 
             }
 
@@ -40730,12 +40730,12 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end "rule__IfIncIitems__IftermAssignment_0"
+    // $ANTLR end "rule__IfIncItems__PatternAssignment_0"
 
 
-    // $ANTLR start "rule__IfIncIitems__ElseiftermAssignment_1"
-    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14886:1: rule__IfIncIitems__ElseiftermAssignment_1 : ( ruleElseIfTerm ) ;
-    public final void rule__IfIncIitems__ElseiftermAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__IfIncItems__PatternAssignment_1"
+    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14886:1: rule__IfIncItems__PatternAssignment_1 : ( ruleElseIfTerm ) ;
+    public final void rule__IfIncItems__PatternAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -40746,13 +40746,13 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
             // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14891:1: ( ruleElseIfTerm )
             // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14892:1: ruleElseIfTerm
             {
-             before(grammarAccess.getIfIncIitemsAccess().getElseiftermElseIfTermParserRuleCall_1_0()); 
-            pushFollow(FOLLOW_ruleElseIfTerm_in_rule__IfIncIitems__ElseiftermAssignment_130332);
+             before(grammarAccess.getIfIncItemsAccess().getPatternElseIfTermParserRuleCall_1_0()); 
+            pushFollow(FOLLOW_ruleElseIfTerm_in_rule__IfIncItems__PatternAssignment_130332);
             ruleElseIfTerm();
 
             state._fsp--;
 
-             after(grammarAccess.getIfIncIitemsAccess().getElseiftermElseIfTermParserRuleCall_1_0()); 
+             after(grammarAccess.getIfIncItemsAccess().getPatternElseIfTermParserRuleCall_1_0()); 
 
             }
 
@@ -40771,12 +40771,12 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end "rule__IfIncIitems__ElseiftermAssignment_1"
+    // $ANTLR end "rule__IfIncItems__PatternAssignment_1"
 
 
-    // $ANTLR start "rule__IfIncIitems__ElsetermAssignment_2"
-    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14901:1: rule__IfIncIitems__ElsetermAssignment_2 : ( ruleElseTerm ) ;
-    public final void rule__IfIncIitems__ElsetermAssignment_2() throws RecognitionException {
+    // $ANTLR start "rule__IfIncItems__PatternAssignment_2"
+    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14901:1: rule__IfIncItems__PatternAssignment_2 : ( ruleElseTerm ) ;
+    public final void rule__IfIncItems__PatternAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -40787,13 +40787,13 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
             // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14906:1: ( ruleElseTerm )
             // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:14907:1: ruleElseTerm
             {
-             before(grammarAccess.getIfIncIitemsAccess().getElsetermElseTermParserRuleCall_2_0()); 
-            pushFollow(FOLLOW_ruleElseTerm_in_rule__IfIncIitems__ElsetermAssignment_230363);
+             before(grammarAccess.getIfIncItemsAccess().getPatternElseTermParserRuleCall_2_0()); 
+            pushFollow(FOLLOW_ruleElseTerm_in_rule__IfIncItems__PatternAssignment_230363);
             ruleElseTerm();
 
             state._fsp--;
 
-             after(grammarAccess.getIfIncIitemsAccess().getElsetermElseTermParserRuleCall_2_0()); 
+             after(grammarAccess.getIfIncItemsAccess().getPatternElseTermParserRuleCall_2_0()); 
 
             }
 
@@ -40812,7 +40812,7 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end "rule__IfIncIitems__ElsetermAssignment_2"
+    // $ANTLR end "rule__IfIncItems__PatternAssignment_2"
 
 
     // $ANTLR start "rule__IfTerm__LogicalAssignment_1"
@@ -44661,25 +44661,25 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__Model__IfincitemsAssignment_3_1"
-    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:16352:1: rule__Model__IfincitemsAssignment_3_1 : ( ruleIfIncIitems ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:16352:1: rule__Model__IfincitemsAssignment_3_1 : ( ruleIfIncItems ) ;
     public final void rule__Model__IfincitemsAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:16356:1: ( ( ruleIfIncIitems ) )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:16357:1: ( ruleIfIncIitems )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:16356:1: ( ( ruleIfIncItems ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:16357:1: ( ruleIfIncItems )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:16357:1: ( ruleIfIncIitems )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:16358:1: ruleIfIncIitems
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:16357:1: ( ruleIfIncItems )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditor.g:16358:1: ruleIfIncItems
             {
-             before(grammarAccess.getModelAccess().getIfincitemsIfIncIitemsParserRuleCall_3_1_0()); 
-            pushFollow(FOLLOW_ruleIfIncIitems_in_rule__Model__IfincitemsAssignment_3_133361);
-            ruleIfIncIitems();
+             before(grammarAccess.getModelAccess().getIfincitemsIfIncItemsParserRuleCall_3_1_0()); 
+            pushFollow(FOLLOW_ruleIfIncItems_in_rule__Model__IfincitemsAssignment_3_133361);
+            ruleIfIncItems();
 
             state._fsp--;
 
-             after(grammarAccess.getModelAccess().getIfincitemsIfIncIitemsParserRuleCall_3_1_0()); 
+             after(grammarAccess.getModelAccess().getIfincitemsIfIncItemsParserRuleCall_3_1_0()); 
 
             }
 
@@ -45927,9 +45927,9 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
     public static final BitSet FOLLOW_rulePattern_in_entryRulePattern121 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRulePattern128 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Pattern__Alternatives_in_rulePattern154 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIfIncIitems_in_entryRuleIfIncIitems181 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleIfIncIitems188 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__IfIncIitems__Group__0_in_ruleIfIncIitems214 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleIfIncItems_in_entryRuleIfIncItems181 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleIfIncItems188 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__IfIncItems__Group__0_in_ruleIfIncItems214 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleIfTerm_in_entryRuleIfTerm241 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleIfTerm248 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__IfTerm__Group__0_in_ruleIfTerm274 = new BitSet(new long[]{0x0000000000000002L});
@@ -46393,14 +46393,14 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
     public static final BitSet FOLLOW_rule__WreslEvaluator__Group_1__2__Impl_in_rule__WreslEvaluator__Group_1__210750 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__WreslEvaluator__ModelAssignment_1_2_in_rule__WreslEvaluator__Group_1__2__Impl10779 = new BitSet(new long[]{0x0000000000000002L,0x00000000C0000000L});
     public static final BitSet FOLLOW_rule__WreslEvaluator__ModelAssignment_1_2_in_rule__WreslEvaluator__Group_1__2__Impl10791 = new BitSet(new long[]{0x0000000000000002L,0x00000000C0000000L});
-    public static final BitSet FOLLOW_rule__IfIncIitems__Group__0__Impl_in_rule__IfIncIitems__Group__010830 = new BitSet(new long[]{0x0000000000001800L});
-    public static final BitSet FOLLOW_rule__IfIncIitems__Group__1_in_rule__IfIncIitems__Group__010833 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__IfIncIitems__IftermAssignment_0_in_rule__IfIncIitems__Group__0__Impl10860 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__IfIncIitems__Group__1__Impl_in_rule__IfIncIitems__Group__110890 = new BitSet(new long[]{0x0000000000001800L});
-    public static final BitSet FOLLOW_rule__IfIncIitems__Group__2_in_rule__IfIncIitems__Group__110893 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__IfIncIitems__ElseiftermAssignment_1_in_rule__IfIncIitems__Group__1__Impl10920 = new BitSet(new long[]{0x0000000000000802L});
-    public static final BitSet FOLLOW_rule__IfIncIitems__Group__2__Impl_in_rule__IfIncIitems__Group__210951 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__IfIncIitems__ElsetermAssignment_2_in_rule__IfIncIitems__Group__2__Impl10978 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__IfIncItems__Group__0__Impl_in_rule__IfIncItems__Group__010830 = new BitSet(new long[]{0x0000000000001800L});
+    public static final BitSet FOLLOW_rule__IfIncItems__Group__1_in_rule__IfIncItems__Group__010833 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__IfIncItems__PatternAssignment_0_in_rule__IfIncItems__Group__0__Impl10860 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__IfIncItems__Group__1__Impl_in_rule__IfIncItems__Group__110890 = new BitSet(new long[]{0x0000000000001800L});
+    public static final BitSet FOLLOW_rule__IfIncItems__Group__2_in_rule__IfIncItems__Group__110893 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__IfIncItems__PatternAssignment_1_in_rule__IfIncItems__Group__1__Impl10920 = new BitSet(new long[]{0x0000000000000802L});
+    public static final BitSet FOLLOW_rule__IfIncItems__Group__2__Impl_in_rule__IfIncItems__Group__210951 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__IfIncItems__PatternAssignment_2_in_rule__IfIncItems__Group__2__Impl10978 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__IfTerm__Group__0__Impl_in_rule__IfTerm__Group__011015 = new BitSet(new long[]{0x0000000000838330L,0x0020080000000000L});
     public static final BitSet FOLLOW_rule__IfTerm__Group__1_in_rule__IfTerm__Group__011018 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_IF_in_rule__IfTerm__Group__0__Impl11045 = new BitSet(new long[]{0x0000000000000002L});
@@ -47240,13 +47240,13 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
     public static final BitSet FOLLOW_rule__IncludeModel__Group__2__Impl_in_rule__IncludeModel__Group__230079 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_rule__IncludeModel__Group__2__Impl30106 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulePattern_in_rule__WreslEvaluator__PatternAssignment_0_030146 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIfIncIitems_in_rule__WreslEvaluator__IfincitemAssignment_0_130177 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleIfIncItems_in_rule__WreslEvaluator__IfincitemAssignment_0_130177 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleInitial_in_rule__WreslEvaluator__InitialAssignment_1_030208 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSequence_in_rule__WreslEvaluator__SequenceAssignment_1_130239 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleModel_in_rule__WreslEvaluator__ModelAssignment_1_230270 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIfTerm_in_rule__IfIncIitems__IftermAssignment_030301 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleElseIfTerm_in_rule__IfIncIitems__ElseiftermAssignment_130332 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleElseTerm_in_rule__IfIncIitems__ElsetermAssignment_230363 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleIfTerm_in_rule__IfIncItems__PatternAssignment_030301 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleElseIfTerm_in_rule__IfIncItems__PatternAssignment_130332 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleElseTerm_in_rule__IfIncItems__PatternAssignment_230363 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLogicalExpression_in_rule__IfTerm__LogicalAssignment_130394 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulePattern_in_rule__IfTerm__PatternAssignment_330425 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLogicalExpression_in_rule__ElseIfTerm__LogicalAssignment_130456 = new BitSet(new long[]{0x0000000000000002L});
@@ -47342,7 +47342,7 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
     public static final BitSet FOLLOW_ruleExpression_in_rule__Constraint__RhsAssignment_233268 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_rule__Model__NameAssignment_133299 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulePattern_in_rule__Model__PatternAssignment_3_033330 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIfIncIitems_in_rule__Model__IfincitemsAssignment_3_133361 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleIfIncItems_in_rule__Model__IfincitemsAssignment_3_133361 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulePattern_in_rule__Initial__PatternAssignment_233392 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_rule__Sequence__NameAssignment_133423 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_rule__Sequence__ModelAssignment_433458 = new BitSet(new long[]{0x0000000000000002L});
