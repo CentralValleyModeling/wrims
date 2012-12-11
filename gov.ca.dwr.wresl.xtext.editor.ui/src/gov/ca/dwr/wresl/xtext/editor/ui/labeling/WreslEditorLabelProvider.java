@@ -7,6 +7,7 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConstDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Define;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncIitems;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IncludeFile;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Initial;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Model;
@@ -131,5 +132,13 @@ public class WreslEditorLabelProvider extends DefaultEObjectLabelProvider {
 
 	String image(IncludeFile e){
 		return "outline_include.gif";
+	}
+	
+	String text(IfIncIitems e) {
+		return "IF";
+	}
+
+	String image(IfIncIitems e){
+		return null;
 	}
 }
