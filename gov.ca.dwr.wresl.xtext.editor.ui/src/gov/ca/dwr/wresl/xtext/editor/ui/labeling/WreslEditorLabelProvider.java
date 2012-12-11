@@ -4,13 +4,16 @@
 package gov.ca.dwr.wresl.xtext.editor.ui.labeling;
 
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConstDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Define;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IncludeFile;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Initial;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Model;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SVar;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SVarDSS;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Sequence;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SvarDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator;
 
 import org.eclipse.emf.ecore.EObject;
@@ -40,6 +43,14 @@ public class WreslEditorLabelProvider extends DefaultEObjectLabelProvider {
 
 	String image(WreslEvaluator e) {
 		return "outline_wresl.gif";
+	}
+	
+	String text(Initial e){
+		return "initial";
+	}
+	
+	String image(Initial e){
+		return "outline_sequence.gif";
 	}
 	
 	String text(Sequence e){
@@ -81,7 +92,31 @@ public class WreslEditorLabelProvider extends DefaultEObjectLabelProvider {
 		}
 		return "outline_define.gif";
 	}
+	
+	String text(SvarDef e) {
+		return e.getName();
+	}
 
+	String image(SvarDef e) {
+		EObject definition = e.getDefinition();
+		if (definition instanceof SVar) {
+			if (definition instanceof SVarDSS) {
+				return "outline_svar_timeseries.gif";
+			} else {
+				return "outline_svar.gif";
+			}
+		}
+		return "outline_define.gif";
+	}
+
+	String text(ConstDef e) {
+		return e.getName();
+	}
+
+	String image(ConstDef e) {
+		return "outline_svar.gif";	
+	}
+	
 	String text(Alias e) {
 		return e.getName();
 	}

@@ -4,12 +4,16 @@
 package gov.ca.dwr.wresl.xtext.editor.ui.outline;
 
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConstDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Define;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DvarDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IncludeFile;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Initial;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Model;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Objective;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Sequence;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SvarDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator;
 
 import org.eclipse.emf.ecore.EObject;
@@ -24,10 +28,14 @@ public class WreslEditorOutlineTreeProvider extends DefaultOutlineTreeProvider {
 	@Override
 	protected void _createNode(IOutlineNode parentNode, EObject modelElement) {
 		if (modelElement instanceof WreslEvaluator
+				|| modelElement instanceof Initial
 				|| modelElement instanceof Model
 				|| modelElement instanceof Sequence
 				|| modelElement instanceof IncludeFile
 				|| modelElement instanceof Define
+				|| modelElement instanceof SvarDef
+				|| modelElement instanceof DvarDef
+				|| modelElement instanceof ConstDef
 				|| modelElement instanceof Alias
 				|| modelElement instanceof Goal
 				|| modelElement instanceof Objective) {
@@ -36,7 +44,7 @@ public class WreslEditorOutlineTreeProvider extends DefaultOutlineTreeProvider {
 	}
 
 	public boolean _isLeaf(EObject modelElement) {
-		return !(modelElement instanceof WreslEvaluator || modelElement instanceof Model);
+		return !(modelElement instanceof WreslEvaluator || modelElement instanceof Model || modelElement instanceof Initial);
 	}
 
 }

@@ -1,9 +1,12 @@
 package gov.ca.dwr.wresl.xtext.editor.ui.texthover;
 
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVar;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ConstDefImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DefineImpl;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DvarDefImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GoalImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IdentImpl;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.SvarDefImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TermImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.UnaryImpl;
 
@@ -29,6 +32,15 @@ public class WreslEObjectDocumentationProvider implements
 			return "constraint : "+getConstraint(name);
 		}else if (o instanceof IdentImpl){
 			String name=((IdentImpl) o).getName();
+			return "value : "+getValue(name);
+		}else if (o instanceof SvarDefImpl){
+			String name=((SvarDefImpl) o).getName();
+			return "value : "+getValue(name);
+		}else if (o instanceof DvarDefImpl){
+			String name=((DvarDefImpl) o).getName();
+			return "value : "+getValue(name);
+		}else if (o instanceof ConstDefImpl){
+			String name=((ConstDefImpl) o).getName();
 			return "value : "+getValue(name);
 		}else{
 			return null;

@@ -4,10 +4,13 @@ import org.eclipse.swt.events.FocusListener;
 
 import gov.ca.dwr.wresl.xtext.editor.ui.watch.AddWatch;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVar;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ConstDefImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DVarIntegerImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DefineImpl;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DvarDefImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GoalImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IdentImpl;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.SvarDefImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TermImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.UnaryImpl;
 
@@ -41,6 +44,18 @@ public class WreslEObjectHoverProvider extends DefaultEObjectHoverProvider {
 			return hoverText;
 		}else if (o instanceof IdentImpl){
 			hoverText=((IdentImpl) o).getName();
+			DebugCorePlugin.hoverText=hoverText;
+			return hoverText;
+		}else if (o instanceof SvarDefImpl){
+			hoverText=((SvarDefImpl) o).getName();
+			DebugCorePlugin.hoverText=hoverText;
+			return hoverText;
+		}else if (o instanceof DvarDefImpl){
+			hoverText=((DvarDefImpl) o).getName();
+			DebugCorePlugin.hoverText=hoverText;
+			return hoverText;
+		}else if (o instanceof ConstDefImpl){
+			hoverText=((ConstDefImpl) o).getName();
 			DebugCorePlugin.hoverText=hoverText;
 			return hoverText;
 		}else{
