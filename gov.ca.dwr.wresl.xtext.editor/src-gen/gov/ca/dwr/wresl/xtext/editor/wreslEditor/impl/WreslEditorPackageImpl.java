@@ -726,16 +726,6 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getIfIncItems_Pattern()
-  {
-    return (EReference)ifIncItemsEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getIfTerm()
   {
     return ifTermEClass;
@@ -746,7 +736,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getIfTerm_Logical()
+  public EReference getIfTerm_Elseifterm()
   {
     return (EReference)ifTermEClass.getEStructuralFeatures().get(0);
   }
@@ -756,9 +746,29 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getIfTerm_Pattern()
+  public EReference getIfTerm_Elseterm()
   {
     return (EReference)ifTermEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIfTerm_Logical()
+  {
+    return (EReference)ifTermEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIfTerm_Pattern()
+  {
+    return (EReference)ifTermEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -2492,9 +2502,10 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     createEAttribute(patternEClass, PATTERN__LOCAL);
 
     ifIncItemsEClass = createEClass(IF_INC_ITEMS);
-    createEReference(ifIncItemsEClass, IF_INC_ITEMS__PATTERN);
 
     ifTermEClass = createEClass(IF_TERM);
+    createEReference(ifTermEClass, IF_TERM__ELSEIFTERM);
+    createEReference(ifTermEClass, IF_TERM__ELSETERM);
     createEReference(ifTermEClass, IF_TERM__LOGICAL);
     createEReference(ifTermEClass, IF_TERM__PATTERN);
 
@@ -2761,6 +2772,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    ifTermEClass.getESuperTypes().add(this.getIfIncItems());
     objectiveEClass.getESuperTypes().add(this.getPattern());
     defineEClass.getESuperTypes().add(this.getPattern());
     svarDefEClass.getESuperTypes().add(this.getPattern());
@@ -2802,14 +2814,15 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     initEAttribute(getPattern_Local(), ecorePackage.getEBoolean(), "local", null, 0, 1, Pattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(ifIncItemsEClass, IfIncItems.class, "IfIncItems", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getIfIncItems_Pattern(), ecorePackage.getEObject(), null, "pattern", null, 0, 1, IfIncItems.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(ifTermEClass, IfTerm.class, "IfTerm", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getIfTerm_Elseifterm(), this.getElseIfTerm(), null, "elseifterm", null, 0, 1, IfTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIfTerm_Elseterm(), this.getElseTerm(), null, "elseterm", null, 0, 1, IfTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getIfTerm_Logical(), this.getLogicalExpression(), null, "logical", null, 0, 1, IfTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getIfTerm_Pattern(), this.getPattern(), null, "pattern", null, 0, -1, IfTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(elseIfTermEClass, ElseIfTerm.class, "ElseIfTerm", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getElseIfTerm_Logical(), this.getLogicalExpression(), null, "logical", null, 0, 1, ElseIfTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getElseIfTerm_Logical(), this.getLogicalExpression(), null, "logical", null, 0, -1, ElseIfTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getElseIfTerm_Pattern(), this.getPattern(), null, "pattern", null, 0, -1, ElseIfTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(elseTermEClass, ElseTerm.class, "ElseTerm", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

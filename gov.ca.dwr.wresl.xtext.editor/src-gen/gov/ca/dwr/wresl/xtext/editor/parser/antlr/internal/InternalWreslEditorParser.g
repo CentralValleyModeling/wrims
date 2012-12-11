@@ -326,55 +326,49 @@ ruleIfIncItems returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-((
+(
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getIfIncItemsAccess().getIfTermParserRuleCall_0()); 
+    }
+    this_IfTerm_0=ruleIfTerm
+    {
+        $current = $this_IfTerm_0.current;
+        afterParserOrEnumRuleCall();
+    }
+(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getIfIncItemsAccess().getPatternIfTermParserRuleCall_0_0()); 
+	        newCompositeNode(grammarAccess.getIfIncItemsAccess().getElseiftermElseIfTermParserRuleCall_1_0()); 
 	    }
-		lv_pattern_0_0=ruleIfTerm		{
+		lv_elseifterm_1_0=ruleElseIfTerm		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getIfIncItemsRule());
 	        }
        		set(
        			$current, 
-       			"pattern",
-        		lv_pattern_0_0, 
-        		"IfTerm");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getIfIncItemsAccess().getPatternElseIfTermParserRuleCall_1_0()); 
-	    }
-		lv_pattern_1_0=ruleElseIfTerm		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getIfIncItemsRule());
-	        }
-       		set(
-       			$current, 
-       			"pattern",
-        		lv_pattern_1_0, 
+       			"elseifterm",
+        		lv_elseifterm_1_0, 
         		"ElseIfTerm");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)*(
+)?(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getIfIncItemsAccess().getPatternElseTermParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getIfIncItemsAccess().getElsetermElseTermParserRuleCall_2_0()); 
 	    }
-		lv_pattern_2_0=ruleElseTerm		{
+		lv_elseterm_2_0=ruleElseTerm		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getIfIncItemsRule());
 	        }
        		set(
        			$current, 
-       			"pattern",
-        		lv_pattern_2_0, 
+       			"elseterm",
+        		lv_elseterm_2_0, 
         		"ElseTerm");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -485,7 +479,7 @@ ruleElseIfTerm returns [EObject current=null]
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getElseIfTermRule());
 	        }
-       		set(
+       		add(
        			$current, 
        			"logical",
         		lv_logical_1_0, 
@@ -522,7 +516,7 @@ ruleElseIfTerm returns [EObject current=null]
     {
     	newLeafNode(otherlv_4, grammarAccess.getElseIfTermAccess().getRightCurlyBracketKeyword_4());
     }
-)
+)+
 ;
 
 

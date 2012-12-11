@@ -10,11 +10,11 @@ Pattern:
 	Define | Alias | SvarDef | DvarDef | ConstDef | IncludeFile | IncludeModel | Goal | Objective;
 
 IfIncItems:
-	ifterm=IfTerm  (elseifterm=ElseIfTerm)* (elseterm=ElseTerm)?  ;
+	IfTerm  (elseifterm=ElseIfTerm)? (elseterm=ElseTerm)?  ;
 	
 IfTerm: If logical=LogicalExpression '{' pattern+=Pattern+ '}';
 
-ElseIfTerm: ElseIf logical=LogicalExpression '{' pattern+=Pattern+ '}';
+ElseIfTerm: (ElseIf logical+=LogicalExpression '{' pattern+=Pattern+ '}')+;
 
 ElseTerm: Else '{' pattern+=Pattern+ '}';
 

@@ -163,22 +163,13 @@ public interface WreslEditorPackage extends EPackage
   int IF_INC_ITEMS = 2;
 
   /**
-   * The feature id for the '<em><b>Pattern</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int IF_INC_ITEMS__PATTERN = 0;
-
-  /**
    * The number of structural features of the '<em>If Inc Items</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int IF_INC_ITEMS_FEATURE_COUNT = 1;
+  int IF_INC_ITEMS_FEATURE_COUNT = 0;
 
   /**
    * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IfTermImpl <em>If Term</em>}' class.
@@ -191,13 +182,31 @@ public interface WreslEditorPackage extends EPackage
   int IF_TERM = 3;
 
   /**
+   * The feature id for the '<em><b>Elseifterm</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IF_TERM__ELSEIFTERM = IF_INC_ITEMS_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Elseterm</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IF_TERM__ELSETERM = IF_INC_ITEMS_FEATURE_COUNT + 1;
+
+  /**
    * The feature id for the '<em><b>Logical</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int IF_TERM__LOGICAL = 0;
+  int IF_TERM__LOGICAL = IF_INC_ITEMS_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Pattern</b></em>' containment reference list.
@@ -206,7 +215,7 @@ public interface WreslEditorPackage extends EPackage
    * @generated
    * @ordered
    */
-  int IF_TERM__PATTERN = 1;
+  int IF_TERM__PATTERN = IF_INC_ITEMS_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>If Term</em>' class.
@@ -215,7 +224,7 @@ public interface WreslEditorPackage extends EPackage
    * @generated
    * @ordered
    */
-  int IF_TERM_FEATURE_COUNT = 2;
+  int IF_TERM_FEATURE_COUNT = IF_INC_ITEMS_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ElseIfTermImpl <em>Else If Term</em>}' class.
@@ -228,7 +237,7 @@ public interface WreslEditorPackage extends EPackage
   int ELSE_IF_TERM = 4;
 
   /**
-   * The feature id for the '<em><b>Logical</b></em>' containment reference.
+   * The feature id for the '<em><b>Logical</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -2656,17 +2665,6 @@ public interface WreslEditorPackage extends EPackage
   EClass getIfIncItems();
 
   /**
-   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems#getPattern <em>Pattern</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Pattern</em>'.
-   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems#getPattern()
-   * @see #getIfIncItems()
-   * @generated
-   */
-  EReference getIfIncItems_Pattern();
-
-  /**
    * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfTerm <em>If Term</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2675,6 +2673,28 @@ public interface WreslEditorPackage extends EPackage
    * @generated
    */
   EClass getIfTerm();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfTerm#getElseifterm <em>Elseifterm</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Elseifterm</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfTerm#getElseifterm()
+   * @see #getIfTerm()
+   * @generated
+   */
+  EReference getIfTerm_Elseifterm();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfTerm#getElseterm <em>Elseterm</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Elseterm</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfTerm#getElseterm()
+   * @see #getIfTerm()
+   * @generated
+   */
+  EReference getIfTerm_Elseterm();
 
   /**
    * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfTerm#getLogical <em>Logical</em>}'.
@@ -2709,10 +2729,10 @@ public interface WreslEditorPackage extends EPackage
   EClass getElseIfTerm();
 
   /**
-   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseIfTerm#getLogical <em>Logical</em>}'.
+   * Returns the meta object for the containment reference list '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseIfTerm#getLogical <em>Logical</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Logical</em>'.
+   * @return the meta object for the containment reference list '<em>Logical</em>'.
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseIfTerm#getLogical()
    * @see #getElseIfTerm()
    * @generated
@@ -4595,14 +4615,6 @@ public interface WreslEditorPackage extends EPackage
     EClass IF_INC_ITEMS = eINSTANCE.getIfIncItems();
 
     /**
-     * The meta object literal for the '<em><b>Pattern</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference IF_INC_ITEMS__PATTERN = eINSTANCE.getIfIncItems_Pattern();
-
-    /**
      * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IfTermImpl <em>If Term</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4611,6 +4623,22 @@ public interface WreslEditorPackage extends EPackage
      * @generated
      */
     EClass IF_TERM = eINSTANCE.getIfTerm();
+
+    /**
+     * The meta object literal for the '<em><b>Elseifterm</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference IF_TERM__ELSEIFTERM = eINSTANCE.getIfTerm_Elseifterm();
+
+    /**
+     * The meta object literal for the '<em><b>Elseterm</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference IF_TERM__ELSETERM = eINSTANCE.getIfTerm_Elseterm();
 
     /**
      * The meta object literal for the '<em><b>Logical</b></em>' containment reference feature.
@@ -4639,7 +4667,7 @@ public interface WreslEditorPackage extends EPackage
     EClass ELSE_IF_TERM = eINSTANCE.getElseIfTerm();
 
     /**
-     * The meta object literal for the '<em><b>Logical</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Logical</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

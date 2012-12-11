@@ -128,37 +128,33 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	public class IfIncItemsElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "IfIncItems");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cPatternAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cPatternIfTermParserRuleCall_0_0 = (RuleCall)cPatternAssignment_0.eContents().get(0);
-		private final Assignment cPatternAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cPatternElseIfTermParserRuleCall_1_0 = (RuleCall)cPatternAssignment_1.eContents().get(0);
-		private final Assignment cPatternAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cPatternElseTermParserRuleCall_2_0 = (RuleCall)cPatternAssignment_2.eContents().get(0);
+		private final RuleCall cIfTermParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Assignment cElseiftermAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cElseiftermElseIfTermParserRuleCall_1_0 = (RuleCall)cElseiftermAssignment_1.eContents().get(0);
+		private final Assignment cElsetermAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cElsetermElseTermParserRuleCall_2_0 = (RuleCall)cElsetermAssignment_2.eContents().get(0);
 		
 		//IfIncItems:
-		//	pattern=IfTerm pattern=ElseIfTerm* pattern=ElseTerm?;
+		//	IfTerm elseifterm=ElseIfTerm? elseterm=ElseTerm?;
 		public ParserRule getRule() { return rule; }
 
-		//pattern=IfTerm pattern=ElseIfTerm* pattern=ElseTerm?
+		//IfTerm elseifterm=ElseIfTerm? elseterm=ElseTerm?
 		public Group getGroup() { return cGroup; }
 
-		//pattern=IfTerm
-		public Assignment getPatternAssignment_0() { return cPatternAssignment_0; }
-
 		//IfTerm
-		public RuleCall getPatternIfTermParserRuleCall_0_0() { return cPatternIfTermParserRuleCall_0_0; }
+		public RuleCall getIfTermParserRuleCall_0() { return cIfTermParserRuleCall_0; }
 
-		//pattern=ElseIfTerm*
-		public Assignment getPatternAssignment_1() { return cPatternAssignment_1; }
+		//elseifterm=ElseIfTerm?
+		public Assignment getElseiftermAssignment_1() { return cElseiftermAssignment_1; }
 
 		//ElseIfTerm
-		public RuleCall getPatternElseIfTermParserRuleCall_1_0() { return cPatternElseIfTermParserRuleCall_1_0; }
+		public RuleCall getElseiftermElseIfTermParserRuleCall_1_0() { return cElseiftermElseIfTermParserRuleCall_1_0; }
 
-		//pattern=ElseTerm?
-		public Assignment getPatternAssignment_2() { return cPatternAssignment_2; }
+		//elseterm=ElseTerm?
+		public Assignment getElsetermAssignment_2() { return cElsetermAssignment_2; }
 
 		//ElseTerm
-		public RuleCall getPatternElseTermParserRuleCall_2_0() { return cPatternElseTermParserRuleCall_2_0; }
+		public RuleCall getElsetermElseTermParserRuleCall_2_0() { return cElsetermElseTermParserRuleCall_2_0; }
 	}
 
 	public class IfTermElements extends AbstractParserRuleElementFinder {
@@ -213,16 +209,16 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//ElseIfTerm:
-		//	ElseIf logical=LogicalExpression "{" pattern+=Pattern+ "}";
+		//	(ElseIf logical+=LogicalExpression "{" pattern+=Pattern+ "}")+;
 		public ParserRule getRule() { return rule; }
 
-		//ElseIf logical=LogicalExpression "{" pattern+=Pattern+ "}"
+		//(ElseIf logical+=LogicalExpression "{" pattern+=Pattern+ "}")+
 		public Group getGroup() { return cGroup; }
 
 		//ElseIf
 		public RuleCall getElseIfTerminalRuleCall_0() { return cElseIfTerminalRuleCall_0; }
 
-		//logical=LogicalExpression
+		//logical+=LogicalExpression
 		public Assignment getLogicalAssignment_1() { return cLogicalAssignment_1; }
 
 		//LogicalExpression
@@ -3792,7 +3788,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//IfIncItems:
-	//	pattern=IfTerm pattern=ElseIfTerm* pattern=ElseTerm?;
+	//	IfTerm elseifterm=ElseIfTerm? elseterm=ElseTerm?;
 	public IfIncItemsElements getIfIncItemsAccess() {
 		return (pIfIncItems != null) ? pIfIncItems : (pIfIncItems = new IfIncItemsElements());
 	}
@@ -3812,7 +3808,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ElseIfTerm:
-	//	ElseIf logical=LogicalExpression "{" pattern+=Pattern+ "}";
+	//	(ElseIf logical+=LogicalExpression "{" pattern+=Pattern+ "}")+;
 	public ElseIfTermElements getElseIfTermAccess() {
 		return (pElseIfTerm != null) ? pElseIfTerm : (pElseIfTerm = new ElseIfTermElements());
 	}

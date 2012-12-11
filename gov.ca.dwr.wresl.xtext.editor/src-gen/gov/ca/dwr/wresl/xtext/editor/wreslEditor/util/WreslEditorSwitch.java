@@ -101,6 +101,7 @@ public class WreslEditorSwitch<T> extends Switch<T>
       {
         IfTerm ifTerm = (IfTerm)theEObject;
         T result = caseIfTerm(ifTerm);
+        if (result == null) result = caseIfIncItems(ifTerm);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }

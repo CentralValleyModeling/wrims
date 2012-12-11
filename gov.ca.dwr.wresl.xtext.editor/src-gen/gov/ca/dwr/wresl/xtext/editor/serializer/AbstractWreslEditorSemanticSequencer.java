@@ -26,7 +26,6 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCaseContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalNoCaseContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalSimple;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Ident;
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfTerm;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IncludeFile;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Initial;
@@ -251,14 +250,12 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 					return; 
 				}
 				else break;
-			case WreslEditorPackage.IF_INC_ITEMS:
+			case WreslEditorPackage.IF_TERM:
 				if(context == grammarAccess.getIfIncItemsRule()) {
-					sequence_IfIncItems(context, (IfIncItems) semanticObject); 
+					sequence_IfIncItems(context, (IfTerm) semanticObject); 
 					return; 
 				}
-				else break;
-			case WreslEditorPackage.IF_TERM:
-				if(context == grammarAccess.getIfTermRule()) {
+				else if(context == grammarAccess.getIfTermRule()) {
 					sequence_IfTerm(context, (IfTerm) semanticObject); 
 					return; 
 				}
@@ -747,11 +744,15 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (logical=LogicalExpression pattern+=Pattern+)
+	 *     (logical+=LogicalExpression pattern+=Pattern+)+
 	 *
 	 * Features:
-	 *    logical[1, 1]
+	 *    logical[1, *]
+	 *         MANDATORY_IF_SET pattern
+	 *         SAME_OR_LESS pattern
 	 *    pattern[1, *]
+	 *         EXCLUDE_IF_UNSET logical
+	 *         SAME_OR_MORE logical
 	 */
 	protected void sequence_ElseIfTerm(EObject context, ElseIfTerm semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -892,12 +893,15 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (pattern=IfTerm pattern=ElseIfTerm* pattern=ElseTerm?)
+	 *     (logical=LogicalExpression pattern+=Pattern+ elseifterm=ElseIfTerm? elseterm=ElseTerm?)
 	 *
 	 * Features:
+	 *    elseifterm[0, 1]
+	 *    elseterm[0, 1]
+	 *    logical[1, 1]
 	 *    pattern[1, *]
 	 */
-	protected void sequence_IfIncItems(EObject context, IfIncItems semanticObject) {
+	protected void sequence_IfIncItems(EObject context, IfTerm semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

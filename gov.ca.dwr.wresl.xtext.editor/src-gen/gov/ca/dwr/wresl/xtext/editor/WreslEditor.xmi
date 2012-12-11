@@ -51,13 +51,11 @@
         <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//IfIncItems"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Assignment" feature="pattern" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
-        </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="*" feature="pattern" operator="=">
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="elseifterm" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
         </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="pattern" operator="=">
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="elseterm" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
         </elements>
       </alternatives>
@@ -82,9 +80,9 @@
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor#//ElseIfTerm"/>
       </type>
-      <alternatives xsi:type="xtext:Group">
+      <alternatives xsi:type="xtext:Group" cardinality="+">
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.78"/>
-        <elements xsi:type="xtext:Assignment" feature="logical" operator="=">
+        <elements xsi:type="xtext:Assignment" feature="logical" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.53"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
