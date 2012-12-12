@@ -526,6 +526,28 @@ public class DebugInterface {
 					}
 				}
 			}
+			for (String svName:svList){
+				Set<String> dependants = fileDataSet.svMap.get(svName).dependants;
+				Iterator<String> iterator = dependants.iterator();
+				while (iterator.hasNext()){
+					String varName=iterator.next();
+					if (!sortedList.contains(varName)){
+						sortedList.add(varName);
+					}
+				}
+			}
+			for (String asName:asList){
+				if (asMap.containsKey(asName)){
+					Set<String> dependants = fileDataSet.asMap.get(asName).dependants;
+					Iterator<String> iterator = dependants.iterator();
+					while (iterator.hasNext()){
+						String varName=iterator.next();
+						if (!sortedList.contains(varName)){
+							sortedList.add(varName);
+						}
+					}
+				}
+			}
 			
 			IntDouble intDouble;
 			Collections.sort(sortedList);
@@ -628,6 +650,30 @@ public class DebugInterface {
 						}
 					}
 				}
+				for (String svName:svList){
+					if (svMap.containsKey(svName)){
+						Set<String> dependants = svMap.get(svName).dependants;
+						Iterator<String> iterator = dependants.iterator();
+						while (iterator.hasNext()){
+							String varName=iterator.next();
+							if (!sortedList.contains(varName)){
+								sortedList.add(varName);
+							}
+						}
+					}
+				}
+				for (String asName:asList){
+					if (asMap.containsKey(asName)){
+						Set<String> dependants = asMap.get(asName).dependants;
+						Iterator<String> iterator = dependants.iterator();
+						while (iterator.hasNext()){
+							String varName=iterator.next();
+							if (!sortedList.contains(varName)){
+								sortedList.add(varName);
+							}
+						}
+					}
+				}
 			}
 		}else{
 			modelTemp = ParserUtils.parseWreslFile(fileFullPath);
@@ -647,6 +693,30 @@ public class DebugInterface {
 			for (String gName:gList){
 				if (gMap.containsKey(gName)){
 					Set<String> dependants = gMap.get(gName).dependants;
+					Iterator<String> iterator = dependants.iterator();
+					while (iterator.hasNext()){
+						String varName=iterator.next();
+						if (!sortedList.contains(varName)){
+							sortedList.add(varName);
+						}
+					}
+				}
+			}
+			for (String svName:svList){
+				if (svMap.containsKey(svName)){
+					Set<String> dependants = svMap.get(svName).dependants;
+					Iterator<String> iterator = dependants.iterator();
+					while (iterator.hasNext()){
+						String varName=iterator.next();
+						if (!sortedList.contains(varName)){
+							sortedList.add(varName);
+						}
+					}
+				}
+			}
+			for (String asName:asList){
+				if (asMap.containsKey(asName)){
+					Set<String> dependants = asMap.get(asName).dependants;
 					Iterator<String> iterator = dependants.iterator();
 					while (iterator.hasNext()){
 						String varName=iterator.next();
