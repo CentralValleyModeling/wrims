@@ -802,6 +802,7 @@ public class DebugInterface {
 		ArrayList<String> controlGoals=new ArrayList<String>();
 		ArrayList<String> sortedGoalList=new ArrayList<String>();
 		
+		fileFullPath=fileFullPath.replace("/", "\\");
 		if (fileFullPath.equalsIgnoreCase(FilePaths.fullMainPath)){
 			StudyTemp studyTemp = ParserUtils.parseWreslMain(fileFullPath);
 			if (studyTemp==null) return goalString;
@@ -896,14 +897,17 @@ public class DebugInterface {
 		ArrayList<String> allDvNames=new ArrayList<String>();
 		ArrayList<String> allSvNames=new ArrayList<String>();
 		ArrayList<String> allAsNames=new ArrayList<String>();
+		ArrayList<String> allParameterNames=new ArrayList<String>();
 		Map<String, Number> allData=new HashMap<String, Number>();
-		String modelName=ControlData.currStudyDataSet.getModelList().get(ControlData.currCycleIndex);
-		ModelDataSet mds=ControlData.currStudyDataSet.getModelDataSetMap().get(modelName);
+		StudyDataSet sds = ControlData.currStudyDataSet;
+		String modelName=sds.getModelList().get(ControlData.currCycleIndex);
+		ModelDataSet mds=sds.getModelDataSetMap().get(modelName);
 		Map<String, Timeseries> tsMap = mds.tsMap;
 		Map<String, Dvar> dvMap = SolverData.getDvarMap();
 		Map<String, Svar> svMap = mds.svMap;
 		Map<String, Svar> svFutMap = mds.svFutMap;
 		Map<String, Alias> asMap = mds.asMap;
+		Map<String, Svar> parameterMap = sds.getParameterMap();
 
 		IntDouble intDouble;
 		
@@ -976,6 +980,20 @@ public class DebugInterface {
 			}
 			if (!allAsNames.contains(asName)){
 				allAsNames.add(asName);
+			}
+		}
+		
+		Set<String> parameterKeySet = parameterMap.keySet();
+		Iterator<String> parameterIterator = parameterKeySet.iterator();
+		while (parameterIterator.hasNext()){
+			String parameterName=parameterIterator.next();
+			if (!allDataNames.contains(parameterName)){
+				intDouble=parameterMap.get(parameterName).getData();
+				if (intDouble!=null){
+					allDataNames.add(parameterName);
+					allParameterNames.add(parameterName);
+					allData.put(parameterName, intDouble.getData());
+				}
 			}
 		}
 		
