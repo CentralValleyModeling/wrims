@@ -416,11 +416,6 @@ weight_subgroup_trunk
 
 weight_subgroup_unit : i=ID  {$weight_subgroup::sub_.varList.add($i.text);} ;
 
-operation: 'operation' operationName '{' operationCase+ '}'; 
-
-operationCase: CASE logical_main '{' ( include_model | timeseries | svar_g | dvar_g | goal_s )+  '}';
-
-operationName: ID;
 
 include_model returns[String id] : INCLUDE MODEL i=ID   {$id=$i.text;} ;
 
