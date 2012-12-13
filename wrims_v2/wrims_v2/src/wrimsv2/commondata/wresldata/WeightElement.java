@@ -12,11 +12,13 @@ public class WeightElement implements Serializable {
 	public ValueEvaluatorParser weightParser;
 	public ValueEvaluatorParser conditionParser;
 	public String fromWresl;
+	public int line=0;
 	private double value;
 	
 	// default is zero
 	public String timeArraySize;
 	public ValueEvaluatorParser timeArraySizeParser;
+	
 	
 	public WeightElement(){
 		weight = Param.undefined;

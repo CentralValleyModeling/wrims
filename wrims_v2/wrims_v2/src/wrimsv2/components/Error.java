@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.IOException;
 
+import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.ilp.ILP;
 import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.elements.Tools;
@@ -139,30 +140,59 @@ public class Error {
 	}
 	
 	public static void addEvaluationError(String error){
+		ModelDataSet mds = ControlData.currModelDataSet;
+		String sourceLocation="";
 		if (ControlData.currEvalTypeIndex == 0){
-			error_evaluation.add(getCurrentDateCycleModel()+", "+ControlData.currEvalName+" in svar definition: "+error);
+			if (mds.svMap.containsKey(ControlData.currEvalName)){
+				sourceLocation="("+mds.svMap.get(ControlData.currEvalName).fromWresl+":"+1+")";
+			}
+			error_evaluation.add(sourceLocation+getCurrentDateCycleModel()+", "+ControlData.currEvalName+" in svar definition: "+error);
 		}else if (ControlData.currEvalTypeIndex == 1){
+			if (mds.dvMap.containsKey(ControlData.currEvalName)){
+				sourceLocation="("+mds.dvMap.get(ControlData.currEvalName).fromWresl+":"+"1"+")";
+			}
 			error_evaluation.add(getCurrentDateCycleModel()+", "+ControlData.currEvalName+" in dvar definition: "+error);
 		}else if (ControlData.currEvalTypeIndex == 2){
+			if (mds.asMap.containsKey(ControlData.currEvalName)){
+				sourceLocation="("+mds.asMap.get(ControlData.currEvalName).fromWresl+":"+"1"+")";
+			}
 			error_evaluation.add(getCurrentDateCycleModel()+", "+ControlData.currEvalName+" in alias definition: "+error);
 		}else if (ControlData.currEvalTypeIndex == 3){
+			if (mds.gMap.containsKey(ControlData.currEvalName)){
+				sourceLocation="("+mds.gMap.get(ControlData.currEvalName).fromWresl+":"+"1"+")";
+			}
 			error_evaluation.add(getCurrentDateCycleModel()+", "+ControlData.currEvalName+" in constraint definition: "+error);
 		}else if (ControlData.currEvalTypeIndex == 4){
+			if (mds.exMap.containsKey(ControlData.currEvalName)){
+				sourceLocation="("+mds.exMap.get(ControlData.currEvalName).fromWresl+":"+"1"+")";
+			}
 			error_evaluation.add(getCurrentDateCycleModel()+", "+ControlData.currEvalName+" in external function definition: "+error);
 		}else if (ControlData.currEvalTypeIndex == 5){
+			if (mds.tsMap.containsKey(ControlData.currEvalName)){
+				sourceLocation="("+mds.tsMap.get(ControlData.currEvalName).fromWresl+":"+"1"+")";
+			}
 			error_evaluation.add(getCurrentDateCycleModel()+", "+ControlData.currEvalName+" in timeseries definition: "+error);
 		}else if (ControlData.currEvalTypeIndex==6){
+			if (mds.tsMap.containsKey(ControlData.currEvalName)){
+				sourceLocation="("+mds.tsMap.get(ControlData.currEvalName).fromWresl+":"+"1"+")";
+			}
 			error_evaluation.add(ControlData.currEvalName+" in timeseries reading: "+error);
 		}else if (ControlData.currEvalTypeIndex==7){
+			if (mds.wtMap.containsKey(ControlData.currEvalName)){
+				sourceLocation="("+mds.wtMap.get(ControlData.currEvalName).fromWresl+":"+"1"+")";
+			}
 			error_evaluation.add(getCurrentDateCycleModel()+", "+ControlData.currEvalName+" in weight definition: "+error);
 		}else if (ControlData.currEvalTypeIndex==8){
+			if (mds.svMap.containsKey(ControlData.currEvalName)){
+				sourceLocation="("+mds.svMap.get(ControlData.currEvalName).fromWresl+":"+"1"+")";
+			}
 			error_evaluation.add("Initial variable "+ControlData.currEvalName+": "+error);
 		}else if (ControlData.currEvalTypeIndex==9){
 			String msg = "Conditional include (if, elseif) in file: "+ControlData.currEvalName+": "+error;
 			error_evaluation.add(msg);
 			System.out.println("# Error :"+msg);
 		}
-		System.out.println("Error-"+ControlData.currEvalName+":"+error);
+		System.out.println(sourceLocation+" Error-"+ControlData.currEvalName+":"+error);
 	}
 	
 	public static void addSolvingError(String error){

@@ -13,6 +13,7 @@ public class Dvar implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public String fromWresl;
+	public int line=0;
 	public String scope;
 	public String integer;
 	public String format;
@@ -28,8 +29,7 @@ public class Dvar implements Serializable {
 	public String expression;
 	public Set<String> dependants;
 	public IntDouble data;
-	
-	
+		
 	// default is zero
 	public String timeArraySize;
 	public ValueEvaluatorParser timeArraySizeParser;

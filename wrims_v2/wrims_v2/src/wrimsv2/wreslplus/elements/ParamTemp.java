@@ -10,6 +10,8 @@ public class ParamTemp implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	public String fromWresl; // for test only
+	public int line=0;
 	public String id;
 	public Set<String> dependants;
 	public Set<String> dependants_unknown;

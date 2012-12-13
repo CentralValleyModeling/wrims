@@ -19,6 +19,7 @@ public class TimeseriesTemp implements Serializable {
 	public String units;
 	public String convertToUnits;
 	public String fromWresl;
+	public int line=0;
 	
 	public TimeseriesTemp(){
 

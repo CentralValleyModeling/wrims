@@ -18,6 +18,7 @@ public class AliasTemp implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public String fromWresl; // for test only
+	public int line=0;	
 	public String id;
 	public String kind;
 	public String units;
@@ -32,8 +33,7 @@ public class AliasTemp implements Serializable {
 	public Set<String> dependants_unknown;
 	public Set<String> neededVarInCycleSet;
 	public boolean needVarFromEarlierCycle;
-	public boolean isMovedToDvar;
-			
+	public boolean isMovedToDvar;	
 	
 	public AliasTemp(){
 

@@ -13,6 +13,7 @@ public class DvarTemp implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public String fromWresl; // for test only
+	public int line=0;
 	public String id;
 	public boolean isInteger;
 	public String format;
@@ -27,7 +28,7 @@ public class DvarTemp implements Serializable {
 	
 	// default is 0
 	public String timeArraySize;
-	public String arraySize;	
+	public String arraySize;
 	
 	public DvarTemp(){
 		

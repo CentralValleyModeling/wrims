@@ -18,6 +18,7 @@ public class Alias implements Serializable {
 	public String expression;
 	public ValueEvaluatorParser expressionParser;
 	public String fromWresl;
+	public int line=0;
 	public IntDouble data;
 	public Set<String> dependants;
 	public Set<String> neededVarInCycleSet;
@@ -26,7 +27,8 @@ public class Alias implements Serializable {
 	// default is zero
 	public String timeArraySize;
 	public ValueEvaluatorParser timeArraySizeParser;
-
+	
+	
 	public Alias(){
 		condition=Param.always;
 		scope=Param.undefined;

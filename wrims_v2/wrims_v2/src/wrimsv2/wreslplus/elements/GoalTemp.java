@@ -20,6 +20,7 @@ public class GoalTemp implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public String fromWresl; // for test only
+	public int line=0;
 	public String id;
 	public String condition;
 	public String lhs;
@@ -47,7 +48,7 @@ public class GoalTemp implements Serializable {
 	public ArrayList<ArrayList<String>> dvarSlackSurplusList;	
 	public ArrayList<String> slackList;
 	public ArrayList<String> surplusList;
-
+	
 	public GoalTemp(){
 		
 		lhs=null;

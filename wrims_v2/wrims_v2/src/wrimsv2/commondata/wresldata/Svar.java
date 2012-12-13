@@ -18,6 +18,7 @@ public class Svar implements Serializable {
 	
 	// These properties are the same for all Svar time array
 	public String fromWresl;
+	public int line=0;
 	public String scope;
 	public String dssBPart;
 	public String format;
@@ -35,7 +36,6 @@ public class Svar implements Serializable {
 	// default is zero
 	public String timeArraySize;
 	public ValueEvaluatorParser timeArraySizeParser;
-	
 	
 	// These are for: 
 	// (1) normal Svar if timeArraySize=0

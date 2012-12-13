@@ -9,7 +9,7 @@ public class External implements Serializable {
 	public String scope;
 	public String type;
 	public String fromWresl;
-
+	public int line=0;
 	
 	public External(){
 		scope=Param.undefined;

@@ -15,7 +15,9 @@ public class Timeseries implements Serializable {
 	public String units;
 	public String convertToUnits;
 	public String fromWresl;
+	public int line=0;
 	private IntDouble data;
+	
 	
 	public Timeseries(){
 		scope=Param.undefined;

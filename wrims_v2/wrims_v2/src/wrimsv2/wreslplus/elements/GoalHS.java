@@ -20,6 +20,7 @@ public class GoalHS implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public String fromWresl; // for test only
+	public int line=0;
 	public String id;
 	public String condition;
 	public String lhs;
@@ -30,7 +31,7 @@ public class GoalHS implements Serializable {
 	
 	public ArrayList<String> caseName;
 	public Map<String,GoalCase> caseMap;
-
+	
 	public GoalHS(){
 		
 		condition = Param.always;

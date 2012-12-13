@@ -11,7 +11,7 @@ public class WeightTemp implements Serializable {
 	public String weight;
 	public String condition;
 	public String fromWresl;
-
+	public int line=0;
 	
 	public WeightTemp(){
 		weight = Param.undefined;

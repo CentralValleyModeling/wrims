@@ -18,6 +18,7 @@ public class SvarTemp implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public String fromWresl; // for test only
+	public int line=0;
 	public String id;
 	public String kind;
 	public String units;
@@ -44,7 +45,7 @@ public class SvarTemp implements Serializable {
 	
 	// default is 0
 	public String timeArraySize;
-	public String arraySize;	
+	public String arraySize;
 	
 	public SvarTemp(){
 		
