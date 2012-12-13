@@ -408,4 +408,13 @@
        </action>
     </actionSet>
  </extension>
+ <extension point="org.eclipse.ui.console.consolePatternMatchListeners">
+  <consolePatternMatchListener
+    class="wrimsv2_plugin.debugger.console.WPPConsoleLogPatternMatcher"
+    id="wpp.consolelogpatternmatcher"
+    regex="\([a-zA-Z]:.*\.wresl:[0-9]*\)">
+    <enablement>
+    </enablement>
+  </consolePatternMatchListener>
+</extension>
 </plugin>
