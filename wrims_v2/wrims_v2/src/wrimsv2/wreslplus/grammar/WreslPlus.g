@@ -53,6 +53,7 @@ options {
   	boolean addDep = true;
   	boolean isParameter = false;
   	public int number_of_errors = 0;
+  	public int line=1;
  	
   		/// error message	
     public void displayRecognitionError(String[] tokenNames,
@@ -252,7 +253,8 @@ scope { IfIncItemGroup incg_;
         $mt::m_.glList.add($if_inc_items::incg_.id); 
         $mt::m_.gl2List.add($if_inc_items::incg_.id); 
         //$if_inc_items::incg_.dependants = dependants;
-        $if_inc_items::incg_.fromWresl = this.currentAbsolutePath; 
+        $if_inc_items::incg_.fromWresl = this.currentAbsolutePath;
+        $if_inc_items::incg_.line=line; 
        // $mt::m_.wTableObjList.add($if_inc_items::incg_.id);         
 
 }
@@ -261,7 +263,7 @@ scope { IfIncItemGroup incg_;
 if_ 
 @init{ dependants = new LinkedHashSet<String>(); }
   :
-  If e=logical_main {$if_inc_items::incg_.dependants.addAll(dependants);}
+  If{line=$If.line;} e=logical_main {$if_inc_items::incg_.dependants.addAll(dependants);}
   '{' include_item_group '}' 
   {$if_inc_items::incg_.conditionList.add($e.text);};
   
@@ -361,22 +363,25 @@ scope { WeightTable wt_;
       } 
 @init{ $weight::wt_ = new WeightTable(); 
        $weight::wt_.fromWresl = this.currentAbsolutePath; 
+       $weight::wt_.line = line;
        dependants = new LinkedHashSet<String>();
 	 }
 @after{ $id = $weight::wt_.id_lowcase; $wtObj=$weight::wt_; $wtObj.dependants= dependants;}	 
 	: weight_legacy | weight_new ;
 
-weight_legacy : OBJECTIVE (local_deprecated)? objGroupName '='? '{' weight_legacy_unit+ '}'  ;
+weight_legacy : OBJECTIVE{line=$OBJECTIVE.line;} (local_deprecated)? objGroupName '='? '{' weight_legacy_unit+ '}'  ;
 
 //obj : 'obj' | 'Obj' | 'OBJ' ;
 objGroupName : i=ID {$weight::wt_.id_lowcase=$i.text.toLowerCase();
                      $weight::wt_.id_raw=$i.text;} ;
 
 weight_legacy_unit 
-	: '[' i=ID ',' e=expr_add ']' ','?
-	{$weight::wt_.varList.add($i.text);$weight::wt_.varWeightMap.put($i.text,$e.text);};
+	: '[' i=ID{line=$i.line;} ',' e=expr_add ']' ','?
+	{$weight::wt_.varList.add($i.text);
+	$weight::wt_.varWeightMap.put($i.text,$e.text);
+	$weight::wt_.varLineMap.put($i.text, line);};
 
-weight_new : OBJECTIVE weightTableID '{' weight_group '}'  ;
+weight_new : OBJECTIVE{line=$OBJECTIVE.line;} weightTableID '{' weight_group '}'  ;
 
 weightTableID : i=ID {$weight::wt_.id_lowcase=$i.text.toLowerCase();
                       $weight::wt_.id_raw=$i.text;
@@ -446,9 +451,10 @@ scope { GoalTemp gl_;
         $glObj=$goal_s::gl_; 
         $glObj.dependants= dependants;
         $glObj.neededVarInCycleSet= varInCycle;
-        $glObj.needVarFromEarlierCycle = (varInCycle!=null);}	 
+        $glObj.needVarFromEarlierCycle = (varInCycle!=null);
+        $glObj.line=line;}	 
 
-	: GOAL (local_deprecated)? i=ID  '{' ( e=expr_constraint )'}' 
+	: GOAL{line=$GOAL.line;} (local_deprecated)? i=ID  '{' ( e=expr_constraint )'}' 
 	{$goal_s::gl_.id=$i.text; 
 	 $goal_s::gl_.caseCondition.add(Param.always);
 	 $goal_s::gl_.caseName.add(Param.defaultCaseName);
@@ -469,8 +475,9 @@ scope { GoalTemp gl_;
         $glObj=$goal_hs::gl_; 
         $glObj.dependants= dependants;
         $glObj.neededVarInCycleSet= varInCycle;
-        $glObj.needVarFromEarlierCycle = (varInCycle!=null);}	 
-	: GOAL (local_deprecated)? i=ID  {$goal_hs::gl_.id=$i.text;}
+        $glObj.needVarFromEarlierCycle = (varInCycle!=null);
+        $glObj.line=line;}	 
+	: GOAL{line=$GOAL.line;} (local_deprecated)? i=ID  {$goal_hs::gl_.id=$i.text;}
 	  '{' lhs 
 	  ( goal_hs_nocase 		
 	  | goal_hs_cases 
@@ -521,12 +528,13 @@ scope { AliasTemp as_;}
         $asObj=$alias::as_; 
         $asObj.dependants= dependants;
         $asObj.neededVarInCycleSet= varInCycle;
-        $asObj.needVarFromEarlierCycle = (varInCycle!=null);}	 
+        $asObj.needVarFromEarlierCycle = (varInCycle!=null);
+        $asObj.line=line;}	 
 	: alias_new | alias_old
  	;
 
-alias_old : DEFINE (local_deprecated)? aliasID '{' ALIAS  aliasExpresion  aliasKind?  aliasUnits?  '}' ;
-alias_new : ALIAS aliasID '{' aliasExpresion  aliasKind?  aliasUnits? '}' ;
+alias_old : DEFINE{line=$DEFINE.line;} (local_deprecated)? aliasID '{' ALIAS  aliasExpresion  aliasKind?  aliasUnits?  '}' ;
+alias_new : ALIAS{line=$ALIAS.line;} aliasID '{' aliasExpresion  aliasKind?  aliasUnits? '}' ;
 
 aliasExpresion : e=expr_add {$alias::as_.expression=$e.text;}; 
 aliasID : i=ID {$alias::as_.id=$i.text;}; 
@@ -536,7 +544,7 @@ aliasKind:  KIND s=QUOTE {$alias::as_.kind=Tools.strip($s.text);};
 /// svar
 
 svar_group returns[String id, SvarTemp svObj]
-  : ( SVAR | DEFINE (local_deprecated)? ) svar_g { $id=$svar_g.id;  $svObj=$svar_g.svObj;  } ;
+  : ( SVAR{line=$SVAR.line;} | DEFINE{line=$DEFINE.line;} (local_deprecated)? ) svar_g { $id=$svar_g.id;  $svObj=$svar_g.svObj;  $svObj.line=line;} ;
 
 svar_g returns[String id, SvarTemp svObj]
 scope { SvarTemp sv_;
@@ -645,11 +653,12 @@ scope { TimeseriesTemp ts_;
 	 }
 @after{ $id = $timeseries::ts_.id; 
         $tsObj = $timeseries::ts_; 
+        $tsObj.line = line;
 	 }
 	: timeseries_new | timeseries_old ;
 
-timeseries_new : TIMESERIES tsID      '{' (NAME      bpart_id)? tsKind tsUnits convert? '}' ;
-timeseries_old : DEFINE (local_deprecated)? tsID   '{' TIMESERIES bpart_id? tsKind tsUnits convert? '}' ;
+timeseries_new : TIMESERIES{line=$TIMESERIES.line;} tsID      '{' (NAME      bpart_id)? tsKind tsUnits convert? '}' ;
+timeseries_old : DEFINE{line=$DEFINE.line;} (local_deprecated)? tsID   '{' TIMESERIES bpart_id? tsKind tsUnits convert? '}' ;
 			
 tsID : i=ID {$timeseries::ts_.id=$i.text;$timeseries::ts_.dssBPart=$i.text;} ;			
 tsUnits: UNITS s=QUOTE {$timeseries::ts_.units=Tools.strip($s.text);} ;
@@ -710,12 +719,13 @@ scope { ExternalTemp ex_;
 	 }
 @after{ $id = $ex_g::ex_.id; 
         $exObj = $ex_g::ex_; 
+        $exObj.line=line;
 	 }
 	 : ex_old ; //| ex_new ;
 
 ex_id : i=ID {$ex_g::ex_.id=$i.text;} ;
 
-ex_old : DEFINE (local_deprecated)? ex_id '{' EXTERNAL f=ex_fileName {$ex_g::ex_.fileName=$f.text;} '}' ;
+ex_old : DEFINE{line=$DEFINE.line;} (local_deprecated)? ex_id '{' EXTERNAL f=ex_fileName {$ex_g::ex_.fileName=$f.text;} '}' ;
 
 ex_fileName : ID ('.' ID)? ;
 
@@ -737,14 +747,14 @@ scope { DvarTemp dvar_;
 @init{ $dvar_g::dvar_ = new DvarTemp(); 
        $dvar_g::dvar_.fromWresl = this.currentAbsolutePath; 
 	 }
-@after{ $id= $dvar_g::id_; $dvObj= $dvar_g::dvar_; }
+@after{ $id= $dvar_g::id_; $dvObj= $dvar_g::dvar_; $dvObj.line=line; }
 	: ( dvar_group_new | dvar_group_old ) 
 	;
 
 dvarID : i=ID { $dvar_g::dvar_.id=$i.text; $dvar_g::id_=$i.text; };
 
-dvar_group_old: DEFINE (local_deprecated)? dvar ;
-dvar_group_new: DVAR    dvar ;
+dvar_group_old: DEFINE{line=$DEFINE.line;} (local_deprecated)? dvar ;
+dvar_group_new: DVAR{line=$DVAR.line;}    dvar ;
 
 dvar: (dvarArray|dvarTimeArray)? dvarID '{' dvar_trunk '}'  ;
 

@@ -577,6 +577,7 @@ public class ToWreslData {
 		Svar o = new Svar();
 		try {
 			o.fromWresl = s.fromWresl;
+			o.line = s.line;
 		} catch (Exception e) {
 			System.out.println("#### error");
 			System.out.println("svarName: "+s.id);
@@ -610,6 +611,7 @@ public class ToWreslData {
 		Svar o = new Svar();
 		try {
 			o.fromWresl = s.fromWresl;
+			o.line = s.line;
 		} catch (Exception e) {
 			System.out.println("#### error");
 			System.out.println("svarName: "+s.id);
@@ -643,6 +645,7 @@ public class ToWreslData {
 		Timeseries o = new Timeseries();
 		
 		o.fromWresl = t.fromWresl;
+		o.line = t.line;
 		o.dssBPart = t.dssBPart;
 		o.convertToUnits = t.convertToUnits;
 		o.kind = t.kind;
@@ -657,6 +660,7 @@ public class ToWreslData {
 		Dvar o = new Dvar();
 		
 		o.fromWresl = d.fromWresl;
+		o.line = d.line;
 		o.lowerBound = d.lowerBound;
 		o.upperBound = d.upperBound;
 		o.kind = d.kind;
@@ -674,6 +678,7 @@ public class ToWreslData {
 		WeightElement o = new WeightElement();
 		
 		o.fromWresl = w.fromWresl;
+		o.line = w.line;
 		o.condition = w.condition;
 		o.weight = w.weight;
 
@@ -694,6 +699,7 @@ public class ToWreslData {
 			WeightElement o = new WeightElement();
 		
 			o.fromWresl = w.fromWresl;
+			o.line = w.varLineMap.get(s);
 			o.condition = w.condition;
 			o.weight = w.varWeightMap.get(s);
 			
@@ -714,6 +720,7 @@ public class ToWreslData {
 			WeightElement o = new WeightElement();
 		
 			o.fromWresl = w.fromWresl;
+			o.line = w.line;
 			o.condition = w.condition;
 			o.weight = w.commonWeight;
 			
@@ -730,6 +737,7 @@ public class ToWreslData {
 				WeightElement o = new WeightElement();
 			
 				o.fromWresl = w.fromWresl;
+				o.line = w.line;
 				o.condition = w.condition;
 				o.weight = w.commonWeight;
 				
@@ -746,6 +754,7 @@ public class ToWreslData {
 		External o = new External();
 		
 		o.fromWresl = e.fromWresl;
+		o.line = e.line;
 		o.type = e.fileName;
 		
 		return o;
@@ -758,6 +767,7 @@ public class ToWreslData {
 		Goal o = new Goal();
 		
 		o.fromWresl = g.fromWresl;
+		o.line = g.line;
 		o.caseName = g.caseName;
 		o.expressionDependants = g.dependants;
 		o.neededVarInCycleSet = g.neededVarInCycleSet;
@@ -788,6 +798,7 @@ public class ToWreslData {
 		Alias o = new Alias();
 		
 		o.fromWresl = d.fromWresl;
+		o.line = d.line;
 		o.expression = Tools.replace_seperator(d.expression);
 		o.kind = d.kind;
 		o.units = d.units;

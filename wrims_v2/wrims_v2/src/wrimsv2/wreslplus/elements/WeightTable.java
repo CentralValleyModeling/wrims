@@ -21,6 +21,7 @@ public class WeightTable implements Serializable {
 	public Set<String> dependants;
 	public ArrayList<String> varList;
 	public Map<String,String> varWeightMap;
+	public Map<String,Integer> varLineMap;
 	public String commonWeight;
 	public String deviationPenalty;
 	public String deviationTolerance;
@@ -37,6 +38,7 @@ public class WeightTable implements Serializable {
 		dependants = new LinkedHashSet<String>();
 		varList = new ArrayList<String>();
 		varWeightMap = new LinkedHashMap<String, String>();
+		varLineMap = new LinkedHashMap<String, Integer>();
 		commonWeight = Param.undefined;
 		deviationPenalty = Param.zero;
 		deviationTolerance = Param.zero;

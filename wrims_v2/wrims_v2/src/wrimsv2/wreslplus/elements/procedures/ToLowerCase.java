@@ -170,6 +170,7 @@ public class ToLowerCase {
 		
 		o.id = s.id;
 		o.fromWresl = s.fromWresl.toLowerCase();
+		o.line = s.line;
 		o.kind = s.kind.toLowerCase();
 		o.units = s.units.toLowerCase();
 		o.caseName = Tools.allToLowerCase(s.caseName);
@@ -200,6 +201,7 @@ public class ToLowerCase {
 		
 		o.id = t.id;
 		o.fromWresl = t.fromWresl.toLowerCase();
+		o.line = t.line;
 		o.dssBPart = t.dssBPart.toLowerCase();
 		o.convertToUnits = t.convertToUnits.toLowerCase();
 		o.kind = t.kind.toLowerCase();
@@ -217,6 +219,7 @@ public class ToLowerCase {
 		
 		o.id = d.id;
 		o.fromWresl = d.fromWresl.toLowerCase();
+		o.line = d.line;
 		o.lowerBound = d.lowerBound.toLowerCase();
 		o.upperBound = d.upperBound.toLowerCase();
 		o.kind = d.kind.toLowerCase();
@@ -236,6 +239,7 @@ public class ToLowerCase {
 		
 		o.id = w.id;
 		o.fromWresl = w.fromWresl.toLowerCase();
+		o.line = w.line;
 		o.condition = w.condition.toLowerCase();
 		o.weight = w.weight.toLowerCase();
 		
@@ -252,9 +256,11 @@ public class ToLowerCase {
 		o.id_raw = w.id_raw;
 		o.line = w.line;
 		o.fromWresl = w.fromWresl.toLowerCase();
+		o.line = w.line;
 		o.condition = w.condition.toLowerCase();
 		o.varList = Tools.allToLowerCase(w.varList);
 		o.varWeightMap = Tools.allToLowerCase_string(w.varWeightMap);
+		o.varLineMap = Tools.allToLowerCaseString(w.varLineMap);
 		o.subgroupMap = Tools.allToLowerCase_weightSubgroup(w.subgroupMap);
 		o.dependants = Tools.allToLowerCase(w.dependants);
 		o.commonWeight = w.commonWeight.toLowerCase();
@@ -273,6 +279,7 @@ public class ToLowerCase {
 		
 		o.id = e.id;
 		o.fromWresl = e.fromWresl.toLowerCase();
+		o.line = e.line;
 		o.fileName = e.fileName.toLowerCase();
 		
 		return o;
@@ -297,6 +304,7 @@ public class ToLowerCase {
 			
 		o.id = g.id;
 		o.fromWresl = g.fromWresl.toLowerCase();
+		o.line = g.line;
 		o.caseName = Tools.allToLowerCase(g.caseName);
 		o.dependants = Tools.allToLowerCase(g.dependants);
 		o.neededVarInCycleSet = Tools.allToLowerCase(g.neededVarInCycleSet);
@@ -336,6 +344,7 @@ public class ToLowerCase {
 		
 		o.id = d.id;
 		o.fromWresl = d.fromWresl.toLowerCase();
+		o.line = d.line;
 		o.expression = d.expression.toLowerCase();
 		o.kind = d.kind.toLowerCase();
 		o.units = d.units.toLowerCase();
@@ -386,6 +395,7 @@ public class ToLowerCase {
 		
 		o.id = w.id;
 		o.fromWresl = w.fromWresl.toLowerCase();
+		o.line = w.line;
 		o.dependants = Tools.allToLowerCase(w.dependants);
 		o.conditionList =  Tools.allToLowerCase(w.conditionList);
 

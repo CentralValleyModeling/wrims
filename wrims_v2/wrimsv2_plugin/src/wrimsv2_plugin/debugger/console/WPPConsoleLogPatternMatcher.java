@@ -43,7 +43,7 @@ public class WPPConsoleLogPatternMatcher implements IPatternMatchListenerDelegat
 			String canonicalPath = sourceFile.getCanonicalPath();
 			IPath path = new Path(canonicalPath);
 			IFile file = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(path);
-			console.addHyperlink(new FileLink(file, null, 0, 0, line), event.getOffset(), event.getLength());
+			console.addHyperlink(new FileLink(file, null, -1, -1, line), event.getOffset(), event.getLength());
 		} catch (Exception e) {
 			WPPException.handleException(e);
 		} 

@@ -139,6 +139,16 @@ public class Tools {
 		
 		return out;
 	}
+	public static Map<String,Integer> allToLowerCaseString(Map<String,Integer> inMap){
+		
+		Map<String,Integer> out = new LinkedHashMap<String, Integer>();
+		
+		for (String s: inMap.keySet()){
+			out.put(s.toLowerCase(),inMap.get(s));
+		}
+		
+		return out;
+	}
 	public static LinkedHashMap<String,WeightSubgroup> allToLowerCase_weightSubgroup(Map<String,WeightSubgroup> inMap){
 		
 		LinkedHashMap<String,WeightSubgroup> out = new LinkedHashMap<String, WeightSubgroup>();
