@@ -18,7 +18,7 @@ public class Svar implements Serializable {
 	
 	// These properties are the same for all Svar time array
 	public String fromWresl;
-	public int line=0;
+	public int line=1;
 	public String scope;
 	public String dssBPart;
 	public String format;

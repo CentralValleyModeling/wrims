@@ -15,7 +15,7 @@ public class Timeseries implements Serializable {
 	public String units;
 	public String convertToUnits;
 	public String fromWresl;
-	public int line=0;
+	public int line=1;
 	private IntDouble data;
 	
 	

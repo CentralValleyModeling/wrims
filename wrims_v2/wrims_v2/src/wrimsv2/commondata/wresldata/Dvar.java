@@ -13,7 +13,7 @@ public class Dvar implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public String fromWresl;
-	public int line=0;
+	public int line=1;
 	public String scope;
 	public String integer;
 	public String format;

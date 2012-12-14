@@ -12,7 +12,7 @@ public class WeightElement implements Serializable {
 	public ValueEvaluatorParser weightParser;
 	public ValueEvaluatorParser conditionParser;
 	public String fromWresl;
-	public int line=0;
+	public int line=1;
 	private double value;
 	
 	// default is zero

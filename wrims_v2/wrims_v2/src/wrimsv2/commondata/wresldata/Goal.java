@@ -28,7 +28,7 @@ public class Goal implements Serializable {
 	public Set<String> expressionDependants;
 	public ArrayList<EvaluatorParser> caseExpressionParsers;
 	public String fromWresl;
-	public int line=0;
+	public int line=1;
 	public Set<String> neededVarInCycleSet;
 	public boolean needVarFromEarlierCycle;
 	

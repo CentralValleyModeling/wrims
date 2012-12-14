@@ -18,7 +18,7 @@ public class Alias implements Serializable {
 	public String expression;
 	public ValueEvaluatorParser expressionParser;
 	public String fromWresl;
-	public int line=0;
+	public int line=1;
 	public IntDouble data;
 	public Set<String> dependants;
 	public Set<String> neededVarInCycleSet;
