@@ -133,6 +133,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ID_WPP_VARIABLEMONITOR_VIEW="wpp.varmonitorview";
 	public static final String ID_WPP_GOAL_VIEW="wpp.goalview";
 	public static final String ID_WPP_ALLGOAL_VIEW="wpp.allgoalview";
+	public static final String ID_WPP_FILEINCEXPLORE_VIEW = "wpp.fileincexploreview";
 	public static final String ID_WPP_EDITOR="wpp.editor";
 	public static final String ID_WPP_RESUMEMENU="wpp.resume";
 	public static final String ID_WPP_TERMINATEMENU="wpp.terminate";
@@ -187,6 +188,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	
 	public static String hoverText="";
 	
+	public static ArrayList<String> fileFolderWreslInc=new ArrayList<String>();
 	/**
 	 * The constructor.
 	 */
