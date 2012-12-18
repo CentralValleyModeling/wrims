@@ -6,12 +6,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Date;
+import java.util.Properties;
+
 
 import org.antlr.runtime.RecognitionException;
 import org.apache.commons.io.FilenameUtils;
 
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.StudyDataSet;
+import wrimsv2.components.BuildProps;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
 import wrimsv2.components.Versions;
@@ -87,7 +91,9 @@ public class StudyUtils {
 		File mainWreslFile = sanityCheck(inMainWreslPath);
 
 		LogUtils.setLogFile(mainWreslFile.getParentFile().getCanonicalPath(), logFileName);
-		LogUtils.titleMsg(Param.wreslChekerName + " 2.0 SVN 2589");
+
+		LogUtils.titleMsg(Param.wreslChekerName + new BuildProps().getSVN());
+
 			
 		try {
 			
