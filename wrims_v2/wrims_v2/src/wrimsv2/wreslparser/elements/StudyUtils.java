@@ -87,7 +87,7 @@ public class StudyUtils {
 		File mainWreslFile = sanityCheck(inMainWreslPath);
 
 		LogUtils.setLogFile(mainWreslFile.getParentFile().getCanonicalPath(), logFileName);
-		LogUtils.titleMsg(Param.wreslChekerName + new Versions().getComplete());
+		LogUtils.titleMsg(Param.wreslChekerName + " 2.0 SVN 2589");
 			
 		try {
 			
