@@ -14,7 +14,7 @@ public class BuildProps {
 		//buildProps.put("version", "2.0");
 		try {
 			buildProps.load(getClass().getResourceAsStream(
-					"/wrimsv2/schematic/build.props"));
+					"/wrimsv2/version.props"));
 		} catch (Exception e) {
 			buildProps.put("svn", "NOT BUILT EVER - DEV Env");
 			buildProps.put("buildtime", "" + new Date());
