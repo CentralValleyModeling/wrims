@@ -15,8 +15,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import wrimsv2.commondata.wresldata.Param;
+import wrimsv2.components.BuildProps;
 import wrimsv2.components.ControlData;
-import wrimsv2.components.Versions;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyParser;
 import wrimsv2.wreslparser.elements.StudyUtils;
@@ -26,7 +26,7 @@ public class WreslCheckGUI {
 	
 	public static void main(String[] args) {
 				
-		JFrame frame = new JFrame(Param.wreslChekerName + new Versions().getComplete());
+		JFrame frame = new JFrame(Param.wreslChekerName + new BuildProps().getSVN());
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		JPanel wreslCheckPanel = new JPanel();
 		wreslCheckPanel.setLayout(new BoxLayout(wreslCheckPanel, BoxLayout.Y_AXIS));

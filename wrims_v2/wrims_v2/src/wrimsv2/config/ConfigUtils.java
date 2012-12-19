@@ -12,9 +12,9 @@ import java.util.Set;
 import org.antlr.runtime.RecognitionException;
 import org.apache.commons.io.FilenameUtils;
 
+import wrimsv2.components.BuildProps;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
-import wrimsv2.components.Versions;
 import wrimsv2.components.Error;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.ilp.ILP;
@@ -38,7 +38,7 @@ public class ConfigUtils {
 		// print version number then exit
 		if (args.length==1 && args[0].equalsIgnoreCase("-version") ) {
 		
-			System.out.println("WRIMS "+new Versions().getComplete());
+			System.out.println("WRIMS "+new BuildProps().getSVN());
 			System.exit(0);
 		}
 		
