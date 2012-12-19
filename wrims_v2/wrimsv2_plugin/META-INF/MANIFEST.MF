@@ -36,6 +36,7 @@ Require-Bundle: org.eclipse.ui,
  gov.ca.dwr.hecdssvue;bundle-version="1.0.0"
 Export-Package: wrimsv2_plugin.debugger,
  wrimsv2_plugin.debugger.breakpoint,
+ wrimsv2_plugin.debugger.commanditem,
  wrimsv2_plugin.debugger.core,
  wrimsv2_plugin.debugger.exception,
  wrimsv2_plugin.debugger.launcher,
@@ -54,6 +55,8 @@ Bundle-ClassPath: lib/gridUtil.jar,
  lib/images.jar,
  lib/rma.jar,
  lib/dssvueHelp.jar,
+ lib/commons-io-2.1.jar,
+ lib/WRIMSv2.jar,
  .
 Bundle-Activator: wrimsv2_plugin.debugger.core.DebugCorePlugin
 Bundle-ActivationPolicy: lazy

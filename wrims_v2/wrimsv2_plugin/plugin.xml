@@ -9,16 +9,6 @@
            id="wpp.category.wrims2"
            name="WRIMS2">
         </category>
-        <view id="wpp.fileincexploreview"
-             name="WRESL Included"
-             category="wpp.category.wrims2"
-          class="wrimsv2_plugin.debugger.view.WPPFileIncExploreView"/>
-</extension>
-<extension point="org.eclipse.ui.views">
-        <category 
-           id="wpp.category.wrims2"
-           name="WRIMS2">
-        </category>
         <view id="wpp.variableview"
              name="Variables"
              category="wpp.category.wrims2"
@@ -194,6 +184,47 @@
           id="wpp.varmonitorview">
     </view>
 </extension>
+<extension point="org.eclipse.ui.views">
+        <category 
+           id="wpp.category.wrims2"
+           name="WRIMS2">
+        </category>
+        <view id="wpp.fileincexploreview"
+             name="WRESL Included"
+             category="wpp.category.wrims2"
+          class="wrimsv2_plugin.debugger.view.WPPFileIncExploreView"/>
+</extension>
+<extension
+	point="org.eclipse.ui.commands">
+	<command
+		description="List included WRESL in a study"
+		id="wpp.studywresl"
+		defaultHandler="wrimsv2_plugin.debugger.commanditem.StudyWresl"
+		name="Study WRESL">
+	</command>
+</extension>
+<extension point="org.eclipse.ui.menus">
+        <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         	<command 
+         	commandId="wpp.studywresl"
+            style="push">
+            <visibleWhen checkEnabled="false">
+              <with variable="selection">
+                 <iterate ifEmpty="false" operator="or">
+                    <adapt type="org.eclipse.core.resources.IResource">
+                       <or>
+                          <test property="org.eclipse.core.resources.extension"
+                                value="wresl">
+                          </test>
+                       </or>
+                    </adapt>
+                 </iterate>
+              </with>
+           </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
 <extension
          point="org.eclipse.debug.ui.launchConfigurationTabGroups">
       <launchConfigurationTabGroup

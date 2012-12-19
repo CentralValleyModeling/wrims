@@ -10,5 +10,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/images.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/rma.jar"/>
 	<classpathentry kind="lib" path="lib/dssvueHelp.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.1.jar"/>
+	<classpathentry kind="lib" path="lib/WRIMSv2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
