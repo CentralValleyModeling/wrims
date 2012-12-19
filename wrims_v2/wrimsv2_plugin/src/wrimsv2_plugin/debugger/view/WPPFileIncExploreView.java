@@ -5,6 +5,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -15,6 +21,13 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.IEditorDescriptor;
+import org.eclipse.ui.IEditorRegistry;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
@@ -98,30 +111,49 @@ public class WPPFileIncExploreView extends ViewPart {
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer.setContentProvider(new FileIncContentProvider());
 		viewer.setLabelProvider(new FileLabelProvider());
-		viewer.setInput(File.listRoots());
+		File[] files=File.listRoots();
+		viewer.setInput(files);
 		viewer.addOpenListener(new IOpenListener() {
 			@Override
 			public void open(OpenEvent event) {
 				IStructuredSelection selection = (IStructuredSelection) event
 						.getSelection();
 
-				File file = (File) selection.getFirstElement();
-				if (Desktop.isDesktopSupported()) {
-					Desktop desktop = Desktop.getDesktop();
-					if (desktop.isSupported(Desktop.Action.OPEN)) {
-						try {
-							desktop.open(file);
-						} catch (IOException e) {
+				File firstEle = (File)selection.getFirstElement();
+				IWorkspace workspace= ResourcesPlugin.getWorkspace();    
+				IPath location= Path.fromOSString(firstEle.getAbsolutePath()); 
+				final IFile ifile= workspace.getRoot().getFileForLocation(location);
+				final IWorkbench workbench=PlatformUI.getWorkbench();
+				workbench.getDisplay().asyncExec(new Runnable(){
+		    		public void run(){
+		    			String fn=ifile.getName();
+		    			IEditorRegistry registry = workbench.getEditorRegistry();
+		    			IEditorDescriptor desc = registry.getDefaultEditor(fn);
+		    			try {
+							workbench.getActiveWorkbenchWindow().getActivePage().openEditor(new FileEditorInput(ifile), desc.getId());
+						} catch (PartInitException e) {
 							WPPException.handleException(e);
 						}
-					}
-				}
+		    		}
+				});
 			}
 		});
 	}
 
 	public void setFocus() {
 		viewer.getControl().setFocus();
+	}
+	
+	public void update(){
+		Tree tree=viewer.getTree();
+		File[] roots=File.listRoots();
+		ArrayList<File> rootArray=new ArrayList<File> ();
+		for (int i=0; i<roots.length; i++){
+			if (DebugCorePlugin.fileFolderWreslInc.contains(roots[i].getAbsolutePath().toLowerCase())) rootArray.add(roots[i]);
+		}
+		File[] newRoots=rootArray.toArray(new File[rootArray.size()]);
+		viewer.setInput(newRoots);
+		tree.update();
 	}
 }
 
