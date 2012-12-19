@@ -20,4 +20,12 @@ public class FileProcess {
 		}
 		return allFiles;
 	}
+	
+	public static boolean isWreslFile(String path){
+		if (path.toLowerCase().endsWith(".wresl")){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }

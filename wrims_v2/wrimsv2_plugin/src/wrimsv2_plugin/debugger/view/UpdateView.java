@@ -23,6 +23,7 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.model.WPPValue;
 import wrimsv2_plugin.tools.DataProcess;
+import wrimsv2_plugin.tools.FileProcess;
 
 public class UpdateView {
 	
@@ -44,8 +45,10 @@ public class UpdateView {
 			public void run(){
 				IWorkbenchPage workBenchPage = workbench.getActiveWorkbenchWindow().getActivePage();
 				String filePath=findFilePathActiveEditor(workBenchPage);
-				updateVariableView(target, filePath);
-				updateGoalView(target, filePath);
+				if (FileProcess.isWreslFile(filePath)) {
+					updateVariableView(target, filePath);
+					updateGoalView(target, filePath);
+				}
 			}
 		});
 	}
@@ -56,13 +59,13 @@ public class UpdateView {
 			updateAllVariableView(target);
 		}else if (viewName.equals(DebugCorePlugin.TITLE_VARIABLES_VIEW)){
 			monitor.subTask("Update variables in current file");
-			updateVariableView(target, filePath);
+			if (FileProcess.isWreslFile(filePath)) updateVariableView(target, filePath);
 		}else if (viewName.equals(DebugCorePlugin.TITLE_ALLGOALS_VIEW)){
 			monitor.subTask("Update all goals");
 			updateAllGoalView(target);
 		}else if (viewName.equals(DebugCorePlugin.TITLE_GOALS_VIEW)){
 			monitor.subTask("Update goals in current file");
-			updateGoalView(target, filePath);
+			if (FileProcess.isWreslFile(filePath)) updateGoalView(target, filePath);
 		}else if (viewName.equals(DebugCorePlugin.TITLE_WATCH_VIEW)){
 			monitor.subTask("Update watched data");
 			updateWatchView(target);
@@ -73,11 +76,11 @@ public class UpdateView {
 		if (viewName.equals(DebugCorePlugin.TITLE_ALLVARIABLES_VIEW)){
 			updateAllVariableViewWithMonitor(target);
 		}else if (viewName.equals(DebugCorePlugin.TITLE_VARIABLES_VIEW)){
-			updateVariableView(target, filePath);
+			if (FileProcess.isWreslFile(filePath)) updateVariableView(target, filePath);
 		}else if (viewName.equals(DebugCorePlugin.TITLE_ALLGOALS_VIEW)){
 			updateAllGoalViewWithMonitor(target);
 		}else if (viewName.equals(DebugCorePlugin.TITLE_GOALS_VIEW)){
-			updateGoalView(target, filePath);
+			if (FileProcess.isWreslFile(filePath)) updateGoalView(target, filePath);
 		}else if (viewName.equals(DebugCorePlugin.TITLE_WATCH_VIEW)){
 			updateWatchView(target);
 		}
