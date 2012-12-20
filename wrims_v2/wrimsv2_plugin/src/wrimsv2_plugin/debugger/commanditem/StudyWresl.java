@@ -30,7 +30,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 
 import wrimsv2.commondata.wresldata.StudyDataSet;
-import wrimsv2.wreslparser.elements.StudyUtils;
+import wrimsv2.debug.Compile;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
@@ -62,20 +62,20 @@ public class StudyWresl extends AbstractHandler {
 							dialog.run(true,false, new IRunnableWithProgress() {
 								public void run(IProgressMonitor monitor) {
 									monitor.beginTask("Update explorer for included WRESL files", 100);
-									StudyDataSet sds;
+									StudyDataSet sds=new StudyDataSet();
 									try {
-										sds = StudyUtils.checkStudy(path);
-										monitor.worked(50);
-										ArrayList<String> fns=FileProcess.getStudyWreslFiles(path, sds);
-										monitor.worked(20);
-										DebugCorePlugin.fileFolderWreslInc=FileProcess.retrieveFileNames(fns);
-										monitor.worked(20);
-										UpdateWreslIncExplore();
-										monitor.done();
+										sds = Compile.checkStudy(path, true);
 									} catch (IOException e) {
 										WPPException.handleException(e);
-										monitor.done();
 									}
+									monitor.worked(50);
+									ArrayList<String> fns=FileProcess.getStudyWreslFiles(path, sds);
+									monitor.worked(20);
+									DebugCorePlugin.fileFolderWreslInc=FileProcess.retrieveFileNames(fns);
+									monitor.worked(20);
+									UpdateWreslIncExplore();
+									monitor.done();
+									
 								}
 							});
 						} catch (InvocationTargetException e) {

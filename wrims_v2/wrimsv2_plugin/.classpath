@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="lib/dssvueHelp.jar"/>
 	<classpathentry kind="lib" path="lib/commons-io-2.1.jar"/>
 	<classpathentry kind="lib" path="lib/WRIMSv2.jar"/>
+	<classpathentry kind="lib" path="lib/guava-11.0.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -57,6 +57,7 @@ Bundle-ClassPath: lib/gridUtil.jar,
  lib/dssvueHelp.jar,
  lib/commons-io-2.1.jar,
  lib/WRIMSv2.jar,
+ lib/guava-11.0.2.jar,
  .
 Bundle-Activator: wrimsv2_plugin.debugger.core.DebugCorePlugin
 Bundle-ActivationPolicy: lazy
