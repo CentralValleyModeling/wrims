@@ -509,11 +509,12 @@ public class DebugInterface {
 			ArrayList<String> svList = fileDataSet.svList;
 			ArrayList<String> asList = fileDataSet.asList;
 			ArrayList<String> tsList = fileDataSet.tsList;
-			ArrayList<String> sortedList=fileDataSet.asList;
 			asList.removeAll(dvList);
+			ArrayList<String> sortedList=new ArrayList<String>();
 			sortedList.addAll(dvList);
 			sortedList.addAll(svList);
 			sortedList.addAll(tsList);
+			sortedList.addAll(asList);
 			
 			ArrayList<String> gList = fileDataSet.gList;
 			for (String gName:gList){
@@ -634,10 +635,10 @@ public class DebugInterface {
 				gList = modelTemp.glList;
 				gMap = modelTemp.glMap;
 				asList.removeAll(dvList);
-				sortedList.addAll(asList);
 				sortedList.addAll(dvList);
 				sortedList.addAll(svList);
 				sortedList.addAll(tsList);
+				sortedList.addAll(asList);
 				for (String gName:gList){
 					if (gMap.containsKey(gName)){
 						Set<String> dependants = gMap.get(gName).dependants;
@@ -684,12 +685,12 @@ public class DebugInterface {
 			tsList = modelTemp.tsList;
 			gList = modelTemp.glList;
 			gMap = modelTemp.glMap;
-			sortedList = asList;
+			sortedList = new ArrayList<String>();
 			asList.removeAll(dvList);
 			sortedList.addAll(dvList);
-			sortedList.addAll(parameterList);
 			sortedList.addAll(svList);
 			sortedList.addAll(tsList);
+			sortedList.addAll(asList);
 			for (String gName:gList){
 				if (gMap.containsKey(gName)){
 					Set<String> dependants = gMap.get(gName).dependants;
@@ -1136,8 +1137,10 @@ public class DebugInterface {
 	
 	public String getWatch(String vGNameString){
 		String dataString="";
-		String modelName=ControlData.currStudyDataSet.getModelList().get(ControlData.currCycleIndex);
-		ModelDataSet mds=ControlData.currStudyDataSet.getModelDataSetMap().get(modelName);
+		StudyDataSet sds=ControlData.currStudyDataSet;
+		String modelName=sds.getModelList().get(ControlData.currCycleIndex);
+		ModelDataSet mds=sds.getModelDataSetMap().get(modelName);
+		Map<String, Svar> parameterMap = sds.getParameterMap();
 		Map<String, Timeseries> tsMap = mds.tsMap;
 		Map<String, Dvar> dvMap = SolverData.getDvarMap();
 		Map<String, Svar> svMap = mds.svMap;
@@ -1184,6 +1187,13 @@ public class DebugInterface {
 				if (intDouble != null) {
 					dataString=dataString+vGName+":"+df.format(intDouble.getData())+"#";
 					partsMap.put(vGName, as.kind+":"+ControlData.timeStep);
+				}
+			}else if(parameterMap.containsKey(vGName)){
+				Svar sv=parameterMap.get(vGName);
+				intDouble=sv.getData();
+				if (intDouble !=null) {
+					dataString=dataString+vGName+":"+df.format(intDouble.getData())+"#";
+					partsMap.put(vGName, sv.kind+":"+ControlData.timeStep);
 				}
 			}else if (gMap.containsKey(vGName)){
 				double lhs=0;
