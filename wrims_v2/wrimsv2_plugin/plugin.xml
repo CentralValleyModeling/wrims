@@ -152,6 +152,21 @@
       </action> 
    </viewContribution> 
 </extension>
+<extension point="org.eclipse.ui.viewActions"> 
+  <viewContribution 
+      id="org.eclipse.ui.articles.action.contribution.view" 
+   targetID="org.eclipse.ui.console.ConsoleView">
+	<action
+         id="wpp.pausebutton" 
+         label="Pause"
+         icon="icons\pause.png" 
+         tooltip="pause"
+         toolbarPath="launchGroup"
+         class="wrimsv2_plugin.debugger.toolbaritem.Pause"
+         enablesFor="*">
+      </action> 
+   </viewContribution> 
+</extension>
 <extension point="org.eclipse.ui.views">
         <category 
            id="wpp.category.wrims2"
