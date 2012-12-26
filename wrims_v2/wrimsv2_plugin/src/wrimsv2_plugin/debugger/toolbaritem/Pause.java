@@ -67,5 +67,6 @@ public class Pause extends ActionDelegate implements IViewActionDelegate{
 		enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, true);
 		enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, true);
 		new EnableMenus(enableMap);
+		HandlePauseButton.enablePauseToolbarItem(false);
 	}
 }

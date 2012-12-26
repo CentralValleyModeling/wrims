@@ -155,7 +155,7 @@
 <extension point="org.eclipse.ui.viewActions"> 
   <viewContribution 
       id="org.eclipse.ui.articles.action.contribution.view" 
-   targetID="org.eclipse.ui.console.ConsoleView">
+   targetID="org.eclipse.ui.console.ConsoleView"> 
 	<action
          id="wpp.pausebutton" 
          label="Pause"
@@ -165,7 +165,7 @@
          class="wrimsv2_plugin.debugger.toolbaritem.Pause"
          enablesFor="*">
       </action> 
-   </viewContribution> 
+   </viewContribution>
 </extension>
 <extension point="org.eclipse.ui.views">
         <category 

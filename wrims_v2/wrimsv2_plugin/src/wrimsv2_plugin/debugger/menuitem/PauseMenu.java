@@ -12,6 +12,7 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.debugger.toolbaritem.HandlePauseButton;
 
 public class PauseMenu implements IWorkbenchWindowActionDelegate {
 	public PauseMenu(){
@@ -59,5 +60,6 @@ public class PauseMenu implements IWorkbenchWindowActionDelegate {
 		enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, true);
 		enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, true);
 		new EnableMenus(enableMap);
+		HandlePauseButton.enablePauseToolbarItem(false);
 	}
 }

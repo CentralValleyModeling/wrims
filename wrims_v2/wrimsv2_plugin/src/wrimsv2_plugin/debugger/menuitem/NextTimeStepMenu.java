@@ -10,6 +10,7 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.debugger.toolbaritem.HandlePauseButton;
 
 public class NextTimeStepMenu implements IWorkbenchWindowActionDelegate{
 	public NextTimeStepMenu(){
@@ -64,6 +65,7 @@ public class NextTimeStepMenu implements IWorkbenchWindowActionDelegate{
 		enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, false);
 		new EnableMenus(enableMap);
+		HandlePauseButton.enablePauseToolbarItem(true);
 	}
 	
 	public void enableRunMenuNoDebugging(){
@@ -78,6 +80,7 @@ public class NextTimeStepMenu implements IWorkbenchWindowActionDelegate{
 		enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, false);
 		new EnableMenus(enableMap);
+		HandlePauseButton.enablePauseToolbarItem(false);
 	}
 	
 	public void enableRunMenuNoResume(){
@@ -92,5 +95,6 @@ public class NextTimeStepMenu implements IWorkbenchWindowActionDelegate{
 		enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, false);
 		new EnableMenus(enableMap);
+		HandlePauseButton.enablePauseToolbarItem(false);
 	}
 }

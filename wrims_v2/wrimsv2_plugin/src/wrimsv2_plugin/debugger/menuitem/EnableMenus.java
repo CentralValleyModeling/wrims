@@ -4,12 +4,17 @@ import java.util.HashMap;
 
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.SubContributionItem;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.console.IConsoleConstants;
 import org.eclipse.ui.internal.ActionSetContributionItem;
 import org.eclipse.ui.internal.ActionSetMenuManager;
 import org.eclipse.ui.internal.PluginActionContributionItem;

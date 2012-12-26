@@ -83,6 +83,7 @@ import wrimsv2_plugin.debugger.breakpoint.WPPRunToLineBreakpoint;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.menuitem.EnableMenus;
+import wrimsv2_plugin.debugger.toolbaritem.HandlePauseButton;
 import wrimsv2_plugin.debugger.view.UpdateView;
 import wrimsv2_plugin.debugger.view.WPPAllGoalView;
 import wrimsv2_plugin.debugger.view.WPPAllVariableView;
@@ -877,6 +878,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
 		new EnableMenus(enableMap);
+		HandlePauseButton.enablePauseToolbarItem(true);
 	}
 	
 	public void enableRunMenuWithSuspended(){
@@ -891,6 +893,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, true);
 		enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, true);
 		new EnableMenus(enableMap);
+		HandlePauseButton.enablePauseToolbarItem(false);
 	}
 	
 	public void enableRunMenuWithTerminate(){
@@ -905,5 +908,6 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 		enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, false);
 		new EnableMenus(enableMap);
+		HandlePauseButton.enablePauseToolbarItem(false);
 	}
 }
