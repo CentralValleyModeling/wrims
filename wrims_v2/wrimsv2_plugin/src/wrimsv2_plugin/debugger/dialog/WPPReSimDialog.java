@@ -30,7 +30,7 @@ import org.eclipse.ui.PlatformUI;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.menuitem.EnableMenus;
-import wrimsv2_plugin.debugger.toolbaritem.HandlePauseButton;
+import wrimsv2_plugin.debugger.toolbaritem.HandlePauseResumeButton;
 import wrimsv2_plugin.debugger.view.WPPVarDetailView;
 
 public class WPPReSimDialog extends PopupDialog {
@@ -242,6 +242,6 @@ public class WPPReSimDialog extends PopupDialog {
 		enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, false);
 		new EnableMenus(enableMap);
-		HandlePauseButton.enablePauseToolbarItem(true);
+		HandlePauseResumeButton.procPauseResumeToolbarItem(1);
 	}
 }

@@ -157,12 +157,12 @@
       id="org.eclipse.ui.articles.action.contribution.view" 
    targetID="org.eclipse.ui.console.ConsoleView"> 
 	<action
-         id="wpp.pausebutton" 
-         label="Pause"
+         id="wpp.pauseresumebutton" 
+         label="Pause/Resume"
          icon="icons\pause.png" 
-         tooltip="pause"
+         tooltip="pause/resume"
          toolbarPath="launchGroup"
-         class="wrimsv2_plugin.debugger.toolbaritem.Pause"
+         class="wrimsv2_plugin.debugger.toolbaritem.PauseResume"
          enablesFor="*">
       </action> 
    </viewContribution>

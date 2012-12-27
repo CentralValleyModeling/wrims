@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.eclipse.ui.IStartup;
 
 import wrimsv2_plugin.debugger.menuitem.EnableMenus;
-import wrimsv2_plugin.debugger.toolbaritem.HandlePauseButton;
+import wrimsv2_plugin.debugger.toolbaritem.HandlePauseResumeButton;
 
 public class DebuggerStartUp implements IStartup {
 
@@ -26,6 +26,6 @@ public class DebuggerStartUp implements IStartup {
 		enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, false);
 		new EnableMenus(enableMap);
-		HandlePauseButton.enablePauseToolbarItem(false);
+		HandlePauseResumeButton.procPauseResumeToolbarItem(0);
 	}
 }

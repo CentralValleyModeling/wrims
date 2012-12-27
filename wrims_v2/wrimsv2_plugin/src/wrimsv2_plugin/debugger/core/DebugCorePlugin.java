@@ -146,7 +146,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ID_WPP_SAVETOSVFILE="wpp.savesvfile";
 	public static final String ID_WPP_SOLVEROPTIONMENU="wpp.solveroption";
 	
-	public static final String ID_WPP_PAUSEBUTTON="wpp.pausebutton";
+	public static final String ID_WPP_PAUSERESUMEBUTTON="wpp.pauseresumebutton";
 	/**
 	 * Identifier for the WPP launch configuration type
 	 * (value <code>wpp.launchType</code>)

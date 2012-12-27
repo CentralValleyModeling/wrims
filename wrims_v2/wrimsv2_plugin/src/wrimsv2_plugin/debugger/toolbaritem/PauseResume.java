@@ -36,7 +36,7 @@ import wrimsv2_plugin.debugger.view.WPPAllVariableView;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
 import wrimsv2_plugin.tools.DataProcess;
 
-public class Pause extends ActionDelegate implements IViewActionDelegate{
+public class PauseResume extends ActionDelegate implements IViewActionDelegate{
 	IViewPart view;
 	
 	@Override
@@ -47,26 +47,44 @@ public class Pause extends ActionDelegate implements IViewActionDelegate{
 	public void run(IAction action) {
 		try {
 			if (DebugCorePlugin.isDebugging){
-				DebugCorePlugin.target.pause();
-				enableRunMenu();
+				if (DebugCorePlugin.target.isSuspended()){
+					DebugCorePlugin.debugSet.updateDebugTimeSet();
+					DebugCorePlugin.target.resume();
+					enableRunMenu(1);
+				}else{
+					DebugCorePlugin.target.pause();
+					enableRunMenu(3);
+				}
 			}
 		} catch (DebugException e) {
 			WPPException.handleException(e);
 		}
 	}
 	
-	public void enableRunMenu(){
+	public void enableRunMenu(int flag){
+		HandlePauseResumeButton.procPauseResumeToolbarItem(flag);
 		HashMap<String, Boolean> enableMap=new HashMap<String, Boolean>();
-		enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
-		enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, true);
-		enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, true);
-		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
-		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
-		enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, true);
-		enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, true);
+		if (flag==3){
+			enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
+			enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, false);
+			enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, false);
+			enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, true);
+			enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, true);
+			enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
+			enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
+			enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, true);
+			enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, true);	
+		}else{
+			enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
+			enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, true);
+			enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, true);
+			enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
+			enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, false);
+			enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
+			enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
+			enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, false);
+			enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, false);
+		}
 		new EnableMenus(enableMap);
-		HandlePauseButton.enablePauseToolbarItem(false);
 	}
 }
