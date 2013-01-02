@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
-
  */
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor;
 

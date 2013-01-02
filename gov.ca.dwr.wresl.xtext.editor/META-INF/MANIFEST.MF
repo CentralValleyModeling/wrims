@@ -17,10 +17,9 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.0.0";visibility:=reexport,
  org.eclipse.emf.common,
  org.antlr.runtime,
  org.eclipse.xtext.common.types
-Import-Package: org.apache.log4j,
- org.apache.commons.logging,
- org.eclipse.xtext.xbase.lib,
- org.eclipse.xtext.xtend2.lib
+Import-Package: org.apache.commons.logging,
+ org.apache.log4j,
+ org.eclipse.xtext.xbase.lib
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: gov.ca.dwr.wresl.xtext.editor,
  gov.ca.dwr.wresl.xtext.editor.services,
@@ -31,4 +30,8 @@ Export-Package: gov.ca.dwr.wresl.xtext.editor,
  gov.ca.dwr.wresl.xtext.editor.parser.antlr,
  gov.ca.dwr.wresl.xtext.editor.parser.antlr.internal,
  gov.ca.dwr.wresl.xtext.editor.validation,
- gov.ca.dwr.wresl.xtext.editor.parser.antlr.lexer
+ gov.ca.dwr.wresl.xtext.editor.parser.antlr.lexer,
+ gov.ca.dwr.wresl.xtext.editor.scoping,
+ gov.ca.dwr.wresl.xtext.editor.generator,
+ gov.ca.dwr.wresl.xtext.editor.formatting
+

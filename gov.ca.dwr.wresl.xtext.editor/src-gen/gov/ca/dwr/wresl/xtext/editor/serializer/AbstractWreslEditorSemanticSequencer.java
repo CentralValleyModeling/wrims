@@ -65,38 +65,18 @@ import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
 import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.diagnostic.ISemanticSequencerDiagnosticProvider;
 import org.eclipse.xtext.serializer.diagnostic.ISerializationDiagnostic.Acceptor;
-import org.eclipse.xtext.serializer.sequencer.AbstractSemanticSequencer;
+import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.GenericSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISemanticNodeProvider.INodesForEObjectProvider;
 import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
-@SuppressWarnings("restriction")
-public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequencer {
+@SuppressWarnings("all")
+public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 
 	@Inject
-	protected WreslEditorGrammarAccess grammarAccess;
-	
-	@Inject
-	protected ISemanticSequencerDiagnosticProvider diagnosticProvider;
-	
-	@Inject
-	protected ITransientValueService transientValues;
-	
-	@Inject
-	@GenericSequencer
-	protected Provider<ISemanticSequencer> genericSequencerProvider;
-	
-	protected ISemanticSequencer genericSequencer;
-	
-	
-	@Override
-	public void init(ISemanticSequencer sequencer, ISemanticSequenceAcceptor sequenceAcceptor, Acceptor errorAcceptor) {
-		super.init(sequencer, sequenceAcceptor, errorAcceptor);
-		this.genericSequencer = genericSequencerProvider.get();
-		this.genericSequencer.init(sequencer, sequenceAcceptor, errorAcceptor);
-	}
+	private WreslEditorGrammarAccess grammarAccess;
 	
 	public void createSequence(EObject context, EObject semanticObject) {
 		if(semanticObject.eClass().getEPackage() == WreslEditorPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
@@ -252,7 +232,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 				else break;
 			case WreslEditorPackage.IF_TERM:
 				if(context == grammarAccess.getIfIncItemsRule()) {
-					sequence_IfIncItems(context, (IfTerm) semanticObject); 
+					sequence_IfIncItems_IfTerm(context, (IfTerm) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getIfTermRule()) {
@@ -458,7 +438,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 			case WreslEditorPackage.LOWER_UPPER:
 				if(context == grammarAccess.getDVarIntegerRule() ||
 				   context == grammarAccess.getDVarIntegerNonStdRule()) {
-					sequence_DVarIntegerNonStd(context, (lowerUpper) semanticObject); 
+					sequence_DVarIntegerNonStd_lowerUpper(context, (lowerUpper) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getLowerAndOrUpperRule() ||
@@ -470,7 +450,7 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 			case WreslEditorPackage.UPPER_LOWER:
 				if(context == grammarAccess.getDVarIntegerRule() ||
 				   context == grammarAccess.getDVarIntegerNonStdRule()) {
-					sequence_DVarIntegerNonStd(context, (upperLower) semanticObject); 
+					sequence_DVarIntegerNonStd_upperLower(context, (upperLower) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getLowerAndOrUpperRule() ||
@@ -486,10 +466,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (m1=Multiply m2+=Multiply*)
-	 *
-	 * Features:
-	 *    m1[1, 1]
-	 *    m2[0, *]
 	 */
 	protected void sequence_Add(EObject context, Add semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -499,13 +475,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     ((local?='local' | local?='LOCAL')? name=ID expression=Expression kind=STRING? units=STRING?)
-	 *
-	 * Features:
-	 *    local[0, 2]
-	 *    name[1, 1]
-	 *    expression[1, 1]
-	 *    kind[0, 1]
-	 *    units[0, 1]
 	 */
 	protected void sequence_Alias(EObject context, Alias semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -515,10 +484,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (term=TermSimple expression=Expression)
-	 *
-	 * Features:
-	 *    term[1, 1]
-	 *    expression[1, 1]
 	 */
 	protected void sequence_Assignment(EObject context, Assignment semanticObject) {
 		if(errorAcceptor != null) {
@@ -538,11 +503,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (caseName=ID condition=Condition (content=TableContent | content=ValueContent | content=SumContent))
-	 *
-	 * Features:
-	 *    caseName[1, 1]
-	 *    condition[1, 1]
-	 *    content[0, 3]
 	 */
 	protected void sequence_CaseContent(EObject context, CaseContent semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -552,8 +512,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     {Condition}
-	 *
-	 * Features:
 	 */
 	protected void sequence_Condition(EObject context, Condition semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -563,10 +521,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (e1=Expression e2=Expression)
-	 *
-	 * Features:
-	 *    e1[1, 1]
-	 *    e2[1, 1]
 	 */
 	protected void sequence_ConditionalTerm(EObject context, ConditionalTerm semanticObject) {
 		if(errorAcceptor != null) {
@@ -586,11 +540,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     ((local?='local' | local?='LOCAL')? name=ID definition=Number)
-	 *
-	 * Features:
-	 *    local[0, 2]
-	 *    name[1, 1]
-	 *    definition[1, 1]
 	 */
 	protected void sequence_ConstDef(EObject context, ConstDef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -600,11 +549,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (lhs=Expression (operator='<' | operator='>' | operator='=') rhs=Expression)
-	 *
-	 * Features:
-	 *    lhs[1, 1]
-	 *    operator[0, 3]
-	 *    rhs[1, 1]
 	 */
 	protected void sequence_Constraint(EObject context, Constraint semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -614,14 +558,8 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (lower=Lower upper=Upper? kind=STRING units=STRING)
-	 *
-	 * Features:
-	 *    kind[1, 1]
-	 *    units[1, 1]
-	 *    upper[0, 1]
-	 *    lower[1, 1]
 	 */
-	protected void sequence_DVarIntegerNonStd(EObject context, lowerUpper semanticObject) {
+	protected void sequence_DVarIntegerNonStd_lowerUpper(EObject context, lowerUpper semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -629,14 +567,8 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (upper=Upper lower=Lower? kind=STRING units=STRING)
-	 *
-	 * Features:
-	 *    kind[1, 1]
-	 *    units[1, 1]
-	 *    upper[1, 1]
-	 *    lower[0, 1]
 	 */
-	protected void sequence_DVarIntegerNonStd(EObject context, upperLower semanticObject) {
+	protected void sequence_DVarIntegerNonStd_upperLower(EObject context, upperLower semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -644,10 +576,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (kind=STRING units=STRING)
-	 *
-	 * Features:
-	 *    kind[1, 1]
-	 *    units[1, 1]
 	 */
 	protected void sequence_DVarIntegerStd(EObject context, DVarIntegerStd semanticObject) {
 		if(errorAcceptor != null) {
@@ -667,11 +595,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (lowerUpper=LowerAndOrUpper kind=STRING units=STRING)
-	 *
-	 * Features:
-	 *    kind[1, 1]
-	 *    units[1, 1]
-	 *    lowerUpper[1, 1]
 	 */
 	protected void sequence_DVarNonStd(EObject context, DVarNonStd semanticObject) {
 		if(errorAcceptor != null) {
@@ -694,10 +617,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (kind=STRING units=STRING)
-	 *
-	 * Features:
-	 *    kind[1, 1]
-	 *    units[1, 1]
 	 */
 	protected void sequence_DVarStd(EObject context, DVarStd semanticObject) {
 		if(errorAcceptor != null) {
@@ -717,11 +636,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     ((local?='local' | local?='LOCAL')? name=ID (definition=DVar | definition=SVar | definition=DVarInteger | definition=External))
-	 *
-	 * Features:
-	 *    local[0, 2]
-	 *    name[1, 1]
-	 *    definition[0, 4]
 	 */
 	protected void sequence_Define(EObject context, Define semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -731,11 +645,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     ((local?='local' | local?='LOCAL')? name=ID (definition=DVar | definition=DVarInteger))
-	 *
-	 * Features:
-	 *    local[0, 2]
-	 *    name[1, 1]
-	 *    definition[0, 2]
 	 */
 	protected void sequence_DvarDef(EObject context, DvarDef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -745,14 +654,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (logical+=LogicalExpression pattern+=Pattern+)+
-	 *
-	 * Features:
-	 *    logical[1, *]
-	 *         MANDATORY_IF_SET pattern
-	 *         SAME_OR_LESS pattern
-	 *    pattern[1, *]
-	 *         EXCLUDE_IF_UNSET logical
-	 *         SAME_OR_MORE logical
 	 */
 	protected void sequence_ElseIfTerm(EObject context, ElseIfTerm semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -762,9 +663,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     pattern+=Pattern+
-	 *
-	 * Features:
-	 *    pattern[1, *]
 	 */
 	protected void sequence_ElseTerm(EObject context, ElseTerm semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -774,10 +672,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (e1=Expression e2+=Expression*)
-	 *
-	 * Features:
-	 *    e1[1, 1]
-	 *    e2[0, *]
 	 */
 	protected void sequence_ExternalFunction(EObject context, ExternalFunction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -787,8 +681,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     {External}
-	 *
-	 * Features:
 	 */
 	protected void sequence_External(EObject context, External semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -798,12 +690,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (caseName=ID condition=Condition rhs=Expression subContent=SubContent?)
-	 *
-	 * Features:
-	 *    caseName[1, 1]
-	 *    condition[1, 1]
-	 *    rhs[1, 1]
-	 *    subContent[0, 1]
 	 */
 	protected void sequence_GoalCaseContent(EObject context, GoalCaseContent semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -813,13 +699,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (lhs=Expression (content=GoalNoCaseContent | caseContent+=GoalCaseContent+))
-	 *
-	 * Features:
-	 *    lhs[1, 1]
-	 *    content[0, 1]
-	 *         EXCLUDE_IF_SET caseContent
-	 *    caseContent[0, *]
-	 *         EXCLUDE_IF_SET content
 	 */
 	protected void sequence_GoalCase(EObject context, GoalCase semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -829,10 +708,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (rhs=Expression subContent=SubContent?)
-	 *
-	 * Features:
-	 *    rhs[1, 1]
-	 *    subContent[0, 1]
 	 */
 	protected void sequence_GoalNoCaseContent(EObject context, GoalNoCaseContent semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -842,9 +717,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     constraint=Constraint
-	 *
-	 * Features:
-	 *    constraint[1, 1]
 	 */
 	protected void sequence_GoalSimple(EObject context, GoalSimple semanticObject) {
 		if(errorAcceptor != null) {
@@ -861,11 +733,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     ((local?='local' | local?='LOCAL')? name=ID (definition=GoalSimple | definition=GoalCase))
-	 *
-	 * Features:
-	 *    local[0, 2]
-	 *    name[1, 1]
-	 *    definition[0, 2]
 	 */
 	protected void sequence_Goal(EObject context, Goal semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -875,9 +742,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     name=ID
-	 *
-	 * Features:
-	 *    name[1, 1]
 	 */
 	protected void sequence_Ident(EObject context, Ident semanticObject) {
 		if(errorAcceptor != null) {
@@ -894,14 +758,8 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (logical=LogicalExpression pattern+=Pattern+ elseifterm=ElseIfTerm? elseterm=ElseTerm?)
-	 *
-	 * Features:
-	 *    elseifterm[0, 1]
-	 *    elseterm[0, 1]
-	 *    logical[1, 1]
-	 *    pattern[1, *]
 	 */
-	protected void sequence_IfIncItems(EObject context, IfTerm semanticObject) {
+	protected void sequence_IfIncItems_IfTerm(EObject context, IfTerm semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -909,10 +767,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (logical=LogicalExpression pattern+=Pattern+)
-	 *
-	 * Features:
-	 *    logical[1, 1]
-	 *    pattern[1, *]
 	 */
 	protected void sequence_IfTerm(EObject context, IfTerm semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -922,10 +776,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     ((local?='local' | local?='LOCAL')? file=STRING)
-	 *
-	 * Features:
-	 *    local[0, 2]
-	 *    file[1, 1]
 	 */
 	protected void sequence_IncludeFile(EObject context, IncludeFile semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -935,9 +785,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     pattern+=Pattern+
-	 *
-	 * Features:
-	 *    pattern[1, *]
 	 */
 	protected void sequence_Initial(EObject context, Initial semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -947,9 +794,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     e=Expression
-	 *
-	 * Features:
-	 *    e[1, 1]
 	 */
 	protected void sequence_IntFunction(EObject context, IntFunction semanticObject) {
 		if(errorAcceptor != null) {
@@ -966,8 +810,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     {LhsGtRhs}
-	 *
-	 * Features:
 	 */
 	protected void sequence_LhsGtRhs(EObject context, LhsGtRhs semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -977,8 +819,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     {LhsLtRhs}
-	 *
-	 * Features:
 	 */
 	protected void sequence_LhsLtRhs(EObject context, LhsLtRhs semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -988,10 +828,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (c1=ConditionalUnary c2+=ConditionalUnary*)
-	 *
-	 * Features:
-	 *    c1[1, 1]
-	 *    c2[0, *]
 	 */
 	protected void sequence_LogicalExpression(EObject context, LogicalExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1001,8 +837,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     {Lower}
-	 *
-	 * Features:
 	 */
 	protected void sequence_Lower(EObject context, Lower semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1012,10 +846,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (e1=Expression e2+=Expression*)
-	 *
-	 * Features:
-	 *    e1[1, 1]
-	 *    e2[0, *]
 	 */
 	protected void sequence_MaxFunction(EObject context, MaxFunction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1025,10 +855,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (e1=Expression e2+=Expression*)
-	 *
-	 * Features:
-	 *    e1[1, 1]
-	 *    e2[0, *]
 	 */
 	protected void sequence_MinFunction(EObject context, MinFunction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1038,11 +864,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (name=ID (pattern+=Pattern | ifincitems+=IfIncItems)+)
-	 *
-	 * Features:
-	 *    name[1, 1]
-	 *    pattern[0, *]
-	 *    ifincitems[0, *]
 	 */
 	protected void sequence_Model(EObject context, Model semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1052,10 +873,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (u1=Unary u2+=Unary*)
-	 *
-	 * Features:
-	 *    u1[1, 1]
-	 *    u2[0, *]
 	 */
 	protected void sequence_Multiply(EObject context, Multiply semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1065,11 +882,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     ((local?='local' | local?='LOCAL')? name=ID weights+=WeightItem+)
-	 *
-	 * Features:
-	 *    local[0, 2]
-	 *    name[1, 1]
-	 *    weights[1, *]
 	 */
 	protected void sequence_Objective(EObject context, Objective semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1079,9 +891,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     expression=Expression
-	 *
-	 * Features:
-	 *    expression[1, 1]
 	 */
 	protected void sequence_Penalty(EObject context, Penalty semanticObject) {
 		if(errorAcceptor != null) {
@@ -1098,9 +907,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     caseContent+=CaseContent+
-	 *
-	 * Features:
-	 *    caseContent[1, *]
 	 */
 	protected void sequence_SVarCase(EObject context, SVarCase semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1110,12 +916,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (bPart=STRING? kind=STRING units=STRING convert=STRING?)
-	 *
-	 * Features:
-	 *    bPart[0, 1]
-	 *    kind[1, 1]
-	 *    units[1, 1]
-	 *    convert[0, 1]
 	 */
 	protected void sequence_SVarDSS(EObject context, SVarDSS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1125,9 +925,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     expression=Expression
-	 *
-	 * Features:
-	 *    expression[1, 1]
 	 */
 	protected void sequence_SVarExpression(EObject context, SVarExpression semanticObject) {
 		if(errorAcceptor != null) {
@@ -1144,9 +941,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     sumContent=SumContent
-	 *
-	 * Features:
-	 *    sumContent[1, 1]
 	 */
 	protected void sequence_SVarSum(EObject context, SVarSum semanticObject) {
 		if(errorAcceptor != null) {
@@ -1163,9 +957,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     tableContent=TableContent
-	 *
-	 * Features:
-	 *    tableContent[1, 1]
 	 */
 	protected void sequence_SVarTable(EObject context, SVarTable semanticObject) {
 		if(errorAcceptor != null) {
@@ -1182,12 +973,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (name=ID model=[Model|ID] condition=Condition? order=INT?)
-	 *
-	 * Features:
-	 *    name[1, 1]
-	 *    model[1, 1]
-	 *    condition[0, 1]
-	 *    order[0, 1]
 	 */
 	protected void sequence_Sequence(EObject context, Sequence semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1197,10 +982,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     ((gt=LhsGtRhs lt=LhsLtRhs?) | (lt=LhsLtRhs gt=LhsGtRhs?))
-	 *
-	 * Features:
-	 *    gt[0, 2]
-	 *    lt[0, 2]
 	 */
 	protected void sequence_SubContent(EObject context, SubContent semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1210,10 +991,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (header=SumHeader expression=Expression)
-	 *
-	 * Features:
-	 *    header[1, 1]
-	 *    expression[1, 1]
 	 */
 	protected void sequence_SumContent(EObject context, SumContent semanticObject) {
 		if(errorAcceptor != null) {
@@ -1233,10 +1010,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (expression1=Expression expression2=Expression)
-	 *
-	 * Features:
-	 *    expression1[1, 1]
-	 *    expression2[1, 1]
 	 */
 	protected void sequence_SumHeader(EObject context, SumHeader semanticObject) {
 		if(errorAcceptor != null) {
@@ -1256,11 +1029,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     ((local?='local' | local?='LOCAL')? name=ID definition=SVar)
-	 *
-	 * Features:
-	 *    local[0, 2]
-	 *    name[1, 1]
-	 *    definition[1, 1]
 	 */
 	protected void sequence_SvarDef(EObject context, SvarDef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1270,17 +1038,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (tableName=ID from=ID (given=Assignment use=ID)? where=WhereItems?)
-	 *
-	 * Features:
-	 *    tableName[1, 1]
-	 *    from[1, 1]
-	 *    given[0, 1]
-	 *         EXCLUDE_IF_UNSET use
-	 *         MANDATORY_IF_SET use
-	 *    use[0, 1]
-	 *         EXCLUDE_IF_UNSET given
-	 *         MANDATORY_IF_SET given
-	 *    where[0, 1]
 	 */
 	protected void sequence_TableContent(EObject context, TableContent semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1290,24 +1047,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (i=Ident | n=Number | f=Function | e2=Expression)
-	 *
-	 * Features:
-	 *    i[0, 1]
-	 *         EXCLUDE_IF_SET n
-	 *         EXCLUDE_IF_SET f
-	 *         EXCLUDE_IF_SET e2
-	 *    n[0, 1]
-	 *         EXCLUDE_IF_SET i
-	 *         EXCLUDE_IF_SET f
-	 *         EXCLUDE_IF_SET e2
-	 *    f[0, 1]
-	 *         EXCLUDE_IF_SET i
-	 *         EXCLUDE_IF_SET n
-	 *         EXCLUDE_IF_SET e2
-	 *    e2[0, 1]
-	 *         EXCLUDE_IF_SET i
-	 *         EXCLUDE_IF_SET n
-	 *         EXCLUDE_IF_SET f
 	 */
 	protected void sequence_Term(EObject context, Term semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1317,8 +1056,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     {Upper}
-	 *
-	 * Features:
 	 */
 	protected void sequence_Upper(EObject context, Upper semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1328,9 +1065,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     expression=Expression
-	 *
-	 * Features:
-	 *    expression[1, 1]
 	 */
 	protected void sequence_ValueContent(EObject context, ValueContent semanticObject) {
 		if(errorAcceptor != null) {
@@ -1347,10 +1081,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (name=ID expression=Expression)
-	 *
-	 * Features:
-	 *    name[1, 1]
-	 *    expression[1, 1]
 	 */
 	protected void sequence_WeightItem(EObject context, WeightItem semanticObject) {
 		if(errorAcceptor != null) {
@@ -1370,9 +1100,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (assignment+=Assignment assignment+=Assignment*)
-	 *
-	 * Features:
-	 *    assignment[1, *]
 	 */
 	protected void sequence_WhereItems(EObject context, WhereItems semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1382,33 +1109,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     ((pattern+=Pattern | ifincitem+=IfIncItems)+ | (initial=Initial? sequence+=Sequence+ model+=Model+))
-	 *
-	 * Features:
-	 *    pattern[0, *]
-	 *         EXCLUDE_IF_SET initial
-	 *         EXCLUDE_IF_SET sequence
-	 *         EXCLUDE_IF_SET model
-	 *    ifincitem[0, *]
-	 *         EXCLUDE_IF_SET initial
-	 *         EXCLUDE_IF_SET sequence
-	 *         EXCLUDE_IF_SET model
-	 *    initial[0, 1]
-	 *         EXCLUDE_IF_UNSET sequence
-	 *         EXCLUDE_IF_UNSET model
-	 *         EXCLUDE_IF_SET pattern
-	 *         EXCLUDE_IF_SET ifincitem
-	 *    sequence[0, *]
-	 *         MANDATORY_IF_SET initial
-	 *         EXCLUDE_IF_UNSET model
-	 *         MANDATORY_IF_SET model
-	 *         EXCLUDE_IF_SET pattern
-	 *         EXCLUDE_IF_SET ifincitem
-	 *    model[0, *]
-	 *         MANDATORY_IF_SET initial
-	 *         EXCLUDE_IF_UNSET sequence
-	 *         MANDATORY_IF_SET sequence
-	 *         EXCLUDE_IF_SET pattern
-	 *         EXCLUDE_IF_SET ifincitem
 	 */
 	protected void sequence_WreslEvaluator(EObject context, WreslEvaluator semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1418,10 +1118,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (lower=Lower upper=Upper?)
-	 *
-	 * Features:
-	 *    upper[0, 1]
-	 *    lower[1, 1]
 	 */
 	protected void sequence_lowerUpper(EObject context, lowerUpper semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1431,10 +1127,6 @@ public class AbstractWreslEditorSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (upper=Upper lower=Lower?)
-	 *
-	 * Features:
-	 *    upper[1, 1]
-	 *    lower[0, 1]
 	 */
 	protected void sequence_upperLower(EObject context, upperLower semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
