@@ -36,5 +36,6 @@ Import-Package: org.apache.commons.logging,
  wrimsv2_plugin.tools
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: gov.ca.dwr.wresl.xtext.editor.ui.contentassist.antlr,
- gov.ca.dwr.wresl.xtext.editor.ui.internal
+ gov.ca.dwr.wresl.xtext.editor.ui.internal,
+ gov.ca.dwr.wresl.xtext.editor.ui.contentassist
 Bundle-Activator: gov.ca.dwr.wresl.xtext.editor.ui.internal.WreslEditorActivator

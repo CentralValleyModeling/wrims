@@ -71,6 +71,19 @@
         </page>
     </extension>
     <extension
+            point="org.eclipse.ui.propertyPages">
+        <page
+            class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="gov.ca.dwr.wresl.xtext.editor.WreslEditor"
+            name="WreslEditor">
+            <keywordReference id="gov.ca.dwr.wresl.xtext.editor.ui.keyword_WreslEditor"/>
+            <enabledWhen>
+	            <adapt type="org.eclipse.core.resources.IProject"/>
+			</enabledWhen>
+	        <filter name="projectNature" value="org.eclipse.xtext.ui.shared.xtextNature"/>
+        </page>
+    </extension>
+    <extension
         point="org.eclipse.ui.keywords">
         <keyword
             id="gov.ca.dwr.wresl.xtext.editor.ui.keyword_WreslEditor"
@@ -138,6 +151,28 @@
     </extension>
 
 
+    <!-- marker definitions for gov.ca.dwr.wresl.xtext.editor.WreslEditor -->
+    <extension
+            id="wresleditor.check.fast"
+            name="WreslEditor Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.fast"/>
+        <persistent value="true"/>
+    </extension>
+    <extension
+            id="wresleditor.check.normal"
+            name="WreslEditor Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.normal"/>
+        <persistent value="true"/>
+    </extension>
+    <extension
+            id="wresleditor.check.expensive"
+            name="WreslEditor Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.expensive"/>
+        <persistent value="true"/>
+    </extension>
 
    <extension
          point="org.eclipse.xtext.builder.participant">
@@ -145,6 +180,30 @@
             class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant">
       </participant>
    </extension>
+   <extension
+            point="org.eclipse.ui.preferencePages">
+        <page
+            category="gov.ca.dwr.wresl.xtext.editor.WreslEditor"
+            class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+            id="gov.ca.dwr.wresl.xtext.editor.WreslEditor.compiler.preferencePage"
+            name="Compiler">
+            <keywordReference id="gov.ca.dwr.wresl.xtext.editor.ui.keyword_WreslEditor"/>
+        </page>
+    </extension>
+    <extension
+            point="org.eclipse.ui.propertyPages">
+        <page
+            category="gov.ca.dwr.wresl.xtext.editor.WreslEditor"
+            class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+            id="gov.ca.dwr.wresl.xtext.editor.WreslEditor.compiler.propertyPage"
+            name="Compiler">
+            <keywordReference id="gov.ca.dwr.wresl.xtext.editor.ui.keyword_WreslEditor"/>
+            <enabledWhen>
+	            <adapt type="org.eclipse.core.resources.IProject"/>
+			</enabledWhen>
+	        <filter name="projectNature" value="org.eclipse.xtext.ui.shared.xtextNature"/>
+        </page>
+    </extension>
 
 	<!-- Quick Outline -->
 	<extension
@@ -179,18 +238,38 @@
 			</command>
 		</menuContribution>
 	</extension>
-   <!-- quickfix marker resolution generator -->
-   <extension
-         point="org.eclipse.ui.ide.markerResolution">
-      <markerResolutionGenerator
-            class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
-      </markerResolutionGenerator>
-   </extension>
-
+    <!-- quickfix marker resolution generator for gov.ca.dwr.wresl.xtext.editor.WreslEditor -->
+    <extension
+            point="org.eclipse.ui.ide.markerResolution">
+        <markerResolutionGenerator
+            class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="gov.ca.dwr.wresl.xtext.editor.ui.wresleditor.check.fast">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+        <markerResolutionGenerator
+            class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="gov.ca.dwr.wresl.xtext.editor.ui.wresleditor.check.normal">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+        <markerResolutionGenerator
+            class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="gov.ca.dwr.wresl.xtext.editor.ui.wresleditor.check.expensive">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+    </extension>
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
-			class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RenameElementHandler"
+			class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
 			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
 			<activeWhen>
 				<reference
@@ -212,6 +291,15 @@
          </command>
       </menuContribution>
    </extension>
+   <extension point="org.eclipse.ui.preferencePages">
+	    <page
+	        category="gov.ca.dwr.wresl.xtext.editor.WreslEditor"
+	        class="gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+	        id="gov.ca.dwr.wresl.xtext.editor.WreslEditor.refactoring"
+	        name="Refactoring">
+	        <keywordReference id="gov.ca.dwr.wresl.xtext.editor.ui.keyword_WreslEditor"/>
+	    </page>
+	</extension>
 
   <extension point="org.eclipse.compare.contentViewers">
     <viewer id="gov.ca.dwr.wresl.xtext.editor.WreslEditor.compare.contentViewers"

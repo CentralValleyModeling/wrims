@@ -8,6 +8,8 @@ import org.osgi.framework.Bundle;
 
 import com.google.inject.Injector;
 
+import gov.ca.dwr.wresl.xtext.editor.ui.internal.WreslEditorActivator;
+
 /**
  * This class was generated. Customizations should only happen in a newly
  * introduced subclass. 
@@ -16,12 +18,12 @@ public class WreslEditorExecutableExtensionFactory extends AbstractGuiceAwareExe
 
 	@Override
 	protected Bundle getBundle() {
-		return gov.ca.dwr.wresl.xtext.editor.ui.internal.WreslEditorActivator.getInstance().getBundle();
+		return WreslEditorActivator.getInstance().getBundle();
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return gov.ca.dwr.wresl.xtext.editor.ui.internal.WreslEditorActivator.getInstance().getInjector("gov.ca.dwr.wresl.xtext.editor.WreslEditor");
+		return WreslEditorActivator.getInstance().getInjector(WreslEditorActivator.GOV_CA_DWR_WRESL_XTEXT_EDITOR_WRESLEDITOR);
 	}
 	
 }

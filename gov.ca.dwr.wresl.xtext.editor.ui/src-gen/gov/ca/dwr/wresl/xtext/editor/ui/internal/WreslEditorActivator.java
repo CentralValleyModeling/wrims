@@ -3,49 +3,38 @@
  */
 package gov.ca.dwr.wresl.xtext.editor.ui.internal;
 
-import static com.google.inject.util.Modules.override;
-import static com.google.inject.Guice.createInjector;
+import java.util.Collections;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
-
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.xtext.ui.shared.SharedStateModule;
+import org.eclipse.xtext.util.Modules2;
 import org.osgi.framework.BundleContext;
 
+import com.google.common.collect.Maps;
+import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
-
-import java.util.Map;
-import java.util.HashMap;
 
 /**
  * This class was generated. Customizations should only happen in a newly
  * introduced subclass. 
  */
 public class WreslEditorActivator extends AbstractUIPlugin {
-
-	private Map<String,Injector> injectors = new HashMap<String,Injector>();
+	
+	public static final String GOV_CA_DWR_WRESL_XTEXT_EDITOR_WRESLEDITOR = "gov.ca.dwr.wresl.xtext.editor.WreslEditor";
+	
+	private static final Logger logger = Logger.getLogger(WreslEditorActivator.class);
+	
 	private static WreslEditorActivator INSTANCE;
-
-	public Injector getInjector(String languageName) {
-		return injectors.get(languageName);
-	}
+	
+	private Map<String, Injector> injectors = Collections.synchronizedMap(Maps.<String, Injector> newHashMapWithExpectedSize(1));
 	
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		INSTANCE = this;
-		try {
-			registerInjectorFor("gov.ca.dwr.wresl.xtext.editor.WreslEditor");
-			
-		} catch (Exception e) {
-			Logger.getLogger(getClass()).error(e.getMessage(), e);
-			throw e;
-		}
-	}
-	
-	protected void registerInjectorFor(String language) throws Exception {
-		injectors.put(language, createInjector(
-		  override(override(getRuntimeModule(language)).with(getSharedStateModule())).with(getUiModule(language))));
 	}
 	
 	@Override
@@ -59,24 +48,48 @@ public class WreslEditorActivator extends AbstractUIPlugin {
 		return INSTANCE;
 	}
 	
+	public Injector getInjector(String language) {
+		synchronized (injectors) {
+			Injector injector = injectors.get(language);
+			if (injector == null) {
+				injectors.put(language, injector = createInjector(language));
+			}
+			return injector;
+		}
+	}
+	
+	protected Injector createInjector(String language) {
+		try {
+			Module runtimeModule = getRuntimeModule(language);
+			Module sharedStateModule = getSharedStateModule();
+			Module uiModule = getUiModule(language);
+			Module mergedModule = Modules2.mixin(runtimeModule, sharedStateModule, uiModule);
+			return Guice.createInjector(mergedModule);
+		} catch (Exception e) {
+			logger.error("Failed to create injector for " + language);
+			logger.error(e.getMessage(), e);
+			throw new RuntimeException("Failed to create injector for " + language, e);
+		}
+	}
+
 	protected Module getRuntimeModule(String grammar) {
-		if ("gov.ca.dwr.wresl.xtext.editor.WreslEditor".equals(grammar)) {
-		  return new gov.ca.dwr.wresl.xtext.editor.WreslEditorRuntimeModule();
+		if (GOV_CA_DWR_WRESL_XTEXT_EDITOR_WRESLEDITOR.equals(grammar)) {
+			return new gov.ca.dwr.wresl.xtext.editor.WreslEditorRuntimeModule();
 		}
 		
 		throw new IllegalArgumentException(grammar);
 	}
 	
 	protected Module getUiModule(String grammar) {
-		if ("gov.ca.dwr.wresl.xtext.editor.WreslEditor".equals(grammar)) {
-		  return new gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorUiModule(this);
+		if (GOV_CA_DWR_WRESL_XTEXT_EDITOR_WRESLEDITOR.equals(grammar)) {
+			return new gov.ca.dwr.wresl.xtext.editor.ui.WreslEditorUiModule(this);
 		}
 		
 		throw new IllegalArgumentException(grammar);
 	}
 	
 	protected Module getSharedStateModule() {
-		return new org.eclipse.xtext.ui.shared.SharedStateModule();
+		return new SharedStateModule();
 	}
 	
 }
