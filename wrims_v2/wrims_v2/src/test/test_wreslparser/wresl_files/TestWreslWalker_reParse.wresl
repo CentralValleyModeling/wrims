@@ -1,0 +1,15 @@
+SEQUENCE CYCLE1 {
+    model   first
+    order   1
+    }
+
+MODEL first { 
+
+	include 'TestWreslWalker_reParse_include.wresl'
+	
+	define y {std kind 'FLOW' units 'CFS'}	
+	objective wg1 {
+		[x,2]
+	}
+
+}

@@ -1,0 +1,2 @@
+	define x {upper 7 kind 'FLOW' units 'CFS'}	
+	goal g { x < 7 }
