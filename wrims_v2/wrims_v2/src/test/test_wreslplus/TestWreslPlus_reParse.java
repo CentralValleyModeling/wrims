@@ -53,7 +53,8 @@ public class TestWreslPlus_reParse {
 		
 		StudyDataSet sd = ToWreslData.convertStudy(styTemp);
 		System.out.println("StudyDataSet:");
-		System.out.println(sd.getModelDataSetMap().get("first").gMap.get("g").caseExpression.get(0));	
+		System.out.println(sd.getModelDataSetMap().get("first").gMap.get("g").caseExpression.get(0));
+		System.out.println(sd.getModelDataSetMap().get("first").dvMap.get("x").upperBound);
 		
 		// modify wresl file, replace 7 with 888
 		FileWriter fstream = new FileWriter(inputFilePath_include);
@@ -72,7 +73,8 @@ public class TestWreslPlus_reParse {
 		
 		sd = ToWreslData.convertStudy(styTemp);
 		System.out.println("StudyDataSet:");  
-		System.out.println(sd.getModelDataSetMap().get("first").gMap.get("g").caseExpression.get(0));			  
+		System.out.println(sd.getModelDataSetMap().get("first").gMap.get("g").caseExpression.get(0));
+		System.out.println(sd.getModelDataSetMap().get("first").dvMap.get("x").upperBound);
 		
 		// revert wresl file
 		fstream = new FileWriter(inputFilePath_include);

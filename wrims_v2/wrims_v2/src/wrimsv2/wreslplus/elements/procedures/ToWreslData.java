@@ -35,28 +35,44 @@ import wrimsv2.wreslplus.elements.WeightTemp;
 public class ToWreslData {
 	
 	// < relative file path, svar name, svar object >
-	private static HashBasedTable<String,String,Svar> fileSvMap = HashBasedTable.create(); 
-	private static HashBasedTable<String,String,Dvar> fileDvMap = HashBasedTable.create(); 
-	private static HashBasedTable<String,String,Timeseries> fileTsMap = HashBasedTable.create(); 
-	private static HashBasedTable<String,String,Alias> fileAsMap = HashBasedTable.create(); 
-	private static HashBasedTable<String,String,Goal> fileGlMap = HashBasedTable.create();
-	private static HashBasedTable<String,String,Dvar> fileSlackSurplusNoCaseMap = HashBasedTable.create();
-	private static HashBasedTable<String,String,WeightElement> fileGroupWeightMap = HashBasedTable.create(); 
-	private static HashBasedTable<String,String,WeightElement> fileSsWeightMap_noCase = HashBasedTable.create(); 
-	private static HashBasedTable<String,String,WeightElement> fileWeightMap = HashBasedTable.create(); 
-	private static HashBasedTable<String,String,HashMap<String,WeightElement>> fileWTableObjMap = HashBasedTable.create(); 
-	private static HashBasedTable<String,String,HashMap<String,WeightElement>> mainfileModelWTableObjMap = HashBasedTable.create();
+	private static HashBasedTable<String,String,Svar> fileSvMap; 
+	private static HashBasedTable<String,String,Dvar> fileDvMap; 
+	private static HashBasedTable<String,String,Timeseries> fileTsMap; 
+	private static HashBasedTable<String,String,Alias> fileAsMap; 
+	private static HashBasedTable<String,String,Goal> fileGlMap;
+	private static HashBasedTable<String,String,Dvar> fileSlackSurplusNoCaseMap;
+	private static HashBasedTable<String,String,WeightElement> fileGroupWeightMap; 
+	private static HashBasedTable<String,String,WeightElement> fileSsWeightMap_noCase; 
+	private static HashBasedTable<String,String,WeightElement> fileWeightMap; 
+	private static HashBasedTable<String,String,HashMap<String,WeightElement>> fileWTableObjMap; 
+	private static HashBasedTable<String,String,HashMap<String,WeightElement>> mainfileModelWTableObjMap;
 		
-	private static HashBasedTable<String,Integer,Svar> StringIntegerSvarMap = HashBasedTable.create(); 
+	private static HashBasedTable<String,Integer,Svar> StringIntegerSvarMap; 
 	
 	private ToWreslData(){}
 
+	private static void initialize() {
+		fileSvMap = HashBasedTable.create(); 
+		fileDvMap = HashBasedTable.create(); 
+		fileTsMap = HashBasedTable.create(); 
+		fileAsMap = HashBasedTable.create(); 
+		fileGlMap = HashBasedTable.create();
+		fileSlackSurplusNoCaseMap = HashBasedTable.create();
+		fileGroupWeightMap = HashBasedTable.create(); 
+		fileSsWeightMap_noCase = HashBasedTable.create(); 
+		fileWeightMap = HashBasedTable.create(); 
+		fileWTableObjMap = HashBasedTable.create(); 
+		mainfileModelWTableObjMap = HashBasedTable.create();		
+		StringIntegerSvarMap = HashBasedTable.create(); 
+	}
 	
 	//TODO: model must be in sequence obj, also condition not linked yet
 	//TODO: remember to lowercase all evaluation strings and var names
 	public static StudyDataSet convertStudy (StudyTemp s){
 		
 		if (s==null) return null;
+		
+		initialize();
 		
 		StudyDataSet o = new StudyDataSet();
 		o.setModelList(s.modelList_effective);
