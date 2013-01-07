@@ -206,32 +206,32 @@ public class Error {
 		}else if (ControlData.currEvalTypeIndex==9){
 			String msg = "Conditional include (if, elseif) in file: "+ControlData.currEvalName+": "+error;
 			error_evaluation.add(msg);
-			System.out.println("# Error :"+msg);
+			System.err.println("# Error :"+msg);
 		}
-		System.out.println(sourceLocation+" Error-"+ControlData.currEvalName+":"+error);
+		System.err.println(sourceLocation+" # Error :"+ControlData.currEvalName+":"+error);
 	}
 	
 	public static void addSolvingError(String error){
 		error_solving.add(getCurrentDateCycleModel()+": "+error);
-		System.out.println("Error-"+error);
+		System.err.println("# Error :"+error);
 	}
 	
 	public static void addEngineError(String error){
-		error_engine.add("Engine error: "+error);
-		System.out.println("Engine error: "+error);
+		error_engine.add("Engine Error: "+error);
+		System.err.println("# Engine Error: "+error);
 	}
 	
 	public static void addConfigError(String error){
 		error_config.add(error);
-		System.out.println("# Error: "+error);
+		System.err.println("# Error: "+error);
 	}
 	public static void addInitialError(String error){
 		error_initial.add(error);
-		System.out.println("# Error: "+error);
+		System.err.println("# Error: "+error);
 	}
 	public static void addDeviationError(String error){
 		error_deviation.add(getCurrentDateCycleModel()+": "+error);
-		System.out.println("# Error: "+error);
+		System.err.println("# Error: "+error);
 	}
 	
 	public static int getTotalError(){
