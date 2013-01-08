@@ -28,6 +28,7 @@ public class CbcSolver {
 
 		try {
 			solver = new MPSolver("testExample", MPSolver.getSolverEnum(mpSolverType));
+			verbosity = 0;
 
 		} catch (java.lang.ClassNotFoundException e) {
 			throw new java.lang.Error(e);
@@ -160,17 +161,26 @@ public class CbcSolver {
 		model = new MPModel("wrims");
 		// create model
 		Misc.setDVars(model);
-		Misc.setConstraints();
-		Misc.setWeights();
-		
-		solver.setMaximization();		
-		int modelStatus = solver.solve();
+		Misc.setConstraints(model);
+		Misc.setWeights(model);	
+		int modelStatus = solve(model);
 		
 		if (modelStatus != MPSolver.OPTIMAL) {
 			Misc.getSolverInformation(modelStatus);
 		}
-		else {
-			Misc.assignDvar(); 
+		else {			
+			// post solution.
+			solution = new LinkedHashMap<String, Double>();
+			SortedSet<String> sortedkeys = new TreeSet<String>(_solverVarMap.keySet());
+			for (String varName : sortedkeys) {
+				double v = _solverVarMap.get(varName).solutionValue();
+				if (verbosity > 1)
+					System.out.println(varName + " = " + v);
+				solution.put(varName, v);
+			}
+			
+			// assign dvar
+			Misc.assignDvar(solution); 
 		}
 		
 	}

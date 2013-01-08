@@ -654,6 +654,7 @@ public class ControllerBatch {
 		
 		ILP.initializeIlp();
 		CbcSolver.initialize();
+		//CbcSolver.setVerbose(2);
 		
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 
@@ -718,8 +719,8 @@ public class ControllerBatch {
 						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
 						if (Error.error_solving.size()<1){
 							
-		            		//ILP.writeObjValue_Gurobi();
-		            		//if (ILP.loggingVariableValue) ILP.writeDvarValue_Gurobi();
+		            		ILP.writeObjValue_Cbc();
+		            		if (ILP.loggingVariableValue) ILP.writeDvarValue_Cbc();
 		            		
 		            		ILP.closeIlpFile();
 		            		

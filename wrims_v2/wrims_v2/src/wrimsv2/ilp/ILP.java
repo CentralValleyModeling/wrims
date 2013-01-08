@@ -21,6 +21,7 @@ import wrimsv2.components.FilePaths;
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.solver.Gurobi.GurobiSolver;
+import wrimsv2.solver.cbc.CbcSolver;
 import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.elements.Tools;
 
@@ -144,6 +145,19 @@ public class ILP {
 
 	}
 	
+	public static void writeObjValue_Cbc() {
+
+		double objValue = CbcSolver.solver.objectiveValue();
+		String objValueStr = Double.toString(objValue);
+		
+		writeObjValue(objValueStr, _cplexLpFile, cplexLp_comment_Symbol);
+		if (ILP.loggingLpSolve) writeObjValue(objValueStr, _lpSolveFile, lpSolve_comment_Symbol);
+		if (ILP.loggingAmpl)    writeObjValue(objValueStr, _amplFile, ampl_comment_Symbol);
+
+		writeObjValueLog(getYearMonthCycle(), objValueStr, _objValueFile);
+
+	}
+	
 	private static void writeLpSolveFile() {
 		
 		_lpSolveFile.print(findHeaderStr(lpSolve_comment_Symbol));
@@ -222,6 +236,12 @@ public class ILP {
 	public static void writeDvarValue_Gurobi() {
 		
 		writeDvarValue_Gurobi(_dvarFile, dvar_effective);
+		_dvarFile.flush();
+		
+	}
+	public static void writeDvarValue_Cbc() {
+		
+		writeDvarValue_Cbc(_dvarFile, dvar_effective);
 		_dvarFile.flush();
 		
 	}
@@ -615,6 +635,49 @@ public class ILP {
 		}
 	}
 
+	private static void writeDvarValue_Cbc(PrintWriter dvarFile, Set<String> dvar_effective) {
+
+		
+		ArrayList<ArrayList<String>> sortedDvar = prepareDvarToWrite(dvar_effective);		
+		ArrayList<String> dvar_weighted = sortedDvar.get(0);
+		ArrayList<String> dvar_unweighted = sortedDvar.get(1);
+		
+		dvarFile.println("/* Weighted Dvar    */");
+		for (String s : dvar_weighted){
+			String dvName = String.format("%-35s", s);
+			//dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
+			try{
+				double v = CbcSolver.solution.get(s);
+				// TODO: improve speed
+				if (!df.format(v).equals("-0")) {
+					dvarFile.print(dvName + ":  " + df.format(v) +"\n"  );					
+				} else {
+					dvarFile.print(dvName + ":  0" +"\n"  );				
+				}
+	
+			} catch (Exception e) {
+				dvarFile.print(dvName + ":  " + CbcSolver.solution.get(s) +"\n"  );
+			}
+		}
+		dvarFile.println();
+		dvarFile.println("/* Unweighted Dvar    */");	
+		for (String s : dvar_unweighted){
+			String dvName = String.format("%-35s", s);
+			try{
+				double v = CbcSolver.solution.get(s);
+				// TODO: improve speed
+				if (!df.format(v).equals("-0")) {
+					dvarFile.print(dvName + ":  " + df.format(v) +"\n"  );					
+				} else {
+					dvarFile.print(dvName + ":  0" +"\n"  );				
+				}
+				
+			} catch (Exception e) {
+				dvarFile.print(dvName + ":  " + CbcSolver.solution.get(s) +"\n"  );
+			}
+		}
+	}	
+	
 	private static void writeSvarValue(PrintWriter svarFile) {
 		
 		Map<String, Svar> svMap = ControlData.currSvMap;

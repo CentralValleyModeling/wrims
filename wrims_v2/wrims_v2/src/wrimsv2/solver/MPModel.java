@@ -130,10 +130,16 @@ public class MPModel {
 			double[] lb_ub = new double[] { 0, ub + 0.1 };
 
 			varMap_integer.put(varName, lb_ub);
-			var_int_nonnegative.add(varName);
+			
+			if (ub == 1) {
+				var_int_binary.add(varName);
+			} else {
+				var_int_nonnegative.add(varName);
+			}
+		
 		} else {
+			
 			System.err.println(" Error in MPModel.");
-
 			throw new java.lang.Error();
 
 		}

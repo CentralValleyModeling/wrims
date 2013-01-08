@@ -3,6 +3,7 @@ package wrimsv2.solver.cbc;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import wrimsv2.commondata.solverdata.SolverData;
@@ -21,7 +22,7 @@ import wrimsv2.solver.MPModel;
 public class Misc {
 
 	
-	protected static void setConstraints() {
+	protected static void setConstraints(MPModel m) {
 		Map<String, EvalConstraint> constraintMap = SolverData.getConstraintDataMap();
 		Map<String, Dvar> dvarMap=SolverData.getDvarMap();
 		for (int i=0; i<=1; i++){
@@ -38,25 +39,36 @@ public class Misc {
 				String constraintName=(String)constraintIterator.next();
 				EvalConstraint ec=constraintMap.get(constraintName);
 			
+				double lb = -m.inf;
+				double ub =  m.inf;
+				
 				if (ec.getSign().equals("=")) {
-					ControlData.xasolver.setRowFix(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue()); //string constraint name
+					//ControlData.xasolver.setRowFix(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue()); 
+					lb = -ec.getEvalExpression().getValue().getData().doubleValue();
+					ub = -ec.getEvalExpression().getValue().getData().doubleValue();
 				}
 				else if (ec.getSign().equals("<") || ec.getSign().equals("<=")){
-					ControlData.xasolver.setRowMax(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue()); //string constraint name
+					//ControlData.xasolver.setRowMax(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue()); 
+					ub = -ec.getEvalExpression().getValue().getData().doubleValue();
 				}
 				else if (ec.getSign().equals(">")){
-					ControlData.xasolver.setRowMin(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue()); //string constraint name
+					lb = -ec.getEvalExpression().getValue().getData().doubleValue();
 				}
 			
 				HashMap<String, IntDouble> multMap = ec.getEvalExpression().getMultiplier();
 				Set multCollection = multMap.keySet();
 				Iterator multIterator = multCollection.iterator();
 			
+				LinkedHashMap<String, Double> varCoefMap = new LinkedHashMap<String, Double>();
+				
 				while(multIterator.hasNext()){
 					String multName=(String)multIterator.next();
 					if (!dvarMap.containsKey(multName)) addConditionalSlackSurplusToDvarMap(dvarMap, multName);
-					ControlData.xasolver.loadToCurrentRow(multName, multMap.get(multName).getData().doubleValue());
+					
+					varCoefMap.put(multName, multMap.get(multName).getData().doubleValue());
+					//ControlData.xasolver.loadToCurrentRow(multName, multMap.get(multName).getData().doubleValue());
 				}
+				m.createConstraint(constraintName, varCoefMap, lb, ub);
 			}
 		}
 	}
@@ -68,7 +80,7 @@ public class Misc {
 		dvarMap.put(multName, dvar);
 	}
 	
-	protected static void assignDvar(){
+	protected static void assignDvar(LinkedHashMap<String, Double> solution){
 		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
 		Map<String, Map<String, IntDouble>> varTimeArrayCycleValueMap=ControlData.currStudyDataSet.getVarTimeArrayCycleValueMap();
 		Set<String> dvarUsedByLaterCycle = ControlData.currModelDataSet.dvarUsedByLaterCycle;
@@ -82,7 +94,8 @@ public class Misc {
 		while(dvarIterator.hasNext()){ 
 			String dvName=(String)dvarIterator.next();
 			Dvar dvar=dvarMap.get(dvName);
-			double value=ControlData.xasolver.getColumnActivity(dvName);
+			//double value=ControlData.xasolver.getColumnActivity(dvName);
+			double value=solution.get(dvName);
 			IntDouble id=new IntDouble(value,false);
 			dvar.setData(id);
 			if(dvarUsedByLaterCycle.contains(dvName)){
@@ -116,7 +129,7 @@ public class Misc {
 		}
 		
 		if (ControlData.showRunTimeMessage) {
-			System.out.println("Objective Value: "+ControlData.xasolver.getObjective());
+			//System.out.println("Objective Value: "+ControlData.xasolver.getObjective());
 			System.out.println("Assign Dvar Done.");
 		}
 	}
@@ -140,17 +153,16 @@ public class Misc {
 				double ub = dvar.upperBoundValue.doubleValue();
 			
 				if (dvar.integer.equals("y")){
-					//ControlData.xasolver.setColumnInteger(dvarName, lb, ub);
 					m.addIntVar(dvarName, lb, ub); }
 				else {
-					ControlData.xasolver.setColumnMinMax(dvarName, lb, ub);
 					m.addGeneralVar(dvarName, lb, ub); }
 			}
 		}
 	}
 
-	protected static void setWeights(){
+	protected static void setWeights(MPModel m){
 		Map<String, WeightElement> weightMap = SolverData.getWeightMap();
+		LinkedHashMap<String, Double> objFunction = new LinkedHashMap<String, Double>();
 		for (int i=0; i<=1; i++){
 			ArrayList<String> weightCollection;
 			if (i==0){
@@ -159,10 +171,11 @@ public class Misc {
 				weightCollection = ControlData.currModelDataSet.wtTimeArrayList;
 			}
 			Iterator<String> weightIterator = weightCollection.iterator();
-		
+			
 			while(weightIterator.hasNext()){
 				String weightName=(String)weightIterator.next();
-				ControlData.xasolver.setColumnObjective(weightName, weightMap.get(weightName).getValue());
+				//ControlData.xasolver.setColumnObjective(weightName, weightMap.get(weightName).getValue());
+				objFunction.put(weightName, weightMap.get(weightName).getValue());
 			}
 		
 			Map<String, WeightElement> weightSlackSurplusMap = SolverData.getWeightSlackSurplusMap();
@@ -171,9 +184,11 @@ public class Misc {
 		
 			while(usedWeightSlackSurplusIterator.hasNext()){
 				String usedWeightSlackSurplusName=(String)usedWeightSlackSurplusIterator.next();
-				ControlData.xasolver.setColumnObjective(usedWeightSlackSurplusName, weightSlackSurplusMap.get(usedWeightSlackSurplusName).getValue());
+				//ControlData.xasolver.setColumnObjective(usedWeightSlackSurplusName, weightSlackSurplusMap.get(usedWeightSlackSurplusName).getValue());
+				objFunction.put(usedWeightSlackSurplusName, weightSlackSurplusMap.get(usedWeightSlackSurplusName).getValue());
 			}
 		}
+		m.objFunction = objFunction;
 	}
 	
 	protected static void getSolverInformation(int modelStatus){
