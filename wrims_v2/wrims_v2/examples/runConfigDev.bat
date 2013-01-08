@@ -41,6 +41,7 @@ set JarDir=D:\cvwrsm\trunk\wrims_schematics\lib
 
 set AppJars=%~dp0..\bin\
 set AppJars=%AppJars%;D:\cvwrsm\trunk\wrims_v2\wrims_v2\src\wrimsv2\lib\antlr-runtime-3.2.jar
+set AppJars=%AppJars%;%JarDir%\com.google.ortools.linearsolver.jar
 set AppJars=%AppJars%;%JarDir%\gurobi.jar
 set AppJars=%AppJars%;%JarDir%\heclib.jar
 set AppJars=%AppJars%;%JarDir%\jnios.jar
