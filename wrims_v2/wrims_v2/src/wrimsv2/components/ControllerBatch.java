@@ -22,9 +22,8 @@ import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.solver.XASolver;
 import wrimsv2.solver.SetXALog;
 import wrimsv2.solver.InitialXASolver;
-import wrimsv2.solver.Cbc.CbcSolver;
-import wrimsv2.solver.Cbc.InitialCbcSolver;
 import wrimsv2.solver.Gurobi.GurobiSolver;
+import wrimsv2.solver.cbc.CbcSolver;
 import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.elements.Tools;
 import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
@@ -176,8 +175,8 @@ public class ControllerBatch {
 		//if (ControlData.solverName.equalsIgnoreCase("GUROBI") ) 
 		if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
 			runModelGurobi(sds);
-		} else if (ControlData.solverName.equalsIgnoreCase("GurobiTest")){
-			runModelGurobiTest(sds);		
+		} else if (ControlData.solverName.equalsIgnoreCase("Cbc")){
+			runModelCbc(sds);		
 		} else if (ILP.logging){
 			runModelILP(sds);
 	    } else if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG") ){
@@ -647,15 +646,17 @@ public class ControllerBatch {
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
 		
-		new InitialCbcSolver();
 		ArrayList<ValueEvaluatorParser> modelConditionParsers=sds.getModelConditionParsers();
 		boolean noError=true;
 		VariableTimeStep.initialCurrTimeStep(modelList);
 		VariableTimeStep.initialCycleStartDate();
 		VariableTimeStep.setCycleEndDate(sds);
+		
+		ILP.initializeIlp();
+		CbcSolver.initialize();
+		
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
-			// TODO: chage to cbc log?
-			//if (ControlData.solverName.equalsIgnoreCase("XALOG")) SetXALog.enableXALog();
+
 			ClearValue.clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
 			int i=0;
@@ -692,13 +693,23 @@ public class ControllerBatch {
 						ControlData.currTsMap=mds.tsMap;
 						ControlData.isPostProcessing=false;
 						mds.processModel();
+						
 						if (Error.error_evaluation.size()>=1){
 							Error.writeEvaluationErrorFile("Error_evaluation.txt");
+							Error.addSolvingError("evaluation error(s)");
 							Error.writeErrorLog();
 							noError=false;
+						} else {	
+							ILP.setIlpFile();
+							ILP.writeIlp();
+							if (ILP.loggingVariableValue) {
+								ILP.setVarFile();
+								ILP.writeSvarValue();
+							}
+
+							CbcSolver.run();
 						}
-						new CbcSolver();
-						
+
 						// check monitored dvar list. they are slack and surplus generated automatically 
 						// from the weight group deviation penalty
 						// give error if they are not zero or greater than a small tolerance.
@@ -706,6 +717,12 @@ public class ControllerBatch {
 						
 						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
 						if (Error.error_solving.size()<1){
+							
+		            		//ILP.writeObjValue_Gurobi();
+		            		//if (ILP.loggingVariableValue) ILP.writeDvarValue_Gurobi();
+		            		
+		            		ILP.closeIlpFile();
+		            		
 							ControlData.isPostProcessing=true;
 							mds.processAlias();
 							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
@@ -716,7 +733,7 @@ public class ControllerBatch {
 						}
 						System.out.println("Cycle "+(i+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						if (Error.error_evaluation.size()>=1) noError=false;
-	
+
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
 							VariableTimeStep.currTimeAddOneMonth();
@@ -739,8 +756,7 @@ public class ControllerBatch {
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
 		}
-		// TODO: close cbc solver
-		//ControlData.xasolver.close();
+		CbcSolver.delete();
 		if (ControlData.writeInitToDVOutput){
 			DssOperation.writeInitDvarAliasToDSS();
 		}
