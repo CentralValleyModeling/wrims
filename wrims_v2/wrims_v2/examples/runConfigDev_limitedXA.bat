@@ -77,6 +77,6 @@ set PATH=%ExternalDir%;%JarDir%
 
 
 
-D:\cvwrsm\trunk\3rd_party\jrockit-jre1.6.0_26-R28.1.4\bin\java -Xmx1472m -Xss1280K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
+%Java_Bin%/../../../../../3rd_party/jrockit-jre1.6.0_26-R28.1.4/bin/java -Xmx1472m -Xss1280K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
 
 pause
