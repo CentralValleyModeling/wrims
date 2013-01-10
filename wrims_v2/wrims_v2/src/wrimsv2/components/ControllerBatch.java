@@ -23,7 +23,7 @@ import wrimsv2.solver.XASolver;
 import wrimsv2.solver.SetXALog;
 import wrimsv2.solver.InitialXASolver;
 import wrimsv2.solver.Gurobi.GurobiSolver;
-import wrimsv2.solver.cbc.CbcSolver;
+import wrimsv2.solver.ortools.OrToolsSolver;
 import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.elements.Tools;
 import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
@@ -172,11 +172,12 @@ public class ControllerBatch {
 	public void runModel(StudyDataSet sds){
 		System.out.println("==============Run Study Start============");
 		
-		//if (ControlData.solverName.equalsIgnoreCase("GUROBI") ) 
 		if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
 			runModelGurobi(sds);
+		} else if (ControlData.solverName.equalsIgnoreCase("Glpk")){
+			runModelOrTools(sds, "GLPK_LINEAR_PROGRAMMING");	
 		} else if (ControlData.solverName.equalsIgnoreCase("Cbc")){
-			runModelCbc(sds);		
+			runModelOrTools(sds, "CBC_MIXED_INTEGER_PROGRAMMING");		
 		} else if (ILP.logging){
 			runModelILP(sds);
 	    } else if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG") ){
@@ -642,7 +643,7 @@ public class ControllerBatch {
 
 	}
 	
-	public void runModelCbc(StudyDataSet sds){
+	public void runModelOrTools(StudyDataSet sds, String mpSolverType){
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
 		
@@ -653,7 +654,7 @@ public class ControllerBatch {
 		VariableTimeStep.setCycleEndDate(sds);
 		
 		ILP.initializeIlp();
-		CbcSolver.initialize();
+		OrToolsSolver.initialize(mpSolverType);
 		//CbcSolver.setVerbose(2);
 		
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
@@ -708,7 +709,7 @@ public class ControllerBatch {
 								ILP.writeSvarValue();
 							}
 
-							CbcSolver.run();
+							OrToolsSolver.run();
 						}
 
 						// check monitored dvar list. they are slack and surplus generated automatically 
@@ -719,8 +720,8 @@ public class ControllerBatch {
 						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
 						if (Error.error_solving.size()<1){
 							
-		            		ILP.writeObjValue_Cbc();
-		            		if (ILP.loggingVariableValue) ILP.writeDvarValue_Cbc();
+		            		ILP.writeObjValue_OrTools();
+		            		if (ILP.loggingVariableValue) ILP.writeDvarValue_OrTools();
 		            		
 		            		ILP.closeIlpFile();
 		            		
@@ -757,7 +758,7 @@ public class ControllerBatch {
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
 		}
-		CbcSolver.delete();
+		OrToolsSolver.delete();
 		if (ControlData.writeInitToDVOutput){
 			DssOperation.writeInitDvarAliasToDSS();
 		}

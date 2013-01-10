@@ -1,4 +1,4 @@
-package wrimsv2.solver.cbc;
+package wrimsv2.solver.ortools;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -11,10 +11,11 @@ import com.google.ortools.linearsolver.MPConstraint;
 import com.google.ortools.linearsolver.MPSolver;
 import com.google.ortools.linearsolver.MPVariable;
 
-public class CbcSolver {
+public class OrToolsSolver {
 
 	// private static String solverType = "CLP_LINEAR_PROGRAMMING";
-	private static String mpSolverType = "CBC_MIXED_INTEGER_PROGRAMMING";
+	// private static String mpSolverType = "CBC_MIXED_INTEGER_PROGRAMMING";
+	// private static String mpSolverType = "GLPK_LINEAR_PROGRAMMING";
 	public static MPSolver solver;
 	public static MPModel model;
 	private static Map<String, MPVariable> _solverVarMap = null;
@@ -22,7 +23,7 @@ public class CbcSolver {
 	public static LinkedHashMap<String, Double> solution = null;
 	private static int verbosity = 0; // 0,1,2,3,4
 
-	public static void initialize() {
+	public static void initialize(String mpSolverType) {
 
 		System.loadLibrary("jnilinearsolver");
 
@@ -66,6 +67,15 @@ public class CbcSolver {
 			_solverVarMap.put(varName, solver.makeIntVar(lb, ub, varName));
 		}
 
+		// add obj into solver
+		for (String key : m.objFunction.keySet()) {
+			
+			if (!_solverVarMap.keySet().contains(key)) {
+				_solverVarMap.put(key, solver.makeNumVar(0, m.inf, key));
+			}
+			solver.setObjectiveCoefficient(_solverVarMap.get(key), m.objFunction.get(key));
+		}
+
 		// add constraints into solver
 		_solverConstraintMap = new LinkedHashMap<String, MPConstraint>();
 
@@ -82,12 +92,6 @@ public class CbcSolver {
 
 			}
 		}
-
-		// add obj into solver
-		for (String key : m.objFunction.keySet()) {
-			solver.setObjectiveCoefficient(_solverVarMap.get(key), m.objFunction.get(key));
-		}
-
 	}
 
 	public static void refreshObjFunc(LinkedHashMap<String, Double> newObjFunc) {
@@ -105,7 +109,7 @@ public class CbcSolver {
 
 	public static void setVerbose(int verbosity) {
 
-		CbcSolver.verbosity = verbosity;
+		OrToolsSolver.verbosity = verbosity;
 	}
 
 	public static int solve(MPModel m) {

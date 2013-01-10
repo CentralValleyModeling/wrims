@@ -1,4 +1,4 @@
-package wrimsv2.solver.cbc;
+package wrimsv2.solver.ortools;
 
 import java.util.ArrayList;
 import java.util.HashMap;

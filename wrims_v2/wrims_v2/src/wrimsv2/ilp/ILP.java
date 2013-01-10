@@ -21,7 +21,7 @@ import wrimsv2.components.FilePaths;
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.solver.LPSolveSolver;
 import wrimsv2.solver.Gurobi.GurobiSolver;
-import wrimsv2.solver.cbc.CbcSolver;
+import wrimsv2.solver.ortools.OrToolsSolver;
 import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.elements.Tools;
 
@@ -145,9 +145,9 @@ public class ILP {
 
 	}
 	
-	public static void writeObjValue_Cbc() {
+	public static void writeObjValue_OrTools() {
 
-		double objValue = CbcSolver.solver.objectiveValue();
+		double objValue = OrToolsSolver.solver.objectiveValue();
 		String objValueStr = Double.toString(objValue);
 		
 		writeObjValue(objValueStr, _cplexLpFile, cplexLp_comment_Symbol);
@@ -239,9 +239,9 @@ public class ILP {
 		_dvarFile.flush();
 		
 	}
-	public static void writeDvarValue_Cbc() {
+	public static void writeDvarValue_OrTools() {
 		
-		writeDvarValue_Cbc(_dvarFile, dvar_effective);
+		writeDvarValue_OrTools(_dvarFile, dvar_effective);
 		_dvarFile.flush();
 		
 	}
@@ -635,7 +635,7 @@ public class ILP {
 		}
 	}
 
-	private static void writeDvarValue_Cbc(PrintWriter dvarFile, Set<String> dvar_effective) {
+	private static void writeDvarValue_OrTools(PrintWriter dvarFile, Set<String> dvar_effective) {
 
 		
 		ArrayList<ArrayList<String>> sortedDvar = prepareDvarToWrite(dvar_effective);		
@@ -647,7 +647,7 @@ public class ILP {
 			String dvName = String.format("%-35s", s);
 			//dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
 			try{
-				double v = CbcSolver.solution.get(s);
+				double v = OrToolsSolver.solution.get(s);
 				// TODO: improve speed
 				if (!df.format(v).equals("-0")) {
 					dvarFile.print(dvName + ":  " + df.format(v) +"\n"  );					
@@ -656,7 +656,7 @@ public class ILP {
 				}
 	
 			} catch (Exception e) {
-				dvarFile.print(dvName + ":  " + CbcSolver.solution.get(s) +"\n"  );
+				dvarFile.print(dvName + ":  " + OrToolsSolver.solution.get(s) +"\n"  );
 			}
 		}
 		dvarFile.println();
@@ -664,7 +664,7 @@ public class ILP {
 		for (String s : dvar_unweighted){
 			String dvName = String.format("%-35s", s);
 			try{
-				double v = CbcSolver.solution.get(s);
+				double v = OrToolsSolver.solution.get(s);
 				// TODO: improve speed
 				if (!df.format(v).equals("-0")) {
 					dvarFile.print(dvName + ":  " + df.format(v) +"\n"  );					
@@ -673,7 +673,7 @@ public class ILP {
 				}
 				
 			} catch (Exception e) {
-				dvarFile.print(dvName + ":  " + CbcSolver.solution.get(s) +"\n"  );
+				dvarFile.print(dvName + ":  " + OrToolsSolver.solution.get(s) +"\n"  );
 			}
 		}
 	}	
