@@ -15,7 +15,7 @@ public class OrToolsSolver {
 
 	// private static String solverType = "CLP_LINEAR_PROGRAMMING";
 	// private static String mpSolverType = "CBC_MIXED_INTEGER_PROGRAMMING";
-	// private static String mpSolverType = "GLPK_LINEAR_PROGRAMMING";
+	// private static String mpSolverType = "GLPK_MIXED_INTEGER_PROGRAMMING";
 	public static MPSolver solver;
 	public static MPModel model;
 	private static Map<String, MPVariable> _solverVarMap = null;
