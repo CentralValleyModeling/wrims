@@ -175,7 +175,7 @@ public class ControllerBatch {
 		if (ControlData.solverName.equalsIgnoreCase("Gurobi")){
 			runModelGurobi(sds);
 		} else if (ControlData.solverName.equalsIgnoreCase("Glpk")){
-			runModelOrTools(sds, "GLPK_LINEAR_PROGRAMMING");	
+			runModelOrTools(sds, "GLPK_MIXED_INTEGER_PROGRAMMING");	
 		} else if (ControlData.solverName.equalsIgnoreCase("Cbc")){
 			runModelOrTools(sds, "CBC_MIXED_INTEGER_PROGRAMMING");		
 		} else if (ILP.logging){
@@ -653,7 +653,7 @@ public class ControllerBatch {
 		VariableTimeStep.initialCycleStartDate();
 		VariableTimeStep.setCycleEndDate(sds);
 		
-		ILP.initializeIlp();
+		if (ILP.logging) ILP.initializeIlp();
 		OrToolsSolver.initialize(mpSolverType);
 		//CbcSolver.setVerbose(2);
 		
@@ -702,11 +702,13 @@ public class ControllerBatch {
 							Error.writeErrorLog();
 							noError=false;
 						} else {	
-							ILP.setIlpFile();
-							ILP.writeIlp();
-							if (ILP.loggingVariableValue) {
-								ILP.setVarFile();
-								ILP.writeSvarValue();
+							if (ILP.logging) {
+								ILP.setIlpFile();
+								ILP.writeIlp();
+								if (ILP.loggingVariableValue) {
+									ILP.setVarFile();
+									ILP.writeSvarValue();
+								}
 							}
 
 							OrToolsSolver.run();
@@ -720,11 +722,12 @@ public class ControllerBatch {
 						if (ControlData.showRunTimeMessage) System.out.println("Solving Done.");
 						if (Error.error_solving.size()<1){
 							
-		            		ILP.writeObjValue_OrTools();
-		            		if (ILP.loggingVariableValue) ILP.writeDvarValue_OrTools();
+							if (ILP.logging) {
+								ILP.writeObjValue_OrTools();
+								if (ILP.loggingVariableValue) ILP.writeDvarValue_OrTools();
 		            		
-		            		ILP.closeIlpFile();
-		            		
+								ILP.closeIlpFile();
+							}
 							ControlData.isPostProcessing=true;
 							mds.processAlias();
 							if (ControlData.showRunTimeMessage) System.out.println("Assign Alias Done.");
