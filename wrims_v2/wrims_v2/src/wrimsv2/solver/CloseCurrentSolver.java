@@ -10,8 +10,6 @@ public class CloseCurrentSolver {
 			ControlData.xasolver.close();
 		}else if (currentSolver.equalsIgnoreCase("Gurobi")){
 			GurobiSolver.dispose();
-		}else if (currentSolver.equalsIgnoreCase("Glpk")){
-			OrToolsSolver.delete();
 		}else if (currentSolver.equalsIgnoreCase("Cbc")){
 			OrToolsSolver.delete();
 		}
