@@ -19,6 +19,7 @@ import wrimsv2.evaluator.PreEvaluator;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.ilp.ILP;
 import wrimsv2.solver.LPSolveSolver;
+import wrimsv2.solver.MPModel;
 import wrimsv2.solver.XASolver;
 import wrimsv2.solver.SetXALog;
 import wrimsv2.solver.InitialXASolver;
@@ -702,8 +703,12 @@ public class ControllerBatch {
 							Error.writeErrorLog();
 							noError=false;
 						} else {	
+							
+							MPModel m = OrToolsSolver.createModel();
+							
 							if (ILP.logging) {
 								ILP.setIlpFile();
+								if (ILP.loggingMPModel) ILP.writeMPModelFile(m);
 								ILP.writeIlp();
 								if (ILP.loggingVariableValue) {
 									ILP.setVarFile();

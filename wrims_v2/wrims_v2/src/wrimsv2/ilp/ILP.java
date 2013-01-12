@@ -1,7 +1,9 @@
 package wrimsv2.ilp;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import wrimsv2.components.Error;
 import wrimsv2.components.FilePaths;
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.solver.LPSolveSolver;
+import wrimsv2.solver.MPModel;
 import wrimsv2.solver.Gurobi.GurobiSolver;
 import wrimsv2.solver.ortools.OrToolsSolver;
 import wrimsv2.wreslparser.elements.StudyUtils;
@@ -29,12 +32,15 @@ import wrimsv2.wreslparser.elements.Tools;
 
 public class ILP {
 
+	private static String _mpModelDir;
 	private static String _lpSolveDir;
 	private static String _cplexLpDir;
 	private static String _amplDir;
+	public static String mpModelFilePath;
 	public static String lpSolveFilePath;
 	public static String cplexLpFilePath;
 	public static String amplFilePath;
+	private static ObjectOutputStream  _mpModelFile;
 	private static PrintWriter _lpSolveFile;
 	private static PrintWriter _cplexLpFile;
 	private static PrintWriter _amplFile;
@@ -52,6 +58,7 @@ public class ILP {
 	public static boolean loggingAmpl = false;
 	public static boolean loggingCplexLp = false; // special LP problem file format designed by Cplex
 	public static boolean loggingLpSolve = false; // special LP problem file format designed by LpSolve
+	public static boolean loggingMPModel = false; // special LP problem binary file format designed for OR-Tools
 	
 	private static File _ilpRootDir;  
 	private static File _ilpDir; 
@@ -67,7 +74,8 @@ public class ILP {
 		_ilpRootDir = new File(FilePaths.mainDirectory, "=ILP=");  
 	    _ilpDir = new File(_ilpRootDir.getAbsolutePath(), StudyUtils.configFileName); 
 	    
-		if (ILP.loggingLpSolve)  _lpSolveDir = new File(_ilpDir, "lpsolve").getAbsolutePath();
+		if (ILP.loggingMPModel)  _mpModelDir = new File(_ilpDir, "mpmodel").getAbsolutePath();
+	    if (ILP.loggingLpSolve)  _lpSolveDir = new File(_ilpDir, "lpsolve").getAbsolutePath();
 		if (ILP.loggingCplexLp)  _cplexLpDir = new File(_ilpDir, "cplexlp").getAbsolutePath();
 		if (ILP.loggingAmpl)     _amplDir = new File(_ilpDir, "ampl").getAbsolutePath();
 		// TODO: write ampl command file "option presolve_eps 1e-13;"
@@ -92,7 +100,8 @@ public class ILP {
 	}
 	
 	public static void setIlpFile() {
-		
+
+		if (ILP.loggingMPModel) setMPModelFile();
 		if (ILP.loggingLpSolve) setLpSolveFile();
 		if (ILP.loggingCplexLp) setCplexLpFile();		
 		if (ILP.loggingAmpl)    setAmplFile();		
@@ -100,6 +109,15 @@ public class ILP {
 
 	public static void writeIlp() {
 		
+		Set<String> dvar_inConstraint = findDvarInConstraint();
+		Set<String> dvar_weighted = findWeightedDvar();
+		//Set<String> dvar_unWeighted = findUnWeightedDvarInConstraint(dvar_inConstraint, dvar_weighted);
+		
+		dvar_effective = new HashSet<String>();
+		dvar_effective.addAll(dvar_weighted);
+		dvar_effective.addAll(dvar_inConstraint);
+		
+		//if (ILP.loggingMPModel) writeMPModelFile();
 		if (ILP.loggingLpSolve) writeLpSolveFile();
 		if (ILP.loggingCplexLp) writeCplexLpFile();
 		if (ILP.loggingAmpl)    writeAmplFile();
@@ -150,7 +168,7 @@ public class ILP {
 		double objValue = OrToolsSolver.solver.objectiveValue();
 		String objValueStr = Double.toString(objValue);
 		
-		writeObjValue(objValueStr, _cplexLpFile, cplexLp_comment_Symbol);
+		if (ILP.loggingCplexLp) writeObjValue(objValueStr, _cplexLpFile, cplexLp_comment_Symbol);
 		if (ILP.loggingLpSolve) writeObjValue(objValueStr, _lpSolveFile, lpSolve_comment_Symbol);
 		if (ILP.loggingAmpl)    writeObjValue(objValueStr, _amplFile, ampl_comment_Symbol);
 
@@ -158,6 +176,16 @@ public class ILP {
 
 	}
 	
+	public static void writeMPModelFile(MPModel m) {
+				
+		try {
+			_mpModelFile.writeObject(m);
+			_mpModelFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	    
+	}
 	private static void writeLpSolveFile() {
 		
 		_lpSolveFile.print(findHeaderStr(lpSolve_comment_Symbol));
@@ -167,13 +195,13 @@ public class ILP {
 		LpSolveWriter.writeObj(_lpSolveFile, activeWeightMap);
 		LpSolveWriter.writeConstraint(_lpSolveFile);
 		
-		Set<String> dvar_inConstraint = findDvarInConstraint();
-		Set<String> dvar_weighted = findWeightedDvar();
-		//Set<String> dvar_unWeighted = findUnWeightedDvarInConstraint(dvar_inConstraint, dvar_weighted);
-		
-		dvar_effective = new HashSet<String>();
-		dvar_effective.addAll(dvar_weighted);
-		dvar_effective.addAll(dvar_inConstraint);
+//		Set<String> dvar_inConstraint = findDvarInConstraint();
+//		Set<String> dvar_weighted = findWeightedDvar();
+//		//Set<String> dvar_unWeighted = findUnWeightedDvarInConstraint(dvar_inConstraint, dvar_weighted);
+//		
+//		dvar_effective = new HashSet<String>();
+//		dvar_effective.addAll(dvar_weighted);
+//		dvar_effective.addAll(dvar_inConstraint);
 		
 		//LpSolveWriter.writeDvar(_lpSolveFile, dvar_weighted, dvar_unWeighted);
 		LpSolveWriter.writeDvar(_lpSolveFile, dvar_effective);	
@@ -188,13 +216,13 @@ public class ILP {
 		CplexLpWriter.writeObj(_cplexLpFile, activeWeightMap);
 		CplexLpWriter.writeConstraint(_cplexLpFile);
 		
-		Set<String> dvar_inConstraint = findDvarInConstraint();
-		Set<String> dvar_weighted = findWeightedDvar();
-		//Set<String> dvar_unWeighted = findUnWeightedDvarInConstraint(dvar_inConstraint, dvar_weighted);
-		
-		dvar_effective = new HashSet<String>();
-		dvar_effective.addAll(dvar_weighted);
-		dvar_effective.addAll(dvar_inConstraint);
+//		Set<String> dvar_inConstraint = findDvarInConstraint();
+//		Set<String> dvar_weighted = findWeightedDvar();
+//		//Set<String> dvar_unWeighted = findUnWeightedDvarInConstraint(dvar_inConstraint, dvar_weighted);
+//		
+//		dvar_effective = new HashSet<String>();
+//		dvar_effective.addAll(dvar_weighted);
+//		dvar_effective.addAll(dvar_inConstraint);
 		
 		CplexLpWriter.writeDvar(_cplexLpFile, dvar_effective);	
 		_cplexLpFile.println("\nEnd");
@@ -207,13 +235,13 @@ public class ILP {
 		
 		Map<String, WeightElement> activeWeightMap = findActiveWeightMap();
 		
-		Set<String> dvar_inConstraint = findDvarInConstraint();
-		Set<String> dvar_weighted = findWeightedDvar();
-		//Set<String> dvar_unWeighted = findUnWeightedDvarInConstraint(dvar_inConstraint, dvar_weighted);
-		
-		dvar_effective = new HashSet<String>();
-		dvar_effective.addAll(dvar_weighted);
-		dvar_effective.addAll(dvar_inConstraint);
+//		Set<String> dvar_inConstraint = findDvarInConstraint();
+//		Set<String> dvar_weighted = findWeightedDvar();
+//		//Set<String> dvar_unWeighted = findUnWeightedDvarInConstraint(dvar_inConstraint, dvar_weighted);
+//		
+//		dvar_effective = new HashSet<String>();
+//		dvar_effective.addAll(dvar_weighted);
+//		dvar_effective.addAll(dvar_inConstraint);
 		
 		AmplWriter.writeDvar(_amplFile, dvar_effective);	
 		AmplWriter.writeConstraint(_amplFile);
@@ -254,6 +282,7 @@ public class ILP {
 	public static void closeIlpFile() {
 	
 		try {
+			if (ILP.loggingMPModel) _mpModelFile.close();
 			if (ILP.loggingLpSolve) _lpSolveFile.close();
 			if (ILP.loggingCplexLp) _cplexLpFile.close();
 			if (ILP.loggingAmpl)    _amplFile.close();
@@ -267,6 +296,29 @@ public class ILP {
 		}
 	}
 
+	private static void setMPModelFile() {
+		
+		String mpModelFileName;
+		String twoDigitMonth = String.format("%02d", ControlData.currMonth);
+		String twoDigitCycle = String.format("%02d", ControlData.currCycleIndex+1);
+		
+		mpModelFileName = ControlData.currYear + "_" + twoDigitMonth + "_c" + twoDigitCycle + ".mpm";		
+
+		try {
+
+			File dir = new File(_mpModelDir);
+			dir.mkdirs();
+			mpModelFilePath = new File(_mpModelDir, mpModelFileName).getAbsolutePath(); // for public access
+			_mpModelFile = new ObjectOutputStream(new FileOutputStream(mpModelFilePath));
+
+		}
+		catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	
+	}
+	
 	private static void setLpSolveFile() {
 	
 		String lpSolveFileName;

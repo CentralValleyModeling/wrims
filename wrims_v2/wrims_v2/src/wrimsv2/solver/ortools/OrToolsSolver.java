@@ -160,13 +160,20 @@ public class OrToolsSolver {
 	}
 
 	// for wrimsv2 only
-	public static void run() {
+	public static MPModel createModel() {
 		
 		model = new MPModel("wrims");
 		// create model
 		Misc.setDVars(model);
 		Misc.setConstraints(model);
-		Misc.setWeights(model);	
+		Misc.setWeights(model);
+		
+		return model;	
+
+	}
+
+	public static void run() {
+		
 		int modelStatus = solve(model);
 		
 		if (modelStatus != MPSolver.OPTIMAL) {

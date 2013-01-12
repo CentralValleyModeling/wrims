@@ -1,9 +1,10 @@
 package wrimsv2.solver;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 
-public class MPModel {
+public class MPModel implements Serializable {
 
 	public String modelName = "";
 	public LinkedHashMap<String, double[]> varMap_number = null;

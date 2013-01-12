@@ -384,6 +384,10 @@ public class ConfigUtils {
 					ILP.loggingCplexLp = true;
 					System.out.println("IlpLogFormat:           " + "CplexLp");
 				} 
+				if (s.toLowerCase().contains("mpmodel")) {
+					ILP.loggingMPModel = true;
+					System.out.println("IlpLogFormat:           " + "MPModel");
+				} 
 				if (s.toLowerCase().contains("ampl")) {
 					ILP.loggingAmpl = true;
 					System.out.println("IlpLogFormat:           " + "Ampl");
