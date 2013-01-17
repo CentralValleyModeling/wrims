@@ -2,7 +2,6 @@ package wrimsv2.solver;
 
 import wrimsv2.components.ControlData;
 import wrimsv2.solver.Gurobi.GurobiSolver;
-import wrimsv2.solver.ortools.OrToolsSolver;
 
 public class CloseCurrentSolver {
 	public CloseCurrentSolver(String currentSolver){
@@ -11,7 +10,7 @@ public class CloseCurrentSolver {
 		}else if (currentSolver.equalsIgnoreCase("Gurobi")){
 			GurobiSolver.dispose();
 		}else if (currentSolver.equalsIgnoreCase("Cbc")){
-			OrToolsSolver.delete();
+			ControlData.otsolver.delete();
 		}
 	}
 }

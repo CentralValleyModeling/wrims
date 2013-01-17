@@ -1,15 +1,15 @@
-package wrimsv2.tools.nonuniqueSolutionDetector;
+package wrimsv2.solver.mpmodel;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
-import wrimsv2.solver.MPModel;
+import wrimsv2.commondata.wresldata.Param;
+
 
 public class TransformModel {
 
-	private static final double inf = Double.POSITIVE_INFINITY;
 	private static final String slack_append   = "___tslac";
 	private static final String surplus_append = "___tsurp";
 
@@ -109,9 +109,9 @@ public class TransformModel {
 			// (a, b) => shift(-a) => surplus(b-a)
 			// (a, inf) => shift(-a) => surplus(std)
 
-			if (lb == -inf) {
+			if (lb < -Param.inf_assumed) {
 
-				if (ub == inf) {
+				if (ub > Param.inf_assumed) {
 					// / case 1
 					// (-inf, inf) => surplus(std) - slack(std)
 

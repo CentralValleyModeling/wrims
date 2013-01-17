@@ -19,11 +19,11 @@ import wrimsv2.evaluator.PreEvaluator;
 import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.ilp.ILP;
 import wrimsv2.solver.LPSolveSolver;
-import wrimsv2.solver.MPModel;
 import wrimsv2.solver.XASolver;
 import wrimsv2.solver.SetXALog;
 import wrimsv2.solver.InitialXASolver;
 import wrimsv2.solver.Gurobi.GurobiSolver;
+import wrimsv2.solver.mpmodel.MPModel;
 import wrimsv2.solver.ortools.OrToolsSolver;
 import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.elements.Tools;
@@ -655,8 +655,8 @@ public class ControllerBatch {
 		VariableTimeStep.setCycleEndDate(sds);
 		
 		if (ILP.logging) ILP.initializeIlp();
-		OrToolsSolver.initialize(mpSolverType);
-		//CbcSolver.setVerbose(2);
+		OrToolsSolver.initialize();
+		ControlData.otsolver = new OrToolsSolver(mpSolverType);
 		
 		while (VariableTimeStep.checkEndDate(ControlData.cycleStartDay, ControlData.cycleStartMonth, ControlData.cycleStartYear, ControlData.endDay, ControlData.endMonth, ControlData.endYear)<=0 && noError){
 
@@ -704,7 +704,7 @@ public class ControllerBatch {
 							noError=false;
 						} else {	
 							
-							MPModel m = OrToolsSolver.createModel();
+							MPModel m = ControlData.otsolver.createModel();
 							
 							if (ILP.logging) {
 								ILP.setIlpFile();
@@ -716,7 +716,7 @@ public class ControllerBatch {
 								}
 							}
 
-							OrToolsSolver.run();
+							ControlData.otsolver.run();
 						}
 
 						// check monitored dvar list. they are slack and surplus generated automatically 
@@ -766,7 +766,7 @@ public class ControllerBatch {
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
 		}
-		OrToolsSolver.delete();
+		ControlData.otsolver.delete();
 		if (ControlData.writeInitToDVOutput){
 			DssOperation.writeInitDvarAliasToDSS();
 		}

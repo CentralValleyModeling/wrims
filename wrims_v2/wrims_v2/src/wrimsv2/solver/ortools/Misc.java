@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.Dvar;
+import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
@@ -16,7 +17,7 @@ import wrimsv2.evaluator.DataTimeSeries;
 import wrimsv2.evaluator.DssDataSetFixLength;
 import wrimsv2.evaluator.DssOperation;
 import wrimsv2.evaluator.EvalConstraint;
-import wrimsv2.solver.MPModel;
+import wrimsv2.solver.mpmodel.MPModel;
 
 
 public class Misc {
@@ -39,8 +40,8 @@ public class Misc {
 				String constraintName=(String)constraintIterator.next();
 				EvalConstraint ec=constraintMap.get(constraintName);
 			
-				double lb = -m.inf;
-				double ub =  m.inf;
+				double lb = -Param.inf;
+				double ub =  Param.inf;
 				
 				if (ec.getSign().equals("=")) {
 					//ControlData.xasolver.setRowFix(constraintName, -ec.getEvalExpression().getValue().getData().doubleValue()); 

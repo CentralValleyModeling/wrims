@@ -14,6 +14,7 @@ import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.LoopIndex;
 import wrimsv2.external.ExternalFunction;
+import wrimsv2.solver.ortools.OrToolsSolver;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -82,6 +83,7 @@ public class ControlData {
 	public static DSSDataWriter writer;
 	public static String solverName;
 	public static Optimizer xasolver;
+	public static OrToolsSolver otsolver;
 	public static double lpsolve_objective;
 	public static double gurobi_objective;
 	public static boolean isPostProcessing=false;

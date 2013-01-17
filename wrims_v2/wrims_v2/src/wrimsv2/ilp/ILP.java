@@ -22,9 +22,8 @@ import wrimsv2.components.Error;
 import wrimsv2.components.FilePaths;
 import wrimsv2.evaluator.EvalConstraint;
 import wrimsv2.solver.LPSolveSolver;
-import wrimsv2.solver.MPModel;
 import wrimsv2.solver.Gurobi.GurobiSolver;
-import wrimsv2.solver.ortools.OrToolsSolver;
+import wrimsv2.solver.mpmodel.MPModel;
 import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.elements.Tools;
 
@@ -165,7 +164,7 @@ public class ILP {
 	
 	public static void writeObjValue_OrTools() {
 
-		double objValue = OrToolsSolver.solver.objectiveValue();
+		double objValue = ControlData.otsolver.solver.objectiveValue();
 		String objValueStr = Double.toString(objValue);
 		
 		if (ILP.loggingCplexLp) writeObjValue(objValueStr, _cplexLpFile, cplexLp_comment_Symbol);
@@ -699,7 +698,7 @@ public class ILP {
 			String dvName = String.format("%-35s", s);
 			//dvarFile.print(dvName + ":  " + ControlData.xasolver.getColumnActivity(s) +"\n"  );
 			try{
-				double v = OrToolsSolver.solution.get(s);
+				double v = ControlData.otsolver.solution.get(s);
 				// TODO: improve speed
 				if (!df.format(v).equals("-0")) {
 					dvarFile.print(dvName + ":  " + df.format(v) +"\n"  );					
@@ -708,7 +707,7 @@ public class ILP {
 				}
 	
 			} catch (Exception e) {
-				dvarFile.print(dvName + ":  " + OrToolsSolver.solution.get(s) +"\n"  );
+				dvarFile.print(dvName + ":  " + ControlData.otsolver.solution.get(s) +"\n"  );
 			}
 		}
 		dvarFile.println();
@@ -716,7 +715,7 @@ public class ILP {
 		for (String s : dvar_unweighted){
 			String dvName = String.format("%-35s", s);
 			try{
-				double v = OrToolsSolver.solution.get(s);
+				double v = ControlData.otsolver.solution.get(s);
 				// TODO: improve speed
 				if (!df.format(v).equals("-0")) {
 					dvarFile.print(dvName + ":  " + df.format(v) +"\n"  );					
@@ -725,7 +724,7 @@ public class ILP {
 				}
 				
 			} catch (Exception e) {
-				dvarFile.print(dvName + ":  " + OrToolsSolver.solution.get(s) +"\n"  );
+				dvarFile.print(dvName + ":  " + ControlData.otsolver.solution.get(s) +"\n"  );
 			}
 		}
 	}	

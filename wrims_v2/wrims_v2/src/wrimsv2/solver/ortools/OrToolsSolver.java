@@ -5,7 +5,8 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import wrimsv2.solver.MPModel;
+import wrimsv2.commondata.wresldata.Param;
+import wrimsv2.solver.mpmodel.MPModel;
 
 import com.google.ortools.linearsolver.MPConstraint;
 import com.google.ortools.linearsolver.MPSolver;
@@ -16,16 +17,17 @@ public class OrToolsSolver {
 	// private static String solverType = "CLP_LINEAR_PROGRAMMING";
 	// private static String mpSolverType = "CBC_MIXED_INTEGER_PROGRAMMING";
 	// private static String mpSolverType = "GLPK_MIXED_INTEGER_PROGRAMMING";
-	public static MPSolver solver;
-	public static MPModel model;
-	private static Map<String, MPVariable> _solverVarMap = null;
-	private static Map<String, MPConstraint> _solverConstraintMap = null;
-	public static LinkedHashMap<String, Double> solution = null;
-	private static int verbosity = 0; // 0,1,2,3,4
+	public MPSolver solver;
+	public MPModel model;
+	private Map<String, MPVariable> _solverVarMap = null;
+	private Map<String, MPConstraint> _solverConstraintMap = null;
+	public LinkedHashMap<String, Double> solution = null;
+	private int verbosity = 0; // 0,1,2,3,4
+	
+	
+	public OrToolsSolver(String mpSolverType) {
 
-	public static void initialize(String mpSolverType) {
-
-		System.loadLibrary("jnilinearsolver");
+		//System.loadLibrary("jnilinearsolver");
 
 		try {
 			solver = new MPSolver("testExample", MPSolver.getSolverEnum(mpSolverType));
@@ -42,12 +44,13 @@ public class OrToolsSolver {
 
 	}
 
-	public static void setLp(String CplexLpFilePath) {
-		// TODO: read cplex lp file
-
+	public static void initialize() {
+		
+		System.loadLibrary("jnilinearsolver");
+		
 	}
-
-	public static void setModel(MPModel m) {
+	
+	public void setModel(MPModel m) {
 
 		model = m;
 
@@ -71,7 +74,7 @@ public class OrToolsSolver {
 		for (String key : m.objFunction.keySet()) {
 			
 			if (!_solverVarMap.keySet().contains(key)) {
-				_solverVarMap.put(key, solver.makeNumVar(0, m.inf, key));
+				_solverVarMap.put(key, solver.makeNumVar(0, Param.inf, key));
 			}
 			solver.setObjectiveCoefficient(_solverVarMap.get(key), m.objFunction.get(key));
 		}
@@ -94,7 +97,7 @@ public class OrToolsSolver {
 		}
 	}
 
-	public static void refreshObjFunc(LinkedHashMap<String, Double> newObjFunc) {
+	public void refreshObjFunc(LinkedHashMap<String, Double> newObjFunc) {
 
 		model.objFunction = newObjFunc;
 
@@ -107,12 +110,12 @@ public class OrToolsSolver {
 
 	}
 
-	public static void setVerbose(int verbosity) {
+	public void setVerbose(int verbosity) {
 
-		OrToolsSolver.verbosity = verbosity;
+		this.verbosity = verbosity;
 	}
 
-	public static int solve(MPModel m) {
+	public int solve(MPModel m) {
 
 		setModel(m);
 
@@ -120,7 +123,7 @@ public class OrToolsSolver {
 
 	}
 
-	public static int solve() {
+	public int solve() {
 
 		solver.setMaximization();
 
@@ -153,14 +156,14 @@ public class OrToolsSolver {
 
 	}
 
-	public static void delete() {
+	public void delete() {
 
 		solver.delete();
 
 	}
 
 	// for wrimsv2 only
-	public static MPModel createModel() {
+	public MPModel createModel() {
 		
 		model = new MPModel("wrims");
 		// create model
@@ -171,8 +174,8 @@ public class OrToolsSolver {
 		return model;	
 
 	}
-
-	public static void run() {
+	// for wrimsv2 only
+	public void run() {
 		
 		int modelStatus = solve(model);
 		

@@ -1,15 +1,17 @@
-package wrimsv2.solver;
+package wrimsv2.solver.mpmodel;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+
+import wrimsv2.commondata.wresldata.Param;
 
 public class MPModel implements Serializable {
 
 	public String modelName = "";
 	public LinkedHashMap<String, double[]> varMap_number = null;
 	public HashSet<String> var_general = null;
-	public HashSet<String> var_standard = null;
+	public HashSet<String> var_standard = null;  // warning: is a subset of all standard vars
 	public HashSet<String> var_free = null;
 
 	public LinkedHashMap<String, double[]> varMap_integer = null;
@@ -27,8 +29,6 @@ public class MPModel implements Serializable {
 	public LinkedHashMap<String, Double> originalObjFunction = null;
 	public LinkedHashMap<String, Double> restoredSolution = null;
 	public double restoredObjValue;
-
-	public final double inf = Double.POSITIVE_INFINITY;
 
 	//
 	public LinkedHashMap<String, Double> tvarOffsetMap = null;
@@ -83,9 +83,9 @@ public class MPModel implements Serializable {
 		double[] lb_ub = new double[] { lb, ub };
 		varMap_number.put(varName, lb_ub);
 
-		if (lb == 0 && ub == inf) {
+		if (lb == 0 && ub > Param.inf_assumed) {
 			var_standard.add(varName);
-		} else if (lb == -inf && ub == inf) {
+		} else if (lb < -Param.inf_assumed && ub > Param.inf_assumed) {
 			var_free.add(varName);
 		} else {
 			var_general.add(varName);
@@ -96,7 +96,7 @@ public class MPModel implements Serializable {
 	// number: standard var (0,inf)
 	public void addStdVar(String varName) {
 
-		double[] lb_ub = new double[] { 0, inf };
+		double[] lb_ub = new double[] { 0, Param.inf };
 		varMap_number.put(varName, lb_ub);
 		var_standard.add(varName);
 
@@ -105,7 +105,7 @@ public class MPModel implements Serializable {
 	// number: free var (-inf, inf)
 	public void addFreeVar(String varName) {
 
-		double[] lb_ub = new double[] { -inf, inf };
+		double[] lb_ub = new double[] { -Param.inf, Param.inf };
 		varMap_number.put(varName, lb_ub);
 		var_free.add(varName);
 
@@ -115,7 +115,7 @@ public class MPModel implements Serializable {
 	public void addBinaryVar(String varName) {
 
 		// warning, can't set {0, 1}
-		double[] lb_ub = new double[] { 0, 1.1 };
+		double[] lb_ub = new double[] { 0, 1.0 };
 		varMap_integer.put(varName, lb_ub);
 		var_int_binary.add(varName);
 
@@ -128,7 +128,7 @@ public class MPModel implements Serializable {
 		// with upper bound (0, ub)
 		if (lb == 0) {
 			// warning, need to add tolerance
-			double[] lb_ub = new double[] { 0, ub + 0.1 };
+			double[] lb_ub = new double[] { 0, ub };
 
 			varMap_integer.put(varName, lb_ub);
 			
