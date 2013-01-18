@@ -76,6 +76,11 @@ public class LpSolveExport {
 			
 			String lhs = "";
 			
+			// TODO:  this constraint might be always true or always false
+			if (lhs_map.keySet().size()==0) {
+				System.err.println("# Error: check constraint named: "+constraintName);
+			}
+			
 			for (String key: lhs_map.keySet()){
 				
 				lhs =  lhs + " + " + lhs_map.get(key) + " " + key ;

@@ -57,6 +57,20 @@ public class Misc {
 				}
 			
 				HashMap<String, IntDouble> multMap = ec.getEvalExpression().getMultiplier();
+				
+				//TODO: what if multMap is empty?? this means 0 according to wresl parser.
+				// for example,      lb < 0
+				if (multMap.size()==0) {
+					
+					if ( lb <= 0 && 0 <= ub) {
+						System.out.println("Constraint: "+constraintName+" is removed.");
+						continue; // skip to next constraint without adding this to lp
+					} else {
+						Error.addSolvingError("Infeasible solution caused by constraint named: "+constraintName); break;
+					}
+				}
+				
+				
 				Set multCollection = multMap.keySet();
 				Iterator multIterator = multCollection.iterator();
 			

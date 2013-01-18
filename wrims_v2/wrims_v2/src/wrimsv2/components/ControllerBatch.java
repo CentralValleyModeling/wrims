@@ -704,7 +704,14 @@ public class ControllerBatch {
 							noError=false;
 						} else {	
 							
-							MPModel m = ControlData.otsolver.createModel();
+							MPModel m = ControlData.otsolver.createModel();							
+							
+							if (Error.error_solving.size()>=1){
+								Error.writeErrorLog();
+								noError=false;
+								break;
+							}
+							
 							
 							if (ILP.logging) {
 								ILP.setIlpFile();
