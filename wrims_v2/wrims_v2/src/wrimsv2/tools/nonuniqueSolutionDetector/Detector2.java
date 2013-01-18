@@ -23,17 +23,20 @@ public class Detector2 {
 	public static final double inf = Double.POSITIVE_INFINITY;
 	public static final double delta = 0.001;
 	public static final double vertax_tolerance = 0.001;
+	public static final double obj_constraint_lower_bound_tolerance_ratio = 0.00001;
 	
 	public static void main(String[] args) throws Exception {
 		
 		OrToolsSolver.initialize();
 		//detect("examples\\simple1\\run\\=ILP=\\simple1_cbc.config\\mpmodel\\1921_10_c01.mpm");
-		detect("examples\\example8\\run\\=ILP=\\example8.config\\mpmodel\\1921_10_c01.mpm");
+		//detect("examples\\example8\\run\\=ILP=\\example8.config\\mpmodel\\1921_10_c01.mpm");
+		detect("examples\\CL_SharingFix_Shortage_121212\\Run\\=ILP=\\Existing_BO_121212_CBC.config\\mpmodel\\\\1921_10_c01.mpm");
+		
 		
 	}
 
 	
-	private static ArrayList<LinkedHashMap<String, Double>> searchAltSolutions_quick(MPModel inModel, LinkedHashSet<String> lowerVertaxVars, String mpmodelDir, String mpmodelFileName) {
+	private static ArrayList<LinkedHashMap<String, Double>> searchAltSolutions(MPModel inModel, ArrayList<String> lowerVertaxVars_number, ArrayList<String> lowerVertaxVars_integer, String mpmodelDir, String mpmodelFileName) {
 		
 		ArrayList<LinkedHashMap<String, Double>> solutions = new ArrayList<LinkedHashMap<String,Double>>();
 		
@@ -44,15 +47,16 @@ public class Detector2 {
 		OrToolsSolver sSolver = new OrToolsSolver("CBC_MIXED_INTEGER_PROGRAMMING");
 		sSolver.setModel(inModel);
 		
-		while (hasNewSolution && i<=maxTry && lowerVertaxVars.size()>0) {
+		while (hasNewSolution && i<=maxTry && lowerVertaxVars_number.size()>0) {
 			i++;
 			System.out.println("# seach: "+i);
 									
 			LinkedHashMap<String, Double> searchObjFunc = new LinkedHashMap<String, Double>();
 
-			System.out.println("lowerVertaxVars: "+lowerVertaxVars);
+			System.out.println("lowerVertaxVars_number:  "+lowerVertaxVars_number);
+			System.out.println("lowerVertaxVars_integer: "+lowerVertaxVars_integer);
 			
-			double searchObjOffset = createSearchObjFunc(searchObjFunc, lowerVertaxVars, inModel);
+			double searchObjOffset = createSearchObjFunc(searchObjFunc, lowerVertaxVars_number, lowerVertaxVars_integer, inModel);
 			
 
 			System.out.println("searchObjFunc: "+searchObjFunc);
@@ -79,20 +83,33 @@ public class Detector2 {
 				solutions.add(sSolver.solution);
 				
 				// update zeroSolutionVars
-				ArrayList<String> nonZeroVars = new ArrayList<String>();
-				for (String key: lowerVertaxVars){
+				ArrayList<String> varsHaveNewSolution = new ArrayList<String>();
+				for (String key: lowerVertaxVars_number){
 					
-					// TODO: tolerance to replace 0
-					if (sSolver.solution.get(key)>0) nonZeroVars.add(key);
+					// TODO: tolerance to replace lower bound
+					if (sSolver.solution.get(key) > inModel.varMap_number.get(key)[0]) varsHaveNewSolution.add(key);
 					
 				}
-				lowerVertaxVars.removeAll(nonZeroVars);
-
+				for (String key: lowerVertaxVars_integer){
+					
+					// TODO: tolerance to replace lower bound
+					if (sSolver.solution.get(key) > inModel.varMap_integer.get(key)[0]) varsHaveNewSolution.add(key);
+					
+				}
+				lowerVertaxVars_number.removeAll(varsHaveNewSolution);
+				lowerVertaxVars_integer.removeAll(varsHaveNewSolution);
+				
 				hasNewSolution = true;
 				
+				System.out.println("New solution found? "+hasNewSolution);	
+				System.out.println("vars have new solution: "+varsHaveNewSolution);
+				
+			} else {
+				
+				System.out.println("New solution found? "+hasNewSolution);	
 			}
 			
-			//System.out.println("# hasNewSolution? "+hasNewSolution);	
+			
 		}
 		
 		sSolver.delete();
@@ -100,21 +117,9 @@ public class Detector2 {
 		
 	}
 
-
-	
-	public static LinkedHashSet<String> findLowerVertaxVars(MPModel in) {
+	public static ArrayList<String> findLowerVertaxVars_integer(MPModel in) {
 		
-		LinkedHashSet<String> out = new LinkedHashSet<String>();
-		
-		for (String key: in.varMap_number.keySet()){
-			
-			if (in.solution.get(key) < in.varMap_number.get(key)[0] + vertax_tolerance) {
-			
-				out.add(key);
-				
-			}
-			
-		}
+		ArrayList<String> out = new ArrayList<String>();
 		
 		for (String key: in.varMap_integer.keySet()){
 			
@@ -130,18 +135,41 @@ public class Detector2 {
 		
 	}
 	
-	public static double createSearchObjFunc(LinkedHashMap<String, Double> out_searchObjFunc, LinkedHashSet<String> vars, MPModel in){
+	public static ArrayList<String> findLowerVertaxVars_number(MPModel in) {
+		
+		ArrayList<String> out = new ArrayList<String>();
+		
+		for (String key: in.varMap_number.keySet()){
+			
+			if (in.solution.get(key) < in.varMap_number.get(key)[0] + vertax_tolerance) {
+			
+				out.add(key);
+				
+			}
+			
+		}
+		
+		return out;
+		
+	}
+	
+	public static double createSearchObjFunc(LinkedHashMap<String, Double> out_searchObjFunc, ArrayList<String> vars1, ArrayList<String> vars2, MPModel in){
 
 
 		double out_searchObjOffset = 0;
 		
-		for (String key: vars){
+		for (String key: vars1){
 			
 			out_searchObjFunc.put(key, coef_searchObj);
 			out_searchObjOffset = out_searchObjOffset + in.solution.get(key)*coef_searchObj;
 			
 		}
-		
+		for (String key: vars2){
+			
+			out_searchObjFunc.put(key, coef_searchObj);
+			out_searchObjOffset = out_searchObjOffset + in.solution.get(key)*coef_searchObj;
+			
+		}		
 		return out_searchObjOffset;
 			
 	}
@@ -149,8 +177,8 @@ public class Detector2 {
 	public static int detect(String mpmPath) {
 		
 		int returnCode = 0;
-		OrToolsSolver orSolver = new OrToolsSolver("CBC_MIXED_INTEGER_PROGRAMMING");
-		orSolver.setVerbose(1);
+		OrToolsSolver aSolver = new OrToolsSolver("CBC_MIXED_INTEGER_PROGRAMMING");
+		aSolver.setVerbose(1);
 
 		
 		MPModel originalModel = null;
@@ -182,40 +210,56 @@ public class Detector2 {
 		// log original model
 		MPModelUtils.toLpSolve(originalModel, mpmodelDir, mpmodelFileName+"_original.lps");
 		// solve original model		
-		returnCode = orSolver.solve(originalModel);
+		System.out.println("solve original model...");
+		returnCode = aSolver.solve(originalModel);
 		if (returnCode!=0) {
-			orSolver.delete();
+			aSolver.delete();
 			return returnCode;
+		} else {
+			System.out.println("solving success!");
 		}
 		
-		originalModel.solution = orSolver.solution;
-		originalModel.objValue = orSolver.solver.objectiveValue();
+		originalModel.solution = aSolver.solution;
+		originalModel.objValue = aSolver.solver.objectiveValue();
 		
 		
 		
 		// search base model
 		MPModel baseModel = new MPModel(originalModel, "searchBase");
-		baseModel.createConstraint("OBJ_CONSTRAINT", originalModel.objFunction, originalModel.objValue, Param.inf);
+		baseModel.createConstraint("OBJ_CONSTRAINT", originalModel.objFunction, originalModel.objValue*(1.0-obj_constraint_lower_bound_tolerance_ratio), Param.inf);
 
 		MPModelUtils.toLpSolve(baseModel, mpmodelDir, mpmodelFileName+"_searchBase.lps");
 		
-		orSolver.solve(baseModel);
-		if (returnCode!=0) {
-			orSolver.delete();
+		System.out.println("solve base model...");
+		returnCode =  aSolver.solve(baseModel);
+		if (aSolver.solve(baseModel)!=0) {
+			aSolver.delete();
 			return returnCode;
+		} else {
+			System.out.println("solving success!");
 		}
 		
-		baseModel.solution = orSolver.solution;
-		baseModel.objValue = orSolver.solver.objectiveValue();		
+		baseModel.solution = aSolver.solution;
+		baseModel.objValue = aSolver.solver.objectiveValue();	
+		
+		aSolver.delete();
+		
+		
+		
+		
 		
 		// find vars that equals it's own lower bound
-		LinkedHashSet<String> lowerVertaxVars = findLowerVertaxVars(baseModel);
+		ArrayList<String> lowerVertaxVars_number_all = findLowerVertaxVars_number(baseModel);
+		ArrayList<String> lowerVertaxVars_integer = findLowerVertaxVars_integer(baseModel);
 		
 		// TODO: find vars that equals it's own upper bound
 		
 		// TODO: find vars not at either bound
 		
-		ArrayList<LinkedHashMap<String, Double>> allSearchSolutions = searchAltSolutions_quick(baseModel, lowerVertaxVars, mpmodelDir, mpmodelFileName);
+		ArrayList<String> lowerVertaxVars_number = new ArrayList<String>(lowerVertaxVars_number_all.subList(10, 50));
+		
+		
+		ArrayList<LinkedHashMap<String, Double>> allSearchSolutions = searchAltSolutions(baseModel, lowerVertaxVars_number, lowerVertaxVars_integer, mpmodelDir, mpmodelFileName);
 		allSearchSolutions.add(baseModel.solution);
 		allSearchSolutions.add(originalModel.solution);
 			
@@ -235,26 +279,28 @@ public class Detector2 {
 		}
 		
 		// find solution ranges
-		//LinkedHashMap<String, double[]> varRange = findNonUniqueVars(allSearchSolutions);
+		LinkedHashMap<String, double[]> varRange = findNonUniqueVars(allSearchSolutions);
 		
-		//writeReport(varRange, mpmodelDir);
+		writeReport(varRange, mpmodelDir, mpmodelFileName);
 
-		orSolver.delete();
+		aSolver.delete();
 
 		return returnCode;
 		
 	}
 
-	private static void writeReport(LinkedHashMap<String, double[]> varRange, String dir) {
+	private static void writeReport(LinkedHashMap<String, double[]> varRange, String dir, String fileName) {
 		
 		try {
-			PrintWriter reportFile = Tools.openFile(dir,"detector.report");
+			PrintWriter reportFile = Tools.openFile(dir, fileName+"_nonunique.txt");
 			
 			for (String varName: varRange.keySet()){
 				
 				double[] range = varRange.get(varName);
 				
 				reportFile.println(varName+" : {"+(float)range[0] + ", "+(float)range[1]+"}");
+				
+				reportFile.flush();
 				
 			}
 			
