@@ -89,7 +89,8 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 				else break;
 			case WreslEditorPackage.ALIAS:
 				if(context == grammarAccess.getAliasRule() ||
-				   context == grammarAccess.getPatternRule()) {
+				   context == grammarAccess.getPatternRule() ||
+				   context == grammarAccess.getVariableRule()) {
 					sequence_Alias(context, (Alias) semanticObject); 
 					return; 
 				}
@@ -121,7 +122,8 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 				else break;
 			case WreslEditorPackage.CONST_DEF:
 				if(context == grammarAccess.getConstDefRule() ||
-				   context == grammarAccess.getPatternRule()) {
+				   context == grammarAccess.getPatternRule() ||
+				   context == grammarAccess.getVariableRule()) {
 					sequence_ConstDef(context, (ConstDef) semanticObject); 
 					return; 
 				}
@@ -155,14 +157,16 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 				else break;
 			case WreslEditorPackage.DEFINE:
 				if(context == grammarAccess.getDefineRule() ||
-				   context == grammarAccess.getPatternRule()) {
+				   context == grammarAccess.getPatternRule() ||
+				   context == grammarAccess.getVariableRule()) {
 					sequence_Define(context, (Define) semanticObject); 
 					return; 
 				}
 				else break;
 			case WreslEditorPackage.DVAR_DEF:
 				if(context == grammarAccess.getDvarDefRule() ||
-				   context == grammarAccess.getPatternRule()) {
+				   context == grammarAccess.getPatternRule() ||
+				   context == grammarAccess.getVariableRule()) {
 					sequence_DvarDef(context, (DvarDef) semanticObject); 
 					return; 
 				}
@@ -387,7 +391,8 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 				else break;
 			case WreslEditorPackage.SVAR_DEF:
 				if(context == grammarAccess.getPatternRule() ||
-				   context == grammarAccess.getSvarDefRule()) {
+				   context == grammarAccess.getSvarDefRule() ||
+				   context == grammarAccess.getVariableRule()) {
 					sequence_SvarDef(context, (SvarDef) semanticObject); 
 					return; 
 				}
@@ -502,7 +507,7 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     (caseName=ID condition=Condition (content=TableContent | content=ValueContent | content=SumContent))
+	 *     ((caseName=ID | caseName=SpecialIdent) condition=Condition (content=TableContent | content=ValueContent | content=SumContent))
 	 */
 	protected void sequence_CaseContent(EObject context, CaseContent semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -689,7 +694,7 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     (caseName=ID condition=Condition rhs=Expression subContent=SubContent?)
+	 *     ((caseName=ID | caseName=SpecialIdent) condition=Condition rhs=Expression subContent=SubContent?)
 	 */
 	protected void sequence_GoalCaseContent(EObject context, GoalCaseContent semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1037,7 +1042,7 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     (tableName=ID from=ID (given=Assignment use=ID)? where=WhereItems?)
+	 *     ((tableName=ID | tableName=SpecialIdent) (from=ID | from=SpecialIdent) (given=Assignment use=ID)? where=WhereItems?)
 	 */
 	protected void sequence_TableContent(EObject context, TableContent semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1046,7 +1051,7 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     (i=Ident | n=Number | f=Function | e2=Expression)
+	 *     (ref=[Variable|ID] | n=Number | f=Function | e2=Expression | s=SpecialIdent)
 	 */
 	protected void sequence_Term(EObject context, Term semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

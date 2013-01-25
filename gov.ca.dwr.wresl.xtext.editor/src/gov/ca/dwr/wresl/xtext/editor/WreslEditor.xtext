@@ -7,7 +7,10 @@ WreslEvaluator:
 	| ((initial=Initial)? sequence+=Sequence+ model+=Model+);
 
 Pattern:
-	Define | Alias | SvarDef | DvarDef | ConstDef | IncludeFile | IncludeModel | Goal | Objective;
+	Variable | IncludeFile | IncludeModel | Goal | Objective;
+
+Variable:
+	Define | Alias | SvarDef | DvarDef | ConstDef;
 
 IfIncItems:
 	IfTerm  (elseifterm=ElseIfTerm)? (elseterm=ElseTerm)?  ;
@@ -85,7 +88,7 @@ SVarCase:
 	caseContent+=(CaseContent)+;
 
 CaseContent:
-	("case" | "CASE") caseName=ID '{' condition=Condition (content=TableContent | content=ValueContent |
+	("case" | "CASE") caseName=(ID|SpecialIdent) '{' condition=Condition (content=TableContent | content=ValueContent |
 	content=SumContent)
 	'}';
 
@@ -99,7 +102,7 @@ ValueContent:
 	("value" | "VALUE") expression=Expression;
 
 TableContent:
-	("select" | "SELECT") tableName=ID ("from" | "FROM") from=ID (("given" | "GIVEN") given=Assignment ("use" | "USE")
+	("select" | "SELECT") tableName=(ID|SpecialIdent) ("from" | "FROM") from=(ID|SpecialIdent) (("given" | "GIVEN") given=Assignment ("use" | "USE")
 	use=ID)? (("where" | "WHERE") where=WhereItems)?;
 
 WhereItems:
@@ -109,7 +112,7 @@ Assignment:
 	term=TermSimple '=' expression=Expression;
 
 TermSimple:
-	ID | Number | Function;
+	ID | Number | Function | SpecialIdent;
 
 LowerAndOrUpper:
 	lowerUpper | upperLower;
@@ -133,7 +136,7 @@ GoalCase:
 	('lhs' | 'LHS') lhs=Expression (content=GoalNoCaseContent | caseContent+=GoalCaseContent+);
 
 GoalCaseContent:
-	("case" | "CASE") caseName=ID '{' condition=Condition ("rhs" | "RHS") rhs=Expression (subContent=SubContent)? '}';
+	("case" | "CASE") caseName=(ID|SpecialIdent) '{' condition=Condition ("rhs" | "RHS") rhs=Expression (subContent=SubContent)? '}';
 
 GoalNoCaseContent:
 	("rhs" | "RHS") rhs=Expression (subContent=SubContent)?;
@@ -202,13 +205,13 @@ Negation:
 	'-';
 
 Term:
-	i=Ident | n=Number | f=Function | '(' e2=Expression ')';
+	ref=[Variable] | n=Number | f=Function | '(' e2=Expression ')'| s=SpecialIdent;
 
 Function:
 	ExternalFunction | MaxFunction | MinFunction | IntFunction | VarModel;
 
 ExternalFunction:
-	ID '(' e1=Expression (',' e2+=Expression)* ')';
+	(ID|TafCfs) '(' e1=Expression (',' e2+=Expression)* ')';
 
 MaxFunction:
 	MAX '(' e1=Expression (',' e2+=Expression)* ')';
@@ -226,7 +229,7 @@ VarModel:
 	ID '[' ID ']';
 
 RangeFunction:
-	RANGE '(' ID ',' ID ',' ID ')';
+	RANGE '(' (ID|Month|WaterYear) ',' (ID|CalendarMonth|PrevMonth) ',' (ID|CalendarMonth|PrevMonth) ')';
 
 Ident:
 	name=ID;
@@ -239,6 +242,30 @@ IncludeFile:
 
 IncludeModel:
 	("include" | "INCLUDE") ('model' | 'MODEL') ID;
+
+SpecialIdent: TafCfs|DaysIn|WaterYear|Month|CalendarMonth|PrevMonth|I;
+
+TafCfs: AF_CFS|CF_SAF|CFS_TAF|TAF_CFS;
+
+I: 'i';
+
+AF_CFS: 'af_cfs';
+
+CF_SAF: 'cfs_af';
+
+CFS_TAF: 'cfs_taf';
+
+TAF_CFS: 'taf_cfs';
+
+DaysIn: 'daysin'|'daysinmonth';
+
+WaterYear: 'wateryear';
+
+Month: 'month';
+
+CalendarMonth: 'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'|'dec';
+
+PrevMonth: 'prevjan'|'prevfeb'|'prevmar'|'prevapr'|'prevmay'|'prevjun'|'prevjul'|'prevaug'|'prevsep'|'prevoct'|'prevnov'|'prevdec';
 
 terminal If : 'If' | 'IF' | 'if' ;
 

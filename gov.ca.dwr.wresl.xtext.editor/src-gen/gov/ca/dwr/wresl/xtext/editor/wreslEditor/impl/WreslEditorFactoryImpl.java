@@ -66,6 +66,7 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
     {
       case WreslEditorPackage.WRESL_EVALUATOR: return createWreslEvaluator();
       case WreslEditorPackage.PATTERN: return createPattern();
+      case WreslEditorPackage.VARIABLE: return createVariable();
       case WreslEditorPackage.IF_INC_ITEMS: return createIfIncItems();
       case WreslEditorPackage.IF_TERM: return createIfTerm();
       case WreslEditorPackage.ELSE_IF_TERM: return createElseIfTerm();
@@ -157,6 +158,17 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
   {
     PatternImpl pattern = new PatternImpl();
     return pattern;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Variable createVariable()
+  {
+    VariableImpl variable = new VariableImpl();
+    return variable;
   }
 
   /**

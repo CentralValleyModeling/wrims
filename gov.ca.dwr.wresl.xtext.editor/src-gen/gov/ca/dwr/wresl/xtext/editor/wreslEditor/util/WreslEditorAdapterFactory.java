@@ -85,6 +85,11 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
         return createPatternAdapter();
       }
       @Override
+      public Adapter caseVariable(Variable object)
+      {
+        return createVariableAdapter();
+      }
+      @Override
       public Adapter caseIfIncItems(IfIncItems object)
       {
         return createIfIncItemsAdapter();
@@ -462,6 +467,21 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createPatternAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Variable <em>Variable</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Variable
+   * @generated
+   */
+  public Adapter createVariableAdapter()
   {
     return null;
   }

@@ -21,35 +21,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DefineImpl#getName <em>Name</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DefineImpl#getDefinition <em>Definition</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class DefineImpl extends PatternImpl implements Define
+public class DefineImpl extends VariableImpl implements Define
 {
-  /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
-
   /**
    * The cached value of the '{@link #getDefinition() <em>Definition</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -79,29 +58,6 @@ public class DefineImpl extends PatternImpl implements Define
   protected EClass eStaticClass()
   {
     return WreslEditorPackage.Literals.DEFINE;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setName(String newName)
-  {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.DEFINE__NAME, oldName, name));
   }
 
   /**
@@ -178,8 +134,6 @@ public class DefineImpl extends PatternImpl implements Define
   {
     switch (featureID)
     {
-      case WreslEditorPackage.DEFINE__NAME:
-        return getName();
       case WreslEditorPackage.DEFINE__DEFINITION:
         return getDefinition();
     }
@@ -196,9 +150,6 @@ public class DefineImpl extends PatternImpl implements Define
   {
     switch (featureID)
     {
-      case WreslEditorPackage.DEFINE__NAME:
-        setName((String)newValue);
-        return;
       case WreslEditorPackage.DEFINE__DEFINITION:
         setDefinition((EObject)newValue);
         return;
@@ -216,9 +167,6 @@ public class DefineImpl extends PatternImpl implements Define
   {
     switch (featureID)
     {
-      case WreslEditorPackage.DEFINE__NAME:
-        setName(NAME_EDEFAULT);
-        return;
       case WreslEditorPackage.DEFINE__DEFINITION:
         setDefinition((EObject)null);
         return;
@@ -236,29 +184,10 @@ public class DefineImpl extends PatternImpl implements Define
   {
     switch (featureID)
     {
-      case WreslEditorPackage.DEFINE__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case WreslEditorPackage.DEFINE__DEFINITION:
         return definition != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(')');
-    return result.toString();
   }
 
 } //DefineImpl

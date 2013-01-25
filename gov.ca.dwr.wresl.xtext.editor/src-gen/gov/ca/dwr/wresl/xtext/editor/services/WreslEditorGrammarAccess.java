@@ -82,22 +82,51 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	public class PatternElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Pattern");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cVariableParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cIncludeFileParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cIncludeModelParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cGoalParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cObjectiveParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		
+		//Pattern:
+		//
+		//	Variable | IncludeFile | IncludeModel | Goal | Objective;
+		public ParserRule getRule() { return rule; }
+
+		//Variable | IncludeFile | IncludeModel | Goal | Objective
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Variable
+		public RuleCall getVariableParserRuleCall_0() { return cVariableParserRuleCall_0; }
+
+		//IncludeFile
+		public RuleCall getIncludeFileParserRuleCall_1() { return cIncludeFileParserRuleCall_1; }
+
+		//IncludeModel
+		public RuleCall getIncludeModelParserRuleCall_2() { return cIncludeModelParserRuleCall_2; }
+
+		//Goal
+		public RuleCall getGoalParserRuleCall_3() { return cGoalParserRuleCall_3; }
+
+		//Objective
+		public RuleCall getObjectiveParserRuleCall_4() { return cObjectiveParserRuleCall_4; }
+	}
+
+	public class VariableElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Variable");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cDefineParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cAliasParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cSvarDefParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cDvarDefParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cConstDefParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final RuleCall cIncludeFileParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
-		private final RuleCall cIncludeModelParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
-		private final RuleCall cGoalParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
-		private final RuleCall cObjectiveParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
 		
-		//Pattern:
+		//Variable:
 		//
-		//	Define | Alias | SvarDef | DvarDef | ConstDef | IncludeFile | IncludeModel | Goal | Objective;
+		//	Define | Alias | SvarDef | DvarDef | ConstDef;
 		public ParserRule getRule() { return rule; }
 
-		//Define | Alias | SvarDef | DvarDef | ConstDef | IncludeFile | IncludeModel | Goal | Objective
+		//Define | Alias | SvarDef | DvarDef | ConstDef
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Define
@@ -114,18 +143,6 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ConstDef
 		public RuleCall getConstDefParserRuleCall_4() { return cConstDefParserRuleCall_4; }
-
-		//IncludeFile
-		public RuleCall getIncludeFileParserRuleCall_5() { return cIncludeFileParserRuleCall_5; }
-
-		//IncludeModel
-		public RuleCall getIncludeModelParserRuleCall_6() { return cIncludeModelParserRuleCall_6; }
-
-		//Goal
-		public RuleCall getGoalParserRuleCall_7() { return cGoalParserRuleCall_7; }
-
-		//Objective
-		public RuleCall getObjectiveParserRuleCall_8() { return cObjectiveParserRuleCall_8; }
 	}
 
 	public class IfIncItemsElements extends AbstractParserRuleElementFinder {
@@ -1504,7 +1521,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cCaseKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
 		private final Keyword cCASEKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
 		private final Assignment cCaseNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cCaseNameIDTerminalRuleCall_1_0 = (RuleCall)cCaseNameAssignment_1.eContents().get(0);
+		private final Alternatives cCaseNameAlternatives_1_0 = (Alternatives)cCaseNameAssignment_1.eContents().get(0);
+		private final RuleCall cCaseNameIDTerminalRuleCall_1_0_0 = (RuleCall)cCaseNameAlternatives_1_0.eContents().get(0);
+		private final RuleCall cCaseNameSpecialIdentParserRuleCall_1_0_1 = (RuleCall)cCaseNameAlternatives_1_0.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cConditionAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cConditionConditionParserRuleCall_3_0 = (RuleCall)cConditionAssignment_3.eContents().get(0);
@@ -1519,14 +1538,14 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//CaseContent:
 		//
-		//	("case" | "CASE") caseName=ID "{" condition=Condition (content=TableContent | content=ValueContent |
+		//	("case" | "CASE") caseName=(ID | SpecialIdent) "{" condition=Condition (content=TableContent | content=ValueContent |
 		//
 		//	content=SumContent) "}";
 		public ParserRule getRule() { return rule; }
 
-		//("case" | "CASE") caseName=ID "{" condition=Condition (content=TableContent | content=ValueContent | content=SumContent)
+		//("case" | "CASE") caseName=(ID | SpecialIdent) "{" condition=Condition (content=TableContent | content=ValueContent |
 		//
-		//"}"
+		//content=SumContent) "}"
 		public Group getGroup() { return cGroup; }
 
 		//"case" | "CASE"
@@ -1538,11 +1557,17 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"CASE"
 		public Keyword getCASEKeyword_0_1() { return cCASEKeyword_0_1; }
 
-		//caseName=ID
+		//caseName=(ID | SpecialIdent)
 		public Assignment getCaseNameAssignment_1() { return cCaseNameAssignment_1; }
 
+		//ID | SpecialIdent
+		public Alternatives getCaseNameAlternatives_1_0() { return cCaseNameAlternatives_1_0; }
+
 		//ID
-		public RuleCall getCaseNameIDTerminalRuleCall_1_0() { return cCaseNameIDTerminalRuleCall_1_0; }
+		public RuleCall getCaseNameIDTerminalRuleCall_1_0_0() { return cCaseNameIDTerminalRuleCall_1_0_0; }
+
+		//SpecialIdent
+		public RuleCall getCaseNameSpecialIdentParserRuleCall_1_0_1() { return cCaseNameSpecialIdentParserRuleCall_1_0_1; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
@@ -1720,12 +1745,16 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSelectKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
 		private final Keyword cSELECTKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
 		private final Assignment cTableNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cTableNameIDTerminalRuleCall_1_0 = (RuleCall)cTableNameAssignment_1.eContents().get(0);
+		private final Alternatives cTableNameAlternatives_1_0 = (Alternatives)cTableNameAssignment_1.eContents().get(0);
+		private final RuleCall cTableNameIDTerminalRuleCall_1_0_0 = (RuleCall)cTableNameAlternatives_1_0.eContents().get(0);
+		private final RuleCall cTableNameSpecialIdentParserRuleCall_1_0_1 = (RuleCall)cTableNameAlternatives_1_0.eContents().get(1);
 		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
 		private final Keyword cFromKeyword_2_0 = (Keyword)cAlternatives_2.eContents().get(0);
 		private final Keyword cFROMKeyword_2_1 = (Keyword)cAlternatives_2.eContents().get(1);
 		private final Assignment cFromAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cFromIDTerminalRuleCall_3_0 = (RuleCall)cFromAssignment_3.eContents().get(0);
+		private final Alternatives cFromAlternatives_3_0 = (Alternatives)cFromAssignment_3.eContents().get(0);
+		private final RuleCall cFromIDTerminalRuleCall_3_0_0 = (RuleCall)cFromAlternatives_3_0.eContents().get(0);
+		private final RuleCall cFromSpecialIdentParserRuleCall_3_0_1 = (RuleCall)cFromAlternatives_3_0.eContents().get(1);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Alternatives cAlternatives_4_0 = (Alternatives)cGroup_4.eContents().get(0);
 		private final Keyword cGivenKeyword_4_0_0 = (Keyword)cAlternatives_4_0.eContents().get(0);
@@ -1746,14 +1775,14 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//TableContent:
 		//
-		//	("select" | "SELECT") tableName=ID ("from" | "FROM") from=ID (("given" | "GIVEN") given=Assignment ("use" | "USE")
+		//	("select" | "SELECT") tableName=(ID | SpecialIdent) ("from" | "FROM") from=(ID | SpecialIdent) (("given" | "GIVEN")
 		//
-		//	use=ID)? (("where" | "WHERE") where=WhereItems)?;
+		//	given=Assignment ("use" | "USE") use=ID)? (("where" | "WHERE") where=WhereItems)?;
 		public ParserRule getRule() { return rule; }
 
-		//("select" | "SELECT") tableName=ID ("from" | "FROM") from=ID (("given" | "GIVEN") given=Assignment ("use" | "USE")
+		//("select" | "SELECT") tableName=(ID | SpecialIdent) ("from" | "FROM") from=(ID | SpecialIdent) (("given" | "GIVEN")
 		//
-		//use=ID)? (("where" | "WHERE") where=WhereItems)?
+		//given=Assignment ("use" | "USE") use=ID)? (("where" | "WHERE") where=WhereItems)?
 		public Group getGroup() { return cGroup; }
 
 		//"select" | "SELECT"
@@ -1765,11 +1794,17 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"SELECT"
 		public Keyword getSELECTKeyword_0_1() { return cSELECTKeyword_0_1; }
 
-		//tableName=ID
+		//tableName=(ID | SpecialIdent)
 		public Assignment getTableNameAssignment_1() { return cTableNameAssignment_1; }
 
+		//ID | SpecialIdent
+		public Alternatives getTableNameAlternatives_1_0() { return cTableNameAlternatives_1_0; }
+
 		//ID
-		public RuleCall getTableNameIDTerminalRuleCall_1_0() { return cTableNameIDTerminalRuleCall_1_0; }
+		public RuleCall getTableNameIDTerminalRuleCall_1_0_0() { return cTableNameIDTerminalRuleCall_1_0_0; }
+
+		//SpecialIdent
+		public RuleCall getTableNameSpecialIdentParserRuleCall_1_0_1() { return cTableNameSpecialIdentParserRuleCall_1_0_1; }
 
 		//"from" | "FROM"
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
@@ -1780,11 +1815,17 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"FROM"
 		public Keyword getFROMKeyword_2_1() { return cFROMKeyword_2_1; }
 
-		//from=ID
+		//from=(ID | SpecialIdent)
 		public Assignment getFromAssignment_3() { return cFromAssignment_3; }
 
+		//ID | SpecialIdent
+		public Alternatives getFromAlternatives_3_0() { return cFromAlternatives_3_0; }
+
 		//ID
-		public RuleCall getFromIDTerminalRuleCall_3_0() { return cFromIDTerminalRuleCall_3_0; }
+		public RuleCall getFromIDTerminalRuleCall_3_0_0() { return cFromIDTerminalRuleCall_3_0_0; }
+
+		//SpecialIdent
+		public RuleCall getFromSpecialIdentParserRuleCall_3_0_1() { return cFromSpecialIdentParserRuleCall_3_0_1; }
 
 		//(("given" | "GIVEN") given=Assignment ("use" | "USE") use=ID)?
 		public Group getGroup_4() { return cGroup_4; }
@@ -1914,13 +1955,14 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIDTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cNumberParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cFunctionParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cSpecialIdentParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
 		//TermSimple:
 		//
-		//	ID | Number | Function;
+		//	ID | Number | Function | SpecialIdent;
 		public ParserRule getRule() { return rule; }
 
-		//ID | Number | Function
+		//ID | Number | Function | SpecialIdent
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//ID
@@ -1931,6 +1973,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Function
 		public RuleCall getFunctionParserRuleCall_2() { return cFunctionParserRuleCall_2; }
+
+		//SpecialIdent
+		public RuleCall getSpecialIdentParserRuleCall_3() { return cSpecialIdentParserRuleCall_3; }
 	}
 
 	public class LowerAndOrUpperElements extends AbstractParserRuleElementFinder {
@@ -2271,7 +2316,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cCaseKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
 		private final Keyword cCASEKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
 		private final Assignment cCaseNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cCaseNameIDTerminalRuleCall_1_0 = (RuleCall)cCaseNameAssignment_1.eContents().get(0);
+		private final Alternatives cCaseNameAlternatives_1_0 = (Alternatives)cCaseNameAssignment_1.eContents().get(0);
+		private final RuleCall cCaseNameIDTerminalRuleCall_1_0_0 = (RuleCall)cCaseNameAlternatives_1_0.eContents().get(0);
+		private final RuleCall cCaseNameSpecialIdentParserRuleCall_1_0_1 = (RuleCall)cCaseNameAlternatives_1_0.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cConditionAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cConditionConditionParserRuleCall_3_0 = (RuleCall)cConditionAssignment_3.eContents().get(0);
@@ -2286,10 +2333,14 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//GoalCaseContent:
 		//
-		//	("case" | "CASE") caseName=ID "{" condition=Condition ("rhs" | "RHS") rhs=Expression subContent=SubContent? "}";
+		//	("case" | "CASE") caseName=(ID | SpecialIdent) "{" condition=Condition ("rhs" | "RHS") rhs=Expression
+		//
+		//	subContent=SubContent? "}";
 		public ParserRule getRule() { return rule; }
 
-		//("case" | "CASE") caseName=ID "{" condition=Condition ("rhs" | "RHS") rhs=Expression subContent=SubContent? "}"
+		//("case" | "CASE") caseName=(ID | SpecialIdent) "{" condition=Condition ("rhs" | "RHS") rhs=Expression
+		//
+		//subContent=SubContent? "}"
 		public Group getGroup() { return cGroup; }
 
 		//"case" | "CASE"
@@ -2301,11 +2352,17 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"CASE"
 		public Keyword getCASEKeyword_0_1() { return cCASEKeyword_0_1; }
 
-		//caseName=ID
+		//caseName=(ID | SpecialIdent)
 		public Assignment getCaseNameAssignment_1() { return cCaseNameAssignment_1; }
 
+		//ID | SpecialIdent
+		public Alternatives getCaseNameAlternatives_1_0() { return cCaseNameAlternatives_1_0; }
+
 		//ID
-		public RuleCall getCaseNameIDTerminalRuleCall_1_0() { return cCaseNameIDTerminalRuleCall_1_0; }
+		public RuleCall getCaseNameIDTerminalRuleCall_1_0_0() { return cCaseNameIDTerminalRuleCall_1_0_0; }
+
+		//SpecialIdent
+		public RuleCall getCaseNameSpecialIdentParserRuleCall_1_0_1() { return cCaseNameSpecialIdentParserRuleCall_1_0_1; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
@@ -3246,8 +3303,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	public class TermElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Term");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Assignment cIAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
-		private final RuleCall cIIdentParserRuleCall_0_0 = (RuleCall)cIAssignment_0.eContents().get(0);
+		private final Assignment cRefAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
+		private final CrossReference cRefVariableCrossReference_0_0 = (CrossReference)cRefAssignment_0.eContents().get(0);
+		private final RuleCall cRefVariableIDTerminalRuleCall_0_0_1 = (RuleCall)cRefVariableCrossReference_0_0.eContents().get(1);
 		private final Assignment cNAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
 		private final RuleCall cNNumberParserRuleCall_1_0 = (RuleCall)cNAssignment_1.eContents().get(0);
 		private final Assignment cFAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
@@ -3257,20 +3315,25 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cE2Assignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cE2ExpressionParserRuleCall_3_1_0 = (RuleCall)cE2Assignment_3_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
+		private final Assignment cSAssignment_4 = (Assignment)cAlternatives.eContents().get(4);
+		private final RuleCall cSSpecialIdentParserRuleCall_4_0 = (RuleCall)cSAssignment_4.eContents().get(0);
 		
 		//Term:
 		//
-		//	i=Ident | n=Number | f=Function | "(" e2=Expression ")";
+		//	ref=[Variable] | n=Number | f=Function | "(" e2=Expression ")" | s=SpecialIdent;
 		public ParserRule getRule() { return rule; }
 
-		//i=Ident | n=Number | f=Function | "(" e2=Expression ")"
+		//ref=[Variable] | n=Number | f=Function | "(" e2=Expression ")" | s=SpecialIdent
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//i=Ident
-		public Assignment getIAssignment_0() { return cIAssignment_0; }
+		//ref=[Variable]
+		public Assignment getRefAssignment_0() { return cRefAssignment_0; }
 
-		//Ident
-		public RuleCall getIIdentParserRuleCall_0_0() { return cIIdentParserRuleCall_0_0; }
+		//[Variable]
+		public CrossReference getRefVariableCrossReference_0_0() { return cRefVariableCrossReference_0_0; }
+
+		//ID
+		public RuleCall getRefVariableIDTerminalRuleCall_0_0_1() { return cRefVariableIDTerminalRuleCall_0_0_1; }
 
 		//n=Number
 		public Assignment getNAssignment_1() { return cNAssignment_1; }
@@ -3298,6 +3361,12 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 		//")"
 		public Keyword getRightParenthesisKeyword_3_2() { return cRightParenthesisKeyword_3_2; }
+
+		//s=SpecialIdent
+		public Assignment getSAssignment_4() { return cSAssignment_4; }
+
+		//SpecialIdent
+		public RuleCall getSSpecialIdentParserRuleCall_4_0() { return cSSpecialIdentParserRuleCall_4_0; }
 	}
 
 	public class FunctionElements extends AbstractParserRuleElementFinder {
@@ -3336,7 +3405,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	public class ExternalFunctionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ExternalFunction");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cIDTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final RuleCall cIDTerminalRuleCall_0_0 = (RuleCall)cAlternatives_0.eContents().get(0);
+		private final RuleCall cTafCfsParserRuleCall_0_1 = (RuleCall)cAlternatives_0.eContents().get(1);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cE1Assignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cE1ExpressionParserRuleCall_2_0 = (RuleCall)cE1Assignment_2.eContents().get(0);
@@ -3348,14 +3419,20 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ExternalFunction:
 		//
-		//	ID "(" e1=Expression ("," e2+=Expression)* ")";
+		//	(ID | TafCfs) "(" e1=Expression ("," e2+=Expression)* ")";
 		public ParserRule getRule() { return rule; }
 
-		//ID "(" e1=Expression ("," e2+=Expression)* ")"
+		//(ID | TafCfs) "(" e1=Expression ("," e2+=Expression)* ")"
 		public Group getGroup() { return cGroup; }
 
+		//ID | TafCfs
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
 		//ID
-		public RuleCall getIDTerminalRuleCall_0() { return cIDTerminalRuleCall_0; }
+		public RuleCall getIDTerminalRuleCall_0_0() { return cIDTerminalRuleCall_0_0; }
+
+		//TafCfs
+		public RuleCall getTafCfsParserRuleCall_0_1() { return cTafCfsParserRuleCall_0_1; }
 
 		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
@@ -3560,19 +3637,28 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final RuleCall cRANGETerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final RuleCall cIDTerminalRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final RuleCall cIDTerminalRuleCall_2_0 = (RuleCall)cAlternatives_2.eContents().get(0);
+		private final RuleCall cMonthParserRuleCall_2_1 = (RuleCall)cAlternatives_2.eContents().get(1);
+		private final RuleCall cWaterYearParserRuleCall_2_2 = (RuleCall)cAlternatives_2.eContents().get(2);
 		private final Keyword cCommaKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final RuleCall cIDTerminalRuleCall_4 = (RuleCall)cGroup.eContents().get(4);
+		private final Alternatives cAlternatives_4 = (Alternatives)cGroup.eContents().get(4);
+		private final RuleCall cIDTerminalRuleCall_4_0 = (RuleCall)cAlternatives_4.eContents().get(0);
+		private final RuleCall cCalendarMonthParserRuleCall_4_1 = (RuleCall)cAlternatives_4.eContents().get(1);
+		private final RuleCall cPrevMonthParserRuleCall_4_2 = (RuleCall)cAlternatives_4.eContents().get(2);
 		private final Keyword cCommaKeyword_5 = (Keyword)cGroup.eContents().get(5);
-		private final RuleCall cIDTerminalRuleCall_6 = (RuleCall)cGroup.eContents().get(6);
+		private final Alternatives cAlternatives_6 = (Alternatives)cGroup.eContents().get(6);
+		private final RuleCall cIDTerminalRuleCall_6_0 = (RuleCall)cAlternatives_6.eContents().get(0);
+		private final RuleCall cCalendarMonthParserRuleCall_6_1 = (RuleCall)cAlternatives_6.eContents().get(1);
+		private final RuleCall cPrevMonthParserRuleCall_6_2 = (RuleCall)cAlternatives_6.eContents().get(2);
 		private final Keyword cRightParenthesisKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//RangeFunction:
 		//
-		//	RANGE "(" ID "," ID "," ID ")";
+		//	RANGE "(" (ID | Month | WaterYear) "," (ID | CalendarMonth | PrevMonth) "," (ID | CalendarMonth | PrevMonth) ")";
 		public ParserRule getRule() { return rule; }
 
-		//RANGE "(" ID "," ID "," ID ")"
+		//RANGE "(" (ID | Month | WaterYear) "," (ID | CalendarMonth | PrevMonth) "," (ID | CalendarMonth | PrevMonth) ")"
 		public Group getGroup() { return cGroup; }
 
 		//RANGE
@@ -3581,20 +3667,47 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
+		//ID | Month | WaterYear
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+
 		//ID
-		public RuleCall getIDTerminalRuleCall_2() { return cIDTerminalRuleCall_2; }
+		public RuleCall getIDTerminalRuleCall_2_0() { return cIDTerminalRuleCall_2_0; }
+
+		//Month
+		public RuleCall getMonthParserRuleCall_2_1() { return cMonthParserRuleCall_2_1; }
+
+		//WaterYear
+		public RuleCall getWaterYearParserRuleCall_2_2() { return cWaterYearParserRuleCall_2_2; }
 
 		//","
 		public Keyword getCommaKeyword_3() { return cCommaKeyword_3; }
 
+		//ID | CalendarMonth | PrevMonth
+		public Alternatives getAlternatives_4() { return cAlternatives_4; }
+
 		//ID
-		public RuleCall getIDTerminalRuleCall_4() { return cIDTerminalRuleCall_4; }
+		public RuleCall getIDTerminalRuleCall_4_0() { return cIDTerminalRuleCall_4_0; }
+
+		//CalendarMonth
+		public RuleCall getCalendarMonthParserRuleCall_4_1() { return cCalendarMonthParserRuleCall_4_1; }
+
+		//PrevMonth
+		public RuleCall getPrevMonthParserRuleCall_4_2() { return cPrevMonthParserRuleCall_4_2; }
 
 		//","
 		public Keyword getCommaKeyword_5() { return cCommaKeyword_5; }
 
+		//ID | CalendarMonth | PrevMonth
+		public Alternatives getAlternatives_6() { return cAlternatives_6; }
+
 		//ID
-		public RuleCall getIDTerminalRuleCall_6() { return cIDTerminalRuleCall_6; }
+		public RuleCall getIDTerminalRuleCall_6_0() { return cIDTerminalRuleCall_6_0; }
+
+		//CalendarMonth
+		public RuleCall getCalendarMonthParserRuleCall_6_1() { return cCalendarMonthParserRuleCall_6_1; }
+
+		//PrevMonth
+		public RuleCall getPrevMonthParserRuleCall_6_2() { return cPrevMonthParserRuleCall_6_2; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_7() { return cRightParenthesisKeyword_7; }
@@ -3739,10 +3852,319 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getIDTerminalRuleCall_2() { return cIDTerminalRuleCall_2; }
 	}
+
+	public class SpecialIdentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SpecialIdent");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cTafCfsParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cDaysInParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cWaterYearParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cMonthParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cCalendarMonthParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cPrevMonthParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cIParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		
+		//SpecialIdent:
+		//
+		//	TafCfs | DaysIn | WaterYear | Month | CalendarMonth | PrevMonth | I;
+		public ParserRule getRule() { return rule; }
+
+		//TafCfs | DaysIn | WaterYear | Month | CalendarMonth | PrevMonth | I
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//TafCfs
+		public RuleCall getTafCfsParserRuleCall_0() { return cTafCfsParserRuleCall_0; }
+
+		//DaysIn
+		public RuleCall getDaysInParserRuleCall_1() { return cDaysInParserRuleCall_1; }
+
+		//WaterYear
+		public RuleCall getWaterYearParserRuleCall_2() { return cWaterYearParserRuleCall_2; }
+
+		//Month
+		public RuleCall getMonthParserRuleCall_3() { return cMonthParserRuleCall_3; }
+
+		//CalendarMonth
+		public RuleCall getCalendarMonthParserRuleCall_4() { return cCalendarMonthParserRuleCall_4; }
+
+		//PrevMonth
+		public RuleCall getPrevMonthParserRuleCall_5() { return cPrevMonthParserRuleCall_5; }
+
+		//I
+		public RuleCall getIParserRuleCall_6() { return cIParserRuleCall_6; }
+	}
+
+	public class TafCfsElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TafCfs");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cAF_CFSParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cCF_SAFParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cCFS_TAFParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cTAF_CFSParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		
+		//TafCfs:
+		//
+		//	AF_CFS | CF_SAF | CFS_TAF | TAF_CFS;
+		public ParserRule getRule() { return rule; }
+
+		//AF_CFS | CF_SAF | CFS_TAF | TAF_CFS
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//AF_CFS
+		public RuleCall getAF_CFSParserRuleCall_0() { return cAF_CFSParserRuleCall_0; }
+
+		//CF_SAF
+		public RuleCall getCF_SAFParserRuleCall_1() { return cCF_SAFParserRuleCall_1; }
+
+		//CFS_TAF
+		public RuleCall getCFS_TAFParserRuleCall_2() { return cCFS_TAFParserRuleCall_2; }
+
+		//TAF_CFS
+		public RuleCall getTAF_CFSParserRuleCall_3() { return cTAF_CFSParserRuleCall_3; }
+	}
+
+	public class IElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "I");
+		private final Keyword cIKeyword = (Keyword)rule.eContents().get(1);
+		
+		//I:
+		//
+		//	"i";
+		public ParserRule getRule() { return rule; }
+
+		//"i"
+		public Keyword getIKeyword() { return cIKeyword; }
+	}
+
+	public class AF_CFSElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AF_CFS");
+		private final Keyword cAf_cfsKeyword = (Keyword)rule.eContents().get(1);
+		
+		//AF_CFS:
+		//
+		//	"af_cfs";
+		public ParserRule getRule() { return rule; }
+
+		//"af_cfs"
+		public Keyword getAf_cfsKeyword() { return cAf_cfsKeyword; }
+	}
+
+	public class CF_SAFElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "CF_SAF");
+		private final Keyword cCfs_afKeyword = (Keyword)rule.eContents().get(1);
+		
+		//CF_SAF:
+		//
+		//	"cfs_af";
+		public ParserRule getRule() { return rule; }
+
+		//"cfs_af"
+		public Keyword getCfs_afKeyword() { return cCfs_afKeyword; }
+	}
+
+	public class CFS_TAFElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "CFS_TAF");
+		private final Keyword cCfs_tafKeyword = (Keyword)rule.eContents().get(1);
+		
+		//CFS_TAF:
+		//
+		//	"cfs_taf";
+		public ParserRule getRule() { return rule; }
+
+		//"cfs_taf"
+		public Keyword getCfs_tafKeyword() { return cCfs_tafKeyword; }
+	}
+
+	public class TAF_CFSElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TAF_CFS");
+		private final Keyword cTaf_cfsKeyword = (Keyword)rule.eContents().get(1);
+		
+		//TAF_CFS:
+		//
+		//	"taf_cfs";
+		public ParserRule getRule() { return rule; }
+
+		//"taf_cfs"
+		public Keyword getTaf_cfsKeyword() { return cTaf_cfsKeyword; }
+	}
+
+	public class DaysInElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DaysIn");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cDaysinKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cDaysinmonthKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		
+		//DaysIn:
+		//
+		//	"daysin" | "daysinmonth";
+		public ParserRule getRule() { return rule; }
+
+		//"daysin" | "daysinmonth"
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//"daysin"
+		public Keyword getDaysinKeyword_0() { return cDaysinKeyword_0; }
+
+		//"daysinmonth"
+		public Keyword getDaysinmonthKeyword_1() { return cDaysinmonthKeyword_1; }
+	}
+
+	public class WaterYearElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "WaterYear");
+		private final Keyword cWateryearKeyword = (Keyword)rule.eContents().get(1);
+		
+		//WaterYear:
+		//
+		//	"wateryear";
+		public ParserRule getRule() { return rule; }
+
+		//"wateryear"
+		public Keyword getWateryearKeyword() { return cWateryearKeyword; }
+	}
+
+	public class MonthElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Month");
+		private final Keyword cMonthKeyword = (Keyword)rule.eContents().get(1);
+		
+		//Month:
+		//
+		//	"month";
+		public ParserRule getRule() { return rule; }
+
+		//"month"
+		public Keyword getMonthKeyword() { return cMonthKeyword; }
+	}
+
+	public class CalendarMonthElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "CalendarMonth");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cJanKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cFebKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		private final Keyword cMarKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
+		private final Keyword cAprKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
+		private final Keyword cMayKeyword_4 = (Keyword)cAlternatives.eContents().get(4);
+		private final Keyword cJunKeyword_5 = (Keyword)cAlternatives.eContents().get(5);
+		private final Keyword cJulKeyword_6 = (Keyword)cAlternatives.eContents().get(6);
+		private final Keyword cAugKeyword_7 = (Keyword)cAlternatives.eContents().get(7);
+		private final Keyword cSepKeyword_8 = (Keyword)cAlternatives.eContents().get(8);
+		private final Keyword cOctKeyword_9 = (Keyword)cAlternatives.eContents().get(9);
+		private final Keyword cNovKeyword_10 = (Keyword)cAlternatives.eContents().get(10);
+		private final Keyword cDecKeyword_11 = (Keyword)cAlternatives.eContents().get(11);
+		
+		//CalendarMonth:
+		//
+		//	"jan" | "feb" | "mar" | "apr" | "may" | "jun" | "jul" | "aug" | "sep" | "oct" | "nov" | "dec";
+		public ParserRule getRule() { return rule; }
+
+		//"jan" | "feb" | "mar" | "apr" | "may" | "jun" | "jul" | "aug" | "sep" | "oct" | "nov" | "dec"
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//"jan"
+		public Keyword getJanKeyword_0() { return cJanKeyword_0; }
+
+		//"feb"
+		public Keyword getFebKeyword_1() { return cFebKeyword_1; }
+
+		//"mar"
+		public Keyword getMarKeyword_2() { return cMarKeyword_2; }
+
+		//"apr"
+		public Keyword getAprKeyword_3() { return cAprKeyword_3; }
+
+		//"may"
+		public Keyword getMayKeyword_4() { return cMayKeyword_4; }
+
+		//"jun"
+		public Keyword getJunKeyword_5() { return cJunKeyword_5; }
+
+		//"jul"
+		public Keyword getJulKeyword_6() { return cJulKeyword_6; }
+
+		//"aug"
+		public Keyword getAugKeyword_7() { return cAugKeyword_7; }
+
+		//"sep"
+		public Keyword getSepKeyword_8() { return cSepKeyword_8; }
+
+		//"oct"
+		public Keyword getOctKeyword_9() { return cOctKeyword_9; }
+
+		//"nov"
+		public Keyword getNovKeyword_10() { return cNovKeyword_10; }
+
+		//"dec"
+		public Keyword getDecKeyword_11() { return cDecKeyword_11; }
+	}
+
+	public class PrevMonthElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PrevMonth");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cPrevjanKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cPrevfebKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		private final Keyword cPrevmarKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
+		private final Keyword cPrevaprKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
+		private final Keyword cPrevmayKeyword_4 = (Keyword)cAlternatives.eContents().get(4);
+		private final Keyword cPrevjunKeyword_5 = (Keyword)cAlternatives.eContents().get(5);
+		private final Keyword cPrevjulKeyword_6 = (Keyword)cAlternatives.eContents().get(6);
+		private final Keyword cPrevaugKeyword_7 = (Keyword)cAlternatives.eContents().get(7);
+		private final Keyword cPrevsepKeyword_8 = (Keyword)cAlternatives.eContents().get(8);
+		private final Keyword cPrevoctKeyword_9 = (Keyword)cAlternatives.eContents().get(9);
+		private final Keyword cPrevnovKeyword_10 = (Keyword)cAlternatives.eContents().get(10);
+		private final Keyword cPrevdecKeyword_11 = (Keyword)cAlternatives.eContents().get(11);
+		
+		//PrevMonth:
+		//
+		//	"prevjan" | "prevfeb" | "prevmar" | "prevapr" | "prevmay" | "prevjun" | "prevjul" | "prevaug" | "prevsep" | "prevoct"
+		//
+		//	| "prevnov" | "prevdec";
+		public ParserRule getRule() { return rule; }
+
+		//"prevjan" | "prevfeb" | "prevmar" | "prevapr" | "prevmay" | "prevjun" | "prevjul" | "prevaug" | "prevsep" | "prevoct" |
+		//
+		//"prevnov" | "prevdec"
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//"prevjan"
+		public Keyword getPrevjanKeyword_0() { return cPrevjanKeyword_0; }
+
+		//"prevfeb"
+		public Keyword getPrevfebKeyword_1() { return cPrevfebKeyword_1; }
+
+		//"prevmar"
+		public Keyword getPrevmarKeyword_2() { return cPrevmarKeyword_2; }
+
+		//"prevapr"
+		public Keyword getPrevaprKeyword_3() { return cPrevaprKeyword_3; }
+
+		//"prevmay"
+		public Keyword getPrevmayKeyword_4() { return cPrevmayKeyword_4; }
+
+		//"prevjun"
+		public Keyword getPrevjunKeyword_5() { return cPrevjunKeyword_5; }
+
+		//"prevjul"
+		public Keyword getPrevjulKeyword_6() { return cPrevjulKeyword_6; }
+
+		//"prevaug"
+		public Keyword getPrevaugKeyword_7() { return cPrevaugKeyword_7; }
+
+		//"prevsep"
+		public Keyword getPrevsepKeyword_8() { return cPrevsepKeyword_8; }
+
+		//"prevoct"
+		public Keyword getPrevoctKeyword_9() { return cPrevoctKeyword_9; }
+
+		//"prevnov"
+		public Keyword getPrevnovKeyword_10() { return cPrevnovKeyword_10; }
+
+		//"prevdec"
+		public Keyword getPrevdecKeyword_11() { return cPrevdecKeyword_11; }
+	}
 	
 	
 	private WreslEvaluatorElements pWreslEvaluator;
 	private PatternElements pPattern;
+	private VariableElements pVariable;
 	private IfIncItemsElements pIfIncItems;
 	private IfTermElements pIfTerm;
 	private ElseIfTermElements pElseIfTerm;
@@ -3818,6 +4240,18 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	private NumberElements pNumber;
 	private IncludeFileElements pIncludeFile;
 	private IncludeModelElements pIncludeModel;
+	private SpecialIdentElements pSpecialIdent;
+	private TafCfsElements pTafCfs;
+	private IElements pI;
+	private AF_CFSElements pAF_CFS;
+	private CF_SAFElements pCF_SAF;
+	private CFS_TAFElements pCFS_TAF;
+	private TAF_CFSElements pTAF_CFS;
+	private DaysInElements pDaysIn;
+	private WaterYearElements pWaterYear;
+	private MonthElements pMonth;
+	private CalendarMonthElements pCalendarMonth;
+	private PrevMonthElements pPrevMonth;
 	private TerminalRule tIf;
 	private TerminalRule tElseIf;
 	private TerminalRule tElse;
@@ -3885,13 +4319,24 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Pattern:
 	//
-	//	Define | Alias | SvarDef | DvarDef | ConstDef | IncludeFile | IncludeModel | Goal | Objective;
+	//	Variable | IncludeFile | IncludeModel | Goal | Objective;
 	public PatternElements getPatternAccess() {
 		return (pPattern != null) ? pPattern : (pPattern = new PatternElements());
 	}
 	
 	public ParserRule getPatternRule() {
 		return getPatternAccess().getRule();
+	}
+
+	//Variable:
+	//
+	//	Define | Alias | SvarDef | DvarDef | ConstDef;
+	public VariableElements getVariableAccess() {
+		return (pVariable != null) ? pVariable : (pVariable = new VariableElements());
+	}
+	
+	public ParserRule getVariableRule() {
+		return getVariableAccess().getRule();
 	}
 
 	//IfIncItems:
@@ -4167,7 +4612,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//CaseContent:
 	//
-	//	("case" | "CASE") caseName=ID "{" condition=Condition (content=TableContent | content=ValueContent |
+	//	("case" | "CASE") caseName=(ID | SpecialIdent) "{" condition=Condition (content=TableContent | content=ValueContent |
 	//
 	//	content=SumContent) "}";
 	public CaseContentElements getCaseContentAccess() {
@@ -4213,9 +4658,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//TableContent:
 	//
-	//	("select" | "SELECT") tableName=ID ("from" | "FROM") from=ID (("given" | "GIVEN") given=Assignment ("use" | "USE")
+	//	("select" | "SELECT") tableName=(ID | SpecialIdent) ("from" | "FROM") from=(ID | SpecialIdent) (("given" | "GIVEN")
 	//
-	//	use=ID)? (("where" | "WHERE") where=WhereItems)?;
+	//	given=Assignment ("use" | "USE") use=ID)? (("where" | "WHERE") where=WhereItems)?;
 	public TableContentElements getTableContentAccess() {
 		return (pTableContent != null) ? pTableContent : (pTableContent = new TableContentElements());
 	}
@@ -4248,7 +4693,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//TermSimple:
 	//
-	//	ID | Number | Function;
+	//	ID | Number | Function | SpecialIdent;
 	public TermSimpleElements getTermSimpleAccess() {
 		return (pTermSimple != null) ? pTermSimple : (pTermSimple = new TermSimpleElements());
 	}
@@ -4336,7 +4781,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//GoalCaseContent:
 	//
-	//	("case" | "CASE") caseName=ID "{" condition=Condition ("rhs" | "RHS") rhs=Expression subContent=SubContent? "}";
+	//	("case" | "CASE") caseName=(ID | SpecialIdent) "{" condition=Condition ("rhs" | "RHS") rhs=Expression
+	//
+	//	subContent=SubContent? "}";
 	public GoalCaseContentElements getGoalCaseContentAccess() {
 		return (pGoalCaseContent != null) ? pGoalCaseContent : (pGoalCaseContent = new GoalCaseContentElements());
 	}
@@ -4591,7 +5038,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Term:
 	//
-	//	i=Ident | n=Number | f=Function | "(" e2=Expression ")";
+	//	ref=[Variable] | n=Number | f=Function | "(" e2=Expression ")" | s=SpecialIdent;
 	public TermElements getTermAccess() {
 		return (pTerm != null) ? pTerm : (pTerm = new TermElements());
 	}
@@ -4613,7 +5060,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ExternalFunction:
 	//
-	//	ID "(" e1=Expression ("," e2+=Expression)* ")";
+	//	(ID | TafCfs) "(" e1=Expression ("," e2+=Expression)* ")";
 	public ExternalFunctionElements getExternalFunctionAccess() {
 		return (pExternalFunction != null) ? pExternalFunction : (pExternalFunction = new ExternalFunctionElements());
 	}
@@ -4679,7 +5126,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//RangeFunction:
 	//
-	//	RANGE "(" ID "," ID "," ID ")";
+	//	RANGE "(" (ID | Month | WaterYear) "," (ID | CalendarMonth | PrevMonth) "," (ID | CalendarMonth | PrevMonth) ")";
 	public RangeFunctionElements getRangeFunctionAccess() {
 		return (pRangeFunction != null) ? pRangeFunction : (pRangeFunction = new RangeFunctionElements());
 	}
@@ -4730,6 +5177,140 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getIncludeModelRule() {
 		return getIncludeModelAccess().getRule();
+	}
+
+	//SpecialIdent:
+	//
+	//	TafCfs | DaysIn | WaterYear | Month | CalendarMonth | PrevMonth | I;
+	public SpecialIdentElements getSpecialIdentAccess() {
+		return (pSpecialIdent != null) ? pSpecialIdent : (pSpecialIdent = new SpecialIdentElements());
+	}
+	
+	public ParserRule getSpecialIdentRule() {
+		return getSpecialIdentAccess().getRule();
+	}
+
+	//TafCfs:
+	//
+	//	AF_CFS | CF_SAF | CFS_TAF | TAF_CFS;
+	public TafCfsElements getTafCfsAccess() {
+		return (pTafCfs != null) ? pTafCfs : (pTafCfs = new TafCfsElements());
+	}
+	
+	public ParserRule getTafCfsRule() {
+		return getTafCfsAccess().getRule();
+	}
+
+	//I:
+	//
+	//	"i";
+	public IElements getIAccess() {
+		return (pI != null) ? pI : (pI = new IElements());
+	}
+	
+	public ParserRule getIRule() {
+		return getIAccess().getRule();
+	}
+
+	//AF_CFS:
+	//
+	//	"af_cfs";
+	public AF_CFSElements getAF_CFSAccess() {
+		return (pAF_CFS != null) ? pAF_CFS : (pAF_CFS = new AF_CFSElements());
+	}
+	
+	public ParserRule getAF_CFSRule() {
+		return getAF_CFSAccess().getRule();
+	}
+
+	//CF_SAF:
+	//
+	//	"cfs_af";
+	public CF_SAFElements getCF_SAFAccess() {
+		return (pCF_SAF != null) ? pCF_SAF : (pCF_SAF = new CF_SAFElements());
+	}
+	
+	public ParserRule getCF_SAFRule() {
+		return getCF_SAFAccess().getRule();
+	}
+
+	//CFS_TAF:
+	//
+	//	"cfs_taf";
+	public CFS_TAFElements getCFS_TAFAccess() {
+		return (pCFS_TAF != null) ? pCFS_TAF : (pCFS_TAF = new CFS_TAFElements());
+	}
+	
+	public ParserRule getCFS_TAFRule() {
+		return getCFS_TAFAccess().getRule();
+	}
+
+	//TAF_CFS:
+	//
+	//	"taf_cfs";
+	public TAF_CFSElements getTAF_CFSAccess() {
+		return (pTAF_CFS != null) ? pTAF_CFS : (pTAF_CFS = new TAF_CFSElements());
+	}
+	
+	public ParserRule getTAF_CFSRule() {
+		return getTAF_CFSAccess().getRule();
+	}
+
+	//DaysIn:
+	//
+	//	"daysin" | "daysinmonth";
+	public DaysInElements getDaysInAccess() {
+		return (pDaysIn != null) ? pDaysIn : (pDaysIn = new DaysInElements());
+	}
+	
+	public ParserRule getDaysInRule() {
+		return getDaysInAccess().getRule();
+	}
+
+	//WaterYear:
+	//
+	//	"wateryear";
+	public WaterYearElements getWaterYearAccess() {
+		return (pWaterYear != null) ? pWaterYear : (pWaterYear = new WaterYearElements());
+	}
+	
+	public ParserRule getWaterYearRule() {
+		return getWaterYearAccess().getRule();
+	}
+
+	//Month:
+	//
+	//	"month";
+	public MonthElements getMonthAccess() {
+		return (pMonth != null) ? pMonth : (pMonth = new MonthElements());
+	}
+	
+	public ParserRule getMonthRule() {
+		return getMonthAccess().getRule();
+	}
+
+	//CalendarMonth:
+	//
+	//	"jan" | "feb" | "mar" | "apr" | "may" | "jun" | "jul" | "aug" | "sep" | "oct" | "nov" | "dec";
+	public CalendarMonthElements getCalendarMonthAccess() {
+		return (pCalendarMonth != null) ? pCalendarMonth : (pCalendarMonth = new CalendarMonthElements());
+	}
+	
+	public ParserRule getCalendarMonthRule() {
+		return getCalendarMonthAccess().getRule();
+	}
+
+	//PrevMonth:
+	//
+	//	"prevjan" | "prevfeb" | "prevmar" | "prevapr" | "prevmay" | "prevjun" | "prevjul" | "prevaug" | "prevsep" | "prevoct"
+	//
+	//	| "prevnov" | "prevdec";
+	public PrevMonthElements getPrevMonthAccess() {
+		return (pPrevMonth != null) ? pPrevMonth : (pPrevMonth = new PrevMonthElements());
+	}
+	
+	public ParserRule getPrevMonthRule() {
+		return getPrevMonthAccess().getRule();
 	}
 
 	//terminal If:

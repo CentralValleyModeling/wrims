@@ -41,6 +41,15 @@ public interface WreslEditorFactory extends EFactory
   Pattern createPattern();
 
   /**
+   * Returns a new object of class '<em>Variable</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Variable</em>'.
+   * @generated
+   */
+  Variable createVariable();
+
+  /**
    * Returns a new object of class '<em>If Inc Items</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

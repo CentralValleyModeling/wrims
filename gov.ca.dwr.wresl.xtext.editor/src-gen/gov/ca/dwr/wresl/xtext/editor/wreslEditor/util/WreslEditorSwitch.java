@@ -86,6 +86,14 @@ public class WreslEditorSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case WreslEditorPackage.VARIABLE:
+      {
+        Variable variable = (Variable)theEObject;
+        T result = caseVariable(variable);
+        if (result == null) result = casePattern(variable);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case WreslEditorPackage.IF_INC_ITEMS:
       {
         IfIncItems ifIncItems = (IfIncItems)theEObject;
@@ -134,6 +142,7 @@ public class WreslEditorSwitch<T> extends Switch<T>
       {
         Define define = (Define)theEObject;
         T result = caseDefine(define);
+        if (result == null) result = caseVariable(define);
         if (result == null) result = casePattern(define);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -142,6 +151,7 @@ public class WreslEditorSwitch<T> extends Switch<T>
       {
         SvarDef svarDef = (SvarDef)theEObject;
         T result = caseSvarDef(svarDef);
+        if (result == null) result = caseVariable(svarDef);
         if (result == null) result = casePattern(svarDef);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -150,6 +160,7 @@ public class WreslEditorSwitch<T> extends Switch<T>
       {
         DvarDef dvarDef = (DvarDef)theEObject;
         T result = caseDvarDef(dvarDef);
+        if (result == null) result = caseVariable(dvarDef);
         if (result == null) result = casePattern(dvarDef);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -158,6 +169,7 @@ public class WreslEditorSwitch<T> extends Switch<T>
       {
         ConstDef constDef = (ConstDef)theEObject;
         T result = caseConstDef(constDef);
+        if (result == null) result = caseVariable(constDef);
         if (result == null) result = casePattern(constDef);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -173,6 +185,7 @@ public class WreslEditorSwitch<T> extends Switch<T>
       {
         Alias alias = (Alias)theEObject;
         T result = caseAlias(alias);
+        if (result == null) result = caseVariable(alias);
         if (result == null) result = casePattern(alias);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -618,6 +631,22 @@ public class WreslEditorSwitch<T> extends Switch<T>
    * @generated
    */
   public T casePattern(Pattern object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Variable</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Variable</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseVariable(Variable object)
   {
     return null;
   }

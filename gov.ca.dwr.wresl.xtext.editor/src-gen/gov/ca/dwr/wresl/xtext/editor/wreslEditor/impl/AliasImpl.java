@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AliasImpl#getName <em>Name</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AliasImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AliasImpl#getKind <em>Kind</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AliasImpl#getUnits <em>Units</em>}</li>
@@ -30,28 +29,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class AliasImpl extends PatternImpl implements Alias
+public class AliasImpl extends VariableImpl implements Alias
 {
-  /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
-
   /**
    * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -121,29 +100,6 @@ public class AliasImpl extends PatternImpl implements Alias
   protected EClass eStaticClass()
   {
     return WreslEditorPackage.Literals.ALIAS;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setName(String newName)
-  {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.ALIAS__NAME, oldName, name));
   }
 
   /**
@@ -266,8 +222,6 @@ public class AliasImpl extends PatternImpl implements Alias
   {
     switch (featureID)
     {
-      case WreslEditorPackage.ALIAS__NAME:
-        return getName();
       case WreslEditorPackage.ALIAS__EXPRESSION:
         return getExpression();
       case WreslEditorPackage.ALIAS__KIND:
@@ -288,9 +242,6 @@ public class AliasImpl extends PatternImpl implements Alias
   {
     switch (featureID)
     {
-      case WreslEditorPackage.ALIAS__NAME:
-        setName((String)newValue);
-        return;
       case WreslEditorPackage.ALIAS__EXPRESSION:
         setExpression((Expression)newValue);
         return;
@@ -314,9 +265,6 @@ public class AliasImpl extends PatternImpl implements Alias
   {
     switch (featureID)
     {
-      case WreslEditorPackage.ALIAS__NAME:
-        setName(NAME_EDEFAULT);
-        return;
       case WreslEditorPackage.ALIAS__EXPRESSION:
         setExpression((Expression)null);
         return;
@@ -340,8 +288,6 @@ public class AliasImpl extends PatternImpl implements Alias
   {
     switch (featureID)
     {
-      case WreslEditorPackage.ALIAS__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case WreslEditorPackage.ALIAS__EXPRESSION:
         return expression != null;
       case WreslEditorPackage.ALIAS__KIND:
@@ -363,9 +309,7 @@ public class AliasImpl extends PatternImpl implements Alias
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(", kind: ");
+    result.append(" (kind: ");
     result.append(kind);
     result.append(", units: ");
     result.append(units);

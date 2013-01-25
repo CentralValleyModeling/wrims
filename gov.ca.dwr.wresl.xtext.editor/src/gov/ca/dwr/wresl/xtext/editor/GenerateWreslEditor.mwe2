@@ -74,7 +74,10 @@ Workflow {
             // fragment = exporting.SimpleNamesFragment {}
 
             // scoping and exporting API
-            fragment = scoping.ImportNamespacesScopingFragment {}
+            fragment = scoping.ImportNamespacesScopingFragment {
+                  ignoreCase = true
+            }
+            
             fragment = exporting.QualifiedNamesFragment {}
             fragment = builder.BuilderIntegrationFragment {}
 
@@ -97,6 +100,11 @@ Workflow {
             // quickfix API
             fragment = quickfix.QuickfixProviderFragment {}
 
+			// rename refactoring
+			fragment = refactoring.RefactorElementNameFragment {
+				//useJdtRefactoring=true
+			}
+			
             // content assist API
             fragment = contentAssist.JavaBasedContentAssistFragment {}
 
@@ -123,14 +131,10 @@ Workflow {
             // provides a preference page for template proposals
             fragment = templates.CodetemplatesGeneratorFragment {}
 
-            // rename refactoring
-            fragment = refactoring.RefactorElementNameFragment {}
-
             // provides a compare view
             fragment = compare.CompareFragment {
                  fileExtensions = file.extensions
             }
-
         }
     }
 }
