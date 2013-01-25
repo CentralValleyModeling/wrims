@@ -205,14 +205,8 @@ public class Procedures {
 			hasNewItem = t.size()>0 ;
 		}
 		
-		
-//		// add all dep from Alias
-//		for (String key : seqObj.asMap.keySet()) {
-//
-//			AliasTemp a = seqObj.asMap.get(key);
-//			allDepInGoals.addAll(a.dependants);
-//		}
-
+		// TODO: provide option for sending all alias to goal and dvar
+		// so that non-unique solution analysis can be work with alias vars
 		for (String aKey : seqObj.asMap.keySet()) {
 
 			if (allDepInGoals.contains(aKey)) {
