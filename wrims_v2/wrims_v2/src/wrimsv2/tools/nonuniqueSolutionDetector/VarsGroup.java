@@ -10,28 +10,24 @@ public class VarsGroup {
 
 	public ArrayList<String> lowerVertexVars_number;
 	public ArrayList<String> lowerVertexVars_integer;
-	public ArrayList<String> upperVertexVars_number;
-	public ArrayList<String> upperVertexVars_integer;
 
 	// required
 	private final double vertax_tolerance;  // tolerance for determining if a var is at vertex
 	private MPModel baseModel;	
 	
 	// optional 
-	private ArrayList<String> excludeStrings; // if not set then exclude none
-	private ArrayList<String> includeStrings; // if not set then include all
-	private ArrayList<String> varsPool;	// default is base solution
+	private ArrayList<String> excludeStrings = null; // if not set then exclude none
+	private ArrayList<String> includeStrings = null; // if not set then include all
+	public ArrayList<String> varsPool;	// default is base solution
 	
 	// processed
-	private ArrayList<String> varsPool_number;	// subset of varsPool
-	private ArrayList<String> varsPool_integer;	// subset of varsPool
+	public ArrayList<String> varsPool_number;	// subset of varsPool
+	public ArrayList<String> varsPool_integer;	// subset of varsPool
 	
 	public VarsGroup(MPModel in, double vertax_tolerance) {
 
 		lowerVertexVars_number = new ArrayList<String>();
 		lowerVertexVars_integer = new ArrayList<String>();
-		upperVertexVars_number = new ArrayList<String>();
-		upperVertexVars_integer = new ArrayList<String>();
 		
 		excludeStrings = null;
 		includeStrings = null;
@@ -53,12 +49,12 @@ public class VarsGroup {
 		
 	}	
 	
-	
 	public void setVarsPool(){
 		
 		setVarsPool(new ArrayList<String>(baseModel.solution.keySet()));
 		
 	}
+	
 	public void setVarsPool(ArrayList<String> varsToSearch_in){
 		
 		ArrayList<String> p = new ArrayList<String>(Tools.allToLowerCase(varsToSearch_in));
@@ -73,25 +69,61 @@ public class VarsGroup {
 			
 			varsPool = p;
 			
-			varsPool_integer = new ArrayList<String>(p);
+			varsPool_integer = new ArrayList<String>(varsPool);
 			varsPool_integer.retainAll(baseModel.varMap_integer.keySet());
 
-			varsPool_number = new ArrayList<String>(p);
+			varsPool_number = new ArrayList<String>(varsPool);
 			varsPool_number.retainAll(baseModel.varMap_number.keySet());
 			
-		}
+		}		
 	
-		
 	}
 	
-
-	public void findVarsAtVertex(){
+	public void filterVarsPool(ArrayList<String> includeStrings, ArrayList<String> excludeStrings ){
 		
-		//lowerVertexVars_number = findLowerVertaxVars_number();
+		
+		if (includeStrings!=null && includeStrings.size()>0) {
+			
+			this.includeStrings = new ArrayList<String>(Tools.allToLowerCase(includeStrings));
+			
+			
+			ArrayList<String> varsPool_t = new ArrayList<String>(varsPool);
+			for (String incStr: this.includeStrings){
+				
+				for (String key: varsPool_t){
+					
+					if (!key.contains(incStr)) varsPool.remove(key);		
+					
+				}
+				
+			}
+			
+		}
+		
+		if (excludeStrings!=null && excludeStrings.size()>0) {
+			
+			this.excludeStrings = new ArrayList<String>(Tools.allToLowerCase(excludeStrings));
+			
+			
+			ArrayList<String> varsPool_t = new ArrayList<String>(varsPool);
+			for (String excStr: this.excludeStrings){
+				
+				for (String key: varsPool_t){
+					
+					if (key.contains(excStr)) varsPool.remove(key);		
+					
+				}
+				
+			}
+			
+		}
+		
+	}	
+
+	public void findVarsAtVertex(){		
+		
 		lowerVertexVars_number = findLowerVertaxVars(varsPool_number, baseModel.solution, baseModel.varMap_number);
-		upperVertexVars_number = findUpperVertaxVars(varsPool_number, baseModel.solution, baseModel.varMap_number);
 		lowerVertexVars_integer = findLowerVertaxVars(varsPool_integer, baseModel.solution, baseModel.varMap_integer);
-		upperVertexVars_integer = findUpperVertaxVars(varsPool_integer, baseModel.solution, baseModel.varMap_integer);
 		
 	}
 	
@@ -111,36 +143,4 @@ public class VarsGroup {
 		return out;
 	}
 	
-	private ArrayList<String> findUpperVertaxVars(ArrayList<String> vars, LinkedHashMap<String, Double> solutionMap, LinkedHashMap<String, double[]> varBounds) {
-
-		ArrayList<String> out = new ArrayList<String>();
-
-		for (String key : vars) {
-
-			if (solutionMap.get(key) > varBounds.get(key)[1] - vertax_tolerance) {
-
-				out.add(key);
-
-			}
-		}
-
-		return out;
-	}
-	
-	private ArrayList<String> findLowerVertaxVars_number() {
-
-		ArrayList<String> out = new ArrayList<String>();
-
-		for (String key : varsPool_number) {
-
-			if (baseModel.solution.get(key) < baseModel.varMap_number.get(key)[0] + vertax_tolerance) {
-
-				out.add(key);
-
-			}
-		}
-
-		return out;
-	}
-
 }

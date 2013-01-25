@@ -438,7 +438,20 @@ public class Tools {
 		}
 		return out;
 	}
+	
+	public static void mapRetainAll (Map<String, ?> map, ArrayList<String> retainKeys){
+				
+		Set<String> mapKeys = new HashSet<String>(map.keySet());
+		Set<String> removeKeys = new HashSet<String>(mapKeys);
+		removeKeys.removeAll(retainKeys);
+		
+		for (String rkey: removeKeys){
+			
+			map.remove(rkey);	
+		}
 
+	}
+	
 	public static Set<String> mapRemoveAll (Map<String, ?> map, Set<String> set){
 		
 		Set<String> removedKeys = new LinkedHashSet<String>();

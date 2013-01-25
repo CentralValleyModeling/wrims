@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import wrimsv2.solver.mpmodel.MPModel;
 import wrimsv2.solver.mpmodel.MPModelUtils;
 import wrimsv2.solver.ortools.OrToolsSolver;
+import wrimsv2.wreslplus.elements.Tools;
 
 public class AltSolutionFinder {
 
@@ -13,9 +14,11 @@ public class AltSolutionFinder {
 	// required
 	private String id;
 	private MPModel asfModel = null;
-	private ArrayList<String> searchVars;
-	private boolean isMaximize = true;
+	private ArrayList<String> searchVars; // will be modified (reduced) in the searching process ..
+	private int searchObjSign; // 1 for + and -1 for -
+	private ArrayList<String> reportVars; // only report these vars 
 	private int maxIteration = 0; // max number of finds
+	
 	
 	
 	// optional
@@ -24,13 +27,15 @@ public class AltSolutionFinder {
 	private String lpsFileNamePrepend = "";
 	
 	
-	public AltSolutionFinder(String id, MPModel inModel, ArrayList<String> searchVars, boolean isMaximize, int maxIteration) {
+	public AltSolutionFinder(String id, MPModel inModel, ArrayList<String> searchVars, int searchObjSign, ArrayList<String> reportVars, int maxIteration) {
 		
 		this.asfModel = inModel;
 		this.id = id;
 		this.searchVars = searchVars;
-		this.isMaximize = isMaximize;
-		this.maxIteration = maxIteration;		
+		this.searchObjSign = searchObjSign;
+		this.reportVars = reportVars;
+		this.maxIteration = maxIteration;
+
 	}
 
 
@@ -44,28 +49,25 @@ public class AltSolutionFinder {
 	}
 
 	public ArrayList<LinkedHashMap<String, Double>> go() {
-		
-		ArrayList<LinkedHashMap<String, Double>> altSolutions = new ArrayList<LinkedHashMap<String, Double>>();
-		
-		boolean hasNewSolution = true;
 
-		int i = 0;
-		
 		OrToolsSolver sSolver = new OrToolsSolver("CBC_MIXED_INTEGER_PROGRAMMING");
 		sSolver.setModel(asfModel);
 		
-		while (hasNewSolution && i<=maxIteration && searchVars.size()>0) {
+		ArrayList<LinkedHashMap<String, Double>> altSolutions = new ArrayList<LinkedHashMap<String, Double>>();
+		
+		boolean hasNewObjValue = true;
+
+		int i = 0;
+		
+		while (hasNewObjValue && i<=maxIteration && searchVars.size()>0) {
 			i++;
-			System.out.println("# seach: "+i);
+			System.out.println(id+" seach: "+i);
 									
 			LinkedHashMap<String, Double> searchObjFunc = new LinkedHashMap<String, Double>();
-	
+			double searchObjOffset = createObjFunc(searchObjFunc, searchVars, searchObjSign, asfModel.solution);				
+			
 			System.out.println("Vars to search:  "+searchVars);
-			//System.out.println("lowerVertaxVars_integer: "+lowerVertaxVars_integer);
-			
-			double searchObjOffset = createSearchObjFunc(searchObjFunc, searchVars, asfModel.solution);
-			
-	
+
 			System.out.println("searchObjFunc: "+searchObjFunc);
 			System.out.println("searchObjOffset: "+searchObjOffset);
 			
@@ -80,38 +82,55 @@ public class AltSolutionFinder {
 				System.out.println("# Error ... problem in alt solution search ...");
 				//continue;
 			}
-	
-	
-			hasNewSolution = false;
+
+			System.out.println("obj value: "+sSolver.solver.objectiveValue());
+			System.out.println("solution: "+sSolver.solution);
 			
-			// TODO: tolerance to replace 0
-			if (sSolver.solver.objectiveValue() > searchObjOffset) {
+			hasNewObjValue = false;
+			
+			// TODO: something wrong here!
+			
+			if (searchObjSign>0) {
+				hasNewObjValue = sSolver.solver.objectiveValue() > searchObjOffset;
+			} else if (searchObjSign<0) {
+				hasNewObjValue = sSolver.solver.objectiveValue() * searchObjSign < searchObjOffset * searchObjSign;
+			}
+			
+			System.out.println("New solution found? "+hasNewObjValue);	
+			
+			if (hasNewObjValue) {
 				
 				// post new solution
-				altSolutions.add(sSolver.solution);
 				
-				// update zeroSolutionVars
+				LinkedHashMap<String, Double> report_solution = new LinkedHashMap<String, Double>(sSolver.solution);
+				Tools.mapRetainAll(report_solution, reportVars);
+				altSolutions.add(report_solution);
+
+				
+				
+				// update searchVars
 				ArrayList<String> varsHaveNewSolution = new ArrayList<String>();
 				for (String key: searchVars){
 					
-					// TODO: tolerance to replace lower bound
-					if (sSolver.solution.get(key) > asfModel.varMap_number.get(key)[0]) varsHaveNewSolution.add(key);
+					// TODO: something wrong here...
+					
+					boolean hasNewVarSolution = false;
+					
+					if (searchObjSign>0) {
+						hasNewVarSolution = sSolver.solution.get(key) > asfModel.solution.get(key);
+					} else if (searchObjSign<0) {
+						hasNewVarSolution = sSolver.solution.get(key) < asfModel.solution.get(key);
+					}					
+					
+					if (hasNewVarSolution) varsHaveNewSolution.add(key);
 					
 				}
 	
 				searchVars.removeAll(varsHaveNewSolution);
 	
-				
-				hasNewSolution = true;
-				
-				System.out.println("New solution found? "+hasNewSolution);	
 				System.out.println("vars have new solution: "+varsHaveNewSolution);
 				
-			} else {
-				
-				System.out.println("New solution found? "+hasNewSolution);	
-			}
-			
+			} 	
 			
 		}
 		
@@ -121,15 +140,15 @@ public class AltSolutionFinder {
 	}
 
 
-	public static double createSearchObjFunc(LinkedHashMap<String, Double> out_searchObjFunc, ArrayList<String> vars, LinkedHashMap<String, Double> baseSolution){
+	public static double createObjFunc(LinkedHashMap<String, Double> out_searchObjFunc, ArrayList<String> vars, int searchObjSign, LinkedHashMap<String, Double> baseSolution){
 	
 	
 		double out_searchObjOffset = 0;
 		
 		for (String key: vars){
 			
-			out_searchObjFunc.put(key, Detector2.coef_searchObj);
-			out_searchObjOffset = out_searchObjOffset + baseSolution.get(key)*Detector2.coef_searchObj;
+			out_searchObjFunc.put(key, (double)searchObjSign);
+			out_searchObjOffset = out_searchObjOffset + baseSolution.get(key)*searchObjSign;
 			
 		}
 		

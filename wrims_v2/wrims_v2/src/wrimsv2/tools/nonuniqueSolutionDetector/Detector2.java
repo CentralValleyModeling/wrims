@@ -7,39 +7,37 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import org.apache.commons.io.FilenameUtils;
 
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.solver.mpmodel.MPModelUtils;
 import wrimsv2.solver.mpmodel.MPModel;
 import wrimsv2.solver.ortools.OrToolsSolver;
-import wrimsv2.wreslparser.elements.Tools;
+import wrimsv2.wreslplus.elements.Tools;
 
 
 public class Detector2 {
 
-	public static final double coef_searchObj = 1.0;
 	public static final double inf = Double.POSITIVE_INFINITY;
 	public static final double nonunique_min_diff = 0.1;     // minimum difference for reporting solution range
 	public static final double vertax_tolerance = 0.001;  // tolerance for determining if a var is at vertex
 	public static final double obj_constraint_tolerance_ratio = 0.00001; // relax constraint by this ratio to avoid solution infeasible 
-	public static ArrayList<String> notContainingString = null;
-	public static ArrayList<String> onlyContainingString = null;
+	public static ArrayList<String> excludeStrings = null;
+	public static ArrayList<String> includeStrings = null;
 	public static ArrayList<String> varList = null;
 	
 	public static void main(String[] args) throws Exception {
 		
 		OrToolsSolver.initialize();
-		//detect("examples\\simple1\\run\\=ILP=\\simple1_cbc.config\\mpmodel\\1921_10_c01.mpm");
+
 		//detect("examples\\example8\\run\\=ILP=\\example8.config\\mpmodel\\1921_10_c01.mpm");
 		
-		notContainingString = new ArrayList<String>();
-		notContainingString.add("slack__");
-		notContainingString.add("surplus__");
+		excludeStrings = new ArrayList<String>();
+		excludeStrings.add("slack__");
+		excludeStrings.add("surplus__");
 		
-		detect("examples\\CL_SharingFix_Shortage_121212\\Run\\=ILP=\\Existing_BO_121212_CBC.config\\mpmodel\\\\1921_10_c01.mpm");
-		
+		//detect("examples\\CL_SharingFix_Shortage_121212\\Run\\=ILP=\\Existing_BO_121212_CBC.config\\mpmodel\\\\1921_10_c01.mpm");
+		detect("examples\\simple1\\run\\=ILP=\\simple1_cbc.config\\mpmodel\\1921_10_c01.mpm");		
 		
 	}
 
@@ -61,27 +59,6 @@ public class Detector2 {
 		return out;
 		
 	}
-
-//	public static double createSearchObjFunc(LinkedHashMap<String, Double> out_searchObjFunc, ArrayList<String> vars1, ArrayList<String> vars2, MPModel in){
-//
-//
-//		double out_searchObjOffset = 0;
-//		
-//		for (String key: vars1){
-//			
-//			out_searchObjFunc.put(key, coef_searchObj);
-//			out_searchObjOffset = out_searchObjOffset + in.solution.get(key)*coef_searchObj;
-//			
-//		}
-//		for (String key: vars2){
-//			
-//			out_searchObjFunc.put(key, coef_searchObj);
-//			out_searchObjOffset = out_searchObjOffset + in.solution.get(key)*coef_searchObj;
-//			
-//		}		
-//		return out_searchObjOffset;
-//			
-//	}
 	
 	public static int detect(String mpmPath) {
 		
@@ -130,7 +107,7 @@ public class Detector2 {
 		
 		originalModel.solution = aSolver.solution;
 		originalModel.objValue = aSolver.solver.objectiveValue();
-		
+		//System.out.println("Original:   "+originalModel.solution);			
 		
 		
 		// base model
@@ -150,54 +127,84 @@ public class Detector2 {
 		
 		baseModel.solution = aSolver.solution;
 		baseModel.objValue = aSolver.solver.objectiveValue();	
+		//System.out.println("SearchBase: "+baseModel.solution);
+		
 		
 		aSolver.delete();
+		
 
 		// find vars that equals it's own bound
 		VarsGroup varsGroup = new VarsGroup(baseModel, vertax_tolerance);
 		varsGroup.setVarsPool();
+		varsGroup.filterVarsPool(includeStrings, excludeStrings);
+		
 		varsGroup.findVarsAtVertex();
 		
-		// find vars that equals it's own lower bound
-		//ArrayList<String> lowerVertaxVars_number_all = findLowerVertaxVars_number(baseModel);
-		//ArrayList<String> lowerVertaxVars_integer = findLowerVertaxVars_integer(baseModel);
-		
 		// TODO: find vars that equals it's own upper bound
-		
 		// TODO: find vars not at either bound
 		
-		ArrayList<String> lowerVertaxVars_number = new ArrayList<String>(varsGroup.lowerVertexVars_number.subList(10, 50));
+		
+		// initialize var range using original and base solutions		
+		
+		ArrayList<String> all_vars_to_report = varsGroup.varsPool;
+		ArrayList<String> all_vars_to_search = varsGroup.varsPool_integer;
 		
 		
-		AltSolutionFinder altFinder = new AltSolutionFinder("group1", baseModel, lowerVertaxVars_number, true, 30);
-		altFinder.setLpsLoggingPath(mpmodelDir, mpmodelFileName);
-		ArrayList<LinkedHashMap<String, Double>> allSearchSolutions = altFinder.go();
+		LinkedHashMap<String, Double> reportBaseSolution = new LinkedHashMap<String, Double>(baseModel.solution);
+		Tools.mapRetainAll(reportBaseSolution, all_vars_to_report);
+		
+		LinkedHashMap<String, Double> reportOriginalSolution = new LinkedHashMap<String, Double>(originalModel.solution);
+		Tools.mapRetainAll(reportOriginalSolution, all_vars_to_report);
+		
+		ArrayList<LinkedHashMap<String, Double>> group0Solutions = new ArrayList<LinkedHashMap<String,Double>>();
+		group0Solutions.add(reportBaseSolution);
+		group0Solutions.add(reportOriginalSolution);	
+		
+		LinkedHashMap<String, double[]> varRange_group0 = findVarsRange(group0Solutions);		
 		
 		
-		allSearchSolutions.add(baseModel.solution);
-		allSearchSolutions.add(originalModel.solution);
-			
-	
-		// print all solutions
 		
-		System.out.println("Original:   "+originalModel.solution);	
-		System.out.println("SearchBase: "+baseModel.solution);
+		// start to search
 		
 
 		
-		System.out.println("==== all solutions ====");
-		for (LinkedHashMap<String,Double> solution: allSearchSolutions){
-			
-			System.out.println("solution:   "+solution);
-			
-		}
+		System.out.println("all_vars_to_search:"+all_vars_to_search);
+		// group 1 search
+		
+		int begin_indx = 0;
+		int end_indx = Math.min(10, all_vars_to_search.size());
+		int max_n_trials = 30;
+		int coef_obj_search = -1;
+		
+		ArrayList<String> g1searchVars = new ArrayList<String>(all_vars_to_search.subList(begin_indx, end_indx));		
+		AltSolutionFinder altFinder = new AltSolutionFinder("group1", baseModel, g1searchVars, coef_obj_search, all_vars_to_report, max_n_trials);
+		altFinder.setLpsLoggingPath(mpmodelDir, mpmodelFileName);
+		ArrayList<LinkedHashMap<String, Double>> group1Solutions = altFinder.go();
 		
 		// find solution ranges
-		LinkedHashMap<String, double[]> varRange = findNonUniqueVars(allSearchSolutions);
+		if (group1Solutions.size()==0) {
+			System.out.println(" no alt solution found");
+			System.exit(0);
+		}
+			
+		LinkedHashMap<String, double[]> varRange_group1 = findVarsRange(group1Solutions);		
 		
-		writeReport(varRange, mpmodelDir, mpmodelFileName);
+		
+		
+		
+		
+		// update ranges
+		LinkedHashMap<String, double[]> varRange_all =  updateVarsRange(varRange_group0, varRange_group1);
+		
+		
+		// report only vars that have big difference
+		LinkedHashMap<String, double[]> varRange_all_filtered =  filterVarsRange_or(varRange_all, 0.5);
+		
+		
+		// write report
+		writeReport(varRange_all_filtered, mpmodelDir, mpmodelFileName);
 
-		aSolver.delete();
+
 
 		return returnCode;
 		
@@ -206,14 +213,14 @@ public class Detector2 {
 	private static void writeReport(LinkedHashMap<String, double[]> varRange, String dir, String fileName) {
 		
 		try {
-			PrintWriter reportFile = Tools.openFile(dir, fileName+"_nonunique.txt");
+			PrintWriter reportFile = Tools.openFile(dir, fileName+"_nonunique.csv");
 			
 			for (String varName: varRange.keySet()){
 				
 				double[] range = varRange.get(varName);
 				
 				// for excel view
-				reportFile.println(varName+"\t"+(float)range[0] + "\t"+(float)range[1]);
+				reportFile.println(varName+","+(float)range[0] + ","+(float)range[1]);
 				
 				reportFile.flush();
 				
@@ -227,7 +234,26 @@ public class Detector2 {
 		
 	}
 
-	private static LinkedHashMap<String, double[]> findNonUniqueVars(ArrayList<LinkedHashMap<String, Double>> allSearchSolutions) {
+	private static LinkedHashMap<String, double[]> filterVarsRange_or(LinkedHashMap<String, double[]> varsRange, double min_abs_diff) {
+		
+		LinkedHashMap<String, double[]> out = new LinkedHashMap<String, double[]>();
+		
+		
+		for (String varName: varsRange.keySet()){
+			
+			double lower = varsRange.get(varName)[0];
+			double upper = varsRange.get(varName)[1];
+			
+			if ( (upper-lower)> min_abs_diff ) out.put(varName, new double[]{lower, upper});
+			//if ( (upper!=0) && ( (upper-lower)/upper > min_abs_diff ) ) out.put(varName, new double[]{lower, upper});
+			
+		}
+		
+		return out;		
+		
+	}
+
+	private static LinkedHashMap<String, double[]> findVarsRange(ArrayList<LinkedHashMap<String, Double>> allSearchSolutions) {
 		
 		
 		// initialize		
@@ -244,7 +270,7 @@ public class Detector2 {
 		}
 		
 		
-		// return vars that has range greater than a specified delta
+
 		LinkedHashMap<String, double[]> varRange = new LinkedHashMap<String, double[]>();
 		
 		for (String varName: allSearchSolutions.get(0).keySet()){
@@ -252,12 +278,33 @@ public class Detector2 {
 			double upper = varUpper.get(varName);
 			double lower = varLower.get(varName);
 			
-			if ( (upper-lower)> nonunique_min_diff) varRange.put(varName, new double[]{lower, upper});
+			varRange.put(varName, new double[]{lower, upper});
 			
 		}
 		
 		return varRange;		
 		
 	}
-
+	
+	private static LinkedHashMap<String, double[]> updateVarsRange(LinkedHashMap<String, double[]> varsRange1, LinkedHashMap<String, double[]> varsRange2) {
+		
+		LinkedHashMap<String, double[]> out = new LinkedHashMap<String, double[]>(varsRange1);
+		
+		
+		for (String key: varsRange1.keySet()){
+			
+			double upper = varsRange1.get(key)[1];
+			double lower = varsRange1.get(key)[0];
+			
+			System.out.println("$$:"+key+":"+varsRange2.get(key)[0]);
+			if (varsRange2.get(key)[0] < lower) lower = varsRange2.get(key)[0];
+			if (varsRange2.get(key)[1] > upper) upper = varsRange2.get(key)[1];
+			
+			out.put(key, new double[]{lower, upper});
+				
+		}
+		
+		return out;		
+		
+	}
 }
