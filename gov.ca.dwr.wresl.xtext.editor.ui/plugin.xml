@@ -212,6 +212,18 @@
          </command>
       </menuContribution>
    </extension>
+   <extension point="org.eclipse.ltk.core.refactoring.renameParticipants">
+      <renameParticipant
+            class="gov.ca.dwr.wresl.xtext.editor.ui.refactoring.WreslEditorRenameElementParticipant"
+            id="gov.ca.dwr.wresl.xtext.editor.WreslEditor.editors.wresleditorrenameelementparticipant"
+            name="WRESL editor rename participant">
+         	<enablement>
+         		<with variable="element">
+        			<instanceof value="org.eclipse.xtext.ui.refactoring.ui.IRenameElementContext"/>
+        		</with>
+        	</enablement>
+      </renameParticipant>
+    </extension>
    	<extension
 		point="org.eclipse.ui.commands">
 		<command
