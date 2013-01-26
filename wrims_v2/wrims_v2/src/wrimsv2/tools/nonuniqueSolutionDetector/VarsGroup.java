@@ -2,14 +2,15 @@ package wrimsv2.tools.nonuniqueSolutionDetector;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import wrimsv2.solver.mpmodel.MPModel;
 import wrimsv2.wreslplus.elements.Tools;
 
 public class VarsGroup {
 
-	public ArrayList<String> lowerVertexVars_number;
-	public ArrayList<String> lowerVertexVars_integer;
+	public List<String> lowerVertexVars_number;
+	public List<String> lowerVertexVars_integer;
 
 	// required
 	private final double vertax_tolerance;  // tolerance for determining if a var is at vertex
@@ -49,13 +50,9 @@ public class VarsGroup {
 		
 	}	
 	
-	public void setVarsPool(){
-		
-		setVarsPool(new ArrayList<String>(baseModel.solution.keySet()));
-		
-	}
 	
 	public void setVarsPool(ArrayList<String> varsToSearch_in){
+		
 		
 		ArrayList<String> p = new ArrayList<String>(Tools.allToLowerCase(varsToSearch_in));
 

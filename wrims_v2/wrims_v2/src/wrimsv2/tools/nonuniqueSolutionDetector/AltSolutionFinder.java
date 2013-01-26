@@ -2,6 +2,7 @@ package wrimsv2.tools.nonuniqueSolutionDetector;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import wrimsv2.solver.mpmodel.MPModel;
 import wrimsv2.solver.mpmodel.MPModelUtils;
@@ -14,10 +15,9 @@ public class AltSolutionFinder {
 	// required
 	private String id;
 	private MPModel asfModel = null;
-	private ArrayList<String> searchVars; // will be modified (reduced) in the searching process ..
+	private List<String> searchVars; // will be modified (reduced) in the searching process ..
 	private int searchObjSign; // 1 for + and -1 for -
 	private ArrayList<String> reportVars; // only report these vars 
-	private int maxIteration = 0; // max number of finds
 	
 	
 	
@@ -27,14 +27,13 @@ public class AltSolutionFinder {
 	private String lpsFileNamePrepend = "";
 	
 	
-	public AltSolutionFinder(String id, MPModel inModel, ArrayList<String> searchVars, int searchObjSign, ArrayList<String> reportVars, int maxIteration) {
+	public AltSolutionFinder(String id, MPModel inModel, List<String> searchVars, int searchObjSign, ArrayList<String> reportVars) {
 		
 		this.asfModel = inModel;
 		this.id = id;
 		this.searchVars = searchVars;
 		this.searchObjSign = searchObjSign;
 		this.reportVars = reportVars;
-		this.maxIteration = maxIteration;
 
 	}
 
@@ -54,19 +53,19 @@ public class AltSolutionFinder {
 		sSolver.setModel(asfModel);
 		
 		ArrayList<LinkedHashMap<String, Double>> altSolutions = new ArrayList<LinkedHashMap<String, Double>>();
-		
-		boolean hasNewObjValue = true;
 
 		int i = 0;
 		
-		while (hasNewObjValue && i<=maxIteration && searchVars.size()>0) {
+		for ( String sv: searchVars) {
 			i++;
-			System.out.println(id+" seach: "+i);
+			System.out.println(id+" seach: "+i+": "+sv);
 									
 			LinkedHashMap<String, Double> searchObjFunc = new LinkedHashMap<String, Double>();
-			double searchObjOffset = createObjFunc(searchObjFunc, searchVars, searchObjSign, asfModel.solution);				
+			searchObjFunc.put(sv, (double)searchObjSign);
+			double searchObjOffset = asfModel.solution.get(sv)*searchObjSign;
+						
 			
-			System.out.println("Vars to search:  "+searchVars);
+			System.out.println("Var to search:  "+sv);
 
 			System.out.println("searchObjFunc: "+searchObjFunc);
 			System.out.println("searchObjOffset: "+searchObjOffset);
@@ -85,10 +84,10 @@ public class AltSolutionFinder {
 
 			System.out.println("obj value: "+sSolver.solver.objectiveValue());
 			System.out.println("solution: "+sSolver.solution);
-			
-			hasNewObjValue = false;
-			
-			// TODO: something wrong here!
+
+			// TODO: simplify this
+			boolean hasNewObjValue = false;
+
 			
 			if (searchObjSign>0) {
 				hasNewObjValue = sSolver.solver.objectiveValue() > searchObjOffset;
@@ -105,30 +104,6 @@ public class AltSolutionFinder {
 				LinkedHashMap<String, Double> report_solution = new LinkedHashMap<String, Double>(sSolver.solution);
 				Tools.mapRetainAll(report_solution, reportVars);
 				altSolutions.add(report_solution);
-
-				
-				
-				// update searchVars
-				ArrayList<String> varsHaveNewSolution = new ArrayList<String>();
-				for (String key: searchVars){
-					
-					// TODO: something wrong here...
-					
-					boolean hasNewVarSolution = false;
-					
-					if (searchObjSign>0) {
-						hasNewVarSolution = sSolver.solution.get(key) > asfModel.solution.get(key);
-					} else if (searchObjSign<0) {
-						hasNewVarSolution = sSolver.solution.get(key) < asfModel.solution.get(key);
-					}					
-					
-					if (hasNewVarSolution) varsHaveNewSolution.add(key);
-					
-				}
-	
-				searchVars.removeAll(varsHaveNewSolution);
-	
-				System.out.println("vars have new solution: "+varsHaveNewSolution);
 				
 			} 	
 			
