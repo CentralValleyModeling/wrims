@@ -3,9 +3,9 @@
 SCALAR
 NAME		VALUE
 TABLE_FONT_SIZE   8
-FILE_BASE	D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\CL_SharingFix_Shortage_121212\DSS\CL_EXISTING_BO_081011_DV_XA.DSS 
+FILE_BASE	D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\CL_SharingFix_Shortage_121212\DSS\CL_EXISTING_BO_DV_XA.DSS 
 NAME_BASE	XA
-FILE_ALT	D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\CL_SharingFix_Shortage_121212\DSS\CL_EXISTING_BO_081011_DV_CBC.DSS 
+FILE_ALT	D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\CL_SharingFix_Shortage_121212\DSS\CL_EXISTING_BO_DV_CBC.DSS 
 NAME_ALT	CBC
 OUTFILE		D:\cvwrsm\trunk\wrims_v2\wrims_v2\examples\CL_SharingFix_Shortage_121212\Report\Existing_BO__(CBC_vs_XA).pdf
 NOTE		""
