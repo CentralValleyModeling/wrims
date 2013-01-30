@@ -134,7 +134,7 @@ public class DetectorWorkflow {
 		// 1: alt solution found
 
 		if (!(isBaseValidated && isOriginalValidated))
-			return -1;
+			return DetectorParam.modelNotValid;
 
 		// use all vars in solution to search if null
 		if (searchVarList == null)
@@ -179,11 +179,11 @@ public class DetectorWorkflow {
 
 		if (Detector.searchLevel == 1) {
 
-			return -2; // not integrated
+			return DetectorParam.otherErrors; // not integrated
 
 		} else if (Detector.searchLevel == 3) {
 
-			return -2; // not integrated
+			return DetectorParam.otherErrors; // not integrated
 
 		} else if (Detector.searchLevel == 2) {
 
@@ -225,7 +225,7 @@ public class DetectorWorkflow {
 			if (varRange_allGroups.size() > 0) {
 				varRange_all = Misc.updateVarsRange(varRange_allGroups);
 			} else {
-				return 0; // no alt solutions found
+				return DetectorParam.altSolutionNotFound; // no alt solutions found
 			}
 
 			// report only vars that have big difference
@@ -237,7 +237,7 @@ public class DetectorWorkflow {
 		// Misc.writeReport(varsRange_output, mpmodelDir,
 		// mpmodelFile_withoutExt);
 
-		return 1; // alt solutions found
+		return DetectorParam.altSolutionFound; // alt solutions found
 
 	}
 

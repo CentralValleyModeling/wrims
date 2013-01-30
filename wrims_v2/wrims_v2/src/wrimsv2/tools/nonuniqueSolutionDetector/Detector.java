@@ -22,7 +22,8 @@ public class Detector {
 
 	// constant
 	public static final double inf = Double.POSITIVE_INFINITY;
-	
+	public static final int Detection_AltSolutionFound = 1;
+
 	
 	// required
 	public static final double nonunique_min_abs_diff = 0.6;     // minimum difference for reporting solution range
@@ -64,14 +65,12 @@ public class Detector {
 		
 		DetectorWorkflow dw = new DetectorWorkflow(mpmPath);
 		
-		boolean originalOK = dw.validateOriginalModel();
-		boolean baseOK = dw.validateBaseModel();
+		boolean OK_original = dw.validateOriginalModel();
+		boolean OK_base = dw.validateBaseModel();
 
 		LinkedHashMap<String, double[]> varsRange = null;
-
-		boolean hasAltSolution = dw.findAltSolutions(searchVarList)==1;
 		
-		if (hasAltSolution) {
+		if (dw.findAltSolutions(searchVarList) == DetectorParam.altSolutionFound) {
 			varsRange = dw.getVarsRange();
 			String reportPath = FilenameUtils.removeExtension(mpmPath)+"_variable_range.csv";
 			Misc.writeReport(varsRange, reportPath);
