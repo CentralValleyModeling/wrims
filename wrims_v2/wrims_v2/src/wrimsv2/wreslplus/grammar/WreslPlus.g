@@ -842,7 +842,7 @@ expr_constraint
 	;
 
 // comparison expr
-relation_token: '>' | '<' | '>=' | '<=' | '==' | '!=' ;
+relation_token: '>' | '<' | '>=' | '<=' | '==' | '/=' ;
 
 expr_relation
 	:  expr_add  relation_token  expr_add
@@ -1016,7 +1016,7 @@ SL_COMMENT : ('#'|'!') ~('\r'|'\n')*  '\r'? ( '\n' | EOF ) {skip();};  //{$chann
 
 AND : '&&' | '.and.' | '.AND.' ;
 OR  : '||' | '.or.' | '.OR.' ;
-NOT : '!' | '.not.' | '.NOT.' ;
+NOT :  '.not.' | '.NOT.' ;
 NOT_EQUAL :  '.ne.' | '.NE.' ;
 
 MONTH :   'month' | 'Month' | 'MONTH' ;
