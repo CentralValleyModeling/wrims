@@ -208,7 +208,7 @@ public class Error {
 			error_evaluation.add(msg);
 			System.err.println("# Error :"+msg);
 		}
-		System.err.println(sourceLocation+" # Error :"+ControlData.currEvalName+":"+error);
+		if (ControlData.currEvalTypeIndex<100) System.err.println(sourceLocation+" # Error :"+ControlData.currEvalName+":"+error);
 	}
 	
 	public static void addSolvingError(String error){

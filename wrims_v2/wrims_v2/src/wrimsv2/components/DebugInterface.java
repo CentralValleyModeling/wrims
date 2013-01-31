@@ -17,7 +17,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.antlr.runtime.ANTLRStringStream;
+import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
+import org.antlr.runtime.TokenStream;
 
 import com.google.common.primitives.Doubles;
 import com.sun.java.util.collections.Arrays;
@@ -47,6 +50,8 @@ import wrimsv2.evaluator.PreEvaluator;
 import wrimsv2.evaluator.TableSeries;
 import wrimsv2.evaluator.TimeOperation;
 import wrimsv2.evaluator.ValueEvaluation;
+import wrimsv2.evaluator.ValueEvaluatorLexer;
+import wrimsv2.evaluator.ValueEvaluatorParser;
 import wrimsv2.ilp.ILP;
 import wrimsv2.solver.CloseCurrentSolver;
 import wrimsv2.solver.InitialXASolver;
@@ -466,9 +471,17 @@ public class DebugInterface {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}else if (request.startsWith("conditional_breakpoint:")){
+			setConditionalBreakpoint(request);
+			try {
+				sendRequest("conditioal breakpoint set");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
-	
+
 	public void sendRequest(String request) throws IOException {
 		synchronized (requestConnection){
 			try{
@@ -1604,6 +1617,22 @@ public class DebugInterface {
 			return true;
 		}
 	}
+	
+	private void setConditionalBreakpoint(String request) {
+		String evalString;
+		if (request.equals("conditional_breakpoint:")){
+			controllerDebug.conditionalBreakpoint="";
+			evalString="c: ";
+		}else{
+			String[] data=request.split(":");
+			controllerDebug.conditionalBreakpoint=data[1];
+			evalString="c:"+controllerDebug.conditionalBreakpoint;
+		}
+		ANTLRStringStream stream = new ANTLRStringStream(evalString);
+		ValueEvaluatorLexer lexer = new ValueEvaluatorLexer(stream);
+		TokenStream tokenStream = new CommonTokenStream(lexer);
+		controllerDebug.conditionalBreakpointParser=new ValueEvaluatorParser(tokenStream);
+	}	
 	
 	public static void main(String[] args){
 		int argsSize=args.length;

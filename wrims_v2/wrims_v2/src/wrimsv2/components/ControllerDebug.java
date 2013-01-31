@@ -75,6 +75,8 @@ public class ControllerDebug extends Thread {
 	public int debugMonth;
 	public int debugDay;
 	public int debugCycle;
+	public String conditionalBreakpoint;
+	public ValueEvaluatorParser conditionalBreakpointParser;
 	public String[] args;
 	public int modelIndex;
 	public static ArrayList<Integer> initialTimeStep;
@@ -419,9 +421,38 @@ public class ControllerDebug extends Thread {
 				e.printStackTrace();
 			}
 			this.suspend();
+		}else{
+			checkConditionalBreakpoint();
 		}
 	}
 	
+	private void checkConditionalBreakpoint() {
+		boolean condition=false;
+		ControlData.currEvalTypeIndex=1000;
+		if (conditionalBreakpointParser!=null){		
+			try{
+				conditionalBreakpointParser.evaluator();
+				condition=conditionalBreakpointParser.evalCondition;
+			}catch (Exception e){
+				condition=false;
+			}
+		
+			conditionalBreakpointParser.reset();
+			Error.error_evaluation.clear();
+		}
+		
+		if (condition){
+			try {
+				di.sendEvent("suspended!"+debugYear+"#"+debugMonth+"#"+debugDay+"#"+debugCycle);
+				System.out.println("conditional breakpoint of " + conditionalBreakpoint + " reached");
+				System.out.println("paused");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			this.suspend();
+		}
+	}
+
 	public void updateVarMonitor(){
 		String dataString="updateVarMonitor!";
 		for (int k=0; k<di.monitorVarNames.length; k++){
