@@ -1625,7 +1625,7 @@ public class DebugInterface {
 			evalString="c: ";
 		}else{
 			String[] data=request.split(":");
-			controllerDebug.conditionalBreakpoint=data[1];
+			controllerDebug.conditionalBreakpoint=data[1].toLowerCase();
 			evalString="c:"+controllerDebug.conditionalBreakpoint;
 		}
 		ANTLRStringStream stream = new ANTLRStringStream(evalString);
