@@ -28,6 +28,7 @@ public class ClearConditionalBreakpointMenu implements IWorkbenchWindowActionDel
 	@Override
 	public void run(IAction action) {
 		DebugCorePlugin.conditionalBreakpoint="";
+		clearConditionalBreakpoint();
 	}
 
 	@Override
@@ -45,5 +46,15 @@ public class ClearConditionalBreakpointMenu implements IWorkbenchWindowActionDel
 	public void init(IWorkbenchWindow window) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void clearConditionalBreakpoint(){
+		if (DebugCorePlugin.isDebugging){
+			try {
+				DebugCorePlugin.target.sendRequest("conditional_breakpoint:");
+			} catch (DebugException e) {
+				WPPException.handleException(e);
+			}
+		}
 	}
 }

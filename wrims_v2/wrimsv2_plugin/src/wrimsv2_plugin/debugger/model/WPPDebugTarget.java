@@ -301,6 +301,7 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 			DebugCorePlugin.isDebugging=true;
 			
 			data=sendRequest("time:"+DebugCorePlugin.debugYear+"/"+DebugCorePlugin.debugMonth+"/"+DebugCorePlugin.debugDay+"/"+DebugCorePlugin.debugCycle);
+			data=sendRequest("conditional_breakpoint:"+DebugCorePlugin.conditionalBreakpoint);
 			enableRunMenuWithStart();
 		} catch (DebugException e) {
 			WPPException.handleException(e);

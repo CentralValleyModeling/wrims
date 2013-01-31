@@ -85,6 +85,7 @@ public class WPPConditionalBreakpointDialog extends PopupDialog {
 		ok.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent event){
 				DebugCorePlugin.conditionalBreakpoint=text1.getText();
+				setConditionalBreakpoint();
 				close();
 			}
 		});
@@ -108,4 +109,14 @@ public class WPPConditionalBreakpointDialog extends PopupDialog {
 		dialogArea.getShell().setDefaultButton(ok);
 		return dialogArea;
 	 }
+	
+	public void setConditionalBreakpoint(){
+		if (DebugCorePlugin.isDebugging){
+			try {
+				DebugCorePlugin.target.sendRequest("conditional_breakpoint:"+DebugCorePlugin.conditionalBreakpoint);
+			} catch (DebugException e) {
+				WPPException.handleException(e);
+			}
+		}
+	}
 }

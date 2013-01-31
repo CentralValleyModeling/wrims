@@ -23,6 +23,8 @@ public class DebuggerStartUp implements IStartup {
 		enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, false);
+		enableMap.put(DebugCorePlugin.ID_WPP_CONDITIONALBREAKPOINT, true);
+		enableMap.put(DebugCorePlugin.ID_WPP_CLEARCONDITIONALBREAKPOINT, true);
 		enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, false);
 		enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, false);
 		new EnableMenus(enableMap);
