@@ -315,12 +315,14 @@ public class DebugInterface {
 			}
 		}else if (request.equals("terminate")) {
 			controllerDebug.stop();
-			if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG")) {
-				ControlData.xasolver.close();
+			if (isDebugging){
+				if (ControlData.solverName.equalsIgnoreCase("XA") || ControlData.solverName.equalsIgnoreCase("XALOG")) {
+					ControlData.xasolver.close();
+				}
+				DssOperation.writeInitDvarAliasToDSS();
+				DssOperation.writeDVAliasToDSS();
+				ControlData.writer.closeDSSFile();
 			}
-			DssOperation.writeInitDvarAliasToDSS();
-			DssOperation.writeDVAliasToDSS();
-			ControlData.writer.closeDSSFile();
 			System.out.println("terminated");
 			try {
 				sendRequest("terminated");
