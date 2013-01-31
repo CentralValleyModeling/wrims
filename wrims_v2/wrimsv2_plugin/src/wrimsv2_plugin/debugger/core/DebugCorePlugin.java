@@ -142,6 +142,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static final String ID_WPP_NEXTTIMESTEP="wpp.nexttimestep";
 	public static final String ID_WPP_NEXTCYCLE="wpp.nextcycle";
 	public static final String ID_WPP_RESIMMENU="wpp.resim";
+	public static final String ID_WPP_CONDITIONALBREAKPOINT="wpp.conditionalbreakpoint";
+	public static final String ID_WPP_CLEARCONDITIONALBREAKPOINT="wpp.clearconditionalbreakpoint";
 	public static final String ID_WPP_SAVETODVFILE="wpp.savedvfile";
 	public static final String ID_WPP_SAVETOSVFILE="wpp.savesvfile";
 	public static final String ID_WPP_SOLVEROPTIONMENU="wpp.solveroption";
@@ -189,6 +191,8 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static String textVarGoalSearch="";
 	
 	public static String hoverText="";
+	
+	public static String conditionalBreakpoint="";
 	
 	public static ArrayList<String> fileFolderWreslInc=new ArrayList<String>();
 	/**

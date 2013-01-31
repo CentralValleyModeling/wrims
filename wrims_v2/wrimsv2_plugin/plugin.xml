@@ -367,6 +367,18 @@
 		visible="true"
 		id="wpp.debugcontrol">
 		<action
+			label="Clear Conditional Breakpoint"
+			class="wrimsv2_plugin.debugger.menuitem.ClearConditionalBreakpointMenu"
+			menubarPath="org.eclipse.ui.run/debug"
+			id="wpp.clearconditionalbreakpoint">
+		</action>
+		<action
+			label="Conditional Breakpoint"
+			class="wrimsv2_plugin.debugger.menuitem.ConditionalBreakpointMenu"
+			menubarPath="org.eclipse.ui.run/debug"
+			id="wpp.conditionalbreakpoint">
+		</action>
+		<action
 			label="Re-Simulate"
 			class="wrimsv2_plugin.debugger.menuitem.ReSimMenu"
 			menubarPath="org.eclipse.ui.run/debug"
