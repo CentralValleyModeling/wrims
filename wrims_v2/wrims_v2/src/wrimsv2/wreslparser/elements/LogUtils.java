@@ -281,7 +281,7 @@ public class LogUtils {
 		
 		 StudyParser.total_errors++;
 
-		if (ControlData.showWreslLog) System.out.println( "("+filePath+":"+lineNumber+") "+msg );
+		if (ControlData.showWreslLog) System.err.println( "("+filePath+":"+lineNumber+") "+msg );
 		 _logFile.println("# Error: " + "("+filePath+":"+lineNumber+") "+msg );
 		 _logFile.flush();
 		
@@ -291,7 +291,7 @@ public class LogUtils {
 		
 		 StudyParser.total_errors++;
 
-		if (ControlData.showWreslLog) System.out.println("# Error: "+msg);
+		if (ControlData.showWreslLog) System.err.println("# Error: "+msg);
 		 _logFile.println("# Error: "+msg);
 		 _logFile.flush();
 		
