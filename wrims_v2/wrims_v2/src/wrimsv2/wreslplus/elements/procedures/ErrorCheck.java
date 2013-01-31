@@ -105,8 +105,10 @@ public class ErrorCheck {
 			AliasTemp asObj = seqObj.asMap.get(key);
 				
 			if (asObj.dependants_unknown.size()>0){
-				LogUtils.errMsg(asObj.fromWresl+
-						"\n  In model ["+seqObj.model+"] variable(s) not defined before use: "+asObj.dependants_unknown+" in Alias ["+asObj.id+"]");
+//				LogUtils.errMsg(asObj.fromWresl+
+//						"\n  In model ["+seqObj.model+"] variable(s) not defined before use: "+asObj.dependants_unknown+" in Alias ["+asObj.id+"]");
+				String msg = "In model ["+seqObj.model+"] variable(s) not defined before use: "+asObj.dependants_unknown+" in Alias ["+asObj.id+"]";
+				LogUtils.errMsgLocation(asObj.fromWresl, asObj.line, msg);
 			}
 	
 		}	
@@ -117,23 +119,43 @@ public class ErrorCheck {
 			GoalTemp glObj = seqObj.glMap.get(key);
 				
 			if (glObj.dependants_unknown.size()>0){
-				LogUtils.errMsg(glObj.fromWresl+
-						"\n  In model ["+seqObj.model+"] variable(s) not defined before use: "+glObj.dependants_unknown+" in Goal ["+glObj.id+"]");
+//				LogUtils.errMsg(glObj.fromWresl+
+//						"\n  In model ["+seqObj.model+"] variable(s) not defined before use: "+glObj.dependants_unknown+" in Goal ["+glObj.id+"]");
+				String msg = "In model ["+seqObj.model+"] variable(s) not defined before use: "+glObj.dependants_unknown+" in Goal ["+glObj.id+"]";
+				LogUtils.errMsgLocation(glObj.fromWresl, glObj.line, msg);
 			}
 	
 		}
-		
-		for (String key : seqObj.svMap.keySet()) {
+
+		for (int i=0; i<seqObj.svIncFileList_post.size(); i++) {
+
+			String key = seqObj.svIncFileList_post.get(i);
 
 			SvarTemp svObj = seqObj.svMap.get(key);
 				
 			if (svObj.dependants_unknown.size()>0){
-				LogUtils.errMsg(svObj.fromWresl+
-						"\n  In model ["+seqObj.model+"] variable(s) not defined before use: "+svObj.dependants_unknown+" in Svar ["+svObj.id+"]");
+//				LogUtils.errMsg(svObj.fromWresl+
+//						"\n  In model ["+seqObj.model+"] variable(s) not defined before use: "+svObj.dependants_unknown+" in Svar ["+svObj.id+"]");
+				String msg = "In model ["+seqObj.model+"] variable(s) not defined before use: "+svObj.dependants_unknown+" in Svar ["+svObj.id+"]";
+				LogUtils.errMsgLocation(svObj.fromWresl, svObj.line, msg);
+			
+			
+			} else {
+				
+				for (String dep: svObj.dependants_svar){
+					
+					if ( seqObj.svIncFileList_post.indexOf(dep)> i){
+//						LogUtils.errMsg(svObj.fromWresl+
+//								"\n  In model ["+seqObj.model+"] variable not defined before use: "+dep+" in Svar ["+svObj.id+"]");
+						String msg = "In model ["+seqObj.model+"] variable not defined before use: "+dep+" in Svar ["+svObj.id+"]";
+						LogUtils.errMsgLocation(svObj.fromWresl, svObj.line, msg);
+					}
+					
+				}
+				
 			}
 	
 		}		
-
 		
 	}
 
@@ -245,7 +267,9 @@ public class ErrorCheck {
 		
 			for (String s: dvDup){
 				DvarTemp dvO = m.dvMap.get(s);
-				LogUtils.errMsg("Dvar ["+dvO.id+"] redefined in file ["+ dvO.fromWresl +"].");
+				//LogUtils.errMsg("Dvar ["+dvO.id+"] redefined in file ["+ dvO.fromWresl +"].");
+				String msg = "Dvar ["+dvO.id+"] redefined";
+				LogUtils.errMsgLocation(dvO.fromWresl, dvO.line, msg);
 			}
 		}		
 	
@@ -257,7 +281,9 @@ public class ErrorCheck {
 		
 			for (String s: svDup){
 				SvarTemp svO = m.svMap.get(s);
-				LogUtils.errMsg("Svar ["+svO.id+"] redefined in file ["+ svO.fromWresl +"].");
+				//LogUtils.errMsg("Svar ["+svO.id+"] redefined in file ["+ svO.fromWresl +"].");
+				String msg = "Svar ["+svO.id+"] redefined";
+				LogUtils.errMsgLocation(svO.fromWresl, svO.line, msg);
 			}
 		}
 		
@@ -627,7 +653,8 @@ public class ErrorCheck {
 				String msg = "Initial svar ["+ pt.id +"] has dependent(s) not allowed: "+pt.dependants_notAllowed;
 				
 				Error.addInitialError(msg);
-				LogUtils.errMsg(msg);
+				//LogUtils.errMsg(msg);
+				LogUtils.errMsgLocation(pt.fromWresl, pt.line, msg);
 				
 				hasError = true;				
 				
@@ -637,7 +664,8 @@ public class ErrorCheck {
 				String msg = "Initial svar ["+ pt.id +"] has unknown dependent(s): "+pt.dependants_unknown;
 				
 				Error.addInitialError(msg);
-				LogUtils.errMsg(msg);
+				//LogUtils.errMsg(msg);
+				LogUtils.errMsgLocation(pt.fromWresl, pt.line, msg);
 				
 				hasError = true;
 						
