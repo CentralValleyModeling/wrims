@@ -34,6 +34,14 @@ public class FileProcess {
 		}
 	}
 	
+	public static boolean isTableFile(String path){
+		if (path.toLowerCase().endsWith(".table")){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	public static ArrayList<String> getStudyWreslFiles(String mainFilePath, StudyDataSet sds){
 		ArrayList<String> fns=new ArrayList<String>();
 		fns.add(mainFilePath.toLowerCase());
@@ -50,5 +58,21 @@ public class FileProcess {
 			}
 		}
 		return fns;
+	}
+	
+	public static ArrayList<String> getTableFiles(String mainFilePath){
+		ArrayList<String> tns=new ArrayList<String>();
+		File file=new File(mainFilePath);
+		String tfn=file.getParentFile().toString()+"\\lookup";
+		File tDir=new File(tfn);
+		if (tDir!=null){
+			for (File table : tDir.listFiles()) {
+				String tn=table.getAbsolutePath().toLowerCase();
+				if (tn.endsWith(".table")){
+					tns.add(tn);
+				}
+			}
+		}
+		return tns;
 	}
 }

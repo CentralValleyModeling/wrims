@@ -70,6 +70,8 @@ public class StudyWresl extends AbstractHandler {
 									}
 									monitor.worked(50);
 									ArrayList<String> fns=FileProcess.getStudyWreslFiles(path, sds);
+									ArrayList<String> tfns=FileProcess.getTableFiles(path);
+									fns.addAll(tfns);
 									monitor.worked(20);
 									DebugCorePlugin.fileFolderWreslInc=FileProcess.retrieveFileNames(fns);
 									monitor.worked(20);

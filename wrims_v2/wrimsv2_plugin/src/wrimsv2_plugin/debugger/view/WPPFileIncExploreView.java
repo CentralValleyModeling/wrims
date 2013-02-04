@@ -22,6 +22,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorRegistry;
 import org.eclipse.ui.IWorkbench;
@@ -33,6 +34,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
+import wrimsv2_plugin.tools.FileProcess;
 
 public class WPPFileIncExploreView extends ViewPart {
 	private TreeViewer viewer;
@@ -118,22 +120,30 @@ public class WPPFileIncExploreView extends ViewPart {
 			public void open(OpenEvent event) {
 				IStructuredSelection selection = (IStructuredSelection) event
 						.getSelection();
-
-				File firstEle = (File)selection.getFirstElement();
+								
+				final File firstEle = (File)selection.getFirstElement();
 				IWorkspace workspace= ResourcesPlugin.getWorkspace();    
 				IPath location= Path.fromOSString(firstEle.getAbsolutePath()); 
 				final IFile ifile= workspace.getRoot().getFileForLocation(location);
 				final IWorkbench workbench=PlatformUI.getWorkbench();
 				workbench.getDisplay().asyncExec(new Runnable(){
 		    		public void run(){
-		    			String fn=ifile.getName();
-		    			IEditorRegistry registry = workbench.getEditorRegistry();
-		    			IEditorDescriptor desc = registry.getDefaultEditor(fn);
-		    			try {
-							workbench.getActiveWorkbenchWindow().getActivePage().openEditor(new FileEditorInput(ifile), desc.getId());
-						} catch (PartInitException e) {
-							WPPException.handleException(e);
-						}
+		    			String fn=firstEle.getName();
+		    			if (FileProcess.isTableFile(fn)){
+		    				try {
+								Desktop.getDesktop().open(firstEle);
+							} catch (IOException e) {
+								WPPException.handleException(e);
+							}
+		    			}else if (FileProcess.isWreslFile(fn)){
+		    				IEditorRegistry registry = workbench.getEditorRegistry();
+			    			IEditorDescriptor desc= registry.getDefaultEditor(fn);
+		    				try {
+			    				workbench.getActiveWorkbenchWindow().getActivePage().openEditor(new FileEditorInput(ifile), desc.getId());
+			    			} catch (PartInitException e) {
+			    				WPPException.handleException(e);
+			    			}
+		    			}
 		    		}
 				});
 			}
