@@ -78,7 +78,7 @@ Workflow {
                   ignoreCase = true
             }
             
-            fragment = exporting.QualifiedNamesFragment {}
+            fragment = exporting.SimpleNamesFragment {}
             fragment = builder.BuilderIntegrationFragment {}
 
             // generator API

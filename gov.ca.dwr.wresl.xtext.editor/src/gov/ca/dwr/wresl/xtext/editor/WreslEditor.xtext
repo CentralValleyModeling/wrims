@@ -25,7 +25,7 @@ Objective:
 	('objective' | 'OBJECTIVE') ('[' local?=('local' | 'LOCAL') ']')? name=ID '='? '{' weights+=WeightItem+ '}';
 
 WeightItem:
-	'[' name=ID ',' expression=Expression ']' (',')?;
+	'[' name=[Variable] ',' expression=Expression ']' (',')?;
 
 Define:
 	('define' | 'DEFINE') ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=(DVar | SVar | DVarInteger |
@@ -208,10 +208,10 @@ Term:
 	ref=[Variable] | n=Number | f=Function | '(' e2=Expression ')'| s=SpecialIdent;
 
 Function:
-	ExternalFunction | MaxFunction | MinFunction | IntFunction | VarModel;
+	ExternalFunction | MaxFunction | MinFunction | IntFunction | AbsFunction | PowFunction | LogFunction | VarModel;
 
 ExternalFunction:
-	(ID|TafCfs) '(' e1=Expression (',' e2+=Expression)* ')';
+	((ref=[Variable])|TafCfs) '(' e1=Expression (',' e2+=Expression)* ')';
 
 MaxFunction:
 	MAX '(' e1=Expression (',' e2+=Expression)* ')';
@@ -220,7 +220,16 @@ MinFunction:
 	MIN '(' e1=Expression (',' e2+=Expression)* ')';
 
 IntFunction:
-	INT '(' e=Expression ')';
+	INTFUNC '(' e=Expression ')';
+
+AbsFunction:
+	ABS '(' e=Expression ')';
+
+PowFunction:
+	POW '(' e1=Expression ','  e2=Expression ')';
+	
+LogFunction:
+	LOG '(' e=Expression ')';
 
 LogicalFunction:
 	RangeFunction;
@@ -281,6 +290,18 @@ terminal MIN:
 
 terminal MAX:
 	'max' | 'MAX';
+	
+terminal INTFUNC:
+	'int' | 'INT';
+	
+terminal ABS:
+	'abs' | 'ABS';
+	
+terminal POW:
+	'pow' | 'POW';
+	
+terminal LOG:
+	'log' | 'LOG' | 'log10' | 'LOG10';
 
 terminal FLOAT:
 	INT '.' (INT)* | '.' (INT)+;

@@ -3,6 +3,7 @@
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Expression;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Variable;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WeightItem;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage;
 
@@ -32,24 +33,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class WeightItemImpl extends MinimalEObjectImpl.Container implements WeightItem
 {
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The cached value of the '{@link #getName() <em>Name</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getName()
    * @generated
    * @ordered
    */
-  protected static final String NAME_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
-  protected String name = NAME_EDEFAULT;
+  protected Variable name;
 
   /**
    * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
@@ -87,7 +78,27 @@ public class WeightItemImpl extends MinimalEObjectImpl.Container implements Weig
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getName()
+  public Variable getName()
+  {
+    if (name != null && name.eIsProxy())
+    {
+      InternalEObject oldName = (InternalEObject)name;
+      name = (Variable)eResolveProxy(oldName);
+      if (name != oldName)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, WreslEditorPackage.WEIGHT_ITEM__NAME, oldName, name));
+      }
+    }
+    return name;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Variable basicGetName()
   {
     return name;
   }
@@ -97,9 +108,9 @@ public class WeightItemImpl extends MinimalEObjectImpl.Container implements Weig
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setName(String newName)
+  public void setName(Variable newName)
   {
-    String oldName = name;
+    Variable oldName = name;
     name = newName;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.WEIGHT_ITEM__NAME, oldName, name));
@@ -180,7 +191,8 @@ public class WeightItemImpl extends MinimalEObjectImpl.Container implements Weig
     switch (featureID)
     {
       case WreslEditorPackage.WEIGHT_ITEM__NAME:
-        return getName();
+        if (resolve) return getName();
+        return basicGetName();
       case WreslEditorPackage.WEIGHT_ITEM__EXPRESSION:
         return getExpression();
     }
@@ -198,7 +210,7 @@ public class WeightItemImpl extends MinimalEObjectImpl.Container implements Weig
     switch (featureID)
     {
       case WreslEditorPackage.WEIGHT_ITEM__NAME:
-        setName((String)newValue);
+        setName((Variable)newValue);
         return;
       case WreslEditorPackage.WEIGHT_ITEM__EXPRESSION:
         setExpression((Expression)newValue);
@@ -218,7 +230,7 @@ public class WeightItemImpl extends MinimalEObjectImpl.Container implements Weig
     switch (featureID)
     {
       case WreslEditorPackage.WEIGHT_ITEM__NAME:
-        setName(NAME_EDEFAULT);
+        setName((Variable)null);
         return;
       case WreslEditorPackage.WEIGHT_ITEM__EXPRESSION:
         setExpression((Expression)null);
@@ -238,28 +250,11 @@ public class WeightItemImpl extends MinimalEObjectImpl.Container implements Weig
     switch (featureID)
     {
       case WreslEditorPackage.WEIGHT_ITEM__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+        return name != null;
       case WreslEditorPackage.WEIGHT_ITEM__EXPRESSION:
         return expression != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(')');
-    return result.toString();
   }
 
 } //WeightItemImpl

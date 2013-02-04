@@ -584,6 +584,33 @@ public class WreslEditorSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case WreslEditorPackage.ABS_FUNCTION:
+      {
+        AbsFunction absFunction = (AbsFunction)theEObject;
+        T result = caseAbsFunction(absFunction);
+        if (result == null) result = caseFunction(absFunction);
+        if (result == null) result = caseTermSimple(absFunction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case WreslEditorPackage.POW_FUNCTION:
+      {
+        PowFunction powFunction = (PowFunction)theEObject;
+        T result = casePowFunction(powFunction);
+        if (result == null) result = caseFunction(powFunction);
+        if (result == null) result = caseTermSimple(powFunction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case WreslEditorPackage.LOG_FUNCTION:
+      {
+        LogFunction logFunction = (LogFunction)theEObject;
+        T result = caseLogFunction(logFunction);
+        if (result == null) result = caseFunction(logFunction);
+        if (result == null) result = caseTermSimple(logFunction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case WreslEditorPackage.IDENT:
       {
         Ident ident = (Ident)theEObject;
@@ -1671,6 +1698,54 @@ public class WreslEditorSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseIntFunction(IntFunction object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Abs Function</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Abs Function</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAbsFunction(AbsFunction object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Pow Function</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Pow Function</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePowFunction(PowFunction object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Log Function</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Log Function</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLogFunction(LogFunction object)
   {
     return null;
   }

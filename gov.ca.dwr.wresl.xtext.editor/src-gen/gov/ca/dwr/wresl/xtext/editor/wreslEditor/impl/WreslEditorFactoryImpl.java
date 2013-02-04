@@ -131,6 +131,9 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
       case WreslEditorPackage.MAX_FUNCTION: return createMaxFunction();
       case WreslEditorPackage.MIN_FUNCTION: return createMinFunction();
       case WreslEditorPackage.INT_FUNCTION: return createIntFunction();
+      case WreslEditorPackage.ABS_FUNCTION: return createAbsFunction();
+      case WreslEditorPackage.POW_FUNCTION: return createPowFunction();
+      case WreslEditorPackage.LOG_FUNCTION: return createLogFunction();
       case WreslEditorPackage.IDENT: return createIdent();
       case WreslEditorPackage.INCLUDE_FILE: return createIncludeFile();
       default:
@@ -873,6 +876,39 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
   {
     IntFunctionImpl intFunction = new IntFunctionImpl();
     return intFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AbsFunction createAbsFunction()
+  {
+    AbsFunctionImpl absFunction = new AbsFunctionImpl();
+    return absFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public PowFunction createPowFunction()
+  {
+    PowFunctionImpl powFunction = new PowFunctionImpl();
+    return powFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LogFunction createLogFunction()
+  {
+    LogFunctionImpl logFunction = new LogFunctionImpl();
+    return logFunction;
   }
 
   /**

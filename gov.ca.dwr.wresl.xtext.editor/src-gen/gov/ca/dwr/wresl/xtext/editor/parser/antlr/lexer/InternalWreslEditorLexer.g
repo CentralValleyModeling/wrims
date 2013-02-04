@@ -208,6 +208,14 @@ RULE_MIN : ('min'|'MIN');
 
 RULE_MAX : ('max'|'MAX');
 
+RULE_INTFUNC : ('int'|'INT');
+
+RULE_ABS : ('abs'|'ABS');
+
+RULE_POW : ('pow'|'POW');
+
+RULE_LOG : ('log'|'LOG'|'log10'|'LOG10');
+
 RULE_FLOAT : (RULE_INT '.' RULE_INT*|'.' RULE_INT+);
 
 RULE_AND : ('.and.'|'.AND.');

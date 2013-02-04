@@ -626,6 +626,33 @@ public interface WreslEditorFactory extends EFactory
   IntFunction createIntFunction();
 
   /**
+   * Returns a new object of class '<em>Abs Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Abs Function</em>'.
+   * @generated
+   */
+  AbsFunction createAbsFunction();
+
+  /**
+   * Returns a new object of class '<em>Pow Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Pow Function</em>'.
+   * @generated
+   */
+  PowFunction createPowFunction();
+
+  /**
+   * Returns a new object of class '<em>Log Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Log Function</em>'.
+   * @generated
+   */
+  LogFunction createLogFunction();
+
+  /**
    * Returns a new object of class '<em>Ident</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

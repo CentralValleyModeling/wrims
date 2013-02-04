@@ -410,6 +410,21 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
         return createIntFunctionAdapter();
       }
       @Override
+      public Adapter caseAbsFunction(AbsFunction object)
+      {
+        return createAbsFunctionAdapter();
+      }
+      @Override
+      public Adapter casePowFunction(PowFunction object)
+      {
+        return createPowFunctionAdapter();
+      }
+      @Override
+      public Adapter caseLogFunction(LogFunction object)
+      {
+        return createLogFunctionAdapter();
+      }
+      @Override
       public Adapter caseIdent(Ident object)
       {
         return createIdentAdapter();
@@ -1442,6 +1457,51 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createIntFunctionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.AbsFunction <em>Abs Function</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.AbsFunction
+   * @generated
+   */
+  public Adapter createAbsFunctionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.PowFunction <em>Pow Function</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.PowFunction
+   * @generated
+   */
+  public Adapter createPowFunctionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.LogFunction <em>Log Function</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.LogFunction
+   * @generated
+   */
+  public Adapter createLogFunctionAdapter()
   {
     return null;
   }
