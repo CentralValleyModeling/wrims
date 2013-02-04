@@ -234,6 +234,9 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getMinFunctionAccess().getGroup(), "rule__MinFunction__Group__0");
 					put(grammarAccess.getMinFunctionAccess().getGroup_3(), "rule__MinFunction__Group_3__0");
 					put(grammarAccess.getIntFunctionAccess().getGroup(), "rule__IntFunction__Group__0");
+					put(grammarAccess.getAbsFunctionAccess().getGroup(), "rule__AbsFunction__Group__0");
+					put(grammarAccess.getPowFunctionAccess().getGroup(), "rule__PowFunction__Group__0");
+					put(grammarAccess.getLogFunctionAccess().getGroup(), "rule__LogFunction__Group__0");
 					put(grammarAccess.getVarModelAccess().getGroup(), "rule__VarModel__Group__0");
 					put(grammarAccess.getRangeFunctionAccess().getGroup(), "rule__RangeFunction__Group__0");
 					put(grammarAccess.getIncludeFileAccess().getGroup(), "rule__IncludeFile__Group__0");
@@ -361,6 +364,7 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTermAccess().getFAssignment_2(), "rule__Term__FAssignment_2");
 					put(grammarAccess.getTermAccess().getE2Assignment_3_1(), "rule__Term__E2Assignment_3_1");
 					put(grammarAccess.getTermAccess().getSAssignment_4(), "rule__Term__SAssignment_4");
+					put(grammarAccess.getExternalFunctionAccess().getRefAssignment_0_0(), "rule__ExternalFunction__RefAssignment_0_0");
 					put(grammarAccess.getExternalFunctionAccess().getE1Assignment_2(), "rule__ExternalFunction__E1Assignment_2");
 					put(grammarAccess.getExternalFunctionAccess().getE2Assignment_3_1(), "rule__ExternalFunction__E2Assignment_3_1");
 					put(grammarAccess.getMaxFunctionAccess().getE1Assignment_2(), "rule__MaxFunction__E1Assignment_2");
@@ -368,6 +372,10 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getMinFunctionAccess().getE1Assignment_2(), "rule__MinFunction__E1Assignment_2");
 					put(grammarAccess.getMinFunctionAccess().getE2Assignment_3_1(), "rule__MinFunction__E2Assignment_3_1");
 					put(grammarAccess.getIntFunctionAccess().getEAssignment_2(), "rule__IntFunction__EAssignment_2");
+					put(grammarAccess.getAbsFunctionAccess().getEAssignment_2(), "rule__AbsFunction__EAssignment_2");
+					put(grammarAccess.getPowFunctionAccess().getE1Assignment_2(), "rule__PowFunction__E1Assignment_2");
+					put(grammarAccess.getPowFunctionAccess().getE2Assignment_4(), "rule__PowFunction__E2Assignment_4");
+					put(grammarAccess.getLogFunctionAccess().getEAssignment_2(), "rule__LogFunction__EAssignment_2");
 					put(grammarAccess.getIdentAccess().getNameAssignment(), "rule__Ident__NameAssignment");
 					put(grammarAccess.getIncludeFileAccess().getLocalAssignment_1_1(), "rule__IncludeFile__LocalAssignment_1_1");
 					put(grammarAccess.getIncludeFileAccess().getFileAssignment_2(), "rule__IncludeFile__FileAssignment_2");

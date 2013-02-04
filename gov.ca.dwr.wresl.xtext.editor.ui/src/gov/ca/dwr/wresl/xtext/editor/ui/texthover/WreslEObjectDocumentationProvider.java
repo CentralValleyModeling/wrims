@@ -5,6 +5,7 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AliasImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ConstDefImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DefineImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DvarDefImpl;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ExternalImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GoalImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IdentImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.SvarDefImpl;
@@ -26,6 +27,9 @@ public class WreslEObjectDocumentationProvider implements
 	
 	public String getDocumentation(EObject o) {
 		if (o instanceof DefineImpl){
+			if (((DefineImpl)o).getDefinition() instanceof ExternalImpl){
+				return null;
+			}
 			String name=((DefineImpl) o).getName();
 			return "value : "+getValue(name);
 		}else if (o instanceof AliasImpl){

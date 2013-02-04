@@ -9,6 +9,7 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ConstDefImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DVarIntegerImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DefineImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DvarDefImpl;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ExternalImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GoalImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IdentImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.SvarDefImpl;
@@ -37,7 +38,7 @@ public class WreslEObjectHoverProvider extends DefaultEObjectHoverProvider {
 		String hoverText;
 		if (o instanceof DefineImpl){
 			hoverText=((DefineImpl) o).getName();
-			DebugCorePlugin.hoverText=hoverText;
+			if (!(((DefineImpl)o).getDefinition() instanceof ExternalImpl)) DebugCorePlugin.hoverText=hoverText;
 			return hoverText;
 		}else if (o instanceof AliasImpl){
 			hoverText=((AliasImpl) o).getName();
