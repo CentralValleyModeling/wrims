@@ -100,6 +100,7 @@ public class Misc {
 		Map<String, Map<String, IntDouble>> varTimeArrayCycleValueMap=ControlData.currStudyDataSet.getVarTimeArrayCycleValueMap();
 		Set<String> dvarUsedByLaterCycle = ControlData.currModelDataSet.dvarUsedByLaterCycle;
 		Set<String> dvarTimeArrayUsedByLaterCycle = ControlData.currModelDataSet.dvarTimeArrayUsedByLaterCycle;
+		ArrayList<String> timeArrayDvList = ControlData.currModelDataSet.timeArrayDvList;
 		String model=ControlData.currCycleName;
 		
 		Map<String, Dvar> dvarMap = SolverData.getDvarMap();
@@ -125,22 +126,11 @@ public class Misc {
 				}
 			}
 			String entryNameTS=DssOperation.entryNameTS(dvName, ControlData.timeStep);
-			if (!DataTimeSeries.dvAliasTS.containsKey(entryNameTS)){
-				DssDataSetFixLength dds=new DssDataSetFixLength();
-				double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
-				dds.setData(data);
-				dds.setTimeStep(ControlData.partE);
-				if (dds.getTimeStep().equals("1MON")){
-					dds.setStartTime(ControlData.monthlyStartTime);
-				}else{
-					dds.setStartTime(ControlData.dailyStartTime);
-				}
-				dds.setUnits(dvar.units);
-				dds.setKind(dvar.kind);
-				DataTimeSeries.dvAliasTS.put(entryNameTS,dds);
+			DataTimeSeries.saveDataToTimeSeries(entryNameTS, value, dvar);
+			if (timeArrayDvList.contains(dvName)){
+				entryNameTS=DssOperation.entryNameTS(dvName+"__fut__0", ControlData.timeStep);
+				DataTimeSeries.saveDataToTimeSeries(entryNameTS, value, dvar);
 			}
-			double[] dataList=DataTimeSeries.dvAliasTS.get(entryNameTS).getData();
-			dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=value;
 		}
 		
 		if (ControlData.showRunTimeMessage) {

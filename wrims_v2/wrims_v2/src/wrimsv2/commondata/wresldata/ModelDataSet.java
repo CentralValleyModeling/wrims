@@ -74,6 +74,7 @@ public class ModelDataSet implements Serializable {
 	public ArrayList<String> dvList_deviationSlackSurplus = new ArrayList<String>();
 	public Map<String,Double> deviationSlackSurplus_toleranceMap = new HashMap<String, Double>();
 	public ArrayList<String> dvTimeArrayList = new ArrayList<String>();
+	public ArrayList<String> timeArrayDvList = new ArrayList<String>();
 	public ArrayList<String> dvSlackSurplusList = new ArrayList<String>();
 	public ArrayList<String> dvList_global = new ArrayList<String>();
 	public ArrayList<String> dvList_local = new ArrayList<String>();
@@ -372,6 +373,7 @@ public class ModelDataSet implements Serializable {
 		ControlData.currDvMap=dvMap;
 		ControlData.currEvalTypeIndex=1;
 		dvTimeArrayList = new ArrayList<String>();
+		timeArrayDvList = new ArrayList<String>();
 		dvarTimeArrayUsedByLaterCycle = new HashSet<String>();
 		for (String dvName: dvList){
 			ControlData.currEvalName=dvName;
@@ -401,6 +403,9 @@ public class ModelDataSet implements Serializable {
 			solverDvarMap.put(dvName, dvar);
 			
 			int timeArraySize=getTimeArraySize(dvar.timeArraySizeParser);
+			if (!dvar.timeArraySize.equals("0") && !timeArrayDvList.contains(dvName)){
+				timeArrayDvList.add(dvName);
+			}
 			for (ControlData.timeArrayIndex=1; ControlData.timeArrayIndex<=timeArraySize; ControlData.timeArrayIndex++){
 				Dvar newDvar=new Dvar();
 				String newDvarName = dvName+"__fut__"+ControlData.timeArrayIndex;
