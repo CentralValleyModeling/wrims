@@ -2,7 +2,6 @@ package gov.ca.dwr.wresl.xtext.editor.tests;
 
 import gov.ca.dwr.wresl.xtext.editor.WreslEditorInjectorProvider;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias;
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Define;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalSimple;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IncludeFile;
