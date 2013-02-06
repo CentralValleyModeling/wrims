@@ -115,34 +115,68 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	public class VariableElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Variable");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cDefineParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cAliasParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cSvarDefParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cDvarDefParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cConstDefParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cStateVariableParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cDecisionVariableParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cExternalDefParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//Variable:
 		//
-		//	Define | Alias | SvarDef | DvarDef | ConstDef;
+		//	StateVariable | DecisionVariable | ExternalDef;
 		public ParserRule getRule() { return rule; }
 
-		//Define | Alias | SvarDef | DvarDef | ConstDef
+		//StateVariable | DecisionVariable | ExternalDef
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//Define
-		public RuleCall getDefineParserRuleCall_0() { return cDefineParserRuleCall_0; }
+		//StateVariable
+		public RuleCall getStateVariableParserRuleCall_0() { return cStateVariableParserRuleCall_0; }
+
+		//DecisionVariable
+		public RuleCall getDecisionVariableParserRuleCall_1() { return cDecisionVariableParserRuleCall_1; }
+
+		//ExternalDef
+		public RuleCall getExternalDefParserRuleCall_2() { return cExternalDefParserRuleCall_2; }
+	}
+
+	public class StateVariableElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "StateVariable");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cSvarDefParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cConstDefParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//StateVariable:
+		//
+		//	SvarDef | ConstDef;
+		public ParserRule getRule() { return rule; }
+
+		//SvarDef | ConstDef
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//SvarDef
+		public RuleCall getSvarDefParserRuleCall_0() { return cSvarDefParserRuleCall_0; }
+
+		//ConstDef
+		public RuleCall getConstDefParserRuleCall_1() { return cConstDefParserRuleCall_1; }
+	}
+
+	public class DecisionVariableElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DecisionVariable");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cDvarDefParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cAliasParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//DecisionVariable:
+		//
+		//	DvarDef | Alias;
+		public ParserRule getRule() { return rule; }
+
+		//DvarDef | Alias
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//DvarDef
+		public RuleCall getDvarDefParserRuleCall_0() { return cDvarDefParserRuleCall_0; }
 
 		//Alias
 		public RuleCall getAliasParserRuleCall_1() { return cAliasParserRuleCall_1; }
-
-		//SvarDef
-		public RuleCall getSvarDefParserRuleCall_2() { return cSvarDefParserRuleCall_2; }
-
-		//DvarDef
-		public RuleCall getDvarDefParserRuleCall_3() { return cDvarDefParserRuleCall_3; }
-
-		//ConstDef
-		public RuleCall getConstDefParserRuleCall_4() { return cConstDefParserRuleCall_4; }
 	}
 
 	public class IfIncItemsElements extends AbstractParserRuleElementFinder {
@@ -293,6 +327,39 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
 	}
 
+	public class TimeArraySizeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TimeArraySize");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cRefAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cRefStateVariableCrossReference_1_0 = (CrossReference)cRefAssignment_1.eContents().get(0);
+		private final RuleCall cRefStateVariableIDTerminalRuleCall_1_0_1 = (RuleCall)cRefStateVariableCrossReference_1_0.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		
+		//TimeArraySize:
+		//
+		//	"(" ref=[StateVariable] ")";
+		public ParserRule getRule() { return rule; }
+
+		//"(" ref=[StateVariable] ")"
+		public Group getGroup() { return cGroup; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_0() { return cLeftParenthesisKeyword_0; }
+
+		//ref=[StateVariable]
+		public Assignment getRefAssignment_1() { return cRefAssignment_1; }
+
+		//[StateVariable]
+		public CrossReference getRefStateVariableCrossReference_1_0() { return cRefStateVariableCrossReference_1_0; }
+
+		//ID
+		public RuleCall getRefStateVariableIDTerminalRuleCall_1_0_1() { return cRefStateVariableIDTerminalRuleCall_1_0_1; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_2() { return cRightParenthesisKeyword_2; }
+	}
+
 	public class ObjectiveElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Objective");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -379,52 +446,60 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cLeftSquareBracketKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final CrossReference cNameVariableCrossReference_1_0 = (CrossReference)cNameAssignment_1.eContents().get(0);
-		private final RuleCall cNameVariableIDTerminalRuleCall_1_0_1 = (RuleCall)cNameVariableCrossReference_1_0.eContents().get(1);
-		private final Keyword cCommaKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cExpressionAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cExpressionExpressionParserRuleCall_3_0 = (RuleCall)cExpressionAssignment_3.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Keyword cCommaKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final CrossReference cNameDecisionVariableCrossReference_1_0 = (CrossReference)cNameAssignment_1.eContents().get(0);
+		private final RuleCall cNameDecisionVariableIDTerminalRuleCall_1_0_1 = (RuleCall)cNameDecisionVariableCrossReference_1_0.eContents().get(1);
+		private final Assignment cTaAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cTaTimeArraySizeParserRuleCall_2_0 = (RuleCall)cTaAssignment_2.eContents().get(0);
+		private final Keyword cCommaKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cExpressionAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cExpressionExpressionParserRuleCall_4_0 = (RuleCall)cExpressionAssignment_4.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Keyword cCommaKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//WeightItem:
 		//
-		//	"[" name=[Variable] "," expression=Expression "]" ","?;
+		//	"[" name=[DecisionVariable] ta=TimeArraySize? "," expression=Expression "]" ","?;
 		public ParserRule getRule() { return rule; }
 
-		//"[" name=[Variable] "," expression=Expression "]" ","?
+		//"[" name=[DecisionVariable] ta=TimeArraySize? "," expression=Expression "]" ","?
 		public Group getGroup() { return cGroup; }
 
 		//"["
 		public Keyword getLeftSquareBracketKeyword_0() { return cLeftSquareBracketKeyword_0; }
 
-		//name=[Variable]
+		//name=[DecisionVariable]
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 
-		//[Variable]
-		public CrossReference getNameVariableCrossReference_1_0() { return cNameVariableCrossReference_1_0; }
+		//[DecisionVariable]
+		public CrossReference getNameDecisionVariableCrossReference_1_0() { return cNameDecisionVariableCrossReference_1_0; }
 
 		//ID
-		public RuleCall getNameVariableIDTerminalRuleCall_1_0_1() { return cNameVariableIDTerminalRuleCall_1_0_1; }
+		public RuleCall getNameDecisionVariableIDTerminalRuleCall_1_0_1() { return cNameDecisionVariableIDTerminalRuleCall_1_0_1; }
+
+		//ta=TimeArraySize?
+		public Assignment getTaAssignment_2() { return cTaAssignment_2; }
+
+		//TimeArraySize
+		public RuleCall getTaTimeArraySizeParserRuleCall_2_0() { return cTaTimeArraySizeParserRuleCall_2_0; }
 
 		//","
-		public Keyword getCommaKeyword_2() { return cCommaKeyword_2; }
+		public Keyword getCommaKeyword_3() { return cCommaKeyword_3; }
 
 		//expression=Expression
-		public Assignment getExpressionAssignment_3() { return cExpressionAssignment_3; }
+		public Assignment getExpressionAssignment_4() { return cExpressionAssignment_4; }
 
 		//Expression
-		public RuleCall getExpressionExpressionParserRuleCall_3_0() { return cExpressionExpressionParserRuleCall_3_0; }
+		public RuleCall getExpressionExpressionParserRuleCall_4_0() { return cExpressionExpressionParserRuleCall_4_0; }
 
 		//"]"
-		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
+		public Keyword getRightSquareBracketKeyword_5() { return cRightSquareBracketKeyword_5; }
 
 		//","?
-		public Keyword getCommaKeyword_5() { return cCommaKeyword_5; }
+		public Keyword getCommaKeyword_6() { return cCommaKeyword_6; }
 	}
 
-	public class DefineElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Define");
+	public class ExternalDefElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ExternalDef");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
 		private final Keyword cDefineKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
@@ -440,23 +515,15 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cDefinitionAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final Alternatives cDefinitionAlternatives_4_0 = (Alternatives)cDefinitionAssignment_4.eContents().get(0);
-		private final RuleCall cDefinitionDVarParserRuleCall_4_0_0 = (RuleCall)cDefinitionAlternatives_4_0.eContents().get(0);
-		private final RuleCall cDefinitionSVarParserRuleCall_4_0_1 = (RuleCall)cDefinitionAlternatives_4_0.eContents().get(1);
-		private final RuleCall cDefinitionDVarIntegerParserRuleCall_4_0_2 = (RuleCall)cDefinitionAlternatives_4_0.eContents().get(2);
-		private final RuleCall cDefinitionExternalParserRuleCall_4_0_3 = (RuleCall)cDefinitionAlternatives_4_0.eContents().get(3);
+		private final RuleCall cDefinitionExternalParserRuleCall_4_0 = (RuleCall)cDefinitionAssignment_4.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
-		//Define:
+		//ExternalDef:
 		//
-		//	("define" | "DEFINE") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(DVar | SVar | DVarInteger |
-		//
-		//	External) "}";
+		//	("define" | "DEFINE") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=External "}";
 		public ParserRule getRule() { return rule; }
 
-		//("define" | "DEFINE") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(DVar | SVar | DVarInteger |
-		//
-		//External) "}"
+		//("define" | "DEFINE") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=External "}"
 		public Group getGroup() { return cGroup; }
 
 		//"define" | "DEFINE"
@@ -498,23 +565,11 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
 
-		//definition=(DVar | SVar | DVarInteger | External)
+		//definition=External
 		public Assignment getDefinitionAssignment_4() { return cDefinitionAssignment_4; }
 
-		//DVar | SVar | DVarInteger | External
-		public Alternatives getDefinitionAlternatives_4_0() { return cDefinitionAlternatives_4_0; }
-
-		//DVar
-		public RuleCall getDefinitionDVarParserRuleCall_4_0_0() { return cDefinitionDVarParserRuleCall_4_0_0; }
-
-		//SVar
-		public RuleCall getDefinitionSVarParserRuleCall_4_0_1() { return cDefinitionSVarParserRuleCall_4_0_1; }
-
-		//DVarInteger
-		public RuleCall getDefinitionDVarIntegerParserRuleCall_4_0_2() { return cDefinitionDVarIntegerParserRuleCall_4_0_2; }
-
 		//External
-		public RuleCall getDefinitionExternalParserRuleCall_4_0_3() { return cDefinitionExternalParserRuleCall_4_0_3; }
+		public RuleCall getDefinitionExternalParserRuleCall_4_0() { return cDefinitionExternalParserRuleCall_4_0; }
 
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
@@ -522,172 +577,372 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class SvarDefElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SvarDef");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
-		private final Keyword cSvarKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
-		private final Keyword cSVARKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
-		private final Keyword cSvarKeyword_0_2 = (Keyword)cAlternatives_0.eContents().get(2);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cLeftSquareBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cLocalAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final Alternatives cLocalAlternatives_1_1_0 = (Alternatives)cLocalAssignment_1_1.eContents().get(0);
-		private final Keyword cLocalLocalKeyword_1_1_0_0 = (Keyword)cLocalAlternatives_1_1_0.eContents().get(0);
-		private final Keyword cLocalLOCALKeyword_1_1_0_1 = (Keyword)cLocalAlternatives_1_1_0.eContents().get(1);
-		private final Keyword cRightSquareBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cDefinitionAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cDefinitionSVarParserRuleCall_4_0 = (RuleCall)cDefinitionAssignment_4.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Alternatives cAlternatives_0_0 = (Alternatives)cGroup_0.eContents().get(0);
+		private final Keyword cDefineKeyword_0_0_0 = (Keyword)cAlternatives_0_0.eContents().get(0);
+		private final Keyword cDEFINEKeyword_0_0_1 = (Keyword)cAlternatives_0_0.eContents().get(1);
+		private final Assignment cTaAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cTaTimeArraySizeParserRuleCall_0_1_0 = (RuleCall)cTaAssignment_0_1.eContents().get(0);
+		private final Group cGroup_0_2 = (Group)cGroup_0.eContents().get(2);
+		private final Keyword cLeftSquareBracketKeyword_0_2_0 = (Keyword)cGroup_0_2.eContents().get(0);
+		private final Assignment cLocalAssignment_0_2_1 = (Assignment)cGroup_0_2.eContents().get(1);
+		private final Alternatives cLocalAlternatives_0_2_1_0 = (Alternatives)cLocalAssignment_0_2_1.eContents().get(0);
+		private final Keyword cLocalLocalKeyword_0_2_1_0_0 = (Keyword)cLocalAlternatives_0_2_1_0.eContents().get(0);
+		private final Keyword cLocalLOCALKeyword_0_2_1_0_1 = (Keyword)cLocalAlternatives_0_2_1_0.eContents().get(1);
+		private final Keyword cRightSquareBracketKeyword_0_2_2 = (Keyword)cGroup_0_2.eContents().get(2);
+		private final Assignment cNameAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
+		private final RuleCall cNameIDTerminalRuleCall_0_3_0 = (RuleCall)cNameAssignment_0_3.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_0_4 = (Keyword)cGroup_0.eContents().get(4);
+		private final Assignment cDefinitionAssignment_0_5 = (Assignment)cGroup_0.eContents().get(5);
+		private final RuleCall cDefinitionSVarParserRuleCall_0_5_0 = (RuleCall)cDefinitionAssignment_0_5.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_0_6 = (Keyword)cGroup_0.eContents().get(6);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Alternatives cAlternatives_1_0 = (Alternatives)cGroup_1.eContents().get(0);
+		private final Keyword cSvarKeyword_1_0_0 = (Keyword)cAlternatives_1_0.eContents().get(0);
+		private final Keyword cSVARKeyword_1_0_1 = (Keyword)cAlternatives_1_0.eContents().get(1);
+		private final Keyword cSvarKeyword_1_0_2 = (Keyword)cAlternatives_1_0.eContents().get(2);
+		private final Assignment cTaAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cTaTimeArraySizeParserRuleCall_1_1_0 = (RuleCall)cTaAssignment_1_1.eContents().get(0);
+		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
+		private final Keyword cLeftSquareBracketKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
+		private final Assignment cLocalAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final Alternatives cLocalAlternatives_1_2_1_0 = (Alternatives)cLocalAssignment_1_2_1.eContents().get(0);
+		private final Keyword cLocalLocalKeyword_1_2_1_0_0 = (Keyword)cLocalAlternatives_1_2_1_0.eContents().get(0);
+		private final Keyword cLocalLOCALKeyword_1_2_1_0_1 = (Keyword)cLocalAlternatives_1_2_1_0.eContents().get(1);
+		private final Keyword cRightSquareBracketKeyword_1_2_2 = (Keyword)cGroup_1_2.eContents().get(2);
+		private final Assignment cNameAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
+		private final RuleCall cNameIDTerminalRuleCall_1_3_0 = (RuleCall)cNameAssignment_1_3.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_1_4 = (Keyword)cGroup_1.eContents().get(4);
+		private final Assignment cDefinitionAssignment_1_5 = (Assignment)cGroup_1.eContents().get(5);
+		private final RuleCall cDefinitionSVarParserRuleCall_1_5_0 = (RuleCall)cDefinitionAssignment_1_5.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_1_6 = (Keyword)cGroup_1.eContents().get(6);
 		
 		//SvarDef:
 		//
-		//	("svar" | "SVAR" | "Svar") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}";
+		//	("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}" |
+		//
+		//	("svar" | "SVAR" | "Svar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}";
 		public ParserRule getRule() { return rule; }
 
-		//("svar" | "SVAR" | "Svar") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}"
-		public Group getGroup() { return cGroup; }
+		//("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}" | ("svar"
+		//
+		//| "SVAR" | "Svar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}"
+		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//"svar" | "SVAR" | "Svar"
-		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+		//("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}"
+		public Group getGroup_0() { return cGroup_0; }
 
-		//"svar"
-		public Keyword getSvarKeyword_0_0() { return cSvarKeyword_0_0; }
+		//"define" | "DEFINE"
+		public Alternatives getAlternatives_0_0() { return cAlternatives_0_0; }
 
-		//"SVAR"
-		public Keyword getSVARKeyword_0_1() { return cSVARKeyword_0_1; }
+		//"define"
+		public Keyword getDefineKeyword_0_0_0() { return cDefineKeyword_0_0_0; }
 
-		//"Svar"
-		public Keyword getSvarKeyword_0_2() { return cSvarKeyword_0_2; }
+		//"DEFINE"
+		public Keyword getDEFINEKeyword_0_0_1() { return cDEFINEKeyword_0_0_1; }
+
+		//ta=TimeArraySize?
+		public Assignment getTaAssignment_0_1() { return cTaAssignment_0_1; }
+
+		//TimeArraySize
+		public RuleCall getTaTimeArraySizeParserRuleCall_0_1_0() { return cTaTimeArraySizeParserRuleCall_0_1_0; }
 
 		//("[" local?=("local" | "LOCAL") "]")?
-		public Group getGroup_1() { return cGroup_1; }
+		public Group getGroup_0_2() { return cGroup_0_2; }
 
 		//"["
-		public Keyword getLeftSquareBracketKeyword_1_0() { return cLeftSquareBracketKeyword_1_0; }
+		public Keyword getLeftSquareBracketKeyword_0_2_0() { return cLeftSquareBracketKeyword_0_2_0; }
 
 		//local?=("local" | "LOCAL")
-		public Assignment getLocalAssignment_1_1() { return cLocalAssignment_1_1; }
+		public Assignment getLocalAssignment_0_2_1() { return cLocalAssignment_0_2_1; }
 
 		//"local" | "LOCAL"
-		public Alternatives getLocalAlternatives_1_1_0() { return cLocalAlternatives_1_1_0; }
+		public Alternatives getLocalAlternatives_0_2_1_0() { return cLocalAlternatives_0_2_1_0; }
 
 		//"local"
-		public Keyword getLocalLocalKeyword_1_1_0_0() { return cLocalLocalKeyword_1_1_0_0; }
+		public Keyword getLocalLocalKeyword_0_2_1_0_0() { return cLocalLocalKeyword_0_2_1_0_0; }
 
 		//"LOCAL"
-		public Keyword getLocalLOCALKeyword_1_1_0_1() { return cLocalLOCALKeyword_1_1_0_1; }
+		public Keyword getLocalLOCALKeyword_0_2_1_0_1() { return cLocalLOCALKeyword_0_2_1_0_1; }
 
 		//"]"
-		public Keyword getRightSquareBracketKeyword_1_2() { return cRightSquareBracketKeyword_1_2; }
+		public Keyword getRightSquareBracketKeyword_0_2_2() { return cRightSquareBracketKeyword_0_2_2; }
 
 		//name=ID
-		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+		public Assignment getNameAssignment_0_3() { return cNameAssignment_0_3; }
 
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
+		public RuleCall getNameIDTerminalRuleCall_0_3_0() { return cNameIDTerminalRuleCall_0_3_0; }
 
 		//"{"
-		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
+		public Keyword getLeftCurlyBracketKeyword_0_4() { return cLeftCurlyBracketKeyword_0_4; }
 
 		//definition=SVar
-		public Assignment getDefinitionAssignment_4() { return cDefinitionAssignment_4; }
+		public Assignment getDefinitionAssignment_0_5() { return cDefinitionAssignment_0_5; }
 
 		//SVar
-		public RuleCall getDefinitionSVarParserRuleCall_4_0() { return cDefinitionSVarParserRuleCall_4_0; }
+		public RuleCall getDefinitionSVarParserRuleCall_0_5_0() { return cDefinitionSVarParserRuleCall_0_5_0; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+		public Keyword getRightCurlyBracketKeyword_0_6() { return cRightCurlyBracketKeyword_0_6; }
+
+		//("svar" | "SVAR" | "Svar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}"
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"svar" | "SVAR" | "Svar"
+		public Alternatives getAlternatives_1_0() { return cAlternatives_1_0; }
+
+		//"svar"
+		public Keyword getSvarKeyword_1_0_0() { return cSvarKeyword_1_0_0; }
+
+		//"SVAR"
+		public Keyword getSVARKeyword_1_0_1() { return cSVARKeyword_1_0_1; }
+
+		//"Svar"
+		public Keyword getSvarKeyword_1_0_2() { return cSvarKeyword_1_0_2; }
+
+		//ta=TimeArraySize?
+		public Assignment getTaAssignment_1_1() { return cTaAssignment_1_1; }
+
+		//TimeArraySize
+		public RuleCall getTaTimeArraySizeParserRuleCall_1_1_0() { return cTaTimeArraySizeParserRuleCall_1_1_0; }
+
+		//("[" local?=("local" | "LOCAL") "]")?
+		public Group getGroup_1_2() { return cGroup_1_2; }
+
+		//"["
+		public Keyword getLeftSquareBracketKeyword_1_2_0() { return cLeftSquareBracketKeyword_1_2_0; }
+
+		//local?=("local" | "LOCAL")
+		public Assignment getLocalAssignment_1_2_1() { return cLocalAssignment_1_2_1; }
+
+		//"local" | "LOCAL"
+		public Alternatives getLocalAlternatives_1_2_1_0() { return cLocalAlternatives_1_2_1_0; }
+
+		//"local"
+		public Keyword getLocalLocalKeyword_1_2_1_0_0() { return cLocalLocalKeyword_1_2_1_0_0; }
+
+		//"LOCAL"
+		public Keyword getLocalLOCALKeyword_1_2_1_0_1() { return cLocalLOCALKeyword_1_2_1_0_1; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_1_2_2() { return cRightSquareBracketKeyword_1_2_2; }
+
+		//name=ID
+		public Assignment getNameAssignment_1_3() { return cNameAssignment_1_3; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_3_0() { return cNameIDTerminalRuleCall_1_3_0; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_1_4() { return cLeftCurlyBracketKeyword_1_4; }
+
+		//definition=SVar
+		public Assignment getDefinitionAssignment_1_5() { return cDefinitionAssignment_1_5; }
+
+		//SVar
+		public RuleCall getDefinitionSVarParserRuleCall_1_5_0() { return cDefinitionSVarParserRuleCall_1_5_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_1_6() { return cRightCurlyBracketKeyword_1_6; }
 	}
 
 	public class DvarDefElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DvarDef");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
-		private final Keyword cDvarKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
-		private final Keyword cDVARKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
-		private final Keyword cDvarKeyword_0_2 = (Keyword)cAlternatives_0.eContents().get(2);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cLeftSquareBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cLocalAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final Alternatives cLocalAlternatives_1_1_0 = (Alternatives)cLocalAssignment_1_1.eContents().get(0);
-		private final Keyword cLocalLocalKeyword_1_1_0_0 = (Keyword)cLocalAlternatives_1_1_0.eContents().get(0);
-		private final Keyword cLocalLOCALKeyword_1_1_0_1 = (Keyword)cLocalAlternatives_1_1_0.eContents().get(1);
-		private final Keyword cRightSquareBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cDefinitionAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final Alternatives cDefinitionAlternatives_4_0 = (Alternatives)cDefinitionAssignment_4.eContents().get(0);
-		private final RuleCall cDefinitionDVarParserRuleCall_4_0_0 = (RuleCall)cDefinitionAlternatives_4_0.eContents().get(0);
-		private final RuleCall cDefinitionDVarIntegerParserRuleCall_4_0_1 = (RuleCall)cDefinitionAlternatives_4_0.eContents().get(1);
-		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Alternatives cAlternatives_0_0 = (Alternatives)cGroup_0.eContents().get(0);
+		private final Keyword cDefineKeyword_0_0_0 = (Keyword)cAlternatives_0_0.eContents().get(0);
+		private final Keyword cDEFINEKeyword_0_0_1 = (Keyword)cAlternatives_0_0.eContents().get(1);
+		private final Assignment cTaAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cTaTimeArraySizeParserRuleCall_0_1_0 = (RuleCall)cTaAssignment_0_1.eContents().get(0);
+		private final Group cGroup_0_2 = (Group)cGroup_0.eContents().get(2);
+		private final Keyword cLeftSquareBracketKeyword_0_2_0 = (Keyword)cGroup_0_2.eContents().get(0);
+		private final Assignment cLocalAssignment_0_2_1 = (Assignment)cGroup_0_2.eContents().get(1);
+		private final Alternatives cLocalAlternatives_0_2_1_0 = (Alternatives)cLocalAssignment_0_2_1.eContents().get(0);
+		private final Keyword cLocalLocalKeyword_0_2_1_0_0 = (Keyword)cLocalAlternatives_0_2_1_0.eContents().get(0);
+		private final Keyword cLocalLOCALKeyword_0_2_1_0_1 = (Keyword)cLocalAlternatives_0_2_1_0.eContents().get(1);
+		private final Keyword cRightSquareBracketKeyword_0_2_2 = (Keyword)cGroup_0_2.eContents().get(2);
+		private final Assignment cNameAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
+		private final RuleCall cNameIDTerminalRuleCall_0_3_0 = (RuleCall)cNameAssignment_0_3.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_0_4 = (Keyword)cGroup_0.eContents().get(4);
+		private final Assignment cDefinitionAssignment_0_5 = (Assignment)cGroup_0.eContents().get(5);
+		private final Alternatives cDefinitionAlternatives_0_5_0 = (Alternatives)cDefinitionAssignment_0_5.eContents().get(0);
+		private final RuleCall cDefinitionDVarParserRuleCall_0_5_0_0 = (RuleCall)cDefinitionAlternatives_0_5_0.eContents().get(0);
+		private final RuleCall cDefinitionDVarIntegerParserRuleCall_0_5_0_1 = (RuleCall)cDefinitionAlternatives_0_5_0.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_0_6 = (Keyword)cGroup_0.eContents().get(6);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Alternatives cAlternatives_1_0 = (Alternatives)cGroup_1.eContents().get(0);
+		private final Keyword cDvarKeyword_1_0_0 = (Keyword)cAlternatives_1_0.eContents().get(0);
+		private final Keyword cDVARKeyword_1_0_1 = (Keyword)cAlternatives_1_0.eContents().get(1);
+		private final Keyword cDvarKeyword_1_0_2 = (Keyword)cAlternatives_1_0.eContents().get(2);
+		private final Assignment cTaAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cTaTimeArraySizeParserRuleCall_1_1_0 = (RuleCall)cTaAssignment_1_1.eContents().get(0);
+		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
+		private final Keyword cLeftSquareBracketKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
+		private final Assignment cLocalAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final Alternatives cLocalAlternatives_1_2_1_0 = (Alternatives)cLocalAssignment_1_2_1.eContents().get(0);
+		private final Keyword cLocalLocalKeyword_1_2_1_0_0 = (Keyword)cLocalAlternatives_1_2_1_0.eContents().get(0);
+		private final Keyword cLocalLOCALKeyword_1_2_1_0_1 = (Keyword)cLocalAlternatives_1_2_1_0.eContents().get(1);
+		private final Keyword cRightSquareBracketKeyword_1_2_2 = (Keyword)cGroup_1_2.eContents().get(2);
+		private final Assignment cNameAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
+		private final RuleCall cNameIDTerminalRuleCall_1_3_0 = (RuleCall)cNameAssignment_1_3.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_1_4 = (Keyword)cGroup_1.eContents().get(4);
+		private final Assignment cDefinitionAssignment_1_5 = (Assignment)cGroup_1.eContents().get(5);
+		private final Alternatives cDefinitionAlternatives_1_5_0 = (Alternatives)cDefinitionAssignment_1_5.eContents().get(0);
+		private final RuleCall cDefinitionDVarParserRuleCall_1_5_0_0 = (RuleCall)cDefinitionAlternatives_1_5_0.eContents().get(0);
+		private final RuleCall cDefinitionDVarIntegerParserRuleCall_1_5_0_1 = (RuleCall)cDefinitionAlternatives_1_5_0.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_1_6 = (Keyword)cGroup_1.eContents().get(6);
 		
 		//DvarDef:
 		//
-		//	("dvar" | "DVAR" | "Dvar") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(DVar | DVarInteger) "}";
+		//	("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(DVar |
+		//
+		//	DVarInteger) "}" | ("dvar" | "DVAR" | "Dvar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{"
+		//
+		//	definition=(DVar | DVarInteger) "}";
 		public ParserRule getRule() { return rule; }
 
-		//("dvar" | "DVAR" | "Dvar") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(DVar | DVarInteger) "}"
-		public Group getGroup() { return cGroup; }
+		//("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(DVar |
+		//
+		//DVarInteger) "}" | ("dvar" | "DVAR" | "Dvar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{"
+		//
+		//definition=(DVar | DVarInteger) "}"
+		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//"dvar" | "DVAR" | "Dvar"
-		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+		//("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(DVar |
+		//
+		//DVarInteger) "}"
+		public Group getGroup_0() { return cGroup_0; }
 
-		//"dvar"
-		public Keyword getDvarKeyword_0_0() { return cDvarKeyword_0_0; }
+		//"define" | "DEFINE"
+		public Alternatives getAlternatives_0_0() { return cAlternatives_0_0; }
 
-		//"DVAR"
-		public Keyword getDVARKeyword_0_1() { return cDVARKeyword_0_1; }
+		//"define"
+		public Keyword getDefineKeyword_0_0_0() { return cDefineKeyword_0_0_0; }
 
-		//"Dvar"
-		public Keyword getDvarKeyword_0_2() { return cDvarKeyword_0_2; }
+		//"DEFINE"
+		public Keyword getDEFINEKeyword_0_0_1() { return cDEFINEKeyword_0_0_1; }
+
+		//ta=TimeArraySize?
+		public Assignment getTaAssignment_0_1() { return cTaAssignment_0_1; }
+
+		//TimeArraySize
+		public RuleCall getTaTimeArraySizeParserRuleCall_0_1_0() { return cTaTimeArraySizeParserRuleCall_0_1_0; }
 
 		//("[" local?=("local" | "LOCAL") "]")?
-		public Group getGroup_1() { return cGroup_1; }
+		public Group getGroup_0_2() { return cGroup_0_2; }
 
 		//"["
-		public Keyword getLeftSquareBracketKeyword_1_0() { return cLeftSquareBracketKeyword_1_0; }
+		public Keyword getLeftSquareBracketKeyword_0_2_0() { return cLeftSquareBracketKeyword_0_2_0; }
 
 		//local?=("local" | "LOCAL")
-		public Assignment getLocalAssignment_1_1() { return cLocalAssignment_1_1; }
+		public Assignment getLocalAssignment_0_2_1() { return cLocalAssignment_0_2_1; }
 
 		//"local" | "LOCAL"
-		public Alternatives getLocalAlternatives_1_1_0() { return cLocalAlternatives_1_1_0; }
+		public Alternatives getLocalAlternatives_0_2_1_0() { return cLocalAlternatives_0_2_1_0; }
 
 		//"local"
-		public Keyword getLocalLocalKeyword_1_1_0_0() { return cLocalLocalKeyword_1_1_0_0; }
+		public Keyword getLocalLocalKeyword_0_2_1_0_0() { return cLocalLocalKeyword_0_2_1_0_0; }
 
 		//"LOCAL"
-		public Keyword getLocalLOCALKeyword_1_1_0_1() { return cLocalLOCALKeyword_1_1_0_1; }
+		public Keyword getLocalLOCALKeyword_0_2_1_0_1() { return cLocalLOCALKeyword_0_2_1_0_1; }
 
 		//"]"
-		public Keyword getRightSquareBracketKeyword_1_2() { return cRightSquareBracketKeyword_1_2; }
+		public Keyword getRightSquareBracketKeyword_0_2_2() { return cRightSquareBracketKeyword_0_2_2; }
 
 		//name=ID
-		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+		public Assignment getNameAssignment_0_3() { return cNameAssignment_0_3; }
 
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
+		public RuleCall getNameIDTerminalRuleCall_0_3_0() { return cNameIDTerminalRuleCall_0_3_0; }
 
 		//"{"
-		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
+		public Keyword getLeftCurlyBracketKeyword_0_4() { return cLeftCurlyBracketKeyword_0_4; }
 
 		//definition=(DVar | DVarInteger)
-		public Assignment getDefinitionAssignment_4() { return cDefinitionAssignment_4; }
+		public Assignment getDefinitionAssignment_0_5() { return cDefinitionAssignment_0_5; }
 
 		//DVar | DVarInteger
-		public Alternatives getDefinitionAlternatives_4_0() { return cDefinitionAlternatives_4_0; }
+		public Alternatives getDefinitionAlternatives_0_5_0() { return cDefinitionAlternatives_0_5_0; }
 
 		//DVar
-		public RuleCall getDefinitionDVarParserRuleCall_4_0_0() { return cDefinitionDVarParserRuleCall_4_0_0; }
+		public RuleCall getDefinitionDVarParserRuleCall_0_5_0_0() { return cDefinitionDVarParserRuleCall_0_5_0_0; }
 
 		//DVarInteger
-		public RuleCall getDefinitionDVarIntegerParserRuleCall_4_0_1() { return cDefinitionDVarIntegerParserRuleCall_4_0_1; }
+		public RuleCall getDefinitionDVarIntegerParserRuleCall_0_5_0_1() { return cDefinitionDVarIntegerParserRuleCall_0_5_0_1; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+		public Keyword getRightCurlyBracketKeyword_0_6() { return cRightCurlyBracketKeyword_0_6; }
+
+		//("dvar" | "DVAR" | "Dvar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(DVar |
+		//
+		//DVarInteger) "}"
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"dvar" | "DVAR" | "Dvar"
+		public Alternatives getAlternatives_1_0() { return cAlternatives_1_0; }
+
+		//"dvar"
+		public Keyword getDvarKeyword_1_0_0() { return cDvarKeyword_1_0_0; }
+
+		//"DVAR"
+		public Keyword getDVARKeyword_1_0_1() { return cDVARKeyword_1_0_1; }
+
+		//"Dvar"
+		public Keyword getDvarKeyword_1_0_2() { return cDvarKeyword_1_0_2; }
+
+		//ta=TimeArraySize?
+		public Assignment getTaAssignment_1_1() { return cTaAssignment_1_1; }
+
+		//TimeArraySize
+		public RuleCall getTaTimeArraySizeParserRuleCall_1_1_0() { return cTaTimeArraySizeParserRuleCall_1_1_0; }
+
+		//("[" local?=("local" | "LOCAL") "]")?
+		public Group getGroup_1_2() { return cGroup_1_2; }
+
+		//"["
+		public Keyword getLeftSquareBracketKeyword_1_2_0() { return cLeftSquareBracketKeyword_1_2_0; }
+
+		//local?=("local" | "LOCAL")
+		public Assignment getLocalAssignment_1_2_1() { return cLocalAssignment_1_2_1; }
+
+		//"local" | "LOCAL"
+		public Alternatives getLocalAlternatives_1_2_1_0() { return cLocalAlternatives_1_2_1_0; }
+
+		//"local"
+		public Keyword getLocalLocalKeyword_1_2_1_0_0() { return cLocalLocalKeyword_1_2_1_0_0; }
+
+		//"LOCAL"
+		public Keyword getLocalLOCALKeyword_1_2_1_0_1() { return cLocalLOCALKeyword_1_2_1_0_1; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_1_2_2() { return cRightSquareBracketKeyword_1_2_2; }
+
+		//name=ID
+		public Assignment getNameAssignment_1_3() { return cNameAssignment_1_3; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_3_0() { return cNameIDTerminalRuleCall_1_3_0; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_1_4() { return cLeftCurlyBracketKeyword_1_4; }
+
+		//definition=(DVar | DVarInteger)
+		public Assignment getDefinitionAssignment_1_5() { return cDefinitionAssignment_1_5; }
+
+		//DVar | DVarInteger
+		public Alternatives getDefinitionAlternatives_1_5_0() { return cDefinitionAlternatives_1_5_0; }
+
+		//DVar
+		public RuleCall getDefinitionDVarParserRuleCall_1_5_0_0() { return cDefinitionDVarParserRuleCall_1_5_0_0; }
+
+		//DVarInteger
+		public RuleCall getDefinitionDVarIntegerParserRuleCall_1_5_0_1() { return cDefinitionDVarIntegerParserRuleCall_1_5_0_1; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_1_6() { return cRightCurlyBracketKeyword_1_6; }
 	}
 
 	public class ConstDefElements extends AbstractParserRuleElementFinder {
@@ -850,46 +1105,48 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
 		private final Keyword cDefineKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
 		private final Keyword cDEFINEKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cLeftSquareBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cLocalAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final Alternatives cLocalAlternatives_1_1_0 = (Alternatives)cLocalAssignment_1_1.eContents().get(0);
-		private final Keyword cLocalLocalKeyword_1_1_0_0 = (Keyword)cLocalAlternatives_1_1_0.eContents().get(0);
-		private final Keyword cLocalLOCALKeyword_1_1_0_1 = (Keyword)cLocalAlternatives_1_1_0.eContents().get(1);
-		private final Keyword cRightSquareBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Alternatives cAlternatives_4 = (Alternatives)cGroup.eContents().get(4);
-		private final Keyword cAliasKeyword_4_0 = (Keyword)cAlternatives_4.eContents().get(0);
-		private final Keyword cALIASKeyword_4_1 = (Keyword)cAlternatives_4.eContents().get(1);
-		private final Assignment cExpressionAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cExpressionExpressionParserRuleCall_5_0 = (RuleCall)cExpressionAssignment_5.eContents().get(0);
-		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
-		private final Alternatives cAlternatives_6_0 = (Alternatives)cGroup_6.eContents().get(0);
-		private final Keyword cKindKeyword_6_0_0 = (Keyword)cAlternatives_6_0.eContents().get(0);
-		private final Keyword cKINDKeyword_6_0_1 = (Keyword)cAlternatives_6_0.eContents().get(1);
-		private final Assignment cKindAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
-		private final RuleCall cKindSTRINGTerminalRuleCall_6_1_0 = (RuleCall)cKindAssignment_6_1.eContents().get(0);
+		private final Assignment cTaAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cTaTimeArraySizeParserRuleCall_1_0 = (RuleCall)cTaAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftSquareBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cLocalAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final Alternatives cLocalAlternatives_2_1_0 = (Alternatives)cLocalAssignment_2_1.eContents().get(0);
+		private final Keyword cLocalLocalKeyword_2_1_0_0 = (Keyword)cLocalAlternatives_2_1_0.eContents().get(0);
+		private final Keyword cLocalLOCALKeyword_2_1_0_1 = (Keyword)cLocalAlternatives_2_1_0.eContents().get(1);
+		private final Keyword cRightSquareBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final Assignment cNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cNameIDTerminalRuleCall_3_0 = (RuleCall)cNameAssignment_3.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Alternatives cAlternatives_5 = (Alternatives)cGroup.eContents().get(5);
+		private final Keyword cAliasKeyword_5_0 = (Keyword)cAlternatives_5.eContents().get(0);
+		private final Keyword cALIASKeyword_5_1 = (Keyword)cAlternatives_5.eContents().get(1);
+		private final Assignment cExpressionAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cExpressionExpressionParserRuleCall_6_0 = (RuleCall)cExpressionAssignment_6.eContents().get(0);
 		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
 		private final Alternatives cAlternatives_7_0 = (Alternatives)cGroup_7.eContents().get(0);
-		private final Keyword cUnitsKeyword_7_0_0 = (Keyword)cAlternatives_7_0.eContents().get(0);
-		private final Keyword cUNITSKeyword_7_0_1 = (Keyword)cAlternatives_7_0.eContents().get(1);
-		private final Assignment cUnitsAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
-		private final RuleCall cUnitsSTRINGTerminalRuleCall_7_1_0 = (RuleCall)cUnitsAssignment_7_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
+		private final Keyword cKindKeyword_7_0_0 = (Keyword)cAlternatives_7_0.eContents().get(0);
+		private final Keyword cKINDKeyword_7_0_1 = (Keyword)cAlternatives_7_0.eContents().get(1);
+		private final Assignment cKindAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
+		private final RuleCall cKindSTRINGTerminalRuleCall_7_1_0 = (RuleCall)cKindAssignment_7_1.eContents().get(0);
+		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
+		private final Alternatives cAlternatives_8_0 = (Alternatives)cGroup_8.eContents().get(0);
+		private final Keyword cUnitsKeyword_8_0_0 = (Keyword)cAlternatives_8_0.eContents().get(0);
+		private final Keyword cUNITSKeyword_8_0_1 = (Keyword)cAlternatives_8_0.eContents().get(1);
+		private final Assignment cUnitsAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
+		private final RuleCall cUnitsSTRINGTerminalRuleCall_8_1_0 = (RuleCall)cUnitsAssignment_8_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_9 = (Keyword)cGroup.eContents().get(9);
 		
 		////name=[SVar|ID] to be changed to reference after scoping is resolved across files
 		// Alias:
 		//
-		//	("define" | "DEFINE") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" ("alias" | "ALIAS") expression=Expression
+		//	("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" ("alias" | "ALIAS")
 		//
-		//	(("kind" | "KIND") kind=STRING)? (("units" | "UNITS") units=STRING)? "}";
+		//	expression=Expression (("kind" | "KIND") kind=STRING)? (("units" | "UNITS") units=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
-		//("define" | "DEFINE") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" ("alias" | "ALIAS") expression=Expression
+		//("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" ("alias" | "ALIAS")
 		//
-		//(("kind" | "KIND") kind=STRING)? (("units" | "UNITS") units=STRING)? "}"
+		//expression=Expression (("kind" | "KIND") kind=STRING)? (("units" | "UNITS") units=STRING)? "}"
 		public Group getGroup() { return cGroup; }
 
 		//"define" | "DEFINE"
@@ -901,89 +1158,95 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"DEFINE"
 		public Keyword getDEFINEKeyword_0_1() { return cDEFINEKeyword_0_1; }
 
+		//ta=TimeArraySize?
+		public Assignment getTaAssignment_1() { return cTaAssignment_1; }
+
+		//TimeArraySize
+		public RuleCall getTaTimeArraySizeParserRuleCall_1_0() { return cTaTimeArraySizeParserRuleCall_1_0; }
+
 		//("[" local?=("local" | "LOCAL") "]")?
-		public Group getGroup_1() { return cGroup_1; }
+		public Group getGroup_2() { return cGroup_2; }
 
 		//"["
-		public Keyword getLeftSquareBracketKeyword_1_0() { return cLeftSquareBracketKeyword_1_0; }
+		public Keyword getLeftSquareBracketKeyword_2_0() { return cLeftSquareBracketKeyword_2_0; }
 
 		//local?=("local" | "LOCAL")
-		public Assignment getLocalAssignment_1_1() { return cLocalAssignment_1_1; }
+		public Assignment getLocalAssignment_2_1() { return cLocalAssignment_2_1; }
 
 		//"local" | "LOCAL"
-		public Alternatives getLocalAlternatives_1_1_0() { return cLocalAlternatives_1_1_0; }
+		public Alternatives getLocalAlternatives_2_1_0() { return cLocalAlternatives_2_1_0; }
 
 		//"local"
-		public Keyword getLocalLocalKeyword_1_1_0_0() { return cLocalLocalKeyword_1_1_0_0; }
+		public Keyword getLocalLocalKeyword_2_1_0_0() { return cLocalLocalKeyword_2_1_0_0; }
 
 		//"LOCAL"
-		public Keyword getLocalLOCALKeyword_1_1_0_1() { return cLocalLOCALKeyword_1_1_0_1; }
+		public Keyword getLocalLOCALKeyword_2_1_0_1() { return cLocalLOCALKeyword_2_1_0_1; }
 
 		//"]"
-		public Keyword getRightSquareBracketKeyword_1_2() { return cRightSquareBracketKeyword_1_2; }
+		public Keyword getRightSquareBracketKeyword_2_2() { return cRightSquareBracketKeyword_2_2; }
 
 		//name=ID
-		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+		public Assignment getNameAssignment_3() { return cNameAssignment_3; }
 
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
+		public RuleCall getNameIDTerminalRuleCall_3_0() { return cNameIDTerminalRuleCall_3_0; }
 
 		//"{"
-		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
+		public Keyword getLeftCurlyBracketKeyword_4() { return cLeftCurlyBracketKeyword_4; }
 
 		//"alias" | "ALIAS"
-		public Alternatives getAlternatives_4() { return cAlternatives_4; }
+		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 
 		//"alias"
-		public Keyword getAliasKeyword_4_0() { return cAliasKeyword_4_0; }
+		public Keyword getAliasKeyword_5_0() { return cAliasKeyword_5_0; }
 
 		//"ALIAS"
-		public Keyword getALIASKeyword_4_1() { return cALIASKeyword_4_1; }
+		public Keyword getALIASKeyword_5_1() { return cALIASKeyword_5_1; }
 
 		//expression=Expression
-		public Assignment getExpressionAssignment_5() { return cExpressionAssignment_5; }
+		public Assignment getExpressionAssignment_6() { return cExpressionAssignment_6; }
 
 		//Expression
-		public RuleCall getExpressionExpressionParserRuleCall_5_0() { return cExpressionExpressionParserRuleCall_5_0; }
+		public RuleCall getExpressionExpressionParserRuleCall_6_0() { return cExpressionExpressionParserRuleCall_6_0; }
 
 		//(("kind" | "KIND") kind=STRING)?
-		public Group getGroup_6() { return cGroup_6; }
-
-		//"kind" | "KIND"
-		public Alternatives getAlternatives_6_0() { return cAlternatives_6_0; }
-
-		//"kind"
-		public Keyword getKindKeyword_6_0_0() { return cKindKeyword_6_0_0; }
-
-		//"KIND"
-		public Keyword getKINDKeyword_6_0_1() { return cKINDKeyword_6_0_1; }
-
-		//kind=STRING
-		public Assignment getKindAssignment_6_1() { return cKindAssignment_6_1; }
-
-		//STRING
-		public RuleCall getKindSTRINGTerminalRuleCall_6_1_0() { return cKindSTRINGTerminalRuleCall_6_1_0; }
-
-		//(("units" | "UNITS") units=STRING)?
 		public Group getGroup_7() { return cGroup_7; }
 
-		//"units" | "UNITS"
+		//"kind" | "KIND"
 		public Alternatives getAlternatives_7_0() { return cAlternatives_7_0; }
 
-		//"units"
-		public Keyword getUnitsKeyword_7_0_0() { return cUnitsKeyword_7_0_0; }
+		//"kind"
+		public Keyword getKindKeyword_7_0_0() { return cKindKeyword_7_0_0; }
 
-		//"UNITS"
-		public Keyword getUNITSKeyword_7_0_1() { return cUNITSKeyword_7_0_1; }
+		//"KIND"
+		public Keyword getKINDKeyword_7_0_1() { return cKINDKeyword_7_0_1; }
 
-		//units=STRING
-		public Assignment getUnitsAssignment_7_1() { return cUnitsAssignment_7_1; }
+		//kind=STRING
+		public Assignment getKindAssignment_7_1() { return cKindAssignment_7_1; }
 
 		//STRING
-		public RuleCall getUnitsSTRINGTerminalRuleCall_7_1_0() { return cUnitsSTRINGTerminalRuleCall_7_1_0; }
+		public RuleCall getKindSTRINGTerminalRuleCall_7_1_0() { return cKindSTRINGTerminalRuleCall_7_1_0; }
+
+		//(("units" | "UNITS") units=STRING)?
+		public Group getGroup_8() { return cGroup_8; }
+
+		//"units" | "UNITS"
+		public Alternatives getAlternatives_8_0() { return cAlternatives_8_0; }
+
+		//"units"
+		public Keyword getUnitsKeyword_8_0_0() { return cUnitsKeyword_8_0_0; }
+
+		//"UNITS"
+		public Keyword getUNITSKeyword_8_0_1() { return cUNITSKeyword_8_0_1; }
+
+		//units=STRING
+		public Assignment getUnitsAssignment_8_1() { return cUnitsAssignment_8_1; }
+
+		//STRING
+		public RuleCall getUnitsSTRINGTerminalRuleCall_8_1_0() { return cUnitsSTRINGTerminalRuleCall_8_1_0; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_8() { return cRightCurlyBracketKeyword_8; }
+		public Keyword getRightCurlyBracketKeyword_9() { return cRightCurlyBracketKeyword_9; }
 	}
 
 	public class DVarElements extends AbstractParserRuleElementFinder {
@@ -2181,28 +2444,34 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
 		private final Keyword cGoalKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
 		private final Keyword cGOALKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cLeftSquareBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cLocalAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final Alternatives cLocalAlternatives_1_1_0 = (Alternatives)cLocalAssignment_1_1.eContents().get(0);
-		private final Keyword cLocalLocalKeyword_1_1_0_0 = (Keyword)cLocalAlternatives_1_1_0.eContents().get(0);
-		private final Keyword cLocalLOCALKeyword_1_1_0_1 = (Keyword)cLocalAlternatives_1_1_0.eContents().get(1);
-		private final Keyword cRightSquareBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cDefinitionAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final Alternatives cDefinitionAlternatives_4_0 = (Alternatives)cDefinitionAssignment_4.eContents().get(0);
-		private final RuleCall cDefinitionGoalSimpleParserRuleCall_4_0_0 = (RuleCall)cDefinitionAlternatives_4_0.eContents().get(0);
-		private final RuleCall cDefinitionGoalCaseParserRuleCall_4_0_1 = (RuleCall)cDefinitionAlternatives_4_0.eContents().get(1);
-		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Assignment cTaAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cTaTimeArraySizeParserRuleCall_1_0 = (RuleCall)cTaAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftSquareBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cLocalAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final Alternatives cLocalAlternatives_2_1_0 = (Alternatives)cLocalAssignment_2_1.eContents().get(0);
+		private final Keyword cLocalLocalKeyword_2_1_0_0 = (Keyword)cLocalAlternatives_2_1_0.eContents().get(0);
+		private final Keyword cLocalLOCALKeyword_2_1_0_1 = (Keyword)cLocalAlternatives_2_1_0.eContents().get(1);
+		private final Keyword cRightSquareBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final Assignment cNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cNameIDTerminalRuleCall_3_0 = (RuleCall)cNameAssignment_3.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cDefinitionAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final Alternatives cDefinitionAlternatives_5_0 = (Alternatives)cDefinitionAssignment_5.eContents().get(0);
+		private final RuleCall cDefinitionGoalSimpleParserRuleCall_5_0_0 = (RuleCall)cDefinitionAlternatives_5_0.eContents().get(0);
+		private final RuleCall cDefinitionGoalCaseParserRuleCall_5_0_1 = (RuleCall)cDefinitionAlternatives_5_0.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//Goal:
 		//
-		//	("goal" | "GOAL") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(GoalSimple | GoalCase) "}";
+		//	("goal" | "GOAL") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(GoalSimple |
+		//
+		//	GoalCase) "}";
 		public ParserRule getRule() { return rule; }
 
-		//("goal" | "GOAL") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(GoalSimple | GoalCase) "}"
+		//("goal" | "GOAL") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(GoalSimple | GoalCase)
+		//
+		//"}"
 		public Group getGroup() { return cGroup; }
 
 		//"goal" | "GOAL"
@@ -2214,50 +2483,56 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"GOAL"
 		public Keyword getGOALKeyword_0_1() { return cGOALKeyword_0_1; }
 
+		//ta=TimeArraySize?
+		public Assignment getTaAssignment_1() { return cTaAssignment_1; }
+
+		//TimeArraySize
+		public RuleCall getTaTimeArraySizeParserRuleCall_1_0() { return cTaTimeArraySizeParserRuleCall_1_0; }
+
 		//("[" local?=("local" | "LOCAL") "]")?
-		public Group getGroup_1() { return cGroup_1; }
+		public Group getGroup_2() { return cGroup_2; }
 
 		//"["
-		public Keyword getLeftSquareBracketKeyword_1_0() { return cLeftSquareBracketKeyword_1_0; }
+		public Keyword getLeftSquareBracketKeyword_2_0() { return cLeftSquareBracketKeyword_2_0; }
 
 		//local?=("local" | "LOCAL")
-		public Assignment getLocalAssignment_1_1() { return cLocalAssignment_1_1; }
+		public Assignment getLocalAssignment_2_1() { return cLocalAssignment_2_1; }
 
 		//"local" | "LOCAL"
-		public Alternatives getLocalAlternatives_1_1_0() { return cLocalAlternatives_1_1_0; }
+		public Alternatives getLocalAlternatives_2_1_0() { return cLocalAlternatives_2_1_0; }
 
 		//"local"
-		public Keyword getLocalLocalKeyword_1_1_0_0() { return cLocalLocalKeyword_1_1_0_0; }
+		public Keyword getLocalLocalKeyword_2_1_0_0() { return cLocalLocalKeyword_2_1_0_0; }
 
 		//"LOCAL"
-		public Keyword getLocalLOCALKeyword_1_1_0_1() { return cLocalLOCALKeyword_1_1_0_1; }
+		public Keyword getLocalLOCALKeyword_2_1_0_1() { return cLocalLOCALKeyword_2_1_0_1; }
 
 		//"]"
-		public Keyword getRightSquareBracketKeyword_1_2() { return cRightSquareBracketKeyword_1_2; }
+		public Keyword getRightSquareBracketKeyword_2_2() { return cRightSquareBracketKeyword_2_2; }
 
 		//name=ID
-		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+		public Assignment getNameAssignment_3() { return cNameAssignment_3; }
 
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
+		public RuleCall getNameIDTerminalRuleCall_3_0() { return cNameIDTerminalRuleCall_3_0; }
 
 		//"{"
-		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
+		public Keyword getLeftCurlyBracketKeyword_4() { return cLeftCurlyBracketKeyword_4; }
 
 		//definition=(GoalSimple | GoalCase)
-		public Assignment getDefinitionAssignment_4() { return cDefinitionAssignment_4; }
+		public Assignment getDefinitionAssignment_5() { return cDefinitionAssignment_5; }
 
 		//GoalSimple | GoalCase
-		public Alternatives getDefinitionAlternatives_4_0() { return cDefinitionAlternatives_4_0; }
+		public Alternatives getDefinitionAlternatives_5_0() { return cDefinitionAlternatives_5_0; }
 
 		//GoalSimple
-		public RuleCall getDefinitionGoalSimpleParserRuleCall_4_0_0() { return cDefinitionGoalSimpleParserRuleCall_4_0_0; }
+		public RuleCall getDefinitionGoalSimpleParserRuleCall_5_0_0() { return cDefinitionGoalSimpleParserRuleCall_5_0_0; }
 
 		//GoalCase
-		public RuleCall getDefinitionGoalCaseParserRuleCall_4_0_1() { return cDefinitionGoalCaseParserRuleCall_4_0_1; }
+		public RuleCall getDefinitionGoalCaseParserRuleCall_5_0_1() { return cDefinitionGoalCaseParserRuleCall_5_0_1; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+		public Keyword getRightCurlyBracketKeyword_6() { return cRightCurlyBracketKeyword_6; }
 	}
 
 	public class GoalCaseElements extends AbstractParserRuleElementFinder {
@@ -3088,15 +3363,18 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cE2Assignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
 		private final RuleCall cE2ExpressionParserRuleCall_0_2_0 = (RuleCall)cE2Assignment_0_2.eContents().get(0);
 		private final RuleCall cLogicalFunctionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
+		private final Group cGroup_2_0 = (Group)cGroup_2.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
+		private final RuleCall cLogicalExpressionParserRuleCall_2_0_1 = (RuleCall)cGroup_2_0.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_2_0_2 = (Keyword)cGroup_2_0.eContents().get(2);
 		
 		//ConditionalTerm:
 		//
-		//	e1=Expression Relation e2=Expression | //| '(' LogicalExpression ')'
-		// LogicalFunction;
+		//	e1=Expression Relation e2=Expression | LogicalFunction | => ("(" LogicalExpression ")");
 		public ParserRule getRule() { return rule; }
 
-		//e1=Expression Relation e2=Expression | //| '(' LogicalExpression ')'
-		// LogicalFunction
+		//e1=Expression Relation e2=Expression | LogicalFunction | => ("(" LogicalExpression ")")
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//e1=Expression Relation e2=Expression
@@ -3117,9 +3395,23 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//Expression
 		public RuleCall getE2ExpressionParserRuleCall_0_2_0() { return cE2ExpressionParserRuleCall_0_2_0; }
 
-		////| '(' LogicalExpression ')'
-		// LogicalFunction
+		//LogicalFunction
 		public RuleCall getLogicalFunctionParserRuleCall_1() { return cLogicalFunctionParserRuleCall_1; }
+
+		//=> ("(" LogicalExpression ")")
+		public Group getGroup_2() { return cGroup_2; }
+
+		//"(" LogicalExpression ")"
+		public Group getGroup_2_0() { return cGroup_2_0; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_2_0_0() { return cLeftParenthesisKeyword_2_0_0; }
+
+		//LogicalExpression
+		public RuleCall getLogicalExpressionParserRuleCall_2_0_1() { return cLogicalExpressionParserRuleCall_2_0_1; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_2_0_2() { return cRightParenthesisKeyword_2_0_2; }
 	}
 
 	public class RelationElements extends AbstractParserRuleElementFinder {
@@ -3316,18 +3608,19 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cFFunctionParserRuleCall_2_0 = (RuleCall)cFAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
 		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cE2Assignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cE2ExpressionParserRuleCall_3_1_0 = (RuleCall)cE2Assignment_3_1.eContents().get(0);
+		private final Assignment cEAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cEExpressionParserRuleCall_3_1_0 = (RuleCall)cEAssignment_3_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
 		private final Assignment cSAssignment_4 = (Assignment)cAlternatives.eContents().get(4);
 		private final RuleCall cSSpecialIdentParserRuleCall_4_0 = (RuleCall)cSAssignment_4.eContents().get(0);
+		private final RuleCall cMultiStepParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		
 		//Term:
 		//
-		//	ref=[Variable] | n=Number | f=Function | "(" e2=Expression ")" | s=SpecialIdent;
+		//	ref=[Variable] | n=Number | f=Function | "(" e=Expression ")" | s=SpecialIdent | MultiStep;
 		public ParserRule getRule() { return rule; }
 
-		//ref=[Variable] | n=Number | f=Function | "(" e2=Expression ")" | s=SpecialIdent
+		//ref=[Variable] | n=Number | f=Function | "(" e=Expression ")" | s=SpecialIdent | MultiStep
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//ref=[Variable]
@@ -3351,17 +3644,17 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//Function
 		public RuleCall getFFunctionParserRuleCall_2_0() { return cFFunctionParserRuleCall_2_0; }
 
-		//"(" e2=Expression ")"
+		//"(" e=Expression ")"
 		public Group getGroup_3() { return cGroup_3; }
 
 		//"("
 		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
 
-		//e2=Expression
-		public Assignment getE2Assignment_3_1() { return cE2Assignment_3_1; }
+		//e=Expression
+		public Assignment getEAssignment_3_1() { return cEAssignment_3_1; }
 
 		//Expression
-		public RuleCall getE2ExpressionParserRuleCall_3_1_0() { return cE2ExpressionParserRuleCall_3_1_0; }
+		public RuleCall getEExpressionParserRuleCall_3_1_0() { return cEExpressionParserRuleCall_3_1_0; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_3_2() { return cRightParenthesisKeyword_3_2; }
@@ -3371,6 +3664,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 		//SpecialIdent
 		public RuleCall getSSpecialIdentParserRuleCall_4_0() { return cSSpecialIdentParserRuleCall_4_0; }
+
+		//MultiStep
+		public RuleCall getMultiStepParserRuleCall_5() { return cMultiStepParserRuleCall_5; }
 	}
 
 	public class FunctionElements extends AbstractParserRuleElementFinder {
@@ -3379,18 +3675,28 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cExternalFunctionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cMaxFunctionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cMinFunctionParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cIntFunctionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cAbsFunctionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final RuleCall cPowFunctionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
-		private final RuleCall cLogFunctionParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
-		private final RuleCall cVarModelParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
+		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final RuleCall cSumContentParserRuleCall_3_1 = (RuleCall)cGroup_3.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
+		private final RuleCall cModFunctionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cIntFunctionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cAbsFunctionParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cPowFunctionParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cLogFunctionParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		private final RuleCall cVarModelParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
+		private final RuleCall cVarModelStepParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
 		
 		//Function:
 		//
-		//	ExternalFunction | MaxFunction | MinFunction | IntFunction | AbsFunction | PowFunction | LogFunction | VarModel;
+		//	ExternalFunction | MaxFunction | MinFunction | "(" SumContent ")" | ModFunction | IntFunction | AbsFunction |
+		//
+		//	PowFunction | LogFunction | VarModel | VarModelStep;
 		public ParserRule getRule() { return rule; }
 
-		//ExternalFunction | MaxFunction | MinFunction | IntFunction | AbsFunction | PowFunction | LogFunction | VarModel
+		//ExternalFunction | MaxFunction | MinFunction | "(" SumContent ")" | ModFunction | IntFunction | AbsFunction |
+		//
+		//PowFunction | LogFunction | VarModel | VarModelStep
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//ExternalFunction
@@ -3402,20 +3708,38 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//MinFunction
 		public RuleCall getMinFunctionParserRuleCall_2() { return cMinFunctionParserRuleCall_2; }
 
+		//"(" SumContent ")"
+		public Group getGroup_3() { return cGroup_3; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
+
+		//SumContent
+		public RuleCall getSumContentParserRuleCall_3_1() { return cSumContentParserRuleCall_3_1; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_3_2() { return cRightParenthesisKeyword_3_2; }
+
+		//ModFunction
+		public RuleCall getModFunctionParserRuleCall_4() { return cModFunctionParserRuleCall_4; }
+
 		//IntFunction
-		public RuleCall getIntFunctionParserRuleCall_3() { return cIntFunctionParserRuleCall_3; }
+		public RuleCall getIntFunctionParserRuleCall_5() { return cIntFunctionParserRuleCall_5; }
 
 		//AbsFunction
-		public RuleCall getAbsFunctionParserRuleCall_4() { return cAbsFunctionParserRuleCall_4; }
+		public RuleCall getAbsFunctionParserRuleCall_6() { return cAbsFunctionParserRuleCall_6; }
 
 		//PowFunction
-		public RuleCall getPowFunctionParserRuleCall_5() { return cPowFunctionParserRuleCall_5; }
+		public RuleCall getPowFunctionParserRuleCall_7() { return cPowFunctionParserRuleCall_7; }
 
 		//LogFunction
-		public RuleCall getLogFunctionParserRuleCall_6() { return cLogFunctionParserRuleCall_6; }
+		public RuleCall getLogFunctionParserRuleCall_8() { return cLogFunctionParserRuleCall_8; }
 
 		//VarModel
-		public RuleCall getVarModelParserRuleCall_7() { return cVarModelParserRuleCall_7; }
+		public RuleCall getVarModelParserRuleCall_9() { return cVarModelParserRuleCall_9; }
+
+		//VarModelStep
+		public RuleCall getVarModelStepParserRuleCall_10() { return cVarModelStepParserRuleCall_10; }
 	}
 
 	public class ExternalFunctionElements extends AbstractParserRuleElementFinder {
@@ -3426,6 +3750,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cRefVariableCrossReference_0_0_0 = (CrossReference)cRefAssignment_0_0.eContents().get(0);
 		private final RuleCall cRefVariableIDTerminalRuleCall_0_0_0_1 = (RuleCall)cRefVariableCrossReference_0_0_0.eContents().get(1);
 		private final RuleCall cTafCfsParserRuleCall_0_1 = (RuleCall)cAlternatives_0.eContents().get(1);
+		private final RuleCall cMonthParserRuleCall_0_2 = (RuleCall)cAlternatives_0.eContents().get(2);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cE1Assignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cE1ExpressionParserRuleCall_2_0 = (RuleCall)cE1Assignment_2.eContents().get(0);
@@ -3437,13 +3762,13 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ExternalFunction:
 		//
-		//	(ref=[Variable] | TafCfs) "(" e1=Expression ("," e2+=Expression)* ")";
+		//	(ref=[Variable] | TafCfs | Month) "(" e1=Expression ("," e2+=Expression)* ")";
 		public ParserRule getRule() { return rule; }
 
-		//(ref=[Variable] | TafCfs) "(" e1=Expression ("," e2+=Expression)* ")"
+		//(ref=[Variable] | TafCfs | Month) "(" e1=Expression ("," e2+=Expression)* ")"
 		public Group getGroup() { return cGroup; }
 
-		//ref=[Variable] | TafCfs
+		//ref=[Variable] | TafCfs | Month
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
 		//ref=[Variable]
@@ -3457,6 +3782,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 		//TafCfs
 		public RuleCall getTafCfsParserRuleCall_0_1() { return cTafCfsParserRuleCall_0_1; }
+
+		//Month
+		public RuleCall getMonthParserRuleCall_0_2() { return cMonthParserRuleCall_0_2; }
 
 		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
@@ -3579,6 +3907,51 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 		//")"
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+	}
+
+	public class ModFunctionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ModFunction");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cMODTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cE1Assignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cE1ExpressionParserRuleCall_2_0 = (RuleCall)cE1Assignment_2.eContents().get(0);
+		private final Keyword cCommaKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cE2Assignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cE2ExpressionParserRuleCall_4_0 = (RuleCall)cE2Assignment_4.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//ModFunction:
+		//
+		//	MOD "(" e1=Expression "," e2=Expression ")";
+		public ParserRule getRule() { return rule; }
+
+		//MOD "(" e1=Expression "," e2=Expression ")"
+		public Group getGroup() { return cGroup; }
+
+		//MOD
+		public RuleCall getMODTerminalRuleCall_0() { return cMODTerminalRuleCall_0; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+
+		//e1=Expression
+		public Assignment getE1Assignment_2() { return cE1Assignment_2; }
+
+		//Expression
+		public RuleCall getE1ExpressionParserRuleCall_2_0() { return cE1ExpressionParserRuleCall_2_0; }
+
+		//","
+		public Keyword getCommaKeyword_3() { return cCommaKeyword_3; }
+
+		//e2=Expression
+		public Assignment getE2Assignment_4() { return cE2Assignment_4; }
+
+		//Expression
+		public RuleCall getE2ExpressionParserRuleCall_4_0() { return cE2ExpressionParserRuleCall_4_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_5() { return cRightParenthesisKeyword_5; }
 	}
 
 	public class IntFunctionElements extends AbstractParserRuleElementFinder {
@@ -3765,6 +4138,47 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"]"
 		public Keyword getRightSquareBracketKeyword_3() { return cRightSquareBracketKeyword_3; }
+	}
+
+	public class VarModelStepElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VarModelStep");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cIDTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Keyword cLeftSquareBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final RuleCall cIDTerminalRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
+		private final Keyword cRightSquareBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Keyword cLeftParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final RuleCall cExpressionParserRuleCall_5 = (RuleCall)cGroup.eContents().get(5);
+		private final Keyword cRightParenthesisKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		
+		//VarModelStep:
+		//
+		//	ID "[" ID "]" "(" Expression ")";
+		public ParserRule getRule() { return rule; }
+
+		//ID "[" ID "]" "(" Expression ")"
+		public Group getGroup() { return cGroup; }
+
+		//ID
+		public RuleCall getIDTerminalRuleCall_0() { return cIDTerminalRuleCall_0; }
+
+		//"["
+		public Keyword getLeftSquareBracketKeyword_1() { return cLeftSquareBracketKeyword_1; }
+
+		//ID
+		public RuleCall getIDTerminalRuleCall_2() { return cIDTerminalRuleCall_2; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_3() { return cRightSquareBracketKeyword_3; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_4() { return cLeftParenthesisKeyword_4; }
+
+		//Expression
+		public RuleCall getExpressionParserRuleCall_5() { return cExpressionParserRuleCall_5; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_6() { return cRightParenthesisKeyword_6; }
 	}
 
 	public class RangeFunctionElements extends AbstractParserRuleElementFinder {
@@ -4295,18 +4709,34 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"prevdec"
 		public Keyword getPrevdecKeyword_11() { return cPrevdecKeyword_11; }
 	}
+
+	public class MultiStepElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "MultiStep");
+		private final Keyword cMKeyword = (Keyword)rule.eContents().get(1);
+		
+		//MultiStep:
+		//
+		//	"$m";
+		public ParserRule getRule() { return rule; }
+
+		//"$m"
+		public Keyword getMKeyword() { return cMKeyword; }
+	}
 	
 	
 	private WreslEvaluatorElements pWreslEvaluator;
 	private PatternElements pPattern;
 	private VariableElements pVariable;
+	private StateVariableElements pStateVariable;
+	private DecisionVariableElements pDecisionVariable;
 	private IfIncItemsElements pIfIncItems;
 	private IfTermElements pIfTerm;
 	private ElseIfTermElements pElseIfTerm;
 	private ElseTermElements pElseTerm;
+	private TimeArraySizeElements pTimeArraySize;
 	private ObjectiveElements pObjective;
 	private WeightItemElements pWeightItem;
-	private DefineElements pDefine;
+	private ExternalDefElements pExternalDef;
 	private SvarDefElements pSvarDef;
 	private DvarDefElements pDvarDef;
 	private ConstDefElements pConstDef;
@@ -4367,12 +4797,14 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	private ExternalFunctionElements pExternalFunction;
 	private MaxFunctionElements pMaxFunction;
 	private MinFunctionElements pMinFunction;
+	private ModFunctionElements pModFunction;
 	private IntFunctionElements pIntFunction;
 	private AbsFunctionElements pAbsFunction;
 	private PowFunctionElements pPowFunction;
 	private LogFunctionElements pLogFunction;
 	private LogicalFunctionElements pLogicalFunction;
 	private VarModelElements pVarModel;
+	private VarModelStepElements pVarModelStep;
 	private RangeFunctionElements pRangeFunction;
 	private IdentElements pIdent;
 	private NumberElements pNumber;
@@ -4390,12 +4822,14 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	private MonthElements pMonth;
 	private CalendarMonthElements pCalendarMonth;
 	private PrevMonthElements pPrevMonth;
+	private MultiStepElements pMultiStep;
 	private TerminalRule tIf;
 	private TerminalRule tElseIf;
 	private TerminalRule tElse;
 	private TerminalRule tRANGE;
 	private TerminalRule tMIN;
 	private TerminalRule tMAX;
+	private TerminalRule tMOD;
 	private TerminalRule tINTFUNC;
 	private TerminalRule tABS;
 	private TerminalRule tPOW;
@@ -4472,13 +4906,35 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Variable:
 	//
-	//	Define | Alias | SvarDef | DvarDef | ConstDef;
+	//	StateVariable | DecisionVariable | ExternalDef;
 	public VariableElements getVariableAccess() {
 		return (pVariable != null) ? pVariable : (pVariable = new VariableElements());
 	}
 	
 	public ParserRule getVariableRule() {
 		return getVariableAccess().getRule();
+	}
+
+	//StateVariable:
+	//
+	//	SvarDef | ConstDef;
+	public StateVariableElements getStateVariableAccess() {
+		return (pStateVariable != null) ? pStateVariable : (pStateVariable = new StateVariableElements());
+	}
+	
+	public ParserRule getStateVariableRule() {
+		return getStateVariableAccess().getRule();
+	}
+
+	//DecisionVariable:
+	//
+	//	DvarDef | Alias;
+	public DecisionVariableElements getDecisionVariableAccess() {
+		return (pDecisionVariable != null) ? pDecisionVariable : (pDecisionVariable = new DecisionVariableElements());
+	}
+	
+	public ParserRule getDecisionVariableRule() {
+		return getDecisionVariableAccess().getRule();
 	}
 
 	//IfIncItems:
@@ -4525,6 +4981,17 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		return getElseTermAccess().getRule();
 	}
 
+	//TimeArraySize:
+	//
+	//	"(" ref=[StateVariable] ")";
+	public TimeArraySizeElements getTimeArraySizeAccess() {
+		return (pTimeArraySize != null) ? pTimeArraySize : (pTimeArraySize = new TimeArraySizeElements());
+	}
+	
+	public ParserRule getTimeArraySizeRule() {
+		return getTimeArraySizeAccess().getRule();
+	}
+
 	//Objective:
 	//
 	//	("objective" | "OBJECTIVE") ("[" local?=("local" | "LOCAL") "]")? name=ID "="? "{" weights+=WeightItem+ "}";
@@ -4538,7 +5005,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//WeightItem:
 	//
-	//	"[" name=[Variable] "," expression=Expression "]" ","?;
+	//	"[" name=[DecisionVariable] ta=TimeArraySize? "," expression=Expression "]" ","?;
 	public WeightItemElements getWeightItemAccess() {
 		return (pWeightItem != null) ? pWeightItem : (pWeightItem = new WeightItemElements());
 	}
@@ -4547,22 +5014,22 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		return getWeightItemAccess().getRule();
 	}
 
-	//Define:
+	//ExternalDef:
 	//
-	//	("define" | "DEFINE") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(DVar | SVar | DVarInteger |
-	//
-	//	External) "}";
-	public DefineElements getDefineAccess() {
-		return (pDefine != null) ? pDefine : (pDefine = new DefineElements());
+	//	("define" | "DEFINE") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=External "}";
+	public ExternalDefElements getExternalDefAccess() {
+		return (pExternalDef != null) ? pExternalDef : (pExternalDef = new ExternalDefElements());
 	}
 	
-	public ParserRule getDefineRule() {
-		return getDefineAccess().getRule();
+	public ParserRule getExternalDefRule() {
+		return getExternalDefAccess().getRule();
 	}
 
 	//SvarDef:
 	//
-	//	("svar" | "SVAR" | "Svar") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}";
+	//	("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}" |
+	//
+	//	("svar" | "SVAR" | "Svar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}";
 	public SvarDefElements getSvarDefAccess() {
 		return (pSvarDef != null) ? pSvarDef : (pSvarDef = new SvarDefElements());
 	}
@@ -4573,7 +5040,11 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//DvarDef:
 	//
-	//	("dvar" | "DVAR" | "Dvar") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(DVar | DVarInteger) "}";
+	//	("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(DVar |
+	//
+	//	DVarInteger) "}" | ("dvar" | "DVAR" | "Dvar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{"
+	//
+	//	definition=(DVar | DVarInteger) "}";
 	public DvarDefElements getDvarDefAccess() {
 		return (pDvarDef != null) ? pDvarDef : (pDvarDef = new DvarDefElements());
 	}
@@ -4607,9 +5078,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	////name=[SVar|ID] to be changed to reference after scoping is resolved across files
 	// Alias:
 	//
-	//	("define" | "DEFINE") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" ("alias" | "ALIAS") expression=Expression
+	//	("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" ("alias" | "ALIAS")
 	//
-	//	(("kind" | "KIND") kind=STRING)? (("units" | "UNITS") units=STRING)? "}";
+	//	expression=Expression (("kind" | "KIND") kind=STRING)? (("units" | "UNITS") units=STRING)? "}";
 	public AliasElements getAliasAccess() {
 		return (pAlias != null) ? pAlias : (pAlias = new AliasElements());
 	}
@@ -4901,7 +5372,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Goal:
 	//
-	//	("goal" | "GOAL") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(GoalSimple | GoalCase) "}";
+	//	("goal" | "GOAL") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(GoalSimple |
+	//
+	//	GoalCase) "}";
 	public GoalElements getGoalAccess() {
 		return (pGoal != null) ? pGoal : (pGoal = new GoalElements());
 	}
@@ -5102,8 +5575,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ConditionalTerm:
 	//
-	//	e1=Expression Relation e2=Expression | //| '(' LogicalExpression ')'
-	// LogicalFunction;
+	//	e1=Expression Relation e2=Expression | LogicalFunction | => ("(" LogicalExpression ")");
 	public ConditionalTermElements getConditionalTermAccess() {
 		return (pConditionalTerm != null) ? pConditionalTerm : (pConditionalTerm = new ConditionalTermElements());
 	}
@@ -5180,7 +5652,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Term:
 	//
-	//	ref=[Variable] | n=Number | f=Function | "(" e2=Expression ")" | s=SpecialIdent;
+	//	ref=[Variable] | n=Number | f=Function | "(" e=Expression ")" | s=SpecialIdent | MultiStep;
 	public TermElements getTermAccess() {
 		return (pTerm != null) ? pTerm : (pTerm = new TermElements());
 	}
@@ -5191,7 +5663,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Function:
 	//
-	//	ExternalFunction | MaxFunction | MinFunction | IntFunction | AbsFunction | PowFunction | LogFunction | VarModel;
+	//	ExternalFunction | MaxFunction | MinFunction | "(" SumContent ")" | ModFunction | IntFunction | AbsFunction |
+	//
+	//	PowFunction | LogFunction | VarModel | VarModelStep;
 	public FunctionElements getFunctionAccess() {
 		return (pFunction != null) ? pFunction : (pFunction = new FunctionElements());
 	}
@@ -5202,7 +5676,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ExternalFunction:
 	//
-	//	(ref=[Variable] | TafCfs) "(" e1=Expression ("," e2+=Expression)* ")";
+	//	(ref=[Variable] | TafCfs | Month) "(" e1=Expression ("," e2+=Expression)* ")";
 	public ExternalFunctionElements getExternalFunctionAccess() {
 		return (pExternalFunction != null) ? pExternalFunction : (pExternalFunction = new ExternalFunctionElements());
 	}
@@ -5231,6 +5705,17 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getMinFunctionRule() {
 		return getMinFunctionAccess().getRule();
+	}
+
+	//ModFunction:
+	//
+	//	MOD "(" e1=Expression "," e2=Expression ")";
+	public ModFunctionElements getModFunctionAccess() {
+		return (pModFunction != null) ? pModFunction : (pModFunction = new ModFunctionElements());
+	}
+	
+	public ParserRule getModFunctionRule() {
+		return getModFunctionAccess().getRule();
 	}
 
 	//IntFunction:
@@ -5297,6 +5782,17 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getVarModelRule() {
 		return getVarModelAccess().getRule();
+	}
+
+	//VarModelStep:
+	//
+	//	ID "[" ID "]" "(" Expression ")";
+	public VarModelStepElements getVarModelStepAccess() {
+		return (pVarModelStep != null) ? pVarModelStep : (pVarModelStep = new VarModelStepElements());
+	}
+	
+	public ParserRule getVarModelStepRule() {
+		return getVarModelStepAccess().getRule();
 	}
 
 	//RangeFunction:
@@ -5488,6 +5984,17 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		return getPrevMonthAccess().getRule();
 	}
 
+	//MultiStep:
+	//
+	//	"$m";
+	public MultiStepElements getMultiStepAccess() {
+		return (pMultiStep != null) ? pMultiStep : (pMultiStep = new MultiStepElements());
+	}
+	
+	public ParserRule getMultiStepRule() {
+		return getMultiStepAccess().getRule();
+	}
+
 	//terminal If:
 	//
 	//	"If" | "IF" | "if";
@@ -5528,6 +6035,13 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	//	"max" | "MAX";
 	public TerminalRule getMAXRule() {
 		return (tMAX != null) ? tMAX : (tMAX = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "MAX"));
+	} 
+
+	//terminal MOD:
+	//
+	//	"mod" | "MOD";
+	public TerminalRule getMODRule() {
+		return (tMOD != null) ? tMOD : (tMOD = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "MOD"));
 	} 
 
 	//terminal INTFUNC:

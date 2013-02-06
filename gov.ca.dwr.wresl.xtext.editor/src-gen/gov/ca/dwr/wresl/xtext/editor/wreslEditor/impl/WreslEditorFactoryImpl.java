@@ -67,13 +67,16 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
       case WreslEditorPackage.WRESL_EVALUATOR: return createWreslEvaluator();
       case WreslEditorPackage.PATTERN: return createPattern();
       case WreslEditorPackage.VARIABLE: return createVariable();
+      case WreslEditorPackage.STATE_VARIABLE: return createStateVariable();
+      case WreslEditorPackage.DECISION_VARIABLE: return createDecisionVariable();
       case WreslEditorPackage.IF_INC_ITEMS: return createIfIncItems();
       case WreslEditorPackage.IF_TERM: return createIfTerm();
       case WreslEditorPackage.ELSE_IF_TERM: return createElseIfTerm();
       case WreslEditorPackage.ELSE_TERM: return createElseTerm();
+      case WreslEditorPackage.TIME_ARRAY_SIZE: return createTimeArraySize();
       case WreslEditorPackage.OBJECTIVE: return createObjective();
       case WreslEditorPackage.WEIGHT_ITEM: return createWeightItem();
-      case WreslEditorPackage.DEFINE: return createDefine();
+      case WreslEditorPackage.EXTERNAL_DEF: return createExternalDef();
       case WreslEditorPackage.SVAR_DEF: return createSvarDef();
       case WreslEditorPackage.DVAR_DEF: return createDvarDef();
       case WreslEditorPackage.CONST_DEF: return createConstDef();
@@ -130,10 +133,12 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
       case WreslEditorPackage.EXTERNAL_FUNCTION: return createExternalFunction();
       case WreslEditorPackage.MAX_FUNCTION: return createMaxFunction();
       case WreslEditorPackage.MIN_FUNCTION: return createMinFunction();
+      case WreslEditorPackage.MOD_FUNCTION: return createModFunction();
       case WreslEditorPackage.INT_FUNCTION: return createIntFunction();
       case WreslEditorPackage.ABS_FUNCTION: return createAbsFunction();
       case WreslEditorPackage.POW_FUNCTION: return createPowFunction();
       case WreslEditorPackage.LOG_FUNCTION: return createLogFunction();
+      case WreslEditorPackage.VAR_MODEL_STEP: return createVarModelStep();
       case WreslEditorPackage.IDENT: return createIdent();
       case WreslEditorPackage.INCLUDE_FILE: return createIncludeFile();
       default:
@@ -172,6 +177,28 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
   {
     VariableImpl variable = new VariableImpl();
     return variable;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public StateVariable createStateVariable()
+  {
+    StateVariableImpl stateVariable = new StateVariableImpl();
+    return stateVariable;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DecisionVariable createDecisionVariable()
+  {
+    DecisionVariableImpl decisionVariable = new DecisionVariableImpl();
+    return decisionVariable;
   }
 
   /**
@@ -223,6 +250,17 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
    * <!-- end-user-doc -->
    * @generated
    */
+  public TimeArraySize createTimeArraySize()
+  {
+    TimeArraySizeImpl timeArraySize = new TimeArraySizeImpl();
+    return timeArraySize;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public Objective createObjective()
   {
     ObjectiveImpl objective = new ObjectiveImpl();
@@ -245,10 +283,10 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
    * <!-- end-user-doc -->
    * @generated
    */
-  public Define createDefine()
+  public ExternalDef createExternalDef()
   {
-    DefineImpl define = new DefineImpl();
-    return define;
+    ExternalDefImpl externalDef = new ExternalDefImpl();
+    return externalDef;
   }
 
   /**
@@ -872,6 +910,17 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
    * <!-- end-user-doc -->
    * @generated
    */
+  public ModFunction createModFunction()
+  {
+    ModFunctionImpl modFunction = new ModFunctionImpl();
+    return modFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public IntFunction createIntFunction()
   {
     IntFunctionImpl intFunction = new IntFunctionImpl();
@@ -909,6 +958,17 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
   {
     LogFunctionImpl logFunction = new LogFunctionImpl();
     return logFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public VarModelStep createVarModelStep()
+  {
+    VarModelStepImpl varModelStep = new VarModelStepImpl();
+    return varModelStep;
   }
 
   /**

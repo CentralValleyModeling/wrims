@@ -14,7 +14,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,7 +29,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public class SumContentImpl extends MinimalEObjectImpl.Container implements SumContent
+public class SumContentImpl extends FunctionImpl implements SumContent
 {
   /**
    * The cached value of the '{@link #getHeader() <em>Header</em>}' containment reference.

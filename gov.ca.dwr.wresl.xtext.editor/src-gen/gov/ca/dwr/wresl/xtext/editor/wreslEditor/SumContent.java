@@ -2,7 +2,6 @@
  */
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -21,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface SumContent extends EObject
+public interface SumContent extends Function
 {
   /**
    * Returns the value of the '<em><b>Header</b></em>' containment reference.

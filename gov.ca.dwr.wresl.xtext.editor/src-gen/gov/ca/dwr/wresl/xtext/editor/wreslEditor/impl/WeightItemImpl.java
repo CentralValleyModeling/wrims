@@ -2,8 +2,9 @@
  */
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DecisionVariable;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Expression;
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Variable;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TimeArraySize;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WeightItem;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage;
 
@@ -24,6 +25,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WeightItemImpl#getName <em>Name</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WeightItemImpl#getTa <em>Ta</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WeightItemImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
@@ -40,7 +42,17 @@ public class WeightItemImpl extends MinimalEObjectImpl.Container implements Weig
    * @generated
    * @ordered
    */
-  protected Variable name;
+  protected DecisionVariable name;
+
+  /**
+   * The cached value of the '{@link #getTa() <em>Ta</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTa()
+   * @generated
+   * @ordered
+   */
+  protected TimeArraySize ta;
 
   /**
    * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
@@ -78,12 +90,12 @@ public class WeightItemImpl extends MinimalEObjectImpl.Container implements Weig
    * <!-- end-user-doc -->
    * @generated
    */
-  public Variable getName()
+  public DecisionVariable getName()
   {
     if (name != null && name.eIsProxy())
     {
       InternalEObject oldName = (InternalEObject)name;
-      name = (Variable)eResolveProxy(oldName);
+      name = (DecisionVariable)eResolveProxy(oldName);
       if (name != oldName)
       {
         if (eNotificationRequired())
@@ -98,7 +110,7 @@ public class WeightItemImpl extends MinimalEObjectImpl.Container implements Weig
    * <!-- end-user-doc -->
    * @generated
    */
-  public Variable basicGetName()
+  public DecisionVariable basicGetName()
   {
     return name;
   }
@@ -108,12 +120,60 @@ public class WeightItemImpl extends MinimalEObjectImpl.Container implements Weig
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setName(Variable newName)
+  public void setName(DecisionVariable newName)
   {
-    Variable oldName = name;
+    DecisionVariable oldName = name;
     name = newName;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.WEIGHT_ITEM__NAME, oldName, name));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TimeArraySize getTa()
+  {
+    return ta;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetTa(TimeArraySize newTa, NotificationChain msgs)
+  {
+    TimeArraySize oldTa = ta;
+    ta = newTa;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, WreslEditorPackage.WEIGHT_ITEM__TA, oldTa, newTa);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setTa(TimeArraySize newTa)
+  {
+    if (newTa != ta)
+    {
+      NotificationChain msgs = null;
+      if (ta != null)
+        msgs = ((InternalEObject)ta).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.WEIGHT_ITEM__TA, null, msgs);
+      if (newTa != null)
+        msgs = ((InternalEObject)newTa).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.WEIGHT_ITEM__TA, null, msgs);
+      msgs = basicSetTa(newTa, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.WEIGHT_ITEM__TA, newTa, newTa));
   }
 
   /**
@@ -174,6 +234,8 @@ public class WeightItemImpl extends MinimalEObjectImpl.Container implements Weig
   {
     switch (featureID)
     {
+      case WreslEditorPackage.WEIGHT_ITEM__TA:
+        return basicSetTa(null, msgs);
       case WreslEditorPackage.WEIGHT_ITEM__EXPRESSION:
         return basicSetExpression(null, msgs);
     }
@@ -193,6 +255,8 @@ public class WeightItemImpl extends MinimalEObjectImpl.Container implements Weig
       case WreslEditorPackage.WEIGHT_ITEM__NAME:
         if (resolve) return getName();
         return basicGetName();
+      case WreslEditorPackage.WEIGHT_ITEM__TA:
+        return getTa();
       case WreslEditorPackage.WEIGHT_ITEM__EXPRESSION:
         return getExpression();
     }
@@ -210,7 +274,10 @@ public class WeightItemImpl extends MinimalEObjectImpl.Container implements Weig
     switch (featureID)
     {
       case WreslEditorPackage.WEIGHT_ITEM__NAME:
-        setName((Variable)newValue);
+        setName((DecisionVariable)newValue);
+        return;
+      case WreslEditorPackage.WEIGHT_ITEM__TA:
+        setTa((TimeArraySize)newValue);
         return;
       case WreslEditorPackage.WEIGHT_ITEM__EXPRESSION:
         setExpression((Expression)newValue);
@@ -230,7 +297,10 @@ public class WeightItemImpl extends MinimalEObjectImpl.Container implements Weig
     switch (featureID)
     {
       case WreslEditorPackage.WEIGHT_ITEM__NAME:
-        setName((Variable)null);
+        setName((DecisionVariable)null);
+        return;
+      case WreslEditorPackage.WEIGHT_ITEM__TA:
+        setTa((TimeArraySize)null);
         return;
       case WreslEditorPackage.WEIGHT_ITEM__EXPRESSION:
         setExpression((Expression)null);
@@ -251,6 +321,8 @@ public class WeightItemImpl extends MinimalEObjectImpl.Container implements Weig
     {
       case WreslEditorPackage.WEIGHT_ITEM__NAME:
         return name != null;
+      case WreslEditorPackage.WEIGHT_ITEM__TA:
+        return ta != null;
       case WreslEditorPackage.WEIGHT_ITEM__EXPRESSION:
         return expression != null;
     }

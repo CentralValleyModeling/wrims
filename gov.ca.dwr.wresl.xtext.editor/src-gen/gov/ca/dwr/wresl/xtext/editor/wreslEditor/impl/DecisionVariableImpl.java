@@ -2,49 +2,49 @@
  */
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Define;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DecisionVariable;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TimeArraySize;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Define</b></em>'.
+ * An implementation of the model object '<em><b>Decision Variable</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DefineImpl#getDefinition <em>Definition</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DecisionVariableImpl#getTa <em>Ta</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class DefineImpl extends VariableImpl implements Define
+public class DecisionVariableImpl extends VariableImpl implements DecisionVariable
 {
   /**
-   * The cached value of the '{@link #getDefinition() <em>Definition</em>}' containment reference.
+   * The cached value of the '{@link #getTa() <em>Ta</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getDefinition()
+   * @see #getTa()
    * @generated
    * @ordered
    */
-  protected EObject definition;
+  protected TimeArraySize ta;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected DefineImpl()
+  protected DecisionVariableImpl()
   {
     super();
   }
@@ -57,7 +57,7 @@ public class DefineImpl extends VariableImpl implements Define
   @Override
   protected EClass eStaticClass()
   {
-    return WreslEditorPackage.Literals.DEFINE;
+    return WreslEditorPackage.Literals.DECISION_VARIABLE;
   }
 
   /**
@@ -65,9 +65,9 @@ public class DefineImpl extends VariableImpl implements Define
    * <!-- end-user-doc -->
    * @generated
    */
-  public EObject getDefinition()
+  public TimeArraySize getTa()
   {
-    return definition;
+    return ta;
   }
 
   /**
@@ -75,13 +75,13 @@ public class DefineImpl extends VariableImpl implements Define
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetDefinition(EObject newDefinition, NotificationChain msgs)
+  public NotificationChain basicSetTa(TimeArraySize newTa, NotificationChain msgs)
   {
-    EObject oldDefinition = definition;
-    definition = newDefinition;
+    TimeArraySize oldTa = ta;
+    ta = newTa;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, WreslEditorPackage.DEFINE__DEFINITION, oldDefinition, newDefinition);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, WreslEditorPackage.DECISION_VARIABLE__TA, oldTa, newTa);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -92,20 +92,20 @@ public class DefineImpl extends VariableImpl implements Define
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setDefinition(EObject newDefinition)
+  public void setTa(TimeArraySize newTa)
   {
-    if (newDefinition != definition)
+    if (newTa != ta)
     {
       NotificationChain msgs = null;
-      if (definition != null)
-        msgs = ((InternalEObject)definition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.DEFINE__DEFINITION, null, msgs);
-      if (newDefinition != null)
-        msgs = ((InternalEObject)newDefinition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.DEFINE__DEFINITION, null, msgs);
-      msgs = basicSetDefinition(newDefinition, msgs);
+      if (ta != null)
+        msgs = ((InternalEObject)ta).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.DECISION_VARIABLE__TA, null, msgs);
+      if (newTa != null)
+        msgs = ((InternalEObject)newTa).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.DECISION_VARIABLE__TA, null, msgs);
+      msgs = basicSetTa(newTa, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.DEFINE__DEFINITION, newDefinition, newDefinition));
+      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.DECISION_VARIABLE__TA, newTa, newTa));
   }
 
   /**
@@ -118,8 +118,8 @@ public class DefineImpl extends VariableImpl implements Define
   {
     switch (featureID)
     {
-      case WreslEditorPackage.DEFINE__DEFINITION:
-        return basicSetDefinition(null, msgs);
+      case WreslEditorPackage.DECISION_VARIABLE__TA:
+        return basicSetTa(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -134,8 +134,8 @@ public class DefineImpl extends VariableImpl implements Define
   {
     switch (featureID)
     {
-      case WreslEditorPackage.DEFINE__DEFINITION:
-        return getDefinition();
+      case WreslEditorPackage.DECISION_VARIABLE__TA:
+        return getTa();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -150,8 +150,8 @@ public class DefineImpl extends VariableImpl implements Define
   {
     switch (featureID)
     {
-      case WreslEditorPackage.DEFINE__DEFINITION:
-        setDefinition((EObject)newValue);
+      case WreslEditorPackage.DECISION_VARIABLE__TA:
+        setTa((TimeArraySize)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -167,8 +167,8 @@ public class DefineImpl extends VariableImpl implements Define
   {
     switch (featureID)
     {
-      case WreslEditorPackage.DEFINE__DEFINITION:
-        setDefinition((EObject)null);
+      case WreslEditorPackage.DECISION_VARIABLE__TA:
+        setTa((TimeArraySize)null);
         return;
     }
     super.eUnset(featureID);
@@ -184,10 +184,10 @@ public class DefineImpl extends VariableImpl implements Define
   {
     switch (featureID)
     {
-      case WreslEditorPackage.DEFINE__DEFINITION:
-        return definition != null;
+      case WreslEditorPackage.DECISION_VARIABLE__TA:
+        return ta != null;
     }
     return super.eIsSet(featureID);
   }
 
-} //DefineImpl
+} //DecisionVariableImpl

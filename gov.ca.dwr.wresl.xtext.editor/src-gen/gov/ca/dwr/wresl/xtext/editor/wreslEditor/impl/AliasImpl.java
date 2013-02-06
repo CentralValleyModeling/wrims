@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class AliasImpl extends VariableImpl implements Alias
+public class AliasImpl extends DecisionVariableImpl implements Alias
 {
   /**
    * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.

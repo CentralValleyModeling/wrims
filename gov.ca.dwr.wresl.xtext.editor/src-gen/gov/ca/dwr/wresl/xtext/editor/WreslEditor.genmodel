@@ -20,6 +20,10 @@
     <genClasses ecoreClass="WreslEditor.ecore#//Variable">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WreslEditor.ecore#//Variable/name"/>
     </genClasses>
+    <genClasses ecoreClass="WreslEditor.ecore#//StateVariable"/>
+    <genClasses ecoreClass="WreslEditor.ecore#//DecisionVariable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//DecisionVariable/ta"/>
+    </genClasses>
     <genClasses ecoreClass="WreslEditor.ecore#//IfIncItems"/>
     <genClasses ecoreClass="WreslEditor.ecore#//IfTerm">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//IfTerm/elseifterm"/>
@@ -34,18 +38,23 @@
     <genClasses ecoreClass="WreslEditor.ecore#//ElseTerm">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//ElseTerm/pattern"/>
     </genClasses>
+    <genClasses ecoreClass="WreslEditor.ecore#//TimeArraySize">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//TimeArraySize/ref"/>
+    </genClasses>
     <genClasses ecoreClass="WreslEditor.ecore#//Objective">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WreslEditor.ecore#//Objective/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//Objective/weights"/>
     </genClasses>
     <genClasses ecoreClass="WreslEditor.ecore#//WeightItem">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//WeightItem/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//WeightItem/ta"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//WeightItem/expression"/>
     </genClasses>
-    <genClasses ecoreClass="WreslEditor.ecore#//Define">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//Define/definition"/>
+    <genClasses ecoreClass="WreslEditor.ecore#//ExternalDef">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//ExternalDef/definition"/>
     </genClasses>
     <genClasses ecoreClass="WreslEditor.ecore#//SvarDef">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//SvarDef/ta"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//SvarDef/definition"/>
     </genClasses>
     <genClasses ecoreClass="WreslEditor.ecore#//DvarDef">
@@ -141,6 +150,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//Lower/expression"/>
     </genClasses>
     <genClasses ecoreClass="WreslEditor.ecore#//Goal">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//Goal/ta"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WreslEditor.ecore#//Goal/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//Goal/definition"/>
     </genClasses>
@@ -220,7 +230,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//Term/ref"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WreslEditor.ecore#//Term/n"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//Term/f"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//Term/e2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//Term/e"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WreslEditor.ecore#//Term/s"/>
     </genClasses>
     <genClasses ecoreClass="WreslEditor.ecore#//Function"/>
@@ -237,6 +247,10 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//MinFunction/e1"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//MinFunction/e2"/>
     </genClasses>
+    <genClasses ecoreClass="WreslEditor.ecore#//ModFunction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//ModFunction/e1"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//ModFunction/e2"/>
+    </genClasses>
     <genClasses ecoreClass="WreslEditor.ecore#//IntFunction">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//IntFunction/e"/>
     </genClasses>
@@ -250,6 +264,7 @@
     <genClasses ecoreClass="WreslEditor.ecore#//LogFunction">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//LogFunction/e"/>
     </genClasses>
+    <genClasses ecoreClass="WreslEditor.ecore#//VarModelStep"/>
     <genClasses ecoreClass="WreslEditor.ecore#//Ident">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WreslEditor.ecore#//Ident/name"/>
     </genClasses>

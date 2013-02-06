@@ -10,7 +10,11 @@ Pattern:
 	Variable | IncludeFile | IncludeModel | Goal | Objective;
 
 Variable:
-	Define | Alias | SvarDef | DvarDef | ConstDef;
+	StateVariable | DecisionVariable | ExternalDef;
+
+StateVariable: SvarDef | ConstDef;
+
+DecisionVariable: DvarDef | Alias;
 
 IfIncItems:
 	IfTerm  (elseifterm=ElseIfTerm)? (elseterm=ElseTerm)?  ;
@@ -21,22 +25,24 @@ ElseIfTerm: (ElseIf logical+=LogicalExpression '{' pattern+=Pattern+ '}')+;
 
 ElseTerm: Else '{' pattern+=Pattern+ '}';
 
+TimeArraySize: '(' ref=[StateVariable] ')';
+
 Objective:
 	('objective' | 'OBJECTIVE') ('[' local?=('local' | 'LOCAL') ']')? name=ID '='? '{' weights+=WeightItem+ '}';
 
 WeightItem:
-	'[' name=[Variable] ',' expression=Expression ']' (',')?;
+	'[' name=[DecisionVariable] ta=TimeArraySize? ',' expression=Expression ']' (',')?;
 
-Define:
-	('define' | 'DEFINE') ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=(DVar | SVar | DVarInteger |
-	External)
-	'}';
+ExternalDef:
+	('define' | 'DEFINE') ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=External '}';
 	
 SvarDef:
-	('svar' | 'SVAR' | 'Svar') ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=SVar '}';
+	 ('define' | 'DEFINE') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=SVar '}'
+	| (('svar' | 'SVAR' | 'Svar') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=SVar '}');
 
 DvarDef:
-	('dvar' | 'DVAR' | 'Dvar') ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=(DVar|DVarInteger) '}';
+	(('define' | 'DEFINE') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=(DVar|DVarInteger) '}')
+	| (('dvar' | 'DVAR' | 'Dvar') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=(DVar|DVarInteger) '}');
 
 ConstDef:
 	('const' | 'CONST' | 'Const') ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=Number '}';
@@ -45,7 +51,7 @@ External:
 	('external' | 'EXTERNAL') ((name=ID ('.dll' | '.DLL')) | {External} ('f90' | 'F90'));
 
 Alias: //name=[SVar|ID] to be changed to reference after scoping is resolved across files
-	('define' | 'DEFINE') ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' ('alias' | 'ALIAS') expression=Expression
+	('define' | 'DEFINE') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' ('alias' | 'ALIAS') expression=Expression
 	(('kind' |
 	'KIND') kind=STRING)? (('units' | 'UNITS') units=STRING)? '}';
 
@@ -130,7 +136,7 @@ Lower:
 	("lower" | "LOWER") ({Lower} ("unbounded" | "UNBOUNDED") | expression=Expression);
 
 Goal:
-	("goal" | "GOAL") ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=(GoalSimple | GoalCase) '}';
+	("goal" | "GOAL") ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=(GoalSimple | GoalCase) '}';
 
 GoalCase:
 	('lhs' | 'LHS') lhs=Expression (content=GoalNoCaseContent | caseContent+=GoalCaseContent+);
@@ -183,7 +189,7 @@ ConditionalNegation:
 	NOT;
 
 ConditionalTerm:
-	e1=Expression Relation e2=Expression | LogicalFunction //| '(' LogicalExpression ')'
+	(e1=Expression Relation e2=Expression) | LogicalFunction | =>('(' LogicalExpression ')')  
 ;
 
 Relation:
@@ -205,19 +211,22 @@ Negation:
 	'-';
 
 Term:
-	ref=[Variable] | n=Number | f=Function | '(' e2=Expression ')'| s=SpecialIdent;
+	ref=[Variable] | n=Number | f=Function | '(' e=Expression ')'| s=SpecialIdent | MultiStep;
 
 Function:
-	ExternalFunction | MaxFunction | MinFunction | IntFunction | AbsFunction | PowFunction | LogFunction | VarModel;
+	ExternalFunction | MaxFunction | MinFunction | '(' SumContent ')' | ModFunction | IntFunction | AbsFunction | PowFunction | LogFunction | VarModel | VarModelStep;
 
 ExternalFunction:
-	((ref=[Variable])|TafCfs) '(' e1=Expression (',' e2+=Expression)* ')';
+	((ref=[Variable])|TafCfs|Month) '(' e1=Expression (',' e2+=Expression)* ')';
 
 MaxFunction:
 	MAX '(' e1=Expression (',' e2+=Expression)* ')';
 
 MinFunction:
 	MIN '(' e1=Expression (',' e2+=Expression)* ')';
+	
+ModFunction:
+    MOD '(' e1=Expression ','  e2=Expression ')';
 
 IntFunction:
 	INTFUNC '(' e=Expression ')';
@@ -236,6 +245,9 @@ LogicalFunction:
 
 VarModel:
 	ID '[' ID ']';
+	
+VarModelStep:
+	ID '[' ID ']' '(' Expression ')';
 
 RangeFunction:
 	RANGE '(' (ID|Month|WaterYear) ',' (ID|CalendarMonth|PrevMonth) ',' (ID|CalendarMonth|PrevMonth) ')';
@@ -276,6 +288,8 @@ CalendarMonth: 'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'
 
 PrevMonth: 'prevjan'|'prevfeb'|'prevmar'|'prevapr'|'prevmay'|'prevjun'|'prevjul'|'prevaug'|'prevsep'|'prevoct'|'prevnov'|'prevdec';
 
+MultiStep: '$m';
+
 terminal If : 'If' | 'IF' | 'if' ;
 
 terminal ElseIf : 'Elseif' | 'ELSEIF' | 'elseif' | 'ElseIf' ;
@@ -290,6 +304,9 @@ terminal MIN:
 
 terminal MAX:
 	'max' | 'MAX';
+	
+terminal MOD:
+	'mod' | 'MOD';
 	
 terminal INTFUNC:
 	'int' | 'INT';

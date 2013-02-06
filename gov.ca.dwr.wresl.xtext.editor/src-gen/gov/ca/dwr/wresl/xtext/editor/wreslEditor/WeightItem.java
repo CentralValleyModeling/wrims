@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WeightItem#getName <em>Name</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WeightItem#getTa <em>Ta</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WeightItem#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
@@ -32,12 +33,12 @@ public interface WeightItem extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' reference.
-   * @see #setName(Variable)
+   * @see #setName(DecisionVariable)
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getWeightItem_Name()
    * @model
    * @generated
    */
-  Variable getName();
+  DecisionVariable getName();
 
   /**
    * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WeightItem#getName <em>Name</em>}' reference.
@@ -47,7 +48,33 @@ public interface WeightItem extends EObject
    * @see #getName()
    * @generated
    */
-  void setName(Variable value);
+  void setName(DecisionVariable value);
+
+  /**
+   * Returns the value of the '<em><b>Ta</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Ta</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Ta</em>' containment reference.
+   * @see #setTa(TimeArraySize)
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getWeightItem_Ta()
+   * @model containment="true"
+   * @generated
+   */
+  TimeArraySize getTa();
+
+  /**
+   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WeightItem#getTa <em>Ta</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Ta</em>' containment reference.
+   * @see #getTa()
+   * @generated
+   */
+  void setTa(TimeArraySize value);
 
   /**
    * Returns the value of the '<em><b>Expression</b></em>' containment reference.

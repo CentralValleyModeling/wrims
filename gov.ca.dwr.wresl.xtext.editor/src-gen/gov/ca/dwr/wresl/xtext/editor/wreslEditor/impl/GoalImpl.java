@@ -3,6 +3,7 @@
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TimeArraySize;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -21,6 +22,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GoalImpl#getTa <em>Ta</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GoalImpl#getName <em>Name</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GoalImpl#getDefinition <em>Definition</em>}</li>
  * </ul>
@@ -30,6 +32,16 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class GoalImpl extends PatternImpl implements Goal
 {
+  /**
+   * The cached value of the '{@link #getTa() <em>Ta</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTa()
+   * @generated
+   * @ordered
+   */
+  protected TimeArraySize ta;
+
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -79,6 +91,54 @@ public class GoalImpl extends PatternImpl implements Goal
   protected EClass eStaticClass()
   {
     return WreslEditorPackage.Literals.GOAL;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TimeArraySize getTa()
+  {
+    return ta;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetTa(TimeArraySize newTa, NotificationChain msgs)
+  {
+    TimeArraySize oldTa = ta;
+    ta = newTa;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, WreslEditorPackage.GOAL__TA, oldTa, newTa);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setTa(TimeArraySize newTa)
+  {
+    if (newTa != ta)
+    {
+      NotificationChain msgs = null;
+      if (ta != null)
+        msgs = ((InternalEObject)ta).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.GOAL__TA, null, msgs);
+      if (newTa != null)
+        msgs = ((InternalEObject)newTa).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - WreslEditorPackage.GOAL__TA, null, msgs);
+      msgs = basicSetTa(newTa, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.GOAL__TA, newTa, newTa));
   }
 
   /**
@@ -162,6 +222,8 @@ public class GoalImpl extends PatternImpl implements Goal
   {
     switch (featureID)
     {
+      case WreslEditorPackage.GOAL__TA:
+        return basicSetTa(null, msgs);
       case WreslEditorPackage.GOAL__DEFINITION:
         return basicSetDefinition(null, msgs);
     }
@@ -178,6 +240,8 @@ public class GoalImpl extends PatternImpl implements Goal
   {
     switch (featureID)
     {
+      case WreslEditorPackage.GOAL__TA:
+        return getTa();
       case WreslEditorPackage.GOAL__NAME:
         return getName();
       case WreslEditorPackage.GOAL__DEFINITION:
@@ -196,6 +260,9 @@ public class GoalImpl extends PatternImpl implements Goal
   {
     switch (featureID)
     {
+      case WreslEditorPackage.GOAL__TA:
+        setTa((TimeArraySize)newValue);
+        return;
       case WreslEditorPackage.GOAL__NAME:
         setName((String)newValue);
         return;
@@ -216,6 +283,9 @@ public class GoalImpl extends PatternImpl implements Goal
   {
     switch (featureID)
     {
+      case WreslEditorPackage.GOAL__TA:
+        setTa((TimeArraySize)null);
+        return;
       case WreslEditorPackage.GOAL__NAME:
         setName(NAME_EDEFAULT);
         return;
@@ -236,6 +306,8 @@ public class GoalImpl extends PatternImpl implements Goal
   {
     switch (featureID)
     {
+      case WreslEditorPackage.GOAL__TA:
+        return ta != null;
       case WreslEditorPackage.GOAL__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case WreslEditorPackage.GOAL__DEFINITION:

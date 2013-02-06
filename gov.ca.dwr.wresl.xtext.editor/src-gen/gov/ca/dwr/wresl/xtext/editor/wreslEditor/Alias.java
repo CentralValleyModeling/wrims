@@ -21,7 +21,7 @@ package gov.ca.dwr.wresl.xtext.editor.wreslEditor;
  * @model
  * @generated
  */
-public interface Alias extends Variable
+public interface Alias extends DecisionVariable
 {
   /**
    * Returns the value of the '<em><b>Expression</b></em>' containment reference.

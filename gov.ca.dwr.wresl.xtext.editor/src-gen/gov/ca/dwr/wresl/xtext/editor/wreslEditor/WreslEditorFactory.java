@@ -50,6 +50,24 @@ public interface WreslEditorFactory extends EFactory
   Variable createVariable();
 
   /**
+   * Returns a new object of class '<em>State Variable</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>State Variable</em>'.
+   * @generated
+   */
+  StateVariable createStateVariable();
+
+  /**
+   * Returns a new object of class '<em>Decision Variable</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Decision Variable</em>'.
+   * @generated
+   */
+  DecisionVariable createDecisionVariable();
+
+  /**
    * Returns a new object of class '<em>If Inc Items</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -86,6 +104,15 @@ public interface WreslEditorFactory extends EFactory
   ElseTerm createElseTerm();
 
   /**
+   * Returns a new object of class '<em>Time Array Size</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Time Array Size</em>'.
+   * @generated
+   */
+  TimeArraySize createTimeArraySize();
+
+  /**
    * Returns a new object of class '<em>Objective</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -104,13 +131,13 @@ public interface WreslEditorFactory extends EFactory
   WeightItem createWeightItem();
 
   /**
-   * Returns a new object of class '<em>Define</em>'.
+   * Returns a new object of class '<em>External Def</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Define</em>'.
+   * @return a new object of class '<em>External Def</em>'.
    * @generated
    */
-  Define createDefine();
+  ExternalDef createExternalDef();
 
   /**
    * Returns a new object of class '<em>Svar Def</em>'.
@@ -617,6 +644,15 @@ public interface WreslEditorFactory extends EFactory
   MinFunction createMinFunction();
 
   /**
+   * Returns a new object of class '<em>Mod Function</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Mod Function</em>'.
+   * @generated
+   */
+  ModFunction createModFunction();
+
+  /**
    * Returns a new object of class '<em>Int Function</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -651,6 +687,15 @@ public interface WreslEditorFactory extends EFactory
    * @generated
    */
   LogFunction createLogFunction();
+
+  /**
+   * Returns a new object of class '<em>Var Model Step</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Var Model Step</em>'.
+   * @generated
+   */
+  VarModelStep createVarModelStep();
 
   /**
    * Returns a new object of class '<em>Ident</em>'.
