@@ -5,6 +5,7 @@ package gov.ca.dwr.wresl.xtext.editor.ui.labeling;
 
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConstDef;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IncludeFile;
@@ -99,6 +100,14 @@ public class WreslEditorLabelProvider extends DefaultEObjectLabelProvider {
 
 	String image(ConstDef e) {
 		return "outline_svar.gif";	
+	}
+	
+	String text(ExternalDef e) {
+		return e.getName();
+	}
+
+	String image(ExternalDef e) {
+		return "outline_define.gif";  //To Do: Change to external function icon	
 	}
 	
 	String text(Alias e) {

@@ -8,6 +8,7 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConstDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DvarDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseIfTerm;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseTerm;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfTerm;
@@ -39,6 +40,7 @@ public class WreslEditorOutlineTreeProvider extends DefaultOutlineTreeProvider {
 				|| modelElement instanceof SvarDef
 				|| modelElement instanceof DvarDef
 				|| modelElement instanceof ConstDef
+				|| modelElement instanceof ExternalDef
 				|| modelElement instanceof Alias
 				|| modelElement instanceof Goal
 				|| modelElement instanceof Objective) {
