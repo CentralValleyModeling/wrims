@@ -45,14 +45,20 @@ public class WPPFileIncExploreView extends ViewPart {
 		public Object[] getChildren(Object parent) {
 			File file = (File) parent;
 			File[] files = file.listFiles();
-			ArrayList<File> filesInc=new ArrayList<File> ();
+			ArrayList<File> fileFoldersInc=new ArrayList<File> ();
+			ArrayList<File> filesInc= new ArrayList<File> ();
 			for (int i=0; i<files.length; i++){
 				String path=files[i].getAbsolutePath();
 				if (DebugCorePlugin.fileFolderWreslInc.contains(path.toLowerCase())){
-					filesInc.add(files[i]);
+					if (files[i].isDirectory()){
+						fileFoldersInc.add(files[i]);
+					}else{
+						filesInc.add(files[i]);
+					}
 				}
 			}
-			File[] fileArray = filesInc.toArray(new File[filesInc.size()]);
+			fileFoldersInc.addAll(filesInc);
+			File[] fileArray = fileFoldersInc.toArray(new File[fileFoldersInc.size()]);
 			return fileArray;
 		}
 

@@ -60,6 +60,22 @@ public class FileProcess {
 		return fns;
 	}
 	
+	public static ArrayList<String> getCycleWreslFiles(String mainFilePath, StudyDataSet sds, int index){
+		ArrayList<String> fns=new ArrayList<String>();
+		fns.add(mainFilePath.toLowerCase());
+		Map<String, ModelDataSet> mdsm = sds.getModelDataSetMap();
+		String mn=sds.getModelList().get(index);
+		ModelDataSet mds=mdsm.get(mn);
+		ArrayList<String> ifl = mds.incFileList;
+		for (int i=0; i<ifl.size(); i++){
+			String fnl = ifl.get(i).toLowerCase();
+			if (!fns.contains(fnl)){
+				fns.add(fnl);
+			}
+		}
+		return fns;
+	}
+	
 	public static ArrayList<String> getTableFiles(String mainFilePath){
 		ArrayList<String> tns=new ArrayList<String>();
 		File file=new File(mainFilePath);

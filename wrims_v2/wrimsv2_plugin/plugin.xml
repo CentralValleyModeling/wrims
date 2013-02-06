@@ -218,8 +218,37 @@
 		name="Study WRESL">
 	</command>
 </extension>
+<extension
+	point="org.eclipse.ui.commands">
+	<command
+		description="List included WRESL in a cycle"
+		id="wpp.cyclewresl"
+		defaultHandler="wrimsv2_plugin.debugger.commanditem.CycleWresl"
+		name="Cycle WRESL">
+	</command>
+</extension>
 <extension point="org.eclipse.ui.menus">
-        <menuContribution
+	  <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         	<command 
+         	commandId="wpp.cyclewresl"
+            style="push">
+            <visibleWhen checkEnabled="false">
+              <with variable="selection">
+                 <iterate ifEmpty="false" operator="or">
+                    <adapt type="org.eclipse.core.resources.IResource">
+                       <or>
+                          <test property="org.eclipse.core.resources.extension"
+                                value="wresl">
+                          </test>
+                       </or>
+                    </adapt>
+                 </iterate>
+              </with>
+           </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          	<command 
          	commandId="wpp.studywresl"
@@ -239,7 +268,7 @@
            </visibleWhen>
          </command>
       </menuContribution>
-   </extension>
+</extension>
 <extension
          point="org.eclipse.debug.ui.launchConfigurationTabGroups">
       <launchConfigurationTabGroup

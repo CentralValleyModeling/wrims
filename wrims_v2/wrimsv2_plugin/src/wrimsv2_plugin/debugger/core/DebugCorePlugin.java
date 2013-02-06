@@ -195,6 +195,7 @@ public class DebugCorePlugin extends AbstractUIPlugin {
 	public static String conditionalBreakpoint="";
 	
 	public static ArrayList<String> fileFolderWreslInc=new ArrayList<String>();
+	public static String cycleWreslMainFilePath = "";
 	/**
 	 * The constructor.
 	 */
