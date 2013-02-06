@@ -5,7 +5,6 @@ package gov.ca.dwr.wresl.xtext.editor.ui.labeling;
 
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConstDef;
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Define;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IncludeFile;
@@ -76,22 +75,6 @@ public class WreslEditorLabelProvider extends DefaultEObjectLabelProvider {
 
 	String image(Goal e) {
 		return "outline_goal.gif";
-	}
-
-	String text(Define e) {
-		return e.getName();
-	}
-
-	String image(Define e) {
-		EObject definition = e.getDefinition();
-		if (definition instanceof SVar) {
-			if (definition instanceof SVarDSS) {
-				return "outline_svar_timeseries.gif";
-			} else {
-				return "outline_svar.gif";
-			}
-		}
-		return "outline_define.gif";
 	}
 	
 	String text(SvarDef e) {

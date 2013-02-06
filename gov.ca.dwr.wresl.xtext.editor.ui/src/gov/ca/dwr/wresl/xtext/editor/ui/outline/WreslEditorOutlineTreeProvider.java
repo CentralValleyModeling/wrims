@@ -5,7 +5,6 @@ package gov.ca.dwr.wresl.xtext.editor.ui.outline;
 
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConstDef;
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Define;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DvarDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseIfTerm;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseTerm;
@@ -37,7 +36,6 @@ public class WreslEditorOutlineTreeProvider extends DefaultOutlineTreeProvider {
 				|| modelElement instanceof Model
 				|| modelElement instanceof Sequence
 				|| modelElement instanceof IncludeFile
-				|| modelElement instanceof Define
 				|| modelElement instanceof SvarDef
 				|| modelElement instanceof DvarDef
 				|| modelElement instanceof ConstDef

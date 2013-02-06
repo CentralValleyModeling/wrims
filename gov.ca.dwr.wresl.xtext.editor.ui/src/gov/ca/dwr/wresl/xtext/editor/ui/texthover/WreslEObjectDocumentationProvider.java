@@ -3,8 +3,8 @@ package gov.ca.dwr.wresl.xtext.editor.ui.texthover;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVar;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AliasImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ConstDefImpl;
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DefineImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DvarDefImpl;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ExternalDefImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ExternalImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GoalImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IdentImpl;
@@ -26,13 +26,7 @@ public class WreslEObjectDocumentationProvider implements
 		IEObjectDocumentationProvider {
 	
 	public String getDocumentation(EObject o) {
-		if (o instanceof DefineImpl){
-			if (((DefineImpl)o).getDefinition() instanceof ExternalImpl){
-				return null;
-			}
-			String name=((DefineImpl) o).getName();
-			return "value : "+getValue(name);
-		}else if (o instanceof AliasImpl){
+		if (o instanceof AliasImpl){
 			String name=((AliasImpl) o).getName();
 			return "value : "+getValue(name);
 		}else if (o instanceof GoalImpl){
@@ -50,6 +44,8 @@ public class WreslEObjectDocumentationProvider implements
 		}else if (o instanceof ConstDefImpl){
 			String name=((ConstDefImpl) o).getName();
 			return "value : "+getValue(name);
+		}else if (o instanceof ExternalDefImpl){
+			return null;
 		}else{
 			return null;
 		}

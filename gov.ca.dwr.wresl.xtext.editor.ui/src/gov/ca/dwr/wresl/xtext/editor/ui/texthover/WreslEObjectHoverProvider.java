@@ -7,8 +7,8 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVar;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AliasImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ConstDefImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DVarIntegerImpl;
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DefineImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DvarDefImpl;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ExternalDefImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ExternalImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GoalImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IdentImpl;
@@ -36,11 +36,7 @@ public class WreslEObjectHoverProvider extends DefaultEObjectHoverProvider {
 	@Override
 	protected String getFirstLine(EObject o) {
 		String hoverText;
-		if (o instanceof DefineImpl){
-			hoverText=((DefineImpl) o).getName();
-			if (!(((DefineImpl)o).getDefinition() instanceof ExternalImpl)) DebugCorePlugin.hoverText=hoverText;
-			return hoverText;
-		}else if (o instanceof AliasImpl){
+		if (o instanceof AliasImpl){
 			hoverText=((AliasImpl) o).getName();
 			DebugCorePlugin.hoverText=hoverText;
 			return hoverText;
@@ -63,6 +59,9 @@ public class WreslEObjectHoverProvider extends DefaultEObjectHoverProvider {
 		}else if (o instanceof ConstDefImpl){
 			hoverText=((ConstDefImpl) o).getName();
 			DebugCorePlugin.hoverText=hoverText;
+			return hoverText;
+		}else if (o instanceof ExternalDefImpl){
+			hoverText=((ExternalDefImpl) o).getName();
 			return hoverText;
 		}else{
 			DebugCorePlugin.hoverText="";
