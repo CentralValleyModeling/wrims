@@ -156,7 +156,7 @@ public class DebugSet extends WorkbenchWindowControlContribution{
 			_cycle.add(String.valueOf(i));
 		}
      
-		_cycle.select(0);
+		_cycle.select(98);
 		_cycle.setToolTipText("Go To Cycle:");
 		_cycle.addModifyListener(new ModifyListener() {
 			@Override
