@@ -553,7 +553,7 @@ public class DebugInterface {
 				}
 			}
 			for (String asName:asList){
-				if (asMap.containsKey(asName)){
+				if (fileDataSet.asMap.containsKey(asName)){
 					Set<String> dependants = fileDataSet.asMap.get(asName).dependants;
 					Iterator<String> iterator = dependants.iterator();
 					while (iterator.hasNext()){
@@ -632,7 +632,6 @@ public class DebugInterface {
 		ArrayList<String> gList = new ArrayList<String>();
 		ArrayList<String> sortedList = new ArrayList<String>();
 		ModelTemp modelTemp;
-		Map<String, GoalTemp> gMap = new HashMap <String, GoalTemp>();
 		fileFullPath=fileFullPath.replace("/", "\\");
 		if (fileFullPath.equalsIgnoreCase(FilePaths.fullMainPath)){
 			StudyTemp studyTemp = ParserUtils.parseWreslMain(fileFullPath);
@@ -648,15 +647,14 @@ public class DebugInterface {
 				asList = modelTemp.asList;
 				tsList = modelTemp.tsList;
 				gList = modelTemp.glList;
-				gMap = modelTemp.glMap;
 				asList.removeAll(dvList);
 				sortedList.addAll(dvList);
 				sortedList.addAll(svList);
 				sortedList.addAll(tsList);
 				sortedList.addAll(asList);
 				for (String gName:gList){
-					if (gMap.containsKey(gName)){
-						Set<String> dependants = gMap.get(gName).dependants;
+					if (modelTemp.glMap.containsKey(gName)){
+						Set<String> dependants = modelTemp.glMap.get(gName).dependants;
 						Iterator<String> iterator = dependants.iterator();
 						while (iterator.hasNext()){
 							String varName=iterator.next();
@@ -667,8 +665,8 @@ public class DebugInterface {
 					}
 				}
 				for (String svName:svList){
-					if (svMap.containsKey(svName)){
-						Set<String> dependants = svMap.get(svName).dependants;
+					if (modelTemp.svMap.containsKey(svName)){
+						Set<String> dependants = modelTemp.svMap.get(svName).dependants;
 						Iterator<String> iterator = dependants.iterator();
 						while (iterator.hasNext()){
 							String varName=iterator.next();
@@ -679,8 +677,8 @@ public class DebugInterface {
 					}
 				}
 				for (String asName:asList){
-					if (asMap.containsKey(asName)){
-						Set<String> dependants = asMap.get(asName).dependants;
+					if (modelTemp.asMap.containsKey(asName)){
+						Set<String> dependants = modelTemp.asMap.get(asName).dependants;
 						Iterator<String> iterator = dependants.iterator();
 						while (iterator.hasNext()){
 							String varName=iterator.next();
@@ -699,7 +697,6 @@ public class DebugInterface {
 			asList = modelTemp.asList;
 			tsList = modelTemp.tsList;
 			gList = modelTemp.glList;
-			gMap = modelTemp.glMap;
 			sortedList = new ArrayList<String>();
 			asList.removeAll(dvList);
 			sortedList.addAll(dvList);
@@ -707,8 +704,8 @@ public class DebugInterface {
 			sortedList.addAll(tsList);
 			sortedList.addAll(asList);
 			for (String gName:gList){
-				if (gMap.containsKey(gName)){
-					Set<String> dependants = gMap.get(gName).dependants;
+				if (modelTemp.glMap.containsKey(gName)){
+					Set<String> dependants = modelTemp.glMap.get(gName).dependants;
 					Iterator<String> iterator = dependants.iterator();
 					while (iterator.hasNext()){
 						String varName=iterator.next();
@@ -719,8 +716,8 @@ public class DebugInterface {
 				}
 			}
 			for (String svName:svList){
-				if (svMap.containsKey(svName)){
-					Set<String> dependants = svMap.get(svName).dependants;
+				if (modelTemp.svMap.containsKey(svName)){
+					Set<String> dependants = modelTemp.svMap.get(svName).dependants;
 					Iterator<String> iterator = dependants.iterator();
 					while (iterator.hasNext()){
 						String varName=iterator.next();
@@ -731,8 +728,8 @@ public class DebugInterface {
 				}
 			}
 			for (String asName:asList){
-				if (asMap.containsKey(asName)){
-					Set<String> dependants = asMap.get(asName).dependants;
+				if (modelTemp.asMap.containsKey(asName)){
+					Set<String> dependants = modelTemp.asMap.get(asName).dependants;
 					Iterator<String> iterator = dependants.iterator();
 					while (iterator.hasNext()){
 						String varName=iterator.next();
@@ -1414,7 +1411,7 @@ public class DebugInterface {
 		Collections.sort(indexList);
 		for (int i=0; i<indexList.size(); i++){
 			Integer index=indexList.get(i);
-			TimeOperation.findTime(i);
+			TimeOperation.findTime(index);
 			dataString=dataString+index+":"+ControlData.dataMonth+"-"+ControlData.dataDay+"-"+ControlData.dataYear+":"+df.format(futureArray.get(index))+"#";
 		}
 		
