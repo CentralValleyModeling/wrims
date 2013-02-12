@@ -904,7 +904,7 @@ expr_mult
     :    expr_unary  ( ( '*' | '/' )  expr_unary   )*
     ; 
 
-expr_unary: '-'? expr_term ;
+expr_unary: ('-'|'+')?  expr_term ;
 
 expr_term 
     :   atom
