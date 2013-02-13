@@ -250,7 +250,7 @@ argFunction returns [EvalExpression ee] @init{ArrayList<EvalExpression> eeArray 
   : IDENT '(' (e1=expression {eeArray.add($e1.ee);}) (';' (e2=expression{eeArray.add($e2.ee);}))* ')'{ee=Evaluation.argFunction($IDENT.text,eeArray);};
   	
 unary returns [EvalExpression ee] 
-	:	(s='-')? term{ee=Evaluation.unary($s.text, $term.ee);
+	:	(s=('+'|'-'))? term{ee=Evaluation.unary($s.text, $term.ee);
 	};
 	
 allnumber 

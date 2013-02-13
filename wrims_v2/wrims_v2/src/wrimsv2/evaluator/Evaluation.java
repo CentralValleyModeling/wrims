@@ -230,7 +230,7 @@ public class Evaluation {
 	}
 	
 	public static EvalExpression unary (String s, EvalExpression ee){
-		if (s !=null){
+		if (s !=null && s.equals("-")){
 			if (ee.getValue().isInt()){
 				int value=-ee.getValue().getData().intValue();
 				ee.getValue().setData(value);

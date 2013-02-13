@@ -166,7 +166,7 @@ public class ValueEvaluation {
 	}
 	
 	public static IntDouble unary (String s, IntDouble id){
-		if (s !=null){
+		if (s !=null && s.equals("-")){
 			if (id.isInt()){
 				int value=-id.getData().intValue();
 				id.setData(value);

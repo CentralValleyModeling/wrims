@@ -246,7 +246,7 @@ argFunction returns [IntDouble result] @init{ArrayList<IntDouble> idArray = new 
   : IDENT '(' (e1=expression {idArray.add($e1.id);}) (';' (e2=expression{idArray.add($e2.id);}))* ')'{result=ValueEvaluation.argFunction($IDENT.text,idArray);};
   	
 unary returns [IntDouble id] 
-	:	(s='-')? term{id=ValueEvaluation.unary($s.text, $term.id);
+	:	(s=('+'|'-'))? term{id=ValueEvaluation.unary($s.text, $term.id);
 	};
 	
 allnumber 
