@@ -605,6 +605,27 @@ public class ModelDataSet implements Serializable {
 			}
 			evaluator.reset();
 			
+			if (!alias.timeArraySize.equals("0")){
+				String newAsName=asName+"__fut__0";
+				String entryNameTS=DssOperation.entryNameTS(newAsName, ControlData.timeStep);
+				if (!DataTimeSeries.dvAliasTS.containsKey(entryNameTS)){
+					DssDataSetFixLength dds=new DssDataSetFixLength();
+					double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
+					dds.setData(data);
+					dds.setTimeStep(ControlData.partE);
+					if (dds.getTimeStep().equals("1MON")){
+						dds.setStartTime(ControlData.monthlyStartTime);
+					}else{
+						dds.setStartTime(ControlData.dailyStartTime);
+					}
+					dds.setUnits(alias.units);
+					dds.setKind(alias.kind);
+					DataTimeSeries.dvAliasTS.put(entryNameTS,dds);
+				}
+				double[] dataList=DataTimeSeries.dvAliasTS.get(entryNameTS).getData();
+				dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=alias.data.getData().doubleValue();
+			}
+			
 			int timeArraySize=getTimeArraySize(alias.timeArraySizeParser);
 			for (ControlData.timeArrayIndex=1; ControlData.timeArrayIndex<=timeArraySize; ControlData.timeArrayIndex++){
 				String newAsName=asName+"__fut__"+ControlData.timeArrayIndex;
