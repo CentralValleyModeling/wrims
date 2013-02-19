@@ -5,6 +5,7 @@ package gov.ca.dwr.wresl.xtext.editor.ui.labeling;
 
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ConstDef;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Declaration;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DvarDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal;
@@ -80,7 +81,7 @@ public class WreslEditorLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	
 	String text(SvarDef e) {
-		return e.getName();
+		return e.getRef().getName();
 	}
 
 	String image(SvarDef e) {
@@ -96,7 +97,7 @@ public class WreslEditorLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	String text(ConstDef e) {
-		return e.getName();
+		return e.getRef().getName();
 	}
 
 	String image(ConstDef e) {
@@ -104,7 +105,7 @@ public class WreslEditorLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	
 	String text(ExternalDef e) {
-		return e.getName();
+		return e.getRef().getName();
 	}
 
 	String image(ExternalDef e) {
@@ -112,7 +113,7 @@ public class WreslEditorLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	
 	String text(DvarDef e) {
-		return e.getName();
+		return e.getRef().getName();
 	}
 
 	String image(DvarDef e) {
@@ -120,7 +121,7 @@ public class WreslEditorLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	
 	String text(Alias e) {
-		return e.getName();
+		return e.getRef().getName();
 	}
 
 	String image(Alias e) {
@@ -133,5 +134,9 @@ public class WreslEditorLabelProvider extends DefaultEObjectLabelProvider {
 
 	String image(IncludeFile e){
 		return "outline_include.gif";
+	}
+	
+	String text(Declaration e){
+		return e.getName();
 	}
 }

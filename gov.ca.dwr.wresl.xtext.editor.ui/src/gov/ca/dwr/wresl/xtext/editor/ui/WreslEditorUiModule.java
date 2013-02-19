@@ -3,14 +3,21 @@
  */
 package gov.ca.dwr.wresl.xtext.editor.ui;
 
+import gov.ca.dwr.wresl.xtext.editor.ui.link.WreslLinkingService;
 import gov.ca.dwr.wresl.xtext.editor.ui.texthover.WreslEObjectDocumentationProvider;
 import gov.ca.dwr.wresl.xtext.editor.ui.texthover.WreslEObjectHoverProvider;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider;
+import org.eclipse.xtext.linking.ILinkingService;
+import org.eclipse.xtext.linking.lazy.LazyLinkingResource;
+import org.eclipse.xtext.resource.DerivedStateAwareResource;
+import org.eclipse.xtext.resource.IDerivedStateComputer;
 import org.eclipse.xtext.ui.editor.findrefs.IReferenceFinder;
 import org.eclipse.xtext.ui.editor.hover.IEObjectHoverProvider;
 import org.eclipse.xtext.ui.refactoring.IDependentElementsCalculator;
+import org.eclipse.xtext.xbase.jvmmodel.JvmModelAssociator;
+import org.eclipse.xtext.xtext.GrammarResource;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -28,4 +35,18 @@ public class WreslEditorUiModule extends gov.ca.dwr.wresl.xtext.editor.ui.Abstra
 	public Class<? extends IEObjectDocumentationProvider> bindIEObjectDocumentationProvider() {
 		return WreslEObjectDocumentationProvider.class;
 	}
+	
+	public Class<? extends ILinkingService> bindILinkingService() {
+		return WreslLinkingService.class;
+	}
+	
+	/*
+	public Class<? extends LazyLinkingResource> bindLazyLinkingResource() {
+		return DerivedStateAwareResource.class;
+	}
+	
+	public Class<? extends IDerivedStateComputer> bindIDerivedStateComputer() {
+		return JvmModelAssociator.class;
+	}
+	*/
 }

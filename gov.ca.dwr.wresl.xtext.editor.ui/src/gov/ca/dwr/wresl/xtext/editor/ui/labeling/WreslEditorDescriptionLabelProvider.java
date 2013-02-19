@@ -3,7 +3,17 @@
 */
 package gov.ca.dwr.wresl.xtext.editor.ui.labeling;
 
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Declaration;
+
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.xtext.resource.IReferenceDescription;
 import org.eclipse.xtext.ui.label.DefaultDescriptionLabelProvider;
+
+import com.google.inject.Inject;
 
 /**
  * Provides labels for a IEObjectDescriptions and IResourceDescriptions.
@@ -11,6 +21,9 @@ import org.eclipse.xtext.ui.label.DefaultDescriptionLabelProvider;
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvider
  */
 public class WreslEditorDescriptionLabelProvider extends DefaultDescriptionLabelProvider {
+
+	@Inject
+    private WreslEditorLabelProvider labelProvider;
 
 /*
 	//Labels and icons can be computed like this:
@@ -23,5 +36,26 @@ public class WreslEditorDescriptionLabelProvider extends DefaultDescriptionLabel
       return ele.getEClass().getName() + ".gif";
     }	 
 */
+	public Object text(IReferenceDescription referenceDescription) {
+		URI sourceUri = referenceDescription.getSourceEObjectUri();
+		String sourceFragment = sourceUri.fragment();
+		if (sourceFragment.startsWith("//@pattern.")){
+			int index=sourceFragment.indexOf("/", 2);
+			if (index<=1){
+				EObject object = new ResourceSetImpl().getEObject(sourceUri, true);
+		        return (String)labelProvider.getText(object)+" - "+object.eClass().getName();
+			}else{
+				String fragment=sourceFragment.substring(0, index);
+				URI uri=sourceUri.trimFragment().appendFragment(fragment);
+				EObject object = new ResourceSetImpl().getEObject(uri, true);
+		        return (String)labelProvider.getText(object)+" - "+object.eClass().getName();
+			}
+		}
+        return "<unnamed>";
+	}
+	
+	public Object image(IReferenceDescription referenceDescription) {
+		return null;
+	}
 
 }

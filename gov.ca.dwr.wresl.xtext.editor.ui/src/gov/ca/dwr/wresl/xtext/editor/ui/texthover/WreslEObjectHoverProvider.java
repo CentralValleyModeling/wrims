@@ -7,6 +7,7 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVar;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.AliasImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ConstDefImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DVarIntegerImpl;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DeclarationImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DvarDefImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ExternalDefImpl;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ExternalImpl;
@@ -36,8 +37,12 @@ public class WreslEObjectHoverProvider extends DefaultEObjectHoverProvider {
 	@Override
 	protected String getFirstLine(EObject o) {
 		String hoverText;
-		if (o instanceof AliasImpl){
-			hoverText=((AliasImpl) o).getName();
+		if (o instanceof DeclarationImpl){
+			hoverText=((DeclarationImpl) o).getName();
+			DebugCorePlugin.hoverText=hoverText;
+			return hoverText;
+		}else if (o instanceof AliasImpl){
+			hoverText=((AliasImpl) o).getRef().getName();
 			DebugCorePlugin.hoverText=hoverText;
 			return hoverText;
 		}else if (o instanceof GoalImpl){
@@ -49,19 +54,19 @@ public class WreslEObjectHoverProvider extends DefaultEObjectHoverProvider {
 			DebugCorePlugin.hoverText=hoverText;
 			return hoverText;
 		}else if (o instanceof SvarDefImpl){
-			hoverText=((SvarDefImpl) o).getName();
+			hoverText=((SvarDefImpl) o).getRef().getName();;
 			DebugCorePlugin.hoverText=hoverText;
 			return hoverText;
 		}else if (o instanceof DvarDefImpl){
-			hoverText=((DvarDefImpl) o).getName();
+			hoverText=((DvarDefImpl) o).getRef().getName();
 			DebugCorePlugin.hoverText=hoverText;
 			return hoverText;
 		}else if (o instanceof ConstDefImpl){
-			hoverText=((ConstDefImpl) o).getName();
+			hoverText=((ConstDefImpl) o).getRef().getName();
 			DebugCorePlugin.hoverText=hoverText;
 			return hoverText;
 		}else if (o instanceof ExternalDefImpl){
-			hoverText=((ExternalDefImpl) o).getName();
+			hoverText=((ExternalDefImpl) o).getRef().getName();
 			return hoverText;
 		}else{
 			DebugCorePlugin.hoverText="";
