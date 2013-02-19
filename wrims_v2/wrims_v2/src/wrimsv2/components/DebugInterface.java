@@ -404,7 +404,8 @@ public class DebugInterface {
 				try {
 					sds = controllerDebug.parse();
 					ControlData.currStudyDataSet=sds;
-					sendEvent("totalcycle#"+sds.getModelList().size());
+					controllerDebug.totalCycles = sds.getModelList().size();
+					sendEvent("totalcycle#"+controllerDebug.totalCycles);
 					if (StudyParser.total_errors==0){
 						new PreEvaluator(sds);
 					}

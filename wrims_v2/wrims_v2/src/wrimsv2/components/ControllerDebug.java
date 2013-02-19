@@ -75,6 +75,7 @@ public class ControllerDebug extends Thread {
 	public int debugMonth;
 	public int debugDay;
 	public int debugCycle;
+	public int totalCycles=0;
 	public String conditionalBreakpoint;
 	public ValueEvaluatorParser conditionalBreakpointParser;
 	public String[] args;
@@ -93,7 +94,8 @@ public class ControllerDebug extends Thread {
 		try {
 			StudyDataSet sds = parse();
 			if (StudyParser.total_errors==0){
-				di.sendEvent("totalcycle#"+sds.getModelList().size());
+				totalCycles=sds.getModelList().size();
+				di.sendEvent("totalcycle#"+totalCycles);
 				new PreEvaluator(sds);
 				runModel(sds);
 			}
@@ -331,6 +333,7 @@ public class ControllerDebug extends Thread {
 					}else{
 						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" skipped. ("+model+")");
 						new AssignPastCycleVariable();
+						deferPause(modelIndex);
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
 							VariableTimeStep.currTimeAddOneMonth();
@@ -424,6 +427,45 @@ public class ControllerDebug extends Thread {
 		}else{
 			checkConditionalBreakpoint();
 		}
+	}
+	
+	public void deferPause(int i){
+		if (ControlData.timeStep.equals("1MON")){
+			if (ControlData.currYear==debugYear && ControlData.currMonth==debugMonth && i==debugCycle-1){
+				debugCycle=debugCycle+1;
+				if (debugCycle>totalCycles){
+					debugCycle=1;
+					debugTimeAddOneMonth();
+				}
+			}
+		}else{
+			if (ControlData.currYear==debugYear && ControlData.currMonth==debugMonth && ControlData.currDay==debugDay && i==debugCycle-1){
+				debugCycle=debugCycle+1;
+				if (debugCycle>totalCycles){
+					debugCycle=1;
+					debugTimeAddOneDay();
+				}
+			}
+		}
+	}
+	
+	
+	public void debugTimeAddOneMonth(){
+		debugMonth=debugMonth+1;
+		if (debugMonth>12){
+			debugMonth=debugMonth-12;
+			debugYear=debugYear+1;
+		}
+		debugDay=TimeOperation.numberOfDays(debugMonth, debugYear);
+	}
+
+	public void debugTimeAddOneDay(){
+		Date debugDate = new Date (debugYear-1900, debugMonth-1, debugDay);
+		long debugTime=debugDate.getTime()+1 * 24 * 60 * 60 * 1000l;
+		debugDate = new Date (debugTime);
+		debugMonth=debugDate.getMonth()+1;
+		debugYear=debugDate.getYear()+1900;
+		debugDay=debugDate.getDate();
 	}
 	
 	private void checkConditionalBreakpoint() {
