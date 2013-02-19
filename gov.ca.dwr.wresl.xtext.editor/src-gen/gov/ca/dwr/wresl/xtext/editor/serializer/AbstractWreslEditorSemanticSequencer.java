@@ -15,6 +15,7 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Constraint;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVarIntegerStd;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVarNonStd;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVarStd;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Declaration;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DvarDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseIfTerm;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseTerm;
@@ -170,6 +171,13 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 				if(context == grammarAccess.getDVarRule() ||
 				   context == grammarAccess.getDVarStdRule()) {
 					sequence_DVarStd(context, (DVarStd) semanticObject); 
+					return; 
+				}
+				else break;
+			case WreslEditorPackage.DECLARATION:
+				if(context == grammarAccess.getDeclarationRule() ||
+				   context == grammarAccess.getPatternRule()) {
+					sequence_Declaration(context, (Declaration) semanticObject); 
 					return; 
 				}
 				else break;
@@ -552,7 +560,7 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	 *     (
 	 *         ta=TimeArraySize? 
 	 *         (local?='local' | local?='LOCAL')? 
-	 *         name=ID 
+	 *         ref=[Declaration|ID] 
 	 *         expression=Expression 
 	 *         kind=STRING? 
 	 *         units=STRING?
@@ -621,7 +629,7 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     ((local?='local' | local?='LOCAL')? name=ID definition=Number)
+	 *     ((local?='local' | local?='LOCAL')? ref=[Declaration|ID] definition=Number)
 	 */
 	protected void sequence_ConstDef(EObject context, ConstDef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -717,9 +725,25 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
+	 *     name=ID
+	 */
+	protected void sequence_Declaration(EObject context, Declaration semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.DECLARATION__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.DECLARATION__NAME));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getDeclarationAccess().getNameIDTerminalRuleCall_2_0(), semanticObject.getName());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (
-	 *         (ta=TimeArraySize? (local?='local' | local?='LOCAL')? name=ID (definition=DVar | definition=DVarInteger)) | 
-	 *         (ta=TimeArraySize? (local?='local' | local?='LOCAL')? name=ID (definition=DVar | definition=DVarInteger))
+	 *         (ta=TimeArraySize? (local?='local' | local?='LOCAL')? ref=[Declaration|ID] (definition=DVar | definition=DVarInteger)) | 
+	 *         (ta=TimeArraySize? (local?='local' | local?='LOCAL')? ref=[Declaration|ID] (definition=DVar | definition=DVarInteger))
 	 *     )
 	 */
 	protected void sequence_DvarDef(EObject context, DvarDef semanticObject) {
@@ -747,7 +771,7 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     ((local?='local' | local?='LOCAL')? name=ID definition=External)
+	 *     ((local?='local' | local?='LOCAL')? ref=[Declaration|ID] definition=External)
 	 */
 	protected void sequence_ExternalDef(EObject context, ExternalDef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -756,7 +780,7 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     (ref=[Variable|ID]? e1=Expression e2+=Expression*)
+	 *     (ref=[Declaration|ID]? e1=Expression e2+=Expression*)
 	 */
 	protected void sequence_ExternalFunction(EObject context, ExternalFunction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1168,8 +1192,8 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	/**
 	 * Constraint:
 	 *     (
-	 *         (ta=TimeArraySize? (local?='local' | local?='LOCAL')? name=ID definition=SVar) | 
-	 *         (ta=TimeArraySize? (local?='local' | local?='LOCAL')? name=ID definition=SVar)
+	 *         (ta=TimeArraySize? (local?='local' | local?='LOCAL')? ref=[Declaration|ID] definition=SVar) | 
+	 *         (ta=TimeArraySize? (local?='local' | local?='LOCAL')? ref=[Declaration|ID] definition=SVar)
 	 *     )
 	 */
 	protected void sequence_SvarDef(EObject context, SvarDef semanticObject) {
@@ -1188,7 +1212,7 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     (ref=[Variable|ID] | n=Number | f=Function | e=Expression | s=SpecialIdent)
+	 *     (ref=[Declaration|ID] | n=Number | f=Function | e=Expression | s=SpecialIdent)
 	 */
 	protected void sequence_Term(EObject context, Term semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1197,16 +1221,16 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     ref=[StateVariable|ID]
+	 *     name=[Declaration|ID]
 	 */
 	protected void sequence_TimeArraySize(EObject context, TimeArraySize semanticObject) {
 		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.TIME_ARRAY_SIZE__REF) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.TIME_ARRAY_SIZE__REF));
+			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.TIME_ARRAY_SIZE__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.TIME_ARRAY_SIZE__NAME));
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getTimeArraySizeAccess().getRefStateVariableIDTerminalRuleCall_1_0_1(), semanticObject.getRef());
+		feeder.accept(grammarAccess.getTimeArraySizeAccess().getNameDeclarationIDTerminalRuleCall_1_0_1(), semanticObject.getName());
 		feeder.finish();
 	}
 	
@@ -1238,7 +1262,7 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     (name=[DecisionVariable|ID] ta=TimeArraySize? expression=Expression)
+	 *     (ref=[Declaration|ID] ta=TimeArraySize? expression=Expression)
 	 */
 	protected void sequence_WeightItem(EObject context, WeightItem semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

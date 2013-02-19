@@ -2,10 +2,10 @@
  */
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Declaration;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Expression;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Function;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term;
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Variable;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -43,7 +43,7 @@ public class TermImpl extends UnaryImpl implements Term
    * @generated
    * @ordered
    */
-  protected Variable ref;
+  protected Declaration ref;
 
   /**
    * The default value of the '{@link #getN() <em>N</em>}' attribute.
@@ -131,12 +131,12 @@ public class TermImpl extends UnaryImpl implements Term
    * <!-- end-user-doc -->
    * @generated
    */
-  public Variable getRef()
+  public Declaration getRef()
   {
     if (ref != null && ref.eIsProxy())
     {
       InternalEObject oldRef = (InternalEObject)ref;
-      ref = (Variable)eResolveProxy(oldRef);
+      ref = (Declaration)eResolveProxy(oldRef);
       if (ref != oldRef)
       {
         if (eNotificationRequired())
@@ -151,7 +151,7 @@ public class TermImpl extends UnaryImpl implements Term
    * <!-- end-user-doc -->
    * @generated
    */
-  public Variable basicGetRef()
+  public Declaration basicGetRef()
   {
     return ref;
   }
@@ -161,9 +161,9 @@ public class TermImpl extends UnaryImpl implements Term
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setRef(Variable newRef)
+  public void setRef(Declaration newRef)
   {
-    Variable oldRef = ref;
+    Declaration oldRef = ref;
     ref = newRef;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.TERM__REF, oldRef, ref));
@@ -365,7 +365,7 @@ public class TermImpl extends UnaryImpl implements Term
     switch (featureID)
     {
       case WreslEditorPackage.TERM__REF:
-        setRef((Variable)newValue);
+        setRef((Declaration)newValue);
         return;
       case WreslEditorPackage.TERM__N:
         setN((String)newValue);
@@ -394,7 +394,7 @@ public class TermImpl extends UnaryImpl implements Term
     switch (featureID)
     {
       case WreslEditorPackage.TERM__REF:
-        setRef((Variable)null);
+        setRef((Declaration)null);
         return;
       case WreslEditorPackage.TERM__N:
         setN(N_EDEFAULT);

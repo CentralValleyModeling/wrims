@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IncludeFileImpl#isLocal <em>Local</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IncludeFileImpl#getFile <em>File</em>}</li>
  * </ul>
  * </p>
@@ -26,6 +27,26 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class IncludeFileImpl extends PatternImpl implements IncludeFile
 {
+  /**
+   * The default value of the '{@link #isLocal() <em>Local</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isLocal()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean LOCAL_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isLocal() <em>Local</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isLocal()
+   * @generated
+   * @ordered
+   */
+  protected boolean local = LOCAL_EDEFAULT;
+
   /**
    * The default value of the '{@link #getFile() <em>File</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -72,6 +93,29 @@ public class IncludeFileImpl extends PatternImpl implements IncludeFile
    * <!-- end-user-doc -->
    * @generated
    */
+  public boolean isLocal()
+  {
+    return local;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setLocal(boolean newLocal)
+  {
+    boolean oldLocal = local;
+    local = newLocal;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.INCLUDE_FILE__LOCAL, oldLocal, local));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public String getFile()
   {
     return file;
@@ -100,6 +144,8 @@ public class IncludeFileImpl extends PatternImpl implements IncludeFile
   {
     switch (featureID)
     {
+      case WreslEditorPackage.INCLUDE_FILE__LOCAL:
+        return isLocal();
       case WreslEditorPackage.INCLUDE_FILE__FILE:
         return getFile();
     }
@@ -116,6 +162,9 @@ public class IncludeFileImpl extends PatternImpl implements IncludeFile
   {
     switch (featureID)
     {
+      case WreslEditorPackage.INCLUDE_FILE__LOCAL:
+        setLocal((Boolean)newValue);
+        return;
       case WreslEditorPackage.INCLUDE_FILE__FILE:
         setFile((String)newValue);
         return;
@@ -133,6 +182,9 @@ public class IncludeFileImpl extends PatternImpl implements IncludeFile
   {
     switch (featureID)
     {
+      case WreslEditorPackage.INCLUDE_FILE__LOCAL:
+        setLocal(LOCAL_EDEFAULT);
+        return;
       case WreslEditorPackage.INCLUDE_FILE__FILE:
         setFile(FILE_EDEFAULT);
         return;
@@ -150,6 +202,8 @@ public class IncludeFileImpl extends PatternImpl implements IncludeFile
   {
     switch (featureID)
     {
+      case WreslEditorPackage.INCLUDE_FILE__LOCAL:
+        return local != LOCAL_EDEFAULT;
       case WreslEditorPackage.INCLUDE_FILE__FILE:
         return FILE_EDEFAULT == null ? file != null : !FILE_EDEFAULT.equals(file);
     }
@@ -167,7 +221,9 @@ public class IncludeFileImpl extends PatternImpl implements IncludeFile
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (file: ");
+    result.append(" (local: ");
+    result.append(local);
+    result.append(", file: ");
     result.append(file);
     result.append(')');
     return result.toString();

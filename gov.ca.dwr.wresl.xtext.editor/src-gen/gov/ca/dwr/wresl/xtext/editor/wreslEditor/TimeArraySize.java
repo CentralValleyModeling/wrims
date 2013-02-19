@@ -12,7 +12,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.TimeArraySize#getRef <em>Ref</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.TimeArraySize#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -23,29 +23,29 @@ import org.eclipse.emf.ecore.EObject;
 public interface TimeArraySize extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Ref</b></em>' reference.
+   * Returns the value of the '<em><b>Name</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Ref</em>' reference isn't clear,
+   * If the meaning of the '<em>Name</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Ref</em>' reference.
-   * @see #setRef(StateVariable)
-   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getTimeArraySize_Ref()
+   * @return the value of the '<em>Name</em>' reference.
+   * @see #setName(Declaration)
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getTimeArraySize_Name()
    * @model
    * @generated
    */
-  StateVariable getRef();
+  Declaration getName();
 
   /**
-   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.TimeArraySize#getRef <em>Ref</em>}' reference.
+   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.TimeArraySize#getName <em>Name</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Ref</em>' reference.
-   * @see #getRef()
+   * @param value the new value of the '<em>Name</em>' reference.
+   * @see #getName()
    * @generated
    */
-  void setRef(StateVariable value);
+  void setName(Declaration value);
 
 } // TimeArraySize

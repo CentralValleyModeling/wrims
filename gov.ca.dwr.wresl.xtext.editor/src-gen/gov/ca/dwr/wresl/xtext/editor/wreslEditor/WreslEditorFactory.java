@@ -41,6 +41,15 @@ public interface WreslEditorFactory extends EFactory
   Pattern createPattern();
 
   /**
+   * Returns a new object of class '<em>Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Declaration</em>'.
+   * @generated
+   */
+  Declaration createDeclaration();
+
+  /**
    * Returns a new object of class '<em>Variable</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -167,15 +176,6 @@ public interface WreslEditorFactory extends EFactory
   ConstDef createConstDef();
 
   /**
-   * Returns a new object of class '<em>External</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>External</em>'.
-   * @generated
-   */
-  External createExternal();
-
-  /**
    * Returns a new object of class '<em>Alias</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -183,6 +183,15 @@ public interface WreslEditorFactory extends EFactory
    * @generated
    */
   Alias createAlias();
+
+  /**
+   * Returns a new object of class '<em>External</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>External</em>'.
+   * @generated
+   */
+  External createExternal();
 
   /**
    * Returns a new object of class '<em>DVar</em>'.

@@ -66,6 +66,7 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
     {
       case WreslEditorPackage.WRESL_EVALUATOR: return createWreslEvaluator();
       case WreslEditorPackage.PATTERN: return createPattern();
+      case WreslEditorPackage.DECLARATION: return createDeclaration();
       case WreslEditorPackage.VARIABLE: return createVariable();
       case WreslEditorPackage.STATE_VARIABLE: return createStateVariable();
       case WreslEditorPackage.DECISION_VARIABLE: return createDecisionVariable();
@@ -80,8 +81,8 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
       case WreslEditorPackage.SVAR_DEF: return createSvarDef();
       case WreslEditorPackage.DVAR_DEF: return createDvarDef();
       case WreslEditorPackage.CONST_DEF: return createConstDef();
-      case WreslEditorPackage.EXTERNAL: return createExternal();
       case WreslEditorPackage.ALIAS: return createAlias();
+      case WreslEditorPackage.EXTERNAL: return createExternal();
       case WreslEditorPackage.DVAR: return createDVar();
       case WreslEditorPackage.DVAR_NON_STD: return createDVarNonStd();
       case WreslEditorPackage.DVAR_STD: return createDVarStd();
@@ -166,6 +167,17 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
   {
     PatternImpl pattern = new PatternImpl();
     return pattern;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Declaration createDeclaration()
+  {
+    DeclarationImpl declaration = new DeclarationImpl();
+    return declaration;
   }
 
   /**
@@ -327,10 +339,10 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
    * <!-- end-user-doc -->
    * @generated
    */
-  public External createExternal()
+  public Alias createAlias()
   {
-    ExternalImpl external = new ExternalImpl();
-    return external;
+    AliasImpl alias = new AliasImpl();
+    return alias;
   }
 
   /**
@@ -338,10 +350,10 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
    * <!-- end-user-doc -->
    * @generated
    */
-  public Alias createAlias()
+  public External createExternal()
   {
-    AliasImpl alias = new AliasImpl();
-    return alias;
+    ExternalImpl external = new ExternalImpl();
+    return external;
   }
 
   /**

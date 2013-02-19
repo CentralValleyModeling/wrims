@@ -2,12 +2,14 @@
  */
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Declaration;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Variable;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
@@ -18,7 +20,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.VariableImpl#getName <em>Name</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.VariableImpl#isLocal <em>Local</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.VariableImpl#getRef <em>Ref</em>}</li>
  * </ul>
  * </p>
  *
@@ -27,24 +30,34 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class VariableImpl extends PatternImpl implements Variable
 {
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The default value of the '{@link #isLocal() <em>Local</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #isLocal()
    * @generated
    * @ordered
    */
-  protected static final String NAME_EDEFAULT = null;
+  protected static final boolean LOCAL_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * The cached value of the '{@link #isLocal() <em>Local</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
+   * @see #isLocal()
    * @generated
    * @ordered
    */
-  protected String name = NAME_EDEFAULT;
+  protected boolean local = LOCAL_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getRef() <em>Ref</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getRef()
+   * @generated
+   * @ordered
+   */
+  protected Declaration ref;
 
   /**
    * <!-- begin-user-doc -->
@@ -72,9 +85,9 @@ public class VariableImpl extends PatternImpl implements Variable
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getName()
+  public boolean isLocal()
   {
-    return name;
+    return local;
   }
 
   /**
@@ -82,12 +95,55 @@ public class VariableImpl extends PatternImpl implements Variable
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setName(String newName)
+  public void setLocal(boolean newLocal)
   {
-    String oldName = name;
-    name = newName;
+    boolean oldLocal = local;
+    local = newLocal;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.VARIABLE__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.VARIABLE__LOCAL, oldLocal, local));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Declaration getRef()
+  {
+    if (ref != null && ref.eIsProxy())
+    {
+      InternalEObject oldRef = (InternalEObject)ref;
+      ref = (Declaration)eResolveProxy(oldRef);
+      if (ref != oldRef)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, WreslEditorPackage.VARIABLE__REF, oldRef, ref));
+      }
+    }
+    return ref;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Declaration basicGetRef()
+  {
+    return ref;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setRef(Declaration newRef)
+  {
+    Declaration oldRef = ref;
+    ref = newRef;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.VARIABLE__REF, oldRef, ref));
   }
 
   /**
@@ -100,8 +156,11 @@ public class VariableImpl extends PatternImpl implements Variable
   {
     switch (featureID)
     {
-      case WreslEditorPackage.VARIABLE__NAME:
-        return getName();
+      case WreslEditorPackage.VARIABLE__LOCAL:
+        return isLocal();
+      case WreslEditorPackage.VARIABLE__REF:
+        if (resolve) return getRef();
+        return basicGetRef();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -116,8 +175,11 @@ public class VariableImpl extends PatternImpl implements Variable
   {
     switch (featureID)
     {
-      case WreslEditorPackage.VARIABLE__NAME:
-        setName((String)newValue);
+      case WreslEditorPackage.VARIABLE__LOCAL:
+        setLocal((Boolean)newValue);
+        return;
+      case WreslEditorPackage.VARIABLE__REF:
+        setRef((Declaration)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -133,8 +195,11 @@ public class VariableImpl extends PatternImpl implements Variable
   {
     switch (featureID)
     {
-      case WreslEditorPackage.VARIABLE__NAME:
-        setName(NAME_EDEFAULT);
+      case WreslEditorPackage.VARIABLE__LOCAL:
+        setLocal(LOCAL_EDEFAULT);
+        return;
+      case WreslEditorPackage.VARIABLE__REF:
+        setRef((Declaration)null);
         return;
     }
     super.eUnset(featureID);
@@ -150,8 +215,10 @@ public class VariableImpl extends PatternImpl implements Variable
   {
     switch (featureID)
     {
-      case WreslEditorPackage.VARIABLE__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case WreslEditorPackage.VARIABLE__LOCAL:
+        return local != LOCAL_EDEFAULT;
+      case WreslEditorPackage.VARIABLE__REF:
+        return ref != null;
     }
     return super.eIsSet(featureID);
   }
@@ -167,8 +234,8 @@ public class VariableImpl extends PatternImpl implements Variable
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
+    result.append(" (local: ");
+    result.append(local);
     result.append(')');
     return result.toString();
   }

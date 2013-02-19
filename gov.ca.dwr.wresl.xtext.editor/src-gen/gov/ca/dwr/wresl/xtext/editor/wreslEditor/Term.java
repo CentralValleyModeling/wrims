@@ -34,12 +34,12 @@ public interface Term extends Unary
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Ref</em>' reference.
-   * @see #setRef(Variable)
+   * @see #setRef(Declaration)
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getTerm_Ref()
    * @model
    * @generated
    */
-  Variable getRef();
+  Declaration getRef();
 
   /**
    * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term#getRef <em>Ref</em>}' reference.
@@ -49,7 +49,7 @@ public interface Term extends Unary
    * @see #getRef()
    * @generated
    */
-  void setRef(Variable value);
+  void setRef(Declaration value);
 
   /**
    * Returns the value of the '<em><b>N</b></em>' attribute.

@@ -3,48 +3,55 @@
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Declaration;
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TimeArraySize;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Time Array Size</b></em>'.
+ * An implementation of the model object '<em><b>Declaration</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TimeArraySizeImpl#getName <em>Name</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.DeclarationImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class TimeArraySizeImpl extends MinimalEObjectImpl.Container implements TimeArraySize
+public class DeclarationImpl extends PatternImpl implements Declaration
 {
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' reference.
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getName()
    * @generated
    * @ordered
    */
-  protected Declaration name;
+  protected static final String NAME_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getName()
+   * @generated
+   * @ordered
+   */
+  protected String name = NAME_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected TimeArraySizeImpl()
+  protected DeclarationImpl()
   {
     super();
   }
@@ -57,7 +64,7 @@ public class TimeArraySizeImpl extends MinimalEObjectImpl.Container implements T
   @Override
   protected EClass eStaticClass()
   {
-    return WreslEditorPackage.Literals.TIME_ARRAY_SIZE;
+    return WreslEditorPackage.Literals.DECLARATION;
   }
 
   /**
@@ -65,27 +72,7 @@ public class TimeArraySizeImpl extends MinimalEObjectImpl.Container implements T
    * <!-- end-user-doc -->
    * @generated
    */
-  public Declaration getName()
-  {
-    if (name != null && name.eIsProxy())
-    {
-      InternalEObject oldName = (InternalEObject)name;
-      name = (Declaration)eResolveProxy(oldName);
-      if (name != oldName)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, WreslEditorPackage.TIME_ARRAY_SIZE__NAME, oldName, name));
-      }
-    }
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Declaration basicGetName()
+  public String getName()
   {
     return name;
   }
@@ -95,12 +82,12 @@ public class TimeArraySizeImpl extends MinimalEObjectImpl.Container implements T
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setName(Declaration newName)
+  public void setName(String newName)
   {
-    Declaration oldName = name;
+    String oldName = name;
     name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.TIME_ARRAY_SIZE__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.DECLARATION__NAME, oldName, name));
   }
 
   /**
@@ -113,9 +100,8 @@ public class TimeArraySizeImpl extends MinimalEObjectImpl.Container implements T
   {
     switch (featureID)
     {
-      case WreslEditorPackage.TIME_ARRAY_SIZE__NAME:
-        if (resolve) return getName();
-        return basicGetName();
+      case WreslEditorPackage.DECLARATION__NAME:
+        return getName();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -130,8 +116,8 @@ public class TimeArraySizeImpl extends MinimalEObjectImpl.Container implements T
   {
     switch (featureID)
     {
-      case WreslEditorPackage.TIME_ARRAY_SIZE__NAME:
-        setName((Declaration)newValue);
+      case WreslEditorPackage.DECLARATION__NAME:
+        setName((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -147,8 +133,8 @@ public class TimeArraySizeImpl extends MinimalEObjectImpl.Container implements T
   {
     switch (featureID)
     {
-      case WreslEditorPackage.TIME_ARRAY_SIZE__NAME:
-        setName((Declaration)null);
+      case WreslEditorPackage.DECLARATION__NAME:
+        setName(NAME_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -164,10 +150,27 @@ public class TimeArraySizeImpl extends MinimalEObjectImpl.Container implements T
   {
     switch (featureID)
     {
-      case WreslEditorPackage.TIME_ARRAY_SIZE__NAME:
-        return name != null;
+      case WreslEditorPackage.DECLARATION__NAME:
+        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     }
     return super.eIsSet(featureID);
   }
 
-} //TimeArraySizeImpl
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (name: ");
+    result.append(name);
+    result.append(')');
+    return result.toString();
+  }
+
+} //DeclarationImpl

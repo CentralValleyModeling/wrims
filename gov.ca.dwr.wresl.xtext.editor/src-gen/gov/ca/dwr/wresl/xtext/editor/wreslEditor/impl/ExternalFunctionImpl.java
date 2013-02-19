@@ -2,9 +2,9 @@
  */
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Declaration;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Expression;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction;
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Variable;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage;
 
 import java.util.Collection;
@@ -47,7 +47,7 @@ public class ExternalFunctionImpl extends FunctionImpl implements ExternalFuncti
    * @generated
    * @ordered
    */
-  protected Variable ref;
+  protected Declaration ref;
 
   /**
    * The cached value of the '{@link #getE1() <em>E1</em>}' containment reference.
@@ -95,12 +95,12 @@ public class ExternalFunctionImpl extends FunctionImpl implements ExternalFuncti
    * <!-- end-user-doc -->
    * @generated
    */
-  public Variable getRef()
+  public Declaration getRef()
   {
     if (ref != null && ref.eIsProxy())
     {
       InternalEObject oldRef = (InternalEObject)ref;
-      ref = (Variable)eResolveProxy(oldRef);
+      ref = (Declaration)eResolveProxy(oldRef);
       if (ref != oldRef)
       {
         if (eNotificationRequired())
@@ -115,7 +115,7 @@ public class ExternalFunctionImpl extends FunctionImpl implements ExternalFuncti
    * <!-- end-user-doc -->
    * @generated
    */
-  public Variable basicGetRef()
+  public Declaration basicGetRef()
   {
     return ref;
   }
@@ -125,9 +125,9 @@ public class ExternalFunctionImpl extends FunctionImpl implements ExternalFuncti
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setRef(Variable newRef)
+  public void setRef(Declaration newRef)
   {
-    Variable oldRef = ref;
+    Declaration oldRef = ref;
     ref = newRef;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.EXTERNAL_FUNCTION__REF, oldRef, ref));
@@ -246,7 +246,7 @@ public class ExternalFunctionImpl extends FunctionImpl implements ExternalFuncti
     switch (featureID)
     {
       case WreslEditorPackage.EXTERNAL_FUNCTION__REF:
-        setRef((Variable)newValue);
+        setRef((Declaration)newValue);
         return;
       case WreslEditorPackage.EXTERNAL_FUNCTION__E1:
         setE1((Expression)newValue);
@@ -270,7 +270,7 @@ public class ExternalFunctionImpl extends FunctionImpl implements ExternalFuncti
     switch (featureID)
     {
       case WreslEditorPackage.EXTERNAL_FUNCTION__REF:
-        setRef((Variable)null);
+        setRef((Declaration)null);
         return;
       case WreslEditorPackage.EXTERNAL_FUNCTION__E1:
         setE1((Expression)null);

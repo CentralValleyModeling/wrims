@@ -85,6 +85,11 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
         return createPatternAdapter();
       }
       @Override
+      public Adapter caseDeclaration(Declaration object)
+      {
+        return createDeclarationAdapter();
+      }
+      @Override
       public Adapter caseVariable(Variable object)
       {
         return createVariableAdapter();
@@ -155,14 +160,14 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
         return createConstDefAdapter();
       }
       @Override
-      public Adapter caseExternal(External object)
-      {
-        return createExternalAdapter();
-      }
-      @Override
       public Adapter caseAlias(Alias object)
       {
         return createAliasAdapter();
+      }
+      @Override
+      public Adapter caseExternal(External object)
+      {
+        return createExternalAdapter();
       }
       @Override
       public Adapter caseDVar(DVar object)
@@ -512,6 +517,21 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Declaration <em>Declaration</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Declaration
+   * @generated
+   */
+  public Adapter createDeclarationAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Variable <em>Variable</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -722,21 +742,6 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.External <em>External</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.External
-   * @generated
-   */
-  public Adapter createExternalAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Alias <em>Alias</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -747,6 +752,21 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createAliasAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.External <em>External</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.External
+   * @generated
+   */
+  public Adapter createExternalAdapter()
   {
     return null;
   }

@@ -12,7 +12,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WeightItem#getName <em>Name</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WeightItem#getRef <em>Ref</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WeightItem#getTa <em>Ta</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WeightItem#getExpression <em>Expression</em>}</li>
  * </ul>
@@ -25,30 +25,30 @@ import org.eclipse.emf.ecore.EObject;
 public interface WeightItem extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Name</b></em>' reference.
+   * Returns the value of the '<em><b>Ref</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Name</em>' reference isn't clear,
+   * If the meaning of the '<em>Ref</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Name</em>' reference.
-   * @see #setName(DecisionVariable)
-   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getWeightItem_Name()
+   * @return the value of the '<em>Ref</em>' reference.
+   * @see #setRef(Declaration)
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getWeightItem_Ref()
    * @model
    * @generated
    */
-  DecisionVariable getName();
+  Declaration getRef();
 
   /**
-   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WeightItem#getName <em>Name</em>}' reference.
+   * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WeightItem#getRef <em>Ref</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name</em>' reference.
-   * @see #getName()
+   * @param value the new value of the '<em>Ref</em>' reference.
+   * @see #getRef()
    * @generated
    */
-  void setName(DecisionVariable value);
+  void setRef(Declaration value);
 
   /**
    * Returns the value of the '<em><b>Ta</b></em>' containment reference.

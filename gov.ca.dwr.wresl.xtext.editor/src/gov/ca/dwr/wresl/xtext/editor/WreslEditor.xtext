@@ -7,7 +7,10 @@ WreslEvaluator:
 	| ((initial=Initial)? sequence+=Sequence+ model+=Model+);
 
 Pattern:
-	Variable | IncludeFile | IncludeModel | Goal | Objective;
+	Variable | IncludeFile | IncludeModel | Goal | Objective | Declaration;
+
+Declaration:
+	'Declare' '{' name=ID '}';
 
 Variable:
 	StateVariable | DecisionVariable | ExternalDef;
@@ -25,35 +28,35 @@ ElseIfTerm: (ElseIf logical+=LogicalExpression '{' pattern+=Pattern+ '}')+;
 
 ElseTerm: Else '{' pattern+=Pattern+ '}';
 
-TimeArraySize: '(' ref=[StateVariable] ')';
+TimeArraySize: '(' name=[Declaration] ')';
 
 Objective:
 	('objective' | 'OBJECTIVE') ('[' local?=('local' | 'LOCAL') ']')? name=ID '='? '{' weights+=WeightItem+ '}';
 
 WeightItem:
-	'[' name=[DecisionVariable] ta=TimeArraySize? ',' expression=Expression ']' (',')?;
+	'[' ref=[Declaration] ta=TimeArraySize? ',' expression=Expression ']' (',')?;
 
 ExternalDef:
-	('define' | 'DEFINE') ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=External '}';
+	('define' | 'DEFINE') ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=External '}';
 	
 SvarDef:
-	 ('define' | 'DEFINE') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=SVar '}'
-	| (('svar' | 'SVAR' | 'Svar') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=SVar '}');
+	 ('define' | 'DEFINE') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=SVar '}'
+	| (('svar' | 'SVAR' | 'Svar') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=SVar '}');
 
 DvarDef:
-	(('define' | 'DEFINE') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=(DVar|DVarInteger) '}')
-	| (('dvar' | 'DVAR' | 'Dvar') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=(DVar|DVarInteger) '}');
+	(('define' | 'DEFINE') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=(DVar|DVarInteger) '}')
+	| (('dvar' | 'DVAR' | 'Dvar') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=(DVar|DVarInteger) '}');
 
 ConstDef:
-	('const' | 'CONST' | 'Const') ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' definition=Number '}';
+	('const' | 'CONST' | 'Const') ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' definition=Number '}';
+
+Alias: //name=[SVar|ID] to be changed to reference after scoping is resolved across files
+	('define' | 'DEFINE') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? ref=[Declaration] '{' ('alias' | 'ALIAS') expression=Expression
+	(('kind' |
+	'KIND') kind=STRING)? (('units' | 'UNITS') units=STRING)? '}';
 
 External:
 	('external' | 'EXTERNAL') ((name=ID ('.dll' | '.DLL')) | {External} ('f90' | 'F90'));
-
-Alias: //name=[SVar|ID] to be changed to reference after scoping is resolved across files
-	('define' | 'DEFINE') ta=TimeArraySize? ('[' local?=('local' | 'LOCAL') ']')? name=ID '{' ('alias' | 'ALIAS') expression=Expression
-	(('kind' |
-	'KIND') kind=STRING)? (('units' | 'UNITS') units=STRING)? '}';
 
 DVar:
 	(DVarStd | DVarNonStd);
@@ -211,13 +214,13 @@ Negation:
 	'-';
 
 Term:
-	ref=[Variable] | n=Number | f=Function | '(' e=Expression ')'| s=SpecialIdent | MultiStep;
+	ref=[Declaration] | n=Number | f=Function | '(' e=Expression ')'| s=SpecialIdent | MultiStep;
 
 Function:
 	ExternalFunction | MaxFunction | MinFunction | '(' SumContent ')' | ModFunction | IntFunction | AbsFunction | PowFunction | LogFunction | VarModel | VarModelStep;
 
 ExternalFunction:
-	((ref=[Variable])|TafCfs|Month) '(' e1=Expression (',' e2+=Expression)* ')';
+	((ref=[Declaration])|TafCfs|Month) '(' e1=Expression (',' e2+=Expression)* ')';
 
 MaxFunction:
 	MAX '(' e1=Expression (',' e2+=Expression)* ')';

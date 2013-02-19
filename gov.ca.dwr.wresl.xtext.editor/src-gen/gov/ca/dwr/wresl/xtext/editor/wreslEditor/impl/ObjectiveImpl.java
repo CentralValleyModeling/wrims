@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ObjectiveImpl#isLocal <em>Local</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ObjectiveImpl#getName <em>Name</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ObjectiveImpl#getWeights <em>Weights</em>}</li>
  * </ul>
@@ -37,6 +38,26 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class ObjectiveImpl extends PatternImpl implements Objective
 {
+  /**
+   * The default value of the '{@link #isLocal() <em>Local</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isLocal()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean LOCAL_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isLocal() <em>Local</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isLocal()
+   * @generated
+   * @ordered
+   */
+  protected boolean local = LOCAL_EDEFAULT;
+
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -86,6 +107,29 @@ public class ObjectiveImpl extends PatternImpl implements Objective
   protected EClass eStaticClass()
   {
     return WreslEditorPackage.Literals.OBJECTIVE;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isLocal()
+  {
+    return local;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setLocal(boolean newLocal)
+  {
+    boolean oldLocal = local;
+    local = newLocal;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.OBJECTIVE__LOCAL, oldLocal, local));
   }
 
   /**
@@ -151,6 +195,8 @@ public class ObjectiveImpl extends PatternImpl implements Objective
   {
     switch (featureID)
     {
+      case WreslEditorPackage.OBJECTIVE__LOCAL:
+        return isLocal();
       case WreslEditorPackage.OBJECTIVE__NAME:
         return getName();
       case WreslEditorPackage.OBJECTIVE__WEIGHTS:
@@ -170,6 +216,9 @@ public class ObjectiveImpl extends PatternImpl implements Objective
   {
     switch (featureID)
     {
+      case WreslEditorPackage.OBJECTIVE__LOCAL:
+        setLocal((Boolean)newValue);
+        return;
       case WreslEditorPackage.OBJECTIVE__NAME:
         setName((String)newValue);
         return;
@@ -191,6 +240,9 @@ public class ObjectiveImpl extends PatternImpl implements Objective
   {
     switch (featureID)
     {
+      case WreslEditorPackage.OBJECTIVE__LOCAL:
+        setLocal(LOCAL_EDEFAULT);
+        return;
       case WreslEditorPackage.OBJECTIVE__NAME:
         setName(NAME_EDEFAULT);
         return;
@@ -211,6 +263,8 @@ public class ObjectiveImpl extends PatternImpl implements Objective
   {
     switch (featureID)
     {
+      case WreslEditorPackage.OBJECTIVE__LOCAL:
+        return local != LOCAL_EDEFAULT;
       case WreslEditorPackage.OBJECTIVE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case WreslEditorPackage.OBJECTIVE__WEIGHTS:
@@ -230,7 +284,9 @@ public class ObjectiveImpl extends PatternImpl implements Objective
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
+    result.append(" (local: ");
+    result.append(local);
+    result.append(", name: ");
     result.append(name);
     result.append(')');
     return result.toString();

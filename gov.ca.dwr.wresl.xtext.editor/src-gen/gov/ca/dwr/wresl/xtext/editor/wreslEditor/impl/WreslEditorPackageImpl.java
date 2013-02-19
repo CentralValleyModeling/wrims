@@ -19,6 +19,7 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVarIntegerStd;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVarNonStd;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DVarStd;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DecisionVariable;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Declaration;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DvarDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseIfTerm;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseTerm;
@@ -110,6 +111,13 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * @generated
    */
   private EClass patternEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass declarationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -214,14 +222,14 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass externalEClass = null;
+  private EClass aliasEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass aliasEClass = null;
+  private EClass externalEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -774,9 +782,19 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getPattern_Local()
+  public EClass getDeclaration()
   {
-    return (EAttribute)patternEClass.getEStructuralFeatures().get(0);
+    return declarationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getDeclaration_Name()
+  {
+    return (EAttribute)declarationEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -794,9 +812,19 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getVariable_Name()
+  public EAttribute getVariable_Local()
   {
     return (EAttribute)variableEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getVariable_Ref()
+  {
+    return (EReference)variableEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -954,7 +982,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getTimeArraySize_Ref()
+  public EReference getTimeArraySize_Name()
   {
     return (EReference)timeArraySizeEClass.getEStructuralFeatures().get(0);
   }
@@ -974,7 +1002,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getObjective_Name()
+  public EAttribute getObjective_Local()
   {
     return (EAttribute)objectiveEClass.getEStructuralFeatures().get(0);
   }
@@ -984,9 +1012,19 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getObjective_Name()
+  {
+    return (EAttribute)objectiveEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getObjective_Weights()
   {
-    return (EReference)objectiveEClass.getEStructuralFeatures().get(1);
+    return (EReference)objectiveEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1004,7 +1042,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getWeightItem_Name()
+  public EReference getWeightItem_Ref()
   {
     return (EReference)weightItemEClass.getEStructuralFeatures().get(0);
   }
@@ -1124,26 +1162,6 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getExternal()
-  {
-    return externalEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getExternal_Name()
-  {
-    return (EAttribute)externalEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getAlias()
   {
     return aliasEClass;
@@ -1177,6 +1195,26 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
   public EAttribute getAlias_Units()
   {
     return (EAttribute)aliasEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getExternal()
+  {
+    return externalEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getExternal_Name()
+  {
+    return (EAttribute)externalEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1804,7 +1842,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getGoal_Name()
+  public EAttribute getGoal_Local()
   {
     return (EAttribute)goalEClass.getEStructuralFeatures().get(1);
   }
@@ -1814,9 +1852,19 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getGoal_Name()
+  {
+    return (EAttribute)goalEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getGoal_Definition()
   {
-    return (EReference)goalEClass.getEStructuralFeatures().get(2);
+    return (EReference)goalEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -2704,9 +2752,19 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getIncludeFile_File()
+  public EAttribute getIncludeFile_Local()
   {
     return (EAttribute)includeFileEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getIncludeFile_File()
+  {
+    return (EAttribute)includeFileEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -2747,10 +2805,13 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     createEReference(wreslEvaluatorEClass, WRESL_EVALUATOR__MODEL);
 
     patternEClass = createEClass(PATTERN);
-    createEAttribute(patternEClass, PATTERN__LOCAL);
+
+    declarationEClass = createEClass(DECLARATION);
+    createEAttribute(declarationEClass, DECLARATION__NAME);
 
     variableEClass = createEClass(VARIABLE);
-    createEAttribute(variableEClass, VARIABLE__NAME);
+    createEAttribute(variableEClass, VARIABLE__LOCAL);
+    createEReference(variableEClass, VARIABLE__REF);
 
     stateVariableEClass = createEClass(STATE_VARIABLE);
 
@@ -2773,14 +2834,15 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     createEReference(elseTermEClass, ELSE_TERM__PATTERN);
 
     timeArraySizeEClass = createEClass(TIME_ARRAY_SIZE);
-    createEReference(timeArraySizeEClass, TIME_ARRAY_SIZE__REF);
+    createEReference(timeArraySizeEClass, TIME_ARRAY_SIZE__NAME);
 
     objectiveEClass = createEClass(OBJECTIVE);
+    createEAttribute(objectiveEClass, OBJECTIVE__LOCAL);
     createEAttribute(objectiveEClass, OBJECTIVE__NAME);
     createEReference(objectiveEClass, OBJECTIVE__WEIGHTS);
 
     weightItemEClass = createEClass(WEIGHT_ITEM);
-    createEReference(weightItemEClass, WEIGHT_ITEM__NAME);
+    createEReference(weightItemEClass, WEIGHT_ITEM__REF);
     createEReference(weightItemEClass, WEIGHT_ITEM__TA);
     createEReference(weightItemEClass, WEIGHT_ITEM__EXPRESSION);
 
@@ -2797,13 +2859,13 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     constDefEClass = createEClass(CONST_DEF);
     createEAttribute(constDefEClass, CONST_DEF__DEFINITION);
 
-    externalEClass = createEClass(EXTERNAL);
-    createEAttribute(externalEClass, EXTERNAL__NAME);
-
     aliasEClass = createEClass(ALIAS);
     createEReference(aliasEClass, ALIAS__EXPRESSION);
     createEAttribute(aliasEClass, ALIAS__KIND);
     createEAttribute(aliasEClass, ALIAS__UNITS);
+
+    externalEClass = createEClass(EXTERNAL);
+    createEAttribute(externalEClass, EXTERNAL__NAME);
 
     dVarEClass = createEClass(DVAR);
     createEAttribute(dVarEClass, DVAR__KIND);
@@ -2892,6 +2954,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
 
     goalEClass = createEClass(GOAL);
     createEReference(goalEClass, GOAL__TA);
+    createEAttribute(goalEClass, GOAL__LOCAL);
     createEAttribute(goalEClass, GOAL__NAME);
     createEReference(goalEClass, GOAL__DEFINITION);
 
@@ -3015,6 +3078,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     createEAttribute(identEClass, IDENT__NAME);
 
     includeFileEClass = createEClass(INCLUDE_FILE);
+    createEAttribute(includeFileEClass, INCLUDE_FILE__LOCAL);
     createEAttribute(includeFileEClass, INCLUDE_FILE__FILE);
   }
 
@@ -3047,6 +3111,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    declarationEClass.getESuperTypes().add(this.getPattern());
     variableEClass.getESuperTypes().add(this.getPattern());
     stateVariableEClass.getESuperTypes().add(this.getVariable());
     decisionVariableEClass.getESuperTypes().add(this.getVariable());
@@ -3097,10 +3162,13 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     initEReference(getWreslEvaluator_Model(), this.getModel(), null, "model", null, 0, -1, WreslEvaluator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(patternEClass, Pattern.class, "Pattern", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPattern_Local(), ecorePackage.getEBoolean(), "local", null, 0, 1, Pattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(declarationEClass, Declaration.class, "Declaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getDeclaration_Name(), ecorePackage.getEString(), "name", null, 0, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(variableEClass, Variable.class, "Variable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getVariable_Name(), ecorePackage.getEString(), "name", null, 0, 1, Variable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getVariable_Local(), ecorePackage.getEBoolean(), "local", null, 0, 1, Variable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVariable_Ref(), this.getDeclaration(), null, "ref", null, 0, 1, Variable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(stateVariableEClass, StateVariable.class, "StateVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -3123,14 +3191,15 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     initEReference(getElseTerm_Pattern(), this.getPattern(), null, "pattern", null, 0, -1, ElseTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(timeArraySizeEClass, TimeArraySize.class, "TimeArraySize", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTimeArraySize_Ref(), this.getStateVariable(), null, "ref", null, 0, 1, TimeArraySize.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTimeArraySize_Name(), this.getDeclaration(), null, "name", null, 0, 1, TimeArraySize.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(objectiveEClass, Objective.class, "Objective", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getObjective_Local(), ecorePackage.getEBoolean(), "local", null, 0, 1, Objective.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getObjective_Name(), ecorePackage.getEString(), "name", null, 0, 1, Objective.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getObjective_Weights(), this.getWeightItem(), null, "weights", null, 0, -1, Objective.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(weightItemEClass, WeightItem.class, "WeightItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getWeightItem_Name(), this.getDecisionVariable(), null, "name", null, 0, 1, WeightItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getWeightItem_Ref(), this.getDeclaration(), null, "ref", null, 0, 1, WeightItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getWeightItem_Ta(), this.getTimeArraySize(), null, "ta", null, 0, 1, WeightItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getWeightItem_Expression(), this.getExpression(), null, "expression", null, 0, 1, WeightItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3147,13 +3216,13 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     initEClass(constDefEClass, ConstDef.class, "ConstDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getConstDef_Definition(), ecorePackage.getEString(), "definition", null, 0, 1, ConstDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(externalEClass, External.class, "External", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getExternal_Name(), ecorePackage.getEString(), "name", null, 0, 1, External.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEClass(aliasEClass, Alias.class, "Alias", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAlias_Expression(), this.getExpression(), null, "expression", null, 0, 1, Alias.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAlias_Kind(), ecorePackage.getEString(), "kind", null, 0, 1, Alias.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAlias_Units(), ecorePackage.getEString(), "units", null, 0, 1, Alias.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(externalEClass, External.class, "External", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getExternal_Name(), ecorePackage.getEString(), "name", null, 0, 1, External.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(dVarEClass, DVar.class, "DVar", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getDVar_Kind(), ecorePackage.getEString(), "kind", null, 0, 1, DVar.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3242,6 +3311,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
 
     initEClass(goalEClass, Goal.class, "Goal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getGoal_Ta(), this.getTimeArraySize(), null, "ta", null, 0, 1, Goal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getGoal_Local(), ecorePackage.getEBoolean(), "local", null, 0, 1, Goal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getGoal_Name(), ecorePackage.getEString(), "name", null, 0, 1, Goal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getGoal_Definition(), ecorePackage.getEObject(), null, "definition", null, 0, 1, Goal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3321,7 +3391,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     initEClass(unaryEClass, Unary.class, "Unary", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(termEClass, Term.class, "Term", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTerm_Ref(), this.getVariable(), null, "ref", null, 0, 1, Term.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTerm_Ref(), this.getDeclaration(), null, "ref", null, 0, 1, Term.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTerm_N(), ecorePackage.getEString(), "n", null, 0, 1, Term.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getTerm_F(), this.getFunction(), null, "f", null, 0, 1, Term.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getTerm_E(), this.getExpression(), null, "e", null, 0, 1, Term.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3330,7 +3400,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     initEClass(functionEClass, Function.class, "Function", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(externalFunctionEClass, ExternalFunction.class, "ExternalFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getExternalFunction_Ref(), this.getVariable(), null, "ref", null, 0, 1, ExternalFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExternalFunction_Ref(), this.getDeclaration(), null, "ref", null, 0, 1, ExternalFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getExternalFunction_E1(), this.getExpression(), null, "e1", null, 0, 1, ExternalFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getExternalFunction_E2(), this.getExpression(), null, "e2", null, 0, -1, ExternalFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -3365,6 +3435,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     initEAttribute(getIdent_Name(), ecorePackage.getEString(), "name", null, 0, 1, Ident.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(includeFileEClass, IncludeFile.class, "IncludeFile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getIncludeFile_Local(), ecorePackage.getEBoolean(), "local", null, 0, 1, IncludeFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getIncludeFile_File(), ecorePackage.getEString(), "file", null, 0, 1, IncludeFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource

@@ -87,13 +87,14 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIncludeModelParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cGoalParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cObjectiveParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cDeclarationParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		
 		//Pattern:
 		//
-		//	Variable | IncludeFile | IncludeModel | Goal | Objective;
+		//	Variable | IncludeFile | IncludeModel | Goal | Objective | Declaration;
 		public ParserRule getRule() { return rule; }
 
-		//Variable | IncludeFile | IncludeModel | Goal | Objective
+		//Variable | IncludeFile | IncludeModel | Goal | Objective | Declaration
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Variable
@@ -110,6 +111,42 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Objective
 		public RuleCall getObjectiveParserRuleCall_4() { return cObjectiveParserRuleCall_4; }
+
+		//Declaration
+		public RuleCall getDeclarationParserRuleCall_5() { return cDeclarationParserRuleCall_5; }
+	}
+
+	public class DeclarationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Declaration");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cDeclareKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//Declaration:
+		//
+		//	"Declare" "{" name=ID "}";
+		public ParserRule getRule() { return rule; }
+
+		//"Declare" "{" name=ID "}"
+		public Group getGroup() { return cGroup; }
+
+		//"Declare"
+		public Keyword getDeclareKeyword_0() { return cDeclareKeyword_0; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
+
+		//name=ID
+		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
 	}
 
 	public class VariableElements extends AbstractParserRuleElementFinder {
@@ -331,30 +368,30 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TimeArraySize");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cLeftParenthesisKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cRefAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final CrossReference cRefStateVariableCrossReference_1_0 = (CrossReference)cRefAssignment_1.eContents().get(0);
-		private final RuleCall cRefStateVariableIDTerminalRuleCall_1_0_1 = (RuleCall)cRefStateVariableCrossReference_1_0.eContents().get(1);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cNameDeclarationCrossReference_1_0 = (CrossReference)cNameAssignment_1.eContents().get(0);
+		private final RuleCall cNameDeclarationIDTerminalRuleCall_1_0_1 = (RuleCall)cNameDeclarationCrossReference_1_0.eContents().get(1);
 		private final Keyword cRightParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		
 		//TimeArraySize:
 		//
-		//	"(" ref=[StateVariable] ")";
+		//	"(" name=[Declaration] ")";
 		public ParserRule getRule() { return rule; }
 
-		//"(" ref=[StateVariable] ")"
+		//"(" name=[Declaration] ")"
 		public Group getGroup() { return cGroup; }
 
 		//"("
 		public Keyword getLeftParenthesisKeyword_0() { return cLeftParenthesisKeyword_0; }
 
-		//ref=[StateVariable]
-		public Assignment getRefAssignment_1() { return cRefAssignment_1; }
+		//name=[Declaration]
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 
-		//[StateVariable]
-		public CrossReference getRefStateVariableCrossReference_1_0() { return cRefStateVariableCrossReference_1_0; }
+		//[Declaration]
+		public CrossReference getNameDeclarationCrossReference_1_0() { return cNameDeclarationCrossReference_1_0; }
 
 		//ID
-		public RuleCall getRefStateVariableIDTerminalRuleCall_1_0_1() { return cRefStateVariableIDTerminalRuleCall_1_0_1; }
+		public RuleCall getNameDeclarationIDTerminalRuleCall_1_0_1() { return cNameDeclarationIDTerminalRuleCall_1_0_1; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_2() { return cRightParenthesisKeyword_2; }
@@ -445,9 +482,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "WeightItem");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cLeftSquareBracketKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final CrossReference cNameDecisionVariableCrossReference_1_0 = (CrossReference)cNameAssignment_1.eContents().get(0);
-		private final RuleCall cNameDecisionVariableIDTerminalRuleCall_1_0_1 = (RuleCall)cNameDecisionVariableCrossReference_1_0.eContents().get(1);
+		private final Assignment cRefAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cRefDeclarationCrossReference_1_0 = (CrossReference)cRefAssignment_1.eContents().get(0);
+		private final RuleCall cRefDeclarationIDTerminalRuleCall_1_0_1 = (RuleCall)cRefDeclarationCrossReference_1_0.eContents().get(1);
 		private final Assignment cTaAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cTaTimeArraySizeParserRuleCall_2_0 = (RuleCall)cTaAssignment_2.eContents().get(0);
 		private final Keyword cCommaKeyword_3 = (Keyword)cGroup.eContents().get(3);
@@ -458,23 +495,23 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//WeightItem:
 		//
-		//	"[" name=[DecisionVariable] ta=TimeArraySize? "," expression=Expression "]" ","?;
+		//	"[" ref=[Declaration] ta=TimeArraySize? "," expression=Expression "]" ","?;
 		public ParserRule getRule() { return rule; }
 
-		//"[" name=[DecisionVariable] ta=TimeArraySize? "," expression=Expression "]" ","?
+		//"[" ref=[Declaration] ta=TimeArraySize? "," expression=Expression "]" ","?
 		public Group getGroup() { return cGroup; }
 
 		//"["
 		public Keyword getLeftSquareBracketKeyword_0() { return cLeftSquareBracketKeyword_0; }
 
-		//name=[DecisionVariable]
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		//ref=[Declaration]
+		public Assignment getRefAssignment_1() { return cRefAssignment_1; }
 
-		//[DecisionVariable]
-		public CrossReference getNameDecisionVariableCrossReference_1_0() { return cNameDecisionVariableCrossReference_1_0; }
+		//[Declaration]
+		public CrossReference getRefDeclarationCrossReference_1_0() { return cRefDeclarationCrossReference_1_0; }
 
 		//ID
-		public RuleCall getNameDecisionVariableIDTerminalRuleCall_1_0_1() { return cNameDecisionVariableIDTerminalRuleCall_1_0_1; }
+		public RuleCall getRefDeclarationIDTerminalRuleCall_1_0_1() { return cRefDeclarationIDTerminalRuleCall_1_0_1; }
 
 		//ta=TimeArraySize?
 		public Assignment getTaAssignment_2() { return cTaAssignment_2; }
@@ -511,8 +548,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLocalLocalKeyword_1_1_0_0 = (Keyword)cLocalAlternatives_1_1_0.eContents().get(0);
 		private final Keyword cLocalLOCALKeyword_1_1_0_1 = (Keyword)cLocalAlternatives_1_1_0.eContents().get(1);
 		private final Keyword cRightSquareBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final Assignment cRefAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final CrossReference cRefDeclarationCrossReference_2_0 = (CrossReference)cRefAssignment_2.eContents().get(0);
+		private final RuleCall cRefDeclarationIDTerminalRuleCall_2_0_1 = (RuleCall)cRefDeclarationCrossReference_2_0.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cDefinitionAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cDefinitionExternalParserRuleCall_4_0 = (RuleCall)cDefinitionAssignment_4.eContents().get(0);
@@ -520,10 +558,10 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ExternalDef:
 		//
-		//	("define" | "DEFINE") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=External "}";
+		//	("define" | "DEFINE") ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{" definition=External "}";
 		public ParserRule getRule() { return rule; }
 
-		//("define" | "DEFINE") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=External "}"
+		//("define" | "DEFINE") ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{" definition=External "}"
 		public Group getGroup() { return cGroup; }
 
 		//"define" | "DEFINE"
@@ -556,11 +594,14 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"]"
 		public Keyword getRightSquareBracketKeyword_1_2() { return cRightSquareBracketKeyword_1_2; }
 
-		//name=ID
-		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+		//ref=[Declaration]
+		public Assignment getRefAssignment_2() { return cRefAssignment_2; }
+
+		//[Declaration]
+		public CrossReference getRefDeclarationCrossReference_2_0() { return cRefDeclarationCrossReference_2_0; }
 
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
+		public RuleCall getRefDeclarationIDTerminalRuleCall_2_0_1() { return cRefDeclarationIDTerminalRuleCall_2_0_1; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
@@ -591,8 +632,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLocalLocalKeyword_0_2_1_0_0 = (Keyword)cLocalAlternatives_0_2_1_0.eContents().get(0);
 		private final Keyword cLocalLOCALKeyword_0_2_1_0_1 = (Keyword)cLocalAlternatives_0_2_1_0.eContents().get(1);
 		private final Keyword cRightSquareBracketKeyword_0_2_2 = (Keyword)cGroup_0_2.eContents().get(2);
-		private final Assignment cNameAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
-		private final RuleCall cNameIDTerminalRuleCall_0_3_0 = (RuleCall)cNameAssignment_0_3.eContents().get(0);
+		private final Assignment cRefAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
+		private final CrossReference cRefDeclarationCrossReference_0_3_0 = (CrossReference)cRefAssignment_0_3.eContents().get(0);
+		private final RuleCall cRefDeclarationIDTerminalRuleCall_0_3_0_1 = (RuleCall)cRefDeclarationCrossReference_0_3_0.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_0_4 = (Keyword)cGroup_0.eContents().get(4);
 		private final Assignment cDefinitionAssignment_0_5 = (Assignment)cGroup_0.eContents().get(5);
 		private final RuleCall cDefinitionSVarParserRuleCall_0_5_0 = (RuleCall)cDefinitionAssignment_0_5.eContents().get(0);
@@ -611,8 +653,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLocalLocalKeyword_1_2_1_0_0 = (Keyword)cLocalAlternatives_1_2_1_0.eContents().get(0);
 		private final Keyword cLocalLOCALKeyword_1_2_1_0_1 = (Keyword)cLocalAlternatives_1_2_1_0.eContents().get(1);
 		private final Keyword cRightSquareBracketKeyword_1_2_2 = (Keyword)cGroup_1_2.eContents().get(2);
-		private final Assignment cNameAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
-		private final RuleCall cNameIDTerminalRuleCall_1_3_0 = (RuleCall)cNameAssignment_1_3.eContents().get(0);
+		private final Assignment cRefAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
+		private final CrossReference cRefDeclarationCrossReference_1_3_0 = (CrossReference)cRefAssignment_1_3.eContents().get(0);
+		private final RuleCall cRefDeclarationIDTerminalRuleCall_1_3_0_1 = (RuleCall)cRefDeclarationCrossReference_1_3_0.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_1_4 = (Keyword)cGroup_1.eContents().get(4);
 		private final Assignment cDefinitionAssignment_1_5 = (Assignment)cGroup_1.eContents().get(5);
 		private final RuleCall cDefinitionSVarParserRuleCall_1_5_0 = (RuleCall)cDefinitionAssignment_1_5.eContents().get(0);
@@ -620,17 +663,21 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SvarDef:
 		//
-		//	("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}" |
+		//	("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{" definition=SVar
 		//
-		//	("svar" | "SVAR" | "Svar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}";
+		//	"}" | ("svar" | "SVAR" | "Svar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{"
+		//
+		//	definition=SVar "}";
 		public ParserRule getRule() { return rule; }
 
-		//("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}" | ("svar"
+		//("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{" definition=SVar "}"
 		//
-		//| "SVAR" | "Svar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}"
+		//| ("svar" | "SVAR" | "Svar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{"
+		//
+		//definition=SVar "}"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}"
+		//("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{" definition=SVar "}"
 		public Group getGroup_0() { return cGroup_0; }
 
 		//"define" | "DEFINE"
@@ -669,11 +716,14 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"]"
 		public Keyword getRightSquareBracketKeyword_0_2_2() { return cRightSquareBracketKeyword_0_2_2; }
 
-		//name=ID
-		public Assignment getNameAssignment_0_3() { return cNameAssignment_0_3; }
+		//ref=[Declaration]
+		public Assignment getRefAssignment_0_3() { return cRefAssignment_0_3; }
+
+		//[Declaration]
+		public CrossReference getRefDeclarationCrossReference_0_3_0() { return cRefDeclarationCrossReference_0_3_0; }
 
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_0_3_0() { return cNameIDTerminalRuleCall_0_3_0; }
+		public RuleCall getRefDeclarationIDTerminalRuleCall_0_3_0_1() { return cRefDeclarationIDTerminalRuleCall_0_3_0_1; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_0_4() { return cLeftCurlyBracketKeyword_0_4; }
@@ -687,7 +737,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_0_6() { return cRightCurlyBracketKeyword_0_6; }
 
-		//("svar" | "SVAR" | "Svar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}"
+		//("svar" | "SVAR" | "Svar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{" definition=SVar
+		//
+		//"}"
 		public Group getGroup_1() { return cGroup_1; }
 
 		//"svar" | "SVAR" | "Svar"
@@ -729,11 +781,14 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"]"
 		public Keyword getRightSquareBracketKeyword_1_2_2() { return cRightSquareBracketKeyword_1_2_2; }
 
-		//name=ID
-		public Assignment getNameAssignment_1_3() { return cNameAssignment_1_3; }
+		//ref=[Declaration]
+		public Assignment getRefAssignment_1_3() { return cRefAssignment_1_3; }
+
+		//[Declaration]
+		public CrossReference getRefDeclarationCrossReference_1_3_0() { return cRefDeclarationCrossReference_1_3_0; }
 
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_1_3_0() { return cNameIDTerminalRuleCall_1_3_0; }
+		public RuleCall getRefDeclarationIDTerminalRuleCall_1_3_0_1() { return cRefDeclarationIDTerminalRuleCall_1_3_0_1; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_1_4() { return cLeftCurlyBracketKeyword_1_4; }
@@ -764,8 +819,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLocalLocalKeyword_0_2_1_0_0 = (Keyword)cLocalAlternatives_0_2_1_0.eContents().get(0);
 		private final Keyword cLocalLOCALKeyword_0_2_1_0_1 = (Keyword)cLocalAlternatives_0_2_1_0.eContents().get(1);
 		private final Keyword cRightSquareBracketKeyword_0_2_2 = (Keyword)cGroup_0_2.eContents().get(2);
-		private final Assignment cNameAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
-		private final RuleCall cNameIDTerminalRuleCall_0_3_0 = (RuleCall)cNameAssignment_0_3.eContents().get(0);
+		private final Assignment cRefAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
+		private final CrossReference cRefDeclarationCrossReference_0_3_0 = (CrossReference)cRefAssignment_0_3.eContents().get(0);
+		private final RuleCall cRefDeclarationIDTerminalRuleCall_0_3_0_1 = (RuleCall)cRefDeclarationCrossReference_0_3_0.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_0_4 = (Keyword)cGroup_0.eContents().get(4);
 		private final Assignment cDefinitionAssignment_0_5 = (Assignment)cGroup_0.eContents().get(5);
 		private final Alternatives cDefinitionAlternatives_0_5_0 = (Alternatives)cDefinitionAssignment_0_5.eContents().get(0);
@@ -786,8 +842,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLocalLocalKeyword_1_2_1_0_0 = (Keyword)cLocalAlternatives_1_2_1_0.eContents().get(0);
 		private final Keyword cLocalLOCALKeyword_1_2_1_0_1 = (Keyword)cLocalAlternatives_1_2_1_0.eContents().get(1);
 		private final Keyword cRightSquareBracketKeyword_1_2_2 = (Keyword)cGroup_1_2.eContents().get(2);
-		private final Assignment cNameAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
-		private final RuleCall cNameIDTerminalRuleCall_1_3_0 = (RuleCall)cNameAssignment_1_3.eContents().get(0);
+		private final Assignment cRefAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
+		private final CrossReference cRefDeclarationCrossReference_1_3_0 = (CrossReference)cRefAssignment_1_3.eContents().get(0);
+		private final RuleCall cRefDeclarationIDTerminalRuleCall_1_3_0_1 = (RuleCall)cRefDeclarationCrossReference_1_3_0.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_1_4 = (Keyword)cGroup_1.eContents().get(4);
 		private final Assignment cDefinitionAssignment_1_5 = (Assignment)cGroup_1.eContents().get(5);
 		private final Alternatives cDefinitionAlternatives_1_5_0 = (Alternatives)cDefinitionAssignment_1_5.eContents().get(0);
@@ -797,21 +854,21 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DvarDef:
 		//
-		//	("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(DVar |
+		//	("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{" definition=(DVar
 		//
-		//	DVarInteger) "}" | ("dvar" | "DVAR" | "Dvar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{"
+		//	| DVarInteger) "}" | ("dvar" | "DVAR" | "Dvar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")?
 		//
-		//	definition=(DVar | DVarInteger) "}";
+		//	ref=[Declaration] "{" definition=(DVar | DVarInteger) "}";
 		public ParserRule getRule() { return rule; }
 
-		//("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(DVar |
+		//("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{" definition=(DVar |
 		//
-		//DVarInteger) "}" | ("dvar" | "DVAR" | "Dvar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{"
+		//DVarInteger) "}" | ("dvar" | "DVAR" | "Dvar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")?
 		//
-		//definition=(DVar | DVarInteger) "}"
+		//ref=[Declaration] "{" definition=(DVar | DVarInteger) "}"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(DVar |
+		//("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{" definition=(DVar |
 		//
 		//DVarInteger) "}"
 		public Group getGroup_0() { return cGroup_0; }
@@ -852,11 +909,14 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"]"
 		public Keyword getRightSquareBracketKeyword_0_2_2() { return cRightSquareBracketKeyword_0_2_2; }
 
-		//name=ID
-		public Assignment getNameAssignment_0_3() { return cNameAssignment_0_3; }
+		//ref=[Declaration]
+		public Assignment getRefAssignment_0_3() { return cRefAssignment_0_3; }
+
+		//[Declaration]
+		public CrossReference getRefDeclarationCrossReference_0_3_0() { return cRefDeclarationCrossReference_0_3_0; }
 
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_0_3_0() { return cNameIDTerminalRuleCall_0_3_0; }
+		public RuleCall getRefDeclarationIDTerminalRuleCall_0_3_0_1() { return cRefDeclarationIDTerminalRuleCall_0_3_0_1; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_0_4() { return cLeftCurlyBracketKeyword_0_4; }
@@ -876,9 +936,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_0_6() { return cRightCurlyBracketKeyword_0_6; }
 
-		//("dvar" | "DVAR" | "Dvar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(DVar |
+		//("dvar" | "DVAR" | "Dvar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{"
 		//
-		//DVarInteger) "}"
+		//definition=(DVar | DVarInteger) "}"
 		public Group getGroup_1() { return cGroup_1; }
 
 		//"dvar" | "DVAR" | "Dvar"
@@ -920,11 +980,14 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"]"
 		public Keyword getRightSquareBracketKeyword_1_2_2() { return cRightSquareBracketKeyword_1_2_2; }
 
-		//name=ID
-		public Assignment getNameAssignment_1_3() { return cNameAssignment_1_3; }
+		//ref=[Declaration]
+		public Assignment getRefAssignment_1_3() { return cRefAssignment_1_3; }
+
+		//[Declaration]
+		public CrossReference getRefDeclarationCrossReference_1_3_0() { return cRefDeclarationCrossReference_1_3_0; }
 
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_1_3_0() { return cNameIDTerminalRuleCall_1_3_0; }
+		public RuleCall getRefDeclarationIDTerminalRuleCall_1_3_0_1() { return cRefDeclarationIDTerminalRuleCall_1_3_0_1; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_1_4() { return cLeftCurlyBracketKeyword_1_4; }
@@ -959,8 +1022,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLocalLocalKeyword_1_1_0_0 = (Keyword)cLocalAlternatives_1_1_0.eContents().get(0);
 		private final Keyword cLocalLOCALKeyword_1_1_0_1 = (Keyword)cLocalAlternatives_1_1_0.eContents().get(1);
 		private final Keyword cRightSquareBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final Assignment cRefAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final CrossReference cRefDeclarationCrossReference_2_0 = (CrossReference)cRefAssignment_2.eContents().get(0);
+		private final RuleCall cRefDeclarationIDTerminalRuleCall_2_0_1 = (RuleCall)cRefDeclarationCrossReference_2_0.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cDefinitionAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cDefinitionNumberParserRuleCall_4_0 = (RuleCall)cDefinitionAssignment_4.eContents().get(0);
@@ -968,10 +1032,10 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ConstDef:
 		//
-		//	("const" | "CONST" | "Const") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=Number "}";
+		//	("const" | "CONST" | "Const") ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{" definition=Number "}";
 		public ParserRule getRule() { return rule; }
 
-		//("const" | "CONST" | "Const") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=Number "}"
+		//("const" | "CONST" | "Const") ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{" definition=Number "}"
 		public Group getGroup() { return cGroup; }
 
 		//"const" | "CONST" | "Const"
@@ -1007,11 +1071,14 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"]"
 		public Keyword getRightSquareBracketKeyword_1_2() { return cRightSquareBracketKeyword_1_2; }
 
-		//name=ID
-		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+		//ref=[Declaration]
+		public Assignment getRefAssignment_2() { return cRefAssignment_2; }
+
+		//[Declaration]
+		public CrossReference getRefDeclarationCrossReference_2_0() { return cRefDeclarationCrossReference_2_0; }
 
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
+		public RuleCall getRefDeclarationIDTerminalRuleCall_2_0_1() { return cRefDeclarationIDTerminalRuleCall_2_0_1; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
@@ -1024,6 +1091,160 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+	}
+
+	public class AliasElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Alias");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cDefineKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cDEFINEKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
+		private final Assignment cTaAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cTaTimeArraySizeParserRuleCall_1_0 = (RuleCall)cTaAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftSquareBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cLocalAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final Alternatives cLocalAlternatives_2_1_0 = (Alternatives)cLocalAssignment_2_1.eContents().get(0);
+		private final Keyword cLocalLocalKeyword_2_1_0_0 = (Keyword)cLocalAlternatives_2_1_0.eContents().get(0);
+		private final Keyword cLocalLOCALKeyword_2_1_0_1 = (Keyword)cLocalAlternatives_2_1_0.eContents().get(1);
+		private final Keyword cRightSquareBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final Assignment cRefAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final CrossReference cRefDeclarationCrossReference_3_0 = (CrossReference)cRefAssignment_3.eContents().get(0);
+		private final RuleCall cRefDeclarationIDTerminalRuleCall_3_0_1 = (RuleCall)cRefDeclarationCrossReference_3_0.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Alternatives cAlternatives_5 = (Alternatives)cGroup.eContents().get(5);
+		private final Keyword cAliasKeyword_5_0 = (Keyword)cAlternatives_5.eContents().get(0);
+		private final Keyword cALIASKeyword_5_1 = (Keyword)cAlternatives_5.eContents().get(1);
+		private final Assignment cExpressionAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cExpressionExpressionParserRuleCall_6_0 = (RuleCall)cExpressionAssignment_6.eContents().get(0);
+		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
+		private final Alternatives cAlternatives_7_0 = (Alternatives)cGroup_7.eContents().get(0);
+		private final Keyword cKindKeyword_7_0_0 = (Keyword)cAlternatives_7_0.eContents().get(0);
+		private final Keyword cKINDKeyword_7_0_1 = (Keyword)cAlternatives_7_0.eContents().get(1);
+		private final Assignment cKindAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
+		private final RuleCall cKindSTRINGTerminalRuleCall_7_1_0 = (RuleCall)cKindAssignment_7_1.eContents().get(0);
+		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
+		private final Alternatives cAlternatives_8_0 = (Alternatives)cGroup_8.eContents().get(0);
+		private final Keyword cUnitsKeyword_8_0_0 = (Keyword)cAlternatives_8_0.eContents().get(0);
+		private final Keyword cUNITSKeyword_8_0_1 = (Keyword)cAlternatives_8_0.eContents().get(1);
+		private final Assignment cUnitsAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
+		private final RuleCall cUnitsSTRINGTerminalRuleCall_8_1_0 = (RuleCall)cUnitsAssignment_8_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_9 = (Keyword)cGroup.eContents().get(9);
+		
+		////name=[SVar|ID] to be changed to reference after scoping is resolved across files
+		// Alias:
+		//
+		//	("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{" ("alias" |
+		//
+		//	"ALIAS") expression=Expression (("kind" | "KIND") kind=STRING)? (("units" | "UNITS") units=STRING)? "}";
+		public ParserRule getRule() { return rule; }
+
+		//("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{" ("alias" | "ALIAS")
+		//
+		//expression=Expression (("kind" | "KIND") kind=STRING)? (("units" | "UNITS") units=STRING)? "}"
+		public Group getGroup() { return cGroup; }
+
+		//"define" | "DEFINE"
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
+		//"define"
+		public Keyword getDefineKeyword_0_0() { return cDefineKeyword_0_0; }
+
+		//"DEFINE"
+		public Keyword getDEFINEKeyword_0_1() { return cDEFINEKeyword_0_1; }
+
+		//ta=TimeArraySize?
+		public Assignment getTaAssignment_1() { return cTaAssignment_1; }
+
+		//TimeArraySize
+		public RuleCall getTaTimeArraySizeParserRuleCall_1_0() { return cTaTimeArraySizeParserRuleCall_1_0; }
+
+		//("[" local?=("local" | "LOCAL") "]")?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//"["
+		public Keyword getLeftSquareBracketKeyword_2_0() { return cLeftSquareBracketKeyword_2_0; }
+
+		//local?=("local" | "LOCAL")
+		public Assignment getLocalAssignment_2_1() { return cLocalAssignment_2_1; }
+
+		//"local" | "LOCAL"
+		public Alternatives getLocalAlternatives_2_1_0() { return cLocalAlternatives_2_1_0; }
+
+		//"local"
+		public Keyword getLocalLocalKeyword_2_1_0_0() { return cLocalLocalKeyword_2_1_0_0; }
+
+		//"LOCAL"
+		public Keyword getLocalLOCALKeyword_2_1_0_1() { return cLocalLOCALKeyword_2_1_0_1; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_2_2() { return cRightSquareBracketKeyword_2_2; }
+
+		//ref=[Declaration]
+		public Assignment getRefAssignment_3() { return cRefAssignment_3; }
+
+		//[Declaration]
+		public CrossReference getRefDeclarationCrossReference_3_0() { return cRefDeclarationCrossReference_3_0; }
+
+		//ID
+		public RuleCall getRefDeclarationIDTerminalRuleCall_3_0_1() { return cRefDeclarationIDTerminalRuleCall_3_0_1; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_4() { return cLeftCurlyBracketKeyword_4; }
+
+		//"alias" | "ALIAS"
+		public Alternatives getAlternatives_5() { return cAlternatives_5; }
+
+		//"alias"
+		public Keyword getAliasKeyword_5_0() { return cAliasKeyword_5_0; }
+
+		//"ALIAS"
+		public Keyword getALIASKeyword_5_1() { return cALIASKeyword_5_1; }
+
+		//expression=Expression
+		public Assignment getExpressionAssignment_6() { return cExpressionAssignment_6; }
+
+		//Expression
+		public RuleCall getExpressionExpressionParserRuleCall_6_0() { return cExpressionExpressionParserRuleCall_6_0; }
+
+		//(("kind" | "KIND") kind=STRING)?
+		public Group getGroup_7() { return cGroup_7; }
+
+		//"kind" | "KIND"
+		public Alternatives getAlternatives_7_0() { return cAlternatives_7_0; }
+
+		//"kind"
+		public Keyword getKindKeyword_7_0_0() { return cKindKeyword_7_0_0; }
+
+		//"KIND"
+		public Keyword getKINDKeyword_7_0_1() { return cKINDKeyword_7_0_1; }
+
+		//kind=STRING
+		public Assignment getKindAssignment_7_1() { return cKindAssignment_7_1; }
+
+		//STRING
+		public RuleCall getKindSTRINGTerminalRuleCall_7_1_0() { return cKindSTRINGTerminalRuleCall_7_1_0; }
+
+		//(("units" | "UNITS") units=STRING)?
+		public Group getGroup_8() { return cGroup_8; }
+
+		//"units" | "UNITS"
+		public Alternatives getAlternatives_8_0() { return cAlternatives_8_0; }
+
+		//"units"
+		public Keyword getUnitsKeyword_8_0_0() { return cUnitsKeyword_8_0_0; }
+
+		//"UNITS"
+		public Keyword getUNITSKeyword_8_0_1() { return cUNITSKeyword_8_0_1; }
+
+		//units=STRING
+		public Assignment getUnitsAssignment_8_1() { return cUnitsAssignment_8_1; }
+
+		//STRING
+		public RuleCall getUnitsSTRINGTerminalRuleCall_8_1_0() { return cUnitsSTRINGTerminalRuleCall_8_1_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_9() { return cRightCurlyBracketKeyword_9; }
 	}
 
 	public class ExternalElements extends AbstractParserRuleElementFinder {
@@ -1097,156 +1318,6 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"F90"
 		public Keyword getF90Keyword_1_1_1_1() { return cF90Keyword_1_1_1_1; }
-	}
-
-	public class AliasElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Alias");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
-		private final Keyword cDefineKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
-		private final Keyword cDEFINEKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
-		private final Assignment cTaAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cTaTimeArraySizeParserRuleCall_1_0 = (RuleCall)cTaAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cLeftSquareBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cLocalAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final Alternatives cLocalAlternatives_2_1_0 = (Alternatives)cLocalAssignment_2_1.eContents().get(0);
-		private final Keyword cLocalLocalKeyword_2_1_0_0 = (Keyword)cLocalAlternatives_2_1_0.eContents().get(0);
-		private final Keyword cLocalLOCALKeyword_2_1_0_1 = (Keyword)cLocalAlternatives_2_1_0.eContents().get(1);
-		private final Keyword cRightSquareBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
-		private final Assignment cNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cNameIDTerminalRuleCall_3_0 = (RuleCall)cNameAssignment_3.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Alternatives cAlternatives_5 = (Alternatives)cGroup.eContents().get(5);
-		private final Keyword cAliasKeyword_5_0 = (Keyword)cAlternatives_5.eContents().get(0);
-		private final Keyword cALIASKeyword_5_1 = (Keyword)cAlternatives_5.eContents().get(1);
-		private final Assignment cExpressionAssignment_6 = (Assignment)cGroup.eContents().get(6);
-		private final RuleCall cExpressionExpressionParserRuleCall_6_0 = (RuleCall)cExpressionAssignment_6.eContents().get(0);
-		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
-		private final Alternatives cAlternatives_7_0 = (Alternatives)cGroup_7.eContents().get(0);
-		private final Keyword cKindKeyword_7_0_0 = (Keyword)cAlternatives_7_0.eContents().get(0);
-		private final Keyword cKINDKeyword_7_0_1 = (Keyword)cAlternatives_7_0.eContents().get(1);
-		private final Assignment cKindAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
-		private final RuleCall cKindSTRINGTerminalRuleCall_7_1_0 = (RuleCall)cKindAssignment_7_1.eContents().get(0);
-		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
-		private final Alternatives cAlternatives_8_0 = (Alternatives)cGroup_8.eContents().get(0);
-		private final Keyword cUnitsKeyword_8_0_0 = (Keyword)cAlternatives_8_0.eContents().get(0);
-		private final Keyword cUNITSKeyword_8_0_1 = (Keyword)cAlternatives_8_0.eContents().get(1);
-		private final Assignment cUnitsAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
-		private final RuleCall cUnitsSTRINGTerminalRuleCall_8_1_0 = (RuleCall)cUnitsAssignment_8_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_9 = (Keyword)cGroup.eContents().get(9);
-		
-		////name=[SVar|ID] to be changed to reference after scoping is resolved across files
-		// Alias:
-		//
-		//	("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" ("alias" | "ALIAS")
-		//
-		//	expression=Expression (("kind" | "KIND") kind=STRING)? (("units" | "UNITS") units=STRING)? "}";
-		public ParserRule getRule() { return rule; }
-
-		//("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" ("alias" | "ALIAS")
-		//
-		//expression=Expression (("kind" | "KIND") kind=STRING)? (("units" | "UNITS") units=STRING)? "}"
-		public Group getGroup() { return cGroup; }
-
-		//"define" | "DEFINE"
-		public Alternatives getAlternatives_0() { return cAlternatives_0; }
-
-		//"define"
-		public Keyword getDefineKeyword_0_0() { return cDefineKeyword_0_0; }
-
-		//"DEFINE"
-		public Keyword getDEFINEKeyword_0_1() { return cDEFINEKeyword_0_1; }
-
-		//ta=TimeArraySize?
-		public Assignment getTaAssignment_1() { return cTaAssignment_1; }
-
-		//TimeArraySize
-		public RuleCall getTaTimeArraySizeParserRuleCall_1_0() { return cTaTimeArraySizeParserRuleCall_1_0; }
-
-		//("[" local?=("local" | "LOCAL") "]")?
-		public Group getGroup_2() { return cGroup_2; }
-
-		//"["
-		public Keyword getLeftSquareBracketKeyword_2_0() { return cLeftSquareBracketKeyword_2_0; }
-
-		//local?=("local" | "LOCAL")
-		public Assignment getLocalAssignment_2_1() { return cLocalAssignment_2_1; }
-
-		//"local" | "LOCAL"
-		public Alternatives getLocalAlternatives_2_1_0() { return cLocalAlternatives_2_1_0; }
-
-		//"local"
-		public Keyword getLocalLocalKeyword_2_1_0_0() { return cLocalLocalKeyword_2_1_0_0; }
-
-		//"LOCAL"
-		public Keyword getLocalLOCALKeyword_2_1_0_1() { return cLocalLOCALKeyword_2_1_0_1; }
-
-		//"]"
-		public Keyword getRightSquareBracketKeyword_2_2() { return cRightSquareBracketKeyword_2_2; }
-
-		//name=ID
-		public Assignment getNameAssignment_3() { return cNameAssignment_3; }
-
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_3_0() { return cNameIDTerminalRuleCall_3_0; }
-
-		//"{"
-		public Keyword getLeftCurlyBracketKeyword_4() { return cLeftCurlyBracketKeyword_4; }
-
-		//"alias" | "ALIAS"
-		public Alternatives getAlternatives_5() { return cAlternatives_5; }
-
-		//"alias"
-		public Keyword getAliasKeyword_5_0() { return cAliasKeyword_5_0; }
-
-		//"ALIAS"
-		public Keyword getALIASKeyword_5_1() { return cALIASKeyword_5_1; }
-
-		//expression=Expression
-		public Assignment getExpressionAssignment_6() { return cExpressionAssignment_6; }
-
-		//Expression
-		public RuleCall getExpressionExpressionParserRuleCall_6_0() { return cExpressionExpressionParserRuleCall_6_0; }
-
-		//(("kind" | "KIND") kind=STRING)?
-		public Group getGroup_7() { return cGroup_7; }
-
-		//"kind" | "KIND"
-		public Alternatives getAlternatives_7_0() { return cAlternatives_7_0; }
-
-		//"kind"
-		public Keyword getKindKeyword_7_0_0() { return cKindKeyword_7_0_0; }
-
-		//"KIND"
-		public Keyword getKINDKeyword_7_0_1() { return cKINDKeyword_7_0_1; }
-
-		//kind=STRING
-		public Assignment getKindAssignment_7_1() { return cKindAssignment_7_1; }
-
-		//STRING
-		public RuleCall getKindSTRINGTerminalRuleCall_7_1_0() { return cKindSTRINGTerminalRuleCall_7_1_0; }
-
-		//(("units" | "UNITS") units=STRING)?
-		public Group getGroup_8() { return cGroup_8; }
-
-		//"units" | "UNITS"
-		public Alternatives getAlternatives_8_0() { return cAlternatives_8_0; }
-
-		//"units"
-		public Keyword getUnitsKeyword_8_0_0() { return cUnitsKeyword_8_0_0; }
-
-		//"UNITS"
-		public Keyword getUNITSKeyword_8_0_1() { return cUNITSKeyword_8_0_1; }
-
-		//units=STRING
-		public Assignment getUnitsAssignment_8_1() { return cUnitsAssignment_8_1; }
-
-		//STRING
-		public RuleCall getUnitsSTRINGTerminalRuleCall_8_1_0() { return cUnitsSTRINGTerminalRuleCall_8_1_0; }
-
-		//"}"
-		public Keyword getRightCurlyBracketKeyword_9() { return cRightCurlyBracketKeyword_9; }
 	}
 
 	public class DVarElements extends AbstractParserRuleElementFinder {
@@ -3600,8 +3671,8 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Term");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Assignment cRefAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
-		private final CrossReference cRefVariableCrossReference_0_0 = (CrossReference)cRefAssignment_0.eContents().get(0);
-		private final RuleCall cRefVariableIDTerminalRuleCall_0_0_1 = (RuleCall)cRefVariableCrossReference_0_0.eContents().get(1);
+		private final CrossReference cRefDeclarationCrossReference_0_0 = (CrossReference)cRefAssignment_0.eContents().get(0);
+		private final RuleCall cRefDeclarationIDTerminalRuleCall_0_0_1 = (RuleCall)cRefDeclarationCrossReference_0_0.eContents().get(1);
 		private final Assignment cNAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
 		private final RuleCall cNNumberParserRuleCall_1_0 = (RuleCall)cNAssignment_1.eContents().get(0);
 		private final Assignment cFAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
@@ -3617,20 +3688,20 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Term:
 		//
-		//	ref=[Variable] | n=Number | f=Function | "(" e=Expression ")" | s=SpecialIdent | MultiStep;
+		//	ref=[Declaration] | n=Number | f=Function | "(" e=Expression ")" | s=SpecialIdent | MultiStep;
 		public ParserRule getRule() { return rule; }
 
-		//ref=[Variable] | n=Number | f=Function | "(" e=Expression ")" | s=SpecialIdent | MultiStep
+		//ref=[Declaration] | n=Number | f=Function | "(" e=Expression ")" | s=SpecialIdent | MultiStep
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//ref=[Variable]
+		//ref=[Declaration]
 		public Assignment getRefAssignment_0() { return cRefAssignment_0; }
 
-		//[Variable]
-		public CrossReference getRefVariableCrossReference_0_0() { return cRefVariableCrossReference_0_0; }
+		//[Declaration]
+		public CrossReference getRefDeclarationCrossReference_0_0() { return cRefDeclarationCrossReference_0_0; }
 
 		//ID
-		public RuleCall getRefVariableIDTerminalRuleCall_0_0_1() { return cRefVariableIDTerminalRuleCall_0_0_1; }
+		public RuleCall getRefDeclarationIDTerminalRuleCall_0_0_1() { return cRefDeclarationIDTerminalRuleCall_0_0_1; }
 
 		//n=Number
 		public Assignment getNAssignment_1() { return cNAssignment_1; }
@@ -3747,8 +3818,8 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
 		private final Assignment cRefAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
-		private final CrossReference cRefVariableCrossReference_0_0_0 = (CrossReference)cRefAssignment_0_0.eContents().get(0);
-		private final RuleCall cRefVariableIDTerminalRuleCall_0_0_0_1 = (RuleCall)cRefVariableCrossReference_0_0_0.eContents().get(1);
+		private final CrossReference cRefDeclarationCrossReference_0_0_0 = (CrossReference)cRefAssignment_0_0.eContents().get(0);
+		private final RuleCall cRefDeclarationIDTerminalRuleCall_0_0_0_1 = (RuleCall)cRefDeclarationCrossReference_0_0_0.eContents().get(1);
 		private final RuleCall cTafCfsParserRuleCall_0_1 = (RuleCall)cAlternatives_0.eContents().get(1);
 		private final RuleCall cMonthParserRuleCall_0_2 = (RuleCall)cAlternatives_0.eContents().get(2);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
@@ -3762,23 +3833,23 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ExternalFunction:
 		//
-		//	(ref=[Variable] | TafCfs | Month) "(" e1=Expression ("," e2+=Expression)* ")";
+		//	(ref=[Declaration] | TafCfs | Month) "(" e1=Expression ("," e2+=Expression)* ")";
 		public ParserRule getRule() { return rule; }
 
-		//(ref=[Variable] | TafCfs | Month) "(" e1=Expression ("," e2+=Expression)* ")"
+		//(ref=[Declaration] | TafCfs | Month) "(" e1=Expression ("," e2+=Expression)* ")"
 		public Group getGroup() { return cGroup; }
 
-		//ref=[Variable] | TafCfs | Month
+		//ref=[Declaration] | TafCfs | Month
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
-		//ref=[Variable]
+		//ref=[Declaration]
 		public Assignment getRefAssignment_0_0() { return cRefAssignment_0_0; }
 
-		//[Variable]
-		public CrossReference getRefVariableCrossReference_0_0_0() { return cRefVariableCrossReference_0_0_0; }
+		//[Declaration]
+		public CrossReference getRefDeclarationCrossReference_0_0_0() { return cRefDeclarationCrossReference_0_0_0; }
 
 		//ID
-		public RuleCall getRefVariableIDTerminalRuleCall_0_0_0_1() { return cRefVariableIDTerminalRuleCall_0_0_0_1; }
+		public RuleCall getRefDeclarationIDTerminalRuleCall_0_0_0_1() { return cRefDeclarationIDTerminalRuleCall_0_0_0_1; }
 
 		//TafCfs
 		public RuleCall getTafCfsParserRuleCall_0_1() { return cTafCfsParserRuleCall_0_1; }
@@ -4726,6 +4797,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	
 	private WreslEvaluatorElements pWreslEvaluator;
 	private PatternElements pPattern;
+	private DeclarationElements pDeclaration;
 	private VariableElements pVariable;
 	private StateVariableElements pStateVariable;
 	private DecisionVariableElements pDecisionVariable;
@@ -4740,8 +4812,8 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	private SvarDefElements pSvarDef;
 	private DvarDefElements pDvarDef;
 	private ConstDefElements pConstDef;
-	private ExternalElements pExternal;
 	private AliasElements pAlias;
+	private ExternalElements pExternal;
 	private DVarElements pDVar;
 	private DVarNonStdElements pDVarNonStd;
 	private DVarStdElements pDVarStd;
@@ -4895,13 +4967,24 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Pattern:
 	//
-	//	Variable | IncludeFile | IncludeModel | Goal | Objective;
+	//	Variable | IncludeFile | IncludeModel | Goal | Objective | Declaration;
 	public PatternElements getPatternAccess() {
 		return (pPattern != null) ? pPattern : (pPattern = new PatternElements());
 	}
 	
 	public ParserRule getPatternRule() {
 		return getPatternAccess().getRule();
+	}
+
+	//Declaration:
+	//
+	//	"Declare" "{" name=ID "}";
+	public DeclarationElements getDeclarationAccess() {
+		return (pDeclaration != null) ? pDeclaration : (pDeclaration = new DeclarationElements());
+	}
+	
+	public ParserRule getDeclarationRule() {
+		return getDeclarationAccess().getRule();
 	}
 
 	//Variable:
@@ -4983,7 +5066,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//TimeArraySize:
 	//
-	//	"(" ref=[StateVariable] ")";
+	//	"(" name=[Declaration] ")";
 	public TimeArraySizeElements getTimeArraySizeAccess() {
 		return (pTimeArraySize != null) ? pTimeArraySize : (pTimeArraySize = new TimeArraySizeElements());
 	}
@@ -5005,7 +5088,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//WeightItem:
 	//
-	//	"[" name=[DecisionVariable] ta=TimeArraySize? "," expression=Expression "]" ","?;
+	//	"[" ref=[Declaration] ta=TimeArraySize? "," expression=Expression "]" ","?;
 	public WeightItemElements getWeightItemAccess() {
 		return (pWeightItem != null) ? pWeightItem : (pWeightItem = new WeightItemElements());
 	}
@@ -5016,7 +5099,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ExternalDef:
 	//
-	//	("define" | "DEFINE") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=External "}";
+	//	("define" | "DEFINE") ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{" definition=External "}";
 	public ExternalDefElements getExternalDefAccess() {
 		return (pExternalDef != null) ? pExternalDef : (pExternalDef = new ExternalDefElements());
 	}
@@ -5027,9 +5110,11 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SvarDef:
 	//
-	//	("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}" |
+	//	("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{" definition=SVar
 	//
-	//	("svar" | "SVAR" | "Svar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=SVar "}";
+	//	"}" | ("svar" | "SVAR" | "Svar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{"
+	//
+	//	definition=SVar "}";
 	public SvarDefElements getSvarDefAccess() {
 		return (pSvarDef != null) ? pSvarDef : (pSvarDef = new SvarDefElements());
 	}
@@ -5040,11 +5125,11 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//DvarDef:
 	//
-	//	("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=(DVar |
+	//	("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{" definition=(DVar
 	//
-	//	DVarInteger) "}" | ("dvar" | "DVAR" | "Dvar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{"
+	//	| DVarInteger) "}" | ("dvar" | "DVAR" | "Dvar") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")?
 	//
-	//	definition=(DVar | DVarInteger) "}";
+	//	ref=[Declaration] "{" definition=(DVar | DVarInteger) "}";
 	public DvarDefElements getDvarDefAccess() {
 		return (pDvarDef != null) ? pDvarDef : (pDvarDef = new DvarDefElements());
 	}
@@ -5055,13 +5140,27 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ConstDef:
 	//
-	//	("const" | "CONST" | "Const") ("[" local?=("local" | "LOCAL") "]")? name=ID "{" definition=Number "}";
+	//	("const" | "CONST" | "Const") ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{" definition=Number "}";
 	public ConstDefElements getConstDefAccess() {
 		return (pConstDef != null) ? pConstDef : (pConstDef = new ConstDefElements());
 	}
 	
 	public ParserRule getConstDefRule() {
 		return getConstDefAccess().getRule();
+	}
+
+	////name=[SVar|ID] to be changed to reference after scoping is resolved across files
+	// Alias:
+	//
+	//	("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? ref=[Declaration] "{" ("alias" |
+	//
+	//	"ALIAS") expression=Expression (("kind" | "KIND") kind=STRING)? (("units" | "UNITS") units=STRING)? "}";
+	public AliasElements getAliasAccess() {
+		return (pAlias != null) ? pAlias : (pAlias = new AliasElements());
+	}
+	
+	public ParserRule getAliasRule() {
+		return getAliasAccess().getRule();
 	}
 
 	//External:
@@ -5073,20 +5172,6 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getExternalRule() {
 		return getExternalAccess().getRule();
-	}
-
-	////name=[SVar|ID] to be changed to reference after scoping is resolved across files
-	// Alias:
-	//
-	//	("define" | "DEFINE") ta=TimeArraySize? ("[" local?=("local" | "LOCAL") "]")? name=ID "{" ("alias" | "ALIAS")
-	//
-	//	expression=Expression (("kind" | "KIND") kind=STRING)? (("units" | "UNITS") units=STRING)? "}";
-	public AliasElements getAliasAccess() {
-		return (pAlias != null) ? pAlias : (pAlias = new AliasElements());
-	}
-	
-	public ParserRule getAliasRule() {
-		return getAliasAccess().getRule();
 	}
 
 	//DVar:
@@ -5652,7 +5737,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Term:
 	//
-	//	ref=[Variable] | n=Number | f=Function | "(" e=Expression ")" | s=SpecialIdent | MultiStep;
+	//	ref=[Declaration] | n=Number | f=Function | "(" e=Expression ")" | s=SpecialIdent | MultiStep;
 	public TermElements getTermAccess() {
 		return (pTerm != null) ? pTerm : (pTerm = new TermElements());
 	}
@@ -5676,7 +5761,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ExternalFunction:
 	//
-	//	(ref=[Variable] | TafCfs | Month) "(" e1=Expression ("," e2+=Expression)* ")";
+	//	(ref=[Declaration] | TafCfs | Month) "(" e1=Expression ("," e2+=Expression)* ")";
 	public ExternalFunctionElements getExternalFunctionAccess() {
 		return (pExternalFunction != null) ? pExternalFunction : (pExternalFunction = new ExternalFunctionElements());
 	}

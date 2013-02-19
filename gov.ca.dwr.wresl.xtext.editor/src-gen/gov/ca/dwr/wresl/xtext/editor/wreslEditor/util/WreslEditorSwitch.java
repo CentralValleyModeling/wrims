@@ -86,6 +86,14 @@ public class WreslEditorSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case WreslEditorPackage.DECLARATION:
+      {
+        Declaration declaration = (Declaration)theEObject;
+        T result = caseDeclaration(declaration);
+        if (result == null) result = casePattern(declaration);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case WreslEditorPackage.VARIABLE:
       {
         Variable variable = (Variable)theEObject;
@@ -202,13 +210,6 @@ public class WreslEditorSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case WreslEditorPackage.EXTERNAL:
-      {
-        External external = (External)theEObject;
-        T result = caseExternal(external);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case WreslEditorPackage.ALIAS:
       {
         Alias alias = (Alias)theEObject;
@@ -216,6 +217,13 @@ public class WreslEditorSwitch<T> extends Switch<T>
         if (result == null) result = caseDecisionVariable(alias);
         if (result == null) result = caseVariable(alias);
         if (result == null) result = casePattern(alias);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case WreslEditorPackage.EXTERNAL:
+      {
+        External external = (External)theEObject;
+        T result = caseExternal(external);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -720,6 +728,22 @@ public class WreslEditorSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Declaration</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDeclaration(Declaration object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Variable</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -944,22 +968,6 @@ public class WreslEditorSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>External</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>External</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseExternal(External object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Alias</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -971,6 +979,22 @@ public class WreslEditorSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseAlias(Alias object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>External</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>External</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseExternal(External object)
   {
     return null;
   }
