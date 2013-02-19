@@ -24,7 +24,7 @@ import org.eclipse.ui.internal.WorkbenchWindow;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 
 public class EnableMenus {
-	public EnableMenus(final HashMap<String, Boolean> enableMap){
+	public EnableMenus(final HashMap<String, Boolean> enableMenuMap){
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() { 
 				IWorkbenchWindow window = Workbench.getInstance().getActiveWorkbenchWindow();
@@ -42,11 +42,11 @@ public class EnableMenus {
 					IContributionItem subItems = subContribution.getInnerItem();
 					ActionSetMenuManager aSubItems = (ActionSetMenuManager)subItems;
 					for (IContributionItem subItem:aSubItems.getItems()){
-						if (enableMap.containsKey(subItem.getId())){
+						if (enableMenuMap.containsKey(subItem.getId())){
 							ActionSetContributionItem aSubItem = (ActionSetContributionItem)subItem;
 							IContributionItem inSubItem = aSubItem.getInnerItem();	
 							PluginActionContributionItem pACI=(PluginActionContributionItem)inSubItem;
-							pACI.getAction().setEnabled(enableMap.get(aSubItem.getId()));
+							pACI.getAction().setEnabled(enableMenuMap.get(aSubItem.getId()));
 						}
 					}
 				}
@@ -58,11 +58,11 @@ public class EnableMenus {
 					IContributionItem subItems = subContribution.getInnerItem();
 					MenuManager aSubItems = (MenuManager)subItems;
 					for (IContributionItem subItem:aSubItems.getItems()){
-						if (enableMap.containsKey(subItem.getId())){
+						if (enableMenuMap.containsKey(subItem.getId())){
 							ActionSetContributionItem aSubItem = (ActionSetContributionItem)subItem;
 							IContributionItem inSubItem = aSubItem.getInnerItem();	
 							PluginActionContributionItem pACI=(PluginActionContributionItem)inSubItem;
-							pACI.getAction().setEnabled(enableMap.get(aSubItem.getId()));
+							pACI.getAction().setEnabled(enableMenuMap.get(aSubItem.getId()));
 						}
 					}
 				}

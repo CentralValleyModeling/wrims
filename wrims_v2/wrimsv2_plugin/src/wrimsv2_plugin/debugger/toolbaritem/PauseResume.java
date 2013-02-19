@@ -63,28 +63,34 @@ public class PauseResume extends ActionDelegate implements IViewActionDelegate{
 	
 	public void enableRunMenu(int flag){
 		HandlePauseResumeButton.procPauseResumeToolbarItem(flag);
-		HashMap<String, Boolean> enableMap=new HashMap<String, Boolean>();
+		HashMap<String, Boolean> enableMenuMap=new HashMap<String, Boolean>();
+		HashMap<String, Boolean> enableButtonMap=new HashMap<String, Boolean>();
 		if (flag==3){
-			enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
-			enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, false);
-			enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, false);
-			enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, true);
-			enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, true);
-			enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
-			enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
-			enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, true);
-			enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, true);	
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, false);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, false);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, true);
+			enableButtonMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLEBUTTON, true);
+			enableButtonMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEPBUTTON, true);
 		}else{
-			enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
-			enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, true);
-			enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, true);
-			enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
-			enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, false);
-			enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
-			enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
-			enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, false);
-			enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, false);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, false);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, false);
+			enableMenuMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, false);
+			enableButtonMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLEBUTTON, true);
+			enableButtonMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEPBUTTON, true);
 		}
-		new EnableMenus(enableMap);
+		new EnableMenus(enableMenuMap);
+		new EnableButtons(enableButtonMap);
 	}
 }

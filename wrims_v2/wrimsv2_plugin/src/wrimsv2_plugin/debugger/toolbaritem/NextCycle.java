@@ -1,26 +1,62 @@
-package wrimsv2_plugin.debugger.menuitem;
+package wrimsv2_plugin.debugger.toolbaritem;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IMenuCreator;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.HelpListener;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IViewActionDelegate;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.ActionDelegate;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.dialog.WPPAddWatchDialog;
+import wrimsv2_plugin.debugger.dialog.WPPReSimDialog;
+import wrimsv2_plugin.debugger.dialog.WPPVarGoalSearchDialog;
 import wrimsv2_plugin.debugger.exception.WPPException;
-import wrimsv2_plugin.debugger.toolbaritem.EnableButtons;
-import wrimsv2_plugin.debugger.toolbaritem.HandlePauseResumeButton;
+import wrimsv2_plugin.debugger.menuitem.EnableMenus;
+import wrimsv2_plugin.debugger.view.WPPAllGoalView;
+import wrimsv2_plugin.debugger.view.WPPAllVariableView;
+import wrimsv2_plugin.debugger.view.WPPVariableView;
+import wrimsv2_plugin.tools.DataProcess;
 
-public class NextTimeStepMenu implements IWorkbenchWindowActionDelegate{
-	public NextTimeStepMenu(){
-
+public class NextCycle extends ActionDelegate implements IViewActionDelegate{
+	IViewPart view;
+	
+	@Override
+	public void init(IViewPart view) {
+		this.view=view;		
 	}
 
-	@Override
 	public void run(IAction action) {
-		DebugCorePlugin.debugSet.nextTimeStep();
+		if (DebugCorePlugin.debugCycle<DebugCorePlugin.totalNoOfCycle){
+			DebugCorePlugin.debugSet.getComboCycle().setText(String.valueOf(DebugCorePlugin.debugCycle+1));
+			DebugCorePlugin.debugSet.updateDebugTimeSet();
+		}else{
+			Date endDate= new Date(DebugCorePlugin.endYear-1900, DebugCorePlugin.endMonth-1, DebugCorePlugin.endDay);
+			Date debugDate = new Date (DebugCorePlugin.debugYear-1900, DebugCorePlugin.debugMonth-1, DebugCorePlugin.debugDay);
+			if (endDate.after(debugDate)){
+				DebugCorePlugin.debugSet.getComboCycle().setText("1");
+				DebugCorePlugin.debugSet.nextTimeStep();
+			}
+		}
 		try {
 			if (DebugCorePlugin.isDebugging && DebugCorePlugin.target.isSuspended()) {
 				DebugCorePlugin.target.resume();
@@ -33,24 +69,6 @@ public class NextTimeStepMenu implements IWorkbenchWindowActionDelegate{
 		} catch (DebugException e) {
 			WPPException.handleException(e);
 		}
-	}
-
-	@Override
-	public void selectionChanged(IAction action, ISelection selection) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void init(IWorkbenchWindow window) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	public void enableRunMenuWithResume(){

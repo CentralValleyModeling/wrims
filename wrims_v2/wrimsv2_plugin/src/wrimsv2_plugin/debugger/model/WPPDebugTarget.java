@@ -83,6 +83,7 @@ import wrimsv2_plugin.debugger.breakpoint.WPPRunToLineBreakpoint;
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.menuitem.EnableMenus;
+import wrimsv2_plugin.debugger.toolbaritem.EnableButtons;
 import wrimsv2_plugin.debugger.toolbaritem.HandlePauseResumeButton;
 import wrimsv2_plugin.debugger.view.UpdateView;
 import wrimsv2_plugin.debugger.view.WPPAllGoalView;
@@ -870,45 +871,57 @@ public class WPPDebugTarget extends WPPDebugElement implements IDebugTarget, IBr
 	}
 	
 	public void enableRunMenuWithStart(){
-		HashMap<String, Boolean> enableMap=new HashMap<String, Boolean>();
-		enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
-		enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, true);
-		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, true);
-		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
-		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
-		new EnableMenus(enableMap);
+		HashMap<String, Boolean> enableMenuMap=new HashMap<String, Boolean>();
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, true);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, true);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, false);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
+		new EnableMenus(enableMenuMap);
 		HandlePauseResumeButton.procPauseResumeToolbarItem(1);
+		HashMap<String, Boolean> enableButtonMap=new HashMap<String, Boolean>();
+		enableButtonMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLEBUTTON, true);
+		enableButtonMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEPBUTTON, true);
+		new EnableButtons(enableButtonMap);
 	}
 	
 	public void enableRunMenuWithSuspended(){
-		HashMap<String, Boolean> enableMap=new HashMap<String, Boolean>();
-		enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
-		enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, true);
-		enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, true);
-		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
-		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
-		enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, true);
-		enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, true);
-		new EnableMenus(enableMap);
+		HashMap<String, Boolean> enableMenuMap=new HashMap<String, Boolean>();
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, true);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, false);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, false);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, true);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, true);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, true);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, true);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, true);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, true);
+		new EnableMenus(enableMenuMap);
 		HandlePauseResumeButton.procPauseResumeToolbarItem(3);
+		HashMap<String, Boolean> enableButtonMap=new HashMap<String, Boolean>();
+		enableButtonMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLEBUTTON, true);
+		enableButtonMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEPBUTTON, true);
+		new EnableButtons(enableButtonMap);
 	}
 	
 	public void enableRunMenuWithTerminate(){
-		HashMap<String, Boolean> enableMap=new HashMap<String, Boolean>();
-		enableMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, false);
-		enableMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, false);
-		new EnableMenus(enableMap);
+		HashMap<String, Boolean> enableMenuMap=new HashMap<String, Boolean>();
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_TERMINATEMENU, false);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_PAUSEMENU, false);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_SUSPENDMENU, false);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_RESUMEMENU, false);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_RESIMMENU, false);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLE, false);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEP, false);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_SAVETODVFILE, false);
+		enableMenuMap.put(DebugCorePlugin.ID_WPP_SAVETOSVFILE, false);
+		new EnableMenus(enableMenuMap);
 		HandlePauseResumeButton.procPauseResumeToolbarItem(0);
+		HashMap<String, Boolean> enableButtonMap=new HashMap<String, Boolean>();
+		enableButtonMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLEBUTTON, false);
+		enableButtonMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEPBUTTON, false);
+		new EnableButtons(enableButtonMap);
 	}
 }

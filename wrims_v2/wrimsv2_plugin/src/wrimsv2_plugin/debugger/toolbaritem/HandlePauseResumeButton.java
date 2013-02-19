@@ -44,6 +44,7 @@ public class HandlePauseResumeButton {
 		});
 	}
 	
+	/*
 	public static void setVisibilityPauseResumeToolbarItem(final boolean isVisible){
 		Display.getDefault().syncExec(new Runnable() {
 			public void run() { 
@@ -56,5 +57,6 @@ public class HandlePauseResumeButton {
 				contributionItem.setVisible(isVisible);
 			}
 		});
-	}	
+	}
+	*/	
 }

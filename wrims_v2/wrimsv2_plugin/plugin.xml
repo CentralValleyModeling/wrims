@@ -156,7 +156,25 @@
   <viewContribution 
       id="org.eclipse.ui.articles.action.contribution.view" 
    targetID="org.eclipse.ui.console.ConsoleView"> 
-	<action
+      <action
+         id="wpp.nexttimestepbutton" 
+         label="Next Timestep"
+         icon="icons\next_timestep.png" 
+         tooltip="next timestep"
+         toolbarPath="launchGroup"
+         class="wrimsv2_plugin.debugger.toolbaritem.NextTimestep"
+         enablesFor="*">
+      </action> 
+      <action
+         id="wpp.nextcyclebutton" 
+         label="Next Cycle"
+         icon="icons\next_cycle.png" 
+         tooltip="next cycle"
+         toolbarPath="launchGroup"
+         class="wrimsv2_plugin.debugger.toolbaritem.NextCycle"
+         enablesFor="*">
+      </action> 
+      <action
          id="wpp.pauseresumebutton" 
          label="Pause/Resume"
          icon="icons\pause.png" 
