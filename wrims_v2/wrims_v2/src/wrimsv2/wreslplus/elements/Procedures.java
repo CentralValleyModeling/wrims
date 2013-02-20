@@ -688,8 +688,8 @@ public class Procedures {
 			
 			SequenceTemp q = st.seqMap.get(se);
 			
-			// TODO: warning!!! test only. need to parse time step from wreslplus
-			st.seqTimeStepList.add("1MON");		
+			// TODO: warning!!! need test
+			st.seqTimeStepList.add(q.timeStep);		
 		}
 
 		String definedTimeStep = "1MON";

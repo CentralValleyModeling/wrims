@@ -166,7 +166,9 @@ sequence returns[String id, SequenceTemp seqObj]
 	: SEQUENCE i=ID {$id=$i.text; $seqObj.id=$i.text;} 
 		'{' MODEL m=ID 
 		   ( CONDITION cc=logical_main {$seqObj.condition=$cc.text;} )? 
-		    ORDER o=INT '}' 
+		    ORDER o=INT 
+		   ( TIMESTEP t=TIMESTEPVALUE {$seqObj.timeStep=$t.text.toUpperCase();} )? 
+		    '}' 
 	;
 
 
@@ -1033,6 +1035,8 @@ MODEL :     'model' | 'MODEL' ;
 SEQUENCE :  'sequence' | 'SEQUENCE' ;
 
 ORDER :     'order' | 'ORDER' | 'Order' ;
+TIMESTEP  : 'timestep'|'TIMESTEP'|'TimeStep';
+TIMESTEPVALUE: '1mon'|'1day';
 INCLUDE :   'include' | 'INCLUDE' | 'Include' ;
 CASE :      'case' | 'CASE' | 'Case' ;
 CONDITION : 'condition' | 'CONDITION' | 'Condition' ;

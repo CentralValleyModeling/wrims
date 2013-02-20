@@ -75,6 +75,7 @@ public class ToLowerCase {
 		o.model = w.model.toLowerCase();
 		o.condition = w.condition.toLowerCase();
 		o.order = w.order.toLowerCase();
+		o.timeStep = w.timeStep;
 		
 		return o;
 	
