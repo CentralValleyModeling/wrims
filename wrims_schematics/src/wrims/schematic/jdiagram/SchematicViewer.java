@@ -445,7 +445,7 @@ public class SchematicViewer extends JPanel {
 				.putValue(
 						Action.SMALL_ICON,
 						ImageUtil
-								.createImageIcon("/wrims/schematic/images/toolbar/forward_view.png"));
+								.createImageIcon("/wrims/schematic/images/toolbar/forward.png"));
 		backwardViewAction = new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -458,7 +458,7 @@ public class SchematicViewer extends JPanel {
 				.putValue(
 						Action.SMALL_ICON,
 						ImageUtil
-								.createImageIcon("/wrims/schematic/images/toolbar/backward_view.png"));
+								.createImageIcon("/wrims/schematic/images/toolbar/backward.png"));
 
 		markViewAction = new AbstractAction() {
 			@Override

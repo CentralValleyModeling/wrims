@@ -105,10 +105,18 @@ public class MainFrame extends JPanel implements Runnable, DocumentListener,
 
 				// check previously loaded schematics
 
-				String filename = Preferences.userNodeForPackage(
-						MainFrame.class).get("last.schematic",
-						mainDir + "/wrims/schematic/CS3_NetworkSchematic.xml");
-
+				Preferences preference = Preferences.userNodeForPackage(
+						MainFrame.class);
+				
+				String filename;
+				if (preference.getBoolean("firsttime", true)){
+					filename = mainDir + "/wrims/schematic/CS3_NetworkSchematic.xml";
+				}else{
+					filename = preference.get("last.schematic",
+							mainDir + "/wrims/schematic/CS3_NetworkSchematic.xml");
+				}
+				preference.putBoolean("firsttime", false);
+				
 				_viewer.load(filename);
 			} catch (Exception e) {
 				e.printStackTrace();
