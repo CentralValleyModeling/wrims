@@ -49,6 +49,10 @@ public class GoalTemp implements Serializable {
 	public ArrayList<String> slackList;
 	public ArrayList<String> surplusList;
 	
+	// default is 0
+	public String timeArraySize;
+	public String arraySize;
+	
 	public GoalTemp(){
 		
 		lhs=null;
@@ -73,6 +77,9 @@ public class GoalTemp implements Serializable {
 		dvarSlackSurplusList = new ArrayList<ArrayList<String>>();
 		slackList=new ArrayList<String>();
 		surplusList=new ArrayList<String>();
+		
+		timeArraySize="0";
+		arraySize="0";
 	}
 	
 }

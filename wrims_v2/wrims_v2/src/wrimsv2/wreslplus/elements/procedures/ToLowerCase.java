@@ -190,6 +190,9 @@ public class ToLowerCase {
 		//o.caseExpression = Tools.replace_seperator(o.caseExpression);
 		o.caseExpression = Tools.add_space_between_logical(o.caseExpression);
 		
+		o.arraySize = s.arraySize.toLowerCase();
+		o.timeArraySize = s.timeArraySize.toLowerCase();
+		
 		return o;
 		
 	}	
@@ -229,6 +232,9 @@ public class ToLowerCase {
 		
 		o.isInteger = d.isInteger;
 		o.isFromAlias = d.isFromAlias;
+		
+		o.arraySize = d.arraySize.toLowerCase();
+		o.timeArraySize = d.timeArraySize.toLowerCase();
 		
 		return o;
 	}
@@ -332,6 +338,9 @@ public class ToLowerCase {
 		
 		}
 		
+		o.arraySize = g.arraySize.toLowerCase();
+		o.timeArraySize = g.timeArraySize.toLowerCase();
+		
 		return o;
 				
 	}
@@ -355,6 +364,8 @@ public class ToLowerCase {
 		o.needVarFromEarlierCycle = d.needVarFromEarlierCycle;
 		o.isMovedToDvar = d.isMovedToDvar;
 
+		o.arraySize = d.arraySize.toLowerCase();
+		o.timeArraySize = d.timeArraySize.toLowerCase();
 		
 		return o;
 	}

@@ -35,6 +35,10 @@ public class AliasTemp implements Serializable {
 	public boolean needVarFromEarlierCycle;
 	public boolean isMovedToDvar;	
 	
+	// default is 0
+	public String timeArraySize;
+	public String arraySize;
+	
 	public AliasTemp(){
 
 		kind=Param.undefined;
@@ -50,6 +54,8 @@ public class AliasTemp implements Serializable {
 		needVarFromEarlierCycle = false;
 		isMovedToDvar = false;
 
+		timeArraySize="0";
+		arraySize="0";
 	}
 	
 }
