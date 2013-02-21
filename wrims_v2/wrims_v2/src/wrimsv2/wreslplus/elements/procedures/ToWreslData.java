@@ -684,6 +684,8 @@ public class ToWreslData {
 		o.condition = d.condition;
 		if (d.isInteger) o.integer=Param.yes;
 		
+		o.timeArraySize = d.timeArraySize;
+		
 		return o;
 		
 	}
@@ -697,7 +699,7 @@ public class ToWreslData {
 		o.line = w.line;
 		o.condition = w.condition;
 		o.weight = w.weight;
-
+		
 		o.weight = Tools.replace_with_space(o.weight);
 		o.weight = Tools.replace_seperator(o.weight);
 		
@@ -718,6 +720,8 @@ public class ToWreslData {
 			o.line = w.varLineMap.get(s);
 			o.condition = w.condition;
 			o.weight = w.varWeightMap.get(s);
+			
+			o.timeArraySize = w.varTimeArraySizeMap.get(s);
 			
 			om.put(s,o);
 		}
@@ -804,6 +808,8 @@ public class ToWreslData {
 		o.dvarWeightMapList = g.dvarWeightMapList;
 		o.dvarSlackSurplusList = g.dvarSlackSurplusList;
 		//System.out.println(o.caseExpression);
+		
+		o.timeArraySize = g.timeArraySize;
 		return o;
 		
 	}
@@ -822,6 +828,8 @@ public class ToWreslData {
 		o.dependants = d.dependants;
 		o.neededVarInCycleSet = d.neededVarInCycleSet;
 		o.needVarFromEarlierCycle = d.needVarFromEarlierCycle;
+		
+		o.timeArraySize = d.timeArraySize;
 
 		return o;
 		

@@ -29,6 +29,7 @@ public class WeightTable implements Serializable {
 	public Map<String,WeightSubgroup> subgroupMap;
 	//public ArrayList<WeightGroup> weightGroupList;
 	//public Map<String,LinkedHashSet<String>> varDependantMap;
+	public Map<String,String> varTimeArraySizeMap;
 	
 	
 	public WeightTable(){
@@ -46,6 +47,7 @@ public class WeightTable implements Serializable {
 		subgroupMap = new LinkedHashMap<String,WeightSubgroup>();
 		//weightGroupList = new ArrayList<WeightGroup>();
 		//varDependantMap = new LinkedHashMap<String, LinkedHashSet<String>>();
+		varTimeArraySizeMap = new LinkedHashMap<String, String>();
 
 	}
 	

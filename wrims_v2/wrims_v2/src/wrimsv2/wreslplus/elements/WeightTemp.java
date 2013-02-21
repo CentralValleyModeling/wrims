@@ -13,10 +13,16 @@ public class WeightTemp implements Serializable {
 	public String fromWresl;
 	public int line=1;
 	
+	public String timeArraySize;
+	public String arraySize;
+	
 	public WeightTemp(){
 		weight = Param.undefined;
 		condition = Param.always;
-		fromWresl = Param.undefined;		
+		fromWresl = Param.undefined;	
+		
+		timeArraySize="0";
+		arraySize="0";
 
 	}
 	

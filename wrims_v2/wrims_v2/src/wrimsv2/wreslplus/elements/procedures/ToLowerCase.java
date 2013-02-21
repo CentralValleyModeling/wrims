@@ -274,6 +274,7 @@ public class ToLowerCase {
 		o.deviationPenalty = w.deviationPenalty.toLowerCase();
 		o.deviationTolerance = w.deviationTolerance.toLowerCase();
 		o.isWeightGroup = w.isWeightGroup;
+		o.varTimeArraySizeMap = Tools.allToLowerCase_string(w.varTimeArraySizeMap);
 		
 		return o;
 
