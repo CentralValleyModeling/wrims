@@ -378,10 +378,12 @@ objGroupName : i=ID {$weight::wt_.id_lowcase=$i.text.toLowerCase();
                      $weight::wt_.id_raw=$i.text;} ;
 
 weight_legacy_unit 
-	: '[' i=ID{line=$i.line;} ',' e=expr_add ']' ','?
+	: '[' i=ID{line=$i.line;} (weightTimeArray)? ',' e=expr_add ']' ','?
 	{$weight::wt_.varList.add($i.text);
 	$weight::wt_.varWeightMap.put($i.text,$e.text);
 	$weight::wt_.varLineMap.put($i.text, line);};
+  
+weightTimeArray : '(' d=( INT | ID ) ')';  // this is a repetition. The time array should be known when dvar is declared.
 
 weight_new : OBJECTIVE{line=$OBJECTIVE.line;} weightTableID '{' weight_group '}'  ;
 
@@ -456,11 +458,15 @@ scope { GoalTemp gl_;
         $glObj.needVarFromEarlierCycle = (varInCycle!=null);
         $glObj.line=line;}	 
 
-	: GOAL{line=$GOAL.line;} (local_deprecated)? i=ID  '{' ( e=expr_constraint )'}' 
+	: GOAL{line=$GOAL.line;} (local_deprecated)? (goalSimpleArray|goalSimpleTimeArray)? i=ID  '{' ( e=expr_constraint )'}' 
 	{$goal_s::gl_.id=$i.text; 
 	 $goal_s::gl_.caseCondition.add(Param.always);
 	 $goal_s::gl_.caseName.add(Param.defaultCaseName);
 	 $goal_s::gl_.caseExpression.add($e.text);};
+
+goalSimpleArray :     '[' d=( INT | ID ) ']'  {$goal_s::gl_.arraySize=$d.text; };
+goalSimpleTimeArray : '(' d=( INT | ID ) ')'  {$goal_s::gl_.timeArraySize=$d.text; };
+
 
 /// goal hs
 goal_hs returns[String id, GoalTemp glObj]
@@ -479,11 +485,14 @@ scope { GoalTemp gl_;
         $glObj.neededVarInCycleSet= varInCycle;
         $glObj.needVarFromEarlierCycle = (varInCycle!=null);
         $glObj.line=line;}	 
-	: GOAL{line=$GOAL.line;} (local_deprecated)? i=ID  {$goal_hs::gl_.id=$i.text;}
+	: GOAL{line=$GOAL.line;} (local_deprecated)? (goalHsArray|goalHsTimeArray)? i=ID  {$goal_hs::gl_.id=$i.text;}
 	  '{' lhs 
 	  ( goal_hs_nocase 		
 	  | goal_hs_cases 
 	  ) '}';
+
+goalHsArray :     '[' d=( INT | ID ) ']'  {$goal_hs::gl_.arraySize=$d.text; };
+goalHsTimeArray : '(' d=( INT | ID ) ')'  {$goal_hs::gl_.timeArraySize=$d.text; };
 
 goal_hs_nocase
 @after{ $t.gc.id = Param.defaultCaseName;
@@ -535,18 +544,22 @@ scope { AliasTemp as_;}
 	: alias_new | alias_old
  	;
 
-alias_old : DEFINE{line=$DEFINE.line;} (local_deprecated)? aliasID '{' ALIAS  aliasExpresion  aliasKind?  aliasUnits?  '}' ;
-alias_new : ALIAS{line=$ALIAS.line;} aliasID '{' aliasExpresion  aliasKind?  aliasUnits? '}' ;
+alias_old : DEFINE{line=$DEFINE.line;}  (local_deprecated)? (aliasArray|aliasTimeArray)? aliasID '{' ALIAS  aliasExpresion  aliasKind?  aliasUnits?  '}' ;
+alias_new : ALIAS{line=$ALIAS.line;} (aliasArray|aliasTimeArray)? aliasID '{' aliasExpresion  aliasKind?  aliasUnits? '}' ;
 
 aliasExpresion : e=expr_add {$alias::as_.expression=$e.text;}; 
 aliasID : i=ID {$alias::as_.id=$i.text;}; 
 aliasUnits: UNITS s=QUOTE {$alias::as_.units=Tools.strip($s.text);};
 aliasKind:  KIND s=QUOTE {$alias::as_.kind=Tools.strip($s.text);};
 
+aliasArray :     '[' d=( INT | ID ) ']'  {$alias::as_.arraySize=$d.text; };
+aliasTimeArray : '(' d=( INT | ID ) ')'  {$alias::as_.timeArraySize=$d.text; };
+
 /// svar
 
 svar_group returns[String id, SvarTemp svObj]
-  : ( SVAR{line=$SVAR.line;} | DEFINE{line=$DEFINE.line;} (local_deprecated)? ) svar_g { $id=$svar_g.id;  $svObj=$svar_g.svObj;  $svObj.line=line;} ;
+  : ( SVAR{line=$SVAR.line;} | DEFINE{line=$DEFINE.line;}  (local_deprecated)? ) svar_g { $id=$svar_g.id;  $svObj=$svar_g.svObj;  $svObj.line=line;} ;
+
 
 svar_g returns[String id, SvarTemp svObj]
 scope { SvarTemp sv_;
@@ -571,9 +584,12 @@ svarID : i=ID  {$svar_g::sv_.id =$i.text;} ;
 
 svar: svarID '{' svar_trunk '}' ;
 
-svar_array: dimension svar;
+svar_array: svarArray svar;
 
-svar_timeArray: dimension_time svar ;
+svar_timeArray: svarTimeArray svar ;
+
+svarArray :     '[' d=( INT | ID ) ']'  {$svar_g::sv_.arraySize=$d.text; };
+svarTimeArray : '(' d=( INT | ID ) ')'  {$svar_g::sv_.timeArraySize=$d.text; };
 
 /// svar trunk
 
@@ -916,22 +932,22 @@ expr_term
 
 atom
     :  number_p
-    |  v=varID {if (addDep) dependants.add($v.text);} 
+    |  v=varID {if (addDep) dependants.add($v.text);}  
     |  intrinsicFunc
-    |  r=reservedID   {if (isParameter) dependants_notAllowed.add($r.text);}  
+   // |  r=reservedID   {if (isParameter) dependants_notAllowed.add($r.text);}  
     |  s=specialVar   {if (isParameter) dependants_notAllowed.add($s.text);}  
     |  externalFunc
     |  vf=varFunc     {if (isParameter) dependants_notAllowed.add($vf.text);}    
     |  p=preCycleVar  {if (isParameter) dependants_notAllowed.add($p.text);}   
     ;
 
-specialVar : 'i' | '$m' ;
+specialVar : 'i' | '$m' | '$M';
 
 preCycleVar
 	:  p=preCycleVar_old {varInCycle.add($p.text);}
 	;
 
-//preCycleVar_new :  ID '@[' ID ']'  ;
+
 preCycleVar_old :  var=ID '[' cycle=ID ']' 
 { 
   // TODO: don't convert to lower case here!
@@ -956,8 +972,11 @@ intrinsicFunc
 	| multiInputFunc
 	| unitFunc
 	| tableFunc
+	| timeFunc
 	; 
 	
+timeFunc:  ( MONTH | WATERYEAR ) ( '(' expr_add ')' )? ;
+
 tableFunc : 'table' '(' tableName ',' columnNumber ',' rowNumber ')' ;
 
 tableName : ID ;
@@ -1108,6 +1127,9 @@ MIN : 'min' | 'MIN' ;
 MOD : 'mod' | 'MOD' ;
 CFS_TAF : 'cfs_taf' | 'CFS_TAF' ;
 TAF_CFS : 'taf_cfs' | 'TAF_CFS' ;
+
+
+
 
 //ID  :   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
 ID : Letter ( Letter | Digit | '_' )*;
