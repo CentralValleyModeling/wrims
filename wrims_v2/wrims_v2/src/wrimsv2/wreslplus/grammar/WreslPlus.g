@@ -92,7 +92,7 @@ scope { StudyTemp sty;}
 	: 
    initial?
 	( seq=sequence { $wreslMain::sty.seqList.add($seq.id); $wreslMain::sty.seqMap.put($seq.id,$seq.seqObj);  }    )+ 
-	( g=group      { $wreslMain::sty.modelList.add($g.id); $wreslMain::sty.modelMap.put($g.id, $g.modelObj);  }    )+ 
+	( g=group      { $wreslMain::sty.modelList.add($g.id); $wreslMain::sty.modelMap.put($g.id, $g.modelObj);  }    )*
 	( m=model      { $wreslMain::sty.modelList.add($m.id); $wreslMain::sty.modelMap.put($m.id, $m.modelObj);  }    )+ 
 	;
 
@@ -150,8 +150,6 @@ expression_simple
 
 template : TEMPLATE ID '{' ( template_svar | template_dvar | template_dvar_array )*  '}' ;
 
-//label : LABEL ID ;
-
 template_dvar : '%dvar' varID '{' dvar_trunk '}' ;
 
 template_dvar_array : '%dvar' dimension varID '{' dvar_trunk '}' ;
@@ -174,10 +172,6 @@ sequence returns[String id, SequenceTemp seqObj]
 
 
 
-
-//package_: 'package'  packageName;
-//packageName: ( ID '.' )*  ID ;
-
 group returns[String id, ModelTemp modelObj]
 : GROUP i=ID {$id=$i.text;} '{' t=mt '}' {$modelObj =$t.modelObj; $modelObj.id=$id;} ;
 
@@ -186,16 +180,8 @@ group returns[String id, ModelTemp modelObj]
 model_standalone : model ;
 
 model returns[String id, ModelTemp modelObj]
-
-//scope { ModelTemp model_;} 
-//@init{ $model::model_ = new ModelTemp(); 
-//	   $model::model_.absPath = currentAbsolutePath; 
-//	   $model::model_.parentAbsPath = currentAbsoluteParent; 
-//} 
 : MODEL i=modelName {$id=$i.text;} 
-	   '{' 
-	   		t=mt
-	   '}' 
+	   '{' t=mt '}' 
 	   {$modelObj =$t.modelObj; $modelObj.id=$id;}
 	   ;
 
@@ -399,7 +385,7 @@ weightTableID : i=ID {$weight::wt_.id_lowcase=$i.text.toLowerCase();
 weight_group
 @init{ $weight::wt_.isWeightGroup=true; }
 	:  WEIGHT w=expr_add  {$weight::wt_.commonWeight=$w.text;} 
-	   weight_trunk //{System.out.println("subgroup: "+$weight::wt_.subgroupMap.keySet());}
+	   weight_trunk 
 	;	
 
 weight_trunk 
@@ -441,8 +427,6 @@ include_file returns[String id, IncFileTemp incFileObj]
       : INCLUDE (local_deprecated)? fp=file_path {$incFileObj.rawPath=Tools.strip($fp.text);}   ;
 
 file_path : QUOTE  ;
-
-//includeNameAs: ID ;
 
 
 /// goal simple
