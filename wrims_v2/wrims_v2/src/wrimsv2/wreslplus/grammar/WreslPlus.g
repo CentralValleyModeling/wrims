@@ -378,10 +378,9 @@ objGroupName : i=ID {$weight::wt_.id_lowcase=$i.text.toLowerCase();
                      $weight::wt_.id_raw=$i.text;} ;
 
 weight_legacy_unit 
-	: '[' i=ID{line=$i.line;} (ta=weightTimeArray)? ',' e=expr_add ']' ','?
+	: '[' i=ID{line=$i.line;} (ta=weightTimeArray {$weight::wt_.varTimeArraySizeMap.put($i.text,$ta.text);})? ',' e=expr_add ']' ','?
 	{$weight::wt_.varList.add($i.text);
 	$weight::wt_.varWeightMap.put($i.text,$e.text);
-	$weight::wt_.varTimeArraySizeMap.put($i.text,$ta.text);
 	$weight::wt_.varLineMap.put($i.text, line);};
   
 weightTimeArray : '(' d=( INT | ID ) ')';  // this is a repetition. The time array should be known when dvar is declared.

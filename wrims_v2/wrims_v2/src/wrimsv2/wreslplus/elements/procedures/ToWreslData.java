@@ -652,6 +652,8 @@ public class ToWreslData {
 		//o.caseExpression = Tools.add_space_between_logical(o.caseExpression);
 		
 		//System.out.println(o.caseExpression);
+		o.timeArraySize = s.timeArraySize;
+		
 		return o;
 		
 	}	
