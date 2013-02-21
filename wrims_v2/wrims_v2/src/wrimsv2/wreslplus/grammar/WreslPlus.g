@@ -92,6 +92,7 @@ scope { StudyTemp sty;}
 	: 
    initial?
 	( seq=sequence { $wreslMain::sty.seqList.add($seq.id); $wreslMain::sty.seqMap.put($seq.id,$seq.seqObj);  }    )+ 
+	( g=group      { $wreslMain::sty.modelList.add($g.id); $wreslMain::sty.modelMap.put($g.id, $g.modelObj);  }    )+ 
 	( m=model      { $wreslMain::sty.modelList.add($m.id); $wreslMain::sty.modelMap.put($m.id, $m.modelObj);  }    )+ 
 	;
 
@@ -176,6 +177,10 @@ sequence returns[String id, SequenceTemp seqObj]
 
 //package_: 'package'  packageName;
 //packageName: ( ID '.' )*  ID ;
+
+group returns[String id, ModelTemp modelObj]
+: GROUP i=ID {$id=$i.text;} '{' t=mt '}' {$modelObj =$t.modelObj; $modelObj.id=$id;} ;
+
 
 
 model_standalone : model ;
@@ -426,7 +431,7 @@ weight_subgroup_trunk
 weight_subgroup_unit : i=ID  {$weight_subgroup::sub_.varList.add($i.text);} ;
 
 
-include_model returns[String id] : INCLUDE MODEL i=ID   {$id=$i.text;} ;
+include_model returns[String id] : INCLUDE (MODEL|GROUP) i=ID   {$id=$i.text;} ;
 
 include_file returns[String id, IncFileTemp incFileObj]
 @init{ $incFileObj = new IncFileTemp();
@@ -1050,8 +1055,9 @@ INT :   Digit+ ;
 
 OBJECTIVE : 'objective' | 'OBJECTIVE' | 'Objective' ;
 //OBJ : 'obj' | 'Obj' | 'OBJ' ;
-MODEL :     'model' | 'MODEL' ;
-SEQUENCE :  'sequence' | 'SEQUENCE' ;
+MODEL :     'model' | 'MODEL' | 'Model' ;
+GROUP :     'group' | 'Group' | 'GROUP';
+SEQUENCE :  'sequence' | 'Sequence' | 'SEQUENCE' ;
 
 ORDER :     'order' | 'ORDER' | 'Order' ;
 TIMESTEP  : 'timestep'|'TIMESTEP'|'TimeStep';
