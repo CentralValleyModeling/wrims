@@ -40,7 +40,7 @@ public class WreslLinkingService extends DefaultLinkingService{
 	public List<EObject> getLinkedObjects(EObject context, EReference ref, INode node) throws IllegalNodeException {
 		List<EObject> list = super.getLinkedObjects(context, ref, node);
 	    if ( list.isEmpty()) {
-	    	final String crossRefString = getCrossRefNodeAsString(node);
+	    	final String crossRefString = getCrossRefNodeAsString(node).toLowerCase();
 	    	URI contextUri = context.eResource().getURI();
 	    	String[] segments = contextUri.segments();
 	    	if (segments.length<2){
