@@ -2,6 +2,7 @@
  */
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor;
 
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -13,6 +14,6 @@ package gov.ca.dwr.wresl.xtext.editor.wreslEditor;
  * @model
  * @generated
  */
-public interface Expression extends VarModelStep
+public interface Expression extends EObject
 {
 } // Expression

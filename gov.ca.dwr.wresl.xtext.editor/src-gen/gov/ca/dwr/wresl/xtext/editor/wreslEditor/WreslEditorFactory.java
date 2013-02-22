@@ -698,6 +698,15 @@ public interface WreslEditorFactory extends EFactory
   LogFunction createLogFunction();
 
   /**
+   * Returns a new object of class '<em>Var Model</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Var Model</em>'.
+   * @generated
+   */
+  VarModel createVarModel();
+
+  /**
    * Returns a new object of class '<em>Var Model Step</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

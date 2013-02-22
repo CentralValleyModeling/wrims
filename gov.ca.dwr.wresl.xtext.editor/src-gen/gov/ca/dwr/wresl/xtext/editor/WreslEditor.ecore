@@ -14,12 +14,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="model" upperBound="-1"
         eType="#//Model" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Pattern"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Declaration" eSuperTypes="#//Pattern">
+  <eClassifiers xsi:type="ecore:EClass" name="Pattern">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="local" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Declaration" eSuperTypes="#//WreslEvaluator">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Variable" eSuperTypes="#//Pattern">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="local" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref" eType="#//Declaration"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StateVariable" eSuperTypes="#//Variable"/>
@@ -52,7 +53,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//Declaration"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Objective" eSuperTypes="#//Pattern">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="local" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="weights" upperBound="-1"
         eType="#//WeightItem" containment="true"/>
@@ -192,7 +192,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="Goal" eSuperTypes="#//Pattern">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ta" eType="#//TimeArraySize"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="local" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="definition" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         containment="true"/>
@@ -284,7 +283,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="e2" eType="#//Expression"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Expression" eSuperTypes="#//VarModelStep"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Expression"/>
   <eClassifiers xsi:type="ecore:EClass" name="Add" eSuperTypes="#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="m1" eType="#//Multiply"
         containment="true"/>
@@ -350,12 +349,20 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="e" eType="#//Expression"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="VarModelStep" eSuperTypes="#//Function"/>
+  <eClassifiers xsi:type="ecore:EClass" name="VarModel" eSuperTypes="#//Function">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ref1" eType="#//Declaration"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ref2" eType="#//Model"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VarModelStep" eSuperTypes="#//Function">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ref1" eType="#//Declaration"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ref2" eType="#//Model"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Ident">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IncludeFile" eSuperTypes="#//Pattern">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="local" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="file" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

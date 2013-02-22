@@ -4,10 +4,10 @@ generate wreslEditor "http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor"
 
 WreslEvaluator:
 	(pattern+=Pattern | ifincitem+=IfIncItems)+
-	| ((initial=Initial)? sequence+=Sequence+ model+=Model+);
+	| ((initial=Initial)? sequence+=Sequence+ model+=Model+)| Declaration;
 
 Pattern:
-	Variable | IncludeFile | IncludeModel | Goal | Objective | Declaration;
+	Variable | IncludeFile | IncludeModel | Goal | Objective;
 
 Declaration:
 	'Declare' '{' name=ID '}';
@@ -173,7 +173,7 @@ Model:
 Initial: ("initial"|'Initial'|"INITIAL") '{' pattern+=Pattern+ '}';
 
 Sequence:
-	("sequence" | "SEQUENCE") name=ID '{' ("model" | "MODEL") model=[Model|ID] (condition=Condition)? (ORDER order=INT)?
+	("sequence" | "SEQUENCE") name=ID '{' ("model" | "MODEL") model=[Model|ID] (condition=Condition)? (ORDER order=INT)? (TimeStep TimeStepValue)?
 	'}';
 
 Condition:
@@ -247,10 +247,10 @@ LogicalFunction:
 	RangeFunction;
 
 VarModel:
-	ID '[' ID ']';
+	ref1=[Declaration] '[' ref2=[Model] ']';
 	
 VarModelStep:
-	ID '[' ID ']' '(' Expression ')';
+	ref1=[Declaration] '[' ref2=[Model] ']' '(' e=Expression ')';
 
 RangeFunction:
 	RANGE '(' (ID|Month|WaterYear) ',' (ID|CalendarMonth|PrevMonth) ',' (ID|CalendarMonth|PrevMonth) ')';
@@ -292,6 +292,10 @@ CalendarMonth: 'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'
 PrevMonth: 'prevjan'|'prevfeb'|'prevmar'|'prevapr'|'prevmay'|'prevjun'|'prevjul'|'prevaug'|'prevsep'|'prevoct'|'prevnov'|'prevdec';
 
 MultiStep: '$m';
+
+TimeStep: 'timestep';
+
+TimeStepValue: '1MON'|'1DAY';
 
 terminal If : 'If' | 'IF' | 'if' ;
 

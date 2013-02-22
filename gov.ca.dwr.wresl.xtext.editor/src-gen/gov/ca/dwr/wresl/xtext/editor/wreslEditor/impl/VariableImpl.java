@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.VariableImpl#isLocal <em>Local</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.VariableImpl#getRef <em>Ref</em>}</li>
  * </ul>
  * </p>
@@ -29,26 +28,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class VariableImpl extends PatternImpl implements Variable
 {
-  /**
-   * The default value of the '{@link #isLocal() <em>Local</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isLocal()
-   * @generated
-   * @ordered
-   */
-  protected static final boolean LOCAL_EDEFAULT = false;
-
-  /**
-   * The cached value of the '{@link #isLocal() <em>Local</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isLocal()
-   * @generated
-   * @ordered
-   */
-  protected boolean local = LOCAL_EDEFAULT;
-
   /**
    * The cached value of the '{@link #getRef() <em>Ref</em>}' reference.
    * <!-- begin-user-doc -->
@@ -78,29 +57,6 @@ public class VariableImpl extends PatternImpl implements Variable
   protected EClass eStaticClass()
   {
     return WreslEditorPackage.Literals.VARIABLE;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public boolean isLocal()
-  {
-    return local;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setLocal(boolean newLocal)
-  {
-    boolean oldLocal = local;
-    local = newLocal;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.VARIABLE__LOCAL, oldLocal, local));
   }
 
   /**
@@ -156,8 +112,6 @@ public class VariableImpl extends PatternImpl implements Variable
   {
     switch (featureID)
     {
-      case WreslEditorPackage.VARIABLE__LOCAL:
-        return isLocal();
       case WreslEditorPackage.VARIABLE__REF:
         if (resolve) return getRef();
         return basicGetRef();
@@ -175,9 +129,6 @@ public class VariableImpl extends PatternImpl implements Variable
   {
     switch (featureID)
     {
-      case WreslEditorPackage.VARIABLE__LOCAL:
-        setLocal((Boolean)newValue);
-        return;
       case WreslEditorPackage.VARIABLE__REF:
         setRef((Declaration)newValue);
         return;
@@ -195,9 +146,6 @@ public class VariableImpl extends PatternImpl implements Variable
   {
     switch (featureID)
     {
-      case WreslEditorPackage.VARIABLE__LOCAL:
-        setLocal(LOCAL_EDEFAULT);
-        return;
       case WreslEditorPackage.VARIABLE__REF:
         setRef((Declaration)null);
         return;
@@ -215,29 +163,10 @@ public class VariableImpl extends PatternImpl implements Variable
   {
     switch (featureID)
     {
-      case WreslEditorPackage.VARIABLE__LOCAL:
-        return local != LOCAL_EDEFAULT;
       case WreslEditorPackage.VARIABLE__REF:
         return ref != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (local: ");
-    result.append(local);
-    result.append(')');
-    return result.toString();
   }
 
 } //VariableImpl

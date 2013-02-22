@@ -19,7 +19,7 @@ package gov.ca.dwr.wresl.xtext.editor.wreslEditor;
  * @model
  * @generated
  */
-public interface Declaration extends Pattern
+public interface Declaration extends WreslEvaluator
 {
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.

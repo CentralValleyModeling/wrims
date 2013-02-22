@@ -139,6 +139,7 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
       case WreslEditorPackage.ABS_FUNCTION: return createAbsFunction();
       case WreslEditorPackage.POW_FUNCTION: return createPowFunction();
       case WreslEditorPackage.LOG_FUNCTION: return createLogFunction();
+      case WreslEditorPackage.VAR_MODEL: return createVarModel();
       case WreslEditorPackage.VAR_MODEL_STEP: return createVarModelStep();
       case WreslEditorPackage.IDENT: return createIdent();
       case WreslEditorPackage.INCLUDE_FILE: return createIncludeFile();
@@ -970,6 +971,17 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
   {
     LogFunctionImpl logFunction = new LogFunctionImpl();
     return logFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public VarModel createVarModel()
+  {
+    VarModelImpl varModel = new VarModelImpl();
+    return varModel;
   }
 
   /**

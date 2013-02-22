@@ -90,7 +90,7 @@ public class WreslEditorSwitch<T> extends Switch<T>
       {
         Declaration declaration = (Declaration)theEObject;
         T result = caseDeclaration(declaration);
-        if (result == null) result = casePattern(declaration);
+        if (result == null) result = caseWreslEvaluator(declaration);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -548,9 +548,6 @@ public class WreslEditorSwitch<T> extends Switch<T>
       {
         Expression expression = (Expression)theEObject;
         T result = caseExpression(expression);
-        if (result == null) result = caseVarModelStep(expression);
-        if (result == null) result = caseFunction(expression);
-        if (result == null) result = caseTermSimple(expression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -559,9 +556,6 @@ public class WreslEditorSwitch<T> extends Switch<T>
         Add add = (Add)theEObject;
         T result = caseAdd(add);
         if (result == null) result = caseExpression(add);
-        if (result == null) result = caseVarModelStep(add);
-        if (result == null) result = caseFunction(add);
-        if (result == null) result = caseTermSimple(add);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -664,6 +658,15 @@ public class WreslEditorSwitch<T> extends Switch<T>
         T result = caseLogFunction(logFunction);
         if (result == null) result = caseFunction(logFunction);
         if (result == null) result = caseTermSimple(logFunction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case WreslEditorPackage.VAR_MODEL:
+      {
+        VarModel varModel = (VarModel)theEObject;
+        T result = caseVarModel(varModel);
+        if (result == null) result = caseFunction(varModel);
+        if (result == null) result = caseTermSimple(varModel);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -1891,6 +1894,22 @@ public class WreslEditorSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseLogFunction(LogFunction object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Var Model</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Var Model</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseVarModel(VarModel object)
   {
     return null;
   }

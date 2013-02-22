@@ -450,6 +450,11 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
         return createLogFunctionAdapter();
       }
       @Override
+      public Adapter caseVarModel(VarModel object)
+      {
+        return createVarModelAdapter();
+      }
+      @Override
       public Adapter caseVarModelStep(VarModelStep object)
       {
         return createVarModelStepAdapter();
@@ -1607,6 +1612,21 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createLogFunctionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModel <em>Var Model</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModel
+   * @generated
+   */
+  public Adapter createVarModelAdapter()
   {
     return null;
   }

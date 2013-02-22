@@ -33,13 +33,14 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSequenceSequenceParserRuleCall_1_1_0 = (RuleCall)cSequenceAssignment_1_1.eContents().get(0);
 		private final Assignment cModelAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
 		private final RuleCall cModelModelParserRuleCall_1_2_0 = (RuleCall)cModelAssignment_1_2.eContents().get(0);
+		private final RuleCall cDeclarationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//WreslEvaluator:
 		//
-		//	(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ model+=Model+;
+		//	(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ model+=Model+ | Declaration;
 		public ParserRule getRule() { return rule; }
 
-		//(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ model+=Model+
+		//(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ model+=Model+ | Declaration
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//(pattern+=Pattern | ifincitem+=IfIncItems)+
@@ -77,6 +78,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Model
 		public RuleCall getModelModelParserRuleCall_1_2_0() { return cModelModelParserRuleCall_1_2_0; }
+
+		//Declaration
+		public RuleCall getDeclarationParserRuleCall_2() { return cDeclarationParserRuleCall_2; }
 	}
 
 	public class PatternElements extends AbstractParserRuleElementFinder {
@@ -87,14 +91,13 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIncludeModelParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cGoalParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cObjectiveParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final RuleCall cDeclarationParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		
 		//Pattern:
 		//
-		//	Variable | IncludeFile | IncludeModel | Goal | Objective | Declaration;
+		//	Variable | IncludeFile | IncludeModel | Goal | Objective;
 		public ParserRule getRule() { return rule; }
 
-		//Variable | IncludeFile | IncludeModel | Goal | Objective | Declaration
+		//Variable | IncludeFile | IncludeModel | Goal | Objective
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Variable
@@ -111,9 +114,6 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Objective
 		public RuleCall getObjectiveParserRuleCall_4() { return cObjectiveParserRuleCall_4; }
-
-		//Declaration
-		public RuleCall getDeclarationParserRuleCall_5() { return cDeclarationParserRuleCall_5; }
 	}
 
 	public class DeclarationElements extends AbstractParserRuleElementFinder {
@@ -3215,14 +3215,21 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cORDERTerminalRuleCall_6_0 = (RuleCall)cGroup_6.eContents().get(0);
 		private final Assignment cOrderAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
 		private final RuleCall cOrderINTTerminalRuleCall_6_1_0 = (RuleCall)cOrderAssignment_6_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
+		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
+		private final RuleCall cTimeStepParserRuleCall_7_0 = (RuleCall)cGroup_7.eContents().get(0);
+		private final RuleCall cTimeStepValueParserRuleCall_7_1 = (RuleCall)cGroup_7.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
 		//Sequence:
 		//
-		//	("sequence" | "SEQUENCE") name=ID "{" ("model" | "MODEL") model=[Model] condition=Condition? (ORDER order=INT)? "}";
+		//	("sequence" | "SEQUENCE") name=ID "{" ("model" | "MODEL") model=[Model] condition=Condition? (ORDER order=INT)?
+		//
+		//	(TimeStep TimeStepValue)? "}";
 		public ParserRule getRule() { return rule; }
 
-		//("sequence" | "SEQUENCE") name=ID "{" ("model" | "MODEL") model=[Model] condition=Condition? (ORDER order=INT)? "}"
+		//("sequence" | "SEQUENCE") name=ID "{" ("model" | "MODEL") model=[Model] condition=Condition? (ORDER order=INT)?
+		//
+		//(TimeStep TimeStepValue)? "}"
 		public Group getGroup() { return cGroup; }
 
 		//"sequence" | "SEQUENCE"
@@ -3279,8 +3286,17 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//INT
 		public RuleCall getOrderINTTerminalRuleCall_6_1_0() { return cOrderINTTerminalRuleCall_6_1_0; }
 
+		//(TimeStep TimeStepValue)?
+		public Group getGroup_7() { return cGroup_7; }
+
+		//TimeStep
+		public RuleCall getTimeStepParserRuleCall_7_0() { return cTimeStepParserRuleCall_7_0; }
+
+		//TimeStepValue
+		public RuleCall getTimeStepValueParserRuleCall_7_1() { return cTimeStepValueParserRuleCall_7_1; }
+
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_7() { return cRightCurlyBracketKeyword_7; }
+		public Keyword getRightCurlyBracketKeyword_8() { return cRightCurlyBracketKeyword_8; }
 	}
 
 	public class ConditionElements extends AbstractParserRuleElementFinder {
@@ -4185,27 +4201,43 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	public class VarModelElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VarModel");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cIDTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Assignment cRef1Assignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cRef1DeclarationCrossReference_0_0 = (CrossReference)cRef1Assignment_0.eContents().get(0);
+		private final RuleCall cRef1DeclarationIDTerminalRuleCall_0_0_1 = (RuleCall)cRef1DeclarationCrossReference_0_0.eContents().get(1);
 		private final Keyword cLeftSquareBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final RuleCall cIDTerminalRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
+		private final Assignment cRef2Assignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final CrossReference cRef2ModelCrossReference_2_0 = (CrossReference)cRef2Assignment_2.eContents().get(0);
+		private final RuleCall cRef2ModelIDTerminalRuleCall_2_0_1 = (RuleCall)cRef2ModelCrossReference_2_0.eContents().get(1);
 		private final Keyword cRightSquareBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//VarModel:
 		//
-		//	ID "[" ID "]";
+		//	ref1=[Declaration] "[" ref2=[Model] "]";
 		public ParserRule getRule() { return rule; }
 
-		//ID "[" ID "]"
+		//ref1=[Declaration] "[" ref2=[Model] "]"
 		public Group getGroup() { return cGroup; }
 
+		//ref1=[Declaration]
+		public Assignment getRef1Assignment_0() { return cRef1Assignment_0; }
+
+		//[Declaration]
+		public CrossReference getRef1DeclarationCrossReference_0_0() { return cRef1DeclarationCrossReference_0_0; }
+
 		//ID
-		public RuleCall getIDTerminalRuleCall_0() { return cIDTerminalRuleCall_0; }
+		public RuleCall getRef1DeclarationIDTerminalRuleCall_0_0_1() { return cRef1DeclarationIDTerminalRuleCall_0_0_1; }
 
 		//"["
 		public Keyword getLeftSquareBracketKeyword_1() { return cLeftSquareBracketKeyword_1; }
 
+		//ref2=[Model]
+		public Assignment getRef2Assignment_2() { return cRef2Assignment_2; }
+
+		//[Model]
+		public CrossReference getRef2ModelCrossReference_2_0() { return cRef2ModelCrossReference_2_0; }
+
 		//ID
-		public RuleCall getIDTerminalRuleCall_2() { return cIDTerminalRuleCall_2; }
+		public RuleCall getRef2ModelIDTerminalRuleCall_2_0_1() { return cRef2ModelIDTerminalRuleCall_2_0_1; }
 
 		//"]"
 		public Keyword getRightSquareBracketKeyword_3() { return cRightSquareBracketKeyword_3; }
@@ -4214,30 +4246,47 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	public class VarModelStepElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VarModelStep");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cIDTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Assignment cRef1Assignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cRef1DeclarationCrossReference_0_0 = (CrossReference)cRef1Assignment_0.eContents().get(0);
+		private final RuleCall cRef1DeclarationIDTerminalRuleCall_0_0_1 = (RuleCall)cRef1DeclarationCrossReference_0_0.eContents().get(1);
 		private final Keyword cLeftSquareBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final RuleCall cIDTerminalRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
+		private final Assignment cRef2Assignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final CrossReference cRef2ModelCrossReference_2_0 = (CrossReference)cRef2Assignment_2.eContents().get(0);
+		private final RuleCall cRef2ModelIDTerminalRuleCall_2_0_1 = (RuleCall)cRef2ModelCrossReference_2_0.eContents().get(1);
 		private final Keyword cRightSquareBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Keyword cLeftParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final RuleCall cExpressionParserRuleCall_5 = (RuleCall)cGroup.eContents().get(5);
+		private final Assignment cEAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cEExpressionParserRuleCall_5_0 = (RuleCall)cEAssignment_5.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//VarModelStep:
 		//
-		//	ID "[" ID "]" "(" Expression ")";
+		//	ref1=[Declaration] "[" ref2=[Model] "]" "(" e=Expression ")";
 		public ParserRule getRule() { return rule; }
 
-		//ID "[" ID "]" "(" Expression ")"
+		//ref1=[Declaration] "[" ref2=[Model] "]" "(" e=Expression ")"
 		public Group getGroup() { return cGroup; }
 
+		//ref1=[Declaration]
+		public Assignment getRef1Assignment_0() { return cRef1Assignment_0; }
+
+		//[Declaration]
+		public CrossReference getRef1DeclarationCrossReference_0_0() { return cRef1DeclarationCrossReference_0_0; }
+
 		//ID
-		public RuleCall getIDTerminalRuleCall_0() { return cIDTerminalRuleCall_0; }
+		public RuleCall getRef1DeclarationIDTerminalRuleCall_0_0_1() { return cRef1DeclarationIDTerminalRuleCall_0_0_1; }
 
 		//"["
 		public Keyword getLeftSquareBracketKeyword_1() { return cLeftSquareBracketKeyword_1; }
 
+		//ref2=[Model]
+		public Assignment getRef2Assignment_2() { return cRef2Assignment_2; }
+
+		//[Model]
+		public CrossReference getRef2ModelCrossReference_2_0() { return cRef2ModelCrossReference_2_0; }
+
 		//ID
-		public RuleCall getIDTerminalRuleCall_2() { return cIDTerminalRuleCall_2; }
+		public RuleCall getRef2ModelIDTerminalRuleCall_2_0_1() { return cRef2ModelIDTerminalRuleCall_2_0_1; }
 
 		//"]"
 		public Keyword getRightSquareBracketKeyword_3() { return cRightSquareBracketKeyword_3; }
@@ -4245,8 +4294,11 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_4() { return cLeftParenthesisKeyword_4; }
 
+		//e=Expression
+		public Assignment getEAssignment_5() { return cEAssignment_5; }
+
 		//Expression
-		public RuleCall getExpressionParserRuleCall_5() { return cExpressionParserRuleCall_5; }
+		public RuleCall getEExpressionParserRuleCall_5_0() { return cEExpressionParserRuleCall_5_0; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_6() { return cRightParenthesisKeyword_6; }
@@ -4793,6 +4845,40 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"$m"
 		public Keyword getMKeyword() { return cMKeyword; }
 	}
+
+	public class TimeStepElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TimeStep");
+		private final Keyword cTimestepKeyword = (Keyword)rule.eContents().get(1);
+		
+		//TimeStep:
+		//
+		//	"timestep";
+		public ParserRule getRule() { return rule; }
+
+		//"timestep"
+		public Keyword getTimestepKeyword() { return cTimestepKeyword; }
+	}
+
+	public class TimeStepValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TimeStepValue");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cMONKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cDAYKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		
+		//TimeStepValue:
+		//
+		//	"1MON" | "1DAY";
+		public ParserRule getRule() { return rule; }
+
+		//"1MON" | "1DAY"
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//"1MON"
+		public Keyword getMONKeyword_0() { return cMONKeyword_0; }
+
+		//"1DAY"
+		public Keyword getDAYKeyword_1() { return cDAYKeyword_1; }
+	}
 	
 	
 	private WreslEvaluatorElements pWreslEvaluator;
@@ -4895,6 +4981,8 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	private CalendarMonthElements pCalendarMonth;
 	private PrevMonthElements pPrevMonth;
 	private MultiStepElements pMultiStep;
+	private TimeStepElements pTimeStep;
+	private TimeStepValueElements pTimeStepValue;
 	private TerminalRule tIf;
 	private TerminalRule tElseIf;
 	private TerminalRule tElse;
@@ -4956,7 +5044,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//WreslEvaluator:
 	//
-	//	(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ model+=Model+;
+	//	(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ model+=Model+ | Declaration;
 	public WreslEvaluatorElements getWreslEvaluatorAccess() {
 		return (pWreslEvaluator != null) ? pWreslEvaluator : (pWreslEvaluator = new WreslEvaluatorElements());
 	}
@@ -4967,7 +5055,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Pattern:
 	//
-	//	Variable | IncludeFile | IncludeModel | Goal | Objective | Declaration;
+	//	Variable | IncludeFile | IncludeModel | Goal | Objective;
 	public PatternElements getPatternAccess() {
 		return (pPattern != null) ? pPattern : (pPattern = new PatternElements());
 	}
@@ -5594,7 +5682,9 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Sequence:
 	//
-	//	("sequence" | "SEQUENCE") name=ID "{" ("model" | "MODEL") model=[Model] condition=Condition? (ORDER order=INT)? "}";
+	//	("sequence" | "SEQUENCE") name=ID "{" ("model" | "MODEL") model=[Model] condition=Condition? (ORDER order=INT)?
+	//
+	//	(TimeStep TimeStepValue)? "}";
 	public SequenceElements getSequenceAccess() {
 		return (pSequence != null) ? pSequence : (pSequence = new SequenceElements());
 	}
@@ -5860,7 +5950,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//VarModel:
 	//
-	//	ID "[" ID "]";
+	//	ref1=[Declaration] "[" ref2=[Model] "]";
 	public VarModelElements getVarModelAccess() {
 		return (pVarModel != null) ? pVarModel : (pVarModel = new VarModelElements());
 	}
@@ -5871,7 +5961,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//VarModelStep:
 	//
-	//	ID "[" ID "]" "(" Expression ")";
+	//	ref1=[Declaration] "[" ref2=[Model] "]" "(" e=Expression ")";
 	public VarModelStepElements getVarModelStepAccess() {
 		return (pVarModelStep != null) ? pVarModelStep : (pVarModelStep = new VarModelStepElements());
 	}
@@ -6078,6 +6168,28 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getMultiStepRule() {
 		return getMultiStepAccess().getRule();
+	}
+
+	//TimeStep:
+	//
+	//	"timestep";
+	public TimeStepElements getTimeStepAccess() {
+		return (pTimeStep != null) ? pTimeStep : (pTimeStep = new TimeStepElements());
+	}
+	
+	public ParserRule getTimeStepRule() {
+		return getTimeStepAccess().getRule();
+	}
+
+	//TimeStepValue:
+	//
+	//	"1MON" | "1DAY";
+	public TimeStepValueElements getTimeStepValueAccess() {
+		return (pTimeStepValue != null) ? pTimeStepValue : (pTimeStepValue = new TimeStepValueElements());
+	}
+	
+	public ParserRule getTimeStepValueRule() {
+		return getTimeStepValueAccess().getRule();
 	}
 
 	//terminal If:

@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class DeclarationImpl extends PatternImpl implements Declaration
+public class DeclarationImpl extends WreslEvaluatorImpl implements Declaration
 {
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.

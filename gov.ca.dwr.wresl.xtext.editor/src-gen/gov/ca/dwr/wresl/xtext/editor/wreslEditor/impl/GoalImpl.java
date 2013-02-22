@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GoalImpl#getTa <em>Ta</em>}</li>
- *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GoalImpl#isLocal <em>Local</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GoalImpl#getName <em>Name</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GoalImpl#getDefinition <em>Definition</em>}</li>
  * </ul>
@@ -42,26 +41,6 @@ public class GoalImpl extends PatternImpl implements Goal
    * @ordered
    */
   protected TimeArraySize ta;
-
-  /**
-   * The default value of the '{@link #isLocal() <em>Local</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isLocal()
-   * @generated
-   * @ordered
-   */
-  protected static final boolean LOCAL_EDEFAULT = false;
-
-  /**
-   * The cached value of the '{@link #isLocal() <em>Local</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isLocal()
-   * @generated
-   * @ordered
-   */
-  protected boolean local = LOCAL_EDEFAULT;
 
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -167,29 +146,6 @@ public class GoalImpl extends PatternImpl implements Goal
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean isLocal()
-  {
-    return local;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setLocal(boolean newLocal)
-  {
-    boolean oldLocal = local;
-    local = newLocal;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, WreslEditorPackage.GOAL__LOCAL, oldLocal, local));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public String getName()
   {
     return name;
@@ -286,8 +242,6 @@ public class GoalImpl extends PatternImpl implements Goal
     {
       case WreslEditorPackage.GOAL__TA:
         return getTa();
-      case WreslEditorPackage.GOAL__LOCAL:
-        return isLocal();
       case WreslEditorPackage.GOAL__NAME:
         return getName();
       case WreslEditorPackage.GOAL__DEFINITION:
@@ -308,9 +262,6 @@ public class GoalImpl extends PatternImpl implements Goal
     {
       case WreslEditorPackage.GOAL__TA:
         setTa((TimeArraySize)newValue);
-        return;
-      case WreslEditorPackage.GOAL__LOCAL:
-        setLocal((Boolean)newValue);
         return;
       case WreslEditorPackage.GOAL__NAME:
         setName((String)newValue);
@@ -335,9 +286,6 @@ public class GoalImpl extends PatternImpl implements Goal
       case WreslEditorPackage.GOAL__TA:
         setTa((TimeArraySize)null);
         return;
-      case WreslEditorPackage.GOAL__LOCAL:
-        setLocal(LOCAL_EDEFAULT);
-        return;
       case WreslEditorPackage.GOAL__NAME:
         setName(NAME_EDEFAULT);
         return;
@@ -360,8 +308,6 @@ public class GoalImpl extends PatternImpl implements Goal
     {
       case WreslEditorPackage.GOAL__TA:
         return ta != null;
-      case WreslEditorPackage.GOAL__LOCAL:
-        return local != LOCAL_EDEFAULT;
       case WreslEditorPackage.GOAL__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case WreslEditorPackage.GOAL__DEFINITION:
@@ -381,9 +327,7 @@ public class GoalImpl extends PatternImpl implements Goal
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (local: ");
-    result.append(local);
-    result.append(", name: ");
+    result.append(" (name: ");
     result.append(name);
     result.append(')');
     return result.toString();

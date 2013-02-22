@@ -60,6 +60,8 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TimeArraySize;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Upper;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ValueContent;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModel;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelStep;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WeightItem;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WhereItems;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage;
@@ -96,10 +98,7 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 				else break;
 			case WreslEditorPackage.ADD:
 				if(context == grammarAccess.getAddRule() ||
-				   context == grammarAccess.getExpressionRule() ||
-				   context == grammarAccess.getFunctionRule() ||
-				   context == grammarAccess.getTermSimpleRule() ||
-				   context == grammarAccess.getVarModelStepRule()) {
+				   context == grammarAccess.getExpressionRule()) {
 					sequence_Add(context, (Add) semanticObject); 
 					return; 
 				}
@@ -176,7 +175,7 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 				else break;
 			case WreslEditorPackage.DECLARATION:
 				if(context == grammarAccess.getDeclarationRule() ||
-				   context == grammarAccess.getPatternRule()) {
+				   context == grammarAccess.getWreslEvaluatorRule()) {
 					sequence_Declaration(context, (Declaration) semanticObject); 
 					return; 
 				}
@@ -484,6 +483,22 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 					return; 
 				}
 				else break;
+			case WreslEditorPackage.VAR_MODEL:
+				if(context == grammarAccess.getFunctionRule() ||
+				   context == grammarAccess.getTermSimpleRule() ||
+				   context == grammarAccess.getVarModelRule()) {
+					sequence_VarModel(context, (VarModel) semanticObject); 
+					return; 
+				}
+				else break;
+			case WreslEditorPackage.VAR_MODEL_STEP:
+				if(context == grammarAccess.getFunctionRule() ||
+				   context == grammarAccess.getTermSimpleRule() ||
+				   context == grammarAccess.getVarModelStepRule()) {
+					sequence_VarModelStep(context, (VarModelStep) semanticObject); 
+					return; 
+				}
+				else break;
 			case WreslEditorPackage.WEIGHT_ITEM:
 				if(context == grammarAccess.getWeightItemRule()) {
 					sequence_WeightItem(context, (WeightItem) semanticObject); 
@@ -728,14 +743,7 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	 *     name=ID
 	 */
 	protected void sequence_Declaration(EObject context, Declaration semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.DECLARATION__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.DECLARATION__NAME));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getDeclarationAccess().getNameIDTerminalRuleCall_2_0(), semanticObject.getName());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -1256,6 +1264,47 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
 		feeder.accept(grammarAccess.getValueContentAccess().getExpressionExpressionParserRuleCall_1_0(), semanticObject.getExpression());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (ref1=[Declaration|ID] ref2=[Model|ID] e=Expression)
+	 */
+	protected void sequence_VarModelStep(EObject context, VarModelStep semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.VAR_MODEL_STEP__REF1) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.VAR_MODEL_STEP__REF1));
+			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.VAR_MODEL_STEP__REF2) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.VAR_MODEL_STEP__REF2));
+			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.VAR_MODEL_STEP__E) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.VAR_MODEL_STEP__E));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getVarModelStepAccess().getRef1DeclarationIDTerminalRuleCall_0_0_1(), semanticObject.getRef1());
+		feeder.accept(grammarAccess.getVarModelStepAccess().getRef2ModelIDTerminalRuleCall_2_0_1(), semanticObject.getRef2());
+		feeder.accept(grammarAccess.getVarModelStepAccess().getEExpressionParserRuleCall_5_0(), semanticObject.getE());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (ref1=[Declaration|ID] ref2=[Model|ID])
+	 */
+	protected void sequence_VarModel(EObject context, VarModel semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.VAR_MODEL__REF1) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.VAR_MODEL__REF1));
+			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.VAR_MODEL__REF2) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.VAR_MODEL__REF2));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getVarModelAccess().getRef1DeclarationIDTerminalRuleCall_0_0_1(), semanticObject.getRef1());
+		feeder.accept(grammarAccess.getVarModelAccess().getRef2ModelIDTerminalRuleCall_2_0_1(), semanticObject.getRef2());
 		feeder.finish();
 	}
 	
