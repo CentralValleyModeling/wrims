@@ -57,7 +57,7 @@ public class WreslEditorLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	
 	String text(Sequence e){
-		return e.getName();
+		return e.getModel().getName();
 	}
 	
 	String image(Sequence e){

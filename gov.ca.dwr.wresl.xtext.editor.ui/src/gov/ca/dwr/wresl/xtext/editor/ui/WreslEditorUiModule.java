@@ -16,6 +16,7 @@ import org.eclipse.xtext.resource.IDerivedStateComputer;
 import org.eclipse.xtext.ui.editor.findrefs.IReferenceFinder;
 import org.eclipse.xtext.ui.editor.hover.IEObjectHoverProvider;
 import org.eclipse.xtext.ui.refactoring.IDependentElementsCalculator;
+import org.eclipse.xtext.ui.refactoring.impl.RenameElementProcessor;
 import org.eclipse.xtext.xbase.jvmmodel.JvmModelAssociator;
 import org.eclipse.xtext.xtext.GrammarResource;
 
@@ -41,12 +42,8 @@ public class WreslEditorUiModule extends gov.ca.dwr.wresl.xtext.editor.ui.Abstra
 	}
 	
 	/*
-	public Class<? extends LazyLinkingResource> bindLazyLinkingResource() {
-		return DerivedStateAwareResource.class;
-	}
-	
-	public Class<? extends IDerivedStateComputer> bindIDerivedStateComputer() {
-		return JvmModelAssociator.class;
+	public Class<? extends RenameElementProcessor> bindRenameElementProcessor() {
+		return WreslRenameElementProcessor.class;
 	}
 	*/
 }

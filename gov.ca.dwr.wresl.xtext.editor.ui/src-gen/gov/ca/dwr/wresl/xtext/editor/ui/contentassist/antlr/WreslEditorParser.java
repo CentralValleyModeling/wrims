@@ -159,6 +159,7 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getDaysInAccess().getAlternatives(), "rule__DaysIn__Alternatives");
 					put(grammarAccess.getCalendarMonthAccess().getAlternatives(), "rule__CalendarMonth__Alternatives");
 					put(grammarAccess.getPrevMonthAccess().getAlternatives(), "rule__PrevMonth__Alternatives");
+					put(grammarAccess.getTimeStepValueAccess().getAlternatives(), "rule__TimeStepValue__Alternatives");
 					put(grammarAccess.getWreslEvaluatorAccess().getGroup_1(), "rule__WreslEvaluator__Group_1__0");
 					put(grammarAccess.getDeclarationAccess().getGroup(), "rule__Declaration__Group__0");
 					put(grammarAccess.getIfIncItemsAccess().getGroup(), "rule__IfIncItems__Group__0");
@@ -229,6 +230,7 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getInitialAccess().getGroup(), "rule__Initial__Group__0");
 					put(grammarAccess.getSequenceAccess().getGroup(), "rule__Sequence__Group__0");
 					put(grammarAccess.getSequenceAccess().getGroup_6(), "rule__Sequence__Group_6__0");
+					put(grammarAccess.getSequenceAccess().getGroup_7(), "rule__Sequence__Group_7__0");
 					put(grammarAccess.getConditionAccess().getGroup(), "rule__Condition__Group__0");
 					put(grammarAccess.getConditionAccess().getGroup_1_1(), "rule__Condition__Group_1_1__0");
 					put(grammarAccess.getLogicalExpressionAccess().getGroup(), "rule__LogicalExpression__Group__0");
@@ -412,6 +414,11 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPowFunctionAccess().getE1Assignment_2(), "rule__PowFunction__E1Assignment_2");
 					put(grammarAccess.getPowFunctionAccess().getE2Assignment_4(), "rule__PowFunction__E2Assignment_4");
 					put(grammarAccess.getLogFunctionAccess().getEAssignment_2(), "rule__LogFunction__EAssignment_2");
+					put(grammarAccess.getVarModelAccess().getRef1Assignment_0(), "rule__VarModel__Ref1Assignment_0");
+					put(grammarAccess.getVarModelAccess().getRef2Assignment_2(), "rule__VarModel__Ref2Assignment_2");
+					put(grammarAccess.getVarModelStepAccess().getRef1Assignment_0(), "rule__VarModelStep__Ref1Assignment_0");
+					put(grammarAccess.getVarModelStepAccess().getRef2Assignment_2(), "rule__VarModelStep__Ref2Assignment_2");
+					put(grammarAccess.getVarModelStepAccess().getEAssignment_5(), "rule__VarModelStep__EAssignment_5");
 					put(grammarAccess.getIdentAccess().getNameAssignment(), "rule__Ident__NameAssignment");
 					put(grammarAccess.getIncludeFileAccess().getLocalAssignment_1_1(), "rule__IncludeFile__LocalAssignment_1_1");
 					put(grammarAccess.getIncludeFileAccess().getFileAssignment_2(), "rule__IncludeFile__FileAssignment_2");

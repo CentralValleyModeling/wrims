@@ -2,6 +2,7 @@ package gov.ca.dwr.wresl.xtext.editor.ui.link;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,7 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorFactoryImpl;
 
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -46,7 +48,7 @@ public class WreslLinkingService extends DefaultLinkingService{
 	    	if (segments.length<2){
 	    		return list;
 	    	}
-	        URI uri = URI.createURI(segments[1]+"/"+crossRefString+".wresl");
+	        URI uri = URI.createPlatformResourceURI(segments[1]+"/src-gen/"+crossRefString+".wresl");
 	        ResourceSet resourceSet = context.eResource().getResourceSet();
 	        Resource resource = resourceSet.getResource(uri, false);
 	        if ( resource ==null){          
@@ -56,14 +58,25 @@ public class WreslLinkingService extends DefaultLinkingService{
 			    declare.setName(crossRefString);
 			    resource.getContents().add(declare);
 
+			    /*  
+			    try {
+					resource.save(null);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				*/
+			    
 			    IEObjectDescription eObjectDescription = EObjectDescription.create(crossRefString, declare);
 			    list = Collections.singletonList(eObjectDescription.getEObjectOrProxy());
 			    //list = Collections.singletonList((EObject)declare);
 	        }else{
-	        	EObject o=resource.getContents().get(0);
-	        	IEObjectDescription eObjectDescription = EObjectDescription.create(crossRefString, o);
-			    list = Collections.singletonList(eObjectDescription.getEObjectOrProxy());
-	        	//list = Collections.singletonList(o);
+	        	EList<EObject> contents = resource.getContents();
+	        	if (contents.size()>0){
+	        		EObject o=contents.get(0);
+	        		IEObjectDescription eObjectDescription = EObjectDescription.create(crossRefString, o);
+	        		list = Collections.singletonList(eObjectDescription.getEObjectOrProxy());
+	        		//list = Collections.singletonList(o);
+	        	}
 	        }
 	    }
 	    return list;
