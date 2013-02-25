@@ -138,6 +138,13 @@ Workflow {
             fragment = compare.CompareFragment {
                  fileExtensions = file.extensions
             }
+            
+            fragment = parser.antlr.ex.ca.ContentAssistParserGeneratorFragment {
+            	 options = {
+			    // ignore case keywords
+					ignoreCase = true
+				}
+        	}
         }
     }
 }
