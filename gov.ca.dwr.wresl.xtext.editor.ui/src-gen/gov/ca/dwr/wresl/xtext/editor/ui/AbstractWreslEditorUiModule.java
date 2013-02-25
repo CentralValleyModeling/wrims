@@ -133,26 +133,6 @@ public abstract class AbstractWreslEditorUiModule extends DefaultUiModule {
 		return gov.ca.dwr.wresl.xtext.editor.ui.contentassist.WreslEditorProposalProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext.Factory> bindContentAssistContext$Factory() {
-		return org.eclipse.xtext.ui.editor.contentassist.antlr.ParserBasedContentAssistContextFactory.class;
-	}
-
-	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment
-	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.antlr.IContentAssistParser> bindIContentAssistParser() {
-		return gov.ca.dwr.wresl.xtext.editor.ui.contentassist.antlr.WreslEditorParser.class;
-	}
-
-	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment
-	public void configureContentAssistLexerProvider(com.google.inject.Binder binder) {
-		binder.bind(gov.ca.dwr.wresl.xtext.editor.ui.contentassist.antlr.internal.InternalWreslEditorLexer.class).toProvider(org.eclipse.xtext.parser.antlr.LexerProvider.create(gov.ca.dwr.wresl.xtext.editor.ui.contentassist.antlr.internal.InternalWreslEditorLexer.class));
-	}
-
-	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment
-	public void configureContentAssistLexer(com.google.inject.Binder binder) {
-		binder.bind(org.eclipse.xtext.ui.editor.contentassist.antlr.internal.Lexer.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.ui.LexerUIBindings.CONTENT_ASSIST)).to(gov.ca.dwr.wresl.xtext.editor.ui.contentassist.antlr.internal.InternalWreslEditorLexer.class);
-	}
-
 	// contributed by org.eclipse.xtext.generator.types.TypesGeneratorFragment
 	public java.lang.ClassLoader bindClassLoaderToInstance() {
 		return getClass().getClassLoader();
@@ -236,6 +216,26 @@ public abstract class AbstractWreslEditorUiModule extends DefaultUiModule {
 	// contributed by org.eclipse.xtext.ui.generator.compare.CompareFragment
 	public Class<? extends org.eclipse.compare.IViewerCreator> bindIViewerCreator() {
 		return org.eclipse.xtext.ui.compare.DefaultViewerCreator.class;
+	}
+
+	// contributed by org.eclipse.xtext.generator.parser.antlr.ex.ca.ContentAssistParserGeneratorFragment
+	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext.Factory> bindContentAssistContext$Factory() {
+		return org.eclipse.xtext.ui.editor.contentassist.antlr.ParserBasedContentAssistContextFactory.class;
+	}
+
+	// contributed by org.eclipse.xtext.generator.parser.antlr.ex.ca.ContentAssistParserGeneratorFragment
+	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.antlr.IContentAssistParser> bindIContentAssistParser() {
+		return gov.ca.dwr.wresl.xtext.editor.ui.contentassist.antlr.WreslEditorParser.class;
+	}
+
+	// contributed by org.eclipse.xtext.generator.parser.antlr.ex.ca.ContentAssistParserGeneratorFragment
+	public void configureContentAssistLexerProvider(com.google.inject.Binder binder) {
+		binder.bind(gov.ca.dwr.wresl.xtext.editor.ui.contentassist.antlr.lexer.InternalWreslEditorLexer.class).toProvider(org.eclipse.xtext.parser.antlr.LexerProvider.create(gov.ca.dwr.wresl.xtext.editor.ui.contentassist.antlr.lexer.InternalWreslEditorLexer.class));
+	}
+
+	// contributed by org.eclipse.xtext.generator.parser.antlr.ex.ca.ContentAssistParserGeneratorFragment
+	public void configureContentAssistLexer(com.google.inject.Binder binder) {
+		binder.bind(org.eclipse.xtext.ui.editor.contentassist.antlr.internal.Lexer.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.ui.LexerUIBindings.CONTENT_ASSIST)).to(gov.ca.dwr.wresl.xtext.editor.ui.contentassist.antlr.lexer.InternalWreslEditorLexer.class);
 	}
 
 

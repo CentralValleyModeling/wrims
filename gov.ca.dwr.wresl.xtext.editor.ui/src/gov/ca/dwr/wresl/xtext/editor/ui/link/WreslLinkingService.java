@@ -36,6 +36,8 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.scoping.IScope;
 
+import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+
 public class WreslLinkingService extends DefaultLinkingService{
 
     @Override
@@ -57,25 +59,23 @@ public class WreslLinkingService extends DefaultLinkingService{
 			    Declaration declare = (Declaration) f.create(WreslEditorPackage.Literals.DECLARATION);
 			    declare.setName(crossRefString);
 			    resource.getContents().add(declare);
+  
+			    /*
+		    	try {
+		    		resource.save(null);
+		    	} catch (IOException e) {
+		    		e.printStackTrace();
+		    	}
+		    	*/
 
-			    /*  
-			    try {
-					resource.save(null);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				*/
-			    
 			    IEObjectDescription eObjectDescription = EObjectDescription.create(crossRefString, declare);
 			    list = Collections.singletonList(eObjectDescription.getEObjectOrProxy());
-			    //list = Collections.singletonList((EObject)declare);
 	        }else{
 	        	EList<EObject> contents = resource.getContents();
 	        	if (contents.size()>0){
 	        		EObject o=contents.get(0);
 	        		IEObjectDescription eObjectDescription = EObjectDescription.create(crossRefString, o);
 	        		list = Collections.singletonList(eObjectDescription.getEObjectOrProxy());
-	        		//list = Collections.singletonList(o);
 	        	}
 	        }
 	    }
