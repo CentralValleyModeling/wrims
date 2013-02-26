@@ -15,7 +15,8 @@ public class SequenceTemp implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public String id;
-	
+	public String fromWresl;
+	public int line=1;
 	public String model;
 	public String condition;
 	public String order;	
@@ -72,6 +73,7 @@ public class SequenceTemp implements Serializable {
 	
 	public SequenceTemp(){
 		
+		fromWresl ="";
 		dependants = new LinkedHashSet<String>();
 		
 		condition = Param.always;

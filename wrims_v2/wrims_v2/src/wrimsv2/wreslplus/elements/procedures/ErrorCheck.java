@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.config.ConfigUtils;
@@ -272,7 +273,22 @@ public class ErrorCheck {
 				LogUtils.errMsgLocation(dvO.fromWresl, dvO.line, msg);
 			}
 		}		
-	
+
+		// check svar defined in initial statement
+		
+		ArrayList<String> svDup_initialStatement = new ArrayList<String>(ControlData.parameterMap.keySet());
+		
+		svDup_initialStatement.retainAll(m.svList);
+
+		if (svDup_initialStatement.size()>0) {
+		
+			for (String s: svDup_initialStatement){
+				SvarTemp svO = m.svMap.get(s);
+				String msg = "Svar ["+svO.id+"] redefined in initial statement and model statement";
+				LogUtils.errMsgLocation(svO.fromWresl, svO.line, msg);
+			}
+		}		
+		
 		// check svar list duplicates
 		ArrayList<String> svDup = findDuplicates(m.svList);
 		
@@ -715,6 +731,37 @@ public class ErrorCheck {
 			}
 			
 		return false;
+		
+	}
+
+	public static boolean checkSeqConditionHasUnknownDepedants(StudyTemp st) {
+		
+		boolean hasError = false;
+		
+		
+		for (String k: st.seqList){
+			
+			SequenceTemp seqObj = st.seqMap.get(k);
+			ArrayList<String> unknown_deps = new ArrayList<String>(seqObj.dependants);
+			
+			unknown_deps.removeAll(ControlData.parameterMap.keySet());
+
+
+			if (unknown_deps.size()>0){
+				
+				String msg = "Sequence ["+ k +"] has unknown dependent(s): "+unknown_deps;
+				
+				Error.addInitialError(msg);
+				LogUtils.errMsgLocation(seqObj.fromWresl, seqObj.line, msg);
+				
+				hasError = true;
+						
+			}
+			
+		}
+		
+		if (hasError) Error.writeErrorLog();
+		return hasError;
 		
 	}
 

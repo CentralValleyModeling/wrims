@@ -44,7 +44,7 @@ public class Workflow {
 			return null;
 		}
 		
-		
+
 		if (ErrorCheck.checkIncModelNotExistIgnoreCase(st)) return null;	
 		if (ErrorCheck.checkModelRedefinedIgnoreCase(st)>0) return null;
 		if (ErrorCheck.checkSequenceHasUniqueModel(st)>0) return null;
@@ -84,6 +84,8 @@ public class Workflow {
 		
 		ProcParameter.process(st);
 
+		if (ErrorCheck.checkSeqConditionHasUnknownDepedants(st)) return null;
+		
 		// check unknown dependants in if statement
 		ErrorCheck.checkIfStatementHasUnknownDependants(st);
 		
@@ -173,7 +175,7 @@ public class Workflow {
 			ParserUtils.parseAllIncFile(mt.incFileRelativePathList, st);					
 			
 		}
-	
+		
 
 		if (StudyParser.total_errors>0) {
 			
@@ -201,8 +203,6 @@ public class Workflow {
 		ProcGoal.processGoalHS2(st); 
 		
 		ProcWeight.collectWeightVar(st);
-
-
 		
 		
 		// filter weight groups from the weight Object list and then process them

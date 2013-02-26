@@ -126,11 +126,11 @@ public class ParserUtils {
 					String absPath = Tools.getCanonicalLowCasePath(new File(st.runDir, relativePath).getAbsolutePath());
 					ModelTemp fm = parseWreslFile(absPath);
 					
-					if (fm==null) continue;
-					
-					ErrorCheck.checkVarRedefined(fm);	
+					if (fm==null) continue;	
 	
 					ToLowerCase.convert(fm);
+					
+					ErrorCheck.checkVarRedefined(fm);
 					
 					// check unknown dependants in if statement
 					ErrorCheck.checkIfStatementHasUnknownDependants(fm, st.parameterMap.keySet());

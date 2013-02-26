@@ -139,6 +139,16 @@ public class Tools {
 		
 		return out;
 	}
+	public static Map<String,HashSet<String>> allToLowerCase_string_set(Map<String,HashSet<String>> inMap){
+		
+		Map<String,HashSet<String>> out = new LinkedHashMap<String,HashSet<String>>();
+		
+		for (String s: inMap.keySet()){
+			out.put(s.toLowerCase(), (HashSet)allToLowerCase(inMap.get(s)));
+		}
+		
+		return out;
+	}
 	public static Map<String,Integer> allToLowerCaseString(Map<String,Integer> inMap){
 		
 		Map<String,Integer> out = new LinkedHashMap<String, Integer>();

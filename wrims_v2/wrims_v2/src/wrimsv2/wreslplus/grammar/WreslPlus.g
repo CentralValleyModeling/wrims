@@ -158,9 +158,17 @@ template_svar : '%svar' varID  svar_trunk ;
 
 sequence returns[String id, SequenceTemp seqObj]
 @init {$seqObj = new SequenceTemp();
-       dependants = new LinkedHashSet<String>();}
+       dependants = new LinkedHashSet<String>();
+       $seqObj.fromWresl = this.currentAbsolutePath; 
+       
+       // for condition expression if previous cycle var is used
+       neededCycleVarMap = new HashMap<String, HashSet<String>>();
+       }
+       
 @after{$seqObj.model=$m.text; $seqObj.order=$o.text;
-       $seqObj.dependants= dependants;}  
+       $seqObj.dependants= dependants; $seqObj.line=line;
+       $seqObj.neededCycleVarMap = neededCycleVarMap;
+       }  
        
 	: SEQUENCE i=ID {$id=$i.text; $seqObj.id=$i.text;} 
 		'{' MODEL m=ID 

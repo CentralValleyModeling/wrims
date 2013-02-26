@@ -72,10 +72,14 @@ public class ToLowerCase {
 		SequenceTemp o = new SequenceTemp();
 		
 		o.id = w.id;
+		o.fromWresl = w.fromWresl.toLowerCase();
+		o.line = w.line;
 		o.model = w.model.toLowerCase();
 		o.condition = w.condition.toLowerCase();
 		o.order = w.order.toLowerCase();
 		o.timeStep = w.timeStep;
+		o.dependants = Tools.allToLowerCase(w.dependants);
+		o.neededCycleVarMap = Tools.allToLowerCase_string_set(w.neededCycleVarMap);
 		
 		return o;
 	
