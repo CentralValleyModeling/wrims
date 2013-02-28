@@ -99,7 +99,7 @@ public class OrToolsSolver {
 
 	public void refreshObjFunc(LinkedHashMap<String, Double> newObjFunc) {
 
-		model.objFunction = newObjFunc;
+		//model.objFunction = newObjFunc;
 
 		solver.clearObjective();
 

@@ -12,6 +12,12 @@ public class VarsGroup {
 	public List<String> lowerVertexVars_number;
 	public List<String> lowerVertexVars_integer;
 
+	public List<String> notLowerVertexVars_number;
+	public List<String> notLowerVertexVars_integer;
+	
+	public List<String> notUpperVertexVars_number;
+	public List<String> notUpperVertexVars_integer;
+	
 	// required
 	private final double vertax_tolerance;  // tolerance for determining if a var is at vertex
 	private MPModel baseModel;	
@@ -119,9 +125,47 @@ public class VarsGroup {
 
 	public void findVarsAtVertex(){		
 		
-		lowerVertexVars_number = findLowerVertaxVars(varsPool_number, baseModel.solution, baseModel.varMap_number);
+		lowerVertexVars_number  = findLowerVertaxVars(varsPool_number,  baseModel.solution, baseModel.varMap_number);
 		lowerVertexVars_integer = findLowerVertaxVars(varsPool_integer, baseModel.solution, baseModel.varMap_integer);
+
+		notLowerVertexVars_number  = findNotLowerVertaxVars(varsPool_number,  baseModel.solution, baseModel.varMap_number);
+		notLowerVertexVars_integer = findNotLowerVertaxVars(varsPool_integer, baseModel.solution, baseModel.varMap_integer);
+
+		notUpperVertexVars_number  = findNotUpperVertaxVars(varsPool_number,  baseModel.solution, baseModel.varMap_number);
+		notUpperVertexVars_integer = findNotUpperVertaxVars(varsPool_integer, baseModel.solution, baseModel.varMap_integer);
 		
+	}
+
+	private ArrayList<String> findNotUpperVertaxVars(ArrayList<String> vars, LinkedHashMap<String, Double> solutionMap, LinkedHashMap<String, double[]> varBounds) {
+
+		ArrayList<String> out = new ArrayList<String>();
+
+		for (String key : vars) {
+
+			if (solutionMap.get(key) < varBounds.get(key)[1]) {
+
+				out.add(key);
+
+			}
+		}
+
+		return out;
+	}
+	
+	private ArrayList<String> findNotLowerVertaxVars(ArrayList<String> vars, LinkedHashMap<String, Double> solutionMap, LinkedHashMap<String, double[]> varBounds) {
+
+		ArrayList<String> out = new ArrayList<String>();
+
+		for (String key : vars) {
+
+			if (solutionMap.get(key) > varBounds.get(key)[0]) {
+
+				out.add(key);
+
+			}
+		}
+
+		return out;
 	}
 	
 	private ArrayList<String> findLowerVertaxVars(ArrayList<String> vars, LinkedHashMap<String, Double> solutionMap, LinkedHashMap<String, double[]> varBounds) {

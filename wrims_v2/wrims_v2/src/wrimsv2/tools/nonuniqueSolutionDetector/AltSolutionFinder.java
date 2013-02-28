@@ -110,6 +110,7 @@ public class AltSolutionFinder {
 		}
 		
 		sSolver.delete();
+		sSolver = null;
 		return altSolutions;
 		
 	}
