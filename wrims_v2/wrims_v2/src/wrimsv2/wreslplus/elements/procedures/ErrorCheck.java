@@ -9,6 +9,7 @@ import java.util.Set;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
 import wrimsv2.commondata.wresldata.Dvar;
+import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.config.ConfigUtils;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslplus.elements.AliasTemp;
@@ -745,6 +746,7 @@ public class ErrorCheck {
 			ArrayList<String> unknown_deps = new ArrayList<String>(seqObj.dependants);
 			
 			unknown_deps.removeAll(ControlData.parameterMap.keySet());
+			unknown_deps.removeAll(Param.reservedSet);
 
 
 			if (unknown_deps.size()>0){
