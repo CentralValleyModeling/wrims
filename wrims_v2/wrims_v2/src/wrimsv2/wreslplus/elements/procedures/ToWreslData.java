@@ -600,6 +600,7 @@ public class ToWreslData {
 		}
 		o.kind = s.kind;
 		o.units = s.units;
+		o.timeArraySize = s.timeArraySize;
 		o.caseName = s.caseName;
 		o.dependants = s.dependants;
 		o.neededVarInCycleSet = s.neededVarInCycleSet;
@@ -634,6 +635,7 @@ public class ToWreslData {
 		}
 		o.kind = s.kind;
 		o.units = s.units;
+		o.timeArraySize = s.timeArraySize;
 		o.caseName = s.caseName;
 		o.dependants = s.dependants;
 		o.neededVarInCycleSet = s.neededVarInCycleSet;
@@ -686,7 +688,7 @@ public class ToWreslData {
 		o.condition = d.condition;
 		if (d.isInteger) o.integer=Param.yes;
 		
-		//o.timeArraySize = d.timeArraySize;
+		o.timeArraySize = d.timeArraySize;
 		
 		return o;
 		
@@ -701,6 +703,7 @@ public class ToWreslData {
 		o.line = w.line;
 		o.condition = w.condition;
 		o.weight = w.weight;
+		o.timeArraySize = w.timeArraySize;
 		
 		o.weight = Tools.replace_with_space(o.weight);
 		o.weight = Tools.replace_seperator(o.weight);
@@ -717,13 +720,13 @@ public class ToWreslData {
 		for (String s : w.varList) {
 		
 			WeightElement o = new WeightElement();
-		
+
 			o.fromWresl = w.fromWresl;
 			o.line = w.varLineMap.get(s);
 			o.condition = w.condition;
 			o.weight = w.varWeightMap.get(s);
 			
-			//o.timeArraySize = w.varTimeArraySizeMap.get(s);
+			o.timeArraySize = w.varTimeArraySizeMap.get(s);
 			
 			om.put(s,o);
 		}
@@ -811,7 +814,7 @@ public class ToWreslData {
 		o.dvarSlackSurplusList = g.dvarSlackSurplusList;
 		//System.out.println(o.caseExpression);
 		
-		//o.timeArraySize = g.timeArraySize;
+		o.timeArraySize = g.timeArraySize;
 		return o;
 		
 	}
@@ -831,7 +834,7 @@ public class ToWreslData {
 		o.neededVarInCycleSet = d.neededVarInCycleSet;
 		o.needVarFromEarlierCycle = d.needVarFromEarlierCycle;
 		
-		//o.timeArraySize = d.timeArraySize;
+		o.timeArraySize = d.timeArraySize;
 
 		return o;
 		

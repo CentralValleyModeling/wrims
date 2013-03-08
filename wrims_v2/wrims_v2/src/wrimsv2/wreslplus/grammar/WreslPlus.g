@@ -945,7 +945,7 @@ preCycleVar
 	;
 
 
-preCycleVar_old :  var=ID '[' cycle=ID ']' 
+preCycleVar_old :  var=ID '[' cycle=ID ']' ('(' e=expr_add ')')?
 { 
   // TODO: don't convert to lower case here!
   if (!isParameter){

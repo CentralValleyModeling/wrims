@@ -91,7 +91,7 @@ public class ProcGoal {
 				g2.caseCondition.add(gc.condition);
 	
 				// convert penalty into caseExpression
-				Map<String, String> o = ProcGoal.convertPenalty(g2.id.toLowerCase(), caseNumber, g2.lhs, gc);
+				Map<String, String> o = ProcGoal.convertPenalty(g2, g2.id.toLowerCase(), caseNumber, g2.lhs, gc);
 	
 				String slackName = o.get("slackName");
 				String surplusName = o.get("surplusName");
@@ -112,10 +112,12 @@ public class ProcGoal {
 					DvarTemp d = new DvarTemp();
 					d.fromWresl = g2.fromWresl;
 					d.kind = "slack";
+					d.timeArraySize=g2.timeArraySize;
 	
 					if (g2.hasCase) {
 						d.condition = Param.conditional;
 						w.condition = Param.conditional;
+						w.timeArraySize=g2.timeArraySize;
 						
 						mObj.ssList_hasCase.add(slackName);
 						mObj.ssMap_hasCase.put(slackName, d);
@@ -140,10 +142,12 @@ public class ProcGoal {
 					DvarTemp d = new DvarTemp();
 					d.fromWresl = g2.fromWresl;
 					d.kind = "surplus";
+					d.timeArraySize=g2.timeArraySize;
 	
 					if (g2.hasCase) {
 						d.condition = Param.conditional;
 						w.condition = Param.conditional;
+						w.timeArraySize=g2.timeArraySize;
 						mObj.ssList_hasCase.add(surplusName);
 						mObj.ssMap_hasCase.put(surplusName, d);
 						mObj.ssWeightMap_hasCase.put(surplusName, w);
@@ -176,7 +180,7 @@ public class ProcGoal {
 	
 	}
 
-	public static Map<String, String> convertPenalty(String goalName, int caseIndex, String lhs, GoalCase cm) {
+	public static Map<String, String> convertPenalty(GoalTemp goal, String goalName, int caseIndex, String lhs, GoalCase cm) {
 	
 		String caseNumber = Integer.toString(caseIndex + 1);
 		String caseExpression = null;
@@ -214,7 +218,11 @@ public class ProcGoal {
 	
 				slackName = "slack__" + goalName + "_" + caseNumber;
 				slackWeight = lt;
-				lhs_m = lhs + "+" + slackName;
+				if (goal.timeArraySize.equals("0")){
+					lhs_m = lhs + "+" + slackName;
+				}else{
+					lhs_m = lhs + "+" + slackName + "($m)";
+				}
 				relation = "=";
 				caseExpression = lhs_m + relation + cm.rhs;
 			}
@@ -233,7 +241,11 @@ public class ProcGoal {
 	
 				surplusName = "surplus__" + goalName + "_" + caseNumber;
 				surplusWeight = gt;
-				lhs_m = lhs + "-" + surplusName;
+				if (goal.timeArraySize.equals("0")){
+					lhs_m = lhs + "-" + surplusName;
+				}else{
+					lhs_m = lhs + "-" + surplusName + "($m)";
+				}
 				relation = "=";
 				caseExpression = lhs_m + relation + cm.rhs;
 			}
@@ -245,12 +257,22 @@ public class ProcGoal {
 		
 			// default to general treatment, that is, 
 			// lhs + slack - surplus = rhs with zero weight on lhs and rhs 
+			
 			surplusName = "surplus__" + goalName + "_" + caseNumber;
 			surplusWeight = gt;
-			lhs_m = lhs + "-" + surplusName;
+			if (goal.timeArraySize.equals("0")){
+				lhs_m = lhs + "-" + surplusName;
+			}else{
+				lhs_m = lhs + "-" + surplusName+"($m)";
+			}
+			
 			slackName = "slack__" + goalName + "_" + caseNumber;
 			slackWeight = lt;
-			lhs_m = lhs_m + "+" + slackName;
+			if (goal.timeArraySize.equals("0")){
+				lhs_m = lhs_m + "+" + slackName;
+			}else{
+				lhs_m = lhs_m + "+" + slackName+"($m)";
+			}
 			relation = "=";
 			caseExpression = lhs_m + " = " + cm.rhs;
 	
@@ -259,7 +281,11 @@ public class ProcGoal {
 	
 			surplusName = "surplus__" + goalName + "_" + caseNumber;
 			surplusWeight = gt;
-			lhs_m = lhs + "-" + surplusName;
+			if (goal.timeArraySize.equals("0")){
+				lhs_m = lhs + "-" + surplusName;
+			}else{
+				lhs_m = lhs + "-" + surplusName + ("($m)");
+			}
 			relation = "<";
 			caseExpression = lhs_m + relation + cm.rhs;
 	
@@ -268,19 +294,30 @@ public class ProcGoal {
 	
 			slackName = "slack__" + goalName + "_" + caseNumber;
 			slackWeight = lt;
-			lhs_m = lhs + "+" + slackName;
+			if (goal.timeArraySize.equals("0")){
+				lhs_m = lhs + "+" + slackName;
+			}else{
+				lhs_m = lhs + "+" + slackName + "($m)";
+			}
 			relation = ">";
 			caseExpression = lhs_m + relation + cm.rhs;
 	
 		}
 		else {
-	
 			surplusName = "surplus__" + goalName + "_" + caseNumber;
 			surplusWeight = gt;
-			lhs_m = lhs + "-" + surplusName;
+			if (goal.timeArraySize.equals("0")){
+				lhs_m = lhs + "-" + surplusName;
+			}else{
+				lhs_m = lhs + "-" + surplusName+"($m)";
+			}
 			slackName = "slack__" + goalName + "_" + caseNumber;
 			slackWeight = lt;
-			lhs_m = lhs_m + "+" + slackName;
+			if (goal.timeArraySize.equals("0")){
+				lhs_m = lhs_m + "+" + slackName;
+			}else{
+				lhs_m = lhs_m + "+" + slackName + "($m)";
+			}
 			relation = "=";
 			caseExpression = lhs_m + relation + cm.rhs;
 		}
