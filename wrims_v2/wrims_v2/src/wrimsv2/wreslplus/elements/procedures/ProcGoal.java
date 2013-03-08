@@ -127,7 +127,8 @@ public class ProcGoal {
 						dvarSlackSurplus.add(slackName);
 						
 					} else {
-	
+						
+						w.timeArraySize=g2.timeArraySize;
 						mObj.ssList_noCase.add(slackName);
 						mObj.ssMap_noCase.put(slackName, d);
 						mObj.ssWeightMap_noCase.put(slackName, w);
@@ -156,7 +157,8 @@ public class ProcGoal {
 						dvarSlackSurplus.add(surplusName);
 						
 					} else {
-					
+						
+						w.timeArraySize=g2.timeArraySize;
 						mObj.ssList_noCase.add(surplusName);
 						mObj.ssMap_noCase.put(surplusName, d);
 						mObj.ssWeightMap_noCase.put(surplusName, w);
