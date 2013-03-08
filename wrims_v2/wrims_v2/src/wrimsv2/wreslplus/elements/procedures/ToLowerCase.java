@@ -253,6 +253,7 @@ public class ToLowerCase {
 		o.line = w.line;
 		o.condition = w.condition.toLowerCase();
 		o.weight = w.weight.toLowerCase();
+		o.timeArraySize = w.timeArraySize.toLowerCase();
 		
 		return o;
 

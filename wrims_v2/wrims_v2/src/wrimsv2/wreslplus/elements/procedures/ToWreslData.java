@@ -726,7 +726,11 @@ public class ToWreslData {
 			o.condition = w.condition;
 			o.weight = w.varWeightMap.get(s);
 			
-			o.timeArraySize = w.varTimeArraySizeMap.get(s);
+			if (w.varTimeArraySizeMap.containsKey(s)){
+				o.timeArraySize = w.varTimeArraySizeMap.get(s);
+			}else{
+				o.timeArraySize = "0";
+			}
 			
 			om.put(s,o);
 		}
