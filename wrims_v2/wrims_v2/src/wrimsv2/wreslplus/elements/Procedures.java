@@ -238,7 +238,11 @@ public class Procedures {
 				g.fromWresl = a.fromWresl;
 				g.id = a.id + "__alias";
 				// String e = a.id.toLowerCase() + "=" + a.expression;
-				g.caseExpression.add(a.id.toLowerCase() + "=" + a.expression);
+				if (a.timeArraySize.equals("0")){
+					g.caseExpression.add(a.id.toLowerCase() + "=" + a.expression);
+				}else{
+					g.caseExpression.add(a.id.toLowerCase()+"($m)" + "=" + a.expression);
+				}
 				g.condition = a.condition;
 				g.caseName.add(Param.defaultCaseName);
 				g.caseCondition.add(Param.always);
