@@ -160,7 +160,7 @@ public class ControllerDebug extends Thread {
 			out.write("NONE\n");
 			out.write("FALSE\n");
 			out.write("FALSE\n");
-			out.write("\n");
+			out.write(" \n");
 			out.write("FALSE\n");
 			out.write("FALSE\n");
 			out.write("FALSE\n");
@@ -175,6 +175,7 @@ public class ControllerDebug extends Thread {
 			out.write("TRUE\n");
 			out.write("FALSE\n");
 			out.write("SINGLE\n");
+			out.write("NODEBUG\n");
 			out.close();
 		
 		} catch (IOException e) {

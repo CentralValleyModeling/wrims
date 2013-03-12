@@ -92,7 +92,7 @@ public class ControllerBatch {
 	}
 	
 	public void generateStudyFile(){
-		String outPath=System.getenv("Java_Bin")+"study.sty";
+		String outPath=new File(".").getAbsolutePath()+"\\jre\\bin\\study.sty";
 		FileWriter outstream;
 		try {
 			outstream = new FileWriter(outPath);
@@ -120,7 +120,7 @@ public class ControllerBatch {
 			out.write("NONE\n");
 			out.write("FALSE\n");
 			out.write("FALSE\n");
-			out.write("\n");
+			out.write(" \n");
 			out.write("FALSE\n");
 			out.write("FALSE\n");
 			out.write("FALSE\n");
@@ -135,6 +135,7 @@ public class ControllerBatch {
 			out.write("TRUE\n");
 			out.write("FALSE\n");
 			out.write("SINGLE\n");
+			out.write("NODEBUG\n");
 			out.close();
 		
 		} catch (IOException e) {
