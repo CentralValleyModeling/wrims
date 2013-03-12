@@ -4,6 +4,8 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 
+import wrimsv2.commondata.wresldata.Alias;
+import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.components.ControlData;
@@ -566,6 +568,30 @@ public class ValueEvaluation {
 			return new IntDouble(1.0,false);
 		}
 		return new IntDouble(data.getData(),data.isInt());
+	}
+	
+	public static IntDouble pastCycleNoTimeArray(String ident, int index){
+		int ci=ControlData.currCycleIndex+index;
+		if (ci<0){
+			Error.addEvaluationError("The "+ci+" cycle from the current cycle is unvailable.");
+			return new IntDouble(1.0,false);
+		}
+		String cycle=ControlData.currStudyDataSet.getModelList().get(ci);
+		ModelDataSet mds = ControlData.currStudyDataSet.getModelDataSetMap().get(cycle);
+		Map<String, Dvar> dvMap = mds.dvMap;
+		Map<String, Svar> svMap = mds.svMap;
+		Map<String, Alias> asMap = mds.asMap;
+		if (dvMap.containsKey(ident)){
+			return dvMap.get(ident).getData();
+		}
+		if (svMap.containsKey(ident)){
+			return svMap.get(ident).getData();
+		}
+		if (asMap.containsKey(ident)){
+			return asMap.get(ident).getData();
+		}
+		Error.addEvaluationError("Variable "+ident+" is not in the "+ci+" cycle [" + cycle + "] from the current cycle");
+		return new IntDouble(1.0,false);
 	}
 	
 	public static IntDouble pastCycleTimeArray(String ident, String cycle, IntDouble id){

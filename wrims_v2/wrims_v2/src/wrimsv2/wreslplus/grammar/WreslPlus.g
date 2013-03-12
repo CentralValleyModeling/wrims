@@ -941,9 +941,8 @@ atom
 specialVar : 'i' | '$m' | '$M';
 
 preCycleVar
-	:  p=preCycleVar_old {varInCycle.add($p.text);}
+	:  p1=preCycleVar_old {varInCycle.add($p1.text);} | p2=preCycleVarIndex {varInCycle.add($p2.text);}
 	;
-
 
 preCycleVar_old :  var=ID '[' cycle=ID ']' ('(' e=expr_add ')')?
 { 
@@ -959,7 +958,9 @@ preCycleVar_old :  var=ID '[' cycle=ID ']' ('(' e=expr_add ')')?
       neededCycleVarMap.put(cnl, t);
     }
   }
-} ;  
+} ; 
+
+preCycleVarIndex :  var=ID '[' '-' INT ']'; 
 
 externalFunc
 	:  'extern:(' ID '(' expr_add ')' ')'
