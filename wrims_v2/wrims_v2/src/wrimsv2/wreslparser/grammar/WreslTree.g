@@ -587,8 +587,7 @@ var_model_timeArray
     {  $expression::varInCycle.add($varName.text+'['+$cycleName.text+']'+'(' + $e.text +')' );} ; //{ $expression::DV.add($i.text.toLowerCase());} ; 
 
 var_modelindex_noTimeArray 
-  : varName=IDENT '[' cycleIndex=('-' INTEGER) ']' 
-    {  $expression::varInCycle.add($varName.text+'['+$cycleIndex.text+']' );} ; //{ $expression::DV.add($i.text.toLowerCase());} ; 
+  : varName=IDENT '[' cycleIndex=('-' INTEGER) ']' ; //{ $expression::DV.add($i.text.toLowerCase());} ; 
 
 external_func // this could be timeseries function
 	: i=IDENT {$expression::SV.add($i.text);} '('  ie=expression (',' e=expression  {$expression::SV.addAll($e.members);$expression::varInCycle.addAll($e.setVarInCycle);}  )*  ')' 

@@ -873,7 +873,7 @@ public class Evaluation {
 		if (asMap.containsKey(ident)){
 			return asMap.get(ident).getData();
 		}
-		Error.addEvaluationError("Variable "+ident+" is not in the "+ci+" cycle [" + cycle + "] from the current cycle");
+		Error.addEvaluationError("Variable "+ident+" is not in cycle "+ci+1+ " of [" + cycle + "] from the current cycle");
 		return new IntDouble(1.0,false);
 	}
 	

@@ -236,7 +236,7 @@ pastCycleTimeArray returns [IntDouble result]
   ; 
   
 pastCycleIndexNoTimeArray returns [IntDouble result]
-  : i1=IDENT '[' index=('-' INTEGER) ']'{result=ValueEvaluation.pastCycleNoTimeArray($i1.text,Integer.parseInt($index.text));}
+  : i1=IDENT '[' ('-' index=INTEGER) ']'{result=ValueEvaluation.pastCycleNoTimeArray($i1.text, -Integer.parseInt($index.text));}
   ; 
 
 function returns [IntDouble result]
