@@ -190,6 +190,7 @@ public class ControllerSG {
 			if (ControlData.solverName.equalsIgnoreCase("XALOG")) SetXALog.enableXALog();
 			ClearValue.clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
+			sds.clearVarCycleIndexByTimeStep();
 			int i=0;
 			while (i<modelList.size()  && noError){  
 				

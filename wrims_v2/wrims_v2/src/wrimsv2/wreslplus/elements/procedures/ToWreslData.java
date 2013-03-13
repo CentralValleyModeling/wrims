@@ -19,6 +19,7 @@ import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.components.ControlData;
+import wrimsv2.wreslplus.elements.VarCycleIndex;
 import wrimsv2.wreslplus.elements.AliasTemp;
 import wrimsv2.wreslplus.elements.DvarTemp;
 import wrimsv2.wreslplus.elements.ExternalTemp;
@@ -115,6 +116,7 @@ public class ToWreslData {
 		o.setModelDataSetMap(modelDataSetMap);
 		o.setModelConditionList(modelConditionList);
 		o.setTimeseriesMap(allTimeseriesMap);
+		o.setVarCycleIndexList(VarCycleIndex.varCycleIndexList);
 
 		return o;
 

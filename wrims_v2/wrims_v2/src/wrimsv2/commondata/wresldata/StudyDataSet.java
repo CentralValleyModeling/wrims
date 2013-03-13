@@ -34,8 +34,10 @@ public class StudyDataSet implements Serializable {
 	/// < VarName, < CycleName, Value >>		
 	private Map<String, Map<String, IntDouble>> varCycleValueMap = new HashMap<String, Map<String, IntDouble>>();
 	private Map<String, Map<String, IntDouble>> varTimeArrayCycleValueMap = new HashMap<String, Map<String, IntDouble>>();
-
-
+	private Map<String, Map<String, IntDouble>> varCycleIndexValueMap = new HashMap<String, Map<String, IntDouble>>();
+	private ArrayList<String> varCycleIndexList = new ArrayList<String>();
+	private ArrayList<String> dvarTimeArrayCycleIndexList = new ArrayList<String>();
+	
 	public ArrayList<String> getParameterList() {
 		return new ArrayList<String>(parameterList);
 	}
@@ -128,7 +130,32 @@ public class StudyDataSet implements Serializable {
 		return this.varTimeArrayCycleValueMap;
 	}
 	
+	public Map<String, Map<String, IntDouble>> getVarCycleIndexValueMap() {
+		return this.varCycleIndexValueMap;
+	}
+	
+	public void setVarCycleIndexValueMap(Map<String, Map<String, IntDouble>> varCycleIndexValueMap) {
+		this.varCycleIndexValueMap = varCycleIndexValueMap;
+	}
+	
 	public void clearVarTimeArrayCycleValueMap(){
 		varTimeArrayCycleValueMap=new HashMap<String, Map<String, IntDouble>>();
+	}
+	
+	public void clearVarCycleIndexByTimeStep(){
+		varCycleIndexValueMap = new HashMap<String, Map<String, IntDouble>>();
+		dvarTimeArrayCycleIndexList = new ArrayList<String> ();
+	}
+	
+	public ArrayList<String> getVarCycleIndexList(){
+		return varCycleIndexList;
+	}
+	
+	public void setVarCycleIndexList(ArrayList<String> varCycleIndexList){
+		this.varCycleIndexList=varCycleIndexList;
+	}
+
+	public ArrayList<String> getDvarTimeArrayCycleIndexList(){
+		return dvarTimeArrayCycleIndexList;
 	}
 }

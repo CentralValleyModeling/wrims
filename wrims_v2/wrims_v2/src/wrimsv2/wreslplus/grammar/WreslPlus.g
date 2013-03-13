@@ -31,6 +31,7 @@ options {
   import wrimsv2.wreslplus.elements.ModelTemp;
   import wrimsv2.wreslplus.elements.SequenceTemp;
   import wrimsv2.wreslplus.elements.StudyTemp;
+  import wrimsv2.wreslplus.elements.VarCycleIndex;
   import wrimsv2.commondata.wresldata.Param;
 }
 @lexer::header {
@@ -960,7 +961,11 @@ preCycleVar_old :  var=ID '[' cycle=ID ']' ('(' e=expr_add ')')?
   }
 } ; 
 
-preCycleVarIndex :  var=ID '[' '-' INT ']'; 
+preCycleVarIndex :  var=ID '[' '-' INT ']' ('(' e=expr_add ')')? {
+  if (!VarCycleIndex.varCycleIndexList.contains($var.text)){
+    VarCycleIndex.varCycleIndexList.add($var.text.toLowerCase());
+  }
+}; 
 
 externalFunc
 	:  'extern:(' ID '(' expr_add ')' ')'

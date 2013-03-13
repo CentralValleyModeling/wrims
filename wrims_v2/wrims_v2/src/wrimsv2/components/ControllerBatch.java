@@ -210,6 +210,7 @@ public class ControllerBatch {
 			if (ControlData.solverName.equalsIgnoreCase("XALOG")) SetXALog.enableXALog();
 			ClearValue.clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
+			sds.clearVarCycleIndexByTimeStep();
 			int i=0;
 			while (i<modelList.size()  && noError){  
 				
@@ -340,6 +341,7 @@ public class ControllerBatch {
 			if (ControlData.solverType == Param.SOLVER_XA && ControlData.solverName.toLowerCase().contains("xalog")) SetXALog.enableXALog();
 			ClearValue.clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
+			sds.clearVarCycleIndexByTimeStep();
 			int i=0;
 			while (i<modelList.size()  && noError){  
 				
@@ -488,6 +490,7 @@ public class ControllerBatch {
 
 			ClearValue.clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
+			sds.clearVarCycleIndexByTimeStep();
 			int i=0;
 			while (i<modelList.size()  && noError){  
 				
@@ -663,6 +666,7 @@ public class ControllerBatch {
 
 			ClearValue.clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
+			sds.clearVarCycleIndexByTimeStep();
 			int i=0;
 			while (i<modelList.size()  && noError){  
 				

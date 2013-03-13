@@ -233,6 +233,7 @@ public class ControllerTree {
 		while (ControlData.currTimeStep.get(0)<ControlData.totalTimeStep.get(0) && noError){
 			clearDvarValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
+			sds.clearVarCycleIndexByTimeStep();
 			int i=0;
 			while (i<modelList.size() && noError){
 				String model=modelList.get(i);
@@ -316,6 +317,7 @@ public class ControllerTree {
 		while (ControlData.currTimeStep.get(0)<ControlData.totalTimeStep.get(0) && noError){
 			clearDvarValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
+			sds.clearVarCycleIndexByTimeStep();
 			int i=0;
 			while (i<modelList.size() && noError){
 				String model=modelList.get(i);

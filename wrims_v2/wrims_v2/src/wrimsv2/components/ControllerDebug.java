@@ -224,6 +224,7 @@ public class ControllerDebug extends Thread {
 			if (ControlData.solverName.equalsIgnoreCase("XALOG")) SetXALog.enableXALog();
 			ClearValue.clearValues(modelList, modelDataSetMap);
 			sds.clearVarTimeArrayCycleValueMap();
+			sds.clearVarCycleIndexByTimeStep();
 			modelIndex=0;
 			prepareInitialTimeStep();
 			while (modelIndex<modelList.size()  && noError){  

@@ -224,7 +224,7 @@ knownTS returns [IntDouble result]
   ;
   
 pastCycleValue returns [IntDouble result]
-  : (p1=pastCycleNoTimeArray{return $p1.result;})|(p2=pastCycleTimeArray{return $p2.result;})|(p3=pastCycleIndexNoTimeArray{return $p3.result;})
+  : (p1=pastCycleNoTimeArray{return $p1.result;})|(p2=pastCycleTimeArray{return $p2.result;})|(p3=pastCycleIndexNoTimeArray{return $p3.result;})|(p4=pastCycleIndexTimeArray{return $p4.result;})
   ;
 
 pastCycleNoTimeArray returns [IntDouble result]
@@ -236,8 +236,12 @@ pastCycleTimeArray returns [IntDouble result]
   ; 
   
 pastCycleIndexNoTimeArray returns [IntDouble result]
-  : i1=IDENT '[' ('-' index=INTEGER) ']'{result=ValueEvaluation.pastCycleNoTimeArray($i1.text, -Integer.parseInt($index.text));}
+  : i1=IDENT '[' ('-' index=INTEGER) ']'{result=ValueEvaluation.pastCycleIndexNoTimeArray($i1.text, -Integer.parseInt($index.text));}
   ; 
+  
+pastCycleIndexTimeArray returns [IntDouble result]
+  : i1=IDENT '[' '-' index=INTEGER ']' '(' e1=expression ')' {result=ValueEvaluation.pastCycleIndexTimeArray($i1.text,-Integer.parseInt($index.text), $e1.id);}
+  ;
 
 function returns [IntDouble result]
   : (n=noArgFunction{result=$n.result;})|(a=argFunction{result=$a.result;})

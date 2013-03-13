@@ -33,6 +33,8 @@ public class Workflow {
 		
 		ParserUtils.setRunDir(new File(canonicalMainFilePath).getParent()); 
 		
+		VarCycleIndex.clearVarCycleIndexList();
+		
 		StudyTemp st = ParserUtils.parseWreslMain(canonicalMainFilePath);
 		// TODO: need to check sequence error here
 		// check study

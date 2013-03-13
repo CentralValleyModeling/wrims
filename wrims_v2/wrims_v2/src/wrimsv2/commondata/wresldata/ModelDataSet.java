@@ -234,6 +234,7 @@ public class ModelDataSet implements Serializable {
 	}
 	
 	public void processSvar(){
+		StudyDataSet sds = ControlData.currStudyDataSet;
 		ModelDataSet mds=ControlData.currModelDataSet;
 		ArrayList<String> svList = mds.svList;
 		Map<String, Svar> svMap =mds.svMap;
@@ -241,6 +242,8 @@ public class ModelDataSet implements Serializable {
 		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
 		Map<String, Map<String, IntDouble>> varTimeArrayCycleValueMap=ControlData.currStudyDataSet.getVarTimeArrayCycleValueMap();
 		Set<String> svarUsedByLaterCycle = mds.svarUsedByLaterCycle;
+		ArrayList<String> varCycleIndexList = sds.getVarCycleIndexList();
+		Map<String, Map<String, IntDouble>> varCycleIndexValueMap = sds.getVarCycleIndexValueMap();
 		String model=ControlData.currCycleName;
 		for (String svName: svList){
 			ControlData.currEvalName=svName;
@@ -272,12 +275,30 @@ public class ModelDataSet implements Serializable {
 					if (svarUsedByLaterCycle.contains(svName)){
 						varCycleValueMap.get(svName).put(model, evalValue);
 					}
+					if (varCycleIndexList.contains(svName)){
+						if (varCycleIndexValueMap.containsKey(svName)){
+							varCycleIndexValueMap.get(svName).put(model, evalValue);
+						}else{
+							Map<String, IntDouble> cycleValue = new HashMap<String, IntDouble>();
+							cycleValue.put(model, evalValue);
+							varCycleIndexValueMap.put(svName, cycleValue);
+						}
+					}
 				} catch (RecognitionException e) {
 					Error.addEvaluationError("Case expression evaluation has error.");
 					IntDouble evalValue=new IntDouble(1.0, false);
 					svar.setData(evalValue);
 					if (svarUsedByLaterCycle.contains(svName)){
 						varCycleValueMap.get(svName).put(model, evalValue);
+					}
+					if (varCycleIndexList.contains(svName)){
+						if (varCycleIndexValueMap.containsKey(svName)){
+							varCycleIndexValueMap.get(svName).put(model, evalValue);
+						}else{
+							Map<String, IntDouble> cycleValue = new HashMap<String, IntDouble>();
+							cycleValue.put(model, evalValue);
+							varCycleIndexValueMap.put(svName, cycleValue);
+						}
 					}
 				}
 				caseExpression.reset();
@@ -321,6 +342,15 @@ public class ModelDataSet implements Serializable {
 								varTimeArrayCycleValueMap.put(newSvName, cycleValue);
 							}
 						}
+						if (varCycleIndexList.contains(svName)){
+							if (varCycleIndexValueMap.containsKey(newSvName)){
+								varCycleIndexValueMap.get(newSvName).put(model, evalValue);
+							}else{
+								Map<String, IntDouble> cycleValue = new HashMap<String, IntDouble>();
+								cycleValue.put(model, evalValue);
+								varCycleIndexValueMap.put(newSvName, cycleValue);
+							}
+						}
 					} catch (RecognitionException e) {
 						Error.addEvaluationError("Case expression evaluation has error.");
 						IntDouble evalValue=new IntDouble(1.0, false);
@@ -335,6 +365,15 @@ public class ModelDataSet implements Serializable {
 								Map<String, IntDouble> cycleValue = new HashMap<String, IntDouble>();
 								cycleValue.put(model, evalValue);
 								varTimeArrayCycleValueMap.put(newSvName, cycleValue);
+							}
+						}
+						if (varCycleIndexList.contains(svName)){
+							if (varCycleIndexValueMap.containsKey(newSvName)){
+								varCycleIndexValueMap.get(newSvName).put(model, evalValue);
+							}else{
+								Map<String, IntDouble> cycleValue = new HashMap<String, IntDouble>();
+								cycleValue.put(model, evalValue);
+								varCycleIndexValueMap.put(newSvName, cycleValue);
 							}
 						}
 					}
@@ -375,6 +414,9 @@ public class ModelDataSet implements Serializable {
 		dvTimeArrayList = new ArrayList<String>();
 		timeArrayDvList = new ArrayList<String>();
 		dvarTimeArrayUsedByLaterCycle = new HashSet<String>();
+		StudyDataSet sds = ControlData.currStudyDataSet;
+		ArrayList<String> varCycleIndexList = sds.getVarCycleIndexList();
+		ArrayList<String> dvarTimeArrayCycleIndexList = sds.getDvarTimeArrayCycleIndexList();
 		for (String dvName: dvList){
 			ControlData.currEvalName=dvName;
 			//System.out.println("Process dvar "+dvName);
@@ -441,6 +483,9 @@ public class ModelDataSet implements Serializable {
 				
 				if (dvarUsedByLaterCycle.contains(dvName)){
 					dvarTimeArrayUsedByLaterCycle.add(newDvarName);
+				}
+				if (varCycleIndexList.contains(dvName) && !dvarTimeArrayCycleIndexList.contains(newDvarName)){
+					dvarTimeArrayCycleIndexList.add(newDvarName);
 				}
 			}
 		}
@@ -553,6 +598,7 @@ public class ModelDataSet implements Serializable {
 	}
 	
 	public void processAlias(){
+		StudyDataSet sds = ControlData.currStudyDataSet;
 		ModelDataSet mds=ControlData.currModelDataSet;
 		ArrayList<String> asList = mds.asList;
 		Map<String, Alias> asMap =mds.asMap;
@@ -560,6 +606,8 @@ public class ModelDataSet implements Serializable {
 		Map<String, Map<String, IntDouble>> varCycleValueMap=ControlData.currStudyDataSet.getVarCycleValueMap();
 		Map<String, Map<String, IntDouble>> varTimeArrayCycleValueMap=ControlData.currStudyDataSet.getVarTimeArrayCycleValueMap();
 		Set<String> aliasUsedByLaterCycle = mds.aliasUsedByLaterCycle;
+		ArrayList<String> varCycleIndexList = sds.getVarCycleIndexList();
+		Map<String, Map<String, IntDouble>> varCycleIndexValueMap = sds.getVarCycleIndexValueMap();
 		String model=ControlData.currCycleName;
 		for (String asName: asList){
 			ControlData.currEvalName=asName;
@@ -574,6 +622,15 @@ public class ModelDataSet implements Serializable {
 				alias.data=id.copyOf();
 				if (aliasUsedByLaterCycle.contains(asName)){
 					varCycleValueMap.get(asName).put(model, alias.data);
+				}
+				if (varCycleIndexList.contains(asName)){
+					if (varCycleIndexValueMap.containsKey(asName)){
+						varCycleIndexValueMap.get(asName).put(model, alias.data);
+					}else{
+						Map<String, IntDouble> cycleValue = new HashMap<String, IntDouble>();
+						cycleValue.put(model, alias.data);
+						varCycleIndexValueMap.put(asName, cycleValue);
+					}
 				}
 				String entryNameTS=DssOperation.entryNameTS(asName, ControlData.timeStep);
 				if (!DataTimeSeries.dvAliasTS.containsKey(entryNameTS)){
@@ -598,6 +655,15 @@ public class ModelDataSet implements Serializable {
 				alias.data=id;
 				if (aliasUsedByLaterCycle.contains(asName)){
 					varCycleValueMap.get(asName).put(model, id);
+				}
+				if (varCycleIndexList.contains(asName)){
+					if (varCycleIndexValueMap.containsKey(asName)){
+						varCycleIndexValueMap.get(asName).put(model, alias.data);
+					}else{
+						Map<String, IntDouble> cycleValue = new HashMap<String, IntDouble>();
+						cycleValue.put(model, alias.data);
+						varCycleIndexValueMap.put(asName, cycleValue);
+					}
 				}
 				String entryNameTS=DssOperation.entryNameTS(asName, ControlData.timeStep);
 				double[] dataList=DataTimeSeries.dvAliasTS.get(entryNameTS).getData();
@@ -643,6 +709,15 @@ public class ModelDataSet implements Serializable {
 							varTimeArrayCycleValueMap.put(newAsName, cycleValue);
 						}
 					}
+					if (varCycleIndexList.contains(asName)){
+						if (varCycleIndexValueMap.containsKey(newAsName)){
+							varCycleIndexValueMap.get(newAsName).put(model, newAlias.data);
+						}else{
+							Map<String, IntDouble> cycleValue = new HashMap<String, IntDouble>();
+							cycleValue.put(model, newAlias.data);
+							varCycleIndexValueMap.put(newAsName, cycleValue);
+						}
+					}
 					String entryNameTS=DssOperation.entryNameTS(newAsName, ControlData.timeStep);
 					if (!DataTimeSeries.dvAliasTS.containsKey(entryNameTS)){
 						DssDataSetFixLength dds=new DssDataSetFixLength();
@@ -672,6 +747,15 @@ public class ModelDataSet implements Serializable {
 							Map<String, IntDouble> cycleValue = new HashMap<String, IntDouble>();
 							cycleValue.put(model, id);
 							varTimeArrayCycleValueMap.put(newAsName, cycleValue);
+						}
+					}
+					if (varCycleIndexList.contains(asName)){
+						if (varCycleIndexValueMap.containsKey(newAsName)){
+							varCycleIndexValueMap.get(newAsName).put(model, id);
+						}else{
+							Map<String, IntDouble> cycleValue = new HashMap<String, IntDouble>();
+							cycleValue.put(model, id);
+							varCycleIndexValueMap.put(newAsName, cycleValue);
 						}
 					}
 					String entryNameTS=DssOperation.entryNameTS(newAsName, ControlData.timeStep);

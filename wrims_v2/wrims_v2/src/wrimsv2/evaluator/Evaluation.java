@@ -9,6 +9,7 @@ import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.ModelDataSet;
 import wrimsv2.commondata.wresldata.Param;
+import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.Svar;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.Error;
@@ -853,27 +854,22 @@ public class Evaluation {
 		return new IntDouble(data.getData(),data.isInt());
 	}
 	
-	public static IntDouble pastCycleNoTimeArray(String ident, int index){
+	public static IntDouble pastCycleIndexNoTimeArray(String ident, int index){
 		int ci=ControlData.currCycleIndex+index;
 		if (ci<0){
 			Error.addEvaluationError("The "+ci+" cycle from the current cycle is unvailable.");
 			return new IntDouble(1.0,false);
 		}
-		String cycle=ControlData.currStudyDataSet.getModelList().get(ci);
-		ModelDataSet mds = ControlData.currStudyDataSet.getModelDataSetMap().get(cycle);
-		Map<String, Dvar> dvMap = mds.dvMap;
-		Map<String, Svar> svMap = mds.svMap;
-		Map<String, Alias> asMap = mds.asMap;
-		if (dvMap.containsKey(ident)){
-			return dvMap.get(ident).getData();
+		StudyDataSet sds = ControlData.currStudyDataSet;
+		String cycle=sds.getModelList().get(ci);
+		Map<String, Map<String, IntDouble>> varCycleIndexValueMap = sds.getVarCycleIndexValueMap();		
+		if (varCycleIndexValueMap.containsKey(ident)){
+			Map<String, IntDouble> valueMap = varCycleIndexValueMap.get(ident);
+			if (valueMap.containsKey(cycle)){
+				return valueMap.get(cycle);
+			}
 		}
-		if (svMap.containsKey(ident)){
-			return svMap.get(ident).getData();
-		}
-		if (asMap.containsKey(ident)){
-			return asMap.get(ident).getData();
-		}
-		Error.addEvaluationError("Variable "+ident+" is not in cycle "+ci+1+ " of [" + cycle + "] from the current cycle");
+		Error.addEvaluationError("Variable "+ident+" is not in "+ index+" from the current cycle - "+cycle);
 		return new IntDouble(1.0,false);
 	}
 	
@@ -908,6 +904,61 @@ public class Evaluation {
 	    String varTimeArrayName=ident+"__fut__"+index;
 		if (varTimeArrayCycleValueMap.containsKey(varTimeArrayName)){
 			Map<String, IntDouble> var= varTimeArrayCycleValueMap.get(varTimeArrayName);
+			if (var.containsKey(cycle)){
+				data=var.get(cycle);
+			}else{
+				Error.addEvaluationError("The variable "+ident+" is not defined in the past cycle of "+cycle+".");
+				return data;
+			}
+		}else{
+			Error.addEvaluationError("The variable "+ident+" is not defined in the past cycle of "+cycle+".");
+			return data;
+		}
+		if (data==null){
+			Error.addEvaluationError("The variable "+ident+" is not defined in the past cycle of "+cycle+".");
+			return new IntDouble(1.0,false);
+		}
+		return new IntDouble(data.getData(),data.isInt());
+	}
+	
+	public static IntDouble pastCycleIndexTimeArray(String ident, int pci, EvalExpression ee){
+		IntDouble data=new IntDouble(1.0,false);
+		int ci=ControlData.currCycleIndex+pci;
+		if (ci<0){
+			Error.addEvaluationError("The "+ci+" cycle from the current cycle is unvailable.");
+			return new IntDouble(1.0,false);
+		}
+		if (!ee.isNumeric()){
+			Error.addEvaluationError("Time array index of "+ident+" contains decision variable.");
+			return data;
+		}
+		IntDouble id=ee.getValue();
+		if (!id.isInt()){
+			Error.addEvaluationError("Time array index of "+ident+" is not an integer.");
+			return data;
+		}
+		int index=id.getData().intValue();
+		StudyDataSet sds = ControlData.currStudyDataSet;
+		String cycle=sds.getModelList().get(ci);
+		if (index<0){
+			ArrayList<EvalExpression> eeArray=new ArrayList<EvalExpression>();
+			eeArray.add(ee);
+			ModelDataSet mds=ControlData.currStudyDataSet.getModelDataSetMap().get(cycle);
+			EvalExpression ee1;
+			if (mds.dvMap.containsKey(ident) || mds.asMap.containsKey(ident)){
+				TimeOperation.findTime(index);
+				return new IntDouble(dvarAliasTimeSeries(ident, index), false);
+			}else{
+				Error.addEvaluationError(ident+" is not a dvar/alias in the cycle of "+cycle+". Only dvar/alias in the past time step of "+index+" and past cycle of "+cycle+" can be used from previous cycles");
+				return new IntDouble(1.0, false);
+			}
+		}else if(index==0){
+			return pastCycleIndexNoTimeArray(ident, pci);
+		}
+		Map<String, Map<String, IntDouble>> varCycleIndexValueMap=sds.getVarCycleIndexValueMap();
+	    String varTimeArrayName=ident+"__fut__"+index;
+		if (varCycleIndexValueMap.containsKey(varTimeArrayName)){
+			Map<String, IntDouble> var= varCycleIndexValueMap.get(varTimeArrayName);
 			if (var.containsKey(cycle)){
 				data=var.get(cycle);
 			}else{

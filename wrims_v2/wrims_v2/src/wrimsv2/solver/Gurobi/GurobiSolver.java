@@ -37,6 +37,7 @@ import com.sunsetsoft.xa.XAException;
 import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.ModelDataSet;
+import wrimsv2.commondata.wresldata.StudyDataSet;
 import wrimsv2.commondata.wresldata.WeightElement;
 import wrimsv2.commondata.solverdata.*;
 import wrimsv2.components.ControlData;
@@ -253,6 +254,11 @@ public class GurobiSolver {
 		ArrayList<String> timeArrayDvList = ControlData.currModelDataSet.timeArrayDvList;
 		String model=ControlData.currCycleName;
 		
+		StudyDataSet sds = ControlData.currStudyDataSet;
+		ArrayList<String> varCycleIndexList = sds.getVarCycleIndexList();
+		ArrayList<String> dvarTimeArrayCycleIndexList = sds.getDvarTimeArrayCycleIndexList();
+		Map<String, Map<String, IntDouble>> varCycleIndexValueMap = sds.getVarCycleIndexValueMap();
+				
 		Map<String, Dvar> dvarMap = SolverData.getDvarMap();
 		Set dvarCollection = dvarMap.keySet();
 		Iterator dvarIterator = dvarCollection.iterator();
@@ -286,6 +292,15 @@ public class GurobiSolver {
 					Map<String, IntDouble> cycleValue = new HashMap<String, IntDouble>();
 					cycleValue.put(model, dvar.data);
 					varTimeArrayCycleValueMap.put(dvName, cycleValue);
+				}
+			}
+			if (varCycleIndexList.contains(dvName) || dvarTimeArrayCycleIndexList.contains(dvName)){
+				if (varCycleIndexValueMap.containsKey(dvName)){
+					varCycleIndexValueMap.get(dvName).put(model, dvar.data);
+				}else{
+					Map<String, IntDouble> cycleValue = new HashMap<String, IntDouble>();
+					cycleValue.put(model, dvar.data);
+					varCycleIndexValueMap.put(dvName, cycleValue);
 				}
 			}
 			String entryNameTS=DssOperation.entryNameTS(dvName, ControlData.timeStep);
