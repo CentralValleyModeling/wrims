@@ -38,7 +38,8 @@ tokens {
 @header {
   package wrimsv2.wreslparser.grammar;
   import wrimsv2.wreslparser.elements.LogUtils; 
-  import wrimsv2.wreslparser.elements.Tools; 
+  import wrimsv2.wreslparser.elements.Tools;
+  import wrimsv2.wreslplus.elements.VarCycleIndex; 
   import wrimsv2.commondata.wresldata.Param;
   import java.util.Set;
   import java.util.HashSet;
@@ -576,7 +577,7 @@ function : external_func | max_func | min_func | int_func | var_model ;
 
 function_logical : range_func ;
 
-var_model: var_model_noTimeArray|var_model_timeArray   //|var_modelindex_noTimeArray
+var_model: var_model_noTimeArray|var_model_timeArray|var_modelindex_noTimeArray|var_modelindex_TimeArray
            ;
 
 var_model_noTimeArray 
@@ -587,8 +588,19 @@ var_model_timeArray
   : varName=IDENT '[' cycleName = IDENT ']' '(' e=expression ')'
     {  $expression::varInCycle.add($varName.text+'['+$cycleName.text+']'+'(' + $e.text +')' );} ; //{ $expression::DV.add($i.text.toLowerCase());} ; 
 
-//var_modelindex_noTimeArray 
-//  : varName=IDENT '[' cycleIndex=('-' INTEGER) ']' ;  
+var_modelindex_noTimeArray 
+  : varName=IDENT '[' cycleIndex=('-' INTEGER) ']' {
+      if (!VarCycleIndex.varCycleIndexList.contains(varName)){
+        VarCycleIndex.varCycleIndexList.add($varName.text.toLowerCase());
+      }
+    };  
+  
+var_modelindex_TimeArray 
+  : varName=IDENT '[' cycleIndex=('-' INTEGER) ']' '(' e=expression ')' {
+      if (!VarCycleIndex.varCycleIndexList.contains(varName)){
+        VarCycleIndex.varCycleIndexList.add($varName.text.toLowerCase());
+      }
+  }; 
 
 external_func // this could be timeseries function
 	: i=IDENT {$expression::SV.add($i.text);} '('  ie=expression (',' e=expression  {$expression::SV.addAll($e.members);$expression::varInCycle.addAll($e.setVarInCycle);}  )*  ')' 

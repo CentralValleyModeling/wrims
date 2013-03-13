@@ -23,6 +23,7 @@ import wrimsv2.commondata.wresldata.Timeseries;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.IntDouble;
 import wrimsv2.wreslparser.grammar.WreslTreeWalker;
+import wrimsv2.wreslplus.elements.VarCycleIndex;
 
 public class StudyParser{
 	
@@ -154,7 +155,8 @@ public class StudyParser{
     studyDataSet.setModelDataSetMap(modelDataSetMap);
     studyDataSet.setTimeseriesMap(timeseriesMap);
     studyDataSet.setTimeseriesTimeStepMap(timeseriesTimeStepMap);
-
+    studyDataSet.setVarCycleIndexList(VarCycleIndex.varCycleIndexList);
+    
     return studyDataSet;
   }
   

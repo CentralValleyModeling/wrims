@@ -19,6 +19,7 @@ import wrimsv2.components.BuildProps;
 import wrimsv2.components.ControlData;
 import wrimsv2.components.FilePaths;
 import wrimsv2.wreslplus.elements.StudyTemp;
+import wrimsv2.wreslplus.elements.VarCycleIndex;
 import wrimsv2.wreslplus.elements.Workflow;
 import wrimsv2.wreslplus.elements.procedures.ToWreslData;
 
@@ -184,6 +185,7 @@ public class StudyUtils {
 
 			TempData td = new TempData();
 			StudyParser.reset();
+			VarCycleIndex.clearVarCycleIndexList();
 			StudyConfig sc = StudyParser.processMainFileIntoStudyConfig(validatedMainWreslFile.getCanonicalPath());
 
 			// td.model_dataset_map=StudyParser.parseModels(sc,td);
