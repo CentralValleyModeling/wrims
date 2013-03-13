@@ -679,6 +679,24 @@ public class WreslEditorSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case WreslEditorPackage.VAR_MODEL_INDEX:
+      {
+        VarModelIndex varModelIndex = (VarModelIndex)theEObject;
+        T result = caseVarModelIndex(varModelIndex);
+        if (result == null) result = caseFunction(varModelIndex);
+        if (result == null) result = caseTermSimple(varModelIndex);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case WreslEditorPackage.VAR_MODEL_INDEX_STEP:
+      {
+        VarModelIndexStep varModelIndexStep = (VarModelIndexStep)theEObject;
+        T result = caseVarModelIndexStep(varModelIndexStep);
+        if (result == null) result = caseFunction(varModelIndexStep);
+        if (result == null) result = caseTermSimple(varModelIndexStep);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case WreslEditorPackage.IDENT:
       {
         Ident ident = (Ident)theEObject;
@@ -1926,6 +1944,38 @@ public class WreslEditorSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseVarModelStep(VarModelStep object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Var Model Index</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Var Model Index</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseVarModelIndex(VarModelIndex object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Var Model Index Step</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Var Model Index Step</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseVarModelIndexStep(VarModelIndexStep object)
   {
     return null;
   }

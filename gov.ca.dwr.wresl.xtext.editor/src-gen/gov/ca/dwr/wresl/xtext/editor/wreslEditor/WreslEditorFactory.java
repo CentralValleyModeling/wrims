@@ -716,6 +716,24 @@ public interface WreslEditorFactory extends EFactory
   VarModelStep createVarModelStep();
 
   /**
+   * Returns a new object of class '<em>Var Model Index</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Var Model Index</em>'.
+   * @generated
+   */
+  VarModelIndex createVarModelIndex();
+
+  /**
+   * Returns a new object of class '<em>Var Model Index Step</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Var Model Index Step</em>'.
+   * @generated
+   */
+  VarModelIndexStep createVarModelIndexStep();
+
+  /**
    * Returns a new object of class '<em>Ident</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

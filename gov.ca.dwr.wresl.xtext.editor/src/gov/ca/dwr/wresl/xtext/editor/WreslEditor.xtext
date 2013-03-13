@@ -217,7 +217,7 @@ Term:
 	ref=[Declaration] | n=Number | f=Function | '(' e=Expression ')'| s=SpecialIdent | MultiStep;
 
 Function:
-	ExternalFunction | MaxFunction | MinFunction | '(' SumContent ')' | ModFunction | IntFunction | AbsFunction | PowFunction | LogFunction | VarModel | VarModelStep;
+	ExternalFunction | MaxFunction | MinFunction | '(' SumContent ')' | ModFunction | IntFunction | AbsFunction | PowFunction | LogFunction | VarModel | VarModelStep | VarModelIndex | VarModelIndexStep;
 
 ExternalFunction:
 	((ref=[Declaration])|TafCfs|Month) '(' e1=Expression (',' e2+=Expression)* ')';
@@ -251,6 +251,12 @@ VarModel:
 	
 VarModelStep:
 	ref1=[Declaration] '[' ref2=[Model] ']' '(' e=Expression ')';
+
+VarModelIndex: 
+	ref1=[Declaration] '[' '-' INT ']';
+
+VarModelIndexStep: 
+	ref1=[Declaration] '[' '-' INT ']' '(' e=Expression ')';
 
 RangeFunction:
 	RANGE '(' (ID|Month|WaterYear) ',' (ID|CalendarMonth|PrevMonth) ',' (ID|CalendarMonth|PrevMonth) ')';

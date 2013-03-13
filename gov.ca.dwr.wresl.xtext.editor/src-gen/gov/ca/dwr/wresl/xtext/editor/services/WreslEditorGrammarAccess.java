@@ -3773,17 +3773,19 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLogFunctionParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
 		private final RuleCall cVarModelParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
 		private final RuleCall cVarModelStepParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
+		private final RuleCall cVarModelIndexParserRuleCall_11 = (RuleCall)cAlternatives.eContents().get(11);
+		private final RuleCall cVarModelIndexStepParserRuleCall_12 = (RuleCall)cAlternatives.eContents().get(12);
 		
 		//Function:
 		//
 		//	ExternalFunction | MaxFunction | MinFunction | "(" SumContent ")" | ModFunction | IntFunction | AbsFunction |
 		//
-		//	PowFunction | LogFunction | VarModel | VarModelStep;
+		//	PowFunction | LogFunction | VarModel | VarModelStep | VarModelIndex | VarModelIndexStep;
 		public ParserRule getRule() { return rule; }
 
 		//ExternalFunction | MaxFunction | MinFunction | "(" SumContent ")" | ModFunction | IntFunction | AbsFunction |
 		//
-		//PowFunction | LogFunction | VarModel | VarModelStep
+		//PowFunction | LogFunction | VarModel | VarModelStep | VarModelIndex | VarModelIndexStep
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//ExternalFunction
@@ -3827,6 +3829,12 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 		//VarModelStep
 		public RuleCall getVarModelStepParserRuleCall_10() { return cVarModelStepParserRuleCall_10; }
+
+		//VarModelIndex
+		public RuleCall getVarModelIndexParserRuleCall_11() { return cVarModelIndexParserRuleCall_11; }
+
+		//VarModelIndexStep
+		public RuleCall getVarModelIndexStepParserRuleCall_12() { return cVarModelIndexStepParserRuleCall_12; }
 	}
 
 	public class ExternalFunctionElements extends AbstractParserRuleElementFinder {
@@ -4302,6 +4310,104 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 		//")"
 		public Keyword getRightParenthesisKeyword_6() { return cRightParenthesisKeyword_6; }
+	}
+
+	public class VarModelIndexElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VarModelIndex");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cRef1Assignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cRef1DeclarationCrossReference_0_0 = (CrossReference)cRef1Assignment_0.eContents().get(0);
+		private final RuleCall cRef1DeclarationIDTerminalRuleCall_0_0_1 = (RuleCall)cRef1DeclarationCrossReference_0_0.eContents().get(1);
+		private final Keyword cLeftSquareBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cHyphenMinusKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final RuleCall cINTTerminalRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
+		private final Keyword cRightSquareBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//VarModelIndex:
+		//
+		//	ref1=[Declaration] "[" "-" INT "]";
+		public ParserRule getRule() { return rule; }
+
+		//ref1=[Declaration] "[" "-" INT "]"
+		public Group getGroup() { return cGroup; }
+
+		//ref1=[Declaration]
+		public Assignment getRef1Assignment_0() { return cRef1Assignment_0; }
+
+		//[Declaration]
+		public CrossReference getRef1DeclarationCrossReference_0_0() { return cRef1DeclarationCrossReference_0_0; }
+
+		//ID
+		public RuleCall getRef1DeclarationIDTerminalRuleCall_0_0_1() { return cRef1DeclarationIDTerminalRuleCall_0_0_1; }
+
+		//"["
+		public Keyword getLeftSquareBracketKeyword_1() { return cLeftSquareBracketKeyword_1; }
+
+		//"-"
+		public Keyword getHyphenMinusKeyword_2() { return cHyphenMinusKeyword_2; }
+
+		//INT
+		public RuleCall getINTTerminalRuleCall_3() { return cINTTerminalRuleCall_3; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
+	}
+
+	public class VarModelIndexStepElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VarModelIndexStep");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cRef1Assignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cRef1DeclarationCrossReference_0_0 = (CrossReference)cRef1Assignment_0.eContents().get(0);
+		private final RuleCall cRef1DeclarationIDTerminalRuleCall_0_0_1 = (RuleCall)cRef1DeclarationCrossReference_0_0.eContents().get(1);
+		private final Keyword cLeftSquareBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cHyphenMinusKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final RuleCall cINTTerminalRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
+		private final Keyword cRightSquareBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Keyword cLeftParenthesisKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Assignment cEAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cEExpressionParserRuleCall_6_0 = (RuleCall)cEAssignment_6.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_7 = (Keyword)cGroup.eContents().get(7);
+		
+		//VarModelIndexStep:
+		//
+		//	ref1=[Declaration] "[" "-" INT "]" "(" e=Expression ")";
+		public ParserRule getRule() { return rule; }
+
+		//ref1=[Declaration] "[" "-" INT "]" "(" e=Expression ")"
+		public Group getGroup() { return cGroup; }
+
+		//ref1=[Declaration]
+		public Assignment getRef1Assignment_0() { return cRef1Assignment_0; }
+
+		//[Declaration]
+		public CrossReference getRef1DeclarationCrossReference_0_0() { return cRef1DeclarationCrossReference_0_0; }
+
+		//ID
+		public RuleCall getRef1DeclarationIDTerminalRuleCall_0_0_1() { return cRef1DeclarationIDTerminalRuleCall_0_0_1; }
+
+		//"["
+		public Keyword getLeftSquareBracketKeyword_1() { return cLeftSquareBracketKeyword_1; }
+
+		//"-"
+		public Keyword getHyphenMinusKeyword_2() { return cHyphenMinusKeyword_2; }
+
+		//INT
+		public RuleCall getINTTerminalRuleCall_3() { return cINTTerminalRuleCall_3; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_5() { return cLeftParenthesisKeyword_5; }
+
+		//e=Expression
+		public Assignment getEAssignment_6() { return cEAssignment_6; }
+
+		//Expression
+		public RuleCall getEExpressionParserRuleCall_6_0() { return cEExpressionParserRuleCall_6_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_7() { return cRightParenthesisKeyword_7; }
 	}
 
 	public class RangeFunctionElements extends AbstractParserRuleElementFinder {
@@ -4963,6 +5069,8 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	private LogicalFunctionElements pLogicalFunction;
 	private VarModelElements pVarModel;
 	private VarModelStepElements pVarModelStep;
+	private VarModelIndexElements pVarModelIndex;
+	private VarModelIndexStepElements pVarModelIndexStep;
 	private RangeFunctionElements pRangeFunction;
 	private IdentElements pIdent;
 	private NumberElements pNumber;
@@ -5840,7 +5948,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//	ExternalFunction | MaxFunction | MinFunction | "(" SumContent ")" | ModFunction | IntFunction | AbsFunction |
 	//
-	//	PowFunction | LogFunction | VarModel | VarModelStep;
+	//	PowFunction | LogFunction | VarModel | VarModelStep | VarModelIndex | VarModelIndexStep;
 	public FunctionElements getFunctionAccess() {
 		return (pFunction != null) ? pFunction : (pFunction = new FunctionElements());
 	}
@@ -5968,6 +6076,28 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getVarModelStepRule() {
 		return getVarModelStepAccess().getRule();
+	}
+
+	//VarModelIndex:
+	//
+	//	ref1=[Declaration] "[" "-" INT "]";
+	public VarModelIndexElements getVarModelIndexAccess() {
+		return (pVarModelIndex != null) ? pVarModelIndex : (pVarModelIndex = new VarModelIndexElements());
+	}
+	
+	public ParserRule getVarModelIndexRule() {
+		return getVarModelIndexAccess().getRule();
+	}
+
+	//VarModelIndexStep:
+	//
+	//	ref1=[Declaration] "[" "-" INT "]" "(" e=Expression ")";
+	public VarModelIndexStepElements getVarModelIndexStepAccess() {
+		return (pVarModelIndexStep != null) ? pVarModelIndexStep : (pVarModelIndexStep = new VarModelIndexStepElements());
+	}
+	
+	public ParserRule getVarModelIndexStepRule() {
+		return getVarModelIndexStepAccess().getRule();
 	}
 
 	//RangeFunction:

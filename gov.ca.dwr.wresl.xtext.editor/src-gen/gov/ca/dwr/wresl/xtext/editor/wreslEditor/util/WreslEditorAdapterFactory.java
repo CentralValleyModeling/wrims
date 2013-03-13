@@ -460,6 +460,16 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
         return createVarModelStepAdapter();
       }
       @Override
+      public Adapter caseVarModelIndex(VarModelIndex object)
+      {
+        return createVarModelIndexAdapter();
+      }
+      @Override
+      public Adapter caseVarModelIndexStep(VarModelIndexStep object)
+      {
+        return createVarModelIndexStepAdapter();
+      }
+      @Override
       public Adapter caseIdent(Ident object)
       {
         return createIdentAdapter();
@@ -1642,6 +1652,36 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createVarModelStepAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelIndex <em>Var Model Index</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelIndex
+   * @generated
+   */
+  public Adapter createVarModelIndexAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelIndexStep <em>Var Model Index Step</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelIndexStep
+   * @generated
+   */
+  public Adapter createVarModelIndexStepAdapter()
   {
     return null;
   }

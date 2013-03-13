@@ -359,6 +359,14 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="e" eType="#//Expression"
         containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VarModelIndex" eSuperTypes="#//Function">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ref1" eType="#//Declaration"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VarModelIndexStep" eSuperTypes="#//Function">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ref1" eType="#//Declaration"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Ident">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>

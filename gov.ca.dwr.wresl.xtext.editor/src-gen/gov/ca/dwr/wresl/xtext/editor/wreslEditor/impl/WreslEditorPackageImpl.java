@@ -74,6 +74,8 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Unary;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Upper;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ValueContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModel;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelIndex;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelIndexStep;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelStep;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Variable;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WeightItem;
@@ -637,6 +639,20 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * @generated
    */
   private EClass varModelStepEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass varModelIndexEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass varModelIndexStepEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -2770,6 +2786,56 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getVarModelIndex()
+  {
+    return varModelIndexEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getVarModelIndex_Ref1()
+  {
+    return (EReference)varModelIndexEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getVarModelIndexStep()
+  {
+    return varModelIndexStepEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getVarModelIndexStep_Ref1()
+  {
+    return (EReference)varModelIndexStepEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getVarModelIndexStep_E()
+  {
+    return (EReference)varModelIndexStepEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getIdent()
   {
     return identEClass;
@@ -3117,6 +3183,13 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     createEReference(varModelStepEClass, VAR_MODEL_STEP__REF2);
     createEReference(varModelStepEClass, VAR_MODEL_STEP__E);
 
+    varModelIndexEClass = createEClass(VAR_MODEL_INDEX);
+    createEReference(varModelIndexEClass, VAR_MODEL_INDEX__REF1);
+
+    varModelIndexStepEClass = createEClass(VAR_MODEL_INDEX_STEP);
+    createEReference(varModelIndexStepEClass, VAR_MODEL_INDEX_STEP__REF1);
+    createEReference(varModelIndexStepEClass, VAR_MODEL_INDEX_STEP__E);
+
     identEClass = createEClass(IDENT);
     createEAttribute(identEClass, IDENT__NAME);
 
@@ -3193,6 +3266,8 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     logFunctionEClass.getESuperTypes().add(this.getFunction());
     varModelEClass.getESuperTypes().add(this.getFunction());
     varModelStepEClass.getESuperTypes().add(this.getFunction());
+    varModelIndexEClass.getESuperTypes().add(this.getFunction());
+    varModelIndexStepEClass.getESuperTypes().add(this.getFunction());
     includeFileEClass.getESuperTypes().add(this.getPattern());
 
     // Initialize classes and features; add operations and parameters
@@ -3477,6 +3552,13 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     initEReference(getVarModelStep_Ref1(), this.getDeclaration(), null, "ref1", null, 0, 1, VarModelStep.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getVarModelStep_Ref2(), this.getModel(), null, "ref2", null, 0, 1, VarModelStep.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getVarModelStep_E(), this.getExpression(), null, "e", null, 0, 1, VarModelStep.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(varModelIndexEClass, VarModelIndex.class, "VarModelIndex", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getVarModelIndex_Ref1(), this.getDeclaration(), null, "ref1", null, 0, 1, VarModelIndex.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(varModelIndexStepEClass, VarModelIndexStep.class, "VarModelIndexStep", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getVarModelIndexStep_Ref1(), this.getDeclaration(), null, "ref1", null, 0, 1, VarModelIndexStep.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVarModelIndexStep_E(), this.getExpression(), null, "e", null, 0, 1, VarModelIndexStep.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(identEClass, Ident.class, "Ident", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getIdent_Name(), ecorePackage.getEString(), "name", null, 0, 1, Ident.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

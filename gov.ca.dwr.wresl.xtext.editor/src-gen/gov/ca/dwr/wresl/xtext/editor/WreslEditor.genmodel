@@ -276,6 +276,13 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//VarModelStep/ref2"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//VarModelStep/e"/>
     </genClasses>
+    <genClasses ecoreClass="WreslEditor.ecore#//VarModelIndex">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//VarModelIndex/ref1"/>
+    </genClasses>
+    <genClasses ecoreClass="WreslEditor.ecore#//VarModelIndexStep">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//VarModelIndexStep/ref1"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//VarModelIndexStep/e"/>
+    </genClasses>
     <genClasses ecoreClass="WreslEditor.ecore#//Ident">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WreslEditor.ecore#//Ident/name"/>
     </genClasses>

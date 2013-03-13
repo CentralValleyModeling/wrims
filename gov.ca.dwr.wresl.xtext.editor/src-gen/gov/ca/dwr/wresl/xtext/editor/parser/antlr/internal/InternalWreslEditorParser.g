@@ -6195,6 +6195,32 @@ ruleFunction returns [EObject current=null]
         $current = $this_VarModelStep_12.current;
         afterParserOrEnumRuleCall();
     }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getFunctionAccess().getVarModelIndexParserRuleCall_11()); 
+    }
+    this_VarModelIndex_13=ruleVarModelIndex
+    {
+        $current = $this_VarModelIndex_13.current;
+        afterParserOrEnumRuleCall();
+    }
+
+    |
+	{ 
+	  /* */ 
+	}
+    { 
+        newCompositeNode(grammarAccess.getFunctionAccess().getVarModelIndexStepParserRuleCall_12()); 
+    }
+    this_VarModelIndexStep_14=ruleVarModelIndexStep
+    {
+        $current = $this_VarModelIndexStep_14.current;
+        afterParserOrEnumRuleCall();
+    }
 )
 ;
 
@@ -6956,6 +6982,146 @@ ruleVarModelStep returns [EObject current=null]
 	otherlv_6=KEYWORD_2
     {
     	newLeafNode(otherlv_6, grammarAccess.getVarModelStepAccess().getRightParenthesisKeyword_6());
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleVarModelIndex
+entryRuleVarModelIndex returns [EObject current=null]
+	:
+	{ newCompositeNode(grammarAccess.getVarModelIndexRule()); }
+	 iv_ruleVarModelIndex=ruleVarModelIndex 
+	 { $current=$iv_ruleVarModelIndex.current; } 
+	 EOF 
+;
+
+// Rule VarModelIndex
+ruleVarModelIndex returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+(
+		{ 
+		  /* */ 
+		}
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getVarModelIndexRule());
+	        }
+        }
+	otherlv_0=RULE_ID
+	{
+		newLeafNode(otherlv_0, grammarAccess.getVarModelIndexAccess().getRef1DeclarationCrossReference_0_0()); 
+	}
+
+)
+)
+	otherlv_1=KEYWORD_11
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getVarModelIndexAccess().getLeftSquareBracketKeyword_1());
+    }
+
+	otherlv_2=KEYWORD_6
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getVarModelIndexAccess().getHyphenMinusKeyword_2());
+    }
+this_INT_3=RULE_INT
+    { 
+    newLeafNode(this_INT_3, grammarAccess.getVarModelIndexAccess().getINTTerminalRuleCall_3()); 
+    }
+
+	otherlv_4=KEYWORD_12
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getVarModelIndexAccess().getRightSquareBracketKeyword_4());
+    }
+)
+;
+
+
+
+
+
+// Entry rule entryRuleVarModelIndexStep
+entryRuleVarModelIndexStep returns [EObject current=null]
+	:
+	{ newCompositeNode(grammarAccess.getVarModelIndexStepRule()); }
+	 iv_ruleVarModelIndexStep=ruleVarModelIndexStep 
+	 { $current=$iv_ruleVarModelIndexStep.current; } 
+	 EOF 
+;
+
+// Rule VarModelIndexStep
+ruleVarModelIndexStep returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+(
+		{ 
+		  /* */ 
+		}
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getVarModelIndexStepRule());
+	        }
+        }
+	otherlv_0=RULE_ID
+	{
+		newLeafNode(otherlv_0, grammarAccess.getVarModelIndexStepAccess().getRef1DeclarationCrossReference_0_0()); 
+	}
+
+)
+)
+	otherlv_1=KEYWORD_11
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getVarModelIndexStepAccess().getLeftSquareBracketKeyword_1());
+    }
+
+	otherlv_2=KEYWORD_6
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getVarModelIndexStepAccess().getHyphenMinusKeyword_2());
+    }
+this_INT_3=RULE_INT
+    { 
+    newLeafNode(this_INT_3, grammarAccess.getVarModelIndexStepAccess().getINTTerminalRuleCall_3()); 
+    }
+
+	otherlv_4=KEYWORD_12
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getVarModelIndexStepAccess().getRightSquareBracketKeyword_4());
+    }
+
+	otherlv_5=KEYWORD_1
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getVarModelIndexStepAccess().getLeftParenthesisKeyword_5());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getVarModelIndexStepAccess().getEExpressionParserRuleCall_6_0()); 
+	    }
+		lv_e_6_0=ruleExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getVarModelIndexStepRule());
+	        }
+       		set(
+       			$current, 
+       			"e",
+        		lv_e_6_0, 
+        		"Expression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)
+	otherlv_7=KEYWORD_2
+    {
+    	newLeafNode(otherlv_7, grammarAccess.getVarModelIndexStepAccess().getRightParenthesisKeyword_7());
     }
 )
 ;

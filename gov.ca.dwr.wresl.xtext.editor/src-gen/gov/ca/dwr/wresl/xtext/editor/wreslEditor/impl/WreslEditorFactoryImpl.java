@@ -141,6 +141,8 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
       case WreslEditorPackage.LOG_FUNCTION: return createLogFunction();
       case WreslEditorPackage.VAR_MODEL: return createVarModel();
       case WreslEditorPackage.VAR_MODEL_STEP: return createVarModelStep();
+      case WreslEditorPackage.VAR_MODEL_INDEX: return createVarModelIndex();
+      case WreslEditorPackage.VAR_MODEL_INDEX_STEP: return createVarModelIndexStep();
       case WreslEditorPackage.IDENT: return createIdent();
       case WreslEditorPackage.INCLUDE_FILE: return createIncludeFile();
       default:
@@ -993,6 +995,28 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
   {
     VarModelStepImpl varModelStep = new VarModelStepImpl();
     return varModelStep;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public VarModelIndex createVarModelIndex()
+  {
+    VarModelIndexImpl varModelIndex = new VarModelIndexImpl();
+    return varModelIndex;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public VarModelIndexStep createVarModelIndexStep()
+  {
+    VarModelIndexStepImpl varModelIndexStep = new VarModelIndexStepImpl();
+    return varModelIndexStep;
   }
 
   /**

@@ -3014,6 +3014,71 @@ public interface WreslEditorPackage extends EPackage
   int VAR_MODEL_STEP_FEATURE_COUNT = FUNCTION_FEATURE_COUNT + 3;
 
   /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.VarModelIndexImpl <em>Var Model Index</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.VarModelIndexImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getVarModelIndex()
+   * @generated
+   */
+  int VAR_MODEL_INDEX = 77;
+
+  /**
+   * The feature id for the '<em><b>Ref1</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VAR_MODEL_INDEX__REF1 = FUNCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Var Model Index</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VAR_MODEL_INDEX_FEATURE_COUNT = FUNCTION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.VarModelIndexStepImpl <em>Var Model Index Step</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.VarModelIndexStepImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getVarModelIndexStep()
+   * @generated
+   */
+  int VAR_MODEL_INDEX_STEP = 78;
+
+  /**
+   * The feature id for the '<em><b>Ref1</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VAR_MODEL_INDEX_STEP__REF1 = FUNCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>E</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VAR_MODEL_INDEX_STEP__E = FUNCTION_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Var Model Index Step</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VAR_MODEL_INDEX_STEP_FEATURE_COUNT = FUNCTION_FEATURE_COUNT + 2;
+
+  /**
    * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IdentImpl <em>Ident</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3021,7 +3086,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getIdent()
    * @generated
    */
-  int IDENT = 77;
+  int IDENT = 79;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3049,7 +3114,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getIncludeFile()
    * @generated
    */
-  int INCLUDE_FILE = 78;
+  int INCLUDE_FILE = 80;
 
   /**
    * The feature id for the '<em><b>Local</b></em>' attribute.
@@ -5258,6 +5323,59 @@ public interface WreslEditorPackage extends EPackage
   EReference getVarModelStep_E();
 
   /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelIndex <em>Var Model Index</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Var Model Index</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelIndex
+   * @generated
+   */
+  EClass getVarModelIndex();
+
+  /**
+   * Returns the meta object for the reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelIndex#getRef1 <em>Ref1</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Ref1</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelIndex#getRef1()
+   * @see #getVarModelIndex()
+   * @generated
+   */
+  EReference getVarModelIndex_Ref1();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelIndexStep <em>Var Model Index Step</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Var Model Index Step</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelIndexStep
+   * @generated
+   */
+  EClass getVarModelIndexStep();
+
+  /**
+   * Returns the meta object for the reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelIndexStep#getRef1 <em>Ref1</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Ref1</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelIndexStep#getRef1()
+   * @see #getVarModelIndexStep()
+   * @generated
+   */
+  EReference getVarModelIndexStep_Ref1();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelIndexStep#getE <em>E</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>E</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelIndexStep#getE()
+   * @see #getVarModelIndexStep()
+   * @generated
+   */
+  EReference getVarModelIndexStep_E();
+
+  /**
    * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Ident <em>Ident</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -7115,6 +7233,50 @@ public interface WreslEditorPackage extends EPackage
      * @generated
      */
     EReference VAR_MODEL_STEP__E = eINSTANCE.getVarModelStep_E();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.VarModelIndexImpl <em>Var Model Index</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.VarModelIndexImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getVarModelIndex()
+     * @generated
+     */
+    EClass VAR_MODEL_INDEX = eINSTANCE.getVarModelIndex();
+
+    /**
+     * The meta object literal for the '<em><b>Ref1</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VAR_MODEL_INDEX__REF1 = eINSTANCE.getVarModelIndex_Ref1();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.VarModelIndexStepImpl <em>Var Model Index Step</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.VarModelIndexStepImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getVarModelIndexStep()
+     * @generated
+     */
+    EClass VAR_MODEL_INDEX_STEP = eINSTANCE.getVarModelIndexStep();
+
+    /**
+     * The meta object literal for the '<em><b>Ref1</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VAR_MODEL_INDEX_STEP__REF1 = eINSTANCE.getVarModelIndexStep_Ref1();
+
+    /**
+     * The meta object literal for the '<em><b>E</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VAR_MODEL_INDEX_STEP__E = eINSTANCE.getVarModelIndexStep_E();
 
     /**
      * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.IdentImpl <em>Ident</em>}' class.

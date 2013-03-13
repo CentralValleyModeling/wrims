@@ -61,6 +61,8 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TimeArraySize;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Upper;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ValueContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModel;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelIndex;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelIndexStep;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModelStep;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WeightItem;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WhereItems;
@@ -488,6 +490,22 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 				   context == grammarAccess.getTermSimpleRule() ||
 				   context == grammarAccess.getVarModelRule()) {
 					sequence_VarModel(context, (VarModel) semanticObject); 
+					return; 
+				}
+				else break;
+			case WreslEditorPackage.VAR_MODEL_INDEX:
+				if(context == grammarAccess.getFunctionRule() ||
+				   context == grammarAccess.getTermSimpleRule() ||
+				   context == grammarAccess.getVarModelIndexRule()) {
+					sequence_VarModelIndex(context, (VarModelIndex) semanticObject); 
+					return; 
+				}
+				else break;
+			case WreslEditorPackage.VAR_MODEL_INDEX_STEP:
+				if(context == grammarAccess.getFunctionRule() ||
+				   context == grammarAccess.getTermSimpleRule() ||
+				   context == grammarAccess.getVarModelIndexStepRule()) {
+					sequence_VarModelIndexStep(context, (VarModelIndexStep) semanticObject); 
 					return; 
 				}
 				else break;
@@ -1264,6 +1282,41 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
 		feeder.accept(grammarAccess.getValueContentAccess().getExpressionExpressionParserRuleCall_1_0(), semanticObject.getExpression());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (ref1=[Declaration|ID] e=Expression)
+	 */
+	protected void sequence_VarModelIndexStep(EObject context, VarModelIndexStep semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.VAR_MODEL_INDEX_STEP__REF1) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.VAR_MODEL_INDEX_STEP__REF1));
+			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.VAR_MODEL_INDEX_STEP__E) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.VAR_MODEL_INDEX_STEP__E));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getVarModelIndexStepAccess().getRef1DeclarationIDTerminalRuleCall_0_0_1(), semanticObject.getRef1());
+		feeder.accept(grammarAccess.getVarModelIndexStepAccess().getEExpressionParserRuleCall_6_0(), semanticObject.getE());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     ref1=[Declaration|ID]
+	 */
+	protected void sequence_VarModelIndex(EObject context, VarModelIndex semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.VAR_MODEL_INDEX__REF1) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.VAR_MODEL_INDEX__REF1));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getVarModelIndexAccess().getRef1DeclarationIDTerminalRuleCall_0_0_1(), semanticObject.getRef1());
 		feeder.finish();
 	}
 	
