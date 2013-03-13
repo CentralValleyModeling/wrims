@@ -259,6 +259,8 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getLogFunctionAccess().getGroup(), "rule__LogFunction__Group__0");
 					put(grammarAccess.getVarModelAccess().getGroup(), "rule__VarModel__Group__0");
 					put(grammarAccess.getVarModelStepAccess().getGroup(), "rule__VarModelStep__Group__0");
+					put(grammarAccess.getVarModelIndexAccess().getGroup(), "rule__VarModelIndex__Group__0");
+					put(grammarAccess.getVarModelIndexStepAccess().getGroup(), "rule__VarModelIndexStep__Group__0");
 					put(grammarAccess.getRangeFunctionAccess().getGroup(), "rule__RangeFunction__Group__0");
 					put(grammarAccess.getIncludeFileAccess().getGroup(), "rule__IncludeFile__Group__0");
 					put(grammarAccess.getIncludeFileAccess().getGroup_1(), "rule__IncludeFile__Group_1__0");
@@ -419,6 +421,9 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVarModelStepAccess().getRef1Assignment_0(), "rule__VarModelStep__Ref1Assignment_0");
 					put(grammarAccess.getVarModelStepAccess().getRef2Assignment_2(), "rule__VarModelStep__Ref2Assignment_2");
 					put(grammarAccess.getVarModelStepAccess().getEAssignment_5(), "rule__VarModelStep__EAssignment_5");
+					put(grammarAccess.getVarModelIndexAccess().getRef1Assignment_0(), "rule__VarModelIndex__Ref1Assignment_0");
+					put(grammarAccess.getVarModelIndexStepAccess().getRef1Assignment_0(), "rule__VarModelIndexStep__Ref1Assignment_0");
+					put(grammarAccess.getVarModelIndexStepAccess().getEAssignment_6(), "rule__VarModelIndexStep__EAssignment_6");
 					put(grammarAccess.getIdentAccess().getNameAssignment(), "rule__Ident__NameAssignment");
 					put(grammarAccess.getIncludeFileAccess().getLocalAssignment_1_1(), "rule__IncludeFile__LocalAssignment_1_1");
 					put(grammarAccess.getIncludeFileAccess().getFileAssignment_2(), "rule__IncludeFile__FileAssignment_2");
