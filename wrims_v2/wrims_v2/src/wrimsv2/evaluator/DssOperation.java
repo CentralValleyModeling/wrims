@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import com.google.common.primitives.Doubles;
@@ -349,14 +350,21 @@ public class DssOperation {
 			writer.storeTimeSeriesData(pathName, startJulmin, dd,
 						storeFlags);
 		}
+		System.out.println("Dvar file saved.");
 	}
 	
 	public static void saveSvarTSData(DSSDataWriter writer, String fileName){
 		System.out.println("write svar timeseries to "+fileName);
 		Set svTsSet=DataTimeSeries.svTS.keySet();
 		Iterator iterator = svTsSet.iterator();
+		Map<String, Timeseries> allTsMap = ControlData.allTsMap;
 		while(iterator.hasNext()){
 			String svTsName=(String)iterator.next();
+			String svName=getTSName(svTsName);
+			String ctu = "none";
+			if (allTsMap.containsKey(svName)){
+				ctu=allTsMap.get(svName).convertToUnits;
+			}
 			DssDataSet dds=DataTimeSeries.svTS.get(svTsName);
 			ArrayList<Double> values=dds.getData();
 			DSSData dd = new DSSData();
@@ -366,21 +374,37 @@ public class DssOperation {
 			dd._numberRead=size;
 			dd._yUnits=dds.getUnits().toUpperCase();
 			dd._yValues=new double[size];
-			for (int i=0; i<size; i++){
-				Double value=values.get(i);
-				if (value != null){
+			Date startDate=dds.getStartTime();
+			startDate.setTime(startDate.getTime()-1*24*60*60);
+			int year=startDate.getYear()+1900;
+			int month=startDate.getMonth()+1;
+			int day=startDate.getDate();
+			String startDateStr=TimeOperation.dssTimeEndDay(year, month, day);
+			long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
+			if (ctu.equals("cfs")){			
+				for (int i=0; i<size; i++){
+					Double value=values.get(i);
+					if (value == null){
+						dd._yValues[i]=-901.0;
+					}else{
+						if (value == -901.0 || value == -902.0){
+							dd._yValues[i]=value;
+						}else{
+							TimeOperation.findTime(i, year, month, day);
+							dd._yValues[i]=value/Evaluation.tafcfs("taf_cfs");;
+						}
+					}
+				}
+			}else{
+				for (int i=0; i<size; i++){
+					Double value=values.get(i);
 					dd._yValues[i]=value;
-				}else{
-					dd._yValues[i]=-901.0;
 				}
 			}
 			boolean storeFlags = false;
-			Date startDate=dds.getStartTime();
-			startDate.setTime(startDate.getTime()-1*24*60*60);
-			String startDateStr=TimeOperation.dssTimeEndDay(startDate.getYear()+1900, startDate.getMonth()+1, startDate.getDate());
-			long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
-			String pathName="/"+ControlData.partA+"/"+getTSName(svTsName)+"/"+dds.getKind()+"//"+dds.getTimeStep()+"/"+ControlData.svDvPartF+"/";
+			String pathName="/"+ControlData.partA+"/"+svName+"/"+dds.getKind()+"//"+dds.getTimeStep()+"/"+ControlData.svDvPartF+"/";
 			writer.storeTimeSeriesData(pathName, startJulmin, dd, storeFlags);
 		}
+		System.out.println("Svar file saved.");
 	}
 }
