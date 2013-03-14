@@ -164,14 +164,20 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			DebugCorePlugin.endDay=endDay;
 			
 			wreslPlus=configuration.getAttribute(DebugCorePlugin.ATTR_WPP_WRESLPLUS, "no");
-					
-			int index = mainFile.lastIndexOf(File.separator);
-			String mainDirectory = mainFile.substring(0, index + 1);
+			
+			String mainFileAbsPath;
+			if (new File(mainFile).isAbsolute()){
+				mainFileAbsPath = mainFile;
+			}else{
+				mainFileAbsPath = procRelativePath(mainFile, configuration);
+			}
+			int index = mainFileAbsPath.lastIndexOf(File.separator);
+			String mainDirectory = mainFileAbsPath.substring(0, index + 1);
 			externalPath = mainDirectory + "External";
 			
 			String engineFileFullPath = "WRIMSv2_Engine.bat";
 			try {
-				String configFilePath = generateConfigFile();
+				String configFilePath = generateConfigFile(configuration, mainFileAbsPath);
 				FileWriter debugFile = new FileWriter(engineFileFullPath);
 				PrintWriter out = new PrintWriter(debugFile);
 				generateBatch(out, mode, requestPort, eventPort, configFilePath);
@@ -196,7 +202,7 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 		out.close();
 	}
 	
-	public String generateConfigFile(){
+	public String generateConfigFile(ILaunchConfiguration configuration, String mainFileAbsPath){
 		
 		Map<String, String> configMap = new HashMap<String, String>();
 		String configFilePath = null;
@@ -244,8 +250,6 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			}
 			
 			configMap.put("WreslPlus".toLowerCase(), wreslPlus);
-	
-			String mainFileAbsPath = configMap.get("MainFile".toLowerCase());
 			
 			String studyDir = new File(mainFileAbsPath).getParentFile().getParentFile().getAbsolutePath();
 			String configName = "__study.config";
@@ -267,14 +271,30 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			out.println("");
 			out.println("");
 			
-			out.println("MainFile           "+configMap.get("MainFile".toLowerCase()));
+			out.println("MainFile           "+mainFileAbsPath);
 			out.println("Solver             "+configMap.get("solver".toLowerCase()));
-			out.println("DvarFile           "+configMap.get("DvarFile".toLowerCase()));
-			out.println("SvarFile           "+configMap.get("SvarFile".toLowerCase()));
-			out.println("GroundwaterDir     "+configMap.get("groundwaterdir".toLowerCase()));
+			if (new File(dvarFile).isAbsolute()){
+				out.println("DvarFile           "+dvarFile);
+			}else{
+				out.println("DvarFile           "+procRelativePath(dvarFile, configuration));
+			}
+			if (new File(svarFile).isAbsolute()){
+				out.println("SvarFile           "+svarFile);
+			}else{
+				out.println("SvarFile           "+procRelativePath(svarFile, configuration));
+			}
+			if (new File(gwDataFolder).isAbsolute()){
+				out.println("GroundwaterDir     "+gwDataFolder);
+			}else{
+				out.println("GroundwaterDir     "+procRelativePath(gwDataFolder, configuration));
+			}
 			out.println("SvarAPart          "+configMap.get("SvarAPart".toLowerCase()));
 			out.println("SvarFPart          "+configMap.get("SvarFPart".toLowerCase()));
-			out.println("InitFile           "+configMap.get("InitFile".toLowerCase()));
+			if (new File(initFile).isAbsolute()){
+				out.println("InitFile           "+initFile);
+			}else{
+				out.println("InitFile           "+procRelativePath(initFile, configuration));
+			}
 			out.println("InitFPart          "+configMap.get("InitFPart".toLowerCase()));
 			out.println("TimeStep           "+configMap.get("TimeStep".toLowerCase()));
 			out.println("StartYear          "+configMap.get("StartYear".toLowerCase()));
@@ -303,6 +323,12 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 
 		return configFilePath;
 			
+	}
+	
+	public String procRelativePath(String path, ILaunchConfiguration config){
+		String absPath=config.getFile().getLocation().toFile().getParentFile().getAbsolutePath();
+		absPath=absPath+"\\"+path;
+		return absPath;
 	}
 	
 	/**
