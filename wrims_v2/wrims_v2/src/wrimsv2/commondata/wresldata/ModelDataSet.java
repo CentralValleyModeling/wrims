@@ -87,7 +87,8 @@ public class ModelDataSet implements Serializable {
 	public ArrayList<String> asList_global = new ArrayList<String>();
 	public ArrayList<String> asList_local = new ArrayList<String>();
 	public Map<String, Alias> asMap = new HashMap<String, Alias>();
-
+	public Map<String, Alias> asFutMap = new HashMap<String, Alias>();
+	
 	// / goal data structure
 	public ArrayList<String> gList = new ArrayList<String>();
 	public ArrayList<String> gTimeArrayList = new ArrayList<String>();	
@@ -700,6 +701,7 @@ public class ModelDataSet implements Serializable {
 					IntDouble id=evaluator.evalValue;
 					Alias newAlias=new Alias();
 					newAlias.data=id.copyOf();
+					asFutMap.put(newAsName, newAlias);
 					if (aliasUsedByLaterCycle.contains(asName)){
 						if (varTimeArrayCycleValueMap.containsKey(newAsName)){
 							varTimeArrayCycleValueMap.get(newAsName).put(model, newAlias.data);
@@ -769,6 +771,10 @@ public class ModelDataSet implements Serializable {
 	
 	public void clearFutureSvMap(){
 		svFutMap = new HashMap<String, Svar>();
+	}
+	
+	public void clearFutureAsMap(){
+		asFutMap = new HashMap<String, Alias>();
 	}
 }
 

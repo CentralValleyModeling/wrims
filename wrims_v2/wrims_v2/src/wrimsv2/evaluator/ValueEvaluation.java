@@ -4,6 +4,7 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
 
+import wrimsv2.commondata.solverdata.SolverData;
 import wrimsv2.commondata.wresldata.Alias;
 import wrimsv2.commondata.wresldata.Dvar;
 import wrimsv2.commondata.wresldata.ModelDataSet;
@@ -472,7 +473,17 @@ public class ValueEvaluation {
 	public static double dvarAliasTimeSeries(String ident, int indexValue){
 		String entryNameTS=DssOperation.entryNameTS(ident, ControlData.timeStep);
 		if (indexValue>0){
-			Error.addEvaluationError("Can't access decision variable after the current time step.");
+			String newName = ident+"__fut__"+indexValue;
+			Map<String, Dvar> dvMap = SolverData.getDvarMap();
+			Map<String, Alias> asFutMap = ControlData.currModelDataSet.asFutMap;
+			if (dvMap.containsKey(newName)){
+				return dvMap.get(newName).getData().getData().doubleValue();
+			}else if(asFutMap.containsKey(newName)){
+				return asFutMap.get(newName).getData().getData().doubleValue();
+			}else{
+				Error.addEvaluationError("Can't access decision variable after the current time step.");
+				return 1.0;
+			}
 		}
 		
 		int index=indexValue+ControlData.currTimeStep.get(ControlData.currCycleIndex);

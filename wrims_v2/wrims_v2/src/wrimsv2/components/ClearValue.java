@@ -57,6 +57,7 @@ public class ClearValue {
 			}
 			
 			mds.clearFutureSvMap();
+			mds.clearFutureAsMap();
 		}
 	}
 }
