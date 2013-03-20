@@ -47,7 +47,7 @@ public class DssOperation {
 		int year=startDate.getYear()+1900;
 		int month=startDate.getMonth();;
 		int day = startDate.getDate();
-		if (ts.convertToUnits.equals("cfs")){
+		if (ts.units.equals("taf") && ts.convertToUnits.equals("cfs")){
 			int i=0;
 			for (double dataEntry :  rts.getYArray()){
 				if (dataEntry==-901.0){
@@ -57,6 +57,20 @@ public class DssOperation {
 				}else{
 					TimeOperation.findTime(i, year, month, day);
 					double dataEntryValue=dataEntry*Evaluation.tafcfs("taf_cfs");
+					dataArray.add(dataEntryValue);
+				}
+				i=i+1;
+			}
+		}else if (ts.units.equals("cfs") && ts.convertToUnits.equals("taf")){
+			int i=0;
+			for (double dataEntry :  rts.getYArray()){
+				if (dataEntry==-901.0){
+					dataArray.add(-901.0);
+				}else if (dataEntry==-902.0){
+					dataArray.add(-902.0);
+				}else{
+					TimeOperation.findTime(i, year, month, day);
+					double dataEntryValue=dataEntry*Evaluation.tafcfs("cfs_taf");
 					dataArray.add(dataEntryValue);
 				}
 				i=i+1;
@@ -95,7 +109,7 @@ public class DssOperation {
 		DssDataSet dds= new DssDataSet();
 		ArrayList<Double> dataArray= new ArrayList<Double>();
 		Date startDate=rts.getStartTime().getDate();
-		if (ts.convertToUnits.equals("cfs")){
+		if (ts.units.equals("taf") && ts.convertToUnits.equals("cfs")){
 			ControlData.dataYear=startDate.getYear()+1900;
 			ControlData.dataMonth=startDate.getMonth()+1;
 			ControlData.dataDay=startDate.getDate();
@@ -108,6 +122,22 @@ public class DssOperation {
 				}else{
 					TimeOperation.findTime(i);
 					dataArray.add(dataEntry*Evaluation.tafcfs("taf_cfs"));
+				}
+				i=i+1;
+			}
+		}else if (ts.units.equals("cfs") && ts.convertToUnits.equals("taf")){
+			ControlData.dataYear=startDate.getYear()+1900;
+			ControlData.dataMonth=startDate.getMonth()+1;
+			ControlData.dataDay=startDate.getDate();
+			int i=0;
+			for (double dataEntry :  rts.getYArray()){
+				if (dataEntry==-901.0){
+					dataArray.add(-901.0);
+				}else if (dataEntry==-902.0){
+					dataArray.add(-902.0);
+				}else{
+					TimeOperation.findTime(i);
+					dataArray.add(dataEntry*Evaluation.tafcfs("cfs_taf"));
 				}
 				i=i+1;
 			}
@@ -362,8 +392,11 @@ public class DssOperation {
 			String svTsName=(String)iterator.next();
 			String svName=getTSName(svTsName);
 			String ctu = "none";
+			String units="none";
 			if (allTsMap.containsKey(svName)){
-				ctu=allTsMap.get(svName).convertToUnits;
+				Timeseries ts=allTsMap.get(svName);
+				units = ts.units;
+				ctu=ts.convertToUnits;
 			}
 			DssDataSet dds=DataTimeSeries.svTS.get(svTsName);
 			ArrayList<Double> values=dds.getData();
@@ -381,7 +414,7 @@ public class DssOperation {
 			int day=startDate.getDate();
 			String startDateStr=TimeOperation.dssTimeEndDay(year, month, day);
 			long startJulmin = TimeFactory.getInstance().createTime(startDateStr).getTimeInMinutes();
-			if (ctu.equals("cfs")){			
+			if (units.equals("taf") && ctu.equals("cfs")){			
 				for (int i=0; i<size; i++){
 					Double value=values.get(i);
 					if (value == null){
@@ -392,6 +425,20 @@ public class DssOperation {
 						}else{
 							TimeOperation.findTime(i, year, month, day);
 							dd._yValues[i]=value/Evaluation.tafcfs("taf_cfs");;
+						}
+					}
+				}
+			}else if (units.equals("cfs") && ctu.equals("taf")){			
+				for (int i=0; i<size; i++){
+					Double value=values.get(i);
+					if (value == null){
+						dd._yValues[i]=-901.0;
+					}else{
+						if (value == -901.0 || value == -902.0){
+							dd._yValues[i]=value;
+						}else{
+							TimeOperation.findTime(i, year, month, day);
+							dd._yValues[i]=value/Evaluation.tafcfs("cfs_taf");;
 						}
 					}
 				}
