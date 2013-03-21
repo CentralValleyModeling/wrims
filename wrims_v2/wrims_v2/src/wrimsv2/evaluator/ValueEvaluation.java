@@ -901,6 +901,7 @@ public class ValueEvaluation {
 	
 	public static IntDouble sumExpression(IntDouble id, String expression){	
 		if (step>=0){
+			if (start>end) return new IntDouble(0.0, false);
 			start=start+step;
 			if (start>end) return id;
 			for (int i=start; i<=end; i=i+step){
@@ -922,6 +923,7 @@ public class ValueEvaluation {
 				id=add(id, id0);
 			}
 		}else{
+			if (start<end) return new IntDouble(0.0, false);
 			start=start+step;
 			if (start<end) return id;
 			for (int i=start; i>=end; i=i+step){

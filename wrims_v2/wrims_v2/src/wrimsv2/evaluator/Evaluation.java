@@ -1273,6 +1273,7 @@ public class Evaluation {
 	
 	public static EvalExpression sumExpression(EvalExpression ee, String expression){	
 		if (step>=0){
+			if (start>end) return new EvalExpression(new IntDouble(0.0, false));
 			start=start+step;
 			if (start>end) return ee;
 			for (int i=start; i<=end; i=i+step){
@@ -1294,6 +1295,7 @@ public class Evaluation {
 				ee=add(ee, ee0);
 			}
 		}else{
+			if (start<end) return new EvalExpression(new IntDouble(0.0, false));
 			start=start+step;
 			if (start<end) return ee;
 			for (int i=start; i>=end; i=i+step){
