@@ -94,7 +94,7 @@ public class ControlData {
 	public static boolean writeInitToDVOutput=true;
 	public static int solverType;
 	public static boolean isParseStudy=true;
-
+	public static boolean ignoreError=false;
 	
 	public ControlData(){
 	}

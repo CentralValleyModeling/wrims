@@ -364,7 +364,7 @@ public class ValueEvaluation {
 					if (ControlData.currSvFutMap.containsKey(futSvName)){
 						return ControlData.currSvFutMap.get(futSvName).getData();
 					}else{
-						Error.addEvaluationError(futSvName+", the future value of "+ident+" is used before defined.");
+						if (!ControlData.ignoreError) Error.addEvaluationError(futSvName+", the future value of "+ident+" is used before defined.");
 						return new IntDouble (1.0,false);
 					}
 				}
@@ -897,9 +897,15 @@ public class ValueEvaluation {
 		li.setValue(start);
 		li.setIndexStart(true);
 		ControlData.sumIndex.push(li);
+		if (start>end && step>0){
+			ControlData.ignoreError=true;
+		}else if (start<end && step<0){
+			ControlData.ignoreError=true;
+		}
 	}
 	
 	public static IntDouble sumExpression(IntDouble id, String expression){	
+		ControlData.ignoreError=false;
 		if (step>=0){
 			if (start>end) return new IntDouble(0.0, false);
 			start=start+step;

@@ -643,7 +643,7 @@ public class Evaluation {
 						result=ControlData.currSvFutMap.get(futSvName).getData();
 						return new EvalExpression(result);
 					}else{
-						Error.addEvaluationError(futSvName+", the future value of "+ident+" is used before defined.");
+						if (!ControlData.ignoreError) Error.addEvaluationError(futSvName+", the future value of "+ident+" is used before defined.");
 						result=new IntDouble (1.0,false);
 						return new EvalExpression(result);
 					}
@@ -1269,9 +1269,15 @@ public class Evaluation {
 		li.setValue(start);
 		li.setIndexStart(true);
 		ControlData.sumIndex.push(li);
+		if (start>end && step>0){
+			ControlData.ignoreError=true;
+		}else if (start<end && step<0){
+			ControlData.ignoreError=true;
+		}
 	}
 	
 	public static EvalExpression sumExpression(EvalExpression ee, String expression){	
+		ControlData.ignoreError=false;
 		if (step>=0){
 			if (start>end) return new EvalExpression(new IntDouble(0.0, false));
 			start=start+step;
