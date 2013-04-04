@@ -421,7 +421,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		startDayCombo.setFont(font);
 		startDayCombo.select(30);
 		startDayCombo.addModifyListener(sdl);
-		startDayCombo.setEnabled(false);
+		//startDayCombo.setEnabled(false);
 		
 		Label day = new Label(comp, SWT.NONE);
 		day.setText("day");
@@ -474,7 +474,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		endDayCombo.setFont(font);
 		endDayCombo.select(30);
 		endDayCombo.addModifyListener(edl);
-		endDayCombo.setEnabled(false);
+		//endDayCombo.setEnabled(false);
 		
 		Label day1 = new Label(comp, SWT.NONE);
 		day1.setText("day");
@@ -582,7 +582,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 				startMonthCombo.setText(startMonth);
 			}
 			String startDay = null;
-			startYear = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTDAY, (String)null);
+			startDay = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTDAY, (String)null);
 			if (startDay != null) {
 				startDayCombo.setText(startDay);
 			}
@@ -597,7 +597,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 				endMonthCombo.setText(endMonth);
 			}
 			String endDay = null;
-			endYear = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, (String)null);
+			endDay = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, (String)null);
 			if (endDay != null) {
 				endDayCombo.setText(endDay);
 			}
@@ -738,17 +738,17 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 				int startYear=Integer.parseInt(startYearCombo.getText());	
 				startDayCombo.select(TimeOperation.numberOfDays(startMonth, startYear)-1);
 				startDayCombo.addModifyListener(sdl);
-				startDayCombo.setEnabled(false);
+				//startDayCombo.setEnabled(false);
 				
 				endDayCombo.removeModifyListener(edl);
 				int endMonth=TimeOperation.monthValue(endMonthCombo.getText());
 				int endYear=Integer.parseInt(endYearCombo.getText());	
 				endDayCombo.select(TimeOperation.numberOfDays(endMonth, endYear)-1);
 				endDayCombo.addModifyListener(edl);
-				endDayCombo.setEnabled(false);
+				//endDayCombo.setEnabled(false);
 			} else {
-				startDayCombo.setEnabled(true);
-				endDayCombo.setEnabled(true);
+				//startDayCombo.setEnabled(true);
+				//endDayCombo.setEnabled(true);
 			}
 			
 		}

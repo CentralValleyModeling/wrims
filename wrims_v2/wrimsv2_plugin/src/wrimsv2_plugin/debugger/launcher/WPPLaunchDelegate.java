@@ -153,13 +153,9 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			DebugCorePlugin.endYear=endYear;
 			DebugCorePlugin.endMonth=endMonth;
 			
-			if (timeStep.equals("1MON")){
-				startDay=TimeOperation.numberOfDays(startMonth, startYear);
-				endDay=TimeOperation.numberOfDays(endMonth, endYear);
-			}else{
-				startDay= Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTDAY, (String)null));
-				endDay=Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, (String)null));
-			}
+			startDay= Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTDAY, (String)null));
+			endDay=Integer.parseInt(configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, (String)null));
+				
 			DebugCorePlugin.startDay=startDay;
 			DebugCorePlugin.endDay=endDay;
 			
@@ -221,6 +217,8 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			configMap.put("StopYear".toLowerCase(),   String.valueOf(endYear));
 			configMap.put("StartMonth".toLowerCase(), String.valueOf(startMonth));
 			configMap.put("StopMonth".toLowerCase(),  String.valueOf(endMonth));
+			configMap.put("StartDay".toLowerCase(), String.valueOf(startDay));
+			configMap.put("StopDay".toLowerCase(), String.valueOf(endDay));
 			
 			if (gwDataFolder.length()>0) {
 				configMap.put("groundwaterdir".toLowerCase(), gwDataFolder);
@@ -299,8 +297,10 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			out.println("TimeStep           "+configMap.get("TimeStep".toLowerCase()));
 			out.println("StartYear          "+configMap.get("StartYear".toLowerCase()));
 			out.println("StartMonth         "+configMap.get("StartMonth".toLowerCase()));
+			out.println("StartDay           "+configMap.get("StartDay".toLowerCase()));
 			out.println("StopYear           "+configMap.get("StopYear".toLowerCase()));
 			out.println("StopMonth          "+configMap.get("StopMonth".toLowerCase()));
+			out.println("StopDay            "+configMap.get("StopDay".toLowerCase()));
 			out.println("IlpLog             "+configMap.get("IlpLog".toLowerCase()));
 			out.println("IlpLogFormat       "+configMap.get("IlpLogFormat".toLowerCase()));
 			out.println("IlpLogVarValue     "+configMap.get("IlpLogVarValue".toLowerCase()));
