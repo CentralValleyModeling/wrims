@@ -4638,16 +4638,17 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cDaysInParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cWaterYearParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cMonthParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cCalendarMonthParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final RuleCall cPrevMonthParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
-		private final RuleCall cIParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cDayParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cCalendarMonthParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cPrevMonthParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cIParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		
 		//SpecialIdent:
 		//
-		//	TafCfs | DaysIn | WaterYear | Month | CalendarMonth | PrevMonth | I;
+		//	TafCfs | DaysIn | WaterYear | Month | Day | CalendarMonth | PrevMonth | I;
 		public ParserRule getRule() { return rule; }
 
-		//TafCfs | DaysIn | WaterYear | Month | CalendarMonth | PrevMonth | I
+		//TafCfs | DaysIn | WaterYear | Month | Day | CalendarMonth | PrevMonth | I
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//TafCfs
@@ -4662,14 +4663,17 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//Month
 		public RuleCall getMonthParserRuleCall_3() { return cMonthParserRuleCall_3; }
 
+		//Day
+		public RuleCall getDayParserRuleCall_4() { return cDayParserRuleCall_4; }
+
 		//CalendarMonth
-		public RuleCall getCalendarMonthParserRuleCall_4() { return cCalendarMonthParserRuleCall_4; }
+		public RuleCall getCalendarMonthParserRuleCall_5() { return cCalendarMonthParserRuleCall_5; }
 
 		//PrevMonth
-		public RuleCall getPrevMonthParserRuleCall_5() { return cPrevMonthParserRuleCall_5; }
+		public RuleCall getPrevMonthParserRuleCall_6() { return cPrevMonthParserRuleCall_6; }
 
 		//I
-		public RuleCall getIParserRuleCall_6() { return cIParserRuleCall_6; }
+		public RuleCall getIParserRuleCall_7() { return cIParserRuleCall_7; }
 	}
 
 	public class TafCfsElements extends AbstractParserRuleElementFinder {
@@ -4811,6 +4815,19 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"month"
 		public Keyword getMonthKeyword() { return cMonthKeyword; }
+	}
+
+	public class DayElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Day");
+		private final Keyword cDayKeyword = (Keyword)rule.eContents().get(1);
+		
+		//Day:
+		//
+		//	"day";
+		public ParserRule getRule() { return rule; }
+
+		//"day"
+		public Keyword getDayKeyword() { return cDayKeyword; }
 	}
 
 	public class CalendarMonthElements extends AbstractParserRuleElementFinder {
@@ -5086,6 +5103,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	private DaysInElements pDaysIn;
 	private WaterYearElements pWaterYear;
 	private MonthElements pMonth;
+	private DayElements pDay;
 	private CalendarMonthElements pCalendarMonth;
 	private PrevMonthElements pPrevMonth;
 	private MultiStepElements pMultiStep;
@@ -6157,7 +6175,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SpecialIdent:
 	//
-	//	TafCfs | DaysIn | WaterYear | Month | CalendarMonth | PrevMonth | I;
+	//	TafCfs | DaysIn | WaterYear | Month | Day | CalendarMonth | PrevMonth | I;
 	public SpecialIdentElements getSpecialIdentAccess() {
 		return (pSpecialIdent != null) ? pSpecialIdent : (pSpecialIdent = new SpecialIdentElements());
 	}
@@ -6263,6 +6281,17 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getMonthRule() {
 		return getMonthAccess().getRule();
+	}
+
+	//Day:
+	//
+	//	"day";
+	public DayElements getDayAccess() {
+		return (pDay != null) ? pDay : (pDay = new DayElements());
+	}
+	
+	public ParserRule getDayRule() {
+		return getDayAccess().getRule();
 	}
 
 	//CalendarMonth:

@@ -273,7 +273,7 @@ IncludeFile:
 IncludeModel:
 	("include" | "INCLUDE") ('model' | 'MODEL') ID;
 
-SpecialIdent: TafCfs|DaysIn|WaterYear|Month|CalendarMonth|PrevMonth|I;
+SpecialIdent: TafCfs|DaysIn|WaterYear|Month|Day|CalendarMonth|PrevMonth|I;
 
 TafCfs: AF_CFS|CF_SAF|CFS_TAF|TAF_CFS;
 
@@ -292,6 +292,8 @@ DaysIn: 'daysin'|'daysinmonth';
 WaterYear: 'wateryear';
 
 Month: 'month';
+
+Day: 'day';
 
 CalendarMonth: 'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'|'dec';
 

@@ -22,35 +22,35 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "KEYWORD_94", "KEYWORD_93", "KEYWORD_88", "KEYWORD_89", "KEYWORD_90", "KEYWORD_91", "KEYWORD_92", "KEYWORD_85", "KEYWORD_86", "KEYWORD_87", "KEYWORD_65", "KEYWORD_66", "KEYWORD_67", "KEYWORD_68", "KEYWORD_69", "KEYWORD_70", "KEYWORD_71", "KEYWORD_72", "KEYWORD_73", "KEYWORD_74", "KEYWORD_75", "KEYWORD_76", "KEYWORD_77", "KEYWORD_78", "KEYWORD_79", "KEYWORD_80", "KEYWORD_81", "KEYWORD_82", "KEYWORD_83", "KEYWORD_84", "KEYWORD_60", "KEYWORD_61", "KEYWORD_62", "KEYWORD_63", "KEYWORD_64", "KEYWORD_49", "KEYWORD_50", "KEYWORD_51", "KEYWORD_52", "KEYWORD_53", "KEYWORD_54", "KEYWORD_55", "KEYWORD_56", "KEYWORD_57", "KEYWORD_58", "KEYWORD_59", "KEYWORD_40", "KEYWORD_41", "KEYWORD_42", "KEYWORD_43", "KEYWORD_44", "KEYWORD_45", "KEYWORD_46", "KEYWORD_47", "KEYWORD_48", "KEYWORD_22", "KEYWORD_23", "KEYWORD_24", "KEYWORD_25", "KEYWORD_26", "KEYWORD_27", "KEYWORD_28", "KEYWORD_29", "KEYWORD_30", "KEYWORD_31", "KEYWORD_32", "KEYWORD_33", "KEYWORD_34", "KEYWORD_35", "KEYWORD_36", "KEYWORD_37", "KEYWORD_38", "KEYWORD_39", "KEYWORD_16", "KEYWORD_17", "KEYWORD_18", "KEYWORD_19", "KEYWORD_20", "KEYWORD_21", "KEYWORD_1", "KEYWORD_2", "KEYWORD_3", "KEYWORD_4", "KEYWORD_5", "KEYWORD_6", "KEYWORD_7", "KEYWORD_8", "KEYWORD_9", "KEYWORD_10", "KEYWORD_11", "KEYWORD_12", "KEYWORD_13", "KEYWORD_14", "KEYWORD_15", "RULE_IF", "RULE_ELSEIF", "RULE_ELSE", "RULE_RANGE", "RULE_MIN", "RULE_MAX", "RULE_MOD", "RULE_INTFUNC", "RULE_ABS", "RULE_POW", "RULE_LOG", "RULE_INT", "RULE_FLOAT", "RULE_AND", "RULE_OR", "RULE_NOT", "RULE_ALWAYS", "RULE_ORDER", "RULE_STRING", "RULE_SL_COMMENT", "RULE_ID", "RULE_ML_COMMENT", "RULE_WS", "RULE_ANY_OTHER"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "KEYWORD_95", "KEYWORD_94", "KEYWORD_89", "KEYWORD_90", "KEYWORD_91", "KEYWORD_92", "KEYWORD_93", "KEYWORD_86", "KEYWORD_87", "KEYWORD_88", "KEYWORD_66", "KEYWORD_67", "KEYWORD_68", "KEYWORD_69", "KEYWORD_70", "KEYWORD_71", "KEYWORD_72", "KEYWORD_73", "KEYWORD_74", "KEYWORD_75", "KEYWORD_76", "KEYWORD_77", "KEYWORD_78", "KEYWORD_79", "KEYWORD_80", "KEYWORD_81", "KEYWORD_82", "KEYWORD_83", "KEYWORD_84", "KEYWORD_85", "KEYWORD_61", "KEYWORD_62", "KEYWORD_63", "KEYWORD_64", "KEYWORD_65", "KEYWORD_50", "KEYWORD_51", "KEYWORD_52", "KEYWORD_53", "KEYWORD_54", "KEYWORD_55", "KEYWORD_56", "KEYWORD_57", "KEYWORD_58", "KEYWORD_59", "KEYWORD_60", "KEYWORD_41", "KEYWORD_42", "KEYWORD_43", "KEYWORD_44", "KEYWORD_45", "KEYWORD_46", "KEYWORD_47", "KEYWORD_48", "KEYWORD_49", "KEYWORD_22", "KEYWORD_23", "KEYWORD_24", "KEYWORD_25", "KEYWORD_26", "KEYWORD_27", "KEYWORD_28", "KEYWORD_29", "KEYWORD_30", "KEYWORD_31", "KEYWORD_32", "KEYWORD_33", "KEYWORD_34", "KEYWORD_35", "KEYWORD_36", "KEYWORD_37", "KEYWORD_38", "KEYWORD_39", "KEYWORD_40", "KEYWORD_16", "KEYWORD_17", "KEYWORD_18", "KEYWORD_19", "KEYWORD_20", "KEYWORD_21", "KEYWORD_1", "KEYWORD_2", "KEYWORD_3", "KEYWORD_4", "KEYWORD_5", "KEYWORD_6", "KEYWORD_7", "KEYWORD_8", "KEYWORD_9", "KEYWORD_10", "KEYWORD_11", "KEYWORD_12", "KEYWORD_13", "KEYWORD_14", "KEYWORD_15", "RULE_IF", "RULE_ELSEIF", "RULE_ELSE", "RULE_RANGE", "RULE_MIN", "RULE_MAX", "RULE_MOD", "RULE_INTFUNC", "RULE_ABS", "RULE_POW", "RULE_LOG", "RULE_INT", "RULE_FLOAT", "RULE_AND", "RULE_OR", "RULE_NOT", "RULE_ALWAYS", "RULE_ORDER", "RULE_STRING", "RULE_SL_COMMENT", "RULE_ID", "RULE_ML_COMMENT", "RULE_WS", "RULE_ANY_OTHER"
     };
-    public static final int RULE_ID=118;
-    public static final int RULE_ANY_OTHER=121;
-    public static final int RULE_OR=112;
-    public static final int KEYWORD_56=46;
-    public static final int KEYWORD_55=45;
-    public static final int KEYWORD_54=44;
-    public static final int KEYWORD_53=43;
-    public static final int RULE_AND=111;
-    public static final int KEYWORD_52=42;
-    public static final int KEYWORD_51=41;
-    public static final int KEYWORD_50=40;
+    public static final int RULE_ID=119;
+    public static final int RULE_ANY_OTHER=122;
+    public static final int RULE_OR=113;
+    public static final int KEYWORD_56=45;
+    public static final int KEYWORD_55=44;
+    public static final int KEYWORD_54=43;
+    public static final int KEYWORD_53=42;
+    public static final int RULE_AND=112;
+    public static final int KEYWORD_52=41;
+    public static final int KEYWORD_51=40;
+    public static final int KEYWORD_50=39;
     public static final int EOF=-1;
-    public static final int KEYWORD_59=49;
-    public static final int KEYWORD_58=48;
-    public static final int KEYWORD_57=47;
-    public static final int RULE_MOD=104;
-    public static final int KEYWORD_65=14;
-    public static final int KEYWORD_64=38;
-    public static final int KEYWORD_67=16;
-    public static final int KEYWORD_66=15;
-    public static final int KEYWORD_61=35;
-    public static final int KEYWORD_60=34;
-    public static final int KEYWORD_63=37;
-    public static final int KEYWORD_62=36;
-    public static final int KEYWORD_69=18;
-    public static final int KEYWORD_68=17;
-    public static final int RULE_MIN=102;
+    public static final int KEYWORD_59=48;
+    public static final int KEYWORD_58=47;
+    public static final int KEYWORD_57=46;
+    public static final int RULE_MOD=105;
+    public static final int KEYWORD_65=38;
+    public static final int KEYWORD_64=37;
+    public static final int KEYWORD_67=15;
+    public static final int KEYWORD_66=14;
+    public static final int KEYWORD_61=34;
+    public static final int KEYWORD_60=49;
+    public static final int KEYWORD_63=36;
+    public static final int KEYWORD_62=35;
+    public static final int KEYWORD_69=17;
+    public static final int KEYWORD_68=16;
+    public static final int RULE_MIN=103;
     public static final int KEYWORD_30=67;
     public static final int KEYWORD_34=71;
     public static final int KEYWORD_33=70;
@@ -60,89 +60,90 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public static final int KEYWORD_37=74;
     public static final int KEYWORD_36=73;
     public static final int KEYWORD_35=72;
-    public static final int RULE_RANGE=101;
-    public static final int RULE_ML_COMMENT=119;
+    public static final int RULE_RANGE=102;
+    public static final int RULE_ML_COMMENT=120;
     public static final int KEYWORD_39=76;
-    public static final int RULE_INTFUNC=105;
-    public static final int RULE_STRING=116;
-    public static final int KEYWORD_41=51;
-    public static final int KEYWORD_40=50;
-    public static final int KEYWORD_43=53;
-    public static final int KEYWORD_42=52;
-    public static final int KEYWORD_45=55;
-    public static final int KEYWORD_44=54;
-    public static final int KEYWORD_47=57;
-    public static final int KEYWORD_46=56;
-    public static final int RULE_ABS=106;
-    public static final int KEYWORD_49=39;
-    public static final int RULE_IF=98;
-    public static final int KEYWORD_48=58;
-    public static final int RULE_LOG=108;
-    public static final int KEYWORD_93=5;
-    public static final int KEYWORD_94=4;
-    public static final int KEYWORD_90=8;
-    public static final int KEYWORD_19=80;
-    public static final int RULE_MAX=103;
-    public static final int KEYWORD_92=10;
-    public static final int KEYWORD_17=78;
-    public static final int KEYWORD_91=9;
-    public static final int KEYWORD_18=79;
-    public static final int KEYWORD_15=97;
-    public static final int KEYWORD_16=77;
-    public static final int KEYWORD_13=95;
-    public static final int KEYWORD_14=96;
-    public static final int KEYWORD_11=93;
-    public static final int KEYWORD_12=94;
-    public static final int RULE_NOT=113;
-    public static final int KEYWORD_10=92;
-    public static final int RULE_ELSEIF=99;
-    public static final int RULE_POW=107;
-    public static final int KEYWORD_6=88;
-    public static final int KEYWORD_7=89;
-    public static final int KEYWORD_8=90;
-    public static final int KEYWORD_9=91;
+    public static final int RULE_INTFUNC=106;
+    public static final int RULE_STRING=117;
+    public static final int KEYWORD_41=50;
+    public static final int KEYWORD_40=77;
+    public static final int KEYWORD_43=52;
+    public static final int KEYWORD_42=51;
+    public static final int KEYWORD_45=54;
+    public static final int KEYWORD_44=53;
+    public static final int KEYWORD_47=56;
+    public static final int KEYWORD_46=55;
+    public static final int RULE_ABS=107;
+    public static final int KEYWORD_49=58;
+    public static final int RULE_IF=99;
+    public static final int KEYWORD_48=57;
+    public static final int RULE_LOG=109;
+    public static final int KEYWORD_93=10;
+    public static final int KEYWORD_94=5;
+    public static final int KEYWORD_95=4;
+    public static final int KEYWORD_90=7;
+    public static final int KEYWORD_19=81;
+    public static final int RULE_MAX=104;
+    public static final int KEYWORD_92=9;
+    public static final int KEYWORD_17=79;
+    public static final int KEYWORD_91=8;
+    public static final int KEYWORD_18=80;
+    public static final int KEYWORD_15=98;
+    public static final int KEYWORD_16=78;
+    public static final int KEYWORD_13=96;
+    public static final int KEYWORD_14=97;
+    public static final int KEYWORD_11=94;
+    public static final int KEYWORD_12=95;
+    public static final int RULE_NOT=114;
+    public static final int KEYWORD_10=93;
+    public static final int RULE_ELSEIF=100;
+    public static final int RULE_POW=108;
+    public static final int KEYWORD_6=89;
+    public static final int KEYWORD_7=90;
+    public static final int KEYWORD_8=91;
+    public static final int KEYWORD_9=92;
     public static final int KEYWORD_28=65;
     public static final int KEYWORD_29=66;
-    public static final int RULE_INT=109;
+    public static final int RULE_INT=110;
     public static final int KEYWORD_24=61;
     public static final int KEYWORD_25=62;
     public static final int KEYWORD_26=63;
     public static final int KEYWORD_27=64;
-    public static final int KEYWORD_20=81;
-    public static final int KEYWORD_21=82;
+    public static final int KEYWORD_20=82;
+    public static final int KEYWORD_21=83;
     public static final int KEYWORD_22=59;
     public static final int KEYWORD_23=60;
-    public static final int RULE_ORDER=115;
-    public static final int KEYWORD_79=28;
-    public static final int KEYWORD_71=20;
-    public static final int KEYWORD_72=21;
-    public static final int KEYWORD_73=22;
-    public static final int KEYWORD_74=23;
-    public static final int KEYWORD_75=24;
-    public static final int KEYWORD_76=25;
-    public static final int KEYWORD_77=26;
-    public static final int KEYWORD_78=27;
-    public static final int KEYWORD_1=83;
-    public static final int KEYWORD_5=87;
-    public static final int KEYWORD_4=86;
-    public static final int KEYWORD_3=85;
-    public static final int KEYWORD_70=19;
-    public static final int KEYWORD_2=84;
-    public static final int RULE_FLOAT=110;
-    public static final int RULE_SL_COMMENT=117;
-    public static final int KEYWORD_84=33;
-    public static final int KEYWORD_85=11;
-    public static final int KEYWORD_82=31;
-    public static final int KEYWORD_83=32;
-    public static final int KEYWORD_88=6;
-    public static final int KEYWORD_89=7;
-    public static final int KEYWORD_86=12;
-    public static final int KEYWORD_87=13;
-    public static final int RULE_ALWAYS=114;
-    public static final int KEYWORD_81=30;
-    public static final int KEYWORD_80=29;
-    public static final int RULE_WS=120;
-    public static final int RULE_ELSE=100;
+    public static final int RULE_ORDER=116;
+    public static final int KEYWORD_79=27;
+    public static final int KEYWORD_71=19;
+    public static final int KEYWORD_72=20;
+    public static final int KEYWORD_73=21;
+    public static final int KEYWORD_74=22;
+    public static final int KEYWORD_75=23;
+    public static final int KEYWORD_76=24;
+    public static final int KEYWORD_77=25;
+    public static final int KEYWORD_78=26;
+    public static final int KEYWORD_1=84;
+    public static final int KEYWORD_5=88;
+    public static final int KEYWORD_4=87;
+    public static final int KEYWORD_3=86;
+    public static final int KEYWORD_70=18;
+    public static final int KEYWORD_2=85;
+    public static final int RULE_FLOAT=111;
+    public static final int RULE_SL_COMMENT=118;
+    public static final int KEYWORD_84=32;
+    public static final int KEYWORD_85=33;
+    public static final int KEYWORD_82=30;
+    public static final int KEYWORD_83=31;
+    public static final int KEYWORD_88=13;
+    public static final int KEYWORD_89=6;
+    public static final int KEYWORD_86=11;
+    public static final int KEYWORD_87=12;
+    public static final int RULE_ALWAYS=115;
+    public static final int KEYWORD_81=29;
+    public static final int KEYWORD_80=28;
+    public static final int RULE_WS=121;
+    public static final int RULE_ELSE=101;
 
     // delegates
     // delegators
@@ -255,25 +256,25 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:80:1: ( ( ( (lv_pattern_0_0= rulePattern ) ) | ( (lv_ifincitem_1_0= ruleIfIncItems ) ) )+ | ( ( (lv_initial_2_0= ruleInitial ) )? ( (lv_sequence_3_0= ruleSequence ) )+ ( (lv_model_4_0= ruleModel ) )+ ) | this_Declaration_5= ruleDeclaration )
             int alt5=3;
             switch ( input.LA(1) ) {
-            case KEYWORD_90:
-            case KEYWORD_67:
-            case KEYWORD_60:
-            case KEYWORD_50:
-            case KEYWORD_44:
-            case KEYWORD_46:
-            case KEYWORD_48:
+            case KEYWORD_91:
+            case KEYWORD_68:
+            case KEYWORD_61:
+            case KEYWORD_51:
+            case KEYWORD_45:
+            case KEYWORD_47:
+            case KEYWORD_49:
             case RULE_IF:
                 {
                 alt5=1;
                 }
                 break;
-            case KEYWORD_86:
-            case KEYWORD_68:
+            case KEYWORD_87:
+            case KEYWORD_69:
                 {
                 alt5=2;
                 }
                 break;
-            case KEYWORD_66:
+            case KEYWORD_67:
                 {
                 alt5=3;
                 }
@@ -297,7 +298,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                         int alt1=3;
                         int LA1_0 = input.LA(1);
 
-                        if ( (LA1_0==KEYWORD_90||LA1_0==KEYWORD_67||LA1_0==KEYWORD_60||LA1_0==KEYWORD_50||LA1_0==KEYWORD_44||LA1_0==KEYWORD_46||LA1_0==KEYWORD_48) ) {
+                        if ( (LA1_0==KEYWORD_91||LA1_0==KEYWORD_68||LA1_0==KEYWORD_61||LA1_0==KEYWORD_51||LA1_0==KEYWORD_45||LA1_0==KEYWORD_47||LA1_0==KEYWORD_49) ) {
                             alt1=1;
                         }
                         else if ( (LA1_0==RULE_IF) ) {
@@ -412,7 +413,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     int alt2=2;
                     int LA2_0 = input.LA(1);
 
-                    if ( (LA2_0==KEYWORD_68) ) {
+                    if ( (LA2_0==KEYWORD_69) ) {
                         alt2=1;
                     }
                     switch (alt2) {
@@ -461,7 +462,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                         int alt3=2;
                         int LA3_0 = input.LA(1);
 
-                        if ( (LA3_0==KEYWORD_86) ) {
+                        if ( (LA3_0==KEYWORD_87) ) {
                             alt3=1;
                         }
 
@@ -520,7 +521,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                         int alt4=2;
                         int LA4_0 = input.LA(1);
 
-                        if ( (LA4_0==KEYWORD_54) ) {
+                        if ( (LA4_0==KEYWORD_55) ) {
                             alt4=1;
                         }
 
@@ -690,23 +691,23 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:206:1: (this_Variable_0= ruleVariable | this_IncludeFile_1= ruleIncludeFile | ruleIncludeModel | this_Goal_3= ruleGoal | this_Objective_4= ruleObjective )
             int alt6=5;
             switch ( input.LA(1) ) {
-            case KEYWORD_60:
-            case KEYWORD_50:
-            case KEYWORD_44:
-            case KEYWORD_48:
+            case KEYWORD_61:
+            case KEYWORD_51:
+            case KEYWORD_45:
+            case KEYWORD_49:
                 {
                 alt6=1;
                 }
                 break;
-            case KEYWORD_67:
+            case KEYWORD_68:
                 {
                 int LA6_2 = input.LA(2);
 
-                if ( (LA6_2==KEYWORD_11||LA6_2==RULE_STRING) ) {
-                    alt6=2;
-                }
-                else if ( (LA6_2==KEYWORD_54) ) {
+                if ( (LA6_2==KEYWORD_55) ) {
                     alt6=3;
+                }
+                else if ( (LA6_2==KEYWORD_11||LA6_2==RULE_STRING) ) {
+                    alt6=2;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
@@ -717,12 +718,12 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                 }
                 }
                 break;
-            case KEYWORD_46:
+            case KEYWORD_47:
                 {
                 alt6=4;
                 }
                 break;
-            case KEYWORD_90:
+            case KEYWORD_91:
                 {
                 alt6=5;
                 }
@@ -933,7 +934,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDeclaration"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:286:1: ruleDeclaration returns [EObject current=null] : (otherlv_0= KEYWORD_66 otherlv_1= KEYWORD_14 ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_15 ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:286:1: ruleDeclaration returns [EObject current=null] : (otherlv_0= KEYWORD_67 otherlv_1= KEYWORD_14 ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_15 ) ;
     public final EObject ruleDeclaration() throws RecognitionException {
         EObject current = null;
 
@@ -945,13 +946,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:289:28: ( (otherlv_0= KEYWORD_66 otherlv_1= KEYWORD_14 ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_15 ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:290:1: (otherlv_0= KEYWORD_66 otherlv_1= KEYWORD_14 ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:289:28: ( (otherlv_0= KEYWORD_67 otherlv_1= KEYWORD_14 ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_15 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:290:1: (otherlv_0= KEYWORD_67 otherlv_1= KEYWORD_14 ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_15 )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:290:1: (otherlv_0= KEYWORD_66 otherlv_1= KEYWORD_14 ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_15 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:291:2: otherlv_0= KEYWORD_66 otherlv_1= KEYWORD_14 ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_15
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:290:1: (otherlv_0= KEYWORD_67 otherlv_1= KEYWORD_14 ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:291:2: otherlv_0= KEYWORD_67 otherlv_1= KEYWORD_14 ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_15
             {
-            otherlv_0=(Token)match(input,KEYWORD_66,FOLLOW_KEYWORD_66_in_ruleDeclaration554); if (state.failed) return current;
+            otherlv_0=(Token)match(input,KEYWORD_67,FOLLOW_KEYWORD_67_in_ruleDeclaration554); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getDeclarationAccess().getDeclareKeyword_0());
@@ -1246,10 +1247,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             int alt8=2;
             int LA8_0 = input.LA(1);
 
-            if ( (LA8_0==KEYWORD_60||LA8_0==KEYWORD_48) ) {
+            if ( (LA8_0==KEYWORD_61||LA8_0==KEYWORD_49) ) {
                 alt8=1;
             }
-            else if ( (LA8_0==KEYWORD_50) ) {
+            else if ( (LA8_0==KEYWORD_51) ) {
                 alt8=2;
             }
             else {
@@ -1784,7 +1785,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                 int alt12=2;
                 int LA12_0 = input.LA(1);
 
-                if ( (LA12_0==KEYWORD_90||LA12_0==KEYWORD_67||LA12_0==KEYWORD_60||LA12_0==KEYWORD_50||LA12_0==KEYWORD_44||LA12_0==KEYWORD_46||LA12_0==KEYWORD_48) ) {
+                if ( (LA12_0==KEYWORD_91||LA12_0==KEYWORD_68||LA12_0==KEYWORD_61||LA12_0==KEYWORD_51||LA12_0==KEYWORD_45||LA12_0==KEYWORD_47||LA12_0==KEYWORD_49) ) {
                     alt12=1;
                 }
 
@@ -1993,7 +1994,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             	        int alt13=2;
             	        int LA13_0 = input.LA(1);
 
-            	        if ( (LA13_0==KEYWORD_90||LA13_0==KEYWORD_67||LA13_0==KEYWORD_60||LA13_0==KEYWORD_50||LA13_0==KEYWORD_44||LA13_0==KEYWORD_46||LA13_0==KEYWORD_48) ) {
+            	        if ( (LA13_0==KEYWORD_91||LA13_0==KEYWORD_68||LA13_0==KEYWORD_61||LA13_0==KEYWORD_51||LA13_0==KEYWORD_45||LA13_0==KEYWORD_47||LA13_0==KEYWORD_49) ) {
             	            alt13=1;
             	        }
 
@@ -2163,7 +2164,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                 int alt15=2;
                 int LA15_0 = input.LA(1);
 
-                if ( (LA15_0==KEYWORD_90||LA15_0==KEYWORD_67||LA15_0==KEYWORD_60||LA15_0==KEYWORD_50||LA15_0==KEYWORD_44||LA15_0==KEYWORD_46||LA15_0==KEYWORD_48) ) {
+                if ( (LA15_0==KEYWORD_91||LA15_0==KEYWORD_68||LA15_0==KEYWORD_61||LA15_0==KEYWORD_51||LA15_0==KEYWORD_45||LA15_0==KEYWORD_47||LA15_0==KEYWORD_49) ) {
                     alt15=1;
                 }
 
@@ -2406,7 +2407,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleObjective"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:802:1: ruleObjective returns [EObject current=null] : ( (otherlv_0= KEYWORD_90 | otherlv_1= KEYWORD_90 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_name_5_0= RULE_ID ) ) (otherlv_6= KEYWORD_9 )? otherlv_7= KEYWORD_14 ( (lv_weights_8_0= ruleWeightItem ) )+ otherlv_9= KEYWORD_15 ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:802:1: ruleObjective returns [EObject current=null] : ( (otherlv_0= KEYWORD_91 | otherlv_1= KEYWORD_91 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_name_5_0= RULE_ID ) ) (otherlv_6= KEYWORD_9 )? otherlv_7= KEYWORD_14 ( (lv_weights_8_0= ruleWeightItem ) )+ otherlv_9= KEYWORD_15 ) ;
     public final EObject ruleObjective() throws RecognitionException {
         EObject current = null;
 
@@ -2426,17 +2427,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:805:28: ( ( (otherlv_0= KEYWORD_90 | otherlv_1= KEYWORD_90 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_name_5_0= RULE_ID ) ) (otherlv_6= KEYWORD_9 )? otherlv_7= KEYWORD_14 ( (lv_weights_8_0= ruleWeightItem ) )+ otherlv_9= KEYWORD_15 ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:806:1: ( (otherlv_0= KEYWORD_90 | otherlv_1= KEYWORD_90 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_name_5_0= RULE_ID ) ) (otherlv_6= KEYWORD_9 )? otherlv_7= KEYWORD_14 ( (lv_weights_8_0= ruleWeightItem ) )+ otherlv_9= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:805:28: ( ( (otherlv_0= KEYWORD_91 | otherlv_1= KEYWORD_91 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_name_5_0= RULE_ID ) ) (otherlv_6= KEYWORD_9 )? otherlv_7= KEYWORD_14 ( (lv_weights_8_0= ruleWeightItem ) )+ otherlv_9= KEYWORD_15 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:806:1: ( (otherlv_0= KEYWORD_91 | otherlv_1= KEYWORD_91 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_name_5_0= RULE_ID ) ) (otherlv_6= KEYWORD_9 )? otherlv_7= KEYWORD_14 ( (lv_weights_8_0= ruleWeightItem ) )+ otherlv_9= KEYWORD_15 )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:806:1: ( (otherlv_0= KEYWORD_90 | otherlv_1= KEYWORD_90 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_name_5_0= RULE_ID ) ) (otherlv_6= KEYWORD_9 )? otherlv_7= KEYWORD_14 ( (lv_weights_8_0= ruleWeightItem ) )+ otherlv_9= KEYWORD_15 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:806:2: (otherlv_0= KEYWORD_90 | otherlv_1= KEYWORD_90 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_name_5_0= RULE_ID ) ) (otherlv_6= KEYWORD_9 )? otherlv_7= KEYWORD_14 ( (lv_weights_8_0= ruleWeightItem ) )+ otherlv_9= KEYWORD_15
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:806:1: ( (otherlv_0= KEYWORD_91 | otherlv_1= KEYWORD_91 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_name_5_0= RULE_ID ) ) (otherlv_6= KEYWORD_9 )? otherlv_7= KEYWORD_14 ( (lv_weights_8_0= ruleWeightItem ) )+ otherlv_9= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:806:2: (otherlv_0= KEYWORD_91 | otherlv_1= KEYWORD_91 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_name_5_0= RULE_ID ) ) (otherlv_6= KEYWORD_9 )? otherlv_7= KEYWORD_14 ( (lv_weights_8_0= ruleWeightItem ) )+ otherlv_9= KEYWORD_15
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:806:2: (otherlv_0= KEYWORD_90 | otherlv_1= KEYWORD_90 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:806:2: (otherlv_0= KEYWORD_91 | otherlv_1= KEYWORD_91 )
             int alt16=2;
             int LA16_0 = input.LA(1);
 
-            if ( (LA16_0==KEYWORD_90) ) {
+            if ( (LA16_0==KEYWORD_91) ) {
                 int LA16_1 = input.LA(2);
 
                 if ( (synpred22_InternalWreslEditorParser()) ) {
@@ -2462,9 +2463,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt16) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:807:2: otherlv_0= KEYWORD_90
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:807:2: otherlv_0= KEYWORD_91
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_90,FOLLOW_KEYWORD_90_in_ruleObjective1762); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_91,FOLLOW_KEYWORD_91_in_ruleObjective1762); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getObjectiveAccess().getObjectiveKeyword_0_0());
@@ -2474,9 +2475,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:813:2: otherlv_1= KEYWORD_90
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:813:2: otherlv_1= KEYWORD_91
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_90,FOLLOW_KEYWORD_90_in_ruleObjective1780); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_91,FOLLOW_KEYWORD_91_in_ruleObjective1780); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getObjectiveAccess().getOBJECTIVEKeyword_0_1());
@@ -2488,7 +2489,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:817:2: (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12 )?
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:817:2: (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12 )?
             int alt18=2;
             int LA18_0 = input.LA(1);
 
@@ -2497,7 +2498,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt18) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:818:2: otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:818:2: otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12
                     {
                     otherlv_2=(Token)match(input,KEYWORD_11,FOLLOW_KEYWORD_11_in_ruleObjective1794); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -2505,17 +2506,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_2, grammarAccess.getObjectiveAccess().getLeftSquareBracketKeyword_1_0());
                           
                     }
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:822:1: ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:823:1: ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:822:1: ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:823:1: ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:823:1: ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:824:1: (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:823:1: ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:824:1: (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:824:1: (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:824:1: (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 )
                     int alt17=2;
                     int LA17_0 = input.LA(1);
 
-                    if ( (LA17_0==KEYWORD_52) ) {
+                    if ( (LA17_0==KEYWORD_53) ) {
                         int LA17_1 = input.LA(2);
 
                         if ( (synpred23_InternalWreslEditorParser()) ) {
@@ -2541,9 +2542,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt17) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:825:3: lv_local_3_1= KEYWORD_52
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:825:3: lv_local_3_1= KEYWORD_53
                             {
-                            lv_local_3_1=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleObjective1814); if (state.failed) return current;
+                            lv_local_3_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleObjective1814); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                       newLeafNode(lv_local_3_1, grammarAccess.getObjectiveAccess().getLocalLocalKeyword_1_1_0_0());
@@ -2561,9 +2562,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:838:8: lv_local_3_2= KEYWORD_52
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:838:8: lv_local_3_2= KEYWORD_53
                             {
-                            lv_local_3_2=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleObjective1842); if (state.failed) return current;
+                            lv_local_3_2=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleObjective1842); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                       newLeafNode(lv_local_3_2, grammarAccess.getObjectiveAccess().getLocalLOCALKeyword_1_1_0_1());
@@ -3026,7 +3027,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExternalDef"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1020:1: ruleExternalDef returns [EObject current=null] : ( (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12 )? ( (otherlv_5= RULE_ID ) ) otherlv_6= KEYWORD_14 ( (lv_definition_7_0= ruleExternal ) ) otherlv_8= KEYWORD_15 ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1020:1: ruleExternalDef returns [EObject current=null] : ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12 )? ( (otherlv_5= RULE_ID ) ) otherlv_6= KEYWORD_14 ( (lv_definition_7_0= ruleExternal ) ) otherlv_8= KEYWORD_15 ) ;
     public final EObject ruleExternalDef() throws RecognitionException {
         EObject current = null;
 
@@ -3045,17 +3046,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1023:28: ( ( (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12 )? ( (otherlv_5= RULE_ID ) ) otherlv_6= KEYWORD_14 ( (lv_definition_7_0= ruleExternal ) ) otherlv_8= KEYWORD_15 ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1024:1: ( (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12 )? ( (otherlv_5= RULE_ID ) ) otherlv_6= KEYWORD_14 ( (lv_definition_7_0= ruleExternal ) ) otherlv_8= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1023:28: ( ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12 )? ( (otherlv_5= RULE_ID ) ) otherlv_6= KEYWORD_14 ( (lv_definition_7_0= ruleExternal ) ) otherlv_8= KEYWORD_15 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1024:1: ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12 )? ( (otherlv_5= RULE_ID ) ) otherlv_6= KEYWORD_14 ( (lv_definition_7_0= ruleExternal ) ) otherlv_8= KEYWORD_15 )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1024:1: ( (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12 )? ( (otherlv_5= RULE_ID ) ) otherlv_6= KEYWORD_14 ( (lv_definition_7_0= ruleExternal ) ) otherlv_8= KEYWORD_15 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1024:2: (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12 )? ( (otherlv_5= RULE_ID ) ) otherlv_6= KEYWORD_14 ( (lv_definition_7_0= ruleExternal ) ) otherlv_8= KEYWORD_15
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1024:1: ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12 )? ( (otherlv_5= RULE_ID ) ) otherlv_6= KEYWORD_14 ( (lv_definition_7_0= ruleExternal ) ) otherlv_8= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1024:2: (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12 )? ( (otherlv_5= RULE_ID ) ) otherlv_6= KEYWORD_14 ( (lv_definition_7_0= ruleExternal ) ) otherlv_8= KEYWORD_15
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1024:2: (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1024:2: (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 )
             int alt23=2;
             int LA23_0 = input.LA(1);
 
-            if ( (LA23_0==KEYWORD_60) ) {
+            if ( (LA23_0==KEYWORD_61) ) {
                 int LA23_1 = input.LA(2);
 
                 if ( (synpred29_InternalWreslEditorParser()) ) {
@@ -3081,9 +3082,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt23) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1025:2: otherlv_0= KEYWORD_60
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1025:2: otherlv_0= KEYWORD_61
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_60,FOLLOW_KEYWORD_60_in_ruleExternalDef2225); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_61,FOLLOW_KEYWORD_61_in_ruleExternalDef2225); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getExternalDefAccess().getDefineKeyword_0_0());
@@ -3093,9 +3094,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1031:2: otherlv_1= KEYWORD_60
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1031:2: otherlv_1= KEYWORD_61
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_60,FOLLOW_KEYWORD_60_in_ruleExternalDef2243); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_61,FOLLOW_KEYWORD_61_in_ruleExternalDef2243); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getExternalDefAccess().getDEFINEKeyword_0_1());
@@ -3107,7 +3108,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1035:2: (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12 )?
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1035:2: (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12 )?
             int alt25=2;
             int LA25_0 = input.LA(1);
 
@@ -3116,7 +3117,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt25) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1036:2: otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1036:2: otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12
                     {
                     otherlv_2=(Token)match(input,KEYWORD_11,FOLLOW_KEYWORD_11_in_ruleExternalDef2257); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -3124,17 +3125,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_2, grammarAccess.getExternalDefAccess().getLeftSquareBracketKeyword_1_0());
                           
                     }
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1040:1: ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1041:1: ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1040:1: ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1041:1: ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1041:1: ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1042:1: (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1041:1: ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1042:1: (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1042:1: (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1042:1: (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 )
                     int alt24=2;
                     int LA24_0 = input.LA(1);
 
-                    if ( (LA24_0==KEYWORD_52) ) {
+                    if ( (LA24_0==KEYWORD_53) ) {
                         int LA24_1 = input.LA(2);
 
                         if ( (synpred30_InternalWreslEditorParser()) ) {
@@ -3160,9 +3161,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt24) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1043:3: lv_local_3_1= KEYWORD_52
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1043:3: lv_local_3_1= KEYWORD_53
                             {
-                            lv_local_3_1=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleExternalDef2277); if (state.failed) return current;
+                            lv_local_3_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleExternalDef2277); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                       newLeafNode(lv_local_3_1, grammarAccess.getExternalDefAccess().getLocalLocalKeyword_1_1_0_0());
@@ -3180,9 +3181,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1056:8: lv_local_3_2= KEYWORD_52
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1056:8: lv_local_3_2= KEYWORD_53
                             {
-                            lv_local_3_2=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleExternalDef2305); if (state.failed) return current;
+                            lv_local_3_2=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleExternalDef2305); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                       newLeafNode(lv_local_3_2, grammarAccess.getExternalDefAccess().getLocalLOCALKeyword_1_1_0_1());
@@ -3360,7 +3361,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSvarDef"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1138:1: ruleSvarDef returns [EObject current=null] : ( ( (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleSVar ) ) otherlv_9= KEYWORD_15 ) | ( (otherlv_10= KEYWORD_48 | otherlv_11= KEYWORD_48 | otherlv_12= KEYWORD_48 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( (lv_definition_19_0= ruleSVar ) ) otherlv_20= KEYWORD_15 ) ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1138:1: ruleSvarDef returns [EObject current=null] : ( ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleSVar ) ) otherlv_9= KEYWORD_15 ) | ( (otherlv_10= KEYWORD_49 | otherlv_11= KEYWORD_49 | otherlv_12= KEYWORD_49 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( (lv_definition_19_0= ruleSVar ) ) otherlv_20= KEYWORD_15 ) ) ;
     public final EObject ruleSvarDef() throws RecognitionException {
         EObject current = null;
 
@@ -3395,17 +3396,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1141:28: ( ( ( (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleSVar ) ) otherlv_9= KEYWORD_15 ) | ( (otherlv_10= KEYWORD_48 | otherlv_11= KEYWORD_48 | otherlv_12= KEYWORD_48 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( (lv_definition_19_0= ruleSVar ) ) otherlv_20= KEYWORD_15 ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1142:1: ( ( (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleSVar ) ) otherlv_9= KEYWORD_15 ) | ( (otherlv_10= KEYWORD_48 | otherlv_11= KEYWORD_48 | otherlv_12= KEYWORD_48 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( (lv_definition_19_0= ruleSVar ) ) otherlv_20= KEYWORD_15 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1141:28: ( ( ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleSVar ) ) otherlv_9= KEYWORD_15 ) | ( (otherlv_10= KEYWORD_49 | otherlv_11= KEYWORD_49 | otherlv_12= KEYWORD_49 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( (lv_definition_19_0= ruleSVar ) ) otherlv_20= KEYWORD_15 ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1142:1: ( ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleSVar ) ) otherlv_9= KEYWORD_15 ) | ( (otherlv_10= KEYWORD_49 | otherlv_11= KEYWORD_49 | otherlv_12= KEYWORD_49 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( (lv_definition_19_0= ruleSVar ) ) otherlv_20= KEYWORD_15 ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1142:1: ( ( (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleSVar ) ) otherlv_9= KEYWORD_15 ) | ( (otherlv_10= KEYWORD_48 | otherlv_11= KEYWORD_48 | otherlv_12= KEYWORD_48 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( (lv_definition_19_0= ruleSVar ) ) otherlv_20= KEYWORD_15 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1142:1: ( ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleSVar ) ) otherlv_9= KEYWORD_15 ) | ( (otherlv_10= KEYWORD_49 | otherlv_11= KEYWORD_49 | otherlv_12= KEYWORD_49 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( (lv_definition_19_0= ruleSVar ) ) otherlv_20= KEYWORD_15 ) )
             int alt34=2;
             int LA34_0 = input.LA(1);
 
-            if ( (LA34_0==KEYWORD_60) ) {
+            if ( (LA34_0==KEYWORD_61) ) {
                 alt34=1;
             }
-            else if ( (LA34_0==KEYWORD_48) ) {
+            else if ( (LA34_0==KEYWORD_49) ) {
                 alt34=2;
             }
             else {
@@ -3417,16 +3418,16 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt34) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1142:2: ( (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleSVar ) ) otherlv_9= KEYWORD_15 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1142:2: ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleSVar ) ) otherlv_9= KEYWORD_15 )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1142:2: ( (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleSVar ) ) otherlv_9= KEYWORD_15 )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1142:3: (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleSVar ) ) otherlv_9= KEYWORD_15
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1142:2: ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleSVar ) ) otherlv_9= KEYWORD_15 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1142:3: (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleSVar ) ) otherlv_9= KEYWORD_15
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1142:3: (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1142:3: (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 )
                     int alt26=2;
                     int LA26_0 = input.LA(1);
 
-                    if ( (LA26_0==KEYWORD_60) ) {
+                    if ( (LA26_0==KEYWORD_61) ) {
                         int LA26_1 = input.LA(2);
 
                         if ( (synpred32_InternalWreslEditorParser()) ) {
@@ -3452,9 +3453,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt26) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1143:2: otherlv_0= KEYWORD_60
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1143:2: otherlv_0= KEYWORD_61
                             {
-                            otherlv_0=(Token)match(input,KEYWORD_60,FOLLOW_KEYWORD_60_in_ruleSvarDef2487); if (state.failed) return current;
+                            otherlv_0=(Token)match(input,KEYWORD_61,FOLLOW_KEYWORD_61_in_ruleSvarDef2487); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_0, grammarAccess.getSvarDefAccess().getDefineKeyword_0_0_0());
@@ -3464,9 +3465,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1149:2: otherlv_1= KEYWORD_60
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1149:2: otherlv_1= KEYWORD_61
                             {
-                            otherlv_1=(Token)match(input,KEYWORD_60,FOLLOW_KEYWORD_60_in_ruleSvarDef2505); if (state.failed) return current;
+                            otherlv_1=(Token)match(input,KEYWORD_61,FOLLOW_KEYWORD_61_in_ruleSvarDef2505); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_1, grammarAccess.getSvarDefAccess().getDEFINEKeyword_0_0_1());
@@ -3524,7 +3525,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1171:3: (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )?
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1171:3: (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )?
                     int alt29=2;
                     int LA29_0 = input.LA(1);
 
@@ -3533,7 +3534,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt29) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1172:2: otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1172:2: otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12
                             {
                             otherlv_3=(Token)match(input,KEYWORD_11,FOLLOW_KEYWORD_11_in_ruleSvarDef2541); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
@@ -3541,17 +3542,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                                   	newLeafNode(otherlv_3, grammarAccess.getSvarDefAccess().getLeftSquareBracketKeyword_0_2_0());
                                   
                             }
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1176:1: ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) )
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1177:1: ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) )
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1176:1: ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) )
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1177:1: ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) )
                             {
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1177:1: ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) )
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1178:1: (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 )
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1177:1: ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) )
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1178:1: (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 )
                             {
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1178:1: (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 )
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1178:1: (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 )
                             int alt28=2;
                             int LA28_0 = input.LA(1);
 
-                            if ( (LA28_0==KEYWORD_52) ) {
+                            if ( (LA28_0==KEYWORD_53) ) {
                                 int LA28_1 = input.LA(2);
 
                                 if ( (synpred34_InternalWreslEditorParser()) ) {
@@ -3577,9 +3578,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             switch (alt28) {
                                 case 1 :
-                                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1179:3: lv_local_4_1= KEYWORD_52
+                                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1179:3: lv_local_4_1= KEYWORD_53
                                     {
-                                    lv_local_4_1=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleSvarDef2561); if (state.failed) return current;
+                                    lv_local_4_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleSvarDef2561); if (state.failed) return current;
                                     if ( state.backtracking==0 ) {
 
                                               newLeafNode(lv_local_4_1, grammarAccess.getSvarDefAccess().getLocalLocalKeyword_0_2_1_0_0());
@@ -3597,9 +3598,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                                     }
                                     break;
                                 case 2 :
-                                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1192:8: lv_local_4_2= KEYWORD_52
+                                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1192:8: lv_local_4_2= KEYWORD_53
                                     {
-                                    lv_local_4_2=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleSvarDef2589); if (state.failed) return current;
+                                    lv_local_4_2=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleSvarDef2589); if (state.failed) return current;
                                     if ( state.backtracking==0 ) {
 
                                               newLeafNode(lv_local_4_2, grammarAccess.getSvarDefAccess().getLocalLOCALKeyword_0_2_1_0_1());
@@ -3721,16 +3722,16 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1258:6: ( (otherlv_10= KEYWORD_48 | otherlv_11= KEYWORD_48 | otherlv_12= KEYWORD_48 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( (lv_definition_19_0= ruleSVar ) ) otherlv_20= KEYWORD_15 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1258:6: ( (otherlv_10= KEYWORD_49 | otherlv_11= KEYWORD_49 | otherlv_12= KEYWORD_49 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( (lv_definition_19_0= ruleSVar ) ) otherlv_20= KEYWORD_15 )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1258:6: ( (otherlv_10= KEYWORD_48 | otherlv_11= KEYWORD_48 | otherlv_12= KEYWORD_48 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( (lv_definition_19_0= ruleSVar ) ) otherlv_20= KEYWORD_15 )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1258:7: (otherlv_10= KEYWORD_48 | otherlv_11= KEYWORD_48 | otherlv_12= KEYWORD_48 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( (lv_definition_19_0= ruleSVar ) ) otherlv_20= KEYWORD_15
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1258:6: ( (otherlv_10= KEYWORD_49 | otherlv_11= KEYWORD_49 | otherlv_12= KEYWORD_49 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( (lv_definition_19_0= ruleSVar ) ) otherlv_20= KEYWORD_15 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1258:7: (otherlv_10= KEYWORD_49 | otherlv_11= KEYWORD_49 | otherlv_12= KEYWORD_49 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( (lv_definition_19_0= ruleSVar ) ) otherlv_20= KEYWORD_15
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1258:7: (otherlv_10= KEYWORD_48 | otherlv_11= KEYWORD_48 | otherlv_12= KEYWORD_48 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1258:7: (otherlv_10= KEYWORD_49 | otherlv_11= KEYWORD_49 | otherlv_12= KEYWORD_49 )
                     int alt30=3;
                     int LA30_0 = input.LA(1);
 
-                    if ( (LA30_0==KEYWORD_48) ) {
+                    if ( (LA30_0==KEYWORD_49) ) {
                         int LA30_1 = input.LA(2);
 
                         if ( (synpred37_InternalWreslEditorParser()) ) {
@@ -3759,9 +3760,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt30) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1259:2: otherlv_10= KEYWORD_48
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1259:2: otherlv_10= KEYWORD_49
                             {
-                            otherlv_10=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_ruleSvarDef2708); if (state.failed) return current;
+                            otherlv_10=(Token)match(input,KEYWORD_49,FOLLOW_KEYWORD_49_in_ruleSvarDef2708); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_10, grammarAccess.getSvarDefAccess().getSvarKeyword_1_0_0());
@@ -3771,9 +3772,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1265:2: otherlv_11= KEYWORD_48
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1265:2: otherlv_11= KEYWORD_49
                             {
-                            otherlv_11=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_ruleSvarDef2726); if (state.failed) return current;
+                            otherlv_11=(Token)match(input,KEYWORD_49,FOLLOW_KEYWORD_49_in_ruleSvarDef2726); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_11, grammarAccess.getSvarDefAccess().getSVARKeyword_1_0_1());
@@ -3783,9 +3784,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 3 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1271:2: otherlv_12= KEYWORD_48
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1271:2: otherlv_12= KEYWORD_49
                             {
-                            otherlv_12=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_ruleSvarDef2744); if (state.failed) return current;
+                            otherlv_12=(Token)match(input,KEYWORD_49,FOLLOW_KEYWORD_49_in_ruleSvarDef2744); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_12, grammarAccess.getSvarDefAccess().getSvarKeyword_1_0_2());
@@ -3843,7 +3844,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1293:3: (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) ) ) otherlv_16= KEYWORD_12 )?
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1293:3: (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) ) ) otherlv_16= KEYWORD_12 )?
                     int alt33=2;
                     int LA33_0 = input.LA(1);
 
@@ -3852,7 +3853,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt33) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1294:2: otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) ) ) otherlv_16= KEYWORD_12
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1294:2: otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) ) ) otherlv_16= KEYWORD_12
                             {
                             otherlv_14=(Token)match(input,KEYWORD_11,FOLLOW_KEYWORD_11_in_ruleSvarDef2780); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
@@ -3860,17 +3861,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                                   	newLeafNode(otherlv_14, grammarAccess.getSvarDefAccess().getLeftSquareBracketKeyword_1_2_0());
                                   
                             }
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1298:1: ( ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) ) )
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1299:1: ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) )
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1298:1: ( ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) ) )
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1299:1: ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) )
                             {
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1299:1: ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) )
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1300:1: (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 )
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1299:1: ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) )
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1300:1: (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 )
                             {
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1300:1: (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 )
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1300:1: (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 )
                             int alt32=2;
                             int LA32_0 = input.LA(1);
 
-                            if ( (LA32_0==KEYWORD_52) ) {
+                            if ( (LA32_0==KEYWORD_53) ) {
                                 int LA32_1 = input.LA(2);
 
                                 if ( (synpred40_InternalWreslEditorParser()) ) {
@@ -3896,9 +3897,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             switch (alt32) {
                                 case 1 :
-                                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1301:3: lv_local_15_1= KEYWORD_52
+                                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1301:3: lv_local_15_1= KEYWORD_53
                                     {
-                                    lv_local_15_1=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleSvarDef2800); if (state.failed) return current;
+                                    lv_local_15_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleSvarDef2800); if (state.failed) return current;
                                     if ( state.backtracking==0 ) {
 
                                               newLeafNode(lv_local_15_1, grammarAccess.getSvarDefAccess().getLocalLocalKeyword_1_2_1_0_0());
@@ -3916,9 +3917,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                                     }
                                     break;
                                 case 2 :
-                                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1314:8: lv_local_15_2= KEYWORD_52
+                                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1314:8: lv_local_15_2= KEYWORD_53
                                     {
-                                    lv_local_15_2=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleSvarDef2828); if (state.failed) return current;
+                                    lv_local_15_2=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleSvarDef2828); if (state.failed) return current;
                                     if ( state.backtracking==0 ) {
 
                                               newLeafNode(lv_local_15_2, grammarAccess.getSvarDefAccess().getLocalLOCALKeyword_1_2_1_0_1());
@@ -4102,7 +4103,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDvarDef"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1396:1: ruleDvarDef returns [EObject current=null] : ( ( (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleDVar | lv_definition_8_2= ruleDVarInteger ) ) ) otherlv_9= KEYWORD_15 ) | ( (otherlv_10= KEYWORD_44 | otherlv_11= KEYWORD_44 | otherlv_12= KEYWORD_44 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( ( (lv_definition_19_1= ruleDVar | lv_definition_19_2= ruleDVarInteger ) ) ) otherlv_20= KEYWORD_15 ) ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1396:1: ruleDvarDef returns [EObject current=null] : ( ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleDVar | lv_definition_8_2= ruleDVarInteger ) ) ) otherlv_9= KEYWORD_15 ) | ( (otherlv_10= KEYWORD_45 | otherlv_11= KEYWORD_45 | otherlv_12= KEYWORD_45 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( ( (lv_definition_19_1= ruleDVar | lv_definition_19_2= ruleDVarInteger ) ) ) otherlv_20= KEYWORD_15 ) ) ;
     public final EObject ruleDvarDef() throws RecognitionException {
         EObject current = null;
 
@@ -4141,17 +4142,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1399:28: ( ( ( (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleDVar | lv_definition_8_2= ruleDVarInteger ) ) ) otherlv_9= KEYWORD_15 ) | ( (otherlv_10= KEYWORD_44 | otherlv_11= KEYWORD_44 | otherlv_12= KEYWORD_44 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( ( (lv_definition_19_1= ruleDVar | lv_definition_19_2= ruleDVarInteger ) ) ) otherlv_20= KEYWORD_15 ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1400:1: ( ( (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleDVar | lv_definition_8_2= ruleDVarInteger ) ) ) otherlv_9= KEYWORD_15 ) | ( (otherlv_10= KEYWORD_44 | otherlv_11= KEYWORD_44 | otherlv_12= KEYWORD_44 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( ( (lv_definition_19_1= ruleDVar | lv_definition_19_2= ruleDVarInteger ) ) ) otherlv_20= KEYWORD_15 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1399:28: ( ( ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleDVar | lv_definition_8_2= ruleDVarInteger ) ) ) otherlv_9= KEYWORD_15 ) | ( (otherlv_10= KEYWORD_45 | otherlv_11= KEYWORD_45 | otherlv_12= KEYWORD_45 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( ( (lv_definition_19_1= ruleDVar | lv_definition_19_2= ruleDVarInteger ) ) ) otherlv_20= KEYWORD_15 ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1400:1: ( ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleDVar | lv_definition_8_2= ruleDVarInteger ) ) ) otherlv_9= KEYWORD_15 ) | ( (otherlv_10= KEYWORD_45 | otherlv_11= KEYWORD_45 | otherlv_12= KEYWORD_45 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( ( (lv_definition_19_1= ruleDVar | lv_definition_19_2= ruleDVarInteger ) ) ) otherlv_20= KEYWORD_15 ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1400:1: ( ( (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleDVar | lv_definition_8_2= ruleDVarInteger ) ) ) otherlv_9= KEYWORD_15 ) | ( (otherlv_10= KEYWORD_44 | otherlv_11= KEYWORD_44 | otherlv_12= KEYWORD_44 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( ( (lv_definition_19_1= ruleDVar | lv_definition_19_2= ruleDVarInteger ) ) ) otherlv_20= KEYWORD_15 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1400:1: ( ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleDVar | lv_definition_8_2= ruleDVarInteger ) ) ) otherlv_9= KEYWORD_15 ) | ( (otherlv_10= KEYWORD_45 | otherlv_11= KEYWORD_45 | otherlv_12= KEYWORD_45 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( ( (lv_definition_19_1= ruleDVar | lv_definition_19_2= ruleDVarInteger ) ) ) otherlv_20= KEYWORD_15 ) )
             int alt45=2;
             int LA45_0 = input.LA(1);
 
-            if ( (LA45_0==KEYWORD_60) ) {
+            if ( (LA45_0==KEYWORD_61) ) {
                 alt45=1;
             }
-            else if ( (LA45_0==KEYWORD_44) ) {
+            else if ( (LA45_0==KEYWORD_45) ) {
                 alt45=2;
             }
             else {
@@ -4163,16 +4164,16 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt45) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1400:2: ( (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleDVar | lv_definition_8_2= ruleDVarInteger ) ) ) otherlv_9= KEYWORD_15 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1400:2: ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleDVar | lv_definition_8_2= ruleDVarInteger ) ) ) otherlv_9= KEYWORD_15 )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1400:2: ( (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleDVar | lv_definition_8_2= ruleDVarInteger ) ) ) otherlv_9= KEYWORD_15 )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1400:3: (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleDVar | lv_definition_8_2= ruleDVarInteger ) ) ) otherlv_9= KEYWORD_15
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1400:2: ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleDVar | lv_definition_8_2= ruleDVarInteger ) ) ) otherlv_9= KEYWORD_15 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1400:3: (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleDVar | lv_definition_8_2= ruleDVarInteger ) ) ) otherlv_9= KEYWORD_15
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1400:3: (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1400:3: (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 )
                     int alt35=2;
                     int LA35_0 = input.LA(1);
 
-                    if ( (LA35_0==KEYWORD_60) ) {
+                    if ( (LA35_0==KEYWORD_61) ) {
                         int LA35_1 = input.LA(2);
 
                         if ( (synpred42_InternalWreslEditorParser()) ) {
@@ -4198,9 +4199,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt35) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1401:2: otherlv_0= KEYWORD_60
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1401:2: otherlv_0= KEYWORD_61
                             {
-                            otherlv_0=(Token)match(input,KEYWORD_60,FOLLOW_KEYWORD_60_in_ruleDvarDef3011); if (state.failed) return current;
+                            otherlv_0=(Token)match(input,KEYWORD_61,FOLLOW_KEYWORD_61_in_ruleDvarDef3011); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_0, grammarAccess.getDvarDefAccess().getDefineKeyword_0_0_0());
@@ -4210,9 +4211,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1407:2: otherlv_1= KEYWORD_60
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1407:2: otherlv_1= KEYWORD_61
                             {
-                            otherlv_1=(Token)match(input,KEYWORD_60,FOLLOW_KEYWORD_60_in_ruleDvarDef3029); if (state.failed) return current;
+                            otherlv_1=(Token)match(input,KEYWORD_61,FOLLOW_KEYWORD_61_in_ruleDvarDef3029); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_1, grammarAccess.getDvarDefAccess().getDEFINEKeyword_0_0_1());
@@ -4270,7 +4271,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1429:3: (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )?
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1429:3: (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )?
                     int alt38=2;
                     int LA38_0 = input.LA(1);
 
@@ -4279,7 +4280,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt38) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1430:2: otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1430:2: otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12
                             {
                             otherlv_3=(Token)match(input,KEYWORD_11,FOLLOW_KEYWORD_11_in_ruleDvarDef3065); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
@@ -4287,17 +4288,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                                   	newLeafNode(otherlv_3, grammarAccess.getDvarDefAccess().getLeftSquareBracketKeyword_0_2_0());
                                   
                             }
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1434:1: ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) )
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1435:1: ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) )
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1434:1: ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) )
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1435:1: ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) )
                             {
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1435:1: ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) )
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1436:1: (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 )
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1435:1: ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) )
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1436:1: (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 )
                             {
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1436:1: (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 )
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1436:1: (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 )
                             int alt37=2;
                             int LA37_0 = input.LA(1);
 
-                            if ( (LA37_0==KEYWORD_52) ) {
+                            if ( (LA37_0==KEYWORD_53) ) {
                                 int LA37_1 = input.LA(2);
 
                                 if ( (synpred44_InternalWreslEditorParser()) ) {
@@ -4323,9 +4324,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             switch (alt37) {
                                 case 1 :
-                                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1437:3: lv_local_4_1= KEYWORD_52
+                                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1437:3: lv_local_4_1= KEYWORD_53
                                     {
-                                    lv_local_4_1=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleDvarDef3085); if (state.failed) return current;
+                                    lv_local_4_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleDvarDef3085); if (state.failed) return current;
                                     if ( state.backtracking==0 ) {
 
                                               newLeafNode(lv_local_4_1, grammarAccess.getDvarDefAccess().getLocalLocalKeyword_0_2_1_0_0());
@@ -4343,9 +4344,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                                     }
                                     break;
                                 case 2 :
-                                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1450:8: lv_local_4_2= KEYWORD_52
+                                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1450:8: lv_local_4_2= KEYWORD_53
                                     {
-                                    lv_local_4_2=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleDvarDef3113); if (state.failed) return current;
+                                    lv_local_4_2=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleDvarDef3113); if (state.failed) return current;
                                     if ( state.backtracking==0 ) {
 
                                               newLeafNode(lv_local_4_2, grammarAccess.getDvarDefAccess().getLocalLOCALKeyword_0_2_1_0_1());
@@ -4429,10 +4430,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     int alt39=2;
                     int LA39_0 = input.LA(1);
 
-                    if ( (LA39_0==KEYWORD_53||LA39_0==KEYWORD_56||LA39_0==KEYWORD_25) ) {
+                    if ( (LA39_0==KEYWORD_54||LA39_0==KEYWORD_57||LA39_0==KEYWORD_25) ) {
                         alt39=1;
                     }
-                    else if ( (LA39_0==KEYWORD_69) ) {
+                    else if ( (LA39_0==KEYWORD_70) ) {
                         alt39=2;
                     }
                     else {
@@ -4523,16 +4524,16 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1534:6: ( (otherlv_10= KEYWORD_44 | otherlv_11= KEYWORD_44 | otherlv_12= KEYWORD_44 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( ( (lv_definition_19_1= ruleDVar | lv_definition_19_2= ruleDVarInteger ) ) ) otherlv_20= KEYWORD_15 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1534:6: ( (otherlv_10= KEYWORD_45 | otherlv_11= KEYWORD_45 | otherlv_12= KEYWORD_45 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( ( (lv_definition_19_1= ruleDVar | lv_definition_19_2= ruleDVarInteger ) ) ) otherlv_20= KEYWORD_15 )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1534:6: ( (otherlv_10= KEYWORD_44 | otherlv_11= KEYWORD_44 | otherlv_12= KEYWORD_44 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( ( (lv_definition_19_1= ruleDVar | lv_definition_19_2= ruleDVarInteger ) ) ) otherlv_20= KEYWORD_15 )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1534:7: (otherlv_10= KEYWORD_44 | otherlv_11= KEYWORD_44 | otherlv_12= KEYWORD_44 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( ( (lv_definition_19_1= ruleDVar | lv_definition_19_2= ruleDVarInteger ) ) ) otherlv_20= KEYWORD_15
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1534:6: ( (otherlv_10= KEYWORD_45 | otherlv_11= KEYWORD_45 | otherlv_12= KEYWORD_45 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( ( (lv_definition_19_1= ruleDVar | lv_definition_19_2= ruleDVarInteger ) ) ) otherlv_20= KEYWORD_15 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1534:7: (otherlv_10= KEYWORD_45 | otherlv_11= KEYWORD_45 | otherlv_12= KEYWORD_45 ) ( (lv_ta_13_0= ruleTimeArraySize ) )? (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) ) ) otherlv_16= KEYWORD_12 )? ( (otherlv_17= RULE_ID ) ) otherlv_18= KEYWORD_14 ( ( (lv_definition_19_1= ruleDVar | lv_definition_19_2= ruleDVarInteger ) ) ) otherlv_20= KEYWORD_15
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1534:7: (otherlv_10= KEYWORD_44 | otherlv_11= KEYWORD_44 | otherlv_12= KEYWORD_44 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1534:7: (otherlv_10= KEYWORD_45 | otherlv_11= KEYWORD_45 | otherlv_12= KEYWORD_45 )
                     int alt40=3;
                     int LA40_0 = input.LA(1);
 
-                    if ( (LA40_0==KEYWORD_44) ) {
+                    if ( (LA40_0==KEYWORD_45) ) {
                         int LA40_1 = input.LA(2);
 
                         if ( (synpred48_InternalWreslEditorParser()) ) {
@@ -4561,9 +4562,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt40) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1535:2: otherlv_10= KEYWORD_44
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1535:2: otherlv_10= KEYWORD_45
                             {
-                            otherlv_10=(Token)match(input,KEYWORD_44,FOLLOW_KEYWORD_44_in_ruleDvarDef3256); if (state.failed) return current;
+                            otherlv_10=(Token)match(input,KEYWORD_45,FOLLOW_KEYWORD_45_in_ruleDvarDef3256); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_10, grammarAccess.getDvarDefAccess().getDvarKeyword_1_0_0());
@@ -4573,9 +4574,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1541:2: otherlv_11= KEYWORD_44
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1541:2: otherlv_11= KEYWORD_45
                             {
-                            otherlv_11=(Token)match(input,KEYWORD_44,FOLLOW_KEYWORD_44_in_ruleDvarDef3274); if (state.failed) return current;
+                            otherlv_11=(Token)match(input,KEYWORD_45,FOLLOW_KEYWORD_45_in_ruleDvarDef3274); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_11, grammarAccess.getDvarDefAccess().getDVARKeyword_1_0_1());
@@ -4585,9 +4586,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 3 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1547:2: otherlv_12= KEYWORD_44
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1547:2: otherlv_12= KEYWORD_45
                             {
-                            otherlv_12=(Token)match(input,KEYWORD_44,FOLLOW_KEYWORD_44_in_ruleDvarDef3292); if (state.failed) return current;
+                            otherlv_12=(Token)match(input,KEYWORD_45,FOLLOW_KEYWORD_45_in_ruleDvarDef3292); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_12, grammarAccess.getDvarDefAccess().getDvarKeyword_1_0_2());
@@ -4645,7 +4646,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1569:3: (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) ) ) otherlv_16= KEYWORD_12 )?
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1569:3: (otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) ) ) otherlv_16= KEYWORD_12 )?
                     int alt43=2;
                     int LA43_0 = input.LA(1);
 
@@ -4654,7 +4655,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt43) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1570:2: otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) ) ) otherlv_16= KEYWORD_12
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1570:2: otherlv_14= KEYWORD_11 ( ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) ) ) otherlv_16= KEYWORD_12
                             {
                             otherlv_14=(Token)match(input,KEYWORD_11,FOLLOW_KEYWORD_11_in_ruleDvarDef3328); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
@@ -4662,17 +4663,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                                   	newLeafNode(otherlv_14, grammarAccess.getDvarDefAccess().getLeftSquareBracketKeyword_1_2_0());
                                   
                             }
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1574:1: ( ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) ) )
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1575:1: ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) )
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1574:1: ( ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) ) )
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1575:1: ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) )
                             {
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1575:1: ( (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 ) )
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1576:1: (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 )
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1575:1: ( (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 ) )
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1576:1: (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 )
                             {
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1576:1: (lv_local_15_1= KEYWORD_52 | lv_local_15_2= KEYWORD_52 )
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1576:1: (lv_local_15_1= KEYWORD_53 | lv_local_15_2= KEYWORD_53 )
                             int alt42=2;
                             int LA42_0 = input.LA(1);
 
-                            if ( (LA42_0==KEYWORD_52) ) {
+                            if ( (LA42_0==KEYWORD_53) ) {
                                 int LA42_1 = input.LA(2);
 
                                 if ( (synpred51_InternalWreslEditorParser()) ) {
@@ -4698,9 +4699,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             switch (alt42) {
                                 case 1 :
-                                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1577:3: lv_local_15_1= KEYWORD_52
+                                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1577:3: lv_local_15_1= KEYWORD_53
                                     {
-                                    lv_local_15_1=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleDvarDef3348); if (state.failed) return current;
+                                    lv_local_15_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleDvarDef3348); if (state.failed) return current;
                                     if ( state.backtracking==0 ) {
 
                                               newLeafNode(lv_local_15_1, grammarAccess.getDvarDefAccess().getLocalLocalKeyword_1_2_1_0_0());
@@ -4718,9 +4719,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                                     }
                                     break;
                                 case 2 :
-                                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1590:8: lv_local_15_2= KEYWORD_52
+                                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1590:8: lv_local_15_2= KEYWORD_53
                                     {
-                                    lv_local_15_2=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleDvarDef3376); if (state.failed) return current;
+                                    lv_local_15_2=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleDvarDef3376); if (state.failed) return current;
                                     if ( state.backtracking==0 ) {
 
                                               newLeafNode(lv_local_15_2, grammarAccess.getDvarDefAccess().getLocalLOCALKeyword_1_2_1_0_1());
@@ -4804,10 +4805,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     int alt44=2;
                     int LA44_0 = input.LA(1);
 
-                    if ( (LA44_0==KEYWORD_53||LA44_0==KEYWORD_56||LA44_0==KEYWORD_25) ) {
+                    if ( (LA44_0==KEYWORD_54||LA44_0==KEYWORD_57||LA44_0==KEYWORD_25) ) {
                         alt44=1;
                     }
-                    else if ( (LA44_0==KEYWORD_69) ) {
+                    else if ( (LA44_0==KEYWORD_70) ) {
                         alt44=2;
                     }
                     else {
@@ -4960,7 +4961,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConstDef"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1690:1: ruleConstDef returns [EObject current=null] : ( (otherlv_0= KEYWORD_50 | otherlv_1= KEYWORD_50 | otherlv_2= KEYWORD_50 ) (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleNumber ) ) otherlv_9= KEYWORD_15 ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1690:1: ruleConstDef returns [EObject current=null] : ( (otherlv_0= KEYWORD_51 | otherlv_1= KEYWORD_51 | otherlv_2= KEYWORD_51 ) (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleNumber ) ) otherlv_9= KEYWORD_15 ) ;
     public final EObject ruleConstDef() throws RecognitionException {
         EObject current = null;
 
@@ -4980,17 +4981,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1693:28: ( ( (otherlv_0= KEYWORD_50 | otherlv_1= KEYWORD_50 | otherlv_2= KEYWORD_50 ) (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleNumber ) ) otherlv_9= KEYWORD_15 ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1694:1: ( (otherlv_0= KEYWORD_50 | otherlv_1= KEYWORD_50 | otherlv_2= KEYWORD_50 ) (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleNumber ) ) otherlv_9= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1693:28: ( ( (otherlv_0= KEYWORD_51 | otherlv_1= KEYWORD_51 | otherlv_2= KEYWORD_51 ) (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleNumber ) ) otherlv_9= KEYWORD_15 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1694:1: ( (otherlv_0= KEYWORD_51 | otherlv_1= KEYWORD_51 | otherlv_2= KEYWORD_51 ) (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleNumber ) ) otherlv_9= KEYWORD_15 )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1694:1: ( (otherlv_0= KEYWORD_50 | otherlv_1= KEYWORD_50 | otherlv_2= KEYWORD_50 ) (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleNumber ) ) otherlv_9= KEYWORD_15 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1694:2: (otherlv_0= KEYWORD_50 | otherlv_1= KEYWORD_50 | otherlv_2= KEYWORD_50 ) (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleNumber ) ) otherlv_9= KEYWORD_15
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1694:1: ( (otherlv_0= KEYWORD_51 | otherlv_1= KEYWORD_51 | otherlv_2= KEYWORD_51 ) (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleNumber ) ) otherlv_9= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1694:2: (otherlv_0= KEYWORD_51 | otherlv_1= KEYWORD_51 | otherlv_2= KEYWORD_51 ) (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 ( (lv_definition_8_0= ruleNumber ) ) otherlv_9= KEYWORD_15
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1694:2: (otherlv_0= KEYWORD_50 | otherlv_1= KEYWORD_50 | otherlv_2= KEYWORD_50 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1694:2: (otherlv_0= KEYWORD_51 | otherlv_1= KEYWORD_51 | otherlv_2= KEYWORD_51 )
             int alt46=3;
             int LA46_0 = input.LA(1);
 
-            if ( (LA46_0==KEYWORD_50) ) {
+            if ( (LA46_0==KEYWORD_51) ) {
                 int LA46_1 = input.LA(2);
 
                 if ( (synpred54_InternalWreslEditorParser()) ) {
@@ -5019,9 +5020,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt46) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1695:2: otherlv_0= KEYWORD_50
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1695:2: otherlv_0= KEYWORD_51
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_50,FOLLOW_KEYWORD_50_in_ruleConstDef3582); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_51,FOLLOW_KEYWORD_51_in_ruleConstDef3582); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getConstDefAccess().getConstKeyword_0_0());
@@ -5031,9 +5032,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1701:2: otherlv_1= KEYWORD_50
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1701:2: otherlv_1= KEYWORD_51
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_50,FOLLOW_KEYWORD_50_in_ruleConstDef3600); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_51,FOLLOW_KEYWORD_51_in_ruleConstDef3600); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getConstDefAccess().getCONSTKeyword_0_1());
@@ -5043,9 +5044,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1707:2: otherlv_2= KEYWORD_50
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1707:2: otherlv_2= KEYWORD_51
                     {
-                    otherlv_2=(Token)match(input,KEYWORD_50,FOLLOW_KEYWORD_50_in_ruleConstDef3618); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,KEYWORD_51,FOLLOW_KEYWORD_51_in_ruleConstDef3618); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getConstDefAccess().getConstKeyword_0_2());
@@ -5057,7 +5058,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1711:2: (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )?
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1711:2: (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )?
             int alt48=2;
             int LA48_0 = input.LA(1);
 
@@ -5066,7 +5067,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt48) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1712:2: otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1712:2: otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12
                     {
                     otherlv_3=(Token)match(input,KEYWORD_11,FOLLOW_KEYWORD_11_in_ruleConstDef3632); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -5074,17 +5075,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_3, grammarAccess.getConstDefAccess().getLeftSquareBracketKeyword_1_0());
                           
                     }
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1716:1: ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1717:1: ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1716:1: ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1717:1: ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1717:1: ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1718:1: (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1717:1: ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1718:1: (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1718:1: (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1718:1: (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 )
                     int alt47=2;
                     int LA47_0 = input.LA(1);
 
-                    if ( (LA47_0==KEYWORD_52) ) {
+                    if ( (LA47_0==KEYWORD_53) ) {
                         int LA47_1 = input.LA(2);
 
                         if ( (synpred56_InternalWreslEditorParser()) ) {
@@ -5110,9 +5111,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt47) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1719:3: lv_local_4_1= KEYWORD_52
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1719:3: lv_local_4_1= KEYWORD_53
                             {
-                            lv_local_4_1=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleConstDef3652); if (state.failed) return current;
+                            lv_local_4_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleConstDef3652); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                       newLeafNode(lv_local_4_1, grammarAccess.getConstDefAccess().getLocalLocalKeyword_1_1_0_0());
@@ -5130,9 +5131,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1732:8: lv_local_4_2= KEYWORD_52
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1732:8: lv_local_4_2= KEYWORD_53
                             {
-                            lv_local_4_2=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleConstDef3680); if (state.failed) return current;
+                            lv_local_4_2=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleConstDef3680); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                       newLeafNode(lv_local_4_2, grammarAccess.getConstDefAccess().getLocalLOCALKeyword_1_1_0_1());
@@ -5310,7 +5311,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAlias"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1814:1: ruleAlias returns [EObject current=null] : ( (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 (otherlv_8= KEYWORD_49 | otherlv_9= KEYWORD_49 ) ( (lv_expression_10_0= ruleExpression ) ) ( (otherlv_11= KEYWORD_47 | otherlv_12= KEYWORD_47 ) ( (lv_kind_13_0= RULE_STRING ) ) )? ( (otherlv_14= KEYWORD_55 | otherlv_15= KEYWORD_55 ) ( (lv_units_16_0= RULE_STRING ) ) )? otherlv_17= KEYWORD_15 ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1814:1: ruleAlias returns [EObject current=null] : ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 (otherlv_8= KEYWORD_50 | otherlv_9= KEYWORD_50 ) ( (lv_expression_10_0= ruleExpression ) ) ( (otherlv_11= KEYWORD_48 | otherlv_12= KEYWORD_48 ) ( (lv_kind_13_0= RULE_STRING ) ) )? ( (otherlv_14= KEYWORD_56 | otherlv_15= KEYWORD_56 ) ( (lv_units_16_0= RULE_STRING ) ) )? otherlv_17= KEYWORD_15 ) ;
     public final EObject ruleAlias() throws RecognitionException {
         EObject current = null;
 
@@ -5339,17 +5340,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1817:28: ( ( (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 (otherlv_8= KEYWORD_49 | otherlv_9= KEYWORD_49 ) ( (lv_expression_10_0= ruleExpression ) ) ( (otherlv_11= KEYWORD_47 | otherlv_12= KEYWORD_47 ) ( (lv_kind_13_0= RULE_STRING ) ) )? ( (otherlv_14= KEYWORD_55 | otherlv_15= KEYWORD_55 ) ( (lv_units_16_0= RULE_STRING ) ) )? otherlv_17= KEYWORD_15 ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1818:1: ( (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 (otherlv_8= KEYWORD_49 | otherlv_9= KEYWORD_49 ) ( (lv_expression_10_0= ruleExpression ) ) ( (otherlv_11= KEYWORD_47 | otherlv_12= KEYWORD_47 ) ( (lv_kind_13_0= RULE_STRING ) ) )? ( (otherlv_14= KEYWORD_55 | otherlv_15= KEYWORD_55 ) ( (lv_units_16_0= RULE_STRING ) ) )? otherlv_17= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1817:28: ( ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 (otherlv_8= KEYWORD_50 | otherlv_9= KEYWORD_50 ) ( (lv_expression_10_0= ruleExpression ) ) ( (otherlv_11= KEYWORD_48 | otherlv_12= KEYWORD_48 ) ( (lv_kind_13_0= RULE_STRING ) ) )? ( (otherlv_14= KEYWORD_56 | otherlv_15= KEYWORD_56 ) ( (lv_units_16_0= RULE_STRING ) ) )? otherlv_17= KEYWORD_15 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1818:1: ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 (otherlv_8= KEYWORD_50 | otherlv_9= KEYWORD_50 ) ( (lv_expression_10_0= ruleExpression ) ) ( (otherlv_11= KEYWORD_48 | otherlv_12= KEYWORD_48 ) ( (lv_kind_13_0= RULE_STRING ) ) )? ( (otherlv_14= KEYWORD_56 | otherlv_15= KEYWORD_56 ) ( (lv_units_16_0= RULE_STRING ) ) )? otherlv_17= KEYWORD_15 )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1818:1: ( (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 (otherlv_8= KEYWORD_49 | otherlv_9= KEYWORD_49 ) ( (lv_expression_10_0= ruleExpression ) ) ( (otherlv_11= KEYWORD_47 | otherlv_12= KEYWORD_47 ) ( (lv_kind_13_0= RULE_STRING ) ) )? ( (otherlv_14= KEYWORD_55 | otherlv_15= KEYWORD_55 ) ( (lv_units_16_0= RULE_STRING ) ) )? otherlv_17= KEYWORD_15 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1818:2: (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 (otherlv_8= KEYWORD_49 | otherlv_9= KEYWORD_49 ) ( (lv_expression_10_0= ruleExpression ) ) ( (otherlv_11= KEYWORD_47 | otherlv_12= KEYWORD_47 ) ( (lv_kind_13_0= RULE_STRING ) ) )? ( (otherlv_14= KEYWORD_55 | otherlv_15= KEYWORD_55 ) ( (lv_units_16_0= RULE_STRING ) ) )? otherlv_17= KEYWORD_15
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1818:1: ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 (otherlv_8= KEYWORD_50 | otherlv_9= KEYWORD_50 ) ( (lv_expression_10_0= ruleExpression ) ) ( (otherlv_11= KEYWORD_48 | otherlv_12= KEYWORD_48 ) ( (lv_kind_13_0= RULE_STRING ) ) )? ( (otherlv_14= KEYWORD_56 | otherlv_15= KEYWORD_56 ) ( (lv_units_16_0= RULE_STRING ) ) )? otherlv_17= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1818:2: (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (otherlv_6= RULE_ID ) ) otherlv_7= KEYWORD_14 (otherlv_8= KEYWORD_50 | otherlv_9= KEYWORD_50 ) ( (lv_expression_10_0= ruleExpression ) ) ( (otherlv_11= KEYWORD_48 | otherlv_12= KEYWORD_48 ) ( (lv_kind_13_0= RULE_STRING ) ) )? ( (otherlv_14= KEYWORD_56 | otherlv_15= KEYWORD_56 ) ( (lv_units_16_0= RULE_STRING ) ) )? otherlv_17= KEYWORD_15
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1818:2: (otherlv_0= KEYWORD_60 | otherlv_1= KEYWORD_60 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1818:2: (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 )
             int alt49=2;
             int LA49_0 = input.LA(1);
 
-            if ( (LA49_0==KEYWORD_60) ) {
+            if ( (LA49_0==KEYWORD_61) ) {
                 int LA49_1 = input.LA(2);
 
                 if ( (synpred58_InternalWreslEditorParser()) ) {
@@ -5375,9 +5376,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt49) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1819:2: otherlv_0= KEYWORD_60
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1819:2: otherlv_0= KEYWORD_61
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_60,FOLLOW_KEYWORD_60_in_ruleAlias3861); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_61,FOLLOW_KEYWORD_61_in_ruleAlias3861); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getAliasAccess().getDefineKeyword_0_0());
@@ -5387,9 +5388,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1825:2: otherlv_1= KEYWORD_60
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1825:2: otherlv_1= KEYWORD_61
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_60,FOLLOW_KEYWORD_60_in_ruleAlias3879); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_61,FOLLOW_KEYWORD_61_in_ruleAlias3879); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getAliasAccess().getDEFINEKeyword_0_1());
@@ -5447,7 +5448,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1847:3: (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )?
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1847:3: (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )?
             int alt52=2;
             int LA52_0 = input.LA(1);
 
@@ -5456,7 +5457,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt52) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1848:2: otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1848:2: otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12
                     {
                     otherlv_3=(Token)match(input,KEYWORD_11,FOLLOW_KEYWORD_11_in_ruleAlias3915); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -5464,17 +5465,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_3, grammarAccess.getAliasAccess().getLeftSquareBracketKeyword_2_0());
                           
                     }
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1852:1: ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1853:1: ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1852:1: ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1853:1: ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1853:1: ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1854:1: (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1853:1: ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1854:1: (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1854:1: (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1854:1: (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 )
                     int alt51=2;
                     int LA51_0 = input.LA(1);
 
-                    if ( (LA51_0==KEYWORD_52) ) {
+                    if ( (LA51_0==KEYWORD_53) ) {
                         int LA51_1 = input.LA(2);
 
                         if ( (synpred60_InternalWreslEditorParser()) ) {
@@ -5500,9 +5501,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt51) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1855:3: lv_local_4_1= KEYWORD_52
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1855:3: lv_local_4_1= KEYWORD_53
                             {
-                            lv_local_4_1=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleAlias3935); if (state.failed) return current;
+                            lv_local_4_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleAlias3935); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                       newLeafNode(lv_local_4_1, grammarAccess.getAliasAccess().getLocalLocalKeyword_2_1_0_0());
@@ -5520,9 +5521,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1868:8: lv_local_4_2= KEYWORD_52
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1868:8: lv_local_4_2= KEYWORD_53
                             {
-                            lv_local_4_2=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleAlias3963); if (state.failed) return current;
+                            lv_local_4_2=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleAlias3963); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                       newLeafNode(lv_local_4_2, grammarAccess.getAliasAccess().getLocalLOCALKeyword_2_1_0_1());
@@ -5596,11 +5597,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_7, grammarAccess.getAliasAccess().getLeftCurlyBracketKeyword_4());
                   
             }
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1910:1: (otherlv_8= KEYWORD_49 | otherlv_9= KEYWORD_49 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1910:1: (otherlv_8= KEYWORD_50 | otherlv_9= KEYWORD_50 )
             int alt53=2;
             int LA53_0 = input.LA(1);
 
-            if ( (LA53_0==KEYWORD_49) ) {
+            if ( (LA53_0==KEYWORD_50) ) {
                 int LA53_1 = input.LA(2);
 
                 if ( (synpred62_InternalWreslEditorParser()) ) {
@@ -5626,9 +5627,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt53) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1911:2: otherlv_8= KEYWORD_49
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1911:2: otherlv_8= KEYWORD_50
                     {
-                    otherlv_8=(Token)match(input,KEYWORD_49,FOLLOW_KEYWORD_49_in_ruleAlias4041); if (state.failed) return current;
+                    otherlv_8=(Token)match(input,KEYWORD_50,FOLLOW_KEYWORD_50_in_ruleAlias4041); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_8, grammarAccess.getAliasAccess().getAliasKeyword_5_0());
@@ -5638,9 +5639,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1917:2: otherlv_9= KEYWORD_49
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1917:2: otherlv_9= KEYWORD_50
                     {
-                    otherlv_9=(Token)match(input,KEYWORD_49,FOLLOW_KEYWORD_49_in_ruleAlias4059); if (state.failed) return current;
+                    otherlv_9=(Token)match(input,KEYWORD_50,FOLLOW_KEYWORD_50_in_ruleAlias4059); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_9, grammarAccess.getAliasAccess().getALIASKeyword_5_1());
@@ -5687,22 +5688,22 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1939:2: ( (otherlv_11= KEYWORD_47 | otherlv_12= KEYWORD_47 ) ( (lv_kind_13_0= RULE_STRING ) ) )?
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1939:2: ( (otherlv_11= KEYWORD_48 | otherlv_12= KEYWORD_48 ) ( (lv_kind_13_0= RULE_STRING ) ) )?
             int alt55=2;
             int LA55_0 = input.LA(1);
 
-            if ( (LA55_0==KEYWORD_47) ) {
+            if ( (LA55_0==KEYWORD_48) ) {
                 alt55=1;
             }
             switch (alt55) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1939:3: (otherlv_11= KEYWORD_47 | otherlv_12= KEYWORD_47 ) ( (lv_kind_13_0= RULE_STRING ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1939:3: (otherlv_11= KEYWORD_48 | otherlv_12= KEYWORD_48 ) ( (lv_kind_13_0= RULE_STRING ) )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1939:3: (otherlv_11= KEYWORD_47 | otherlv_12= KEYWORD_47 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1939:3: (otherlv_11= KEYWORD_48 | otherlv_12= KEYWORD_48 )
                     int alt54=2;
                     int LA54_0 = input.LA(1);
 
-                    if ( (LA54_0==KEYWORD_47) ) {
+                    if ( (LA54_0==KEYWORD_48) ) {
                         int LA54_1 = input.LA(2);
 
                         if ( (synpred63_InternalWreslEditorParser()) ) {
@@ -5728,9 +5729,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt54) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1940:2: otherlv_11= KEYWORD_47
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1940:2: otherlv_11= KEYWORD_48
                             {
-                            otherlv_11=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_ruleAlias4095); if (state.failed) return current;
+                            otherlv_11=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_ruleAlias4095); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_11, grammarAccess.getAliasAccess().getKindKeyword_7_0_0());
@@ -5740,9 +5741,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1946:2: otherlv_12= KEYWORD_47
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1946:2: otherlv_12= KEYWORD_48
                             {
-                            otherlv_12=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_ruleAlias4113); if (state.failed) return current;
+                            otherlv_12=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_ruleAlias4113); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_12, grammarAccess.getAliasAccess().getKINDKeyword_7_0_1());
@@ -5790,22 +5791,22 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1968:4: ( (otherlv_14= KEYWORD_55 | otherlv_15= KEYWORD_55 ) ( (lv_units_16_0= RULE_STRING ) ) )?
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1968:4: ( (otherlv_14= KEYWORD_56 | otherlv_15= KEYWORD_56 ) ( (lv_units_16_0= RULE_STRING ) ) )?
             int alt57=2;
             int LA57_0 = input.LA(1);
 
-            if ( (LA57_0==KEYWORD_55) ) {
+            if ( (LA57_0==KEYWORD_56) ) {
                 alt57=1;
             }
             switch (alt57) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1968:5: (otherlv_14= KEYWORD_55 | otherlv_15= KEYWORD_55 ) ( (lv_units_16_0= RULE_STRING ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1968:5: (otherlv_14= KEYWORD_56 | otherlv_15= KEYWORD_56 ) ( (lv_units_16_0= RULE_STRING ) )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1968:5: (otherlv_14= KEYWORD_55 | otherlv_15= KEYWORD_55 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1968:5: (otherlv_14= KEYWORD_56 | otherlv_15= KEYWORD_56 )
                     int alt56=2;
                     int LA56_0 = input.LA(1);
 
-                    if ( (LA56_0==KEYWORD_55) ) {
+                    if ( (LA56_0==KEYWORD_56) ) {
                         int LA56_1 = input.LA(2);
 
                         if ( (synpred65_InternalWreslEditorParser()) ) {
@@ -5831,9 +5832,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt56) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1969:2: otherlv_14= KEYWORD_55
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1969:2: otherlv_14= KEYWORD_56
                             {
-                            otherlv_14=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_ruleAlias4152); if (state.failed) return current;
+                            otherlv_14=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_ruleAlias4152); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_14, grammarAccess.getAliasAccess().getUnitsKeyword_8_0_0());
@@ -5843,9 +5844,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1975:2: otherlv_15= KEYWORD_55
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1975:2: otherlv_15= KEYWORD_56
                             {
-                            otherlv_15=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_ruleAlias4170); if (state.failed) return current;
+                            otherlv_15=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_ruleAlias4170); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_15, grammarAccess.getAliasAccess().getUNITSKeyword_8_0_1());
@@ -5962,7 +5963,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExternal"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2019:1: ruleExternal returns [EObject current=null] : ( (otherlv_0= KEYWORD_85 | otherlv_1= KEYWORD_85 ) ( ( ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= KEYWORD_40 | otherlv_4= KEYWORD_40 ) ) | ( () (otherlv_6= KEYWORD_22 | otherlv_7= KEYWORD_22 ) ) ) ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2019:1: ruleExternal returns [EObject current=null] : ( (otherlv_0= KEYWORD_86 | otherlv_1= KEYWORD_86 ) ( ( ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= KEYWORD_41 | otherlv_4= KEYWORD_41 ) ) | ( () (otherlv_6= KEYWORD_22 | otherlv_7= KEYWORD_22 ) ) ) ) ;
     public final EObject ruleExternal() throws RecognitionException {
         EObject current = null;
 
@@ -5977,17 +5978,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2022:28: ( ( (otherlv_0= KEYWORD_85 | otherlv_1= KEYWORD_85 ) ( ( ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= KEYWORD_40 | otherlv_4= KEYWORD_40 ) ) | ( () (otherlv_6= KEYWORD_22 | otherlv_7= KEYWORD_22 ) ) ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2023:1: ( (otherlv_0= KEYWORD_85 | otherlv_1= KEYWORD_85 ) ( ( ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= KEYWORD_40 | otherlv_4= KEYWORD_40 ) ) | ( () (otherlv_6= KEYWORD_22 | otherlv_7= KEYWORD_22 ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2022:28: ( ( (otherlv_0= KEYWORD_86 | otherlv_1= KEYWORD_86 ) ( ( ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= KEYWORD_41 | otherlv_4= KEYWORD_41 ) ) | ( () (otherlv_6= KEYWORD_22 | otherlv_7= KEYWORD_22 ) ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2023:1: ( (otherlv_0= KEYWORD_86 | otherlv_1= KEYWORD_86 ) ( ( ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= KEYWORD_41 | otherlv_4= KEYWORD_41 ) ) | ( () (otherlv_6= KEYWORD_22 | otherlv_7= KEYWORD_22 ) ) ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2023:1: ( (otherlv_0= KEYWORD_85 | otherlv_1= KEYWORD_85 ) ( ( ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= KEYWORD_40 | otherlv_4= KEYWORD_40 ) ) | ( () (otherlv_6= KEYWORD_22 | otherlv_7= KEYWORD_22 ) ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2023:2: (otherlv_0= KEYWORD_85 | otherlv_1= KEYWORD_85 ) ( ( ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= KEYWORD_40 | otherlv_4= KEYWORD_40 ) ) | ( () (otherlv_6= KEYWORD_22 | otherlv_7= KEYWORD_22 ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2023:1: ( (otherlv_0= KEYWORD_86 | otherlv_1= KEYWORD_86 ) ( ( ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= KEYWORD_41 | otherlv_4= KEYWORD_41 ) ) | ( () (otherlv_6= KEYWORD_22 | otherlv_7= KEYWORD_22 ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2023:2: (otherlv_0= KEYWORD_86 | otherlv_1= KEYWORD_86 ) ( ( ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= KEYWORD_41 | otherlv_4= KEYWORD_41 ) ) | ( () (otherlv_6= KEYWORD_22 | otherlv_7= KEYWORD_22 ) ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2023:2: (otherlv_0= KEYWORD_85 | otherlv_1= KEYWORD_85 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2023:2: (otherlv_0= KEYWORD_86 | otherlv_1= KEYWORD_86 )
             int alt58=2;
             int LA58_0 = input.LA(1);
 
-            if ( (LA58_0==KEYWORD_85) ) {
+            if ( (LA58_0==KEYWORD_86) ) {
                 int LA58_1 = input.LA(2);
 
                 if ( (synpred67_InternalWreslEditorParser()) ) {
@@ -6013,9 +6014,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt58) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2024:2: otherlv_0= KEYWORD_85
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2024:2: otherlv_0= KEYWORD_86
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_85,FOLLOW_KEYWORD_85_in_ruleExternal4290); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_86,FOLLOW_KEYWORD_86_in_ruleExternal4290); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getExternalAccess().getExternalKeyword_0_0());
@@ -6025,9 +6026,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2030:2: otherlv_1= KEYWORD_85
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2030:2: otherlv_1= KEYWORD_86
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_85,FOLLOW_KEYWORD_85_in_ruleExternal4308); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_86,FOLLOW_KEYWORD_86_in_ruleExternal4308); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getExternalAccess().getEXTERNALKeyword_0_1());
@@ -6039,7 +6040,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2034:2: ( ( ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= KEYWORD_40 | otherlv_4= KEYWORD_40 ) ) | ( () (otherlv_6= KEYWORD_22 | otherlv_7= KEYWORD_22 ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2034:2: ( ( ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= KEYWORD_41 | otherlv_4= KEYWORD_41 ) ) | ( () (otherlv_6= KEYWORD_22 | otherlv_7= KEYWORD_22 ) ) )
             int alt61=2;
             int LA61_0 = input.LA(1);
 
@@ -6058,10 +6059,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt61) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2034:3: ( ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= KEYWORD_40 | otherlv_4= KEYWORD_40 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2034:3: ( ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= KEYWORD_41 | otherlv_4= KEYWORD_41 ) )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2034:3: ( ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= KEYWORD_40 | otherlv_4= KEYWORD_40 ) )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2034:4: ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= KEYWORD_40 | otherlv_4= KEYWORD_40 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2034:3: ( ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= KEYWORD_41 | otherlv_4= KEYWORD_41 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2034:4: ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= KEYWORD_41 | otherlv_4= KEYWORD_41 )
                     {
                     // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2034:4: ( (lv_name_2_0= RULE_ID ) )
                     // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2035:1: (lv_name_2_0= RULE_ID )
@@ -6093,11 +6094,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2052:2: (otherlv_3= KEYWORD_40 | otherlv_4= KEYWORD_40 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2052:2: (otherlv_3= KEYWORD_41 | otherlv_4= KEYWORD_41 )
                     int alt59=2;
                     int LA59_0 = input.LA(1);
 
-                    if ( (LA59_0==KEYWORD_40) ) {
+                    if ( (LA59_0==KEYWORD_41) ) {
                         int LA59_1 = input.LA(2);
 
                         if ( (synpred68_InternalWreslEditorParser()) ) {
@@ -6123,9 +6124,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt59) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2053:2: otherlv_3= KEYWORD_40
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2053:2: otherlv_3= KEYWORD_41
                             {
-                            otherlv_3=(Token)match(input,KEYWORD_40,FOLLOW_KEYWORD_40_in_ruleExternal4346); if (state.failed) return current;
+                            otherlv_3=(Token)match(input,KEYWORD_41,FOLLOW_KEYWORD_41_in_ruleExternal4346); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_3, grammarAccess.getExternalAccess().getDllKeyword_1_0_1_0());
@@ -6135,9 +6136,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2059:2: otherlv_4= KEYWORD_40
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2059:2: otherlv_4= KEYWORD_41
                             {
-                            otherlv_4=(Token)match(input,KEYWORD_40,FOLLOW_KEYWORD_40_in_ruleExternal4364); if (state.failed) return current;
+                            otherlv_4=(Token)match(input,KEYWORD_41,FOLLOW_KEYWORD_41_in_ruleExternal4364); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_4, grammarAccess.getExternalAccess().getDLLKeyword_1_0_1_1());
@@ -6329,7 +6330,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             if ( (LA62_0==KEYWORD_25) ) {
                 alt62=1;
             }
-            else if ( (LA62_0==KEYWORD_53||LA62_0==KEYWORD_56) ) {
+            else if ( (LA62_0==KEYWORD_54||LA62_0==KEYWORD_57) ) {
                 alt62=2;
             }
             else {
@@ -6457,7 +6458,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDVarNonStd"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2147:1: ruleDVarNonStd returns [EObject current=null] : ( ( (lv_lowerUpper_0_0= ruleLowerAndOrUpper ) ) (otherlv_1= KEYWORD_47 | otherlv_2= KEYWORD_47 ) ( (lv_kind_3_0= RULE_STRING ) ) (otherlv_4= KEYWORD_55 | otherlv_5= KEYWORD_55 ) ( (lv_units_6_0= RULE_STRING ) ) ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2147:1: ruleDVarNonStd returns [EObject current=null] : ( ( (lv_lowerUpper_0_0= ruleLowerAndOrUpper ) ) (otherlv_1= KEYWORD_48 | otherlv_2= KEYWORD_48 ) ( (lv_kind_3_0= RULE_STRING ) ) (otherlv_4= KEYWORD_56 | otherlv_5= KEYWORD_56 ) ( (lv_units_6_0= RULE_STRING ) ) ) ;
     public final EObject ruleDVarNonStd() throws RecognitionException {
         EObject current = null;
 
@@ -6473,11 +6474,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2150:28: ( ( ( (lv_lowerUpper_0_0= ruleLowerAndOrUpper ) ) (otherlv_1= KEYWORD_47 | otherlv_2= KEYWORD_47 ) ( (lv_kind_3_0= RULE_STRING ) ) (otherlv_4= KEYWORD_55 | otherlv_5= KEYWORD_55 ) ( (lv_units_6_0= RULE_STRING ) ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2151:1: ( ( (lv_lowerUpper_0_0= ruleLowerAndOrUpper ) ) (otherlv_1= KEYWORD_47 | otherlv_2= KEYWORD_47 ) ( (lv_kind_3_0= RULE_STRING ) ) (otherlv_4= KEYWORD_55 | otherlv_5= KEYWORD_55 ) ( (lv_units_6_0= RULE_STRING ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2150:28: ( ( ( (lv_lowerUpper_0_0= ruleLowerAndOrUpper ) ) (otherlv_1= KEYWORD_48 | otherlv_2= KEYWORD_48 ) ( (lv_kind_3_0= RULE_STRING ) ) (otherlv_4= KEYWORD_56 | otherlv_5= KEYWORD_56 ) ( (lv_units_6_0= RULE_STRING ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2151:1: ( ( (lv_lowerUpper_0_0= ruleLowerAndOrUpper ) ) (otherlv_1= KEYWORD_48 | otherlv_2= KEYWORD_48 ) ( (lv_kind_3_0= RULE_STRING ) ) (otherlv_4= KEYWORD_56 | otherlv_5= KEYWORD_56 ) ( (lv_units_6_0= RULE_STRING ) ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2151:1: ( ( (lv_lowerUpper_0_0= ruleLowerAndOrUpper ) ) (otherlv_1= KEYWORD_47 | otherlv_2= KEYWORD_47 ) ( (lv_kind_3_0= RULE_STRING ) ) (otherlv_4= KEYWORD_55 | otherlv_5= KEYWORD_55 ) ( (lv_units_6_0= RULE_STRING ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2151:2: ( (lv_lowerUpper_0_0= ruleLowerAndOrUpper ) ) (otherlv_1= KEYWORD_47 | otherlv_2= KEYWORD_47 ) ( (lv_kind_3_0= RULE_STRING ) ) (otherlv_4= KEYWORD_55 | otherlv_5= KEYWORD_55 ) ( (lv_units_6_0= RULE_STRING ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2151:1: ( ( (lv_lowerUpper_0_0= ruleLowerAndOrUpper ) ) (otherlv_1= KEYWORD_48 | otherlv_2= KEYWORD_48 ) ( (lv_kind_3_0= RULE_STRING ) ) (otherlv_4= KEYWORD_56 | otherlv_5= KEYWORD_56 ) ( (lv_units_6_0= RULE_STRING ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2151:2: ( (lv_lowerUpper_0_0= ruleLowerAndOrUpper ) ) (otherlv_1= KEYWORD_48 | otherlv_2= KEYWORD_48 ) ( (lv_kind_3_0= RULE_STRING ) ) (otherlv_4= KEYWORD_56 | otherlv_5= KEYWORD_56 ) ( (lv_units_6_0= RULE_STRING ) )
             {
             // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2151:2: ( (lv_lowerUpper_0_0= ruleLowerAndOrUpper ) )
             // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2152:1: (lv_lowerUpper_0_0= ruleLowerAndOrUpper )
@@ -6514,11 +6515,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2169:2: (otherlv_1= KEYWORD_47 | otherlv_2= KEYWORD_47 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2169:2: (otherlv_1= KEYWORD_48 | otherlv_2= KEYWORD_48 )
             int alt63=2;
             int LA63_0 = input.LA(1);
 
-            if ( (LA63_0==KEYWORD_47) ) {
+            if ( (LA63_0==KEYWORD_48) ) {
                 int LA63_1 = input.LA(2);
 
                 if ( (synpred72_InternalWreslEditorParser()) ) {
@@ -6544,9 +6545,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt63) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2170:2: otherlv_1= KEYWORD_47
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2170:2: otherlv_1= KEYWORD_48
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_ruleDVarNonStd4647); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_ruleDVarNonStd4647); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getDVarNonStdAccess().getKindKeyword_1_0());
@@ -6556,9 +6557,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2176:2: otherlv_2= KEYWORD_47
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2176:2: otherlv_2= KEYWORD_48
                     {
-                    otherlv_2=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_ruleDVarNonStd4665); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_ruleDVarNonStd4665); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getDVarNonStdAccess().getKINDKeyword_1_1());
@@ -6600,11 +6601,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2198:2: (otherlv_4= KEYWORD_55 | otherlv_5= KEYWORD_55 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2198:2: (otherlv_4= KEYWORD_56 | otherlv_5= KEYWORD_56 )
             int alt64=2;
             int LA64_0 = input.LA(1);
 
-            if ( (LA64_0==KEYWORD_55) ) {
+            if ( (LA64_0==KEYWORD_56) ) {
                 int LA64_1 = input.LA(2);
 
                 if ( (synpred73_InternalWreslEditorParser()) ) {
@@ -6630,9 +6631,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt64) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2199:2: otherlv_4= KEYWORD_55
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2199:2: otherlv_4= KEYWORD_56
                     {
-                    otherlv_4=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_ruleDVarNonStd4701); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_ruleDVarNonStd4701); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_4, grammarAccess.getDVarNonStdAccess().getUnitsKeyword_3_0());
@@ -6642,9 +6643,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2205:2: otherlv_5= KEYWORD_55
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2205:2: otherlv_5= KEYWORD_56
                     {
-                    otherlv_5=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_ruleDVarNonStd4719); if (state.failed) return current;
+                    otherlv_5=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_ruleDVarNonStd4719); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_5, grammarAccess.getDVarNonStdAccess().getUNITSKeyword_3_1());
@@ -6749,7 +6750,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDVarStd"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2244:1: ruleDVarStd returns [EObject current=null] : ( (otherlv_0= KEYWORD_25 | otherlv_1= KEYWORD_25 ) (otherlv_2= KEYWORD_47 | otherlv_3= KEYWORD_47 ) ( (lv_kind_4_0= RULE_STRING ) ) (otherlv_5= KEYWORD_55 | otherlv_6= KEYWORD_55 ) ( (lv_units_7_0= RULE_STRING ) ) ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2244:1: ruleDVarStd returns [EObject current=null] : ( (otherlv_0= KEYWORD_25 | otherlv_1= KEYWORD_25 ) (otherlv_2= KEYWORD_48 | otherlv_3= KEYWORD_48 ) ( (lv_kind_4_0= RULE_STRING ) ) (otherlv_5= KEYWORD_56 | otherlv_6= KEYWORD_56 ) ( (lv_units_7_0= RULE_STRING ) ) ) ;
     public final EObject ruleDVarStd() throws RecognitionException {
         EObject current = null;
 
@@ -6765,11 +6766,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2247:28: ( ( (otherlv_0= KEYWORD_25 | otherlv_1= KEYWORD_25 ) (otherlv_2= KEYWORD_47 | otherlv_3= KEYWORD_47 ) ( (lv_kind_4_0= RULE_STRING ) ) (otherlv_5= KEYWORD_55 | otherlv_6= KEYWORD_55 ) ( (lv_units_7_0= RULE_STRING ) ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2248:1: ( (otherlv_0= KEYWORD_25 | otherlv_1= KEYWORD_25 ) (otherlv_2= KEYWORD_47 | otherlv_3= KEYWORD_47 ) ( (lv_kind_4_0= RULE_STRING ) ) (otherlv_5= KEYWORD_55 | otherlv_6= KEYWORD_55 ) ( (lv_units_7_0= RULE_STRING ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2247:28: ( ( (otherlv_0= KEYWORD_25 | otherlv_1= KEYWORD_25 ) (otherlv_2= KEYWORD_48 | otherlv_3= KEYWORD_48 ) ( (lv_kind_4_0= RULE_STRING ) ) (otherlv_5= KEYWORD_56 | otherlv_6= KEYWORD_56 ) ( (lv_units_7_0= RULE_STRING ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2248:1: ( (otherlv_0= KEYWORD_25 | otherlv_1= KEYWORD_25 ) (otherlv_2= KEYWORD_48 | otherlv_3= KEYWORD_48 ) ( (lv_kind_4_0= RULE_STRING ) ) (otherlv_5= KEYWORD_56 | otherlv_6= KEYWORD_56 ) ( (lv_units_7_0= RULE_STRING ) ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2248:1: ( (otherlv_0= KEYWORD_25 | otherlv_1= KEYWORD_25 ) (otherlv_2= KEYWORD_47 | otherlv_3= KEYWORD_47 ) ( (lv_kind_4_0= RULE_STRING ) ) (otherlv_5= KEYWORD_55 | otherlv_6= KEYWORD_55 ) ( (lv_units_7_0= RULE_STRING ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2248:2: (otherlv_0= KEYWORD_25 | otherlv_1= KEYWORD_25 ) (otherlv_2= KEYWORD_47 | otherlv_3= KEYWORD_47 ) ( (lv_kind_4_0= RULE_STRING ) ) (otherlv_5= KEYWORD_55 | otherlv_6= KEYWORD_55 ) ( (lv_units_7_0= RULE_STRING ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2248:1: ( (otherlv_0= KEYWORD_25 | otherlv_1= KEYWORD_25 ) (otherlv_2= KEYWORD_48 | otherlv_3= KEYWORD_48 ) ( (lv_kind_4_0= RULE_STRING ) ) (otherlv_5= KEYWORD_56 | otherlv_6= KEYWORD_56 ) ( (lv_units_7_0= RULE_STRING ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2248:2: (otherlv_0= KEYWORD_25 | otherlv_1= KEYWORD_25 ) (otherlv_2= KEYWORD_48 | otherlv_3= KEYWORD_48 ) ( (lv_kind_4_0= RULE_STRING ) ) (otherlv_5= KEYWORD_56 | otherlv_6= KEYWORD_56 ) ( (lv_units_7_0= RULE_STRING ) )
             {
             // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2248:2: (otherlv_0= KEYWORD_25 | otherlv_1= KEYWORD_25 )
             int alt65=2;
@@ -6827,11 +6828,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2259:2: (otherlv_2= KEYWORD_47 | otherlv_3= KEYWORD_47 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2259:2: (otherlv_2= KEYWORD_48 | otherlv_3= KEYWORD_48 )
             int alt66=2;
             int LA66_0 = input.LA(1);
 
-            if ( (LA66_0==KEYWORD_47) ) {
+            if ( (LA66_0==KEYWORD_48) ) {
                 int LA66_1 = input.LA(2);
 
                 if ( (synpred75_InternalWreslEditorParser()) ) {
@@ -6857,9 +6858,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt66) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2260:2: otherlv_2= KEYWORD_47
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2260:2: otherlv_2= KEYWORD_48
                     {
-                    otherlv_2=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_ruleDVarStd4857); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_ruleDVarStd4857); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getDVarStdAccess().getKindKeyword_1_0());
@@ -6869,9 +6870,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2266:2: otherlv_3= KEYWORD_47
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2266:2: otherlv_3= KEYWORD_48
                     {
-                    otherlv_3=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_ruleDVarStd4875); if (state.failed) return current;
+                    otherlv_3=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_ruleDVarStd4875); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_3, grammarAccess.getDVarStdAccess().getKINDKeyword_1_1());
@@ -6913,11 +6914,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2288:2: (otherlv_5= KEYWORD_55 | otherlv_6= KEYWORD_55 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2288:2: (otherlv_5= KEYWORD_56 | otherlv_6= KEYWORD_56 )
             int alt67=2;
             int LA67_0 = input.LA(1);
 
-            if ( (LA67_0==KEYWORD_55) ) {
+            if ( (LA67_0==KEYWORD_56) ) {
                 int LA67_1 = input.LA(2);
 
                 if ( (synpred76_InternalWreslEditorParser()) ) {
@@ -6943,9 +6944,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt67) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2289:2: otherlv_5= KEYWORD_55
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2289:2: otherlv_5= KEYWORD_56
                     {
-                    otherlv_5=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_ruleDVarStd4911); if (state.failed) return current;
+                    otherlv_5=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_ruleDVarStd4911); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_5, grammarAccess.getDVarStdAccess().getUnitsKeyword_3_0());
@@ -6955,9 +6956,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2295:2: otherlv_6= KEYWORD_55
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2295:2: otherlv_6= KEYWORD_56
                     {
-                    otherlv_6=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_ruleDVarStd4929); if (state.failed) return current;
+                    otherlv_6=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_ruleDVarStd4929); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_6, grammarAccess.getDVarStdAccess().getUNITSKeyword_3_1());
@@ -7081,14 +7082,14 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             int alt68=2;
             int LA68_0 = input.LA(1);
 
-            if ( (LA68_0==KEYWORD_69) ) {
+            if ( (LA68_0==KEYWORD_70) ) {
                 int LA68_1 = input.LA(2);
 
-                if ( (LA68_1==KEYWORD_53||LA68_1==KEYWORD_56) ) {
-                    alt68=2;
-                }
-                else if ( (LA68_1==KEYWORD_25) ) {
+                if ( (LA68_1==KEYWORD_25) ) {
                     alt68=1;
+                }
+                else if ( (LA68_1==KEYWORD_54||LA68_1==KEYWORD_57) ) {
+                    alt68=2;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
@@ -7223,7 +7224,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDVarIntegerStd"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2380:1: ruleDVarIntegerStd returns [EObject current=null] : ( (otherlv_0= KEYWORD_69 | otherlv_1= KEYWORD_69 ) (otherlv_2= KEYWORD_25 | otherlv_3= KEYWORD_25 ) (otherlv_4= KEYWORD_47 | otherlv_5= KEYWORD_47 ) ( (lv_kind_6_0= RULE_STRING ) ) (otherlv_7= KEYWORD_55 | otherlv_8= KEYWORD_55 ) ( (lv_units_9_0= RULE_STRING ) ) ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2380:1: ruleDVarIntegerStd returns [EObject current=null] : ( (otherlv_0= KEYWORD_70 | otherlv_1= KEYWORD_70 ) (otherlv_2= KEYWORD_25 | otherlv_3= KEYWORD_25 ) (otherlv_4= KEYWORD_48 | otherlv_5= KEYWORD_48 ) ( (lv_kind_6_0= RULE_STRING ) ) (otherlv_7= KEYWORD_56 | otherlv_8= KEYWORD_56 ) ( (lv_units_9_0= RULE_STRING ) ) ) ;
     public final EObject ruleDVarIntegerStd() throws RecognitionException {
         EObject current = null;
 
@@ -7241,17 +7242,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2383:28: ( ( (otherlv_0= KEYWORD_69 | otherlv_1= KEYWORD_69 ) (otherlv_2= KEYWORD_25 | otherlv_3= KEYWORD_25 ) (otherlv_4= KEYWORD_47 | otherlv_5= KEYWORD_47 ) ( (lv_kind_6_0= RULE_STRING ) ) (otherlv_7= KEYWORD_55 | otherlv_8= KEYWORD_55 ) ( (lv_units_9_0= RULE_STRING ) ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2384:1: ( (otherlv_0= KEYWORD_69 | otherlv_1= KEYWORD_69 ) (otherlv_2= KEYWORD_25 | otherlv_3= KEYWORD_25 ) (otherlv_4= KEYWORD_47 | otherlv_5= KEYWORD_47 ) ( (lv_kind_6_0= RULE_STRING ) ) (otherlv_7= KEYWORD_55 | otherlv_8= KEYWORD_55 ) ( (lv_units_9_0= RULE_STRING ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2383:28: ( ( (otherlv_0= KEYWORD_70 | otherlv_1= KEYWORD_70 ) (otherlv_2= KEYWORD_25 | otherlv_3= KEYWORD_25 ) (otherlv_4= KEYWORD_48 | otherlv_5= KEYWORD_48 ) ( (lv_kind_6_0= RULE_STRING ) ) (otherlv_7= KEYWORD_56 | otherlv_8= KEYWORD_56 ) ( (lv_units_9_0= RULE_STRING ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2384:1: ( (otherlv_0= KEYWORD_70 | otherlv_1= KEYWORD_70 ) (otherlv_2= KEYWORD_25 | otherlv_3= KEYWORD_25 ) (otherlv_4= KEYWORD_48 | otherlv_5= KEYWORD_48 ) ( (lv_kind_6_0= RULE_STRING ) ) (otherlv_7= KEYWORD_56 | otherlv_8= KEYWORD_56 ) ( (lv_units_9_0= RULE_STRING ) ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2384:1: ( (otherlv_0= KEYWORD_69 | otherlv_1= KEYWORD_69 ) (otherlv_2= KEYWORD_25 | otherlv_3= KEYWORD_25 ) (otherlv_4= KEYWORD_47 | otherlv_5= KEYWORD_47 ) ( (lv_kind_6_0= RULE_STRING ) ) (otherlv_7= KEYWORD_55 | otherlv_8= KEYWORD_55 ) ( (lv_units_9_0= RULE_STRING ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2384:2: (otherlv_0= KEYWORD_69 | otherlv_1= KEYWORD_69 ) (otherlv_2= KEYWORD_25 | otherlv_3= KEYWORD_25 ) (otherlv_4= KEYWORD_47 | otherlv_5= KEYWORD_47 ) ( (lv_kind_6_0= RULE_STRING ) ) (otherlv_7= KEYWORD_55 | otherlv_8= KEYWORD_55 ) ( (lv_units_9_0= RULE_STRING ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2384:1: ( (otherlv_0= KEYWORD_70 | otherlv_1= KEYWORD_70 ) (otherlv_2= KEYWORD_25 | otherlv_3= KEYWORD_25 ) (otherlv_4= KEYWORD_48 | otherlv_5= KEYWORD_48 ) ( (lv_kind_6_0= RULE_STRING ) ) (otherlv_7= KEYWORD_56 | otherlv_8= KEYWORD_56 ) ( (lv_units_9_0= RULE_STRING ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2384:2: (otherlv_0= KEYWORD_70 | otherlv_1= KEYWORD_70 ) (otherlv_2= KEYWORD_25 | otherlv_3= KEYWORD_25 ) (otherlv_4= KEYWORD_48 | otherlv_5= KEYWORD_48 ) ( (lv_kind_6_0= RULE_STRING ) ) (otherlv_7= KEYWORD_56 | otherlv_8= KEYWORD_56 ) ( (lv_units_9_0= RULE_STRING ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2384:2: (otherlv_0= KEYWORD_69 | otherlv_1= KEYWORD_69 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2384:2: (otherlv_0= KEYWORD_70 | otherlv_1= KEYWORD_70 )
             int alt69=2;
             int LA69_0 = input.LA(1);
 
-            if ( (LA69_0==KEYWORD_69) ) {
+            if ( (LA69_0==KEYWORD_70) ) {
                 int LA69_1 = input.LA(2);
 
                 if ( (synpred78_InternalWreslEditorParser()) ) {
@@ -7277,9 +7278,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt69) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2385:2: otherlv_0= KEYWORD_69
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2385:2: otherlv_0= KEYWORD_70
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_69,FOLLOW_KEYWORD_69_in_ruleDVarIntegerStd5159); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_70,FOLLOW_KEYWORD_70_in_ruleDVarIntegerStd5159); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getDVarIntegerStdAccess().getIntegerKeyword_0_0());
@@ -7289,9 +7290,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2391:2: otherlv_1= KEYWORD_69
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2391:2: otherlv_1= KEYWORD_70
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_69,FOLLOW_KEYWORD_69_in_ruleDVarIntegerStd5177); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_70,FOLLOW_KEYWORD_70_in_ruleDVarIntegerStd5177); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getDVarIntegerStdAccess().getINTEGERKeyword_0_1());
@@ -7359,11 +7360,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2406:2: (otherlv_4= KEYWORD_47 | otherlv_5= KEYWORD_47 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2406:2: (otherlv_4= KEYWORD_48 | otherlv_5= KEYWORD_48 )
             int alt71=2;
             int LA71_0 = input.LA(1);
 
-            if ( (LA71_0==KEYWORD_47) ) {
+            if ( (LA71_0==KEYWORD_48) ) {
                 int LA71_1 = input.LA(2);
 
                 if ( (synpred80_InternalWreslEditorParser()) ) {
@@ -7389,9 +7390,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt71) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2407:2: otherlv_4= KEYWORD_47
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2407:2: otherlv_4= KEYWORD_48
                     {
-                    otherlv_4=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_ruleDVarIntegerStd5223); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_ruleDVarIntegerStd5223); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_4, grammarAccess.getDVarIntegerStdAccess().getKindKeyword_2_0());
@@ -7401,9 +7402,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2413:2: otherlv_5= KEYWORD_47
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2413:2: otherlv_5= KEYWORD_48
                     {
-                    otherlv_5=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_ruleDVarIntegerStd5241); if (state.failed) return current;
+                    otherlv_5=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_ruleDVarIntegerStd5241); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_5, grammarAccess.getDVarIntegerStdAccess().getKINDKeyword_2_1());
@@ -7445,11 +7446,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2435:2: (otherlv_7= KEYWORD_55 | otherlv_8= KEYWORD_55 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2435:2: (otherlv_7= KEYWORD_56 | otherlv_8= KEYWORD_56 )
             int alt72=2;
             int LA72_0 = input.LA(1);
 
-            if ( (LA72_0==KEYWORD_55) ) {
+            if ( (LA72_0==KEYWORD_56) ) {
                 int LA72_1 = input.LA(2);
 
                 if ( (synpred81_InternalWreslEditorParser()) ) {
@@ -7475,9 +7476,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt72) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2436:2: otherlv_7= KEYWORD_55
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2436:2: otherlv_7= KEYWORD_56
                     {
-                    otherlv_7=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_ruleDVarIntegerStd5277); if (state.failed) return current;
+                    otherlv_7=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_ruleDVarIntegerStd5277); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_7, grammarAccess.getDVarIntegerStdAccess().getUnitsKeyword_4_0());
@@ -7487,9 +7488,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2442:2: otherlv_8= KEYWORD_55
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2442:2: otherlv_8= KEYWORD_56
                     {
-                    otherlv_8=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_ruleDVarIntegerStd5295); if (state.failed) return current;
+                    otherlv_8=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_ruleDVarIntegerStd5295); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_8, grammarAccess.getDVarIntegerStdAccess().getUNITSKeyword_4_1());
@@ -7594,7 +7595,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDVarIntegerNonStd"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2481:1: ruleDVarIntegerNonStd returns [EObject current=null] : ( (otherlv_0= KEYWORD_69 | otherlv_1= KEYWORD_69 ) this_LowerAndOrUpper_2= ruleLowerAndOrUpper (otherlv_3= KEYWORD_47 | otherlv_4= KEYWORD_47 ) ( (lv_kind_5_0= RULE_STRING ) ) (otherlv_6= KEYWORD_55 | otherlv_7= KEYWORD_55 ) ( (lv_units_8_0= RULE_STRING ) ) ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2481:1: ruleDVarIntegerNonStd returns [EObject current=null] : ( (otherlv_0= KEYWORD_70 | otherlv_1= KEYWORD_70 ) this_LowerAndOrUpper_2= ruleLowerAndOrUpper (otherlv_3= KEYWORD_48 | otherlv_4= KEYWORD_48 ) ( (lv_kind_5_0= RULE_STRING ) ) (otherlv_6= KEYWORD_56 | otherlv_7= KEYWORD_56 ) ( (lv_units_8_0= RULE_STRING ) ) ) ;
     public final EObject ruleDVarIntegerNonStd() throws RecognitionException {
         EObject current = null;
 
@@ -7612,17 +7613,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2484:28: ( ( (otherlv_0= KEYWORD_69 | otherlv_1= KEYWORD_69 ) this_LowerAndOrUpper_2= ruleLowerAndOrUpper (otherlv_3= KEYWORD_47 | otherlv_4= KEYWORD_47 ) ( (lv_kind_5_0= RULE_STRING ) ) (otherlv_6= KEYWORD_55 | otherlv_7= KEYWORD_55 ) ( (lv_units_8_0= RULE_STRING ) ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2485:1: ( (otherlv_0= KEYWORD_69 | otherlv_1= KEYWORD_69 ) this_LowerAndOrUpper_2= ruleLowerAndOrUpper (otherlv_3= KEYWORD_47 | otherlv_4= KEYWORD_47 ) ( (lv_kind_5_0= RULE_STRING ) ) (otherlv_6= KEYWORD_55 | otherlv_7= KEYWORD_55 ) ( (lv_units_8_0= RULE_STRING ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2484:28: ( ( (otherlv_0= KEYWORD_70 | otherlv_1= KEYWORD_70 ) this_LowerAndOrUpper_2= ruleLowerAndOrUpper (otherlv_3= KEYWORD_48 | otherlv_4= KEYWORD_48 ) ( (lv_kind_5_0= RULE_STRING ) ) (otherlv_6= KEYWORD_56 | otherlv_7= KEYWORD_56 ) ( (lv_units_8_0= RULE_STRING ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2485:1: ( (otherlv_0= KEYWORD_70 | otherlv_1= KEYWORD_70 ) this_LowerAndOrUpper_2= ruleLowerAndOrUpper (otherlv_3= KEYWORD_48 | otherlv_4= KEYWORD_48 ) ( (lv_kind_5_0= RULE_STRING ) ) (otherlv_6= KEYWORD_56 | otherlv_7= KEYWORD_56 ) ( (lv_units_8_0= RULE_STRING ) ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2485:1: ( (otherlv_0= KEYWORD_69 | otherlv_1= KEYWORD_69 ) this_LowerAndOrUpper_2= ruleLowerAndOrUpper (otherlv_3= KEYWORD_47 | otherlv_4= KEYWORD_47 ) ( (lv_kind_5_0= RULE_STRING ) ) (otherlv_6= KEYWORD_55 | otherlv_7= KEYWORD_55 ) ( (lv_units_8_0= RULE_STRING ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2485:2: (otherlv_0= KEYWORD_69 | otherlv_1= KEYWORD_69 ) this_LowerAndOrUpper_2= ruleLowerAndOrUpper (otherlv_3= KEYWORD_47 | otherlv_4= KEYWORD_47 ) ( (lv_kind_5_0= RULE_STRING ) ) (otherlv_6= KEYWORD_55 | otherlv_7= KEYWORD_55 ) ( (lv_units_8_0= RULE_STRING ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2485:1: ( (otherlv_0= KEYWORD_70 | otherlv_1= KEYWORD_70 ) this_LowerAndOrUpper_2= ruleLowerAndOrUpper (otherlv_3= KEYWORD_48 | otherlv_4= KEYWORD_48 ) ( (lv_kind_5_0= RULE_STRING ) ) (otherlv_6= KEYWORD_56 | otherlv_7= KEYWORD_56 ) ( (lv_units_8_0= RULE_STRING ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2485:2: (otherlv_0= KEYWORD_70 | otherlv_1= KEYWORD_70 ) this_LowerAndOrUpper_2= ruleLowerAndOrUpper (otherlv_3= KEYWORD_48 | otherlv_4= KEYWORD_48 ) ( (lv_kind_5_0= RULE_STRING ) ) (otherlv_6= KEYWORD_56 | otherlv_7= KEYWORD_56 ) ( (lv_units_8_0= RULE_STRING ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2485:2: (otherlv_0= KEYWORD_69 | otherlv_1= KEYWORD_69 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2485:2: (otherlv_0= KEYWORD_70 | otherlv_1= KEYWORD_70 )
             int alt73=2;
             int LA73_0 = input.LA(1);
 
-            if ( (LA73_0==KEYWORD_69) ) {
+            if ( (LA73_0==KEYWORD_70) ) {
                 int LA73_1 = input.LA(2);
 
                 if ( (synpred82_InternalWreslEditorParser()) ) {
@@ -7648,9 +7649,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt73) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2486:2: otherlv_0= KEYWORD_69
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2486:2: otherlv_0= KEYWORD_70
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_69,FOLLOW_KEYWORD_69_in_ruleDVarIntegerNonStd5401); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_70,FOLLOW_KEYWORD_70_in_ruleDVarIntegerNonStd5401); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getDVarIntegerNonStdAccess().getIntegerKeyword_0_0());
@@ -7660,9 +7661,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2492:2: otherlv_1= KEYWORD_69
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2492:2: otherlv_1= KEYWORD_70
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_69,FOLLOW_KEYWORD_69_in_ruleDVarIntegerNonStd5419); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_70,FOLLOW_KEYWORD_70_in_ruleDVarIntegerNonStd5419); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getDVarIntegerNonStdAccess().getINTEGERKeyword_0_1());
@@ -7695,11 +7696,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                       afterParserOrEnumRuleCall();
                   
             }
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2508:1: (otherlv_3= KEYWORD_47 | otherlv_4= KEYWORD_47 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2508:1: (otherlv_3= KEYWORD_48 | otherlv_4= KEYWORD_48 )
             int alt74=2;
             int LA74_0 = input.LA(1);
 
-            if ( (LA74_0==KEYWORD_47) ) {
+            if ( (LA74_0==KEYWORD_48) ) {
                 int LA74_1 = input.LA(2);
 
                 if ( (synpred83_InternalWreslEditorParser()) ) {
@@ -7725,9 +7726,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt74) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2509:2: otherlv_3= KEYWORD_47
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2509:2: otherlv_3= KEYWORD_48
                     {
-                    otherlv_3=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_ruleDVarIntegerNonStd5457); if (state.failed) return current;
+                    otherlv_3=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_ruleDVarIntegerNonStd5457); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_3, grammarAccess.getDVarIntegerNonStdAccess().getKindKeyword_2_0());
@@ -7737,9 +7738,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2515:2: otherlv_4= KEYWORD_47
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2515:2: otherlv_4= KEYWORD_48
                     {
-                    otherlv_4=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_ruleDVarIntegerNonStd5475); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_ruleDVarIntegerNonStd5475); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_4, grammarAccess.getDVarIntegerNonStdAccess().getKINDKeyword_2_1());
@@ -7781,11 +7782,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2537:2: (otherlv_6= KEYWORD_55 | otherlv_7= KEYWORD_55 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2537:2: (otherlv_6= KEYWORD_56 | otherlv_7= KEYWORD_56 )
             int alt75=2;
             int LA75_0 = input.LA(1);
 
-            if ( (LA75_0==KEYWORD_55) ) {
+            if ( (LA75_0==KEYWORD_56) ) {
                 int LA75_1 = input.LA(2);
 
                 if ( (synpred84_InternalWreslEditorParser()) ) {
@@ -7811,9 +7812,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt75) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2538:2: otherlv_6= KEYWORD_55
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2538:2: otherlv_6= KEYWORD_56
                     {
-                    otherlv_6=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_ruleDVarIntegerNonStd5511); if (state.failed) return current;
+                    otherlv_6=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_ruleDVarIntegerNonStd5511); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_6, grammarAccess.getDVarIntegerNonStdAccess().getUnitsKeyword_4_0());
@@ -7823,9 +7824,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2544:2: otherlv_7= KEYWORD_55
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2544:2: otherlv_7= KEYWORD_56
                     {
-                    otherlv_7=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_ruleDVarIntegerNonStd5529); if (state.failed) return current;
+                    otherlv_7=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_ruleDVarIntegerNonStd5529); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_7, grammarAccess.getDVarIntegerNonStdAccess().getUNITSKeyword_4_1());
@@ -7954,12 +7955,12 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2587:1: (this_SVarDSS_0= ruleSVarDSS | this_SVarExpression_1= ruleSVarExpression | this_SVarSum_2= ruleSVarSum | this_SVarTable_3= ruleSVarTable | this_SVarCase_4= ruleSVarCase )
             int alt76=5;
             switch ( input.LA(1) ) {
-            case KEYWORD_93:
+            case KEYWORD_94:
                 {
                 alt76=1;
                 }
                 break;
-            case KEYWORD_57:
+            case KEYWORD_58:
                 {
                 alt76=2;
                 }
@@ -7969,12 +7970,12 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                 alt76=3;
                 }
                 break;
-            case KEYWORD_61:
+            case KEYWORD_62:
                 {
                 alt76=4;
                 }
                 break;
-            case KEYWORD_43:
+            case KEYWORD_44:
                 {
                 alt76=5;
                 }
@@ -8186,7 +8187,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSVarDSS"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2668:1: ruleSVarDSS returns [EObject current=null] : ( (otherlv_0= KEYWORD_93 | otherlv_1= KEYWORD_93 ) ( (lv_bPart_2_0= RULE_STRING ) )? (otherlv_3= KEYWORD_47 | otherlv_4= KEYWORD_47 ) ( (lv_kind_5_0= RULE_STRING ) ) (otherlv_6= KEYWORD_55 | otherlv_7= KEYWORD_55 ) ( (lv_units_8_0= RULE_STRING ) ) ( (otherlv_9= KEYWORD_65 | otherlv_10= KEYWORD_65 ) ( (lv_convert_11_0= RULE_STRING ) ) )? ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2668:1: ruleSVarDSS returns [EObject current=null] : ( (otherlv_0= KEYWORD_94 | otherlv_1= KEYWORD_94 ) ( (lv_bPart_2_0= RULE_STRING ) )? (otherlv_3= KEYWORD_48 | otherlv_4= KEYWORD_48 ) ( (lv_kind_5_0= RULE_STRING ) ) (otherlv_6= KEYWORD_56 | otherlv_7= KEYWORD_56 ) ( (lv_units_8_0= RULE_STRING ) ) ( (otherlv_9= KEYWORD_66 | otherlv_10= KEYWORD_66 ) ( (lv_convert_11_0= RULE_STRING ) ) )? ) ;
     public final EObject ruleSVarDSS() throws RecognitionException {
         EObject current = null;
 
@@ -8206,17 +8207,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2671:28: ( ( (otherlv_0= KEYWORD_93 | otherlv_1= KEYWORD_93 ) ( (lv_bPart_2_0= RULE_STRING ) )? (otherlv_3= KEYWORD_47 | otherlv_4= KEYWORD_47 ) ( (lv_kind_5_0= RULE_STRING ) ) (otherlv_6= KEYWORD_55 | otherlv_7= KEYWORD_55 ) ( (lv_units_8_0= RULE_STRING ) ) ( (otherlv_9= KEYWORD_65 | otherlv_10= KEYWORD_65 ) ( (lv_convert_11_0= RULE_STRING ) ) )? ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2672:1: ( (otherlv_0= KEYWORD_93 | otherlv_1= KEYWORD_93 ) ( (lv_bPart_2_0= RULE_STRING ) )? (otherlv_3= KEYWORD_47 | otherlv_4= KEYWORD_47 ) ( (lv_kind_5_0= RULE_STRING ) ) (otherlv_6= KEYWORD_55 | otherlv_7= KEYWORD_55 ) ( (lv_units_8_0= RULE_STRING ) ) ( (otherlv_9= KEYWORD_65 | otherlv_10= KEYWORD_65 ) ( (lv_convert_11_0= RULE_STRING ) ) )? )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2671:28: ( ( (otherlv_0= KEYWORD_94 | otherlv_1= KEYWORD_94 ) ( (lv_bPart_2_0= RULE_STRING ) )? (otherlv_3= KEYWORD_48 | otherlv_4= KEYWORD_48 ) ( (lv_kind_5_0= RULE_STRING ) ) (otherlv_6= KEYWORD_56 | otherlv_7= KEYWORD_56 ) ( (lv_units_8_0= RULE_STRING ) ) ( (otherlv_9= KEYWORD_66 | otherlv_10= KEYWORD_66 ) ( (lv_convert_11_0= RULE_STRING ) ) )? ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2672:1: ( (otherlv_0= KEYWORD_94 | otherlv_1= KEYWORD_94 ) ( (lv_bPart_2_0= RULE_STRING ) )? (otherlv_3= KEYWORD_48 | otherlv_4= KEYWORD_48 ) ( (lv_kind_5_0= RULE_STRING ) ) (otherlv_6= KEYWORD_56 | otherlv_7= KEYWORD_56 ) ( (lv_units_8_0= RULE_STRING ) ) ( (otherlv_9= KEYWORD_66 | otherlv_10= KEYWORD_66 ) ( (lv_convert_11_0= RULE_STRING ) ) )? )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2672:1: ( (otherlv_0= KEYWORD_93 | otherlv_1= KEYWORD_93 ) ( (lv_bPart_2_0= RULE_STRING ) )? (otherlv_3= KEYWORD_47 | otherlv_4= KEYWORD_47 ) ( (lv_kind_5_0= RULE_STRING ) ) (otherlv_6= KEYWORD_55 | otherlv_7= KEYWORD_55 ) ( (lv_units_8_0= RULE_STRING ) ) ( (otherlv_9= KEYWORD_65 | otherlv_10= KEYWORD_65 ) ( (lv_convert_11_0= RULE_STRING ) ) )? )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2672:2: (otherlv_0= KEYWORD_93 | otherlv_1= KEYWORD_93 ) ( (lv_bPart_2_0= RULE_STRING ) )? (otherlv_3= KEYWORD_47 | otherlv_4= KEYWORD_47 ) ( (lv_kind_5_0= RULE_STRING ) ) (otherlv_6= KEYWORD_55 | otherlv_7= KEYWORD_55 ) ( (lv_units_8_0= RULE_STRING ) ) ( (otherlv_9= KEYWORD_65 | otherlv_10= KEYWORD_65 ) ( (lv_convert_11_0= RULE_STRING ) ) )?
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2672:1: ( (otherlv_0= KEYWORD_94 | otherlv_1= KEYWORD_94 ) ( (lv_bPart_2_0= RULE_STRING ) )? (otherlv_3= KEYWORD_48 | otherlv_4= KEYWORD_48 ) ( (lv_kind_5_0= RULE_STRING ) ) (otherlv_6= KEYWORD_56 | otherlv_7= KEYWORD_56 ) ( (lv_units_8_0= RULE_STRING ) ) ( (otherlv_9= KEYWORD_66 | otherlv_10= KEYWORD_66 ) ( (lv_convert_11_0= RULE_STRING ) ) )? )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2672:2: (otherlv_0= KEYWORD_94 | otherlv_1= KEYWORD_94 ) ( (lv_bPart_2_0= RULE_STRING ) )? (otherlv_3= KEYWORD_48 | otherlv_4= KEYWORD_48 ) ( (lv_kind_5_0= RULE_STRING ) ) (otherlv_6= KEYWORD_56 | otherlv_7= KEYWORD_56 ) ( (lv_units_8_0= RULE_STRING ) ) ( (otherlv_9= KEYWORD_66 | otherlv_10= KEYWORD_66 ) ( (lv_convert_11_0= RULE_STRING ) ) )?
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2672:2: (otherlv_0= KEYWORD_93 | otherlv_1= KEYWORD_93 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2672:2: (otherlv_0= KEYWORD_94 | otherlv_1= KEYWORD_94 )
             int alt77=2;
             int LA77_0 = input.LA(1);
 
-            if ( (LA77_0==KEYWORD_93) ) {
+            if ( (LA77_0==KEYWORD_94) ) {
                 int LA77_1 = input.LA(2);
 
                 if ( (synpred89_InternalWreslEditorParser()) ) {
@@ -8242,9 +8243,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt77) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2673:2: otherlv_0= KEYWORD_93
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2673:2: otherlv_0= KEYWORD_94
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_93,FOLLOW_KEYWORD_93_in_ruleSVarDSS5849); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_94,FOLLOW_KEYWORD_94_in_ruleSVarDSS5849); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getSVarDSSAccess().getTimeseriesKeyword_0_0());
@@ -8254,9 +8255,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2679:2: otherlv_1= KEYWORD_93
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2679:2: otherlv_1= KEYWORD_94
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_93,FOLLOW_KEYWORD_93_in_ruleSVarDSS5867); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_94,FOLLOW_KEYWORD_94_in_ruleSVarDSS5867); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getSVarDSSAccess().getTIMESERIESKeyword_0_1());
@@ -8309,11 +8310,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2701:3: (otherlv_3= KEYWORD_47 | otherlv_4= KEYWORD_47 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2701:3: (otherlv_3= KEYWORD_48 | otherlv_4= KEYWORD_48 )
             int alt79=2;
             int LA79_0 = input.LA(1);
 
-            if ( (LA79_0==KEYWORD_47) ) {
+            if ( (LA79_0==KEYWORD_48) ) {
                 int LA79_1 = input.LA(2);
 
                 if ( (synpred91_InternalWreslEditorParser()) ) {
@@ -8339,9 +8340,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt79) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2702:2: otherlv_3= KEYWORD_47
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2702:2: otherlv_3= KEYWORD_48
                     {
-                    otherlv_3=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_ruleSVarDSS5904); if (state.failed) return current;
+                    otherlv_3=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_ruleSVarDSS5904); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_3, grammarAccess.getSVarDSSAccess().getKindKeyword_2_0());
@@ -8351,9 +8352,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2708:2: otherlv_4= KEYWORD_47
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2708:2: otherlv_4= KEYWORD_48
                     {
-                    otherlv_4=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_ruleSVarDSS5922); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_ruleSVarDSS5922); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_4, grammarAccess.getSVarDSSAccess().getKINDKeyword_2_1());
@@ -8395,11 +8396,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2730:2: (otherlv_6= KEYWORD_55 | otherlv_7= KEYWORD_55 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2730:2: (otherlv_6= KEYWORD_56 | otherlv_7= KEYWORD_56 )
             int alt80=2;
             int LA80_0 = input.LA(1);
 
-            if ( (LA80_0==KEYWORD_55) ) {
+            if ( (LA80_0==KEYWORD_56) ) {
                 int LA80_1 = input.LA(2);
 
                 if ( (synpred92_InternalWreslEditorParser()) ) {
@@ -8425,9 +8426,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt80) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2731:2: otherlv_6= KEYWORD_55
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2731:2: otherlv_6= KEYWORD_56
                     {
-                    otherlv_6=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_ruleSVarDSS5958); if (state.failed) return current;
+                    otherlv_6=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_ruleSVarDSS5958); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_6, grammarAccess.getSVarDSSAccess().getUnitsKeyword_4_0());
@@ -8437,9 +8438,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2737:2: otherlv_7= KEYWORD_55
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2737:2: otherlv_7= KEYWORD_56
                     {
-                    otherlv_7=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_ruleSVarDSS5976); if (state.failed) return current;
+                    otherlv_7=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_ruleSVarDSS5976); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_7, grammarAccess.getSVarDSSAccess().getUNITSKeyword_4_1());
@@ -8481,22 +8482,22 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2759:2: ( (otherlv_9= KEYWORD_65 | otherlv_10= KEYWORD_65 ) ( (lv_convert_11_0= RULE_STRING ) ) )?
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2759:2: ( (otherlv_9= KEYWORD_66 | otherlv_10= KEYWORD_66 ) ( (lv_convert_11_0= RULE_STRING ) ) )?
             int alt82=2;
             int LA82_0 = input.LA(1);
 
-            if ( (LA82_0==KEYWORD_65) ) {
+            if ( (LA82_0==KEYWORD_66) ) {
                 alt82=1;
             }
             switch (alt82) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2759:3: (otherlv_9= KEYWORD_65 | otherlv_10= KEYWORD_65 ) ( (lv_convert_11_0= RULE_STRING ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2759:3: (otherlv_9= KEYWORD_66 | otherlv_10= KEYWORD_66 ) ( (lv_convert_11_0= RULE_STRING ) )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2759:3: (otherlv_9= KEYWORD_65 | otherlv_10= KEYWORD_65 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2759:3: (otherlv_9= KEYWORD_66 | otherlv_10= KEYWORD_66 )
                     int alt81=2;
                     int LA81_0 = input.LA(1);
 
-                    if ( (LA81_0==KEYWORD_65) ) {
+                    if ( (LA81_0==KEYWORD_66) ) {
                         int LA81_1 = input.LA(2);
 
                         if ( (synpred93_InternalWreslEditorParser()) ) {
@@ -8522,9 +8523,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt81) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2760:2: otherlv_9= KEYWORD_65
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2760:2: otherlv_9= KEYWORD_66
                             {
-                            otherlv_9=(Token)match(input,KEYWORD_65,FOLLOW_KEYWORD_65_in_ruleSVarDSS6013); if (state.failed) return current;
+                            otherlv_9=(Token)match(input,KEYWORD_66,FOLLOW_KEYWORD_66_in_ruleSVarDSS6013); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_9, grammarAccess.getSVarDSSAccess().getConvertKeyword_6_0_0());
@@ -8534,9 +8535,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2766:2: otherlv_10= KEYWORD_65
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2766:2: otherlv_10= KEYWORD_66
                             {
-                            otherlv_10=(Token)match(input,KEYWORD_65,FOLLOW_KEYWORD_65_in_ruleSVarDSS6031); if (state.failed) return current;
+                            otherlv_10=(Token)match(input,KEYWORD_66,FOLLOW_KEYWORD_66_in_ruleSVarDSS6031); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_10, grammarAccess.getSVarDSSAccess().getCONVERTKeyword_6_0_1());
@@ -8647,7 +8648,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSVarExpression"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2805:1: ruleSVarExpression returns [EObject current=null] : ( (otherlv_0= KEYWORD_57 | otherlv_1= KEYWORD_57 ) ( (lv_expression_2_0= ruleExpression ) ) ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2805:1: ruleSVarExpression returns [EObject current=null] : ( (otherlv_0= KEYWORD_58 | otherlv_1= KEYWORD_58 ) ( (lv_expression_2_0= ruleExpression ) ) ) ;
     public final EObject ruleSVarExpression() throws RecognitionException {
         EObject current = null;
 
@@ -8659,17 +8660,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2808:28: ( ( (otherlv_0= KEYWORD_57 | otherlv_1= KEYWORD_57 ) ( (lv_expression_2_0= ruleExpression ) ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2809:1: ( (otherlv_0= KEYWORD_57 | otherlv_1= KEYWORD_57 ) ( (lv_expression_2_0= ruleExpression ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2808:28: ( ( (otherlv_0= KEYWORD_58 | otherlv_1= KEYWORD_58 ) ( (lv_expression_2_0= ruleExpression ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2809:1: ( (otherlv_0= KEYWORD_58 | otherlv_1= KEYWORD_58 ) ( (lv_expression_2_0= ruleExpression ) ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2809:1: ( (otherlv_0= KEYWORD_57 | otherlv_1= KEYWORD_57 ) ( (lv_expression_2_0= ruleExpression ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2809:2: (otherlv_0= KEYWORD_57 | otherlv_1= KEYWORD_57 ) ( (lv_expression_2_0= ruleExpression ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2809:1: ( (otherlv_0= KEYWORD_58 | otherlv_1= KEYWORD_58 ) ( (lv_expression_2_0= ruleExpression ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2809:2: (otherlv_0= KEYWORD_58 | otherlv_1= KEYWORD_58 ) ( (lv_expression_2_0= ruleExpression ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2809:2: (otherlv_0= KEYWORD_57 | otherlv_1= KEYWORD_57 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2809:2: (otherlv_0= KEYWORD_58 | otherlv_1= KEYWORD_58 )
             int alt83=2;
             int LA83_0 = input.LA(1);
 
-            if ( (LA83_0==KEYWORD_57) ) {
+            if ( (LA83_0==KEYWORD_58) ) {
                 int LA83_1 = input.LA(2);
 
                 if ( (synpred95_InternalWreslEditorParser()) ) {
@@ -8695,9 +8696,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt83) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2810:2: otherlv_0= KEYWORD_57
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2810:2: otherlv_0= KEYWORD_58
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_57,FOLLOW_KEYWORD_57_in_ruleSVarExpression6139); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_58,FOLLOW_KEYWORD_58_in_ruleSVarExpression6139); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getSVarExpressionAccess().getValueKeyword_0_0());
@@ -8707,9 +8708,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2816:2: otherlv_1= KEYWORD_57
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2816:2: otherlv_1= KEYWORD_58
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_57,FOLLOW_KEYWORD_57_in_ruleSVarExpression6157); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_58,FOLLOW_KEYWORD_58_in_ruleSVarExpression6157); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getSVarExpressionAccess().getVALUEKeyword_0_1());
@@ -9055,7 +9056,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                 int alt84=2;
                 int LA84_0 = input.LA(1);
 
-                if ( (LA84_0==KEYWORD_43) ) {
+                if ( (LA84_0==KEYWORD_44) ) {
                     alt84=1;
                 }
 
@@ -9167,7 +9168,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCaseContent"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2972:1: ruleCaseContent returns [EObject current=null] : ( (otherlv_0= KEYWORD_43 | otherlv_1= KEYWORD_43 ) ( ( (lv_caseName_2_1= RULE_ID | lv_caseName_2_2= ruleSpecialIdent ) ) ) otherlv_3= KEYWORD_14 ( (lv_condition_4_0= ruleCondition ) ) ( ( (lv_content_5_0= ruleTableContent ) ) | ( (lv_content_6_0= ruleValueContent ) ) | ( (lv_content_7_0= ruleSumContent ) ) ) otherlv_8= KEYWORD_15 ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2972:1: ruleCaseContent returns [EObject current=null] : ( (otherlv_0= KEYWORD_44 | otherlv_1= KEYWORD_44 ) ( ( (lv_caseName_2_1= RULE_ID | lv_caseName_2_2= ruleSpecialIdent ) ) ) otherlv_3= KEYWORD_14 ( (lv_condition_4_0= ruleCondition ) ) ( ( (lv_content_5_0= ruleTableContent ) ) | ( (lv_content_6_0= ruleValueContent ) ) | ( (lv_content_7_0= ruleSumContent ) ) ) otherlv_8= KEYWORD_15 ) ;
     public final EObject ruleCaseContent() throws RecognitionException {
         EObject current = null;
 
@@ -9190,17 +9191,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2975:28: ( ( (otherlv_0= KEYWORD_43 | otherlv_1= KEYWORD_43 ) ( ( (lv_caseName_2_1= RULE_ID | lv_caseName_2_2= ruleSpecialIdent ) ) ) otherlv_3= KEYWORD_14 ( (lv_condition_4_0= ruleCondition ) ) ( ( (lv_content_5_0= ruleTableContent ) ) | ( (lv_content_6_0= ruleValueContent ) ) | ( (lv_content_7_0= ruleSumContent ) ) ) otherlv_8= KEYWORD_15 ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2976:1: ( (otherlv_0= KEYWORD_43 | otherlv_1= KEYWORD_43 ) ( ( (lv_caseName_2_1= RULE_ID | lv_caseName_2_2= ruleSpecialIdent ) ) ) otherlv_3= KEYWORD_14 ( (lv_condition_4_0= ruleCondition ) ) ( ( (lv_content_5_0= ruleTableContent ) ) | ( (lv_content_6_0= ruleValueContent ) ) | ( (lv_content_7_0= ruleSumContent ) ) ) otherlv_8= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2975:28: ( ( (otherlv_0= KEYWORD_44 | otherlv_1= KEYWORD_44 ) ( ( (lv_caseName_2_1= RULE_ID | lv_caseName_2_2= ruleSpecialIdent ) ) ) otherlv_3= KEYWORD_14 ( (lv_condition_4_0= ruleCondition ) ) ( ( (lv_content_5_0= ruleTableContent ) ) | ( (lv_content_6_0= ruleValueContent ) ) | ( (lv_content_7_0= ruleSumContent ) ) ) otherlv_8= KEYWORD_15 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2976:1: ( (otherlv_0= KEYWORD_44 | otherlv_1= KEYWORD_44 ) ( ( (lv_caseName_2_1= RULE_ID | lv_caseName_2_2= ruleSpecialIdent ) ) ) otherlv_3= KEYWORD_14 ( (lv_condition_4_0= ruleCondition ) ) ( ( (lv_content_5_0= ruleTableContent ) ) | ( (lv_content_6_0= ruleValueContent ) ) | ( (lv_content_7_0= ruleSumContent ) ) ) otherlv_8= KEYWORD_15 )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2976:1: ( (otherlv_0= KEYWORD_43 | otherlv_1= KEYWORD_43 ) ( ( (lv_caseName_2_1= RULE_ID | lv_caseName_2_2= ruleSpecialIdent ) ) ) otherlv_3= KEYWORD_14 ( (lv_condition_4_0= ruleCondition ) ) ( ( (lv_content_5_0= ruleTableContent ) ) | ( (lv_content_6_0= ruleValueContent ) ) | ( (lv_content_7_0= ruleSumContent ) ) ) otherlv_8= KEYWORD_15 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2976:2: (otherlv_0= KEYWORD_43 | otherlv_1= KEYWORD_43 ) ( ( (lv_caseName_2_1= RULE_ID | lv_caseName_2_2= ruleSpecialIdent ) ) ) otherlv_3= KEYWORD_14 ( (lv_condition_4_0= ruleCondition ) ) ( ( (lv_content_5_0= ruleTableContent ) ) | ( (lv_content_6_0= ruleValueContent ) ) | ( (lv_content_7_0= ruleSumContent ) ) ) otherlv_8= KEYWORD_15
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2976:1: ( (otherlv_0= KEYWORD_44 | otherlv_1= KEYWORD_44 ) ( ( (lv_caseName_2_1= RULE_ID | lv_caseName_2_2= ruleSpecialIdent ) ) ) otherlv_3= KEYWORD_14 ( (lv_condition_4_0= ruleCondition ) ) ( ( (lv_content_5_0= ruleTableContent ) ) | ( (lv_content_6_0= ruleValueContent ) ) | ( (lv_content_7_0= ruleSumContent ) ) ) otherlv_8= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2976:2: (otherlv_0= KEYWORD_44 | otherlv_1= KEYWORD_44 ) ( ( (lv_caseName_2_1= RULE_ID | lv_caseName_2_2= ruleSpecialIdent ) ) ) otherlv_3= KEYWORD_14 ( (lv_condition_4_0= ruleCondition ) ) ( ( (lv_content_5_0= ruleTableContent ) ) | ( (lv_content_6_0= ruleValueContent ) ) | ( (lv_content_7_0= ruleSumContent ) ) ) otherlv_8= KEYWORD_15
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2976:2: (otherlv_0= KEYWORD_43 | otherlv_1= KEYWORD_43 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2976:2: (otherlv_0= KEYWORD_44 | otherlv_1= KEYWORD_44 )
             int alt85=2;
             int LA85_0 = input.LA(1);
 
-            if ( (LA85_0==KEYWORD_43) ) {
+            if ( (LA85_0==KEYWORD_44) ) {
                 int LA85_1 = input.LA(2);
 
                 if ( (synpred97_InternalWreslEditorParser()) ) {
@@ -9226,9 +9227,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt85) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2977:2: otherlv_0= KEYWORD_43
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2977:2: otherlv_0= KEYWORD_44
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_43,FOLLOW_KEYWORD_43_in_ruleCaseContent6530); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_44,FOLLOW_KEYWORD_44_in_ruleCaseContent6530); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getCaseContentAccess().getCaseKeyword_0_0());
@@ -9238,9 +9239,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2983:2: otherlv_1= KEYWORD_43
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2983:2: otherlv_1= KEYWORD_44
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_43,FOLLOW_KEYWORD_43_in_ruleCaseContent6548); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_44,FOLLOW_KEYWORD_44_in_ruleCaseContent6548); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getCaseContentAccess().getCASEKeyword_0_1());
@@ -9265,7 +9266,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             if ( (LA86_0==RULE_ID) ) {
                 alt86=1;
             }
-            else if ( (LA86_0==KEYWORD_94||LA86_0==KEYWORD_92||(LA86_0>=KEYWORD_71 && LA86_0<=KEYWORD_84)||(LA86_0>=KEYWORD_62 && LA86_0<=KEYWORD_64)||LA86_0==KEYWORD_59||(LA86_0>=KEYWORD_28 && LA86_0<=KEYWORD_39)||LA86_0==KEYWORD_13) ) {
+            else if ( (LA86_0==KEYWORD_95||LA86_0==KEYWORD_93||(LA86_0>=KEYWORD_72 && LA86_0<=KEYWORD_85)||(LA86_0>=KEYWORD_63 && LA86_0<=KEYWORD_65)||LA86_0==KEYWORD_60||(LA86_0>=KEYWORD_28 && LA86_0<=KEYWORD_40)||LA86_0==KEYWORD_13) ) {
                 alt86=2;
             }
             else {
@@ -9382,12 +9383,12 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3046:2: ( ( (lv_content_5_0= ruleTableContent ) ) | ( (lv_content_6_0= ruleValueContent ) ) | ( (lv_content_7_0= ruleSumContent ) ) )
             int alt87=3;
             switch ( input.LA(1) ) {
-            case KEYWORD_61:
+            case KEYWORD_62:
                 {
                 alt87=1;
                 }
                 break;
-            case KEYWORD_57:
+            case KEYWORD_58:
                 {
                 alt87=2;
                 }
@@ -10044,7 +10045,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValueContent"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3283:1: ruleValueContent returns [EObject current=null] : ( (otherlv_0= KEYWORD_57 | otherlv_1= KEYWORD_57 ) ( (lv_expression_2_0= ruleExpression ) ) ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3283:1: ruleValueContent returns [EObject current=null] : ( (otherlv_0= KEYWORD_58 | otherlv_1= KEYWORD_58 ) ( (lv_expression_2_0= ruleExpression ) ) ) ;
     public final EObject ruleValueContent() throws RecognitionException {
         EObject current = null;
 
@@ -10056,17 +10057,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3286:28: ( ( (otherlv_0= KEYWORD_57 | otherlv_1= KEYWORD_57 ) ( (lv_expression_2_0= ruleExpression ) ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3287:1: ( (otherlv_0= KEYWORD_57 | otherlv_1= KEYWORD_57 ) ( (lv_expression_2_0= ruleExpression ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3286:28: ( ( (otherlv_0= KEYWORD_58 | otherlv_1= KEYWORD_58 ) ( (lv_expression_2_0= ruleExpression ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3287:1: ( (otherlv_0= KEYWORD_58 | otherlv_1= KEYWORD_58 ) ( (lv_expression_2_0= ruleExpression ) ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3287:1: ( (otherlv_0= KEYWORD_57 | otherlv_1= KEYWORD_57 ) ( (lv_expression_2_0= ruleExpression ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3287:2: (otherlv_0= KEYWORD_57 | otherlv_1= KEYWORD_57 ) ( (lv_expression_2_0= ruleExpression ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3287:1: ( (otherlv_0= KEYWORD_58 | otherlv_1= KEYWORD_58 ) ( (lv_expression_2_0= ruleExpression ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3287:2: (otherlv_0= KEYWORD_58 | otherlv_1= KEYWORD_58 ) ( (lv_expression_2_0= ruleExpression ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3287:2: (otherlv_0= KEYWORD_57 | otherlv_1= KEYWORD_57 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3287:2: (otherlv_0= KEYWORD_58 | otherlv_1= KEYWORD_58 )
             int alt91=2;
             int LA91_0 = input.LA(1);
 
-            if ( (LA91_0==KEYWORD_57) ) {
+            if ( (LA91_0==KEYWORD_58) ) {
                 int LA91_1 = input.LA(2);
 
                 if ( (synpred104_InternalWreslEditorParser()) ) {
@@ -10092,9 +10093,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt91) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3288:2: otherlv_0= KEYWORD_57
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3288:2: otherlv_0= KEYWORD_58
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_57,FOLLOW_KEYWORD_57_in_ruleValueContent7144); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_58,FOLLOW_KEYWORD_58_in_ruleValueContent7144); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getValueContentAccess().getValueKeyword_0_0());
@@ -10104,9 +10105,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3294:2: otherlv_1= KEYWORD_57
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3294:2: otherlv_1= KEYWORD_58
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_57,FOLLOW_KEYWORD_57_in_ruleValueContent7162); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_58,FOLLOW_KEYWORD_58_in_ruleValueContent7162); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getValueContentAccess().getVALUEKeyword_0_1());
@@ -10216,7 +10217,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTableContent"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3333:1: ruleTableContent returns [EObject current=null] : ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( ( (lv_tableName_2_1= RULE_ID | lv_tableName_2_2= ruleSpecialIdent ) ) ) (otherlv_3= KEYWORD_45 | otherlv_4= KEYWORD_45 ) ( ( (lv_from_5_1= RULE_ID | lv_from_5_2= ruleSpecialIdent ) ) ) ( (otherlv_6= KEYWORD_51 | otherlv_7= KEYWORD_51 ) ( (lv_given_8_0= ruleAssignment ) ) (otherlv_9= KEYWORD_27 | otherlv_10= KEYWORD_27 ) ( (lv_use_11_0= RULE_ID ) ) )? ( (otherlv_12= KEYWORD_58 | otherlv_13= KEYWORD_58 ) ( (lv_where_14_0= ruleWhereItems ) ) )? ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3333:1: ruleTableContent returns [EObject current=null] : ( (otherlv_0= KEYWORD_62 | otherlv_1= KEYWORD_62 ) ( ( (lv_tableName_2_1= RULE_ID | lv_tableName_2_2= ruleSpecialIdent ) ) ) (otherlv_3= KEYWORD_46 | otherlv_4= KEYWORD_46 ) ( ( (lv_from_5_1= RULE_ID | lv_from_5_2= ruleSpecialIdent ) ) ) ( (otherlv_6= KEYWORD_52 | otherlv_7= KEYWORD_52 ) ( (lv_given_8_0= ruleAssignment ) ) (otherlv_9= KEYWORD_27 | otherlv_10= KEYWORD_27 ) ( (lv_use_11_0= RULE_ID ) ) )? ( (otherlv_12= KEYWORD_59 | otherlv_13= KEYWORD_59 ) ( (lv_where_14_0= ruleWhereItems ) ) )? ) ;
     public final EObject ruleTableContent() throws RecognitionException {
         EObject current = null;
 
@@ -10245,17 +10246,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3336:28: ( ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( ( (lv_tableName_2_1= RULE_ID | lv_tableName_2_2= ruleSpecialIdent ) ) ) (otherlv_3= KEYWORD_45 | otherlv_4= KEYWORD_45 ) ( ( (lv_from_5_1= RULE_ID | lv_from_5_2= ruleSpecialIdent ) ) ) ( (otherlv_6= KEYWORD_51 | otherlv_7= KEYWORD_51 ) ( (lv_given_8_0= ruleAssignment ) ) (otherlv_9= KEYWORD_27 | otherlv_10= KEYWORD_27 ) ( (lv_use_11_0= RULE_ID ) ) )? ( (otherlv_12= KEYWORD_58 | otherlv_13= KEYWORD_58 ) ( (lv_where_14_0= ruleWhereItems ) ) )? ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3337:1: ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( ( (lv_tableName_2_1= RULE_ID | lv_tableName_2_2= ruleSpecialIdent ) ) ) (otherlv_3= KEYWORD_45 | otherlv_4= KEYWORD_45 ) ( ( (lv_from_5_1= RULE_ID | lv_from_5_2= ruleSpecialIdent ) ) ) ( (otherlv_6= KEYWORD_51 | otherlv_7= KEYWORD_51 ) ( (lv_given_8_0= ruleAssignment ) ) (otherlv_9= KEYWORD_27 | otherlv_10= KEYWORD_27 ) ( (lv_use_11_0= RULE_ID ) ) )? ( (otherlv_12= KEYWORD_58 | otherlv_13= KEYWORD_58 ) ( (lv_where_14_0= ruleWhereItems ) ) )? )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3336:28: ( ( (otherlv_0= KEYWORD_62 | otherlv_1= KEYWORD_62 ) ( ( (lv_tableName_2_1= RULE_ID | lv_tableName_2_2= ruleSpecialIdent ) ) ) (otherlv_3= KEYWORD_46 | otherlv_4= KEYWORD_46 ) ( ( (lv_from_5_1= RULE_ID | lv_from_5_2= ruleSpecialIdent ) ) ) ( (otherlv_6= KEYWORD_52 | otherlv_7= KEYWORD_52 ) ( (lv_given_8_0= ruleAssignment ) ) (otherlv_9= KEYWORD_27 | otherlv_10= KEYWORD_27 ) ( (lv_use_11_0= RULE_ID ) ) )? ( (otherlv_12= KEYWORD_59 | otherlv_13= KEYWORD_59 ) ( (lv_where_14_0= ruleWhereItems ) ) )? ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3337:1: ( (otherlv_0= KEYWORD_62 | otherlv_1= KEYWORD_62 ) ( ( (lv_tableName_2_1= RULE_ID | lv_tableName_2_2= ruleSpecialIdent ) ) ) (otherlv_3= KEYWORD_46 | otherlv_4= KEYWORD_46 ) ( ( (lv_from_5_1= RULE_ID | lv_from_5_2= ruleSpecialIdent ) ) ) ( (otherlv_6= KEYWORD_52 | otherlv_7= KEYWORD_52 ) ( (lv_given_8_0= ruleAssignment ) ) (otherlv_9= KEYWORD_27 | otherlv_10= KEYWORD_27 ) ( (lv_use_11_0= RULE_ID ) ) )? ( (otherlv_12= KEYWORD_59 | otherlv_13= KEYWORD_59 ) ( (lv_where_14_0= ruleWhereItems ) ) )? )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3337:1: ( (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( ( (lv_tableName_2_1= RULE_ID | lv_tableName_2_2= ruleSpecialIdent ) ) ) (otherlv_3= KEYWORD_45 | otherlv_4= KEYWORD_45 ) ( ( (lv_from_5_1= RULE_ID | lv_from_5_2= ruleSpecialIdent ) ) ) ( (otherlv_6= KEYWORD_51 | otherlv_7= KEYWORD_51 ) ( (lv_given_8_0= ruleAssignment ) ) (otherlv_9= KEYWORD_27 | otherlv_10= KEYWORD_27 ) ( (lv_use_11_0= RULE_ID ) ) )? ( (otherlv_12= KEYWORD_58 | otherlv_13= KEYWORD_58 ) ( (lv_where_14_0= ruleWhereItems ) ) )? )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3337:2: (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 ) ( ( (lv_tableName_2_1= RULE_ID | lv_tableName_2_2= ruleSpecialIdent ) ) ) (otherlv_3= KEYWORD_45 | otherlv_4= KEYWORD_45 ) ( ( (lv_from_5_1= RULE_ID | lv_from_5_2= ruleSpecialIdent ) ) ) ( (otherlv_6= KEYWORD_51 | otherlv_7= KEYWORD_51 ) ( (lv_given_8_0= ruleAssignment ) ) (otherlv_9= KEYWORD_27 | otherlv_10= KEYWORD_27 ) ( (lv_use_11_0= RULE_ID ) ) )? ( (otherlv_12= KEYWORD_58 | otherlv_13= KEYWORD_58 ) ( (lv_where_14_0= ruleWhereItems ) ) )?
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3337:1: ( (otherlv_0= KEYWORD_62 | otherlv_1= KEYWORD_62 ) ( ( (lv_tableName_2_1= RULE_ID | lv_tableName_2_2= ruleSpecialIdent ) ) ) (otherlv_3= KEYWORD_46 | otherlv_4= KEYWORD_46 ) ( ( (lv_from_5_1= RULE_ID | lv_from_5_2= ruleSpecialIdent ) ) ) ( (otherlv_6= KEYWORD_52 | otherlv_7= KEYWORD_52 ) ( (lv_given_8_0= ruleAssignment ) ) (otherlv_9= KEYWORD_27 | otherlv_10= KEYWORD_27 ) ( (lv_use_11_0= RULE_ID ) ) )? ( (otherlv_12= KEYWORD_59 | otherlv_13= KEYWORD_59 ) ( (lv_where_14_0= ruleWhereItems ) ) )? )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3337:2: (otherlv_0= KEYWORD_62 | otherlv_1= KEYWORD_62 ) ( ( (lv_tableName_2_1= RULE_ID | lv_tableName_2_2= ruleSpecialIdent ) ) ) (otherlv_3= KEYWORD_46 | otherlv_4= KEYWORD_46 ) ( ( (lv_from_5_1= RULE_ID | lv_from_5_2= ruleSpecialIdent ) ) ) ( (otherlv_6= KEYWORD_52 | otherlv_7= KEYWORD_52 ) ( (lv_given_8_0= ruleAssignment ) ) (otherlv_9= KEYWORD_27 | otherlv_10= KEYWORD_27 ) ( (lv_use_11_0= RULE_ID ) ) )? ( (otherlv_12= KEYWORD_59 | otherlv_13= KEYWORD_59 ) ( (lv_where_14_0= ruleWhereItems ) ) )?
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3337:2: (otherlv_0= KEYWORD_61 | otherlv_1= KEYWORD_61 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3337:2: (otherlv_0= KEYWORD_62 | otherlv_1= KEYWORD_62 )
             int alt92=2;
             int LA92_0 = input.LA(1);
 
-            if ( (LA92_0==KEYWORD_61) ) {
+            if ( (LA92_0==KEYWORD_62) ) {
                 int LA92_1 = input.LA(2);
 
                 if ( (synpred105_InternalWreslEditorParser()) ) {
@@ -10281,9 +10282,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt92) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3338:2: otherlv_0= KEYWORD_61
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3338:2: otherlv_0= KEYWORD_62
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_61,FOLLOW_KEYWORD_61_in_ruleTableContent7267); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_62,FOLLOW_KEYWORD_62_in_ruleTableContent7267); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getTableContentAccess().getSelectKeyword_0_0());
@@ -10293,9 +10294,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3344:2: otherlv_1= KEYWORD_61
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3344:2: otherlv_1= KEYWORD_62
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_61,FOLLOW_KEYWORD_61_in_ruleTableContent7285); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_62,FOLLOW_KEYWORD_62_in_ruleTableContent7285); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getTableContentAccess().getSELECTKeyword_0_1());
@@ -10320,7 +10321,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             if ( (LA93_0==RULE_ID) ) {
                 alt93=1;
             }
-            else if ( (LA93_0==KEYWORD_94||LA93_0==KEYWORD_92||(LA93_0>=KEYWORD_71 && LA93_0<=KEYWORD_84)||(LA93_0>=KEYWORD_62 && LA93_0<=KEYWORD_64)||LA93_0==KEYWORD_59||(LA93_0>=KEYWORD_28 && LA93_0<=KEYWORD_39)||LA93_0==KEYWORD_13) ) {
+            else if ( (LA93_0==KEYWORD_95||LA93_0==KEYWORD_93||(LA93_0>=KEYWORD_72 && LA93_0<=KEYWORD_85)||(LA93_0>=KEYWORD_63 && LA93_0<=KEYWORD_65)||LA93_0==KEYWORD_60||(LA93_0>=KEYWORD_28 && LA93_0<=KEYWORD_40)||LA93_0==KEYWORD_13) ) {
                 alt93=2;
             }
             else {
@@ -10393,11 +10394,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3384:2: (otherlv_3= KEYWORD_45 | otherlv_4= KEYWORD_45 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3384:2: (otherlv_3= KEYWORD_46 | otherlv_4= KEYWORD_46 )
             int alt94=2;
             int LA94_0 = input.LA(1);
 
-            if ( (LA94_0==KEYWORD_45) ) {
+            if ( (LA94_0==KEYWORD_46) ) {
                 int LA94_1 = input.LA(2);
 
                 if ( (synpred107_InternalWreslEditorParser()) ) {
@@ -10423,9 +10424,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt94) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3385:2: otherlv_3= KEYWORD_45
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3385:2: otherlv_3= KEYWORD_46
                     {
-                    otherlv_3=(Token)match(input,KEYWORD_45,FOLLOW_KEYWORD_45_in_ruleTableContent7345); if (state.failed) return current;
+                    otherlv_3=(Token)match(input,KEYWORD_46,FOLLOW_KEYWORD_46_in_ruleTableContent7345); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_3, grammarAccess.getTableContentAccess().getFromKeyword_2_0());
@@ -10435,9 +10436,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3391:2: otherlv_4= KEYWORD_45
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3391:2: otherlv_4= KEYWORD_46
                     {
-                    otherlv_4=(Token)match(input,KEYWORD_45,FOLLOW_KEYWORD_45_in_ruleTableContent7363); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,KEYWORD_46,FOLLOW_KEYWORD_46_in_ruleTableContent7363); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_4, grammarAccess.getTableContentAccess().getFROMKeyword_2_1());
@@ -10462,7 +10463,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             if ( (LA95_0==RULE_ID) ) {
                 alt95=1;
             }
-            else if ( (LA95_0==KEYWORD_94||LA95_0==KEYWORD_92||(LA95_0>=KEYWORD_71 && LA95_0<=KEYWORD_84)||(LA95_0>=KEYWORD_62 && LA95_0<=KEYWORD_64)||LA95_0==KEYWORD_59||(LA95_0>=KEYWORD_28 && LA95_0<=KEYWORD_39)||LA95_0==KEYWORD_13) ) {
+            else if ( (LA95_0==KEYWORD_95||LA95_0==KEYWORD_93||(LA95_0>=KEYWORD_72 && LA95_0<=KEYWORD_85)||(LA95_0>=KEYWORD_63 && LA95_0<=KEYWORD_65)||LA95_0==KEYWORD_60||(LA95_0>=KEYWORD_28 && LA95_0<=KEYWORD_40)||LA95_0==KEYWORD_13) ) {
                 alt95=2;
             }
             else {
@@ -10535,22 +10536,22 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3431:2: ( (otherlv_6= KEYWORD_51 | otherlv_7= KEYWORD_51 ) ( (lv_given_8_0= ruleAssignment ) ) (otherlv_9= KEYWORD_27 | otherlv_10= KEYWORD_27 ) ( (lv_use_11_0= RULE_ID ) ) )?
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3431:2: ( (otherlv_6= KEYWORD_52 | otherlv_7= KEYWORD_52 ) ( (lv_given_8_0= ruleAssignment ) ) (otherlv_9= KEYWORD_27 | otherlv_10= KEYWORD_27 ) ( (lv_use_11_0= RULE_ID ) ) )?
             int alt98=2;
             int LA98_0 = input.LA(1);
 
-            if ( (LA98_0==KEYWORD_51) ) {
+            if ( (LA98_0==KEYWORD_52) ) {
                 alt98=1;
             }
             switch (alt98) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3431:3: (otherlv_6= KEYWORD_51 | otherlv_7= KEYWORD_51 ) ( (lv_given_8_0= ruleAssignment ) ) (otherlv_9= KEYWORD_27 | otherlv_10= KEYWORD_27 ) ( (lv_use_11_0= RULE_ID ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3431:3: (otherlv_6= KEYWORD_52 | otherlv_7= KEYWORD_52 ) ( (lv_given_8_0= ruleAssignment ) ) (otherlv_9= KEYWORD_27 | otherlv_10= KEYWORD_27 ) ( (lv_use_11_0= RULE_ID ) )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3431:3: (otherlv_6= KEYWORD_51 | otherlv_7= KEYWORD_51 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3431:3: (otherlv_6= KEYWORD_52 | otherlv_7= KEYWORD_52 )
                     int alt96=2;
                     int LA96_0 = input.LA(1);
 
-                    if ( (LA96_0==KEYWORD_51) ) {
+                    if ( (LA96_0==KEYWORD_52) ) {
                         int LA96_1 = input.LA(2);
 
                         if ( (synpred109_InternalWreslEditorParser()) ) {
@@ -10576,9 +10577,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt96) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3432:2: otherlv_6= KEYWORD_51
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3432:2: otherlv_6= KEYWORD_52
                             {
-                            otherlv_6=(Token)match(input,KEYWORD_51,FOLLOW_KEYWORD_51_in_ruleTableContent7424); if (state.failed) return current;
+                            otherlv_6=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleTableContent7424); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_6, grammarAccess.getTableContentAccess().getGivenKeyword_4_0_0());
@@ -10588,9 +10589,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3438:2: otherlv_7= KEYWORD_51
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3438:2: otherlv_7= KEYWORD_52
                             {
-                            otherlv_7=(Token)match(input,KEYWORD_51,FOLLOW_KEYWORD_51_in_ruleTableContent7442); if (state.failed) return current;
+                            otherlv_7=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleTableContent7442); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_7, grammarAccess.getTableContentAccess().getGIVENKeyword_4_0_1());
@@ -10729,22 +10730,22 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3489:4: ( (otherlv_12= KEYWORD_58 | otherlv_13= KEYWORD_58 ) ( (lv_where_14_0= ruleWhereItems ) ) )?
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3489:4: ( (otherlv_12= KEYWORD_59 | otherlv_13= KEYWORD_59 ) ( (lv_where_14_0= ruleWhereItems ) ) )?
             int alt100=2;
             int LA100_0 = input.LA(1);
 
-            if ( (LA100_0==KEYWORD_58) ) {
+            if ( (LA100_0==KEYWORD_59) ) {
                 alt100=1;
             }
             switch (alt100) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3489:5: (otherlv_12= KEYWORD_58 | otherlv_13= KEYWORD_58 ) ( (lv_where_14_0= ruleWhereItems ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3489:5: (otherlv_12= KEYWORD_59 | otherlv_13= KEYWORD_59 ) ( (lv_where_14_0= ruleWhereItems ) )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3489:5: (otherlv_12= KEYWORD_58 | otherlv_13= KEYWORD_58 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3489:5: (otherlv_12= KEYWORD_59 | otherlv_13= KEYWORD_59 )
                     int alt99=2;
                     int LA99_0 = input.LA(1);
 
-                    if ( (LA99_0==KEYWORD_58) ) {
+                    if ( (LA99_0==KEYWORD_59) ) {
                         int LA99_1 = input.LA(2);
 
                         if ( (synpred112_InternalWreslEditorParser()) ) {
@@ -10770,9 +10771,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt99) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3490:2: otherlv_12= KEYWORD_58
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3490:2: otherlv_12= KEYWORD_59
                             {
-                            otherlv_12=(Token)match(input,KEYWORD_58,FOLLOW_KEYWORD_58_in_ruleTableContent7534); if (state.failed) return current;
+                            otherlv_12=(Token)match(input,KEYWORD_59,FOLLOW_KEYWORD_59_in_ruleTableContent7534); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_12, grammarAccess.getTableContentAccess().getWhereKeyword_5_0_0());
@@ -10782,9 +10783,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3496:2: otherlv_13= KEYWORD_58
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3496:2: otherlv_13= KEYWORD_59
                             {
-                            otherlv_13=(Token)match(input,KEYWORD_58,FOLLOW_KEYWORD_58_in_ruleTableContent7552); if (state.failed) return current;
+                            otherlv_13=(Token)match(input,KEYWORD_59,FOLLOW_KEYWORD_59_in_ruleTableContent7552); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_13, grammarAccess.getTableContentAccess().getWHEREKeyword_5_0_1());
@@ -11431,10 +11432,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             int alt103=2;
             int LA103_0 = input.LA(1);
 
-            if ( (LA103_0==KEYWORD_53) ) {
+            if ( (LA103_0==KEYWORD_54) ) {
                 alt103=1;
             }
-            else if ( (LA103_0==KEYWORD_56) ) {
+            else if ( (LA103_0==KEYWORD_57) ) {
                 alt103=2;
             }
             else {
@@ -11619,7 +11620,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             int alt104=2;
             int LA104_0 = input.LA(1);
 
-            if ( (LA104_0==KEYWORD_53) ) {
+            if ( (LA104_0==KEYWORD_54) ) {
                 alt104=1;
             }
             switch (alt104) {
@@ -11781,7 +11782,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             int alt105=2;
             int LA105_0 = input.LA(1);
 
-            if ( (LA105_0==KEYWORD_56) ) {
+            if ( (LA105_0==KEYWORD_57) ) {
                 alt105=1;
             }
             switch (alt105) {
@@ -11886,7 +11887,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleUpper"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3881:1: ruleUpper returns [EObject current=null] : ( (otherlv_0= KEYWORD_56 | otherlv_1= KEYWORD_56 ) ( ( () (otherlv_3= KEYWORD_91 | otherlv_4= KEYWORD_91 ) ) | ( (lv_expression_5_0= ruleExpression ) ) ) ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3881:1: ruleUpper returns [EObject current=null] : ( (otherlv_0= KEYWORD_57 | otherlv_1= KEYWORD_57 ) ( ( () (otherlv_3= KEYWORD_92 | otherlv_4= KEYWORD_92 ) ) | ( (lv_expression_5_0= ruleExpression ) ) ) ) ;
     public final EObject ruleUpper() throws RecognitionException {
         EObject current = null;
 
@@ -11900,17 +11901,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3884:28: ( ( (otherlv_0= KEYWORD_56 | otherlv_1= KEYWORD_56 ) ( ( () (otherlv_3= KEYWORD_91 | otherlv_4= KEYWORD_91 ) ) | ( (lv_expression_5_0= ruleExpression ) ) ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3885:1: ( (otherlv_0= KEYWORD_56 | otherlv_1= KEYWORD_56 ) ( ( () (otherlv_3= KEYWORD_91 | otherlv_4= KEYWORD_91 ) ) | ( (lv_expression_5_0= ruleExpression ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3884:28: ( ( (otherlv_0= KEYWORD_57 | otherlv_1= KEYWORD_57 ) ( ( () (otherlv_3= KEYWORD_92 | otherlv_4= KEYWORD_92 ) ) | ( (lv_expression_5_0= ruleExpression ) ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3885:1: ( (otherlv_0= KEYWORD_57 | otherlv_1= KEYWORD_57 ) ( ( () (otherlv_3= KEYWORD_92 | otherlv_4= KEYWORD_92 ) ) | ( (lv_expression_5_0= ruleExpression ) ) ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3885:1: ( (otherlv_0= KEYWORD_56 | otherlv_1= KEYWORD_56 ) ( ( () (otherlv_3= KEYWORD_91 | otherlv_4= KEYWORD_91 ) ) | ( (lv_expression_5_0= ruleExpression ) ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3885:2: (otherlv_0= KEYWORD_56 | otherlv_1= KEYWORD_56 ) ( ( () (otherlv_3= KEYWORD_91 | otherlv_4= KEYWORD_91 ) ) | ( (lv_expression_5_0= ruleExpression ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3885:1: ( (otherlv_0= KEYWORD_57 | otherlv_1= KEYWORD_57 ) ( ( () (otherlv_3= KEYWORD_92 | otherlv_4= KEYWORD_92 ) ) | ( (lv_expression_5_0= ruleExpression ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3885:2: (otherlv_0= KEYWORD_57 | otherlv_1= KEYWORD_57 ) ( ( () (otherlv_3= KEYWORD_92 | otherlv_4= KEYWORD_92 ) ) | ( (lv_expression_5_0= ruleExpression ) ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3885:2: (otherlv_0= KEYWORD_56 | otherlv_1= KEYWORD_56 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3885:2: (otherlv_0= KEYWORD_57 | otherlv_1= KEYWORD_57 )
             int alt106=2;
             int LA106_0 = input.LA(1);
 
-            if ( (LA106_0==KEYWORD_56) ) {
+            if ( (LA106_0==KEYWORD_57) ) {
                 int LA106_1 = input.LA(2);
 
                 if ( (synpred121_InternalWreslEditorParser()) ) {
@@ -11936,9 +11937,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt106) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3886:2: otherlv_0= KEYWORD_56
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3886:2: otherlv_0= KEYWORD_57
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_ruleUpper8418); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_57,FOLLOW_KEYWORD_57_in_ruleUpper8418); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getUpperAccess().getUpperKeyword_0_0());
@@ -11948,9 +11949,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3892:2: otherlv_1= KEYWORD_56
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3892:2: otherlv_1= KEYWORD_57
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_ruleUpper8436); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_57,FOLLOW_KEYWORD_57_in_ruleUpper8436); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getUpperAccess().getUPPERKeyword_0_1());
@@ -11962,14 +11963,14 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3896:2: ( ( () (otherlv_3= KEYWORD_91 | otherlv_4= KEYWORD_91 ) ) | ( (lv_expression_5_0= ruleExpression ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3896:2: ( ( () (otherlv_3= KEYWORD_92 | otherlv_4= KEYWORD_92 ) ) | ( (lv_expression_5_0= ruleExpression ) ) )
             int alt108=2;
             int LA108_0 = input.LA(1);
 
-            if ( (LA108_0==KEYWORD_91) ) {
+            if ( (LA108_0==KEYWORD_92) ) {
                 alt108=1;
             }
-            else if ( (LA108_0==KEYWORD_94||LA108_0==KEYWORD_92||(LA108_0>=KEYWORD_71 && LA108_0<=KEYWORD_84)||(LA108_0>=KEYWORD_62 && LA108_0<=KEYWORD_64)||LA108_0==KEYWORD_59||(LA108_0>=KEYWORD_28 && LA108_0<=KEYWORD_16)||LA108_0==KEYWORD_1||LA108_0==KEYWORD_4||LA108_0==KEYWORD_6||LA108_0==KEYWORD_13||(LA108_0>=RULE_MIN && LA108_0<=RULE_FLOAT)||LA108_0==RULE_ID) ) {
+            else if ( (LA108_0==KEYWORD_95||LA108_0==KEYWORD_93||(LA108_0>=KEYWORD_72 && LA108_0<=KEYWORD_85)||(LA108_0>=KEYWORD_63 && LA108_0<=KEYWORD_65)||LA108_0==KEYWORD_60||(LA108_0>=KEYWORD_28 && LA108_0<=KEYWORD_16)||LA108_0==KEYWORD_1||LA108_0==KEYWORD_4||LA108_0==KEYWORD_6||LA108_0==KEYWORD_13||(LA108_0>=RULE_MIN && LA108_0<=RULE_FLOAT)||LA108_0==RULE_ID) ) {
                 alt108=2;
             }
             else {
@@ -11981,10 +11982,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt108) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3896:3: ( () (otherlv_3= KEYWORD_91 | otherlv_4= KEYWORD_91 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3896:3: ( () (otherlv_3= KEYWORD_92 | otherlv_4= KEYWORD_92 ) )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3896:3: ( () (otherlv_3= KEYWORD_91 | otherlv_4= KEYWORD_91 ) )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3896:4: () (otherlv_3= KEYWORD_91 | otherlv_4= KEYWORD_91 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3896:3: ( () (otherlv_3= KEYWORD_92 | otherlv_4= KEYWORD_92 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3896:4: () (otherlv_3= KEYWORD_92 | otherlv_4= KEYWORD_92 )
                     {
                     // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3896:4: ()
                     // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3897:2: 
@@ -12004,11 +12005,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3905:2: (otherlv_3= KEYWORD_91 | otherlv_4= KEYWORD_91 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3905:2: (otherlv_3= KEYWORD_92 | otherlv_4= KEYWORD_92 )
                     int alt107=2;
                     int LA107_0 = input.LA(1);
 
-                    if ( (LA107_0==KEYWORD_91) ) {
+                    if ( (LA107_0==KEYWORD_92) ) {
                         int LA107_1 = input.LA(2);
 
                         if ( (synpred122_InternalWreslEditorParser()) ) {
@@ -12034,9 +12035,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt107) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3906:2: otherlv_3= KEYWORD_91
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3906:2: otherlv_3= KEYWORD_92
                             {
-                            otherlv_3=(Token)match(input,KEYWORD_91,FOLLOW_KEYWORD_91_in_ruleUpper8464); if (state.failed) return current;
+                            otherlv_3=(Token)match(input,KEYWORD_92,FOLLOW_KEYWORD_92_in_ruleUpper8464); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_3, grammarAccess.getUpperAccess().getUnboundedKeyword_1_0_1_0());
@@ -12046,9 +12047,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3912:2: otherlv_4= KEYWORD_91
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3912:2: otherlv_4= KEYWORD_92
                             {
-                            otherlv_4=(Token)match(input,KEYWORD_91,FOLLOW_KEYWORD_91_in_ruleUpper8482); if (state.failed) return current;
+                            otherlv_4=(Token)match(input,KEYWORD_92,FOLLOW_KEYWORD_92_in_ruleUpper8482); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_4, grammarAccess.getUpperAccess().getUNBOUNDEDKeyword_1_0_1_1());
@@ -12173,7 +12174,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLower"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3952:1: ruleLower returns [EObject current=null] : ( (otherlv_0= KEYWORD_53 | otherlv_1= KEYWORD_53 ) ( ( () (otherlv_3= KEYWORD_91 | otherlv_4= KEYWORD_91 ) ) | ( (lv_expression_5_0= ruleExpression ) ) ) ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3952:1: ruleLower returns [EObject current=null] : ( (otherlv_0= KEYWORD_54 | otherlv_1= KEYWORD_54 ) ( ( () (otherlv_3= KEYWORD_92 | otherlv_4= KEYWORD_92 ) ) | ( (lv_expression_5_0= ruleExpression ) ) ) ) ;
     public final EObject ruleLower() throws RecognitionException {
         EObject current = null;
 
@@ -12187,17 +12188,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3955:28: ( ( (otherlv_0= KEYWORD_53 | otherlv_1= KEYWORD_53 ) ( ( () (otherlv_3= KEYWORD_91 | otherlv_4= KEYWORD_91 ) ) | ( (lv_expression_5_0= ruleExpression ) ) ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3956:1: ( (otherlv_0= KEYWORD_53 | otherlv_1= KEYWORD_53 ) ( ( () (otherlv_3= KEYWORD_91 | otherlv_4= KEYWORD_91 ) ) | ( (lv_expression_5_0= ruleExpression ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3955:28: ( ( (otherlv_0= KEYWORD_54 | otherlv_1= KEYWORD_54 ) ( ( () (otherlv_3= KEYWORD_92 | otherlv_4= KEYWORD_92 ) ) | ( (lv_expression_5_0= ruleExpression ) ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3956:1: ( (otherlv_0= KEYWORD_54 | otherlv_1= KEYWORD_54 ) ( ( () (otherlv_3= KEYWORD_92 | otherlv_4= KEYWORD_92 ) ) | ( (lv_expression_5_0= ruleExpression ) ) ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3956:1: ( (otherlv_0= KEYWORD_53 | otherlv_1= KEYWORD_53 ) ( ( () (otherlv_3= KEYWORD_91 | otherlv_4= KEYWORD_91 ) ) | ( (lv_expression_5_0= ruleExpression ) ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3956:2: (otherlv_0= KEYWORD_53 | otherlv_1= KEYWORD_53 ) ( ( () (otherlv_3= KEYWORD_91 | otherlv_4= KEYWORD_91 ) ) | ( (lv_expression_5_0= ruleExpression ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3956:1: ( (otherlv_0= KEYWORD_54 | otherlv_1= KEYWORD_54 ) ( ( () (otherlv_3= KEYWORD_92 | otherlv_4= KEYWORD_92 ) ) | ( (lv_expression_5_0= ruleExpression ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3956:2: (otherlv_0= KEYWORD_54 | otherlv_1= KEYWORD_54 ) ( ( () (otherlv_3= KEYWORD_92 | otherlv_4= KEYWORD_92 ) ) | ( (lv_expression_5_0= ruleExpression ) ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3956:2: (otherlv_0= KEYWORD_53 | otherlv_1= KEYWORD_53 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3956:2: (otherlv_0= KEYWORD_54 | otherlv_1= KEYWORD_54 )
             int alt109=2;
             int LA109_0 = input.LA(1);
 
-            if ( (LA109_0==KEYWORD_53) ) {
+            if ( (LA109_0==KEYWORD_54) ) {
                 int LA109_1 = input.LA(2);
 
                 if ( (synpred124_InternalWreslEditorParser()) ) {
@@ -12223,9 +12224,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt109) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3957:2: otherlv_0= KEYWORD_53
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3957:2: otherlv_0= KEYWORD_54
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleLower8595); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_54,FOLLOW_KEYWORD_54_in_ruleLower8595); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getLowerAccess().getLowerKeyword_0_0());
@@ -12235,9 +12236,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3963:2: otherlv_1= KEYWORD_53
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3963:2: otherlv_1= KEYWORD_54
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleLower8613); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_54,FOLLOW_KEYWORD_54_in_ruleLower8613); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getLowerAccess().getLOWERKeyword_0_1());
@@ -12249,14 +12250,14 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3967:2: ( ( () (otherlv_3= KEYWORD_91 | otherlv_4= KEYWORD_91 ) ) | ( (lv_expression_5_0= ruleExpression ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3967:2: ( ( () (otherlv_3= KEYWORD_92 | otherlv_4= KEYWORD_92 ) ) | ( (lv_expression_5_0= ruleExpression ) ) )
             int alt111=2;
             int LA111_0 = input.LA(1);
 
-            if ( (LA111_0==KEYWORD_91) ) {
+            if ( (LA111_0==KEYWORD_92) ) {
                 alt111=1;
             }
-            else if ( (LA111_0==KEYWORD_94||LA111_0==KEYWORD_92||(LA111_0>=KEYWORD_71 && LA111_0<=KEYWORD_84)||(LA111_0>=KEYWORD_62 && LA111_0<=KEYWORD_64)||LA111_0==KEYWORD_59||(LA111_0>=KEYWORD_28 && LA111_0<=KEYWORD_16)||LA111_0==KEYWORD_1||LA111_0==KEYWORD_4||LA111_0==KEYWORD_6||LA111_0==KEYWORD_13||(LA111_0>=RULE_MIN && LA111_0<=RULE_FLOAT)||LA111_0==RULE_ID) ) {
+            else if ( (LA111_0==KEYWORD_95||LA111_0==KEYWORD_93||(LA111_0>=KEYWORD_72 && LA111_0<=KEYWORD_85)||(LA111_0>=KEYWORD_63 && LA111_0<=KEYWORD_65)||LA111_0==KEYWORD_60||(LA111_0>=KEYWORD_28 && LA111_0<=KEYWORD_16)||LA111_0==KEYWORD_1||LA111_0==KEYWORD_4||LA111_0==KEYWORD_6||LA111_0==KEYWORD_13||(LA111_0>=RULE_MIN && LA111_0<=RULE_FLOAT)||LA111_0==RULE_ID) ) {
                 alt111=2;
             }
             else {
@@ -12268,10 +12269,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt111) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3967:3: ( () (otherlv_3= KEYWORD_91 | otherlv_4= KEYWORD_91 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3967:3: ( () (otherlv_3= KEYWORD_92 | otherlv_4= KEYWORD_92 ) )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3967:3: ( () (otherlv_3= KEYWORD_91 | otherlv_4= KEYWORD_91 ) )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3967:4: () (otherlv_3= KEYWORD_91 | otherlv_4= KEYWORD_91 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3967:3: ( () (otherlv_3= KEYWORD_92 | otherlv_4= KEYWORD_92 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3967:4: () (otherlv_3= KEYWORD_92 | otherlv_4= KEYWORD_92 )
                     {
                     // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3967:4: ()
                     // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3968:2: 
@@ -12291,11 +12292,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3976:2: (otherlv_3= KEYWORD_91 | otherlv_4= KEYWORD_91 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3976:2: (otherlv_3= KEYWORD_92 | otherlv_4= KEYWORD_92 )
                     int alt110=2;
                     int LA110_0 = input.LA(1);
 
-                    if ( (LA110_0==KEYWORD_91) ) {
+                    if ( (LA110_0==KEYWORD_92) ) {
                         int LA110_1 = input.LA(2);
 
                         if ( (synpred125_InternalWreslEditorParser()) ) {
@@ -12321,9 +12322,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt110) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3977:2: otherlv_3= KEYWORD_91
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3977:2: otherlv_3= KEYWORD_92
                             {
-                            otherlv_3=(Token)match(input,KEYWORD_91,FOLLOW_KEYWORD_91_in_ruleLower8641); if (state.failed) return current;
+                            otherlv_3=(Token)match(input,KEYWORD_92,FOLLOW_KEYWORD_92_in_ruleLower8641); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_3, grammarAccess.getLowerAccess().getUnboundedKeyword_1_0_1_0());
@@ -12333,9 +12334,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3983:2: otherlv_4= KEYWORD_91
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3983:2: otherlv_4= KEYWORD_92
                             {
-                            otherlv_4=(Token)match(input,KEYWORD_91,FOLLOW_KEYWORD_91_in_ruleLower8659); if (state.failed) return current;
+                            otherlv_4=(Token)match(input,KEYWORD_92,FOLLOW_KEYWORD_92_in_ruleLower8659); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_4, grammarAccess.getLowerAccess().getUNBOUNDEDKeyword_1_0_1_1());
@@ -12460,7 +12461,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleGoal"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4023:1: ruleGoal returns [EObject current=null] : ( (otherlv_0= KEYWORD_46 | otherlv_1= KEYWORD_46 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (lv_name_6_0= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleGoalSimple | lv_definition_8_2= ruleGoalCase ) ) ) otherlv_9= KEYWORD_15 ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4023:1: ruleGoal returns [EObject current=null] : ( (otherlv_0= KEYWORD_47 | otherlv_1= KEYWORD_47 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (lv_name_6_0= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleGoalSimple | lv_definition_8_2= ruleGoalCase ) ) ) otherlv_9= KEYWORD_15 ) ;
     public final EObject ruleGoal() throws RecognitionException {
         EObject current = null;
 
@@ -12483,17 +12484,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4026:28: ( ( (otherlv_0= KEYWORD_46 | otherlv_1= KEYWORD_46 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (lv_name_6_0= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleGoalSimple | lv_definition_8_2= ruleGoalCase ) ) ) otherlv_9= KEYWORD_15 ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4027:1: ( (otherlv_0= KEYWORD_46 | otherlv_1= KEYWORD_46 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (lv_name_6_0= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleGoalSimple | lv_definition_8_2= ruleGoalCase ) ) ) otherlv_9= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4026:28: ( ( (otherlv_0= KEYWORD_47 | otherlv_1= KEYWORD_47 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (lv_name_6_0= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleGoalSimple | lv_definition_8_2= ruleGoalCase ) ) ) otherlv_9= KEYWORD_15 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4027:1: ( (otherlv_0= KEYWORD_47 | otherlv_1= KEYWORD_47 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (lv_name_6_0= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleGoalSimple | lv_definition_8_2= ruleGoalCase ) ) ) otherlv_9= KEYWORD_15 )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4027:1: ( (otherlv_0= KEYWORD_46 | otherlv_1= KEYWORD_46 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (lv_name_6_0= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleGoalSimple | lv_definition_8_2= ruleGoalCase ) ) ) otherlv_9= KEYWORD_15 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4027:2: (otherlv_0= KEYWORD_46 | otherlv_1= KEYWORD_46 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )? ( (lv_name_6_0= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleGoalSimple | lv_definition_8_2= ruleGoalCase ) ) ) otherlv_9= KEYWORD_15
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4027:1: ( (otherlv_0= KEYWORD_47 | otherlv_1= KEYWORD_47 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (lv_name_6_0= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleGoalSimple | lv_definition_8_2= ruleGoalCase ) ) ) otherlv_9= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4027:2: (otherlv_0= KEYWORD_47 | otherlv_1= KEYWORD_47 ) ( (lv_ta_2_0= ruleTimeArraySize ) )? (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )? ( (lv_name_6_0= RULE_ID ) ) otherlv_7= KEYWORD_14 ( ( (lv_definition_8_1= ruleGoalSimple | lv_definition_8_2= ruleGoalCase ) ) ) otherlv_9= KEYWORD_15
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4027:2: (otherlv_0= KEYWORD_46 | otherlv_1= KEYWORD_46 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4027:2: (otherlv_0= KEYWORD_47 | otherlv_1= KEYWORD_47 )
             int alt112=2;
             int LA112_0 = input.LA(1);
 
-            if ( (LA112_0==KEYWORD_46) ) {
+            if ( (LA112_0==KEYWORD_47) ) {
                 int LA112_1 = input.LA(2);
 
                 if ( (synpred127_InternalWreslEditorParser()) ) {
@@ -12519,9 +12520,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt112) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4028:2: otherlv_0= KEYWORD_46
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4028:2: otherlv_0= KEYWORD_47
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_46,FOLLOW_KEYWORD_46_in_ruleGoal8772); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_ruleGoal8772); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getGoalAccess().getGoalKeyword_0_0());
@@ -12531,9 +12532,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4034:2: otherlv_1= KEYWORD_46
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4034:2: otherlv_1= KEYWORD_47
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_46,FOLLOW_KEYWORD_46_in_ruleGoal8790); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_ruleGoal8790); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getGoalAccess().getGOALKeyword_0_1());
@@ -12591,7 +12592,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4056:3: (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12 )?
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4056:3: (otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12 )?
             int alt115=2;
             int LA115_0 = input.LA(1);
 
@@ -12600,7 +12601,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt115) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4057:2: otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) ) otherlv_5= KEYWORD_12
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4057:2: otherlv_3= KEYWORD_11 ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) ) otherlv_5= KEYWORD_12
                     {
                     otherlv_3=(Token)match(input,KEYWORD_11,FOLLOW_KEYWORD_11_in_ruleGoal8826); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -12608,17 +12609,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_3, grammarAccess.getGoalAccess().getLeftSquareBracketKeyword_2_0());
                           
                     }
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4061:1: ( ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) ) )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4062:1: ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4061:1: ( ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4062:1: ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4062:1: ( (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 ) )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4063:1: (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4062:1: ( (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4063:1: (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4063:1: (lv_local_4_1= KEYWORD_52 | lv_local_4_2= KEYWORD_52 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4063:1: (lv_local_4_1= KEYWORD_53 | lv_local_4_2= KEYWORD_53 )
                     int alt114=2;
                     int LA114_0 = input.LA(1);
 
-                    if ( (LA114_0==KEYWORD_52) ) {
+                    if ( (LA114_0==KEYWORD_53) ) {
                         int LA114_1 = input.LA(2);
 
                         if ( (synpred129_InternalWreslEditorParser()) ) {
@@ -12644,9 +12645,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt114) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4064:3: lv_local_4_1= KEYWORD_52
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4064:3: lv_local_4_1= KEYWORD_53
                             {
-                            lv_local_4_1=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleGoal8846); if (state.failed) return current;
+                            lv_local_4_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleGoal8846); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                       newLeafNode(lv_local_4_1, grammarAccess.getGoalAccess().getLocalLocalKeyword_2_1_0_0());
@@ -12664,9 +12665,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4077:8: lv_local_4_2= KEYWORD_52
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4077:8: lv_local_4_2= KEYWORD_53
                             {
-                            lv_local_4_2=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleGoal8874); if (state.failed) return current;
+                            lv_local_4_2=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleGoal8874); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                       newLeafNode(lv_local_4_2, grammarAccess.getGoalAccess().getLocalLOCALKeyword_2_1_0_1());
@@ -12750,7 +12751,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             int alt116=2;
             int LA116_0 = input.LA(1);
 
-            if ( (LA116_0==KEYWORD_94||LA116_0==KEYWORD_92||(LA116_0>=KEYWORD_71 && LA116_0<=KEYWORD_84)||(LA116_0>=KEYWORD_62 && LA116_0<=KEYWORD_64)||LA116_0==KEYWORD_59||(LA116_0>=KEYWORD_28 && LA116_0<=KEYWORD_16)||LA116_0==KEYWORD_1||LA116_0==KEYWORD_4||LA116_0==KEYWORD_6||LA116_0==KEYWORD_13||(LA116_0>=RULE_MIN && LA116_0<=RULE_FLOAT)||LA116_0==RULE_ID) ) {
+            if ( (LA116_0==KEYWORD_95||LA116_0==KEYWORD_93||(LA116_0>=KEYWORD_72 && LA116_0<=KEYWORD_85)||(LA116_0>=KEYWORD_63 && LA116_0<=KEYWORD_65)||LA116_0==KEYWORD_60||(LA116_0>=KEYWORD_28 && LA116_0<=KEYWORD_16)||LA116_0==KEYWORD_1||LA116_0==KEYWORD_4||LA116_0==KEYWORD_6||LA116_0==KEYWORD_13||(LA116_0>=RULE_MIN && LA116_0<=RULE_FLOAT)||LA116_0==RULE_ID) ) {
                 alt116=1;
             }
             else if ( (LA116_0==KEYWORD_23) ) {
@@ -13020,7 +13021,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             if ( (LA119_0==KEYWORD_24) ) {
                 alt119=1;
             }
-            else if ( (LA119_0==KEYWORD_43) ) {
+            else if ( (LA119_0==KEYWORD_44) ) {
                 alt119=2;
             }
             else {
@@ -13082,7 +13083,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                         int alt118=2;
                         int LA118_0 = input.LA(1);
 
-                        if ( (LA118_0==KEYWORD_43) ) {
+                        if ( (LA118_0==KEYWORD_44) ) {
                             alt118=1;
                         }
 
@@ -13203,7 +13204,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleGoalCaseContent"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4266:1: ruleGoalCaseContent returns [EObject current=null] : ( (otherlv_0= KEYWORD_43 | otherlv_1= KEYWORD_43 ) ( ( (lv_caseName_2_1= RULE_ID | lv_caseName_2_2= ruleSpecialIdent ) ) ) otherlv_3= KEYWORD_14 ( (lv_condition_4_0= ruleCondition ) ) (otherlv_5= KEYWORD_24 | otherlv_6= KEYWORD_24 ) ( (lv_rhs_7_0= ruleExpression ) ) ( (lv_subContent_8_0= ruleSubContent ) )? otherlv_9= KEYWORD_15 ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4266:1: ruleGoalCaseContent returns [EObject current=null] : ( (otherlv_0= KEYWORD_44 | otherlv_1= KEYWORD_44 ) ( ( (lv_caseName_2_1= RULE_ID | lv_caseName_2_2= ruleSpecialIdent ) ) ) otherlv_3= KEYWORD_14 ( (lv_condition_4_0= ruleCondition ) ) (otherlv_5= KEYWORD_24 | otherlv_6= KEYWORD_24 ) ( (lv_rhs_7_0= ruleExpression ) ) ( (lv_subContent_8_0= ruleSubContent ) )? otherlv_9= KEYWORD_15 ) ;
     public final EObject ruleGoalCaseContent() throws RecognitionException {
         EObject current = null;
 
@@ -13226,17 +13227,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4269:28: ( ( (otherlv_0= KEYWORD_43 | otherlv_1= KEYWORD_43 ) ( ( (lv_caseName_2_1= RULE_ID | lv_caseName_2_2= ruleSpecialIdent ) ) ) otherlv_3= KEYWORD_14 ( (lv_condition_4_0= ruleCondition ) ) (otherlv_5= KEYWORD_24 | otherlv_6= KEYWORD_24 ) ( (lv_rhs_7_0= ruleExpression ) ) ( (lv_subContent_8_0= ruleSubContent ) )? otherlv_9= KEYWORD_15 ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4270:1: ( (otherlv_0= KEYWORD_43 | otherlv_1= KEYWORD_43 ) ( ( (lv_caseName_2_1= RULE_ID | lv_caseName_2_2= ruleSpecialIdent ) ) ) otherlv_3= KEYWORD_14 ( (lv_condition_4_0= ruleCondition ) ) (otherlv_5= KEYWORD_24 | otherlv_6= KEYWORD_24 ) ( (lv_rhs_7_0= ruleExpression ) ) ( (lv_subContent_8_0= ruleSubContent ) )? otherlv_9= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4269:28: ( ( (otherlv_0= KEYWORD_44 | otherlv_1= KEYWORD_44 ) ( ( (lv_caseName_2_1= RULE_ID | lv_caseName_2_2= ruleSpecialIdent ) ) ) otherlv_3= KEYWORD_14 ( (lv_condition_4_0= ruleCondition ) ) (otherlv_5= KEYWORD_24 | otherlv_6= KEYWORD_24 ) ( (lv_rhs_7_0= ruleExpression ) ) ( (lv_subContent_8_0= ruleSubContent ) )? otherlv_9= KEYWORD_15 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4270:1: ( (otherlv_0= KEYWORD_44 | otherlv_1= KEYWORD_44 ) ( ( (lv_caseName_2_1= RULE_ID | lv_caseName_2_2= ruleSpecialIdent ) ) ) otherlv_3= KEYWORD_14 ( (lv_condition_4_0= ruleCondition ) ) (otherlv_5= KEYWORD_24 | otherlv_6= KEYWORD_24 ) ( (lv_rhs_7_0= ruleExpression ) ) ( (lv_subContent_8_0= ruleSubContent ) )? otherlv_9= KEYWORD_15 )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4270:1: ( (otherlv_0= KEYWORD_43 | otherlv_1= KEYWORD_43 ) ( ( (lv_caseName_2_1= RULE_ID | lv_caseName_2_2= ruleSpecialIdent ) ) ) otherlv_3= KEYWORD_14 ( (lv_condition_4_0= ruleCondition ) ) (otherlv_5= KEYWORD_24 | otherlv_6= KEYWORD_24 ) ( (lv_rhs_7_0= ruleExpression ) ) ( (lv_subContent_8_0= ruleSubContent ) )? otherlv_9= KEYWORD_15 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4270:2: (otherlv_0= KEYWORD_43 | otherlv_1= KEYWORD_43 ) ( ( (lv_caseName_2_1= RULE_ID | lv_caseName_2_2= ruleSpecialIdent ) ) ) otherlv_3= KEYWORD_14 ( (lv_condition_4_0= ruleCondition ) ) (otherlv_5= KEYWORD_24 | otherlv_6= KEYWORD_24 ) ( (lv_rhs_7_0= ruleExpression ) ) ( (lv_subContent_8_0= ruleSubContent ) )? otherlv_9= KEYWORD_15
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4270:1: ( (otherlv_0= KEYWORD_44 | otherlv_1= KEYWORD_44 ) ( ( (lv_caseName_2_1= RULE_ID | lv_caseName_2_2= ruleSpecialIdent ) ) ) otherlv_3= KEYWORD_14 ( (lv_condition_4_0= ruleCondition ) ) (otherlv_5= KEYWORD_24 | otherlv_6= KEYWORD_24 ) ( (lv_rhs_7_0= ruleExpression ) ) ( (lv_subContent_8_0= ruleSubContent ) )? otherlv_9= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4270:2: (otherlv_0= KEYWORD_44 | otherlv_1= KEYWORD_44 ) ( ( (lv_caseName_2_1= RULE_ID | lv_caseName_2_2= ruleSpecialIdent ) ) ) otherlv_3= KEYWORD_14 ( (lv_condition_4_0= ruleCondition ) ) (otherlv_5= KEYWORD_24 | otherlv_6= KEYWORD_24 ) ( (lv_rhs_7_0= ruleExpression ) ) ( (lv_subContent_8_0= ruleSubContent ) )? otherlv_9= KEYWORD_15
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4270:2: (otherlv_0= KEYWORD_43 | otherlv_1= KEYWORD_43 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4270:2: (otherlv_0= KEYWORD_44 | otherlv_1= KEYWORD_44 )
             int alt120=2;
             int LA120_0 = input.LA(1);
 
-            if ( (LA120_0==KEYWORD_43) ) {
+            if ( (LA120_0==KEYWORD_44) ) {
                 int LA120_1 = input.LA(2);
 
                 if ( (synpred135_InternalWreslEditorParser()) ) {
@@ -13262,9 +13263,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt120) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4271:2: otherlv_0= KEYWORD_43
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4271:2: otherlv_0= KEYWORD_44
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_43,FOLLOW_KEYWORD_43_in_ruleGoalCaseContent9251); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_44,FOLLOW_KEYWORD_44_in_ruleGoalCaseContent9251); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getGoalCaseContentAccess().getCaseKeyword_0_0());
@@ -13274,9 +13275,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4277:2: otherlv_1= KEYWORD_43
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4277:2: otherlv_1= KEYWORD_44
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_43,FOLLOW_KEYWORD_43_in_ruleGoalCaseContent9269); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_44,FOLLOW_KEYWORD_44_in_ruleGoalCaseContent9269); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getGoalCaseContentAccess().getCASEKeyword_0_1());
@@ -13301,7 +13302,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             if ( (LA121_0==RULE_ID) ) {
                 alt121=1;
             }
-            else if ( (LA121_0==KEYWORD_94||LA121_0==KEYWORD_92||(LA121_0>=KEYWORD_71 && LA121_0<=KEYWORD_84)||(LA121_0>=KEYWORD_62 && LA121_0<=KEYWORD_64)||LA121_0==KEYWORD_59||(LA121_0>=KEYWORD_28 && LA121_0<=KEYWORD_39)||LA121_0==KEYWORD_13) ) {
+            else if ( (LA121_0==KEYWORD_95||LA121_0==KEYWORD_93||(LA121_0>=KEYWORD_72 && LA121_0<=KEYWORD_85)||(LA121_0>=KEYWORD_63 && LA121_0<=KEYWORD_65)||LA121_0==KEYWORD_60||(LA121_0>=KEYWORD_28 && LA121_0<=KEYWORD_40)||LA121_0==KEYWORD_13) ) {
                 alt121=2;
             }
             else {
@@ -14138,7 +14139,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLhsGtRhs"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4571:1: ruleLhsGtRhs returns [EObject current=null] : ( (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 ) otherlv_2= KEYWORD_10 (otherlv_3= KEYWORD_24 | otherlv_4= KEYWORD_24 ) ( ( () (otherlv_6= KEYWORD_89 | otherlv_7= KEYWORD_89 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) ) ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4571:1: ruleLhsGtRhs returns [EObject current=null] : ( (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 ) otherlv_2= KEYWORD_10 (otherlv_3= KEYWORD_24 | otherlv_4= KEYWORD_24 ) ( ( () (otherlv_6= KEYWORD_90 | otherlv_7= KEYWORD_90 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) ) ) ;
     public final EObject ruleLhsGtRhs() throws RecognitionException {
         EObject current = null;
 
@@ -14155,11 +14156,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4574:28: ( ( (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 ) otherlv_2= KEYWORD_10 (otherlv_3= KEYWORD_24 | otherlv_4= KEYWORD_24 ) ( ( () (otherlv_6= KEYWORD_89 | otherlv_7= KEYWORD_89 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4575:1: ( (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 ) otherlv_2= KEYWORD_10 (otherlv_3= KEYWORD_24 | otherlv_4= KEYWORD_24 ) ( ( () (otherlv_6= KEYWORD_89 | otherlv_7= KEYWORD_89 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4574:28: ( ( (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 ) otherlv_2= KEYWORD_10 (otherlv_3= KEYWORD_24 | otherlv_4= KEYWORD_24 ) ( ( () (otherlv_6= KEYWORD_90 | otherlv_7= KEYWORD_90 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4575:1: ( (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 ) otherlv_2= KEYWORD_10 (otherlv_3= KEYWORD_24 | otherlv_4= KEYWORD_24 ) ( ( () (otherlv_6= KEYWORD_90 | otherlv_7= KEYWORD_90 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4575:1: ( (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 ) otherlv_2= KEYWORD_10 (otherlv_3= KEYWORD_24 | otherlv_4= KEYWORD_24 ) ( ( () (otherlv_6= KEYWORD_89 | otherlv_7= KEYWORD_89 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4575:2: (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 ) otherlv_2= KEYWORD_10 (otherlv_3= KEYWORD_24 | otherlv_4= KEYWORD_24 ) ( ( () (otherlv_6= KEYWORD_89 | otherlv_7= KEYWORD_89 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4575:1: ( (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 ) otherlv_2= KEYWORD_10 (otherlv_3= KEYWORD_24 | otherlv_4= KEYWORD_24 ) ( ( () (otherlv_6= KEYWORD_90 | otherlv_7= KEYWORD_90 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4575:2: (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 ) otherlv_2= KEYWORD_10 (otherlv_3= KEYWORD_24 | otherlv_4= KEYWORD_24 ) ( ( () (otherlv_6= KEYWORD_90 | otherlv_7= KEYWORD_90 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) )
             {
             // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4575:2: (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 )
             int alt129=2;
@@ -14279,14 +14280,14 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4602:2: ( ( () (otherlv_6= KEYWORD_89 | otherlv_7= KEYWORD_89 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4602:2: ( ( () (otherlv_6= KEYWORD_90 | otherlv_7= KEYWORD_90 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) )
             int alt132=2;
             int LA132_0 = input.LA(1);
 
-            if ( (LA132_0==KEYWORD_89) ) {
+            if ( (LA132_0==KEYWORD_90) ) {
                 alt132=1;
             }
-            else if ( (LA132_0==KEYWORD_70) ) {
+            else if ( (LA132_0==KEYWORD_71) ) {
                 alt132=2;
             }
             else {
@@ -14298,10 +14299,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt132) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4602:3: ( () (otherlv_6= KEYWORD_89 | otherlv_7= KEYWORD_89 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4602:3: ( () (otherlv_6= KEYWORD_90 | otherlv_7= KEYWORD_90 ) )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4602:3: ( () (otherlv_6= KEYWORD_89 | otherlv_7= KEYWORD_89 ) )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4602:4: () (otherlv_6= KEYWORD_89 | otherlv_7= KEYWORD_89 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4602:3: ( () (otherlv_6= KEYWORD_90 | otherlv_7= KEYWORD_90 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4602:4: () (otherlv_6= KEYWORD_90 | otherlv_7= KEYWORD_90 )
                     {
                     // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4602:4: ()
                     // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4603:2: 
@@ -14321,11 +14322,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4611:2: (otherlv_6= KEYWORD_89 | otherlv_7= KEYWORD_89 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4611:2: (otherlv_6= KEYWORD_90 | otherlv_7= KEYWORD_90 )
                     int alt131=2;
                     int LA131_0 = input.LA(1);
 
-                    if ( (LA131_0==KEYWORD_89) ) {
+                    if ( (LA131_0==KEYWORD_90) ) {
                         int LA131_1 = input.LA(2);
 
                         if ( (synpred146_InternalWreslEditorParser()) ) {
@@ -14351,9 +14352,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt131) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4612:2: otherlv_6= KEYWORD_89
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4612:2: otherlv_6= KEYWORD_90
                             {
-                            otherlv_6=(Token)match(input,KEYWORD_89,FOLLOW_KEYWORD_89_in_ruleLhsGtRhs9920); if (state.failed) return current;
+                            otherlv_6=(Token)match(input,KEYWORD_90,FOLLOW_KEYWORD_90_in_ruleLhsGtRhs9920); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_6, grammarAccess.getLhsGtRhsAccess().getConstrainKeyword_3_0_1_0());
@@ -14363,9 +14364,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4618:2: otherlv_7= KEYWORD_89
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4618:2: otherlv_7= KEYWORD_90
                             {
-                            otherlv_7=(Token)match(input,KEYWORD_89,FOLLOW_KEYWORD_89_in_ruleLhsGtRhs9938); if (state.failed) return current;
+                            otherlv_7=(Token)match(input,KEYWORD_90,FOLLOW_KEYWORD_90_in_ruleLhsGtRhs9938); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_7, grammarAccess.getLhsGtRhsAccess().getCONSTRAINKeyword_3_0_1_1());
@@ -14490,7 +14491,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLhsLtRhs"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4658:1: ruleLhsLtRhs returns [EObject current=null] : ( (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 ) otherlv_2= KEYWORD_8 (otherlv_3= KEYWORD_24 | otherlv_4= KEYWORD_24 ) ( ( () (otherlv_6= KEYWORD_89 | otherlv_7= KEYWORD_89 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) ) ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4658:1: ruleLhsLtRhs returns [EObject current=null] : ( (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 ) otherlv_2= KEYWORD_8 (otherlv_3= KEYWORD_24 | otherlv_4= KEYWORD_24 ) ( ( () (otherlv_6= KEYWORD_90 | otherlv_7= KEYWORD_90 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) ) ) ;
     public final EObject ruleLhsLtRhs() throws RecognitionException {
         EObject current = null;
 
@@ -14507,11 +14508,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4661:28: ( ( (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 ) otherlv_2= KEYWORD_8 (otherlv_3= KEYWORD_24 | otherlv_4= KEYWORD_24 ) ( ( () (otherlv_6= KEYWORD_89 | otherlv_7= KEYWORD_89 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4662:1: ( (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 ) otherlv_2= KEYWORD_8 (otherlv_3= KEYWORD_24 | otherlv_4= KEYWORD_24 ) ( ( () (otherlv_6= KEYWORD_89 | otherlv_7= KEYWORD_89 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4661:28: ( ( (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 ) otherlv_2= KEYWORD_8 (otherlv_3= KEYWORD_24 | otherlv_4= KEYWORD_24 ) ( ( () (otherlv_6= KEYWORD_90 | otherlv_7= KEYWORD_90 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4662:1: ( (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 ) otherlv_2= KEYWORD_8 (otherlv_3= KEYWORD_24 | otherlv_4= KEYWORD_24 ) ( ( () (otherlv_6= KEYWORD_90 | otherlv_7= KEYWORD_90 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4662:1: ( (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 ) otherlv_2= KEYWORD_8 (otherlv_3= KEYWORD_24 | otherlv_4= KEYWORD_24 ) ( ( () (otherlv_6= KEYWORD_89 | otherlv_7= KEYWORD_89 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4662:2: (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 ) otherlv_2= KEYWORD_8 (otherlv_3= KEYWORD_24 | otherlv_4= KEYWORD_24 ) ( ( () (otherlv_6= KEYWORD_89 | otherlv_7= KEYWORD_89 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4662:1: ( (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 ) otherlv_2= KEYWORD_8 (otherlv_3= KEYWORD_24 | otherlv_4= KEYWORD_24 ) ( ( () (otherlv_6= KEYWORD_90 | otherlv_7= KEYWORD_90 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4662:2: (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 ) otherlv_2= KEYWORD_8 (otherlv_3= KEYWORD_24 | otherlv_4= KEYWORD_24 ) ( ( () (otherlv_6= KEYWORD_90 | otherlv_7= KEYWORD_90 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) )
             {
             // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4662:2: (otherlv_0= KEYWORD_23 | otherlv_1= KEYWORD_23 )
             int alt133=2;
@@ -14631,14 +14632,14 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4689:2: ( ( () (otherlv_6= KEYWORD_89 | otherlv_7= KEYWORD_89 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4689:2: ( ( () (otherlv_6= KEYWORD_90 | otherlv_7= KEYWORD_90 ) ) | ( (lv_penalty_8_0= rulePenalty ) ) )
             int alt136=2;
             int LA136_0 = input.LA(1);
 
-            if ( (LA136_0==KEYWORD_89) ) {
+            if ( (LA136_0==KEYWORD_90) ) {
                 alt136=1;
             }
-            else if ( (LA136_0==KEYWORD_70) ) {
+            else if ( (LA136_0==KEYWORD_71) ) {
                 alt136=2;
             }
             else {
@@ -14650,10 +14651,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt136) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4689:3: ( () (otherlv_6= KEYWORD_89 | otherlv_7= KEYWORD_89 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4689:3: ( () (otherlv_6= KEYWORD_90 | otherlv_7= KEYWORD_90 ) )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4689:3: ( () (otherlv_6= KEYWORD_89 | otherlv_7= KEYWORD_89 ) )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4689:4: () (otherlv_6= KEYWORD_89 | otherlv_7= KEYWORD_89 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4689:3: ( () (otherlv_6= KEYWORD_90 | otherlv_7= KEYWORD_90 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4689:4: () (otherlv_6= KEYWORD_90 | otherlv_7= KEYWORD_90 )
                     {
                     // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4689:4: ()
                     // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4690:2: 
@@ -14673,11 +14674,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4698:2: (otherlv_6= KEYWORD_89 | otherlv_7= KEYWORD_89 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4698:2: (otherlv_6= KEYWORD_90 | otherlv_7= KEYWORD_90 )
                     int alt135=2;
                     int LA135_0 = input.LA(1);
 
-                    if ( (LA135_0==KEYWORD_89) ) {
+                    if ( (LA135_0==KEYWORD_90) ) {
                         int LA135_1 = input.LA(2);
 
                         if ( (synpred150_InternalWreslEditorParser()) ) {
@@ -14703,9 +14704,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt135) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4699:2: otherlv_6= KEYWORD_89
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4699:2: otherlv_6= KEYWORD_90
                             {
-                            otherlv_6=(Token)match(input,KEYWORD_89,FOLLOW_KEYWORD_89_in_ruleLhsLtRhs10141); if (state.failed) return current;
+                            otherlv_6=(Token)match(input,KEYWORD_90,FOLLOW_KEYWORD_90_in_ruleLhsLtRhs10141); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_6, grammarAccess.getLhsLtRhsAccess().getConstrainKeyword_3_0_1_0());
@@ -14715,9 +14716,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4705:2: otherlv_7= KEYWORD_89
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4705:2: otherlv_7= KEYWORD_90
                             {
-                            otherlv_7=(Token)match(input,KEYWORD_89,FOLLOW_KEYWORD_89_in_ruleLhsLtRhs10159); if (state.failed) return current;
+                            otherlv_7=(Token)match(input,KEYWORD_90,FOLLOW_KEYWORD_90_in_ruleLhsLtRhs10159); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                   	newLeafNode(otherlv_7, grammarAccess.getLhsLtRhsAccess().getCONSTRAINKeyword_3_0_1_1());
@@ -14842,7 +14843,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePenalty"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4745:1: rulePenalty returns [EObject current=null] : ( (otherlv_0= KEYWORD_70 | otherlv_1= KEYWORD_70 ) ( (lv_expression_2_0= ruleExpression ) ) ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4745:1: rulePenalty returns [EObject current=null] : ( (otherlv_0= KEYWORD_71 | otherlv_1= KEYWORD_71 ) ( (lv_expression_2_0= ruleExpression ) ) ) ;
     public final EObject rulePenalty() throws RecognitionException {
         EObject current = null;
 
@@ -14854,17 +14855,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4748:28: ( ( (otherlv_0= KEYWORD_70 | otherlv_1= KEYWORD_70 ) ( (lv_expression_2_0= ruleExpression ) ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4749:1: ( (otherlv_0= KEYWORD_70 | otherlv_1= KEYWORD_70 ) ( (lv_expression_2_0= ruleExpression ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4748:28: ( ( (otherlv_0= KEYWORD_71 | otherlv_1= KEYWORD_71 ) ( (lv_expression_2_0= ruleExpression ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4749:1: ( (otherlv_0= KEYWORD_71 | otherlv_1= KEYWORD_71 ) ( (lv_expression_2_0= ruleExpression ) ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4749:1: ( (otherlv_0= KEYWORD_70 | otherlv_1= KEYWORD_70 ) ( (lv_expression_2_0= ruleExpression ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4749:2: (otherlv_0= KEYWORD_70 | otherlv_1= KEYWORD_70 ) ( (lv_expression_2_0= ruleExpression ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4749:1: ( (otherlv_0= KEYWORD_71 | otherlv_1= KEYWORD_71 ) ( (lv_expression_2_0= ruleExpression ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4749:2: (otherlv_0= KEYWORD_71 | otherlv_1= KEYWORD_71 ) ( (lv_expression_2_0= ruleExpression ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4749:2: (otherlv_0= KEYWORD_70 | otherlv_1= KEYWORD_70 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4749:2: (otherlv_0= KEYWORD_71 | otherlv_1= KEYWORD_71 )
             int alt137=2;
             int LA137_0 = input.LA(1);
 
-            if ( (LA137_0==KEYWORD_70) ) {
+            if ( (LA137_0==KEYWORD_71) ) {
                 int LA137_1 = input.LA(2);
 
                 if ( (synpred152_InternalWreslEditorParser()) ) {
@@ -14890,9 +14891,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt137) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4750:2: otherlv_0= KEYWORD_70
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4750:2: otherlv_0= KEYWORD_71
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_70,FOLLOW_KEYWORD_70_in_rulePenalty10272); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_71,FOLLOW_KEYWORD_71_in_rulePenalty10272); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getPenaltyAccess().getPenaltyKeyword_0_0());
@@ -14902,9 +14903,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4756:2: otherlv_1= KEYWORD_70
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4756:2: otherlv_1= KEYWORD_71
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_70,FOLLOW_KEYWORD_70_in_rulePenalty10290); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_71,FOLLOW_KEYWORD_71_in_rulePenalty10290); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getPenaltyAccess().getPENALTYKeyword_0_1());
@@ -15378,7 +15379,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleModel"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4936:1: ruleModel returns [EObject current=null] : ( (otherlv_0= KEYWORD_54 | otherlv_1= KEYWORD_54 ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_14 ( ( (lv_pattern_4_0= rulePattern ) ) | ( (lv_ifincitems_5_0= ruleIfIncItems ) ) )+ otherlv_6= KEYWORD_15 ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4936:1: ruleModel returns [EObject current=null] : ( (otherlv_0= KEYWORD_55 | otherlv_1= KEYWORD_55 ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_14 ( ( (lv_pattern_4_0= rulePattern ) ) | ( (lv_ifincitems_5_0= ruleIfIncItems ) ) )+ otherlv_6= KEYWORD_15 ) ;
     public final EObject ruleModel() throws RecognitionException {
         EObject current = null;
 
@@ -15395,17 +15396,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4939:28: ( ( (otherlv_0= KEYWORD_54 | otherlv_1= KEYWORD_54 ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_14 ( ( (lv_pattern_4_0= rulePattern ) ) | ( (lv_ifincitems_5_0= ruleIfIncItems ) ) )+ otherlv_6= KEYWORD_15 ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4940:1: ( (otherlv_0= KEYWORD_54 | otherlv_1= KEYWORD_54 ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_14 ( ( (lv_pattern_4_0= rulePattern ) ) | ( (lv_ifincitems_5_0= ruleIfIncItems ) ) )+ otherlv_6= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4939:28: ( ( (otherlv_0= KEYWORD_55 | otherlv_1= KEYWORD_55 ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_14 ( ( (lv_pattern_4_0= rulePattern ) ) | ( (lv_ifincitems_5_0= ruleIfIncItems ) ) )+ otherlv_6= KEYWORD_15 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4940:1: ( (otherlv_0= KEYWORD_55 | otherlv_1= KEYWORD_55 ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_14 ( ( (lv_pattern_4_0= rulePattern ) ) | ( (lv_ifincitems_5_0= ruleIfIncItems ) ) )+ otherlv_6= KEYWORD_15 )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4940:1: ( (otherlv_0= KEYWORD_54 | otherlv_1= KEYWORD_54 ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_14 ( ( (lv_pattern_4_0= rulePattern ) ) | ( (lv_ifincitems_5_0= ruleIfIncItems ) ) )+ otherlv_6= KEYWORD_15 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4940:2: (otherlv_0= KEYWORD_54 | otherlv_1= KEYWORD_54 ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_14 ( ( (lv_pattern_4_0= rulePattern ) ) | ( (lv_ifincitems_5_0= ruleIfIncItems ) ) )+ otherlv_6= KEYWORD_15
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4940:1: ( (otherlv_0= KEYWORD_55 | otherlv_1= KEYWORD_55 ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_14 ( ( (lv_pattern_4_0= rulePattern ) ) | ( (lv_ifincitems_5_0= ruleIfIncItems ) ) )+ otherlv_6= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4940:2: (otherlv_0= KEYWORD_55 | otherlv_1= KEYWORD_55 ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_14 ( ( (lv_pattern_4_0= rulePattern ) ) | ( (lv_ifincitems_5_0= ruleIfIncItems ) ) )+ otherlv_6= KEYWORD_15
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4940:2: (otherlv_0= KEYWORD_54 | otherlv_1= KEYWORD_54 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4940:2: (otherlv_0= KEYWORD_55 | otherlv_1= KEYWORD_55 )
             int alt139=2;
             int LA139_0 = input.LA(1);
 
-            if ( (LA139_0==KEYWORD_54) ) {
+            if ( (LA139_0==KEYWORD_55) ) {
                 int LA139_1 = input.LA(2);
 
                 if ( (synpred155_InternalWreslEditorParser()) ) {
@@ -15431,9 +15432,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt139) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4941:2: otherlv_0= KEYWORD_54
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4941:2: otherlv_0= KEYWORD_55
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_54,FOLLOW_KEYWORD_54_in_ruleModel10687); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_ruleModel10687); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getModelAccess().getModelKeyword_0_0());
@@ -15443,9 +15444,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4947:2: otherlv_1= KEYWORD_54
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4947:2: otherlv_1= KEYWORD_55
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_54,FOLLOW_KEYWORD_54_in_ruleModel10705); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_ruleModel10705); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getModelAccess().getMODELKeyword_0_1());
@@ -15500,7 +15501,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                 int alt140=3;
                 int LA140_0 = input.LA(1);
 
-                if ( (LA140_0==KEYWORD_90||LA140_0==KEYWORD_67||LA140_0==KEYWORD_60||LA140_0==KEYWORD_50||LA140_0==KEYWORD_44||LA140_0==KEYWORD_46||LA140_0==KEYWORD_48) ) {
+                if ( (LA140_0==KEYWORD_91||LA140_0==KEYWORD_68||LA140_0==KEYWORD_61||LA140_0==KEYWORD_51||LA140_0==KEYWORD_45||LA140_0==KEYWORD_47||LA140_0==KEYWORD_49) ) {
                     alt140=1;
                 }
                 else if ( (LA140_0==RULE_IF) ) {
@@ -15671,7 +15672,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleInitial"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5033:1: ruleInitial returns [EObject current=null] : ( (otherlv_0= KEYWORD_68 | otherlv_1= KEYWORD_68 | otherlv_2= KEYWORD_68 ) otherlv_3= KEYWORD_14 ( (lv_pattern_4_0= rulePattern ) )+ otherlv_5= KEYWORD_15 ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5033:1: ruleInitial returns [EObject current=null] : ( (otherlv_0= KEYWORD_69 | otherlv_1= KEYWORD_69 | otherlv_2= KEYWORD_69 ) otherlv_3= KEYWORD_14 ( (lv_pattern_4_0= rulePattern ) )+ otherlv_5= KEYWORD_15 ) ;
     public final EObject ruleInitial() throws RecognitionException {
         EObject current = null;
 
@@ -15686,17 +15687,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5036:28: ( ( (otherlv_0= KEYWORD_68 | otherlv_1= KEYWORD_68 | otherlv_2= KEYWORD_68 ) otherlv_3= KEYWORD_14 ( (lv_pattern_4_0= rulePattern ) )+ otherlv_5= KEYWORD_15 ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5037:1: ( (otherlv_0= KEYWORD_68 | otherlv_1= KEYWORD_68 | otherlv_2= KEYWORD_68 ) otherlv_3= KEYWORD_14 ( (lv_pattern_4_0= rulePattern ) )+ otherlv_5= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5036:28: ( ( (otherlv_0= KEYWORD_69 | otherlv_1= KEYWORD_69 | otherlv_2= KEYWORD_69 ) otherlv_3= KEYWORD_14 ( (lv_pattern_4_0= rulePattern ) )+ otherlv_5= KEYWORD_15 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5037:1: ( (otherlv_0= KEYWORD_69 | otherlv_1= KEYWORD_69 | otherlv_2= KEYWORD_69 ) otherlv_3= KEYWORD_14 ( (lv_pattern_4_0= rulePattern ) )+ otherlv_5= KEYWORD_15 )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5037:1: ( (otherlv_0= KEYWORD_68 | otherlv_1= KEYWORD_68 | otherlv_2= KEYWORD_68 ) otherlv_3= KEYWORD_14 ( (lv_pattern_4_0= rulePattern ) )+ otherlv_5= KEYWORD_15 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5037:2: (otherlv_0= KEYWORD_68 | otherlv_1= KEYWORD_68 | otherlv_2= KEYWORD_68 ) otherlv_3= KEYWORD_14 ( (lv_pattern_4_0= rulePattern ) )+ otherlv_5= KEYWORD_15
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5037:1: ( (otherlv_0= KEYWORD_69 | otherlv_1= KEYWORD_69 | otherlv_2= KEYWORD_69 ) otherlv_3= KEYWORD_14 ( (lv_pattern_4_0= rulePattern ) )+ otherlv_5= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5037:2: (otherlv_0= KEYWORD_69 | otherlv_1= KEYWORD_69 | otherlv_2= KEYWORD_69 ) otherlv_3= KEYWORD_14 ( (lv_pattern_4_0= rulePattern ) )+ otherlv_5= KEYWORD_15
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5037:2: (otherlv_0= KEYWORD_68 | otherlv_1= KEYWORD_68 | otherlv_2= KEYWORD_68 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5037:2: (otherlv_0= KEYWORD_69 | otherlv_1= KEYWORD_69 | otherlv_2= KEYWORD_69 )
             int alt141=3;
             int LA141_0 = input.LA(1);
 
-            if ( (LA141_0==KEYWORD_68) ) {
+            if ( (LA141_0==KEYWORD_69) ) {
                 int LA141_1 = input.LA(2);
 
                 if ( (synpred158_InternalWreslEditorParser()) ) {
@@ -15725,9 +15726,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt141) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5038:2: otherlv_0= KEYWORD_68
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5038:2: otherlv_0= KEYWORD_69
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_68,FOLLOW_KEYWORD_68_in_ruleInitial10886); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_69,FOLLOW_KEYWORD_69_in_ruleInitial10886); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getInitialAccess().getInitialKeyword_0_0());
@@ -15737,9 +15738,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5044:2: otherlv_1= KEYWORD_68
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5044:2: otherlv_1= KEYWORD_69
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_68,FOLLOW_KEYWORD_68_in_ruleInitial10904); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_69,FOLLOW_KEYWORD_69_in_ruleInitial10904); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getInitialAccess().getInitialKeyword_0_1());
@@ -15749,9 +15750,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5050:2: otherlv_2= KEYWORD_68
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5050:2: otherlv_2= KEYWORD_69
                     {
-                    otherlv_2=(Token)match(input,KEYWORD_68,FOLLOW_KEYWORD_68_in_ruleInitial10922); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,KEYWORD_69,FOLLOW_KEYWORD_69_in_ruleInitial10922); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_2, grammarAccess.getInitialAccess().getINITIALKeyword_0_2());
@@ -15776,7 +15777,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                 int alt142=2;
                 int LA142_0 = input.LA(1);
 
-                if ( (LA142_0==KEYWORD_90||LA142_0==KEYWORD_67||LA142_0==KEYWORD_60||LA142_0==KEYWORD_50||LA142_0==KEYWORD_44||LA142_0==KEYWORD_46||LA142_0==KEYWORD_48) ) {
+                if ( (LA142_0==KEYWORD_91||LA142_0==KEYWORD_68||LA142_0==KEYWORD_61||LA142_0==KEYWORD_51||LA142_0==KEYWORD_45||LA142_0==KEYWORD_47||LA142_0==KEYWORD_49) ) {
                     alt142=1;
                 }
 
@@ -15897,7 +15898,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSequence"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5099:1: ruleSequence returns [EObject current=null] : ( (otherlv_0= KEYWORD_86 | otherlv_1= KEYWORD_86 ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_14 (otherlv_4= KEYWORD_54 | otherlv_5= KEYWORD_54 ) ( (otherlv_6= RULE_ID ) ) ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ( ruleTimeStep ruleTimeStepValue )? otherlv_12= KEYWORD_15 ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5099:1: ruleSequence returns [EObject current=null] : ( (otherlv_0= KEYWORD_87 | otherlv_1= KEYWORD_87 ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_14 (otherlv_4= KEYWORD_55 | otherlv_5= KEYWORD_55 ) ( (otherlv_6= RULE_ID ) ) ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ( ruleTimeStep ruleTimeStepValue )? otherlv_12= KEYWORD_15 ) ;
     public final EObject ruleSequence() throws RecognitionException {
         EObject current = null;
 
@@ -15917,17 +15918,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5102:28: ( ( (otherlv_0= KEYWORD_86 | otherlv_1= KEYWORD_86 ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_14 (otherlv_4= KEYWORD_54 | otherlv_5= KEYWORD_54 ) ( (otherlv_6= RULE_ID ) ) ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ( ruleTimeStep ruleTimeStepValue )? otherlv_12= KEYWORD_15 ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5103:1: ( (otherlv_0= KEYWORD_86 | otherlv_1= KEYWORD_86 ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_14 (otherlv_4= KEYWORD_54 | otherlv_5= KEYWORD_54 ) ( (otherlv_6= RULE_ID ) ) ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ( ruleTimeStep ruleTimeStepValue )? otherlv_12= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5102:28: ( ( (otherlv_0= KEYWORD_87 | otherlv_1= KEYWORD_87 ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_14 (otherlv_4= KEYWORD_55 | otherlv_5= KEYWORD_55 ) ( (otherlv_6= RULE_ID ) ) ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ( ruleTimeStep ruleTimeStepValue )? otherlv_12= KEYWORD_15 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5103:1: ( (otherlv_0= KEYWORD_87 | otherlv_1= KEYWORD_87 ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_14 (otherlv_4= KEYWORD_55 | otherlv_5= KEYWORD_55 ) ( (otherlv_6= RULE_ID ) ) ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ( ruleTimeStep ruleTimeStepValue )? otherlv_12= KEYWORD_15 )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5103:1: ( (otherlv_0= KEYWORD_86 | otherlv_1= KEYWORD_86 ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_14 (otherlv_4= KEYWORD_54 | otherlv_5= KEYWORD_54 ) ( (otherlv_6= RULE_ID ) ) ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ( ruleTimeStep ruleTimeStepValue )? otherlv_12= KEYWORD_15 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5103:2: (otherlv_0= KEYWORD_86 | otherlv_1= KEYWORD_86 ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_14 (otherlv_4= KEYWORD_54 | otherlv_5= KEYWORD_54 ) ( (otherlv_6= RULE_ID ) ) ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ( ruleTimeStep ruleTimeStepValue )? otherlv_12= KEYWORD_15
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5103:1: ( (otherlv_0= KEYWORD_87 | otherlv_1= KEYWORD_87 ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_14 (otherlv_4= KEYWORD_55 | otherlv_5= KEYWORD_55 ) ( (otherlv_6= RULE_ID ) ) ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ( ruleTimeStep ruleTimeStepValue )? otherlv_12= KEYWORD_15 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5103:2: (otherlv_0= KEYWORD_87 | otherlv_1= KEYWORD_87 ) ( (lv_name_2_0= RULE_ID ) ) otherlv_3= KEYWORD_14 (otherlv_4= KEYWORD_55 | otherlv_5= KEYWORD_55 ) ( (otherlv_6= RULE_ID ) ) ( (lv_condition_7_0= ruleCondition ) )? (this_ORDER_8= RULE_ORDER ( (lv_order_9_0= RULE_INT ) ) )? ( ruleTimeStep ruleTimeStepValue )? otherlv_12= KEYWORD_15
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5103:2: (otherlv_0= KEYWORD_86 | otherlv_1= KEYWORD_86 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5103:2: (otherlv_0= KEYWORD_87 | otherlv_1= KEYWORD_87 )
             int alt143=2;
             int LA143_0 = input.LA(1);
 
-            if ( (LA143_0==KEYWORD_86) ) {
+            if ( (LA143_0==KEYWORD_87) ) {
                 int LA143_1 = input.LA(2);
 
                 if ( (synpred161_InternalWreslEditorParser()) ) {
@@ -15953,9 +15954,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt143) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5104:2: otherlv_0= KEYWORD_86
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5104:2: otherlv_0= KEYWORD_87
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_86,FOLLOW_KEYWORD_86_in_ruleSequence11052); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_87,FOLLOW_KEYWORD_87_in_ruleSequence11052); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getSequenceAccess().getSequenceKeyword_0_0());
@@ -15965,9 +15966,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5110:2: otherlv_1= KEYWORD_86
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5110:2: otherlv_1= KEYWORD_87
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_86,FOLLOW_KEYWORD_86_in_ruleSequence11070); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_87,FOLLOW_KEYWORD_87_in_ruleSequence11070); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getSequenceAccess().getSEQUENCEKeyword_0_1());
@@ -16015,11 +16016,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                   	newLeafNode(otherlv_3, grammarAccess.getSequenceAccess().getLeftCurlyBracketKeyword_2());
                   
             }
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5137:1: (otherlv_4= KEYWORD_54 | otherlv_5= KEYWORD_54 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5137:1: (otherlv_4= KEYWORD_55 | otherlv_5= KEYWORD_55 )
             int alt144=2;
             int LA144_0 = input.LA(1);
 
-            if ( (LA144_0==KEYWORD_54) ) {
+            if ( (LA144_0==KEYWORD_55) ) {
                 int LA144_1 = input.LA(2);
 
                 if ( (synpred162_InternalWreslEditorParser()) ) {
@@ -16045,9 +16046,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt144) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5138:2: otherlv_4= KEYWORD_54
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5138:2: otherlv_4= KEYWORD_55
                     {
-                    otherlv_4=(Token)match(input,KEYWORD_54,FOLLOW_KEYWORD_54_in_ruleSequence11118); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_ruleSequence11118); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_4, grammarAccess.getSequenceAccess().getModelKeyword_3_0());
@@ -16057,9 +16058,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5144:2: otherlv_5= KEYWORD_54
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5144:2: otherlv_5= KEYWORD_55
                     {
-                    otherlv_5=(Token)match(input,KEYWORD_54,FOLLOW_KEYWORD_54_in_ruleSequence11136); if (state.failed) return current;
+                    otherlv_5=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_ruleSequence11136); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_5, grammarAccess.getSequenceAccess().getMODELKeyword_3_1());
@@ -16105,7 +16106,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             int alt145=2;
             int LA145_0 = input.LA(1);
 
-            if ( (LA145_0==KEYWORD_88) ) {
+            if ( (LA145_0==KEYWORD_89) ) {
                 alt145=1;
             }
             switch (alt145) {
@@ -16204,7 +16205,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             int alt147=2;
             int LA147_0 = input.LA(1);
 
-            if ( (LA147_0==KEYWORD_87) ) {
+            if ( (LA147_0==KEYWORD_88) ) {
                 alt147=1;
             }
             switch (alt147) {
@@ -16326,7 +16327,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCondition"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5248:1: ruleCondition returns [EObject current=null] : ( (otherlv_0= KEYWORD_88 | otherlv_1= KEYWORD_88 ) ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) ) ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5248:1: ruleCondition returns [EObject current=null] : ( (otherlv_0= KEYWORD_89 | otherlv_1= KEYWORD_89 ) ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) ) ) ;
     public final EObject ruleCondition() throws RecognitionException {
         EObject current = null;
 
@@ -16339,17 +16340,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5251:28: ( ( (otherlv_0= KEYWORD_88 | otherlv_1= KEYWORD_88 ) ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5252:1: ( (otherlv_0= KEYWORD_88 | otherlv_1= KEYWORD_88 ) ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5251:28: ( ( (otherlv_0= KEYWORD_89 | otherlv_1= KEYWORD_89 ) ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5252:1: ( (otherlv_0= KEYWORD_89 | otherlv_1= KEYWORD_89 ) ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5252:1: ( (otherlv_0= KEYWORD_88 | otherlv_1= KEYWORD_88 ) ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5252:2: (otherlv_0= KEYWORD_88 | otherlv_1= KEYWORD_88 ) ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5252:1: ( (otherlv_0= KEYWORD_89 | otherlv_1= KEYWORD_89 ) ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5252:2: (otherlv_0= KEYWORD_89 | otherlv_1= KEYWORD_89 ) ( ( (lv_logical_2_0= ruleLogicalExpression ) ) | ( () this_ALWAYS_4= RULE_ALWAYS ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5252:2: (otherlv_0= KEYWORD_88 | otherlv_1= KEYWORD_88 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5252:2: (otherlv_0= KEYWORD_89 | otherlv_1= KEYWORD_89 )
             int alt148=2;
             int LA148_0 = input.LA(1);
 
-            if ( (LA148_0==KEYWORD_88) ) {
+            if ( (LA148_0==KEYWORD_89) ) {
                 int LA148_1 = input.LA(2);
 
                 if ( (synpred166_InternalWreslEditorParser()) ) {
@@ -16375,9 +16376,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt148) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5253:2: otherlv_0= KEYWORD_88
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5253:2: otherlv_0= KEYWORD_89
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_88,FOLLOW_KEYWORD_88_in_ruleCondition11352); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_89,FOLLOW_KEYWORD_89_in_ruleCondition11352); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getConditionAccess().getConditionKeyword_0_0());
@@ -16387,9 +16388,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5259:2: otherlv_1= KEYWORD_88
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5259:2: otherlv_1= KEYWORD_89
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_88,FOLLOW_KEYWORD_88_in_ruleCondition11370); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_89,FOLLOW_KEYWORD_89_in_ruleCondition11370); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getConditionAccess().getCONDITIONKeyword_0_1());
@@ -16405,7 +16406,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             int alt149=2;
             int LA149_0 = input.LA(1);
 
-            if ( (LA149_0==KEYWORD_94||LA149_0==KEYWORD_92||(LA149_0>=KEYWORD_71 && LA149_0<=KEYWORD_84)||(LA149_0>=KEYWORD_62 && LA149_0<=KEYWORD_64)||LA149_0==KEYWORD_59||(LA149_0>=KEYWORD_28 && LA149_0<=KEYWORD_16)||LA149_0==KEYWORD_1||LA149_0==KEYWORD_4||LA149_0==KEYWORD_6||LA149_0==KEYWORD_13||(LA149_0>=RULE_RANGE && LA149_0<=RULE_FLOAT)||LA149_0==RULE_NOT||LA149_0==RULE_ID) ) {
+            if ( (LA149_0==KEYWORD_95||LA149_0==KEYWORD_93||(LA149_0>=KEYWORD_72 && LA149_0<=KEYWORD_85)||(LA149_0>=KEYWORD_63 && LA149_0<=KEYWORD_65)||LA149_0==KEYWORD_60||(LA149_0>=KEYWORD_28 && LA149_0<=KEYWORD_16)||LA149_0==KEYWORD_1||LA149_0==KEYWORD_4||LA149_0==KEYWORD_6||LA149_0==KEYWORD_13||(LA149_0>=RULE_RANGE && LA149_0<=RULE_FLOAT)||LA149_0==RULE_NOT||LA149_0==RULE_ID) ) {
                 alt149=1;
             }
             else if ( (LA149_0==RULE_ALWAYS) ) {
@@ -19177,15 +19178,15 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                 alt162=1;
                 }
                 break;
-            case KEYWORD_71:
-            case KEYWORD_84:
-            case KEYWORD_62:
+            case KEYWORD_72:
+            case KEYWORD_85:
             case KEYWORD_63:
+            case KEYWORD_64:
                 {
                 alt162=2;
                 }
                 break;
-            case KEYWORD_59:
+            case KEYWORD_60:
                 {
                 alt162=3;
                 }
@@ -21465,12 +21466,12 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                 alt166=1;
                 }
                 break;
-            case KEYWORD_59:
+            case KEYWORD_60:
                 {
                 alt166=2;
                 }
                 break;
-            case KEYWORD_92:
+            case KEYWORD_93:
                 {
                 alt166=3;
                 }
@@ -21573,7 +21574,6 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                 break;
             case KEYWORD_28:
             case KEYWORD_29:
-            case KEYWORD_30:
             case KEYWORD_31:
             case KEYWORD_32:
             case KEYWORD_33:
@@ -21583,11 +21583,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             case KEYWORD_37:
             case KEYWORD_38:
             case KEYWORD_39:
+            case KEYWORD_40:
                 {
                 alt167=2;
                 }
                 break;
-            case KEYWORD_72:
             case KEYWORD_73:
             case KEYWORD_74:
             case KEYWORD_75:
@@ -21599,6 +21599,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             case KEYWORD_81:
             case KEYWORD_82:
             case KEYWORD_83:
+            case KEYWORD_84:
                 {
                 alt167=3;
                 }
@@ -21701,7 +21702,6 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                 break;
             case KEYWORD_28:
             case KEYWORD_29:
-            case KEYWORD_30:
             case KEYWORD_31:
             case KEYWORD_32:
             case KEYWORD_33:
@@ -21711,11 +21711,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             case KEYWORD_37:
             case KEYWORD_38:
             case KEYWORD_39:
+            case KEYWORD_40:
                 {
                 alt168=2;
                 }
                 break;
-            case KEYWORD_72:
             case KEYWORD_73:
             case KEYWORD_74:
             case KEYWORD_75:
@@ -21727,6 +21727,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             case KEYWORD_81:
             case KEYWORD_82:
             case KEYWORD_83:
+            case KEYWORD_84:
                 {
                 alt168=3;
                 }
@@ -22012,7 +22013,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIncludeFile"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7328:1: ruleIncludeFile returns [EObject current=null] : ( (otherlv_0= KEYWORD_67 | otherlv_1= KEYWORD_67 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_file_5_0= RULE_STRING ) ) ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7328:1: ruleIncludeFile returns [EObject current=null] : ( (otherlv_0= KEYWORD_68 | otherlv_1= KEYWORD_68 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_file_5_0= RULE_STRING ) ) ) ;
     public final EObject ruleIncludeFile() throws RecognitionException {
         EObject current = null;
 
@@ -22027,17 +22028,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7331:28: ( ( (otherlv_0= KEYWORD_67 | otherlv_1= KEYWORD_67 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_file_5_0= RULE_STRING ) ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7332:1: ( (otherlv_0= KEYWORD_67 | otherlv_1= KEYWORD_67 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_file_5_0= RULE_STRING ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7331:28: ( ( (otherlv_0= KEYWORD_68 | otherlv_1= KEYWORD_68 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_file_5_0= RULE_STRING ) ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7332:1: ( (otherlv_0= KEYWORD_68 | otherlv_1= KEYWORD_68 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_file_5_0= RULE_STRING ) ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7332:1: ( (otherlv_0= KEYWORD_67 | otherlv_1= KEYWORD_67 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_file_5_0= RULE_STRING ) ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7332:2: (otherlv_0= KEYWORD_67 | otherlv_1= KEYWORD_67 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_file_5_0= RULE_STRING ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7332:1: ( (otherlv_0= KEYWORD_68 | otherlv_1= KEYWORD_68 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_file_5_0= RULE_STRING ) ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7332:2: (otherlv_0= KEYWORD_68 | otherlv_1= KEYWORD_68 ) (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12 )? ( (lv_file_5_0= RULE_STRING ) )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7332:2: (otherlv_0= KEYWORD_67 | otherlv_1= KEYWORD_67 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7332:2: (otherlv_0= KEYWORD_68 | otherlv_1= KEYWORD_68 )
             int alt170=2;
             int LA170_0 = input.LA(1);
 
-            if ( (LA170_0==KEYWORD_67) ) {
+            if ( (LA170_0==KEYWORD_68) ) {
                 int LA170_1 = input.LA(2);
 
                 if ( (synpred214_InternalWreslEditorParser()) ) {
@@ -22063,9 +22064,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt170) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7333:2: otherlv_0= KEYWORD_67
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7333:2: otherlv_0= KEYWORD_68
                     {
-                    otherlv_0=(Token)match(input,KEYWORD_67,FOLLOW_KEYWORD_67_in_ruleIncludeFile16248); if (state.failed) return current;
+                    otherlv_0=(Token)match(input,KEYWORD_68,FOLLOW_KEYWORD_68_in_ruleIncludeFile16248); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_0, grammarAccess.getIncludeFileAccess().getIncludeKeyword_0_0());
@@ -22075,9 +22076,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7339:2: otherlv_1= KEYWORD_67
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7339:2: otherlv_1= KEYWORD_68
                     {
-                    otherlv_1=(Token)match(input,KEYWORD_67,FOLLOW_KEYWORD_67_in_ruleIncludeFile16266); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,KEYWORD_68,FOLLOW_KEYWORD_68_in_ruleIncludeFile16266); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                           	newLeafNode(otherlv_1, grammarAccess.getIncludeFileAccess().getINCLUDEKeyword_0_1());
@@ -22089,7 +22090,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7343:2: (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12 )?
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7343:2: (otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12 )?
             int alt172=2;
             int LA172_0 = input.LA(1);
 
@@ -22098,7 +22099,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt172) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7344:2: otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) ) otherlv_4= KEYWORD_12
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7344:2: otherlv_2= KEYWORD_11 ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) ) otherlv_4= KEYWORD_12
                     {
                     otherlv_2=(Token)match(input,KEYWORD_11,FOLLOW_KEYWORD_11_in_ruleIncludeFile16280); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -22106,17 +22107,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                           	newLeafNode(otherlv_2, grammarAccess.getIncludeFileAccess().getLeftSquareBracketKeyword_1_0());
                           
                     }
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7348:1: ( ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) ) )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7349:1: ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7348:1: ( ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7349:1: ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7349:1: ( (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 ) )
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7350:1: (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7349:1: ( (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 ) )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7350:1: (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 )
                     {
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7350:1: (lv_local_3_1= KEYWORD_52 | lv_local_3_2= KEYWORD_52 )
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7350:1: (lv_local_3_1= KEYWORD_53 | lv_local_3_2= KEYWORD_53 )
                     int alt171=2;
                     int LA171_0 = input.LA(1);
 
-                    if ( (LA171_0==KEYWORD_52) ) {
+                    if ( (LA171_0==KEYWORD_53) ) {
                         int LA171_1 = input.LA(2);
 
                         if ( (synpred215_InternalWreslEditorParser()) ) {
@@ -22142,9 +22143,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt171) {
                         case 1 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7351:3: lv_local_3_1= KEYWORD_52
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7351:3: lv_local_3_1= KEYWORD_53
                             {
-                            lv_local_3_1=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleIncludeFile16300); if (state.failed) return current;
+                            lv_local_3_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleIncludeFile16300); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                       newLeafNode(lv_local_3_1, grammarAccess.getIncludeFileAccess().getLocalLocalKeyword_1_1_0_0());
@@ -22162,9 +22163,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7364:8: lv_local_3_2= KEYWORD_52
+                            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7364:8: lv_local_3_2= KEYWORD_53
                             {
-                            lv_local_3_2=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_ruleIncludeFile16328); if (state.failed) return current;
+                            lv_local_3_2=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_ruleIncludeFile16328); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                                       newLeafNode(lv_local_3_2, grammarAccess.getIncludeFileAccess().getLocalLOCALKeyword_1_1_0_1());
@@ -22295,7 +22296,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIncludeModel"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7420:1: ruleIncludeModel returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= KEYWORD_67 | kw= KEYWORD_67 ) (kw= KEYWORD_54 | kw= KEYWORD_54 ) this_ID_4= RULE_ID ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7420:1: ruleIncludeModel returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= KEYWORD_68 | kw= KEYWORD_68 ) (kw= KEYWORD_55 | kw= KEYWORD_55 ) this_ID_4= RULE_ID ) ;
     public final AntlrDatatypeRuleToken ruleIncludeModel() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -22305,17 +22306,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7424:6: ( ( (kw= KEYWORD_67 | kw= KEYWORD_67 ) (kw= KEYWORD_54 | kw= KEYWORD_54 ) this_ID_4= RULE_ID ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7425:1: ( (kw= KEYWORD_67 | kw= KEYWORD_67 ) (kw= KEYWORD_54 | kw= KEYWORD_54 ) this_ID_4= RULE_ID )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7424:6: ( ( (kw= KEYWORD_68 | kw= KEYWORD_68 ) (kw= KEYWORD_55 | kw= KEYWORD_55 ) this_ID_4= RULE_ID ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7425:1: ( (kw= KEYWORD_68 | kw= KEYWORD_68 ) (kw= KEYWORD_55 | kw= KEYWORD_55 ) this_ID_4= RULE_ID )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7425:1: ( (kw= KEYWORD_67 | kw= KEYWORD_67 ) (kw= KEYWORD_54 | kw= KEYWORD_54 ) this_ID_4= RULE_ID )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7425:2: (kw= KEYWORD_67 | kw= KEYWORD_67 ) (kw= KEYWORD_54 | kw= KEYWORD_54 ) this_ID_4= RULE_ID
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7425:1: ( (kw= KEYWORD_68 | kw= KEYWORD_68 ) (kw= KEYWORD_55 | kw= KEYWORD_55 ) this_ID_4= RULE_ID )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7425:2: (kw= KEYWORD_68 | kw= KEYWORD_68 ) (kw= KEYWORD_55 | kw= KEYWORD_55 ) this_ID_4= RULE_ID
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7425:2: (kw= KEYWORD_67 | kw= KEYWORD_67 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7425:2: (kw= KEYWORD_68 | kw= KEYWORD_68 )
             int alt173=2;
             int LA173_0 = input.LA(1);
 
-            if ( (LA173_0==KEYWORD_67) ) {
+            if ( (LA173_0==KEYWORD_68) ) {
                 int LA173_1 = input.LA(2);
 
                 if ( (synpred217_InternalWreslEditorParser()) ) {
@@ -22341,9 +22342,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt173) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7426:2: kw= KEYWORD_67
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7426:2: kw= KEYWORD_68
                     {
-                    kw=(Token)match(input,KEYWORD_67,FOLLOW_KEYWORD_67_in_ruleIncludeModel16464); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_68,FOLLOW_KEYWORD_68_in_ruleIncludeModel16464); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -22354,9 +22355,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7433:2: kw= KEYWORD_67
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7433:2: kw= KEYWORD_68
                     {
-                    kw=(Token)match(input,KEYWORD_67,FOLLOW_KEYWORD_67_in_ruleIncludeModel16483); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_68,FOLLOW_KEYWORD_68_in_ruleIncludeModel16483); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -22369,11 +22370,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7438:2: (kw= KEYWORD_54 | kw= KEYWORD_54 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7438:2: (kw= KEYWORD_55 | kw= KEYWORD_55 )
             int alt174=2;
             int LA174_0 = input.LA(1);
 
-            if ( (LA174_0==KEYWORD_54) ) {
+            if ( (LA174_0==KEYWORD_55) ) {
                 int LA174_1 = input.LA(2);
 
                 if ( (synpred218_InternalWreslEditorParser()) ) {
@@ -22399,9 +22400,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt174) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7439:2: kw= KEYWORD_54
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7439:2: kw= KEYWORD_55
                     {
-                    kw=(Token)match(input,KEYWORD_54,FOLLOW_KEYWORD_54_in_ruleIncludeModel16498); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_ruleIncludeModel16498); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -22412,9 +22413,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7446:2: kw= KEYWORD_54
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7446:2: kw= KEYWORD_55
                     {
-                    kw=(Token)match(input,KEYWORD_54,FOLLOW_KEYWORD_54_in_ruleIncludeModel16517); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_ruleIncludeModel16517); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -22502,7 +22503,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSpecialIdent"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7475:1: ruleSpecialIdent returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_TafCfs_0= ruleTafCfs | this_DaysIn_1= ruleDaysIn | this_WaterYear_2= ruleWaterYear | this_Month_3= ruleMonth | this_CalendarMonth_4= ruleCalendarMonth | this_PrevMonth_5= rulePrevMonth | this_I_6= ruleI ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7475:1: ruleSpecialIdent returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_TafCfs_0= ruleTafCfs | this_DaysIn_1= ruleDaysIn | this_WaterYear_2= ruleWaterYear | this_Month_3= ruleMonth | this_Day_4= ruleDay | this_CalendarMonth_5= ruleCalendarMonth | this_PrevMonth_6= rulePrevMonth | this_I_7= ruleI ) ;
     public final AntlrDatatypeRuleToken ruleSpecialIdent() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -22514,49 +22515,55 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
         AntlrDatatypeRuleToken this_Month_3 = null;
 
-        AntlrDatatypeRuleToken this_CalendarMonth_4 = null;
+        AntlrDatatypeRuleToken this_Day_4 = null;
 
-        AntlrDatatypeRuleToken this_PrevMonth_5 = null;
+        AntlrDatatypeRuleToken this_CalendarMonth_5 = null;
 
-        AntlrDatatypeRuleToken this_I_6 = null;
+        AntlrDatatypeRuleToken this_PrevMonth_6 = null;
+
+        AntlrDatatypeRuleToken this_I_7 = null;
 
 
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7479:6: ( (this_TafCfs_0= ruleTafCfs | this_DaysIn_1= ruleDaysIn | this_WaterYear_2= ruleWaterYear | this_Month_3= ruleMonth | this_CalendarMonth_4= ruleCalendarMonth | this_PrevMonth_5= rulePrevMonth | this_I_6= ruleI ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7480:1: (this_TafCfs_0= ruleTafCfs | this_DaysIn_1= ruleDaysIn | this_WaterYear_2= ruleWaterYear | this_Month_3= ruleMonth | this_CalendarMonth_4= ruleCalendarMonth | this_PrevMonth_5= rulePrevMonth | this_I_6= ruleI )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7479:6: ( (this_TafCfs_0= ruleTafCfs | this_DaysIn_1= ruleDaysIn | this_WaterYear_2= ruleWaterYear | this_Month_3= ruleMonth | this_Day_4= ruleDay | this_CalendarMonth_5= ruleCalendarMonth | this_PrevMonth_6= rulePrevMonth | this_I_7= ruleI ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7480:1: (this_TafCfs_0= ruleTafCfs | this_DaysIn_1= ruleDaysIn | this_WaterYear_2= ruleWaterYear | this_Month_3= ruleMonth | this_Day_4= ruleDay | this_CalendarMonth_5= ruleCalendarMonth | this_PrevMonth_6= rulePrevMonth | this_I_7= ruleI )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7480:1: (this_TafCfs_0= ruleTafCfs | this_DaysIn_1= ruleDaysIn | this_WaterYear_2= ruleWaterYear | this_Month_3= ruleMonth | this_CalendarMonth_4= ruleCalendarMonth | this_PrevMonth_5= rulePrevMonth | this_I_6= ruleI )
-            int alt175=7;
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7480:1: (this_TafCfs_0= ruleTafCfs | this_DaysIn_1= ruleDaysIn | this_WaterYear_2= ruleWaterYear | this_Month_3= ruleMonth | this_Day_4= ruleDay | this_CalendarMonth_5= ruleCalendarMonth | this_PrevMonth_6= rulePrevMonth | this_I_7= ruleI )
+            int alt175=8;
             switch ( input.LA(1) ) {
-            case KEYWORD_71:
-            case KEYWORD_84:
-            case KEYWORD_62:
+            case KEYWORD_72:
+            case KEYWORD_85:
             case KEYWORD_63:
+            case KEYWORD_64:
                 {
                 alt175=1;
                 }
                 break;
-            case KEYWORD_94:
-            case KEYWORD_64:
+            case KEYWORD_95:
+            case KEYWORD_65:
                 {
                 alt175=2;
                 }
                 break;
-            case KEYWORD_92:
+            case KEYWORD_93:
                 {
                 alt175=3;
                 }
                 break;
-            case KEYWORD_59:
+            case KEYWORD_60:
                 {
                 alt175=4;
                 }
                 break;
+            case KEYWORD_30:
+                {
+                alt175=5;
+                }
+                break;
             case KEYWORD_28:
             case KEYWORD_29:
-            case KEYWORD_30:
             case KEYWORD_31:
             case KEYWORD_32:
             case KEYWORD_33:
@@ -22566,11 +22573,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             case KEYWORD_37:
             case KEYWORD_38:
             case KEYWORD_39:
+            case KEYWORD_40:
                 {
-                alt175=5;
+                alt175=6;
                 }
                 break;
-            case KEYWORD_72:
             case KEYWORD_73:
             case KEYWORD_74:
             case KEYWORD_75:
@@ -22582,13 +22589,14 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             case KEYWORD_81:
             case KEYWORD_82:
             case KEYWORD_83:
+            case KEYWORD_84:
                 {
-                alt175=6;
+                alt175=7;
                 }
                 break;
             case KEYWORD_13:
                 {
-                alt175=7;
+                alt175=8;
                 }
                 break;
             default:
@@ -22705,21 +22713,21 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7529:5: this_CalendarMonth_4= ruleCalendarMonth
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7529:5: this_Day_4= ruleDay
                     {
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getSpecialIdentAccess().getCalendarMonthParserRuleCall_4()); 
+                              newCompositeNode(grammarAccess.getSpecialIdentAccess().getDayParserRuleCall_4()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleCalendarMonth_in_ruleSpecialIdent16768);
-                    this_CalendarMonth_4=ruleCalendarMonth();
+                    pushFollow(FOLLOW_ruleDay_in_ruleSpecialIdent16768);
+                    this_Day_4=ruleDay();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      		current.merge(this_CalendarMonth_4);
+                      		current.merge(this_Day_4);
                           
                     }
                     if ( state.backtracking==0 ) {
@@ -22731,21 +22739,21 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7541:5: this_PrevMonth_5= rulePrevMonth
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7541:5: this_CalendarMonth_5= ruleCalendarMonth
                     {
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getSpecialIdentAccess().getPrevMonthParserRuleCall_5()); 
+                              newCompositeNode(grammarAccess.getSpecialIdentAccess().getCalendarMonthParserRuleCall_5()); 
                           
                     }
-                    pushFollow(FOLLOW_rulePrevMonth_in_ruleSpecialIdent16801);
-                    this_PrevMonth_5=rulePrevMonth();
+                    pushFollow(FOLLOW_ruleCalendarMonth_in_ruleSpecialIdent16801);
+                    this_CalendarMonth_5=ruleCalendarMonth();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      		current.merge(this_PrevMonth_5);
+                      		current.merge(this_CalendarMonth_5);
                           
                     }
                     if ( state.backtracking==0 ) {
@@ -22757,21 +22765,47 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7553:5: this_I_6= ruleI
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7553:5: this_PrevMonth_6= rulePrevMonth
                     {
                     if ( state.backtracking==0 ) {
                        
-                              newCompositeNode(grammarAccess.getSpecialIdentAccess().getIParserRuleCall_6()); 
+                              newCompositeNode(grammarAccess.getSpecialIdentAccess().getPrevMonthParserRuleCall_6()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleI_in_ruleSpecialIdent16834);
-                    this_I_6=ruleI();
+                    pushFollow(FOLLOW_rulePrevMonth_in_ruleSpecialIdent16834);
+                    this_PrevMonth_6=rulePrevMonth();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      		current.merge(this_I_6);
+                      		current.merge(this_PrevMonth_6);
+                          
+                    }
+                    if ( state.backtracking==0 ) {
+                       
+                              afterParserOrEnumRuleCall();
+                          
+                    }
+
+                    }
+                    break;
+                case 8 :
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7565:5: this_I_7= ruleI
+                    {
+                    if ( state.backtracking==0 ) {
+                       
+                              newCompositeNode(grammarAccess.getSpecialIdentAccess().getIParserRuleCall_7()); 
+                          
+                    }
+                    pushFollow(FOLLOW_ruleI_in_ruleSpecialIdent16867);
+                    this_I_7=ruleI();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      		current.merge(this_I_7);
                           
                     }
                     if ( state.backtracking==0 ) {
@@ -22806,7 +22840,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTafCfs"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7571:1: entryRuleTafCfs returns [String current=null] : iv_ruleTafCfs= ruleTafCfs EOF ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7583:1: entryRuleTafCfs returns [String current=null] : iv_ruleTafCfs= ruleTafCfs EOF ;
     public final String entryRuleTafCfs() throws RecognitionException {
         String current = null;
 
@@ -22814,13 +22848,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7572:1: (iv_ruleTafCfs= ruleTafCfs EOF )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7573:2: iv_ruleTafCfs= ruleTafCfs EOF
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7584:1: (iv_ruleTafCfs= ruleTafCfs EOF )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7585:2: iv_ruleTafCfs= ruleTafCfs EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTafCfsRule()); 
             }
-            pushFollow(FOLLOW_ruleTafCfs_in_entryRuleTafCfs16879);
+            pushFollow(FOLLOW_ruleTafCfs_in_entryRuleTafCfs16912);
             iv_ruleTafCfs=ruleTafCfs();
 
             state._fsp--;
@@ -22828,7 +22862,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleTafCfs.getText(); 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleTafCfs16890); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleTafCfs16923); if (state.failed) return current;
 
             }
 
@@ -22846,7 +22880,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTafCfs"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7580:1: ruleTafCfs returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_AF_CFS_0= ruleAF_CFS | this_CF_SAF_1= ruleCF_SAF | this_CFS_TAF_2= ruleCFS_TAF | this_TAF_CFS_3= ruleTAF_CFS ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7592:1: ruleTafCfs returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_AF_CFS_0= ruleAF_CFS | this_CF_SAF_1= ruleCF_SAF | this_CFS_TAF_2= ruleCFS_TAF | this_TAF_CFS_3= ruleTAF_CFS ) ;
     public final AntlrDatatypeRuleToken ruleTafCfs() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -22862,28 +22896,28 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7584:6: ( (this_AF_CFS_0= ruleAF_CFS | this_CF_SAF_1= ruleCF_SAF | this_CFS_TAF_2= ruleCFS_TAF | this_TAF_CFS_3= ruleTAF_CFS ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7585:1: (this_AF_CFS_0= ruleAF_CFS | this_CF_SAF_1= ruleCF_SAF | this_CFS_TAF_2= ruleCFS_TAF | this_TAF_CFS_3= ruleTAF_CFS )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7596:6: ( (this_AF_CFS_0= ruleAF_CFS | this_CF_SAF_1= ruleCF_SAF | this_CFS_TAF_2= ruleCFS_TAF | this_TAF_CFS_3= ruleTAF_CFS ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7597:1: (this_AF_CFS_0= ruleAF_CFS | this_CF_SAF_1= ruleCF_SAF | this_CFS_TAF_2= ruleCFS_TAF | this_TAF_CFS_3= ruleTAF_CFS )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7585:1: (this_AF_CFS_0= ruleAF_CFS | this_CF_SAF_1= ruleCF_SAF | this_CFS_TAF_2= ruleCFS_TAF | this_TAF_CFS_3= ruleTAF_CFS )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7597:1: (this_AF_CFS_0= ruleAF_CFS | this_CF_SAF_1= ruleCF_SAF | this_CFS_TAF_2= ruleCFS_TAF | this_TAF_CFS_3= ruleTAF_CFS )
             int alt176=4;
             switch ( input.LA(1) ) {
-            case KEYWORD_62:
+            case KEYWORD_63:
                 {
                 alt176=1;
                 }
                 break;
-            case KEYWORD_63:
+            case KEYWORD_64:
                 {
                 alt176=2;
                 }
                 break;
-            case KEYWORD_71:
+            case KEYWORD_72:
                 {
                 alt176=3;
                 }
                 break;
-            case KEYWORD_84:
+            case KEYWORD_85:
                 {
                 alt176=4;
                 }
@@ -22898,14 +22932,14 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             switch (alt176) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7586:5: this_AF_CFS_0= ruleAF_CFS
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7598:5: this_AF_CFS_0= ruleAF_CFS
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getTafCfsAccess().getAF_CFSParserRuleCall_0()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleAF_CFS_in_ruleTafCfs16937);
+                    pushFollow(FOLLOW_ruleAF_CFS_in_ruleTafCfs16970);
                     this_AF_CFS_0=ruleAF_CFS();
 
                     state._fsp--;
@@ -22924,14 +22958,14 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7598:5: this_CF_SAF_1= ruleCF_SAF
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7610:5: this_CF_SAF_1= ruleCF_SAF
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getTafCfsAccess().getCF_SAFParserRuleCall_1()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleCF_SAF_in_ruleTafCfs16970);
+                    pushFollow(FOLLOW_ruleCF_SAF_in_ruleTafCfs17003);
                     this_CF_SAF_1=ruleCF_SAF();
 
                     state._fsp--;
@@ -22950,14 +22984,14 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7610:5: this_CFS_TAF_2= ruleCFS_TAF
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7622:5: this_CFS_TAF_2= ruleCFS_TAF
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getTafCfsAccess().getCFS_TAFParserRuleCall_2()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleCFS_TAF_in_ruleTafCfs17003);
+                    pushFollow(FOLLOW_ruleCFS_TAF_in_ruleTafCfs17036);
                     this_CFS_TAF_2=ruleCFS_TAF();
 
                     state._fsp--;
@@ -22976,14 +23010,14 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7622:5: this_TAF_CFS_3= ruleTAF_CFS
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7634:5: this_TAF_CFS_3= ruleTAF_CFS
                     {
                     if ( state.backtracking==0 ) {
                        
                               newCompositeNode(grammarAccess.getTafCfsAccess().getTAF_CFSParserRuleCall_3()); 
                           
                     }
-                    pushFollow(FOLLOW_ruleTAF_CFS_in_ruleTafCfs17036);
+                    pushFollow(FOLLOW_ruleTAF_CFS_in_ruleTafCfs17069);
                     this_TAF_CFS_3=ruleTAF_CFS();
 
                     state._fsp--;
@@ -23025,7 +23059,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleI"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7640:1: entryRuleI returns [String current=null] : iv_ruleI= ruleI EOF ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7652:1: entryRuleI returns [String current=null] : iv_ruleI= ruleI EOF ;
     public final String entryRuleI() throws RecognitionException {
         String current = null;
 
@@ -23033,13 +23067,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7641:1: (iv_ruleI= ruleI EOF )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7642:2: iv_ruleI= ruleI EOF
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7653:1: (iv_ruleI= ruleI EOF )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7654:2: iv_ruleI= ruleI EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIRule()); 
             }
-            pushFollow(FOLLOW_ruleI_in_entryRuleI17081);
+            pushFollow(FOLLOW_ruleI_in_entryRuleI17114);
             iv_ruleI=ruleI();
 
             state._fsp--;
@@ -23047,7 +23081,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleI.getText(); 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleI17092); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleI17125); if (state.failed) return current;
 
             }
 
@@ -23065,7 +23099,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleI"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7649:1: ruleI returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= KEYWORD_13 ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7661:1: ruleI returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= KEYWORD_13 ;
     public final AntlrDatatypeRuleToken ruleI() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -23074,10 +23108,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7653:6: (kw= KEYWORD_13 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7655:2: kw= KEYWORD_13
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7665:6: (kw= KEYWORD_13 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7667:2: kw= KEYWORD_13
             {
-            kw=(Token)match(input,KEYWORD_13,FOLLOW_KEYWORD_13_in_ruleI17129); if (state.failed) return current;
+            kw=(Token)match(input,KEYWORD_13,FOLLOW_KEYWORD_13_in_ruleI17162); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current.merge(kw);
@@ -23105,7 +23139,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAF_CFS"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7668:1: entryRuleAF_CFS returns [String current=null] : iv_ruleAF_CFS= ruleAF_CFS EOF ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7680:1: entryRuleAF_CFS returns [String current=null] : iv_ruleAF_CFS= ruleAF_CFS EOF ;
     public final String entryRuleAF_CFS() throws RecognitionException {
         String current = null;
 
@@ -23113,13 +23147,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7669:1: (iv_ruleAF_CFS= ruleAF_CFS EOF )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7670:2: iv_ruleAF_CFS= ruleAF_CFS EOF
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7681:1: (iv_ruleAF_CFS= ruleAF_CFS EOF )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7682:2: iv_ruleAF_CFS= ruleAF_CFS EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAF_CFSRule()); 
             }
-            pushFollow(FOLLOW_ruleAF_CFS_in_entryRuleAF_CFS17168);
+            pushFollow(FOLLOW_ruleAF_CFS_in_entryRuleAF_CFS17201);
             iv_ruleAF_CFS=ruleAF_CFS();
 
             state._fsp--;
@@ -23127,7 +23161,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleAF_CFS.getText(); 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleAF_CFS17179); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleAF_CFS17212); if (state.failed) return current;
 
             }
 
@@ -23145,7 +23179,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAF_CFS"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7677:1: ruleAF_CFS returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= KEYWORD_62 ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7689:1: ruleAF_CFS returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= KEYWORD_63 ;
     public final AntlrDatatypeRuleToken ruleAF_CFS() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -23154,10 +23188,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7681:6: (kw= KEYWORD_62 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7683:2: kw= KEYWORD_62
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7693:6: (kw= KEYWORD_63 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7695:2: kw= KEYWORD_63
             {
-            kw=(Token)match(input,KEYWORD_62,FOLLOW_KEYWORD_62_in_ruleAF_CFS17216); if (state.failed) return current;
+            kw=(Token)match(input,KEYWORD_63,FOLLOW_KEYWORD_63_in_ruleAF_CFS17249); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current.merge(kw);
@@ -23185,7 +23219,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCF_SAF"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7696:1: entryRuleCF_SAF returns [String current=null] : iv_ruleCF_SAF= ruleCF_SAF EOF ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7708:1: entryRuleCF_SAF returns [String current=null] : iv_ruleCF_SAF= ruleCF_SAF EOF ;
     public final String entryRuleCF_SAF() throws RecognitionException {
         String current = null;
 
@@ -23193,13 +23227,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7697:1: (iv_ruleCF_SAF= ruleCF_SAF EOF )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7698:2: iv_ruleCF_SAF= ruleCF_SAF EOF
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7709:1: (iv_ruleCF_SAF= ruleCF_SAF EOF )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7710:2: iv_ruleCF_SAF= ruleCF_SAF EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getCF_SAFRule()); 
             }
-            pushFollow(FOLLOW_ruleCF_SAF_in_entryRuleCF_SAF17255);
+            pushFollow(FOLLOW_ruleCF_SAF_in_entryRuleCF_SAF17288);
             iv_ruleCF_SAF=ruleCF_SAF();
 
             state._fsp--;
@@ -23207,7 +23241,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleCF_SAF.getText(); 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleCF_SAF17266); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleCF_SAF17299); if (state.failed) return current;
 
             }
 
@@ -23225,7 +23259,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCF_SAF"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7705:1: ruleCF_SAF returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= KEYWORD_63 ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7717:1: ruleCF_SAF returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= KEYWORD_64 ;
     public final AntlrDatatypeRuleToken ruleCF_SAF() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -23234,10 +23268,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7709:6: (kw= KEYWORD_63 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7711:2: kw= KEYWORD_63
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7721:6: (kw= KEYWORD_64 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7723:2: kw= KEYWORD_64
             {
-            kw=(Token)match(input,KEYWORD_63,FOLLOW_KEYWORD_63_in_ruleCF_SAF17303); if (state.failed) return current;
+            kw=(Token)match(input,KEYWORD_64,FOLLOW_KEYWORD_64_in_ruleCF_SAF17336); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current.merge(kw);
@@ -23265,7 +23299,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCFS_TAF"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7724:1: entryRuleCFS_TAF returns [String current=null] : iv_ruleCFS_TAF= ruleCFS_TAF EOF ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7736:1: entryRuleCFS_TAF returns [String current=null] : iv_ruleCFS_TAF= ruleCFS_TAF EOF ;
     public final String entryRuleCFS_TAF() throws RecognitionException {
         String current = null;
 
@@ -23273,13 +23307,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7725:1: (iv_ruleCFS_TAF= ruleCFS_TAF EOF )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7726:2: iv_ruleCFS_TAF= ruleCFS_TAF EOF
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7737:1: (iv_ruleCFS_TAF= ruleCFS_TAF EOF )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7738:2: iv_ruleCFS_TAF= ruleCFS_TAF EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getCFS_TAFRule()); 
             }
-            pushFollow(FOLLOW_ruleCFS_TAF_in_entryRuleCFS_TAF17342);
+            pushFollow(FOLLOW_ruleCFS_TAF_in_entryRuleCFS_TAF17375);
             iv_ruleCFS_TAF=ruleCFS_TAF();
 
             state._fsp--;
@@ -23287,7 +23321,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleCFS_TAF.getText(); 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleCFS_TAF17353); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleCFS_TAF17386); if (state.failed) return current;
 
             }
 
@@ -23305,7 +23339,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCFS_TAF"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7733:1: ruleCFS_TAF returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= KEYWORD_71 ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7745:1: ruleCFS_TAF returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= KEYWORD_72 ;
     public final AntlrDatatypeRuleToken ruleCFS_TAF() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -23314,10 +23348,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7737:6: (kw= KEYWORD_71 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7739:2: kw= KEYWORD_71
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7749:6: (kw= KEYWORD_72 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7751:2: kw= KEYWORD_72
             {
-            kw=(Token)match(input,KEYWORD_71,FOLLOW_KEYWORD_71_in_ruleCFS_TAF17390); if (state.failed) return current;
+            kw=(Token)match(input,KEYWORD_72,FOLLOW_KEYWORD_72_in_ruleCFS_TAF17423); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current.merge(kw);
@@ -23345,7 +23379,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTAF_CFS"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7752:1: entryRuleTAF_CFS returns [String current=null] : iv_ruleTAF_CFS= ruleTAF_CFS EOF ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7764:1: entryRuleTAF_CFS returns [String current=null] : iv_ruleTAF_CFS= ruleTAF_CFS EOF ;
     public final String entryRuleTAF_CFS() throws RecognitionException {
         String current = null;
 
@@ -23353,13 +23387,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7753:1: (iv_ruleTAF_CFS= ruleTAF_CFS EOF )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7754:2: iv_ruleTAF_CFS= ruleTAF_CFS EOF
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7765:1: (iv_ruleTAF_CFS= ruleTAF_CFS EOF )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7766:2: iv_ruleTAF_CFS= ruleTAF_CFS EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTAF_CFSRule()); 
             }
-            pushFollow(FOLLOW_ruleTAF_CFS_in_entryRuleTAF_CFS17429);
+            pushFollow(FOLLOW_ruleTAF_CFS_in_entryRuleTAF_CFS17462);
             iv_ruleTAF_CFS=ruleTAF_CFS();
 
             state._fsp--;
@@ -23367,7 +23401,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleTAF_CFS.getText(); 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleTAF_CFS17440); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleTAF_CFS17473); if (state.failed) return current;
 
             }
 
@@ -23385,7 +23419,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTAF_CFS"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7761:1: ruleTAF_CFS returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= KEYWORD_84 ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7773:1: ruleTAF_CFS returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= KEYWORD_85 ;
     public final AntlrDatatypeRuleToken ruleTAF_CFS() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -23394,10 +23428,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7765:6: (kw= KEYWORD_84 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7767:2: kw= KEYWORD_84
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7777:6: (kw= KEYWORD_85 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7779:2: kw= KEYWORD_85
             {
-            kw=(Token)match(input,KEYWORD_84,FOLLOW_KEYWORD_84_in_ruleTAF_CFS17477); if (state.failed) return current;
+            kw=(Token)match(input,KEYWORD_85,FOLLOW_KEYWORD_85_in_ruleTAF_CFS17510); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current.merge(kw);
@@ -23425,7 +23459,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDaysIn"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7780:1: entryRuleDaysIn returns [String current=null] : iv_ruleDaysIn= ruleDaysIn EOF ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7792:1: entryRuleDaysIn returns [String current=null] : iv_ruleDaysIn= ruleDaysIn EOF ;
     public final String entryRuleDaysIn() throws RecognitionException {
         String current = null;
 
@@ -23433,13 +23467,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7781:1: (iv_ruleDaysIn= ruleDaysIn EOF )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7782:2: iv_ruleDaysIn= ruleDaysIn EOF
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7793:1: (iv_ruleDaysIn= ruleDaysIn EOF )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7794:2: iv_ruleDaysIn= ruleDaysIn EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getDaysInRule()); 
             }
-            pushFollow(FOLLOW_ruleDaysIn_in_entryRuleDaysIn17516);
+            pushFollow(FOLLOW_ruleDaysIn_in_entryRuleDaysIn17549);
             iv_ruleDaysIn=ruleDaysIn();
 
             state._fsp--;
@@ -23447,7 +23481,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleDaysIn.getText(); 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleDaysIn17527); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDaysIn17560); if (state.failed) return current;
 
             }
 
@@ -23465,7 +23499,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDaysIn"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7789:1: ruleDaysIn returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= KEYWORD_64 | kw= KEYWORD_94 ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7801:1: ruleDaysIn returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= KEYWORD_65 | kw= KEYWORD_95 ) ;
     public final AntlrDatatypeRuleToken ruleDaysIn() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -23474,17 +23508,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7793:6: ( (kw= KEYWORD_64 | kw= KEYWORD_94 ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7794:1: (kw= KEYWORD_64 | kw= KEYWORD_94 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7805:6: ( (kw= KEYWORD_65 | kw= KEYWORD_95 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7806:1: (kw= KEYWORD_65 | kw= KEYWORD_95 )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7794:1: (kw= KEYWORD_64 | kw= KEYWORD_94 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7806:1: (kw= KEYWORD_65 | kw= KEYWORD_95 )
             int alt177=2;
             int LA177_0 = input.LA(1);
 
-            if ( (LA177_0==KEYWORD_64) ) {
+            if ( (LA177_0==KEYWORD_65) ) {
                 alt177=1;
             }
-            else if ( (LA177_0==KEYWORD_94) ) {
+            else if ( (LA177_0==KEYWORD_95) ) {
                 alt177=2;
             }
             else {
@@ -23496,9 +23530,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt177) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7795:2: kw= KEYWORD_64
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7807:2: kw= KEYWORD_65
                     {
-                    kw=(Token)match(input,KEYWORD_64,FOLLOW_KEYWORD_64_in_ruleDaysIn17565); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_65,FOLLOW_KEYWORD_65_in_ruleDaysIn17598); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -23509,9 +23543,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7802:2: kw= KEYWORD_94
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7814:2: kw= KEYWORD_95
                     {
-                    kw=(Token)match(input,KEYWORD_94,FOLLOW_KEYWORD_94_in_ruleDaysIn17584); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_95,FOLLOW_KEYWORD_95_in_ruleDaysIn17617); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -23545,7 +23579,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleWaterYear"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7815:1: entryRuleWaterYear returns [String current=null] : iv_ruleWaterYear= ruleWaterYear EOF ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7827:1: entryRuleWaterYear returns [String current=null] : iv_ruleWaterYear= ruleWaterYear EOF ;
     public final String entryRuleWaterYear() throws RecognitionException {
         String current = null;
 
@@ -23553,13 +23587,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7816:1: (iv_ruleWaterYear= ruleWaterYear EOF )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7817:2: iv_ruleWaterYear= ruleWaterYear EOF
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7828:1: (iv_ruleWaterYear= ruleWaterYear EOF )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7829:2: iv_ruleWaterYear= ruleWaterYear EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getWaterYearRule()); 
             }
-            pushFollow(FOLLOW_ruleWaterYear_in_entryRuleWaterYear17624);
+            pushFollow(FOLLOW_ruleWaterYear_in_entryRuleWaterYear17657);
             iv_ruleWaterYear=ruleWaterYear();
 
             state._fsp--;
@@ -23567,7 +23601,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleWaterYear.getText(); 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleWaterYear17635); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleWaterYear17668); if (state.failed) return current;
 
             }
 
@@ -23585,7 +23619,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleWaterYear"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7824:1: ruleWaterYear returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= KEYWORD_92 ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7836:1: ruleWaterYear returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= KEYWORD_93 ;
     public final AntlrDatatypeRuleToken ruleWaterYear() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -23594,10 +23628,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7828:6: (kw= KEYWORD_92 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7830:2: kw= KEYWORD_92
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7840:6: (kw= KEYWORD_93 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7842:2: kw= KEYWORD_93
             {
-            kw=(Token)match(input,KEYWORD_92,FOLLOW_KEYWORD_92_in_ruleWaterYear17672); if (state.failed) return current;
+            kw=(Token)match(input,KEYWORD_93,FOLLOW_KEYWORD_93_in_ruleWaterYear17705); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current.merge(kw);
@@ -23625,7 +23659,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleMonth"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7843:1: entryRuleMonth returns [String current=null] : iv_ruleMonth= ruleMonth EOF ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7855:1: entryRuleMonth returns [String current=null] : iv_ruleMonth= ruleMonth EOF ;
     public final String entryRuleMonth() throws RecognitionException {
         String current = null;
 
@@ -23633,13 +23667,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7844:1: (iv_ruleMonth= ruleMonth EOF )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7845:2: iv_ruleMonth= ruleMonth EOF
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7856:1: (iv_ruleMonth= ruleMonth EOF )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7857:2: iv_ruleMonth= ruleMonth EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getMonthRule()); 
             }
-            pushFollow(FOLLOW_ruleMonth_in_entryRuleMonth17711);
+            pushFollow(FOLLOW_ruleMonth_in_entryRuleMonth17744);
             iv_ruleMonth=ruleMonth();
 
             state._fsp--;
@@ -23647,7 +23681,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleMonth.getText(); 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleMonth17722); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleMonth17755); if (state.failed) return current;
 
             }
 
@@ -23665,7 +23699,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMonth"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7852:1: ruleMonth returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= KEYWORD_59 ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7864:1: ruleMonth returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= KEYWORD_60 ;
     public final AntlrDatatypeRuleToken ruleMonth() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -23674,10 +23708,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7856:6: (kw= KEYWORD_59 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7858:2: kw= KEYWORD_59
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7868:6: (kw= KEYWORD_60 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7870:2: kw= KEYWORD_60
             {
-            kw=(Token)match(input,KEYWORD_59,FOLLOW_KEYWORD_59_in_ruleMonth17759); if (state.failed) return current;
+            kw=(Token)match(input,KEYWORD_60,FOLLOW_KEYWORD_60_in_ruleMonth17792); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current.merge(kw);
@@ -23704,8 +23738,88 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleMonth"
 
 
+    // $ANTLR start "entryRuleDay"
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7883:1: entryRuleDay returns [String current=null] : iv_ruleDay= ruleDay EOF ;
+    public final String entryRuleDay() throws RecognitionException {
+        String current = null;
+
+        AntlrDatatypeRuleToken iv_ruleDay = null;
+
+
+        try {
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7884:1: (iv_ruleDay= ruleDay EOF )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7885:2: iv_ruleDay= ruleDay EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getDayRule()); 
+            }
+            pushFollow(FOLLOW_ruleDay_in_entryRuleDay17831);
+            iv_ruleDay=ruleDay();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleDay.getText(); 
+            }
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDay17842); if (state.failed) return current;
+
+            }
+
+        }
+         
+        	catch (RecognitionException re) { 
+        	    recover(input,re); 
+        	    appendSkippedTokens();
+        	}
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleDay"
+
+
+    // $ANTLR start "ruleDay"
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7892:1: ruleDay returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= KEYWORD_30 ;
+    public final AntlrDatatypeRuleToken ruleDay() throws RecognitionException {
+        AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
+
+        Token kw=null;
+
+         enterRule(); 
+            
+        try {
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7896:6: (kw= KEYWORD_30 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7898:2: kw= KEYWORD_30
+            {
+            kw=(Token)match(input,KEYWORD_30,FOLLOW_KEYWORD_30_in_ruleDay17879); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+                      current.merge(kw);
+                      newLeafNode(kw, grammarAccess.getDayAccess().getDayKeyword()); 
+                  
+            }
+
+            }
+
+            if ( state.backtracking==0 ) {
+               leaveRule();
+                  
+            }
+        }
+         
+        	catch (RecognitionException re) { 
+        	    recover(input,re); 
+        	    appendSkippedTokens();
+        	}
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleDay"
+
+
     // $ANTLR start "entryRuleCalendarMonth"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7871:1: entryRuleCalendarMonth returns [String current=null] : iv_ruleCalendarMonth= ruleCalendarMonth EOF ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7911:1: entryRuleCalendarMonth returns [String current=null] : iv_ruleCalendarMonth= ruleCalendarMonth EOF ;
     public final String entryRuleCalendarMonth() throws RecognitionException {
         String current = null;
 
@@ -23713,13 +23827,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7872:1: (iv_ruleCalendarMonth= ruleCalendarMonth EOF )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7873:2: iv_ruleCalendarMonth= ruleCalendarMonth EOF
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7912:1: (iv_ruleCalendarMonth= ruleCalendarMonth EOF )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7913:2: iv_ruleCalendarMonth= ruleCalendarMonth EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getCalendarMonthRule()); 
             }
-            pushFollow(FOLLOW_ruleCalendarMonth_in_entryRuleCalendarMonth17798);
+            pushFollow(FOLLOW_ruleCalendarMonth_in_entryRuleCalendarMonth17918);
             iv_ruleCalendarMonth=ruleCalendarMonth();
 
             state._fsp--;
@@ -23727,7 +23841,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleCalendarMonth.getText(); 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleCalendarMonth17809); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleCalendarMonth17929); if (state.failed) return current;
 
             }
 
@@ -23745,7 +23859,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCalendarMonth"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7880:1: ruleCalendarMonth returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= KEYWORD_32 | kw= KEYWORD_31 | kw= KEYWORD_35 | kw= KEYWORD_28 | kw= KEYWORD_36 | kw= KEYWORD_34 | kw= KEYWORD_33 | kw= KEYWORD_29 | kw= KEYWORD_39 | kw= KEYWORD_38 | kw= KEYWORD_37 | kw= KEYWORD_30 ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7920:1: ruleCalendarMonth returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= KEYWORD_33 | kw= KEYWORD_32 | kw= KEYWORD_36 | kw= KEYWORD_28 | kw= KEYWORD_37 | kw= KEYWORD_35 | kw= KEYWORD_34 | kw= KEYWORD_29 | kw= KEYWORD_40 | kw= KEYWORD_39 | kw= KEYWORD_38 | kw= KEYWORD_31 ) ;
     public final AntlrDatatypeRuleToken ruleCalendarMonth() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -23754,23 +23868,23 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7884:6: ( (kw= KEYWORD_32 | kw= KEYWORD_31 | kw= KEYWORD_35 | kw= KEYWORD_28 | kw= KEYWORD_36 | kw= KEYWORD_34 | kw= KEYWORD_33 | kw= KEYWORD_29 | kw= KEYWORD_39 | kw= KEYWORD_38 | kw= KEYWORD_37 | kw= KEYWORD_30 ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7885:1: (kw= KEYWORD_32 | kw= KEYWORD_31 | kw= KEYWORD_35 | kw= KEYWORD_28 | kw= KEYWORD_36 | kw= KEYWORD_34 | kw= KEYWORD_33 | kw= KEYWORD_29 | kw= KEYWORD_39 | kw= KEYWORD_38 | kw= KEYWORD_37 | kw= KEYWORD_30 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7924:6: ( (kw= KEYWORD_33 | kw= KEYWORD_32 | kw= KEYWORD_36 | kw= KEYWORD_28 | kw= KEYWORD_37 | kw= KEYWORD_35 | kw= KEYWORD_34 | kw= KEYWORD_29 | kw= KEYWORD_40 | kw= KEYWORD_39 | kw= KEYWORD_38 | kw= KEYWORD_31 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7925:1: (kw= KEYWORD_33 | kw= KEYWORD_32 | kw= KEYWORD_36 | kw= KEYWORD_28 | kw= KEYWORD_37 | kw= KEYWORD_35 | kw= KEYWORD_34 | kw= KEYWORD_29 | kw= KEYWORD_40 | kw= KEYWORD_39 | kw= KEYWORD_38 | kw= KEYWORD_31 )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7885:1: (kw= KEYWORD_32 | kw= KEYWORD_31 | kw= KEYWORD_35 | kw= KEYWORD_28 | kw= KEYWORD_36 | kw= KEYWORD_34 | kw= KEYWORD_33 | kw= KEYWORD_29 | kw= KEYWORD_39 | kw= KEYWORD_38 | kw= KEYWORD_37 | kw= KEYWORD_30 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7925:1: (kw= KEYWORD_33 | kw= KEYWORD_32 | kw= KEYWORD_36 | kw= KEYWORD_28 | kw= KEYWORD_37 | kw= KEYWORD_35 | kw= KEYWORD_34 | kw= KEYWORD_29 | kw= KEYWORD_40 | kw= KEYWORD_39 | kw= KEYWORD_38 | kw= KEYWORD_31 )
             int alt178=12;
             switch ( input.LA(1) ) {
-            case KEYWORD_32:
+            case KEYWORD_33:
                 {
                 alt178=1;
                 }
                 break;
-            case KEYWORD_31:
+            case KEYWORD_32:
                 {
                 alt178=2;
                 }
                 break;
-            case KEYWORD_35:
+            case KEYWORD_36:
                 {
                 alt178=3;
                 }
@@ -23780,17 +23894,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                 alt178=4;
                 }
                 break;
-            case KEYWORD_36:
+            case KEYWORD_37:
                 {
                 alt178=5;
                 }
                 break;
-            case KEYWORD_34:
+            case KEYWORD_35:
                 {
                 alt178=6;
                 }
                 break;
-            case KEYWORD_33:
+            case KEYWORD_34:
                 {
                 alt178=7;
                 }
@@ -23800,22 +23914,22 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                 alt178=8;
                 }
                 break;
-            case KEYWORD_39:
+            case KEYWORD_40:
                 {
                 alt178=9;
                 }
                 break;
-            case KEYWORD_38:
+            case KEYWORD_39:
                 {
                 alt178=10;
                 }
                 break;
-            case KEYWORD_37:
+            case KEYWORD_38:
                 {
                 alt178=11;
                 }
                 break;
-            case KEYWORD_30:
+            case KEYWORD_31:
                 {
                 alt178=12;
                 }
@@ -23830,9 +23944,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             switch (alt178) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7886:2: kw= KEYWORD_32
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7926:2: kw= KEYWORD_33
                     {
-                    kw=(Token)match(input,KEYWORD_32,FOLLOW_KEYWORD_32_in_ruleCalendarMonth17847); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_33,FOLLOW_KEYWORD_33_in_ruleCalendarMonth17967); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -23843,9 +23957,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7893:2: kw= KEYWORD_31
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7933:2: kw= KEYWORD_32
                     {
-                    kw=(Token)match(input,KEYWORD_31,FOLLOW_KEYWORD_31_in_ruleCalendarMonth17866); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_32,FOLLOW_KEYWORD_32_in_ruleCalendarMonth17986); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -23856,9 +23970,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7900:2: kw= KEYWORD_35
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7940:2: kw= KEYWORD_36
                     {
-                    kw=(Token)match(input,KEYWORD_35,FOLLOW_KEYWORD_35_in_ruleCalendarMonth17885); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_36,FOLLOW_KEYWORD_36_in_ruleCalendarMonth18005); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -23869,9 +23983,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7907:2: kw= KEYWORD_28
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7947:2: kw= KEYWORD_28
                     {
-                    kw=(Token)match(input,KEYWORD_28,FOLLOW_KEYWORD_28_in_ruleCalendarMonth17904); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_28,FOLLOW_KEYWORD_28_in_ruleCalendarMonth18024); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -23882,9 +23996,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7914:2: kw= KEYWORD_36
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7954:2: kw= KEYWORD_37
                     {
-                    kw=(Token)match(input,KEYWORD_36,FOLLOW_KEYWORD_36_in_ruleCalendarMonth17923); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_37,FOLLOW_KEYWORD_37_in_ruleCalendarMonth18043); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -23895,9 +24009,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7921:2: kw= KEYWORD_34
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7961:2: kw= KEYWORD_35
                     {
-                    kw=(Token)match(input,KEYWORD_34,FOLLOW_KEYWORD_34_in_ruleCalendarMonth17942); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_35,FOLLOW_KEYWORD_35_in_ruleCalendarMonth18062); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -23908,9 +24022,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7928:2: kw= KEYWORD_33
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7968:2: kw= KEYWORD_34
                     {
-                    kw=(Token)match(input,KEYWORD_33,FOLLOW_KEYWORD_33_in_ruleCalendarMonth17961); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_34,FOLLOW_KEYWORD_34_in_ruleCalendarMonth18081); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -23921,9 +24035,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7935:2: kw= KEYWORD_29
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7975:2: kw= KEYWORD_29
                     {
-                    kw=(Token)match(input,KEYWORD_29,FOLLOW_KEYWORD_29_in_ruleCalendarMonth17980); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_29,FOLLOW_KEYWORD_29_in_ruleCalendarMonth18100); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -23934,9 +24048,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7942:2: kw= KEYWORD_39
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7982:2: kw= KEYWORD_40
                     {
-                    kw=(Token)match(input,KEYWORD_39,FOLLOW_KEYWORD_39_in_ruleCalendarMonth17999); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_40,FOLLOW_KEYWORD_40_in_ruleCalendarMonth18119); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -23947,9 +24061,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 10 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7949:2: kw= KEYWORD_38
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7989:2: kw= KEYWORD_39
                     {
-                    kw=(Token)match(input,KEYWORD_38,FOLLOW_KEYWORD_38_in_ruleCalendarMonth18018); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_39,FOLLOW_KEYWORD_39_in_ruleCalendarMonth18138); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -23960,9 +24074,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 11 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7956:2: kw= KEYWORD_37
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7996:2: kw= KEYWORD_38
                     {
-                    kw=(Token)match(input,KEYWORD_37,FOLLOW_KEYWORD_37_in_ruleCalendarMonth18037); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_38,FOLLOW_KEYWORD_38_in_ruleCalendarMonth18157); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -23973,9 +24087,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 12 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7963:2: kw= KEYWORD_30
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8003:2: kw= KEYWORD_31
                     {
-                    kw=(Token)match(input,KEYWORD_30,FOLLOW_KEYWORD_30_in_ruleCalendarMonth18056); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_31,FOLLOW_KEYWORD_31_in_ruleCalendarMonth18176); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -24009,7 +24123,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePrevMonth"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7976:1: entryRulePrevMonth returns [String current=null] : iv_rulePrevMonth= rulePrevMonth EOF ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8016:1: entryRulePrevMonth returns [String current=null] : iv_rulePrevMonth= rulePrevMonth EOF ;
     public final String entryRulePrevMonth() throws RecognitionException {
         String current = null;
 
@@ -24017,13 +24131,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7977:1: (iv_rulePrevMonth= rulePrevMonth EOF )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7978:2: iv_rulePrevMonth= rulePrevMonth EOF
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8017:1: (iv_rulePrevMonth= rulePrevMonth EOF )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8018:2: iv_rulePrevMonth= rulePrevMonth EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getPrevMonthRule()); 
             }
-            pushFollow(FOLLOW_rulePrevMonth_in_entryRulePrevMonth18096);
+            pushFollow(FOLLOW_rulePrevMonth_in_entryRulePrevMonth18216);
             iv_rulePrevMonth=rulePrevMonth();
 
             state._fsp--;
@@ -24031,7 +24145,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_rulePrevMonth.getText(); 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRulePrevMonth18107); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRulePrevMonth18227); if (state.failed) return current;
 
             }
 
@@ -24049,7 +24163,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePrevMonth"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7985:1: rulePrevMonth returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= KEYWORD_76 | kw= KEYWORD_75 | kw= KEYWORD_79 | kw= KEYWORD_72 | kw= KEYWORD_80 | kw= KEYWORD_78 | kw= KEYWORD_77 | kw= KEYWORD_73 | kw= KEYWORD_83 | kw= KEYWORD_82 | kw= KEYWORD_81 | kw= KEYWORD_74 ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8025:1: rulePrevMonth returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= KEYWORD_77 | kw= KEYWORD_76 | kw= KEYWORD_80 | kw= KEYWORD_73 | kw= KEYWORD_81 | kw= KEYWORD_79 | kw= KEYWORD_78 | kw= KEYWORD_74 | kw= KEYWORD_84 | kw= KEYWORD_83 | kw= KEYWORD_82 | kw= KEYWORD_75 ) ;
     public final AntlrDatatypeRuleToken rulePrevMonth() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -24058,68 +24172,68 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7989:6: ( (kw= KEYWORD_76 | kw= KEYWORD_75 | kw= KEYWORD_79 | kw= KEYWORD_72 | kw= KEYWORD_80 | kw= KEYWORD_78 | kw= KEYWORD_77 | kw= KEYWORD_73 | kw= KEYWORD_83 | kw= KEYWORD_82 | kw= KEYWORD_81 | kw= KEYWORD_74 ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7990:1: (kw= KEYWORD_76 | kw= KEYWORD_75 | kw= KEYWORD_79 | kw= KEYWORD_72 | kw= KEYWORD_80 | kw= KEYWORD_78 | kw= KEYWORD_77 | kw= KEYWORD_73 | kw= KEYWORD_83 | kw= KEYWORD_82 | kw= KEYWORD_81 | kw= KEYWORD_74 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8029:6: ( (kw= KEYWORD_77 | kw= KEYWORD_76 | kw= KEYWORD_80 | kw= KEYWORD_73 | kw= KEYWORD_81 | kw= KEYWORD_79 | kw= KEYWORD_78 | kw= KEYWORD_74 | kw= KEYWORD_84 | kw= KEYWORD_83 | kw= KEYWORD_82 | kw= KEYWORD_75 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8030:1: (kw= KEYWORD_77 | kw= KEYWORD_76 | kw= KEYWORD_80 | kw= KEYWORD_73 | kw= KEYWORD_81 | kw= KEYWORD_79 | kw= KEYWORD_78 | kw= KEYWORD_74 | kw= KEYWORD_84 | kw= KEYWORD_83 | kw= KEYWORD_82 | kw= KEYWORD_75 )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7990:1: (kw= KEYWORD_76 | kw= KEYWORD_75 | kw= KEYWORD_79 | kw= KEYWORD_72 | kw= KEYWORD_80 | kw= KEYWORD_78 | kw= KEYWORD_77 | kw= KEYWORD_73 | kw= KEYWORD_83 | kw= KEYWORD_82 | kw= KEYWORD_81 | kw= KEYWORD_74 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8030:1: (kw= KEYWORD_77 | kw= KEYWORD_76 | kw= KEYWORD_80 | kw= KEYWORD_73 | kw= KEYWORD_81 | kw= KEYWORD_79 | kw= KEYWORD_78 | kw= KEYWORD_74 | kw= KEYWORD_84 | kw= KEYWORD_83 | kw= KEYWORD_82 | kw= KEYWORD_75 )
             int alt179=12;
             switch ( input.LA(1) ) {
-            case KEYWORD_76:
+            case KEYWORD_77:
                 {
                 alt179=1;
                 }
                 break;
-            case KEYWORD_75:
+            case KEYWORD_76:
                 {
                 alt179=2;
                 }
                 break;
-            case KEYWORD_79:
+            case KEYWORD_80:
                 {
                 alt179=3;
                 }
                 break;
-            case KEYWORD_72:
+            case KEYWORD_73:
                 {
                 alt179=4;
                 }
                 break;
-            case KEYWORD_80:
+            case KEYWORD_81:
                 {
                 alt179=5;
                 }
                 break;
-            case KEYWORD_78:
+            case KEYWORD_79:
                 {
                 alt179=6;
                 }
                 break;
-            case KEYWORD_77:
+            case KEYWORD_78:
                 {
                 alt179=7;
                 }
                 break;
-            case KEYWORD_73:
+            case KEYWORD_74:
                 {
                 alt179=8;
                 }
                 break;
-            case KEYWORD_83:
+            case KEYWORD_84:
                 {
                 alt179=9;
                 }
                 break;
-            case KEYWORD_82:
+            case KEYWORD_83:
                 {
                 alt179=10;
                 }
                 break;
-            case KEYWORD_81:
+            case KEYWORD_82:
                 {
                 alt179=11;
                 }
                 break;
-            case KEYWORD_74:
+            case KEYWORD_75:
                 {
                 alt179=12;
                 }
@@ -24134,9 +24248,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
             switch (alt179) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7991:2: kw= KEYWORD_76
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8031:2: kw= KEYWORD_77
                     {
-                    kw=(Token)match(input,KEYWORD_76,FOLLOW_KEYWORD_76_in_rulePrevMonth18145); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_77,FOLLOW_KEYWORD_77_in_rulePrevMonth18265); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -24147,9 +24261,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7998:2: kw= KEYWORD_75
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8038:2: kw= KEYWORD_76
                     {
-                    kw=(Token)match(input,KEYWORD_75,FOLLOW_KEYWORD_75_in_rulePrevMonth18164); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_76,FOLLOW_KEYWORD_76_in_rulePrevMonth18284); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -24160,9 +24274,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8005:2: kw= KEYWORD_79
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8045:2: kw= KEYWORD_80
                     {
-                    kw=(Token)match(input,KEYWORD_79,FOLLOW_KEYWORD_79_in_rulePrevMonth18183); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_80,FOLLOW_KEYWORD_80_in_rulePrevMonth18303); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -24173,9 +24287,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8012:2: kw= KEYWORD_72
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8052:2: kw= KEYWORD_73
                     {
-                    kw=(Token)match(input,KEYWORD_72,FOLLOW_KEYWORD_72_in_rulePrevMonth18202); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_73,FOLLOW_KEYWORD_73_in_rulePrevMonth18322); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -24186,9 +24300,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8019:2: kw= KEYWORD_80
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8059:2: kw= KEYWORD_81
                     {
-                    kw=(Token)match(input,KEYWORD_80,FOLLOW_KEYWORD_80_in_rulePrevMonth18221); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_81,FOLLOW_KEYWORD_81_in_rulePrevMonth18341); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -24199,9 +24313,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8026:2: kw= KEYWORD_78
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8066:2: kw= KEYWORD_79
                     {
-                    kw=(Token)match(input,KEYWORD_78,FOLLOW_KEYWORD_78_in_rulePrevMonth18240); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_79,FOLLOW_KEYWORD_79_in_rulePrevMonth18360); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -24212,9 +24326,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8033:2: kw= KEYWORD_77
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8073:2: kw= KEYWORD_78
                     {
-                    kw=(Token)match(input,KEYWORD_77,FOLLOW_KEYWORD_77_in_rulePrevMonth18259); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_78,FOLLOW_KEYWORD_78_in_rulePrevMonth18379); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -24225,9 +24339,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8040:2: kw= KEYWORD_73
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8080:2: kw= KEYWORD_74
                     {
-                    kw=(Token)match(input,KEYWORD_73,FOLLOW_KEYWORD_73_in_rulePrevMonth18278); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_74,FOLLOW_KEYWORD_74_in_rulePrevMonth18398); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -24238,9 +24352,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8047:2: kw= KEYWORD_83
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8087:2: kw= KEYWORD_84
                     {
-                    kw=(Token)match(input,KEYWORD_83,FOLLOW_KEYWORD_83_in_rulePrevMonth18297); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_84,FOLLOW_KEYWORD_84_in_rulePrevMonth18417); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -24251,9 +24365,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 10 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8054:2: kw= KEYWORD_82
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8094:2: kw= KEYWORD_83
                     {
-                    kw=(Token)match(input,KEYWORD_82,FOLLOW_KEYWORD_82_in_rulePrevMonth18316); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_83,FOLLOW_KEYWORD_83_in_rulePrevMonth18436); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -24264,9 +24378,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 11 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8061:2: kw= KEYWORD_81
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8101:2: kw= KEYWORD_82
                     {
-                    kw=(Token)match(input,KEYWORD_81,FOLLOW_KEYWORD_81_in_rulePrevMonth18335); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_82,FOLLOW_KEYWORD_82_in_rulePrevMonth18455); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -24277,9 +24391,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 12 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8068:2: kw= KEYWORD_74
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8108:2: kw= KEYWORD_75
                     {
-                    kw=(Token)match(input,KEYWORD_74,FOLLOW_KEYWORD_74_in_rulePrevMonth18354); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_75,FOLLOW_KEYWORD_75_in_rulePrevMonth18474); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -24313,7 +24427,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleMultiStep"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8081:1: entryRuleMultiStep returns [String current=null] : iv_ruleMultiStep= ruleMultiStep EOF ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8121:1: entryRuleMultiStep returns [String current=null] : iv_ruleMultiStep= ruleMultiStep EOF ;
     public final String entryRuleMultiStep() throws RecognitionException {
         String current = null;
 
@@ -24321,13 +24435,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8082:1: (iv_ruleMultiStep= ruleMultiStep EOF )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8083:2: iv_ruleMultiStep= ruleMultiStep EOF
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8122:1: (iv_ruleMultiStep= ruleMultiStep EOF )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8123:2: iv_ruleMultiStep= ruleMultiStep EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getMultiStepRule()); 
             }
-            pushFollow(FOLLOW_ruleMultiStep_in_entryRuleMultiStep18394);
+            pushFollow(FOLLOW_ruleMultiStep_in_entryRuleMultiStep18514);
             iv_ruleMultiStep=ruleMultiStep();
 
             state._fsp--;
@@ -24335,7 +24449,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleMultiStep.getText(); 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleMultiStep18405); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleMultiStep18525); if (state.failed) return current;
 
             }
 
@@ -24353,7 +24467,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMultiStep"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8090:1: ruleMultiStep returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= KEYWORD_16 ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8130:1: ruleMultiStep returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= KEYWORD_16 ;
     public final AntlrDatatypeRuleToken ruleMultiStep() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -24362,10 +24476,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8094:6: (kw= KEYWORD_16 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8096:2: kw= KEYWORD_16
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8134:6: (kw= KEYWORD_16 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8136:2: kw= KEYWORD_16
             {
-            kw=(Token)match(input,KEYWORD_16,FOLLOW_KEYWORD_16_in_ruleMultiStep18442); if (state.failed) return current;
+            kw=(Token)match(input,KEYWORD_16,FOLLOW_KEYWORD_16_in_ruleMultiStep18562); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current.merge(kw);
@@ -24393,7 +24507,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTimeStep"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8109:1: entryRuleTimeStep returns [String current=null] : iv_ruleTimeStep= ruleTimeStep EOF ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8149:1: entryRuleTimeStep returns [String current=null] : iv_ruleTimeStep= ruleTimeStep EOF ;
     public final String entryRuleTimeStep() throws RecognitionException {
         String current = null;
 
@@ -24401,13 +24515,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8110:1: (iv_ruleTimeStep= ruleTimeStep EOF )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8111:2: iv_ruleTimeStep= ruleTimeStep EOF
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8150:1: (iv_ruleTimeStep= ruleTimeStep EOF )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8151:2: iv_ruleTimeStep= ruleTimeStep EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTimeStepRule()); 
             }
-            pushFollow(FOLLOW_ruleTimeStep_in_entryRuleTimeStep18481);
+            pushFollow(FOLLOW_ruleTimeStep_in_entryRuleTimeStep18601);
             iv_ruleTimeStep=ruleTimeStep();
 
             state._fsp--;
@@ -24415,7 +24529,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleTimeStep.getText(); 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleTimeStep18492); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleTimeStep18612); if (state.failed) return current;
 
             }
 
@@ -24433,7 +24547,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTimeStep"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8118:1: ruleTimeStep returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= KEYWORD_87 ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8158:1: ruleTimeStep returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= KEYWORD_88 ;
     public final AntlrDatatypeRuleToken ruleTimeStep() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -24442,10 +24556,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8122:6: (kw= KEYWORD_87 )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8124:2: kw= KEYWORD_87
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8162:6: (kw= KEYWORD_88 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8164:2: kw= KEYWORD_88
             {
-            kw=(Token)match(input,KEYWORD_87,FOLLOW_KEYWORD_87_in_ruleTimeStep18529); if (state.failed) return current;
+            kw=(Token)match(input,KEYWORD_88,FOLLOW_KEYWORD_88_in_ruleTimeStep18649); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                       current.merge(kw);
@@ -24473,7 +24587,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTimeStepValue"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8137:1: entryRuleTimeStepValue returns [String current=null] : iv_ruleTimeStepValue= ruleTimeStepValue EOF ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8177:1: entryRuleTimeStepValue returns [String current=null] : iv_ruleTimeStepValue= ruleTimeStepValue EOF ;
     public final String entryRuleTimeStepValue() throws RecognitionException {
         String current = null;
 
@@ -24481,13 +24595,13 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8138:1: (iv_ruleTimeStepValue= ruleTimeStepValue EOF )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8139:2: iv_ruleTimeStepValue= ruleTimeStepValue EOF
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8178:1: (iv_ruleTimeStepValue= ruleTimeStepValue EOF )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8179:2: iv_ruleTimeStepValue= ruleTimeStepValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTimeStepValueRule()); 
             }
-            pushFollow(FOLLOW_ruleTimeStepValue_in_entryRuleTimeStepValue18568);
+            pushFollow(FOLLOW_ruleTimeStepValue_in_entryRuleTimeStepValue18688);
             iv_ruleTimeStepValue=ruleTimeStepValue();
 
             state._fsp--;
@@ -24495,7 +24609,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleTimeStepValue.getText(); 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleTimeStepValue18579); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleTimeStepValue18699); if (state.failed) return current;
 
             }
 
@@ -24513,7 +24627,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTimeStepValue"
-    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8146:1: ruleTimeStepValue returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= KEYWORD_42 | kw= KEYWORD_41 ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8186:1: ruleTimeStepValue returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= KEYWORD_43 | kw= KEYWORD_42 ) ;
     public final AntlrDatatypeRuleToken ruleTimeStepValue() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -24522,17 +24636,17 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8150:6: ( (kw= KEYWORD_42 | kw= KEYWORD_41 ) )
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8151:1: (kw= KEYWORD_42 | kw= KEYWORD_41 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8190:6: ( (kw= KEYWORD_43 | kw= KEYWORD_42 ) )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8191:1: (kw= KEYWORD_43 | kw= KEYWORD_42 )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8151:1: (kw= KEYWORD_42 | kw= KEYWORD_41 )
+            // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8191:1: (kw= KEYWORD_43 | kw= KEYWORD_42 )
             int alt180=2;
             int LA180_0 = input.LA(1);
 
-            if ( (LA180_0==KEYWORD_42) ) {
+            if ( (LA180_0==KEYWORD_43) ) {
                 alt180=1;
             }
-            else if ( (LA180_0==KEYWORD_41) ) {
+            else if ( (LA180_0==KEYWORD_42) ) {
                 alt180=2;
             }
             else {
@@ -24544,9 +24658,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             }
             switch (alt180) {
                 case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8152:2: kw= KEYWORD_42
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8192:2: kw= KEYWORD_43
                     {
-                    kw=(Token)match(input,KEYWORD_42,FOLLOW_KEYWORD_42_in_ruleTimeStepValue18617); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_43,FOLLOW_KEYWORD_43_in_ruleTimeStepValue18737); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -24557,9 +24671,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8159:2: kw= KEYWORD_41
+                    // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:8199:2: kw= KEYWORD_42
                     {
-                    kw=(Token)match(input,KEYWORD_41,FOLLOW_KEYWORD_41_in_ruleTimeStepValue18636); if (state.failed) return current;
+                    kw=(Token)match(input,KEYWORD_42,FOLLOW_KEYWORD_42_in_ruleTimeStepValue18756); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -24595,10 +24709,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred22_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:807:2: (otherlv_0= KEYWORD_90 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:807:2: otherlv_0= KEYWORD_90
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:807:2: (otherlv_0= KEYWORD_91 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:807:2: otherlv_0= KEYWORD_91
         {
-        otherlv_0=(Token)match(input,KEYWORD_90,FOLLOW_KEYWORD_90_in_synpred22_InternalWreslEditorParser1762); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_91,FOLLOW_KEYWORD_91_in_synpred22_InternalWreslEditorParser1762); if (state.failed) return ;
 
         }
     }
@@ -24608,10 +24722,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred23_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token lv_local_3_1=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:825:3: (lv_local_3_1= KEYWORD_52 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:825:3: lv_local_3_1= KEYWORD_52
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:825:3: (lv_local_3_1= KEYWORD_53 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:825:3: lv_local_3_1= KEYWORD_53
         {
-        lv_local_3_1=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_synpred23_InternalWreslEditorParser1814); if (state.failed) return ;
+        lv_local_3_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_synpred23_InternalWreslEditorParser1814); if (state.failed) return ;
 
         }
     }
@@ -24621,10 +24735,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred29_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1025:2: (otherlv_0= KEYWORD_60 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1025:2: otherlv_0= KEYWORD_60
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1025:2: (otherlv_0= KEYWORD_61 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1025:2: otherlv_0= KEYWORD_61
         {
-        otherlv_0=(Token)match(input,KEYWORD_60,FOLLOW_KEYWORD_60_in_synpred29_InternalWreslEditorParser2225); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_61,FOLLOW_KEYWORD_61_in_synpred29_InternalWreslEditorParser2225); if (state.failed) return ;
 
         }
     }
@@ -24634,10 +24748,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred30_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token lv_local_3_1=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1043:3: (lv_local_3_1= KEYWORD_52 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1043:3: lv_local_3_1= KEYWORD_52
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1043:3: (lv_local_3_1= KEYWORD_53 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1043:3: lv_local_3_1= KEYWORD_53
         {
-        lv_local_3_1=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_synpred30_InternalWreslEditorParser2277); if (state.failed) return ;
+        lv_local_3_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_synpred30_InternalWreslEditorParser2277); if (state.failed) return ;
 
         }
     }
@@ -24647,10 +24761,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred32_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1143:2: (otherlv_0= KEYWORD_60 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1143:2: otherlv_0= KEYWORD_60
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1143:2: (otherlv_0= KEYWORD_61 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1143:2: otherlv_0= KEYWORD_61
         {
-        otherlv_0=(Token)match(input,KEYWORD_60,FOLLOW_KEYWORD_60_in_synpred32_InternalWreslEditorParser2487); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_61,FOLLOW_KEYWORD_61_in_synpred32_InternalWreslEditorParser2487); if (state.failed) return ;
 
         }
     }
@@ -24660,10 +24774,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred34_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token lv_local_4_1=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1179:3: (lv_local_4_1= KEYWORD_52 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1179:3: lv_local_4_1= KEYWORD_52
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1179:3: (lv_local_4_1= KEYWORD_53 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1179:3: lv_local_4_1= KEYWORD_53
         {
-        lv_local_4_1=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_synpred34_InternalWreslEditorParser2561); if (state.failed) return ;
+        lv_local_4_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_synpred34_InternalWreslEditorParser2561); if (state.failed) return ;
 
         }
     }
@@ -24673,10 +24787,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred37_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_10=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1259:2: (otherlv_10= KEYWORD_48 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1259:2: otherlv_10= KEYWORD_48
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1259:2: (otherlv_10= KEYWORD_49 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1259:2: otherlv_10= KEYWORD_49
         {
-        otherlv_10=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_synpred37_InternalWreslEditorParser2708); if (state.failed) return ;
+        otherlv_10=(Token)match(input,KEYWORD_49,FOLLOW_KEYWORD_49_in_synpred37_InternalWreslEditorParser2708); if (state.failed) return ;
 
         }
     }
@@ -24686,10 +24800,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred38_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_11=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1265:2: (otherlv_11= KEYWORD_48 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1265:2: otherlv_11= KEYWORD_48
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1265:2: (otherlv_11= KEYWORD_49 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1265:2: otherlv_11= KEYWORD_49
         {
-        otherlv_11=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_synpred38_InternalWreslEditorParser2726); if (state.failed) return ;
+        otherlv_11=(Token)match(input,KEYWORD_49,FOLLOW_KEYWORD_49_in_synpred38_InternalWreslEditorParser2726); if (state.failed) return ;
 
         }
     }
@@ -24699,10 +24813,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred40_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token lv_local_15_1=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1301:3: (lv_local_15_1= KEYWORD_52 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1301:3: lv_local_15_1= KEYWORD_52
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1301:3: (lv_local_15_1= KEYWORD_53 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1301:3: lv_local_15_1= KEYWORD_53
         {
-        lv_local_15_1=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_synpred40_InternalWreslEditorParser2800); if (state.failed) return ;
+        lv_local_15_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_synpred40_InternalWreslEditorParser2800); if (state.failed) return ;
 
         }
     }
@@ -24712,10 +24826,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred42_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1401:2: (otherlv_0= KEYWORD_60 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1401:2: otherlv_0= KEYWORD_60
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1401:2: (otherlv_0= KEYWORD_61 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1401:2: otherlv_0= KEYWORD_61
         {
-        otherlv_0=(Token)match(input,KEYWORD_60,FOLLOW_KEYWORD_60_in_synpred42_InternalWreslEditorParser3011); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_61,FOLLOW_KEYWORD_61_in_synpred42_InternalWreslEditorParser3011); if (state.failed) return ;
 
         }
     }
@@ -24725,10 +24839,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred44_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token lv_local_4_1=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1437:3: (lv_local_4_1= KEYWORD_52 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1437:3: lv_local_4_1= KEYWORD_52
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1437:3: (lv_local_4_1= KEYWORD_53 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1437:3: lv_local_4_1= KEYWORD_53
         {
-        lv_local_4_1=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_synpred44_InternalWreslEditorParser3085); if (state.failed) return ;
+        lv_local_4_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_synpred44_InternalWreslEditorParser3085); if (state.failed) return ;
 
         }
     }
@@ -24738,10 +24852,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred48_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_10=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1535:2: (otherlv_10= KEYWORD_44 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1535:2: otherlv_10= KEYWORD_44
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1535:2: (otherlv_10= KEYWORD_45 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1535:2: otherlv_10= KEYWORD_45
         {
-        otherlv_10=(Token)match(input,KEYWORD_44,FOLLOW_KEYWORD_44_in_synpred48_InternalWreslEditorParser3256); if (state.failed) return ;
+        otherlv_10=(Token)match(input,KEYWORD_45,FOLLOW_KEYWORD_45_in_synpred48_InternalWreslEditorParser3256); if (state.failed) return ;
 
         }
     }
@@ -24751,10 +24865,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred49_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_11=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1541:2: (otherlv_11= KEYWORD_44 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1541:2: otherlv_11= KEYWORD_44
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1541:2: (otherlv_11= KEYWORD_45 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1541:2: otherlv_11= KEYWORD_45
         {
-        otherlv_11=(Token)match(input,KEYWORD_44,FOLLOW_KEYWORD_44_in_synpred49_InternalWreslEditorParser3274); if (state.failed) return ;
+        otherlv_11=(Token)match(input,KEYWORD_45,FOLLOW_KEYWORD_45_in_synpred49_InternalWreslEditorParser3274); if (state.failed) return ;
 
         }
     }
@@ -24764,10 +24878,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred51_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token lv_local_15_1=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1577:3: (lv_local_15_1= KEYWORD_52 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1577:3: lv_local_15_1= KEYWORD_52
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1577:3: (lv_local_15_1= KEYWORD_53 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1577:3: lv_local_15_1= KEYWORD_53
         {
-        lv_local_15_1=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_synpred51_InternalWreslEditorParser3348); if (state.failed) return ;
+        lv_local_15_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_synpred51_InternalWreslEditorParser3348); if (state.failed) return ;
 
         }
     }
@@ -24777,10 +24891,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred54_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1695:2: (otherlv_0= KEYWORD_50 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1695:2: otherlv_0= KEYWORD_50
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1695:2: (otherlv_0= KEYWORD_51 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1695:2: otherlv_0= KEYWORD_51
         {
-        otherlv_0=(Token)match(input,KEYWORD_50,FOLLOW_KEYWORD_50_in_synpred54_InternalWreslEditorParser3582); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_51,FOLLOW_KEYWORD_51_in_synpred54_InternalWreslEditorParser3582); if (state.failed) return ;
 
         }
     }
@@ -24790,10 +24904,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred55_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_1=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1701:2: (otherlv_1= KEYWORD_50 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1701:2: otherlv_1= KEYWORD_50
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1701:2: (otherlv_1= KEYWORD_51 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1701:2: otherlv_1= KEYWORD_51
         {
-        otherlv_1=(Token)match(input,KEYWORD_50,FOLLOW_KEYWORD_50_in_synpred55_InternalWreslEditorParser3600); if (state.failed) return ;
+        otherlv_1=(Token)match(input,KEYWORD_51,FOLLOW_KEYWORD_51_in_synpred55_InternalWreslEditorParser3600); if (state.failed) return ;
 
         }
     }
@@ -24803,10 +24917,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred56_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token lv_local_4_1=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1719:3: (lv_local_4_1= KEYWORD_52 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1719:3: lv_local_4_1= KEYWORD_52
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1719:3: (lv_local_4_1= KEYWORD_53 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1719:3: lv_local_4_1= KEYWORD_53
         {
-        lv_local_4_1=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_synpred56_InternalWreslEditorParser3652); if (state.failed) return ;
+        lv_local_4_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_synpred56_InternalWreslEditorParser3652); if (state.failed) return ;
 
         }
     }
@@ -24816,10 +24930,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred58_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1819:2: (otherlv_0= KEYWORD_60 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1819:2: otherlv_0= KEYWORD_60
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1819:2: (otherlv_0= KEYWORD_61 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1819:2: otherlv_0= KEYWORD_61
         {
-        otherlv_0=(Token)match(input,KEYWORD_60,FOLLOW_KEYWORD_60_in_synpred58_InternalWreslEditorParser3861); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_61,FOLLOW_KEYWORD_61_in_synpred58_InternalWreslEditorParser3861); if (state.failed) return ;
 
         }
     }
@@ -24829,10 +24943,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred60_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token lv_local_4_1=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1855:3: (lv_local_4_1= KEYWORD_52 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1855:3: lv_local_4_1= KEYWORD_52
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1855:3: (lv_local_4_1= KEYWORD_53 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1855:3: lv_local_4_1= KEYWORD_53
         {
-        lv_local_4_1=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_synpred60_InternalWreslEditorParser3935); if (state.failed) return ;
+        lv_local_4_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_synpred60_InternalWreslEditorParser3935); if (state.failed) return ;
 
         }
     }
@@ -24842,10 +24956,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred62_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_8=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1911:2: (otherlv_8= KEYWORD_49 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1911:2: otherlv_8= KEYWORD_49
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1911:2: (otherlv_8= KEYWORD_50 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1911:2: otherlv_8= KEYWORD_50
         {
-        otherlv_8=(Token)match(input,KEYWORD_49,FOLLOW_KEYWORD_49_in_synpred62_InternalWreslEditorParser4041); if (state.failed) return ;
+        otherlv_8=(Token)match(input,KEYWORD_50,FOLLOW_KEYWORD_50_in_synpred62_InternalWreslEditorParser4041); if (state.failed) return ;
 
         }
     }
@@ -24855,10 +24969,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred63_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_11=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1940:2: (otherlv_11= KEYWORD_47 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1940:2: otherlv_11= KEYWORD_47
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1940:2: (otherlv_11= KEYWORD_48 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1940:2: otherlv_11= KEYWORD_48
         {
-        otherlv_11=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_synpred63_InternalWreslEditorParser4095); if (state.failed) return ;
+        otherlv_11=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_synpred63_InternalWreslEditorParser4095); if (state.failed) return ;
 
         }
     }
@@ -24868,10 +24982,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred65_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_14=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1969:2: (otherlv_14= KEYWORD_55 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1969:2: otherlv_14= KEYWORD_55
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1969:2: (otherlv_14= KEYWORD_56 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:1969:2: otherlv_14= KEYWORD_56
         {
-        otherlv_14=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_synpred65_InternalWreslEditorParser4152); if (state.failed) return ;
+        otherlv_14=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_synpred65_InternalWreslEditorParser4152); if (state.failed) return ;
 
         }
     }
@@ -24881,10 +24995,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred67_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2024:2: (otherlv_0= KEYWORD_85 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2024:2: otherlv_0= KEYWORD_85
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2024:2: (otherlv_0= KEYWORD_86 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2024:2: otherlv_0= KEYWORD_86
         {
-        otherlv_0=(Token)match(input,KEYWORD_85,FOLLOW_KEYWORD_85_in_synpred67_InternalWreslEditorParser4290); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_86,FOLLOW_KEYWORD_86_in_synpred67_InternalWreslEditorParser4290); if (state.failed) return ;
 
         }
     }
@@ -24894,10 +25008,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred68_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_3=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2053:2: (otherlv_3= KEYWORD_40 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2053:2: otherlv_3= KEYWORD_40
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2053:2: (otherlv_3= KEYWORD_41 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2053:2: otherlv_3= KEYWORD_41
         {
-        otherlv_3=(Token)match(input,KEYWORD_40,FOLLOW_KEYWORD_40_in_synpred68_InternalWreslEditorParser4346); if (state.failed) return ;
+        otherlv_3=(Token)match(input,KEYWORD_41,FOLLOW_KEYWORD_41_in_synpred68_InternalWreslEditorParser4346); if (state.failed) return ;
 
         }
     }
@@ -24920,10 +25034,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred72_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_1=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2170:2: (otherlv_1= KEYWORD_47 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2170:2: otherlv_1= KEYWORD_47
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2170:2: (otherlv_1= KEYWORD_48 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2170:2: otherlv_1= KEYWORD_48
         {
-        otherlv_1=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_synpred72_InternalWreslEditorParser4647); if (state.failed) return ;
+        otherlv_1=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_synpred72_InternalWreslEditorParser4647); if (state.failed) return ;
 
         }
     }
@@ -24933,10 +25047,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred73_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_4=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2199:2: (otherlv_4= KEYWORD_55 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2199:2: otherlv_4= KEYWORD_55
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2199:2: (otherlv_4= KEYWORD_56 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2199:2: otherlv_4= KEYWORD_56
         {
-        otherlv_4=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_synpred73_InternalWreslEditorParser4701); if (state.failed) return ;
+        otherlv_4=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_synpred73_InternalWreslEditorParser4701); if (state.failed) return ;
 
         }
     }
@@ -24959,10 +25073,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred75_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_2=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2260:2: (otherlv_2= KEYWORD_47 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2260:2: otherlv_2= KEYWORD_47
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2260:2: (otherlv_2= KEYWORD_48 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2260:2: otherlv_2= KEYWORD_48
         {
-        otherlv_2=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_synpred75_InternalWreslEditorParser4857); if (state.failed) return ;
+        otherlv_2=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_synpred75_InternalWreslEditorParser4857); if (state.failed) return ;
 
         }
     }
@@ -24972,10 +25086,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred76_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_5=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2289:2: (otherlv_5= KEYWORD_55 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2289:2: otherlv_5= KEYWORD_55
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2289:2: (otherlv_5= KEYWORD_56 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2289:2: otherlv_5= KEYWORD_56
         {
-        otherlv_5=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_synpred76_InternalWreslEditorParser4911); if (state.failed) return ;
+        otherlv_5=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_synpred76_InternalWreslEditorParser4911); if (state.failed) return ;
 
         }
     }
@@ -24985,10 +25099,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred78_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2385:2: (otherlv_0= KEYWORD_69 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2385:2: otherlv_0= KEYWORD_69
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2385:2: (otherlv_0= KEYWORD_70 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2385:2: otherlv_0= KEYWORD_70
         {
-        otherlv_0=(Token)match(input,KEYWORD_69,FOLLOW_KEYWORD_69_in_synpred78_InternalWreslEditorParser5159); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_70,FOLLOW_KEYWORD_70_in_synpred78_InternalWreslEditorParser5159); if (state.failed) return ;
 
         }
     }
@@ -25011,10 +25125,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred80_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_4=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2407:2: (otherlv_4= KEYWORD_47 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2407:2: otherlv_4= KEYWORD_47
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2407:2: (otherlv_4= KEYWORD_48 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2407:2: otherlv_4= KEYWORD_48
         {
-        otherlv_4=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_synpred80_InternalWreslEditorParser5223); if (state.failed) return ;
+        otherlv_4=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_synpred80_InternalWreslEditorParser5223); if (state.failed) return ;
 
         }
     }
@@ -25024,10 +25138,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred81_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_7=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2436:2: (otherlv_7= KEYWORD_55 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2436:2: otherlv_7= KEYWORD_55
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2436:2: (otherlv_7= KEYWORD_56 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2436:2: otherlv_7= KEYWORD_56
         {
-        otherlv_7=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_synpred81_InternalWreslEditorParser5277); if (state.failed) return ;
+        otherlv_7=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_synpred81_InternalWreslEditorParser5277); if (state.failed) return ;
 
         }
     }
@@ -25037,10 +25151,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred82_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2486:2: (otherlv_0= KEYWORD_69 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2486:2: otherlv_0= KEYWORD_69
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2486:2: (otherlv_0= KEYWORD_70 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2486:2: otherlv_0= KEYWORD_70
         {
-        otherlv_0=(Token)match(input,KEYWORD_69,FOLLOW_KEYWORD_69_in_synpred82_InternalWreslEditorParser5401); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_70,FOLLOW_KEYWORD_70_in_synpred82_InternalWreslEditorParser5401); if (state.failed) return ;
 
         }
     }
@@ -25050,10 +25164,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred83_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_3=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2509:2: (otherlv_3= KEYWORD_47 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2509:2: otherlv_3= KEYWORD_47
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2509:2: (otherlv_3= KEYWORD_48 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2509:2: otherlv_3= KEYWORD_48
         {
-        otherlv_3=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_synpred83_InternalWreslEditorParser5457); if (state.failed) return ;
+        otherlv_3=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_synpred83_InternalWreslEditorParser5457); if (state.failed) return ;
 
         }
     }
@@ -25063,10 +25177,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred84_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_6=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2538:2: (otherlv_6= KEYWORD_55 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2538:2: otherlv_6= KEYWORD_55
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2538:2: (otherlv_6= KEYWORD_56 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2538:2: otherlv_6= KEYWORD_56
         {
-        otherlv_6=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_synpred84_InternalWreslEditorParser5511); if (state.failed) return ;
+        otherlv_6=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_synpred84_InternalWreslEditorParser5511); if (state.failed) return ;
 
         }
     }
@@ -25076,10 +25190,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred89_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2673:2: (otherlv_0= KEYWORD_93 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2673:2: otherlv_0= KEYWORD_93
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2673:2: (otherlv_0= KEYWORD_94 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2673:2: otherlv_0= KEYWORD_94
         {
-        otherlv_0=(Token)match(input,KEYWORD_93,FOLLOW_KEYWORD_93_in_synpred89_InternalWreslEditorParser5849); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_94,FOLLOW_KEYWORD_94_in_synpred89_InternalWreslEditorParser5849); if (state.failed) return ;
 
         }
     }
@@ -25089,10 +25203,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred91_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_3=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2702:2: (otherlv_3= KEYWORD_47 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2702:2: otherlv_3= KEYWORD_47
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2702:2: (otherlv_3= KEYWORD_48 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2702:2: otherlv_3= KEYWORD_48
         {
-        otherlv_3=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_synpred91_InternalWreslEditorParser5904); if (state.failed) return ;
+        otherlv_3=(Token)match(input,KEYWORD_48,FOLLOW_KEYWORD_48_in_synpred91_InternalWreslEditorParser5904); if (state.failed) return ;
 
         }
     }
@@ -25102,10 +25216,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred92_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_6=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2731:2: (otherlv_6= KEYWORD_55 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2731:2: otherlv_6= KEYWORD_55
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2731:2: (otherlv_6= KEYWORD_56 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2731:2: otherlv_6= KEYWORD_56
         {
-        otherlv_6=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_synpred92_InternalWreslEditorParser5958); if (state.failed) return ;
+        otherlv_6=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_synpred92_InternalWreslEditorParser5958); if (state.failed) return ;
 
         }
     }
@@ -25115,10 +25229,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred93_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_9=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2760:2: (otherlv_9= KEYWORD_65 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2760:2: otherlv_9= KEYWORD_65
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2760:2: (otherlv_9= KEYWORD_66 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2760:2: otherlv_9= KEYWORD_66
         {
-        otherlv_9=(Token)match(input,KEYWORD_65,FOLLOW_KEYWORD_65_in_synpred93_InternalWreslEditorParser6013); if (state.failed) return ;
+        otherlv_9=(Token)match(input,KEYWORD_66,FOLLOW_KEYWORD_66_in_synpred93_InternalWreslEditorParser6013); if (state.failed) return ;
 
         }
     }
@@ -25128,10 +25242,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred95_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2810:2: (otherlv_0= KEYWORD_57 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2810:2: otherlv_0= KEYWORD_57
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2810:2: (otherlv_0= KEYWORD_58 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2810:2: otherlv_0= KEYWORD_58
         {
-        otherlv_0=(Token)match(input,KEYWORD_57,FOLLOW_KEYWORD_57_in_synpred95_InternalWreslEditorParser6139); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_58,FOLLOW_KEYWORD_58_in_synpred95_InternalWreslEditorParser6139); if (state.failed) return ;
 
         }
     }
@@ -25141,10 +25255,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred97_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2977:2: (otherlv_0= KEYWORD_43 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2977:2: otherlv_0= KEYWORD_43
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2977:2: (otherlv_0= KEYWORD_44 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:2977:2: otherlv_0= KEYWORD_44
         {
-        otherlv_0=(Token)match(input,KEYWORD_43,FOLLOW_KEYWORD_43_in_synpred97_InternalWreslEditorParser6530); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_44,FOLLOW_KEYWORD_44_in_synpred97_InternalWreslEditorParser6530); if (state.failed) return ;
 
         }
     }
@@ -25167,10 +25281,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred104_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3288:2: (otherlv_0= KEYWORD_57 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3288:2: otherlv_0= KEYWORD_57
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3288:2: (otherlv_0= KEYWORD_58 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3288:2: otherlv_0= KEYWORD_58
         {
-        otherlv_0=(Token)match(input,KEYWORD_57,FOLLOW_KEYWORD_57_in_synpred104_InternalWreslEditorParser7144); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_58,FOLLOW_KEYWORD_58_in_synpred104_InternalWreslEditorParser7144); if (state.failed) return ;
 
         }
     }
@@ -25180,10 +25294,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred105_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3338:2: (otherlv_0= KEYWORD_61 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3338:2: otherlv_0= KEYWORD_61
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3338:2: (otherlv_0= KEYWORD_62 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3338:2: otherlv_0= KEYWORD_62
         {
-        otherlv_0=(Token)match(input,KEYWORD_61,FOLLOW_KEYWORD_61_in_synpred105_InternalWreslEditorParser7267); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_62,FOLLOW_KEYWORD_62_in_synpred105_InternalWreslEditorParser7267); if (state.failed) return ;
 
         }
     }
@@ -25193,10 +25307,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred107_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_3=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3385:2: (otherlv_3= KEYWORD_45 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3385:2: otherlv_3= KEYWORD_45
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3385:2: (otherlv_3= KEYWORD_46 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3385:2: otherlv_3= KEYWORD_46
         {
-        otherlv_3=(Token)match(input,KEYWORD_45,FOLLOW_KEYWORD_45_in_synpred107_InternalWreslEditorParser7345); if (state.failed) return ;
+        otherlv_3=(Token)match(input,KEYWORD_46,FOLLOW_KEYWORD_46_in_synpred107_InternalWreslEditorParser7345); if (state.failed) return ;
 
         }
     }
@@ -25206,10 +25320,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred109_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_6=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3432:2: (otherlv_6= KEYWORD_51 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3432:2: otherlv_6= KEYWORD_51
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3432:2: (otherlv_6= KEYWORD_52 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3432:2: otherlv_6= KEYWORD_52
         {
-        otherlv_6=(Token)match(input,KEYWORD_51,FOLLOW_KEYWORD_51_in_synpred109_InternalWreslEditorParser7424); if (state.failed) return ;
+        otherlv_6=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_synpred109_InternalWreslEditorParser7424); if (state.failed) return ;
 
         }
     }
@@ -25232,10 +25346,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred112_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_12=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3490:2: (otherlv_12= KEYWORD_58 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3490:2: otherlv_12= KEYWORD_58
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3490:2: (otherlv_12= KEYWORD_59 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3490:2: otherlv_12= KEYWORD_59
         {
-        otherlv_12=(Token)match(input,KEYWORD_58,FOLLOW_KEYWORD_58_in_synpred112_InternalWreslEditorParser7534); if (state.failed) return ;
+        otherlv_12=(Token)match(input,KEYWORD_59,FOLLOW_KEYWORD_59_in_synpred112_InternalWreslEditorParser7534); if (state.failed) return ;
 
         }
     }
@@ -25245,10 +25359,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred121_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3886:2: (otherlv_0= KEYWORD_56 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3886:2: otherlv_0= KEYWORD_56
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3886:2: (otherlv_0= KEYWORD_57 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3886:2: otherlv_0= KEYWORD_57
         {
-        otherlv_0=(Token)match(input,KEYWORD_56,FOLLOW_KEYWORD_56_in_synpred121_InternalWreslEditorParser8418); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_57,FOLLOW_KEYWORD_57_in_synpred121_InternalWreslEditorParser8418); if (state.failed) return ;
 
         }
     }
@@ -25258,10 +25372,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred122_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_3=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3906:2: (otherlv_3= KEYWORD_91 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3906:2: otherlv_3= KEYWORD_91
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3906:2: (otherlv_3= KEYWORD_92 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3906:2: otherlv_3= KEYWORD_92
         {
-        otherlv_3=(Token)match(input,KEYWORD_91,FOLLOW_KEYWORD_91_in_synpred122_InternalWreslEditorParser8464); if (state.failed) return ;
+        otherlv_3=(Token)match(input,KEYWORD_92,FOLLOW_KEYWORD_92_in_synpred122_InternalWreslEditorParser8464); if (state.failed) return ;
 
         }
     }
@@ -25271,10 +25385,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred124_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3957:2: (otherlv_0= KEYWORD_53 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3957:2: otherlv_0= KEYWORD_53
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3957:2: (otherlv_0= KEYWORD_54 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3957:2: otherlv_0= KEYWORD_54
         {
-        otherlv_0=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_synpred124_InternalWreslEditorParser8595); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_54,FOLLOW_KEYWORD_54_in_synpred124_InternalWreslEditorParser8595); if (state.failed) return ;
 
         }
     }
@@ -25284,10 +25398,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred125_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_3=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3977:2: (otherlv_3= KEYWORD_91 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3977:2: otherlv_3= KEYWORD_91
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3977:2: (otherlv_3= KEYWORD_92 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:3977:2: otherlv_3= KEYWORD_92
         {
-        otherlv_3=(Token)match(input,KEYWORD_91,FOLLOW_KEYWORD_91_in_synpred125_InternalWreslEditorParser8641); if (state.failed) return ;
+        otherlv_3=(Token)match(input,KEYWORD_92,FOLLOW_KEYWORD_92_in_synpred125_InternalWreslEditorParser8641); if (state.failed) return ;
 
         }
     }
@@ -25297,10 +25411,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred127_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4028:2: (otherlv_0= KEYWORD_46 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4028:2: otherlv_0= KEYWORD_46
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4028:2: (otherlv_0= KEYWORD_47 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4028:2: otherlv_0= KEYWORD_47
         {
-        otherlv_0=(Token)match(input,KEYWORD_46,FOLLOW_KEYWORD_46_in_synpred127_InternalWreslEditorParser8772); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_47,FOLLOW_KEYWORD_47_in_synpred127_InternalWreslEditorParser8772); if (state.failed) return ;
 
         }
     }
@@ -25310,10 +25424,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred129_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token lv_local_4_1=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4064:3: (lv_local_4_1= KEYWORD_52 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4064:3: lv_local_4_1= KEYWORD_52
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4064:3: (lv_local_4_1= KEYWORD_53 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4064:3: lv_local_4_1= KEYWORD_53
         {
-        lv_local_4_1=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_synpred129_InternalWreslEditorParser8846); if (state.failed) return ;
+        lv_local_4_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_synpred129_InternalWreslEditorParser8846); if (state.failed) return ;
 
         }
     }
@@ -25336,10 +25450,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred135_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4271:2: (otherlv_0= KEYWORD_43 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4271:2: otherlv_0= KEYWORD_43
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4271:2: (otherlv_0= KEYWORD_44 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4271:2: otherlv_0= KEYWORD_44
         {
-        otherlv_0=(Token)match(input,KEYWORD_43,FOLLOW_KEYWORD_43_in_synpred135_InternalWreslEditorParser9251); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_44,FOLLOW_KEYWORD_44_in_synpred135_InternalWreslEditorParser9251); if (state.failed) return ;
 
         }
     }
@@ -25401,10 +25515,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred146_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_6=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4612:2: (otherlv_6= KEYWORD_89 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4612:2: otherlv_6= KEYWORD_89
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4612:2: (otherlv_6= KEYWORD_90 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4612:2: otherlv_6= KEYWORD_90
         {
-        otherlv_6=(Token)match(input,KEYWORD_89,FOLLOW_KEYWORD_89_in_synpred146_InternalWreslEditorParser9920); if (state.failed) return ;
+        otherlv_6=(Token)match(input,KEYWORD_90,FOLLOW_KEYWORD_90_in_synpred146_InternalWreslEditorParser9920); if (state.failed) return ;
 
         }
     }
@@ -25440,10 +25554,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred150_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_6=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4699:2: (otherlv_6= KEYWORD_89 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4699:2: otherlv_6= KEYWORD_89
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4699:2: (otherlv_6= KEYWORD_90 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4699:2: otherlv_6= KEYWORD_90
         {
-        otherlv_6=(Token)match(input,KEYWORD_89,FOLLOW_KEYWORD_89_in_synpred150_InternalWreslEditorParser10141); if (state.failed) return ;
+        otherlv_6=(Token)match(input,KEYWORD_90,FOLLOW_KEYWORD_90_in_synpred150_InternalWreslEditorParser10141); if (state.failed) return ;
 
         }
     }
@@ -25453,10 +25567,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred152_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4750:2: (otherlv_0= KEYWORD_70 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4750:2: otherlv_0= KEYWORD_70
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4750:2: (otherlv_0= KEYWORD_71 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4750:2: otherlv_0= KEYWORD_71
         {
-        otherlv_0=(Token)match(input,KEYWORD_70,FOLLOW_KEYWORD_70_in_synpred152_InternalWreslEditorParser10272); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_71,FOLLOW_KEYWORD_71_in_synpred152_InternalWreslEditorParser10272); if (state.failed) return ;
 
         }
     }
@@ -25466,10 +25580,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred155_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4941:2: (otherlv_0= KEYWORD_54 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4941:2: otherlv_0= KEYWORD_54
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4941:2: (otherlv_0= KEYWORD_55 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:4941:2: otherlv_0= KEYWORD_55
         {
-        otherlv_0=(Token)match(input,KEYWORD_54,FOLLOW_KEYWORD_54_in_synpred155_InternalWreslEditorParser10687); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_synpred155_InternalWreslEditorParser10687); if (state.failed) return ;
 
         }
     }
@@ -25479,10 +25593,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred158_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5038:2: (otherlv_0= KEYWORD_68 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5038:2: otherlv_0= KEYWORD_68
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5038:2: (otherlv_0= KEYWORD_69 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5038:2: otherlv_0= KEYWORD_69
         {
-        otherlv_0=(Token)match(input,KEYWORD_68,FOLLOW_KEYWORD_68_in_synpred158_InternalWreslEditorParser10886); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_69,FOLLOW_KEYWORD_69_in_synpred158_InternalWreslEditorParser10886); if (state.failed) return ;
 
         }
     }
@@ -25492,10 +25606,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred159_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_1=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5044:2: (otherlv_1= KEYWORD_68 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5044:2: otherlv_1= KEYWORD_68
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5044:2: (otherlv_1= KEYWORD_69 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5044:2: otherlv_1= KEYWORD_69
         {
-        otherlv_1=(Token)match(input,KEYWORD_68,FOLLOW_KEYWORD_68_in_synpred159_InternalWreslEditorParser10904); if (state.failed) return ;
+        otherlv_1=(Token)match(input,KEYWORD_69,FOLLOW_KEYWORD_69_in_synpred159_InternalWreslEditorParser10904); if (state.failed) return ;
 
         }
     }
@@ -25505,10 +25619,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred161_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5104:2: (otherlv_0= KEYWORD_86 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5104:2: otherlv_0= KEYWORD_86
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5104:2: (otherlv_0= KEYWORD_87 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5104:2: otherlv_0= KEYWORD_87
         {
-        otherlv_0=(Token)match(input,KEYWORD_86,FOLLOW_KEYWORD_86_in_synpred161_InternalWreslEditorParser11052); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_87,FOLLOW_KEYWORD_87_in_synpred161_InternalWreslEditorParser11052); if (state.failed) return ;
 
         }
     }
@@ -25518,10 +25632,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred162_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_4=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5138:2: (otherlv_4= KEYWORD_54 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5138:2: otherlv_4= KEYWORD_54
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5138:2: (otherlv_4= KEYWORD_55 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5138:2: otherlv_4= KEYWORD_55
         {
-        otherlv_4=(Token)match(input,KEYWORD_54,FOLLOW_KEYWORD_54_in_synpred162_InternalWreslEditorParser11118); if (state.failed) return ;
+        otherlv_4=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_synpred162_InternalWreslEditorParser11118); if (state.failed) return ;
 
         }
     }
@@ -25531,10 +25645,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred166_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5253:2: (otherlv_0= KEYWORD_88 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5253:2: otherlv_0= KEYWORD_88
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5253:2: (otherlv_0= KEYWORD_89 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:5253:2: otherlv_0= KEYWORD_89
         {
-        otherlv_0=(Token)match(input,KEYWORD_88,FOLLOW_KEYWORD_88_in_synpred166_InternalWreslEditorParser11352); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_89,FOLLOW_KEYWORD_89_in_synpred166_InternalWreslEditorParser11352); if (state.failed) return ;
 
         }
     }
@@ -25637,10 +25751,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred214_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token otherlv_0=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7333:2: (otherlv_0= KEYWORD_67 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7333:2: otherlv_0= KEYWORD_67
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7333:2: (otherlv_0= KEYWORD_68 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7333:2: otherlv_0= KEYWORD_68
         {
-        otherlv_0=(Token)match(input,KEYWORD_67,FOLLOW_KEYWORD_67_in_synpred214_InternalWreslEditorParser16248); if (state.failed) return ;
+        otherlv_0=(Token)match(input,KEYWORD_68,FOLLOW_KEYWORD_68_in_synpred214_InternalWreslEditorParser16248); if (state.failed) return ;
 
         }
     }
@@ -25650,10 +25764,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred215_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token lv_local_3_1=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7351:3: (lv_local_3_1= KEYWORD_52 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7351:3: lv_local_3_1= KEYWORD_52
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7351:3: (lv_local_3_1= KEYWORD_53 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7351:3: lv_local_3_1= KEYWORD_53
         {
-        lv_local_3_1=(Token)match(input,KEYWORD_52,FOLLOW_KEYWORD_52_in_synpred215_InternalWreslEditorParser16300); if (state.failed) return ;
+        lv_local_3_1=(Token)match(input,KEYWORD_53,FOLLOW_KEYWORD_53_in_synpred215_InternalWreslEditorParser16300); if (state.failed) return ;
 
         }
     }
@@ -25663,10 +25777,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred217_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token kw=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7426:2: (kw= KEYWORD_67 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7426:2: kw= KEYWORD_67
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7426:2: (kw= KEYWORD_68 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7426:2: kw= KEYWORD_68
         {
-        kw=(Token)match(input,KEYWORD_67,FOLLOW_KEYWORD_67_in_synpred217_InternalWreslEditorParser16464); if (state.failed) return ;
+        kw=(Token)match(input,KEYWORD_68,FOLLOW_KEYWORD_68_in_synpred217_InternalWreslEditorParser16464); if (state.failed) return ;
 
         }
     }
@@ -25676,10 +25790,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public final void synpred218_InternalWreslEditorParser_fragment() throws RecognitionException {   
         Token kw=null;
 
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7439:2: (kw= KEYWORD_54 )
-        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7439:2: kw= KEYWORD_54
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7439:2: (kw= KEYWORD_55 )
+        // ../gov.ca.dwr.wresl.xtext.editor/src-gen/gov/ca/dwr/wresl/xtext/editor/parser/antlr/internal/InternalWreslEditorParser.g:7439:2: kw= KEYWORD_55
         {
-        kw=(Token)match(input,KEYWORD_54,FOLLOW_KEYWORD_54_in_synpred218_InternalWreslEditorParser16498); if (state.failed) return ;
+        kw=(Token)match(input,KEYWORD_55,FOLLOW_KEYWORD_55_in_synpred218_InternalWreslEditorParser16498); if (state.failed) return ;
 
         }
     }
@@ -26806,11 +26920,11 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     static final String DFA7_eofS =
         "\22\uffff";
     static final String DFA7_minS =
-        "\1\42\1\123\2\uffff\1\166\1\52\1\140\1\124\1\136\1\5\1\135\1\166"+
-        "\1\uffff\1\52\1\140\1\136\1\5\1\166";
+        "\1\42\1\124\2\uffff\1\167\1\52\1\141\1\125\1\137\1\5\1\136\1\167"+
+        "\1\uffff\1\52\1\141\1\137\1\5\1\167";
     static final String DFA7_maxS =
-        "\1\72\1\166\2\uffff\1\166\1\52\1\140\1\124\1\136\1\77\2\166\1\uffff"+
-        "\1\52\1\140\1\136\1\77\1\166";
+        "\1\72\1\167\2\uffff\1\167\1\52\1\141\1\125\1\137\1\77\2\167\1\uffff"+
+        "\1\52\1\141\1\137\1\77\1\167";
     static final String DFA7_acceptS =
         "\2\uffff\1\1\1\2\10\uffff\1\3\5\uffff";
     static final String DFA7_specialS =
@@ -26876,10 +26990,10 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     static final String DFA9_eofS =
         "\14\uffff";
     static final String DFA9_minS =
-        "\1\42\1\123\1\uffff\1\166\1\52\1\140\1\124\1\136\1\22\1\135\1\166"+
+        "\1\42\1\124\1\uffff\1\167\1\52\1\141\1\125\1\137\1\22\1\136\1\167"+
         "\1\uffff";
     static final String DFA9_maxS =
-        "\1\66\1\166\1\uffff\1\166\1\52\1\140\1\124\1\136\1\76\2\166\1\uffff";
+        "\1\66\1\167\1\uffff\1\167\1\52\1\141\1\125\1\137\1\76\2\167\1\uffff";
     static final String DFA9_acceptS =
         "\2\uffff\1\1\10\uffff\1\2";
     static final String DFA9_specialS =
@@ -26937,16 +27051,16 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     static final String DFA102_eofS =
         "\1\uffff\1\12\1\uffff\5\11\3\uffff";
     static final String DFA102_minS =
-        "\1\4\1\123\1\uffff\5\123\3\uffff";
+        "\1\4\1\124\1\uffff\5\124\3\uffff";
     static final String DFA102_maxS =
-        "\1\166\1\135\1\uffff\5\133\3\uffff";
+        "\1\167\1\136\1\uffff\5\134\3\uffff";
     static final String DFA102_acceptS =
         "\2\uffff\1\2\5\uffff\1\3\1\4\1\1";
     static final String DFA102_specialS =
         "\13\uffff}>";
     static final String[] DFA102_transitionS = {
             "\1\11\5\uffff\1\11\11\uffff\1\5\14\11\1\6\2\uffff\1\3\1\4\1"+
-            "\11\12\uffff\1\7\17\uffff\14\11\6\uffff\1\10\13\uffff\1\11\6"+
+            "\11\12\uffff\1\7\17\uffff\15\11\6\uffff\1\10\13\uffff\1\11\6"+
             "\uffff\7\10\2\2\7\uffff\1\1",
             "\1\10\7\uffff\1\12\1\uffff\1\10",
             "",
@@ -26994,21 +27108,21 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
         }
     }
     static final String DFA153_eotS =
-        "\62\uffff";
+        "\63\uffff";
     static final String DFA153_eofS =
-        "\62\uffff";
+        "\63\uffff";
     static final String DFA153_minS =
-        "\1\4\14\uffff\1\0\44\uffff";
+        "\1\4\14\uffff\1\0\45\uffff";
     static final String DFA153_maxS =
-        "\1\166\14\uffff\1\0\44\uffff";
+        "\1\167\14\uffff\1\0\45\uffff";
     static final String DFA153_acceptS =
-        "\1\uffff\1\1\56\uffff\1\2\1\3";
+        "\1\uffff\1\1\57\uffff\1\2\1\3";
     static final String DFA153_specialS =
-        "\15\uffff\1\0\44\uffff}>";
+        "\15\uffff\1\0\45\uffff}>";
     static final String[] DFA153_transitionS = {
             "\1\1\5\uffff\1\1\11\uffff\16\1\2\uffff\3\1\12\uffff\1\1\17"+
-            "\uffff\15\1\5\uffff\1\15\2\uffff\1\1\1\uffff\1\1\6\uffff\1\1"+
-            "\5\uffff\1\60\11\1\7\uffff\1\1",
+            "\uffff\16\1\5\uffff\1\15\2\uffff\1\1\1\uffff\1\1\6\uffff\1\1"+
+            "\5\uffff\1\61\11\1\7\uffff\1\1",
             "",
             "",
             "",
@@ -27022,6 +27136,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             "",
             "",
             "\1\uffff",
+            "",
             "",
             "",
             "",
@@ -27105,7 +27220,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred171_InternalWreslEditorParser()) ) {s = 1;}
 
-                        else if ( (synpred173_InternalWreslEditorParser()) ) {s = 49;}
+                        else if ( (synpred173_InternalWreslEditorParser()) ) {s = 50;}
 
                          
                         input.seek(index153_13);
@@ -27126,42 +27241,42 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     static final String DFA160_minS =
         "\1\4\1\15\1\uffff\5\15\1\uffff\1\4\4\uffff";
     static final String DFA160_maxS =
-        "\1\166\1\163\1\uffff\5\163\1\uffff\1\166\4\uffff";
+        "\1\167\1\164\1\uffff\5\164\1\uffff\1\167\4\uffff";
     static final String DFA160_acceptS =
         "\2\uffff\1\2\5\uffff\1\3\1\uffff\1\5\1\6\1\1\1\4";
     static final String DFA160_specialS =
         "\16\uffff}>";
     static final String[] DFA160_transitionS = {
             "\1\12\5\uffff\1\12\11\uffff\1\5\14\12\1\6\2\uffff\1\3\1\4\1"+
-            "\12\12\uffff\1\7\17\uffff\14\12\1\13\5\uffff\1\11\13\uffff\1"+
+            "\12\12\uffff\1\7\17\uffff\15\12\1\13\5\uffff\1\11\13\uffff\1"+
             "\12\6\uffff\7\10\2\2\7\uffff\1\1",
             "\1\14\25\uffff\1\14\7\uffff\1\14\1\uffff\3\14\5\uffff\1\14"+
-            "\3\uffff\1\14\2\uffff\2\14\1\uffff\2\14\15\uffff\4\14\1\uffff"+
+            "\3\uffff\1\14\2\uffff\2\14\1\uffff\2\14\16\uffff\4\14\1\uffff"+
             "\1\10\11\14\1\10\1\14\1\uffff\2\14\15\uffff\2\14\2\uffff\1\14",
             "",
             "\1\12\25\uffff\1\12\7\uffff\1\12\1\uffff\3\12\5\uffff\1\12"+
-            "\3\uffff\1\12\2\uffff\2\12\1\uffff\2\12\15\uffff\4\12\1\uffff"+
+            "\3\uffff\1\12\2\uffff\2\12\1\uffff\2\12\16\uffff\4\12\1\uffff"+
             "\1\10\11\12\1\uffff\1\12\1\uffff\2\12\15\uffff\2\12\2\uffff"+
             "\1\12",
             "\1\12\25\uffff\1\12\7\uffff\1\12\1\uffff\3\12\5\uffff\1\12"+
-            "\3\uffff\1\12\2\uffff\2\12\1\uffff\2\12\15\uffff\4\12\1\uffff"+
+            "\3\uffff\1\12\2\uffff\2\12\1\uffff\2\12\16\uffff\4\12\1\uffff"+
             "\1\10\11\12\1\uffff\1\12\1\uffff\2\12\15\uffff\2\12\2\uffff"+
             "\1\12",
             "\1\12\25\uffff\1\12\7\uffff\1\12\1\uffff\3\12\5\uffff\1\12"+
-            "\3\uffff\1\12\2\uffff\2\12\1\uffff\2\12\15\uffff\4\12\1\uffff"+
+            "\3\uffff\1\12\2\uffff\2\12\1\uffff\2\12\16\uffff\4\12\1\uffff"+
             "\1\10\11\12\1\uffff\1\12\1\uffff\2\12\15\uffff\2\12\2\uffff"+
             "\1\12",
             "\1\12\25\uffff\1\12\7\uffff\1\12\1\uffff\3\12\5\uffff\1\12"+
-            "\3\uffff\1\12\2\uffff\2\12\1\uffff\2\12\15\uffff\4\12\1\uffff"+
+            "\3\uffff\1\12\2\uffff\2\12\1\uffff\2\12\16\uffff\4\12\1\uffff"+
             "\1\10\11\12\1\uffff\1\12\1\uffff\2\12\15\uffff\2\12\2\uffff"+
             "\1\12",
             "\1\12\25\uffff\1\12\7\uffff\1\12\1\uffff\3\12\5\uffff\1\12"+
-            "\3\uffff\1\12\2\uffff\2\12\1\uffff\2\12\15\uffff\4\12\1\uffff"+
+            "\3\uffff\1\12\2\uffff\2\12\1\uffff\2\12\16\uffff\4\12\1\uffff"+
             "\1\10\11\12\1\uffff\1\12\1\uffff\2\12\15\uffff\2\12\2\uffff"+
             "\1\12",
             "",
             "\1\15\5\uffff\1\15\11\uffff\16\15\2\uffff\3\15\12\uffff\1"+
-            "\15\15\uffff\1\10\1\uffff\15\15\5\uffff\1\15\2\uffff\1\15\1"+
+            "\15\15\uffff\1\10\1\uffff\16\15\5\uffff\1\15\2\uffff\1\15\1"+
             "\uffff\1\15\6\uffff\1\15\6\uffff\11\15\7\uffff\1\15",
             "",
             "",
@@ -27205,18 +27320,18 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     static final String DFA161_eotS =
         "\25\uffff";
     static final String DFA161_eofS =
-        "\17\uffff\1\22\1\24\4\uffff";
+        "\17\uffff\1\21\1\23\4\uffff";
     static final String DFA161_minS =
-        "\1\24\1\123\11\uffff\1\130\1\155\2\136\2\15\4\uffff";
+        "\1\24\1\124\11\uffff\1\131\1\156\2\137\2\15\4\uffff";
     static final String DFA161_maxS =
-        "\1\166\1\135\11\uffff\1\166\1\155\2\136\2\163\4\uffff";
+        "\1\167\1\136\11\uffff\1\167\1\156\2\137\2\164\4\uffff";
     static final String DFA161_acceptS =
-        "\2\uffff\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\6\uffff\1\13\1\12"+
-        "\1\15\1\14";
+        "\2\uffff\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\6\uffff\1\12\1\13"+
+        "\1\14\1\15";
     static final String DFA161_specialS =
         "\25\uffff}>";
     static final String[] DFA161_transitionS = {
-            "\1\2\14\uffff\1\2\2\uffff\2\2\13\uffff\1\2\41\uffff\1\5\22"+
+            "\1\2\14\uffff\1\2\2\uffff\2\2\13\uffff\1\2\42\uffff\1\5\22"+
             "\uffff\1\4\1\3\1\6\1\7\1\10\1\11\1\12\11\uffff\1\1",
             "\1\2\11\uffff\1\13",
             "",
@@ -27232,14 +27347,14 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
             "\1\16",
             "\1\17",
             "\1\20",
-            "\1\22\25\uffff\1\22\7\uffff\1\22\1\uffff\3\22\5\uffff\1\22"+
-            "\3\uffff\1\22\2\uffff\2\22\1\uffff\2\22\15\uffff\4\22\1\uffff"+
-            "\1\21\11\22\1\uffff\1\22\1\uffff\2\22\15\uffff\2\22\2\uffff"+
-            "\1\22",
-            "\1\24\25\uffff\1\24\7\uffff\1\24\1\uffff\3\24\5\uffff\1\24"+
-            "\3\uffff\1\24\2\uffff\2\24\1\uffff\2\24\15\uffff\4\24\1\uffff"+
-            "\1\23\11\24\1\uffff\1\24\1\uffff\2\24\15\uffff\2\24\2\uffff"+
-            "\1\24",
+            "\1\21\25\uffff\1\21\7\uffff\1\21\1\uffff\3\21\5\uffff\1\21"+
+            "\3\uffff\1\21\2\uffff\2\21\1\uffff\2\21\16\uffff\4\21\1\uffff"+
+            "\1\22\11\21\1\uffff\1\21\1\uffff\2\21\15\uffff\2\21\2\uffff"+
+            "\1\21",
+            "\1\23\25\uffff\1\23\7\uffff\1\23\1\uffff\3\23\5\uffff\1\23"+
+            "\3\uffff\1\23\2\uffff\2\23\1\uffff\2\23\16\uffff\4\23\1\uffff"+
+            "\1\24\11\23\1\uffff\1\23\1\uffff\2\23\15\uffff\2\23\2\uffff"+
+            "\1\23",
             "",
             "",
             "",
@@ -27283,8 +27398,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
 
     public static final BitSet FOLLOW_ruleWreslEvaluator_in_entryRuleWreslEvaluator73 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleWreslEvaluator83 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePattern_in_ruleWreslEvaluator130 = new BitSet(new long[]{0x0540010400010102L,0x0000000400000000L});
-    public static final BitSet FOLLOW_ruleIfIncItems_in_ruleWreslEvaluator157 = new BitSet(new long[]{0x0540010400010102L,0x0000000400000000L});
+    public static final BitSet FOLLOW_rulePattern_in_ruleWreslEvaluator130 = new BitSet(new long[]{0x0540010400010102L,0x0000000800000000L});
+    public static final BitSet FOLLOW_ruleIfIncItems_in_ruleWreslEvaluator157 = new BitSet(new long[]{0x0540010400010102L,0x0000000800000000L});
     public static final BitSet FOLLOW_ruleInitial_in_ruleWreslEvaluator187 = new BitSet(new long[]{0x0000000000001000L});
     public static final BitSet FOLLOW_ruleSequence_in_ruleWreslEvaluator209 = new BitSet(new long[]{0x0000100000001000L});
     public static final BitSet FOLLOW_ruleModel_in_ruleWreslEvaluator231 = new BitSet(new long[]{0x0000100000000002L});
@@ -27298,9 +27413,9 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleObjective_in_rulePattern472 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleDeclaration_in_entryRuleDeclaration506 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleDeclaration516 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_66_in_ruleDeclaration554 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
-    public static final BitSet FOLLOW_KEYWORD_14_in_ruleDeclaration566 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleDeclaration582 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_KEYWORD_67_in_ruleDeclaration554 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_KEYWORD_14_in_ruleDeclaration566 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleDeclaration582 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
     public static final BitSet FOLLOW_KEYWORD_15_in_ruleDeclaration600 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleVariable_in_entryRuleVariable634 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleVariable644 = new BitSet(new long[]{0x0000000000000002L});
@@ -27317,161 +27432,161 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleAlias_in_ruleDecisionVariable1002 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleIfIncItems_in_entryRuleIfIncItems1036 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleIfIncItems1046 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIfTerm_in_ruleIfIncItems1096 = new BitSet(new long[]{0x0000000000000002L,0x0000001800000000L});
-    public static final BitSet FOLLOW_ruleElseIfTerm_in_ruleIfIncItems1116 = new BitSet(new long[]{0x0000000000000002L,0x0000001000000000L});
+    public static final BitSet FOLLOW_ruleIfTerm_in_ruleIfIncItems1096 = new BitSet(new long[]{0x0000000000000002L,0x0000003000000000L});
+    public static final BitSet FOLLOW_ruleElseIfTerm_in_ruleIfIncItems1116 = new BitSet(new long[]{0x0000000000000002L,0x0000002000000000L});
     public static final BitSet FOLLOW_ruleElseTerm_in_ruleIfIncItems1138 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleIfTerm_in_entryRuleIfTerm1174 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleIfTerm1184 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_IF_in_ruleIfTerm1220 = new BitSet(new long[]{0x00020073FFF00410L,0x00427FE081483FFEL});
-    public static final BitSet FOLLOW_ruleLogicalExpression_in_ruleIfTerm1240 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
+    public static final BitSet FOLLOW_RULE_IF_in_ruleIfTerm1220 = new BitSet(new long[]{0x00020073FFF00410L,0x0084FFC102907FFEL});
+    public static final BitSet FOLLOW_ruleLogicalExpression_in_ruleIfTerm1240 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
     public static final BitSet FOLLOW_KEYWORD_14_in_ruleIfTerm1253 = new BitSet(new long[]{0x0540010400010100L});
-    public static final BitSet FOLLOW_rulePattern_in_ruleIfTerm1273 = new BitSet(new long[]{0x0540010400010100L,0x0000000200000000L});
+    public static final BitSet FOLLOW_rulePattern_in_ruleIfTerm1273 = new BitSet(new long[]{0x0540010400010100L,0x0000000400000000L});
     public static final BitSet FOLLOW_KEYWORD_15_in_ruleIfTerm1287 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleElseIfTerm_in_entryRuleElseIfTerm1321 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleElseIfTerm1331 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ELSEIF_in_ruleElseIfTerm1367 = new BitSet(new long[]{0x00020073FFF00410L,0x00427FE081483FFEL});
-    public static final BitSet FOLLOW_ruleLogicalExpression_in_ruleElseIfTerm1387 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
+    public static final BitSet FOLLOW_RULE_ELSEIF_in_ruleElseIfTerm1367 = new BitSet(new long[]{0x00020073FFF00410L,0x0084FFC102907FFEL});
+    public static final BitSet FOLLOW_ruleLogicalExpression_in_ruleElseIfTerm1387 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
     public static final BitSet FOLLOW_KEYWORD_14_in_ruleElseIfTerm1400 = new BitSet(new long[]{0x0540010400010100L});
-    public static final BitSet FOLLOW_rulePattern_in_ruleElseIfTerm1420 = new BitSet(new long[]{0x0540010400010100L,0x0000000200000000L});
-    public static final BitSet FOLLOW_KEYWORD_15_in_ruleElseIfTerm1434 = new BitSet(new long[]{0x0000000000000002L,0x0000000800000000L});
+    public static final BitSet FOLLOW_rulePattern_in_ruleElseIfTerm1420 = new BitSet(new long[]{0x0540010400010100L,0x0000000400000000L});
+    public static final BitSet FOLLOW_KEYWORD_15_in_ruleElseIfTerm1434 = new BitSet(new long[]{0x0000000000000002L,0x0000001000000000L});
     public static final BitSet FOLLOW_ruleElseTerm_in_entryRuleElseTerm1469 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleElseTerm1479 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ELSE_in_ruleElseTerm1515 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
+    public static final BitSet FOLLOW_RULE_ELSE_in_ruleElseTerm1515 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
     public static final BitSet FOLLOW_KEYWORD_14_in_ruleElseTerm1527 = new BitSet(new long[]{0x0540010400010100L});
-    public static final BitSet FOLLOW_rulePattern_in_ruleElseTerm1547 = new BitSet(new long[]{0x0540010400010100L,0x0000000200000000L});
+    public static final BitSet FOLLOW_rulePattern_in_ruleElseTerm1547 = new BitSet(new long[]{0x0540010400010100L,0x0000000400000000L});
     public static final BitSet FOLLOW_KEYWORD_15_in_ruleElseTerm1561 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleTimeArraySize_in_entryRuleTimeArraySize1595 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleTimeArraySize1605 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_1_in_ruleTimeArraySize1643 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleTimeArraySize1666 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_KEYWORD_1_in_ruleTimeArraySize1643 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleTimeArraySize1666 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
     public static final BitSet FOLLOW_KEYWORD_2_in_ruleTimeArraySize1679 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleObjective_in_entryRuleObjective1713 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleObjective1723 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_90_in_ruleObjective1762 = new BitSet(new long[]{0x0000000000000000L,0x0040000020000000L});
-    public static final BitSet FOLLOW_KEYWORD_90_in_ruleObjective1780 = new BitSet(new long[]{0x0000000000000000L,0x0040000020000000L});
+    public static final BitSet FOLLOW_KEYWORD_91_in_ruleObjective1762 = new BitSet(new long[]{0x0000000000000000L,0x0080000040000000L});
+    public static final BitSet FOLLOW_KEYWORD_91_in_ruleObjective1780 = new BitSet(new long[]{0x0000000000000000L,0x0080000040000000L});
     public static final BitSet FOLLOW_KEYWORD_11_in_ruleObjective1794 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_ruleObjective1814 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_ruleObjective1842 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_12_in_ruleObjective1869 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleObjective1887 = new BitSet(new long[]{0x0000000000000000L,0x0000000108000000L});
-    public static final BitSet FOLLOW_KEYWORD_9_in_ruleObjective1906 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
-    public static final BitSet FOLLOW_KEYWORD_14_in_ruleObjective1920 = new BitSet(new long[]{0x0000000000000000L,0x0000000020000000L});
-    public static final BitSet FOLLOW_ruleWeightItem_in_ruleObjective1940 = new BitSet(new long[]{0x0000000000000000L,0x0000000220000000L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_ruleObjective1814 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_ruleObjective1842 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_12_in_ruleObjective1869 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleObjective1887 = new BitSet(new long[]{0x0000000000000000L,0x0000000210000000L});
+    public static final BitSet FOLLOW_KEYWORD_9_in_ruleObjective1906 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_KEYWORD_14_in_ruleObjective1920 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
+    public static final BitSet FOLLOW_ruleWeightItem_in_ruleObjective1940 = new BitSet(new long[]{0x0000000000000000L,0x0000000440000000L});
     public static final BitSet FOLLOW_KEYWORD_15_in_ruleObjective1954 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleWeightItem_in_entryRuleWeightItem1988 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleWeightItem1998 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_11_in_ruleWeightItem2036 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleWeightItem2059 = new BitSet(new long[]{0x0000000000000000L,0x0000000000880000L});
-    public static final BitSet FOLLOW_ruleTimeArraySize_in_ruleWeightItem2080 = new BitSet(new long[]{0x0000000000000000L,0x0000000000800000L});
-    public static final BitSet FOLLOW_KEYWORD_5_in_ruleWeightItem2094 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleWeightItem2114 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_12_in_ruleWeightItem2127 = new BitSet(new long[]{0x0000000000000002L,0x0000000000800000L});
+    public static final BitSet FOLLOW_KEYWORD_11_in_ruleWeightItem2036 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleWeightItem2059 = new BitSet(new long[]{0x0000000000000000L,0x0000000001100000L});
+    public static final BitSet FOLLOW_ruleTimeArraySize_in_ruleWeightItem2080 = new BitSet(new long[]{0x0000000000000000L,0x0000000001000000L});
+    public static final BitSet FOLLOW_KEYWORD_5_in_ruleWeightItem2094 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleWeightItem2114 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_12_in_ruleWeightItem2127 = new BitSet(new long[]{0x0000000000000002L,0x0000000001000000L});
     public static final BitSet FOLLOW_KEYWORD_5_in_ruleWeightItem2140 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExternalDef_in_entryRuleExternalDef2176 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleExternalDef2186 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_60_in_ruleExternalDef2225 = new BitSet(new long[]{0x0000000000000000L,0x0040000020000000L});
-    public static final BitSet FOLLOW_KEYWORD_60_in_ruleExternalDef2243 = new BitSet(new long[]{0x0000000000000000L,0x0040000020000000L});
+    public static final BitSet FOLLOW_KEYWORD_61_in_ruleExternalDef2225 = new BitSet(new long[]{0x0000000000000000L,0x0080000040000000L});
+    public static final BitSet FOLLOW_KEYWORD_61_in_ruleExternalDef2243 = new BitSet(new long[]{0x0000000000000000L,0x0080000040000000L});
     public static final BitSet FOLLOW_KEYWORD_11_in_ruleExternalDef2257 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_ruleExternalDef2277 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_ruleExternalDef2305 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_12_in_ruleExternalDef2332 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleExternalDef2357 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_ruleExternalDef2277 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_ruleExternalDef2305 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_12_in_ruleExternalDef2332 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleExternalDef2357 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
     public static final BitSet FOLLOW_KEYWORD_14_in_ruleExternalDef2370 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_ruleExternal_in_ruleExternalDef2390 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_ruleExternal_in_ruleExternalDef2390 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
     public static final BitSet FOLLOW_KEYWORD_15_in_ruleExternalDef2403 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSvarDef_in_entryRuleSvarDef2437 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleSvarDef2447 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_60_in_ruleSvarDef2487 = new BitSet(new long[]{0x0000000000000000L,0x0040000020080000L});
-    public static final BitSet FOLLOW_KEYWORD_60_in_ruleSvarDef2505 = new BitSet(new long[]{0x0000000000000000L,0x0040000020080000L});
-    public static final BitSet FOLLOW_ruleTimeArraySize_in_ruleSvarDef2526 = new BitSet(new long[]{0x0000000000000000L,0x0040000020000000L});
+    public static final BitSet FOLLOW_KEYWORD_61_in_ruleSvarDef2487 = new BitSet(new long[]{0x0000000000000000L,0x0080000040100000L});
+    public static final BitSet FOLLOW_KEYWORD_61_in_ruleSvarDef2505 = new BitSet(new long[]{0x0000000000000000L,0x0080000040100000L});
+    public static final BitSet FOLLOW_ruleTimeArraySize_in_ruleSvarDef2526 = new BitSet(new long[]{0x0000000000000000L,0x0080000040000000L});
     public static final BitSet FOLLOW_KEYWORD_11_in_ruleSvarDef2541 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_ruleSvarDef2561 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_ruleSvarDef2589 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_12_in_ruleSvarDef2616 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleSvarDef2641 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_ruleSvarDef2561 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_ruleSvarDef2589 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_12_in_ruleSvarDef2616 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleSvarDef2641 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
     public static final BitSet FOLLOW_KEYWORD_14_in_ruleSvarDef2654 = new BitSet(new long[]{0x8020800800000020L});
-    public static final BitSet FOLLOW_ruleSVar_in_ruleSvarDef2674 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_ruleSVar_in_ruleSvarDef2674 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
     public static final BitSet FOLLOW_KEYWORD_15_in_ruleSvarDef2687 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_48_in_ruleSvarDef2708 = new BitSet(new long[]{0x0000000000000000L,0x0040000020080000L});
-    public static final BitSet FOLLOW_KEYWORD_48_in_ruleSvarDef2726 = new BitSet(new long[]{0x0000000000000000L,0x0040000020080000L});
-    public static final BitSet FOLLOW_KEYWORD_48_in_ruleSvarDef2744 = new BitSet(new long[]{0x0000000000000000L,0x0040000020080000L});
-    public static final BitSet FOLLOW_ruleTimeArraySize_in_ruleSvarDef2765 = new BitSet(new long[]{0x0000000000000000L,0x0040000020000000L});
+    public static final BitSet FOLLOW_KEYWORD_49_in_ruleSvarDef2708 = new BitSet(new long[]{0x0000000000000000L,0x0080000040100000L});
+    public static final BitSet FOLLOW_KEYWORD_49_in_ruleSvarDef2726 = new BitSet(new long[]{0x0000000000000000L,0x0080000040100000L});
+    public static final BitSet FOLLOW_KEYWORD_49_in_ruleSvarDef2744 = new BitSet(new long[]{0x0000000000000000L,0x0080000040100000L});
+    public static final BitSet FOLLOW_ruleTimeArraySize_in_ruleSvarDef2765 = new BitSet(new long[]{0x0000000000000000L,0x0080000040000000L});
     public static final BitSet FOLLOW_KEYWORD_11_in_ruleSvarDef2780 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_ruleSvarDef2800 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_ruleSvarDef2828 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_12_in_ruleSvarDef2855 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleSvarDef2880 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_ruleSvarDef2800 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_ruleSvarDef2828 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_12_in_ruleSvarDef2855 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleSvarDef2880 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
     public static final BitSet FOLLOW_KEYWORD_14_in_ruleSvarDef2893 = new BitSet(new long[]{0x8020800800000020L});
-    public static final BitSet FOLLOW_ruleSVar_in_ruleSvarDef2913 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_ruleSVar_in_ruleSvarDef2913 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
     public static final BitSet FOLLOW_KEYWORD_15_in_ruleSvarDef2926 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleDvarDef_in_entryRuleDvarDef2961 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleDvarDef2971 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_60_in_ruleDvarDef3011 = new BitSet(new long[]{0x0000000000000000L,0x0040000020080000L});
-    public static final BitSet FOLLOW_KEYWORD_60_in_ruleDvarDef3029 = new BitSet(new long[]{0x0000000000000000L,0x0040000020080000L});
-    public static final BitSet FOLLOW_ruleTimeArraySize_in_ruleDvarDef3050 = new BitSet(new long[]{0x0000000000000000L,0x0040000020000000L});
+    public static final BitSet FOLLOW_KEYWORD_61_in_ruleDvarDef3011 = new BitSet(new long[]{0x0000000000000000L,0x0080000040100000L});
+    public static final BitSet FOLLOW_KEYWORD_61_in_ruleDvarDef3029 = new BitSet(new long[]{0x0000000000000000L,0x0080000040100000L});
+    public static final BitSet FOLLOW_ruleTimeArraySize_in_ruleDvarDef3050 = new BitSet(new long[]{0x0000000000000000L,0x0080000040000000L});
     public static final BitSet FOLLOW_KEYWORD_11_in_ruleDvarDef3065 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_ruleDvarDef3085 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_ruleDvarDef3113 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_12_in_ruleDvarDef3140 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleDvarDef3165 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_ruleDvarDef3085 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_ruleDvarDef3113 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_12_in_ruleDvarDef3140 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleDvarDef3165 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
     public static final BitSet FOLLOW_KEYWORD_14_in_ruleDvarDef3178 = new BitSet(new long[]{0x4000480000040000L});
-    public static final BitSet FOLLOW_ruleDVar_in_ruleDvarDef3200 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
-    public static final BitSet FOLLOW_ruleDVarInteger_in_ruleDvarDef3219 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_ruleDVar_in_ruleDvarDef3200 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
+    public static final BitSet FOLLOW_ruleDVarInteger_in_ruleDvarDef3219 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
     public static final BitSet FOLLOW_KEYWORD_15_in_ruleDvarDef3235 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_44_in_ruleDvarDef3256 = new BitSet(new long[]{0x0000000000000000L,0x0040000020080000L});
-    public static final BitSet FOLLOW_KEYWORD_44_in_ruleDvarDef3274 = new BitSet(new long[]{0x0000000000000000L,0x0040000020080000L});
-    public static final BitSet FOLLOW_KEYWORD_44_in_ruleDvarDef3292 = new BitSet(new long[]{0x0000000000000000L,0x0040000020080000L});
-    public static final BitSet FOLLOW_ruleTimeArraySize_in_ruleDvarDef3313 = new BitSet(new long[]{0x0000000000000000L,0x0040000020000000L});
+    public static final BitSet FOLLOW_KEYWORD_45_in_ruleDvarDef3256 = new BitSet(new long[]{0x0000000000000000L,0x0080000040100000L});
+    public static final BitSet FOLLOW_KEYWORD_45_in_ruleDvarDef3274 = new BitSet(new long[]{0x0000000000000000L,0x0080000040100000L});
+    public static final BitSet FOLLOW_KEYWORD_45_in_ruleDvarDef3292 = new BitSet(new long[]{0x0000000000000000L,0x0080000040100000L});
+    public static final BitSet FOLLOW_ruleTimeArraySize_in_ruleDvarDef3313 = new BitSet(new long[]{0x0000000000000000L,0x0080000040000000L});
     public static final BitSet FOLLOW_KEYWORD_11_in_ruleDvarDef3328 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_ruleDvarDef3348 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_ruleDvarDef3376 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_12_in_ruleDvarDef3403 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleDvarDef3428 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_ruleDvarDef3348 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_ruleDvarDef3376 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_12_in_ruleDvarDef3403 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleDvarDef3428 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
     public static final BitSet FOLLOW_KEYWORD_14_in_ruleDvarDef3441 = new BitSet(new long[]{0x4000480000040000L});
-    public static final BitSet FOLLOW_ruleDVar_in_ruleDvarDef3463 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
-    public static final BitSet FOLLOW_ruleDVarInteger_in_ruleDvarDef3482 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_ruleDVar_in_ruleDvarDef3463 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
+    public static final BitSet FOLLOW_ruleDVarInteger_in_ruleDvarDef3482 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
     public static final BitSet FOLLOW_KEYWORD_15_in_ruleDvarDef3498 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleConstDef_in_entryRuleConstDef3533 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleConstDef3543 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_50_in_ruleConstDef3582 = new BitSet(new long[]{0x0000000000000000L,0x0040000020000000L});
-    public static final BitSet FOLLOW_KEYWORD_50_in_ruleConstDef3600 = new BitSet(new long[]{0x0000000000000000L,0x0040000020000000L});
-    public static final BitSet FOLLOW_KEYWORD_50_in_ruleConstDef3618 = new BitSet(new long[]{0x0000000000000000L,0x0040000020000000L});
+    public static final BitSet FOLLOW_KEYWORD_51_in_ruleConstDef3582 = new BitSet(new long[]{0x0000000000000000L,0x0080000040000000L});
+    public static final BitSet FOLLOW_KEYWORD_51_in_ruleConstDef3600 = new BitSet(new long[]{0x0000000000000000L,0x0080000040000000L});
+    public static final BitSet FOLLOW_KEYWORD_51_in_ruleConstDef3618 = new BitSet(new long[]{0x0000000000000000L,0x0080000040000000L});
     public static final BitSet FOLLOW_KEYWORD_11_in_ruleConstDef3632 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_ruleConstDef3652 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_ruleConstDef3680 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_12_in_ruleConstDef3707 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleConstDef3732 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
-    public static final BitSet FOLLOW_KEYWORD_14_in_ruleConstDef3745 = new BitSet(new long[]{0x0000000000000000L,0x0000600000000000L});
-    public static final BitSet FOLLOW_ruleNumber_in_ruleConstDef3765 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_ruleConstDef3652 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_ruleConstDef3680 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_12_in_ruleConstDef3707 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleConstDef3732 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_KEYWORD_14_in_ruleConstDef3745 = new BitSet(new long[]{0x0000000000000000L,0x0000C00000000000L});
+    public static final BitSet FOLLOW_ruleNumber_in_ruleConstDef3765 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
     public static final BitSet FOLLOW_KEYWORD_15_in_ruleConstDef3778 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAlias_in_entryRuleAlias3812 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleAlias3822 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_60_in_ruleAlias3861 = new BitSet(new long[]{0x0000000000000000L,0x0040000020080000L});
-    public static final BitSet FOLLOW_KEYWORD_60_in_ruleAlias3879 = new BitSet(new long[]{0x0000000000000000L,0x0040000020080000L});
-    public static final BitSet FOLLOW_ruleTimeArraySize_in_ruleAlias3900 = new BitSet(new long[]{0x0000000000000000L,0x0040000020000000L});
+    public static final BitSet FOLLOW_KEYWORD_61_in_ruleAlias3861 = new BitSet(new long[]{0x0000000000000000L,0x0080000040100000L});
+    public static final BitSet FOLLOW_KEYWORD_61_in_ruleAlias3879 = new BitSet(new long[]{0x0000000000000000L,0x0080000040100000L});
+    public static final BitSet FOLLOW_ruleTimeArraySize_in_ruleAlias3900 = new BitSet(new long[]{0x0000000000000000L,0x0080000040000000L});
     public static final BitSet FOLLOW_KEYWORD_11_in_ruleAlias3915 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_ruleAlias3935 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_ruleAlias3963 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_12_in_ruleAlias3990 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleAlias4015 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_ruleAlias3935 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_ruleAlias3963 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_12_in_ruleAlias3990 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleAlias4015 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
     public static final BitSet FOLLOW_KEYWORD_14_in_ruleAlias4028 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_KEYWORD_49_in_ruleAlias4041 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_KEYWORD_49_in_ruleAlias4059 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleAlias4080 = new BitSet(new long[]{0x0200200000000000L,0x0000000200000000L});
-    public static final BitSet FOLLOW_KEYWORD_47_in_ruleAlias4095 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_47_in_ruleAlias4113 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleAlias4130 = new BitSet(new long[]{0x0000200000000000L,0x0000000200000000L});
-    public static final BitSet FOLLOW_KEYWORD_55_in_ruleAlias4152 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_55_in_ruleAlias4170 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleAlias4187 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_KEYWORD_50_in_ruleAlias4041 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_KEYWORD_50_in_ruleAlias4059 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleAlias4080 = new BitSet(new long[]{0x0200200000000000L,0x0000000400000000L});
+    public static final BitSet FOLLOW_KEYWORD_48_in_ruleAlias4095 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_48_in_ruleAlias4113 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleAlias4130 = new BitSet(new long[]{0x0000200000000000L,0x0000000400000000L});
+    public static final BitSet FOLLOW_KEYWORD_56_in_ruleAlias4152 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_56_in_ruleAlias4170 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleAlias4187 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
     public static final BitSet FOLLOW_KEYWORD_15_in_ruleAlias4207 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExternal_in_entryRuleExternal4241 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleExternal4251 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_85_in_ruleExternal4290 = new BitSet(new long[]{0x0800000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_85_in_ruleExternal4308 = new BitSet(new long[]{0x0800000000000000L,0x0040000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_86_in_ruleExternal4290 = new BitSet(new long[]{0x0800000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_86_in_ruleExternal4308 = new BitSet(new long[]{0x0800000000000000L,0x0080000000000000L});
     public static final BitSet FOLLOW_RULE_ID_in_ruleExternal4327 = new BitSet(new long[]{0x0004000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_40_in_ruleExternal4346 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_40_in_ruleExternal4364 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_41_in_ruleExternal4346 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_41_in_ruleExternal4364 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_KEYWORD_22_in_ruleExternal4398 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_KEYWORD_22_in_ruleExternal4416 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleDVar_in_entryRuleDVar4453 = new BitSet(new long[]{0x0000000000000000L});
@@ -27481,21 +27596,21 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleDVarNonStd_in_entryRuleDVarNonStd4577 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleDVarNonStd4587 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLowerAndOrUpper_in_ruleDVarNonStd4633 = new BitSet(new long[]{0x0200000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_47_in_ruleDVarNonStd4647 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_47_in_ruleDVarNonStd4665 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_48_in_ruleDVarNonStd4647 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_48_in_ruleDVarNonStd4665 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
     public static final BitSet FOLLOW_RULE_STRING_in_ruleDVarNonStd4682 = new BitSet(new long[]{0x0000200000000000L});
-    public static final BitSet FOLLOW_KEYWORD_55_in_ruleDVarNonStd4701 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_55_in_ruleDVarNonStd4719 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_56_in_ruleDVarNonStd4701 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_56_in_ruleDVarNonStd4719 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
     public static final BitSet FOLLOW_RULE_STRING_in_ruleDVarNonStd4736 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleDVarStd_in_entryRuleDVarStd4776 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleDVarStd4786 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_KEYWORD_25_in_ruleDVarStd4825 = new BitSet(new long[]{0x0200000000000000L});
     public static final BitSet FOLLOW_KEYWORD_25_in_ruleDVarStd4843 = new BitSet(new long[]{0x0200000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_47_in_ruleDVarStd4857 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_47_in_ruleDVarStd4875 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_48_in_ruleDVarStd4857 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_48_in_ruleDVarStd4875 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
     public static final BitSet FOLLOW_RULE_STRING_in_ruleDVarStd4892 = new BitSet(new long[]{0x0000200000000000L});
-    public static final BitSet FOLLOW_KEYWORD_55_in_ruleDVarStd4911 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_55_in_ruleDVarStd4929 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_56_in_ruleDVarStd4911 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_56_in_ruleDVarStd4929 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
     public static final BitSet FOLLOW_RULE_STRING_in_ruleDVarStd4946 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleDVarInteger_in_entryRuleDVarInteger4986 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleDVarInteger4996 = new BitSet(new long[]{0x0000000000000002L});
@@ -27503,26 +27618,26 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleDVarIntegerNonStd_in_ruleDVarInteger5076 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleDVarIntegerStd_in_entryRuleDVarIntegerStd5110 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleDVarIntegerStd5120 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_69_in_ruleDVarIntegerStd5159 = new BitSet(new long[]{0x4000000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_69_in_ruleDVarIntegerStd5177 = new BitSet(new long[]{0x4000000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_70_in_ruleDVarIntegerStd5159 = new BitSet(new long[]{0x4000000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_70_in_ruleDVarIntegerStd5177 = new BitSet(new long[]{0x4000000000000000L});
     public static final BitSet FOLLOW_KEYWORD_25_in_ruleDVarIntegerStd5191 = new BitSet(new long[]{0x0200000000000000L});
     public static final BitSet FOLLOW_KEYWORD_25_in_ruleDVarIntegerStd5209 = new BitSet(new long[]{0x0200000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_47_in_ruleDVarIntegerStd5223 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_47_in_ruleDVarIntegerStd5241 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_48_in_ruleDVarIntegerStd5223 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_48_in_ruleDVarIntegerStd5241 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
     public static final BitSet FOLLOW_RULE_STRING_in_ruleDVarIntegerStd5258 = new BitSet(new long[]{0x0000200000000000L});
-    public static final BitSet FOLLOW_KEYWORD_55_in_ruleDVarIntegerStd5277 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_55_in_ruleDVarIntegerStd5295 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_56_in_ruleDVarIntegerStd5277 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_56_in_ruleDVarIntegerStd5295 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
     public static final BitSet FOLLOW_RULE_STRING_in_ruleDVarIntegerStd5312 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleDVarIntegerNonStd_in_entryRuleDVarIntegerNonStd5352 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleDVarIntegerNonStd5362 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_69_in_ruleDVarIntegerNonStd5401 = new BitSet(new long[]{0x4000480000000000L});
-    public static final BitSet FOLLOW_KEYWORD_69_in_ruleDVarIntegerNonStd5419 = new BitSet(new long[]{0x4000480000000000L});
+    public static final BitSet FOLLOW_KEYWORD_70_in_ruleDVarIntegerNonStd5401 = new BitSet(new long[]{0x4000480000000000L});
+    public static final BitSet FOLLOW_KEYWORD_70_in_ruleDVarIntegerNonStd5419 = new BitSet(new long[]{0x4000480000000000L});
     public static final BitSet FOLLOW_ruleLowerAndOrUpper_in_ruleDVarIntegerNonStd5444 = new BitSet(new long[]{0x0200000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_47_in_ruleDVarIntegerNonStd5457 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_47_in_ruleDVarIntegerNonStd5475 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_48_in_ruleDVarIntegerNonStd5457 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_48_in_ruleDVarIntegerNonStd5475 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
     public static final BitSet FOLLOW_RULE_STRING_in_ruleDVarIntegerNonStd5492 = new BitSet(new long[]{0x0000200000000000L});
-    public static final BitSet FOLLOW_KEYWORD_55_in_ruleDVarIntegerNonStd5511 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_55_in_ruleDVarIntegerNonStd5529 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_56_in_ruleDVarIntegerNonStd5511 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_56_in_ruleDVarIntegerNonStd5529 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
     public static final BitSet FOLLOW_RULE_STRING_in_ruleDVarIntegerNonStd5546 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSVar_in_entryRuleSVar5586 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleSVar5596 = new BitSet(new long[]{0x0000000000000002L});
@@ -27533,22 +27648,22 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleSVarCase_in_ruleSVar5766 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSVarDSS_in_entryRuleSVarDSS5800 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleSVarDSS5810 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_93_in_ruleSVarDSS5849 = new BitSet(new long[]{0x0200000000000000L,0x0010000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_93_in_ruleSVarDSS5867 = new BitSet(new long[]{0x0200000000000000L,0x0010000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_94_in_ruleSVarDSS5849 = new BitSet(new long[]{0x0200000000000000L,0x0020000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_94_in_ruleSVarDSS5867 = new BitSet(new long[]{0x0200000000000000L,0x0020000000000000L});
     public static final BitSet FOLLOW_RULE_STRING_in_ruleSVarDSS5884 = new BitSet(new long[]{0x0200000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_47_in_ruleSVarDSS5904 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_47_in_ruleSVarDSS5922 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_48_in_ruleSVarDSS5904 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_48_in_ruleSVarDSS5922 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
     public static final BitSet FOLLOW_RULE_STRING_in_ruleSVarDSS5939 = new BitSet(new long[]{0x0000200000000000L});
-    public static final BitSet FOLLOW_KEYWORD_55_in_ruleSVarDSS5958 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_55_in_ruleSVarDSS5976 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_56_in_ruleSVarDSS5958 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_56_in_ruleSVarDSS5976 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
     public static final BitSet FOLLOW_RULE_STRING_in_ruleSVarDSS5993 = new BitSet(new long[]{0x0000000000004002L});
-    public static final BitSet FOLLOW_KEYWORD_65_in_ruleSVarDSS6013 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_65_in_ruleSVarDSS6031 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_66_in_ruleSVarDSS6013 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_66_in_ruleSVarDSS6031 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
     public static final BitSet FOLLOW_RULE_STRING_in_ruleSVarDSS6048 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSVarExpression_in_entryRuleSVarExpression6090 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleSVarExpression6100 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_57_in_ruleSVarExpression6139 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_KEYWORD_57_in_ruleSVarExpression6157 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
+    public static final BitSet FOLLOW_KEYWORD_58_in_ruleSVarExpression6139 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_KEYWORD_58_in_ruleSVarExpression6157 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
     public static final BitSet FOLLOW_ruleExpression_in_ruleSVarExpression6178 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSVarSum_in_entryRuleSVarSum6213 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleSVarSum6223 = new BitSet(new long[]{0x0000000000000002L});
@@ -27561,66 +27676,66 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleCaseContent_in_ruleSVarCase6446 = new BitSet(new long[]{0x8020800800000022L});
     public static final BitSet FOLLOW_ruleCaseContent_in_entryRuleCaseContent6481 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleCaseContent6491 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_43_in_ruleCaseContent6530 = new BitSet(new long[]{0x00020073FFF00410L,0x0040000080001FFEL});
-    public static final BitSet FOLLOW_KEYWORD_43_in_ruleCaseContent6548 = new BitSet(new long[]{0x00020073FFF00410L,0x0040000080001FFEL});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleCaseContent6567 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
-    public static final BitSet FOLLOW_ruleSpecialIdent_in_ruleCaseContent6591 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
+    public static final BitSet FOLLOW_KEYWORD_44_in_ruleCaseContent6530 = new BitSet(new long[]{0x00020073FFF00410L,0x0080000100003FFEL});
+    public static final BitSet FOLLOW_KEYWORD_44_in_ruleCaseContent6548 = new BitSet(new long[]{0x00020073FFF00410L,0x0080000100003FFEL});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleCaseContent6567 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_ruleSpecialIdent_in_ruleCaseContent6591 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
     public static final BitSet FOLLOW_KEYWORD_14_in_ruleCaseContent6607 = new BitSet(new long[]{0x0000000000000040L});
     public static final BitSet FOLLOW_ruleCondition_in_ruleCaseContent6627 = new BitSet(new long[]{0x8000800800000000L});
-    public static final BitSet FOLLOW_ruleTableContent_in_ruleCaseContent6649 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
-    public static final BitSet FOLLOW_ruleValueContent_in_ruleCaseContent6676 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
-    public static final BitSet FOLLOW_ruleSumContent_in_ruleCaseContent6703 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_ruleTableContent_in_ruleCaseContent6649 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
+    public static final BitSet FOLLOW_ruleValueContent_in_ruleCaseContent6676 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
+    public static final BitSet FOLLOW_ruleSumContent_in_ruleCaseContent6703 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
     public static final BitSet FOLLOW_KEYWORD_15_in_ruleCaseContent6717 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSumContent_in_entryRuleSumContent6751 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleSumContent6761 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_26_in_ruleSumContent6800 = new BitSet(new long[]{0x0000000000000000L,0x0000000000080000L});
-    public static final BitSet FOLLOW_KEYWORD_26_in_ruleSumContent6818 = new BitSet(new long[]{0x0000000000000000L,0x0000000000080000L});
-    public static final BitSet FOLLOW_ruleSumHeader_in_ruleSumContent6839 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
+    public static final BitSet FOLLOW_KEYWORD_26_in_ruleSumContent6800 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_KEYWORD_26_in_ruleSumContent6818 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_ruleSumHeader_in_ruleSumContent6839 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
     public static final BitSet FOLLOW_ruleExpression_in_ruleSumContent6860 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSumHeader_in_entryRuleSumHeader6895 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleSumHeader6905 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_1_in_ruleSumHeader6943 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
-    public static final BitSet FOLLOW_KEYWORD_21_in_ruleSumHeader6955 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleSumHeader6975 = new BitSet(new long[]{0x0000000000000000L,0x0000000000800000L});
-    public static final BitSet FOLLOW_KEYWORD_5_in_ruleSumHeader6988 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleSumHeader7008 = new BitSet(new long[]{0x0000000000000000L,0x0000000000900000L});
-    public static final BitSet FOLLOW_KEYWORD_5_in_ruleSumHeader7022 = new BitSet(new long[]{0x0000000000000000L,0x0000200001000000L});
-    public static final BitSet FOLLOW_KEYWORD_6_in_ruleSumHeader7035 = new BitSet(new long[]{0x0000000000000000L,0x0000200000000000L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleSumHeader7047 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_KEYWORD_1_in_ruleSumHeader6943 = new BitSet(new long[]{0x0000000000000000L,0x0000000000080000L});
+    public static final BitSet FOLLOW_KEYWORD_21_in_ruleSumHeader6955 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleSumHeader6975 = new BitSet(new long[]{0x0000000000000000L,0x0000000001000000L});
+    public static final BitSet FOLLOW_KEYWORD_5_in_ruleSumHeader6988 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleSumHeader7008 = new BitSet(new long[]{0x0000000000000000L,0x0000000001200000L});
+    public static final BitSet FOLLOW_KEYWORD_5_in_ruleSumHeader7022 = new BitSet(new long[]{0x0000000000000000L,0x0000400002000000L});
+    public static final BitSet FOLLOW_KEYWORD_6_in_ruleSumHeader7035 = new BitSet(new long[]{0x0000000000000000L,0x0000400000000000L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleSumHeader7047 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
     public static final BitSet FOLLOW_KEYWORD_2_in_ruleSumHeader7061 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleValueContent_in_entryRuleValueContent7095 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleValueContent7105 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_57_in_ruleValueContent7144 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_KEYWORD_57_in_ruleValueContent7162 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
+    public static final BitSet FOLLOW_KEYWORD_58_in_ruleValueContent7144 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_KEYWORD_58_in_ruleValueContent7162 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
     public static final BitSet FOLLOW_ruleExpression_in_ruleValueContent7183 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleTableContent_in_entryRuleTableContent7218 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleTableContent7228 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_61_in_ruleTableContent7267 = new BitSet(new long[]{0x00020073FFF00410L,0x0040000080001FFEL});
-    public static final BitSet FOLLOW_KEYWORD_61_in_ruleTableContent7285 = new BitSet(new long[]{0x00020073FFF00410L,0x0040000080001FFEL});
+    public static final BitSet FOLLOW_KEYWORD_62_in_ruleTableContent7267 = new BitSet(new long[]{0x00020073FFF00410L,0x0080000100003FFEL});
+    public static final BitSet FOLLOW_KEYWORD_62_in_ruleTableContent7285 = new BitSet(new long[]{0x00020073FFF00410L,0x0080000100003FFEL});
     public static final BitSet FOLLOW_RULE_ID_in_ruleTableContent7304 = new BitSet(new long[]{0x0080000000000000L});
     public static final BitSet FOLLOW_ruleSpecialIdent_in_ruleTableContent7328 = new BitSet(new long[]{0x0080000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_45_in_ruleTableContent7345 = new BitSet(new long[]{0x00020073FFF00410L,0x0040000080001FFEL});
-    public static final BitSet FOLLOW_KEYWORD_45_in_ruleTableContent7363 = new BitSet(new long[]{0x00020073FFF00410L,0x0040000080001FFEL});
+    public static final BitSet FOLLOW_KEYWORD_46_in_ruleTableContent7345 = new BitSet(new long[]{0x00020073FFF00410L,0x0080000100003FFEL});
+    public static final BitSet FOLLOW_KEYWORD_46_in_ruleTableContent7363 = new BitSet(new long[]{0x00020073FFF00410L,0x0080000100003FFEL});
     public static final BitSet FOLLOW_RULE_ID_in_ruleTableContent7382 = new BitSet(new long[]{0x0001020000000002L});
     public static final BitSet FOLLOW_ruleSpecialIdent_in_ruleTableContent7406 = new BitSet(new long[]{0x0001020000000002L});
-    public static final BitSet FOLLOW_KEYWORD_51_in_ruleTableContent7424 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC080081FFEL});
-    public static final BitSet FOLLOW_KEYWORD_51_in_ruleTableContent7442 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC080081FFEL});
+    public static final BitSet FOLLOW_KEYWORD_52_in_ruleTableContent7424 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8100103FFEL});
+    public static final BitSet FOLLOW_KEYWORD_52_in_ruleTableContent7442 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8100103FFEL});
     public static final BitSet FOLLOW_ruleAssignment_in_ruleTableContent7463 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_KEYWORD_27_in_ruleTableContent7477 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_27_in_ruleTableContent7495 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_27_in_ruleTableContent7477 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_27_in_ruleTableContent7495 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
     public static final BitSet FOLLOW_RULE_ID_in_ruleTableContent7512 = new BitSet(new long[]{0x0001000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_58_in_ruleTableContent7534 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC080081FFEL});
-    public static final BitSet FOLLOW_KEYWORD_58_in_ruleTableContent7552 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC080081FFEL});
+    public static final BitSet FOLLOW_KEYWORD_59_in_ruleTableContent7534 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8100103FFEL});
+    public static final BitSet FOLLOW_KEYWORD_59_in_ruleTableContent7552 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8100103FFEL});
     public static final BitSet FOLLOW_ruleWhereItems_in_ruleTableContent7573 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleWhereItems_in_entryRuleWhereItems7610 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleWhereItems7620 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAssignment_in_ruleWhereItems7666 = new BitSet(new long[]{0x0000000000000002L,0x0000000000800000L});
-    public static final BitSet FOLLOW_KEYWORD_5_in_ruleWhereItems7680 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC080081FFEL});
-    public static final BitSet FOLLOW_ruleAssignment_in_ruleWhereItems7700 = new BitSet(new long[]{0x0000000000000002L,0x0000000000800000L});
+    public static final BitSet FOLLOW_ruleAssignment_in_ruleWhereItems7666 = new BitSet(new long[]{0x0000000000000002L,0x0000000001000000L});
+    public static final BitSet FOLLOW_KEYWORD_5_in_ruleWhereItems7680 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8100103FFEL});
+    public static final BitSet FOLLOW_ruleAssignment_in_ruleWhereItems7700 = new BitSet(new long[]{0x0000000000000002L,0x0000000001000000L});
     public static final BitSet FOLLOW_ruleAssignment_in_entryRuleAssignment7737 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleAssignment7747 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTermSimple_in_ruleAssignment7793 = new BitSet(new long[]{0x0000000000000000L,0x0000000008000000L});
-    public static final BitSet FOLLOW_KEYWORD_9_in_ruleAssignment7806 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
+    public static final BitSet FOLLOW_ruleTermSimple_in_ruleAssignment7793 = new BitSet(new long[]{0x0000000000000000L,0x0000000010000000L});
+    public static final BitSet FOLLOW_KEYWORD_9_in_ruleAssignment7806 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
     public static final BitSet FOLLOW_ruleExpression_in_ruleAssignment7826 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleTermSimple_in_entryRuleTermSimple7861 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleTermSimple7871 = new BitSet(new long[]{0x0000000000000002L});
@@ -27642,56 +27757,56 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleUpper_in_rulelowerUpper8333 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleUpper_in_entryRuleUpper8369 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleUpper8379 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_56_in_ruleUpper8418 = new BitSet(new long[]{0x00020073FFF00610L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_KEYWORD_56_in_ruleUpper8436 = new BitSet(new long[]{0x00020073FFF00610L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_KEYWORD_91_in_ruleUpper8464 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_91_in_ruleUpper8482 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_57_in_ruleUpper8418 = new BitSet(new long[]{0x00020073FFF00610L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_KEYWORD_57_in_ruleUpper8436 = new BitSet(new long[]{0x00020073FFF00610L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_KEYWORD_92_in_ruleUpper8464 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_92_in_ruleUpper8482 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_ruleUpper8510 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLower_in_entryRuleLower8546 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleLower8556 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_53_in_ruleLower8595 = new BitSet(new long[]{0x00020073FFF00610L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_KEYWORD_53_in_ruleLower8613 = new BitSet(new long[]{0x00020073FFF00610L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_KEYWORD_91_in_ruleLower8641 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_91_in_ruleLower8659 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_54_in_ruleLower8595 = new BitSet(new long[]{0x00020073FFF00610L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_KEYWORD_54_in_ruleLower8613 = new BitSet(new long[]{0x00020073FFF00610L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_KEYWORD_92_in_ruleLower8641 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_92_in_ruleLower8659 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExpression_in_ruleLower8687 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleGoal_in_entryRuleGoal8723 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleGoal8733 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_46_in_ruleGoal8772 = new BitSet(new long[]{0x0000000000000000L,0x0040000020080000L});
-    public static final BitSet FOLLOW_KEYWORD_46_in_ruleGoal8790 = new BitSet(new long[]{0x0000000000000000L,0x0040000020080000L});
-    public static final BitSet FOLLOW_ruleTimeArraySize_in_ruleGoal8811 = new BitSet(new long[]{0x0000000000000000L,0x0040000020000000L});
+    public static final BitSet FOLLOW_KEYWORD_47_in_ruleGoal8772 = new BitSet(new long[]{0x0000000000000000L,0x0080000040100000L});
+    public static final BitSet FOLLOW_KEYWORD_47_in_ruleGoal8790 = new BitSet(new long[]{0x0000000000000000L,0x0080000040100000L});
+    public static final BitSet FOLLOW_ruleTimeArraySize_in_ruleGoal8811 = new BitSet(new long[]{0x0000000000000000L,0x0080000040000000L});
     public static final BitSet FOLLOW_KEYWORD_11_in_ruleGoal8826 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_ruleGoal8846 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_ruleGoal8874 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_12_in_ruleGoal8901 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleGoal8919 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
-    public static final BitSet FOLLOW_KEYWORD_14_in_ruleGoal8937 = new BitSet(new long[]{0x10020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleGoalSimple_in_ruleGoal8959 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
-    public static final BitSet FOLLOW_ruleGoalCase_in_ruleGoal8978 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_ruleGoal8846 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_ruleGoal8874 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_12_in_ruleGoal8901 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleGoal8919 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_KEYWORD_14_in_ruleGoal8937 = new BitSet(new long[]{0x10020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleGoalSimple_in_ruleGoal8959 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
+    public static final BitSet FOLLOW_ruleGoalCase_in_ruleGoal8978 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
     public static final BitSet FOLLOW_KEYWORD_15_in_ruleGoal8994 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleGoalCase_in_entryRuleGoalCase9028 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleGoalCase9038 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_23_in_ruleGoalCase9077 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_KEYWORD_23_in_ruleGoalCase9095 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
+    public static final BitSet FOLLOW_KEYWORD_23_in_ruleGoalCase9077 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_KEYWORD_23_in_ruleGoalCase9095 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
     public static final BitSet FOLLOW_ruleExpression_in_ruleGoalCase9116 = new BitSet(new long[]{0x2020000000000000L});
     public static final BitSet FOLLOW_ruleGoalNoCaseContent_in_ruleGoalCase9138 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleGoalCaseContent_in_ruleGoalCase9165 = new BitSet(new long[]{0x2020000000000002L});
     public static final BitSet FOLLOW_ruleGoalCaseContent_in_entryRuleGoalCaseContent9202 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleGoalCaseContent9212 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_43_in_ruleGoalCaseContent9251 = new BitSet(new long[]{0x00020073FFF00410L,0x0040000080001FFEL});
-    public static final BitSet FOLLOW_KEYWORD_43_in_ruleGoalCaseContent9269 = new BitSet(new long[]{0x00020073FFF00410L,0x0040000080001FFEL});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleGoalCaseContent9288 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
-    public static final BitSet FOLLOW_ruleSpecialIdent_in_ruleGoalCaseContent9312 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
+    public static final BitSet FOLLOW_KEYWORD_44_in_ruleGoalCaseContent9251 = new BitSet(new long[]{0x00020073FFF00410L,0x0080000100003FFEL});
+    public static final BitSet FOLLOW_KEYWORD_44_in_ruleGoalCaseContent9269 = new BitSet(new long[]{0x00020073FFF00410L,0x0080000100003FFEL});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleGoalCaseContent9288 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_ruleSpecialIdent_in_ruleGoalCaseContent9312 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
     public static final BitSet FOLLOW_KEYWORD_14_in_ruleGoalCaseContent9328 = new BitSet(new long[]{0x0000000000000040L});
     public static final BitSet FOLLOW_ruleCondition_in_ruleGoalCaseContent9348 = new BitSet(new long[]{0x2000000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_24_in_ruleGoalCaseContent9362 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_KEYWORD_24_in_ruleGoalCaseContent9380 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleGoalCaseContent9401 = new BitSet(new long[]{0x1000000000000000L,0x0000000200000000L});
-    public static final BitSet FOLLOW_ruleSubContent_in_ruleGoalCaseContent9422 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_KEYWORD_24_in_ruleGoalCaseContent9362 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_KEYWORD_24_in_ruleGoalCaseContent9380 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleGoalCaseContent9401 = new BitSet(new long[]{0x1000000000000000L,0x0000000400000000L});
+    public static final BitSet FOLLOW_ruleSubContent_in_ruleGoalCaseContent9422 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
     public static final BitSet FOLLOW_KEYWORD_15_in_ruleGoalCaseContent9436 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleGoalNoCaseContent_in_entryRuleGoalNoCaseContent9470 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleGoalNoCaseContent9480 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_24_in_ruleGoalNoCaseContent9519 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_KEYWORD_24_in_ruleGoalNoCaseContent9537 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
+    public static final BitSet FOLLOW_KEYWORD_24_in_ruleGoalNoCaseContent9519 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_KEYWORD_24_in_ruleGoalNoCaseContent9537 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
     public static final BitSet FOLLOW_ruleExpression_in_ruleGoalNoCaseContent9558 = new BitSet(new long[]{0x1000000000000002L});
     public static final BitSet FOLLOW_ruleSubContent_in_ruleGoalNoCaseContent9579 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSubContent_in_entryRuleSubContent9615 = new BitSet(new long[]{0x0000000000000000L});
@@ -27702,101 +27817,101 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleLhsGtRhs_in_ruleSubContent9744 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLhsGtRhs_in_entryRuleLhsGtRhs9781 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleLhsGtRhs9791 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_23_in_ruleLhsGtRhs9830 = new BitSet(new long[]{0x0000000000000000L,0x0000000010000000L});
-    public static final BitSet FOLLOW_KEYWORD_23_in_ruleLhsGtRhs9848 = new BitSet(new long[]{0x0000000000000000L,0x0000000010000000L});
+    public static final BitSet FOLLOW_KEYWORD_23_in_ruleLhsGtRhs9830 = new BitSet(new long[]{0x0000000000000000L,0x0000000020000000L});
+    public static final BitSet FOLLOW_KEYWORD_23_in_ruleLhsGtRhs9848 = new BitSet(new long[]{0x0000000000000000L,0x0000000020000000L});
     public static final BitSet FOLLOW_KEYWORD_10_in_ruleLhsGtRhs9861 = new BitSet(new long[]{0x2000000000000000L});
     public static final BitSet FOLLOW_KEYWORD_24_in_ruleLhsGtRhs9874 = new BitSet(new long[]{0x0000000000080080L});
     public static final BitSet FOLLOW_KEYWORD_24_in_ruleLhsGtRhs9892 = new BitSet(new long[]{0x0000000000080080L});
-    public static final BitSet FOLLOW_KEYWORD_89_in_ruleLhsGtRhs9920 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_89_in_ruleLhsGtRhs9938 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_90_in_ruleLhsGtRhs9920 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_90_in_ruleLhsGtRhs9938 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulePenalty_in_ruleLhsGtRhs9966 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLhsLtRhs_in_entryRuleLhsLtRhs10002 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleLhsLtRhs10012 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_23_in_ruleLhsLtRhs10051 = new BitSet(new long[]{0x0000000000000000L,0x0000000004000000L});
-    public static final BitSet FOLLOW_KEYWORD_23_in_ruleLhsLtRhs10069 = new BitSet(new long[]{0x0000000000000000L,0x0000000004000000L});
+    public static final BitSet FOLLOW_KEYWORD_23_in_ruleLhsLtRhs10051 = new BitSet(new long[]{0x0000000000000000L,0x0000000008000000L});
+    public static final BitSet FOLLOW_KEYWORD_23_in_ruleLhsLtRhs10069 = new BitSet(new long[]{0x0000000000000000L,0x0000000008000000L});
     public static final BitSet FOLLOW_KEYWORD_8_in_ruleLhsLtRhs10082 = new BitSet(new long[]{0x2000000000000000L});
     public static final BitSet FOLLOW_KEYWORD_24_in_ruleLhsLtRhs10095 = new BitSet(new long[]{0x0000000000080080L});
     public static final BitSet FOLLOW_KEYWORD_24_in_ruleLhsLtRhs10113 = new BitSet(new long[]{0x0000000000080080L});
-    public static final BitSet FOLLOW_KEYWORD_89_in_ruleLhsLtRhs10141 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_89_in_ruleLhsLtRhs10159 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_90_in_ruleLhsLtRhs10141 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_90_in_ruleLhsLtRhs10159 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulePenalty_in_ruleLhsLtRhs10187 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulePenalty_in_entryRulePenalty10223 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRulePenalty10233 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_70_in_rulePenalty10272 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_KEYWORD_70_in_rulePenalty10290 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
+    public static final BitSet FOLLOW_KEYWORD_71_in_rulePenalty10272 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_KEYWORD_71_in_rulePenalty10290 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
     public static final BitSet FOLLOW_ruleExpression_in_rulePenalty10311 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleGoalSimple_in_entryRuleGoalSimple10346 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleGoalSimple10356 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleConstraint_in_ruleGoalSimple10401 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleConstraint_in_entryRuleConstraint10435 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleConstraint10445 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleConstraint10491 = new BitSet(new long[]{0x0000000000000000L,0x000000001C000000L});
-    public static final BitSet FOLLOW_KEYWORD_8_in_ruleConstraint10512 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_KEYWORD_10_in_ruleConstraint10540 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_KEYWORD_9_in_ruleConstraint10568 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleConstraint10491 = new BitSet(new long[]{0x0000000000000000L,0x0000000038000000L});
+    public static final BitSet FOLLOW_KEYWORD_8_in_ruleConstraint10512 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_KEYWORD_10_in_ruleConstraint10540 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_KEYWORD_9_in_ruleConstraint10568 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
     public static final BitSet FOLLOW_ruleExpression_in_ruleConstraint10603 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleModel_in_entryRuleModel10638 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleModel10648 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_54_in_ruleModel10687 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_54_in_ruleModel10705 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleModel10722 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
-    public static final BitSet FOLLOW_KEYWORD_14_in_ruleModel10740 = new BitSet(new long[]{0x0540010400010100L,0x0000000600000000L});
-    public static final BitSet FOLLOW_rulePattern_in_ruleModel10761 = new BitSet(new long[]{0x0540010400010100L,0x0000000600000000L});
-    public static final BitSet FOLLOW_ruleIfIncItems_in_ruleModel10788 = new BitSet(new long[]{0x0540010400010100L,0x0000000600000000L});
+    public static final BitSet FOLLOW_KEYWORD_55_in_ruleModel10687 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_55_in_ruleModel10705 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleModel10722 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_KEYWORD_14_in_ruleModel10740 = new BitSet(new long[]{0x0540010400010100L,0x0000000C00000000L});
+    public static final BitSet FOLLOW_rulePattern_in_ruleModel10761 = new BitSet(new long[]{0x0540010400010100L,0x0000000C00000000L});
+    public static final BitSet FOLLOW_ruleIfIncItems_in_ruleModel10788 = new BitSet(new long[]{0x0540010400010100L,0x0000000C00000000L});
     public static final BitSet FOLLOW_KEYWORD_15_in_ruleModel10803 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleInitial_in_entryRuleInitial10837 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleInitial10847 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_68_in_ruleInitial10886 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
-    public static final BitSet FOLLOW_KEYWORD_68_in_ruleInitial10904 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
-    public static final BitSet FOLLOW_KEYWORD_68_in_ruleInitial10922 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
+    public static final BitSet FOLLOW_KEYWORD_69_in_ruleInitial10886 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_KEYWORD_69_in_ruleInitial10904 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_KEYWORD_69_in_ruleInitial10922 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
     public static final BitSet FOLLOW_KEYWORD_14_in_ruleInitial10935 = new BitSet(new long[]{0x0540010400010100L});
-    public static final BitSet FOLLOW_rulePattern_in_ruleInitial10955 = new BitSet(new long[]{0x0540010400010100L,0x0000000200000000L});
+    public static final BitSet FOLLOW_rulePattern_in_ruleInitial10955 = new BitSet(new long[]{0x0540010400010100L,0x0000000400000000L});
     public static final BitSet FOLLOW_KEYWORD_15_in_ruleInitial10969 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSequence_in_entryRuleSequence11003 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleSequence11013 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_86_in_ruleSequence11052 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_86_in_ruleSequence11070 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleSequence11087 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
+    public static final BitSet FOLLOW_KEYWORD_87_in_ruleSequence11052 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_87_in_ruleSequence11070 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleSequence11087 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
     public static final BitSet FOLLOW_KEYWORD_14_in_ruleSequence11105 = new BitSet(new long[]{0x0000100000000000L});
-    public static final BitSet FOLLOW_KEYWORD_54_in_ruleSequence11118 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_54_in_ruleSequence11136 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleSequence11160 = new BitSet(new long[]{0x0000000000002040L,0x0008000200000000L});
-    public static final BitSet FOLLOW_ruleCondition_in_ruleSequence11181 = new BitSet(new long[]{0x0000000000002000L,0x0008000200000000L});
-    public static final BitSet FOLLOW_RULE_ORDER_in_ruleSequence11194 = new BitSet(new long[]{0x0000000000000000L,0x0000200000000000L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleSequence11210 = new BitSet(new long[]{0x0000000000002000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_KEYWORD_55_in_ruleSequence11118 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_55_in_ruleSequence11136 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleSequence11160 = new BitSet(new long[]{0x0000000000002040L,0x0010000400000000L});
+    public static final BitSet FOLLOW_ruleCondition_in_ruleSequence11181 = new BitSet(new long[]{0x0000000000002000L,0x0010000400000000L});
+    public static final BitSet FOLLOW_RULE_ORDER_in_ruleSequence11194 = new BitSet(new long[]{0x0000000000000000L,0x0000400000000000L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleSequence11210 = new BitSet(new long[]{0x0000000000002000L,0x0000000400000000L});
     public static final BitSet FOLLOW_ruleTimeStep_in_ruleSequence11237 = new BitSet(new long[]{0x0018000000000000L});
-    public static final BitSet FOLLOW_ruleTimeStepValue_in_ruleSequence11255 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000000L});
+    public static final BitSet FOLLOW_ruleTimeStepValue_in_ruleSequence11255 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
     public static final BitSet FOLLOW_KEYWORD_15_in_ruleSequence11269 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleCondition_in_entryRuleCondition11303 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleCondition11313 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_88_in_ruleCondition11352 = new BitSet(new long[]{0x00020073FFF00410L,0x00467FE081483FFEL});
-    public static final BitSet FOLLOW_KEYWORD_88_in_ruleCondition11370 = new BitSet(new long[]{0x00020073FFF00410L,0x00467FE081483FFEL});
+    public static final BitSet FOLLOW_KEYWORD_89_in_ruleCondition11352 = new BitSet(new long[]{0x00020073FFF00410L,0x008CFFC102907FFEL});
+    public static final BitSet FOLLOW_KEYWORD_89_in_ruleCondition11370 = new BitSet(new long[]{0x00020073FFF00410L,0x008CFFC102907FFEL});
     public static final BitSet FOLLOW_ruleLogicalExpression_in_ruleCondition11392 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ALWAYS_in_ruleCondition11422 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLogicalExpression_in_entryRuleLogicalExpression11458 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleLogicalExpression11468 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleConditionalUnary_in_ruleLogicalExpression11514 = new BitSet(new long[]{0x0000000000000002L,0x0001800000000000L});
-    public static final BitSet FOLLOW_ruleBinaryOp_in_ruleLogicalExpression11534 = new BitSet(new long[]{0x00020073FFF00410L,0x00427FE081483FFEL});
-    public static final BitSet FOLLOW_ruleConditionalUnary_in_ruleLogicalExpression11554 = new BitSet(new long[]{0x0000000000000002L,0x0001800000000000L});
+    public static final BitSet FOLLOW_ruleConditionalUnary_in_ruleLogicalExpression11514 = new BitSet(new long[]{0x0000000000000002L,0x0003000000000000L});
+    public static final BitSet FOLLOW_ruleBinaryOp_in_ruleLogicalExpression11534 = new BitSet(new long[]{0x00020073FFF00410L,0x0084FFC102907FFEL});
+    public static final BitSet FOLLOW_ruleConditionalUnary_in_ruleLogicalExpression11554 = new BitSet(new long[]{0x0000000000000002L,0x0003000000000000L});
     public static final BitSet FOLLOW_ruleBinaryOp_in_entryRuleBinaryOp11592 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleBinaryOp11603 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_OR_in_ruleBinaryOp11643 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_AND_in_ruleBinaryOp11669 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleConditionalUnary_in_entryRuleConditionalUnary11713 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleConditionalUnary11723 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleConditionalNegation_in_ruleConditionalUnary11768 = new BitSet(new long[]{0x00020073FFF00410L,0x00427FE081483FFEL});
+    public static final BitSet FOLLOW_ruleConditionalNegation_in_ruleConditionalUnary11768 = new BitSet(new long[]{0x00020073FFF00410L,0x0084FFC102907FFEL});
     public static final BitSet FOLLOW_ruleConditionalTerm_in_ruleConditionalUnary11794 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleConditionalNegation_in_entryRuleConditionalNegation11829 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleConditionalNegation11840 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_NOT_in_ruleConditionalNegation11879 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleConditionalTerm_in_entryRuleConditionalTerm11922 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleConditionalTerm11932 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleConditionalTerm11979 = new BitSet(new long[]{0x0000000000000000L,0x000000001403C000L});
-    public static final BitSet FOLLOW_ruleRelation_in_ruleConditionalTerm11998 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleConditionalTerm11979 = new BitSet(new long[]{0x0000000000000000L,0x0000000028078000L});
+    public static final BitSet FOLLOW_ruleRelation_in_ruleConditionalTerm11998 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
     public static final BitSet FOLLOW_ruleExpression_in_ruleConditionalTerm12018 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLogicalFunction_in_ruleConditionalTerm12044 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_1_in_ruleConditionalTerm12076 = new BitSet(new long[]{0x00020073FFF00410L,0x00427FE081483FFEL});
-    public static final BitSet FOLLOW_ruleLogicalExpression_in_ruleConditionalTerm12100 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_KEYWORD_1_in_ruleConditionalTerm12076 = new BitSet(new long[]{0x00020073FFF00410L,0x0084FFC102907FFEL});
+    public static final BitSet FOLLOW_ruleLogicalExpression_in_ruleConditionalTerm12100 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
     public static final BitSet FOLLOW_KEYWORD_2_in_ruleConditionalTerm12112 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleRelation_in_entryRuleRelation12149 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleRelation12160 = new BitSet(new long[]{0x0000000000000002L});
@@ -27811,20 +27926,20 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleAdd_in_ruleExpression12391 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAdd_in_entryRuleAdd12424 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleAdd12434 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleMultiply_in_ruleAdd12480 = new BitSet(new long[]{0x0000000000000002L,0x0000000001400000L});
-    public static final BitSet FOLLOW_KEYWORD_4_in_ruleAdd12495 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_KEYWORD_6_in_ruleAdd12513 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleMultiply_in_ruleAdd12534 = new BitSet(new long[]{0x0000000000000002L,0x0000000001400000L});
+    public static final BitSet FOLLOW_ruleMultiply_in_ruleAdd12480 = new BitSet(new long[]{0x0000000000000002L,0x0000000002800000L});
+    public static final BitSet FOLLOW_KEYWORD_4_in_ruleAdd12495 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_KEYWORD_6_in_ruleAdd12513 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleMultiply_in_ruleAdd12534 = new BitSet(new long[]{0x0000000000000002L,0x0000000002800000L});
     public static final BitSet FOLLOW_ruleMultiply_in_entryRuleMultiply12571 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleMultiply12581 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleUnary_in_ruleMultiply12627 = new BitSet(new long[]{0x0000000000000002L,0x0000000002200000L});
-    public static final BitSet FOLLOW_KEYWORD_3_in_ruleMultiply12642 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_KEYWORD_7_in_ruleMultiply12660 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleUnary_in_ruleMultiply12681 = new BitSet(new long[]{0x0000000000000002L,0x0000000002200000L});
+    public static final BitSet FOLLOW_ruleUnary_in_ruleMultiply12627 = new BitSet(new long[]{0x0000000000000002L,0x0000000004400000L});
+    public static final BitSet FOLLOW_KEYWORD_3_in_ruleMultiply12642 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_KEYWORD_7_in_ruleMultiply12660 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleUnary_in_ruleMultiply12681 = new BitSet(new long[]{0x0000000000000002L,0x0000000004400000L});
     public static final BitSet FOLLOW_ruleUnary_in_entryRuleUnary12718 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleUnary12728 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_4_in_ruleUnary12767 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleNegation_in_ruleUnary12791 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
+    public static final BitSet FOLLOW_KEYWORD_4_in_ruleUnary12767 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleNegation_in_ruleUnary12791 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
     public static final BitSet FOLLOW_ruleTerm_in_ruleUnary12817 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleNegation_in_entryRuleNegation12852 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleNegation12863 = new BitSet(new long[]{0x0000000000000002L});
@@ -27834,8 +27949,8 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_RULE_ID_in_ruleTerm12997 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleNumber_in_ruleTerm13024 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleFunction_in_ruleTerm13051 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_1_in_ruleTerm13071 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleTerm13091 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_KEYWORD_1_in_ruleTerm13071 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleTerm13091 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
     public static final BitSet FOLLOW_KEYWORD_2_in_ruleTerm13104 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSpecialIdent_in_ruleTerm13131 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleMultiStep_in_ruleTerm13156 = new BitSet(new long[]{0x0000000000000002L});
@@ -27845,7 +27960,7 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleMaxFunction_in_ruleFunction13280 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleMinFunction_in_ruleFunction13310 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_KEYWORD_1_in_ruleFunction13329 = new BitSet(new long[]{0x8000000000000000L});
-    public static final BitSet FOLLOW_ruleSumContent_in_ruleFunction13353 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_ruleSumContent_in_ruleFunction13353 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
     public static final BitSet FOLLOW_KEYWORD_2_in_ruleFunction13365 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleModFunction_in_ruleFunction13396 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleIntFunction_in_ruleFunction13426 = new BitSet(new long[]{0x0000000000000002L});
@@ -27858,114 +27973,114 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleVarModelIndexStep_in_ruleFunction13636 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleExternalFunction_in_entryRuleExternalFunction13670 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleExternalFunction13680 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleExternalFunction13730 = new BitSet(new long[]{0x0000000000000000L,0x0000000000080000L});
-    public static final BitSet FOLLOW_ruleTafCfs_in_ruleExternalFunction13755 = new BitSet(new long[]{0x0000000000000000L,0x0000000000080000L});
-    public static final BitSet FOLLOW_ruleMonth_in_ruleExternalFunction13779 = new BitSet(new long[]{0x0000000000000000L,0x0000000000080000L});
-    public static final BitSet FOLLOW_KEYWORD_1_in_ruleExternalFunction13792 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleExternalFunction13812 = new BitSet(new long[]{0x0000000000000000L,0x0000000000900000L});
-    public static final BitSet FOLLOW_KEYWORD_5_in_ruleExternalFunction13826 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleExternalFunction13846 = new BitSet(new long[]{0x0000000000000000L,0x0000000000900000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleExternalFunction13730 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_ruleTafCfs_in_ruleExternalFunction13755 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_ruleMonth_in_ruleExternalFunction13779 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_KEYWORD_1_in_ruleExternalFunction13792 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleExternalFunction13812 = new BitSet(new long[]{0x0000000000000000L,0x0000000001200000L});
+    public static final BitSet FOLLOW_KEYWORD_5_in_ruleExternalFunction13826 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleExternalFunction13846 = new BitSet(new long[]{0x0000000000000000L,0x0000000001200000L});
     public static final BitSet FOLLOW_KEYWORD_2_in_ruleExternalFunction13861 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleMaxFunction_in_entryRuleMaxFunction13895 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleMaxFunction13905 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_MAX_in_ruleMaxFunction13941 = new BitSet(new long[]{0x0000000000000000L,0x0000000000080000L});
-    public static final BitSet FOLLOW_KEYWORD_1_in_ruleMaxFunction13953 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleMaxFunction13973 = new BitSet(new long[]{0x0000000000000000L,0x0000000000900000L});
-    public static final BitSet FOLLOW_KEYWORD_5_in_ruleMaxFunction13987 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleMaxFunction14007 = new BitSet(new long[]{0x0000000000000000L,0x0000000000900000L});
+    public static final BitSet FOLLOW_RULE_MAX_in_ruleMaxFunction13941 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_KEYWORD_1_in_ruleMaxFunction13953 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleMaxFunction13973 = new BitSet(new long[]{0x0000000000000000L,0x0000000001200000L});
+    public static final BitSet FOLLOW_KEYWORD_5_in_ruleMaxFunction13987 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleMaxFunction14007 = new BitSet(new long[]{0x0000000000000000L,0x0000000001200000L});
     public static final BitSet FOLLOW_KEYWORD_2_in_ruleMaxFunction14022 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleMinFunction_in_entryRuleMinFunction14056 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleMinFunction14066 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_MIN_in_ruleMinFunction14102 = new BitSet(new long[]{0x0000000000000000L,0x0000000000080000L});
-    public static final BitSet FOLLOW_KEYWORD_1_in_ruleMinFunction14114 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleMinFunction14134 = new BitSet(new long[]{0x0000000000000000L,0x0000000000900000L});
-    public static final BitSet FOLLOW_KEYWORD_5_in_ruleMinFunction14148 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleMinFunction14168 = new BitSet(new long[]{0x0000000000000000L,0x0000000000900000L});
+    public static final BitSet FOLLOW_RULE_MIN_in_ruleMinFunction14102 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_KEYWORD_1_in_ruleMinFunction14114 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleMinFunction14134 = new BitSet(new long[]{0x0000000000000000L,0x0000000001200000L});
+    public static final BitSet FOLLOW_KEYWORD_5_in_ruleMinFunction14148 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleMinFunction14168 = new BitSet(new long[]{0x0000000000000000L,0x0000000001200000L});
     public static final BitSet FOLLOW_KEYWORD_2_in_ruleMinFunction14183 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleModFunction_in_entryRuleModFunction14217 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleModFunction14227 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_MOD_in_ruleModFunction14263 = new BitSet(new long[]{0x0000000000000000L,0x0000000000080000L});
-    public static final BitSet FOLLOW_KEYWORD_1_in_ruleModFunction14275 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleModFunction14295 = new BitSet(new long[]{0x0000000000000000L,0x0000000000800000L});
-    public static final BitSet FOLLOW_KEYWORD_5_in_ruleModFunction14308 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleModFunction14328 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_RULE_MOD_in_ruleModFunction14263 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_KEYWORD_1_in_ruleModFunction14275 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleModFunction14295 = new BitSet(new long[]{0x0000000000000000L,0x0000000001000000L});
+    public static final BitSet FOLLOW_KEYWORD_5_in_ruleModFunction14308 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleModFunction14328 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
     public static final BitSet FOLLOW_KEYWORD_2_in_ruleModFunction14341 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleIntFunction_in_entryRuleIntFunction14375 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleIntFunction14385 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INTFUNC_in_ruleIntFunction14421 = new BitSet(new long[]{0x0000000000000000L,0x0000000000080000L});
-    public static final BitSet FOLLOW_KEYWORD_1_in_ruleIntFunction14433 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleIntFunction14453 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_RULE_INTFUNC_in_ruleIntFunction14421 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_KEYWORD_1_in_ruleIntFunction14433 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleIntFunction14453 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
     public static final BitSet FOLLOW_KEYWORD_2_in_ruleIntFunction14466 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAbsFunction_in_entryRuleAbsFunction14500 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleAbsFunction14510 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ABS_in_ruleAbsFunction14546 = new BitSet(new long[]{0x0000000000000000L,0x0000000000080000L});
-    public static final BitSet FOLLOW_KEYWORD_1_in_ruleAbsFunction14558 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleAbsFunction14578 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_RULE_ABS_in_ruleAbsFunction14546 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_KEYWORD_1_in_ruleAbsFunction14558 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleAbsFunction14578 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
     public static final BitSet FOLLOW_KEYWORD_2_in_ruleAbsFunction14591 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulePowFunction_in_entryRulePowFunction14625 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRulePowFunction14635 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_POW_in_rulePowFunction14671 = new BitSet(new long[]{0x0000000000000000L,0x0000000000080000L});
-    public static final BitSet FOLLOW_KEYWORD_1_in_rulePowFunction14683 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_rulePowFunction14703 = new BitSet(new long[]{0x0000000000000000L,0x0000000000800000L});
-    public static final BitSet FOLLOW_KEYWORD_5_in_rulePowFunction14716 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_rulePowFunction14736 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_RULE_POW_in_rulePowFunction14671 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_KEYWORD_1_in_rulePowFunction14683 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_rulePowFunction14703 = new BitSet(new long[]{0x0000000000000000L,0x0000000001000000L});
+    public static final BitSet FOLLOW_KEYWORD_5_in_rulePowFunction14716 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_rulePowFunction14736 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
     public static final BitSet FOLLOW_KEYWORD_2_in_rulePowFunction14749 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLogFunction_in_entryRuleLogFunction14783 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleLogFunction14793 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_LOG_in_ruleLogFunction14829 = new BitSet(new long[]{0x0000000000000000L,0x0000000000080000L});
-    public static final BitSet FOLLOW_KEYWORD_1_in_ruleLogFunction14841 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleLogFunction14861 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_RULE_LOG_in_ruleLogFunction14829 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_KEYWORD_1_in_ruleLogFunction14841 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleLogFunction14861 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
     public static final BitSet FOLLOW_KEYWORD_2_in_ruleLogFunction14874 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLogicalFunction_in_entryRuleLogicalFunction14909 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleLogicalFunction14920 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleRangeFunction_in_ruleLogicalFunction14966 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleVarModel_in_entryRuleVarModel15009 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleVarModel15019 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleVarModel15068 = new BitSet(new long[]{0x0000000000000000L,0x0000000020000000L});
-    public static final BitSet FOLLOW_KEYWORD_11_in_ruleVarModel15081 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleVarModel15104 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleVarModel15068 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
+    public static final BitSet FOLLOW_KEYWORD_11_in_ruleVarModel15081 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleVarModel15104 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
     public static final BitSet FOLLOW_KEYWORD_12_in_ruleVarModel15117 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleVarModelStep_in_entryRuleVarModelStep15151 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleVarModelStep15161 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleVarModelStep15210 = new BitSet(new long[]{0x0000000000000000L,0x0000000020000000L});
-    public static final BitSet FOLLOW_KEYWORD_11_in_ruleVarModelStep15223 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleVarModelStep15246 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_12_in_ruleVarModelStep15259 = new BitSet(new long[]{0x0000000000000000L,0x0000000000080000L});
-    public static final BitSet FOLLOW_KEYWORD_1_in_ruleVarModelStep15271 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleVarModelStep15291 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleVarModelStep15210 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
+    public static final BitSet FOLLOW_KEYWORD_11_in_ruleVarModelStep15223 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleVarModelStep15246 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_12_in_ruleVarModelStep15259 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_KEYWORD_1_in_ruleVarModelStep15271 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleVarModelStep15291 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
     public static final BitSet FOLLOW_KEYWORD_2_in_ruleVarModelStep15304 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleVarModelIndex_in_entryRuleVarModelIndex15338 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleVarModelIndex15348 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleVarModelIndex15397 = new BitSet(new long[]{0x0000000000000000L,0x0000000020000000L});
-    public static final BitSet FOLLOW_KEYWORD_11_in_ruleVarModelIndex15410 = new BitSet(new long[]{0x0000000000000000L,0x0000000001000000L});
-    public static final BitSet FOLLOW_KEYWORD_6_in_ruleVarModelIndex15422 = new BitSet(new long[]{0x0000000000000000L,0x0000200000000000L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleVarModelIndex15432 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleVarModelIndex15397 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
+    public static final BitSet FOLLOW_KEYWORD_11_in_ruleVarModelIndex15410 = new BitSet(new long[]{0x0000000000000000L,0x0000000002000000L});
+    public static final BitSet FOLLOW_KEYWORD_6_in_ruleVarModelIndex15422 = new BitSet(new long[]{0x0000000000000000L,0x0000400000000000L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleVarModelIndex15432 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
     public static final BitSet FOLLOW_KEYWORD_12_in_ruleVarModelIndex15444 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleVarModelIndexStep_in_entryRuleVarModelIndexStep15478 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleVarModelIndexStep15488 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleVarModelIndexStep15537 = new BitSet(new long[]{0x0000000000000000L,0x0000000020000000L});
-    public static final BitSet FOLLOW_KEYWORD_11_in_ruleVarModelIndexStep15550 = new BitSet(new long[]{0x0000000000000000L,0x0000000001000000L});
-    public static final BitSet FOLLOW_KEYWORD_6_in_ruleVarModelIndexStep15562 = new BitSet(new long[]{0x0000000000000000L,0x0000200000000000L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleVarModelIndexStep15572 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_12_in_ruleVarModelIndexStep15584 = new BitSet(new long[]{0x0000000000000000L,0x0000000000080000L});
-    public static final BitSet FOLLOW_KEYWORD_1_in_ruleVarModelIndexStep15596 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleVarModelIndexStep15616 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleVarModelIndexStep15537 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
+    public static final BitSet FOLLOW_KEYWORD_11_in_ruleVarModelIndexStep15550 = new BitSet(new long[]{0x0000000000000000L,0x0000000002000000L});
+    public static final BitSet FOLLOW_KEYWORD_6_in_ruleVarModelIndexStep15562 = new BitSet(new long[]{0x0000000000000000L,0x0000400000000000L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleVarModelIndexStep15572 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_12_in_ruleVarModelIndexStep15584 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_KEYWORD_1_in_ruleVarModelIndexStep15596 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleVarModelIndexStep15616 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
     public static final BitSet FOLLOW_KEYWORD_2_in_ruleVarModelIndexStep15629 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleRangeFunction_in_entryRuleRangeFunction15664 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleRangeFunction15675 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_RANGE_in_ruleRangeFunction15715 = new BitSet(new long[]{0x0000000000000000L,0x0000000000080000L});
-    public static final BitSet FOLLOW_KEYWORD_1_in_ruleRangeFunction15733 = new BitSet(new long[]{0x0002003200100400L,0x0040000000000000L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleRangeFunction15749 = new BitSet(new long[]{0x0000000000000000L,0x0000000000800000L});
-    public static final BitSet FOLLOW_ruleMonth_in_ruleRangeFunction15782 = new BitSet(new long[]{0x0000000000000000L,0x0000000000800000L});
-    public static final BitSet FOLLOW_ruleWaterYear_in_ruleRangeFunction15815 = new BitSet(new long[]{0x0000000000000000L,0x0000000000800000L});
-    public static final BitSet FOLLOW_KEYWORD_5_in_ruleRangeFunction15834 = new BitSet(new long[]{0x00000001FFE00000L,0x0040000000001FFEL});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleRangeFunction15850 = new BitSet(new long[]{0x0000000000000000L,0x0000000000800000L});
-    public static final BitSet FOLLOW_ruleCalendarMonth_in_ruleRangeFunction15883 = new BitSet(new long[]{0x0000000000000000L,0x0000000000800000L});
-    public static final BitSet FOLLOW_rulePrevMonth_in_ruleRangeFunction15916 = new BitSet(new long[]{0x0000000000000000L,0x0000000000800000L});
-    public static final BitSet FOLLOW_KEYWORD_5_in_ruleRangeFunction15935 = new BitSet(new long[]{0x00000001FFE00000L,0x0040000000001FFEL});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleRangeFunction15951 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
-    public static final BitSet FOLLOW_ruleCalendarMonth_in_ruleRangeFunction15984 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
-    public static final BitSet FOLLOW_rulePrevMonth_in_ruleRangeFunction16017 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_RULE_RANGE_in_ruleRangeFunction15715 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_KEYWORD_1_in_ruleRangeFunction15733 = new BitSet(new long[]{0x0002003200100400L,0x0080000000000000L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleRangeFunction15749 = new BitSet(new long[]{0x0000000000000000L,0x0000000001000000L});
+    public static final BitSet FOLLOW_ruleMonth_in_ruleRangeFunction15782 = new BitSet(new long[]{0x0000000000000000L,0x0000000001000000L});
+    public static final BitSet FOLLOW_ruleWaterYear_in_ruleRangeFunction15815 = new BitSet(new long[]{0x0000000000000000L,0x0000000001000000L});
+    public static final BitSet FOLLOW_KEYWORD_5_in_ruleRangeFunction15834 = new BitSet(new long[]{0x00000001FFE00000L,0x0080000000003FF6L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleRangeFunction15850 = new BitSet(new long[]{0x0000000000000000L,0x0000000001000000L});
+    public static final BitSet FOLLOW_ruleCalendarMonth_in_ruleRangeFunction15883 = new BitSet(new long[]{0x0000000000000000L,0x0000000001000000L});
+    public static final BitSet FOLLOW_rulePrevMonth_in_ruleRangeFunction15916 = new BitSet(new long[]{0x0000000000000000L,0x0000000001000000L});
+    public static final BitSet FOLLOW_KEYWORD_5_in_ruleRangeFunction15935 = new BitSet(new long[]{0x00000001FFE00000L,0x0080000000003FF6L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleRangeFunction15951 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
+    public static final BitSet FOLLOW_ruleCalendarMonth_in_ruleRangeFunction15984 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
+    public static final BitSet FOLLOW_rulePrevMonth_in_ruleRangeFunction16017 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
     public static final BitSet FOLLOW_KEYWORD_2_in_ruleRangeFunction16036 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleNumber_in_entryRuleNumber16078 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleNumber16089 = new BitSet(new long[]{0x0000000000000002L});
@@ -27973,19 +28088,19 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_RULE_FLOAT_in_ruleNumber16155 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleIncludeFile_in_entryRuleIncludeFile16199 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleIncludeFile16209 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_67_in_ruleIncludeFile16248 = new BitSet(new long[]{0x0000000000000000L,0x0010000020000000L});
-    public static final BitSet FOLLOW_KEYWORD_67_in_ruleIncludeFile16266 = new BitSet(new long[]{0x0000000000000000L,0x0010000020000000L});
+    public static final BitSet FOLLOW_KEYWORD_68_in_ruleIncludeFile16248 = new BitSet(new long[]{0x0000000000000000L,0x0020000040000000L});
+    public static final BitSet FOLLOW_KEYWORD_68_in_ruleIncludeFile16266 = new BitSet(new long[]{0x0000000000000000L,0x0020000040000000L});
     public static final BitSet FOLLOW_KEYWORD_11_in_ruleIncludeFile16280 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_ruleIncludeFile16300 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_ruleIncludeFile16328 = new BitSet(new long[]{0x0000000000000000L,0x0000000040000000L});
-    public static final BitSet FOLLOW_KEYWORD_12_in_ruleIncludeFile16355 = new BitSet(new long[]{0x0000000000000000L,0x0010000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_ruleIncludeFile16300 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_ruleIncludeFile16328 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
+    public static final BitSet FOLLOW_KEYWORD_12_in_ruleIncludeFile16355 = new BitSet(new long[]{0x0000000000000000L,0x0020000000000000L});
     public static final BitSet FOLLOW_RULE_STRING_in_ruleIncludeFile16373 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleIncludeModel_in_entryRuleIncludeModel16414 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleIncludeModel16425 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_67_in_ruleIncludeModel16464 = new BitSet(new long[]{0x0000100000000000L});
-    public static final BitSet FOLLOW_KEYWORD_67_in_ruleIncludeModel16483 = new BitSet(new long[]{0x0000100000000000L});
-    public static final BitSet FOLLOW_KEYWORD_54_in_ruleIncludeModel16498 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
-    public static final BitSet FOLLOW_KEYWORD_54_in_ruleIncludeModel16517 = new BitSet(new long[]{0x0000000000000000L,0x0040000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_68_in_ruleIncludeModel16464 = new BitSet(new long[]{0x0000100000000000L});
+    public static final BitSet FOLLOW_KEYWORD_68_in_ruleIncludeModel16483 = new BitSet(new long[]{0x0000100000000000L});
+    public static final BitSet FOLLOW_KEYWORD_55_in_ruleIncludeModel16498 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
+    public static final BitSet FOLLOW_KEYWORD_55_in_ruleIncludeModel16517 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});
     public static final BitSet FOLLOW_RULE_ID_in_ruleIncludeModel16533 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleSpecialIdent_in_entryRuleSpecialIdent16578 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleSpecialIdent16589 = new BitSet(new long[]{0x0000000000000002L});
@@ -27993,160 +28108,164 @@ public class InternalWreslEditorParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleDaysIn_in_ruleSpecialIdent16669 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleWaterYear_in_ruleSpecialIdent16702 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleMonth_in_ruleSpecialIdent16735 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCalendarMonth_in_ruleSpecialIdent16768 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePrevMonth_in_ruleSpecialIdent16801 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleI_in_ruleSpecialIdent16834 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTafCfs_in_entryRuleTafCfs16879 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleTafCfs16890 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAF_CFS_in_ruleTafCfs16937 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCF_SAF_in_ruleTafCfs16970 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCFS_TAF_in_ruleTafCfs17003 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTAF_CFS_in_ruleTafCfs17036 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleI_in_entryRuleI17081 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleI17092 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_13_in_ruleI17129 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAF_CFS_in_entryRuleAF_CFS17168 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleAF_CFS17179 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_62_in_ruleAF_CFS17216 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCF_SAF_in_entryRuleCF_SAF17255 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleCF_SAF17266 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_63_in_ruleCF_SAF17303 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCFS_TAF_in_entryRuleCFS_TAF17342 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleCFS_TAF17353 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_71_in_ruleCFS_TAF17390 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTAF_CFS_in_entryRuleTAF_CFS17429 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleTAF_CFS17440 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_84_in_ruleTAF_CFS17477 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDaysIn_in_entryRuleDaysIn17516 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleDaysIn17527 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_64_in_ruleDaysIn17565 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_94_in_ruleDaysIn17584 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleWaterYear_in_entryRuleWaterYear17624 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleWaterYear17635 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_92_in_ruleWaterYear17672 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleMonth_in_entryRuleMonth17711 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleMonth17722 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_59_in_ruleMonth17759 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCalendarMonth_in_entryRuleCalendarMonth17798 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleCalendarMonth17809 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_32_in_ruleCalendarMonth17847 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_31_in_ruleCalendarMonth17866 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_35_in_ruleCalendarMonth17885 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_28_in_ruleCalendarMonth17904 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_36_in_ruleCalendarMonth17923 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_34_in_ruleCalendarMonth17942 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_33_in_ruleCalendarMonth17961 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_29_in_ruleCalendarMonth17980 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_39_in_ruleCalendarMonth17999 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_38_in_ruleCalendarMonth18018 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_37_in_ruleCalendarMonth18037 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_30_in_ruleCalendarMonth18056 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePrevMonth_in_entryRulePrevMonth18096 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRulePrevMonth18107 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_76_in_rulePrevMonth18145 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_75_in_rulePrevMonth18164 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_79_in_rulePrevMonth18183 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_72_in_rulePrevMonth18202 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_80_in_rulePrevMonth18221 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_78_in_rulePrevMonth18240 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_77_in_rulePrevMonth18259 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_73_in_rulePrevMonth18278 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_83_in_rulePrevMonth18297 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_82_in_rulePrevMonth18316 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_81_in_rulePrevMonth18335 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_74_in_rulePrevMonth18354 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleMultiStep_in_entryRuleMultiStep18394 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleMultiStep18405 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_16_in_ruleMultiStep18442 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTimeStep_in_entryRuleTimeStep18481 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleTimeStep18492 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_87_in_ruleTimeStep18529 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTimeStepValue_in_entryRuleTimeStepValue18568 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleTimeStepValue18579 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_42_in_ruleTimeStepValue18617 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_41_in_ruleTimeStepValue18636 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_90_in_synpred22_InternalWreslEditorParser1762 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_synpred23_InternalWreslEditorParser1814 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_60_in_synpred29_InternalWreslEditorParser2225 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_synpred30_InternalWreslEditorParser2277 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_60_in_synpred32_InternalWreslEditorParser2487 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_synpred34_InternalWreslEditorParser2561 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_48_in_synpred37_InternalWreslEditorParser2708 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_48_in_synpred38_InternalWreslEditorParser2726 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_synpred40_InternalWreslEditorParser2800 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_60_in_synpred42_InternalWreslEditorParser3011 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_synpred44_InternalWreslEditorParser3085 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_44_in_synpred48_InternalWreslEditorParser3256 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_44_in_synpred49_InternalWreslEditorParser3274 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_synpred51_InternalWreslEditorParser3348 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_50_in_synpred54_InternalWreslEditorParser3582 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_50_in_synpred55_InternalWreslEditorParser3600 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_synpred56_InternalWreslEditorParser3652 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_60_in_synpred58_InternalWreslEditorParser3861 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_synpred60_InternalWreslEditorParser3935 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_49_in_synpred62_InternalWreslEditorParser4041 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_47_in_synpred63_InternalWreslEditorParser4095 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_55_in_synpred65_InternalWreslEditorParser4152 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_85_in_synpred67_InternalWreslEditorParser4290 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_40_in_synpred68_InternalWreslEditorParser4346 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDay_in_ruleSpecialIdent16768 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCalendarMonth_in_ruleSpecialIdent16801 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePrevMonth_in_ruleSpecialIdent16834 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleI_in_ruleSpecialIdent16867 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTafCfs_in_entryRuleTafCfs16912 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleTafCfs16923 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAF_CFS_in_ruleTafCfs16970 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCF_SAF_in_ruleTafCfs17003 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCFS_TAF_in_ruleTafCfs17036 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTAF_CFS_in_ruleTafCfs17069 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleI_in_entryRuleI17114 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleI17125 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_13_in_ruleI17162 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAF_CFS_in_entryRuleAF_CFS17201 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleAF_CFS17212 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_63_in_ruleAF_CFS17249 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCF_SAF_in_entryRuleCF_SAF17288 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleCF_SAF17299 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_64_in_ruleCF_SAF17336 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCFS_TAF_in_entryRuleCFS_TAF17375 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleCFS_TAF17386 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_72_in_ruleCFS_TAF17423 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTAF_CFS_in_entryRuleTAF_CFS17462 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleTAF_CFS17473 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_85_in_ruleTAF_CFS17510 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDaysIn_in_entryRuleDaysIn17549 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDaysIn17560 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_65_in_ruleDaysIn17598 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_95_in_ruleDaysIn17617 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleWaterYear_in_entryRuleWaterYear17657 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleWaterYear17668 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_93_in_ruleWaterYear17705 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleMonth_in_entryRuleMonth17744 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleMonth17755 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_60_in_ruleMonth17792 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDay_in_entryRuleDay17831 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDay17842 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_30_in_ruleDay17879 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCalendarMonth_in_entryRuleCalendarMonth17918 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleCalendarMonth17929 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_33_in_ruleCalendarMonth17967 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_32_in_ruleCalendarMonth17986 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_36_in_ruleCalendarMonth18005 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_28_in_ruleCalendarMonth18024 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_37_in_ruleCalendarMonth18043 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_35_in_ruleCalendarMonth18062 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_34_in_ruleCalendarMonth18081 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_29_in_ruleCalendarMonth18100 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_40_in_ruleCalendarMonth18119 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_39_in_ruleCalendarMonth18138 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_38_in_ruleCalendarMonth18157 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_31_in_ruleCalendarMonth18176 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePrevMonth_in_entryRulePrevMonth18216 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRulePrevMonth18227 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_77_in_rulePrevMonth18265 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_76_in_rulePrevMonth18284 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_80_in_rulePrevMonth18303 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_73_in_rulePrevMonth18322 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_81_in_rulePrevMonth18341 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_79_in_rulePrevMonth18360 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_78_in_rulePrevMonth18379 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_74_in_rulePrevMonth18398 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_84_in_rulePrevMonth18417 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_83_in_rulePrevMonth18436 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_82_in_rulePrevMonth18455 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_75_in_rulePrevMonth18474 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleMultiStep_in_entryRuleMultiStep18514 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleMultiStep18525 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_16_in_ruleMultiStep18562 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTimeStep_in_entryRuleTimeStep18601 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleTimeStep18612 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_88_in_ruleTimeStep18649 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTimeStepValue_in_entryRuleTimeStepValue18688 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleTimeStepValue18699 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_43_in_ruleTimeStepValue18737 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_42_in_ruleTimeStepValue18756 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_91_in_synpred22_InternalWreslEditorParser1762 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_synpred23_InternalWreslEditorParser1814 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_61_in_synpred29_InternalWreslEditorParser2225 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_synpred30_InternalWreslEditorParser2277 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_61_in_synpred32_InternalWreslEditorParser2487 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_synpred34_InternalWreslEditorParser2561 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_49_in_synpred37_InternalWreslEditorParser2708 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_49_in_synpred38_InternalWreslEditorParser2726 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_synpred40_InternalWreslEditorParser2800 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_61_in_synpred42_InternalWreslEditorParser3011 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_synpred44_InternalWreslEditorParser3085 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_45_in_synpred48_InternalWreslEditorParser3256 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_45_in_synpred49_InternalWreslEditorParser3274 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_synpred51_InternalWreslEditorParser3348 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_51_in_synpred54_InternalWreslEditorParser3582 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_51_in_synpred55_InternalWreslEditorParser3600 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_synpred56_InternalWreslEditorParser3652 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_61_in_synpred58_InternalWreslEditorParser3861 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_synpred60_InternalWreslEditorParser3935 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_50_in_synpred62_InternalWreslEditorParser4041 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_48_in_synpred63_InternalWreslEditorParser4095 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_56_in_synpred65_InternalWreslEditorParser4152 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_86_in_synpred67_InternalWreslEditorParser4290 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_41_in_synpred68_InternalWreslEditorParser4346 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_KEYWORD_22_in_synpred70_InternalWreslEditorParser4398 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_47_in_synpred72_InternalWreslEditorParser4647 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_55_in_synpred73_InternalWreslEditorParser4701 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_48_in_synpred72_InternalWreslEditorParser4647 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_56_in_synpred73_InternalWreslEditorParser4701 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_KEYWORD_25_in_synpred74_InternalWreslEditorParser4825 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_47_in_synpred75_InternalWreslEditorParser4857 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_55_in_synpred76_InternalWreslEditorParser4911 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_69_in_synpred78_InternalWreslEditorParser5159 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_48_in_synpred75_InternalWreslEditorParser4857 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_56_in_synpred76_InternalWreslEditorParser4911 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_70_in_synpred78_InternalWreslEditorParser5159 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_KEYWORD_25_in_synpred79_InternalWreslEditorParser5191 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_47_in_synpred80_InternalWreslEditorParser5223 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_55_in_synpred81_InternalWreslEditorParser5277 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_69_in_synpred82_InternalWreslEditorParser5401 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_47_in_synpred83_InternalWreslEditorParser5457 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_55_in_synpred84_InternalWreslEditorParser5511 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_93_in_synpred89_InternalWreslEditorParser5849 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_47_in_synpred91_InternalWreslEditorParser5904 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_55_in_synpred92_InternalWreslEditorParser5958 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_65_in_synpred93_InternalWreslEditorParser6013 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_57_in_synpred95_InternalWreslEditorParser6139 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_43_in_synpred97_InternalWreslEditorParser6530 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_48_in_synpred80_InternalWreslEditorParser5223 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_56_in_synpred81_InternalWreslEditorParser5277 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_70_in_synpred82_InternalWreslEditorParser5401 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_48_in_synpred83_InternalWreslEditorParser5457 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_56_in_synpred84_InternalWreslEditorParser5511 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_94_in_synpred89_InternalWreslEditorParser5849 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_48_in_synpred91_InternalWreslEditorParser5904 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_56_in_synpred92_InternalWreslEditorParser5958 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_66_in_synpred93_InternalWreslEditorParser6013 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_58_in_synpred95_InternalWreslEditorParser6139 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_44_in_synpred97_InternalWreslEditorParser6530 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_KEYWORD_26_in_synpred101_InternalWreslEditorParser6800 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_57_in_synpred104_InternalWreslEditorParser7144 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_61_in_synpred105_InternalWreslEditorParser7267 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_45_in_synpred107_InternalWreslEditorParser7345 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_51_in_synpred109_InternalWreslEditorParser7424 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_58_in_synpred104_InternalWreslEditorParser7144 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_62_in_synpred105_InternalWreslEditorParser7267 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_46_in_synpred107_InternalWreslEditorParser7345 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_52_in_synpred109_InternalWreslEditorParser7424 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_KEYWORD_27_in_synpred110_InternalWreslEditorParser7477 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_58_in_synpred112_InternalWreslEditorParser7534 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_56_in_synpred121_InternalWreslEditorParser8418 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_91_in_synpred122_InternalWreslEditorParser8464 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_53_in_synpred124_InternalWreslEditorParser8595 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_91_in_synpred125_InternalWreslEditorParser8641 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_46_in_synpred127_InternalWreslEditorParser8772 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_synpred129_InternalWreslEditorParser8846 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_59_in_synpred112_InternalWreslEditorParser7534 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_57_in_synpred121_InternalWreslEditorParser8418 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_92_in_synpred122_InternalWreslEditorParser8464 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_54_in_synpred124_InternalWreslEditorParser8595 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_92_in_synpred125_InternalWreslEditorParser8641 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_47_in_synpred127_InternalWreslEditorParser8772 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_synpred129_InternalWreslEditorParser8846 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_KEYWORD_23_in_synpred132_InternalWreslEditorParser9077 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_43_in_synpred135_InternalWreslEditorParser9251 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_44_in_synpred135_InternalWreslEditorParser9251 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_KEYWORD_24_in_synpred137_InternalWreslEditorParser9362 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_KEYWORD_24_in_synpred139_InternalWreslEditorParser9519 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_KEYWORD_23_in_synpred144_InternalWreslEditorParser9830 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_KEYWORD_24_in_synpred145_InternalWreslEditorParser9874 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_89_in_synpred146_InternalWreslEditorParser9920 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_90_in_synpred146_InternalWreslEditorParser9920 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_KEYWORD_23_in_synpred148_InternalWreslEditorParser10051 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_KEYWORD_24_in_synpred149_InternalWreslEditorParser10095 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_89_in_synpred150_InternalWreslEditorParser10141 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_70_in_synpred152_InternalWreslEditorParser10272 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_54_in_synpred155_InternalWreslEditorParser10687 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_68_in_synpred158_InternalWreslEditorParser10886 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_68_in_synpred159_InternalWreslEditorParser10904 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_86_in_synpred161_InternalWreslEditorParser11052 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_54_in_synpred162_InternalWreslEditorParser11118 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_88_in_synpred166_InternalWreslEditorParser11352 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleExpression_in_synpred171_InternalWreslEditorParser11979 = new BitSet(new long[]{0x0000000000000000L,0x000000001403C000L});
-    public static final BitSet FOLLOW_ruleRelation_in_synpred171_InternalWreslEditorParser11998 = new BitSet(new long[]{0x00020073FFF00410L,0x00407FC081483FFEL});
+    public static final BitSet FOLLOW_KEYWORD_90_in_synpred150_InternalWreslEditorParser10141 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_71_in_synpred152_InternalWreslEditorParser10272 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_55_in_synpred155_InternalWreslEditorParser10687 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_69_in_synpred158_InternalWreslEditorParser10886 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_69_in_synpred159_InternalWreslEditorParser10904 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_87_in_synpred161_InternalWreslEditorParser11052 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_55_in_synpred162_InternalWreslEditorParser11118 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_89_in_synpred166_InternalWreslEditorParser11352 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleExpression_in_synpred171_InternalWreslEditorParser11979 = new BitSet(new long[]{0x0000000000000000L,0x0000000028078000L});
+    public static final BitSet FOLLOW_ruleRelation_in_synpred171_InternalWreslEditorParser11998 = new BitSet(new long[]{0x00020073FFF00410L,0x0080FF8102907FFEL});
     public static final BitSet FOLLOW_ruleExpression_in_synpred171_InternalWreslEditorParser12018 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_1_in_synpred173_InternalWreslEditorParser12062 = new BitSet(new long[]{0x00020073FFF00410L,0x00427FE081483FFEL});
-    public static final BitSet FOLLOW_ruleLogicalExpression_in_synpred173_InternalWreslEditorParser12064 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
+    public static final BitSet FOLLOW_KEYWORD_1_in_synpred173_InternalWreslEditorParser12062 = new BitSet(new long[]{0x00020073FFF00410L,0x0084FFC102907FFEL});
+    public static final BitSet FOLLOW_ruleLogicalExpression_in_synpred173_InternalWreslEditorParser12064 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
     public static final BitSet FOLLOW_KEYWORD_2_in_synpred173_InternalWreslEditorParser12066 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_67_in_synpred214_InternalWreslEditorParser16248 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_52_in_synpred215_InternalWreslEditorParser16300 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_67_in_synpred217_InternalWreslEditorParser16464 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_KEYWORD_54_in_synpred218_InternalWreslEditorParser16498 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_68_in_synpred214_InternalWreslEditorParser16248 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_53_in_synpred215_InternalWreslEditorParser16300 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_68_in_synpred217_InternalWreslEditorParser16464 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_KEYWORD_55_in_synpred218_InternalWreslEditorParser16498 = new BitSet(new long[]{0x0000000000000002L});
 
 }
