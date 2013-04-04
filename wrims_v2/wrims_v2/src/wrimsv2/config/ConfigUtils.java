@@ -206,11 +206,11 @@ public class ConfigUtils {
 
 		ControlData.startYear = Integer.parseInt(configMap.get("startyear"));
 		ControlData.startMonth = Integer.parseInt(configMap.get("startmonth"));
-		ControlData.startDay = TimeOperation.numberOfDays(ControlData.startMonth, ControlData.startYear);
+		ControlData.startDay = Integer.parseInt(configMap.get("startday"));
 
 		ControlData.endYear = Integer.parseInt(configMap.get("stopyear"));
 		ControlData.endMonth = Integer.parseInt(configMap.get("stopmonth"));
-		ControlData.endDay = TimeOperation.numberOfDays(ControlData.endMonth, ControlData.endYear);
+		ControlData.endDay = Integer.parseInt(configMap.get("stopday"));
 
 		ControlData.solverName = configMap.get("solver");
 		
@@ -623,12 +623,12 @@ public class ConfigUtils {
 		// fill-in start day and end day
 		
 		int bday=TimeOperation.numberOfDays(bMon, bYr);
-		configMap.put("startday", Integer.toString(bday));
+		//configMap.put("startday", Integer.toString(bday));
 		
 		int endYr= Integer.parseInt(configMap.get("stopyear"));
 		int endMon= Integer.parseInt(configMap.get("stopmonth"));
 		int endday= TimeOperation.numberOfDays(endMon, endYr);
-		configMap.put("stopday", Integer.toString(endday));		
+		//configMap.put("stopday", Integer.toString(endday));		
 		
 		
 		// support only monthly time step

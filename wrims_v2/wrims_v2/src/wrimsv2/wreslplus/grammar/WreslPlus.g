@@ -628,7 +628,7 @@ svar_table
 	| svar_table_2 ;
 
 svar_table_1 
-	: s=SELECT { $s.setText("select ");} ID 
+	: s=SELECT { $s.setText("select ");} (ID|reservedID) 
 	  f=FROM   { $f.setText(" from ");} ID 
 	  (g=GIVEN { $g.setText(" given ");} expr_assign 
 	   u=USE   { $u.setText(" use ");}  ID)? 
@@ -978,7 +978,7 @@ intrinsicFunc
 	| timeFunc
 	; 
 	
-timeFunc:  ( MONTH | WATERYEAR ) ( '(' expr_add ')' )? ;
+timeFunc:  ( DAY | MONTH | WATERYEAR ) ( '(' expr_add ')' )? ;
 
 tableFunc : 'table' '(' tableName ',' columnNumber ',' rowNumber ')' ;
 
@@ -1030,7 +1030,7 @@ multiInputFunc
 //Real: 'real';
 
 
-reservedID :  MONTH | WATERYEAR ; //| MonthID ;
+reservedID :  DAY | MONTH | WATERYEAR ; //| MonthID ;
 
 QUOTE : '\'' .*  '\'' ;
 
@@ -1043,6 +1043,7 @@ OR  : '||' | '.or.' | '.OR.' ;
 NOT :  '.not.' | '.NOT.' ;
 NOT_EQUAL :  '.ne.' | '.NE.' ;
 
+DAY: 'day'|'Day'|'DAY';
 MONTH :   'month' | 'Month' | 'MONTH' ;
 WATERYEAR : 'wateryear' | 'Wateryear' | 'WaterYear' | 'WATERYEAR'  ; 
 //MonthID : 'jan'|'feb'|'mar'|'apr'|'may'|'jun'|'jul'|'aug'|'sep'|'oct'|'nov'|'dec';        

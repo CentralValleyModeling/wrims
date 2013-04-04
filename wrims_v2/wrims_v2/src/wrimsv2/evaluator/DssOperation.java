@@ -223,51 +223,6 @@ public class DssOperation {
               return refs[0].getData();
         }
     }
-
-	public static void getAllInitTimeseries(String file){
-
-		DSSDataReader reader = new DSSDataReader();
-		Group group = DSSUtil.createGroup("local", file);
-		DataReference[] refs = group.getAllDataReferences();
-		String endTimeStr;
-		ArrayList<DataReference> newList = new ArrayList<DataReference>();
-		for(DataReference r: refs){
-			TimeWindow tw = r.getTimeWindow();
-			TimeInterval interval= r.getTimeInterval();
-			String timeStep;
-			if (interval.getIntervalAsString().equals("1MON")){
-				timeStep="1MON";
-				endTimeStr=TimeOperation.dssTime(ControlData.startYear, ControlData.startMonth-1, ControlData.startDay);
-			}else{
-				timeStep="1DAY";
-				endTimeStr=TimeOperation.dssTime(ControlData.startYear, ControlData.startMonth, ControlData.startDay-1);
-			}
-			Time endTime = TimeFactory.getInstance().createTime(endTimeStr);
-			Time ceiling = endTime.ceiling(interval);
-			if (tw.contains(ceiling)){
-				//To Do: see if r.name is in svar or dvar or alias map
-				//
-				String rName=r.getPathname().getPart(1);
-				//To Do: find partC
-				String path=ControlData.partA+"/"+rName+"/"+".*"+"/.*/"+ControlData.partE+"/"+ControlData.svDvPartF;
-				long st=(int) tw.getStartTime().getTimeInMinutes();
-				long et=endTime.getTimeInMinutes();
-                DSSData data = reader.getData(file, path, st, et,
-                        true);
-                DssDataSet dds= new DssDataSet();
-        		ArrayList<Double> dataArray= new ArrayList<Double>();
-        		for (double dataEntry :  data._yValues){
-        			dataArray.add(dataEntry);
-        		}
-                dds.setData(dataArray);
-                dds.setUnits(data._yUnits);
-                dds.setTimeStep(timeStep);
-                dds.setStartTime(tw.getStartTime().getDate());
-                String entryNameTS=DssOperation.entryNameTS(rName, timeStep);
-                DataTimeSeries.dvAliasInit.put(entryNameTS, dds);
-			}
-		}
-	}
 	
 	public static void writeInitDvarAliasToDSS() {	
 		System.out.println("write initial data for dvar and alias to dv dss");
