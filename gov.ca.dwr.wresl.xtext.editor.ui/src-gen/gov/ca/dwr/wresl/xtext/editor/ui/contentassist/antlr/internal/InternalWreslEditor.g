@@ -2833,6 +2833,36 @@ finally {
 
 
 
+// Entry rule entryRuleDay
+entryRuleDay 
+:
+{ before(grammarAccess.getDayRule()); }
+	 ruleDay
+{ after(grammarAccess.getDayRule()); } 
+	 EOF 
+;
+
+// Rule Day
+ruleDay
+    @init {
+		int stackSize = keepStackSize();
+    }
+	:
+(
+{ before(grammarAccess.getDayAccess().getDayKeyword()); }
+
+	'day' 
+
+{ after(grammarAccess.getDayAccess().getDayKeyword()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+
 // Entry rule entryRuleCalendarMonth
 entryRuleCalendarMonth 
 :
@@ -6164,21 +6194,27 @@ rule__SpecialIdent__Alternatives
 )
 
     |(
-{ before(grammarAccess.getSpecialIdentAccess().getCalendarMonthParserRuleCall_4()); }
+{ before(grammarAccess.getSpecialIdentAccess().getDayParserRuleCall_4()); }
+	ruleDay
+{ after(grammarAccess.getSpecialIdentAccess().getDayParserRuleCall_4()); }
+)
+
+    |(
+{ before(grammarAccess.getSpecialIdentAccess().getCalendarMonthParserRuleCall_5()); }
 	ruleCalendarMonth
-{ after(grammarAccess.getSpecialIdentAccess().getCalendarMonthParserRuleCall_4()); }
+{ after(grammarAccess.getSpecialIdentAccess().getCalendarMonthParserRuleCall_5()); }
 )
 
     |(
-{ before(grammarAccess.getSpecialIdentAccess().getPrevMonthParserRuleCall_5()); }
+{ before(grammarAccess.getSpecialIdentAccess().getPrevMonthParserRuleCall_6()); }
 	rulePrevMonth
-{ after(grammarAccess.getSpecialIdentAccess().getPrevMonthParserRuleCall_5()); }
+{ after(grammarAccess.getSpecialIdentAccess().getPrevMonthParserRuleCall_6()); }
 )
 
     |(
-{ before(grammarAccess.getSpecialIdentAccess().getIParserRuleCall_6()); }
+{ before(grammarAccess.getSpecialIdentAccess().getIParserRuleCall_7()); }
 	ruleI
-{ after(grammarAccess.getSpecialIdentAccess().getIParserRuleCall_6()); }
+{ after(grammarAccess.getSpecialIdentAccess().getIParserRuleCall_7()); }
 )
 
 ;
