@@ -224,8 +224,10 @@ public class ConfigUtils {
 		System.out.println("InitFPart:      "+ControlData.initPartF);
 		System.out.println("StartYear:      "+ControlData.startYear);
 		System.out.println("StartMonth:     "+ControlData.startMonth);
+		System.out.println("StartDay:       "+ControlData.startDay);
 		System.out.println("StopYear:       "+ControlData.endYear);
 		System.out.println("StopMonth:      "+ControlData.endMonth);
+		System.out.println("StopDay:        "+ControlData.endDay);
 		System.out.println("Solver:         "+ControlData.solverName);
 		
 		final String[] solvers = {"xa","xalog","lpsolve","gurobi","cbc"};
@@ -620,15 +622,19 @@ public class ConfigUtils {
 			}			
 		}
 		
-		// fill-in start day and end day
+		// if start day and end day are not specified, fill-in start day and end day
 		
-		int bday=TimeOperation.numberOfDays(bMon, bYr);
-		//configMap.put("startday", Integer.toString(bday));
+		if (!configMap.containsKey("startday")) {
+			configMap.put("startday", "1");
+		}
 		
 		int endYr= Integer.parseInt(configMap.get("stopyear"));
 		int endMon= Integer.parseInt(configMap.get("stopmonth"));
 		int endday= TimeOperation.numberOfDays(endMon, endYr);
-		//configMap.put("stopday", Integer.toString(endday));		
+		
+		if (!configMap.containsKey("stopday")) {
+			configMap.put("stopday", Integer.toString(endday));	
+		}
 		
 		
 		// support only monthly time step
