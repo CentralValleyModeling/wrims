@@ -251,8 +251,8 @@ public class ConfigUtils {
 		}
 		System.out.println("SendAliasToDvar: "+ControlData.sendAliasToDvar);
 		
+		
 		// PrefixInitToDvarFile
-		// default is false in controllerBatch but true in other controller
 		if (configMap.keySet().contains("prefixinittodvarfile")){
 			
 			String s = configMap.get("prefixinittodvarfile");
@@ -264,6 +264,8 @@ public class ConfigUtils {
 			} else {
 				ControlData.writeInitToDVOutput = false;	
 			}
+		}else{
+			ControlData.writeInitToDVOutput = true;
 		}
 		System.out.println("PrefixInitToDvarFile: "+ControlData.writeInitToDVOutput);
 
@@ -415,9 +417,7 @@ public class ConfigUtils {
 		}
 		System.out.println("WreslPlus:         " + StudyUtils.useWreslPlus);
 		
-		
-		
-		
+
 		//if (Error.getTotalError()<1) readParameter(configFile);
 		
 //		if (Error.getTotalError()<1 && paramMap.size()>0) { 

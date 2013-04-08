@@ -976,7 +976,10 @@ intrinsicFunc
 	| unitFunc
 	| tableFunc
 	| timeFunc
+	| sumFunc
 	; 
+
+sumFunc: '(' sum_header sum_content ')';
 	
 timeFunc:  ( DAY | MONTH | WATERYEAR ) ( '(' expr_add ')' )? ;
 
