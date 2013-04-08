@@ -324,19 +324,12 @@ public class ProcGoal {
 			caseExpression = lhs_m + relation + cm.rhs;
 		}
 	
-		if (ProcGoal.isNumber(slackWeight)) {
-			slackWeight = "-" + slackWeight;
-		}
-		else {
-			slackWeight = "-(" + slackWeight + ")";
-		}
+
+		slackWeight = "-(" + slackWeight + ")";
+
 	
-		if (ProcGoal.isNumber(surplusWeight)) {
-			surplusWeight = "-" + surplusWeight;
-		}
-		else {
-			surplusWeight = "-(" + surplusWeight + ")";
-		}
+		surplusWeight = "-(" + surplusWeight + ")";
+		
 	
 		expression_slack_surplus.put("caseExpression", caseExpression);
 		expression_slack_surplus.put("slackName", slackName);
