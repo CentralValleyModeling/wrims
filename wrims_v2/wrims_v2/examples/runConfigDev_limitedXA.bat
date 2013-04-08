@@ -24,15 +24,9 @@ set t=%ConfigFilePath%
 set t=%t::=@%
 set t=%t:\=$%
 
-set Java_Bin=%~dp0_temp\%t%
-
-IF EXIST %Java_Bin% (
-	rmdir /s /q %Java_Bin%
-)
+set temp_wrims2=%~dp0_temp\%t%
  
-mkdir %Java_Bin%
-
-set Java_Bin=%~dp0_temp\%t%\
+mkdir %temp_wrims2%
 
 :------------------:
 : wrims2 lib jars  :
@@ -77,6 +71,6 @@ set PATH=%ExternalDir%;%JarDir%
 
 
 
-%Java_Bin%/../../../../../3rd_party/jrockit-jre1.6.0_26-R28.1.4/bin/java -Xmx1472m -Xss1280K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
+%temp_wrims2%/../../../../../3rd_party/jrockit-jre1.6.0_26-R28.1.4/bin/java -Xmx1472m -Xss1280K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
 
 pause
