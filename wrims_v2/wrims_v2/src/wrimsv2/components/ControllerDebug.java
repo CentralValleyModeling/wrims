@@ -420,7 +420,8 @@ public class ControllerDebug extends Thread {
 		}
 		if (Error.getTotalError()>0){
 			try {
-				di.sendEvent("suspended!"+ControlData.currYear+"#"+ControlData.currMonth+"#"+ControlData.currDay+"#"+ControlData.currCycleIndex+1);
+				int cycle=ControlData.currCycleIndex+1;
+				di.sendEvent("suspended!"+ControlData.currYear+"#"+ControlData.currMonth+"#"+ControlData.currDay+"#"+cycle);
 				System.out.println("error! paused");
 			} catch (IOException e) {
 				e.printStackTrace();

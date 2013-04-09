@@ -173,13 +173,14 @@ public class ValueEvaluation {
 		if (s !=null && s.equals("-")){
 			if (id.isInt()){
 				int value=-id.getData().intValue();
-				id.setData(value);
+				return new IntDouble(value, id.isInt());
 			}else{
 				double value=-id.getData().doubleValue();
-				id.setData(value);
+				return new IntDouble(value, id.isInt());
 			}
+		}else{
+			return id;
 		}
-		return id;
 	}
 		
 	public static IntDouble mult(IntDouble id1, IntDouble id2){
@@ -358,11 +359,11 @@ public class ValueEvaluation {
 		}else{
 			if (ControlData.currSvMap.containsKey(ident)){ 
 				if (idValue==0)	{
-					return ControlData.currSvMap.get(ident).getData();
+					return ControlData.currSvMap.get(ident).getData().copyOf();
 				}else if(idValue>0){
 					String futSvName=ident+"__fut__"+idValue;
 					if (ControlData.currSvFutMap.containsKey(futSvName)){
-						return ControlData.currSvFutMap.get(futSvName).getData();
+						return ControlData.currSvFutMap.get(futSvName).getData().copyOf();
 					}else{
 						if (!ControlData.ignoreError) Error.addEvaluationError(futSvName+", the future value of "+ident+" is used before defined.");
 						return new IntDouble (1.0,false);

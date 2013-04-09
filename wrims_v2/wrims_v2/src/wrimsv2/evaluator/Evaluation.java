@@ -636,12 +636,12 @@ public class Evaluation {
 			if (ControlData.currSvMap.containsKey(ident)){ 
 				if (idValue==0)	{
 					result = ControlData.currSvMap.get(ident).getData();
-					return new EvalExpression(result);
+					return new EvalExpression(result.copyOf());
 				}else if(idValue>0){
 					String futSvName=ident+"__fut__"+idValue;
 					if (ControlData.currSvFutMap.containsKey(futSvName)){
 						result=ControlData.currSvFutMap.get(futSvName).getData();
-						return new EvalExpression(result);
+						return new EvalExpression(result.copyOf());
 					}else{
 						if (!ControlData.ignoreError) Error.addEvaluationError(futSvName+", the future value of "+ident+" is used before defined.");
 						result=new IntDouble (1.0,false);
