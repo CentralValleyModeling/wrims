@@ -203,9 +203,11 @@ public class DetectorWorkflow {
 		//
 		// System.out.println("all_vars_to_search:" + all_vars_to_search);
 
-		List<String> g1searchVars = new ArrayList<String>(varsGroup.notUpperVertexVars_number.subList(0, 3));
-		List<String> g2searchVars = new ArrayList<String>(varsGroup.notLowerVertexVars_number.subList(0, 3));
-
+		//List<String> g1searchVars = new ArrayList<String>(varsGroup.notUpperVertexVars_number.subList(0, 3));
+		//List<String> g2searchVars = new ArrayList<String>(varsGroup.notLowerVertexVars_number.subList(0, 3));
+		List<String> g1searchVars = new ArrayList<String>(varsGroup.notUpperVertexVars_number);
+		List<String> g2searchVars = new ArrayList<String>(varsGroup.notLowerVertexVars_number);
+		
 		// TODO: parallel threads for multiple solver instances
 
 		// ================ begin group 1 search ==============

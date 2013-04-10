@@ -57,13 +57,13 @@ public class Detector {
 	
 	public Detector(MPModel mpm) {
 
-		if (mpm==null) System.err.println("# Error: original model is not valid.");
+		if (mpm==null) System.err.println("# Error: original model is not valid (mpm==null).");
 		
 		dwf = new DetectorWorkflow(mpm);
 
 		boolean OK_original = dwf.validateOriginalModel();
 		
-		if (!OK_original) System.err.println("# Error: original model is not valid.");
+		if (!OK_original) System.err.println("# Error: original model is not valid (!OK_original).");
 
 	}
 
