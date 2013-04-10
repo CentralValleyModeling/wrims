@@ -14,7 +14,8 @@ public class DetectorParam {
 
 	/// user input
 	// required
-	public static final double nonunique_min_abs_diff = 0.6;     // minimum difference for reporting solution range
+	public static final double nonunique_min_abs_diff = 10.0;     // minimum difference for reporting solution range 
+	public static final double nonunique_min_ratio_diff = 0.2;     // minimum difference ratio for reporting solution range. nonunique_min_ratio_diff > difference/max(larger, 1.0)
 	public static final double vertax_tolerance = 0.001;  // tolerance for determining if a var is at vertex
 	public static final double obj_constraint_relax_ratio = 0.00001; // relax constraint by this ratio to avoid solution infeasible 
 	

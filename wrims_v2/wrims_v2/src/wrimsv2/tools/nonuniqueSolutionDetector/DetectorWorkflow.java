@@ -229,6 +229,7 @@ public class DetectorWorkflow {
 		if (group1Solutions.size() == 0) {
 			System.out.println(" no alt solution found in group1");
 		} else {
+			System.out.println(" alt solution found in group1");
 			varRange_group1 = Misc.findVarsRange(group1Solutions);
 		}
 
@@ -261,6 +262,7 @@ public class DetectorWorkflow {
 			varRange_group2 = Misc.findVarsRange(group2Solutions);
 		}
 		if (varRange_group2.size() > 0) {
+			System.out.println(" alt solution found in group2");
 			varRange_allGroups.add(varRange_group2);
 		}
 		// ============= end group 2 search ==============
@@ -269,13 +271,14 @@ public class DetectorWorkflow {
 		LinkedHashMap<String, double[]> varRange_all = null;
 
 		if (varRange_allGroups.size() > 0) {
+			System.out.println("update vars range...");
 			varRange_all = Misc.updateVarsRange(varRange_allGroups);
 		} else {
 			return DetectorParam.altSolutionNotFound; // no alt solutions found
 		}
 
 		// report only vars that have big difference
-		varsRange_output = Misc.filterVarsRange(varRange_all, DetectorParam.nonunique_min_abs_diff);
+		varsRange_output = Misc.filterVarsRange(varRange_all, DetectorParam.nonunique_min_abs_diff, DetectorParam.nonunique_min_ratio_diff);
 
 		// write report
 		// Misc.writeReport(varsRange_output, mpmodelDir,

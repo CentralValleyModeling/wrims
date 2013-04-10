@@ -36,10 +36,10 @@ public class Misc {
 				
 				// for excel view
 				reportFile.println(varName+","+(float)range[0] + ","+(float)range[1]);
-				
 				reportFile.flush();
-				
 			}
+			
+			reportFile.close();
 			
 			
 		} catch (IOException e) {
@@ -49,7 +49,7 @@ public class Misc {
 		
 	}
 
-	protected static LinkedHashMap<String, double[]> filterVarsRange(LinkedHashMap<String, double[]> varsRange, double min_abs_diff) {
+	protected static LinkedHashMap<String, double[]> filterVarsRange(LinkedHashMap<String, double[]> varsRange, double min_abs_diff, double min_ratio_diff) {
 		
 		LinkedHashMap<String, double[]> out = new LinkedHashMap<String, double[]>();
 		
@@ -58,9 +58,19 @@ public class Misc {
 			
 			double lower = varsRange.get(varName)[0];
 			double upper = varsRange.get(varName)[1];
+			double absMax = Math.max(Math.abs(lower), Math.abs(upper)); 
 			
-			if ( (upper-lower)> min_abs_diff ) out.put(varName, new double[]{lower, upper});
+			double difference = Math.abs(upper-lower);
+			
+			boolean check1 = difference > min_abs_diff;
+			
+			boolean check2 = difference / Math.max(absMax, 1.0) > min_ratio_diff;  // assign 1.0 in case both lower and uppers are zero.
+			
+			if ( check1 && check2 ) out.put(varName, new double[]{lower, upper});
 			//if ( (upper!=0) && ( (upper-lower)/upper > min_abs_diff ) ) out.put(varName, new double[]{lower, upper});
+			
+
+
 			
 		}
 		
