@@ -1101,7 +1101,7 @@ SVAR : 'svar' | 'SVAR' | 'Svar' ;
 VARIABLE  : 'variable' | 'VARIABLE' | 'Variable' ;
 ALIAS : 'alias' | 'ALIAS' | 'Alias';
 TIMESERIES : 'timeseries' | 'TIMESERIES' | 'Timeseries' ;
-EXTERNAL : 'external' | 'EXTERNAL' ;
+EXTERNAL : 'external' | 'EXTERNAL' | 'External' ;
 TEMPLATE : 'template' ;
 
 
@@ -1128,7 +1128,7 @@ LHS : 'lhs' | 'LHS' ;
 RHS : 'rhs' | 'RHS' ;
 
 // special function
-RANGE : 'range' | 'RANGE' ;
+RANGE : 'range' | 'RANGE' | 'Range' ;
 
 // intrinsic function
 INT_word : 'int' | 'INT' ;
