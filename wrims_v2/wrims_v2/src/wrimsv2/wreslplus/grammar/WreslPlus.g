@@ -784,13 +784,16 @@ dvarTimeArray : '(' d=( INT | ID ) ')'  {$dvar_g::dvar_.timeArraySize=$d.text; }
 dvar_trunk 
 	: 
 	// TODO: remove addDep. this is to match wreslparser result.
-	( dvarIsInteger? ( std | ( {addDep = false;} lower_upper {addDep = true;} ) ) dvKindUnits )
+	( ( ( dvarIsInteger? ( std | ( {addDep = false;} lower_upper {addDep = true;} ) ) ) 
+	  | dvarIsBinary )
+	 dvKindUnits )
 	| ('<' ID '>') ;
 
 //dvar_array_trunk : ( index_assign? '{' dvar_trunk '}' )+ ;
 //dvar_timeArray_trunk : ( timeIndex_assign? '{' dvar_trunk '}' )+ ;
 
 dvarIsInteger : INTEGER {$dvar_g::dvar_.isInteger=true; $dvar_g::dvar_.upperBound="1";$dvar_g::dvar_.lowerBound="0";} ;
+dvarIsBinary  : BINARY  {$dvar_g::dvar_.isInteger=true; $dvar_g::dvar_.upperBound="1";$dvar_g::dvar_.lowerBound="0";} ;
 index_assign : '[' INT (':' INT)? ']' ;
 timeIndex_assign : '(' INT (':' INT)? ')' ;
 
@@ -1113,7 +1116,7 @@ UNBOUNDED : 'unbounded'|'UNBOUNDED' ;
 
 ALWAYS: 'always'|'ALWAYS'|'Always' ;
 INTEGER : 'integer'|'INTEGER'|'Integer';
-
+BINARY : 'binary'|'BINARY'|'Binary';
 
 SELECT : 'select' | 'SELECT'|'Select' ;
 FROM   : 'from' | 'FROM'|'From' ;
