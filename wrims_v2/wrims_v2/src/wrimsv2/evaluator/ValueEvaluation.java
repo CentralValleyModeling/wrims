@@ -292,24 +292,45 @@ public class ValueEvaluation {
 		}
 	}
 	
-	public static IntDouble argFunction(String ident, ArrayList<IntDouble> idArray){
+	public static IntDouble argFunction(String ident, ArrayList<ArrayList<IntDouble>> idArray){
 		IntDouble result;
 		if (idArray.size()==1){
-			if (ControlData.currSvMap.containsKey(ident)||ControlData.currTsMap.containsKey(ident)||ControlData.currDvMap.containsKey(ident)||ControlData.currAliasMap.containsKey(ident)) return getTimeSeries(ident, idArray);
+			if (ControlData.currSvMap.containsKey(ident)||ControlData.currTsMap.containsKey(ident)||ControlData.currDvMap.containsKey(ident)||ControlData.currAliasMap.containsKey(ident)) {
+				ArrayList<IntDouble> idArray1 = idArray.get(0);
+				if (idArray1.size()==1){
+					return getTimeSeries(ident, idArray1);
+				}else{
+					Error.addEvaluationError("Variable "+ident+" has number of indexes different from 1.");
+					return new IntDouble (1.0, false);
+				}
+			}
 		}
 			
 		Class function;
 		try {
 			Stack stack = new Stack();
 			for (int i=0; i<idArray.size(); i++){
-				IntDouble id=idArray.get(i);
-				if (id.isInt()){
-					int value=id.getData().intValue();
-					stack.push(value);
+				ArrayList<IntDouble> idArray1 = idArray.get(i);
+				int size =idArray1.size(); 
+				if (size==1){
+					IntDouble id=idArray1.get(0);
+					if (id.isInt()){
+						int value=id.getData().intValue();
+						stack.push(value);
+					}else{
+						double value=id.getData().doubleValue();
+						stack.push(value);
+					}      
+				}else if (size>1){
+					Number[] valueArray=new Number[size];
+					for (int j=0; j<size; j++){
+						valueArray[j]=idArray1.get(j).getData();
+					}
+					stack.push(valueArray);
 				}else{
-					double value=id.getData().doubleValue();
-					stack.push(value);
-				}      
+					int ai=i+1;
+					Error.addEvaluationError("The No. "+ai+" argument of function "+ident+" has no data.");				return new IntDouble (1.0, false);
+				}
 			}
 
 			ExternalFunction ef;
@@ -693,6 +714,38 @@ public class ValueEvaluation {
 			return new IntDouble(1.0,false);
 		}
 		return new IntDouble(data.getData(),data.isInt());
+	}
+	
+	public static ArrayList<IntDouble> trunk_timeArray(String ident, IntDouble start, IntDouble end){
+		ArrayList<IntDouble> idArray=new ArrayList<IntDouble>();
+		if (!start.isInt()){
+			Error.addEvaluationError("The starting index of trunk data for variable " + ident + " is not an integer.");
+			idArray.add(new IntDouble(1.0, false));
+			return idArray;
+		}else if (!end.isInt()){
+			Error.addEvaluationError("The ending index of trunk data for variable " + ident + " is not an integer.");
+			idArray.add(new IntDouble(1.0, false));
+			return idArray;
+		}
+		int si=start.getData().intValue();
+		int ei=end.getData().intValue();
+		
+		if (si>ei){
+			Error.addEvaluationError("The starting index of trunk data for variable " + ident + " is larger than the ending index");
+			idArray.add(new IntDouble(1.0, false));
+			return idArray;
+		}
+	
+		for (int i=si; i<=ei; i++){
+			ArrayList<IntDouble> indexArray1=new ArrayList<IntDouble> ();
+			IntDouble index = new IntDouble(i, true);
+			indexArray1.add(index);
+			ArrayList<ArrayList<IntDouble>> indexArray = new ArrayList<ArrayList<IntDouble>>();
+			indexArray.add(indexArray1);
+			IntDouble id=ValueEvaluation.argFunction(ident, indexArray);
+			idArray.add(id);
+		}
+		return idArray;
 	}
 	
 	public static IntDouble max(IntDouble id1, IntDouble id2){

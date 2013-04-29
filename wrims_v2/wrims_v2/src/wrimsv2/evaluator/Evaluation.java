@@ -484,10 +484,18 @@ public class Evaluation {
 		}
 	}
 	
-	public static EvalExpression argFunction(String ident, ArrayList<EvalExpression> eeArray){
+	public static EvalExpression argFunction(String ident, ArrayList<ArrayList<EvalExpression>> eeArray){
 		IntDouble result;
 		if (eeArray.size()==1){
-			if (ControlData.currSvMap.containsKey(ident)||ControlData.currTsMap.containsKey(ident)||ControlData.currDvMap.containsKey(ident)||ControlData.currAliasMap.containsKey(ident)||ControlData.currDvSlackSurplusMap.containsKey(ident)) return getTimeSeries(ident, eeArray);
+			if (ControlData.currSvMap.containsKey(ident)||ControlData.currTsMap.containsKey(ident)||ControlData.currDvMap.containsKey(ident)||ControlData.currAliasMap.containsKey(ident)||ControlData.currDvSlackSurplusMap.containsKey(ident)) {
+				ArrayList<EvalExpression> eeArray1 = eeArray.get(0);
+				if (eeArray1.size()==1){
+					return getTimeSeries(ident, eeArray1);
+				}else{
+					Error.addEvaluationError("Variable "+ident+" has number of indexes different from 1.");
+					return new EvalExpression(new IntDouble (1.0, false));
+				}
+			}
 		}
 			
 		Class function;
@@ -496,21 +504,42 @@ public class Evaluation {
 		
 			Stack stack = new Stack();
 			for (int i=0; i<eeArray.size(); i++){
-				EvalExpression ee=eeArray.get(i);
-				if (!ee.isNumeric()){
-					Error.addEvaluationError("The function " +ident+" is not defined in the WRIMS engine. Re-run preprocessor for dlls.");
-					result=new IntDouble (0.0,false);
-					return new EvalExpression(result);
-				}
+				ArrayList<EvalExpression> eeArray1=eeArray.get(i);
+				int size=eeArray1.size();
+				if (size ==1){
+					EvalExpression ee = eeArray1.get(0);
+					if (!ee.isNumeric()){
+						int ai=i+1;
+						Error.addEvaluationError("The function " +ident+" has an unkown argument at argument index of "+ai+".");
+						result=new IntDouble (0.0,false);
+						return new EvalExpression(result);
+					}
 			
-				IntDouble id=ee.getValue();
-				if (id.isInt()){
-					int value=id.getData().intValue();
-					stack.push(value);
+					IntDouble id=ee.getValue();
+					if (id.isInt()){
+						int value=id.getData().intValue();
+						stack.push(value);
+					}else{
+						double value=id.getData().doubleValue();
+						stack.push(value);
+					}
+				}else if (size>1){
+					Number[] valueArray = new Number[size];
+					for (int j=0; j<size; j++){
+						EvalExpression ee = eeArray1.get(j);
+						if (!ee.isNumeric()){
+							int ai=i+1;
+							Error.addEvaluationError("The function " +ident+" has an unkown argument at argument index of "+ai+".");
+							return new EvalExpression(new IntDouble (0.0,false));
+						}
+						valueArray[j]=ee.getValue().getData();
+					}
+					stack.push(valueArray);
 				}else{
-					double value=id.getData().doubleValue();
-					stack.push(value);
-				}      
+					int ai=i+1;
+					Error.addEvaluationError("The No. "+ai+" argument of function "+ident+" has no data.");	
+					return new EvalExpression(new IntDouble (0.0,false));
+				}
 			}
 
 			ExternalFunction ef;
@@ -974,6 +1003,41 @@ public class Evaluation {
 			return new IntDouble(1.0,false);
 		}
 		return new IntDouble(data.getData(),data.isInt());
+	}
+	
+	public static ArrayList<EvalExpression> trunk_timeArray(String ident, IntDouble start, IntDouble end){
+		ArrayList<EvalExpression> eeArray=new ArrayList<EvalExpression>();
+		if (!start.isInt()){
+			Error.addEvaluationError("The starting index of trunk data for variable " + ident + " is not an integer.");
+			EvalExpression ee=new EvalExpression(new IntDouble(1.0, false));
+			eeArray.add(ee);
+			return eeArray;
+		}else if (!end.isInt()){
+			Error.addEvaluationError("The ending index of trunk data for variable " + ident + " is not an integer.");
+			EvalExpression ee=new EvalExpression(new IntDouble(1.0, false));
+			eeArray.add(ee);
+			return eeArray;
+		}
+		int si=start.getData().intValue();
+		int ei=end.getData().intValue();
+		
+		if (si>ei){
+			Error.addEvaluationError("The starting index of trunk data for variable " + ident + " is larger than the ending index");
+			EvalExpression ee=new EvalExpression(new IntDouble(1.0, false));
+			eeArray.add(ee);
+			return eeArray;
+		}
+	
+		for (int i=si; i<=ei; i++){
+			ArrayList<IntDouble> indexArray1=new ArrayList<IntDouble> ();
+			IntDouble index = new IntDouble(i, true);
+			indexArray1.add(index);
+			ArrayList<ArrayList<IntDouble>> indexArray=new ArrayList<ArrayList<IntDouble>> ();
+			indexArray.add(indexArray1);
+			IntDouble id=ValueEvaluation.argFunction(ident, indexArray);
+			eeArray.add(new EvalExpression(id));
+		}
+		return eeArray;
 	}
 	
 	public static EvalExpression max(EvalExpression ee1, EvalExpression ee2){

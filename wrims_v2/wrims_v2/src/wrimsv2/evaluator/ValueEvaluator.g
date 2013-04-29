@@ -250,8 +250,21 @@ function returns [IntDouble result]
 noArgFunction returns [IntDouble result]
   : IDENT '(' ')' {result=ValueEvaluation.noArgFunction($IDENT.text);};
 
-argFunction returns [IntDouble result] @init{ArrayList<IntDouble> idArray = new ArrayList<IntDouble>();}
-  : IDENT '(' (e1=expression {idArray.add($e1.id);}) (';' (e2=expression{idArray.add($e2.id);}))* ')'{result=ValueEvaluation.argFunction($IDENT.text,idArray);};
+argFunction returns [IntDouble result] @init{ArrayList<ArrayList<IntDouble>> idArray = new ArrayList<ArrayList<IntDouble>>();}
+  : IDENT '(' (e1=expression {ArrayList<IntDouble> idArray1=new ArrayList<IntDouble>(); idArray1.add($e1.id); idArray.add(idArray1);} 
+  | t1=trunk_timeArray{idArray.add($t1.idArray);}) 
+  (';' (e2=expression{ArrayList<IntDouble> idArray1=new ArrayList<IntDouble>(); idArray1.add($e2.id); idArray.add(idArray1);}
+  |t2=trunk_timeArray{idArray.add($t2.idArray);}))* ')' 
+  {
+    result=ValueEvaluation.argFunction($IDENT.text,idArray);
+  };
+
+trunk_timeArray returns[ArrayList<IntDouble> idArray] @init{idArray = new ArrayList<IntDouble>(); IntDouble start=new IntDouble(1, true);  IntDouble end=new IntDouble(1, true);}
+  : i0=IDENT '(' (n1=INTEGER{start=ValueEvaluation.term_INTEGER($n1.text);}|i1=IDENT{start=ValueEvaluation.term_IDENT($i1.text);}) ':' (n2=INTEGER{end=ValueEvaluation.term_INTEGER($n2.text);}|i2=IDENT{end=ValueEvaluation.term_IDENT($i2.text);}) ')' 
+  {
+    idArray=ValueEvaluation.trunk_timeArray($i0.text, start, end);
+  }
+  ;
   	
 unary returns [IntDouble id] 
 	:	(s=('+'|'-'))? term{id=ValueEvaluation.unary($s.text, $term.id);

@@ -253,8 +253,8 @@ function returns [IntDouble result]
 noArgFunction returns [IntDouble result]
   : ^(IDENT '(' ')' {result=ValueEvaluation.noArgFunction($IDENT.text);});
 
-argFunction returns [IntDouble result] @init{ArrayList<IntDouble> idArray = new ArrayList<IntDouble>();}
-  : ^(IDENT '(' (t1=term {idArray.add($t1.id);}) ((t2=term{idArray.add($t2.id);}))* ')'{result=ValueEvaluation.argFunction($IDENT.text,idArray);});
+argFunction returns [IntDouble result] @init{ArrayList<ArrayList<IntDouble>> idArray = new ArrayList<ArrayList<IntDouble>>();}
+  : ^(IDENT '(' (t1=term {ArrayList<IntDouble> idArray1=new ArrayList<IntDouble>();idArray1.add($t1.id);idArray.add(idArray1);}) ((t2=term{ArrayList<IntDouble> idArray1=new ArrayList<IntDouble>();idArray1.add($t2.id);idArray.add(idArray1);}))* ')'{result=ValueEvaluation.argFunction($IDENT.text,idArray);});
   	
 expression returns [IntDouble id]  
   : (^('+' t1=term t2=term{$id=ValueEvaluation.add($t1.id, $t2.id);})

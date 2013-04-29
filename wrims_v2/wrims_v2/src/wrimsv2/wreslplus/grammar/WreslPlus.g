@@ -993,7 +993,7 @@ columnNumber : INT ;
 rowNumber : INT ;
 	
 varFunc
-	: v=varID '(' ( expr_add  (',' expr_add )*   ) ')' 
+	: v=varID '(' func_arg  (',' func_arg )*   ')' 
 	{dependants.add($v.text);
 	 //System.out.println(dependants);
 	 }
@@ -1001,6 +1001,13 @@ varFunc
 
 varID : ID ;
 
+func_arg: expr_add|trunk_timeArray;
+
+trunk_timeArray
+  : v1=varID '(' (INT|v2=varID) ':' (INT|v3=varID) ')'
+  {dependants.add($v2.text);
+   dependants.add($v3.text);
+  };  
 	
 number : integer | real ;
 number_p : integer_p | real_p ;

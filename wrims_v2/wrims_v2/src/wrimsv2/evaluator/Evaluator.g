@@ -254,8 +254,21 @@ function returns [EvalExpression ee]
 noArgFunction returns [EvalExpression ee]
   : IDENT '(' ')' {ee=Evaluation.noArgFunction($IDENT.text);};
 
-argFunction returns [EvalExpression ee] @init{ArrayList<EvalExpression> eeArray = new ArrayList<EvalExpression>();}
-  : IDENT '(' (e1=expression {eeArray.add($e1.ee);}) (';' (e2=expression{eeArray.add($e2.ee);}))* ')'{ee=Evaluation.argFunction($IDENT.text,eeArray);};
+argFunction returns [EvalExpression ee] @init{ArrayList<ArrayList<EvalExpression>> eeArray = new ArrayList<ArrayList<EvalExpression>>();}
+  : IDENT '(' (e1=expression {ArrayList<EvalExpression> eeArray1=new ArrayList<EvalExpression>(); eeArray1.add($e1.ee); eeArray.add(eeArray1);}
+    |t1=trunk_timeArray{eeArray.add($t1.eeArray);}) 
+    (';' (e2=expression{ArrayList<EvalExpression> eeArray1=new ArrayList<EvalExpression>(); eeArray1.add($e2.ee); eeArray.add(eeArray1);}
+    |t2=trunk_timeArray{eeArray.add($t2.eeArray);}))* ')'
+    {
+      ee=Evaluation.argFunction($IDENT.text,eeArray);
+    };
+
+trunk_timeArray returns[ArrayList<EvalExpression> eeArray] @init{eeArray = new ArrayList<EvalExpression>(); IntDouble start=new IntDouble(1, true);  IntDouble end=new IntDouble(1, true);}
+  : i0=IDENT '(' (n1=INTEGER{start=ValueEvaluation.term_INTEGER($n1.text);}|i1=IDENT{start=ValueEvaluation.term_IDENT($i1.text);}) ':' (n2=INTEGER{end=ValueEvaluation.term_INTEGER($n2.text);}|i2=IDENT{end=ValueEvaluation.term_IDENT($i2.text);}) ')' 
+  {
+    eeArray=Evaluation.trunk_timeArray($i0.text, start, end);
+  }
+  ;
   	
 unary returns [EvalExpression ee] 
 	:	(s=('+'|'-'))? term{ee=Evaluation.unary($s.text, $term.ee);
