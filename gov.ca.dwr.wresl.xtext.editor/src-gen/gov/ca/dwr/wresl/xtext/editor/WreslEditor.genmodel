@@ -242,6 +242,14 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//ExternalFunction/e1"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//ExternalFunction/e2"/>
     </genClasses>
+    <genClasses ecoreClass="WreslEditor.ecore#//TrunkTimeArray">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//TrunkTimeArray/ref"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//TrunkTimeArray/t1"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//TrunkTimeArray/t2"/>
+    </genClasses>
+    <genClasses ecoreClass="WreslEditor.ecore#//TrunkTimeArrayIndex">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//TrunkTimeArrayIndex/ref"/>
+    </genClasses>
     <genClasses ecoreClass="WreslEditor.ecore#//MaxFunction">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//MaxFunction/e1"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//MaxFunction/e2"/>

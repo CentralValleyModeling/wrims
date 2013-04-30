@@ -2699,6 +2699,80 @@ public interface WreslEditorPackage extends EPackage
   int EXTERNAL_FUNCTION_FEATURE_COUNT = FUNCTION_FEATURE_COUNT + 3;
 
   /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TrunkTimeArrayImpl <em>Trunk Time Array</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TrunkTimeArrayImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getTrunkTimeArray()
+   * @generated
+   */
+  int TRUNK_TIME_ARRAY = 68;
+
+  /**
+   * The feature id for the '<em><b>Ref</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TRUNK_TIME_ARRAY__REF = 0;
+
+  /**
+   * The feature id for the '<em><b>T1</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TRUNK_TIME_ARRAY__T1 = 1;
+
+  /**
+   * The feature id for the '<em><b>T2</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TRUNK_TIME_ARRAY__T2 = 2;
+
+  /**
+   * The number of structural features of the '<em>Trunk Time Array</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TRUNK_TIME_ARRAY_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TrunkTimeArrayIndexImpl <em>Trunk Time Array Index</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TrunkTimeArrayIndexImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getTrunkTimeArrayIndex()
+   * @generated
+   */
+  int TRUNK_TIME_ARRAY_INDEX = 69;
+
+  /**
+   * The feature id for the '<em><b>Ref</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TRUNK_TIME_ARRAY_INDEX__REF = 0;
+
+  /**
+   * The number of structural features of the '<em>Trunk Time Array Index</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TRUNK_TIME_ARRAY_INDEX_FEATURE_COUNT = 1;
+
+  /**
    * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.MaxFunctionImpl <em>Max Function</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2706,7 +2780,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getMaxFunction()
    * @generated
    */
-  int MAX_FUNCTION = 68;
+  int MAX_FUNCTION = 70;
 
   /**
    * The feature id for the '<em><b>E1</b></em>' containment reference.
@@ -2743,7 +2817,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getMinFunction()
    * @generated
    */
-  int MIN_FUNCTION = 69;
+  int MIN_FUNCTION = 71;
 
   /**
    * The feature id for the '<em><b>E1</b></em>' containment reference.
@@ -2780,7 +2854,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getModFunction()
    * @generated
    */
-  int MOD_FUNCTION = 70;
+  int MOD_FUNCTION = 72;
 
   /**
    * The feature id for the '<em><b>E1</b></em>' containment reference.
@@ -2817,7 +2891,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getIntFunction()
    * @generated
    */
-  int INT_FUNCTION = 71;
+  int INT_FUNCTION = 73;
 
   /**
    * The feature id for the '<em><b>E</b></em>' containment reference.
@@ -2845,7 +2919,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getAbsFunction()
    * @generated
    */
-  int ABS_FUNCTION = 72;
+  int ABS_FUNCTION = 74;
 
   /**
    * The feature id for the '<em><b>E</b></em>' containment reference.
@@ -2873,7 +2947,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getPowFunction()
    * @generated
    */
-  int POW_FUNCTION = 73;
+  int POW_FUNCTION = 75;
 
   /**
    * The feature id for the '<em><b>E1</b></em>' containment reference.
@@ -2910,7 +2984,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getLogFunction()
    * @generated
    */
-  int LOG_FUNCTION = 74;
+  int LOG_FUNCTION = 76;
 
   /**
    * The feature id for the '<em><b>E</b></em>' containment reference.
@@ -2938,7 +3012,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getVarModel()
    * @generated
    */
-  int VAR_MODEL = 75;
+  int VAR_MODEL = 77;
 
   /**
    * The feature id for the '<em><b>Ref1</b></em>' reference.
@@ -2975,7 +3049,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getVarModelStep()
    * @generated
    */
-  int VAR_MODEL_STEP = 76;
+  int VAR_MODEL_STEP = 78;
 
   /**
    * The feature id for the '<em><b>Ref1</b></em>' reference.
@@ -3021,7 +3095,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getVarModelIndex()
    * @generated
    */
-  int VAR_MODEL_INDEX = 77;
+  int VAR_MODEL_INDEX = 79;
 
   /**
    * The feature id for the '<em><b>Ref1</b></em>' reference.
@@ -3049,7 +3123,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getVarModelIndexStep()
    * @generated
    */
-  int VAR_MODEL_INDEX_STEP = 78;
+  int VAR_MODEL_INDEX_STEP = 80;
 
   /**
    * The feature id for the '<em><b>Ref1</b></em>' reference.
@@ -3086,7 +3160,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getIdent()
    * @generated
    */
-  int IDENT = 79;
+  int IDENT = 81;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3114,7 +3188,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getIncludeFile()
    * @generated
    */
-  int INCLUDE_FILE = 80;
+  int INCLUDE_FILE = 82;
 
   /**
    * The feature id for the '<em><b>Local</b></em>' attribute.
@@ -5055,6 +5129,70 @@ public interface WreslEditorPackage extends EPackage
    * @generated
    */
   EReference getExternalFunction_E2();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.TrunkTimeArray <em>Trunk Time Array</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Trunk Time Array</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.TrunkTimeArray
+   * @generated
+   */
+  EClass getTrunkTimeArray();
+
+  /**
+   * Returns the meta object for the reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.TrunkTimeArray#getRef <em>Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Ref</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.TrunkTimeArray#getRef()
+   * @see #getTrunkTimeArray()
+   * @generated
+   */
+  EReference getTrunkTimeArray_Ref();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.TrunkTimeArray#getT1 <em>T1</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>T1</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.TrunkTimeArray#getT1()
+   * @see #getTrunkTimeArray()
+   * @generated
+   */
+  EReference getTrunkTimeArray_T1();
+
+  /**
+   * Returns the meta object for the containment reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.TrunkTimeArray#getT2 <em>T2</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>T2</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.TrunkTimeArray#getT2()
+   * @see #getTrunkTimeArray()
+   * @generated
+   */
+  EReference getTrunkTimeArray_T2();
+
+  /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.TrunkTimeArrayIndex <em>Trunk Time Array Index</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Trunk Time Array Index</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.TrunkTimeArrayIndex
+   * @generated
+   */
+  EClass getTrunkTimeArrayIndex();
+
+  /**
+   * Returns the meta object for the reference '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.TrunkTimeArrayIndex#getRef <em>Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Ref</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.TrunkTimeArrayIndex#getRef()
+   * @see #getTrunkTimeArrayIndex()
+   * @generated
+   */
+  EReference getTrunkTimeArrayIndex_Ref();
 
   /**
    * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.MaxFunction <em>Max Function</em>}'.
@@ -7015,6 +7153,58 @@ public interface WreslEditorPackage extends EPackage
      * @generated
      */
     EReference EXTERNAL_FUNCTION__E2 = eINSTANCE.getExternalFunction_E2();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TrunkTimeArrayImpl <em>Trunk Time Array</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TrunkTimeArrayImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getTrunkTimeArray()
+     * @generated
+     */
+    EClass TRUNK_TIME_ARRAY = eINSTANCE.getTrunkTimeArray();
+
+    /**
+     * The meta object literal for the '<em><b>Ref</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TRUNK_TIME_ARRAY__REF = eINSTANCE.getTrunkTimeArray_Ref();
+
+    /**
+     * The meta object literal for the '<em><b>T1</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TRUNK_TIME_ARRAY__T1 = eINSTANCE.getTrunkTimeArray_T1();
+
+    /**
+     * The meta object literal for the '<em><b>T2</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TRUNK_TIME_ARRAY__T2 = eINSTANCE.getTrunkTimeArray_T2();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TrunkTimeArrayIndexImpl <em>Trunk Time Array Index</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.TrunkTimeArrayIndexImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getTrunkTimeArrayIndex()
+     * @generated
+     */
+    EClass TRUNK_TIME_ARRAY_INDEX = eINSTANCE.getTrunkTimeArrayIndex();
+
+    /**
+     * The meta object literal for the '<em><b>Ref</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TRUNK_TIME_ARRAY_INDEX__REF = eINSTANCE.getTrunkTimeArrayIndex_Ref();
 
     /**
      * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.MaxFunctionImpl <em>Max Function</em>}' class.

@@ -220,7 +220,13 @@ Function:
 	ExternalFunction | MaxFunction | MinFunction | '(' SumContent ')' | ModFunction | IntFunction | AbsFunction | PowFunction | LogFunction | VarModel | VarModelStep | VarModelIndex | VarModelIndexStep;
 
 ExternalFunction:
-	((ref=[Declaration])|TafCfs|Month) '(' e1=Expression (',' e2+=Expression)* ')';
+	((ref=[Declaration])|TafCfs|Month) '(' e1=(Expression|TrunkTimeArray) (',' e2+=(Expression|TrunkTimeArray))* ')';
+
+TrunkTimeArray: 
+	ref=[Declaration] '(' t1=TrunkTimeArrayIndex ':' t2=TrunkTimeArrayIndex ')' 
+  ;
+  
+TrunkTimeArrayIndex: INT|('-' INT)|ref=[Declaration];
 
 MaxFunction:
 	MAX '(' e1=Expression (',' e2+=Expression)* ')';

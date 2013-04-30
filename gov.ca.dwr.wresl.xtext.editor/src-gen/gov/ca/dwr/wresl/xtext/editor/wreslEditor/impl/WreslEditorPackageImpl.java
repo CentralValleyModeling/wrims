@@ -70,6 +70,8 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TableContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TermSimple;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TimeArraySize;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TrunkTimeArray;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TrunkTimeArrayIndex;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Unary;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Upper;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ValueContent;
@@ -576,6 +578,20 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * @generated
    */
   private EClass externalFunctionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass trunkTimeArrayEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass trunkTimeArrayIndexEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -2536,6 +2552,66 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getTrunkTimeArray()
+  {
+    return trunkTimeArrayEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTrunkTimeArray_Ref()
+  {
+    return (EReference)trunkTimeArrayEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTrunkTimeArray_T1()
+  {
+    return (EReference)trunkTimeArrayEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTrunkTimeArray_T2()
+  {
+    return (EReference)trunkTimeArrayEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTrunkTimeArrayIndex()
+  {
+    return trunkTimeArrayIndexEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTrunkTimeArrayIndex_Ref()
+  {
+    return (EReference)trunkTimeArrayIndexEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getMaxFunction()
   {
     return maxFunctionEClass;
@@ -3149,6 +3225,14 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     createEReference(externalFunctionEClass, EXTERNAL_FUNCTION__E1);
     createEReference(externalFunctionEClass, EXTERNAL_FUNCTION__E2);
 
+    trunkTimeArrayEClass = createEClass(TRUNK_TIME_ARRAY);
+    createEReference(trunkTimeArrayEClass, TRUNK_TIME_ARRAY__REF);
+    createEReference(trunkTimeArrayEClass, TRUNK_TIME_ARRAY__T1);
+    createEReference(trunkTimeArrayEClass, TRUNK_TIME_ARRAY__T2);
+
+    trunkTimeArrayIndexEClass = createEClass(TRUNK_TIME_ARRAY_INDEX);
+    createEReference(trunkTimeArrayIndexEClass, TRUNK_TIME_ARRAY_INDEX__REF);
+
     maxFunctionEClass = createEClass(MAX_FUNCTION);
     createEReference(maxFunctionEClass, MAX_FUNCTION__E1);
     createEReference(maxFunctionEClass, MAX_FUNCTION__E2);
@@ -3516,8 +3600,16 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
 
     initEClass(externalFunctionEClass, ExternalFunction.class, "ExternalFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getExternalFunction_Ref(), this.getDeclaration(), null, "ref", null, 0, 1, ExternalFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getExternalFunction_E1(), this.getExpression(), null, "e1", null, 0, 1, ExternalFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getExternalFunction_E2(), this.getExpression(), null, "e2", null, 0, -1, ExternalFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExternalFunction_E1(), ecorePackage.getEObject(), null, "e1", null, 0, 1, ExternalFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExternalFunction_E2(), ecorePackage.getEObject(), null, "e2", null, 0, -1, ExternalFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(trunkTimeArrayEClass, TrunkTimeArray.class, "TrunkTimeArray", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTrunkTimeArray_Ref(), this.getDeclaration(), null, "ref", null, 0, 1, TrunkTimeArray.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTrunkTimeArray_T1(), this.getTrunkTimeArrayIndex(), null, "t1", null, 0, 1, TrunkTimeArray.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTrunkTimeArray_T2(), this.getTrunkTimeArrayIndex(), null, "t2", null, 0, 1, TrunkTimeArray.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(trunkTimeArrayIndexEClass, TrunkTimeArrayIndex.class, "TrunkTimeArrayIndex", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTrunkTimeArrayIndex_Ref(), this.getDeclaration(), null, "ref", null, 0, 1, TrunkTimeArrayIndex.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(maxFunctionEClass, MaxFunction.class, "MaxFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getMaxFunction_E1(), this.getExpression(), null, "e1", null, 0, 1, MaxFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

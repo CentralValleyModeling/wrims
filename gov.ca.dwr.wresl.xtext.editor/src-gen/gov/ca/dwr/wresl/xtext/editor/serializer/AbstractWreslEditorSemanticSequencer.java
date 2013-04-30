@@ -58,6 +58,8 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.SvarDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TableContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Term;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TimeArraySize;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TrunkTimeArray;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.TrunkTimeArrayIndex;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Upper;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ValueContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.VarModel;
@@ -473,6 +475,18 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 					return; 
 				}
 				else break;
+			case WreslEditorPackage.TRUNK_TIME_ARRAY:
+				if(context == grammarAccess.getTrunkTimeArrayRule()) {
+					sequence_TrunkTimeArray(context, (TrunkTimeArray) semanticObject); 
+					return; 
+				}
+				else break;
+			case WreslEditorPackage.TRUNK_TIME_ARRAY_INDEX:
+				if(context == grammarAccess.getTrunkTimeArrayIndexRule()) {
+					sequence_TrunkTimeArrayIndex(context, (TrunkTimeArrayIndex) semanticObject); 
+					return; 
+				}
+				else break;
 			case WreslEditorPackage.UPPER:
 				if(context == grammarAccess.getUpperRule()) {
 					sequence_Upper(context, (Upper) semanticObject); 
@@ -806,7 +820,7 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     (ref=[Declaration|ID]? e1=Expression e2+=Expression*)
+	 *     (ref=[Declaration|ID]? (e1=Expression | e1=TrunkTimeArray) (e2+=Expression | e2+=TrunkTimeArray)*)
 	 */
 	protected void sequence_ExternalFunction(EObject context, ExternalFunction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1257,6 +1271,37 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
 		feeder.accept(grammarAccess.getTimeArraySizeAccess().getNameDeclarationIDTerminalRuleCall_1_0_1(), semanticObject.getName());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     ref=[Declaration|ID]?
+	 */
+	protected void sequence_TrunkTimeArrayIndex(EObject context, TrunkTimeArrayIndex semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (ref=[Declaration|ID] t1=TrunkTimeArrayIndex t2=TrunkTimeArrayIndex)
+	 */
+	protected void sequence_TrunkTimeArray(EObject context, TrunkTimeArray semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.TRUNK_TIME_ARRAY__REF) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.TRUNK_TIME_ARRAY__REF));
+			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.TRUNK_TIME_ARRAY__T1) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.TRUNK_TIME_ARRAY__T1));
+			if(transientValues.isValueTransient(semanticObject, WreslEditorPackage.Literals.TRUNK_TIME_ARRAY__T2) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, WreslEditorPackage.Literals.TRUNK_TIME_ARRAY__T2));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getTrunkTimeArrayAccess().getRefDeclarationIDTerminalRuleCall_0_0_1(), semanticObject.getRef());
+		feeder.accept(grammarAccess.getTrunkTimeArrayAccess().getT1TrunkTimeArrayIndexParserRuleCall_2_0(), semanticObject.getT1());
+		feeder.accept(grammarAccess.getTrunkTimeArrayAccess().getT2TrunkTimeArrayIndexParserRuleCall_4_0(), semanticObject.getT2());
 		feeder.finish();
 	}
 	

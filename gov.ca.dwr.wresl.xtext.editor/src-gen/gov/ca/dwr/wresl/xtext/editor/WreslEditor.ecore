@@ -308,10 +308,20 @@
   <eClassifiers xsi:type="ecore:EClass" name="Function" eSuperTypes="#//TermSimple"/>
   <eClassifiers xsi:type="ecore:EClass" name="ExternalFunction" eSuperTypes="#//Function">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref" eType="#//Declaration"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="e1" eType="#//Expression"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="e2" upperBound="-1" eType="#//Expression"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e2" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TrunkTimeArray">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ref" eType="#//Declaration"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="t1" eType="#//TrunkTimeArrayIndex"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="t2" eType="#//TrunkTimeArrayIndex"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TrunkTimeArrayIndex">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ref" eType="#//Declaration"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MaxFunction" eSuperTypes="#//Function">
     <eStructuralFeatures xsi:type="ecore:EReference" name="e1" eType="#//Expression"

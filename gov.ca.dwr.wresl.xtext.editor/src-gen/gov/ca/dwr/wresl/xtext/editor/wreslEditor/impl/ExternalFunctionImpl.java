@@ -3,7 +3,6 @@
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Declaration;
-import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Expression;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage;
 
@@ -15,6 +14,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -57,7 +57,7 @@ public class ExternalFunctionImpl extends FunctionImpl implements ExternalFuncti
    * @generated
    * @ordered
    */
-  protected Expression e1;
+  protected EObject e1;
 
   /**
    * The cached value of the '{@link #getE2() <em>E2</em>}' containment reference list.
@@ -67,7 +67,7 @@ public class ExternalFunctionImpl extends FunctionImpl implements ExternalFuncti
    * @generated
    * @ordered
    */
-  protected EList<Expression> e2;
+  protected EList<EObject> e2;
 
   /**
    * <!-- begin-user-doc -->
@@ -138,7 +138,7 @@ public class ExternalFunctionImpl extends FunctionImpl implements ExternalFuncti
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression getE1()
+  public EObject getE1()
   {
     return e1;
   }
@@ -148,9 +148,9 @@ public class ExternalFunctionImpl extends FunctionImpl implements ExternalFuncti
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetE1(Expression newE1, NotificationChain msgs)
+  public NotificationChain basicSetE1(EObject newE1, NotificationChain msgs)
   {
-    Expression oldE1 = e1;
+    EObject oldE1 = e1;
     e1 = newE1;
     if (eNotificationRequired())
     {
@@ -165,7 +165,7 @@ public class ExternalFunctionImpl extends FunctionImpl implements ExternalFuncti
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setE1(Expression newE1)
+  public void setE1(EObject newE1)
   {
     if (newE1 != e1)
     {
@@ -186,11 +186,11 @@ public class ExternalFunctionImpl extends FunctionImpl implements ExternalFuncti
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Expression> getE2()
+  public EList<EObject> getE2()
   {
     if (e2 == null)
     {
-      e2 = new EObjectContainmentEList<Expression>(Expression.class, this, WreslEditorPackage.EXTERNAL_FUNCTION__E2);
+      e2 = new EObjectContainmentEList<EObject>(EObject.class, this, WreslEditorPackage.EXTERNAL_FUNCTION__E2);
     }
     return e2;
   }
@@ -249,11 +249,11 @@ public class ExternalFunctionImpl extends FunctionImpl implements ExternalFuncti
         setRef((Declaration)newValue);
         return;
       case WreslEditorPackage.EXTERNAL_FUNCTION__E1:
-        setE1((Expression)newValue);
+        setE1((EObject)newValue);
         return;
       case WreslEditorPackage.EXTERNAL_FUNCTION__E2:
         getE2().clear();
-        getE2().addAll((Collection<? extends Expression>)newValue);
+        getE2().addAll((Collection<? extends EObject>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -273,7 +273,7 @@ public class ExternalFunctionImpl extends FunctionImpl implements ExternalFuncti
         setRef((Declaration)null);
         return;
       case WreslEditorPackage.EXTERNAL_FUNCTION__E1:
-        setE1((Expression)null);
+        setE1((EObject)null);
         return;
       case WreslEditorPackage.EXTERNAL_FUNCTION__E2:
         getE2().clear();

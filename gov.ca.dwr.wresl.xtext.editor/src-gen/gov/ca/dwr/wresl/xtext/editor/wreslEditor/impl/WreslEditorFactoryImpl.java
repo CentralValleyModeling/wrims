@@ -132,6 +132,8 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
       case WreslEditorPackage.TERM: return createTerm();
       case WreslEditorPackage.FUNCTION: return createFunction();
       case WreslEditorPackage.EXTERNAL_FUNCTION: return createExternalFunction();
+      case WreslEditorPackage.TRUNK_TIME_ARRAY: return createTrunkTimeArray();
+      case WreslEditorPackage.TRUNK_TIME_ARRAY_INDEX: return createTrunkTimeArrayIndex();
       case WreslEditorPackage.MAX_FUNCTION: return createMaxFunction();
       case WreslEditorPackage.MIN_FUNCTION: return createMinFunction();
       case WreslEditorPackage.MOD_FUNCTION: return createModFunction();
@@ -896,6 +898,28 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
   {
     ExternalFunctionImpl externalFunction = new ExternalFunctionImpl();
     return externalFunction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TrunkTimeArray createTrunkTimeArray()
+  {
+    TrunkTimeArrayImpl trunkTimeArray = new TrunkTimeArrayImpl();
+    return trunkTimeArray;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TrunkTimeArrayIndex createTrunkTimeArrayIndex()
+  {
+    TrunkTimeArrayIndexImpl trunkTimeArrayIndex = new TrunkTimeArrayIndexImpl();
+    return trunkTimeArrayIndex;
   }
 
   /**

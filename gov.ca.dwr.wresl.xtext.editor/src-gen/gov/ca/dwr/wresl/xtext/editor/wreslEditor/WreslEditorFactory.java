@@ -635,6 +635,24 @@ public interface WreslEditorFactory extends EFactory
   ExternalFunction createExternalFunction();
 
   /**
+   * Returns a new object of class '<em>Trunk Time Array</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Trunk Time Array</em>'.
+   * @generated
+   */
+  TrunkTimeArray createTrunkTimeArray();
+
+  /**
+   * Returns a new object of class '<em>Trunk Time Array Index</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Trunk Time Array Index</em>'.
+   * @generated
+   */
+  TrunkTimeArrayIndex createTrunkTimeArrayIndex();
+
+  /**
    * Returns a new object of class '<em>Max Function</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

@@ -415,6 +415,16 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
         return createExternalFunctionAdapter();
       }
       @Override
+      public Adapter caseTrunkTimeArray(TrunkTimeArray object)
+      {
+        return createTrunkTimeArrayAdapter();
+      }
+      @Override
+      public Adapter caseTrunkTimeArrayIndex(TrunkTimeArrayIndex object)
+      {
+        return createTrunkTimeArrayIndexAdapter();
+      }
+      @Override
       public Adapter caseMaxFunction(MaxFunction object)
       {
         return createMaxFunctionAdapter();
@@ -1517,6 +1527,36 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createExternalFunctionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.TrunkTimeArray <em>Trunk Time Array</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.TrunkTimeArray
+   * @generated
+   */
+  public Adapter createTrunkTimeArrayAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.TrunkTimeArrayIndex <em>Trunk Time Array Index</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.TrunkTimeArrayIndex
+   * @generated
+   */
+  public Adapter createTrunkTimeArrayIndexAdapter()
   {
     return null;
   }

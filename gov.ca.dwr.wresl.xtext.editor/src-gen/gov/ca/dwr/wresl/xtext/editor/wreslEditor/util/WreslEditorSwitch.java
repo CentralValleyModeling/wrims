@@ -598,6 +598,20 @@ public class WreslEditorSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case WreslEditorPackage.TRUNK_TIME_ARRAY:
+      {
+        TrunkTimeArray trunkTimeArray = (TrunkTimeArray)theEObject;
+        T result = caseTrunkTimeArray(trunkTimeArray);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case WreslEditorPackage.TRUNK_TIME_ARRAY_INDEX:
+      {
+        TrunkTimeArrayIndex trunkTimeArrayIndex = (TrunkTimeArrayIndex)theEObject;
+        T result = caseTrunkTimeArrayIndex(trunkTimeArrayIndex);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case WreslEditorPackage.MAX_FUNCTION:
       {
         MaxFunction maxFunction = (MaxFunction)theEObject;
@@ -1800,6 +1814,38 @@ public class WreslEditorSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseExternalFunction(ExternalFunction object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Trunk Time Array</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Trunk Time Array</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTrunkTimeArray(TrunkTimeArray object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Trunk Time Array Index</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Trunk Time Array Index</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTrunkTimeArrayIndex(TrunkTimeArrayIndex object)
   {
     return null;
   }

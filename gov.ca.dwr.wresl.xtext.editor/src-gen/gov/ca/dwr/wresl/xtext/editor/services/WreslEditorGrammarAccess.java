@@ -3848,19 +3848,25 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cMonthParserRuleCall_0_2 = (RuleCall)cAlternatives_0.eContents().get(2);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cE1Assignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cE1ExpressionParserRuleCall_2_0 = (RuleCall)cE1Assignment_2.eContents().get(0);
+		private final Alternatives cE1Alternatives_2_0 = (Alternatives)cE1Assignment_2.eContents().get(0);
+		private final RuleCall cE1ExpressionParserRuleCall_2_0_0 = (RuleCall)cE1Alternatives_2_0.eContents().get(0);
+		private final RuleCall cE1TrunkTimeArrayParserRuleCall_2_0_1 = (RuleCall)cE1Alternatives_2_0.eContents().get(1);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cCommaKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cE2Assignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cE2ExpressionParserRuleCall_3_1_0 = (RuleCall)cE2Assignment_3_1.eContents().get(0);
+		private final Alternatives cE2Alternatives_3_1_0 = (Alternatives)cE2Assignment_3_1.eContents().get(0);
+		private final RuleCall cE2ExpressionParserRuleCall_3_1_0_0 = (RuleCall)cE2Alternatives_3_1_0.eContents().get(0);
+		private final RuleCall cE2TrunkTimeArrayParserRuleCall_3_1_0_1 = (RuleCall)cE2Alternatives_3_1_0.eContents().get(1);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//ExternalFunction:
 		//
-		//	(ref=[Declaration] | TafCfs | Month) "(" e1=Expression ("," e2+=Expression)* ")";
+		//	(ref=[Declaration] | TafCfs | Month) "(" e1=(Expression | TrunkTimeArray) ("," e2+=(Expression | TrunkTimeArray))*
+		//
+		//	")";
 		public ParserRule getRule() { return rule; }
 
-		//(ref=[Declaration] | TafCfs | Month) "(" e1=Expression ("," e2+=Expression)* ")"
+		//(ref=[Declaration] | TafCfs | Month) "(" e1=(Expression | TrunkTimeArray) ("," e2+=(Expression | TrunkTimeArray))* ")"
 		public Group getGroup() { return cGroup; }
 
 		//ref=[Declaration] | TafCfs | Month
@@ -3884,26 +3890,132 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
-		//e1=Expression
+		//e1=(Expression | TrunkTimeArray)
 		public Assignment getE1Assignment_2() { return cE1Assignment_2; }
 
-		//Expression
-		public RuleCall getE1ExpressionParserRuleCall_2_0() { return cE1ExpressionParserRuleCall_2_0; }
+		//Expression | TrunkTimeArray
+		public Alternatives getE1Alternatives_2_0() { return cE1Alternatives_2_0; }
 
-		//("," e2+=Expression)*
+		//Expression
+		public RuleCall getE1ExpressionParserRuleCall_2_0_0() { return cE1ExpressionParserRuleCall_2_0_0; }
+
+		//TrunkTimeArray
+		public RuleCall getE1TrunkTimeArrayParserRuleCall_2_0_1() { return cE1TrunkTimeArrayParserRuleCall_2_0_1; }
+
+		//("," e2+=(Expression | TrunkTimeArray))*
 		public Group getGroup_3() { return cGroup_3; }
 
 		//","
 		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
 
-		//e2+=Expression
+		//e2+=(Expression | TrunkTimeArray)
 		public Assignment getE2Assignment_3_1() { return cE2Assignment_3_1; }
 
+		//Expression | TrunkTimeArray
+		public Alternatives getE2Alternatives_3_1_0() { return cE2Alternatives_3_1_0; }
+
 		//Expression
-		public RuleCall getE2ExpressionParserRuleCall_3_1_0() { return cE2ExpressionParserRuleCall_3_1_0; }
+		public RuleCall getE2ExpressionParserRuleCall_3_1_0_0() { return cE2ExpressionParserRuleCall_3_1_0_0; }
+
+		//TrunkTimeArray
+		public RuleCall getE2TrunkTimeArrayParserRuleCall_3_1_0_1() { return cE2TrunkTimeArrayParserRuleCall_3_1_0_1; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+	}
+
+	public class TrunkTimeArrayElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TrunkTimeArray");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cRefAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cRefDeclarationCrossReference_0_0 = (CrossReference)cRefAssignment_0.eContents().get(0);
+		private final RuleCall cRefDeclarationIDTerminalRuleCall_0_0_1 = (RuleCall)cRefDeclarationCrossReference_0_0.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cT1Assignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cT1TrunkTimeArrayIndexParserRuleCall_2_0 = (RuleCall)cT1Assignment_2.eContents().get(0);
+		private final Keyword cColonKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cT2Assignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cT2TrunkTimeArrayIndexParserRuleCall_4_0 = (RuleCall)cT2Assignment_4.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//TrunkTimeArray:
+		//
+		//	ref=[Declaration] "(" t1=TrunkTimeArrayIndex ":" t2=TrunkTimeArrayIndex ")";
+		public ParserRule getRule() { return rule; }
+
+		//ref=[Declaration] "(" t1=TrunkTimeArrayIndex ":" t2=TrunkTimeArrayIndex ")"
+		public Group getGroup() { return cGroup; }
+
+		//ref=[Declaration]
+		public Assignment getRefAssignment_0() { return cRefAssignment_0; }
+
+		//[Declaration]
+		public CrossReference getRefDeclarationCrossReference_0_0() { return cRefDeclarationCrossReference_0_0; }
+
+		//ID
+		public RuleCall getRefDeclarationIDTerminalRuleCall_0_0_1() { return cRefDeclarationIDTerminalRuleCall_0_0_1; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+
+		//t1=TrunkTimeArrayIndex
+		public Assignment getT1Assignment_2() { return cT1Assignment_2; }
+
+		//TrunkTimeArrayIndex
+		public RuleCall getT1TrunkTimeArrayIndexParserRuleCall_2_0() { return cT1TrunkTimeArrayIndexParserRuleCall_2_0; }
+
+		//":"
+		public Keyword getColonKeyword_3() { return cColonKeyword_3; }
+
+		//t2=TrunkTimeArrayIndex
+		public Assignment getT2Assignment_4() { return cT2Assignment_4; }
+
+		//TrunkTimeArrayIndex
+		public RuleCall getT2TrunkTimeArrayIndexParserRuleCall_4_0() { return cT2TrunkTimeArrayIndexParserRuleCall_4_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_5() { return cRightParenthesisKeyword_5; }
+	}
+
+	public class TrunkTimeArrayIndexElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TrunkTimeArrayIndex");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cINTTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Keyword cHyphenMinusKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final RuleCall cINTTerminalRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
+		private final Assignment cRefAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
+		private final CrossReference cRefDeclarationCrossReference_2_0 = (CrossReference)cRefAssignment_2.eContents().get(0);
+		private final RuleCall cRefDeclarationIDTerminalRuleCall_2_0_1 = (RuleCall)cRefDeclarationCrossReference_2_0.eContents().get(1);
+		
+		//TrunkTimeArrayIndex:
+		//
+		//	INT | "-" INT | ref=[Declaration];
+		public ParserRule getRule() { return rule; }
+
+		//INT | "-" INT | ref=[Declaration]
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//INT
+		public RuleCall getINTTerminalRuleCall_0() { return cINTTerminalRuleCall_0; }
+
+		//"-" INT
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"-"
+		public Keyword getHyphenMinusKeyword_1_0() { return cHyphenMinusKeyword_1_0; }
+
+		//INT
+		public RuleCall getINTTerminalRuleCall_1_1() { return cINTTerminalRuleCall_1_1; }
+
+		//ref=[Declaration]
+		public Assignment getRefAssignment_2() { return cRefAssignment_2; }
+
+		//[Declaration]
+		public CrossReference getRefDeclarationCrossReference_2_0() { return cRefDeclarationCrossReference_2_0; }
+
+		//ID
+		public RuleCall getRefDeclarationIDTerminalRuleCall_2_0_1() { return cRefDeclarationIDTerminalRuleCall_2_0_1; }
 	}
 
 	public class MaxFunctionElements extends AbstractParserRuleElementFinder {
@@ -5076,6 +5188,8 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	private TermElements pTerm;
 	private FunctionElements pFunction;
 	private ExternalFunctionElements pExternalFunction;
+	private TrunkTimeArrayElements pTrunkTimeArray;
+	private TrunkTimeArrayIndexElements pTrunkTimeArrayIndex;
 	private MaxFunctionElements pMaxFunction;
 	private MinFunctionElements pMinFunction;
 	private ModFunctionElements pModFunction;
@@ -5977,13 +6091,37 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ExternalFunction:
 	//
-	//	(ref=[Declaration] | TafCfs | Month) "(" e1=Expression ("," e2+=Expression)* ")";
+	//	(ref=[Declaration] | TafCfs | Month) "(" e1=(Expression | TrunkTimeArray) ("," e2+=(Expression | TrunkTimeArray))*
+	//
+	//	")";
 	public ExternalFunctionElements getExternalFunctionAccess() {
 		return (pExternalFunction != null) ? pExternalFunction : (pExternalFunction = new ExternalFunctionElements());
 	}
 	
 	public ParserRule getExternalFunctionRule() {
 		return getExternalFunctionAccess().getRule();
+	}
+
+	//TrunkTimeArray:
+	//
+	//	ref=[Declaration] "(" t1=TrunkTimeArrayIndex ":" t2=TrunkTimeArrayIndex ")";
+	public TrunkTimeArrayElements getTrunkTimeArrayAccess() {
+		return (pTrunkTimeArray != null) ? pTrunkTimeArray : (pTrunkTimeArray = new TrunkTimeArrayElements());
+	}
+	
+	public ParserRule getTrunkTimeArrayRule() {
+		return getTrunkTimeArrayAccess().getRule();
+	}
+
+	//TrunkTimeArrayIndex:
+	//
+	//	INT | "-" INT | ref=[Declaration];
+	public TrunkTimeArrayIndexElements getTrunkTimeArrayIndexAccess() {
+		return (pTrunkTimeArrayIndex != null) ? pTrunkTimeArrayIndex : (pTrunkTimeArrayIndex = new TrunkTimeArrayIndexElements());
+	}
+	
+	public ParserRule getTrunkTimeArrayIndexRule() {
+		return getTrunkTimeArrayIndexAccess().getRule();
 	}
 
 	//MaxFunction:

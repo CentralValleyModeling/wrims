@@ -4,6 +4,8 @@ package gov.ca.dwr.wresl.xtext.editor.wreslEditor;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.ecore.EObject;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>External Function</b></em>'.
@@ -59,12 +61,12 @@ public interface ExternalFunction extends Function
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>E1</em>' containment reference.
-   * @see #setE1(Expression)
+   * @see #setE1(EObject)
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getExternalFunction_E1()
    * @model containment="true"
    * @generated
    */
-  Expression getE1();
+  EObject getE1();
 
   /**
    * Sets the value of the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalFunction#getE1 <em>E1</em>}' containment reference.
@@ -74,11 +76,11 @@ public interface ExternalFunction extends Function
    * @see #getE1()
    * @generated
    */
-  void setE1(Expression value);
+  void setE1(EObject value);
 
   /**
    * Returns the value of the '<em><b>E2</b></em>' containment reference list.
-   * The list contents are of type {@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Expression}.
+   * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>E2</em>' containment reference list isn't clear,
@@ -90,6 +92,6 @@ public interface ExternalFunction extends Function
    * @model containment="true"
    * @generated
    */
-  EList<Expression> getE2();
+  EList<EObject> getE2();
 
 } // ExternalFunction
