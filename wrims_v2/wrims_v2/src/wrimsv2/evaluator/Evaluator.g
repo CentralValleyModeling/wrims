@@ -264,7 +264,7 @@ argFunction returns [EvalExpression ee] @init{ArrayList<ArrayList<EvalExpression
     };
 
 trunk_timeArray returns[ArrayList<EvalExpression> eeArray] @init{eeArray = new ArrayList<EvalExpression>(); IntDouble start=new IntDouble(1, true);  IntDouble end=new IntDouble(1, true);}
-  : i0=IDENT '(' (n1=INTEGER{start=ValueEvaluation.term_INTEGER($n1.text);}|i1=IDENT{start=ValueEvaluation.term_IDENT($i1.text);}) ':' (n2=INTEGER{end=ValueEvaluation.term_INTEGER($n2.text);}|i2=IDENT{end=ValueEvaluation.term_IDENT($i2.text);}) ')' 
+  : i0=IDENT '(' (n1=integer{start=ValueEvaluation.term_INTEGER($n1.text);}|i1=IDENT{start=ValueEvaluation.term_IDENT($i1.text);}) ':' (n2=integer{end=ValueEvaluation.term_INTEGER($n2.text);}|i2=IDENT{end=ValueEvaluation.term_IDENT($i2.text);}) ')' 
   {
     eeArray=Evaluation.trunk_timeArray($i0.text, start, end);
   }
@@ -356,6 +356,10 @@ number
 	: INTEGER 
 	| FLOAT
 	;
+	
+integer : integer_p|integer_n ;
+integer_p : INTEGER ;
+integer_n : '-' INTEGER ;
 
 MULTILINE_COMMENT : '/*' .* '*/' {$channel = HIDDEN;} ;
 

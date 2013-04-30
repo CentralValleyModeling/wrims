@@ -1004,10 +1004,7 @@ varID : ID ;
 func_arg: expr_add|trunk_timeArray;
 
 trunk_timeArray
-  : v1=varID '(' (INT|v2=varID) ':' (INT|v3=varID) ')'
-  {dependants.add($v2.text);
-   dependants.add($v3.text);
-  };  
+  : v1=varID '(' (integer|v2=varID{dependants.add($v2.text);}) ':' (integer|v3=varID{dependants.add($v3.text);}) ')';  
 	
 number : integer | real ;
 number_p : integer_p | real_p ;
