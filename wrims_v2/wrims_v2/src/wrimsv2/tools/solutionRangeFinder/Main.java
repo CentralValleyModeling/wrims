@@ -1,4 +1,4 @@
-package wrimsv2.tools.nonuniqueSolutionDetector;
+package wrimsv2.tools.solutionRangeFinder;
 
 import java.io.BufferedReader;
 import java.io.File;
