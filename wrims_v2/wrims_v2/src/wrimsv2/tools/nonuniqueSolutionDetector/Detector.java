@@ -1,6 +1,7 @@
 package wrimsv2.tools.nonuniqueSolutionDetector;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import org.apache.commons.io.FilenameUtils;
@@ -44,7 +45,9 @@ public class Detector {
 		// write report
 		if (varsRange!=null && varsRange.size()>0) {
 			String reportPath = FilenameUtils.removeExtension(mpmPath) + "_variable_range.csv";
-			Misc.writeReport(varsRange, reportPath);
+			PrintWriter rp = Misc.openReportFile(reportPath);
+			Misc.writeReport(varsRange, rp);
+			rp.close();
 		} else {
 			
 			System.out.println("no alternative solution detected.");

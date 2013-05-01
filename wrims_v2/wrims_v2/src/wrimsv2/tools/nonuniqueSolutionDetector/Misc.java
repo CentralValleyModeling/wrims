@@ -15,13 +15,58 @@ import wrimsv2.wreslplus.elements.Tools;
 
 public class Misc {
 
-	protected static void writeReport(LinkedHashMap<String, double[]> varRange, String filePath) {
+	static PrintWriter openReportFile(String filePath) {
 		
 		File f = new File(filePath);
 		String file = f.getName();
 		String dir = new File(f.getParent()).getAbsolutePath();
 		
-		writeReport(varRange, dir, file);
+		PrintWriter reportFile = null;
+		
+		try {
+			reportFile = Tools.openFile(dir, file);
+			
+			reportFile.println("VariableName,LowerBound,UpperBound,Difference,PercentageDifference");
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return reportFile;
+		
+	}
+
+	
+//	protected static void writeReport(LinkedHashMap<String, double[]> varRange, String filePath) {
+//		
+//		File f = new File(filePath);
+//		String file = f.getName();
+//		String dir = new File(f.getParent()).getAbsolutePath();
+//		
+//		writeReport(varRange, dir, file);
+//		
+//	}
+
+	protected static void writeReport(LinkedHashMap<String, double[]> varRange, PrintWriter reportFile) {
+		
+
+
+			
+			for (String varName: varRange.keySet()){
+				
+				double[] range = varRange.get(varName);
+				double diff = range[1] - range[0];
+				double diff_percent = 100*diff/Math.max(Math.abs(range[1]), Math.abs(range[0]));
+				
+				// for excel view
+				reportFile.println(varName+","+(float)range[0] + ","+(float)range[1]+ ","+(float)diff+ ","+(float)diff_percent+"%");
+				reportFile.flush();
+			
+			
+			}
+			
+
 		
 	}
 	
@@ -30,12 +75,16 @@ public class Misc {
 		try {
 			PrintWriter reportFile = Tools.openFile(dir, fileName);
 			
+			reportFile.println("VariableName,LowerBound,UpperBound,Difference,PercentageDifference");
+			
 			for (String varName: varRange.keySet()){
 				
 				double[] range = varRange.get(varName);
+				double diff = range[1] - range[0];
+				double diff_percent = 100*diff/Math.max(Math.abs(range[1]), Math.abs(range[0]));
 				
 				// for excel view
-				reportFile.println(varName+","+(float)range[0] + ","+(float)range[1]);
+				reportFile.println(varName+","+(float)range[0] + ","+(float)range[1]+ ","+(float)diff+ ","+(float)diff_percent+"%");
 				reportFile.flush();
 			}
 			

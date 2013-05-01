@@ -75,17 +75,17 @@ public class AltSolutionFinder {
 			// log search model
 			
 			//TODO: sSolver.model searchObjFunc is wrong
-			//MPModelUtils.toLpSolve(sSolver.model, lpsDir, lpsFileNamePrepend+"_search_"+i+".lps");
+			if (DetectorParam.lpsLogging) MPModelUtils.toLpSolve(sSolver.model, lpsDir, lpsFileNamePrepend+"_search_"+i+".lps");
 	
 			// TODO: if solve fail then need to skip current obj function and continue to next search
 			// TODO: need to log solver fail for that specific variable
 			if (sSolver.solve()!=0) {
-				System.err.println("# Error ... problem in alt solution search ...");
-				continue;
+				System.err.println("# Error ... no optimal solution for search variable: "+sv);
+				if (DetectorParam.continueOnErrors) continue;
 			}
 
 			System.out.println("obj value: "+sSolver.solver.objectiveValue());
-			System.out.println("solution: "+sSolver.solution);
+			if (DetectorParam.showSolutionInConsole) System.out.println("solution: "+sSolver.solution);
 
 			// TODO: simplify this
 			boolean hasNewObjValue = false;
