@@ -61,7 +61,8 @@ options {
                                         RecognitionException e) {
         String hdr = getErrorHeader(e);
         String msg = getErrorMessage(e, tokenNames);
-        LogUtils.errMsg("@parser "+ hdr + " " + msg);
+        //LogUtils.errMsg("@parser "+ hdr + " " + msg);
+        LogUtils.errMsgLocation(currentAbsolutePath, e.line, msg);
         number_of_errors++;
     }
 }
