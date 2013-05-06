@@ -11,6 +11,9 @@ options {
   package scripting.grammar;
   import java.util.Map;
   import java.util.LinkedHashMap;
+  import java.util.Arrays;
+  import java.util.HashSet;
+  import java.util.Set;
 }
 @lexer::header {
   package scripting.grammar;
@@ -22,6 +25,36 @@ options {
       public Map<String, ArrayList<String>> transferMap = new LinkedHashMap<String, ArrayList<String>>();
       //public ArrayList<String> varList = new ArrayList<String>();
       public ArrayList<String> t = new ArrayList<String>();
+      public static Set<String> reservedKeys = new HashSet<String>(Arrays.asList
+        ( "wreslplus" 
+          ,"mainfile"
+          ,"solver"   
+					,"initfile"
+					,"initfpart"
+					,"svarfile" 
+					,"svarapart"
+					,"svarfpart"
+					,"dvarfile"                    
+					,"timestep"
+					,"startyear" 
+					,"startmonth"
+					,"startday"
+					,"numberofsteps"
+					,"stopyear"
+					,"stopmonth"
+					,"stopday" 
+					,"groundwaterdir"
+					,"showwresllog"
+					,"sendaliastodvar"
+					,"prefixinittodvarfile"
+					,"lpsolveconfigfile"
+					,"lpsolvenumberofretries"
+					,"ilpmaximumfractiondigits"
+					,"ilplog"  
+					,"ilplogformat" 
+					,"ilplogvarvalue" 
+
+         ));
 }
 
 
@@ -65,69 +98,47 @@ configFile : ENDLINE* 'Begin' 'Config' ENDLINE+
 configItem returns[String key, String val ]
 	: 
 
-    k=configKey  v=anything     ENDLINE+
-   { $key=$k.text; $val=$v.text;  }
+    k=configKey         { $key=$k.text;  System.out.print("key: "+$k.text);System.out.print("\t");} 
+    ( v1=integer        { $val=$v1.text; System.out.println($v1.text);}  
+    | v2=complex        { $val=$v2.text; System.out.println($v2.text);} 
+    //| v3=complex   { $val=$v3.text; }
+    ) 
+    ENDLINE+
+   
    //{ System.out.println($k.text); System.out.println($v.text); }
    ;
 
+integer : INT ;
+complex : INT?  ( ID | '.' | '-' | '\"' | '\\' )+ ;
 
 
 //anything: .+;
+//anything:  INT? ( ID | '.' | '-' | '\"' | '\\' )*  
 
-anything:  INT? ( ID | '.' | '-' | '\"' | '\\' )* ;
 
-//solverName : ID ;
-//fileName:  ID '.' ID ;
-//dssPartID : INT? ( ID | '-' )* ;
-//timeStepValue : INT? ID ;
-//
-//
-//path_literal : '\"'  .+ '\"' ;
-//
-//dirPath : upperDir* normalDir* ID   '\\'? ;
-//filePath : upperDir* normalDir* fileName ?  ;
-//
-//upperDir : '..\\' ;
-//normalDir : ID  '\\' ;
-
-configKey
-	: 
- 'MainFile'
-|'Solver'   
-|'InitFile'
-|'InitFPart'
-|'SvarFile' 
-|'SvarAPart'
-|'SvarFPart'
-|'DvarFile'                    
-|'TimeStep'
-|'StartYear' 
-|'StartMonth'
-|'NumberOfSteps'
-|'StopYear'
-|'StopMonth' 
-|'GroundwaterDir'
-|'ShowWreslLog'
-|'SendAliasToDvar'
-|'PrefixInitToDvarFile'
-|'LpSolveConfigFile'
-|'LpSolveNumberOfRetries'
-|'IlpMaximumFractionDigits'
+configKey : ke=ID 
+{ 
+    
+    if (!reservedKeys.contains( $ke.text.toLowerCase() ) ) 
+    { throw new RuntimeException("Error! "+$ke.text + " is not a recognized keyword in the config file!" ); } 
+}
 ;
+
 
 SL_COMMENT : '#' ~('\r'|'\n')*  {$channel=HIDDEN;} ;
 
-REAL :   Digit+ '.' Digit* ;
 
-INT :   Digit+ ;
-
+INT : Digit+ ;
 
 ID : Letter ( Letter | Digit | '_' )*;
 
+//Others: ~('\r'|'\n'|'\t'|' '|'/')+ ;
 
 fragment Letter : 'a'..'z' | 'A'..'Z';
 
 fragment Digit : '0'..'9';
+
+
 
 WS : (' ' | '\t' ) {$channel=HIDDEN;};
 
