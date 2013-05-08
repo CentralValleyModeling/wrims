@@ -4,10 +4,10 @@ generate wreslEditor "http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor"
 
 WreslEvaluator:
 	(pattern+=Pattern | ifincitem+=IfIncItems)+
-	| ((initial=Initial)? sequence+=Sequence+ model+=Model+)| Declaration;
+	| ((initial=Initial)? sequence+=Sequence+ (group+=Group+)? model+=Model+ )| Declaration;
 
 Pattern:
-	Variable | IncludeFile | IncludeModel | Goal | Objective;
+	Variable | IncludeFile | IncludeModel | IncludeGroup | Goal | Objective;
 
 Declaration:
 	'Declare' '{' name=ID '}';
@@ -167,6 +167,9 @@ GoalSimple:
 Constraint:
 	lhs=Expression operator=('<' | '>' | '=') rhs=Expression;
 
+Group:
+	("group" | "GROUP") name=ID '{' (pattern+=Pattern|ifincitems+=IfIncItems)+ '}';
+
 Model:
 	("model" | "MODEL") name=ID '{' (pattern+=Pattern|ifincitems+=IfIncItems)+ '}';
 
@@ -278,6 +281,9 @@ IncludeFile:
 
 IncludeModel:
 	("include" | "INCLUDE") ('model' | 'MODEL') ID;
+
+IncludeGroup:
+	("include" | "INCLUDE") ('group' | 'GROUP') ID;
 
 SpecialIdent: TafCfs|DaysIn|WaterYear|Month|Day|CalendarMonth|PrevMonth|I;
 
