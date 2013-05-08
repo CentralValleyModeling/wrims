@@ -62,10 +62,16 @@ import wrimsv2.wreslparser.elements.SimulationDataSet;
 import wrimsv2.wreslparser.elements.StudyParser;
 import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslparser.grammar.WreslTreeWalker;
+import wrimsv2.wreslplus.elements.AliasTemp;
+import wrimsv2.wreslplus.elements.DvarTemp;
 import wrimsv2.wreslplus.elements.GoalTemp;
+import wrimsv2.wreslplus.elements.IfIncItemGroup;
 import wrimsv2.wreslplus.elements.ModelTemp;
 import wrimsv2.wreslplus.elements.ParserUtils;
 import wrimsv2.wreslplus.elements.StudyTemp;
+import wrimsv2.wreslplus.elements.SvarTemp;
+import wrimsv2.wreslplus.elements.Tools;
+import wrimsv2.wreslplus.elements.procedures.ProcIfIncItemGroup;
 
 public class DebugInterface {
 	private ServerSocket requestSocket;
@@ -689,6 +695,9 @@ public class DebugInterface {
 						}
 					}
 				}
+				ArrayList<String> varIfInc = getVariableIfInc(modelTemp);
+				sortedList.remove(varIfInc);
+				sortedList.addAll(varIfInc);
 			}
 		}else{
 			modelTemp = ParserUtils.parseWreslFile(fileFullPath);
@@ -740,6 +749,9 @@ public class DebugInterface {
 					}
 				}
 			}
+			ArrayList<String> varIfInc = getVariableIfInc(modelTemp);
+			sortedList.remove(varIfInc);
+			sortedList.addAll(varIfInc);
 		}
 		IntDouble intDouble;
 		Collections.sort(sortedList);
@@ -790,6 +802,88 @@ public class DebugInterface {
 		if (dataString.endsWith("#")) dataString=dataString.substring(0, dataString.length()-1);
 		
 		return dataString;
+	}
+	
+	public ArrayList<String> getVariableIfInc(ModelTemp modelTemp){
+		ArrayList<String> varList= new ArrayList<String>();
+		ArrayList<String> ifIncItemGroupIDList = modelTemp.ifIncItemGroupIDList;
+		Map<String, IfIncItemGroup> ifIncItemGroupMap = modelTemp.ifIncItemGroupMap;
+		for (int i=0; i<ifIncItemGroupIDList.size(); i++){
+			IfIncItemGroup ifIncItemGroup=ifIncItemGroupMap.get(ifIncItemGroupIDList.get(i));
+			varList.removeAll(ifIncItemGroup.dependants);
+			varList.addAll(ifIncItemGroup.dependants);
+			ArrayList<Boolean> conditionValueList = ProcIfIncItemGroup.evaluateConditions(Tools.allToLowerCase(ifIncItemGroup.conditionList));
+			int j=0;
+			while (!conditionValueList.get(j)){
+				j=j+1;
+			}
+			
+			ArrayList<HashMap<String, SvarTemp>> inc_svar_map_list = ifIncItemGroup.inc_svar_map_list;
+			HashMap<String, SvarTemp> inc_svar_map = inc_svar_map_list.get(i);
+			Set<String> svarNames = inc_svar_map.keySet();
+			varList.addAll(svarNames);
+			Iterator<String> iterator = svarNames.iterator();
+			while (iterator.hasNext()){
+				String svarName = iterator.next();
+				SvarTemp svar = inc_svar_map.get(svarName);
+				Set<String> dependants = svar.dependants;
+				varList.removeAll(dependants);
+				varList.addAll(dependants);
+			}
+							
+			ArrayList<HashMap<String, DvarTemp>> inc_dvar_map_list = ifIncItemGroup.inc_dvar_map_list;
+			HashMap<String, DvarTemp> inc_dvar_map = inc_dvar_map_list.get(i);
+			Set<String> dvarNames = inc_dvar_map.keySet();
+			varList.addAll(dvarNames);
+			iterator = dvarNames.iterator();
+			while (iterator.hasNext()){
+				String dvarName = iterator.next();
+				DvarTemp dvar = inc_dvar_map.get(dvarName);
+				Set<String> dependants = dvar.dependants;
+				varList.removeAll(dependants);
+				varList.addAll(dependants);
+			}
+			
+			ArrayList<HashMap<String, AliasTemp>> inc_alias_map_list = ifIncItemGroup.inc_alias_map_list;
+			HashMap<String, AliasTemp> inc_alias_map = inc_alias_map_list.get(i);
+			Set<String> aliasNames = inc_alias_map.keySet();
+			varList.addAll(aliasNames);
+			iterator = aliasNames.iterator();
+			while (iterator.hasNext()){
+				String aliasName = iterator.next();
+				AliasTemp alias = inc_alias_map.get(aliasName);
+				Set<String> dependants = alias.dependants;
+				varList.removeAll(dependants);
+				varList.addAll(dependants);
+			}
+			
+			ArrayList<HashMap<String, GoalTemp>> inc_goalSimple_map_list = ifIncItemGroup.inc_goalSimple_map_list;
+			HashMap<String, GoalTemp> inc_goalSimple_map = inc_goalSimple_map_list.get(i);
+			Set<String> goalSimpleNames = inc_goalSimple_map.keySet();
+			iterator = goalSimpleNames.iterator();
+			while (iterator.hasNext()){
+				String goalSimpleName = iterator.next();
+				GoalTemp goalSimple = inc_goalSimple_map.get(goalSimpleName);
+				Set<String> dependants = goalSimple.dependants;
+				varList.removeAll(dependants);
+				varList.addAll(dependants);
+			}
+			
+			ArrayList<HashMap<String, GoalTemp>> inc_goalComplex_map_list = ifIncItemGroup.inc_goalComplex_map_list;
+			HashMap<String, GoalTemp> inc_goalComplex_map = inc_goalComplex_map_list.get(i);
+			Set<String> goalComplexNames = inc_goalComplex_map.keySet();
+			iterator = goalComplexNames.iterator();
+			while (iterator.hasNext()){
+				String goalComplexName = iterator.next();
+				GoalTemp goalComplex = inc_goalComplex_map.get(goalComplexName);
+				Set<String> dependants = goalComplex.dependants;
+				varList.removeAll(dependants);
+				varList.addAll(dependants);
+			}
+			
+			varList.addAll(ifIncItemGroup.inc_timeseries_map_list.get(i).keySet());
+		}
+		return varList;
 	}
 	
 	public String getGoalInOneFile(String fileFullPath){
@@ -895,11 +989,39 @@ public class DebugInterface {
 			for (String model: modelList){
 				ModelTemp modelTemp = modelMap.get(model);
 				sortedGoalList.addAll(modelTemp.glList);
+				ArrayList<String> ifIncItemGroupIDList = modelTemp.ifIncItemGroupIDList;
+				Map<String, IfIncItemGroup> ifIncItemGroupMap = modelTemp.ifIncItemGroupMap;
+				for (int i=0; i<ifIncItemGroupIDList.size(); i++){
+					IfIncItemGroup ifIncItemGroup=ifIncItemGroupMap.get(ifIncItemGroupIDList.get(i));
+					ArrayList<Boolean> conditionValueList = ProcIfIncItemGroup.evaluateConditions(Tools.allToLowerCase(ifIncItemGroup.conditionList));
+					int j=0;
+					while (!conditionValueList.get(j)){
+						j=j+1;
+					}
+					HashMap<String, GoalTemp> simpleGoals = ifIncItemGroup.inc_goalSimple_map_list.get(i);
+					HashMap<String, GoalTemp> complexGoals = ifIncItemGroup.inc_goalComplex_map_list.get(i);
+					sortedGoalList.addAll(simpleGoals.keySet());
+					sortedGoalList.addAll(complexGoals.keySet());
+				}
 			}
 		}else{
 			ModelTemp modelTemp = ParserUtils.parseWreslFile(fileFullPath);
 			if (modelTemp==null) return goalString;	
 			sortedGoalList = modelTemp.glList;
+			ArrayList<String> ifIncItemGroupIDList = modelTemp.ifIncItemGroupIDList;
+			Map<String, IfIncItemGroup> ifIncItemGroupMap = modelTemp.ifIncItemGroupMap;
+			for (int i=0; i<ifIncItemGroupIDList.size(); i++){
+				IfIncItemGroup ifIncItemGroup=ifIncItemGroupMap.get(ifIncItemGroupIDList.get(i));
+				ArrayList<Boolean> conditionValueList = ProcIfIncItemGroup.evaluateConditions(Tools.allToLowerCase(ifIncItemGroup.conditionList));
+				int j=0;
+				while (!conditionValueList.get(j)){
+					j=j+1;
+				}
+				HashMap<String, GoalTemp> simpleGoals = ifIncItemGroup.inc_goalSimple_map_list.get(i);
+				HashMap<String, GoalTemp> complexGoals = ifIncItemGroup.inc_goalComplex_map_list.get(i);
+				sortedGoalList.addAll(simpleGoals.keySet());
+				sortedGoalList.addAll(complexGoals.keySet());
+			}
 		}
 		
 		Collections.sort(sortedGoalList);
