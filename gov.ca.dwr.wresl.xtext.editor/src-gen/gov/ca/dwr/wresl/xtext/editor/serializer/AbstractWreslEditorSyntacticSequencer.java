@@ -52,6 +52,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	protected AbstractElementAlias match_GoalCase_LHSKeyword_0_1_or_LhsKeyword_0_0;
 	protected AbstractElementAlias match_GoalNoCaseContent_RHSKeyword_0_1_or_RhsKeyword_0_0;
 	protected AbstractElementAlias match_Goal_GOALKeyword_0_1_or_GoalKeyword_0_0;
+	protected AbstractElementAlias match_Group_GROUPKeyword_0_1_or_GroupKeyword_0_0;
 	protected AbstractElementAlias match_IncludeFile_INCLUDEKeyword_0_1_or_IncludeKeyword_0_0;
 	protected AbstractElementAlias match_Initial_INITIALKeyword_0_2_or_InitialKeyword_0_0_or_InitialKeyword_0_1;
 	protected AbstractElementAlias match_LhsGtRhs_CONSTRAINKeyword_3_0_1_1_or_ConstrainKeyword_3_0_1_0;
@@ -66,6 +67,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	protected AbstractElementAlias match_Multiply_AsteriskKeyword_1_0_0_or_SolidusKeyword_1_0_1;
 	protected AbstractElementAlias match_Objective_EqualsSignKeyword_3_q;
 	protected AbstractElementAlias match_Objective_OBJECTIVEKeyword_0_1_or_ObjectiveKeyword_0_0;
+	protected AbstractElementAlias match_Pattern_IncludeGroupParserRuleCall_3_or_IncludeModelParserRuleCall_2;
 	protected AbstractElementAlias match_Penalty_PENALTYKeyword_0_1_or_PenaltyKeyword_0_0;
 	protected AbstractElementAlias match_SVarDSS_CONVERTKeyword_6_0_1_or_ConvertKeyword_6_0_0;
 	protected AbstractElementAlias match_SVarDSS_KINDKeyword_2_1_or_KindKeyword_2_0;
@@ -128,6 +130,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 		match_GoalCase_LHSKeyword_0_1_or_LhsKeyword_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getGoalCaseAccess().getLHSKeyword_0_1()), new TokenAlias(false, false, grammarAccess.getGoalCaseAccess().getLhsKeyword_0_0()));
 		match_GoalNoCaseContent_RHSKeyword_0_1_or_RhsKeyword_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getGoalNoCaseContentAccess().getRHSKeyword_0_1()), new TokenAlias(false, false, grammarAccess.getGoalNoCaseContentAccess().getRhsKeyword_0_0()));
 		match_Goal_GOALKeyword_0_1_or_GoalKeyword_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getGoalAccess().getGOALKeyword_0_1()), new TokenAlias(false, false, grammarAccess.getGoalAccess().getGoalKeyword_0_0()));
+		match_Group_GROUPKeyword_0_1_or_GroupKeyword_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getGroupAccess().getGROUPKeyword_0_1()), new TokenAlias(false, false, grammarAccess.getGroupAccess().getGroupKeyword_0_0()));
 		match_IncludeFile_INCLUDEKeyword_0_1_or_IncludeKeyword_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getIncludeFileAccess().getINCLUDEKeyword_0_1()), new TokenAlias(false, false, grammarAccess.getIncludeFileAccess().getIncludeKeyword_0_0()));
 		match_Initial_INITIALKeyword_0_2_or_InitialKeyword_0_0_or_InitialKeyword_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getInitialAccess().getINITIALKeyword_0_2()), new TokenAlias(false, false, grammarAccess.getInitialAccess().getInitialKeyword_0_0()), new TokenAlias(false, false, grammarAccess.getInitialAccess().getInitialKeyword_0_1()));
 		match_LhsGtRhs_CONSTRAINKeyword_3_0_1_1_or_ConstrainKeyword_3_0_1_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getLhsGtRhsAccess().getCONSTRAINKeyword_3_0_1_1()), new TokenAlias(false, false, grammarAccess.getLhsGtRhsAccess().getConstrainKeyword_3_0_1_0()));
@@ -142,6 +145,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 		match_Multiply_AsteriskKeyword_1_0_0_or_SolidusKeyword_1_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getMultiplyAccess().getAsteriskKeyword_1_0_0()), new TokenAlias(false, false, grammarAccess.getMultiplyAccess().getSolidusKeyword_1_0_1()));
 		match_Objective_EqualsSignKeyword_3_q = new TokenAlias(false, true, grammarAccess.getObjectiveAccess().getEqualsSignKeyword_3());
 		match_Objective_OBJECTIVEKeyword_0_1_or_ObjectiveKeyword_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getObjectiveAccess().getOBJECTIVEKeyword_0_1()), new TokenAlias(false, false, grammarAccess.getObjectiveAccess().getObjectiveKeyword_0_0()));
+		match_Pattern_IncludeGroupParserRuleCall_3_or_IncludeModelParserRuleCall_2 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getPatternAccess().getIncludeGroupParserRuleCall_3()), new TokenAlias(false, false, grammarAccess.getPatternAccess().getIncludeModelParserRuleCall_2()));
 		match_Penalty_PENALTYKeyword_0_1_or_PenaltyKeyword_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getPenaltyAccess().getPENALTYKeyword_0_1()), new TokenAlias(false, false, grammarAccess.getPenaltyAccess().getPenaltyKeyword_0_0()));
 		match_SVarDSS_CONVERTKeyword_6_0_1_or_ConvertKeyword_6_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getSVarDSSAccess().getCONVERTKeyword_6_0_1()), new TokenAlias(false, false, grammarAccess.getSVarDSSAccess().getConvertKeyword_6_0_0()));
 		match_SVarDSS_KINDKeyword_2_1_or_KindKeyword_2_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getSVarDSSAccess().getKINDKeyword_2_1()), new TokenAlias(false, false, grammarAccess.getSVarDSSAccess().getKindKeyword_2_0()));
@@ -191,6 +195,8 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 			return getINTFUNCToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getIfRule())
 			return getIfToken(semanticObject, ruleCall, node);
+		else if(ruleCall.getRule() == grammarAccess.getIncludeGroupRule())
+			return getIncludeGroupToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getIncludeModelRule())
 			return getIncludeModelToken(semanticObject, ruleCall, node);
 		else if(ruleCall.getRule() == grammarAccess.getLOGRule())
@@ -321,6 +327,16 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 		if (node != null)
 			return getTokenText(node);
 		return "If";
+	}
+	
+	/**
+	 * IncludeGroup:
+	 * 	("include" | "INCLUDE") ('group' | 'GROUP') ID;
+	 */
+	protected String getIncludeGroupToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "includegroup";
 	}
 	
 	/**
@@ -559,6 +575,8 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 				emit_GoalNoCaseContent_RHSKeyword_0_1_or_RhsKeyword_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_Goal_GOALKeyword_0_1_or_GoalKeyword_0_0.equals(syntax))
 				emit_Goal_GOALKeyword_0_1_or_GoalKeyword_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_Group_GROUPKeyword_0_1_or_GroupKeyword_0_0.equals(syntax))
+				emit_Group_GROUPKeyword_0_1_or_GroupKeyword_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_IncludeFile_INCLUDEKeyword_0_1_or_IncludeKeyword_0_0.equals(syntax))
 				emit_IncludeFile_INCLUDEKeyword_0_1_or_IncludeKeyword_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_Initial_INITIALKeyword_0_2_or_InitialKeyword_0_0_or_InitialKeyword_0_1.equals(syntax))
@@ -587,6 +605,8 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 				emit_Objective_EqualsSignKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_Objective_OBJECTIVEKeyword_0_1_or_ObjectiveKeyword_0_0.equals(syntax))
 				emit_Objective_OBJECTIVEKeyword_0_1_or_ObjectiveKeyword_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_Pattern_IncludeGroupParserRuleCall_3_or_IncludeModelParserRuleCall_2.equals(syntax))
+				emit_Pattern_IncludeGroupParserRuleCall_3_or_IncludeModelParserRuleCall_2(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_Penalty_PENALTYKeyword_0_1_or_PenaltyKeyword_0_0.equals(syntax))
 				emit_Penalty_PENALTYKeyword_0_1_or_PenaltyKeyword_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_SVarDSS_CONVERTKeyword_6_0_1_or_ConvertKeyword_6_0_0.equals(syntax))
@@ -643,7 +663,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 
 	/**
 	 * Syntax:
-	 *     '-' | '+'
+	 *     '+' | '-'
 	 */
 	protected void emit_Add_HyphenMinusKeyword_1_0_1_or_PlusSignKeyword_1_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -651,7 +671,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'ALIAS' | 'alias'
+	 *     'alias' | 'ALIAS'
 	 */
 	protected void emit_Alias_ALIASKeyword_5_1_or_AliasKeyword_5_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -667,7 +687,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'KIND' | 'kind'
+	 *     'kind' | 'KIND'
 	 */
 	protected void emit_Alias_KINDKeyword_7_0_1_or_KindKeyword_7_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -707,7 +727,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'CONST' | 'const' | 'Const'
+	 *     'const' | 'Const' | 'CONST'
 	 */
 	protected void emit_ConstDef_CONSTKeyword_0_1_or_ConstKeyword_0_0_or_ConstKeyword_0_2(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -715,7 +735,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'integer' | 'INTEGER'
+	 *     'INTEGER' | 'integer'
 	 */
 	protected void emit_DVarIntegerNonStd_INTEGERKeyword_0_1_or_IntegerKeyword_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -723,7 +743,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'kind' | 'KIND'
+	 *     'KIND' | 'kind'
 	 */
 	protected void emit_DVarIntegerNonStd_KINDKeyword_2_1_or_KindKeyword_2_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -755,7 +775,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'std' | 'STD'
+	 *     'STD' | 'std'
 	 */
 	protected void emit_DVarIntegerStd_STDKeyword_1_1_or_StdKeyword_1_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -763,7 +783,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'UNITS' | 'units'
+	 *     'units' | 'UNITS'
 	 */
 	protected void emit_DVarIntegerStd_UNITSKeyword_4_1_or_UnitsKeyword_4_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -787,7 +807,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'kind' | 'KIND'
+	 *     'KIND' | 'kind'
 	 */
 	protected void emit_DVarStd_KINDKeyword_1_1_or_KindKeyword_1_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -795,7 +815,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'STD' | 'std'
+	 *     'std' | 'STD'
 	 */
 	protected void emit_DVarStd_STDKeyword_0_1_or_StdKeyword_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -811,7 +831,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'DEFINE' | 'define'
+	 *     'define' | 'DEFINE'
 	 */
 	protected void emit_DvarDef_DEFINEKeyword_0_0_1_or_DefineKeyword_0_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -819,7 +839,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'dvar' | 'Dvar' | 'DVAR'
+	 *     'DVAR' | 'dvar' | 'Dvar'
 	 */
 	protected void emit_DvarDef_DVARKeyword_1_0_1_or_DvarKeyword_1_0_0_or_DvarKeyword_1_0_2(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -859,7 +879,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'f90' | 'F90'
+	 *     'F90' | 'f90'
 	 */
 	protected void emit_External_F90Keyword_1_1_1_0_or_F90Keyword_1_1_1_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -867,7 +887,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'CASE' | 'case'
+	 *     'case' | 'CASE'
 	 */
 	protected void emit_GoalCaseContent_CASEKeyword_0_1_or_CaseKeyword_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -875,7 +895,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'RHS' | 'rhs'
+	 *     'rhs' | 'RHS'
 	 */
 	protected void emit_GoalCaseContent_RHSKeyword_4_1_or_RhsKeyword_4_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -891,7 +911,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'RHS' | 'rhs'
+	 *     'rhs' | 'RHS'
 	 */
 	protected void emit_GoalNoCaseContent_RHSKeyword_0_1_or_RhsKeyword_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -907,6 +927,14 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
+	 *     'group' | 'GROUP'
+	 */
+	protected void emit_Group_GROUPKeyword_0_1_or_GroupKeyword_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Syntax:
 	 *     'include' | 'INCLUDE'
 	 */
 	protected void emit_IncludeFile_INCLUDEKeyword_0_1_or_IncludeKeyword_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -915,7 +943,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'initial' | 'Initial' | 'INITIAL'
+	 *     'INITIAL' | 'Initial' | 'initial'
 	 */
 	protected void emit_Initial_INITIALKeyword_0_2_or_InitialKeyword_0_0_or_InitialKeyword_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -939,7 +967,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'RHS' | 'rhs'
+	 *     'rhs' | 'RHS'
 	 */
 	protected void emit_LhsGtRhs_RHSKeyword_2_1_or_RhsKeyword_2_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -955,7 +983,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'LHS' | 'lhs'
+	 *     'lhs' | 'LHS'
 	 */
 	protected void emit_LhsLtRhs_LHSKeyword_0_1_or_LhsKeyword_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -963,7 +991,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'RHS' | 'rhs'
+	 *     'rhs' | 'RHS'
 	 */
 	protected void emit_LhsLtRhs_RHSKeyword_2_1_or_RhsKeyword_2_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -971,7 +999,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'lower' | 'LOWER'
+	 *     'LOWER' | 'lower'
 	 */
 	protected void emit_Lower_LOWERKeyword_0_1_or_LowerKeyword_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -987,7 +1015,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'MODEL' | 'model'
+	 *     'model' | 'MODEL'
 	 */
 	protected void emit_Model_MODELKeyword_0_1_or_ModelKeyword_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -995,7 +1023,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     '/' | '*'
+	 *     '*' | '/'
 	 */
 	protected void emit_Multiply_AsteriskKeyword_1_0_0_or_SolidusKeyword_1_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -1019,6 +1047,14 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
+	 *     IncludeModel | IncludeGroup
+	 */
+	protected void emit_Pattern_IncludeGroupParserRuleCall_3_or_IncludeModelParserRuleCall_2(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Syntax:
 	 *     'PENALTY' | 'penalty'
 	 */
 	protected void emit_Penalty_PENALTYKeyword_0_1_or_PenaltyKeyword_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -1027,7 +1063,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'CONVERT' | 'convert'
+	 *     'convert' | 'CONVERT'
 	 */
 	protected void emit_SVarDSS_CONVERTKeyword_6_0_1_or_ConvertKeyword_6_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -1043,7 +1079,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'timeseries' | 'TIMESERIES'
+	 *     'TIMESERIES' | 'timeseries'
 	 */
 	protected void emit_SVarDSS_TIMESERIESKeyword_0_1_or_TimeseriesKeyword_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -1051,7 +1087,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'units' | 'UNITS'
+	 *     'UNITS' | 'units'
 	 */
 	protected void emit_SVarDSS_UNITSKeyword_4_1_or_UnitsKeyword_4_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -1075,7 +1111,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'sequence' | 'SEQUENCE'
+	 *     'SEQUENCE' | 'sequence'
 	 */
 	protected void emit_Sequence_SEQUENCEKeyword_0_1_or_SequenceKeyword_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -1115,7 +1151,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'Svar' | 'SVAR' | 'svar'
+	 *     'svar' | 'Svar' | 'SVAR'
 	 */
 	protected void emit_SvarDef_SVARKeyword_1_0_1_or_SvarKeyword_1_0_0_or_SvarKeyword_1_0_2(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -1147,7 +1183,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'USE' | 'use'
+	 *     'use' | 'USE'
 	 */
 	protected void emit_TableContent_USEKeyword_4_2_1_or_UseKeyword_4_2_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -1155,7 +1191,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     'where' | 'WHERE'
+	 *     'WHERE' | 'where'
 	 */
 	protected void emit_TableContent_WHEREKeyword_5_0_1_or_WhereKeyword_5_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -1163,7 +1199,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     ID | SpecialIdent | Number
+	 *     SpecialIdent | ID | Number
 	 */
 	protected void emit_TermSimple_IDTerminalRuleCall_0_or_NumberParserRuleCall_1_or_SpecialIdentParserRuleCall_3(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -1179,7 +1215,7 @@ public abstract class AbstractWreslEditorSyntacticSequencer extends AbstractSynt
 	
 	/**
 	 * Syntax:
-	 *     ('+' | Negation)?
+	 *     (Negation | '+')?
 	 */
 	protected void emit_Unary___NegationParserRuleCall_0_1_or_PlusSignKeyword_0_0__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

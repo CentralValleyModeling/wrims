@@ -345,6 +345,11 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
         return createConstraintAdapter();
       }
       @Override
+      public Adapter caseGroup(Group object)
+      {
+        return createGroupAdapter();
+      }
+      @Override
       public Adapter caseModel(Model object)
       {
         return createModelAdapter();
@@ -1317,6 +1322,21 @@ public class WreslEditorAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createConstraintAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Group <em>Group</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Group
+   * @generated
+   */
+  public Adapter createGroupAdapter()
   {
     return null;
   }

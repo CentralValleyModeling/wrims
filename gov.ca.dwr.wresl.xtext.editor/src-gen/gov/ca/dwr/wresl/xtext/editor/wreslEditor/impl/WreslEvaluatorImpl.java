@@ -2,6 +2,7 @@
  */
 package gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl;
 
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Group;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Initial;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Model;
@@ -37,6 +38,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEvaluatorImpl#getIfincitem <em>Ifincitem</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEvaluatorImpl#getInitial <em>Initial</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEvaluatorImpl#getSequence <em>Sequence</em>}</li>
+ *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEvaluatorImpl#getGroup <em>Group</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEvaluatorImpl#getModel <em>Model</em>}</li>
  * </ul>
  * </p>
@@ -84,6 +86,16 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
    * @ordered
    */
   protected EList<Sequence> sequence;
+
+  /**
+   * The cached value of the '{@link #getGroup() <em>Group</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getGroup()
+   * @generated
+   * @ordered
+   */
+  protected EList<Group> group;
 
   /**
    * The cached value of the '{@link #getModel() <em>Model</em>}' containment reference list.
@@ -211,6 +223,20 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Group> getGroup()
+  {
+    if (group == null)
+    {
+      group = new EObjectContainmentEList<Group>(Group.class, this, WreslEditorPackage.WRESL_EVALUATOR__GROUP);
+    }
+    return group;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<Model> getModel()
   {
     if (model == null)
@@ -238,6 +264,8 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
         return basicSetInitial(null, msgs);
       case WreslEditorPackage.WRESL_EVALUATOR__SEQUENCE:
         return ((InternalEList<?>)getSequence()).basicRemove(otherEnd, msgs);
+      case WreslEditorPackage.WRESL_EVALUATOR__GROUP:
+        return ((InternalEList<?>)getGroup()).basicRemove(otherEnd, msgs);
       case WreslEditorPackage.WRESL_EVALUATOR__MODEL:
         return ((InternalEList<?>)getModel()).basicRemove(otherEnd, msgs);
     }
@@ -262,6 +290,8 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
         return getInitial();
       case WreslEditorPackage.WRESL_EVALUATOR__SEQUENCE:
         return getSequence();
+      case WreslEditorPackage.WRESL_EVALUATOR__GROUP:
+        return getGroup();
       case WreslEditorPackage.WRESL_EVALUATOR__MODEL:
         return getModel();
     }
@@ -294,6 +324,10 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
         getSequence().clear();
         getSequence().addAll((Collection<? extends Sequence>)newValue);
         return;
+      case WreslEditorPackage.WRESL_EVALUATOR__GROUP:
+        getGroup().clear();
+        getGroup().addAll((Collection<? extends Group>)newValue);
+        return;
       case WreslEditorPackage.WRESL_EVALUATOR__MODEL:
         getModel().clear();
         getModel().addAll((Collection<? extends Model>)newValue);
@@ -324,6 +358,9 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
       case WreslEditorPackage.WRESL_EVALUATOR__SEQUENCE:
         getSequence().clear();
         return;
+      case WreslEditorPackage.WRESL_EVALUATOR__GROUP:
+        getGroup().clear();
+        return;
       case WreslEditorPackage.WRESL_EVALUATOR__MODEL:
         getModel().clear();
         return;
@@ -349,6 +386,8 @@ public class WreslEvaluatorImpl extends MinimalEObjectImpl.Container implements 
         return initial != null;
       case WreslEditorPackage.WRESL_EVALUATOR__SEQUENCE:
         return sequence != null && !sequence.isEmpty();
+      case WreslEditorPackage.WRESL_EVALUATOR__GROUP:
+        return group != null && !group.isEmpty();
       case WreslEditorPackage.WRESL_EVALUATOR__MODEL:
         return model != null && !model.isEmpty();
     }

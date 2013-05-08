@@ -103,13 +103,22 @@ public interface WreslEditorPackage extends EPackage
   int WRESL_EVALUATOR__SEQUENCE = 3;
 
   /**
+   * The feature id for the '<em><b>Group</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int WRESL_EVALUATOR__GROUP = 4;
+
+  /**
    * The feature id for the '<em><b>Model</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int WRESL_EVALUATOR__MODEL = 4;
+  int WRESL_EVALUATOR__MODEL = 5;
 
   /**
    * The number of structural features of the '<em>Wresl Evaluator</em>' class.
@@ -118,7 +127,7 @@ public interface WreslEditorPackage extends EPackage
    * @generated
    * @ordered
    */
-  int WRESL_EVALUATOR_FEATURE_COUNT = 5;
+  int WRESL_EVALUATOR_FEATURE_COUNT = 6;
 
   /**
    * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.PatternImpl <em>Pattern</em>}' class.
@@ -193,6 +202,15 @@ public interface WreslEditorPackage extends EPackage
    * @ordered
    */
   int DECLARATION__SEQUENCE = WRESL_EVALUATOR__SEQUENCE;
+
+  /**
+   * The feature id for the '<em><b>Group</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DECLARATION__GROUP = WRESL_EVALUATOR__GROUP;
 
   /**
    * The feature id for the '<em><b>Model</b></em>' containment reference list.
@@ -1357,7 +1375,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getFunction()
    * @generated
    */
-  int FUNCTION = 66;
+  int FUNCTION = 67;
 
   /**
    * The number of structural features of the '<em>Function</em>' class.
@@ -2209,6 +2227,52 @@ public interface WreslEditorPackage extends EPackage
   int CONSTRAINT_FEATURE_COUNT = 3;
 
   /**
+   * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GroupImpl <em>Group</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GroupImpl
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getGroup()
+   * @generated
+   */
+  int GROUP = 54;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GROUP__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Pattern</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GROUP__PATTERN = 1;
+
+  /**
+   * The feature id for the '<em><b>Ifincitems</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GROUP__IFINCITEMS = 2;
+
+  /**
+   * The number of structural features of the '<em>Group</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GROUP_FEATURE_COUNT = 3;
+
+  /**
    * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ModelImpl <em>Model</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2216,7 +2280,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getModel()
    * @generated
    */
-  int MODEL = 54;
+  int MODEL = 55;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2262,7 +2326,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getInitial()
    * @generated
    */
-  int INITIAL = 55;
+  int INITIAL = 56;
 
   /**
    * The feature id for the '<em><b>Pattern</b></em>' containment reference list.
@@ -2290,7 +2354,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getSequence()
    * @generated
    */
-  int SEQUENCE = 56;
+  int SEQUENCE = 57;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2345,7 +2409,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getCondition()
    * @generated
    */
-  int CONDITION = 57;
+  int CONDITION = 58;
 
   /**
    * The feature id for the '<em><b>Logical</b></em>' containment reference.
@@ -2373,7 +2437,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getConditionalUnary()
    * @generated
    */
-  int CONDITIONAL_UNARY = 59;
+  int CONDITIONAL_UNARY = 60;
 
   /**
    * The number of structural features of the '<em>Conditional Unary</em>' class.
@@ -2392,7 +2456,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getConditionalTerm()
    * @generated
    */
-  int CONDITIONAL_TERM = 60;
+  int CONDITIONAL_TERM = 61;
 
   /**
    * The feature id for the '<em><b>E1</b></em>' containment reference.
@@ -2429,7 +2493,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getLogicalExpression()
    * @generated
    */
-  int LOGICAL_EXPRESSION = 58;
+  int LOGICAL_EXPRESSION = 59;
 
   /**
    * The feature id for the '<em><b>E1</b></em>' containment reference.
@@ -2484,7 +2548,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getExpression()
    * @generated
    */
-  int EXPRESSION = 61;
+  int EXPRESSION = 62;
 
   /**
    * The number of structural features of the '<em>Expression</em>' class.
@@ -2503,7 +2567,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getAdd()
    * @generated
    */
-  int ADD = 62;
+  int ADD = 63;
 
   /**
    * The feature id for the '<em><b>M1</b></em>' containment reference.
@@ -2540,7 +2604,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getMultiply()
    * @generated
    */
-  int MULTIPLY = 63;
+  int MULTIPLY = 64;
 
   /**
    * The feature id for the '<em><b>U1</b></em>' containment reference.
@@ -2577,7 +2641,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getUnary()
    * @generated
    */
-  int UNARY = 64;
+  int UNARY = 65;
 
   /**
    * The number of structural features of the '<em>Unary</em>' class.
@@ -2596,7 +2660,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getTerm()
    * @generated
    */
-  int TERM = 65;
+  int TERM = 66;
 
   /**
    * The feature id for the '<em><b>Ref</b></em>' reference.
@@ -2660,7 +2724,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getExternalFunction()
    * @generated
    */
-  int EXTERNAL_FUNCTION = 67;
+  int EXTERNAL_FUNCTION = 68;
 
   /**
    * The feature id for the '<em><b>Ref</b></em>' reference.
@@ -2706,7 +2770,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getTrunkTimeArray()
    * @generated
    */
-  int TRUNK_TIME_ARRAY = 68;
+  int TRUNK_TIME_ARRAY = 69;
 
   /**
    * The feature id for the '<em><b>Ref</b></em>' reference.
@@ -2752,7 +2816,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getTrunkTimeArrayIndex()
    * @generated
    */
-  int TRUNK_TIME_ARRAY_INDEX = 69;
+  int TRUNK_TIME_ARRAY_INDEX = 70;
 
   /**
    * The feature id for the '<em><b>Ref</b></em>' reference.
@@ -2780,7 +2844,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getMaxFunction()
    * @generated
    */
-  int MAX_FUNCTION = 70;
+  int MAX_FUNCTION = 71;
 
   /**
    * The feature id for the '<em><b>E1</b></em>' containment reference.
@@ -2817,7 +2881,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getMinFunction()
    * @generated
    */
-  int MIN_FUNCTION = 71;
+  int MIN_FUNCTION = 72;
 
   /**
    * The feature id for the '<em><b>E1</b></em>' containment reference.
@@ -2854,7 +2918,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getModFunction()
    * @generated
    */
-  int MOD_FUNCTION = 72;
+  int MOD_FUNCTION = 73;
 
   /**
    * The feature id for the '<em><b>E1</b></em>' containment reference.
@@ -2891,7 +2955,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getIntFunction()
    * @generated
    */
-  int INT_FUNCTION = 73;
+  int INT_FUNCTION = 74;
 
   /**
    * The feature id for the '<em><b>E</b></em>' containment reference.
@@ -2919,7 +2983,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getAbsFunction()
    * @generated
    */
-  int ABS_FUNCTION = 74;
+  int ABS_FUNCTION = 75;
 
   /**
    * The feature id for the '<em><b>E</b></em>' containment reference.
@@ -2947,7 +3011,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getPowFunction()
    * @generated
    */
-  int POW_FUNCTION = 75;
+  int POW_FUNCTION = 76;
 
   /**
    * The feature id for the '<em><b>E1</b></em>' containment reference.
@@ -2984,7 +3048,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getLogFunction()
    * @generated
    */
-  int LOG_FUNCTION = 76;
+  int LOG_FUNCTION = 77;
 
   /**
    * The feature id for the '<em><b>E</b></em>' containment reference.
@@ -3012,7 +3076,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getVarModel()
    * @generated
    */
-  int VAR_MODEL = 77;
+  int VAR_MODEL = 78;
 
   /**
    * The feature id for the '<em><b>Ref1</b></em>' reference.
@@ -3049,7 +3113,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getVarModelStep()
    * @generated
    */
-  int VAR_MODEL_STEP = 78;
+  int VAR_MODEL_STEP = 79;
 
   /**
    * The feature id for the '<em><b>Ref1</b></em>' reference.
@@ -3095,7 +3159,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getVarModelIndex()
    * @generated
    */
-  int VAR_MODEL_INDEX = 79;
+  int VAR_MODEL_INDEX = 80;
 
   /**
    * The feature id for the '<em><b>Ref1</b></em>' reference.
@@ -3123,7 +3187,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getVarModelIndexStep()
    * @generated
    */
-  int VAR_MODEL_INDEX_STEP = 80;
+  int VAR_MODEL_INDEX_STEP = 81;
 
   /**
    * The feature id for the '<em><b>Ref1</b></em>' reference.
@@ -3160,7 +3224,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getIdent()
    * @generated
    */
-  int IDENT = 81;
+  int IDENT = 82;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3188,7 +3252,7 @@ public interface WreslEditorPackage extends EPackage
    * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getIncludeFile()
    * @generated
    */
-  int INCLUDE_FILE = 82;
+  int INCLUDE_FILE = 83;
 
   /**
    * The feature id for the '<em><b>Local</b></em>' attribute.
@@ -3271,6 +3335,17 @@ public interface WreslEditorPackage extends EPackage
    * @generated
    */
   EReference getWreslEvaluator_Sequence();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getGroup <em>Group</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Group</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getGroup()
+   * @see #getWreslEvaluator()
+   * @generated
+   */
+  EReference getWreslEvaluator_Group();
 
   /**
    * Returns the meta object for the containment reference list '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getModel <em>Model</em>}'.
@@ -4716,6 +4791,49 @@ public interface WreslEditorPackage extends EPackage
   EReference getConstraint_Rhs();
 
   /**
+   * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Group <em>Group</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Group</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Group
+   * @generated
+   */
+  EClass getGroup();
+
+  /**
+   * Returns the meta object for the attribute '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Group#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Group#getName()
+   * @see #getGroup()
+   * @generated
+   */
+  EAttribute getGroup_Name();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Group#getPattern <em>Pattern</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Pattern</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Group#getPattern()
+   * @see #getGroup()
+   * @generated
+   */
+  EReference getGroup_Pattern();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Group#getIfincitems <em>Ifincitems</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Ifincitems</em>'.
+   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.Group#getIfincitems()
+   * @see #getGroup()
+   * @generated
+   */
+  EReference getGroup_Ifincitems();
+
+  /**
    * Returns the meta object for class '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Model <em>Model</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -5619,6 +5737,14 @@ public interface WreslEditorPackage extends EPackage
      * @generated
      */
     EReference WRESL_EVALUATOR__SEQUENCE = eINSTANCE.getWreslEvaluator_Sequence();
+
+    /**
+     * The meta object literal for the '<em><b>Group</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference WRESL_EVALUATOR__GROUP = eINSTANCE.getWreslEvaluator_Group();
 
     /**
      * The meta object literal for the '<em><b>Model</b></em>' containment reference list feature.
@@ -6813,6 +6939,40 @@ public interface WreslEditorPackage extends EPackage
      * @generated
      */
     EReference CONSTRAINT__RHS = eINSTANCE.getConstraint_Rhs();
+
+    /**
+     * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GroupImpl <em>Group</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.GroupImpl
+     * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.WreslEditorPackageImpl#getGroup()
+     * @generated
+     */
+    EClass GROUP = eINSTANCE.getGroup();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute GROUP__NAME = eINSTANCE.getGroup_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Pattern</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference GROUP__PATTERN = eINSTANCE.getGroup_Pattern();
+
+    /**
+     * The meta object literal for the '<em><b>Ifincitems</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference GROUP__IFINCITEMS = eINSTANCE.getGroup_Ifincitems();
 
     /**
      * The meta object literal for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.ModelImpl <em>Model</em>}' class.

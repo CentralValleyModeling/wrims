@@ -27,6 +27,7 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCase;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalCaseContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalNoCaseContent;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.GoalSimple;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Group;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Ident;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfTerm;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IncludeFile;
@@ -255,6 +256,12 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 			case WreslEditorPackage.GOAL_SIMPLE:
 				if(context == grammarAccess.getGoalSimpleRule()) {
 					sequence_GoalSimple(context, (GoalSimple) semanticObject); 
+					return; 
+				}
+				else break;
+			case WreslEditorPackage.GROUP:
+				if(context == grammarAccess.getGroupRule()) {
+					sequence_Group(context, (Group) semanticObject); 
 					return; 
 				}
 				else break;
@@ -890,6 +897,15 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
+	 *     (name=ID (pattern+=Pattern | ifincitems+=IfIncItems)+)
+	 */
+	protected void sequence_Group(EObject context, Group semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     name=ID
 	 */
 	protected void sequence_Ident(EObject context, Ident semanticObject) {
@@ -1427,7 +1443,7 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     ((pattern+=Pattern | ifincitem+=IfIncItems)+ | (initial=Initial? sequence+=Sequence+ model+=Model+))
+	 *     ((pattern+=Pattern | ifincitem+=IfIncItems)+ | (initial=Initial? sequence+=Sequence+ group+=Group? model+=Model+))
 	 */
 	protected void sequence_WreslEvaluator(EObject context, WreslEvaluator semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

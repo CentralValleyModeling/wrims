@@ -12,6 +12,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//WreslEvaluator/ifincitem"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//WreslEvaluator/initial"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//WreslEvaluator/sequence"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//WreslEvaluator/group"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//WreslEvaluator/model"/>
     </genClasses>
     <genClasses ecoreClass="WreslEditor.ecore#//Pattern">
@@ -192,6 +193,11 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//Constraint/lhs"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WreslEditor.ecore#//Constraint/operator"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//Constraint/rhs"/>
+    </genClasses>
+    <genClasses ecoreClass="WreslEditor.ecore#//Group">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WreslEditor.ecore#//Group/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//Group/pattern"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//Group/ifincitems"/>
     </genClasses>
     <genClasses ecoreClass="WreslEditor.ecore#//Model">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute WreslEditor.ecore#//Model/name"/>

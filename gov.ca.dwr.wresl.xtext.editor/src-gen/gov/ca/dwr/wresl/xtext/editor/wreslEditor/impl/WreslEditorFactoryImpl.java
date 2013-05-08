@@ -118,6 +118,7 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
       case WreslEditorPackage.PENALTY: return createPenalty();
       case WreslEditorPackage.GOAL_SIMPLE: return createGoalSimple();
       case WreslEditorPackage.CONSTRAINT: return createConstraint();
+      case WreslEditorPackage.GROUP: return createGroup();
       case WreslEditorPackage.MODEL: return createModel();
       case WreslEditorPackage.INITIAL: return createInitial();
       case WreslEditorPackage.SEQUENCE: return createSequence();
@@ -744,6 +745,17 @@ public class WreslEditorFactoryImpl extends EFactoryImpl implements WreslEditorF
   {
     ConstraintImpl constraint = new ConstraintImpl();
     return constraint;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Group createGroup()
+  {
+    GroupImpl group = new GroupImpl();
+    return group;
   }
 
   /**
