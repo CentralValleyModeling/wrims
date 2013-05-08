@@ -130,6 +130,8 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getLhsLtRhsAccess().getAlternatives_3_0_1(), "rule__LhsLtRhs__Alternatives_3_0_1");
 					put(grammarAccess.getPenaltyAccess().getAlternatives_0(), "rule__Penalty__Alternatives_0");
 					put(grammarAccess.getConstraintAccess().getOperatorAlternatives_1_0(), "rule__Constraint__OperatorAlternatives_1_0");
+					put(grammarAccess.getGroupAccess().getAlternatives_0(), "rule__Group__Alternatives_0");
+					put(grammarAccess.getGroupAccess().getAlternatives_3(), "rule__Group__Alternatives_3");
 					put(grammarAccess.getModelAccess().getAlternatives_0(), "rule__Model__Alternatives_0");
 					put(grammarAccess.getModelAccess().getAlternatives_3(), "rule__Model__Alternatives_3");
 					put(grammarAccess.getInitialAccess().getAlternatives_0(), "rule__Initial__Alternatives_0");
@@ -157,6 +159,8 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIncludeFileAccess().getLocalAlternatives_1_1_0(), "rule__IncludeFile__LocalAlternatives_1_1_0");
 					put(grammarAccess.getIncludeModelAccess().getAlternatives_0(), "rule__IncludeModel__Alternatives_0");
 					put(grammarAccess.getIncludeModelAccess().getAlternatives_1(), "rule__IncludeModel__Alternatives_1");
+					put(grammarAccess.getIncludeGroupAccess().getAlternatives_0(), "rule__IncludeGroup__Alternatives_0");
+					put(grammarAccess.getIncludeGroupAccess().getAlternatives_1(), "rule__IncludeGroup__Alternatives_1");
 					put(grammarAccess.getSpecialIdentAccess().getAlternatives(), "rule__SpecialIdent__Alternatives");
 					put(grammarAccess.getTafCfsAccess().getAlternatives(), "rule__TafCfs__Alternatives");
 					put(grammarAccess.getDaysInAccess().getAlternatives(), "rule__DaysIn__Alternatives");
@@ -229,6 +233,7 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getLhsLtRhsAccess().getGroup_3_0(), "rule__LhsLtRhs__Group_3_0__0");
 					put(grammarAccess.getPenaltyAccess().getGroup(), "rule__Penalty__Group__0");
 					put(grammarAccess.getConstraintAccess().getGroup(), "rule__Constraint__Group__0");
+					put(grammarAccess.getGroupAccess().getGroup(), "rule__Group__Group__0");
 					put(grammarAccess.getModelAccess().getGroup(), "rule__Model__Group__0");
 					put(grammarAccess.getInitialAccess().getGroup(), "rule__Initial__Group__0");
 					put(grammarAccess.getSequenceAccess().getGroup(), "rule__Sequence__Group__0");
@@ -270,11 +275,13 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIncludeFileAccess().getGroup(), "rule__IncludeFile__Group__0");
 					put(grammarAccess.getIncludeFileAccess().getGroup_1(), "rule__IncludeFile__Group_1__0");
 					put(grammarAccess.getIncludeModelAccess().getGroup(), "rule__IncludeModel__Group__0");
+					put(grammarAccess.getIncludeGroupAccess().getGroup(), "rule__IncludeGroup__Group__0");
 					put(grammarAccess.getWreslEvaluatorAccess().getPatternAssignment_0_0(), "rule__WreslEvaluator__PatternAssignment_0_0");
 					put(grammarAccess.getWreslEvaluatorAccess().getIfincitemAssignment_0_1(), "rule__WreslEvaluator__IfincitemAssignment_0_1");
 					put(grammarAccess.getWreslEvaluatorAccess().getInitialAssignment_1_0(), "rule__WreslEvaluator__InitialAssignment_1_0");
 					put(grammarAccess.getWreslEvaluatorAccess().getSequenceAssignment_1_1(), "rule__WreslEvaluator__SequenceAssignment_1_1");
-					put(grammarAccess.getWreslEvaluatorAccess().getModelAssignment_1_2(), "rule__WreslEvaluator__ModelAssignment_1_2");
+					put(grammarAccess.getWreslEvaluatorAccess().getGroupAssignment_1_2(), "rule__WreslEvaluator__GroupAssignment_1_2");
+					put(grammarAccess.getWreslEvaluatorAccess().getModelAssignment_1_3(), "rule__WreslEvaluator__ModelAssignment_1_3");
 					put(grammarAccess.getDeclarationAccess().getNameAssignment_2(), "rule__Declaration__NameAssignment_2");
 					put(grammarAccess.getIfIncItemsAccess().getElseiftermAssignment_1(), "rule__IfIncItems__ElseiftermAssignment_1");
 					put(grammarAccess.getIfIncItemsAccess().getElsetermAssignment_2(), "rule__IfIncItems__ElsetermAssignment_2");
@@ -385,6 +392,9 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getConstraintAccess().getLhsAssignment_0(), "rule__Constraint__LhsAssignment_0");
 					put(grammarAccess.getConstraintAccess().getOperatorAssignment_1(), "rule__Constraint__OperatorAssignment_1");
 					put(grammarAccess.getConstraintAccess().getRhsAssignment_2(), "rule__Constraint__RhsAssignment_2");
+					put(grammarAccess.getGroupAccess().getNameAssignment_1(), "rule__Group__NameAssignment_1");
+					put(grammarAccess.getGroupAccess().getPatternAssignment_3_0(), "rule__Group__PatternAssignment_3_0");
+					put(grammarAccess.getGroupAccess().getIfincitemsAssignment_3_1(), "rule__Group__IfincitemsAssignment_3_1");
 					put(grammarAccess.getModelAccess().getNameAssignment_1(), "rule__Model__NameAssignment_1");
 					put(grammarAccess.getModelAccess().getPatternAssignment_3_0(), "rule__Model__PatternAssignment_3_0");
 					put(grammarAccess.getModelAccess().getIfincitemsAssignment_3_1(), "rule__Model__IfincitemsAssignment_3_1");
