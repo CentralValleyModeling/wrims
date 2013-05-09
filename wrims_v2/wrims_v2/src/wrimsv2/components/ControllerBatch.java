@@ -31,6 +31,7 @@ import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
 
 public class ControllerBatch {
 	
+	public ControllerBatch() {} // do nothing
 	
 	public ControllerBatch(String[] args) {
 		long startTimeInMillis = Calendar.getInstance().getTimeInMillis();
