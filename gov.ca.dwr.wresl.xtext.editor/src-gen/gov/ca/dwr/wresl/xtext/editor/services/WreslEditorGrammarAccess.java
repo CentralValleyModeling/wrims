@@ -31,22 +31,20 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cInitialInitialParserRuleCall_1_0_0 = (RuleCall)cInitialAssignment_1_0.eContents().get(0);
 		private final Assignment cSequenceAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cSequenceSequenceParserRuleCall_1_1_0 = (RuleCall)cSequenceAssignment_1_1.eContents().get(0);
-		private final Assignment cGroupAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cGroupGroupParserRuleCall_1_2_0 = (RuleCall)cGroupAssignment_1_2.eContents().get(0);
-		private final Assignment cModelAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
-		private final RuleCall cModelModelParserRuleCall_1_3_0 = (RuleCall)cModelAssignment_1_3.eContents().get(0);
+		private final Assignment cModelAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final Alternatives cModelAlternatives_1_2_0 = (Alternatives)cModelAssignment_1_2.eContents().get(0);
+		private final RuleCall cModelModelParserRuleCall_1_2_0_0 = (RuleCall)cModelAlternatives_1_2_0.eContents().get(0);
+		private final RuleCall cModelGroupParserRuleCall_1_2_0_1 = (RuleCall)cModelAlternatives_1_2_0.eContents().get(1);
 		private final RuleCall cDeclarationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//WreslEvaluator:
 		//
-		//	(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ group+=Group* model+=Model+ |
+		//	(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ model+=(Model | Group)+ |
 		//
 		//	Declaration;
 		public ParserRule getRule() { return rule; }
 
-		//(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ group+=Group* model+=Model+ |
-		//
-		//Declaration
+		//(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ model+=(Model | Group)+ | Declaration
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//(pattern+=Pattern | ifincitem+=IfIncItems)+
@@ -64,7 +62,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//IfIncItems
 		public RuleCall getIfincitemIfIncItemsParserRuleCall_0_1_0() { return cIfincitemIfIncItemsParserRuleCall_0_1_0; }
 
-		//initial=Initial? sequence+=Sequence+ group+=Group* model+=Model+
+		//initial=Initial? sequence+=Sequence+ model+=(Model | Group)+
 		public Group getGroup_1() { return cGroup_1; }
 
 		//initial=Initial?
@@ -79,17 +77,17 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//Sequence
 		public RuleCall getSequenceSequenceParserRuleCall_1_1_0() { return cSequenceSequenceParserRuleCall_1_1_0; }
 
-		//group+=Group*
-		public Assignment getGroupAssignment_1_2() { return cGroupAssignment_1_2; }
+		//model+=(Model | Group)+
+		public Assignment getModelAssignment_1_2() { return cModelAssignment_1_2; }
 
-		//Group
-		public RuleCall getGroupGroupParserRuleCall_1_2_0() { return cGroupGroupParserRuleCall_1_2_0; }
-
-		//model+=Model+
-		public Assignment getModelAssignment_1_3() { return cModelAssignment_1_3; }
+		//Model | Group
+		public Alternatives getModelAlternatives_1_2_0() { return cModelAlternatives_1_2_0; }
 
 		//Model
-		public RuleCall getModelModelParserRuleCall_1_3_0() { return cModelModelParserRuleCall_1_3_0; }
+		public RuleCall getModelModelParserRuleCall_1_2_0_0() { return cModelModelParserRuleCall_1_2_0_0; }
+
+		//Group
+		public RuleCall getModelGroupParserRuleCall_1_2_0_1() { return cModelGroupParserRuleCall_1_2_0_1; }
 
 		//Declaration
 		public RuleCall getDeclarationParserRuleCall_2() { return cDeclarationParserRuleCall_2; }
@@ -5404,7 +5402,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//WreslEvaluator:
 	//
-	//	(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ group+=Group* model+=Model+ |
+	//	(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ model+=(Model | Group)+ |
 	//
 	//	Declaration;
 	public WreslEvaluatorElements getWreslEvaluatorAccess() {

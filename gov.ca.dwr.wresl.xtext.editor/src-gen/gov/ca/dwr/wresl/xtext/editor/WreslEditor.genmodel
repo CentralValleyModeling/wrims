@@ -12,7 +12,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//WreslEvaluator/ifincitem"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//WreslEvaluator/initial"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//WreslEvaluator/sequence"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//WreslEvaluator/group"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference WreslEditor.ecore#//WreslEvaluator/model"/>
     </genClasses>
     <genClasses ecoreClass="WreslEditor.ecore#//Pattern">

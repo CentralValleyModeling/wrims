@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getIfincitem <em>Ifincitem</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getInitial <em>Initial</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getSequence <em>Sequence</em>}</li>
- *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getGroup <em>Group</em>}</li>
  *   <li>{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getModel <em>Model</em>}</li>
  * </ul>
  * </p>
@@ -104,24 +103,8 @@ public interface WreslEvaluator extends EObject
   EList<Sequence> getSequence();
 
   /**
-   * Returns the value of the '<em><b>Group</b></em>' containment reference list.
-   * The list contents are of type {@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Group}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Group</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Group</em>' containment reference list.
-   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEditorPackage#getWreslEvaluator_Group()
-   * @model containment="true"
-   * @generated
-   */
-  EList<Group> getGroup();
-
-  /**
    * Returns the value of the '<em><b>Model</b></em>' containment reference list.
-   * The list contents are of type {@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.Model}.
+   * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Model</em>' containment reference list isn't clear,
@@ -133,6 +116,6 @@ public interface WreslEvaluator extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<Model> getModel();
+  EList<EObject> getModel();
 
 } // WreslEvaluator

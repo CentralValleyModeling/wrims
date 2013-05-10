@@ -810,19 +810,9 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getWreslEvaluator_Group()
-  {
-    return (EReference)wreslEvaluatorEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getWreslEvaluator_Model()
   {
-    return (EReference)wreslEvaluatorEClass.getEStructuralFeatures().get(5);
+    return (EReference)wreslEvaluatorEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -3040,7 +3030,6 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     createEReference(wreslEvaluatorEClass, WRESL_EVALUATOR__IFINCITEM);
     createEReference(wreslEvaluatorEClass, WRESL_EVALUATOR__INITIAL);
     createEReference(wreslEvaluatorEClass, WRESL_EVALUATOR__SEQUENCE);
-    createEReference(wreslEvaluatorEClass, WRESL_EVALUATOR__GROUP);
     createEReference(wreslEvaluatorEClass, WRESL_EVALUATOR__MODEL);
 
     patternEClass = createEClass(PATTERN);
@@ -3424,8 +3413,7 @@ public class WreslEditorPackageImpl extends EPackageImpl implements WreslEditorP
     initEReference(getWreslEvaluator_Ifincitem(), this.getIfIncItems(), null, "ifincitem", null, 0, -1, WreslEvaluator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getWreslEvaluator_Initial(), this.getInitial(), null, "initial", null, 0, 1, WreslEvaluator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getWreslEvaluator_Sequence(), this.getSequence(), null, "sequence", null, 0, -1, WreslEvaluator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getWreslEvaluator_Group(), this.getGroup(), null, "group", null, 0, -1, WreslEvaluator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getWreslEvaluator_Model(), this.getModel(), null, "model", null, 0, -1, WreslEvaluator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getWreslEvaluator_Model(), ecorePackage.getEObject(), null, "model", null, 0, -1, WreslEvaluator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(patternEClass, Pattern.class, "Pattern", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPattern_Local(), ecorePackage.getEBoolean(), "local", null, 0, 1, Pattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

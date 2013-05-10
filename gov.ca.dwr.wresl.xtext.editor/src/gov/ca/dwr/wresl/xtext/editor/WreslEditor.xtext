@@ -4,7 +4,7 @@ generate wreslEditor "http://www.ca.gov/dwr/wresl/xtext/editor/WreslEditor"
 
 WreslEvaluator:
 	(pattern+=Pattern | ifincitem+=IfIncItems)+
-	| ((initial=Initial)? sequence+=Sequence+ group+=Group* model+=Model+ )| Declaration;
+	| ((initial=Initial)? sequence+=Sequence+ model+=(Model|Group)+ )| Declaration;
 
 Pattern:
 	Variable | IncludeFile | IncludeModel | IncludeGroup | Goal | Objective;

@@ -153,38 +153,38 @@ ruleWreslEvaluator returns [EObject current=null]
 )
 )+(
 (
-		{ 
-	        newCompositeNode(grammarAccess.getWreslEvaluatorAccess().getGroupGroupParserRuleCall_1_2_0()); 
-	    }
-		lv_group_4_0=ruleGroup		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getWreslEvaluatorRule());
-	        }
-       		add(
-       			$current, 
-       			"group",
-        		lv_group_4_0, 
-        		"Group");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)*(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getWreslEvaluatorAccess().getModelModelParserRuleCall_1_3_0()); 
+	        newCompositeNode(grammarAccess.getWreslEvaluatorAccess().getModelModelParserRuleCall_1_2_0_0()); 
 	    }
-		lv_model_5_0=ruleModel		{
+		lv_model_4_1=ruleModel		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getWreslEvaluatorRule());
 	        }
        		add(
        			$current, 
        			"model",
-        		lv_model_5_0, 
+        		lv_model_4_1, 
         		"Model");
 	        afterParserOrEnumRuleCall();
 	    }
+
+    |		{ 
+	        newCompositeNode(grammarAccess.getWreslEvaluatorAccess().getModelGroupParserRuleCall_1_2_0_1()); 
+	    }
+		lv_model_4_2=ruleGroup		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getWreslEvaluatorRule());
+	        }
+       		add(
+       			$current, 
+       			"model",
+        		lv_model_4_2, 
+        		"Group");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 
 )
 )+)
@@ -195,9 +195,9 @@ ruleWreslEvaluator returns [EObject current=null]
     { 
         newCompositeNode(grammarAccess.getWreslEvaluatorAccess().getDeclarationParserRuleCall_2()); 
     }
-    this_Declaration_6=ruleDeclaration
+    this_Declaration_5=ruleDeclaration
     {
-        $current = $this_Declaration_6.current;
+        $current = $this_Declaration_5.current;
         afterParserOrEnumRuleCall();
     }
 )

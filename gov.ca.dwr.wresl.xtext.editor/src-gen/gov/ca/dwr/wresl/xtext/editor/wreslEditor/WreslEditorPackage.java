@@ -103,22 +103,13 @@ public interface WreslEditorPackage extends EPackage
   int WRESL_EVALUATOR__SEQUENCE = 3;
 
   /**
-   * The feature id for the '<em><b>Group</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int WRESL_EVALUATOR__GROUP = 4;
-
-  /**
    * The feature id for the '<em><b>Model</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int WRESL_EVALUATOR__MODEL = 5;
+  int WRESL_EVALUATOR__MODEL = 4;
 
   /**
    * The number of structural features of the '<em>Wresl Evaluator</em>' class.
@@ -127,7 +118,7 @@ public interface WreslEditorPackage extends EPackage
    * @generated
    * @ordered
    */
-  int WRESL_EVALUATOR_FEATURE_COUNT = 6;
+  int WRESL_EVALUATOR_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.impl.PatternImpl <em>Pattern</em>}' class.
@@ -202,15 +193,6 @@ public interface WreslEditorPackage extends EPackage
    * @ordered
    */
   int DECLARATION__SEQUENCE = WRESL_EVALUATOR__SEQUENCE;
-
-  /**
-   * The feature id for the '<em><b>Group</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DECLARATION__GROUP = WRESL_EVALUATOR__GROUP;
 
   /**
    * The feature id for the '<em><b>Model</b></em>' containment reference list.
@@ -3337,17 +3319,6 @@ public interface WreslEditorPackage extends EPackage
   EReference getWreslEvaluator_Sequence();
 
   /**
-   * Returns the meta object for the containment reference list '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getGroup <em>Group</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Group</em>'.
-   * @see gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getGroup()
-   * @see #getWreslEvaluator()
-   * @generated
-   */
-  EReference getWreslEvaluator_Group();
-
-  /**
    * Returns the meta object for the containment reference list '{@link gov.ca.dwr.wresl.xtext.editor.wreslEditor.WreslEvaluator#getModel <em>Model</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -5737,14 +5708,6 @@ public interface WreslEditorPackage extends EPackage
      * @generated
      */
     EReference WRESL_EVALUATOR__SEQUENCE = eINSTANCE.getWreslEvaluator_Sequence();
-
-    /**
-     * The meta object literal for the '<em><b>Group</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference WRESL_EVALUATOR__GROUP = eINSTANCE.getWreslEvaluator_Group();
 
     /**
      * The meta object literal for the '<em><b>Model</b></em>' containment reference list feature.
