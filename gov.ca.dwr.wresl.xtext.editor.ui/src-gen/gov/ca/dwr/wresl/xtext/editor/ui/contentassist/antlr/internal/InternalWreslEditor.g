@@ -3177,6 +3177,28 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+rule__WreslEvaluator__ModelAlternatives_1_2_0
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getWreslEvaluatorAccess().getModelModelParserRuleCall_1_2_0_0()); }
+	ruleModel
+{ after(grammarAccess.getWreslEvaluatorAccess().getModelModelParserRuleCall_1_2_0_0()); }
+)
+
+    |(
+{ before(grammarAccess.getWreslEvaluatorAccess().getModelGroupParserRuleCall_1_2_0_1()); }
+	ruleGroup
+{ after(grammarAccess.getWreslEvaluatorAccess().getModelGroupParserRuleCall_1_2_0_1()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 rule__Pattern__Alternatives
     @init {
 		int stackSize = keepStackSize();
@@ -6883,7 +6905,6 @@ rule__WreslEvaluator__Group_1__2
     }
 :
 	rule__WreslEvaluator__Group_1__2__Impl
-	rule__WreslEvaluator__Group_1__3
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -6895,43 +6916,15 @@ rule__WreslEvaluator__Group_1__2__Impl
     }
 :
 (
-{ before(grammarAccess.getWreslEvaluatorAccess().getGroupAssignment_1_2()); }
-(rule__WreslEvaluator__GroupAssignment_1_2)*
-{ after(grammarAccess.getWreslEvaluatorAccess().getGroupAssignment_1_2()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__WreslEvaluator__Group_1__3
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-	rule__WreslEvaluator__Group_1__3__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__WreslEvaluator__Group_1__3__Impl
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
 (
-(
-{ before(grammarAccess.getWreslEvaluatorAccess().getModelAssignment_1_3()); }
-(rule__WreslEvaluator__ModelAssignment_1_3)
-{ after(grammarAccess.getWreslEvaluatorAccess().getModelAssignment_1_3()); }
+{ before(grammarAccess.getWreslEvaluatorAccess().getModelAssignment_1_2()); }
+(rule__WreslEvaluator__ModelAssignment_1_2)
+{ after(grammarAccess.getWreslEvaluatorAccess().getModelAssignment_1_2()); }
 )
 (
-{ before(grammarAccess.getWreslEvaluatorAccess().getModelAssignment_1_3()); }
-(rule__WreslEvaluator__ModelAssignment_1_3)*
-{ after(grammarAccess.getWreslEvaluatorAccess().getModelAssignment_1_3()); }
+{ before(grammarAccess.getWreslEvaluatorAccess().getModelAssignment_1_2()); }
+(rule__WreslEvaluator__ModelAssignment_1_2)*
+{ after(grammarAccess.getWreslEvaluatorAccess().getModelAssignment_1_2()); }
 )
 )
 
@@ -6939,8 +6932,6 @@ rule__WreslEvaluator__Group_1__3__Impl
 finally {
 	restoreStackSize(stackSize);
 }
-
-
 
 
 
@@ -19892,29 +19883,15 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__WreslEvaluator__GroupAssignment_1_2
+rule__WreslEvaluator__ModelAssignment_1_2
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getWreslEvaluatorAccess().getGroupGroupParserRuleCall_1_2_0()); }
-	ruleGroup{ after(grammarAccess.getWreslEvaluatorAccess().getGroupGroupParserRuleCall_1_2_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__WreslEvaluator__ModelAssignment_1_3
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getWreslEvaluatorAccess().getModelModelParserRuleCall_1_3_0()); }
-	ruleModel{ after(grammarAccess.getWreslEvaluatorAccess().getModelModelParserRuleCall_1_3_0()); }
+{ before(grammarAccess.getWreslEvaluatorAccess().getModelAlternatives_1_2_0()); }
+(rule__WreslEvaluator__ModelAlternatives_1_2_0)
+{ after(grammarAccess.getWreslEvaluatorAccess().getModelAlternatives_1_2_0()); }
 )
 
 ;

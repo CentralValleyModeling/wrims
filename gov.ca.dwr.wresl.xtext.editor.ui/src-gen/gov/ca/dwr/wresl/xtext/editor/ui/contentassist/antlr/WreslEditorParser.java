@@ -39,6 +39,7 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 				{
 					put(grammarAccess.getWreslEvaluatorAccess().getAlternatives(), "rule__WreslEvaluator__Alternatives");
 					put(grammarAccess.getWreslEvaluatorAccess().getAlternatives_0(), "rule__WreslEvaluator__Alternatives_0");
+					put(grammarAccess.getWreslEvaluatorAccess().getModelAlternatives_1_2_0(), "rule__WreslEvaluator__ModelAlternatives_1_2_0");
 					put(grammarAccess.getPatternAccess().getAlternatives(), "rule__Pattern__Alternatives");
 					put(grammarAccess.getVariableAccess().getAlternatives(), "rule__Variable__Alternatives");
 					put(grammarAccess.getStateVariableAccess().getAlternatives(), "rule__StateVariable__Alternatives");
@@ -280,8 +281,7 @@ public class WreslEditorParser extends AbstractContentAssistParser {
 					put(grammarAccess.getWreslEvaluatorAccess().getIfincitemAssignment_0_1(), "rule__WreslEvaluator__IfincitemAssignment_0_1");
 					put(grammarAccess.getWreslEvaluatorAccess().getInitialAssignment_1_0(), "rule__WreslEvaluator__InitialAssignment_1_0");
 					put(grammarAccess.getWreslEvaluatorAccess().getSequenceAssignment_1_1(), "rule__WreslEvaluator__SequenceAssignment_1_1");
-					put(grammarAccess.getWreslEvaluatorAccess().getGroupAssignment_1_2(), "rule__WreslEvaluator__GroupAssignment_1_2");
-					put(grammarAccess.getWreslEvaluatorAccess().getModelAssignment_1_3(), "rule__WreslEvaluator__ModelAssignment_1_3");
+					put(grammarAccess.getWreslEvaluatorAccess().getModelAssignment_1_2(), "rule__WreslEvaluator__ModelAssignment_1_2");
 					put(grammarAccess.getDeclarationAccess().getNameAssignment_2(), "rule__Declaration__NameAssignment_2");
 					put(grammarAccess.getIfIncItemsAccess().getElseiftermAssignment_1(), "rule__IfIncItems__ElseiftermAssignment_1");
 					put(grammarAccess.getIfIncItemsAccess().getElsetermAssignment_2(), "rule__IfIncItems__ElsetermAssignment_2");
