@@ -169,7 +169,7 @@ ruleWreslEvaluator returns [EObject current=null]
 	    }
 
 )
-)?(
+)*(
 (
 		{ 
 	        newCompositeNode(grammarAccess.getWreslEvaluatorAccess().getModelModelParserRuleCall_1_3_0()); 

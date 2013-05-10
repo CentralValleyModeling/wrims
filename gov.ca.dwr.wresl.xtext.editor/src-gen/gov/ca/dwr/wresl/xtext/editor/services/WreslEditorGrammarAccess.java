@@ -39,12 +39,12 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//WreslEvaluator:
 		//
-		//	(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ group+=Group? model+=Model+ |
+		//	(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ group+=Group* model+=Model+ |
 		//
 		//	Declaration;
 		public ParserRule getRule() { return rule; }
 
-		//(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ group+=Group? model+=Model+ |
+		//(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ group+=Group* model+=Model+ |
 		//
 		//Declaration
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -64,7 +64,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//IfIncItems
 		public RuleCall getIfincitemIfIncItemsParserRuleCall_0_1_0() { return cIfincitemIfIncItemsParserRuleCall_0_1_0; }
 
-		//initial=Initial? sequence+=Sequence+ group+=Group? model+=Model+
+		//initial=Initial? sequence+=Sequence+ group+=Group* model+=Model+
 		public Group getGroup_1() { return cGroup_1; }
 
 		//initial=Initial?
@@ -79,7 +79,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 		//Sequence
 		public RuleCall getSequenceSequenceParserRuleCall_1_1_0() { return cSequenceSequenceParserRuleCall_1_1_0; }
 
-		//group+=Group?
+		//group+=Group*
 		public Assignment getGroupAssignment_1_2() { return cGroupAssignment_1_2; }
 
 		//Group
@@ -5404,7 +5404,7 @@ public class WreslEditorGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//WreslEvaluator:
 	//
-	//	(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ group+=Group? model+=Model+ |
+	//	(pattern+=Pattern | ifincitem+=IfIncItems)+ | initial=Initial? sequence+=Sequence+ group+=Group* model+=Model+ |
 	//
 	//	Declaration;
 	public WreslEvaluatorElements getWreslEvaluatorAccess() {

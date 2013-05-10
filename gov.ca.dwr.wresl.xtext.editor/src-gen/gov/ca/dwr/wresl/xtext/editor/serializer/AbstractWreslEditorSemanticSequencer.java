@@ -1443,7 +1443,7 @@ public abstract class AbstractWreslEditorSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     ((pattern+=Pattern | ifincitem+=IfIncItems)+ | (initial=Initial? sequence+=Sequence+ group+=Group? model+=Model+))
+	 *     ((pattern+=Pattern | ifincitem+=IfIncItems)+ | (initial=Initial? sequence+=Sequence+ group+=Group* model+=Model+))
 	 */
 	protected void sequence_WreslEvaluator(EObject context, WreslEvaluator semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
