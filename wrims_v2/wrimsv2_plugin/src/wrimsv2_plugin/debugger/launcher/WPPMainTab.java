@@ -472,7 +472,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		endDayCombo.setLayoutData(gd);
 		endDayCombo.setFont(font);
-		endDayCombo.select(30);
+		endDayCombo.select(29);
 		endDayCombo.addModifyListener(edl);
 		//endDayCombo.setEnabled(false);
 		

@@ -115,11 +115,9 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			
 			dvarFile = null;
 			dvarFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE, (String)null);
-			DebugCorePlugin.savedDvFileName=dvarFile;
 			
 			svarFile = null;
 			svarFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVARFILE, (String)null);
-			DebugCorePlugin.savedSvFileName=svarFile;
 			
 			initFile = null;
 			initFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFILE, (String)null);
@@ -274,13 +272,19 @@ public class WPPLaunchDelegate extends LaunchConfigurationDelegate {
 			out.println("Solver             "+configMap.get("solver".toLowerCase()));
 			if (new File(dvarFile).isAbsolute()){
 				out.println("DvarFile           "+dvarFile);
+				DebugCorePlugin.savedDvFileName=dvarFile;
 			}else{
-				out.println("DvarFile           "+procRelativePath(dvarFile, configuration));
+				String procDvarFile=procRelativePath(dvarFile, configuration);
+				out.println("DvarFile           " + procDvarFile);
+				DebugCorePlugin.savedDvFileName=procDvarFile;
 			}
 			if (new File(svarFile).isAbsolute()){
 				out.println("SvarFile           "+svarFile);
+				DebugCorePlugin.savedSvFileName=svarFile;
 			}else{
-				out.println("SvarFile           "+procRelativePath(svarFile, configuration));
+				String procSvarFile=procRelativePath(svarFile, configuration);
+				out.println("SvarFile           "+procSvarFile);
+				DebugCorePlugin.savedSvFileName=procSvarFile;
 			}
 			if (new File(gwDataFolder).isAbsolute()){
 				out.println("GroundwaterDir     "+gwDataFolder);
