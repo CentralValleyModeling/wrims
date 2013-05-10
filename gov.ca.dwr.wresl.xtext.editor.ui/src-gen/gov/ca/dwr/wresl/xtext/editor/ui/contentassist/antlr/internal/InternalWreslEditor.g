@@ -6896,7 +6896,7 @@ rule__WreslEvaluator__Group_1__2__Impl
 :
 (
 { before(grammarAccess.getWreslEvaluatorAccess().getGroupAssignment_1_2()); }
-(rule__WreslEvaluator__GroupAssignment_1_2)?
+(rule__WreslEvaluator__GroupAssignment_1_2)*
 { after(grammarAccess.getWreslEvaluatorAccess().getGroupAssignment_1_2()); }
 )
 

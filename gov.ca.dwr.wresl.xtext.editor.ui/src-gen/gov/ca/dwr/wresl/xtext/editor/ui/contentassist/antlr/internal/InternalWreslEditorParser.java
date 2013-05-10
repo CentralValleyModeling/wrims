@@ -13344,11 +13344,11 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
             if ( (LA43_0==KEYWORD_72) ) {
                 int LA43_1 = input.LA(2);
 
-                if ( (LA43_1==KEYWORD_56||LA43_1==KEYWORD_59) ) {
-                    alt43=2;
-                }
-                else if ( (LA43_1==KEYWORD_26) ) {
+                if ( (LA43_1==KEYWORD_26) ) {
                     alt43=1;
+                }
+                else if ( (LA43_1==KEYWORD_56||LA43_1==KEYWORD_59) ) {
+                    alt43=2;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return ;}
@@ -17462,11 +17462,11 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
             if ( (LA87_0==KEYWORD_24) ) {
                 int LA87_1 = input.LA(2);
 
-                if ( (LA87_1==KEYWORD_11) ) {
-                    alt87=1;
-                }
-                else if ( (LA87_1==KEYWORD_9) ) {
+                if ( (LA87_1==KEYWORD_9) ) {
                     alt87=2;
+                }
+                else if ( (LA87_1==KEYWORD_11) ) {
+                    alt87=1;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return ;}
@@ -20660,7 +20660,10 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
             else if ( (LA116_0==RULE_ID) ) {
                 int LA116_2 = input.LA(2);
 
-                if ( (LA116_2==KEYWORD_1) ) {
+                if ( ((LA116_2>=KEYWORD_2 && LA116_2<=KEYWORD_7)||LA116_2==KEYWORD_12) ) {
+                    alt116=1;
+                }
+                else if ( (LA116_2==KEYWORD_1) ) {
                     switch ( input.LA(3) ) {
                     case KEYWORD_97:
                     case KEYWORD_95:
@@ -20715,7 +20718,10 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
                         {
                         int LA116_4 = input.LA(4);
 
-                        if ( (LA116_4==RULE_INT) ) {
+                        if ( (LA116_4==KEYWORD_97||LA116_4==KEYWORD_95||(LA116_4>=KEYWORD_74 && LA116_4<=KEYWORD_87)||(LA116_4>=KEYWORD_65 && LA116_4<=KEYWORD_67)||LA116_4==KEYWORD_62||(LA116_4>=KEYWORD_29 && LA116_4<=KEYWORD_17)||LA116_4==KEYWORD_1||LA116_4==KEYWORD_14||(LA116_4>=RULE_MIN && LA116_4<=RULE_LOG)||LA116_4==RULE_FLOAT||LA116_4==RULE_ID) ) {
+                            alt116=1;
+                        }
+                        else if ( (LA116_4==RULE_INT) ) {
                             int LA116_7 = input.LA(5);
 
                             if ( ((LA116_7>=KEYWORD_2 && LA116_7<=KEYWORD_7)) ) {
@@ -20731,9 +20737,6 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
                                 throw nvae;
                             }
-                        }
-                        else if ( (LA116_4==KEYWORD_97||LA116_4==KEYWORD_95||(LA116_4>=KEYWORD_74 && LA116_4<=KEYWORD_87)||(LA116_4>=KEYWORD_65 && LA116_4<=KEYWORD_67)||LA116_4==KEYWORD_62||(LA116_4>=KEYWORD_29 && LA116_4<=KEYWORD_17)||LA116_4==KEYWORD_1||LA116_4==KEYWORD_14||(LA116_4>=RULE_MIN && LA116_4<=RULE_LOG)||LA116_4==RULE_FLOAT||LA116_4==RULE_ID) ) {
-                            alt116=1;
                         }
                         else {
                             if (state.backtracking>0) {state.failed=true; return ;}
@@ -20790,9 +20793,6 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
                         throw nvae;
                     }
 
-                }
-                else if ( ((LA116_2>=KEYWORD_2 && LA116_2<=KEYWORD_7)||LA116_2==KEYWORD_12) ) {
-                    alt116=1;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return ;}
@@ -20890,79 +20890,11 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
             else if ( (LA117_0==RULE_ID) ) {
                 int LA117_2 = input.LA(2);
 
-                if ( (LA117_2==KEYWORD_1) ) {
+                if ( (LA117_2==EOF||(LA117_2>=KEYWORD_2 && LA117_2<=KEYWORD_7)||LA117_2==KEYWORD_12) ) {
+                    alt117=1;
+                }
+                else if ( (LA117_2==KEYWORD_1) ) {
                     switch ( input.LA(3) ) {
-                    case RULE_INT:
-                        {
-                        int LA117_4 = input.LA(4);
-
-                        if ( ((LA117_4>=KEYWORD_2 && LA117_4<=KEYWORD_7)) ) {
-                            alt117=1;
-                        }
-                        else if ( (LA117_4==KEYWORD_8) ) {
-                            alt117=2;
-                        }
-                        else {
-                            if (state.backtracking>0) {state.failed=true; return ;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("", 117, 4, input);
-
-                            throw nvae;
-                        }
-                        }
-                        break;
-                    case KEYWORD_6:
-                        {
-                        int LA117_5 = input.LA(4);
-
-                        if ( (LA117_5==KEYWORD_97||LA117_5==KEYWORD_95||(LA117_5>=KEYWORD_74 && LA117_5<=KEYWORD_87)||(LA117_5>=KEYWORD_65 && LA117_5<=KEYWORD_67)||LA117_5==KEYWORD_62||(LA117_5>=KEYWORD_29 && LA117_5<=KEYWORD_17)||LA117_5==KEYWORD_1||LA117_5==KEYWORD_14||(LA117_5>=RULE_MIN && LA117_5<=RULE_LOG)||LA117_5==RULE_FLOAT||LA117_5==RULE_ID) ) {
-                            alt117=1;
-                        }
-                        else if ( (LA117_5==RULE_INT) ) {
-                            int LA117_8 = input.LA(5);
-
-                            if ( (LA117_8==KEYWORD_8) ) {
-                                alt117=2;
-                            }
-                            else if ( ((LA117_8>=KEYWORD_2 && LA117_8<=KEYWORD_7)) ) {
-                                alt117=1;
-                            }
-                            else {
-                                if (state.backtracking>0) {state.failed=true; return ;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("", 117, 8, input);
-
-                                throw nvae;
-                            }
-                        }
-                        else {
-                            if (state.backtracking>0) {state.failed=true; return ;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("", 117, 5, input);
-
-                            throw nvae;
-                        }
-                        }
-                        break;
-                    case RULE_ID:
-                        {
-                        int LA117_6 = input.LA(4);
-
-                        if ( ((LA117_6>=KEYWORD_1 && LA117_6<=KEYWORD_7)||LA117_6==KEYWORD_12) ) {
-                            alt117=1;
-                        }
-                        else if ( (LA117_6==KEYWORD_8) ) {
-                            alt117=2;
-                        }
-                        else {
-                            if (state.backtracking>0) {state.failed=true; return ;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("", 117, 6, input);
-
-                            throw nvae;
-                        }
-                        }
-                        break;
                     case KEYWORD_97:
                     case KEYWORD_95:
                     case KEYWORD_74:
@@ -21012,6 +20944,77 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
                         alt117=1;
                         }
                         break;
+                    case KEYWORD_6:
+                        {
+                        int LA117_4 = input.LA(4);
+
+                        if ( (LA117_4==RULE_INT) ) {
+                            int LA117_7 = input.LA(5);
+
+                            if ( (LA117_7==KEYWORD_8) ) {
+                                alt117=2;
+                            }
+                            else if ( ((LA117_7>=KEYWORD_2 && LA117_7<=KEYWORD_7)) ) {
+                                alt117=1;
+                            }
+                            else {
+                                if (state.backtracking>0) {state.failed=true; return ;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("", 117, 7, input);
+
+                                throw nvae;
+                            }
+                        }
+                        else if ( (LA117_4==KEYWORD_97||LA117_4==KEYWORD_95||(LA117_4>=KEYWORD_74 && LA117_4<=KEYWORD_87)||(LA117_4>=KEYWORD_65 && LA117_4<=KEYWORD_67)||LA117_4==KEYWORD_62||(LA117_4>=KEYWORD_29 && LA117_4<=KEYWORD_17)||LA117_4==KEYWORD_1||LA117_4==KEYWORD_14||(LA117_4>=RULE_MIN && LA117_4<=RULE_LOG)||LA117_4==RULE_FLOAT||LA117_4==RULE_ID) ) {
+                            alt117=1;
+                        }
+                        else {
+                            if (state.backtracking>0) {state.failed=true; return ;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("", 117, 4, input);
+
+                            throw nvae;
+                        }
+                        }
+                        break;
+                    case RULE_ID:
+                        {
+                        int LA117_5 = input.LA(4);
+
+                        if ( ((LA117_5>=KEYWORD_1 && LA117_5<=KEYWORD_7)||LA117_5==KEYWORD_12) ) {
+                            alt117=1;
+                        }
+                        else if ( (LA117_5==KEYWORD_8) ) {
+                            alt117=2;
+                        }
+                        else {
+                            if (state.backtracking>0) {state.failed=true; return ;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("", 117, 5, input);
+
+                            throw nvae;
+                        }
+                        }
+                        break;
+                    case RULE_INT:
+                        {
+                        int LA117_6 = input.LA(4);
+
+                        if ( (LA117_6==KEYWORD_8) ) {
+                            alt117=2;
+                        }
+                        else if ( ((LA117_6>=KEYWORD_2 && LA117_6<=KEYWORD_7)) ) {
+                            alt117=1;
+                        }
+                        else {
+                            if (state.backtracking>0) {state.failed=true; return ;}
+                            NoViableAltException nvae =
+                                new NoViableAltException("", 117, 6, input);
+
+                            throw nvae;
+                        }
+                        }
+                        break;
                     default:
                         if (state.backtracking>0) {state.failed=true; return ;}
                         NoViableAltException nvae =
@@ -21020,9 +21023,6 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
                         throw nvae;
                     }
 
-                }
-                else if ( (LA117_2==EOF||(LA117_2>=KEYWORD_2 && LA117_2<=KEYWORD_7)||LA117_2==KEYWORD_12) ) {
-                    alt117=1;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return ;}
@@ -23766,42 +23766,49 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start "rule__WreslEvaluator__Group_1__2__Impl"
-    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditorParser.g:7034:1: rule__WreslEvaluator__Group_1__2__Impl : ( ( rule__WreslEvaluator__GroupAssignment_1_2 )? ) ;
+    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditorParser.g:7034:1: rule__WreslEvaluator__Group_1__2__Impl : ( ( rule__WreslEvaluator__GroupAssignment_1_2 )* ) ;
     public final void rule__WreslEvaluator__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditorParser.g:7038:1: ( ( ( rule__WreslEvaluator__GroupAssignment_1_2 )? ) )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditorParser.g:7039:1: ( ( rule__WreslEvaluator__GroupAssignment_1_2 )? )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditorParser.g:7038:1: ( ( ( rule__WreslEvaluator__GroupAssignment_1_2 )* ) )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditorParser.g:7039:1: ( ( rule__WreslEvaluator__GroupAssignment_1_2 )* )
             {
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditorParser.g:7039:1: ( ( rule__WreslEvaluator__GroupAssignment_1_2 )? )
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditorParser.g:7040:1: ( rule__WreslEvaluator__GroupAssignment_1_2 )?
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditorParser.g:7039:1: ( ( rule__WreslEvaluator__GroupAssignment_1_2 )* )
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditorParser.g:7040:1: ( rule__WreslEvaluator__GroupAssignment_1_2 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getWreslEvaluatorAccess().getGroupAssignment_1_2()); 
             }
-            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditorParser.g:7041:1: ( rule__WreslEvaluator__GroupAssignment_1_2 )?
-            int alt137=2;
-            int LA137_0 = input.LA(1);
+            // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditorParser.g:7041:1: ( rule__WreslEvaluator__GroupAssignment_1_2 )*
+            loop137:
+            do {
+                int alt137=2;
+                int LA137_0 = input.LA(1);
 
-            if ( (LA137_0==KEYWORD_54) ) {
-                alt137=1;
-            }
-            switch (alt137) {
-                case 1 :
-                    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditorParser.g:7041:2: rule__WreslEvaluator__GroupAssignment_1_2
-                    {
-                    pushFollow(FOLLOW_rule__WreslEvaluator__GroupAssignment_1_2_in_rule__WreslEvaluator__Group_1__2__Impl15432);
-                    rule__WreslEvaluator__GroupAssignment_1_2();
+                if ( (LA137_0==KEYWORD_54) ) {
+                    alt137=1;
+                }
 
-                    state._fsp--;
-                    if (state.failed) return ;
 
-                    }
-                    break;
+                switch (alt137) {
+            	case 1 :
+            	    // ../gov.ca.dwr.wresl.xtext.editor.ui/src-gen/gov/ca/dwr/wresl/xtext/editor/ui/contentassist/antlr/internal/InternalWreslEditorParser.g:7041:2: rule__WreslEvaluator__GroupAssignment_1_2
+            	    {
+            	    pushFollow(FOLLOW_rule__WreslEvaluator__GroupAssignment_1_2_in_rule__WreslEvaluator__Group_1__2__Impl15432);
+            	    rule__WreslEvaluator__GroupAssignment_1_2();
 
-            }
+            	    state._fsp--;
+            	    if (state.failed) return ;
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop137;
+                }
+            } while (true);
 
             if ( state.backtracking==0 ) {
                after(grammarAccess.getWreslEvaluatorAccess().getGroupAssignment_1_2()); 
@@ -70140,13 +70147,13 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
     static final String DFA114_eotS =
         "\25\uffff";
     static final String DFA114_eofS =
-        "\17\uffff\1\22\1\24\4\uffff";
+        "\17\uffff\1\21\1\24\4\uffff";
     static final String DFA114_minS =
         "\1\24\1\125\11\uffff\1\132\1\160\2\141\2\15\4\uffff";
     static final String DFA114_maxS =
         "\1\171\1\140\11\uffff\1\171\1\160\2\141\2\166\4\uffff";
     static final String DFA114_acceptS =
-        "\2\uffff\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\6\uffff\1\13\1\12"+
+        "\2\uffff\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\6\uffff\1\12\1\13"+
         "\1\15\1\14";
     static final String DFA114_specialS =
         "\25\uffff}>";
@@ -70167,10 +70174,10 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
             "\1\16",
             "\1\17",
             "\1\20",
-            "\1\22\25\uffff\1\22\10\uffff\1\22\1\uffff\3\22\5\uffff\1\22"+
-            "\3\uffff\1\22\2\uffff\2\22\1\uffff\2\22\16\uffff\4\22\1\uffff"+
-            "\1\21\6\22\1\uffff\3\22\1\uffff\1\22\1\uffff\2\22\15\uffff\2"+
-            "\22\2\uffff\1\22",
+            "\1\21\25\uffff\1\21\10\uffff\1\21\1\uffff\3\21\5\uffff\1\21"+
+            "\3\uffff\1\21\2\uffff\2\21\1\uffff\2\21\16\uffff\4\21\1\uffff"+
+            "\1\22\6\21\1\uffff\3\21\1\uffff\1\21\1\uffff\2\21\15\uffff\2"+
+            "\21\2\uffff\1\21",
             "\1\24\25\uffff\1\24\10\uffff\1\24\1\uffff\3\24\5\uffff\1\24"+
             "\3\uffff\1\24\2\uffff\2\24\1\uffff\2\24\16\uffff\4\24\1\uffff"+
             "\1\23\6\24\1\uffff\3\24\1\uffff\1\24\1\uffff\2\24\15\uffff\2"+
@@ -70883,7 +70890,7 @@ public class InternalWreslEditorParser extends AbstractInternalContentAssistPars
     public static final BitSet FOLLOW_rule__WreslEvaluator__SequenceAssignment_1_1_in_rule__WreslEvaluator__Group_1__1__Impl15369 = new BitSet(new long[]{0x0000000000001002L});
     public static final BitSet FOLLOW_rule__WreslEvaluator__Group_1__2__Impl_in_rule__WreslEvaluator__Group_1__215402 = new BitSet(new long[]{0x0000240000000000L});
     public static final BitSet FOLLOW_rule__WreslEvaluator__Group_1__3_in_rule__WreslEvaluator__Group_1__215405 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__WreslEvaluator__GroupAssignment_1_2_in_rule__WreslEvaluator__Group_1__2__Impl15432 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__WreslEvaluator__GroupAssignment_1_2_in_rule__WreslEvaluator__Group_1__2__Impl15432 = new BitSet(new long[]{0x0000040000000002L});
     public static final BitSet FOLLOW_rule__WreslEvaluator__Group_1__3__Impl_in_rule__WreslEvaluator__Group_1__315463 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__WreslEvaluator__ModelAssignment_1_3_in_rule__WreslEvaluator__Group_1__3__Impl15492 = new BitSet(new long[]{0x0000240000000002L});
     public static final BitSet FOLLOW_rule__WreslEvaluator__ModelAssignment_1_3_in_rule__WreslEvaluator__Group_1__3__Impl15504 = new BitSet(new long[]{0x0000240000000002L});
