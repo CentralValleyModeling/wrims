@@ -10,6 +10,7 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseIfTerm;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ElseTerm;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Group;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfTerm;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IncludeFile;
@@ -43,7 +44,8 @@ public class WreslEditorOutlineTreeProvider extends DefaultOutlineTreeProvider {
 				|| modelElement instanceof ExternalDef
 				|| modelElement instanceof Alias
 				|| modelElement instanceof Goal
-				|| modelElement instanceof Objective) {
+				|| modelElement instanceof Objective
+				|| modelElement instanceof Group) {
 			super._createNode(parentNode, modelElement);
 		} else if (modelElement instanceof IfIncItems
 				|| modelElement instanceof IfTerm

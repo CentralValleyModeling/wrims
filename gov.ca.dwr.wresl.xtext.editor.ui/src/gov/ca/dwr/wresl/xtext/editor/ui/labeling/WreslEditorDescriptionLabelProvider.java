@@ -50,6 +50,23 @@ public class WreslEditorDescriptionLabelProvider extends DefaultDescriptionLabel
 				EObject object = new ResourceSetImpl().getEObject(uri, true);
 		        return (String)labelProvider.getText(object)+" - "+object.eClass().getName();
 			}
+		}else if (sourceFragment.startsWith("//@ifincitem")){
+			int index=sourceFragment.indexOf("@pattern", 2);
+			if (index<=1){
+				EObject object = new ResourceSetImpl().getEObject(sourceUri, true);
+		        return (String)labelProvider.getText(object)+" - "+object.eClass().getName();
+			}else{
+				int index1=sourceFragment.indexOf("/", index);
+				if (index1>index){
+					String fragment=sourceFragment.substring(0, index1);
+					URI uri=sourceUri.trimFragment().appendFragment(fragment);
+					EObject object = new ResourceSetImpl().getEObject(uri, true);
+					return (String)labelProvider.getText(object)+" - "+object.eClass().getName();
+				}else{
+					EObject object = new ResourceSetImpl().getEObject(sourceUri, true);
+			        return (String)labelProvider.getText(object)+" - "+object.eClass().getName();
+				}
+			}
 		}
         return "<unnamed>";
 	}
