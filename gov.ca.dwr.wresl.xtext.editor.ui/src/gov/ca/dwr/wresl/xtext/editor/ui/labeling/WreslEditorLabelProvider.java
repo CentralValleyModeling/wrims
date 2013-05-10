@@ -9,6 +9,7 @@ import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Declaration;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.DvarDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.ExternalDef;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Goal;
+import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Group;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IfIncItems;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.IncludeFile;
 import gov.ca.dwr.wresl.xtext.editor.wreslEditor.Initial;
@@ -69,6 +70,14 @@ public class WreslEditorLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	
 	String image(Model e){
+		return "outline_model.gif";
+	}
+	
+	String text(Group e){
+		return e.getName();
+	}
+	
+	String image(Group e){
 		return "outline_model.gif";
 	}
 
