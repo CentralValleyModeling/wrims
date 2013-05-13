@@ -814,74 +814,77 @@ public class DebugInterface {
 			varList.addAll(ifIncItemGroup.dependants);
 			ArrayList<Boolean> conditionValueList = ProcIfIncItemGroup.evaluateConditions(Tools.allToLowerCase(ifIncItemGroup.conditionList));
 			int j=0;
-			while (!conditionValueList.get(j)){
+			int cn=conditionValueList.size();
+			while (j<cn && !conditionValueList.get(j)){
 				j=j+1;
 			}
 			
-			ArrayList<HashMap<String, SvarTemp>> inc_svar_map_list = ifIncItemGroup.inc_svar_map_list;
-			HashMap<String, SvarTemp> inc_svar_map = inc_svar_map_list.get(i);
-			Set<String> svarNames = inc_svar_map.keySet();
-			varList.addAll(svarNames);
-			Iterator<String> iterator = svarNames.iterator();
-			while (iterator.hasNext()){
-				String svarName = iterator.next();
-				SvarTemp svar = inc_svar_map.get(svarName);
-				Set<String> dependants = svar.dependants;
-				varList.removeAll(dependants);
-				varList.addAll(dependants);
-			}
+			if (j<cn){
+				ArrayList<HashMap<String, SvarTemp>> inc_svar_map_list = ifIncItemGroup.inc_svar_map_list;
+				HashMap<String, SvarTemp> inc_svar_map = inc_svar_map_list.get(j);
+				Set<String> svarNames = inc_svar_map.keySet();
+				varList.addAll(svarNames);
+				Iterator<String> iterator = svarNames.iterator();
+				while (iterator.hasNext()){
+					String svarName = iterator.next();
+					SvarTemp svar = inc_svar_map.get(svarName);
+					Set<String> dependants = svar.dependants;
+					varList.removeAll(dependants);
+					varList.addAll(dependants);
+				}
 							
-			ArrayList<HashMap<String, DvarTemp>> inc_dvar_map_list = ifIncItemGroup.inc_dvar_map_list;
-			HashMap<String, DvarTemp> inc_dvar_map = inc_dvar_map_list.get(i);
-			Set<String> dvarNames = inc_dvar_map.keySet();
-			varList.addAll(dvarNames);
-			iterator = dvarNames.iterator();
-			while (iterator.hasNext()){
-				String dvarName = iterator.next();
-				DvarTemp dvar = inc_dvar_map.get(dvarName);
-				Set<String> dependants = dvar.dependants;
-				varList.removeAll(dependants);
-				varList.addAll(dependants);
-			}
+				ArrayList<HashMap<String, DvarTemp>> inc_dvar_map_list = ifIncItemGroup.inc_dvar_map_list;
+				HashMap<String, DvarTemp> inc_dvar_map = inc_dvar_map_list.get(j);
+				Set<String> dvarNames = inc_dvar_map.keySet();
+				varList.addAll(dvarNames);
+				iterator = dvarNames.iterator();
+				while (iterator.hasNext()){
+					String dvarName = iterator.next();
+					DvarTemp dvar = inc_dvar_map.get(dvarName);
+					Set<String> dependants = dvar.dependants;
+					varList.removeAll(dependants);
+					varList.addAll(dependants);
+				}
 			
-			ArrayList<HashMap<String, AliasTemp>> inc_alias_map_list = ifIncItemGroup.inc_alias_map_list;
-			HashMap<String, AliasTemp> inc_alias_map = inc_alias_map_list.get(i);
-			Set<String> aliasNames = inc_alias_map.keySet();
-			varList.addAll(aliasNames);
-			iterator = aliasNames.iterator();
-			while (iterator.hasNext()){
-				String aliasName = iterator.next();
-				AliasTemp alias = inc_alias_map.get(aliasName);
-				Set<String> dependants = alias.dependants;
-				varList.removeAll(dependants);
-				varList.addAll(dependants);
-			}
+				ArrayList<HashMap<String, AliasTemp>> inc_alias_map_list = ifIncItemGroup.inc_alias_map_list;
+				HashMap<String, AliasTemp> inc_alias_map = inc_alias_map_list.get(j);
+				Set<String> aliasNames = inc_alias_map.keySet();
+				varList.addAll(aliasNames);
+				iterator = aliasNames.iterator();
+				while (iterator.hasNext()){
+					String aliasName = iterator.next();
+					AliasTemp alias = inc_alias_map.get(aliasName);
+					Set<String> dependants = alias.dependants;
+					varList.removeAll(dependants);
+					varList.addAll(dependants);
+				}
 			
-			ArrayList<HashMap<String, GoalTemp>> inc_goalSimple_map_list = ifIncItemGroup.inc_goalSimple_map_list;
-			HashMap<String, GoalTemp> inc_goalSimple_map = inc_goalSimple_map_list.get(i);
-			Set<String> goalSimpleNames = inc_goalSimple_map.keySet();
-			iterator = goalSimpleNames.iterator();
-			while (iterator.hasNext()){
-				String goalSimpleName = iterator.next();
-				GoalTemp goalSimple = inc_goalSimple_map.get(goalSimpleName);
-				Set<String> dependants = goalSimple.dependants;
-				varList.removeAll(dependants);
-				varList.addAll(dependants);
-			}
+				ArrayList<HashMap<String, GoalTemp>> inc_goalSimple_map_list = ifIncItemGroup.inc_goalSimple_map_list;
+				HashMap<String, GoalTemp> inc_goalSimple_map = inc_goalSimple_map_list.get(j);
+				Set<String> goalSimpleNames = inc_goalSimple_map.keySet();
+				iterator = goalSimpleNames.iterator();
+				while (iterator.hasNext()){
+					String goalSimpleName = iterator.next();
+					GoalTemp goalSimple = inc_goalSimple_map.get(goalSimpleName);
+					Set<String> dependants = goalSimple.dependants;
+					varList.removeAll(dependants);
+					varList.addAll(dependants);
+				}
 			
-			ArrayList<HashMap<String, GoalTemp>> inc_goalComplex_map_list = ifIncItemGroup.inc_goalComplex_map_list;
-			HashMap<String, GoalTemp> inc_goalComplex_map = inc_goalComplex_map_list.get(i);
-			Set<String> goalComplexNames = inc_goalComplex_map.keySet();
-			iterator = goalComplexNames.iterator();
-			while (iterator.hasNext()){
-				String goalComplexName = iterator.next();
-				GoalTemp goalComplex = inc_goalComplex_map.get(goalComplexName);
-				Set<String> dependants = goalComplex.dependants;
-				varList.removeAll(dependants);
-				varList.addAll(dependants);
-			}
+				ArrayList<HashMap<String, GoalTemp>> inc_goalComplex_map_list = ifIncItemGroup.inc_goalComplex_map_list;
+				HashMap<String, GoalTemp> inc_goalComplex_map = inc_goalComplex_map_list.get(j);
+				Set<String> goalComplexNames = inc_goalComplex_map.keySet();
+				iterator = goalComplexNames.iterator();
+				while (iterator.hasNext()){
+					String goalComplexName = iterator.next();
+					GoalTemp goalComplex = inc_goalComplex_map.get(goalComplexName);
+					Set<String> dependants = goalComplex.dependants;
+					varList.removeAll(dependants);
+					varList.addAll(dependants);
+				}
 			
-			varList.addAll(ifIncItemGroup.inc_timeseries_map_list.get(i).keySet());
+				varList.addAll(ifIncItemGroup.inc_timeseries_map_list.get(j).keySet());
+			}
 		}
 		return varList;
 	}
@@ -995,13 +998,16 @@ public class DebugInterface {
 					IfIncItemGroup ifIncItemGroup=ifIncItemGroupMap.get(ifIncItemGroupIDList.get(i));
 					ArrayList<Boolean> conditionValueList = ProcIfIncItemGroup.evaluateConditions(Tools.allToLowerCase(ifIncItemGroup.conditionList));
 					int j=0;
-					while (!conditionValueList.get(j)){
+					int cn=conditionValueList.size();
+					while (j<cn && !conditionValueList.get(j)){
 						j=j+1;
 					}
-					HashMap<String, GoalTemp> simpleGoals = ifIncItemGroup.inc_goalSimple_map_list.get(i);
-					HashMap<String, GoalTemp> complexGoals = ifIncItemGroup.inc_goalComplex_map_list.get(i);
-					sortedGoalList.addAll(simpleGoals.keySet());
-					sortedGoalList.addAll(complexGoals.keySet());
+					if (j<cn){
+						HashMap<String, GoalTemp> simpleGoals = ifIncItemGroup.inc_goalSimple_map_list.get(j);
+						HashMap<String, GoalTemp> complexGoals = ifIncItemGroup.inc_goalComplex_map_list.get(j);
+						sortedGoalList.addAll(simpleGoals.keySet());
+						sortedGoalList.addAll(complexGoals.keySet());
+					}
 				}
 			}
 		}else{
@@ -1014,13 +1020,16 @@ public class DebugInterface {
 				IfIncItemGroup ifIncItemGroup=ifIncItemGroupMap.get(ifIncItemGroupIDList.get(i));
 				ArrayList<Boolean> conditionValueList = ProcIfIncItemGroup.evaluateConditions(Tools.allToLowerCase(ifIncItemGroup.conditionList));
 				int j=0;
-				while (!conditionValueList.get(j)){
+				int cn=conditionValueList.size();
+				while (j<cn && !conditionValueList.get(j)){
 					j=j+1;
 				}
-				HashMap<String, GoalTemp> simpleGoals = ifIncItemGroup.inc_goalSimple_map_list.get(i);
-				HashMap<String, GoalTemp> complexGoals = ifIncItemGroup.inc_goalComplex_map_list.get(i);
-				sortedGoalList.addAll(simpleGoals.keySet());
-				sortedGoalList.addAll(complexGoals.keySet());
+				if (j<cn){
+					HashMap<String, GoalTemp> simpleGoals = ifIncItemGroup.inc_goalSimple_map_list.get(j);
+					HashMap<String, GoalTemp> complexGoals = ifIncItemGroup.inc_goalComplex_map_list.get(j);
+					sortedGoalList.addAll(simpleGoals.keySet());
+					sortedGoalList.addAll(complexGoals.keySet());
+				}
 			}
 		}
 		
