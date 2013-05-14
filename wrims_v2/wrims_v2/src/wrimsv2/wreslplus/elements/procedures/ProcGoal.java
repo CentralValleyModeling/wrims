@@ -255,28 +255,28 @@ public class ProcGoal {
 		}
 		else if (ProcGoal.isFree(gt) && ProcGoal.isFree(lt)) {
 	
-			//caseExpression = " 1 > 0 ";
+			caseExpression = " 1 > 0 ";
 		
 			// default to general treatment, that is, 
 			// lhs + slack - surplus = rhs with zero weight on lhs and rhs 
 			
-			surplusName = "surplus__" + goalName + "_" + caseNumber;
-			surplusWeight = gt;
-			if (goal.timeArraySize.equals("0")){
-				lhs_m = lhs + "-" + surplusName;
-			}else{
-				lhs_m = lhs + "-" + surplusName+"($m)";
-			}
-			
-			slackName = "slack__" + goalName + "_" + caseNumber;
-			slackWeight = lt;
-			if (goal.timeArraySize.equals("0")){
-				lhs_m = lhs_m + "+" + slackName;
-			}else{
-				lhs_m = lhs_m + "+" + slackName+"($m)";
-			}
-			relation = "=";
-			caseExpression = lhs_m + " = " + cm.rhs;
+//			surplusName = "surplus__" + goalName + "_" + caseNumber;
+//			surplusWeight = gt;
+//			if (goal.timeArraySize.equals("0")){
+//				lhs_m = lhs + "-" + surplusName;
+//			}else{
+//				lhs_m = lhs + "-" + surplusName+"($m)";
+//			}
+//			
+//			slackName = "slack__" + goalName + "_" + caseNumber;
+//			slackWeight = lt;
+//			if (goal.timeArraySize.equals("0")){
+//				lhs_m = lhs_m + "+" + slackName;
+//			}else{
+//				lhs_m = lhs_m + "+" + slackName+"($m)";
+//			}
+//			relation = "=";
+//			caseExpression = lhs_m + " = " + cm.rhs;
 	
 		}
 		else if (ProcGoal.isFree(lt)) {
