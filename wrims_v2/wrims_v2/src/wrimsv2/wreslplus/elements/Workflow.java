@@ -218,11 +218,11 @@ public class Workflow {
 		
 		ErrorCheck.checkVarRedefined(st);	
 		
-		Procedures.classifyDependants(st);
+		Procedures.classifyDependants(st);  // TODO: bottleneck. need to optimize.
 		
 		ErrorCheck.checkVarUsedBeforeDefined(st);
 		
-		Procedures.convertAliasToGoal(st); 
+		Procedures.convertAliasToGoal(st);   // TODO: bottleneck. need to optimize.
 		
 		ErrorCheck.checkWeightVarNotInDvar(st);
 		
