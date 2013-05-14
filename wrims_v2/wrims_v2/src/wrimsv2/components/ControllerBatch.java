@@ -31,6 +31,8 @@ import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
 
 public class ControllerBatch {
 	
+	public boolean enableProgressLog = false;
+	
 	public ControllerBatch() {} // do nothing
 	
 	public ControllerBatch(String[] args) {
@@ -51,6 +53,7 @@ public class ControllerBatch {
 			} else {
 				System.out.println("=================Run ends with errors=================");
 			}
+			
 		} catch (RecognitionException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -196,7 +199,6 @@ public class ControllerBatch {
 			System.out.println("=================Run ends!================");
 		}
 	}
-	
 	public void runModelXA(StudyDataSet sds){
 		ArrayList<String> modelList=sds.getModelList();
 		Map<String, ModelDataSet> modelDataSetMap=sds.getModelDataSetMap();		
@@ -292,6 +294,21 @@ public class ControllerBatch {
 			}
 			VariableTimeStep.setCycleStartDate(ControlData.cycleEndDay, ControlData.cycleEndMonth, ControlData.cycleEndYear);
 			VariableTimeStep.setCycleEndDate(sds);
+			if (enableProgressLog) {
+				try {
+					FileWriter progressFile = new FileWriter(FilePaths.mainDirectory + "progress.txt", true);
+					PrintWriter pw = new PrintWriter(progressFile);
+					int cy = 0;
+					if (ControlData.currYear > cy) {
+						cy = ControlData.currYear;
+						pw.println(ControlData.startYear + " " + ControlData.endYear + " " + ControlData.currYear);
+						pw.close();
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		ControlData.xasolver.close();
 		if (ControlData.writeInitToDVOutput){
@@ -299,6 +316,23 @@ public class ControllerBatch {
 		}
 		DssOperation.writeDVAliasToDSS();
 		ControlData.writer.closeDSSFile();
+		
+		// write complete or fail
+		if (enableProgressLog) {
+			try {
+				FileWriter progressFile = new FileWriter(FilePaths.mainDirectory + "progress.txt", true);
+				PrintWriter pw = new PrintWriter(progressFile);
+				if (Error.getTotalError() > 0) {
+					pw.println("Run failed.");
+				} else {
+					pw.println("Run completed.");
+				}
+				pw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void writeOutputDssEveryTenYears(){
