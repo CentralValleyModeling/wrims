@@ -69,8 +69,8 @@ set PATH=%ExternalDir%;%JarDir%
 : call java to run ControllerBatch class                :
 :-------------------------------------------------------:
 
+echo %temp_wrims2%
 
-
-%temp_wrims2%/../../../../../3rd_party/jrockit-jre1.6.0_26-R28.1.4/bin/java -Xmx1472m -Xss1280K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
+%temp_wrims2%\/../../../../../3rd_party/jrockit-jre1.6.0_26-R28.1.4/bin/java -Xmx1472m -Xss1280K -Djava.library.path=%PATH% %CLASSPATH% wrimsv2.components.ControllerBatch -config="%configFilePath%"
 
 pause
