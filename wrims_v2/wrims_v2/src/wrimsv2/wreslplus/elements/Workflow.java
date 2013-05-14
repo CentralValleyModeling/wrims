@@ -9,6 +9,7 @@ import wrimsv2.components.ControlData;
 import wrimsv2.config.ConfigUtils;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyParser;
+import wrimsv2.wreslparser.elements.StudyUtils;
 import wrimsv2.wreslplus.elements.procedures.ErrorCheck;
 import wrimsv2.wreslplus.elements.procedures.ProcGoal;
 import wrimsv2.wreslplus.elements.procedures.ProcIfIncItemGroup;
@@ -220,8 +221,12 @@ public class Workflow {
 		
 		Procedures.classifyDependants(st);  // TODO: bottleneck. need to optimize.
 		
-		ErrorCheck.checkVarUsedBeforeDefined(st);
+		if (StudyUtils.parserCheckVarUndefined) {
+			LogUtils.importantMsg("Check variables used before defined ...");
+			ErrorCheck.checkVarUsedBeforeDefined(st);
+		}
 		
+		LogUtils.importantMsg("Convert aliases to goals ...");
 		Procedures.convertAliasToGoal(st);   // TODO: bottleneck. need to optimize.
 		
 		ErrorCheck.checkWeightVarNotInDvar(st);

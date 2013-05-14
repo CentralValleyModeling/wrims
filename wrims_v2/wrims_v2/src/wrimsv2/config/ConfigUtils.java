@@ -271,6 +271,23 @@ public class ConfigUtils {
 		}
 		System.out.println("PrefixInitToDvarFile: "+ControlData.writeInitToDVOutput);
 
+
+		// ParserCheckVarUndefined
+		if (configMap.keySet().contains("parsercheckvarundefined")){
+			
+			String s = configMap.get("parsercheckvarundefined");
+			
+			if (s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("true")){
+				StudyUtils.parserCheckVarUndefined = true;	
+			} else if (s.equalsIgnoreCase("no") || s.equalsIgnoreCase("false")){
+				StudyUtils.parserCheckVarUndefined = false;	
+			} else {
+				StudyUtils.parserCheckVarUndefined = false;	
+			}
+		}else{
+			StudyUtils.parserCheckVarUndefined = false;
+		}
+		System.out.println("ParserCheckVarUndefined: "+StudyUtils.parserCheckVarUndefined);
 		
 		
 		if (ControlData.solverName.equalsIgnoreCase("lpsolve")) {
