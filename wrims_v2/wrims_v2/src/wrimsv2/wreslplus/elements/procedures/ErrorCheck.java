@@ -105,7 +105,15 @@ public class ErrorCheck {
 		for (String key : seqObj.asMap.keySet()) {
 
 			AliasTemp asObj = seqObj.asMap.get(key);
-				
+			
+			Set<String> temp = new HashSet<String>(asObj.dependants);
+			temp.removeAll(seqObj.tsList);
+			temp.removeAll(seqObj.asMap.keySet());
+			temp.removeAll(seqObj.dvList);
+			temp.removeAll(seqObj.svMap.keySet());
+			temp.removeAll(asObj.dependants_parameter);
+			asObj.dependants_unknown = temp;	
+			
 			if (asObj.dependants_unknown.size()>0){
 //				LogUtils.errMsg(asObj.fromWresl+
 //						"\n  In model ["+seqObj.model+"] variable(s) not defined before use: "+asObj.dependants_unknown+" in Alias ["+asObj.id+"]");
@@ -119,6 +127,15 @@ public class ErrorCheck {
 		for (String key : seqObj.glMap.keySet()) {
 
 			GoalTemp glObj = seqObj.glMap.get(key);
+			
+			Set<String> temp = new HashSet<String>(glObj.dependants);
+			temp.removeAll(seqObj.tsList);
+			temp.removeAll(seqObj.asMap.keySet());
+			temp.removeAll(seqObj.dvList);
+			temp.removeAll(seqObj.svMap.keySet());
+			temp.removeAll(seqObj.exList);
+			temp.removeAll(glObj.dependants_parameter);
+			glObj.dependants_unknown = temp;
 				
 			if (glObj.dependants_unknown.size()>0){
 //				LogUtils.errMsg(glObj.fromWresl+
@@ -134,6 +151,16 @@ public class ErrorCheck {
 			String key = seqObj.svIncFileList_post.get(i);
 
 			SvarTemp svObj = seqObj.svMap.get(key);
+			
+			Set<String> temp = new HashSet<String>(svObj.dependants);
+			temp.removeAll(seqObj.tsList);
+			temp.removeAll(seqObj.asMap.keySet());
+			temp.removeAll(seqObj.dvList);
+			temp.removeAll(seqObj.svMap.keySet());
+			temp.removeAll(seqObj.exList);
+			temp.removeAll(svObj.dependants_parameter);
+			svObj.dependants_unknown = temp;
+			
 				
 			if (svObj.dependants_unknown.size()>0){
 //				LogUtils.errMsg(svObj.fromWresl+

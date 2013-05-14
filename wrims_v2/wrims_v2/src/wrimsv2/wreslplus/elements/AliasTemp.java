@@ -34,6 +34,7 @@ public class AliasTemp implements Serializable {
 	public Set<String> neededVarInCycleSet;
 	public boolean needVarFromEarlierCycle;
 	public boolean isMovedToDvar;	
+	public boolean isProcessed;	
 	
 	// default is 0
 	public String timeArraySize;
@@ -53,6 +54,7 @@ public class AliasTemp implements Serializable {
 		neededVarInCycleSet = new LinkedHashSet<String>();
 		needVarFromEarlierCycle = false;
 		isMovedToDvar = false;
+		isProcessed = false;
 
 		timeArraySize="0";
 		arraySize="0";

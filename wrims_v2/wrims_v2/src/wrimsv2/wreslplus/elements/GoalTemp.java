@@ -39,6 +39,7 @@ public class GoalTemp implements Serializable {
 	public boolean hasCase;
 	public boolean hasLhs;
 	public boolean isFromAlias;
+	public boolean isProcessed;
 	public ArrayList<String> caseName;
 	public Map<String, GoalCase> caseMap;
 	public ArrayList<String> caseCondition;
@@ -59,6 +60,7 @@ public class GoalTemp implements Serializable {
 		hasCase=false;
 		hasLhs=false;
 		isFromAlias=false;
+		isProcessed=false;
 		condition = Param.always;
 		dependants = new LinkedHashSet<String>();
 //		dependants_timeseries = new LinkedHashSet<String>();

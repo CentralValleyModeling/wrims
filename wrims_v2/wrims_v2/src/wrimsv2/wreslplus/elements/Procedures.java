@@ -1,7 +1,5 @@
 package wrimsv2.wreslplus.elements;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,10 +8,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.javatuples.Triplet;
-
 import wrimsv2.commondata.wresldata.Param;
-import wrimsv2.components.ControlData;
 import wrimsv2.components.IntDouble;
 import wrimsv2.wreslparser.elements.LogUtils;
 
@@ -504,101 +499,137 @@ public class Procedures {
 
 			AliasTemp asObj = seqObj.asMap.get(key);
 
+			if (asObj.isProcessed) continue;
+			
+			Set<String> temp = new HashSet<String>(asObj.dependants);
+			
 			asObj.dependants_timeseries = new LinkedHashSet<String>(asObj.dependants);
 			asObj.dependants_timeseries.retainAll(seqObj.tsList);
+			temp.removeAll(asObj.dependants_timeseries);
 
-			asObj.dependants_dvar = new LinkedHashSet<String>(asObj.dependants);
+
+			asObj.dependants_dvar = new LinkedHashSet<String>(temp);
 			asObj.dependants_dvar.retainAll(seqObj.dvList);
+			temp.removeAll(asObj.dependants_dvar);
 
-			asObj.dependants_svar = new LinkedHashSet<String>(asObj.dependants);
+			asObj.dependants_svar = new LinkedHashSet<String>(temp);
 			asObj.dependants_svar.retainAll(seqObj.svMap.keySet());
-
-			asObj.dependants_alias = new LinkedHashSet<String>(asObj.dependants);
-			asObj.dependants_alias.retainAll(seqObj.asMap.keySet());
-
-			asObj.dependants_parameter = new LinkedHashSet<String>(asObj.dependants);
-			asObj.dependants_parameter.retainAll(parameterList);
+			temp.removeAll(asObj.dependants_svar);
 			
-			asObj.dependants_unknown = new LinkedHashSet<String>(asObj.dependants);
-			asObj.dependants_unknown.removeAll(asObj.dependants_timeseries);
-			asObj.dependants_unknown.removeAll(asObj.dependants_dvar);
-			asObj.dependants_unknown.removeAll(asObj.dependants_svar);
-			asObj.dependants_unknown.removeAll(asObj.dependants_alias);
-			asObj.dependants_unknown.removeAll(asObj.dependants_parameter);
+			asObj.dependants_alias = new LinkedHashSet<String>(temp);
+			asObj.dependants_alias.retainAll(seqObj.asMap.keySet());
+			temp.removeAll(asObj.dependants_alias);
+
+			asObj.dependants_parameter = new LinkedHashSet<String>(temp);
+			asObj.dependants_parameter.retainAll(parameterList);
+			temp.removeAll(asObj.dependants_parameter);
+			
+//			asObj.dependants_unknown = temp;
+//			asObj.dependants_unknown.removeAll(asObj.dependants_timeseries);
+//			asObj.dependants_unknown.removeAll(asObj.dependants_dvar);
+//			asObj.dependants_unknown.removeAll(asObj.dependants_svar);
+//			asObj.dependants_unknown.removeAll(asObj.dependants_alias);
+//			asObj.dependants_unknown.removeAll(asObj.dependants_parameter);
 			
 			
 			// TODO: this is to match legacy wresl parser
 			asObj.dependants.removeAll(asObj.dependants_timeseries);
 			asObj.dependants.removeAll(asObj.dependants_dvar);
+			
+			asObj.isProcessed = true;
 		}	
 		
 		for (String key : seqObj.svMap.keySet()) {
 
 			SvarTemp svObj = seqObj.svMap.get(key);
 			
+			if (svObj.isProcessed) continue;
+			
+			Set<String> temp = new HashSet<String>(svObj.dependants);
+			
 			svObj.dependants_timeseries = new LinkedHashSet<String>(svObj.dependants);
 			svObj.dependants_timeseries.retainAll(seqObj.tsList);
+			temp.removeAll(svObj.dependants_timeseries);
 
-			svObj.dependants_alias = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_alias = new LinkedHashSet<String>(temp);
 			svObj.dependants_alias.retainAll(seqObj.asMap.keySet());
+			temp.removeAll(svObj.dependants_alias);
 			
-			svObj.dependants_dvar = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_dvar = new LinkedHashSet<String>(temp);
 			svObj.dependants_dvar.retainAll(seqObj.dvList);
+			temp.removeAll(svObj.dependants_dvar);
 			
-			svObj.dependants_svar = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_svar = new LinkedHashSet<String>(temp);
 			svObj.dependants_svar.retainAll(seqObj.svMap.keySet());
+			temp.removeAll(svObj.dependants_svar);
 			
-			svObj.dependants_external = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_external = new LinkedHashSet<String>(temp);
 			svObj.dependants_external.retainAll(seqObj.exList);
+			temp.removeAll(svObj.dependants_external);
 
-			svObj.dependants_parameter = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_parameter = new LinkedHashSet<String>(temp);
 			svObj.dependants_parameter.retainAll(parameterList);
+			temp.removeAll(svObj.dependants_parameter);
 			
-			svObj.dependants_unknown = new LinkedHashSet<String>(svObj.dependants);
-			svObj.dependants_unknown.removeAll(svObj.dependants_timeseries);
-			svObj.dependants_unknown.removeAll(svObj.dependants_alias);
-			svObj.dependants_unknown.removeAll(svObj.dependants_dvar);
-			svObj.dependants_unknown.removeAll(svObj.dependants_svar);
-			svObj.dependants_unknown.removeAll(svObj.dependants_external);
-			svObj.dependants_unknown.removeAll(svObj.dependants_parameter);
+//			svObj.dependants_unknown = temp;
+//			svObj.dependants_unknown.removeAll(svObj.dependants_timeseries);
+//			svObj.dependants_unknown.removeAll(svObj.dependants_alias);
+//			svObj.dependants_unknown.removeAll(svObj.dependants_dvar);
+//			svObj.dependants_unknown.removeAll(svObj.dependants_svar);
+//			svObj.dependants_unknown.removeAll(svObj.dependants_external);
+//			svObj.dependants_unknown.removeAll(svObj.dependants_parameter);
 
 			// TODO: this is to match legacy wresl parser
 			svObj.dependants.removeAll(svObj.dependants_timeseries);
 			svObj.dependants.removeAll(seqObj.dvList);
+			
+			svObj.isProcessed = true;
 		}	
 		
 		for (String key : seqObj.glMap.keySet()) {
 
 			GoalTemp svObj = seqObj.glMap.get(key);
+			
+			if (svObj.isProcessed) continue;
 
 			//svObj.dependants.removeAll(seqObj.tsList);
 			//svObj.dependants.removeAll(seqObj.dvList);
 			
+			Set<String> temp = new HashSet<String>(svObj.dependants);
+			
 			svObj.dependants_timeseries = new LinkedHashSet<String>(svObj.dependants);
 			svObj.dependants_timeseries.retainAll(seqObj.tsList);
+			temp.removeAll(svObj.dependants_timeseries);
 
-			svObj.dependants_svar = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_svar = new LinkedHashSet<String>(temp);
 			svObj.dependants_svar.retainAll(seqObj.svMap.keySet());
+			temp.removeAll(svObj.dependants_svar);
 			
-			svObj.dependants_dvar = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_dvar = new LinkedHashSet<String>(temp);
 			svObj.dependants_dvar.retainAll(seqObj.dvList);
+			temp.removeAll(svObj.dependants_dvar);
 
-			svObj.dependants_alias = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_alias = new LinkedHashSet<String>(temp);
 			svObj.dependants_alias.retainAll(seqObj.asMap.keySet());
+			temp.removeAll(svObj.dependants_alias);
 
-			svObj.dependants_external = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_external = new LinkedHashSet<String>(temp);
 			svObj.dependants_external.retainAll(seqObj.exMap.keySet());
+			temp.removeAll(svObj.dependants_external);
 
-			svObj.dependants_parameter = new LinkedHashSet<String>(svObj.dependants);
+			svObj.dependants_parameter = new LinkedHashSet<String>(temp);
 			svObj.dependants_parameter.retainAll(parameterList);
+			temp.removeAll(svObj.dependants_parameter);
 			
-			svObj.dependants_unknown = new LinkedHashSet<String>(svObj.dependants);
-			svObj.dependants_unknown.removeAll(svObj.dependants_timeseries);
-			svObj.dependants_unknown.removeAll(svObj.dependants_svar);
-			svObj.dependants_unknown.removeAll(svObj.dependants_dvar);
-			svObj.dependants_unknown.removeAll(svObj.dependants_alias);
-			svObj.dependants_unknown.removeAll(svObj.dependants_external);
-			svObj.dependants_unknown.removeAll(svObj.dependants_parameter);
+//			svObj.dependants_unknown = temp;
+//			svObj.dependants_unknown.removeAll(svObj.dependants_timeseries);
+//			svObj.dependants_unknown.removeAll(svObj.dependants_svar);
+//			svObj.dependants_unknown.removeAll(svObj.dependants_dvar);
+//			svObj.dependants_unknown.removeAll(svObj.dependants_alias);
+//			svObj.dependants_unknown.removeAll(svObj.dependants_external);
+//			svObj.dependants_unknown.removeAll(svObj.dependants_parameter);
+			
+			svObj.isProcessed = true;
 			
 		}	
 	}

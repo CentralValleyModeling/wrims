@@ -35,6 +35,7 @@ public class SvarTemp implements Serializable {
 	public Set<String> dependants_notAllowed;
 	public Set<String> neededVarInCycleSet;
 	public boolean needVarFromEarlierCycle;
+	public boolean isProcessed;
 
 
 	
@@ -61,6 +62,7 @@ public class SvarTemp implements Serializable {
 		//dependants_svar = new LinkedHashSet<String>();
 		neededVarInCycleSet = new LinkedHashSet<String>();
 		needVarFromEarlierCycle = false;
+		isProcessed = false;
 		
 		timeArraySize="0";
 		arraySize="0";
