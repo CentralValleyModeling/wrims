@@ -4,8 +4,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.apache.commons.io.FilenameUtils;
+
 import wrimsv2.commondata.wresldata.Param;
 import wrimsv2.components.ControlData;
+import wrimsv2.components.FilePaths;
 import wrimsv2.config.ConfigUtils;
 import wrimsv2.wreslparser.elements.LogUtils;
 import wrimsv2.wreslparser.elements.StudyParser;
@@ -260,6 +263,8 @@ public class Workflow {
 		StudyTemp st = ParserUtils.parseWreslMain(canonicalMainFilePath);
 		// TODO: need to check sequence error here
 		// check study
+
+		LogDebug.writeMainWreslLog(st, canonicalMainFilePath);
 		
 		if (StudyParser.total_errors>0) {
 			
