@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import wrimsv2.commondata.wresldata.Param;
+import wrimsv2.components.ControlData;
 import wrimsv2.components.IntDouble;
 import wrimsv2.wreslparser.elements.LogUtils;
 
@@ -715,26 +716,22 @@ public class Procedures {
 
 	public static void collectTimeStep(StudyTemp st) {
 
-		// TODO: need to create model time step list in sequence.
-		// TODO: currently only allows monthly time step for testing in wreslplus
-		// TODO: check with Hao
-
-
-
 		for (String se : st.seqList){
 			
 			SequenceTemp q = st.seqMap.get(se);
 			
 			// TODO: warning!!! need test
 			st.seqTimeStepList.add(q.timeStep);		
-		}
 
-		String definedTimeStep = "1MON";
-		
-		for (String se : st.seqList){
-			
-			SequenceTemp q = st.seqMap.get(se); 
-
+		    String timeStep=q.timeStep;
+		    String definedTimeStep;
+		    
+		    if (timeStep.equals(Param.undefined)){
+		    	definedTimeStep=ControlData.defaultTimeStep;
+	      	}else{
+	      		definedTimeStep=timeStep;
+	      	}
+		    			
 			for (String timeseriesName : q.tsList) {
 
 				if (st.timeseriesTimeStepMap.containsKey(timeseriesName)) {
@@ -750,26 +747,7 @@ public class Procedures {
 			}
 
 		}
-		
-		
-//	      String timeStep=sc.modelTimeStepList.get(modelIndex);
-//	      String definedTimeStep;
-//	      if (timeStep.equals(Param.undefined)){
-//	    	  definedTimeStep=ControlData.defaultTimeStep;
-//	      }else{
-//	    	  definedTimeStep=timeStep;
-//	      }
-//	      for (String timeseriesName:ds.tsMap.keySet()){
-//	    	  if (timeseriesTimeStepMap.containsKey(timeseriesName)){
-//	    		  ArrayList<String> timeStepList=timeseriesTimeStepMap.get(timeseriesName);
-//	    		  if (!timeStepList.contains(definedTimeStep)){
-//	    			  timeStepList.add(definedTimeStep);
-//	    		  }
-//	    	  }else{
-//	    		  timeseriesTimeStepMap.put(timeseriesName, new ArrayList<String>(Arrays.asList(definedTimeStep)));
-//	    	  }
-//	      }
-		
+
 	}
 
 
