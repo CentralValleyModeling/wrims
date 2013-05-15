@@ -37,6 +37,7 @@ public class StudyUtils {
 	public static String configFileName = "default";
 	public static boolean useWreslPlus = false;
 	public static boolean parserCheckVarUndefined = true;
+	public static boolean showDebugLog = false;
 	
 	private StudyUtils() {
 
@@ -217,8 +218,12 @@ public class StudyUtils {
 	
 			
 			//total_errors = StudyParser.total_errors;
-	
-			StudyTemp st = Workflow.checkStudy(validatedMainWreslFile.getCanonicalPath());
+			StudyTemp st = null;
+			if (showDebugLog) {
+				st = Workflow.checkStudy_debugLog(validatedMainWreslFile.getCanonicalPath());
+			} else {
+				st = Workflow.checkStudy(validatedMainWreslFile.getCanonicalPath());
+			}
 			
 			StudyDataSet sd = ToWreslData.convertStudy(st);
 			
