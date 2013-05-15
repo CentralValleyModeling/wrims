@@ -219,7 +219,7 @@ public class Workflow {
 		
 		ErrorCheck.checkVarRedefined(st);	
 		
-		Procedures.classifyDependants(st);  // TODO: bottleneck. need to optimize.
+		Procedures.classifyDependants(st);  // TODO: has bug. need to fix. also a bottleneck.
 		
 		if (StudyUtils.parserCheckVarUndefined) {
 			LogUtils.importantMsg("Check variables used before defined ...");

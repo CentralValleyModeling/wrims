@@ -499,7 +499,7 @@ public class Procedures {
 
 			AliasTemp asObj = seqObj.asMap.get(key);
 
-			if (asObj.isProcessed) continue;
+			//if (asObj.isProcessed) continue;
 			
 			Set<String> temp = new HashSet<String>(asObj.dependants);
 			
@@ -536,14 +536,14 @@ public class Procedures {
 			asObj.dependants.removeAll(asObj.dependants_timeseries);
 			asObj.dependants.removeAll(asObj.dependants_dvar);
 			
-			asObj.isProcessed = true;
+			//asObj.isProcessed = true;
 		}	
 		
 		for (String key : seqObj.svMap.keySet()) {
 
 			SvarTemp svObj = seqObj.svMap.get(key);
 			
-			if (svObj.isProcessed) continue;
+			//if (svObj.isProcessed) continue;
 			
 			Set<String> temp = new HashSet<String>(svObj.dependants);
 			
@@ -583,14 +583,14 @@ public class Procedures {
 			svObj.dependants.removeAll(svObj.dependants_timeseries);
 			svObj.dependants.removeAll(seqObj.dvList);
 			
-			svObj.isProcessed = true;
+			//svObj.isProcessed = true;
 		}	
 		
 		for (String key : seqObj.glMap.keySet()) {
 
 			GoalTemp svObj = seqObj.glMap.get(key);
 			
-			if (svObj.isProcessed) continue;
+			//if (svObj.isProcessed) continue;
 
 			//svObj.dependants.removeAll(seqObj.tsList);
 			//svObj.dependants.removeAll(seqObj.dvList);
@@ -629,7 +629,7 @@ public class Procedures {
 //			svObj.dependants_unknown.removeAll(svObj.dependants_external);
 //			svObj.dependants_unknown.removeAll(svObj.dependants_parameter);
 			
-			svObj.isProcessed = true;
+			//svObj.isProcessed = true;
 			
 		}	
 	}
