@@ -36,7 +36,7 @@ public class StudyUtils {
 	public static String configDir = "";
 	public static String configFileName = "default";
 	public static boolean useWreslPlus = false;
-	public static boolean parserCheckVarUndefined = false;
+	public static boolean parserCheckVarUndefined = true;
 	
 	private StudyUtils() {
 
