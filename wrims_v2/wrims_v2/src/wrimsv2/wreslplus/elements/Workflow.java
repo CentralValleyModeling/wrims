@@ -250,7 +250,7 @@ public class Workflow {
 	}
 
 
-	public static StudyTemp checkStudy_debugLog(String mainFilePath) {
+	public static StudyTemp checkStudy_compileLog(String mainFilePath) {
 		
 		StudyParser.reset();
 		
@@ -261,212 +261,18 @@ public class Workflow {
 		VarCycleIndex.clearVarCycleIndexList();
 		
 		StudyTemp st = ParserUtils.parseWreslMain(canonicalMainFilePath);
-		// TODO: need to check sequence error here
-		// check study
+		String mainString = CompileLog.createMainWreslLog(st);
+		CompileLog.writeLog(mainString, canonicalMainFilePath);
+		
+		
+		String canonicalFilePath = "D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\conv\\Run\\B2Actions\\B2Action1Repeat.wresl";
+		
+		ModelTemp mt = ParserUtils.parseWreslFile(canonicalFilePath);
+		String w = CompileLog.createWreslLog(mt);	
+		CompileLog.writeLog(w, canonicalFilePath);
+		
+		
 
-		LogDebug.writeMainWreslLog(st, canonicalMainFilePath);
-		
-		if (StudyParser.total_errors>0) {
-			
-			LogUtils.parsingSummaryMsg("Wresl+ parsing aborted", StudyParser.total_errors);
-			
-			return null;
-		}
-		
-	
-		if (ErrorCheck.checkIncModelNotExistIgnoreCase(st)) return null;	
-		if (ErrorCheck.checkModelRedefinedIgnoreCase(st)>0) return null;
-		if (ErrorCheck.checkSequenceHasUniqueModel(st)>0) return null;
-		if (ErrorCheck.checkVarRedefined(st)>0) return null;		
-		
-		ToLowerCase.convert(st);
-		
-		if (ErrorCheck.checkVarRedefined(st)>0) return null;
-		
-		// for Error.log header
-		ControlData.currEvalTypeIndex=8;
-		
-		// check config param not declared in wresl main file
-		if (ErrorCheck.checkInitialVarInConfigNotDeclaredInWresl(st)) return null;		
-		
-		// overwrite main wresl parameter with config file parameter
-		if (ConfigUtils.paramMap.size()>0){
-			
-			for (String k: ConfigUtils.paramMap.keySet()){
-				ParamTemp pt = ConfigUtils.paramMap.get(k);
-				SvarTemp svObj = new SvarTemp();
-	            svObj.id = pt.id;
-	            svObj.caseName.add(Param.defaultCaseName);
-	            svObj.caseCondition.add(Param.always);
-	            svObj.caseExpression.add(pt.expression);
-	            svObj.dependants = pt.dependants;
-	            
-	            LogUtils.importantMsg("Overwrite initial variable ["+ k +"] in main wresl file.");
-				st.parameterMap.put(k,svObj);
-			}
-	
-		}
-		
-		// check param dependents unknown
-		if (ErrorCheck.checkInitialConst(st)) return null;
-		if (ErrorCheck.checkParameterHasUnknownDepedants(st)) return null;
-		
-		ProcParameter.process(st);
-	
-		if (ErrorCheck.checkSeqConditionHasUnknownDepedants(st)) return null;
-		
-		// check unknown dependants in if statement
-		ErrorCheck.checkIfStatementHasUnknownDependants(st);
-		
-		// process "if include file group"
-		ProcIfIncItemGroup.process(st);
-		
-		
-		ProcMainFile.findEffectiveModel(st); 
-	
-		ProcMainFile.findKidMap_incModel(st);
-		ProcMainFile.findAllOffSpring_incModel(st);
-		ProcMainFile.findGroupOrder_incModel(st);
-		
-		
-		ProcMainFile.findEffectiveIncludeModel(st); 
-		
-		
-		ProcIncFile.processPath(st);
-			
-	
-		ProcVarIncFileList.replaceIncFile(st);
-		
-		
-		Procedures.processDependants(st);
-		
-	
-		
-		
-		/// put effective models into fileModelDataTable
-	
-		for (String modelName: st.modelList_effective){
-				
-			ModelTemp mt = st.modelMap.get(modelName);  // this is model in main file
-			
-			if (st.fileModelNameMap.keySet().contains(mt.pathRelativeToRunDir)) {
-				
-				st.fileModelNameMap.get(mt.pathRelativeToRunDir).add(modelName);
-				
-			} else {
-				ArrayList<String> modelNameList = new ArrayList<String>();
-				modelNameList.add(modelName);
-				st.fileModelNameMap.put(mt.pathRelativeToRunDir, modelNameList);
-			}
-			
-			st.fileModelDataTable.put(mt.pathRelativeToRunDir, modelName, mt);			
-			
-		}
-	
-		/// put effective include models into fileModelDataTable
-		for (String incM: st.incModelList_effective){
-			
-			ModelTemp incMt = st.modelMap.get(incM);  // this is model in main file
-				
-			if (st.fileModelNameMap.keySet().contains(incMt.pathRelativeToRunDir)) {
-				
-				st.fileModelNameMap.get(incMt.pathRelativeToRunDir).add(incM);
-				
-			} else {
-				ArrayList<String> modelNameList = new ArrayList<String>();
-				modelNameList.add(incM);
-				st.fileModelNameMap.put(incMt.pathRelativeToRunDir, modelNameList);
-			}
-			
-			st.fileModelDataTable.put(incMt.pathRelativeToRunDir, incM, incMt);			
-			
-		}
-		
-		// parse modelList_effective all included files		
-		// store results to a map using relativePath as key
-		for (String se : st.seqList){
-			
-			SequenceTemp seqObj = st.seqMap.get(se); 
-			String m = seqObj.model;
-	
-			ModelTemp mt = st.modelMap.get(m);
-	
-			ParserUtils.parseAllIncFile(mt.incFileRelativePathList, st);					
-			
-		}
-		
-		// parse incModelList_effective all included files		
-		// store results to a map using relativePath as key
-		for (String incM : st.incModelList_effective){
-	
-			ModelTemp mt = st.modelMap.get(incM);
-	
-			ParserUtils.parseAllIncFile(mt.incFileRelativePathList, st);					
-			
-		}
-		
-	
-		if (StudyParser.total_errors>0) {
-			
-			LogUtils.parsingSummaryMsg("Wresl+ parsing stopped", StudyParser.total_errors);
-			
-			return null;
-		}
-		
-		// find all offspring
-		// store results to kidMap and AOMap, fileGroupOrder
-		Procedures.findKidMap(st);
-		
-		
-		Procedures.findAllOffSpring(st);
-		
-		
-		Procedures.findFileGroupOrder(st);
-		
-	
-		Procedures.postProcessIncFileList(st);
-		
-		
-		Procedures.postProcessVarListinIncFile(st);
-	
-		ProcGoal.processGoalHS2(st); 
-		
-		ProcWeight.collectWeightVar(st);
-		
-		
-		// filter weight groups from the weight Object list and then process them
-		// TODO: need to rewrite
-	
-		ProcWeight.processWeightGroup(st);
-						
-		Procedures.copyModelVarMapToSequenceVarMap(st);
-				
-		if (ErrorCheck.checkWeightObjList(st)) return null;
-		
-		ErrorCheck.checkVarRedefined(st);	
-		
-		Procedures.classifyDependants(st);  // TODO: has bug. need to fix. also a bottleneck.
-		
-		if (StudyUtils.parserCheckVarUndefined) {
-			LogUtils.importantMsg("Check variables used before defined ...");
-			ErrorCheck.checkVarUsedBeforeDefined(st);
-		}
-		
-		LogUtils.importantMsg("Convert aliases to goals ...");
-		Procedures.convertAliasToGoal(st);   // TODO: bottleneck. need to optimize.
-		
-		ErrorCheck.checkWeightVarNotInDvar(st);
-		
-		Procedures.analyzeVarNeededFromCycle(st);
-		Procedures.createSpaceInVarCycleValueMap(st);
-		
-		
-		Procedures.collectTimeStep(st);
-		
-				
-		LogUtils.parsingSummaryMsg("Wresl+ parsing completed",StudyParser.total_errors);
-		
-		if (StudyParser.total_errors>0) return null;
 		
 		return st;
 		
