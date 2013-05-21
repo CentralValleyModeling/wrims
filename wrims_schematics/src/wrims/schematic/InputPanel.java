@@ -603,26 +603,21 @@ public class InputPanel extends JPanel {
 				.getComponent(1);
 		consolePane.textArea.setText("");
 
-		Process p;
 		try {
-			p = Runtime.getRuntime().exec(runFileFullPath);
+			ProcessBuilder builder = new ProcessBuilder(runFileFullPath);
+			builder.redirectErrorStream(true);
+			Process p = builder.start();
 
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(
 				p.getInputStream()));
 
-			BufferedReader stdError = new BufferedReader(new InputStreamReader(
-				p.getErrorStream()));
-
 			String s = null;
+			
 			// read the output from the command
 			while ((s = stdInput.readLine()) != null) {
 				System.out.println(s);
 			}
-
-			// read any errors from the attempted command
-			while ((s = stdError.readLine()) != null) {
-				System.out.println(s);
-			}
+			stdInput.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
