@@ -2,7 +2,10 @@ package wrimsv2.wreslplus.elements;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.io.FilenameUtils;
 
@@ -252,24 +255,53 @@ public class Workflow {
 
 	public static StudyTemp checkStudy_compileLog(String mainFilePath) {
 		
-		StudyParser.reset();
+		StudyParser.reset();		
+		VarCycleIndex.clearVarCycleIndexList();
+		
 		
 		String canonicalMainFilePath = Tools.getCanonicalLowCasePath(mainFilePath);
 		
-		ParserUtils.setRunDir(new File(canonicalMainFilePath).getParent()); 
+		String runDir = new File(canonicalMainFilePath).getParent();
+		String mainFileName = new File(canonicalMainFilePath).getName();
 		
-		VarCycleIndex.clearVarCycleIndexList();
+		ParserUtils.setRunDir(runDir); 
+		
+		String compileLogDir = "z:\\compileLog\\"+FilenameUtils.getPath(runDir);
+		
+		
+		new File(compileLogDir).mkdirs();
 		
 		StudyTemp st = ParserUtils.parseWreslMain(canonicalMainFilePath);
-		String mainString = CompileLog.createMainWreslLog(st);
-		CompileLog.writeLog(mainString, canonicalMainFilePath);
+		
+		LinkedHashMap<String,Integer> fileMap_reverse = new LinkedHashMap<String, Integer>();
+		
+		String mainString = CompileLog.createMainWreslLog(st, fileMap_reverse);
+		CompileLog.writeLog(mainString, new File (compileLogDir, mainFileName).getAbsolutePath());
 		
 		
-		String canonicalFilePath = "D:\\cvwrsm\\trunk\\calsim30\\calsim30_bo\\conv\\Run\\B2Actions\\B2Action1Repeat.wresl";
-		
-		ModelTemp mt = ParserUtils.parseWreslFile(canonicalFilePath);
-		String w = CompileLog.createWreslLog(mt);	
-		CompileLog.writeLog(w, canonicalFilePath);
+		for (String filePath : fileMap_reverse.keySet()) {
+
+			String absFilePath = st.runDir + "\\" + filePath;
+			
+			ModelTemp mt = ParserUtils.parseWreslFile(absFilePath);
+			
+			
+			Set<String> deps = new LinkedHashSet<String>();
+			String w = CompileLog.createWreslFileLog(mt, deps);
+			
+			// write dependents
+			w= "\n" + w;
+			for (String d : deps){ w= d +" " + w; }
+			w = "@dep: "+ w; 
+			
+			
+			File f = new File (compileLogDir, filePath);
+			File dir = f.getParentFile();			
+			if (! dir.exists()) dir.mkdirs();
+			
+			CompileLog.writeLog(w, f.getAbsolutePath());
+
+		}
 		
 		
 
