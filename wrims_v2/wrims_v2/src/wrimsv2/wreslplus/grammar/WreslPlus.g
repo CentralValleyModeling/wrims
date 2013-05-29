@@ -684,10 +684,10 @@ bpart_id : s=QUOTE {$timeseries::ts_.dssBPart=Tools.strip($s.text);};
 convert : CONVERT s=QUOTE {$timeseries::ts_.convertToUnits=Tools.strip($s.text);};
 
 /// network
-network : 'network' ID '{' inlet* outlet* connection+ '}';
+network : 'network' ID '{' inlet? outlet? connection+ '}';
 
-inlet: 'inlet' ID ;
-outlet: 'outlet' ID ;
+inlet:  'inlet'  ID ( ',' ID)* ;
+outlet: 'outlet' ID ( ',' ID)* ;
 
 connection:    inflow? branch outflow?   ;
 
@@ -709,7 +709,7 @@ branch_i : elements flow ( element flow )* elements ;
 
 elements : element ( ',' element)* ;
 
-element : ( ID '.' )?  ID ;
+element : ID ;
 
 
 
