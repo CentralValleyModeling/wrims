@@ -612,79 +612,79 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	public void performApply(ILaunchConfigurationWorkingCopy configuration) {
 		String studyName = studyText.getText().trim();
 		if (studyName.length() == 0) {
-			studyName = null;
+			studyName = "";
 		}	
 		String author = authorText.getText().trim();
 		if (author.length() == 0) {
-			author = null;
+			author = "";
 		}	
 		String date = dateText.getText().trim();
 		if (date.length() == 0) {
-			date = null;
+			date = "";
 		}	
 		String description = descriptionText.getText().trim();
 		if (description.length() == 0) {
-			description = null;
+			description = "";
 		}	
 		String mainFile = fMainFileText.getText().trim();
 		if (mainFile.length() == 0) {
-			mainFile = null;
+			mainFile = "";
 		}
 		String dvarFile = fDvarFileText.getText().trim();
 		if (dvarFile.length() == 0) {
-			dvarFile = null;
+			dvarFile = "";
 		}
 		String svarFile = fSvarFileText.getText().trim();
 		if (svarFile.length() == 0) {
-			svarFile = null;
+			svarFile = "";
 		}
 		String initFile = fInitFileText.getText().trim();
 		if (initFile.length() == 0) {
-			initFile = null;
+			initFile = "";
 		}
 		String gwDataFolder = groundWaterFolderText.getText().trim();
 		if (gwDataFolder.length() == 0) {
-			gwDataFolder = null;
+			gwDataFolder = "";
 		}
 		String aPart = aPartText.getText().trim();
 		if (aPart.length() == 0) {
-			aPart = null;
+			aPart = "";
 		}
 		String svFPart = svFPartText.getText().trim();
 		if (svFPart.length() == 0) {
-			svFPart = null;
+			svFPart = "";
 		}
 		String initFPart = initFPartText.getText().trim();
 		if (initFPart.length() == 0) {
-			initFPart = null;
+			initFPart = "";
 		}
 		String timeStep = timeStepCombo.getText().trim();
 		if (timeStep.length() == 0) {
-			timeStep = null;
+			timeStep = "";
 		}
 		String startYear = startYearCombo.getText().trim();
 		if (startYear.length() == 0) {
-			startYear = null;
+			startYear = "";
 		}
 		String startMonth = startMonthCombo.getText().trim();
 		if (startMonth.length() == 0) {
-			startMonth = null;
+			startMonth = "";
 		}
 		String startDay = startDayCombo.getText().trim();
 		if (startDay.length() == 0) {
-			startDay = null;
+			startDay = "";
 		}
 		String endYear = endYearCombo.getText().trim();
 		if (endYear.length() == 0) {
-			endYear = null;
+			endYear = "";
 		}
 		String endMonth = endMonthCombo.getText().trim();
 		if (endMonth.length() == 0) {
-			endMonth = null;
+			endMonth = "";
 		}
 		String endDay = endDayCombo.getText().trim();
 		if (endDay.length() == 0) {
-			endDay = null;
+			endDay = "";
 		}
 		
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_STUDY, studyName);
