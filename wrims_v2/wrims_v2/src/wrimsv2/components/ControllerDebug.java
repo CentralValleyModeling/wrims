@@ -325,6 +325,7 @@ public class ControllerDebug extends Thread {
 						System.out.println("Cycle "+(modelIndex+1)+" in "+ControlData.currYear+"/"+ControlData.currMonth+"/"+ControlData.currDay+" Done. ("+model+")");
 						pauseForDebug(modelIndex);
 						if (Error.error_evaluation.size()>=1) noError=false;
+						if (Error.getTotalError()==0) noError=true;
 						//if (ControlData.currTimeStep==0 && ControlData.currCycleIndex==2) new RCCComparison();
 						ControlData.currTimeStep.set(ControlData.currCycleIndex, ControlData.currTimeStep.get(ControlData.currCycleIndex)+1);
 						if (ControlData.timeStep.equals("1MON")){
