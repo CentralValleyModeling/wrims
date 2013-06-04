@@ -1,0 +1,49 @@
+@echo off
+rem ##############################
+rem Batch file for running vscript
+rem ##############################
+
+set vista_home=%~dp0/lib/vista/
+set hec_home=%~dp0/lib/hecdss/
+set wrims2_home=%~dp0/lib/wrims2/
+set misc_home=%~dp0/lib/misc/
+
+setlocal
+rem ###############
+rem Set path to location of dll
+rem ###############
+
+set PATH=%path%;%vista_home%/bin;%vista_home%/lib;%wrims2_home%;
+
+set PYPATH="%vista_home%/jython/Lib;%vista_home%/lib/Lib;%hec_home%/hec.jar;%hec_home%/hecData.jar;%hec_home%/heclib.jar;"
+
+set CPATH="%vista_home%/lib/vista.jar;%vista_home%/lib/vista-help.jar;%vista_home%/jython/jython.jar;%vista_home%/lib/jakarta-oro-2.0.8.jar;%vista_home%/lib/pd.jar;%vista_home%/lib/misc.jar;%vista_home%/lib/jhall.jar;%vista_home%/lib/jnios.jar;%vista_home%/lib/widgets.jar;%wrims2_home%/WRIMSv2.jar;%misc_home%/wscripting.jar"
+
+set LPATH="%vista_home%/lib" -Dvista.home="%vista_home%"
+
+set PYHOME="%vista_home%/jython"
+
+set ARGS=
+
+:loop
+if [%1] == [] goto endloop
+        set ARGS=%ARGS% %1
+        shift
+        goto loop
+:endloop
+
+rem ###############
+rem starting vscript
+rem ###############
+
+if defined ARGS goto run2
+
+:run1
+"C:\Program Files (x86)\Java\jre6\bin\java" -mx128m  -Djava.library.path=%LPATH% -Dvista.home="%vista_home%" -Dpython.home=%PYHOME% -Dpython.path=%PYPATH% -classpath %CPATH% org.python.util.jython -i "%vista_home%/lib/__init__.py"
+goto end
+
+:run2
+"C:\Program Files (x86)\Java\jre6\bin\java" -mx128m  -Djava.library.path=%LPATH% -Dvista.home="%vista_home%" -Dpython.home=%PYHOME% -Dpython.path=%PYPATH% -classpath %CPATH% org.python.util.jython -i  %ARGS%
+
+endlocal
+:end 

@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.8.2
+Created-By: 1.6.0_24-b24 (Sun Microsystems Inc.)
+Main-Class: org.python.util.install.Installation
+Built-By: frank
+
+Name: Jython
+version: 2.5.3
+exclude-dirs: org;META-INF
+
+Name: Build-Info
+svn-build: true
+oracle: true
+informix: true
+build-compiler: modern
+jdk-target-version: 1.5
+debug: true
+

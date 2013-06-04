@@ -1,0 +1,5 @@
+ WARNING:
+
+AD_TERM SHORTAGES and/or RELAXATIONS larger than 0.01 OCCUR!
+
+YYYY	MM	Kswck	RedBlf	Wilkns	SacFea	SacAme	YoloBP	Therm	YubFea	Nimbus	Hst	ANN_RL	MRDO_RL	PosSum	NegSum	
