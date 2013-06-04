@@ -3,10 +3,12 @@ rem ##############################
 rem Batch file for running vscript
 rem ##############################
 
-set vista_home=%~dp0/lib/vista/
-set hec_home=%~dp0/lib/hecdss/
-set wrims2_home=%~dp0/lib/wrims2/
-set misc_home=%~dp0/lib/misc/
+set lib_home=%~dp0/lib/
+set vista_home=%lib_home%/vista/
+set hec_home=%lib_home%/hecdss/
+set wrims2_home=%lib_home%/wrims2/
+set misc_home=%lib_home%/misc/
+set jre_home=%lib_home%/jre6/
 
 setlocal
 rem ###############
@@ -39,11 +41,11 @@ rem ###############
 if defined ARGS goto run2
 
 :run1
-"C:\Program Files (x86)\Java\jre6\bin\java" -mx128m  -Djava.library.path=%LPATH% -Dvista.home="%vista_home%" -Dpython.home=%PYHOME% -Dpython.path=%PYPATH% -classpath %CPATH% org.python.util.jython -i "%vista_home%/lib/__init__.py"
+%jre_home%\bin\java -Xmx800m  -Djava.library.path=%LPATH% -Dvista.home="%vista_home%" -Dpython.home=%PYHOME% -Dpython.path=%PYPATH% -classpath %CPATH% org.python.util.jython -i "%vista_home%/lib/__init__.py"
 goto end
 
 :run2
-"C:\Program Files (x86)\Java\jre6\bin\java" -mx128m  -Djava.library.path=%LPATH% -Dvista.home="%vista_home%" -Dpython.home=%PYHOME% -Dpython.path=%PYPATH% -classpath %CPATH% org.python.util.jython -i  %ARGS%
+%jre_home%\bin\java -Xmx800m  -Djava.library.path=%LPATH% -Dvista.home="%vista_home%" -Dpython.home=%PYHOME% -Dpython.path=%PYPATH% -classpath %CPATH% org.python.util.jython -i  %ARGS%
 
 endlocal
 :end 
