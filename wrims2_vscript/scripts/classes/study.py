@@ -99,12 +99,12 @@ class Study:
 		# call cmd to run config path
 
 	
-		self._logger.info("Write study config file in dir: "+self.configDir)
+		#self._logger.info("Write study config file in dir: "+self.configDir)
 		# write config file
-		Tools.generateConfigFile(self.ms_configPath, self.cMap, startYear=startYear, numberOfSteps=numberOfSteps)
+		#Tools.generateConfigFile(self.ms_configPath, self.cMap, startYear=startYear, numberOfSteps=numberOfSteps)
 		
 		self._logger.info("Run study config file in dir: "+self.configDir)
-		subprocess.call([self.batFileName, self.ms_configPath])
+		subprocess.call([self.batFileName, self.configPath])
 		#subprocess.call(['cmd.exe', '/c', 'RunStudy.bat', self.ms_configPath])
 
 
