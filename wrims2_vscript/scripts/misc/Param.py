@@ -1,8 +1,8 @@
 import os
 
 logger = None
-logFile = '=MultiStudyRunner=.log'
-loggerName = 'MultiStudyRunner'
+logFile = '=WRIMS2_Vscript=.log'
+loggerName = 'WRIMS2_Vscript'
 templateDir = os.path.dirname(os.path.split(__file__)[0])
 templateDir = os.path.normpath(templateDir)
 

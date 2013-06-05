@@ -17,11 +17,11 @@ class Study:
 	
 	
 	
-	def __init__(self, configPath, batFileName='runConfig.bat'):
+	def __init__(self, dir, configPath, batFileName='runConfig.bat'):
 
 		
 		self._logger = Param.logger
-		self.configPath = configPath
+		self.configPath = os.path.join(dir, configPath)
 		self.configDir = dirname(self.configPath)
 		self.ms_configPath = os.path.join( self.configDir, "__MultiStudyRunner.config")
 		self.batFileName = batFileName

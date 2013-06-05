@@ -6,8 +6,6 @@ from scripts.misc import LogUtils, Param
 #import shutil
 
 LogUtils.initLogging(__file__)
-
-
 dir = os.path.dirname(os.path.realpath(__file__))
 
 
@@ -16,5 +14,5 @@ s1_configPath = os.path.join(dir, r"studies\callite_D1641\D1641.config")
 
 print s1_configPath
 
-s1=Study(s1_configPath)
+s1=Study(dir, s1_configPath)
 s1.run(startYear=1921, numberOfSteps=12)
