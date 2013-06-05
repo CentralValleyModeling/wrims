@@ -17,13 +17,13 @@ class Study:
 	
 	
 	
-	def __init__(self, dir, configPath, batFileName='runConfig.bat'):
+	def __init__(self, directory, configPath, batFileName='runConfig.bat'):
 
 		
 		self._logger = Param.logger
-		self.configPath = os.path.join(dir, configPath)
+		self.configPath = os.path.join(directory, configPath)
 		self.configDir = dirname(self.configPath)
-		self.ms_configPath = os.path.join( self.configDir, "__MultiStudyRunner.config")
+		self.ms_configPath = os.path.join( self.configDir, "__wvscript.config")
 		self.batFileName = batFileName
 		
 		#parse config file and put the map to cMap	
@@ -97,14 +97,23 @@ class Study:
 
 
 		# call cmd to run config path
-
-	
-		#self._logger.info("Write study config file in dir: "+self.configDir)
-		# write config file
-		#Tools.generateConfigFile(self.ms_configPath, self.cMap, startYear=startYear, numberOfSteps=numberOfSteps)
 		
-		self._logger.info("Run study config file in dir: "+self.configDir)
-		subprocess.call([self.batFileName, self.configPath])
+		if (startYear != self._startYear) or (numberOfSteps != self._numberOfSteps):
+	
+			self._logger.info("Write study config:  "+self.ms_configPath)
+			# write config file
+			Tools.generateConfigFile(self.ms_configPath, self.cMap, startYear=startYear, numberOfSteps=numberOfSteps)
+		
+			self._logger.info("Run generated config: "+self.ms_configPath)
+			
+			subprocess.call([self.batFileName, self.ms_configPath])
+			
+		else:
+			self._logger.info("Run original config: "+self.configPath)
+			subprocess.call([self.batFileName, self.configPath])	
+			
+			
+			
 		#subprocess.call(['cmd.exe', '/c', 'RunStudy.bat', self.ms_configPath])
 
 
@@ -120,12 +129,16 @@ class Study:
 		process.run()
 		
 		
-	def run(self, startYear, numberOfSteps):
+	def run(self, startYear=None, numberOfSteps=None):
 	
-		self._startYear=startYear
-		self._numberOfSteps=numberOfSteps
-
+		#self._startYear=startYear
+		#self._numberOfSteps=numberOfSteps
 		
+		if startYear == None:
+			startYear = self._startYear
+			
+		if numberOfSteps == None:
+			numberOfSteps = self._numberOfSteps
 		
 		self._run_wrims(startYear,numberOfSteps)
 		
