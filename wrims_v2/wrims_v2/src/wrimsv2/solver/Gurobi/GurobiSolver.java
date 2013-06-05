@@ -304,10 +304,10 @@ public class GurobiSolver {
 				}
 			}
 			String entryNameTS=DssOperation.entryNameTS(dvName, ControlData.timeStep);
-			DataTimeSeries.saveDataToTimeSeries(entryNameTS, value, dvar);
+			DataTimeSeries.saveDataToTimeSeries(dvName, entryNameTS, value, dvar);
 			if (timeArrayDvList.contains(dvName)){
 				entryNameTS=DssOperation.entryNameTS(dvName+"__fut__0", ControlData.timeStep);
-				DataTimeSeries.saveDataToTimeSeries(entryNameTS, value, dvar);
+				DataTimeSeries.saveDataToTimeSeries(entryNameTS, value, dvar, 0);
 			}
 		}
 		

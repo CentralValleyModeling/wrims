@@ -14,7 +14,22 @@ public class DataTimeSeries {
 	public static ArrayList<String> lookSvDss=new ArrayList<String>();
 	public static ArrayList<String> lookInitDss=new ArrayList<String>();
 	
-	public static void saveDataToTimeSeries(String entryNameTS, double value, Dvar dvar){
+	public static void saveDataToTimeSeries(String dvName, String entryNameTS, double value, Dvar dvar){
+		saveDataToTimeSeries(entryNameTS, value, dvar, 0);
+		if (dvName.contains("__fut__")){
+			String[] dvNameParts = dvName.split("__fut__");
+			if (dvNameParts.length==2){
+				try{
+					int offset=Integer.parseInt(dvNameParts[1]);
+					String newEntryNameTS=DssOperation.entryNameTS(dvNameParts[0], ControlData.timeStep);
+					saveDataToTimeSeries(newEntryNameTS, value, dvar, offset);
+				}catch(NumberFormatException e){
+				}
+			}
+		}
+	}
+	
+	public static void saveDataToTimeSeries(String entryNameTS, double value, Dvar dvar, int offset){
 		if (!dvAliasTS.containsKey(entryNameTS)){
 			DssDataSetFixLength dds=new DssDataSetFixLength();
 			double[] data=new double[ControlData.totalTimeStep.get(ControlData.currCycleIndex)];
@@ -30,6 +45,7 @@ public class DataTimeSeries {
 			dvAliasTS.put(entryNameTS,dds);
 		}
 		double[] dataList=dvAliasTS.get(entryNameTS).getData();
-		dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=value;
+		int index=ControlData.currTimeStep.get(ControlData.currCycleIndex)+offset;
+		if (index<dataList.length)	dataList[index]=value;
 	}
 }
