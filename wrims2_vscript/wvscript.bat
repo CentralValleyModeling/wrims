@@ -8,7 +8,7 @@ set vista_home=%lib_home%/vista/
 set hec_home=%lib_home%/hecdss/
 set wrims2_home=%lib_home%/wrims2/
 set misc_home=%lib_home%/misc/
-set jre_home=%lib_home%/jre6/
+set jre_home=%~dp0/jre6/
 
 setlocal
 rem ###############
