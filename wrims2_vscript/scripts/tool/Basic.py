@@ -12,9 +12,9 @@ def arr2dss(dssfile,ds_arr,interval,starttime,path,attr):
     return None
 
 
-def copyDssToFuture(inFile, outFile, beginYR, totalYR, futureYR=-99, epart="1MON"):
+def copyDssToFuture(inFile, outFile, beginYR, sequentialYR, futureYR=-99, epart="1MON"):
     
-    endYR = beginYR + totalYR - 1
+    endYR = beginYR + sequentialYR - 1
 
     tw = timewindow("15JAN"+str(beginYR)+" 2400 - 31DEC"+str(endYR)+" 2400")  
     beginTime_new = "31JAN"+str(futureYR)+" 2400"
