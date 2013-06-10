@@ -17,11 +17,12 @@ class Study:
 	
 	
 	
-	def __init__(self, directory, configPath, batFileName='runConfig.bat'):
+	def __init__(self, configPath, batFileName='runConfig.bat'):
 
 		
 		self._logger = Param.logger
-		self.configPath = os.path.join(directory, configPath)
+		self.configPath = os.path.join(os.path.dirname(Param.mainScriptPath), configPath)
+		print 'self.configPath:'+self.configPath
 		self.configDir = dirname(self.configPath)
 		self.ms_configPath = os.path.join( self.configDir, "__wvscript.config")
 		self.batFileName = batFileName

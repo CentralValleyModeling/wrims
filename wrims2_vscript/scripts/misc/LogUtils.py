@@ -3,10 +3,10 @@ import Param
 import os.path
 
 
-def initLogging(mainScriptPath):
+def initLogging():
 
     
-    logFilePath = os.path.join(os.path.dirname(mainScriptPath),Param.logFile) 
+    logFilePath = os.path.join(os.path.dirname(Param.mainScriptPath),Param.logFile) 
     
     # clean old entries
     dummy = open(logFilePath,'w') 
