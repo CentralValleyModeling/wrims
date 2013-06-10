@@ -1,7 +1,7 @@
-rem  Run 2 different studies in parallel
+rem  Run 2 different studies simultaneously and pause after completes
 rem  Delay 3 seconds to avoid jvm initiation error
 
-start runConfig_limitedLicense.bat D:\cvwrsm\trunk\wrims2_scripting\studies\callite_svn47\CONV\CONV_test2.conifg
+start runConfig_limitedLicense.bat %~dp0\studies\callite_D1641\D1641.config -pause
 timeout /t 3
-start runConfig_limitedLicense.bat D:\cvwrsm\trunk\wrims2_scripting\studies\callite_svn47\CONV\CONV_test1.conifg
+start runConfig_limitedLicense.bat %~dp0\studies\callite_D1641\Test.config -pause
 

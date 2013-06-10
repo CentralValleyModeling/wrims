@@ -1,3 +1,3 @@
-rem  Use the XA dongle version and pause after run completes
+rem  Use the XA dongle version and pause after completes
 
-start runConfig_pause.bat D:\cvwrsm\trunk\wrims2_scripting\studies\callite_svn47\CONV\CONV_test1.conifg
+start runConfig.bat %~dp0\studies\callite_D1641\D1641.config -pause

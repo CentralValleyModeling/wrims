@@ -1,4 +1,4 @@
-rem  Run single instance
+rem  Run sequentially
 
-start /wait runConfig_limitedLicense.bat D:\cvwrsm\trunk\wrims2_scripting\studies\callite_svn47\CONV\CONV_test1.conifg
-start /wait runConfig_limitedLicense.bat D:\cvwrsm\trunk\wrims2_scripting\studies\callite_svn47\CONV\CONV_test2.conifg
+start /wait runConfig_limitedLicense.bat %~dp0\studies\callite_D1641\D1641.config
+start /wait runConfig_limitedLicense.bat %~dp0\studies\callite_D1641\Test.config

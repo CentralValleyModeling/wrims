@@ -1,3 +1,3 @@
-rem  Pause after run completes
+rem  Run callite D1641.config and then pause
 
-start runConfig_limitedLicense_pause.bat D:\cvwrsm\trunk\wrims2_scripting\studies\callite_svn47\CONV\CONV_test1.conifg
+start runConfig_limitedLicense.bat %~dp0\studies\callite_D1641\D1641.config -pause
