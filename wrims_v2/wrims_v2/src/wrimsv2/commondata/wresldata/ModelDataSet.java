@@ -737,6 +737,11 @@ public class ModelDataSet implements Serializable {
 					}
 					double[] dataList=DataTimeSeries.dvAliasTS.get(entryNameTS).getData();
 					dataList[ControlData.currTimeStep.get(ControlData.currCycleIndex)]=id.getData().doubleValue();
+					
+					String asEntryNameTS=DssOperation.entryNameTS(asName, ControlData.timeStep);
+					double[] asDataList=DataTimeSeries.dvAliasTS.get(asEntryNameTS).getData();
+					int index=ControlData.currTimeStep.get(ControlData.currCycleIndex)+ControlData.timeArrayIndex;
+					if (index<asDataList.length) asDataList[index]=id.getData().doubleValue();
 				} catch (RecognitionException e) {
 					Error.addEvaluationError("Alias evaluation has error.");
 					IntDouble id=new IntDouble(-901.0,false);
