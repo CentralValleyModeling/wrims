@@ -5,7 +5,7 @@ import os.path
 
 def initLogging():
 
-    
+    Param.logFile = os.path.basename(Param.mainScriptPath) + '.log'
     logFilePath = os.path.join(os.path.dirname(Param.mainScriptPath),Param.logFile) 
     
     # clean old entries
