@@ -10,6 +10,7 @@ options {
 @header {
   package scripting.grammar;
   import java.util.Map;
+  import java.util.HashMap;
   import java.util.LinkedHashMap;
   import java.util.Arrays;
   import java.util.HashSet;
@@ -25,36 +26,34 @@ options {
       public Map<String, ArrayList<String>> transferMap = new LinkedHashMap<String, ArrayList<String>>();
       //public ArrayList<String> varList = new ArrayList<String>();
       public ArrayList<String> t = new ArrayList<String>();
-      public static Set<String> reservedKeys = new HashSet<String>(Arrays.asList
-        (  "wreslplus" 
-          ,"mainfile"
-          ,"solver"   
-					,"initfile"
-					,"initfpart"
-					,"svarfile" 
-					,"svarapart"
-					,"svarfpart"
-					,"dvarfile"                    
-					,"timestep"
-					,"startyear" 
-					,"startmonth"
-					,"startday"
-					,"numberofsteps"
-					,"stopyear"
-					,"stopmonth"
-					,"stopday" 
-					,"groundwaterdir"
-					,"showwresllog"
-					,"sendaliastodvar"
-					,"prefixinittodvarfile"
-					,"lpsolveconfigfile"
-					,"lpsolvenumberofretries"
-					,"ilpmaximumfractiondigits"
-					,"ilplog"  
-					,"ilplogformat" 
-					,"ilplogvarvalue" 
 
-         ));
+      static final Map<String , String> reservedKeyMap = new HashMap<String , String>() {{
+         put("wreslplus",   "WreslPlus"          );
+         put("mainfile" ,   "MainFile"           );
+         put("solver"   ,   "Solver"             );
+         put("initfile" ,   "InitFile"           );
+         put("initfpart",   "InitFPart"          );       
+         put("svarfile" ,   "SvarFile"           );
+         put("svarapart",   "SvarAPart"          );
+         put("svarfpart",   "SvarFPart"          );
+         put("dvarfile" ,   "DvarFile"           );            
+         put("timestep" ,   "TimeStep"           );
+         put("startyear",   "StartYear"          );
+         put("startmonth",  "StartMonth"         );
+         put("startday",    "StartDay"           );
+         put("numberofsteps", "NumberOfSteps"    );
+         put("stopyear" ,    "StopYear"          );
+         put("stopmonth",    "StopMonth"         );
+         put("stopday"  ,    "StopDay"           );
+         put("groundwaterdir", "GroundWaterDir"  );
+         put("showwresllog"  , "ShowWreslLog"    );
+         put("sendaliastodvar" , "SendAliasToDvar"                    );
+         put("prefixinittodvarfile", "PrefixInitToDvarFile"           );
+         put("ilpmaximumfractiondigits" , "IlpMaximumFractionDigits"  );
+         put("ilplog"  , "IlpLog"                                     );
+         put("ilplogformat"  , "IlpLogFormat"                         );
+         put("ilplogvarvalue" ,"IlpLogVarValue"                       );
+      }};
 }
 
 
@@ -100,7 +99,7 @@ configFile :
 configItem returns[String key, String val ]
 	: 
 
-    k=configKey         { $key=$k.text;  System.out.print("key: "+$k.text);System.out.print("\t");} 
+    k=configKey         { $key=reservedKeyMap.get($k.text.toLowerCase());  System.out.print("key: "+$key);System.out.print("\t");} 
     ( v1=integer        { $val=$v1.text; System.out.println($v1.text);}  
     | v2=complex        { $val=$v2.text; System.out.println($v2.text);} 
     //| v3=complex   { $val=$v3.text; }
@@ -121,7 +120,7 @@ complex : INT?  ( ID | '.' | '-' | '\"' | '\\' )+ ;
 configKey : ke=ID 
 { 
     
-    if (!reservedKeys.contains( $ke.text.toLowerCase() ) ) 
+    if (!reservedKeyMap.keySet().contains( $ke.text.toLowerCase() ) ) 
     { throw new RuntimeException("Error! "+$ke.text + " is not a recognized keyword in the config file!" ); } 
 }
 ;
