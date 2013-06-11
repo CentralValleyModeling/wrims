@@ -2,7 +2,7 @@ import os
 import subprocess
 from os.path import dirname
 from scripts.misc import Tools, Param
-from DssTransferProcess import DssTransferProcess
+from process.dssTransferProcess import DssTransferProcess
 
 class Study:
 

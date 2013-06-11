@@ -4,7 +4,7 @@
 #=====================================================================================
 
 import os
-from scripts.wrims2.Study import Study
+from scripts.wrims2.study import Study
 from scripts.misc import LogUtils, Param
 #import shutil
 
