@@ -2,6 +2,7 @@ import os
 import subprocess
 from os.path import dirname
 from scripts.tool import Param, DssHec
+from scripts.wrims2 import Utils
 from process.dssTransferProcess import DssTransferProcess
 
 class Study:
@@ -24,11 +25,11 @@ class Study:
 		self.configPath = os.path.join(os.path.dirname(Param.mainScriptPath), configPath)
 		print 'self.configPath:'+self.configPath
 		self.configDir = dirname(self.configPath)
-		self.ms_configPath = os.path.join( self.configDir, "__wvscript.config")
+		self.ms_configPath = os.path.join( self.configDir, "__generated.config")
 		self.batFileName = batFileName
 		
 		#parse config file and put the map to cMap	
-		self.cMap=DssHec.getConfigMap(self.configPath)
+		self.cMap=Utils.getConfigMap(self.configPath)
 		
 		self._startYear=int(self.cMap.get("StartYear"))
 		self._startMonth=int(self.cMap.get("StartMonth"))
@@ -103,7 +104,7 @@ class Study:
 	
 			self._logger.info("Write study config:  "+self.ms_configPath)
 			# write config file
-			Tools.generateConfigFile(self.ms_configPath, self.cMap, startYear=startYear, numberOfSteps=numberOfSteps)
+			Utils.generateConfigFile(self.ms_configPath, self.cMap, startYear=startYear, numberOfSteps=numberOfSteps)
 		
 			self._logger.info("Run generated config: "+self.ms_configPath)
 			
