@@ -24,11 +24,11 @@
 			<manifest>
 				<attribute name="Class-Path" value="."/>
 			</manifest>
-			<fileset dir="D:/cvwrsm/trunk/wrims2_scripting/bin_dev">
+			<fileset dir="bin_dev">
 				<include name="scripting/**/*.class"/>
 				<exclude name="**/*.g"/>
 			</fileset>
-			<zipfileset excludes="META-INF/*.SF" src="D:/cvwrsm/trunk/wrims_v2/wrims_v2/src/wrimsv2/lib/antlr-runtime-3.2.jar"/>
+			<zipfileset excludes="META-INF/*.SF" src="../wrims_v2/wrims_v2/src/wrimsv2/lib/antlr-runtime-3.2.jar"/>
 		</jar>
 		
 		<echo message="Finished Build_scripting_jar" />
