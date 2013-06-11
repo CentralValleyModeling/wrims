@@ -1,7 +1,7 @@
 import os
 import subprocess
 from os.path import dirname
-from scripts.misc import Tools, Param
+from scripts.tool import Param, DssHec
 from process.dssTransferProcess import DssTransferProcess
 
 class Study:
@@ -28,7 +28,7 @@ class Study:
 		self.batFileName = batFileName
 		
 		#parse config file and put the map to cMap	
-		self.cMap=Tools.getConfigMap(self.configPath)
+		self.cMap=DssHec.getConfigMap(self.configPath)
 		
 		self._startYear=int(self.cMap.get("StartYear"))
 		self._startMonth=int(self.cMap.get("StartMonth"))

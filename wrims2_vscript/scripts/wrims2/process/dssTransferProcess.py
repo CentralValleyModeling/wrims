@@ -1,5 +1,5 @@
 from scripting.element import DssTransferReader
-from scripts.misc import Tools, Param
+from scripts.tool import Param
 import hec.heclib.dss.HecDss as HecDss
 #import hec.heclib.dss.DSSPathname as DSSPathname
 
