@@ -684,33 +684,25 @@ bpart_id : s=QUOTE {$timeseries::ts_.dssBPart=Tools.strip($s.text);};
 convert : CONVERT s=QUOTE {$timeseries::ts_.convertToUnits=Tools.strip($s.text);};
 
 /// network
-network : 'network' ID '{' inlet? outlet? connection+ '}';
+network : NETWORK ID '{' node? connection+ '}';
 
-inlet:  'inlet'  ID ( ',' ID)* ;
-outlet: 'outlet' ID ( ',' ID)* ;
+//inlet:  'inlet'  ID ( ',' ID)* ;
+//outlet: 'outlet' ID ( ',' ID)* ;
+node:   NODE    ID ( ',' ID)* ;
 
-connection:    inflow? branch outflow?   ;
+connection:    branch | branch_short ;
 
-inflow :   '*>>' ;
+inlet       :  INFLOW  element ;
+outlet      :  element OUTFLOW ;
+inoutlet    :  INFLOW element OUTFLOW ;
 
-outflow :  '>>*' ;
+branch_short : inoutlet ;
 
-flow:  ( '~>>' | '>>' ) ;
+branch : (elements | inlet) FLOW  (element FLOW)*  (elements | outlet) ;
 
-branch : branch_start ( branch_trunk branch_end )?;
+elements     :  element ( ',' element)* ;
 
-branch_start:     element ( ',' element)*   ;
-
-branch_trunk:     flow ( element flow )*   ;
-
-branch_end:       element ( ',' element)*   ;
-
-branch_i : elements flow ( element flow )* elements ;
-
-elements : element ( ',' element)* ;
-
-element : ID ;
-
+element      :  ID ('.' ID)?  ;
 
 
 //branch:     ( id_with_port arrow_type )+ id_with_port   ;
@@ -1144,8 +1136,12 @@ MOD : 'mod' | 'MOD' ;
 CFS_TAF : 'cfs_taf' | 'CFS_TAF' ;
 TAF_CFS : 'taf_cfs' | 'TAF_CFS' ;
 
-
-
+// network
+NETWORK : 'network' | 'NETWORK' | 'Network' ;
+NODE    : 'node' | 'NODE' | 'Node' ;
+INFLOW  :  '*>>' ;
+OUTFLOW :  '>>*' ;
+FLOW    :  '>>'  ;
 
 //ID  :   ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
 ID : Letter ( Letter | Digit | '_' )*;
