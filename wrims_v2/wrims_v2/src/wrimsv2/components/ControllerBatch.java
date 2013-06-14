@@ -299,12 +299,13 @@ public class ControllerBatch {
 			VariableTimeStep.setCycleEndDate(sds);
 			if (enableProgressLog) {
 				try {
-					FileWriter progressFile = new FileWriter(FilePaths.mainDirectory + "progress.txt", true);
+					//FileWriter progressFile = new FileWriter(FilePaths.mainDirectory + "progress.txt", true);
+					FileWriter progressFile = new FileWriter(FilePaths.mainDirectory + "progress.txt");
 					PrintWriter pw = new PrintWriter(progressFile);
 					int cy = 0;
 					if (ControlData.currYear > cy) {
 						cy = ControlData.currYear;
-						pw.println(ControlData.startYear + " " + ControlData.endYear + " " + ControlData.currYear);
+						pw.println(ControlData.startYear + " " + ControlData.endYear + " " + ControlData.currYear +" "+ ControlData.currMonth);
 						pw.close();
 					}
 				} catch (IOException e) {
