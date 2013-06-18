@@ -42,7 +42,7 @@
 		
 		<echo message="Copy jre6" />
 		<copy todir="${temp.dir}/jre6">
-		    <fileset dir="${jre6.dir}" excludesfile="jre_excludes.properties" />
+		    <fileset dir="${jre6.dir}" excludesfile="distro/jre_excludes.properties" />
 		</copy>
 		
 		<echo message="Copy src" />
