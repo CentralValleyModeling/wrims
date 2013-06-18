@@ -103,10 +103,11 @@
 	<target name="7z">
 	    <exec executable="${7za.path}">
 	    	<arg value="a"/>
-		    <arg value="-sfx"/>
+		    <arg value="-t7z"/>
+	    	<arg value="-sfx"/>
 	    	<arg value="${dist.dir}/wrims2_vscript_${version}_${svnversion}.exe"/>
 	    	<arg value="${temp.dir}"/>
-	    	<arg value="-m7"/>
+	    	<arg value="-m5=LZMA2"/>
 	    </exec>
     </target>
 
