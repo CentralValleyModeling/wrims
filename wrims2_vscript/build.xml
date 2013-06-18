@@ -55,6 +55,25 @@
 		<echo message="Copy src" />
 		<copy todir="${temp.dir}">
 			<fileset dir="${src.dir}">
+				
+				<exclude name="**/vista/jython/cachedir/packages/**"/>
+				<exclude name="**/vista/jython/bin/**"/> 
+				<exclude name="**/vista/jython/src/**"/> 
+				<exclude name="**/vista/jython/tests/**"/> 
+				<exclude name="**/vista/jython/Doc/**"/>
+				<exclude name="**/vista/jython/Demo/**"/> 
+				<exclude name="**/vista/jython/META-INF/**"/> 
+				<exclude name="**/vista/jython/**/*$py.class"/> 
+				<exclude name="**/lib/vista/lib/**/*$py.class"/>
+				<exclude name="scripts/**/*$py.class"/>
+				<exclude name="**/*.log"/>
+				<exclude name="**/*.dsc"/>
+				<exclude name="**/*.dsd"/>	
+				
+				<exclude name="**/lib/vista/*.py"/>
+				<exclude name="**/lib/vista/*.dss"/>
+					
+				
 				<include name="lib/**"/>
 				<include name="license/**"/>
 				<include name="scripts/**"/>
@@ -64,23 +83,6 @@
 				<include name="*.txt"/>
 				
 				<include name="*.properties"/>
-
-				<exclude name="**/jython/cachedir/packages/**"/>
-				<exclude name="**/jython/bin"/>
-				<exclude name="**/jython/src"/> 
-				<exclude name="**/jython/tests"/> 
-				<exclude name="**/jython/Doc"/>
-				<exclude name="**/jython/Demo"/> 
-				<exclude name="**/jython/META-INF"/> 
-				<exclude name="**/jython/**/*.class"/> 
-				<exclude name="**/lib/vista/lib/**/*.class"/>
-				<exclude name="scripts/**/*.class"/>
-				<exclude name="**/*.log"/>
-				<exclude name="**/*.dsc"/>
-				<exclude name="**/*.dsd"/>	
-				
-				<exclude name="**/lib/vista/*.py"/>
-				<exclude name="**/lib/vista/*.dss"/>
 		
 			</fileset>
 		</copy>
