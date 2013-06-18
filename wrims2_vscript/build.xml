@@ -107,7 +107,7 @@
 	    	<arg value="-sfx"/>
 	    	<arg value="${dist.dir}/wrims2_vscript_${version}_${svnversion}.exe"/>
 	    	<arg value="${temp.dir}"/>
-	    	<arg value="-m5=LZMA2"/>
+	    	<arg value="-mx7"/>
 	    </exec>
     </target>
 
