@@ -66,11 +66,12 @@
 				<include name="*.properties"/>
 
 				<exclude name="**/jython/cachedir/packages/**"/>
-				<exclude name="**/jython/src/**"/> 
-				<exclude name="**/jython/tests/**"/> 
-				<exclude name="**/jython/Doc/**"/>
-				<exclude name="**/jython/Demo/**"/> 
-				<exclude name="**/jython/META-INF/**"/> 
+				<exclude name="**/jython/bin"/>
+				<exclude name="**/jython/src"/> 
+				<exclude name="**/jython/tests"/> 
+				<exclude name="**/jython/Doc"/>
+				<exclude name="**/jython/Demo"/> 
+				<exclude name="**/jython/META-INF"/> 
 				<exclude name="**/jython/**/*.class"/> 
 				<exclude name="**/lib/vista/lib/**/*.class"/>
 				<exclude name="scripts/**/*.class"/>
