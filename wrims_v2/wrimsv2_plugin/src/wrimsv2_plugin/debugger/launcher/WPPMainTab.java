@@ -13,6 +13,17 @@ package wrimsv2_plugin.debugger.launcher;
 
 
 import java.awt.event.ItemListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -43,6 +54,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ResourceListSelectionDialog;
 
 import wrimsv2_plugin.debugger.core.DebugCorePlugin;
+import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.tools.TimeOperation;
 
 /**
@@ -74,6 +86,10 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	private Combo endYearCombo;
 	private Combo endMonthCombo;
 	private Combo endDayCombo;
+	private Button wsidigen;
+	
+	private ILaunchConfiguration launchConfig;
+	String externalPath="";
 	
 	private DayItemListener sdl=new DayItemListener(1);
 	private DayItemListener edl=new DayItemListener(2);
@@ -481,7 +497,167 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		gd = new GridData(GridData.BEGINNING);
 		day1.setLayoutData(gd);
 		day1.setFont(font);
+		
+		wsidigen = new Button(comp, SWT.NONE);
+		wsidigen.setText("&Wsi-Di Generator");
+		gd = new GridData(GridData.BEGINNING);
+		gd.horizontalSpan=2;
+		wsidigen.setLayoutData(gd);
+		wsidigen.setFont(font);
+		wsidigen.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				wsidigenerator();
+			}
+		});
+	}
+	
+	public void wsidigenerator(){
+		String engineFileFullPath = "WRIMSv2_Engine.bat";
+		try {
+			String configFilePath = generateConfigFile();
+			FileWriter debugFile = new FileWriter(engineFileFullPath);
+			PrintWriter out = new PrintWriter(debugFile);
+			generateBatch(out, configFilePath);
+			Process process = Runtime.getRuntime().exec("cmd /c start " + "WSIDIGenerator\\wsidi_generator.bat");
+		}catch (IOException e) {
+			WPPException.handleException(e);
+		}
+	}
+	
+	public String generateConfigFile(){
+		
+		String configFilePath="";
+		String mainFile=fMainFileText.getText();
+		try {				
+			String mainFileAbsPath;
+			if (new File(mainFile).isAbsolute()){
+				mainFileAbsPath = mainFile;
+			}else{
+				mainFileAbsPath = procRelativePath(mainFile);
+			}
+			
+			int index = mainFileAbsPath.lastIndexOf(File.separator);
+			String mainDirectory = mainFileAbsPath.substring(0, index + 1);
+			externalPath = mainDirectory + "External";
+			
+			String studyDir = new File(mainFileAbsPath).getParentFile().getParentFile().getAbsolutePath();
+			String configName = "__study.config";
+			File f = new File(studyDir, configName);
+			File dir = new File(f.getParent());
+			dir.mkdirs();
+			f.createNewFile();
+			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f)));
+			 
+			out.println("##################################################################################");
+			out.println("# Command line Example:");
+			out.println("# C:\\wrimsv2_SG\\bin\\runConfig_limitedXA.bat D:\\example\\EXISTING_BO.config");
+			out.println("# ");	
+			out.println("# Note:");			
+			out.println("# 1. This config file and the RUN directory must be placed in the same directory.");
+			out.println("# 2. Use relative path to increase the portability.");
+			out.println("#    For example, use RUN\\main.wresl for MainFile and DSS\\INIT.dss for InitFile");
+			out.println("##################################################################################");	
+			out.println("");
+			out.println("");
+			
+			out.println("MainFile           "+mainFileAbsPath.toLowerCase());
+			out.println("Solver             "+DebugCorePlugin.solver.toLowerCase());
+			String dvarFile = fDvarFileText.getText();
+			if (new File(dvarFile).isAbsolute()){
+				out.println("DvarFile           "+dvarFile.toLowerCase());
+				setDvarFileNameWsiDiGen(dvarFile);
+			}else{
+				String procDvarFile=procRelativePath(dvarFile);
+				out.println("DvarFile           " + procDvarFile.toLowerCase());
+				setDvarFileNameWsiDiGen(procDvarFile);
+			}
+			String svarFile = fSvarFileText.getText();
+			if (new File(svarFile).isAbsolute()){
+				out.println("SvarFile           "+svarFile.toLowerCase());
+			}else{
+				String procSvarFile=procRelativePath(svarFile);
+				out.println("SvarFile           "+procSvarFile.toLowerCase());
+			}
+			String gwDataFolder = groundWaterFolderText.getText();
+			if (new File(gwDataFolder).isAbsolute()){
+				out.println("GroundwaterDir     "+gwDataFolder.toLowerCase());
+			}else{
+				out.println("GroundwaterDir     "+procRelativePath(gwDataFolder).toLowerCase());
+			}
+			out.println("SvarAPart          " + aPartText.getText().toLowerCase());
+			out.println("SvarFPart          " + svFPartText.getText().toLowerCase());
+			String initFile = fInitFileText.getText();
+			if (new File(initFile).isAbsolute()){
+				out.println("InitFile           "+initFile.toLowerCase());
+			}else{
+				out.println("InitFile           "+procRelativePath(initFile).toLowerCase());
+			}
+			out.println("InitFPart          "+initFPartText.getText().toLowerCase());
+			out.println("TimeStep           "+timeStepCombo.getText().toLowerCase());
+			out.println("StartYear          "+startYearCombo.getText().toLowerCase());
+			out.println("StartMonth         "+TimeOperation.monthValue(startMonthCombo.getText().toLowerCase()));
+			out.println("StartDay           "+startDayCombo.getText().toLowerCase());
+			out.println("StopYear           "+endYearCombo.getText().toLowerCase());
+			out.println("StopMonth          "+TimeOperation.monthValue(endMonthCombo.getText().toLowerCase()));
+			out.println("StopDay            "+endDayCombo.getText().toLowerCase());
+			out.println("IlpLog             "+"no");
+			out.println("IlpLogFormat       "+"none");
+			out.println("IlpLogVarValue     "+"no");
+			out.println("WreslPlus          "+launchConfig.getAttribute(DebugCorePlugin.ATTR_WPP_WRESLPLUS, "no"));
+			
+			if (DebugCorePlugin.solver.equalsIgnoreCase("LpSolve")) {
+				out.println("LpSolveConfigFile         callite.lpsolve");
+				out.println("LpSolveNumberOfRetries    2");				
+			}	
+			out.close();
+			configFilePath= new File(studyDir, configName).getAbsolutePath();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
+		return configFilePath;
+	}
+	
+	public void generateBatch(PrintWriter out, String configFilePath){
+		out.println("@echo off");
+		out.println();
+		out.println("set path=" + externalPath + ";"+"lib;%path%");
+		out.println("set temp_wrims2=jre\\bin");
+		out.println();
+		out.println("jre\\bin\\java -Xmx1600m -Xss1024K -Duser.timezone=UTC -Djava.library.path=\"" + externalPath + ";lib\" -cp \""+externalPath+";"+"lib\\external;lib\\WRIMSv2.jar;lib\\commons-io-2.1.jar;lib\\XAOptimizer.jar;lib\\lpsolve55j.jar;lib\\gurobi.jar;lib\\heclib.jar;lib\\jnios.jar;lib\\jpy.jar;lib\\misc.jar;lib\\pd.jar;lib\\vista.jar;lib\\guava-11.0.2.jar;lib\\javatuples-1.2.jar;\" wrimsv2.components.ControllerBatch "+"-config="+configFilePath);
+		out.close();
+	}
+	
+	public void setDvarFileNameWsiDiGen(String dvarFile){
+		String wsidiMainTemplate = ".\\WSIDIGenerator\\Main_template.py";
+		String wsidiMainFile = ".\\WSIDIGenerator\\Main.py";
+		try {
+	         FileInputStream fs= new FileInputStream(wsidiMainTemplate);
+	         BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+	         LineNumberReader reader = new LineNumberReader(br);
+	         FileWriter writer = new FileWriter(wsidiMainFile);
+	         String line;
+	         int count =0;
+	         while((line = br.readLine())!=null){
+	              count++;
+	              if(count==28){
+	                    writer.write("        studyDvName=\""+dvarFile+"\"\n");
+	              }else{
+	                  writer.append(line+"\n");
+	              }
+	         }
+	         writer.close();
+	    }
+	    catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public String procRelativePath(String path){
+		String absPath=launchConfig.getFile().getLocation().toFile().getParentFile().getAbsolutePath();
+		absPath=absPath+"\\"+path;
+		return absPath;
 	}
 	
 	protected void browseFiles(Text fileLocationText) {
@@ -604,6 +780,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		} catch (CoreException e) {
 			setErrorMessage(e.getMessage());
 		}
+		launchConfig=configuration;
 	}
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#performApply(org.eclipse.debug.core.ILaunchConfigurationWorkingCopy)
