@@ -108,12 +108,13 @@ class Study:
 		
 			self._logger.info("Run generated config: "+self.ms_configPath)
 			
-			subprocess.call([self.batFileName, self.ms_configPath])
+			#subprocess.call([self.batFileName, self.ms_configPath])
+			subprocess.call(["cmd.exe", "/c", "start", self.batFileName, self.ms_configPath])
 			
 		else:
 			self._logger.info("Run original config: "+self.configPath)
-			subprocess.call([self.batFileName, self.configPath])	
-			
+			#subprocess.call([self.batFileName, self.configPath])	
+			subprocess.call(["cmd.exe", "/c", "start", self.batFileName, self.configPath])
 			
 			
 		#subprocess.call(['cmd.exe', '/c', 'RunStudy.bat', self.ms_configPath])
