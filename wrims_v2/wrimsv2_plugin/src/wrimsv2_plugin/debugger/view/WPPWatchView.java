@@ -47,6 +47,7 @@ import wrimsv2_plugin.debugger.model.IWPPEventListener;
 import wrimsv2_plugin.debugger.model.WPPDebugTarget;
 import wrimsv2_plugin.debugger.model.WPPValue;
 import wrimsv2_plugin.tools.ProcImage;
+import wrimsv2_plugin.tools.ProcWatchItem;
 import wrimsv2_plugin.tools.SearchTable;
 import wrimsv2_plugin.tools.SetSelectionInTable;
 
@@ -284,6 +285,7 @@ public class WPPWatchView extends AbstractDebugView implements ISelectionListene
 			TableItem ti=tis[i];
 			String varGoalNameLowerCase=ti.getText(0).toLowerCase();
 			DebugCorePlugin.watchItems.remove(varGoalNameLowerCase);
+			ProcWatchItem.saveWatchItems(DebugCorePlugin.watchItems);
 		}
 		int[] indices = table.getSelectionIndices();
 		table.remove(indices);
@@ -319,6 +321,7 @@ public class WPPWatchView extends AbstractDebugView implements ISelectionListene
 		TableViewer viewer=(TableViewer) getViewer();
 		Table table=viewer.getTable();
 		DebugCorePlugin.watchItems=new ArrayList<String>();
+		ProcWatchItem.saveWatchItems(DebugCorePlugin.watchItems);
 		table.removeAll();
 	}
 	

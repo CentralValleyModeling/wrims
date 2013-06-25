@@ -1,18 +1,26 @@
 package wrimsv2_plugin.debugger.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.eclipse.ui.IStartup;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 
 import wrimsv2_plugin.debugger.menuitem.EnableMenus;
 import wrimsv2_plugin.debugger.toolbaritem.EnableButtons;
 import wrimsv2_plugin.debugger.toolbaritem.HandlePauseResumeButton;
+import wrimsv2_plugin.debugger.view.UpdateView;
+import wrimsv2_plugin.debugger.view.WPPWatchView;
+import wrimsv2_plugin.tools.ProcWatchItem;
+import wrimsv2_plugin.tools.ShowDuplicatedWatch;
 
 public class DebuggerStartUp implements IStartup {
 
 	@Override
 	public void earlyStartup() {
 		enableRunMenu();
+		initialWatchViewer();
 	}
 
 	public void enableRunMenu(){
@@ -34,5 +42,21 @@ public class DebuggerStartUp implements IStartup {
 		enableButtonMap.put(DebugCorePlugin.ID_WPP_NEXTCYCLEBUTTON, false);
 		enableButtonMap.put(DebugCorePlugin.ID_WPP_NEXTTIMESTEPBUTTON, false);
 		new EnableButtons(enableButtonMap);
+	}
+	
+	public void initialWatchViewer(){
+		ArrayList<String> watchItems= ProcWatchItem.getLastWatchItems();
+		DebugCorePlugin.watchItems = watchItems;
+		int size = watchItems.size();
+		for (int i=0; i<size; i++){
+			final String varGoalName=watchItems.get(i);
+			final IWorkbench workbench=PlatformUI.getWorkbench();
+			workbench.getDisplay().asyncExec(new Runnable(){
+				public void run(){
+					WPPWatchView watchView = (WPPWatchView) workbench.getActiveWorkbenchWindow().getActivePage().findView(DebugCorePlugin.ID_WPP_WATCH_VIEW);
+					watchView.addWatched(varGoalName);
+				}
+			});
+		}
 	}
 }

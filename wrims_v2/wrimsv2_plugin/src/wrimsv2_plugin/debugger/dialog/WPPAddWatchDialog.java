@@ -45,6 +45,7 @@ import wrimsv2_plugin.debugger.view.WPPGoalView;
 import wrimsv2_plugin.debugger.view.WPPVarDetailView;
 import wrimsv2_plugin.debugger.view.WPPVariableView;
 import wrimsv2_plugin.debugger.view.WPPWatchView;
+import wrimsv2_plugin.tools.ProcWatchItem;
 import wrimsv2_plugin.tools.SearchTable;
 import wrimsv2_plugin.tools.ShowDuplicatedWatch;
 
@@ -97,6 +98,7 @@ public class WPPAddWatchDialog extends PopupDialog {
 					text1.setText("");
 				}else{
 					watchItems.add(varGoalNameLowerCase);
+					ProcWatchItem.saveWatchItems(watchItems);
 					if (DebugCorePlugin.target!=null && DebugCorePlugin.target.isSuspended()){
 						UpdateView.updateWatchView(DebugCorePlugin.target);
 					}else{
