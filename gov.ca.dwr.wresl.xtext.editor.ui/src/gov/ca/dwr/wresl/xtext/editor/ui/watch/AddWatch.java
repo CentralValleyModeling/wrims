@@ -17,6 +17,7 @@ import wrimsv2_plugin.debugger.core.DebugCorePlugin;
 import wrimsv2_plugin.debugger.exception.WPPException;
 import wrimsv2_plugin.debugger.view.UpdateView;
 import wrimsv2_plugin.debugger.view.WPPWatchView;
+import wrimsv2_plugin.tools.ProcWatchItem;
 import wrimsv2_plugin.tools.ShowDuplicatedWatch;
 
 public class AddWatch extends org.eclipse.core.commands.AbstractHandler {
@@ -29,6 +30,7 @@ public class AddWatch extends org.eclipse.core.commands.AbstractHandler {
 				new ShowDuplicatedWatch(varGoalNameLowerCase);
 			}else{
 				DebugCorePlugin.watchItems.add(varGoalNameLowerCase);
+				ProcWatchItem.saveWatchItems(DebugCorePlugin.watchItems);
 				if (DebugCorePlugin.target!=null && DebugCorePlugin.target.isSuspended()){
 					UpdateView.updateWatchView(DebugCorePlugin.target);
 				}else{
