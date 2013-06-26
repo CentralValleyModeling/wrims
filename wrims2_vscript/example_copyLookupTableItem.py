@@ -8,7 +8,7 @@ lookupPath = "studies/callite_D1641Existing_PA__2012oct/Run/Lookup"
 inSubDir = "PA_Base_D1641_Existing"
 
 futureYR = 2012
-historyYRs = [x for x in range(1945, 1947)]
+historyYRs = [x for x in range(1945, 1946)]
 sequentialYRs = 3
 #--------------------------------------------------------------------------------
 
@@ -19,6 +19,9 @@ yearlyTableList = ["wytypes.table",
 				   "wytypeD1485.table",
 				   "wytypeDefic.table",
 				   "wytypeSnow.table",
+				   "AnnualReqDel_swp.table",
+				   "SacValleyIndex.table",
+				   "eightriver.table"
 				]
 
 
