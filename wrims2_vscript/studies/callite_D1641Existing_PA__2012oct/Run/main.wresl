@@ -9,6 +9,9 @@ initial {
 	svar CH_DLTSW {select OPTION from gui_Regs where Index = 13}  !D-1485
 	svar DCC_DLTSW {select OPTION from gui_Regs where Index = 1}
 	svar EI_DLTSW {select OPTION from gui_Regs where Index = 2}
+	
+	! For Position Analysis
+	const beginWaterYear { 2013 } ! swp_alloc in \Run\swp_dellogic\WSI_DI\delcar_swp.wresl
 }
 
 SEQUENCE CYCLE1 {

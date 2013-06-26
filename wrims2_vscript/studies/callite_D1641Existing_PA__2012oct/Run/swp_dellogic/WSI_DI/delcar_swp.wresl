@@ -279,7 +279,9 @@ define swp_allocation_3 {value min(max_tableA,swp_allocation_2)}
 ! This implements the no reduction rule for april to december
 define swp_alloc {
     case start {
-        condition  wateryear==1922 .and. month==oct
+        !condition  wateryear==1922 .and. month==oct
+		! modified for position analysis. beginWaterYear is defined in main.wresl 
+		condition  wateryear==beginWaterYear .and. month==oct  
         value      max_tableA*0.5}
     case JanToApr {                                         ! reductions allowed
         condition  month >= JAN .and. month <= APR
