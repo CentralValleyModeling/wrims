@@ -11,7 +11,8 @@ initial {
 	svar EI_DLTSW {select OPTION from gui_Regs where Index = 2}
 	
 	! For Position Analysis
-	const beginWaterYear { 2013 } ! swp_alloc in \Run\swp_dellogic\WSI_DI\delcar_swp.wresl
+	! Position analysis always begin in October. 
+	const beginWaterYear { 2013 } ! October 2012 is water year 2013
 }
 
 SEQUENCE CYCLE1 {
