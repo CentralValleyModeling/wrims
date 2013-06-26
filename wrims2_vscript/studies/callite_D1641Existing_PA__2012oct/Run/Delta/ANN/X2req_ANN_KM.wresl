@@ -108,6 +108,7 @@ define DO_req_X2roe_nocap {
           value POW(10.0, (a_x2_coef + b_x2_coef*X2_last - km_roe)/c_x2_coef) }
      case StandardOn_ANN {
           condition      daysX2_roe_mod > 0.5 .and. X2_ANN_KM == 0
+		  ! need to modify for position analysis
           value getNDO_X2(km_roe,
                     X2_PRV(-4),X2_PRV(-3),X2_PRV(-2),X2_PRV(-1),X2_last,
                     NDO(-4),NDO(-3),NDO(-2),NDO(-1),
@@ -168,6 +169,7 @@ define DO_req_X2chs_nocap {
           value          POW(10.0, (a_x2_coef + b_x2_coef*X2_roe - km_chs)/c_x2_coef)  }
      case StandardOn_ANN {
           condition      daysX2_chs_mod > 0.5 .and. X2_ANN_KM == 0
+		  ! need to modify for position analysis
           value getNDO_x2_curMonNDOSplit(km_chs,
                     X2_PRV(-4),X2_PRV(-3),X2_PRV(-2),X2_PRV(-1),X2_last,
                     NDO(-4),NDO(-3),NDO(-2),NDO(-1),DO_req_X2roe,NDO(-1),
@@ -239,6 +241,7 @@ define DO_req_X2cnf_nocap {
           value           flowmin_specX2 }
      case StandardOn_ANN {
           condition      daysX2_cnf_mod > 0.5 .and. X2_ANN_KM == 0
+		  ! need to modify for position analysis
           value getNDO_x2_curMonNDOSplit(km_cnf,
                     X2_PRV(-4),X2_PRV(-3),X2_PRV(-2),X2_PRV(-1),X2_last,
                     NDO(-4),NDO(-3),NDO(-2),NDO(-1),DO_req_X2roe,DO_req_X2chs,
