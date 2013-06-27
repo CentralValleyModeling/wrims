@@ -13,7 +13,7 @@ Sets Oroville rule curve (Oroville Storage Level 3 and Level 4 values)
 ***/
 define OroSepTarg { ! DrainTar_buffer = 0 when int(OMRBOON)==1 as defined in delcar_swp.wresl
   case a_X{
-    condition wateryear==1922 .and. month<=dec
+    condition wateryear==beginWY .and. month<=dec
     value min(1000. + 0.5*max(S_Orovl(prevSep) - 1000. - DrainTar_buffer ,0.), S_OrovlLevel5) }
   case b_X{
     condition always

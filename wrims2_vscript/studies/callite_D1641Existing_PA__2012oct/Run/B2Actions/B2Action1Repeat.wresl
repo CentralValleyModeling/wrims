@@ -48,8 +48,8 @@ define C_Wkytn_adj_dv {alias C_Wkytn_adj kind 'flow-minimum' units 'cfs'}
 
 ! Minflow is either the inputted lookup table's Minimum Instream Flow value or the stability target
 define minflow_C_Wkytn_b2 {
-    case Oct1922 {
-       condition month==OCT .and. wateryear==1922
+    case OctbeginWY {
+       condition month==OCT .and. wateryear==beginWY
             value       0.0}
     case UnderStabLim {
        condition   C_Wkytn(-1)< ClearStabLimit + 0.1 .and. month > 1 .and. int(B2Action1) == 1

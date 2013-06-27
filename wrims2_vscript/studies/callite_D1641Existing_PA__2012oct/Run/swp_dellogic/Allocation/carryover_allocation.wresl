@@ -236,34 +236,34 @@ define co_current_29 {case b{condition wateryear==beginWY value 0.} case a{condi
 define co_current_30 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_30*co_available} } !CASTAIC LAKE WA - MI
 
 !position analysis:                                                                                      
-/*define co_current_1  {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*118.17/352.} } !ALAMEDA COUNTY FC&WCD-ZONE 7    
-define co_current_2  {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*  0.00/352.} } !ALAMEDA COUNTY WD
-define co_current_3  {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1* 31.09/352.} } !ANTELOPE VALLEY-EAST KERN WA
-define co_current_4  {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1* 29.10/352.} } !CASTAIC LAKE WA
-define co_current_5  {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*  0.00/352.} } !CITY OF YUBA CITY
-define co_current_6  {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*  0.00/352.} } !COACHELLA VALLEY WD
-define co_current_7  {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*  0.00/352.} } !COUNTY OF BUTTE
-define co_current_8  {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*  0.00/352.} } !COUNTY OF KINGS
-define co_current_9  {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*  1.62/352.} } !CRESTLINE-LAKE ARROWHEAD WA
-define co_current_10 {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1* 30.79/352.} } !DESERT WA
-define co_current_11 {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*  0.00/352.} } !DUDLEY RIDGE WD
-define co_current_12 {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*  0.00/352.} } !EMPIRE WEST SIDE ID
-define co_current_13 {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1* 17.17/352.} } !KERN COUNTY WA
-define co_current_14 {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*  0.00/352.} } !LITTLEROCK CREEK ID
-define co_current_15 {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*  0.00/352.} } !METROPOLITAN WDSC
-define co_current_16 {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1* 65.43/352.} } !MOJAVE WA
-define co_current_17 {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1* 13.69/352.} } !NAPA COUNTY FC&WCD
-define co_current_18 {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*  0.00/352.} } !OAK FLAT WD
-define co_current_19 {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*  0.97/352.} } !PALMDALE WD
-define co_current_20 {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*  0.00/352.} } !SAN BERNARDINO VALLEY MWD
-define co_current_21 {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*  0.00/352.} } !SAN GABRIEL VALLEY MWD
-define co_current_22 {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*  0.00/352.} } !SAN GORGONIO PASS WA
-define co_current_23 {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*  0.00/352.} } !SAN LUIS OBISPO COUNTY FC&WCD
-define co_current_24 {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*  0.00/352.} } !SANTA BARBARA COUNTY FC&WCD
-define co_current_25 {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*  0.00/352.} } !SANTA CLARA VALLEY WD
-define co_current_26 {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1* 43.98/352.} } !SOLANO COUNTY WA
-define co_current_27 {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*  0.00/352.} } !TULARE LAKE BASIN WSD
-define co_current_28 {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*  0.00/352.} } !VENTURA COUNTY WPD*/
+/*define co_current_1  {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*118.17/352.} } !ALAMEDA COUNTY FC&WCD-ZONE 7    
+define co_current_2  {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*  0.00/352.} } !ALAMEDA COUNTY WD
+define co_current_3  {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1* 31.09/352.} } !ANTELOPE VALLEY-EAST KERN WA
+define co_current_4  {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1* 29.10/352.} } !CASTAIC LAKE WA
+define co_current_5  {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*  0.00/352.} } !CITY OF YUBA CITY
+define co_current_6  {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*  0.00/352.} } !COACHELLA VALLEY WD
+define co_current_7  {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*  0.00/352.} } !COUNTY OF BUTTE
+define co_current_8  {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*  0.00/352.} } !COUNTY OF KINGS
+define co_current_9  {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*  1.62/352.} } !CRESTLINE-LAKE ARROWHEAD WA
+define co_current_10 {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1* 30.79/352.} } !DESERT WA
+define co_current_11 {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*  0.00/352.} } !DUDLEY RIDGE WD
+define co_current_12 {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*  0.00/352.} } !EMPIRE WEST SIDE ID
+define co_current_13 {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1* 17.17/352.} } !KERN COUNTY WA
+define co_current_14 {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*  0.00/352.} } !LITTLEROCK CREEK ID
+define co_current_15 {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*  0.00/352.} } !METROPOLITAN WDSC
+define co_current_16 {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1* 65.43/352.} } !MOJAVE WA
+define co_current_17 {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1* 13.69/352.} } !NAPA COUNTY FC&WCD
+define co_current_18 {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*  0.00/352.} } !OAK FLAT WD
+define co_current_19 {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*  0.97/352.} } !PALMDALE WD
+define co_current_20 {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*  0.00/352.} } !SAN BERNARDINO VALLEY MWD
+define co_current_21 {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*  0.00/352.} } !SAN GABRIEL VALLEY MWD
+define co_current_22 {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*  0.00/352.} } !SAN GORGONIO PASS WA
+define co_current_23 {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*  0.00/352.} } !SAN LUIS OBISPO COUNTY FC&WCD
+define co_current_24 {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*  0.00/352.} } !SANTA BARBARA COUNTY FC&WCD
+define co_current_25 {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*  0.00/352.} } !SANTA CLARA VALLEY WD
+define co_current_26 {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1* 43.98/352.} } !SOLANO COUNTY WA
+define co_current_27 {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*  0.00/352.} } !TULARE LAKE BASIN WSD
+define co_current_28 {case b{condition month>=oct .and. month <=dec .and. wateryear==beginWY value 0.} case a{condition always value swp_co_1*  0.00/352.} } !VENTURA COUNTY WPD*/
 
 goal set_co_dv_1  {co_dv_1 = co_current_1 } !ALAMEDA COUNTY FC&WCD-ZONE 7
 goal set_co_dv_2  {co_dv_2 = co_current_2 } !ALAMEDA COUNTY WD

@@ -46,7 +46,7 @@ define SAC_RI {timeseries kind 'SRI_FLOW' units 'CFS'}
 define A1_TurbTdv {std kind 'RPA-A1' units 'NONE'}
 define A1_TurbT {
         case Initialize {
-            condition month==OCT .and. wateryear==1922 .or. OMRBOON == 0
+            condition month==OCT .and. wateryear==beginWY .or. OMRBOON == 0
                 value 99.}
     case Oct_Dec {
             condition month>=OCT .and. month<DEC
@@ -81,7 +81,7 @@ goal setA1_TurbTdv {A1_TurbTdv = A1_TurbT}
 define A1_TurbTCdv {std kind 'RPA-A1' units 'NONE'}
 define A1_TurbTC {
         case Initialize {
-                condition month==OCT .and. wateryear==1922 .or. OMRBOON == 0
+                condition month==OCT .and. wateryear==beginWY .or. OMRBOON == 0
                 value 0.}
         case Oct_Dec {
                 condition month>=OCT .and. month<DEC
@@ -232,7 +232,7 @@ define X2_lastdv {alias X2_last kind 'X2-POSITION-PREV' units 'KM'}
 ! Action 3 - X2 Threshold for OMR flows
 define X2_A3 {
     case Initialize {
-            condition month==OCT .and. wateryear==1922 .or. OMRBOON == 0
+            condition month==OCT .and. wateryear==beginWY .or. OMRBOON == 0
                 value 3.}
     case J_E_Roe {
                 condition month==JUN .and. X2_lastdv(-1) > 74.
@@ -279,7 +279,7 @@ define A3_OMR_Targ{
 !OMR FWS RPA 14 day average
 define OMR_RPA_1{
     case Initialize {
-            condition month==OCT .and. wateryear==1922 .or. OMRBOON == 0
+            condition month==OCT .and. wateryear==beginWY .or. OMRBOON == 0
                 value -99999.}
         case Oct_Dec {
             condition month>=OCT .and. month<DEC
@@ -404,7 +404,7 @@ define OMR_RPA_1{
 /*
 define OMR_RPA_1con{
     case Initialize {
-            condition month==OCT .and. wateryear==1922
+            condition month==OCT .and. wateryear==beginWY
                 value -99999.}
         case Oct_Dec {
             condition month>=OCT .and. month<DEC
@@ -496,7 +496,7 @@ define OMR_RPA_1condv {alias OMR_RPA_1con kind 'TRIGGER' units 'NONE'}
 !define NoA1_OMR_Targ { value -5000.}
 /*define NoA1_con{
        case initial {
-         condition month==OCT .and. wateryear==1922
+         condition month==OCT .and. wateryear==beginWY
          value 0.}
        case JAN {
         condition C408(-1)<=NoA1_OMR_Targ

@@ -425,36 +425,36 @@ define co_full_dv_30 {alias carryover_30 kind 'swp-output' units 'taf'} !CASTAIC
 !____________________________________________________________________________________________
 
 !scale carryover storage to percent allocated (per contractor):
-define carryover_final_1  {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_1  * percent_1 }} !ALAMEDA COUNTY FC&WCD-ZONE 7
-define carryover_final_2  {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_2  * percent_2 }} !ALAMEDA COUNTY WD
-define carryover_final_3  {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_3  * percent_3 }} !ANTELOPE VALLEY-EAST KERN WA
-define carryover_final_4  {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_4  * percent_4 }} !CASTAIC LAKE WA
-define carryover_final_5  {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_5  * percent_5 }} !CITY OF YUBA CITY
-define carryover_final_6  {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_6  * percent_6 }} !COACHELLA VALLEY WD
-define carryover_final_7  {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_7  * percent_7 }} !COUNTY OF BUTTE
-define carryover_final_8  {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_8  * percent_8 }} !COUNTY OF KINGS
-define carryover_final_9  {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_9  * percent_9 }} !CRESTLINE-LAKE ARROWHEAD WA
-define carryover_final_10 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_10 * percent_10}} !DESERT WA
-define carryover_final_11 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_11 * percent_11}} !DUDLEY RIDGE WD
-define carryover_final_12 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_12 * percent_12}} !EMPIRE WEST SIDE ID
-define carryover_final_13 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_13 * percent_13}} !KERN COUNTY WA
-define carryover_final_14 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_14 * percent_14}} !LITTLEROCK CREEK ID
-define carryover_final_15 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_15 * percent_15}} !METROPOLITAN WDSC
-define carryover_final_16 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_16 * percent_16}} !MOJAVE WA
-define carryover_final_17 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_17 * percent_17}} !NAPA COUNTY FC&WCD
-define carryover_final_18 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_18 * percent_18}} !OAK FLAT WD
-define carryover_final_19 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_19 * percent_19}} !PALMDALE WD
-define carryover_final_20 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_20 * percent_20}} !SAN BERNARDINO VALLEY MWD
-define carryover_final_21 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_21 * percent_21}} !SAN GABRIEL VALLEY MWD
-define carryover_final_22 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_22 * percent_22}} !SAN GORGONIO PASS WA
-define carryover_final_23 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_23 * percent_23}} !SAN LUIS OBISPO COUNTY FC&WCD
-define carryover_final_24 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_24 * percent_24}} !SANTA BARBARA COUNTY FC&WCD
-define carryover_final_25 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_25 * percent_25}} !SANTA CLARA VALLEY WD
-define carryover_final_26 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_26 * percent_26}} !SOLANO COUNTY WA
-define carryover_final_27 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_27 * percent_27}} !TULARE LAKE BASIN WSD
-define carryover_final_28 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_28 * percent_28}} !VENTURA COUNTY WPD
-define carryover_final_29 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_29 * percent_29}} !KERN COUNTY WA - MI
-define carryover_final_30 {case a {condition range(month,oct,dec) .and. wateryear == 1922 value 0.} case b {condition always value carryover_30 * percent_30}} !CASTAIC LAKE WA - MI
+define carryover_final_1  {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_1  * percent_1 }} !ALAMEDA COUNTY FC&WCD-ZONE 7
+define carryover_final_2  {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_2  * percent_2 }} !ALAMEDA COUNTY WD
+define carryover_final_3  {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_3  * percent_3 }} !ANTELOPE VALLEY-EAST KERN WA
+define carryover_final_4  {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_4  * percent_4 }} !CASTAIC LAKE WA
+define carryover_final_5  {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_5  * percent_5 }} !CITY OF YUBA CITY
+define carryover_final_6  {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_6  * percent_6 }} !COACHELLA VALLEY WD
+define carryover_final_7  {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_7  * percent_7 }} !COUNTY OF BUTTE
+define carryover_final_8  {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_8  * percent_8 }} !COUNTY OF KINGS
+define carryover_final_9  {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_9  * percent_9 }} !CRESTLINE-LAKE ARROWHEAD WA
+define carryover_final_10 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_10 * percent_10}} !DESERT WA
+define carryover_final_11 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_11 * percent_11}} !DUDLEY RIDGE WD
+define carryover_final_12 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_12 * percent_12}} !EMPIRE WEST SIDE ID
+define carryover_final_13 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_13 * percent_13}} !KERN COUNTY WA
+define carryover_final_14 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_14 * percent_14}} !LITTLEROCK CREEK ID
+define carryover_final_15 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_15 * percent_15}} !METROPOLITAN WDSC
+define carryover_final_16 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_16 * percent_16}} !MOJAVE WA
+define carryover_final_17 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_17 * percent_17}} !NAPA COUNTY FC&WCD
+define carryover_final_18 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_18 * percent_18}} !OAK FLAT WD
+define carryover_final_19 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_19 * percent_19}} !PALMDALE WD
+define carryover_final_20 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_20 * percent_20}} !SAN BERNARDINO VALLEY MWD
+define carryover_final_21 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_21 * percent_21}} !SAN GABRIEL VALLEY MWD
+define carryover_final_22 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_22 * percent_22}} !SAN GORGONIO PASS WA
+define carryover_final_23 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_23 * percent_23}} !SAN LUIS OBISPO COUNTY FC&WCD
+define carryover_final_24 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_24 * percent_24}} !SANTA BARBARA COUNTY FC&WCD
+define carryover_final_25 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_25 * percent_25}} !SANTA CLARA VALLEY WD
+define carryover_final_26 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_26 * percent_26}} !SOLANO COUNTY WA
+define carryover_final_27 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_27 * percent_27}} !TULARE LAKE BASIN WSD
+define carryover_final_28 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_28 * percent_28}} !VENTURA COUNTY WPD
+define carryover_final_29 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_29 * percent_29}} !KERN COUNTY WA - MI
+define carryover_final_30 {case a {condition range(month,oct,dec) .and. wateryear == beginWY value 0.} case b {condition always value carryover_30 * percent_30}} !CASTAIC LAKE WA - MI
 
 define carryover_final {value
  carryover_final_1   +

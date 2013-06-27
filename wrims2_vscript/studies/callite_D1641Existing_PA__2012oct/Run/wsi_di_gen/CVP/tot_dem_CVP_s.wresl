@@ -16,7 +16,7 @@ This file is used to calculate the Actual DI to be used in the curve generation 
 define cvpdem_pag {  ! Annual Sum of Reduced Demands for AG
 
        case      MAR  {
-       condition month == MAR .and. wateryear > 1922
+       condition month == MAR .and. wateryear > beginWY
        sum(i=-1,-12,-1) red_dem_pag(i) }
 
        case      otherwise {
@@ -31,7 +31,7 @@ define cvpdem_pag {  ! Annual Sum of Reduced Demands for AG
 define cvpdem_pmi { ! Annual Sum of Reduced Demands for MI
 
        case      MAR  {
-       condition month == MAR .and. wateryear > 1922
+       condition month == MAR .and. wateryear > beginWY
        sum(i=-1,-12,-1) red_dem_pmi(i) }
 
        case      otherwise {
@@ -46,7 +46,7 @@ define cvpdem_pmi { ! Annual Sum of Reduced Demands for MI
 define cvpdem_pex { ! Annual Sum of Reduced Demands for EX
 
        case      MAR  {
-       condition month == MAR .and. wateryear > 1922
+       condition month == MAR .and. wateryear > beginWY
        sum(i=-1,-12,-1) red_dem_pex(i) }
 
        case      otherwise {
@@ -60,7 +60,7 @@ define cvpdem_pex { ! Annual Sum of Reduced Demands for EX
 define cvpdem_prf { ! Annual Sum of Reduced Demands for REF
 
        case      MAR  {
-       condition month == MAR .and. wateryear > 1922
+       condition month == MAR .and. wateryear > beginWY
        sum(i=-1,-12,-1) red_dem_prf(i) }
 
        case      otherwise {
@@ -74,7 +74,7 @@ define cvpdem_prf { ! Annual Sum of Reduced Demands for REF
 define cvpdem_pls { ! Annual Sum of Reduced Demands for LS
 
        case      MAR  {
-       condition month == MAR .and. wateryear > 1922
+       condition month == MAR .and. wateryear > beginWY
        value     acvpdem_pls_s }
        
        case      otherwise {

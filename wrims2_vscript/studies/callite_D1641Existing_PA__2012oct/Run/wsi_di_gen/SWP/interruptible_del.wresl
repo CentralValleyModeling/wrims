@@ -9,7 +9,7 @@ Interuptible Deliveries
 define swpdel_pin27{
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D27_pin(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -20,7 +20,7 @@ define swpdel_pin27{
 define swpdel_pin810{
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D810_pin(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -31,7 +31,7 @@ define swpdel_pin810{
 define swpdel_pin814{
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D814_pin(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -42,7 +42,7 @@ define swpdel_pin814{
 define swpdel_pin815{
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D815_pin(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -53,7 +53,7 @@ define swpdel_pin815{
 define swpdel_pin403B{
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D403B_pin(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -64,7 +64,7 @@ define swpdel_pin403B{
 define swpdel_pin846{
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D846_pin(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -75,7 +75,7 @@ define swpdel_pin846{
 define swpdel_pin848{
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D848_pin(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -86,7 +86,7 @@ define swpdel_pin848{
 define swpdel_pin849{
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D849_pin(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -97,7 +97,7 @@ define swpdel_pin849{
 define swpdel_pin859{
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D859_pin(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -108,7 +108,7 @@ define swpdel_pin859{
 define swpdel_pin868{
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D868_pin(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -119,7 +119,7 @@ define swpdel_pin868{
 define swpdel_pin877{
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D877_pin(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -130,7 +130,7 @@ define swpdel_pin877{
 define swpdel_pin883{
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D883_pin(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -141,7 +141,7 @@ define swpdel_pin883{
 define swpdel_pin884{
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D884_pin(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -152,7 +152,7 @@ define swpdel_pin884{
 define swpdel_pin885{
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D885_pin(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -163,7 +163,7 @@ define swpdel_pin885{
 define swpdel_pin895{
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D895_pin(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -174,7 +174,7 @@ define swpdel_pin895{
 define swpdel_pin899{
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D899_pin(i) * cfs_taf(i) }
 
        case      otherwise {

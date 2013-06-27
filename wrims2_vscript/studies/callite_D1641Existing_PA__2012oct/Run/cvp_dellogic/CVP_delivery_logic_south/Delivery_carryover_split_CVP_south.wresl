@@ -20,7 +20,7 @@ define acvpdem_total_s_ {alias acvpdem_total_s kind 'annual-demand' units 'taf'}
 
 define final_del_target_cvp_s {
     case initialdel {                                   ! Use the total annual contract  
-        condition month <= FEB .and. wateryear == 1922  ! amount until the first   
+        condition month <= FEB .and. wateryear == beginWY  ! amount until the first   
             value  acvpdem_total_s }                    ! delivery target is assigned
     case March {
         condition month == MAR                            ! use the minimum of the initial target  

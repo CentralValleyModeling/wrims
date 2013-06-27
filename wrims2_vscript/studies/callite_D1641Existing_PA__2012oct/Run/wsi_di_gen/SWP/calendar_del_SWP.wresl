@@ -9,7 +9,7 @@ Sum of Calendar Year SWP Deliveries
 define swpdel_D25 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D25_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -20,7 +20,7 @@ define swpdel_D25 {
 define swpdel_D27 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D27_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -31,7 +31,7 @@ define swpdel_D27 {
 define swpdel_D28 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D28_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -42,7 +42,7 @@ define swpdel_D28 {
 define swpdel_D29 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D29_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -53,7 +53,7 @@ define swpdel_D29 {
 define swpdel_D201 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D201_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -64,7 +64,7 @@ define swpdel_D201 {
 define swpdel_D204 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D204_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -75,7 +75,7 @@ define swpdel_D204 {
 define swpdel_D403B {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D403B_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -86,7 +86,7 @@ define swpdel_D403B {
 define swpdel_D403C {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D403C_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -97,7 +97,7 @@ define swpdel_D403C {
 define swpdel_D802A {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D802A_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -108,7 +108,7 @@ define swpdel_D802A {
 define swpdel_D803 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D803_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -119,7 +119,7 @@ define swpdel_D803 {
 define swpdel_D810 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D810_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -130,7 +130,7 @@ define swpdel_D810 {
 define swpdel_D813 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D813_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -141,7 +141,7 @@ define swpdel_D813 {
  define swpdel_D814 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D814_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -152,7 +152,7 @@ define swpdel_D813 {
  define swpdel_D815 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D815_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -163,7 +163,7 @@ define swpdel_D813 {
  define swpdel_D816 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D816_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -174,7 +174,7 @@ define swpdel_D813 {
  define swpdel_D824 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D824_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -185,7 +185,7 @@ define swpdel_D813 {
  define swpdel_D826 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D826_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -196,7 +196,7 @@ define swpdel_D813 {
  define swpdel_D827 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D827_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -207,7 +207,7 @@ define swpdel_D813 {
  define swpdel_D828 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D828_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -218,7 +218,7 @@ define swpdel_D813 {
  define swpdel_D829 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D829_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -229,7 +229,7 @@ define swpdel_D813 {
 define swpdel_D846 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D846_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -240,7 +240,7 @@ define swpdel_D846 {
 define swpdel_D847 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D847_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -251,7 +251,7 @@ define swpdel_D847 {
 define swpdel_D848 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D848_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -262,7 +262,7 @@ define swpdel_D848 {
 define swpdel_D849 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D849_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -273,7 +273,7 @@ define swpdel_D849 {
 define swpdel_D851 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D851_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -284,7 +284,7 @@ define swpdel_D851 {
 define swpdel_D854 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D854_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -295,7 +295,7 @@ define swpdel_D854 {
 define swpdel_D859 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D859_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -306,7 +306,7 @@ define swpdel_D859 {
 define swpdel_D862 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D862_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -317,7 +317,7 @@ define swpdel_D862 {
 define swpdel_D863 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D863_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -328,7 +328,7 @@ define swpdel_D863 {
 define swpdel_D864 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D864_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -339,7 +339,7 @@ define swpdel_D864 {
 define swpdel_D867 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D867_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -350,7 +350,7 @@ define swpdel_D867 {
 define swpdel_D868 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D868_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -361,7 +361,7 @@ define swpdel_D868 {
 define swpdel_D869 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D869_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -372,7 +372,7 @@ define swpdel_D869 {
 define swpdel_D870 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D870_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -383,7 +383,7 @@ define swpdel_D870 {
 define swpdel_D877 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D877_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -394,7 +394,7 @@ define swpdel_D877 {
 define swpdel_D878 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D878_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -405,7 +405,7 @@ define swpdel_D878 {
 define swpdel_D879 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D879_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -416,7 +416,7 @@ define swpdel_D879 {
 define swpdel_D880 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D880_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -427,7 +427,7 @@ define swpdel_D880 {
 define swpdel_D881 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D881_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -438,7 +438,7 @@ define swpdel_D881 {
 define swpdel_D882 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D882_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -449,7 +449,7 @@ define swpdel_D882 {
 define swpdel_D883 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D883_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -460,7 +460,7 @@ define swpdel_D883 {
 define swpdel_D884 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D884_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -471,7 +471,7 @@ define swpdel_D884 {
 define swpdel_D885 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D885_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -482,7 +482,7 @@ define swpdel_D885 {
 define swpdel_D886 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D886_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -493,7 +493,7 @@ define swpdel_D886 {
 define swpdel_D887 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D887_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -504,7 +504,7 @@ define swpdel_D887 {
 define swpdel_D888 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D888_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -515,7 +515,7 @@ define swpdel_D888 {
 define swpdel_D889 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D889_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -526,7 +526,7 @@ define swpdel_D889 {
 define swpdel_D891 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D891_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -537,7 +537,7 @@ define swpdel_D891 {
 define swpdel_D893 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D893_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -548,7 +548,7 @@ define swpdel_D893 {
 define swpdel_D894 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D894_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -559,7 +559,7 @@ define swpdel_D894 {
 define swpdel_D895 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D895_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -570,7 +570,7 @@ define swpdel_D895 {
 define swpdel_D896 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D896_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {
@@ -581,7 +581,7 @@ define swpdel_D896 {
 define swpdel_D899 {
 
        case      JAN  {
-       condition month == JAN .and. wateryear > 1922
+       condition month == JAN .and. wateryear > beginWY
        sum(i=-1,-12,-1) D899_PRJ(i) * cfs_taf(i) }
 
        case      otherwise {

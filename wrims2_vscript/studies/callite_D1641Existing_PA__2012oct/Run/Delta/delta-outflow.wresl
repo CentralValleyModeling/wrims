@@ -154,7 +154,7 @@ define endday_flw3 {value   daysin }
 ! Index to determine if Oroville in flood envelope
 define OroFldType {
   case Oct {                                                                  !RLEAF-
-    condition month==OCT .and. int(wateryear)==1922                           !RLEAF-
+    condition month==OCT .and. int(wateryear)==beginWY                           !RLEAF-
     value 0.0 }                                                               !RLEAF-
   case flood {
     condition   S_Orovl(-1) > s_OrovlLevel5(-1) - 0.5
@@ -167,7 +167,7 @@ define OroFldType {
 ! Index to determine if Folsom in flood envelope
 define FolFldType {
   case Oct {                                                                  !RLEAF-
-    condition month==OCT .and. int(wateryear)==1922                           !RLEAF-
+    condition month==OCT .and. int(wateryear)==beginWY                           !RLEAF-
     value 0.0 }                                                               !RLEAF-
   case flood {
     condition   S_Folsm(-1) > S_FolsmLevel5(-1) - 0.5
@@ -180,7 +180,7 @@ define FolFldType {
 ! Index to determine if Shasta in flood envelope
 define ShaFldType {
   case Oct {                                                                  !RLEAF-
-    condition month==OCT .and. int(wateryear)==1922                           !RLEAF-
+    condition month==OCT .and. int(wateryear)==beginWY                           !RLEAF-
     value 0.0 }                                                               !RLEAF-
   case flood {
     condition   S_Shsta(-1) > S_ShstaLevel5(-1) - 0.5

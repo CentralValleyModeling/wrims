@@ -298,7 +298,7 @@ define swpdel_pmid204 { value 0 } ! need to be added with feather river deliveri
 define swpdel_pmid201 {
 
        case      Oct_DEC  {
-       condition month >= OCT .and. month <= DEC .and. Wateryear > 1922
+       condition month >= OCT .and. month <= DEC .and. Wateryear > beginWY
        sum(i=-1,prevJAN,-1) d201_pmi(i) * cfs_taf(i) }
 
        case      Feb_SEP {
@@ -314,7 +314,7 @@ define swpdel_pmid201 {
 define swpdel_pmid204 { 
 
        case      Oct_DEC  {
-       condition month >= OCT .and. month <= DEC .and. Wateryear > 1922
+       condition month >= OCT .and. month <= DEC .and. Wateryear > beginWY
        sum(i=-1,prevJAN,-1) d204_pmi(i) * cfs_taf(i) }
 
        case      Feb_SEP {
