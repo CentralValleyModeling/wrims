@@ -684,97 +684,135 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		try {
 			String studyName=null;
 			studyName = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STUDY, (String)null);
-			if (studyName != null) {
+			if (studyName == null) {
+				studyText.setText("");
+			}else{
 				studyText.setText(studyName);
 			}		
 			String author=null;
 			author = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_AUTHOR, (String)null);
-			if (author != null) {
+			if (author == null) {
+				authorText.setText("");
+			}else{
 				authorText.setText(author);
 			}	
 			String date=null;
 			date = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DATE, (String)null);
-			if (date != null) {
+			if (date == null) {
+				dateText.setText("");
+			}else{
 				dateText.setText(date);
 			}	
 			String description=null;
 			description = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DESCRIPTION, (String)null);
-			if (description != null) {
+			if (description == null) {
+				descriptionText.setText("");
+			}else{
 				descriptionText.setText(description);
 			}	
 			String mainFile = null;
 			mainFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_PROGRAM, (String)null);
-			if (mainFile != null) {
+			if (mainFile == null) {
+				fMainFileText.setText("");
+			}else{
 				fMainFileText.setText(mainFile);
 			}
 			String dvarFile = null;
 			dvarFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_DVARFILE, (String)null);
-			if (dvarFile != null) {
+			if (dvarFile == null) {
+				fDvarFileText.setText("");
+			}else{
 				fDvarFileText.setText(dvarFile);
 			}
 			String svarFile = null;
 			svarFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVARFILE, (String)null);
-			if (svarFile != null) {
+			if (svarFile == null) {
+				fSvarFileText.setText("");
+			}else{
 				fSvarFileText.setText(svarFile);
 			}
 			String initFile = null;
 			initFile = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFILE, (String)null);
-			if (initFile != null) {
+			if (initFile == null) {
+				fInitFileText.setText("");
+			}else{
 				fInitFileText.setText(initFile);
 			}
 			String gwDataFolder = null;
 			gwDataFolder = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_GWDATAFOLDER, (String)null);
-			if (gwDataFolder != null) {
+			if (gwDataFolder == null) {
+				groundWaterFolderText.setText("");
+			}else{
 				groundWaterFolderText.setText(gwDataFolder);
 			}
 			String aPart = null;
 			aPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_APART, (String)null);
-			if (aPart != null) {
+			if (aPart == null) {
+				aPartText.setText("");
+			}else{
 				aPartText.setText(aPart);
 			}
 			String svFPart = null;
 			svFPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_SVFPART, (String)null);
-			if (svFPart != null) {
+			if (svFPart == null) {
+				svFPartText.setText("");
+			}else{
 				svFPartText.setText(svFPart);
 			}
 			String initFPart = null;
 			initFPart = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_INITFPART, (String)null);
-			if (initFPart != null) {
+			if (initFPart == null) {
+				initFPartText.setText("");
+			}else{
 				initFPartText.setText(initFPart);
 			}
 			String timeStep = null;
 			timeStep = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_TIMESTEP, (String)null);
-			if (timeStep != null) {
+			if (timeStep == null) {
+				timeStepCombo.select(0);
+			}else{
 				timeStepCombo.setText(timeStep);
 			}
 			String startYear = null;
 			startYear = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTYEAR, (String)null);
-			if (startYear != null) {
+			if (startYear == null) {
+				startYearCombo.select(21);
+			}else{
 				startYearCombo.setText(startYear);
 			}
 			String startMonth = null;
 			startMonth = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTMONTH, (String)null);
-			if (startMonth != null) {
+			if (startMonth == null) {
+				startMonthCombo.select(0);
+			}else{
 				startMonthCombo.setText(startMonth);
 			}
 			String startDay = null;
 			startDay = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_STARTDAY, (String)null);
-			if (startDay != null) {
+			if (startDay == null) {
+				startDayCombo.select(30);
+			}else{
 				startDayCombo.setText(startDay);
 			}
 			String endYear = null;
 			endYear = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDYEAR, (String)null);
-			if (endYear != null) {
+			if (endYear == null) {
+				endYearCombo.select(103);
+			}else{
 				endYearCombo.setText(endYear);
 			}
 			String endMonth = null;
 			endMonth = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDMONTH, (String)null);
-			if (endMonth != null) {
+			if (endMonth == null) {
+				endMonthCombo.select(11);
+			}else{
 				endMonthCombo.setText(endMonth);
 			}
 			String endDay = null;
 			endDay = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_ENDDAY, (String)null);
-			if (endDay != null) {
+			if (endDay == null) {
+				endDayCombo.select(29);
+			}else{
 				endDayCombo.setText(endDay);
 			}
 		} catch (CoreException e) {
