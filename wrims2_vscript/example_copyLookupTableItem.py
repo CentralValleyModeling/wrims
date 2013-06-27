@@ -23,10 +23,15 @@ yearlyTableList = ["wytypes.table",
 				   "SacValleyIndex.table",
 				   "eightriver.table",
 				   "FWS_BO_A3_Temp.table",
-				   "wheelCap.table"
+				   "wheelCap.table",
+				   "sacramento_runoff_forecast.table",
+				   "american_runoff_forecast.table",
+				   "febeiratio.table",
+				   "delta_index.table",
 				]
 
-yearlyTableList = ["feather_runoff_forecast.table"
+monthlyTableList = ["feather_runoff_forecast.table",
+				    "x2days.table",
 				]
 
 for beginYR in historyYRs:
@@ -47,7 +52,14 @@ for beginYR in historyYRs:
 	
 		LookupTable.copyYearlyTableToFuture(inTablePath, outTablePath, beginYR, sequentialYRs, futureYR)
 
+
+	for tableName in monthlyTableList:
+		
+		outTablePath = os.path.join(lookupPath, outSubDir, tableName)
+		inTablePath = os.path.join(lookupPath, inSubDir, tableName)
 	
+		LookupTable.copyMonthlyTableToFuture(inTablePath, outTablePath, beginYR, sequentialYRs, futureYR)
+			
 print "Done!"
 
 exit()
