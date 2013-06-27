@@ -21,9 +21,13 @@ yearlyTableList = ["wytypes.table",
 				   "wytypeSnow.table",
 				   "AnnualReqDel_swp.table",
 				   "SacValleyIndex.table",
-				   "eightriver.table"
+				   "eightriver.table",
+				   "FWS_BO_A3_Temp.table",
+				   "wheelCap.table"
 				]
 
+yearlyTableList = ["feather_runoff_forecast.table"
+				]
 
 for beginYR in historyYRs:
 
@@ -41,7 +45,7 @@ for beginYR in historyYRs:
 		outTablePath = os.path.join(lookupPath, outSubDir, tableName)
 		inTablePath = os.path.join(lookupPath, inSubDir, tableName)
 	
-		LookupTable.copyYearlyWYTypesToFuture(inTablePath, outTablePath, beginYR, sequentialYRs, futureYR)
+		LookupTable.copyYearlyTableToFuture(inTablePath, outTablePath, beginYR, sequentialYRs, futureYR)
 
 	
 print "Done!"
