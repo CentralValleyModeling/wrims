@@ -33,7 +33,7 @@ group PositionAnalysis {
 
 	}	
 	
-model inc1 {
+group inc1 {
 	define getFinalMrdo {EXTERNAL f90}  ! OBJ code file must be located in run\external directory for compilation
 	INCLUDE  'Delta\DeltaExtFuncs_7inpANN.wresl'
 	INCLUDE  'swp_dellogic\allocation\co_extfcn.wresl'
@@ -46,7 +46,7 @@ model inc1 {
 	INCLUDE 'hydrology\forecast\CVPforecasts.wresl'
 }
 
-model inc2 { 
+group inc2 { 
 	INCLUDE 'Assumptions\assumption.wresl'
 	INCLUDE 'hydrology\demands\demands_defs.wresl'
 	INCLUDE 'swp_dellogic\SwpDeliveryLogic.wresl'
@@ -62,18 +62,19 @@ model inc2 {
 	INCLUDE 'Wheeling\WheelOpsVarDefines.wresl'
 }
 
-model inc3 {
+group inc3 {
 	INCLUDE 'B2Actions\BaseStudyResults.wresl' 
 	INCLUDE 'B2Actions\B2Action1Repeat.wresl'
 	INCLUDE 'system\weight-table.wresl'
 }
 
 MODEL Upstream {         !CYCLE 1
-	INCLUDE model inc1
+	include group PositionAnalysis
+	INCLUDE group inc1
 
 	INCLUDE 'hydrology\WEIRS\weir_steps_monthops.wresl' 
 	
-	INCLUDE model inc2
+	INCLUDE group inc2
 
 	if int(PBwheel_ON)==1 {INCLUDE 'Wheeling\WheelD1485.wresl'}
 	INCLUDE 'Wheeling\WheelzeroCVC.wresl'
@@ -84,14 +85,15 @@ MODEL Upstream {         !CYCLE 1
 	INCLUDE 'Delta\Delta.wresl'
 	INCLUDE 'Delta\X2_BO_WQ.wresl'
 	
-	INCLUDE model inc3
+	INCLUDE group inc3
 
 }
 
 MODEL BASE {         !CYCLE 2
-	INCLUDE model inc1
-	INCLUDE model inc2
-	INCLUDE model inc3
+	include group PositionAnalysis
+	INCLUDE group inc1
+	INCLUDE group inc2
+	INCLUDE group inc3
 	
 	INCLUDE 'hydrology\WEIRS\weir_steps_monthops.wresl'
 	if int(PBwheel_ON)==1 {INCLUDE 'Wheeling\WheelD1485.wresl'}
@@ -106,9 +108,10 @@ MODEL BASE {         !CYCLE 2
 
 
 MODEL B2_BO_DailyWeir {         !CYCLE 3
-	INCLUDE model inc1
-	INCLUDE model inc2
-	INCLUDE model inc3
+	include group PositionAnalysis
+	INCLUDE group inc1
+	INCLUDE group inc2
+	INCLUDE group inc3
 
 	INCLUDE 'hydrology\WEIRS\weir_steps_dailyops_SETUP.wresl'  
 	INCLUDE 'B2Actions\B2SetBaseline.wresl'                    
