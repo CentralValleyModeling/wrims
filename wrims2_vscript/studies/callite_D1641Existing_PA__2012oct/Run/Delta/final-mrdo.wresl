@@ -34,7 +34,7 @@ if int(NDO_DLTSW)==3 {
 						DO_req_flw2,  int(begday_flw2), int(endday_flw2),
 						DO_req_flw3,  int(begday_flw3), int(endday_flw3),
 						DO_req_flw4,  int(begday_flw4), int(endday_flw4),
-						wateryear, month, daysin )
+						historicalWY, month, daysin )
 	}
 }
 
@@ -51,7 +51,7 @@ else {
                                         	0., int(1), int(daysin), ! DO_req_rsl1,  int(begday_rsl1), int(endday_rsl1),
                                         	0., int(1), int(daysin), ! DO_req_rsl2,  int(begday_rsl2), int(endday_rsl2),
                                         	DO_req_flow,  int(begday_flw),  int(endday_flw),
-                                        	wateryear, month, daysin )
+                                        	historicalWY, month, daysin )
 	}
 }
 
@@ -69,7 +69,7 @@ define MRDO_X2nocap  {value getFinalMrdo ( DO_req_X2roe_nocap, int(begday_roe), 
                                         0., int(1), int(daysin), ! DO_req_rsl1,  int(begday_rsl1), int(endday_rsl1),
                                         0., int(1), int(daysin), ! DO_req_rsl2,  int(begday_rsl2), int(endday_rsl2),
                                         DO_req_flow,  int(begday_flw),  int(endday_flw),
-                                        wateryear, month, daysin )
+                                        historicalWY, month, daysin )
 
 }
 

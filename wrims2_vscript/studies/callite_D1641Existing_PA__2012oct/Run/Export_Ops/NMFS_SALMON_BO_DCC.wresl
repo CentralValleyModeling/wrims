@@ -49,7 +49,7 @@ define RS_estEC_noDXC {
            exp_oth(-4),exp_oth(-3),exp_oth(-2),exp_oth(-1),exp_oth[Base],
            VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),VernWQFINALsv,
            int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),daysin,
-           int(2),int(monthly_avg),month,wateryear)}  ! 2 is for RS
+           int(2),int(monthly_avg),month,historicalWY)}  ! 2 is for RS
 
 define RSestECnoDXCmE {
     value AnnEC(C_Hood(-4),C_Hood(-3),C_Hood(-2),C_Hood(-1),C_Hood[Base],
@@ -61,7 +61,7 @@ define RSestECnoDXCmE {
            exp_oth(-4),exp_oth(-3),exp_oth(-2),exp_oth(-1),exp_oth[Base],
            VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),VernWQFINALsv,
            int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),daysin,
-           int(2),int(monthly_avg),month,wateryear)}  ! 2 is for RS
+           int(2),int(monthly_avg),month,historicalWY)}  ! 2 is for RS
 
 ! This is CCWD's first approximation (Matt Moses, July 2006)
 ! Use Maximum of the following two equations:

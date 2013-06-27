@@ -22,7 +22,7 @@ define LV_EC_Month_sv {
                exp_oth(-5),exp_oth(-4),exp_oth(-3),exp_oth(-2),exp_oth(-1),
                VERNWQFINAL(-5),VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),
                int(daysindv(-5)),int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),
-               int(LV),int(monthly_avg),12,(wateryear-1))}
+               int(LV),int(monthly_avg),12,(historicalWY-1))}
 
   case others {
     condition always
@@ -35,7 +35,7 @@ define LV_EC_Month_sv {
                exp_oth(-5),exp_oth(-4),exp_oth(-3),exp_oth(-2),exp_oth(-1),
                VERNWQFINAL(-5),VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),
                int(daysindv(-5)),int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),
-               int(LV),int(monthly_avg),(month-1),wateryear)}
+               int(LV),int(monthly_avg),(month-1),historicalWY)}
 }
 
 define LV_EC_Month {std kind 'SALINITY' units 'UMHOS/CM'}

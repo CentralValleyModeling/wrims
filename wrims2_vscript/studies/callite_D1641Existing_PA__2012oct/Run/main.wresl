@@ -30,6 +30,7 @@ group PositionAnalysis {
 
 	! Position analysis always begin in October. 
 	svar beginWY { value 2013 } ! October 2012 is water year 2013
+	svar historicalWY { value 1945 } 
 
 	}	
 	
