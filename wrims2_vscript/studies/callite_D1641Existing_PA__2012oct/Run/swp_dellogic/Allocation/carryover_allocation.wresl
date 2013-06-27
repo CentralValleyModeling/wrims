@@ -33,36 +33,36 @@ define co_dv_29 {std kind 'alias' units 'taf'} !KERN COUNTY WA - MI
 define co_dv_30 {std kind 'alias' units 'taf'} !CASTAIC LAKE WA - MI
 
 !Determine beginning of month contractor Article 56 request.
-define co_req_1  {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_1(-1)} case otherwise {condition always value max(0., co_dv_1(-1) - swp_CO_ACFC(-1)*cfs_taf(-1))}} !ALAMEDA COUNTY FC&WCD-ZONE 7
-define co_req_2  {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_2(-1)} case otherwise {condition always value max(0., co_dv_2(-1) - swp_CO_ACWD(-1)*cfs_taf(-1))}} !ALAMEDA COUNTY WD
-define co_req_3  {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_3(-1)} case otherwise {condition always value max(0., co_dv_3(-1) - swp_CO_AVEK(-1)*cfs_taf(-1))}} !ANTELOPE VALLEY-EAST KERN WA
-define co_req_4  {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_4(-1)} case otherwise {condition always value max(0., co_dv_4(-1) - swp_CO_CLWA1(-1)*cfs_taf(-1))}}  !CASTAIC LAKE WA
-define co_req_5  {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_5(-1)} case otherwise {condition always value max(0., co_dv_5(-1) - swp_CO_YUBA(-1)*cfs_taf(-1))}} !CITY OF YUBA CITY
-define co_req_6  {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_6(-1)} case otherwise {condition always value max(0., co_dv_6(-1) - swp_CO_CVWD(-1)*cfs_taf(-1))}} !COACHELLA VALLEY WD
-define co_req_7  {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_7(-1)} case otherwise {condition always value max(0., co_dv_7(-1) - swp_CO_BUTTE(-1)*cfs_taf(-1))}}  !COUNTY OF BUTTE
-define co_req_8  {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_8(-1)} case otherwise {condition always value max(0., co_dv_8(-1) - swp_CO_KINGS(-1)*cfs_taf(-1))}} !COUNTY OF KINGS
-define co_req_9  {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_9(-1)} case otherwise {condition always value max(0., co_dv_9(-1) - swp_CO_CLA(-1)*cfs_taf(-1))}} !CRESTLINE-LAKE ARROWHEAD WA
-define co_req_10 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_10(-1)} case otherwise {condition always value max(0., co_dv_10(-1) - swp_CO_DESERT(-1)*cfs_taf(-1))}} !DESERT WA
-define co_req_11 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_11(-1)} case otherwise {condition always value max(0., co_dv_11(-1) - swp_CO_DUDLEY(-1)*cfs_taf(-1))}}  !DUDLEY RIDGE WD
-define co_req_12 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_12(-1)} case otherwise {condition always value max(0., co_dv_12(-1) - swp_CO_EMPIRE(-1)*cfs_taf(-1))}}  !EMPIRE WEST SIDE ID
-define co_req_13 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_13(-1)} case otherwise {condition always value max(0., co_dv_13(-1) - swp_CO_KERN(-1)*cfs_taf(-1))}} !KERN COUNTY WA
-define co_req_14 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_14(-1)} case otherwise {condition always value max(0., co_dv_14(-1) - swp_CO_LCID(-1)*cfs_taf(-1))}}  !LITTLEROCK CREEK ID
-define co_req_15 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_15(-1)} case otherwise {condition always value max(0., co_dv_15(-1) - swp_CO_MWD(-1)*cfs_taf(-1))}} !METROPOLITAN WDSC
-define co_req_16 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_16(-1)} case otherwise {condition always value max(0., co_dv_16(-1) - swp_CO_MWA(-1)*cfs_taf(-1))}}  !MOJAVE WA
-define co_req_17 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_17(-1)} case otherwise {condition always value max(0., co_dv_17(-1) - swp_CO_Napa(-1)*cfs_taf(-1))}}  !NAPA COUNTY FC&WCD
-define co_req_18 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_18(-1)} case otherwise {condition always value max(0., co_dv_18(-1) - swp_CO_Oak(-1)*cfs_taf(-1))}}  !OAK FLAT WD
-define co_req_19 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_19(-1)} case otherwise {condition always value max(0., co_dv_19(-1) - swp_CO_PWD(-1)*cfs_taf(-1))}} !PALMDALE WD
-define co_req_20 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_20(-1)} case otherwise {condition always value max(0., co_dv_20(-1) - swp_CO_SBV(-1)*cfs_taf(-1))}} !SAN BERNARDINO VALLEY MWD
-define co_req_21 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_21(-1)} case otherwise {condition always value max(0., co_dv_21(-1) - swp_CO_SGV(-1)*cfs_taf(-1))}} !SAN GABRIEL VALLEY MWD
-define co_req_22 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_22(-1)} case otherwise {condition always value max(0., co_dv_22(-1) - swp_CO_SGP(-1)*cfs_taf(-1))}} !SAN GORGONIO PASS WA
-define co_req_23 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_23(-1)} case otherwise {condition always value max(0., co_dv_23(-1) - swp_CO_SLO(-1)*cfs_taf(-1))}} !SAN LUIS OBISPO COUNTY FC&WCD
-define co_req_24 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_24(-1)} case otherwise {condition always value max(0., co_dv_24(-1) - swp_CO_SB(-1)*cfs_taf(-1))}}  !SANTA BARBARA COUNTY FC&WCD
-define co_req_25 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_25(-1)} case otherwise {condition always value max(0., co_dv_25(-1) - swp_CO_SCV(-1)*cfs_taf(-1))}}  !SANTA CLARA VALLEY WD
-define co_req_26 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_26(-1)} case otherwise {condition always value max(0., co_dv_26(-1) - swp_CO_Solano(-1)*cfs_taf(-1))}}  !SOLANO COUNTY WA
-define co_req_27 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_27(-1)} case otherwise {condition always value max(0., co_dv_27(-1) - swp_CO_Tulare(-1)*cfs_taf(-1))}}  !TULARE LAKE BASIN WSD
-define co_req_28 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_28(-1)} case otherwise {condition always value max(0., co_dv_28(-1) - swp_CO_VC(-1)*cfs_taf(-1))}} !VENTURA COUNTY WPD
-define co_req_29 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_29(-1)} case otherwise {condition always value max(0., co_dv_29(-1) - 0.*cfs_taf(-1))}} !KERN COUNTY WA - MI
-define co_req_30 {case a{condition month == oct .and. wateryear == beginWaterYear value 0.} case b{condition month == jan value antco_dv_30(-1)} case otherwise {condition always value max(0., co_dv_30(-1) - swp_CO_CLWA2(-1)*cfs_taf(-1))}} !CASTAIC LAKE WA - MI
+define co_req_1  {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_1(-1)} case otherwise {condition always value max(0., co_dv_1(-1) - swp_CO_ACFC(-1)*cfs_taf(-1))}} !ALAMEDA COUNTY FC&WCD-ZONE 7
+define co_req_2  {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_2(-1)} case otherwise {condition always value max(0., co_dv_2(-1) - swp_CO_ACWD(-1)*cfs_taf(-1))}} !ALAMEDA COUNTY WD
+define co_req_3  {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_3(-1)} case otherwise {condition always value max(0., co_dv_3(-1) - swp_CO_AVEK(-1)*cfs_taf(-1))}} !ANTELOPE VALLEY-EAST KERN WA
+define co_req_4  {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_4(-1)} case otherwise {condition always value max(0., co_dv_4(-1) - swp_CO_CLWA1(-1)*cfs_taf(-1))}}  !CASTAIC LAKE WA
+define co_req_5  {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_5(-1)} case otherwise {condition always value max(0., co_dv_5(-1) - swp_CO_YUBA(-1)*cfs_taf(-1))}} !CITY OF YUBA CITY
+define co_req_6  {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_6(-1)} case otherwise {condition always value max(0., co_dv_6(-1) - swp_CO_CVWD(-1)*cfs_taf(-1))}} !COACHELLA VALLEY WD
+define co_req_7  {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_7(-1)} case otherwise {condition always value max(0., co_dv_7(-1) - swp_CO_BUTTE(-1)*cfs_taf(-1))}}  !COUNTY OF BUTTE
+define co_req_8  {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_8(-1)} case otherwise {condition always value max(0., co_dv_8(-1) - swp_CO_KINGS(-1)*cfs_taf(-1))}} !COUNTY OF KINGS
+define co_req_9  {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_9(-1)} case otherwise {condition always value max(0., co_dv_9(-1) - swp_CO_CLA(-1)*cfs_taf(-1))}} !CRESTLINE-LAKE ARROWHEAD WA
+define co_req_10 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_10(-1)} case otherwise {condition always value max(0., co_dv_10(-1) - swp_CO_DESERT(-1)*cfs_taf(-1))}} !DESERT WA
+define co_req_11 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_11(-1)} case otherwise {condition always value max(0., co_dv_11(-1) - swp_CO_DUDLEY(-1)*cfs_taf(-1))}}  !DUDLEY RIDGE WD
+define co_req_12 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_12(-1)} case otherwise {condition always value max(0., co_dv_12(-1) - swp_CO_EMPIRE(-1)*cfs_taf(-1))}}  !EMPIRE WEST SIDE ID
+define co_req_13 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_13(-1)} case otherwise {condition always value max(0., co_dv_13(-1) - swp_CO_KERN(-1)*cfs_taf(-1))}} !KERN COUNTY WA
+define co_req_14 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_14(-1)} case otherwise {condition always value max(0., co_dv_14(-1) - swp_CO_LCID(-1)*cfs_taf(-1))}}  !LITTLEROCK CREEK ID
+define co_req_15 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_15(-1)} case otherwise {condition always value max(0., co_dv_15(-1) - swp_CO_MWD(-1)*cfs_taf(-1))}} !METROPOLITAN WDSC
+define co_req_16 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_16(-1)} case otherwise {condition always value max(0., co_dv_16(-1) - swp_CO_MWA(-1)*cfs_taf(-1))}}  !MOJAVE WA
+define co_req_17 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_17(-1)} case otherwise {condition always value max(0., co_dv_17(-1) - swp_CO_Napa(-1)*cfs_taf(-1))}}  !NAPA COUNTY FC&WCD
+define co_req_18 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_18(-1)} case otherwise {condition always value max(0., co_dv_18(-1) - swp_CO_Oak(-1)*cfs_taf(-1))}}  !OAK FLAT WD
+define co_req_19 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_19(-1)} case otherwise {condition always value max(0., co_dv_19(-1) - swp_CO_PWD(-1)*cfs_taf(-1))}} !PALMDALE WD
+define co_req_20 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_20(-1)} case otherwise {condition always value max(0., co_dv_20(-1) - swp_CO_SBV(-1)*cfs_taf(-1))}} !SAN BERNARDINO VALLEY MWD
+define co_req_21 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_21(-1)} case otherwise {condition always value max(0., co_dv_21(-1) - swp_CO_SGV(-1)*cfs_taf(-1))}} !SAN GABRIEL VALLEY MWD
+define co_req_22 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_22(-1)} case otherwise {condition always value max(0., co_dv_22(-1) - swp_CO_SGP(-1)*cfs_taf(-1))}} !SAN GORGONIO PASS WA
+define co_req_23 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_23(-1)} case otherwise {condition always value max(0., co_dv_23(-1) - swp_CO_SLO(-1)*cfs_taf(-1))}} !SAN LUIS OBISPO COUNTY FC&WCD
+define co_req_24 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_24(-1)} case otherwise {condition always value max(0., co_dv_24(-1) - swp_CO_SB(-1)*cfs_taf(-1))}}  !SANTA BARBARA COUNTY FC&WCD
+define co_req_25 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_25(-1)} case otherwise {condition always value max(0., co_dv_25(-1) - swp_CO_SCV(-1)*cfs_taf(-1))}}  !SANTA CLARA VALLEY WD
+define co_req_26 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_26(-1)} case otherwise {condition always value max(0., co_dv_26(-1) - swp_CO_Solano(-1)*cfs_taf(-1))}}  !SOLANO COUNTY WA
+define co_req_27 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_27(-1)} case otherwise {condition always value max(0., co_dv_27(-1) - swp_CO_Tulare(-1)*cfs_taf(-1))}}  !TULARE LAKE BASIN WSD
+define co_req_28 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_28(-1)} case otherwise {condition always value max(0., co_dv_28(-1) - swp_CO_VC(-1)*cfs_taf(-1))}} !VENTURA COUNTY WPD
+define co_req_29 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_29(-1)} case otherwise {condition always value max(0., co_dv_29(-1) - 0.*cfs_taf(-1))}} !KERN COUNTY WA - MI
+define co_req_30 {case a{condition month == oct .and. wateryear == beginWY value 0.} case b{condition month == jan value antco_dv_30(-1)} case otherwise {condition always value max(0., co_dv_30(-1) - swp_CO_CLWA2(-1)*cfs_taf(-1))}} !CASTAIC LAKE WA - MI
 
 !Save beginning of month contractor Article 56 request.
 define co_req_1_dv  {alias co_req_1 kind 'carryover' units 'taf'} !ALAMEDA COUNTY FC&WCD-ZONE 7
@@ -105,7 +105,7 @@ define co_req_tot_dv {alias co_req_tot kind 'carryover' units 'taf'}
 
 ! lost carryover storage due to full San Luis (lost equal to unused banks capacity) and Article 21 deliveries made
 define co_spill {
-  case a  {condition month==oct .and. wateryear==beginWaterYear value 0.}
+  case a  {condition month==oct .and. wateryear==beginWY value 0.}
   case b  {condition month==jan     value 0.}
   case c  {condition S_SLSWP(-1)>=1067  value min(max(0.,co_req_tot /*- SIO_SWP(-1)*/), swp_IN_total(-1)*cfs_taf(-1) + max(0.,6680.-D_ExpTD(-1)) * cfs_taf(-1)) }
   case d  {condition always             value min(max(0.,co_req_tot /*- SIO_SWP(-1)*/), swp_IN_total(-1)*cfs_taf(-1))}
@@ -204,36 +204,36 @@ define alloc_co_30_dv {alias alloc_co_30 kind 'carryover-allocation' units 'none
 
 
 !Allocate available carryover to contractors:
-define co_current_1  {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_1*co_available} } !ALAMEDA COUNTY FC&WCD-ZONE 7
-define co_current_2  {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_2*co_available} } !ALAMEDA COUNTY WD
-define co_current_3  {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_3*co_available} } !ANTELOPE VALLEY-EAST KERN WA
-define co_current_4  {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_4*co_available} } !CASTAIC LAKE WA
-define co_current_5  {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_5*co_available} } !CITY OF YUBA CITY
-define co_current_6  {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_6*co_available} } !COACHELLA VALLEY WD
-define co_current_7  {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_7*co_available} } !COUNTY OF BUTTE
-define co_current_8  {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_8*co_available} } !COUNTY OF KINGS
-define co_current_9  {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_9*co_available} } !CRESTLINE-LAKE ARROWHEAD WA
-define co_current_10 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_10*co_available} } !DESERT WA
-define co_current_11 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_11*co_available} } !DUDLEY RIDGE WD
-define co_current_12 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_12*co_available} } !EMPIRE WEST SIDE ID
-define co_current_13 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_13*co_available} } !KERN COUNTY WA
-define co_current_14 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_14*co_available} } !LITTLEROCK CREEK ID
-define co_current_15 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_15*co_available} } !METROPOLITAN WDSC
-define co_current_16 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_16*co_available} } !MOJAVE WA
-define co_current_17 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_17*co_available} } !NAPA COUNTY FC&WCD
-define co_current_18 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_18*co_available} } !OAK FLAT WD
-define co_current_19 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_19*co_available} } !PALMDALE WD
-define co_current_20 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_20*co_available} } !SAN BERNARDINO VALLEY MWD
-define co_current_21 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_21*co_available} } !SAN GABRIEL VALLEY MWD
-define co_current_22 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_22*co_available} } !SAN GORGONIO PASS WA
-define co_current_23 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_23*co_available} } !SAN LUIS OBISPO COUNTY FC&WCD
-define co_current_24 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_24*co_available} } !SANTA BARBARA COUNTY FC&WCD
-define co_current_25 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_25*co_available} } !SANTA CLARA VALLEY WD
-define co_current_26 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_26*co_available} } !SOLANO COUNTY WA
-define co_current_27 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_27*co_available} } !TULARE LAKE BASIN WSD
-define co_current_28 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_28*co_available} } !VENTURA COUNTY WPD
-define co_current_29 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_29*co_available} } !KERN COUNTY WA - MI
-define co_current_30 {case b{condition wateryear==beginWaterYear value 0.} case a{condition always value ALLOC_CO_30*co_available} } !CASTAIC LAKE WA - MI
+define co_current_1  {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_1*co_available} } !ALAMEDA COUNTY FC&WCD-ZONE 7
+define co_current_2  {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_2*co_available} } !ALAMEDA COUNTY WD
+define co_current_3  {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_3*co_available} } !ANTELOPE VALLEY-EAST KERN WA
+define co_current_4  {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_4*co_available} } !CASTAIC LAKE WA
+define co_current_5  {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_5*co_available} } !CITY OF YUBA CITY
+define co_current_6  {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_6*co_available} } !COACHELLA VALLEY WD
+define co_current_7  {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_7*co_available} } !COUNTY OF BUTTE
+define co_current_8  {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_8*co_available} } !COUNTY OF KINGS
+define co_current_9  {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_9*co_available} } !CRESTLINE-LAKE ARROWHEAD WA
+define co_current_10 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_10*co_available} } !DESERT WA
+define co_current_11 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_11*co_available} } !DUDLEY RIDGE WD
+define co_current_12 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_12*co_available} } !EMPIRE WEST SIDE ID
+define co_current_13 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_13*co_available} } !KERN COUNTY WA
+define co_current_14 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_14*co_available} } !LITTLEROCK CREEK ID
+define co_current_15 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_15*co_available} } !METROPOLITAN WDSC
+define co_current_16 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_16*co_available} } !MOJAVE WA
+define co_current_17 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_17*co_available} } !NAPA COUNTY FC&WCD
+define co_current_18 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_18*co_available} } !OAK FLAT WD
+define co_current_19 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_19*co_available} } !PALMDALE WD
+define co_current_20 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_20*co_available} } !SAN BERNARDINO VALLEY MWD
+define co_current_21 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_21*co_available} } !SAN GABRIEL VALLEY MWD
+define co_current_22 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_22*co_available} } !SAN GORGONIO PASS WA
+define co_current_23 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_23*co_available} } !SAN LUIS OBISPO COUNTY FC&WCD
+define co_current_24 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_24*co_available} } !SANTA BARBARA COUNTY FC&WCD
+define co_current_25 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_25*co_available} } !SANTA CLARA VALLEY WD
+define co_current_26 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_26*co_available} } !SOLANO COUNTY WA
+define co_current_27 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_27*co_available} } !TULARE LAKE BASIN WSD
+define co_current_28 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_28*co_available} } !VENTURA COUNTY WPD
+define co_current_29 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_29*co_available} } !KERN COUNTY WA - MI
+define co_current_30 {case b{condition wateryear==beginWY value 0.} case a{condition always value ALLOC_CO_30*co_available} } !CASTAIC LAKE WA - MI
 
 !position analysis:                                                                                      
 /*define co_current_1  {case b{condition month>=oct .and. month <=dec .and. wateryear==1922 value 0.} case a{condition always value swp_co_1*118.17/352.} } !ALAMEDA COUNTY FC&WCD-ZONE 7    

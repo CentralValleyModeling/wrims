@@ -9,10 +9,6 @@ initial {
 	svar CH_DLTSW {select OPTION from gui_Regs where Index = 13}  !D-1485
 	svar DCC_DLTSW {select OPTION from gui_Regs where Index = 1}
 	svar EI_DLTSW {select OPTION from gui_Regs where Index = 2}
-	
-	! For Position Analysis
-	! Position analysis always begin in October. 
-	const beginWaterYear { 2013 } ! October 2012 is water year 2013
 }
 
 SEQUENCE CYCLE1 {
@@ -30,6 +26,13 @@ SEQUENCE CYCLE3 {
     order   3
     }
 
+group PositionAnalysis {
+
+	! Position analysis always begin in October. 
+	svar beginWY { value 2013 } ! October 2012 is water year 2013
+
+	}	
+	
 model inc1 {
 	define getFinalMrdo {EXTERNAL f90}  ! OBJ code file must be located in run\external directory for compilation
 	INCLUDE  'Delta\DeltaExtFuncs_7inpANN.wresl'
