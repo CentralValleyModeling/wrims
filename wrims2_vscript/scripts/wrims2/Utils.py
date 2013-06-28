@@ -1,6 +1,5 @@
 import os
-import logging
-import scripts.tool.Param
+import scripts.tool.Param as Param
 import wrimsv2.evaluator.TimeOperation as TimeOp
 from scripting.element import ConfigReader
 
@@ -43,10 +42,10 @@ def writeConfigFile(filePath,cMap):
     cfile.close()
     
 
-def deleteFile(dir, extensionToDelete):
+def deleteFile(directory, extensionToDelete):
     
-    for item in os.listdir(dir):
-        filePath = os.path.join(dir, item)
+    for item in os.listdir(directory):
+        filePath = os.path.join(directory, item)
         if os.path.isfile(filePath):
             #print item
             extension = os.path.splitext(item)[1]
