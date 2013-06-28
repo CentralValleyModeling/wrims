@@ -28,11 +28,14 @@ SEQUENCE CYCLE3 {
 
 group PositionAnalysis {
 
-	! Position analysis always begin in October. 
-	svar beginWY { value 2013 } ! October 2012 is water year 2013
-	svar historicalWY { value 1945 } 
-
-	}	
+	! Position analysis always begin in October.
+	! October 2012 is water year 2013	
+	svar beginWY { value 2013 }
+	
+	! historicalWY is the actual water year where svar's data is copied from. 
+	! for ann dll.
+	svar historicalWY {select historicalWaterYear from Position_Analysis where FutureWaterYear = WaterYear} 
+}	
 	
 group inc1 {
 	define getFinalMrdo {EXTERNAL f90}  ! OBJ code file must be located in run\external directory for compilation
