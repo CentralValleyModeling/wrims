@@ -4,7 +4,7 @@
 ! Similar to values found in wytypes.table (common folder) with exception of included 1919 and 1920 values.
 ! Extended 10/31/03 from 1994 through 1998 by MZE using data obtained from CDEC
 ! Extended 6/27/05 from 1998 to 2003 by C.Quan-DWR from data extracted from CDEC.
-! Extended 6/27/2013 from 2009 to 2012 by K.Kao-DWR from data extracted from CDEC.
+! Extended 6/27/2013 from 2010 to 2012 by K.Kao-DWR from data extracted from CDEC.
 ! 1=W, 2=AN, 3=BN, 4=D, 5=C
 ! Units None
 wytypeSJR
@@ -94,7 +94,12 @@ wateryear      index
 2001	       4
 2002	       4
 2003	       3
-2009           3
+2004           4
+2005           1
+2006           1
+2007	       5
+2008	       5
+2009	       3
 2010           2
 2011           1
 2012           4
