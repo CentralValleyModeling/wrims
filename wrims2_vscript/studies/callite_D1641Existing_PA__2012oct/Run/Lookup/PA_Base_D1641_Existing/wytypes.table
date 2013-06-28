@@ -102,7 +102,7 @@ WATERYEAR  SACindex SJRindex SHASTAindex  AmerD893 FEATHERindex  Trinityindex   
 2009	      4        3	    1	          1	       0	         4		     0
 2010          3        2        1         -9994        0         -9996       -9997
 2011          1        1        1         -9994        0         -9996       -9997
-2012	      3        4	    1	      -9994	       0	     -9996		 -9997   
+2012	      3        4	    1	          1	       0	         4		 -9997   ! wrong data for AmerD893 and Trinityindex
 
 
 
