@@ -23,6 +23,7 @@ import wrimsv2_plugin.debugger.exception.WPPException;
 public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 	
 	private Button wpButton;
+	private Button xaButton;
 	
 	@Override
 	public void createControl(Composite parent) {
@@ -62,6 +63,31 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 				updateLaunchConfigurationDialog();			
 			}
 		});
+		
+		Label xaLabel = new Label(comp, SWT.NONE);
+		xaLabel.setText("&XA Free Limited License:");
+		gd = new GridData(GridData.BEGINNING);
+		gd.horizontalSpan=2;
+		xaLabel.setLayoutData(gd);
+		xaLabel.setFont(font);
+		
+		xaButton = new Button(comp, SWT.CHECK);
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 1;
+		xaButton.setLayoutData(gd);
+		xaButton.setFont(font);
+		xaButton.addSelectionListener(new SelectionListener(){
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updateLaunchConfigurationDialog();	
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				updateLaunchConfigurationDialog();			
+			}
+		});
 	}
 
 	@Override
@@ -82,6 +108,18 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 		} catch (CoreException e) {
 			WPPException.handleException(e);
 		}
+		
+		String freeXA = null;
+		try {
+			freeXA = configuration.getAttribute(DebugCorePlugin.ATTR_WPP_FREEXA, "no");
+			if (freeXA.equalsIgnoreCase("yes")){
+				xaButton.setSelection(true);
+			}else{
+				xaButton.setSelection(false);
+			}
+		} catch (CoreException e) {
+			WPPException.handleException(e);
+		}
 	}
 
 	@Override
@@ -93,6 +131,14 @@ public class WPPConfigTab extends AbstractLaunchConfigurationTab {
 			wreslPlus="no";
 		}
 		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_WRESLPLUS, wreslPlus);
+		
+		String freeXA="yes";
+		if (xaButton.getSelection()){
+			freeXA="yes";
+		}else{
+			freeXA="no";
+		}
+		configuration.setAttribute(DebugCorePlugin.ATTR_WPP_FREEXA, freeXA);
 	}
 
 	@Override
