@@ -1,6 +1,6 @@
 import os
 from scripts.tool import LookupTable
-from scripts.tool import Misc
+from scripts.tool import FileUtils
 
 
 #-------------------------------------------------------------------------------
@@ -40,10 +40,10 @@ for beginWY in historyWYs:
 	outSubDir = "PA_"+str(beginWY)+"_"+str(beginWY+sequentialYRs-1)
 
 	# delete outSubDir content	
-	Misc.erase(os.path.join(lookupPath, outSubDir))
+	FileUtils.erase(os.path.join(lookupPath, outSubDir))
 
 	# copy all tables from inSubDir to outSubDir
-	Misc.copyAll(os.path.join(lookupPath, inSubDir), os.path.join(lookupPath, outSubDir))
+	FileUtils.copyAll(os.path.join(lookupPath, inSubDir), os.path.join(lookupPath, outSubDir))
 
 	# create lookup table for converting futureWaterYear to historicalWaterYear
 	posTable = open(os.path.join(lookupPath, outSubDir,"Position_Analysis.table"),'w+'  )
