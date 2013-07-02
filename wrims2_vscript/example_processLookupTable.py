@@ -8,8 +8,8 @@ lookupPath = "studies/callite_D1641Existing_PA__2012oct/Run/Lookup"
 inSubDir = "PA_Base_D1641_Existing"
 
 futureWY = 2013
-historyWYs = [x for x in range(1945, 1946)]
-sequentialYRs = 3
+historyWYs = [x for x in range(1945, 1948)]
+sequentialYRs = 2
 #--------------------------------------------------------------------------------
 
 tableName ="wytypes.table"

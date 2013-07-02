@@ -160,7 +160,7 @@ class Study:
 			self._run_process(pn, StartYear, NumberOfSteps)
 	
 	
-	def modifyConfig(self, newStudyName, InitFile=None, InitFPart=None, SvarFile=None, SvarFPart=None, DvarFile=None, StartYear=None, StartMonth=None, NumberOfSteps=None, LookupSubDir=None):
+	def setConfig(self, newStudyName, InitFile=None, InitFPart=None, SvarFile=None, SvarFPart=None, DvarFile=None, StartYear=None, StartMonth=None, NumberOfSteps=None, LookupSubDir=None):
 		
 		newConfigPath = P.join(self._configDir, newStudyName+'.config')
 		
