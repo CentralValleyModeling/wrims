@@ -1,9 +1,10 @@
 import os
 import subprocess
-from os.path import dirname
+import os.path as P
 from scripts.tool import Param, DssHec
 from scripts.wrims2 import Utils
 from process.dssTransferProcess import DssTransferProcess
+
 
 class Study:
 
@@ -22,12 +23,12 @@ class Study:
 
 		
 		self._logger = Param.logger
-		self._configPath = os.path.join(os.path.dirname(Param.mainScriptPath), configPath)
-		print 'configPath:'+self._configPath
-		self._configDir = os.path.dirname(self._configPath)
-		self._studyName, configExtension = os.path.splitext(os.path.basename(self._configPath))
+		self._configPath = P.join(P.dirname(Param.mainScriptPath), configPath)
+		print 'configPath: '+self._configPath
+		self._configDir = P.dirname(self._configPath)
+		self._studyName, configExtension = P.splitext(P.basename(self._configPath))
 		print 'studyName: '+self._studyName
-		self._ms_configPath = os.path.join( self._configDir, "__generated.config")
+		self._ms_configPath = P.join( self._configDir, "__generated.config")
 		self._batFileName = batFileName
 		
 		#parse config file and put the map to cMap	
@@ -51,9 +52,9 @@ class Study:
 		self._cMap.put("DvarFile",t_dvarFile)		
 
 		
-# 		self._initFileAbsPath = os.path.join( self.configDir, initFile )
-# 		self._svarFileAbsPath = os.path.join( self.configDir, svarFile )
-# 		self._dvarFileAbsPath = os.path.join( self.configDir, dvarFile )	
+# 		self._initFileAbsPath = P.join( self.configDir, initFile )
+# 		self._svarFileAbsPath = P.join( self.configDir, svarFile )
+# 		self._dvarFileAbsPath = P.join( self.configDir, dvarFile )	
 
 		self._initFPart = self._cMap.get("InitFPart")	
 		self._svarFPart = self._cMap.get("SvarFPart")	
@@ -74,7 +75,7 @@ class Study:
 			if "." not in transferFile:
 				transferFile = transferFile+".transfer"
 		
-			dssTransferFile = os.path.join( self.configDir, transferFile )
+			dssTransferFile = P.join( self.configDir, transferFile )
 		
 		else:
 			
@@ -159,16 +160,33 @@ class Study:
 			self._run_process(pn, StartYear, NumberOfSteps)
 	
 	
-	def modifyConfig(self, newStudyName, StartYear=None, StartMonth=None, NumberOfSteps=None, SvarFPart=None):
+	def modifyConfig(self, newStudyName, InitFile=None, InitFPart=None, SvarFile=None, SvarFPart=None, DvarFile=None, StartYear=None, StartMonth=None, NumberOfSteps=None, LookupSubDir=None):
 		
-		newConfigPath = os.path.join(self._configDir, newStudyName+'.config')
+		newConfigPath = P.join(self._configDir, newStudyName+'.config')
 		
-		if os.path.exists(newConfigPath):
-			print newStudyName+' already exists.'
+		if P.exists(newConfigPath):
+			self._logger.info(newStudyName+' already exists.')
 			return
 		
-		self._studyName = newStudyName		
+		self._logger.info('Modifying study config...')
+		self._studyName = newStudyName	
+		self._configPath = 	newConfigPath
 		
+		if InitFile:
+			self._cMap.put('InitFile', InitFile)
+
+		if InitFPart:
+			self._cMap.put('InitFPart', InitFPart)
+						
+		if SvarFile:
+			self._cMap.put('SvarFile', SvarFile)
+			
+		if SvarFPart:
+			self._cMap.put('SvarFPart', SvarFPart)	
+
+		if DvarFile:
+			self._cMap.put('DvarFile', DvarFile)
+						
 		if StartYear:
 			self._cMap.put('StartYear', StartYear)
 
@@ -181,13 +199,39 @@ class Study:
 		if SvarFPart:
 			self._cMap.put('SvarFPart', SvarFPart)
 			
+		if LookupSubDir:
+			self._cMap.put('LookupSubDir', LookupSubDir)	
+			
 		# write configFile
 		cf = open(newConfigPath,'w+')	
+		cf.write("Begin Config\n")
 		for key in self._configKeyList:
 			if self._cMap.get(key):
 				cf.write( key + '\t' + str(self._cMap.get(key)) + '\n')	
+		cf.write("End Config\n")		
+		cf.close()
 			
 
-
+	def writeBatch(self, pause=True):
 		
+		batchPath = P.join(self._configDir, self._studyName+'.bat')
+		
+		if P.exists(batchPath):
+			self._logger.info(batchPath+' already exists.')
+			return	
+		
+		self._logger.info('Writing batch file: '+batchPath)
+		
+		bf = open(batchPath,'w+')
+		
+		mainScriptDir = P.dirname(Param.mainScriptPath)
+		
+		wrims2BatPath = P.normpath(P.join(mainScriptDir, self._batFileName))
+		
+		
+		bf.write(wrims2BatPath + ' ' + P.join( '%~dp0', self._studyName+'.config'))
+		if pause:
+			bf.write(' -pause')
+		bf.close()
+			
 			

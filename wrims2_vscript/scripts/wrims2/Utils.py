@@ -3,7 +3,9 @@ import scripts.tool.Param as Param
 import wrimsv2.evaluator.TimeOperation as TimeOp
 from scripting.element import ConfigReader
 
-configKeyList = ["MainFile", 
+configKeyList = [
+             "WreslPlus",     
+             "MainFile", 
              "Solver",
              "InitFile",
              "InitFPart",
@@ -19,6 +21,7 @@ configKeyList = ["MainFile",
              "EndYear",
              "EndMonth",
              "EndDay",
+             "LookupSubDir",
              "GroundwaterDir",
              "ShowWreslLog"]
 
@@ -59,28 +62,8 @@ def writeConfigFile(filePath,cMap):
     cfile.write("End Config\n")
     cfile.close()
     
-
-def deleteFile(directory, extensionToDelete):
-    
-    for item in os.listdir(directory):
-        filePath = os.path.join(directory, item)
-        if os.path.isfile(filePath):
-            #print item
-            extension = os.path.splitext(item)[1]
-            #print extension
-            if extensionToDelete in extension:
-                # print "File deleted: "+item
-                try: 
-                    os.remove(filePath)
-                    Param.logger.warning("File deleted: "+filePath)
-                except:
-                    pass
-               
         
-def arrayShift(inArray, shift): 
 
-    outArray = map(lambda x: x+shift, inArray) 
-    return outArray
 
 
     

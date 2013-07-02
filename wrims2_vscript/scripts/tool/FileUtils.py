@@ -1,5 +1,6 @@
 import shutil
 import os
+import Param
 
 
 def erase(fileOrDirPath):
@@ -30,3 +31,19 @@ def copyAll(root_src_dir, root_dst_dir):
             if os.path.exists(dst_file):
                 os.remove(dst_file)
             shutil.copy(src_file, dst_dir)
+            
+def deleteFile(directory, extensionToDelete):
+    
+    for item in os.listdir(directory):
+        filePath = os.path.join(directory, item)
+        if os.path.isfile(filePath):
+            #print item
+            extension = os.path.splitext(item)[1]
+            #print extension
+            if extensionToDelete in extension:
+                # print "File deleted: "+item
+                try: 
+                    os.remove(filePath)
+                    Param.logger.warning("File deleted: "+filePath)
+                except:
+                    pass            
