@@ -3,10 +3,28 @@ import scripts.tool.Param as Param
 import wrimsv2.evaluator.TimeOperation as TimeOp
 from scripting.element import ConfigReader
 
+configKeyList = ["MainFile", 
+             "Solver",
+             "InitFile",
+             "InitFPart",
+             "SvarFile",
+             "SvarAPart",
+             "SvarFPart",
+             "DvarFile",                   
+             "TimeStep",
+             "StartYear", 
+             "StartMonth",
+             "StartDay",
+             "NumberOfSteps",
+             "EndYear",
+             "EndMonth",
+             "EndDay",
+             "GroundwaterDir",
+             "ShowWreslLog"]
 
-def getConfigMap(filePath):
-    
-    cp = ConfigReader;
+def  getConfigMap(filePath):
+        
+    cp = ConfigReader(configKeyList);
     cp.parseFile(filePath)
 
     return cp.configMap

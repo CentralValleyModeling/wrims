@@ -21,42 +21,37 @@ public class ConfigReader {
 	
 	private static CharStream stream;	
 	public static Map<String, String> configMap;
-	private static ArrayList<String> configKeyList;
+	private static String[] configKeyList;
 
 
-	public ConfigReader(){
+	public ConfigReader(String[] configKeyListInput){
 		
-		configKeyList = new ArrayList<String>();
+		configKeyList = configKeyListInput;
 		
 
-		configKeyList.add("MainFile");
-		configKeyList.add("Solver");   
-		configKeyList.add("InitFile");
-		configKeyList.add("InitFPart");
-		configKeyList.add("SvarFile");
-		configKeyList.add("SvarAPart");
-		configKeyList.add("SvarFPart");
-		configKeyList.add("DvarFile");                   
-		configKeyList.add("TimeStep");
-		configKeyList.add("StartYear"); 
-		configKeyList.add("StartMonth");
-		//configKeyList.add("StartDay");
-		configKeyList.add("NumberOfSteps");
-		configKeyList.add("EndYear");
-		configKeyList.add("EndMonth");
-		//configKeyList.add("EndDay");
-		configKeyList.add("GroundwaterDir");
-		configKeyList.add("ShowWreslLog");
+//		configKeyList.add("MainFile");
+//		configKeyList.add("Solver");   
+//		configKeyList.add("InitFile");
+//		configKeyList.add("InitFPart");
+//		configKeyList.add("SvarFile");
+//		configKeyList.add("SvarAPart");
+//		configKeyList.add("SvarFPart");
+//		configKeyList.add("DvarFile");                   
+//		configKeyList.add("TimeStep");
+//		configKeyList.add("StartYear"); 
+//		configKeyList.add("StartMonth");
+//		//configKeyList.add("StartDay");
+//		configKeyList.add("NumberOfSteps");
+//		configKeyList.add("EndYear");
+//		configKeyList.add("EndMonth");
+//		//configKeyList.add("EndDay");
+//		configKeyList.add("GroundwaterDir");
+//		configKeyList.add("ShowWreslLog");
 		
 
 	}
 	
-	public static ArrayList<String> getConfigKeyList(){
-				
-		return configKeyList;
-		
-		
-	}
+
 	//@Test( groups = { "config" } )
 	public static void parseFile(String inputFilePath) throws RecognitionException  {		
 

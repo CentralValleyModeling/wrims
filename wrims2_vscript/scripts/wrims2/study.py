@@ -22,33 +22,41 @@ class Study:
 
 		
 		self._logger = Param.logger
-		self.configPath = os.path.join(os.path.dirname(Param.mainScriptPath), configPath)
-		print 'self.configPath:'+self.configPath
-		self.configDir = dirname(self.configPath)
-		self.ms_configPath = os.path.join( self.configDir, "__generated.config")
-		self.batFileName = batFileName
+		self._configPath = os.path.join(os.path.dirname(Param.mainScriptPath), configPath)
+		print 'configPath:'+self._configPath
+		self._configDir = os.path.dirname(self._configPath)
+		self._studyName, configExtension = os.path.splitext(os.path.basename(self._configPath))
+		print 'studyName: '+self._studyName
+		self._ms_configPath = os.path.join( self._configDir, "__generated.config")
+		self._batFileName = batFileName
 		
 		#parse config file and put the map to cMap	
-		self.cMap=Utils.getConfigMap(self.configPath)
+		self._cMap=Utils.getConfigMap(self._configPath)
+		self._configKeyList = Utils.configKeyList
 		
-		self._startYear=int(self.cMap.get("StartYear"))
-		self._startMonth=int(self.cMap.get("StartMonth"))
-		self._numberOfSteps=int(self.cMap.get("NumberOfSteps"))
+# 		self._StartYear=int(self.cMap.get("StartYear"))
+# 		self._startMonth=int(self.cMap.get("StartMonth"))
+# 		self._numberOfSteps=int(self.cMap.get("NumberOfSteps"))
 		
-		initFile=self.cMap.get("InitFile")
-		svarFile=self.cMap.get("SvarFile")
-		dvarFile=self.cMap.get("DvarFile")
-		
-		initFile=initFile.replace('\"','').replace('\'','')
-		svarFile=svarFile.replace('\"','').replace('\'','')
-		dvarFile=dvarFile.replace('\"','').replace('\'','')
-		
-		self.InitFile = os.path.join( self.configDir, initFile )
-		self.SvarFile = os.path.join( self.configDir, svarFile )
-		self.DvarFile = os.path.join( self.configDir, dvarFile )	
+		t_initFile=self._cMap.get("InitFile")
+		t_svarFile=self._cMap.get("SvarFile")
+		t_dvarFile=self._cMap.get("DvarFile")
 
-		self.InitFPart = self.cMap.get("InitFPart")	
-		self.SvarFPart = self.cMap.get("SvarFPart")	
+		t_initFile=t_initFile.replace('\"','').replace('\'','')
+		t_svarFile=t_svarFile.replace('\"','').replace('\'','')
+		t_dvarFile=t_dvarFile.replace('\"','').replace('\'','')
+				
+		self._cMap.put("InitFile",t_initFile)
+		self._cMap.put("SvarFile",t_svarFile)
+		self._cMap.put("DvarFile",t_dvarFile)		
+
+		
+# 		self._initFileAbsPath = os.path.join( self.configDir, initFile )
+# 		self._svarFileAbsPath = os.path.join( self.configDir, svarFile )
+# 		self._dvarFileAbsPath = os.path.join( self.configDir, dvarFile )	
+
+		self._initFPart = self._cMap.get("InitFPart")	
+		self._svarFPart = self._cMap.get("SvarFPart")	
 			
 		self.processList=[]	
 		self.processDict={}
@@ -89,10 +97,12 @@ class Study:
 	def info(self):
 		
 		#print "Study Name:  "+self.name
-		print "Config path: "+self.configPath
+		print "configPath: "+self._configPath
 		for pn in self.processDict.keys():
-			print "process name: "+pn
-		
+			print "processNames: "+pn
+		for key in self._configKeyList:
+			if self._cMap.get(key):
+				print '=> ' + key + ':' + self._cMap.get(key)	
 		
 	
 	def _run_wrims(self,startYear,numberOfSteps):
@@ -132,21 +142,52 @@ class Study:
 		process.run()
 		
 		
-	def run(self, startYear=None, numberOfSteps=None):
+	def run(self, StartYear=None, NumberOfSteps=None):
 	
 		#self._startYear=startYear
 		#self._numberOfSteps=numberOfSteps
 		
-		if startYear == None:
-			startYear = self._startYear
+		if StartYear == None:
+			StartYear = self._StartYear
 			
-		if numberOfSteps == None:
-			numberOfSteps = self._numberOfSteps
+		if NumberOfSteps == None:
+			NumberOfSteps = self._NumberOfSteps
 		
-		self._run_wrims(startYear,numberOfSteps)
+		self._run_wrims(StartYear,NumberOfSteps)
 		
 		for pn in self.processDict.keys():
-			self._run_process(pn, startYear, numberOfSteps)
+			self._run_process(pn, StartYear, NumberOfSteps)
 	
 	
-	
+	def modifyConfig(self, newStudyName, StartYear=None, StartMonth=None, NumberOfSteps=None, SvarFPart=None):
+		
+		newConfigPath = os.path.join(self._configDir, newStudyName+'.config')
+		
+		if os.path.exists(newConfigPath):
+			print newStudyName+' already exists.'
+			return
+		
+		self._studyName = newStudyName		
+		
+		if StartYear:
+			self._cMap.put('StartYear', StartYear)
+
+		if StartMonth:
+			self._cMap.put('StartMonth', StartMonth)
+			
+		if NumberOfSteps:
+			self._cMap.put('NumberOfSteps', NumberOfSteps)
+
+		if SvarFPart:
+			self._cMap.put('SvarFPart', SvarFPart)
+			
+		# write configFile
+		cf = open(newConfigPath,'w+')	
+		for key in self._configKeyList:
+			if self._cMap.get(key):
+				cf.write( key + '\t' + str(self._cMap.get(key)) + '\n')	
+			
+
+
+		
+			

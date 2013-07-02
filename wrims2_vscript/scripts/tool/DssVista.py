@@ -11,6 +11,15 @@ def arr2dss(dssfile,ds_arr,interval,starttime,path,attr):
     writedss(dssfile,path,rts)
     return None
 
+def array2dss(outFile, ds_arr, startTime, pathnameString, unit, interp_type='PER-AVER'):
+    
+    path = Pathname.createPathname(pathnameString)
+    ePart = path.getPart(Pathname.E_PART)
+    attr = DataSetAttr(DataType.REGULAR_TIME_SERIES,'',unit,'TIME',interp_type)
+    rts = RegularTimeSeries(str(path),startTime,ePart,ds_arr,None,attr)
+    writedss(outFile,str(path),rts)
+    return None
+
 def copyDssToFuture_calendarYear(inFile, outFile, beginYR, sequentialYR, futureYR=-99, epart="1MON"):
     
     endYR = beginYR + sequentialYR - 1
@@ -34,7 +43,7 @@ def copyDssToFuture_calendarYear(inFile, outFile, beginYR, sequentialYR, futureY
     
         arr2dss(outFile, y_arr, interval, beginTime_new, pathname_new, attr)
         
-def copyDssToFuture_waterYear(inFile, outFile, beginWY, sequentialYR, futureWY=-99, epart="1MON"):
+def copyDssToFuture_waterYear(inFile, outFile, beginWY, sequentialYR, futureWY=-99, outFpart="", epart="1MON"):
     
     beginCY = beginWY - 1
     endCY = beginCY + sequentialYR - 1 + 1
@@ -54,7 +63,11 @@ def copyDssToFuture_waterYear(inFile, outFile, beginWY, sequentialYR, futureWY=-
         interval = epart
     
         path = ref.getPathname()
-        path.setPart(Pathname.F_PART,str(beginWY)+"_"+str(endWY))
+        
+        if not outFpart:
+            outFpart = str(beginWY)+"_"+str(endWY)
+            
+        path.setPart(Pathname.F_PART,outFpart)
         pathname_new = str(path)
         attr = ds.getAttributes()
     

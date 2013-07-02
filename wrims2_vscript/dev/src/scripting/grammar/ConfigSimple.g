@@ -45,6 +45,7 @@ options {
          put("stopyear" ,    "StopYear"          );
          put("stopmonth",    "StopMonth"         );
          put("stopday"  ,    "StopDay"           );
+         put("lookupsubdir"  ,    "LookupSubDir"           );
          put("groundwaterdir", "GroundWaterDir"  );
          put("showwresllog"  , "ShowWreslLog"    );
          put("sendaliastodvar" , "SendAliasToDvar"                    );
@@ -99,9 +100,10 @@ configFile :
 configItem returns[String key, String val ]
 	: 
 
-    k=configKey         { $key=reservedKeyMap.get($k.text.toLowerCase());  System.out.print("key: "+$key);System.out.print("\t");} 
-    ( v1=integer        { $val=$v1.text; System.out.println($v1.text);}  
-    | v2=complex        { $val=$v2.text; System.out.println($v2.text);} 
+    k=configKey         { $key=reservedKeyMap.get($k.text.toLowerCase()); } 
+                        //{ System.out.print("key: "+$key);System.out.print("\t");} 
+    ( v1=integer        { $val=$v1.text;} //System.out.println($v1.text);}  
+    | v2=complex        { $val=$v2.text;} //System.out.println($v2.text);} 
     //| v3=complex   { $val=$v3.text; }
     ) 
     ENDLINE+
