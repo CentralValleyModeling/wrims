@@ -2,7 +2,7 @@
 #  TimeStep must be monthly 
 #=====================================================================================
 
-import os
+from os import path 
 from scripts.wrims2.study import Study
 from scripts.tool import LogUtils, Param, LookupTable, FileUtils, DssVista
 
@@ -11,7 +11,7 @@ from scripts.tool import LogUtils, Param, LookupTable, FileUtils, DssVista
 svarOriginalFile="studies/callite_D1641Existing_PA__2012oct/Run/DSS/CL_EXISTING_BO_081011_SV.dss"
 svarNewFile = "studies/callite_D1641Existing_PA__2012oct/Run/DSS/CL_EXISTING_BO_081011_PA_SV.dss"
 runDir = "studies/callite_D1641Existing_PA__2012oct/Run"
-lookupOriginalDir = os.path.join(runDir, "Lookup", "PA_Base_D1641_Existing" )
+lookupOriginalDir = path.join(runDir, "Lookup", "PA_Base_D1641_Existing" )
 futureWY = 2013
 historyWYs = [1935, 1970, 1988]
 sequentialYRs = 2   # including first year
@@ -46,7 +46,7 @@ monthlyTableList = ["feather_runoff_forecast.table",
 
 
 # initialization
-Param.mainScriptPath = __file__
+Param.mainScriptPath = path.normpath(path.abspath(__file__))
 LogUtils.initLogging()
 
 
@@ -60,13 +60,13 @@ for beginWY in historyWYs:
 # prepare tables
 
     # delete outSubDir content    
-    FileUtils.erase( os.path.join(runDir, "Lookup", outSubDir))
+    FileUtils.erase( path.join(runDir, "Lookup", outSubDir))
 
     # copy all tables from LookupOriginalDir to outSubDir
-    FileUtils.copyAll(lookupOriginalDir, os.path.join(runDir, "Lookup", outSubDir))
+    FileUtils.copyAll(lookupOriginalDir, path.join(runDir, "Lookup", outSubDir))
 
     # create lookup table for converting futureWaterYear to historicalWaterYear
-    posTable = open(os.path.join(runDir, "Lookup", outSubDir,"Position_Analysis.table"),'w+'  )
+    posTable = open(path.join(runDir, "Lookup", outSubDir,"Position_Analysis.table"),'w+'  )
     posTable.write("Position_Analysis\n")
     posTable.write("FutureWaterYear     HistoricalWaterYear\n")
     for iYear in range(sequentialYRs):
@@ -75,16 +75,16 @@ for beginWY in historyWYs:
     
 
     for tableName in yearlyTableList:
-        outTablePath = os.path.join(runDir, "Lookup", outSubDir, tableName)
-        inTablePath = os.path.join(lookupOriginalDir, tableName)
+        outTablePath = path.join(runDir, "Lookup", outSubDir, tableName)
+        inTablePath = path.join(lookupOriginalDir, tableName)
     
         LookupTable.copyYearlyTableToFuture(inTablePath, outTablePath, beginWY, sequentialYRs, futureWY)
 
 
     for tableName in monthlyTableList:
         
-        outTablePath = os.path.join(runDir, "Lookup", outSubDir, tableName)
-        inTablePath = os.path.join(lookupOriginalDir, tableName)
+        outTablePath = path.join(runDir, "Lookup", outSubDir, tableName)
+        inTablePath = path.join(lookupOriginalDir, tableName)
     
         LookupTable.copyMonthlyTableToFuture(inTablePath, outTablePath, beginWY, sequentialYRs, futureWY)
 

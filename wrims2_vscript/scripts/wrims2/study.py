@@ -25,6 +25,8 @@ class Study:
 		self._logger = Param.logger
 		self._configPath = P.join(P.dirname(Param.mainScriptPath), configPath)
 		print 'configPath: '+self._configPath
+		self._logger.info('configPath: '+self._configPath)
+		self._logger.info('configDir: '+P.dirname(self._configPath))
 		self._configDir = P.dirname(self._configPath)
 		self._studyName, configExtension = P.splitext(P.basename(self._configPath))
 		print 'studyName: '+self._studyName
@@ -165,8 +167,8 @@ class Study:
 		newConfigPath = P.join(self._configDir, newStudyName+'.config')
 		
 		if P.exists(newConfigPath):
-			self._logger.info(newStudyName+' already exists.')
-			return
+			self._logger.info(newStudyName+'.config already exists.')
+			self._logger.info('Overwriting '+newStudyName+'.config')
 		
 		self._logger.info('Modifying study config...')
 		self._studyName = newStudyName	
@@ -218,7 +220,7 @@ class Study:
 		
 		if P.exists(batchPath):
 			self._logger.info(batchPath+' already exists.')
-			return	
+			self._logger.info('Overwriting '+batchPath)
 		
 		self._logger.info('Writing batch file: '+batchPath)
 		
@@ -227,7 +229,10 @@ class Study:
 		mainScriptDir = P.dirname(Param.mainScriptPath)
 		
 		wrims2BatPath = P.normpath(P.join(mainScriptDir, self._batFileName))
-		
+
+		self._logger.info('Param.mainScriptPath: '+Param.mainScriptPath)		
+		self._logger.info('mainScriptDir: '+mainScriptDir)
+		self._logger.info('wrims2BatPath: '+wrims2BatPath)
 		
 		bf.write(wrims2BatPath + ' ' + P.join( '%~dp0', self._studyName+'.config'))
 		if pause:
