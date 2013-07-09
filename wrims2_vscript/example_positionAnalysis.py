@@ -3,14 +3,11 @@
 #=====================================================================================
 
 import os
-import scripts.tool.DssVista as DV
 from scripts.wrims2.study import Study
-from scripts.tool import LogUtils, Param
-from scripts.tool import LookupTable
-from scripts.tool import FileUtils
+from scripts.tool import LogUtils, Param, LookupTable, FileUtils, DssVista
 
 # User Input
-#-------------------------------------------------------------------------------
+########################################################
 svarOriginalFile="studies/callite_D1641Existing_PA__2012oct/Run/DSS/CL_EXISTING_BO_081011_SV.dss"
 svarNewFile = "studies/callite_D1641Existing_PA__2012oct/Run/DSS/CL_EXISTING_BO_081011_PA_SV.dss"
 runDir = "studies/callite_D1641Existing_PA__2012oct/Run"
@@ -24,19 +21,6 @@ sequentialYRs = 2   # including first year
 # Tom Fitzhugh 
 
 UARM_at_2012_09 = [300] 
-#--------------------------------------------------------------------------------
-
-
-
-# initialization
-#################################
-Param.mainScriptPath = __file__
-LogUtils.initLogging()
-#################################
-
-
-
-tableName ="wytypes.table"
 
 yearlyTableList = ["wytypes.table",
                    "wytypesjr.table",
@@ -57,11 +41,23 @@ yearlyTableList = ["wytypes.table",
 monthlyTableList = ["feather_runoff_forecast.table",
                     "x2days.table",
                 ]
+########################################################
+
+
+
+# initialization
+Param.mainScriptPath = __file__
+LogUtils.initLogging()
+
+
 
 for beginWY in historyWYs:
 
+    endWY = beginWY + sequentialYRs - 1
     # dir for outTable, e.g., PA_1945_1947
-    outSubDir = "PA_"+str(beginWY)+"_"+str(beginWY+sequentialYRs-1)
+    outSubDir = "PA_"+str(beginWY)+"_"+str(endWY)
+
+# prepare tables
 
     # delete outSubDir content    
     FileUtils.erase( os.path.join(runDir, "Lookup", outSubDir))
@@ -77,7 +73,6 @@ for beginWY in historyWYs:
         posTable.write(str(futureWY+iYear)+"\t"+str(beginWY+iYear)+'\n')
     posTable.close()
     
-
 
     for tableName in yearlyTableList:
         outTablePath = os.path.join(runDir, "Lookup", outSubDir, tableName)
@@ -95,29 +90,20 @@ for beginWY in historyWYs:
 
 
 
+# prepare svar file
 
-
-
-    
-study=[]
-
-
-for beginWY in historyWYs:
-
-    endWY = beginWY + sequentialYRs - 1
     outSvarFpart = str(beginWY)+"_"+str(endWY) # e.g., 1945_1947
     studyName = 'PA_'+outSvarFpart
 
+    DssVista.copyDssToFuture_waterYear(svarOriginalFile, svarNewFile, beginWY, sequentialYRs, futureWY, outSvarFpart)    
+    DssVista.array2dss(svarNewFile, UARM_at_2012_09, "30SEP2012 2400", "/CALLITE/UARM/STORAGE//1MON/"+ outSvarFpart +"/", "TAF")
 
-    DV.copyDssToFuture_waterYear(svarOriginalFile, svarNewFile, beginWY, sequentialYRs, futureWY, outSvarFpart)    
-    DV.array2dss(svarNewFile, UARM_at_2012_09, "30SEP2012 2400", "/CALLITE/UARM/STORAGE//1MON/"+ outSvarFpart +"/", "TAF")
 
 
+# prepare config and batch files
 
     s = Study("studies/callite_D1641Existing_PA__2012oct/PA_template.config")
     s.setConfig(studyName, StartYear=2012, SvarFPart=outSvarFpart, LookupSubDir=studyName)
     s.writeBatch(pause=True)
-    study.append(s)
-
 
 
