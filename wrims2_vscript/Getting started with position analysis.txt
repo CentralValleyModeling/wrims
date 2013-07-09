@@ -1,0 +1,25 @@
+Getting started with WRIMS2_VScript
+
+DSS data processing example:
+
+(1) Open command window in the installed folder, i.e., "wrims2_vscript_vX.X_XXXX"
+
+(2) Type "vscript example_copyToFuture.py" in the command window to run the example
+
+
+
+
+Simple batch example:
+
+    Double-click the file "exmple1.bat" to run the example
+
+
+
+
+
+
+
+
+
+
+
