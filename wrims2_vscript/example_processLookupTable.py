@@ -8,7 +8,7 @@ lookupPath = "studies/callite_D1641Existing_PA__2012oct/Run/Lookup"
 inSubDir = "PA_Base_D1641_Existing"
 
 futureWY = 2013
-historyWYs = [x for x in range(1945, 1948)]
+historyWYs = [1935, 1970, 1988]
 sequentialYRs = 2
 #--------------------------------------------------------------------------------
 
