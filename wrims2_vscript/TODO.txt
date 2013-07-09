@@ -1,0 +1,7 @@
+AnnualReqDel_swp
+
+
+automatic water year type generation
+cleanup code for d1485
+
+tutorial powerpoint
