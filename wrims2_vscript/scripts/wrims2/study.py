@@ -16,10 +16,10 @@ class Study:
 #	_numberOfSteps=None
 
 	_logger = Param.logger
+	_batchPath = ''
 	
 	
-	
-	def __init__(self, configPath, batFileName='runConfig.bat'):
+	def __init__(self, configPath, batFileName='runConfig_limitedLicense.bat'):
 
 		
 		self._logger = Param.logger
@@ -221,8 +221,11 @@ class Study:
 		if P.exists(batchPath):
 			self._logger.info(batchPath+' already exists.')
 			self._logger.info('Overwriting '+batchPath)
+			
+		else:
+			self._logger.info('Writing batch file: '+batchPath)
 		
-		self._logger.info('Writing batch file: '+batchPath)
+		self._batchPath = batchPath
 		
 		bf = open(batchPath,'w+')
 		

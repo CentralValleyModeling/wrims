@@ -4,17 +4,20 @@
 
 from os import path 
 from scripts.wrims2.study import Study
+from scripts.wrims2.runGroup import RunGroup
 from scripts.tool import LogUtils, Param, LookupTable, FileUtils, DssVista
 
 # User Input
 ########################################################
+projectName="CalLitePA_demo"
 svarOriginalFile="studies/callite_D1641Existing_PA__2012oct/Run/DSS/CL_EXISTING_BO_081011_SV.dss"
 svarNewFile = "studies/callite_D1641Existing_PA__2012oct/Run/DSS/CL_EXISTING_BO_081011_PA_SV.dss"
 runDir = "studies/callite_D1641Existing_PA__2012oct/Run"
 lookupOriginalDir = path.join(runDir, "Lookup", "PA_Base_D1641_Existing" )
 futureWY = 2013
-historyWYs = [1935, 1970, 1988]
-sequentialYRs = 2   # including first year
+historyWYs = [ x for x in range(1935, 1940)]
+sequentialYRs = 1   # including first year
+simultaneousRuns = 4 # how many runs at the same time
 
 # UARM: Upper American River Model, that is storage in French Meadows, 
 # Hell Hole, and Union Valley Reservoirs, which are upstream of Folsom.
@@ -48,14 +51,14 @@ monthlyTableList = ["feather_runoff_forecast.table",
 # initialization
 Param.mainScriptPath = path.normpath(path.abspath(__file__))
 LogUtils.initLogging()
-
+runGroup = RunGroup(projectName)
 
 
 for beginWY in historyWYs:
 
     endWY = beginWY + sequentialYRs - 1
     # dir for outTable, e.g., PA_1945_1947
-    outSubDir = "PA_"+str(beginWY)+"_"+str(endWY)
+    outSubDir = projectName+"_"+str(beginWY)+"_"+str(endWY)
 
 # prepare tables
 
@@ -93,7 +96,7 @@ for beginWY in historyWYs:
 # prepare svar file
 
     outSvarFpart = str(beginWY)+"_"+str(endWY) # e.g., 1945_1947
-    studyName = 'PA_'+outSvarFpart
+    studyName = projectName+'_'+outSvarFpart
 
     DssVista.copyDssToFuture_waterYear(svarOriginalFile, svarNewFile, beginWY, sequentialYRs, futureWY, outSvarFpart)    
     DssVista.array2dss(svarNewFile, UARM_at_2012_09, "30SEP2012 2400", "/CALLITE/UARM/STORAGE//1MON/"+ outSvarFpart +"/", "TAF")
@@ -103,7 +106,9 @@ for beginWY in historyWYs:
 # prepare config and batch files
 
     s = Study("studies/callite_D1641Existing_PA__2012oct/PA_template.config")
-    s.setConfig(studyName, StartYear=2012, SvarFPart=outSvarFpart, LookupSubDir=studyName)
-    s.writeBatch(pause=True)
+    s.setConfig(studyName, StartYear=2012, SvarFPart=outSvarFpart, NumberOfSteps=sequentialYRs*12, LookupSubDir=studyName)
+    s.writeBatch(pause=False)
+    runGroup.add(s)
 
-
+# write batch for all runs
+runGroup.writeBatch(simultaneousRuns)
