@@ -9,6 +9,7 @@ IF [%1]==[] (
 	)
 
 set ConfigFilePath=%1
+set ConfigFilePath=%ConfigFilePath:/=\%
 
 for %%F in (%ConfigFilePath%) do set dirname=%%~dpF
 set RunDir=%dirname%run\
