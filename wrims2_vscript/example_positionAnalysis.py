@@ -15,7 +15,7 @@ svarNewFile = "studies/callite_D1641Existing_PA__2012oct/Run/DSS/CL_EXISTING_BO_
 runDir = "studies/callite_D1641Existing_PA__2012oct/Run"
 lookupOriginalDir = path.join(runDir, "Lookup", "PA_Base_D1641_Existing" )
 futureWY = 2013
-historyWYs = [ x for x in range(1935, 1940)]
+historyWYs = [ x for x in range(1935, 1937)]
 sequentialYRs = 1   # including first year
 simultaneousRuns = 4 # how many runs at the same time
 

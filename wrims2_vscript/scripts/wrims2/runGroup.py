@@ -78,12 +78,16 @@ class RunGroup:
 				bg.close()
 			
 				bf.write('start /wait ' + subGroupPath + '\n')
+				bf.write('echo \"run completed.\"\n')
+				bf.write('pause\n')
 					
 		else:  # sequential run
 					
 			for study in self._runList:
 					
-				bf.write("start /WAIT " + study._batchPath + '\n');				
+				bf.write("start /WAIT " + study._batchPath + '\n');	
+				bf.write('echo \"run completed.\"\n')
+				bf.write('pause\n')		
 				
 		bf.close()
 			
