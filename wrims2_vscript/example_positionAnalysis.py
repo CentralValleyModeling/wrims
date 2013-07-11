@@ -7,13 +7,27 @@ from scripts.wrims2.study import Study
 from scripts.wrims2.runGroup import RunGroup
 from scripts.tool import LogUtils, Param, LookupTable, FileUtils, DssVista
 
+## Step 1. 
+## Step 2.
+
+
 # User Input
 ########################################################
-projectName="CalLitePA_demo"
-svarOriginalFile="studies/callite_D1641Existing_PA__2012oct/Run/DSS/CL_EXISTING_BO_081011_SV.dss"
-svarNewFile = "studies/callite_D1641Existing_PA__2012oct/Run/DSS/CL_EXISTING_BO_081011_PA_SV.dss"
-runDir = "studies/callite_D1641Existing_PA__2012oct/Run"
-lookupOriginalDir = path.join(runDir, "Lookup", "PA_Base_D1641_Existing" )
+
+# projectName will be used to prepend generated files and folders.
+projectName ="CalLitePA_demo"
+
+# path to this script and its directory
+Param.mainScriptPath = path.abspath(__file__)
+Param.mainScriptDir  = path.dirname(Param.mainScriptPath)
+
+# studyRunDir is the run directory of the CalLite study
+studyRunDir = path.join(Param.mainScriptDir, "studies/callite_D1641Existing_PA__2012oct/Run")
+
+svarOriginalFile =path.join(studyRunDir, "DSS/CL_EXISTING_BO_081011_SV.dss")
+#svarNewFile      =path.join(studyRunDir, "DSS/CL_EXISTING_BO_081011_PA_SV.dss")
+
+lookupOriginalDir = path.join(studyRunDir, "Lookup", "PA_Base_D1641_Existing" )
 futureWY = 2013
 historyWYs = [ x for x in range(1935, 1937)]
 sequentialYRs = 1   # including first year
@@ -45,8 +59,14 @@ monthlyTableList = ["feather_runoff_forecast.table",
                     "x2days.table",
                 ]
 ########################################################
+svarNewFile      =path.join(studyRunDir, "DSS/CL_EXISTING_BO_081011_PA_SV.dss")
 
 
+SvarFile = path.relpath(svarNewFile, path.dirname(studyRunDir))
+
+
+
+########################################################
 
 # initialization
 Param.mainScriptPath = path.normpath(path.abspath(__file__))
@@ -63,13 +83,13 @@ for beginWY in historyWYs:
 # prepare tables
 
     # delete outSubDir content    
-    FileUtils.erase( path.join(runDir, "Lookup", outSubDir))
+    FileUtils.erase( path.join(studyRunDir, "Lookup", outSubDir))
 
     # copy all tables from LookupOriginalDir to outSubDir
-    FileUtils.copyAll(lookupOriginalDir, path.join(runDir, "Lookup", outSubDir))
+    FileUtils.copyAll(lookupOriginalDir, path.join(studyRunDir, "Lookup", outSubDir))
 
     # create lookup table for converting futureWaterYear to historicalWaterYear
-    posTable = open(path.join(runDir, "Lookup", outSubDir,"Position_Analysis.table"),'w+'  )
+    posTable = open(path.join(studyRunDir, "Lookup", outSubDir,"Position_Analysis.table"),'w+'  )
     posTable.write("Position_Analysis\n")
     posTable.write("FutureWaterYear     HistoricalWaterYear\n")
     for iYear in range(sequentialYRs):
@@ -78,7 +98,7 @@ for beginWY in historyWYs:
     
 
     for tableName in yearlyTableList:
-        outTablePath = path.join(runDir, "Lookup", outSubDir, tableName)
+        outTablePath = path.join(studyRunDir, "Lookup", outSubDir, tableName)
         inTablePath = path.join(lookupOriginalDir, tableName)
     
         LookupTable.copyYearlyTableToFuture(inTablePath, outTablePath, beginWY, sequentialYRs, futureWY)
@@ -86,7 +106,7 @@ for beginWY in historyWYs:
 
     for tableName in monthlyTableList:
         
-        outTablePath = path.join(runDir, "Lookup", outSubDir, tableName)
+        outTablePath = path.join(studyRunDir, "Lookup", outSubDir, tableName)
         inTablePath = path.join(lookupOriginalDir, tableName)
     
         LookupTable.copyMonthlyTableToFuture(inTablePath, outTablePath, beginWY, sequentialYRs, futureWY)
@@ -106,7 +126,7 @@ for beginWY in historyWYs:
 # prepare config and batch files
 
     s = Study("studies/callite_D1641Existing_PA__2012oct/PA_template.config")
-    s.setConfig(studyName, StartYear=2012, SvarFPart=outSvarFpart, NumberOfSteps=sequentialYRs*12, LookupSubDir=studyName)
+    s.setConfig(studyName, StartYear=2012, SvarFile=SvarFile, SvarFPart=outSvarFpart, NumberOfSteps=sequentialYRs*12, LookupSubDir=studyName)
     s.writeBatch(pause=False)
     runGroup.add(s)
 
