@@ -1,7 +1,4 @@
-AnnualReqDel_swp
-
-
-automatic water year type generation
-cleanup code for d1485
-
-tutorial powerpoint
+1. prepare 2012 data for AnnualReqDel_swp
+2. automatic water year type generation for combination of observed data and simulated data
+3. cleanup code for d1485
+4. prepare tutorial powerpoint

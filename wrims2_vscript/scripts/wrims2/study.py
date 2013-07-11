@@ -28,7 +28,6 @@ class Study:
 		self._logger.info('configDir: '+P.dirname(self._configPath))
 		self._configDir = P.dirname(self._configPath)
 		self._studyName, configExtension = P.splitext(P.basename(self._configPath))
-		print 'studyName: '+self._studyName
 		self._ms_configPath = P.join( self._configDir, "__generated.config")
 		self._batFileName = batFileName
 		

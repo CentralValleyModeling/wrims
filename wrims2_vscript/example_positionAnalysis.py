@@ -1,5 +1,6 @@
 #=====================================================================================
-#   Position analysis using CalLite
+#   Position analysis using CalLite. 
+#   Run start time is Oct 2012.
 #=====================================================================================
 from os import path 
 from scripts.wrims2.study import Study
@@ -13,9 +14,11 @@ LogUtils.initLogging()
 
 
 
-## Step 1. 
-## Step 2.
-
+## Step 1. Provide initial data for decision variables. See .\Run\DSS\CL_INIT_2012.dss
+## Step 2. Provide 2012 annual requests data in this table: \Run\Lookup\PA_Base_D1641_Existing\AnnualReqDel_swp.table
+## Step 3. Enter data in the following "User Input" section
+## Step 4. Open a command prompt and type "vscript example_positionAnalysis.py"
+## Step 5. A batch file named "CalLitePA_demo.bat" will be generated. Double click this batch file to run the project.
 
 # User Input
 #=====================================================================================
@@ -49,7 +52,7 @@ simultaneousRuns = 4
 # Hell Hole, and Union Valley Reservoirs, which are upstream of Folsom.
 # Tom Fitzhugh 
 
-# in the demo you need to provide UARM data at September 2012
+# in this demo you need to provide UARM data at September 2012
 UARM_at_2012_09 = [300] 
 
 # yearly water type tables that will copy historical water year type to future
@@ -75,6 +78,8 @@ monthlyTableList = ["feather_runoff_forecast.table",
                 ]
 
 #=====================================================================================
+
+
 
 
 runGroup = RunGroup(projectName)
