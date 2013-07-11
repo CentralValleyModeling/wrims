@@ -18,7 +18,7 @@ LogUtils.initLogging()
 
 
 # User Input
-########################################################
+#=====================================================================================
 
 # projectName will be used to prepend generated files and folders.
 projectName ="CalLitePA_demo"
@@ -74,7 +74,7 @@ monthlyTableList = ["feather_runoff_forecast.table",
                     "x2days.table",
                 ]
 
-########################################################
+#=====================================================================================
 
 
 runGroup = RunGroup(projectName)
