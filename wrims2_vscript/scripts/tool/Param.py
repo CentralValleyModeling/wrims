@@ -2,6 +2,7 @@ import os
 import LogUtils
 
 mainScriptPath = None
+mainScriptDir = None
 logger = None
 logFile = None
 loggerName = 'WRIMS2_Vscript'

@@ -3,6 +3,7 @@ import os
 import Param
 
 
+
 def erase(fileOrDirPath):
     
     try:
@@ -46,4 +47,9 @@ def deleteFile(directory, extensionToDelete):
                     os.remove(filePath)
                     Param.logger.warning("File deleted: "+filePath)
                 except:
-                    pass            
+                    pass       
+                
+def getRelativePath(targetDir, baseDir):
+
+    return os.path.relpath(targetDir, baseDir)
+
