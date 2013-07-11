@@ -23,8 +23,7 @@ class Study:
 
 		
 		self._logger = Param.logger
-		self._configPath = P.join(P.dirname(Param.mainScriptPath), configPath)
-		print 'configPath: '+self._configPath
+		self._configPath = P.normpath(P.join(Param.mainScriptDir, configPath))
 		self._logger.info('configPath: '+self._configPath)
 		self._logger.info('configDir: '+P.dirname(self._configPath))
 		self._configDir = P.dirname(self._configPath)
