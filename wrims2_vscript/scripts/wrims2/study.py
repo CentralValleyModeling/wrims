@@ -19,45 +19,25 @@ class Study:
 	_batchPath = ''
 	
 	
-	def __init__(self, configPath, batFileName='runConfig_limitedLicense.bat'):
+	#def __init__(self, configPath, batFileName='runConfig_limitedLicense.bat'):
+	def __init__(self, studyName, runDir,  batFileName='runConfig_limitedLicense.bat'):	
 
 		
 		self._logger = Param.logger
-		self._configPath = P.normpath(P.join(Param.mainScriptDir, configPath))
-		self._logger.info('configPath: '+self._configPath)
-		self._logger.info('configDir: '+P.dirname(self._configPath))
-		self._configDir = P.dirname(self._configPath)
-		self._studyName, configExtension = P.splitext(P.basename(self._configPath))
-		self._ms_configPath = P.join( self._configDir, "__generated.config")
+		self._configDir = P.normpath(P.dirname(runDir))
+		#self._configPath = P.normpath(P.join(Param.mainScriptDir, configPath))
+		#self._logger.info('configPath: '+self._configPath)
+		#self._logger.info('configDir: '+P.dirname(self._configPath))
+		#self._configDir = P.dirname(self._configPath)
+		#self._studyName, configExtension = P.splitext(P.basename(self._configPath))
+		self._studyName = studyName
+		#self._ms_configPath = P.join( self._configDir, "__generated.config")
 		self._batFileName = batFileName
 		
 		#parse config file and put the map to cMap	
-		self._cMap=Utils.getConfigMap(self._configPath)
-		self._configKeyList = Utils.configKeyList
-		
-# 		self._StartYear=int(self.cMap.get("StartYear"))
-# 		self._startMonth=int(self.cMap.get("StartMonth"))
-# 		self._numberOfSteps=int(self.cMap.get("NumberOfSteps"))
-		
-		t_initFile=self._cMap.get("InitFile")
-		t_svarFile=self._cMap.get("SvarFile")
-		t_dvarFile=self._cMap.get("DvarFile")
+		#self._cMap=Utils.getConfigMap(self._configPath)
+		#self._configKeyList = Utils.configKeyList	
 
-		t_initFile=t_initFile.replace('\"','').replace('\'','')
-		t_svarFile=t_svarFile.replace('\"','').replace('\'','')
-		t_dvarFile=t_dvarFile.replace('\"','').replace('\'','')
-				
-		self._cMap.put("InitFile",t_initFile)
-		self._cMap.put("SvarFile",t_svarFile)
-		self._cMap.put("DvarFile",t_dvarFile)		
-
-		
-# 		self._initFileAbsPath = P.join( self.configDir, initFile )
-# 		self._svarFileAbsPath = P.join( self.configDir, svarFile )
-# 		self._dvarFileAbsPath = P.join( self.configDir, dvarFile )	
-
-		self._initFPart = self._cMap.get("InitFPart")	
-		self._svarFPart = self._cMap.get("SvarFPart")	
 			
 		self.processList=[]	
 		self.processDict={}
@@ -158,34 +138,104 @@ class Study:
 		
 		for pn in self.processDict.keys():
 			self._run_process(pn, StartYear, NumberOfSteps)
+
+	def loadConfig(self, configPath):
+						
+		#parse config file and put the map to cMap	
+		
+		configPath = P.normpath(P.join(Param.mainScriptDir, configPath))
+		
+		try:
+			self._cMap=Utils.getConfigMap(configPath)
+		except:
+			self._logger.error('Error in parsing '+configPath)	
+		self._configKeyList = Utils.configKeyList
+
+		
+		t_initFile=self._cMap.get("InitFile")
+		t_svarFile=self._cMap.get("SvarFile")
+		t_dvarFile=self._cMap.get("DvarFile")
+
+		t_initFile=t_initFile.replace('\"','').replace('\'','')
+		t_svarFile=t_svarFile.replace('\"','').replace('\'','')
+		t_dvarFile=t_dvarFile.replace('\"','').replace('\'','')
+				
+		self._cMap.put("InitFile",t_initFile)
+		self._cMap.put("SvarFile",t_svarFile)
+		self._cMap.put("DvarFile",t_dvarFile)		
+
+		# write configFile
+		self._configDir = P.dirname(configPath)
+		self._configPath = P.join(self._configDir, self._studyName+'.config')
+		
+		try:
+			cf = open(self._configPath,'w+')	
+			cf.write("Begin Config\n")
+			for key in self._configKeyList:
+				if self._cMap.get(key):
+					cf.write( key + '\t' + str(self._cMap.get(key)) + '\n')	
+			cf.write("End Config\n")		
+			cf.close()
+			
+		except:
+			self._logger.error('Error in writing '+self._configPath)			
+
 	
-	
-	def setConfig(self, newStudyName, InitFile=None, InitFPart=None, SvarFile=None, SvarFPart=None, DvarFile=None, StartYear=None, StartMonth=None, NumberOfSteps=None, LookupSubDir=None):
+	def createConfig(self, 
+					WreslPlus, 
+					MainFile, 
+					InitFile, 
+					InitFPart, 
+					SvarFile, 
+					SvarAPart, 
+					SvarFPart, 
+					DvarFile, 
+					StartYear, 
+					StartMonth, 
+					NumberOfSteps, 
+					LookupSubDir=None,
+					ShowWreslLog='Yes',
+					PrefixInitToDvarFile='No',
+					IlpLog='No',
+					IlpLogFormat='CplexLp',
+					IlpLogVarValue='no'
+					):
 		
-		newConfigPath = P.join(self._configDir, newStudyName+'.config')
+		self._configPath = P.join(self._configDir, self._studyName+'.config')
+		self._configKeyList = Utils.configKeyList
 		
-		if P.exists(newConfigPath):
-			self._logger.info(newStudyName+'.config already exists.')
-			self._logger.info('Overwriting '+newStudyName+'.config')
+		if P.exists(self._configPath):
+			self._logger.info(self._configPath+'already exists.')
+			self._logger.info('Overwriting '+self._configPath)
 		
-		self._logger.info('Modifying study config...')
-		self._studyName = newStudyName	
-		self._configPath = 	newConfigPath
+		self._cMap = Utils.newConfigMap()
 		
+		self._cMap.put('WreslPlus', WreslPlus)
+		self._cMap.put('MainFile', P.normpath(MainFile))
+		self._cMap.put('Solver', 'XA')
+		self._cMap.put('SvarAPart', SvarAPart)
+		self._cMap.put('ShowWreslLog', ShowWreslLog)
+		self._cMap.put('PrefixInitToDvarFile', PrefixInitToDvarFile)
+		self._cMap.put('IlpLog', IlpLog)
+		self._cMap.put('IlpLogFormat', IlpLogFormat)		
+		self._cMap.put('IlpLogVarValue', IlpLogVarValue)
+
+		
+				
 		if InitFile:
-			self._cMap.put('InitFile', InitFile)
+			self._cMap.put('InitFile', P.normpath(InitFile))
 
 		if InitFPart:
 			self._cMap.put('InitFPart', InitFPart)
 						
 		if SvarFile:
-			self._cMap.put('SvarFile', SvarFile)
+			self._cMap.put('SvarFile', P.normpath(SvarFile))
 			
 		if SvarFPart:
 			self._cMap.put('SvarFPart', SvarFPart)	
 
 		if DvarFile:
-			self._cMap.put('DvarFile', DvarFile)
+			self._cMap.put('DvarFile', P.normpath(DvarFile))
 						
 		if StartYear:
 			self._cMap.put('StartYear', StartYear)
@@ -203,14 +253,14 @@ class Study:
 			self._cMap.put('LookupSubDir', LookupSubDir)	
 			
 		# write configFile
-		cf = open(newConfigPath,'w+')	
+		cf = open(self._configPath,'w+')	
 		cf.write("Begin Config\n")
 		for key in self._configKeyList:
 			if self._cMap.get(key):
 				cf.write( key + '\t' + str(self._cMap.get(key)) + '\n')	
 		cf.write("End Config\n")		
 		cf.close()
-			
+
 
 	def writeBatch(self, pause=True):
 		

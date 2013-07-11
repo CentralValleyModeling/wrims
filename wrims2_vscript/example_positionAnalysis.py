@@ -1,7 +1,14 @@
 #=====================================================================================
 #   Position analysis using CalLite. 
 #   Run start time is Oct 2012.
+#
+## Step 1. Provide initial data for decision variables. See .\Run\DSS\CL_INIT_2012.dss
+## Step 2. Provide 2012 annual requests data in this table: \Run\Lookup\PA_Base_D1641_Existing\AnnualReqDel_swp.table
+## Step 3. Enter data in the following "User Input" section
+## Step 4. Open a command prompt and type "vscript example_positionAnalysis.py"
+## Step 5. A batch file named "CalLitePA_demo.bat" will be generated. Double click this batch file to run the project.
 #=====================================================================================
+
 from os import path 
 from scripts.wrims2.study import Study
 from scripts.wrims2.runGroup import RunGroup
@@ -11,14 +18,6 @@ Param.mainScriptDir  = path.dirname(Param.mainScriptPath)
 LogUtils.initLogging()
 
 
-
-
-
-## Step 1. Provide initial data for decision variables. See .\Run\DSS\CL_INIT_2012.dss
-## Step 2. Provide 2012 annual requests data in this table: \Run\Lookup\PA_Base_D1641_Existing\AnnualReqDel_swp.table
-## Step 3. Enter data in the following "User Input" section
-## Step 4. Open a command prompt and type "vscript example_positionAnalysis.py"
-## Step 5. A batch file named "CalLitePA_demo.bat" will be generated. Double click this batch file to run the project.
 
 # User Input
 #=====================================================================================
@@ -32,6 +31,15 @@ studyRunDir = path.join(Param.mainScriptDir, "studies/callite_D1641Existing_PA__
 # svarOriginalFile is the svar dss file path
 svarOriginalFile =path.join(studyRunDir, "DSS/CL_EXISTING_BO_081011_SV.dss")
 
+# InitFile
+initFile=path.join(studyRunDir, "DSS/CL_INIT_2012.dss")
+initFPart = "PA"
+
+# SvarAPart
+svarAPart="CalLite"
+
+
+
 # lookupOriginalDir is the directory of lookup tables
 lookupOriginalDir = path.join(studyRunDir, "Lookup", "PA_Base_D1641_Existing" )
 
@@ -40,7 +48,8 @@ futureWY = 2013
 
 # historyWYs are the historical svars that will be used to simulate future water year svars
 #historyWYs = [ x for x in range(1935, 1945)]
-historyWYs = [ 1935, 1940, 1955, 1970, 1972, 1983, 1994]
+#historyWYs = [ 1935, 1940, 1955, 1970, 1972, 1983, 1994]
+historyWYs = [ 1935, 1940]
 
 # if sequentialYRs is 2, historyWYs is 1935, and futureWY is 2013, 
 # then 1935 svar will be copied to 2013 and 1936 svar will be copied to 2014 
@@ -86,6 +95,8 @@ monthlyTableList = ["feather_runoff_forecast.table",
 runGroup = RunGroup(projectName)
 svarShiftedFile= path.join(path.dirname(svarOriginalFile), projectName + "_SV.dss")
 dvarFile= path.join(path.dirname(svarOriginalFile), projectName + "_DV.dss")
+startYear=2012 # tied to lookup table data and initial data
+startMonth=10  # tied to lookup table data and initial data
 
 for beginWY in historyWYs:
 
@@ -138,10 +149,18 @@ for beginWY in historyWYs:
 
 # prepare config and batch files
 
-    s = Study("studies/callite_D1641Existing_PA__2012oct/PA_template.config")
-    s.setConfig(studyName, 
-                StartYear=2012, 
+    #s = Study("studies/callite_D1641Existing_PA__2012oct/PA_template.config")
+    s = Study(studyName, studyRunDir)
+    #s.loadConfig("studies/callite_D1641Existing_PA__2012oct/PA_template.config")
+    s.createConfig(
+                WreslPlus='Yes',
+                MainFile='Run/Main.wresl',
+                StartYear=startYear, 
+                StartMonth=startMonth,
+                InitFile=path.relpath(initFile, path.dirname(studyRunDir)),
+                InitFPart=initFPart,  
                 SvarFile=path.relpath(svarShiftedFile, path.dirname(studyRunDir)), 
+                SvarAPart=svarAPart,
                 DvarFile=path.relpath(dvarFile, path.dirname(studyRunDir)), 
                 SvarFPart=outSvarFpart, 
                 NumberOfSteps=sequentialYRs*12, 

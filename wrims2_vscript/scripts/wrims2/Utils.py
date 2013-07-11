@@ -23,7 +23,18 @@ configKeyList = [
              "EndDay",
              "LookupSubDir",
              "GroundwaterDir",
-             "ShowWreslLog"]
+             "ShowWreslLog",
+             "PrefixInitToDvarFile",
+             "IlpLog",
+             "IlpLogFormat",
+             "IlpLogVarValue"
+             ]
+
+def  newConfigMap():
+        
+    cp = ConfigReader(configKeyList);
+
+    return cp.newConfigMap()
 
 def  getConfigMap(filePath):
         

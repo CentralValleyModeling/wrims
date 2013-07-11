@@ -2,6 +2,7 @@ package scripting.element;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.antlr.runtime.ANTLRFileStream;
@@ -51,7 +52,11 @@ public class ConfigReader {
 
 	}
 	
-
+	public static Map<String, String> newConfigMap(){
+		
+		return new LinkedHashMap<String, String>();
+	}
+	
 	//@Test( groups = { "config" } )
 	public static void parseFile(String inputFilePath) throws RecognitionException  {		
 
