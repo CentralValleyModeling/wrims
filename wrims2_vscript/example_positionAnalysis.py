@@ -1,11 +1,17 @@
 #=====================================================================================
-#  TimeStep must be monthly 
+#   Position analysis using CalLite
 #=====================================================================================
-
 from os import path 
 from scripts.wrims2.study import Study
 from scripts.wrims2.runGroup import RunGroup
 from scripts.tool import LogUtils, Param, LookupTable, FileUtils, DssVista
+Param.mainScriptPath = path.abspath(__file__)
+Param.mainScriptDir  = path.dirname(Param.mainScriptPath)
+LogUtils.initLogging()
+
+
+
+
 
 ## Step 1. 
 ## Step 2.
@@ -17,28 +23,36 @@ from scripts.tool import LogUtils, Param, LookupTable, FileUtils, DssVista
 # projectName will be used to prepend generated files and folders.
 projectName ="CalLitePA_demo"
 
-# path to this script and its directory
-Param.mainScriptPath = path.abspath(__file__)
-Param.mainScriptDir  = path.dirname(Param.mainScriptPath)
-
 # studyRunDir is the run directory of the CalLite study
 studyRunDir = path.join(Param.mainScriptDir, "studies/callite_D1641Existing_PA__2012oct/Run")
 
+# svarOriginalFile is the svar dss file path
 svarOriginalFile =path.join(studyRunDir, "DSS/CL_EXISTING_BO_081011_SV.dss")
-#svarNewFile      =path.join(studyRunDir, "DSS/CL_EXISTING_BO_081011_PA_SV.dss")
 
+# lookupOriginalDir is the directory of lookup tables
 lookupOriginalDir = path.join(studyRunDir, "Lookup", "PA_Base_D1641_Existing" )
+
+# futureWY is the beginning water year that the historical svar data will be copied to
 futureWY = 2013
+
+# historyWYs are the historical svars that will be used to simulate future water year svars
 historyWYs = [ x for x in range(1935, 1937)]
-sequentialYRs = 1   # including first year
-simultaneousRuns = 4 # how many runs at the same time
+
+# if sequentialYRs is 2, historyWYs is 1935, and futureWY is 2013, 
+# then 1935 svar will be copied to 2013 and 1936 svar will be copied to 2014 
+sequentialYRs = 1
+
+# specify the number of runs at the same time
+simultaneousRuns = 4 
 
 # UARM: Upper American River Model, that is storage in French Meadows, 
 # Hell Hole, and Union Valley Reservoirs, which are upstream of Folsom.
 # Tom Fitzhugh 
 
+# in the demo you need to provide UARM data at September 2012
 UARM_at_2012_09 = [300] 
 
+# yearly water type tables that will copy historical water year type to future
 yearlyTableList = ["wytypes.table",
                    "wytypesjr.table",
                    "wytypeD1485.table",
@@ -55,24 +69,17 @@ yearlyTableList = ["wytypes.table",
                    "delta_index.table",
                 ]
 
+# monthly water type tables that will copy historical water year type to future
 monthlyTableList = ["feather_runoff_forecast.table",
                     "x2days.table",
                 ]
-########################################################
-svarNewFile      =path.join(studyRunDir, "DSS/CL_EXISTING_BO_081011_PA_SV.dss")
-
-
-SvarFile = path.relpath(svarNewFile, path.dirname(studyRunDir))
-
-
 
 ########################################################
 
-# initialization
-Param.mainScriptPath = path.normpath(path.abspath(__file__))
-LogUtils.initLogging()
+
 runGroup = RunGroup(projectName)
-
+svarShiftedFile= path.join(path.dirname(svarOriginalFile), projectName + "_SV.dss")
+dvarFile= path.join(path.dirname(svarOriginalFile), projectName + "_DV.dss")
 
 for beginWY in historyWYs:
 
@@ -118,15 +125,22 @@ for beginWY in historyWYs:
     outSvarFpart = str(beginWY)+"_"+str(endWY) # e.g., 1945_1947
     studyName = projectName+'_'+outSvarFpart
 
-    DssVista.copyDssToFuture_waterYear(svarOriginalFile, svarNewFile, beginWY, sequentialYRs, futureWY, outSvarFpart)    
-    DssVista.array2dss(svarNewFile, UARM_at_2012_09, "30SEP2012 2400", "/CALLITE/UARM/STORAGE//1MON/"+ outSvarFpart +"/", "TAF")
+    DssVista.copyDssToFuture_waterYear(svarOriginalFile, svarShiftedFile, beginWY, sequentialYRs, futureWY, outSvarFpart)    
+    DssVista.array2dss(svarShiftedFile, UARM_at_2012_09, "30SEP2012 2400", "/CALLITE/UARM/STORAGE//1MON/"+ outSvarFpart +"/", "TAF")
 
 
 
 # prepare config and batch files
 
     s = Study("studies/callite_D1641Existing_PA__2012oct/PA_template.config")
-    s.setConfig(studyName, StartYear=2012, SvarFile=SvarFile, SvarFPart=outSvarFpart, NumberOfSteps=sequentialYRs*12, LookupSubDir=studyName)
+    s.setConfig(studyName, 
+                StartYear=2012, 
+                SvarFile=path.relpath(svarShiftedFile, path.dirname(studyRunDir)), 
+                DvarFile=path.relpath(dvarFile, path.dirname(studyRunDir)), 
+                SvarFPart=outSvarFpart, 
+                NumberOfSteps=sequentialYRs*12, 
+                LookupSubDir=studyName)
+    
     s.writeBatch(pause=False)
     runGroup.add(s)
 
