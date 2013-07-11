@@ -39,7 +39,8 @@ lookupOriginalDir = path.join(studyRunDir, "Lookup", "PA_Base_D1641_Existing" )
 futureWY = 2013
 
 # historyWYs are the historical svars that will be used to simulate future water year svars
-historyWYs = [ x for x in range(1935, 1937)]
+#historyWYs = [ x for x in range(1935, 1945)]
+historyWYs = [ 1935, 1940, 1955, 1970, 1972, 1983, 1994]
 
 # if sequentialYRs is 2, historyWYs is 1935, and futureWY is 2013, 
 # then 1935 svar will be copied to 2013 and 1936 svar will be copied to 2014 
