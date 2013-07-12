@@ -52,10 +52,8 @@ class RunGroup:
 		subGroupDir = P.join(mainScriptDir, '_'+self._runGroupName)		
 		if P.exists(subGroupDir):
 			FileUtils.erase(subGroupDir)
-			os.mkdir(subGroupDir)
-		else:
-			os.mkdir(subGroupDir)
-			
+
+		os.mkdir(subGroupDir)			
 	
 		if simultaneousRun > 1:
 			
