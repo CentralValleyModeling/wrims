@@ -72,7 +72,8 @@
 				
 				<exclude name="**/lib/vista/*.py"/>
 				<exclude name="**/lib/vista/*.dss"/>
-					
+				<exclude name="TODO.txt"/>
+				
 				
 				<include name="lib/**"/>
 				<include name="license/**"/>
@@ -108,7 +109,7 @@
 	    	<arg value="a"/>
 		    <arg value="-t7z"/>
 	    	<arg value="-sfx"/>
-	    	<arg value="${dist.dir}/wrims2_vscript_${version}_${svnversion}.exe"/>
+	    	<arg value="${dist.dir}/wrims2_vscript_${version}_r${svnversion}.exe"/>
 	    	<arg value="${temp.dir}"/>
 	    	<arg value="-mx7"/>
 	    </exec>
