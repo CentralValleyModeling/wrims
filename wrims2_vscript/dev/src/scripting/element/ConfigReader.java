@@ -23,32 +23,18 @@ public class ConfigReader {
 	private static CharStream stream;	
 	public static Map<String, String> configMap;
 	private static String[] configKeyList;
+	private static Map<String , String> reservedKeyMap;
 
 
 	public ConfigReader(String[] configKeyListInput){
 		
-		configKeyList = configKeyListInput;
+		configKeyList = configKeyListInput;		
+		reservedKeyMap = new HashMap<String , String>();
 		
-
-//		configKeyList.add("MainFile");
-//		configKeyList.add("Solver");   
-//		configKeyList.add("InitFile");
-//		configKeyList.add("InitFPart");
-//		configKeyList.add("SvarFile");
-//		configKeyList.add("SvarAPart");
-//		configKeyList.add("SvarFPart");
-//		configKeyList.add("DvarFile");                   
-//		configKeyList.add("TimeStep");
-//		configKeyList.add("StartYear"); 
-//		configKeyList.add("StartMonth");
-//		//configKeyList.add("StartDay");
-//		configKeyList.add("NumberOfSteps");
-//		configKeyList.add("EndYear");
-//		configKeyList.add("EndMonth");
-//		//configKeyList.add("EndDay");
-//		configKeyList.add("GroundwaterDir");
-//		configKeyList.add("ShowWreslLog");
+		for (String key: configKeyList) {
+			reservedKeyMap.put(key.toLowerCase(), key);
 		
+		}
 
 	}
 	
@@ -76,19 +62,40 @@ public class ConfigReader {
 		ConfigSimpleParser parser = new ConfigSimpleParser(tokenStream);
 		
 
+		
+//	      final Map<String , String> reservedKeyMap = new HashMap<String , String>() {{
+//	          put("wreslplus",   "WreslPlus"          );
+//	          put("mainfile" ,   "MainFile"           );
+//	          put("solver"   ,   "Solver"             );
+//	          put("initfile" ,   "InitFile"           );
+//	          put("initfpart",   "InitFPart"          );       
+//	          put("svarfile" ,   "SvarFile"           );
+//	          put("svarapart",   "SvarAPart"          );
+//	          put("svarfpart",   "SvarFPart"          );
+//	          put("dvarfile" ,   "DvarFile"           );            
+//	          put("timestep" ,   "TimeStep"           );
+//	          put("startyear",   "StartYear"          );
+//	          put("startmonth",  "StartMonth"         );
+//	          put("startday",    "StartDay"           );
+//	          put("numberofsteps", "NumberOfSteps"    );
+//	          put("stopyear" ,    "StopYear"          );
+//	          put("stopmonth",    "StopMonth"         );
+//	          put("stopday"  ,    "StopDay"           );
+//	          put("lookupsubdir"  ,    "LookupSubDir"           );
+//	          put("groundwaterdir", "GroundWaterDir"  );
+//	          put("showwresllog"  , "ShowWreslLog"    );
+//	          put("sendaliastodvar" , "SendAliasToDvar"                    );
+//	          put("prefixinittodvarfile", "PrefixInitToDvarFile"           );
+//	          put("ilpmaximumfractiondigits" , "IlpMaximumFractionDigits"  );
+//	          put("ilplog"  , "IlpLog"                                     );
+//	          put("ilplogformat"  , "IlpLogFormat"                         );
+//	          put("ilplogvarvalue" ,"IlpLogVarValue"                       );
+//	       }};
+		
+		
+		parser.reservedKeyMap = ConfigReader.reservedKeyMap;	
 		parser.configFile();
 		
-		//System.out.println(parser.cMap);
-		
-		//Map<String, String> configMap = new HashMap<String, String>();
-
-		//Assert.assertEquals(0, 1);
-		
-//		for (String k : parser.cMap.keySet()) {
-//			
-//			configMap.put(k.toLowerCase(), parser.cMap.get(k));			
-//		
-//		}
 		
 		configMap = parser.cMap;
 		

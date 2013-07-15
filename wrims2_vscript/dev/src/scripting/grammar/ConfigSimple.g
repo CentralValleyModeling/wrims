@@ -27,34 +27,7 @@ options {
       //public ArrayList<String> varList = new ArrayList<String>();
       public ArrayList<String> t = new ArrayList<String>();
 
-      static final Map<String , String> reservedKeyMap = new HashMap<String , String>() {{
-         put("wreslplus",   "WreslPlus"          );
-         put("mainfile" ,   "MainFile"           );
-         put("solver"   ,   "Solver"             );
-         put("initfile" ,   "InitFile"           );
-         put("initfpart",   "InitFPart"          );       
-         put("svarfile" ,   "SvarFile"           );
-         put("svarapart",   "SvarAPart"          );
-         put("svarfpart",   "SvarFPart"          );
-         put("dvarfile" ,   "DvarFile"           );            
-         put("timestep" ,   "TimeStep"           );
-         put("startyear",   "StartYear"          );
-         put("startmonth",  "StartMonth"         );
-         put("startday",    "StartDay"           );
-         put("numberofsteps", "NumberOfSteps"    );
-         put("stopyear" ,    "StopYear"          );
-         put("stopmonth",    "StopMonth"         );
-         put("stopday"  ,    "StopDay"           );
-         put("lookupsubdir"  ,    "LookupSubDir"           );
-         put("groundwaterdir", "GroundWaterDir"  );
-         put("showwresllog"  , "ShowWreslLog"    );
-         put("sendaliastodvar" , "SendAliasToDvar"                    );
-         put("prefixinittodvarfile", "PrefixInitToDvarFile"           );
-         put("ilpmaximumfractiondigits" , "IlpMaximumFractionDigits"  );
-         put("ilplog"  , "IlpLog"                                     );
-         put("ilplogformat"  , "IlpLogFormat"                         );
-         put("ilplogvarvalue" ,"IlpLogVarValue"                       );
-      }};
+      public Map<String , String> reservedKeyMap; // this is input from caller
 }
 
 
