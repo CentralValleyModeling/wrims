@@ -73,7 +73,7 @@
 				<exclude name="**/lib/vista/*.py"/>
 				<exclude name="**/lib/vista/*.dss"/>
 				<exclude name="TODO.txt"/>
-				
+				<exclude name="doc/**"/>				
 				
 				<include name="lib/**"/>
 				<include name="license/**"/>
