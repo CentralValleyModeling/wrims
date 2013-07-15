@@ -45,6 +45,9 @@ lookupOriginalDir = path.join(studyRunDir, "Lookup", "PA_Base_D1641_Existing" )
 
 # futureWY is the beginning water year that the historical svar data will be copied to
 futureWY = 2013
+startYear=2012 # tied to lookup table data and initial data
+startMonth=10  # tied to lookup table data and initial data
+
 
 # historyWYs are the historical svars that will be used to simulate future water year svars
 #historyWYs = [ x for x in range(1935, 1945)]
@@ -95,8 +98,7 @@ monthlyTableList = ["feather_runoff_forecast.table",
 runGroup = RunGroup(projectName)
 svarShiftedFile= path.join(path.dirname(svarOriginalFile), projectName + "_SV.dss")
 dvarFile= path.join(path.dirname(svarOriginalFile), projectName + "_DV.dss")
-startYear=2012 # tied to lookup table data and initial data
-startMonth=10  # tied to lookup table data and initial data
+
 
 for beginWY in historyWYs:
 
