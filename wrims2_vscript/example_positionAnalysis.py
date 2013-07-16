@@ -166,7 +166,8 @@ for beginWY in historyWYs:
                 DvarFile=path.relpath(dvarFile, path.dirname(studyRunDir)), 
                 SvarFPart=outSvarFpart, 
                 NumberOfSteps=sequentialYRs*12, 
-                LookupSubDir=studyName)
+                LookupSubDir=studyName,
+                PrefixInitToDvarFile='Yes')
     
     s.writeBatch(pause=False)
     runGroup.add(s)

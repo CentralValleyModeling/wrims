@@ -195,7 +195,7 @@ class Study:
 					NumberOfSteps, 
 					LookupSubDir=None,
 					ShowWreslLog='Yes',
-					PrefixInitToDvarFile='No',
+					PrefixInitToDvarFile='Yes',
 					IlpLog='No',
 					IlpLogFormat='CplexLp',
 					IlpLogVarValue='no'
