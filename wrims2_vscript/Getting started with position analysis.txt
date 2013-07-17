@@ -7,6 +7,8 @@ Getting started with WRIMS2_VScript
 
 (3) A batch file named "CalLitePA_demo.bat" will be generated. Double click this batch file to run the project
 
+(4) Open ./studies/callite_D1641Existing_PA__2012oct/Run/DSS/CalLitePA_demo_DV.dss to see results
+
 
 
 

@@ -2,11 +2,12 @@
 #   Position analysis using CalLite. 
 #   Run start time is Oct 2012.
 #
-## Step 1. Provide initial data for decision variables. See .\Run\DSS\CL_INIT_2012.dss
-## Step 2. Provide 2012 annual requests data in this table: \Run\Lookup\PA_Base_D1641_Existing\AnnualReqDel_swp.table
+## Step 1. Provide initial data for decision variables:  /Run/DSS/CL_INIT_2012.dss
+## Step 2. Provide 2012 annual requests data in this table: /Run/Lookup/PA_Base_D1641_Existing/AnnualReqDel_swp.table
 ## Step 3. Enter data in the following "User Input" section
 ## Step 4. Open a command prompt and type "vscript example_positionAnalysis.py"
 ## Step 5. A batch file named "CalLitePA_demo.bat" will be generated. Double click this batch file to run the project.
+## Step 6. After runs completed, open this dss file to see results: /studies/callite_D1641Existing_PA__2012oct/Run/DSS/CalLitePA_demo_DV.dss to see results
 #=====================================================================================
 
 from os import path 
