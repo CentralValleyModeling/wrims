@@ -63,7 +63,7 @@ simultaneousRuns = 4
 
 # UARM: Upper American River Model, that is storage in French Meadows, 
 # Hell Hole, and Union Valley Reservoirs, which are upstream of Folsom.
-# Tom Fitzhugh 
+# - Tom Fitzhugh 
 
 # in this demo you need to provide UARM data at September 2012
 UARM_at_2012_09 = [300] 
@@ -151,9 +151,7 @@ for beginWY in historyWYs:
 
 # prepare config and batch files
 
-    #s = Study("studies/callite_D1641Existing_PA__2012oct/PA_template.config")
     s = Study(studyName, studyRunDir)
-    #s.loadConfig("studies/callite_D1641Existing_PA__2012oct/PA_template.config")
     s.createConfig(
                 WreslPlus='Yes',
                 MainFile='Run/Main.wresl',
