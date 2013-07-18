@@ -77,19 +77,16 @@ configItem returns[String key, String val ]
                         //{ System.out.print("key: "+$key);System.out.print("\t");} 
     ( v1=integer        { $val=$v1.text;} //System.out.println($v1.text);}  
     | v2=complex        { $val=$v2.text;} //System.out.println($v2.text);} 
-    //| v3=complex   { $val=$v3.text; }
     ) 
     ENDLINE+
    
-   //{ System.out.println($k.text); System.out.println($v.text); }
+
    ;
 
 integer : INT ;
 complex : INT?  ( ID | '.' | '-' | '\"' | '\\' )+ ;
 
 
-//anything: .+;
-//anything:  INT? ( ID | '.' | '-' | '\"' | '\\' )*  
 
 
 configKey : ke=ID 
@@ -111,8 +108,6 @@ End    : 'End' | 'end' | 'END'    ;
 Config : 'Config' | 'config' | 'CONFIG' ;
 
 ID : Letter ( Letter | Digit | '_' )*;
-
-//Others: ~('\r'|'\n'|'\t'|' '|'/')+ ;
 
 
 fragment Letter : 'a'..'z' | 'A'..'Z';
