@@ -106,9 +106,9 @@ SL_COMMENT : '#' ~('\r'|'\n')*  {$channel=HIDDEN;} ;
 
 INT : Digit+ ;
 
-Begin  : 'Begin'  ;
-End    : 'End'    ;
-Config : 'Config' ;
+Begin  : 'Begin' | 'begin' | 'BEGIN'  ;
+End    : 'End' | 'end' | 'END'    ;
+Config : 'Config' | 'config' | 'CONFIG' ;
 
 ID : Letter ( Letter | Digit | '_' )*;
 
