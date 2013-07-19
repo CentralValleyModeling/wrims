@@ -22,16 +22,16 @@ options {
 
 @members {
       //public CommonTree commonTree;
-      public Map<String, String> cMap = new LinkedHashMap<String, String>();
+      public Map<String, String> configMap = new LinkedHashMap<String, String>();
       public Map<String, ArrayList<String>> transferMap = new LinkedHashMap<String, ArrayList<String>>();
       //public ArrayList<String> varList = new ArrayList<String>();
       public ArrayList<String> t = new ArrayList<String>();
 
-      public Map<String , String> reservedKeyMap; // this is input from caller
+      public Map<String , String> configKeyMap; // this is input from caller
 }
 
 
-dssTransfer : ENDLINE* 'Begin' 'DssTransfer' ENDLINE+ 
+dssTransfer : ENDLINE* Begin 'DssTransfer' ENDLINE+ 
 
 			( c=transferItem  
 				{ 
@@ -47,7 +47,7 @@ dssTransfer : ENDLINE* 'Begin' 'DssTransfer' ENDLINE+
 				  } 
 				} 
 				)+  
-			'End' 'DssTransfer' //{ System.out.println( cMap); }
+			End 'DssTransfer' //{ System.out.println( cMap); }
 			
 			; 
 			
@@ -64,7 +64,7 @@ pair : ID('-'|ID)*  '/' ID('-'|ID)* ;
 configFile : 
       ENDLINE* 
       Begin Config ENDLINE+ 
-			( c=configItem  { cMap.put($c.key, $c.val); } )+  
+			( c=configItem  { configMap.put($c.key, $c.val); } )+  
 			End Config  //{ System.out.println( cMap); }
 			
 			;
@@ -73,7 +73,7 @@ configFile :
 configItem returns[String key, String val ]
 	: 
 
-    k=configKey         { $key=reservedKeyMap.get($k.text.toLowerCase()); } 
+    k=configKey         { $key=configKeyMap.get($k.text.toLowerCase()); } 
                         //{ System.out.print("key: "+$key);System.out.print("\t");} 
     ( v1=integer        { $val=$v1.text;} //System.out.println($v1.text);}  
     | v2=complex        { $val=$v2.text;} //System.out.println($v2.text);} 
@@ -92,7 +92,7 @@ complex : INT?  ( ID | '.' | '-' | '\"' | '\\' )+ ;
 configKey : ke=ID 
 { 
     
-    if (!reservedKeyMap.keySet().contains( $ke.text.toLowerCase() ) ) 
+    if (!configKeyMap.keySet().contains( $ke.text.toLowerCase() ) ) 
     { throw new RuntimeException("Error! "+$ke.text + " is not a recognized keyword in the config file!" ); } 
 }
 ;

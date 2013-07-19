@@ -23,16 +23,16 @@ public class ConfigReader {
 	private static CharStream stream;	
 	public static Map<String, String> configMap;
 	private static String[] configKeyList;
-	private static Map<String , String> reservedKeyMap;
+	private static Map<String , String> configKeyMap;
 
 
 	public ConfigReader(String[] configKeyListInput){
 		
 		configKeyList = configKeyListInput;		
-		reservedKeyMap = new HashMap<String , String>();
+		configKeyMap = new HashMap<String , String>();
 		
 		for (String key: configKeyList) {
-			reservedKeyMap.put(key.toLowerCase(), key);
+			configKeyMap.put(key.toLowerCase(), key);
 		
 		}
 
@@ -93,11 +93,11 @@ public class ConfigReader {
 //	       }};
 		
 		
-		parser.reservedKeyMap = ConfigReader.reservedKeyMap;	
+		parser.configKeyMap = ConfigReader.configKeyMap;	
 		parser.configFile();
 		
 		
-		configMap = parser.cMap;
+		configMap = parser.configMap;
 		
 		//return configMap;
 		
