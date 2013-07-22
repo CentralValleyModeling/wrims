@@ -52,7 +52,7 @@ startMonth=10  # tied to lookup table data and initial data
 
 # historyWYs are the historical svars that will be used to simulate future water year svars
 #historyWYs = [ x for x in range(1935, 1945)]
-historyWYs = [ 1928, 1929, 1930, 1931, 1932, 1933, 1934, 1976, 1977]
+historyWYs = [1929, 1930, 1931, 1932, 1933, 1934, 1976, 1977]
 #historyWYs = [ 1935, 1940]
 
 # if sequentialYRs is 2, historyWYs is 1935, and futureWY is 2013, 
