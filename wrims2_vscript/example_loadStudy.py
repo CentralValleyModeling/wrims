@@ -14,5 +14,6 @@ LogUtils.initLogging()
 
 s = Study('testStudy', 'studies/callite_D1641')
 s.loadConfig('studies/callite_D1641/D1641.config')    
-s.writeBatch(pause=True)
+#s.writeBatch(pause=True)
+s.run()
 

@@ -16,7 +16,8 @@ class Study:
 #	_numberOfSteps=None
 
 	_logger = Param.logger
-	_batchPath = ''
+	#_batchPath = ''
+	_configPath = None
 	
 	
 	#def __init__(self, configPath, batFileName='runConfig_limitedLicense.bat'):
@@ -86,29 +87,29 @@ class Study:
 				print '=> ' + key + ':' + self._cMap.get(key)	
 		
 	
-	def _run_wrims(self,startYear,numberOfSteps):
+	def _run_wrims(self):
 
 
 		# call cmd to run config path
 		
-		if (startYear != self._startYear) or (numberOfSteps != self._numberOfSteps):
-	
-			self._logger.info("Write study config:  "+self.ms_configPath)
-			# write config file
-			Utils.generateConfigFile(self.ms_configPath, self.cMap, startYear=startYear, numberOfSteps=numberOfSteps)
-		
-			self._logger.info("Run generated config: "+self.ms_configPath)
+# 		if (startYear != self._startYear) or (numberOfSteps != self._numberOfSteps):
+# 	
+# 			self._logger.info("Write study config:  "+self.ms_configPath)
+# 			# write config file
+# 			Utils.generateConfigFile(self.ms_configPath, self.cMap, startYear=startYear, numberOfSteps=numberOfSteps)
+# 		
+# 			self._logger.info("Run generated config: "+self.ms_configPath)
+# 			
+# 			#subprocess.call([self.batFileName, self.ms_configPath])
+# 			subprocess.call(["cmd.exe", "/c", "start", self.batFileName, self.ms_configPath])
+# 			
+# 		else:
+# 			self._logger.info("Run original config: "+self.configPath)
+# 			#subprocess.call([self.batFileName, self.configPath])	
+# 			subprocess.call(["cmd.exe", "/c", "start", self.batFileName, self.configPath])
 			
-			#subprocess.call([self.batFileName, self.ms_configPath])
-			subprocess.call(["cmd.exe", "/c", "start", self.batFileName, self.ms_configPath])
-			
-		else:
-			self._logger.info("Run original config: "+self.configPath)
-			#subprocess.call([self.batFileName, self.configPath])	
-			subprocess.call(["cmd.exe", "/c", "start", self.batFileName, self.configPath])
-			
-			
-		#subprocess.call(['cmd.exe', '/c', 'RunStudy.bat', self.ms_configPath])
+		self._logger.info("Run study config: "+self._configPath)	
+		subprocess.call(["cmd.exe", "/c", "start", self._batFileName, self._configPath])
 
 
 	def _run_process(self,processName,startYear,numberOfSteps):
@@ -123,18 +124,18 @@ class Study:
 		process.run()
 		
 		
-	def run(self, StartYear=None, NumberOfSteps=None):
+	def run(self):
 	
 		#self._startYear=startYear
 		#self._numberOfSteps=numberOfSteps
 		
-		if StartYear == None:
-			StartYear = self._StartYear
-			
-		if NumberOfSteps == None:
-			NumberOfSteps = self._NumberOfSteps
+# 		if StartYear == None:
+# 			StartYear = self._StartYear
+# 			
+# 		if NumberOfSteps == None:
+# 			NumberOfSteps = self._NumberOfSteps
 		
-		self._run_wrims(StartYear,NumberOfSteps)
+		self._run_wrims()
 		
 		for pn in self.processDict.keys():
 			self._run_process(pn, StartYear, NumberOfSteps)
