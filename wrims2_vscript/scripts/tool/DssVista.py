@@ -5,6 +5,12 @@ from vutils import *
 
 #attr = DataSetAttr(DataType.REGULAR_TIME_SERIES,'',unit,'TIME','PER-AVER')
 
+def exactPath(dssfile,ds_arr,interval,starttime,path,attr):
+    
+    rts = RegularTimeSeries(path,starttime,interval,ds_arr,None,attr)
+    writedss(dssfile,path,rts)
+    return None
+
 def arr2dss(dssfile,ds_arr,interval,starttime,path,attr):
     
     rts = RegularTimeSeries(path,starttime,interval,ds_arr,None,attr)
