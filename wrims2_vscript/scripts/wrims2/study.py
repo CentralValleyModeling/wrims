@@ -140,30 +140,47 @@ class Study:
 		for pn in self.processDict.keys():
 			self._run_process(pn, StartYear, NumberOfSteps)
 
-	def loadConfig(self, configPath):
+	def loadConfig(self, configFile):
 						
 		#parse config file and put the map to cMap	
 		
-		configPath = P.normpath(P.join(Param.mainScriptDir, configPath))
+		configPath = P.normpath(P.join(self._configDir , configFile))
 		
+		#configPath = P.normpath(P.join(Param.mainScriptDir, configPath))
+		
+		#self._cMap = Utils.newConfigMap()
 		try:
 			self._cMap=Utils.getConfigMap(configPath)
+			
+			t_initFile=self._cMap.get("InitFile")
+			t_svarFile=self._cMap.get("SvarFile")
+			t_dvarFile=self._cMap.get("DvarFile")
+
+			t_initFile=t_initFile.replace('\"','').replace('\'','')
+			t_svarFile=t_svarFile.replace('\"','').replace('\'','')
+			t_dvarFile=t_dvarFile.replace('\"','').replace('\'','')
+				
+			self._cMap.put("InitFile",t_initFile)
+			self._cMap.put("SvarFile",t_svarFile)
+			self._cMap.put("DvarFile",t_dvarFile)
+			
 		except:
 			self._logger.error('Error in parsing '+configPath)	
+			
 		self._configKeyList = Utils.configKeyList
 
 		
-		t_initFile=self._cMap.get("InitFile")
-		t_svarFile=self._cMap.get("SvarFile")
-		t_dvarFile=self._cMap.get("DvarFile")
-
-		t_initFile=t_initFile.replace('\"','').replace('\'','')
-		t_svarFile=t_svarFile.replace('\"','').replace('\'','')
-		t_dvarFile=t_dvarFile.replace('\"','').replace('\'','')
-				
-		self._cMap.put("InitFile",t_initFile)
-		self._cMap.put("SvarFile",t_svarFile)
-		self._cMap.put("DvarFile",t_dvarFile)		
+# 		t_initFile=self._cMap.get("InitFile")
+# 		t_svarFile=self._cMap.get("SvarFile")
+# 		t_dvarFile=self._cMap.get("DvarFile")
+# 
+# 		t_initFile=t_initFile.replace('\"','').replace('\'','')
+# 		t_svarFile=t_svarFile.replace('\"','').replace('\'','')
+# 		t_dvarFile=t_dvarFile.replace('\"','').replace('\'','')
+# 				
+# 		self._cMap.put("InitFile",t_initFile)
+# 		self._cMap.put("SvarFile",t_svarFile)
+# 		self._cMap.put("DvarFile",t_dvarFile)		
 
 		# write configFile
 		self._configDir = P.dirname(configPath)
