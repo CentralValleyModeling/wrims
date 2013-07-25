@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="dev" name="Create Standalone Runnable Jar for WRIMSv2">
+<project default="dev" name="Create WVscript jar">
 
-	<target name="dev" depends="Clean_files, Build_scripting_jar">
+	<target name="dev" depends="Clean_files, Build_wvscript_jar">
 
 		<echo message="Finish dev" />
 		
@@ -12,7 +12,7 @@
 		<delete file="../lib/misc/*.jar"/>
 	</target>
 
-	<target name="Build_scripting_jar" >
+	<target name="Build_wvscript_jar" >
 
 
 		<echo message="Generate version file" />
@@ -24,14 +24,14 @@
 	    </propertyfile>
 		<echo message="SVN: ${svnversion}"/>
 		
-		<echo message="Building wscripting.jar" />
+		<echo message="Building wvscript.jar" />
 
-		<jar destfile="../lib/misc/wscripting.jar" filesetmanifest="mergewithoutmain">
+		<jar destfile="../lib/misc/wvscript.jar" filesetmanifest="mergewithoutmain">
 			<manifest>
 				<attribute name="Class-Path" value="."/>
 			</manifest>
 			<fileset dir="../bin_dev">
-				<include name="scripting/**/*.class"/>
+				<include name="wvscript/**/*.class"/>
 				<include name="version.props"/>
 				<exclude name="**/*.g"/>
 			</fileset>

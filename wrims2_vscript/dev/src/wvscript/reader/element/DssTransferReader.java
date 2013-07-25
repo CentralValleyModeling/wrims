@@ -1,4 +1,4 @@
-package scripting.element;
+package wvscript.reader.element;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -8,8 +8,9 @@ import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
-import scripting.grammar.ConfigSimpleLexer;
-import scripting.grammar.ConfigSimpleParser;
+
+import wvscript.reader.grammar.ConfigSimpleLexer;
+import wvscript.reader.grammar.ConfigSimpleParser;
 
 
 

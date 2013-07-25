@@ -1,4 +1,4 @@
-from scripting.element import DssTransferReader
+from wvscript.reader.element import DssTransferReader
 from scripts.tool import Param
 import hec.heclib.dss.HecDss as HecDss
 #import hec.heclib.dss.DSSPathname as DSSPathname

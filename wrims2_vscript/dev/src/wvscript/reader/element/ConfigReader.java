@@ -1,4 +1,4 @@
-package scripting.element;
+package wvscript.reader.element;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,8 +13,8 @@ import org.antlr.runtime.TokenStream;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import scripting.grammar.ConfigSimpleLexer;
-import scripting.grammar.ConfigSimpleParser;
+import wvscript.reader.grammar.ConfigSimpleLexer;
+import wvscript.reader.grammar.ConfigSimpleParser;
 
 
 

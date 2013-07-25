@@ -1,7 +1,7 @@
 import os
 import scripts.tool.Param as Param
 import wrimsv2.evaluator.TimeOperation as TimeOp
-from scripting.element import ConfigReader
+from wvscript.reader.element import ConfigReader
 
 configKeyList = [
              "WreslPlus",     

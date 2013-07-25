@@ -8,7 +8,7 @@ options {
 }
 
 @header {
-  package scripting.grammar;
+  package wvscript.reader.grammar;
   import java.util.Map;
   import java.util.HashMap;
   import java.util.LinkedHashMap;
@@ -17,7 +17,7 @@ options {
   import java.util.Set;
 }
 @lexer::header {
-  package scripting.grammar;
+  package wvscript.reader.grammar;
 }
 
 @members {
