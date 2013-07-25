@@ -5,5 +5,6 @@
 	<classpathentry kind="lib" path="dev/lib/antlr-3.2.jar"/>
 	<classpathentry kind="lib" path="dev/lib/testng-6.3.jar"/>
 	<classpathentry kind="lib" path="distro/lib/ant-contrib-1.0b3.jar"/>
+	<classpathentry kind="lib" path="lib/vista/jython/jython.jar"/>
 	<classpathentry kind="output" path="bin_dev"/>
 </classpath>
