@@ -53,7 +53,12 @@ class RunGroup:
 		if P.exists(subGroupDir):
 			FileUtils.erase(subGroupDir)
 
-		os.mkdir(subGroupDir)			
+		# strange bug. need to investigate.
+		try: 
+			os.makedirs(subGroupDir)
+		except:
+			os.mkdir(subGroupDir)	
+						
 	
 		if simultaneousRun > 1:
 			
