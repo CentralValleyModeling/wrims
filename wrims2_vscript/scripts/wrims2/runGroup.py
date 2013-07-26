@@ -33,7 +33,7 @@ class RunGroup:
 			self._logger.error('Error adding a study to RunGroup')	
 			
 
-	def writeBatch(self, simultaneousRun):
+	def writeBatch(self, simultaneousRun, delaySec=4):
 		
 		mainScriptDir = P.dirname(Param.mainScriptPath)
 		batchPath = P.join(mainScriptDir, self._runGroupName+'.bat')
@@ -74,7 +74,7 @@ class RunGroup:
 
 					if j < len(chunks[i])-1:
 						bg.write("start " + study._batchPath + '\n')
-						bg.write("timeout 3\n")
+						bg.write("timeout "+str(delaySec)+"\n")
 					else:
 						bg.write("@title = \"" + study._batchPath + "\"\n")
 						bg.write(study._batchPath + '\n')
