@@ -36,7 +36,7 @@ define CO_EC_Month_sv {
                exp_oth(-5),exp_oth(-4),exp_oth(-3),exp_oth(-2),exp_oth(-1),
                VERNWQFINAL(-5),VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),
                int(daysindv(-5)),int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),
-               int(CO),int(monthly_avg),12,(historicalWY-1))}
+               int(CO),int(monthly_avg),12,(wateryear-1))}
   case others {
     condition always
       value  AnnEC(C_Hood(-5),C_Hood(-4),C_Hood(-3),C_Hood(-2),C_Hood(-1),
@@ -48,7 +48,7 @@ define CO_EC_Month_sv {
                exp_oth(-5),exp_oth(-4),exp_oth(-3),exp_oth(-2),exp_oth(-1),
                VERNWQFINAL(-5),VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),
                int(daysindv(-5)),int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),
-               int(CO),int(monthly_avg),(month-1),historicalWY)}
+               int(CO),int(monthly_avg),(month-1),wateryear)}
 }
 define CO_EC_Month {std kind 'SALINITY' units 'UMHOS/CM'}
 goal setCO_EC_MON {CO_EC_Month = CO_EC_Month_sv}
@@ -92,7 +92,7 @@ define CO_b_sv {
                     VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),VERNWQFINALsv,
                     int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),daysin,
                     CO_EC_STD_sv,line_CO_lo,line_CO_hi,
-                    int(CO),int(intercept),int(monthly_avg),month,historicalWY,4)}
+                    int(CO),int(intercept),int(monthly_avg),month,wateryear,4)}
   case other {
     condition  always
     value 999999.}
@@ -116,7 +116,7 @@ define CO_m_sv {
                     VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),VERNWQFINALsv,
                     int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),daysin,
                     CO_EC_STD_sv,line_CO_lo,line_CO_hi,
-                    int(CO),int(slope),int(monthly_avg),month,historicalWY,4)}
+                    int(CO),int(slope),int(monthly_avg),month,wateryear,4)}
   case other {
     condition  always
     value 0.}

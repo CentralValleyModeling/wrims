@@ -116,12 +116,12 @@ for beginWY in historyWYs:
     FileUtils.copyAll(lookupOriginalDir, path.join(studyRunDir, "Lookup", outSubDir))
 
     # create lookup table for converting futureWaterYear to historicalWaterYear
-    posTable = open(path.join(studyRunDir, "Lookup", outSubDir,"Position_Analysis.table"),'w+'  )
-    posTable.write("Position_Analysis\n")
-    posTable.write("FutureWaterYear     HistoricalWaterYear\n")
-    for iYear in range(sequentialYRs):
-        posTable.write(str(futureWY+iYear)+"\t"+str(beginWY+iYear)+'\n')
-    posTable.close()
+#     posTable = open(path.join(studyRunDir, "Lookup", outSubDir,"Position_Analysis.table"),'w+'  )
+#     posTable.write("Position_Analysis\n")
+#     posTable.write("FutureWaterYear     HistoricalWaterYear\n")
+#     for iYear in range(sequentialYRs):
+#         posTable.write(str(futureWY+iYear)+"\t"+str(beginWY+iYear)+'\n')
+#     posTable.close()
     
 
     for tableName in yearlyTableList:

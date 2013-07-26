@@ -23,7 +23,7 @@ define RS_EC_Month_sv {
                exp_oth(-5),exp_oth(-4),exp_oth(-3),exp_oth(-2),exp_oth(-1),
                VERNWQFINAL(-5),VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),
                int(daysindv(-5)),int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),
-               int(RS),int(monthly_avg),12,(historicalWY-1))}
+               int(RS),int(monthly_avg),12,(wateryear-1))}
   case others {
     condition always
       value  AnnEC(C_Hood(-5),C_Hood(-4),C_Hood(-3),C_Hood(-2),C_Hood(-1),
@@ -35,7 +35,7 @@ define RS_EC_Month_sv {
                exp_oth(-5),exp_oth(-4),exp_oth(-3),exp_oth(-2),exp_oth(-1),
                VERNWQFINAL(-5),VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),
                int(daysindv(-5)),int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),
-               int(RS),int(monthly_avg),(month-1),historicalWY)}
+               int(RS),int(monthly_avg),(month-1),wateryear)}
 }
 
 
@@ -114,7 +114,7 @@ define RS_b_1_sv {
                     VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),VERNWQFINALsv,
                     int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),daysin,
                     RS_EC_STD_sv,line_RS_1_lo,line_RS_1_hi,
-                    int(RS),int(intercept),int(ann_type),month,historicalWY,1)
+                    int(RS),int(intercept),int(ann_type),month,wateryear,1)
                      }
 }
 define RS_m_1_sv {
@@ -136,7 +136,7 @@ define RS_m_1_sv {
                     VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),VERNWQFINALsv,
                     int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),daysin,
                     RS_EC_STD_sv,line_RS_1_lo,line_RS_1_hi,
-                    int(RS),int(slope),int(ann_type),month,historicalWY,1)}
+                    int(RS),int(slope),int(ann_type),month,wateryear,1)}
 }
 define RS_m_1 {lower unbounded upper unbounded kind 'SLOPE' units 'NONE'}
 define RS_b_1 {lower unbounded upper unbounded kind 'INTERCEPT' units 'NONE'}
@@ -160,7 +160,7 @@ define RS_b_2_sv {
                     VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),VERNWQFINALsv,
                     int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),daysin,
                     RS_EC_STD_225,line_RS_2_lo,line_RS_2_hi,
-                    int(RS),int(intercept),int(ann_type),month,historicalWY,2)}
+                    int(RS),int(intercept),int(ann_type),month,wateryear,2)}
   case call {
     condition always
     value  AnnLineGen(C_Hood_ANN(-4),C_Hood_ANN(-3),C_Hood_ANN(-2),C_Hood_ANN(-1),
@@ -173,7 +173,7 @@ define RS_b_2_sv {
                     VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),VERNWQFINALsv,
                     int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),daysin,
                     RS_EC_STD_sv,line_RS_2_lo,line_RS_2_hi,
-                    int(RS),int(intercept),int(ann_type),month,historicalWY,2)}
+                    int(RS),int(intercept),int(ann_type),month,wateryear,2)}
 }
 define RS_m_2_sv {
   case DRegsOff{
@@ -195,7 +195,7 @@ define RS_m_2_sv {
                     VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),VERNWQFINALsv,
                     int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),daysin,
                     RS_EC_STD_225,line_RS_2_lo,line_RS_2_hi,
-                    int(RS),int(slope),int(ann_type),month,historicalWY,2)}
+                    int(RS),int(slope),int(ann_type),month,wateryear,2)}
   case call {
     condition always
     value  AnnLineGen(C_Hood_ANN(-4),C_Hood_ANN(-3),C_Hood_ANN(-2),C_Hood_ANN(-1),
@@ -208,7 +208,7 @@ define RS_m_2_sv {
                     VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),VERNWQFINALsv,
                     int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),daysin,
                     RS_EC_STD_sv,line_RS_2_lo,line_RS_2_hi,
-                    int(RS),int(slope),int(ann_type),month,historicalWY,2)}
+                    int(RS),int(slope),int(ann_type),month,wateryear,2)}
 }
 define RS_m_2 {lower unbounded upper unbounded kind 'SLOPE' units 'NONE'}
 define RS_b_2 {lower unbounded upper unbounded kind 'INTERCEPT' units 'NONE'}
@@ -232,7 +232,7 @@ define RS_b_3_sv {
                     VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),VERNWQFINALsv,
                     int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),daysin,
                     RS_EC_STD_sv,line_RS_3_lo,line_RS_3_hi,
-                    int(RS),int(intercept),int(ann_type),month,historicalWY,4)}
+                    int(RS),int(intercept),int(ann_type),month,wateryear,4)}
   case line1infeas {
     condition abs(RS_m_1_sv) <= 0.001 .and. int(RS_b_1_sv) == 0
     value  AnnLineGen(C_Hood_ANN(-4),C_Hood_ANN(-3),C_Hood_ANN(-2),C_Hood_ANN(-1),
@@ -245,7 +245,7 @@ define RS_b_3_sv {
                     VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),VERNWQFINALsv,
                     int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),daysin,
                     RS_EC_STD_225,line_RS_3_lo,line_RS_3_hi,
-                    int(RS),int(intercept),int(ann_type),month,historicalWY,3)}
+                    int(RS),int(intercept),int(ann_type),month,wateryear,3)}
   case call {
     condition always
     value  AnnLineGen(C_Hood_ANN(-4),C_Hood_ANN(-3),C_Hood_ANN(-2),C_Hood_ANN(-1),
@@ -258,7 +258,7 @@ define RS_b_3_sv {
                     VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),VERNWQFINALsv,
                     int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),daysin,
                     RS_EC_STD_sv,line_RS_3_lo,line_RS_3_hi,
-                    int(RS),int(intercept),int(ann_type),month,historicalWY,3)}
+                    int(RS),int(intercept),int(ann_type),month,wateryear,3)}
 }
 define RS_m_3_sv {
                   case DRegsOff{
@@ -279,7 +279,7 @@ define RS_m_3_sv {
                     VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),VERNWQFINALsv,
                     int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),daysin,
                     RS_EC_STD_sv,line_RS_3_lo,line_RS_3_hi,
-                    int(RS),int(slope),int(ann_type),month,historicalWY,4)}
+                    int(RS),int(slope),int(ann_type),month,wateryear,4)}
   case line1infeas {
     condition abs(RS_m_1_sv) <= 0.001 .and. int(RS_b_1_sv) == 0
     value  AnnLineGen(C_Hood_ANN(-4),C_Hood_ANN(-3),C_Hood_ANN(-2),C_Hood_ANN(-1),
@@ -292,7 +292,7 @@ define RS_m_3_sv {
                     VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),VERNWQFINALsv,
                     int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),daysin,
                     RS_EC_STD_225,line_RS_3_lo,line_RS_3_hi,
-                    int(RS),int(slope),int(ann_type),month,historicalWY,3)}
+                    int(RS),int(slope),int(ann_type),month,wateryear,3)}
   case final {
     condition always
     value  AnnLineGen(C_Hood_ANN(-4),C_Hood_ANN(-3),C_Hood_ANN(-2),C_Hood_ANN(-1),
@@ -305,7 +305,7 @@ define RS_m_3_sv {
                     VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),VERNWQFINALsv,
                     int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),daysin,
                     RS_EC_STD_sv,line_RS_3_lo,line_RS_3_hi,
-                    int(RS),int(slope),int(ann_type),month,historicalWY,3)}
+                    int(RS),int(slope),int(ann_type),month,wateryear,3)}
 }
 define RS_m_3 {lower unbounded upper unbounded kind 'SLOPE' units 'NONE'}
 define RS_b_3 {lower unbounded upper unbounded kind 'INTERCEPT' units 'NONE'}

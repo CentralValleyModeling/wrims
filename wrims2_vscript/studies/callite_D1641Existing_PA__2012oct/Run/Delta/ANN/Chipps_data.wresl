@@ -37,7 +37,7 @@ define CH_EC_Month_sv {
                exp_oth(-5),exp_oth(-4),exp_oth(-3),exp_oth(-2),exp_oth(-1),
                VERNWQFINAL(-5),VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),
                int(daysindv(-5)),int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),
-               int(CH),int(monthly_avg),12,(historicalWY-1))}
+               int(CH),int(monthly_avg),12,(wateryear-1))}
 
   case others {
     condition always
@@ -50,7 +50,7 @@ define CH_EC_Month_sv {
                exp_oth(-5),exp_oth(-4),exp_oth(-3),exp_oth(-2),exp_oth(-1),
                VERNWQFINAL(-5),VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),
                int(daysindv(-5)),int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),
-               int(CH),int(monthly_avg),(month-1),historicalWY)}
+               int(CH),int(monthly_avg),(month-1),wateryear)}
 }
 
 define CH_EC_Month {std kind 'SALINITY' units 'UMHOS/CM'}
@@ -102,7 +102,7 @@ if int(CH_DLTSW)==3 {
 			    VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),VERNWQFINALsv,
 			    int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),daysin,
 			    CH_EC_STD_sv,line_EM_lo,line_EM_hi,
-			    int(CH),int(intercept),int(ann_type),month,historicalWY,4)}
+			    int(CH),int(intercept),int(ann_type),month,wateryear,4)}
 	  case other {
 	    condition  always
 	    value 999999.}
@@ -123,7 +123,7 @@ if int(CH_DLTSW)==3 {
 			    VERNWQFINAL(-4),VERNWQFINAL(-3),VERNWQFINAL(-2),VERNWQFINAL(-1),VERNWQFINALsv,
 			    int(daysindv(-4)),int(daysindv(-3)),int(daysindv(-2)),int(daysindv(-1)),daysin,
 			    CH_EC_STD_sv,line_EM_lo,line_EM_hi,
-			    int(CH),int(slope),int(ann_type),month,historicalWY,4)}
+			    int(CH),int(slope),int(ann_type),month,wateryear,4)}
 	  case other {
 	    condition  always
 	    value 0.}

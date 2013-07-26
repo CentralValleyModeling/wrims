@@ -34,7 +34,7 @@ group PositionAnalysis {
 	
 	! historicalWY is the actual water year where svar's data is copied from. 
 	! for ann dll.
-	svar historicalWY {select historicalWaterYear from Position_Analysis where FutureWaterYear = WaterYear} 
+	! svar historicalWY {select historicalWaterYear from Position_Analysis where FutureWaterYear = WaterYear} 
 }	
 	
 group inc1 {
