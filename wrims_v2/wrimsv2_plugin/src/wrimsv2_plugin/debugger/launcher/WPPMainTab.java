@@ -515,7 +515,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	public void wsidigenerator(){
 		String engineFileFullPath = "WRIMSv2_Engine.bat";
 		try {
-			String configFilePath = generateConfigFile();
+			String configFilePath = generateWsiDiConfigFile();
 			FileWriter debugFile = new FileWriter(engineFileFullPath);
 			PrintWriter out = new PrintWriter(debugFile);
 			generateBatch(out, configFilePath);
@@ -525,7 +525,7 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 		}
 	}
 	
-	public String generateConfigFile(){
+	public String generateWsiDiConfigFile(){
 		
 		String configFilePath="";
 		String mainFile=fMainFileText.getText();
@@ -565,12 +565,14 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 			out.println("Solver             "+DebugCorePlugin.solver.toLowerCase());
 			String dvarFile = fDvarFileText.getText();
 			if (new File(dvarFile).isAbsolute()){
-				out.println("DvarFile           "+dvarFile.toLowerCase());
-				setDvarFileNameWsiDiGen(dvarFile);
+				String wsidiDvarFile=createWsiDiDvarFileName(dvarFile);
+				out.println("DvarFile           "+wsidiDvarFile.toLowerCase());
+				setDvarFileNameWsiDiGen(wsidiDvarFile);
 			}else{
 				String procDvarFile=procRelativePath(dvarFile);
-				out.println("DvarFile           " + procDvarFile.toLowerCase());
-				setDvarFileNameWsiDiGen(procDvarFile);
+				String wsidiDvarFile=createWsiDiDvarFileName(procDvarFile);
+				out.println("DvarFile           " + wsidiDvarFile.toLowerCase());
+				setDvarFileNameWsiDiGen(wsidiDvarFile);
 			}
 			String svarFile = fSvarFileText.getText();
 			if (new File(svarFile).isAbsolute()){
@@ -664,6 +666,11 @@ public class WPPMainTab extends AbstractLaunchConfigurationTab {
 	    catch (IOException e) {
 	        e.printStackTrace();
 	    }
+	}
+	
+	public String createWsiDiDvarFileName(String dvFileName){
+		File dvFile=new File(dvFileName);
+		return dvFile.getParentFile().getAbsolutePath()+"\\genwsidi_dv.dss";
 	}
 	
 	public String procRelativePath(String path){
