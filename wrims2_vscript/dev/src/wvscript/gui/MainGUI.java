@@ -68,7 +68,7 @@ public class MainGUI {
 		JPanel panel_Simple = new JPanel();
 		tabbedPane_Main.addTab("Simple", null, panel_Simple, null);
 
-		JTabbedPane tabbedPane_PA = new JTabbedPane(JTabbedPane.CENTER);
+		JTabbedPane tabbedPane_PA = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_Main.addTab("Position Analysis", tabbedPane_PA);
 		JPanel panel_PA_1 = new JPanel();
 		tabbedPane_PA.addTab("PA Step 1", null, panel_PA_1, null);
