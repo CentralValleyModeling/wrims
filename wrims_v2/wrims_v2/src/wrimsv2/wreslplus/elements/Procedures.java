@@ -221,6 +221,7 @@ public class Procedures {
 				d.condition = a.condition;
 				d.isFromAlias = true;
 				d.timeArraySize = a.timeArraySize;
+				d.line=a.line;
 
 				seqObj.asList.remove(aKey);
 				seqObj.asIncFileList_post.remove(aKey);
@@ -244,6 +245,7 @@ public class Procedures {
 				g.caseCondition.add(Param.always);
 				g.dependants = a.dependants;
 				g.timeArraySize = a.timeArraySize;
+				g.line=a.line;
 
 				seqObj.glList_fromAlias.add(g.id.toLowerCase());
 				//seqObj.glList.add(g.id.toLowerCase());
