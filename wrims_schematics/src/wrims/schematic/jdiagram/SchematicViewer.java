@@ -997,7 +997,7 @@ public class SchematicViewer extends JPanel {
 							if (subordinateGroup != null) {
 								DiagramNodeList attachedNodes = subordinateGroup
 										.getAttachedNodes();
-								if (attachedNodes.size() < studyId + 1) {
+								if (studyId > attachedNodes.size() - 1) {
 									diagramNode = createTextNodeWithIntermediates(
 											studyId, attachedNodes.size(),
 											shapeNode);
@@ -1007,6 +1007,7 @@ public class SchematicViewer extends JPanel {
 							} else {
 								diagramNode = createTextNodeWithIntermediates(
 										studyId, 0, shapeNode);
+//								diagramNode = createTextNode(studyId, shapeNode);
 							}
 							if (diagramNode != null) {
 								diagramNode.setEditedText(value);
@@ -1031,12 +1032,11 @@ public class SchematicViewer extends JPanel {
 
 	private ShapeNode createTextNodeWithIntermediates(int studyId,
 			int startingWithId, ShapeNode shapeNode) {
-		int id = startingWithId;
-		if (id < studyId + 1) {
-			return createTextNode(id++, shapeNode);
-		} else {
-			return null;
+		ShapeNode textNode = null;
+		for (int id = startingWithId; id <= studyId; id++){
+			textNode = createTextNode(id, shapeNode);
 		}
+		return textNode;
 	}
 
 	private ShapeNode createTextNode(int studyId, ShapeNode shapeNode) {

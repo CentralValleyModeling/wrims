@@ -367,11 +367,18 @@ public class DssViewer implements Outputer {
 							ht.setDate(periodDate);
 							int valueIndex = (ht.year() - hecStartTime.year())
 									* 12 + (ht.month() - hecStartTime.month());
-							if (valueIndex < 0) {
-								System.out.println();
+							if (valueIndex < 0 || valueIndex > tsc.values.length - 1) {
+//								System.out.println();
+								value = "N/A";
+							} else {
+								Double value_temp=tsc.values[valueIndex];
+								if (Math.abs(value_temp)>100000000) {//empty value
+									value="N/A";
+								} else {
+									value = tsc.values[valueIndex] + " "
+											+ dataSet.getUnits();
+								}
 							}
-							value = tsc.values[valueIndex] + " "
-									+ dataSet.getUnits();
 						} else { // multiple-month time window LONG-TERM
 							// AVERAGES
 							if (twData.get(name) != null) {
@@ -436,14 +443,19 @@ public class DssViewer implements Outputer {
 						if (_mode.equals("Diff")) {
 							if (j > 0) {
 								if (results[0] == null || results[0].get(name) == null){
+									results[j].put(name,"N/A");
 									continue;
 								}
 								String[] baseFields = results[0].get(name)
 										.split("\\s");
 								String[] altFields = value.split("\\s");
-								double baseVal = Double.parseDouble(baseFields[0]);
-								double altVal = Double.parseDouble(altFields[0]);
-								results[j].put(name, (altVal - baseVal) + " " + baseFields[1]);
+								try {
+									double baseVal = Double.parseDouble(baseFields[0]);
+									double altVal = Double.parseDouble(altFields[0]);
+									results[j].put(name, (altVal - baseVal) + " " + baseFields[1]);
+								} catch (NumberFormatException nfe) {
+									results[j].put(name,"N/A");
+								}
 							} else {
 								results[j].put(name, value);
 							}
