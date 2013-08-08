@@ -1,0 +1,214 @@
+/*
+File Name: Yuba_Definition.wresl
+CalSim 3.0  File for New Bullards Bar Dam and Lower Yuba River Operations
+
+Purpose: Defines variables
+
+*/
+define C_NBLDB_MIF 		{std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+define C_NBLDB_POW 		{std kind 'FLOW-POWER-INSTREAM' units 'CFS'}
+define C_NBLDB_ADD 		{std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_ENGLB_MIF 		{std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+define C_ENGLB_POW 		{std kind 'FLOW-POWER-INSTREAM' units 'CFS'}
+define C_ENGLB_ADD 		{std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_NBLDB_POW_MIN 	{std kind 'FLOW-DELIVERY' units 'CFS'}
+ define C_NBLDB_POW_ADD 	{std kind 'FLOW-DELIVERY' units 'CFS'}
+
+! Timeseries calculated based on annual contract amount of 226 TAF, annual water right fo 162 TAF
+! and observed monthly delivery pattern water years 1990-2009
+! delivery pattern as follows:
+! Oct 	8%
+! Nov 	7%
+! Dec 	5%
+! Jan 	2%
+! Feb 	0%
+! Mar 	0%
+! Apr 	5%
+! May 	14%
+! Jun 	17%
+! Jul 	19%
+! Aug 	16%
+! Sep	6%
+
+define WR_DGR 			{timeseries kind 'WATER-RIGHT' units 'TAF' convert 'CFS'}
+define CL_DGR 			{timeseries kind 'CONTRACT-LIMIT' units 'TAF' convert 'CFS'}
+
+
+define S_NBB_MAR {std kind 'STORAGE' units 'TAF'}
+define S_NBB_APR 	{std kind 'STORAGE' units 'TAF'} 
+define S_NBB_MAY {std kind 'STORAGE' units 'TAF'}
+define S_NBB_JUN 	{std kind 'STORAGE' units 'TAF'} 
+define S_NBB_JUL 	{std kind 'STORAGE' units 'TAF'} 
+define S_NBB_AUG {std kind 'STORAGE' units 'TAF'}
+define S_NBB_SEP 	{std kind 'STORAGE' units 'TAF'} 
+
+define C_NBB_APR {std kind 'FLOW-CHANNEL' units 'CFS'}
+define C_NBB_MAY {std kind 'FLOW-CHANNEL' units 'CFS'}
+define C_NBB_JUN {std kind 'FLOW-CHANNEL' units 'CFS'}
+define C_NBB_JUL {std kind 'FLOW-CHANNEL' units 'CFS'}
+define C_NBB_AUG {std kind 'FLOW-CHANNEL' units 'CFS'}
+define C_NBB_SEP {std kind 'FLOW-CHANNEL' units 'CFS'}
+
+define C_EB_APR {std kind 'FLOW-CHANNEL' units 'CFS'}
+define C_EB_MAY {std kind 'FLOW-CHANNEL' units 'CFS'}
+define C_EB_JUN {std kind 'FLOW-CHANNEL' units 'CFS'}
+define C_EB_JUL {std kind 'FLOW-CHANNEL' units 'CFS'}
+define C_EB_AUG {std kind 'FLOW-CHANNEL' units 'CFS'}
+define C_EB_SEP {std kind 'FLOW-CHANNEL' units 'CFS'}
+
+define C_DGR_APR {std kind 'FLOW-CHANNEL' units 'CFS'}
+define C_DGR_MAY {std kind 'FLOW-CHANNEL' units 'CFS'}
+define C_DGR_JUN {std kind 'FLOW-CHANNEL' units 'CFS'}
+define C_DGR_JUL {std kind 'FLOW-CHANNEL' units 'CFS'}
+define C_DGR_AUG {std kind 'FLOW-CHANNEL' units 'CFS'}
+define C_DGR_SEP {std kind 'FLOW-CHANNEL' units 'CFS'}
+
+define D_DGR_APR {std kind 'FLOW-DIVERSION' units 'CFS'}
+define D_DGR_MAY {std kind 'FLOW-DIVERSION' units 'CFS'}
+define D_DGR_JUN {std kind 'FLOW-DIVERSION' units 'CFS'}
+define D_DGR_JUL {std kind 'FLOW-DIVERSION' units 'CFS'}
+define D_DGR_AUG {std kind 'FLOW-DIVERSION' units 'CFS'}
+define D_DGR_SEP {std kind 'FLOW-DIVERSION' units 'CFS'}
+
+define E_NBB_APR {std kind 'EVAPORATION' units 'CFS'}
+define E_NBB_MAY {std kind 'EVAPORATION' units 'CFS'}
+define E_NBB_JUN {std kind 'EVAPORATION' units 'CFS'}
+define E_NBB_JUL {std kind 'EVAPORATION' units 'CFS'}
+define E_NBB_AUG {std kind 'EVAPORATION' units 'CFS'}
+define E_NBB_SEP {std kind 'EVAPORATION' units 'CFS'}
+
+!minimum flows d/s of Daguerre Point
+define C_DGR_MIF_APR {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+define C_DGR_MIF_MAY {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+define C_DGR_MIF_JUN {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+define C_DGR_MIF_JUL {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+define C_DGR_MIF_AUG {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+define C_DGR_MIF_SEP {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+
+define C_DGR_ADD_APR {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_DGR_ADD_MAY {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_DGR_ADD_JUN {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_DGR_ADD_JUL {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_DGR_ADD_AUG {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_DGR_ADD_SEP {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+
+!minimum flows d/s of Englebright
+define C_EB_MIF_APR {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+define C_EB_MIF_MAY {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+define C_EB_MIF_JUN {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+define C_EB_MIF_JUL {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+define C_EB_MIF_AUG {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+define C_EB_MIF_SEP {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+
+define C_EB_ADD_APR {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_EB_ADD_MAY {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_EB_ADD_JUN {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_EB_ADD_JUL {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_EB_ADD_AUG {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_EB_ADD_SEP {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+
+define C_EB_SPILL_APR {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_EB_SPILL_MAY {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_EB_SPILL_JUN {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_EB_SPILL_JUL {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_EB_SPILL_AUG {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_EB_SPILL_SEP {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+
+define NARROWS_APR {lower 0 upper 4190 kind 'FLOW-CHANNEL' units 'CFS'}
+define NARROWS_MAY {lower 0 upper 4190 kind 'FLOW-CHANNEL' units 'CFS'}
+define NARROWS_JUN {lower 0 upper 4190 kind 'FLOW-CHANNEL' units 'CFS'}
+define NARROWS_JUL {lower 0 upper 4190 kind 'FLOW-CHANNEL' units 'CFS'}
+define NARROWS_AUG {lower 0 upper 4190 kind 'FLOW-CHANNEL' units 'CFS'}
+define NARROWS_SEP {lower 0 upper 4190 kind 'FLOW-CHANNEL' units 'CFS'}
+
+!minimum flows d/s of New Bullards Bar
+define C_NBB_MIF_APR {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+define C_NBB_MIF_MAY {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+define C_NBB_MIF_JUN {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+define C_NBB_MIF_JUL {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+define C_NBB_MIF_AUG {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+define C_NBB_MIF_SEP {std kind 'FLOW-MIN-INSTREAM' units 'CFS'}
+
+define C_NBB_ADD_APR {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_NBB_ADD_MAY {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_NBB_ADD_JUN {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_NBB_ADD_JUL {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_NBB_ADD_AUG {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+define C_NBB_ADD_SEP {std kind 'FLOW-ADDITIONAL-INSTREAM' units 'CFS'}
+
+define COLGATE_APR {lower 0 upper 3700 kind 'FLOW-CHANNEL' units 'CFS'}
+define COLGATE_MAY {lower 0 upper 3700 kind 'FLOW-CHANNEL' units 'CFS'}
+define COLGATE_JUN {lower 0 upper 3700 kind 'FLOW-CHANNEL' units 'CFS'}
+define COLGATE_JUL {lower 0 upper 3700 kind 'FLOW-CHANNEL' units 'CFS'}
+define COLGATE_AUG {lower 0 upper 3700 kind 'FLOW-CHANNEL' units 'CFS'}
+define COLGATE_SEP {lower 0 upper 3700 kind 'FLOW-CHANNEL' units 'CFS'}
+
+define S_NBB_1_APR {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_1_MAY {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_1_JUN {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_1_JUL {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_1_AUG {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_1_SEP {std kind 'STORAGE-ZONE' units 'TAF'}
+
+define S_NBB_2_APR {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_2_MAY {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_2_JUN {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_2_JUL {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_2_AUG {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_2_SEP {std kind 'STORAGE-ZONE' units 'TAF'}
+
+define S_NBB_3_APR {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_3_MAY {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_3_JUN {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_3_JUL {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_3_AUG {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_3_SEP {std kind 'STORAGE-ZONE' units 'TAF'}
+
+define S_NBB_4_APR {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_4_MAY {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_4_JUN {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_4_JUL {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_4_AUG {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_4_SEP {std kind 'STORAGE-ZONE' units 'TAF'}
+
+define S_NBB_5_APR {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_5_MAY {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_5_JUN {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_5_JUL {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_5_AUG {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_5_SEP {std kind 'STORAGE-ZONE' units 'TAF'}
+
+define S_NBB_6_APR {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_6_MAY {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_6_JUN {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_6_JUL {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_6_AUG {std kind 'STORAGE-ZONE' units 'TAF'}
+define S_NBB_6_SEP {std kind 'STORAGE-ZONE' units 'TAF'}
+
+define A_NBB_APR {lower unbounded kind 'SURFACE-AREA' units 'ACRES'}
+define A_NBB_MAY {lower unbounded kind 'SURFACE-AREA' units 'ACRES'}
+define A_NBB_JUN {lower unbounded kind 'SURFACE-AREA' units 'ACRES'}
+define A_NBB_JUL {lower unbounded kind 'SURFACE-AREA' units 'ACRES'}
+define A_NBB_AUG {lower unbounded kind 'SURFACE-AREA' units 'ACRES'}
+define A_NBB_SEP {lower unbounded kind 'SURFACE-AREA' units 'ACRES'}
+
+define I_NBB_APRdv 	{std kind 'INFLOW' units 'cfs'}
+define I_NBB_MAYdv	{std kind 'INFLOW' units 'cfs'}
+define I_NBB_JUNdv 	{std kind 'INFLOW' units 'cfs'}
+define I_NBB_JULdv 	{std kind 'INFLOW' units 'cfs'}
+define I_NBB_AUGdv 	{std kind 'INFLOW' units 'cfs'}
+define I_NBB_SEPdv 	{std kind 'INFLOW' units 'cfs'}
+
+define I_EB_APRdv 		{std kind 'INFLOW' units 'cfs'}
+define I_EB_MAYdv		{std kind 'INFLOW' units 'cfs'}
+define I_EB_JUNdv 		{std kind 'INFLOW' units 'cfs'}
+define I_EB_JULdv 		{std kind 'INFLOW' units 'cfs'}
+define I_EB_AUGdv 	{std kind 'INFLOW' units 'cfs'}
+define I_EB_SEPdv 		{std kind 'INFLOW' units 'cfs'}
+
+define I_DGR_APRdv 	{std kind 'INFLOW' units 'cfs'}
+define I_DGR_MAYdv	{std kind 'INFLOW' units 'cfs'}
+define I_DGR_JUNdv 	{std kind 'INFLOW' units 'cfs'}
+define I_DGR_JULdv 	{std kind 'INFLOW' units 'cfs'}
+define I_DGR_AUGdv 	{std kind 'INFLOW' units 'cfs'}
+define I_DGR_SEPdv 	{std kind 'INFLOW' units 'cfs'}
