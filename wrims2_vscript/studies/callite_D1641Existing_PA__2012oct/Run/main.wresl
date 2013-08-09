@@ -9,6 +9,7 @@ initial {
 	svar CH_DLTSW {select OPTION from gui_Regs where Index = 13}  !D-1485
 	svar DCC_DLTSW {select OPTION from gui_Regs where Index = 1}
 	svar EI_DLTSW {select OPTION from gui_Regs where Index = 2}
+	svar beginWY { value 2013 }
 }
 
 SEQUENCE CYCLE1 {
@@ -26,18 +27,7 @@ SEQUENCE CYCLE3 {
     order   3
     }
 
-group PositionAnalysis {
-
-	! Position analysis always begin in October.
-	! October 2012 is water year 2013	
-	svar beginWY { value 2013 }
-	
-	! historicalWY is the actual water year where svar's data is copied from. 
-	! for ann dll.
-	! svar historicalWY {select historicalWaterYear from Position_Analysis where FutureWaterYear = WaterYear} 
-}	
-	
-group inc1 {
+model inc1 {
 	define getFinalMrdo {EXTERNAL f90}  ! OBJ code file must be located in run\external directory for compilation
 	INCLUDE  'Delta\DeltaExtFuncs_7inpANN.wresl'
 	INCLUDE  'swp_dellogic\allocation\co_extfcn.wresl'
@@ -50,7 +40,7 @@ group inc1 {
 	INCLUDE 'hydrology\forecast\CVPforecasts.wresl'
 }
 
-group inc2 { 
+model inc2 { 
 	INCLUDE 'Assumptions\assumption.wresl'
 	INCLUDE 'hydrology\demands\demands_defs.wresl'
 	INCLUDE 'swp_dellogic\SwpDeliveryLogic.wresl'
@@ -66,19 +56,18 @@ group inc2 {
 	INCLUDE 'Wheeling\WheelOpsVarDefines.wresl'
 }
 
-group inc3 {
+model inc3 {
 	INCLUDE 'B2Actions\BaseStudyResults.wresl' 
 	INCLUDE 'B2Actions\B2Action1Repeat.wresl'
 	INCLUDE 'system\weight-table.wresl'
 }
 
 MODEL Upstream {         !CYCLE 1
-	include group PositionAnalysis
-	INCLUDE group inc1
+	INCLUDE model inc1
 
 	INCLUDE 'hydrology\WEIRS\weir_steps_monthops.wresl' 
 	
-	INCLUDE group inc2
+	INCLUDE model inc2
 
 	if int(PBwheel_ON)==1 {INCLUDE 'Wheeling\WheelD1485.wresl'}
 	INCLUDE 'Wheeling\WheelzeroCVC.wresl'
@@ -89,15 +78,14 @@ MODEL Upstream {         !CYCLE 1
 	INCLUDE 'Delta\Delta.wresl'
 	INCLUDE 'Delta\X2_BO_WQ.wresl'
 	
-	INCLUDE group inc3
+	INCLUDE model inc3
 
 }
 
 MODEL BASE {         !CYCLE 2
-	include group PositionAnalysis
-	INCLUDE group inc1
-	INCLUDE group inc2
-	INCLUDE group inc3
+	INCLUDE model inc1
+	INCLUDE model inc2
+	INCLUDE model inc3
 	
 	INCLUDE 'hydrology\WEIRS\weir_steps_monthops.wresl'
 	if int(PBwheel_ON)==1 {INCLUDE 'Wheeling\WheelD1485.wresl'}
@@ -112,10 +100,9 @@ MODEL BASE {         !CYCLE 2
 
 
 MODEL B2_BO_DailyWeir {         !CYCLE 3
-	include group PositionAnalysis
-	INCLUDE group inc1
-	INCLUDE group inc2
-	INCLUDE group inc3
+	INCLUDE model inc1
+	INCLUDE model inc2
+	INCLUDE model inc3
 
 	INCLUDE 'hydrology\WEIRS\weir_steps_dailyops_SETUP.wresl'  
 	INCLUDE 'B2Actions\B2SetBaseline.wresl'                    
