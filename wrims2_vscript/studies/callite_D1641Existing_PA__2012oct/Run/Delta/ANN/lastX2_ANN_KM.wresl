@@ -34,7 +34,6 @@ define X2_last {
   
   case lastWaterYear {
     condition  month == Oct .and. X2_ANN_KM ==0
-	! need to modify for position analysis
       value  ANN_X2(
                X2_PRV(-5),X2_PRV(-4),X2_PRV(-3),X2_PRV(-2),X2_PRV(-1),
                NDO(-5),NDO(-4),NDO(-3),NDO(-2),NDO(-1),
@@ -43,7 +42,6 @@ define X2_last {
 
   case others {
     condition always
-	! need to modify for position analysis
       value  Ann_X2(
                X2_PRV(-5),X2_PRV(-4),X2_PRV(-3),X2_PRV(-2),X2_PRV(-1),
                NDO(-5),NDO(-4),NDO(-3),NDO(-2),NDO(-1),
