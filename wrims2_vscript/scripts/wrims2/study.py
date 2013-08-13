@@ -137,8 +137,8 @@ class Study:
 		
 		self._run_wrims()
 		
-		for pn in self.processDict.keys():
-			self._run_process(pn, StartYear, NumberOfSteps)
+# 		for pn in self.processDict.keys():
+# 			self._run_process(pn, StartYear, NumberOfSteps)
 
 	def loadConfig(self, configFile):
 						

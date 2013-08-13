@@ -1,5 +1,6 @@
 import hec.heclib.dss.HecDss as HecDss
 import hec.heclib.dss.DSSPathname as DSSPathname
+import TimeUtils
 #from hec.heclib.dss import *
 #from hec.hecmath import *
 import os
@@ -73,7 +74,7 @@ def dssDataTransferMonthly2(inFile, inFilePathList, inFileBpartList, outFile, ou
     
     # time window format
     # 02JAN1926 0012        
-    timeWindow_begin = "03"+Param.month2Str(startMon)+str(startYr)+" 0000"
+    timeWindow_begin = "03"+TimeUtils.month2Str(startMon)+str(startYr)+" 0000"
 
     increMon = int(numberOfMonths-1)%12
     increYr = int(numberOfMonths-1)/12
@@ -90,7 +91,7 @@ def dssDataTransferMonthly2(inFile, inFilePathList, inFileBpartList, outFile, ou
 
     stopDay = TimeOp.numberOfDays(stopMon, stopYr)
     
-    timeWindow_end = str(stopDay)+Param.month2Str(stopMon)+str(stopYr)+" 2400"
+    timeWindow_end = str(stopDay)+TimeUtils.month2Str(stopMon)+str(stopYr)+" 2400"
     
     inFile.setTimeWindow(timeWindow_begin, timeWindow_end)
 
