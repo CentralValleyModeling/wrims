@@ -10,6 +10,11 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
+import java.awt.GridBagLayout;
+import javax.swing.JCheckBox;
+import java.awt.GridBagConstraints;
+import javax.swing.JRadioButton;
+import java.awt.Insets;
 
 public class MainGUI {
 
@@ -76,6 +81,25 @@ public class MainGUI {
 		tabbedPane_PA.addTab("PA Step 2", null, panel_PA_2, null);
 		JPanel panel_PA_3 = new JPanel();
 		tabbedPane_PA.addTab("Run", null, panel_PA_3, null);
+		GridBagLayout gbl_panel_PA_3 = new GridBagLayout();
+		gbl_panel_PA_3.columnWidths = new int[]{0, 0, 0};
+		gbl_panel_PA_3.rowHeights = new int[]{0, 0, 0, 0};
+		gbl_panel_PA_3.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_PA_3.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panel_PA_3.setLayout(gbl_panel_PA_3);
+		
+		JCheckBox chckbxNewCheckBox = new JCheckBox("New check box");
+		GridBagConstraints gbc_chckbxNewCheckBox = new GridBagConstraints();
+		gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 5, 0);
+		gbc_chckbxNewCheckBox.gridx = 1;
+		gbc_chckbxNewCheckBox.gridy = 1;
+		panel_PA_3.add(chckbxNewCheckBox, gbc_chckbxNewCheckBox);
+		
+		JRadioButton rdbtnNewRadioButton = new JRadioButton("New radio button");
+		GridBagConstraints gbc_rdbtnNewRadioButton = new GridBagConstraints();
+		gbc_rdbtnNewRadioButton.gridx = 1;
+		gbc_rdbtnNewRadioButton.gridy = 2;
+		panel_PA_3.add(rdbtnNewRadioButton, gbc_rdbtnNewRadioButton);
 
 	}
 
