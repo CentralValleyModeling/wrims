@@ -1,4 +1,4 @@
-package wvscript.gui;
+package wvscript.app;
 
 import java.io.File;
 import java.util.ArrayList;
