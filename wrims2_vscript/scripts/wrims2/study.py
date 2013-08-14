@@ -140,7 +140,7 @@ class Study:
 # 		for pn in self.processDict.keys():
 # 			self._run_process(pn, StartYear, NumberOfSteps)
 
-	def loadConfig(self, configFile):
+	def importConfig(self, configFile):
 						
 		#parse config file and put the map to cMap	
 		

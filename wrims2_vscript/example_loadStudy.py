@@ -17,7 +17,7 @@ configFile = 'D1641.config'
 
 
 s = Study('testStudy', studyRunDir)
-s.loadConfig(configFile)    
+s.importConfig(configFile)    
 #s.writeBatch(pause=True)
 s.run()
 
