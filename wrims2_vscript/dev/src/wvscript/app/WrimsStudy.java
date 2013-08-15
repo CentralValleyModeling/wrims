@@ -18,7 +18,7 @@ public class WrimsStudy {
 	private Map<String,String> configMap;
 
 	
-	public WrimsStudy(String studyRunDir, String studyName) {
+	public WrimsStudy(String studyName, String studyRunDir) {
 
 		// initialize
 		interp = new org.python.util.PythonInterpreter();
@@ -91,9 +91,8 @@ public class WrimsStudy {
 		// TODO Auto-generated method stub
 
 		WrimsStudy sty = new WrimsStudy(
-					"D:\\cvwrsm\\trunk\\wrims2_vscript\\studies\\callite_D1641\\run", 
-					"test3Study"
-					);
+				"test3Study",
+				"D:\\cvwrsm\\trunk\\wrims2_vscript\\studies\\callite_D1641\\run");
 		
 		sty.importConfig("D1641.config");
 
