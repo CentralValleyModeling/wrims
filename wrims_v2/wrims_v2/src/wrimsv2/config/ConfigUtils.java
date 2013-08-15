@@ -653,17 +653,8 @@ public class ConfigUtils {
 			configMap.put("stopday", Integer.toString(endday));	
 		}
 		
+		ControlData.defaultTimeStep=configMap.get("timestep").toUpperCase();
 		
-		// support only monthly time step
-		if (!configMap.get("timestep").equalsIgnoreCase("1mon")){
-
-			Error.addConfigError("Only monthly timestep supported, i.e., \"TimeStep  1MON\" ");
-			Error.writeErrorLog();
-
-		}
-		
-		
-
 		// TODO: duplcate codes. clean it up!
 		
 		File mf = null;
