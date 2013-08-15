@@ -4,6 +4,7 @@ import os.path as P
 from scripts.tool import Param, DssHec
 from scripts.wrims2 import Utils
 from process.dssTransferProcess import DssTransferProcess
+from datetime import datetime
 
 
 class Study:
@@ -182,10 +183,17 @@ class Study:
 # 		self._cMap.put("SvarFile",t_svarFile)
 # 		self._cMap.put("DvarFile",t_dvarFile)		
 
+
+		
 		# write configFile
 		self._configDir = P.dirname(configPath)
 		self._configPath = P.join(self._configDir, self._studyName+'.config')
-		
+
+		# backup configFile if exists
+		if os.path.exists(self._configPath):
+			t = datetime.now().strftime('%Y%m%d%H%M%S')
+			os.rename(self._configPath, self._configPath+'_bac_'+t)
+				
 		try:
 			cf = open(self._configPath,'w+')	
 			cf.write("Begin Config\n")
