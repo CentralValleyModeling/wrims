@@ -30,7 +30,7 @@ public class TestJ {
 			interp.exec("sys.path.append(\""+ pyp +"\")");
 		}
 
-		String scriptname = "example_loadStudy.py"; 
+		String scriptname = "scripts/app/loadStudy.py"; 
 		
 		interp.exec("__file__ = os.path.join(os.path.abspath(sys.argv[0]), \'"+scriptname +"\') ");
 
