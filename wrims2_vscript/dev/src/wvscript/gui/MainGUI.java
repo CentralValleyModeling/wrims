@@ -15,10 +15,32 @@ import javax.swing.JCheckBox;
 import java.awt.GridBagConstraints;
 import javax.swing.JRadioButton;
 import java.awt.Insets;
+import javax.swing.JTextField;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+import com.jgoodies.forms.factories.FormFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.CompoundBorder;
+import java.awt.Dimension;
 
 public class MainGUI {
 
-	private JFrame frame;
+	private JFrame frmWvscript;
+	private JTextField textField;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -28,7 +50,7 @@ public class MainGUI {
 			public void run() {
 				try {
 					MainGUI window = new MainGUI();
-					window.frame.setVisible(true);
+					window.frmWvscript.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -63,15 +85,114 @@ public class MainGUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmWvscript = new JFrame();
+		frmWvscript.setTitle("WVscript 1.20");
+		frmWvscript.setBounds(100, 100, 608, 551);
+		frmWvscript.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JTabbedPane tabbedPane_Main = new JTabbedPane(JTabbedPane.TOP);
-		frame.getContentPane().add(tabbedPane_Main, BorderLayout.CENTER);
+		frmWvscript.getContentPane().add(tabbedPane_Main, BorderLayout.CENTER);
 
 		JPanel panel_Simple = new JPanel();
 		tabbedPane_Main.addTab("Simple", null, panel_Simple, null);
+		panel_Simple.setLayout(new FormLayout(new ColumnSpec[] {
+				FormFactory.RELATED_GAP_COLSPEC,
+				FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC,
+				FormFactory.DEFAULT_COLSPEC,
+				ColumnSpec.decode("max(20dlu;min)"),
+				FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC,
+				FormFactory.DEFAULT_COLSPEC,
+				FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(50dlu;default):grow"),
+				FormFactory.RELATED_GAP_COLSPEC,},
+			new RowSpec[] {
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,}));
+		
+		JLabel lblNewLabel = new JLabel("Study name:");
+		panel_Simple.add(lblNewLabel, "4, 2, left, center");
+		
+		JLabel lblNewLabel_1 = new JLabel("Config file content:");
+		panel_Simple.add(lblNewLabel_1, "6, 2");
+		
+		textField = new JTextField();
+		panel_Simple.add(textField, "4, 4, fill, default");
+		textField.setColumns(10);
+		
+		table = new JTable();
+		table.setRowHeight(20);
+		table.setIntercellSpacing(new Dimension(3, 3));
+		table.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel_Simple.add(table, "6, 4, 5, 13");
+		table.setFont(new Font("Dialog", Font.PLAIN, 14));
+		table.setColumnSelectionAllowed(true);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"keyword1", "value1"},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+			},
+			new String[] {
+				"Keyword", "Value"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, String.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
+		table.getColumnModel().getColumn(0).setPreferredWidth(100);
+		table.getColumnModel().getColumn(0).setMinWidth(50);
+		table.getColumnModel().getColumn(0).setMaxWidth(150);
+		table.getColumnModel().getColumn(1).setPreferredWidth(190);
+		table.getColumnModel().getColumn(1).setMinWidth(50);
+		table.getColumnModel().getColumn(1).setMaxWidth(900);
+		
+		JButton btnNewButton_3 = new JButton("Import config...");
+		panel_Simple.add(btnNewButton_3, "4, 6");
+		
+		JButton btnNewButton = new JButton("Run dir...");
+		panel_Simple.add(btnNewButton, "4, 8");
+		
+		JButton btnNewButton_1 = new JButton("Init dss...");
+		panel_Simple.add(btnNewButton_1, "4, 10");
+		
+		JButton btnNewButton_2 = new JButton("Svar dss...");
+		panel_Simple.add(btnNewButton_2, "4, 12");
+		
+		JButton btnNewButton_4 = new JButton("New button");
+		panel_Simple.add(btnNewButton_4, "4, 14");
 
 		JTabbedPane tabbedPane_PA = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_Main.addTab("Position Analysis", tabbedPane_PA);
